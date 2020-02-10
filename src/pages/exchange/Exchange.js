@@ -26,9 +26,9 @@ import useStyles from './styles'
 
 // components
 import mock from './mock'
-import Widget from '../../components/Widget'
-import PageTitle from '../../components/PageTitle'
-import { Typography } from '../../components/Wrappers'
+import Widget from '../../components/Widget/Widget'
+import PageTitle from '../../components/PageTitle/PageTitle'
+import { Typography } from '../../components/Wrappers/Wrappers'
 import Dot from '../../components/Sidebar/components/Dot'
 import Table from './components/Table/Table'
 import BigStat from './components/BigStat/BigStat'
@@ -41,17 +41,17 @@ const PieChartData = [
   { name: 'Group D', value: 200, color: 'success' }
 ]
 
-export default function Dashboard (props) {
+export default function Exchange (props) {
   var classes = useStyles()
   var theme = useTheme()
+  var serial = props.location.pathname.split('/')[3]
 
-  // local
   var [mainChartState, setMainChartState] = useState('monthly')
 
   return (
     <>
-      <PageTitle title='Dashboard' button='Latest Reports' />
-      {/* <Grid container spacing={4}>
+      <PageTitle title={`${serial} Secondary Exchange`} />
+      <Grid container spacing={4}>
         <Grid item lg={3} md={4} sm={6} xs={12}>
           <Widget
             title='Visits Today'
@@ -407,7 +407,7 @@ export default function Dashboard (props) {
             <Table data={mock.table} />
           </Widget>
         </Grid>
-      </Grid> */}
+      </Grid>
     </>
   )
 }

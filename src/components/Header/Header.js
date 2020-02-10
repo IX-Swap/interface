@@ -293,9 +293,9 @@ export default function Header (props) {
               className={classes.profileMenuLink}
               component='a'
               color='primary'
-              href='https://flatlogic.com'
+              href='https://investax.io'
             >
-              Flalogic.com
+              InvestaX.io
             </Typography>
           </div>
           <MenuItem
@@ -304,7 +304,7 @@ export default function Header (props) {
               classes.headerMenuItem
             )}
           >
-            <AccountIcon className={classes.profileMenuIcon} /> Profile
+            <AccountIcon className={classes.profileMenuIcon} /> Identity
           </MenuItem>
           <MenuItem
             className={classNames(
@@ -312,7 +312,7 @@ export default function Header (props) {
               classes.headerMenuItem
             )}
           >
-            <AccountIcon className={classes.profileMenuIcon} /> Tasks
+            <AccountIcon className={classes.profileMenuIcon} /> Security
           </MenuItem>
           <MenuItem
             className={classNames(
@@ -320,7 +320,7 @@ export default function Header (props) {
               classes.headerMenuItem
             )}
           >
-            <AccountIcon className={classes.profileMenuIcon} /> Messages
+            <AccountIcon className={classes.profileMenuIcon} /> Custody
           </MenuItem>
           <div className={classes.profileMenuUser}>
             <Typography

@@ -42,24 +42,24 @@ const structure = [
     link: '/app/primary',
     icon: <NoteIcon />
   },
-  { id: 2, label: 'Secondary', link: '/app/tables', icon: <ChartIcon /> },
-  {
-    id: 3,
-    label: 'Custody',
-    link: '/app/notifications',
-    icon: <LockIcon />
-  },
-  {
-    id: 4,
-    label: 'Identity',
-    link: '/app/ui',
-    icon: <IdentityIcon />,
-    children: [
-      { label: 'Icons', link: '/app/ui/icons' },
-      { label: 'Charts', link: '/app/ui/charts' },
-      { label: 'Maps', link: '/app/ui/maps' }
-    ]
-  },
+  { id: 2, label: 'Secondary', link: '/app/secondary', icon: <ChartIcon /> },
+  // {
+  //   id: 3,
+  //   label: 'Custody',
+  //   link: '/app/notifications',
+  //   icon: <LockIcon />
+  // },
+  // {
+  //   id: 4,
+  //   label: 'Identity',
+  //   link: '/app/ui',
+  //   icon: <IdentityIcon />,
+  //   children: [
+  //     { label: 'Icons', link: '/app/ui/icons' },
+  //     { label: 'Charts', link: '/app/ui/charts' },
+  //     { label: 'Maps', link: '/app/ui/maps' }
+  //   ]
+  // },
   { id: 5, type: 'divider' },
   { id: 6, type: 'title', label: 'HELP' },
   { id: 7, label: 'Documentation', link: '', icon: <LibraryIcon /> },

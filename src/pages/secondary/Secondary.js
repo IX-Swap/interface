@@ -7,15 +7,15 @@ import Widget from '../../components/Widget/Widget'
 import Table from './components/Table'
 
 // data
-import mock from './mock-primary-data'
+import mock from './mock-secondary-data'
 
-export default function Primary (props) {
+export default function Secondary (props) {
   return (
     <>
-      <PageTitle title='Primary Offering Board' />
+      <PageTitle title='Secondary Exchange' />
       <Grid container spacing={4}>
         <Grid item xs={12}>
-          <Widget title='Digital Security Offerings' upperTitle noBodyPadding>
+          <Widget title='Listed DSOs' upperTitle noBodyPadding>
             <Table data={mock.primaryOfferings} location={props} />
           </Widget>
         </Grid>

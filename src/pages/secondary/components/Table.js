@@ -32,7 +32,7 @@ export default function TableComponent ({ data, location }) {
       </TableHead>
       <TableBody>
         {data.map((offer, i) => (
-          <TableRow key={i} hover onClick={() => location.history.push(`/app/offering/${offer.overview.serialNumber}`)}>
+          <TableRow key={i} hover onClick={() => location.history.push(`/app/exchange/${offer.overview.serialNumber}`)}>
             <TableCell className='pl-3 fw-normal'>{offer.overview.serialNumber}</TableCell>
             <TableCell>{offer.overview.capitalStructure}</TableCell>
             <TableCell>{offer.overview.investmentType}</TableCell>

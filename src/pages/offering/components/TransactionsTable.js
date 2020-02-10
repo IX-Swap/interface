@@ -18,7 +18,6 @@ const states = {
 }
 
 export default function TransactionsTable({ data }) {
-  console.log(data)
   return (
     <Table className='mb-0'>
       <TableHead>

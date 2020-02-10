@@ -24,6 +24,8 @@ import Icons from '../../pages/icons'
 import Charts from '../../pages/charts'
 import Primary from '../../pages/primary'
 import Offering from '../../pages/offering'
+import Secondary from '../../pages/secondary'
+import Exchange from '../../pages/exchange'
 
 // context
 import { useLayoutState } from '../../context/LayoutContext'
@@ -51,6 +53,10 @@ function Layout (props) {
             <Route path='/app/notifications' component={Notifications} />
             <Route path='/app/primary' component={Primary} />
             <Route path='/app/offering' component={Offering} />
+            <Route path='/app/secondary' component={Secondary} />
+            <Route path='/app/exchange' component={Exchange} />
+
+
 
             <Route
               exact

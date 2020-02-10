@@ -13,6 +13,7 @@ import {
   Pie,
   Cell
 } from 'recharts'
+import * as Icons from '@material-ui/icons'
 
 // styles
 import useStyles from './styles'
@@ -27,10 +28,10 @@ import TransactionsTable from './components/TransactionsTable'
 
 const mainChartData = getMainChartData()
 const PieChartData = [
-  { name: 'Group A', value: 400, color: 'primary' },
-  { name: 'Group B', value: 300, color: 'secondary' },
-  { name: 'Group C', value: 300, color: 'warning' },
-  { name: 'Group D', value: 200, color: 'success' }
+  { name: 'Seaside Capital Fund', value: 50000000, color: 'primary' },
+  { name: 'Cho Family', value: 10000000, color: 'secondary' },
+  { name: 'Telstra Group', value: 20000000, color: 'warning' },
+  { name: 'Lighthouse Captial', value: 10000000, color: 'success' }
 ]
 
 // use mock data
@@ -43,9 +44,9 @@ export default function Offering (props) {
 
   return (
     <>
-      <PageTitle title={offer} button='Invest' />
+      <PageTitle title={`${offer} Primary Offering`} button='Invest' />
       <Grid container spacing={4}>
-        <Grid item lg={3} md={4} sm={6} xs={12}>
+        <Grid item lg={3} md={5} sm={6} xs={12}>
           <Widget
             title='Summary'
             upperTitle
@@ -54,7 +55,7 @@ export default function Offering (props) {
           >
             <div className={classes.visitsNumberContainer}>
               <Typography size='xl' weight='medium'>
-                {issuer.companyName}
+                EXAMPLE PTE LTD
               </Typography>
               <LineChart
                 width={55}
@@ -104,7 +105,7 @@ export default function Offering (props) {
             </Grid>
           </Widget>
         </Grid>
-        <Grid item lg={3} md={8} sm={6} xs={12}>
+        <Grid item lg={3} md={7} sm={6} xs={12}>
           <Widget
             title='Introduction'
             upperTitle
@@ -116,10 +117,10 @@ export default function Offering (props) {
             </Typography>
           </Widget>
         </Grid>
-        <Grid item lg={3} md={3} sm={12} xs={12}>
+        <Grid item lg={6} md={12} sm={12} xs={12}>
           <Widget title='Cap Table' upperTitle className={classes.card}>
             <Grid container spacing={0}>
-              <Grid item lg={5} xs={4}>
+              <Grid item lg={3} md={3} xs={6}>
                 <ResponsiveContainer width='100%' height={144}>
                   <PieChart margin={{ left: theme.spacing(2) }}>
                     <Pie
@@ -138,7 +139,7 @@ export default function Offering (props) {
                   </PieChart>
                 </ResponsiveContainer>
               </Grid>
-              <Grid item lg={6} xs={4}>
+              <Grid item lg={6} md={7} xs={12}>
                 <div className={classes.pieChartLegendWrapper}>
                   {PieChartData.map(({ name, value, color }, index) => (
                     <div key={color} className={classes.legendItemContainer}>
@@ -162,6 +163,95 @@ export default function Offering (props) {
             <BigStat {...stat} />
           </Grid>
         ))} */}
+        <Grid item xs={6}>
+          <Widget
+            title={`${overview.serialNumber} Data Room`}
+            upperTitle
+            bodyClass={classes.tableWidget}
+          >
+            <div className={classes.visitsNumberContainer}>
+
+              <Grid
+                className={classes.materailIcon}
+                item
+                md={3}
+                lg={2}
+                sm={4}
+                xs={12}
+              >
+                <Icons.AccessAlarms />
+                <Typography className={classes.materialIconText}>
+                document-file-name.pdf
+                </Typography>
+              </Grid>
+            </div>
+            <div className={classes.visitsNumberContainer}>
+              <Grid
+                className={classes.materailIcon}
+                item
+                md={3}
+                lg={2}
+                sm={4}
+                xs={12}
+              >
+                <Icons.AccessAlarms />
+                <Typography className={classes.materialIconText}>
+                document-file-name.pdf
+                </Typography>
+              </Grid>
+              </div>
+              <div className={classes.visitsNumberContainer}>
+
+              <Grid
+                className={classes.materailIcon}
+                item
+                md={3}
+                lg={2}
+                sm={4}
+                xs={12}
+              >
+                <Icons.AccessAlarms />
+                <Typography className={classes.materialIconText}>
+                document-file-name.pdf
+                </Typography>
+              </Grid>
+            </div>
+          </Widget>
+        </Grid>
+        <Grid item xs={6}>
+          <Widget
+            title={`${overview.serialNumber} Information`}
+            upperTitle
+            noBodyPadding
+            bodyClass={classes.tableWidget}
+          >
+
+            <ul>
+              <li>Band Protocol offers a unique approach to decentralized data oracle by making data readily available to be queried on-chain using delegated proof of stake to ensure data integrity. This offers many benefits
+                </li>
+              <li>Decentralized economic incentive:data providers have economic and reputation at stake to remain honest actors.</li>
+              <li>
+              Cheap:over 50% cheaper than current decentralized alternative with much less gas consumed. Band’s smart contracts are optimized for gas usage and require less than 30000 gas to process a query call.
+
+              </li>
+              <li>
+              Scalable:costs for data providers remain constant regardless of how many dApps are using the data. Once a datapoint is put on-chain multiple smart contracts can consume the data without added cost to data providers.
+
+              </li>
+              <li>
+              Fast instant query:logic can be processed within one transaction requiring 0 blockchain confirmation. Data is readily available on blockchain so consuming data can be done synchronously within the same transaction.
+              </li>
+              <li>
+              Easy deployment:dApps can integrate with Band Protocol using a few lines of code with no major modification. Querying data on Band dataset is merely a function call on a predefined interface.
+
+              </li>
+              <li>
+              Working products & traction:strong developer communities with live testnet and many developers have already started the integration on testnet.
+
+              </li>
+            </ul>
+          </Widget>
+        </Grid>
         <Grid item xs={12}>
           <Widget
             title={`${overview.serialNumber} Transfers`}
