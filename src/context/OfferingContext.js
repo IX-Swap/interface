@@ -3,23 +3,34 @@ import React from 'react'
 var PrimaryOfferingStateContext = React.createContext()
 var PrimaryOfferingDispatchContext = React.createContext()
 
-function prmaryOfferingReducer (state, { type, primaryOfferings }) {
+function getPrimaryOfferingsReducer (state, action) {
   switch (action.type) {
-    case 'GET_PRIMARY_OFFERINGS_FETCHING':
-      return { ...state, fetching: true }
+    case 'GET_PRIMARY_OFFERINGS':
+      return { 
+        ...state,
+        fetching: true,
+        error: null }
     case 'GET_PRIMARY_OFFERINGS_SUCCESS':
       return { 
-        ...state, 
-        fetching: false, 
+        ...state,
+        fetching: false,
+        error: null,
         primaryOfferings: action.primaryOfferings }
+    case 'GET_PRIMARY_OFFERINGS_FAILED': {
+      return {
+        ...state,
+        fetching: false,
+        primaryOfferings: [],
+        error: action.error }
+    }
     default: {
       throw new Error(`Unhandled action type: ${action.type}`)
     }
   }
 }
 
-function PrimaryOfferingProvider ({ children }) {
-  var [state, dispatch] = React.useReducer(primaryOfferingReducer, {
+function PrimaryOfferingsProvider ({ children }) {
+  var [state, dispatch] = React.useReducer(getPrimaryOfferingsReducer, {
     primaryOfferings: []
   })
 

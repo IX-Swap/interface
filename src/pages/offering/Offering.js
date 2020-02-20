@@ -35,7 +35,7 @@ const PieChartData = [
 ]
 
 // use mock data
-const { overview, information, issuer, contract, investors, distributors  } = mock.primaryOfferings[0]
+const { overview, information, issuer, contract, investors, distributors  } = mock.dsoList[0]
 
 export default function Offering (props) {
   var classes = useStyles()
@@ -44,7 +44,7 @@ export default function Offering (props) {
 
   return (
     <>
-      <PageTitle title={`${offer} Primary Offering`} button='Invest' />
+      <PageTitle title={`${offer}`} />
       <Grid container spacing={4}>
         <Grid item lg={3} md={5} sm={6} xs={12}>
           <Widget

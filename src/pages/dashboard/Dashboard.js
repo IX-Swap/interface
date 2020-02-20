@@ -1,6 +1,7 @@
 import React, { useState } from 'react'
 import {
   Grid,
+  Button,
   LinearProgress,
   Select,
   OutlinedInput,
@@ -50,7 +51,13 @@ export default function Dashboard (props) {
 
   return (
     <>
-      <PageTitle title='Dashboard' button='Latest Reports' />
+      <PageTitle title='Dashboard' />
+
+        <Grid container spacing={4}>
+          <Button variant="outlined" color="primary" href="#/app/create-dso">
+            New DSO
+          </Button>
+        </Grid>
       {/* <Grid container spacing={4}>
         <Grid item lg={3} md={4} sm={6} xs={12}>
           <Widget
