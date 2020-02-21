@@ -2,7 +2,7 @@ import React from 'react'
 import {
   Route,
   Switch,
-  Redirect,
+  // Redirect,
   withRouter
 } from 'react-router-dom'
 import classnames from 'classnames'

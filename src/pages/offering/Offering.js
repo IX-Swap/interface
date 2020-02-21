@@ -1,14 +1,14 @@
-import React, { useState } from 'react'
+import React from 'react'
 import {
   Grid
 } from '@material-ui/core'
 import { useTheme } from '@material-ui/styles'
 import {
   ResponsiveContainer,
-  AreaChart,
+  // AreaChart,
   LineChart,
   Line,
-  Area,
+  // Area,
   PieChart,
   Pie,
   Cell
@@ -26,7 +26,7 @@ import { Typography } from '../../components/Wrappers'
 import Dot from '../../components/Sidebar/components/Dot'
 import TransactionsTable from './components/TransactionsTable'
 
-const mainChartData = getMainChartData()
+// const mainChartData = getMainChartData()
 const PieChartData = [
   { name: 'Seaside Capital Fund', value: 50000000, color: 'primary' },
   { name: 'Cho Family', value: 10000000, color: 'secondary' },

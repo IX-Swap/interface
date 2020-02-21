@@ -1,16 +1,16 @@
 import React, { useState, useEffect } from 'react'
 import { Drawer, IconButton, List } from '@material-ui/core'
 import {
-  PermIdentity as IdentityIcon,
+  // PermIdentity as IdentityIcon,
   NoteAdd as NoteIcon,
   InsertChart as ChartIcon,
-  Lock as LockIcon,
+  // Lock as LockIcon,
   Business as BusinessIcon,
-  Home as HomeIcon,
-  NotificationsNone as NotificationsIcon,
-  FormatSize as TypographyIcon,
-  FilterNone as UIElementsIcon,
-  BorderAll as TableIcon,
+  // Home as HomeIcon,
+  // NotificationsNone as NotificationsIcon,
+  // FormatSize as TypographyIcon,
+  // FilterNone as UIElementsIcon,
+  // BorderAll as TableIcon,
   QuestionAnswer as SupportIcon,
   LibraryBooks as LibraryIcon,
   HelpOutline as FAQIcon,
@@ -25,7 +25,7 @@ import useStyles from './styles'
 
 // components
 import SidebarLink from './components/SidebarLink/SidebarLink'
-import Dot from './components/Dot'
+// import Dot from './components/Dot'
 
 // context
 import {
