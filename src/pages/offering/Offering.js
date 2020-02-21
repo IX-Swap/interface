@@ -1,14 +1,14 @@
-import React, { useState } from 'react'
+import React from 'react'
 import {
   Grid
 } from '@material-ui/core'
 import { useTheme } from '@material-ui/styles'
 import {
   ResponsiveContainer,
-  AreaChart,
+  // AreaChart,
   LineChart,
   Line,
-  Area,
+  // Area,
   PieChart,
   Pie,
   Cell
@@ -26,7 +26,7 @@ import { Typography } from '../../components/Wrappers'
 import Dot from '../../components/Sidebar/components/Dot'
 import TransactionsTable from './components/TransactionsTable'
 
-const mainChartData = getMainChartData()
+// const mainChartData = getMainChartData()
 const PieChartData = [
   { name: 'Seaside Capital Fund', value: 50000000, color: 'primary' },
   { name: 'Cho Family', value: 10000000, color: 'secondary' },
@@ -35,7 +35,7 @@ const PieChartData = [
 ]
 
 // use mock data
-const { overview, information, issuer, contract, investors, distributors  } = mock.primaryOfferings[0]
+const { overview, information, issuer, contract, investors, distributors  } = mock.dsoList[0]
 
 export default function Offering (props) {
   var classes = useStyles()
@@ -44,7 +44,7 @@ export default function Offering (props) {
 
   return (
     <>
-      <PageTitle title={`${offer} Primary Offering`} button='Invest' />
+      <PageTitle title={`${offer}`} />
       <Grid container spacing={4}>
         <Grid item lg={3} md={5} sm={6} xs={12}>
           <Widget

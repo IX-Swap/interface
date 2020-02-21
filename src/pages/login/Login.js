@@ -20,21 +20,21 @@ import logo from '../../images/ix-logo-v5.png'
 import google from '../../images/google.svg'
 
 // context
-import { useUserDispatch, loginUser } from '../../context/UserContext'
+import { useUserDispatch, useUserState, setActiveTabId, loginUser, signupUser } from '../../context/UserContext'
 
 function Login (props) {
-  var classes = useStyles()
+  const classes = useStyles()
 
   // global
-  var userDispatch = useUserDispatch()
+  const userDispatch = useUserDispatch()
+  const userState = useUserState()
 
   // local
-  var [isLoading, setIsLoading] = useState(false)
-  var [error, setError] = useState(null)
-  var [activeTabId, setActiveTabId] = useState(0)
-  var [nameValue, setNameValue] = useState('')
-  var [loginValue, setLoginValue] = useState('')
-  var [passwordValue, setPasswordValue] = useState('')
+  const [isLoading, setIsLoading] = useState(false)
+  const [error, setError] = useState(null)
+  const [nameValue, setNameValue] = useState('')
+  const [usernameValue, setUsernameValue] = useState('')
+  const [passwordValue, setPasswordValue] = useState('')
 
   return (
     <Grid container className={classes.container}>
@@ -45,8 +45,8 @@ function Login (props) {
       <div className={classes.formContainer}>
         <div className={classes.form}>
           <Tabs
-            value={activeTabId}
-            onChange={(e, id) => setActiveTabId(id)}
+            value={userState.activeTabId}
+            onChange={(e, id) => setActiveTabId(userDispatch, id)}
             indicatorColor='primary'
             textColor='primary'
             centered
@@ -54,7 +54,7 @@ function Login (props) {
             <Tab label='Login' classes={{ root: classes.tab }} />
             <Tab label='New User' classes={{ root: classes.tab }} />
           </Tabs>
-          {activeTabId === 0 && (
+          {userState.activeTabId === 0 && (
             <>
               {/* <Typography variant="h1" className={classes.greeting}>
                 Good Morning, User
@@ -81,8 +81,8 @@ function Login (props) {
                     input: classes.textField
                   }
                 }}
-                value={loginValue}
-                onChange={e => setLoginValue(e.target.value)}
+                value={usernameValue}
+                onChange={e => setUsernameValue(e.target.value)}
                 margin='normal'
                 placeholder='Email Adress'
                 type='email'
@@ -104,17 +104,16 @@ function Login (props) {
                 fullWidth
               />
               <div className={classes.formButtons}>
-                {isLoading ? (
+                {userState.isLoading ? (
                   <CircularProgress size={26} className={classes.loginLoader} />
                 ) : (
                   <Button
                     disabled={
-                      loginValue.length === 0 || passwordValue.length === 0
+                      usernameValue.length === 0 || passwordValue.length === 0
                     }
-                    onClick={() =>
-                      loginUser(
+                    onClick={() => loginUser(
                         userDispatch,
-                        loginValue,
+                        usernameValue,
                         passwordValue,
                         props.history,
                         setIsLoading,
@@ -137,17 +136,14 @@ function Login (props) {
               </div>
             </>
           )}
-          {activeTabId === 1 && (
+          {userState.activeTabId === 1 && (
             <>
-              <Typography variant='h1' className={classes.greeting}>
-                Welcome!
+              <Typography variant="h4" className={classes.greeting}>
+                Create a new account
               </Typography>
-              <Typography variant='h2' className={classes.subGreeting}>
-                Create your account
-              </Typography>
-              <Fade in={error}>
+              <Fade in={userState.error !== ''}>
                 <Typography color='secondary' className={classes.errorMessage}>
-                  Something is wrong with your login or password :(
+                  {userState.error}
                 </Typography>
               </Fade>
               <TextField
@@ -173,8 +169,8 @@ function Login (props) {
                     input: classes.textField
                   }
                 }}
-                value={loginValue}
-                onChange={e => setLoginValue(e.target.value)}
+                value={usernameValue}
+                onChange={e => setUsernameValue(e.target.value)}
                 margin='normal'
                 placeholder='Email Adress'
                 type='email'
@@ -201,16 +197,14 @@ function Login (props) {
                 ) : (
                   <Button
                     onClick={() =>
-                      loginUser(
+                      signupUser(
                         userDispatch,
-                        loginValue,
-                        passwordValue,
-                        props.history,
-                        setIsLoading,
-                        setError
+                        nameValue,
+                        usernameValue,
+                        passwordValue
                     )}
                     disabled={
-                      loginValue.length === 0 ||
+                      usernameValue.length === 0 ||
                       passwordValue.length === 0 ||
                       nameValue.length === 0
                     }
@@ -243,7 +237,7 @@ function Login (props) {
           )}
         </div>
         <Typography color='primary' className={classes.copyright}>
-          © 2019 InvestX, All rights reserved.
+          © 2020 InvestX, All rights reserved.
         </Typography>
       </div>
     </Grid>
