@@ -1,7 +1,8 @@
 export default {
-  primaryOfferings: [
+  dsoList: [
     {
       _id: '234234-234234234-234234234-422424',
+      stage: 'primary | secondary',
       overview: {
         serialNumber: 'GOO-EQ-20200206',
         capitalStructure: 'Equity',
@@ -29,7 +30,7 @@ export default {
       information: {
         description: `GOO-EQ-20200206 is a common equity offering for an SVV fund in Singapore wth Real Estate assets in the Australian commercial mid-market.`,
         tokenPrice: '$1.00',
-        target: '$100,000,000',
+        target: '$100,000,000',   
         jurisdiction: 'Austalia',
         issueDate: '6 February 2020',
         assetProfile: 'Fund',
@@ -47,7 +48,7 @@ export default {
         blockchainNetwork: 'IX-CSRT-Singapore',
         environment: 'IX-ENV-Production',
         contractAddress: '0x84A0d77c693aDAbE0ebc48F88b3fFFF010577051',
-        ownerAddress: '0xf4b6da8ae9c3ab6f706d7966bbc93c3c08d20bb9',
+        operatorAddress: '0xf4b6da8ae9c3ab6f706d7966bbc93c3c08d20bb9',
         capTable: [
           {
             name: 'Goodman Group',
@@ -73,7 +74,7 @@ export default {
             timestamp: 15201928,
             from: '0x84A0d77c693aDAbE0ebc48F88b3fFFF010577051',
             to: '0xdac17f958d2ee523a2206206994597c13d831ec7',
-            amount: '500,000'
+            arguments: ['500,000']
           },
           {
             txnHash: '0x86f48ff1a1c909a2382d774e1f2dc53809cf98aedce8d771689eb5f71b019d78',
@@ -215,7 +216,8 @@ export default {
         blockchainNetwork: 'IX-CSRT-Singapore',
         environment: 'IX-ENV-Production',
         contractAddress: '0x84A0d77c693aDAbE0ebc48F88b3fFFF010577051',
-        ownerAddress: '0xf4b6da8ae9c3ab6f706d7966bbc93c3c08d20bb9',
+        operatorAddress: '0xf4b6da8ae9c3ab6f706d7966bbc93c3c08d20bb9',
+        adminAddresses: [],
         capTable: [
           {
             name: 'Goodman Group',
@@ -236,6 +238,8 @@ export default {
         transactions: [
           {
             txnHash: '0xfb0c8e482a62584e7b89bd2d602d6adf6309cd118c53df52c1d95b0022133afd',
+            type: 'name of the function: issue | transfer | etc',
+            arguments: ' depending on the type, it could have differnet parameters',
             status: 'success',
             block: '944',
             timestamp: 15201928,

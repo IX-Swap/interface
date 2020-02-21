@@ -22,32 +22,25 @@ export default function TableComponent ({ data, location }) {
     <Table className='mb-0'>
       <TableHead>
         <TableRow>
-          <TableCell>Serial</TableCell>
-          <TableCell>Structure</TableCell>
-          <TableCell>Type</TableCell>
-          <TableCell>Raised</TableCell>
-          <TableCell>Total Stupply</TableCell>
-          <TableCell>Status</TableCell>
+          <TableCell>Symbol</TableCell>
+          <TableCell>Name</TableCell>
         </TableRow>
       </TableHead>
       <TableBody>
-        {data.map((offer, i) => (
-          <TableRow key={i} hover onClick={() => location.history.push(`/app/offering/${offer.overview.serialNumber}`)}>
-            <TableCell className='pl-3 fw-normal'>{offer.overview.serialNumber}</TableCell>
-            <TableCell>{offer.overview.capitalStructure}</TableCell>
-            <TableCell>{offer.overview.investmentType}</TableCell>
-            <TableCell>{offer.information.percentRaised}</TableCell>
-            <TableCell>{offer.overview.totalSupply}</TableCell>
+        {data.map((dso, i) => (
+          <TableRow key={i} hover onClick={() => location.history.push(`/app/offering/${dso.symbol}`)}>
+            <TableCell className='pl-3 fw-normal'>{dso.symbol}</TableCell>
+            <TableCell>{dso.name}</TableCell>
             <TableCell>
               <Button
-                color={states[offer.overview.status.toLowerCase()]}
+                color={'complete'}
                 size='small'
                 className='px-2'
                 variant='contained'
               >
-                {offer.overview.status}
+                Complete
               </Button>
-            </TableCell>
+              </TableCell>
           </TableRow>
         ))}
       </TableBody>

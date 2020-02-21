@@ -1,0 +1,6 @@
+{
+  "name": "create-dso",
+  "version": "0.0.0",
+  "main": "CreateDso.js",
+  "private": true
+}

@@ -1,37 +1,38 @@
 import React, { useState } from 'react'
 import {
   Grid,
-  LinearProgress,
-  Select,
-  OutlinedInput,
-  MenuItem
+  Button,
+  // LinearProgress,
+  // Select,
+  // OutlinedInput,
+  // MenuItem
 } from '@material-ui/core'
 import { useTheme } from '@material-ui/styles'
-import {
-  ResponsiveContainer,
-  ComposedChart,
-  AreaChart,
-  LineChart,
-  Line,
-  Area,
-  PieChart,
-  Pie,
-  Cell,
-  YAxis,
-  XAxis
-} from 'recharts'
+// import {
+//   ResponsiveContainer,
+//   ComposedChart,
+//   AreaChart,
+//   LineChart,
+//   Line,
+//   Area,
+//   PieChart,
+//   Pie,
+//   Cell,
+//   YAxis,
+//   XAxis
+// } from 'recharts'
 
 // styles
 import useStyles from './styles'
 
 // components
-import mock from './mock'
-import Widget from '../../components/Widget'
+// import mock from './mock'
+// import Widget from '../../components/Widget'
 import PageTitle from '../../components/PageTitle'
-import { Typography } from '../../components/Wrappers'
-import Dot from '../../components/Sidebar/components/Dot'
-import Table from './components/Table/Table'
-import BigStat from './components/BigStat/BigStat'
+// import { Typography } from '../../components/Wrappers'
+// import Dot from '../../components/Sidebar/components/Dot'
+// import Table from './components/Table/Table'
+// import BigStat from './components/BigStat/BigStat'
 
 const mainChartData = getMainChartData()
 const PieChartData = [
@@ -46,11 +47,17 @@ export default function Dashboard (props) {
   var theme = useTheme()
 
   // local
-  var [mainChartState, setMainChartState] = useState('monthly')
+  // var [mainChartState, setMainChartState] = useState('monthly')
 
   return (
     <>
-      <PageTitle title='Dashboard' button='Latest Reports' />
+      <PageTitle title='Dashboard' />
+
+        <Grid container spacing={4}>
+          <Button variant="outlined" color="primary" href="#/app/create-dso">
+            New DSO
+          </Button>
+        </Grid>
       {/* <Grid container spacing={4}>
         <Grid item lg={3} md={4} sm={6} xs={12}>
           <Widget
