@@ -16,9 +16,9 @@ import Sidebar from '../Sidebar'
 
 // pages
 import Dashboard from '../../pages/dashboard'
-import Primary from '../../pages/primary'
-import CreateDso from '../../pages/create-dso'
-
+import DSOBoard from '../../pages/dso-board'
+import TokenDeploy from '../../pages/token-deploy'
+import TokenList from '../../pages/token-list'
 import Offering from '../../pages/offering'
 import Secondary from '../../pages/secondary'
 import Exchange from '../../pages/exchange'
@@ -43,8 +43,10 @@ function Layout (props) {
           <div className={classes.fakeToolbar} />
           <Switch>
             <Route path='/app/dashboard' component={Dashboard} />
-            <Route path='/app/primary' component={Primary} />
-            <Route path='/app/create-dso' component={CreateDso} />
+            <Route path='/app/invest' component={DSOBoard} />
+            <Route path='/app/token-deploy' component={TokenDeploy} />
+            <Route path='/app/token-list' component={TokenList} />
+
             <Route path='/app/offering' component={Offering} />
             <Route path='/app/secondary' component={Secondary} />
             <Route path='/app/exchange' component={Exchange} />

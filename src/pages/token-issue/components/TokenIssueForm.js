@@ -1,7 +1,6 @@
 import React from 'react'
 import { TextField, Grid, Button }from '@material-ui/core'
-import axios from 'axios'
-import clsx from 'clsx';
+import clsx from 'clsx'
 import { makeStyles } from '@material-ui/core/styles';
 import CircularProgress from '@material-ui/core/CircularProgress';
 import { green } from '@material-ui/core/colors';
@@ -9,7 +8,7 @@ import Fab from '@material-ui/core/Fab';
 import CheckIcon from '@material-ui/icons/Check';
 import RouterIcon from '@material-ui/icons/Router';
 
-export default function NewDsoForm() {
+export default function TokenIssueForm () {
   
   const useStyles = makeStyles(theme => ({
     root: {
@@ -80,10 +79,6 @@ export default function NewDsoForm() {
       symbol: values.symbol, 
       decimals: values.decimals 
     }
-
-    // const result = await axios.post('http://localhost:3456/contracts/deploy', payload)
-    // console.log(result)
-
   }
 
   const handleSubmit = prop => event => {

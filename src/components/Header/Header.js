@@ -285,7 +285,7 @@ export default function Header (props) {
           classes={{ paper: classes.profileMenu }}
           disableAutoFocusItem
         >
-          <div className={classes.profileMenuUser}>
+          {/* <div className={classes.profileMenuUser}>
             <Typography variant='h4' weight='medium'>
               John Smith
             </Typography>
@@ -321,7 +321,7 @@ export default function Header (props) {
             )}
           >
             <AccountIcon className={classes.profileMenuIcon} /> Custody
-          </MenuItem>
+          </MenuItem> */}
           <div className={classes.profileMenuUser}>
             <Typography
               className={classes.profileMenuLink}
