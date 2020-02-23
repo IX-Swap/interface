@@ -1,0 +1,6 @@
+{
+  "name": "dso-board",
+  "version": "0.0.0",
+  "main": "DsoBoard.js",
+  "private": true
+}

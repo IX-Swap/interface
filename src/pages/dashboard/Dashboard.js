@@ -27,7 +27,7 @@ import useStyles from './styles'
 
 // components
 // import mock from './mock'
-// import Widget from '../../components/Widget'
+import Widget from '../../components/Widget'
 import PageTitle from '../../components/PageTitle'
 // import { Typography } from '../../components/Wrappers'
 // import Dot from '../../components/Sidebar/components/Dot'
@@ -53,10 +53,24 @@ export default function Dashboard (props) {
     <>
       <PageTitle title='Dashboard' />
 
-        <Grid container spacing={4}>
-          <Button variant="outlined" color="primary" href="#/app/create-dso">
-            New DSO
-          </Button>
+        <Grid container spacing={5}>
+          <Grid item lg={6} md={6} sm={6} xs={12}>
+
+            <Widget
+              title='Debug Menu'
+              upperTitle
+              bodyClass={classes.fullHeightBody}
+              className={classes.card}
+              disableWidgetMenu
+            >
+              <Button variant="outlined" color="primary" href="#/app/token-deploy">
+                Deploy Token
+              </Button>
+              <Button variant="outlined" color="primary" href="#/app/token-list">
+                 Token List
+              </Button>
+            </Widget>
+          </Grid>
         </Grid>
       {/* <Grid container spacing={4}>
         <Grid item lg={3} md={4} sm={6} xs={12}>

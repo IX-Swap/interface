@@ -20,7 +20,13 @@ import logo from '../../images/ix-logo-v5.png'
 import google from '../../images/google.svg'
 
 // context
-import { useUserDispatch, useUserState, setActiveTabId, loginUser, signupUser } from '../../context/UserContext'
+import {
+  useUserDispatch,
+  useUserState,
+  setActiveTabId,
+  loginUser,
+  signupUser 
+} from '../../context/UserContext'
 
 function Login (props) {
   const classes = useStyles()
@@ -59,6 +65,7 @@ function Login (props) {
               {/* <Typography variant="h1" className={classes.greeting}>
                 Good Morning, User
               </Typography> */}
+
               <Button size='large' className={classes.googleButton}>
                 <img src={google} alt='google' className={classes.googleIcon} />
                 &nbsp;Sign in with Google
@@ -68,9 +75,9 @@ function Login (props) {
                 <Typography className={classes.formDividerWord}>or</Typography>
                 <div className={classes.formDivider} />
               </div>
-              <Fade in={error}>
+              <Fade in={userState.error !== ''}>
                 <Typography color='secondary' className={classes.errorMessage}>
-                  Something is wrong with your login or password :(
+                  {userState.error}
                 </Typography>
               </Fade>
               <TextField

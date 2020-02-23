@@ -1,0 +1,6 @@
+{
+  "name": "token-deploy",
+  "version": "0.0.1",
+  "main": "TokenDeploy.js",
+  "private": true
+}

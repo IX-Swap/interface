@@ -19,7 +19,7 @@ import * as Icons from '@material-ui/icons'
 import useStyles from './styles'
 
 // components
-import mock from '../primary/mock-primary-data'
+import mock from '../dso-board/mock-primary-data'
 import Widget from '../../components/Widget'
 import PageTitle from '../../components/PageTitle'
 import { Typography } from '../../components/Wrappers'

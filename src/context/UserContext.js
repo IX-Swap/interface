@@ -21,7 +21,7 @@ export function userReducer (state, action) {
     case 'SIGNUP_FAILURE':
       return { ...state, isAuthenticated: false, isLoading: false, error: action.payload }
     case 'SET_ACTIVE_TAB_ID': 
-      return { ...state, activeTabId: action.payload }
+      return { ...state, activeTabId: action.payload , error: null }
     default: {
       throw new Error(`Unhandled action type: ${action.type}`)
     }
