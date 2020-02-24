@@ -51,9 +51,9 @@ export default function Dashboard (props) {
 
   return (
     <>
-      <PageTitle title='Dashboard' />
+      <PageTitle title='Developer Panel' />
 
-        <Grid container spacing={5}>
+        <Grid container>
           <Grid item lg={6} md={6} sm={6} xs={12}>
 
             <Widget
@@ -64,10 +64,13 @@ export default function Dashboard (props) {
               disableWidgetMenu
             >
               <Button variant="outlined" color="primary" href="#/app/token-deploy">
-                Deploy Token
+                Token Deploy
               </Button>
               <Button variant="outlined" color="primary" href="#/app/token-list">
-                 Token List
+                Token List
+              </Button>
+              <Button variant="outlined" color="primary" href="#/app/token-issue">
+                Token Issue
               </Button>
             </Widget>
           </Grid>

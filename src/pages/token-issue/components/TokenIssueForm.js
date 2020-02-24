@@ -1,15 +1,23 @@
 import React from 'react'
 import { TextField, Grid, Button }from '@material-ui/core'
 import clsx from 'clsx'
-import { makeStyles } from '@material-ui/core/styles';
-import CircularProgress from '@material-ui/core/CircularProgress';
-import { green } from '@material-ui/core/colors';
-import Fab from '@material-ui/core/Fab';
-import CheckIcon from '@material-ui/icons/Check';
-import RouterIcon from '@material-ui/icons/Router';
+import { makeStyles } from '@material-ui/core/styles'
+import CircularProgress from '@material-ui/core/CircularProgress'
+import { green } from '@material-ui/core/colors'
+import Fab from '@material-ui/core/Fab'
+import CheckIcon from '@material-ui/icons/Check'
+import RouterIcon from '@material-ui/icons/Router'
 
-export default function TokenIssueForm () {
-  
+import {
+  issueTokens,
+  useTokenIssueState,
+  useTokenIssueDispatch
+} from '../../../context/TokenIssueContext'
+
+export default function TokenIssueForm (props) {
+  const tokenIssueState = useTokenIssueState()
+  const tokenIssueDispatch = useTokenIssueDispatch()
+
   const useStyles = makeStyles(theme => ({
     root: {
       display: 'flex',
@@ -40,32 +48,29 @@ export default function TokenIssueForm () {
       marginTop: -12,
       marginLeft: -12,
     },
-  }));
-  // local
-  const [values, setValues] = React.useState({
-    name: '',
-    symbol: '',
-    decimals: ''
-  })
+  }))
 
-  const classes = useStyles();
-  const [loading, setLoading] = React.useState(false);
-  const [success, setSuccess] = React.useState(false);
+  const [values, setValues] = React.useState({
+    tokenHolder: '',
+    symbol: '',
+    amount: 0
+  })
+  const classes = useStyles()
 
   const buttonClassname = clsx({
-    [classes.buttonSuccess]: success,
+    [classes.buttonSuccess]: tokenIssueState.success,
   });
 
   const handleButtonClick = () => {
-    if (!loading) {
-      setSuccess(false);
-      setLoading(true);
-
-      createDsoRequest()
-        .then(() => {
-          setSuccess(true)
-          setLoading(false)
-        })
+    if (!tokenIssueState.isLoading) {
+      issueTokens(
+        tokenIssueDispatch,
+        values.tokenHolder,
+        values.symbol,
+        values.amount
+      ).then(() => {
+        setValues( { tokenHolder: '', symbol: '', amount: ''})
+      })
     }
   };
   
@@ -73,50 +78,46 @@ export default function TokenIssueForm () {
     setValues({ ...values, [prop]: event.target.value })
   }
 
-  const createDsoRequest = async () => {
-    const payload = { 
-      name: values.name, 
-      symbol: values.symbol, 
-      decimals: values.decimals 
-    }
-  }
-
-  const handleSubmit = prop => event => {
-    console.log(prop, event)
-  }
-
   return (
-    <form onSubmit={handleSubmit}>
+    <form>
       <Grid container spacing={7}>
         <Grid item xs={12}>
-          <TextField
-            id="dso-name"
-            label="DSO Name"
-            required
-            helperText="Enter the title of your Digital Security offering, eg: InvestaX Preferred Equity"
-            onChange={handleChange('name')}
-            value={values.amount}
-            variant="outlined"
-          />
+          <Grid container spacing={6}>
+            <Grid item>
+              <TextField
+                id="token-symbol"
+                label="Symbol"
+                required
+                helperText="The symbol of the token contract."
+                onChange={handleChange('symbol')}
+                value={values.symbol}
+                variant="outlined"
+              />
+            </Grid>
+            <Grid item>
+              <TextField
+                id="token-amount"
+                label="Amount"
+                required
+                helperText="The amount of tokens to be issued."
+                onChange={handleChange('amount')}
+                value={values.amount}
+                variant="outlined"
+              />
+            </Grid>
+          </Grid>
         </Grid>
         <Grid item xs={12}>
           <TextField
-            id="dso-symbol"
-            label="DSO Ticker Symbol"
+            id="token-holder"
+            label="Recipient's Address"
             required
-            helperText="Enter the unique symbol to identity your Digital Security offering, eg: SGIX01"
-            onChange={handleChange('symbol')}
-            values={values.symbol}
-            variant="outlined"
-          />
-        </Grid>
-        <Grid item xs={12}>
-          <TextField
-            id="dso-decimals"
-            label="DSO Share unit Decimal Places"
-            helperText="Optionally specify the decimal places of each token or share, eg 2 (1.00) Default: 0"
-            onChange={handleChange('decimals')}
-            value={values.decimals}
+            helperText="
+              The account address to which the tokens will 
+              be issued. The default account address is: 
+              0x05d3e6b6b6ce037c96cafb9a8259451bf23f3e02"
+            onChange={handleChange('tokenHolder')}
+            value={values.tokenHolder}
             variant="outlined"
           />
         </Grid>
@@ -127,24 +128,23 @@ export default function TokenIssueForm () {
                 aria-label="save"
                 color="primary"
                 className={buttonClassname}
-                onClick={handleButtonClick}
               >
-                {success ? <CheckIcon /> : <RouterIcon />}
+                {tokenIssueState.success ? <CheckIcon /> : <RouterIcon />}
               </Fab>
-              {loading && <CircularProgress size={68} className={classes.fabProgress} />}
+              {tokenIssueState.isLoading && <CircularProgress size={68} className={classes.fabProgress} />}
             </div>
             <div className={classes.wrapper}>
               <Button
                 variant="contained"
                 color="primary"
                 className={buttonClassname}
-                disabled={loading}
-                onClick={() => handleButtonClick()}
+                disabled={tokenIssueState.isLoading}
+                onClick={handleButtonClick}
               >
-                Deploy DSO Contract
+                Issue Tokens
               </Button>
-              {loading && <CircularProgress size={24} className={classes.buttonProgress} />}
             </div>
+            { tokenIssueState.error || tokenIssueState.message }
           </div>
         </Grid>
       </Grid>

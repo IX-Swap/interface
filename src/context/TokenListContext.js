@@ -90,8 +90,8 @@ export function useTokenListDispatch () {
 export async function tokenList (dispatch) {
   dispatch({ type: tokenListActions.TOKEN_LIST_REQUEST })
   try {
-    const url = `${apiUrl}/blockchain/contracts/tokens`
-    const result = await getRequest(url)
+    const uri = '/blockchain/contracts/tokens'
+    const result = await getRequest(uri)
     const response = await result.json()
     if (result.status === 200) {
       dispatch({

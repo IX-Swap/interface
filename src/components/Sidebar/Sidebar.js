@@ -35,14 +35,14 @@ import {
 } from '../../context/LayoutContext'
 
 const structure = [
-  { id: 0, label: 'Dashboard', link: '/app/dashboard', icon: <BusinessIcon /> },
-  {
-    id: 1,
-    label: 'Primary',
-    link: '/app/primary',
-    icon: <NoteIcon />
-  },
-  { id: 2, label: 'Secondary', link: '/app/secondary', icon: <ChartIcon /> },
+  { id: 0, label: 'Developer', link: '/app/dashboard', icon: <BusinessIcon /> },
+  // {
+  //   id: 1,
+  //   label: 'Primary',
+  //   link: '/app/primary',
+  //   icon: <NoteIcon />
+  // },
+  // { id: 2, label: 'Secondary', link: '/app/secondary', icon: <ChartIcon /> },
   // {
   //   id: 3,
   //   label: 'Custody',

@@ -2,6 +2,7 @@ import React from 'react'
 import logger from 'use-reducer-logger'
 import { apiUrl } from './config'
 import { postRequest } from './httpRequests'
+import { CallToActionSharp } from '@material-ui/icons'
 
 const TokenIssueStateContext = React.createContext()
 const TokenIssueDispatchContext = React.createContext()
@@ -30,9 +31,9 @@ export function tokenIssueReducer (state, action) {
         success: true,
         error: null,
         message: action.payload.message,
-        data: action.pyaload.data
+        data: action.payload.data
       }
-    case tokenIssueActions.ISSUE_TOKEN_FAILURE:
+    case tokenIssueActions.TOKEN_ISSUE_FAILURE:
       return {
         ...state,
         isLoading: false,
@@ -41,6 +42,8 @@ export function tokenIssueReducer (state, action) {
         messsage: null,
         data: []
       }
+      default:
+        throw new Error(`Unhandled action type: ${action.type}`)
   }
 }
 
@@ -84,11 +87,11 @@ export function useTokenIssueDispatch () {
   return context
 }
 
-async function issueTokens (dispatch, symbol, tokenHolder, value) {
-  dispatch({ type: tokenIssueActions.ISSUE_TOKEN_REQUEST })
+async function issueTokens (dispatch,tokenHolder, symbol, value) {
+  dispatch({ type: tokenIssueActions.TOKEN_ISSUE_REQUEST })
   try {
-    const url = `${apiUrl}/blockchain/contracts/tokens/${symbol}/issue`
-    const result = await postRequest(url, { tokenHolder, value })
+    const uri = `/blockchain/contracts/token/${symbol}/issue`
+    const result = await postRequest(uri, { tokenHolder, value })
     const response = await result.json()
     if (result.status === 200) {
       dispatch({
@@ -98,7 +101,8 @@ async function issueTokens (dispatch, symbol, tokenHolder, value) {
     } else {
       dispatch({
         type: tokenIssueActions.TOKEN_ISSUE_FAILURE,
-        payload: response
+        payload: response.message ||
+        { message: 'Failed to issue tokens.' }
       })
     }
   } catch(err) {

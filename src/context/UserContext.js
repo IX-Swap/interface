@@ -1,5 +1,6 @@
 import React from 'react'
 import logger from 'use-reducer-logger'
+import { postRequest } from './httpRequests'
 
 const UserStateContext = React.createContext()
 const UserDispatchContext = React.createContext()
@@ -7,21 +8,59 @@ const UserDispatchContext = React.createContext()
 export function userReducer (state, action) {
   switch (action.type) {
     case 'LOGIN_REQUEST':
-      return { ...state, isAuthenticated: false, isLoading: true, error: null }
+      return {
+        ...state,
+        isAuthenticated: false,
+        isLoading: true,
+        error: null 
+      }
     case 'LOGIN_SUCCESS':
-      return { ...state, isAuthenticated: true, isLoading: false, error: null }
+      return {
+        ...state,
+        isAuthenticated: true,
+        isLoading: false,
+        error: null
+      }
     case 'LOGIN_FAILURE':
-      return {...state, isAuthenticated: false, isLoading: false, error: action.payload }
+      return {
+        ...state,
+        isAuthenticated: false,
+        isLoading: false,
+        error: action.payload
+      }
     case 'SIGN_OUT_SUCCESS':
-      return { ...state, isAuthenticated: false }
+      return {
+        ...state,
+        isAuthenticated: false
+      }
     case 'SIGNUP_REQUEST':
-      return { ...state, isAuthenticated: false, isLoading: true, error: null }
+      return {
+        ...state,
+        isAuthenticated: false,
+        isLoading: true,
+        error: null
+      }
     case 'SIGNUP_SUCCESS':
-      return { ...state, isAuthenticated: false, isLoading: false, error: null, activeTabId: 0 }
+      return {
+        ...state,
+        isAuthenticated: false,
+        isLoading: false,
+        error: null,
+        activeTabId: 0
+      }
     case 'SIGNUP_FAILURE':
-      return { ...state, isAuthenticated: false, isLoading: false, error: action.payload }
+      return {
+        ...state,
+        isAuthenticated: false,
+        isLoading: false,
+        error: action.payload
+      }
     case 'SET_ACTIVE_TAB_ID': 
-      return { ...state, activeTabId: action.payload , error: null }
+      return {
+        ...state,
+        activeTabId: action.payload,
+        error: null
+      }
     default: {
       throw new Error(`Unhandled action type: ${action.type}`)
     }
@@ -64,28 +103,12 @@ export function useUserDispatch () {
   return context
 }
 
-// ###########################################################
-
 export async function loginUser (dispatch, username, password) {
   dispatch({ type: 'LOGIN_REQUEST' })
-
   try {
-    const result = await fetch('http://localhost:3456/identity/auth/login',
-      {
-        method: 'POST', // *GET, POST, PUT, DELETE, etc.
-        mode: 'cors', // no-cors, *cors, same-origin
-        cache: 'no-cache', // *default, no-cache, reload, force-cache, only-if-cached
-        credentials: 'same-origin', // include, *same-origin, omit
-        headers: {
-          'Content-Type': 'application/json'
-        },
-        redirect: 'follow', // manual, *follow, error
-        referrerPolicy: 'no-referrer', // no-referrer, *client
-        body: JSON.stringify({ username, password })
-      })
-    
+    const uri = '/identity/auth/login'
+    const result = await postRequest(uri, { username, password })
     const response = await result.json()
-
     if (result.status === 200) {
       const token = response.data.accessToken
       localStorage.setItem('id_token', token)
@@ -101,20 +124,8 @@ export async function loginUser (dispatch, username, password) {
 export async function signupUser (dispatch, name, email, password) {
   dispatch({ type: 'SIGNUP_REQUEST'})
   try {
-    const result = await fetch('http://localhost:3456/identity/auth/sign-up',
-      {
-        method: 'POST', // *GET, POST, PUT, DELETE, etc.
-        mode: 'cors', // no-cors, *cors, same-origin
-        cache: 'no-cache', // *default, no-cache, reload, force-cache, only-if-cached
-        credentials: 'same-origin', // include, *same-origin, omit
-        headers: {
-          'Content-Type': 'application/json'
-        },
-        redirect: 'follow', // manual, *follow, error
-        referrerPolicy: 'no-referrer', // no-referrer, *client
-        body: JSON.stringify({ name, email, password })
-      })
-    
+    const uri = '/identity/auth/sign-up'
+    const result = await postRequest(uri, { name, email, password })
     const response = await result.json()
 
     if (result.status === 200) {

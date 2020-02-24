@@ -1,6 +1,5 @@
 import React from 'react'
 import logger from 'use-reducer-logger'
-import { apiUrl } from './config'
 import { postRequest } from './httpRequests'
 
 const TokenDeployStateContext = React.createContext()
@@ -92,8 +91,8 @@ async function deployToken (dispatch, name, symbol, decimals) {
   dispatch({ type: tokenDeployActions.TOKEN_DEPLOY_REQUEST })
 
   try {
-    const url = `${apiUrl}/blockchain/contracts/deploy`
-    const result = postRequest(url, { name, symbol, decimals })
+    const uri = '/blockchain/contracts/deploy'
+    const result = postRequest(uri, { name, symbol, decimals })
     const response = await result.json()
 
     if (result.status === 200) {
