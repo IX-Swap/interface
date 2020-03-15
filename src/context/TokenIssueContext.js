@@ -1,8 +1,6 @@
 import React from 'react'
 import logger from 'use-reducer-logger'
-import { apiUrl } from './config'
 import { postRequest } from './httpRequests'
-import { CallToActionSharp } from '@material-ui/icons'
 
 const TokenIssueStateContext = React.createContext()
 const TokenIssueDispatchContext = React.createContext()
@@ -14,7 +12,7 @@ export const tokenIssueActions = {
 }
 
 export function tokenIssueReducer (state, action) {
-  switch(action.type) {
+  switch (action.type) {
     case tokenIssueActions.TOKEN_ISSUE_REQUEST:
       return {
         ...state,
@@ -22,11 +20,11 @@ export function tokenIssueReducer (state, action) {
         success: false,
         error: null,
         message: 'Loading',
-        data: null 
+        data: null
       }
     case tokenIssueActions.TOKEN_ISSUE_SUCCESS:
       return {
-        ...state, 
+        ...state,
         isLoading: false,
         success: true,
         error: null,
@@ -42,18 +40,19 @@ export function tokenIssueReducer (state, action) {
         messsage: null,
         data: []
       }
-      default:
-        throw new Error(`Unhandled action type: ${action.type}`)
+    default:
+      throw new Error(`Unhandled action type: ${action.type}`)
   }
 }
 
 export function TokenIssueProvider ({ children }) {
-  const thisReducer = process.env.NODE_ENV === 'development'
-    ? logger(tokenIssueReducer)
-    : tokenIssueReducer
+  const thisReducer =
+    process.env.NODE_ENV === 'development'
+      ? logger(tokenIssueReducer)
+      : tokenIssueReducer
   const [state, dispatch] = React.useReducer(thisReducer, {
     isLoading: false,
-    success:false,
+    success: false,
     error: null,
     message: null,
     data: null
@@ -70,9 +69,7 @@ export function TokenIssueProvider ({ children }) {
 export function useTokenIssueState () {
   const context = React.useContext(TokenIssueStateContext)
   if (context === undefined) {
-    throw new Error(
-      'tokenIssueState must be used within a TokeIssueProvider'
-    )
+    throw new Error('tokenIssueState must be used within a TokeIssueProvider')
   }
   return context
 }
@@ -87,11 +84,11 @@ export function useTokenIssueDispatch () {
   return context
 }
 
-async function issueTokens (dispatch,tokenHolder, symbol, value) {
+async function issueTokens (dispatch, tokenHolder, symbol, amount) {
   dispatch({ type: tokenIssueActions.TOKEN_ISSUE_REQUEST })
   try {
     const uri = `/blockchain/contracts/token/${symbol}/issue`
-    const result = await postRequest(uri, { tokenHolder, value })
+    const result = await postRequest(uri, { tokenHolder, amount })
     const response = await result.json()
     if (result.status === 200) {
       dispatch({
@@ -101,11 +98,10 @@ async function issueTokens (dispatch,tokenHolder, symbol, value) {
     } else {
       dispatch({
         type: tokenIssueActions.TOKEN_ISSUE_FAILURE,
-        payload: response.message ||
-        { message: 'Failed to issue tokens.' }
+        payload: response.message || { message: 'Failed to issue tokens.' }
       })
     }
-  } catch(err) {
+  } catch (err) {
     dispatch({
       type: tokenIssueActions.TOKEN_ISSUE_FAILURE,
       payload: { message: 'We failed to issue the tokens.' }
@@ -114,7 +110,3 @@ async function issueTokens (dispatch,tokenHolder, symbol, value) {
 }
 
 export { issueTokens }
-
-
-
-

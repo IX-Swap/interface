@@ -2,8 +2,8 @@ import React, { useState, useEffect } from 'react'
 import { Drawer, IconButton, List } from '@material-ui/core'
 import {
   // PermIdentity as IdentityIcon,
-  NoteAdd as NoteIcon,
-  InsertChart as ChartIcon,
+  // NoteAdd as NoteIcon,
+  // InsertChart as ChartIcon,
   // Lock as LockIcon,
   Business as BusinessIcon,
   // Home as HomeIcon,
@@ -35,7 +35,12 @@ import {
 } from '../../context/LayoutContext'
 
 const structure = [
-  { id: 0, label: 'Developer', link: '/app/dashboard', icon: <BusinessIcon /> },
+  {
+    id: 0,
+    label: 'Developer',
+    link: '/app/developer-panel',
+    icon: <BusinessIcon />
+  },
   // {
   //   id: 1,
   //   label: 'Primary',

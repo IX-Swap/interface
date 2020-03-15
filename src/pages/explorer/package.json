@@ -1,0 +1,6 @@
+{
+  "name": "explorer",
+  "version": "0.0.0",
+  "main": "Explorer.js",
+  "private": true
+}

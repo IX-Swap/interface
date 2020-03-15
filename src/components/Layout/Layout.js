@@ -1,9 +1,5 @@
 import React from 'react'
-import {
-  Route,
-  Switch,
-  withRouter
-} from 'react-router-dom'
+import { Route, Switch, withRouter } from 'react-router-dom'
 
 import classnames from 'classnames'
 import useStyles from './styles'
@@ -12,13 +8,11 @@ import Header from '../Header'
 import Sidebar from '../Sidebar'
 
 import Dashboard from '../../pages/dashboard'
-import DSOBoard from '../../pages/dso-board'
-import TokenDeploy from '../../pages/token-deploy'
-import TokenList from '../../pages/token-list'
-import TokenIssue from '../../pages/token-issue'
-import Offering from '../../pages/offering'
-import Secondary from '../../pages/secondary'
+import DeveloperPanel from '../../pages/developer-panel'
+import Tokens from '../../pages/tokens'
 import Exchange from '../../pages/exchange'
+import Explorer from '../../pages/explorer'
+import Accounts from '../../pages/accounts'
 
 import { useLayoutState } from '../../context/LayoutContext'
 
@@ -38,13 +32,11 @@ function Layout (props) {
         <div className={classes.fakeToolbar} />
         <Switch>
           <Route path='/app/dashboard' component={Dashboard} />
-          <Route path='/app/invest' component={DSOBoard} />
-          <Route path='/app/token-deploy' component={TokenDeploy} />
-          <Route path='/app/token-list' component={TokenList} />
-          <Route path='/app/token-issue' component={TokenIssue} />
-          <Route path='/app/offering' component={Offering} />
-          <Route path='/app/secondary' component={Secondary} />
+          <Route path='/app/developer-panel' component={DeveloperPanel} />
           <Route path='/app/exchange' component={Exchange} />
+          <Route path='/app/explorer' component={Explorer} />
+          <Route path='/app/accounts' component={Accounts} />
+          <Route path='/app/tokens' component={Tokens} />
           {/* <Route
             exact
             path='/app/ui'

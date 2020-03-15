@@ -25,7 +25,7 @@ import {
   useUserState,
   setActiveTabId,
   loginUser,
-  signupUser 
+  signupUser
 } from '../../context/UserContext'
 
 function Login (props) {
@@ -37,7 +37,6 @@ function Login (props) {
 
   // local
   const [isLoading, setIsLoading] = useState(false)
-  const [error, setError] = useState(null)
   const [nameValue, setNameValue] = useState('')
   const [usernameValue, setUsernameValue] = useState('')
   const [passwordValue, setPasswordValue] = useState('')
@@ -46,7 +45,9 @@ function Login (props) {
     <Grid container className={classes.container}>
       <div className={classes.logotypeContainer}>
         <img src={logo} alt='logo' className={classes.logotypeImage} />
-        <Typography className={classes.logotypeText}>Digital Securities</Typography>
+        <Typography className={classes.logotypeText}>
+          Digital Securities
+        </Typography>
       </div>
       <div className={classes.formContainer}>
         <div className={classes.form}>
@@ -118,14 +119,15 @@ function Login (props) {
                     disabled={
                       usernameValue.length === 0 || passwordValue.length === 0
                     }
-                    onClick={() => loginUser(
+                    onClick={() =>
+                      loginUser(
                         userDispatch,
                         usernameValue,
                         passwordValue,
                         props.history,
-                        setIsLoading,
-                        setError
-                    )}
+                        setIsLoading
+                      )
+                    }
                     variant='contained'
                     color='primary'
                     size='large'
@@ -145,7 +147,7 @@ function Login (props) {
           )}
           {userState.activeTabId === 1 && (
             <>
-              <Typography variant="h4" className={classes.greeting}>
+              <Typography variant='h4' className={classes.greeting}>
                 Create a new account
               </Typography>
               <Fade in={userState.error !== ''}>
@@ -209,7 +211,8 @@ function Login (props) {
                         nameValue,
                         usernameValue,
                         passwordValue
-                    )}
+                      )
+                    }
                     disabled={
                       usernameValue.length === 0 ||
                       passwordValue.length === 0 ||
