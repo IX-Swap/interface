@@ -1,0 +1,6 @@
+{
+  "name": "block-info",
+  "version": "0.0.0",
+  "main": "BlockInfo.js",
+  "private": true
+}

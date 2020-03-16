@@ -1,0 +1,6 @@
+{
+  "name": "token-transfer",
+  "version": "0.0.0",
+  "main": "TokenTransfer.js",
+  "private": true
+}

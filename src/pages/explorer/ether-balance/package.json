@@ -1,0 +1,6 @@
+{
+  "name": "ether-balance",
+  "version": "0.0.0",
+  "main": "EtherBalance.js",
+  "private": true
+}

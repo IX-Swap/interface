@@ -1,63 +1,49 @@
 import React from 'react'
-import {
-  Route,
-  Switch,
-  // Redirect,
-  withRouter
-} from 'react-router-dom'
-import classnames from 'classnames'
+import { Route, Switch, withRouter } from 'react-router-dom'
 
-// styles
+import classnames from 'classnames'
 import useStyles from './styles'
 
-// components
 import Header from '../Header'
 import Sidebar from '../Sidebar'
 
-// pages
 import Dashboard from '../../pages/dashboard'
-import DSOBoard from '../../pages/dso-board'
-import TokenDeploy from '../../pages/token-deploy'
-import TokenList from '../../pages/token-list'
-import Offering from '../../pages/offering'
-import Secondary from '../../pages/secondary'
+import DeveloperPanel from '../../pages/developer-panel'
+import Tokens from '../../pages/tokens'
 import Exchange from '../../pages/exchange'
-// context
+import Explorer from '../../pages/explorer'
+import Accounts from '../../pages/accounts'
+
 import { useLayoutState } from '../../context/LayoutContext'
 
 function Layout (props) {
-  var classes = useStyles()
+  const classes = useStyles()
 
-  // global
-  var layoutState = useLayoutState()
+  const layoutState = useLayoutState()
   return (
     <div className={classes.root}>
-      <>
-        <Header history={props.history} />
-        <Sidebar />
-        <div
-          className={classnames(classes.content, {
-            [classes.contentShift]: layoutState.isSidebarOpened
-          })}
-        >
-          <div className={classes.fakeToolbar} />
-          <Switch>
-            <Route path='/app/dashboard' component={Dashboard} />
-            <Route path='/app/invest' component={DSOBoard} />
-            <Route path='/app/token-deploy' component={TokenDeploy} />
-            <Route path='/app/token-list' component={TokenList} />
-
-            <Route path='/app/offering' component={Offering} />
-            <Route path='/app/secondary' component={Secondary} />
-            <Route path='/app/exchange' component={Exchange} />
-            {/* <Route
-              exact
-              path='/app/ui'
-              render={() => <Redirect to='/app/ui/icons' />}
-            /> */}
-          </Switch>
-        </div>
-      </>
+      <Header history={props.history} />
+      <Sidebar />
+      <div
+        className={classnames(classes.content, {
+          [classes.contentShift]: layoutState.isSidebarOpened
+        })}
+      >
+        <div className={classes.fakeToolbar} />
+        <Switch>
+          <Route path='/app/dashboard' component={Dashboard} />
+          <Route path='/app/developer-panel' component={DeveloperPanel} />
+          <Route path='/app/exchange' component={Exchange} />
+          <Route path='/app/explorer' component={Explorer} />
+          <Route path='/app/accounts' component={Accounts} />
+          <Route path='/app/tokens' component={Tokens} />
+          {/* <Route
+            exact
+            path='/app/ui'
+            render={() => <Redirect to='/app/ui/icons' />}
+          /> */}
+        </Switch>
+      </div>
     </div>
   )
 }

@@ -1,0 +1,6 @@
+{
+  "name": "developer-panel",
+  "version": "1.0.0",
+  "private": true,
+  "main": "DeveloperPanel.js"
+}

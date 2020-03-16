@@ -1,7 +1,6 @@
 import React from 'react'
 import logger from 'use-reducer-logger'
 import { getRequest } from './httpRequests'
-import { apiUrl } from './config'
 
 export const TokenListStateContext = React.createContext()
 export const TokenListDispatchContext = React.createContext()
@@ -13,7 +12,7 @@ const tokenListActions = {
 }
 
 export function tokenListReducer (state, action) {
-  switch(action.type) {
+  switch (action.type) {
     case tokenListActions.TOKEN_LIST_REQUEST:
       return {
         ...state,
@@ -47,9 +46,10 @@ export function tokenListReducer (state, action) {
 }
 
 export function TokenListProvider ({ children }) {
-  const thisReducer = process.env.NODE_ENV === 'development'
-    ? logger(tokenListReducer)
-    : tokenListReducer
+  const thisReducer =
+    process.env.NODE_ENV === 'development'
+      ? logger(tokenListReducer)
+      : tokenListReducer
   const [state, dispatch] = React.useReducer(thisReducer, {
     isLoading: false,
     error: null,
@@ -68,11 +68,7 @@ export function TokenListProvider ({ children }) {
 export function useTokenListState () {
   const context = React.useContext(TokenListStateContext)
   if (context === undefined)
-    throw new Error(
-      'useTokenListState ' +
-      'must be called in a ' +
-      'TokenListProvider'
-    )
+    throw new Error('useTokenListState must be called in a TokenListProvider')
   return context
 }
 
@@ -80,9 +76,7 @@ export function useTokenListDispatch () {
   const context = React.useContext(TokenListDispatchContext)
   if (context === undefined)
     throw new Error(
-      'useTokenListDispatch ' +
-      'must be called within a ' +
-      'TokenListProvider'
+      'useTokenListDispatch must be called within a TokenListProvider'
     )
   return context
 }
@@ -90,8 +84,8 @@ export function useTokenListDispatch () {
 export async function tokenList (dispatch) {
   dispatch({ type: tokenListActions.TOKEN_LIST_REQUEST })
   try {
-    const url = `${apiUrl}/blockchain/contracts/tokens`
-    const result = await getRequest(url)
+    const uri = '/blockchain/contracts/tokens'
+    const result = await getRequest(uri)
     const response = await result.json()
     if (result.status === 200) {
       dispatch({
