@@ -4,6 +4,8 @@ import { Grid } from '@material-ui/core'
 import PageTitle from '../../components/PageTitle'
 
 import Widget from '../../components/Widget/Widget'
+import WalletCreateComponent from './wallets/WalletCreateComponent'
+import { WalletCreateProvider } from './wallets/WalletCreateContext'
 
 function Explorer (props) {
   return (
@@ -20,13 +22,25 @@ function Explorer (props) {
                 </li>
               </ul>
             </Grid>
+            <Grid item sm={12} md={3}>
+              Wallets
+              <ul>
+                <li>
+                  <a href='/#/app/accounts/wallet-create'>Create Seed Phrase</a>
+                </li>
+              </ul>
+            </Grid>
           </Grid>
         </Widget>
       </Grid>
       <Switch>
         <Route
-          path='/app/accounts/transfer-token'
-          component={() => 'accounts '}
+          path='/app/accounts/wallet-create'
+          component={() => (
+            <WalletCreateProvider>
+              <WalletCreateComponent />
+            </WalletCreateProvider>
+          )}
         />
       </Switch>
     </Grid>
