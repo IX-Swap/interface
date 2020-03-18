@@ -13,6 +13,7 @@ import Tokens from '../../pages/tokens'
 import Exchange from '../../pages/exchange'
 import Explorer from '../../pages/explorer'
 import Accounts from '../../pages/accounts'
+import Identity from '../../pages/identity'
 
 import { useLayoutState } from '../../context/LayoutContext'
 
@@ -37,6 +38,7 @@ function Layout (props) {
           <Route path='/app/explorer' component={Explorer} />
           <Route path='/app/accounts' component={Accounts} />
           <Route path='/app/tokens' component={Tokens} />
+          <Route path='/app/identity' component={Identity} />
           {/* <Route
             exact
             path='/app/ui'
