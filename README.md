@@ -1,6 +1,8 @@
 # InvestaX Platform WebApp
-Built with [React](https://facebook.github.io/react/), [Material-UI](https://material-ui.com), [React Router](https://reacttraining.com/react-router/).
 
+[![JS Standard Style][js-standard-style-badge]][js-standard-style-link]
+
+Built with [React](https://facebook.github.io/react/), [Material-UI](https://material-ui.com), [React Router](https://reacttraining.com/react-router/).
 
 ## Features
 
@@ -26,12 +28,9 @@ We have implemented some basic pages, so you can see our template in action.
 - Custody
 - Identity
 
-
 ## Quick Start
 
 #### 1. Get the latest version
-
-
 
 ```shell
 $ git clone git@github.com:investax/ixwebapp

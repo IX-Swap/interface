@@ -14,6 +14,7 @@ import Exchange from '../../pages/exchange'
 import Explorer from '../../pages/explorer'
 import Accounts from '../../pages/accounts'
 import Identity from '../../pages/identity'
+import Invest from '../../pages/invest'
 
 import { useLayoutState } from '../../context/LayoutContext'
 
@@ -39,11 +40,7 @@ function Layout (props) {
           <Route path='/app/accounts' component={Accounts} />
           <Route path='/app/tokens' component={Tokens} />
           <Route path='/app/identity' component={Identity} />
-          {/* <Route
-            exact
-            path='/app/ui'
-            render={() => <Redirect to='/app/ui/icons' />}
-          /> */}
+          <Route path='/app/invest' component={Invest} />
         </Switch>
       </div>
     </div>
