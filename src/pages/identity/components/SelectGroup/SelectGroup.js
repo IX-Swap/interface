@@ -20,7 +20,7 @@ export default function SelectGroup(props) {
         }
         {...controllerProps}
       />
-      {error && <FormHelperText>{error}</FormHelperText>}
+      {error && <FormHelperText>{helperText}</FormHelperText>}
     </FormControl>
   )
 }

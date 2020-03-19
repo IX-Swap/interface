@@ -46,7 +46,7 @@ export function identityReducer (state, { type, payload }) {
     case actions.SAVE_IDENTITY_REQUEST:
       return { ...state, status: STATUS.SAVING, error: { ...state.error, save: null } }
     case actions.SAVE_IDENTITY_SUCCESS:
-      return { ...state, status: STATUS.IDLE, identity: payload }
+      return { ...state, status: STATUS.IDLE, identity: payload, shouldCreateNew: false }
     case actions.SAVE_IDENTITY_FAILURE:
       return { ...state, status: STATUS.IDLE, error: { ...state.error, save: payload } }
     default:

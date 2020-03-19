@@ -154,7 +154,7 @@ const useIdentityFormLogic = () => {
   const createFieldProps = (key, overrides) =>
     ({
       name: key,
-      error: errors[key] && errors[key].message,
+      error: Boolean(errors[key] && errors[key].message),
       helperText: (errors[key] && errors[key].message) || '',
       defaultValue: '',
       control,
