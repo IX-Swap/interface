@@ -5,15 +5,13 @@ import { useForm, Controller } from 'react-hook-form'
 import IdentityProgress from 'pages/identity/components/IdentityProgress'
 import * as yup from 'yup'
 import { useMemo } from 'react'
-import { DatePicker } from '@material-ui/pickers'
-import { subYears, subHours } from 'date-fns'
 import Alert from '@material-ui/lab/Alert'
 import CloseIcon from '@material-ui/icons/Close'
 import { useHistory } from 'react-router-dom'
 import { COUNTRIES, COUNTRIES_OPTS } from 'const/countries'
 import SelectGroup from 'pages/identity/components/SelectGroup/SelectGroup'
 
-export default function IdentificationStepOne () {
+export default function IdentificationStepTwo () {
   const {
     status,
     handleSubmit,
@@ -32,7 +30,7 @@ export default function IdentificationStepOne () {
             <Typography component='h1' variant='h3' align='center'>Identification</Typography>
 
             <Box mt={3}>
-              <IdentityProgress />
+              <IdentityProgress activeStep={1} />
             </Box>
 
             {['INIT', 'GETTING'].includes(status) ? (
@@ -43,48 +41,24 @@ export default function IdentificationStepOne () {
               <Alert severity='error'>{error.get}</Alert>
             ) : (
               <>
-                <Box component='section' mt={3}>
-                  <Grid container spacing={2}>
-                    <Grid item xs={12} sm={4}>
-                      <Controller as={TextField} fullWidth margin='dense' label='First Name' {...fields.firstName} />
-                    </Grid>
-                    <Grid item xs={12} sm={4}>
-                      <Controller as={TextField} fullWidth margin='dense' label='Middle Name' {...fields.middleName} />
-                    </Grid>
-                    <Grid item xs={12} sm={4}>
-                      <Controller as={TextField} fullWidth margin='dense' label='Last Name' {...fields.lastName} />
-                    </Grid>
-                  </Grid>
-                </Box>
-
                 <Box mt={4}>
                   <Grid container spacing={3}>
-                    <Grid item xs={12} sm={6}>
-                      <SelectGroup label='Gender' {...fields.gender} />
-
-                      <Controller
-                        fullWidth
-                        margin='dense'
-                        label='Date of Birth'
-                        disableFuture
-                        openTo='year'
-                        format='MM/dd/yyyy'
-                        views={['year', 'month', 'date']}
-                        maxDate={createDate18YearsAgo()}
-                        as={DatePicker}
-                        {...fields.dob}
-                      />
-
-                      <SelectGroup label='Marital Status' {...fields.maritalStatus} />
+                    <Grid item xs={12} sm={6} style={{ paddingTop: 0, paddingBottom: 0 }}>
+                      <Controller as={TextField} fullWidth margin='dense' label='Unit' {...fields.unit} />
+                      <Controller as={TextField} fullWidth margin='dense' label='Line 1' {...fields.line1} />
+                      <Controller as={TextField} fullWidth margin='dense' label='Line 2' {...fields.line2} />
+                      <Controller as={TextField} fullWidth margin='dense' label='City' {...fields.city} />
                     </Grid>
-                    <Grid item xs={12} sm={6}>
-                      <Controller as={TextField} fullWidth margin='dense' label='Contact Number' {...fields.contactNumber} />
-                      <SelectGroup label='Nationality' {...fields.nationality} />
+                    <Grid item xs={12} sm={6} style={{ paddingTop: 0, paddingBottom: 0 }}>
+                      <Controller as={TextField} fullWidth margin='dense' label='Postal Code' {...fields.postalCode} />
+                      <Controller as={TextField} fullWidth margin='dense' label='State' {...fields.state} />
+                      <SelectGroup label='Country' {...fields.country} />
+                      <SelectGroup label='Country of Residence' {...fields.countryOfResidence} />
                     </Grid>
                   </Grid>
                 </Box>
 
-                <Box display='flex' justifyContent='flex-end' mt={6}>
+                <Box display='flex' justifyContent='flex-end' mt={8}>
                   <Button disabled={!isValid || status !== 'IDLE'} type='submit' variant='contained' color='primary'>
                     {status === 'SAVING'
                       ? 'Saving...'
@@ -131,7 +105,9 @@ const useIdentityFormLogic = () => {
 
     Object.keys(fields)
       .forEach(fieldName => {
-        const loadedFieldValue = identity[fieldName]
+        const loadedFieldValue = fieldName === 'countryOfResidence'
+          ? identity.countryOfResidence
+          : identity.address[fieldName]
         if (!loadedFieldValue) return
         setValue(fieldName, loadedFieldValue)
       })
@@ -145,9 +121,11 @@ const useIdentityFormLogic = () => {
   }, []) // eslint-disable-line react-hooks/exhaustive-deps
 
   // saves identity data for on form submit
-  const handleSubmit = rhfHandleSubmit(newIdentity => {
+  const handleSubmit = rhfHandleSubmit(formData => {
+    const newIdentity = { ...formData, firstName: identity.firstName }
+
     saveIdentity(idDispatch, newIdentity, shouldCreateNew)
-      .then(() => history.push('/app/identity/identification-steps/2'))
+      .then(() => history.push('/app/identity/identification-steps/3'))
       .catch(e => setSnackbarError(e.message || e.toString()))
   })
 
@@ -162,26 +140,20 @@ const useIdentityFormLogic = () => {
     })
 
   const fields = {
-    firstName: createFieldProps('firstName', { required: true }),
-    middleName: createFieldProps('middleName'),
-    lastName: createFieldProps('lastName', { required: true }),
-    contactNumber: createFieldProps('contactNumber', { required: true }),
-    dob: createFieldProps('dob', {
-      defaultValue: createDate18YearsAndADayAgo(),
-      required: true
-    }),
-    maritalStatus: createFieldProps('maritalStatus', {
-      options: MARITAL_STATUSES_OPTS,
-      required: true
-    }),
-    gender: createFieldProps('gender', {
-      options: GENDERS_OPTS,
-      required: true
-    }),
-    nationality: createFieldProps('nationality', {
+    unit: createFieldProps('unit'),
+    line1: createFieldProps('line1', { required: true }),
+    line2: createFieldProps('line2'),
+    city: createFieldProps('city', { required: true }),
+    postalCode: createFieldProps('postalCode'),
+    state: createFieldProps('state'),
+    country: createFieldProps('country', {
       options: COUNTRIES_OPTS,
       required: true
     }),
+    countryOfResidence: createFieldProps('countryOfResidence', {
+      options: COUNTRIES_OPTS,
+      required: true
+    })
   }
 
   return {
@@ -196,33 +168,20 @@ const useIdentityFormLogic = () => {
   }
 }
 
-const arrToOpts = arr => arr.map(value => ({ value, label: value }))
-
-const MARITAL_STATUSES = ['Married', 'Widowed', 'Separated', 'Single']
-const MARITAL_STATUSES_OPTS = arrToOpts(MARITAL_STATUSES)
-const GENDERS = ['M', 'F']
-const GENDERS_OPTS = [{ value: 'M', label: 'Male'}, { value: 'F', label: 'Female'}]
-
 const createSchema = () =>
   yup.object().shape({
-    firstName: yup.string().required('First name is required'),
-    middleName: yup.string(),
-    lastName: yup.string().required('Last name is required'),
-    dob: yup.date('Date of birth is required')
-      .max(createDate18YearsAgo(), 'You must be at least 18 years old')
-      .required('Date of birth is required'),
-    maritalStatus: yup.mixed()
-      .oneOf(MARITAL_STATUSES, 'Marital status is required')
-      .required('Marital status is required'),
-    gender: yup.mixed()
-      .oneOf(GENDERS, 'Gender is required')
-      .required('Gender is required'),
-    contactNumber: yup.string()
-      .required('Contact number is required'),
-    nationality: yup.mixed()
-      .oneOf(COUNTRIES, 'Nationality is required')
-      .required('Nationality is required'),
+    unit: yup.string(),
+    line1: yup.string().required('Line 1 is required'),
+    line2: yup.string(),
+    city: yup.string().required('City is required'),
+    postalCode: yup.string().matches(ALPHA_NUMERIC_OR_EMPTY, "Postal Code may only contain alphabet or numbers"),
+    state: yup.string(),
+    country: yup.mixed()
+      .oneOf(COUNTRIES, 'Country is required')
+      .required('Country is required'),
+    countryOfResidence: yup.mixed()
+      .oneOf(COUNTRIES, 'Country of Residence is required')
+      .required('Country of Residence is required'),
   })
 
-const createDate18YearsAgo = () => subYears(new Date(), 18)
-const createDate18YearsAndADayAgo = () => subHours(subYears(new Date(), 18), 1)
+const ALPHA_NUMERIC_OR_EMPTY = /^([a-z0-9]|(?![\s\S]))+$/i
