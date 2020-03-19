@@ -6,6 +6,7 @@ import { IdentityProvider } from 'context/IdentityContext'
 import DateFnsUtils from '@date-io/date-fns'
 import { MuiPickersUtilsProvider } from '@material-ui/pickers'
 import IdentificationStepTwo from './pages/identification-step-two/IdentificationStepTwo'
+import IdentificationStepThree from './pages/identification-step-three/IdentificationStepThree'
 
 export default function Identity () {
   return (
@@ -15,6 +16,7 @@ export default function Identity () {
           <Route path='/app/identity' exact component={IdentityDashboard} />
           <Route path='/app/identity/identification-steps/1' exact component={IdentificationStepOne} />
           <Route path='/app/identity/identification-steps/2' exact component={IdentificationStepTwo} />
+          <Route path='/app/identity/identification-steps/3' exact component={IdentificationStepThree} />
         </Switch>
       </MuiPickersUtilsProvider>
     </IdentityProvider>
