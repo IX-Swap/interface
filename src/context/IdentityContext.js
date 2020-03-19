@@ -103,7 +103,8 @@ export async function getIdentity (dispatch) {
       dispatch({ type: actions.GET_IDENTITY_FAILURE, payload: response.message })
     }
   } catch (err) {
-    dispatch({ type: actions.GET_IDENTITY_FAILURE, payload: 'Loading profile failed.' })
+    dispatch({ type: actions.GET_IDENTITY_FAILURE, payload: err.message || 'Loading profile failed.' })
+    throw new Error(err.message || 'Loading profile failed.')
   }
 }
 
@@ -121,6 +122,7 @@ export async function saveIdentity (dispatch, identity, shouldCreateNew) {
       dispatch({ type: actions.SAVE_IDENTITY_FAILURE, payload: response.message })
     }
   } catch (err) {
-    dispatch({ type: actions.SAVE_IDENTITY_FAILURE, payload: 'Loading profile failed.' })
+    dispatch({ type: actions.SAVE_IDENTITY_FAILURE, payload: err.message || 'Saving profile failed.' })
+    throw new Error(err.message || 'Saving profile failed.')
   }
 }

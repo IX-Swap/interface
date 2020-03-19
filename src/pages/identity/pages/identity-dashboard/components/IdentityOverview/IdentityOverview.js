@@ -2,9 +2,12 @@ import React, { useEffect } from 'react'
 import { Grid, Card, Typography, Box, CircularProgress, Button } from '@material-ui/core'
 import { useIdentityState, useIdentityDispatch, getIdentity } from 'context/IdentityContext'
 import { Link } from 'react-router-dom'
+import Alert from '@material-ui/lab/Alert'
 
 export default function IdentityOverview () {
-  const { status, identity, shouldCreateNew } = useIdentityOverviewLogic()
+  const { status, identity, shouldCreateNew, error } = useIdentityOverviewLogic()
+
+  if (error.get) return <Alert severity='error'>{error.get}</Alert>
 
   return (
     <Card>
@@ -82,16 +85,16 @@ export default function IdentityOverview () {
 // ############################################################
 
 const useIdentityOverviewLogic = () => {
-  const { status, identity, shouldCreateNew } = useIdentityState()
+  const { status, identity, shouldCreateNew, error } = useIdentityState()
   const idDispatch = useIdentityDispatch()
 
   // fetch identity data for initial values
   const isInit = status === 'INIT'
   useEffect(() => {
-    if (isInit) getIdentity(idDispatch)
+    if (isInit) getIdentity(idDispatch).catch(() => {})
   }, [isInit]) // eslint-disable-line react-hooks/exhaustive-deps
 
-  return { status, identity, shouldCreateNew }
+  return { status, identity, shouldCreateNew, error }
 }
 
 const StaticTextField = ({ value, label, ...props }) =>

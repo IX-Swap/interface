@@ -1,5 +1,5 @@
-import React, { useEffect } from 'react'
-import { Grid, Card, TextField, Typography, Box, Button, CircularProgress, Select, MenuItem, FormControl, InputLabel, FormHelperText } from '@material-ui/core'
+import React, { useEffect, useState, useCallback } from 'react'
+import { Grid, Card, TextField, Typography, Box, Button, CircularProgress, Select, MenuItem, FormControl, InputLabel, FormHelperText, Snackbar, IconButton } from '@material-ui/core'
 import { useIdentityState, useIdentityDispatch, getIdentity, saveIdentity, IDENTITY_STATUS } from 'context/IdentityContext'
 import { useForm, Controller } from 'react-hook-form'
 import IdentityProgress from 'pages/identity/components/IdentityProgress'
@@ -8,9 +8,19 @@ import countryNamesJson from 'country-json/src/country-by-name.json'
 import { useMemo } from 'react'
 import { DatePicker } from '@material-ui/pickers'
 import { subYears, subHours } from 'date-fns'
+import Alert from '@material-ui/lab/Alert'
+import CloseIcon from '@material-ui/icons/Close'
 
 export default function IdentificationStepOne () {
-  const { status, handleSubmit, fields, isValid } = useIdentityFormLogic()
+  const {
+    status,
+    handleSubmit,
+    fields,
+    isValid,
+    error,
+    snackbarError,
+    handleSnackbarErrorClose
+  } = useIdentityFormLogic()
 
   return (
     <Grid component='article' container justify='center' spacing={3}>
@@ -27,6 +37,8 @@ export default function IdentificationStepOne () {
               <Box p={3} display='flex' justifyContent='center'>
                 <CircularProgress size={48} />
               </Box>
+            ) : error.get ? (
+              <Alert severity='error'>{error.get}</Alert>
             ) : (
               <>
                 <Box component='section' mt={3}>
@@ -81,6 +93,16 @@ export default function IdentificationStepOne () {
             )}
           </Box>
         </Card>
+
+        <Snackbar
+          message={snackbarError}
+          open={!!snackbarError}
+          action={
+            <IconButton size='small' aria-label='close' color='inherit' onClick={handleSnackbarErrorClose}>
+              <CloseIcon fontSize='small' />
+            </IconButton>
+          }
+        />
       </Grid>
     </Grid>
   )
@@ -89,12 +111,15 @@ export default function IdentificationStepOne () {
 // ############################################################
 
 const useIdentityFormLogic = () => {
-  const { status, shouldCreateNew, identity } = useIdentityState()
+  const { status, shouldCreateNew, identity, error } = useIdentityState()
+  const [snackbarError, setSnackbarError] = useState('')
   const idDispatch = useIdentityDispatch()
   const validationSchema = useMemo(createSchema, [])
   const methods = useForm({ validationSchema })
   const { handleSubmit: rhfHandleSubmit, errors, control, setValue, formState } = methods
   const isValid = formState.isSubmitted ? formState.isValid : true
+
+  const handleSnackbarErrorClose = useCallback(() => setSnackbarError(''), [])
 
   // load identity data to form when it updates from reducer
   const ADDRESS_KEYS = ['unit', 'line1', 'line2']
@@ -115,12 +140,15 @@ const useIdentityFormLogic = () => {
 
   // fetch identity data for initial values
   useEffect(() => {
-    if (status === IDENTITY_STATUS.INIT) getIdentity(idDispatch)
+    if (status === IDENTITY_STATUS.INIT) {
+      getIdentity(idDispatch).catch(() => {})
+    }
   }, []) // eslint-disable-line react-hooks/exhaustive-deps
 
   // saves identity data for on form submit
   const handleSubmit = rhfHandleSubmit(newIdentity => {
     saveIdentity(idDispatch, newIdentity, shouldCreateNew)
+      .catch(e => setSnackbarError(e.message))
   })
 
   const createFieldProps = (key, overrides) =>
@@ -144,7 +172,16 @@ const useIdentityFormLogic = () => {
     nationality: createFieldProps('nationality', { options: COUNTRIES_OPTS })
   }
 
-  return { status, handleSubmit, fields, methods, isValid }
+  return {
+    status,
+    handleSubmit,
+    fields,
+    methods,
+    isValid,
+    error,
+    snackbarError,
+    handleSnackbarErrorClose
+  }
 }
 
 const arrToOpts = arr => arr.map(value => ({ value, label: value }))
