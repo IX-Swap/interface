@@ -52,7 +52,7 @@ export default function FinancialsStepThree () {
                     <Controller as={TextField} fullWidth margin='dense' label='Source Of Wealth' {...fields.sourceOfWealth} />
                     <SingleCheckbox
                       color='primary'
-                      inputProps={{ 'aria-label': 'secondary checkbox' }}
+                      inputProps={{ 'aria-label': 'Politically Exposed' }}
                       label='Politically Exposed'
                       {...fields.politicallyExposed}
                     />
