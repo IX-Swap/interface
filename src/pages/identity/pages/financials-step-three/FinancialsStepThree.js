@@ -48,7 +48,7 @@ export default function FinancialsStepThree () {
                 <Box mx='auto' mt={4} maxWidth='32rem'>
                   {/* Inputs Column */}
                     <Controller as={TextField} fullWidth margin='dense' label='Annual Income' {...fields.annualIncome} />
-                    <Controller as={TextField} fullWidth margin='dense' label='HouseHold Income' {...fields.houseHoldIncome} />
+                    <Controller as={TextField} fullWidth margin='dense' label='Household Income' {...fields.houseHoldIncome} />
                     <Controller as={TextField} fullWidth margin='dense' label='Source Of Wealth' {...fields.sourceOfWealth} />
                     <SingleCheckbox
                       color='primary'
