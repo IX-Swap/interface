@@ -37,16 +37,22 @@ import {
 const structure = [
   {
     id: 0,
-    label: 'Developer',
+    label: 'Developer Panel',
     link: '/app/developer-panel',
     icon: <BusinessIcon />
   },
-  // {
-  //   id: 1,
-  //   label: 'Primary',
-  //   link: '/app/primary',
-  //   icon: <NoteIcon />
-  // },
+  {
+    id: 1,
+    label: 'Invest',
+    link: '/app/primary',
+    icon: <BusinessIcon />
+  },
+  {
+    id: 1,
+    label: 'Trade',
+    link: '/app/primary',
+    icon: <BusinessIcon />
+  },
   // { id: 2, label: 'Secondary', link: '/app/secondary', icon: <ChartIcon /> },
   // {
   //   id: 3,
@@ -54,22 +60,29 @@ const structure = [
   //   link: '/app/notifications',
   //   icon: <LockIcon />
   // },
-  // {
-  //   id: 4,
-  //   label: 'Identity',
-  //   link: '/app/ui',
-  //   icon: <IdentityIcon />,
-  //   children: [
-  //     { label: 'Icons', link: '/app/ui/icons' },
-  //     { label: 'Charts', link: '/app/ui/charts' },
-  //     { label: 'Maps', link: '/app/ui/maps' }
-  //   ]
-  // },
-  { id: 5, type: 'divider' },
-  { id: 6, type: 'title', label: 'HELP' },
-  { id: 7, label: 'Documentation', link: '', icon: <LibraryIcon /> },
-  { id: 8, label: 'Support', link: '', icon: <SupportIcon /> },
-  { id: 9, label: 'FAQ', link: '', icon: <FAQIcon /> }
+  {
+    id: 4,
+    label: 'Accounts',
+    link: '/app/ui',
+    icon: <BusinessIcon />,
+    children: [
+      { label: 'Transactions', link: '/app/ui/icons' },
+      { label: 'Identity', link: '/app/ui/charts' },
+      { label: 'Reports', link: '/app/ui/maps' },
+      { label: 'Settings', link: '/app/ui/maps' }
+    ]
+  },
+  {
+    id: 1,
+    label: 'Support',
+    link: '/app/primary',
+    icon: <BusinessIcon />
+  }
+  // { id: 5, type: 'divider' },
+  // { id: 6, type: 'title', label: 'HELP' },
+  // { id: 7, label: 'Documentation', link: '', icon: <LibraryIcon /> },
+  // { id: 8, label: 'Support', link: '', icon: <SupportIcon /> },
+  // { id: 9, label: 'FAQ', link: '', icon: <FAQIcon /> }
   // { id: 10, type: "divider" },
   // { id: 11, type: "title", label: "PROJECTS" },
   // {
