@@ -98,6 +98,19 @@ export default function IdentityOverview () {
               </Grid>
             </Box>
 
+            {/* Documents */}
+            <Box component='section' mt={2}>
+              <Grid container spacing={1}>
+                <Grid item xs={12}>
+                  <Typography component='h3' variant='h6' gutterBottom={false} color='textSecondary'>Documents</Typography>
+                  <StaticTextField my={2} mt={1} label='ID (File)' />
+                  <StaticTextField my={2} mt={1} label='ID Type' value={identity.idType} />
+                  <StaticTextField my={2} mt={1} label='ID Number' value={identity.idNumber} />
+                  <StaticTextField my={2} mt={1} label='Most Recent Utility Bill (File)' />
+                </Grid>
+              </Grid>
+            </Box>
+
             {/* Financials */}
             <Box component='section' mt={4}>
               <Typography component='h2' variant='h4' gutterBottom={false}>Financials</Typography>
@@ -154,6 +167,15 @@ export default function IdentityOverview () {
                   <StaticTextField my={2} label='Is your last income in the last 12 months greater than S$300,000?' value={accreditation.accreditationDetails?.lastTwelveMonthIncomeGreatherThanThreeHundredThousands} />
                   <StaticTextField my={2} label='Does your personal financial assets exceed S$1,000,000?' value={accreditation.accreditationDetails?.personalFinancialAssetsExceedsOneMillion} />
                   <StaticTextField my={2} label='Do you have any jointly held in any of the above?' value={accreditation.accreditationDetails?.jointlyHeldAccountMeetingAnyAbove} />
+                </Grid>
+              </Grid>
+            </Box>
+
+            <Box component='section' mt={2}>
+              <Grid container spacing={1}>
+                <Grid item xs={12}>
+                  <Typography component='h3' variant='h6' gutterBottom={false} color='textSecondary'>Proof of wealth</Typography>
+                  <StaticTextField my={2} mt={1} label='Proof of Wealth (File)' />
                 </Grid>
               </Grid>
             </Box>

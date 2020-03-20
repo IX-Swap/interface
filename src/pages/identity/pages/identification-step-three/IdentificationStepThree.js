@@ -41,26 +41,37 @@ export default function IdentificationStepThree () {
               <>
                 <Box mx='auto' mt={4} maxWidth='32rem'>
                   <UploadSection
-                    label='Passport'
+                    label='ID Photo'
                     emptyLabel='Please upload a photo or scan or your passport.'
                     {...fields.passport}
                   />
 
-                  <Controller as={TextField}
-                    fullWidth
-                    width='100%'
-                    margin='normal'
-                    label='Passport ID No.'
-                    {...fields.idNumber}
-                    helperText={fields.idNumber.error ? fields.idNumber.helperText : 'Please type in your passport ID no.'}
-                  />
-
-                  <Box mt={6}>
-                    <UploadSection
-                      label='Utility Bill'
-                      emptyLabel='Please upload a photo or scan of a recent utility bill.'
-                      {...fields.utilityBill}
+                  <Box mt={1}>
+                    <Controller as={TextField}
+                      fullWidth
+                      width='100%'
+                      margin='dense'
+                      label='ID Type'
+                      {...fields.idType}
+                      helperText={fields.idType.error ? fields.idType.helperText : 'Please type in your ID type.'}
                     />
+
+                    <Controller as={TextField}
+                      fullWidth
+                      width='100%'
+                      margin='dense'
+                      label='ID No.'
+                      {...fields.idNumber}
+                      helperText={fields.idNumber.error ? fields.idNumber.helperText : 'Please type in your ID no.'}
+                    />
+
+                    <Box mt={6}>
+                      <UploadSection
+                        label='Utility Bill'
+                        emptyLabel='Please upload a photo or scan of a recent utility bill.'
+                        {...fields.utilityBill}
+                      />
+                    </Box>
                   </Box>
                 </Box>
 
@@ -157,6 +168,7 @@ const useIdentityFormLogic = () => {
 
   const handleFileChange = name => files => setValue(name, files)
   const fields = {
+    idType: createFieldProps('idType', { required: true }),
     idNumber: createFieldProps('idNumber', { required: true }),
     passport: createFieldProps('passport', {
       required: true,
@@ -186,6 +198,7 @@ const useIdentityFormLogic = () => {
 
 const createSchema = () =>
   yup.object().shape({
+    idType: yup.string().required('This field is required'),
     idNumber: yup.string().required('This field is required'),
     passport: yup.mixed().required('This field is required'),
     utilityBill: yup.mixed().required('This field is required'),
