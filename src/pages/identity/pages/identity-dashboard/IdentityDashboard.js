@@ -80,6 +80,7 @@ const useIdentityDashboardLogic = () => {
   }
 
   const financialsProgress = {
+    completed: Boolean(identity?.annualIncome),
     activeStep: identity?.annualIncome ? 2
       : identity?.bankName ? 1
       : identity?.occupation ? 0
