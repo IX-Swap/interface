@@ -127,21 +127,32 @@ export default function IdentityOverview () {
               </Grid>
             </Box>
 
+            {/* Bank Account (2) Columns */}
             <Box component='section' mt={4}>
+              <Typography component='h3' variant='h6' gutterBottom={false} color='textSecondary'>Bank Account</Typography>
+
               <Grid container spacing={1}>
                 <Grid item xs={12} sm={6}>
-                  {/* Bank Account Column */}
-                  <Typography component='h3' variant='h6' gutterBottom={false} color='textSecondary'>Bank Account</Typography>
-                  <StaticTextField my={2} mt={1} label='Bank Name' value={identity.bankName} />
-                  <StaticTextField my={2} label='Bank Account Name' value={identity.bankAccountName} />
+                  <StaticTextField my={2} label='Bank Name' value={identity.bankName} />
                   <StaticTextField my={2} label='Bank Account Number' value={identity.bankAccountNumber} />
                 </Grid>
                 <Grid item xs={12} sm={6}>
-                  {/* Income Column */}
-                  <Typography component='h3' variant='h6' gutterBottom={false} color='textSecondary'>Income</Typography>
+                  <StaticTextField my={2} label='Bank Account Name' value={identity.bankAccountName} />
+                </Grid>
+              </Grid>
+            </Box>
+
+            {/* Income (2) Columns */}
+            <Box component='section' mt={4}>
+              <Typography component='h3' variant='h6' gutterBottom={false} color='textSecondary'>Income</Typography>
+
+              <Grid container spacing={1}>
+                <Grid item xs={12} sm={6}>
                   <StaticTextField my={2} mt={1} label='Annual Income' value={identity.annualIncome} />
-                  <StaticTextField my={2} label='Household Income' value={identity.houseHoldIncome} />
                   <StaticTextField my={2} label='Source of Wealth' value={identity.sourceOfWealth} />
+                </Grid>
+                <Grid item xs={12} sm={6}>
+                  <StaticTextField my={2} label='Household Income' value={identity.houseHoldIncome} />
                   <StaticTextField my={2} label='Is Politically Exposed' value={identity.politicallyExposed} />
                 </Grid>
               </Grid>
@@ -158,7 +169,7 @@ export default function IdentityOverview () {
               </Grid>
             </Box>
 
-            {/* Accreditation */}
+            {/* Declarations */}
             <Box component='section' mt={2}>
               <Grid container spacing={1}>
                 <Grid item xs={12}>
@@ -171,6 +182,7 @@ export default function IdentityOverview () {
               </Grid>
             </Box>
 
+            {/* Proof of wealth */}
             <Box component='section' mt={2}>
               <Grid container spacing={1}>
                 <Grid item xs={12}>
