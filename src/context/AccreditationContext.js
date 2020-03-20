@@ -98,6 +98,11 @@ export async function getAccreditation (dispatch) {
       const accreditation = response.data || {}
       dispatch({ type: actions.GET_ACCREDITATION_SUCCESS, payload: accreditation })
     } else {
+      // Forgive 404 because it is expected to be 404 before inputting some data
+      if (result.status === 404) {
+        return dispatch({ type: actions.GET_ACCREDITATION_SUCCESS, payload: {} })
+      }
+
       dispatch({ type: actions.GET_ACCREDITATION_FAILURE, payload: response.message })
       throw new Error(response.message)
     }
