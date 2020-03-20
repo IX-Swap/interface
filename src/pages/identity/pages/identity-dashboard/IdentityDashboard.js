@@ -1,11 +1,11 @@
-import React, { useEffect } from 'react'
+import React from 'react'
 import { Grid, Box, Hidden } from '@material-ui/core'
 import IdentityOverview from './components/IdentityOverview'
 import ProgressCard from './components/ProgressCard'
 import IdentityProgress from 'pages/identity/components/IdentityProgress'
 import { useIdentityState, IDENTITY_STATUS } from 'context/IdentityContext'
 import FinancialsProgress from 'pages/identity/components/FinancialsProgress/FinancialsProgress'
-import { useAccreditationState, ACCREDITATION_STATUS, getAccreditation, useAccreditationDispatch } from 'context/AccreditationContext'
+import { useAccreditationState, ACCREDITATION_STATUS } from 'context/AccreditationContext'
 import AccreditationProgress from 'pages/identity/components/AccreditationProgress/AccreditationProgress'
 
 export default function IdentityDashboard () {
@@ -75,7 +75,6 @@ export default function IdentityDashboard () {
 const useIdentityDashboardLogic = () => {
   const { status: idStatus, identity } = useIdentityState()
   const { status: accreditationStatus, accreditation } = useAccreditationState()
-  const accreditationDispatch = useAccreditationDispatch()
 
   const isIDReady =
     ![IDENTITY_STATUS.INIT, IDENTITY_STATUS.GETTING].includes(idStatus)
@@ -99,13 +98,6 @@ const useIdentityDashboardLogic = () => {
       : identity?.occupation ? 33
       : 0
   }
-
-  // fetch accreditation data for initial values
-  useEffect(() => {
-    if (accreditationStatus === ACCREDITATION_STATUS.INIT) {
-      getAccreditation(accreditationDispatch).catch(() => {})
-    }
-  }, []) // eslint-disable-line react-hooks/exhaustive-deps
 
   const totalPersonalAssetExceedsTwoMillionSGD =
     accreditation?.accreditationDetails?.totalPersonalAssetExceedsTwoMillionSGD
