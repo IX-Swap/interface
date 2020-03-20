@@ -6,15 +6,20 @@ export default function Progress ({
   activeStep,
   completed
 }) {
-  const stepProps = typeof completed === 'boolean' ? { completed } : {}
-
   return (
     <Stepper activeStep={activeStep} alternativeLabel>
-      {steps.map(label => (
-        <Step key={label} {...stepProps}>
-          <StepLabel>{label}</StepLabel>
-        </Step>
-      ))}
+      {steps.map((label, i) => {
+        const stepProps =
+          i <= activeStep && completed
+            ? { completed }
+            : {}
+
+        return (
+          <Step key={label} {...stepProps}>
+            <StepLabel>{label}</StepLabel>
+          </Step>
+        )
+      })}
     </Stepper>
   )
 }

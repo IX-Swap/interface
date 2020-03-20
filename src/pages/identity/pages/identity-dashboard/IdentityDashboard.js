@@ -18,6 +18,7 @@ export default function IdentityDashboard () {
 
   const idProgressJsx =
     <ProgressCard
+      completed
       to={`/app/identity/identification-steps/${identityProgress.activeStep + 2}`}
       title='Identification'
       component={IdentityProgress}
@@ -43,6 +44,7 @@ export default function IdentityDashboard () {
             </Hidden>
             <Box mt={3}>
               <ProgressCard
+                completed
                 to={`/app/identity/financials-steps/${financialsProgress.activeStep + 2}`}
                 title='Financials'
                 component={FinancialsProgress}
@@ -51,6 +53,7 @@ export default function IdentityDashboard () {
             </Box>
             <Box mt={3}>
               <ProgressCard
+                completed
                 to={`/app/identity/accreditation-steps/${accreditationProgress.activeStep + 2}`}
                 title='Accreditation'
                 component={AccreditationProgress}
@@ -80,7 +83,6 @@ const useIdentityDashboardLogic = () => {
   }
 
   const financialsProgress = {
-    completed: Boolean(identity?.annualIncome),
     activeStep: identity?.annualIncome ? 2
       : identity?.bankName ? 1
       : identity?.occupation ? 0
