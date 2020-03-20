@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useCallback, useRef } from 'react'
+import React, { useEffect, useState, useCallback } from 'react'
 import { Grid, Card, TextField, Typography, Box, Button, CircularProgress, Snackbar, IconButton } from '@material-ui/core'
 import { useIdentityState, useIdentityDispatch, getIdentity, IDENTITY_STATUS } from 'context/IdentityContext'
 import { useForm, Controller } from 'react-hook-form'
@@ -7,6 +7,7 @@ import * as yup from 'yup'
 import { useMemo } from 'react'
 import Alert from '@material-ui/lab/Alert'
 import CloseIcon from '@material-ui/icons/Close'
+import UploadSection from 'pages/identity/components/UploadSection'
 
 export default function IdentificationStepThree () {
   const {
@@ -189,60 +190,3 @@ const createSchema = () =>
     passport: yup.mixed().required('This field is required'),
     utilityBill: yup.mixed().required('This field is required'),
   })
-
-
-const UploadSection = ({
-  name,
-  label,
-  emptyLabel,
-  error,
-  helperText,
-  onChange,
-  required,
-  value,
-  triggerValidation
-}) => {
-  const fileInputRef = useRef()
-
-  const handleClick = useCallback(() => {
-    if (fileInputRef.current) fileInputRef.current.click()
-  }, [])
-
-  const handleFocus = useCallback(ev => {
-    ev.preventDefault()
-    ev.target.blur()
-    if (fileInputRef.current) fileInputRef.current.click()
-  }, [])
-
-  const handleChange = useCallback(() => {
-    const newFileName = fileInputRef.current.files?.[0]?.name
-    if (!newFileName) return
-
-    onChange(fileInputRef.current.files)
-    triggerValidation(name)
-  }, [onChange]) // eslint-disable-line react-hooks/exhaustive-deps
-
-  const fileName = value?.[0]?.name;
-
-  return (
-    <Box display={['block', 'flex']} alignItems='center'>
-      <Box flex='1 1 auto'>
-        <TextField
-          fullWidth
-          error={error}
-          label={label}
-          helperText={error ? helperText : emptyLabel}
-          value={fileName || ''}
-          required={required}
-          onFocus={handleFocus}
-        />
-      </Box>
-      <Box pl={[0, 3]} pt={[3, 0]}>
-        <Button variant='contained' color='primary' onClick={handleClick}>
-          Choose&nbsp;File
-        </Button>
-        <input ref={fileInputRef} hidden type="file" onChange={handleChange} />
-      </Box>
-    </Box>
-  )
-}

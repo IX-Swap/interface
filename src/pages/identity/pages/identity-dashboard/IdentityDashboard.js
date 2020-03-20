@@ -1,16 +1,19 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { Grid, Box, Hidden } from '@material-ui/core'
 import IdentityOverview from './components/IdentityOverview'
 import ProgressCard from './components/ProgressCard'
 import IdentityProgress from 'pages/identity/components/IdentityProgress'
 import { useIdentityState, IDENTITY_STATUS } from 'context/IdentityContext'
 import FinancialsProgress from 'pages/identity/components/FinancialsProgress/FinancialsProgress'
+import { useAccreditationState, ACCREDITATION_STATUS, getAccreditation, useAccreditationDispatch } from 'context/AccreditationContext'
+import AccreditationProgress from 'pages/identity/components/AccreditationProgress/AccreditationProgress'
 
 export default function IdentityDashboard () {
   const {
     isProgressReady,
     identityProgress,
-    financialsProgress
+    financialsProgress,
+    accreditationProgress
   } = useIdentityDashboardLogic()
 
   const idProgressJsx =
@@ -40,7 +43,7 @@ export default function IdentityDashboard () {
             </Hidden>
             <Box mt={3}>
               <ProgressCard
-                to={`/app/identity/financials-steps/${FinancialsProgress.activeStep + 2}`}
+                to={`/app/identity/financials-steps/${financialsProgress.activeStep + 2}`}
                 title='Financials'
                 component={FinancialsProgress}
                 {...financialsProgress}
@@ -48,11 +51,10 @@ export default function IdentityDashboard () {
             </Box>
             <Box mt={3}>
               <ProgressCard
-                to='/app/identity'
+                to={`/app/identity/accreditation-steps/${accreditationProgress.activeStep + 2}`}
                 title='Accreditation'
-                component={IdentityProgress}
-                activeStep={-1}
-                percentage='0'
+                component={AccreditationProgress}
+                {...accreditationProgress}
               />
             </Box>
             <Box mt={3}>
@@ -71,9 +73,15 @@ export default function IdentityDashboard () {
 }
 
 const useIdentityDashboardLogic = () => {
-  const { status, identity } = useIdentityState()
+  const { status: idStatus, identity } = useIdentityState()
+  const { status: accreditationStatus, accreditation } = useAccreditationState()
+  const accreditationDispatch = useAccreditationDispatch()
 
-  const isProgressReady = ![IDENTITY_STATUS.INIT, IDENTITY_STATUS.GETTING].includes(status)
+  const isIDReady =
+    ![IDENTITY_STATUS.INIT, IDENTITY_STATUS.GETTING].includes(idStatus)
+  const isAccreditationReady =
+    ![ACCREDITATION_STATUS.INIT, ACCREDITATION_STATUS.GETTING].includes(accreditationStatus)
+  const isProgressReady = isIDReady && isAccreditationReady
 
   // TODO: Handle returning 100% when appropriate
   const identityProgress = {
@@ -92,5 +100,27 @@ const useIdentityDashboardLogic = () => {
       : 0
   }
 
-  return { isProgressReady, identityProgress, financialsProgress }
+  // fetch accreditation data for initial values
+  useEffect(() => {
+    if (accreditationStatus === ACCREDITATION_STATUS.INIT) {
+      getAccreditation(accreditationDispatch).catch(() => {})
+    }
+  }, []) // eslint-disable-line react-hooks/exhaustive-deps
+
+  const totalPersonalAssetExceedsTwoMillionSGD =
+    accreditation?.accreditationDetails?.totalPersonalAssetExceedsTwoMillionSGD
+  const accreditationProgress = {
+    activeStep: typeof totalPersonalAssetExceedsTwoMillionSGD === 'boolean'
+      ? 1
+      : typeof accreditation?.selfAccreditedInvestor === 'boolean'
+      ? 0
+      : -1,
+    percentage: typeof totalPersonalAssetExceedsTwoMillionSGD === 'boolean'
+      ? 66
+      : typeof accreditation?.selfAccreditedInvestor === 'boolean'
+      ? 33
+      : 0
+  }
+
+  return { isProgressReady, identityProgress, financialsProgress, accreditationProgress }
 }

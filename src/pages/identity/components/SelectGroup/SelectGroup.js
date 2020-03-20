@@ -3,11 +3,11 @@ import { Select, MenuItem, FormControl, InputLabel, FormHelperText } from '@mate
 import { Controller } from 'react-hook-form'
 
 export default function SelectGroup(props) {
-  const { options, label, error, helperText, required, ...controllerProps } = props
+  const { options, label, error, helperText, required, margin, ...controllerProps } = props
   const { name } = controllerProps
 
   return (
-    <FormControl margin='dense' fullWidth error={!!error} required={required}>
+    <FormControl margin={margin || 'dense'} fullWidth error={!!error} required={required}>
       <InputLabel id={`${name}-label`}>{label}</InputLabel>
       <Controller
         fullWidth
