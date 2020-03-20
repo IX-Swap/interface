@@ -57,15 +57,6 @@ export default function IdentityDashboard () {
                 {...accreditationProgress}
               />
             </Box>
-            <Box mt={3}>
-              <ProgressCard
-                to='/app/identity'
-                title='Confirmation'
-                component={IdentityProgress}
-                activeStep={-1}
-                percentage='0'
-              />
-            </Box>
           </>}
       </Grid>
     </Grid>
