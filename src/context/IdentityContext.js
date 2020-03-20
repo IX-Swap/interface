@@ -130,3 +130,24 @@ export async function saveIdentity (dispatch, identity, shouldCreateNew) {
     throw new Error(errMsg)
   }
 }
+
+export async function saveFinancials (dispatch, identity) {
+  dispatch({ type: actions.SAVE_IDENTITY_REQUEST })
+
+  try {
+    const uri = '/identity/profile/individual/financials'
+    const result = await putRequest(uri, identity)
+    const response = await result.json()
+    if (result.status === 200) {
+      const payload = response.data || {}
+      dispatch({ type: actions.SAVE_IDENTITY_SUCCESS, payload })
+    } else {
+      dispatch({ type: actions.SAVE_IDENTITY_FAILURE, payload: response.message })
+      throw new Error(response.message)
+    }
+  } catch (err) {
+    const errMsg = err.message || err.toString() || 'Saving profile failed.'
+    dispatch({ type: actions.SAVE_IDENTITY_FAILURE, payload: errMsg })
+    throw new Error(errMsg)
+  }
+}

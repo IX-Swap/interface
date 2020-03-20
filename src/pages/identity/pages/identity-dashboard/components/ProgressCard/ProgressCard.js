@@ -22,11 +22,12 @@ export default function ProgressCard ({
         {createElement(component, props)}
 
         <Box display='flex' justifyContent='center'>
+        {percentage !== 100 &&
           <Link to={to} style={{ textDecoration: 'none' }}>
             <Button color='primary' component='div'>
               Continue
             </Button>
-          </Link>
+          </Link>}
         </Box>
       </Box>
     </Card>
