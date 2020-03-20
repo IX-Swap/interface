@@ -40,7 +40,7 @@ export default function IdentityDashboard () {
             </Hidden>
             <Box mt={3}>
               <ProgressCard
-                to='/app/identity/financials-steps/1'
+                to={`/app/identity/financials-steps/${FinancialsProgress.activeStep + 2}`}
                 title='Financials'
                 component={FinancialsProgress}
                 {...financialsProgress}
