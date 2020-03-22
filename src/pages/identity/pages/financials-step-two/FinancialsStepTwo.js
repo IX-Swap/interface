@@ -1,17 +1,15 @@
 import React, { useEffect, useState, useCallback } from 'react'
 import { Grid, Card, TextField, Typography, Box, Button, CircularProgress, Snackbar, IconButton } from '@material-ui/core'
-import { useIdentityState, useIdentityDispatch, getIdentity, saveIdentity, IDENTITY_STATUS } from 'context/IdentityContext'
+import { useIdentityState, useIdentityDispatch, getIdentity, saveFinancials, IDENTITY_STATUS } from 'context/IdentityContext'
 import { useForm, Controller } from 'react-hook-form'
-import IdentityProgress from 'pages/identity/components/IdentityProgress'
+import FinancialsProgress from 'pages/identity/components/FinancialsProgress'
 import * as yup from 'yup'
 import { useMemo } from 'react'
 import Alert from '@material-ui/lab/Alert'
 import CloseIcon from '@material-ui/icons/Close'
 import { useHistory } from 'react-router-dom'
-import { COUNTRIES, COUNTRIES_OPTS } from 'const/countries'
-import SelectGroup from 'pages/identity/components/SelectGroup/SelectGroup'
 
-export default function IdentificationStepTwo () {
+export default function FinancialsStepTwo () {
   const {
     status,
     handleSubmit,
@@ -20,45 +18,41 @@ export default function IdentificationStepTwo () {
     error,
     snackbarError,
     handleSnackbarErrorClose
-  } = useIdentityFormLogic()
+  } = useFinancialsFormLogic()
 
   return (
     <Grid component='article' container justify='center' spacing={3}>
       <Grid item xs={12} sm={10} md={8}>
+        {/* Form */}
         <Card component='form' onSubmit={handleSubmit} noValidate>
           <Box p={3}>
-            <Typography component='h1' variant='h3' align='center'>Identification</Typography>
+            <Typography component='h1' variant='h3' align='center'>Financials</Typography>
 
+            {/* Progress Section */}
             <Box mt={3}>
-              <IdentityProgress activeStep={1} />
+              <FinancialsProgress activeStep={1} />
             </Box>
 
             {['INIT', 'GETTING'].includes(status) ? (
+              /* Loader */
               <Box p={3} display='flex' justifyContent='center'>
                 <CircularProgress size={48} />
               </Box>
             ) : error.get ? (
+              /* Error alert - For getIdentity() errors */
               <Alert severity='error'>{error.get}</Alert>
             ) : (
+              /* Form */
               <>
-                <Box mt={4}>
-                  <Grid container spacing={3}>
-                    <Grid item xs={12} sm={6} style={{ paddingTop: 0, paddingBottom: 0 }}>
-                      <Controller as={TextField} fullWidth margin='dense' label='Unit' {...fields.unit} />
-                      <Controller as={TextField} fullWidth margin='dense' label='Line 1' {...fields.line1} />
-                      <Controller as={TextField} fullWidth margin='dense' label='Line 2' {...fields.line2} />
-                      <Controller as={TextField} fullWidth margin='dense' label='City' {...fields.city} />
-                    </Grid>
-                    <Grid item xs={12} sm={6} style={{ paddingTop: 0, paddingBottom: 0 }}>
-                      <Controller as={TextField} fullWidth margin='dense' label='Postal Code' {...fields.postalCode} />
-                      <Controller as={TextField} fullWidth margin='dense' label='State' {...fields.state} />
-                      <SelectGroup label='Country' {...fields.country} />
-                      <SelectGroup label='Country of Residence' {...fields.countryOfResidence} />
-                    </Grid>
-                  </Grid>
+                <Box mx='auto' mt={4} maxWidth='32rem'>
+                  {/* Inputs Column */}
+                  <Controller as={TextField} fullWidth margin='dense' label='Bank Name' {...fields.bankName} />
+                  <Controller as={TextField} fullWidth margin='dense' label='Bank Account Name' {...fields.bankAccountName} />
+                  <Controller as={TextField} fullWidth margin='dense' label='Bank Account Number' {...fields.bankAccountNumber} />
                 </Box>
 
-                <Box display='flex' justifyContent='flex-end' mt={8}>
+                {/* Submit Button */}
+                <Box display='flex' justifyContent='flex-end' mt={6}>
                   <Button disabled={!isValid || status !== 'IDLE'} type='submit' variant='contained' color='primary'>
                     {status === 'SAVING'
                       ? 'Saving...'
@@ -70,6 +64,7 @@ export default function IdentificationStepTwo () {
           </Box>
         </Card>
 
+        {/* Error Snackbar - For saveFinancials() errors */}
         <Snackbar
           message={snackbarError}
           open={!!snackbarError}
@@ -86,8 +81,8 @@ export default function IdentificationStepTwo () {
 
 // ############################################################
 
-const useIdentityFormLogic = () => {
-  const { status, shouldCreateNew, identity, error } = useIdentityState()
+const useFinancialsFormLogic = () => {
+  const { status, identity, error } = useIdentityState()
   const [snackbarError, setSnackbarError] = useState('')
   const idDispatch = useIdentityDispatch()
   const validationSchema = useMemo(createSchema, [])
@@ -105,9 +100,7 @@ const useIdentityFormLogic = () => {
 
     Object.keys(fields)
       .forEach(fieldName => {
-        const loadedFieldValue = fieldName === 'countryOfResidence'
-          ? identity.countryOfResidence
-          : identity.address[fieldName]
+        const loadedFieldValue = identity[fieldName]
         if (!loadedFieldValue) return
         setValue(fieldName, loadedFieldValue)
       })
@@ -120,15 +113,14 @@ const useIdentityFormLogic = () => {
     }
   }, []) // eslint-disable-line react-hooks/exhaustive-deps
 
-  // saves identity data for on form submit
-  const handleSubmit = rhfHandleSubmit(formData => {
-    const newIdentity = { ...formData, firstName: identity.firstName }
-
-    saveIdentity(idDispatch, newIdentity, shouldCreateNew)
-      .then(() => history.push('/app/identity/identification-steps/3'))
+  // saves identity data on form submit
+  const handleSubmit = rhfHandleSubmit(newFinancials => {
+    saveFinancials(idDispatch, newFinancials)
+      .then(() => history.push('/app/identity/financials-steps/3'))
       .catch(e => setSnackbarError(e.message || e.toString()))
   })
 
+  // create the field props
   const createFieldProps = (key, overrides) =>
     ({
       name: key,
@@ -140,20 +132,9 @@ const useIdentityFormLogic = () => {
     })
 
   const fields = {
-    unit: createFieldProps('unit'),
-    line1: createFieldProps('line1', { required: true }),
-    line2: createFieldProps('line2'),
-    city: createFieldProps('city', { required: true }),
-    postalCode: createFieldProps('postalCode'),
-    state: createFieldProps('state'),
-    country: createFieldProps('country', {
-      options: COUNTRIES_OPTS,
-      required: true
-    }),
-    countryOfResidence: createFieldProps('countryOfResidence', {
-      options: COUNTRIES_OPTS,
-      required: true
-    })
+    bankName: createFieldProps('bankName', { required: true }),
+    bankAccountName: createFieldProps('bankAccountName', { required: true }),
+    bankAccountNumber: createFieldProps('bankAccountNumber', { required: true }),
   }
 
   return {
@@ -168,20 +149,10 @@ const useIdentityFormLogic = () => {
   }
 }
 
+// Create the form schema
 const createSchema = () =>
   yup.object().shape({
-    unit: yup.string(),
-    line1: yup.string().required('Line 1 is required'),
-    line2: yup.string(),
-    city: yup.string().required('City is required'),
-    postalCode: yup.string().matches(ALPHA_NUMERIC_OR_EMPTY, "Postal Code may only contain alphabet or numbers"),
-    state: yup.string(),
-    country: yup.mixed()
-      .oneOf(COUNTRIES, 'Country is required')
-      .required('Country is required'),
-    countryOfResidence: yup.mixed()
-      .oneOf(COUNTRIES, 'Country of Residence is required')
-      .required('Country of Residence is required'),
+    bankName: yup.string().required('This field is required'),
+    bankAccountName: yup.string().required('This field is required'),
+    bankAccountNumber: yup.string().required('This field is required'),
   })
-
-const ALPHA_NUMERIC_OR_EMPTY = /^([a-z0-9]|(?![\s\S]))+$/i

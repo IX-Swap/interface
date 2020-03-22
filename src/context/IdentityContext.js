@@ -46,7 +46,7 @@ export function identityReducer (state, { type, payload }) {
     case actions.SAVE_IDENTITY_REQUEST:
       return { ...state, status: STATUS.SAVING, error: { ...state.error, save: null } }
     case actions.SAVE_IDENTITY_SUCCESS:
-      return { ...state, status: STATUS.IDLE, identity: payload }
+      return { ...state, status: STATUS.IDLE, identity: payload, shouldCreateNew: false }
     case actions.SAVE_IDENTITY_FAILURE:
       return { ...state, status: STATUS.IDLE, error: { ...state.error, save: payload } }
     default:
@@ -116,6 +116,27 @@ export async function saveIdentity (dispatch, identity, shouldCreateNew) {
   try {
     const uri = '/identity/profile/individual'
     const result = shouldCreateNew ? await postRequest(uri, identity) : await putRequest(uri, identity)
+    const response = await result.json()
+    if (result.status === 200) {
+      const payload = response.data || {}
+      dispatch({ type: actions.SAVE_IDENTITY_SUCCESS, payload })
+    } else {
+      dispatch({ type: actions.SAVE_IDENTITY_FAILURE, payload: response.message })
+      throw new Error(response.message)
+    }
+  } catch (err) {
+    const errMsg = err.message || err.toString() || 'Saving profile failed.'
+    dispatch({ type: actions.SAVE_IDENTITY_FAILURE, payload: errMsg })
+    throw new Error(errMsg)
+  }
+}
+
+export async function saveFinancials (dispatch, identity) {
+  dispatch({ type: actions.SAVE_IDENTITY_REQUEST })
+
+  try {
+    const uri = '/identity/profile/individual/financials'
+    const result = await putRequest(uri, identity)
     const response = await result.json()
     if (result.status === 200) {
       const payload = response.data || {}

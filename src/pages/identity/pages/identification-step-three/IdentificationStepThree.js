@@ -1,17 +1,15 @@
 import React, { useEffect, useState, useCallback } from 'react'
 import { Grid, Card, TextField, Typography, Box, Button, CircularProgress, Snackbar, IconButton } from '@material-ui/core'
-import { useIdentityState, useIdentityDispatch, getIdentity, saveIdentity, IDENTITY_STATUS } from 'context/IdentityContext'
+import { useIdentityState, useIdentityDispatch, getIdentity, IDENTITY_STATUS } from 'context/IdentityContext'
 import { useForm, Controller } from 'react-hook-form'
 import IdentityProgress from 'pages/identity/components/IdentityProgress'
 import * as yup from 'yup'
 import { useMemo } from 'react'
 import Alert from '@material-ui/lab/Alert'
 import CloseIcon from '@material-ui/icons/Close'
-import { useHistory } from 'react-router-dom'
-import { COUNTRIES, COUNTRIES_OPTS } from 'const/countries'
-import SelectGroup from 'pages/identity/components/SelectGroup/SelectGroup'
+import UploadSection from 'pages/identity/components/UploadSection'
 
-export default function IdentificationStepTwo () {
+export default function IdentificationStepThree () {
   const {
     status,
     handleSubmit,
@@ -30,7 +28,7 @@ export default function IdentificationStepTwo () {
             <Typography component='h1' variant='h3' align='center'>Identification</Typography>
 
             <Box mt={3}>
-              <IdentityProgress activeStep={1} />
+              <IdentityProgress activeStep={2} />
             </Box>
 
             {['INIT', 'GETTING'].includes(status) ? (
@@ -41,28 +39,47 @@ export default function IdentificationStepTwo () {
               <Alert severity='error'>{error.get}</Alert>
             ) : (
               <>
-                <Box mt={4}>
-                  <Grid container spacing={3}>
-                    <Grid item xs={12} sm={6} style={{ paddingTop: 0, paddingBottom: 0 }}>
-                      <Controller as={TextField} fullWidth margin='dense' label='Unit' {...fields.unit} />
-                      <Controller as={TextField} fullWidth margin='dense' label='Line 1' {...fields.line1} />
-                      <Controller as={TextField} fullWidth margin='dense' label='Line 2' {...fields.line2} />
-                      <Controller as={TextField} fullWidth margin='dense' label='City' {...fields.city} />
-                    </Grid>
-                    <Grid item xs={12} sm={6} style={{ paddingTop: 0, paddingBottom: 0 }}>
-                      <Controller as={TextField} fullWidth margin='dense' label='Postal Code' {...fields.postalCode} />
-                      <Controller as={TextField} fullWidth margin='dense' label='State' {...fields.state} />
-                      <SelectGroup label='Country' {...fields.country} />
-                      <SelectGroup label='Country of Residence' {...fields.countryOfResidence} />
-                    </Grid>
-                  </Grid>
+                <Box mx='auto' mt={4} maxWidth='32rem'>
+                  <UploadSection
+                    label='ID Photo'
+                    emptyLabel='Please upload a photo or scan or your passport.'
+                    {...fields.passport}
+                  />
+
+                  <Box mt={1}>
+                    <Controller as={TextField}
+                      fullWidth
+                      width='100%'
+                      margin='dense'
+                      label='ID Type'
+                      {...fields.idType}
+                      helperText={fields.idType.error ? fields.idType.helperText : 'Please type in your ID type.'}
+                    />
+
+                    <Controller as={TextField}
+                      fullWidth
+                      width='100%'
+                      margin='dense'
+                      label='ID No.'
+                      {...fields.idNumber}
+                      helperText={fields.idNumber.error ? fields.idNumber.helperText : 'Please type in your ID no.'}
+                    />
+
+                    <Box mt={6}>
+                      <UploadSection
+                        label='Utility Bill'
+                        emptyLabel='Please upload a photo or scan of a recent utility bill.'
+                        {...fields.utilityBill}
+                      />
+                    </Box>
+                  </Box>
                 </Box>
 
-                <Box display='flex' justifyContent='flex-end' mt={8}>
+                <Box display='flex' justifyContent='flex-end' mt={6}>
                   <Button disabled={!isValid || status !== 'IDLE'} type='submit' variant='contained' color='primary'>
                     {status === 'SAVING'
                       ? 'Saving...'
-                      : 'Save & Next'}
+                      : 'Upload & Finish'}
                   </Button>
                 </Box>
               </>
@@ -87,14 +104,24 @@ export default function IdentificationStepTwo () {
 // ############################################################
 
 const useIdentityFormLogic = () => {
-  const { status, shouldCreateNew, identity, error } = useIdentityState()
+  const { status, identity, error } = useIdentityState()
   const [snackbarError, setSnackbarError] = useState('')
   const idDispatch = useIdentityDispatch()
   const validationSchema = useMemo(createSchema, [])
   const methods = useForm({ validationSchema })
-  const { handleSubmit: rhfHandleSubmit, errors, control, setValue, formState } = methods
+
+  const {
+    handleSubmit: rhfHandleSubmit,
+    errors,
+    control,
+    setValue,
+    formState,
+    register,
+    triggerValidation,
+    watch
+  } = methods
+
   const isValid = formState.isSubmitted ? formState.isValid : true
-  const history = useHistory()
 
   const handleSnackbarErrorClose = useCallback(() => setSnackbarError(''), [])
 
@@ -113,8 +140,12 @@ const useIdentityFormLogic = () => {
       })
   }, [identity]) // eslint-disable-line react-hooks/exhaustive-deps
 
-  // fetch identity data for initial values
   useEffect(() => {
+    // register file inputs
+    register({ name: 'passport' })
+    register({ name: 'utilityBill' })
+
+    // fetch identity data for initial values
     if (status === IDENTITY_STATUS.INIT) {
       getIdentity(idDispatch).catch(() => {})
     }
@@ -122,11 +153,7 @@ const useIdentityFormLogic = () => {
 
   // saves identity data for on form submit
   const handleSubmit = rhfHandleSubmit(formData => {
-    const newIdentity = { ...formData, firstName: identity.firstName }
-
-    saveIdentity(idDispatch, newIdentity, shouldCreateNew)
-      .then(() => history.push('/app/identity/identification-steps/3'))
-      .catch(e => setSnackbarError(e.message || e.toString()))
+    alert('formData: ' + JSON.stringify(formData))
   })
 
   const createFieldProps = (key, overrides) =>
@@ -139,20 +166,21 @@ const useIdentityFormLogic = () => {
       ...overrides
     })
 
+  const handleFileChange = name => files => setValue(name, files)
   const fields = {
-    unit: createFieldProps('unit'),
-    line1: createFieldProps('line1', { required: true }),
-    line2: createFieldProps('line2'),
-    city: createFieldProps('city', { required: true }),
-    postalCode: createFieldProps('postalCode'),
-    state: createFieldProps('state'),
-    country: createFieldProps('country', {
-      options: COUNTRIES_OPTS,
-      required: true
+    idType: createFieldProps('idType', { required: true }),
+    idNumber: createFieldProps('idNumber', { required: true }),
+    passport: createFieldProps('passport', {
+      required: true,
+      onChange: useCallback(handleFileChange('passport'), []), // eslint-disable-line react-hooks/exhaustive-deps
+      value: watch('passport'),
+      triggerValidation
     }),
-    countryOfResidence: createFieldProps('countryOfResidence', {
-      options: COUNTRIES_OPTS,
-      required: true
+    utilityBill: createFieldProps('utilityBill', {
+      required: true,
+      onChange: useCallback(handleFileChange('utilityBill'), []), // eslint-disable-line react-hooks/exhaustive-deps
+      value: watch('utilityBill'),
+      triggerValidation
     })
   }
 
@@ -170,18 +198,8 @@ const useIdentityFormLogic = () => {
 
 const createSchema = () =>
   yup.object().shape({
-    unit: yup.string(),
-    line1: yup.string().required('Line 1 is required'),
-    line2: yup.string(),
-    city: yup.string().required('City is required'),
-    postalCode: yup.string().matches(ALPHA_NUMERIC_OR_EMPTY, "Postal Code may only contain alphabet or numbers"),
-    state: yup.string(),
-    country: yup.mixed()
-      .oneOf(COUNTRIES, 'Country is required')
-      .required('Country is required'),
-    countryOfResidence: yup.mixed()
-      .oneOf(COUNTRIES, 'Country of Residence is required')
-      .required('Country of Residence is required'),
+    idType: yup.string().required('This field is required'),
+    idNumber: yup.string().required('This field is required'),
+    passport: yup.mixed().required('This field is required'),
+    utilityBill: yup.mixed().required('This field is required'),
   })
-
-const ALPHA_NUMERIC_OR_EMPTY = /^([a-z0-9]|(?![\s\S]))+$/i

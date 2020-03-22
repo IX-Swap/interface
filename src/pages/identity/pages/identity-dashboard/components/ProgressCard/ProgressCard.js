@@ -1,7 +1,9 @@
 import React, { createElement } from 'react'
-import { Card, Box, Typography } from '@material-ui/core'
+import { Card, Box, Typography, Button } from '@material-ui/core'
+import { Link } from 'react-router-dom'
 
 export default function ProgressCard ({
+  to,
   title,
   percentage,
   component,
@@ -18,6 +20,15 @@ export default function ProgressCard ({
         </Box>
 
         {createElement(component, props)}
+
+        <Box display='flex' justifyContent='center'>
+        {percentage !== 100 &&
+          <Link to={to} style={{ textDecoration: 'none' }}>
+            <Button color='primary' component='div'>
+              Continue
+            </Button>
+          </Link>}
+        </Box>
       </Box>
     </Card>
   )
