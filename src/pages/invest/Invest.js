@@ -1,17 +1,17 @@
 import React from 'react'
 import { Switch, Route } from 'react-router-dom'
-import DealBoard from './pages/deal-board'
-import DealView from './pages/deal-view'
-import CreateDeal from './pages/create-deal'
+import DsoBoard from './pages/dso-board/DsoBoard'
+import DsoView from './pages/dso-view'
+import CreateDso from './pages/create-dso'
 import { InvestProvider } from 'context/InvestContext'
 
 export default function Invest () {
   return (
     <InvestProvider>
       <Switch>
-        <Route path='/app/invest' exact component={DealBoard} />
-        <Route path='/app/invest/:dealId' exact component={DealView} />
-        <Route path='/app/invest/create-deal' exact component={CreateDeal} />
+        <Route path='/app/invest' exact component={DsoBoard} />
+        <Route path='/app/invest/:dsoId' exact component={DsoView} />
+        <Route path='/app/invest/create-dso' exact component={CreateDso} />
       </Switch>
     </InvestProvider>
   )

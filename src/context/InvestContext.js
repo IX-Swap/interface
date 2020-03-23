@@ -7,12 +7,12 @@ const StateContext = React.createContext()
 const DispatchContext = React.createContext()
 
 const actions = {
-  GET_DEALS_REQUEST: 'GET_DEALS_REQUEST',
-  GET_DEALS_SUCCESS: 'GET_DEALS_SUCCESS',
-  GET_DEALS_FAILURE: 'GET_DEALS_FAILURE',
-  GET_OFFERING_REQUEST: 'GET_OFFERING_REQUEST',
-  GET_OFFERING_SUCCESS: 'GET_OFFERING_SUCCESS',
-  GET_OFFERING_FAILURE: 'GET_OFFERING_FAILURE'
+  GET_DSOLIST_REQUEST: 'GET_DSOLIST_REQUEST',
+  GET_DSOLIST_SUCCESS: 'GET_DSOLIST_SUCCESS',
+  GET_DSOLIST_FAILURE: 'GET_DSOLIST_FAILURE',
+  GET_DSO_REQUEST: 'GET_DSO_REQUEST',
+  GET_DSO_SUCCESS: 'GET_DSO_SUCCESS',
+  GET_DSO_FAILURE: 'GET_DSO_FAILURE'
 }
 
 export const INVEST_STATUS = {
@@ -25,8 +25,8 @@ export const INVEST_STATUS = {
 const STATUS = INVEST_STATUS
 
 const initialState = {
-  deals: {},
-  offering: {},
+  dsoList: [],
+  dsoActiveViewIndex: 0,
   status: STATUS.INIT,
   error: {
     save: null,
@@ -37,33 +37,37 @@ const initialState = {
 // reducer
 export function investReducer (state, { type, payload }) {
   switch (type) {
-    case actions.GET_DEALS_REQUEST:
+    case actions.GET_DSOLIST_REQUEST:
       return {
         ...state,
         status: STATUS.GETTING,
         error: { ...state.error, get: null }
       }
-    case actions.GET_DEALS_SUCCESS:
+    case actions.GET_DSOLIST_SUCCESS:
       return {
         ...state,
         status: STATUS.IDLE,
-        deals: payload.deals
+        dsoList: payload.dsoList
       }
-    case actions.GET_DEALS_FAILURE:
+    case actions.GET_DSOLIST_FAILURE:
       return {
         ...state,
         status: STATUS.IDLE,
         error: { ...state.error, get: payload }
       }
-    case actions.GET_OFFERING_REQUEST:
+    case actions.GET_DSO_REQUEST:
       return {
         ...state,
         status: STATUS.SAVING,
         error: { ...state.error, save: null }
       }
-    case actions.GET_OFFERING_SUCCESS:
-      return { ...state, status: STATUS.IDLE, offering: payload.offering }
-    case actions.GET_OFFERING_FAILURE:
+    case actions.GET_DSO_SUCCESS:
+      return {
+        ...state,
+        status: STATUS.IDLE,
+        offering: payload.dsoActiveViewIndex
+      }
+    case actions.GET_DSO_FAILURE:
       return {
         ...state,
         status: STATUS.IDLE,
@@ -112,75 +116,50 @@ export function useInvestDispatch () {
 }
 
 // actions
-export async function getDeals (dispatch) {
-  dispatch({ type: actions.GET_DEALS_REQUEST })
+export async function getDsoList (dispatch) {
+  dispatch({ type: actions.GET_DSOLIST_REQUEST })
 
   try {
-    const uri = '/issuance/deals'
+    const uri = '/issuance/dso'
     const result = await getRequest(uri)
     const response = await result.json()
     if (result.status === 200) {
-      const deals = response.data || {}
+      const dsoList = response.data || []
       dispatch({
-        type: actions.GET_DEALS_SUCCESS,
-        payload: { deals }
+        type: actions.GET_DSOLIST_SUCCESS,
+        payload: { dsoList }
       })
     } else {
-      dispatch({ type: actions.GET_DEALS_FAILURE, payload: response.message })
+      dispatch({ type: actions.GET_DSOLIST_FAILURE, payload: response.message })
       throw new Error(response.message)
     }
   } catch (err) {
-    const errMsg = err.message || err.toString() || 'Loading deals failed.'
-    dispatch({ type: actions.GET_DEALS_FAILURE, payload: errMsg })
+    const errMsg = err.message || err.toString() || 'Loading dso list failed.'
+    dispatch({ type: actions.GET_DSOLIST_FAILURE, payload: errMsg })
     throw new Error(errMsg)
   }
 }
 
-export async function getOffering (dispatch, dealId) {
-  dispatch({ type: actions.GET_OFFERING_REQUEST })
-
-  try {
-    const uri = `issuance/deals/${dealId}}/offering-terms`
-    const result = await getRequest(uri)
-    const response = await result.json()
-    if (result.status === 200) {
-      const offering = response.data || {}
-      dispatch({
-        type: actions.GET_OFFERING_SUCCESS,
-        payload: { offering }
-      })
-    } else {
-      dispatch({
-        type: actions.GET_OFFERING_FAILURE,
-        payload: response.message
-      })
-      throw new Error(response.message)
-    }
-  } catch (err) {
-    const errMsg = err.message || err.toString() || 'Load offering failed.'
-    dispatch({ type: actions.GET_OFFERING_FAILURE, payload: errMsg })
-    throw new Error(errMsg)
-  }
-}
-// export async function saveDeal (dispatch, deal, shouldCreateNew) {
-//   dispatch({ type: actions.SAVE_INVEST_REQUEST })
+// export async function setActiveDso (dispatch, dsoId) {
+//   dispatch({ type: actions.GET_DSOLIST_REQUEST })
 
 //   try {
-//     const uri = '/issuance/deals'
-//     const result = shouldCreateNew
-//       ? await postRequest(uri, deal)
-//       : await putRequest(uri, deal)
-//     const response = await result.json()
 //     if (result.status === 200) {
-//       const payload = response.data || {}
-//       dispatch({ type: actions.SAVE_INVEST_SUCCESS, payload })
+//       const offering = response.data || {}
+//       dispatch({
+//         type: actions.GET_DSOLIST_SUCCESS,
+//         payload: { dsoActiveViewIndex }
+//       })
 //     } else {
-//       dispatch({ type: actions.SAVE_INVEST_FAILURE, payload: response.message })
+//       dispatch({
+//         type: actions.GET_DSOLIST_FAILURE,
+//         payload: response.message
+//       })
 //       throw new Error(response.message)
 //     }
 //   } catch (err) {
-//     const errMsg = err.message || err.toString() || 'Saving deal failed.'
-//     dispatch({ type: actions.SAVE_INVEST_FAILURE, payload: errMsg })
+//     const errMsg = err.message || err.toString() || 'Loading dso failed.'
+//     dispatch({ type: actions.GET_DSOLIST_FAILURE, payload: errMsg })
 //     throw new Error(errMsg)
 //   }
 // }

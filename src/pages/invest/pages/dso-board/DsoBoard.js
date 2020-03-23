@@ -1,27 +1,27 @@
 import React, { useEffect } from 'react'
 import { Grid, Box, CircularProgress } from '@material-ui/core'
-import DealCard from './DealCard'
+import DsoCard from './DsoCard'
 
 import {
   INVEST_STATUS,
   useInvestState,
   useInvestDispatch,
-  getDeals
+  getDsoList
 } from '../../../../context/InvestContext'
 
-export default function DealBoard () {
-  const { deals, areDealsReady, error } = useDealBoardLogic()
+export default function DsoBoard () {
+  const { dsoList, isDsoListReady, error } = useDsoBoardLogic()
   return (
     <Grid component='article' container spacing={3}>
-      {!areDealsReady ? (
+      {!isDsoListReady ? (
         <Box p={3} display='flex' justifyContent='center'>
           <CircularProgress size={48} />
         </Box>
       ) : (
-        deals.map((deal, id) => {
+        dsoList.map((dso, id) => {
           return (
-            <Grid key={id} item xs={12} md={12} lg={6}>
-              <DealCard deal={deal} />
+            <Grid key={id} item xs={12} md={12} lg={5}>
+              <DsoCard dso={dso} />
             </Grid>
           )
         })
@@ -30,9 +30,9 @@ export default function DealBoard () {
   )
 }
 
-const useDealBoardLogic = () => {
-  const { status: investStatus, deals, ...invest } = useInvestState()
-  const areDealsReady = ![INVEST_STATUS.INIT, INVEST_STATUS.GETTING].includes(
+const useDsoBoardLogic = () => {
+  const { status: investStatus, dsoList, ...invest } = useInvestState()
+  const isDsoListReady = ![INVEST_STATUS.INIT, INVEST_STATUS.GETTING].includes(
     investStatus
   )
   const error = invest.error
@@ -41,9 +41,9 @@ const useDealBoardLogic = () => {
   useEffect(() => {
     // fetch deals data for initial values
     if (investStatus === INVEST_STATUS.INIT) {
-      getDeals(investDispatch).catch(() => {})
+      getDsoList(investDispatch).catch(() => {})
     }
   }, [investStatus])
 
-  return { areDealsReady, deals, error }
+  return { isDsoListReady, dsoList, error }
 }

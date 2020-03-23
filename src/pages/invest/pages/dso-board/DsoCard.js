@@ -8,30 +8,30 @@ import Grid from '@material-ui/core/Grid'
 import Box from '@material-ui/core/Box'
 import Chip from '@material-ui/core/Chip'
 
-export default function DealCard ({ deal }) {
+export default function DsoCard ({ dso }) {
   return (
     <Card>
       <CardContent>
         <Grid container spacing={4}>
           <Grid item sm={7} md={8} lg={8}>
-            <img width={100} height={100} src={deal.logo} />
+            <img width={100} height={100} src={dso.logo} />
             <Box pt={3} pb={2}>
               <Typography variant='h3' component='h2'>
-                {deal.title}
+                {dso.title}
               </Typography>
             </Box>
 
             <Typography variant='body2' component='p'>
               <span
                 dangerouslySetInnerHTML={{
-                  __html: deal.summary
+                  __html: dso.summary
                 }}
               />
             </Typography>
           </Grid>
           <Grid item sm={5} md={4} lg={4}>
             <Box display='flex' justifyContent='flex-end' m={1} p={1}>
-              <Chip label={deal.status} clickable color='primary' />
+              <Chip label={dso.status} clickable color='primary' />
             </Box>
             <Typography variant='h5' component='h2'>
               Highlights
@@ -41,7 +41,7 @@ export default function DealCard ({ deal }) {
               <Typography variant='body2' component='p'>
                 <span
                   dangerouslySetInnerHTML={{
-                    __html: deal.investmentHightlights
+                    __html: dso.highlights
                   }}
                 />
               </Typography>
