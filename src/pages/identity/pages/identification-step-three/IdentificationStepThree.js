@@ -8,6 +8,7 @@ import { useMemo } from 'react'
 import Alert from '@material-ui/lab/Alert'
 import CloseIcon from '@material-ui/icons/Close'
 import UploadSection from 'pages/identity/components/UploadSection'
+import { postRequest } from 'context/httpRequests'
 
 export default function IdentificationStepThree () {
   const {
@@ -43,7 +44,7 @@ export default function IdentificationStepThree () {
                   <UploadSection
                     label='ID Photo'
                     emptyLabel='Please upload a photo or scan or your passport.'
-                    {...fields.passport}
+                    {...fields.idFile}
                   />
 
                   <Box mt={1}>
@@ -69,7 +70,7 @@ export default function IdentificationStepThree () {
                       <UploadSection
                         label='Utility Bill'
                         emptyLabel='Please upload a photo or scan of a recent utility bill.'
-                        {...fields.utilityBill}
+                        {...fields.utilityBillFile}
                       />
                     </Box>
                   </Box>
@@ -142,8 +143,8 @@ const useIdentityFormLogic = () => {
 
   useEffect(() => {
     // register file inputs
-    register({ name: 'passport' })
-    register({ name: 'utilityBill' })
+    register({ name: 'idFile' })
+    register({ name: 'utilityBillFile' })
 
     // fetch identity data for initial values
     if (status === IDENTITY_STATUS.INIT) {
@@ -153,7 +154,7 @@ const useIdentityFormLogic = () => {
 
   // saves identity data for on form submit
   const handleSubmit = rhfHandleSubmit(formData => {
-    alert('formData: ' + JSON.stringify(formData))
+    requestUpload({ ...formData, type: 'Passport' }).finally(console.log)
   })
 
   const createFieldProps = (key, overrides) =>
@@ -170,16 +171,16 @@ const useIdentityFormLogic = () => {
   const fields = {
     idType: createFieldProps('idType', { required: true }),
     idNumber: createFieldProps('idNumber', { required: true }),
-    passport: createFieldProps('passport', {
+    idFile: createFieldProps('idFile', {
       required: true,
-      onChange: useCallback(handleFileChange('passport'), []), // eslint-disable-line react-hooks/exhaustive-deps
-      value: watch('passport'),
+      onChange: useCallback(handleFileChange('idFile'), []), // eslint-disable-line react-hooks/exhaustive-deps
+      value: watch('idFile'),
       triggerValidation
     }),
-    utilityBill: createFieldProps('utilityBill', {
+    utilityBillFile: createFieldProps('utilityBillFile', {
       required: true,
-      onChange: useCallback(handleFileChange('utilityBill'), []), // eslint-disable-line react-hooks/exhaustive-deps
-      value: watch('utilityBill'),
+      onChange: useCallback(handleFileChange('utilityBillFile'), []), // eslint-disable-line react-hooks/exhaustive-deps
+      value: watch('utilityBillFile'),
       triggerValidation
     })
   }
@@ -200,6 +201,17 @@ const createSchema = () =>
   yup.object().shape({
     idType: yup.string().required('This field is required'),
     idNumber: yup.string().required('This field is required'),
-    passport: yup.mixed().required('This field is required'),
-    utilityBill: yup.mixed().required('This field is required'),
+    idFile: yup.mixed().required('This field is required'),
+    utilityBillFile: yup.mixed().required('This field is required'),
   })
+
+const requestUpload = ({ idFile, idNumber, type }) => {
+  const formData = new FormData()
+
+  formData.append('title', idNumber)
+  formData.append('documents', idFile[0])
+  formData.append('remarks', 'none')
+  formData.append('type', type)
+
+  return postRequest('/dataroom', formData)
+}

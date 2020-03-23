@@ -2,18 +2,33 @@ import { apiUrl } from './config'
 
 export async function postRequest (uri, payload) {
   const bearerToken = localStorage.getItem('id_token')
+
+  for (const entry of payload.entries()) {
+    console.log('>>> is formdata', payload instanceof FormData)
+    console.log('>>> entry', entry);
+
+    if (entry[0] === 'documents') {
+      console.log('>>> file', entry[1])
+      console.log('>>> file name', entry[1].name)
+    }
+  }
+
   return await fetch(apiUrl + uri, {
     method: 'POST', // *GET, POST, PUT, DELETE, etc.
     mode: 'cors', // no-cors, *cors, same-origin
     cache: 'no-cache', // *default, no-cache, reload, force-cache, only-if-cached
     credentials: 'same-origin', // include, *same-origin, omit
     headers: {
-      'Content-Type': 'application/json',
-      Authorization: `Bearer ${bearerToken}`
+      Authorization: `Bearer ${bearerToken}`,
+      ...(payload instanceof FormData
+        ? {}
+        : { 'Content-Type': 'application/json' })
     },
     redirect: 'follow', // manual, *follow, error
     referrerPolicy: 'no-referrer', // no-referrer, *client
-    body: JSON.stringify(payload)
+    body: payload instanceof FormData
+      ? payload
+      : JSON.stringify(payload)
   })
 }
 
