@@ -1,0 +1,6 @@
+{
+  "name": "dealview",
+  "version": "1.0.0",
+  "private": true,
+  "main": "DealView.js"
+}

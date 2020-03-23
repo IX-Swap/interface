@@ -247,7 +247,7 @@ function Login (props) {
           )}
         </div>
         <Typography color='primary' className={classes.copyright}>
-          © 2020 InvestX, All rights reserved.
+          © 2020 InvestaX, All rights reserved.
         </Typography>
       </div>
     </Grid>

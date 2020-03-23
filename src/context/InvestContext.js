@@ -7,12 +7,12 @@ const StateContext = React.createContext()
 const DispatchContext = React.createContext()
 
 const actions = {
-  GET_INVEST_REQUEST: 'GET_INVEST_REQUEST',
-  GET_INVEST_SUCCESS: 'GET_INVEST_SUCCESS',
-  GET_INVEST_FAILURE: 'GET_INVEST_FAILURE',
-  SAVE_INVEST_REQUEST: 'SAVE_INVEST_REQUEST',
-  SAVE_INVEST_SUCCESS: 'SAVE_INVEST_SUCCESS',
-  SAVE_INVEST_FAILURE: 'SAVE_INVEST_FAILURE'
+  GET_DEALS_REQUEST: 'GET_DEALS_REQUEST',
+  GET_DEALS_SUCCESS: 'GET_DEALS_SUCCESS',
+  GET_DEALS_FAILURE: 'GET_DEALS_FAILURE',
+  GET_OFFERING_REQUEST: 'GET_OFFERING_REQUEST',
+  GET_OFFERING_SUCCESS: 'GET_OFFERING_SUCCESS',
+  GET_OFFERING_FAILURE: 'GET_OFFERING_FAILURE'
 }
 
 export const INVEST_STATUS = {
@@ -25,9 +25,9 @@ export const INVEST_STATUS = {
 const STATUS = INVEST_STATUS
 
 const initialState = {
-  investments: {},
+  deals: {},
+  offering: {},
   status: STATUS.INIT,
-  shouldCreateNew: false,
   error: {
     save: null,
     get: null
@@ -37,34 +37,33 @@ const initialState = {
 // reducer
 export function investReducer (state, { type, payload }) {
   switch (type) {
-    case actions.GET_INVEST_REQUEST:
+    case actions.GET_DEALS_REQUEST:
       return {
         ...state,
         status: STATUS.GETTING,
         error: { ...state.error, get: null }
       }
-    case actions.GET_INVEST_SUCCESS:
+    case actions.GET_DEALS_SUCCESS:
       return {
         ...state,
         status: STATUS.IDLE,
-        invest: payload.invest,
-        shouldCreateNew: payload.shouldCreateNew
+        deals: payload.deals
       }
-    case actions.GET_INVEST_FAILURE:
+    case actions.GET_DEALS_FAILURE:
       return {
         ...state,
         status: STATUS.IDLE,
         error: { ...state.error, get: payload }
       }
-    case actions.SAVE_INVEST_REQUEST:
+    case actions.GET_OFFERING_REQUEST:
       return {
         ...state,
         status: STATUS.SAVING,
         error: { ...state.error, save: null }
       }
-    case actions.SAVE_INVEST_SUCCESS:
-      return { ...state, status: STATUS.IDLE, invest: payload }
-    case actions.SAVE_INVEST_FAILURE:
+    case actions.GET_OFFERING_SUCCESS:
+      return { ...state, status: STATUS.IDLE, offering: payload.offering }
+    case actions.GET_OFFERING_FAILURE:
       return {
         ...state,
         status: STATUS.IDLE,
@@ -113,50 +112,75 @@ export function useInvestDispatch () {
 }
 
 // actions
-export async function getInvest (dispatch) {
-  dispatch({ type: actions.GET_INVEST_REQUEST })
+export async function getDeals (dispatch) {
+  dispatch({ type: actions.GET_DEALS_REQUEST })
 
   try {
     const uri = '/issuance/deals'
     const result = await getRequest(uri)
     const response = await result.json()
     if (result.status === 200) {
-      const invest = response.data || {}
-      const shouldCreateNew = !response.data
+      const deals = response.data || {}
       dispatch({
-        type: actions.GET_INVEST_SUCCESS,
-        payload: { invest, shouldCreateNew }
+        type: actions.GET_DEALS_SUCCESS,
+        payload: { deals }
       })
     } else {
-      dispatch({ type: actions.GET_INVEST_FAILURE, payload: response.message })
+      dispatch({ type: actions.GET_DEALS_FAILURE, payload: response.message })
       throw new Error(response.message)
     }
   } catch (err) {
-    const errMsg = err.message || err.toString() || 'Loading profile failed.'
-    dispatch({ type: actions.GET_INVEST_FAILURE, payload: errMsg })
+    const errMsg = err.message || err.toString() || 'Loading deals failed.'
+    dispatch({ type: actions.GET_DEALS_FAILURE, payload: errMsg })
     throw new Error(errMsg)
   }
 }
 
-export async function saveInvest (dispatch, deal, shouldCreateNew) {
-  dispatch({ type: actions.SAVE_INVEST_REQUEST })
+export async function getOffering (dispatch, dealId) {
+  dispatch({ type: actions.GET_OFFERING_REQUEST })
 
   try {
-    const uri = '/issuance/deals'
-    const result = shouldCreateNew
-      ? await postRequest(uri, deal)
-      : await putRequest(uri, deal)
+    const uri = `issuance/deals/${dealId}}/offering-terms`
+    const result = await getRequest(uri)
     const response = await result.json()
     if (result.status === 200) {
-      const payload = response.data || {}
-      dispatch({ type: actions.SAVE_INVEST_SUCCESS, payload })
+      const offering = response.data || {}
+      dispatch({
+        type: actions.GET_OFFERING_SUCCESS,
+        payload: { offering }
+      })
     } else {
-      dispatch({ type: actions.SAVE_INVEST_FAILURE, payload: response.message })
+      dispatch({
+        type: actions.GET_OFFERING_FAILURE,
+        payload: response.message
+      })
       throw new Error(response.message)
     }
   } catch (err) {
-    const errMsg = err.message || err.toString() || 'Saving deal failed.'
-    dispatch({ type: actions.SAVE_INVEST_FAILURE, payload: errMsg })
+    const errMsg = err.message || err.toString() || 'Load offering failed.'
+    dispatch({ type: actions.GET_OFFERING_FAILURE, payload: errMsg })
     throw new Error(errMsg)
   }
 }
+// export async function saveDeal (dispatch, deal, shouldCreateNew) {
+//   dispatch({ type: actions.SAVE_INVEST_REQUEST })
+
+//   try {
+//     const uri = '/issuance/deals'
+//     const result = shouldCreateNew
+//       ? await postRequest(uri, deal)
+//       : await putRequest(uri, deal)
+//     const response = await result.json()
+//     if (result.status === 200) {
+//       const payload = response.data || {}
+//       dispatch({ type: actions.SAVE_INVEST_SUCCESS, payload })
+//     } else {
+//       dispatch({ type: actions.SAVE_INVEST_FAILURE, payload: response.message })
+//       throw new Error(response.message)
+//     }
+//   } catch (err) {
+//     const errMsg = err.message || err.toString() || 'Saving deal failed.'
+//     dispatch({ type: actions.SAVE_INVEST_FAILURE, payload: errMsg })
+//     throw new Error(errMsg)
+//   }
+// }

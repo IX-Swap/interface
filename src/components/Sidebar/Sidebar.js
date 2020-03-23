@@ -1,21 +1,18 @@
 import React, { useState, useEffect } from 'react'
 import { Drawer, IconButton, List } from '@material-ui/core'
-import {
-  // PermIdentity as IdentityIcon,
-  // NoteAdd as NoteIcon,
-  // InsertChart as ChartIcon,
-  // Lock as LockIcon,
-  Business as BusinessIcon,
-  // Home as HomeIcon,
-  // NotificationsNone as NotificationsIcon,
-  // FormatSize as TypographyIcon,
-  // FilterNone as UIElementsIcon,
-  // BorderAll as TableIcon,
-  QuestionAnswer as SupportIcon,
-  LibraryBooks as LibraryIcon,
-  HelpOutline as FAQIcon,
-  ArrowBack as ArrowBackIcon
-} from '@material-ui/icons'
+
+import DashboardIcon from '@material-ui/icons/Dashboard'
+import BusinessIcon from '@material-ui/icons/Business'
+import SettingsIcon from '@material-ui/icons/Settings'
+import ShowChartIcon from '@material-ui/icons/ShowChart'
+import HelpIcon from '@material-ui/icons/Help'
+import PermIdentityIcon from '@material-ui/icons/PermIdentity'
+import ArrowBackIcon from '@material-ui/icons/ArrowBack'
+import SecurityIcon from '@material-ui/icons/Security'
+import CodeIcon from '@material-ui/icons/Code'
+import AccountBalanceIcon from '@material-ui/icons/AccountBalance'
+import PieChartIcon from '@material-ui/icons/PieChart'
+
 import { useTheme } from '@material-ui/styles'
 import { withRouter } from 'react-router-dom'
 import classNames from 'classnames'
@@ -37,21 +34,21 @@ import {
 const structure = [
   {
     id: 0,
-    label: 'Developer Panel',
-    link: '/app/developer-panel',
-    icon: <BusinessIcon />
+    label: 'Dashboard',
+    link: '/app/dashboard',
+    icon: <DashboardIcon />
   },
   {
     id: 1,
     label: 'Invest',
-    link: '/app/primary',
-    icon: <BusinessIcon />
+    link: '/app/invest',
+    icon: <PieChartIcon />
   },
   {
-    id: 1,
+    id: 2,
     label: 'Trade',
-    link: '/app/primary',
-    icon: <BusinessIcon />
+    link: '/app/trade',
+    icon: <ShowChartIcon />
   },
   // { id: 2, label: 'Secondary', link: '/app/secondary', icon: <ChartIcon /> },
   // {
@@ -61,24 +58,40 @@ const structure = [
   //   icon: <LockIcon />
   // },
   {
-    id: 4,
+    id: 3,
     label: 'Accounts',
-    link: '/app/ui',
-    icon: <BusinessIcon />,
+    link: '/app/accounts',
+    icon: <AccountBalanceIcon />,
     children: [
-      { label: 'Transactions', link: '/app/ui/icons' },
-      { label: 'Identity', link: '/app/ui/charts' },
-      { label: 'Reports', link: '/app/ui/maps' },
-      { label: 'Settings', link: '/app/ui/maps' }
+      { label: 'Cash', link: '/app/cash' },
+      { label: 'Assets', link: '/app/assets' },
+      { label: 'Reports', link: '/app/reports' }
+    ]
+  },
+
+  {
+    id: 4,
+    label: 'Settings',
+    link: '/app/settings',
+    icon: <SettingsIcon />,
+    children: [
+      { label: 'Identity', link: '/app/identity', icon: <PermIdentityIcon /> },
+      { label: 'Security', link: '/app/security', icon: <SecurityIcon /> }
     ]
   },
   {
-    id: 1,
+    id: 5,
     label: 'Support',
     link: '/app/primary',
-    icon: <BusinessIcon />
+    icon: <HelpIcon />
+  },
+  { id: 6, type: 'divider' },
+  {
+    id: 7,
+    label: 'Developer Panel',
+    link: '/app/developer-panel',
+    icon: <CodeIcon />
   }
-  // { id: 5, type: 'divider' },
   // { id: 6, type: 'title', label: 'HELP' },
   // { id: 7, label: 'Documentation', link: '', icon: <LibraryIcon /> },
   // { id: 8, label: 'Support', link: '', icon: <SupportIcon /> },
