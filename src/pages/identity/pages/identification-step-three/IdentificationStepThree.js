@@ -28,7 +28,7 @@ export default function IdentificationStepThree () {
           <Box p={3}>
             <Typography component='h1' variant='h3' align='center'>Identification</Typography>
 
-            <Box mt={3}>
+            <Box mt={3} mx={-3}>
               <IdentityProgress activeStep={2} />
             </Box>
 

@@ -16,51 +16,45 @@ export default function IdentityDashboard () {
     accreditationProgress
   } = useIdentityDashboardLogic()
 
-  const idProgressJsx =
-    <ProgressCard
-      completed
-      to={`/app/identity/identification-steps/${identityProgress.activeStep + 2}`}
-      title='Identification'
-      component={IdentityProgress}
-      {...identityProgress}
-    />
+  const progressesJsx =
+    <>
+      <ProgressCard
+        completed
+        to={`/app/identity/identification-steps/${identityProgress.activeStep + 2}`}
+        title='Identification'
+        component={IdentityProgress}
+        {...identityProgress}
+      />
+      <Box mt={3}>
+        <ProgressCard
+          completed
+          to={`/app/identity/financials-steps/${financialsProgress.activeStep + 2}`}
+          title='Financials'
+          component={FinancialsProgress}
+          {...financialsProgress}
+        />
+      </Box>
+      <Box mt={3}>
+        <ProgressCard
+          completed
+          to={`/app/identity/accreditation-steps/${accreditationProgress.activeStep + 2}`}
+          title='Accreditation'
+          component={AccreditationProgress}
+          {...accreditationProgress}
+        />
+      </Box>
+    </>
 
   return (
     <Grid component='article' container spacing={3}>
       <Grid item xs={12}>
-        {isProgressReady &&
-          <Hidden mdUp>
-            {idProgressJsx}
-          </Hidden>}
+        {isProgressReady && <Hidden mdUp>{progressesJsx}</Hidden>}
       </Grid>
       <Grid component='section' item xs={12} md={7}>
         <IdentityOverview />
       </Grid>
       <Grid item xs={12} md={5}>
-        {isProgressReady &&
-          <>
-            <Hidden smDown>
-              {idProgressJsx}
-            </Hidden>
-            <Box mt={3}>
-              <ProgressCard
-                completed
-                to={`/app/identity/financials-steps/${financialsProgress.activeStep + 2}`}
-                title='Financials'
-                component={FinancialsProgress}
-                {...financialsProgress}
-              />
-            </Box>
-            <Box mt={3}>
-              <ProgressCard
-                completed
-                to={`/app/identity/accreditation-steps/${accreditationProgress.activeStep + 2}`}
-                title='Accreditation'
-                component={AccreditationProgress}
-                {...accreditationProgress}
-              />
-            </Box>
-          </>}
+        {isProgressReady && <Hidden smDown>{progressesJsx}</Hidden>}
       </Grid>
     </Grid>
   )

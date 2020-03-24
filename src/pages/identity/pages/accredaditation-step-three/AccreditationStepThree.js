@@ -29,7 +29,7 @@ export default function AccreditationStepOne () {
             <Typography component='h1' variant='h3' align='center'>Accreditation</Typography>
 
             {/* Progress Section */}
-            <Box mt={3}>
+            <Box mt={3} mx={-3}>
               <AccreditationProgress activeStep={2} />
             </Box>
 
