@@ -7,8 +7,28 @@ import Typography from '@material-ui/core/Typography'
 import Grid from '@material-ui/core/Grid'
 import Box from '@material-ui/core/Box'
 import Chip from '@material-ui/core/Chip'
+import MUIRichTextEditor from 'mui-rte'
+import { createMuiTheme, MuiThemeProvider } from '@material-ui/core/styles'
+import { Link } from 'react-router-dom'
 
-export default function DsoCard ({ dso }) {
+const defaultTheme = createMuiTheme()
+
+Object.assign(defaultTheme, {
+  overrides: {
+    MUIRichTextEditor: {
+      root: {
+        marginTop: 20,
+        width: '100%'
+      },
+      editor: {
+        padding: 10
+      }
+    }
+  }
+})
+
+export default function DsoCard (props) {
+  const { dso, history } = props
   return (
     <Card>
       <CardContent>
@@ -36,22 +56,34 @@ export default function DsoCard ({ dso }) {
             <Typography variant='h5' component='h2'>
               Highlights
             </Typography>
-
-            <Box mt={3}>
-              <Typography variant='body2' component='p'>
-                <span
-                  dangerouslySetInnerHTML={{
-                    __html: dso.highlights
-                  }}
-                />
-              </Typography>
-            </Box>
+            <MuiThemeProvider theme={defaultTheme}>
+              <MUIRichTextEditor
+                value={dso.highlights}
+                toolbar={false}
+                readOnly={true}
+                controls={[
+                  'title',
+                  'bold',
+                  'italic',
+                  'underline',
+                  'link',
+                  'numberList',
+                  'bulletList',
+                  'save'
+                ]}
+              />
+            </MuiThemeProvider>
           </Grid>
         </Grid>
       </CardContent>
       <CardActions>
         <Box p={3}>
-          <Button variant='contained' color='default' size='small'>
+          <Button
+            variant='contained'
+            color='default'
+            size='small'
+            onClick={() => props.history.push(`/app/invest/${dso._id}`)}
+          >
             View
           </Button>
         </Box>

@@ -9,7 +9,7 @@ import {
   getDsoList
 } from '../../../../context/InvestContext'
 
-export default function DsoBoard () {
+export default function DsoBoard ({ history }) {
   const { dsoList, isDsoListReady, error } = useDsoBoardLogic()
   return (
     <Grid component='article' container spacing={3}>
@@ -21,7 +21,7 @@ export default function DsoBoard () {
         dsoList.map((dso, id) => {
           return (
             <Grid key={id} item xs={12} md={12} lg={5}>
-              <DsoCard dso={dso} />
+              <DsoCard history={history} dso={dso} />
             </Grid>
           )
         })

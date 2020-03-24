@@ -12,7 +12,10 @@ const actions = {
   GET_DSOLIST_FAILURE: 'GET_DSOLIST_FAILURE',
   GET_DSO_REQUEST: 'GET_DSO_REQUEST',
   GET_DSO_SUCCESS: 'GET_DSO_SUCCESS',
-  GET_DSO_FAILURE: 'GET_DSO_FAILURE'
+  GET_DSO_FAILURE: 'GET_DSO_FAILURE',
+  SAVE_DSO_REQUEST: 'SAVE_DSO_REQUEST',
+  SAVE_DSO_SUCCESS: 'SAVE_DSO_SUCCESS',
+  SAVE_DSO_FAILURE: 'SAVE_DSO_FAILURE'
 }
 
 export const INVEST_STATUS = {
@@ -26,7 +29,7 @@ const STATUS = INVEST_STATUS
 
 const initialState = {
   dsoList: [],
-  dsoActiveViewIndex: 0,
+  dso: {},
   status: STATUS.INIT,
   error: {
     save: null,
@@ -58,20 +61,38 @@ export function investReducer (state, { type, payload }) {
     case actions.GET_DSO_REQUEST:
       return {
         ...state,
-        status: STATUS.SAVING,
-        error: { ...state.error, save: null }
+        status: STATUS.GETTING,
+        error: { ...state.error, get: null }
       }
     case actions.GET_DSO_SUCCESS:
       return {
         ...state,
         status: STATUS.IDLE,
-        offering: payload.dsoActiveViewIndex
+        dso: payload.dso
       }
     case actions.GET_DSO_FAILURE:
       return {
         ...state,
         status: STATUS.IDLE,
-        error: { ...state.error, save: payload }
+        error: { ...state.error, get: payload }
+      }
+    case actions.SAVE_DSO_REQUEST:
+      return {
+        ...state,
+        status: STATUS.SAVING,
+        error: { ...state.error, get: null }
+      }
+    case actions.SAVE_DSO_SUCCESS:
+      return {
+        ...state,
+        status: STATUS.IDLE,
+        dso: payload.dso
+      }
+    case actions.SAVE_DSO_FAILURE:
+      return {
+        ...state,
+        status: STATUS.IDLE,
+        error: { ...state.error, get: payload }
       }
     default:
       throw new Error(`Unhandled action type: ${type}`)
@@ -140,26 +161,58 @@ export async function getDsoList (dispatch) {
   }
 }
 
-// export async function setActiveDso (dispatch, dsoId) {
-//   dispatch({ type: actions.GET_DSOLIST_REQUEST })
+export async function getDso (dispatch, dsoId) {
+  dispatch({ type: actions.GET_DSO_REQUEST })
 
-//   try {
-//     if (result.status === 200) {
-//       const offering = response.data || {}
-//       dispatch({
-//         type: actions.GET_DSOLIST_SUCCESS,
-//         payload: { dsoActiveViewIndex }
-//       })
-//     } else {
-//       dispatch({
-//         type: actions.GET_DSOLIST_FAILURE,
-//         payload: response.message
-//       })
-//       throw new Error(response.message)
-//     }
-//   } catch (err) {
-//     const errMsg = err.message || err.toString() || 'Loading dso failed.'
-//     dispatch({ type: actions.GET_DSOLIST_FAILURE, payload: errMsg })
-//     throw new Error(errMsg)
-//   }
-// }
+  try {
+    const uri = `/issuance/dso/${dsoId}`
+    const result = await getRequest(uri)
+    const response = await result.json()
+    const dso = response.data[0]
+
+    if (result.status === 200) {
+      dispatch({
+        type: actions.GET_DSO_SUCCESS,
+        payload: { dso }
+      })
+    } else {
+      dispatch({
+        type: actions.GET_DSO_FAILURE,
+        payload: response.message
+      })
+      throw new Error(response.message)
+    }
+  } catch (err) {
+    const errMsg = err.message || err.toString() || 'Loading dso failed.'
+    dispatch({ type: actions.GET_DSO_FAILURE, payload: errMsg })
+    throw new Error(errMsg)
+  }
+}
+
+export async function saveDso (dispatch, dsoId, payload) {
+  dispatch({ type: actions.SAVE_DSO_REQUEST })
+
+  try {
+    const uri = `/issuance/dso/${dsoId}`
+    const result = await putRequest(uri, payload)
+    const response = await result.json()
+    if (result.status === 200) {
+      const dso = response.data[0] || {}
+
+      dispatch({
+        type: actions.SAVE_DSO_SUCCESS,
+        payload: { dso }
+      })
+    } else {
+      dispatch({
+        type: actions.SAVE_DSO_FAILURE,
+        payload: response.message
+      })
+      throw new Error(response.message)
+    }
+  } catch (err) {
+    const errMsg = err.message || err.toString() || 'Loading dso failed.'
+    dispatch({ type: actions.SAVE_DSO_FAILURE, payload: errMsg })
+    // throw new Error(errMsg)
+  }
+}
