@@ -1,6 +1,6 @@
 import React, { useEffect, useState, useCallback } from 'react'
 import { Grid, Card, TextField, Typography, Box, Button, CircularProgress, Snackbar, IconButton } from '@material-ui/core'
-import { useIdentityState, useIdentityDispatch, getIdentity, IDENTITY_STATUS } from 'context/IdentityContext'
+import { useIdentityState, useIdentityDispatch, getIdentity, IDENTITY_STATUS, saveFile, saveIdentity } from 'context/IdentityContext'
 import { useForm, Controller } from 'react-hook-form'
 import IdentityProgress from 'pages/identity/components/IdentityProgress'
 import * as yup from 'yup'
@@ -8,7 +8,7 @@ import { useMemo } from 'react'
 import Alert from '@material-ui/lab/Alert'
 import CloseIcon from '@material-ui/icons/Close'
 import UploadSection from 'pages/identity/components/UploadSection'
-import { postRequest } from 'context/httpRequests'
+import { useHistory } from 'react-router-dom'
 
 export default function IdentificationStepThree () {
   const {
@@ -105,11 +105,12 @@ export default function IdentificationStepThree () {
 // ############################################################
 
 const useIdentityFormLogic = () => {
-  const { status, identity, error } = useIdentityState()
+  const { status, identity, error, shouldCreateNew } = useIdentityState()
   const [snackbarError, setSnackbarError] = useState('')
   const idDispatch = useIdentityDispatch()
   const validationSchema = useMemo(createSchema, [])
   const methods = useForm({ validationSchema })
+  const history = useHistory()
 
   const {
     handleSubmit: rhfHandleSubmit,
@@ -153,8 +154,29 @@ const useIdentityFormLogic = () => {
   }, []) // eslint-disable-line react-hooks/exhaustive-deps
 
   // saves identity data for on form submit
-  const handleSubmit = rhfHandleSubmit(formData => {
-    requestUpload({ ...formData, type: 'Passport' }).finally(console.log)
+  const handleSubmit = rhfHandleSubmit(async formData => {
+    try {
+      const { idNumber, idFile, utilityBillFile, firstName, idType } = formData
+
+      await saveFile(idDispatch, {
+        title: 'Passport',
+        file: idFile[0],
+        remarks: idNumber
+      })
+
+      await saveFile(idDispatch, {
+        title: 'Utility Bill',
+        file: utilityBillFile[0],
+        remarks: ''
+      })
+
+      const newIdentity = { idType, idNumber, firstName }
+      await saveIdentity(idDispatch, newIdentity, shouldCreateNew)
+
+      history.push('/app/identity/financials-steps/1')
+    } catch (e) {
+      setSnackbarError(e.message || e.toString())
+    }
   })
 
   const createFieldProps = (key, overrides) =>
@@ -204,14 +226,3 @@ const createSchema = () =>
     idFile: yup.mixed().required('This field is required'),
     utilityBillFile: yup.mixed().required('This field is required'),
   })
-
-const requestUpload = ({ idFile, idNumber, type }) => {
-  const formData = new FormData()
-
-  formData.append('title', idNumber)
-  formData.append('documents', idFile[0])
-  formData.append('remarks', 'none')
-  formData.append('type', type)
-
-  return postRequest('/dataroom', formData)
-}
