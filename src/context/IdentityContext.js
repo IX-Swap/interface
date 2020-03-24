@@ -1,6 +1,7 @@
 import React, { useMemo } from 'react'
 import logger from 'use-reducer-logger'
 import { getRequest, putRequest, postRequest } from './httpRequests'
+import { compareAsc } from 'date-fns'
 
 // constants
 const StateContext = React.createContext()
@@ -54,17 +55,19 @@ export function identityReducer (state, { type, payload }) {
     case actions.GET_IDENTITY_FAILURE:
       return { ...state, status: STATUS.IDLE, error: { ...state.error, get: payload } }
 
-    case actions.SAVE_FILE_REQUEST:
     case actions.SAVE_IDENTITY_REQUEST:
       return { ...state, status: STATUS.SAVING, error: { ...state.error, save: null } }
     case actions.SAVE_IDENTITY_SUCCESS:
       return { ...state, status: STATUS.IDLE, identity: payload, shouldCreateNew: false }
     case actions.SAVE_IDENTITY_FAILURE:
-    case actions.SAVE_FILE_FAILURE:
       return { ...state, status: STATUS.IDLE, error: { ...state.error, save: payload } }
 
+    case actions.SAVE_FILE_REQUEST:
+      return { ...state, status: STATUS.SAVING, error: { ...state.error, save: null } }
     case actions.SAVE_FILE_SUCCESS:
       return { ...state, status: STATUS.IDLE, files: [...state.files, payload] }
+    case actions.SAVE_FILE_FAILURE:
+      return { ...state, status: STATUS.IDLE, error: { ...state.error, save: payload } }
 
     default:
       throw new Error(`Unhandled action type: ${type}`)
@@ -194,14 +197,14 @@ export async function saveFile (dispatch, { title, file, remarks }) {
     formData.append('title', title)
     formData.append('document', file)
     formData.append('remarks', remarks)
-    formData.append('type', 'identity')
+    formData.append('type', 'individual')
 
     const uri = '/dataroom'
     const result = await postRequest(uri, formData)
 
     const response = await result.json()
     if (result.status === 200) {
-      const payload = response.data
+      const payload = response.data[0]
       dispatch({ type: actions.SAVE_FILE_SUCCESS, payload })
     } else {
       dispatch({ type: actions.SAVE_FILE_FAILURE, payload: response.message })
@@ -212,4 +215,25 @@ export async function saveFile (dispatch, { title, file, remarks }) {
     dispatch({ type: actions.SAVE_FILE_FAILURE, payload: errMsg })
     throw new Error(errMsg)
   }
+}
+
+// selectors
+export const selectFile = (state, title) => {
+  const file =
+    state.files
+      ?.filter?.(f => f.title === title)
+      .reduce((lastFile, currFile) => {
+        if (!lastFile) return currFile
+        const lastDate = new Date(lastFile.createdAt)
+        const currDate = new Date(currFile.createdAt)
+        const isLastFileOutdated = compareAsc(currDate, lastDate) === 1
+        return isLastFileOutdated ? currFile : lastFile
+      }, null)
+
+
+  if (file && !file.fileName) {
+    return { ...file, fileName: file.originalFileName }
+  }
+
+  return file
 }

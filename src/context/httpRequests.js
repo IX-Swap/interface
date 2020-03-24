@@ -3,16 +3,6 @@ import { apiUrl } from './config'
 export async function postRequest (uri, payload) {
   const bearerToken = localStorage.getItem('id_token')
 
-  for (const entry of payload.entries()) {
-    console.log('>>> is formdata', payload instanceof FormData)
-    console.log('>>> entry', entry);
-
-    if (entry[0] === 'documents') {
-      console.log('>>> file', entry[1])
-      console.log('>>> file name', entry[1].name)
-    }
-  }
-
   return await fetch(apiUrl + uri, {
     method: 'POST', // *GET, POST, PUT, DELETE, etc.
     mode: 'cors', // no-cors, *cors, same-origin

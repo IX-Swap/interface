@@ -1,13 +1,14 @@
 import React, { useEffect } from 'react'
 import { Grid, Card, Typography, Box, CircularProgress, Button } from '@material-ui/core'
-import { useIdentityState, useIdentityDispatch, getIdentity, IDENTITY_STATUS } from 'context/IdentityContext'
+import { useIdentityState, useIdentityDispatch, getIdentity, IDENTITY_STATUS, selectFile } from 'context/IdentityContext'
 import { Link } from 'react-router-dom'
 import Alert from '@material-ui/lab/Alert'
 import { useAccreditationState, useAccreditationDispatch, ACCREDITATION_STATUS, getAccreditation } from 'context/AccreditationContext'
 import { format } from 'date-fns'
+import ImageFromApi from 'pages/identity/components/ImageFromApi/ImageFromApi'
 
 export default function IdentityOverview () {
-  const { isReady, identity, accreditation, shouldCreateNew, error } = useIdentityOverviewLogic()
+  const { isReady, identity, accreditation, shouldCreateNew, error, files } = useIdentityOverviewLogic()
 
   if (error.get) return <Alert severity='error'>{error.get}</Alert>
 
@@ -103,10 +104,10 @@ export default function IdentityOverview () {
               <Grid container spacing={1}>
                 <Grid item xs={12}>
                   <Typography component='h3' variant='h6' gutterBottom={false} color='textSecondary'>Documents</Typography>
-                  <StaticTextField my={2} mt={1} label='ID (File)' />
+                  <StaticTextField my={2} mt={1} label='ID (File)' value={files.passport} />
                   <StaticTextField my={2} mt={1} label='ID Type' value={identity.idType} />
                   <StaticTextField my={2} mt={1} label='ID Number' value={identity.idNumber} />
-                  <StaticTextField my={2} mt={1} label='Most Recent Utility Bill (File)' />
+                  <StaticTextField my={2} mt={1} label='Most Recent Utility Bill (File)' value={files.utilityBill} />
                 </Grid>
               </Grid>
             </Box>
@@ -187,7 +188,7 @@ export default function IdentityOverview () {
               <Grid container spacing={1}>
                 <Grid item xs={12}>
                   <Typography component='h3' variant='h6' gutterBottom={false} color='textSecondary'>Proof of wealth</Typography>
-                  <StaticTextField my={2} mt={1} label='Proof of Wealth (File)' />
+                  <StaticTextField my={2} mt={1} label='Proof of Wealth (File)' value={files.proofOfWealth} />
                 </Grid>
               </Grid>
             </Box>
@@ -201,7 +202,8 @@ export default function IdentityOverview () {
 // ############################################################
 
 const useIdentityOverviewLogic = () => {
-  const { identity, shouldCreateNew, ...id } = useIdentityState()
+  const id = useIdentityState()
+  const { identity, shouldCreateNew } = id
   const { accreditation, ...acrd } = useAccreditationState()
   const idDispatch = useIdentityDispatch()
   const acrdDispatch = useAccreditationDispatch()
@@ -212,6 +214,12 @@ const useIdentityOverviewLogic = () => {
   const isAcrdReady =
     ![ACCREDITATION_STATUS.INIT, ACCREDITATION_STATUS.GETTING].includes(acrd.status)
   const isReady = isIdReady && isAcrdReady
+
+  const files = {
+    passport: { ...selectFile(id, 'Passport'), type: 'file' },
+    utilityBill: { ...selectFile(id, 'Utility Bill'), type: 'file' },
+    proofOfWealth: { ...selectFile(id, 'Proof of Wealth'), type: 'file' }
+  }
 
   useEffect(() => {
     // fetch identity data for initial values
@@ -225,7 +233,7 @@ const useIdentityOverviewLogic = () => {
     }
   }, [id.status, acrd.status]) // eslint-disable-line react-hooks/exhaustive-deps
 
-  return { isReady, identity, accreditation, shouldCreateNew, error }
+  return { isReady, identity, accreditation, shouldCreateNew, error, files }
 }
 
 const StaticTextField = ({ value, label, ...props }) =>
@@ -236,12 +244,21 @@ const StaticTextField = ({ value, label, ...props }) =>
         ? 'textPrimary'
         : 'textSecondary'}
     >
-      {typeof value === 'boolean' && value
+      {typeof value === 'boolean' && value // handle true
         ? 'Yes'
-        : typeof value === 'boolean' && !value
+        : typeof value === 'boolean' && !value // handle false
         ? 'No'
-        : value || typeof value === 'number'
+        : value?.type === 'file' && isImg(value.fileName) // handle image file
+        ? <ImageFromApi url={fixFileUrl(value.url)} />
+        : value?.type === 'file' && value.fileName // handle other files
+        ? value.fileName
+        : value?.type === 'file' && !value.fileName // handle empty file
+        ? '--'
+        : typeof value === 'string' || typeof value === 'number' // handle string/number
         ? value
-        : '--'}
+        : '--' /* handle empty values */}
     </Typography>
   </Box>
+
+const isImg = str => (/\.(gif|jpe?g|tiff|png|webp|bmp)$/i).test(str)
+const fixFileUrl = str => str.replace('http://http://localhost:3000', '')

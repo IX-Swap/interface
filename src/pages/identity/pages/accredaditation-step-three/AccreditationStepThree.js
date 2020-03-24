@@ -8,6 +8,8 @@ import { useMemo } from 'react'
 import Alert from '@material-ui/lab/Alert'
 import CloseIcon from '@material-ui/icons/Close'
 import UploadSection from 'pages/identity/components/UploadSection'
+import { saveFile, useIdentityDispatch, IDENTITY_STATUS, useIdentityState, getIdentity } from 'context/IdentityContext'
+import { useHistory } from 'react-router-dom'
 
 export default function AccreditationStepOne () {
   const {
@@ -17,7 +19,8 @@ export default function AccreditationStepOne () {
     isValid,
     error,
     snackbarError,
-    handleSnackbarErrorClose
+    handleSnackbarErrorClose,
+    isReady
   } = useAccreditationFormLogic()
 
   return (
@@ -33,15 +36,7 @@ export default function AccreditationStepOne () {
               <AccreditationProgress activeStep={2} />
             </Box>
 
-            {['INIT', 'GETTING'].includes(status) ? (
-              /* Loader */
-              <Box p={3} display='flex' justifyContent='center'>
-                <CircularProgress size={48} />
-              </Box>
-            ) : error.get ? (
-              /* Error alert - For getAccreditation() errors */
-              <Alert severity='error'>{error.get}</Alert>
-            ) : (
+            {isReady ? (
               /* Form */
               <>
                 <Box mx='auto' mt={4} maxWidth='32rem'>
@@ -61,6 +56,14 @@ export default function AccreditationStepOne () {
                   </Button>
                 </Box>
               </>
+            ) : error ? (
+              /* Error alert - For getAccreditation() errors */
+              <Alert severity='error'>{error.get}</Alert>
+            ) : (
+              /* Loader */
+              <Box p={3} display='flex' justifyContent='center'>
+                <CircularProgress size={48} />
+              </Box>
             )}
           </Box>
         </Card>
@@ -83,13 +86,25 @@ export default function AccreditationStepOne () {
 // ############################################################
 
 const useAccreditationFormLogic = () => {
-  const { status, error } = useAccreditationState()
+  const acrd = useAccreditationState()
+  const { status } = acrd
+  const id = useIdentityState()
   const [snackbarError, setSnackbarError] = useState('')
-  const idDispatch = useAccreditationDispatch()
+  const idDispatch = useIdentityDispatch()
+  const acrdDispatch = useAccreditationDispatch()
   const validationSchema = useMemo(createSchema, [])
   const methods = useForm({ validationSchema })
   const { handleSubmit: rhfHandleSubmit, errors, control, setValue, formState, watch, triggerValidation, register } = methods
   const isValid = formState.isSubmitted ? formState.isValid : true
+  const history = useHistory()
+
+  const isIdReady =
+    ![IDENTITY_STATUS.INIT, IDENTITY_STATUS.GETTING, IDENTITY_STATUS.SAVING].includes(id.status)
+  const isAcrdReady =
+    ![ACCREDITATION_STATUS.INIT, ACCREDITATION_STATUS.GETTING].includes(acrd.status)
+  const isReady = isIdReady && isAcrdReady
+
+  const error = id.error.get || id.error.save
 
   const handleSnackbarErrorClose = useCallback(() => setSnackbarError(''), [])
 
@@ -97,15 +112,26 @@ const useAccreditationFormLogic = () => {
     // register file inputs
     register({ name: 'proofOfWealth' })
 
-  // fetch accreditation data for initial values
-    if (status === ACCREDITATION_STATUS.INIT) {
-      getAccreditation(idDispatch).catch(() => {})
+    // fetch identity data for initial values
+    if (id.status === IDENTITY_STATUS.INIT) {
+      getIdentity(idDispatch).catch(() => {})
+    }
+
+    // fetch accreditation data for initial values
+    if (acrd.status === ACCREDITATION_STATUS.INIT) {
+      getAccreditation(acrdDispatch).catch(() => {})
     }
   }, []) // eslint-disable-line react-hooks/exhaustive-deps
 
   // saves accreditation data on form submit
   const handleSubmit = rhfHandleSubmit(formData => {
-    alert('formData: ' + JSON.stringify(formData))
+    saveFile(idDispatch, {
+      title: 'Proof of Wealth',
+      file: formData.proofOfWealth[0],
+      remarks: ''
+    })
+      .then(() => history.push('/app/identity'))
+      .catch(e => setSnackbarError(e.message || e.toString()))
   })
 
   // create the field props
@@ -137,7 +163,8 @@ const useAccreditationFormLogic = () => {
     isValid,
     error,
     snackbarError,
-    handleSnackbarErrorClose
+    handleSnackbarErrorClose,
+    isReady
   }
 }
 

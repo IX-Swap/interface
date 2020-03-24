@@ -3,7 +3,7 @@ import { Grid, Box, Hidden } from '@material-ui/core'
 import IdentityOverview from './components/IdentityOverview'
 import ProgressCard from './components/ProgressCard'
 import IdentityProgress from 'pages/identity/components/IdentityProgress'
-import { useIdentityState, IDENTITY_STATUS } from 'context/IdentityContext'
+import { useIdentityState, IDENTITY_STATUS, selectFile } from 'context/IdentityContext'
 import FinancialsProgress from 'pages/identity/components/FinancialsProgress/FinancialsProgress'
 import { useAccreditationState, ACCREDITATION_STATUS } from 'context/AccreditationContext'
 import AccreditationProgress from 'pages/identity/components/AccreditationProgress/AccreditationProgress'
@@ -61,7 +61,8 @@ export default function IdentityDashboard () {
 }
 
 const useIdentityDashboardLogic = () => {
-  const { status: idStatus, identity } = useIdentityState()
+  const id = useIdentityState()
+  const { status: idStatus, identity } = id
   const { status: accreditationStatus, accreditation } = useAccreditationState()
 
   const isIDReady =
@@ -72,30 +73,52 @@ const useIdentityDashboardLogic = () => {
 
   // TODO: Handle returning 100% when appropriate
   const identityProgress = {
-    activeStep: identity?.address?.line1 ? 1 : identity?.firstName ? 0 : -1,
-    percentage: identity?.address?.line1 ? 66 : identity?.firstName ? 33 : 0
+    activeStep: identity?.idNumber
+      ? 2
+      : identity?.address?.line1
+      ? 1
+      : identity?.firstName
+      ? 0
+      : -1,
+    percentage: identity?.idNumber
+      ? 100
+      : identity?.address?.line1
+      ? 66
+      : identity?.firstName
+      ? 33
+      : 0
   }
 
   const financialsProgress = {
-    activeStep: identity?.annualIncome ? 2
-      : identity?.bankName ? 1
-      : identity?.occupation ? 0
+    activeStep: identity?.annualIncome
+      ? 2
+      : identity?.bankName
+      ? 1
+      : identity?.occupation
+      ? 0
       : -1,
-    percentage: identity?.annualIncome ? 100
-      : identity?.bankName ? 66
-      : identity?.occupation ? 33
+    percentage: identity?.annualIncome
+      ? 100
+      : identity?.bankName
+      ? 66
+      : identity?.occupation
+      ? 33
       : 0
   }
 
   const totalPersonalAssetExceedsTwoMillionSGD =
     accreditation?.accreditationDetails?.totalPersonalAssetExceedsTwoMillionSGD
   const accreditationProgress = {
-    activeStep: typeof totalPersonalAssetExceedsTwoMillionSGD === 'boolean'
+    activeStep: selectFile(id, 'Proof of Wealth')
+      ? 2
+      : typeof totalPersonalAssetExceedsTwoMillionSGD === 'boolean'
       ? 1
       : typeof accreditation?.selfAccreditedInvestor === 'boolean'
       ? 0
       : -1,
-    percentage: typeof totalPersonalAssetExceedsTwoMillionSGD === 'boolean'
+    percentage: selectFile(id, 'Proof of Wealth')
+      ? 100
+      : typeof totalPersonalAssetExceedsTwoMillionSGD === 'boolean'
       ? 66
       : typeof accreditation?.selfAccreditedInvestor === 'boolean'
       ? 33

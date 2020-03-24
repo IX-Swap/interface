@@ -9,6 +9,7 @@ import Alert from '@material-ui/lab/Alert'
 import CloseIcon from '@material-ui/icons/Close'
 import UploadSection from 'pages/identity/components/UploadSection'
 import { useHistory } from 'react-router-dom'
+import { pick } from 'ramda'
 
 export default function IdentificationStepThree () {
   const {
@@ -156,7 +157,8 @@ const useIdentityFormLogic = () => {
   // saves identity data for on form submit
   const handleSubmit = rhfHandleSubmit(async formData => {
     try {
-      const { idNumber, idFile, utilityBillFile, firstName, idType } = formData
+      const { firstName, address } = identity
+      const { idNumber, idFile, utilityBillFile, idType } = formData
 
       await saveFile(idDispatch, {
         title: 'Passport',
@@ -170,7 +172,13 @@ const useIdentityFormLogic = () => {
         remarks: ''
       })
 
-      const newIdentity = { idType, idNumber, firstName }
+      const newIdentity = {
+        idType,
+        idNumber,
+        firstName,
+        ...filterIllegalAddressKeys(address) // need to reinclude Address otherwise it will be deleted
+      }
+
       await saveIdentity(idDispatch, newIdentity, shouldCreateNew)
 
       history.push('/app/identity/financials-steps/1')
@@ -221,8 +229,13 @@ const useIdentityFormLogic = () => {
 
 const createSchema = () =>
   yup.object().shape({
-    idType: yup.string().required('This field is required'),
-    idNumber: yup.string().required('This field is required'),
+    idType: yup.string().matches(ALPHA_NUMERIC, 'This field may only contain alphabet or numbers').required('This field is required'),
+    idNumber: yup.string().matches(ALPHA_NUMERIC, 'This field may only contain alphabet or numbers').required('This field is required'),
     idFile: yup.mixed().required('This field is required'),
     utilityBillFile: yup.mixed().required('This field is required'),
   })
+
+const ALPHA_NUMERIC = /^[a-z0-9]*$/i
+
+const ADDRESS_KEYS = ['unit', 'line1', 'line2', 'city', 'postalCode', 'state', 'country']
+const filterIllegalAddressKeys = pick(ADDRESS_KEYS)
