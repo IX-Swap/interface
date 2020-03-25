@@ -13,7 +13,9 @@ export default function IdentityDashboard () {
     isProgressReady,
     identityProgress,
     financialsProgress,
-    accreditationProgress
+    accreditationProgress,
+    areAllCompleted,
+    error
   } = useIdentityDashboardLogic()
 
   const progressesJsx =
@@ -46,32 +48,42 @@ export default function IdentityDashboard () {
     </>
 
   return (
-    <Grid component='article' container spacing={3}>
-      <Grid item xs={12}>
-        {isProgressReady && <Hidden mdUp>{progressesJsx}</Hidden>}
-      </Grid>
+    <Grid component='article' container spacing={3} justify='center'>
+      {isProgressReady && !error && !areAllCompleted && (
+        <Grid item xs={12}>
+          <Hidden mdUp>{progressesJsx}</Hidden>
+        </Grid>
+      )}
+
       <Grid component='section' item xs={12} md={7}>
-        <IdentityOverview />
+        <IdentityOverview areAllCompleted={areAllCompleted} />
       </Grid>
-      <Grid item xs={12} md={5}>
-        {isProgressReady && <Hidden smDown>{progressesJsx}</Hidden>}
-      </Grid>
+
+      {isProgressReady && !error && !areAllCompleted && (
+        <Grid item xs={12} md={5}>
+          <Hidden smDown>{progressesJsx}</Hidden>
+        </Grid>
+      )}
     </Grid>
   )
 }
 
 const useIdentityDashboardLogic = () => {
   const id = useIdentityState()
+  const acrd = useAccreditationState()
   const { status: idStatus, identity } = id
-  const { status: accreditationStatus, accreditation } = useAccreditationState()
+  const { status: accreditationStatus, accreditation } = acrd
 
+  const error = id.error.get || acrd.error.get
+
+  // calculate if page is ready (i.e. completed all network requests)
   const isIDReady =
     ![IDENTITY_STATUS.INIT, IDENTITY_STATUS.GETTING].includes(idStatus)
   const isAccreditationReady =
     ![ACCREDITATION_STATUS.INIT, ACCREDITATION_STATUS.GETTING].includes(accreditationStatus)
   const isProgressReady = isIDReady && isAccreditationReady
 
-  // TODO: Handle returning 100% when appropriate
+  // calculate progress of identity steps
   const identityProgress = {
     activeStep: identity?.idNumber
       ? 2
@@ -89,6 +101,7 @@ const useIdentityDashboardLogic = () => {
       : 0
   }
 
+  // calculate progress of financials steps
   const financialsProgress = {
     activeStep: identity?.annualIncome
       ? 2
@@ -106,6 +119,7 @@ const useIdentityDashboardLogic = () => {
       : 0
   }
 
+  // calculate progress of accreditation steps
   const totalPersonalAssetExceedsTwoMillionSGD =
     accreditation?.accreditationDetails?.totalPersonalAssetExceedsTwoMillionSGD
   const accreditationProgress = {
@@ -125,5 +139,16 @@ const useIdentityDashboardLogic = () => {
       : 0
   }
 
-  return { isProgressReady, identityProgress, financialsProgress, accreditationProgress }
+  const areAllCompleted = identityProgress.percentage === 100
+    && financialsProgress.percentage === 100
+    && accreditationProgress.percentage === 100
+
+  return {
+    isProgressReady,
+    identityProgress,
+    financialsProgress,
+    accreditationProgress,
+    areAllCompleted,
+    error
+  }
 }

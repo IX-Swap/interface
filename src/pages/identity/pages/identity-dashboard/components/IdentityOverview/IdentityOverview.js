@@ -7,10 +7,10 @@ import { useAccreditationState, useAccreditationDispatch, ACCREDITATION_STATUS, 
 import { format } from 'date-fns'
 import ImageFromApi from 'pages/identity/components/ImageFromApi/ImageFromApi'
 
-export default function IdentityOverview () {
+export default function IdentityOverview ({ areAllCompleted }) {
   const { isReady, identity, accreditation, shouldCreateNew, error, files } = useIdentityOverviewLogic()
 
-  if (error.get) return <Alert severity='error'>{error.get}</Alert>
+  if (error) return <Alert severity='error'>{error}</Alert>
 
   return (
     <Card>
@@ -41,7 +41,15 @@ export default function IdentityOverview () {
           </Box>
         ) : (
           <>
-            <Typography component='h1' variant='h3'>My Identity</Typography>
+            <Box display='flex'>
+              <Box flex='1 1 auto'>
+                <Typography component='h1' variant='h3'>My Identity</Typography>
+              </Box>
+              {areAllCompleted &&
+                <Button variant='contained' color='primary' to='/app/identity/edit' component={Link}>
+                  Update
+                </Button>}
+            </Box>
 
             {/* Names Row */}
             <Box component='section' mt={3}>
@@ -207,7 +215,7 @@ const useIdentityOverviewLogic = () => {
   const { accreditation, ...acrd } = useAccreditationState()
   const idDispatch = useIdentityDispatch()
   const acrdDispatch = useAccreditationDispatch()
-  const error = id.error || acrd.error
+  const error = id.error.get || acrd.error.get
 
   const isIdReady =
     ![IDENTITY_STATUS.INIT, IDENTITY_STATUS.GETTING].includes(id.status)
