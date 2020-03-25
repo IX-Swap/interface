@@ -1,6 +1,6 @@
 import React, { useEffect, useState, useCallback } from 'react'
 import { Grid, Card, TextField, Typography, Box, Button, CircularProgress, Snackbar, IconButton } from '@material-ui/core'
-import { useIdentityState, useIdentityDispatch, getIdentity, IDENTITY_STATUS } from 'context/IdentityContext'
+import { useIdentityState, useIdentityDispatch, getIdentity, IDENTITY_STATUS, saveFile, saveIdentity } from 'context/IdentityContext'
 import { useForm, Controller } from 'react-hook-form'
 import IdentityProgress from 'pages/identity/components/IdentityProgress'
 import * as yup from 'yup'
@@ -8,6 +8,8 @@ import { useMemo } from 'react'
 import Alert from '@material-ui/lab/Alert'
 import CloseIcon from '@material-ui/icons/Close'
 import UploadSection from 'pages/identity/components/UploadSection'
+import { useHistory } from 'react-router-dom'
+import { pick } from 'ramda'
 
 export default function IdentificationStepThree () {
   const {
@@ -27,7 +29,7 @@ export default function IdentificationStepThree () {
           <Box p={3}>
             <Typography component='h1' variant='h3' align='center'>Identification</Typography>
 
-            <Box mt={3}>
+            <Box mt={3} mx={-3}>
               <IdentityProgress activeStep={2} />
             </Box>
 
@@ -43,7 +45,7 @@ export default function IdentificationStepThree () {
                   <UploadSection
                     label='ID Photo'
                     emptyLabel='Please upload a photo or scan or your passport.'
-                    {...fields.passport}
+                    {...fields.idFile}
                   />
 
                   <Box mt={1}>
@@ -69,7 +71,7 @@ export default function IdentificationStepThree () {
                       <UploadSection
                         label='Utility Bill'
                         emptyLabel='Please upload a photo or scan of a recent utility bill.'
-                        {...fields.utilityBill}
+                        {...fields.utilityBillFile}
                       />
                     </Box>
                   </Box>
@@ -104,11 +106,12 @@ export default function IdentificationStepThree () {
 // ############################################################
 
 const useIdentityFormLogic = () => {
-  const { status, identity, error } = useIdentityState()
+  const { status, identity, error, shouldCreateNew } = useIdentityState()
   const [snackbarError, setSnackbarError] = useState('')
   const idDispatch = useIdentityDispatch()
   const validationSchema = useMemo(createSchema, [])
   const methods = useForm({ validationSchema })
+  const history = useHistory()
 
   const {
     handleSubmit: rhfHandleSubmit,
@@ -142,8 +145,8 @@ const useIdentityFormLogic = () => {
 
   useEffect(() => {
     // register file inputs
-    register({ name: 'passport' })
-    register({ name: 'utilityBill' })
+    register({ name: 'idFile' })
+    register({ name: 'utilityBillFile' })
 
     // fetch identity data for initial values
     if (status === IDENTITY_STATUS.INIT) {
@@ -152,8 +155,36 @@ const useIdentityFormLogic = () => {
   }, []) // eslint-disable-line react-hooks/exhaustive-deps
 
   // saves identity data for on form submit
-  const handleSubmit = rhfHandleSubmit(formData => {
-    alert('formData: ' + JSON.stringify(formData))
+  const handleSubmit = rhfHandleSubmit(async formData => {
+    try {
+      const { firstName, address } = identity
+      const { idNumber, idFile, utilityBillFile, idType } = formData
+
+      await saveFile(idDispatch, {
+        title: 'Passport',
+        file: idFile[0],
+        remarks: idNumber
+      })
+
+      await saveFile(idDispatch, {
+        title: 'Utility Bill',
+        file: utilityBillFile[0],
+        remarks: ''
+      })
+
+      const newIdentity = {
+        idType,
+        idNumber,
+        firstName,
+        ...filterIllegalAddressKeys(address) // need to reinclude Address otherwise it will be deleted
+      }
+
+      await saveIdentity(idDispatch, newIdentity, shouldCreateNew)
+
+      history.push('/app/identity/financials-steps/1')
+    } catch (e) {
+      setSnackbarError(e.message || e.toString())
+    }
   })
 
   const createFieldProps = (key, overrides) =>
@@ -170,16 +201,16 @@ const useIdentityFormLogic = () => {
   const fields = {
     idType: createFieldProps('idType', { required: true }),
     idNumber: createFieldProps('idNumber', { required: true }),
-    passport: createFieldProps('passport', {
+    idFile: createFieldProps('idFile', {
       required: true,
-      onChange: useCallback(handleFileChange('passport'), []), // eslint-disable-line react-hooks/exhaustive-deps
-      value: watch('passport'),
+      onChange: useCallback(handleFileChange('idFile'), []), // eslint-disable-line react-hooks/exhaustive-deps
+      value: watch('idFile'),
       triggerValidation
     }),
-    utilityBill: createFieldProps('utilityBill', {
+    utilityBillFile: createFieldProps('utilityBillFile', {
       required: true,
-      onChange: useCallback(handleFileChange('utilityBill'), []), // eslint-disable-line react-hooks/exhaustive-deps
-      value: watch('utilityBill'),
+      onChange: useCallback(handleFileChange('utilityBillFile'), []), // eslint-disable-line react-hooks/exhaustive-deps
+      value: watch('utilityBillFile'),
       triggerValidation
     })
   }
@@ -198,8 +229,13 @@ const useIdentityFormLogic = () => {
 
 const createSchema = () =>
   yup.object().shape({
-    idType: yup.string().required('This field is required'),
-    idNumber: yup.string().required('This field is required'),
-    passport: yup.mixed().required('This field is required'),
-    utilityBill: yup.mixed().required('This field is required'),
+    idType: yup.string().matches(ALPHA_NUMERIC, 'This field may only contain alphabet or numbers').required('This field is required'),
+    idNumber: yup.string().matches(ALPHA_NUMERIC, 'This field may only contain alphabet or numbers').required('This field is required'),
+    idFile: yup.mixed().required('This field is required'),
+    utilityBillFile: yup.mixed().required('This field is required'),
   })
+
+const ALPHA_NUMERIC = /^[a-z0-9]*$/i
+
+const ADDRESS_KEYS = ['unit', 'line1', 'line2', 'city', 'postalCode', 'state', 'country']
+const filterIllegalAddressKeys = pick(ADDRESS_KEYS)

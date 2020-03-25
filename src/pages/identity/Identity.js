@@ -14,6 +14,7 @@ import { AccreditationProvider } from 'context/AccreditationContext'
 import AccreditationStepOne from './pages/accredaditation-step-one/AccreditationStepOne'
 import AccreditationStepTwo from './pages/accredaditation-step-two/AccreditationStepTwo'
 import AccreditationStepThree from './pages/accredaditation-step-three/AccreditationStepThree'
+import Alert from '@material-ui/lab/Alert'
 
 export default function Identity () {
   return (
@@ -31,6 +32,9 @@ export default function Identity () {
             <Route path='/app/identity/accreditation-steps/1' exact component={AccreditationStepOne} />
             <Route path='/app/identity/accreditation-steps/2' exact component={AccreditationStepTwo} />
             <Route path='/app/identity/accreditation-steps/3' exact component={AccreditationStepThree} />
+            <Route>
+              <Alert severity='error'>Page not found</Alert>
+            </Route>
           </Switch>
         </MuiPickersUtilsProvider>
       </AccreditationProvider>

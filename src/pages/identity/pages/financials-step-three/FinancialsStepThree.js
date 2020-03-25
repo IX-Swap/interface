@@ -30,7 +30,7 @@ export default function FinancialsStepThree () {
             <Typography component='h1' variant='h3' align='center'>Financials</Typography>
 
             {/* Progress Section */}
-            <Box mt={3}>
+            <Box mt={3} mx={-3}>
               <FinancialsProgress activeStep={2} />
             </Box>
 

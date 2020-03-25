@@ -19,7 +19,9 @@ export default function ProgressCard ({
           <Typography component='h2' variant='h5'>{percentage + '%'}</Typography>
         </Box>
 
-        {createElement(component, props)}
+        <Box mx={-3}>
+          {createElement(component, props)}
+        </Box>
 
         <Box display='flex' justifyContent='center'>
         {percentage !== 100 &&
