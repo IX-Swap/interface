@@ -103,7 +103,6 @@ export async function getAccreditation (dispatch) {
         return dispatch({ type: actions.GET_ACCREDITATION_SUCCESS, payload: {} })
       }
 
-      dispatch({ type: actions.GET_ACCREDITATION_FAILURE, payload: response.message })
       throw new Error(response.message)
     }
   } catch (err) {
@@ -124,7 +123,6 @@ export async function saveAccreditation (dispatch, accreditation) {
       const payload = response.data || {}
       dispatch({ type: actions.SAVE_ACCREDITATION_SUCCESS, payload })
     } else {
-      dispatch({ type: actions.SAVE_ACCREDITATION_FAILURE, payload: response.message })
       throw new Error(response.message)
     }
   } catch (err) {

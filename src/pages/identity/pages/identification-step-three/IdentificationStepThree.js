@@ -3,13 +3,13 @@ import { Grid, Card, TextField, Typography, Box, Button, CircularProgress, Snack
 import { useIdentityState, useIdentityDispatch, getIdentity, IDENTITY_STATUS, saveFile, saveIdentity } from 'context/IdentityContext'
 import { useForm, Controller } from 'react-hook-form'
 import IdentityProgress from 'pages/identity/components/IdentityProgress'
-import * as yup from 'yup'
 import { useMemo } from 'react'
 import Alert from '@material-ui/lab/Alert'
 import CloseIcon from '@material-ui/icons/Close'
 import UploadSection from 'pages/identity/components/UploadSection'
 import { useHistory } from 'react-router-dom'
 import { pick } from 'ramda'
+import { createIDDocumentsSchema } from 'pages/identity/helpers/schema'
 
 export default function IdentificationStepThree () {
   const {
@@ -109,7 +109,7 @@ const useIdentityFormLogic = () => {
   const { status, identity, error, shouldCreateNew } = useIdentityState()
   const [snackbarError, setSnackbarError] = useState('')
   const idDispatch = useIdentityDispatch()
-  const validationSchema = useMemo(createSchema, [])
+  const validationSchema = useMemo(createIDDocumentsSchema, [])
   const methods = useForm({ validationSchema })
   const history = useHistory()
 
@@ -127,21 +127,6 @@ const useIdentityFormLogic = () => {
   const isValid = formState.isSubmitted ? formState.isValid : true
 
   const handleSnackbarErrorClose = useCallback(() => setSnackbarError(''), [])
-
-  // load identity data to form when it updates from reducer
-  useEffect(() => {
-    const isLoadedDataEmpty = !identity || !Object.keys(identity).length
-    if (isLoadedDataEmpty) return
-
-    Object.keys(fields)
-      .forEach(fieldName => {
-        const loadedFieldValue = fieldName === 'countryOfResidence'
-          ? identity.countryOfResidence
-          : identity.address[fieldName]
-        if (!loadedFieldValue) return
-        setValue(fieldName, loadedFieldValue)
-      })
-  }, [identity]) // eslint-disable-line react-hooks/exhaustive-deps
 
   useEffect(() => {
     // register file inputs
@@ -226,16 +211,6 @@ const useIdentityFormLogic = () => {
     handleSnackbarErrorClose
   }
 }
-
-const createSchema = () =>
-  yup.object().shape({
-    idType: yup.string().matches(ALPHA_NUMERIC, 'This field may only contain alphabet or numbers').required('This field is required'),
-    idNumber: yup.string().matches(ALPHA_NUMERIC, 'This field may only contain alphabet or numbers').required('This field is required'),
-    idFile: yup.mixed().required('This field is required'),
-    utilityBillFile: yup.mixed().required('This field is required'),
-  })
-
-const ALPHA_NUMERIC = /^[a-z0-9]*$/i
 
 const ADDRESS_KEYS = ['unit', 'line1', 'line2', 'city', 'postalCode', 'state', 'country']
 const filterIllegalAddressKeys = pick(ADDRESS_KEYS)

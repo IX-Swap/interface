@@ -3,12 +3,13 @@ import { Grid, Card, Typography, Box, Button, CircularProgress, Snackbar, IconBu
 import { useAccreditationState, useAccreditationDispatch, getAccreditation, saveAccreditation, ACCREDITATION_STATUS } from 'context/AccreditationContext'
 import { useForm, } from 'react-hook-form'
 import AccreditationProgress from 'pages/identity/components/AccreditationProgress'
-import * as yup from 'yup'
 import { useMemo } from 'react'
 import Alert from '@material-ui/lab/Alert'
 import CloseIcon from '@material-ui/icons/Close'
 import { useHistory } from 'react-router-dom'
 import SelectGroup from 'pages/identity/components/SelectGroup'
+import { YES_OR_NO_OPTS } from 'const/const'
+import { createIDAcrdInvestorSchema } from 'pages/identity/helpers/schema'
 
 export default function AccreditationStepOne () {
   const {
@@ -85,27 +86,16 @@ export default function AccreditationStepOne () {
 // ############################################################
 
 const useAccreditationFormLogic = () => {
-  const { status, accreditation, error } = useAccreditationState()
+  const { status, error } = useAccreditationState()
   const [snackbarError, setSnackbarError] = useState('')
   const idDispatch = useAccreditationDispatch()
-  const validationSchema = useMemo(createSchema, [])
+  const validationSchema = useMemo(createIDAcrdInvestorSchema, [])
   const methods = useForm({ validationSchema })
-  const { handleSubmit: rhfHandleSubmit, errors, control, setValue, formState } = methods
+  const { handleSubmit: rhfHandleSubmit, errors, control, formState } = methods
   const isValid = formState.isSubmitted ? formState.isValid : true
   const history = useHistory()
 
   const handleSnackbarErrorClose = useCallback(() => setSnackbarError(''), [])
-
-  // load accreditation data to form when it updates from reducer
-  useEffect(() => {
-    const isLoadedDataEmpty = !accreditation || !Object.keys(accreditation).length
-    const isSelfAccreditedInvestorDefined = typeof accreditation?.selfAccreditedInvestor === 'boolean'
-
-    if (isLoadedDataEmpty || !isSelfAccreditedInvestorDefined) return
-
-    const selfAccreditedInvestor = accreditation.selfAccreditedInvestor ? 'true' : 'false'
-    setValue('selfAccreditedInvestor', selfAccreditedInvestor)
-  }, [accreditation]) // eslint-disable-line react-hooks/exhaustive-deps
 
   // fetch accreditation data for initial values
   useEffect(() => {
@@ -155,11 +145,3 @@ const useAccreditationFormLogic = () => {
     handleSnackbarErrorClose
   }
 }
-
-const YES_OR_NO_OPTS = [{ value: 'true', label: 'Yes'}, { value: 'false', label: 'No'}]
-
-// Create the form schema
-const createSchema = () =>
-  yup.object().shape({
-    selfAccreditedInvestor: yup.mixed().oneOf(['true', 'false'], 'This field is required'),
-  })

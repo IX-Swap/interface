@@ -3,13 +3,13 @@ import { Grid, Card, TextField, Typography, Box, Button, CircularProgress, Snack
 import { useIdentityState, useIdentityDispatch, getIdentity, saveIdentity, IDENTITY_STATUS } from 'context/IdentityContext'
 import { useForm, Controller } from 'react-hook-form'
 import IdentityProgress from 'pages/identity/components/IdentityProgress'
-import * as yup from 'yup'
 import { useMemo } from 'react'
 import Alert from '@material-ui/lab/Alert'
 import CloseIcon from '@material-ui/icons/Close'
 import { useHistory } from 'react-router-dom'
-import { COUNTRIES, COUNTRIES_OPTS } from 'const/countries'
+import { COUNTRIES_OPTS } from 'const/countries'
 import SelectGroup from 'pages/identity/components/SelectGroup/SelectGroup'
+import { createIDAddressSchema } from 'pages/identity/helpers/schema'
 
 export default function IdentificationStepTwo () {
   const {
@@ -90,28 +90,13 @@ const useIdentityFormLogic = () => {
   const { status, shouldCreateNew, identity, error } = useIdentityState()
   const [snackbarError, setSnackbarError] = useState('')
   const idDispatch = useIdentityDispatch()
-  const validationSchema = useMemo(createSchema, [])
+  const validationSchema = useMemo(createIDAddressSchema, [])
   const methods = useForm({ validationSchema })
-  const { handleSubmit: rhfHandleSubmit, errors, control, setValue, formState } = methods
+  const { handleSubmit: rhfHandleSubmit, errors, control, formState } = methods
   const isValid = formState.isSubmitted ? formState.isValid : true
   const history = useHistory()
 
   const handleSnackbarErrorClose = useCallback(() => setSnackbarError(''), [])
-
-  // load identity data to form when it updates from reducer
-  useEffect(() => {
-    const isLoadedDataEmpty = !identity || !Object.keys(identity).length
-    if (isLoadedDataEmpty) return
-
-    Object.keys(fields)
-      .forEach(fieldName => {
-        const loadedFieldValue = fieldName === 'countryOfResidence'
-          ? identity.countryOfResidence
-          : identity.address[fieldName]
-        if (!loadedFieldValue) return
-        setValue(fieldName, loadedFieldValue)
-      })
-  }, [identity]) // eslint-disable-line react-hooks/exhaustive-deps
 
   // fetch identity data for initial values
   useEffect(() => {
@@ -167,21 +152,3 @@ const useIdentityFormLogic = () => {
     handleSnackbarErrorClose
   }
 }
-
-const createSchema = () =>
-  yup.object().shape({
-    unit: yup.string(),
-    line1: yup.string().required('Line 1 is required'),
-    line2: yup.string(),
-    city: yup.string().required('City is required'),
-    postalCode: yup.string().matches(ALPHA_NUMERIC_OR_EMPTY, "Postal Code may only contain alphabet or numbers"),
-    state: yup.string(),
-    country: yup.mixed()
-      .oneOf(COUNTRIES, 'Country is required')
-      .required('Country is required'),
-    countryOfResidence: yup.mixed()
-      .oneOf(COUNTRIES, 'Country of Residence is required')
-      .required('Country of Residence is required'),
-  })
-
-const ALPHA_NUMERIC_OR_EMPTY = /^([a-z0-9]|(?![\s\S]))+$/i

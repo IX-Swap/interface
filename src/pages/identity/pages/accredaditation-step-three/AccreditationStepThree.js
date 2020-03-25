@@ -3,13 +3,13 @@ import { Grid, Card, Typography, Box, Button, CircularProgress, Snackbar, IconBu
 import { useAccreditationState, useAccreditationDispatch, getAccreditation, ACCREDITATION_STATUS } from 'context/AccreditationContext'
 import { useForm, } from 'react-hook-form'
 import AccreditationProgress from 'pages/identity/components/AccreditationProgress'
-import * as yup from 'yup'
 import { useMemo } from 'react'
 import Alert from '@material-ui/lab/Alert'
 import CloseIcon from '@material-ui/icons/Close'
 import UploadSection from 'pages/identity/components/UploadSection'
 import { saveFile, useIdentityDispatch, IDENTITY_STATUS, useIdentityState, getIdentity } from 'context/IdentityContext'
 import { useHistory } from 'react-router-dom'
+import { createIDProofOfWealthSchema } from 'pages/identity/helpers/schema'
 
 export default function AccreditationStepOne () {
   const {
@@ -92,7 +92,7 @@ const useAccreditationFormLogic = () => {
   const [snackbarError, setSnackbarError] = useState('')
   const idDispatch = useIdentityDispatch()
   const acrdDispatch = useAccreditationDispatch()
-  const validationSchema = useMemo(createSchema, [])
+  const validationSchema = useMemo(createIDProofOfWealthSchema, [])
   const methods = useForm({ validationSchema })
   const { handleSubmit: rhfHandleSubmit, errors, control, setValue, formState, watch, triggerValidation, register } = methods
   const isValid = formState.isSubmitted ? formState.isValid : true
@@ -167,9 +167,3 @@ const useAccreditationFormLogic = () => {
     isReady
   }
 }
-
-// Create the form schema
-const createSchema = () =>
-  yup.object().shape({
-    proofOfWealth: yup.mixed().required('This field is required'),
-  })

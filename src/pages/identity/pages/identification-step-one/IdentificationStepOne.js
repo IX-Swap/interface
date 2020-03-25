@@ -3,15 +3,16 @@ import { Grid, Card, TextField, Typography, Box, Button, CircularProgress, Snack
 import { useIdentityState, useIdentityDispatch, getIdentity, saveIdentity, IDENTITY_STATUS } from 'context/IdentityContext'
 import { useForm, Controller } from 'react-hook-form'
 import IdentityProgress from 'pages/identity/components/IdentityProgress'
-import * as yup from 'yup'
 import { useMemo } from 'react'
 import { DatePicker } from '@material-ui/pickers'
-import { subYears, subHours } from 'date-fns'
 import Alert from '@material-ui/lab/Alert'
 import CloseIcon from '@material-ui/icons/Close'
 import { useHistory } from 'react-router-dom'
-import { COUNTRIES, COUNTRIES_OPTS } from 'const/countries'
+import { MARITAL_STATUSES_OPTS, GENDERS_OPTS, COUNTRIES_OPTS } from 'const'
 import SelectGroup from 'pages/identity/components/SelectGroup/SelectGroup'
+import createDate18YearsAgo from 'pages/identity/helpers/createDate18YearsAgo'
+import { createIDBasic } from 'pages/identity/helpers/schema'
+import createDate18YearsAndADayAgo from 'pages/identity/helpers/createDate18YearsAndADayAgo'
 
 export default function IdentificationStepOne () {
   const {
@@ -113,29 +114,17 @@ export default function IdentificationStepOne () {
 // ############################################################
 
 const useIdentityFormLogic = () => {
-  const { status, shouldCreateNew, identity, error } = useIdentityState()
+  const { status, shouldCreateNew, error } = useIdentityState()
   const [snackbarError, setSnackbarError] = useState('')
   const idDispatch = useIdentityDispatch()
-  const validationSchema = useMemo(createSchema, [])
+  const validationSchema = useMemo(createIDBasic, [])
   const methods = useForm({ validationSchema })
-  const { handleSubmit: rhfHandleSubmit, errors, control, setValue, formState } = methods
+  const { handleSubmit: rhfHandleSubmit, errors, control, formState } = methods
   const isValid = formState.isSubmitted ? formState.isValid : true
   const history = useHistory()
 
   const handleSnackbarErrorClose = useCallback(() => setSnackbarError(''), [])
 
-  // load identity data to form when it updates from reducer
-  useEffect(() => {
-    const isLoadedDataEmpty = !identity || !Object.keys(identity).length
-    if (isLoadedDataEmpty) return
-
-    Object.keys(fields)
-      .forEach(fieldName => {
-        const loadedFieldValue = identity[fieldName]
-        if (!loadedFieldValue) return
-        setValue(fieldName, loadedFieldValue)
-      })
-  }, [identity]) // eslint-disable-line react-hooks/exhaustive-deps
 
   // fetch identity data for initial values
   useEffect(() => {
@@ -195,34 +184,3 @@ const useIdentityFormLogic = () => {
     handleSnackbarErrorClose
   }
 }
-
-const arrToOpts = arr => arr.map(value => ({ value, label: value }))
-
-const MARITAL_STATUSES = ['Married', 'Widowed', 'Separated', 'Single']
-const MARITAL_STATUSES_OPTS = arrToOpts(MARITAL_STATUSES)
-const GENDERS = ['M', 'F']
-const GENDERS_OPTS = [{ value: 'M', label: 'Male'}, { value: 'F', label: 'Female'}]
-
-const createSchema = () =>
-  yup.object().shape({
-    firstName: yup.string().required('First name is required'),
-    middleName: yup.string(),
-    lastName: yup.string().required('Last name is required'),
-    dob: yup.date('Date of birth is required')
-      .max(createDate18YearsAgo(), 'You must be at least 18 years old')
-      .required('Date of birth is required'),
-    maritalStatus: yup.mixed()
-      .oneOf(MARITAL_STATUSES, 'Marital status is required')
-      .required('Marital status is required'),
-    gender: yup.mixed()
-      .oneOf(GENDERS, 'Gender is required')
-      .required('Gender is required'),
-    contactNumber: yup.string()
-      .required('Contact number is required'),
-    nationality: yup.mixed()
-      .oneOf(COUNTRIES, 'Nationality is required')
-      .required('Nationality is required'),
-  })
-
-const createDate18YearsAgo = () => subYears(new Date(), 18)
-const createDate18YearsAndADayAgo = () => subHours(subYears(new Date(), 18), 1)

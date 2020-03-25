@@ -32,7 +32,9 @@ export default function UploadSection({
     triggerValidation(name)
   }, [onChange]) // eslint-disable-line react-hooks/exhaustive-deps
 
-  const fileName = value?.[0]?.name;
+  const fileName =
+    value?.[0]?.name // file name when loading data from upload
+    || value?.fileName // file name when loading data from endpoint
 
   return (
     <Box display={['block', 'flex']} alignItems='center'>

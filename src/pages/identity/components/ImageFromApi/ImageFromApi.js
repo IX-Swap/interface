@@ -11,7 +11,7 @@ export default function ImageFromApi ({ url }) {
       .then(res => res.blob())
       .then(blob => setLocalUrl(URL.createObjectURL(blob)))
       .catch(setError)
-  }, [])
+  }, []) // eslint-disable-line react-hooks/exhaustive-deps
 
   return localUrl ? (
     <Box

@@ -3,12 +3,12 @@ import { Grid, Card, Typography, Box, Button, CircularProgress, Snackbar, IconBu
 import { useAccreditationState, useAccreditationDispatch, getAccreditation, saveAccreditation, ACCREDITATION_STATUS } from 'context/AccreditationContext'
 import { useForm, } from 'react-hook-form'
 import AccreditationProgress from 'pages/identity/components/AccreditationProgress'
-import * as yup from 'yup'
 import { useMemo } from 'react'
 import Alert from '@material-ui/lab/Alert'
 import CloseIcon from '@material-ui/icons/Close'
 import { useHistory } from 'react-router-dom'
 import SelectGroup from 'pages/identity/components/SelectGroup'
+import { createIDAcrdInfoSchema } from 'pages/identity/helpers/schema'
 
 export default function AccreditationStepOne () {
   const {
@@ -102,31 +102,16 @@ export default function AccreditationStepOne () {
 // ############################################################
 
 const useAccreditationFormLogic = () => {
-  const { status, accreditation, error } = useAccreditationState()
+  const { status, error } = useAccreditationState()
   const [snackbarError, setSnackbarError] = useState('')
   const idDispatch = useAccreditationDispatch()
-  const validationSchema = useMemo(createSchema, [])
+  const validationSchema = useMemo(createIDAcrdInfoSchema, [])
   const methods = useForm({ validationSchema })
-  const { handleSubmit: rhfHandleSubmit, errors, control, setValue, formState } = methods
+  const { handleSubmit: rhfHandleSubmit, errors, control, formState } = methods
   const isValid = formState.isSubmitted ? formState.isValid : true
   const history = useHistory()
 
   const handleSnackbarErrorClose = useCallback(() => setSnackbarError(''), [])
-
-  // load accreditation data to form when it updates from reducer
-  useEffect(() => {
-    const accreditationDetails = accreditation?.accreditationDetails
-    const isLoadedDataEmpty = !accreditationDetails
-      || !Object.keys(accreditationDetails).length
-    if (isLoadedDataEmpty) return
-
-    Object.keys(fields)
-      .forEach(fieldName => {
-        const loadedFieldValue = accreditationDetails[fieldName]
-        if (typeof loadedFieldValue !== 'boolean') return
-        setValue(fieldName, loadedFieldValue ? 'true' : 'false')
-      })
-  }, [accreditation]) // eslint-disable-line react-hooks/exhaustive-deps
 
   // fetch accreditation data for initial values
   useEffect(() => {
@@ -187,13 +172,3 @@ const YES_OR_NO_OPTS = [
   { value: 'false', label: 'No'},
   { value: '', label: 'Select Yes or No'}
 ]
-
-// Create the form schema
-const TRUE_OR_FALSE_YUP = yup.mixed().oneOf(['true', 'false'], 'This field is required')
-const createSchema = () =>
-  yup.object().shape({
-    totalPersonalAssetExceedsTwoMillionSGD: TRUE_OR_FALSE_YUP,
-    lastTwelveMonthIncomeGreatherThanThreeHundredThousands: TRUE_OR_FALSE_YUP,
-    personalFinancialAssetsExceedsOneMillion: TRUE_OR_FALSE_YUP,
-    jointlyHeldAccountMeetingAnyAbove: TRUE_OR_FALSE_YUP
-  })

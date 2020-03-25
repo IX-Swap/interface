@@ -3,11 +3,11 @@ import { Grid, Card, TextField, Typography, Box, Button, CircularProgress, Snack
 import { useIdentityState, useIdentityDispatch, getIdentity, saveFinancials, IDENTITY_STATUS } from 'context/IdentityContext'
 import { useForm, Controller } from 'react-hook-form'
 import FinancialsProgress from 'pages/identity/components/FinancialsProgress'
-import * as yup from 'yup'
 import { useMemo } from 'react'
 import Alert from '@material-ui/lab/Alert'
 import CloseIcon from '@material-ui/icons/Close'
 import { useHistory } from 'react-router-dom'
+import { createIDOccupationSchema } from 'pages/identity/helpers/schema'
 
 export default function FinancialsStepOne () {
   const {
@@ -91,29 +91,16 @@ export default function FinancialsStepOne () {
 // ############################################################
 
 const useFinancialsFormLogic = () => {
-  const { status, identity, error } = useIdentityState()
+  const { status, error } = useIdentityState()
   const [snackbarError, setSnackbarError] = useState('')
   const idDispatch = useIdentityDispatch()
-  const validationSchema = useMemo(createSchema, [])
+  const validationSchema = useMemo(createIDOccupationSchema, [])
   const methods = useForm({ validationSchema })
-  const { handleSubmit: rhfHandleSubmit, errors, control, setValue, formState } = methods
+  const { handleSubmit: rhfHandleSubmit, errors, control, formState } = methods
   const isValid = formState.isSubmitted ? formState.isValid : true
   const history = useHistory()
 
   const handleSnackbarErrorClose = useCallback(() => setSnackbarError(''), [])
-
-  // load identity data to form when it updates from reducer
-  useEffect(() => {
-    const isLoadedDataEmpty = !identity || !Object.keys(identity).length
-    if (isLoadedDataEmpty) return
-
-    Object.keys(fields)
-      .forEach(fieldName => {
-        const loadedFieldValue = identity[fieldName]
-        if (!loadedFieldValue) return
-        setValue(fieldName, loadedFieldValue)
-      })
-  }, [identity]) // eslint-disable-line react-hooks/exhaustive-deps
 
   // fetch identity data for initial values
   useEffect(() => {
@@ -158,12 +145,3 @@ const useFinancialsFormLogic = () => {
     handleSnackbarErrorClose
   }
 }
-
-// Create the form schema
-const createSchema = () =>
-  yup.object().shape({
-    occupation: yup.string().required('This field is required'),
-    employmentStatus: yup.string().required('This field is required'),
-    employer: yup.string().required('This field is required'),
-    industryOfEmployment: yup.string().required('This field is required'),
-  })

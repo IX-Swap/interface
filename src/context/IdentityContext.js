@@ -136,7 +136,6 @@ export async function getIdentity (dispatch) {
     } else {
       const message = resps.find(r => r.status !== 200).message
 
-      dispatch({ type: actions.GET_IDENTITY_FAILURE, payload: message })
       throw new Error(message)
     }
   } catch (err) {
@@ -157,7 +156,6 @@ export async function saveIdentity (dispatch, identity, shouldCreateNew) {
       const payload = response.data || {}
       dispatch({ type: actions.SAVE_IDENTITY_SUCCESS, payload })
     } else {
-      dispatch({ type: actions.SAVE_IDENTITY_FAILURE, payload: response.message })
       throw new Error(response.message)
     }
   } catch (err) {
@@ -178,7 +176,6 @@ export async function saveFinancials (dispatch, identity) {
       const payload = response.data || {}
       dispatch({ type: actions.SAVE_IDENTITY_SUCCESS, payload })
     } else {
-      dispatch({ type: actions.SAVE_IDENTITY_FAILURE, payload: response.message })
       throw new Error(response.message)
     }
   } catch (err) {
@@ -204,10 +201,18 @@ export async function saveFile (dispatch, { title, file, remarks }) {
 
     const response = await result.json()
     if (result.status === 200) {
-      const payload = response.data[0]
+      const data = response.data[0]
+      const payload = {
+        ...data,
+
+        // Response on create doesn't include this properties,
+        //   so let's create our own as the app relies on them
+        fileName: data.fileName || data.originalFileName,
+        createdAt: data.createdAt || (new Date()).toString()
+      }
+
       dispatch({ type: actions.SAVE_FILE_SUCCESS, payload })
     } else {
-      dispatch({ type: actions.SAVE_FILE_FAILURE, payload: response.message })
       throw new Error(response.message)
     }
   } catch (err) {
@@ -218,22 +223,13 @@ export async function saveFile (dispatch, { title, file, remarks }) {
 }
 
 // selectors
-export const selectFile = (state, title) => {
-  const file =
-    state.files
-      ?.filter?.(f => f.title === title)
-      .reduce((lastFile, currFile) => {
-        if (!lastFile) return currFile
-        const lastDate = new Date(lastFile.createdAt)
-        const currDate = new Date(currFile.createdAt)
-        const isLastFileOutdated = compareAsc(currDate, lastDate) === 1
-        return isLastFileOutdated ? currFile : lastFile
-      }, null)
-
-
-  if (file && !file.fileName) {
-    return { ...file, fileName: file.originalFileName }
-  }
-
-  return file
-}
+export const selectFile = (state, title) =>
+  state.files
+    ?.filter?.(f => f.title === title)
+    .reduce((lastFile, currFile) => {
+      if (!lastFile) return currFile
+      const lastDate = new Date(lastFile.createdAt)
+      const currDate = new Date(currFile.createdAt)
+      const isLastFileOutdated = compareAsc(currDate, lastDate) === 1
+      return isLastFileOutdated ? currFile : lastFile
+    }, null)
