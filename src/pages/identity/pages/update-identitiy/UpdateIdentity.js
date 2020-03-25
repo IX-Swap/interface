@@ -382,16 +382,11 @@ const useUpdateIdentityLogic = () => {
       })
 
       initialDataRef.current = getValues()
-      console.log(initialDataRef.current)
   }, [isDataPresent]) // eslint-disable-line react-hooks/exhaustive-deps
 
   // saves all updated data group and files on form submit
   const handleSubmit = rhfHandleSubmit(async formData => {
     const initialData = initialDataRef.current
-    console.log(initialDataRef.current)
-    console.log('checkIsIdentityDirty(formState.dirtyFields)', checkIsIdentityDirty(initialData, formData))
-    console.log('checkIsFinancialsDirty(formState.dirtyFields)', checkIsFinancialsDirty(initialData, formData))
-    console.log('checkIsAcrdDirty(formState.dirtyFields)', checkIsAcrdDirty(initialData, formData))
     setIsSaving(true)
 
     Promise.all([
@@ -627,11 +622,11 @@ const ACRD_KEYS = [
 const DATE_KEYS = ['dob']
 
 const checkIsIdentityDirty = (initialData, currentData) =>
-  ID_KEYS.some(k => { if (initialData[k] !== currentData[k]) console.log(k); return initialData[k] !== currentData[k]})
+  ID_KEYS.some(k => initialData[k] !== currentData[k])
 const checkIsFinancialsDirty = (initialData, currentData) =>
-  FINANCIALS_KEYS.some(k => { if (initialData[k] !== currentData[k]) console.log(k); return initialData[k] !== currentData[k]})
+  FINANCIALS_KEYS.some(k => initialData[k] !== currentData[k])
 const checkIsAcrdDirty = (initialData, currentData) =>
-  ACRD_KEYS.some(k => { if (initialData[k] !== currentData[k]) console.log(k); return initialData[k] !== currentData[k]})
+  ACRD_KEYS.some(k => initialData[k] !== currentData[k])
 
 const extractPropsFromObj = curry((keys, obj) =>
   keys.reduce((acc, k) =>
@@ -660,7 +655,6 @@ const saveChangedFiles = (idDispatch, formData) => {
       const isValueFromApi = !!value?.fileName
       if (isValueFromApi) return Promise.resolve()
 
-      console.log('UPLOADING', FILE_KEYS_TO_TITLE[key])
       const saveFilePromise = saveFile(idDispatch, {
         title: FILE_KEYS_TO_TITLE[key],
         file: value[0],
