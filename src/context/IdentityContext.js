@@ -43,7 +43,11 @@ const initialState = {
 export function identityReducer (state, { type, payload }) {
   switch (type) {
     case actions.GET_IDENTITY_REQUEST:
-      return { ...state, status: STATUS.GETTING, error: { ...state.error, get: null } }
+      return {
+        ...state,
+        status: STATUS.GETTING,
+        error: { ...state.error, get: null }
+      }
     case actions.GET_IDENTITY_SUCCESS:
       return {
         ...state,
@@ -53,21 +57,46 @@ export function identityReducer (state, { type, payload }) {
         shouldCreateNew: payload.shouldCreateNew
       }
     case actions.GET_IDENTITY_FAILURE:
-      return { ...state, status: STATUS.IDLE, error: { ...state.error, get: payload } }
+      return {
+        ...state,
+        status: STATUS.IDLE,
+        error: { ...state.error, get: payload }
+      }
 
     case actions.SAVE_IDENTITY_REQUEST:
-      return { ...state, status: STATUS.SAVING, error: { ...state.error, save: null } }
+      return {
+        ...state,
+        status: STATUS.SAVING,
+        error: { ...state.error, save: null }
+      }
     case actions.SAVE_IDENTITY_SUCCESS:
-      return { ...state, status: STATUS.IDLE, identity: payload, shouldCreateNew: false }
+      return {
+        ...state,
+        status: STATUS.IDLE,
+        identity: payload,
+        shouldCreateNew: false
+      }
     case actions.SAVE_IDENTITY_FAILURE:
-      return { ...state, status: STATUS.IDLE, error: { ...state.error, save: payload } }
+      return {
+        ...state,
+        status: STATUS.IDLE,
+        error: { ...state.error, save: payload }
+      }
 
     case actions.SAVE_FILE_REQUEST:
-      return { ...state, status: STATUS.SAVING, error: { ...state.error, save: null } }
+      return {
+        ...state,
+        status: STATUS.SAVING,
+        error: { ...state.error, save: null }
+      }
     case actions.SAVE_FILE_SUCCESS:
       return { ...state, status: STATUS.IDLE, files: [...state.files, payload] }
     case actions.SAVE_FILE_FAILURE:
-      return { ...state, status: STATUS.IDLE, error: { ...state.error, save: payload } }
+      return {
+        ...state,
+        status: STATUS.IDLE,
+        error: { ...state.error, save: payload }
+      }
 
     default:
       throw new Error(`Unhandled action type: ${type}`)
@@ -76,9 +105,13 @@ export function identityReducer (state, { type, payload }) {
 
 // context and hooks
 export function IdentityProvider ({ children }) {
-  const thisReducer = useMemo(() =>
-    process.env.NODE_ENV === 'development' ? logger(identityReducer) : identityReducer,
-    [])
+  const thisReducer = useMemo(
+    () =>
+      process.env.NODE_ENV === 'development'
+        ? logger(identityReducer)
+        : identityReducer,
+    []
+  )
 
   const [state, dispatch] = React.useReducer(thisReducer, initialState)
 
@@ -102,7 +135,9 @@ export function useIdentityState () {
 export function useIdentityDispatch () {
   const context = React.useContext(DispatchContext)
   if (context === undefined) {
-    throw new Error('useIdentityDispatch must be used within a IdentityProvider')
+    throw new Error(
+      'useIdentityDispatch must be used within a IdentityProvider'
+    )
   }
   return context
 }
@@ -128,11 +163,14 @@ export async function getIdentity (dispatch) {
       const shouldCreateNew = !resps[0].data
       const files = resps[1].data
 
-      dispatch({ type: actions.GET_IDENTITY_SUCCESS, payload: {
-        identity,
-        shouldCreateNew,
-        files
-      } })
+      dispatch({
+        type: actions.GET_IDENTITY_SUCCESS,
+        payload: {
+          identity,
+          shouldCreateNew,
+          files
+        }
+      })
     } else {
       const message = resps.find(r => r.status !== 200).message
 
@@ -149,8 +187,18 @@ export async function saveIdentity (dispatch, identity, shouldCreateNew) {
   dispatch({ type: actions.SAVE_IDENTITY_REQUEST })
 
   try {
-    const uri = '/identity/profile/individual'
-    const result = shouldCreateNew ? await postRequest(uri, identity) : await putRequest(uri, identity)
+    console.log(identity)
+    const { id } = identity
+    const type = identity?.type ? identity.type : 'individual'
+    const postUri = `/identity/profile/${type}/`
+    const putUri = `/identity/profile/${type}/${id}`
+
+    delete identity.id
+    delete identity.type
+    const result = shouldCreateNew
+      ? await postRequest(postUri, identity)
+      : await putRequest(putUri, identity)
+
     const response = await result.json()
     if (result.status === 200) {
       const payload = response.data || {}
@@ -161,7 +209,8 @@ export async function saveIdentity (dispatch, identity, shouldCreateNew) {
   } catch (err) {
     const errMsg = err.message || err.toString() || 'Saving profile failed.'
     dispatch({ type: actions.SAVE_IDENTITY_FAILURE, payload: errMsg })
-    throw new Error(errMsg)
+    // throw new Error(errMsg)
+    console.log(err)
   }
 }
 
@@ -185,7 +234,18 @@ export async function saveFinancials (dispatch, identity) {
   }
 }
 
-export async function saveFile (dispatch, { title, file, remarks }) {
+export async function saveFile (dispatch, payload) {
+  /**
+   * saveFile requires the following params in payload
+   * @param String title
+   * @param String type
+   * @param String remarks
+   * @param String file
+   * @param Enum type individual | corporate
+   * @param String id individal document id or corporate document id
+   */
+
+  const { title, file, remarks, type, id } = payload
   dispatch({ type: actions.SAVE_FILE_REQUEST })
 
   try {
@@ -194,7 +254,7 @@ export async function saveFile (dispatch, { title, file, remarks }) {
     formData.append('title', title)
     formData.append('document', file)
     formData.append('remarks', remarks)
-    formData.append('type', 'individual')
+    formData.append('type', type)
 
     const uri = '/dataroom'
     const result = await postRequest(uri, formData)
@@ -206,12 +266,17 @@ export async function saveFile (dispatch, { title, file, remarks }) {
         ...data,
 
         // Response on create doesn't include this properties,
-        //   so let's create our own as the app relies on them
-        fileName: data.fileName || data.originalFileName,
-        createdAt: data.createdAt || (new Date()).toString()
+        // so let's create our own as the app relies on them
+        fileName: data.fileName || data.originalFileName
       }
 
-      dispatch({ type: actions.SAVE_FILE_SUCCESS, payload })
+      // as the API implements a two step process to upload
+      // a file, we have to also associate the file with
+      // the individual or corporate
+
+      await dispatch({ type: actions.SAVE_FILE_SUCCESS, payload })
+
+      saveIdentity(dispatch, { type, id, documents: [data._id] }, false)
     } else {
       throw new Error(response.message)
     }

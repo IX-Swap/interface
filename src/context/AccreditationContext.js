@@ -37,17 +37,33 @@ const initialState = {
 export function accreditationReducer (state, { type, payload }) {
   switch (type) {
     case actions.GET_ACCREDITATION_REQUEST:
-      return { ...state, status: STATUS.GETTING, error: { ...state.error, get: null } }
+      return {
+        ...state,
+        status: STATUS.GETTING,
+        error: { ...state.error, get: null }
+      }
     case actions.GET_ACCREDITATION_SUCCESS:
       return { ...state, status: STATUS.IDLE, accreditation: payload }
     case actions.GET_ACCREDITATION_FAILURE:
-      return { ...state, status: STATUS.IDLE, error: { ...state.error, get: payload } }
+      return {
+        ...state,
+        status: STATUS.IDLE,
+        error: { ...state.error, get: payload }
+      }
     case actions.SAVE_ACCREDITATION_REQUEST:
-      return { ...state, status: STATUS.SAVING, error: { ...state.error, save: null } }
+      return {
+        ...state,
+        status: STATUS.SAVING,
+        error: { ...state.error, save: null }
+      }
     case actions.SAVE_ACCREDITATION_SUCCESS:
       return { ...state, status: STATUS.IDLE, accreditation: payload }
     case actions.SAVE_ACCREDITATION_FAILURE:
-      return { ...state, status: STATUS.IDLE, error: { ...state.error, save: payload } }
+      return {
+        ...state,
+        status: STATUS.IDLE,
+        error: { ...state.error, save: payload }
+      }
     default:
       throw new Error(`Unhandled action type: ${type}`)
   }
@@ -55,9 +71,13 @@ export function accreditationReducer (state, { type, payload }) {
 
 // context and hooks
 export function AccreditationProvider ({ children }) {
-  const thisReducer = useMemo(() =>
-    process.env.NODE_ENV === 'development' ? logger(accreditationReducer) : accreditationReducer,
-    [])
+  const thisReducer = useMemo(
+    () =>
+      process.env.NODE_ENV === 'development'
+        ? logger(accreditationReducer)
+        : accreditationReducer,
+    []
+  )
 
   const [state, dispatch] = React.useReducer(thisReducer, initialState)
 
@@ -73,7 +93,9 @@ export function AccreditationProvider ({ children }) {
 export function useAccreditationState () {
   const context = React.useContext(StateContext)
   if (context === undefined) {
-    throw new Error('useAccreditationState must be used within a AccreditationProvider')
+    throw new Error(
+      'useAccreditationState must be used within a AccreditationProvider'
+    )
   }
   return context
 }
@@ -81,7 +103,9 @@ export function useAccreditationState () {
 export function useAccreditationDispatch () {
   const context = React.useContext(DispatchContext)
   if (context === undefined) {
-    throw new Error('useAccreditationDispatch must be used within a AccreditationProvider')
+    throw new Error(
+      'useAccreditationDispatch must be used within a AccreditationProvider'
+    )
   }
   return context
 }
@@ -96,11 +120,17 @@ export async function getAccreditation (dispatch) {
     const response = await result.json()
     if (result.status === 200) {
       const accreditation = response.data || {}
-      dispatch({ type: actions.GET_ACCREDITATION_SUCCESS, payload: accreditation })
+      dispatch({
+        type: actions.GET_ACCREDITATION_SUCCESS,
+        payload: accreditation
+      })
     } else {
       // Forgive 404 because it is expected to be 404 before inputting some data
       if (result.status === 404) {
-        return dispatch({ type: actions.GET_ACCREDITATION_SUCCESS, payload: {} })
+        return dispatch({
+          type: actions.GET_ACCREDITATION_SUCCESS,
+          payload: {}
+        })
       }
 
       throw new Error(response.message)
@@ -114,7 +144,7 @@ export async function getAccreditation (dispatch) {
 
 export async function saveAccreditation (dispatch, accreditation) {
   dispatch({ type: actions.SAVE_ACCREDITATION_REQUEST })
-
+  console.log(accreditation)
   try {
     const uri = '/identity/profile/individual/accreditation'
     const result = await putRequest(uri, accreditation)

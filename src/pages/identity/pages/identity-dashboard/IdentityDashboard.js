@@ -3,9 +3,16 @@ import { Grid, Box, Hidden } from '@material-ui/core'
 import IdentityOverview from './components/IdentityOverview'
 import ProgressCard from './components/ProgressCard'
 import IdentityProgress from 'pages/identity/components/IdentityProgress'
-import { useIdentityState, IDENTITY_STATUS, selectFile } from 'context/IdentityContext'
+import {
+  useIdentityState,
+  IDENTITY_STATUS,
+  selectFile
+} from 'context/IdentityContext'
 import FinancialsProgress from 'pages/identity/components/FinancialsProgress/FinancialsProgress'
-import { useAccreditationState, ACCREDITATION_STATUS } from 'context/AccreditationContext'
+import {
+  useAccreditationState,
+  ACCREDITATION_STATUS
+} from 'context/AccreditationContext'
 import AccreditationProgress from 'pages/identity/components/AccreditationProgress/AccreditationProgress'
 
 export default function IdentityDashboard () {
@@ -18,11 +25,12 @@ export default function IdentityDashboard () {
     error
   } = useIdentityDashboardLogic()
 
-  const progressesJsx =
+  const progressesJsx = (
     <>
       <ProgressCard
         completed
-        to={`/app/identity/identification-steps/${identityProgress.activeStep + 2}`}
+        to={`/app/identity/identification-steps/${identityProgress.activeStep +
+          2}`}
         title='Identification'
         component={IdentityProgress}
         {...identityProgress}
@@ -30,7 +38,8 @@ export default function IdentityDashboard () {
       <Box mt={3}>
         <ProgressCard
           completed
-          to={`/app/identity/financials-steps/${financialsProgress.activeStep + 2}`}
+          to={`/app/identity/financials-steps/${financialsProgress.activeStep +
+            2}`}
           title='Financials'
           component={FinancialsProgress}
           {...financialsProgress}
@@ -39,13 +48,15 @@ export default function IdentityDashboard () {
       <Box mt={3}>
         <ProgressCard
           completed
-          to={`/app/identity/accreditation-steps/${accreditationProgress.activeStep + 2}`}
+          to={`/app/identity/accreditation-steps/${accreditationProgress.activeStep +
+            2}`}
           title='Accreditation'
           component={AccreditationProgress}
           {...accreditationProgress}
         />
       </Box>
     </>
+  )
 
   return (
     <Grid component='article' container spacing={3} justify='center'>
@@ -55,7 +66,7 @@ export default function IdentityDashboard () {
         </Grid>
       )}
 
-      <Grid component='section' item xs={12} md={7}>
+      <Grid component='section' item xs={12} md={areAllCompleted ? 9 : 7}>
         <IdentityOverview areAllCompleted={areAllCompleted} />
       </Grid>
 
@@ -77,10 +88,13 @@ const useIdentityDashboardLogic = () => {
   const error = id.error.get || acrd.error.get
 
   // calculate if page is ready (i.e. completed all network requests)
-  const isIDReady =
-    ![IDENTITY_STATUS.INIT, IDENTITY_STATUS.GETTING].includes(idStatus)
-  const isAccreditationReady =
-    ![ACCREDITATION_STATUS.INIT, ACCREDITATION_STATUS.GETTING].includes(accreditationStatus)
+  const isIDReady = ![IDENTITY_STATUS.INIT, IDENTITY_STATUS.GETTING].includes(
+    idStatus
+  )
+  const isAccreditationReady = ![
+    ACCREDITATION_STATUS.INIT,
+    ACCREDITATION_STATUS.GETTING
+  ].includes(accreditationStatus)
   const isProgressReady = isIDReady && isAccreditationReady
 
   // calculate progress of identity steps
@@ -139,9 +153,10 @@ const useIdentityDashboardLogic = () => {
       : 0
   }
 
-  const areAllCompleted = identityProgress.percentage === 100
-    && financialsProgress.percentage === 100
-    && accreditationProgress.percentage === 100
+  const areAllCompleted =
+    identityProgress.percentage === 100 &&
+    financialsProgress.percentage === 100 &&
+    accreditationProgress.percentage === 100
 
   return {
     isProgressReady,

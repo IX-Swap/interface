@@ -1,7 +1,22 @@
 import React, { useEffect, useState, useCallback } from 'react'
-import { Grid, Card, Typography, Box, Button, CircularProgress, Snackbar, IconButton } from '@material-ui/core'
-import { useAccreditationState, useAccreditationDispatch, getAccreditation, saveAccreditation, ACCREDITATION_STATUS } from 'context/AccreditationContext'
-import { useForm, } from 'react-hook-form'
+import {
+  Grid,
+  Card,
+  Typography,
+  Box,
+  Button,
+  CircularProgress,
+  Snackbar,
+  IconButton
+} from '@material-ui/core'
+import {
+  useAccreditationState,
+  useAccreditationDispatch,
+  getAccreditation,
+  saveAccreditation,
+  ACCREDITATION_STATUS
+} from 'context/AccreditationContext'
+import { useForm } from 'react-hook-form'
 import AccreditationProgress from 'pages/identity/components/AccreditationProgress'
 import { useMemo } from 'react'
 import Alert from '@material-ui/lab/Alert'
@@ -28,7 +43,9 @@ export default function AccreditationStepOne () {
         {/* Form */}
         <Card component='form' onSubmit={handleSubmit} noValidate>
           <Box p={3}>
-            <Typography component='h1' variant='h3' align='center'>Accreditation</Typography>
+            <Typography component='h1' variant='h3' align='center'>
+              Accreditation
+            </Typography>
 
             {/* Progress Section */}
             <Box mt={3} mx={-3}>
@@ -51,16 +68,23 @@ export default function AccreditationStepOne () {
 
                   {/* Inputs Column */}
                   <Box maxWidth='12rem'>
-                    <SelectGroup fullWidth label='Select Yes or No' {...fields.selfAccreditedInvestor} />
+                    <SelectGroup
+                      fullWidth
+                      label='Select Yes or No'
+                      {...fields.selfAccreditedInvestor}
+                    />
                   </Box>
                 </Box>
 
                 {/* Submit Button */}
                 <Box display='flex' justifyContent='flex-end' mt={6}>
-                  <Button disabled={!isValid || status !== 'IDLE'} type='submit' variant='contained' color='primary'>
-                    {status === 'SAVING'
-                      ? 'Saving...'
-                      : 'Save & Next'}
+                  <Button
+                    disabled={!isValid || status !== 'IDLE'}
+                    type='submit'
+                    variant='contained'
+                    color='primary'
+                  >
+                    {status === 'SAVING' ? 'Saving...' : 'Save & Next'}
                   </Button>
                 </Box>
               </>
@@ -73,7 +97,12 @@ export default function AccreditationStepOne () {
           message={snackbarError}
           open={!!snackbarError}
           action={
-            <IconButton size='small' aria-label='close' color='inherit' onClick={handleSnackbarErrorClose}>
+            <IconButton
+              size='small'
+              aria-label='close'
+              color='inherit'
+              onClick={handleSnackbarErrorClose}
+            >
               <CloseIcon fontSize='small' />
             </IconButton>
           }
@@ -117,21 +146,20 @@ const useAccreditationFormLogic = () => {
   })
 
   // create the field props
-  const createFieldProps = (key, overrides) =>
-    ({
-      name: key,
-      error: Boolean(errors[key] && errors[key].message),
-      helperText: (errors[key] && errors[key].message) || '',
-      control,
-      defaultValue: '',
-      ...overrides
-    })
+  const createFieldProps = (key, overrides) => ({
+    name: key,
+    error: Boolean(errors[key] && errors[key].message),
+    helperText: (errors[key] && errors[key].message) || '',
+    control,
+    defaultValue: '',
+    ...overrides
+  })
 
   const fields = {
     selfAccreditedInvestor: createFieldProps('selfAccreditedInvestor', {
       options: YES_OR_NO_OPTS,
-      required: true,
-    }),
+      required: true
+    })
   }
 
   return {
