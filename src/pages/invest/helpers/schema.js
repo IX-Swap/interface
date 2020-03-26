@@ -1,6 +1,5 @@
-export const createDsoSchema = () =>
+export const editDsoSchema = () =>
   yup.object().shape({
-    userId: yup.string(),
     title: yup.string(),
     status: yup.string(),
     summary: yup.string(),

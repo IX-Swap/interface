@@ -128,7 +128,9 @@ const useAccreditationFormLogic = () => {
     saveFile(idDispatch, {
       title: 'Proof of Wealth',
       file: formData.proofOfWealth[0],
-      remarks: ''
+      remarks: '',
+      type: 'individual',
+      id: id.identity._id
     })
       .then(() => history.push('/app/identity'))
       .catch(e => setSnackbarError(e.message || e.toString()))

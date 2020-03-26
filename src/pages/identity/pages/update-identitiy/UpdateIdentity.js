@@ -628,7 +628,11 @@ const useUpdateIdentityLogic = () => {
 
     Promise.all([
       checkIsIdentityDirty(initialData, formData)
-        ? saveIdentity(idDispatch, extractIdFromFormData(formData))
+        ? saveIdentity(idDispatch, {
+            ...extractIdFromFormData(formData),
+            type: 'individual',
+            id: id.identity._id
+          })
         : Promise.resolve(),
       checkIsFinancialsDirty(initialData, formData)
         ? saveFinancials(idDispatch, extractFinancialsFromFormData(formData))
@@ -636,7 +640,7 @@ const useUpdateIdentityLogic = () => {
       checkIsAcrdDirty(initialData, formData)
         ? saveAccreditation(acrdDispatch, extractAcrdFromFormData(formData))
         : Promise.resolve(),
-      ...saveChangedFiles(idDispatch, formData)
+      ...saveChangedFiles(idDispatch, formData, id.identity._id)
     ])
       .then(() => history.push('/app/identity'))
       .catch(e => {
@@ -900,7 +904,7 @@ const extractAcrdFromFormData = formData => {
   return { accreditationDetails, ...otherAcrdProps }
 }
 
-const saveChangedFiles = (idDispatch, formData) => {
+const saveChangedFiles = (idDispatch, formData, id) => {
   const filesData = extractPropsFromObj(FILES_KEYS, formData)
   const saveFilePromises = Object.entries(filesData).map(([key, value]) => {
     const isValueFromApi = !!value?.fileName
@@ -909,8 +913,25 @@ const saveChangedFiles = (idDispatch, formData) => {
     const saveFilePromise = saveFile(idDispatch, {
       title: FILE_KEYS_TO_TITLE[key],
       file: value[0],
-      remarks: ''
+      remarks: '',
+      type: 'individual',
+      id
     })
+    // const saveFilePromises = Object.entries(filesData)
+    //   .map(([key, value]) => {
+    //     const isValueFromApi = !!value?.fileName
+    //     if (isValueFromApi) return Promise.resolve()
+
+    //     const saveFilePromise = saveFile(idDispatch, {
+    //       title: FILE_KEYS_TO_TITLE[key],
+    //       file: value[0],
+    //       remarks: '',
+    //       type: 'individual',
+    //       id
+    //     })
+
+    //     return saveFilePromise
+    //   })
 
     return saveFilePromise
   })
