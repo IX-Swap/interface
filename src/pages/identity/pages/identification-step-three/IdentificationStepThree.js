@@ -1,15 +1,32 @@
 import React, { useEffect, useState, useCallback } from 'react'
-import { Grid, Card, TextField, Typography, Box, Button, CircularProgress, Snackbar, IconButton } from '@material-ui/core'
-import { useIdentityState, useIdentityDispatch, getIdentity, IDENTITY_STATUS, saveFile, saveIdentity } from 'context/IdentityContext'
+import {
+  Grid,
+  Card,
+  TextField,
+  Typography,
+  Box,
+  Button,
+  CircularProgress,
+  Snackbar,
+  IconButton
+} from '@material-ui/core'
+import {
+  useIdentityState,
+  useIdentityDispatch,
+  getIdentity,
+  IDENTITY_STATUS,
+  saveFile,
+  saveIdentity
+} from 'context/IdentityContext'
 import { useForm, Controller } from 'react-hook-form'
 import IdentityProgress from 'pages/identity/components/IdentityProgress'
-import * as yup from 'yup'
 import { useMemo } from 'react'
 import Alert from '@material-ui/lab/Alert'
 import CloseIcon from '@material-ui/icons/Close'
 import UploadSection from 'pages/identity/components/UploadSection'
 import { useHistory } from 'react-router-dom'
 import { pick } from 'ramda'
+import { createIDDocumentsSchema } from 'pages/identity/helpers/schema'
 
 export default function IdentificationStepThree () {
   const {
@@ -27,7 +44,9 @@ export default function IdentificationStepThree () {
       <Grid item xs={12} sm={10} md={8}>
         <Card component='form' onSubmit={handleSubmit} noValidate>
           <Box p={3}>
-            <Typography component='h1' variant='h3' align='center'>Identification</Typography>
+            <Typography component='h1' variant='h3' align='center'>
+              Identification
+            </Typography>
 
             <Box mt={3} mx={-3}>
               <IdentityProgress activeStep={2} />
@@ -49,22 +68,32 @@ export default function IdentificationStepThree () {
                   />
 
                   <Box mt={1}>
-                    <Controller as={TextField}
+                    <Controller
+                      as={TextField}
                       fullWidth
                       width='100%'
                       margin='dense'
                       label='ID Type'
                       {...fields.idType}
-                      helperText={fields.idType.error ? fields.idType.helperText : 'Please type in your ID type.'}
+                      helperText={
+                        fields.idType.error
+                          ? fields.idType.helperText
+                          : 'Please type in your ID type.'
+                      }
                     />
 
-                    <Controller as={TextField}
+                    <Controller
+                      as={TextField}
                       fullWidth
                       width='100%'
                       margin='dense'
                       label='ID No.'
                       {...fields.idNumber}
-                      helperText={fields.idNumber.error ? fields.idNumber.helperText : 'Please type in your ID no.'}
+                      helperText={
+                        fields.idNumber.error
+                          ? fields.idNumber.helperText
+                          : 'Please type in your ID no.'
+                      }
                     />
 
                     <Box mt={6}>
@@ -78,10 +107,13 @@ export default function IdentificationStepThree () {
                 </Box>
 
                 <Box display='flex' justifyContent='flex-end' mt={6}>
-                  <Button disabled={!isValid || status !== 'IDLE'} type='submit' variant='contained' color='primary'>
-                    {status === 'SAVING'
-                      ? 'Saving...'
-                      : 'Upload & Finish'}
+                  <Button
+                    disabled={!isValid || status !== 'IDLE'}
+                    type='submit'
+                    variant='contained'
+                    color='primary'
+                  >
+                    {status === 'SAVING' ? 'Saving...' : 'Upload & Finish'}
                   </Button>
                 </Box>
               </>
@@ -93,7 +125,12 @@ export default function IdentificationStepThree () {
           message={snackbarError}
           open={!!snackbarError}
           action={
-            <IconButton size='small' aria-label='close' color='inherit' onClick={handleSnackbarErrorClose}>
+            <IconButton
+              size='small'
+              aria-label='close'
+              color='inherit'
+              onClick={handleSnackbarErrorClose}
+            >
               <CloseIcon fontSize='small' />
             </IconButton>
           }
@@ -109,7 +146,7 @@ const useIdentityFormLogic = () => {
   const { status, identity, error, shouldCreateNew } = useIdentityState()
   const [snackbarError, setSnackbarError] = useState('')
   const idDispatch = useIdentityDispatch()
-  const validationSchema = useMemo(createSchema, [])
+  const validationSchema = useMemo(createIDDocumentsSchema, [])
   const methods = useForm({ validationSchema })
   const history = useHistory()
 
@@ -128,21 +165,6 @@ const useIdentityFormLogic = () => {
 
   const handleSnackbarErrorClose = useCallback(() => setSnackbarError(''), [])
 
-  // load identity data to form when it updates from reducer
-  useEffect(() => {
-    const isLoadedDataEmpty = !identity || !Object.keys(identity).length
-    if (isLoadedDataEmpty) return
-
-    Object.keys(fields)
-      .forEach(fieldName => {
-        const loadedFieldValue = fieldName === 'countryOfResidence'
-          ? identity.countryOfResidence
-          : identity.address[fieldName]
-        if (!loadedFieldValue) return
-        setValue(fieldName, loadedFieldValue)
-      })
-  }, [identity]) // eslint-disable-line react-hooks/exhaustive-deps
-
   useEffect(() => {
     // register file inputs
     register({ name: 'idFile' })
@@ -157,26 +179,32 @@ const useIdentityFormLogic = () => {
   // saves identity data for on form submit
   const handleSubmit = rhfHandleSubmit(async formData => {
     try {
-      const { firstName, address } = identity
+      const { firstName, address, _id } = identity
       const { idNumber, idFile, utilityBillFile, idType } = formData
 
       await saveFile(idDispatch, {
         title: 'Passport',
         file: idFile[0],
-        remarks: idNumber
+        remarks: idNumber,
+        type: 'individual',
+        id: _id
       })
 
       await saveFile(idDispatch, {
         title: 'Utility Bill',
         file: utilityBillFile[0],
-        remarks: ''
+        remarks: '',
+        type: 'individual',
+        id: _id
       })
 
       const newIdentity = {
         idType,
         idNumber,
         firstName,
-        ...filterIllegalAddressKeys(address) // need to reinclude Address otherwise it will be deleted
+        ...filterIllegalAddressKeys(address), // need to reinclude Address otherwise it will be deleted
+        type: 'individual',
+        id: _id
       }
 
       await saveIdentity(idDispatch, newIdentity, shouldCreateNew)
@@ -187,15 +215,14 @@ const useIdentityFormLogic = () => {
     }
   })
 
-  const createFieldProps = (key, overrides) =>
-    ({
-      name: key,
-      error: Boolean(errors[key] && errors[key].message),
-      helperText: (errors[key] && errors[key].message) || '',
-      defaultValue: '',
-      control,
-      ...overrides
-    })
+  const createFieldProps = (key, overrides) => ({
+    name: key,
+    error: Boolean(errors[key] && errors[key].message),
+    helperText: (errors[key] && errors[key].message) || '',
+    defaultValue: '',
+    control,
+    ...overrides
+  })
 
   const handleFileChange = name => files => setValue(name, files)
   const fields = {
@@ -227,15 +254,13 @@ const useIdentityFormLogic = () => {
   }
 }
 
-const createSchema = () =>
-  yup.object().shape({
-    idType: yup.string().matches(ALPHA_NUMERIC, 'This field may only contain alphabet or numbers').required('This field is required'),
-    idNumber: yup.string().matches(ALPHA_NUMERIC, 'This field may only contain alphabet or numbers').required('This field is required'),
-    idFile: yup.mixed().required('This field is required'),
-    utilityBillFile: yup.mixed().required('This field is required'),
-  })
-
-const ALPHA_NUMERIC = /^[a-z0-9]*$/i
-
-const ADDRESS_KEYS = ['unit', 'line1', 'line2', 'city', 'postalCode', 'state', 'country']
+const ADDRESS_KEYS = [
+  'unit',
+  'line1',
+  'line2',
+  'city',
+  'postalCode',
+  'state',
+  'country'
+]
 const filterIllegalAddressKeys = pick(ADDRESS_KEYS)

@@ -1,19 +1,20 @@
 import React from 'react'
 import { Switch, Route } from 'react-router-dom'
-import IdentityDashboard from './pages/identity-dashboard/IdentityDashboard'
-import IdentificationStepOne from './pages/identification-step-one/IdentificationStepOne'
+import IdentityDashboard from './pages/identity-dashboard'
+import IdentificationStepOne from './pages/identification-step-one'
 import { IdentityProvider } from 'context/IdentityContext'
 import DateFnsUtils from '@date-io/date-fns'
 import { MuiPickersUtilsProvider } from '@material-ui/pickers'
-import IdentificationStepTwo from './pages/identification-step-two/IdentificationStepTwo'
-import IdentificationStepThree from './pages/identification-step-three/IdentificationStepThree'
-import FinancialsStepOne from './pages/financials-step-one/FinancialsStepOne'
-import FinancialsStepTwo from './pages/financials-step-two/FinancialsStepTwo'
-import FinancialsStepThree from './pages/financials-step-three/FinancialsStepThree'
+import IdentificationStepTwo from './pages/identification-step-two'
+import IdentificationStepThree from './pages/identification-step-three'
+import FinancialsStepOne from './pages/financials-step-one'
+import FinancialsStepTwo from './pages/financials-step-two'
+import FinancialsStepThree from './pages/financials-step-three'
 import { AccreditationProvider } from 'context/AccreditationContext'
-import AccreditationStepOne from './pages/accredaditation-step-one/AccreditationStepOne'
-import AccreditationStepTwo from './pages/accredaditation-step-two/AccreditationStepTwo'
-import AccreditationStepThree from './pages/accredaditation-step-three/AccreditationStepThree'
+import AccreditationStepOne from './pages/accredaditation-step-one'
+import AccreditationStepTwo from './pages/accredaditation-step-two'
+import AccreditationStepThree from './pages/accredaditation-step-three'
+import UpdateIdentity from './pages/update-identitiy'
 import Alert from '@material-ui/lab/Alert'
 
 export default function Identity () {
@@ -23,6 +24,7 @@ export default function Identity () {
         <MuiPickersUtilsProvider utils={DateFnsUtils}>
           <Switch>
             <Route path='/app/identity' exact component={IdentityDashboard} />
+            <Route path='/app/identity/edit' exact component={UpdateIdentity} />
             <Route path='/app/identity/identification-steps/1' exact component={IdentificationStepOne} />
             <Route path='/app/identity/identification-steps/2' exact component={IdentificationStepTwo} />
             <Route path='/app/identity/identification-steps/3' exact component={IdentificationStepThree} />

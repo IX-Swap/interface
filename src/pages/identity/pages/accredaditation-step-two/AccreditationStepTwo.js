@@ -1,14 +1,29 @@
 import React, { useEffect, useState, useCallback } from 'react'
-import { Grid, Card, Typography, Box, Button, CircularProgress, Snackbar, IconButton } from '@material-ui/core'
-import { useAccreditationState, useAccreditationDispatch, getAccreditation, saveAccreditation, ACCREDITATION_STATUS } from 'context/AccreditationContext'
-import { useForm, } from 'react-hook-form'
+import {
+  Grid,
+  Card,
+  Typography,
+  Box,
+  Button,
+  CircularProgress,
+  Snackbar,
+  IconButton
+} from '@material-ui/core'
+import {
+  useAccreditationState,
+  useAccreditationDispatch,
+  getAccreditation,
+  saveAccreditation,
+  ACCREDITATION_STATUS
+} from 'context/AccreditationContext'
+import { useForm } from 'react-hook-form'
 import AccreditationProgress from 'pages/identity/components/AccreditationProgress'
-import * as yup from 'yup'
 import { useMemo } from 'react'
 import Alert from '@material-ui/lab/Alert'
 import CloseIcon from '@material-ui/icons/Close'
 import { useHistory } from 'react-router-dom'
 import SelectGroup from 'pages/identity/components/SelectGroup'
+import { createIDAcrdInfoSchema } from 'pages/identity/helpers/schema'
 
 export default function AccreditationStepOne () {
   const {
@@ -27,7 +42,9 @@ export default function AccreditationStepOne () {
         {/* Form */}
         <Card component='form' onSubmit={handleSubmit} noValidate>
           <Box p={3}>
-            <Typography component='h1' variant='h3' align='center'>Accreditation</Typography>
+            <Typography component='h1' variant='h3' align='center'>
+              Accreditation
+            </Typography>
 
             {/* Progress Section */}
             <Box mt={3} mx={-3}>
@@ -46,37 +63,48 @@ export default function AccreditationStepOne () {
               /* Form */
               <>
                 <Box mx='auto' mt={4} maxWidth='32rem'>
-                  {[[
-                    'Does your total personal asset exceed S$2,000,000?',
-                    fields.totalPersonalAssetExceedsTwoMillionSGD
-                  ],
-                  [
-                    'Is your last income in the last 12 months greater than S$300,000?',
-                    fields.lastTwelveMonthIncomeGreatherThanThreeHundredThousands
-                  ],
-                  [
-                    'Does your personal financial assets exceed S$1,000,000?',
-                    fields.personalFinancialAssetsExceedsOneMillion
-                  ],
-                  [
-                    'Do you have any jointly held in any of the above?',
-                    fields.jointlyHeldAccountMeetingAnyAbove
-                  ]].map(([label, field], i) =>
+                  {[
+                    [
+                      'Do your total personal assets exceed S$2,000,000?',
+                      fields.totalPersonalAssetExceedsTwoMillionSGD
+                    ],
+                    [
+                      'Is your last income in the last 12 months greater than S$300,000?',
+                      fields.lastTwelveMonthIncomeGreatherThanThreeHundredThousands
+                    ],
+                    [
+                      'Do your personal financial assets exceed S$1,000,000?',
+                      fields.personalFinancialAssetsExceedsOneMillion
+                    ],
+                    [
+                      'Do you have any jointly held accounts meeting any of the above?',
+                      fields.jointlyHeldAccountMeetingAnyAbove
+                    ]
+                  ].map(([label, field], i) => (
                     <Box mt={i === 0 ? 0 : 4} key={i}>
                       <Typography>{label}</Typography>
                       <Box maxWidth='12rem' mt={-1}>
-                        <SelectGroup displayEmpty margin='none' fullWidth label='' {...field} />
+                        <SelectGroup
+                          displayEmpty
+                          margin='none'
+                          fullWidth
+                          label=''
+                          {...field}
+                        />
                       </Box>
                     </Box>
-                    )}
+                  ))}
                 </Box>
 
                 {/* Submit Button */}
                 <Box display='flex' justifyContent='flex-end' mt={6}>
-                  <Button disabled={!isValid || status !== 'IDLE'} type='submit' variant='contained' color='primary'>
-                    {status === 'SAVING'
-                      ? 'Saving...'
-                      : 'Save & Next'}
+                  <Button
+                    disabled={!isValid || status !== 'IDLE'}
+                    type='submit'
+                    variant='contained'
+                    color='primary'
+                  >
+                    {status === 'SAVING' ? 'Saving...' : 'Save & Next'}
                   </Button>
                 </Box>
               </>
@@ -89,7 +117,12 @@ export default function AccreditationStepOne () {
           message={snackbarError}
           open={!!snackbarError}
           action={
-            <IconButton size='small' aria-label='close' color='inherit' onClick={handleSnackbarErrorClose}>
+            <IconButton
+              size='small'
+              aria-label='close'
+              color='inherit'
+              onClick={handleSnackbarErrorClose}
+            >
               <CloseIcon fontSize='small' />
             </IconButton>
           }
@@ -102,31 +135,16 @@ export default function AccreditationStepOne () {
 // ############################################################
 
 const useAccreditationFormLogic = () => {
-  const { status, accreditation, error } = useAccreditationState()
+  const { status, error } = useAccreditationState()
   const [snackbarError, setSnackbarError] = useState('')
   const idDispatch = useAccreditationDispatch()
-  const validationSchema = useMemo(createSchema, [])
+  const validationSchema = useMemo(createIDAcrdInfoSchema, [])
   const methods = useForm({ validationSchema })
-  const { handleSubmit: rhfHandleSubmit, errors, control, setValue, formState } = methods
+  const { handleSubmit: rhfHandleSubmit, errors, control, formState } = methods
   const isValid = formState.isSubmitted ? formState.isValid : true
   const history = useHistory()
 
   const handleSnackbarErrorClose = useCallback(() => setSnackbarError(''), [])
-
-  // load accreditation data to form when it updates from reducer
-  useEffect(() => {
-    const accreditationDetails = accreditation?.accreditationDetails
-    const isLoadedDataEmpty = !accreditationDetails
-      || !Object.keys(accreditationDetails).length
-    if (isLoadedDataEmpty) return
-
-    Object.keys(fields)
-      .forEach(fieldName => {
-        const loadedFieldValue = accreditationDetails[fieldName]
-        if (typeof loadedFieldValue !== 'boolean') return
-        setValue(fieldName, loadedFieldValue ? 'true' : 'false')
-      })
-  }, [accreditation]) // eslint-disable-line react-hooks/exhaustive-deps
 
   // fetch accreditation data for initial values
   useEffect(() => {
@@ -137,10 +155,9 @@ const useAccreditationFormLogic = () => {
 
   // saves accreditation data on form submit
   const handleSubmit = rhfHandleSubmit(formData => {
-    const accreditationDetails =
-      Object.fromEntries(
-        Object.entries(formData)
-          .map(([key, value]) => [key, value === 'true']))
+    const accreditationDetails = Object.fromEntries(
+      Object.entries(formData).map(([key, value]) => [key, value === 'true'])
+    )
 
     const newAccreditation = { accreditationDetails }
     saveAccreditation(idDispatch, newAccreditation)
@@ -149,25 +166,28 @@ const useAccreditationFormLogic = () => {
   })
 
   // create the field props
-  const createFieldProps = key =>
-    ({
-      name: key,
-      error: Boolean(errors[key] && errors[key].message),
-      helperText: (errors[key] && errors[key].message) || '',
-      control,
-      defaultValue: '',
-      options: YES_OR_NO_OPTS
-    })
+  const createFieldProps = key => ({
+    name: key,
+    error: Boolean(errors[key] && errors[key].message),
+    helperText: (errors[key] && errors[key].message) || '',
+    control,
+    defaultValue: '',
+    options: YES_OR_NO_OPTS
+  })
 
   const fields = {
-    totalPersonalAssetExceedsTwoMillionSGD:
-      createFieldProps('totalPersonalAssetExceedsTwoMillionSGD'),
-    lastTwelveMonthIncomeGreatherThanThreeHundredThousands:
-      createFieldProps('lastTwelveMonthIncomeGreatherThanThreeHundredThousands'),
-    personalFinancialAssetsExceedsOneMillion:
-      createFieldProps('personalFinancialAssetsExceedsOneMillion'),
-    jointlyHeldAccountMeetingAnyAbove:
-      createFieldProps('jointlyHeldAccountMeetingAnyAbove')
+    totalPersonalAssetExceedsTwoMillionSGD: createFieldProps(
+      'totalPersonalAssetExceedsTwoMillionSGD'
+    ),
+    lastTwelveMonthIncomeGreatherThanThreeHundredThousands: createFieldProps(
+      'lastTwelveMonthIncomeGreatherThanThreeHundredThousands'
+    ),
+    personalFinancialAssetsExceedsOneMillion: createFieldProps(
+      'personalFinancialAssetsExceedsOneMillion'
+    ),
+    jointlyHeldAccountMeetingAnyAbove: createFieldProps(
+      'jointlyHeldAccountMeetingAnyAbove'
+    )
   }
 
   return {
@@ -183,17 +203,7 @@ const useAccreditationFormLogic = () => {
 }
 
 const YES_OR_NO_OPTS = [
-  { value: 'true', label: 'Yes'},
-  { value: 'false', label: 'No'},
-  { value: '', label: 'Select Yes or No'}
+  { value: 'true', label: 'Yes' },
+  { value: 'false', label: 'No' },
+  { value: '', label: 'Select Yes or No' }
 ]
-
-// Create the form schema
-const TRUE_OR_FALSE_YUP = yup.mixed().oneOf(['true', 'false'], 'This field is required')
-const createSchema = () =>
-  yup.object().shape({
-    totalPersonalAssetExceedsTwoMillionSGD: TRUE_OR_FALSE_YUP,
-    lastTwelveMonthIncomeGreatherThanThreeHundredThousands: TRUE_OR_FALSE_YUP,
-    personalFinancialAssetsExceedsOneMillion: TRUE_OR_FALSE_YUP,
-    jointlyHeldAccountMeetingAnyAbove: TRUE_OR_FALSE_YUP
-  })
