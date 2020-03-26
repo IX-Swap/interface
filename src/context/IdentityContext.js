@@ -187,17 +187,14 @@ export async function saveIdentity (dispatch, identity, shouldCreateNew) {
   dispatch({ type: actions.SAVE_IDENTITY_REQUEST })
 
   try {
-    console.log(identity)
-    const { id } = identity
-    const type = identity?.type ? identity.type : 'individual'
+    let { id, type, ...filteredId } = identity || {}
+    type = type || 'individual'
     const postUri = `/identity/profile/${type}/`
     const putUri = `/identity/profile/${type}/${id}`
 
-    delete identity.id
-    delete identity.type
     const result = shouldCreateNew
-      ? await postRequest(postUri, identity)
-      : await putRequest(putUri, identity)
+      ? await postRequest(postUri, filteredId)
+      : await putRequest(putUri, filteredId)
 
     const response = await result.json()
     if (result.status === 200) {
@@ -209,8 +206,7 @@ export async function saveIdentity (dispatch, identity, shouldCreateNew) {
   } catch (err) {
     const errMsg = err.message || err.toString() || 'Saving profile failed.'
     dispatch({ type: actions.SAVE_IDENTITY_FAILURE, payload: errMsg })
-    // throw new Error(errMsg)
-    console.log(err)
+    throw new Error(errMsg)
   }
 }
 
@@ -274,9 +270,9 @@ export async function saveFile (dispatch, payload) {
       // a file, we have to also associate the file with
       // the individual or corporate
 
-      await dispatch({ type: actions.SAVE_FILE_SUCCESS, payload })
+      dispatch({ type: actions.SAVE_FILE_SUCCESS, payload })
 
-      saveIdentity(dispatch, { type, id, documents: [data._id] }, false)
+      await saveIdentity(dispatch, { type, id, documents: [data._id] }, false)
     } else {
       throw new Error(response.message)
     }
