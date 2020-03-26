@@ -12,42 +12,22 @@ import {
 } from '@material-ui/core'
 import Alert from '@material-ui/lab/Alert'
 import { Controller, useForm } from 'react-hook-form'
-import SelectGroup from 'pages/identity/components/SelectGroup/SelectGroup'
-import createDate18YearsAgo from 'pages/identity/helpers/createDate18YearsAgo'
-import { DatePicker } from '@material-ui/pickers'
-import createDate18YearsAndADayAgo from 'pages/identity/helpers/createDate18YearsAndADayAgo'
+
+import { createDsoSchema } from 'pages/invest/helpers/schema'
 import {
-  MARITAL_STATUSES_OPTS,
-  GENDERS_OPTS,
-  COUNTRIES_OPTS,
-  YES_OR_NO_OPTS
-} from 'const'
-import { createIndividualSchema } from 'pages/identity/helpers/schema'
-import UploadSection from 'pages/identity/components/UploadSection/UploadSection'
-import SingleCheckbox from 'pages/identity/components/SingleCheckbox'
-import {
-  useAccreditationState,
-  useAccreditationDispatch,
-  ACCREDITATION_STATUS,
-  getAccreditation,
-  saveAccreditation
-} from 'context/AccreditationContext'
-import {
-  useIdentityState,
-  useIdentityDispatch,
-  IDENTITY_STATUS,
-  getIdentity,
-  selectFile,
-  saveIdentity,
-  saveFinancials,
-  saveFile
-} from 'context/IdentityContext'
+  useInvestState,
+  useInvestDispatch,
+  INVEST_STATUS,
+  saveDso,
+  getDso
+} from 'context/InvestContext'
+
 import { useHistory } from 'react-router-dom'
 import CloseIcon from '@material-ui/icons/Close'
 import { mapObjIndexed, curry } from 'ramda'
 import { useRef } from 'react'
 
-export default function UpdateIdentity () {
+export default function DsoEdit () {
   const {
     handleSubmit,
     fields,
@@ -57,7 +37,7 @@ export default function UpdateIdentity () {
     handleSnackbarErrorClose,
     isReady,
     isSaving
-  } = useUpdateIdentityLogic()
+  } = useDsoEditLogic()
 
   return (
     <Grid component='article' container justify='center' spacing={3}>
@@ -77,7 +57,7 @@ export default function UpdateIdentity () {
           <Card component='form' onSubmit={handleSubmit}>
             <Box p={3}>
               <Typography component='h1' variant='h3'>
-                Update My Identity
+                Edit Dso
               </Typography>
 
               {/* Names Row */}
@@ -88,8 +68,8 @@ export default function UpdateIdentity () {
                       as={TextField}
                       fullWidth
                       margin='dense'
-                      label='First Name'
-                      {...fields.firstName}
+                      label='Title of Dso'
+                      {...fields.title}
                     />
                   </Grid>
                   <Grid item xs={12} sm={4}>
@@ -97,8 +77,8 @@ export default function UpdateIdentity () {
                       as={TextField}
                       fullWidth
                       margin='dense'
-                      label='Middle Name'
-                      {...fields.middleName}
+                      label='Current Status of DSO'
+                      {...fields.status}
                     />
                   </Grid>
                   <Grid item xs={12} sm={4}>
@@ -106,8 +86,8 @@ export default function UpdateIdentity () {
                       as={TextField}
                       fullWidth
                       margin='dense'
-                      label='Last Name'
-                      {...fields.lastName}
+                      label='Summary'
+                      {...fields.summary}
                     />
                   </Grid>
                 </Grid>
@@ -117,24 +97,14 @@ export default function UpdateIdentity () {
               <Box component='section'>
                 <Grid container spacing={3}>
                   <Grid item xs={12} sm={6}>
-                    <SelectGroup label='Gender' {...fields.gender} />
-
-                    <Controller
-                      fullWidth
-                      margin='dense'
-                      label='Date of Birth'
-                      disableFuture
-                      openTo='year'
-                      format='MM/dd/yyyy'
-                      views={['year', 'month', 'date']}
-                      maxDate={createDate18YearsAgo()}
-                      as={DatePicker}
-                      {...fields.dob}
+                    <SelectGroup
+                      label='Status'
+                      {...['Upcoming', 'Live', 'Complete']}
                     />
 
                     <SelectGroup
-                      label='Marital Status'
-                      {...fields.maritalStatus}
+                      label='Funding Currency'
+                      {...['Singapore Dollar', 'US Dollar']}
                     />
                   </Grid>
                   <Grid item xs={12} sm={6}>
@@ -145,7 +115,10 @@ export default function UpdateIdentity () {
                       label='Contact Number'
                       {...fields.contactNumber}
                     />
-                    <SelectGroup label='Nationality' {...fields.nationality} />
+                    <SelectGroup
+                      label='Capital Structure'
+                      {...['Equity', 'Debt']}
+                    />
                   </Grid>
                 </Grid>
               </Box>
@@ -507,13 +480,13 @@ export default function UpdateIdentity () {
 }
 
 const useUpdateIdentityLogic = () => {
-  const acrd = useAccreditationState()
   const id = useIdentityState()
   const idDispatch = useIdentityDispatch()
-  const acrdDispatch = useAccreditationDispatch()
-  const { status } = acrd
+
   const [snackbarError, setSnackbarError] = useState('')
+
   const validationSchema = useMemo(createIndividualSchema, [])
+
   const methods = useForm({ validationSchema })
   const {
     handleSubmit: rhfHandleSubmit,
@@ -553,12 +526,7 @@ const useUpdateIdentityLogic = () => {
 
     // fetch identity data for initial values
     if (id.status === IDENTITY_STATUS.INIT) {
-      getIdentity(idDispatch).catch(() => {})
-    }
-
-    // fetch accreditation data for initial values
-    if (acrd.status === ACCREDITATION_STATUS.INIT) {
-      getAccreditation(acrdDispatch).catch(() => {})
+      getDso(idDispatch, dsoId).catch(() => {})
     }
   }, []) // eslint-disable-line react-hooks/exhaustive-deps
 
@@ -658,129 +626,130 @@ const useUpdateIdentityLogic = () => {
     ...overrides
   })
 
-  const fields = {
-    // basic identity fields
-    firstName: createFieldProps('firstName', { required: true }),
-    middleName: createFieldProps('middleName'),
-    lastName: createFieldProps('lastName', { required: true }),
-    contactNumber: createFieldProps('contactNumber', { required: true }),
-    dob: createFieldProps('dob', {
-      defaultValue: createDate18YearsAndADayAgo(),
-      required: true
-    }),
-    maritalStatus: createFieldProps('maritalStatus', {
-      options: MARITAL_STATUSES_OPTS,
-      required: true
-    }),
-    gender: createFieldProps('gender', {
-      options: GENDERS_OPTS,
-      required: true
-    }),
-    nationality: createFieldProps('nationality', {
-      options: COUNTRIES_OPTS,
-      required: true
-    }),
+  const fields = {}
+  // const fields = {
+  //   // basic identity fields
+  //   firstName: createFieldProps('firstName', { required: true }),
+  //   middleName: createFieldProps('middleName'),
+  //   lastName: createFieldProps('lastName', { required: true }),
+  //   contactNumber: createFieldProps('contactNumber', { required: true }),
+  //   dob: createFieldProps('dob', {
+  //     defaultValue: createDate18YearsAndADayAgo(),
+  //     required: true
+  //   }),
+  //   maritalStatus: createFieldProps('maritalStatus', {
+  //     options: MARITAL_STATUSES_OPTS,
+  //     required: true
+  //   }),
+  //   gender: createFieldProps('gender', {
+  //     options: GENDERS_OPTS,
+  //     required: true
+  //   }),
+  //   nationality: createFieldProps('nationality', {
+  //     options: COUNTRIES_OPTS,
+  //     required: true
+  //   }),
 
-    // address fields
-    unit: createFieldProps('unit'),
-    line1: createFieldProps('line1', { required: true }),
-    line2: createFieldProps('line2'),
-    city: createFieldProps('city', { required: true }),
-    postalCode: createFieldProps('postalCode'),
-    state: createFieldProps('state'),
-    country: createFieldProps('country', {
-      options: COUNTRIES_OPTS,
-      required: true
-    }),
-    countryOfResidence: createFieldProps('countryOfResidence', {
-      options: COUNTRIES_OPTS,
-      required: true
-    }),
+  //   // address fields
+  //   unit: createFieldProps('unit'),
+  //   line1: createFieldProps('line1', { required: true }),
+  //   line2: createFieldProps('line2'),
+  //   city: createFieldProps('city', { required: true }),
+  //   postalCode: createFieldProps('postalCode'),
+  //   state: createFieldProps('state'),
+  //   country: createFieldProps('country', {
+  //     options: COUNTRIES_OPTS,
+  //     required: true
+  //   }),
+  //   countryOfResidence: createFieldProps('countryOfResidence', {
+  //     options: COUNTRIES_OPTS,
+  //     required: true
+  //   }),
 
-    // documents fields
-    idType: createFieldProps('idType', { required: true }),
-    idNumber: createFieldProps('idNumber', { required: true }),
-    idFile: createFieldProps('idFile', {
-      required: true,
-      onChange: useCallback(handleFileChange('idFile'), []), // eslint-disable-line react-hooks/exhaustive-deps
-      value: watch('idFile'),
-      triggerValidation
-    }),
-    utilityBillFile: createFieldProps('utilityBillFile', {
-      required: true,
-      onChange: useCallback(handleFileChange('utilityBillFile'), []), // eslint-disable-line react-hooks/exhaustive-deps
-      value: watch('utilityBillFile'),
-      triggerValidation
-    }),
+  //   // documents fields
+  //   idType: createFieldProps('idType', { required: true }),
+  //   idNumber: createFieldProps('idNumber', { required: true }),
+  //   idFile: createFieldProps('idFile', {
+  //     required: true,
+  //     onChange: useCallback(handleFileChange('idFile'), []), // eslint-disable-line react-hooks/exhaustive-deps
+  //     value: watch('idFile'),
+  //     triggerValidation
+  //   }),
+  //   utilityBillFile: createFieldProps('utilityBillFile', {
+  //     required: true,
+  //     onChange: useCallback(handleFileChange('utilityBillFile'), []), // eslint-disable-line react-hooks/exhaustive-deps
+  //     value: watch('utilityBillFile'),
+  //     triggerValidation
+  //   }),
 
-    // occupation fields
-    occupation: createFieldProps('occupation', { required: true }),
-    employmentStatus: createFieldProps('employmentStatus', { required: true }),
-    employer: createFieldProps('employer', { required: true }),
-    industryOfEmployment: createFieldProps('industryOfEmployment', {
-      required: true
-    }),
+  //   // occupation fields
+  //   occupation: createFieldProps('occupation', { required: true }),
+  //   employmentStatus: createFieldProps('employmentStatus', { required: true }),
+  //   employer: createFieldProps('employer', { required: true }),
+  //   industryOfEmployment: createFieldProps('industryOfEmployment', {
+  //     required: true
+  //   }),
 
-    // bank account fields
-    bankName: createFieldProps('bankName', { required: true }),
-    bankAccountName: createFieldProps('bankAccountName', { required: true }),
-    bankAccountNumber: createFieldProps('bankAccountNumber', {
-      required: true
-    }),
+  //   // bank account fields
+  //   bankName: createFieldProps('bankName', { required: true }),
+  //   bankAccountName: createFieldProps('bankAccountName', { required: true }),
+  //   bankAccountNumber: createFieldProps('bankAccountNumber', {
+  //     required: true
+  //   }),
 
-    // income fields
-    annualIncome: createFieldProps('annualIncome', { required: true }),
-    houseHoldIncome: createFieldProps('houseHoldIncome', { required: true }),
-    sourceOfWealth: createFieldProps('sourceOfWealth', { required: true }),
-    politicallyExposed: createFieldProps('politicallyExposed', {
-      required: true,
-      defaultValue: false
-    }),
+  //   // income fields
+  //   annualIncome: createFieldProps('annualIncome', { required: true }),
+  //   houseHoldIncome: createFieldProps('houseHoldIncome', { required: true }),
+  //   sourceOfWealth: createFieldProps('sourceOfWealth', { required: true }),
+  //   politicallyExposed: createFieldProps('politicallyExposed', {
+  //     required: true,
+  //     defaultValue: false
+  //   }),
 
-    // self accreditated investor fields
-    selfAccreditedInvestor: createFieldProps('selfAccreditedInvestor', {
-      options: YES_OR_NO_OPTS,
-      required: true
-    }),
+  //   // self accreditated investor fields
+  //   selfAccreditedInvestor: createFieldProps('selfAccreditedInvestor', {
+  //     options: YES_OR_NO_OPTS,
+  //     required: true
+  //   }),
 
-    // accreditation info fields
-    totalPersonalAssetExceedsTwoMillionSGD: createFieldProps(
-      'totalPersonalAssetExceedsTwoMillionSGD',
-      {
-        options: YES_OR_NO_OPTS,
-        required: true
-      }
-    ),
-    lastTwelveMonthIncomeGreatherThanThreeHundredThousands: createFieldProps(
-      'lastTwelveMonthIncomeGreatherThanThreeHundredThousands',
-      {
-        options: YES_OR_NO_OPTS,
-        required: true
-      }
-    ),
-    personalFinancialAssetsExceedsOneMillion: createFieldProps(
-      'personalFinancialAssetsExceedsOneMillion',
-      {
-        options: YES_OR_NO_OPTS,
-        required: true
-      }
-    ),
-    jointlyHeldAccountMeetingAnyAbove: createFieldProps(
-      'jointlyHeldAccountMeetingAnyAbove',
-      {
-        options: YES_OR_NO_OPTS,
-        required: true
-      }
-    ),
+  //   // accreditation info fields
+  //   totalPersonalAssetExceedsTwoMillionSGD: createFieldProps(
+  //     'totalPersonalAssetExceedsTwoMillionSGD',
+  //     {
+  //       options: YES_OR_NO_OPTS,
+  //       required: true
+  //     }
+  //   ),
+  //   lastTwelveMonthIncomeGreatherThanThreeHundredThousands: createFieldProps(
+  //     'lastTwelveMonthIncomeGreatherThanThreeHundredThousands',
+  //     {
+  //       options: YES_OR_NO_OPTS,
+  //       required: true
+  //     }
+  //   ),
+  //   personalFinancialAssetsExceedsOneMillion: createFieldProps(
+  //     'personalFinancialAssetsExceedsOneMillion',
+  //     {
+  //       options: YES_OR_NO_OPTS,
+  //       required: true
+  //     }
+  //   ),
+  //   jointlyHeldAccountMeetingAnyAbove: createFieldProps(
+  //     'jointlyHeldAccountMeetingAnyAbove',
+  //     {
+  //       options: YES_OR_NO_OPTS,
+  //       required: true
+  //     }
+  //   ),
 
-    // proof of wealth field
-    proofOfWealth: createFieldProps('proofOfWealth', {
-      required: true,
-      onChange: useCallback(handleFileChange('proofOfWealth'), []), // eslint-disable-line react-hooks/exhaustive-deps
-      value: watch('proofOfWealth'),
-      triggerValidation
-    })
-  }
+  //   // proof of wealth field
+  //   proofOfWealth: createFieldProps('proofOfWealth', {
+  //     required: true,
+  //     onChange: useCallback(handleFileChange('proofOfWealth'), []), // eslint-disable-line react-hooks/exhaustive-deps
+  //     value: watch('proofOfWealth'),
+  //     triggerValidation
+  //   })
+  // }
 
   return {
     status,
