@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import { Grid, Button, TextField } from '@material-ui/core'
 
-import { createMnemonicSeed, privateKeyfromSeed } from './WalletService'
+import { createMnemonicSeed } from './WalletService'
 import Widget from '../../../components/Widget/Widget'
 import { makeStyles } from '@material-ui/core/styles'
 
@@ -38,25 +38,27 @@ export default function WalletCreateComponent () {
   const [privateKey, setPrivateKey] = useState('')
   const [publicKey, setPublicKey] = useState('')
 
+  setPrivateKey()
+  setPublicKey()
   async function createSeed () {
     const seed = await createMnemonicSeed()
     setSeedPhrase(seed)
     // createWallet(seed)
   }
 
-  async function createWallet (seed) {
-    const hdwallet = await privateKeyfromSeed(seed)
+  // async function createWallet (seed) {
+  //   const hdwallet = await privateKeyfromSeed(seed)
 
-    const node = hdwallet.derivePath()
-    const nodeExtendedPrivateKey = node.privateExtendedKey()
-    const nodeExtendedPublicKey = node.publicExtendedKey()
+  //   const node = hdwallet.derivePath()
+  //   // const nodeExtendedPrivateKey = node.privateExtendedKey()
+  //   // const nodeExtendedPublicKey = node.publicExtendedKey()
 
-    const addressIndexWallet = node.deriveChild[0].getWallet()
-    const publicKey = addressIndexWallet.getPublicKey().toString('hex')
-    const privateKey = addressIndexWallet.getPrivateKey().toString('hex')
-    setPublicKey(publicKey)
-    setPrivateKey(privateKey)
-  }
+  //   const addressIndexWallet = node.deriveChild[0].getWallet()
+  //   const publicKey = addressIndexWallet.getPublicKey().toString('hex')
+  //   const privateKey = addressIndexWallet.getPrivateKey().toString('hex')
+  //   setPublicKey(publicKey)
+  //   setPrivateKey(privateKey)
+  // }
 
   return (
     <Grid container className={classes.panel} spacing={3}>

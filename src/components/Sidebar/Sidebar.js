@@ -2,7 +2,6 @@ import React, { useState, useEffect } from 'react'
 import { Drawer, IconButton, List } from '@material-ui/core'
 
 import DashboardIcon from '@material-ui/icons/Dashboard'
-import BusinessIcon from '@material-ui/icons/Business'
 import SettingsIcon from '@material-ui/icons/Settings'
 import ShowChartIcon from '@material-ui/icons/ShowChart'
 import HelpIcon from '@material-ui/icons/Help'

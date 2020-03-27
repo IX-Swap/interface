@@ -10,7 +10,7 @@ import {
 } from '../../../../context/InvestContext'
 
 export default function DsoBoard ({ history }) {
-  const { dsoList, isDsoListReady, error } = useDsoBoardLogic()
+  const { dsoList, isDsoListReady } = useDsoBoardLogic()
   return (
     <Grid component='article' container spacing={3}>
       {!isDsoListReady ? (
@@ -43,7 +43,7 @@ const useDsoBoardLogic = () => {
     if (investStatus === INVEST_STATUS.INIT) {
       getDsoList(investDispatch).catch(() => {})
     }
-  }, [investStatus])
+  }, [investStatus, investDispatch])
 
   return { isDsoListReady, dsoList, error }
 }

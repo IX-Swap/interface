@@ -1,9 +1,5 @@
 import React from 'react'
 import { Grid, Box, Card, Typography, Button } from '@material-ui/core'
-import { createMuiTheme, MuiThemeProvider } from '@material-ui/core/styles'
-
-import { convertFromHTML, ContentState, convertToRaw } from 'draft-js'
-import MUIRichTextEditor from 'mui-rte'
 
 // "title": "Health Sciences LLC",
 // "status": "upcoming",
@@ -23,29 +19,6 @@ import MUIRichTextEditor from 'mui-rte'
 // "holdingStructure": "<p>SVV Singapore</p>",
 // "smartContractAddress": "contract address",
 // "team": "<p>Tom Smith<p><Linda Jones</p>"
-
-const data =
-  '{"blocks":[{"key":"ec09h","text":"Write here... this is a test. ","type":"unstyled","depth":0,"inlineStyleRanges":[],"entityRanges":[],"data":{}}],"entityMap":{}}'
-
-const defaultTheme = createMuiTheme()
-
-Object.assign(defaultTheme, {
-  overrides: {
-    MUIRichTextEditor: {
-      root: {
-        marginTop: 20,
-        width: '80%'
-      },
-      editor: {
-        padding: 10
-      }
-    }
-  }
-})
-
-const save = data => {
-  console.log(data)
-}
 
 export default function ViewDso () {
   return (

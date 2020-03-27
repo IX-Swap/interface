@@ -1,6 +1,6 @@
 import React, { useMemo } from 'react'
 import logger from 'use-reducer-logger'
-import { getRequest, putRequest, postRequest } from './httpRequests'
+import { getRequest, putRequest } from './httpRequests'
 
 // constants
 const StateContext = React.createContext()
@@ -74,13 +74,13 @@ export function investReducer (state, { type, payload }) {
       return {
         ...state,
         status: STATUS.IDLE,
-        error: { ...state.error, get: payload }
+        error: { ...state.error, save: payload }
       }
     case actions.SAVE_DSO_REQUEST:
       return {
         ...state,
         status: STATUS.SAVING,
-        error: { ...state.error, get: null }
+        error: { ...state.error, save: null }
       }
     case actions.SAVE_DSO_SUCCESS:
       return {
@@ -92,7 +92,7 @@ export function investReducer (state, { type, payload }) {
       return {
         ...state,
         status: STATUS.IDLE,
-        error: { ...state.error, get: payload }
+        error: { ...state.error, save: payload }
       }
     default:
       throw new Error(`Unhandled action type: ${type}`)

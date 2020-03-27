@@ -1,2 +1,2 @@
-var bip39
+export var bip39
 export default window.bip39

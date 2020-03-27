@@ -8,7 +8,7 @@ import { TokenDeployProvider } from '../../context/TokenDeployContext'
 import { TokenIssueProvider } from '../../context/TokenIssueContext'
 import { TokenListProvider } from '../../context/TokenListContext'
 
-import TokenTransfer from './token-transfer'
+// import TokenTransfer from './token-transfer'
 import TokenList from './token-list'
 import TokenIssue from './token-issue'
 import TokenDeploy from './token-deploy'

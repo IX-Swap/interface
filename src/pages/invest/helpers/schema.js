@@ -1,3 +1,5 @@
+import * as yup from 'yup'
+
 export const editDsoSchema = () =>
   yup.object().shape({
     title: yup.string(),

@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react'
 import { Grid, Box, Card, Typography } from '@material-ui/core'
-import { createMuiTheme, MuiThemeProvider } from '@material-ui/core/styles'
+import { createMuiTheme } from '@material-ui/core/styles'
 
 import {
   INVEST_STATUS,
@@ -9,9 +9,6 @@ import {
   getDso,
   saveDso
 } from '../../../../context/InvestContext'
-
-import { convertFromHTML, ContentState, convertToRaw } from 'draft-js'
-import MUIRichTextEditor from 'mui-rte'
 
 // "title": "Health Sciences LLC",
 // "status": "upcoming",
@@ -51,36 +48,20 @@ Object.assign(defaultTheme, {
 export default function ViewDso (props) {
   const { dsoId, mode } = props.match.params
 
-  const edit = mode === 'edit' ? true : false
+  console.log(mode)
+  // const edit = mode === 'edit' ? true : false
 
-  const { dso, handleSave, isDsoReady, error } = useDsoViewLogic(dsoId)
+  const { dso } = useDsoViewLogic(dsoId)
 
   return (
     <Card>
       <Grid container spacing={2}>
         <Grid item md={7} lg={5}>
           <Box p={3}>
-            <img src={dso.logo} width={100} height={100} />
+            <img src={dso.logo} width={100} height={100} alt='dso-logo' />
           </Box>
           <Box p={2}>
-            <MuiThemeProvider theme={defaultTheme}>
-              <MUIRichTextEditor
-                value={isDsoReady ? dso.title : ''}
-                toolbar={edit}
-                readOnly={!edit}
-                controls={[
-                  'title',
-                  'bold',
-                  'italic',
-                  'underline',
-                  'link',
-                  'numberList',
-                  'bulletList',
-                  'save'
-                ]}
-                onSave={e => handleSave({ highlights: e })}
-              />
-            </MuiThemeProvider>
+            {dso.title}
             {/* <Typography variant='h2' component='h2'>
               {'Title of the DSO'}
             </Typography> */}
@@ -96,24 +77,7 @@ export default function ViewDso (props) {
             </Typography>
           </Box>
 
-          <MuiThemeProvider theme={defaultTheme}>
-            <MUIRichTextEditor
-              value={isDsoReady ? dso.highlights : ''}
-              toolbar={edit}
-              readOnly={!edit}
-              controls={[
-                'title',
-                'bold',
-                'italic',
-                'underline',
-                'link',
-                'numberList',
-                'bulletList',
-                'save'
-              ]}
-              onSave={e => handleSave({ highlights: e })}
-            />
-          </MuiThemeProvider>
+          <Box m={3}>{dso.highlights}</Box>
         </Grid>
       </Grid>
     </Card>
@@ -136,7 +100,7 @@ const useDsoViewLogic = dsoId => {
     if (!dso._id) {
       getDso(investDispatch, dsoId).catch(() => {})
     }
-  }, [investStatus])
+  }, [investStatus, investDispatch, dsoId, dso])
 
   const handleSave = payload => {
     saveDso(investDispatch, dsoId, payload)

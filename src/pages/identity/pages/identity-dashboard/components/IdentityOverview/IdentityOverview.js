@@ -70,7 +70,7 @@ export default function IdentityOverview ({ areAllCompleted }) {
                 </Link>
               </Box>
               <Box mt={3}>
-                <a href='#' style={{ textDecoration: 'none' }}>
+                <a href='#/app' style={{ textDecoration: 'none' }}>
                   <Button
                     as='div'
                     fullWidth
