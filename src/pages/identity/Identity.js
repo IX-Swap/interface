@@ -1,36 +1,45 @@
 import React from 'react'
-import { Grid, Box, Hidden } from '@material-ui/core'
+import { Switch, Route } from 'react-router-dom'
+import IdentityDashboard from './pages/identity-dashboard'
+import IdentificationStepOne from './pages/identification-step-one'
 import { IdentityProvider } from 'context/IdentityContext'
-import IdentityForm from './components/IdentityForm'
-import IdentityProgress from './components/IdentityProgress/IdentityProgress'
+import DateFnsUtils from '@date-io/date-fns'
+import { MuiPickersUtilsProvider } from '@material-ui/pickers'
+import IdentificationStepTwo from './pages/identification-step-two'
+import IdentificationStepThree from './pages/identification-step-three'
+import FinancialsStepOne from './pages/financials-step-one'
+import FinancialsStepTwo from './pages/financials-step-two'
+import FinancialsStepThree from './pages/financials-step-three'
+import { AccreditationProvider } from 'context/AccreditationContext'
+import AccreditationStepOne from './pages/accredaditation-step-one'
+import AccreditationStepTwo from './pages/accredaditation-step-two'
+import AccreditationStepThree from './pages/accredaditation-step-three'
+import UpdateIdentity from './pages/update-identitiy'
+import Alert from '@material-ui/lab/Alert'
 
 export default function Identity () {
-  const idProgressJsx =
-    <IdentityProgress title='Identification' steps={['', '', '']} activeStep={0} percentage='0' />
-
   return (
     <IdentityProvider>
-      <Grid component='article' container spacing={3}>
-        <Grid item xs={12}>
-          <Hidden mdUp>
-            {idProgressJsx}
-          </Hidden>
-        </Grid>
-        <Grid component='section' item xs={12} md={7}>
-          <IdentityForm />
-        </Grid>
-        <Grid item xs={12} md={5}>
-          <Hidden smDown>
-            {idProgressJsx}
-          </Hidden>
-          <Box mt={3}>
-            <IdentityProgress title='Financials' steps={['', '', '']} activeStep={0} percentage='0' />
-          </Box>
-          <Box mt={3}>
-            <IdentityProgress title='Accreditation' steps={['', '', '']} activeStep={0} percentage='0' />
-          </Box>
-        </Grid>
-      </Grid>
+      <AccreditationProvider>
+        <MuiPickersUtilsProvider utils={DateFnsUtils}>
+          <Switch>
+            <Route path='/app/identity' exact component={IdentityDashboard} />
+            <Route path='/app/identity/edit' exact component={UpdateIdentity} />
+            <Route path='/app/identity/identification-steps/1' exact component={IdentificationStepOne} />
+            <Route path='/app/identity/identification-steps/2' exact component={IdentificationStepTwo} />
+            <Route path='/app/identity/identification-steps/3' exact component={IdentificationStepThree} />
+            <Route path='/app/identity/financials-steps/1' exact component={FinancialsStepOne} />
+            <Route path='/app/identity/financials-steps/2' exact component={FinancialsStepTwo} />
+            <Route path='/app/identity/financials-steps/3' exact component={FinancialsStepThree} />
+            <Route path='/app/identity/accreditation-steps/1' exact component={AccreditationStepOne} />
+            <Route path='/app/identity/accreditation-steps/2' exact component={AccreditationStepTwo} />
+            <Route path='/app/identity/accreditation-steps/3' exact component={AccreditationStepThree} />
+            <Route>
+              <Alert severity='error'>Page not found</Alert>
+            </Route>
+          </Switch>
+        </MuiPickersUtilsProvider>
+      </AccreditationProvider>
     </IdentityProvider>
   )
 }

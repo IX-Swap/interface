@@ -1,0 +1,6 @@
+{
+  "name": "financials-progress",
+  "version": "1.0.0",
+  "private": true,
+  "main": "FinancialsProgress.js"
+}
