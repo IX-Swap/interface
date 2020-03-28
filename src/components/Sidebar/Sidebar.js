@@ -1,21 +1,17 @@
 import React, { useState, useEffect } from 'react'
 import { Drawer, IconButton, List } from '@material-ui/core'
-import {
-  // PermIdentity as IdentityIcon,
-  // NoteAdd as NoteIcon,
-  // InsertChart as ChartIcon,
-  // Lock as LockIcon,
-  Business as BusinessIcon,
-  // Home as HomeIcon,
-  // NotificationsNone as NotificationsIcon,
-  // FormatSize as TypographyIcon,
-  // FilterNone as UIElementsIcon,
-  // BorderAll as TableIcon,
-  QuestionAnswer as SupportIcon,
-  LibraryBooks as LibraryIcon,
-  HelpOutline as FAQIcon,
-  ArrowBack as ArrowBackIcon
-} from '@material-ui/icons'
+
+import DashboardIcon from '@material-ui/icons/Dashboard'
+import SettingsIcon from '@material-ui/icons/Settings'
+import ShowChartIcon from '@material-ui/icons/ShowChart'
+import HelpIcon from '@material-ui/icons/Help'
+import PermIdentityIcon from '@material-ui/icons/PermIdentity'
+import ArrowBackIcon from '@material-ui/icons/ArrowBack'
+import SecurityIcon from '@material-ui/icons/Security'
+import CodeIcon from '@material-ui/icons/Code'
+import AccountBalanceIcon from '@material-ui/icons/AccountBalance'
+import PieChartIcon from '@material-ui/icons/PieChart'
+
 import { useTheme } from '@material-ui/styles'
 import { withRouter } from 'react-router-dom'
 import classNames from 'classnames'
@@ -37,16 +33,22 @@ import {
 const structure = [
   {
     id: 0,
-    label: 'Developer',
-    link: '/app/developer-panel',
-    icon: <BusinessIcon />
+    label: 'Dashboard',
+    link: '/app/dashboard',
+    icon: <DashboardIcon />
   },
-  // {
-  //   id: 1,
-  //   label: 'Primary',
-  //   link: '/app/primary',
-  //   icon: <NoteIcon />
-  // },
+  {
+    id: 1,
+    label: 'Invest',
+    link: '/app/invest',
+    icon: <PieChartIcon />
+  },
+  {
+    id: 2,
+    label: 'Trade',
+    link: '/app/trade',
+    icon: <ShowChartIcon />
+  },
   // { id: 2, label: 'Secondary', link: '/app/secondary', icon: <ChartIcon /> },
   // {
   //   id: 3,
@@ -54,22 +56,45 @@ const structure = [
   //   link: '/app/notifications',
   //   icon: <LockIcon />
   // },
-  // {
-  //   id: 4,
-  //   label: 'Identity',
-  //   link: '/app/ui',
-  //   icon: <IdentityIcon />,
-  //   children: [
-  //     { label: 'Icons', link: '/app/ui/icons' },
-  //     { label: 'Charts', link: '/app/ui/charts' },
-  //     { label: 'Maps', link: '/app/ui/maps' }
-  //   ]
-  // },
-  { id: 5, type: 'divider' },
-  { id: 6, type: 'title', label: 'HELP' },
-  { id: 7, label: 'Documentation', link: '', icon: <LibraryIcon /> },
-  { id: 8, label: 'Support', link: '', icon: <SupportIcon /> },
-  { id: 9, label: 'FAQ', link: '', icon: <FAQIcon /> }
+  {
+    id: 3,
+    label: 'Accounts',
+    link: '/app/accounts',
+    icon: <AccountBalanceIcon />,
+    children: [
+      { label: 'Cash', link: '/app/cash' },
+      { label: 'Assets', link: '/app/assets' },
+      { label: 'Reports', link: '/app/reports' }
+    ]
+  },
+
+  {
+    id: 4,
+    label: 'Settings',
+    link: '/app/settings',
+    icon: <SettingsIcon />,
+    children: [
+      { label: 'Identity', link: '/app/identity', icon: <PermIdentityIcon /> },
+      { label: 'Security', link: '/app/security', icon: <SecurityIcon /> }
+    ]
+  },
+  {
+    id: 5,
+    label: 'Support',
+    link: '/app/primary',
+    icon: <HelpIcon />
+  },
+  { id: 6, type: 'divider' },
+  {
+    id: 7,
+    label: 'Developer Panel',
+    link: '/app/developer-panel',
+    icon: <CodeIcon />
+  }
+  // { id: 6, type: 'title', label: 'HELP' },
+  // { id: 7, label: 'Documentation', link: '', icon: <LibraryIcon /> },
+  // { id: 8, label: 'Support', link: '', icon: <SupportIcon /> },
+  // { id: 9, label: 'FAQ', link: '', icon: <FAQIcon /> }
   // { id: 10, type: "divider" },
   // { id: 11, type: "title", label: "PROJECTS" },
   // {

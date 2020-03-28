@@ -1,6 +1,5 @@
 import React from 'react'
 import { Grid, Button } from '@material-ui/core'
-import { Link } from 'react-router-dom'
 
 import useStyles from './styles'
 

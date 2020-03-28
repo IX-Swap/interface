@@ -70,7 +70,7 @@ export default function IdentityOverview ({ areAllCompleted }) {
                 </Link>
               </Box>
               <Box mt={3}>
-                <a href='#' style={{ textDecoration: 'none' }}>
+                <a href='#/app' style={{ textDecoration: 'none' }}>
                   <Button
                     as='div'
                     fullWidth
@@ -166,12 +166,7 @@ export default function IdentityOverview ({ areAllCompleted }) {
 
             {/* Address (2) Columns */}
             <Box component='section' mt={4}>
-              <Typography
-                component='h3'
-                variant='h6'
-                gutterBottom={false}
-                color='textSecondary'
-              >
+              <Typography component='h3' variant='h6' gutterBottom={false}>
                 Address
               </Typography>
 
@@ -227,12 +222,7 @@ export default function IdentityOverview ({ areAllCompleted }) {
             <Box component='section' mt={2}>
               <Grid container spacing={1}>
                 <Grid item xs={12}>
-                  <Typography
-                    component='h3'
-                    variant='h6'
-                    gutterBottom={false}
-                    color='textSecondary'
-                  >
+                  <Typography component='h3' variant='h6' gutterBottom={false}>
                     Documents
                   </Typography>
                   <StaticTextField
@@ -299,12 +289,7 @@ export default function IdentityOverview ({ areAllCompleted }) {
 
             {/* Bank Account (2) Columns */}
             <Box component='section' mt={4}>
-              <Typography
-                component='h3'
-                variant='h6'
-                gutterBottom={false}
-                color='textSecondary'
-              >
+              <Typography component='h3' variant='h6' gutterBottom={false}>
                 Bank Account
               </Typography>
 
@@ -333,12 +318,7 @@ export default function IdentityOverview ({ areAllCompleted }) {
 
             {/* Income (2) Columns */}
             <Box component='section' mt={4}>
-              <Typography
-                component='h3'
-                variant='h6'
-                gutterBottom={false}
-                color='textSecondary'
-              >
+              <Typography component='h3' variant='h6' gutterBottom={false}>
                 Income
               </Typography>
 
@@ -392,12 +372,7 @@ export default function IdentityOverview ({ areAllCompleted }) {
             <Box component='section' mt={2}>
               <Grid container spacing={1}>
                 <Grid item xs={12}>
-                  <Typography
-                    component='h3'
-                    variant='h6'
-                    gutterBottom={false}
-                    color='textSecondary'
-                  >
+                  <Typography component='h3' variant='h6' gutterBottom={false}>
                     Declarations
                   </Typography>
                   <StaticTextField
@@ -441,12 +416,7 @@ export default function IdentityOverview ({ areAllCompleted }) {
             <Box component='section' mt={2}>
               <Grid container spacing={1}>
                 <Grid item xs={12}>
-                  <Typography
-                    component='h3'
-                    variant='h6'
-                    gutterBottom={false}
-                    color='textSecondary'
-                  >
+                  <Typography component='h3' variant='h6' gutterBottom={false}>
                     Proof of wealth
                   </Typography>
                   <StaticTextField
@@ -507,7 +477,7 @@ const useIdentityOverviewLogic = () => {
 
 const StaticTextField = ({ value, label, ...props }) => (
   <Box as='section' {...props}>
-    <Typography color='secondary' as='h3' variant='body2'>
+    <Typography color='primary' as='h3' variant='body2'>
       {label}
     </Typography>
     <Typography
@@ -537,4 +507,4 @@ const StaticTextField = ({ value, label, ...props }) => (
 )
 
 const isImg = str => /\.(gif|jpe?g|tiff|png|webp|bmp)$/i.test(str)
-const fixFileUrl = str => str.replace('http://http://localhost:3000', '')
+const fixFileUrl = str => str.replace('http://localhost:3000', '')
