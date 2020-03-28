@@ -664,10 +664,10 @@ const useUpdateIdentityLogic = () => {
 
   const fields = {
     // basic identity fields
-    firstName: createFieldProps('firstName', { required: true }),
+    firstName: createFieldProps('firstName'),
     middleName: createFieldProps('middleName'),
-    lastName: createFieldProps('lastName', { required: true }),
-    contactNumber: createFieldProps('contactNumber', { required: true }),
+    lastName: createFieldProps('lastName'),
+    contactNumber: createFieldProps('contactNumber'),
     dob: createFieldProps('dob', {
       defaultValue: createDate18YearsAndADayAgo(),
       required: true
@@ -687,9 +687,9 @@ const useUpdateIdentityLogic = () => {
 
     // address fields
     unit: createFieldProps('unit'),
-    line1: createFieldProps('line1', { required: true }),
+    line1: createFieldProps('line1'),
     line2: createFieldProps('line2'),
-    city: createFieldProps('city', { required: true }),
+    city: createFieldProps('city'),
     postalCode: createFieldProps('postalCode'),
     state: createFieldProps('state'),
     country: createFieldProps('country', {
@@ -702,42 +702,39 @@ const useUpdateIdentityLogic = () => {
     }),
 
     // documents fields
-    idType: createFieldProps('idType', { required: true }),
-    idNumber: createFieldProps('idNumber', { required: true }),
+    idType: createFieldProps('idType'),
+    idNumber: createFieldProps('idNumber'),
     idFile: createFieldProps('idFile', {
-      required: true,
       onChange: useCallback(handleFileChange('idFile'), []), // eslint-disable-line react-hooks/exhaustive-deps
       value: watch('idFile'),
-      triggerValidation
+      triggerValidation,
+      required: false
     }),
     utilityBillFile: createFieldProps('utilityBillFile', {
-      required: true,
       onChange: useCallback(handleFileChange('utilityBillFile'), []), // eslint-disable-line react-hooks/exhaustive-deps
       value: watch('utilityBillFile'),
-      triggerValidation
+      triggerValidation,
+      required: false
     }),
 
     // occupation fields
-    occupation: createFieldProps('occupation', { required: true }),
-    employmentStatus: createFieldProps('employmentStatus', { required: true }),
-    employer: createFieldProps('employer', { required: true }),
+    occupation: createFieldProps('occupation'),
+    employmentStatus: createFieldProps('employmentStatus'),
+    employer: createFieldProps('employer'),
     industryOfEmployment: createFieldProps('industryOfEmployment', {
       required: true
     }),
 
     // bank account fields
-    bankName: createFieldProps('bankName', { required: true }),
-    bankAccountName: createFieldProps('bankAccountName', { required: true }),
-    bankAccountNumber: createFieldProps('bankAccountNumber', {
-      required: true
-    }),
+    bankName: createFieldProps('bankName'),
+    bankAccountName: createFieldProps('bankAccountName'),
+    bankAccountNumber: createFieldProps('bankAccountNumber'),
 
     // income fields
-    annualIncome: createFieldProps('annualIncome', { required: true }),
-    houseHoldIncome: createFieldProps('houseHoldIncome', { required: true }),
-    sourceOfWealth: createFieldProps('sourceOfWealth', { required: true }),
+    annualIncome: createFieldProps('annualIncome'),
+    houseHoldIncome: createFieldProps('houseHoldIncome'),
+    sourceOfWealth: createFieldProps('sourceOfWealth'),
     politicallyExposed: createFieldProps('politicallyExposed', {
-      required: true,
       defaultValue: false
     }),
 
@@ -751,22 +748,19 @@ const useUpdateIdentityLogic = () => {
     totalPersonalAssetExceedsTwoMillionSGD: createFieldProps(
       'totalPersonalAssetExceedsTwoMillionSGD',
       {
-        options: YES_OR_NO_OPTS,
-        required: true
+        options: YES_OR_NO_OPTS
       }
     ),
     lastTwelveMonthIncomeGreatherThanThreeHundredThousands: createFieldProps(
       'lastTwelveMonthIncomeGreatherThanThreeHundredThousands',
       {
-        options: YES_OR_NO_OPTS,
-        required: true
+        options: YES_OR_NO_OPTS
       }
     ),
     personalFinancialAssetsExceedsOneMillion: createFieldProps(
       'personalFinancialAssetsExceedsOneMillion',
       {
-        options: YES_OR_NO_OPTS,
-        required: true
+        options: YES_OR_NO_OPTS
       }
     ),
     jointlyHeldAccountMeetingAnyAbove: createFieldProps(
@@ -779,7 +773,6 @@ const useUpdateIdentityLogic = () => {
 
     // proof of wealth field
     proofOfWealth: createFieldProps('proofOfWealth', {
-      required: true,
       onChange: useCallback(handleFileChange('proofOfWealth'), []), // eslint-disable-line react-hooks/exhaustive-deps
       value: watch('proofOfWealth'),
       triggerValidation

@@ -4,6 +4,7 @@ import { createMuiTheme } from '@material-ui/core'
 
 const overrides = {
   typography: {
+    fontFamily: '"Roboto", "Helvetica", "Arial", sans-serif',
     h1: {
       fontSize: '3rem'
     },

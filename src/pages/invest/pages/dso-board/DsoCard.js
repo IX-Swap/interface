@@ -7,6 +7,7 @@ import Typography from '@material-ui/core/Typography'
 import Grid from '@material-ui/core/Grid'
 import Box from '@material-ui/core/Box'
 import Chip from '@material-ui/core/Chip'
+import sanitize from 'sanitize-html'
 
 export default function DsoCard (props) {
   const { dso } = props
@@ -25,19 +26,29 @@ export default function DsoCard (props) {
             <Typography variant='body2' component='p'>
               <span
                 dangerouslySetInnerHTML={{
-                  __html: dso.summary
+                  __html: sanitize(dso.summary)
                 }}
               />
             </Typography>
           </Grid>
           <Grid item sm={5} md={4} lg={4}>
             <Box display='flex' justifyContent='flex-end' m={1} p={1}>
-              <Chip label={dso.status} clickable color='primary' />
+              <Chip
+                label={dso.status.toUpperCase()}
+                clickable
+                color={
+                  dso.status.toUpperCase() === 'LIVE' ? 'secondary' : 'primary'
+                }
+              />
             </Box>
-            <Typography variant='h5' component='h2'>
-              Highlights
+
+            <Typography variant='body2' component='p'>
+              <span
+                dangerouslySetInnerHTML={{
+                  __html: sanitize(dso.highlights)
+                }}
+              />
             </Typography>
-            {dso.highlights}
           </Grid>
         </Grid>
       </CardContent>

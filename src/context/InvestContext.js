@@ -1,6 +1,6 @@
 import React, { useMemo } from 'react'
 import logger from 'use-reducer-logger'
-import { getRequest, putRequest } from './httpRequests'
+import { getRequest, putRequest, postRequest } from './httpRequests'
 
 // constants
 const StateContext = React.createContext()
@@ -15,14 +15,22 @@ const actions = {
   GET_DSO_FAILURE: 'GET_DSO_FAILURE',
   SAVE_DSO_REQUEST: 'SAVE_DSO_REQUEST',
   SAVE_DSO_SUCCESS: 'SAVE_DSO_SUCCESS',
-  SAVE_DSO_FAILURE: 'SAVE_DSO_FAILURE'
+  SAVE_DSO_FAILURE: 'SAVE_DSO_FAILURE',
+  CREATE_DSO_REQUEST: 'CREATE_DSO_REQUEST',
+  CREATE_DSO_SUCCESS: 'CREATE_DSO_SUCCESS',
+  CREATE_DSO_FAILURE: 'CREATE_DSO_FAILURE'
 }
 
 export const INVEST_STATUS = {
   INIT: 'INIT',
   IDLE: 'IDLE',
   GETTING: 'GETTING',
-  SAVING: 'SAVING'
+  FETCHING: 'FETCHING',
+  FETCHED: 'FETCHED',
+  ERROR: 'ERROR',
+  SAVING: 'SAVING',
+  CREATING: 'CREATING',
+  CREATED: 'CREATED'
 }
 
 const STATUS = INVEST_STATUS
@@ -40,6 +48,7 @@ const initialState = {
 // reducer
 export function investReducer (state, { type, payload }) {
   switch (type) {
+    // get a list of dsos
     case actions.GET_DSOLIST_REQUEST:
       return {
         ...state,
@@ -58,6 +67,8 @@ export function investReducer (state, { type, payload }) {
         status: STATUS.IDLE,
         error: { ...state.error, get: payload }
       }
+
+    // get a dso
     case actions.GET_DSO_REQUEST:
       return {
         ...state,
@@ -76,6 +87,8 @@ export function investReducer (state, { type, payload }) {
         status: STATUS.IDLE,
         error: { ...state.error, save: payload }
       }
+
+    // save the dso
     case actions.SAVE_DSO_REQUEST:
       return {
         ...state,
@@ -89,6 +102,26 @@ export function investReducer (state, { type, payload }) {
         dso: payload.dso
       }
     case actions.SAVE_DSO_FAILURE:
+      return {
+        ...state,
+        status: STATUS.IDLE,
+        error: { ...state.error, save: payload }
+      }
+
+    // create a new dso
+    case actions.CREATE_DSO_REQUEST:
+      return {
+        ...state,
+        status: STATUS.CREATING,
+        error: { ...state.error, save: null }
+      }
+    case actions.CREATE_DSO_SUCCESS:
+      return {
+        ...state,
+        status: STATUS.CREATED,
+        dso: payload.dso
+      }
+    case actions.CREATE_DSO_FAILURE:
       return {
         ...state,
         status: STATUS.IDLE,
@@ -155,7 +188,7 @@ export async function getDsoList (dispatch) {
       throw new Error(response.message)
     }
   } catch (err) {
-    const errMsg = err.message || err.toString() || 'Loading dso list failed.'
+    const errMsg = err.message || err.toString() || 'Fetching dso list failed.'
     dispatch({ type: actions.GET_DSOLIST_FAILURE, payload: errMsg })
     throw new Error(errMsg)
   }
@@ -197,7 +230,7 @@ export async function saveDso (dispatch, dsoId, payload) {
     const result = await putRequest(uri, payload)
     const response = await result.json()
     if (result.status === 200) {
-      const dso = response.data[0] || {}
+      const dso = response.data || {}
 
       dispatch({
         type: actions.SAVE_DSO_SUCCESS,
@@ -213,6 +246,34 @@ export async function saveDso (dispatch, dsoId, payload) {
   } catch (err) {
     const errMsg = err.message || err.toString() || 'Loading dso failed.'
     dispatch({ type: actions.SAVE_DSO_FAILURE, payload: errMsg })
-    // throw new Error(errMsg)
+    throw new Error(errMsg)
+  }
+}
+
+export async function createDso (dispatch, payload) {
+  dispatch({ type: actions.CREATE_DSO_REQUEST })
+
+  try {
+    const uri = `/issuance/dso`
+    const result = await postRequest(uri, payload)
+    const response = await result.json()
+    if (result.status === 200) {
+      const dso = response.data || {}
+
+      dispatch({
+        type: actions.CREATE_DSO_SUCCESS,
+        payload: { dso }
+      })
+    } else {
+      dispatch({
+        type: actions.CREATE_DSO_FAILURE,
+        payload: response.message
+      })
+      throw new Error(response.message)
+    }
+  } catch (err) {
+    const errMsg = err.message || err.toString() || 'Creating dso failed.'
+    dispatch({ type: actions.CREATE_DSO_FAILURE, payload: errMsg })
+    throw new Error(errMsg)
   }
 }

@@ -1,6 +1,13 @@
 import React, { useEffect } from 'react'
-import { Grid, Box, Card, Typography } from '@material-ui/core'
-import { createMuiTheme } from '@material-ui/core/styles'
+import {
+  Grid,
+  Box,
+  Card,
+  Button,
+  Typography,
+  CircularProgress
+} from '@material-ui/core'
+import sanitize from 'sanitize-html'
 
 import {
   INVEST_STATUS,
@@ -8,82 +15,134 @@ import {
   useInvestDispatch,
   getDso,
   saveDso
-} from '../../../../context/InvestContext'
+} from 'context/InvestContext'
 
-// "title": "Health Sciences LLC",
-// "status": "upcoming",
-//   "logo": "https://cdn5.vectorstock.com/i/1000x1000/25/89/building-construction-company-logo-vector-19242589.jpg",
-//   "summary": "<div><p>This DSO is a common equity offering for SeaView LLC, a private investment fund working with green companies looking to change the world. This offering is DSO contract available in the Singpaore jursidiction for Accredited investors.</p><p>This project is marture and looking for sophisticated investors to accelerate development and improve time-to-market performance.</div>",
-//   "highlights": "<b>Shares Available:</b><p>10,000,000</p><b>Minimum Investment:</b><p>$50,000</p><b>Capital Structure:</b><p>Equity</p><b>Unit Price:</b><p>$0.50 USD</p>",
-// "businessModel": "<p>a, b, c</p>",
-// "milestones": "<p>2019: Seed Round $50,000</p>",
-// "roadmap": "<p>stage1: build</p>",
-// "existingClients": "<p>InvestaX</p>",
-// "fundingCurrency": "USD",
-// "minimumInvestment": "<p>$50,000</p>",
-// "investmentTerms": "<p>terms</p>",
-// "fundingGoal": "<p>$10,000,000</p>",
-// "dealStructure": "<p>the deal structure</p>",
-// "capitalStructure": "<p>common equity</p>",
-// "holdingStructure": "<p>SVV Singapore</p>",
-// "smartContractAddress": "contract address",
-// "team": "<p>Tom Smith<p><Linda Jones</p>"
+export default function DsoView (props) {
+  const { dsoId } = props.match.params
 
-const defaultTheme = createMuiTheme()
-
-Object.assign(defaultTheme, {
-  overrides: {
-    MUIRichTextEditor: {
-      root: {
-        marginTop: 5,
-        width: '100%'
-      },
-      editor: {
-        padding: 10
-      }
-    }
-  }
-})
-
-export default function ViewDso (props) {
-  const { dsoId, mode } = props.match.params
-
-  console.log(mode)
-  // const edit = mode === 'edit' ? true : false
-
-  const { dso } = useDsoViewLogic(dsoId)
+  const { dso, isDsoReady } = useDsoViewLogic(dsoId)
 
   return (
-    <Card>
-      <Grid container spacing={2}>
-        <Grid item md={7} lg={5}>
-          <Box p={3}>
-            <img src={dso.logo} width={100} height={100} alt='dso-logo' />
-          </Box>
-          <Box p={2}>
-            {dso.title}
-            {/* <Typography variant='h2' component='h2'>
-              {'Title of the DSO'}
-            </Typography> */}
-          </Box>
-          <Box p={2}>
-            <Typography variant='body1'>{dso.summary}</Typography>
-          </Box>
+    <Grid container justify='center' alignContent='center'>
+      {!isDsoReady ? (
+        <Box p={3} display='flex' justifyContent='center'>
+          <CircularProgress size={48} />
+        </Box>
+      ) : (
+        <Grid item lg={8}>
+          <Card>
+            <Box p={1}>
+              <Grid container>
+                <Grid item lg={12}>
+                  <Button
+                    onClick={() =>
+                      props.history.push(`/app/invest/${dsoId}/edit`)
+                    }
+                  >
+                    Edit DSO
+                  </Button>
+                </Grid>
+              </Grid>
+              <Grid container>
+                <Grid item md={3} lg={7}>
+                  <Box>
+                    <Box p={3}>
+                      <img
+                        src={dso.logo}
+                        width={100}
+                        height={100}
+                        alt='dso-logo'
+                      />
+                    </Box>
+                  </Box>
+                </Grid>
+                <Grid item md={4} lg={5}>
+                  {renderButtons()}
+                </Grid>
+              </Grid>
+              <Grid container>
+                <Grid item md={12} lg={12}>
+                  <Box p={2}>
+                    <Typography variant='h1'>{dso.title}</Typography>
+                  </Box>
+                  <Box p={2}>
+                    <Typography variant='body1'>
+                      <span
+                        dangerouslySetInnerHTML={{
+                          __html: sanitize(dso.summary)
+                        }}
+                      />
+                    </Typography>
+                  </Box>
+                </Grid>
+              </Grid>
+              <Grid container>
+                {renderContent('Business Model', dso.businessModel)}
+                {renderContent('Highlights', dso.highlights)}
+                {renderContent('Milestones', dso.milestones)}
+                {renderContent('Roadmap', dso.roadmap)}
+                {renderContent('Team', dso.team)}
+                {renderContent('Existing Clients', dso.existingClients)}
+                {renderContent('Funding Currency', dso.fundingCurrency)}
+                {renderContent('Minimum Investment', dso.minimumInvestment)}
+                {renderContent('Funding Goal', dso.investmentTerms)}
+                {renderContent('Investment Terms', dso.investmentTerms)}
+                {renderContent('Deal Structure', dso.dealStructure)}
+                {renderContent('Capital Structure', dso.capitalStructure)}
+                {renderContent('Holding Structure', dso.holdingStructure)}
+                {renderDocuments('Documents', dso.documents)}
+              </Grid>
+            </Box>
+          </Card>
         </Grid>
-        <Grid item md={5}>
-          <Box mt={5} p={2}>
-            <Typography variant='h3' component='h2'>
-              Highlights
-            </Typography>
-          </Box>
-
-          <Box m={3}>{dso.highlights}</Box>
-        </Grid>
-      </Grid>
-    </Card>
+      )}
+    </Grid>
   )
 }
 
+const renderContent = (header, content) => (
+  <Grid item md={12} lg={12}>
+    <Box p={2}>
+      <Typography variant='h3' component='h3'>
+        {header}
+      </Typography>
+    </Box>
+    <Box p={2}>
+      <span
+        dangerouslySetInnerHTML={{
+          __html: sanitize(content)
+        }}
+      />
+    </Box>
+  </Grid>
+)
+
+const renderButtons = () => (
+  <Grid container>
+    <Grid item>
+      <Button color='primary'>Ask a Question</Button>
+    </Grid>
+    <Grid item>
+      <Button color='secondary'>Invest</Button>
+    </Grid>
+  </Grid>
+)
+const renderDocuments = (header, documents) => (
+  <Grid item md={12} lg={12}>
+    <Box p={2}>
+      <Typography variant='h3' component='h3'>
+        {header}
+      </Typography>
+    </Box>
+    <Box p={2}>
+      <span
+        dangerouslySetInnerHTML={{
+          __html: sanitize(documents)
+        }}
+      />
+    </Box>
+  </Grid>
+)
 const useDsoViewLogic = dsoId => {
   const { status: investStatus, dso, ...invest } = useInvestState()
 

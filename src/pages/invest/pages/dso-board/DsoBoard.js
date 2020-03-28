@@ -7,24 +7,27 @@ import {
   useInvestState,
   useInvestDispatch,
   getDsoList
-} from '../../../../context/InvestContext'
+} from 'context/InvestContext'
 
 export default function DsoBoard ({ history }) {
   const { dsoList, isDsoListReady } = useDsoBoardLogic()
   return (
-    <Grid component='article' container spacing={3}>
+    <Grid container jusity='center' spacing={3}>
       {!isDsoListReady ? (
-        <Box p={3} display='flex' justifyContent='center'>
+        <Box p={3} display='flex'>
           <CircularProgress size={48} />
         </Box>
       ) : (
-        dsoList.map((dso, id) => {
-          return (
-            <Grid key={id} item xs={12} md={12} lg={5}>
-              <DsoCard history={history} dso={dso} />
-            </Grid>
-          )
-        })
+        <Grid container spacing={3} justify='center'>
+          {dsoList.map((dso, id) => {
+            if (dso.status)
+              return (
+                <Grid key={id} item xs={12} md={9} lg={9}>
+                  <DsoCard history={history} dso={dso} />
+                </Grid>
+              )
+          })}
+        </Grid>
       )}
     </Grid>
   )
@@ -32,15 +35,17 @@ export default function DsoBoard ({ history }) {
 
 const useDsoBoardLogic = () => {
   const { status: investStatus, dsoList, ...invest } = useInvestState()
-  const isDsoListReady = ![INVEST_STATUS.INIT, INVEST_STATUS.GETTING].includes(
-    investStatus
-  )
+  const isDsoListReady = ![
+    INVEST_STATUS.INIT,
+    INVEST_STATUS.GETTING,
+    INVEST_STATUS.SAVING
+  ].includes(investStatus)
   const error = invest.error
   const investDispatch = useInvestDispatch()
 
   useEffect(() => {
     // fetch deals data for initial values
-    if (investStatus === INVEST_STATUS.INIT) {
+    if (!isDsoListReady) {
       getDsoList(investDispatch).catch(() => {})
     }
   }, [investStatus, investDispatch])
