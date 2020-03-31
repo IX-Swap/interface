@@ -17,7 +17,3 @@ jobs:
         run: yarn install && yarn build
       - name: Deploy Build to S3 bucket
         run: aws s3 sync ./build/ s3://app.mozork.com --delete
-        env:
-          AWS_BUCKET: 'app.mozork.com'
-          AWS_REGION: 'ap-southeast-1'
-          AWS_DISTRO_ID: 'E1GXVB58NJXJTB'
