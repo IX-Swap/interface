@@ -4,7 +4,7 @@ on:
     branches: [develop]
 jobs:
   build:
-    runs-on: node:11.15-alpine
+    runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v1
       - name: Configure AWS Credentials
