@@ -16,9 +16,7 @@ export async function postRequest (uri, payload) {
     },
     redirect: 'follow', // manual, *follow, error
     referrerPolicy: 'no-referrer', // no-referrer, *client
-    body: payload instanceof FormData
-      ? payload
-      : JSON.stringify(payload)
+    body: payload instanceof FormData ? payload : JSON.stringify(payload)
   })
 }
 

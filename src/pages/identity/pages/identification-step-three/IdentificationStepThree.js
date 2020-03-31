@@ -67,48 +67,18 @@ export default function IdentificationStepThree () {
                     {...fields.idFile}
                   />
 
-                  <Box mt={1}>
-                    <Controller
-                      as={TextField}
-                      fullWidth
-                      width='100%'
-                      margin='dense'
-                      label='ID Type'
-                      {...fields.idType}
-                      helperText={
-                        fields.idType.error
-                          ? fields.idType.helperText
-                          : 'Please type in your ID type.'
-                      }
+                  <Box mt={6}>
+                    <UploadSection
+                      label='Utility Bill'
+                      emptyLabel='Please upload a photo or scan of a recent utility bill.'
+                      {...fields.utilityBillFile}
                     />
-
-                    <Controller
-                      as={TextField}
-                      fullWidth
-                      width='100%'
-                      margin='dense'
-                      label='ID No.'
-                      {...fields.idNumber}
-                      helperText={
-                        fields.idNumber.error
-                          ? fields.idNumber.helperText
-                          : 'Please type in your ID no.'
-                      }
-                    />
-
-                    <Box mt={6}>
-                      <UploadSection
-                        label='Utility Bill'
-                        emptyLabel='Please upload a photo or scan of a recent utility bill.'
-                        {...fields.utilityBillFile}
-                      />
-                    </Box>
                   </Box>
                 </Box>
 
                 <Box display='flex' justifyContent='flex-end' mt={6}>
                   <Button
-                    disabled={!isValid || status !== 'IDLE'}
+                    disabled={status !== 'IDLE'}
                     type='submit'
                     variant='contained'
                     color='primary'
@@ -143,7 +113,7 @@ export default function IdentificationStepThree () {
 // ############################################################
 
 const useIdentityFormLogic = () => {
-  const { status, identity, error, shouldCreateNew } = useIdentityState()
+  const { status, identity, error } = useIdentityState()
   const [snackbarError, setSnackbarError] = useState('')
   const idDispatch = useIdentityDispatch()
   const validationSchema = useMemo(createIDDocumentsSchema, [])
@@ -180,12 +150,11 @@ const useIdentityFormLogic = () => {
   const handleSubmit = rhfHandleSubmit(async formData => {
     try {
       const { firstName, address, _id } = identity
-      const { idNumber, idFile, utilityBillFile, idType } = formData
+      const { idFile, utilityBillFile } = formData
 
       await saveFile(idDispatch, {
         title: 'Passport',
         file: idFile[0],
-        remarks: idNumber,
         type: 'individual',
         id: _id
       })
@@ -193,21 +162,18 @@ const useIdentityFormLogic = () => {
       await saveFile(idDispatch, {
         title: 'Utility Bill',
         file: utilityBillFile[0],
-        remarks: '',
         type: 'individual',
         id: _id
       })
 
       const newIdentity = {
-        idType,
-        idNumber,
         firstName,
         ...filterIllegalAddressKeys(address), // need to reinclude Address otherwise it will be deleted
         type: 'individual',
         id: _id
       }
 
-      await saveIdentity(idDispatch, newIdentity, shouldCreateNew)
+      await saveIdentity(idDispatch, newIdentity)
 
       history.push('/app/identity/financials-steps/1')
     } catch (e) {
@@ -226,8 +192,6 @@ const useIdentityFormLogic = () => {
 
   const handleFileChange = name => files => setValue(name, files)
   const fields = {
-    idType: createFieldProps('idType', { required: true }),
-    idNumber: createFieldProps('idNumber', { required: true }),
     idFile: createFieldProps('idFile', {
       required: true,
       onChange: useCallback(handleFileChange('idFile'), []), // eslint-disable-line react-hooks/exhaustive-deps

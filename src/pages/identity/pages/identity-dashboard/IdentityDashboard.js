@@ -22,6 +22,7 @@ export default function IdentityDashboard () {
     financialsProgress,
     accreditationProgress,
     areAllCompleted,
+    isIDReady,
     error
   } = useIdentityDashboardLogic()
 
@@ -66,21 +67,20 @@ export default function IdentityDashboard () {
 
   return (
     <Grid component='article' container spacing={3} justify='center'>
-      {isProgressReady && !error && !areAllCompleted && (
+      {isIDReady && isProgressReady && !error && !areAllCompleted && (
         <Grid item xs={12}>
           <Hidden mdUp>{progressesJsx}</Hidden>
         </Grid>
       )}
-
-      <Grid component='section' item xs={12} md={areAllCompleted ? 9 : 7}>
-        <IdentityOverview areAllCompleted={areAllCompleted} />
-      </Grid>
 
       {isProgressReady && !error && !areAllCompleted && (
         <Grid item xs={12} md={5}>
           <Hidden smDown>{progressesJsx}</Hidden>
         </Grid>
       )}
+      <Grid component='section' item xs={12} md={areAllCompleted ? 9 : 7}>
+        <IdentityOverview areAllCompleted={areAllCompleted} />
+      </Grid>
     </Grid>
   )
 }
@@ -105,14 +105,14 @@ const useIdentityDashboardLogic = () => {
 
   // calculate progress of identity steps
   const identityProgress = {
-    activeStep: identity?.idNumber
+    activeStep: selectFile(id, 'Passport')
       ? 2
       : identity?.address?.line1
       ? 1
       : identity?.firstName
       ? 0
       : -1,
-    percentage: identity?.idNumber
+    percentage: selectFile(id, 'Passport')
       ? 100
       : identity?.address?.line1
       ? 66
@@ -170,6 +170,7 @@ const useIdentityDashboardLogic = () => {
     financialsProgress,
     accreditationProgress,
     areAllCompleted,
+    isIDReady,
     error
   }
 }

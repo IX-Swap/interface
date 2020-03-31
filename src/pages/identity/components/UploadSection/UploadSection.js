@@ -1,7 +1,7 @@
 import React, { useCallback, useRef } from 'react'
-import { TextField, Box, Button, } from '@material-ui/core'
+import { TextField, Box, Button } from '@material-ui/core'
 
-export default function UploadSection({
+export default function UploadSection ({
   name,
   label,
   emptyLabel,
@@ -33,8 +33,7 @@ export default function UploadSection({
   }, [onChange]) // eslint-disable-line react-hooks/exhaustive-deps
 
   const fileName =
-    value?.[0]?.name // file name when loading data from upload
-    || value?.fileName // file name when loading data from endpoint
+    value?.[0]?.name || value?.fileName // file name when loading data from upload // file name when loading data from endpoint
 
   return (
     <Box display={['block', 'flex']} alignItems='center'>
@@ -50,10 +49,10 @@ export default function UploadSection({
         />
       </Box>
       <Box pl={[0, 3]} pt={[3, 0]}>
-        <Button variant='contained' color='primary' onClick={handleClick}>
+        <Button variant='outlined' color='primary' onClick={handleClick}>
           Choose&nbsp;File
         </Button>
-        <input ref={fileInputRef} hidden type="file" onChange={handleChange} />
+        <input ref={fileInputRef} hidden type='file' onChange={handleChange} />
       </Box>
     </Box>
   )

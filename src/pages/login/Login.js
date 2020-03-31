@@ -37,7 +37,6 @@ function Login (props) {
 
   // local
   const [isLoading, setIsLoading] = useState(false)
-  const [nameValue, setNameValue] = useState('')
   const [usernameValue, setUsernameValue] = useState('')
   const [passwordValue, setPasswordValue] = useState('')
 
@@ -92,7 +91,7 @@ function Login (props) {
                 value={usernameValue}
                 onChange={e => setUsernameValue(e.target.value)}
                 margin='normal'
-                placeholder='Email Adress'
+                placeholder='Email Address'
                 type='email'
                 fullWidth
               />
@@ -156,21 +155,6 @@ function Login (props) {
                 </Typography>
               </Fade>
               <TextField
-                id='name'
-                InputProps={{
-                  classes: {
-                    underline: classes.textFieldUnderline,
-                    input: classes.textField
-                  }
-                }}
-                value={nameValue}
-                onChange={e => setNameValue(e.target.value)}
-                margin='normal'
-                placeholder='Full Name'
-                type='email'
-                fullWidth
-              />
-              <TextField
                 id='email'
                 InputProps={{
                   classes: {
@@ -206,17 +190,10 @@ function Login (props) {
                 ) : (
                   <Button
                     onClick={() =>
-                      signupUser(
-                        userDispatch,
-                        nameValue,
-                        usernameValue,
-                        passwordValue
-                      )
+                      signupUser(userDispatch, usernameValue, passwordValue)
                     }
                     disabled={
-                      usernameValue.length === 0 ||
-                      passwordValue.length === 0 ||
-                      nameValue.length === 0
+                      usernameValue.length === 0 || passwordValue.length === 0
                     }
                     size='large'
                     variant='contained'
