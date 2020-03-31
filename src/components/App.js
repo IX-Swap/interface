@@ -19,13 +19,8 @@ export default function App () {
     <HashRouter>
       <Switch>
         <Route exact path='/' render={() => <Redirect to='/app/dashboard' />} />
-        <Route
-          exact
-          path='/app'
-          render={() => <Redirect to='/app/dashboard' />}
-        />
         <PrivateRoute path='/app' component={Layout} />
-        <PublicRoute path='/login' component={Login} />
+        <PublicRoute exact path='/login' component={Login} />
         <Route component={Error} />
       </Switch>
     </HashRouter>
@@ -37,19 +32,31 @@ export default function App () {
     return (
       <Route
         {...rest}
-        render={props => isAuthenticated
-          ? (React.createElement(component, props))
-          : (<Redirect to={{ pathname: '/login', state: { from: props.location } }} />)}
+        render={props =>
+          isAuthenticated ? (
+            React.createElement(component, props)
+          ) : (
+            <Redirect
+              to={{ pathname: '/login', state: { from: props.location } }}
+            />
+          )
+        }
       />
     )
   }
 
   function PublicRoute ({ component, ...rest }) {
-    return (<Route
-      {...rest} render={props => isAuthenticated
-        ? (<Redirect to={{ pathname: '/' }} />)
-        : React.createElement(component, props)}
-    />
+    return (
+      <Route
+        {...rest}
+        render={props =>
+          isAuthenticated ? (
+            <Redirect to={{ pathname: '/app/dashboard' }} />
+          ) : (
+            React.createElement(component, props)
+          )
+        }
+      />
     )
   }
 }

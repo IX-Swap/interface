@@ -165,7 +165,7 @@ function Login (props) {
                 value={usernameValue}
                 onChange={e => setUsernameValue(e.target.value)}
                 margin='normal'
-                placeholder='Email Adress'
+                placeholder='Email Address'
                 type='email'
                 fullWidth
               />

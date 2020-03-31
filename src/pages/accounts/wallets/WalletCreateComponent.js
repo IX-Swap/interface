@@ -35,11 +35,9 @@ export default function WalletCreateComponent () {
   const classes = useStyles()
 
   const [seedPhrase, setSeedPhrase] = useState('')
-  const [privateKey, setPrivateKey] = useState('')
-  const [publicKey, setPublicKey] = useState('')
+  const [privateKey] = useState('')
+  const [publicKey] = useState('')
 
-  setPrivateKey()
-  setPublicKey()
   async function createSeed () {
     const seed = await createMnemonicSeed()
     setSeedPhrase(seed)

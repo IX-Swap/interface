@@ -1,6 +1,22 @@
 import React, { useEffect, useState, useCallback } from 'react'
-import { Grid, Card, TextField, Typography, Box, Button, CircularProgress, Snackbar, IconButton } from '@material-ui/core'
-import { useIdentityState, useIdentityDispatch, getIdentity, saveFinancials, IDENTITY_STATUS } from 'context/IdentityContext'
+import {
+  Grid,
+  Card,
+  TextField,
+  Typography,
+  Box,
+  Button,
+  CircularProgress,
+  Snackbar,
+  IconButton
+} from '@material-ui/core'
+import {
+  useIdentityState,
+  useIdentityDispatch,
+  getIdentity,
+  saveFinancials,
+  IDENTITY_STATUS
+} from 'context/IdentityContext'
 import { useForm, Controller } from 'react-hook-form'
 import FinancialsProgress from 'pages/identity/components/FinancialsProgress'
 import { useMemo } from 'react'
@@ -26,7 +42,9 @@ export default function FinancialsStepTwo () {
         {/* Form */}
         <Card component='form' onSubmit={handleSubmit} noValidate>
           <Box p={3}>
-            <Typography component='h1' variant='h3' align='center'>Financials</Typography>
+            <Typography component='h1' variant='h3' align='center'>
+              Financials
+            </Typography>
 
             {/* Progress Section */}
             <Box mt={3} mx={-3}>
@@ -46,17 +64,38 @@ export default function FinancialsStepTwo () {
               <>
                 <Box mx='auto' mt={4} maxWidth='32rem'>
                   {/* Inputs Column */}
-                  <Controller as={TextField} fullWidth margin='dense' label='Bank Name' {...fields.bankName} />
-                  <Controller as={TextField} fullWidth margin='dense' label='Bank Account Name' {...fields.bankAccountName} />
-                  <Controller as={TextField} fullWidth margin='dense' label='Bank Account Number' {...fields.bankAccountNumber} />
+                  <Controller
+                    as={TextField}
+                    fullWidth
+                    margin='dense'
+                    label='Bank Name'
+                    {...fields.bankName}
+                  />
+                  <Controller
+                    as={TextField}
+                    fullWidth
+                    margin='dense'
+                    label='Bank Account Name'
+                    {...fields.bankAccountName}
+                  />
+                  <Controller
+                    as={TextField}
+                    fullWidth
+                    margin='dense'
+                    label='Bank Account Number'
+                    {...fields.bankAccountNumber}
+                  />
                 </Box>
 
                 {/* Submit Button */}
                 <Box display='flex' justifyContent='flex-end' mt={6}>
-                  <Button disabled={!isValid || status !== 'IDLE'} type='submit' variant='contained' color='primary'>
-                    {status === 'SAVING'
-                      ? 'Saving...'
-                      : 'Save & Next'}
+                  <Button
+                    disabled={!isValid || status !== 'IDLE'}
+                    type='submit'
+                    variant='contained'
+                    color='primary'
+                  >
+                    {status === 'SAVING' ? 'Saving...' : 'Save & Next'}
                   </Button>
                 </Box>
               </>
@@ -69,7 +108,12 @@ export default function FinancialsStepTwo () {
           message={snackbarError}
           open={!!snackbarError}
           action={
-            <IconButton size='small' aria-label='close' color='inherit' onClick={handleSnackbarErrorClose}>
+            <IconButton
+              size='small'
+              aria-label='close'
+              color='inherit'
+              onClick={handleSnackbarErrorClose}
+            >
               <CloseIcon fontSize='small' />
             </IconButton>
           }
@@ -93,7 +137,6 @@ const useFinancialsFormLogic = () => {
 
   const handleSnackbarErrorClose = useCallback(() => setSnackbarError(''), [])
 
-
   // fetch identity data for initial values
   useEffect(() => {
     if (status === IDENTITY_STATUS.INIT) {
@@ -109,20 +152,19 @@ const useFinancialsFormLogic = () => {
   })
 
   // create the field props
-  const createFieldProps = (key, overrides) =>
-    ({
-      name: key,
-      error: Boolean(errors[key] && errors[key].message),
-      helperText: (errors[key] && errors[key].message) || '',
-      defaultValue: '',
-      control,
-      ...overrides
-    })
+  const createFieldProps = (key, overrides) => ({
+    name: key,
+    error: Boolean(errors[key] && errors[key].message),
+    helperText: (errors[key] && errors[key].message) || '',
+    defaultValue: '',
+    control,
+    ...overrides
+  })
 
   const fields = {
     bankName: createFieldProps('bankName', { required: true }),
     bankAccountName: createFieldProps('bankAccountName', { required: true }),
-    bankAccountNumber: createFieldProps('bankAccountNumber', { required: true }),
+    bankAccountNumber: createFieldProps('bankAccountNumber', { required: true })
   }
 
   return {

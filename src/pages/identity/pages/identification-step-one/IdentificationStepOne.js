@@ -1,6 +1,22 @@
 import React, { useEffect, useState, useCallback } from 'react'
-import { Grid, Card, TextField, Typography, Box, Button, CircularProgress, Snackbar, IconButton } from '@material-ui/core'
-import { useIdentityState, useIdentityDispatch, getIdentity, saveIdentity, IDENTITY_STATUS } from 'context/IdentityContext'
+import {
+  Grid,
+  Card,
+  TextField,
+  Typography,
+  Box,
+  Button,
+  CircularProgress,
+  Snackbar,
+  IconButton
+} from '@material-ui/core'
+import {
+  useIdentityState,
+  useIdentityDispatch,
+  getIdentity,
+  saveIdentity,
+  IDENTITY_STATUS
+} from 'context/IdentityContext'
 import { useForm, Controller } from 'react-hook-form'
 import IdentityProgress from 'pages/identity/components/IdentityProgress'
 import { useMemo } from 'react'
@@ -30,7 +46,9 @@ export default function IdentificationStepOne () {
       <Grid item xs={12} sm={10} md={8}>
         <Card component='form' onSubmit={handleSubmit} noValidate>
           <Box p={3}>
-            <Typography component='h1' variant='h3' align='center'>Identification</Typography>
+            <Typography component='h1' variant='h3' align='center'>
+              Identification
+            </Typography>
 
             <Box mt={3} mx={-3}>
               <IdentityProgress />
@@ -47,13 +65,31 @@ export default function IdentificationStepOne () {
                 <Box component='section' mt={3}>
                   <Grid container spacing={2}>
                     <Grid item xs={12} sm={4}>
-                      <Controller as={TextField} fullWidth margin='dense' label='First Name' {...fields.firstName} />
+                      <Controller
+                        as={TextField}
+                        fullWidth
+                        margin='dense'
+                        label='First Name'
+                        {...fields.firstName}
+                      />
                     </Grid>
                     <Grid item xs={12} sm={4}>
-                      <Controller as={TextField} fullWidth margin='dense' label='Middle Name' {...fields.middleName} />
+                      <Controller
+                        as={TextField}
+                        fullWidth
+                        margin='dense'
+                        label='Middle Name'
+                        {...fields.middleName}
+                      />
                     </Grid>
                     <Grid item xs={12} sm={4}>
-                      <Controller as={TextField} fullWidth margin='dense' label='Last Name' {...fields.lastName} />
+                      <Controller
+                        as={TextField}
+                        fullWidth
+                        margin='dense'
+                        label='Last Name'
+                        {...fields.lastName}
+                      />
                     </Grid>
                   </Grid>
                 </Box>
@@ -76,20 +112,35 @@ export default function IdentificationStepOne () {
                         {...fields.dob}
                       />
 
-                      <SelectGroup label='Marital Status' {...fields.maritalStatus} />
+                      <SelectGroup
+                        label='Marital Status'
+                        {...fields.maritalStatus}
+                      />
                     </Grid>
                     <Grid item xs={12} sm={6}>
-                      <Controller as={TextField} fullWidth margin='dense' label='Contact Number' {...fields.contactNumber} />
-                      <SelectGroup label='Nationality' {...fields.nationality} />
+                      <Controller
+                        as={TextField}
+                        fullWidth
+                        margin='dense'
+                        label='Contact Number'
+                        {...fields.contactNumber}
+                      />
+                      <SelectGroup
+                        label='Nationality'
+                        {...fields.nationality}
+                      />
                     </Grid>
                   </Grid>
                 </Box>
 
                 <Box display='flex' justifyContent='flex-end' mt={6}>
-                  <Button disabled={!isValid || status !== 'IDLE'} type='submit' variant='contained' color='primary'>
-                    {status === 'SAVING'
-                      ? 'Saving...'
-                      : 'Save & Next'}
+                  <Button
+                    disabled={!isValid || status !== 'IDLE'}
+                    type='submit'
+                    variant='contained'
+                    color='primary'
+                  >
+                    {status === 'SAVING' ? 'Saving...' : 'Save & Next'}
                   </Button>
                 </Box>
               </>
@@ -101,7 +152,12 @@ export default function IdentificationStepOne () {
           message={snackbarError}
           open={!!snackbarError}
           action={
-            <IconButton size='small' aria-label='close' color='inherit' onClick={handleSnackbarErrorClose}>
+            <IconButton
+              size='small'
+              aria-label='close'
+              color='inherit'
+              onClick={handleSnackbarErrorClose}
+            >
               <CloseIcon fontSize='small' />
             </IconButton>
           }
@@ -125,7 +181,6 @@ const useIdentityFormLogic = () => {
 
   const handleSnackbarErrorClose = useCallback(() => setSnackbarError(''), [])
 
-
   // fetch identity data for initial values
   useEffect(() => {
     if (status === IDENTITY_STATUS.INIT) {
@@ -140,15 +195,14 @@ const useIdentityFormLogic = () => {
       .catch(e => setSnackbarError(e.message || e.toString()))
   })
 
-  const createFieldProps = (key, overrides) =>
-    ({
-      name: key,
-      error: Boolean(errors[key] && errors[key].message),
-      helperText: (errors[key] && errors[key].message) || '',
-      defaultValue: '',
-      control,
-      ...overrides
-    })
+  const createFieldProps = (key, overrides) => ({
+    name: key,
+    error: Boolean(errors[key] && errors[key].message),
+    helperText: (errors[key] && errors[key].message) || '',
+    defaultValue: '',
+    control,
+    ...overrides
+  })
 
   const fields = {
     firstName: createFieldProps('firstName', { required: true }),
@@ -170,7 +224,7 @@ const useIdentityFormLogic = () => {
     nationality: createFieldProps('nationality', {
       options: COUNTRIES_OPTS,
       required: true
-    }),
+    })
   }
 
   return {

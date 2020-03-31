@@ -2,7 +2,6 @@ import React, { useEffect, useState, useCallback } from 'react'
 import {
   Grid,
   Card,
-  TextField,
   Typography,
   Box,
   Button,
@@ -18,7 +17,7 @@ import {
   saveFile,
   saveIdentity
 } from 'context/IdentityContext'
-import { useForm, Controller } from 'react-hook-form'
+import { useForm } from 'react-hook-form'
 import IdentityProgress from 'pages/identity/components/IdentityProgress'
 import { useMemo } from 'react'
 import Alert from '@material-ui/lab/Alert'
@@ -33,7 +32,6 @@ export default function IdentificationStepThree () {
     status,
     handleSubmit,
     fields,
-    isValid,
     error,
     snackbarError,
     handleSnackbarErrorClose

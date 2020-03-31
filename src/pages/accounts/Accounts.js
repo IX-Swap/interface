@@ -35,6 +35,7 @@ function Explorer (props) {
       </Grid>
       <Switch>
         <Route
+          eact
           path='/app/accounts/wallet-create'
           component={() => (
             <WalletCreateProvider>

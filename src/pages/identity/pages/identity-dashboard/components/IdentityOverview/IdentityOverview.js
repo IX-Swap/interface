@@ -22,8 +22,7 @@ import {
   useIdentityDispatch,
   getIdentity,
   downloadFile,
-  IDENTITY_STATUS,
-  selectFile
+  IDENTITY_STATUS
 } from 'context/IdentityContext'
 import { Link } from 'react-router-dom'
 import Alert from '@material-ui/lab/Alert'
@@ -34,7 +33,6 @@ import {
   getAccreditation
 } from 'context/AccreditationContext'
 import { format } from 'date-fns'
-import ImageFromApi from 'pages/identity/components/ImageFromApi/ImageFromApi'
 
 export default function IdentityOverview ({ areAllCompleted }) {
   const {
@@ -81,7 +79,7 @@ export default function IdentityOverview ({ areAllCompleted }) {
                 </Link>
               </Box>
               <Box mt={3}>
-                <a href='#/app' style={{ textDecoration: 'none' }}>
+                <a href='#/' style={{ textDecoration: 'none' }}>
                   <Button
                     as='div'
                     fullWidth

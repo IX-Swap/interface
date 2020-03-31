@@ -25,15 +25,51 @@ export default function Identity () {
           <Switch>
             <Route path='/app/identity' exact component={IdentityDashboard} />
             <Route path='/app/identity/edit' exact component={UpdateIdentity} />
-            <Route path='/app/identity/identification-steps/1' exact component={IdentificationStepOne} />
-            <Route path='/app/identity/identification-steps/2' exact component={IdentificationStepTwo} />
-            <Route path='/app/identity/identification-steps/3' exact component={IdentificationStepThree} />
-            <Route path='/app/identity/financials-steps/1' exact component={FinancialsStepOne} />
-            <Route path='/app/identity/financials-steps/2' exact component={FinancialsStepTwo} />
-            <Route path='/app/identity/financials-steps/3' exact component={FinancialsStepThree} />
-            <Route path='/app/identity/accreditation-steps/1' exact component={AccreditationStepOne} />
-            <Route path='/app/identity/accreditation-steps/2' exact component={AccreditationStepTwo} />
-            <Route path='/app/identity/accreditation-steps/3' exact component={AccreditationStepThree} />
+            <Route
+              path='/app/identity/identification-steps/1'
+              exact
+              component={IdentificationStepOne}
+            />
+            <Route
+              path='/app/identity/identification-steps/2'
+              exact
+              component={IdentificationStepTwo}
+            />
+            <Route
+              path='/app/identity/identification-steps/3'
+              exact
+              component={IdentificationStepThree}
+            />
+            <Route
+              path='/app/identity/financials-steps/1'
+              exact
+              component={FinancialsStepOne}
+            />
+            <Route
+              path='/app/identity/financials-steps/2'
+              exact
+              component={FinancialsStepTwo}
+            />
+            <Route
+              path='/app/identity/financials-steps/3'
+              exact
+              component={FinancialsStepThree}
+            />
+            <Route
+              path='/app/identity/accreditation-steps/1'
+              exact
+              component={AccreditationStepOne}
+            />
+            <Route
+              path='/app/identity/accreditation-steps/2'
+              exact
+              component={AccreditationStepTwo}
+            />
+            <Route
+              path='/app/identity/accreditation-steps/3'
+              exact
+              component={AccreditationStepThree}
+            />
             <Route>
               <Alert severity='error'>Page not found</Alert>
             </Route>
