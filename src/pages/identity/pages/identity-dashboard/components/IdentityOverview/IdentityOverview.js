@@ -1,18 +1,28 @@
 import React, { useEffect } from 'react'
+import CloudDownloadIcon from '@material-ui/icons/CloudDownload'
+
 import {
   Grid,
   Card,
   Typography,
   Box,
   CircularProgress,
-  Button
+  Button,
+  Table,
+  TableBody,
+  TableContainer,
+  TableHead,
+  TableRow,
+  TableCell,
+  Paper
 } from '@material-ui/core'
+
 import {
   useIdentityState,
   useIdentityDispatch,
   getIdentity,
-  IDENTITY_STATUS,
-  selectFile
+  downloadFile,
+  IDENTITY_STATUS
 } from 'context/IdentityContext'
 import { Link } from 'react-router-dom'
 import Alert from '@material-ui/lab/Alert'
@@ -23,7 +33,6 @@ import {
   getAccreditation
 } from 'context/AccreditationContext'
 import { format } from 'date-fns'
-import ImageFromApi from 'pages/identity/components/ImageFromApi/ImageFromApi'
 
 export default function IdentityOverview ({ areAllCompleted }) {
   const {
@@ -31,8 +40,8 @@ export default function IdentityOverview ({ areAllCompleted }) {
     identity,
     accreditation,
     shouldCreateNew,
-    error,
-    files
+    handleFileDownload,
+    error
   } = useIdentityOverviewLogic()
 
   if (error) return <Alert severity='error'>{error}</Alert>
@@ -70,7 +79,7 @@ export default function IdentityOverview ({ areAllCompleted }) {
                 </Link>
               </Box>
               <Box mt={3}>
-                <a href='#/app' style={{ textDecoration: 'none' }}>
+                <a href='#/' style={{ textDecoration: 'none' }}>
                   <Button
                     as='div'
                     fullWidth
@@ -110,19 +119,19 @@ export default function IdentityOverview ({ areAllCompleted }) {
                 <Grid item xs={12} sm={4}>
                   <StaticTextField
                     label='First Name'
-                    value={identity.firstName}
+                    value={identity.firstName || ''}
                   />
                 </Grid>
                 <Grid item xs={12} sm={4}>
                   <StaticTextField
                     label='Middle Name'
-                    value={identity.middleName}
+                    value={identity.middleName || ''}
                   />
                 </Grid>
                 <Grid item xs={12} sm={4}>
                   <StaticTextField
                     label='Last Name'
-                    value={identity.lastName}
+                    value={identity.lastName || ''}
                   />
                 </Grid>
               </Grid>
@@ -222,33 +231,55 @@ export default function IdentityOverview ({ areAllCompleted }) {
             <Box component='section' mt={2}>
               <Grid container spacing={1}>
                 <Grid item xs={12}>
-                  <Typography component='h3' variant='h6' gutterBottom={false}>
-                    Documents
-                  </Typography>
-                  <StaticTextField
-                    my={2}
-                    mt={1}
-                    label='ID (File)'
-                    value={files.passport}
-                  />
-                  <StaticTextField
-                    my={2}
-                    mt={1}
-                    label='ID Type'
-                    value={identity.idType}
-                  />
-                  <StaticTextField
-                    my={2}
-                    mt={1}
-                    label='ID Number'
-                    value={identity.idNumber}
-                  />
-                  <StaticTextField
-                    my={2}
-                    mt={1}
-                    label='Most Recent Utility Bill (File)'
-                    value={files.utilityBill}
-                  />
+                  <Box mb={3}>
+                    <Typography
+                      component='h2'
+                      variant='h4'
+                      gutterBottom={false}
+                    >
+                      Documents
+                    </Typography>
+                  </Box>
+
+                  <TableContainer component={Paper}>
+                    <Table aria-label='simple table'>
+                      <TableHead>
+                        <TableRow>
+                          <TableCell>
+                            <b>Filename</b>
+                          </TableCell>
+                          <TableCell align='left'>
+                            <b>Title</b>
+                          </TableCell>
+                          <TableCell align='left'>
+                            <b>Type</b>
+                          </TableCell>
+                        </TableRow>
+                      </TableHead>
+                      <TableBody>
+                        {identity.documents.map((doc, i) => (
+                          <TableRow key={i}>
+                            <TableCell component='th' scope='row'>
+                              {doc.originalFileName}
+                            </TableCell>
+                            <TableCell component='th' scope='row'>
+                              {doc.title}
+                            </TableCell>
+                            <TableCell component='th' scope='row'>
+                              {doc.type}
+                            </TableCell>
+                            <TableCell>
+                              <Button
+                                onClick={() => handleFileDownload(doc._id)}
+                              >
+                                <CloudDownloadIcon />
+                              </Button>
+                            </TableCell>
+                          </TableRow>
+                        ))}
+                      </TableBody>
+                    </Table>
+                  </TableContainer>
                 </Grid>
               </Grid>
             </Box>
@@ -411,23 +442,6 @@ export default function IdentityOverview ({ areAllCompleted }) {
                 </Grid>
               </Grid>
             </Box>
-
-            {/* Proof of wealth */}
-            <Box component='section' mt={2}>
-              <Grid container spacing={1}>
-                <Grid item xs={12}>
-                  <Typography component='h3' variant='h6' gutterBottom={false}>
-                    Proof of wealth
-                  </Typography>
-                  <StaticTextField
-                    my={2}
-                    mt={1}
-                    label='Proof of Wealth (File)'
-                    value={files.proofOfWealth}
-                  />
-                </Grid>
-              </Grid>
-            </Box>
           </>
         )}
       </Box>
@@ -454,12 +468,6 @@ const useIdentityOverviewLogic = () => {
   ].includes(acrd.status)
   const isReady = isIdReady && isAcrdReady
 
-  const files = {
-    passport: { ...selectFile(id, 'Passport'), type: 'file' },
-    utilityBill: { ...selectFile(id, 'Utility Bill'), type: 'file' },
-    proofOfWealth: { ...selectFile(id, 'Proof of Wealth'), type: 'file' }
-  }
-
   useEffect(() => {
     // fetch identity data for initial values
     if (id.status === IDENTITY_STATUS.INIT) {
@@ -472,7 +480,17 @@ const useIdentityOverviewLogic = () => {
     }
   }, [id.status, acrd.status]) // eslint-disable-line react-hooks/exhaustive-deps
 
-  return { isReady, identity, accreditation, shouldCreateNew, error, files }
+  const handleFileDownload = documentId => {
+    downloadFile(idDispatch, documentId)
+  }
+  return {
+    isReady,
+    identity,
+    accreditation,
+    handleFileDownload,
+    shouldCreateNew,
+    error
+  }
 }
 
 const StaticTextField = ({ value, label, ...props }) => (
@@ -487,24 +505,13 @@ const StaticTextField = ({ value, label, ...props }) => (
           : 'textSecondary'
       }
     >
-      {typeof value === 'boolean' && value ? ( // handle true
-        'Yes'
-      ) : typeof value === 'boolean' && !value ? ( // handle false
-        'No'
-      ) : value?.type === 'file' && isImg(value.fileName) ? ( // handle image file
-        <ImageFromApi url={fixFileUrl(value.url)} />
-      ) : value?.type === 'file' && value.fileName ? ( // handle other files
-        value.fileName
-      ) : value?.type === 'file' && !value.fileName ? ( // handle empty file
-        '--'
-      ) : typeof value === 'string' || typeof value === 'number' ? ( // handle string/number
-        value
-      ) : (
-        '--'
-      ) /* handle empty values */}
+      {typeof value === 'boolean' && value // handle true
+        ? 'Yes'
+        : typeof value === 'boolean' && !value // handle false
+        ? 'No'
+        : typeof value === 'string' || typeof value === 'number' // handle string/number
+        ? value
+        : '--' /* handle empty values */}
     </Typography>
   </Box>
 )
-
-const isImg = str => /\.(gif|jpe?g|tiff|png|webp|bmp)$/i.test(str)
-const fixFileUrl = str => str.replace('http://localhost:3000', '')

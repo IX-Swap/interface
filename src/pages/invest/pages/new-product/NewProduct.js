@@ -11,11 +11,11 @@ export default function NewProduct ({ history }) {
   const { handleCreateDso } = useCreateDsoLogic(history)
 
   return (
-    <Grid container>
-      <Grid item md={7} lg={7}>
+    <Grid container justify='center' alignItems='center'>
+      <Grid item md={11} lg={8}>
         <Card>
           <Box mt={4} p={3}>
-            <Grid container justify='center'>
+            <Grid container justify='center' alignContent='center'>
               <Grid item md={8}>
                 <Box p={4}>
                   <Typography variant='h1'>

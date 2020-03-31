@@ -40,7 +40,7 @@ export default function DsoEdit (props) {
               <Grid container spacing={3}>
                 <Grid item>
                   <Button
-                    color='success'
+                    color='default'
                     variant='outlined'
                     onClick={() => props.history.push(`/app/invest/${dsoId}`)}
                   >
@@ -48,7 +48,7 @@ export default function DsoEdit (props) {
                   </Button>
                 </Grid>
                 <Grid item>
-                  <Button type='submit' color='success'>
+                  <Button type='submit' color='primary'>
                     Save
                   </Button>
                 </Grid>
@@ -186,7 +186,7 @@ export default function DsoEdit (props) {
                   variant='outlined'
                   value={state.miniumumInvestment}
                   onChange={e =>
-                    actions.miniumumInvestment(sanitize(e.target.value))
+                    actions.setMinimumInvestment(sanitize(e.target.value))
                   }
                 />
               </Box>

@@ -3,14 +3,12 @@ import {
   AppBar,
   Toolbar,
   IconButton,
-  InputBase,
   Menu,
   Typography
 } from '@material-ui/core'
 import {
   Menu as MenuIcon,
   Person as AccountIcon,
-  Search as SearchIcon,
   ArrowBack as ArrowBackIcon
 } from '@material-ui/icons'
 import classNames from 'classnames'
@@ -93,7 +91,7 @@ export default function Header (props) {
   // var [notificationsMenu, setNotificationsMenu] = useState(null)
   // var [isNotificationsUnread, setIsNotificationsUnread] = useState(true)
   var [profileMenu, setProfileMenu] = useState(null)
-  var [isSearchOpen, setSearchOpen] = useState(false)
+  // var [isSearchOpen, setSearchOpen] = useState(false)
 
   return (
     <AppBar position='fixed' className={classes.appBar}>
@@ -124,7 +122,7 @@ export default function Header (props) {
           InvestaX Digital Securities
         </Typography>
         <div className={classes.grow} />
-        <div
+        {/* <div
           className={classNames(classes.search, {
             [classes.searchFocused]: isSearchOpen
           })}
@@ -144,7 +142,7 @@ export default function Header (props) {
               input: classes.inputInput
             }}
           />
-        </div>
+        </div> */}
         {/* <IconButton
           color='inherit'
           aria-haspopup='true'

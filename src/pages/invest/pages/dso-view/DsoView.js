@@ -29,7 +29,7 @@ export default function DsoView (props) {
           <CircularProgress size={48} />
         </Box>
       ) : (
-        <Grid item lg={8}>
+        <Grid item lg={10}>
           <Card>
             <Box p={1}>
               <Grid container>
@@ -77,20 +77,23 @@ export default function DsoView (props) {
                 </Grid>
               </Grid>
               <Grid container>
-                {renderContent('Business Model', dso.businessModel)}
-                {renderContent('Highlights', dso.highlights)}
-                {renderContent('Milestones', dso.milestones)}
-                {renderContent('Roadmap', dso.roadmap)}
-                {renderContent('Team', dso.team)}
-                {renderContent('Existing Clients', dso.existingClients)}
-                {renderContent('Funding Currency', dso.fundingCurrency)}
-                {renderContent('Minimum Investment', dso.minimumInvestment)}
-                {renderContent('Funding Goal', dso.investmentTerms)}
-                {renderContent('Investment Terms', dso.investmentTerms)}
-                {renderContent('Deal Structure', dso.dealStructure)}
-                {renderContent('Capital Structure', dso.capitalStructure)}
-                {renderContent('Holding Structure', dso.holdingStructure)}
-                {renderDocuments('Documents', dso.documents)}
+                {renderContent('Business Model', dso.businessModel || '')}
+                {renderContent('Highlights', dso.highlights || '')}
+                {renderContent('Milestones', dso.milestones || '')}
+                {renderContent('Roadmap', dso.roadmap || '')}
+                {renderContent('Team', dso.team || '')}
+                {renderContent('Existing Clients', dso.existingClients || '')}
+                {renderContent('Funding Currency', dso.fundingCurrency || '')}
+                {renderContent(
+                  'Minimum Investment',
+                  dso.minimumInvestment || ''
+                )}
+                {renderContent('Funding Goal', dso.investmentTerms || '')}
+                {renderContent('Investment Terms', dso.investmentTerms || '')}
+                {renderContent('Deal Structure', dso.dealStructure || '')}
+                {renderContent('Capital Structure', dso.capitalStructure || '')}
+                {renderContent('Holding Structure', dso.holdingStructure || '')}
+                {renderDocuments('Documents', dso.documents || '')}
               </Grid>
             </Box>
           </Card>

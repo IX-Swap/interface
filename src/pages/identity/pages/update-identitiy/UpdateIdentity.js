@@ -910,22 +910,6 @@ const saveChangedFiles = (idDispatch, formData, id) => {
       type: 'individual',
       id
     })
-    // const saveFilePromises = Object.entries(filesData)
-    //   .map(([key, value]) => {
-    //     const isValueFromApi = !!value?.fileName
-    //     if (isValueFromApi) return Promise.resolve()
-
-    //     const saveFilePromise = saveFile(idDispatch, {
-    //       title: FILE_KEYS_TO_TITLE[key],
-    //       file: value[0],
-    //       remarks: '',
-    //       type: 'individual',
-    //       id
-    //     })
-
-    //     return saveFilePromise
-    //   })
-
     return saveFilePromise
   })
 

@@ -84,13 +84,7 @@ const structure = [
     link: '/app/primary',
     icon: <HelpIcon />
   },
-  { id: 6, type: 'divider' },
-  {
-    id: 7,
-    label: 'Developer Panel',
-    link: '/app/developer-panel',
-    icon: <CodeIcon />
-  }
+  { id: 6, type: 'divider' }
   // { id: 6, type: 'title', label: 'HELP' },
   // { id: 7, label: 'Documentation', link: '', icon: <LibraryIcon /> },
   // { id: 8, label: 'Support', link: '', icon: <SupportIcon /> },

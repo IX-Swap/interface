@@ -1,5 +1,10 @@
 import * as yup from 'yup'
-import { MARITAL_STATUSES, GENDERS, COUNTRIES, ALPHA_NUMERIC_OR_EMPTY_REGEX } from 'const'
+import {
+  MARITAL_STATUSES,
+  GENDERS,
+  COUNTRIES,
+  ALPHA_NUMERIC_OR_EMPTY_REGEX
+} from 'const'
 import createDate18YearsAgo from 'pages/identity/helpers/createDate18YearsAgo'
 
 const REQUIRED_ERR_MSG = 'This field is required'
@@ -9,20 +14,23 @@ export const createIDBasic = () =>
     firstName: yup.string().required(REQUIRED_ERR_MSG),
     middleName: yup.string(),
     lastName: yup.string().required(REQUIRED_ERR_MSG),
-    dob: yup.date(REQUIRED_ERR_MSG)
+    dob: yup
+      .date(REQUIRED_ERR_MSG)
       .max(createDate18YearsAgo(), 'You must be at least 18 years old')
       .required(REQUIRED_ERR_MSG),
-    maritalStatus: yup.mixed()
+    maritalStatus: yup
+      .mixed()
       .oneOf(MARITAL_STATUSES, REQUIRED_ERR_MSG)
       .required(REQUIRED_ERR_MSG),
-    gender: yup.mixed()
+    gender: yup
+      .mixed()
       .oneOf(GENDERS, REQUIRED_ERR_MSG)
       .required(REQUIRED_ERR_MSG),
-    contactNumber: yup.string()
-      .required(REQUIRED_ERR_MSG),
-    nationality: yup.mixed()
+    contactNumber: yup.string().required(REQUIRED_ERR_MSG),
+    nationality: yup
+      .mixed()
       .oneOf(COUNTRIES, REQUIRED_ERR_MSG)
-      .required(REQUIRED_ERR_MSG),
+      .required(REQUIRED_ERR_MSG)
   })
 
 export const createIDAddressSchema = () =>
@@ -31,22 +39,27 @@ export const createIDAddressSchema = () =>
     line1: yup.string().required(REQUIRED_ERR_MSG),
     line2: yup.string(),
     city: yup.string().required('This field required'),
-    postalCode: yup.string().matches(ALPHA_NUMERIC_OR_EMPTY_REGEX, 'This field may only contain alphabet or numbers'),
+    postalCode: yup
+      .string()
+      .matches(
+        ALPHA_NUMERIC_OR_EMPTY_REGEX,
+        'This field may only contain alphabet or numbers'
+      ),
     state: yup.string(),
-    country: yup.mixed()
+    country: yup
+      .mixed()
       .oneOf(COUNTRIES, REQUIRED_ERR_MSG)
       .required(REQUIRED_ERR_MSG),
-    countryOfResidence: yup.mixed()
+    countryOfResidence: yup
+      .mixed()
       .oneOf(COUNTRIES, REQUIRED_ERR_MSG)
-      .required(REQUIRED_ERR_MSG),
+      .required(REQUIRED_ERR_MSG)
   })
 
 export const createIDDocumentsSchema = () =>
   yup.object().shape({
-    idType: yup.string().matches(ALPHA_NUMERIC_OR_EMPTY_REGEX, 'This field may only contain alphabet or numbers').required(REQUIRED_ERR_MSG),
-    idNumber: yup.string().matches(ALPHA_NUMERIC_OR_EMPTY_REGEX, 'This field may only contain alphabet or numbers').required(REQUIRED_ERR_MSG),
     idFile: yup.mixed().required(REQUIRED_ERR_MSG),
-    utilityBillFile: yup.mixed().required(REQUIRED_ERR_MSG),
+    utilityBillFile: yup.mixed().required(REQUIRED_ERR_MSG)
   })
 
 export const createIDOccupationSchema = () =>
@@ -54,14 +67,14 @@ export const createIDOccupationSchema = () =>
     occupation: yup.string().required(REQUIRED_ERR_MSG),
     employmentStatus: yup.string().required(REQUIRED_ERR_MSG),
     employer: yup.string().required(REQUIRED_ERR_MSG),
-    industryOfEmployment: yup.string().required(REQUIRED_ERR_MSG),
+    industryOfEmployment: yup.string().required(REQUIRED_ERR_MSG)
   })
 
 export const createIDBankAccount = () =>
   yup.object().shape({
     bankName: yup.string().required('This field is required'),
     bankAccountName: yup.string().required('This field is required'),
-    bankAccountNumber: yup.string().required('This field is required'),
+    bankAccountNumber: yup.string().required('This field is required')
   })
 
 export const createIDIncomeSchema = () =>
@@ -72,10 +85,12 @@ export const createIDIncomeSchema = () =>
     politicallyExposed: yup.boolean().required('This field is required')
   })
 
-const TRUE_OR_FALSE_YUP = yup.mixed().oneOf(['true', 'false'], 'This field is required')
+const TRUE_OR_FALSE_YUP = yup
+  .mixed()
+  .oneOf(['true', 'false'], 'This field is required')
 export const createIDAcrdInvestorSchema = () =>
   yup.object().shape({
-    selfAccreditedInvestor: TRUE_OR_FALSE_YUP,
+    selfAccreditedInvestor: TRUE_OR_FALSE_YUP
   })
 
 export const createIDAcrdInfoSchema = () =>
@@ -88,7 +103,7 @@ export const createIDAcrdInfoSchema = () =>
 
 export const createIDProofOfWealthSchema = () =>
   yup.object().shape({
-    proofOfWealth: yup.mixed().required('This field is required'),
+    proofOfWealth: yup.mixed().required('This field is required')
   })
 
 export const createIndividualSchema = () =>

@@ -14,7 +14,6 @@ import {
   MailOutline as MailIcon,
   NotificationsNone as NotificationsIcon,
   Person as AccountIcon,
-  Search as SearchIcon,
   Send as SendIcon,
   ArrowBack as ArrowBackIcon
 } from '@material-ui/icons'
@@ -103,29 +102,31 @@ const Header = ({ classes, isSidebarOpened, toggleSidebar, ...props }) => (
           />
         )}
       </IconButton>
-      <Typography variant='h6' weight='medium' className={classes.logotype}>React Material Admin</Typography>
+      <Typography variant='h6' weight='medium' className={classes.logotype}>
+        InvestaX Digital Securities
+      </Typography>
       <div className={classes.grow} />
-      <div
+      {/* <div
         className={classNames(classes.search, {
           [classes.searchFocused]: props.isSearchOpen
         })}
-      >
-        <div
+      > */}
+      {/* <div
           className={classNames(classes.searchIcon, {
             [classes.searchIconOpened]: props.isSearchOpen
           })}
           onClick={props.toggleSearch}
         >
           <SearchIcon classes={{ root: classes.headerIcon }} />
-        </div>
-        <InputBase
+        </div> */}
+      {/* <InputBase
           placeholder='Search…'
           classes={{
             root: classes.inputRoot,
             input: classes.inputInput
           }}
         />
-      </div>
+      </div> */}
       <IconButton
         color='inherit'
         aria-haspopup='true'
@@ -345,22 +346,22 @@ const styles = theme => ({
       width: 250
     }
   },
-  searchIcon: {
-    width: 36,
-    right: 0,
-    height: '100%',
-    position: 'absolute',
-    display: 'flex',
-    alignItems: 'center',
-    justifyContent: 'center',
-    transition: theme.transitions.create('right'),
-    '&:hover': {
-      cursor: 'pointer'
-    }
-  },
-  searchIconOpened: {
-    right: theme.spacing.unit * 1.25
-  },
+  // searchIcon: {
+  //   width: 36,
+  //   right: 0,
+  //   height: '100%',
+  //   position: 'absolute',
+  //   display: 'flex',
+  //   alignItems: 'center',
+  //   justifyContent: 'center',
+  //   transition: theme.transitions.create('right'),
+  //   '&:hover': {
+  //     cursor: 'pointer'
+  //   }
+  // },
+  // searchIconOpened: {
+  //   right: theme.spacing.unit * 1.25
+  // },
   inputRoot: {
     color: 'inherit',
     width: '100%'

@@ -23,16 +23,16 @@ function Tokens (props) {
         <Widget title='Token Components' disableWidgetMenu>
           <ul>
             <li>
-              <a href='/#/app/tokens/deploy'>Deploy</a>
+              <a href='/#/tokens/deploy'>Deploy</a>
             </li>
             <li>
-              <a href='/#/app/tokens/list'>List</a>
+              <a href='/#/tokens/list'>List</a>
             </li>
             <li>
-              <a href='/#/app/tokens/issue'>Issue</a>
+              <a href='/#/tokens/issue'>Issue</a>
             </li>
             <li>
-              <a href='/#/app/tokens/transfer'>Transfer</a>
+              <a href='/#/tokens/transfer'>Transfer</a>
             </li>
           </ul>
         </Widget>

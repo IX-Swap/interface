@@ -20,12 +20,15 @@ export default function DsoBoard ({ history }) {
       ) : (
         <Grid container spacing={3} justify='center'>
           {dsoList.map((dso, id) => {
-            if (dso.status)
+            if (dso.status) {
               return (
                 <Grid key={id} item xs={12} md={9} lg={9}>
                   <DsoCard history={history} dso={dso} />
                 </Grid>
               )
+            } else {
+              return null
+            }
           })}
         </Grid>
       )}
@@ -48,7 +51,7 @@ const useDsoBoardLogic = () => {
     if (!isDsoListReady) {
       getDsoList(investDispatch).catch(() => {})
     }
-  }, [investStatus, investDispatch])
+  }, [investStatus, investDispatch, isDsoListReady])
 
   return { isDsoListReady, dsoList, error }
 }

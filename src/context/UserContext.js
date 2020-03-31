@@ -130,11 +130,11 @@ export async function loginUser (dispatch, username, password) {
   }
 }
 
-export async function signupUser (dispatch, name, email, password) {
+export async function signupUser (dispatch, email, password) {
   dispatch({ type: userActions.SIGN_UP_REQUEST })
   try {
     const uri = '/identity/auth/sign-up'
-    const result = await postRequest(uri, { name, email, password })
+    const result = await postRequest(uri, { email, password })
     const response = await result.json()
 
     if (result.status === 200) {

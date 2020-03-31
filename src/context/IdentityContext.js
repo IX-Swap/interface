@@ -16,7 +16,10 @@ const actions = {
   SAVE_IDENTITY_FAILURE: 'SAVE_IDENTITY_FAILURE',
   SAVE_FILE_REQUEST: 'SAVE_FILE_REQUEST',
   SAVE_FILE_SUCCESS: 'SAVE_FILE_SUCCESS',
-  SAVE_FILE_FAILURE: 'SAVE_FILE_FAILURE'
+  SAVE_FILE_FAILURE: 'SAVE_FILE_FAILURE',
+  DOWNLOAD_FILE_REQUEST: 'DOWNLOAD_FILE_REQUEST',
+  DOWNLOAD_FILE_SUCCESS: 'DOWNLOAD_FILE_SUCCESS',
+  DOWNLOAD_FILE_FAILURE: 'DOWNLOAD_FILE_FAILURE'
 }
 
 export const IDENTITY_STATUS = {
@@ -30,7 +33,6 @@ const STATUS = IDENTITY_STATUS
 
 const initialState = {
   identity: {},
-  files: [],
   status: STATUS.INIT,
   shouldCreateNew: false,
   error: {
@@ -53,7 +55,6 @@ export function identityReducer (state, { type, payload }) {
         ...state,
         status: STATUS.IDLE,
         identity: payload.identity,
-        files: payload.files,
         shouldCreateNew: payload.shouldCreateNew
       }
     case actions.GET_IDENTITY_FAILURE:
@@ -90,12 +91,30 @@ export function identityReducer (state, { type, payload }) {
         error: { ...state.error, save: null }
       }
     case actions.SAVE_FILE_SUCCESS:
-      return { ...state, status: STATUS.IDLE, files: [...state.files, payload] }
+      return { ...state, status: STATUS.IDLE }
     case actions.SAVE_FILE_FAILURE:
       return {
         ...state,
         status: STATUS.IDLE,
         error: { ...state.error, save: payload }
+      }
+    case actions.DOWNLOAD_FILE_REQUEST:
+      return {
+        ...state,
+        status: STATUS.GETTING,
+        error: { ...state.error, get: null }
+      }
+    case actions.DOWNLOAD_FILE_SUCCESS:
+      return {
+        ...state,
+        status: STATUS.IDLE,
+        error: { ...state.error, get: null }
+      }
+    case actions.DOWNLOAD_FILE_FAILURE:
+      return {
+        ...state,
+        status: STATUS.IDLE,
+        error: { ...state.error, get: payload.message }
       }
 
     default:
@@ -148,33 +167,20 @@ export async function getIdentity (dispatch) {
 
   try {
     const individualUri = '/identity/profile/individual'
-    const filesUri = '/dataroom'
 
-    const results = await Promise.all([
-      getRequest(individualUri),
-      getRequest(filesUri)
-    ])
+    const result = await getRequest(individualUri)
+    const response = await result.json()
 
-    const resps = await Promise.all(results.map(r => r.json()))
-
-    const areAllResultsOk = results.every(r => r.status === 200)
-    if (areAllResultsOk) {
-      const identity = resps[0].data || {}
-      const shouldCreateNew = !resps[0].data
-      const files = resps[1].data
-
+    if (result.status === 200) {
       dispatch({
         type: actions.GET_IDENTITY_SUCCESS,
         payload: {
-          identity,
-          shouldCreateNew,
-          files
+          identity: response.data,
+          shouldCreateNew: response.message === 'shouldCreateNew' ? true : false
         }
       })
     } else {
-      const message = resps.find(r => r.status !== 200).message
-
-      throw new Error(message)
+      throw new Error(response.message)
     }
   } catch (err) {
     const errMsg = err.message || err.toString() || 'Loading profile failed.'
@@ -235,13 +241,12 @@ export async function saveFile (dispatch, payload) {
    * saveFile requires the following params in payload
    * @param String title
    * @param String type
-   * @param String remarks
    * @param String file
    * @param Enum type individual | corporate
    * @param String id individal document id or corporate document id
    */
 
-  const { title, file, remarks, type, id } = payload
+  const { title, file, type, id } = payload
   dispatch({ type: actions.SAVE_FILE_REQUEST })
 
   try {
@@ -249,7 +254,6 @@ export async function saveFile (dispatch, payload) {
 
     formData.append('title', title)
     formData.append('document', file)
-    formData.append('remarks', remarks)
     formData.append('type', type)
 
     const uri = '/dataroom'
@@ -260,9 +264,6 @@ export async function saveFile (dispatch, payload) {
       const data = response.data[0]
       const payload = {
         ...data,
-
-        // Response on create doesn't include this properties,
-        // so let's create our own as the app relies on them
         fileName: data.fileName || data.originalFileName
       }
 
@@ -283,9 +284,29 @@ export async function saveFile (dispatch, payload) {
   }
 }
 
+export const downloadFile = async (dispatch, documentId) => {
+  try {
+    dispatch({ type: actions.DOWNLOAD_FILE_REQUEST })
+    const uri = `/dataroom/raw/${documentId}`
+    const result = await getRequest(uri)
+
+    if (result.status === 200) {
+      result.blob().then(blob => {
+        let url = window.URL.createObjectURL(blob)
+        window.open(url)
+        dispatch({ type: actions.DOWNLOAD_FILE_SUCCESS })
+      })
+    } else {
+      dispatch({ type: actions.DOWNLOAD_FILE_FAILURE })
+    }
+  } catch (err) {
+    console.log(err)
+  }
+}
+
 // selectors
 export const selectFile = (state, title) =>
-  state.files
+  state.identity.documents
     ?.filter?.(f => f.title === title)
     .reduce((lastFile, currFile) => {
       if (!lastFile) return currFile

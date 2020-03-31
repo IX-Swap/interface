@@ -1,6 +1,22 @@
 import React, { useEffect, useState, useCallback } from 'react'
-import { Grid, Card, TextField, Typography, Box, Button, CircularProgress, Snackbar, IconButton } from '@material-ui/core'
-import { useIdentityState, useIdentityDispatch, getIdentity, saveFinancials, IDENTITY_STATUS } from 'context/IdentityContext'
+import {
+  Grid,
+  Card,
+  TextField,
+  Typography,
+  Box,
+  Button,
+  CircularProgress,
+  Snackbar,
+  IconButton
+} from '@material-ui/core'
+import {
+  useIdentityState,
+  useIdentityDispatch,
+  getIdentity,
+  saveFinancials,
+  IDENTITY_STATUS
+} from 'context/IdentityContext'
 import { useForm, Controller } from 'react-hook-form'
 import FinancialsProgress from 'pages/identity/components/FinancialsProgress'
 import { useMemo } from 'react'
@@ -27,7 +43,9 @@ export default function FinancialsStepThree () {
         {/* Form */}
         <Card component='form' onSubmit={handleSubmit} noValidate>
           <Box p={3}>
-            <Typography component='h1' variant='h3' align='center'>Financials</Typography>
+            <Typography component='h1' variant='h3' align='center'>
+              Financials
+            </Typography>
 
             {/* Progress Section */}
             <Box mt={3} mx={-3}>
@@ -47,23 +65,44 @@ export default function FinancialsStepThree () {
               <>
                 <Box mx='auto' mt={4} maxWidth='32rem'>
                   {/* Inputs Column */}
-                    <Controller as={TextField} fullWidth margin='dense' label='Annual Income' {...fields.annualIncome} />
-                    <Controller as={TextField} fullWidth margin='dense' label='Household Income' {...fields.houseHoldIncome} />
-                    <Controller as={TextField} fullWidth margin='dense' label='Source Of Wealth' {...fields.sourceOfWealth} />
-                    <SingleCheckbox
-                      color='primary'
-                      inputProps={{ 'aria-label': 'Politically Exposed' }}
-                      label='Politically Exposed'
-                      {...fields.politicallyExposed}
-                    />
+                  <Controller
+                    as={TextField}
+                    fullWidth
+                    margin='dense'
+                    label='Annual Income'
+                    {...fields.annualIncome}
+                  />
+                  <Controller
+                    as={TextField}
+                    fullWidth
+                    margin='dense'
+                    label='Household Income'
+                    {...fields.houseHoldIncome}
+                  />
+                  <Controller
+                    as={TextField}
+                    fullWidth
+                    margin='dense'
+                    label='Source Of Wealth'
+                    {...fields.sourceOfWealth}
+                  />
+                  <SingleCheckbox
+                    color='primary'
+                    inputProps={{ 'aria-label': 'Politically Exposed' }}
+                    label='Politically Exposed'
+                    {...fields.politicallyExposed}
+                  />
                 </Box>
 
                 {/* Submit Button */}
                 <Box display='flex' justifyContent='flex-end' mt={6}>
-                  <Button disabled={!isValid || status !== 'IDLE'} type='submit' variant='contained' color='primary'>
-                    {status === 'SAVING'
-                      ? 'Saving...'
-                      : 'Save & Finish'}
+                  <Button
+                    disabled={!isValid || status !== 'IDLE'}
+                    type='submit'
+                    variant='contained'
+                    color='primary'
+                  >
+                    {status === 'SAVING' ? 'Saving...' : 'Save & Finish'}
                   </Button>
                 </Box>
               </>
@@ -76,7 +115,12 @@ export default function FinancialsStepThree () {
           message={snackbarError}
           open={!!snackbarError}
           action={
-            <IconButton size='small' aria-label='close' color='inherit' onClick={handleSnackbarErrorClose}>
+            <IconButton
+              size='small'
+              aria-label='close'
+              color='inherit'
+              onClick={handleSnackbarErrorClose}
+            >
               <CloseIcon fontSize='small' />
             </IconButton>
           }
@@ -115,21 +159,23 @@ const useFinancialsFormLogic = () => {
   })
 
   // create the field props
-  const createFieldProps = (key, overrides) =>
-    ({
-      name: key,
-      error: Boolean(errors[key] && errors[key].message),
-      helperText: (errors[key] && errors[key].message) || '',
-      defaultValue: '',
-      control,
-      ...overrides
-    })
+  const createFieldProps = (key, overrides) => ({
+    name: key,
+    error: Boolean(errors[key] && errors[key].message),
+    helperText: (errors[key] && errors[key].message) || '',
+    defaultValue: '',
+    control,
+    ...overrides
+  })
 
   const fields = {
     annualIncome: createFieldProps('annualIncome', { required: true }),
     houseHoldIncome: createFieldProps('houseHoldIncome', { required: true }),
     sourceOfWealth: createFieldProps('sourceOfWealth', { required: true }),
-    politicallyExposed: createFieldProps('politicallyExposed', { required: true, defaultValue: false })
+    politicallyExposed: createFieldProps('politicallyExposed', {
+      required: true,
+      defaultValue: false
+    })
   }
 
   return {
