@@ -36,11 +36,19 @@
     "use-reducer-logger": "^1.0.1",
     "yup": "^0.28.3"
   },
+  "devDependencies": {
+    "aws-sdk": "^2.649.0",
+    "gulp": "^4.0.2",
+    "gulp-awspublish": "^4.1.1",
+    "gulp-rev-all": "^2.0.3",
+    "through2": "^3.0.1"
+  },
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "deploy": "gulp deploy"
   },
   "eslintConfig": {
     "extends": "react-app"
