@@ -8,7 +8,6 @@ import HelpIcon from '@material-ui/icons/Help'
 import PermIdentityIcon from '@material-ui/icons/PermIdentity'
 import ArrowBackIcon from '@material-ui/icons/ArrowBack'
 import SecurityIcon from '@material-ui/icons/Security'
-import CodeIcon from '@material-ui/icons/Code'
 import AccountBalanceIcon from '@material-ui/icons/AccountBalance'
 import PieChartIcon from '@material-ui/icons/PieChart'
 
