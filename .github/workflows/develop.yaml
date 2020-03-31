@@ -17,9 +17,6 @@ jobs:
         run: yarn install && npm run build:prod
       - name: Deploy Build to S3 bucket
         run: aws s3 sync ./build/ s3://app.mozork.com --delete
-        with:
-          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
-          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
         env:
           AWS_BUCKET: 'app.mozork.com'
           AWS_REGION: 'ap-southeast-1'
