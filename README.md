@@ -1,6 +1,6 @@
 # InvestaX Platform WebApp
 
-[![JS Standard Style][js-standard-style-badge]][js-standard-style-link]
+![Standard Js](https://cdn.rawgit.com/feross/standard/master/badge.svg)
 
 Built with [React](https://facebook.github.io/react/), [Material-UI](https://material-ui.com), [React Router](https://reacttraining.com/react-router/).
 
