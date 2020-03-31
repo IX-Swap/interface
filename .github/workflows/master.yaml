@@ -1,5 +1,7 @@
 name: ixwebapp
-on: [push]
+on:
+  push:
+    branches: [master]
 jobs:
   build:
     runs-on: ubuntu-latest
@@ -14,4 +16,4 @@ jobs:
       - name: Build ixWebApp
       - run: yarn install && npm run build:prod
       - name: Deploy static site to S3 bucket
-        run: aws s3 sync ./build/ s3://app.mozork.com --delete
+        run: aws s3 sync ./build/ s3://app.investax.io --delete
