@@ -47,7 +47,7 @@ import CloseIcon from '@material-ui/icons/Close'
 import { mapObjIndexed, curry } from 'ramda'
 import { useRef } from 'react'
 
-export default function UpdateIdentity () {
+export default function UpdateIdentity (props) {
   const {
     handleSubmit,
     fields,
@@ -79,7 +79,27 @@ export default function UpdateIdentity () {
               <Typography component='h1' variant='h3'>
                 Update My Identity
               </Typography>
-
+              <Box display='flex' justifyContent='flex-end' mt={0}>
+                <Box mr={2}>
+                  <Button
+                    variant='outlined'
+                    color='primary'
+                    onClick={() => props.history.push('/app/identity')}
+                  >
+                    Cancel
+                  </Button>
+                </Box>
+                <Box>
+                  <Button
+                    disabled={isSaving}
+                    type='submit'
+                    variant='contained'
+                    color='primary'
+                  >
+                    {isSaving ? 'Saving...' : 'Save Changes'}
+                  </Button>
+                </Box>
+              </Box>
               {/* Names Row */}
               <Box component='section' mt={3}>
                 <Grid container spacing={2}>
@@ -236,36 +256,6 @@ export default function UpdateIdentity () {
                   emptyLabel='Please upload a photo or scan or your passport.'
                   {...fields.idFile}
                 />
-
-                <Box mt={1}>
-                  <Controller
-                    as={TextField}
-                    fullWidth
-                    width='100%'
-                    margin='dense'
-                    label='ID Type'
-                    {...fields.idType}
-                    helperText={
-                      fields.idType.error
-                        ? fields.idType.helperText
-                        : 'Please type in your ID type.'
-                    }
-                  />
-
-                  <Controller
-                    as={TextField}
-                    fullWidth
-                    width='100%'
-                    margin='dense'
-                    label='ID No.'
-                    {...fields.idNumber}
-                    helperText={
-                      fields.idNumber.error
-                        ? fields.idNumber.helperText
-                        : 'Please type in your ID no.'
-                    }
-                  />
-                </Box>
 
                 <Box mt={1}>
                   <UploadSection
@@ -473,14 +463,25 @@ export default function UpdateIdentity () {
 
               {/* Submit Button */}
               <Box display='flex' justifyContent='flex-end' mt={8}>
-                <Button
-                  disabled={!isValid || isSaving}
-                  type='submit'
-                  variant='contained'
-                  color='primary'
-                >
-                  {isSaving ? 'Saving...' : 'Save Changes'}
-                </Button>
+                <Box m={2}>
+                  <Button
+                    variant='outlined'
+                    color='primary'
+                    onClick={() => props.history.push('/app/identity')}
+                  >
+                    Cancel
+                  </Button>
+                </Box>
+                <Box m={2}>
+                  <Button
+                    disabled={isSaving}
+                    type='submit'
+                    variant='contained'
+                    color='primary'
+                  >
+                    {isSaving ? 'Saving...' : 'Save Changes'}
+                  </Button>
+                </Box>
               </Box>
             </Box>
           </Card>
@@ -590,8 +591,8 @@ const useUpdateIdentityLogic = () => {
         valueFromState = masterData.address[fieldName]
 
         // Handle loading file inputs
-      } else if (FILES_KEYS.includes(fieldName)) {
-        valueFromState = selectFile(id, FILE_KEYS_TO_TITLE[fieldName])
+        // } else if (FILES_KEYS.includes(fieldName)) {
+        //   valueFromState = selectFile(id, FILE_KEYS_TO_TITLE[fieldName])
 
         // Handle loading boolean values to be cast to string
       } else if (BOOLEAN_KEYS.includes(fieldName)) {
@@ -702,7 +703,6 @@ const useUpdateIdentityLogic = () => {
     }),
 
     // documents fields
-    idType: createFieldProps('idType'),
     idNumber: createFieldProps('idNumber'),
     idFile: createFieldProps('idFile', {
       onChange: useCallback(handleFileChange('idFile'), []), // eslint-disable-line react-hooks/exhaustive-deps
@@ -839,7 +839,6 @@ const ID_KEYS = [
   'state',
   'country',
   'countryOfResidence',
-  'idType',
   'idNumber'
 ]
 
