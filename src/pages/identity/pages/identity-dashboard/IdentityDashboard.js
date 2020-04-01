@@ -68,17 +68,17 @@ export default function IdentityDashboard () {
   return (
     <Grid component='article' container spacing={3} justify='center'>
       {isIDReady && isProgressReady && !error && !areAllCompleted && (
-        <Grid item xs={12}>
+        <Grid item xs={12} md={12}>
           <Hidden mdUp>{progressesJsx}</Hidden>
         </Grid>
       )}
 
       {isProgressReady && !error && !areAllCompleted && (
-        <Grid item xs={12} md={5}>
+        <Grid item xs={12} md={9}>
           <Hidden smDown>{progressesJsx}</Hidden>
         </Grid>
       )}
-      <Grid component='section' item xs={12} md={areAllCompleted ? 9 : 7}>
+      <Grid component='section' item xs={12} md={areAllCompleted ? 9 : 9}>
         <IdentityOverview areAllCompleted={areAllCompleted} />
       </Grid>
     </Grid>

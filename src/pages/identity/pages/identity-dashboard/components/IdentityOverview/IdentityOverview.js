@@ -103,7 +103,7 @@ export default function IdentityOverview ({ areAllCompleted }) {
               </Box>
               {areAllCompleted && (
                 <Button
-                  variant='contained'
+                  variant='outlined'
                   color='primary'
                   to='/app/identity/edit'
                   component={Link}

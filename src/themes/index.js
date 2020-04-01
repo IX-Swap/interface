@@ -4,7 +4,18 @@ import { createMuiTheme } from '@material-ui/core'
 
 const overrides = {
   typography: {
-    fontFamily: '"Roboto", "Helvetica", "Arial", sans-serif',
+    fontFamily: [
+      '-apple-system',
+      'BlinkMacSystemFont',
+      'Segoe UI',
+      'Roboto',
+      'Oxygen',
+      'Ubuntu',
+      'Cantarell',
+      'Open Sans',
+      'Helvetica Neue',
+      'sans-serif !important;'
+    ].join(','),
     h1: {
       fontSize: '3rem'
     },

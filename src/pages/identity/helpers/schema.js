@@ -58,8 +58,8 @@ export const createIDAddressSchema = () =>
 
 export const createIDDocumentsSchema = () =>
   yup.object().shape({
-    idFile: yup.mixed().required(REQUIRED_ERR_MSG),
-    utilityBillFile: yup.mixed().required(REQUIRED_ERR_MSG)
+    idFile: yup.mixed(),
+    utilityBillFile: yup.mixed()
   })
 
 export const createIDOccupationSchema = () =>
@@ -103,7 +103,7 @@ export const createIDAcrdInfoSchema = () =>
 
 export const createIDProofOfWealthSchema = () =>
   yup.object().shape({
-    proofOfWealth: yup.mixed().required('This field is required')
+    proofOfWealth: yup.mixed()
   })
 
 export const createIndividualSchema = () =>
