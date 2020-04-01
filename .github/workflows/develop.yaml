@@ -16,4 +16,4 @@ jobs:
       - name: Build and Optimize for Production
         run: yarn install && yarn build
       - name: Deploy Build to S3 bucket
-        run: aws s3 sync ./build/ s3://app.mozork.com --delete
+        run: npm run deploy

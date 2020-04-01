@@ -1,3 +1,4 @@
+require('dotenv').config()
 const gulp = require('gulp')
 const revall = require('gulp-rev-all')
 const awspublish = require('gulp-awspublish')
@@ -52,6 +53,8 @@ function updateCloudfrontRootObject (file) {
 }
 
 function publish () {
+  console.log(credentials)
+
   return (
     gulp
       .src('build/**/**')
@@ -81,6 +84,6 @@ function publish () {
   )
 }
 
-const deploy = gulp.series(build, publish)
+const deploy = gulp.series(publish)
 
 gulp.task('deploy', deploy, done => done())
