@@ -12,12 +12,12 @@ import {
   Fade
 } from '@material-ui/core'
 import { withRouter } from 'react-router-dom'
-import classnames from 'classnames'
+// import classnames from 'classnames'
 
 // styles
 import useStyles from './styles'
 
-import google from '../../images/google.svg'
+// import google from '../../images/google.svg'
 import VerifySignup from './VerifySignup'
 
 // context
@@ -26,9 +26,9 @@ import {
   useUserState,
   setActiveTabId,
   loginUser,
-  signupUser,
-  verifySignup,
-  checkAuth
+  signupUser
+  // verifySignup,
+  // checkAuth
 } from '../../context/UserContext'
 
 function Login (props) {
@@ -87,26 +87,26 @@ function Login (props) {
               <Tab label='New User' classes={{ root: classes.tab }} />
             </Tabs>
             {userState.activeTabId === 0 && (
-              <>
+              <Box mt={3}>
                 {/* <Typography variant="h1" className={classes.greeting}>
                 Good Morning, User
               </Typography> */}
 
-                <Button size='large' className={classes.googleButton}>
+                {/* <Button size='large' className={classes.googleButton}>
                   <img
                     src={google}
                     alt='google'
                     className={classes.googleIcon}
                   />
                   &nbsp;Sign in with Google
-                </Button>
-                <div className={classes.formDividerContainer}>
+                </Button> */}
+                {/* <div className={classes.formDividerContainer}>
                   <div className={classes.formDivider} />
                   <Typography className={classes.formDividerWord}>
                     or
                   </Typography>
                   <div className={classes.formDivider} />
-                </div>
+                </div> */}
                 <Fade in={userState.error !== ''}>
                   <Typography
                     color='secondary'
@@ -169,8 +169,7 @@ function Login (props) {
                           userDispatch,
                           usernameValue,
                           passwordValue,
-                          props.history,
-                          setIsLoading
+                          props.history
                         )
                       }
                       variant='contained'
@@ -185,15 +184,15 @@ function Login (props) {
                     size='large'
                     className={classes.forgetButton}
                   >
-                    Forget Password
+                    Forgot Password?
                   </Button>
                 </div>
-              </>
+              </Box>
             )}
             {userState.activeTabId === 1 && (
               <>
                 <Typography variant='h4' className={classes.greeting}>
-                  Sign Up.
+                  Create Account
                 </Typography>
                 <Fade in={userState.error !== ''}>
                   <Typography
@@ -234,7 +233,7 @@ function Login (props) {
                   fullWidth
                 />
                 <div className={classes.creatingButtonContainer}>
-                  {isLoading ? (
+                  {userState.isLoading ? (
                     <CircularProgress size={26} />
                   ) : (
                     <Button
@@ -248,20 +247,20 @@ function Login (props) {
                       variant='contained'
                       color='primary'
                       fullWidth
-                      className={classes.createAccountButton}
+                      // className={classes.createAccountButton}
                     >
-                      Sign Up
+                      CREATE
                     </Button>
                   )}
                 </div>
-                <div className={classes.formDividerContainer}>
+                {/* <div className={classes.formDividerContainer}>
                   <div className={classes.formDivider} />
                   <Typography className={classes.formDividerWord}>
                     or
                   </Typography>
                   <div className={classes.formDivider} />
-                </div>
-                <Button
+                </div> */}
+                {/* <Button
                   size='large'
                   className={classnames(
                     classes.googleButton,
@@ -274,9 +273,14 @@ function Login (props) {
                     className={classes.googleIcon}
                   />
                   &nbsp;Sign in with Google
-                </Button>
+                </Button> */}
               </>
             )}
+            <Box mt={3} align='right'>
+              <a align='right' href='https://bitwarden.com'>
+                <img src='https://www.vectorlogo.zone/logos/bitwarden/bitwarden-ar21.svg' />
+              </a>
+            </Box>
           </form>
         )}
         <Typography color='primary' className={classes.copyright}>

@@ -6,7 +6,7 @@ const through = require('through2')
 const Cloudfront = require('aws-sdk/clients/cloudfront')
 
 const credentials = {
-  key: process.env.AWS_SECRET_ACCESS_KEY,
+  key: process.env.AWS_ACCESS_KEY_ID,
   secret: process.env.AWS_SECRET_ACCESS_KEY,
   bucket: process.env.AWS_BUCKET,
   region: process.env.AWS_REGION || 'ap-southeast-1',
@@ -53,8 +53,6 @@ function updateCloudfrontRootObject (file) {
 }
 
 function publish () {
-  console.log(credentials)
-
   return (
     gulp
       .src('build/**/**')
