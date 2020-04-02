@@ -3,7 +3,7 @@ import { makeStyles } from '@material-ui/styles'
 export default makeStyles(theme => ({
   container: {
     height: '100vh',
-    width: '100vw',
+    // width: '100vw',
     display: 'flex',
     justifyContent: 'center',
     alignItems: 'center',
@@ -39,15 +39,15 @@ export default makeStyles(theme => ({
     }
   },
   formContainer: {
-    width: '40%',
+    // width: '40%',
     height: '100%',
     display: 'flex',
     flexDirection: 'column',
     justifyContent: 'center',
-    alignItems: 'center',
-    [theme.breakpoints.down('md')]: {
-      width: '50%'
-    }
+    alignItems: 'center'
+    // [theme.breakpoints.down('md')]: {
+    //   width: '50%'
+    // }
   },
   form: {
     width: 320
