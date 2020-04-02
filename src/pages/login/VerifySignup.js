@@ -63,7 +63,7 @@ const RenderForm = ({
   props
 }) => (
   <Grid item xs={12} sm={12}>
-    <Paper component='form'>
+    <form>
       <Box m={5} p={5}>
         <Typography component='h3'>
           Please re-enter your login credentials to verify your email address.
@@ -99,7 +99,7 @@ const RenderForm = ({
 
         <Box m={2}>{error}</Box>
       </Box>
-    </Paper>
+    </form>
   </Grid>
 )
 

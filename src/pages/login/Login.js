@@ -44,24 +44,22 @@ function Login (props) {
   const VerifyEmail = () => {
     return (
       <Grid container justify='center' alignItems='center'>
-        <Card>
-          <Box p={4}>
-            <Grid item>
-              <Box mb={2}>
-                Thank you. Please check your email for a verification link.
-              </Box>
-            </Grid>
-            <Grid item>
-              <Button
-                variant='outlined'
-                color='primary'
-                onClick={() => setActiveTabId(userDispatch, 0)}
-              >
-                Back to Login
-              </Button>
-            </Grid>
-          </Box>
-        </Card>
+        <Box p={4}>
+          <Grid item>
+            <Box mb={2}>
+              Thank you. Please check your email for a verification link.
+            </Box>
+          </Grid>
+          <Grid item>
+            <Button
+              variant='outlined'
+              color='primary'
+              onClick={() => setActiveTabId(userDispatch, 0)}
+            >
+              Back to Login
+            </Button>
+          </Grid>
+        </Box>
       </Grid>
     )
   }
