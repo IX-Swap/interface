@@ -1,5 +1,12 @@
 import React from 'react'
-import { HashRouter, Route, Switch, Redirect } from 'react-router-dom'
+import {
+  Router,
+  Route,
+  Switch,
+  Redirect,
+  useHistory,
+  BrowserRouter
+} from 'react-router-dom'
 
 // components
 import Layout from './Layout'
@@ -16,14 +23,14 @@ export default function App () {
   var { isAuthenticated } = useUserState()
 
   return (
-    <HashRouter>
+    <BrowserRouter>
       <Switch>
         <Route exact path='/' render={() => <Redirect to='/app/dashboard' />} />
         <PrivateRoute path='/app' component={Layout} />
         <PublicRoute path='/login/:token?' component={Login} />
         <Route component={Error} />
       </Switch>
-    </HashRouter>
+    </BrowserRouter>
   )
 
   // #######################################################################

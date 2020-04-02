@@ -218,7 +218,6 @@ export async function getDso (dispatch, dsoId) {
   } catch (err) {
     const errMsg = err.message || err.toString() || 'Loading dso failed.'
     dispatch({ type: actions.GET_DSO_FAILURE, payload: errMsg })
-    throw new Error(errMsg)
   }
 }
 
@@ -246,7 +245,6 @@ export async function saveDso (dispatch, dsoId, payload) {
   } catch (err) {
     const errMsg = err.message || err.toString() || 'Loading dso failed.'
     dispatch({ type: actions.SAVE_DSO_FAILURE, payload: errMsg })
-    throw new Error(errMsg)
   }
 }
 
@@ -274,6 +272,5 @@ export async function createDso (dispatch, payload) {
   } catch (err) {
     const errMsg = err.message || err.toString() || 'Creating dso failed.'
     dispatch({ type: actions.CREATE_DSO_FAILURE, payload: errMsg })
-    throw new Error(errMsg)
   }
 }
