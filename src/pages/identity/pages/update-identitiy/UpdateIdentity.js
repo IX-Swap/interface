@@ -37,7 +37,6 @@ import {
   useIdentityDispatch,
   IDENTITY_STATUS,
   getIdentity,
-  selectFile,
   saveIdentity,
   saveFinancials,
   saveFile
@@ -51,7 +50,6 @@ export default function UpdateIdentity (props) {
   const {
     handleSubmit,
     fields,
-    isValid,
     error,
     snackbarError,
     handleSnackbarErrorClose,

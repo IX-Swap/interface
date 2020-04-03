@@ -6,6 +6,12 @@ const UserStateContext = React.createContext()
 const UserDispatchContext = React.createContext()
 
 const initialState = {
+  user: {
+    _id: '',
+    roles: '',
+    email: '',
+    accountType: ''
+  },
   isAuthenticated: !!localStorage.getItem('id_token'),
   isLoading: false,
   isVerified: false,
@@ -36,6 +42,7 @@ export function userReducer (state, action) {
     case userActions.LOGIN_REQUEST:
       return {
         ...state,
+        user: initialState.user,
         isAuthenticated: false,
         isLoading: true,
         message: '',
@@ -44,6 +51,7 @@ export function userReducer (state, action) {
     case userActions.LOGIN_SUCCESS:
       return {
         ...state,
+        user: action.payload,
         isAuthenticated: true,
         isLoading: false,
         isVerified: true,
@@ -53,6 +61,7 @@ export function userReducer (state, action) {
     case userActions.LOGIN_FAILURE:
       return {
         ...state,
+        user: initialState.user,
         isAuthenticated: false,
         isLoading: false,
         error: action.payload
@@ -156,9 +165,16 @@ export async function loginUser (dispatch, username, password) {
     const result = await postRequest(uri, { username, password })
     const response = await result.json()
     if (result.status === 200) {
-      const token = response.data.accessToken
-      localStorage.setItem('id_token', token)
-      dispatch({ type: userActions.LOGIN_SUCCESS, payload: token })
+      const { accessToken, email, roles, _id, accountType } = response.data
+      localStorage.setItem('id_token', accessToken)
+      const newUser = {
+        _id,
+        email,
+        roles,
+        accountType
+      }
+
+      dispatch({ type: userActions.LOGIN_SUCCESS, payload: newUser })
     } else {
       dispatch({ type: userActions.LOGIN_FAILURE, payload: response.message })
     }
