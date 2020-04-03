@@ -17,7 +17,6 @@ import Identity from '../../pages/identity'
 import Invest from '../../pages/invest'
 
 import { useLayoutState } from '../../context/LayoutContext'
-
 function Layout (props) {
   const classes = useStyles()
 

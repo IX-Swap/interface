@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState } from 'react'
 import {
   Grid,
   CircularProgress,
@@ -8,7 +8,6 @@ import {
   Tab,
   TextField,
   Box,
-  Card,
   Fade
 } from '@material-ui/core'
 import { withRouter } from 'react-router-dom'
@@ -37,7 +36,7 @@ function Login (props) {
   const userDispatch = useUserDispatch()
   const userState = useUserState()
   // local
-  const [isLoading, setIsLoading] = useState(false)
+  // const [isLoading, setIsLoading] = useState(false)
   const [usernameValue, setUsernameValue] = useState('')
   const [passwordValue, setPasswordValue] = useState('')
 
@@ -276,7 +275,10 @@ function Login (props) {
             )}
             <Box mt={3} align='right'>
               <a align='right' href='https://bitwarden.com'>
-                <img src='https://www.vectorlogo.zone/logos/bitwarden/bitwarden-ar21.svg' />
+                <img
+                  src='https://www.vectorlogo.zone/logos/bitwarden/bitwarden-ar21.svg'
+                  alt='bitwarden'
+                />
               </a>
             </Box>
           </form>

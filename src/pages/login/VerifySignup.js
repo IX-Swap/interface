@@ -3,7 +3,6 @@ import {
   Grid,
   Box,
   CircularProgress,
-  Paper,
   TextField,
   Button,
   Typography
