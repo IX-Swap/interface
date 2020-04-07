@@ -11,13 +11,13 @@ import {
   Fade
 } from '@material-ui/core'
 import { withRouter } from 'react-router-dom'
-// import classnames from 'classnames'
 
 // styles
 import useStyles from './styles'
 
 // import google from '../../images/google.svg'
 import VerifySignup from './VerifySignup'
+import ResetPassword from './ResetPassword'
 
 // context
 import {
@@ -29,6 +29,8 @@ import {
   // verifySignup,
   // checkAuth
 } from '../../context/UserContext'
+
+import { IdentityProvider } from '../../context/IdentityContext'
 
 function Login (props) {
   const classes = useStyles()
@@ -67,7 +69,11 @@ function Login (props) {
   return (
     <Grid container className={classes.container}>
       <div className={classes.formContainer}>
-        {token ? (
+        {token && token === 'reset-password' ? (
+          <IdentityProvider>
+            <ResetPassword />
+          </IdentityProvider>
+        ) : token && token !== 'reset-password' ? (
           <VerifySignup token={token} props={props} />
         ) : userState.activeTabId === 2 ? (
           <VerifyEmail />
@@ -180,6 +186,7 @@ function Login (props) {
                     color='primary'
                     size='large'
                     className={classes.forgetButton}
+                    onClick={() => props.history.push('/login/reset-password')}
                   >
                     Forgot Password?
                   </Button>
