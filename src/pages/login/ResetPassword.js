@@ -36,57 +36,18 @@ function ResetPassword (props) {
   }
 
   return (
-    <Grid container>
+    <Grid container justify='center' alignItems='center'>
       {identityState?.status === 'GETTING' ? (
-        <CircularProgress />
-      ) : identityState?.resetStatus ? (
-        <Grid>
-          <form onSubmit={handleCompleteResetSubmit}>
-            <Typography comonent='p'>
-              {identityState?.passwordResetMessage}
-            </Typography>
-            <TextField
-              id='email'
-              value={email || ''}
-              onChange={e => setEmail(e.target.value)}
-              margin='normal'
-              placeholder='Email Address'
-              type='email'
-              fullWidth
-            />
-            <TextField
-              id='token'
-              value={resetToken || ''}
-              onChange={e => setResetToken(e.target.value)}
-              margin='normal'
-              placeholder='Paste Reset Token'
-              type='text'
-              fullWidth
-            />
-            <TextField
-              id='new-password'
-              value={newPassword || ''}
-              onChange={e => setNewPassword(e.target.value)}
-              margin='normal'
-              placeholder='New Password'
-              type='password'
-              fullWidth
-            />
-            <Button variant='outlined' type='submit'>
-              Complete Reset
-            </Button>
-          </form>
+        <Grid item>
+          <CircularProgress />
         </Grid>
-      ) : identityState?.resetComplete === 'request' ? (
-        <CircularProgress />
-      ) : identityState?.resetComplete !== 'success' ? (
-        <form onSubmit={handleBeginResetSubmit}>
-          <Box p={4}>
-            <Typography comonent='p'>
-              {identityState?.passwordResetMessage}
-            </Typography>
-
-            <Grid>
+      ) : identityState?.resetStatus ? (
+        <Grid item>
+          <Box p={3}>
+            <form onSubmit={handleCompleteResetSubmit}>
+              <Typography comonent='p'>
+                {identityState?.passwordResetMessage}
+              </Typography>
               <TextField
                 id='email'
                 value={email || ''}
@@ -96,23 +57,76 @@ function ResetPassword (props) {
                 type='email'
                 fullWidth
               />
-              <Button variant='outlined' type='submit'>
-                Request Reset
-              </Button>
-            </Grid>
+              <TextField
+                id='token'
+                value={resetToken || ''}
+                onChange={e => setResetToken(e.target.value)}
+                margin='normal'
+                placeholder='Paste Reset Token'
+                type='text'
+                fullWidth
+              />
+              <TextField
+                id='new-password'
+                value={newPassword || ''}
+                onChange={e => setNewPassword(e.target.value)}
+                margin='normal'
+                placeholder='New Password'
+                type='password'
+                fullWidth
+              />
+              <Box mt={4}>
+                <Button variant='outlined' type='submit'>
+                  Complete Reset
+                </Button>
+              </Box>
+            </form>
           </Box>
-        </form>
+        </Grid>
+      ) : identityState?.resetComplete === 'request' ? (
+        <Grid item>
+          <CircularProgress />
+        </Grid>
+      ) : identityState?.resetComplete !== 'success' ? (
+        <Grid item>
+          <form onSubmit={handleBeginResetSubmit}>
+            <Box>
+              <Typography comonent='p'>
+                {identityState?.passwordResetMessage}
+              </Typography>
+
+              <Grid>
+                <TextField
+                  id='email'
+                  value={email || ''}
+                  onChange={e => setEmail(e.target.value)}
+                  margin='normal'
+                  placeholder='Email Address'
+                  type='email'
+                  fullWidth
+                />
+                <Box mt={4}>
+                  <Button variant='outlined' type='submit'>
+                    Request Reset
+                  </Button>
+                </Box>
+              </Grid>
+            </Box>
+          </form>
+        </Grid>
       ) : (
-        <Grid container>
-          <Typography>{identityState?.passwordResetMessage}</Typography>
-          <Box mt={4}>
-            <Button
-              variant='outlined'
-              onClick={() => props.history.push('/login')}
-            >
-              Login
-            </Button>
-          </Box>
+        <Grid container justify='center' alignItems='center'>
+          <Grid item>
+            <center>{identityState?.passwordResetMessage}</center>
+            <Box mt={4}>
+              <Button
+                variant='outlined'
+                onClick={() => props.history.push('/login')}
+              >
+                Login
+              </Button>
+            </Box>
+          </Grid>
         </Grid>
       )}
     </Grid>
