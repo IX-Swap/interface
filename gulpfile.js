@@ -53,6 +53,8 @@ function updateCloudfrontRootObject (file) {
 }
 
 function publish () {
+  console.log(credentials)
+
   return (
     gulp
       .src('build/**/**')

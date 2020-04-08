@@ -21,3 +21,4 @@ jobs:
           AWS_BUCKET: app.mozork.com
           AWS_REGION: ap-southeast-1
           AWS_DISTRO_ID: E1GXVB58NJXJTB
+
