@@ -15,6 +15,7 @@ import Explorer from '../../pages/explorer'
 import Accounts from '../../pages/accounts'
 import Identity from '../../pages/identity'
 import Invest from '../../pages/invest'
+import Security from '../../pages/security'
 
 import { useLayoutState } from '../../context/LayoutContext'
 function Layout (props) {
@@ -40,6 +41,7 @@ function Layout (props) {
           <Route path='/app/tokens' component={Tokens} />
           <Route path='/app/identity' component={Identity} />
           <Route path='/app/invest' component={Invest} />
+          <Route path='/app/security' component={Security} />
         </Switch>
       </div>
     </div>

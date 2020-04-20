@@ -41,6 +41,7 @@ function Login (props) {
   // const [isLoading, setIsLoading] = useState(false)
   const [usernameValue, setUsernameValue] = useState('')
   const [passwordValue, setPasswordValue] = useState('')
+  const [otpValue, setOtpValue] = useState('')
 
   const VerifyEmail = () => {
     return (
@@ -156,6 +157,16 @@ function Login (props) {
                   type='password'
                   fullWidth
                 />
+                <TextField
+                  id='otpValue'
+                  variant='outlined'
+                  value={otpValue}
+                  onChange={e => setOtpValue(e.target.value)}
+                  margin='normal'
+                  placeholder='OTP Code (optional)'
+                  type='otpValue'
+                  fullWidth
+                />
                 <div className={classes.formButtons}>
                   {userState.isLoading ? (
                     <CircularProgress
@@ -172,7 +183,7 @@ function Login (props) {
                           userDispatch,
                           usernameValue,
                           passwordValue,
-                          props.history
+                          otpValue
                         )
                       }
                       variant='contained'
@@ -242,7 +253,12 @@ function Login (props) {
                   ) : (
                     <Button
                       onClick={() =>
-                        signupUser(userDispatch, usernameValue, passwordValue)
+                        signupUser(
+                          userDispatch,
+                          usernameValue,
+                          passwordValue,
+                          otpValue
+                        )
                       }
                       disabled={
                         usernameValue.length === 0 || passwordValue.length === 0
