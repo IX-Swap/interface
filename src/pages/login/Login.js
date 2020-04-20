@@ -65,7 +65,6 @@ function Login (props) {
       </Grid>
     )
   }
-
   const { token } = props.match.params || null
   return (
     <Grid container className={classes.container}>

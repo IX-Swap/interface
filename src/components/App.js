@@ -1,10 +1,10 @@
 import React from 'react'
-import { Route, Switch, Redirect, withRouter } from 'react-router-dom'
+import { Route, Switch, Redirect } from 'react-router-dom'
 import classnames from 'classnames'
 import useStyles from './Layout/styles'
 import { BrowserRouter } from 'react-router-dom'
 
-import Error from '../pages/error'
+import ErrorPage from '../pages/error'
 import Login from '../pages/login'
 
 import { useUserState } from '../context/UserContext'
@@ -28,30 +28,47 @@ function App () {
   return (
     <BrowserRouter>
       <Switch>
-        <PublicRoute path='/login' component={Login} />
-        <div>
-          <div className={classes.root}>
-            <Header />
-            <Sidebar />
-            <div
-              className={classnames(classes.content, {
-                [classes.contentShift]: layoutState.isSidebarOpened
-              })}
-            >
-              <div className={classes.fakeToolbar} />
-              <PrivateRoute path='/dashboard' component={Dashboard} />
-              <PrivateRoute path='/exchange' component={Exchange} />
-              <PrivateRoute path='/accounts' component={Accounts} />
-              <PrivateRoute path='/identity' component={Identity} />
-              <PrivateRoute path='/invest' component={Invest} />
-              <PrivateRoute path='/security' component={Security} />
-            </div>
-          </div>
-        </div>
+        <PublicRoute path='/login/:token?' component={Login} />
+        <Authenticated />
+        <PrivateRoute exact path='/error' component={ErrorPage} />
       </Switch>
     </BrowserRouter>
   )
 
+  function Authenticated (props) {
+    return (
+      <div>
+        <div className={classes.root}>
+          <Header />
+          <Sidebar />
+          <div
+            className={classnames(classes.content, {
+              [classes.contentShift]: layoutState.isSidebarOpened
+            })}
+          >
+            <div className={classes.fakeToolbar} />
+            <Route exact path='/' render={GotoDashboard} />
+            <PrivateRoute path='/dashboard' component={Dashboard} />
+            <PrivateRoute path='/exchange' component={Exchange} />
+            <PrivateRoute path='/accounts' component={Accounts} />
+            <PrivateRoute path='/identity' component={Identity} />
+            <PrivateRoute path='/invest' component={Invest} />
+            <PrivateRoute path='/security' component={Security} />
+          </div>
+        </div>
+      </div>
+    )
+  }
+  function GotoDashboard (props) {
+    return (
+      <Redirect
+        to={{
+          pathname: '/dashboard',
+          state: { from: props.location }
+        }}
+      />
+    )
+  }
   function PrivateRoute ({ component, ...rest }) {
     return (
       <Route
