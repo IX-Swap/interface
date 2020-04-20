@@ -1,15 +1,14 @@
 import React from 'react'
 import { Route, Switch, Redirect } from 'react-router-dom'
 import classnames from 'classnames'
-import useStyles from './Layout/styles'
-import { BrowserRouter } from 'react-router-dom'
+import { HashRouter } from 'react-router-dom'
 
 import ErrorPage from '../pages/error'
 import Login from '../pages/login'
 
-import { useUserState } from '../context/UserContext'
 import Header from './Header'
 import Sidebar from './Sidebar'
+import useStyles from './Layout/styles'
 
 import Dashboard from '../pages/dashboard'
 import Exchange from '../pages/exchange'
@@ -19,42 +18,45 @@ import Invest from '../pages/invest'
 import Security from '../pages/security'
 
 import { useLayoutState } from '../context/LayoutContext'
+import { useUserState } from '../context/UserContext'
+import { LayoutProvider } from '../context/LayoutContext'
 
 function App () {
   const { isAuthenticated } = useUserState()
-  const layoutState = useLayoutState()
   const classes = useStyles()
 
   return (
-    <BrowserRouter>
+    <HashRouter>
       <Switch>
         <PublicRoute path='/login/:token?' component={Login} />
-        <Authenticated />
+        <LayoutProvider>
+          <Authenticated />
+        </LayoutProvider>
         <PrivateRoute exact path='/error' component={ErrorPage} />
       </Switch>
-    </BrowserRouter>
+    </HashRouter>
   )
 
   function Authenticated (props) {
+    const layoutState = useLayoutState()
+
     return (
-      <div>
-        <div className={classes.root}>
-          <Header />
-          <Sidebar />
-          <div
-            className={classnames(classes.content, {
-              [classes.contentShift]: layoutState.isSidebarOpened
-            })}
-          >
-            <div className={classes.fakeToolbar} />
-            <Route exact path='/' render={GotoDashboard} />
-            <PrivateRoute path='/dashboard' component={Dashboard} />
-            <PrivateRoute path='/exchange' component={Exchange} />
-            <PrivateRoute path='/accounts' component={Accounts} />
-            <PrivateRoute path='/identity' component={Identity} />
-            <PrivateRoute path='/invest' component={Invest} />
-            <PrivateRoute path='/security' component={Security} />
-          </div>
+      <div className={classes.root}>
+        <Header />
+        <Sidebar />
+        <div
+          className={classnames(classes.content, {
+            [classes.contentShift]: layoutState.isSidebarOpened
+          })}
+        >
+          <div className={classes.fakeToolbar} />
+          <Route exact path='/' render={GotoDashboard} />
+          <PrivateRoute path='/dashboard' component={Dashboard} />
+          <PrivateRoute path='/exchange' component={Exchange} />
+          <PrivateRoute path='/accounts' component={Accounts} />
+          <PrivateRoute path='/identity' component={Identity} />
+          <PrivateRoute path='/invest' component={Invest} />
+          <PrivateRoute path='/security' component={Security} />
         </div>
       </div>
     )
