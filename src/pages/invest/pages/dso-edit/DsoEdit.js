@@ -42,7 +42,7 @@ export default function DsoEdit (props) {
                   <Button
                     color='default'
                     variant='outlined'
-                    onClick={() => props.history.push(`/app/invest/${dsoId}`)}
+                    onClick={() => props.history.push(`/invest/${dsoId}`)}
                   >
                     View
                   </Button>

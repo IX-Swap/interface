@@ -10,7 +10,8 @@ const initialState = {
     _id: '',
     roles: '',
     email: '',
-    accountType: ''
+    accountType: '',
+    totpSetup: ''
   },
   isAuthenticated: !!localStorage.getItem('id_token'),
   isLoading: false,
@@ -21,20 +22,36 @@ const initialState = {
 }
 
 const userActions = {
+  SET_ACTIVE_TAB_ID: 'SET_ACTIVE_TAB_ID',
+  SIGN_OUT_SUCCESS: 'SIGN_OUT_SUCCESS',
+
   LOGIN_REQUEST: 'LOGIN_REQUEST',
   LOGIN_SUCCESS: 'LOGIN_SUCCESS',
   LOGIN_FAILURE: 'LOGIN_FAILURE',
-  SIGN_OUT_SUCCESS: 'SIGN_OUT_SUCCESS',
+
   SIGN_UP_REQUEST: 'SIGN_UP_REQUEST',
   SIGN_UP_SUCCESS: 'SIGN_UP_SUCCESS',
   SIGN_UP_FAILURE: 'SIGN_UP_FAILURE',
-  SET_ACTIVE_TAB_ID: 'SET_ACTIVE_TAB_ID',
+
   VERIFY_SIGNUP_REQUEST: 'VERIFY_SIGNUP_REQUEST',
   VERIFY_SIGNUP_SUCCESS: 'VERIFY_SIGNUP_SUCCESS',
   VERIFY_SIGNUP_FAILURE: 'VERIFY_SIGNUP_FAILURE',
+
   CHECK_AUTH_REQUEST: 'CHECK_AUTH_REQUEST',
   CHECK_AUTH_SUCCESS: 'CHECK_AUTH_SUCCESS',
-  CHECK_AUTH_FAILURE: 'CHECK_AUTH_FAILURE'
+  CHECK_AUTH_FAILURE: 'CHECK_AUTH_FAILURE',
+
+  SETUP_2FA_REQUEST: 'SETUP_2FA_REQUEST',
+  SETUP_2FA_SUCCESS: 'SETUP_2FA_SUCCESS',
+  SETUP_2FA_FAILURE: 'SETUP_2FA_FAILURE',
+
+  CONFIRM_2FA_REQUEST: 'CONFIRM_2FA_REQUEST',
+  CONFIRM_2FA_SUCCESS: 'CONFIRM_2FA_SUCCESS',
+  CONFIRM_2FA_FAILURE: 'CONFIRM_2FA_FAILURE',
+
+  VERIFY_2FA_REQUEST: 'VERIFY_2FA_REQUEST',
+  VERIFY_2FA_SUCCESS: 'VERIFY_2FA_SUCCESS',
+  VERIFY_2FA_FAILURE: 'VERIFY_2FA_FAILURE'
 }
 
 export function userReducer (state, action) {
@@ -123,6 +140,28 @@ export function userReducer (state, action) {
         isVerified: false,
         error: action.payload
       }
+
+    case userActions.CONFIRM_2FA_REQUEST:
+      return {}
+    case userActions.CONFIRM_2FA_SUCCESS:
+      return {}
+    case userActions.CONFIRM_2FA_FAILURE:
+      return {}
+
+    case userActions.SETUP_2FA_REQUEST:
+      return {}
+    case userActions.SETUP_2FA_SUCCESS:
+      return {}
+    case userActions.SETUP_2FA_FAILURE:
+      return {}
+
+    case userActions.VERIFY_2FA_REQUEST:
+      return {}
+    case userActions.VERIFY_2FA_SUCCESS:
+      return {}
+    case userActions.VERIFY_2FA_FAILURE:
+      return {}
+
     default:
       throw new Error(`Unhandled action type: ${action.type}`)
   }
@@ -158,11 +197,11 @@ export function useUserDispatch () {
   return context
 }
 
-export async function loginUser (dispatch, username, password) {
+export async function loginUser (dispatch, username, password, otp) {
   dispatch({ type: userActions.LOGIN_REQUEST })
   try {
     const uri = '/identity/auth/login'
-    const result = await postRequest(uri, { username, password })
+    const result = await postRequest(uri, { username, password, otp })
     const response = await result.json()
     if (result.status === 200) {
       const { accessToken, email, roles, _id, accountType } = response.data

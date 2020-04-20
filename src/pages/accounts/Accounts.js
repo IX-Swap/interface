@@ -18,7 +18,7 @@ function Explorer (props) {
               Blocks and Transactions
               <ul>
                 <li>
-                  <a href='/#/app/accounts/transfer-token'>BlockInfo</a>
+                  <a href='/accounts/transfer-token'>BlockInfo</a>
                 </li>
               </ul>
             </Grid>
@@ -26,7 +26,7 @@ function Explorer (props) {
               Wallets
               <ul>
                 <li>
-                  <a href='/#/app/accounts/wallet-create'>Create Seed Phrase</a>
+                  <a href='/accounts/wallet-create'>Create Seed Phrase</a>
                 </li>
               </ul>
             </Grid>
@@ -36,7 +36,7 @@ function Explorer (props) {
       <Switch>
         <Route
           eact
-          path='/app/accounts/wallet-create'
+          path='/accounts/wallet-create'
           component={() => (
             <WalletCreateProvider>
               <WalletCreateComponent />

@@ -15,6 +15,7 @@ import Explorer from '../../pages/explorer'
 import Accounts from '../../pages/accounts'
 import Identity from '../../pages/identity'
 import Invest from '../../pages/invest'
+import Security from '../../pages/security'
 
 import { useLayoutState } from '../../context/LayoutContext'
 function Layout (props) {
@@ -32,14 +33,15 @@ function Layout (props) {
       >
         <div className={classes.fakeToolbar} />
         <Switch>
-          <Route path='/app/dashboard' component={Dashboard} />
-          <Route path='/app/developer-panel' component={DeveloperPanel} />
-          <Route path='/app/exchange' component={Exchange} />
-          <Route path='/app/explorer' component={Explorer} />
-          <Route path='/app/accounts' component={Accounts} />
-          <Route path='/app/tokens' component={Tokens} />
-          <Route path='/app/identity' component={Identity} />
-          <Route path='/app/invest' component={Invest} />
+          <Route path='/1/dashboard' component={Dashboard} />
+          <Route path='/1/developer-panel' component={DeveloperPanel} />
+          <Route path='/1/exchange' component={Exchange} />
+          <Route path='/1/explorer' component={Explorer} />
+          <Route path='/1/accounts' component={Accounts} />
+          <Route path='/1/tokens' component={Tokens} />
+          <Route path='/1/identity' component={Identity} />
+          <Route path='/1/invest' component={Invest} />
+          <Route path='/1/security' component={Security} />
         </Switch>
       </div>
     </div>
