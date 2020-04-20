@@ -244,10 +244,9 @@ export function setActiveTabId (dispatch, activeTabId) {
   dispatch({ type: userActions.SET_ACTIVE_TAB_ID, payload: activeTabId })
 }
 
-export function signOut (dispatch, history) {
+export function signOut (dispatch) {
   localStorage.removeItem('id_token')
   dispatch({ type: userActions.SIGN_OUT_SUCCESS })
-  history.push('/login')
 }
 
 export async function verifySignup (dispatch, token, credentials) {

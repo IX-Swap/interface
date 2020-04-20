@@ -157,8 +157,7 @@ const useAccreditationFormLogic = () => {
 
   const fields = {
     selfAccreditedInvestor: createFieldProps('selfAccreditedInvestor', {
-      options: YES_OR_NO_OPTS,
-      required: true
+      options: YES_OR_NO_OPTS
     })
   }
 
