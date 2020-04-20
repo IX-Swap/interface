@@ -32,7 +32,7 @@ export default function Header (props) {
   var [profileMenu, setProfileMenu] = useState(null)
 
   return (
-    <AppBar position='fixed' className={classes.appBar}>
+    <AppBar position='fixed' elevation={1} className={classes.appBar}>
       <Toolbar className={classes.toolbar}>
         <IconButton
           color='inherit'
