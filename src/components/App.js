@@ -1,29 +1,66 @@
 import React from 'react'
-import { Route, Switch, Redirect, HashRouter } from 'react-router-dom'
+import {
+  Route,
+  Switch,
+  Redirect,
+  BrowserRouter,
+  useHistory
+} from 'react-router-dom'
+import classnames from 'classnames'
+import useStyles from './Layout/styles'
 
-// components
-import Layout from './Layout'
-
-// pages
 import Error from '../pages/error'
 import Login from '../pages/login'
 
-// context
 import { useUserState } from '../context/UserContext'
+import Header from './Header'
+import Sidebar from './Sidebar'
 
-export default function App () {
+import Dashboard from '../pages/dashboard'
+import DeveloperPanel from '../pages/developer-panel'
+import Tokens from '../pages/tokens'
+import Exchange from '../pages/exchange'
+import Explorer from '../pages/explorer'
+import Accounts from '../pages/accounts'
+import Identity from '../pages/identity'
+import Invest from '../pages/invest'
+import Security from '../pages/security'
+
+import { useLayoutState } from '../context/LayoutContext'
+
+function App () {
   // global
-  var { isAuthenticated } = useUserState()
+  const { isAuthenticated } = useUserState()
+  const layoutState = useLayoutState()
+  const classes = useStyles()
+  const history = useHistory()
 
   return (
-    <HashRouter>
-      <Switch>
-        <Route exact path='/' render={() => <Redirect to='/app/dashboard' />} />
-        <PrivateRoute path='/app' component={Layout} />
-        <PublicRoute exact path='/login/:token?' component={Login} />
-        <Route component={Error} />
-      </Switch>
-    </HashRouter>
+    <BrowserRouter>
+      return (
+      <div className={classes.root}>
+        <Header history={history} />
+        <Sidebar />
+        <div
+          className={classnames(classes.content, {
+            [classes.contentShift]: layoutState.isSidebarOpened
+          })}
+        >
+          <div className={classes.fakeToolbar} />
+          <Switch>
+            <PrivateRoute path='/dashboard' component={Dashboard} />
+            <PrivateRoute path='/developer-panel' component={DeveloperPanel} />
+            <PrivateRoute path='/exchange' component={Exchange} />
+            <PrivateRoute path='/explorer' component={Explorer} />
+            <PrivateRoute path='/accounts' component={Accounts} />
+            <PrivateRoute path='/tokens' component={Tokens} />
+            <PrivateRoute path='/identity' component={Identity} />
+            <PrivateRoute path='/invest' component={Invest} />
+            <PrivateRoute path='/security' component={Security} />
+          </Switch>
+        </div>
+      </div>
+    </BrowserRouter>
   )
 
   // #######################################################################
@@ -51,7 +88,7 @@ export default function App () {
         {...rest}
         render={props =>
           isAuthenticated ? (
-            <Redirect to={{ pathname: '/app/dashboard' }} />
+            <Redirect to={{ pathname: '/dashboard' }} />
           ) : (
             React.createElement(component, props)
           )
@@ -60,3 +97,5 @@ export default function App () {
     )
   }
 }
+
+export default App

@@ -42,7 +42,7 @@ function ResetPassword (props) {
           <CircularProgress />
         </Grid>
       ) : identityState?.resetStatus ? (
-        <Grid item>
+        <Grid item md={5} lg={5}>
           <Box p={3}>
             <form onSubmit={handleCompleteResetSubmit}>
               <Typography comonent='p'>
@@ -88,31 +88,33 @@ function ResetPassword (props) {
           <CircularProgress />
         </Grid>
       ) : identityState?.resetComplete !== 'success' ? (
-        <Grid item>
-          <form onSubmit={handleBeginResetSubmit}>
-            <Box>
-              <Typography comonent='p'>
-                {identityState?.passwordResetMessage}
-              </Typography>
+        <Grid item xs={12} sm={8} md={5} lg={5}>
+          <Box p={3}>
+            <form onSubmit={handleBeginResetSubmit}>
+              <Box>
+                <Typography comonent='p'>
+                  {identityState?.passwordResetMessage}
+                </Typography>
 
-              <Grid>
-                <TextField
-                  id='email'
-                  value={email || ''}
-                  onChange={e => setEmail(e.target.value)}
-                  margin='normal'
-                  placeholder='Email Address'
-                  type='email'
-                  fullWidth
-                />
-                <Box mt={4}>
-                  <Button variant='outlined' type='submit'>
-                    Request Reset
-                  </Button>
-                </Box>
-              </Grid>
-            </Box>
-          </form>
+                <Grid>
+                  <TextField
+                    id='email'
+                    value={email || ''}
+                    onChange={e => setEmail(e.target.value)}
+                    margin='normal'
+                    placeholder='Email Address'
+                    type='email'
+                    fullWidth
+                  />
+                  <Box mt={4}>
+                    <Button variant='outlined' type='submit'>
+                      Request Reset
+                    </Button>
+                  </Box>
+                </Grid>
+              </Box>
+            </form>
+          </Box>
         </Grid>
       ) : (
         <Grid container justify='center' alignItems='center'>

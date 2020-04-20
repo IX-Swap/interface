@@ -69,34 +69,33 @@ function Login (props) {
   const { token } = props.match.params || null
   return (
     <Grid container className={classes.container}>
-      <div className={classes.formContainer}>
-        {token && token === 'reset-password' ? (
-          <IdentityProvider>
-            <ResetPassword />
-          </IdentityProvider>
-        ) : token && token !== 'reset-password' ? (
-          <VerifySignup token={token} props={props} />
-        ) : userState.activeTabId === 2 ? (
-          <VerifyEmail />
-        ) : (
-          <form className={classes.form}>
-            <Tabs
-              value={userState.activeTabId}
-              onChange={(e, id) => setActiveTabId(userDispatch, id)}
-              indicatorColor='primary'
-              textColor='primary'
-              centered
-            >
-              <Tab label='Login' classes={{ root: classes.tab }} />
-              <Tab label='New User' classes={{ root: classes.tab }} />
-            </Tabs>
-            {userState.activeTabId === 0 && (
-              <Box mt={3}>
-                {/* <Typography variant="h1" className={classes.greeting}>
+      {token && token === 'reset-password' ? (
+        <IdentityProvider>
+          <ResetPassword />
+        </IdentityProvider>
+      ) : token && token !== 'reset-password' ? (
+        <VerifySignup token={token} props={props} />
+      ) : userState.activeTabId === 2 ? (
+        <VerifyEmail />
+      ) : (
+        <form className={classes.form}>
+          <Tabs
+            value={userState.activeTabId}
+            onChange={(e, id) => setActiveTabId(userDispatch, id)}
+            indicatorColor='primary'
+            textColor='primary'
+            centered
+          >
+            <Tab label='Login' classes={{ root: classes.tab }} />
+            <Tab label='New User' classes={{ root: classes.tab }} />
+          </Tabs>
+          {userState.activeTabId === 0 && (
+            <Box mt={3}>
+              {/* <Typography variant="h1" className={classes.greeting}>
                 Good Morning, User
               </Typography> */}
 
-                {/* <Button size='large' className={classes.googleButton}>
+              {/* <Button size='large' className={classes.googleButton}>
                   <img
                     src={google}
                     alt='google'
@@ -104,183 +103,171 @@ function Login (props) {
                   />
                   &nbsp;Sign in with Google
                 </Button> */}
-                {/* <div className={classes.formDividerContainer}>
+              {/* <div className={classes.formDividerContainer}>
                   <div className={classes.formDivider} />
                   <Typography className={classes.formDividerWord}>
                     or
                   </Typography>
                   <div className={classes.formDivider} />
                 </div> */}
-                <Fade in={userState.error !== ''}>
-                  <Typography
-                    color='secondary'
-                    className={classes.errorMessage}
-                  >
-                    {userState.error}
-                  </Typography>
-                </Fade>
-                <Fade in={userState.message !== ''}>
-                  <Typography
-                    color='secondary'
-                    className={classes.errorMessage}
-                  >
-                    {userState.message}
-                  </Typography>
-                </Fade>
-                <TextField
-                  id='email'
-                  InputProps={{
-                    classes: {
-                      underline: classes.textFieldUnderline,
-                      input: classes.textField
-                    }
-                  }}
-                  value={usernameValue}
-                  onChange={e => setUsernameValue(e.target.value)}
-                  margin='normal'
-                  placeholder='Email Address'
-                  type='email'
-                  fullWidth
-                />
-                <TextField
-                  id='password'
-                  InputProps={{
-                    classes: {
-                      underline: classes.textFieldUnderline,
-                      input: classes.textField
-                    }
-                  }}
-                  value={passwordValue}
-                  onChange={e => setPasswordValue(e.target.value)}
-                  margin='normal'
-                  placeholder='Password'
-                  type='password'
-                  fullWidth
-                />
-                <TextField
-                  id='otpValue'
-                  variant='outlined'
-                  value={otpValue}
-                  onChange={e => setOtpValue(e.target.value)}
-                  margin='normal'
-                  placeholder='OTP Code (optional)'
-                  type='otpValue'
-                  fullWidth
-                />
-                <div className={classes.formButtons}>
-                  {userState.isLoading ? (
-                    <CircularProgress
-                      size={26}
-                      className={classes.loginLoader}
-                    />
-                  ) : (
-                    <Button
-                      disabled={
-                        usernameValue.length === 0 || passwordValue.length === 0
-                      }
-                      onClick={() =>
-                        loginUser(
-                          userDispatch,
-                          usernameValue,
-                          passwordValue,
-                          otpValue
-                        )
-                      }
-                      variant='contained'
-                      color='primary'
-                      size='large'
-                    >
-                      Login
-                    </Button>
-                  )}
+              <Fade in={userState.error !== ''}>
+                <Typography color='secondary' className={classes.errorMessage}>
+                  {userState.error}
+                </Typography>
+              </Fade>
+              <Fade in={userState.message !== ''}>
+                <Typography color='secondary' className={classes.errorMessage}>
+                  {userState.message}
+                </Typography>
+              </Fade>
+              <TextField
+                id='email'
+                InputProps={{
+                  classes: {
+                    underline: classes.textFieldUnderline,
+                    input: classes.textField
+                  }
+                }}
+                value={usernameValue}
+                onChange={e => setUsernameValue(e.target.value)}
+                margin='normal'
+                placeholder='Email Address'
+                type='email'
+                fullWidth
+              />
+              <TextField
+                id='password'
+                InputProps={{
+                  classes: {
+                    underline: classes.textFieldUnderline,
+                    input: classes.textField
+                  }
+                }}
+                value={passwordValue}
+                onChange={e => setPasswordValue(e.target.value)}
+                margin='normal'
+                placeholder='Password'
+                type='password'
+                fullWidth
+              />
+              <TextField
+                id='otpValue'
+                variant='outlined'
+                value={otpValue}
+                onChange={e => setOtpValue(e.target.value)}
+                margin='normal'
+                placeholder='OTP Code (optional)'
+                type='otpValue'
+                fullWidth
+              />
+              <div className={classes.formButtons}>
+                {userState.isLoading ? (
+                  <CircularProgress size={26} className={classes.loginLoader} />
+                ) : (
                   <Button
+                    disabled={
+                      usernameValue.length === 0 || passwordValue.length === 0
+                    }
+                    onClick={() =>
+                      loginUser(
+                        userDispatch,
+                        usernameValue,
+                        passwordValue,
+                        otpValue
+                      )
+                    }
+                    variant='contained'
                     color='primary'
                     size='large'
-                    className={classes.forgetButton}
-                    onClick={() => props.history.push('/login/reset-password')}
                   >
-                    Forgot Password?
+                    Login
                   </Button>
-                </div>
-              </Box>
-            )}
-            {userState.activeTabId === 1 && (
-              <>
-                <Typography variant='h4' className={classes.greeting}>
-                  Create Account
+                )}
+                <Button
+                  color='primary'
+                  size='large'
+                  className={classes.forgetButton}
+                  onClick={() => props.history.push('/login/reset-password')}
+                >
+                  Forgot Password?
+                </Button>
+              </div>
+            </Box>
+          )}
+          {userState.activeTabId === 1 && (
+            <>
+              <Typography variant='h4' className={classes.greeting}>
+                Create Account
+              </Typography>
+              <Fade in={userState.error !== ''}>
+                <Typography color='secondary' className={classes.errorMessage}>
+                  {userState.error}
                 </Typography>
-                <Fade in={userState.error !== ''}>
-                  <Typography
-                    color='secondary'
-                    className={classes.errorMessage}
+              </Fade>
+              <TextField
+                id='email'
+                InputProps={{
+                  classes: {
+                    underline: classes.textFieldUnderline,
+                    input: classes.textField
+                  }
+                }}
+                value={usernameValue}
+                onChange={e => setUsernameValue(e.target.value)}
+                margin='normal'
+                placeholder='Email Address'
+                type='email'
+                fullWidth
+              />
+              <TextField
+                id='password'
+                InputProps={{
+                  classes: {
+                    underline: classes.textFieldUnderline,
+                    input: classes.textField
+                  }
+                }}
+                value={passwordValue}
+                onChange={e => setPasswordValue(e.target.value)}
+                margin='normal'
+                placeholder='Password'
+                type='password'
+                fullWidth
+              />
+              <div className={classes.creatingButtonContainer}>
+                {userState.isLoading ? (
+                  <CircularProgress size={26} />
+                ) : (
+                  <Button
+                    onClick={() =>
+                      signupUser(
+                        userDispatch,
+                        usernameValue,
+                        passwordValue,
+                        otpValue
+                      )
+                    }
+                    disabled={
+                      usernameValue.length === 0 || passwordValue.length === 0
+                    }
+                    size='large'
+                    variant='contained'
+                    color='primary'
+                    fullWidth
+                    // className={classes.createAccountButton}
                   >
-                    {userState.error}
-                  </Typography>
-                </Fade>
-                <TextField
-                  id='email'
-                  InputProps={{
-                    classes: {
-                      underline: classes.textFieldUnderline,
-                      input: classes.textField
-                    }
-                  }}
-                  value={usernameValue}
-                  onChange={e => setUsernameValue(e.target.value)}
-                  margin='normal'
-                  placeholder='Email Address'
-                  type='email'
-                  fullWidth
-                />
-                <TextField
-                  id='password'
-                  InputProps={{
-                    classes: {
-                      underline: classes.textFieldUnderline,
-                      input: classes.textField
-                    }
-                  }}
-                  value={passwordValue}
-                  onChange={e => setPasswordValue(e.target.value)}
-                  margin='normal'
-                  placeholder='Password'
-                  type='password'
-                  fullWidth
-                />
-                <div className={classes.creatingButtonContainer}>
-                  {userState.isLoading ? (
-                    <CircularProgress size={26} />
-                  ) : (
-                    <Button
-                      onClick={() =>
-                        signupUser(
-                          userDispatch,
-                          usernameValue,
-                          passwordValue,
-                          otpValue
-                        )
-                      }
-                      disabled={
-                        usernameValue.length === 0 || passwordValue.length === 0
-                      }
-                      size='large'
-                      variant='contained'
-                      color='primary'
-                      fullWidth
-                      // className={classes.createAccountButton}
-                    >
-                      CREATE
-                    </Button>
-                  )}
-                </div>
-                {/* <div className={classes.formDividerContainer}>
+                    CREATE
+                  </Button>
+                )}
+              </div>
+              {/* <div className={classes.formDividerContainer}>
                   <div className={classes.formDivider} />
                   <Typography className={classes.formDividerWord}>
                     or
                   </Typography>
                   <div className={classes.formDivider} />
                 </div> */}
-                {/* <Button
+              {/* <Button
                   size='large'
                   className={classnames(
                     classes.googleButton,
@@ -294,22 +281,21 @@ function Login (props) {
                   />
                   &nbsp;Sign in with Google
                 </Button> */}
-              </>
-            )}
-            <Box mt={3} align='right'>
-              <a align='right' href='https://bitwarden.com'>
-                <img
-                  src='https://www.vectorlogo.zone/logos/bitwarden/bitwarden-ar21.svg'
-                  alt='bitwarden'
-                />
-              </a>
-            </Box>
-          </form>
-        )}
-        <Typography color='primary' className={classes.copyright}>
-          © 2020 InvestaX, All rights reserved.
-        </Typography>
-      </div>
+            </>
+          )}
+          <Box mt={3} align='right'>
+            <a align='right' href='https://bitwarden.com'>
+              <img
+                src='https://www.vectorlogo.zone/logos/bitwarden/bitwarden-ar21.svg'
+                alt='bitwarden'
+              />
+            </a>
+          </Box>
+        </form>
+      )}
+      <Typography color='primary' className={classes.copyright}>
+        © 2020 InvestaX, All rights reserved.
+      </Typography>
     </Grid>
   )
 }

@@ -33,54 +33,54 @@ const structure = [
   {
     id: 0,
     label: 'Dashboard',
-    link: '/app/dashboard',
+    link: '/dashboard',
     icon: <DashboardIcon />
   },
   {
     id: 1,
     label: 'Invest',
-    link: '/app/invest',
+    link: '/invest',
     icon: <PieChartIcon />
   },
   {
     id: 2,
     label: 'Trade',
-    link: '/app/trade',
+    link: '/trade',
     icon: <ShowChartIcon />
   },
-  // { id: 2, label: 'Secondary', link: '/app/secondary', icon: <ChartIcon /> },
+  // { id: 2, label: 'Secondary', link: '/secondary', icon: <ChartIcon /> },
   // {
   //   id: 3,
   //   label: 'Custody',
-  //   link: '/app/notifications',
+  //   link: '/notifications',
   //   icon: <LockIcon />
   // },
   {
     id: 3,
     label: 'Accounts',
-    link: '/app/accounts',
+    link: '/accounts',
     icon: <AccountBalanceIcon />,
     children: [
-      { label: 'Cash', link: '/app/cash' },
-      { label: 'Assets', link: '/app/assets' },
-      { label: 'Reports', link: '/app/reports' }
+      { label: 'Cash', link: '/cash' },
+      { label: 'Assets', link: '/assets' },
+      { label: 'Reports', link: '/reports' }
     ]
   },
 
   {
     id: 4,
     label: 'Settings',
-    link: '/app/settings',
+    link: '/settings',
     icon: <SettingsIcon />,
     children: [
-      { label: 'Identity', link: '/app/identity', icon: <PermIdentityIcon /> },
-      { label: 'Security', link: '/app/security', icon: <SecurityIcon /> }
+      { label: 'Identity', link: '/identity', icon: <PermIdentityIcon /> },
+      { label: 'Security', link: '/security', icon: <SecurityIcon /> }
     ]
   },
   {
     id: 5,
     label: 'Support',
-    link: '/app/primary',
+    link: '/primary',
     icon: <HelpIcon />
   },
   { id: 6, type: 'divider' }

@@ -35,9 +35,7 @@ export default function DsoView (props) {
               <Grid container>
                 <Grid item lg={12}>
                   <Button
-                    onClick={() =>
-                      props.history.push(`/app/invest/${dsoId}/edit`)
-                    }
+                    onClick={() => props.history.push(`/invest/${dsoId}/edit`)}
                   >
                     Edit DSO
                   </Button>

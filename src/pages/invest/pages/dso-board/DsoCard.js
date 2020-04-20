@@ -58,7 +58,7 @@ export default function DsoCard (props) {
             variant='contained'
             color='default'
             size='small'
-            onClick={() => props.history.push(`/app/invest/${dso._id}`)}
+            onClick={() => props.history.push(`/invest/${dso._id}`)}
           >
             View
           </Button>
