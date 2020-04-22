@@ -146,7 +146,7 @@ export async function saveAccreditation (dispatch, accreditation) {
   dispatch({ type: actions.SAVE_ACCREDITATION_REQUEST })
 
   try {
-    const uri = '/identity/profile/individual/accreditation'
+    const uri = '/identity/profile/individual/accreditations'
     const result = await putRequest(uri, accreditation)
     const response = await result.json()
     if (result.status === 200) {

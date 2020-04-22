@@ -154,7 +154,7 @@ const useFinancialsFormLogic = () => {
   // saves identity data on form submit
   const handleSubmit = rhfHandleSubmit(newFinancials => {
     saveFinancials(idDispatch, newFinancials)
-      .then(() => history.push('/app/identity/accreditation-steps/1'))
+      .then(() => history.push('/identity/accreditation-steps/1'))
       .catch(e => setSnackbarError(e.message || e.toString()))
   })
 
