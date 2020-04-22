@@ -161,7 +161,7 @@ const useAccreditationFormLogic = () => {
 
     const newAccreditation = { accreditationDetails }
     saveAccreditation(idDispatch, newAccreditation)
-      .then(() => history.push('/app/identity/accreditation-steps/3'))
+      .then(() => history.push('/identity/accreditation-steps/3'))
       .catch(e => setSnackbarError(e.message || e.toString()))
   })
 

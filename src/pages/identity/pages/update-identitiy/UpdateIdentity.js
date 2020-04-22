@@ -82,7 +82,7 @@ export default function UpdateIdentity (props) {
                   <Button
                     variant='outlined'
                     color='primary'
-                    onClick={() => props.history.push('/app/identity')}
+                    onClick={() => props.history.push('/identity')}
                   >
                     Cancel
                   </Button>
@@ -465,7 +465,7 @@ export default function UpdateIdentity (props) {
                   <Button
                     variant='outlined'
                     color='primary'
-                    onClick={() => props.history.push('/app/identity')}
+                    onClick={() => props.history.push('/identity')}
                   >
                     Cancel
                   </Button>
@@ -641,7 +641,7 @@ const useUpdateIdentityLogic = () => {
         : Promise.resolve(),
       ...saveChangedFiles(idDispatch, formData, id.identity._id)
     ])
-      .then(() => history.push('/app/identity'))
+      .then(() => history.push('/identity'))
       .catch(e => {
         setSnackbarError(e.message || e.toString())
         setIsSaving(false)

@@ -32,7 +32,7 @@ export default function IdentityDashboard () {
       {identityProgress.percentage !== 100 && (
         <ProgressCard
           completed
-          to={`/app/identity/identification-steps/${identityProgress.activeStep +
+          to={`/identity/identification-steps/${identityProgress.activeStep +
             2}`}
           title='Identification'
           component={IdentityProgress}
@@ -43,7 +43,7 @@ export default function IdentityDashboard () {
         {financialsProgress.percentage !== 100 && (
           <ProgressCard
             completed
-            to={`/app/identity/financials-steps/${financialsProgress.activeStep +
+            to={`/identity/financials-steps/${financialsProgress.activeStep +
               2}`}
             title='Financials'
             component={FinancialsProgress}
@@ -55,7 +55,7 @@ export default function IdentityDashboard () {
         {accreditationProgress.percentage !== 100 && (
           <ProgressCard
             completed
-            to={`/app/identity/accreditation-steps/${accreditationProgress.activeStep +
+            to={`/identity/accreditation-steps/${accreditationProgress.activeStep +
               2}`}
             title='Accreditation'
             component={AccreditationProgress}

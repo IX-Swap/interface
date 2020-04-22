@@ -4,6 +4,7 @@ import CloudDownloadIcon from '@material-ui/icons/CloudDownload'
 import {
   Grid,
   Card,
+  Divider,
   Typography,
   Box,
   CircularProgress,
@@ -48,73 +49,80 @@ export default function IdentityOverview ({ areAllCompleted }) {
 
   return (
     <Card>
-      <Box p={3}>
-        {!isReady ? (
-          <Box p={3} display='flex' justifyContent='center'>
-            <CircularProgress size={48} />
-          </Box>
-        ) : shouldCreateNew ? (
-          <Box display='flex' justifyContent='center'>
-            <Box
-              pt={{ xs: 6, md: 12 }}
-              pb={{ xs: 8, md: 12 }}
-              width='100%'
-              maxWidth='18em'
-            >
-              Please select which type of account you would like to create?
-              <Box mt={3}>
-                <Link
-                  to='/app/identity/identification-steps/1'
-                  style={{ textDecoration: 'none' }}
+      {!isReady ? (
+        <Box p={3} display='flex' justifyContent='center'>
+          <CircularProgress size={48} />
+        </Box>
+      ) : shouldCreateNew ? (
+        <Box display='flex' justifyContent='center'>
+          <Box
+            pt={{ xs: 6, md: 12 }}
+            pb={{ xs: 8, md: 12 }}
+            width='100%'
+            maxWidth='18em'
+          >
+            Please select which type of account you would like to create?
+            <Box mt={3}>
+              <Link
+                to='/identity/identification-steps/1'
+                style={{ textDecoration: 'none' }}
+              >
+                <Button
+                  as='div'
+                  fullWidth
+                  size='large'
+                  color='primary'
+                  variant='contained'
                 >
-                  <Button
-                    as='div'
-                    fullWidth
-                    size='large'
-                    color='primary'
-                    variant='contained'
-                  >
-                    Individual
-                  </Button>
-                </Link>
-              </Box>
-              <Box mt={3}>
-                <a href='#/' style={{ textDecoration: 'none' }}>
-                  <Button
-                    as='div'
-                    fullWidth
-                    size='large'
-                    color='primary'
-                    variant='contained'
-                  >
-                    Corporate
-                  </Button>
-                </a>
-              </Box>
+                  Individual
+                </Button>
+              </Link>
+            </Box>
+            <Box mt={3}>
+              <a href='#/' style={{ textDecoration: 'none' }}>
+                <Button
+                  as='div'
+                  fullWidth
+                  size='large'
+                  color='primary'
+                  variant='contained'
+                >
+                  Corporate
+                </Button>
+              </a>
             </Box>
           </Box>
-        ) : (
-          <>
-            <Box display='flex'>
-              <Box flex='1 1 auto'>
-                <Typography component='h1' variant='h3'>
-                  My Identity
+        </Box>
+      ) : (
+        <>
+          <Box display='flex'>
+            <Box flex='1 1 auto' mt={3}>
+              <Box mb={2} p={3}>
+                <Typography component='h1' variant='h2'>
+                  {`${identity.firstName} ${identity.middleName} ${identity.lastName}`}
                 </Typography>
               </Box>
-              {areAllCompleted && (
-                <Button
-                  variant='outlined'
-                  color='primary'
-                  to='/app/identity/edit'
-                  component={Link}
-                >
-                  Update
-                </Button>
-              )}
+
+              <Box>
+                <Divider />
+              </Box>
             </Box>
 
+            {areAllCompleted && (
+              <Button
+                variant='outlined'
+                color='primary'
+                to='/identity/edit'
+                component={Link}
+              >
+                Update
+              </Button>
+            )}
+          </Box>
+
+          <Box p={3}>
             {/* Names Row */}
-            <Box component='section' mt={3}>
+            {/* <Box component='section' mt={3}>
               <Grid container spacing={1}>
                 <Grid item xs={12} sm={4}>
                   <StaticTextField
@@ -135,7 +143,7 @@ export default function IdentityOverview ({ areAllCompleted }) {
                   />
                 </Grid>
               </Grid>
-            </Box>
+            </Box> */}
 
             {/* Identity (3) Columns */}
             <Box component='section' mt={3}>
@@ -442,9 +450,9 @@ export default function IdentityOverview ({ areAllCompleted }) {
                 </Grid>
               </Grid>
             </Box>
-          </>
-        )}
-      </Box>
+          </Box>
+        </>
+      )}
     </Card>
   )
 }
