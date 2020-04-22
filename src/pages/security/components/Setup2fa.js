@@ -1,5 +1,5 @@
 import React from 'react'
-import { Grid, TextField, Card, Box, Typography } from '@material-ui/core'
+import { Grid, TextField, Box } from '@material-ui/core'
 
 function Setup2fa (props) {
   return (
