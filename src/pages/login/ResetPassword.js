@@ -88,7 +88,7 @@ function ResetPassword (props) {
           <CircularProgress />
         </Grid>
       ) : identityState?.resetComplete !== 'success' ? (
-        <Grid item xs={12} sm={8} md={5} lg={5}>
+        <Grid item xs={12} sm={8} md={3} lg={3}>
           <Box p={3}>
             <form onSubmit={handleBeginResetSubmit}>
               <Box>
