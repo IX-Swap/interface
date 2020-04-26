@@ -10,7 +10,8 @@ export default function UploadSection ({
   onChange,
   required,
   value,
-  triggerValidation
+  triggerValidation,
+  buttonLabel
 }) {
   const fileInputRef = useRef()
 
@@ -27,13 +28,11 @@ export default function UploadSection ({
   const handleChange = useCallback(() => {
     const newFileName = fileInputRef.current.files?.[0]?.name
     if (!newFileName) return
-
     onChange(fileInputRef.current.files)
     triggerValidation(name)
   }, [onChange]) // eslint-disable-line react-hooks/exhaustive-deps
 
-  const fileName =
-    value?.[0]?.name || value?.fileName // file name when loading data from upload // file name when loading data from endpoint
+  const fileName = fileInputRef.current?.files?.[0]?.name || value?.fileName // file name when loading data from upload // file name when loading data from endpoint
 
   return (
     <Box display={['block', 'flex']} alignItems='center'>
@@ -50,7 +49,7 @@ export default function UploadSection ({
       </Box>
       <Box pl={[0, 3]} pt={[3, 0]}>
         <Button variant='outlined' color='primary' onClick={handleClick}>
-          Choose&nbsp;File
+          {buttonLabel ? buttonLabel : 'Choose File'}
         </Button>
         <input ref={fileInputRef} hidden type='file' onChange={handleChange} />
       </Box>

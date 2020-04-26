@@ -5,17 +5,25 @@ import { postRequest, getRequest } from './httpRequests'
 const UserStateContext = React.createContext()
 const UserDispatchContext = React.createContext()
 
+export const USER_STATUS = {
+  INIT: 'INIT',
+  IDLE: 'IDLE',
+  GETTING: 'GETTING',
+  SAVING: 'SAVING'
+}
 const initialState = {
   user: {
-    _id: '',
+    userId: '',
     roles: '',
     email: '',
     accountType: '',
-    totpSetup: ''
+    totpSetup: '',
+    totpConfirmed: '',
+    verified: ''
   },
+  status: USER_STATUS.INIT,
   isAuthenticated: !!localStorage.getItem('id_token'),
   isLoading: false,
-  isVerified: false,
   message: '',
   activeTabId: 0,
   error: ''
@@ -24,6 +32,10 @@ const initialState = {
 const userActions = {
   SET_ACTIVE_TAB_ID: 'SET_ACTIVE_TAB_ID',
   SIGN_OUT_SUCCESS: 'SIGN_OUT_SUCCESS',
+
+  GET_AUTH_ME_REQUEST: 'GET_AUTH_ME_REQUEST',
+  GET_AUTH_ME_SUCCESS: 'GET_AUTH_ME_SUCCESS',
+  GET_AUTH_ME_FAILURE: 'GET_AUTH_ME_FAILURE',
 
   LOGIN_REQUEST: 'LOGIN_REQUEST',
   LOGIN_SUCCESS: 'LOGIN_SUCCESS',
@@ -36,10 +48,6 @@ const userActions = {
   VERIFY_SIGNUP_REQUEST: 'VERIFY_SIGNUP_REQUEST',
   VERIFY_SIGNUP_SUCCESS: 'VERIFY_SIGNUP_SUCCESS',
   VERIFY_SIGNUP_FAILURE: 'VERIFY_SIGNUP_FAILURE',
-
-  CHECK_AUTH_REQUEST: 'CHECK_AUTH_REQUEST',
-  CHECK_AUTH_SUCCESS: 'CHECK_AUTH_SUCCESS',
-  CHECK_AUTH_FAILURE: 'CHECK_AUTH_FAILURE',
 
   SETUP_2FA_REQUEST: 'SETUP_2FA_REQUEST',
   SETUP_2FA_SUCCESS: 'SETUP_2FA_SUCCESS',
@@ -81,6 +89,29 @@ export function userReducer (state, action) {
         user: initialState.user,
         isAuthenticated: false,
         isLoading: false,
+        error: action.payload
+      }
+    case userActions.GET_AUTH_ME_REQUEST:
+      return {
+        ...state,
+        user: action.payload,
+        status: USER_STATUS.GETTING,
+        isLoading: true,
+        error: null
+      }
+    case userActions.GET_AUTH_ME_SUCCESS:
+      return {
+        ...state,
+        status: USER_STATUS.IDLE,
+        user: action.payload,
+        isLoading: false,
+        error: null
+      }
+    case userActions.GET_AUTH_ME_FAILURE:
+      return {
+        ...state,
+        status: USER_STATUS.IDLE,
+        user: initialState.user,
         error: action.payload
       }
     case userActions.SIGN_OUT_SUCCESS:
@@ -270,15 +301,18 @@ export async function verifySignup (dispatch, token, credentials) {
   }
 }
 
-export async function checkAuth (dispatch) {
+export async function getUser (dispatch) {
   try {
+    dispatch({ type: userActions.GET_AUTH_ME_REQUEST })
     const result = await getRequest('/identity/auth/me')
-
     if (result.status === 200) {
-      const response = result.json()
-      dispatch({ type: userActions.CHECK_AUTH_SUCCESS, payload: response.data })
+      const response = await result.json()
+      dispatch({
+        type: userActions.GET_AUTH_ME_SUCCESS,
+        payload: response.data
+      })
     }
   } catch (err) {
-    dispatch({ type: userActions.CHECK_AUTH_FAILURE })
+    dispatch({ type: userActions.GET_AUTH_ME_FAILURE })
   }
 }

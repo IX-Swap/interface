@@ -18,13 +18,12 @@ import Invest from '../pages/invest'
 import Security from '../pages/security'
 
 import { useLayoutState } from '../context/LayoutContext'
-import { useUserState } from '../context/UserContext'
+import { useUserState, useUserDispatch, getUser } from '../context/UserContext'
 import { LayoutProvider } from '../context/LayoutContext'
 
 function App () {
   const { isAuthenticated } = useUserState()
   const classes = useStyles()
-
   return (
     <HashRouter>
       <Switch>
@@ -37,16 +36,19 @@ function App () {
     </HashRouter>
   )
 
-  function Authenticated (props) {
-    const layoutState = useLayoutState()
+  function Authenticated () {
+    const userDispatch = useUserDispatch()
+    const { isSidebarOpened } = useLayoutState()
+    const { status } = useUserState()
 
+    if (status === 'INIT') getUser(userDispatch)
     return (
       <div className={classes.root}>
         <Header />
         <Sidebar />
         <div
           className={classnames(classes.content, {
-            [classes.contentShift]: layoutState.isSidebarOpened
+            [classes.contentShift]: isSidebarOpened
           })}
         >
           <div className={classes.fakeToolbar} />
@@ -61,6 +63,7 @@ function App () {
       </div>
     )
   }
+
   function GotoDashboard (props) {
     return (
       <Redirect
