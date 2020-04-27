@@ -18,8 +18,8 @@ import UpdateIdentity from './pages/update-identitiy'
 import CorporateForm from './pages/corporate-form/CorporateForm'
 
 import Alert from '@material-ui/lab/Alert'
-import IdentityAuthorizer from './pages/identity-authorizer/IdentityAuthorizer'
-
+import IdentityAuthorizerList from './pages/identity-authorizer/IdentityAuthorizerList'
+import IdentityAuthorizerView from './pages/identity-authorizer/IdentityAuthorizerView'
 export default function Identity () {
   return (
     <IdentityProvider>
@@ -31,7 +31,12 @@ export default function Identity () {
             <Route
               path='/identity/authorize'
               exact
-              component={IdentityAuthorizer}
+              component={IdentityAuthorizerList}
+            />
+            <Route
+              path='/identity/authorize/:identityId'
+              exact
+              component={IdentityAuthorizerView}
             />
             <Route path='/identity/edit' exact component={UpdateIdentity} />
             <Route

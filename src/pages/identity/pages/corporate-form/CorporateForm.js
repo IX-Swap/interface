@@ -1,4 +1,4 @@
-import React, { useEffect, useMemo, useState, useCallback } from 'react'
+import React, { useMemo, useState, useCallback } from 'react'
 import {
   Grid,
   Card,
@@ -11,7 +11,7 @@ import {
   IconButton
 } from '@material-ui/core'
 
-import { useHistory } from 'react-router-dom'
+// import { useHistory } from 'react-router-dom'
 import { useForm, Controller } from 'react-hook-form'
 import { DatePicker } from '@material-ui/pickers'
 import CloseIcon from '@material-ui/icons/Close'
@@ -29,6 +29,7 @@ import createDate18YearsAgo from 'pages/identity/helpers/createDate18YearsAgo'
 import { createCorporate } from 'pages/identity/helpers/schema'
 import createDate18YearsAndADayAgo from 'pages/identity/helpers/createDate18YearsAndADayAgo'
 import UploadSection from 'pages/identity/components/UploadSection/UploadSection'
+import YesNoRadio from 'pages/identity/components/YesNoRadio'
 
 export default function CorporateForm () {
   const {
@@ -389,19 +390,129 @@ const Declarations = () => {
   return (
     <Box m={4}>
       <Grid container>
-        <Grid item lg={5}>
-          <Box m={2}></Box>
+        <Grid item lg={9}>
+          <Box mb={3}>
+            The applicant declares he/she is qualified to be defined as as
+            Corporate Accredited Investor under Singapore Law.
+          </Box>
         </Grid>
-        <Grid item lg={5}>
-          <Box m={2}></Box>
+        <Grid item lg={3}>
+          <Box ml={2}>
+            <YesNoRadio />
+          </Box>
+        </Grid>
+      </Grid>
+
+      <Grid container>
+        <Grid item lg={9}>
+          <Box mb={3}>
+            The applicant gives consent to InvestaX to treat the applicant as
+            Corporate Accredited Investor.
+          </Box>
+        </Grid>
+        <Grid item lg={3}>
+          <Box ml={2}>
+            <YesNoRadio />
+          </Box>
+        </Grid>
+      </Grid>
+
+      <Grid container>
+        <Grid item lg={9}>
+          <Box mb={3}>
+            The applicant declares in respect to FATCA FOREIGN TAX COMPLIANCE
+            ACT whether the representative/director/benefical owner is a citizen
+            of the USA.
+          </Box>
+        </Grid>
+        <Grid item lg={3}>
+          <Box ml={2}>
+            <YesNoRadio />
+          </Box>
+        </Grid>
+      </Grid>
+
+      <Grid container>
+        <Grid item lg={9}>
+          <Box mb={3}>
+            The Applicant gives consent to InvestaX on the use of the
+            Applicant’s personal use of data.
+          </Box>
+        </Grid>
+        <Grid item lg={3}>
+          <Box ml={2}>
+            <YesNoRadio />
+          </Box>
+        </Grid>
+      </Grid>
+
+      <Grid container>
+        <Grid item lg={9}>
+          <Box mb={3}>
+            The applicant declares his/her information provided to InvestaX are
+            true and correct.
+          </Box>
+        </Grid>
+        <Grid item lg={3}>
+          <Box ml={2}>
+            <YesNoRadio />
+          </Box>
+        </Grid>
+      </Grid>
+
+      <Grid container>
+        <Grid item lg={9}>
+          <Box mb={3}>
+            The applicant is responsible to notify InvestaX on any potential
+            changes on his/her investor status
+          </Box>
+        </Grid>
+        <Grid item lg={3}>
+          <Box ml={2}>
+            <YesNoRadio />
+          </Box>
+        </Grid>
+      </Grid>
+
+      <Grid container>
+        <Grid item lg={9}>
+          <Box mb={3}>
+            The applicant acknowledges to provide documentary evidence as
+            requested by the Authority.
+          </Box>
+        </Grid>
+        <Grid item lg={3}>
+          <Box ml={2}>
+            <YesNoRadio />
+          </Box>
+        </Grid>
+      </Grid>
+
+      <Grid container>
+        <Grid item lg={9}>
+          <Box mb={3}>
+            The applicant had read through InvestaX’s Disclose statement and
+            Terms of Use Statement.
+          </Box>
+        </Grid>
+        <Grid item lg={3}>
+          <Box ml={2}>
+            <YesNoRadio />
+          </Box>
         </Grid>
       </Grid>
       <Grid container>
-        <Grid item lg={5}>
-          <Box m={2}></Box>
+        <Grid item lg={9}>
+          <Box mb={3}>
+            The applicant acknowledge the risk on trading Digital Securities via
+            InvestaX’s trading platform, which operates under MAS Sandbox
+            environment.
+          </Box>
         </Grid>
-        <Grid item lg={5}>
-          <Box m={2}></Box>
+        <Grid item lg={3}>
+          <Box ml={2}>
+            <YesNoRadio />
+          </Box>
         </Grid>
       </Grid>
     </Box>
@@ -414,18 +525,18 @@ const useCorporateFormLogic = () => {
   const methods = useForm({ validationSchema })
 
   const {
-    handleSubmit: rhfHandleSubmit,
+    // handleSubmit: rhfHandleSubmit,
     errors,
     watch,
     triggerValidation,
     control,
     setValue,
-    getValues,
-    formState
+    getValues
+    // formState
   } = methods
 
-  const isValid = formState.isSubmitted ? formState.isValid : true
-  const history = useHistory()
+  // const isValid = formState.isSubmitted ? formState.isValid : true
+  // const history = useHistory()
   const handleSnackbarErrorClose = useCallback(() => setSnackbarError(''), [])
 
   const createFieldProps = (key, overrides) => ({
@@ -541,6 +652,9 @@ const useCorporateFormLogic = () => {
   const repsTemplate = buildTemplate(numOfReps, 'Representative')
   const ownersTemplate = buildTemplate(numOfOwners, 'Beneficial-Owner')
   const directorsTemplate = buildTemplate(numOfDirectors, 'Director')
+
+  const values = getValues()
+  console.log(values)
 
   return {
     companyFields,
