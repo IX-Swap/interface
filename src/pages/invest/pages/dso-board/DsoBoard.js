@@ -48,10 +48,10 @@ const useDsoBoardLogic = () => {
 
   useEffect(() => {
     // fetch deals data for initial values
-    if (!isDsoListReady) {
-      getDsoList(investDispatch).catch(() => {})
+    if (investStatus === INVEST_STATUS.INIT) {
+      getDsoList(investDispatch)
     }
-  }, [investStatus, investDispatch, isDsoListReady])
+  }, [investStatus, investDispatch])
 
   return { isDsoListReady, dsoList, error }
 }

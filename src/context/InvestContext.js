@@ -171,26 +171,27 @@ export function useInvestDispatch () {
 
 // actions
 export async function getDsoList (dispatch) {
-  dispatch({ type: actions.GET_DSOLIST_REQUEST })
-
   try {
+    dispatch({ type: actions.GET_DSOLIST_REQUEST })
+
     const uri = '/investment/dso'
     const result = await getRequest(uri)
     const response = await result.json()
     if (result.status === 200) {
       const dsoList = response.data || []
-      dispatch({
+      return dispatch({
         type: actions.GET_DSOLIST_SUCCESS,
         payload: { dsoList }
       })
     } else {
-      dispatch({ type: actions.GET_DSOLIST_FAILURE, payload: response.message })
-      throw new Error(response.message)
+      return dispatch({
+        type: actions.GET_DSOLIST_FAILURE,
+        payload: response.message
+      })
     }
   } catch (err) {
     const errMsg = err.message || err.toString() || 'Fetching dso list failed.'
     dispatch({ type: actions.GET_DSOLIST_FAILURE, payload: errMsg })
-    throw new Error(errMsg)
   }
 }
 

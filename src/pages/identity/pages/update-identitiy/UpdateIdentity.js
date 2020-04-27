@@ -75,7 +75,7 @@ export default function UpdateIdentity (props) {
           <Card component='form' onSubmit={handleSubmit}>
             <Box p={3}>
               <Typography component='h1' variant='h3'>
-                Update My Identity
+                Update Identity
               </Typography>
               <Box display='flex' justifyContent='flex-end' mt={0}>
                 <Box mr={2}>

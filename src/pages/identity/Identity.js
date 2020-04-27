@@ -15,8 +15,11 @@ import AccreditationStepOne from './pages/accredaditation-step-one'
 import AccreditationStepTwo from './pages/accredaditation-step-two'
 import AccreditationStepThree from './pages/accredaditation-step-three'
 import UpdateIdentity from './pages/update-identitiy'
-import Alert from '@material-ui/lab/Alert'
+import CorporateForm from './pages/corporate-form/CorporateForm'
 
+import Alert from '@material-ui/lab/Alert'
+import IdentityAuthorizerList from './pages/identity-authorizer/IdentityAuthorizerList'
+import IdentityAuthorizerView from './pages/identity-authorizer/IdentityAuthorizerView'
 export default function Identity () {
   return (
     <IdentityProvider>
@@ -24,6 +27,17 @@ export default function Identity () {
         <MuiPickersUtilsProvider utils={DateFnsUtils}>
           <Switch>
             <Route path='/identity' exact component={IdentityDashboard} />
+            <Route path='/identity/corporate' exact component={CorporateForm} />
+            <Route
+              path='/identity/authorize'
+              exact
+              component={IdentityAuthorizerList}
+            />
+            <Route
+              path='/identity/authorize/:identityId'
+              exact
+              component={IdentityAuthorizerView}
+            />
             <Route path='/identity/edit' exact component={UpdateIdentity} />
             <Route
               path='/identity/identification-steps/1'

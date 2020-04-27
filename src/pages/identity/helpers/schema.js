@@ -9,6 +9,49 @@ import createDate18YearsAgo from 'pages/identity/helpers/createDate18YearsAgo'
 
 const REQUIRED_ERR_MSG = 'This field is required'
 
+export const corporatePerson = () =>
+  yup.object().shape({
+    firstName: yup.string().required(REQUIRED_ERR_MSG),
+    middleName: yup.string(),
+    lastName: yup.string().required(REQUIRED_ERR_MSG),
+    dob: yup
+      .date(REQUIRED_ERR_MSG)
+      .max(createDate18YearsAgo(), 'Person be at least 18 years old.')
+      .required(REQUIRED_ERR_MSG),
+    gender: yup
+      .mixed()
+      .oneOf(GENDERS, REQUIRED_ERR_MSG)
+      .required(REQUIRED_ERR_MSG),
+    email: yup.string(),
+    contactNumber: yup.string().required(REQUIRED_ERR_MSG),
+    nationality: yup
+      .mixed()
+      .oneOf(COUNTRIES, REQUIRED_ERR_MSG)
+      .required(REQUIRED_ERR_MSG)
+  })
+
+export const createCorporate = () => {
+  yup.object().shape({
+    companyName: yup.string().required(REQUIRED_ERR_MSG),
+    companyRegistrationNumber: yup.string().required(REQUIRED_ERR_MSG),
+    companyLegalName: yup.string().required(REQUIRED_ERR_MSG),
+    countryOfFormation: yup.string().required(REQUIRED_ERR_MSG),
+    dateOfFormation: yup.date(REQUIRED_ERR_MSG).required(REQUIRED_ERR_MSG),
+    companyAddress: yup.object().shape({
+      line1: yup.string().required(REQUIRED_ERR_MSG),
+      line2: yup.string().required(REQUIRED_ERR_MSG),
+      unit: yup.string().required(REQUIRED_ERR_MSG),
+      city: yup.string().required(REQUIRED_ERR_MSG),
+      state: yup.string().required(REQUIRED_ERR_MSG),
+      country: yup.string().required(REQUIRED_ERR_MSG),
+      postalCode: yup.string().required(REQUIRED_ERR_MSG)
+    }),
+    representatives: yup.array(),
+    directors: yup.array(),
+    beneficialOwners: yup.array(),
+    declarations: yup.object()
+  })
+}
 export const createIDBasic = () =>
   yup.object().shape({
     firstName: yup.string().required(REQUIRED_ERR_MSG),
