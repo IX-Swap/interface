@@ -37,7 +37,6 @@ import {
   useIdentityDispatch,
   IDENTITY_STATUS,
   getIdentity,
-  selectFile,
   saveIdentity,
   saveFinancials,
   saveFile
@@ -51,7 +50,6 @@ export default function UpdateIdentity (props) {
   const {
     handleSubmit,
     fields,
-    isValid,
     error,
     snackbarError,
     handleSnackbarErrorClose,
@@ -77,14 +75,14 @@ export default function UpdateIdentity (props) {
           <Card component='form' onSubmit={handleSubmit}>
             <Box p={3}>
               <Typography component='h1' variant='h3'>
-                Update My Identity
+                Update Identity
               </Typography>
               <Box display='flex' justifyContent='flex-end' mt={0}>
                 <Box mr={2}>
                   <Button
                     variant='outlined'
                     color='primary'
-                    onClick={() => props.history.push('/app/identity')}
+                    onClick={() => props.history.push('/identity')}
                   >
                     Cancel
                   </Button>
@@ -467,7 +465,7 @@ export default function UpdateIdentity (props) {
                   <Button
                     variant='outlined'
                     color='primary'
-                    onClick={() => props.history.push('/app/identity')}
+                    onClick={() => props.history.push('/identity')}
                   >
                     Cancel
                   </Button>
@@ -643,7 +641,7 @@ const useUpdateIdentityLogic = () => {
         : Promise.resolve(),
       ...saveChangedFiles(idDispatch, formData, id.identity._id)
     ])
-      .then(() => history.push('/app/identity'))
+      .then(() => history.push('/identity'))
       .catch(e => {
         setSnackbarError(e.message || e.toString())
         setIsSaving(false)

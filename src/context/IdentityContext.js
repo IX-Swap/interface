@@ -19,7 +19,25 @@ const actions = {
   SAVE_FILE_FAILURE: 'SAVE_FILE_FAILURE',
   DOWNLOAD_FILE_REQUEST: 'DOWNLOAD_FILE_REQUEST',
   DOWNLOAD_FILE_SUCCESS: 'DOWNLOAD_FILE_SUCCESS',
-  DOWNLOAD_FILE_FAILURE: 'DOWNLOAD_FILE_FAILURE'
+  DOWNLOAD_FILE_FAILURE: 'DOWNLOAD_FILE_FAILURE',
+  BEGIN_RESET_PASSWORD_REQUEST: 'BEGIN_RESET_PASSWORD_REQUEST',
+  BEGIN_RESET_PASSWORD_SUCCESS: 'BEGIN_RESET_PASSWORD_SUCCESS',
+  BEGIN_RESET_PASSWORD_FAILURE: 'BEGIN_RESET_PASSWORD_FAILURE',
+  COMPLETE_RESET_PASSWORD_REQUEST: 'COMPLETE_RESET_PASSWORD_REQUEST',
+  COMPLETE_RESET_PASSWORD_SUCCESS: 'COMPLETE_RESET_PASSWORD_SUCCESS',
+  COMPLETE_RESET_PASSWORD_FAILURE: 'COMPLETE_RESET_PASSWORD_FAILURE',
+  UPDATE_ACCOUNT_TYPE_REQUEST: 'UPDATE_ACCOUNT_TYPE_REQUEST',
+  UPDATE_ACCOUNT_TYPE_SUCCESS: 'UPDATE_ACCOUNT_TYPE_SUCCESS',
+  UPDATE_ACCOUNT_TYPE_FAILURE: 'UPDATE_ACCOUNT_TYPE_FAILURE',
+  GET_CORPORATE_REQUEST: 'GET_CORPORATE_REQUEST',
+  GET_CORPORATE_SUCCESS: 'GET_CORPORATE_SUCCESS',
+  GET_CORPORATE_FAILURE: 'GET_CORPORATE_FAILURE',
+  CREATE_CORPORATE_REQUEST: 'CREATE_CORPORATE_REQUEST',
+  CREATE_CORPORATE_SUCCESS: 'CREATE_CORPORATE_SUCCESS',
+  CREATE_CORPORATE_FAILURE: 'CREATE_CORPORATE_FAILURE',
+  UPDATE_CORPORATE_REQUEST: 'UPDATE_CORPORATE_REQUEST',
+  UPDATE_CORPORATE_SUCCESS: 'UPDATE_CORPORATE_SUCCESS',
+  UPDATE_CORPORATE_FAILURE: 'CREATE_CORPORATE_FAILURE'
 }
 
 export const IDENTITY_STATUS = {
@@ -34,6 +52,9 @@ const STATUS = IDENTITY_STATUS
 const initialState = {
   identity: {},
   status: STATUS.INIT,
+  passwordResetMessage: '',
+  resetStatus: false,
+  resetComplete: false,
   shouldCreateNew: false,
   error: {
     save: null,
@@ -116,6 +137,67 @@ export function identityReducer (state, { type, payload }) {
         status: STATUS.IDLE,
         error: { ...state.error, get: payload.message }
       }
+    case actions.BEGIN_RESET_PASSWORD_REQUEST:
+      return {
+        ...state,
+        passwordResetMessage: '',
+        resetStatus: false,
+        status: STATUS.GETTING,
+        error: { ...state.error, get: null }
+      }
+
+    case actions.BEGIN_RESET_PASSWORD_SUCCESS:
+      return {
+        ...state,
+        status: STATUS.IDLE,
+        passwordResetMessage: payload,
+        resetStatus: true,
+        error: { ...state.error, get: null }
+      }
+
+    case actions.BEGIN_RESET_PASSWORD_FAILURE:
+      return {
+        ...state,
+        status: STATUS.IDLE,
+        passwordResetMessage: payload,
+        resetStatus: false,
+        error: { ...state.error, get: payload }
+      }
+
+    case actions.COMPLETE_RESET_PASSWORD_REQUEST:
+      return {
+        ...state,
+        status: STATUS.GETTING,
+        passwordResetMessage: 'Resetting Password',
+        resetStatus: false,
+        resetComplete: 'request',
+        error: { ...state.error, get: null }
+      }
+
+    case actions.COMPLETE_RESET_PASSWORD_SUCCESS:
+      return {
+        ...state,
+        status: STATUS.IDLE,
+        passwordResetMessage: payload,
+        resetComplete: 'success',
+        error: { ...state.error, get: payload }
+      }
+
+    case actions.COMPELTE_RESET_PASSWORD_FAILURE:
+      return {
+        ...state,
+        status: STATUS.IDLE,
+        passwordResetMessage: payload,
+        resetComplete: 'failure',
+        error: { ...state.error, get: payload }
+      }
+
+    case actions.UPDATE_ACCOUNT_TYPE_REQUEST: {
+      return {
+        ...state,
+        status: STATUS.GETTING
+      }
+    }
 
     default:
       throw new Error(`Unhandled action type: ${type}`)
@@ -225,7 +307,10 @@ export async function saveFinancials (dispatch, identity) {
     const response = await result.json()
     if (result.status === 200) {
       const payload = response.data || {}
-      dispatch({ type: actions.SAVE_IDENTITY_SUCCESS, payload })
+      dispatch({
+        type: actions.SAVE_IDENTITY_SUCCESS,
+        payload
+      })
     } else {
       throw new Error(response.message)
     }
@@ -301,6 +386,7 @@ export const downloadFile = async (dispatch, documentId) => {
     }
   } catch (err) {
     console.log(err)
+    dispatch({ type: actions.DOWNLOAD_FILE_FAILURE })
   }
 }
 
@@ -315,3 +401,79 @@ export const selectFile = (state, title) =>
       const isLastFileOutdated = compareAsc(currDate, lastDate) === 1
       return isLastFileOutdated ? currFile : lastFile
     }, null)
+
+export const beginResetPassword = async (dispatch, email) => {
+  dispatch({ type: actions.BEGIN_RESET_PASSWORD_REQUEST })
+  try {
+    const uri = `/identity/auth/reset-password/${email}`
+    const result = await postRequest(uri)
+    const response = await result.json()
+    if (result.status === 200) {
+      dispatch({
+        type: actions.BEGIN_RESET_PASSWORD_SUCCESS,
+        payload: response.message
+      })
+    }
+  } catch (err) {
+    console.log(err)
+    dispatch({ type: actions.BEGIN_RESET_PASSWORD_FAILURE })
+  }
+}
+
+export const completeResetPassword = async (
+  dispatch,
+  email,
+  resetToken,
+  newPassword
+) => {
+  dispatch({ type: actions.COMPLETE_RESET_PASSWORD_REQUEST })
+  try {
+    const uri = `/identity/auth/reset-password`
+    const payload = {
+      email,
+      resetToken,
+      newPassword
+    }
+    const result = await postRequest(uri, payload)
+    const response = await result.json()
+    if (result.status === 200) {
+      dispatch({
+        type: actions.COMPLETE_RESET_PASSWORD_SUCCESS,
+        payload: response.message
+      })
+    } else {
+      dispatch({
+        type: actions.COMPELTE_RESET_PASSWORD_FAILURE,
+        payload: response.message
+      })
+    }
+  } catch (err) {
+    console.log(err)
+    dispatch({ type: actions.COMPLETE_RESET_PASSWORD_FAILURE })
+  }
+}
+
+export const getCorporate = async dispatch => {
+  try {
+    const uri = '/identity/profile/corporate'
+    const result = await getRequest(uri)
+    const response = result.json()
+    if (result.status === 200) {
+      dispatch({
+        type: actions.GET_CORPORATE_REQUEST,
+        payload: response.data
+      })
+    } else {
+      dispatch({
+        type: actions.GET_IDENTITY_FAILURE,
+        payload: 'Failed to get Corporate Profile.'
+      })
+    }
+  } catch (err) {
+    console.log(err)
+    dispatch({
+      type: actions.GET_CORPORATE_REQUEST,
+      payload: 'Fatal error getting corporate profile.'
+    })
+  }
+}

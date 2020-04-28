@@ -24,10 +24,10 @@ function Explorer (props) {
               Blocks and Transactions
               <ul>
                 <li>
-                  <a href='/#/app/explorer/block-info'>BlockInfo</a>
+                  <a href='/explorer/block-info'>BlockInfo</a>
                 </li>
                 <li>
-                  <a href='/#/app/explorer/transaction-info'>TransactionInfo</a>
+                  <a href='/explorer/transaction-info'>TransactionInfo</a>
                 </li>
               </ul>
             </Grid>
@@ -35,7 +35,7 @@ function Explorer (props) {
               Balances
               <ul>
                 <li>
-                  <a href='/#/app/explorer/ether-balance'>EtherBalance</a>
+                  <a href='/explorer/ether-balance'>EtherBalance</a>
                 </li>
               </ul>
             </Grid>
@@ -43,7 +43,7 @@ function Explorer (props) {
               Contracts
               <ul>
                 <li>
-                  <a href='/#/app/explorer/read-only-abi'>ReadOnlyAbi</a>
+                  <a href='/explorer/read-only-abi'>ReadOnlyAbi</a>
                 </li>
               </ul>
             </Grid>
@@ -52,7 +52,7 @@ function Explorer (props) {
       </Grid>
       <Switch>
         <Route
-          path='/app/explorer/block-info'
+          path='/explorer/block-info'
           component={() => (
             <BlockInfoProvider>
               <BlockInfo />
@@ -61,7 +61,7 @@ function Explorer (props) {
         />
 
         <Route
-          path='/app/explorer/transaction-info'
+          path='/explorer/transaction-info'
           component={() => (
             <TransactionInfoProvider>
               <TransactionInfo />
@@ -70,7 +70,7 @@ function Explorer (props) {
         />
 
         <Route
-          path='/app/explorer/ether-balance'
+          path='/explorer/ether-balance'
           component={() => (
             <EtherBalanceProvider>
               <EtherBalance />
@@ -79,7 +79,7 @@ function Explorer (props) {
         />
 
         <Route
-          path='/app/explorer/read-only-abi'
+          path='/explorer/read-only-abi'
           component={() => (
             <ReadOnlyAbiProvider>
               <ReadOnlyAbi />

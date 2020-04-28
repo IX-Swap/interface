@@ -11,10 +11,10 @@ export default function Invest () {
   return (
     <InvestProvider>
       <Switch>
-        <Route path='/app/invest' exact component={DsoBoard} />
-        <Route path='/app/invest/new-product' exact component={NewProduct} />
-        <Route path='/app/invest/:dsoId' exact component={DsoView} />
-        <Route path='/app/invest/:dsoId/edit' exact component={DsoEdit} />
+        <Route path='/invest' exact component={DsoBoard} />
+        <Route path='/invest/new-product' exact component={NewProduct} />
+        <Route path='/invest/:dsoId' exact component={DsoView} />
+        <Route path='/invest/:dsoId/edit' exact component={DsoEdit} />
       </Switch>
     </InvestProvider>
   )

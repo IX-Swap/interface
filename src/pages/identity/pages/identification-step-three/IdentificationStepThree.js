@@ -173,7 +173,7 @@ const useIdentityFormLogic = () => {
 
       await saveIdentity(idDispatch, newIdentity)
 
-      history.push('/app/identity/financials-steps/1')
+      history.push('/identity/financials-steps/1')
     } catch (e) {
       setSnackbarError(e.message || e.toString())
     }

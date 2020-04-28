@@ -3,5 +3,4 @@ export const apiUrl = (() => {
     return 'http://localhost:3456'
   }
   return 'https://api.mozork.com'
-  // return 'https://api.investax.io'
 })()

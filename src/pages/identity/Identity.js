@@ -15,58 +15,72 @@ import AccreditationStepOne from './pages/accredaditation-step-one'
 import AccreditationStepTwo from './pages/accredaditation-step-two'
 import AccreditationStepThree from './pages/accredaditation-step-three'
 import UpdateIdentity from './pages/update-identitiy'
-import Alert from '@material-ui/lab/Alert'
+import CorporateForm from './pages/corporate-form/CorporateForm'
 
+import Alert from '@material-ui/lab/Alert'
+import IdentityAuthorizerList from './pages/identity-authorizer/IdentityAuthorizerList'
+import IdentityAuthorizerView from './pages/identity-authorizer/IdentityAuthorizerView'
 export default function Identity () {
   return (
     <IdentityProvider>
       <AccreditationProvider>
         <MuiPickersUtilsProvider utils={DateFnsUtils}>
           <Switch>
-            <Route path='/app/identity' exact component={IdentityDashboard} />
-            <Route path='/app/identity/edit' exact component={UpdateIdentity} />
+            <Route path='/identity' exact component={IdentityDashboard} />
+            <Route path='/identity/corporate' exact component={CorporateForm} />
             <Route
-              path='/app/identity/identification-steps/1'
+              path='/identity/authorize'
+              exact
+              component={IdentityAuthorizerList}
+            />
+            <Route
+              path='/identity/authorize/:identityId'
+              exact
+              component={IdentityAuthorizerView}
+            />
+            <Route path='/identity/edit' exact component={UpdateIdentity} />
+            <Route
+              path='/identity/identification-steps/1'
               exact
               component={IdentificationStepOne}
             />
             <Route
-              path='/app/identity/identification-steps/2'
+              path='/identity/identification-steps/2'
               exact
               component={IdentificationStepTwo}
             />
             <Route
-              path='/app/identity/identification-steps/3'
+              path='/identity/identification-steps/3'
               exact
               component={IdentificationStepThree}
             />
             <Route
-              path='/app/identity/financials-steps/1'
+              path='/identity/financials-steps/1'
               exact
               component={FinancialsStepOne}
             />
             <Route
-              path='/app/identity/financials-steps/2'
+              path='/identity/financials-steps/2'
               exact
               component={FinancialsStepTwo}
             />
             <Route
-              path='/app/identity/financials-steps/3'
+              path='/identity/financials-steps/3'
               exact
               component={FinancialsStepThree}
             />
             <Route
-              path='/app/identity/accreditation-steps/1'
+              path='/identity/accreditation-steps/1'
               exact
               component={AccreditationStepOne}
             />
             <Route
-              path='/app/identity/accreditation-steps/2'
+              path='/identity/accreditation-steps/2'
               exact
               component={AccreditationStepTwo}
             />
             <Route
-              path='/app/identity/accreditation-steps/3'
+              path='/identity/accreditation-steps/3'
               exact
               component={AccreditationStepThree}
             />

@@ -171,26 +171,27 @@ export function useInvestDispatch () {
 
 // actions
 export async function getDsoList (dispatch) {
-  dispatch({ type: actions.GET_DSOLIST_REQUEST })
-
   try {
-    const uri = '/issuance/dso'
+    dispatch({ type: actions.GET_DSOLIST_REQUEST })
+
+    const uri = '/investment/dso'
     const result = await getRequest(uri)
     const response = await result.json()
     if (result.status === 200) {
       const dsoList = response.data || []
-      dispatch({
+      return dispatch({
         type: actions.GET_DSOLIST_SUCCESS,
         payload: { dsoList }
       })
     } else {
-      dispatch({ type: actions.GET_DSOLIST_FAILURE, payload: response.message })
-      throw new Error(response.message)
+      return dispatch({
+        type: actions.GET_DSOLIST_FAILURE,
+        payload: response.message
+      })
     }
   } catch (err) {
     const errMsg = err.message || err.toString() || 'Fetching dso list failed.'
     dispatch({ type: actions.GET_DSOLIST_FAILURE, payload: errMsg })
-    throw new Error(errMsg)
   }
 }
 
@@ -198,7 +199,7 @@ export async function getDso (dispatch, dsoId) {
   dispatch({ type: actions.GET_DSO_REQUEST })
 
   try {
-    const uri = `/issuance/dso/${dsoId}`
+    const uri = `/investment/dso/${dsoId}`
     const result = await getRequest(uri)
     const response = await result.json()
     const dso = response.data[0]
@@ -218,7 +219,6 @@ export async function getDso (dispatch, dsoId) {
   } catch (err) {
     const errMsg = err.message || err.toString() || 'Loading dso failed.'
     dispatch({ type: actions.GET_DSO_FAILURE, payload: errMsg })
-    throw new Error(errMsg)
   }
 }
 
@@ -226,7 +226,7 @@ export async function saveDso (dispatch, dsoId, payload) {
   dispatch({ type: actions.SAVE_DSO_REQUEST })
 
   try {
-    const uri = `/issuance/dso/${dsoId}`
+    const uri = `/investment/dso/${dsoId}`
     const result = await putRequest(uri, payload)
     const response = await result.json()
     if (result.status === 200) {
@@ -246,7 +246,6 @@ export async function saveDso (dispatch, dsoId, payload) {
   } catch (err) {
     const errMsg = err.message || err.toString() || 'Loading dso failed.'
     dispatch({ type: actions.SAVE_DSO_FAILURE, payload: errMsg })
-    throw new Error(errMsg)
   }
 }
 
@@ -254,7 +253,7 @@ export async function createDso (dispatch, payload) {
   dispatch({ type: actions.CREATE_DSO_REQUEST })
 
   try {
-    const uri = `/issuance/dso`
+    const uri = `/investment/dso`
     const result = await postRequest(uri, payload)
     const response = await result.json()
     if (result.status === 200) {
@@ -274,6 +273,5 @@ export async function createDso (dispatch, payload) {
   } catch (err) {
     const errMsg = err.message || err.toString() || 'Creating dso failed.'
     dispatch({ type: actions.CREATE_DSO_FAILURE, payload: errMsg })
-    throw new Error(errMsg)
   }
 }

@@ -7,17 +7,17 @@ import {
   Tabs,
   Tab,
   TextField,
+  Box,
   Fade
 } from '@material-ui/core'
 import { withRouter } from 'react-router-dom'
-import classnames from 'classnames'
 
 // styles
 import useStyles from './styles'
 
-// logo
-import logo from '../../images/ix-logo-v5.png'
-import google from '../../images/google.svg'
+// import google from '../../images/google.svg'
+import VerifySignup from './VerifySignup'
+import ResetPassword from './ResetPassword'
 
 // context
 import {
@@ -26,30 +26,58 @@ import {
   setActiveTabId,
   loginUser,
   signupUser
+  // verifySignup,
+  // checkAuth
 } from '../../context/UserContext'
+
+import { IdentityProvider } from '../../context/IdentityContext'
 
 function Login (props) {
   const classes = useStyles()
-
   // global
   const userDispatch = useUserDispatch()
   const userState = useUserState()
-
   // local
-  const [isLoading, setIsLoading] = useState(false)
+  // const [isLoading, setIsLoading] = useState(false)
   const [usernameValue, setUsernameValue] = useState('')
   const [passwordValue, setPasswordValue] = useState('')
+  const [otpValue, setOtpValue] = useState('')
 
+  const VerifyEmail = () => {
+    return (
+      <Grid container justify='center' alignItems='center'>
+        <Box p={4}>
+          <Grid item>
+            <Box mb={2}>
+              Thank you. Please check your email for a verification link.
+            </Box>
+          </Grid>
+          <Grid item>
+            <Button
+              variant='outlined'
+              color='primary'
+              onClick={() => setActiveTabId(userDispatch, 0)}
+            >
+              Back to Login
+            </Button>
+          </Grid>
+        </Box>
+      </Grid>
+    )
+  }
+  const { token } = props.match.params || null
   return (
     <Grid container className={classes.container}>
-      <div className={classes.logotypeContainer}>
-        <img src={logo} alt='logo' className={classes.logotypeImage} />
-        <Typography className={classes.logotypeText}>
-          Digital Securities
-        </Typography>
-      </div>
-      <div className={classes.formContainer}>
-        <div className={classes.form}>
+      {token && token === 'reset-password' ? (
+        <IdentityProvider>
+          <ResetPassword />
+        </IdentityProvider>
+      ) : token && token !== 'reset-password' ? (
+        <VerifySignup token={token} props={props} />
+      ) : userState.activeTabId === 2 ? (
+        <VerifyEmail />
+      ) : (
+        <form className={classes.form}>
           <Tabs
             value={userState.activeTabId}
             onChange={(e, id) => setActiveTabId(userDispatch, id)}
@@ -61,23 +89,34 @@ function Login (props) {
             <Tab label='New User' classes={{ root: classes.tab }} />
           </Tabs>
           {userState.activeTabId === 0 && (
-            <>
+            <Box mt={3}>
               {/* <Typography variant="h1" className={classes.greeting}>
                 Good Morning, User
               </Typography> */}
 
-              <Button size='large' className={classes.googleButton}>
-                <img src={google} alt='google' className={classes.googleIcon} />
-                &nbsp;Sign in with Google
-              </Button>
-              <div className={classes.formDividerContainer}>
-                <div className={classes.formDivider} />
-                <Typography className={classes.formDividerWord}>or</Typography>
-                <div className={classes.formDivider} />
-              </div>
+              {/* <Button size='large' className={classes.googleButton}>
+                  <img
+                    src={google}
+                    alt='google'
+                    className={classes.googleIcon}
+                  />
+                  &nbsp;Sign in with Google
+                </Button> */}
+              {/* <div className={classes.formDividerContainer}>
+                  <div className={classes.formDivider} />
+                  <Typography className={classes.formDividerWord}>
+                    or
+                  </Typography>
+                  <div className={classes.formDivider} />
+                </div> */}
               <Fade in={userState.error !== ''}>
                 <Typography color='secondary' className={classes.errorMessage}>
                   {userState.error}
+                </Typography>
+              </Fade>
+              <Fade in={userState.message !== ''}>
+                <Typography color='secondary' className={classes.errorMessage}>
+                  {userState.message}
                 </Typography>
               </Fade>
               <TextField
@@ -110,6 +149,16 @@ function Login (props) {
                 type='password'
                 fullWidth
               />
+              <TextField
+                id='otpValue'
+                variant='outlined'
+                value={otpValue}
+                onChange={e => setOtpValue(e.target.value)}
+                margin='normal'
+                placeholder='OTP Code (optional)'
+                type='otpValue'
+                fullWidth
+              />
               <div className={classes.formButtons}>
                 {userState.isLoading ? (
                   <CircularProgress size={26} className={classes.loginLoader} />
@@ -123,8 +172,7 @@ function Login (props) {
                         userDispatch,
                         usernameValue,
                         passwordValue,
-                        props.history,
-                        setIsLoading
+                        otpValue
                       )
                     }
                     variant='contained'
@@ -138,16 +186,17 @@ function Login (props) {
                   color='primary'
                   size='large'
                   className={classes.forgetButton}
+                  onClick={() => props.history.push('/login/reset-password')}
                 >
-                  Forget Password
+                  Forgot Password?
                 </Button>
               </div>
-            </>
+            </Box>
           )}
           {userState.activeTabId === 1 && (
             <>
               <Typography variant='h4' className={classes.greeting}>
-                Create a new account
+                Create Account
               </Typography>
               <Fade in={userState.error !== ''}>
                 <Typography color='secondary' className={classes.errorMessage}>
@@ -185,12 +234,17 @@ function Login (props) {
                 fullWidth
               />
               <div className={classes.creatingButtonContainer}>
-                {isLoading ? (
+                {userState.isLoading ? (
                   <CircularProgress size={26} />
                 ) : (
                   <Button
                     onClick={() =>
-                      signupUser(userDispatch, usernameValue, passwordValue)
+                      signupUser(
+                        userDispatch,
+                        usernameValue,
+                        passwordValue,
+                        otpValue
+                      )
                     }
                     disabled={
                       usernameValue.length === 0 || passwordValue.length === 0
@@ -199,34 +253,48 @@ function Login (props) {
                     variant='contained'
                     color='primary'
                     fullWidth
-                    className={classes.createAccountButton}
+                    // className={classes.createAccountButton}
                   >
-                    Create your account
+                    CREATE
                   </Button>
                 )}
               </div>
-              <div className={classes.formDividerContainer}>
-                <div className={classes.formDivider} />
-                <Typography className={classes.formDividerWord}>or</Typography>
-                <div className={classes.formDivider} />
-              </div>
-              <Button
-                size='large'
-                className={classnames(
-                  classes.googleButton,
-                  classes.googleButtonCreating
-                )}
-              >
-                <img src={google} alt='google' className={classes.googleIcon} />
-                &nbsp;Sign in with Google
-              </Button>
+              {/* <div className={classes.formDividerContainer}>
+                  <div className={classes.formDivider} />
+                  <Typography className={classes.formDividerWord}>
+                    or
+                  </Typography>
+                  <div className={classes.formDivider} />
+                </div> */}
+              {/* <Button
+                  size='large'
+                  className={classnames(
+                    classes.googleButton,
+                    classes.googleButtonCreating
+                  )}
+                >
+                  <img
+                    src={google}
+                    alt='google'
+                    className={classes.googleIcon}
+                  />
+                  &nbsp;Sign in with Google
+                </Button> */}
             </>
           )}
-        </div>
-        <Typography color='primary' className={classes.copyright}>
-          © 2020 InvestaX, All rights reserved.
-        </Typography>
-      </div>
+          <Box mt={3} align='right'>
+            <a align='right' href='https://bitwarden.com'>
+              <img
+                src='https://www.vectorlogo.zone/logos/bitwarden/bitwarden-ar21.svg'
+                alt='bitwarden'
+              />
+            </a>
+          </Box>
+        </form>
+      )}
+      <Typography color='primary' className={classes.copyright}>
+        © 2020 InvestaX, All rights reserved.
+      </Typography>
     </Grid>
   )
 }

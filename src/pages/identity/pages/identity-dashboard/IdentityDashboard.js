@@ -23,6 +23,7 @@ export default function IdentityDashboard () {
     accreditationProgress,
     areAllCompleted,
     isIDReady,
+    shouldCreateNew,
     error
   } = useIdentityDashboardLogic()
 
@@ -31,7 +32,7 @@ export default function IdentityDashboard () {
       {identityProgress.percentage !== 100 && (
         <ProgressCard
           completed
-          to={`/app/identity/identification-steps/${identityProgress.activeStep +
+          to={`/identity/identification-steps/${identityProgress.activeStep +
             2}`}
           title='Identification'
           component={IdentityProgress}
@@ -42,7 +43,7 @@ export default function IdentityDashboard () {
         {financialsProgress.percentage !== 100 && (
           <ProgressCard
             completed
-            to={`/app/identity/financials-steps/${financialsProgress.activeStep +
+            to={`/identity/financials-steps/${financialsProgress.activeStep +
               2}`}
             title='Financials'
             component={FinancialsProgress}
@@ -54,7 +55,7 @@ export default function IdentityDashboard () {
         {accreditationProgress.percentage !== 100 && (
           <ProgressCard
             completed
-            to={`/app/identity/accreditation-steps/${accreditationProgress.activeStep +
+            to={`/identity/accreditation-steps/${accreditationProgress.activeStep +
               2}`}
             title='Accreditation'
             component={AccreditationProgress}
@@ -67,20 +68,24 @@ export default function IdentityDashboard () {
 
   return (
     <Grid component='article' container spacing={3} justify='center'>
-      {isIDReady && isProgressReady && !error && !areAllCompleted && (
-        <Grid item xs={12} md={12}>
-          <Hidden mdUp>{progressesJsx}</Hidden>
-        </Grid>
-      )}
+      <Grid component='section' item xs={12} md={areAllCompleted ? 9 : 9}>
+        <IdentityOverview areAllCompleted={areAllCompleted} />
+      </Grid>
+      {!shouldCreateNew &&
+        isIDReady &&
+        isProgressReady &&
+        !error &&
+        !areAllCompleted && (
+          <Grid item xs={12} md={12}>
+            <Hidden mdUp>{progressesJsx}</Hidden>
+          </Grid>
+        )}
 
-      {isProgressReady && !error && !areAllCompleted && (
+      {!shouldCreateNew && isProgressReady && !error && !areAllCompleted && (
         <Grid item xs={12} md={9}>
           <Hidden smDown>{progressesJsx}</Hidden>
         </Grid>
       )}
-      <Grid component='section' item xs={12} md={areAllCompleted ? 9 : 9}>
-        <IdentityOverview areAllCompleted={areAllCompleted} />
-      </Grid>
     </Grid>
   )
 }
@@ -92,7 +97,7 @@ const useIdentityDashboardLogic = () => {
   const { status: accreditationStatus, accreditation } = acrd
 
   const error = id.error.get || acrd.error.get
-
+  const shouldCreateNew = id.shouldCreateNew
   // calculate if page is ready (i.e. completed all network requests)
   const isIDReady = ![IDENTITY_STATUS.INIT, IDENTITY_STATUS.GETTING].includes(
     idStatus
@@ -171,6 +176,7 @@ const useIdentityDashboardLogic = () => {
     accreditationProgress,
     areAllCompleted,
     isIDReady,
+    shouldCreateNew,
     error
   }
 }

@@ -176,7 +176,7 @@ const useAccreditationFormLogic = () => {
       type: 'individual',
       id: id.identity._id
     })
-      .then(() => history.push('/app/identity'))
+      .then(() => history.push('/identity'))
       .catch(e => setSnackbarError(e.message || e.toString()))
   })
 

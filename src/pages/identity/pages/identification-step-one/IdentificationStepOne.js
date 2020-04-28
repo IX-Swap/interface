@@ -191,7 +191,7 @@ const useIdentityFormLogic = () => {
   // saves identity data for on form submit
   const handleSubmit = rhfHandleSubmit(newIdentity => {
     saveIdentity(idDispatch, newIdentity, shouldCreateNew)
-      .then(() => history.push('/app/identity/identification-steps/2'))
+      .then(() => history.push('/identity/identification-steps/2'))
       .catch(e => setSnackbarError(e.message || e.toString()))
   })
 

@@ -189,7 +189,7 @@ const useIdentityFormLogic = () => {
     }
 
     saveIdentity(idDispatch, newIdentity, shouldCreateNew)
-      .then(() => history.push('/app/identity/identification-steps/3'))
+      .then(() => history.push('/identity/identification-steps/3'))
       .catch(e => setSnackbarError(e.message || e.toString()))
   })
 

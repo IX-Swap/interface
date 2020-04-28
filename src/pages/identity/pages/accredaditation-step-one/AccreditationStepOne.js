@@ -141,7 +141,7 @@ const useAccreditationFormLogic = () => {
     }
 
     saveAccreditation(idDispatch, newAccreditation)
-      .then(() => history.push('/app/identity/accreditation-steps/2'))
+      .then(() => history.push('/identity/accreditation-steps/2'))
       .catch(e => setSnackbarError(e.message || e.toString()))
   })
 
@@ -157,8 +157,7 @@ const useAccreditationFormLogic = () => {
 
   const fields = {
     selfAccreditedInvestor: createFieldProps('selfAccreditedInvestor', {
-      options: YES_OR_NO_OPTS,
-      required: true
+      options: YES_OR_NO_OPTS
     })
   }
 
