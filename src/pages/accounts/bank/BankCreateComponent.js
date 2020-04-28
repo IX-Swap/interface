@@ -94,7 +94,7 @@ export default function BankCreateComponent (props) {
               </Box>
             </Grid>
             <Grid item sm={12} md={12} lg={6}>
-              <Box m={3}>
+              <Box ml={3} m={1}>
                 <FormControl fullWidth>
                   <InputLabel htmlFor='bank-name'>Bank Name</InputLabel>
                   <Input
@@ -107,7 +107,7 @@ export default function BankCreateComponent (props) {
               </Box>
             </Grid>
             <Grid item sm={12} md={12} lg={5}>
-              <Box m={3}>
+              <Box ml={3} m={1}>
                 <FormControl fullWidth>
                   <InputLabel htmlFor='account-holder-name-input'>
                     Account Holder Name
@@ -125,7 +125,7 @@ export default function BankCreateComponent (props) {
 
           <Grid container>
             <Grid item md={12} lg={3}>
-              <Box m={3}>
+              <Box ml={3} m={1}>
                 <FormControl fullWidth>
                   <InputLabel id='currency-selector-input'>Currency</InputLabel>
                   <Select
@@ -147,7 +147,7 @@ export default function BankCreateComponent (props) {
               </Box>
             </Grid>
             <Grid item md={12} lg={5}>
-              <Box m={3}>
+              <Box ml={3} m={1}>
                 <FormControl fullWidth>
                   <InputLabel htmlFor='bank-account-number-input'>
                     Bank Account Number
@@ -164,7 +164,7 @@ export default function BankCreateComponent (props) {
               </Box>
             </Grid>
             <Grid item md={12} lg={3}>
-              <Box m={3}>
+              <Box ml={3} m={1}>
                 <FormControl fullWidth>
                   <InputLabel htmlFor='swift-code-input'>Swift Code</InputLabel>
                   <Input
@@ -185,7 +185,7 @@ export default function BankCreateComponent (props) {
               </Box>
             </Grid>
             <Grid item md={12} lg={6}>
-              <Box m={3}>
+              <Box ml={3} m={1}>
                 <FormControl fullWidth>
                   <InputLabel htmlFor='bank-address-line1-input'>
                     Line 1
@@ -203,7 +203,7 @@ export default function BankCreateComponent (props) {
               </Box>
             </Grid>
             <Grid item md={12} lg={5}>
-              <Box m={3}>
+              <Box ml={3} m={1}>
                 <FormControl fullWidth>
                   <InputLabel htmlFor='bank-address-line2-input'>
                     Line 2
@@ -223,7 +223,7 @@ export default function BankCreateComponent (props) {
           </Grid>
           <Grid container>
             <Grid item md={12} lg={6}>
-              <Box m={3}>
+              <Box ml={3} m={1}>
                 <FormControl fullWidth>
                   <InputLabel htmlFor='bank-address-city-input'>
                     City
@@ -238,7 +238,7 @@ export default function BankCreateComponent (props) {
               </Box>
             </Grid>
             <Grid item md={12} lg={5}>
-              <Box m={3}>
+              <Box ml={3} m={1}>
                 <FormControl fullWidth>
                   <InputLabel htmlFor='bank-address-state-input'>
                     State
@@ -257,7 +257,7 @@ export default function BankCreateComponent (props) {
             </Grid>
             <Grid container>
               <Grid item md={12} lg={6}>
-                <Box m={3}>
+                <Box ml={3} m={1}>
                   <FormControl fullWidth>
                     <InputLabel htmlFor='bank-address-country-input'>
                       Country
@@ -275,7 +275,7 @@ export default function BankCreateComponent (props) {
                 </Box>
               </Grid>
               <Grid item md={12} lg={5}>
-                <Box m={3}>
+                <Box ml={3} m={1}>
                   <FormControl fullWidth>
                     <InputLabel htmlFor='bank-address-postal-code-input'>
                       Postal Code
