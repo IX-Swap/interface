@@ -47,10 +47,9 @@ function ListBankAccounts ({ list }) {
           <Table aria-label='accounts table'>
             <TableHead>
               <TableRow>
-                <TableCell>Bank Account Name</TableCell>
-                <TableCell align='right'>Account Holder</TableCell>
-                <TableCell align='right'>Bank Account Number</TableCell>
-                <TableCell align='right'>Swift Code</TableCell>
+                <TableCell>Currency</TableCell>
+                <TableCell>Account Id</TableCell>
+                <TableCell align='right'>Balance</TableCell>
                 <TableCell align='right'>Account Status</TableCell>
               </TableRow>
             </TableHead>
@@ -58,13 +57,12 @@ function ListBankAccounts ({ list }) {
               {list.map(row => (
                 <TableRow key={row._id}>
                   <TableCell component='th' scope='row'>
-                    {row.bankName}
+                    {row.account.asset.symbol}
                   </TableCell>
-                  <TableCell align='right'>{row.accountHolderName}</TableCell>
-                  <TableCell align='right'>{row.bankAccountNumber}</TableCell>
-                  <TableCell align='right'>{row.swiftCode}</TableCell>
+                  <TableCell>{row.account._id}</TableCell>
+                  <TableCell align='right'>{row.account.balance}</TableCell>
                   <TableCell align='right'>
-                    {row.authorized ? 'Account Verified' : 'Account Pending'}
+                    {row.authorized ? 'Authroized' : 'Unauthorized'}
                   </TableCell>
                 </TableRow>
               ))}
@@ -121,7 +119,7 @@ function useBankListLogic () {
     if (loadBanks) {
       listBankAccount(bankDispatch)
     }
-  }, [bankListState, bankDispatch])
+  }, [bankListState, bankDispatch, loadBanks])
 
   return { bankDispatch, bankListState, loadBanks }
 }
