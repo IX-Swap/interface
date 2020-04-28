@@ -1,51 +1,40 @@
 import React from 'react'
 import { Route, Switch, withRouter } from 'react-router-dom'
 import { Grid } from '@material-ui/core'
-import PageTitle from '../../components/PageTitle'
 
-import Widget from '../../components/Widget/Widget'
-import WalletCreateComponent from './wallets/WalletCreateComponent'
-import { WalletCreateProvider } from './wallets/WalletCreateContext'
+import BankCreateComponent from './bank/BankCreateComponent'
+import BankListComponent from './bank/BankListComponent'
+import { BankCreateProvider } from './bank/BankCreateContext'
+import { BankListProvider } from './bank/BankListContext'
+import { AssetsProvider } from 'context/AssetsContext'
 
-function Explorer (props) {
+function Accounts (props) {
   return (
-    <Grid container title='Accounts'>
-      <PageTitle title='Accounts' />
-      <Grid item xs={12} sm={12} md={12}>
-        <Widget title='Account Components' disableWidgetMenu>
-          <Grid container>
-            <Grid item sm={12} md={3}>
-              Blocks and Transactions
-              <ul>
-                <li>
-                  <a href='/accounts/transfer-token'>BlockInfo</a>
-                </li>
-              </ul>
-            </Grid>
-            <Grid item sm={12} md={3}>
-              Wallets
-              <ul>
-                <li>
-                  <a href='/accounts/wallet-create'>Create Seed Phrase</a>
-                </li>
-              </ul>
-            </Grid>
-          </Grid>
-        </Widget>
-      </Grid>
+    <Grid container title='Accounts' justify='center' alignItems='center'>
       <Switch>
-        <Route
-          eact
-          path='/accounts/wallet-create'
-          component={() => (
-            <WalletCreateProvider>
-              <WalletCreateComponent />
-            </WalletCreateProvider>
-          )}
-        />
+        <AssetsProvider>
+          <BankListProvider>
+            <BankCreateProvider>
+              <AccountRoutes />
+            </BankCreateProvider>
+          </BankListProvider>
+        </AssetsProvider>
       </Switch>
     </Grid>
   )
 }
 
-export default withRouter(Explorer)
+function AccountRoutes ({ props }) {
+  return (
+    <>
+      <Route exact path='/accounts' component={() => <BankListComponent />} />
+      <Route
+        exact
+        path='/accounts/bank-create'
+        component={BankCreateComponent}
+      />
+    </>
+  )
+}
+
+export default withRouter(Accounts)

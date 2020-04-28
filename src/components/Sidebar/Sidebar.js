@@ -59,12 +59,7 @@ const structure = [
     id: 3,
     label: 'Accounts',
     link: '/accounts',
-    icon: <AccountBalanceIcon />,
-    children: [
-      { label: 'Cash', link: '/cash' },
-      { label: 'Assets', link: '/assets' },
-      { label: 'Reports', link: '/reports' }
-    ]
+    icon: <AccountBalanceIcon />
   },
 
   {
