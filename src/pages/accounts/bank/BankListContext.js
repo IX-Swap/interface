@@ -11,9 +11,13 @@ export const getBankActions = {
   BANK_GET_FAILURE: 'BANK_GET_FAILURE'
 }
 
+const BANK_LIST_STATUS = {
+  INIT: 'INIT',
+  IDLE: 'IDLE',
+  GETTING: 'GETTING'
+}
 const initialState = {
-  isLoading: false,
-  success: false,
+  status: BANK_LIST_STATUS.INIT,
   error: null,
   message: null,
   data: []
@@ -24,17 +28,14 @@ export function listBankReducer (state, action) {
     case getBankActions.BANK_GET_REQUEST:
       return {
         ...state,
-        isLoading: true,
-        success: false,
+        status: BANK_LIST_STATUS.GETTING,
         error: null,
         message: null,
         data: []
       }
     case getBankActions.BANK_GET_SUCCESS:
       return {
-        ...state,
-        isLoading: false,
-        success: true,
+        status: BANK_LIST_STATUS.IDLE,
         error: null,
         message: action.payload.message,
         data: action.payload.data
@@ -42,8 +43,7 @@ export function listBankReducer (state, action) {
     case getBankActions.BANK_GET_FAILURE:
       return {
         ...state,
-        isLoading: false,
-        success: false,
+        status: BANK_LIST_STATUS.IDLE,
         error: action.payload.message,
         message: null,
         data: []
@@ -87,9 +87,8 @@ export function useBankListDispatch () {
 }
 
 export async function listBankAccount (dispatch) {
-  dispatch({ type: getBankActions.BANK_GET_REQUEST })
-
   try {
+    dispatch({ type: getBankActions.BANK_GET_REQUEST })
     const uri = '/custody/bank-account'
     const result = await getRequest(uri)
     const response = await result.json()

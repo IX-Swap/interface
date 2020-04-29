@@ -72,7 +72,10 @@ export default function BankCreateComponent (props) {
 
     createBankAccount(bankDispatch, payload)
       .then(() => {
-        getBankList().then(history.push('/accounts'))
+        getBankList()
+        setTimeout(() => {
+          history.push('/accounts')
+        }, 1000)
       })
       .catch()
   }
