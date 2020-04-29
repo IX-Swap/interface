@@ -29,15 +29,23 @@ import {
   ASSETS_STATUS
 } from 'context/AssetsContext'
 
+import {
+  useIdentityState,
+  getIdentity,
+  useIdentityDispatch,
+  IDENTITY_STATUS
+} from 'context/IdentityContext'
+
 export default function BankCreateComponent (props) {
   const bankDispatch = useAccountDispatch()
   const {
     currencies,
     assetsReady,
     getBankList,
-    bankState,
+    accountState,
     handleSelectChange,
     assetId,
+    identity,
     symbol
   } = useBankCreateLogic()
 
@@ -54,9 +62,10 @@ export default function BankCreateComponent (props) {
   const [bankAccountHolderName, setBankAccountHolderName] = useState('')
   const [swiftCode, setSwiftCode] = useState('')
   const [bankAccountNumber, setBankAccountNumber] = useState('')
-
+ 
   const handleClickSubmit = () => {
     const payload = {
+      userId: identity._id,
       bankName: bankAccountName,
       bankAddress: bankAddress,
       accountHolderName: bankAccountHolderName,
@@ -294,7 +303,7 @@ export default function BankCreateComponent (props) {
           </Grid>
           <Grid item>
             <Box m={3} p={3}>
-              {!bankState.isLoading ? (
+              {!accountState.isLoading ? (
                 <FormControl>
                   <Button
                     variant='contained'
@@ -318,20 +327,24 @@ export default function BankCreateComponent (props) {
 function useBankCreateLogic () {
   const assetsDispatch = useAssetsDispatch()
   const bankListDispatch = useAccountDispatch()
-  const bankState = useAccountState()
+  const accountState = useAccountState()
   const [assetId, setAssetId] = useState('')
   const [symbol, setSymbol] = useState('')
-
   const { status: assetsStatus, assets } = useAssetsState()
-
+  const identityDispatch = useIdentityDispatch()
+  const { status: identityStatus, identity } = useIdentityState()
   // const currencies = assetsReady ? assets.list.map(asset => asset.symbol) : ''
 
   const assetsReady = ![ASSETS_STATUS.INIT].includes(assetsStatus)
+
   useEffect(() => {
     if (assetsStatus === ASSETS_STATUS.INIT) {
       getAssets(assetsDispatch)
     }
-  }, [assetsStatus, assetsDispatch])
+    if (identityStatus === IDENTITY_STATUS.INIT) {
+      getIdentity(identityDispatch)
+    }
+  }, [assetsStatus, assetsDispatch, identityStatus, identityDispatch])
 
   const currencies = assets.list
     ? assets.list.map((asset, i) => {
@@ -341,7 +354,7 @@ function useBankCreateLogic () {
         return 0
       })
     : []
-      console.log('currencies: ', currencies)
+
   const getBankList = () => getBankAccounts(bankListDispatch)
 
   const handleSelectChange = ev => {
@@ -357,7 +370,8 @@ function useBankCreateLogic () {
     currencies,
     assetsReady,
     getBankList,
-    bankState,
+    accountState,
+    identity,
     handleSelectChange,
     assetId,
     symbol

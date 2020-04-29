@@ -6,6 +6,7 @@ import BankCreateComponent from './bank/BankCreateComponent'
 import BankListComponent from './bank/BankListComponent'
 import { AccountProvider } from 'context/AccountContext'
 import { AssetsProvider } from 'context/AssetsContext'
+import { IdentityProvider } from 'context/IdentityContext'
 
 function Accounts (props) {
   return (
@@ -13,7 +14,9 @@ function Accounts (props) {
       <Switch>
         <AssetsProvider>
           <AccountProvider>
-            <AccountRoutes />
+            <IdentityProvider>
+              <AccountRoutes />
+            </IdentityProvider>
           </AccountProvider>
         </AssetsProvider>
       </Switch>
