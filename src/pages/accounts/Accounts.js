@@ -4,8 +4,7 @@ import { Grid } from '@material-ui/core'
 
 import BankCreateComponent from './bank/BankCreateComponent'
 import BankListComponent from './bank/BankListComponent'
-import { BankCreateProvider } from './bank/BankCreateContext'
-import { BankListProvider } from './bank/BankListContext'
+import { AccountProvider } from 'context/AccountContext'
 import { AssetsProvider } from 'context/AssetsContext'
 
 function Accounts (props) {
@@ -13,11 +12,9 @@ function Accounts (props) {
     <Grid container title='Accounts' justify='center' alignItems='center'>
       <Switch>
         <AssetsProvider>
-          <BankListProvider>
-            <BankCreateProvider>
-              <AccountRoutes />
-            </BankCreateProvider>
-          </BankListProvider>
+          <AccountProvider>
+            <AccountRoutes />
+          </AccountProvider>
         </AssetsProvider>
       </Switch>
     </Grid>

@@ -14,25 +14,26 @@ import {
   CircularProgress
 } from '@material-ui/core'
 import {
-  useBankListDispatch,
-  useBankListState,
-  listBankAccount
-} from './BankListContext'
+  useAccountDispatch,
+  useAccountState,
+  getBankAccounts
+} from 'context/AccountContext'
 import { withRouter, useHistory } from 'react-router-dom'
 
 function BankListComponent (props) {
   const { bankListState } = useBankListLogic()
+
   return (
     <Grid container justify='center' alignItems='center'>
       <Grid item xs={12} sm={12} md={12} lg={8}>
         {bankListState.status === 'GETTING' ? (
           <CircularProgress />
-        ) : !bankListState.data ? (
+        ) : !bankListState.banks ? (
           <AddBankAccount props={props} />
         ) : (
           <ListBankAccounts
             status={bankListState.status}
-            list={bankListState.data}
+            list={bankListState.banks.list}
           />
         )}
       </Grid>
@@ -49,23 +50,31 @@ function ListBankAccounts ({ list, status }) {
           <Table aria-label='accounts table'>
             <TableHead>
               <TableRow>
-                <TableCell>Currency</TableCell>
-                <TableCell>Account Id</TableCell>
-                <TableCell align='right'>Balance</TableCell>
+                <TableCell>Bank Account Name</TableCell>
+                <TableCell align='right'>Account Holder</TableCell>
+                <TableCell align='right'>Bank Account Number</TableCell>
+                <TableCell align='right'>Swift Code</TableCell>
                 <TableCell align='right'>Account Status</TableCell>
               </TableRow>
             </TableHead>
             <TableBody>
               {list.map(row => (
                 <TableRow key={row._id}>
-                  <TableCell component='th' scope='row'>
-                    {row.account.asset.symbol}
-                  </TableCell>
-                  <TableCell>{row.account._id}</TableCell>
-                  <TableCell align='right'>{row.account.balance}</TableCell>
-                  <TableCell align='right'>
-                    {row.authorized ? 'Authroized' : 'Unauthorized'}
-                  </TableCell>
+                <TableCell component='th' scope='row'>
+                  {row.bankName}
+                </TableCell>
+                <TableCell align='right'>
+                  {row.accountHolderName}
+                </TableCell>
+                <TableCell align='right'>
+                  {row.bankAccountNumber}
+                </TableCell>
+                <TableCell align='right'>
+                  {row.swiftCode}
+                </TableCell>
+                <TableCell align='right'>
+                  {row.authorized ? 'Account Verified' : 'Account Pending'}
+                </TableCell>
                 </TableRow>
               ))}
             </TableBody>
@@ -111,15 +120,15 @@ function AddBankAccount ({ props }) {
 }
 
 function useBankListLogic () {
-  const bankDispatch = useBankListDispatch()
-  const bankListState = useBankListState()
+  const bankDispatch = useAccountDispatch()
+  const bankListState = useAccountState()
   const { status } = bankListState
   const loadBanks =
     !bankListState.success && !bankListState.isLoading && !bankListState.error
 
   useEffect(() => {
     if (status === 'INIT') {
-      listBankAccount(bankDispatch)
+      getBankAccounts(bankDispatch)
     }
   }, [status, bankDispatch, loadBanks])
 

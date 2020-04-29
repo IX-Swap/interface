@@ -15,13 +15,12 @@ import {
   CircularProgress
 } from '@material-ui/core'
 
-import {
-  createBankAccount,
-  useBankCreateDispatch,
-  useBankCreateState
-} from './BankCreateContext'
-
-import { useBankListDispatch, listBankAccount } from './BankListContext'
+import { 
+  useAccountDispatch,
+  useAccountState,
+  getBankAccounts,
+  createBankAccount
+} from 'context/AccountContext'
 
 import {
   useAssetsDispatch,
@@ -31,7 +30,7 @@ import {
 } from 'context/AssetsContext'
 
 export default function BankCreateComponent (props) {
-  const bankDispatch = useBankCreateDispatch()
+  const bankDispatch = useAccountDispatch()
   const {
     currencies,
     assetsReady,
@@ -318,8 +317,8 @@ export default function BankCreateComponent (props) {
 
 function useBankCreateLogic () {
   const assetsDispatch = useAssetsDispatch()
-  const bankListDispatch = useBankListDispatch()
-  const bankState = useBankCreateState()
+  const bankListDispatch = useAccountDispatch()
+  const bankState = useAccountState()
   const [assetId, setAssetId] = useState('')
   const [symbol, setSymbol] = useState('')
 
@@ -342,8 +341,8 @@ function useBankCreateLogic () {
         return 0
       })
     : []
-
-  const getBankList = () => listBankAccount(bankListDispatch)
+      console.log('currencies: ', currencies)
+  const getBankList = () => getBankAccounts(bankListDispatch)
 
   const handleSelectChange = ev => {
     ev.preventDefault()
