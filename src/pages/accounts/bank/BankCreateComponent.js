@@ -11,13 +11,14 @@ import {
   Paper,
   Typography,
   MenuItem,
-  Select
+  Select,
+  CircularProgress
 } from '@material-ui/core'
 
 import {
   createBankAccount,
-  useBankCreateDispatch
-  // useBankCreateState
+  useBankCreateDispatch,
+  useBankCreateState
 } from './BankCreateContext'
 
 import { useBankListDispatch, listBankAccount } from './BankListContext'
@@ -31,8 +32,15 @@ import {
 
 export default function BankCreateComponent (props) {
   const bankDispatch = useBankCreateDispatch()
-  const { currencies, assetsReady, getBankList } = useBankCreateLogic()
-  // const bankState = useBankCreateState();
+  const {
+    currencies,
+    assetsReady,
+    getBankList,
+    bankState,
+    handleSelectChange,
+    assetId,
+    symbol
+  } = useBankCreateLogic()
 
   const history = useHistory()
   const [bankAccountName, setBankAccountName] = useState('')
@@ -47,18 +55,6 @@ export default function BankCreateComponent (props) {
   const [bankAccountHolderName, setBankAccountHolderName] = useState('')
   const [swiftCode, setSwiftCode] = useState('')
   const [bankAccountNumber, setBankAccountNumber] = useState('')
-  const [assetId, setAssetId] = useState('')
-  const [symbol, setSymbol] = useState('')
-
-  // fetch identity data for initial values
-  const handleSelectChange = ev => {
-    ev.preventDefault()
-    setSymbol(ev.target.value)
-    currencies.map(c => {
-      if (c.id === ev.target.value) setAssetId(c.assetId)
-      return 0
-    })
-  }
 
   const handleClickSubmit = () => {
     const payload = {
@@ -82,7 +78,7 @@ export default function BankCreateComponent (props) {
 
   return (
     <Grid container justify='center' alignItems='center'>
-      <Grid item lg={8}>
+      <Grid item lg={9}>
         <Paper>
           <Grid item sm={12} md={12} lg={12}>
             <Box mt={3} p={3}>
@@ -299,15 +295,19 @@ export default function BankCreateComponent (props) {
           </Grid>
           <Grid item>
             <Box m={3} p={3}>
-              <FormControl>
-                <Button
-                  variant='contained'
-                  color='primary'
-                  onClick={handleClickSubmit}
-                >
-                  Submit
-                </Button>
-              </FormControl>
+              {!bankState.isLoading ? (
+                <FormControl>
+                  <Button
+                    variant='contained'
+                    color='primary'
+                    onClick={handleClickSubmit}
+                  >
+                    Submit
+                  </Button>
+                </FormControl>
+              ) : (
+                <CircularProgress />
+              )}
             </Box>
           </Grid>
         </Paper>
@@ -319,6 +319,9 @@ export default function BankCreateComponent (props) {
 function useBankCreateLogic () {
   const assetsDispatch = useAssetsDispatch()
   const bankListDispatch = useBankListDispatch()
+  const bankState = useBankCreateState()
+  const [assetId, setAssetId] = useState('')
+  const [symbol, setSymbol] = useState('')
 
   const { status: assetsStatus, assets } = useAssetsState()
 
@@ -342,9 +345,22 @@ function useBankCreateLogic () {
 
   const getBankList = () => listBankAccount(bankListDispatch)
 
+  const handleSelectChange = ev => {
+    ev.preventDefault()
+    setSymbol(ev.target.value)
+    currencies.map(c => {
+      if (c.id === ev.target.value) setAssetId(c.assetId)
+      return 0
+    })
+  }
+
   return {
     currencies,
     assetsReady,
-    getBankList
+    getBankList,
+    bankState,
+    handleSelectChange,
+    assetId,
+    symbol
   }
 }
