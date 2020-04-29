@@ -3,7 +3,6 @@ import {
   Box,
   Card,
   Grid,
-  Paper,
   Table,
   TableBody,
   TableCell,
@@ -57,22 +56,18 @@ function ListBankAccounts ({ list, status }) {
               </TableRow>
             </TableHead>
             <TableBody>
-              {status === 'IDLE' ? (
-                list.map(row => (
-                  <TableRow key={row._id}>
-                    <TableCell component='th' scope='row'>
-                      {row.account.asset.symbol}
-                    </TableCell>
-                    <TableCell>{row.account._id}</TableCell>
-                    <TableCell align='right'>{row.account.balance}</TableCell>
-                    <TableCell align='right'>
-                      {row.authorized ? 'Authroized' : 'Unauthorized'}
-                    </TableCell>
-                  </TableRow>
-                ))
-              ) : (
-                <CircularProgress />
-              )}
+              {list.map(row => (
+                <TableRow key={row._id}>
+                  <TableCell component='th' scope='row'>
+                    {row.account.asset.symbol}
+                  </TableCell>
+                  <TableCell>{row.account._id}</TableCell>
+                  <TableCell align='right'>{row.account.balance}</TableCell>
+                  <TableCell align='right'>
+                    {row.authorized ? 'Authroized' : 'Unauthorized'}
+                  </TableCell>
+                </TableRow>
+              ))}
             </TableBody>
           </Table>
         </TableContainer>
