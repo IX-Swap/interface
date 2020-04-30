@@ -9,12 +9,12 @@ import * as serviceWorker from './serviceWorker'
 import { UserProvider } from './context/UserContext'
 
 ReactDOM.render(
-  <UserProvider>
-    <ThemeProvider theme={Themes.default}>
-      <CssBaseline />
+  <ThemeProvider theme={Themes.default}>
+    <CssBaseline />
+    <UserProvider>
       <App />
-    </ThemeProvider>
-  </UserProvider>,
+    </UserProvider>
+  </ThemeProvider>,
   document.getElementById('root')
 )
 

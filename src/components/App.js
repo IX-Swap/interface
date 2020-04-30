@@ -54,7 +54,7 @@ function App () {
           <div className={classes.fakeToolbar} />
           <Route exact path='/' render={GotoDashboard} />
           <PrivateRoute path='/dashboard' component={Dashboard} />
-          <PrivateRoute path='/exchange' component={Exchange} />
+          <PrivateRoute exact path='/trade' component={Exchange} />
           <PrivateRoute path='/accounts' component={Accounts} />
           <PrivateRoute path='/identity' component={Identity} />
           <PrivateRoute path='/invest' component={Invest} />
