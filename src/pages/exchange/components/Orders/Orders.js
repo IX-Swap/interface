@@ -50,7 +50,7 @@ export default function Orders () {
   } = useOrdersLogic()
 
   return (
-    <Paper className={[classes.root, classes.paper]} elevation={0}>
+    <Paper className={classes.paper} elevation={0}>
       <AppBar position='static' color='default' elevation={1}>
         <Tabs
           value={value}
@@ -73,7 +73,7 @@ export default function Orders () {
           You don't have any open orders.
         </TabPanel>
         <TabPanel value={value} index={1} dir={theme.direction}>
-          ORDER HISTORY
+          You have not made any orders.
         </TabPanel>
       </SwipeableViews>
     </Paper>

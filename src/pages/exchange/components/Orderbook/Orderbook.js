@@ -32,7 +32,7 @@ export default function Orderbook ({ state, setMarket }) {
   } = useOrderbookLogic()
 
   return (
-    <Paper className={[classes.root, classes.paper]} elevation={0}>
+    <Paper className={classes.paper} elevation={0}>
       <AppBar position='static' color='default' elevation={1}>
         <Tabs
           value={value}
@@ -68,7 +68,7 @@ function Buy () {
 
   const { price, amount } = useOrderbookLogic()
   return (
-    <Grid container justify='space-between'>
+    <Grid container justify='center'>
       <Grid item>
         <Box m={1}>
           <Button className={classes.bidButton}>
@@ -82,7 +82,7 @@ function Buy () {
             <TextField
               id='order-amount'
               label='AMOUNT'
-              style={{ width: 200 }}
+              style={{ width: 150 }}
               type='number'
               size='small'
               value={amount}
@@ -99,7 +99,7 @@ function Buy () {
           <FormControl>
             <TextField
               id='order-price'
-              style={{ width: 200 }}
+              style={{ width: 150 }}
               label='PRICE'
               type='price'
               value={price}
@@ -121,14 +121,14 @@ function Sell () {
 
   const { price, amount } = useOrderbookLogic()
   return (
-    <Grid container justify='space-between'>
+    <Grid container justify='center'>
       <Grid item>
         <Box m={1}>
           <FormControl>
             <TextField
               id='order-amount'
               label='AMOUNT'
-              style={{ width: 200 }}
+              style={{ width: 150 }}
               type='number'
               size='small'
               value={amount}
@@ -145,7 +145,7 @@ function Sell () {
           <FormControl>
             <TextField
               id='order-price'
-              style={{ width: 200 }}
+              style={{ width: 150 }}
               label='PRICE'
               type='price'
               value={price}

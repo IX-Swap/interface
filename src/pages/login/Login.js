@@ -160,9 +160,7 @@ function Login (props) {
                 fullWidth
               />
               <div className={classes.formButtons}>
-                {userState.isLoading ? (
-                  <CircularProgress size={26} className={classes.loginLoader} />
-                ) : (
+                {userState && !userState.isLoading ? (
                   <Button
                     disabled={
                       usernameValue.length === 0 || passwordValue.length === 0
@@ -181,6 +179,8 @@ function Login (props) {
                   >
                     Login
                   </Button>
+                ) : (
+                  <CircularProgress size={26} className={classes.loginLoader} />
                 )}
                 <Button
                   color='primary'
