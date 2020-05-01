@@ -10,7 +10,6 @@ import Header from './Header'
 import Sidebar from './Sidebar'
 import useStyles from './Layout/styles'
 
-import Dashboard from '../pages/dashboard'
 import Exchange from '../pages/exchange'
 import Accounts from '../pages/accounts'
 import Identity from '../pages/identity'
