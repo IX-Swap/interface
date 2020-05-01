@@ -17,7 +17,7 @@ import {
 
 // components
 import Widget from '../../components/Widget/Widget'
-import ApexLineChart from './components/ApexLineChart'
+import ApexLineChart from '../../../exchange/components/PriceChart/ApexLineChart'
 import ApexHeatmap from './components/ApexHeatmap'
 import PageTitle from '../../components/PageTitle/PageTitle'
 
@@ -94,43 +94,12 @@ export default function Charts (props) {
           </Widget>
         </Grid>
         <Grid item xs={12} md={8}>
-          <Widget title='Simple Line Chart' noBodyPadding upperTitle>
-            <ResponsiveContainer width='100%' height={350}>
-              <LineChart
-                width={500}
-                height={300}
-                data={lineChartData}
-                margin={{
-                  top: 5,
-                  right: 30,
-                  left: 20,
-                  bottom: 5
-                }}
-              >
-                <CartesianGrid strokeDasharray='3 3' />
-                <XAxis dataKey='name' />
-                <YAxis />
-                <Tooltip />
-                <Legend />
-                <Line
-                  type='monotone'
-                  dataKey='pv'
-                  stroke={theme.palette.primary.main}
-                  activeDot={{ r: 8 }}
-                />
-                <Line
-                  type='monotone'
-                  dataKey='uv'
-                  stroke={theme.palette.secondary.main}
-                />
-              </LineChart>
-            </ResponsiveContainer>
-          </Widget>
+          <Widget title='Simple Line Chart' noBodyPadding upperTitle></Widget>
         </Grid>
         <Grid item xs={12} md={4}>
           <Widget title='Pie Chart with Tooltips' noBodyPadding upperTitle>
             <ResponsiveContainer width='100%' height={300}>
-              <PieChart width={200} height={300}>
+              <PieChart width={200} height={200}>
                 <Pie
                   activeIndex={activeIndex}
                   activeShape={renderActiveShape}
@@ -213,7 +182,8 @@ function renderActiveShape (props) {
         y={ey}
         textAnchor={textAnchor}
         fill='#333'
-      >{`PV ${value}`}
+      >
+        {`PV ${value}`}
       </text>
       <text
         x={ex + (cos >= 0 ? 1 : -1) * 12}

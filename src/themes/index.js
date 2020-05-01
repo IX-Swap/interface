@@ -4,18 +4,7 @@ import { createMuiTheme } from '@material-ui/core'
 
 const overrides = {
   typography: {
-    fontFamily: [
-      '-apple-system',
-      'BlinkMacSystemFont',
-      'Segoe UI',
-      'Roboto',
-      'Oxygen',
-      'Ubuntu',
-      'Cantarell',
-      'Open Sans',
-      'Helvetica Neue',
-      'sans-serif !important;'
-    ].join(','),
+    fontFamily: '"Open Sans", "Helvetica Neue", sans-serif !important',
     h1: {
       fontSize: '3rem'
     },

@@ -57,7 +57,7 @@ export default function Header (props) {
           )}
         </IconButton>
         <Typography variant='h6' weight='medium' className={classes.logotype}>
-          InvestaX Digital Securities
+          DIGITAL SECURITIES
         </Typography>
         <div className={classes.grow} />
 

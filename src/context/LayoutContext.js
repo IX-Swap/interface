@@ -4,7 +4,7 @@ const LayoutStateContext = React.createContext()
 const LayoutDispatchContext = React.createContext()
 
 const initialState = {
-  isSidebarOpened: true
+  isSidebarOpened: false
 }
 
 function layoutReducer (state, action) {
