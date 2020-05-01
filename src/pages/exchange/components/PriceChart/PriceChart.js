@@ -1,5 +1,6 @@
 import React from 'react'
-import { Grid, Paper, Box, makeStyles } from '@material-ui/core'
+import { Grid, Paper, makeStyles } from '@material-ui/core'
+import ApexLineChart from './ApexLineChart'
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -11,14 +12,12 @@ const useStyles = makeStyles(theme => ({
   }
 }))
 
-export default function PriceChart () {
+export default function PriceChart ({ series }) {
   const classes = useStyles()
   return (
     <Grid item>
-      <Paper elevation={1} className={classes.paper}>
-        <Box>
-          <b>PRICE CHART</b>
-        </Box>
+      <Paper elevation={0} className={classes.paper}>
+        <ApexLineChart series={series} />
       </Paper>
     </Grid>
   )

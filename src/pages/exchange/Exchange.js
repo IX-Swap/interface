@@ -1,5 +1,5 @@
-import React from 'react'
-import { Grid, makeStyles } from '@material-ui/core'
+import React, { useState } from 'react'
+import { Grid } from '@material-ui/core'
 import { withRouter } from 'react-router-dom'
 
 import Market from 'pages/exchange/components/Market'
@@ -10,58 +10,22 @@ import Diligence from 'pages/exchange/components/Diligence'
 import Orderbook from 'pages/exchange/components/Orderbook'
 import Markets from 'pages/exchange/components/Markets'
 import Trades from 'pages/exchange/components/Trades'
+import useStyles from 'pages/exchange/styles'
+import { state } from './mock-data/data'
 
-const useStyles = makeStyles(theme => ({
-  root: {
-    flexGrow: 1
-  },
-  paper: {
-    padding: 20
-  },
-  market: {
-    minWidth: 300,
-    minHeight: 300
-  },
-  balance: {
-    minWidth: 300,
-    minHeight: 300
-  },
-  orders: {
-    minWidth: 300,
-    minHeight: 300
-  },
-  priceChart: {
-    minWidth: 300,
-    minHeight: 300
-  },
-  dilligence: {
-    minWidth: 300,
-    minHeight: 300
-  },
-  orderbook: {
-    minWidth: 300,
-    minHeight: 300
-  },
-  markets: {
-    minWidth: 300,
-    minHeight: 300
-  },
-  trades: {
-    minWidth: 300,
-    minHeight: 300
-  }
-}))
 function Exchange (props) {
+  const { state, market, setMarket } = useExchangeLogic()
+
   const classes = useStyles()
   return (
     <Grid container spacing={3}>
       <Grid item sm={12} md={5} lg={3}>
         <Grid container spacing={3}>
           <Grid item xs={12} sm={6} md={12} lg={12} className={classes.market}>
-            <Market />
+            <Market state={state[market].market} />
           </Grid>
           <Grid item xs={12} sm={6} md={12} lg={12} className={classes.balance}>
-            <Balances />
+            <Balances balances={state.balances} />
           </Grid>
           <Grid item xs={12} sm={12} md={12} lg={12} className={classes.orders}>
             <Orders />
@@ -70,11 +34,11 @@ function Exchange (props) {
       </Grid>
       <Grid item sm={12} md={7} lg={5}>
         <Grid container spacing={3}>
-          <Grid item xs={12} sm={12} md={12} className={classes.priceChart}>
-            <PriceChart />
-          </Grid>
           <Grid item xs={12} sm={12} md={12} className={classes.dilligence}>
             <Diligence />
+          </Grid>
+          <Grid item xs={12} sm={12} md={12} className={classes.priceChart}>
+            <PriceChart series={state[market].series} />
           </Grid>
           <Grid item xs={12} sm={12} md={12} className={classes.orderbook}>
             <Orderbook />
@@ -84,7 +48,7 @@ function Exchange (props) {
       <Grid item sm={12} md={12} lg={4}>
         <Grid container spacing={3}>
           <Grid xs={12} item md={6} lg={12} className={classes.markets}>
-            <Markets />
+            <Markets state={state} setMarket={setMarket} />
           </Grid>
           <Grid xs={12} item md={6} lg={12} className={classes.trades}>
             <Trades />
@@ -95,4 +59,9 @@ function Exchange (props) {
   )
 }
 
+function useExchangeLogic () {
+  const [market, setMarket] = useState('IXPS-SGD')
+
+  return { state, market, setMarket }
+}
 export default withRouter(Exchange)

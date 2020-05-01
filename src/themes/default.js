@@ -3,8 +3,9 @@ import tinycolor from 'tinycolor2'
 const primary = '#276ca5'
 const secondary = '#1C4F79'
 const warning = '#a31037'
-const success = '#5ea14f'
+const success = '#348633'
 const info = '#9013FE'
+const error = '#DD0F0F'
 
 const lightenRate = 7.5
 const darkenRate = 15
@@ -38,6 +39,9 @@ export default {
       dark: tinycolor(warning)
         .darken(darkenRate)
         .toHexString()
+    },
+    error: {
+      main: error
     },
     success: {
       main: success,

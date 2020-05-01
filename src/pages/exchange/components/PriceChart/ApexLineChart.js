@@ -2,32 +2,20 @@ import React from 'react'
 import ApexCharts from 'react-apexcharts'
 import { useTheme } from '@material-ui/styles'
 
-const series = [
-  {
-    name: 'series1',
-    data: [31, 40, 28, 51, 42, 109, 100]
-  },
-  {
-    name: 'series2',
-    data: [11, 32, 45, 32, 34, 52, 41]
-  }
-]
-
-export default function ApexLineChart () {
+export default function ApexLineChart ({ series }) {
   var theme = useTheme()
 
   return (
     <ApexCharts
-      options={themeOptions(theme)}
+      options={themeOptions(theme, series[0].dates)}
       series={series}
-      type='area'
-      height={350}
+      height={200}
     />
   )
 }
 
 // ############################################################
-function themeOptions (theme) {
+function themeOptions (theme, dates) {
   return {
     dataLabels: {
       enabled: false
@@ -37,15 +25,11 @@ function themeOptions (theme) {
     },
     xaxis: {
       type: 'datetime',
-      categories: [
-        '2018-09-19T00:00:00',
-        '2018-09-19T01:30:00',
-        '2018-09-19T02:30:00',
-        '2018-09-19T03:30:00',
-        '2018-09-19T04:30:00',
-        '2018-09-19T05:30:00',
-        '2018-09-19T06:30:00'
-      ]
+      categories: dates
+    },
+    yaxis: {
+      position: 'right',
+      orient: 'right'
     },
     tooltip: {
       x: {
@@ -56,11 +40,11 @@ function themeOptions (theme) {
       colors: [theme.palette.primary.light, theme.palette.success.light]
     },
     colors: [theme.palette.primary.main, theme.palette.success.main],
-    chart: {
-      toolbar: {
-        show: false
-      }
-    },
+    // chart: {
+    //   toolbar: {
+    //     show: false
+    //   }
+    // },
     legend: {
       show: false
     }

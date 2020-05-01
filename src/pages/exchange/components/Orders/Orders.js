@@ -6,7 +6,7 @@ const useStyles = makeStyles(theme => ({
     flexGrow: 1
   },
   paper: {
-    height: 300,
+    minHeight: 220,
     padding: 20
   }
 }))
@@ -15,7 +15,7 @@ export default function Orders () {
   const classes = useStyles()
   return (
     <Grid item>
-      <Paper elevation={1} className={classes.paper}>
+      <Paper elevation={0} className={classes.paper}>
         <Box>
           <b>ORDERS</b>
         </Box>

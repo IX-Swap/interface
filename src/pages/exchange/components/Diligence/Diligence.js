@@ -15,7 +15,7 @@ export default function Diligence () {
   const classes = useStyles()
   return (
     <Grid item>
-      <Paper elevation={1} className={classes.paper}>
+      <Paper elevation={0} className={classes.paper}>
         <Box>
           <b>DILIGENCE</b>
         </Box>
