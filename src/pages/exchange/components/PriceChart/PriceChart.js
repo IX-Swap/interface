@@ -1,16 +1,8 @@
 import React from 'react'
-import { Grid, Paper, makeStyles } from '@material-ui/core'
+import { Grid, Paper } from '@material-ui/core'
 import ApexLineChart from './ApexLineChart'
 
-const useStyles = makeStyles(theme => ({
-  root: {
-    flexGrow: 1
-  },
-  paper: {
-    height: 240,
-    padding: 20
-  }
-}))
+import useStyles from 'pages/exchange/styles'
 
 export default function PriceChart ({ series }) {
   const classes = useStyles()

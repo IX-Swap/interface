@@ -59,7 +59,4 @@ Your app is ready to be deployed!
 
 ## Support
 
-This project is managed by the IvestaX technology team:
-
 chad@investax.io
-binod@investax.io
