@@ -3,113 +3,228 @@ import {
   Grid,
   Paper,
   Box,
-  makeStyles,
   TextField,
   FormControl,
-  Button
+  Button,
+  // TableCell,
+  // TableRow,
+  // TableBody,
+  // Table,
+  // TableContainer,
+  // TableHead,
+  Typography,
+  AppBar,
+  Tabs,
+  Tab
 } from '@material-ui/core'
+import useStyles from 'pages/exchange/styles'
+import PropTypes from 'prop-types'
+import SwipeableViews from 'react-swipeable-views'
+import { useTheme } from '@material-ui/core/styles'
 
-const useStyles = makeStyles(theme => ({
-  root: {
-    flexGrow: 1
-  },
-  paper: {
-    height: 400,
-    padding: 20
-  },
-  askButton: {
-    width: 130,
-    backgroundColor: '#C00808',
-    color: 'white',
-    '&:hover': {
-      backgroundColor: '#C00838'
-    }
-  },
-  bidButton: {
-    width: 130,
-    backgroundColor: '#166814',
-    color: 'white',
-    '&:hover': {
-      backgroundColor: '#164814'
-    }
-  },
-  textField: {
-    height: 10,
-    width: 50
-  }
-}))
+export default function Orderbook ({ state, setMarket }) {
+  const {
+    handleChange,
+    handleChangeIndex,
+    theme,
+    classes,
+    value
+  } = useOrderbookLogic()
 
-export default function Orderbook () {
-  const classes = useStyles()
   return (
-    <Grid item>
-      <Paper elevation={0} className={classes.paper}>
-        <Box>
-          <OrderForm />
-        </Box>
-      </Paper>
-    </Grid>
+    <Paper className={[classes.root, classes.paper]} elevation={0}>
+      <AppBar position='static' color='default' elevation={1}>
+        <Tabs
+          value={value}
+          onChange={handleChange}
+          indicatorColor='primary'
+          textColor='primary'
+          variant='fullWidth'
+          aria-label='full width tabs example'
+        >
+          <Tab label='BUY' {...a11yProps(0)} />
+          <Tab label='SELL' {...a11yProps(1)} />
+        </Tabs>
+      </AppBar>
+      <SwipeableViews
+        axis={theme.direction === 'rtl' ? 'x-reverse' : 'x'}
+        index={value}
+        onChangeIndex={handleChangeIndex}
+      >
+        <TabPanel value={value} index={0} dir={theme.direction}>
+          <Buy />
+        </TabPanel>
+        <TabPanel value={value} index={1} dir={theme.direction}>
+          <Sell />
+        </TabPanel>
+      </SwipeableViews>
+    </Paper>
   )
 }
 
-function OrderForm () {
+function Buy () {
   const classes = useStyles()
 
   const { price, amount } = useOrderbookLogic()
   return (
     <Grid container justify='space-between'>
       <Grid item>
-        <Button className={classes.bidButton}>
-          <b>BUY</b>
-        </Button>
+        <Box m={1}>
+          <Button className={classes.bidButton}>
+            <b>BUY</b>
+          </Button>
+        </Box>
       </Grid>
       <Grid item>
-        <FormControl>
-          <TextField
-            id='order-amount'
-            label='AMOUNT'
-            style={{ width: 150 }}
-            type='number'
-            size='small'
-            value={amount}
-            InputLabelProps={{
-              shrink: true
-            }}
-            variant='outlined'
-          />
-        </FormControl>
+        <Box m={1}>
+          <FormControl>
+            <TextField
+              id='order-amount'
+              label='AMOUNT'
+              style={{ width: 200 }}
+              type='number'
+              size='small'
+              value={amount}
+              InputLabelProps={{
+                shrink: true
+              }}
+              variant='outlined'
+            />
+          </FormControl>
+        </Box>
       </Grid>
       <Grid item>
-        <FormControl>
-          <TextField
-            id='order-price'
-            style={{ width: 150 }}
-            label='PRICE'
-            type='price'
-            value={price}
-            size='small'
-            InputLabelProps={{
-              shrink: true
-            }}
-            variant='outlined'
-          />
-        </FormControl>
+        <Box m={1}>
+          <FormControl>
+            <TextField
+              id='order-price'
+              style={{ width: 200 }}
+              label='PRICE'
+              type='price'
+              value={price}
+              size='small'
+              InputLabelProps={{
+                shrink: true
+              }}
+              variant='outlined'
+            />
+          </FormControl>
+        </Box>
+      </Grid>
+    </Grid>
+  )
+}
+
+function Sell () {
+  const classes = useStyles()
+
+  const { price, amount } = useOrderbookLogic()
+  return (
+    <Grid container justify='space-between'>
+      <Grid item>
+        <Box m={1}>
+          <FormControl>
+            <TextField
+              id='order-amount'
+              label='AMOUNT'
+              style={{ width: 200 }}
+              type='number'
+              size='small'
+              value={amount}
+              InputLabelProps={{
+                shrink: true
+              }}
+              variant='outlined'
+            />
+          </FormControl>
+        </Box>
       </Grid>
       <Grid item>
-        <Button className={classes.askButton}>
-          <b>SELL</b>
-        </Button>
+        <Box m={1}>
+          <FormControl>
+            <TextField
+              id='order-price'
+              style={{ width: 200 }}
+              label='PRICE'
+              type='price'
+              value={price}
+              size='small'
+              InputLabelProps={{
+                shrink: true
+              }}
+              variant='outlined'
+            />
+          </FormControl>
+        </Box>
+      </Grid>
+      <Grid item>
+        <Box m={1}>
+          <Button className={classes.askButton}>
+            <b>SELL</b>
+          </Button>
+        </Box>
       </Grid>
     </Grid>
   )
 }
 
 function useOrderbookLogic () {
+  const classes = useStyles()
+  const theme = useTheme()
+  const [value, setValue] = useState(0)
   const [price, setPrice] = useState()
   const [amount] = useState()
+
+  const handleChange = (event, newValue) => {
+    setValue(newValue)
+  }
+
+  const handleChangeIndex = index => {
+    setValue(index)
+  }
 
   const handlePrice = ev => setPrice(ev.target.price)
   const handleAmount = ev => handleAmount(ev.target.price)
 
-  return { price, amount, handleAmount, handlePrice }
+  return {
+    price,
+    amount,
+    handleAmount,
+    handlePrice,
+    handleChange,
+    handleChangeIndex,
+    value,
+    classes,
+    theme
+  }
+}
+
+function TabPanel (props) {
+  const { children, value, index, ...other } = props
+
+  return (
+    <Typography
+      component='div'
+      role='tabpanel'
+      hidden={value !== index}
+      id={`full-width-tabpanel-${index}`}
+      aria-labelledby={`full-width-tab-${index}`}
+      {...other}
+    >
+      {value === index && <Box p={3}>{children}</Box>}
+    </Typography>
+  )
+}
+
+TabPanel.propTypes = {
+  children: PropTypes.node,
+  index: PropTypes.any.isRequired,
+  value: PropTypes.any.isRequired
+}
+
+function a11yProps (index) {
+  return {
+    id: `full-width-tab-${index}`,
+    'aria-controls': `full-width-tabpanel-${index}`
+  }
 }

@@ -18,9 +18,9 @@ function Exchange (props) {
 
   const classes = useStyles()
   return (
-    <Grid container spacing={3}>
+    <Grid container spacing={1}>
       <Grid item sm={12} md={5} lg={3}>
-        <Grid container spacing={3}>
+        <Grid container spacing={1}>
           <Grid item xs={12} sm={6} md={12} lg={12} className={classes.market}>
             <Market state={state[market].market} />
           </Grid>
@@ -33,7 +33,7 @@ function Exchange (props) {
         </Grid>
       </Grid>
       <Grid item sm={12} md={7} lg={5}>
-        <Grid container spacing={3}>
+        <Grid container spacing={1}>
           <Grid item xs={12} sm={12} md={12} className={classes.dilligence}>
             <Diligence />
           </Grid>
@@ -46,7 +46,7 @@ function Exchange (props) {
         </Grid>
       </Grid>
       <Grid item sm={12} md={12} lg={4}>
-        <Grid container spacing={3}>
+        <Grid container spacing={1}>
           <Grid xs={12} item md={6} lg={12} className={classes.markets}>
             <Markets state={state} setMarket={setMarket} />
           </Grid>

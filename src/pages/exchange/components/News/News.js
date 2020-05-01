@@ -1,15 +1,6 @@
 import React from 'react'
 import { Grid, Paper, Box, makeStyles } from '@material-ui/core'
-
-const useStyles = makeStyles(theme => ({
-  root: {
-    flexGrow: 1
-  },
-  paper: {
-    height: 400,
-    padding: 20
-  }
-}))
+import useStyles from 'pages/exchange/styles'
 
 export default function News () {
   const classes = useStyles()
