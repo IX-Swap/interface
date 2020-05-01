@@ -9,7 +9,7 @@ export default function Market ({ state }) {
     <Grid item>
       <Paper elevation={0} className={classes.paper}>
         <Grid container justify='center' alignItems='center'>
-          <Grid item md={6}>
+          <Grid item xs={6} md={6}>
             <Box pl={2} m={2}>
               <Box ml={2} mt={1}>
                 <img
@@ -29,7 +29,7 @@ export default function Market ({ state }) {
               </Box>
             </Box>
           </Grid>
-          <Grid item md={6} m={3}>
+          <Grid item xs={6} md={6} m={3}>
             <Box pl={2}>
               <Box m={1} pt={1}>
                 <Typography variant='h5'>

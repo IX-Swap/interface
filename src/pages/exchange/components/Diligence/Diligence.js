@@ -50,7 +50,7 @@ export default function Trades () {
   } = useTradesLogic()
 
   return (
-    <Paper className={[classes.root, classes.paper]} elevation={0}>
+    <Paper className={classes.paper} elevation={0}>
       <AppBar position='static' color='default' elevation={1}>
         <Tabs
           value={value}

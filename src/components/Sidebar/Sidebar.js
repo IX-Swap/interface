@@ -32,21 +32,15 @@ import {
 const structure = [
   {
     id: 0,
-    label: 'Dashboard',
-    link: '/dashboard',
-    icon: <DashboardIcon />
+    label: 'Trade',
+    link: '/trade',
+    icon: <ShowChartIcon />
   },
   {
     id: 1,
     label: 'Invest',
     link: '/invest',
     icon: <PieChartIcon />
-  },
-  {
-    id: 2,
-    label: 'Trade',
-    link: '/trade',
-    icon: <ShowChartIcon />
   },
   // { id: 2, label: 'Secondary', link: '/secondary', icon: <ChartIcon /> },
   // {
@@ -56,14 +50,14 @@ const structure = [
   //   icon: <LockIcon />
   // },
   {
-    id: 3,
+    id: 2,
     label: 'Accounts',
     link: '/accounts',
     icon: <AccountBalanceIcon />
   },
 
   {
-    id: 4,
+    id: 2,
     label: 'Settings',
     link: '/settings',
     icon: <SettingsIcon />,
@@ -73,12 +67,12 @@ const structure = [
     ]
   },
   {
-    id: 5,
+    id: 3,
     label: 'Support',
     link: '/primary',
     icon: <HelpIcon />
   },
-  { id: 6, type: 'divider' }
+  { id: 4, type: 'divider' }
   // { id: 6, type: 'title', label: 'HELP' },
   // { id: 7, label: 'Documentation', link: '', icon: <LibraryIcon /> },
   // { id: 8, label: 'Support', link: '', icon: <SupportIcon /> },

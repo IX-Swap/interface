@@ -111,6 +111,7 @@ export function userReducer (state, action) {
       return {
         ...state,
         status: USER_STATUS.IDLE,
+        isLoading: false,
         user: initialState.user,
         error: action.payload
       }
@@ -311,6 +312,8 @@ export async function getUser (dispatch) {
         type: userActions.GET_AUTH_ME_SUCCESS,
         payload: response.data
       })
+    } else {
+      dispatch({ type: userActions.GET_AUTH_ME_FAILURE })
     }
   } catch (err) {
     dispatch({ type: userActions.GET_AUTH_ME_FAILURE })

@@ -53,7 +53,6 @@ function App () {
         >
           <div className={classes.fakeToolbar} />
           <Route exact path='/' render={GotoDashboard} />
-          <PrivateRoute path='/dashboard' component={Dashboard} />
           <PrivateRoute exact path='/trade' component={Exchange} />
           <PrivateRoute path='/accounts' component={Accounts} />
           <PrivateRoute path='/identity' component={Identity} />
@@ -68,7 +67,7 @@ function App () {
     return (
       <Redirect
         to={{
-          pathname: '/dashboard',
+          pathname: '/trade',
           state: { from: props.location }
         }}
       />
@@ -97,7 +96,7 @@ function App () {
         {...rest}
         render={props =>
           isAuthenticated ? (
-            <Redirect to={{ pathname: '/dashboard' }} />
+            <Redirect to={{ pathname: '/trade' }} />
           ) : (
             React.createElement(component, props)
           )

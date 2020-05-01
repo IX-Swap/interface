@@ -3,7 +3,6 @@ import {
   Grid,
   Paper,
   Box,
-  makeStyles,
   TableCell,
   TableRow,
   TableBody,
@@ -21,17 +20,17 @@ import SwipeableViews from 'react-swipeable-views'
 import { useTheme } from '@material-ui/core/styles'
 import useStyles from 'pages/exchange/styles'
 
-export default function Trades ({ balances }) {
+export default function Balances ({ balances }) {
   const {
     handleChange,
     handleChangeIndex,
     theme,
     classes,
     value
-  } = useTradesLogic()
+  } = useBalancesLogic()
 
   return (
-    <Paper className={[classes.root, classes.paper]} elevation={0}>
+    <Paper className={classes.paper} elevation={0}>
       <AppBar position='static' color='default' elevation={1}>
         <Tabs
           value={value}
@@ -51,7 +50,7 @@ export default function Trades ({ balances }) {
         onChangeIndex={handleChangeIndex}
       >
         <TabPanel value={value} index={0} dir={theme.direction}>
-          <Balances balances={balances} />
+          <BalancesTab balances={balances} />
         </TabPanel>
         <TabPanel value={value} index={1} dir={theme.direction}>
           Portfolio
@@ -61,43 +60,57 @@ export default function Trades ({ balances }) {
   )
 }
 
-function Balances ({ balances }) {
-  const classes = makeStyles()
+function useBalancesLogic () {
+  const classes = useStyles()
+  const theme = useTheme()
+  const [value, setValue] = React.useState(0)
+
+  const handleChange = (event, newValue) => {
+    setValue(newValue)
+  }
+
+  const handleChangeIndex = index => {
+    setValue(index)
+  }
+
+  return { handleChange, handleChangeIndex, value, classes, theme }
+}
+
+function BalancesTab ({ balances }) {
+  const classes = useStyles()
   const assets = Object.keys(balances)
   return (
     <Grid item>
-      <Paper elevation={0} className={classes.paper}>
-        <Box>
-          <TableContainer>
-            <Table size='small' aria-label='list of the markets'>
-              <TableHead>
-                <TableRow>
-                  <TableCell>
-                    <b>SYMBOL</b>
+      <Box>
+        <TableContainer>
+          <Table size='small' aria-label='list of the markets'>
+            <TableHead>
+              <TableRow>
+                <TableCell>
+                  <b>SYMBOL</b>
+                </TableCell>
+                <TableCell align='right'>
+                  <b>BALANCE</b>
+                </TableCell>
+                <TableCell align='right'>
+                  <b>VALUE</b>
+                </TableCell>
+              </TableRow>
+            </TableHead>
+            <TableBody>
+              {assets.map((m, i) => (
+                <TableRow key={i} className={classes.tableRow}>
+                  <TableCell component='th' scope='row'>
+                    {m}
                   </TableCell>
-                  <TableCell align='right'>
-                    <b>BALANCE</b>
-                  </TableCell>
-                  <TableCell align='right'>
-                    <b>VALUE</b>
-                  </TableCell>
+                  <TableCell align='right'>{balances[m]}</TableCell>
+                  <TableCell align='right'>{balances[m]}</TableCell>
                 </TableRow>
-              </TableHead>
-              <TableBody>
-                {assets.map((m, i) => (
-                  <TableRow key={i} className={classes.tableRow}>
-                    <TableCell component='th' scope='row'>
-                      {m}
-                    </TableCell>
-                    <TableCell align='right'>{balances[m]}</TableCell>
-                    <TableCell align='right'>{balances[m]}</TableCell>
-                  </TableRow>
-                ))}
-              </TableBody>
-            </Table>
-          </TableContainer>
-        </Box>
-      </Paper>
+              ))}
+            </TableBody>
+          </Table>
+        </TableContainer>
+      </Box>
     </Grid>
   )
 }
@@ -130,20 +143,4 @@ function a11yProps (index) {
     id: `full-width-tab-${index}`,
     'aria-controls': `full-width-tabpanel-${index}`
   }
-}
-
-function useTradesLogic () {
-  const classes = useStyles()
-  const theme = useTheme()
-  const [value, setValue] = React.useState(0)
-
-  const handleChange = (event, newValue) => {
-    setValue(newValue)
-  }
-
-  const handleChangeIndex = index => {
-    setValue(index)
-  }
-
-  return { handleChange, handleChangeIndex, value, classes, theme }
 }

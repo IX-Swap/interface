@@ -19,12 +19,12 @@ function Exchange (props) {
   const classes = useStyles()
   return (
     <Grid container spacing={1}>
-      <Grid item sm={12} md={5} lg={3}>
+      <Grid item xs={12} sm={12} md={5} lg={3}>
         <Grid container spacing={1}>
-          <Grid item xs={12} sm={6} md={12} lg={12} className={classes.market}>
+          <Grid item xs={12} sm={12} md={12} lg={12} className={classes.market}>
             <Market state={state[market].market} />
           </Grid>
-          <Grid item xs={12} sm={6} md={12} lg={12} className={classes.balance}>
+          <Grid item xs={12} sm={12} md={12} className={classes.balance}>
             <Balances balances={state.balances} />
           </Grid>
           <Grid item xs={12} sm={12} md={12} lg={12} className={classes.orders}>
