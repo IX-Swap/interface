@@ -1,6 +1,6 @@
 {
-  "name": "Icons",
+  "name": "data",
   "version": "0.0.0",
-  "main": "Icons.js",
+  "main": "data.js",
   "private": true
 }

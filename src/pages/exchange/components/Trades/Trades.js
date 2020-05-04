@@ -2,12 +2,22 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import SwipeableViews from 'react-swipeable-views'
 import { useTheme } from '@material-ui/core/styles'
-import AppBar from '@material-ui/core/AppBar'
-import Tabs from '@material-ui/core/Tabs'
-import Tab from '@material-ui/core/Tab'
-import Typography from '@material-ui/core/Typography'
-import Box from '@material-ui/core/Box'
-import Paper from '@material-ui/core/Paper'
+
+import {
+  AppBar,
+  Tabs,
+  Tab,
+  Typography,
+  Box,
+  Paper,
+  TableContainer,
+  TableHead,
+  TableRow,
+  Table,
+  TableCell,
+  TableBody
+} from '@material-ui/core'
+
 import useStyles from 'pages/exchange/styles'
 
 function TabPanel (props) {
@@ -40,7 +50,7 @@ function a11yProps (index) {
   }
 }
 
-export default function Trades () {
+export default function Trades ({ trades }) {
   const {
     handleChange,
     handleChangeIndex,
@@ -70,13 +80,47 @@ export default function Trades () {
         onChangeIndex={handleChangeIndex}
       >
         <TabPanel value={value} index={0} dir={theme.direction}>
-          MARKET TRADES
+          <TradesTable trades={trades.market} />
         </TabPanel>
         <TabPanel value={value} index={1} dir={theme.direction}>
-          YOUR TRADES
+          <TradesTable trades={trades.yours} />
         </TabPanel>
       </SwipeableViews>
     </Paper>
+  )
+}
+
+function TradesTable ({ trades }) {
+  const classes = useStyles()
+  return (
+    <TableContainer>
+      <Table size='small' aria-label='list of the markets'>
+        <TableHead>
+          <TableRow>
+            <TableCell>
+              <b>TIME</b>
+            </TableCell>
+            <TableCell align='right'>
+              <b>PRICE</b>
+            </TableCell>
+            <TableCell align='right'>
+              <b>AMOUNT</b>
+            </TableCell>
+          </TableRow>
+        </TableHead>
+        <TableBody>
+          {trades.map((t, i) => (
+            <TableRow key={i} className={classes.tableRow}>
+              <TableCell component='th' scope='row'>
+                {t.time}
+              </TableCell>
+              <TableCell align='right'>{t.price}</TableCell>
+              <TableCell align='right'>{t.amount}</TableCell>
+            </TableRow>
+          ))}
+        </TableBody>
+      </Table>
+    </TableContainer>
   )
 }
 

@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 import { Grid, Button, TextField } from '@material-ui/core'
 
 import { createMnemonicSeed } from './WalletService'
-import Widget from '../../../components/Widget/Widget'
+import Widget from '../../../components/Widget-test/Widget'
 import { makeStyles } from '@material-ui/core/styles'
 
 const useStyles = makeStyles(theme => ({
