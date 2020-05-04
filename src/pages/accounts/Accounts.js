@@ -1,15 +1,9 @@
 import React from 'react'
-import { Route, Switch, withRouter } from 'react-router-dom'
+import { Switch, withRouter } from 'react-router-dom'
 import {
   Grid,
   Paper,
   Box,
-  TableCell,
-  TableRow,
-  TableBody,
-  Table,
-  TableContainer,
-  TableHead,
   Typography,
   AppBar,
   Tabs,
@@ -17,9 +11,8 @@ import {
 } from '@material-ui/core'
 import useStyles from 'pages/exchange/styles'
 import PropTypes from 'prop-types'
-import SwipeableViews from 'react-swipeable-views'
 import { useTheme } from '@material-ui/core/styles'
-import BankCreateComponent from './bank/BankCreateComponent'
+// import BankCreateComponent from './bank/BankCreateComponent'
 import BankListComponent from './bank/BankListComponent'
 import { BankCreateProvider } from './bank/BankCreateContext'
 import { BankListProvider } from './bank/BankListContext'
@@ -41,28 +34,24 @@ function Accounts (props) {
   )
 }
 
-function AccountRoutes ({ props }) {
-  return (
-    <>
-      <Route exact path='/accounts' component={() => <BankListComponent />} />
-      <Route
-        exact
-        path='/accounts/bank-create'
-        component={BankCreateComponent}
-      />
-    </>
-  )
-}
+// function AccountRoutes ({ props }) {
+//   return (
+//     <>
+//       <Route exact path='/accounts' component={() => <BankListComponent />} />
+//       <Route
+//         exact
+//         path='/accounts/bank-create'
+//         component={BankCreateComponent}
+//       />
+//     </>
+//   )
+// }
 
-function AccountsPanel ({ state, setMarket }) {
-  const {
-    handleChange,
-    handleChangeIndex,
-    theme,
-    classes,
-    value
-  } = useAccountsLogic()
+function AccountsPanel ({ history, state, setMarket }) {
+  const { handleChange, theme, classes, value } = useAccountsLogic()
 
+  const location = history
+  console.log(location)
   return (
     <Grid container justify='center'>
       <Grid item lg={9}>
@@ -78,7 +67,7 @@ function AccountsPanel ({ state, setMarket }) {
             >
               <Tab label='OVERVIEW' {...a11yProps(0)} />
               <Tab label='CASH' {...a11yProps(1)} />
-              <Tab label='SECURITIES' {...a11yProps(2)} />
+              <Tab label='DIGITAL SECURITIES' {...a11yProps(2)} />
               <Tab label='REPORT' {...a11yProps(3)} />
               <Tab label='TRANSACTIONS' {...a11yProps(4)} />
             </Tabs>
@@ -89,13 +78,13 @@ function AccountsPanel ({ state, setMarket }) {
         onChangeIndex={handleChangeIndex}
       > */}
           <TabPanel value={value} index={0} dir={theme.direction}>
-            <BankListComponent />
+            SOME KIND OF OVERVIEW
           </TabPanel>
           <TabPanel value={value} index={1} dir={theme.direction}>
-            CURRENCY ACCOUNTS
+            <BankListComponent />
           </TabPanel>
           <TabPanel value={value} index={2} dir={theme.direction}>
-            SECURITIES
+            WALLETS
           </TabPanel>
           <TabPanel value={value} index={3} dir={theme.direction}>
             REPORTS
@@ -118,11 +107,11 @@ function useAccountsLogic () {
     setValue(newValue)
   }
 
-  const handleChangeIndex = index => {
-    setValue(index)
-  }
+  // const handleChangeIndex = index => {
+  //   setValue(index)
+  // }
 
-  return { handleChange, handleChangeIndex, value, classes, theme }
+  return { handleChange, value, classes, theme }
 }
 
 function TabPanel (props) {

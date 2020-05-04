@@ -192,20 +192,28 @@ export const state = {
     },
     orderbook: {
       ask: [
-        { price: 10, amount: 212 },
-        { price: 11, amount: 3526 },
-        { price: 12, amount: 2342 },
-        { price: 13, amount: 4526 },
-        { price: 14, amount: 23424 },
-        { price: 15, amount: 2253 }
+        { price: 10.0, amount: 212 },
+        { price: 11.0, amount: 3526 },
+        { price: 12.1, amount: 2342 },
+        { price: 13.23, amount: 4526 },
+        { price: 14.71, amount: 23424 },
+        { price: 15.13, amount: 2253 },
+        { price: 16.24, amount: 2871 },
+        { price: 4.24, amount: 235 },
+        { price: 4.24, amount: 235 },
+        { price: 4.24, amount: 235 }
       ],
       bid: [
-        { price: 9, amount: 24 },
-        { price: 8, amount: 251 },
-        { price: 7, amount: 432 },
-        { price: 6, amount: 52532 },
-        { price: 5, amount: 44 },
-        { price: 4, amount: 235 }
+        { price: 9.0, amount: 24 },
+        { price: 8.24, amount: 251 },
+        { price: 7.0, amount: 432 },
+        { price: 6.14, amount: 52532 },
+        { price: 5.99, amount: 44 },
+        { price: 4.64, amount: 235 },
+        { price: 3.14, amount: 235 },
+        { price: 2.44, amount: 235 },
+        { price: 1.19, amount: 235 },
+        { price: 0.13, amount: 235 }
       ]
     },
     series: [

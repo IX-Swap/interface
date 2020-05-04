@@ -1,7 +1,6 @@
 import React, { useEffect } from 'react'
 import {
   Box,
-  Card,
   Grid,
   Table,
   TableBody,
