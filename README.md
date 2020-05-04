@@ -4,30 +4,6 @@
 
 Built with [React](https://facebook.github.io/react/), [Material-UI](https://material-ui.com), [React Router](https://reacttraining.com/react-router/).
 
-## Features
-
-- React (**16.8.6**)
-- React Hooks
-- React Context
-- Mobile friendly layout (responsive)
-- Create-react-app under the hood
-- React Router v5
-- Material-UI v4
-- Modular Architecture
-- CSS-in-JS styles
-- Webpack build
-- Stylish, clean, responsive layout
-
-## Pages
-
-We have implemented some basic pages, so you can see our template in action.
-
-- Terminal
-- Issuance
-- Exchange
-- Custody
-- Identity
-
 ## Quick Start
 
 #### 1. Get the latest version

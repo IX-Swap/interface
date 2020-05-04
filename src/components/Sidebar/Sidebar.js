@@ -41,13 +41,6 @@ const structure = [
     link: '/invest',
     icon: <PieChartIcon />
   },
-  // { id: 2, label: 'Secondary', link: '/secondary', icon: <ChartIcon /> },
-  // {
-  //   id: 3,
-  //   label: 'Custody',
-  //   link: '/notifications',
-  //   icon: <LockIcon />
-  // },
   {
     id: 2,
     label: 'Accounts',
@@ -56,7 +49,7 @@ const structure = [
   },
 
   {
-    id: 2,
+    id: 3,
     label: 'Settings',
     link: '/settings',
     icon: <SettingsIcon />,
@@ -66,36 +59,12 @@ const structure = [
     ]
   },
   {
-    id: 3,
+    id: 4,
     label: 'Support',
     link: '/primary',
     icon: <HelpIcon />
   },
-  { id: 4, type: 'divider' }
-  // { id: 6, type: 'title', label: 'HELP' },
-  // { id: 7, label: 'Documentation', link: '', icon: <LibraryIcon /> },
-  // { id: 8, label: 'Support', link: '', icon: <SupportIcon /> },
-  // { id: 9, label: 'FAQ', link: '', icon: <FAQIcon /> }
-  // { id: 10, type: "divider" },
-  // { id: 11, type: "title", label: "PROJECTS" },
-  // {
-  //   id: 12,
-  //   label: "My recent",
-  //   link: "",
-  //   icon: <Dot size="large" color="warning" />,
-  // },
-  // {
-  //   id: 13,
-  //   label: "Starred",
-  //   link: "",
-  //   icon: <Dot size="large" color="primary" />,
-  // },
-  // {
-  //   id: 14,
-  //   label: "Background",
-  //   link: "",
-  //   icon: <Dot size="large" color="secondary" />,
-  // },
+  { id: 5, type: 'divider' }
 ]
 
 function Sidebar ({ location }) {

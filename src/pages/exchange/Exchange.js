@@ -11,7 +11,7 @@ import Orderbook from 'pages/exchange/components/Orderbook'
 import Markets from 'pages/exchange/components/Markets'
 import Trades from 'pages/exchange/components/Trades'
 import useStyles from 'pages/exchange/styles'
-import { state } from './mock-data/data'
+import { state } from './mock-data'
 
 function Exchange (props) {
   const { state, market, setMarket } = useExchangeLogic()
@@ -24,11 +24,11 @@ function Exchange (props) {
           <Grid item xs={12} sm={12} md={12} lg={12} className={classes.market}>
             <Market state={state[market].market} />
           </Grid>
-          <Grid item xs={12} sm={12} md={12} className={classes.balance}>
-            <Balances balances={state.balances} />
+          <Grid item xs={12} sm={12} md={12} className={classes.markets}>
+            <Markets state={state} setMarket={setMarket} />
           </Grid>
-          <Grid item xs={12} sm={12} md={12} lg={12} className={classes.orders}>
-            <Orders />
+          <Grid xs={12} item md={6} lg={12} className={classes.balances}>
+            <Balances balances={state.balances} />
           </Grid>
         </Grid>
       </Grid>
@@ -41,17 +41,17 @@ function Exchange (props) {
             <PriceChart series={state[market].series} />
           </Grid>
           <Grid item xs={12} sm={12} md={12} className={classes.orderbook}>
-            <Orderbook />
+            <Orderbook book={state[market].orderbook} />
           </Grid>
         </Grid>
       </Grid>
       <Grid item sm={12} md={12} lg={4}>
         <Grid container spacing={1}>
-          <Grid xs={12} item md={6} lg={12} className={classes.markets}>
-            <Markets state={state} setMarket={setMarket} />
+          <Grid item xs={12} sm={12} md={12} lg={12} className={classes.orders}>
+            <Orders />
           </Grid>
           <Grid xs={12} item md={6} lg={12} className={classes.trades}>
-            <Trades />
+            <Trades trades={state[market].trades} />
           </Grid>
         </Grid>
       </Grid>
@@ -60,7 +60,7 @@ function Exchange (props) {
 }
 
 function useExchangeLogic () {
-  const [market, setMarket] = useState('IXPS-SGD')
+  const [market, setMarket] = useState('IXPS:SGD')
 
   return { state, market, setMarket }
 }

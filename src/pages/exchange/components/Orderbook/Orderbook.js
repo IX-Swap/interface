@@ -1,28 +1,30 @@
 import React, { useState } from 'react'
+
 import {
-  Grid,
-  Paper,
-  Box,
-  TextField,
-  FormControl,
-  Button,
-  // TableCell,
-  // TableRow,
-  // TableBody,
-  // Table,
-  // TableContainer,
-  // TableHead,
-  Typography,
   AppBar,
   Tabs,
-  Tab
+  Tab,
+  FormControl,
+  TextField,
+  Grid,
+  Button,
+  Typography,
+  Box,
+  Paper,
+  TableContainer,
+  TableHead,
+  TableRow,
+  Table,
+  TableCell,
+  TableBody
 } from '@material-ui/core'
-import useStyles from 'pages/exchange/styles'
+
+import useStyles from './styles'
 import PropTypes from 'prop-types'
 import SwipeableViews from 'react-swipeable-views'
 import { useTheme } from '@material-ui/core/styles'
 
-export default function Orderbook ({ state, setMarket }) {
+export default function Orderbook ({ book }) {
   const {
     handleChange,
     handleChangeIndex,
@@ -58,7 +60,14 @@ export default function Orderbook ({ state, setMarket }) {
           <Sell />
         </TabPanel>
       </SwipeableViews>
-      ORDERBOOK HERE
+      <Grid container spacing={3} justify='center'>
+        <Grid item lg={5}>
+          <BuySide side={book.bid}></BuySide>
+        </Grid>
+        <Grid item lg={5}>
+          <SellSide side={book.ask}></SellSide>
+        </Grid>
+      </Grid>
     </Paper>
   )
 }
@@ -165,6 +174,76 @@ function Sell () {
           </Button>
         </Box>
       </Grid>
+    </Grid>
+  )
+}
+
+function BuySide ({ side }) {
+  const classes = useStyles()
+
+  return (
+    <Grid container justify='center'>
+      <TableContainer>
+        <Table
+          size='small'
+          aria-label='list of the markets'
+          className={classes.table}
+        >
+          <TableHead>
+            <TableRow>
+              <TableCell align='right'>
+                <b>AMOUNT</b>
+              </TableCell>
+              <TableCell align='right'>
+                <b>PRICE</b>
+              </TableCell>
+            </TableRow>
+          </TableHead>
+          <TableBody>
+            {side.map((o, i) => (
+              <TableRow key={i} className={classes.tableRow}>
+                <TableCell align='right'>{o.amount}</TableCell>
+                <TableCell align='right'>{o.price}</TableCell>
+              </TableRow>
+            ))}
+          </TableBody>
+        </Table>
+      </TableContainer>
+    </Grid>
+  )
+}
+
+function SellSide ({ side }) {
+  const classes = useStyles()
+
+  return (
+    <Grid container justify='center'>
+      <TableContainer>
+        <Table
+          size='small'
+          aria-label='list of the markets'
+          className={classes.table}
+        >
+          <TableHead>
+            <TableRow>
+              <TableCell align='left'>
+                <b>PRICE</b>
+              </TableCell>
+              <TableCell align='left'>
+                <b>AMOUNT</b>
+              </TableCell>
+            </TableRow>
+          </TableHead>
+          <TableBody>
+            {side.map((o, i) => (
+              <TableRow key={i} className={classes.tableRow}>
+                <TableCell align='left'>{o.price}</TableCell>
+                <TableCell align='left'>{o.amount}</TableCell>
+              </TableRow>
+            ))}
+          </TableBody>
+        </Table>
+      </TableContainer>
     </Grid>
   )
 }
