@@ -1,6 +1,0 @@
-{
-  "name": "read-only-abi",
-  "version": "0.0.0",
-  "main": "ReadOnlyAbi.js",
-  "private": true
-}

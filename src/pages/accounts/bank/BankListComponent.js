@@ -1,7 +1,6 @@
 import React, { useEffect } from 'react'
 import {
   Box,
-  Card,
   Grid,
   Table,
   TableBody,
@@ -25,15 +24,15 @@ function BankListComponent (props) {
 
   return (
     <Grid container justify='center' alignItems='center'>
-      <Grid item xs={12} sm={12} md={12} lg={8}>
+      <Grid item xs={12} sm={12} md={12} lg={12}>
         {bankListState.status === 'GETTING' ? (
           <CircularProgress />
-        ) : !bankListState.banks ? (
+        ) : !bankListState.data ? (
           <AddBankAccount props={props} />
         ) : (
           <ListBankAccounts
             status={bankListState.status}
-            list={bankListState.banks.list}
+            list={bankListState.banks}
           />
         )}
       </Grid>
@@ -44,7 +43,7 @@ function BankListComponent (props) {
 function ListBankAccounts ({ list, status }) {
   const history = useHistory()
   return (
-    <Card title='Bank Accounts'>
+    <Grid item md={12}>
       <Box p={3}>
         <TableContainer>
           <Table aria-label='accounts table'>
@@ -92,13 +91,13 @@ function ListBankAccounts ({ list, status }) {
           </Button>
         </Box>
       </Box>
-    </Card>
+    </Grid>
   )
 }
 
 function AddBankAccount ({ props }) {
   return (
-    <Card>
+    <Grid>
       <Box m={4} p={4}>
         <Grid container direction='column' justify='center' alignItems='center'>
           <Typography paragraph>
@@ -115,7 +114,7 @@ function AddBankAccount ({ props }) {
           </Button>
         </Grid>
       </Box>
-    </Card>
+    </Grid>
   )
 }
 

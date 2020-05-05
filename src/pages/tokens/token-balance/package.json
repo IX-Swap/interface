@@ -1,6 +1,0 @@
-{
-  "name": "token-balance",
-  "version": "0.0.1",
-  "main": "TokenBalance.js",
-  "private": true
-}

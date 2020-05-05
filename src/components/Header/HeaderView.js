@@ -3,7 +3,6 @@ import {
   AppBar,
   Toolbar,
   IconButton,
-  InputBase,
   Menu,
   MenuItem,
   Fab,
@@ -12,7 +11,6 @@ import {
 import {
   Menu as MenuIcon,
   MailOutline as MailIcon,
-  NotificationsNone as NotificationsIcon,
   Person as AccountIcon,
   Send as SendIcon,
   ArrowBack as ArrowBackIcon
@@ -55,28 +53,6 @@ const messages = [
   }
 ]
 
-const notifications = [
-  { id: 0, color: 'warning', message: 'Check out this awesome ticket' },
-  {
-    id: 1,
-    color: 'success',
-    type: 'info',
-    message: 'What is the best way to get ...'
-  },
-  {
-    id: 2,
-    color: 'secondary',
-    type: 'notification',
-    message: 'This is just a simple notification'
-  },
-  {
-    id: 3,
-    color: 'primary',
-    type: 'e-commerce',
-    message: '12 new orders has arrived today'
-  }
-]
-
 const Header = ({ classes, isSidebarOpened, toggleSidebar, ...props }) => (
   <AppBar position='fixed' className={classes.appBar}>
     <Toolbar className={classes.toolbar}>
@@ -103,46 +79,17 @@ const Header = ({ classes, isSidebarOpened, toggleSidebar, ...props }) => (
         )}
       </IconButton>
       <Typography variant='h6' weight='medium' className={classes.logotype}>
-        InvestaX Digital Securities
+        Digital Securities
       </Typography>
       <div className={classes.grow} />
-      {/* <div
-        className={classNames(classes.search, {
-          [classes.searchFocused]: props.isSearchOpen
-        })}
-      > */}
-      {/* <div
-          className={classNames(classes.searchIcon, {
-            [classes.searchIconOpened]: props.isSearchOpen
-          })}
-          onClick={props.toggleSearch}
-        >
-          <SearchIcon classes={{ root: classes.headerIcon }} />
-        </div> */}
-      {/* <InputBase
-          placeholder='Search…'
-          classes={{
-            root: classes.inputRoot,
-            input: classes.inputInput
-          }}
-        />
-      </div> */}
+
       <IconButton
         color='inherit'
         aria-haspopup='true'
         aria-controls='mail-menu'
         onClick={props.openNotificationsMenu}
         className={classes.headerMenuButton}
-      >
-        <Badge
-          badgeContent={
-            props.isNotificationsUnread ? notifications.length : null
-          }
-          colortheme='warning'
-        >
-          <NotificationsIcon classes={{ root: classes.headerIcon }} />
-        </Badge>
-      </IconButton>
+      ></IconButton>
       <IconButton
         color='inherit'
         aria-haspopup='true'
