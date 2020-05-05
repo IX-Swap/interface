@@ -1,8 +1,7 @@
 import React from 'react'
 import { Route, Switch, Redirect } from 'react-router-dom'
 import classnames from 'classnames'
-import { BrowserRouter } from 'react-router-dom'
-import { createBrowserHistory } from 'history'
+import { HashRouter } from 'react-router-dom'
 
 import Login from '../pages/login'
 
@@ -23,16 +22,16 @@ import { LayoutProvider } from '../context/LayoutContext'
 function App () {
   const { isAuthenticated } = useUserState()
   const classes = useStyles()
-  const hist = createBrowserHistory()
+
   return (
-    <BrowserRouter history={hist}>
+    <HashRouter>
       <Switch>
         <PublicRoute path='/login/:token?' component={Login} />
         <LayoutProvider>
           <Authenticated />
         </LayoutProvider>
       </Switch>
-    </BrowserRouter>
+    </HashRouter>
   )
 
   function Authenticated () {
