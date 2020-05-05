@@ -1,6 +1,5 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import SwipeableViews from 'react-swipeable-views'
 import { useTheme } from '@material-ui/core/styles'
 import AppBar from '@material-ui/core/AppBar'
 import Tabs from '@material-ui/core/Tabs'
@@ -9,6 +8,8 @@ import Typography from '@material-ui/core/Typography'
 import Box from '@material-ui/core/Box'
 import Paper from '@material-ui/core/Paper'
 import useStyles from 'pages/exchange/styles'
+import Grid from '@material-ui/core/Grid'
+import InsertDriveFileIcon from '@material-ui/icons/InsertDriveFile'
 
 function TabPanel (props) {
   const { children, value, index, ...other } = props
@@ -40,14 +41,8 @@ function a11yProps (index) {
   }
 }
 
-export default function Trades () {
-  const {
-    handleChange,
-    handleChangeIndex,
-    theme,
-    classes,
-    value
-  } = useTradesLogic()
+export default function Diligence ({ state, market }) {
+  const { handleChange, theme, classes, value } = useTradesLogic()
 
   return (
     <Paper className={classes.paper} elevation={0}>
@@ -61,31 +56,89 @@ export default function Trades () {
           aria-label='full width tabs example'
         >
           <Tab label='OVERVIEW' {...a11yProps(0)} />
-          <Tab label='CAPITAL STRUCTURE' {...a11yProps(1)} />
-          <Tab label='TEAM' {...a11yProps(2)} />
-          <Tab label='DATA ROOM' {...a11yProps(3)} />
+          <Tab label='TEAM' {...a11yProps(1)} />
+          <Tab label='DATA ROOM' {...a11yProps(2)} />
         </Tabs>
       </AppBar>
-      <SwipeableViews
-        axis={theme.direction === 'rtl' ? 'x-reverse' : 'x'}
-        index={value}
-        onChangeIndex={handleChangeIndex}
-      >
-        <TabPanel value={value} index={0} dir={theme.direction}>
-          OVERVIEW HERE
-        </TabPanel>
-        <TabPanel value={value} index={1} dir={theme.direction}>
-          CAPITAL STRUCUTRE HERE
-        </TabPanel>
-        <TabPanel value={value} index={2} dir={theme.direction}>
-          TEAM HERE
-        </TabPanel>
-        <TabPanel value={value} index={3} dir={theme.direction}>
-          DATA ROOM HERE
-        </TabPanel>
-      </SwipeableViews>
+      <TabPanel value={value} index={0} dir={theme.direction}>
+        <Overview overview={state.markets[market].diligence.overview} />
+      </TabPanel>
+      <TabPanel value={value} index={1} dir={theme.direction}>
+        <Team team={state.markets[market].diligence.team} />
+      </TabPanel>
+      <TabPanel value={value} index={2} dir={theme.direction}>
+        <Dataroom dataRoom={state.markets[market].diligence.dataRoom} />
+      </TabPanel>
+      {/* </SwipeableViews> */}
     </Paper>
   )
+}
+
+function Overview ({ overview }) {
+  return <Box>{overview.description}</Box>
+}
+
+function Team ({ team }) {
+  const classes = useStyles()
+
+  const template = team.map((person, i) => (
+    <Grid key={i} item md={5}>
+      <Paper className={classes.paper} elevation={0}>
+        <Box p={1}>
+          <Grid
+            container
+            justify='center'
+            alignItems='center'
+            alignContent='center'
+          >
+            <Grid item md={12}>
+              <center>
+                <img
+                  alt=' is good for now'
+                  className={classes.roundImage}
+                  height={100}
+                  src={person.photo}
+                />
+              </center>
+            </Grid>
+            <Grid item md={12}>
+              <center>
+                <b>Name:</b> {person.name}
+              </center>
+            </Grid>
+            <Grid item md={12}>
+              <center>
+                <b>Position:</b> {person.job}
+              </center>
+            </Grid>
+            <Grid item md={12}>
+              <center>
+                <b>Email:</b> {person.email}
+              </center>
+            </Grid>
+          </Grid>
+        </Box>
+      </Paper>
+    </Grid>
+  ))
+
+  return (
+    <Grid container justify='center' spacing={1}>
+      {template}
+    </Grid>
+  )
+}
+
+function Dataroom ({ dataRoom }) {
+  const template = dataRoom.map((file, i) => (
+    <Grid key={i} item md={3}>
+      <center>
+        <InsertDriveFileIcon />
+        <p>{file.fileName}</p>
+      </center>
+    </Grid>
+  ))
+  return <Grid container>{template}</Grid>
 }
 
 function useTradesLogic () {
@@ -97,9 +150,5 @@ function useTradesLogic () {
     setValue(newValue)
   }
 
-  const handleChangeIndex = index => {
-    setValue(index)
-  }
-
-  return { handleChange, handleChangeIndex, value, classes, theme }
+  return { handleChange, value, classes, theme }
 }

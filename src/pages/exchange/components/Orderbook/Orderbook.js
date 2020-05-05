@@ -21,17 +21,10 @@ import {
 
 import useStyles from './styles'
 import PropTypes from 'prop-types'
-import SwipeableViews from 'react-swipeable-views'
 import { useTheme } from '@material-ui/core/styles'
 
 export default function Orderbook ({ book }) {
-  const {
-    handleChange,
-    handleChangeIndex,
-    theme,
-    classes,
-    value
-  } = useOrderbookLogic()
+  const { handleChange, theme, classes, value } = useOrderbookLogic()
 
   return (
     <Paper className={classes.paper} elevation={0}>
@@ -48,23 +41,17 @@ export default function Orderbook ({ book }) {
           <Tab label='SELL' {...a11yProps(1)} />
         </Tabs>
       </AppBar>
-      <SwipeableViews
-        axis={theme.direction === 'rtl' ? 'x-reverse' : 'x'}
-        index={value}
-        onChangeIndex={handleChangeIndex}
-      >
-        <TabPanel value={value} index={0} dir={theme.direction}>
-          <Buy />
-        </TabPanel>
-        <TabPanel value={value} index={1} dir={theme.direction}>
-          <Sell />
-        </TabPanel>
-      </SwipeableViews>
+      <TabPanel value={value} index={0} dir={theme.direction}>
+        <Buy />
+      </TabPanel>
+      <TabPanel value={value} index={1} dir={theme.direction}>
+        <Sell />
+      </TabPanel>
       <Grid container spacing={3} justify='center'>
-        <Grid item lg={5}>
+        <Grid item sm={5} md={5} lg={5}>
           <BuySide side={book.bid}></BuySide>
         </Grid>
-        <Grid item lg={5}>
+        <Grid item sm={5} md={5} lg={5}>
           <SellSide side={book.ask}></SellSide>
         </Grid>
       </Grid>
@@ -259,10 +246,6 @@ function useOrderbookLogic () {
     setValue(newValue)
   }
 
-  const handleChangeIndex = index => {
-    setValue(index)
-  }
-
   const handlePrice = ev => setPrice(ev.target.price)
   const handleAmount = ev => handleAmount(ev.target.price)
 
@@ -272,7 +255,6 @@ function useOrderbookLogic () {
     handleAmount,
     handlePrice,
     handleChange,
-    handleChangeIndex,
     value,
     classes,
     theme
