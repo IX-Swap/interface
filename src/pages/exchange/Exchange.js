@@ -11,7 +11,7 @@ import Orderbook from 'pages/exchange/components/Orderbook'
 import Markets from 'pages/exchange/components/Markets'
 import Trades from 'pages/exchange/components/Trades'
 import useStyles from 'pages/exchange/styles'
-import { state } from './mock-data'
+import useMockExchangeData from '../../mock/data'
 
 function Exchange (props) {
   const { state, market, setMarket } = useExchangeLogic()
@@ -22,26 +22,26 @@ function Exchange (props) {
       <Grid item xs={12} sm={12} md={5} lg={3}>
         <Grid container spacing={1}>
           <Grid item xs={12} sm={12} md={12} lg={12} className={classes.market}>
-            <Market state={state[market].market} />
+            <Market state={state} market={market} />
           </Grid>
           <Grid item xs={12} sm={12} md={12} className={classes.markets}>
             <Markets state={state} setMarket={setMarket} />
           </Grid>
-          <Grid xs={12} item md={6} lg={12} className={classes.balances}>
-            <Balances balances={state.balances} />
+          <Grid xs={12} item md={12} lg={12} className={classes.balances}>
+            <Balances state={state} />
           </Grid>
         </Grid>
       </Grid>
       <Grid item sm={12} md={7} lg={5}>
         <Grid container spacing={1}>
           <Grid item xs={12} sm={12} md={12} className={classes.dilligence}>
-            <Diligence />
+            <Diligence state={state} market={market} />
           </Grid>
           <Grid item xs={12} sm={12} md={12} className={classes.priceChart}>
-            <PriceChart series={state[market].series} />
+            <PriceChart series={state.markets[market].series} />
           </Grid>
           <Grid item xs={12} sm={12} md={12} className={classes.orderbook}>
-            <Orderbook book={state[market].orderbook} />
+            <Orderbook book={state.markets[market].orderbook} />
           </Grid>
         </Grid>
       </Grid>
@@ -50,8 +50,8 @@ function Exchange (props) {
           <Grid item xs={12} sm={12} md={12} lg={12} className={classes.orders}>
             <Orders />
           </Grid>
-          <Grid xs={12} item md={6} lg={12} className={classes.trades}>
-            <Trades trades={state[market].trades} />
+          <Grid item xs={12} md={12} lg={12} className={classes.trades}>
+            <Trades trades={state.markets[market].trades} />
           </Grid>
         </Grid>
       </Grid>
@@ -61,6 +61,7 @@ function Exchange (props) {
 
 function useExchangeLogic () {
   const [market, setMarket] = useState('IXPS:SGD')
+  const { state } = useMockExchangeData()
 
   return { state, market, setMarket }
 }

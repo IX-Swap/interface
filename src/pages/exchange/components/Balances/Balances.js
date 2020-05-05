@@ -12,22 +12,17 @@ import {
   AppBar,
   Tabs,
   Tab,
-  Typography
+  Typography,
+  CircularProgress
 } from '@material-ui/core'
 
 import PropTypes from 'prop-types'
-import SwipeableViews from 'react-swipeable-views'
 import { useTheme } from '@material-ui/core/styles'
 import useStyles from 'pages/exchange/styles'
+import NumberFormat from 'react-number-format'
 
-export default function Balances ({ balances }) {
-  const {
-    handleChange,
-    handleChangeIndex,
-    theme,
-    classes,
-    value
-  } = useBalancesLogic()
+export default function Balances ({ state }) {
+  const { handleChange, theme, classes, value } = useBalancesLogic()
 
   return (
     <Paper className={classes.paper} elevation={0}>
@@ -44,18 +39,12 @@ export default function Balances ({ balances }) {
           <Tab label='REPORT' {...a11yProps(1)} />
         </Tabs>
       </AppBar>
-      <SwipeableViews
-        axis={theme.direction === 'rtl' ? 'x-reverse' : 'x'}
-        index={value}
-        onChangeIndex={handleChangeIndex}
-      >
-        <TabPanel value={value} index={0} dir={theme.direction}>
-          <BalancesTab balances={balances} />
-        </TabPanel>
-        <TabPanel value={value} index={1} dir={theme.direction}>
-          Portfolio
-        </TabPanel>
-      </SwipeableViews>
+      <TabPanel value={value} index={0} dir={theme.direction}>
+        <BalancesTab state={state} />
+      </TabPanel>
+      <TabPanel value={value} index={1} dir={theme.direction}>
+        Portfolio
+      </TabPanel>
     </Paper>
   )
 }
@@ -69,16 +58,12 @@ function useBalancesLogic () {
     setValue(newValue)
   }
 
-  const handleChangeIndex = index => {
-    setValue(index)
-  }
-
-  return { handleChange, handleChangeIndex, value, classes, theme }
+  return { handleChange, value, classes, theme }
 }
 
-function BalancesTab ({ balances }) {
+function BalancesTab ({ state }) {
   const classes = useStyles()
-  const assets = Object.keys(balances)
+  const { tabsTemplate } = useTabsTemplate(state)
   return (
     <Grid item>
       <Box>
@@ -98,21 +83,49 @@ function BalancesTab ({ balances }) {
               </TableRow>
             </TableHead>
             <TableBody>
-              {assets.map((m, i) => (
-                <TableRow key={i} className={classes.tableRow}>
-                  <TableCell component='th' scope='row'>
-                    {m}
-                  </TableCell>
-                  <TableCell align='right'>{balances[m]}</TableCell>
-                  <TableCell align='right'>{balances[m]}</TableCell>
-                </TableRow>
-              ))}
+              {tabsTemplate ? tabsTemplate : <CircularProgress />}
             </TableBody>
           </Table>
         </TableContainer>
       </Box>
     </Grid>
   )
+
+  function useTabsTemplate (state) {
+    const tabsTemplate = []
+    const keys = Object.keys(state.accounts)
+
+    keys.forEach((a, i) => {
+      let pair = a + ':SGD'
+      let balance = state.accounts[a].balance
+      let value = state.markets[pair]
+        ? state.markets[pair].market.price * balance
+        : state.accounts[a].balance
+      tabsTemplate.push(
+        <TableRow key={i} className={classes.tableRow}>
+          <TableCell component='th' scope='row'>
+            {a}
+          </TableCell>
+          <TableCell align='right'>
+            <NumberFormat
+              value={balance}
+              displayType={'text'}
+              thousandSeparator={true}
+            />
+          </TableCell>
+          <TableCell align='right'>
+            <NumberFormat
+              value={value}
+              displayType={'text'}
+              thousandSeparator={true}
+              prefix={'$'}
+            />
+          </TableCell>
+        </TableRow>
+      )
+    })
+    return { tabsTemplate }
+  }
 }
 
 function TabPanel (props) {
