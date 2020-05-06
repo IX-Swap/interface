@@ -40,7 +40,7 @@ function BankListComponent (props) {
   )
 }
 
-function ListBankAccounts ({ list, status }) {
+function ListBankAccounts ({ list = [], status }) {
   const history = useHistory()
   return (
     <Grid item md={12}>
