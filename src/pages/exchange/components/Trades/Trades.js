@@ -1,7 +1,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import SwipeableViews from 'react-swipeable-views'
 import { useTheme } from '@material-ui/core/styles'
+import moment from 'moment'
 
 import {
   AppBar,
@@ -19,6 +19,7 @@ import {
 } from '@material-ui/core'
 
 import useStyles from 'pages/exchange/styles'
+import NumberFormat from 'react-number-format'
 
 function TabPanel (props) {
   const { children, value, index, ...other } = props
@@ -51,13 +52,7 @@ function a11yProps (index) {
 }
 
 export default function Trades ({ trades }) {
-  const {
-    handleChange,
-    handleChangeIndex,
-    theme,
-    classes,
-    value
-  } = useTradesLogic()
+  const { handleChange, theme, classes, value } = useTradesLogic()
 
   return (
     <Paper className={classes.paper} elevation={0}>
@@ -74,18 +69,12 @@ export default function Trades ({ trades }) {
           <Tab label='YOUR TRADES' {...a11yProps(1)} />
         </Tabs>
       </AppBar>
-      <SwipeableViews
-        axis={theme.direction === 'rtl' ? 'x-reverse' : 'x'}
-        index={value}
-        onChangeIndex={handleChangeIndex}
-      >
-        <TabPanel value={value} index={0} dir={theme.direction}>
-          <TradesTable trades={trades.market} />
-        </TabPanel>
-        <TabPanel value={value} index={1} dir={theme.direction}>
-          <TradesTable trades={trades.yours} />
-        </TabPanel>
-      </SwipeableViews>
+      <TabPanel value={value} index={0} dir={theme.direction}>
+        <TradesTable trades={trades.market} />
+      </TabPanel>
+      <TabPanel value={value} index={1} dir={theme.direction}>
+        <TradesTable trades={trades.yours} />
+      </TabPanel>
     </Paper>
   )
 }
@@ -112,10 +101,16 @@ function TradesTable ({ trades }) {
           {trades.map((t, i) => (
             <TableRow key={i} className={classes.tableRow}>
               <TableCell component='th' scope='row'>
-                {t.time}
+                {moment(t.time).format('l:LTS')}
               </TableCell>
               <TableCell align='right'>{t.price}</TableCell>
-              <TableCell align='right'>{t.amount}</TableCell>
+              <TableCell align='right'>
+                <NumberFormat
+                  value={t.amount}
+                  displayType={'text'}
+                  thousandSeparator={true}
+                />
+              </TableCell>
             </TableRow>
           ))}
         </TableBody>
@@ -133,9 +128,5 @@ function useTradesLogic () {
     setValue(newValue)
   }
 
-  const handleChangeIndex = index => {
-    setValue(index)
-  }
-
-  return { handleChange, handleChangeIndex, value, classes, theme }
+  return { handleChange, value, classes, theme }
 }

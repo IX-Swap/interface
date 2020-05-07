@@ -1,6 +1,5 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import SwipeableViews from 'react-swipeable-views'
 import { useTheme } from '@material-ui/core/styles'
 import AppBar from '@material-ui/core/AppBar'
 import Tabs from '@material-ui/core/Tabs'
@@ -41,13 +40,7 @@ function a11yProps (index) {
 }
 
 export default function Orders () {
-  const {
-    handleChange,
-    handleChangeIndex,
-    theme,
-    classes,
-    value
-  } = useOrdersLogic()
+  const { handleChange, theme, classes, value } = useOrdersLogic()
 
   return (
     <Paper className={classes.paper} elevation={0}>
@@ -64,18 +57,12 @@ export default function Orders () {
           <Tab label='ORDER HISTORY' {...a11yProps(1)} />
         </Tabs>
       </AppBar>
-      <SwipeableViews
-        axis={theme.direction === 'rtl' ? 'x-reverse' : 'x'}
-        index={value}
-        onChangeIndex={handleChangeIndex}
-      >
-        <TabPanel value={value} index={0} dir={theme.direction}>
-          You don't have any open orders.
-        </TabPanel>
-        <TabPanel value={value} index={1} dir={theme.direction}>
-          You have not made any orders.
-        </TabPanel>
-      </SwipeableViews>
+      <TabPanel value={value} index={0} dir={theme.direction}>
+        You don't have any open orders.
+      </TabPanel>
+      <TabPanel value={value} index={1} dir={theme.direction}>
+        You have not made any orders.
+      </TabPanel>
     </Paper>
   )
 }
@@ -89,9 +76,5 @@ function useOrdersLogic () {
     setValue(newValue)
   }
 
-  const handleChangeIndex = index => {
-    setValue(index)
-  }
-
-  return { handleChange, handleChangeIndex, value, classes, theme }
+  return { handleChange, value, classes, theme }
 }
