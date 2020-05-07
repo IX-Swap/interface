@@ -56,13 +56,13 @@ function ListBankAccounts ({ list, status }) {
                 <TableCell>
                   <b>Bank Name</b>
                 </TableCell>
-                <TableCell align="center">
+                <TableCell align='center'>
                   <b>Account Number</b>
                 </TableCell>
-                <TableCell align="center">
+                <TableCell align='center'>
                   <b>Balance</b>
                 </TableCell>
-                <TableCell align="center">
+                <TableCell align='center'>
                   <b>Status</b>
                 </TableCell>
               </TableRow>
@@ -70,21 +70,31 @@ function ListBankAccounts ({ list, status }) {
             <TableBody>
               {list.map(row => (
                 <TableRow key={row._id}>
-                  <TableCell>
-                    {row.account.asset.symbol}
-                  </TableCell>
-                  <TableCell>
-                    {row.bankName}
-                  </TableCell>
-                  <TableCell align="center">{row.bankAccountNumber}</TableCell>
-                  <TableCell align="center">{row.account.balance}</TableCell>
-                  <TableCell align="center">
-                    {row.authorized ?
-                      <ButtonGroup variant="text" color="primary" aria-label="text primary button group">
-                        <Button>Deposit</Button>
-                        <Button>Withdrawal</Button>
+                  <TableCell>{row.account.asset.symbol}</TableCell>
+                  <TableCell>{row.bankName}</TableCell>
+                  <TableCell align='center'>{row.bankAccountNumber}</TableCell>
+                  <TableCell align='center'>{row.account.balance}</TableCell>
+                  <TableCell align='center'>
+                    {row.authorized ? (
+                      <ButtonGroup
+                        variant='text'
+                        color='primary'
+                        aria-label='text primary button group'
+                      >
+                        <Button
+                          onClick={() => {
+                            history.push('/accounts/deposit')
+                          }}
+                        >
+                          Deposit
+                        </Button>
+                        <Button onClick={() => {
+                            history.push('/accounts/withdraw')
+                          }}>Withdrawal</Button>
                       </ButtonGroup>
-                    : 'Account Pending'}
+                    ) : (
+                      'Account Pending'
+                    )}
                   </TableCell>
                 </TableRow>
               ))}
