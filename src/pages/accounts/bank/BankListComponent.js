@@ -10,6 +10,7 @@ import {
   TableRow,
   Typography,
   Button,
+  ButtonGroup,
   CircularProgress
 } from '@material-ui/core'
 import {
@@ -18,6 +19,7 @@ import {
   listBankAccount
 } from './BankListContext'
 import { withRouter, useHistory } from 'react-router-dom'
+import { demoData } from './demodata'
 
 function BankListComponent (props) {
   const { bankListState } = useBankListLogic()
@@ -31,7 +33,7 @@ function BankListComponent (props) {
         ) : (
           <ListBankAccounts
             status={bankListState.status}
-            list={bankListState.data}
+            list={demoData}
           />
         )}
       </Grid>
@@ -48,29 +50,48 @@ function ListBankAccounts ({ list, status }) {
           <Table aria-label='accounts table'>
             <TableHead>
               <TableRow>
-                <TableCell>Currency</TableCell>
-                <TableCell>Account Id</TableCell>
-                <TableCell align='right'>Balance</TableCell>
-                <TableCell align='right'>Account Status</TableCell>
+                <TableCell>
+                  <b>Currency</b>
+                </TableCell>
+                <TableCell>
+                  <b>Bank Name</b>
+                </TableCell>
+                <TableCell align="center">
+                  <b>Account Number</b>
+                </TableCell>
+                <TableCell align="center">
+                  <b>Balance</b>
+                </TableCell>
+                <TableCell align="center">
+                  <b>Status</b>
+                </TableCell>
               </TableRow>
             </TableHead>
             <TableBody>
               {list.map(row => (
                 <TableRow key={row._id}>
-                  <TableCell component='th' scope='row'>
+                  <TableCell>
                     {row.account.asset.symbol}
                   </TableCell>
-                  <TableCell>{row.account._id}</TableCell>
-                  <TableCell align='right'>{row.account.balance}</TableCell>
-                  <TableCell align='right'>
-                    {row.authorized ? 'Authroized' : 'Unauthorized'}
+                  <TableCell>
+                    {row.bankName}
+                  </TableCell>
+                  <TableCell align="center">{row.bankAccountNumber}</TableCell>
+                  <TableCell align="center">{row.account.balance}</TableCell>
+                  <TableCell align="center">
+                    {row.authorized ?
+                      <ButtonGroup variant="text" color="primary" aria-label="text primary button group">
+                        <Button>Deposit</Button>
+                        <Button>Withdrawal</Button>
+                      </ButtonGroup>
+                    : 'Account Pending'}
                   </TableCell>
                 </TableRow>
               ))}
             </TableBody>
           </Table>
         </TableContainer>
-        <Box m={3}>
+        <Box mt={3}>
           <Button
             variant='contained'
             color='primary'
