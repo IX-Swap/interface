@@ -13,6 +13,7 @@ import useStyles from 'pages/exchange/styles'
 import PropTypes from 'prop-types'
 import { useTheme } from '@material-ui/core/styles'
 // import BankCreateComponent from './bank/BankCreateComponent'
+import Overview from './overview/Overview';
 import BankListComponent from './bank/BankListComponent'
 import { BankCreateProvider } from './bank/BankCreateContext'
 import { BankListProvider } from './bank/BankListContext'
@@ -78,7 +79,7 @@ function AccountsPanel ({ history, state, setMarket }) {
         onChangeIndex={handleChangeIndex}
       > */}
           <TabPanel value={value} index={0} dir={theme.direction}>
-            SOME KIND OF OVERVIEW
+            <Overview />
           </TabPanel>
           <TabPanel value={value} index={1} dir={theme.direction}>
             <BankListComponent />
