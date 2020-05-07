@@ -12,6 +12,7 @@ import {
 import useStyles from 'pages/exchange/styles'
 import PropTypes from 'prop-types'
 import { useTheme } from '@material-ui/core/styles'
+import BankCreateComponent from './bank/BankCreateComponent'
 import Overview from './overview/Overview'
 import BankListComponent from './bank/BankListComponent'
 import { AccountProvider } from 'context/AccountContext'
