@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import React, { useEffect } from "react";
 import {
   Box,
   Grid,
@@ -11,89 +11,90 @@ import {
   Typography,
   Button,
   ButtonGroup,
-  CircularProgress
-} from '@material-ui/core'
+  CircularProgress,
+} from "@material-ui/core";
 import {
-  useBankListDispatch,
-  useBankListState,
-  listBankAccount
-} from './BankListContext'
-import { withRouter, useHistory } from 'react-router-dom'
-import { demoData } from './demodata'
+  useAccountDispatch,
+  useAccountState,
+  getBankAccounts,
+} from "context/AccountContext";
+import { withRouter, useHistory } from "react-router-dom";
+import { demoData } from "./demodata";
 
-function BankListComponent (props) {
-  const { bankListState } = useBankListLogic()
+function BankListComponent(props) {
+  const { bankListState } = useBankListLogic();
+
   return (
-    <Grid container justify='center' alignItems='center'>
+    <Grid container justify="center" alignItems="center">
       <Grid item xs={12} sm={12} md={12} lg={12}>
-        {bankListState.status === 'GETTING' ? (
+        {bankListState.status === "GETTING" ? (
           <CircularProgress />
-        ) : !bankListState.data.length ? (
+        ) : !bankListState.data ? (
           <AddBankAccount props={props} />
         ) : (
           <ListBankAccounts
             status={bankListState.status}
-            list={demoData}
+            list={bankListState.banks}
           />
         )}
       </Grid>
     </Grid>
-  )
+  );
 }
 
-function ListBankAccounts ({ list, status }) {
-  const history = useHistory()
+function ListBankAccounts({ list = [], status }) {
+  const history = useHistory();
   return (
     <Grid item md={12}>
       <Box p={3}>
         <TableContainer>
-          <Table aria-label='accounts table'>
+          <Table aria-label="accounts table">
             <TableHead>
               <TableRow>
                 <TableCell>
                   <b>Currency</b>
                 </TableCell>
-                <TableCell>
-                  <b>Bank Name</b>
+                <TableCell align="center">
+                  <b>Account ID</b>
                 </TableCell>
-                <TableCell align='center'>
-                  <b>Account Number</b>
-                </TableCell>
-                <TableCell align='center'>
+                <TableCell align="center">
                   <b>Balance</b>
                 </TableCell>
-                <TableCell align='center'>
+                <TableCell align="center">
                   <b>Status</b>
                 </TableCell>
               </TableRow>
             </TableHead>
             <TableBody>
-              {list.map(row => (
+              {list.map((row) => (
                 <TableRow key={row._id}>
                   <TableCell>{row.account.asset.symbol}</TableCell>
-                  <TableCell>{row.bankName}</TableCell>
-                  <TableCell align='center'>{row.bankAccountNumber}</TableCell>
-                  <TableCell align='center'>{row.account.balance}</TableCell>
-                  <TableCell align='center'>
+                  <TableCell align="center">{row.bankAccountNumber}</TableCell>
+                  <TableCell align="center">{row.account.balance}</TableCell>
+                  <TableCell align="center">
                     {row.authorized ? (
                       <ButtonGroup
-                        variant='text'
-                        color='primary'
-                        aria-label='text primary button group'
+                        variant="text"
+                        color="primary"
+                        aria-label="text primary button group"
                       >
                         <Button
                           onClick={() => {
-                            history.push('/accounts/deposit')
+                            history.push("/accounts/deposit");
                           }}
                         >
                           Deposit
                         </Button>
-                        <Button onClick={() => {
-                            history.push('/accounts/withdraw')
-                          }}>Withdrawal</Button>
+                        <Button
+                          onClick={() => {
+                            history.push("/accounts/withdraw");
+                          }}
+                        >
+                          Withdrawal
+                        </Button>
                       </ButtonGroup>
                     ) : (
-                      'Account Pending'
+                      "Account Pending"
                     )}
                   </TableCell>
                 </TableRow>
@@ -103,10 +104,10 @@ function ListBankAccounts ({ list, status }) {
         </TableContainer>
         <Box mt={3}>
           <Button
-            variant='contained'
-            color='primary'
+            variant="contained"
+            color="primary"
             onClick={() => {
-              history.push(`/accounts/bank-create`)
+              history.push(`/accounts/bank-create`);
             }}
           >
             ADD BANK ACCOUNT
@@ -114,22 +115,22 @@ function ListBankAccounts ({ list, status }) {
         </Box>
       </Box>
     </Grid>
-  )
+  );
 }
 
-function AddBankAccount ({ props }) {
+function AddBankAccount({ props }) {
   return (
     <Grid>
       <Box m={4} p={4}>
-        <Grid container direction='column' justify='center' alignItems='center'>
+        <Grid container direction="column" justify="center" alignItems="center">
           <Typography paragraph>
             You have not added a bank account. Please add a bank account.
           </Typography>
           <Button
-            variant='contained'
-            color='primary'
+            variant="contained"
+            color="primary"
             onClick={() => {
-              props.history.push(`/accounts/bank-create`)
+              props.history.push(`/accounts/bank-create`);
             }}
           >
             ADD BANK ACCOUNT
@@ -137,23 +138,23 @@ function AddBankAccount ({ props }) {
         </Grid>
       </Box>
     </Grid>
-  )
+  );
 }
 
-function useBankListLogic () {
-  const bankDispatch = useBankListDispatch()
-  const bankListState = useBankListState()
-  const { status } = bankListState
+function useBankListLogic() {
+  const bankDispatch = useAccountDispatch();
+  const bankListState = useAccountState();
+  const { status } = bankListState;
   const loadBanks =
-    !bankListState.success && !bankListState.isLoading && !bankListState.error
+    !bankListState.success && !bankListState.isLoading && !bankListState.error;
 
   useEffect(() => {
-    if (status === 'INIT') {
-      listBankAccount(bankDispatch)
+    if (status === "INIT") {
+      getBankAccounts(bankDispatch);
     }
-  }, [status, bankDispatch, loadBanks])
+  }, [status, bankDispatch, loadBanks]);
 
-  return { bankDispatch, bankListState, loadBanks }
+  return { bankDispatch, bankListState, loadBanks };
 }
 
-export default withRouter(BankListComponent)
+export default withRouter(BankListComponent);

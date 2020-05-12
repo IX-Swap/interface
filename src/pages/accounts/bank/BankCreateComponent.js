@@ -11,16 +11,16 @@ import {
   Typography,
   MenuItem,
   Select,
-  CircularProgress
+  CircularProgress,
+  Paper
 } from '@material-ui/core'
 
-import {
-  createBankAccount,
-  useBankCreateDispatch,
-  useBankCreateState
-} from './BankCreateContext'
-
-import { useBankListDispatch, listBankAccount } from './BankListContext'
+import { 
+  useAccountDispatch,
+  useAccountState,
+  getBankAccounts,
+  createBankAccount
+} from 'context/AccountContext'
 
 import {
   useAssetsDispatch,
@@ -29,15 +29,23 @@ import {
   ASSETS_STATUS
 } from 'context/AssetsContext'
 
+import {
+  useIdentityState,
+  getIdentity,
+  useIdentityDispatch,
+  IDENTITY_STATUS
+} from 'context/IdentityContext'
+
 export default function BankCreateComponent (props) {
-  const bankDispatch = useBankCreateDispatch()
+  const bankDispatch = useAccountDispatch()
   const {
     currencies,
     assetsReady,
     getBankList,
-    bankState,
+    accountState,
     handleSelectChange,
     assetId,
+    identity,
     symbol
   } = useBankCreateLogic()
 
@@ -54,9 +62,10 @@ export default function BankCreateComponent (props) {
   const [bankAccountHolderName, setBankAccountHolderName] = useState('')
   const [swiftCode, setSwiftCode] = useState('')
   const [bankAccountNumber, setBankAccountNumber] = useState('')
-
+ 
   const handleClickSubmit = () => {
     const payload = {
+      userId: identity._id,
       bankName: bankAccountName,
       bankAddress: bankAddress,
       accountHolderName: bankAccountHolderName,
@@ -75,194 +84,129 @@ export default function BankCreateComponent (props) {
       .catch()
   }
 
+  const handleBackButton = () => {
+    history.push('/accounts')
+  }
+
   return (
     <Grid container justify='center' alignItems='center'>
       <Grid item lg={9}>
         <Grid item sm={12} md={12} lg={12}>
-          <Box mt={3} p={3}>
+          <Box pl={0} p={3}>
             <Typography variant='h3'>Setup Bank Account</Typography>
           </Box>
         </Grid>
 
-        <Grid container>
-          <Grid item lg={12}>
-            <Box ml={3} mt={3}>
-              <Typography variant='h5'>Account Info</Typography>
-            </Box>
-          </Grid>
-          <Grid item sm={12} md={12} lg={6}>
-            <Box ml={3} m={1}>
-              <FormControl fullWidth>
-                <InputLabel htmlFor='bank-name'>Bank Name</InputLabel>
-                <Input
-                  id='bank-name'
-                  onChange={e => {
-                    setBankAccountName(e.target.value)
-                  }}
-                />
-              </FormControl>
-            </Box>
-          </Grid>
-          <Grid item sm={12} md={12} lg={5}>
-            <Box ml={3} m={1}>
-              <FormControl fullWidth>
-                <InputLabel htmlFor='account-holder-name-input'>
-                  Account Holder Name
-                </InputLabel>
-                <Input
-                  id='account-holder-name-input'
-                  onChange={e => {
-                    setBankAccountHolderName(e.target.value)
-                  }}
-                />
-              </FormControl>
-            </Box>
-          </Grid>
-        </Grid>
-
-        <Grid container>
-          <Grid item sm={12} md={12} lg={3}>
-            <Box ml={3} m={1}>
-              <FormControl fullWidth>
-                <InputLabel id='currency-selector-input'>Currency</InputLabel>
-                <Select
-                  fullWidth
-                  labelId='currency-selector'
-                  id='currency-selector-value'
-                  value={symbol}
-                  onChange={handleSelectChange}
-                >
-                  {assetsReady
-                    ? currencies.map((item, index) => (
-                        <MenuItem key={item.id} value={index}>
-                          {item.symbol}
-                        </MenuItem>
-                      ))
-                    : null}
-                </Select>
-              </FormControl>
-            </Box>
-          </Grid>
-          <Grid item sm={12} md={12} lg={5}>
-            <Box ml={3} m={1}>
-              <FormControl fullWidth>
-                <InputLabel htmlFor='bank-account-number-input'>
-                  Bank Account Number
-                </InputLabel>
-
-                <Input
-                  id='bank-account-number-input'
-                  type='number'
-                  onChange={e => {
-                    setBankAccountNumber(e.target.value)
-                  }}
-                />
-              </FormControl>
-            </Box>
-          </Grid>
-          <Grid item sm={12} md={12} lg={3}>
-            <Box ml={3} m={1}>
-              <FormControl fullWidth>
-                <InputLabel htmlFor='swift-code-input'>Swift Code</InputLabel>
-                <Input
-                  id='swift-code-input'
-                  type='number'
-                  onChange={e => {
-                    setSwiftCode(e.target.value)
-                  }}
-                />
-              </FormControl>
-            </Box>
-          </Grid>
-        </Grid>
-        <Grid container>
-          <Grid item sm={12} md={12} lg={12}>
-            <Box ml={3} mt={3}>
-              <Typography variant='h5'>Bank Address</Typography>
-            </Box>
-          </Grid>
-          <Grid item sm={12} md={12} lg={6}>
-            <Box ml={3} m={1}>
-              <FormControl fullWidth>
-                <InputLabel htmlFor='bank-address-line1-input'>
-                  Line 1
-                </InputLabel>
-                <Input
-                  id='bank-address-line1-input'
-                  onChange={e => {
-                    setBankAddress({
-                      ...bankAddress,
-                      line1: e.target.value
-                    })
-                  }}
-                />
-              </FormControl>
-            </Box>
-          </Grid>
-          <Grid item sm={12} md={12} lg={5}>
-            <Box ml={3} m={1}>
-              <FormControl fullWidth>
-                <InputLabel htmlFor='bank-address-line2-input'>
-                  Line 2
-                </InputLabel>
-                <Input
-                  id='bank-address-line2-input'
-                  onChange={e => {
-                    setBankAddress({
-                      ...bankAddress,
-                      line2: e.target.value
-                    })
-                  }}
-                />
-              </FormControl>
-            </Box>
-          </Grid>
-        </Grid>
-        <Grid container>
-          <Grid item sm={12} md={12} lg={6}>
-            <Box ml={3} m={1}>
-              <FormControl fullWidth>
-                <InputLabel htmlFor='bank-address-city-input'>City</InputLabel>
-                <Input
-                  id='bank-address-city-input'
-                  onChange={e => {
-                    setBankAddress({ ...bankAddress, city: e.target.value })
-                  }}
-                />
-              </FormControl>
-            </Box>
-          </Grid>
-          <Grid item sm={12} md={12} lg={5}>
-            <Box ml={3} m={1}>
-              <FormControl fullWidth>
-                <InputLabel htmlFor='bank-address-state-input'>
-                  State
-                </InputLabel>
-                <Input
-                  id='bank-address-state-input'
-                  onChange={e => {
-                    setBankAddress({
-                      ...bankAddress,
-                      state: e.target.value
-                    })
-                  }}
-                />
-              </FormControl>
-            </Box>
-          </Grid>
+        <Paper>
           <Grid container>
+            <Grid item lg={12}>
+              <Box ml={3} mt={3}>
+                <Typography variant='h5'>Account Info</Typography>
+              </Box>
+            </Grid>
             <Grid item sm={12} md={12} lg={6}>
               <Box ml={3} m={1}>
                 <FormControl fullWidth>
-                  <InputLabel htmlFor='bank-address-country-input'>
-                    Country
+                  <InputLabel htmlFor='bank-name'>Bank Name</InputLabel>
+                  <Input
+                    id='bank-name'
+                    onChange={e => {
+                      setBankAccountName(e.target.value)
+                    }}
+                  />
+                </FormControl>
+              </Box>
+            </Grid>
+            <Grid item sm={12} md={12} lg={5}>
+              <Box ml={3} m={1}>
+                <FormControl fullWidth>
+                  <InputLabel htmlFor='account-holder-name-input'>
+                    Account Holder Name
                   </InputLabel>
                   <Input
-                    id='bank-address-country-input'
+                    id='account-holder-name-input'
+                    onChange={e => {
+                      setBankAccountHolderName(e.target.value)
+                    }}
+                  />
+                </FormControl>
+              </Box>
+            </Grid>
+          </Grid>
+
+          <Grid container>
+            <Grid item sm={12} md={12} lg={3}>
+              <Box ml={3} m={1}>
+                <FormControl fullWidth>
+                  <InputLabel id='currency-selector-input'>Currency</InputLabel>
+                  <Select
+                    fullWidth
+                    labelId='currency-selector'
+                    id='currency-selector-value'
+                    value={symbol}
+                    onChange={handleSelectChange}
+                  >
+                    {assetsReady
+                      ? currencies.map((item, index) => (
+                          <MenuItem key={item.id} value={index}>
+                            {item.symbol}
+                          </MenuItem>
+                        ))
+                      : null}
+                  </Select>
+                </FormControl>
+              </Box>
+            </Grid>
+            <Grid item sm={12} md={12} lg={5}>
+              <Box ml={3} m={1}>
+                <FormControl fullWidth>
+                  <InputLabel htmlFor='bank-account-number-input'>
+                    Bank Account Number
+                  </InputLabel>
+
+                  <Input
+                    id='bank-account-number-input'
+                    type='number'
+                    onChange={e => {
+                      setBankAccountNumber(e.target.value)
+                    }}
+                  />
+                </FormControl>
+              </Box>
+            </Grid>
+            <Grid item sm={12} md={12} lg={3}>
+              <Box ml={3} m={1}>
+                <FormControl fullWidth>
+                  <InputLabel htmlFor='swift-code-input'>Swift Code</InputLabel>
+                  <Input
+                    id='swift-code-input'
+                    type='number'
+                    onChange={e => {
+                      setSwiftCode(e.target.value)
+                    }}
+                  />
+                </FormControl>
+              </Box>
+            </Grid>
+          </Grid>
+          <Grid container>
+            <Grid item sm={12} md={12} lg={12}>
+              <Box ml={3} mt={3}>
+                <Typography variant='h5'>Bank Address</Typography>
+              </Box>
+            </Grid>
+            <Grid item sm={12} md={12} lg={6}>
+              <Box ml={3} m={1}>
+                <FormControl fullWidth>
+                  <InputLabel htmlFor='bank-address-line1-input'>
+                    Line 1
+                  </InputLabel>
+                  <Input
+                    id='bank-address-line1-input'
                     onChange={e => {
                       setBankAddress({
                         ...bankAddress,
-                        country: e.target.value
+                        line1: e.target.value
                       })
                     }}
                   />
@@ -272,15 +216,15 @@ export default function BankCreateComponent (props) {
             <Grid item sm={12} md={12} lg={5}>
               <Box ml={3} m={1}>
                 <FormControl fullWidth>
-                  <InputLabel htmlFor='bank-address-postal-code-input'>
-                    Postal Code
+                  <InputLabel htmlFor='bank-address-line2-input'>
+                    Line 2
                   </InputLabel>
                   <Input
-                    id='bank-address-postalcode-input'
+                    id='bank-address-line2-input'
                     onChange={e => {
                       setBankAddress({
                         ...bankAddress,
-                        postalCode: e.target.value
+                        line2: e.target.value
                       })
                     }}
                   />
@@ -288,24 +232,104 @@ export default function BankCreateComponent (props) {
               </Box>
             </Grid>
           </Grid>
-        </Grid>
-        <Grid item>
-          <Box m={3} p={3}>
-            {!bankState.isLoading ? (
-              <FormControl>
+          <Grid container>
+            <Grid item sm={12} md={12} lg={6}>
+              <Box ml={3} m={1}>
+                <FormControl fullWidth>
+                  <InputLabel htmlFor='bank-address-city-input'>City</InputLabel>
+                  <Input
+                    id='bank-address-city-input'
+                    onChange={e => {
+                      setBankAddress({ ...bankAddress, city: e.target.value })
+                    }}
+                  />
+                </FormControl>
+              </Box>
+            </Grid>
+            <Grid item sm={12} md={12} lg={5}>
+              <Box ml={3} m={1}>
+                <FormControl fullWidth>
+                  <InputLabel htmlFor='bank-address-state-input'>
+                    State
+                  </InputLabel>
+                  <Input
+                    id='bank-address-state-input'
+                    onChange={e => {
+                      setBankAddress({
+                        ...bankAddress,
+                        state: e.target.value
+                      })
+                    }}
+                  />
+                </FormControl>
+              </Box>
+            </Grid>
+            <Grid container>
+              <Grid item sm={12} md={12} lg={6}>
+                <Box ml={3} m={1}>
+                  <FormControl fullWidth>
+                    <InputLabel htmlFor='bank-address-country-input'>
+                      Country
+                    </InputLabel>
+                    <Input
+                      id='bank-address-country-input'
+                      onChange={e => {
+                        setBankAddress({
+                          ...bankAddress,
+                          country: e.target.value
+                        })
+                      }}
+                    />
+                  </FormControl>
+                </Box>
+              </Grid>
+              <Grid item sm={12} md={12} lg={5}>
+                <Box ml={3} m={1}>
+                  <FormControl fullWidth>
+                    <InputLabel htmlFor='bank-address-postal-code-input'>
+                      Postal Code
+                    </InputLabel>
+                    <Input
+                      id='bank-address-postalcode-input'
+                      onChange={e => {
+                        setBankAddress({
+                          ...bankAddress,
+                          postalCode: e.target.value
+                        })
+                      }}
+                    />
+                  </FormControl>
+                </Box>
+              </Grid>
+            </Grid>
+          </Grid>
+          <Grid item>
+            <Box p={3}>
+              <Box component="div" mr={3} display="inline">
                 <Button
                   variant='contained'
                   color='primary'
-                  onClick={handleClickSubmit}
+                  onClick={handleBackButton}
                 >
-                  Submit
+                  Cancel
                 </Button>
-              </FormControl>
-            ) : (
-              <CircularProgress />
-            )}
-          </Box>
-        </Grid>
+              </Box>
+              <Box component="div" display="inline">
+                {!accountState.isLoading ? (
+                  <Button
+                    variant='contained'
+                    color='primary'
+                    onClick={handleClickSubmit}
+                  >
+                    Submit
+                  </Button>
+                ) : (
+                  <CircularProgress />
+                )}
+              </Box>
+            </Box>
+          </Grid>
+        </Paper>
       </Grid>
     </Grid>
   )
@@ -313,21 +337,25 @@ export default function BankCreateComponent (props) {
 
 function useBankCreateLogic () {
   const assetsDispatch = useAssetsDispatch()
-  const bankListDispatch = useBankListDispatch()
-  const bankState = useBankCreateState()
+  const bankListDispatch = useAccountDispatch()
+  const accountState = useAccountState()
   const [assetId, setAssetId] = useState('')
   const [symbol, setSymbol] = useState('')
-
   const { status: assetsStatus, assets } = useAssetsState()
-
+  const identityDispatch = useIdentityDispatch()
+  const { status: identityStatus, identity } = useIdentityState()
   // const currencies = assetsReady ? assets.list.map(asset => asset.symbol) : ''
 
   const assetsReady = ![ASSETS_STATUS.INIT].includes(assetsStatus)
+
   useEffect(() => {
     if (assetsStatus === ASSETS_STATUS.INIT) {
       getAssets(assetsDispatch)
     }
-  }, [assetsStatus, assetsDispatch])
+    if (identityStatus === IDENTITY_STATUS.INIT) {
+      getIdentity(identityDispatch)
+    }
+  }, [assetsStatus, assetsDispatch, identityStatus, identityDispatch])
 
   const currencies = assets.list
     ? assets.list.map((asset, i) => {
@@ -338,7 +366,7 @@ function useBankCreateLogic () {
       })
     : []
 
-  const getBankList = () => listBankAccount(bankListDispatch)
+  const getBankList = () => getBankAccounts(bankListDispatch)
 
   const handleSelectChange = ev => {
     ev.preventDefault()
@@ -353,7 +381,8 @@ function useBankCreateLogic () {
     currencies,
     assetsReady,
     getBankList,
-    bankState,
+    accountState,
+    identity,
     handleSelectChange,
     assetId,
     symbol
