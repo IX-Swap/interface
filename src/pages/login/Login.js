@@ -1,51 +1,33 @@
-import React, { useState } from 'react'
-import {
-  Grid,
-  CircularProgress,
-  Typography,
-  Button,
-  Tabs,
-  Tab,
-  TextField,
-  Box,
-  Fade
-} from '@material-ui/core'
-import { withRouter } from 'react-router-dom'
+import React from 'react';
+import { Grid, Typography, Button, Tabs, Tab, Box } from '@material-ui/core';
+import { withRouter } from 'react-router-dom';
 
 // styles
-import useStyles from './styles'
+import useStyles from './styles';
 
-// import google from '../../images/google.svg'
-import VerifySignup from './VerifySignup'
-import ResetPassword from './ResetPassword'
+import VerifySignup from './VerifySignup';
+import ResetPassword from './ResetPassword';
+import SignupForm from './SignupForm';
+import LoginForm from './LoginForm';
 
 // context
 import {
   useUserDispatch,
   useUserState,
   setActiveTabId,
-  loginUser,
-  signupUser
-  // verifySignup,
-  // checkAuth
-} from '../../context/UserContext'
+} from '../../context/UserContext';
 
-import { IdentityProvider } from '../../context/IdentityContext'
+import { IdentityProvider } from '../../context/IdentityContext';
 
-function Login (props) {
-  const classes = useStyles()
+function Login(props) {
+  const classes = useStyles();
   // global
-  const userDispatch = useUserDispatch()
-  const userState = useUserState()
-  // local
-  // const [isLoading, setIsLoading] = useState(false)
-  const [usernameValue, setUsernameValue] = useState('')
-  const [passwordValue, setPasswordValue] = useState('')
-  const [otpValue, setOtpValue] = useState('')
+  const userDispatch = useUserDispatch();
+  const userState = useUserState();
 
-  const VerifyEmail = () => {
+  const RegistrationSuccess = () => {
     return (
-      <Grid container justify='center' alignItems='center'>
+      <Grid container justify="center" alignItems="center">
         <Box p={4}>
           <Grid item>
             <Box mb={2}>
@@ -54,8 +36,8 @@ function Login (props) {
           </Grid>
           <Grid item>
             <Button
-              variant='outlined'
-              color='primary'
+              variant="outlined"
+              color="primary"
               onClick={() => setActiveTabId(userDispatch, 0)}
             >
               Back to Login
@@ -63,9 +45,11 @@ function Login (props) {
           </Grid>
         </Box>
       </Grid>
-    )
-  }
-  const { token } = props.match.params || null
+    );
+  };
+
+  const { token } = props.match.params || null;
+
   return (
     <Grid container className={classes.container}>
       {token && token === 'reset-password' ? (
@@ -75,228 +59,28 @@ function Login (props) {
       ) : token && token !== 'reset-password' ? (
         <VerifySignup token={token} props={props} />
       ) : userState.activeTabId === 2 ? (
-        <VerifyEmail />
+        <RegistrationSuccess />
       ) : (
         <form className={classes.form}>
           <Tabs
             value={userState.activeTabId}
             onChange={(e, id) => setActiveTabId(userDispatch, id)}
-            indicatorColor='primary'
-            textColor='primary'
+            indicatorColor="primary"
+            textColor="primary"
             centered
           >
-            <Tab label='Login' classes={{ root: classes.tab }} />
-            <Tab label='New User' classes={{ root: classes.tab }} />
+            <Tab label="Login" classes={{ root: classes.tab }} />
+            <Tab label="New User" classes={{ root: classes.tab }} />
           </Tabs>
-          {userState.activeTabId === 0 && (
-            <Box mt={3}>
-              {/* <Typography variant="h1" className={classes.greeting}>
-                Good Morning, User
-              </Typography> */}
-
-              {/* <Button size='large' className={classes.googleButton}>
-                  <img
-                    src={google}
-                    alt='google'
-                    className={classes.googleIcon}
-                  />
-                  &nbsp;Sign in with Google
-                </Button> */}
-              {/* <div className={classes.formDividerContainer}>
-                  <div className={classes.formDivider} />
-                  <Typography className={classes.formDividerWord}>
-                    or
-                  </Typography>
-                  <div className={classes.formDivider} />
-                </div> */}
-              <Fade in={userState.error !== ''}>
-                <Typography color='secondary' className={classes.errorMessage}>
-                  {userState.error}
-                </Typography>
-              </Fade>
-              <Fade in={userState.message !== ''}>
-                <Typography color='secondary' className={classes.errorMessage}>
-                  {userState.message}
-                </Typography>
-              </Fade>
-              <TextField
-                id='email'
-                InputProps={{
-                  classes: {
-                    underline: classes.textFieldUnderline,
-                    input: classes.textField
-                  }
-                }}
-                value={usernameValue}
-                onChange={e => setUsernameValue(e.target.value)}
-                margin='normal'
-                placeholder='Email Address'
-                type='email'
-                fullWidth
-              />
-              <TextField
-                id='password'
-                InputProps={{
-                  classes: {
-                    underline: classes.textFieldUnderline,
-                    input: classes.textField
-                  }
-                }}
-                value={passwordValue}
-                onChange={e => setPasswordValue(e.target.value)}
-                margin='normal'
-                placeholder='Password'
-                type='password'
-                fullWidth
-              />
-              <TextField
-                id='otpValue'
-                variant='outlined'
-                value={otpValue}
-                onChange={e => setOtpValue(e.target.value)}
-                margin='normal'
-                placeholder='OTP Code (optional)'
-                type='otpValue'
-                fullWidth
-              />
-              <div className={classes.formButtons}>
-                {userState && !userState.isLoading ? (
-                  <Button
-                    disabled={
-                      usernameValue.length === 0 || passwordValue.length === 0
-                    }
-                    onClick={() =>
-                      loginUser(
-                        userDispatch,
-                        usernameValue,
-                        passwordValue,
-                        otpValue
-                      )
-                    }
-                    variant='contained'
-                    color='primary'
-                    size='large'
-                  >
-                    Login
-                  </Button>
-                ) : (
-                  <CircularProgress size={26} className={classes.loginLoader} />
-                )}
-                <Button
-                  color='primary'
-                  size='large'
-                  className={classes.forgetButton}
-                  onClick={() => props.history.push('/login/reset-password')}
-                >
-                  Forgot Password?
-                </Button>
-              </div>
-            </Box>
-          )}
-          {userState.activeTabId === 1 && (
-            <>
-              <Typography variant='h4' className={classes.greeting}>
-                Create Account
-              </Typography>
-              <Fade in={userState.error !== ''}>
-                <Typography color='secondary' className={classes.errorMessage}>
-                  {userState.error}
-                </Typography>
-              </Fade>
-              <TextField
-                id='email'
-                InputProps={{
-                  classes: {
-                    underline: classes.textFieldUnderline,
-                    input: classes.textField
-                  }
-                }}
-                value={usernameValue}
-                onChange={e => setUsernameValue(e.target.value)}
-                margin='normal'
-                placeholder='Email Address'
-                type='email'
-                fullWidth
-              />
-              <TextField
-                id='password'
-                InputProps={{
-                  classes: {
-                    underline: classes.textFieldUnderline,
-                    input: classes.textField
-                  }
-                }}
-                value={passwordValue}
-                onChange={e => setPasswordValue(e.target.value)}
-                margin='normal'
-                placeholder='Password'
-                type='password'
-                fullWidth
-              />
-              <div className={classes.creatingButtonContainer}>
-                {userState.isLoading ? (
-                  <CircularProgress size={26} />
-                ) : (
-                  <Button
-                    onClick={() =>
-                      signupUser(
-                        userDispatch,
-                        usernameValue,
-                        passwordValue,
-                        otpValue
-                      )
-                    }
-                    disabled={
-                      usernameValue.length === 0 || passwordValue.length === 0
-                    }
-                    size='large'
-                    variant='contained'
-                    color='primary'
-                    fullWidth
-                    // className={classes.createAccountButton}
-                  >
-                    CREATE
-                  </Button>
-                )}
-              </div>
-              {/* <div className={classes.formDividerContainer}>
-                  <div className={classes.formDivider} />
-                  <Typography className={classes.formDividerWord}>
-                    or
-                  </Typography>
-                  <div className={classes.formDivider} />
-                </div> */}
-              {/* <Button
-                  size='large'
-                  className={classnames(
-                    classes.googleButton,
-                    classes.googleButtonCreating
-                  )}
-                >
-                  <img
-                    src={google}
-                    alt='google'
-                    className={classes.googleIcon}
-                  />
-                  &nbsp;Sign in with Google
-                </Button> */}
-            </>
-          )}
-          <Box mt={3} align='right'>
-            <a align='right' href='https://bitwarden.com'>
-              <img
-                src='https://www.vectorlogo.zone/logos/bitwarden/bitwarden-ar21.svg'
-                alt='bitwarden'
-              />
-            </a>
-          </Box>
+          {userState.activeTabId === 0 && <LoginForm />}
+          {userState.activeTabId === 1 && <SignupForm />}
         </form>
       )}
-      <Typography color='primary' className={classes.copyright}>
+      <Typography color="primary" className={classes.copyright}>
         © 2020 InvestaX, All rights reserved.
       </Typography>
     </Grid>
-  )
+  );
 }
 
-export default withRouter(Login)
+export default withRouter(Login);
