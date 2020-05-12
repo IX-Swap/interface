@@ -1,5 +1,5 @@
-import React from "react";
-import { Switch, withRouter, Route } from "react-router-dom";
+import React from 'react';
+import { Switch, withRouter, Route } from 'react-router-dom';
 import {
   Grid,
   Paper,
@@ -8,18 +8,18 @@ import {
   AppBar,
   Tabs,
   Tab,
-} from "@material-ui/core";
-import useStyles from "pages/exchange/styles";
-import PropTypes from "prop-types";
-import { useTheme } from "@material-ui/core/styles";
-import BankCreateComponent from "./bank/BankCreateComponent";
-import BankListComponent from "./bank/BankListComponent";
-import DepositPage from "./deposit/DepositPage";
-import WithdrawPage from "./withdraw/WithdrawPage";
-import Overview from "./overview/Overview";
-import { AccountProvider } from "context/AccountContext";
-import { AssetsProvider } from "context/AssetsContext";
-import { IdentityProvider } from "context/IdentityContext";
+} from '@material-ui/core';
+import useStyles from 'pages/exchange/styles';
+import PropTypes from 'prop-types';
+import { useTheme } from '@material-ui/core/styles';
+import BankCreateComponent from './bank/BankCreateComponent';
+import BankListComponent from './bank/BankListComponent';
+import DepositPage from './deposit/DepositPage';
+import WithdrawPage from './withdraw/WithdrawPage';
+import Overview from './overview/Overview';
+import { AccountProvider } from 'context/AccountContext';
+import { AssetsProvider } from 'context/AssetsContext';
+import { IdentityProvider } from 'context/IdentityContext';
 
 function Accounts(props) {
   return (
@@ -138,7 +138,7 @@ TabPanel.propTypes = {
 function a11yProps(index) {
   return {
     id: `full-width-tab-${index}`,
-    "aria-controls": `full-width-tabpanel-${index}`,
+    'aria-controls': `full-width-tabpanel-${index}`,
   };
 }
 

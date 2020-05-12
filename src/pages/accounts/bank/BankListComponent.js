@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect } from 'react';
 import {
   Box,
   Grid,
@@ -12,14 +12,13 @@ import {
   Button,
   ButtonGroup,
   CircularProgress,
-} from "@material-ui/core";
+} from '@material-ui/core';
 import {
   useAccountDispatch,
   useAccountState,
   getBankAccounts,
-} from "context/AccountContext";
-import { withRouter, useHistory } from "react-router-dom";
-import { demoData } from "./demodata";
+} from 'context/AccountContext';
+import { withRouter, useHistory } from 'react-router-dom';
 
 function BankListComponent(props) {
   const { bankListState } = useBankListLogic();
@@ -27,7 +26,7 @@ function BankListComponent(props) {
   return (
     <Grid container justify="center" alignItems="center">
       <Grid item xs={12} sm={12} md={12} lg={12}>
-        {bankListState.status === "GETTING" ? (
+        {bankListState.status === 'GETTING' ? (
           <CircularProgress />
         ) : !bankListState.data ? (
           <AddBankAccount props={props} />
@@ -80,21 +79,21 @@ function ListBankAccounts({ list = [], status }) {
                       >
                         <Button
                           onClick={() => {
-                            history.push("/accounts/deposit");
+                            history.push('/accounts/deposit');
                           }}
                         >
                           Deposit
                         </Button>
                         <Button
                           onClick={() => {
-                            history.push("/accounts/withdraw");
+                            history.push('/accounts/withdraw');
                           }}
                         >
                           Withdrawal
                         </Button>
                       </ButtonGroup>
                     ) : (
-                      "Account Pending"
+                      'Account Pending'
                     )}
                   </TableCell>
                 </TableRow>
@@ -149,7 +148,7 @@ function useBankListLogic() {
     !bankListState.success && !bankListState.isLoading && !bankListState.error;
 
   useEffect(() => {
-    if (status === "INIT") {
+    if (status === 'INIT') {
       getBankAccounts(bankDispatch);
     }
   }, [status, bankDispatch, loadBanks]);
