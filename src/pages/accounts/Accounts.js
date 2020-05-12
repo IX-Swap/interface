@@ -1,5 +1,5 @@
-import React from 'react'
-import { Switch, withRouter } from 'react-router-dom'
+import React, { useState } from 'react'
+import { Switch, withRouter, Route } from 'react-router-dom'
 import {
   Grid,
   Paper,
@@ -12,8 +12,10 @@ import {
 import useStyles from 'pages/exchange/styles'
 import PropTypes from 'prop-types'
 import { useTheme } from '@material-ui/core/styles'
-// import BankCreateComponent from './bank/BankCreateComponent'
+import BankCreateComponent from './bank/BankCreateComponent'
 import BankListComponent from './bank/BankListComponent'
+import DepositPage from './deposit/DepositPage'
+import WithdrawPage from './withdraw/WithdrawPage'
 import { BankCreateProvider } from './bank/BankCreateContext'
 import { BankListProvider } from './bank/BankListContext'
 import { AssetsProvider } from 'context/AssetsContext'
@@ -25,7 +27,7 @@ function Accounts (props) {
         <AssetsProvider>
           <BankListProvider>
             <BankCreateProvider>
-              <AccountsPanel />
+              {AccountRoutes(props)}
             </BankCreateProvider>
           </BankListProvider>
         </AssetsProvider>
@@ -34,18 +36,16 @@ function Accounts (props) {
   )
 }
 
-// function AccountRoutes ({ props }) {
-//   return (
-//     <>
-//       <Route exact path='/accounts' component={() => <BankListComponent />} />
-//       <Route
-//         exact
-//         path='/accounts/bank-create'
-//         component={BankCreateComponent}
-//       />
-//     </>
-//   )
-// }
+function AccountRoutes ({ props }) {
+  return (
+    <>
+      <Route exact path='/accounts' component={() => <AccountsPanel />} />
+      <Route exact path='/accounts/bank-create' component={() => <BankCreateComponent />} />
+      <Route exact path='/accounts/deposit' component={() => <DepositPage />} />
+      <Route exact path='/accounts/withdraw' component={() => <WithdrawPage />} />
+    </>
+  )
+}
 
 function AccountsPanel ({ history, state, setMarket }) {
   const { handleChange, theme, classes, value } = useAccountsLogic()
