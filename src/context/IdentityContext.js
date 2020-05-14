@@ -406,8 +406,8 @@ export const selectFile = (state, title) =>
 export const beginResetPassword = async (dispatch, email) => {
   dispatch({ type: actions.BEGIN_RESET_PASSWORD_REQUEST });
   try {
-    const uri = `/identity/auth/reset-password/${email}`;
-    const result = await postRequest(uri);
+    const uri = `/auth/password/reset/start`;
+    const result = await postRequest(uri, { email });
     const response = await result.json();
     if (result.status === 200) {
       dispatch({
@@ -429,7 +429,7 @@ export const completeResetPassword = async (
 ) => {
   dispatch({ type: actions.COMPLETE_RESET_PASSWORD_REQUEST });
   try {
-    const uri = `/identity/auth/reset-password`;
+    const uri = `/auth/password/reset/confirm`;
     const payload = {
       email,
       resetToken,

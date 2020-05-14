@@ -1,0 +1,6 @@
+{
+  "name": "sign-in",
+  "version": "0.0.1",
+  "main": "SignIn.js",
+  "private": true
+}

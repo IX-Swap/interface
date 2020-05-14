@@ -16,37 +16,38 @@ import {
   useUserState,
   setActiveTabId,
 } from '../../context/UserContext';
-
 import { IdentityProvider } from '../../context/IdentityContext';
+
+const RegistrationSuccess = () => {
+  const userDispatch = useUserDispatch();
+
+  return (
+    <Grid container justify="center" alignItems="center">
+      <Box p={4}>
+        <Grid item>
+          <Box mb={2}>
+            Thank you. Please check your email for a verification link.
+          </Box>
+        </Grid>
+        <Grid item>
+          <Button
+            variant="outlined"
+            color="primary"
+            onClick={() => setActiveTabId(userDispatch, 0)}
+          >
+            Back to Login
+          </Button>
+        </Grid>
+      </Box>
+    </Grid>
+  );
+};
 
 function Login(props) {
   const classes = useStyles();
   // global
   const userDispatch = useUserDispatch();
   const userState = useUserState();
-
-  const RegistrationSuccess = () => {
-    return (
-      <Grid container justify="center" alignItems="center">
-        <Box p={4}>
-          <Grid item>
-            <Box mb={2}>
-              Thank you. Please check your email for a verification link.
-            </Box>
-          </Grid>
-          <Grid item>
-            <Button
-              variant="outlined"
-              color="primary"
-              onClick={() => setActiveTabId(userDispatch, 0)}
-            >
-              Back to Login
-            </Button>
-          </Grid>
-        </Box>
-      </Grid>
-    );
-  };
 
   const { token } = props.match.params || null;
 
@@ -57,7 +58,7 @@ function Login(props) {
           <ResetPassword />
         </IdentityProvider>
       ) : token && token !== 'reset-password' ? (
-        <VerifySignup token={token} props={props} />
+        <VerifySignup />
       ) : userState.activeTabId === 2 ? (
         <RegistrationSuccess />
       ) : (

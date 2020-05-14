@@ -284,7 +284,7 @@ export function signOut(dispatch) {
   dispatch({ type: userActions.SIGN_OUT_SUCCESS });
 }
 
-export async function verifySignup(dispatch, token, credentials) {
+export async function verifySignup(dispatch, token) {
   try {
     dispatch({ type: userActions.VERIFY_SIGNUP_REQUEST });
     const uri = `/auth/registrations/confirm`;

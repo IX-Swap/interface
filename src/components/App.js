@@ -3,7 +3,7 @@ import { Route, Switch, Redirect } from 'react-router-dom';
 import classnames from 'classnames';
 import { HashRouter } from 'react-router-dom';
 
-import Login from '../pages/login';
+import Auth from '../pages/auth';
 
 import Header from './Header';
 import Sidebar from './Sidebar';
@@ -26,7 +26,7 @@ function App() {
   return (
     <HashRouter>
       <Switch>
-        <PublicRoute path="/login/:token?" component={Login} />
+        <PublicRoute path="/auth" component={Auth} />
         <LayoutProvider>
           <Authenticated />
         </LayoutProvider>
@@ -71,6 +71,7 @@ function App() {
       />
     );
   }
+
   function PrivateRoute({ component, ...rest }) {
     return (
       <Route
@@ -80,7 +81,10 @@ function App() {
             React.createElement(component, props)
           ) : (
             <Redirect
-              to={{ pathname: '/login', state: { from: props.location } }}
+              to={{
+                pathname: '/auth/sign-in',
+                state: { from: props.location },
+              }}
             />
           )
         }
