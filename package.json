@@ -40,7 +40,6 @@
   },
   "devDependencies": {
     "aws-sdk": "^2.649.0",
-    "dotenv": "^8.2.0",
     "gulp": "^4.0.2",
     "gulp-awspublish": "^4.1.1",
     "gulp-rev-all": "^2.0.3",
