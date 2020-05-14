@@ -13,6 +13,7 @@ import Exchange from '../pages/exchange';
 import Accounts from '../pages/accounts';
 import Identity from '../pages/identity';
 import Invest from '../pages/invest';
+import Users from '../pages/settings/users';
 import Security from '../pages/security';
 
 import { useLayoutState } from '../context/LayoutContext';
@@ -56,6 +57,7 @@ function App() {
           <PrivateRoute path="/identity" component={Identity} />
           <PrivateRoute path="/invest" component={Invest} />
           <PrivateRoute path="/security" component={Security} />
+          <PrivateRoute path="/users" component={Users} />
         </div>
       </div>
     );
