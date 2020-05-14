@@ -90,9 +90,14 @@ function useUsersListLogic() {
       userId: user._id,
       roles: newRole,
     });
+
     setOpen(false);
 
-    getUsersList(usersDispatch, { limit, ref: mountedRef });
+    getUsersList(usersDispatch, {
+      limit,
+      skip: ((page - 1) * limit),
+      ref: mountedRef,
+    });
   };
 
   const handleChangePage = (_, page) => {
@@ -113,7 +118,7 @@ function useUsersListLogic() {
     return () => {
       mountedRef.current = false
     }
-  }, [])
+  }, []);
 
   return {
     handleClose, handleChange, handleConfirm, handleChangePage,
