@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 
 import { makeStyles } from '@material-ui/core/styles';
 import Select from '@material-ui/core/Select';
@@ -18,25 +19,31 @@ export default function UsersTableBody({ users, handleChange }) {
 
   return (
     <TableBody>
-      {users && users.map((row) => (
-        <TableRow key={row._id}>
-          <TableCell>{row.email}</TableCell>
-          <TableCell>
-            <Select
-              className={classes.formControl}
-              value={row.roles}
-              onChange={(evt) => handleChange(evt, row)}
-              inputProps={{
-                name: 'roles'
-              }}
-            >
-              <MenuItem value={'admin'}>admin</MenuItem>
-              <MenuItem value={'authorizer'}>authorizer</MenuItem>
-              <MenuItem value={'user'}>user</MenuItem>
-            </Select>
-          </TableCell>
-        </TableRow>
-      ))}
+      {users &&
+        users.map((row) => (
+          <TableRow key={row._id}>
+            <TableCell>{row.email}</TableCell>
+            <TableCell>
+              <Select
+                className={classes.formControl}
+                value={row.roles}
+                onChange={(evt) => handleChange(evt, row)}
+                inputProps={{
+                  name: 'roles',
+                }}
+              >
+                <MenuItem value="admin">admin</MenuItem>
+                <MenuItem value="authorizer">authorizer</MenuItem>
+                <MenuItem value="user">user</MenuItem>
+              </Select>
+            </TableCell>
+          </TableRow>
+        ))}
     </TableBody>
   );
+}
+
+UsersTableBody.propTypes = {
+  users: PropTypes.array.isRequired,
+  handleChange: PropTypes.func.isRequired,
 };

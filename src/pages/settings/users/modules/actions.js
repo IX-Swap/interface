@@ -1,5 +1,5 @@
 import { usersListGetActions, userUpdateRoleActions } from './types';
-import { postRequest, putRequest } from '../../../../services/httpRequests'
+import { postRequest, putRequest } from '../../../../services/httpRequests';
 
 export async function getUsersList(dispatch, payload) {
   const { ref, ...data } = payload || { ref: {} };
@@ -19,7 +19,7 @@ export async function getUsersList(dispatch, payload) {
         payload: {
           page: Math.floor(skip / limit) + 1,
           total: Math.ceil(count / limit),
-          users: documents
+          users: documents,
         },
       });
     } else {
@@ -59,7 +59,7 @@ export async function updateUserRole(dispatch, payload) {
   } catch (err) {
     dispatch({
       type: userUpdateRoleActions.USER_UPDATE_ROLE_FAILURE,
-      payload: { message: 'Failed to update this user\'s role.' },
+      payload: { message: "Failed to update this user's role." },
     });
   }
 }

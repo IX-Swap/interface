@@ -1,5 +1,6 @@
 import React from 'react';
 import logger from 'use-reducer-logger';
+import PropTypes from 'prop-types';
 import usersListReducer from './reducers';
 import { initialState } from './state';
 
@@ -12,7 +13,7 @@ const DispatchContext = React.createContext();
 export function useUsersListState() {
   const context = React.useContext(StateContext);
   if (context === undefined)
-    throw new Error('useAccountState must be called in a UserListProvider');
+    throw new Error('useUsersListState must be called in a UserListProvider');
   return context;
 }
 
@@ -20,7 +21,7 @@ export function useUsersListDispatch() {
   const context = React.useContext(DispatchContext);
   if (context === undefined)
     throw new Error(
-      'useAccountDispatch must be called within a UserListProvider'
+      'useUsersListDispatch must be called within a UserListProvider'
     );
   return context;
 }
@@ -39,3 +40,5 @@ export function UsersListProvider({ children }) {
     </StateContext.Provider>
   );
 }
+
+UsersListProvider.propTypes = { children: PropTypes.node.isRequired };

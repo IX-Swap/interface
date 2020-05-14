@@ -6,5 +6,5 @@ export const initialState = {
   limit: 5,
   total: null,
   error: null,
-  status: USERS_LIST_STATUS.INIT
-}
+  status: USERS_LIST_STATUS.INIT,
+};
