@@ -1,98 +1,102 @@
-import React from 'react'
-import { Route, Switch, Redirect } from 'react-router-dom'
-import classnames from 'classnames'
-import { HashRouter } from 'react-router-dom'
+import React from 'react';
+import { Route, Switch, Redirect } from 'react-router-dom';
+import classnames from 'classnames';
+import { HashRouter } from 'react-router-dom';
 
-import Login from '../pages/login'
+import Auth from '../pages/auth';
 
-import Header from './Header'
-import Sidebar from './Sidebar'
-import useStyles from './Layout/styles'
+import Header from './Header';
+import Sidebar from './Sidebar';
+import useStyles from './Layout/styles';
 
-import Exchange from '../pages/exchange'
-import Accounts from '../pages/accounts'
-import Identity from '../pages/identity'
-import Invest from '../pages/invest'
-import Security from '../pages/security'
+import Exchange from '../pages/exchange';
+import Accounts from '../pages/accounts';
+import Identity from '../pages/identity';
+import Invest from '../pages/invest';
+import Security from '../pages/security';
 
-import { useLayoutState } from '../context/LayoutContext'
-import { useUserState, useUserDispatch, getUser } from '../context/UserContext'
-import { LayoutProvider } from '../context/LayoutContext'
+import { useLayoutState } from '../context/LayoutContext';
+import { useUserState, useUserDispatch, getUser } from '../context/UserContext';
+import { LayoutProvider } from '../context/LayoutContext';
 
-function App () {
-  const { isAuthenticated } = useUserState()
-  const classes = useStyles()
+function App() {
+  const { isAuthenticated } = useUserState();
+  const classes = useStyles();
 
   return (
     <HashRouter>
       <Switch>
-        <PublicRoute path='/login/:token?' component={Login} />
+        <PublicRoute path="/auth" component={Auth} />
         <LayoutProvider>
           <Authenticated />
         </LayoutProvider>
       </Switch>
     </HashRouter>
-  )
+  );
 
-  function Authenticated () {
-    const userDispatch = useUserDispatch()
-    const { isSidebarOpened } = useLayoutState()
-    const { status } = useUserState()
+  function Authenticated() {
+    const userDispatch = useUserDispatch();
+    const { isSidebarOpened } = useLayoutState();
+    const { status } = useUserState();
 
-    if (status === 'INIT') getUser(userDispatch)
+    if (status === 'INIT') getUser(userDispatch);
     return (
       <div className={classes.root}>
         <Header />
         <Sidebar />
         <div
           className={classnames(classes.content, {
-            [classes.contentShift]: isSidebarOpened
+            [classes.contentShift]: isSidebarOpened,
           })}
         >
           <div className={classes.fakeToolbar} />
-          <Route exact path='/' render={GotoDashboard} />
-          <PrivateRoute exact path='/trade' component={Exchange} />
-          <PrivateRoute path='/accounts' component={Accounts} />
-          <PrivateRoute path='/identity' component={Identity} />
-          <PrivateRoute path='/invest' component={Invest} />
-          <PrivateRoute path='/security' component={Security} />
+          <Route exact path="/" render={GotoDashboard} />
+          <PrivateRoute exact path="/trade" component={Exchange} />
+          <PrivateRoute path="/accounts" component={Accounts} />
+          <PrivateRoute path="/identity" component={Identity} />
+          <PrivateRoute path="/invest" component={Invest} />
+          <PrivateRoute path="/security" component={Security} />
         </div>
       </div>
-    )
+    );
   }
 
-  function GotoDashboard (props) {
+  function GotoDashboard(props) {
     return (
       <Redirect
         to={{
           pathname: '/trade',
-          state: { from: props.location }
+          state: { from: props.location },
         }}
       />
-    )
+    );
   }
-  function PrivateRoute ({ component, ...rest }) {
+
+  function PrivateRoute({ component, ...rest }) {
     return (
       <Route
         {...rest}
-        render={props =>
+        render={(props) =>
           isAuthenticated ? (
             React.createElement(component, props)
           ) : (
             <Redirect
-              to={{ pathname: '/login', state: { from: props.location } }}
+              to={{
+                pathname: '/auth/sign-in',
+                state: { from: props.location },
+              }}
             />
           )
         }
       />
-    )
+    );
   }
 
-  function PublicRoute ({ component, ...rest }) {
+  function PublicRoute({ component, ...rest }) {
     return (
       <Route
         {...rest}
-        render={props =>
+        render={(props) =>
           isAuthenticated ? (
             <Redirect to={{ pathname: '/trade' }} />
           ) : (
@@ -100,8 +104,8 @@ function App () {
           )
         }
       />
-    )
+    );
   }
 }
 
-export default App
+export default App;

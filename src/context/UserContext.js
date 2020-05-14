@@ -1,33 +1,33 @@
-import React from 'react'
-import logger from 'use-reducer-logger'
-import { postRequest, getRequest } from './httpRequests'
+import React from 'react';
+import logger from 'use-reducer-logger';
+import { postRequest, getRequest } from 'services/httpRequests';
 
-const UserStateContext = React.createContext()
-const UserDispatchContext = React.createContext()
+const UserStateContext = React.createContext();
+const UserDispatchContext = React.createContext();
 
 export const USER_STATUS = {
   INIT: 'INIT',
   IDLE: 'IDLE',
   GETTING: 'GETTING',
-  SAVING: 'SAVING'
-}
+  SAVING: 'SAVING',
+};
 const initialState = {
   user: {
     userId: '',
     roles: '',
     email: '',
-    accountType: '',
+    name: '',
     totpSetup: '',
     totpConfirmed: '',
-    verified: ''
+    verified: '',
   },
   status: USER_STATUS.INIT,
   isAuthenticated: !!localStorage.getItem('id_token'),
   isLoading: false,
   message: '',
   activeTabId: 0,
-  error: ''
-}
+  error: '',
+};
 
 const userActions = {
   SET_ACTIVE_TAB_ID: 'SET_ACTIVE_TAB_ID',
@@ -59,10 +59,10 @@ const userActions = {
 
   VERIFY_2FA_REQUEST: 'VERIFY_2FA_REQUEST',
   VERIFY_2FA_SUCCESS: 'VERIFY_2FA_SUCCESS',
-  VERIFY_2FA_FAILURE: 'VERIFY_2FA_FAILURE'
-}
+  VERIFY_2FA_FAILURE: 'VERIFY_2FA_FAILURE',
+};
 
-export function userReducer (state, action) {
+export function userReducer(state, action) {
   switch (action.type) {
     case userActions.LOGIN_REQUEST:
       return {
@@ -71,8 +71,8 @@ export function userReducer (state, action) {
         isAuthenticated: false,
         isLoading: true,
         message: '',
-        error: null
-      }
+        error: null,
+      };
     case userActions.LOGIN_SUCCESS:
       return {
         ...state,
@@ -81,81 +81,81 @@ export function userReducer (state, action) {
         isLoading: false,
         isVerified: true,
         message: '',
-        error: null
-      }
+        error: null,
+      };
     case userActions.LOGIN_FAILURE:
       return {
         ...state,
         user: initialState.user,
         isAuthenticated: false,
         isLoading: false,
-        error: action.payload
-      }
+        error: action.payload,
+      };
     case userActions.GET_AUTH_ME_REQUEST:
       return {
         ...state,
         user: action.payload,
         status: USER_STATUS.GETTING,
         isLoading: true,
-        error: null
-      }
+        error: null,
+      };
     case userActions.GET_AUTH_ME_SUCCESS:
       return {
         ...state,
         status: USER_STATUS.IDLE,
         user: action.payload,
         isLoading: false,
-        error: null
-      }
+        error: null,
+      };
     case userActions.GET_AUTH_ME_FAILURE:
       return {
         ...state,
         status: USER_STATUS.IDLE,
         isLoading: false,
         user: initialState.user,
-        error: action.payload
-      }
+        error: action.payload,
+      };
     case userActions.SIGN_OUT_SUCCESS:
       return {
         ...state,
-        isAuthenticated: false
-      }
+        isAuthenticated: false,
+      };
     case userActions.SIGN_UP_REQUEST:
       return {
         ...state,
         isAuthenticated: false,
         isLoading: true,
-        error: null
-      }
+        error: null,
+      };
     case userActions.SIGN_UP_SUCCESS:
       return {
         ...state,
         isAuthenticated: false,
         isLoading: false,
         error: null,
-        activeTabId: 0
-      }
+        activeTabId: 0,
+      };
     case userActions.SIGN_UP_FAILURE:
       return {
         ...state,
         isAuthenticated: false,
         isLoading: false,
-        error: action.payload
-      }
+        error: action.payload,
+      };
     case userActions.SET_ACTIVE_TAB_ID:
       return {
         ...state,
         activeTabId: action.payload,
-        error: null
-      }
+        error: null,
+      };
 
     case userActions.VERIFY_SIGNUP_REQUEST:
       return {
         ...state,
         isLoading: true,
         isVerified: false,
-        error: ''
-      }
+        error: '',
+      };
 
     case userActions.VERIFY_SIGNUP_SUCCESS:
       return {
@@ -163,46 +163,46 @@ export function userReducer (state, action) {
         isLoading: false,
         isVerified: true,
         message: action.payload,
-        error: ''
-      }
+        error: '',
+      };
     case userActions.VERIFY_SIGNUP_FAILURE:
       return {
         ...state,
         isLoading: false,
         isVerified: false,
-        error: action.payload
-      }
+        error: action.payload,
+      };
 
     case userActions.CONFIRM_2FA_REQUEST:
-      return {}
+      return {};
     case userActions.CONFIRM_2FA_SUCCESS:
-      return {}
+      return {};
     case userActions.CONFIRM_2FA_FAILURE:
-      return {}
+      return {};
 
     case userActions.SETUP_2FA_REQUEST:
-      return {}
+      return {};
     case userActions.SETUP_2FA_SUCCESS:
-      return {}
+      return {};
     case userActions.SETUP_2FA_FAILURE:
-      return {}
+      return {};
 
     case userActions.VERIFY_2FA_REQUEST:
-      return {}
+      return {};
     case userActions.VERIFY_2FA_SUCCESS:
-      return {}
+      return {};
     case userActions.VERIFY_2FA_FAILURE:
-      return {}
+      return {};
 
     default:
-      throw new Error(`Unhandled action type: ${action.type}`)
+      throw new Error(`Unhandled action type: ${action.type}`);
   }
 }
 
-export function UserProvider ({ children }) {
+export function UserProvider({ children }) {
   const thisReducer =
-    process.env.NODE_ENV === 'development' ? logger(userReducer) : userReducer
-  const [state, dispatch] = React.useReducer(thisReducer, initialState)
+    process.env.NODE_ENV === 'development' ? logger(userReducer) : userReducer;
+  const [state, dispatch] = React.useReducer(thisReducer, initialState);
 
   return (
     <UserStateContext.Provider value={state}>
@@ -210,112 +210,115 @@ export function UserProvider ({ children }) {
         {children}
       </UserDispatchContext.Provider>
     </UserStateContext.Provider>
-  )
+  );
 }
 
-export function useUserState () {
-  const context = React.useContext(UserStateContext)
+export function useUserState() {
+  const context = React.useContext(UserStateContext);
   if (context === undefined) {
-    throw new Error('useUserState must be used within a UserProvider')
+    throw new Error('useUserState must be used within a UserProvider');
   }
-  return context
+  return context;
 }
 
-export function useUserDispatch () {
-  const context = React.useContext(UserDispatchContext)
+export function useUserDispatch() {
+  const context = React.useContext(UserDispatchContext);
   if (context === undefined) {
-    throw new Error('useUserDispatch must be used within a UserProvider')
+    throw new Error('useUserDispatch must be used within a UserProvider');
   }
-  return context
+  return context;
 }
 
-export async function loginUser (dispatch, username, password, otp) {
-  dispatch({ type: userActions.LOGIN_REQUEST })
+export async function loginUser(dispatch, { email, password, otp }) {
+  dispatch({ type: userActions.LOGIN_REQUEST });
   try {
-    const uri = '/identity/auth/login'
-    const result = await postRequest(uri, { username, password, otp })
-    const response = await result.json()
+    const uri = '/auth/sign-in';
+    const result = await postRequest(uri, { email, password, otp });
+    const response = await result.json();
     if (result.status === 200) {
-      const { accessToken, email, roles, _id, accountType } = response.data
-      localStorage.setItem('id_token', accessToken)
+      const { accessToken, email, roles, _id, name } = response.data;
+      localStorage.setItem('id_token', accessToken);
       const newUser = {
         _id,
         email,
         roles,
-        accountType
-      }
+        name,
+      };
 
-      dispatch({ type: userActions.LOGIN_SUCCESS, payload: newUser })
+      dispatch({ type: userActions.LOGIN_SUCCESS, payload: newUser });
     } else {
-      dispatch({ type: userActions.LOGIN_FAILURE, payload: response.message })
+      dispatch({ type: userActions.LOGIN_FAILURE, payload: response.message });
     }
   } catch (err) {
-    dispatch({ type: userActions.LOGIN_FAILURE, payload: 'Login failed.' })
+    dispatch({ type: userActions.LOGIN_FAILURE, payload: 'Login failed.' });
   }
 }
 
-export async function signupUser (dispatch, email, password) {
-  dispatch({ type: userActions.SIGN_UP_REQUEST })
+export async function signupUser(dispatch, { email, name, password }) {
+  dispatch({ type: userActions.SIGN_UP_REQUEST });
   try {
-    const uri = '/identity/auth/sign-up'
-    const result = await postRequest(uri, { email, password })
-    const response = await result.json()
+    const uri = '/auth/registrations';
+    const result = await postRequest(uri, { email, name, password });
+    const response = await result.json();
 
     if (result.status === 200) {
-      dispatch({ type: userActions.SIGN_UP_SUCCESS })
-      dispatch({ type: userActions.SET_ACTIVE_TAB_ID, payload: 2 })
+      dispatch({ type: userActions.SIGN_UP_SUCCESS });
+      dispatch({ type: userActions.SET_ACTIVE_TAB_ID, payload: 2 });
     } else {
-      dispatch({ type: userActions.SIGN_UP_FAILURE, payload: response.message })
+      dispatch({
+        type: userActions.SIGN_UP_FAILURE,
+        payload: response.message,
+      });
     }
   } catch (err) {
-    dispatch({ type: userActions.SIGN_UP_FAILURE, payload: 'Signup failed.' })
+    dispatch({ type: userActions.SIGN_UP_FAILURE, payload: 'Signup failed.' });
   }
 }
 
-export function setActiveTabId (dispatch, activeTabId) {
-  dispatch({ type: userActions.SET_ACTIVE_TAB_ID, payload: activeTabId })
+export function setActiveTabId(dispatch, activeTabId) {
+  dispatch({ type: userActions.SET_ACTIVE_TAB_ID, payload: activeTabId });
 }
 
-export function signOut (dispatch) {
-  localStorage.removeItem('id_token')
-  dispatch({ type: userActions.SIGN_OUT_SUCCESS })
+export function signOut(dispatch) {
+  localStorage.removeItem('id_token');
+  dispatch({ type: userActions.SIGN_OUT_SUCCESS });
 }
 
-export async function verifySignup (dispatch, token, credentials) {
+export async function verifySignup(dispatch, token) {
   try {
-    dispatch({ type: userActions.VERIFY_SIGNUP_REQUEST })
-    const uri = `/identity/auth/sign-up/verify/${token}`
-    const result = await postRequest(uri, credentials)
+    dispatch({ type: userActions.VERIFY_SIGNUP_REQUEST });
+    const uri = `/auth/registrations/confirm`;
+    const result = await postRequest(uri, { verificationToken: token });
     if (result.status === 200) {
       dispatch({
         type: userActions.VERIFY_SIGNUP_SUCCESS,
-        payload: 'Successfully verfied. Please login in, again.'
-      })
+        payload: 'Successfully verfied. Please login in, again.',
+      });
     } else {
       dispatch({
         type: userActions.VERIFY_SIGNUP_FAILURE,
-        payload: 'Failed to verify Sign up.'
-      })
+        payload: 'Failed to verify Sign up.',
+      });
     }
   } catch (err) {
-    dispatch({ type: userActions.VERIFY_SIGNUP_FAILURE, payload: err })
+    dispatch({ type: userActions.VERIFY_SIGNUP_FAILURE, payload: err });
   }
 }
 
-export async function getUser (dispatch) {
+export async function getUser(dispatch) {
   try {
-    dispatch({ type: userActions.GET_AUTH_ME_REQUEST })
-    const result = await getRequest('/identity/auth/me')
+    dispatch({ type: userActions.GET_AUTH_ME_REQUEST });
+    const result = await getRequest('/identity/auth/me');
     if (result.status === 200) {
-      const response = await result.json()
+      const response = await result.json();
       dispatch({
         type: userActions.GET_AUTH_ME_SUCCESS,
-        payload: response.data
-      })
+        payload: response.data,
+      });
     } else {
-      dispatch({ type: userActions.GET_AUTH_ME_FAILURE })
+      dispatch({ type: userActions.GET_AUTH_ME_FAILURE });
     }
   } catch (err) {
-    dispatch({ type: userActions.GET_AUTH_ME_FAILURE })
+    dispatch({ type: userActions.GET_AUTH_ME_FAILURE });
   }
 }
