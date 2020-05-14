@@ -1,10 +1,20 @@
+// @flow
 import React from 'react';
-import PropTypes from 'prop-types';
 import Dialog from '@material-ui/core/Dialog';
 import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import Button from '@material-ui/core/Button';
+
+import type { User } from '../modules/types';
+
+type Prop = {
+  user: User,
+  newRole: string,
+  open: boolean,
+  handleClose: Function,
+  handleConfirm: (user: User, newRole: string) => Promise<void>,
+};
 
 export default function DialogConfirmRoleChange({
   user,
@@ -12,7 +22,7 @@ export default function DialogConfirmRoleChange({
   open,
   handleClose,
   handleConfirm,
-}) {
+}: Prop) {
   return (
     <Dialog
       disableBackdropClick
@@ -36,11 +46,3 @@ export default function DialogConfirmRoleChange({
     </Dialog>
   );
 }
-
-DialogConfirmRoleChange.propTypes = {
-  user: PropTypes.any.isRequired,
-  newRole: PropTypes.string.isRequired,
-  open: PropTypes.bool.isRequired,
-  handleClose: PropTypes.func.isRequired,
-  handleConfirm: PropTypes.func.isRequired,
-};

@@ -40,10 +40,15 @@
     "yup": "^0.28.3"
   },
   "devDependencies": {
+    "@babel/cli": "^7.8.4",
+    "@babel/core": "^7.9.6",
+    "@babel/preset-flow": "^7.9.0",
+    "@babel/preset-react": "^7.9.4",
     "aws-sdk": "^2.649.0",
     "eslint-config-airbnb": "^18.1.0",
     "eslint-config-airbnb-base": "^14.1.0",
     "eslint-config-prettier": "^6.11.0",
+    "eslint-plugin-flowtype": "^4.7.0",
     "eslint-plugin-html": "^6.0.2",
     "eslint-plugin-import": "^2.20.2",
     "eslint-plugin-jsx-a11y": "^6.2.3",
@@ -51,6 +56,7 @@
     "eslint-plugin-react": "^7.20.0",
     "eslint-plugin-react-hooks": "^4.0.2",
     "eslint-plugin-react-redux": "^3.0.3",
+    "flow-bin": "^0.124.0",
     "gulp": "^4.0.2",
     "gulp-awspublish": "^4.1.1",
     "gulp-rev-all": "^2.0.3",
@@ -59,7 +65,8 @@
   },
   "scripts": {
     "start": "react-scripts start",
-    "build": "react-scripts build",
+    "build": "babel src/ -d lib/ && react-scripts build",
+    "prepublish": "yarn build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
     "deploy": "gulp deploy"

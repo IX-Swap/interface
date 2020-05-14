@@ -1,6 +1,8 @@
+// @flow
 import { USERS_LIST_STATUS } from './types';
+import type { UsersListState } from './types';
 
-export const initialState = {
+export const initialState: UsersListState = {
   users: [],
   page: 1,
   limit: 5,

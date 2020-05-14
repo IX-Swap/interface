@@ -1,7 +1,16 @@
+// @flow
 import { usersListGetActions, userUpdateRoleActions } from './types';
 import { postRequest, putRequest } from '../../../../services/httpRequests';
 
-export async function getUsersList(dispatch, payload) {
+export async function getUsersList(
+  dispatch: Function,
+  payload: {
+    ref: { current: boolean, ... },
+    skip?: number,
+    limit?: number,
+    ...
+  }
+) {
   const { ref, ...data } = payload || { ref: {} };
   dispatch({ type: usersListGetActions.USERS_LIST_GET_REQUEST });
 
@@ -37,7 +46,10 @@ export async function getUsersList(dispatch, payload) {
   }
 }
 
-export async function updateUserRole(dispatch, payload) {
+export async function updateUserRole(
+  dispatch: Function,
+  payload: { roles: string, userId: string }
+) {
   dispatch({ type: userUpdateRoleActions.USER_UPDATE_ROLE_REQUEST });
 
   try {
@@ -64,6 +76,6 @@ export async function updateUserRole(dispatch, payload) {
   }
 }
 
-export async function setPage(dispatch, payload) {
+export async function setPage(dispatch: Function, payload: { page: number }) {
   dispatch({ type: usersListGetActions.USERS_LIST_GET_CHANGE_PAGE, payload });
 }

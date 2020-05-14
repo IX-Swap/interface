@@ -1,5 +1,5 @@
+// @flow
 import React from 'react';
-import PropTypes from 'prop-types';
 
 import { makeStyles } from '@material-ui/core/styles';
 import Select from '@material-ui/core/Select';
@@ -8,13 +8,20 @@ import TableBody from '@material-ui/core/TableBody';
 import TableRow from '@material-ui/core/TableRow';
 import TableCell from '@material-ui/core/TableCell';
 
+import type { User } from '../modules/types';
+
 const useStyles = makeStyles({
   formControl: {
     minWidth: 120,
   },
 });
 
-export default function UsersTableBody({ users, handleChange }) {
+type Prop = {
+  users: Array<User>,
+  handleChange: (evt: SyntheticInputEvent<HTMLElement>, row: User) => void,
+};
+
+export default function UsersTableBody({ users, handleChange }: Prop) {
   const classes = useStyles();
 
   return (
@@ -42,8 +49,3 @@ export default function UsersTableBody({ users, handleChange }) {
     </TableBody>
   );
 }
-
-UsersTableBody.propTypes = {
-  users: PropTypes.array.isRequired,
-  handleChange: PropTypes.func.isRequired,
-};

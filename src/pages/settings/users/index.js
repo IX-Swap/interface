@@ -1,3 +1,4 @@
+// @flow
 import React, { useEffect, useRef } from 'react';
 import { withRouter } from 'react-router-dom';
 
@@ -22,15 +23,17 @@ import {
 import { getUsersList, updateUserRole, setPage } from './modules/actions';
 import { USERS_LIST_STATUS } from './modules/types';
 
+import type { User } from './modules/types';
+
 function useUsersListLogic() {
   const mountedRef = useRef(true);
 
   const { users, limit, status, total, page } = useUsersListState();
   const usersDispatch = useUsersListDispatch();
 
-  const [open, setOpen] = React.useState(false);
-  const [user, setUser] = React.useState({});
-  const [role, setRole] = React.useState('');
+  const [open, setOpen] = React.useState<boolean>(false);
+  const [user, setUser] = React.useState<User | null>(null);
+  const [role, setRole] = React.useState<string>('');
 
   const handleClose = () => {
     setOpen(false);
@@ -43,7 +46,7 @@ function useUsersListLogic() {
     setOpen(true);
   };
 
-  const handleConfirm = async (userToUpdate, newRole) => {
+  const handleConfirm = async (userToUpdate: User, newRole: string) => {
     await updateUserRole(usersDispatch, {
       userId: userToUpdate._id,
       roles: newRole,
@@ -58,7 +61,7 @@ function useUsersListLogic() {
     });
   };
 
-  const handleChangePage = (_, newPage) => {
+  const handleChangePage = (_, newPage: number) => {
     setPage(usersDispatch, { page: newPage });
   };
 
@@ -119,13 +122,15 @@ function Users() {
 
   return (
     <>
-      <DialogConfirmRoleChange
-        open={open}
-        handleClose={handleClose}
-        user={user}
-        newRole={role}
-        handleConfirm={handleConfirm}
-      />
+      {user && (
+        <DialogConfirmRoleChange
+          open={open}
+          handleClose={handleClose}
+          user={user}
+          newRole={role}
+          handleConfirm={handleConfirm}
+        />
+      )}
       <TableContainer component={Paper}>
         <Table aria-label="simple table">
           <TableHead>

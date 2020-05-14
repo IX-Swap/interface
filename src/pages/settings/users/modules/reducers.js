@@ -1,10 +1,16 @@
+// @flow
+import type { UsersListState } from './types';
+
 import {
   usersListGetActions,
   userUpdateRoleActions,
   USERS_LIST_STATUS,
 } from './types';
 
-export default function userReducer(state, action) {
+export default function userReducer(
+  state: UsersListState,
+  action: any
+): UsersListState {
   switch (action.type) {
     case usersListGetActions.USERS_LIST_GET_REQUEST:
       return {
@@ -45,7 +51,7 @@ export default function userReducer(state, action) {
         ...state,
         status: USERS_LIST_STATUS.IDLE,
       };
-    case userUpdateRoleActions.USERS_LIST_GET_FAILURE:
+    case userUpdateRoleActions.USER_UPDATE_ROLE_FAILURE:
       return {
         ...state,
         status: USERS_LIST_STATUS.IDLE,
