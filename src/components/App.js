@@ -1,7 +1,6 @@
 import React from 'react';
-import { Route, Switch, Redirect } from 'react-router-dom';
+import { Route, Switch, Redirect, HashRouter } from 'react-router-dom';
 import classnames from 'classnames';
-import { HashRouter } from 'react-router-dom';
 
 import Auth from '../pages/auth';
 
@@ -13,11 +12,11 @@ import Exchange from '../pages/exchange';
 import Accounts from '../pages/accounts';
 import Identity from '../pages/identity';
 import Invest from '../pages/invest';
+import Users from '../pages/settings/users';
 import Security from '../pages/security';
 
-import { useLayoutState } from '../context/LayoutContext';
+import { useLayoutState, LayoutProvider } from '../context/LayoutContext';
 import { useUserState, useUserDispatch, getUser } from '../context/UserContext';
-import { LayoutProvider } from '../context/LayoutContext';
 
 function App() {
   const { isAuthenticated } = useUserState();
@@ -56,6 +55,7 @@ function App() {
           <PrivateRoute path="/identity" component={Identity} />
           <PrivateRoute path="/invest" component={Invest} />
           <PrivateRoute path="/security" component={Security} />
+          <PrivateRoute path="/users" component={Users} />
         </div>
       </div>
     );

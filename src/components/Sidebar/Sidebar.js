@@ -55,7 +55,8 @@ const structure = [
     icon: <SettingsIcon />,
     children: [
       { label: 'Identity', link: '/identity', icon: <PermIdentityIcon /> },
-      { label: 'Security', link: '/security', icon: <SecurityIcon /> }
+      { label: 'Security', link: '/security', icon: <SecurityIcon /> },
+      { label: 'Users', link: '/users', icon: <SecurityIcon /> }
     ]
   },
   {
