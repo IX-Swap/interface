@@ -1,6 +1,6 @@
 // @flow
+import { postRequest, putRequest } from 'services/httpRequests';
 import { usersListGetActions, userUpdateRoleActions } from './types';
-import { postRequest, putRequest } from '../../../../services/httpRequests';
 
 export async function getUsersList(
   dispatch: Function,
