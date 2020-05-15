@@ -27,7 +27,7 @@ export async function getUsersList(
         type: usersListGetActions.USERS_LIST_GET_SUCCESS,
         payload: {
           page: Math.floor(skip / limit) + 1,
-          total: Math.ceil(count / limit),
+          total: count,
           users: documents,
         },
       });
@@ -78,4 +78,14 @@ export async function updateUserRole(
 
 export async function setPage(dispatch: Function, payload: { page: number }) {
   dispatch({ type: usersListGetActions.USERS_LIST_GET_CHANGE_PAGE, payload });
+}
+
+export async function setRowsPerPage(
+  dispatch: Function,
+  payload: { rows: number }
+) {
+  dispatch({
+    type: usersListGetActions.USERS_LIST_GET_CHANGE_ROWS_PER_PAGE,
+    payload,
+  });
 }

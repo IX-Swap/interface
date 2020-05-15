@@ -2,15 +2,15 @@
 import React, { useEffect, useRef } from 'react';
 import { withRouter } from 'react-router-dom';
 
-import Grid from '@material-ui/core/Grid';
 import Table from '@material-ui/core/Table';
 import TableBody from '@material-ui/core/TableBody';
 import TableRow from '@material-ui/core/TableRow';
+import TableFooter from '@material-ui/core/TableFooter';
+import TablePagination from '@material-ui/core/TablePagination';
 import TableCell from '@material-ui/core/TableCell';
 import TableContainer from '@material-ui/core/TableContainer';
 import TableHead from '@material-ui/core/TableHead';
 import Paper from '@material-ui/core/Paper';
-import Pagination from '@material-ui/lab/Pagination';
 
 import DialogConfirmRoleChange from './components/DialogConfirmRoleChange';
 import UsersTableBody from './components/UsersTableBody';
@@ -20,7 +20,12 @@ import {
   useUsersListState,
   useUsersListDispatch,
 } from './modules/index';
-import { getUsersList, updateUserRole, setPage } from './modules/actions';
+import {
+  getUsersList,
+  updateUserRole,
+  setPage,
+  setRowsPerPage,
+} from './modules/actions';
 import { USERS_LIST_STATUS } from './modules/types';
 
 import type { User } from './modules/types';
@@ -56,7 +61,7 @@ function useUsersListLogic() {
 
     getUsersList(usersDispatch, {
       limit,
-      skip: (page - 1) * limit,
+      skip: page * limit,
       ref: mountedRef,
     });
   };
@@ -65,10 +70,16 @@ function useUsersListLogic() {
     setPage(usersDispatch, { page: newPage });
   };
 
+  const handleChangeRowsPerPage = (newRows: number) => {
+    console.log(newRows);
+    setRowsPerPage(usersDispatch, { rows: newRows });
+    setPage(usersDispatch, { page: 0 });
+  };
+
   useEffect(() => {
     if (status === USERS_LIST_STATUS.INIT) {
       getUsersList(usersDispatch, {
-        skip: (page - 1) * limit,
+        skip: page * limit,
         limit,
         ref: mountedRef,
       });
@@ -87,11 +98,13 @@ function useUsersListLogic() {
     handleChange,
     handleConfirm,
     handleChangePage,
+    handleChangeRowsPerPage,
     open,
     user,
     role,
     users,
     status,
+    limit,
     total,
     page,
   };
@@ -111,11 +124,13 @@ function Users() {
     handleChange,
     handleConfirm,
     handleChangePage,
+    handleChangeRowsPerPage,
     open,
     user,
     role,
     users,
     status,
+    limit,
     total,
     page,
   } = useUsersListLogic();
@@ -148,16 +163,24 @@ function Users() {
           ) : (
             <UsersTableBody users={users} handleChange={handleChange} />
           )}
+          {total && (
+            <TableFooter>
+              <TableRow>
+                <TablePagination
+                  rowsPerPageOptions={[5, 10, 25]}
+                  colSpan={2}
+                  count={total}
+                  rowsPerPage={limit}
+                  page={page}
+                  onChangeRowsPerPage={(
+                    evt: SyntheticInputEvent<HTMLElement>
+                  ) => handleChangeRowsPerPage(parseInt(evt.target.value))}
+                  onChangePage={handleChangePage}
+                />
+              </TableRow>
+            </TableFooter>
+          )}
         </Table>
-        <Grid
-          style={{ padding: 10 }}
-          container
-          direction="row"
-          justify="center"
-          alignItems="center"
-        >
-          <Pagination count={total} page={page} onChange={handleChangePage} />
-        </Grid>
       </TableContainer>
     </>
   );

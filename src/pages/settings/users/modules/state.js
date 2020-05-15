@@ -4,7 +4,7 @@ import type { UsersListState } from './types';
 
 export const initialState: UsersListState = {
   users: [],
-  page: 1,
+  page: 0,
   limit: 5,
   total: null,
   error: null,

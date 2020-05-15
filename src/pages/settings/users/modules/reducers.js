@@ -18,14 +18,12 @@ export default function userReducer(
         status: USERS_LIST_STATUS.GETTING,
         error: null,
       };
-
     case usersListGetActions.USERS_LIST_GET_CHANGE_PAGE:
       return {
         ...state,
         status: USERS_LIST_STATUS.INIT,
-        page: action.payload.page,
+        page: action.payload.page || 0,
       };
-
     case usersListGetActions.USERS_LIST_GET_SUCCESS:
       return {
         ...state,
@@ -39,6 +37,11 @@ export default function userReducer(
         ...state,
         status: USERS_LIST_STATUS.IDLE,
         error: action.payload.message,
+      };
+    case usersListGetActions.USERS_LIST_GET_CHANGE_ROWS_PER_PAGE:
+      return {
+        ...state,
+        limit: action.payload.rows,
       };
 
     case userUpdateRoleActions.USER_UPDATE_ROLE_REQUEST:

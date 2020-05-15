@@ -1,4 +1,3 @@
 module.exports = {
-  presets: ['@babel/preset-env', '@babel/react', '@babel/flow'],
-  plugins: ['react-hot-loader/babel'],
+  presets: ['@babel/preset-env', '@babel/preset-react', '@babel/preset-flow'],
 };
