@@ -14,27 +14,40 @@ import {
   ButtonGroup,
   CircularProgress,
 } from '@material-ui/core';
+import TableFooter from '@material-ui/core/TableFooter';
+import TablePagination from '@material-ui/core/TablePagination';
 
 import { withRouter, useHistory } from 'react-router-dom';
 
 import { useBanksListDispatch, useBanksListState } from './modules';
 import { BANK_LIST_STATUS } from './modules/types';
-import { getBankAccounts } from './modules/actions';
+import { getBankAccounts, setPage, setRowsPerPage } from './modules/actions';
 import type { Bank } from './modules/types';
 
 function useBankListLogic() {
   const bankDispatch = useBanksListDispatch();
   const bankListState = useBanksListState();
-  const { status } = bankListState;
+  const { status, page, limit } = bankListState;
   const mountedRef = useRef(true);
 
   useEffect(() => {
     if (status === BANK_LIST_STATUS.INIT) {
       getBankAccounts(bankDispatch, {
+        skip: page * limit,
+        limit,
         ref: mountedRef,
       });
     }
-  }, [status, bankDispatch]);
+  }, [page, limit, status, bankDispatch]);
+
+  const handleChangePage = (_, newPage: number) => {
+    setPage(bankDispatch, { page: newPage });
+  };
+
+  const handleChangeRowsPerPage = (newRows: number) => {
+    setRowsPerPage(bankDispatch, { rows: newRows });
+    setPage(bankDispatch, { page: 0 });
+  };
 
   useEffect(
     () => () => {
@@ -43,11 +56,20 @@ function useBankListLogic() {
     []
   );
 
-  return { bankDispatch, bankListState };
+  return {
+    bankDispatch,
+    bankListState,
+    handleChangePage,
+    handleChangeRowsPerPage,
+  };
 }
 
 function BankListComponent(props) {
-  const { bankListState } = useBankListLogic();
+  const {
+    bankListState,
+    handleChangePage,
+    handleChangeRowsPerPage,
+  } = useBankListLogic();
 
   let componentToRender = <CircularProgress />;
 
@@ -55,7 +77,16 @@ function BankListComponent(props) {
     componentToRender = <AddBankAccount props={props} />;
 
     if (bankListState.banks.length > 0) {
-      componentToRender = <ListBankAccounts list={bankListState.banks} />;
+      componentToRender = (
+        <ListBankAccounts
+          total={bankListState.total}
+          list={bankListState.banks}
+          limit={bankListState.limit}
+          page={bankListState.page}
+          handleChangeRowsPerPage={handleChangeRowsPerPage}
+          handleChangePage={handleChangePage}
+        />
+      );
     }
   }
 
@@ -68,7 +99,23 @@ function BankListComponent(props) {
   );
 }
 
-function ListBankAccounts({ list }: { list: Array<Bank> }) {
+type ListBankAccountsProps = {
+  list: Array<Bank>,
+  total: ?number,
+  limit: number,
+  page: number,
+  handleChangeRowsPerPage: (p: number) => void,
+  handleChangePage: (_: SyntheticInputEvent<HTMLElement>, p: number) => void,
+};
+
+function ListBankAccounts({
+  list,
+  total,
+  limit,
+  page,
+  handleChangeRowsPerPage,
+  handleChangePage,
+}: ListBankAccountsProps) {
   const history = useHistory();
   return (
     <Grid item md={12}>
@@ -94,9 +141,9 @@ function ListBankAccounts({ list }: { list: Array<Bank> }) {
             <TableBody>
               {list.map((row) => (
                 <TableRow key={row._id}>
-                  <TableCell>{row.account.asset.symbol}</TableCell>
+                  <TableCell>{row.asset.symbol}</TableCell>
                   <TableCell align="center">{row.bankAccountNumber}</TableCell>
-                  <TableCell align="center">{row.account.balance}</TableCell>
+                  <TableCell align="center">no data </TableCell>
                   <TableCell align="center">
                     {row.authorized ? (
                       <ButtonGroup
@@ -126,6 +173,23 @@ function ListBankAccounts({ list }: { list: Array<Bank> }) {
                 </TableRow>
               ))}
             </TableBody>
+            {total && (
+              <TableFooter>
+                <TableRow>
+                  <TablePagination
+                    rowsPerPageOptions={[5, 10, 25]}
+                    colSpan={4}
+                    count={total}
+                    rowsPerPage={limit}
+                    page={page}
+                    onChangeRowsPerPage={(
+                      evt: SyntheticInputEvent<HTMLElement>
+                    ) => handleChangeRowsPerPage(parseInt(evt.target.value))}
+                    onChangePage={handleChangePage}
+                  />
+                </TableRow>
+              </TableFooter>
+            )}
           </Table>
         </TableContainer>
         <Box mt={3}>

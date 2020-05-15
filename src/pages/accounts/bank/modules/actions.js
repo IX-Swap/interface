@@ -34,7 +34,7 @@ export async function getBankAccounts(
         dPayload = {
           page: Math.floor(skip / limit) + 1,
           total: count,
-          assets: documents,
+          banks: documents,
         };
       }
 
@@ -51,4 +51,18 @@ export async function getBankAccounts(
   } catch (err) {
     dispatch({ type: bankListActions.BANK_LIST_GET_FAILURE });
   }
+}
+
+export async function setPage(dispatch: Function, payload: { page: number }) {
+  dispatch({ type: bankListActions.BANK_LIST_GET_CHANGE_PAGE, payload });
+}
+
+export async function setRowsPerPage(
+  dispatch: Function,
+  payload: { rows: number }
+) {
+  dispatch({
+    type: bankListActions.BANK_LIST_GET_CHANGE_ROWS_PER_PAGE,
+    payload,
+  });
 }

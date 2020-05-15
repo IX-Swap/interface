@@ -71,7 +71,6 @@ function useUsersListLogic() {
   };
 
   const handleChangeRowsPerPage = (newRows: number) => {
-    console.log(newRows);
     setRowsPerPage(usersDispatch, { rows: newRows });
     setPage(usersDispatch, { page: 0 });
   };

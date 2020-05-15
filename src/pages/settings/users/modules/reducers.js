@@ -9,8 +9,9 @@ import {
 
 export default function userReducer(
   state: UsersListState,
-  { type, ...payload }: { type: string, ...any }
+  { type, ...others }: { type: string, ...any }
 ): UsersListState {
+  const { payload } = others;
   switch (type) {
     case usersListGetActions.USERS_LIST_GET_REQUEST:
       return {

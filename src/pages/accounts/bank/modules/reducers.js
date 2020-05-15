@@ -19,7 +19,12 @@ export default function banksListReducer(
         ...state,
         status: BANK_LIST_STATUS.IDLE,
         error: null,
-        banks: payload.banks,
+        banks: payload.banks.map((bank) => ({
+          ...bank,
+          get authorized() {
+            return this.status === 'Authorized';
+          },
+        })),
         total: payload.total,
       };
     case bankListActions.BANK_LIST_GET_FAILURE:
@@ -27,6 +32,17 @@ export default function banksListReducer(
         ...state,
         status: BANK_LIST_STATUS.IDLE,
         error: payload.message,
+      };
+    case bankListActions.BANK_LIST_GET_CHANGE_PAGE:
+      return {
+        ...state,
+        status: BANK_LIST_STATUS.INIT,
+        page: payload.page || 0,
+      };
+    case bankListActions.BANK_LIST_GET_CHANGE_ROWS_PER_PAGE:
+      return {
+        ...state,
+        limit: payload.rows,
       };
     default:
       throw new Error(`Unhandled action type: ${type}`);
