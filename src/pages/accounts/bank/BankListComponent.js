@@ -1,4 +1,5 @@
-import React, { useEffect } from 'react';
+// @flow
+import React, { useEffect, useRef } from 'react';
 import {
   Box,
   Grid,
@@ -13,35 +14,61 @@ import {
   ButtonGroup,
   CircularProgress,
 } from '@material-ui/core';
-import {
-  useAccountDispatch,
-  useAccountState,
-  getBankAccounts,
-} from 'context/AccountContext';
+
 import { withRouter, useHistory } from 'react-router-dom';
+
+import { useBanksListDispatch, useBanksListState } from './modules';
+import { BANK_LIST_STATUS } from './modules/types';
+import { getBankAccounts } from './modules/actions';
+import type { Bank } from './modules/types';
+
+function useBankListLogic() {
+  const bankDispatch = useBanksListDispatch();
+  const bankListState = useBanksListState();
+  const { status } = bankListState;
+  const mountedRef = useRef(true);
+
+  useEffect(() => {
+    if (status === BANK_LIST_STATUS.INIT) {
+      getBankAccounts(bankDispatch, {
+        ref: mountedRef,
+      });
+    }
+  }, [status, bankDispatch]);
+
+  useEffect(
+    () => () => {
+      mountedRef.current = false;
+    },
+    []
+  );
+
+  return { bankDispatch, bankListState };
+}
 
 function BankListComponent(props) {
   const { bankListState } = useBankListLogic();
 
+  let componentToRender = <CircularProgress />;
+
+  if (bankListState.status === BANK_LIST_STATUS.IDLE) {
+    componentToRender = <AddBankAccount props={props} />;
+
+    if (bankListState.banks.length > 0) {
+      componentToRender = <ListBankAccounts list={bankListState.banks} />;
+    }
+  }
+
   return (
     <Grid container justify="center" alignItems="center">
       <Grid item xs={12} sm={12} md={12} lg={12}>
-        {bankListState.status === 'GETTING' ? (
-          <CircularProgress />
-        ) : !bankListState.data ? (
-          <AddBankAccount props={props} />
-        ) : (
-          <ListBankAccounts
-            status={bankListState.status}
-            list={bankListState.banks}
-          />
-        )}
+        {componentToRender}
       </Grid>
     </Grid>
   );
 }
 
-function ListBankAccounts({ list = [], status }) {
+function ListBankAccounts({ list }: { list: Array<Bank> }) {
   const history = useHistory();
   return (
     <Grid item md={12}>
@@ -138,22 +165,6 @@ function AddBankAccount({ props }) {
       </Box>
     </Grid>
   );
-}
-
-function useBankListLogic() {
-  const bankDispatch = useAccountDispatch();
-  const bankListState = useAccountState();
-  const { status } = bankListState;
-  const loadBanks =
-    !bankListState.success && !bankListState.isLoading && !bankListState.error;
-
-  useEffect(() => {
-    if (status === 'INIT') {
-      getBankAccounts(bankDispatch);
-    }
-  }, [status, bankDispatch, loadBanks]);
-
-  return { bankDispatch, bankListState, loadBanks };
 }
 
 export default withRouter(BankListComponent);

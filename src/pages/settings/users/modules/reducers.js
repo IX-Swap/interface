@@ -9,9 +9,9 @@ import {
 
 export default function userReducer(
   state: UsersListState,
-  action: any
+  { type, ...payload }: { type: string, ...any }
 ): UsersListState {
-  switch (action.type) {
+  switch (type) {
     case usersListGetActions.USERS_LIST_GET_REQUEST:
       return {
         ...state,
@@ -22,26 +22,26 @@ export default function userReducer(
       return {
         ...state,
         status: USERS_LIST_STATUS.INIT,
-        page: action.payload.page || 0,
+        page: payload.page || 0,
       };
     case usersListGetActions.USERS_LIST_GET_SUCCESS:
       return {
         ...state,
         status: USERS_LIST_STATUS.IDLE,
         error: null,
-        users: action.payload.users,
-        total: action.payload.total,
+        users: payload.users,
+        total: payload.total,
       };
     case usersListGetActions.USERS_LIST_GET_FAILURE:
       return {
         ...state,
         status: USERS_LIST_STATUS.IDLE,
-        error: action.payload.message,
+        error: payload.message,
       };
     case usersListGetActions.USERS_LIST_GET_CHANGE_ROWS_PER_PAGE:
       return {
         ...state,
-        limit: action.payload.rows,
+        limit: payload.rows,
       };
 
     case userUpdateRoleActions.USER_UPDATE_ROLE_REQUEST:
@@ -58,9 +58,9 @@ export default function userReducer(
       return {
         ...state,
         status: USERS_LIST_STATUS.IDLE,
-        error: action.payload.message,
+        error: payload.message,
       };
     default:
-      throw new Error(`Unhandled action type: ${action.type}`);
+      throw new Error(`Unhandled action type: ${type}`);
   }
 }

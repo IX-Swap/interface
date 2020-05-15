@@ -38,7 +38,6 @@ export async function getUsersList(
       });
     }
   } catch (err) {
-    console.log(err);
     dispatch({
       type: usersListGetActions.USERS_LIST_GET_FAILURE,
       payload: { message: 'Failed to get user list.' },
