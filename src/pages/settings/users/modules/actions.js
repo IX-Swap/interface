@@ -1,51 +1,15 @@
 // @flow
-import { postRequest, putRequest } from 'services/httpRequests';
-import { usersListGetActions, userUpdateRoleActions } from './types';
+import { putRequest } from 'services/httpRequests';
+import actionGenerator from 'context/base/withPagination/actions';
+import { userUpdateRoleActions } from './types';
 
-export async function getUsersList(
-  dispatch: Function,
-  payload: {
-    ref: { current: boolean, ... },
-    skip?: number,
-    limit?: number,
-    ...
-  }
-) {
-  const { ref, ...data } = payload || { ref: {} };
-  dispatch({ type: usersListGetActions.USERS_LIST_GET_REQUEST });
+const { getter: getUsersList, ...pageMethods } = actionGenerator(
+  'usersList',
+  '/auth/users/list',
+  {}
+);
 
-  try {
-    const uri = '/auth/users/list';
-    const result = await postRequest(uri, { skip: 0, limit: 50, ...data });
-    const response = await result.json();
-
-    if (!ref.current) return null;
-
-    if (result.status === 200) {
-      const { limit, count, skip, documents } = response.data[0];
-      dispatch({
-        type: usersListGetActions.USERS_LIST_GET_SUCCESS,
-        payload: {
-          page: Math.floor(skip / limit) + 1,
-          total: count,
-          users: documents,
-        },
-      });
-    } else {
-      dispatch({
-        type: usersListGetActions.USERS_LIST_GET_FAILURE,
-        payload: response,
-      });
-    }
-  } catch (err) {
-    dispatch({
-      type: usersListGetActions.USERS_LIST_GET_FAILURE,
-      payload: { message: 'Failed to get user list.' },
-    });
-  }
-}
-
-export async function updateUserRole(
+async function updateUserRole(
   dispatch: Function,
   payload: { roles: string, userId: string }
 ) {
@@ -75,16 +39,8 @@ export async function updateUserRole(
   }
 }
 
-export async function setPage(dispatch: Function, payload: { page: number }) {
-  dispatch({ type: usersListGetActions.USERS_LIST_GET_CHANGE_PAGE, payload });
-}
-
-export async function setRowsPerPage(
-  dispatch: Function,
-  payload: { rows: number }
-) {
-  dispatch({
-    type: usersListGetActions.USERS_LIST_GET_CHANGE_ROWS_PER_PAGE,
-    payload,
-  });
-}
+export default {
+  getUsersList,
+  updateUserRole,
+  ...pageMethods,
+};

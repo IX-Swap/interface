@@ -20,9 +20,15 @@ import { useAssetsDispatch, useAssetsState } from 'context/assets';
 import { getAssets } from 'context/assets/actions';
 import { ASSETS_STATUS } from 'context/assets/types';
 
-import { useBanksListDispatch, useBanksListState } from './modules/index';
-import { getBankAccounts } from './modules/actions';
-import { BANK_LIST_STATUS } from './modules/types';
+import BankListModule from './modules';
+import Actions from './modules/actions';
+
+const {
+  useBanksListDispatch,
+  useBanksListState,
+  BANK_LIST_STATUS,
+} = BankListModule;
+const { getBankAccounts } = Actions;
 
 function useBankCreateLogic() {
   const assetsDispatch = useAssetsDispatch();

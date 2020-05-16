@@ -1,67 +1,29 @@
-// @flow
 import type { UsersListState } from './types';
-
-import {
-  usersListGetActions,
-  userUpdateRoleActions,
-  USERS_LIST_STATUS,
-} from './types';
+import { userUpdateRoleActions } from './types';
 
 export default function userReducer(
+  statusTypes: GenericStatus,
   state: UsersListState,
-  { type, ...others }: { type: string, ...any }
+  action: any
 ): UsersListState {
-  const { payload } = others;
-  switch (type) {
-    case usersListGetActions.USERS_LIST_GET_REQUEST:
-      return {
-        ...state,
-        status: USERS_LIST_STATUS.GETTING,
-        error: null,
-      };
-    case usersListGetActions.USERS_LIST_GET_CHANGE_PAGE:
-      return {
-        ...state,
-        status: USERS_LIST_STATUS.INIT,
-        page: payload.page || 0,
-      };
-    case usersListGetActions.USERS_LIST_GET_SUCCESS:
-      return {
-        ...state,
-        status: USERS_LIST_STATUS.IDLE,
-        error: null,
-        users: payload.users,
-        total: payload.total,
-      };
-    case usersListGetActions.USERS_LIST_GET_FAILURE:
-      return {
-        ...state,
-        status: USERS_LIST_STATUS.IDLE,
-        error: payload.message,
-      };
-    case usersListGetActions.USERS_LIST_GET_CHANGE_ROWS_PER_PAGE:
-      return {
-        ...state,
-        limit: payload.rows,
-      };
-
+  switch (action.type) {
     case userUpdateRoleActions.USER_UPDATE_ROLE_REQUEST:
       return {
         ...state,
-        status: USERS_LIST_STATUS.GETTING,
+        status: statusTypes.GETTING,
       };
     case userUpdateRoleActions.USER_UPDATE_ROLE_SUCCESS:
       return {
         ...state,
-        status: USERS_LIST_STATUS.IDLE,
+        status: statusTypes.IDLE,
       };
     case userUpdateRoleActions.USER_UPDATE_ROLE_FAILURE:
       return {
         ...state,
-        status: USERS_LIST_STATUS.IDLE,
-        error: payload.message,
+        status: statusTypes.IDLE,
+        error: action.payload.message,
       };
     default:
-      throw new Error(`Unhandled action type: ${type}`);
+      throw new Error(`Unhandled action type: ${action.type}`);
   }
 }

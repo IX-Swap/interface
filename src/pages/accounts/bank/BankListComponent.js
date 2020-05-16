@@ -19,15 +19,21 @@ import TablePagination from '@material-ui/core/TablePagination';
 
 import { withRouter, useHistory } from 'react-router-dom';
 
-import { useBanksListDispatch, useBanksListState } from './modules';
-import { BANK_LIST_STATUS } from './modules/types';
-import { getBankAccounts, setPage, setRowsPerPage } from './modules/actions';
+import BankListModule from './modules';
+import Actions from './modules/actions';
 import type { Bank } from './modules/types';
+
+const {
+  useBanksListDispatch,
+  useBanksListState,
+  BANK_LIST_STATUS,
+} = BankListModule;
+const { getBankAccounts, setPage, setRowsPerPage } = Actions;
 
 function useBankListLogic() {
   const bankDispatch = useBanksListDispatch();
   const bankListState = useBanksListState();
-  const { status, page, limit } = bankListState;
+  const { status, page, total, limit, items } = bankListState;
   const mountedRef = useRef(true);
 
   useEffect(() => {
@@ -58,7 +64,11 @@ function useBankListLogic() {
 
   return {
     bankDispatch,
-    bankListState,
+    items,
+    status,
+    total,
+    limit,
+    page,
     handleChangePage,
     handleChangeRowsPerPage,
   };
@@ -66,23 +76,27 @@ function useBankListLogic() {
 
 function BankListComponent(props) {
   const {
-    bankListState,
+    items,
+    status,
+    total,
+    limit,
+    page,
     handleChangePage,
     handleChangeRowsPerPage,
   } = useBankListLogic();
 
   let componentToRender = <CircularProgress />;
 
-  if (bankListState.status === BANK_LIST_STATUS.IDLE) {
+  if (status === BANK_LIST_STATUS.IDLE) {
     componentToRender = <AddBankAccount props={props} />;
 
-    if (bankListState.banks.length > 0) {
+    if (items.length > 0) {
       componentToRender = (
         <ListBankAccounts
-          total={bankListState.total}
-          list={bankListState.banks}
-          limit={bankListState.limit}
-          page={bankListState.page}
+          total={total}
+          list={items}
+          limit={limit}
+          page={page}
           handleChangeRowsPerPage={handleChangeRowsPerPage}
           handleChangePage={handleChangePage}
         />

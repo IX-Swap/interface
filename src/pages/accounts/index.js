@@ -5,10 +5,12 @@ import { AccountProvider } from 'context/AccountContext';
 import { AssetsProvider } from 'context/assets';
 import { IdentityProvider } from 'context/IdentityContext';
 import BankCreateComponent from './bank/BankCreateComponent';
-import { BanksListProvider } from './bank/modules';
+import BanksModule from './bank/modules';
 import DepositPage from './deposit/DepositPage';
 import WithdrawPage from './withdraw/WithdrawPage';
 import AccountsPanel from './components/AccountsPanel';
+
+const { BanksListProvider } = BanksModule;
 
 function Accounts() {
   return (
