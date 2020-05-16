@@ -2,6 +2,12 @@
 import type { User } from 'context/user/types';
 import type { Asset } from 'context/assets/types';
 
+export const userAddBankActions = {
+  USER_ADD_BANK_REQUEST: 'USER_ADD_BANK_REQUEST',
+  USER_ADD_BANK_SUCCESS: 'USER_ADD_BANK_SUCCESS',
+  USER_ADD_BANK_FAILURE: 'USER_ADD_BANK_FAILURE',
+};
+
 export type Bank = {
   _id: string,
   user: User,

@@ -5,11 +5,12 @@ import type { Node } from 'react';
 import generateInitialState from './state';
 import generateReducers from './reducers';
 import generateActionsAndStatus from './types';
-import type { BaseStateWithPagination } from './types';
+import type { BaseStateWithPagination, GenericStatus } from './types';
 
 export function generateModule<X>(
   name: string,
   additionalReducer?: (
+    statusTypes: GenericStatus,
     state: BaseStateWithPagination<X>,
     load: any
   ) => BaseStateWithPagination<X>

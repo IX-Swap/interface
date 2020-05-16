@@ -28,22 +28,17 @@ const {
   useBanksListState,
   BANK_LIST_STATUS,
 } = BankListModule;
-const { getBankAccounts } = Actions;
+const { getBankAccounts, createBankAccount, setPage } = Actions;
 
 function useBankCreateLogic() {
   const assetsDispatch = useAssetsDispatch();
   const bankListDispatch = useBanksListDispatch();
   const [symbol, setSymbol] = useState('');
   const { status: assetsStatus, assets } = useAssetsState();
-  const { status: bankListStatus } = useBanksListState();
+  const { status: bankListStatus, page, limit } = useBanksListState();
   const mountedRef = useRef(true);
 
   const assetsReady = ![ASSETS_STATUS.INIT].includes(assetsStatus);
-
-  const getBankList = () =>
-    getBankAccounts(bankListDispatch, {
-      ref: mountedRef,
-    });
 
   useEffect(() => {
     if (assetsStatus === ASSETS_STATUS.INIT) {
@@ -54,10 +49,19 @@ function useBankCreateLogic() {
 
     if (bankListStatus === BANK_LIST_STATUS.INIT) {
       getBankAccounts(bankListDispatch, {
+        skip: page * limit,
+        limit,
         ref: mountedRef,
       });
     }
-  }, [assetsStatus, assetsDispatch, bankListStatus, bankListDispatch]);
+  }, [
+    assetsStatus,
+    assetsDispatch,
+    bankListStatus,
+    page,
+    limit,
+    bankListDispatch,
+  ]);
 
   const currencies = assets
     ? assets.filter((asset) => asset.type === 'Currency')
@@ -78,8 +82,8 @@ function useBankCreateLogic() {
   return {
     currencies,
     assetsReady,
-    getBankList,
     bankListStatus,
+    bankListDispatch,
     handleSelectChange,
     symbol,
   };
@@ -89,10 +93,10 @@ export default function BankCreateComponent() {
   const {
     currencies,
     assetsReady,
-    getBankList,
     bankListStatus,
     handleSelectChange,
     symbol,
+    bankListDispatch,
   } = useBankCreateLogic();
 
   const history = useHistory();
@@ -111,24 +115,25 @@ export default function BankCreateComponent() {
 
   const handleClickSubmit = () => {
     const payload = {
-      userId: null,
-      bankName: bankAccountName,
-      bankAddress,
-      accountHolderName: bankAccountHolderName,
-      swiftCode,
-      bankAccountNumber,
-      assetId: symbol,
+      userId: '5ebcf457d67958b03c7caa87',
+      bank: {
+        accountHolderName: bankAccountHolderName,
+        bankName: bankAccountName,
+        bankAccountNumber,
+        asset: symbol,
+        // bankAddress,
+        swiftCode,
+      },
     };
 
-    console.log('will create', payload);
-    // createBankAccount(bankDispatch, payload)
-    //  .then(() => {
-    getBankList();
-    //   setTimeout(() => {
-    //     history.push('/accounts');
-    //   }, 1000);
-    // })
-    // .catch(); */
+    createBankAccount(bankListDispatch, payload)
+      .then(() => {
+        setPage(bankListDispatch, { page: 0 });
+        setTimeout(() => {
+          history.push('/accounts');
+        }, 1000);
+      })
+      .catch();
   };
 
   const handleBackButton = () => {

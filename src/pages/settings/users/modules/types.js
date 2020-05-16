@@ -1,4 +1,6 @@
 // @flow
+import type { BaseStateWithPagination } from 'context/base/withPagination/types';
+
 export const userUpdateRoleActions = {
   USER_UPDATE_ROLE_REQUEST: 'USER_UPDATE_ROLE_REQUEST',
   USER_UPDATE_ROLE_SUCCESS: 'USER_UPDATE_ROLE_SUCCESS',
@@ -11,7 +13,7 @@ export type User = {
   roles: string,
 };
 
-export type UsersListState = {
+export type UsersListState = BaseStateWithPagination<User> & {
   users: Array<User>,
   page: number,
   limit: number,
