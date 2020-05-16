@@ -16,7 +16,8 @@ import Users from '../pages/settings/users';
 import Security from '../pages/security';
 
 import { useLayoutState, LayoutProvider } from '../context/LayoutContext';
-import { useUserState, useUserDispatch, getUser } from '../context/UserContext';
+import { useUserState, useUserDispatch } from '../context/user';
+import { getUser } from '../context/user/actions';
 
 function App() {
   const { isAuthenticated } = useUserState();
