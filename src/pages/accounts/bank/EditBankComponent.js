@@ -34,7 +34,6 @@ function useEditBankLogic(baseBank: BankRequest, onFinish) {
 
   const onSave = () => {
     const payload = {
-      userId: '5ebcf457d67958b03c7caa87',
       bank: {
         _id: baseBank._id,
         ...bank,

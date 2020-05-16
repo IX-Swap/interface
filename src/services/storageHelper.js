@@ -1,6 +1,7 @@
 // @flow
+import type { User } from 'context/user/types';
 
-const set = (user) => {
+const set = (user: User) => {
   localStorage.setItem('user', JSON.stringify(user));
 };
 

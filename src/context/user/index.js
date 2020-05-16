@@ -1,5 +1,6 @@
 // @flow
 import React from 'react';
+import type { Node } from 'react';
 import logger from 'use-reducer-logger';
 import { userReducer } from './reducers';
 import { initialState } from './state';
@@ -26,10 +27,13 @@ export function useUserDispatch() {
   return context;
 }
 
-export function UserProvider({ children }: { children: React.Node }) {
+export function UserProvider({ children }: { children: Node }) {
   const thisReducer =
     process.env.NODE_ENV === 'development' ? logger(userReducer) : userReducer;
-  const [state, dispatch] = React.useReducer(thisReducer, initialState);
+  const [state, dispatch] = React.useReducer<UserAuthState, UserAuthState>(
+    thisReducer,
+    initialState
+  );
 
   return (
     <UserStateContext.Provider value={state}>

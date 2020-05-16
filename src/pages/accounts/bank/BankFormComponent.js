@@ -160,8 +160,8 @@ export default function BankFormComponent({
             </FormControl>
           </Box>
         </Grid>
-        <Grid item sm={12} md={12} lg={5}>
-          <Box ml={3} m={1}>
+        <Grid item sm={12} md={12} lg={6}>
+          <Box mr={3} m={1}>
             <FormControl fullWidth>
               <InputLabel htmlFor="account-holder-name-input">
                 Account Holder Name
@@ -201,7 +201,7 @@ export default function BankFormComponent({
             </FormControl>
           </Box>
         </Grid>
-        <Grid item sm={12} md={12} lg={5}>
+        <Grid item sm={12} md={12} lg={6}>
           <Box ml={3} m={1}>
             <FormControl fullWidth>
               <InputLabel htmlFor="bank-account-number-input">
@@ -220,7 +220,7 @@ export default function BankFormComponent({
           </Box>
         </Grid>
         <Grid item sm={12} md={12} lg={3}>
-          <Box ml={3} m={1}>
+          <Box mr={3} m={1}>
             <FormControl fullWidth>
               <InputLabel htmlFor="swift-code-input">Swift Code</InputLabel>
               <Input
@@ -257,8 +257,8 @@ export default function BankFormComponent({
             </FormControl>
           </Box>
         </Grid>
-        <Grid item sm={12} md={12} lg={5}>
-          <Box ml={3} m={1}>
+        <Grid item sm={12} md={12} lg={6}>
+          <Box mr={3} m={1}>
             <FormControl fullWidth>
               <InputLabel htmlFor="bank-address-line2-input">Line 2</InputLabel>
               <Input
@@ -291,8 +291,8 @@ export default function BankFormComponent({
             </FormControl>
           </Box>
         </Grid>
-        <Grid item sm={12} md={12} lg={5}>
-          <Box ml={3} m={1}>
+        <Grid item sm={12} md={12} lg={6}>
+          <Box mr={3} m={1}>
             <FormControl fullWidth>
               <InputLabel htmlFor="bank-address-state-input">State</InputLabel>
               <Input
@@ -326,8 +326,8 @@ export default function BankFormComponent({
               </FormControl>
             </Box>
           </Grid>
-          <Grid item sm={12} md={12} lg={5}>
-            <Box ml={3} m={1}>
+          <Grid item sm={12} md={12} lg={6}>
+            <Box mr={3} m={1}>
               <FormControl fullWidth>
                 <InputLabel htmlFor="bank-address-postal-code-input">
                   Postal Code

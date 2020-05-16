@@ -80,7 +80,6 @@ export default function BankCreateComponent() {
 
   const handleClickSubmit = () => {
     const payload = {
-      userId: '5ebcf457d67958b03c7caa87',
       bank,
     };
 
@@ -120,8 +119,10 @@ export default function BankCreateComponent() {
                 <Typography variant="h5">Account Info</Typography>
               </Box>
             </Grid>
-            <BankFormComponent onChange={onChange} />
-            <Grid item>
+            <Grid item lg={12}>
+              <BankFormComponent onChange={onChange} />
+            </Grid>
+            <Grid item lg={12}>
               <Box p={3}>
                 <Box component="div" mr={3} display="inline">
                   <Button
