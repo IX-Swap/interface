@@ -1,9 +1,63 @@
-// @flow
+export const userActions = {
+  SET_ACTIVE_TAB_ID: 'SET_ACTIVE_TAB_ID',
+  SIGN_OUT_SUCCESS: 'SIGN_OUT_SUCCESS',
+
+  GET_AUTH_ME_REQUEST: 'GET_AUTH_ME_REQUEST',
+  GET_AUTH_ME_SUCCESS: 'GET_AUTH_ME_SUCCESS',
+  GET_AUTH_ME_FAILURE: 'GET_AUTH_ME_FAILURE',
+
+  LOGIN_REQUEST: 'LOGIN_REQUEST',
+  LOGIN_SUCCESS: 'LOGIN_SUCCESS',
+  LOGIN_FAILURE: 'LOGIN_FAILURE',
+
+  SIGN_UP_REQUEST: 'SIGN_UP_REQUEST',
+  SIGN_UP_SUCCESS: 'SIGN_UP_SUCCESS',
+  SIGN_UP_FAILURE: 'SIGN_UP_FAILURE',
+
+  VERIFY_SIGNUP_REQUEST: 'VERIFY_SIGNUP_REQUEST',
+  VERIFY_SIGNUP_SUCCESS: 'VERIFY_SIGNUP_SUCCESS',
+  VERIFY_SIGNUP_FAILURE: 'VERIFY_SIGNUP_FAILURE',
+
+  SETUP_2FA_REQUEST: 'SETUP_2FA_REQUEST',
+  SETUP_2FA_SUCCESS: 'SETUP_2FA_SUCCESS',
+  SETUP_2FA_FAILURE: 'SETUP_2FA_FAILURE',
+
+  CONFIRM_2FA_REQUEST: 'CONFIRM_2FA_REQUEST',
+  CONFIRM_2FA_SUCCESS: 'CONFIRM_2FA_SUCCESS',
+  CONFIRM_2FA_FAILURE: 'CONFIRM_2FA_FAILURE',
+
+  VERIFY_2FA_REQUEST: 'VERIFY_2FA_REQUEST',
+  VERIFY_2FA_SUCCESS: 'VERIFY_2FA_SUCCESS',
+  VERIFY_2FA_FAILURE: 'VERIFY_2FA_FAILURE',
+};
+
+export const USER_STATUS = {
+  INIT: 'INIT',
+  IDLE: 'IDLE',
+  GETTING: 'GETTING',
+  SAVING: 'SAVING',
+};
 
 export type User = {
   _id: string,
-  accountType: string,
+  verified: boolean,
+  accountType?: string,
   email: string,
   name: string,
   roles: string,
+};
+
+export type LocalUser = {
+  _id: string,
+  accessToken: string,
+};
+
+export type UserAuthState = {
+  user: User,
+  status: string,
+  isAuthenticated: boolean,
+  isLoading: boolean,
+  message?: string,
+  error?: string,
+  activeTabId: number,
 };

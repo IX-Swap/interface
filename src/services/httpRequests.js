@@ -1,8 +1,9 @@
 import { API_URL } from 'config';
+import localStore from './storageHelper';
 
-export async function postRequest(uri, payload) {
-  const bearerToken = localStorage.getItem('id_token');
-  return await fetch(API_URL + uri, {
+export const postRequest = async (uri: string, payload: any) => {
+  const bearerToken = localStore.getAccessToken();
+  const result = await fetch(API_URL + uri, {
     method: 'POST', // *GET, POST, PUT, DELETE, etc.
     mode: 'cors', // no-cors, *cors, same-origin
     cache: 'no-cache', // *default, no-cache, reload, force-cache, only-if-cached
@@ -17,11 +18,13 @@ export async function postRequest(uri, payload) {
     referrerPolicy: 'no-referrer', // no-referrer, *client
     body: payload instanceof FormData ? payload : JSON.stringify(payload),
   });
-}
 
-export async function getRequest(uri) {
-  const bearerToken = localStorage.getItem('id_token');
-  return await fetch(API_URL + uri, {
+  return result;
+};
+
+export const getRequest = async (uri: string) => {
+  const bearerToken = localStore.getAccessToken();
+  const result = await fetch(API_URL + uri, {
     method: 'GET', // *GET, POST, PUT, DELETE, etc.
     mode: 'cors', // no-cors, *cors, same-origin
     cache: 'no-cache', // *default, no-cache, reload, force-cache, only-if-cached
@@ -33,11 +36,13 @@ export async function getRequest(uri) {
     redirect: 'follow', // manual, *follow, error
     referrerPolicy: 'no-referrer', // no-referrer, *client
   });
-}
 
-export async function deleteRequest(uri, payload) {
-  const bearerToken = localStorage.getItem('id_token');
-  return await fetch(API_URL + uri, {
+  return result;
+};
+
+export const deleteRequest = async (uri: string, payload: any) => {
+  const bearerToken = localStore.getAccessToken();
+  const result = await fetch(API_URL + uri, {
     method: 'DELETE', // *GET, POST, PUT, DELETE, etc.
     mode: 'cors', // no-cors, *cors, same-origin
     cache: 'no-cache', // *default, no-cache, reload, force-cache, only-if-cached
@@ -50,11 +55,13 @@ export async function deleteRequest(uri, payload) {
     referrerPolicy: 'no-referrer', // no-referrer, *client
     body: JSON.stringify(payload),
   });
-}
 
-export async function putRequest(uri, payload) {
-  const bearerToken = localStorage.getItem('id_token');
-  return await fetch(API_URL + uri, {
+  return result;
+};
+
+export const putRequest = async (uri, payload) => {
+  const bearerToken = localStore.getAccessToken();
+  const result = await fetch(API_URL + uri, {
     method: 'PUT', // *GET, POST, PUT, DELETE, etc.
     mode: 'cors', // no-cors, *cors, same-origin
     cache: 'no-cache', // *default, no-cache, reload, force-cache, only-if-cached
@@ -67,4 +74,6 @@ export async function putRequest(uri, payload) {
     referrerPolicy: 'no-referrer', // no-referrer, *client
     body: JSON.stringify(payload),
   });
-}
+
+  return result;
+};
