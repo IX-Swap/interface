@@ -92,7 +92,8 @@ export async function verifySignup(
   }
 }
 
-export async function getUser(dispatch: Function, userId: string) {
+export async function getUser(dispatch: Function) {
+  const userId = localStore.getUserId();
   try {
     dispatch({ type: userActions.GET_AUTH_ME_REQUEST });
     const result = await getRequest(`/auth/profiles/${userId}`);
