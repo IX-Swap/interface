@@ -6,7 +6,7 @@ import { CssBaseline } from '@material-ui/core';
 import Themes from './themes';
 import App from './components/App';
 import * as serviceWorker from './serviceWorker';
-import { UserProvider } from './context/UserContext';
+import { UserProvider } from './context/user';
 
 ReactDOM.render(
   <ThemeProvider theme={Themes.default}>

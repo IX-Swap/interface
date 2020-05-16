@@ -8,11 +8,8 @@ import {
 } from '@material-ui/core';
 
 // context
-import {
-  useUserDispatch,
-  useUserState,
-  signupUser,
-} from '../../../../context/UserContext';
+import { useUserDispatch, useUserState } from 'context/user';
+import { signupUser } from 'context/user/actions';
 
 // styles
 import useStyles from '../../styles';
