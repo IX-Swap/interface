@@ -1,5 +1,5 @@
 // @flow
-import React, { useEffect, useRef } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import {
   Box,
   Grid,
@@ -14,14 +14,19 @@ import {
   ButtonGroup,
   CircularProgress,
 } from '@material-ui/core';
+import IconButton from '@material-ui/core/IconButton';
+import EditIcon from '@material-ui/icons/Edit';
+
 import TableFooter from '@material-ui/core/TableFooter';
 import TablePagination from '@material-ui/core/TablePagination';
 
 import { withRouter, useHistory } from 'react-router-dom';
 
+import EditBankComponent from './EditBankComponent';
 import BankListModule from './modules';
 import Actions from './modules/actions';
-import type { Bank } from './modules/types';
+import { baseBankRequest } from './modules/types';
+import type { Bank, BankRequest } from './modules/types';
 
 const {
   useBanksListDispatch,
@@ -35,6 +40,8 @@ function useBankListLogic() {
   const bankListState = useBanksListState();
   const { status, page, total, limit, items } = bankListState;
   const mountedRef = useRef(true);
+  const [activeBank, setActiveBank] = useState<BankRequest>(baseBankRequest);
+  const [editOpen, setEditOpen] = useState(false);
 
   useEffect(() => {
     if (status === BANK_LIST_STATUS.INIT) {
@@ -55,6 +62,24 @@ function useBankListLogic() {
     setPage(bankDispatch, { page: 0 });
   };
 
+  const bankToBankRequest = (bank: Bank): BankRequest => ({
+    _id: bank._id,
+    asset: bank.asset._id,
+    accountHolderName: bank.accountHolderName,
+    bankName: bank.bankName,
+    swiftCode: bank.swiftCode,
+    bankAccountNumber: bank.bankAccountNumber,
+  });
+
+  const editBank = (bank: Bank) => {
+    setActiveBank(bankToBankRequest(bank));
+    setEditOpen(true);
+  };
+
+  const closeEdit = () => {
+    setEditOpen(false);
+  };
+
   useEffect(
     () => () => {
       mountedRef.current = false;
@@ -68,7 +93,11 @@ function useBankListLogic() {
     status,
     total,
     limit,
+    activeBank,
     page,
+    editOpen,
+    closeEdit,
+    editBank,
     handleChangePage,
     handleChangeRowsPerPage,
   };
@@ -81,6 +110,12 @@ function BankListComponent(props) {
     total,
     limit,
     page,
+
+    editOpen,
+    closeEdit,
+    activeBank,
+
+    editBank,
     handleChangePage,
     handleChangeRowsPerPage,
   } = useBankListLogic();
@@ -92,14 +127,23 @@ function BankListComponent(props) {
 
     if (items.length > 0) {
       componentToRender = (
-        <ListBankAccounts
-          total={total}
-          list={items}
-          limit={limit}
-          page={page}
-          handleChangeRowsPerPage={handleChangeRowsPerPage}
-          handleChangePage={handleChangePage}
-        />
+        <>
+          <EditBankComponent
+            open={editOpen}
+            handleClose={closeEdit}
+            bank={activeBank}
+            onFinish={() => closeEdit()}
+          />
+          <ListBankAccounts
+            total={total}
+            list={items}
+            limit={limit}
+            editBank={editBank}
+            page={page}
+            handleChangeRowsPerPage={handleChangeRowsPerPage}
+            handleChangePage={handleChangePage}
+          />
+        </>
       );
     }
   }
@@ -118,6 +162,7 @@ type ListBankAccountsProps = {
   total: ?number,
   limit: number,
   page: number,
+  editBank: Function,
   handleChangeRowsPerPage: (p: number) => void,
   handleChangePage: (_: SyntheticInputEvent<HTMLElement>, p: number) => void,
 };
@@ -127,6 +172,7 @@ function ListBankAccounts({
   total,
   limit,
   page,
+  editBank,
   handleChangeRowsPerPage,
   handleChangePage,
 }: ListBankAccountsProps) {
@@ -149,6 +195,9 @@ function ListBankAccounts({
                 </TableCell>
                 <TableCell align="center">
                   <b>Status</b>
+                </TableCell>
+                <TableCell align="center">
+                  <b>Actions</b>
                 </TableCell>
               </TableRow>
             </TableHead>
@@ -184,6 +233,16 @@ function ListBankAccounts({
                       'Account Pending'
                     )}
                   </TableCell>
+                  <TableCell align="center">
+                    <IconButton
+                      aria-label="edit"
+                      onClick={() => {
+                        editBank(row);
+                      }}
+                    >
+                      <EditIcon />
+                    </IconButton>
+                  </TableCell>
                 </TableRow>
               ))}
             </TableBody>
@@ -192,7 +251,7 @@ function ListBankAccounts({
                 <TableRow>
                   <TablePagination
                     rowsPerPageOptions={[5, 10, 25]}
-                    colSpan={4}
+                    colSpan={5}
                     count={total}
                     rowsPerPage={limit}
                     page={page}
@@ -222,7 +281,8 @@ function ListBankAccounts({
   );
 }
 
-function AddBankAccount({ props }) {
+// TODO: fix this any
+function AddBankAccount({ props }: any) {
   return (
     <Grid>
       <Box m={4} p={4}>

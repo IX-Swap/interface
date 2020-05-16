@@ -12,8 +12,11 @@ export const ASSETS_STATUS = {
   SAVING: 'SAVING',
 };
 
-export type Asset = {
-  _id: string,
+export interface BaseAsset {
+  _id: string;
+}
+
+export type Asset = BaseAsset & {
   symbol: string,
   name: string,
   type: string,

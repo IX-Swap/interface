@@ -1,6 +1,6 @@
 // @flow
 import actionGenerator from 'context/base/withPagination/actions';
-import { postRequest } from 'services/httpRequests';
+import { postRequest, putRequest } from 'services/httpRequests';
 import { userAddBankActions } from './types';
 
 const { getter: getBankAccounts, ...pageMethods } = actionGenerator(
@@ -17,8 +17,13 @@ async function createBankAccount(
   dispatch({ type: userAddBankActions.USER_ADD_BANK_REQUEST });
 
   try {
-    const uri = `/accounts/banks/${payload.userId}`;
-    const result = await postRequest(uri, { ...payload.bank });
+    const {
+      userId,
+      bank: { _id, ...bank },
+    } = payload;
+    const uri = `/accounts/banks/${userId}${_id ? `/${_id}` : ''}`;
+    const method = _id ? putRequest : postRequest;
+    const result = await method(uri, { ...bank });
     const response = await result.json();
 
     if (result.status === 200) {

@@ -7,6 +7,22 @@ export const userAddBankActions = {
   USER_ADD_BANK_SUCCESS: 'USER_ADD_BANK_SUCCESS',
   USER_ADD_BANK_FAILURE: 'USER_ADD_BANK_FAILURE',
 };
+export type BankRequest = {
+  _id?: string,
+  asset: string,
+  bankName: string,
+  bankAccountNumber: string,
+  accountHolderName: string,
+  swiftCode: string,
+};
+
+export const baseBankRequest: BankRequest = Object.freeze({
+  asset: '',
+  bankName: '',
+  bankAccountNumber: '',
+  accountHolderName: '',
+  swiftCode: '',
+});
 
 export type Bank = {
   _id: string,
