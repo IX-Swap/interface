@@ -208,7 +208,7 @@ function ListBankAccounts({
                   <TableCell align="center">{row.bankAccountNumber}</TableCell>
                   <TableCell align="center">no data </TableCell>
                   <TableCell align="center">
-                    {row.authorized ? (
+                    {row.status === 'Authorized' ? (
                       <ButtonGroup
                         variant="text"
                         color="primary"
