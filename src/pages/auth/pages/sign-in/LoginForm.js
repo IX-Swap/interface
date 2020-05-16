@@ -9,15 +9,13 @@ import {
   Fade,
 } from '@material-ui/core';
 
+import { useUserDispatch, useUserState } from 'context/user';
+import { loginUser } from 'context/user/actions';
+
 // styles
 import useStyles from '../../styles';
 
 // context
-import {
-  useUserDispatch,
-  useUserState,
-  loginUser,
-} from '../../../../context/UserContext';
 
 const LoginForm = () => {
   const classes = useStyles();

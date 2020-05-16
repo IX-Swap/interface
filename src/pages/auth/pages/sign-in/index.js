@@ -3,17 +3,14 @@ import { Box, Button, Grid, Typography, Tabs, Tab } from '@material-ui/core';
 import { withRouter } from 'react-router-dom';
 
 // styles
+import { useUserState, useUserDispatch } from 'context/user';
+import { setActiveTabId } from 'context/user/actions';
 import useStyles from '../../styles';
 
 import SignupForm from './SignupForm';
 import LoginForm from './LoginForm';
 
 // context
-import {
-  useUserState,
-  useUserDispatch,
-  setActiveTabId,
-} from '../../../../context/UserContext';
 
 function SignIn() {
   const classes = useStyles();
@@ -21,7 +18,7 @@ function SignIn() {
   const userDispatch = useUserDispatch();
   const userState = useUserState();
 
-  if (userState.activeTabId === 2)
+  if (userState.activeTabId === 2) {
     return (
       <Grid container justify="center" alignItems="center">
         <Box p={4}>
@@ -42,6 +39,7 @@ function SignIn() {
         </Box>
       </Grid>
     );
+  }
 
   return (
     <Grid container className={classes.container}>
