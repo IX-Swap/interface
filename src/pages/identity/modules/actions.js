@@ -1,6 +1,6 @@
 // @flow
 import moment from 'moment';
-import { getRequest, postRequest, putRequest } from 'services/httpRequests';
+import { getRequest, putRequest } from 'services/httpRequests';
 import localStore from 'services/storageHelper';
 import { actions } from './types';
 import type { Identity, IdentityProfile, IndentityFinancials } from './types';
@@ -54,8 +54,8 @@ export const createIdentity = async (
     firstName,
     middleName,
     lastName,
-    dob,
-    gender,
+    // dob,
+    // gender,
     nationality,
     countryOfResidence,
     maritalStatus,
