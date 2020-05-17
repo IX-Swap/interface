@@ -22,10 +22,9 @@ function useGetters() {
   const { status: assetsStatus, assets } = useAssetsState();
 
   const assetsDispatch = useAssetsDispatch();
-
+  const [assetsReady, setAssetsReady] = useState(false);
   const mountedRef = useRef(true);
 
-  const assetsReady = ![ASSETS_STATUS.INIT].includes(assetsStatus);
   const currencies = assets
     ? assets.filter((asset) => asset.type === 'Currency')
     : [];
@@ -36,7 +35,18 @@ function useGetters() {
         ref: mountedRef,
       });
     }
+
+    if (assetsStatus === ASSETS_STATUS.IDLE) {
+      setAssetsReady(true);
+    }
   }, [assetsStatus, assetsDispatch]);
+
+  useEffect(
+    () => () => {
+      mountedRef.current = false;
+    },
+    []
+  );
 
   return {
     assetsReady,
@@ -183,21 +193,21 @@ export default function BankFormComponent({
           <Box ml={3} m={1}>
             <FormControl fullWidth>
               <InputLabel id="currency-selector-input">Currency</InputLabel>
-              <Select
-                fullWidth
-                labelId="currency-selector"
-                id="currency-selector-value"
-                value={symbol}
-                onChange={handleSelectChange}
-              >
-                {assetsReady
-                  ? currencies.map((item) => (
-                      <MenuItem key={item._id} value={item._id}>
-                        {item.symbol}
-                      </MenuItem>
-                    ))
-                  : null}
-              </Select>
+              {assetsReady && (
+                <Select
+                  fullWidth
+                  labelId="currency-selector"
+                  id="currency-selector-value"
+                  value={symbol}
+                  onChange={handleSelectChange}
+                >
+                  {currencies.map((item) => (
+                    <MenuItem key={item._id} value={item._id}>
+                      {item.symbol}
+                    </MenuItem>
+                  ))}
+                </Select>
+              )}
             </FormControl>
           </Box>
         </Grid>

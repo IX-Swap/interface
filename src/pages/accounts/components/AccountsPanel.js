@@ -3,6 +3,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import useStyles from 'pages/exchange/styles';
+import { withRouter, Route, Link, Switch } from 'react-router-dom';
 import { useTheme } from '@material-ui/core/styles';
 import {
   Grid,
@@ -14,19 +15,14 @@ import {
   Box,
 } from '@material-ui/core';
 
-import BankListComponent from '../bank/BankListComponent';
+import BankComponent from '../bank';
 import Overview from '../overview/Overview';
 
 function useAccountsLogic() {
   const classes = useStyles();
   const theme = useTheme();
-  const [value, setValue] = React.useState(0);
 
-  const handleChange = (event, newValue) => {
-    setValue(newValue);
-  };
-
-  return { handleChange, value, classes, theme };
+  return { classes, theme };
 }
 
 type TabProps = {
@@ -64,8 +60,25 @@ function a11yProps(index): TabProps {
   };
 }
 
-export default function AccountsPanel() {
-  const { handleChange, theme, classes, value } = useAccountsLogic();
+function AccountsPanel({ location }: any) {
+  const { classes } = useAccountsLogic();
+  const routes = [
+    '/accounts',
+    '/accounts/banks',
+    '/accounts/wallets',
+    '/accounts/reports',
+    '/accounts/transactions',
+  ];
+
+  let { pathname } = location;
+  const matched = (path: string): boolean => routes.some((p) => p === path);
+
+  // TODO: remove this hack, use proper routing
+  while (!matched(pathname) && pathname !== '/') {
+    pathname = pathname.split('/').filter(Boolean);
+    pathname.pop();
+    pathname = `/${pathname.join('/')}`;
+  }
 
   return (
     <Grid container justify="center">
@@ -73,37 +86,60 @@ export default function AccountsPanel() {
         <Paper className={classes.paper} elevation={0}>
           <AppBar position="static" color="default" elevation={1}>
             <Tabs
-              value={value}
-              onChange={handleChange}
+              value={pathname}
               indicatorColor="primary"
               textColor="primary"
               variant="fullWidth"
               aria-label="full width tabs example"
             >
-              <Tab label="OVERVIEW" {...a11yProps(0)} />
-              <Tab label="CASH" {...a11yProps(1)} />
-              <Tab label="DIGITAL SECURITIES" {...a11yProps(2)} />
-              <Tab label="REPORT" {...a11yProps(3)} />
-              <Tab label="TRANSACTIONS" {...a11yProps(4)} />
+              <Tab
+                component={Link}
+                to={routes[0]}
+                value={routes[0]}
+                label="OVERVIEW"
+                {...a11yProps(0)}
+              />
+              <Tab
+                component={Link}
+                to={routes[1]}
+                value={routes[1]}
+                label="CASH"
+                {...a11yProps(1)}
+              />
+              <Tab
+                component={Link}
+                to={routes[2]}
+                value={routes[2]}
+                label="DIGITAL SECURITIES"
+                {...a11yProps(2)}
+              />
+              <Tab
+                component={Link}
+                to={routes[3]}
+                value={routes[3]}
+                label="REPORT"
+                {...a11yProps(3)}
+              />
+              <Tab
+                component={Link}
+                to={routes[4]}
+                value={routes[4]}
+                label="TRANSACTIONS"
+                {...a11yProps(4)}
+              />
             </Tabs>
           </AppBar>
-          <TabPanel value={value} index={0} dir={theme.direction}>
-            <Overview />
-          </TabPanel>
-          <TabPanel value={value} index={1} dir={theme.direction}>
-            <BankListComponent />
-          </TabPanel>
-          <TabPanel value={value} index={2} dir={theme.direction}>
-            WALLETS
-          </TabPanel>
-          <TabPanel value={value} index={3} dir={theme.direction}>
-            REPORTS
-          </TabPanel>
-          <TabPanel value={value} index={4} dir={theme.direction}>
-            TRANSACTIONS
-          </TabPanel>
+          <Switch>
+            <Route exact path={routes[0]} render={() => <Overview />} />
+            <Route path={routes[1]} render={() => <BankComponent />} />
+            <Route path={routes[2]} render={() => <span>WALLETS</span>} />
+            <Route path={routes[3]} render={() => <span>REPORTS</span>} />
+            <Route path={routes[4]} render={() => <span>TRANSACTIONS</span>} />
+          </Switch>
         </Paper>
       </Grid>
     </Grid>
   );
 }
+
+export default withRouter(AccountsPanel);

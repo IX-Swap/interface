@@ -26,10 +26,9 @@ export default (name: string, uri: string, additionalPayload: any) => {
         ...data,
       });
 
+      const response = await result.json();
       if (!ref.current) return null;
-
       if (result.status === 200) {
-        const response = await result.json();
         const { limit, count, skip, documents } = response.data[0];
         dispatch({
           type: actionTypes.GET_SUCCESS,
@@ -37,16 +36,29 @@ export default (name: string, uri: string, additionalPayload: any) => {
             page: Math.floor(skip / limit) + 1,
             total: count,
             items: documents,
+            statusCode: result.status,
           },
         });
       } else {
+        const pld = {
+          ...response,
+          statusCode: result.status,
+        };
+
+        if (result.status === 403) {
+          pld.items = [];
+        }
+
         dispatch({
           type: actionTypes.GET_FAILURE,
-          payload: result.message,
+          payload: pld,
         });
       }
     } catch (err) {
-      dispatch({ type: actionTypes.GET_FAILURE });
+      dispatch({
+        type: actionTypes.GET_FAILURE,
+        payload: { message: JSON.stringify(err), statusCode: 0 },
+      });
     }
   }
 
@@ -61,9 +73,23 @@ export default (name: string, uri: string, additionalPayload: any) => {
     });
   }
 
+  function clearBaseData(dispatch: Function) {
+    dispatch({
+      type: actionTypes.CLEAR_DATA,
+    });
+  }
+
+  function clearApiStatus(dispatch: Function) {
+    dispatch({
+      type: actionTypes.CLEAR_API,
+    });
+  }
+
   return {
     getter,
     setPage,
+    clearBaseData,
+    clearApiStatus,
     setRowsPerPage,
   };
 };

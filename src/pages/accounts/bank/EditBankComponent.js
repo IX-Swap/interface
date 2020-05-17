@@ -1,18 +1,20 @@
 // @flow
-import React, { useCallback, useState } from 'react';
+import React, { useCallback, useState, useEffect } from 'react';
 import Button from '@material-ui/core/Button';
 import Dialog from '@material-ui/core/Dialog';
 import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
 import DialogTitle from '@material-ui/core/DialogTitle';
+import Box from '@material-ui/core/Box';
+import Alert from '@material-ui/lab/Alert';
 import BankFormComponent from './BankFormComponent';
 import Actions from './modules/actions';
 import BankListModule from './modules';
 
 import type { BankRequest } from './modules/types';
 
-const { useBanksListDispatch } = BankListModule;
-const { createBankAccount, setPage } = Actions;
+const { useBanksListDispatch, useBanksListState } = BankListModule;
+const { createBankAccount } = Actions;
 
 type EditBankComponentProps = {
   open: boolean,
@@ -22,8 +24,10 @@ type EditBankComponentProps = {
 };
 
 function useEditBankLogic(baseBank: BankRequest, onFinish) {
+  const { statusCode, error } = useBanksListState();
   const [bank, setBank] = useState(baseBank);
   const bankListDispatch = useBanksListDispatch();
+  const [snackbarOpen, setSnackbarOpen] = useState(false);
   // setBank(bank);
   const onChange = useCallback(
     (mBank: BankRequest) => {
@@ -41,17 +45,29 @@ function useEditBankLogic(baseBank: BankRequest, onFinish) {
       },
     };
 
-    createBankAccount(bankListDispatch, payload)
-      .then(() => {
-        setPage(bankListDispatch, { page: 0 });
-        onFinish();
-      })
-      .catch();
+    createBankAccount(bankListDispatch, payload);
   };
 
+  const memOnFinish = useCallback(() => {
+    onFinish(true);
+  }, [onFinish]);
+
+  useEffect(() => {
+    if (statusCode && statusCode !== 200 && error) {
+      setSnackbarOpen(true);
+      return;
+    }
+
+    if (statusCode) {
+      memOnFinish();
+    }
+  }, [statusCode, error, memOnFinish]);
+
   return {
+    snackbarOpen,
     onChange,
     onSave,
+    error,
   };
 }
 
@@ -61,7 +77,10 @@ export default function EditBankComponent({
   bank,
   onFinish,
 }: EditBankComponentProps) {
-  const { onChange, onSave } = useEditBankLogic(bank, onFinish);
+  const { onChange, onSave, snackbarOpen, error } = useEditBankLogic(
+    bank,
+    onFinish
+  );
 
   return (
     <div>
@@ -72,6 +91,11 @@ export default function EditBankComponent({
       >
         <DialogTitle id="form-dialog-title">Edit Bank Details</DialogTitle>
         <DialogContent>
+          {snackbarOpen && (
+            <Box mb={2}>
+              <Alert severity="error">{error}</Alert>
+            </Box>
+          )}
           <BankFormComponent bank={bank} onChange={onChange} />
         </DialogContent>
         <DialogActions>

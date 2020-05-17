@@ -27,6 +27,7 @@ export async function getAssets(
     if (result.status === 200) {
       const response = await result.json();
       const { limit, count, skip, documents } = response.data[0];
+      if (!ref.current) return null;
       dispatch({
         type: assetsActions.GET_ASSETS_SUCCESS,
         payload: {

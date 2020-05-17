@@ -14,6 +14,7 @@ import {
   ButtonGroup,
   CircularProgress,
 } from '@material-ui/core';
+import Alert from '@material-ui/lab/Alert';
 import IconButton from '@material-ui/core/IconButton';
 import EditIcon from '@material-ui/icons/Edit';
 
@@ -25,7 +26,7 @@ import { withRouter, useHistory } from 'react-router-dom';
 import EditBankComponent from './EditBankComponent';
 import BankListModule from './modules';
 import Actions from './modules/actions';
-import { baseBankRequest } from './modules/types';
+import { baseBankRequest, bankSaveStatus } from './modules/types';
 import type { Bank, BankRequest } from './modules/types';
 
 const {
@@ -33,25 +34,24 @@ const {
   useBanksListState,
   BANK_LIST_STATUS,
 } = BankListModule;
-const { getBankAccounts, setPage, setRowsPerPage } = Actions;
+const { getBankAccounts, setPage, setRowsPerPage, clearApiStatus } = Actions;
 
 function useBankListLogic() {
   const bankDispatch = useBanksListDispatch();
   const bankListState = useBanksListState();
-  const { status, page, total, limit, items } = bankListState;
+  const {
+    status,
+    page,
+    total,
+    limit,
+    items,
+    statusCode,
+    error,
+  } = bankListState;
   const mountedRef = useRef(true);
   const [activeBank, setActiveBank] = useState<BankRequest>(baseBankRequest);
   const [editOpen, setEditOpen] = useState(false);
-
-  useEffect(() => {
-    if (status === BANK_LIST_STATUS.INIT) {
-      getBankAccounts(bankDispatch, {
-        skip: page * limit,
-        limit,
-        ref: mountedRef,
-      });
-    }
-  }, [page, limit, status, bankDispatch]);
+  const [editSuccess, setEditSuccess] = useState(false);
 
   const handleChangePage = (_, newPage: number) => {
     setPage(bankDispatch, { page: newPage });
@@ -72,13 +72,33 @@ function useBankListLogic() {
   });
 
   const editBank = (bank: Bank) => {
+    clearApiStatus(bankDispatch);
     setActiveBank(bankToBankRequest(bank));
     setEditOpen(true);
   };
 
-  const closeEdit = () => {
+  const closeEdit = (saved: boolean) => {
     setEditOpen(false);
+    console.log('asdfasdf', saved);
+    setEditSuccess(saved || false);
+    setActiveBank(baseBankRequest);
+    setTimeout(() => {
+      if (mountedRef.current && saved) {
+        setEditSuccess(false);
+      }
+    }, 5000);
   };
+
+  useEffect(() => {
+    if (status === BANK_LIST_STATUS.INIT) {
+      getBankAccounts(bankDispatch, {
+        skip: page * limit,
+        limit,
+        ref: mountedRef,
+      });
+      clearApiStatus(bankDispatch);
+    }
+  }, [page, limit, status, bankDispatch]);
 
   useEffect(
     () => () => {
@@ -96,6 +116,9 @@ function useBankListLogic() {
     activeBank,
     page,
     editOpen,
+    statusCode,
+    error,
+    editSuccess,
     closeEdit,
     editBank,
     handleChangePage,
@@ -105,12 +128,15 @@ function useBankListLogic() {
 
 function BankListComponent(props) {
   const {
+    error,
     items,
     status,
     total,
     limit,
     page,
+    statusCode,
 
+    editSuccess,
     editOpen,
     closeEdit,
     activeBank,
@@ -119,21 +145,43 @@ function BankListComponent(props) {
     handleChangePage,
     handleChangeRowsPerPage,
   } = useBankListLogic();
+  const history = useHistory();
 
   let componentToRender = <CircularProgress />;
 
-  if (status === BANK_LIST_STATUS.IDLE) {
+  if ([bankSaveStatus.BANK_SAVING, BANK_LIST_STATUS.IDLE].includes(status)) {
     componentToRender = <AddBankAccount props={props} />;
 
     if (items.length > 0) {
       componentToRender = (
         <>
-          <EditBankComponent
-            open={editOpen}
-            handleClose={closeEdit}
-            bank={activeBank}
-            onFinish={() => closeEdit()}
-          />
+          <Box mt={3} mx={3} display="flex" justifyContent="flex-end">
+            <Button
+              m={3}
+              variant="contained"
+              color="primary"
+              onClick={() => {
+                history.push(`/accounts/banks/bank-create`);
+              }}
+            >
+              ADD BANK ACCOUNT
+            </Button>
+          </Box>
+          {editSuccess && (
+            <Box mx={3} mt={3}>
+              <Alert severity="success">
+                Successfully updated Bank Account!
+              </Alert>
+            </Box>
+          )}
+          {activeBank.bankAccountNumber && (
+            <EditBankComponent
+              open={editOpen}
+              handleClose={() => closeEdit(false)}
+              bank={activeBank}
+              onFinish={() => closeEdit(true)}
+            />
+          )}
           <ListBankAccounts
             total={total}
             list={items}
@@ -144,6 +192,14 @@ function BankListComponent(props) {
             handleChangePage={handleChangePage}
           />
         </>
+      );
+    }
+
+    if (statusCode === 403) {
+      componentToRender = (
+        <Box m={3}>
+          <Alert severity="error">{error}</Alert>
+        </Box>
       );
     }
   }
@@ -187,16 +243,19 @@ function ListBankAccounts({
                 <TableCell>
                   <b>Currency</b>
                 </TableCell>
+                <TableCell align="left">
+                  <b>Bank</b>
+                </TableCell>
                 <TableCell align="center">
-                  <b>Account ID</b>
+                  <b>Account Number</b>
                 </TableCell>
                 <TableCell align="center">
                   <b>Balance</b>
                 </TableCell>
-                <TableCell align="center">
+                <TableCell align="left">
                   <b>Status</b>
                 </TableCell>
-                <TableCell align="center">
+                <TableCell align="left">
                   <b>Actions</b>
                 </TableCell>
               </TableRow>
@@ -205,8 +264,9 @@ function ListBankAccounts({
               {list.map((row) => (
                 <TableRow key={row._id}>
                   <TableCell>{row.asset.symbol}</TableCell>
-                  <TableCell align="center">{row.bankAccountNumber}</TableCell>
-                  <TableCell align="center">no data </TableCell>
+                  <TableCell align="left">{row.bankName}</TableCell>
+                  <TableCell align="right">{row.bankAccountNumber}</TableCell>
+                  <TableCell align="right">no data </TableCell>
                   <TableCell align="center">
                     {row.status === 'Authorized' ? (
                       <ButtonGroup
@@ -216,14 +276,14 @@ function ListBankAccounts({
                       >
                         <Button
                           onClick={() => {
-                            history.push('/accounts/deposit');
+                            history.push(`/accounts/banks/deposit/${row._id}`);
                           }}
                         >
                           Deposit
                         </Button>
                         <Button
                           onClick={() => {
-                            history.push('/accounts/withdraw');
+                            history.push(`/accounts/banks/withdraw/${row._id}`);
                           }}
                         >
                           Withdrawal
@@ -251,7 +311,7 @@ function ListBankAccounts({
                 <TableRow>
                   <TablePagination
                     rowsPerPageOptions={[5, 10, 25]}
-                    colSpan={5}
+                    colSpan={6}
                     count={total}
                     rowsPerPage={limit}
                     page={page}
@@ -265,17 +325,6 @@ function ListBankAccounts({
             )}
           </Table>
         </TableContainer>
-        <Box mt={3}>
-          <Button
-            variant="contained"
-            color="primary"
-            onClick={() => {
-              history.push(`/accounts/bank-create`);
-            }}
-          >
-            ADD BANK ACCOUNT
-          </Button>
-        </Box>
       </Box>
     </Grid>
   );
@@ -294,7 +343,7 @@ function AddBankAccount({ props }: any) {
             variant="contained"
             color="primary"
             onClick={() => {
-              props.history.push(`/accounts/bank-create`);
+              props.history.push(`/accounts/banks/bank-create`);
             }}
           >
             ADD BANK ACCOUNT

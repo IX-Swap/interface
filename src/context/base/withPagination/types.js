@@ -6,6 +6,9 @@ export type GenericActions = {
 
   PAGE_CHANGE: string,
   ROWS_PER_PAGE_CHANGE: string,
+
+  CLEAR_DATA: string,
+  CLEAR_API: string,
 };
 
 export type GenericStatus = {
@@ -24,6 +27,8 @@ const generateActions = (name): GenericActions => ({
 
   PAGE_CHANGE: `GET_${camelToSnake(name)}_PAGE_CHANGE`,
   ROWS_PER_PAGE_CHANGE: `GET_${camelToSnake(name)}_ROWS_PERPAGE_CHANGE`,
+  CLEAR_DATA: `GET_${camelToSnake(name)}_CLEAR_INITIAL_DATA`,
+  CLEAR_API: `GET_${camelToSnake(name)}_CLEAR_API_STATUS`,
 });
 
 export const generateStatus = (): GenericStatus => ({
@@ -43,5 +48,7 @@ export type BaseStateWithPagination<T> = {
   limit: number,
   total: ?number,
   error: ?string,
+  statusCode: ?number,
+  errorCode: ?string | ?number,
   status: string,
 };

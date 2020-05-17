@@ -1,3 +1,4 @@
+// @flow
 import { API_URL } from 'config';
 import localStore from './storageHelper';
 
@@ -59,7 +60,7 @@ export const deleteRequest = async (uri: string, payload: any) => {
   return result;
 };
 
-export const putRequest = async (uri, payload) => {
+export const putRequest = async (uri: string, payload: any) => {
   const bearerToken = localStore.getAccessToken();
   const result = await fetch(API_URL + uri, {
     method: 'PUT', // *GET, POST, PUT, DELETE, etc.
