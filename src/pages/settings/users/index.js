@@ -15,25 +15,22 @@ import Paper from '@material-ui/core/Paper';
 import DialogConfirmRoleChange from './components/DialogConfirmRoleChange';
 import UsersTableBody from './components/UsersTableBody';
 
-import {
-  UsersListProvider,
+import UsersModule from './modules/index';
+import Actions from './modules/actions';
+import type { User } from './modules/types';
+
+const { getUsersList, setPage, setRowsPerPage, updateUserRole } = Actions;
+const {
+  UserListProvider,
   useUsersListState,
   useUsersListDispatch,
-} from './modules/index';
-import {
-  getUsersList,
-  updateUserRole,
-  setPage,
-  setRowsPerPage,
-} from './modules/actions';
-import { USERS_LIST_STATUS } from './modules/types';
-
-import type { User } from './modules/types';
+  USERS_LIST_STATUS,
+} = UsersModule;
 
 function useUsersListLogic() {
   const mountedRef = useRef(true);
 
-  const { users, limit, status, total, page } = useUsersListState();
+  const { items, limit, status, total, page } = useUsersListState();
   const usersDispatch = useUsersListDispatch();
 
   const [open, setOpen] = React.useState<boolean>(false);
@@ -71,7 +68,6 @@ function useUsersListLogic() {
   };
 
   const handleChangeRowsPerPage = (newRows: number) => {
-    console.log(newRows);
     setRowsPerPage(usersDispatch, { rows: newRows });
     setPage(usersDispatch, { page: 0 });
   };
@@ -102,7 +98,7 @@ function useUsersListLogic() {
     open,
     user,
     role,
-    users,
+    users: items,
     status,
     limit,
     total,
@@ -112,9 +108,9 @@ function useUsersListLogic() {
 
 function UsersWithProvider() {
   return (
-    <UsersListProvider>
+    <UserListProvider>
       <Users />
-    </UsersListProvider>
+    </UserListProvider>
   );
 }
 

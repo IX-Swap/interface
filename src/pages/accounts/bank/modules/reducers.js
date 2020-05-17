@@ -1,23 +1,23 @@
 import type { UsersListState } from './types';
-import { userUpdateRoleActions } from './types';
+import { userAddBankActions } from './types';
 
-export default function userReducer(
+export default function addBankReducer(
   statusTypes: GenericStatus,
   state: UsersListState,
   action: any
 ): UsersListState {
   switch (action.type) {
-    case userUpdateRoleActions.USER_UPDATE_ROLE_REQUEST:
+    case userAddBankActions.USER_ADD_BANK_REQUEST:
       return {
         ...state,
         status: statusTypes.GETTING,
       };
-    case userUpdateRoleActions.USER_UPDATE_ROLE_SUCCESS:
+    case userAddBankActions.USER_ADD_BANK_SUCCESS:
       return {
         ...state,
         status: statusTypes.IDLE,
       };
-    case userUpdateRoleActions.USER_UPDATE_ROLE_FAILURE:
+    case userAddBankActions.USER_ADD_BANK_FAILURE:
       return {
         ...state,
         status: statusTypes.IDLE,
