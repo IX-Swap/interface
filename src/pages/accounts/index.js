@@ -4,7 +4,6 @@ import { Grid } from '@material-ui/core';
 import { AccountProvider } from 'context/AccountContext';
 import { AssetsProvider } from 'context/assets';
 import { IdentityProvider } from 'context/IdentityContext';
-import BankCreateComponent from './bank/BankCreateComponent';
 import BanksModule from './bank/modules';
 import DepositPage from './deposit/DepositPage';
 import WithdrawPage from './withdraw/WithdrawPage';
@@ -33,12 +32,7 @@ function Accounts() {
 function AccountRoutes() {
   return (
     <>
-      <Route exact path="/accounts" component={() => <AccountsPanel />} />
-      <Route
-        exact
-        path="/accounts/bank-create"
-        component={() => <BankCreateComponent />}
-      />
+      <Route path="/accounts" component={() => <AccountsPanel />} />
       <Route exact path="/accounts/deposit" component={() => <DepositPage />} />
       <Route
         exact

@@ -11,6 +11,8 @@ export default function generateInitialState<T>(): BaseStateWithPagination<T> {
     limit: 5,
     total: null,
     error: null,
+    statusCode: null,
+    errorCode: null,
     status: statusList.INIT,
   };
 }

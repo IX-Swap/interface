@@ -14,6 +14,7 @@ import {
   ButtonGroup,
   CircularProgress,
 } from '@material-ui/core';
+import Alert from '@material-ui/lab/Alert';
 import IconButton from '@material-ui/core/IconButton';
 import EditIcon from '@material-ui/icons/Edit';
 
@@ -38,20 +39,18 @@ const { getBankAccounts, setPage, setRowsPerPage } = Actions;
 function useBankListLogic() {
   const bankDispatch = useBanksListDispatch();
   const bankListState = useBanksListState();
-  const { status, page, total, limit, items } = bankListState;
+  const {
+    status,
+    page,
+    total,
+    limit,
+    items,
+    statusCode,
+    error,
+  } = bankListState;
   const mountedRef = useRef(true);
   const [activeBank, setActiveBank] = useState<BankRequest>(baseBankRequest);
   const [editOpen, setEditOpen] = useState(false);
-
-  useEffect(() => {
-    if (status === BANK_LIST_STATUS.INIT) {
-      getBankAccounts(bankDispatch, {
-        skip: page * limit,
-        limit,
-        ref: mountedRef,
-      });
-    }
-  }, [page, limit, status, bankDispatch]);
 
   const handleChangePage = (_, newPage: number) => {
     setPage(bankDispatch, { page: newPage });
@@ -80,6 +79,16 @@ function useBankListLogic() {
     setEditOpen(false);
   };
 
+  useEffect(() => {
+    if (status === BANK_LIST_STATUS.INIT) {
+      getBankAccounts(bankDispatch, {
+        skip: page * limit,
+        limit,
+        ref: mountedRef,
+      });
+    }
+  }, [page, limit, status, bankDispatch]);
+
   useEffect(
     () => () => {
       mountedRef.current = false;
@@ -96,6 +105,8 @@ function useBankListLogic() {
     activeBank,
     page,
     editOpen,
+    statusCode,
+    error,
     closeEdit,
     editBank,
     handleChangePage,
@@ -105,11 +116,13 @@ function useBankListLogic() {
 
 function BankListComponent(props) {
   const {
+    error,
     items,
     status,
     total,
     limit,
     page,
+    statusCode,
 
     editOpen,
     closeEdit,
@@ -146,6 +159,14 @@ function BankListComponent(props) {
         </>
       );
     }
+
+    if (statusCode === 403) {
+      componentToRender = (
+        <Box m={3}>
+          <Alert severity="error">{error}</Alert>
+        </Box>
+      );
+    }
   }
 
   return (
@@ -180,6 +201,26 @@ function ListBankAccounts({
   return (
     <Grid item md={12}>
       <Box p={3}>
+        <Grid
+          spacing={3}
+          container
+          direction="row"
+          justify="flex-end"
+          alignItems="center"
+        >
+          <Box mb={3}>
+            <Button
+              m={3}
+              variant="contained"
+              color="primary"
+              onClick={() => {
+                history.push(`/accounts/banks/bank-create`);
+              }}
+            >
+              ADD BANK ACCOUNT
+            </Button>
+          </Box>
+        </Grid>
         <TableContainer>
           <Table aria-label="accounts table">
             <TableHead>
@@ -187,16 +228,19 @@ function ListBankAccounts({
                 <TableCell>
                   <b>Currency</b>
                 </TableCell>
+                <TableCell align="left">
+                  <b>Bank</b>
+                </TableCell>
                 <TableCell align="center">
-                  <b>Account ID</b>
+                  <b>Account Number</b>
                 </TableCell>
                 <TableCell align="center">
                   <b>Balance</b>
                 </TableCell>
-                <TableCell align="center">
+                <TableCell align="left">
                   <b>Status</b>
                 </TableCell>
-                <TableCell align="center">
+                <TableCell align="left">
                   <b>Actions</b>
                 </TableCell>
               </TableRow>
@@ -205,8 +249,9 @@ function ListBankAccounts({
               {list.map((row) => (
                 <TableRow key={row._id}>
                   <TableCell>{row.asset.symbol}</TableCell>
-                  <TableCell align="center">{row.bankAccountNumber}</TableCell>
-                  <TableCell align="center">no data </TableCell>
+                  <TableCell align="left">{row.bankName}</TableCell>
+                  <TableCell align="right">{row.bankAccountNumber}</TableCell>
+                  <TableCell align="right">no data </TableCell>
                   <TableCell align="center">
                     {row.status === 'Authorized' ? (
                       <ButtonGroup
@@ -216,14 +261,14 @@ function ListBankAccounts({
                       >
                         <Button
                           onClick={() => {
-                            history.push('/accounts/deposit');
+                            history.push(`/accounts/banks/deposit/${row._id}`);
                           }}
                         >
                           Deposit
                         </Button>
                         <Button
                           onClick={() => {
-                            history.push('/accounts/withdraw');
+                            history.push(`/accounts/banks/withdraw/${row._id}`);
                           }}
                         >
                           Withdrawal
@@ -251,7 +296,7 @@ function ListBankAccounts({
                 <TableRow>
                   <TablePagination
                     rowsPerPageOptions={[5, 10, 25]}
-                    colSpan={5}
+                    colSpan={6}
                     count={total}
                     rowsPerPage={limit}
                     page={page}
@@ -265,17 +310,6 @@ function ListBankAccounts({
             )}
           </Table>
         </TableContainer>
-        <Box mt={3}>
-          <Button
-            variant="contained"
-            color="primary"
-            onClick={() => {
-              history.push(`/accounts/bank-create`);
-            }}
-          >
-            ADD BANK ACCOUNT
-          </Button>
-        </Box>
       </Box>
     </Grid>
   );
@@ -294,7 +328,7 @@ function AddBankAccount({ props }: any) {
             variant="contained"
             color="primary"
             onClick={() => {
-              props.history.push(`/accounts/bank-create`);
+              props.history.push(`/accounts/banks/bank-create`);
             }}
           >
             ADD BANK ACCOUNT

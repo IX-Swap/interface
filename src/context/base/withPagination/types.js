@@ -43,5 +43,7 @@ export type BaseStateWithPagination<T> = {
   limit: number,
   total: ?number,
   error: ?string,
+  statusCode: ?number,
+  errorCode: ?string | ?number,
   status: string,
 };

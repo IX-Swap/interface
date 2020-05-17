@@ -65,6 +65,13 @@ function useGetters() {
     bankListDispatch,
   ]);
 
+  useEffect(
+    () => () => {
+      mountedRef.current = false;
+    },
+    []
+  );
+
   return {
     bankListStatus,
     assetsReady,
@@ -87,14 +94,14 @@ export default function BankCreateComponent() {
       .then(() => {
         setPage(bankListDispatch, { page: 0 });
         setTimeout(() => {
-          history.push('/accounts');
+          history.push('/accounts/banks');
         }, 1000);
       })
       .catch();
   };
 
   const handleBackButton = () => {
-    history.push('/accounts');
+    history.push('/accounts/banks');
   };
 
   const onChange = useCallback(
@@ -106,50 +113,38 @@ export default function BankCreateComponent() {
 
   return (
     <Grid container justify="center" alignItems="center">
-      <Grid item lg={9}>
-        <Grid item sm={12} md={12} lg={12}>
-          <Box pl={0} p={3}>
-            <Typography variant="h3">Setup Bank Account</Typography>
+      <Grid item lg={12}>
+        <Grid item lg={12}>
+          <Box ml={3} mt={3}>
+            <Typography variant="h5">Account Info</Typography>
           </Box>
         </Grid>
-        <Paper>
-          <Grid container>
-            <Grid item lg={12}>
-              <Box ml={3} mt={3}>
-                <Typography variant="h5">Account Info</Typography>
-              </Box>
-            </Grid>
-            <Grid item lg={12}>
-              <BankFormComponent onChange={onChange} />
-            </Grid>
-            <Grid item lg={12}>
-              <Box p={3}>
-                <Box component="div" mr={3} display="inline">
-                  <Button
-                    variant="contained"
-                    color="primary"
-                    onClick={handleBackButton}
-                  >
-                    Cancel
-                  </Button>
-                </Box>
-                <Box component="div" display="inline">
-                  {bankListStatus === BANK_LIST_STATUS.IDLE ? (
-                    <Button
-                      variant="contained"
-                      color="primary"
-                      onClick={handleClickSubmit}
-                    >
-                      Submit
-                    </Button>
-                  ) : (
-                    <CircularProgress />
-                  )}
-                </Box>
-              </Box>
-            </Grid>
-          </Grid>
-        </Paper>
+      </Grid>
+      <Grid item lg={12}>
+        <BankFormComponent onChange={onChange} />
+      </Grid>
+      <Grid item lg={12} container justify="center">
+        <Box p={3}>
+          <Box component="div" mr={2} display="inline">
+            <Button color="default" onClick={handleBackButton}>
+              Cancel
+            </Button>
+          </Box>
+          <Box component="div" display="inline">
+            {bankListStatus === BANK_LIST_STATUS.IDLE ? (
+              <Button
+                disableElevation
+                variant="contained"
+                color="primary"
+                onClick={handleClickSubmit}
+              >
+                Add Bank Account
+              </Button>
+            ) : (
+              <CircularProgress />
+            )}
+          </Box>
+        </Box>
       </Grid>
     </Grid>
   );

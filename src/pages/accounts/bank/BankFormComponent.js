@@ -38,6 +38,13 @@ function useGetters() {
     }
   }, [assetsStatus, assetsDispatch]);
 
+  useEffect(
+    () => () => {
+      mountedRef.current = false;
+    },
+    []
+  );
+
   return {
     assetsReady,
     currencies,

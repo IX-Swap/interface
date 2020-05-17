@@ -1,9 +1,9 @@
 // @flow
 import localStore from 'services/storageHelper';
 import actionGenerator from 'context/base/withPagination/actions';
-import { postRequest, putRequest } from 'services/httpRequests';
+import { postRequest, putRequest, getRequest } from 'services/httpRequests';
 import { userAddBankActions } from './types';
-import type { BankRequest } from './types';
+import type { BankRequest, Bank } from './types';
 
 const { getter: getBankAccounts, ...pageMethods } = actionGenerator(
   'bankList',
@@ -11,7 +11,26 @@ const { getter: getBankAccounts, ...pageMethods } = actionGenerator(
   {}
 );
 
-// TODO: change any to a definition of a bank post request
+type GetBankResponse = { message: string, data: Bank };
+
+async function getBank(dispatch: Function, payload: { bankId: string }): Bank {
+  try {
+    const { bankId } = payload;
+    const userId = localStore.getUserId();
+    const uri = `/accounts/banks/${userId}/${bankId}`;
+    const result = await getRequest(uri);
+    const response = await result.json();
+
+    if (result.status === 200) {
+      return response.data;
+    }
+
+    throw new Error(response.message);
+  } catch (err) {
+    throw new Error(err);
+  }
+}
+
 async function createBankAccount(
   dispatch: Function,
   payload: { bank: BankRequest }
@@ -48,6 +67,7 @@ async function createBankAccount(
 }
 
 export default {
+  getBank,
   getBankAccounts,
   createBankAccount,
   ...pageMethods,

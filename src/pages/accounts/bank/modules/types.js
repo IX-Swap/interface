@@ -7,6 +7,13 @@ export const userAddBankActions = {
   USER_ADD_BANK_SUCCESS: 'USER_ADD_BANK_SUCCESS',
   USER_ADD_BANK_FAILURE: 'USER_ADD_BANK_FAILURE',
 };
+
+export const getSpecificBankActions = {
+  GET_SPECIFIC_BANK_REQUEST: 'GET_SPECIFIC_BANK_REQUEST',
+  GET_SPECIFIC_BANK_SUCCESS: 'GET_SPECIFIC_BANK_SUCCESS',
+  GET_SPECIFIC_BANK_FAILURE: 'GET_SPECIFIC_BANK_FAILURE',
+};
+
 export type BankRequest = {
   _id?: string,
   asset: string,
