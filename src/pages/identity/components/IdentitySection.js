@@ -1,5 +1,6 @@
 // @flow
 import React, { useState } from 'react';
+import type { Node } from 'react';
 import {
   Container,
   Typography,
@@ -25,7 +26,7 @@ const useStyles = makeStyles(() => ({
 type IdentitySectionProps = {
   title: string,
   subtitle?: string,
-  children: React.Node,
+  children: Node,
 };
 
 const IdentitySection = ({

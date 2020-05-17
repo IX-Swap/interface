@@ -1,5 +1,7 @@
 // @flow
+
 import React from 'react';
+import type { Node } from 'react';
 import { Typography, Grid, List, ListItem, Link } from '@material-ui/core';
 import { makeStyles } from '@material-ui/styles';
 
@@ -13,19 +15,19 @@ const useStyles = makeStyles(() => ({
 }));
 
 type DeclarationItemProps = {
-  _id: string,
-  children: React.Node,
+  // _id: string,
+  children: Node,
   answerable?: boolean,
 };
 
 const DeclarationItem = ({
-  _id,
+  // _id,
   children,
   answerable = false,
 }: DeclarationItemProps) => (
-  <ListItem id={_id}>
+  <ListItem>
     <Grid container alignItems="center" spacing={1}>
-      <Grid item xs={10} justify="flex-start">
+      <Grid item xs={10}>
         {children}
       </Grid>
       {answerable && (

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useMemo } from 'react';
 import { Route, Switch, Redirect, HashRouter } from 'react-router-dom';
 import classnames from 'classnames';
 
@@ -39,7 +39,10 @@ function App() {
     const { isSidebarOpened } = useLayoutState();
     const { status } = useUserState();
 
-    if (status === 'INIT') getUser(userDispatch);
+    useMemo(() => {
+      if (status === 'INIT') getUser(userDispatch);
+    }, [status, userDispatch]);
+
     return (
       <div className={classes.root}>
         <Header />

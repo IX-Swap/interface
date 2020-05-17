@@ -28,7 +28,7 @@ const useStyles = makeStyles(() => ({
 
 const files = [
   {
-    _id: 1,
+    _id: '1',
     originalFileName: 'XX1.pdf',
     title: 'Company document',
     createdAt: '2020-05-15T12:11:32.107Z',
@@ -37,7 +37,7 @@ const files = [
     type: 'identity/individual',
   },
   {
-    _id: 2,
+    _id: '2',
     originalFileName: 'XX2.pdf',
     title: 'Company document',
     createdAt: '2020-05-15T12:11:32.107Z',
@@ -46,7 +46,7 @@ const files = [
     type: 'identity/individual',
   },
   {
-    _id: 3,
+    _id: '3',
     originalFileName: 'XX3.pdf',
     title: 'Company document',
     createdAt: '2020-05-15T12:11:32.107Z',
@@ -55,7 +55,7 @@ const files = [
     type: 'identity/individual',
   },
   {
-    _id: 4,
+    _id: '4',
     originalFileName: 'XXX.pdf',
     title: 'Company document',
     createdAt: '2020-05-15T12:11:32.107Z',
@@ -64,7 +64,7 @@ const files = [
     type: 'identity/individual',
   },
   {
-    _id: 5,
+    _id: '5',
     originalFileName: 'XXX.pdf',
     title: 'Company document',
     createdAt: '2020-05-15T12:11:32.107Z',
@@ -73,7 +73,7 @@ const files = [
     type: 'identity/individual',
   },
   {
-    _id: 6,
+    _id: '6',
     originalFileName: 'XXX.pdf',
     title: 'Company document',
     createdAt: '2020-05-15T12:11:32.107Z',
@@ -89,8 +89,8 @@ type File = {
   type: string,
   originalFileName: string,
   checksum: string,
-  createdAt: string,
-  updatedAt: string,
+  createdAt?: string,
+  updatedAt?: string,
   url: string,
 };
 

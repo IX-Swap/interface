@@ -8,7 +8,7 @@ import Declaration from '../../components/Declaration';
 
 const IdentityProfile = () => (
   <>
-    <IdentitySection title="Company Registration" />
+    <IdentitySection title="Company Registration">Temp</IdentitySection>
 
     <IdentitySection title="Company Address">
       <AddressForm />
