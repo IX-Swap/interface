@@ -70,7 +70,7 @@ function Login(props) {
             textColor="primary"
             centered
           >
-            <Tab label="Sign in" classes={{ root: classes.tab }} />
+            <Tab label="Log in" classes={{ root: classes.tab }} />
             <Tab label="New User" classes={{ root: classes.tab }} />
           </Tabs>
           {userState.activeTabId === 0 && <LoginForm />}
