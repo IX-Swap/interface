@@ -7,7 +7,7 @@ import type { BankRequest } from './types';
 
 const { getter: getBankAccounts, ...pageMethods } = actionGenerator(
   'bankList',
-  '/accounts/banks/list',
+  `/accounts/banks/list/${localStore.getUserId()}`,
   {}
 );
 
