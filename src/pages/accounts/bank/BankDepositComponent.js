@@ -1,4 +1,5 @@
 // @flow
+/* eslint-disable react/jsx-props-no-spreading, react/jsx-no-duplicate-props */
 import React, { useCallback, useState, useEffect, useRef } from 'react';
 import NumberFormat from 'react-number-format';
 import RouteProps from 'react-router-dom';
@@ -6,11 +7,9 @@ import RouteProps from 'react-router-dom';
 import {
   Paper,
   FormControl,
-  InputLabel,
   Grid,
   TextField,
   Box,
-  InputAdornment,
   Typography,
   Button,
 } from '@material-ui/core';
@@ -50,25 +49,28 @@ const BankDetails = ({ bank }: { bank: Bank }) => (
   </Box>
 );
 
-const NumberFormatCustom = ({ symbol, inputRef, onChange, ...others }: any) => (
-  <NumberFormat
-    thousandSeparator
-    {...others}
-    allowEmptyFormatting
-    inputMode="numeric"
-    getInputRef={inputRef}
-    onValueChange={(values) => {
-      onChange({
-        target: {
-          name: others.name,
-          value: values.value,
-        },
-      });
-    }}
-    isNumericString
-    prefix={`${symbol}  `}
-  />
-);
+const NumberFormatCustom = ({ symbol, inputRef, onChange, ...others }: any) => {
+  console.log('others', others);
+  return (
+    <NumberFormat
+      thousandSeparator
+      {...others}
+      allowEmptyFormatting
+      inputMode="numeric"
+      getInputRef={inputRef}
+      onValueChange={(values) => {
+        onChange({
+          target: {
+            name: others.name,
+            value: values.value,
+          },
+        });
+      }}
+      isNumericString
+      prefix={`${symbol}  `}
+    />
+  );
+};
 
 function BankDepositComponent({ match }: RouteProps) {
   const { bankId } = match.params;

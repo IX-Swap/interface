@@ -16,7 +16,6 @@ import {
 } from '@material-ui/core';
 
 import BankComponent from '../bank';
-import BankListComponent from '../bank/BankListComponent';
 import Overview from '../overview/Overview';
 
 function useAccountsLogic() {
@@ -62,7 +61,7 @@ function a11yProps(index): TabProps {
 }
 
 function AccountsPanel({ location }: any) {
-  const { handleChange, classes } = useAccountsLogic();
+  const { classes } = useAccountsLogic();
   const routes = [
     '/accounts',
     '/accounts/banks',
@@ -88,7 +87,6 @@ function AccountsPanel({ location }: any) {
           <AppBar position="static" color="default" elevation={1}>
             <Tabs
               value={pathname}
-              onChange={handleChange}
               indicatorColor="primary"
               textColor="primary"
               variant="fullWidth"

@@ -3,7 +3,7 @@ import localStore from 'services/storageHelper';
 import actionGenerator from 'context/base/withPagination/actions';
 import { postRequest, putRequest, getRequest } from 'services/httpRequests';
 import { userAddBankActions } from './types';
-import type { BankRequest, Bank } from './types';
+import type { BankRequest } from './types';
 
 const { getter: getBankAccounts, ...pageMethods } = actionGenerator(
   'bankList',
@@ -11,9 +11,7 @@ const { getter: getBankAccounts, ...pageMethods } = actionGenerator(
   {}
 );
 
-type GetBankResponse = { message: string, data: Bank };
-
-async function getBank(dispatch: Function, payload: { bankId: string }): Bank {
+async function getBank(dispatch: Function, payload: { bankId: string }) {
   try {
     const { bankId } = payload;
     const userId = localStore.getUserId();
@@ -55,7 +53,10 @@ async function createBankAccount(
     } else {
       dispatch({
         type: userAddBankActions.USER_ADD_BANK_FAILURE,
-        payload: response,
+        payload: {
+          ...response,
+          statusCode: result.status,
+        },
       });
     }
   } catch (err) {

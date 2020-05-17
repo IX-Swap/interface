@@ -7,7 +7,6 @@ export default function assetsReducer(
   state: AssetsListState,
   { type, payload }: { type: string, ...any }
 ): AssetsListState {
-  console.log(type, payload);
   switch (type) {
     case assetsActions.GET_ASSETS_REQUEST:
       return {

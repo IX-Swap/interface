@@ -6,10 +6,10 @@ import {
   Box,
   Grid,
   Typography,
-  Paper,
   Button,
   CircularProgress,
 } from '@material-ui/core';
+import Alert from '@material-ui/lab/Alert';
 import { useAssetsState, useAssetsDispatch } from 'context/assets';
 import { ASSETS_STATUS } from 'context/assets/types';
 import * as AssetsActions from 'context/assets/actions';
@@ -25,12 +25,18 @@ const {
   useBanksListState,
   BANK_LIST_STATUS,
 } = BankListModule;
-const { createBankAccount, getBankAccounts, setPage } = Actions;
+const { createBankAccount, getBankAccounts, clearApiStatus } = Actions;
 const { getAssets } = AssetsActions;
 
 function useGetters() {
   const { status: assetsStatus, assets } = useAssetsState();
-  const { status: bankListStatus, page, limit } = useBanksListState();
+  const {
+    status: bankListStatus,
+    page,
+    limit,
+    error,
+    statusCode,
+  } = useBanksListState();
 
   const bankListDispatch = useBanksListDispatch();
   const assetsDispatch = useAssetsDispatch();
@@ -65,6 +71,10 @@ function useGetters() {
     bankListDispatch,
   ]);
 
+  useEffect(() => {
+    clearApiStatus(bankListDispatch);
+  }, [mountedRef, bankListDispatch]);
+
   useEffect(
     () => () => {
       mountedRef.current = false;
@@ -77,11 +87,13 @@ function useGetters() {
     assetsReady,
     currencies,
     bankListDispatch,
+    error,
+    statusCode,
   };
 }
 
 export default function BankCreateComponent() {
-  const { bankListStatus, bankListDispatch } = useGetters();
+  const { bankListStatus, bankListDispatch, statusCode, error } = useGetters();
   const history = useHistory();
   const [bank, setBank] = useState(baseBankRequest);
 
@@ -92,10 +104,11 @@ export default function BankCreateComponent() {
 
     createBankAccount(bankListDispatch, payload)
       .then(() => {
-        setPage(bankListDispatch, { page: 0 });
-        setTimeout(() => {
-          history.push('/accounts/banks');
-        }, 1000);
+        console.log(statusCode, error);
+        // setPage(bankListDispatch, { page: 0 });
+        // setTimeout(() => {
+        //   history.push('/accounts/banks');
+        // }, 1000);
       })
       .catch();
   };
@@ -113,6 +126,13 @@ export default function BankCreateComponent() {
 
   return (
     <Grid container justify="center" alignItems="center">
+      {statusCode && statusCode !== 200 && error && (
+        <Box m={3} width={1}>
+          <Alert variant="filled" severity="error">
+            {error}
+          </Alert>
+        </Box>
+      )}
       <Grid item lg={12}>
         <Grid item lg={12}>
           <Box ml={3} mt={3}>

@@ -73,9 +73,23 @@ export default (name: string, uri: string, additionalPayload: any) => {
     });
   }
 
+  function clearBaseData(dispatch: Function) {
+    dispatch({
+      type: actionTypes.CLEAR_DATA,
+    });
+  }
+
+  function clearApiStatus(dispatch: Function) {
+    dispatch({
+      type: actionTypes.CLEAR_API,
+    });
+  }
+
   return {
     getter,
     setPage,
+    clearBaseData,
+    clearApiStatus,
     setRowsPerPage,
   };
 };

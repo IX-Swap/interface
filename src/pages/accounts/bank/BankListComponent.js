@@ -26,7 +26,7 @@ import { withRouter, useHistory } from 'react-router-dom';
 import EditBankComponent from './EditBankComponent';
 import BankListModule from './modules';
 import Actions from './modules/actions';
-import { baseBankRequest } from './modules/types';
+import { baseBankRequest, bankSaveStatus } from './modules/types';
 import type { Bank, BankRequest } from './modules/types';
 
 const {
@@ -34,7 +34,7 @@ const {
   useBanksListState,
   BANK_LIST_STATUS,
 } = BankListModule;
-const { getBankAccounts, setPage, setRowsPerPage } = Actions;
+const { getBankAccounts, setPage, setRowsPerPage, clearApiStatus } = Actions;
 
 function useBankListLogic() {
   const bankDispatch = useBanksListDispatch();
@@ -51,6 +51,7 @@ function useBankListLogic() {
   const mountedRef = useRef(true);
   const [activeBank, setActiveBank] = useState<BankRequest>(baseBankRequest);
   const [editOpen, setEditOpen] = useState(false);
+  const [editSuccess, setEditSuccess] = useState(false);
 
   const handleChangePage = (_, newPage: number) => {
     setPage(bankDispatch, { page: newPage });
@@ -71,12 +72,21 @@ function useBankListLogic() {
   });
 
   const editBank = (bank: Bank) => {
+    clearApiStatus(bankDispatch);
     setActiveBank(bankToBankRequest(bank));
     setEditOpen(true);
   };
 
-  const closeEdit = () => {
+  const closeEdit = (saved: boolean) => {
     setEditOpen(false);
+    console.log('asdfasdf', saved);
+    setEditSuccess(saved || false);
+    setActiveBank(baseBankRequest);
+    setTimeout(() => {
+      if (mountedRef.current && saved) {
+        setEditSuccess(false);
+      }
+    }, 5000);
   };
 
   useEffect(() => {
@@ -86,6 +96,7 @@ function useBankListLogic() {
         limit,
         ref: mountedRef,
       });
+      clearApiStatus(bankDispatch);
     }
   }, [page, limit, status, bankDispatch]);
 
@@ -107,6 +118,7 @@ function useBankListLogic() {
     editOpen,
     statusCode,
     error,
+    editSuccess,
     closeEdit,
     editBank,
     handleChangePage,
@@ -124,6 +136,7 @@ function BankListComponent(props) {
     page,
     statusCode,
 
+    editSuccess,
     editOpen,
     closeEdit,
     activeBank,
@@ -132,21 +145,43 @@ function BankListComponent(props) {
     handleChangePage,
     handleChangeRowsPerPage,
   } = useBankListLogic();
+  const history = useHistory();
 
   let componentToRender = <CircularProgress />;
 
-  if (status === BANK_LIST_STATUS.IDLE) {
+  if ([bankSaveStatus.BANK_SAVING, BANK_LIST_STATUS.IDLE].includes(status)) {
     componentToRender = <AddBankAccount props={props} />;
 
     if (items.length > 0) {
       componentToRender = (
         <>
-          <EditBankComponent
-            open={editOpen}
-            handleClose={closeEdit}
-            bank={activeBank}
-            onFinish={() => closeEdit()}
-          />
+          <Box mt={3} mx={3} display="flex" justifyContent="flex-end">
+            <Button
+              m={3}
+              variant="contained"
+              color="primary"
+              onClick={() => {
+                history.push(`/accounts/banks/bank-create`);
+              }}
+            >
+              ADD BANK ACCOUNT
+            </Button>
+          </Box>
+          {editSuccess && (
+            <Box mx={3} mt={3}>
+              <Alert severity="success">
+                Successfully updated Bank Account!
+              </Alert>
+            </Box>
+          )}
+          {activeBank.bankAccountNumber && (
+            <EditBankComponent
+              open={editOpen}
+              handleClose={() => closeEdit(false)}
+              bank={activeBank}
+              onFinish={() => closeEdit(true)}
+            />
+          )}
           <ListBankAccounts
             total={total}
             list={items}
@@ -201,26 +236,6 @@ function ListBankAccounts({
   return (
     <Grid item md={12}>
       <Box p={3}>
-        <Grid
-          spacing={3}
-          container
-          direction="row"
-          justify="flex-end"
-          alignItems="center"
-        >
-          <Box mb={3}>
-            <Button
-              m={3}
-              variant="contained"
-              color="primary"
-              onClick={() => {
-                history.push(`/accounts/banks/bank-create`);
-              }}
-            >
-              ADD BANK ACCOUNT
-            </Button>
-          </Box>
-        </Grid>
         <TableContainer>
           <Table aria-label="accounts table">
             <TableHead>

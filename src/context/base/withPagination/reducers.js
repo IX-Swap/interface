@@ -57,6 +57,22 @@ export default function generateReducers<T>(
           ...state,
           limit: payload.rows,
         };
+      case actionTypes.CLEAR_DATA:
+        return {
+          ...state,
+          limit: 5,
+          items: [],
+          error: '',
+          errorCode: undefined,
+          statusCode: undefined,
+        };
+      case actionTypes.CLEAR_API:
+        return {
+          ...state,
+          error: '',
+          errorCode: undefined,
+          statusCode: undefined,
+        };
       default:
         if (additionalReducer) {
           return additionalReducer(statusTypes, state, load);
