@@ -51,7 +51,7 @@ function SignIn() {
           textColor="primary"
           centered
         >
-          <Tab label="Login" classes={{ root: classes.tab }} />
+          <Tab label="Sign in" classes={{ root: classes.tab }} />
           <Tab label="New User" classes={{ root: classes.tab }} />
         </Tabs>
         {userState.activeTabId === 0 && <LoginForm />}
