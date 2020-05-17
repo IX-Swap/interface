@@ -163,6 +163,7 @@ function Users() {
       {statusCode !== 403 && (
         <Box mt={2}>
           <TableContainer component={Paper}>
+            {status === USERS_LIST_STATUS.GETTING && <LinearProgress />}
             <Table aria-label="simple table">
               <TableHead>
                 <TableRow>
@@ -170,15 +171,16 @@ function Users() {
                   <TableCell>Role</TableCell>
                 </TableRow>
               </TableHead>
-              {status !== USERS_LIST_STATUS.IDLE ? (
+              {status === USERS_LIST_STATUS.INIT && (
                 <TableBody>
                   <TableRow>
                     <TableCell>loding</TableCell>
                   </TableRow>
                 </TableBody>
-              ) : (
-                <UsersTableBody users={users} handleChange={handleChange} />
               )}
+              {users && users.length ? (
+                <UsersTableBody users={users} handleChange={handleChange} />
+              ) : null}
               {total && (
                 <TableFooter>
                   <TableRow>

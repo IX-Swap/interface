@@ -25,7 +25,7 @@ const {
   useBanksListState,
   BANK_LIST_STATUS,
 } = BankListModule;
-const { createBankAccount, getBankAccounts, clearApiStatus, setPage } = Actions;
+const { createBankAccount, clearApiStatus, setPage } = Actions;
 const { getAssets } = AssetsActions;
 
 function useGetters() {
