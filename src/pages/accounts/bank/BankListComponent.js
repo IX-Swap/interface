@@ -13,6 +13,7 @@ import {
   Button,
   ButtonGroup,
   CircularProgress,
+  LinearProgress,
 } from '@material-ui/core';
 import Alert from '@material-ui/lab/Alert';
 import IconButton from '@material-ui/core/IconButton';
@@ -21,12 +22,12 @@ import EditIcon from '@material-ui/icons/Edit';
 import TableFooter from '@material-ui/core/TableFooter';
 import TablePagination from '@material-ui/core/TablePagination';
 
-import { withRouter, useHistory } from 'react-router-dom';
+import { withRouter, useHistory, RouteProps } from 'react-router-dom';
 
 import EditBankComponent from './EditBankComponent';
 import BankListModule from './modules';
 import Actions from './modules/actions';
-import { baseBankRequest, bankSaveStatus } from './modules/types';
+import { baseBankRequest } from './modules/types';
 import type { Bank, BankRequest } from './modules/types';
 
 const {
@@ -79,8 +80,8 @@ function useBankListLogic() {
 
   const closeEdit = (saved: boolean) => {
     setEditOpen(false);
-    console.log('asdfasdf', saved);
     setEditSuccess(saved || false);
+    setPage(bankDispatch, { page });
     setActiveBank(baseBankRequest);
     setTimeout(() => {
       if (mountedRef.current && saved) {
@@ -126,7 +127,7 @@ function useBankListLogic() {
   };
 }
 
-function BankListComponent(props) {
+function BankListComponent(props: RouteProps) {
   const {
     error,
     items,
@@ -146,62 +147,87 @@ function BankListComponent(props) {
     handleChangeRowsPerPage,
   } = useBankListLogic();
   const history = useHistory();
-
   let componentToRender = <CircularProgress />;
 
-  if ([bankSaveStatus.BANK_SAVING, BANK_LIST_STATUS.IDLE].includes(status)) {
+  if ([BANK_LIST_STATUS.IDLE].includes(status)) {
     componentToRender = <AddBankAccount props={props} />;
+  }
 
-    if (items.length > 0) {
-      componentToRender = (
-        <>
-          <Box mt={3} mx={3} display="flex" justifyContent="flex-end">
-            <Button
-              m={3}
-              variant="contained"
-              color="primary"
-              onClick={() => {
-                history.push(`/accounts/banks/bank-create`);
-              }}
-            >
-              ADD BANK ACCOUNT
-            </Button>
-          </Box>
-          {editSuccess && (
-            <Box mx={3} mt={3}>
-              <Alert severity="success">
-                Successfully updated Bank Account!
-              </Alert>
-            </Box>
-          )}
-          {activeBank.bankAccountNumber && (
-            <EditBankComponent
-              open={editOpen}
-              handleClose={() => closeEdit(false)}
-              bank={activeBank}
-              onFinish={() => closeEdit(true)}
-            />
-          )}
-          <ListBankAccounts
-            total={total}
-            list={items}
-            limit={limit}
-            editBank={editBank}
-            page={page}
-            handleChangeRowsPerPage={handleChangeRowsPerPage}
-            handleChangePage={handleChangePage}
-          />
-        </>
-      );
-    }
+  const {
+    location: { state },
+  } = props;
 
-    if (statusCode === 403) {
-      componentToRender = (
-        <Box m={3}>
-          <Alert severity="error">{error}</Alert>
+  let isSaved = state && state.savedBank;
+
+  if (isSaved) {
+    setTimeout(() => {
+      isSaved = false;
+      props.history.replace({
+        ...props.location,
+        state: {},
+      });
+    }, 5000);
+  }
+
+  if (items.length > 0) {
+    componentToRender = (
+      <>
+        <Box mt={3} mx={3} display="flex" justifyContent="flex-end">
+          <Button
+            m={3}
+            variant="contained"
+            color="primary"
+            onClick={() => {
+              history.push(`/accounts/banks/bank-create`);
+            }}
+          >
+            ADD BANK ACCOUNT
+          </Button>
         </Box>
-      );
-    }
+        {(editSuccess || isSaved) && (
+          <Box mx={3} mt={3}>
+            <Alert severity="success">
+              Successfully {isSaved ? 'added' : 'updated'} Bank Account!
+            </Alert>
+          </Box>
+        )}
+        {activeBank.bankAccountNumber && (
+          <EditBankComponent
+            open={editOpen}
+            handleClose={() => closeEdit(false)}
+            bank={activeBank}
+            onFinish={() => closeEdit(true)}
+          />
+        )}
+
+        <Grid item md={12}>
+          <Box p={3}>
+            {[BANK_LIST_STATUS.GETTING].includes(status) ? (
+              <LinearProgress />
+            ) : null}
+            {items && items.length ? (
+              <ListBankAccounts
+                total={total}
+                list={items}
+                limit={limit}
+                editBank={editBank}
+                page={page}
+                handleChangeRowsPerPage={handleChangeRowsPerPage}
+                handleChangePage={handleChangePage}
+              />
+            ) : null}
+          </Box>
+        </Grid>
+      </>
+    );
+  }
+
+  if (statusCode === 403) {
+    componentToRender = (
+      <Box m={3}>
+        <Alert severity="error">{error}</Alert>
+      </Box>
+    );
   }
 
   return (
@@ -234,99 +260,95 @@ function ListBankAccounts({
 }: ListBankAccountsProps) {
   const history = useHistory();
   return (
-    <Grid item md={12}>
-      <Box p={3}>
-        <TableContainer>
-          <Table aria-label="accounts table">
-            <TableHead>
-              <TableRow>
-                <TableCell>
-                  <b>Currency</b>
-                </TableCell>
-                <TableCell align="left">
-                  <b>Bank</b>
-                </TableCell>
-                <TableCell align="center">
-                  <b>Account Number</b>
-                </TableCell>
-                <TableCell align="center">
-                  <b>Balance</b>
-                </TableCell>
-                <TableCell align="left">
-                  <b>Status</b>
-                </TableCell>
-                <TableCell align="left">
-                  <b>Actions</b>
-                </TableCell>
-              </TableRow>
-            </TableHead>
-            <TableBody>
-              {list.map((row) => (
-                <TableRow key={row._id}>
-                  <TableCell>{row.asset.symbol}</TableCell>
-                  <TableCell align="left">{row.bankName}</TableCell>
-                  <TableCell align="right">{row.bankAccountNumber}</TableCell>
-                  <TableCell align="right">no data </TableCell>
-                  <TableCell align="center">
-                    {row.status === 'Authorized' ? (
-                      <ButtonGroup
-                        variant="text"
-                        color="primary"
-                        aria-label="text primary button group"
-                      >
-                        <Button
-                          onClick={() => {
-                            history.push(`/accounts/banks/deposit/${row._id}`);
-                          }}
-                        >
-                          Deposit
-                        </Button>
-                        <Button
-                          onClick={() => {
-                            history.push(`/accounts/banks/withdraw/${row._id}`);
-                          }}
-                        >
-                          Withdrawal
-                        </Button>
-                      </ButtonGroup>
-                    ) : (
-                      'Account Pending'
-                    )}
-                  </TableCell>
-                  <TableCell align="center">
-                    <IconButton
-                      aria-label="edit"
+    <TableContainer>
+      <Table aria-label="accounts table">
+        <TableHead>
+          <TableRow>
+            <TableCell>
+              <b>Currency</b>
+            </TableCell>
+            <TableCell align="left">
+              <b>Bank</b>
+            </TableCell>
+            <TableCell align="center">
+              <b>Account Number</b>
+            </TableCell>
+            <TableCell align="center">
+              <b>Balance</b>
+            </TableCell>
+            <TableCell align="left">
+              <b>Status</b>
+            </TableCell>
+            <TableCell align="left">
+              <b>Actions</b>
+            </TableCell>
+          </TableRow>
+        </TableHead>
+        <TableBody>
+          {list.map((row) => (
+            <TableRow key={row._id}>
+              <TableCell>{row.asset.symbol}</TableCell>
+              <TableCell align="left">{row.bankName}</TableCell>
+              <TableCell align="right">{row.bankAccountNumber}</TableCell>
+              <TableCell align="right">no data </TableCell>
+              <TableCell align="center">
+                {row.status === 'Authorized' ? (
+                  <ButtonGroup
+                    variant="text"
+                    color="primary"
+                    aria-label="text primary button group"
+                  >
+                    <Button
                       onClick={() => {
-                        editBank(row);
+                        history.push(`/accounts/banks/deposit/${row._id}`);
                       }}
                     >
-                      <EditIcon />
-                    </IconButton>
-                  </TableCell>
-                </TableRow>
-              ))}
-            </TableBody>
-            {total && (
-              <TableFooter>
-                <TableRow>
-                  <TablePagination
-                    rowsPerPageOptions={[5, 10, 25]}
-                    colSpan={6}
-                    count={total}
-                    rowsPerPage={limit}
-                    page={page}
-                    onChangeRowsPerPage={(
-                      evt: SyntheticInputEvent<HTMLElement>
-                    ) => handleChangeRowsPerPage(parseInt(evt.target.value))}
-                    onChangePage={handleChangePage}
-                  />
-                </TableRow>
-              </TableFooter>
-            )}
-          </Table>
-        </TableContainer>
-      </Box>
-    </Grid>
+                      Deposit
+                    </Button>
+                    <Button
+                      onClick={() => {
+                        history.push(`/accounts/banks/withdraw/${row._id}`);
+                      }}
+                    >
+                      Withdrawal
+                    </Button>
+                  </ButtonGroup>
+                ) : (
+                  'Account Pending'
+                )}
+              </TableCell>
+              <TableCell align="center">
+                <IconButton
+                  aria-label="edit"
+                  onClick={() => {
+                    editBank(row);
+                  }}
+                >
+                  <EditIcon />
+                </IconButton>
+              </TableCell>
+            </TableRow>
+          ))}
+        </TableBody>
+        {total && (
+          <TableFooter>
+            <TableRow>
+              <TablePagination
+                rowsPerPageOptions={[5, 10, 25]}
+                colSpan={6}
+                count={total}
+                rowsPerPage={limit}
+                page={page}
+                onChangeRowsPerPage={(evt: SyntheticInputEvent<HTMLElement>) =>
+                  handleChangeRowsPerPage(parseInt(evt.target.value))
+                }
+                onChangePage={handleChangePage}
+              />
+            </TableRow>
+          </TableFooter>
+        )}
+      </Table>
+    </TableContainer>
   );
 }
 

@@ -17,7 +17,7 @@ import BankFormComponent from './BankFormComponent';
 
 import Actions from './modules/actions';
 import type { BankRequest } from './modules/types';
-import { baseBankRequest } from './modules/types';
+import { baseBankRequest, bankSaveStatus } from './modules/types';
 import BankListModule from './modules';
 
 const {
@@ -25,7 +25,7 @@ const {
   useBanksListState,
   BANK_LIST_STATUS,
 } = BankListModule;
-const { createBankAccount, getBankAccounts, clearApiStatus } = Actions;
+const { createBankAccount, getBankAccounts, clearApiStatus, setPage } = Actions;
 const { getAssets } = AssetsActions;
 
 function useGetters() {
@@ -37,9 +37,10 @@ function useGetters() {
     error,
     statusCode,
   } = useBanksListState();
-
+  const history = useHistory();
   const bankListDispatch = useBanksListDispatch();
   const assetsDispatch = useAssetsDispatch();
+  const [isSaving, setIsSaving] = useState(false);
 
   const mountedRef = useRef(true);
 
@@ -48,7 +49,21 @@ function useGetters() {
     ? assets.filter((asset) => asset.type === 'Currency')
     : [];
 
+  const goBack = useCallback(
+    (isSaved: boolean) => {
+      console.log('isSaved', isSaved);
+      history.push({
+        pathname: '/accounts/banks',
+        state: {
+          savedBank: isSaved,
+        },
+      });
+    },
+    [history]
+  );
+
   useEffect(() => {
+    console.log('effect called', bankListStatus);
     if (assetsStatus === ASSETS_STATUS.INIT) {
       getAssets(assetsDispatch, {
         ref: mountedRef,
@@ -56,16 +71,24 @@ function useGetters() {
     }
 
     if (bankListStatus === BANK_LIST_STATUS.INIT) {
-      getBankAccounts(bankListDispatch, {
-        skip: page * limit,
-        limit,
-        ref: mountedRef,
-      });
+      setPage(bankListDispatch, { page });
+    }
+
+    if (bankListStatus === BANK_LIST_STATUS.IDLE && isSaving) {
+      setIsSaving(false);
+      setPage(bankListDispatch, { page });
+      goBack(true);
+    }
+
+    if (bankListStatus === bankSaveStatus.BANK_SAVING) {
+      setIsSaving(true);
     }
   }, [
+    goBack,
     assetsStatus,
     assetsDispatch,
     bankListStatus,
+    isSaving,
     page,
     limit,
     bankListDispatch,
@@ -88,13 +111,20 @@ function useGetters() {
     currencies,
     bankListDispatch,
     error,
+    page,
     statusCode,
+    goBack,
   };
 }
 
 export default function BankCreateComponent() {
-  const { bankListStatus, bankListDispatch, statusCode, error } = useGetters();
-  const history = useHistory();
+  const {
+    bankListStatus,
+    bankListDispatch,
+    statusCode,
+    error,
+    goBack,
+  } = useGetters();
   const [bank, setBank] = useState(baseBankRequest);
 
   const handleClickSubmit = () => {
@@ -102,19 +132,11 @@ export default function BankCreateComponent() {
       bank,
     };
 
-    createBankAccount(bankListDispatch, payload)
-      .then(() => {
-        console.log(statusCode, error);
-        // setPage(bankListDispatch, { page: 0 });
-        // setTimeout(() => {
-        //   history.push('/accounts/banks');
-        // }, 1000);
-      })
-      .catch();
+    createBankAccount(bankListDispatch, payload);
   };
 
   const handleBackButton = () => {
-    history.push('/accounts/banks');
+    goBack(false);
   };
 
   const onChange = useCallback(

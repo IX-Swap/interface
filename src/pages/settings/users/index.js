@@ -2,16 +2,19 @@
 import React, { useEffect, useRef } from 'react';
 import { withRouter } from 'react-router-dom';
 
-import Table from '@material-ui/core/Table';
-import TableBody from '@material-ui/core/TableBody';
-import TableRow from '@material-ui/core/TableRow';
-import TableFooter from '@material-ui/core/TableFooter';
-import TablePagination from '@material-ui/core/TablePagination';
-import TableCell from '@material-ui/core/TableCell';
-import TableContainer from '@material-ui/core/TableContainer';
-import TableHead from '@material-ui/core/TableHead';
-import Paper from '@material-ui/core/Paper';
-import Box from '@material-ui/core/Box';
+import {
+  Table,
+  TableBody,
+  TableRow,
+  TableFooter,
+  TablePagination,
+  TableCell,
+  TableContainer,
+  TableHead,
+  Paper,
+  Box,
+  LinearProgress,
+} from '@material-ui/core';
 import Alert from '@material-ui/lab/Alert';
 
 import DialogConfirmRoleChange from './components/DialogConfirmRoleChange';
