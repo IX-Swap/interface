@@ -79,6 +79,15 @@ export const createIdentity = async (
     politicallyExposed,
   } = identity;
 
+  const address = {
+    line1,
+    line2,
+    city,
+    postalCode,
+    state,
+    country,
+  };
+
   try {
     const profileUri = `/identity/individuals/${userId}`;
     const profileResult = await putRequest(profileUri, {
@@ -90,12 +99,7 @@ export const createIdentity = async (
       countryOfResidence,
       maritalStatus,
       contactNumber,
-      line1,
-      line2,
-      city,
-      postalCode,
-      state,
-      country,
+      address,
       dob: moment().format('YYYY-MM-DDTHH:mm:ss'), // TEMP overwrite to prevent error
     });
 
@@ -117,7 +121,7 @@ export const createIdentity = async (
     if (profileResult && financialsResult) {
       const response = await financialsResult.json();
       dispatch({
-        type: actions.SAVE_IDENTITY_SUCCESS,
+        type: actions.CREATE_IDENTITY_SUCCESS,
         payload: response.data,
       });
     } else {
@@ -125,7 +129,7 @@ export const createIdentity = async (
     }
   } catch (err) {
     const errMsg = err.message || err.toString() || 'Saving profile failed.';
-    dispatch({ type: actions.SAVE_IDENTITY_FAILURE, payload: errMsg });
+    dispatch({ type: actions.CREATE_IDENTITY_FAILURE, payload: errMsg });
     throw new Error(errMsg);
   }
 };
