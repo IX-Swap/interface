@@ -2,7 +2,6 @@
 import React, { useState } from 'react';
 import { Typography, Button, Grid, Box } from '@material-ui/core';
 import { makeStyles } from '@material-ui/styles';
-import storage from 'services/storageHelper';
 import { useHistory } from 'react-router-dom';
 import { snackbarService, ButtonWithLoading } from 'uno-material-ui';
 import BankDetails from './BankDetails';
@@ -34,7 +33,9 @@ const BoldTypography = ({ children, ...others }: any) => (
 export default function DepositConfirmation({
   bank,
   amount,
+  transactionCode,
 }: {
+  transactionCode: string,
   bank: Bank,
   amount: number,
 }) {
@@ -43,7 +44,6 @@ export default function DepositConfirmation({
   const [saving, setSaving] = useState(false);
 
   const fAmount = amount.toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,');
-  const transactionCode = storage.generateRandom(8, 'aA#');
 
   const handleBackButton = () => {
     history.push({
