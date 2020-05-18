@@ -51,7 +51,6 @@ function useGetters() {
 
   const goBack = useCallback(
     (isSaved: boolean) => {
-      console.log('isSaved', isSaved);
       history.push({
         pathname: '/accounts/banks',
         state: {
@@ -173,7 +172,7 @@ export default function BankCreateComponent() {
             </Button>
           </Box>
           <Box component="div" display="inline">
-            {bankListStatus === BANK_LIST_STATUS.IDLE ? (
+            {bankListStatus !== bankSaveStatus.BANK_SAVING ? (
               <Button
                 disableElevation
                 variant="contained"
