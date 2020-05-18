@@ -1,3 +1,5 @@
+// @flow
+import { isEmpty, findIndex } from 'lodash';
 import { STATUS, actions } from './types';
 import type { IdentityState } from './types';
 
@@ -18,6 +20,7 @@ export const identityReducer = (
         ...state,
         status: STATUS.IDLE,
         identity: payload.identity,
+        dataroom: !isEmpty(payload.identity) ? payload.identity?.documents : [],
         shouldCreateNew: payload.shouldCreateNew,
         editMode: payload.editMode,
       };
@@ -51,28 +54,6 @@ export const identityReducer = (
         error: { ...state.error, save: payload },
       };
 
-    case actions.SAVE_IDENTITY_REQUEST:
-      return {
-        ...state,
-        status: STATUS.SAVING,
-        error: { ...state.error, save: null },
-      };
-
-    case actions.SAVE_IDENTITY_SUCCESS:
-      return {
-        ...state,
-        status: STATUS.IDLE,
-        identity: payload,
-        shouldCreateNew: false,
-      };
-
-    case actions.SAVE_IDENTITY_FAILURE:
-      return {
-        ...state,
-        status: STATUS.IDLE,
-        error: { ...state.error, save: payload },
-      };
-
     case actions.SAVE_FILE_REQUEST:
       return {
         ...state,
@@ -81,7 +62,11 @@ export const identityReducer = (
       };
 
     case actions.SAVE_FILE_SUCCESS:
-      return { ...state, status: STATUS.IDLE };
+      return {
+        ...state,
+        status: STATUS.IDLE,
+        dataroom: [...state.dataroom, payload],
+      };
 
     case actions.SAVE_FILE_FAILURE:
       return {
@@ -111,12 +96,43 @@ export const identityReducer = (
         error: { ...state.error, get: payload.message },
       };
 
-    case actions.UPDATE_ACCOUNT_TYPE_REQUEST: {
+    case actions.DELETE_FILE_REQUEST:
       return {
         ...state,
         status: STATUS.GETTING,
+        error: { ...state.error, get: null },
       };
-    }
+
+    case actions.DELETE_FILE_SUCCESS:
+      // eslint-disable-next-line no-case-declarations
+      const index = findIndex(
+        state.dataroom,
+        (data) => data._id === payload._id
+      );
+
+      return {
+        ...state,
+        status: STATUS.IDLE,
+        dataroom: [
+          ...state.dataroom.slice(0, index),
+          ...state.dataroom.slice(index + 1),
+        ],
+        error: { ...state.error, get: null },
+      };
+
+    case actions.DELETE_FILE_FAILURE:
+      return {
+        ...state,
+        status: STATUS.IDLE,
+        error: { ...state.error, get: payload.message },
+      };
+
+    // case actions.UPDATE_ACCOUNT_TYPE_REQUEST: {
+    //   return {
+    //     ...state,
+    //     status: STATUS.GETTING,
+    //   };
+    // }
 
     default:
       throw new Error(`Unhandled action type: ${type}`);

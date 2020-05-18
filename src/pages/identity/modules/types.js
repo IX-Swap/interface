@@ -18,21 +18,13 @@ export const actions = {
   SAVE_FILE_SUCCESS: 'SAVE_FILE_SUCCESS',
   SAVE_FILE_FAILURE: 'SAVE_FILE_FAILURE',
 
+  DELETE_FILE_REQUEST: 'DELETE_FILE_REQUEST',
+  DELETE_FILE_SUCCESS: 'DELETE_FILE_SUCCESS',
+  DELETE_FILE_FAILURE: 'DELETE_FILE_FAILURE',
+
   DOWNLOAD_FILE_REQUEST: 'DOWNLOAD_FILE_REQUEST',
   DOWNLOAD_FILE_SUCCESS: 'DOWNLOAD_FILE_SUCCESS',
   DOWNLOAD_FILE_FAILURE: 'DOWNLOAD_FILE_FAILURE',
-
-  BEGIN_RESET_PASSWORD_REQUEST: 'BEGIN_RESET_PASSWORD_REQUEST',
-  BEGIN_RESET_PASSWORD_SUCCESS: 'BEGIN_RESET_PASSWORD_SUCCESS',
-  BEGIN_RESET_PASSWORD_FAILURE: 'BEGIN_RESET_PASSWORD_FAILURE',
-
-  COMPLETE_RESET_PASSWORD_REQUEST: 'COMPLETE_RESET_PASSWORD_REQUEST',
-  COMPLETE_RESET_PASSWORD_SUCCESS: 'COMPLETE_RESET_PASSWORD_SUCCESS',
-  COMPLETE_RESET_PASSWORD_FAILURE: 'COMPLETE_RESET_PASSWORD_FAILURE',
-
-  UPDATE_ACCOUNT_TYPE_REQUEST: 'UPDATE_ACCOUNT_TYPE_REQUEST',
-  UPDATE_ACCOUNT_TYPE_SUCCESS: 'UPDATE_ACCOUNT_TYPE_SUCCESS',
-  UPDATE_ACCOUNT_TYPE_FAILURE: 'UPDATE_ACCOUNT_TYPE_FAILURE',
 
   GET_CORPORATE_REQUEST: 'GET_CORPORATE_REQUEST',
   GET_CORPORATE_SUCCESS: 'GET_CORPORATE_SUCCESS',
@@ -86,6 +78,17 @@ export type IndentityFinancials = {
   sourceOfWealth: string,
 };
 
+export type Document = {
+  _id: string,
+  user: string,
+  title: string,
+  type: string,
+  originalFileName: string,
+  checksum: string,
+  url: string,
+  createdAt: string,
+};
+
 export type Identity = IdentityProfile &
   $Shape<IndentityFinancials> & {
     _id: string,
@@ -93,9 +96,16 @@ export type Identity = IdentityProfile &
     user: User,
     createdAt: string,
     updatedAt: string,
+    documents?: Document[],
   };
 
+export type DocumentGuide = {
+  title: string,
+  label: string,
+};
+
 export type IdentityState = {
+  dataroom: Array<Document | DocumentGuide>,
   identity: Identity | {},
   status: string,
   shouldCreateNew: boolean,

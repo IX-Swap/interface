@@ -1,9 +1,14 @@
 // @flow
 import moment from 'moment';
-import { getRequest, putRequest } from 'services/httpRequests';
+import {
+  getRequest,
+  putRequest,
+  postRequest,
+  deleteRequest,
+} from 'services/httpRequests';
 import localStore from 'services/storageHelper';
 import { actions } from './types';
-import type { Identity, IdentityProfile, IndentityFinancials } from './types';
+import type { Identity } from './types';
 
 export const getIdentity = async (dispatch: Function) => {
   const userId = localStore.getUserId();
@@ -27,6 +32,7 @@ export const getIdentity = async (dispatch: Function) => {
           : {
               identity: response.data,
               shouldCreateNew: false,
+              editMode: false,
             };
 
       dispatch({
@@ -79,6 +85,8 @@ export const createIdentity = async (
     politicallyExposed,
   } = identity;
 
+  const documents = identity.documents?.map((document) => document._id);
+
   const address = {
     line1,
     line2,
@@ -99,6 +107,7 @@ export const createIdentity = async (
       countryOfResidence,
       maritalStatus,
       contactNumber,
+      documents,
       address,
       dob: moment().format('YYYY-MM-DDTHH:mm:ss'), // TEMP overwrite to prevent error
     });
@@ -134,214 +143,87 @@ export const createIdentity = async (
   }
 };
 
-export async function saveIdentity(
+export async function uploadFile(
   dispatch: Function,
-  identity: $Shape<IdentityProfile>
+  payload: { title: string, type: string, file: any }
 ) {
-  const userId = localStore.getUserId();
+  /**
+   * saveFile requires the following params in payload
+   * @param String title
+   * @param String type
+   * @param String file
+   * @param Enum type Identity/Individual | Identity/Corporate
+   * @param String id individal document id or corporate document id
+   */
 
-  dispatch({ type: actions.SAVE_IDENTITY_REQUEST });
+  const { title, file, type } = payload;
+  dispatch({ type: actions.SAVE_FILE_REQUEST });
 
   try {
-    const uri = `/identity/individuals/${userId}`;
-    const result = await putRequest(uri, { ...identity });
+    const formData = new FormData();
+
+    formData.append('title', title);
+    formData.append('documents', file);
+    formData.append('type', type);
+
+    const uri = '/dataroom';
+    const result = await postRequest(uri, formData);
 
     const response = await result.json();
-
-    console.log(response);
     if (result.status === 200) {
-      const payload = response.data || {};
-      dispatch({ type: actions.SAVE_IDENTITY_SUCCESS, payload });
+      const data = response.data[0];
+
+      dispatch({ type: actions.SAVE_FILE_SUCCESS, payload: data });
     } else {
       throw new Error(response.message);
     }
   } catch (err) {
-    const errMsg = err.message || err.toString() || 'Saving profile failed.';
-    dispatch({ type: actions.SAVE_IDENTITY_FAILURE, payload: errMsg });
+    const errMsg = err.message || err.toString() || 'Upload failed.';
+    dispatch({ type: actions.SAVE_FILE_FAILURE, payload: errMsg });
     throw new Error(errMsg);
   }
 }
 
-export async function saveFinancials(
-  dispatch: Function,
-  financials: IndentityFinancials
-) {
+export const downloadFile = async (dispatch: Function, documentId: string) => {
   const userId = localStore.getUserId();
-  dispatch({ type: actions.SAVE_IDENTITY_REQUEST });
-
   try {
-    const uri = `/identity/individuals/${userId}/financials`;
-    const result = await putRequest(uri, financials);
-    const response = await result.json();
+    dispatch({ type: actions.DOWNLOAD_FILE_REQUEST });
+    const uri = `/dataroom/raw/${userId}/${documentId}`;
+    const result = await getRequest(uri);
+
     if (result.status === 200) {
-      const payload = response.data || {};
-      dispatch({
-        type: actions.SAVE_IDENTITY_SUCCESS,
-        payload,
+      result.blob().then((blob) => {
+        const url = window.URL.createObjectURL(blob);
+        window.open(url);
+        dispatch({ type: actions.DOWNLOAD_FILE_SUCCESS });
       });
     } else {
-      throw new Error(response.message);
+      dispatch({ type: actions.DOWNLOAD_FILE_FAILURE });
     }
   } catch (err) {
-    const errMsg = err.message || err.toString() || 'Saving profile failed.';
-    dispatch({ type: actions.SAVE_IDENTITY_FAILURE, payload: errMsg });
-    throw new Error(errMsg);
+    console.log(err);
+    dispatch({ type: actions.DOWNLOAD_FILE_FAILURE });
   }
-}
+};
 
-// export async function saveFile(dispatch, payload) {
-//   /**
-//    * saveFile requires the following params in payload
-//    * @param String title
-//    * @param String type
-//    * @param String file
-//    * @param Enum type individual | corporate
-//    * @param String id individal document id or corporate document id
-//    */
+export const deleteFile = async (dispatch: Function, documentId: string) => {
+  const userId = localStore.getUserId();
+  try {
+    dispatch({ type: actions.DELETE_FILE_REQUEST });
+    const uri = `/dataroom/${userId}/${documentId}`;
+    const result = await deleteRequest(uri);
 
-//   const { title, file, type, id } = payload;
-//   dispatch({ type: actions.SAVE_FILE_REQUEST });
-
-//   try {
-//     const formData = new FormData();
-
-//     formData.append('title', title);
-//     formData.append('document', file);
-//     formData.append('type', type);
-
-//     const uri = '/dataroom';
-//     const result = await postRequest(uri, formData);
-
-//     const response = await result.json();
-//     if (result.status === 200) {
-//       const data = response.data[0];
-//       const payload = {
-//         ...data,
-//         fileName: data.fileName || data.originalFileName,
-//       };
-
-//       // as the API implements a two step process to upload
-//       // a file, we have to also associate the file with
-//       // the individual or corporate
-
-//       dispatch({ type: actions.SAVE_FILE_SUCCESS, payload });
-
-//       await saveIdentity(dispatch, { type, id, documents: [data._id] }, false);
-//     } else {
-//       throw new Error(response.message);
-//     }
-//   } catch (err) {
-//     const errMsg = err.message || err.toString() || 'Upload failed.';
-//     dispatch({ type: actions.SAVE_FILE_FAILURE, payload: errMsg });
-//     throw new Error(errMsg);
-//   }
-// }
-
-// export const downloadFile = async (dispatch, documentId) => {
-//   try {
-//     dispatch({ type: actions.DOWNLOAD_FILE_REQUEST });
-//     const uri = `/dataroom/raw/${documentId}`;
-//     const result = await getRequest(uri);
-
-//     if (result.status === 200) {
-//       result.blob().then((blob) => {
-//         const url = window.URL.createObjectURL(blob);
-//         window.open(url);
-//         dispatch({ type: actions.DOWNLOAD_FILE_SUCCESS });
-//       });
-//     } else {
-//       dispatch({ type: actions.DOWNLOAD_FILE_FAILURE });
-//     }
-//   } catch (err) {
-//     console.log(err);
-//     dispatch({ type: actions.DOWNLOAD_FILE_FAILURE });
-//   }
-// };
-
-// // selectors
-// export const selectFile = (state, title) =>
-//   state.identity.documents
-//     ?.filter?.((f) => f.title === title)
-//     .reduce((lastFile, currFile) => {
-//       if (!lastFile) return currFile;
-//       const lastDate = new Date(lastFile.createdAt);
-//       const currDate = new Date(currFile.createdAt);
-//       const isLastFileOutdated = compareAsc(currDate, lastDate) === 1;
-//       return isLastFileOutdated ? currFile : lastFile;
-//     }, null);
-
-// export const beginResetPassword = async (dispatch, email) => {
-//   dispatch({ type: actions.BEGIN_RESET_PASSWORD_REQUEST });
-//   try {
-//     const uri = `/auth/password/reset/start`;
-//     const result = await postRequest(uri, { email });
-//     const response = await result.json();
-//     if (result.status === 200) {
-//       dispatch({
-//         type: actions.BEGIN_RESET_PASSWORD_SUCCESS,
-//         payload: response.message,
-//       });
-//     }
-//   } catch (err) {
-//     console.log(err);
-//     dispatch({ type: actions.BEGIN_RESET_PASSWORD_FAILURE });
-//   }
-// };
-
-// export const completeResetPassword = async (
-//   dispatch,
-//   email,
-//   resetToken,
-//   newPassword
-// ) => {
-//   dispatch({ type: actions.COMPLETE_RESET_PASSWORD_REQUEST });
-//   try {
-//     const uri = `/auth/password/reset/confirm`;
-//     const payload = {
-//       email,
-//       resetToken,
-//       newPassword,
-//     };
-//     const result = await postRequest(uri, payload);
-//     const response = await result.json();
-//     if (result.status === 200) {
-//       dispatch({
-//         type: actions.COMPLETE_RESET_PASSWORD_SUCCESS,
-//         payload: response.message,
-//       });
-//     } else {
-//       dispatch({
-//         type: actions.COMPELTE_RESET_PASSWORD_FAILURE,
-//         payload: response.message,
-//       });
-//     }
-//   } catch (err) {
-//     console.log(err);
-//     dispatch({ type: actions.COMPLETE_RESET_PASSWORD_FAILURE });
-//   }
-// };
-
-// export const getCorporate = async (dispatch) => {
-//   try {
-//     const uri = '/identity/profile/corporate';
-//     const result = await getRequest(uri);
-//     const response = result.json();
-//     if (result.status === 200) {
-//       dispatch({
-//         type: actions.GET_CORPORATE_REQUEST,
-//         payload: response.data,
-//       });
-//     } else {
-//       dispatch({
-//         type: actions.GET_IDENTITY_FAILURE,
-//         payload: 'Failed to get Corporate Profile.',
-//       });
-//     }
-//   } catch (err) {
-//     console.log(err);
-//     dispatch({
-//       type: actions.GET_CORPORATE_REQUEST,
-//       payload: 'Fatal error getting corporate profile.',
-//     });
-//   }
-// };
+    if (result.status === 200) {
+      const response = await result.json();
+      dispatch({
+        type: actions.DELETE_FILE_SUCCESS,
+        payload: response.data,
+      });
+    } else {
+      dispatch({ type: actions.DELETE_FILE_FAILURE });
+    }
+  } catch (err) {
+    console.log(err);
+    dispatch({ type: actions.DELETE_FILE_FAILURE });
+  }
+};

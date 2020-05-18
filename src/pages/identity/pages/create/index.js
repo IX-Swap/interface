@@ -25,7 +25,6 @@ const CreateIdentity = () => {
     <Paper elevation={0} className={classes.paperContainer}>
       <Grid
         container
-        xs={12}
         alignItems="center"
         justify="center"
         style={{ width: '100%', height: '500px' }}
