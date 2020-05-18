@@ -1,46 +1,60 @@
 // @flow
 import React from 'react';
+import { useForm, FormContext } from 'react-hook-form';
 import IdentitySection from '../../components/IdentitySection';
 import IdentityForm from '../../components/IdentityForm';
 import AddressForm from '../../components/AddressForm';
 import DocumentsList from '../../components/DocumentsList';
 import Declaration from '../../components/Declaration';
 
-const IdentityProfile = () => (
-  <>
-    <IdentitySection title="Company Registration">Temp</IdentitySection>
+const IdentityProfile = () => {
+  const methods = useForm();
+  const { handleSubmit } = methods;
 
-    <IdentitySection title="Company Address">
-      <AddressForm />
-    </IdentitySection>
+  const onSubmit = (data: any) => {
+    console.log(data);
+    // createIdentity(identityDispatch, data);
+  };
 
-    <IdentitySection title="Company Representative">
-      <IdentityForm />
-    </IdentitySection>
+  return (
+    // eslint-disable-next-line react/jsx-props-no-spreading
+    <FormContext {...methods}>
+      <form onSubmit={handleSubmit(onSubmit)}>
+        <IdentitySection title="Company Registration">Temp</IdentitySection>
 
-    <IdentitySection title="Company Representative">
-      <IdentityForm />
-    </IdentitySection>
+        <IdentitySection title="Company Address">
+          <AddressForm />
+        </IdentitySection>
 
-    <IdentitySection title="Director">
-      <IdentityForm />
-    </IdentitySection>
+        <IdentitySection title="Company Representative">
+          <IdentityForm />
+        </IdentitySection>
 
-    <IdentitySection title="Beneficial Owner">
-      <IdentityForm />
-    </IdentitySection>
+        <IdentitySection title="Company Representative">
+          <IdentityForm />
+        </IdentitySection>
 
-    <IdentitySection title="Documents">
-      <DocumentsList />
-    </IdentitySection>
+        <IdentitySection title="Director">
+          <IdentityForm />
+        </IdentitySection>
 
-    <IdentitySection
-      title="Declaration & Acknowledgement"
-      subtitle="Confirmation"
-    >
-      <Declaration />
-    </IdentitySection>
-  </>
-);
+        <IdentitySection title="Beneficial Owner">
+          <IdentityForm />
+        </IdentitySection>
+
+        <IdentitySection title="Documents">
+          <DocumentsList />
+        </IdentitySection>
+
+        <IdentitySection
+          title="Declaration & Acknowledgement"
+          subtitle="Confirmation"
+        >
+          <Declaration />
+        </IdentitySection>
+      </form>
+    </FormContext>
+  );
+};
 
 export default IdentityProfile;

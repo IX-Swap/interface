@@ -35,7 +35,7 @@ const IdentityProfile = () => {
         </IdentitySection>
 
         <IdentitySection title="Address">
-          <AddressForm identity={identity} />
+          <AddressForm identity={identity.address} />
         </IdentitySection>
 
         <IdentitySection title="Financials">
