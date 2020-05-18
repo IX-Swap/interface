@@ -1,6 +1,7 @@
 // @flow
 import React, { useCallback, useState, useEffect, useRef } from 'react';
 import RouteProps from 'react-router-dom';
+import storage from 'services/storageHelper';
 import BankDepositForm from './DepositForm';
 import DepositConfirmation from './DepositConfirmation';
 import type { Bank } from '../modules/types';
@@ -69,7 +70,13 @@ function BankDepositComponent({ match }: RouteProps) {
       />
     );
     if (isConfirmation) {
-      toRender = <DepositConfirmation bank={bank} amount={amount} />;
+      toRender = (
+        <DepositConfirmation
+          bank={bank}
+          amount={amount}
+          transactionCode={storage.generateRandom(8, 'aA#')}
+        />
+      );
     }
   }
 
