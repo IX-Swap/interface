@@ -2,6 +2,7 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import { ThemeProvider } from '@material-ui/styles';
 import { CssBaseline } from '@material-ui/core';
+import { SnackbarContainer } from 'uno-material-ui';
 
 import Themes from './themes';
 import App from './components/App';
@@ -10,6 +11,7 @@ import { UserProvider } from './context/user';
 
 ReactDOM.render(
   <ThemeProvider theme={Themes.default}>
+    <SnackbarContainer />
     <CssBaseline />
     <UserProvider>
       <App />

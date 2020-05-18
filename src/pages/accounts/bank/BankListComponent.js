@@ -208,6 +208,7 @@ function BankListComponent(props: RouteProps) {
             {items && items.length ? (
               <ListBankAccounts
                 total={total}
+                // $FlowFixMe
                 list={items}
                 limit={limit}
                 editBank={editBank}
