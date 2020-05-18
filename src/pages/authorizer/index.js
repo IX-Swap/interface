@@ -4,7 +4,7 @@ import { withRouter, Route, Link } from 'react-router-dom';
 import { Grid } from '@material-ui/core';
 
 const Banks = React.lazy(() => import('./banks'));
-const Deposits = React.lazy(() => import('./Deposits'));
+const Deposits = React.lazy(() => import('./deposits'));
 
 const Links = () => (
   <>
