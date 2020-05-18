@@ -13,6 +13,7 @@ import {
   MenuItem,
   Paper,
   LinearProgress,
+  Typography,
 } from '@material-ui/core';
 import { snackbarService } from 'uno-material-ui';
 import { makeStyles } from '@material-ui/core/styles';
@@ -105,43 +106,63 @@ function useDepositListLogic() {
   };
 }
 
+const RowStatusComponent = ({
+  deposit,
+  handleSelectChange,
+}: {
+  deposit: Deposit,
+  handleSelectChange: (deposit: Deposit, status: string) => void,
+}) => {
+  const classes = useStyles();
+  switch (deposit.status) {
+    case 'Approved':
+      return <Typography color="primary">Approved</Typography>;
+    case 'Rejected':
+      return <Typography color="error">Rejected</Typography>;
+    default:
+      return (
+        <Select
+          className={classes.formControl}
+          value={deposit.status}
+          onChange={(evt: SyntheticInputEvent<HTMLElement>) =>
+            handleSelectChange(deposit, evt.target.value)
+          }
+          inputProps={{
+            name: 'status',
+          }}
+        >
+          <MenuItem value="Approved">Approved</MenuItem>
+          <MenuItem value="Rejected">Rejected</MenuItem>
+        </Select>
+      );
+  }
+};
+
 const Deposits = ({
   list,
   handleSelectChange,
 }: {
   list: Array<Deposit>,
   handleSelectChange: (deposit: Deposit, status: string) => void,
-}) => {
-  const classes = useStyles();
-  return (
-    <TableBody>
-      {list.map((row) => (
-        <TableRow key={row._id}>
-          <TableCell>{row.bankAccount.accountHolderName}</TableCell>
-          <TableCell align="left">{row.bankAccount.bankName}</TableCell>
-          <TableCell align="left">
-            {row.asset.symbol} {row.amount}
-          </TableCell>
-          <TableCell align="left">
-            <Select
-              className={classes.formControl}
-              value={row.status}
-              onChange={(evt: SyntheticInputEvent<HTMLElement>) =>
-                handleSelectChange(row, evt.target.value)
-              }
-              inputProps={{
-                name: 'status',
-              }}
-            >
-              <MenuItem value="Approved">Approved</MenuItem>
-              <MenuItem value="Rejected">Rejected</MenuItem>
-            </Select>
-          </TableCell>
-        </TableRow>
-      ))}
-    </TableBody>
-  );
-};
+}) => (
+  <TableBody>
+    {list.map((row) => (
+      <TableRow key={row._id}>
+        <TableCell>{row.bankAccount.accountHolderName}</TableCell>
+        <TableCell align="left">{row.bankAccount.bankName}</TableCell>
+        <TableCell align="left">
+          {row.asset.symbol} {row.amount}
+        </TableCell>
+        <TableCell align="left">
+          <RowStatusComponent
+            deposit={row}
+            handleSelectChange={handleSelectChange}
+          />
+        </TableCell>
+      </TableRow>
+    ))}
+  </TableBody>
+);
 
 export default function BanksList() {
   const {
