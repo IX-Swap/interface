@@ -14,6 +14,7 @@ import Identity from '../pages/identity';
 import Invest from '../pages/invest';
 import Users from '../pages/settings/users';
 import Security from '../pages/security';
+import Authorizer from '../pages/authorizer';
 
 import { useLayoutState, LayoutProvider } from '../context/LayoutContext';
 import { useUserState, useUserDispatch } from '../context/user';
@@ -60,6 +61,7 @@ function App() {
           <PrivateRoute path="/invest" component={Invest} />
           <PrivateRoute path="/security" component={Security} />
           <PrivateRoute path="/users" component={Users} />
+          <PrivateRoute path="/authorizer" component={Authorizer} />
         </div>
       </div>
     );

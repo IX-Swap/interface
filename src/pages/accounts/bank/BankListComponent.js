@@ -208,6 +208,7 @@ function BankListComponent(props: RouteProps) {
             {items && items.length ? (
               <ListBankAccounts
                 total={total}
+                // $FlowFixMe
                 list={items}
                 limit={limit}
                 editBank={editBank}
@@ -259,6 +260,39 @@ function ListBankAccounts({
   handleChangePage,
 }: ListBankAccountsProps) {
   const history = useHistory();
+
+  const renderRowActions = (bank: Bank) => {
+    switch (bank.status.toLowerCase()) {
+      case 'approved':
+        return (
+          <ButtonGroup
+            variant="text"
+            color="primary"
+            aria-label="text primary button group"
+          >
+            <Button
+              onClick={() => {
+                history.push(`/accounts/banks/deposit/${bank._id}`);
+              }}
+            >
+              Deposit
+            </Button>
+            <Button
+              onClick={() => {
+                history.push(`/accounts/banks/withdraw/${bank._id}`);
+              }}
+            >
+              Withdrawal
+            </Button>
+          </ButtonGroup>
+        );
+      case 'rejected':
+        return <Typography color="error">Account Rejected</Typography>;
+      default:
+        return <Typography color="initial">Account Pending</Typography>;
+    }
+  };
+
   return (
     <TableContainer>
       <Table aria-label="accounts table">
@@ -291,32 +325,7 @@ function ListBankAccounts({
               <TableCell align="left">{row.bankName}</TableCell>
               <TableCell align="right">{row.bankAccountNumber}</TableCell>
               <TableCell align="right">no data </TableCell>
-              <TableCell align="center">
-                {row.status === 'Approved' ? (
-                  <ButtonGroup
-                    variant="text"
-                    color="primary"
-                    aria-label="text primary button group"
-                  >
-                    <Button
-                      onClick={() => {
-                        history.push(`/accounts/banks/deposit/${row._id}`);
-                      }}
-                    >
-                      Deposit
-                    </Button>
-                    <Button
-                      onClick={() => {
-                        history.push(`/accounts/banks/withdraw/${row._id}`);
-                      }}
-                    >
-                      Withdrawal
-                    </Button>
-                  </ButtonGroup>
-                ) : (
-                  'Account Pending'
-                )}
-              </TableCell>
+              <TableCell align="center">{renderRowActions(row)}</TableCell>
               <TableCell align="center">
                 <IconButton
                   aria-label="edit"
