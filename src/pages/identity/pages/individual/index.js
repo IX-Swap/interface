@@ -7,19 +7,42 @@ import IdentitySection from '../../components/IdentitySection';
 import IdentityField from '../../components/IdentityField';
 import IdentityForm from '../../components/IdentityForm';
 import AddressForm from '../../components/AddressForm';
-import DocumentsList from '../../components/DocumentsList';
+import Dataroom from '../../components/Dataroom';
 import Declaration from '../../components/Declaration';
 import { useIdentityState, useIdentityDispatch } from '../../modules';
 import { createIdentity } from '../../modules/actions';
 
+const individualDocumentsList = [
+  {
+    title: 'Identification Document',
+    label: 'Identification Document',
+  },
+  {
+    title: 'Evidence of Accreditation',
+    label: 'Evidence of Accreditation (e.g. bank statement, payslip, tax bill)',
+  },
+  {
+    title: 'Proof of Address',
+    label: 'Proof of Address (e.g. utility bill or tenancy agreement)',
+  },
+  {
+    title: 'Marriage Certificate',
+    label: 'Marriage Certificate',
+  },
+  {
+    title: 'Other Supporting Documents',
+    label: 'Other Supporting Documents',
+  },
+];
+
 const IdentityProfile = () => {
-  const { status, identity, editMode } = useIdentityState();
+  const { status, identity, editMode, dataroom } = useIdentityState();
   const identityDispatch = useIdentityDispatch();
   const methods = useForm();
   const { handleSubmit } = methods;
 
   const onSubmit = (data: any) => {
-    createIdentity(identityDispatch, data);
+    createIdentity(identityDispatch, { ...data, documents: dataroom });
   };
 
   if (status === 'INIT') {
@@ -92,7 +115,7 @@ const IdentityProfile = () => {
         </IdentitySection>
 
         <IdentitySection title="Documents">
-          <DocumentsList />
+          <Dataroom documentsList={individualDocumentsList} />
         </IdentitySection>
 
         <IdentitySection

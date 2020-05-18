@@ -4,7 +4,7 @@ import { useForm, FormContext } from 'react-hook-form';
 import IdentitySection from '../../components/IdentitySection';
 import IdentityForm from '../../components/IdentityForm';
 import AddressForm from '../../components/AddressForm';
-import DocumentsList from '../../components/DocumentsList';
+import Dataroom from '../../components/Dataroom';
 import Declaration from '../../components/Declaration';
 
 const IdentityProfile = () => {
@@ -43,7 +43,7 @@ const IdentityProfile = () => {
         </IdentitySection>
 
         <IdentitySection title="Documents">
-          <DocumentsList />
+          <Dataroom documentsList={[]} />
         </IdentitySection>
 
         <IdentitySection
