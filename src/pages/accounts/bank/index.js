@@ -3,7 +3,7 @@ import React, { Suspense } from 'react';
 import { withRouter, Route } from 'react-router-dom';
 
 const BankDepositComponent = React.lazy(() => import('./deposit'));
-const BankWithrawComponent = React.lazy(() => import('./BankWithrawComponent'));
+const BankWithrawComponent = React.lazy(() => import('./withdraw'));
 const BankCreateComponent = React.lazy(() => import('./BankCreateComponent'));
 const BankListComponent = React.lazy(() => import('./BankListComponent'));
 

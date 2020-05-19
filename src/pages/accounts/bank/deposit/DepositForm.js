@@ -63,30 +63,26 @@ function BankDepositForm({
       {bank && (
         <>
           <Grid container justify="center">
-            <Grid item sm={12} md={12} lg={3}>
-              <Box mt={4}>
-                <FormControl fullWidth>
-                  <TextField
-                    label="Amount"
-                    value={amount}
-                    onChange={handleChange}
-                    name="numberformat"
-                    id="formatted-numberformat-input"
-                    inputProps={{
-                      symbol: bank.asset.symbol,
-                    }}
-                    // this is not duplicate
-                    // eslint-disable-next-line
-                    InputProps={{
-                      inputComponent: NumberFormatCustom,
-                    }}
-                  />
-                  <Typography variant="caption">
-                    Transaction fees may apply
-                  </Typography>
-                </FormControl>
-              </Box>
-            </Grid>
+            <FormControl>
+              <TextField
+                label="Amount"
+                value={amount}
+                onChange={handleChange}
+                name="numberformat"
+                id="formatted-numberformat-input"
+                inputProps={{
+                  symbol: bank.asset.symbol,
+                }}
+                // this is not duplicate
+                // eslint-disable-next-line
+                InputProps={{
+                  inputComponent: NumberFormatCustom,
+                }}
+              />
+              <Typography variant="caption">
+                Transaction fees may apply
+              </Typography>
+            </FormControl>
           </Grid>
           <BankDetails bank={bank} />
           <Grid container justify="center">
