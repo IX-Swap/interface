@@ -34,7 +34,7 @@ export default function DialogAuthorizeConfirmation({
     >
       <DialogTitle>Confirm Withdrawal Action</DialogTitle>
       <DialogContent>
-        Are you sure you want to set this withrawal's status to {newStatus}
+        Are you sure you want to set this withrawal's status to {newStatus}?
       </DialogContent>
       <DialogActions>
         <Button onClick={handleClose} color="primary">

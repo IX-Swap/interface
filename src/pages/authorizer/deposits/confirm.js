@@ -34,7 +34,7 @@ export default function DialogAuthorizeConfirmation({
     >
       <DialogTitle>Confirm Deposit Action</DialogTitle>
       <DialogContent>
-        Are you sure you want to set this deposit's status to {newStatus}
+        Are you sure you want to set this deposit's status to {newStatus}?
       </DialogContent>
       <DialogActions>
         <Button onClick={handleClose} color="primary">
