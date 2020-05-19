@@ -19,6 +19,15 @@ export const bankSaveStatus = {
   BANK_SAVING: 'BANK_SAVING',
 };
 
+type BankAddress = {
+  line1: string,
+  line2: string,
+  city: string,
+  state: string,
+  country: string,
+  postalCode: string,
+};
+
 export type BankRequest = {
   _id?: string,
   asset: string,
@@ -26,6 +35,7 @@ export type BankRequest = {
   bankAccountNumber: string,
   accountHolderName: string,
   swiftCode: string,
+  address: BankAddress,
 };
 
 export const baseBankRequest: BankRequest = Object.freeze({
@@ -34,6 +44,14 @@ export const baseBankRequest: BankRequest = Object.freeze({
   bankAccountNumber: '',
   accountHolderName: '',
   swiftCode: '',
+  address: {
+    line1: '',
+    line2: '',
+    city: '',
+    state: '',
+    country: '',
+    postalCode: '',
+  },
 });
 
 export type Bank = {
@@ -48,6 +66,7 @@ export type Bank = {
   swiftCode: string,
   authorized: boolean,
   createdAt: string,
+  address: BankAddress,
 };
 
 export type BanksListState = {

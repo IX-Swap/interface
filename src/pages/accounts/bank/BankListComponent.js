@@ -70,6 +70,7 @@ function useBankListLogic() {
     bankName: bank.bankName,
     swiftCode: bank.swiftCode,
     bankAccountNumber: bank.bankAccountNumber,
+    address: bank.address,
   });
 
   const editBank = (bank: Bank) => {
