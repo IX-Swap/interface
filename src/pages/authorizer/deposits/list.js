@@ -16,6 +16,7 @@ import {
   Typography,
 } from '@material-ui/core';
 import { snackbarService } from 'uno-material-ui';
+import moment from 'moment';
 import { makeStyles } from '@material-ui/core/styles';
 import type { Deposit } from './modules/types';
 import DepositListModule from './modules';
@@ -148,6 +149,7 @@ const Deposits = ({
   <TableBody>
     {list.map((row) => (
       <TableRow key={row._id}>
+        <TableCell>{moment(row.createdAt).format('MM/DD/YYYY')}</TableCell>
         <TableCell>{row.bankAccount.accountHolderName}</TableCell>
         <TableCell align="left">{row.bankAccount.bankName}</TableCell>
         <TableCell align="left">
@@ -164,7 +166,7 @@ const Deposits = ({
   </TableBody>
 );
 
-export default function BanksList() {
+export default function DepositsList() {
   const {
     status: loadingStatus,
     items,
@@ -226,10 +228,13 @@ export default function BanksList() {
           <TableHead>
             <TableRow>
               <TableCell align="left">
+                <b>Date of Application</b>
+              </TableCell>
+              <TableCell align="left">
                 <b>User</b>
               </TableCell>
               <TableCell align="left">
-                <b>Bank</b>
+                <b>Deposit</b>
               </TableCell>
               <TableCell align="left">
                 <b>Amount</b>

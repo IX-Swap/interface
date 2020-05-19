@@ -16,6 +16,7 @@ import {
   Typography,
 } from '@material-ui/core';
 import { snackbarService } from 'uno-material-ui';
+import moment from 'moment';
 import { makeStyles } from '@material-ui/core/styles';
 import type { Withdraw } from './modules/types';
 import WithdrawListModule from './modules';
@@ -148,6 +149,7 @@ const Withdraws = ({
   <TableBody>
     {list.map((row) => (
       <TableRow key={row._id}>
+        <TableCell>{moment(row.createdAt).format('MM/DD/YYYY')}</TableCell>
         <TableCell>{row.bankAccount.accountHolderName}</TableCell>
         <TableCell align="left">{row.bankAccount.bankName}</TableCell>
         <TableCell align="left">
@@ -225,6 +227,9 @@ export default function BanksList() {
         <Table aria-label="accounts table">
           <TableHead>
             <TableRow>
+              <TableCell align="left">
+                <b>Date of Application</b>
+              </TableCell>
               <TableCell align="left">
                 <b>User</b>
               </TableCell>

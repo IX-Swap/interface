@@ -10,4 +10,5 @@ export type Deposit = {
   depositCode: string,
   asset: Asset,
   bankAccount: Bank,
+  createdAt: string,
 };
