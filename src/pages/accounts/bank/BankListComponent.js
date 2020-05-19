@@ -175,7 +175,6 @@ function BankListComponent(props: RouteProps) {
         <Box mx={4} mt={4}>
           <Grid
             container
-            sm={12}
             direction="row"
             justify="space-between"
             alignItems="center"

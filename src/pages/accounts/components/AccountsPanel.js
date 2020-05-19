@@ -1,6 +1,6 @@
 // @flow
 /* eslint-disable react/jsx-props-no-spreading */
-import React from 'react';
+import React, { Suspense } from 'react';
 import PropTypes from 'prop-types';
 import useStyles from 'pages/exchange/styles';
 import { withRouter, Route, Link, Switch } from 'react-router-dom';
@@ -14,9 +14,9 @@ import {
   Typography,
   Box,
 } from '@material-ui/core';
-
 import BankComponent from '../bank';
-import Overview from '../overview/Overview';
+
+const Overview = React.lazy(() => import('../overview/Overview'));
 
 function useAccountsLogic() {
   const classes = useStyles();
@@ -130,11 +130,16 @@ function AccountsPanel({ location }: any) {
             </Tabs>
           </AppBar>
           <Switch>
-            <Route exact path={routes[0]} render={() => <Overview />} />
-            <Route path={routes[1]} render={() => <BankComponent />} />
-            <Route path={routes[2]} render={() => <span>WALLETS</span>} />
-            <Route path={routes[3]} render={() => <span>REPORTS</span>} />
-            <Route path={routes[4]} render={() => <span>TRANSACTIONS</span>} />
+            <Suspense fallback={<span>loading</span>}>
+              <Route exact path={routes[0]} render={() => <Overview />} />
+              <Route path={routes[1]} render={() => <BankComponent />} />
+              <Route path={routes[2]} render={() => <span>WALLETS</span>} />
+              <Route path={routes[3]} render={() => <span>REPORTS</span>} />
+              <Route
+                path={routes[4]}
+                render={() => <span>TRANSACTIONS</span>}
+              />
+            </Suspense>
           </Switch>
         </Paper>
       </Grid>
