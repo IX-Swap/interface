@@ -7,28 +7,36 @@ const BankWithrawComponent = React.lazy(() => import('./BankWithrawComponent'));
 const BankCreateComponent = React.lazy(() => import('./BankCreateComponent'));
 const BankListComponent = React.lazy(() => import('./BankListComponent'));
 
+const routes = [
+  {
+    route: '/accounts/banks',
+    component: <BankListComponent />
+  },
+  {
+    route: '/accounts/banks/deposit/:bankId',
+    component: <BankDepositComponent />
+  },
+  {
+    route: '/accounts/banks/withdraw/:bankId',
+    component: <BankWithrawComponent />
+  },
+  {
+    route: '/accounts/banks/bank-create',
+    component: <BankCreateComponent />
+  },
+];
+
 function BankRoutes() {
   return (
     <>
       <Suspense fallback={<div>Loading...</div>}>
-        <Route
-          exact
-          path="/accounts/banks"
-          component={() => <BankListComponent />}
-        />
-        <Route
-          path="/accounts/banks/deposit/:bankId"
-          component={BankDepositComponent}
-        />
-        <Route
-          path="/accounts/banks/withdraw/:bankId"
-          component={BankWithrawComponent}
-        />
-        <Route
-          exact
-          path="/accounts/banks/bank-create"
-          component={() => <BankCreateComponent />}
-        />
+        {routes.map((route, index) => 
+          <Route
+            exact={index === 0}
+            path={route.route}
+            component={() => route.component}
+          />
+        )}
       </Suspense>
     </>
   );
