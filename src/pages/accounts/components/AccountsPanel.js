@@ -63,11 +63,31 @@ function a11yProps(index): TabProps {
 function AccountsPanel({ location }: any) {
   const { classes } = useAccountsLogic();
   const routes = [
-    '/accounts',
-    '/accounts/banks',
-    '/accounts/wallets',
-    '/accounts/reports',
-    '/accounts/transactions',
+    {
+      route: '/accounts',
+      label: 'OVERVIEW',
+      component: <Overview />,
+    },
+    {
+      route: '/accounts/banks',
+      label: 'CASH',
+      component: <BankComponent />,
+    },
+    {
+      route: '/accounts/wallets',
+      label: 'DIGITAL SECURITIES',
+      component: <span>WALLETS</span>,
+    },
+    {
+      route: '/accounts/reports',
+      label: 'REPORT',
+      component: <span>REPORTS</span>,
+    },
+    {
+      route: '/accounts/transactions',
+      label: 'TRANSACTIONS',
+      component: <span>TRANSACTIONS</span>,
+    },
   ];
 
   let { pathname } = location;
@@ -92,49 +112,21 @@ function AccountsPanel({ location }: any) {
               variant="fullWidth"
               aria-label="full width tabs example"
             >
-              <Tab
-                component={Link}
-                to={routes[0]}
-                value={routes[0]}
-                label="OVERVIEW"
-                {...a11yProps(0)}
-              />
-              <Tab
-                component={Link}
-                to={routes[1]}
-                value={routes[1]}
-                label="CASH"
-                {...a11yProps(1)}
-              />
-              <Tab
-                component={Link}
-                to={routes[2]}
-                value={routes[2]}
-                label="DIGITAL SECURITIES"
-                {...a11yProps(2)}
-              />
-              <Tab
-                component={Link}
-                to={routes[3]}
-                value={routes[3]}
-                label="REPORT"
-                {...a11yProps(3)}
-              />
-              <Tab
-                component={Link}
-                to={routes[4]}
-                value={routes[4]}
-                label="TRANSACTIONS"
-                {...a11yProps(4)}
-              />
+              {routes.map((route, index) => 
+                <Tab
+                  component={Link}
+                  to={route.route}
+                  value={route.route}
+                  label={route.label}
+                  {...a11yProps(index)}
+                />
+              )}
             </Tabs>
           </AppBar>
           <Switch>
-            <Route exact path={routes[0]} render={() => <Overview />} />
-            <Route path={routes[1]} render={() => <BankComponent />} />
-            <Route path={routes[2]} render={() => <span>WALLETS</span>} />
-            <Route path={routes[3]} render={() => <span>REPORTS</span>} />
-            <Route path={routes[4]} render={() => <span>TRANSACTIONS</span>} />
+            {routes.map((route, index) => 
+              <Route exact={index === 0} path={route.route} render={() => route.component} />
+            )}
           </Switch>
         </Paper>
       </Grid>
