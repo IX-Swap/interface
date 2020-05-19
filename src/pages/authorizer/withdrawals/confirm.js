@@ -8,18 +8,18 @@ import {
   Button,
 } from '@material-ui/core';
 
-import type { Deposit } from './modules/types';
+import type { Withdraw } from './modules/types';
 
 type Prop = {
-  deposit: Deposit,
+  withdraw: Withdraw,
   newStatus: string,
   open: boolean,
   handleClose: Function,
-  handleConfirm: (deposit: Deposit, newStatus: string) => Promise<void>,
+  handleConfirm: (withdraw: Withdraw, newStatus: string) => Promise<void>,
 };
 
 export default function DialogAuthorizeConfirmation({
-  deposit,
+  withdraw,
   open,
   newStatus,
   handleClose,
@@ -32,16 +32,16 @@ export default function DialogAuthorizeConfirmation({
       open={open}
       onClose={handleClose}
     >
-      <DialogTitle>Confirm Deposit Action</DialogTitle>
+      <DialogTitle>Confirm Withdrawal Action</DialogTitle>
       <DialogContent>
-        Are you sure you want to set this deposit's status to {newStatus}
+        Are you sure you want to set this withrawal's status to {newStatus}
       </DialogContent>
       <DialogActions>
         <Button onClick={handleClose} color="primary">
           Cancel
         </Button>
         <Button
-          onClick={() => handleConfirm(deposit, newStatus)}
+          onClick={() => handleConfirm(withdraw, newStatus)}
           color="primary"
         >
           Ok

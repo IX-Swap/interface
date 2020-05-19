@@ -2,9 +2,8 @@
 import React, { useCallback, useState, useEffect, useRef } from 'react';
 import RouteProps from 'react-router-dom';
 import { Typography, Box } from '@material-ui/core';
-import storage from 'services/storageHelper';
-import BankDepositForm from './DepositForm';
-import DepositConfirmation from './DepositConfirmation';
+import BankWithdrawForm from './WithdrawForm';
+import WithdrawConfirmation from './WithdrawConfirmation';
 import type { Bank } from '../modules/types';
 
 import BankActions from '../modules/actions';
@@ -15,6 +14,7 @@ const { useBanksListDispatch } = BanksListModule;
 
 const useGenericBankLogic = (bankId: string) => {
   const [bank, setBank] = useState<Bank | null>(null);
+  const [memo, setMemo] = useState<string>('');
   const [amount, setAmount] = useState<number>(0);
   const dispatch = useBanksListDispatch();
   const mountedRef = useRef(true);
@@ -32,8 +32,9 @@ const useGenericBankLogic = (bankId: string) => {
     [dispatch]
   );
 
-  const deposit = (toDeposit: number) => {
-    setAmount(toDeposit);
+  const withdraw = (toWithdraw: number, mMemo: string) => {
+    setMemo(mMemo);
+    setAmount(toWithdraw);
     setIsConfirmation(true);
   };
 
@@ -50,33 +51,28 @@ const useGenericBankLogic = (bankId: string) => {
 
   return {
     bank,
-    deposit,
+    withdraw,
     amount,
+    memo,
+    setMemo,
     isConfirmation,
     setIsConfirmation,
   };
 };
 
-function BankDepositComponent({ match }: RouteProps) {
+function BankWithdrawComponent({ match }: RouteProps) {
   const { bankId } = match.params;
-  const { bank, deposit, amount, isConfirmation } = useGenericBankLogic(bankId);
+  const { bank, withdraw, amount, isConfirmation, memo } = useGenericBankLogic(
+    bankId
+  );
 
   let toRender = <span>loading</span>;
 
   if (bank) {
-    toRender = (
-      <BankDepositForm
-        bank={bank}
-        deposit={(toDeposit: number) => deposit(toDeposit)}
-      />
-    );
+    toRender = <BankWithdrawForm bank={bank} withdraw={withdraw} />;
     if (isConfirmation) {
       toRender = (
-        <DepositConfirmation
-          bank={bank}
-          amount={amount}
-          transactionCode={storage.generateRandom(8, 'aA#')}
-        />
+        <WithdrawConfirmation memo={memo} bank={bank} amount={amount} />
       );
     }
   }
@@ -84,11 +80,11 @@ function BankDepositComponent({ match }: RouteProps) {
   return (
     <>
       <Box my={2} ml={4}>
-        {bank && <Typography variant="h3">Deposit Cash</Typography>}
+        {bank && <Typography variant="h3">Withdraw Cash</Typography>}
       </Box>
       {toRender}
     </>
   );
 }
 
-export default BankDepositComponent;
+export default BankWithdrawComponent;
