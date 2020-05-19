@@ -10,4 +10,5 @@ export type Withdraw = {
   withdrawCode: string,
   asset: Asset,
   bankAccount: Bank,
+  createdAt: string,
 };

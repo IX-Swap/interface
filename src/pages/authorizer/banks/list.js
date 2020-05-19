@@ -19,6 +19,7 @@ import { snackbarService } from 'uno-material-ui';
 import { makeStyles } from '@material-ui/core/styles';
 // TODO: move bank module to context?
 import type { Bank } from 'pages/accounts/bank/modules/types';
+import moment from 'moment';
 import BankListModule from './modules';
 import Actions from './modules/actions';
 import DialogAuthorizeConfirmation from './confirm';
@@ -149,6 +150,7 @@ const BankAccounts = ({
   <TableBody>
     {list.map((row) => (
       <TableRow key={row._id}>
+        <TableCell>{moment(row.createdAt).format('MM/DD/YYYY')}</TableCell>
         <TableCell>{row.user.name}</TableCell>
         <TableCell align="left">{row.bankName}</TableCell>
         <TableCell align="left">{row.asset.symbol}</TableCell>
@@ -224,6 +226,9 @@ export default function BanksList() {
         <Table aria-label="accounts table">
           <TableHead>
             <TableRow>
+              <TableCell align="left">
+                <b>Date of Application</b>
+              </TableCell>
               <TableCell align="left">
                 <b>User</b>
               </TableCell>

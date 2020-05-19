@@ -47,6 +47,7 @@ export type Bank = {
   accountHolderName: string,
   swiftCode: string,
   authorized: boolean,
+  createdAt: string,
 };
 
 export type BanksListState = {

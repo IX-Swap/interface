@@ -172,17 +172,26 @@ function BankListComponent(props: RouteProps) {
   if (items.length > 0) {
     componentToRender = (
       <>
-        <Box mt={3} mx={3} display="flex" justifyContent="flex-end">
-          <Button
-            m={3}
-            variant="contained"
-            color="primary"
-            onClick={() => {
-              history.push(`/accounts/banks/bank-create`);
-            }}
+        <Box mx={4} mt={4}>
+          <Grid
+            container
+            sm={12}
+            direction="row"
+            justify="space-between"
+            alignItems="center"
           >
-            ADD BANK ACCOUNT
-          </Button>
+            <Typography variant="h3">Bank Accounts</Typography>
+            <Button
+              m={3}
+              variant="contained"
+              color="primary"
+              onClick={() => {
+                history.push(`/accounts/banks/bank-create`);
+              }}
+            >
+              ADD BANK ACCOUNT
+            </Button>
+          </Grid>
         </Box>
         {(editSuccess || isSaved) && (
           <Box mx={3} mt={3}>

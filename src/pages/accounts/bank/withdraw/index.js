@@ -79,7 +79,7 @@ function BankWithdrawComponent({ match }: RouteProps) {
 
   return (
     <>
-      <Box my={2} ml={4}>
+      <Box m={4}>
         {bank && <Typography variant="h3">Withdraw Cash</Typography>}
       </Box>
       {toRender}
