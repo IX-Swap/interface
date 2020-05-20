@@ -1,6 +1,6 @@
 // @flow
 /* eslint-disable react/jsx-props-no-spreading */
-import React from 'react';
+import React, { Suspense } from 'react';
 import PropTypes from 'prop-types';
 import useStyles from 'pages/exchange/styles';
 import { withRouter, Route, Link, Switch } from 'react-router-dom';
@@ -14,9 +14,9 @@ import {
   Typography,
   Box,
 } from '@material-ui/core';
-
 import BankComponent from '../bank';
-import Overview from '../overview/Overview';
+
+const Overview = React.lazy(() => import('../overview/Overview'));
 
 function useAccountsLogic() {
   const classes = useStyles();
@@ -91,7 +91,8 @@ function AccountsPanel({ location }: any) {
   ];
 
   let { pathname } = location;
-  const matched = (path: string): boolean => routes.some((p) => p === path);
+  const matched = (path: string): boolean =>
+    routes.some((p) => p.route === path);
 
   // TODO: remove this hack, use proper routing
   while (!matched(pathname) && pathname !== '/') {
@@ -112,22 +113,30 @@ function AccountsPanel({ location }: any) {
               variant="fullWidth"
               aria-label="full width tabs example"
             >
-              {routes.map((route, index) => 
+              {routes.map((route, index) => (
                 <Tab
+                  key={route.route}
                   component={Link}
                   to={route.route}
                   value={route.route}
                   label={route.label}
                   {...a11yProps(index)}
                 />
-              )}
+              ))}
             </Tabs>
           </AppBar>
-          <Switch>
-            {routes.map((route, index) => 
-              <Route exact={index === 0} path={route.route} render={() => route.component} />
-            )}
-          </Switch>
+          <Suspense fallback={<span>loading</span>}>
+            <Switch>
+              {routes.map((route, index) => (
+                <Route
+                  key={route.route}
+                  exact={index === 0}
+                  path={route.route}
+                  render={() => route.component}
+                />
+              ))}
+            </Switch>
+          </Suspense>
         </Paper>
       </Grid>
     </Grid>

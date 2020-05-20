@@ -70,6 +70,7 @@ function useBankListLogic() {
     bankName: bank.bankName,
     swiftCode: bank.swiftCode,
     bankAccountNumber: bank.bankAccountNumber,
+    address: bank.address,
   });
 
   const editBank = (bank: Bank) => {
@@ -175,7 +176,6 @@ function BankListComponent(props: RouteProps) {
         <Box mx={4} mt={4}>
           <Grid
             container
-            sm={12}
             direction="row"
             justify="space-between"
             alignItems="center"

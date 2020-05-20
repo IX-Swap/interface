@@ -15,7 +15,7 @@ import {
 import { useAssetsDispatch, useAssetsState } from 'context/assets';
 import { getAssets } from 'context/assets/actions';
 import { ASSETS_STATUS } from 'context/assets/types';
-
+import CountrySelect from 'components/CountrySelect';
 import type { BankRequest } from './modules/types';
 
 function useGetters() {
@@ -60,12 +60,12 @@ function useBankFormLogic(bank?: BankRequest) {
 
   const [bankAccountName, setBankAccountName] = useState(bank?.bankName || '');
   const [bankAddress, setBankAddress] = useState({
-    line1: '',
-    line2: '',
-    city: '',
-    state: '',
-    country: '',
-    postalCode: '',
+    line1: (bank && bank.address && bank.address.line1) || '',
+    line2: (bank && bank.address && bank.address.line2) || '',
+    city: (bank && bank.address && bank.address.city) || '',
+    state: (bank && bank.address && bank.address.state) || '',
+    country: (bank && bank.address && bank.address.country) || '',
+    postalCode: (bank && bank.address && bank.address.postalCode) || '',
   });
   const [bankAccountHolderName, setBankAccountHolderName] = useState(
     bank?.accountHolderName || ''
@@ -143,6 +143,7 @@ export default function BankFormComponent({
       bankAccountNumber,
       asset: symbol,
       swiftCode,
+      address: bankAddress,
     });
   }, [
     bankAccountHolderName,
@@ -150,6 +151,7 @@ export default function BankFormComponent({
     bankAccountNumber,
     symbol,
     swiftCode,
+    bankAddress,
     onChangeCallback,
   ]);
 
@@ -257,6 +259,7 @@ export default function BankFormComponent({
               <InputLabel htmlFor="bank-address-line1-input">Line 1</InputLabel>
               <Input
                 id="bank-address-line1-input"
+                value={bankAddress.line1}
                 onChange={(e) => {
                   setBankAddress({
                     ...bankAddress,
@@ -273,6 +276,7 @@ export default function BankFormComponent({
               <InputLabel htmlFor="bank-address-line2-input">Line 2</InputLabel>
               <Input
                 id="bank-address-line2-input"
+                value={bankAddress.line2}
                 onChange={(e) => {
                   setBankAddress({
                     ...bankAddress,
@@ -291,6 +295,7 @@ export default function BankFormComponent({
               <InputLabel htmlFor="bank-address-city-input">City</InputLabel>
               <Input
                 id="bank-address-city-input"
+                value={bankAddress.city}
                 onChange={(e) => {
                   setBankAddress({
                     ...bankAddress,
@@ -307,6 +312,7 @@ export default function BankFormComponent({
               <InputLabel htmlFor="bank-address-state-input">State</InputLabel>
               <Input
                 id="bank-address-state-input"
+                value={bankAddress.state}
                 onChange={(e) => {
                   setBankAddress({
                     ...bankAddress,
@@ -321,15 +327,13 @@ export default function BankFormComponent({
           <Grid item sm={12} md={12} lg={6}>
             <Box ml={3} m={1}>
               <FormControl fullWidth>
-                <InputLabel htmlFor="bank-address-country-input">
-                  Country
-                </InputLabel>
-                <Input
-                  id="bank-address-country-input"
-                  onChange={(e) => {
+                <CountrySelect
+                  value={{ label: bankAddress.country }}
+                  onChange={(_, value) => {
+                    console.log(value);
                     setBankAddress({
                       ...bankAddress,
-                      country: e.target.value,
+                      country: (value && value.label) || '',
                     });
                   }}
                 />
@@ -344,6 +348,7 @@ export default function BankFormComponent({
                 </InputLabel>
                 <Input
                   id="bank-address-postalcode-input"
+                  value={bankAddress.postalCode}
                   onChange={(e) => {
                     setBankAddress({
                       ...bankAddress,

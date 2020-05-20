@@ -4,11 +4,13 @@ import { Grid } from '@material-ui/core';
 import { AccountProvider } from 'context/AccountContext';
 import { AssetsProvider } from 'context/assets';
 import { IdentityProvider } from 'context/IdentityContext';
+import PersonalBalanceListModule from 'context/balance/personal';
 import BanksModule from './bank/modules';
 import DepositPage from './deposit/DepositPage';
 import WithdrawPage from './withdraw/WithdrawPage';
 import AccountsPanel from './components/AccountsPanel';
 
+const { PersonalBalancesListProvider } = PersonalBalanceListModule;
 const { BanksListProvider } = BanksModule;
 
 function Accounts() {
@@ -19,7 +21,9 @@ function Accounts() {
           <AssetsProvider>
             <AccountProvider>
               <IdentityProvider>
-                <AccountRoutes />
+                <PersonalBalancesListProvider>
+                  <AccountRoutes />
+                </PersonalBalancesListProvider>
               </IdentityProvider>
             </AccountProvider>
           </AssetsProvider>
