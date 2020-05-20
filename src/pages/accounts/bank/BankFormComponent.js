@@ -222,7 +222,6 @@ export default function BankFormComponent({
 
               <Input
                 id="bank-account-number-input"
-                type="number"
                 defaultValue={bankAccountNumber}
                 onChange={(e) => {
                   setBankAccountNumber(e.target.value);
@@ -237,7 +236,6 @@ export default function BankFormComponent({
               <InputLabel htmlFor="swift-code-input">Swift Code</InputLabel>
               <Input
                 id="swift-code-input"
-                type="number"
                 defaultValue={swiftCode}
                 onChange={(e) => {
                   setSwiftCode(e.target.value);

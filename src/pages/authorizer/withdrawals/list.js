@@ -18,6 +18,7 @@ import {
 import { snackbarService } from 'uno-material-ui';
 import moment from 'moment';
 import { makeStyles } from '@material-ui/core/styles';
+import type { BaseStateWithPagination } from 'context/base/withPagination/types';
 import type { Withdraw } from './modules/types';
 import WithdrawListModule from './modules';
 import Actions from './modules/actions';
@@ -44,7 +45,7 @@ const {
 
 function useWithdrawListLogic() {
   const withdrawDispatch = useAuhorizerWithdrawListDispatch();
-  const withdrawListState = useAuhorizerWithdrawListState();
+  const withdrawListState: BaseStateWithPagination<Withdraw> = useAuhorizerWithdrawListState();
   const {
     status,
     page,
