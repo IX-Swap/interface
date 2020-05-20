@@ -1,4 +1,7 @@
 import React from 'react';
+import moment from 'moment';
+import { MenuItem } from '@material-ui/core';
+import { GENDERS_OPTS, MARITAL_STATUSES_OPTS } from 'const/const';
 import IdentityField from './IdentityField';
 import Identity from '../modules/types';
 
@@ -19,7 +22,12 @@ const IdentityForm = ({ identity = {} }: { identity?: Identity }) => (
       label="Last Name"
       value={identity.lastName}
     />
-    <IdentityField name="dob" label="Date of Birth" value={identity.dob} />
+    <IdentityField
+      name="dob"
+      label="Date of Birth"
+      type="date"
+      value={identity.dob ? moment(identity.dob).format('MM/DD/YYYY') : ''}
+    />
     <IdentityField
       name="nationality"
       label="Nationality"
@@ -30,18 +38,42 @@ const IdentityForm = ({ identity = {} }: { identity?: Identity }) => (
       label="Country of Residence"
       value={identity.countryOfResidence}
     />
-    <IdentityField label="Email" value={identity.email} />
+    <IdentityField name="email" label="Email" value={identity.email} />
     <IdentityField
       name="contactNumber"
       label="Contact Number"
       value={identity.contactNumber}
     />
-    <IdentityField name="gender" label="Gender" value={identity.gender} />
+    <IdentityField
+      name="gender"
+      label="Gender"
+      value={identity.gender}
+      type="select"
+    >
+      <MenuItem disabled value={undefined}>
+        Gender
+      </MenuItem>
+      {GENDERS_OPTS.map(({ value, label }) => (
+        <MenuItem key={value} value={value}>
+          {label}
+        </MenuItem>
+      ))}
+    </IdentityField>
     <IdentityField
       name="maritalStatus"
       label="Marital Status"
       value={identity.maritalStatus}
-    />
+      type="select"
+    >
+      <MenuItem disabled value={undefined}>
+        Marital Status
+      </MenuItem>
+      {MARITAL_STATUSES_OPTS.map(({ value, label }) => (
+        <MenuItem key={value} value={value}>
+          {label}
+        </MenuItem>
+      ))}
+    </IdentityField>
   </>
 );
 

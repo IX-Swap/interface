@@ -9,6 +9,7 @@ import IdentityForm from '../../components/IdentityForm';
 import AddressForm from '../../components/AddressForm';
 import Dataroom from '../../components/Dataroom';
 import Declaration from '../../components/Declaration';
+import declarations from '../../data/declarations';
 import { useIdentityState, useIdentityDispatch } from '../../modules';
 import { createIdentity } from '../../modules/actions';
 
@@ -58,7 +59,7 @@ const IdentityProfile = () => {
         </IdentitySection>
 
         <IdentitySection title="Address">
-          <AddressForm identity={identity.address} />
+          <AddressForm address={identity.address} />
         </IdentitySection>
 
         <IdentitySection title="Financials">
@@ -122,8 +123,7 @@ const IdentityProfile = () => {
           title="Declaration & Acknowledgement"
           subtitle="Confirmation"
         >
-          <Declaration />
-
+          <Declaration declarations={declarations.individual} />
           {editMode && (
             <Grid container justify="flex-end">
               <Button type="submit">Submit</Button>

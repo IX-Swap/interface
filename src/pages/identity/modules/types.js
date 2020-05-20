@@ -46,6 +46,15 @@ export const STATUS = {
   SAVING: 'SAVING',
 };
 
+export type IdentityAddress = {
+  line1: string,
+  line2: string,
+  city: string,
+  postalCode?: string,
+  state: string,
+  country: string,
+};
+
 export type IdentityProfile = {
   firstName: string,
   middleName: string,
@@ -56,12 +65,7 @@ export type IdentityProfile = {
   countryOfResidence: string,
   maritalStatus: 'Single' | 'Married',
   contactNumber: string,
-  line1: string,
-  line2: string,
-  city: string,
-  postalCode: string,
-  state: string,
-  country: string,
+  address: IdentityAddress,
 };
 
 export type IndentityFinancials = {
@@ -114,4 +118,13 @@ export type IdentityState = {
     save: string | null,
     get: string | null,
   },
+};
+
+export type DeclarationTemplate = {
+  key: string,
+  content: string,
+  value?: boolean,
+  answerable?: boolean,
+  lastLine?: boolean,
+  sublevel?: boolean,
 };

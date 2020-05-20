@@ -60,18 +60,13 @@ export const createIdentity = async (
     firstName,
     middleName,
     lastName,
-    // dob,
-    // gender,
+    dob,
+    gender,
     nationality,
     countryOfResidence,
     maritalStatus,
     contactNumber,
-    line1,
-    line2,
-    city,
-    postalCode,
-    state,
-    country,
+    address,
     occupation,
     employmentStatus,
     employer,
@@ -87,29 +82,20 @@ export const createIdentity = async (
 
   const documents = identity.documents?.map((document) => document._id);
 
-  const address = {
-    line1,
-    line2,
-    city,
-    postalCode,
-    state,
-    country,
-  };
-
   try {
     const profileUri = `/identity/individuals/${userId}`;
     const profileResult = await putRequest(profileUri, {
       firstName,
       middleName,
       lastName,
-      gender: 'M', // TEMP overwrite to prevent error
+      gender,
       nationality,
       countryOfResidence,
       maritalStatus,
       contactNumber,
       documents,
       address,
-      dob: moment().format('YYYY-MM-DDTHH:mm:ss'), // TEMP overwrite to prevent error
+      dob,
     });
 
     const financialsUri = `/identity/individuals/${userId}/financials`;

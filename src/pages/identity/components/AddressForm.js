@@ -1,25 +1,29 @@
 // @flow
 import React from 'react';
 import IdentityField from './IdentityField';
-import type { Identity } from '../modules/types';
+import type { IdentityAddress } from '../modules/types';
 
-const AddressForm = ({ identity = {} }: { identity?: Identity }) => (
+const AddressForm = ({ address = {} }: { address?: IdentityAddress }) => (
   <>
     <IdentityField
-      name="line1"
+      name="address.line1"
       label="Line 1"
-      value={identity.line1}
+      value={address.line1}
       size={6}
     />
     <IdentityField
-      name="line2"
+      name="address.line2"
       label="Line 2"
-      value={identity.line2}
+      value={address.line2}
       size={6}
     />
-    <IdentityField name="city" label="City" value={identity.city} />
-    <IdentityField name="state" label="State" value={identity.state} />
-    <IdentityField name="country" label="Country" value={identity.city} />
+    <IdentityField name="address.city" label="City" value={address.city} />
+    <IdentityField name="address.state" label="State" value={address.state} />
+    <IdentityField
+      name="address.country"
+      label="Country"
+      value={address.city}
+    />
   </>
 );
 
