@@ -35,6 +35,13 @@ const useAssetsGetter = () => {
     }
   }, [aDispatch, status]);
 
+  useEffect(
+    () => () => {
+      mountedRef.current = false;
+    },
+    []
+  );
+
   return { status };
 };
 
