@@ -21,28 +21,79 @@ import {
 function ResetPassword(props) {
   const classes = useStyles();
 
-  const [email, setEmail] = useState();
-  const [resetToken, setResetToken] = useState();
-  const [newPassword, setNewPassword] = useState();
+  // State for the RESET FORM fields
+  const [form, setFields] = useState({
+    email: '',
+    resetToken: '',
+    newPassword: '',
+  });
+
   const passwordResetDispatch = usePasswordResetDispatch();
   const passwordResetState = usePasswordResetState();
 
-  const handleBeginResetSubmit = () => {
-    setResetToken('');
-    setNewPassword('');
-    if (email) beginResetPassword(passwordResetDispatch, email);
+  // Handle change/update for the fields
+  const updateField = e => {
+    const name = e.target.name;
+    const value = e.target.value;
+    setFields({
+      ...form,
+      [name]: value,
+    });
   };
 
+  // Reset fields for the for the RESET PASSWORD FORM
+  const handleBeginResetSubmit = () => {
+    setFields(form);
+    if (form.email) beginResetPassword(passwordResetDispatch, form.email);
+  };
+
+  // Handle submit complete RESET PASSWORD FORM
+  /**
+   * TODO: Handling of errors for the RESET PASSWORD FORM
+   */
   const handleCompleteResetSubmit = () => {
-    if ((email, resetToken, newPassword))
+    if ((form.email, form.resetToken, form.newPassword))
       completeResetPassword(
         passwordResetDispatch,
-        email,
-        resetToken,
-        newPassword
+        form.email,
+        form.resetToken,
+        form.newPassword
       );
   };
 
+  const fields = [
+    {
+      id: 'email',
+      name: 'email',
+      value: form.email,
+      onChange: updateField,
+      margin: 'normal',
+      placeholder: 'Email Address...',
+      type: 'email',
+    },
+    {
+      id: 'token',
+      name: 'resetToken',
+      value: form.resetToken,
+      onChange: updateField,
+      margin: 'normal',
+      placeholder: 'Paste Reset Token...',
+      type: 'text',
+    },
+    {
+      id: 'new-password',
+      name: 'newPassword',
+      value: form.newPassword,
+      onChange: updateField,
+      margin: 'normal',
+      placeholder: 'New Password...',
+      type: 'password',
+    },
+  ];
+
+  /**
+   * TODO: Refactor condition rendering of the forms
+   */
   return (
     <Grid container className={classes.container}>
       <Grid container justify="center" alignItems="center">
@@ -57,33 +108,19 @@ function ResetPassword(props) {
                 <Typography comonent="p">
                   {passwordResetState?.passwordResetMessage}
                 </Typography>
-                <TextField
-                  id="email"
-                  value={email || ''}
-                  onChange={(e) => setEmail(e.target.value)}
-                  margin="normal"
-                  placeholder="Email Address"
-                  type="email"
-                  fullWidth
-                />
-                <TextField
-                  id="token"
-                  value={resetToken || ''}
-                  onChange={(e) => setResetToken(e.target.value)}
-                  margin="normal"
-                  placeholder="Paste Reset Token"
-                  type="text"
-                  fullWidth
-                />
-                <TextField
-                  id="new-password"
-                  value={newPassword || ''}
-                  onChange={(e) => setNewPassword(e.target.value)}
-                  margin="normal"
-                  placeholder="New Password"
-                  type="password"
-                  fullWidth
-                />
+                {fields.map(field => 
+                  <TextField
+                    key={field.id}
+                    id={field.id}
+                    value={field.value}
+                    onChange={field.onChange}
+                    margin={field.margin}
+                    placeholder={field.placeholder}
+                    type={field.type}
+                    name={field.name}
+                    fullWidth
+                  />
+                )}
                 <Box mt={4}>
                   <Button variant="outlined" type="submit">
                     Complete Reset
@@ -104,15 +141,15 @@ function ResetPassword(props) {
                   <Typography comonent="p">
                     {passwordResetState?.passwordResetMessage}
                   </Typography>
-
                   <Grid>
                     <TextField
-                      id="email"
-                      value={email || ''}
-                      onChange={(e) => setEmail(e.target.value)}
-                      margin="normal"
-                      placeholder="Email Address"
-                      type="email"
+                      id={fields[0].id}
+                      value={fields[0].valuee}
+                      onChange={fields[0].onChange}
+                      margin={fields[0].margin}
+                      placeholder={fields[0].placeholder}
+                      type={fields[0].type}
+                      name={fields[0].name}
                       fullWidth
                     />
                     <Box mt={4}>
