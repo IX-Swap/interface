@@ -10,19 +10,19 @@ const BankListComponent = React.lazy(() => import('./BankListComponent'));
 const routes = [
   {
     route: '/accounts/banks',
-    component: <BankListComponent />
+    component: (props) => <BankListComponent {...props} />,
   },
   {
     route: '/accounts/banks/deposit/:bankId',
-    component: <BankDepositComponent />
+    component: (props) => <BankDepositComponent {...props} />,
   },
   {
     route: '/accounts/banks/withdraw/:bankId',
-    component: <BankWithrawComponent />
+    component: (props) => <BankWithrawComponent {...props} />,
   },
   {
     route: '/accounts/banks/bank-create',
-    component: <BankCreateComponent />
+    component: (props) => <BankCreateComponent {...props} />,
   },
 ];
 
@@ -30,13 +30,14 @@ function BankRoutes() {
   return (
     <>
       <Suspense fallback={<div>Loading...</div>}>
-        {routes.map((route, index) => 
+        {routes.map((route, index) => (
           <Route
+            key={route.route}
             exact={index === 0}
             path={route.route}
-            component={() => route.component}
+            component={route.component}
           />
-        )}
+        ))}
       </Suspense>
     </>
   );

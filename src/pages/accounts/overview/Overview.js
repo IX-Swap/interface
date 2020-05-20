@@ -95,9 +95,10 @@ export default function Overview() {
           <List component="nav" aria-label="secondary mailbox folders">
             {personalBalances &&
               // eslint-disable-next-line $$FlowFixMe
-              personalBalances.map((balance: Balance) => (
-                <ListItem button>
-                  <b>{balance.name}: </b>&nbsp;&nbsp;&nbsp;{balance.balance} {balance.symbol}
+              personalBalances.map((balance: Balance, index) => (
+                <ListItem button key={index}>
+                  <b>{balance.name}: </b>&nbsp;&nbsp;&nbsp;{balance.balance}{' '}
+                  {balance.symbol}
                 </ListItem>
               ))}
           </List>

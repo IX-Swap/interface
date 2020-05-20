@@ -91,7 +91,8 @@ function AccountsPanel({ location }: any) {
   ];
 
   let { pathname } = location;
-  const matched = (path: string): boolean => routes.some((p) => p === path);
+  const matched = (path: string): boolean =>
+    routes.some((p) => p.route === path);
 
   // TODO: remove this hack, use proper routing
   while (!matched(pathname) && pathname !== '/') {
@@ -114,6 +115,7 @@ function AccountsPanel({ location }: any) {
             >
               {routes.map((route, index) => (
                 <Tab
+                  key={route.route}
                   component={Link}
                   to={route.route}
                   value={route.route}
@@ -123,15 +125,18 @@ function AccountsPanel({ location }: any) {
               ))}
             </Tabs>
           </AppBar>
-          <Switch>
-            {routes.map((route, index) => (
-              <Route
-                exact={index === 0}
-                path={route.route}
-                render={() => route.component}
-              />
-            ))}
-          </Switch>
+          <Suspense fallback={<span>loading</span>}>
+            <Switch>
+              {routes.map((route, index) => (
+                <Route
+                  key={route.route}
+                  exact={index === 0}
+                  path={route.route}
+                  render={() => route.component}
+                />
+              ))}
+            </Switch>
+          </Suspense>
         </Paper>
       </Grid>
     </Grid>

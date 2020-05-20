@@ -57,7 +57,8 @@ const useGenericBankLogic = (bankId: string) => {
   };
 };
 
-function BankDepositComponent({ match }: RouteProps) {
+function BankDepositComponent({ match, ...others }: RouteProps) {
+  console.log(match, others);
   const { bankId } = match.params;
   const { bank, deposit, amount, isConfirmation } = useGenericBankLogic(bankId);
 
