@@ -10,32 +10,18 @@ import {
   TableBody,
   LinearProgress,
   TablePagination,
-  MenuItem,
-  Select,
-  FormControl,
-  InputLabel,
-  Grid,
   Box,
+  IconButton,
 } from '@material-ui/core';
-import { makeStyles } from '@material-ui/core/styles';
-import {
-  KeyboardDatePicker,
-  MuiPickersUtilsProvider,
-} from '@material-ui/pickers';
-import DateFnsUtils from '@date-io/date-fns';
+import EditIcon from '@material-ui/icons/Edit';
 import moment from 'moment';
 import { useAssetsState } from 'context/assets';
-import type { Asset } from 'context/assets/types';
+import type { BaseStateWithPagination } from 'context/base/withPagination/types';
 import type { Transaction } from './modules/types';
 import TransactionsListModule from './modules';
+import FiltersComponent from './Filters';
 
 import Actions from './modules/actions';
-
-const useStyles = makeStyles({
-  form: {
-    width: 270,
-  },
-});
 
 const {
   useTransactionsListDispatch,
@@ -111,7 +97,7 @@ type Filters = {
 
 const useTransactionsListLogic = () => {
   const tDispatch = useTransactionsListDispatch();
-  const tState = useTransactionsListState();
+  const tState: BaseStateWithPagination<Transaction> = useTransactionsListState();
   const { assets } = useAssets();
   const { status, page, total, limit, items } = tState;
   const mountedRef = useRef(true);
@@ -183,87 +169,6 @@ const useTransactionsListLogic = () => {
   };
 };
 
-type FilterProps = {
-  filters: Filters,
-  assets: Array<Asset>,
-  handleAssetChange: (ev: SyntheticInputEvent<HTMLElement>) => void,
-  handleDateChange: (name: 'to' | 'from', date: Date) => void,
-};
-
-const FiltersComponent = ({
-  filters,
-  assets,
-  handleAssetChange,
-  handleDateChange,
-}: FilterProps) => {
-  const classes = useStyles();
-  return (
-    <MuiPickersUtilsProvider utils={DateFnsUtils}>
-      <Box mx={4}>
-        <Grid container justify="space-between">
-          <Grid item container direction="row" xs={12} sm={9}>
-            <Box mr={2}>
-              <KeyboardDatePicker
-                className={classes.form}
-                disableToolbar
-                variant="inline"
-                format="MM/dd/yyyy"
-                margin="normal"
-                id="from-filter"
-                label="From"
-                value={filters.from}
-                onChange={(date) => handleDateChange('from', date)}
-                KeyboardButtonProps={{
-                  'aria-label': 'change date',
-                }}
-                autoOk
-              />
-            </Box>
-            <KeyboardDatePicker
-              className={classes.form}
-              disableToolbar
-              variant="inline"
-              format="MM/dd/yyyy"
-              margin="normal"
-              id="to-filter"
-              label="To"
-              value={filters.to}
-              onChange={(date) => handleDateChange('to', date)}
-              KeyboardButtonProps={{
-                'aria-label': 'change date',
-              }}
-              autoOk
-            />
-          </Grid>
-          <Grid item xs={12} sm={3} justify="flex-end" container>
-            {assets && (
-              <FormControl margin="normal" className={classes.form}>
-                <InputLabel id="currency-selector-value-label">
-                  Asset
-                </InputLabel>
-                <Select
-                  fullWidth
-                  label="Asset"
-                  labelId="currency-selector"
-                  id="currency-selector-value"
-                  value={filters.asset}
-                  onChange={handleAssetChange}
-                >
-                  {assets.map((item) => (
-                    <MenuItem key={item._id} value={item._id}>
-                      {item.symbol}
-                    </MenuItem>
-                  ))}
-                </Select>
-              </FormControl>
-            )}
-          </Grid>
-        </Grid>
-      </Box>
-    </MuiPickersUtilsProvider>
-  );
-};
-
 export default function Transactions() {
   const {
     items,
@@ -298,6 +203,9 @@ export default function Transactions() {
                     <b>{e.label}</b>
                   </TableCell>
                 ))}
+                <TableCell>
+                  <b>Actions</b>
+                </TableCell>
               </TableRow>
             </TableHead>
             {status === TRANSACTIONS_LIST_STATUS.INIT && (
@@ -316,6 +224,16 @@ export default function Transactions() {
                         {(e.render && e.render(row[e.key])) || row[e.key]}
                       </TableCell>
                     ))}
+                    <TableCell>
+                      <IconButton
+                        aria-label="edit"
+                        onClick={() => {
+                          console.log(row);
+                        }}
+                      >
+                        <EditIcon />
+                      </IconButton>
+                    </TableCell>
                   </TableRow>
                 ))}
               </TableBody>
