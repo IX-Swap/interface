@@ -8,15 +8,16 @@ import {
   TableHead,
   TableRow,
   TableBody,
-  Paper,
   LinearProgress,
   TablePagination,
-  MenuItem,
-  Select,
+  Box,
 } from '@material-ui/core';
 import moment from 'moment';
 import { useAssetsState } from 'context/assets';
+import type { BaseStateWithPagination } from 'context/base/withPagination/types';
+import type { Transaction } from './modules/types';
 import TransactionsListModule from './modules';
+import FiltersComponent from './Filters';
 
 import Actions from './modules/actions';
 
@@ -25,6 +26,7 @@ const {
   useTransactionsListState,
   TRANSACTIONS_LIST_STATUS,
 } = TransactionsListModule;
+
 const {
   getTransactionsList,
   setPage,
@@ -32,21 +34,75 @@ const {
   clearApiStatus,
 } = Actions;
 
+type TableColumn = {
+  label: string,
+  key: $Keys<Transaction>,
+  align?: string,
+  render?: any,
+};
+
+const columns: Array<TableColumn> = [
+  {
+    label: 'Transaction ID',
+    key: 'transactionId',
+  },
+  {
+    label: 'Date',
+    key: 'date',
+    render: (value) => moment(value).format('MM/DD/YYYY'),
+  },
+  {
+    label: 'Type',
+    key: 'type',
+  },
+  {
+    label: 'Reference',
+    key: 'reference',
+  },
+  {
+    label: 'Debit',
+    key: 'debit',
+    align: 'right',
+    render: (value) =>
+      value && value.toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,'),
+  },
+  {
+    label: 'Credit',
+    key: 'credit',
+    align: 'right',
+    render: (value) =>
+      value && value.toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,'),
+  },
+  {
+    label: 'Balance',
+    key: 'runningTotal',
+    align: 'right',
+    render: (value) =>
+      value && value.toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,'),
+  },
+];
+
 const useAssets = () => {
   const assetsState = useAssetsState();
   return { assets: assetsState.assets };
 };
 
+type Filters = {
+  asset: string,
+  from: Date,
+  to: Date,
+};
+
 const useTransactionsListLogic = () => {
   const tDispatch = useTransactionsListDispatch();
-  const tState = useTransactionsListState();
+  const tState: BaseStateWithPagination<Transaction> = useTransactionsListState();
   const { assets } = useAssets();
   const { status, page, total, limit, items } = tState;
   const mountedRef = useRef(true);
-  const [filter, setFilter] = useState({
-    asset: assets[1]._id,
-    from: moment(new Date()).format('MM-DD-YYYY'),
-    to: moment(new Date()).format('MM-DD-YYYY'),
+  const [filter, setFilter] = useState<Filters>({
+    asset: (assets.length && assets[0]._id) || '',
+    from: new Date(),
+    to: new Date(),
   });
 
   const handleChangeRowsPerPage = (newRows: number) => {
@@ -65,6 +121,14 @@ const useTransactionsListLogic = () => {
 
   const handleChangePage = (_, newPage: number) => {
     setPage(tDispatch, { page: newPage });
+  };
+
+  const handleDateChange = (name: 'to' | 'from', date: Date) => {
+    const mFilter = { ...filter };
+    mFilter[name] = date;
+    setFilter(mFilter);
+
+    setPage(tDispatch, { page });
   };
 
   useEffect(() => {
@@ -99,41 +163,9 @@ const useTransactionsListLogic = () => {
     handleChangeRowsPerPage,
     handleChangePage,
     handleAssetChange,
+    handleDateChange,
   };
 };
-
-const columns = [
-  {
-    label: 'Transaction ID',
-    key: 'transactionId',
-  },
-  {
-    label: 'Date',
-    key: 'date',
-    render: (value) => moment(value).format('MM/DD/YYYY'),
-  },
-  {
-    label: 'Type',
-    key: 'type',
-  },
-  {
-    label: 'Reference',
-    key: 'reference',
-  },
-  {
-    label: 'Debit',
-    key: 'debit',
-  },
-  {
-    label: 'Credit',
-    key: 'credit',
-  },
-  {
-    label: 'Balance',
-    key: 'runningTotal',
-    render: (value) => value.toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,'),
-  },
-];
 
 export default function Transactions() {
   const {
@@ -147,74 +179,70 @@ export default function Transactions() {
     handleChangeRowsPerPage,
     handleChangePage,
     handleAssetChange,
+    handleDateChange,
   } = useTransactionsListLogic();
 
   return (
     <>
-      <Select
-        fullWidth
-        labelId="currency-selector"
-        id="currency-selector-value"
-        value={filter.asset}
-        onChange={handleAssetChange}
-      >
-        {assets.map((item) => (
-          <MenuItem key={item._id} value={item._id}>
-            {item.symbol}
-          </MenuItem>
-        ))}
-      </Select>
-      <TableContainer component={Paper}>
-        {status === TRANSACTIONS_LIST_STATUS.GETTING && <LinearProgress />}
-        <Table aria-label="simple table">
-          <TableHead>
-            <TableRow>
-              {columns.map((e) => (
-                <TableCell key={e.label}>
-                  <b>{e.label}</b>
-                </TableCell>
-              ))}
-            </TableRow>
-          </TableHead>
-          {status === TRANSACTIONS_LIST_STATUS.INIT && (
-            <TableBody>
+      <FiltersComponent
+        filters={filter}
+        assets={assets}
+        handleDateChange={handleDateChange}
+        handleAssetChange={handleAssetChange}
+      />
+      <Box mx={4} my={2}>
+        <TableContainer>
+          {status === TRANSACTIONS_LIST_STATUS.GETTING && <LinearProgress />}
+          <Table aria-label="simple table">
+            <TableHead>
               <TableRow>
-                <TableCell>loding</TableCell>
+                {columns.map((e) => (
+                  <TableCell key={e.label}>
+                    <b>{e.label}</b>
+                  </TableCell>
+                ))}
               </TableRow>
-            </TableBody>
-          )}
-          {items && status === TRANSACTIONS_LIST_STATUS.IDLE && (
-            <TableBody>
-              {items.map((row, index) => (
-                <TableRow key={index}>
-                  {columns.map((e) => (
-                    <TableCell key={e.key}>
-                      {(e.render && e.render(row[e.key])) || row[e.key]}
-                    </TableCell>
-                  ))}
+            </TableHead>
+            {status === TRANSACTIONS_LIST_STATUS.INIT && (
+              <TableBody>
+                <TableRow>
+                  <TableCell>loding</TableCell>
                 </TableRow>
-              ))}
-            </TableBody>
-          )}
-          {total && (
-            <TableFooter>
-              <TableRow>
-                <TablePagination
-                  rowsPerPageOptions={[5, 10, 25]}
-                  colSpan={2}
-                  count={total}
-                  rowsPerPage={limit}
-                  page={page}
-                  onChangeRowsPerPage={(
-                    evt: SyntheticInputEvent<HTMLElement>
-                  ) => handleChangeRowsPerPage(parseInt(evt.target.value))}
-                  onChangePage={handleChangePage}
-                />
-              </TableRow>
-            </TableFooter>
-          )}
-        </Table>
-      </TableContainer>
+              </TableBody>
+            )}
+            {items && status === TRANSACTIONS_LIST_STATUS.IDLE && (
+              <TableBody>
+                {items.map((row: Transaction, index) => (
+                  <TableRow key={index}>
+                    {columns.map((e) => (
+                      <TableCell key={e.key} align={e.align || 'left'}>
+                        {(e.render && e.render(row[e.key])) || row[e.key]}
+                      </TableCell>
+                    ))}
+                  </TableRow>
+                ))}
+              </TableBody>
+            )}
+            {total && (
+              <TableFooter>
+                <TableRow>
+                  <TablePagination
+                    rowsPerPageOptions={[5, 10, 25]}
+                    colSpan={columns.length}
+                    count={total}
+                    rowsPerPage={limit}
+                    page={page}
+                    onChangeRowsPerPage={(
+                      evt: SyntheticInputEvent<HTMLElement>
+                    ) => handleChangeRowsPerPage(parseInt(evt.target.value))}
+                    onChangePage={handleChangePage}
+                  />
+                </TableRow>
+              </TableFooter>
+            )}
+          </Table>
+        </TableContainer>
+      </Box>
     </>
   );
 }

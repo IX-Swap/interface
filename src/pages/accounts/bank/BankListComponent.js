@@ -316,9 +316,6 @@ function ListBankAccounts({
             <TableCell align="center">
               <b>Account Number</b>
             </TableCell>
-            <TableCell align="center">
-              <b>Balance</b>
-            </TableCell>
             <TableCell align="left">
               <b>Status</b>
             </TableCell>
@@ -333,7 +330,6 @@ function ListBankAccounts({
               <TableCell>{row.asset.symbol}</TableCell>
               <TableCell align="left">{row.bankName}</TableCell>
               <TableCell align="right">{row.bankAccountNumber}</TableCell>
-              <TableCell align="right">no data </TableCell>
               <TableCell align="center">{renderRowActions(row)}</TableCell>
               <TableCell align="center">
                 <IconButton
