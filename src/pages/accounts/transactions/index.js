@@ -203,9 +203,6 @@ export default function Transactions() {
                     <b>{e.label}</b>
                   </TableCell>
                 ))}
-                <TableCell>
-                  <b>Actions</b>
-                </TableCell>
               </TableRow>
             </TableHead>
             {status === TRANSACTIONS_LIST_STATUS.INIT && (
@@ -224,16 +221,6 @@ export default function Transactions() {
                         {(e.render && e.render(row[e.key])) || row[e.key]}
                       </TableCell>
                     ))}
-                    <TableCell>
-                      <IconButton
-                        aria-label="edit"
-                        onClick={() => {
-                          console.log(row);
-                        }}
-                      >
-                        <EditIcon />
-                      </IconButton>
-                    </TableCell>
                   </TableRow>
                 ))}
               </TableBody>
