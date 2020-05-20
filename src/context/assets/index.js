@@ -10,8 +10,8 @@ import type { AssetsListState } from './types';
 const StateContext = React.createContext<AssetsListState>(initialState);
 const DispatchContext = React.createContext();
 
-export function useAssetsState() {
-  const context = React.useContext(StateContext);
+export function useAssetsState(): AssetsListState {
+  const context = React.useContext<AssetsListState>(StateContext);
   if (context === undefined) {
     throw new Error('useAssetsState must be used within a AssetsProvider');
   }

@@ -44,7 +44,7 @@ const useTransactionsListLogic = () => {
   const { status, page, total, limit, items } = tState;
   const mountedRef = useRef(true);
   const [filter, setFilter] = useState({
-    asset: assets[1]._id,
+    asset: (assets.length && assets[0]._id) || '',
     from: moment(new Date()).format('MM-DD-YYYY'),
     to: moment(new Date()).format('MM-DD-YYYY'),
   });
@@ -151,19 +151,21 @@ export default function Transactions() {
 
   return (
     <>
-      <Select
-        fullWidth
-        labelId="currency-selector"
-        id="currency-selector-value"
-        value={filter.asset}
-        onChange={handleAssetChange}
-      >
-        {assets.map((item) => (
-          <MenuItem key={item._id} value={item._id}>
-            {item.symbol}
-          </MenuItem>
-        ))}
-      </Select>
+      {assets && (
+        <Select
+          fullWidth
+          labelId="currency-selector"
+          id="currency-selector-value"
+          value={filter.asset}
+          onChange={handleAssetChange}
+        >
+          {assets.map((item) => (
+            <MenuItem key={item._id} value={item._id}>
+              {item.symbol}
+            </MenuItem>
+          ))}
+        </Select>
+      )}
       <TableContainer component={Paper}>
         {status === TRANSACTIONS_LIST_STATUS.GETTING && <LinearProgress />}
         <Table aria-label="simple table">
