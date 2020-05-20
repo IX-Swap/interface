@@ -11,9 +11,7 @@ import {
   LinearProgress,
   TablePagination,
   Box,
-  IconButton,
 } from '@material-ui/core';
-import EditIcon from '@material-ui/icons/Edit';
 import moment from 'moment';
 import { useAssetsState } from 'context/assets';
 import type { BaseStateWithPagination } from 'context/base/withPagination/types';
