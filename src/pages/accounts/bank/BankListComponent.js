@@ -24,6 +24,8 @@ import TablePagination from '@material-ui/core/TablePagination';
 
 import { withRouter, useHistory, RouteProps } from 'react-router-dom';
 
+import { snackbarService } from 'uno-material-ui';
+
 import EditBankComponent from './EditBankComponent';
 import BankListModule from './modules';
 import Actions from './modules/actions';
@@ -52,7 +54,6 @@ function useBankListLogic() {
   const mountedRef = useRef(true);
   const [activeBank, setActiveBank] = useState<BankRequest>(baseBankRequest);
   const [editOpen, setEditOpen] = useState(false);
-  const [editSuccess, setEditSuccess] = useState(false);
 
   const handleChangePage = (_, newPage: number) => {
     setPage(bankDispatch, { page: newPage });
@@ -81,14 +82,15 @@ function useBankListLogic() {
 
   const closeEdit = (saved: boolean) => {
     setEditOpen(false);
-    setEditSuccess(saved || false);
     setPage(bankDispatch, { page });
     setActiveBank(baseBankRequest);
-    setTimeout(() => {
-      if (mountedRef.current && saved) {
-        setEditSuccess(false);
-      }
-    }, 5000);
+
+    if (saved) {
+      snackbarService.showSnackbar(
+        'Successfully updated bank account details!',
+        false
+      );
+    }
   };
 
   useEffect(() => {
@@ -120,7 +122,6 @@ function useBankListLogic() {
     editOpen,
     statusCode,
     error,
-    editSuccess,
     closeEdit,
     editBank,
     handleChangePage,
@@ -138,7 +139,6 @@ function BankListComponent(props: RouteProps) {
     page,
     statusCode,
 
-    editSuccess,
     editOpen,
     closeEdit,
     activeBank,
@@ -152,22 +152,6 @@ function BankListComponent(props: RouteProps) {
 
   if ([BANK_LIST_STATUS.IDLE].includes(status)) {
     componentToRender = <AddBankAccount props={props} />;
-  }
-
-  const {
-    location: { state },
-  } = props;
-
-  let isSaved = state && state.savedBank;
-
-  if (isSaved) {
-    setTimeout(() => {
-      isSaved = false;
-      props.history.replace({
-        ...props.location,
-        state: {},
-      });
-    }, 5000);
   }
 
   if (items.length > 0) {
@@ -193,13 +177,6 @@ function BankListComponent(props: RouteProps) {
             </Button>
           </Grid>
         </Box>
-        {(editSuccess || isSaved) && (
-          <Box mx={3} mt={3}>
-            <Alert severity="success">
-              Successfully {isSaved ? 'added' : 'updated'} Bank Account!
-            </Alert>
-          </Box>
-        )}
         {activeBank.bankAccountNumber && (
           <EditBankComponent
             open={editOpen}
