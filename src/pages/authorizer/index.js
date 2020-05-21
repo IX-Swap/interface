@@ -7,19 +7,46 @@ const Banks = React.lazy(() => import('./banks'));
 const Deposits = React.lazy(() => import('./deposits'));
 const Withdrawals = React.lazy(() => import('./withdrawals'));
 
+const routes = [
+  {
+    route: '/authorizer/banks',
+    title: 'Banks',
+    component: Banks,
+  },
+  {
+    route: '/authorizer/deposits',
+    title: 'Deposits',
+    component: Deposits,
+  },
+  {
+    route: '/authorizer/withrawals',
+    title: 'Withdrawals',
+    component: Withdrawals,
+  },
+]
+
 const Links = () => (
-  <>
-    <Link to="/authorizer/banks">Banks</Link>
-    <Link to="/authorizer/deposits">Deposits</Link>
-    <Link to="/authorizer/withrawals">Withdrawals</Link>
-  </>
+  <React.Fragment>
+    {routes.map(route => 
+      <Link 
+        key={route.title}
+        to={route.route}
+      >
+        {route.title}
+      </Link>
+    )}
+  </React.Fragment>
 );
 
 const Routes = () => (
   <Suspense fallback={<span>loading</span>}>
-    <Route path="/authorizer/banks" component={Banks} />
-    <Route path="/authorizer/deposits" component={Deposits} />
-    <Route path="/authorizer/withrawals" component={Withdrawals} />
+    {routes.map(route => 
+      <Route 
+        key={route.title}
+        path={route.route}
+        component={route.component} 
+      />
+    )}  
   </Suspense>
 );
 
