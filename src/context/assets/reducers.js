@@ -28,6 +28,13 @@ export default function assetsReducer(
         status: ASSETS_STATUS.IDLE,
         error: payload.message,
       };
+    case assetsActions.SET_ASSET_TYPE:
+      return {
+        ...state,
+        status: ASSETS_STATUS.INIT,
+        type: payload.type,
+        page: 0,
+      };
     default:
       throw new Error(`Unhandled action type: ${type}`);
   }

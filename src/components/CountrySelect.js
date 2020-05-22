@@ -37,9 +37,8 @@ export default function CountrySelect({
 }) {
   const classes = useStyles();
 
-  const isSelected = (option: { label: string }, val: { label: string }) => {
-    return option.label === val.label;
-  };
+  const isSelected = (option: { label: string }, val: { label: string }) =>
+    option.label === val.label;
 
   return (
     <Autocomplete
@@ -56,7 +55,7 @@ export default function CountrySelect({
       renderOption={(option) => (
         <>
           <span>{countryToFlag(option.code)}</span>
-          {option.label} ({option.code}) +{option.phone}
+          {option.label} ({option.code})
         </>
       )}
       renderInput={(params) => (

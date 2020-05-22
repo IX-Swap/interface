@@ -1,6 +1,12 @@
 // @flow
-import React, { Suspense } from 'react';
+import React, { Suspense, useRef, useEffect } from 'react';
 import { withRouter, Route } from 'react-router-dom';
+
+import { useAssetsState, useAssetsDispatch } from 'context/assets';
+import { ASSETS_STATUS } from 'context/assets/types';
+import * as AssetsActions from 'context/assets/actions';
+
+const { setAssetType } = AssetsActions;
 
 const BankDepositComponent = React.lazy(() => import('./deposit'));
 const BankWithrawComponent = React.lazy(() => import('./withdraw'));
@@ -26,7 +32,28 @@ const routes = [
   },
 ];
 
+const useUpdateAssets = () => {
+  const mountedRef = useRef(true);
+  const { status: assetsStatus, type } = useAssetsState();
+  const aDispatch = useAssetsDispatch();
+
+  useEffect(() => {
+    if (assetsStatus === ASSETS_STATUS.INIT || type !== 'Currency') {
+      setAssetType(aDispatch, { ref: mountedRef, type: 'Currency' });
+    }
+  }, [aDispatch, assetsStatus, type]);
+
+  useEffect(
+    () => () => {
+      mountedRef.current = false;
+    },
+    []
+  );
+};
+
 function BankRoutes() {
+  useUpdateAssets();
+
   return (
     <>
       <Suspense fallback={<div>Loading...</div>}>
