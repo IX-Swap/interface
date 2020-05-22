@@ -49,13 +49,17 @@ const useUpdateAssets = () => {
     },
     []
   );
+
+  return { assetsStatus, type };
 };
 
 function BankRoutes() {
-  useUpdateAssets();
+  const { assetsStatus, type } = useUpdateAssets();
+
+  console.log('atype', type);
 
   return (
-    <>
+    assetsStatus === ASSETS_STATUS.IDLE && (
       <Suspense fallback={<div>Loading...</div>}>
         {routes.map((route, index) => (
           <Route
@@ -66,7 +70,7 @@ function BankRoutes() {
           />
         ))}
       </Suspense>
-    </>
+    )
   );
 }
 
