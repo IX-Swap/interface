@@ -15,6 +15,7 @@ import Invest from '../pages/invest';
 import Users from '../pages/settings/users';
 import Security from '../pages/security';
 import Authorizer from '../pages/authorizer';
+import Settings from '../pages/settings';
 
 import { useLayoutState, LayoutProvider } from '../context/LayoutContext';
 import { useUserState, useUserDispatch } from '../context/user';
@@ -73,6 +74,10 @@ function App() {
         route: '/authorizer',
         component: Authorizer,
       },
+      {
+        route: '/settings',
+        component: Settings,
+      },
     ];
 
     return (
@@ -86,13 +91,14 @@ function App() {
         >
           <div className={classes.fakeToolbar} />
           <Route exact path="/" render={GotoDashboard} />
-          {privateRoutes.map((route, i) => 
-            <PrivateRoute 
-              key={i} 
-              exact={i === 0} 
-              path={route.route} 
-              component={route.component} />
-          )}
+          {privateRoutes.map((route, i) => (
+            <PrivateRoute
+              key={i}
+              exact={i === 0}
+              path={route.route}
+              component={route.component}
+            />
+          ))}
         </div>
       </div>
     );
