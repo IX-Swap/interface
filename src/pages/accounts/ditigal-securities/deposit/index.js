@@ -188,7 +188,9 @@ export default function DigitalSecurities({ match }: RouteProps) {
         </Grid>
         {dsState.selectedCoin && (
           <Grid container item xs={12}>
-            <Typography variant="h3">Recent Deposit History</Typography>
+            <Box my={2}>
+              <Typography variant="h3">Recent Deposit History</Typography>
+            </Box>
             <DepositList assetId={dsState.selectedCoin.assetId} />
           </Grid>
         )}

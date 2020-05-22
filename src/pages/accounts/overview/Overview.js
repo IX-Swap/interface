@@ -4,21 +4,37 @@ import { Typography, Grid, List, ListItem, Box } from '@material-ui/core';
 import { Doughnut, Line } from 'react-chartjs-2';
 import PersonalBalancesListModule from 'context/balance/personal';
 import type { Balance } from 'context/balance/types';
-
+import * as AssetsActions from 'context/assets/actions';
 import Actions from 'context/balance/personal/actions';
+import { useAssetsState, useAssetsDispatch } from 'context/assets';
+import { ASSETS_STATUS } from 'context/assets/types';
+
+const { setAssetType } = AssetsActions;
 
 const {
   usePersonalBalancesListDispatch,
   usePersonalBalancesListState,
   PERSONAL_BALANCE_LIST_STATUS,
 } = PersonalBalancesListModule;
-const { getPersonalBalanceList, clearApiStatus } = Actions;
+const { getPersonalBalanceList, clearApiStatus, setPage } = Actions;
 
 const useOverviewLogic = () => {
   const mountedRef = useRef(true);
   const pBDispatch = usePersonalBalancesListDispatch();
   const pBListState = usePersonalBalancesListState();
+  const { status: assetsStatus, type } = useAssetsState();
+  const aDispatch = useAssetsDispatch();
   const { status, page, limit, items } = pBListState;
+
+  useEffect(() => {
+    if (assetsStatus === ASSETS_STATUS.INIT || type) {
+      setAssetType(aDispatch, { ref: mountedRef, type: undefined });
+    }
+
+    if (assetsStatus === ASSETS_STATUS.IDLE && !type) {
+      setPage(pBDispatch, { page });
+    }
+  }, [aDispatch, assetsStatus, pBDispatch, page, type]);
 
   useEffect(() => {
     if (status === PERSONAL_BALANCE_LIST_STATUS.INIT) {
@@ -29,7 +45,7 @@ const useOverviewLogic = () => {
       });
       clearApiStatus(pBDispatch);
     }
-  }, [page, limit, status, pBDispatch]);
+  }, [page, limit, status, pBDispatch, type]);
 
   useEffect(
     () => () => {
