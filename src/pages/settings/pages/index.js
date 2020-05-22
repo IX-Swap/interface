@@ -13,6 +13,8 @@ import {
 } from '@material-ui/core';
 import PageTitle from 'components/PageTitle';
 import { makeStyles } from '@material-ui/styles';
+import keyImg from '../assets/key.png';
+import gAuthImg from '../assets/googleauth.png';
 
 const useStyles = makeStyles((theme) => ({
   button: {
@@ -20,6 +22,22 @@ const useStyles = makeStyles((theme) => ({
     color: 'white',
     fontWeight: 'bold',
     width: '100px',
+  },
+  logoImg: {
+    height: '2.5em',
+    marginRight: '1em',
+  },
+  btnImg: {
+    height: '3rem',
+    marginRight: '1.5em',
+  },
+  btnLabel: {
+    fontSize: '0.95rem',
+  },
+  popupBtn: {
+    '&:hover': {
+      cursor: 'pointer',
+    },
   },
 }));
 
@@ -43,10 +61,25 @@ const SettingsLandingPage = () => {
                 <Box width="60%">
                   <Box mt={5} mb={3}>
                     <Grid container alignItems="center" justify="space-between">
-                      <Grid item>
-                        <b>Google Authenticator</b>
+                      <Grid
+                        container
+                        item
+                        alignItems="center"
+                        justify="flex-start"
+                        xs={8}
+                      >
+                        <Grid item>
+                          <img
+                            src={gAuthImg}
+                            className={classes.logoImg}
+                            alt="gAuth"
+                          />
+                        </Grid>
+                        <Grid item>
+                          <b>Google Authenticator</b>
+                        </Grid>
                       </Grid>
-                      <Grid item>
+                      <Grid item container justify="flex-end" xs={4}>
                         <Button
                           className={classes.button}
                           onClick={() => setOpen(true)}
@@ -58,10 +91,25 @@ const SettingsLandingPage = () => {
                   </Box>
                   <Box mb={5}>
                     <Grid container alignItems="center" justify="space-between">
-                      <Grid item>
-                        <b>Password</b>
+                      <Grid
+                        container
+                        item
+                        alignItems="center"
+                        justify="flex-start"
+                        xs={8}
+                      >
+                        <Grid item>
+                          <img
+                            src={keyImg}
+                            className={classes.logoImg}
+                            alt="key"
+                          />
+                        </Grid>
+                        <Grid item>
+                          <b>Password</b>
+                        </Grid>
                       </Grid>
-                      <Grid item>
+                      <Grid container item justify="flex-end" xs={4}>
                         <Button
                           onClick={() =>
                             history.push('/settings/change-password')
@@ -85,7 +133,7 @@ const SettingsLandingPage = () => {
                       <b>Currency</b>
                     </Grid>
                     <Grid item>
-                      <Button>SGD</Button>
+                      <Button disabled>SGD</Button>
                     </Grid>
                   </Grid>
                 </Box>
@@ -104,16 +152,18 @@ const SettingsLandingPage = () => {
             <Box
               width="60%"
               mt={4}
-              p={4}
+              p={2}
               border={1}
               borderColor="grey.300"
               component="button"
               onClick={() => history.push('/settings/setup-2fa')}
             >
-              <Grid container>
-                asd
+              <Grid container alignItems="center" justify="center">
                 <Grid item>
-                  <b>Google Authenticator</b>
+                  <img src={gAuthImg} className={classes.btnImg} alt="gAuth" />
+                </Grid>
+                <Grid item>
+                  <b className={classes.btnLabel}>Google Authenticator</b>
                 </Grid>
               </Grid>
             </Box>
