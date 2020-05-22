@@ -89,7 +89,7 @@ const Header = ({ classes, isSidebarOpened, toggleSidebar, ...props }) => (
         aria-controls='mail-menu'
         onClick={props.openNotificationsMenu}
         className={classes.headerMenuButton}
-      ></IconButton>
+      />
       <IconButton
         color='inherit'
         aria-haspopup='true'

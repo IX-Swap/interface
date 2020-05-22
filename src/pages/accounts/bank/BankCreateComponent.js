@@ -10,6 +10,7 @@ import {
   CircularProgress,
 } from '@material-ui/core';
 import Alert from '@material-ui/lab/Alert';
+import { snackbarService } from 'uno-material-ui';
 import { useAssetsState, useAssetsDispatch } from 'context/assets';
 import { ASSETS_STATUS } from 'context/assets/types';
 import * as AssetsActions from 'context/assets/actions';
@@ -61,22 +62,30 @@ function useGetters() {
     [history]
   );
 
-  useEffect(() => {
-    console.log('effect called', bankListStatus);
-    if (assetsStatus === ASSETS_STATUS.INIT) {
-      getAssets(assetsDispatch, {
-        ref: mountedRef,
-      });
-    }
+  if (assetsStatus === ASSETS_STATUS.INIT) {
+    getAssets(assetsDispatch, {
+      ref: mountedRef,
+    });
+  }
 
+  useEffect(() => {
     if (bankListStatus === BANK_LIST_STATUS.INIT) {
       setPage(bankListDispatch, { page });
     }
 
     if (bankListStatus === BANK_LIST_STATUS.IDLE && isSaving) {
+      let message = 'Failed to add bank account';
+      let type = 'error';
+
       setIsSaving(false);
       setPage(bankListDispatch, { page });
-      goBack(true);
+      if (!error && statusCode === 200) {
+        goBack(true);
+        message = 'Successfully added bank account';
+        type = 'success';
+      }
+
+      snackbarService.showSnackbar(message, type);
     }
 
     if (bankListStatus === bankSaveStatus.BANK_SAVING) {
@@ -91,6 +100,8 @@ function useGetters() {
     page,
     limit,
     bankListDispatch,
+    error,
+    statusCode,
   ]);
 
   useEffect(() => {
