@@ -225,27 +225,18 @@ export default function DigitalSecurities() {
               </TableCell>
             </TableRow>
           </TableHead>
-          {status === PERSONAL_BALANCE_LIST_STATUS.INIT && (
-            <TableBody>
-              <TableRow>
-                <TableCell>loding</TableCell>
+          <TableBody>
+            {items.map((row: UserSecurityBalance, index) => (
+              <TableRow key={index}>
+                {columns.map((e) => (
+                  <TableCell key={e.key} align={e.align || 'left'}>
+                    {(e.render && e.render(row[e.key])) || row[e.key]}
+                  </TableCell>
+                ))}
+                <TableCell>{renderRowActions(row)}</TableCell>
               </TableRow>
-            </TableBody>
-          )}
-          {items && status === PERSONAL_BALANCE_LIST_STATUS.IDLE && (
-            <TableBody>
-              {items.map((row: UserSecurityBalance, index) => (
-                <TableRow key={index}>
-                  {columns.map((e) => (
-                    <TableCell key={e.key} align={e.align || 'left'}>
-                      {(e.render && e.render(row[e.key])) || row[e.key]}
-                    </TableCell>
-                  ))}
-                  <TableCell>{renderRowActions(row)}</TableCell>
-                </TableRow>
-              ))}
-            </TableBody>
-          )}
+            ))}
+          </TableBody>
           {total && (
             <TableFooter>
               <TableRow>

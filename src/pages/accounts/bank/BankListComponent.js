@@ -154,7 +154,7 @@ function BankListComponent(props: RouteProps) {
     componentToRender = <AddBankAccount props={props} />;
   }
 
-  if (items.length > 0) {
+  if (items && items.length > 0) {
     componentToRender = (
       <>
         <Box mx={4} mt={4}>

@@ -328,7 +328,6 @@ export default function BankFormComponent({
                 <CountrySelect
                   value={{ label: bankAddress.country }}
                   onChange={(_, value) => {
-                    console.log(value);
                     setBankAddress({
                       ...bankAddress,
                       country: (value && value.label) || '',
