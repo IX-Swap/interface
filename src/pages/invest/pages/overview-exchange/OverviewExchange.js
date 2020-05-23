@@ -15,11 +15,11 @@ function OverviewExchange() {
     <Grid>
       <OverviewHeader />
       <Grid container spacing={1}>
-        <Grid item xs direction="column">
+        <Grid container item xs direction="column">
           <Monitoring />
           <Monitoring />
         </Grid>
-        <Grid item xs={6} direction="column">
+        <Grid container item xs={6} direction="column">
           <Paper className={classes.paper}>
             {
               // TODO: PLACEHOLDER FOR THE CHART
@@ -31,7 +31,7 @@ function OverviewExchange() {
             }
           </Paper>
         </Grid>
-        <Grid item xs direction="column">
+        <Grid container item xs direction="column">
           <Monitoring />
           <Monitoring />
         </Grid>

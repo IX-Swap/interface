@@ -19,9 +19,15 @@ function OverviewHeader () {
             justify="space-between"
             className={classes.overviewHeader}
         >
-            <Grid container alignItems="center" xs={6}> 
+            <Grid
+                container
+                item
+                alignItems="center"
+                xs={6}
+            > 
                 <Link to="/invest"> <ChevronLeftIcon /> </Link>
                 <Grid
+                    container
                     direction="column"
                     justify="flex-start"
                 >
@@ -54,7 +60,7 @@ function OverviewHeader () {
                 </Typography>
                 <Typography 
                     className={classes.price} 
-                    variant="p"
+                    variant="h6"
                 >
                     $123,456.00
                 </Typography>

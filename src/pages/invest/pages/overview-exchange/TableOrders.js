@@ -30,9 +30,9 @@ function createData(date, pair, side, price, amount, filled, total, cancel) {
 
 const rows = [
   createData('04/01/20', 'IXPS/SGD', 'Buy', 3.50, 20000, 100, 70000, true),
-  createData('04/01/20', 'IXPS/SGD', 'Buy', 3.50, 20000, 100, 70000, true),
-  createData('04/01/20', 'IXPS/SGD', 'Buy', 3.50, 20000, 100, 70000, true),
-  createData('04/01/20', 'IXPS/SGD', 'Buy', 3.50, 20000, 100, 70000, true),
+  createData('04/02/20', 'IXPS/SGD', 'Buy', 3.50, 20000, 100, 70000, true),
+  createData('04/03/20', 'IXPS/SGD', 'Buy', 3.50, 20000, 100, 70000, true),
+  createData('04/04/20', 'IXPS/SGD', 'Buy', 3.50, 20000, 100, 70000, true),
 ];
 
 export default function SimpleTable() {
