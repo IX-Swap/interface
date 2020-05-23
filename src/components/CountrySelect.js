@@ -37,9 +37,8 @@ export default function CountrySelect({
 }) {
   const classes = useStyles();
 
-  const isSelected = (option: { label: string }, val: { label: string }) => {
-    return option.label === val.label;
-  };
+  const isSelected = (option: { label: string }, val: { label: string }) =>
+    option.label === val.label;
 
   return (
     <Autocomplete
@@ -53,12 +52,14 @@ export default function CountrySelect({
       }}
       autoHighlight
       getOptionLabel={(option) => option.label}
-      renderOption={(option) => (
-        <>
-          <span>{countryToFlag(option.code)}</span>
-          {option.label} ({option.code}) +{option.phone}
-        </>
-      )}
+      renderOption={(option) =>
+        option.label && (
+          <>
+            <span>{countryToFlag(option.code)}</span>
+            {option.label} ({option.code})
+          </>
+        )
+      }
       renderInput={(params) => (
         <TextField
           {...params}
@@ -75,6 +76,7 @@ export default function CountrySelect({
 
 // From https://bitbucket.org/atlassian/atlaskit-mk-2/raw/4ad0e56649c3e6c973e226b7efaeb28cb240ccb0/packages/core/select/src/data/countries.js
 const countries = [
+  { code: '', label: '', phone: '' },
   { code: 'AD', label: 'Andorra', phone: '376' },
   { code: 'AE', label: 'United Arab Emirates', phone: '971' },
   { code: 'AF', label: 'Afghanistan', phone: '93' },

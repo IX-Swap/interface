@@ -18,6 +18,7 @@ import BankComponent from '../bank';
 
 const Overview = React.lazy(() => import('../overview/Overview'));
 const Transactions = React.lazy(() => import('../transactions'));
+const Wallets = React.lazy(() => import('../ditigal-securities'));
 
 function useAccountsLogic() {
   const classes = useStyles();
@@ -77,7 +78,7 @@ function AccountsPanel({ location }: any) {
     {
       route: '/accounts/wallets',
       label: 'DIGITAL SECURITIES',
-      component: <span>WALLETS</span>,
+      component: <Wallets />,
     },
     {
       route: '/accounts/reports',

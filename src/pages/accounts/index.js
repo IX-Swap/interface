@@ -11,9 +11,7 @@ import * as AssetActions from 'context/assets/actions';
 
 import { ASSETS_STATUS } from 'context/assets/types';
 import BanksModule from './bank/modules';
-import DepositPage from './deposit/DepositPage';
 import TransactionsModule from './transactions/modules';
-import WithdrawPage from './withdraw/WithdrawPage';
 import AccountsPanel from './components/AccountsPanel';
 
 const { AssetsProvider, useAssetsState, useAssetsDispatch } = AssetsModule;
@@ -25,15 +23,16 @@ const { BanksListProvider } = BanksModule;
 const useAssetsGetter = () => {
   const mountedRef = useRef(true);
   const aDispatch = useAssetsDispatch();
-  const { status } = useAssetsState();
+  const { status, type } = useAssetsState();
 
   useEffect(() => {
     if (status === ASSETS_STATUS.INIT) {
       getAssets(aDispatch, {
         ref: mountedRef,
+        type,
       });
     }
-  }, [aDispatch, status]);
+  }, [aDispatch, status, type]);
 
   useEffect(
     () => () => {
@@ -74,16 +73,6 @@ function AccountRoutes() {
     status === ASSETS_STATUS.IDLE && (
       <>
         <Route path="/accounts" component={() => <AccountsPanel />} />
-        <Route
-          exact
-          path="/accounts/deposit"
-          component={() => <DepositPage />}
-        />
-        <Route
-          exact
-          path="/accounts/withdraw"
-          component={() => <WithdrawPage />}
-        />
       </>
     )
   );
