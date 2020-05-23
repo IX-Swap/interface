@@ -36,6 +36,11 @@ const formatDeclarations = (
 };
 
 const fetchIdentity = async (type: 'individual' | 'corporate') => {
+  // TODO: TEMPORARY WHILE BACKEND STILL BEING FIXED
+  if (type === 'corporate') {
+    return null;
+  }
+
   const userId = localStore.getUserId();
   const individualUri = `/identity/${type}s/${userId}`;
   const result = await getRequest(individualUri);
