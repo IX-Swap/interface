@@ -15,6 +15,7 @@ import Invest from '../pages/invest';
 import Users from '../pages/settings/users';
 import Security from '../pages/security';
 import Authorizer from '../pages/authorizer';
+import Settings from '../pages/settings';
 
 import { useLayoutState, LayoutProvider } from '../context/LayoutContext';
 import { useUserState, useUserDispatch } from '../context/user';
@@ -44,6 +45,41 @@ function App() {
       if (status === 'INIT') getUser(userDispatch);
     }, [status, userDispatch]);
 
+    const privateRoutes = [
+      {
+        route: '/trade',
+        component: Exchange,
+      },
+      {
+        route: '/accounts',
+        component: Accounts,
+      },
+      {
+        route: '/identity',
+        component: Identity,
+      },
+      {
+        route: '/invest',
+        component: Invest,
+      },
+      {
+        route: '/security',
+        component: Security,
+      },
+      {
+        route: '/users',
+        component: Users,
+      },
+      {
+        route: '/authorizer',
+        component: Authorizer,
+      },
+      {
+        route: '/settings',
+        component: Settings,
+      },
+    ];
+
     return (
       <div className={classes.root}>
         <Header />
@@ -55,13 +91,14 @@ function App() {
         >
           <div className={classes.fakeToolbar} />
           <Route exact path="/" render={GotoDashboard} />
-          <PrivateRoute exact path="/trade" component={Exchange} />
-          <PrivateRoute path="/accounts" component={Accounts} />
-          <PrivateRoute path="/identity" component={Identity} />
-          <PrivateRoute path="/invest" component={Invest} />
-          <PrivateRoute path="/security" component={Security} />
-          <PrivateRoute path="/users" component={Users} />
-          <PrivateRoute path="/authorizer" component={Authorizer} />
+          {privateRoutes.map((route, i) => (
+            <PrivateRoute
+              key={i}
+              exact={i === 0}
+              path={route.route}
+              component={route.component}
+            />
+          ))}
         </div>
       </div>
     );

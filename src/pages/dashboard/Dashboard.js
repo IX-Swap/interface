@@ -12,6 +12,7 @@ import Transactions from 'pages/dashboard/components/Transactions'
 import BlockchainData from 'pages/dashboard/components/BlockchainData'
 
 function Dashboard (props) {
+  // TODO: Rendering of each component for the <Grid>
   return (
     <Grid container spacing={3}>
       <Grid item>
