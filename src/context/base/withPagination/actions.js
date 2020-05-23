@@ -29,14 +29,9 @@ export default (name: string, uri: string, additionalPayload: any) => {
       const response = await result.json();
       if (!ref.current) return null;
       if (result.status === 200) {
-        const { limit, count, skip } = response.data[0];
-
-        // Hack for balance, must refactor
-        let { documents } = response.data[0];
-        if (!documents) {
-          documents = response.data[0].balances;
-        }
-
+        const { limit, count, skip, documents } = response.data.length
+          ? response.data[0]
+          : {};
         dispatch({
           type: actionTypes.GET_SUCCESS,
           payload: {

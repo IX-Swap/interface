@@ -1,4 +1,6 @@
-export type Balance = {
+// @flow
+
+export type UserSecurityBalance = {
   debitTotal: number,
   creditTotal: number,
   balance: number,
@@ -7,9 +9,6 @@ export type Balance = {
   symbol: string,
   name: string,
   type: string,
-};
-
-export type UserSecurityBalance = Balance & {
   numberFormat: {
     currency: string,
   },
