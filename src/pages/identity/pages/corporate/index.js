@@ -1,60 +1,28 @@
-// @flow
 import React from 'react';
-import { useForm, FormContext } from 'react-hook-form';
-import IdentitySection from '../../components/IdentitySection';
-import IdentityForm from '../../components/IdentityForm';
-import AddressForm from '../../components/AddressForm';
-import Dataroom from '../../components/Dataroom';
-import Declaration from '../../components/Declaration';
+import { Redirect } from 'react-router-dom';
+import { Box, Typography } from '@material-ui/core';
+import CorporateIdentityForm from './CorporateIdentityForm';
+import { useIdentityState } from '../../modules';
 
-const IdentityProfile = () => {
-  const methods = useForm();
-  const { handleSubmit } = methods;
+const CorporateIdentity = () => {
+  const { status, identity } = useIdentityState();
 
-  const onSubmit = (data: any) => {
-    console.log(data);
-    // createIdentity(identityDispatch, data);
-  };
+  if (status === 'INIT') {
+    return <Redirect to="/identity" />;
+  }
 
   return (
-    // eslint-disable-next-line react/jsx-props-no-spreading
-    <FormContext {...methods}>
-      <form onSubmit={handleSubmit(onSubmit)}>
-        <IdentitySection title="Company Registration">Temp</IdentitySection>
-
-        <IdentitySection title="Company Address">
-          <AddressForm />
-        </IdentitySection>
-
-        <IdentitySection title="Company Representative">
-          <IdentityForm />
-        </IdentitySection>
-
-        <IdentitySection title="Company Representative">
-          <IdentityForm />
-        </IdentitySection>
-
-        <IdentitySection title="Director">
-          <IdentityForm />
-        </IdentitySection>
-
-        <IdentitySection title="Beneficial Owner">
-          <IdentityForm />
-        </IdentitySection>
-
-        <IdentitySection title="Documents">
-          <Dataroom documentsList={[]} />
-        </IdentitySection>
-
-        <IdentitySection
-          title="Declaration & Acknowledgement"
-          subtitle="Confirmation"
-        >
-          <Declaration />
-        </IdentitySection>
-      </form>
-    </FormContext>
+    <Box position="relative">
+      {identity && (
+        <Box position="absolute" top="-2.5em" right="0">
+          <Typography>
+            <b>{identity.status}</b>
+          </Typography>
+        </Box>
+      )}
+      <CorporateIdentityForm />
+    </Box>
   );
 };
 
-export default IdentityProfile;
+export default CorporateIdentity;

@@ -23,6 +23,7 @@ export const identityReducer = (
         dataroom: !isEmpty(payload.identity) ? payload.identity?.documents : [],
         shouldCreateNew: payload.shouldCreateNew,
         editMode: payload.editMode,
+        type: payload.type,
       };
 
     case actions.GET_IDENTITY_FAILURE:
@@ -43,8 +44,9 @@ export const identityReducer = (
       return {
         ...state,
         status: STATUS.IDLE,
-        identity: payload,
+        identity: payload.identity,
         editMode: false,
+        type: payload.type,
       };
 
     case actions.CREATE_IDENTITY_FAILURE:

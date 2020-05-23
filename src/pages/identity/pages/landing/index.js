@@ -6,7 +6,7 @@ import { getIdentity } from '../../modules/actions';
 
 // TODO: Consider Corporate Identity
 const IdentityLanding = () => {
-  const { status, shouldCreateNew } = useIdentityState();
+  const { status, type, shouldCreateNew } = useIdentityState();
   const identityDispatch = useIdentityDispatch();
 
   useMemo(() => {
@@ -16,7 +16,7 @@ const IdentityLanding = () => {
   if (status === 'IDLE') {
     const redirectUrl = shouldCreateNew
       ? '/identity/create'
-      : '/identity/individual';
+      : `/identity/${type}`;
 
     return <Redirect to={redirectUrl} />;
   }

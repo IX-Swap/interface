@@ -1,25 +1,58 @@
 // @flow
 import React from 'react';
+import { MenuItem } from '@material-ui/core';
+import { COUNTRIES_OPTS } from 'const/const';
 import IdentityField from './IdentityField';
-import type { Identity } from '../modules/types';
+import type { IdentityAddress } from '../modules/types';
 
-const AddressForm = ({ identity = {} }: { identity?: Identity }) => (
+const AddressForm = ({
+  address = {},
+  rootName = 'address',
+}: {
+  address?: IdentityAddress,
+  rootName?: 'address' | 'companyAddress',
+}) => (
   <>
     <IdentityField
-      name="line1"
+      name={`${rootName}.line1`}
       label="Line 1"
-      value={identity.line1}
+      value={address.line1}
+      size={6}
+      required
+    />
+    <IdentityField
+      name={`${rootName}.line2`}
+      label="Line 2"
+      value={address.line2}
       size={6}
     />
     <IdentityField
-      name="line2"
-      label="Line 2"
-      value={identity.line2}
-      size={6}
+      name={`${rootName}.city`}
+      label="City"
+      value={address.city}
+      required
     />
-    <IdentityField name="city" label="City" value={identity.city} />
-    <IdentityField name="state" label="State" value={identity.state} />
-    <IdentityField name="country" label="Country" value={identity.city} />
+    <IdentityField
+      name={`${rootName}.state`}
+      label="State"
+      value={address.state}
+    />
+    <IdentityField
+      name={`${rootName}.country`}
+      label="Country"
+      value={address.country}
+      required
+      type="select"
+    >
+      <MenuItem disabled value={undefined}>
+        Country
+      </MenuItem>
+      {COUNTRIES_OPTS.map(({ value, label }) => (
+        <MenuItem key={value} value={value}>
+          {label}
+        </MenuItem>
+      ))}
+    </IdentityField>
   </>
 );
 

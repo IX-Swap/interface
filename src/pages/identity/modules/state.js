@@ -12,4 +12,5 @@ export const initialState: IdentityState = {
     save: null,
     get: null,
   },
+  type: undefined,
 };

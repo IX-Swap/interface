@@ -46,6 +46,15 @@ export const STATUS = {
   SAVING: 'SAVING',
 };
 
+export type IdentityAddress = {
+  line1: string,
+  line2: string,
+  city: string,
+  postalCode?: string,
+  state: string,
+  country: string,
+};
+
 export type IdentityProfile = {
   firstName: string,
   middleName: string,
@@ -56,12 +65,7 @@ export type IdentityProfile = {
   countryOfResidence: string,
   maritalStatus: 'Single' | 'Married',
   contactNumber: string,
-  line1: string,
-  line2: string,
-  city: string,
-  postalCode: string,
-  state: string,
-  country: string,
+  address: IdentityAddress,
 };
 
 export type IndentityFinancials = {
@@ -89,19 +93,34 @@ export type Document = {
   createdAt: string,
 };
 
+export type CorporateFields = {
+  companyLegalName: string,
+  registrationNumber: string,
+  countryOfFormation: string,
+  dateOfIncorporation: string,
+  companyAddress: string,
+  representatives: IdentityProfile,
+  directors: IdentityProfile,
+  beneficialOwners: IdentityProfile,
+};
+
 export type Identity = IdentityProfile &
-  $Shape<IndentityFinancials> & {
+  $Shape<IndentityFinancials> &
+  $Shape<CorporateFields> & {
     _id: string,
     status: 'Rejected' | 'Authorized',
     user: User,
     createdAt: string,
     updatedAt: string,
     documents?: Document[],
+    declarations: any[],
+    walletAddress: string,
   };
 
 export type DocumentGuide = {
   title: string,
   label: string,
+  type: string,
 };
 
 export type IdentityState = {
@@ -114,4 +133,14 @@ export type IdentityState = {
     save: string | null,
     get: string | null,
   },
+  type?: 'individual' | 'corporate',
+};
+
+export type DeclarationTemplate = {
+  key: string,
+  content: string,
+  value: 'Yes' | 'No' | null,
+  answerable?: boolean,
+  lastLine?: boolean,
+  sublevel?: boolean,
 };

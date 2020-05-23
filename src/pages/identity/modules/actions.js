@@ -1,5 +1,6 @@
 // @flow
 import moment from 'moment';
+import { findIndex, forEach } from 'lodash';
 import {
   getRequest,
   putRequest,
@@ -9,38 +10,103 @@ import {
 import localStore from 'services/storageHelper';
 import { actions } from './types';
 import type { Identity } from './types';
+import declarationTemplate from '../data/declarations';
+
+const formatDeclarations = (
+  payloadItems: Array<any>,
+  type: 'individual' | 'corporate'
+) => {
+  const declarations = [];
+  forEach(payloadItems, (d) => {
+    // get item key
+    const key = Object.keys(d)[0];
+    // get index of template with same key
+    const index = findIndex(
+      declarationTemplate[type],
+      (item) => item.key === key
+    );
+    // add merged object
+    declarations.push({
+      ...declarationTemplate[type][index],
+      value: d[key],
+    });
+  });
+
+  return declarations;
+};
+
+const fetchIdentity = async (type: 'individual' | 'corporate') => {
+  // TODO: TEMPORARY WHILE BACKEND STILL BEING FIXED
+  if (type === 'corporate') {
+    return null;
+  }
+
+  const userId = localStore.getUserId();
+  const individualUri = `/identity/${type}s/${userId}`;
+  const result = await getRequest(individualUri);
+  const response = await result.json();
+
+  if (result.status === 200) {
+    return response.data;
+  }
+
+  throw new Error(response.message);
+};
 
 export const getIdentity = async (dispatch: Function) => {
-  const userId = localStore.getUserId();
-
   dispatch({ type: actions.GET_IDENTITY_REQUEST });
 
   try {
-    const individualUri = `/identity/individuals/${userId}`;
+    const [individualIdentity, corporateIdentity] = await Promise.all([
+      fetchIdentity('individual'),
+      fetchIdentity('corporate'),
+    ]);
 
-    const result = await getRequest(individualUri);
-    const response = await result.json();
+    if (individualIdentity !== null) {
+      const declarations = formatDeclarations(
+        individualIdentity.declarations,
+        'individual'
+      );
 
-    if (result.status === 200) {
-      const payload =
-        response.data === null
-          ? {
-              identity: {},
-              shouldCreateNew: true,
-              editMode: true,
-            }
-          : {
-              identity: response.data,
-              shouldCreateNew: false,
-              editMode: false,
-            };
+      const payload = {
+        identity: { ...individualIdentity, declarations },
+        shouldCreateNew: false,
+        editMode: false,
+        type: 'individual',
+      };
+
+      dispatch({
+        type: actions.GET_IDENTITY_SUCCESS,
+        payload,
+      });
+    } else if (corporateIdentity !== null) {
+      const declarations = formatDeclarations(
+        corporateIdentity.declarations,
+        'individual'
+      );
+
+      const payload = {
+        identity: { ...corporateIdentity, declarations },
+        shouldCreateNew: false,
+        editMode: false,
+        type: 'corporate',
+      };
 
       dispatch({
         type: actions.GET_IDENTITY_SUCCESS,
         payload,
       });
     } else {
-      throw new Error(response.message);
+      const payload = {
+        identity: {},
+        shouldCreateNew: true,
+        editMode: true,
+      };
+
+      dispatch({
+        type: actions.GET_IDENTITY_SUCCESS,
+        payload,
+      });
     }
   } catch (err) {
     const errMsg = err.message || err.toString() || 'Loading profile failed.';
@@ -49,29 +115,71 @@ export const getIdentity = async (dispatch: Function) => {
   }
 };
 
+const createIndividualIdentity = async ({
+  initialPayload,
+  financialPayload,
+}) => {
+  const userId = localStore.getUserId();
+
+  const profileUri = `/identity/individuals/${userId}`;
+  const profileResult = await putRequest(profileUri, initialPayload);
+
+  const financialsUri = `/identity/individuals/${userId}/financials`;
+  const financialsResult = await putRequest(financialsUri, financialPayload);
+
+  if (profileResult && financialsResult) {
+    const response = await financialsResult.json();
+    const payload = response.data;
+    const mDeclarations = formatDeclarations(
+      payload.declarations,
+      'individual'
+    );
+    return { ...payload, declarations: mDeclarations };
+  }
+
+  throw new Error('Creating profile failed.');
+};
+
+const createCorporateIdentity = async (corporatePayload: any) => {
+  const userId = localStore.getUserId();
+
+  const uri = `/identity/corporates/${userId}`;
+  const result = await postRequest(uri, corporatePayload);
+
+  if (result) {
+    const response = await result.json();
+    console.log(response);
+
+    const payload = response.data;
+    const mDeclarations = formatDeclarations(
+      payload.declarations,
+      'individual'
+    );
+    return { ...payload, declarations: mDeclarations };
+  }
+
+  throw new Error('Creating profile failed.');
+};
+
 export const createIdentity = async (
   dispatch: Function,
-  identity: $Shape<Identity>
+  identity: $Shape<Identity>,
+  type: 'corporate' | 'individual'
 ) => {
-  const userId = localStore.getUserId();
   dispatch({ type: actions.CREATE_IDENTITY_REQUEST });
 
   const {
     firstName,
     middleName,
     lastName,
-    // dob,
-    // gender,
+    dob,
+    gender,
     nationality,
     countryOfResidence,
     maritalStatus,
     contactNumber,
-    line1,
-    line2,
-    city,
-    postalCode,
-    state,
-    country,
+    address,
+    declarations,
     occupation,
     employmentStatus,
     employer,
@@ -83,37 +191,38 @@ export const createIdentity = async (
     houseHoldIncome,
     sourceOfWealth,
     politicallyExposed,
+    // walletAddress,
+    // Corporate Fields
+    companyLegalName,
+    registrationNumber,
+    countryOfFormation,
+    dateOfIncorporation,
+    companyAddress,
+    representatives,
+    directors,
+    beneficialOwners,
   } = identity;
 
   const documents = identity.documents?.map((document) => document._id);
 
-  const address = {
-    line1,
-    line2,
-    city,
-    postalCode,
-    state,
-    country,
-  };
-
-  try {
-    const profileUri = `/identity/individuals/${userId}`;
-    const profileResult = await putRequest(profileUri, {
+  if (type === 'individual') {
+    const initialPayload = {
       firstName,
       middleName,
       lastName,
-      gender: 'M', // TEMP overwrite to prevent error
+      gender,
       nationality,
       countryOfResidence,
       maritalStatus,
       contactNumber,
       documents,
       address,
-      dob: moment().format('YYYY-MM-DDTHH:mm:ss'), // TEMP overwrite to prevent error
-    });
+      dob: moment(dob).format('YYYY-MM-DDTmm:hh:ss'),
+      declarations,
+      walletAddress: '0x65356f2ab79dac8a0a930c18a83b214ef9fca6a7', // TODO
+    };
 
-    const financialsUri = `/identity/individuals/${userId}/financials`;
-    const financialsResult = await putRequest(financialsUri, {
+    const financialPayload = {
       occupation,
       employmentStatus,
       employer,
@@ -125,21 +234,58 @@ export const createIdentity = async (
       houseHoldIncome,
       sourceOfWealth,
       politicallyExposed,
-    });
+    };
 
-    if (profileResult && financialsResult) {
-      const response = await financialsResult.json();
-      dispatch({
-        type: actions.CREATE_IDENTITY_SUCCESS,
-        payload: response.data,
+    try {
+      const createdIdentity = await createIndividualIdentity({
+        initialPayload,
+        financialPayload,
       });
-    } else {
-      throw new Error('Creating profile failed.');
+
+      if (createdIdentity) {
+        dispatch({
+          type: actions.CREATE_IDENTITY_SUCCESS,
+          payload: {
+            identity: createdIdentity,
+            type: 'individual',
+          },
+        });
+      }
+    } catch (err) {
+      const errMsg = err.message || err.toString() || 'Saving profile failed.';
+      dispatch({ type: actions.CREATE_IDENTITY_FAILURE, payload: errMsg });
+      throw new Error(errMsg);
     }
-  } catch (err) {
-    const errMsg = err.message || err.toString() || 'Saving profile failed.';
-    dispatch({ type: actions.CREATE_IDENTITY_FAILURE, payload: errMsg });
-    throw new Error(errMsg);
+  } else if (type === 'corporate') {
+    try {
+      const createdIdentity = await createCorporateIdentity({
+        companyLegalName,
+        registrationNumber,
+        countryOfFormation,
+        dateOfIncorporation,
+        companyAddress,
+        representatives,
+        directors,
+        beneficialOwners,
+        documents,
+        declarations,
+        walletAddress: '0x65356f2ab79dac8a0a930c18a83b214ef9fca6a7', // TODO
+      });
+
+      if (createdIdentity) {
+        dispatch({
+          type: actions.CREATE_IDENTITY_SUCCESS,
+          payload: {
+            identity: createdIdentity,
+            type: 'corporate',
+          },
+        });
+      }
+    } catch (err) {
+      const errMsg = err.message || err.toString() || 'Saving profile failed.';
+      dispatch({ type: actions.CREATE_IDENTITY_FAILURE, payload: errMsg });
+      throw new Error(errMsg);
+    }
   }
 };
 
