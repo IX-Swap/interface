@@ -93,8 +93,20 @@ export type Document = {
   createdAt: string,
 };
 
+export type CorporateFields = {
+  companyLegalName: string,
+  registrationNumber: string,
+  countryOfFormation: string,
+  dateOfIncorporation: string,
+  companyAddress: string,
+  representatives: IdentityProfile,
+  directors: IdentityProfile,
+  beneficialOwners: IdentityProfile,
+};
+
 export type Identity = IdentityProfile &
-  $Shape<IndentityFinancials> & {
+  $Shape<IndentityFinancials> &
+  $Shape<CorporateFields> & {
     _id: string,
     status: 'Rejected' | 'Authorized',
     user: User,
@@ -108,6 +120,7 @@ export type Identity = IdentityProfile &
 export type DocumentGuide = {
   title: string,
   label: string,
+  type: string,
 };
 
 export type IdentityState = {
@@ -120,6 +133,7 @@ export type IdentityState = {
     save: string | null,
     get: string | null,
   },
+  type?: 'individual' | 'corporate',
 };
 
 export type DeclarationTemplate = {

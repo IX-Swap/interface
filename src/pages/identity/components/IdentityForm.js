@@ -13,49 +13,53 @@ import Identity from '../modules/types';
 const IdentityForm = ({
   identity = {},
   useOwnEmail = false,
+  rootName,
 }: {
   identity?: Identity,
   useOwnEmail: boolean,
+  rootName?: string,
 }) => {
   const {
     user: { email },
   } = useUserState();
 
+  const getFieldName = (name) => (rootName ? `${rootName}.${name}` : name);
+
   return (
     <>
       <IdentityField
-        name="firstName"
+        name={getFieldName('firstName')}
         label="First Name"
         value={identity.firstName}
         required
       />
       <IdentityField
-        name="middleName"
+        name={getFieldName('middleName')}
         label="Middle Name"
         value={identity.middleName}
         required
       />
       <IdentityField
-        name="lastName"
+        name={getFieldName('lastName')}
         label="Last Name"
         value={identity.lastName}
         required
       />
       <IdentityField
-        name="dob"
+        name={getFieldName('dob')}
         label="Date of Birth"
         type="date"
         value={identity.dob ? moment(identity.dob).format('MM/DD/YYYY') : ''}
         required
       />
       <IdentityField
-        name="nationality"
+        name={getFieldName('nationality')}
         label="Nationality"
         value={identity.nationality}
         required
       />
       <IdentityField
-        name="countryOfResidence"
+        name={getFieldName('countryOfResidence')}
         label="Country of Residence"
         value={identity.countryOfResidence}
         required
@@ -71,20 +75,20 @@ const IdentityForm = ({
         ))}
       </IdentityField>
       <IdentityField
-        name="email"
+        name={getFieldName('email')}
         label="Email"
         value={useOwnEmail ? email : identity.email}
         disabled={useOwnEmail}
         required
       />
       <IdentityField
-        name="contactNumber"
+        name={getFieldName('contactNumber')}
         label="Contact Number"
         value={identity.contactNumber}
         required
       />
       <IdentityField
-        name="gender"
+        name={getFieldName('gender')}
         label="Gender"
         value={identity.gender}
         type="select"
@@ -100,7 +104,7 @@ const IdentityForm = ({
         ))}
       </IdentityField>
       <IdentityField
-        name="maritalStatus"
+        name={getFieldName('maritalStatus')}
         label="Marital Status"
         value={identity.maritalStatus}
         type="select"

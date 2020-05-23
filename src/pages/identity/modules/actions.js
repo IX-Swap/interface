@@ -8,7 +8,6 @@ import {
   deleteRequest,
 } from 'services/httpRequests';
 import localStore from 'services/storageHelper';
-import { isEmpty } from 'ramda';
 import { actions } from './types';
 import type { Identity } from './types';
 import declarationTemplate from '../data/declarations';
@@ -36,47 +35,73 @@ const formatDeclarations = (
   return declarations;
 };
 
-export const getIdentity = async (dispatch: Function) => {
+const fetchIdentity = async (type: 'individual' | 'corporate') => {
   const userId = localStore.getUserId();
+  const individualUri = `/identity/${type}s/${userId}`;
+  const result = await getRequest(individualUri);
+  const response = await result.json();
 
+  if (result.status === 200) {
+    return response.data;
+  }
+
+  throw new Error(response.message);
+};
+
+export const getIdentity = async (dispatch: Function) => {
   dispatch({ type: actions.GET_IDENTITY_REQUEST });
 
   try {
-    const individualUri = `/identity/individuals/${userId}`;
+    const [individualIdentity, corporateIdentity] = await Promise.all([
+      fetchIdentity('individual'),
+      fetchIdentity('corporate'),
+    ]);
 
-    const result = await getRequest(individualUri);
-    const response = await result.json();
+    if (individualIdentity !== null) {
+      const declarations = formatDeclarations(
+        individualIdentity.declarations,
+        'individual'
+      );
 
-    if (result.status === 200) {
-      let payload =
-        response.data === null
-          ? {
-              identity: {},
-              shouldCreateNew: true,
-              editMode: true,
-            }
-          : {
-              identity: response.data,
-              shouldCreateNew: false,
-              editMode: false,
-            };
+      const payload = {
+        identity: { ...individualIdentity, declarations },
+        shouldCreateNew: false,
+        editMode: false,
+        type: 'individual',
+      };
 
-      if (!isEmpty(payload.identity)) {
-        const declarations = formatDeclarations(
-          payload.identity.declarations,
-          'individual'
-        );
+      dispatch({
+        type: actions.GET_IDENTITY_SUCCESS,
+        payload,
+      });
+    } else if (corporateIdentity !== null) {
+      const declarations = formatDeclarations(
+        corporateIdentity.declarations,
+        'individual'
+      );
 
-        const identity = { ...payload.identity, declarations };
-        payload = { ...payload, identity };
-      }
+      const payload = {
+        identity: { ...corporateIdentity, declarations },
+        shouldCreateNew: false,
+        editMode: false,
+        type: 'corporate',
+      };
 
       dispatch({
         type: actions.GET_IDENTITY_SUCCESS,
         payload,
       });
     } else {
-      throw new Error(response.message);
+      const payload = {
+        identity: {},
+        shouldCreateNew: true,
+        editMode: true,
+      };
+
+      dispatch({
+        type: actions.GET_IDENTITY_SUCCESS,
+        payload,
+      });
     }
   } catch (err) {
     const errMsg = err.message || err.toString() || 'Loading profile failed.';
@@ -85,11 +110,57 @@ export const getIdentity = async (dispatch: Function) => {
   }
 };
 
+const createIndividualIdentity = async ({
+  initialPayload,
+  financialPayload,
+}) => {
+  const userId = localStore.getUserId();
+
+  const profileUri = `/identity/individuals/${userId}`;
+  const profileResult = await putRequest(profileUri, initialPayload);
+
+  const financialsUri = `/identity/individuals/${userId}/financials`;
+  const financialsResult = await putRequest(financialsUri, financialPayload);
+
+  if (profileResult && financialsResult) {
+    const response = await financialsResult.json();
+    const payload = response.data;
+    const mDeclarations = formatDeclarations(
+      payload.declarations,
+      'individual'
+    );
+    return { ...payload, declarations: mDeclarations };
+  }
+
+  throw new Error('Creating profile failed.');
+};
+
+const createCorporateIdentity = async (corporatePayload: any) => {
+  const userId = localStore.getUserId();
+
+  const uri = `/identity/corporates/${userId}`;
+  const result = await postRequest(uri, corporatePayload);
+
+  if (result) {
+    const response = await result.json();
+    console.log(response);
+
+    const payload = response.data;
+    const mDeclarations = formatDeclarations(
+      payload.declarations,
+      'individual'
+    );
+    return { ...payload, declarations: mDeclarations };
+  }
+
+  throw new Error('Creating profile failed.');
+};
+
 export const createIdentity = async (
   dispatch: Function,
-  identity: $Shape<Identity>
+  identity: $Shape<Identity>,
+  type: 'corporate' | 'individual'
 ) => {
-  const userId = localStore.getUserId();
   dispatch({ type: actions.CREATE_IDENTITY_REQUEST });
 
   const {
@@ -116,13 +187,21 @@ export const createIdentity = async (
     sourceOfWealth,
     politicallyExposed,
     // walletAddress,
+    // Corporate Fields
+    companyLegalName,
+    registrationNumber,
+    countryOfFormation,
+    dateOfIncorporation,
+    companyAddress,
+    representatives,
+    directors,
+    beneficialOwners,
   } = identity;
 
   const documents = identity.documents?.map((document) => document._id);
 
-  try {
-    const profileUri = `/identity/individuals/${userId}`;
-    const profileResult = await putRequest(profileUri, {
+  if (type === 'individual') {
+    const initialPayload = {
       firstName,
       middleName,
       lastName,
@@ -136,10 +215,9 @@ export const createIdentity = async (
       dob: moment(dob).format('YYYY-MM-DDTmm:hh:ss'),
       declarations,
       walletAddress: '0x65356f2ab79dac8a0a930c18a83b214ef9fca6a7', // TODO
-    });
+    };
 
-    const financialsUri = `/identity/individuals/${userId}/financials`;
-    const financialsResult = await putRequest(financialsUri, {
+    const financialPayload = {
       occupation,
       employmentStatus,
       employer,
@@ -151,28 +229,58 @@ export const createIdentity = async (
       houseHoldIncome,
       sourceOfWealth,
       politicallyExposed,
-    });
+    };
 
-    if (profileResult && financialsResult) {
-      const response = await financialsResult.json();
-      let payload = response.data;
-      const mDeclarations = formatDeclarations(
-        payload.declarations,
-        'individual'
-      );
-      payload = { ...payload, declarations: mDeclarations };
-
-      dispatch({
-        type: actions.CREATE_IDENTITY_SUCCESS,
-        payload,
+    try {
+      const createdIdentity = await createIndividualIdentity({
+        initialPayload,
+        financialPayload,
       });
-    } else {
-      throw new Error('Creating profile failed.');
+
+      if (createdIdentity) {
+        dispatch({
+          type: actions.CREATE_IDENTITY_SUCCESS,
+          payload: {
+            identity: createdIdentity,
+            type: 'individual',
+          },
+        });
+      }
+    } catch (err) {
+      const errMsg = err.message || err.toString() || 'Saving profile failed.';
+      dispatch({ type: actions.CREATE_IDENTITY_FAILURE, payload: errMsg });
+      throw new Error(errMsg);
     }
-  } catch (err) {
-    const errMsg = err.message || err.toString() || 'Saving profile failed.';
-    dispatch({ type: actions.CREATE_IDENTITY_FAILURE, payload: errMsg });
-    throw new Error(errMsg);
+  } else if (type === 'corporate') {
+    try {
+      const createdIdentity = await createCorporateIdentity({
+        companyLegalName,
+        registrationNumber,
+        countryOfFormation,
+        dateOfIncorporation,
+        companyAddress,
+        representatives,
+        directors,
+        beneficialOwners,
+        documents,
+        declarations,
+        walletAddress: '0x65356f2ab79dac8a0a930c18a83b214ef9fca6a7', // TODO
+      });
+
+      if (createdIdentity) {
+        dispatch({
+          type: actions.CREATE_IDENTITY_SUCCESS,
+          payload: {
+            identity: createdIdentity,
+            type: 'corporate',
+          },
+        });
+      }
+    } catch (err) {
+      const errMsg = err.message || err.toString() || 'Saving profile failed.';
+      dispatch({ type: actions.CREATE_IDENTITY_FAILURE, payload: errMsg });
+      throw new Error(errMsg);
+    }
   }
 };
 

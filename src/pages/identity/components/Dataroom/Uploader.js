@@ -17,7 +17,7 @@ const Uploader = ({ document }: { document: DocumentGuide }) => {
       uploadFile(dispatch, {
         file: inputRef.current?.files?.[0],
         title: document.title,
-        type: 'identity/individual',
+        type: document.type,
       });
     }
   };
