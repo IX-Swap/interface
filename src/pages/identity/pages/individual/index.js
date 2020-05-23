@@ -1,5 +1,6 @@
 // @flow
 import React from 'react';
+import { forOwn } from 'lodash';
 import { Redirect } from 'react-router-dom';
 import { useForm, FormContext } from 'react-hook-form';
 import { Button, Grid } from '@material-ui/core';
@@ -43,7 +44,16 @@ const IdentityProfile = () => {
   const { handleSubmit } = methods;
 
   const onSubmit = (data: any) => {
-    createIdentity(identityDispatch, { ...data, documents: dataroom });
+    const formattedDeclarations = [];
+    forOwn(data.declarations, (value, key) => {
+      formattedDeclarations.push({ [key]: value });
+    });
+
+    createIdentity(identityDispatch, {
+      ...data,
+      documents: dataroom,
+      declarations: formattedDeclarations,
+    });
   };
 
   if (status === 'INIT') {
@@ -55,11 +65,11 @@ const IdentityProfile = () => {
     <FormContext {...methods}>
       <form onSubmit={handleSubmit(onSubmit)}>
         <IdentitySection title="My Identity">
-          <IdentityForm identity={identity} />
+          <IdentityForm identity={identity} useOwnEmail />
         </IdentitySection>
 
         <IdentitySection title="Address">
-          <AddressForm address={identity.address} />
+          <AddressForm address={identity && identity.address} />
         </IdentitySection>
 
         <IdentitySection title="Financials">
@@ -82,6 +92,14 @@ const IdentityProfile = () => {
             name="industryOfEmployment"
             label="Industry"
             value={identity.industryOfEmployment}
+          />
+          <IdentityField
+            name="walletAddress"
+            label="Digital Wallet Address"
+            value={
+              identity.walletAddress ||
+              '0x65356f2ab79dac8a0a930c18a83b214ef9fca6a7' // temporary
+            }
           />
           <IdentityField
             name="annualIncome"
@@ -123,7 +141,9 @@ const IdentityProfile = () => {
           title="Declaration & Acknowledgement"
           subtitle="Confirmation"
         >
-          <Declaration declarations={declarations.individual} />
+          <Declaration
+            declarations={identity.declarations || declarations.individual}
+          />
           {editMode && (
             <Grid container justify="flex-end">
               <Button type="submit">Submit</Button>

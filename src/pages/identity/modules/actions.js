@@ -1,5 +1,6 @@
 // @flow
 import moment from 'moment';
+import { findIndex, forEach } from 'lodash';
 import {
   getRequest,
   putRequest,
@@ -7,8 +8,33 @@ import {
   deleteRequest,
 } from 'services/httpRequests';
 import localStore from 'services/storageHelper';
+import { isEmpty } from 'ramda';
 import { actions } from './types';
 import type { Identity } from './types';
+import declarationTemplate from '../data/declarations';
+
+const formatDeclarations = (
+  payloadItems: Array<any>,
+  type: 'individual' | 'corporate'
+) => {
+  const declarations = [];
+  forEach(payloadItems, (d) => {
+    // get item key
+    const key = Object.keys(d)[0];
+    // get index of template with same key
+    const index = findIndex(
+      declarationTemplate[type],
+      (item) => item.key === key
+    );
+    // add merged object
+    declarations.push({
+      ...declarationTemplate[type][index],
+      value: d[key],
+    });
+  });
+
+  return declarations;
+};
 
 export const getIdentity = async (dispatch: Function) => {
   const userId = localStore.getUserId();
@@ -22,7 +48,7 @@ export const getIdentity = async (dispatch: Function) => {
     const response = await result.json();
 
     if (result.status === 200) {
-      const payload =
+      let payload =
         response.data === null
           ? {
               identity: {},
@@ -34,6 +60,16 @@ export const getIdentity = async (dispatch: Function) => {
               shouldCreateNew: false,
               editMode: false,
             };
+
+      if (!isEmpty(payload.identity)) {
+        const declarations = formatDeclarations(
+          payload.identity.declarations,
+          'individual'
+        );
+
+        const identity = { ...payload.identity, declarations };
+        payload = { ...payload, identity };
+      }
 
       dispatch({
         type: actions.GET_IDENTITY_SUCCESS,
@@ -67,6 +103,7 @@ export const createIdentity = async (
     maritalStatus,
     contactNumber,
     address,
+    declarations,
     occupation,
     employmentStatus,
     employer,
@@ -78,6 +115,7 @@ export const createIdentity = async (
     houseHoldIncome,
     sourceOfWealth,
     politicallyExposed,
+    // walletAddress,
   } = identity;
 
   const documents = identity.documents?.map((document) => document._id);
@@ -95,7 +133,9 @@ export const createIdentity = async (
       contactNumber,
       documents,
       address,
-      dob,
+      dob: moment(dob).format('YYYY-MM-DDTmm:hh:ss'),
+      declarations,
+      walletAddress: '0x65356f2ab79dac8a0a930c18a83b214ef9fca6a7', // TODO
     });
 
     const financialsUri = `/identity/individuals/${userId}/financials`;
@@ -115,9 +155,16 @@ export const createIdentity = async (
 
     if (profileResult && financialsResult) {
       const response = await financialsResult.json();
+      let payload = response.data;
+      const mDeclarations = formatDeclarations(
+        payload.declarations,
+        'individual'
+      );
+      payload = { ...payload, declarations: mDeclarations };
+
       dispatch({
         type: actions.CREATE_IDENTITY_SUCCESS,
-        payload: response.data,
+        payload,
       });
     } else {
       throw new Error('Creating profile failed.');

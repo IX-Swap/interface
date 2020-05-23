@@ -33,6 +33,7 @@ type IdentityFieldProps = {
   name: string,
   type?: 'text' | 'select' | 'date',
   children?: Node,
+  required?: boolean,
 };
 
 const IdentityField = ({
@@ -42,6 +43,7 @@ const IdentityField = ({
   name,
   type,
   children,
+  required = false,
 }: IdentityFieldProps) => {
   const classes = useStyles();
   const { control, register } = useFormContext();
@@ -55,7 +57,7 @@ const IdentityField = ({
         inputComponent = (
           <FormControl
             name={name}
-            ref={register}
+            ref={register({ required })}
             className={classes.selectField}
           >
             <InputLabel id={`select-${name}`}>{label}</InputLabel>
@@ -81,7 +83,7 @@ const IdentityField = ({
           <TextField
             type={type}
             name={name}
-            inputRef={register}
+            inputRef={register({ required })}
             placeholder={label}
             className={classes.textField}
           />

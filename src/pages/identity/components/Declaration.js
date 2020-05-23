@@ -35,11 +35,7 @@ const Declaration = ({
 
         return (
           <Fragment key={key}>
-            <DeclarationItem
-              name={key}
-              value={Boolean(value)}
-              answerable={answerable}
-            >
+            <DeclarationItem name={key} value={value} answerable={answerable}>
               <Typography
                 paragraph={lastLine}
                 className={sublevel ? classes.sublevel : ''}

@@ -9,7 +9,7 @@ type DeclarationItemProps = {
   children: Node,
   answerable?: boolean,
   name: string,
-  value: boolean,
+  value: string | null,
 };
 
 const DeclarationItem = ({
@@ -19,7 +19,7 @@ const DeclarationItem = ({
   value,
 }: DeclarationItemProps) => {
   const { register } = useFormContext();
-  const [selected, setSelected] = useState(value ? 'Yes' : 'No');
+  const [selected, setSelected] = useState(value);
   const { editMode } = useIdentityState();
 
   const handleChange = (e) => {

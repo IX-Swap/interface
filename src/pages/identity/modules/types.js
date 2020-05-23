@@ -101,6 +101,8 @@ export type Identity = IdentityProfile &
     createdAt: string,
     updatedAt: string,
     documents?: Document[],
+    declarations: any[],
+    walletAddress: string,
   };
 
 export type DocumentGuide = {
@@ -123,7 +125,7 @@ export type IdentityState = {
 export type DeclarationTemplate = {
   key: string,
   content: string,
-  value?: boolean,
+  value: 'Yes' | 'No' | null,
   answerable?: boolean,
   lastLine?: boolean,
   sublevel?: boolean,
