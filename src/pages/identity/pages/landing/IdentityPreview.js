@@ -2,7 +2,7 @@
 import React from 'react';
 import { useHistory } from 'react-router-dom';
 import { useForm, FormContext } from 'react-hook-form';
-import { Button, Grid, Box } from '@material-ui/core';
+import { Button, Box } from '@material-ui/core';
 import { isEmpty } from 'lodash';
 import IdentitySection from '../../components/IdentitySection';
 import IdentityField from '../../components/IdentityField';
