@@ -111,7 +111,7 @@ const IndividualIdentityForm = () => {
         </IdentitySection>
 
         <IdentitySection title="Documents">
-          <Dataroom documentsList={documents.individual} />
+          <Dataroom documentsList={documents.individual} dataroom={dataroom} />
         </IdentitySection>
 
         <IdentitySection
@@ -123,7 +123,9 @@ const IndividualIdentityForm = () => {
           />
           {editMode && (
             <Grid container justify="flex-end">
-              <Button type="submit">Submit</Button>
+              <Button type="submit" vairant="contained" color="primary">
+                Submit
+              </Button>
             </Grid>
           )}
         </IdentitySection>

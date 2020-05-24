@@ -30,9 +30,7 @@ const CreateIdentity = () => {
         style={{ width: '100%', height: '500px' }}
       >
         <div>
-          <Typography>
-            Please select which type of account you would like to create?
-          </Typography>
+          <Typography>You do not have an identity setup.</Typography>
 
           <Grid
             container
@@ -40,18 +38,18 @@ const CreateIdentity = () => {
             justify="center"
             className={classes.buttonGroup}
           >
-            <Button
+            {/* <Button
               type="button"
               onClick={() => history.push('/identity/individual')}
             >
               Individual
-            </Button>
+            </Button> */}
             <Button
               type="button"
               className={classes.corporateButton}
-              onClick={() => history.push('/identity/corporate')}
+              onClick={() => history.push('/identity/individual')}
             >
-              Corporate
+              Create identity
             </Button>
           </Grid>
         </div>

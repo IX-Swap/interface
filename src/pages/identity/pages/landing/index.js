@@ -1,12 +1,12 @@
 import React, { useMemo } from 'react';
-import { Redirect } from 'react-router-dom';
 import { CircularProgress, Container } from '@material-ui/core';
 import { useIdentityState, useIdentityDispatch } from '../../modules';
 import { getIdentity } from '../../modules/actions';
+import CreateIdentity from './CreateIdentity';
+import IdentityPreview from './IdentityPreview';
 
-// TODO: Consider Corporate Identity
 const IdentityLanding = () => {
-  const { status, type, shouldCreateNew } = useIdentityState();
+  const { status, shouldCreateNew } = useIdentityState();
   const identityDispatch = useIdentityDispatch();
 
   useMemo(() => {
@@ -14,11 +14,7 @@ const IdentityLanding = () => {
   }, [status, identityDispatch]);
 
   if (status === 'IDLE') {
-    const redirectUrl = shouldCreateNew
-      ? '/identity/create'
-      : `/identity/${type}`;
-
-    return <Redirect to={redirectUrl} />;
+    return shouldCreateNew ? <CreateIdentity /> : <IdentityPreview />;
   }
 
   return (
