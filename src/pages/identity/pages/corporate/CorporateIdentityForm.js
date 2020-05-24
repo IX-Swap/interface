@@ -51,6 +51,7 @@ const CorporateIdentityForm = () => {
             name="companyLegalName"
             label="Company Name"
             size={6}
+            editMode={editMode}
             value={corporate.companyLegalName}
           />
           <IdentityField
@@ -58,6 +59,7 @@ const CorporateIdentityForm = () => {
             label="Company Registration Number"
             size={6}
             value={corporate.registrationNumber}
+            editMode={editMode}
           />
           <IdentityField
             name="countryOfFormation"
@@ -65,6 +67,7 @@ const CorporateIdentityForm = () => {
             size={6}
             value={corporate.countryOfFormation}
             type="select"
+            editMode={editMode}
           >
             <MenuItem disabled value={undefined}>
               Country
@@ -81,6 +84,7 @@ const CorporateIdentityForm = () => {
             size={6}
             value={corporate.dateOfIncorporation}
             type="date"
+            editMode={editMode}
           />
         </IdentitySection>
 
@@ -88,6 +92,7 @@ const CorporateIdentityForm = () => {
           <AddressForm
             address={corporate.companyAddress}
             rootName="companyAddress"
+            editMode={editMode}
           />
         </IdentitySection>
 

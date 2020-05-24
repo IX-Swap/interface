@@ -28,12 +28,13 @@ const useStyles = makeStyles(() => ({
 
 type IdentityFieldProps = {
   label: string,
-  value: string,
+  value?: string,
   size?: number,
   name: string,
   type?: 'text' | 'select' | 'date',
   children?: Node,
   required?: boolean,
+  editMode: boolean,
 };
 
 const IdentityField = ({
@@ -44,10 +45,10 @@ const IdentityField = ({
   type,
   children,
   required = false,
+  editMode,
 }: IdentityFieldProps) => {
   const classes = useStyles();
   const { control, register } = useFormContext();
-  const { editMode } = useIdentityState();
 
   if (!value && editMode) {
     let inputComponent;

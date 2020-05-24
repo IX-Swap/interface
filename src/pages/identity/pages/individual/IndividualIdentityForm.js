@@ -42,35 +42,43 @@ const IndividualIdentityForm = () => {
     <FormContext {...methods}>
       <form onSubmit={handleSubmit(onSubmit)}>
         <IdentitySection title="My Identity">
-          <IdentityForm identity={identity} useOwnEmail />
+          <IdentityForm identity={identity} useOwnEmail editMode={editMode} />
         </IdentitySection>
 
         <IdentitySection title="Address">
-          <AddressForm address={identity && identity.address} />
+          <AddressForm
+            editMode={editMode}
+            address={identity && identity.address}
+          />
         </IdentitySection>
 
         <IdentitySection title="Financials">
           <IdentityField
+            editMode={editMode}
             name="occupation"
             label="Occupation"
             value={identity.occupation}
           />
           <IdentityField
+            editMode={editMode}
             name="employer"
             label="Employer"
             value={identity.employer}
           />
           <IdentityField
+            editMode={editMode}
             name="employmentStatus"
             label="Employment Status"
             value={identity.employmentStatus}
           />
           <IdentityField
+            editMode={editMode}
             name="industryOfEmployment"
             label="Industry"
             value={identity.industryOfEmployment}
           />
           <IdentityField
+            editMode={editMode}
             name="walletAddress"
             label="Digital Wallet Address"
             value={
@@ -79,31 +87,37 @@ const IndividualIdentityForm = () => {
             }
           />
           <IdentityField
+            editMode={editMode}
             name="annualIncome"
             label="Annual Income"
             value={identity.annualIncome}
           />
           <IdentityField
+            editMode={editMode}
             name="houseHoldIncome"
             label="Household Income"
             value={identity.houseHoldIncome}
           />
           <IdentityField
+            editMode={editMode}
             name="sourceOfWealth"
             label="Source of Income"
             value={identity.sourceOfWealth}
           />
           <IdentityField
+            editMode={editMode}
             name="bankName"
             label="Bank Name"
             value={identity.bankName}
           />
           <IdentityField
+            editMode={editMode}
             name="bankAccountName"
             label="Name of Bank Account"
             value={identity.bankAccountName}
           />
           <IdentityField
+            editMode={editMode}
             name="bankAccountNumber"
             label="Bank Account Number"
             value={identity.bankAccountNumber}

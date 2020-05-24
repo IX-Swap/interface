@@ -68,6 +68,7 @@ export type IdentityProfile = {
   maritalStatus: 'Single' | 'Married',
   contactNumber: string,
   address: IdentityAddress,
+  email?: string,
 };
 
 export type IndentityFinancials = {

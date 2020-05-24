@@ -14,14 +14,16 @@ const ArrayForm = ({
   // TODO: Add/Subtract forms
   const [count] = useState(1);
 
+  console.log(editMode);
+
   if (editMode) {
     return [...Array(count)].map((_, i) => {
       const name = `${rootName}[${i}]`;
-      return <IdentityForm key={name} rootName={name} />;
+      return <IdentityForm editMode key={name} rootName={name} />;
     });
   }
 
-  if (data) {
+  if (!editMode && data) {
     return data.map((identity, i) => {
       const name = `${rootName}[${i}]`;
       return <IdentityForm identity={identity} key={name} rootName={name} />;

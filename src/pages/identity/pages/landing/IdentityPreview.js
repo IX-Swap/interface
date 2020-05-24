@@ -14,10 +14,8 @@ import { toggleEditMode } from '../../modules/actions';
 const IdentityPreview = () => {
   const methods = useForm();
   const history = useHistory();
-  const { identity = {}, corporate = {} } = useIdentityState();
+  const { identity, corporate } = useIdentityState();
   const dispatch = useIdentityDispatch();
-
-  const { firstName, lastName } = identity;
 
   const handleCreateCorporate = () => {
     toggleEditMode(dispatch, true);
@@ -42,8 +40,14 @@ const IdentityPreview = () => {
         <FormContext {...methods}>
           <Box position="relative">
             <form onSubmit={() => {}}>
-              <IdentitySection title={`${firstName} ${lastName}`}>
-                <IdentityForm identity={identity} useOwnEmail />
+              <IdentitySection
+                title={`${identity.firstName} ${identity.lastName}`}
+              >
+                <IdentityForm
+                  editMode={false}
+                  identity={identity}
+                  useOwnEmail
+                />
               </IdentitySection>
             </form>
             <Box position="absolute" right="5em" top="0.8em">
@@ -64,18 +68,21 @@ const IdentityPreview = () => {
             <form onSubmit={() => {}}>
               <IdentitySection title={corporate.companyLegalName}>
                 <IdentityField
+                  editMode={false}
                   name="companyLegalName"
                   label="Company Name"
                   size={6}
                   value={corporate.companyLegalName}
                 />
                 <IdentityField
+                  editMode={false}
                   name="registrationNumber"
                   label="Company Registration Number"
                   size={6}
                   value={corporate.registrationNumber}
                 />
                 <IdentityField
+                  editMode={false}
                   name="countryOfFormation"
                   label="Country of Formation"
                   size={6}
@@ -83,6 +90,7 @@ const IdentityPreview = () => {
                   type="select"
                 />
                 <IdentityField
+                  editMode={false}
                   name="dateOfIncorporation"
                   label="Date of Incorporation"
                   size={6}
