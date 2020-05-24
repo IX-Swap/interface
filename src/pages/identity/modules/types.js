@@ -37,6 +37,8 @@ export const actions = {
   UPDATE_CORPORATE_REQUEST: 'UPDATE_CORPORATE_REQUEST',
   UPDATE_CORPORATE_SUCCESS: 'UPDATE_CORPORATE_SUCCESS',
   UPDATE_CORPORATE_FAILURE: 'UPDATE_CORPORATE_FAILURE',
+
+  TOGGLE_EDIT_MODE: 'TOGGLE_EDIT_MODE',
 };
 
 export const STATUS = {
@@ -125,7 +127,9 @@ export type DocumentGuide = {
 
 export type IdentityState = {
   dataroom: Array<Document | DocumentGuide>,
+  corporateDataroom: Array<Document | DocumentGuide>,
   identity: Identity | {},
+  corporate: Identity | {},
   status: string,
   shouldCreateNew: boolean,
   editMode: boolean,

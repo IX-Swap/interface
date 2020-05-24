@@ -4,17 +4,17 @@ import { Typography, List, ListSubheader, Grid } from '@material-ui/core';
 import { findIndex } from 'lodash';
 import Uploader from './Uploader';
 import DocumentItem from './DocumentItem';
-import { useIdentityState } from '../../modules';
-import type { DocumentGuide } from '../../modules/types';
+import type { DocumentGuide, Document } from '../../modules/types';
 import useStyles from './styles';
 
 const DocumentsList = ({
   documentsList,
+  dataroom,
 }: {
   documentsList: DocumentGuide[],
+  dataroom: Document,
 }) => {
   const classes = useStyles();
-  const { dataroom } = useIdentityState();
 
   return (
     <List style={{ width: '100%' }}>

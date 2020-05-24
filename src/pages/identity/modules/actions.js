@@ -35,14 +35,26 @@ const formatDeclarations = (
   return declarations;
 };
 
-const fetchIdentity = async (type: 'individual' | 'corporate') => {
-  // TODO: TEMPORARY WHILE BACKEND STILL BEING FIXED
-  if (type === 'corporate') {
+const fetchCorporateIdentity = async () => {
+  const userId = localStore.getUserId();
+  const corporateUri = `/identity/corporates/${userId}/list`;
+  const result = await postRequest(corporateUri, { skip: 0, limit: 50 });
+  const response = await result.json();
+
+  if (result.status === 200) {
+    if (response.data.length) {
+      return response.data[0].documents[0];
+    }
+
     return null;
   }
 
+  throw new Error(response.message);
+};
+
+const fetchIndividualIdentity = async () => {
   const userId = localStore.getUserId();
-  const individualUri = `/identity/${type}s/${userId}`;
+  const individualUri = `/identity/individuals/${userId}`;
   const result = await getRequest(individualUri);
   const response = await result.json();
 
@@ -56,58 +68,53 @@ const fetchIdentity = async (type: 'individual' | 'corporate') => {
 export const getIdentity = async (dispatch: Function) => {
   dispatch({ type: actions.GET_IDENTITY_REQUEST });
 
+  let dispatchPayload = {
+    identity: {},
+    corporate: {},
+    shouldCreateNew: true,
+    editMode: true,
+  };
+
   try {
     const [individualIdentity, corporateIdentity] = await Promise.all([
-      fetchIdentity('individual'),
-      fetchIdentity('corporate'),
+      fetchIndividualIdentity(),
+      fetchCorporateIdentity(),
     ]);
 
+    // insert individual identity
     if (individualIdentity !== null) {
       const declarations = formatDeclarations(
         individualIdentity.declarations,
         'individual'
       );
 
-      const payload = {
+      dispatchPayload = {
+        ...dispatchPayload,
         identity: { ...individualIdentity, declarations },
         shouldCreateNew: false,
         editMode: false,
-        type: 'individual',
       };
+    }
 
-      dispatch({
-        type: actions.GET_IDENTITY_SUCCESS,
-        payload,
-      });
-    } else if (corporateIdentity !== null) {
+    // insert corporate identity
+    if (corporateIdentity !== null) {
       const declarations = formatDeclarations(
         corporateIdentity.declarations,
         'individual'
       );
 
-      const payload = {
-        identity: { ...corporateIdentity, declarations },
+      dispatchPayload = {
+        ...dispatchPayload,
+        corporate: { ...corporateIdentity, declarations },
         shouldCreateNew: false,
         editMode: false,
-        type: 'corporate',
       };
-
-      dispatch({
-        type: actions.GET_IDENTITY_SUCCESS,
-        payload,
-      });
-    } else {
-      const payload = {
-        identity: {},
-        shouldCreateNew: true,
-        editMode: true,
-      };
-
-      dispatch({
-        type: actions.GET_IDENTITY_SUCCESS,
-        payload,
-      });
     }
+
+    dispatch({
+      type: actions.GET_IDENTITY_SUCCESS,
+      payload: dispatchPayload,
+    });
   } catch (err) {
     const errMsg = err.message || err.toString() || 'Loading profile failed.';
     dispatch({ type: actions.GET_IDENTITY_FAILURE, payload: errMsg });
@@ -276,7 +283,7 @@ export const createIdentity = async (
         dispatch({
           type: actions.CREATE_IDENTITY_SUCCESS,
           payload: {
-            identity: createdIdentity,
+            corporate: createdIdentity,
             type: 'corporate',
           },
         });
@@ -319,7 +326,7 @@ export async function uploadFile(
     if (result.status === 200) {
       const data = response.data[0];
 
-      dispatch({ type: actions.SAVE_FILE_SUCCESS, payload: data });
+      dispatch({ type: actions.SAVE_FILE_SUCCESS, payload: { data, type } });
     } else {
       throw new Error(response.message);
     }
@@ -372,4 +379,8 @@ export const deleteFile = async (dispatch: Function, documentId: string) => {
     console.log(err);
     dispatch({ type: actions.DELETE_FILE_FAILURE });
   }
+};
+
+export const toggleEditMode = (dispatch: Function, payload: boolean) => {
+  dispatch({ type: actions.TOGGLE_EDIT_MODE, payload });
 };

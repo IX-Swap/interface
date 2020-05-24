@@ -6,7 +6,6 @@ import { IdentityProvider } from './modules';
 import IndentityLanding from './pages/landing';
 import IndividualIdentity from './pages/individual';
 import CorporateIdentity from './pages/corporate';
-import CreateIdentity from './pages/create';
 
 const useStyles = makeStyles(() => ({
   pageTitle: {
@@ -34,7 +33,6 @@ const Identity = () => {
             exact
             component={CorporateIdentity}
           />
-          <Route path="/identity/create" exact component={CreateIdentity} />
           <Route path="/identity" exact component={IndentityLanding} />
 
           <Redirect to="/identity" />

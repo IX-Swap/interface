@@ -5,7 +5,7 @@ import CorporateIdentityForm from './CorporateIdentityForm';
 import { useIdentityState } from '../../modules';
 
 const CorporateIdentity = () => {
-  const { status, identity } = useIdentityState();
+  const { status, corporate } = useIdentityState();
 
   if (status === 'INIT') {
     return <Redirect to="/identity" />;
@@ -13,10 +13,10 @@ const CorporateIdentity = () => {
 
   return (
     <Box position="relative">
-      {identity && (
+      {corporate && (
         <Box position="absolute" top="-2.5em" right="0">
           <Typography>
-            <b>{identity.status}</b>
+            <b>{corporate.status}</b>
           </Typography>
         </Box>
       )}
