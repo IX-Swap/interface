@@ -67,10 +67,18 @@ export const identityReducer = (
       };
 
     case actions.SAVE_FILE_SUCCESS:
+      if (payload.type === 'Identity/Individual') {
+        return {
+          ...state,
+          status: STATUS.IDLE,
+          dataroom: [...state.dataroom, payload.data],
+        };
+      }
+
       return {
         ...state,
         status: STATUS.IDLE,
-        dataroom: [...state.dataroom, payload],
+        corporateDataroom: [...state.corporateDataroom, payload.data],
       };
 
     case actions.SAVE_FILE_FAILURE:

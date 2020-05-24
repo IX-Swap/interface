@@ -127,6 +127,7 @@ export type DocumentGuide = {
 
 export type IdentityState = {
   dataroom: Array<Document | DocumentGuide>,
+  corporateDataroom: Array<Document | DocumentGuide>,
   identity: Identity | {},
   corporate: Identity | {},
   status: string,

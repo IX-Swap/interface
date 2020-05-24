@@ -326,7 +326,7 @@ export async function uploadFile(
     if (result.status === 200) {
       const data = response.data[0];
 
-      dispatch({ type: actions.SAVE_FILE_SUCCESS, payload: data });
+      dispatch({ type: actions.SAVE_FILE_SUCCESS, payload: { data, type } });
     } else {
       throw new Error(response.message);
     }
