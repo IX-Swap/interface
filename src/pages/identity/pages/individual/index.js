@@ -1,11 +1,18 @@
+// @flow
 import React from 'react';
 import { Redirect } from 'react-router-dom';
 import { Box, Typography } from '@material-ui/core';
 import IndividualIdentityForm from './IndividualIdentityForm';
-import { useIdentityState } from '../../modules';
+import { useIdentityState, useIdentityDispatch } from '../../modules';
+import { createIdentity } from '../../modules/actions';
 
 const IndividualIdentity = () => {
-  const { status, identity } = useIdentityState();
+  const { status, identity, editMode, dataroom } = useIdentityState();
+  const identityDispatch = useIdentityDispatch();
+
+  const handleOnCreate = (data: any) => {
+    createIdentity(identityDispatch, data, 'individual');
+  };
 
   if (status === 'INIT') {
     return <Redirect to="/identity" />;
@@ -20,7 +27,12 @@ const IndividualIdentity = () => {
           </Typography>
         </Box>
       )}
-      <IndividualIdentityForm />
+      <IndividualIdentityForm
+        dataroom={dataroom}
+        editMode={editMode}
+        identity={identity}
+        handleCreateIdentity={handleOnCreate}
+      />
     </Box>
   );
 };

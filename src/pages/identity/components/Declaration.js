@@ -16,8 +16,10 @@ const useStyles = makeStyles(() => ({
 
 const Declaration = ({
   declarations,
+  editMode,
 }: {
   declarations: DeclarationTemplate[],
+  editMode: boolean,
 }) => {
   const classes = useStyles();
 
@@ -35,7 +37,12 @@ const Declaration = ({
 
         return (
           <Fragment key={key}>
-            <DeclarationItem name={key} value={value} answerable={answerable}>
+            <DeclarationItem
+              editMode={editMode}
+              name={key}
+              value={value}
+              answerable={answerable}
+            >
               <Typography
                 paragraph={lastLine}
                 className={sublevel ? classes.sublevel : ''}

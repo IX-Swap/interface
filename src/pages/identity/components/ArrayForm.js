@@ -14,8 +14,6 @@ const ArrayForm = ({
   // TODO: Add/Subtract forms
   const [count] = useState(1);
 
-  console.log(editMode);
-
   if (editMode) {
     return [...Array(count)].map((_, i) => {
       const name = `${rootName}[${i}]`;

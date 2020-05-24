@@ -11,18 +11,22 @@ import AddressForm from '../../components/AddressForm';
 import Dataroom from '../../components/Dataroom';
 import Declaration from '../../components/Declaration';
 import declarations from '../../data/declarations';
-import { useIdentityState, useIdentityDispatch } from '../../modules';
-import { createIdentity } from '../../modules/actions';
+import type { Identity, Document } from '../../modules/types';
 import documents from '../../data/documents';
 
-const CorporateIdentityForm = () => {
+const CorporateIdentityForm = ({
+  corporate,
+  editMode,
+  dataroom,
+  handleCreateIdentity,
+}: {
+  corporate: Identity,
+  editMode: boolean,
+  dataroom: Document[],
+  handleCreateIdentity?: Function,
+}) => {
   const methods = useForm();
-  const {
-    corporate,
-    editMode,
-    corporateDataroom: dataroom,
-  } = useIdentityState();
-  const identityDispatch = useIdentityDispatch();
+
   const { handleSubmit } = methods;
 
   const onSubmit = (data: any) => {
@@ -31,15 +35,13 @@ const CorporateIdentityForm = () => {
       formattedDeclarations.push({ [key]: value });
     });
 
-    createIdentity(
-      identityDispatch,
-      {
+    if (handleCreateIdentity) {
+      handleCreateIdentity({
         ...data,
         documents: dataroom,
         declarations: formattedDeclarations,
-      },
-      'corporate'
-    );
+      });
+    }
   };
 
   return (
@@ -129,6 +131,7 @@ const CorporateIdentityForm = () => {
           subtitle="Confirmation"
         >
           <Declaration
+            editMode={editMode}
             declarations={corporate.declarations || declarations.individual}
           />
 

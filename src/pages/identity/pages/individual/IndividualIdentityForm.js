@@ -10,13 +10,20 @@ import AddressForm from '../../components/AddressForm';
 import Dataroom from '../../components/Dataroom';
 import Declaration from '../../components/Declaration';
 import declarations from '../../data/declarations';
-import { useIdentityState, useIdentityDispatch } from '../../modules';
-import { createIdentity } from '../../modules/actions';
+import type { Identity, Document } from '../../modules/types';
 import documents from '../../data/documents';
 
-const IndividualIdentityForm = () => {
-  const { identity, editMode, dataroom } = useIdentityState();
-  const identityDispatch = useIdentityDispatch();
+const IndividualIdentityForm = ({
+  identity,
+  editMode,
+  dataroom,
+  handleCreateIdentity,
+}: {
+  identity: Identity,
+  editMode: boolean,
+  dataroom: Document[],
+  handleCreateIdentity?: Function,
+}) => {
   const methods = useForm();
   const { handleSubmit } = methods;
 
@@ -26,15 +33,13 @@ const IndividualIdentityForm = () => {
       formattedDeclarations.push({ [key]: value });
     });
 
-    createIdentity(
-      identityDispatch,
-      {
+    if (handleCreateIdentity) {
+      handleCreateIdentity({
         ...data,
         documents: dataroom,
         declarations: formattedDeclarations,
-      },
-      'individual'
-    );
+      });
+    }
   };
 
   return (
@@ -46,10 +51,7 @@ const IndividualIdentityForm = () => {
         </IdentitySection>
 
         <IdentitySection title="Address">
-          <AddressForm
-            editMode={editMode}
-            address={identity && identity.address}
-          />
+          <AddressForm editMode={editMode} address={identity.address} />
         </IdentitySection>
 
         <IdentitySection title="Financials">

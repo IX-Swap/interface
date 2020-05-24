@@ -12,7 +12,7 @@ const DocumentsList = ({
   dataroom,
 }: {
   documentsList: DocumentGuide[],
-  dataroom: Document,
+  dataroom: Document[],
 }) => {
   const classes = useStyles();
 

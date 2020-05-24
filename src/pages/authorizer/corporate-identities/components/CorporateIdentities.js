@@ -21,7 +21,7 @@ const CorporateIdentities = () => {
     return <IdentityList onClickView={onClickView} />;
   }
 
-  if (page === authorizeIdentitiesPage.VIEW) {
+  if (identity && page === authorizeIdentitiesPage.VIEW) {
     return (
       <CorporateIdentityPreview
         identity={identity}

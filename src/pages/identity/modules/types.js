@@ -101,7 +101,7 @@ export type CorporateFields = {
   registrationNumber: string,
   countryOfFormation: string,
   dateOfIncorporation: string,
-  companyAddress: string,
+  companyAddress: IdentityAddress,
   representatives: IdentityProfile,
   directors: IdentityProfile,
   beneficialOwners: IdentityProfile,
@@ -111,7 +111,7 @@ export type Identity = IdentityProfile &
   $Shape<IndentityFinancials> &
   $Shape<CorporateFields> & {
     _id: string,
-    status: 'Rejected' | 'Authorized',
+    status: 'Rejected' | 'Authorized' | 'Unauthorized',
     user: User,
     createdAt: string,
     updatedAt: string,
