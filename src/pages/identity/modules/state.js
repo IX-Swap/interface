@@ -4,6 +4,7 @@ import type { IdentityState } from './types';
 
 export const initialState: IdentityState = {
   identity: {},
+  corporate: {},
   dataroom: [],
   status: STATUS.INIT,
   shouldCreateNew: false,

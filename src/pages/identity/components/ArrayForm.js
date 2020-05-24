@@ -21,10 +21,14 @@ const ArrayForm = ({
     });
   }
 
-  return data.map((identity, i) => {
-    const name = `${rootName}[${i}]`;
-    return <IdentityForm identity={identity} key={name} rootName={name} />;
-  });
+  if (data) {
+    return data.map((identity, i) => {
+      const name = `${rootName}[${i}]`;
+      return <IdentityForm identity={identity} key={name} rootName={name} />;
+    });
+  }
+
+  return <>loading...</>;
 };
 
 export default ArrayForm;

@@ -17,7 +17,11 @@ import documents from '../../data/documents';
 
 const CorporateIdentityForm = () => {
   const methods = useForm();
-  const { identity, editMode, dataroom } = useIdentityState();
+  const {
+    corporate,
+    editMode,
+    corporateDataroom: dataroom,
+  } = useIdentityState();
   const identityDispatch = useIdentityDispatch();
   const { handleSubmit } = methods;
 
@@ -47,19 +51,19 @@ const CorporateIdentityForm = () => {
             name="companyLegalName"
             label="Company Name"
             size={6}
-            value={identity.companyLegalName}
+            value={corporate.companyLegalName}
           />
           <IdentityField
             name="registrationNumber"
             label="Company Registration Number"
             size={6}
-            value={identity.registrationNumber}
+            value={corporate.registrationNumber}
           />
           <IdentityField
             name="countryOfFormation"
             label="Country of Formation"
             size={6}
-            value={identity.countryOfFormation}
+            value={corporate.countryOfFormation}
             type="select"
           >
             <MenuItem disabled value={undefined}>
@@ -75,38 +79,44 @@ const CorporateIdentityForm = () => {
             name="dateOfIncorporation"
             label="Date of Incorporation"
             size={6}
-            value={identity.dateOfIncorporation}
+            value={corporate.dateOfIncorporation}
             type="date"
           />
         </IdentitySection>
 
         <IdentitySection title="Company Address">
           <AddressForm
-            address={identity.companyAddress}
+            address={corporate.companyAddress}
             rootName="companyAddress"
           />
         </IdentitySection>
 
         <IdentitySection title="Company Representative">
           <ArrayForm
-            data={identity.representatives}
+            editMode={editMode}
+            data={corporate.representatives}
             rootName="representatives"
           />
         </IdentitySection>
 
         <IdentitySection title="Director">
-          <ArrayForm data={identity.directors} rootName="directors" />
+          <ArrayForm
+            editMode={editMode}
+            data={corporate.directors}
+            rootName="directors"
+          />
         </IdentitySection>
 
         <IdentitySection title="Beneficial Owner">
           <ArrayForm
-            data={identity.beneficialOwners}
+            data={corporate.beneficialOwners}
+            editMode={editMode}
             rootName="beneficialOwners"
           />
         </IdentitySection>
 
         <IdentitySection title="Documents">
-          <Dataroom documentsList={documents.corporate} />
+          <Dataroom documentsList={documents.corporate} dataroom={dataroom} />
         </IdentitySection>
 
         <IdentitySection
@@ -114,12 +124,14 @@ const CorporateIdentityForm = () => {
           subtitle="Confirmation"
         >
           <Declaration
-            declarations={identity.declarations || declarations.individual}
+            declarations={corporate.declarations || declarations.individual}
           />
 
           {editMode && (
             <Grid container justify="flex-end">
-              <Button type="submit">Submit</Button>
+              <Button type="submit" variant="contained" color="primary">
+                Submit
+              </Button>
             </Grid>
           )}
         </IdentitySection>

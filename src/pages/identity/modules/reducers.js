@@ -20,10 +20,13 @@ export const identityReducer = (
         ...state,
         status: STATUS.IDLE,
         identity: payload.identity,
+        corporate: payload.corporate,
         dataroom: !isEmpty(payload.identity) ? payload.identity?.documents : [],
+        corporateDataroom: !isEmpty(payload.corporate)
+          ? payload.corporate?.documents
+          : [],
         shouldCreateNew: payload.shouldCreateNew,
         editMode: payload.editMode,
-        type: payload.type,
       };
 
     case actions.GET_IDENTITY_FAILURE:
@@ -45,8 +48,8 @@ export const identityReducer = (
         ...state,
         status: STATUS.IDLE,
         identity: payload.identity,
+        corporate: payload.corporate,
         editMode: false,
-        type: payload.type,
       };
 
     case actions.CREATE_IDENTITY_FAILURE:
@@ -129,12 +132,12 @@ export const identityReducer = (
         error: { ...state.error, get: payload.message },
       };
 
-    // case actions.UPDATE_ACCOUNT_TYPE_REQUEST: {
-    //   return {
-    //     ...state,
-    //     status: STATUS.GETTING,
-    //   };
-    // }
+    case actions.TOGGLE_EDIT_MODE: {
+      return {
+        ...state,
+        editMode: payload || !state.editMode,
+      };
+    }
 
     default:
       throw new Error(`Unhandled action type: ${type}`);

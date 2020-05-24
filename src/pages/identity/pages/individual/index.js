@@ -12,7 +12,7 @@ const IndividualIdentity = () => {
   }
 
   return (
-    <Box>
+    <Box position="relative">
       {identity && (
         <Box position="absolute" top="-2.5em" right="0">
           <Typography>
