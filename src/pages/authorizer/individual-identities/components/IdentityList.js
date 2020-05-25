@@ -1,5 +1,5 @@
 // @flow
-import React, { useRef, useEffect, useState } from 'react';
+import React, { useRef, useEffect } from 'react';
 import {
   TableContainer,
   Table,
@@ -12,12 +12,9 @@ import {
   LinearProgress,
   TableBody,
 } from '@material-ui/core';
-import { snackbarService } from 'uno-material-ui';
-import type { Identity } from 'pages/identity/modules/types';
 import IdentityListModule from '../modules';
 import Actions from '../modules/actions';
 import IdentityListItem from './IdentityListItem';
-import AuthorizeConfirmDialog from './AuthorizeConfirmDialog';
 
 const {
   useAuhorizerIdentityListState,
@@ -45,9 +42,6 @@ const useIdentityListLogic = () => {
     error,
   } = identityListState;
   const mountedRef = useRef(true);
-  const [newStatus, setNewStatus] = useState<string>('');
-  const [identity, setIdentity] = useState<Identity | null>(null);
-  const [open, setOpen] = useState<boolean>(false);
 
   const handleChangePage = (_, newPage: number) => {
     setPage(identityListDispatch, { page: newPage });
@@ -88,17 +82,11 @@ const useIdentityListLogic = () => {
     handleChangePage,
     handleChangeRowsPerPage,
     setPage,
-    newStatus,
-    setNewStatus,
-    identity,
-    setIdentity,
-    open,
-    setOpen,
     toggleIdentityStatus,
   };
 };
 
-const IdentityList = () => {
+const IdentityList = ({ onClickView }: { onClickView: Function }) => {
   const {
     status: loadingStatus,
     items,
@@ -107,51 +95,10 @@ const IdentityList = () => {
     page,
     handleChangeRowsPerPage,
     handleChangePage,
-    newStatus,
-    setNewStatus,
-    identity,
-    setIdentity,
-    open,
-    setOpen,
   } = useIdentityListLogic();
-
-  const handleSelectChange = (mIdentity: Identity, status: string) => {
-    setIdentity(mIdentity);
-    setNewStatus(status);
-    setOpen(true);
-  };
-
-  const handleClose = () => {
-    setOpen(false);
-  };
-
-  const handleConfirm = async (mIdentity: Identity, status: string) => {
-    const confirm = await toggleIdentityStatus(mIdentity, status);
-    let message = 'Failed to update withdraw status!';
-    let type = 'error';
-
-    if (confirm) {
-      message = 'Successfully updated withdraw status!';
-      type = 'success';
-      handleChangePage(null, page);
-      setOpen(false);
-    }
-
-    snackbarService.showSnackbar(message, type);
-  };
 
   return (
     <>
-      {identity && (
-        <AuthorizeConfirmDialog
-          open={open}
-          newStatus={newStatus}
-          handleClose={handleClose}
-          identity={identity}
-          handleConfirm={handleConfirm}
-        />
-      )}
-
       {[AUTHORIZER_IDENTITY_LIST_STATUS.GETTING].includes(loadingStatus) ? (
         <LinearProgress />
       ) : null}
@@ -170,7 +117,10 @@ const IdentityList = () => {
                 <b>Name</b>
               </TableCell>
               <TableCell align="left">
-                <b>Country</b>
+                <b>Country Of Residence</b>
+              </TableCell>
+              <TableCell align="left">
+                <b>Status</b>
               </TableCell>
               <TableCell align="left">
                 <b>&nbsp;</b>
@@ -182,7 +132,7 @@ const IdentityList = () => {
               <IdentityListItem
                 key={identity._id}
                 identity={identity}
-                handleSelectChange={handleSelectChange}
+                onClickView={onClickView}
               />
             ))}
           </TableBody>

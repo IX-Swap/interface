@@ -54,7 +54,8 @@ export type IdentityAddress = {
   city: string,
   postalCode?: string,
   state: string,
-  country: string,
+  countryOfResidence?: string, // for individual
+  country?: string, // for corporate
 };
 
 export type IdentityProfile = {

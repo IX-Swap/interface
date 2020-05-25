@@ -27,6 +27,8 @@ const IndividualIdentityForm = ({
   const methods = useForm();
   const { handleSubmit } = methods;
 
+  console.log(identity);
+
   const onSubmit = (data: any) => {
     const formattedDeclarations = [];
     forOwn(data.declarations, (value, key) => {
@@ -135,6 +137,7 @@ const IndividualIdentityForm = ({
           subtitle="Confirmation"
         >
           <Declaration
+            editMode={editMode}
             declarations={identity.declarations || declarations.individual}
           />
           {editMode && (

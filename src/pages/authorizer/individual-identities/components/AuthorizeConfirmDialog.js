@@ -8,23 +8,24 @@ import {
   Button,
 } from '@material-ui/core';
 
-import type { Identity } from 'pages/identity/modules/types';
-
 type Prop = {
-  identity: Identity,
   newStatus: string,
   open: boolean,
   handleClose: Function,
-  handleConfirm: (identity: Identity, newStatus: string) => Promise<void>,
+  handleConfirm: () => Promise<void>,
 };
 
 export default function DialogAuthorizeConfirmation({
-  identity,
   open,
   newStatus,
   handleClose,
   handleConfirm,
 }: Prop) {
+  const title =
+    newStatus === 'approve'
+      ? 'Confirm Approve Identity'
+      : 'Confirm Reject Identity';
+
   return (
     <Dialog
       disableBackdropClick
@@ -32,18 +33,15 @@ export default function DialogAuthorizeConfirmation({
       open={open}
       onClose={handleClose}
     >
-      <DialogTitle>Confirm Identity Action</DialogTitle>
+      <DialogTitle>{title}</DialogTitle>
       <DialogContent>
-        Are you sure you want to set this identity's status to {newStatus}?
+        Are you sure you want to <b>{newStatus}</b> this identity?
       </DialogContent>
       <DialogActions>
         <Button onClick={handleClose} color="primary">
           Cancel
         </Button>
-        <Button
-          onClick={() => handleConfirm(identity, newStatus)}
-          color="primary"
-        >
+        <Button onClick={() => handleConfirm()} color="primary">
           Ok
         </Button>
       </DialogActions>

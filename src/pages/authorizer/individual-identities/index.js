@@ -1,12 +1,12 @@
 import React from 'react';
-import IdentityList from './components/IdentityList';
+import IndividualIdentities from './components/IndividualIdentities';
 import AuthorizerIdentityModule from './modules';
 
 const { AuthorizerIdentityListProvider } = AuthorizerIdentityModule;
 
 const Identities = () => (
   <AuthorizerIdentityListProvider>
-    <IdentityList />
+    <IndividualIdentities />
   </AuthorizerIdentityListProvider>
 );
 

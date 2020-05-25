@@ -1,72 +1,43 @@
+// @flow
 import React from 'react';
-import {
-  TableCell,
-  TableRow,
-  Typography,
-  Select,
-  MenuItem,
-} from '@material-ui/core';
-import { makeStyles } from '@material-ui/styles';
+import moment from 'moment';
+import { TableCell, TableRow, Button, Typography } from '@material-ui/core';
 import type { Identity } from 'pages/identity/modules/types';
-
-const useStyles = makeStyles({
-  formControl: {
-    minWidth: 120,
-  },
-});
-
-const RowStatusComponent = ({
-  identity,
-  handleSelectChange,
-}: {
-  identity: Identity,
-  handleSelectChange: (identity: Identity, status: string) => void,
-}) => {
-  const classes = useStyles();
-  switch (identity.status) {
-    case 'Approved':
-      return <Typography color="primary">Approved</Typography>;
-    case 'Rejected':
-      return <Typography color="error">Rejected</Typography>;
-    default:
-      return (
-        <Select
-          className={classes.formControl}
-          value={identity.status}
-          onChange={(evt: SyntheticInputEvent<HTMLElement>) =>
-            handleSelectChange(identity, evt.target.value)
-          }
-          inputProps={{
-            name: 'status',
-          }}
-        >
-          <MenuItem value="Approved">Approved</MenuItem>
-          <MenuItem value="Rejected">Rejected</MenuItem>
-        </Select>
-      );
-  }
-};
 
 const IdentityListItem = ({
   identity,
-  handleSelectChange,
+  onClickView,
 }: {
-  identity: Identit,
-  handleSelectChange: (identity: Identity, status: string) => void,
+  identity: Identity,
+  onClickView: (identity: Identity) => void,
 }) => {
-  const { firstName, lastName, createdAt, countryOfResidence } = identity;
+  const {
+    firstName,
+    lastName,
+    createdAt,
+    address: { country },
+    status,
+  } = identity;
+  let statusColor = 'initial';
+  if (status !== 'Unauthorized') {
+    statusColor = status === 'Approved' ? 'primary' : 'error';
+  }
 
   return (
     <TableRow>
-      <TableCell>Individual</TableCell>
-      <TableCell align="left">{createdAt}</TableCell>
-      <TableCell align="left">{`${firstName} ${lastName}`}</TableCell>
-      <TableCell align="left">{countryOfResidence}</TableCell>
+      <TableCell>Corporate</TableCell>
       <TableCell align="left">
-        <RowStatusComponent
-          identity={identity}
-          handleSelectChange={handleSelectChange}
-        />
+        {moment(createdAt).format('MMMM DD, YYYY')}
+      </TableCell>
+      <TableCell align="left">{`${firstName} ${lastName}`}</TableCell>
+      <TableCell align="left">{country}</TableCell>
+      <TableCell align="left">
+        <Typography color={statusColor}>{status}</Typography>
+      </TableCell>
+      <TableCell align="center">
+        <Button type="button" onClick={() => onClickView(identity)}>
+          View
+        </Button>
       </TableCell>
     </TableRow>
   );
