@@ -4,7 +4,6 @@ import classNames from 'classnames'
 
 // Material Components
 import { Typography } from '@material-ui/core';
-import Button from '@material-ui/core/Button';
 // Styles
 import useStyles from './styles'
 
@@ -163,8 +162,8 @@ const data = [
 
 function Monitoring(props) {
     const { title } = props; 
-    const classes = useStyles()
-    console.log('classes.monitoringListValue', classes.monitoringListValue);
+    const classes = useStyles();
+    
     return (
         <React.Fragment>
             {title && (

@@ -12,6 +12,7 @@ export const initialState: UserAuthState = {
     name: '',
     verified: false,
     accountType: '',
+    totpConfirmed: false,
   },
   status: USER_STATUS.INIT,
   isAuthenticated: !isEmpty(localStore.get()),

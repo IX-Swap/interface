@@ -37,6 +37,8 @@ export const actions = {
   UPDATE_CORPORATE_REQUEST: 'UPDATE_CORPORATE_REQUEST',
   UPDATE_CORPORATE_SUCCESS: 'UPDATE_CORPORATE_SUCCESS',
   UPDATE_CORPORATE_FAILURE: 'UPDATE_CORPORATE_FAILURE',
+
+  TOGGLE_EDIT_MODE: 'TOGGLE_EDIT_MODE',
 };
 
 export const STATUS = {
@@ -44,6 +46,16 @@ export const STATUS = {
   IDLE: 'IDLE',
   GETTING: 'GETTING',
   SAVING: 'SAVING',
+};
+
+export type IdentityAddress = {
+  line1: string,
+  line2: string,
+  city: string,
+  postalCode?: string,
+  state: string,
+  countryOfResidence?: string, // for individual
+  country?: string, // for corporate
 };
 
 export type IdentityProfile = {
@@ -56,12 +68,8 @@ export type IdentityProfile = {
   countryOfResidence: string,
   maritalStatus: 'Single' | 'Married',
   contactNumber: string,
-  line1: string,
-  line2: string,
-  city: string,
-  postalCode: string,
-  state: string,
-  country: string,
+  address: IdentityAddress,
+  email?: string,
 };
 
 export type IndentityFinancials = {
@@ -89,24 +97,41 @@ export type Document = {
   createdAt: string,
 };
 
+export type CorporateFields = {
+  companyLegalName: string,
+  registrationNumber: string,
+  countryOfFormation: string,
+  dateOfIncorporation: string,
+  companyAddress: IdentityAddress,
+  representatives: IdentityProfile,
+  directors: IdentityProfile,
+  beneficialOwners: IdentityProfile,
+};
+
 export type Identity = IdentityProfile &
-  $Shape<IndentityFinancials> & {
+  $Shape<IndentityFinancials> &
+  $Shape<CorporateFields> & {
     _id: string,
-    status: 'Rejected' | 'Authorized',
+    status: 'Rejected' | 'Authorized' | 'Unauthorized',
     user: User,
     createdAt: string,
     updatedAt: string,
     documents?: Document[],
+    declarations: any[],
+    walletAddress: string,
   };
 
 export type DocumentGuide = {
   title: string,
   label: string,
+  type: string,
 };
 
 export type IdentityState = {
   dataroom: Array<Document | DocumentGuide>,
+  corporateDataroom: Array<Document | DocumentGuide>,
   identity: Identity | {},
+  corporate: Identity | {},
   status: string,
   shouldCreateNew: boolean,
   editMode: boolean,
@@ -114,4 +139,14 @@ export type IdentityState = {
     save: string | null,
     get: string | null,
   },
+  type?: 'individual' | 'corporate',
+};
+
+export type DeclarationTemplate = {
+  key: string,
+  content: string,
+  value: 'Yes' | 'No' | null,
+  answerable?: boolean,
+  lastLine?: boolean,
+  sublevel?: boolean,
 };

@@ -1,4 +1,6 @@
-import React, { useState } from 'react'
+// @flow
+import React, { useState } from 'react';
+import type { Node } from 'react';
 import {
   Collapse,
   Divider,
@@ -6,19 +8,16 @@ import {
   ListItem,
   ListItemIcon,
   ListItemText,
-  Typography
-} from '@material-ui/core'
-import { Inbox as InboxIcon } from '@material-ui/icons'
-import { Link } from 'react-router-dom'
-import classnames from 'classnames'
+  Typography,
+} from '@material-ui/core';
+import { Inbox as InboxIcon } from '@material-ui/icons';
+import { Link } from 'react-router-dom';
+import classnames from 'classnames';
 
 // styles
-import useStyles from './styles'
+import useStyles from './styles';
 
-// components
-import Dot from '../Dot'
-
-export default function SidebarLink ({
+export default function SidebarLink({
   link,
   icon,
   label,
@@ -26,29 +25,38 @@ export default function SidebarLink ({
   location,
   isSidebarOpened,
   nested,
-  type
+  type,
+}: {
+  link: string,
+  icon: Node,
+  label: string,
+  children?: Node,
+  location: any,
+  isSidebarOpened: boolean,
+  nested: any,
+  type: any,
 }) {
-  var classes = useStyles()
+  const classes = useStyles();
 
   // local
-  var [isOpen, setIsOpen] = useState(false)
-  var isLinkActive =
+  const [isOpen, setIsOpen] = useState(false);
+  const isLinkActive =
     link &&
-    (location.pathname === link || location.pathname.indexOf(link) !== -1)
+    (location.pathname === link || location.pathname.indexOf(link) !== -1);
 
   if (type === 'title') {
     return (
       <Typography
         className={classnames(classes.linkText, classes.sectionTitle, {
-          [classes.linkTextHidden]: !isSidebarOpened
+          [classes.linkTextHidden]: !isSidebarOpened,
         })}
       >
         {label}
       </Typography>
-    )
+    );
   }
 
-  if (type === 'divider') return <Divider className={classes.divider} />
+  if (type === 'divider') return <Divider className={classes.divider} />;
 
   if (!children) {
     return (
@@ -60,29 +68,30 @@ export default function SidebarLink ({
         classes={{
           root: classnames(classes.linkRoot, {
             [classes.linkActive]: isLinkActive && !nested,
-            [classes.linkNested]: nested
-          })
+            [classes.linkNested]: nested,
+          }),
         }}
         disableRipple
       >
         <ListItemIcon
           className={classnames(classes.linkIcon, {
-            [classes.linkIconActive]: isLinkActive
+            [classes.linkIconActive]: isLinkActive,
+            [classes.linkIconNested]: nested,
           })}
         >
-          {nested ? <Dot color={isLinkActive && 'primary'} /> : icon}
+          {nested ? <>&nbsp;</> : icon}
         </ListItemIcon>
         <ListItemText
           classes={{
             primary: classnames(classes.linkText, {
               [classes.linkTextActive]: isLinkActive,
-              [classes.linkTextHidden]: !isSidebarOpened
-            })
+              [classes.linkTextHidden]: !isSidebarOpened,
+            }),
           }}
           primary={label}
         />
       </ListItem>
-    )
+    );
   }
 
   return (
@@ -97,7 +106,7 @@ export default function SidebarLink ({
       >
         <ListItemIcon
           className={classnames(classes.linkIcon, {
-            [classes.linkIconActive]: isLinkActive
+            [classes.linkIconActive]: isLinkActive,
           })}
         >
           {icon || <InboxIcon />}
@@ -106,8 +115,8 @@ export default function SidebarLink ({
           classes={{
             primary: classnames(classes.linkText, {
               [classes.linkTextActive]: isLinkActive,
-              [classes.linkTextHidden]: !isSidebarOpened
-            })
+              [classes.linkTextHidden]: !isSidebarOpened,
+            }),
           }}
           primary={label}
         />
@@ -115,12 +124,12 @@ export default function SidebarLink ({
       {children && (
         <Collapse
           in={isOpen && isSidebarOpened}
-          timeout='auto'
+          timeout="auto"
           unmountOnExit
           className={classes.nestedList}
         >
-          <List component='div' disablePadding>
-            {children.map(childrenLink => (
+          <List component="div" disablePadding>
+            {children.map((childrenLink) => (
               <SidebarLink
                 key={childrenLink && childrenLink.link}
                 location={location}
@@ -134,14 +143,14 @@ export default function SidebarLink ({
         </Collapse>
       )}
     </>
-  )
+  );
 
   // ###########################################################
 
-  function toggleCollapse (e) {
+  function toggleCollapse(e) {
     if (isSidebarOpened) {
-      e.preventDefault()
-      setIsOpen(!isOpen)
+      e.preventDefault();
+      setIsOpen(!isOpen);
     }
   }
 }

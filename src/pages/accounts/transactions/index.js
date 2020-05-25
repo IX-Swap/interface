@@ -13,13 +13,19 @@ import {
   Box,
 } from '@material-ui/core';
 import moment from 'moment';
-import { useAssetsState } from 'context/assets';
 import type { BaseStateWithPagination } from 'context/base/withPagination/types';
+
+import { useAssetsState, useAssetsDispatch } from 'context/assets';
+import { ASSETS_STATUS } from 'context/assets/types';
+import * as AssetsActions from 'context/assets/actions';
+
 import type { Transaction } from './modules/types';
 import TransactionsListModule from './modules';
 import FiltersComponent from './Filters';
 
 import Actions from './modules/actions';
+
+const { setAssetType } = AssetsActions;
 
 const {
   useTransactionsListDispatch,
@@ -27,12 +33,7 @@ const {
   TRANSACTIONS_LIST_STATUS,
 } = TransactionsListModule;
 
-const {
-  getTransactionsList,
-  setPage,
-  setRowsPerPage,
-  clearApiStatus,
-} = Actions;
+const { getTransactionsList, setPage, setRowsPerPage } = Actions;
 
 type TableColumn = {
   label: string,
@@ -83,8 +84,27 @@ const columns: Array<TableColumn> = [
 ];
 
 const useAssets = () => {
-  const assetsState = useAssetsState();
-  return { assets: assetsState.assets };
+  const mountedRef = useRef(true);
+  const { status: assetsStatus, type, assets } = useAssetsState();
+  const aDispatch = useAssetsDispatch();
+
+  useEffect(() => {
+    if (
+      assetsStatus === ASSETS_STATUS.INIT ||
+      ['Currency', 'Security'].includes(type)
+    ) {
+      setAssetType(aDispatch, { ref: mountedRef, type: undefined });
+    }
+  }, [aDispatch, assetsStatus, type]);
+
+  useEffect(
+    () => () => {
+      mountedRef.current = false;
+    },
+    []
+  );
+
+  return { assets, type };
 };
 
 type Filters = {
@@ -96,7 +116,7 @@ type Filters = {
 const useTransactionsListLogic = () => {
   const tDispatch = useTransactionsListDispatch();
   const tState: BaseStateWithPagination<Transaction> = useTransactionsListState();
-  const { assets } = useAssets();
+  const { assets, type } = useAssets();
   const { status, page, total, limit, items } = tState;
   const mountedRef = useRef(true);
   const [filter, setFilter] = useState<Filters>({
@@ -132,7 +152,7 @@ const useTransactionsListLogic = () => {
   };
 
   useEffect(() => {
-    if (status === TRANSACTIONS_LIST_STATUS.INIT) {
+    if (!type && status === TRANSACTIONS_LIST_STATUS.INIT) {
       getTransactionsList(tDispatch, {
         skip: page * limit,
         limit,
@@ -140,9 +160,8 @@ const useTransactionsListLogic = () => {
         ref: mountedRef,
         asset: filter.asset,
       });
-      clearApiStatus(tDispatch);
     }
-  }, [filter, page, limit, status, tDispatch, assets]);
+  }, [type, filter, page, limit, status, tDispatch, assets]);
 
   useEffect(
     () => () => {

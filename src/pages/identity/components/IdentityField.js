@@ -1,9 +1,16 @@
 // @flow
 import React from 'react';
-import { Typography, Grid, TextField } from '@material-ui/core';
+import type { Node } from 'react';
+import {
+  Typography,
+  Grid,
+  TextField,
+  Select,
+  FormControl,
+  InputLabel,
+} from '@material-ui/core';
 import { makeStyles } from '@material-ui/styles';
-import { useFormContext } from 'react-hook-form';
-import { useIdentityState } from '../modules';
+import { useFormContext, Controller } from 'react-hook-form';
 
 const useStyles = makeStyles(() => ({
   fieldLabel: {
@@ -13,13 +20,20 @@ const useStyles = makeStyles(() => ({
     width: '100%',
     padding: '1em 0',
   },
+  selectField: {
+    width: '100%',
+  },
 }));
 
 type IdentityFieldProps = {
   label: string,
-  value: string,
+  value?: string,
   size?: number,
   name: string,
+  type?: 'text' | 'select' | 'date',
+  children?: Node,
+  required?: boolean,
+  editMode: boolean,
 };
 
 const IdentityField = ({
@@ -27,20 +41,59 @@ const IdentityField = ({
   value,
   size = 4,
   name,
+  type,
+  children,
+  required = false,
+  editMode,
 }: IdentityFieldProps) => {
   const classes = useStyles();
-  const { register } = useFormContext();
-  const { editMode } = useIdentityState();
+  const { control, register } = useFormContext();
 
   if (!value && editMode) {
+    let inputComponent;
+
+    switch (type) {
+      case 'select':
+        inputComponent = (
+          <FormControl
+            name={name}
+            ref={register({ required })}
+            className={classes.selectField}
+          >
+            <InputLabel id={`select-${name}`}>{label}</InputLabel>
+            <Controller
+              as={Select}
+              name={name}
+              id={`select-${name}`}
+              control={control}
+              onChange={([e]) => e.target.value}
+              className={classes.selectField}
+              value={value}
+            >
+              {children}
+            </Controller>
+          </FormControl>
+        );
+        break;
+
+      case 'text':
+      case 'date':
+      default:
+        inputComponent = (
+          <TextField
+            type={type}
+            name={name}
+            inputRef={register({ required })}
+            placeholder={label}
+            className={classes.textField}
+          />
+        );
+        break;
+    }
+
     return (
       <Grid item xs={size}>
-        <TextField
-          name={name}
-          inputRef={register}
-          placeholder={label}
-          className={classes.textField}
-        />
+        {inputComponent}
       </Grid>
     );
   }
