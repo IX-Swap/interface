@@ -8,15 +8,15 @@ const GoogleAuthenticatorSetup = React.lazy(() => import('./pages/setup-2fa'));
 
 const routes = [
   {
-    route: '/settings',
+    route: '/security',
     component: (props) => <SettingsLanding {...props} />,
   },
   {
-    route: '/settings/change-password',
+    route: '/security/change-password',
     component: (props) => <ChangPassword {...props} />,
   },
   {
-    route: '/settings/setup-2fa',
+    route: '/security/setup-2fa',
     component: (props) => <GoogleAuthenticatorSetup {...props} />,
   },
 ];
