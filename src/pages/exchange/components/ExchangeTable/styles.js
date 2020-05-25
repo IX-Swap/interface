@@ -1,5 +1,15 @@
 import { makeStyles } from '@material-ui/styles'
 
+const defaultBadge = {
+    borderRadius: 5,
+    color: '#979797',
+    display: 'flex',
+    fontSize: 12,
+    justifyContent: 'center',
+    padding: 5,
+    minWidth: 90,
+};
+
 export default makeStyles(theme => ({
     title: {
         fontSize: 25,
@@ -10,6 +20,7 @@ export default makeStyles(theme => ({
         border: '1px solid #e8e8e8',
     },
     tableHeader: {
+        fontSize: 12,
         fontWeight: 600,
         borderBottom: 0,
     },
@@ -48,6 +59,7 @@ export default makeStyles(theme => ({
         alignItems: 'center',
         display: 'flex',
         justifyContent: 'center',
+        marginLeft: 15,
     },
     dropdownFilter: {
         alignItems: 'center',
@@ -65,4 +77,27 @@ export default makeStyles(theme => ({
         fontWeight: 600,
         fontSize: 18,
     },
+    defaultCell: {
+        fontSize: 12,
+    },
+    positiveCell: {
+        fontSize: 12,
+        color: '#009806',
+    },
+    negativeCell: {
+        fontSize: 12,
+        color: '#D20000',
+    },
+    disabledBadge: {
+        ...defaultBadge,
+        background: '#efefef',
+    },
+    positiveBadge: {
+        ...defaultBadge,
+        background: '#C5F1C7',
+    },
+    tableLink: {
+        textDecoration: 'none',
+        color: '#01A2FF',
+    }
 }))

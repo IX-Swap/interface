@@ -16,6 +16,12 @@ import Users from '../pages/settings/users';
 import Security from '../pages/security';
 import Authorizer from '../pages/authorizer';
 import Settings from '../pages/settings';
+import TableMyTrades from '../pages/exchange/components/ExchangeTable/TableMyTrades';
+import TableMyOrders from '../pages/exchange/components/ExchangeTable/TableMyOrders';
+import TableMarketListings from '../pages/exchange/components/ExchangeTable/TableMarketListings';
+import TableListings from '../pages/exchange/components/ExchangeTable/TableListings';
+import OverviewExchange from '../pages/exchange/components/OverviewExchange/OverviewExchange';
+import ListingView from '../pages/exchange/components/OverviewExchange/ListingView';
 
 import { useLayoutState, LayoutProvider } from '../context/LayoutContext';
 import { useUserState, useUserDispatch } from '../context/user';
@@ -77,6 +83,30 @@ function App() {
       {
         route: '/settings',
         component: Settings,
+      },
+      {
+        route: '/exchange',
+        component: OverviewExchange,
+      },
+      {
+        route: '/trade-history',
+        component: () => <TableMyTrades title='My Trades'/>,
+      },
+      {
+        route: '/order-history',
+        component: () => <TableMyOrders title='My Orders'/>,
+      },
+      {
+        route: '/markets',
+        component: () => <TableMarketListings title='Markets'/>,
+      },
+      {
+        route: '/listings',
+        component: () => <TableListings title='Listing'/>,
+      },
+      {
+        route: '/listings-view',
+        component: () => <ListingView title='Listing View'/>,
       },
     ];
 

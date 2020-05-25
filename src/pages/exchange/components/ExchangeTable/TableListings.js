@@ -1,11 +1,12 @@
-import React from 'react'
+import React from 'react';
 import PropTypes from 'prop-types';
-import { withRouter } from 'react-router-dom';
+import { withRouter, Link } from 'react-router-dom';
 
 // Material Components
 import { 
     Grid, 
     Typography,
+    Button,
     Paper,
     Table,
     TableBody,
@@ -16,15 +17,8 @@ import {
     TableFooter,
     TablePagination,
 } from '@material-ui/core';
-import Button from '@material-ui/core/Button';
-
-// Date Utils
-import DateFnsUtils from '@date-io/date-fns';
-import { MuiPickersUtilsProvider } from '@material-ui/pickers';
 
 // Local component
-import DateFilter from 'pages/exchange/components/ExchangeTable/DateFilter';
-import DropdownFilter from 'pages/exchange/components/ExchangeTable/DropdownFilter';
 import Pagination from 'pages/exchange/components/ExchangeTable/Pagination';
 
 // Styles
@@ -35,37 +29,41 @@ const columns = [
         id: 'name', 
         label: 'Name',
     },
-    { 
-        id: 'code', 
-        label: 'ISO\u00a0Code' 
+    {
+        id: 'assetName', 
+        label: 'Asset Name',
     },
     {
-        id: 'population',
-        label: 'Population',
+        id: 'companyName', 
+        label: 'Company Name',
+    },
+    {
+        id: 'view', 
+        label: '',
     },
 ];
 
-function createData(name, calories, fat) {
-    return { name, calories, fat };
+function createData(name, assetName, companyName, view) {
+    return { name, assetName, companyName, view };
 }
   
 const rows = [
-    createData('Donut', 452, 25.0),
-    createData('Eclair', 262, 16.0),
-    createData('Frozen yoghurt', 159, 6.0),
-    createData('Gingerbread', 356, 16.0),
-    createData('Honeycomb', 408, 3.2),
-    createData('Ice cream sandwich', 237, 9.0),
-    createData('Jelly Bean', 375, 0.0),
-    createData('KitKat', 518, 26.0),
-    createData('Lollipop', 392, 0.2),
-    createData('Marshmallow', 318, 0),
-    createData('Nougat', 360, 19.0),
-    createData('Oreo', 437, 18.0),
-].sort((a, b) => (a.calories < b.calories ? -1 : 1));
+    createData('IXPS/SGD', 'InvestaX', '$1,234,50', 'View'),
+    createData('IXPS/SGD', 'InvestaX', '$1,234,50', 'View'),
+    createData('IXPS/SGD', 'InvestaX', '$1,234,50', 'View'),
+    createData('IXPS/SGD', 'InvestaX', '$1,234,50', 'View'),
+    createData('IXPS/SGD', 'InvestaX', '$1,234,50', 'View'),
+    createData('IXPS/SGD', 'InvestaX', '$1,234,50', 'View'),
+    createData('IXPS/SGD', 'InvestaX', '$1,234,50', 'View'),
+    createData('IXPS/SGD', 'InvestaX', '$1,234,50', 'View'),
+    createData('IXPS/SGD', 'InvestaX', '$1,234,50', 'View'),
+    createData('IXPS/SGD', 'InvestaX', '$1,234,50', 'View'),
+    createData('IXPS/SGD', 'InvestaX', '$1,234,50', 'View'),
+    createData('IXPS/SGD', 'InvestaX', '$1,234,50', 'View'),
+];
 
 function ExchangeTable(props) {
-    const { title, withFilter } = props;
+    const { title } = props;
     const classes = useStyles();
     const [page, setPage] = React.useState(0);
     const [rowsPerPage, setRowsPerPage] = React.useState(10);
@@ -89,29 +87,6 @@ function ExchangeTable(props) {
                 {title}
             </Typography>
             <Grid className={classes.componentStyle}>
-                {withFilter && (
-                    <MuiPickersUtilsProvider utils={DateFnsUtils}>
-                        <section className={classes.filterContainer}>
-                            <DateFilter />
-                            <DropdownFilter />
-                            <section className={classes.buttonFilter}>
-                                <Button 
-                                    variant="outlined" 
-                                    color="primary"
-                                    className={classes.btnStyle}
-                                >
-                                    Primary
-                                </Button>
-                                <Button 
-                                    variant="contained"
-                                    className={classes.btnStyle}
-                                >
-                                    Reset
-                                </Button>
-                            </section>
-                        </section>
-                    </MuiPickersUtilsProvider>
-                )}
                 <TableContainer component={Paper}>
                     <Table aria-label="custom pagination table">    
                         <TableHead>
@@ -127,19 +102,31 @@ function ExchangeTable(props) {
                             </TableRow>
                         </TableHead>
                         <TableBody>
-                            {(rowsPerPage > 0 ? rows.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage) : rows).map((row) => (
-                                <TableRow key={row.name}>
-                                    <TableCell component="th" scope="row">
-                                        {row.name}
-                                    </TableCell>
-                                    <TableCell>
-                                        {row.calories}
-                                    </TableCell>
-                                    <TableCell>
-                                        {row.fat}
-                                    </TableCell>
-                                </TableRow>
-                            ))}
+                            {(rowsPerPage > 0 ? rows.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage) : rows).map((row, i) => {
+                                    return (
+                                        <TableRow key={i}>
+                                            <TableCell className={classes.defaultCell}>
+                                                {row.name}
+                                            </TableCell>
+                                            <TableCell className={classes.defaultCell}>
+                                                {row.assetName}
+                                            </TableCell>
+                                            <TableCell className={classes.defaultCell}>
+                                                {row.companyName}
+                                            </TableCell>
+                                            <TableCell className={classes.defaultCell}>
+                                                <Button href="#text-buttons" color="primary">
+                                                    <Link
+                                                        className={classes.tableLink}
+                                                        to='listings-view'
+                                                    >
+                                                        {row.view}
+                                                    </Link>
+                                                </Button>
+                                            </TableCell>
+                                        </TableRow>
+                                    )
+                            })}
 
                             {emptyRows > 0 && (
                                 <TableRow style={{ height: 53 * emptyRows }}>

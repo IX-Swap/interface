@@ -8,6 +8,7 @@ import PermIdentityIcon from '@material-ui/icons/PermIdentity';
 import ArrowBackIcon from '@material-ui/icons/ArrowBack';
 import SecurityIcon from '@material-ui/icons/Security';
 import AccountBalanceIcon from '@material-ui/icons/AccountBalance';
+import TrendingUpIcon from '@material-ui/icons/TrendingUp';
 import PieChartIcon from '@material-ui/icons/PieChart';
 
 import { useTheme } from '@material-ui/styles';
@@ -47,9 +48,20 @@ const structure = [
     link: '/accounts',
     icon: <AccountBalanceIcon />,
   },
-
   {
     id: 3,
+    label: 'Exchange',
+    link: '/exchange',
+    icon: <TrendingUpIcon />,
+    children: [
+      { label: 'Trade History', link: '/trade-history', icon: <PermIdentityIcon /> },
+      { label: 'Order History', link: '/order-history', icon: <SecurityIcon /> },
+      { label: 'Markets', link: '/markets', icon: <SecurityIcon /> },
+      { label: 'Listings', link: '/listings', icon: <SecurityIcon /> },
+    ],
+  },
+  {
+    id: 4,
     label: 'Settings',
     link: '/settings',
     icon: <SettingsIcon />,
@@ -61,12 +73,12 @@ const structure = [
     ],
   },
   {
-    id: 4,
+    id: 5,
     label: 'Support',
     link: '/primary',
     icon: <HelpIcon />,
   },
-  { id: 5, type: 'divider' },
+  { id: 6, type: 'divider' },
 ];
 
 function Sidebar({ location }) {
