@@ -10,7 +10,6 @@ import Header from './Header';
 import Sidebar from './Sidebar';
 import useStyles from './Layout/styles';
 
-import Exchange from '../pages/exchange';
 import Accounts from '../pages/accounts';
 import Identity from '../pages/identity';
 import Invest from '../pages/invest';
@@ -45,7 +44,7 @@ function App() {
         {...rest}
         render={(props: RouteProps) =>
           isAuthenticated ? (
-            <Redirect to={{ pathname: '/trade' }} />
+            <Redirect to={{ pathname: '/identity' }} />
           ) : (
             React.createElement(component, props)
           )
@@ -79,16 +78,12 @@ function App() {
 
     const privateRoutes = [
       {
-        route: '/trade',
-        component: Exchange,
+        route: '/identity',
+        component: Identity,
       },
       {
         route: '/accounts',
         component: Accounts,
-      },
-      {
-        route: '/identity',
-        component: Identity,
       },
       {
         route: '/invest',
@@ -104,23 +99,23 @@ function App() {
       },
       {
         route: '/trade-history',
-        component: () => <TableMyTrades title='My Trades'/>,
+        component: () => <TableMyTrades title="My Trades" />,
       },
       {
         route: '/order-history',
-        component: () => <TableMyOrders title='My Orders'/>,
+        component: () => <TableMyOrders title="My Orders" />,
       },
       {
         route: '/markets',
-        component: () => <TableMarketListings title='Markets'/>,
+        component: () => <TableMarketListings title="Markets" />,
       },
       {
         route: '/listings',
-        component: () => <TableListings title='Listing'/>,
+        component: () => <TableListings title="Listing" />,
       },
       {
         route: '/listings-view',
-        component: () => <ListingView title='Listing View'/>,
+        component: () => <ListingView title="Listing View" />,
       },
       // Show only when user has issuer role
       ...(isIssuer
@@ -155,7 +150,7 @@ function App() {
       return (
         <Redirect
           to={{
-            pathname: '/trade',
+            pathname: '/identity',
             state: { from: location },
           }}
         />
