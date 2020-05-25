@@ -7,6 +7,8 @@ import HelpIcon from '@material-ui/icons/Help';
 import ArrowBackIcon from '@material-ui/icons/ArrowBack';
 import SecurityIcon from '@material-ui/icons/Security';
 import AccountBalanceIcon from '@material-ui/icons/AccountBalance';
+import TrendingUpIcon from '@material-ui/icons/TrendingUp';
+import PermIdentityIcon from '@material-ui/icons/PermIdentity';
 import PieChartIcon from '@material-ui/icons/PieChart';
 import PersonIcon from '@material-ui/icons/Person';
 import PeopleIcon from '@material-ui/icons/People';
@@ -55,6 +57,18 @@ function Sidebar({ location }: { location: any }) {
       label: 'Accounts',
       link: '/accounts',
       icon: <AccountBalanceIcon />,
+    },
+    {
+      id: 'exchange',
+      label: 'Exchange',
+      link: '/exchange',
+      icon: <TrendingUpIcon />,
+      children: [
+        { label: 'Trade History', link: '/trade-history', icon: <PermIdentityIcon /> },
+        { label: 'Order History', link: '/order-history', icon: <SecurityIcon /> },
+        { label: 'Markets', link: '/markets', icon: <SecurityIcon /> },
+        { label: 'Listings', link: '/listings', icon: <SecurityIcon /> },
+      ],
     },
     {
       id: 'identity',
