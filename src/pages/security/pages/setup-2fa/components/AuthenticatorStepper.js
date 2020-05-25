@@ -83,7 +83,7 @@ const AuthenticatorStepper = () => {
         snackbarService.showSnackbar(message, type);
         // return to page
         setTimeout(() => {
-          history.push('/settings');
+          history.push('/security');
         }, 1000);
       } else {
         type = 'error';
@@ -107,7 +107,7 @@ const AuthenticatorStepper = () => {
 
   const handleBack = () => {
     if (activeStep <= 0) {
-      history.push('/settings');
+      history.push('/security');
     }
 
     setActiveStep((prevActiveStep) => prevActiveStep - 1);
