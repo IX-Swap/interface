@@ -1,17 +1,36 @@
-import React from 'react';
-import { Switch, Route, Redirect } from 'react-router-dom';
+import React, { Suspense } from 'react';
+import { Switch, Route, Redirect, withRouter } from 'react-router-dom';
 import { Container, Typography } from '@material-ui/core';
 import { makeStyles } from '@material-ui/styles';
 import { IdentityProvider } from './modules';
-import IndentityLanding from './pages/landing';
-import IndividualIdentity from './pages/individual';
-import CorporateIdentity from './pages/corporate';
+
+const IndentityLanding = React.lazy(() => import('./pages/landing'));
+const IndividualIdentity = React.lazy(() => import('./pages/individual'));
+const CorporateIdentity = React.lazy(() => import('./pages/corporate'));
 
 const useStyles = makeStyles(() => ({
   pageTitle: {
     lineHeight: '2em',
   },
 }));
+
+const routes = [
+  {
+    title: 'Identity',
+    route: '/identity',
+    component: IndentityLanding,
+  },
+  {
+    title: 'Corporate Identity',
+    route: '/identity/corporate',
+    component: CorporateIdentity,
+  },
+  {
+    title: 'Individual Identity',
+    route: '/identity/individual',
+    component: IndividualIdentity,
+  },
+];
 
 const Identity = () => {
   const classes = useStyles();
@@ -23,18 +42,16 @@ const Identity = () => {
           Identity
         </Typography>
         <Switch>
-          <Route
-            path="/identity/individual"
-            exact
-            component={IndividualIdentity}
-          />
-          <Route
-            path="/identity/corporate"
-            exact
-            component={CorporateIdentity}
-          />
-          <Route path="/identity" exact component={IndentityLanding} />
-
+          <Suspense fallback={<div>Loading...</div>}>
+            {routes.map((route, index) => (
+              <Route
+                exact={index === 0}
+                key={route.title}
+                path={route.route}
+                component={route.component}
+              />
+            ))}
+          </Suspense>
           <Redirect to="/identity" />
         </Switch>
       </Container>

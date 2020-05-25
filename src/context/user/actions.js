@@ -65,6 +65,9 @@ export function setActiveTabId(dispatch: Function, activeTabId: number) {
 export function signOut(dispatch: Function) {
   localStore.remove();
   dispatch({ type: userActions.SIGN_OUT_SUCCESS });
+
+  // TODO: Fix to not hacky solution
+  window.location = '#/auth/sign-in';
 }
 
 export async function verifySignup(

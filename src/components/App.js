@@ -1,3 +1,4 @@
+// @flow
 import React, { useMemo } from 'react';
 import type { Node } from 'react';
 import { Route, Switch, Redirect, HashRouter } from 'react-router-dom';
@@ -191,7 +192,6 @@ function App() {
           {privateRoutes.map((route, i) => (
             <PrivateRoute
               key={i}
-              exact={i === 0}
               path={route.route}
               component={route.component}
             />

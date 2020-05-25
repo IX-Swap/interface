@@ -112,7 +112,7 @@ const SettingsLandingPage = () => {
                       <Grid container item justify="flex-end" xs={4}>
                         <Button
                           onClick={() =>
-                            history.push('/settings/change-password')
+                            history.push('/security/change-password')
                           }
                           className={classes.button}
                         >
@@ -156,7 +156,7 @@ const SettingsLandingPage = () => {
               border={1}
               borderColor="grey.300"
               component="button"
-              onClick={() => history.push('/settings/setup-2fa')}
+              onClick={() => history.push('/security/setup-2fa')}
             >
               <Grid container alignItems="center" justify="center">
                 <Grid item>
