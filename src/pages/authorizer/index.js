@@ -1,7 +1,7 @@
 // @flow
 import React, { Suspense } from 'react';
 import { withRouter, Route, Link, RouteProps } from 'react-router-dom';
-import { Grid, Box, Typography } from '@material-ui/core';
+import { Grid, Box } from '@material-ui/core';
 import PageTitle from 'components/PageTitle';
 
 const Banks = React.lazy(() => import('./banks'));
