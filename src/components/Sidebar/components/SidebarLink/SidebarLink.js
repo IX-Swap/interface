@@ -17,9 +17,6 @@ import classnames from 'classnames';
 // styles
 import useStyles from './styles';
 
-// components
-import Dot from '../Dot';
-
 export default function SidebarLink({
   link,
   icon,
