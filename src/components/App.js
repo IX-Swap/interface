@@ -1,7 +1,9 @@
 import React, { useMemo } from 'react';
+import type { Node } from 'react';
 import { Route, Switch, Redirect, HashRouter } from 'react-router-dom';
 import classnames from 'classnames';
 
+import { useIsAdmin, useIsAuthorizer, useIsIssuer } from 'services/acl';
 import Auth from '../pages/auth';
 
 import Header from './Header';
@@ -15,14 +17,36 @@ import Invest from '../pages/invest';
 import Users from '../pages/users';
 import Security from '../pages/security';
 import Authorizer from '../pages/authorizer';
+import Issuance from '../pages/issuance';
 
 import { useLayoutState, LayoutProvider } from '../context/LayoutContext';
 import { useUserState, useUserDispatch } from '../context/user';
 import { getUser } from '../context/user/actions';
 
+type Location = $Shape<{ pathname: string }>;
+
+type RouteProps = $Shape<{
+  location: Location,
+}>;
+
 function App() {
   const { isAuthenticated } = useUserState();
   const classes = useStyles();
+
+  function PublicRoute({ component, ...rest }: { component: Node }) {
+    return (
+      <Route
+        {...rest}
+        render={(props: RouteProps) =>
+          isAuthenticated ? (
+            <Redirect to={{ pathname: '/trade' }} />
+          ) : (
+            React.createElement(component, props)
+          )
+        }
+      />
+    );
+  }
 
   return (
     <HashRouter>
@@ -39,6 +63,9 @@ function App() {
     const userDispatch = useUserDispatch();
     const { isSidebarOpened } = useLayoutState();
     const { status } = useUserState();
+    const isAdmin = useIsAdmin();
+    const isAuthorizer = useIsAuthorizer();
+    const isIssuer = useIsIssuer();
 
     useMemo(() => {
       if (status === 'INIT') getUser(userDispatch);
@@ -65,15 +92,65 @@ function App() {
         route: '/security',
         component: Security,
       },
-      {
-        route: '/users',
-        component: Users,
-      },
-      {
-        route: '/authorizer',
-        component: Authorizer,
-      },
+      // Show only when user has issuer role
+      ...(isIssuer
+        ? [
+            {
+              route: '/issuance',
+              component: Issuance,
+            },
+          ]
+        : []),
+      // Show only when user has admin role
+      ...(isAdmin
+        ? [
+            {
+              route: '/users',
+              component: Users,
+            },
+          ]
+        : []),
+      // Show only when user has authorizer role
+      ...(isAuthorizer
+        ? [
+            {
+              route: '/authorizer',
+              component: Authorizer,
+            },
+          ]
+        : []),
     ];
+
+    function GotoDashboard({ location }: { location: Location }) {
+      return (
+        <Redirect
+          to={{
+            pathname: '/trade',
+            state: { from: location },
+          }}
+        />
+      );
+    }
+
+    function PrivateRoute({ component, ...rest }) {
+      return (
+        <Route
+          {...rest}
+          render={(props: RouteProps) =>
+            isAuthenticated ? (
+              React.createElement(component, props)
+            ) : (
+              <Redirect
+                to={{
+                  pathname: '/auth/sign-in',
+                  state: { from: props.location },
+                }}
+              />
+            )
+          }
+        />
+      );
+    }
 
     return (
       <div className={classes.root}>
@@ -96,52 +173,6 @@ function App() {
           ))}
         </div>
       </div>
-    );
-  }
-
-  function GotoDashboard(props) {
-    return (
-      <Redirect
-        to={{
-          pathname: '/trade',
-          state: { from: props.location },
-        }}
-      />
-    );
-  }
-
-  function PrivateRoute({ component, ...rest }) {
-    return (
-      <Route
-        {...rest}
-        render={(props) =>
-          isAuthenticated ? (
-            React.createElement(component, props)
-          ) : (
-            <Redirect
-              to={{
-                pathname: '/auth/sign-in',
-                state: { from: props.location },
-              }}
-            />
-          )
-        }
-      />
-    );
-  }
-
-  function PublicRoute({ component, ...rest }) {
-    return (
-      <Route
-        {...rest}
-        render={(props) =>
-          isAuthenticated ? (
-            <Redirect to={{ pathname: '/trade' }} />
-          ) : (
-            React.createElement(component, props)
-          )
-        }
-      />
     );
   }
 }

@@ -45,6 +45,7 @@ export type User = {
   email: string,
   name: string,
   roles: string,
+  totpConfirmed: boolean,
 };
 
 export type LocalUser = {
