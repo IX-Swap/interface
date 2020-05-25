@@ -2,6 +2,7 @@
 import React, { Suspense } from 'react';
 import { withRouter, Route, Link, RouteProps } from 'react-router-dom';
 import { Grid, Box, Typography } from '@material-ui/core';
+import PageTitle from 'components/PageTitle';
 
 const Banks = React.lazy(() => import('./banks'));
 const Deposits = React.lazy(() => import('./deposits'));
@@ -23,7 +24,7 @@ const routes = [
     component: Deposits,
   },
   {
-    route: '/authorizer/withrawals',
+    route: '/authorizer/withdrawals',
     title: 'Withdrawals',
     component: Withdrawals,
   },
@@ -63,8 +64,12 @@ const getTitle = (path: string): string => {
       return 'Banks';
     case '/authorizer/deposits':
       return 'Deposits';
-    case '/authorizer/withrawals':
+    case '/authorizer/withdrawals':
       return 'Withdrawals';
+    case '/authorizer/individual-identities':
+      return 'Individual Identities';
+    case '/authorizer/corporate-identities':
+      return 'Corporate Identities';
     default:
       return '';
   }
@@ -80,11 +85,7 @@ function Authorizer(props: RouteProps) {
       <Grid container title="Accounts" justify="center" alignItems="center">
         <Grid item xs={12}>
           <Box my={4}>
-            {location && (
-              <Typography variant="h2">
-                {getTitle(location.pathname)}
-              </Typography>
-            )}
+            {location && <PageTitle title={getTitle(location.pathname)} />}
           </Box>
         </Grid>
         <Routes />

@@ -14,9 +14,11 @@ import {
   Paper,
   Box,
   LinearProgress,
+  Container,
 } from '@material-ui/core';
 import Alert from '@material-ui/lab/Alert';
 
+import PageTitle from 'components/PageTitle';
 import DialogConfirmRoleChange from './components/DialogConfirmRoleChange';
 import UsersTableBody from './components/UsersTableBody';
 
@@ -124,7 +126,10 @@ function useUsersListLogic() {
 function UsersWithProvider() {
   return (
     <UserListProvider>
-      <Users />
+      <Container>
+        <PageTitle title="Users" />
+        <Users />
+      </Container>
     </UserListProvider>
   );
 }

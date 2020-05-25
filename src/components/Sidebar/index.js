@@ -1,14 +1,16 @@
 import React, { useState, useEffect } from 'react';
 import { Drawer, IconButton, List } from '@material-ui/core';
 
-import SettingsIcon from '@material-ui/icons/Settings';
 import ShowChartIcon from '@material-ui/icons/ShowChart';
+import LocalAtmIcon from '@material-ui/icons/LocalAtm';
 import HelpIcon from '@material-ui/icons/Help';
 import ArrowBackIcon from '@material-ui/icons/ArrowBack';
 import SecurityIcon from '@material-ui/icons/Security';
 import AccountBalanceIcon from '@material-ui/icons/AccountBalance';
 import PieChartIcon from '@material-ui/icons/PieChart';
 import PersonIcon from '@material-ui/icons/Person';
+import PeopleIcon from '@material-ui/icons/People';
+import AccountBoxIcon from '@material-ui/icons/AccountBox';
 
 import { useTheme } from '@material-ui/styles';
 import { withRouter } from 'react-router-dom';
@@ -29,39 +31,62 @@ import {
 
 const structure = [
   {
-    id: 0,
+    id: 'trade',
     label: 'Trade',
     link: '/trade',
     icon: <ShowChartIcon />,
   },
   {
-    id: 1,
+    id: 'invest',
     label: 'Invest',
     link: '/invest',
     icon: <PieChartIcon />,
   },
   {
-    id: 2,
+    id: 'accounts',
     label: 'Accounts',
     link: '/accounts',
     icon: <AccountBalanceIcon />,
   },
   {
-    id: 3,
+    id: 'identity',
     label: 'Identity',
     link: '/identity',
     icon: <PersonIcon />,
   },
   {
-    id: 4,
-    label: 'Settings',
-    link: '/settings',
-    icon: <SettingsIcon />,
+    id: 'issuance',
+    label: 'Issuance',
+    link: '/issuance',
+    icon: <LocalAtmIcon />,
+  },
+
+  {
+    id: 'authorizer',
+    label: 'Authorizer',
+    link: '/authorizer',
+    icon: <AccountBoxIcon />,
     children: [
-      { label: 'Security', link: '/security', icon: <SecurityIcon /> },
-      { label: 'Users', link: '/users', icon: <SecurityIcon /> },
-      { label: 'Authorizer', link: '/authorizer', icon: <SecurityIcon /> },
+      { label: 'Bank Accounts', link: '/authorizer/banks' },
+      { label: 'Cash Deposits', link: '/authorizer/deposits' },
+      { label: 'Cash Withdrawals', link: '/authorizer/withdrawals' },
+      {
+        label: 'Indentities (Individual)',
+        link: '/authorizer/individual-identities',
+      },
+      {
+        label: 'Indentities (Corporate)',
+        link: '/authorizer/corporate-identities',
+      },
     ],
+  },
+  { id: 'users', label: 'Users', link: '/users', icon: <PeopleIcon /> },
+  { id: 6, type: 'divider' },
+  {
+    id: 'security',
+    label: 'Security',
+    link: '/security',
+    icon: <SecurityIcon />,
   },
   {
     id: 5,
@@ -69,7 +94,6 @@ const structure = [
     link: '/primary',
     icon: <HelpIcon />,
   },
-  { id: 6, type: 'divider' },
 ];
 
 function Sidebar({ location }: { location: any }) {

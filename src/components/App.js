@@ -12,10 +12,9 @@ import Exchange from '../pages/exchange';
 import Accounts from '../pages/accounts';
 import Identity from '../pages/identity';
 import Invest from '../pages/invest';
-import Users from '../pages/settings/users';
+import Users from '../pages/users';
 import Security from '../pages/security';
 import Authorizer from '../pages/authorizer';
-import Settings from '../pages/settings';
 
 import { useLayoutState, LayoutProvider } from '../context/LayoutContext';
 import { useUserState, useUserDispatch } from '../context/user';
@@ -73,10 +72,6 @@ function App() {
       {
         route: '/authorizer',
         component: Authorizer,
-      },
-      {
-        route: '/settings',
-        component: Settings,
       },
     ];
 
