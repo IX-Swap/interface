@@ -13,27 +13,23 @@ function OverviewExchange() {
 
   return (
     <Grid>
-      <OverviewHeader />
+      {false && <OverviewHeader />}
       <Grid container spacing={1}>
-        <Grid item xs direction="column">
+        <Grid container item xs direction="column">
           <Monitoring />
           <Monitoring />
         </Grid>
-        <Grid item xs={6} direction="column">
+        <Grid container item xs={6} direction="column">
           <Paper className={classes.paper}>
-            {
-              // TODO: PLACEHOLDER FOR THE CHART
-            }
+              TODO: PLACEHOLDER FOR THE CHART
           </Paper>
           <Paper className={classes.paper}>
-            {
-              // TODO: PLACEHOLDER FOR THE BUY/SELL OPTIONS
-            }
+              TODO: PLACEHOLDER FOR THE BUY/SELL OPTIONS
           </Paper>
         </Grid>
-        <Grid item xs direction="column">
+        <Grid container item xs direction="column">
           <Monitoring />
-          <Monitoring />
+          <Monitoring title="Trade History" />
         </Grid>
       </Grid>
       <Typography className={classes.tableTitle} variant="h3">

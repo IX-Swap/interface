@@ -1,12 +1,13 @@
 import React, { useState, useEffect } from 'react';
 import { Drawer, IconButton, List } from '@material-ui/core';
 
-import ShowChartIcon from '@material-ui/icons/ShowChart';
 import LocalAtmIcon from '@material-ui/icons/LocalAtm';
 import HelpIcon from '@material-ui/icons/Help';
 import ArrowBackIcon from '@material-ui/icons/ArrowBack';
 import SecurityIcon from '@material-ui/icons/Security';
 import AccountBalanceIcon from '@material-ui/icons/AccountBalance';
+import TrendingUpIcon from '@material-ui/icons/TrendingUp';
+import PermIdentityIcon from '@material-ui/icons/PermIdentity';
 import PieChartIcon from '@material-ui/icons/PieChart';
 import PersonIcon from '@material-ui/icons/Person';
 import PeopleIcon from '@material-ui/icons/People';
@@ -39,10 +40,10 @@ function Sidebar({ location }: { location: any }) {
 
   const structure = [
     {
-      id: 'trade',
-      label: 'Trade',
-      link: '/trade',
-      icon: <ShowChartIcon />,
+      id: 'identity',
+      label: 'Identity',
+      link: '/identity',
+      icon: <PersonIcon />,
     },
     {
       id: 'invest',
@@ -57,10 +58,24 @@ function Sidebar({ location }: { location: any }) {
       icon: <AccountBalanceIcon />,
     },
     {
-      id: 'identity',
-      label: 'Identity',
-      link: '/identity',
-      icon: <PersonIcon />,
+      id: 'exchange',
+      label: 'Exchange',
+      link: '/exchange',
+      icon: <TrendingUpIcon />,
+      children: [
+        {
+          label: 'Trade History',
+          link: '/trade-history',
+          icon: <PermIdentityIcon />,
+        },
+        {
+          label: 'Order History',
+          link: '/order-history',
+          icon: <SecurityIcon />,
+        },
+        { label: 'Markets', link: '/markets', icon: <SecurityIcon /> },
+        { label: 'Listings', link: '/listings', icon: <SecurityIcon /> },
+      ],
     },
     // Show only when user has issuer role
     ...(isIssuer

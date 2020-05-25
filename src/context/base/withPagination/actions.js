@@ -37,7 +37,7 @@ export default (name: string, uri: string, additionalPayload: any) => {
           payload: {
             page: Math.floor(skip / limit) + 1,
             total: count,
-            items: documents,
+            items: documents || [],
             statusCode: result.status,
           },
         });

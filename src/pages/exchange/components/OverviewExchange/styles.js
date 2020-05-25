@@ -1,5 +1,10 @@
 import { makeStyles } from '@material-ui/styles'
-
+const defaultListItemStyle = {
+  flex: 1,
+  margin: 0,
+  textAlign: 'left',
+  fontSize: 11,
+};
 export default makeStyles(theme => ({
   overviewHeader: {
     marginBottom: theme.spacing.unit * 5,
@@ -30,9 +35,14 @@ export default makeStyles(theme => ({
   },
   monitoring: {
     backgroundColor: '#fff',
-    border: '1px solid #bcbcbc',
+    boxShadow: '0px 2px 1px -1px rgba(0,0,0,0.2), 0px 1px 1px 0px rgba(0,0,0,0.14), 0px 1px 3px 0px rgba(0,0,0,0.12)',
     marginBottom: theme.spacing.unit,
     padding: theme.spacing.unit,
+  },
+  monitoringTitle: {
+    fontSize: 16,
+    fontWeight: 600,
+    margin: '10px 0',
   },
   monitoringHeader: {
     color: '#bcbcbc',
@@ -52,15 +62,20 @@ export default makeStyles(theme => ({
     display: 'flex',
     justifyContent: 'space-between',
   },
-  monitoringListValue: {
-    flex: 1,
-    margin: 0,
-    textAlign: 'left',
-    fontSize: 11,
+  defaultListItemStyle: {
+    ...defaultListItemStyle,
 
     '&:last-child, &:nth-child(2)': {
       textAlign: 'right',
     }
+  },
+  positiveCell: {
+    defaultListItemStyle,
+    color: '#009806',
+  },
+  negativeCell: {
+    ...defaultListItemStyle,
+    color: '#D20000',
   },
   tableTitle: {
     color: "#000",
