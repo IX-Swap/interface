@@ -13,13 +13,12 @@ import {
 } from '@material-ui/core';
 import PageTitle from 'components/PageTitle';
 import { makeStyles } from '@material-ui/styles';
+import { useUserState } from 'context/user';
 import keyImg from '../assets/key.png';
 import gAuthImg from '../assets/googleauth.png';
 
-const useStyles = makeStyles((theme) => ({
+const useStyles = makeStyles(() => ({
   button: {
-    backgroundColor: theme.palette.secondary.main,
-    color: 'white',
     fontWeight: 'bold',
     width: '100px',
   },
@@ -42,9 +41,10 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const SettingsLandingPage = () => {
+  const { user: { totpConfirmed = false } = {} } = useUserState();
   const history = useHistory();
   const classes = useStyles();
-  const [open, setOpen] = useState(false);
+  const [open, setOpen] = useState(!totpConfirmed);
 
   return (
     <>
@@ -81,10 +81,13 @@ const SettingsLandingPage = () => {
                       </Grid>
                       <Grid item container justify="flex-end" xs={4}>
                         <Button
+                          variant="contained"
+                          color="primary"
                           className={classes.button}
                           onClick={() => setOpen(true)}
+                          disabled={totpConfirmed}
                         >
-                          Setup
+                          {totpConfirmed ? 'Done' : 'Setup'}
                         </Button>
                       </Grid>
                     </Grid>
@@ -111,6 +114,8 @@ const SettingsLandingPage = () => {
                       </Grid>
                       <Grid container item justify="flex-end" xs={4}>
                         <Button
+                          variant="contained"
+                          color="primary"
                           onClick={() =>
                             history.push('/security/change-password')
                           }

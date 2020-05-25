@@ -5,6 +5,7 @@ import { Route, Switch, Redirect, HashRouter } from 'react-router-dom';
 import classnames from 'classnames';
 
 import { useIsAdmin, useIsAuthorizer, useIsIssuer } from 'services/acl';
+import useRedirectTo2faSetup from 'hooks/useRedirectTo2faSetup';
 import Auth from '../pages/auth';
 
 import Header from './Header';
@@ -39,10 +40,18 @@ function App() {
   const { isAuthenticated } = useUserState();
   const classes = useStyles();
 
-  function PublicRoute({ component, ...rest }: { component: Node }) {
+  function PublicRoute({
+    component,
+    path,
+    ...rest
+  }: {
+    component: Node,
+    path: string,
+  }) {
     return (
       <Route
         {...rest}
+        path={path}
         render={(props: RouteProps) =>
           isAuthenticated ? (
             <Redirect to={{ pathname: '/identity' }} />
@@ -159,6 +168,24 @@ function App() {
     }
 
     function PrivateRoute({ component, ...rest }) {
+      const redirect = useRedirectTo2faSetup();
+
+      if (redirect) {
+        return (
+          <Route
+            {...rest}
+            render={(props: RouteProps) => (
+              <Redirect
+                to={{
+                  pathname: '/security',
+                  state: { from: props.location },
+                }}
+              />
+            )}
+          />
+        );
+      }
+
       return (
         <Route
           {...rest}
