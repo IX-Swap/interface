@@ -29,6 +29,7 @@ import Issuance from '../pages/issuance';
 import { useLayoutState, LayoutProvider } from '../context/LayoutContext';
 import { useUserState, useUserDispatch } from '../context/user';
 import { getUser } from '../context/user/actions';
+import NoAccessDialog from './NoAccessDialog';
 
 type Location = $Shape<{ pathname: string }>;
 
@@ -224,6 +225,9 @@ function App() {
             />
           ))}
         </div>
+
+        {/** Modal showing invalid access when user is not yet accredited */}
+        <NoAccessDialog />
       </div>
     );
   }
