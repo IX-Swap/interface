@@ -8,9 +8,11 @@ import type { IdentityAddress } from '../modules/types';
 const AddressForm = ({
   address = {},
   rootName = 'address',
+  editMode,
 }: {
   address?: IdentityAddress,
   rootName?: 'address' | 'companyAddress',
+  editMode: boolean,
 }) => (
   <>
     <IdentityField
@@ -18,6 +20,7 @@ const AddressForm = ({
       label="Line 1"
       value={address.line1}
       size={6}
+      editMode={editMode}
       required
     />
     <IdentityField
@@ -25,17 +28,20 @@ const AddressForm = ({
       label="Line 2"
       value={address.line2}
       size={6}
+      editMode={editMode}
     />
     <IdentityField
       name={`${rootName}.city`}
       label="City"
       value={address.city}
       required
+      editMode={editMode}
     />
     <IdentityField
       name={`${rootName}.state`}
       label="State"
       value={address.state}
+      editMode={editMode}
     />
     <IdentityField
       name={`${rootName}.country`}
@@ -43,6 +49,7 @@ const AddressForm = ({
       value={address.country}
       required
       type="select"
+      editMode={editMode}
     >
       <MenuItem disabled value={undefined}>
         Country

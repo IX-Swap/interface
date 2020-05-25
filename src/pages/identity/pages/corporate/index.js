@@ -1,15 +1,27 @@
+// @flow
 import React from 'react';
 import { Redirect } from 'react-router-dom';
 import { Box, Typography } from '@material-ui/core';
 import CorporateIdentityForm from './CorporateIdentityForm';
-import { useIdentityState } from '../../modules';
+import { useIdentityState, useIdentityDispatch } from '../../modules';
+import { createIdentity } from '../../modules/actions';
 
 const CorporateIdentity = () => {
-  const { status, corporate } = useIdentityState();
+  const {
+    status,
+    corporate,
+    editMode,
+    corporateDataroom: dataroom,
+  } = useIdentityState();
+  const identityDispatch = useIdentityDispatch();
 
   if (status === 'INIT') {
     return <Redirect to="/identity" />;
   }
+
+  const handleOnCreate = (data) => {
+    createIdentity(identityDispatch, data, 'corporate');
+  };
 
   return (
     <Box position="relative">
@@ -20,7 +32,12 @@ const CorporateIdentity = () => {
           </Typography>
         </Box>
       )}
-      <CorporateIdentityForm />
+      <CorporateIdentityForm
+        editMode={editMode}
+        corporate={corporate}
+        handleCreateIdentity={handleOnCreate}
+        dataroom={dataroom}
+      />
     </Box>
   );
 };

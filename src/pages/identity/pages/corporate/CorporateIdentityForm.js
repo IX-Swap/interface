@@ -11,18 +11,22 @@ import AddressForm from '../../components/AddressForm';
 import Dataroom from '../../components/Dataroom';
 import Declaration from '../../components/Declaration';
 import declarations from '../../data/declarations';
-import { useIdentityState, useIdentityDispatch } from '../../modules';
-import { createIdentity } from '../../modules/actions';
+import type { Identity, Document } from '../../modules/types';
 import documents from '../../data/documents';
 
-const CorporateIdentityForm = () => {
+const CorporateIdentityForm = ({
+  corporate,
+  editMode,
+  dataroom,
+  handleCreateIdentity,
+}: {
+  corporate: Identity,
+  editMode: boolean,
+  dataroom: Document[],
+  handleCreateIdentity?: Function,
+}) => {
   const methods = useForm();
-  const {
-    corporate,
-    editMode,
-    corporateDataroom: dataroom,
-  } = useIdentityState();
-  const identityDispatch = useIdentityDispatch();
+
   const { handleSubmit } = methods;
 
   const onSubmit = (data: any) => {
@@ -31,15 +35,13 @@ const CorporateIdentityForm = () => {
       formattedDeclarations.push({ [key]: value });
     });
 
-    createIdentity(
-      identityDispatch,
-      {
+    if (handleCreateIdentity) {
+      handleCreateIdentity({
         ...data,
         documents: dataroom,
         declarations: formattedDeclarations,
-      },
-      'corporate'
-    );
+      });
+    }
   };
 
   return (
@@ -51,6 +53,7 @@ const CorporateIdentityForm = () => {
             name="companyLegalName"
             label="Company Name"
             size={6}
+            editMode={editMode}
             value={corporate.companyLegalName}
           />
           <IdentityField
@@ -58,6 +61,7 @@ const CorporateIdentityForm = () => {
             label="Company Registration Number"
             size={6}
             value={corporate.registrationNumber}
+            editMode={editMode}
           />
           <IdentityField
             name="countryOfFormation"
@@ -65,6 +69,7 @@ const CorporateIdentityForm = () => {
             size={6}
             value={corporate.countryOfFormation}
             type="select"
+            editMode={editMode}
           >
             <MenuItem disabled value={undefined}>
               Country
@@ -81,6 +86,7 @@ const CorporateIdentityForm = () => {
             size={6}
             value={corporate.dateOfIncorporation}
             type="date"
+            editMode={editMode}
           />
         </IdentitySection>
 
@@ -88,6 +94,7 @@ const CorporateIdentityForm = () => {
           <AddressForm
             address={corporate.companyAddress}
             rootName="companyAddress"
+            editMode={editMode}
           />
         </IdentitySection>
 
@@ -124,6 +131,7 @@ const CorporateIdentityForm = () => {
           subtitle="Confirmation"
         >
           <Declaration
+            editMode={editMode}
             declarations={corporate.declarations || declarations.individual}
           />
 

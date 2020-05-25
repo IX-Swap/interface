@@ -3,13 +3,13 @@ import React, { useState } from 'react';
 import type { Node } from 'react';
 import { Grid, ListItem, Radio } from '@material-ui/core';
 import { useFormContext } from 'react-hook-form';
-import { useIdentityState } from '../modules';
 
 type DeclarationItemProps = {
   children: Node,
   answerable?: boolean,
   name: string,
   value: string | null,
+  editMode: boolean,
 };
 
 const DeclarationItem = ({
@@ -17,10 +17,10 @@ const DeclarationItem = ({
   answerable = false,
   name,
   value,
+  editMode,
 }: DeclarationItemProps) => {
   const { register } = useFormContext();
   const [selected, setSelected] = useState(value);
-  const { editMode } = useIdentityState();
 
   const handleChange = (e) => {
     setSelected(e.target.value);

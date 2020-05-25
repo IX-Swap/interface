@@ -54,7 +54,8 @@ export type IdentityAddress = {
   city: string,
   postalCode?: string,
   state: string,
-  country: string,
+  countryOfResidence?: string, // for individual
+  country?: string, // for corporate
 };
 
 export type IdentityProfile = {
@@ -68,6 +69,7 @@ export type IdentityProfile = {
   maritalStatus: 'Single' | 'Married',
   contactNumber: string,
   address: IdentityAddress,
+  email?: string,
 };
 
 export type IndentityFinancials = {
@@ -100,7 +102,7 @@ export type CorporateFields = {
   registrationNumber: string,
   countryOfFormation: string,
   dateOfIncorporation: string,
-  companyAddress: string,
+  companyAddress: IdentityAddress,
   representatives: IdentityProfile,
   directors: IdentityProfile,
   beneficialOwners: IdentityProfile,
@@ -110,7 +112,7 @@ export type Identity = IdentityProfile &
   $Shape<IndentityFinancials> &
   $Shape<CorporateFields> & {
     _id: string,
-    status: 'Rejected' | 'Authorized',
+    status: 'Rejected' | 'Authorized' | 'Unauthorized',
     user: User,
     createdAt: string,
     updatedAt: string,

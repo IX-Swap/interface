@@ -10,15 +10,24 @@ import AddressForm from '../../components/AddressForm';
 import Dataroom from '../../components/Dataroom';
 import Declaration from '../../components/Declaration';
 import declarations from '../../data/declarations';
-import { useIdentityState, useIdentityDispatch } from '../../modules';
-import { createIdentity } from '../../modules/actions';
+import type { Identity, Document } from '../../modules/types';
 import documents from '../../data/documents';
 
-const IndividualIdentityForm = () => {
-  const { identity, editMode, dataroom } = useIdentityState();
-  const identityDispatch = useIdentityDispatch();
+const IndividualIdentityForm = ({
+  identity,
+  editMode,
+  dataroom,
+  handleCreateIdentity,
+}: {
+  identity: Identity,
+  editMode: boolean,
+  dataroom: Document[],
+  handleCreateIdentity?: Function,
+}) => {
   const methods = useForm();
   const { handleSubmit } = methods;
+
+  console.log(identity);
 
   const onSubmit = (data: any) => {
     const formattedDeclarations = [];
@@ -26,15 +35,13 @@ const IndividualIdentityForm = () => {
       formattedDeclarations.push({ [key]: value });
     });
 
-    createIdentity(
-      identityDispatch,
-      {
+    if (handleCreateIdentity) {
+      handleCreateIdentity({
         ...data,
         documents: dataroom,
         declarations: formattedDeclarations,
-      },
-      'individual'
-    );
+      });
+    }
   };
 
   return (
@@ -42,35 +49,40 @@ const IndividualIdentityForm = () => {
     <FormContext {...methods}>
       <form onSubmit={handleSubmit(onSubmit)}>
         <IdentitySection title="My Identity">
-          <IdentityForm identity={identity} useOwnEmail />
+          <IdentityForm identity={identity} useOwnEmail editMode={editMode} />
         </IdentitySection>
 
         <IdentitySection title="Address">
-          <AddressForm address={identity && identity.address} />
+          <AddressForm editMode={editMode} address={identity.address} />
         </IdentitySection>
 
         <IdentitySection title="Financials">
           <IdentityField
+            editMode={editMode}
             name="occupation"
             label="Occupation"
             value={identity.occupation}
           />
           <IdentityField
+            editMode={editMode}
             name="employer"
             label="Employer"
             value={identity.employer}
           />
           <IdentityField
+            editMode={editMode}
             name="employmentStatus"
             label="Employment Status"
             value={identity.employmentStatus}
           />
           <IdentityField
+            editMode={editMode}
             name="industryOfEmployment"
             label="Industry"
             value={identity.industryOfEmployment}
           />
           <IdentityField
+            editMode={editMode}
             name="walletAddress"
             label="Digital Wallet Address"
             value={
@@ -79,31 +91,37 @@ const IndividualIdentityForm = () => {
             }
           />
           <IdentityField
+            editMode={editMode}
             name="annualIncome"
             label="Annual Income"
             value={identity.annualIncome}
           />
           <IdentityField
+            editMode={editMode}
             name="houseHoldIncome"
             label="Household Income"
             value={identity.houseHoldIncome}
           />
           <IdentityField
+            editMode={editMode}
             name="sourceOfWealth"
             label="Source of Income"
             value={identity.sourceOfWealth}
           />
           <IdentityField
+            editMode={editMode}
             name="bankName"
             label="Bank Name"
             value={identity.bankName}
           />
           <IdentityField
+            editMode={editMode}
             name="bankAccountName"
             label="Name of Bank Account"
             value={identity.bankAccountName}
           />
           <IdentityField
+            editMode={editMode}
             name="bankAccountNumber"
             label="Bank Account Number"
             value={identity.bankAccountNumber}
@@ -119,6 +137,7 @@ const IndividualIdentityForm = () => {
           subtitle="Confirmation"
         >
           <Declaration
+            editMode={editMode}
             declarations={identity.declarations || declarations.individual}
           />
           {editMode && (

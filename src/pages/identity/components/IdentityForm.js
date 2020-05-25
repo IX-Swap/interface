@@ -1,3 +1,4 @@
+// @flow
 import React from 'react';
 import moment from 'moment';
 import { MenuItem } from '@material-ui/core';
@@ -8,16 +9,18 @@ import {
 } from 'const/const';
 import { useUserState } from 'context/user';
 import IdentityField from './IdentityField';
-import Identity from '../modules/types';
+import type { Identity } from '../modules/types';
 
 const IdentityForm = ({
   identity = {},
   useOwnEmail = false,
   rootName,
+  editMode,
 }: {
   identity?: Identity,
   useOwnEmail: boolean,
   rootName?: string,
+  editMode: boolean,
 }) => {
   const {
     user: { email },
@@ -31,18 +34,21 @@ const IdentityForm = ({
         name={getFieldName('firstName')}
         label="First Name"
         value={identity.firstName}
+        editMode={editMode}
         required
       />
       <IdentityField
         name={getFieldName('middleName')}
         label="Middle Name"
         value={identity.middleName}
+        editMode={editMode}
         required
       />
       <IdentityField
         name={getFieldName('lastName')}
         label="Last Name"
         value={identity.lastName}
+        editMode={editMode}
         required
       />
       <IdentityField
@@ -50,6 +56,7 @@ const IdentityForm = ({
         label="Date of Birth"
         type="date"
         value={identity.dob ? moment(identity.dob).format('MM/DD/YYYY') : ''}
+        editMode={editMode}
         required
       />
       <IdentityField
@@ -57,6 +64,7 @@ const IdentityForm = ({
         label="Nationality"
         value={identity.nationality}
         required
+        editMode={editMode}
       />
       <IdentityField
         name={getFieldName('countryOfResidence')}
@@ -64,6 +72,7 @@ const IdentityForm = ({
         value={identity.countryOfResidence}
         required
         type="select"
+        editMode={editMode}
       >
         <MenuItem disabled value={undefined}>
           Country
@@ -78,20 +87,22 @@ const IdentityForm = ({
         name={getFieldName('email')}
         label="Email"
         value={useOwnEmail ? email : identity.email}
-        disabled={useOwnEmail}
         required
+        editMode={editMode}
       />
       <IdentityField
         name={getFieldName('contactNumber')}
         label="Contact Number"
         value={identity.contactNumber}
         required
+        editMode={editMode}
       />
       <IdentityField
         name={getFieldName('gender')}
         label="Gender"
         value={identity.gender}
         type="select"
+        editMode={editMode}
         required
       >
         <MenuItem disabled value={undefined}>
@@ -109,6 +120,7 @@ const IdentityForm = ({
         value={identity.maritalStatus}
         type="select"
         required
+        editMode={editMode}
       >
         <MenuItem disabled value={undefined}>
           Marital Status
