@@ -17,6 +17,7 @@ import { withRouter } from 'react-router-dom';
 import classNames from 'classnames';
 
 // styles
+import { useIsAdmin, useIsAuthorizer, useIsIssuer } from 'services/acl';
 import useStyles from './styles';
 
 // components
@@ -29,76 +30,98 @@ import {
   toggleSidebar,
 } from '../../context/LayoutContext';
 
-const structure = [
-  {
-    id: 'trade',
-    label: 'Trade',
-    link: '/trade',
-    icon: <ShowChartIcon />,
-  },
-  {
-    id: 'invest',
-    label: 'Invest',
-    link: '/invest',
-    icon: <PieChartIcon />,
-  },
-  {
-    id: 'accounts',
-    label: 'Accounts',
-    link: '/accounts',
-    icon: <AccountBalanceIcon />,
-  },
-  {
-    id: 'identity',
-    label: 'Identity',
-    link: '/identity',
-    icon: <PersonIcon />,
-  },
-  {
-    id: 'issuance',
-    label: 'Issuance',
-    link: '/issuance',
-    icon: <LocalAtmIcon />,
-  },
-
-  {
-    id: 'authorizer',
-    label: 'Authorizer',
-    link: '/authorizer',
-    icon: <AccountBoxIcon />,
-    children: [
-      { label: 'Bank Accounts', link: '/authorizer/banks' },
-      { label: 'Cash Deposits', link: '/authorizer/deposits' },
-      { label: 'Cash Withdrawals', link: '/authorizer/withdrawals' },
-      {
-        label: 'Indentities (Individual)',
-        link: '/authorizer/individual-identities',
-      },
-      {
-        label: 'Indentities (Corporate)',
-        link: '/authorizer/corporate-identities',
-      },
-    ],
-  },
-  { id: 'users', label: 'Users', link: '/users', icon: <PeopleIcon /> },
-  { id: 6, type: 'divider' },
-  {
-    id: 'security',
-    label: 'Security',
-    link: '/security',
-    icon: <SecurityIcon />,
-  },
-  {
-    id: 5,
-    label: 'Support',
-    link: '/primary',
-    icon: <HelpIcon />,
-  },
-];
-
 function Sidebar({ location }: { location: any }) {
   const classes = useStyles();
   const theme = useTheme();
+  const isAdmin = useIsAdmin();
+  const isAuthorizer = useIsAuthorizer();
+  const isIssuer = useIsIssuer();
+
+  const structure = [
+    {
+      id: 'trade',
+      label: 'Trade',
+      link: '/trade',
+      icon: <ShowChartIcon />,
+    },
+    {
+      id: 'invest',
+      label: 'Invest',
+      link: '/invest',
+      icon: <PieChartIcon />,
+    },
+    {
+      id: 'accounts',
+      label: 'Accounts',
+      link: '/accounts',
+      icon: <AccountBalanceIcon />,
+    },
+    {
+      id: 'identity',
+      label: 'Identity',
+      link: '/identity',
+      icon: <PersonIcon />,
+    },
+    // Show only when user has issuer role
+    ...(isIssuer
+      ? [
+          {
+            id: 'issuance',
+            label: 'Issuance',
+            link: '/issuance',
+            icon: <LocalAtmIcon />,
+          },
+        ]
+      : []),
+    // Show only when user has authorizer role
+    ...(isAuthorizer
+      ? [
+          {
+            id: 'authorizer',
+            label: 'Authorizer',
+            link: '/authorizer',
+            icon: <AccountBoxIcon />,
+            children: [
+              { label: 'Bank Accounts', link: '/authorizer/banks' },
+              { label: 'Cash Deposits', link: '/authorizer/deposits' },
+              { label: 'Cash Withdrawals', link: '/authorizer/withdrawals' },
+              {
+                label: 'Indentities (Individual)',
+                link: '/authorizer/individual-identities',
+              },
+              {
+                label: 'Indentities (Corporate)',
+                link: '/authorizer/corporate-identities',
+              },
+            ],
+          },
+        ]
+      : []),
+    // Show only when user has admin role
+    ...(isAdmin
+      ? [
+          {
+            id: 'users',
+            label: 'User Management',
+            link: '/users',
+            icon: <PeopleIcon />,
+          },
+        ]
+      : []),
+    { id: 6, type: 'divider' },
+    {
+      id: 'security',
+      label: 'Security',
+      link: '/security',
+      icon: <SecurityIcon />,
+    },
+    {
+      id: 5,
+      label: 'Support',
+      link: '/primary',
+      icon: <HelpIcon />,
+    },
+  ];
 
   // global
   const { isSidebarOpened } = useLayoutState();

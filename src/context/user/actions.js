@@ -10,7 +10,6 @@ export async function loginUser(
   try {
     const uri = '/auth/sign-in';
     const result = await postRequest(uri, { ...payload });
-    console.log(result);
     const response = await result.json();
     if (result.status === 200) {
       const { email, roles, _id, name, accessToken } = response.data;
