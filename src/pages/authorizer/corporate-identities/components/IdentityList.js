@@ -89,7 +89,7 @@ const useIdentityListLogic = () => {
 const IdentityList = ({ onClickView }: { onClickView: Function }) => {
   const {
     status: loadingStatus,
-    items,
+    items = [],
     total,
     limit,
     page,
@@ -128,13 +128,21 @@ const IdentityList = ({ onClickView }: { onClickView: Function }) => {
             </TableRow>
           </TableHead>
           <TableBody>
-            {items.map((identity) => (
-              <IdentityListItem
-                key={identity._id}
-                identity={identity}
-                onClickView={onClickView}
-              />
-            ))}
+            {items.length ? (
+              items.map((identity) => (
+                <IdentityListItem
+                  key={identity._id}
+                  identity={identity}
+                  onClickView={onClickView}
+                />
+              ))
+            ) : (
+              <TableRow>
+                <TableCell colSpan="5" align="center">
+                  No Data
+                </TableCell>
+              </TableRow>
+            )}
           </TableBody>
           {total && (
             <TableFooter>
