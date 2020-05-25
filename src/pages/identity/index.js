@@ -1,5 +1,5 @@
 import React, { Suspense } from 'react';
-import { Switch, Route, Redirect, withRouter } from 'react-router-dom';
+import { Switch, Route, Redirect } from 'react-router-dom';
 import { Container, Typography } from '@material-ui/core';
 import { makeStyles } from '@material-ui/styles';
 import { IdentityProvider } from './modules';
