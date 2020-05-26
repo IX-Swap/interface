@@ -11,4 +11,5 @@ export type Withdraw = {
   asset: Asset,
   bankAccount: Bank,
   createdAt: string,
+  level: string,
 };

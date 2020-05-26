@@ -11,4 +11,5 @@ export type Deposit = {
   asset: Asset,
   bankAccount: Bank,
   createdAt: string,
+  level: string,
 };
