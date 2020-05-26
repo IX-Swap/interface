@@ -64,3 +64,11 @@ export const useIsAccredited = (): boolean => {
 
   return hasRole(roles, appRoles.ACCREDITED);
 };
+
+export const useHasSpecialRole = (): boolean => {
+  const isAdmin = useIsAdmin();
+  const isAuthorizer = useIsAuthorizer();
+  const isIssuer = useIsIssuer();
+
+  return isAdmin || isAuthorizer || isIssuer;
+};

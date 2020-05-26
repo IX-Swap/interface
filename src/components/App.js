@@ -5,6 +5,7 @@ import { Route, Switch, Redirect, HashRouter } from 'react-router-dom';
 import classnames from 'classnames';
 
 import { useIsAdmin, useIsAuthorizer, useIsIssuer } from 'services/acl';
+import useRedirectTo2faSetup from 'hooks/useRedirectTo2faSetup';
 import Auth from '../pages/auth';
 
 import Header from './Header';
@@ -28,6 +29,7 @@ import Issuance from '../pages/issuance';
 import { useLayoutState, LayoutProvider } from '../context/LayoutContext';
 import { useUserState, useUserDispatch } from '../context/user';
 import { getUser } from '../context/user/actions';
+import NoAccessDialog from './NoAccessDialog';
 
 type Location = $Shape<{ pathname: string }>;
 
@@ -39,10 +41,18 @@ function App() {
   const { isAuthenticated } = useUserState();
   const classes = useStyles();
 
-  function PublicRoute({ component, ...rest }: { component: Node }) {
+  function PublicRoute({
+    component,
+    path,
+    ...rest
+  }: {
+    component: Node,
+    path: string,
+  }) {
     return (
       <Route
         {...rest}
+        path={path}
         render={(props: RouteProps) =>
           isAuthenticated ? (
             <Redirect to={{ pathname: '/identity' }} />
@@ -159,6 +169,24 @@ function App() {
     }
 
     function PrivateRoute({ component, ...rest }) {
+      const redirect = useRedirectTo2faSetup();
+
+      if (redirect) {
+        return (
+          <Route
+            {...rest}
+            render={(props: RouteProps) => (
+              <Redirect
+                to={{
+                  pathname: '/security',
+                  state: { from: props.location },
+                }}
+              />
+            )}
+          />
+        );
+      }
+
       return (
         <Route
           {...rest}
@@ -197,6 +225,9 @@ function App() {
             />
           ))}
         </div>
+
+        {/** Modal showing invalid access when user is not yet accredited */}
+        <NoAccessDialog />
       </div>
     );
   }
