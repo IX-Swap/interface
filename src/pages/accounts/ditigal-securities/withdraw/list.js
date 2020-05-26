@@ -44,7 +44,7 @@ const useWithdrawalsListLogic = (assetId: string) => {
       getDigitalSecurityWithdrawals(dsDispatch, {
         skip: page * limit,
         limit,
-        // assetId,
+        asset: assetId,
         ref: mountedRef,
       });
     }

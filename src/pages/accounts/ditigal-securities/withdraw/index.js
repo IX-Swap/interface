@@ -1,10 +1,19 @@
 // @flow
-import React, { useRef, useEffect, useState } from 'react';
+import React, { useRef, useEffect, useState, useCallback } from 'react';
 import { RouteProps } from 'react-router-dom';
 
-import { Grid, TextField, List, Typography, Box } from '@material-ui/core';
+import {
+  Grid,
+  TextField,
+  List,
+  Typography,
+  Box,
+  Button,
+} from '@material-ui/core';
 import LabelValue from 'components/LabelValue';
 import { Autocomplete } from '@material-ui/lab';
+import { ButtonWithLoading, snackbarService } from 'uno-material-ui';
+import moment from 'moment';
 
 import { useAssetsState, useAssetsDispatch } from 'context/assets';
 import { ASSETS_STATUS } from 'context/assets/types';
@@ -15,7 +24,13 @@ import type { UserSecurityBalance } from 'context/balance/types';
 
 import Actions from 'context/balance/personal/actions';
 import WithdrawalList from './list';
-import AssetDetails from './details';
+import WithdrawalDetailsInput from './details';
+import DSWithdrawalConfirmation from './confirmation';
+
+import WithdrawalModule from './modules';
+import WithdrawalActions, { withdraw } from './modules/actions';
+
+import type { DSState, TransferDetails } from '../modules/types';
 
 const { setAssetType } = AssetsActions;
 
@@ -25,6 +40,9 @@ const {
   PERSONAL_BALANCE_LIST_STATUS,
 } = PersonalBalancesListModule;
 const { getPersonalBalanceList, clearApiStatus, setPage } = Actions;
+
+const { useDSWithdrawalsListDispatch } = WithdrawalModule;
+const { setPage: setWithdrawalsPage } = WithdrawalActions;
 
 const useBalancesLogic = () => {
   const mountedRef = useRef(true);
@@ -81,20 +99,32 @@ function useGetters() {
   };
 }
 
-type DSState = {
-  selectedCoin: ?UserSecurityBalance,
+const baseTransferDetails = {
+  recipientWallet: '',
+  amount: '',
+  memo: '',
+  otp: '',
+  date: '',
+};
+
+const withdrawalInitialState = {
+  isConfirmation: false,
+  isSaving: false,
+  otp: '',
 };
 
 function useDigitalSecuritiesLogic(asset: string) {
   const { type, assetsStatus } = useGetters();
   const { items, page, pBDispatch } = useBalancesLogic();
+  const withdrawalListDispatch = useDSWithdrawalsListDispatch();
   const [dsState, setDsState] = useState<DSState>({ selectedCoin: undefined });
-
-  useEffect(() => {
-    if (assetsStatus === ASSETS_STATUS.IDLE && type === 'Security') {
-      setPage(pBDispatch, { page });
-    }
-  }, [type, assetsStatus, page, pBDispatch]);
+  const [withdrawalState, setWithdrawalState] = useState({
+    ...withdrawalInitialState,
+  });
+  const [transferDetails, setTransferDetails] = useState<TransferDetails>({
+    asset,
+    ...baseTransferDetails,
+  });
 
   if (
     !dsState.selectedCoin ||
@@ -110,10 +140,65 @@ function useDigitalSecuritiesLogic(asset: string) {
     }
   }
 
+  const itemsChanged = useCallback(() => {
+    const filtered = items.filter((e) => e.assetId === asset);
+
+    if (filtered.length) {
+      setDsState({
+        // ...dsState,
+        selectedCoin: filtered[0],
+      });
+    }
+  }, [items, setDsState, asset]);
+
+  useEffect(() => {
+    console.log('effect');
+    itemsChanged();
+  }, [itemsChanged]);
+
+  useEffect(() => {
+    if (assetsStatus === ASSETS_STATUS.IDLE && type === 'Security') {
+      setPage(pBDispatch, { page });
+    }
+  }, [type, assetsStatus, page, pBDispatch]);
+
+  const onConfirmClicked = async () => {
+    const isSuccess = await withdraw(transferDetails);
+    const snackbarDetails = {
+      type: 'error',
+      message: 'Unable to withdraw, please check your OTP and/or balance',
+    };
+
+    if (isSuccess) {
+      const coin = dsState.selectedCoin ? dsState.selectedCoin?.symbol : '';
+      snackbarDetails.type = 'success';
+      snackbarDetails.message = `Successfully withdrawn ${transferDetails.amount} ${coin}`;
+
+      setPage(pBDispatch, { page });
+      setTransferDetails({
+        asset,
+        ...baseTransferDetails,
+      });
+
+      setWithdrawalState({
+        ...withdrawalInitialState,
+      });
+
+      setWithdrawalsPage(withdrawalListDispatch, { page: 1 });
+    }
+
+    snackbarService.showSnackbar(snackbarDetails.message, snackbarDetails.type);
+  };
+
   return {
     items,
     dsState,
     setDsState,
+    transferDetails,
+    setTransferDetails,
+    withdrawalState,
+    setWithdrawalState,
+    onConfirmClicked,
   };
 }
 
@@ -133,9 +218,32 @@ const balanceValues = [
 ];
 
 export default function DigitalSecurities({ match }: RouteProps) {
-  const { items, setDsState, dsState } = useDigitalSecuritiesLogic(
-    match.params.assetId
-  );
+  const {
+    items,
+    setDsState,
+    dsState,
+    withdrawalState,
+    setWithdrawalState,
+    transferDetails,
+    setTransferDetails,
+    onConfirmClicked,
+  } = useDigitalSecuritiesLogic(match.params.assetId);
+
+  const setDetails = (key: $Keys<TransferDetails>, value: string) => {
+    const details = {
+      ...transferDetails,
+    };
+    details[key] = value;
+
+    setTransferDetails(details);
+  };
+
+  const resetDetails = () => {
+    setTransferDetails({
+      ...transferDetails,
+      ...baseTransferDetails,
+    });
+  };
 
   const isSelected = (
     option: UserSecurityBalance,
@@ -143,18 +251,103 @@ export default function DigitalSecurities({ match }: RouteProps) {
   ) => option.assetId === value.assetId;
 
   const onCoinChange = (ev, value: UserSecurityBalance) => {
-    console.log('handle coin change', value);
     setDsState({
       ...dsState,
       selectedCoin: value,
     });
-    console.log(dsState);
   };
+
+  const detailsView = !withdrawalState.isConfirmation ? (
+    <>
+      <WithdrawalDetailsInput
+        asset={dsState.selectedCoin}
+        transferDetails={transferDetails}
+        setTransferDetails={setDetails}
+      />
+      <Grid container my={2} justify="center" spacing={2}>
+        <Grid item>
+          <Button color="default" onClick={() => resetDetails()}>
+            Reset
+          </Button>
+        </Grid>
+        <Grid item>
+          <Button
+            disabled={
+              !transferDetails.amount ||
+              !transferDetails.memo ||
+              !transferDetails.recipientWallet
+            }
+            variant="contained"
+            color="primary"
+            onClick={() => {
+              setDetails(
+                'date',
+                moment(new Date()).format('MM/DD/YYYY hh:mm:ss a')
+              );
+              setWithdrawalState({
+                ...withdrawalState,
+                isConfirmation: true,
+              });
+            }}
+          >
+            Continue
+          </Button>
+        </Grid>
+      </Grid>
+    </>
+  ) : (
+    <>
+      <DSWithdrawalConfirmation
+        asset={dsState.selectedCoin}
+        transferDetails={transferDetails}
+      />
+      <Grid container justify="center">
+        <Box my={4} alignSelf="center">
+          <TextField
+            id="two-fa"
+            label="2-Factor Auth Code"
+            variant="outlined"
+            onChange={(ev) =>
+              setTransferDetails({ ...transferDetails, otp: ev.target.value })
+            }
+          />
+        </Box>
+      </Grid>
+      <Grid container justify="center">
+        <Box component="div" mr={2} mb={4} display="inline">
+          <Button
+            color="default"
+            onClick={() =>
+              setWithdrawalState({
+                ...withdrawalState,
+                isConfirmation: false,
+              })
+            }
+          >
+            Cancel
+          </Button>
+        </Box>
+        <Box mb={4}>
+          <ButtonWithLoading
+            disableElevation
+            variant="contained"
+            color="primary"
+            onClick={() => onConfirmClicked()}
+          >
+            Confirm Withdraw
+          </ButtonWithLoading>
+        </Box>
+      </Grid>
+    </>
+  );
 
   return (
     <Box m={4}>
       <Grid container spacing={3}>
         <Grid container item xs={12} sm={6} direction="column" justify="center">
+          <Box mb={4}>
+            <Typography variant="h3">Withdrawal</Typography>
+          </Box>
           <Autocomplete
             disabled
             options={items}
@@ -182,9 +375,7 @@ export default function DigitalSecurities({ match }: RouteProps) {
           )}
         </Grid>
         <Grid item xs={12} sm={6}>
-          {dsState.selectedCoin && (
-            <AssetDetails asset={dsState.selectedCoin} />
-          )}
+          {dsState.selectedCoin && detailsView}
         </Grid>
         {dsState.selectedCoin && (
           <Grid container item xs={12}>
