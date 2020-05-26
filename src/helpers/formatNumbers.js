@@ -4,4 +4,4 @@ export const formatMoney = (value) =>
 
 // Adds commas
 export const formatNumber = (value) =>
-  value && value.toString().replace(/\d(?=(\d{3})+\.)/g, '$&,');
+  value && value.toString().replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1,');
