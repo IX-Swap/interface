@@ -25,7 +25,7 @@ const CommitmentListItem = ({ commitment }: { commitment: Commitment }) => {
       </TableCell>
       <TableCell>{dso.tokenSymbol}</TableCell>
       <TableCell>{formatMoney(pricePerUnit)}</TableCell>
-      <TableCell>asdas</TableCell>
+      <TableCell>{dso.capitalStructure}</TableCell>
       <TableCell>{formatMoney(totalAmount)}</TableCell>
       <TableCell>{formatNumber(numberOfUnits)}</TableCell>
       <TableCell>{status}</TableCell>
