@@ -148,20 +148,28 @@ const BankAccounts = ({
   handleSelectChange: (bank: Bank, status: string) => void,
 }) => (
   <TableBody>
-    {list.map((row) => (
-      <TableRow key={row._id}>
-        <TableCell>{moment(row.createdAt).format('MM/DD/YYYY')}</TableCell>
-        <TableCell>{row.user.name}</TableCell>
-        <TableCell align="left">{row.bankName}</TableCell>
-        <TableCell align="left">{row.asset.symbol}</TableCell>
-        <TableCell align="left">
-          <RowStatusComponent
-            bank={row}
-            handleSelectChange={handleSelectChange}
-          />
+    {list.length ? (
+      list.map((row) => (
+        <TableRow key={row._id}>
+          <TableCell>{moment(row.createdAt).format('MM/DD/YYYY')}</TableCell>
+          <TableCell>{row.user.name}</TableCell>
+          <TableCell align="left">{row.bankName}</TableCell>
+          <TableCell align="left">{row.asset.symbol}</TableCell>
+          <TableCell align="left">
+            <RowStatusComponent
+              bank={row}
+              handleSelectChange={handleSelectChange}
+            />
+          </TableCell>
+        </TableRow>
+      ))
+    ) : (
+      <TableRow>
+        <TableCell align="center" colSpan={5}>
+          No Data
         </TableCell>
       </TableRow>
-    ))}
+    )}
   </TableBody>
 );
 

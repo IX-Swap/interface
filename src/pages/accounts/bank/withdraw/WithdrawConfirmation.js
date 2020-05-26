@@ -1,6 +1,6 @@
 // @flow
 import React, { useState } from 'react';
-import { Typography, Button, Grid, Box } from '@material-ui/core';
+import { Typography, TextField, Button, Grid, Box } from '@material-ui/core';
 import { makeStyles } from '@material-ui/styles';
 import { useHistory } from 'react-router-dom';
 import { snackbarService, ButtonWithLoading } from 'uno-material-ui';
@@ -40,6 +40,7 @@ export default function WithdrawConfirmation({
 }) {
   const classes = useStyles();
   const history = useHistory();
+  const [twoFa, setTwoFa] = useState('');
   const [saving, setSaving] = useState(false);
 
   const fAmount = amount.toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,');
@@ -50,6 +51,10 @@ export default function WithdrawConfirmation({
     });
   };
 
+  const handle2faChange = (evt: SyntheticInputEvent<HTMLElement>) => {
+    setTwoFa(evt.target.value);
+  };
+
   const handleWithdraw = async () => {
     let message = 'Cannot withdraw at this time, please try again later';
     let type = 'error';
@@ -58,6 +63,7 @@ export default function WithdrawConfirmation({
       amount,
       bank: bank._id,
       memo,
+      otp: twoFa,
     });
 
     setSaving(false);
@@ -149,6 +155,16 @@ export default function WithdrawConfirmation({
           bank account before proceeding.
         </Box>
       </Typography>
+
+      <Box mb={4} alignSelf="center">
+        <TextField
+          id="two-fa"
+          label="2-Factor Auth Code"
+          variant="outlined"
+          onChange={handle2faChange}
+        />
+      </Box>
+
       <Grid container justify="center">
         <Box component="div" mr={2} mb={4} display="inline">
           <Button color="default" onClick={handleBackButton}>

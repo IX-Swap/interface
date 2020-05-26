@@ -147,22 +147,30 @@ const Withdraws = ({
   handleSelectChange: (withdraw: Withdraw, status: string) => void,
 }) => (
   <TableBody>
-    {list.map((row) => (
-      <TableRow key={row._id}>
-        <TableCell>{moment(row.createdAt).format('MM/DD/YYYY')}</TableCell>
-        <TableCell>{row.bankAccount.accountHolderName}</TableCell>
-        <TableCell align="left">{row.bankAccount.bankName}</TableCell>
-        <TableCell align="left">
-          {row.asset.symbol} {row.amount}
-        </TableCell>
-        <TableCell align="left">
-          <RowStatusComponent
-            withdraw={row}
-            handleSelectChange={handleSelectChange}
-          />
+    {list.length ? (
+      list.map((row) => (
+        <TableRow key={row._id}>
+          <TableCell>{moment(row.createdAt).format('MM/DD/YYYY')}</TableCell>
+          <TableCell>{row.bankAccount.accountHolderName}</TableCell>
+          <TableCell align="left">{row.bankAccount.bankName}</TableCell>
+          <TableCell align="left">
+            {row.asset.symbol} {row.amount}
+          </TableCell>
+          <TableCell align="left">
+            <RowStatusComponent
+              withdraw={row}
+              handleSelectChange={handleSelectChange}
+            />
+          </TableCell>
+        </TableRow>
+      ))
+    ) : (
+      <TableRow>
+        <TableCell align="center" colSpan={5}>
+          No Data
         </TableCell>
       </TableRow>
-    ))}
+    )}
   </TableBody>
 );
 
