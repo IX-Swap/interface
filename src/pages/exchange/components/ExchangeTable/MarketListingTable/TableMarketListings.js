@@ -1,6 +1,6 @@
-import React, { useRef, useEffect, useState } from 'react';
+import React, { useRef, useEffect } from 'react';
 import PropTypes from 'prop-types';
-import { withRouter, Link, useHistory } from 'react-router-dom';
+import { withRouter, useHistory } from 'react-router-dom';
 
 // Material Components
 import { 
@@ -19,9 +19,6 @@ import {
 
 // Utils
 import TableUtils from 'pages/exchange/utils';
-
-// Local component
-import Pagination from 'pages/exchange/components/ExchangeTable/Pagination';
 
 // Styles
 import useStyles from 'pages/exchange/components/ExchangeTable/styles';
@@ -138,7 +135,6 @@ function ExchangeTable(props) {
     const marketState = MarketState();
     const mountedRef = useRef(true);
     const {
-        status,
         page,
         total,
         limit,

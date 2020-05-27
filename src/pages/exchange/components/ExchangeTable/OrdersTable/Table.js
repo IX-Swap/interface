@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from 'react';
+import React, { useEffect } from 'react';
 import { withRouter, Link } from 'react-router-dom';
 
 // Material Components
@@ -131,16 +131,12 @@ function OrdersTable(props) {
 
     const dispatch = useOrdersListDispatch();
     const ordersState = OrdersListState();
-    const mountedRef = useRef(true);
 
     const {
-        status,
         page,
         total,
         limit,
         items,
-        statusCode,
-        error,
     } = ordersState;
 
     const handleChangePage = (_, newPage: number) => {

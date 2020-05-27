@@ -1,5 +1,4 @@
 // @flow
-import React from 'react';
 import { generateModule } from 'context/base/withPagination';
 import type { OrdersListState } from './types';
 

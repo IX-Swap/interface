@@ -1,10 +1,7 @@
 import React, { useState, useEffect } from 'react';
-import classNames from 'classnames'
-import {
-    Button,
-    Typography,
-} from '@material-ui/core';
-import io from "socket.io-client";
+import classNames from 'classnames';
+import { Button, Typography } from '@material-ui/core';
+import io from 'socket.io-client';
 
 // Components
 import { Paper } from '@material-ui/core';
@@ -14,7 +11,7 @@ import { ENDPOINT_URL, API_URL } from 'config';
 import localStore from 'services/storageHelper';
 
 // Styles
-import useStyles from '../styles'
+import useStyles from '../styles';
 
 const BidsAsksHistory = (props) => {
     const { id } = props;
@@ -23,7 +20,8 @@ const BidsAsksHistory = (props) => {
     const _userId = localStore.getUserId();
     const socket = io(`${API_URL}?token=${bearerToken}`);
     
-    const [collection, setCollection] = useState(false);
+    // eslint-disable-next-line
+    const [collection, setCollection] = useState(false); 
     const { SUBSCRIBE_API } = ENDPOINT_URL;
     const { BIDS_ASKS } = SUBSCRIBE_API;
     
@@ -42,51 +40,52 @@ const BidsAsksHistory = (props) => {
         amount: 0,
         total: 0,
     });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
 
     // Handle change/update for the fields
-    const updateField = e => {
-        const name = e.target.name;
-        const value = e.target.value;
+    const updateField = (e) => {
+        const { name } = e.target;
+        const { value } = e.target;
         setFields({
             ...form,
             [name]: value,
         });
     };
 
-    const fields = [
-        {
-          id: 'price',
-          name: 'price',
-          label: 'Price:',
-          value: form.price,
-          onChange: updateField,
-          placeholder: 'Price...',
-          type: 'number',
-        },
-        {
-          id: 'amount',
-          name: 'amount',
-          label: 'Amount:',
-          value: form.amount,
-          onChange: updateField,
-          placeholder: 'Amount...',
-          type: 'number',
-        },
-        {
-          id: 'total',
-          name: 'total',
-          label: 'Total:',
-          value: form.total,
-          onChange: updateField,
-          placeholder: 'Total...',
-          type: 'number',
-        },
-      ];
-
     const sellButtonClassName = classNames(
         classes.formButton, 
         classes.sellButton,
     );
+
+    const fields = [
+        {
+            id: 'price',
+            name: 'price',
+            label: 'Price:',
+            value: form.price,
+            onChange: updateField,
+            placeholder: 'Price...',
+            type: 'number',
+        },
+        {
+            id: 'amount',
+            name: 'amount',
+            label: 'Amount:',
+            value: form.amount,
+            onChange: updateField,
+            placeholder: 'Amount...',
+            type: 'number',
+        },
+        {
+            id: 'total',
+            name: 'total',
+            label: 'Total:',
+            value: form.total,
+            onChange: updateField,
+            placeholder: 'Total...',
+            type: 'number',
+        },
+    ];
     
     return (
         <Paper className={classes.bidsAsksContainer}>
@@ -101,7 +100,7 @@ const BidsAsksHistory = (props) => {
                 </div>
                 {fields.map(field => 
                     <div className={classes.inputContainer}>
-                        <label className>{field.label}</label>
+                        <label>{field.label}</label>
                         <input
                             className={classes.inputField}
                             key={field.id}

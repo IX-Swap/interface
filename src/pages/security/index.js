@@ -1,5 +1,5 @@
 import React, { Suspense } from 'react';
-import { Route } from 'react-router-dom';
+import { Route, withRouter, Switch } from 'react-router-dom';
 import { Container } from '@material-ui/core';
 
 const SettingsLanding = React.lazy(() => import('./pages'));
@@ -8,32 +8,37 @@ const GoogleAuthenticatorSetup = React.lazy(() => import('./pages/setup-2fa'));
 
 const routes = [
   {
+    title: 'Security',
     route: '/security',
-    component: (props) => <SettingsLanding {...props} />,
+    component: SettingsLanding,
   },
   {
+    title: 'Change Password',
     route: '/security/change-password',
-    component: (props) => <ChangPassword {...props} />,
+    component: ChangPassword,
   },
   {
+    title: 'Google Authenticator Setup',
     route: '/security/setup-2fa',
-    component: (props) => <GoogleAuthenticatorSetup {...props} />,
+    component: GoogleAuthenticatorSetup,
   },
 ];
 
 const SettingsRoutes = () => (
   <Container>
-    <Suspense fallback={<div>Loading...</div>}>
-      {routes.map((route, index) => (
-        <Route
-          key={route.route}
-          exact={index === 0}
-          path={route.route}
-          component={route.component}
-        />
-      ))}
-    </Suspense>
+    <Switch>
+      <Suspense fallback={<div>Loading...</div>}>
+        {routes.map((route, index) => (
+          <Route
+            exact={index === 0}
+            key={route.title}
+            path={route.route}
+            component={route.component}
+          />
+        ))}
+      </Suspense>
+    </Switch>
   </Container>
 );
 
-export default SettingsRoutes;
+export default withRouter(SettingsRoutes);

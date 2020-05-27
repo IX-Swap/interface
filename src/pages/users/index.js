@@ -14,6 +14,7 @@ import {
   Paper,
   Box,
   LinearProgress,
+  Typography,
   Container,
 } from '@material-ui/core';
 import Alert from '@material-ui/lab/Alert';
@@ -24,7 +25,7 @@ import UsersTableBody from './components/UsersTableBody';
 
 import UsersModule from './modules/index';
 import Actions from './modules/actions';
-import type { User } from './modules/types';
+import type { User, TableColumns } from './modules/types';
 
 const { getUsersList, setPage, setRowsPerPage, updateUserRole } = Actions;
 const {
@@ -56,8 +57,8 @@ function useUsersListLogic() {
     setOpen(false);
   };
 
-  const handleChange = (evt, userToUpdate) => {
-    setRole(evt.target.value);
+  const handleChange = (val, userToUpdate) => {
+    setRole(val);
     setUser(userToUpdate);
 
     setOpen(true);
@@ -123,6 +124,31 @@ function useUsersListLogic() {
   };
 }
 
+const columns: Array<TableColumns> = [
+  {
+    key: 'accountType',
+    label: 'Account Type',
+  },
+  {
+    key: 'name',
+    label: 'Name',
+  },
+  {
+    key: 'email',
+    label: 'Email',
+  },
+  {
+    key: 'twoFactorAuth',
+    label: '2-Factor Auth',
+    render: (is2fa) =>
+      is2fa ? (
+        <Typography color="primary">Yes</Typography>
+      ) : (
+        <Typography color="error">No</Typography>
+      ),
+  },
+];
+
 function UsersWithProvider() {
   return (
     <UserListProvider>
@@ -172,8 +198,14 @@ function Users() {
             <Table aria-label="simple table">
               <TableHead>
                 <TableRow>
-                  <TableCell>Email</TableCell>
-                  <TableCell>Role</TableCell>
+                  {columns.map((col) => (
+                    <TableCell key={col.key}>
+                      <b>{col.label}</b>
+                    </TableCell>
+                  ))}
+                  <TableCell>
+                    <b>Roles</b>
+                  </TableCell>
                 </TableRow>
               </TableHead>
               {status === USERS_LIST_STATUS.INIT && (
@@ -185,14 +217,19 @@ function Users() {
               )}
               {users && users.length ? (
                 // $FlowFixMe
-                <UsersTableBody users={users} handleChange={handleChange} />
+                <UsersTableBody
+                  open={open}
+                  users={users}
+                  handleChange={handleChange}
+                  columns={columns}
+                />
               ) : null}
               {total && (
                 <TableFooter>
                   <TableRow>
                     <TablePagination
                       rowsPerPageOptions={[5, 10, 25]}
-                      colSpan={2}
+                      colSpan={columns.length}
                       count={total}
                       rowsPerPage={limit}
                       page={page}

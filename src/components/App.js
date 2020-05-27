@@ -1,16 +1,17 @@
+// @flow
 import React, { useMemo } from 'react';
 import type { Node } from 'react';
 import { Route, Switch, Redirect, HashRouter } from 'react-router-dom';
 import classnames from 'classnames';
 
 import { useIsAdmin, useIsAuthorizer, useIsIssuer } from 'services/acl';
+import useRedirectTo2faSetup from 'hooks/useRedirectTo2faSetup';
 import Auth from '../pages/auth';
 
 import Header from './Header';
 import Sidebar from './Sidebar';
 import useStyles from './Layout/styles';
 
-import Exchange from '../pages/exchange';
 import Accounts from '../pages/accounts';
 import Identity from '../pages/identity';
 import Invest from '../pages/invest';
@@ -28,6 +29,7 @@ import Issuance from '../pages/issuance';
 import { useLayoutState, LayoutProvider } from '../context/LayoutContext';
 import { useUserState, useUserDispatch } from '../context/user';
 import { getUser } from '../context/user/actions';
+import NoAccessDialog from './NoAccessDialog';
 
 type Location = $Shape<{ pathname: string }>;
 
@@ -39,13 +41,21 @@ function App() {
   const { isAuthenticated } = useUserState();
   const classes = useStyles();
 
-  function PublicRoute({ component, ...rest }: { component: Node }) {
+  function PublicRoute({
+    component,
+    path,
+    ...rest
+  }: {
+    component: Node,
+    path: string,
+  }) {
     return (
       <Route
         {...rest}
+        path={path}
         render={(props: RouteProps) =>
           isAuthenticated ? (
-            <Redirect to={{ pathname: '/trade' }} />
+            <Redirect to={{ pathname: '/identity' }} />
           ) : (
             React.createElement(component, props)
           )
@@ -79,16 +89,12 @@ function App() {
 
     const privateRoutes = [
       {
-        route: '/trade',
-        component: Exchange,
+        route: '/identity',
+        component: Identity,
       },
       {
         route: '/accounts',
         component: Accounts,
-      },
-      {
-        route: '/identity',
-        component: Identity,
       },
       {
         route: '/invest',
@@ -109,7 +115,7 @@ function App() {
       },
       {
         route: '/trade-history',
-        component: () => <TableMyTrades title='My Trades'/>,
+        component: () => <TableMyTrades title="My Trades" />,
       },
       {
         route: '/order-history',
@@ -160,7 +166,7 @@ function App() {
       return (
         <Redirect
           to={{
-            pathname: '/trade',
+            pathname: '/identity',
             state: { from: location },
           }}
         />
@@ -168,6 +174,24 @@ function App() {
     }
 
     function PrivateRoute({ component, ...rest }) {
+      const redirect = useRedirectTo2faSetup();
+
+      if (redirect) {
+        return (
+          <Route
+            {...rest}
+            render={(props: RouteProps) => (
+              <Redirect
+                to={{
+                  pathname: '/security',
+                  state: { from: props.location },
+                }}
+              />
+            )}
+          />
+        );
+      }
+
       return (
         <Route
           {...rest}
@@ -201,12 +225,14 @@ function App() {
           {privateRoutes.map((route, i) => (
             <PrivateRoute
               key={i}
-              exact={i === 0}
               path={route.route}
               component={route.component}
             />
           ))}
         </div>
+
+        {/** Modal showing invalid access when user is not yet accredited */}
+        <NoAccessDialog />
       </div>
     );
   }

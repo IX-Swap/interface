@@ -99,13 +99,10 @@ function ExchangeTable(props) {
     const mountedRef = useRef(true);
 
     const {
-        status,
         page,
         total,
         limit,
         items,
-        statusCode,
-        error,
     } = listState;
 
     const handleChangePage = (_, newPage: number) => {

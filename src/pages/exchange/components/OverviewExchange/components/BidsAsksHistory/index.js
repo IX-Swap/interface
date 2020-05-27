@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import io from "socket.io-client";
+import io from 'socket.io-client';
 
 // Config/Endpoints
 import { ENDPOINT_URL, API_URL } from 'config';
@@ -19,12 +19,16 @@ const BidsAsksHistory = (props) => {
     
     // Subscribe to the bids/asks history
     // TODO: Better way to implement this locally/globally
+    // Update after MAS
     useEffect(() => {
+        /*eslint-disable */
         socket.emit(ORDER_BOOK.emit, id);
         socket.on(`${ORDER_BOOK.on}/${id}`, data => {
             setActiveTrade(data);
         });
+        /*eslint-disable */
     }, []);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     
     const bids = activeTrade ? activeTrade.bids : [];
     const asks = activeTrade ? activeTrade.asks : [];

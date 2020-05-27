@@ -65,7 +65,10 @@ const fetchIndividualIdentity = async () => {
   throw new Error(response.message);
 };
 
-export const getIdentity = async (dispatch: Function) => {
+export const getIdentity = async (
+  dispatch: Function,
+  indcludeCorporate: boolean = false
+) => {
   dispatch({ type: actions.GET_IDENTITY_REQUEST });
 
   let dispatchPayload = {
@@ -76,10 +79,15 @@ export const getIdentity = async (dispatch: Function) => {
   };
 
   try {
-    const [individualIdentity, corporateIdentity] = await Promise.all([
-      fetchIndividualIdentity(),
-      fetchCorporateIdentity(),
-    ]);
+    const requests = [fetchIndividualIdentity()];
+    if (indcludeCorporate) {
+      requests.push(fetchCorporateIdentity());
+    }
+
+    const [
+      individualIdentity = null,
+      corporateIdentity = null,
+    ] = await Promise.all(requests);
 
     // insert individual identity
     if (individualIdentity !== null) {

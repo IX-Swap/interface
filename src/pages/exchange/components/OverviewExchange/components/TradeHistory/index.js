@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import io from "socket.io-client";
+import io from 'socket.io-client';
 
 // Config/Endpoints
 import { ENDPOINT_URL, API_URL } from 'config';
@@ -17,12 +17,15 @@ const TradeHistory = (props) => {
     const { SUBSCRIBE_API } = ENDPOINT_URL;
     const { TRADE_HISTORY } = SUBSCRIBE_API;
 
+    // Update after demo
+    /*eslint-disable */
     useEffect(() => {
         socket.emit(TRADE_HISTORY.emit, id);
         socket.on(`${TRADE_HISTORY.on}/${id}`, data => {
             setTradeStory(data);
         });
     }, []);
+    /*eslint-disable */
     
     const data = tradeStory ? tradeStory : [];
 

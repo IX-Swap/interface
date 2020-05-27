@@ -1,3 +1,4 @@
+// @flow
 import React, { useEffect, useRef } from 'react';
 import { withRouter, useParams } from 'react-router-dom';
 import TradingViewWidget from 'react-tradingview-widget';
@@ -20,10 +21,7 @@ import Modules from './modules';
 // Styles
 import useStyles from './styles';
 
-const {
-  MarketState,
-  useMarketDispatch,
-} = Modules;
+const { MarketState, useMarketDispatch } = Modules;
 
 function OverviewExchange() {
   let { id: tradingPairId } = useParams();
@@ -32,15 +30,9 @@ function OverviewExchange() {
   const marketState = MarketState();
   const mountedRef = useRef(true);
 
-  const {
-    status,
-    page,
-    total,
-    limit,
-    items,
-    statusCode,
-    error,
-  } = marketState;
+  // @Paul here
+  // eslint-disable-next-line no-unused-vars
+  const { status, page, total, limit, items, statusCode, error } = marketState;
 
   useEffect(() => {
     MarketActions.getMarketList(dispatch, {
@@ -59,11 +51,7 @@ function OverviewExchange() {
         </Grid>
         <Grid container item xs={7} direction="column">
           <section className={classes.graphContainer}>
-            <TradingViewWidget
-              symbol="NASDAQ:AAPL"
-              locale="fr"
-              autosize
-            />
+            <TradingViewWidget symbol="NASDAQ:AAPL" locale="fr" autosize />
           </section>
           <BidsAsks id={tradingPairId} />
         </Grid>
@@ -72,10 +60,9 @@ function OverviewExchange() {
           <TradeHistory id={tradingPairId} />
         </Grid>
       </Grid>
-      
       <TableMyOrders id={tradingPairId} data={item && item} />
     </Grid>
   );
 }
-  
+
 export default withRouter(OverviewExchange);
