@@ -2,7 +2,7 @@
 import React from 'react';
 import { Paper, Grid, Box, Typography, Button } from '@material-ui/core';
 import type { Dso } from 'context/dso/types';
-import { formatNumber, formatMoney } from 'helpers/formatNumbers';
+import { formatMoney } from 'helpers/formatNumbers';
 import OfferDetail from './OfferDetail';
 import DsoTitle from './DsoTitle';
 
@@ -27,7 +27,7 @@ const OfferCard = ({
               <Typography paragraph>
                 <span
                   dangerouslySetInnerHTML={{
-                    __html: dso.description,
+                    __html: dso.introduction,
                   }}
                 />
               </Typography>
