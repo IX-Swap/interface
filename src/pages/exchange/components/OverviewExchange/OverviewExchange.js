@@ -1,41 +1,66 @@
-import React from 'react';
+// @flow
+import React, { useEffect, useRef } from 'react';
 import { withRouter } from 'react-router-dom';
-import { Grid, Typography, Paper } from '@material-ui/core';
+import TradingViewWidget from 'react-tradingview-widget';
+import { Grid } from '@material-ui/core';
 
+// Local Components
 import OverviewHeader from './OverviewHeader';
-import Monitoring from './Monitoring';
-import TableOrders from './TableOrders';
+import Monitoring from './components/Monitoring';
+import BidsAsksHistory from './components/BidsAsksHistory';
+import TradeHistory from './components/TradeHistory';
+import BidsAsks from './components/BidsAsks';
 
+// Table Component
+import TableMyOrders from './components/MyOrders';
+
+// Modules
+import MarketActions from './modules/actions';
+import Modules from './modules';
+
+// Styles
 import useStyles from './styles';
+
+const { MarketState, useMarketDispatch } = Modules;
 
 function OverviewExchange() {
   const classes = useStyles();
+  const dispatch = useMarketDispatch();
+  const marketState = MarketState();
+  const mountedRef = useRef(true);
 
+  // @Paul here
+  // eslint-disable-next-line no-unused-vars
+  const { status, page, total, limit, items, statusCode, error } = marketState;
+
+  useEffect(() => {
+    MarketActions.getMarketList(dispatch, {
+      skip: page * limit,
+      limit,
+      ref: mountedRef,
+    });
+  }, [page, limit, dispatch]);
+  console.log('classes.graphContainer', classes.graphContainer);
   return (
     <Grid>
-      {false && <OverviewHeader />}
+      {true && <OverviewHeader />}
       <Grid container spacing={1}>
         <Grid container item xs direction="column">
-          <Monitoring />
-          <Monitoring />
+          <BidsAsksHistory />
         </Grid>
-        <Grid container item xs={6} direction="column">
-          <Paper className={classes.paper}>
-              TODO: PLACEHOLDER FOR THE CHART
-          </Paper>
-          <Paper className={classes.paper}>
-              TODO: PLACEHOLDER FOR THE BUY/SELL OPTIONS
-          </Paper>
+        <Grid container item xs={7} direction="column">
+          <section className={classes.graphContainer}>
+            <TradingViewWidget symbol="NASDAQ:AAPL" locale="fr" autosize />
+          </section>
+          <BidsAsks />
         </Grid>
         <Grid container item xs direction="column">
-          <Monitoring />
-          <Monitoring title="Trade History" />
+          <Monitoring type="marketList" data={items} />
+          <TradeHistory />
         </Grid>
       </Grid>
-      <Typography className={classes.tableTitle} variant="h3">
-        Open Orders
-      </Typography>
-      <TableOrders />
+
+      <TableMyOrders />
     </Grid>
   );
 }
