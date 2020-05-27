@@ -1,5 +1,9 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
+import {
+  StylesProvider,
+  createGenerateClassName,
+} from '@material-ui/core/styles';
 import { ThemeProvider } from '@material-ui/styles';
 import { CssBaseline } from '@material-ui/core';
 import { SnackbarContainer } from 'uno-material-ui';
@@ -9,14 +13,20 @@ import App from './components/App';
 import * as serviceWorker from './serviceWorker';
 import { UserProvider } from './context/user';
 
+const generateClassName = createGenerateClassName({
+  productionPrefix: 'ix',
+});
+
 ReactDOM.render(
-  <ThemeProvider theme={Themes.default}>
-    <SnackbarContainer />
-    <CssBaseline />
-    <UserProvider>
-      <App />
-    </UserProvider>
-  </ThemeProvider>,
+  <StylesProvider generateClassName={generateClassName}>
+    <ThemeProvider theme={Themes.default}>
+      <SnackbarContainer />
+      <CssBaseline />
+      <UserProvider>
+        <App />
+      </UserProvider>
+    </ThemeProvider>
+  </StylesProvider>,
   document.getElementById('root')
 );
 

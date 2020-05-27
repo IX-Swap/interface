@@ -18,6 +18,8 @@ const IndividualIdentity = () => {
     return <Redirect to="/identity" />;
   }
 
+  console.log('im here');
+
   return (
     <Box position="relative">
       {identity && (

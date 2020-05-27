@@ -1,48 +1,102 @@
 // @flow
-import React from 'react';
+import React, { useState, useCallback, useEffect } from 'react';
 
 import { makeStyles } from '@material-ui/core/styles';
-import Select from '@material-ui/core/Select';
-import MenuItem from '@material-ui/core/MenuItem';
-import TableBody from '@material-ui/core/TableBody';
-import TableRow from '@material-ui/core/TableRow';
-import TableCell from '@material-ui/core/TableCell';
+import {
+  Select,
+  MenuItem,
+  TableBody,
+  TableRow,
+  TableCell,
+  FormControl,
+  Checkbox,
+  ListItemText,
+  Input,
+} from '@material-ui/core';
 
-import type { User } from '../modules/types';
+import type { User, TableColumns } from '../modules/types';
 
 const useStyles = makeStyles({
   formControl: {
-    minWidth: 120,
+    width: 220,
   },
 });
 
 type Prop = {
+  open: boolean,
   users: Array<User>,
-  handleChange: (evt: SyntheticInputEvent<HTMLElement>, row: User) => void,
+  columns: Array<TableColumns>,
+  handleChange: (newRole: string, row: User) => void,
 };
 
-export default function UsersTableBody({ users, handleChange }: Prop) {
+export default function UsersTableBody({
+  open,
+  users,
+  columns,
+  handleChange,
+}: Prop) {
   const classes = useStyles();
+  const [roles, setRoles] = useState(
+    users.map((user) => user.roles.split(','))
+  );
+
+  const updateRoles = useCallback(() => {
+    if (!open) {
+      setRoles(users.map((user) => user.roles.split(',')));
+    }
+  }, [open, users]);
+
+  useEffect(() => {
+    updateRoles();
+  }, [updateRoles]);
+
+  const handleRoleChange = (value: Array<string>, index: number) => {
+    setRoles(
+      users.map((user, i: number) =>
+        index === i ? value : user.roles.split(',')
+      )
+    );
+  };
+
+  const possibleValues = [
+    'user',
+    'accredited',
+    'authorizer',
+    'admin',
+    'issuer',
+  ];
 
   return (
     <TableBody>
       {users &&
-        users.map((row) => (
+        users.length === roles.length &&
+        users.map((row, index) => (
           <TableRow key={row._id}>
-            <TableCell>{row.email}</TableCell>
+            {columns.map((col) => (
+              <TableCell key={`${row._id}-${col.label}`}>
+                {col.render ? col.render(row[col.key]) : row[col.key]}
+              </TableCell>
+            ))}
             <TableCell>
-              <Select
-                className={classes.formControl}
-                value={row.roles}
-                onChange={(evt) => handleChange(evt, row)}
-                inputProps={{
-                  name: 'roles',
-                }}
-              >
-                <MenuItem value="admin">admin</MenuItem>
-                <MenuItem value="authorizer">authorizer</MenuItem>
-                <MenuItem value="user">user</MenuItem>
-              </Select>
+              <FormControl className={classes.formControl}>
+                <Select
+                  labelId="demo-mutiple-checkbox-label"
+                  id="demo-mutiple-checkbox"
+                  multiple
+                  value={roles[index]}
+                  onChange={(ev) => handleRoleChange(ev.target.value, index)}
+                  onClose={() => handleChange(roles[index].join(','), row)}
+                  input={<Input />}
+                  renderValue={(selected) => selected.join(', ')}
+                >
+                  {possibleValues.map((name) => (
+                    <MenuItem key={name} value={name}>
+                      <Checkbox checked={roles[index].indexOf(name) > -1} />
+                      <ListItemText primary={name} />
+                    </MenuItem>
+                  ))}
+                </Select>
+              </FormControl>
             </TableCell>
           </TableRow>
         ))}

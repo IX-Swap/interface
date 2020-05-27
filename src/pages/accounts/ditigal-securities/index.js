@@ -3,10 +3,13 @@ import React, { Suspense } from 'react';
 import { withRouter, Route } from 'react-router-dom';
 
 import DSModule from './deposit/modules/index';
+import WSModule from './withdraw/modules/index';
 
 const { DSDepositsListProvider } = DSModule;
+const { DSWithdrawalsListProvider } = WSModule;
 
 const DSDeposit = React.lazy(() => import('./deposit/'));
+const DSWithdraw = React.lazy(() => import('./withdraw/'));
 const DSList = React.lazy(() => import('./list'));
 
 const routes = [
@@ -18,11 +21,11 @@ const routes = [
     route: '/accounts/wallets/deposit/:assetId',
     component: (props) => <DSDeposit {...props} />,
   },
-  /* {
-    route: "/accounts/wallets/withdraw/:assetId",
-    component: (props) => <BankWithrawComponent {...props} />,
-  },
   {
+    route: '/accounts/wallets/withdraw/:assetId',
+    component: (props) => <DSWithdraw {...props} />,
+  },
+  /* {
     route: "/accounts/banks/bank-create",
     component: (props) => <BankCreateComponent {...props} />,
   }, */
@@ -31,16 +34,18 @@ const routes = [
 function DigitalSecurities() {
   return (
     <DSDepositsListProvider>
-      <Suspense fallback={<div>Loading...</div>}>
-        {routes.map((route, index) => (
-          <Route
-            key={route.route}
-            exact={index === 0}
-            path={route.route}
-            component={route.component}
-          />
-        ))}
-      </Suspense>
+      <DSWithdrawalsListProvider>
+        <Suspense fallback={<div>Loading...</div>}>
+          {routes.map((route, index) => (
+            <Route
+              key={route.route}
+              exact={index === 0}
+              path={route.route}
+              component={route.component}
+            />
+          ))}
+        </Suspense>
+      </DSWithdrawalsListProvider>
     </DSDepositsListProvider>
   );
 }

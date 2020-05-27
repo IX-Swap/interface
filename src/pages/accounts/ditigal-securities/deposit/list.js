@@ -77,7 +77,7 @@ type TableColumn = {
 
 const columns: Array<TableColumn> = [
   {
-    label: 'Coin',
+    label: 'Digital Security',
     // $FlowFixMe
     key: 'asset.symbol',
   },

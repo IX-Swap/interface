@@ -16,6 +16,8 @@ import { useForm, FormContext } from 'react-hook-form';
 import { makeStyles } from '@material-ui/styles';
 import usePrevious from 'hooks/usePrevious';
 import { snackbarService } from 'uno-material-ui';
+import { signOut } from 'context/user/actions';
+import { useUserDispatch } from 'context/user';
 import StepOneDownload from './StepOneDownload';
 import StepTwoScan from './StepTwoScan';
 import StepThreeBackup from './StepThreeBackup';
@@ -58,6 +60,7 @@ const getStepContent = (stepIndex) => {
 };
 
 const AuthenticatorStepper = () => {
+  const userDispatch = useUserDispatch();
   const steps = getSteps();
   const [activeStep, setActiveStep] = useState(0);
   const { status, error, confirmed } = useTwoFactorState();
@@ -76,22 +79,24 @@ const AuthenticatorStepper = () => {
 
     // Display confirm response
     if (prevStatus === TFA_STATUS.SAVING && status === TFA_STATUS.IDLE) {
-      let message = 'Google Authenticator Setup Success!';
+      let message =
+        'Google Authenticator Setup Success! You will be redirected to login page.';
       let type = 'success';
 
       if (confirmed) {
         snackbarService.showSnackbar(message, type);
-        // return to page
+        // logout user
+
         setTimeout(() => {
-          history.push('/settings');
-        }, 1000);
+          signOut(userDispatch);
+        }, 1500);
       } else {
         type = 'error';
         message = error;
         snackbarService.showSnackbar(message, type);
       }
     }
-  }, [prevStatus, status, dispatch, confirmed, error, history]);
+  }, [prevStatus, status, dispatch, confirmed, error, userDispatch]);
 
   const onSubmit = ({ otp }) => {
     confirmTwoFactor(dispatch, otp);
@@ -107,7 +112,7 @@ const AuthenticatorStepper = () => {
 
   const handleBack = () => {
     if (activeStep <= 0) {
-      history.push('/settings');
+      history.push('/security');
     }
 
     setActiveStep((prevActiveStep) => prevActiveStep - 1);

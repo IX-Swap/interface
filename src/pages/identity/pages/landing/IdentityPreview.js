@@ -4,6 +4,7 @@ import { useHistory } from 'react-router-dom';
 import { useForm, FormContext } from 'react-hook-form';
 import { Button, Box } from '@material-ui/core';
 import { isEmpty } from 'lodash';
+import { useIsAccredited } from 'services/acl';
 import IdentitySection from '../../components/IdentitySection';
 import IdentityField from '../../components/IdentityField';
 import IdentityForm from '../../components/IdentityForm';
@@ -16,6 +17,7 @@ const IdentityPreview = () => {
   const history = useHistory();
   const { identity, corporate } = useIdentityState();
   const dispatch = useIdentityDispatch();
+  const isAccredited = useIsAccredited();
 
   const handleCreateCorporate = () => {
     toggleEditMode(dispatch, true);
@@ -112,6 +114,7 @@ const IdentityPreview = () => {
           variant="contained"
           color="primary"
           onClick={handleCreateCorporate}
+          disabled={!isAccredited}
         >
           Create Corporate Identiy
         </Button>

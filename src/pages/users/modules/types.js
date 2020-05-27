@@ -1,4 +1,5 @@
 // @flow
+import type { Node } from 'react';
 import type { BaseStateWithPagination } from 'context/base/withPagination/types';
 
 export const userUpdateRoleActions = {
@@ -17,6 +18,9 @@ export type User = {
   _id: string,
   email: string,
   roles: string,
+  name: string,
+  accountType: string,
+  twoFactorAuth: boolean,
 };
 
 export type UsersListState = BaseStateWithPagination<User> & {
@@ -26,4 +30,10 @@ export type UsersListState = BaseStateWithPagination<User> & {
   total: ?number,
   error: ?string,
   status: string,
+};
+
+export type TableColumns = {
+  key: $Keys<User>,
+  label: string,
+  render?: (string | boolean) => Node,
 };
