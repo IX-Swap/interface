@@ -153,6 +153,9 @@ export default function DigitalSecurities({ match }: RouteProps) {
 
   return (
     <Box m={4}>
+      <Box mb={4}>
+        <Typography variant="h3">Deposit</Typography>
+      </Box>
       <Grid container spacing={3}>
         <Grid container item xs={12} sm={6} direction="column" justify="center">
           <Autocomplete
@@ -166,7 +169,7 @@ export default function DigitalSecurities({ match }: RouteProps) {
             id="coin"
             onChange={onCoinChange}
             renderInput={(params) => (
-              <TextField {...params} label="Coin" margin="normal" /> // eslint-disable-line
+              <TextField {...params} label="Digital Security" margin="normal" /> // eslint-disable-line
             )}
           />
           {dsState.selectedCoin && (

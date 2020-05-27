@@ -15,20 +15,20 @@ import { get } from 'lodash';
 import moment from 'moment';
 import DSModule from './modules/index';
 import DSActions from './modules/actions';
-import type { DSDeposit } from './modules/types';
+import type { DSWithdrawal } from './modules/types';
 
 const {
-  useDSDepositsListDispatch,
-  useDSDepositsListState,
-  DS_DEPOSITS_LIST_STATUS,
+  useDSWithdrawalsListDispatch,
+  useDSWithdrawalsListState,
+  DS_WITHDRAWALS_LIST_STATUS,
 } = DSModule;
 
-const { setPage, setRowsPerPage, getDigitalSecurityDeposits } = DSActions;
+const { setPage, setRowsPerPage, getDigitalSecurityWithdrawals } = DSActions;
 
-const useDepositsListLogic = (assetId: string) => {
+const useWithdrawalsListLogic = (assetId: string) => {
   const mountedRef = useRef(true);
-  const dsDispatch = useDSDepositsListDispatch();
-  const { page, limit, items, status, total } = useDSDepositsListState();
+  const dsDispatch = useDSWithdrawalsListDispatch();
+  const { page, limit, items, status, total } = useDSWithdrawalsListState();
 
   const handleChangeRowsPerPage = (newRows: number) => {
     setRowsPerPage(dsDispatch, { rows: newRows });
@@ -40,11 +40,11 @@ const useDepositsListLogic = (assetId: string) => {
   };
 
   useEffect(() => {
-    if (status === DS_DEPOSITS_LIST_STATUS.INIT) {
-      getDigitalSecurityDeposits(dsDispatch, {
+    if (status === DS_WITHDRAWALS_LIST_STATUS.INIT) {
+      getDigitalSecurityWithdrawals(dsDispatch, {
         skip: page * limit,
         limit,
-        // assetId,
+        asset: assetId,
         ref: mountedRef,
       });
     }
@@ -70,40 +70,43 @@ const useDepositsListLogic = (assetId: string) => {
 
 type TableColumn = {
   label: string,
-  key: $Keys<DSDeposit>,
+  key: $Keys<DSWithdrawal>,
   align?: string,
-  render?: any,
+  render?: (val: string) => string,
 };
 
 const columns: Array<TableColumn> = [
   {
-    label: 'Digital Security',
+    label: "Digital Security",
     // $FlowFixMe
-    key: 'asset.symbol',
+    key: "asset.symbol",
   },
   {
-    label: 'Status',
-    key: 'status',
+    label: "Status",
+    key: "status",
   },
   {
-    label: 'Amount',
-    key: 'amount',
-    align: 'right',
+    label: "Amount",
+    key: "amount",
+    align: "right",
     render: (value) =>
-      value && value.toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,'),
+      value &&
+      parseFloat(value)
+        .toFixed(2)
+        .replace(/\d(?=(\d{3})+\.)/g, "$&,"),
   },
   {
-    label: 'Date',
-    key: 'date',
-    render: (value) => moment(value).format('MM/DD/YYYY'),
+    label: "Date",
+    key: "date",
+    render: (value) => moment(value).format("MM/DD/YYYY"),
   },
   {
-    label: 'Information',
-    key: 'hash',
+    label: "Memo",
+    key: "memo",
   },
 ];
 
-export default function DepositList({ assetId }: { assetId: string }) {
+export default function WithdrawalList({ assetId }: { assetId: string }) {
   const {
     status,
     total,
@@ -112,10 +115,10 @@ export default function DepositList({ assetId }: { assetId: string }) {
     items,
     handleChangePage,
     handleChangeRowsPerPage,
-  } = useDepositsListLogic(assetId);
+  } = useWithdrawalsListLogic(assetId);
   return (
     <TableContainer>
-      {status === DS_DEPOSITS_LIST_STATUS.GETTING && <LinearProgress />}
+      {status === DS_WITHDRAWALS_LIST_STATUS.GETTING && <LinearProgress />}
       <Table aria-label="simple table">
         <TableHead>
           <TableRow>
@@ -126,20 +129,22 @@ export default function DepositList({ assetId }: { assetId: string }) {
             ))}
           </TableRow>
         </TableHead>
-        {status === DS_DEPOSITS_LIST_STATUS.INIT && (
+        {status === DS_WITHDRAWALS_LIST_STATUS.INIT && (
           <TableBody>
             <TableRow>
               <TableCell>loding</TableCell>
             </TableRow>
           </TableBody>
         )}
-        {items && status === DS_DEPOSITS_LIST_STATUS.IDLE && (
+        {items && status === DS_WITHDRAWALS_LIST_STATUS.IDLE && (
           <TableBody>
             {items.map((row, index) => (
               <TableRow key={index}>
                 {columns.map((e) => (
                   <TableCell key={e.key} align={e.align || 'left'}>
-                    {(e.render && e.render(get(row, e.key))) || get(row, e.key)}
+                    {(e.render &&
+                      e.render(get<DSWithdrawal, string>(row, e.key))) ||
+                      get(row, e.key)}
                   </TableCell>
                 ))}
               </TableRow>

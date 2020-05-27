@@ -32,6 +32,7 @@ export default (name: string, uri: string, additionalPayload: any) => {
         const { limit, count, skip, documents } = response.data.length
           ? response.data[0]
           : {};
+
         dispatch({
           type: actionTypes.GET_SUCCESS,
           payload: {

@@ -6,6 +6,7 @@ export const withdraw = async (payload: {
   memo: string,
   amount: number,
   bank: string,
+  otp: string,
 }) => {
   const url = `/accounts/cash/withdrawals/${storage.getUserId()}`;
   const response = await postRequest(url, payload);

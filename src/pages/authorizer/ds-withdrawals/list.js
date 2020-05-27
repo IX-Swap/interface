@@ -18,7 +18,8 @@ import {
 import { snackbarService } from 'uno-material-ui';
 import moment from 'moment';
 import { makeStyles } from '@material-ui/core/styles';
-import type { Withdraw } from './modules/types';
+import type { Asset } from 'context/assets/types';
+import type { DSWithdrawal, TableColumns } from './modules/types';
 import WithdrawListModule from './modules';
 import Actions from './modules/actions';
 import DialogAuthorizeConfirmation from './confirm';
@@ -30,9 +31,9 @@ const useStyles = makeStyles({
 });
 
 const {
-  useAuhorizerWithdrawListState,
-  useAuhorizerWithdrawListDispatch,
-  AUTHORIZER_WITHDRAW_LIST_STATUS,
+  useAuhorizerDSWithdrawListState,
+  useAuhorizerDSWithdrawListDispatch,
+  AUTHORIZER_DS_WITHDRAW_LIST_STATUS,
 } = WithdrawListModule;
 const {
   getWithdraws,
@@ -43,8 +44,8 @@ const {
 } = Actions;
 
 function useWithdrawListLogic() {
-  const withdrawDispatch = useAuhorizerWithdrawListDispatch();
-  const withdrawListState = useAuhorizerWithdrawListState();
+  const withdrawDispatch = useAuhorizerDSWithdrawListDispatch();
+  const withdrawListState = useAuhorizerDSWithdrawListState();
   const {
     status,
     page,
@@ -55,7 +56,7 @@ function useWithdrawListLogic() {
     error,
   } = withdrawListState;
   const mountedRef = useRef(true);
-  const [withdraw, setWithdraw] = useState<Withdraw | null>(null);
+  const [withdraw, setWithdraw] = useState<DSWithdrawal | null>(null);
   const [open, setOpen] = useState<boolean>(false);
   const [newStatus, setNewStatus] = useState<string>('');
 
@@ -69,7 +70,7 @@ function useWithdrawListLogic() {
   };
 
   useEffect(() => {
-    if (status === AUTHORIZER_WITHDRAW_LIST_STATUS.INIT) {
+    if (status === AUTHORIZER_DS_WITHDRAW_LIST_STATUS.INIT) {
       getWithdraws(withdrawDispatch, {
         skip: page * limit,
         limit,
@@ -111,8 +112,8 @@ const RowStatusComponent = ({
   withdraw,
   handleSelectChange,
 }: {
-  withdraw: Withdraw,
-  handleSelectChange: (withdraw: Withdraw, status: string) => void,
+  withdraw: DSWithdrawal,
+  handleSelectChange: (withdraw: DSWithdrawal, status: string) => void,
 }) => {
   const classes = useStyles();
   switch (withdraw.status) {
@@ -139,24 +140,53 @@ const RowStatusComponent = ({
   }
 };
 
+const columns: Array<TableColumns> = [
+  {
+    key: 'createdAt',
+    label: 'Date of Application',
+    // $$FlowFixMe
+    render: (a: string) => moment(a).format('MM/DD/YYYY hh:mm:ss a'),
+  },
+  {
+    key: 'asset',
+    label: 'Digital Security',
+    // $$FlowFixMe
+    render: (a: Asset) => a.symbol,
+  },
+  {
+    key: 'recipientWallet',
+    label: "Recipient's IXPS Address",
+  },
+  {
+    key: 'amount',
+    label: 'Amount',
+    align: 'right',
+    // $$FlowFixMe
+    render: (amount: number) =>
+      amount.toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,'),
+  },
+  {
+    key: 'memo',
+    label: 'Memo',
+  },
+];
+
 const Withdraws = ({
   list,
   handleSelectChange,
 }: {
-  list: Array<Withdraw>,
-  handleSelectChange: (withdraw: Withdraw, status: string) => void,
+  list: Array<DSWithdrawal>,
+  handleSelectChange: (withdraw: DSWithdrawal, status: string) => void,
 }) => (
   <TableBody>
     {list.length ? (
       list.map((row) => (
         <TableRow key={row._id}>
-          <TableCell>{row.level}</TableCell>
-          <TableCell>{moment(row.createdAt).format("MM/DD/YYYY")}</TableCell>
-          <TableCell>{row.bankAccount.accountHolderName}</TableCell>
-          <TableCell align="left">{row.bankAccount.bankName}</TableCell>
-          <TableCell align="left">
-            {row.asset.symbol} {row.amount}
-          </TableCell>
+          {columns.map((e) => (
+            <TableCell align={e.align || 'left'}>
+              {e.render ? e.render(row[e.key]) : row[e.key]}
+            </TableCell>
+          ))}
           <TableCell align="left">
             <RowStatusComponent
               withdraw={row}
@@ -193,7 +223,7 @@ export default function BanksList() {
     setNewStatus,
   } = useWithdrawListLogic();
 
-  const handleSelectChange = (mWithdraw: Withdraw, status: string) => {
+  const handleSelectChange = (mWithdraw: DSWithdrawal, status: string) => {
     setWithdraw(mWithdraw);
     setNewStatus(status);
     setOpen(true);
@@ -203,7 +233,7 @@ export default function BanksList() {
     setOpen(false);
   };
 
-  const handleConfirm = async (mWithdraw: Withdraw, status: string) => {
+  const handleConfirm = async (mWithdraw: DSWithdrawal, status: string) => {
     const confirm = await toggleWithdrawStatus(mWithdraw, status);
     let message = 'Failed to update withdraw status!';
     let type = 'error';
@@ -229,30 +259,20 @@ export default function BanksList() {
           handleConfirm={handleConfirm}
         />
       )}
-      {[AUTHORIZER_WITHDRAW_LIST_STATUS.GETTING].includes(loadingStatus) ? (
+      {[AUTHORIZER_DS_WITHDRAW_LIST_STATUS.GETTING].includes(loadingStatus) ? (
         <LinearProgress />
       ) : null}
       <TableContainer component={Paper}>
         <Table aria-label="accounts table">
           <TableHead>
             <TableRow>
-              <TableCell align="left">
-                <b>Level</b>
-              </TableCell>
-              <TableCell align="left">
-                <b>Date of Application</b>
-              </TableCell>
-              <TableCell align="left">
-                <b>User</b>
-              </TableCell>
-              <TableCell align="left">
-                <b>Bank</b>
-              </TableCell>
-              <TableCell align="left">
-                <b>Amount</b>
-              </TableCell>
-              <TableCell align="left">
-                <b>Status</b>
+              {columns.map((e) => (
+                <TableCell key={e.key}>
+                  <b>{e.label}</b>
+                </TableCell>
+              ))}
+              <TableCell>
+                <b>Actions</b>
               </TableCell>
             </TableRow>
           </TableHead>

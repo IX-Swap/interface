@@ -15,3 +15,16 @@ export type UserSecurityBalance = {
   onHold: number,
   available: number,
 };
+
+export type TransferDetails = {
+  asset: string,
+  recipientWallet: string,
+  amount: string,
+  memo: string,
+  otp: string,
+  date: ?string,
+};
+
+export type DSState = {
+  selectedCoin: ?UserSecurityBalance,
+};
