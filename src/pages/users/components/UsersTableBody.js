@@ -69,6 +69,7 @@ export default function UsersTableBody({
   return (
     <TableBody>
       {users &&
+        users.length === roles.length &&
         users.map((row, index) => (
           <TableRow key={row._id}>
             {columns.map((col) => (
