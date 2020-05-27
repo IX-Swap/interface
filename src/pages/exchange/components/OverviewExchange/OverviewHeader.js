@@ -9,7 +9,8 @@ import { Link } from 'react-router-dom'
 
 import useStyles from './styles'
 
-function OverviewHeader () {
+function OverviewHeader (props) {
+    const { data } = props;
     const classes = useStyles()
     
     return (
@@ -19,13 +20,12 @@ function OverviewHeader () {
             justify="space-between"
             className={classes.overviewHeader}
         >
-            <Grid
-                container
-                item
-                alignItems="center"
-                xs={6}
-            > 
-                <Link to="/invest"> <ChevronLeftIcon /> </Link>
+            <section className={classes.overviewHeaderContent}> 
+                <Link 
+                    to="/markets"  
+                    className={classes.overviewHeaderLink}> 
+                    <ChevronLeftIcon /> 
+                </Link>
                 <Grid
                     container
                     direction="column"
@@ -35,16 +35,16 @@ function OverviewHeader () {
                         className={classes.stockTitle} 
                         variant="h1"
                     >
-                        Heading
+                        {data && data.name}
                     </Typography>
                     <Typography 
                         className={classes.subTitle} 
                         variant="h3"
                     >
-                        Sub heading
+                        {data && data.listing.name}
                     </Typography>
                 </Grid>
-            </Grid>
+            </section>
             <Grid
                 container
                 direction="column"
@@ -62,7 +62,7 @@ function OverviewHeader () {
                     className={classes.price} 
                     variant="h6"
                 >
-                    $123,456.00
+                    $0.00
                 </Typography>
             </Grid>
         </Grid>

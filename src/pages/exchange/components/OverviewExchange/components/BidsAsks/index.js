@@ -13,13 +13,11 @@ import { Paper } from '@material-ui/core';
 import { ENDPOINT_URL, API_URL } from 'config';
 import localStore from 'services/storageHelper';
 
-// Component
-import Monitoring from '../Monitoring';
-
 // Styles
 import useStyles from '../styles'
 
-const BidsAsksHistory = () => {
+const BidsAsksHistory = (props) => {
+    const { id } = props;
     const classes = useStyles();
     const bearerToken = localStore.getAccessToken();
     const _userId = localStore.getUserId();
@@ -29,19 +27,14 @@ const BidsAsksHistory = () => {
     const { SUBSCRIBE_API } = ENDPOINT_URL;
     const { BIDS_ASKS } = SUBSCRIBE_API;
     
-    // TODO: Dynamic changing of ID
-    const _id = '5ecb739f1f3e88614b36ddcb';
-
     // Subscribe to the bids/asks
     // TODO: Better way to implement this locally/globally
     useEffect(() => {
-        socket.emit(BIDS_ASKS.emit, _id);
+        socket.emit(BIDS_ASKS.emit, id);
         socket.on(`${BIDS_ASKS.on}/${_userId}`, data => {
             setCollection(data);
         });
     }, []);
-
-    console.log('collction', collection)
 
     // State for the RESET FORM fields
     const [form, setFields] = useState({
@@ -112,7 +105,7 @@ const BidsAsksHistory = () => {
                         <input
                             className={classes.inputField}
                             key={field.id}
-                            id={field.id}
+                            id={`${field.id}-buy`}
                             value={field.value}
                             onChange={field.onChange}
                             placeholder={field.placeholder}
@@ -145,7 +138,7 @@ const BidsAsksHistory = () => {
                         <input
                             className={classes.inputField}
                             key={field.id}
-                            id={field.id}
+                            id={`${field.id}-sell`}
                             value={field.value}
                             onChange={field.onChange}
                             placeholder={field.placeholder}

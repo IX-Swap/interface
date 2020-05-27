@@ -8,7 +8,8 @@ import localStore from 'services/storageHelper';
 // Component
 import Monitoring from '../Monitoring';
 
-const BidsAsksHistory = () => {
+const BidsAsksHistory = (props) => {
+    const { id } = props;
     const bearerToken = localStore.getAccessToken();
     const socket = io(`${API_URL}?token=${bearerToken}`);
     
@@ -16,14 +17,11 @@ const BidsAsksHistory = () => {
     const { SUBSCRIBE_API } = ENDPOINT_URL;
     const { ORDER_BOOK } = SUBSCRIBE_API;
     
-    // TODO: Dynamic changing of ID
-    const _id = '5ecb739f1f3e88614b36ddcb';
-
     // Subscribe to the bids/asks history
     // TODO: Better way to implement this locally/globally
     useEffect(() => {
-        socket.emit(ORDER_BOOK.emit, _id);
-        socket.on(`${ORDER_BOOK.on}/${_id}`, data => {
+        socket.emit(ORDER_BOOK.emit, id);
+        socket.on(`${ORDER_BOOK.on}/${id}`, data => {
             setActiveTrade(data);
         });
     }, []);

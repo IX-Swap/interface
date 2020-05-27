@@ -1,5 +1,5 @@
 import React, { useEffect, useRef } from 'react';
-import { withRouter } from 'react-router-dom';
+import { withRouter, useParams } from 'react-router-dom';
 import TradingViewWidget from 'react-tradingview-widget';
 import { Grid } from '@material-ui/core';
 
@@ -26,6 +26,7 @@ const {
 } = Modules;
 
 function OverviewExchange() {
+  let { id: tradingPairId } = useParams();
   const classes = useStyles();
   const dispatch = useMarketDispatch();
   const marketState = MarketState();
@@ -48,13 +49,13 @@ function OverviewExchange() {
       ref: mountedRef,
     });
   }, [page, limit, dispatch]);
-  console.log('classes.graphContainer', classes.graphContainer);
+  const item = items.length && items.find(item => item._id === tradingPairId);
   return (
     <Grid>
-      {true && <OverviewHeader />}
+      <OverviewHeader data={item && item} />
       <Grid container spacing={1}>
         <Grid container item xs direction="column">
-          <BidsAsksHistory />
+          <BidsAsksHistory id={tradingPairId} />
         </Grid>
         <Grid container item xs={7} direction="column">
           <section className={classes.graphContainer}>
@@ -64,15 +65,15 @@ function OverviewExchange() {
               autosize
             />
           </section>
-          <BidsAsks />
+          <BidsAsks id={tradingPairId} />
         </Grid>
         <Grid container item xs direction="column">
           <Monitoring type="marketList" data={items} />
-          <TradeHistory />
+          <TradeHistory id={tradingPairId} />
         </Grid>
       </Grid>
       
-      <TableMyOrders />
+      <TableMyOrders id={tradingPairId} data={item && item} />
     </Grid>
   );
 }
