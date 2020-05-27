@@ -1,7 +1,9 @@
+// @flow
+
 // Adds decimal places and commas
-export const formatMoney = (value) =>
-  value && value.toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,');
+export const formatMoney = (value: number, symbol?: string = 'SGD'): string =>
+  `${symbol} ${value.toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,')}`;
 
 // Adds commas
-export const formatNumber = (value) =>
-  value && value.toString().replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1,');
+export const formatNumber = (value: number): string =>
+  value.toString().replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1,');
