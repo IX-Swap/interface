@@ -22,7 +22,7 @@ import { setSelectedDso } from '../../modules/actions';
 import { useInvestDispatch } from '../../modules';
 
 const { useDsoListState, useDsoListDispatch, DSO_LIST_STATUS } = DsoListModule;
-const { getDsoList, setPage, setRowsPerPage, clearApiStatus } = Actions;
+const { getDsoList, setPage, setRowsPerPage, clearApiStatus } = Actions.dsoList;
 
 const useDsoListLogic = () => {
   const dsoListDispatch = useDsoListDispatch();

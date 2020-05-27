@@ -2,6 +2,7 @@
 import React from 'react';
 import { Paper, Grid, Box, Typography, Button } from '@material-ui/core';
 import type { Dso } from 'context/dso/types';
+import { formatMoney } from 'helpers/formatNumbers';
 import OfferDetail from './OfferDetail';
 import DsoTitle from './DsoTitle';
 
@@ -26,7 +27,7 @@ const OfferCard = ({
               <Typography paragraph>
                 <span
                   dangerouslySetInnerHTML={{
-                    __html: dso.description,
+                    __html: dso.introduction,
                   }}
                 />
               </Typography>
@@ -45,14 +46,17 @@ const OfferCard = ({
         <Grid item xs={3}>
           <OfferDetail label="Status" value={dso.status} />
           <OfferDetail label="Capital Structure" value={dso.capitalStructure} />
-          <OfferDetail label="Unit Price" value={dso.pricePerToken} />
+          <OfferDetail
+            label="Unit Price"
+            value={formatMoney(dso.pricePerUnit, dso.currency.symbol)}
+          />
           <OfferDetail
             label="Total Fundraising Amount"
-            value={dso.totalFundraisingAmount}
+            value={formatMoney(dso.totalFundraisingAmount, dso.currency.symbol)}
           />
           <OfferDetail
             label="Minimum Investment"
-            value={dso.minimumCommittment}
+            value={formatMoney(dso.minimumInvestment, dso.currency.symbol)}
           />
         </Grid>
       </Grid>
