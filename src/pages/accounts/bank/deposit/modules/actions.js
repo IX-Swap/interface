@@ -6,6 +6,7 @@ export const deposit = async (payload: {
   depositCode: string,
   amount: number,
   bank: string,
+  otp: string,
 }) => {
   const url = `/accounts/cash/deposits/${storage.getUserId()}`;
   const response = await postRequest(url, payload);

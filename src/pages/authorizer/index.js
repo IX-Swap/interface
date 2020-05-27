@@ -1,7 +1,7 @@
 // @flow
 import React, { Suspense } from 'react';
-import { withRouter, Route, Link, RouteProps } from 'react-router-dom';
-import { Grid, Box } from '@material-ui/core';
+import { withRouter, Route, RouteProps } from 'react-router-dom';
+import { Grid } from '@material-ui/core';
 import PageTitle from 'components/PageTitle';
 
 const Banks = React.lazy(() => import('./banks'));
@@ -40,16 +40,6 @@ const routes = [
   },
 ];
 
-const Links = () => (
-  <>
-    {routes.map((route) => (
-      <Link key={route.title} to={route.route}>
-        {route.title}
-      </Link>
-    ))}
-  </>
-);
-
 const Routes = () => (
   <Suspense fallback={<span>loading</span>}>
     {routes.map((route) => (
@@ -80,13 +70,9 @@ function Authorizer(props: RouteProps) {
 
   return (
     <>
-      <Links />
-      <br />
       <Grid container title="Accounts" justify="center" alignItems="center">
         <Grid item xs={12}>
-          <Box my={4}>
-            {location && <PageTitle title={getTitle(location.pathname)} />}
-          </Box>
+          {location && <PageTitle title={getTitle(location.pathname)} />}
         </Grid>
         <Routes />
       </Grid>
