@@ -85,14 +85,14 @@ const rows = [
 
 async function addListing(payload) {
     try {
-      const uri = `/exchange/listings`;
+      const uri = `/exchange/markets/list`;
       const result = await putRequest(uri, payload);
       const response = await result.json();
 
       console.log('reponse', response);
   
     } catch (err) {
-      throw new Error(err);
+        console.log('err', err);
     }
   }
 
@@ -133,21 +133,18 @@ function TableMyTrades(props) {
                                     variant="outlined" 
                                     color="primary"
                                     className={classes.btnStyle}
+                                    onClick={() => {
+                                        addListing({
+                                            "skip": 0,
+                                            "limit": 5
+                                          })
+                                    }}
                                 >
                                     Search
                                 </Button>
                                 <Button 
                                     variant="contained"
                                     className={classes.btnStyle}
-                                    onClick={() => {
-                                        addListing({
-                                            "name": "InvestaX Common Stock",
-                                            "asset": "{{SecurityAssetId}}",
-                                            "description": "Vel minus qui rerum error minima nulla architecto illum nostrum. Quae laudantium sit similique. Debitis deserunt officiis. Cupiditate vel autem deleniti in est. Enim molestiae autem rerum necessitatibus rerum sit natus omnis.",
-                                            "companyName": "Rempel, Pacocha and Harber",
-                                            "explorer": "https://ropsten.etherscan.io/address/0x65356f2ab79dac8a0a930c18a83b214ef9fca6a7#writeContract"
-                                        })
-                                    }}
                                 >
                                     Reset
                                 </Button>

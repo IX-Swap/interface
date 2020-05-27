@@ -14,7 +14,7 @@ import useStyles from './styles';
 function ListingsView(props) {
     const classes = useStyles();
     const { title } = props;
-    
+
     return (
         <Grid>
             <Typography 
