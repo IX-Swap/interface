@@ -7,6 +7,9 @@ import {
   Paper,
   TableContainer,
   TableBody,
+  TableFooter,
+  TablePagination,
+  LinearProgress,
 } from '@material-ui/core';
 
 import CommitmentListItem from './CommitmentListItem';
@@ -96,6 +99,10 @@ const CommitmentsList = ({ onClickView }: { onClickView: Function }) => {
 
   return (
     <>
+      {[AUTHORIZER_COMMITMENT_LIST_STATUS.GETTING].includes(loadingStatus) ? (
+        <LinearProgress />
+      ) : null}
+
       <TableContainer component={Paper}>
         <Table>
           <TableHead>
@@ -135,6 +142,23 @@ const CommitmentsList = ({ onClickView }: { onClickView: Function }) => {
               />
             ))}
           </TableBody>
+          {total && (
+            <TableFooter>
+              <TableRow>
+                <TablePagination
+                  rowsPerPageOptions={[5, 10, 25]}
+                  colSpan={6}
+                  count={total}
+                  rowsPerPage={limit}
+                  page={page}
+                  onChangeRowsPerPage={(
+                    evt: SyntheticInputEvent<HTMLElement>
+                  ) => handleChangeRowsPerPage(parseInt(evt.target.value))}
+                  onChangePage={handleChangePage}
+                />
+              </TableRow>
+            </TableFooter>
+          )}
         </Table>
       </TableContainer>
     </>
