@@ -169,7 +169,7 @@ export default function DigitalSecurities({ match }: RouteProps) {
             id="coin"
             onChange={onCoinChange}
             renderInput={(params) => (
-              <TextField {...params} label="Coin" margin="normal" /> // eslint-disable-line
+              <TextField {...params} label="Digital Security" margin="normal" /> // eslint-disable-line
             )}
           />
           {dsState.selectedCoin && (

@@ -77,32 +77,32 @@ type TableColumn = {
 
 const columns: Array<TableColumn> = [
   {
-    label: 'Coin',
+    label: "Digital Security",
     // $FlowFixMe
-    key: 'asset.symbol',
+    key: "asset.symbol",
   },
   {
-    label: 'Status',
-    key: 'status',
+    label: "Status",
+    key: "status",
   },
   {
-    label: 'Amount',
-    key: 'amount',
-    align: 'right',
+    label: "Amount",
+    key: "amount",
+    align: "right",
     render: (value) =>
       value &&
       parseFloat(value)
         .toFixed(2)
-        .replace(/\d(?=(\d{3})+\.)/g, '$&,'),
+        .replace(/\d(?=(\d{3})+\.)/g, "$&,"),
   },
   {
-    label: 'Date',
-    key: 'date',
-    render: (value) => moment(value).format('MM/DD/YYYY'),
+    label: "Date",
+    key: "date",
+    render: (value) => moment(value).format("MM/DD/YYYY"),
   },
   {
-    label: 'Memo',
-    key: 'memo',
+    label: "Memo",
+    key: "memo",
   },
 ];
 
