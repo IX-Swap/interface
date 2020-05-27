@@ -1,12 +1,12 @@
 import React from 'react';
 import { Switch, Route } from 'react-router-dom';
 
-const Issuance = () => <p>Issuance</p>;
+import DeployToken from './deploy';
 
-export default function IssuancePage() {
-  return (
-    <Switch>
-      <Route path="/issuance" exact component={Issuance} />
-    </Switch>
-  );
-}
+const Issuance = () => (
+  <Switch>
+    <Route path="/issuance/:id/deploy" exact component={DeployToken} />
+  </Switch>
+);
+
+export default Issuance;

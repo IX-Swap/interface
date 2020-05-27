@@ -16,6 +16,17 @@ const getAccessToken = () => get().accessToken;
 
 const getUserId = () => get()._id;
 
+const store = (key: string, value: any) => {
+  localStorage.setItem(key, JSON.stringify(value));
+};
+
+const retrieve = (key: string, def: any) => {
+  const stored = localStorage.getItem('key');
+  if (!stored) return def;
+
+  return JSON.parse(stored);
+};
+
 const generateRandom = (length: number, chars: string) => {
   let mask = '';
   if (chars.indexOf('a') > -1) mask += 'abcdefghijklmnopqrstuvwxyz';
@@ -37,4 +48,6 @@ export default {
   getAccessToken,
   getUserId,
   generateRandom,
+  store,
+  retrieve,
 };
