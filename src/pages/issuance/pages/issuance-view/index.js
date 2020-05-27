@@ -5,15 +5,15 @@ import DsoInformation from 'components/Dso/DsoInformation';
 import PageTitle from 'components/PageTitle';
 import type { Document } from 'context/dso/types';
 import { snackbarService } from 'uno-material-ui';
-import { useInvestState } from '../../modules';
+import { useIssuanceState } from '../../modules';
 import { downloadFile } from './modules/actions';
 
 const DsoView = () => {
-  const { dso } = useInvestState();
+  const { dso } = useIssuanceState();
 
   // TODO: Fetch instead on redirecting
   if (!dso) {
-    return <Redirect to="/invest" />;
+    return <Redirect to="/issuance" />;
   }
 
   const onClickDocument = async (document: Document) => {
@@ -32,7 +32,7 @@ const DsoView = () => {
       <DsoInformation
         dso={dso}
         headerButtonAction={() => {}}
-        headerButtonText="Invest"
+        headerButtonText="Edit"
         onClickDocument={onClickDocument}
       />
     </Container>

@@ -4,8 +4,8 @@ import type { Node } from 'react';
 import { Paper, Box, Grid, Typography, Button } from '@material-ui/core';
 import type { Dso } from 'context/dso/types';
 import { formatMoney, toPercentage } from 'helpers/formatNumbers';
-import OfferDetail from './OfferDetail';
-import DsoTitle from './DsoTitle';
+import OfferDetail from '../OfferDetail';
+import DsoTitle from '../DsoTitle';
 import TeamMember from './DsoTeamMember';
 
 const SectionContainer = ({
@@ -44,7 +44,7 @@ const OfferingTermItem = ({
   </Grid>
 );
 
-const OfferInformation = ({
+const DsoInformation = ({
   dso,
   headerButtonText,
   headerButtonAction,
@@ -213,4 +213,4 @@ const OfferInformation = ({
   </Paper>
 );
 
-export default OfferInformation;
+export default DsoInformation;

@@ -20,12 +20,7 @@ const {
   useCommitmentsListDispatch,
   COMMITMENTS_LIST_STATUS,
 } = Module;
-const {
-  getCommitmentsList,
-  setPage,
-  setRowsPerPage,
-  clearApiStatus,
-} = Actions.commitmentsList;
+const { getCommitmentsList, setPage, setRowsPerPage, clearApiStatus } = Actions;
 
 const useCommitmentsListLogic = () => {
   const commitmentsListState = useCommitmentsListState();
