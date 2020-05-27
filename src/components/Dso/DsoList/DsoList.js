@@ -12,17 +12,13 @@ import {
   TablePagination,
   LinearProgress,
 } from '@material-ui/core';
-import OfferCard from 'components/Dso/OfferCard';
-import { useHistory } from 'react-router-dom';
-import type { Dso } from 'context/dso/types';
+import OfferCard from './OfferCard';
 
-import DsoListModule from './modules';
-import Actions from './modules/actions';
-import { setSelectedDso } from '../../modules/actions';
-import { useInvestDispatch } from '../../modules';
+import DsoListModule from '../modules';
+import Actions from '../modules/actions';
 
 const { useDsoListState, useDsoListDispatch, DSO_LIST_STATUS } = DsoListModule;
-const { getDsoList, setPage, setRowsPerPage, clearApiStatus } = Actions.dsoList;
+const { getDsoList, setPage, setRowsPerPage, clearApiStatus } = Actions;
 
 const useDsoListLogic = () => {
   const dsoListDispatch = useDsoListDispatch();
@@ -72,7 +68,7 @@ const useDsoListLogic = () => {
   };
 };
 
-const DsoList = () => {
+const DsoList = ({ onClickView }: { onClickView: Function }) => {
   const {
     status: loadingStatus,
     items: dsoList = [],
@@ -82,14 +78,6 @@ const DsoList = () => {
     handleChangeRowsPerPage,
     handleChangePage,
   } = useDsoListLogic();
-  const history = useHistory();
-  const investDispatch = useInvestDispatch();
-
-  const onClickView = (dso: Dso) => {
-    setSelectedDso(investDispatch, dso);
-
-    history.push(`/invest/view`);
-  };
 
   return (
     <Container>
