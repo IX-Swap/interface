@@ -6,7 +6,7 @@ export const actions = {
   CLEAR_SELECTED_DSO: 'CLEAR_SELECTED_DSO',
 };
 
-export type InvestState = {
+export type IssuanceState = {
   // selected
   dso: Dso | null,
 };

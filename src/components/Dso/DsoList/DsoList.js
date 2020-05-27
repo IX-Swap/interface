@@ -1,5 +1,6 @@
 // @flow
 import React, { useRef, useEffect } from 'react';
+import { useHistory } from 'react-router-dom';
 import {
   Container,
   TextField,
@@ -12,10 +13,10 @@ import {
   TablePagination,
   LinearProgress,
 } from '@material-ui/core';
+import type { Dso } from 'context/dso/types';
 import OfferCard from './OfferCard';
-
-import DsoListModule from '../modules';
-import Actions from '../modules/actions';
+import DsoListModule from './modules';
+import Actions from './modules/actions';
 
 const { useDsoListState, useDsoListDispatch, DSO_LIST_STATUS } = DsoListModule;
 const { getDsoList, setPage, setRowsPerPage, clearApiStatus } = Actions;
