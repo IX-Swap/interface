@@ -3,7 +3,10 @@ import { Redirect } from 'react-router-dom';
 import { Container, Box } from '@material-ui/core';
 import OfferInformation from 'components/Dso/OfferInformation';
 import PageTitle from 'components/PageTitle';
+import type { Document } from 'context/dso/types';
+import { snackbarService } from 'uno-material-ui';
 import { useInvestState } from '../../modules';
+import { downloadFile } from './modules/actions';
 
 const DsoView = () => {
   const { dso } = useInvestState();
@@ -13,6 +16,14 @@ const DsoView = () => {
     return <Redirect to="/invest" />;
   }
 
+  const onClickDocument = async (document: Document) => {
+    try {
+      await downloadFile(document);
+    } catch (error) {
+      snackbarService.showSnackbar(error.message, 'error');
+    }
+  };
+
   return (
     <Container>
       <PageTitle title={dso.tokenName} subPage />
@@ -21,6 +32,7 @@ const DsoView = () => {
         dso={dso}
         headerButtonAction={() => {}}
         headerButtonText="Invest"
+        onClickDocument={onClickDocument}
       />
     </Container>
   );

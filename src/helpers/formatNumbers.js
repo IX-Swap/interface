@@ -7,3 +7,6 @@ export const formatMoney = (value: number, symbol?: string = 'SGD'): string =>
 // Adds commas
 export const formatNumber = (value: number): string =>
   value.toString().replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1,');
+
+export const toPercentage = (value: number): string =>
+  `${(value * 100).toFixed(2)}%`;
