@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Drawer, IconButton, List } from '@material-ui/core';
 
-import ShowChartIcon from '@material-ui/icons/ShowChart';
 import LocalAtmIcon from '@material-ui/icons/LocalAtm';
 import HelpIcon from '@material-ui/icons/Help';
 import ArrowBackIcon from '@material-ui/icons/ArrowBack';
@@ -41,48 +40,50 @@ function Sidebar({ location }: { location: any }) {
 
   const structure = [
     {
-      id: 'trade',
-      label: 'Trade',
-      link: '/trade',
-      icon: <ShowChartIcon />,
+      id: "identity",
+      label: "Identity",
+      link: "/identity",
+      icon: <PersonIcon />,
     },
     {
-      id: 'invest',
-      label: 'Invest',
-      link: '/invest',
+      id: "invest",
+      label: "Invest",
+      link: "/invest",
       icon: <PieChartIcon />,
     },
     {
-      id: 'accounts',
-      label: 'Accounts',
-      link: '/accounts',
+      id: "accounts",
+      label: "Accounts",
+      link: "/accounts",
       icon: <AccountBalanceIcon />,
     },
     {
-      id: 'exchange',
-      label: 'Exchange',
-      link: '/exchange',
+      id: "exchange",
+      label: "Exchange",
+      link: "/exchange",
       icon: <TrendingUpIcon />,
       children: [
-        { label: 'Trade History', link: '/trade-history', icon: <PermIdentityIcon /> },
-        { label: 'Order History', link: '/order-history', icon: <SecurityIcon /> },
-        { label: 'Markets', link: '/markets', icon: <SecurityIcon /> },
-        { label: 'Listings', link: '/listings', icon: <SecurityIcon /> },
+        {
+          label: "Trade History",
+          link: "/trade-history",
+          icon: <PermIdentityIcon />,
+        },
+        {
+          label: "Order History",
+          link: "/order-history",
+          icon: <SecurityIcon />,
+        },
+        { label: "Markets", link: "/markets", icon: <SecurityIcon /> },
+        { label: "Listings", link: "/listings", icon: <SecurityIcon /> },
       ],
-    },
-    {
-      id: 'identity',
-      label: 'Identity',
-      link: '/identity',
-      icon: <PersonIcon />,
     },
     // Show only when user has issuer role
     ...(isIssuer
       ? [
           {
-            id: 'issuance',
-            label: 'Issuance',
-            link: '/issuance',
+            id: "issuance",
+            label: "Issuance",
+            link: "/issuance",
             icon: <LocalAtmIcon />,
           },
         ]
@@ -91,21 +92,29 @@ function Sidebar({ location }: { location: any }) {
     ...(isAuthorizer
       ? [
           {
-            id: 'authorizer',
-            label: 'Authorizer',
-            link: '/authorizer',
+            id: "authorizer",
+            label: "Authorizer",
+            link: "/authorizer",
             icon: <AccountBoxIcon />,
             children: [
-              { label: 'Bank Accounts', link: '/authorizer/banks' },
-              { label: 'Cash Deposits', link: '/authorizer/deposits' },
-              { label: 'Cash Withdrawals', link: '/authorizer/withdrawals' },
+              { label: "Bank Accounts", link: "/authorizer/banks" },
+              { label: "Cash Deposits", link: "/authorizer/deposits" },
+              { label: "Cash Withdrawals", link: "/authorizer/withdrawals" },
               {
-                label: 'Indentities (Individual)',
-                link: '/authorizer/individual-identities',
+                label: "DS Withdrawals",
+                link: "/authorizer/ds-withdrawals",
               },
               {
-                label: 'Indentities (Corporate)',
-                link: '/authorizer/corporate-identities',
+                label: "Indentities (Individual)",
+                link: "/authorizer/individual-identities",
+              },
+              {
+                label: "Indentities (Corporate)",
+                link: "/authorizer/corporate-identities",
+              },
+              {
+                label: "Digital Securities",
+                link: "/authorizer/digital-securities",
               },
             ],
           },
@@ -115,24 +124,24 @@ function Sidebar({ location }: { location: any }) {
     ...(isAdmin
       ? [
           {
-            id: 'users',
-            label: 'User Management',
-            link: '/users',
+            id: "users",
+            label: "User Management",
+            link: "/users",
             icon: <PeopleIcon />,
           },
         ]
       : []),
-    { id: 6, type: 'divider' },
+    { id: 6, type: "divider" },
     {
-      id: 'security',
-      label: 'Security',
-      link: '/security',
+      id: "security",
+      label: "Security",
+      link: "/security",
       icon: <SecurityIcon />,
     },
     {
       id: 5,
-      label: 'Support',
-      link: '/primary',
+      label: "Support",
+      link: "/primary",
       icon: <HelpIcon />,
     },
   ];

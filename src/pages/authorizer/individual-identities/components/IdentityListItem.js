@@ -25,7 +25,7 @@ const IdentityListItem = ({
 
   return (
     <TableRow>
-      <TableCell>Corporate</TableCell>
+      <TableCell>Individual</TableCell>
       <TableCell align="left">
         {moment(createdAt).format('MMMM DD, YYYY')}
       </TableCell>

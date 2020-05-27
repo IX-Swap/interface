@@ -12,13 +12,21 @@ export async function loginUser(
     const result = await postRequest(uri, { ...payload });
     const response = await result.json();
     if (result.status === 200) {
-      const { email, roles, _id, name, accessToken } = response.data;
+      const {
+        email,
+        roles,
+        _id,
+        name,
+        accessToken,
+        totpConfirmed,
+      } = response.data;
       localStore.set({ _id, accessToken });
       const newUser = {
         _id,
         email,
         roles,
         name,
+        totpConfirmed,
       };
 
       dispatch({ type: userActions.LOGIN_SUCCESS, payload: newUser });
@@ -65,6 +73,9 @@ export function setActiveTabId(dispatch: Function, activeTabId: number) {
 export function signOut(dispatch: Function) {
   localStore.remove();
   dispatch({ type: userActions.SIGN_OUT_SUCCESS });
+
+  // TODO: Fix to not hacky solution
+  window.location = '#/auth/sign-in';
 }
 
 export async function verifySignup(
