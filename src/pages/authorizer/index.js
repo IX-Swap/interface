@@ -6,7 +6,9 @@ import PageTitle from 'components/PageTitle';
 
 const Banks = React.lazy(() => import('./banks'));
 const Deposits = React.lazy(() => import('./deposits'));
+const DepositsView = React.lazy(() => import('./deposits/view'));
 const Withdrawals = React.lazy(() => import('./withdrawals'));
+const WithdrawalsView = React.lazy(() => import('./withdrawals/view'));
 const DSWithdrawals = React.lazy(() => import('./ds-withdrawals'));
 const DSOs = React.lazy(() => import('./digital-securities'));
 const DSOView = React.lazy(() => import('./digital-securities/view'));
@@ -14,6 +16,8 @@ const IndividualIdentities = React.lazy(() =>
   import('./individual-identities')
 );
 const CorporateIdentities = React.lazy(() => import('./corporate-identities'));
+
+const Summary = React.lazy(() => import('components/Summary'));
 
 const routes = [
   {
@@ -24,12 +28,24 @@ const routes = [
   {
     route: '/authorizer/deposits',
     title: 'Deposits',
+    exact: true,
     component: Deposits,
+  },
+  {
+    route: '/authorizer/deposits/view',
+    title: 'View Deposit',
+    component: DepositsView,
   },
   {
     route: '/authorizer/withdrawals',
     title: 'Withdrawals',
+    exact: true,
     component: Withdrawals,
+  },
+  {
+    route: '/authorizer/withdrawals/view',
+    title: 'View Withdrawal',
+    component: WithdrawalsView,
   },
   {
     route: '/authorizer/ds-withdrawals',
@@ -56,6 +72,11 @@ const routes = [
     title: 'Digital Securities',
     component: DSOs,
   },
+  {
+    route: '/authorizer/summary',
+    title: 'Summary',
+    component: Summary,
+  },
 ];
 
 const Routes = () => (
@@ -65,7 +86,7 @@ const Routes = () => (
         key={route.title}
         path={route.route}
         component={route.component}
-        exact={index === routes.length - 1}
+        exact={route.exact || index === routes.length - 1}
       />
     ))}
   </Suspense>
@@ -73,22 +94,28 @@ const Routes = () => (
 
 const getTitle = (path: string): string => {
   switch (path) {
-    case '/authorizer/banks':
-      return 'Banks';
-    case '/authorizer/deposits':
-      return 'Deposits';
-    case '/authorizer/withdrawals':
-      return 'Withdrawals';
-    case '/authorizer/individual-identities':
-      return 'Individual Identities';
-    case '/authorizer/corporate-identities':
-      return 'Corporate Identities';
-    case '/authorizer/ds-withdrawals':
-      return 'DS Withdrawals';
-    case '/authorizer/digital-securities':
-      return 'Digital Securities';
+    case "/authorizer/banks":
+      return "Banks";
+    case "/authorizer/deposits":
+      return "Deposits";
+    case "/authorizer/withdrawals":
+      return "Withdrawals";
+    case "/authorizer/individual-identities":
+      return "Individual Identities";
+    case "/authorizer/corporate-identities":
+      return "Corporate Identities";
+    case "/authorizer/ds-withdrawals":
+      return "DS Withdrawals";
+    case "/authorizer/digital-securities":
+      return "Digital Securities";
+    case "/authorizer/summary":
+      return "Summary";
+    case "/authorizer/deposits/view":
+      return "View Deposit";
+    case "/authorizer/withdrawals/view":
+      return "View Withdrawal";
     default:
-      return '';
+      return "";
   }
 };
 
