@@ -1,7 +1,8 @@
 // @flow
 import React, { Suspense } from 'react';
 import { withRouter, Route, RouteProps } from 'react-router-dom';
-import { Grid } from '@material-ui/core';
+import ArrowBackIosIcon from '@material-ui/icons/ArrowBackIos';
+import { Grid, Button } from '@material-ui/core';
 import PageTitle from 'components/PageTitle';
 
 const Banks = React.lazy(() => import('./banks'));
@@ -35,6 +36,7 @@ const routes = [
     route: '/authorizer/deposits/view',
     title: 'View Deposit',
     component: DepositsView,
+    hasBack: true,
   },
   {
     route: '/authorizer/withdrawals',
@@ -46,6 +48,7 @@ const routes = [
     route: '/authorizer/withdrawals/view',
     title: 'View Withdrawal',
     component: WithdrawalsView,
+    hasBack: true,
   },
   {
     route: '/authorizer/ds-withdrawals',
@@ -76,6 +79,7 @@ const routes = [
     route: '/authorizer/summary',
     title: 'Summary',
     component: Summary,
+    hasBack: true,
   },
 ];
 
@@ -94,39 +98,55 @@ const Routes = () => (
 
 const getTitle = (path: string): string => {
   switch (path) {
-    case "/authorizer/banks":
-      return "Banks";
-    case "/authorizer/deposits":
-      return "Deposits";
-    case "/authorizer/withdrawals":
-      return "Withdrawals";
-    case "/authorizer/individual-identities":
-      return "Individual Identities";
-    case "/authorizer/corporate-identities":
-      return "Corporate Identities";
-    case "/authorizer/ds-withdrawals":
-      return "DS Withdrawals";
-    case "/authorizer/digital-securities":
-      return "Digital Securities";
-    case "/authorizer/summary":
-      return "Summary";
-    case "/authorizer/deposits/view":
-      return "View Deposit";
-    case "/authorizer/withdrawals/view":
-      return "View Withdrawal";
+    case '/authorizer/banks':
+      return 'Banks';
+    case '/authorizer/deposits':
+      return 'Deposits';
+    case '/authorizer/withdrawals':
+      return 'Withdrawals';
+    case '/authorizer/individual-identities':
+      return 'Individual Identities';
+    case '/authorizer/corporate-identities':
+      return 'Corporate Identities';
+    case '/authorizer/ds-withdrawals':
+      return 'DS Withdrawals';
+    case '/authorizer/digital-securities':
+      return 'Digital Securities';
+    case '/authorizer/summary':
+      return 'Summary';
+    case '/authorizer/deposits/view':
+      return 'View Deposit';
+    case '/authorizer/withdrawals/view':
+      return 'View Withdrawal';
     default:
-      return "";
+      return '';
   }
 };
 
 function Authorizer(props: RouteProps) {
-  const { location } = props;
+  const { location, history } = props;
+
+  const hasBack = (a: string) =>
+    [
+      '/authorizer/withdrawals/view',
+      '/authorizer/deposits/view',
+      '/authorizer/summary',
+    ].includes(a);
 
   return (
     <>
       <Grid container title="Accounts" justify="center" alignItems="center">
-        <Grid item xs={12}>
-          {location && <PageTitle title={getTitle(location.pathname)} />}
+        <Grid container item xs={12} alignItems="center">
+          <Grid item>
+            {hasBack(location.pathname) && (
+              <Button type="button" onClick={() => history.goBack()}>
+                <ArrowBackIosIcon />
+              </Button>
+            )}
+          </Grid>
+          <Grid item>
+            {location && <PageTitle title={getTitle(location.pathname)} />}
+          </Grid>
         </Grid>
         <Routes />
       </Grid>

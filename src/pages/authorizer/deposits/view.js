@@ -29,63 +29,65 @@ const BoldTypography = ({ children, ...others }: any) => (
 
 function DepositView({ location }: RouteProps) {
   const { deposit } = location.state || {};
-
-  console.log(deposit);
   const classes = useStyles();
 
-  if (!deposit) return <span>nothing to display</span>;
+  if (!deposit) {
+    return <span>nothing to display</span>;
+  }
 
   return (
-    <Grid container justify="center" direction="column" component={Paper}>
-      <Box pb={4} />
-      <Grid container className={classes.infoGrid}>
-        <Grid item xs={6}>
-          <BoldTypography variant="subtitle2" className={classes.labels}>
-            Transfer Code:
-          </BoldTypography>
-        </Grid>
-        <Grid item xs={6}>
-          <BoldTypography
-            variant="subtitle2"
-            className={classes.values}
-            color="primary"
-          >
-            {deposit.depositCode}
-          </BoldTypography>
-        </Grid>
+    <>
+      <Grid container justify="center" direction="column" component={Paper}>
+        <Box pb={4} />
+        <Grid container className={classes.infoGrid}>
+          <Grid item xs={6}>
+            <BoldTypography variant="subtitle2" className={classes.labels}>
+              Transfer Code:
+            </BoldTypography>
+          </Grid>
+          <Grid item xs={6}>
+            <BoldTypography
+              variant="subtitle2"
+              className={classes.values}
+              color="primary"
+            >
+              {deposit.depositCode}
+            </BoldTypography>
+          </Grid>
 
-        <Grid item xs={6}>
-          <BoldTypography variant="subtitle2" className={classes.labels}>
-            Account No:
-          </BoldTypography>
-        </Grid>
-        <Grid item xs={6}>
-          <BoldTypography
-            variant="subtitle2"
-            className={classes.values}
-            color="primary"
-          >
-            {deposit.bankAccount.bankAccountNumber}
-          </BoldTypography>
-        </Grid>
+          <Grid item xs={6}>
+            <BoldTypography variant="subtitle2" className={classes.labels}>
+              Account No:
+            </BoldTypography>
+          </Grid>
+          <Grid item xs={6}>
+            <BoldTypography
+              variant="subtitle2"
+              className={classes.values}
+              color="primary"
+            >
+              {deposit.bankAccount.bankAccountNumber}
+            </BoldTypography>
+          </Grid>
 
-        <Grid item xs={6}>
-          <BoldTypography variant="subtitle2" className={classes.labels}>
-            Deposit Amount:
-          </BoldTypography>
+          <Grid item xs={6}>
+            <BoldTypography variant="subtitle2" className={classes.labels}>
+              Deposit Amount:
+            </BoldTypography>
+          </Grid>
+          <Grid item xs={6}>
+            <BoldTypography
+              variant="subtitle2"
+              className={classes.values}
+              color="primary"
+            >
+              {deposit.asset.symbol} {formatNumber(deposit.amount)}
+            </BoldTypography>
+          </Grid>
         </Grid>
-        <Grid item xs={6}>
-          <BoldTypography
-            variant="subtitle2"
-            className={classes.values}
-            color="primary"
-          >
-            {deposit.asset.symbol} {formatNumber(deposit.amount)}
-          </BoldTypography>
-        </Grid>
+        <BankDetails bank={deposit.bankAccount} />
       </Grid>
-      <BankDetails bank={deposit.bankAccount} />
-    </Grid>
+    </>
   );
 }
 
