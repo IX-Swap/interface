@@ -31,6 +31,7 @@ const DsoView = () => {
       <Box mb={4} />
       <DsoInformation
         dso={dso}
+        edit
         headerButtonAction={() => {}}
         headerButtonText="Edit"
         onClickDocument={onClickDocument}
