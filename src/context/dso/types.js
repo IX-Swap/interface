@@ -18,6 +18,26 @@ export type DsoTeamMember = {
   photo: string, // documentId
 };
 
+export type DeploymentInfo = {
+  _id: string,
+  createdBy: string,
+  transactionHash: string,
+  token: string,
+  owner: string,
+  name: string,
+  symbol: string,
+  decimals: number,
+  policyBuilder: string,
+  storageEngine: string,
+  controller: string,
+  documentController: string,
+  createdAt: string,
+  updatedAt: string,
+  __v: number,
+};
+
+export type PolicyBuilder = {};
+
 export type Dso = {
   _id: string,
   minimumInvestment: number,
@@ -49,4 +69,6 @@ export type Dso = {
   team: DsoTeamMember[],
   createdAt: string,
   asset: string,
+  deploymentInfo?: ?DeploymentInfo,
+  policyBuilder?: ?PolicyBuilder,
 };
