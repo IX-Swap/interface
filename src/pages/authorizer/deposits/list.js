@@ -1,5 +1,6 @@
 // @flow
 import React, { useRef, useEffect, useState } from 'react';
+import { withRouter, RouteProps } from 'react-router-dom';
 import {
   TableContainer,
   Table,
@@ -125,6 +126,12 @@ const RowStatusComponent = ({
         <Select
           className={classes.formControl}
           value={deposit.status}
+          onClick={(evt) => {
+            evt.stopPropagation();
+            evt.preventDefault();
+            evt.nativeEvent.stopPropagation();
+            evt.nativeEvent.stopImmediatePropagation();
+          }}
           onChange={(evt: SyntheticInputEvent<HTMLElement>) =>
             handleSelectChange(deposit, evt.target.value)
           }
@@ -139,19 +146,82 @@ const RowStatusComponent = ({
   }
 };
 
+const redirectModel = [
+  {
+    label: 'Bank Name',
+    key: 'bankName',
+  },
+  {
+    label: 'Account Holder Name',
+    key: 'accountHolderName',
+  },
+  {
+    label: 'Currency',
+    // $FlowFixMe
+    key: 'asset.symbol',
+  },
+  {
+    label: 'Bank AccountNumber',
+    key: 'bankAccountNumber',
+  },
+  {
+    label: 'Swift Code',
+    key: 'swiftCode',
+  },
+  {
+    label: '',
+    // $FlowFixMe
+    key: '',
+  },
+  {
+    label: 'Line 1',
+    key: 'address.line1',
+  },
+  {
+    label: 'Line 2',
+    key: 'address.line2',
+  },
+  {
+    label: 'City',
+    key: 'address.city',
+  },
+  {
+    label: 'State',
+    key: 'address.state',
+  },
+  {
+    label: 'Country',
+    key: 'address.country',
+  },
+  {
+    label: 'Postal Code',
+    key: 'address.postalCode',
+  },
+];
+
 const Deposits = ({
   list,
   handleSelectChange,
+  history,
 }: {
+  history: any,
   list: Array<Deposit>,
   handleSelectChange: (deposit: Deposit, status: string) => void,
 }) => (
   <TableBody>
     {list.length ? (
       list.map((row) => (
-        <TableRow key={row._id}>
+        <TableRow
+          key={row._id}
+          onClick={() =>
+            history.push({
+              pathname: '/authorizer/deposits/view',
+              state: { deposit: row },
+            })
+          }
+        >
           <TableCell>{row.level}</TableCell>
-          <TableCell>{moment(row.createdAt).format("MM/DD/YYYY")}</TableCell>
+          <TableCell>{moment(row.createdAt).format('MM/DD/YYYY')}</TableCell>
           <TableCell>{row.bankAccount.accountHolderName}</TableCell>
           <TableCell align="left">{row.bankAccount.bankName}</TableCell>
           <TableCell align="left">
@@ -175,7 +245,7 @@ const Deposits = ({
   </TableBody>
 );
 
-export default function DepositsList() {
+function DepositsList({ history }: RouteProps) {
   const {
     status: loadingStatus,
     items,
@@ -256,7 +326,11 @@ export default function DepositsList() {
               </TableCell>
             </TableRow>
           </TableHead>
-          <Deposits list={items} handleSelectChange={handleSelectChange} />
+          <Deposits
+            list={items}
+            history={history}
+            handleSelectChange={handleSelectChange}
+          />
           {total && (
             <TableFooter>
               <TableRow>
@@ -279,3 +353,5 @@ export default function DepositsList() {
     </>
   );
 }
+
+export default withRouter(DepositsList);
