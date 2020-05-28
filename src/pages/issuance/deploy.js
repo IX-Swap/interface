@@ -68,7 +68,7 @@ const useDeployLogic = (id: string) => {
     }
 
     socket.on(`x-token/${id}`, listener);
-  }, [id, bearerToken]);
+  }, [id, bearerToken]); // eslint-disable-line
 
   useEffect(() => {
     (async (mId) => {
