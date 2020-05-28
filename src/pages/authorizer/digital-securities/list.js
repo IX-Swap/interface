@@ -20,6 +20,7 @@ import moment from 'moment';
 import { makeStyles } from '@material-ui/core/styles';
 import type { Dso } from 'context/dso/types';
 import { useHistory } from 'react-router-dom';
+import { formatMoney } from 'helpers/formatNumbers';
 import type { TableColumns } from './modules/types';
 import WithdrawListModule from './modules';
 import Actions from './modules/actions';
@@ -159,8 +160,7 @@ const columns: Array<TableColumns> = [
   {
     key: 'createdAt',
     label: 'Date of Application',
-    // $$FlowFixMe
-    render: (a: string) => moment(a).format('MM/DD/YYYY hh:mm:ss a'),
+    render: (a: string) => moment(a).format('MM/DD/YY'),
   },
   {
     key: 'tokenName',
@@ -171,12 +171,26 @@ const columns: Array<TableColumns> = [
     label: 'Symbol',
   },
   {
+    key: 'capitalStructure',
+    label: 'Capital Structure',
+  },
+  {
+    align: 'right',
+    key: 'pricePerUnit',
+    label: 'Unit Price',
+    render: (a: number) => formatMoney(a),
+  },
+  {
+    align: 'right',
+    key: 'totalFundraisingAmount',
+    label: 'Total Fundraising Amount',
+    render: (amount: number) => formatMoney(amount),
+  },
+  {
+    align: 'right',
     key: 'minimumInvestment',
     label: 'Minimum Investment',
-    align: 'right',
-    // $$FlowFixMe
-    render: (amount: number) =>
-      amount ? amount.toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,') : '',
+    render: (amount: number) => formatMoney(amount),
   },
 ];
 

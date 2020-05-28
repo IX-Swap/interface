@@ -19,10 +19,28 @@ import useStyles from './styles'
 function Monitoring(props) {
     const classes = useStyles();
     const [ fav, setFav ] = useState(false);
+    const [ search, setSearch ] = useState(false);
     const { title, type, data = [] } = props;
     const maxValue = data.length && Math.max(...data.map(d =>d.price));
     const minValue = data.length && Math.min(...data.map(d =>d.price));
+
+    let filteredData = search ? search : data;
     
+    const _onSearch = evt => {
+        const target = evt.target;
+        const value = target.value;
+
+        if (value.length > 3) {
+            const filterData = data.filter(d => {
+                return (
+                    d.name.toLowerCase().search(value.toLowerCase()) !== -1
+                );
+            });
+
+            setSearch(filterData);
+        }
+    }
+
     return (
         <React.Fragment>
             {title && (
@@ -77,7 +95,12 @@ function Monitoring(props) {
                             <button className={classes.actionBtn}>USD</button>
                         </div>
                         <div className={classes.searchContainer}>
-                            <input className={classes.searchInput} type="search" placeholder="search..." />
+                            <input  
+                                onChange={_onSearch}
+                                className={classes.searchInput} 
+                                type="search" 
+                                placeholder="search..." 
+                            />
                         </div>
                         <ul className={classes.marketHeader}>
                             <li className={classes.marketHeaderItem}>
@@ -91,7 +114,7 @@ function Monitoring(props) {
                     
                 )}
                 <ul className={classes.monitoringList}>
-                    {data.map((d, i ) => {
+                    {filteredData.map((d, i ) => {
                         const activeStyle = type === 'bids' ? classes.positiveCell : classes.negativeCell;
                         const priceStyle = classNames(
                             classes.defaultListItemStyle, 
