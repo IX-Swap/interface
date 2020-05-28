@@ -32,7 +32,7 @@ const BidsAsksHistory = (props) => {
     
     const bids = activeTrade ? activeTrade.bids : [];
     const asks = activeTrade ? activeTrade.asks : [];
-
+    console.log('activeTrade', activeTrade);
     return (
         <React.Fragment>
             <Monitoring data={asks} type="asks" />

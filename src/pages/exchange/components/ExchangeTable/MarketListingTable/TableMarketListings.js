@@ -63,10 +63,6 @@ const columns = [
         label: '24h Low',
     },
     {
-        id: 'marketCap', 
-        label: 'Market Cap',
-    },
-    {
         id: 'volume', 
         label: '24h Volume',
     },
@@ -112,9 +108,6 @@ const MarketList = ({
                         </TableCell>
                         <TableCell className={classes.defaultCell}>
                             {row.low || 0}
-                        </TableCell>
-                        <TableCell className={classes.defaultCell}>
-                            {row.marketCap || 0}
                         </TableCell>
                         <TableCell className={classes.defaultCell}>
                             {row.volume || 0}

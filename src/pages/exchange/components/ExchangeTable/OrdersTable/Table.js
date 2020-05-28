@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useRef, useEffect, useState } from 'react';
 import { withRouter, Link } from 'react-router-dom';
 
 // Material Components
@@ -17,12 +17,24 @@ import {
     TablePagination,
 } from '@material-ui/core';
 
+// Date Utils
+import DateFnsUtils from '@date-io/date-fns';
+import { MuiPickersUtilsProvider } from '@material-ui/pickers';
+
+// Local component
+import DateFilter from 'pages/exchange/components/ExchangeTable/DateFilter';
+import DropdownFilter from 'pages/exchange/components/ExchangeTable/DropdownFilter';
+
 // Styles
 import useStyles from 'pages/exchange/components/ExchangeTable/styles';
 
-// Modules
+// Orders Modules
 import OrdersActions from './modules/actions';
 import OrdersModule from './modules';
+
+// Market Modules
+import MarketActions from '../../OverviewExchange/modules/actions';
+import MarketModules from '../../OverviewExchange/modules';
 
 const {
     OrdersListState,
@@ -33,6 +45,11 @@ const {
     setPage,
     setRowsPerPage,
 } = OrdersActions;
+
+const {
+    MarketState,
+    useMarketDispatch,
+} = MarketModules;
 
 const columns = [
     {
@@ -126,18 +143,31 @@ const ListingsList = ({
 };
 
 function OrdersTable(props) {
+    const [fromDate, setFrom] = useState('');
+    const [toDate, setTo] = useState('');
+    const [pairId, setPair] = useState('');
+    const [side, setSide] = useState('');
     const { title } = props;
     const classes = useStyles();
 
     const dispatch = useOrdersListDispatch();
     const ordersState = OrdersListState();
 
+    const marketDispatch = useMarketDispatch();
+    const marketState = MarketState();
+    const mountedRef = useRef(true);
     const {
         page,
         total,
         limit,
         items,
     } = ordersState;
+
+    const {
+        page: marketPage,
+        limit: marketLimit,
+        items: marketItems,
+    } = marketState;
 
     const handleChangePage = (_, newPage: number) => {
         setPage(dispatch, { page: newPage });
@@ -149,15 +179,25 @@ function OrdersTable(props) {
     };
 
     useEffect(() => {
-        OrdersActions.getOrdersList(dispatch, {
-            pair: '5ecb739f1f3e88614b36ddcb',
-            side: 'BID',
-            type: 'LIMIT',
-            price: 100,
-            amount: 0,
+        MarketActions.getMarketList(marketDispatch, {
+            skip: marketPage * marketLimit,
+            limit,
+            ref: mountedRef,
         });
-    }, [page, limit, dispatch]);
-    
+    }, [marketPage, marketLimit, marketDispatch]);
+
+    const _searchOrders = () => {
+        OrdersActions.getOrdersList(dispatch, {
+            skip: page * limit,
+            limit,
+            from: fromDate || new Date(),
+            to: toDate || new Date(),
+            pair: pairId,
+            side,
+            ref: mountedRef,
+        });
+    };
+
     return (
         <Grid>
             <Typography 
@@ -167,6 +207,35 @@ function OrdersTable(props) {
                 {title}
             </Typography>
             <Grid className={classes.componentStyle}>
+                <MuiPickersUtilsProvider utils={DateFnsUtils}>
+                    <section className={classes.filterContainer}>
+                        <DateFilter 
+                            setFrom={(fromDate) => setFrom(fromDate)}
+                            setTo={(toDate) => setTo(toDate)}
+                        />
+                        <DropdownFilter 
+                            items={marketItems} 
+                            setPair={(pairId) => setPair(pairId)}
+                            setSide={(side) => setSide(side)}
+                        />
+                        <section className={classes.buttonFilter}>
+                            <Button 
+                                variant="outlined" 
+                                color="primary"
+                                className={classes.btnStyle}
+                                onClick={_searchOrders}
+                            >
+                                Search
+                            </Button>
+                            <Button 
+                                variant="contained"
+                                className={classes.btnStyle}
+                            >
+                                Reset
+                            </Button>
+                        </section>
+                    </section>
+                </MuiPickersUtilsProvider>
                 <TableContainer component={Paper}>
                     <Table aria-label="ordres table">    
                         <TableHead>

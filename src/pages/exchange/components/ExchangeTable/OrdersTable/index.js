@@ -1,14 +1,18 @@
 import React from 'react';
 import Table from './Table';
 import OrdersModule from './modules';
+import MarketModule from '../../OverviewExchange/modules';
 
+const { MarketProvider } = MarketModule;
 const { OrdersListProvider } = OrdersModule;
 
 const OrdersTable = () => {
   return (
-      <OrdersListProvider>
-        <Table title='My Orders' />
-      </OrdersListProvider>
+      <MarketProvider>
+        <OrdersListProvider>
+          <Table title='My Orders' />
+        </OrdersListProvider>
+      </MarketProvider>
     );
 };
 

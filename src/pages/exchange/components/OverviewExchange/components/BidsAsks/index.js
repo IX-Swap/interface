@@ -86,16 +86,16 @@ const BidsAsksHistory = (props) => {
             type: 'number',
         },
     ];
-    
+
     return (
         <Paper className={classes.bidsAsksContainer}>
             <form className={classes.formContainer}>
                 <div className={classes.formHeader}>
                     <Typography className={classes.formTitle} variant="h3">
-                        Buy IXPS
+                        Buy {(collection.length && collection[1].symbol)}
                     </Typography>
                     <div>
-                        12312312312
+                        {(collection.length && collection[1].available || 0)}
                     </div>
                 </div>
                 {fields.map(field => 
@@ -125,10 +125,10 @@ const BidsAsksHistory = (props) => {
             <form className={classes.formContainer}>
                 <div className={classes.formHeader}>
                     <Typography className={classes.formTitle} variant="h3">
-                        Buy IXPS
+                        Buy {(collection.length && collection[0].symbol)}
                     </Typography>
                     <div>
-                        12312312312
+                        {(collection.length && collection[0].available || 0)}
                     </div>
                 </div>
                 {fields.map(field => 

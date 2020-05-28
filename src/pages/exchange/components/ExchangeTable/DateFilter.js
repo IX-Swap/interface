@@ -1,4 +1,5 @@
-import React from 'react'
+import React from 'react';
+import moment from 'moment';
 
 // Material Component
 import { KeyboardDatePicker } from '@material-ui/pickers';
@@ -7,14 +8,24 @@ import Typography from '@material-ui/core/Typography';
 // Styles
 import useStyles from 'pages/exchange/components/ExchangeTable/styles';
 
-const DATE_FORMAT = 'mm/dd/yyyy';
+const DATE_FORMAT = 'MM/dd/yyyy';
 
 const DateFilter = (props) => {
     const classes = useStyles();
-    const [selectedDate, setSelectedDate] = React.useState(new Date('2014-08-18T21:11:54'));
+    const today = moment().format('MM/dd/YYYY');
 
-    const handleDateChange = (date) => {
-        setSelectedDate(date);
+    const [fromDate, setFrom] = React.useState(new Date());
+
+    const [toDate, setTo] = React.useState(new Date());
+
+    const _handleSetFrom = date => {
+        setFrom(date);
+        props.setFrom(moment(fromDate).format('YYYY-MM-DD HH:mm:ss'))
+    };
+
+    const _handleSetTo = date => {
+        setTo(date);
+        props.setTo(moment(fromDate).format('YYYY-MM-DD HH:mm:ss'))
     };
 
     return (
@@ -31,9 +42,9 @@ const DateFilter = (props) => {
                 variant="inline"
                 format={DATE_FORMAT}
                 margin="normal"
-                id="date-picker-inline"
-                value={selectedDate}
-                onChange={handleDateChange}
+                id="date-picker-from"
+                value={fromDate}
+                onChange={_handleSetFrom}
                 KeyboardButtonProps={{ 'aria-label': 'change date' }}
             />
             <KeyboardDatePicker
@@ -42,9 +53,9 @@ const DateFilter = (props) => {
                 variant="inline"
                 format={DATE_FORMAT}
                 margin="normal"
-                id="date-picker-inline"
-                value={selectedDate}
-                onChange={handleDateChange}
+                id="date-picker-to"
+                value={toDate}
+                onChange={_handleSetTo}
                 KeyboardButtonProps={{ 'aria-label': 'change date' }}
             />
         </section>

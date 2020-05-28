@@ -122,8 +122,6 @@ function ExchangeTable(props) {
         });
       }, [page, limit, dispatch]);
 
-    console.log('items', items);
-    
     return (
         <Grid>
             <Typography 
