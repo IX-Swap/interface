@@ -14,149 +14,146 @@ import localStore from 'services/storageHelper';
 import useStyles from '../styles';
 
 const BidsAsksHistory = (props) => {
-    const { id } = props;
-    const classes = useStyles();
-    const bearerToken = localStore.getAccessToken();
-    const _userId = localStore.getUserId();
-    const socket = io(`${API_URL}?token=${bearerToken}`);
-    
-    // eslint-disable-next-line
-    const [collection, setCollection] = useState(false); 
-    const { SUBSCRIBE_API } = ENDPOINT_URL;
-    const { BIDS_ASKS } = SUBSCRIBE_API;
-    
-    // Subscribe to the bids/asks
-    // TODO: Better way to implement this locally/globally
-    useEffect(() => {
-        socket.emit(BIDS_ASKS.emit, id);
-        socket.on(`${BIDS_ASKS.on}/${_userId}`, data => {
-            setCollection(data);
-        });
-    }, []);
+  const { id } = props;
+  const classes = useStyles();
+  const bearerToken = localStore.getAccessToken();
+  const _userId = localStore.getUserId();
+  const socket = io(`${API_URL}?token=${bearerToken}`);
 
-    // State for the RESET FORM fields
-    const [form, setFields] = useState({
-        price: 0,
-        amount: 0,
-        total: 0,
+  // eslint-disable-next-line
+    const [collection, setCollection] = useState(false); 
+  const { SUBSCRIBE_API } = ENDPOINT_URL;
+  const { BIDS_ASKS } = SUBSCRIBE_API;
+
+  // Subscribe to the bids/asks
+  // TODO: Better way to implement this locally/globally
+  useEffect(() => {
+    socket.emit(BIDS_ASKS.emit, id);
+    socket.on(`${BIDS_ASKS.on}/${_userId}`, (data) => {
+      setCollection(data);
     });
     // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
-    // Handle change/update for the fields
-    const updateField = (e) => {
-        const { name } = e.target;
-        const { value } = e.target;
-        setFields({
-            ...form,
-            [name]: value,
-        });
-    };
+  // State for the RESET FORM fields
+  const [form, setFields] = useState({
+    price: 0,
+    amount: 0,
+    total: 0,
+  });
+  // eslint-disable-next-line react-hooks/exhaustive-deps
 
-    const sellButtonClassName = classNames(
-        classes.formButton, 
-        classes.sellButton,
-    );
+  // Handle change/update for the fields
+  const updateField = (e) => {
+    const { name } = e.target;
+    const { value } = e.target;
+    setFields({
+      ...form,
+      [name]: value,
+    });
+  };
 
-    const fields = [
-        {
-            id: 'price',
-            name: 'price',
-            label: 'Price:',
-            value: form.price,
-            onChange: updateField,
-            placeholder: 'Price...',
-            type: 'number',
-        },
-        {
-            id: 'amount',
-            name: 'amount',
-            label: 'Amount:',
-            value: form.amount,
-            onChange: updateField,
-            placeholder: 'Amount...',
-            type: 'number',
-        },
-        {
-            id: 'total',
-            name: 'total',
-            label: 'Total:',
-            value: form.total,
-            onChange: updateField,
-            placeholder: 'Total...',
-            type: 'number',
-        },
-    ];
-    
-    return (
-        <Paper className={classes.bidsAsksContainer}>
-            <form className={classes.formContainer}>
-                <div className={classes.formHeader}>
-                    <Typography className={classes.formTitle} variant="h3">
-                        Buy IXPS
-                    </Typography>
-                    <div>
-                        12312312312
-                    </div>
-                </div>
-                {fields.map(field => 
-                    <div className={classes.inputContainer}>
-                        <label>{field.label}</label>
-                        <input
-                            className={classes.inputField}
-                            key={field.id}
-                            id={`${field.id}-buy`}
-                            value={field.value}
-                            onChange={field.onChange}
-                            placeholder={field.placeholder}
-                            type={field.type}
-                            name={field.name}
-                        />
-                    </div>
-                )}
-                <Button 
-                    className={classes.formButton}
-                    variant="contained" 
-                    color="primary" 
-                    disableElevation
-                >
-                    BUY IXPS
-                </Button>
-            </form>
-            <form className={classes.formContainer}>
-                <div className={classes.formHeader}>
-                    <Typography className={classes.formTitle} variant="h3">
-                        Buy IXPS
-                    </Typography>
-                    <div>
-                        12312312312
-                    </div>
-                </div>
-                {fields.map(field => 
-                    <div className={classes.inputContainer}>
-                        <label className>{field.label}</label>
-                        <input
-                            className={classes.inputField}
-                            key={field.id}
-                            id={`${field.id}-sell`}
-                            value={field.value}
-                            onChange={field.onChange}
-                            placeholder={field.placeholder}
-                            type={field.type}
-                            name={field.name}
-                        />
-                    </div>
-                )}
-                <Button 
-                    className={sellButtonClassName}
-                    variant="contained" 
-                    color="primary" 
-                    disableElevation
-                >
-                    SELL IXPS
-                </Button>
-            </form>
-        </Paper>
-    );
+  const sellButtonClassName = classNames(
+    classes.formButton,
+    classes.sellButton
+  );
+
+  const fields = [
+    {
+      id: 'price',
+      name: 'price',
+      label: 'Price:',
+      value: form.price,
+      onChange: updateField,
+      placeholder: 'Price...',
+      type: 'number',
+    },
+    {
+      id: 'amount',
+      name: 'amount',
+      label: 'Amount:',
+      value: form.amount,
+      onChange: updateField,
+      placeholder: 'Amount...',
+      type: 'number',
+    },
+    {
+      id: 'total',
+      name: 'total',
+      label: 'Total:',
+      value: form.total,
+      onChange: updateField,
+      placeholder: 'Total...',
+      type: 'number',
+    },
+  ];
+
+  return (
+    <Paper className={classes.bidsAsksContainer}>
+      <form className={classes.formContainer}>
+        <div className={classes.formHeader}>
+          <Typography className={classes.formTitle} variant="h3">
+            Buy IXPS
+          </Typography>
+          <div>12312312312</div>
+        </div>
+        {fields.map((field) => (
+          <div className={classes.inputContainer}>
+            <label>{field.label}</label>
+            <input
+              className={classes.inputField}
+              key={field.id}
+              id={`${field.id}-buy`}
+              value={field.value}
+              onChange={field.onChange}
+              placeholder={field.placeholder}
+              type={field.type}
+              name={field.name}
+            />
+          </div>
+        ))}
+        <Button
+          className={classes.formButton}
+          variant="contained"
+          color="primary"
+          disableElevation
+        >
+          BUY IXPS
+        </Button>
+      </form>
+      <form className={classes.formContainer}>
+        <div className={classes.formHeader}>
+          <Typography className={classes.formTitle} variant="h3">
+            Buy IXPS
+          </Typography>
+          <div>12312312312</div>
+        </div>
+        {fields.map((field) => (
+          <div className={classes.inputContainer}>
+            <label className>{field.label}</label>
+            <input
+              className={classes.inputField}
+              key={field.id}
+              id={`${field.id}-sell`}
+              value={field.value}
+              onChange={field.onChange}
+              placeholder={field.placeholder}
+              type={field.type}
+              name={field.name}
+            />
+          </div>
+        ))}
+        <Button
+          className={sellButtonClassName}
+          variant="contained"
+          color="primary"
+          disableElevation
+        >
+          SELL IXPS
+        </Button>
+      </form>
+    </Paper>
+  );
 };
 
 export default BidsAsksHistory;
