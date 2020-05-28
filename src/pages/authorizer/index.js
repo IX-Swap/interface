@@ -17,68 +17,74 @@ const IndividualIdentities = React.lazy(() =>
   import('./individual-identities')
 );
 const CorporateIdentities = React.lazy(() => import('./corporate-identities'));
+const Commitments = React.lazy(() => import('./commitments'));
 
 const Summary = React.lazy(() => import('components/Summary'));
 
 const routes = [
   {
-    route: "/authorizer/banks",
-    title: "Banks",
+    route: '/authorizer/banks',
+    title: 'Banks',
     component: Banks,
   },
   {
-    route: "/authorizer/deposits",
-    title: "Deposits",
+    route: '/authorizer/deposits',
+    title: 'Deposits',
     exact: true,
     component: Deposits,
   },
   {
-    route: "/authorizer/deposits/view",
-    title: "View Deposit",
+    route: '/authorizer/deposits/view',
+    title: 'View Deposit',
     component: DepositsView,
     hasBack: true,
   },
   {
-    route: "/authorizer/withdrawals",
-    title: "Withdrawals",
+    route: '/authorizer/withdrawals',
+    title: 'Withdrawals',
     exact: true,
     component: Withdrawals,
   },
   {
-    route: "/authorizer/withdrawals/view",
-    title: "View Withdrawal",
+    route: '/authorizer/withdrawals/view',
+    title: 'View Withdrawal',
     component: WithdrawalsView,
     hasBack: true,
   },
   {
-    route: "/authorizer/ds-withdrawals",
-    title: "DS Withdrawals",
+    route: '/authorizer/ds-withdrawals',
+    title: 'DS Withdrawals',
     component: DSWithdrawals,
   },
   {
-    route: "/authorizer/individual-identities",
-    title: "Individual Identities",
+    route: '/authorizer/individual-identities',
+    title: 'Individual Identities',
     component: IndividualIdentities,
   },
   {
-    route: "/authorizer/corporate-identities",
-    title: "Corporate Identities",
+    route: '/authorizer/corporate-identities',
+    title: 'Corporate Identities',
     component: CorporateIdentities,
   },
   {
-    route: "/authorizer/digital-securities/:id",
-    title: "View Digital Security",
+    route: '/authorizer/digital-securities/:id',
+    title: 'View Digital Security',
     component: DSOView,
   },
   {
-    route: "/authorizer/digital-securities",
-    title: "Digital Securities",
+    route: '/authorizer/digital-securities',
+    title: 'Digital Securities',
     exact: true,
     component: DSOs,
   },
   {
-    route: "/authorizer/summary",
-    title: "Summary",
+    route: '/authorizer/commitments',
+    title: 'Commitments',
+    component: Commitments,
+  },
+  {
+    route: '/authorizer/summary',
+    title: 'Summary',
     component: Summary,
     hasBack: true,
   },
@@ -113,6 +119,8 @@ const getTitle = (path: string): string => {
       return 'DS Withdrawals';
     case '/authorizer/digital-securities':
       return 'Digital Securities';
+    case '/authorizer/commitments':
+      return 'Commitments';
     case '/authorizer/summary':
       return 'Summary';
     case '/authorizer/deposits/view':
