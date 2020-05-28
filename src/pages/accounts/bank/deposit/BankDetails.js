@@ -4,7 +4,7 @@ import { Paper, Box } from '@material-ui/core';
 
 import type { Bank } from '../modules/types';
 
-const BankDetails = ({ bank }: { bank: Bank }) => (
+const BankDetails = ({ bank, code }: { bank: Bank, code?: string }) => (
   <Box m={4}>
     <Paper>
       <Box px={4} py={2}>
@@ -23,10 +23,12 @@ const BankDetails = ({ bank }: { bank: Bank }) => (
           <b>Account Number:</b>
           &nbsp;{bank.bankAccountNumber}
         </p>
-        <p>
-          <b>Voucher Code:</b>
-          &nbsp;Where to get?
-        </p>
+        {code && (
+          <p>
+            <b>Deposit Code:</b>
+            &nbsp;{code}
+          </p>
+        )}
       </Box>
     </Paper>
   </Box>

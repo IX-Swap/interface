@@ -52,8 +52,10 @@ const useBankDepositLogic = () => {
 function BankDepositForm({
   bank,
   deposit,
+  code,
 }: {
   bank: Bank,
+  code: string,
   deposit: (amount: number) => void,
 }) {
   const { amount, handleChange } = useBankDepositLogic();
@@ -84,7 +86,7 @@ function BankDepositForm({
               </Typography>
             </FormControl>
           </Grid>
-          <BankDetails bank={bank} />
+          <BankDetails bank={bank} code={code} />
           <Grid container justify="center">
             <Box mb={4}>
               <Button
