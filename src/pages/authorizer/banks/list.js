@@ -1,5 +1,6 @@
 // @flow
 import React, { useRef, useEffect, useState } from 'react';
+import { withRouter, RouteProps } from 'react-router-dom';
 import {
   TableContainer,
   Table,
@@ -153,6 +154,12 @@ const RowStatusComponent = ({
         <Select
           className={classes.formControl}
           value={bank.status}
+          onClick={(evt) => {
+            evt.stopPropagation();
+            evt.preventDefault();
+            evt.nativeEvent.stopPropagation();
+            evt.nativeEvent.stopImmediatePropagation();
+          }}
           onChange={(evt: SyntheticInputEvent<HTMLElement>) =>
             handleSelectChange(bank, evt.target.value)
           }
@@ -167,19 +174,83 @@ const RowStatusComponent = ({
   }
 };
 
+const redirectModel = [
+  {
+    label: 'Bank Name',
+    key: 'bankName',
+  },
+  {
+    label: 'Account Holder Name',
+    key: 'accountHolderName',
+  },
+  {
+    label: 'Currency',
+    // $FlowFixMe
+    key: 'asset.symbol',
+  },
+  {
+    label: 'Bank AccountNumber',
+    key: 'bankAccountNumber',
+  },
+  {
+    label: 'Swift Code',
+    key: 'swiftCode',
+  },
+  {
+    label: '',
+    // $FlowFixMe
+    key: '',
+  },
+  {
+    label: 'Line 1',
+    key: 'address.line1',
+  },
+  {
+    label: 'Line 2',
+    key: 'address.line2',
+  },
+  {
+    label: 'City',
+    key: 'address.city',
+  },
+  {
+    label: 'State',
+    key: 'address.state',
+  },
+  {
+    label: 'Country',
+    key: 'address.country',
+  },
+  {
+    label: 'Postal Code',
+    key: 'address.postalCode',
+  },
+];
+
 const BankAccounts = ({
   list,
   handleSelectChange,
+  history,
 }: {
+  history: any,
   list: Array<Bank>,
   handleSelectChange: (bank: Bank, status: string) => void,
 }) => (
   <TableBody>
     {list.length ? (
       list.map((row) => (
-        <TableRow key={row._id}>
+        <TableRow
+          hover
+          key={row._id}
+          onClick={() =>
+            history.push({
+              pathname: '/authorizer/summary',
+              state: { data: row, model: redirectModel },
+            })
+          }
+        >
           {columns.map((e) => (
-            <TableCell align="left">
+            <TableCell align="left" key={e.key}>
               {e.render ? e.render(get(row, e.key)) : get(row, e.key)}
             </TableCell>
           ))}
@@ -201,7 +272,7 @@ const BankAccounts = ({
   </TableBody>
 );
 
-export default function BanksList() {
+function BanksList({ history }: RouteProps) {
   const {
     status: loadingStatus,
     items,
@@ -263,7 +334,7 @@ export default function BanksList() {
           <TableHead>
             <TableRow>
               {columns.map((e) => (
-                <TableCell align="left">
+                <TableCell key={e.key} align="left">
                   <b>{e.label}</b>
                 </TableCell>
               ))}
@@ -272,7 +343,11 @@ export default function BanksList() {
               </TableCell>
             </TableRow>
           </TableHead>
-          <BankAccounts list={items} handleSelectChange={handleSelectChange} />
+          <BankAccounts
+            history={history}
+            list={items}
+            handleSelectChange={handleSelectChange}
+          />
           {total && (
             <TableFooter>
               <TableRow>
@@ -295,3 +370,5 @@ export default function BanksList() {
     </>
   );
 }
+
+export default withRouter(BanksList);

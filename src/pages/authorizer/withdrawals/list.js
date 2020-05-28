@@ -1,5 +1,6 @@
 // @flow
 import React, { useRef, useEffect, useState } from 'react';
+import { withRouter, RouteProps } from 'react-router-dom';
 import {
   TableContainer,
   Table,
@@ -125,11 +126,17 @@ const RowStatusComponent = ({
         <Select
           className={classes.formControl}
           value={withdraw.status}
+          onClick={(evt) => {
+            evt.stopPropagation();
+            evt.preventDefault();
+            evt.nativeEvent.stopPropagation();
+            evt.nativeEvent.stopImmediatePropagation();
+          }}
           onChange={(evt: SyntheticInputEvent<HTMLElement>) =>
             handleSelectChange(withdraw, evt.target.value)
           }
           inputProps={{
-            name: 'status',
+            name: "status",
           }}
         >
           <MenuItem value="Approved">Approved</MenuItem>
@@ -141,17 +148,27 @@ const RowStatusComponent = ({
 
 const Withdraws = ({
   list,
+  history,
   handleSelectChange,
 }: {
   list: Array<Withdraw>,
+  history: any,
   handleSelectChange: (withdraw: Withdraw, status: string) => void,
 }) => (
   <TableBody>
     {list.length ? (
       list.map((row) => (
-        <TableRow key={row._id}>
+        <TableRow
+          key={row._id}
+          onClick={() =>
+            history.push({
+              pathname: '/authorizer/withdrawals/view',
+              state: { withdrawal: row },
+            })
+          }
+        >
           <TableCell>{row.level}</TableCell>
-          <TableCell>{moment(row.createdAt).format("MM/DD/YYYY")}</TableCell>
+          <TableCell>{moment(row.createdAt).format('MM/DD/YYYY')}</TableCell>
           <TableCell>{row.bankAccount.accountHolderName}</TableCell>
           <TableCell align="left">{row.bankAccount.bankName}</TableCell>
           <TableCell align="left">
@@ -175,7 +192,7 @@ const Withdraws = ({
   </TableBody>
 );
 
-export default function BanksList() {
+function BanksList({ history }: RouteProps) {
   const {
     status: loadingStatus,
     items,
@@ -256,7 +273,11 @@ export default function BanksList() {
               </TableCell>
             </TableRow>
           </TableHead>
-          <Withdraws list={items} handleSelectChange={handleSelectChange} />
+          <Withdraws
+            list={items}
+            history={history}
+            handleSelectChange={handleSelectChange}
+          />
           {total && (
             <TableFooter>
               <TableRow>
@@ -279,3 +300,5 @@ export default function BanksList() {
     </>
   );
 }
+
+export default withRouter(BanksList);
