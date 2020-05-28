@@ -20,6 +20,8 @@ import { makeStyles } from '@material-ui/core/styles';
 // TODO: move bank module to context?
 import type { Bank } from 'pages/accounts/bank/modules/types';
 import moment from 'moment';
+import { get } from 'lodash';
+import type { TableColumn } from './modules/types';
 import BankListModule from './modules';
 import Actions from './modules/actions';
 import DialogAuthorizeConfirmation from './confirm';
@@ -108,6 +110,31 @@ function useBankListLogic() {
   };
 }
 
+const columns: Array<TableColumn> = [
+  {
+    key: 'createdAt',
+    label: 'Date of Application',
+    render: (val: string) => moment(val).format('MM/DD/YY'),
+  },
+  {
+    key: 'bankName',
+    label: 'Bank Name',
+  },
+  {
+    key: 'accountHolderName',
+    label: 'Account Holder Name',
+  },
+  {
+    // $FlowFixMe
+    key: 'asset.symbol',
+    label: 'Currency',
+  },
+  {
+    key: 'bankAccountNumber',
+    label: 'Bank Account Number',
+  },
+];
+
 const RowStatusComponent = ({
   bank,
   handleSelectChange,
@@ -151,10 +178,11 @@ const BankAccounts = ({
     {list.length ? (
       list.map((row) => (
         <TableRow key={row._id}>
-          <TableCell>{moment(row.createdAt).format('MM/DD/YYYY')}</TableCell>
-          <TableCell>{row.user.name}</TableCell>
-          <TableCell align="left">{row.bankName}</TableCell>
-          <TableCell align="left">{row.asset.symbol}</TableCell>
+          {columns.map((e) => (
+            <TableCell align="left">
+              {e.render ? e.render(get(row, e.key)) : get(row, e.key)}
+            </TableCell>
+          ))}
           <TableCell align="left">
             <RowStatusComponent
               bank={row}
@@ -234,20 +262,13 @@ export default function BanksList() {
         <Table aria-label="accounts table">
           <TableHead>
             <TableRow>
+              {columns.map((e) => (
+                <TableCell align="left">
+                  <b>{e.label}</b>
+                </TableCell>
+              ))}
               <TableCell align="left">
-                <b>Date of Application</b>
-              </TableCell>
-              <TableCell align="left">
-                <b>User</b>
-              </TableCell>
-              <TableCell align="left">
-                <b>Bank</b>
-              </TableCell>
-              <TableCell align="left">
-                <b>Currency</b>
-              </TableCell>
-              <TableCell align="left">
-                <b>Status</b>
+                <b>Actions</b>
               </TableCell>
             </TableRow>
           </TableHead>
