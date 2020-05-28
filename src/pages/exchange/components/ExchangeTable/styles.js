@@ -99,5 +99,12 @@ export default makeStyles(theme => ({
     tableLink: {
         textDecoration: 'none',
         color: '#01A2FF',
-    }
+    },
+    tableRowHover: {
+        cursor: 'pointer',
+
+        '&:hover': {
+            background: '#efefef',
+        }
+    },
 }))

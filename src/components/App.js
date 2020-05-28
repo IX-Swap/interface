@@ -19,9 +19,9 @@ import Users from '../pages/users';
 import Security from '../pages/security';
 import Authorizer from '../pages/authorizer';
 import TableMyTrades from '../pages/exchange/components/ExchangeTable/TableMyTrades';
-import TableMyOrders from '../pages/exchange/components/ExchangeTable/TableMyOrders';
-import TableMarketListings from '../pages/exchange/components/ExchangeTable/TableMarketListings';
-import TableListings from '../pages/exchange/components/ExchangeTable/TableListings';
+import TableMyOrders from '../pages/exchange/components/ExchangeTable/OrdersTable';
+import TableMarketListings from '../pages/exchange/components/ExchangeTable/MarketListingTable';
+import TableListings from '../pages/exchange/components/ExchangeTable/ListingTable/';
 import OverviewExchange from '../pages/exchange/components/OverviewExchange';
 import ListingView from '../pages/exchange/components/OverviewExchange/ListingView';
 import Issuance from '../pages/issuance';
@@ -105,8 +105,13 @@ function App() {
         component: Security,
       },
       {
-        route: '/exchange',
+        route: `/market-list/:id`,
         component: OverviewExchange,
+        exact: true,
+      },
+      {
+        route: '/exchange',
+        component: () => <TableMarketListings />,
       },
       {
         route: '/trade-history',
@@ -114,19 +119,19 @@ function App() {
       },
       {
         route: '/order-history',
-        component: () => <TableMyOrders title="My Orders" />,
+        component: () => <TableMyOrders />,
       },
       {
         route: '/markets',
-        component: () => <TableMarketListings title="Markets" />,
+        component: () => <TableMarketListings />,
       },
       {
         route: '/listings',
-        component: () => <TableListings title="Listing" />,
+        component: () => <TableListings />,
       },
       {
-        route: '/listings-view',
-        component: () => <ListingView title="Listing View" />,
+        route: '/listings-view/:id',
+        component: () => <ListingView title='Listing View'/>,
       },
       // Show only when user has issuer role
       ...(isIssuer
