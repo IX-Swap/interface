@@ -126,11 +126,17 @@ const RowStatusComponent = ({
         <Select
           className={classes.formControl}
           value={withdraw.status}
+          onClick={(evt) => {
+            evt.stopPropagation();
+            evt.preventDefault();
+            evt.nativeEvent.stopPropagation();
+            evt.nativeEvent.stopImmediatePropagation();
+          }}
           onChange={(evt: SyntheticInputEvent<HTMLElement>) =>
             handleSelectChange(withdraw, evt.target.value)
           }
           inputProps={{
-            name: 'status',
+            name: "status",
           }}
         >
           <MenuItem value="Approved">Approved</MenuItem>
