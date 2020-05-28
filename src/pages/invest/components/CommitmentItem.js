@@ -17,11 +17,7 @@ import { useForm } from 'react-hook-form';
 import { snackbarService } from 'uno-material-ui';
 import type { Dso } from 'context/dso/types';
 import type { Commitment } from 'context/commitment/types';
-import {
-  fetchAccountBalanceByAsset,
-  addCommitment,
-  toggleEditMode,
-} from '../modules/actions';
+import { fetchAccountBalanceByAsset, addCommitment } from '../modules/actions';
 import { useInvestState, useInvestDispatch } from '../modules';
 
 const useStyles = makeStyles(() => ({
