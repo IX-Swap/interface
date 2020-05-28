@@ -36,8 +36,8 @@ function DepositView({ location }: RouteProps) {
   if (!deposit) return <span>nothing to display</span>;
 
   return (
-    <Grid container justify="center" direction="column" component={Paper} >
-      <Box pb={4}/>
+    <Grid container justify="center" direction="column" component={Paper}>
+      <Box pb={4} />
       <Grid container className={classes.infoGrid}>
         <Grid item xs={6}>
           <BoldTypography variant="subtitle2" className={classes.labels}>

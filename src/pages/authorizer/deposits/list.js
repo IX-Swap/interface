@@ -146,59 +146,6 @@ const RowStatusComponent = ({
   }
 };
 
-const redirectModel = [
-  {
-    label: 'Bank Name',
-    key: 'bankName',
-  },
-  {
-    label: 'Account Holder Name',
-    key: 'accountHolderName',
-  },
-  {
-    label: 'Currency',
-    // $FlowFixMe
-    key: 'asset.symbol',
-  },
-  {
-    label: 'Bank AccountNumber',
-    key: 'bankAccountNumber',
-  },
-  {
-    label: 'Swift Code',
-    key: 'swiftCode',
-  },
-  {
-    label: '',
-    // $FlowFixMe
-    key: '',
-  },
-  {
-    label: 'Line 1',
-    key: 'address.line1',
-  },
-  {
-    label: 'Line 2',
-    key: 'address.line2',
-  },
-  {
-    label: 'City',
-    key: 'address.city',
-  },
-  {
-    label: 'State',
-    key: 'address.state',
-  },
-  {
-    label: 'Country',
-    key: 'address.country',
-  },
-  {
-    label: 'Postal Code',
-    key: 'address.postalCode',
-  },
-];
-
 const Deposits = ({
   list,
   handleSelectChange,
