@@ -190,7 +190,6 @@ const columns: Array<TableColumns> = [
     align: 'right',
     key: 'minimumInvestment',
     label: 'Minimum Investment',
-    align: 'right',
     render: (amount: number) => formatMoney(amount),
   },
 ];

@@ -17,43 +17,43 @@ const CorporateIdentities = React.lazy(() => import('./corporate-identities'));
 
 const routes = [
   {
-    route: "/authorizer/banks",
-    title: "Banks",
+    route: '/authorizer/banks',
+    title: 'Banks',
     component: Banks,
   },
   {
-    route: "/authorizer/deposits",
-    title: "Deposits",
+    route: '/authorizer/deposits',
+    title: 'Deposits',
     component: Deposits,
   },
   {
-    route: "/authorizer/withdrawals",
-    title: "Withdrawals",
+    route: '/authorizer/withdrawals',
+    title: 'Withdrawals',
     component: Withdrawals,
   },
   {
-    route: "/authorizer/ds-withdrawals",
-    title: "DS Withdrawals",
+    route: '/authorizer/ds-withdrawals',
+    title: 'DS Withdrawals',
     component: DSWithdrawals,
   },
   {
-    route: "/authorizer/individual-identities",
-    title: "Individual Identities",
+    route: '/authorizer/individual-identities',
+    title: 'Individual Identities',
     component: IndividualIdentities,
   },
   {
-    route: "/authorizer/corporate-identities",
-    title: "Corporate Identities",
+    route: '/authorizer/corporate-identities',
+    title: 'Corporate Identities',
     component: CorporateIdentities,
   },
   {
-    route: "/authorizer/digital-securities/:id",
-    title: "View Digital Security",
+    route: '/authorizer/digital-securities/:id',
+    title: 'View Digital Security',
     component: DSOView,
   },
   {
-    route: "/authorizer/digital-securities",
-    title: "Digital Securities",
+    route: '/authorizer/digital-securities',
+    title: 'Digital Securities',
     component: DSOs,
   },
 ];

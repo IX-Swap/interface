@@ -52,8 +52,10 @@ const DsoInformation = ({
   headerButtonText,
   headerButtonAction,
   onClickDocument,
+  headerButtonShown = true,
 }: {
   dso: Dso,
+  headerButtonShown?: boolean,
   headerButtonText?: string,
   headerButtonAction?: Function,
   onClickDocument: Function,
@@ -72,7 +74,7 @@ const DsoInformation = ({
             />
           </Grid>
 
-          {headerButtonAction && headerButtonText && (
+          {headerButtonAction && headerButtonText && headerButtonShown && (
             <Grid item>
               <Button
                 variant="contained"
@@ -164,7 +166,7 @@ const DsoInformation = ({
                 label="Interest Rate"
                 value={toPercentage(dso.interestRate)}
               />
-              <OfferingTermItem label="Leverage" value={dso.leverage || "-"} />
+              <OfferingTermItem label="Leverage" value={dso.leverage || '-'} />
             </Grid>
           </SectionContainer>
         </Box>
@@ -181,7 +183,7 @@ const DsoInformation = ({
           <SectionContainer title="Token Address">
             <Grid container item justify="space-between">
               <Typography color="primary">
-                {(dso.deploymentInfo && dso.deploymentInfo.token) || "-"}
+                {(dso.deploymentInfo && dso.deploymentInfo.token) || '-'}
               </Typography>
               {isIssuer && !dso.deploymentInfo && (
                 <Button
