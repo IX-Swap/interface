@@ -17,8 +17,13 @@ import { useForm } from 'react-hook-form';
 import { snackbarService } from 'uno-material-ui';
 import type { Dso } from 'context/dso/types';
 import type { Commitment } from 'context/commitment/types';
-import { fetchAccountBalanceByAsset, addCommitment } from '../modules/actions';
-import { useInvestState, useInvestDispatch } from '../modules';
+import {
+  fetchAccountBalanceByAsset,
+  addCommitment,
+  downloadFile,
+} from '../modules/actions';
+import { useInvestState } from '../modules';
+import Uploader from './Uploader';
 
 const useStyles = makeStyles(() => ({
   label: {
@@ -56,8 +61,8 @@ const CommitmentItem = ({
   const [saving, setSaving] = useState(false);
   const [balance, setBalance] = useState(null);
   const [estimatedValue, setEstimatedValue] = useState(0);
+  const [subscriptionDocument, setSubscriptionDocument] = useState(null);
   const { editMode } = useInvestState();
-  const dispatch = useInvestDispatch();
 
   const { register, handleSubmit, watch, errors } = useForm();
 
@@ -65,8 +70,6 @@ const CommitmentItem = ({
     setSaving(true);
     const { walletAddress, numberOfUnits, otp } = data;
     const { currency, _id, minimumInvestment } = dso;
-    // Temp
-    const signedSubscriptionDocument = '000000000000000000000001';
 
     if (numberOfUnits < minimumInvestment) {
       snackbarService.showSnackbar(
@@ -74,8 +77,21 @@ const CommitmentItem = ({
         'error'
       );
 
+      setSaving(false);
       return;
     }
+
+    if (!subscriptionDocument) {
+      snackbarService.showSnackbar(
+        'You need to upload a signed subscription document',
+        'error'
+      );
+
+      setSaving(false);
+      return;
+    }
+
+    const signedSubscriptionDocument = subscriptionDocument._id;
 
     try {
       const res = await addCommitment({
@@ -105,6 +121,17 @@ const CommitmentItem = ({
         'error'
       );
       setSaving(false);
+    }
+  };
+
+  const onClickDownload = async (documentId) => {
+    try {
+      await downloadFile(documentId);
+    } catch (error) {
+      snackbarService.showSnackbar(
+        error.message ? error.message : 'Something went wrong.',
+        'error'
+      );
     }
   };
 
@@ -167,19 +194,33 @@ const CommitmentItem = ({
                   component={Button}
                   fullWidth
                   disabled={saving}
+                  onClick={() => onClickDownload(dso.subscriptionDocument)}
                 >
                   Download Subscription Document
                 </Button>
               </Box>
-              <Box
-                variant="contained"
-                component={Button}
-                fullWidth
-                mb={4}
-                disabled={saving}
-              >
-                Upload Signed Subscription Document
-              </Box>
+
+              {editMode ? (
+                <Uploader
+                  onUploadSuccess={(doc) => setSubscriptionDocument(doc)}
+                />
+              ) : (
+                <Box mb={2}>
+                  <Button
+                    variant="contained"
+                    component={Button}
+                    fullWidth
+                    disabled={saving}
+                    onClick={() => {
+                      if (commitment) {
+                        onClickDownload(commitment.signedSubscriptionDocument);
+                      }
+                    }}
+                  >
+                    Download Signed Subscription Document
+                  </Button>
+                </Box>
+              )}
 
               {editMode ? (
                 <TextField
