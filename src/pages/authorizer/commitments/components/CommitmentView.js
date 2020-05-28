@@ -1,5 +1,5 @@
 // @flow
-import React from 'react';
+import React, { useState } from 'react';
 import {
   Container,
   Grid,
@@ -12,6 +12,10 @@ import type { Commitment } from 'context/commitment/types';
 import type { Dso } from 'context/dso/types';
 import { formatMoney } from 'helpers/formatNumbers';
 import { blue } from '@material-ui/core/colors';
+import ArrowBackIosIcon from '@material-ui/icons/ArrowBackIos';
+import { snackbarService } from 'uno-material-ui';
+import AuthorizeConfirmDialog from './AuthorizeConfirmDialog';
+import { toggleCommitmentStatus } from '../modules/actions';
 
 const DsoSummary = ({ dso }: { dso: Dso }) => (
   <Paper style={{ height: '96%' }}>
@@ -71,11 +75,44 @@ const CommitmentItem = ({ label, value }: { label: string, value: string }) => (
   </Grid>
 );
 
-const CommitmentView = ({ commitment }: { commitment: Commitment }) => {
-  const { dso, individual } = commitment;
+const CommitmentView = ({
+  commitment,
+  onClickBack,
+}: {
+  commitment: Commitment,
+  onClickBack: Function,
+}) => {
+  const { dso, individual, status } = commitment;
+  const [saving, setSaving] = useState(false);
+  const [newStatus, setNewStatus] = useState('');
+  const [open, setOpen] = useState(false);
+
+  const handleConfirm = async () => {
+    setSaving(true);
+    const confirm = await toggleCommitmentStatus(commitment, newStatus);
+    let message = 'Failed to update withdraw status!';
+    let type = 'error';
+
+    if (confirm) {
+      message = 'Successfully updated withdraw status!';
+      type = 'success';
+      setOpen(false);
+    }
+
+    snackbarService.showSnackbar(message, type);
+    setSaving(false);
+  };
 
   return (
     <Container>
+      <Box mb={3}>
+        <Grid container alignItems="center">
+          <Button type="button" onClick={() => onClickBack()} disabled={saving}>
+            <ArrowBackIosIcon />
+          </Button>
+          <Typography variant="h5">Back</Typography>
+        </Grid>
+      </Box>
       <Grid container spacing={2}>
         <Grid item xs={8} container spacing={2} direction="column">
           <Grid item>
@@ -176,18 +213,46 @@ const CommitmentView = ({ commitment }: { commitment: Commitment }) => {
         </Grid>
       </Grid>
 
-      <Box mt={1}>
-        <Grid container spacing={2}>
-          <Grid item>
-            <Button variant="contained" color="primary">
-              Approve
-            </Button>
+      {status === 'Unauthorized' && (
+        <Box mt={1}>
+          <Grid container spacing={2}>
+            <Grid item>
+              <Button
+                variant="contained"
+                color="primary"
+                onClick={() => {
+                  setOpen(true);
+                  setNewStatus('approve');
+                }}
+                disabled={saving}
+              >
+                Approve
+              </Button>
+            </Grid>
+            <Grid item>
+              <Button
+                variant="contained"
+                onClick={() => {
+                  setOpen(true);
+                  setNewStatus('reject');
+                }}
+                disabled={saving}
+              >
+                Reject
+              </Button>
+            </Grid>
           </Grid>
-          <Grid item>
-            <Button variant="contained">Reject</Button>
-          </Grid>
-        </Grid>
-      </Box>
+        </Box>
+      )}
+
+      <AuthorizeConfirmDialog
+        open={open}
+        handleClose={() => {
+          setOpen(false);
+        }}
+        newStatus={newStatus}
+        handleConfirm={handleConfirm}
+      />
     </Container>
   );
 };

@@ -9,14 +9,14 @@ const { getter: getCommitments, ...pageMethods } = actionGenerator(
   {}
 );
 
-const toggleCommitmentStatus = async (
+export const toggleCommitmentStatus = async (
   commitment: Commitment,
   newStatus: string
 ) => {
   const action = newStatus.toLowerCase().includes('approve')
     ? 'approve'
     : 'reject';
-  const url = `/identity/corporates/${commitment._id}/${action}`;
+  const url = `/issuance/commitments/${commitment._id}/${action}`;
   const response = await putRequest(url);
 
   return response.status === 200;

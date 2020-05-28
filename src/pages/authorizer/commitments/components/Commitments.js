@@ -22,7 +22,12 @@ const Commitments = () => {
   }
 
   if (commitment && page === authorizeCommitmentsPage.VIEW) {
-    return <CommitmentView commitment={commitment} />;
+    return (
+      <CommitmentView
+        commitment={commitment}
+        onClickBack={() => setPage(authorizeCommitmentsPage.LIST)}
+      />
+    );
   }
 };
 
