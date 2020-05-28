@@ -11,11 +11,11 @@ export type Document = {
 };
 
 export type DsoTeamMember = {
-  _id: string,
+  _id?: string,
   name: string,
   position: string,
   about: string,
-  photo: string, // documentId
+  photo?: string, // documentId
 };
 
 export type DeploymentInfo = {

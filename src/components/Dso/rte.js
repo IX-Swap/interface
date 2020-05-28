@@ -1,14 +1,12 @@
 import React from 'react';
 import MUIRichTextEditor from 'mui-rte';
 import { convertFromHTML, ContentState, convertToRaw } from 'draft-js';
+import draftToHtml from 'draftjs-to-html';
 
-export default function RichEditor({
-  value,
-  save,
-}: {
-  value: string,
-  save: Function,
-}) {
+function RichEditor(
+  { value, save }: { value: string, save: Function },
+  ref: any
+) {
   const contentHTML = convertFromHTML(value || '');
   const state = ContentState.createFromBlockArray(
     contentHTML.contentBlocks,
@@ -16,7 +14,16 @@ export default function RichEditor({
   );
   const content = JSON.stringify(convertToRaw(state));
 
+  const onSave = (data) => save(draftToHtml(JSON.parse(data)));
+
   return (
-    <MUIRichTextEditor defaultValue={content} onSave={save} inlineToolbar />
+    <MUIRichTextEditor
+      ref={ref}
+      defaultValue={content}
+      onSave={onSave}
+      inlineToolbar
+    />
   );
 }
+
+export default React.forwardRef(RichEditor);

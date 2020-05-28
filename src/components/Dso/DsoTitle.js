@@ -1,5 +1,5 @@
 // @flow
-import React, { useState } from 'react';
+import React, { forwardRef } from 'react';
 import { Typography, Grid, Box, TextField } from '@material-ui/core';
 import { makeStyles } from '@material-ui/styles';
 import useEditableStyles from './styles';
@@ -13,23 +13,22 @@ const useStyles = makeStyles(() => ({
   },
 }));
 
-const DsoTitle = ({
-  tokenSymbol,
-  issuerName,
-  edit = false,
-  onChange = undefined,
-}: {
-  edit?: boolean,
-  onChange?: (string, string) => void,
-  tokenSymbol: string,
-  issuerName: string,
-}) => {
+const DsoTitle = (
+  {
+    tokenSymbol,
+    issuerName,
+    edit = false,
+    onChange = undefined,
+  }: {
+    edit?: boolean,
+    onChange?: (string, string) => void,
+    tokenSymbol: string,
+    issuerName: string,
+  },
+  ref: any
+) => {
   const classes = useStyles();
   const classesE = useEditableStyles();
-  const [values, setValues] = useState({
-    symbol: tokenSymbol,
-    issuer: issuerName,
-  });
 
   return (
     <Grid container alignItems="center">
@@ -37,7 +36,7 @@ const DsoTitle = ({
         <div className={classes.logo} />
       </Box>
       {!edit && (
-        <Grid item direction="column">
+        <Grid item>
           <Typography variant="h4">
             <b>{tokenSymbol}</b>
           </Typography>
@@ -45,18 +44,12 @@ const DsoTitle = ({
         </Grid>
       )}
       {edit && (
-        <Grid item direction="column" style={{ display: 'flex' }}>
+        <Grid item style={{ display: 'flex', flexDirection: 'column' }}>
           <TextField
             label="Token Symbol"
             margin="normal"
-            value={values.symbol}
-            onChange={(ev) => {
-              setValues({
-                ...values,
-                symbol: ev.target.value,
-              });
-              onChange(ev.target.value, values.issuer);
-            }}
+            name="tokenSymbol"
+            inputRef={ref}
             InputLabelProps={{
               className: classesE.largeInputLabel,
             }}
@@ -65,14 +58,8 @@ const DsoTitle = ({
             }}
           />
           <TextField
-            value={values.issuer}
-            onChange={(ev) => {
-              setValues({
-                ...values,
-                issuer: ev.target.value,
-              });
-              onChange(values.symbol, ev.target.value);
-            }}
+            inputRef={ref}
+            name="issuerName"
             label="Issuer Name"
             margin="normal"
           />
@@ -82,4 +69,4 @@ const DsoTitle = ({
   );
 };
 
-export default DsoTitle;
+export default forwardRef<any, any>(DsoTitle);
