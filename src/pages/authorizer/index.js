@@ -17,6 +17,7 @@ const IndividualIdentities = React.lazy(() =>
   import('./individual-identities')
 );
 const CorporateIdentities = React.lazy(() => import('./corporate-identities'));
+const Commitments = React.lazy(() => import('./commitments'));
 
 const Summary = React.lazy(() => import('components/Summary'));
 
@@ -77,6 +78,11 @@ const routes = [
     component: DSOs,
   },
   {
+    route: '/authorizer/commitments',
+    title: 'Commitments',
+    component: Commitments,
+  },
+  {
     route: '/authorizer/summary',
     title: 'Summary',
     component: Summary,
@@ -113,6 +119,8 @@ const getTitle = (path: string): string => {
       return 'DS Withdrawals';
     case '/authorizer/digital-securities':
       return 'Digital Securities';
+    case '/authorizer/commitments':
+      return 'Commitments';
     case '/authorizer/summary':
       return 'Summary';
     case '/authorizer/deposits/view':

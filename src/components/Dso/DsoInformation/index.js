@@ -134,12 +134,14 @@ const DsoInformation = ({
   const rteRefs = useRef<{ values: Dso }>({});
   const isIssuer = useIsIssuer();
   const history = useHistory();
-  const [editableDso, setEditableDso] = useState(dso);
+  const [editableDso, setEditableDso] = useState(dso || {});
   const def = rteRefs.current.values ? rteRefs.current.values : editableDso;
   const { register, getValues, reset, control } = useForm({
     defaultValues: { ...def },
   });
-  const edit = action === 'edit';
+
+  const edit = ['edit', 'create'].includes(action);
+
   const merge = (destArr, sourceArr) =>
     sourceArr.map((source, i) => {
       const dest = destArr[i];
@@ -192,9 +194,15 @@ const DsoInformation = ({
       }
     });
 
-    finalData.launchDate = dso.launchDate;
-    finalData.currency = dso.currency[0]._id;
-    finalData.subscriptionDocument = dso.subscriptionDocument;
+    if (dso._id) {
+      finalData.launchDate = dso.launchDate;
+      finalData.currency = dso.currency[0]._id;
+      finalData.subscriptionDocument = dso.subscriptionDocument;
+    }
+
+    if (!finalData.team) {
+      finalData.team = [];
+    }
 
     return finalData;
   };
@@ -257,6 +265,7 @@ const DsoInformation = ({
           <Grid container alignItems="center" justify="space-between">
             <Grid item>
               <DsoTitle
+                edit={action === 'create'}
                 ref={register}
                 issuerName={editableDso.issuerName}
                 tokenSymbol={editableDso.tokenSymbol}
@@ -322,7 +331,10 @@ const DsoInformation = ({
                     ref={register}
                     edit={edit}
                     label="Unit Price"
-                    value={formatMoney(dso.pricePerUnit, dso.currency.symbol)}
+                    value={formatMoney(
+                      dso.pricePerUnit,
+                      (dso.currency || {}).symbol
+                    )}
                     raw={`${dso.pricePerUnit || ''}`}
                   />
                   <OfferDetail
@@ -332,7 +344,7 @@ const DsoInformation = ({
                     label="Total Fundraising Amount"
                     value={formatMoney(
                       dso.totalFundraisingAmount,
-                      dso.currency.symbol
+                      (dso.currency || {}).symbol
                     )}
                     raw={`${dso.totalFundraisingAmount || ''}`}
                   />
@@ -343,7 +355,7 @@ const DsoInformation = ({
                     label="Minimum Investment"
                     value={formatMoney(
                       dso.minimumInvestment,
-                      dso.currency.symbol
+                      (dso.currency || {}).symbol
                     )}
                     raw={`${dso.minimumInvestment || ''}`}
                   />
@@ -361,7 +373,7 @@ const DsoInformation = ({
                   label="Investment Period"
                   edit={edit}
                   // TODO:  Check if what the number denotes (eg months, yrs?)
-                  value={dso.investmentPeriod.toString()}
+                  value={(dso.investmentPeriod || '').toString()}
                 />
                 <OfferingTermItem
                   name="dividendYeild"
@@ -487,14 +499,16 @@ const DsoInformation = ({
             <Grid container spacing={4}>
               <Grid item xs={6}>
                 <SectionContainer title="Dataroom">
-                  {dso.documents.map((document) => (
-                    <Button
-                      key={document._id}
-                      onClick={() => onClickDocument(document)}
-                    >
-                      <Typography>{document.title}</Typography>
-                    </Button>
-                  ))}
+                  {!edit &&
+                    (dso.documents || []).map((document) => (
+                      <Button
+                        key={document._id}
+                        onClick={() => onClickDocument(document)}
+                      >
+                        <Typography>{document.title}</Typography>
+                      </Button>
+                    ))}
+                  {edit && <span>upload subscriptionDocument</span>}
                 </SectionContainer>
               </Grid>
               <Grid item xs={6}>

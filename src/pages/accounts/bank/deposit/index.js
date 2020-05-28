@@ -57,9 +57,7 @@ const useGenericBankLogic = (bankId: string) => {
   };
 };
 
-function BankDepositComponent({ match, ...others }: RouteProps) {
-  console.log(match, others);
-  const { bankId } = match.params;
+function BankDepositComponent({ bankId, code }: any) {
   const { bank, deposit, amount, isConfirmation } = useGenericBankLogic(bankId);
 
   let toRender = <span>loading</span>;
@@ -68,6 +66,7 @@ function BankDepositComponent({ match, ...others }: RouteProps) {
     toRender = (
       <BankDepositForm
         bank={bank}
+        code={code}
         deposit={(toDeposit: number) => deposit(toDeposit)}
       />
     );
@@ -76,7 +75,7 @@ function BankDepositComponent({ match, ...others }: RouteProps) {
         <DepositConfirmation
           bank={bank}
           amount={amount}
-          transactionCode={storage.generateRandom(8, 'aA#')}
+          transactionCode={code}
         />
       );
     }
@@ -92,4 +91,11 @@ function BankDepositComponent({ match, ...others }: RouteProps) {
   );
 }
 
-export default BankDepositComponent;
+function BankDepositHolder({ match }: RouteProps) {
+  const { bankId } = match.params;
+  const code = storage.generateRandom(8, 'A#');
+
+  return <BankDepositComponent bankId={bankId} code={code} />;
+}
+
+export default BankDepositHolder;

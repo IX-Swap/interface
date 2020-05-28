@@ -129,7 +129,7 @@ const SettingsLandingPage = () => {
                 </Box>
               </Grid>
 
-              {/* <Divider />
+              <Divider />
 
               <Grid container alignItems="center" justify="center">
                 <Box width="60%" mt={5} mb={5}>
@@ -142,7 +142,7 @@ const SettingsLandingPage = () => {
                     </Grid>
                   </Grid>
                 </Box>
-              </Grid> */}
+              </Grid>
             </Container>
           </Paper>
         </Box>
