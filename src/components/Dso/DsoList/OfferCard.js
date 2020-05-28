@@ -15,7 +15,7 @@ const OfferCard = ({
 }) => (
   <Paper>
     <Box px={4} pt={2} pb={4}>
-      <Grid container justify="space-between">
+      <Grid container justify="space-between" spacing={2}>
         <Grid item container xs={9} justify="space-between" direction="column">
           <Box pt={1}>
             <DsoTitle
