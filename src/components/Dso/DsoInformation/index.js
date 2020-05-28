@@ -185,15 +185,20 @@ const DsoInformation = ({
               <Typography color="primary">
                 {(dso.deploymentInfo && dso.deploymentInfo.token) || '-'}
               </Typography>
-              {isIssuer && !dso.deploymentInfo && (
-                <Button
-                  variant="contained"
-                  color="primary"
-                  onClick={() => history.push(`/issuance/${dso._id}/deploy`)}
-                >
-                  Deploy
-                </Button>
-              )}
+              {isIssuer &&
+                !dso.deploymentInfo &&
+                dso.status ===
+                  'Approved' && (
+                    <Button
+                      variant="contained"
+                      color="primary"
+                      onClick={() =>
+                        history.push(`/issuance/${dso._id}/deploy`)
+                      }
+                    >
+                      Deploy
+                    </Button>
+                  )}
             </Grid>
           </SectionContainer>
         </Box>
