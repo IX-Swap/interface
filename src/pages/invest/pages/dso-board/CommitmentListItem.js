@@ -1,9 +1,12 @@
 // @flow
 import React from 'react';
-import { TableRow, TableCell } from '@material-ui/core';
+import { useHistory } from 'react-router-dom';
+import { TableRow, TableCell, Button } from '@material-ui/core';
 import { makeStyles } from '@material-ui/styles';
 import { formatMoney, formatNumber } from 'helpers/formatNumbers';
 import { Commitment } from './modules/types';
+import { useInvestDispatch } from '../../modules';
+import { setSelectedCommitment } from '../../modules/actions';
 
 const useStyles = makeStyles(() => ({
   logo: {
@@ -16,7 +19,16 @@ const useStyles = makeStyles(() => ({
 
 const CommitmentListItem = ({ commitment }: { commitment: Commitment }) => {
   const classes = useStyles();
+  const dispatch = useInvestDispatch();
+  const history = useHistory();
   const { dso, pricePerUnit, totalAmount, numberOfUnits, status } = commitment;
+
+  const onClickView = (e) => {
+    e.preventDefault();
+
+    setSelectedCommitment(dispatch, commitment);
+    history.push('/invest/view-commitment');
+  };
 
   return (
     <TableRow>
@@ -29,6 +41,9 @@ const CommitmentListItem = ({ commitment }: { commitment: Commitment }) => {
       <TableCell>{formatMoney(totalAmount)}</TableCell>
       <TableCell>{formatNumber(numberOfUnits)}</TableCell>
       <TableCell>{status}</TableCell>
+      <TableCell>
+        <Button onClick={onClickView}>View</Button>
+      </TableCell>
     </TableRow>
   );
 };
