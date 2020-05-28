@@ -1,6 +1,7 @@
 // @flow
 import React, { useState } from 'react';
 import CommitmentsList from './CommitmentsList';
+import CommitmentView from './CommitmentView';
 
 const authorizeCommitmentsPage = {
   LIST: 'LIST',
@@ -21,7 +22,7 @@ const Commitments = () => {
   }
 
   if (commitment && page === authorizeCommitmentsPage.VIEW) {
-    return <>View</>;
+    return <CommitmentView commitment={commitment} />;
   }
 };
 
