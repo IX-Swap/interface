@@ -117,6 +117,8 @@ export default makeStyles(theme => ({
     cursor: 'pointer',
     listStyle: 'none',
     margin: 0,
+    minHeight: 400,
+    maxHeight: 450,
     padding: theme.spacing.unit,
   },
   monitoringListItem: {

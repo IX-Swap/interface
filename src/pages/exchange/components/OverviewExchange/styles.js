@@ -19,6 +19,18 @@ export default makeStyles(theme => ({
   overviewHeader: {
     marginBottom: theme.spacing.unit * 5,
   },
+  overviewHeaderContent: {
+    display: 'flex',
+    alignItems: 'center',
+  },
+  overviewHeaderLink: {
+    marginRight: 15,
+    transition: 'all .3s ease-in-out',
+
+    '&:hover': {
+	    transform: 'translate(-5px)',
+    }
+  },
   stockTitle: {
     color: '#000',
     fontWeight: 600,
