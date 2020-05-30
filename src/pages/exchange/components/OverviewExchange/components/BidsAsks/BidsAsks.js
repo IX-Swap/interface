@@ -152,7 +152,7 @@ const BidsAsksHistory = (props) => {
                 </div>
                 {fields.map(field => 
                     <div className={classes.inputContainer}>
-                        <label className>{field.label}</label>
+                        <label>{field.label}</label>
                         <input
                             className={classes.inputField}
                             key={field.id}
