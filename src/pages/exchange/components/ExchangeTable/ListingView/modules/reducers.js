@@ -14,7 +14,7 @@ export function listViewReducer(state, action) {
       return {
         ...state,
         data: action.data,
-        isLoading: true,
+        isLoading: false,
         message: '',
         error: null,
       };

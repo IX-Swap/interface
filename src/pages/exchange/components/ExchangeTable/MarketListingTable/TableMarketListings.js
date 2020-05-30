@@ -15,6 +15,7 @@ import {
     TableRow,
     TableFooter,
     TablePagination,
+    LinearProgress
 } from '@material-ui/core';
 
 // Utils
@@ -132,6 +133,7 @@ function ExchangeTable(props) {
         total,
         limit,
         items,
+        status,
     } = marketState;
 
     useEffect(() => {
@@ -166,6 +168,9 @@ function ExchangeTable(props) {
             </Typography>
             <Grid className={classes.componentStyle}>
                 <TableContainer component={Paper}>
+                    {status === 'GETTING' &&
+                        <LinearProgress />
+                    }
                     <Table aria-label="Market Lists">    
                         <TableHead>
                             <TableRow>
@@ -180,7 +185,7 @@ function ExchangeTable(props) {
                             </TableRow>
                         </TableHead>
                         <MarketList list={items} goToPage={(id) => goToPage(id)}/>
-                        {total && (
+                        {total && status === 'IDLE' && (
                             <TableFooter>
                                 <TableRow>
                                     <TablePagination

@@ -9,6 +9,7 @@ import {
     Box,
     Button,
     Link as MaterialLink,
+    CircularProgress,
 } from '@material-ui/core';
 import ChevronLeftIcon from '@material-ui/icons/ChevronLeft'
 
@@ -17,6 +18,7 @@ import useStyles from './styles';
 
 // Modules
 import ListActions from './modules/actions';
+import {listViewActions} from './modules/types';
 import ListModule from './modules';
 
 const {
@@ -127,42 +129,49 @@ function ListingsView() {
 
     return (
         <Grid>
-            <Grid
-                container
-                alignItems="center"
-            >
-                <ReactLink 
-                    to="/listings"  
-                    className={classes.pageLink}
-                > 
-                    <ChevronLeftIcon /> 
-                </ReactLink>
-                <Typography 
-                    className={classes.pageTitle} 
-                    variant="h1"
-                >
-                    {name}
-                </Typography>
-            </Grid>
-            <Grid className={classes.cotentContainer}>
-                <Paper elevation={3} className={classes.content}>
-                    <HeaderContent props={state}/>
-                    <Box className={classes.listDescContainer}>
-                    <Typography 
-                            className={classes.listDescTitle} 
-                            variant="h6"
-                        >
-                            Description
-                        </Typography>
+            {state.isLoading ? (
+                <CircularProgress size={50} className={classes.loginLoader} />
+            )
+                :
+                <React.Fragment>
+                    <Grid
+                        container
+                        alignItems="center"
+                    >
+                        <ReactLink 
+                            to="/listings"  
+                            className={classes.pageLink}
+                        > 
+                            <ChevronLeftIcon /> 
+                        </ReactLink>
                         <Typography 
-                            className={classes.listDesc} 
-                            variant="p"
+                            className={classes.pageTitle} 
+                            variant="h1"
                         >
-                            {description}
+                            {name}
                         </Typography>
-                    </Box>
-                </Paper>
-            </Grid>
+                    </Grid>
+                    <Grid className={classes.cotentContainer}>
+                        <Paper elevation={3} className={classes.content}>
+                            <HeaderContent props={state}/>
+                            <Box className={classes.listDescContainer}>
+                            <Typography 
+                                    className={classes.listDescTitle} 
+                                    variant="h6"
+                                >
+                                    Description
+                                </Typography>
+                                <Typography 
+                                    className={classes.listDesc} 
+                                    variant="p"
+                                >
+                                    {description}
+                                </Typography>
+                            </Box>
+                        </Paper>
+                    </Grid>
+                </React.Fragment>
+            }
         </Grid>
     )
 }

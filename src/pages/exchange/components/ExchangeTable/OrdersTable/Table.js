@@ -182,8 +182,6 @@ function OrdersTable(props) {
         });
     };
 
-    console.log('Table my orders history item', items);
-
     return (
         <Grid>
             <Typography 
