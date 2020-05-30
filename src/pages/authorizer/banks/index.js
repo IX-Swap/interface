@@ -6,6 +6,7 @@ import TableWithPagination from 'components/TableWithPagination';
 import type { Bank } from 'pages/accounts/bank/modules/types';
 import { makeStyles } from '@material-ui/core/styles';
 import { snackbarService } from 'uno-material-ui';
+import { isFunction } from 'lodash';
 import DialogAuthorizeConfirmation from './confirm';
 import { columns } from './data';
 import Actions from './modules/actions';
@@ -21,13 +22,17 @@ const useStyles = makeStyles({
 const useBanksListLogic = () => {
   const [bank, setBank] = useState<Bank | null>(null);
   const [open, setOpen] = useState<boolean>(false);
-  const [seed, setSeed] = useState(0);
+  const [cb, setCb] = useState(() => () => {});
   const [newStatus, setNewStatus] = useState<string>('');
-  const handleSelectChange = (mBank: Bank, status: string) => {
+  const handleSelectChange = useCallback((mBank: Bank, status: string) => {
     setBank(mBank);
     setNewStatus(status);
     setOpen(true);
-  };
+  }, []);
+
+  const handleCbChange = useCallback((mCb: any) => {
+    setCb(mCb);
+  }, []);
 
   const handleClose = () => {
     setOpen(false);
@@ -44,18 +49,21 @@ const useBanksListLogic = () => {
       setOpen(false);
     }
 
-    setSeed(seed + 1);
+    if (cb && isFunction(cb)) {
+      cb();
+    }
+
     snackbarService.showSnackbar(message, type);
   };
 
   return {
-    seed,
     bank,
     open,
     newStatus,
     handleSelectChange,
     handleClose,
     handleConfirm,
+    handleCbChange,
   };
 };
 
@@ -97,23 +105,21 @@ const RowStatusComponent = ({
   }
 };
 
-const MemoizedTable = React.memo(({ handleSelectChange }: any) => {
-  const mColumns = columns;
-  return (
-    <TableWithPagination
-      id="authorizerBanksList"
-      endpoint="/accounts/banks/list/"
-      columns={mColumns}
-    >
-      {(mBank: Bank) => (
-        <RowStatusComponent
-          bank={mBank}
-          handleSelectChange={handleSelectChange}
-        />
-      )}
-    </TableWithPagination>
-  );
-});
+const MemoizedTable = React.memo(({ handleSelectChange, onMount }: any) => (
+  <TableWithPagination
+    id="authorizerBanksList"
+    endpoint="/accounts/banks/list/"
+    columns={columns}
+    onMount={onMount}
+  >
+    {(mBank: Bank) => (
+      <RowStatusComponent
+        bank={mBank}
+        handleSelectChange={handleSelectChange}
+      />
+    )}
+  </TableWithPagination>
+));
 MemoizedTable.displayName = 'MemoizedTable';
 
 export default function Banks() {
@@ -124,15 +130,16 @@ export default function Banks() {
     bank,
     handleConfirm,
     handleSelectChange,
-    seed,
+    handleCbChange,
   } = useBanksListLogic();
 
-  const mHandleSelectChange = useCallback(
-    (mBank: Bank, status: string) => {
-      handleSelectChange(mBank, status);
-    },
-    [seed]
-  );
+  const mHandleSelectChange = useCallback((mBank: Bank, status: string) => {
+    handleSelectChange(mBank, status);
+  }, []);
+
+  const onMount = useCallback((callback) => {
+    handleCbChange(() => callback);
+  }, []);
 
   return (
     <>
@@ -145,7 +152,10 @@ export default function Banks() {
           handleConfirm={handleConfirm}
         />
       )}
-      <MemoizedTable handleSelectChange={mHandleSelectChange} />
+      <MemoizedTable
+        handleSelectChange={mHandleSelectChange}
+        onMount={onMount}
+      />
     </>
   );
 }

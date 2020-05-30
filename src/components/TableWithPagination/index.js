@@ -29,6 +29,7 @@ type BaseRequirements<T> = {
   id: string,
   columns: Array<TableColumn<T>>,
   endpoint: string,
+  onMount: Function,
   children?: (...props: any) => Node | React.Element<any>,
 };
 
@@ -41,6 +42,7 @@ type ItemsProps = {
 type TableWithPaginationProps<T> = {
   requirements: Module,
   columns: Array<TableColumn<T>>,
+  onMount: Function,
   children?: (...props: any) => Node | React.Element<any>,
 };
 
@@ -62,6 +64,10 @@ const usePaginationLogic = (actions: ModuleActions, meta: ModuleMeta) => {
   const handleChangeRowsPerPage = (newRows: number) => {
     setRowsPerPage(dispatch, { rows: newRows });
     setPage(dispatch, { page: 0 });
+  };
+
+  const reload = () => {
+    setPage(dispatch, { page });
   };
 
   useEffect(() => {
@@ -99,6 +105,7 @@ const usePaginationLogic = (actions: ModuleActions, meta: ModuleMeta) => {
     page,
     statusCode,
     error,
+    reload,
     handleChangePage,
     handleChangeRowsPerPage,
     setPage,
@@ -134,6 +141,7 @@ const TableWithPagination = ({
   columns,
   requirements,
   children,
+  onMount,
 }: TableWithPaginationProps<any>) => {
   const { actions, meta } = requirements;
   const {
@@ -145,7 +153,9 @@ const TableWithPagination = ({
     handleChangeRowsPerPage,
     handleChangePage,
     status,
+    reload,
   } = usePaginationLogic(actions, meta);
+  onMount(reload);
 
   return (
     <>
@@ -192,12 +202,17 @@ const MainComponent = ({
   endpoint,
   columns,
   children,
+  onMount,
 }: BaseRequirements<any>) => {
   const Reqts = initializeRequirements(id, endpoint);
 
   return (
     <Reqts.meta.Provider>
-      <TableWithPagination columns={columns} requirements={Reqts}>
+      <TableWithPagination
+        columns={columns}
+        requirements={Reqts}
+        onMount={onMount}
+      >
         {children}
       </TableWithPagination>
     </Reqts.meta.Provider>
