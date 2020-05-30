@@ -1,6 +1,4 @@
 // @flow
-import actionGenerator from 'context/base/withPagination/actions';
-
 import { postRequest } from 'services/httpRequests';
 
 import { postOrderActions, OrderState} from './types';

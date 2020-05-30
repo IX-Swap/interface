@@ -4,7 +4,6 @@ import type { Node } from 'react';
 import logger from 'use-reducer-logger';
 import { postOrderReducer } from './reducers';
 import { initialState } from './state';
-import { generateModule } from 'context/base/withPagination';
 import type { PostOrderInitState } from './types';
 
 const PostOrderStateContext = React.createContext<PostOrderInitState>(initialState);

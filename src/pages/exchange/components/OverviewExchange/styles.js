@@ -7,14 +7,6 @@ const defaultListItemStyle = {
   padding: '2px 0',
 };
 
-const bidsTitle = {
-  alignItems: 'center',
-  display: 'flex',
-  fontSize: 14,
-  fontWeight: 600,
-  paddingLeft: 15,
-}
-
 export default makeStyles(theme => ({
   overviewHeader: {
     marginBottom: theme.spacing.unit * 5,

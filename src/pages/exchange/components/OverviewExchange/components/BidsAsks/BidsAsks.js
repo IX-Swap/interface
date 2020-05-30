@@ -35,7 +35,7 @@ const BidsAsksHistory = (props) => {
     useEffect(() => {
         socket.emit(BIDS_ASKS.emit, id);
         socket.on(`${BIDS_ASKS.on}/${_userId}`, (data) => {
-        setCollection(data);
+            setCollection(data);
         });
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);

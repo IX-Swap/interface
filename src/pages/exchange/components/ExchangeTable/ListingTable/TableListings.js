@@ -74,7 +74,7 @@ const ListingsList = ({
                             {row.companyName}
                         </TableCell>
                         <TableCell className={classes.defaultCell}>
-                            <Button href="#text-buttons" color="primary">
+                            <Button color="primary">
                                 <Link
                                     className={classes.tableLink}
                                     to={`/listings-view/${row._id}`}
