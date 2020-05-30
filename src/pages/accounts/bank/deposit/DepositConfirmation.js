@@ -90,7 +90,7 @@ export default function DepositConfirmation({
       <Grid container className={classes.infoGrid}>
         <Grid item xs={6}>
           <BoldTypography variant="subtitle2" className={classes.labels}>
-            Transfer Code:
+            Deposit Code:
           </BoldTypography>
         </Grid>
         <Grid item xs={6}>

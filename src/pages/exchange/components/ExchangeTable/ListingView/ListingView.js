@@ -9,7 +9,7 @@ import {
 } from '@material-ui/core';
 
 // Styles
-import useStyles from './styles';
+import useStyles from '../styles';
 
 function ListingsView(props) {
     const classes = useStyles();
@@ -18,21 +18,13 @@ function ListingsView(props) {
     return (
         <Grid>
             <Typography 
-                className={classes.stockTitle} 
+                className={classes.pageTitle} 
                 variant="h1"
             >
                 {title}
             </Typography>
         </Grid>
     )
-}
-
-ListingsView.propTypes = {
-    title: PropTypes.string.isRequired,
-};
-
-ListingsView.defaultProps = {
-    title: 'Listings View',
 }
 
 export default withRouter(ListingsView)

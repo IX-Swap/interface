@@ -131,8 +131,10 @@ function Monitoring(props) {
                                         <StarBorderIcon fontSize='small' /> {d.name}
                                     </p>
                                 )}
-                                <p className={priceStyle}>{d.price}</p>
-                                <p className={classes.defaultListItemStyle}>{d.amount}</p>
+                                {type !== 'marketList' && (
+                                    <p className={priceStyle}>{d.price}</p>
+                                )}
+                                <p className={classes.defaultListItemStyle}>{d.amount || 0}</p>
                                 {type === 'tradeHistory' ?
                                     <p className={classes.defaultListItemStyle}>{moment(d.createdAt).format(TIME_FORMAT)}</p>
                                     :

@@ -110,23 +110,7 @@ const ListingsList = ({
                 return (
                     <TableRow key={i}>
                         <TableCell className={classes.defaultCell}>
-                            {row.name}
-                        </TableCell>
-                        <TableCell className={classes.defaultCell}>
-                            {row.asset.name}
-                        </TableCell>
-                        <TableCell className={classes.defaultCell}>
-                            {row.companyName}
-                        </TableCell>
-                        <TableCell className={classes.defaultCell}>
-                            <Button href="#text-buttons" color="primary">
-                                <Link
-                                    className={classes.tableLink}
-                                    to='listings-view'
-                                >
-                                    View
-                                </Link>
-                            </Button>
+                            {row && row.listing && row.listing.createdAt}
                         </TableCell>
                     </TableRow>
                 )
@@ -197,6 +181,8 @@ function OrdersTable(props) {
             ref: mountedRef,
         });
     };
+
+    console.log('Table my orders history item', items);
 
     return (
         <Grid>

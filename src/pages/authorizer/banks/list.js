@@ -1,5 +1,6 @@
 // @flow
 import React, { useRef, useEffect, useState } from 'react';
+import { withRouter, RouteProps } from 'react-router-dom';
 import {
   TableContainer,
   Table,
@@ -20,6 +21,8 @@ import { makeStyles } from '@material-ui/core/styles';
 // TODO: move bank module to context?
 import type { Bank } from 'pages/accounts/bank/modules/types';
 import moment from 'moment';
+import { get } from 'lodash';
+import type { TableColumn } from './modules/types';
 import BankListModule from './modules';
 import Actions from './modules/actions';
 import DialogAuthorizeConfirmation from './confirm';
@@ -108,6 +111,31 @@ function useBankListLogic() {
   };
 }
 
+const columns: Array<TableColumn> = [
+  {
+    key: 'createdAt',
+    label: 'Date of Application',
+    render: (val: string) => moment(val).format('MM/DD/YY'),
+  },
+  {
+    key: 'bankName',
+    label: 'Bank Name',
+  },
+  {
+    key: 'accountHolderName',
+    label: 'Account Holder Name',
+  },
+  {
+    // $FlowFixMe
+    key: 'asset.symbol',
+    label: 'Currency',
+  },
+  {
+    key: 'bankAccountNumber',
+    label: 'Bank Account Number',
+  },
+];
+
 const RowStatusComponent = ({
   bank,
   handleSelectChange,
@@ -126,6 +154,12 @@ const RowStatusComponent = ({
         <Select
           className={classes.formControl}
           value={bank.status}
+          onClick={(evt) => {
+            evt.stopPropagation();
+            evt.preventDefault();
+            evt.nativeEvent.stopPropagation();
+            evt.nativeEvent.stopImmediatePropagation();
+          }}
           onChange={(evt: SyntheticInputEvent<HTMLElement>) =>
             handleSelectChange(bank, evt.target.value)
           }
@@ -140,21 +174,86 @@ const RowStatusComponent = ({
   }
 };
 
+const redirectModel = [
+  {
+    label: 'Bank Name',
+    key: 'bankName',
+  },
+  {
+    label: 'Account Holder Name',
+    key: 'accountHolderName',
+  },
+  {
+    label: 'Currency',
+    // $FlowFixMe
+    key: 'asset.symbol',
+  },
+  {
+    label: 'Bank AccountNumber',
+    key: 'bankAccountNumber',
+  },
+  {
+    label: 'Swift Code',
+    key: 'swiftCode',
+  },
+  {
+    label: '',
+    // $FlowFixMe
+    key: '',
+  },
+  {
+    label: 'Line 1',
+    key: 'address.line1',
+  },
+  {
+    label: 'Line 2',
+    key: 'address.line2',
+  },
+  {
+    label: 'City',
+    key: 'address.city',
+  },
+  {
+    label: 'State',
+    key: 'address.state',
+  },
+  {
+    label: 'Country',
+    key: 'address.country',
+  },
+  {
+    label: 'Postal Code',
+    key: 'address.postalCode',
+  },
+];
+
 const BankAccounts = ({
   list,
   handleSelectChange,
+  history,
 }: {
+  history: any,
   list: Array<Bank>,
   handleSelectChange: (bank: Bank, status: string) => void,
 }) => (
   <TableBody>
     {list.length ? (
       list.map((row) => (
-        <TableRow key={row._id}>
-          <TableCell>{moment(row.createdAt).format('MM/DD/YYYY')}</TableCell>
-          <TableCell>{row.user.name}</TableCell>
-          <TableCell align="left">{row.bankName}</TableCell>
-          <TableCell align="left">{row.asset.symbol}</TableCell>
+        <TableRow
+          hover
+          key={row._id}
+          onClick={() =>
+            history.push({
+              pathname: '/authorizer/summary',
+              state: { data: row, model: redirectModel },
+            })
+          }
+        >
+          {columns.map((e) => (
+            <TableCell align="left" key={e.key}>
+              {e.render ? e.render(get(row, e.key)) : get(row, e.key)}
+            </TableCell>
+          ))}
           <TableCell align="left">
             <RowStatusComponent
               bank={row}
@@ -173,7 +272,7 @@ const BankAccounts = ({
   </TableBody>
 );
 
-export default function BanksList() {
+function BanksList({ history }: RouteProps) {
   const {
     status: loadingStatus,
     items,
@@ -234,24 +333,21 @@ export default function BanksList() {
         <Table aria-label="accounts table">
           <TableHead>
             <TableRow>
+              {columns.map((e) => (
+                <TableCell key={e.key} align="left">
+                  <b>{e.label}</b>
+                </TableCell>
+              ))}
               <TableCell align="left">
-                <b>Date of Application</b>
-              </TableCell>
-              <TableCell align="left">
-                <b>User</b>
-              </TableCell>
-              <TableCell align="left">
-                <b>Bank</b>
-              </TableCell>
-              <TableCell align="left">
-                <b>Currency</b>
-              </TableCell>
-              <TableCell align="left">
-                <b>Status</b>
+                <b>Actions</b>
               </TableCell>
             </TableRow>
           </TableHead>
-          <BankAccounts list={items} handleSelectChange={handleSelectChange} />
+          <BankAccounts
+            history={history}
+            list={items}
+            handleSelectChange={handleSelectChange}
+          />
           {total && (
             <TableFooter>
               <TableRow>
@@ -274,3 +370,5 @@ export default function BanksList() {
     </>
   );
 }
+
+export default withRouter(BanksList);

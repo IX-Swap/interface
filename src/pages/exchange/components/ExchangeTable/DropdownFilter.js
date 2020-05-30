@@ -17,11 +17,11 @@ const DropdownFilter = (props) => {
 
     const sides = [
         {
-            side: 'bid',
+            side: 'BID',
             label: 'Sell',
         },
         {
-            side: 'ask',
+            side: 'ASK',
             label: 'Buy',
         },
     ];

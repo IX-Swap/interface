@@ -10,7 +10,6 @@ import type { MarketListState } from './types';
 const MarketListStateContext = React.createContext<MarketListState>(initialState);
 const MarketListDispatchContext = React.createContext();
 
-
 const { Provider, useState, useDispatch, statusList } = generateModule<MarketListState>(
   'marketList'
 );

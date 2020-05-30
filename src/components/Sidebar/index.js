@@ -40,50 +40,50 @@ function Sidebar({ location }: { location: any }) {
 
   const structure = [
     {
-      id: "identity",
-      label: "Identity",
-      link: "/identity",
+      id: 'identity',
+      label: 'Identity',
+      link: '/identity',
       icon: <PersonIcon />,
     },
     {
-      id: "invest",
-      label: "Invest",
-      link: "/invest",
+      id: 'invest',
+      label: 'Invest',
+      link: '/invest',
       icon: <PieChartIcon />,
     },
     {
-      id: "accounts",
-      label: "Accounts",
-      link: "/accounts",
+      id: 'accounts',
+      label: 'Accounts',
+      link: '/accounts',
       icon: <AccountBalanceIcon />,
     },
     {
-      id: "exchange",
-      label: "Exchange",
-      link: "/exchange",
+      id: 'exchange',
+      label: 'Exchange',
+      link: '/exchange',
       icon: <TrendingUpIcon />,
       children: [
         {
-          label: "Trade History",
-          link: "/trade-history",
+          label: 'Trade History',
+          link: '/trade-history',
           icon: <PermIdentityIcon />,
         },
         {
-          label: "Order History",
-          link: "/order-history",
+          label: 'Order History',
+          link: '/order-history',
           icon: <SecurityIcon />,
         },
-        { label: "Markets", link: "/markets", icon: <SecurityIcon /> },
-        { label: "Listings", link: "/listings", icon: <SecurityIcon /> },
+        { label: 'Markets', link: '/markets', icon: <SecurityIcon /> },
+        { label: 'Listings', link: '/listings', icon: <SecurityIcon /> },
       ],
     },
     // Show only when user has issuer role
     ...(isIssuer
       ? [
           {
-            id: "issuance",
-            label: "Issuance",
-            link: "/issuance",
+            id: 'issuance',
+            label: 'Issuance',
+            link: '/issuance',
             icon: <LocalAtmIcon />,
           },
         ]
@@ -92,29 +92,33 @@ function Sidebar({ location }: { location: any }) {
     ...(isAuthorizer
       ? [
           {
-            id: "authorizer",
-            label: "Authorizer",
-            link: "/authorizer",
+            id: 'authorizer',
+            label: 'Authorizer',
+            link: '/authorizer',
             icon: <AccountBoxIcon />,
             children: [
-              { label: "Bank Accounts", link: "/authorizer/banks" },
-              { label: "Cash Deposits", link: "/authorizer/deposits" },
-              { label: "Cash Withdrawals", link: "/authorizer/withdrawals" },
+              { label: 'Bank Accounts', link: '/authorizer/banks' },
+              { label: 'Cash Deposits', link: '/authorizer/deposits' },
+              { label: 'Cash Withdrawals', link: '/authorizer/withdrawals' },
               {
-                label: "DS Withdrawals",
-                link: "/authorizer/ds-withdrawals",
+                label: 'DS Withdrawals',
+                link: '/authorizer/ds-withdrawals',
               },
               {
-                label: "Indentities (Individual)",
-                link: "/authorizer/individual-identities",
+                label: 'Indentities (Individual)',
+                link: '/authorizer/individual-identities',
               },
               {
-                label: "Indentities (Corporate)",
-                link: "/authorizer/corporate-identities",
+                label: 'Indentities (Corporate)',
+                link: '/authorizer/corporate-identities',
               },
               {
-                label: "Digital Securities",
-                link: "/authorizer/digital-securities",
+                label: 'Digital Securities',
+                link: '/authorizer/digital-securities',
+              },
+              {
+                label: 'Commitments',
+                link: '/authorizer/commitments',
               },
             ],
           },
@@ -124,24 +128,24 @@ function Sidebar({ location }: { location: any }) {
     ...(isAdmin
       ? [
           {
-            id: "users",
-            label: "User Management",
-            link: "/users",
+            id: 'users',
+            label: 'User Management',
+            link: '/users',
             icon: <PeopleIcon />,
           },
         ]
       : []),
-    { id: 6, type: "divider" },
+    { id: 6, type: 'divider' },
     {
-      id: "security",
-      label: "Security",
-      link: "/security",
+      id: 'security',
+      label: 'Security',
+      link: '/security',
       icon: <SecurityIcon />,
     },
     {
       id: 5,
-      label: "Support",
-      link: "/primary",
+      label: 'Support',
+      link: '/primary',
       icon: <HelpIcon />,
     },
   ];

@@ -23,7 +23,7 @@ import TableMyOrders from '../pages/exchange/components/ExchangeTable/OrdersTabl
 import TableMarketListings from '../pages/exchange/components/ExchangeTable/MarketListingTable';
 import TableListings from '../pages/exchange/components/ExchangeTable/ListingTable/';
 import OverviewExchange from '../pages/exchange/components/OverviewExchange';
-import ListingView from '../pages/exchange/components/OverviewExchange/ListingView';
+import ListingView from '../pages/exchange/components/ExchangeTable/ListingView';
 import Issuance from '../pages/issuance';
 
 import { useLayoutState, LayoutProvider } from '../context/LayoutContext';

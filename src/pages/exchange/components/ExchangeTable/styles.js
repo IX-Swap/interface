@@ -11,6 +11,12 @@ const defaultBadge = {
 };
 
 export default makeStyles(theme => ({
+    pageTitle: {
+        color: '#000',
+        fontWeight: 600,
+        fontSize: 25,
+        marginBottom: theme.spacing.unit,
+    },
     title: {
         fontSize: 25,
         fontWeight: 600,

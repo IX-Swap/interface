@@ -77,7 +77,7 @@ const ListingsList = ({
                             <Button href="#text-buttons" color="primary">
                                 <Link
                                     className={classes.tableLink}
-                                    to='listings-view'
+                                    to={`/listings-view/${row._id}`}
                                 >
                                     View
                                 </Link>
