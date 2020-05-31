@@ -14,9 +14,13 @@ import localStore from 'services/storageHelper';
 import PostOrderActions from './modules/actions';
 import Modules from './modules';
 
+// Monitoring Module
+import MonitoringModule from '../Monitoring/modules';
+
 // Styles
 import useStyles from '../styles';
 
+const { MonitoringState } = MonitoringModule;
 const { PostOrderState, usePostOrderDispatch } = Modules;
 const BidsAsksHistory = (props) => {
     const { id } = props;
@@ -65,6 +69,8 @@ const BidsAsksHistory = (props) => {
 
     const dispatch = usePostOrderDispatch();
     const orderState = PostOrderState();
+    const payloadState = MonitoringState();
+    
     const _handleBidAsk = evt => {
         PostOrderActions.postOrder(dispatch, {
             pair: id,
@@ -74,7 +80,6 @@ const BidsAsksHistory = (props) => {
             amount: 10
         });
     }
-
     const fields = [
         {
             id: 'price',

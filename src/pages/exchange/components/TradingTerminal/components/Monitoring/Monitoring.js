@@ -13,16 +13,25 @@ import { Typography } from '@material-ui/core';
 // Local
 import { TIME_FORMAT } from 'config';
 
-// Styles
-import useStyles from './styles'
+// Modules
+import MonitoringActions from './modules/actions';
+import Modules from './modules';
 
+// Styles
+import useStyles from '../styles'
+
+const { MonitoringState, useMonitoringDispatch } = Modules;
 function Monitoring(props) {
+    const dispatch = useMonitoringDispatch();
+    const state = MonitoringState();
     const classes = useStyles();
     const [ fav, setFav ] = useState(false);
     const [ search, setSearch ] = useState(false);
     const { title, type, data = [] } = props;
     const maxValue = data.length && Math.max(...data.map(d =>d.price));
     const minValue = data.length && Math.min(...data.map(d =>d.price));
+
+    const isAsksBids = props.type === 'asks' ||  props.type === 'bids';
 
     let filteredData = search ? search : data;
     
@@ -38,6 +47,15 @@ function Monitoring(props) {
             });
 
             setSearch(filterData);
+        }
+    };
+
+    let _handleStorePayload = () => {};
+
+    if (isAsksBids) {
+        // SET PAYLOAD DATA FOR ORDERS
+        _handleStorePayload = data => {
+            MonitoringActions.setBidAndAsk(dispatch, data);
         }
     }
 
@@ -125,6 +143,7 @@ function Monitoring(props) {
                             <li 
                                 key={i}
                                 className={classes.monitoringListItem}
+                                onClick={() => _handleStorePayload(d)}
                             >   
                                 {type === 'marketList' && ( 
                                     <p className={classes.defaultListItemStyle} data-value={i}>

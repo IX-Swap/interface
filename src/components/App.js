@@ -22,7 +22,7 @@ import TableMyTrades from '../pages/exchange/components/ExchangeTable/TableMyTra
 import TableMyOrders from '../pages/exchange/components/ExchangeTable/OrdersTable';
 import TableMarketListings from '../pages/exchange/components/ExchangeTable/MarketListingTable';
 import TableListings from '../pages/exchange/components/ExchangeTable/ListingTable/';
-import OverviewExchange from '../pages/exchange/components/OverviewExchange';
+import OverviewExchange from '../pages/exchange/components/TradingTerminal';
 import ListingView from '../pages/exchange/components/ExchangeTable/ListingView';
 import Issuance from '../pages/issuance';
 

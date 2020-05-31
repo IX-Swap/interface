@@ -25,8 +25,8 @@ import TableUtils from 'pages/exchange/utils';
 import useStyles from 'pages/exchange/components/ExchangeTable/styles';
 
 // Modules
-import MarketActions from '../../OverviewExchange/modules/actions';
-import MarketModules from '../../OverviewExchange/modules';
+import MarketActions from '../../TradingTerminal/modules/actions';
+import MarketModules from '../../TradingTerminal/modules';
 
 const {
     MarketState,

@@ -1,4 +1,6 @@
 import React, { useRef, useEffect, useState } from 'react';
+import moment from 'moment';
+import classNames from 'classnames';
 import { withRouter } from 'react-router-dom';
 
 // Material Components
@@ -15,6 +17,7 @@ import {
     TableRow,
     TableFooter,
     TablePagination,
+    LinearProgress,
 } from '@material-ui/core';
 
 // Date Utils
@@ -33,8 +36,8 @@ import OrdersActions from './modules/actions';
 import OrdersModule from './modules';
 
 // Market Modules
-import MarketActions from '../../OverviewExchange/modules/actions';
-import MarketModules from '../../OverviewExchange/modules';
+import MarketActions from '../../TradingTerminal/modules/actions';
+import MarketModules from '../../TradingTerminal/modules';
 
 const {
     OrdersListState,
@@ -107,10 +110,46 @@ const ListingsList = ({
     return (
         <TableBody>
             {list.map((row, i) => {
+                const statusBadge = classNames({ 
+                    'disabledBadge': row.status.toLowerCase() === 'cancelled', 
+                    'positiveBadge': row.status.toLowerCase() === 'filled', 
+                    'primaryBadge': row.status.toLowerCase() === 'open', 
+                });
+
                 return (
                     <TableRow key={i}>
                         <TableCell className={classes.defaultCell}>
-                            {row && row.listing && row.listing.createdAt}
+                            {moment(row.date).format('DD/MM/YYYY HH:mm')}
+                        </TableCell>
+                        <TableCell className={classes.defaultCell}>
+                            {row.pair}
+                        </TableCell>
+                        <TableCell className={classes.defaultCell}>
+                            {row.type}
+                        </TableCell>
+                        <TableCell className={classes.defaultCell}>
+                            {row.side}
+                        </TableCell>
+                        <TableCell className={classes.defaultCell}>
+                            {row.average}
+                        </TableCell>
+                        <TableCell className={classes.defaultCell}>
+                            {row.price}
+                        </TableCell>
+                        <TableCell className={classes.defaultCell}>
+                            {row.filled}
+                        </TableCell>
+                        <TableCell className={classes.defaultCell}>
+                            {row.amount}
+                        </TableCell>
+                        <TableCell className={classes.defaultCell}>
+                            {row.total}
+                        </TableCell>
+                        <TableCell className={classes.defaultCell}>
+                            --
+                        </TableCell>
+                        <TableCell className={classes[statusBadge]}>
+                            {row.status}
                         </TableCell>
                     </TableRow>
                 )
@@ -145,6 +184,7 @@ function OrdersTable(props) {
         total,
         limit,
         items,
+        status,
     } = ordersState;
 
     const {
@@ -221,6 +261,9 @@ function OrdersTable(props) {
                     </section>
                 </MuiPickersUtilsProvider>
                 <TableContainer component={Paper}>
+                    {status === 'GETTING' &&
+                        <LinearProgress />
+                    }
                     <Table aria-label="ordres table">    
                         <TableHead>
                             <TableRow>
@@ -235,7 +278,7 @@ function OrdersTable(props) {
                             </TableRow>
                         </TableHead>
                         <ListingsList list={items} />
-                        {total && (
+                        {total && status === 'IDLE' && (
                             <TableFooter>
                                 <TableRow>
                                     <TablePagination

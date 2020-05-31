@@ -6,8 +6,9 @@ const defaultBadge = {
     display: 'flex',
     fontSize: 12,
     justifyContent: 'center',
-    padding: 5,
+    margin: 16,
     minWidth: 90,
+    padding: 5,
 };
 
 export default makeStyles(theme => ({
@@ -101,6 +102,10 @@ export default makeStyles(theme => ({
     positiveBadge: {
         ...defaultBadge,
         background: '#C5F1C7',
+    },
+    primaryBadge: {
+        ...defaultBadge,
+        background: '#01A2FF',
     },
     tableLink: {
         textDecoration: 'none',
