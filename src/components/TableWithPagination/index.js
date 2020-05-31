@@ -12,7 +12,7 @@ import {
   TablePagination,
   LinearProgress,
 } from '@material-ui/core';
-import { get } from 'lodash';
+import { get, isFunction } from 'lodash';
 import init from './modules';
 import type { Module, ModuleActions, ModuleMeta } from './modules';
 
@@ -155,7 +155,10 @@ const TableWithPagination = ({
     status,
     reload,
   } = usePaginationLogic(actions, meta);
-  onMount(reload);
+
+  if (onMount && isFunction(onMount)) {
+    onMount(reload);
+  }
 
   return (
     <>
