@@ -112,8 +112,6 @@ function TableMyTrades(props) {
         setPage(0);
     };
     
-
-    
     return (
         <Grid>
             <Typography 

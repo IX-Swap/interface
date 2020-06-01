@@ -10,24 +10,35 @@ import Select from '@material-ui/core/Select';
 // Styles
 import useStyles from 'pages/exchange/components/ExchangeTable/styles';
 
-
-const options = [
-    {
-        id: 1,
-        label: 'SGD',
-    },
-    {
-        id: 2,
-        label: 'IXPS',
-    },
-    {
-        id: 3,
-        label: 'USD',
-    },
-];
-
 const DropdownFilter = (props) => {
+    const { setSide, setPair } = props;
     const classes = useStyles();
+    const { items = [] } = props;
+
+    const sides = [
+        {
+            side: 'BID',
+            label: 'Sell',
+        },
+        {
+            side: 'ASK',
+            label: 'Buy',
+        },
+    ];
+
+    const _handleSetPair = evt => {
+        const target = evt.target;
+        const value = target.value;
+
+        setPair(value);
+    }
+
+    const _handleSetSide = evt => {
+        const target = evt.target;
+        const value = target.value;
+
+        setSide(value);
+    }
 
     return (
         <section className={classes.dropdownFilter}>
@@ -38,34 +49,21 @@ const DropdownFilter = (props) => {
                 Pair
             </Typography>
             <FormControl className={classes.formControl}>
-                <InputLabel htmlFor="grouped-native-select">Digital</InputLabel>
-                <Select defaultValue="" id="grouped-select">
+                <InputLabel htmlFor="grouped-native-select">Pair</InputLabel>
+                <Select 
+                    defaultValue="" 
+                    id="grouped-select"
+                    onChange={_handleSetPair}
+                >
                     <MenuItem value="">
                         <em>None</em>
                     </MenuItem>
-                    {options.map(option =>
+                    {items.map(option =>
                         <MenuItem 
-                            key={option.id}
-                            value={option.label}
+                            key={option._id}
+                            value={option._id}
                         >
-                            {option.label}
-                        </MenuItem>
-                    )}
-                </Select>
-            </FormControl>
-            <span className={classes.filterBreak}>-</span>
-            <FormControl className={classes.formControl}>
-                <InputLabel htmlFor="grouped-select">Currency</InputLabel>
-                <Select defaultValue="" id="grouped-select">
-                    <MenuItem value="">
-                        <em>None</em>
-                    </MenuItem>
-                    {options.map(option =>
-                        <MenuItem 
-                            key={option.id}
-                            value={option.label}
-                        >
-                            {option.label}
+                            {option.name}
                         </MenuItem>
                     )}
                 </Select>
@@ -78,14 +76,18 @@ const DropdownFilter = (props) => {
             </Typography>
             <FormControl className={classes.formControl}>
                 <InputLabel htmlFor="grouped-select">All</InputLabel>
-                <Select defaultValue="" id="grouped-select">
+                <Select 
+                    defaultValue="" 
+                    id="grouped-select"
+                    onChange={_handleSetSide}
+                >
                     <MenuItem value="">
                         <em>None</em>
                     </MenuItem>
-                    {options.map(option =>
+                    {sides.map(option =>
                         <MenuItem 
-                            key={option.id}
-                            value={option.label}
+                            key={option.side}
+                            value={option.side}
                         >
                             {option.label}
                         </MenuItem>

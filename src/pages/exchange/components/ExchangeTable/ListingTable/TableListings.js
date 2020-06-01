@@ -15,6 +15,7 @@ import {
     TableRow,
     TableFooter,
     TablePagination,
+    LinearProgress,
 } from '@material-ui/core';
 
 // Styles
@@ -74,10 +75,10 @@ const ListingsList = ({
                             {row.companyName}
                         </TableCell>
                         <TableCell className={classes.defaultCell}>
-                            <Button href="#text-buttons" color="primary">
+                            <Button color="primary">
                                 <Link
                                     className={classes.tableLink}
-                                    to='listings-view'
+                                    to={`/listings-view/${row._id}`}
                                 >
                                     View
                                 </Link>
@@ -103,6 +104,7 @@ function ExchangeTable(props) {
         total,
         limit,
         items,
+        status,
     } = listState;
 
     const handleChangePage = (_, newPage: number) => {
@@ -116,14 +118,12 @@ function ExchangeTable(props) {
 
     useEffect(() => {
         ListingsAction.getListings(dispatch, {
-          skip: page * limit,
-          limit,
-          ref: mountedRef,
+            skip: page * limit,
+            limit,
+            ref: mountedRef,
         });
-      }, [page, limit, dispatch]);
-
-    console.log('items', items);
-    
+    }, [page, limit, dispatch]);
+   
     return (
         <Grid>
             <Typography 
@@ -134,6 +134,9 @@ function ExchangeTable(props) {
             </Typography>
             <Grid className={classes.componentStyle}>
                 <TableContainer component={Paper}>
+                    {status === 'GETTING' &&
+                        <LinearProgress />
+                    }
                     <Table aria-label="listings table">    
                         <TableHead>
                             <TableRow>
@@ -148,7 +151,7 @@ function ExchangeTable(props) {
                             </TableRow>
                         </TableHead>
                         <ListingsList list={items} />
-                        {total && (
+                        {total && status === 'IDLE' &&(
                             <TableFooter>
                                 <TableRow>
                                     <TablePagination
