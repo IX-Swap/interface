@@ -19,6 +19,7 @@ import AddIcon from '@material-ui/icons/Add';
 import type { Dso } from 'context/dso/types';
 import { useIsIssuer } from 'services/acl';
 
+import moment from 'moment';
 import RichEditor from '../rte';
 import DsoTitle from '../DsoTitle';
 import TeamMember from './DsoTeamMember';
@@ -69,7 +70,11 @@ const useDsoLogic = (dso, action) => {
   const [editableDso, setEditableDso] = useState(dso);
   const def = rteRefs.current.values ? rteRefs.current.values : editableDso;
   const { register, getValues, reset, control } = useForm({
-    defaultValues: { ...def },
+    defaultValues: {
+      ...def,
+      launchDate: moment().format('MM/DD/yyyy'),
+      currency: '',
+    },
   });
 
   const edit = ['edit', 'create'].includes(action);
@@ -275,8 +280,10 @@ const DsoInformation = ({
   onClickDocument,
   headerButtonShown = true,
   action = 'view',
+  assets = [],
 }: {
   dso: Dso,
+  assets: Array<any>,
   action?: string,
   headerButtonShown?: boolean,
   headerButtonText?: string,
@@ -307,7 +314,9 @@ const DsoInformation = ({
           <Grid container alignItems="center" justify="space-between">
             <Grid item>
               <DsoTitle
+                control={control}
                 edit={action === 'create'}
+                assets={assets}
                 ref={register}
                 issuerName={
                   action === 'create' ? editableDso.issuerName : dso.issuerName

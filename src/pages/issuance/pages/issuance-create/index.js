@@ -7,7 +7,7 @@ import type { Document } from 'context/dso/types';
 import { snackbarService } from 'uno-material-ui';
 import { downloadFile, saveIssuance } from './modules/actions';
 
-const DsoView = () => {
+const DsoView = ({ assets }: any) => {
   const [action, setAction] = useState('create');
   const history = useHistory();
 
@@ -16,7 +16,6 @@ const DsoView = () => {
       await downloadFile(document);
     } catch (error) {
       snackbarService.showSnackbar(error.message, 'error');
-      console.log(error);
     }
   };
 
@@ -43,6 +42,7 @@ const DsoView = () => {
       <DsoInformation
         action={action}
         headerButtonAction={save}
+        assets={assets}
         headerButtonText="Save"
         onClickDocument={onClickDocument}
       />

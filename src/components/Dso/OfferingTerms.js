@@ -12,7 +12,6 @@ import { toPercentage } from 'helpers/formatNumbers';
 import SectionContainer from './SectionContianer';
 
 const getOfferingTermComponent = (name, ref, control) => {
-  console.log('register', name, ref, control);
   switch (name) {
     case 'distributionFrequency':
       return (

@@ -2,7 +2,6 @@
 import { postRequest, getRequest } from 'services/httpRequests';
 import type { Document } from 'context/dso/types';
 import localStore from 'services/storageHelper';
-import moment from 'moment';
 
 // TODO: Move to another place for reusability
 export const downloadFile = async (document: Document) => {
@@ -22,8 +21,6 @@ export const downloadFile = async (document: Document) => {
 };
 
 export const saveIssuance = async (payload: any) => {
-  payload.launchDate = moment().format('MM-DD-YYYY');
-  payload.currency = '5ecb6b518caa5b3c19d7b328';
   const uri = `/issuance/dso/${localStore.getUserId()}`;
 
   try {

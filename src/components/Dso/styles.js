@@ -30,4 +30,12 @@ export default makeStyles(() => ({
     borderBottom: `1px solid ${grey[100]}`,
     padding: '1.15em',
   },
+  launchDate: {
+    width: '180px',
+    marginLeft: '16px',
+  },
+  currency: {
+    width: '125px',
+    marginLeft: '16px',
+  },
 }));

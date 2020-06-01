@@ -27,6 +27,11 @@ const useDeployLogic = (id: string) => {
   const [loading, setLoading] = useState<boolean>(false);
   const [messages, setMessages] = useState<Array<string>>([]);
   const bearerToken = localStore.getAccessToken();
+  let socket;
+  if (bearerToken) {
+    socket = io(`${API_URL}?token=${bearerToken}`);
+  }
+
   const listener = (data) => {
     if (!window[`deploy_message_${id}`]) {
       window[`deploy_message_${id}`] = [];
@@ -39,9 +44,9 @@ const useDeployLogic = (id: string) => {
     if (data.toLowerCase() === 'ok') {
       ((mId) => {
         setTimeout(async () => {
+          socket.removeEventListener(`x-token/${id}`);
           const newDso = await getDso(mId);
           if (newDso) {
-            console.log(newDso);
             setDso(newDso);
           }
 
@@ -63,13 +68,14 @@ const useDeployLogic = (id: string) => {
   };
 
   useEffect(() => {
-    const socket = io(`${API_URL}?token=${bearerToken}`);
+    if (!socket || !id) return;
+
     if (socket.hasListeners(`x-token/${id}`)) {
       socket.removeEventListener(`x-token/${id}`);
     }
 
     socket.on(`x-token/${id}`, listener);
-  }, [id, bearerToken]); // eslint-disable-line
+  }, [id]); // eslint-disable-line
 
   useEffect(() => {
     (async (mId) => {
