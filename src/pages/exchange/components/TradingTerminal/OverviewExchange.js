@@ -18,14 +18,10 @@ import TableMyOrders from './components/MyOrders';
 import MarketActions from './modules/actions';
 import Modules from './modules';
 
-// Monitoring Modules
-import MonitornigModule from './components/Monitoring/modules';
-
 // Styles
 import useStyles from './styles';
 
 const { MarketState, useMarketDispatch } = Modules;
-const { MonitoringState } = MonitornigModule;
 function OverviewExchange() {
   let { id: tradingPairId } = useParams();
   const classes = useStyles();

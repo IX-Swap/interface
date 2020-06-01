@@ -20,7 +20,7 @@ import Modules from './modules';
 // Styles
 import useStyles from '../styles'
 
-const { MonitoringState, useMonitoringDispatch } = Modules;
+const { useMonitoringDispatch } = Modules;
 function Monitoring(props) {
     const dispatch = useMonitoringDispatch();
     const classes = useStyles();
