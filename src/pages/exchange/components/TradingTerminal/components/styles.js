@@ -2,10 +2,10 @@ import { makeStyles } from '@material-ui/styles'
 const defaultListItemStyle = {
     alignItems: 'center',
     display: 'flex',
-    margin: 0,
-    textAlign: 'left',
     fontSize: 11,
+    margin: 0,
     padding: '2px 0',
+    textAlign: 'left',
 };
 
 const bidsTitle = {
@@ -119,6 +119,7 @@ export default makeStyles(theme => ({
     margin: 0,
     minHeight: 400,
     maxHeight: 450,
+    overflow: 'scroll',
     padding: theme.spacing.unit,
   },
   monitoringListItem: {

@@ -10,9 +10,17 @@ import { Paper } from '@material-ui/core';
 import { ENDPOINT_URL, API_URL } from 'config';
 import localStore from 'services/storageHelper';
 
+// Modules
+import PostOrderActions from './modules/actions';
+import { usePostOrderDispatch } from './modules';
+
+// Monitoring Module
+// import MonitoringModule from '../Monitoring/modules';
+
 // Styles
 import useStyles from '../styles';
 
+// const { MonitoringState } = MonitoringModule;
 const BidsAsksHistory = (props) => {
   const { id } = props;
   const classes = useStyles();
@@ -58,6 +66,20 @@ const BidsAsksHistory = (props) => {
     classes.sellButton
   );
 
+  const dispatch = usePostOrderDispatch();
+  // const orderState = PostOrderState();
+  // const payloadState = MonitoringState();
+
+  const _handleBidAsk = (evt) => {
+    PostOrderActions.postOrder(dispatch, {
+      pair: id,
+      side: 'BID',
+      type: 'LIMIT',
+      price: 100,
+      amount: 10,
+    });
+  };
+
   const fields = [
     {
       id: 'price',
@@ -93,9 +115,9 @@ const BidsAsksHistory = (props) => {
       <form className={classes.formContainer}>
         <div className={classes.formHeader}>
           <Typography className={classes.formTitle} variant="h3">
-            Buy IXPS
+            Buy {collection.length && collection[1].symbol}
           </Typography>
-          <div>12312312312</div>
+          <div>{(collection.length && collection[1].available) || 0}</div>
         </div>
         {fields.map((field) => (
           <div className={classes.inputContainer}>
@@ -117,20 +139,21 @@ const BidsAsksHistory = (props) => {
           variant="contained"
           color="primary"
           disableElevation
+          onClick={_handleBidAsk}
         >
-          BUY IXPS
+          BID IXPS
         </Button>
       </form>
       <form className={classes.formContainer}>
         <div className={classes.formHeader}>
           <Typography className={classes.formTitle} variant="h3">
-            Buy IXPS
+            Buy {collection.length && collection[0].symbol}
           </Typography>
-          <div>12312312312</div>
+          <div>{(collection.length && collection[0].available) || 0}</div>
         </div>
         {fields.map((field) => (
           <div className={classes.inputContainer}>
-            <label className>{field.label}</label>
+            <label>{field.label}</label>
             <input
               className={classes.inputField}
               key={field.id}
@@ -149,7 +172,7 @@ const BidsAsksHistory = (props) => {
           color="primary"
           disableElevation
         >
-          SELL IXPS
+          ASK IXPS
         </Button>
       </form>
     </Paper>

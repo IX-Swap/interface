@@ -15,6 +15,7 @@ import {
     TableRow,
     TableFooter,
     TablePagination,
+    LinearProgress
 } from '@material-ui/core';
 
 // Utils
@@ -24,8 +25,8 @@ import TableUtils from 'pages/exchange/utils';
 import useStyles from 'pages/exchange/components/ExchangeTable/styles';
 
 // Modules
-import MarketActions from '../../OverviewExchange/modules/actions';
-import MarketModules from '../../OverviewExchange/modules';
+import MarketActions from '../../TradingTerminal/modules/actions';
+import MarketModules from '../../TradingTerminal/modules';
 
 const {
     MarketState,
@@ -61,10 +62,6 @@ const columns = [
     {
         id: 'low', 
         label: '24h Low',
-    },
-    {
-        id: 'marketCap', 
-        label: 'Market Cap',
     },
     {
         id: 'volume', 
@@ -114,9 +111,6 @@ const MarketList = ({
                             {row.low || 0}
                         </TableCell>
                         <TableCell className={classes.defaultCell}>
-                            {row.marketCap || 0}
-                        </TableCell>
-                        <TableCell className={classes.defaultCell}>
                             {row.volume || 0}
                         </TableCell>
                     </TableRow>
@@ -139,6 +133,7 @@ function ExchangeTable(props) {
         total,
         limit,
         items,
+        status,
     } = marketState;
 
     useEffect(() => {
@@ -173,6 +168,9 @@ function ExchangeTable(props) {
             </Typography>
             <Grid className={classes.componentStyle}>
                 <TableContainer component={Paper}>
+                    {status === 'GETTING' &&
+                        <LinearProgress />
+                    }
                     <Table aria-label="Market Lists">    
                         <TableHead>
                             <TableRow>
@@ -187,7 +185,7 @@ function ExchangeTable(props) {
                             </TableRow>
                         </TableHead>
                         <MarketList list={items} goToPage={(id) => goToPage(id)}/>
-                        {total && (
+                        {total && status === 'IDLE' && (
                             <TableFooter>
                                 <TableRow>
                                     <TablePagination

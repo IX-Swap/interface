@@ -1,5 +1,5 @@
 import React from 'react';
-import MarketModule from '../../OverviewExchange/modules';
+import MarketModule from '../../TradingTerminal/modules';
 import TableMarketListings from './TableMarketListings';
 const { MarketProvider } = MarketModule;
 
