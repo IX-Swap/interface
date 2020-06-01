@@ -11,7 +11,6 @@ import Monitoring from '../Monitoring';
 const BidsAsksHistory = (props) => {
     const { id } = props;
     const bearerToken = localStore.getAccessToken();
-    const socket = io(`${API_URL}?token=${bearerToken}`);
     
     const [activeTrade, setActiveTrade] = useState(false);
     const { SUBSCRIBE_API } = ENDPOINT_URL;
@@ -22,11 +21,12 @@ const BidsAsksHistory = (props) => {
     // Update after MAS
     /*eslint-disable */
     useEffect(() => {
+        const socket = io(`${API_URL}?token=${bearerToken}`);
         socket.emit(ORDER_BOOK.emit, id);
         socket.on(`${ORDER_BOOK.on}/${id}`, data => {
             setActiveTrade(data);
         });
-    }, [activeTrade]);
+    }, []);
     /*eslint-disable */
     
     const bids = activeTrade ? activeTrade.bids : [];

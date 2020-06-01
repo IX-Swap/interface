@@ -42,7 +42,6 @@ const useStyles = makeStyles({
 
 // Subscribe to SOCKET.IO
 const bearerToken = localStore.getAccessToken();
-const socket = io(`${API_URL}?token=${bearerToken}`);
 
 export default function TableMyOrders(props) {
   const { id, data } = props;
@@ -53,12 +52,13 @@ export default function TableMyOrders(props) {
 
   /*eslint-disable */
   useEffect(() => {
+    const socket = io(`${API_URL}?token=${bearerToken}`);
     socket.emit(MY_ORDERS.emit, id);
     socket.on(`${MY_ORDERS.on}/${id}`, (data) => {
       setMyOrders(data);
     });
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [myOrders]);
+  }, []);
   /*eslint-disable */
 
   return (

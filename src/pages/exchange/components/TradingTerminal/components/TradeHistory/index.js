@@ -11,7 +11,6 @@ import Monitoring from '../Monitoring';
 const TradeHistory = (props) => {
     const { id } = props;
     const bearerToken = localStore.getAccessToken();
-    const socket = io(`${API_URL}?token=${bearerToken}`);
     
     const [tradeStory, setTradeStory] = useState(false);
     const { SUBSCRIBE_API } = ENDPOINT_URL;
@@ -20,11 +19,12 @@ const TradeHistory = (props) => {
     // Update after demo
     /*eslint-disable */
     useEffect(() => {
+        const socket = io(`${API_URL}?token=${bearerToken}`);
         socket.emit(TRADE_HISTORY.emit, id);
         socket.on(`${TRADE_HISTORY.on}/${id}`, data => {
             setTradeStory(data);
         });
-    }, [tradeStory]);
+    }, []);
     /*eslint-disable */
     
     const data = tradeStory ? tradeStory : [];
