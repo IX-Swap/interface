@@ -20,15 +20,14 @@ const BidsAsksHistory = (props) => {
     // Subscribe to the bids/asks history
     // TODO: Better way to implement this locally/globally
     // Update after MAS
+    /*eslint-disable */
     useEffect(() => {
-        /*eslint-disable */
         socket.emit(ORDER_BOOK.emit, id);
         socket.on(`${ORDER_BOOK.on}/${id}`, data => {
             setActiveTrade(data);
         });
-        /*eslint-disable */
-    }, []);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [activeTrade]);
+    /*eslint-disable */
     
     const bids = activeTrade ? activeTrade.bids : [];
     const asks = activeTrade ? activeTrade.asks : [];

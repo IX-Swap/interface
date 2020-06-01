@@ -4,7 +4,7 @@ import { Button, Typography } from '@material-ui/core';
 import io from 'socket.io-client';
 
 // Components
-import { Paper, Box } from '@material-ui/core';
+import { Paper, Box, TextField } from '@material-ui/core';
 import AccountBalanceWalletIcon from '@material-ui/icons/AccountBalanceWallet';
 
 // Config/Endpoints
@@ -47,7 +47,13 @@ const BidsAsksHistory = (props) => {
     const { BIDS_ASKS } = SUBSCRIBE_API;
 
     // State for the RESET FORM fields
-    const [form, setFields] = useState({
+    const [bidForm, setBidFields] = useState({
+        price: 0,
+        amount: 0,
+        total: 0,
+    });
+
+    const [askForm, setAskFields] = useState({
         price: 0,
         amount: 0,
         total: 0,
@@ -55,30 +61,42 @@ const BidsAsksHistory = (props) => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
 
     // Handle change/update for the fields
-    const updateField = (e) => {
+    const updateBidField = (e) => {
         const { name } = e.target;
         const { value } = e.target;
-        setFields({
-            ...form,
+        setBidFields({
+            ...bidForm,
+            [name]: value,
+        });
+    };
+
+    const updateAskField = (e) => {
+        const { name } = e.target;
+        const { value } = e.target;
+        setAskFields({
+            ...askForm,
             [name]: value,
         });
     };
 
     // Subscribe to the bids/asks
     // TODO: Better way to implement this locally/globally
+    /*eslint-disable */
     useEffect(() => {
         socket.emit(BIDS_ASKS.emit, id);
         socket.on(`${BIDS_ASKS.on}/${_userId}`, (data) => {
             setCollection(data);
         });
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, []);
+    }, []); 
+    /*eslint-disable */
 
     // Update FORM values when toggling asks/bids history
+    /*eslint-disable */
     useMemo(() => {
-        setFields(asksBidsHistoryData)
-    }, [asksBidsHistoryData]);
-
+        setBidFields(asksBidsHistoryData)
+        setAskFields(asksBidsHistoryData)
+    }, [asksBidsHistoryData]); 
+    /*eslint-disable */
 
     const sellButtonClassName = classNames(
         classes.formButton,
@@ -87,44 +105,75 @@ const BidsAsksHistory = (props) => {
 
     const dispatch = usePostOrderDispatch();
     const _handlePostOrder = side => {
+        const isBid = side.toLowerCase() === 'bid';
         PostOrderActions.postOrder(dispatch, {
             pair: id,
             side: side, 
             type: 'LIMIT', 
-            price: form.price, 
-            amount: form.amount,
+            price: isBid ? bidForm.price : askForm.price, 
+            amount: isBid ? bidForm.amount : askForm.amount,
         });
     }
 
-    const fields = [
-        {
-            id: 'price',
-            name: 'price',
-            label: 'Price:',
-            value: form.price,
-            onChange: updateField,
-            placeholder: 'Price...',
-            type: 'number',
-        },
-        {
-            id: 'amount',
-            name: 'amount',
-            label: 'Amount:',
-            value: form.amount,
-            onChange: updateField,
-            placeholder: 'Amount...',
-            type: 'number',
-        },
-        {
-            id: 'total',
-            name: 'total',
-            label: 'Total:',
-            value: form.total,
-            onChange: updateField,
-            placeholder: 'Total...',
-            type: 'number',
-        },
-    ];
+    const bidFields = [
+      {
+          id: 'price',
+          name: 'price',
+          label: 'Price:',
+          value: bidForm.price,
+          onChange: updateBidField,
+          placeholder: 'Price...',
+          type: 'number',
+      },
+      {
+          id: 'amount',
+          name: 'amount',
+          label: 'Amount:',
+          value: bidForm.amount,
+          onChange: updateBidField,
+          placeholder: 'Amount...',
+          type: 'number',
+      },
+      {
+          id: 'total',
+          name: 'total',
+          label: 'Total:',
+          value: bidForm.total,
+          onChange: updateBidField,
+          placeholder: 'Total...',
+          type: 'number',
+      },
+  ];
+
+  const askFields = [
+    {
+        id: 'price',
+        name: 'price',
+        label: 'Price:',
+        value: askForm.price,
+        onChange: updateAskField,
+        placeholder: 'Price...',
+        type: 'number',
+    },
+    {
+        id: 'amount',
+        name: 'amount',
+        label: 'Amount:',
+        value: askForm.amount,
+        onChange: updateAskField,
+        placeholder: 'Amount...',
+        type: 'number',
+    },
+    {
+        id: 'total',
+        name: 'total',
+        label: 'Total:',
+        value: askForm.total,
+        onChange: updateAskField,
+        placeholder: 'Total...',
+        type: 'number',
+    },
+];
 
     const isQuoteItem = collection && collection.length && collection.find(item => item.assetId === marketListItem?.quote?._id);
     const isListingItem = collection && collection.length && collection.find(item => item.assetId !== marketListItem?.quote?._id);
@@ -144,21 +193,27 @@ const BidsAsksHistory = (props) => {
                         {isQuoteItem?.symbol}
                     </Box>
                 </Box>
-                {fields.map(field => 
-                    <Box className={classes.inputContainer}>
-                        <label>{field.label}</label>
-                        <input
-                            className={classes.inputField}
-                            key={field.id}
-                            id={`${field.id}-buy`}
-                            value={field.value}
-                            onChange={field.onChange}
-                            placeholder={field.placeholder}
-                            type={field.type}
-                            name={field.name}
-                        />
-                    </Box>
-                )}
+                {bidFields.map(field => {
+                  const totalAmount = bidForm.amount * bidForm.price;
+                    
+                  return (
+                      <Box className={classes.inputContainer}>
+                          <label>{field.label}</label>
+                          <input
+                              className={classes.inputField}
+                              key={field.id}
+                              id={`${field.id}-bid`}
+                              value={field.id === 'total' ? totalAmount : field.value}
+                              onChange={field.onChange} // eslint-disable-line
+                              placeholder={field.placeholder}
+                              type={field.type}
+                              name={field.name}
+                              min={0}
+                              disabled={field.id === 'total'}
+                          />
+                      </Box>
+                  );
+                })}
                 <Button 
                     className={classes.formButton}
                     variant="contained" 
@@ -183,21 +238,27 @@ const BidsAsksHistory = (props) => {
                         {isListingItem?.symbol}
                     </Box>
                 </Box>
-                {fields.map(field => 
-                    <Box className={classes.inputContainer}>
-                        <label>{field.label}</label>
-                        <input
-                            className={classes.inputField}
-                            key={field.id}
-                            id={`${field.id}-sell`}
-                            value={field.value}
-                            onChange={field.onChange}
-                            placeholder={field.placeholder}
-                            type={field.type}
-                            name={field.name}
-                        />
-                    </Box>
-                )}
+                {askFields.map(field => {
+                  const totalAmount = askForm.amount * askForm.price;
+                    
+                  return (
+                      <Box className={classes.inputContainer}>
+                          <label>{field.label}</label>
+                          <input
+                              className={classes.inputField}
+                              key={field.id}
+                              id={`${field.id}-sell`}
+                              value={field.id === 'total' ? totalAmount : field.value}
+                              onChange={field.onChange} // eslint-disable-line
+                              placeholder={field.placeholder}
+                              type={field.type}
+                              name={field.name}
+                              min={0}
+                              disabled={field.id === 'total'}
+                          />
+                      </Box>
+                  );
+                })}
                 <Button 
                     className={sellButtonClassName}
                     variant="contained" 

@@ -51,13 +51,15 @@ export default function TableMyOrders(props) {
   const { SUBSCRIBE_API } = ENDPOINT_URL;
   const { MY_ORDERS } = SUBSCRIBE_API;
 
+  /*eslint-disable */
   useEffect(() => {
     socket.emit(MY_ORDERS.emit, id);
     socket.on(`${MY_ORDERS.on}/${id}`, (data) => {
       setMyOrders(data);
     });
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, [myOrders]);
+  /*eslint-disable */
 
   return (
     <>
