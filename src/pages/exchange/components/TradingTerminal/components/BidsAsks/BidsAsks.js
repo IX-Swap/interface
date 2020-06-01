@@ -4,7 +4,7 @@ import { Button, Typography } from '@material-ui/core';
 import io from 'socket.io-client';
 
 // Components
-import { Paper, Box, TextField } from '@material-ui/core';
+import { Paper, Box } from '@material-ui/core';
 import AccountBalanceWalletIcon from '@material-ui/icons/AccountBalanceWallet';
 
 // Config/Endpoints
@@ -26,7 +26,7 @@ import useStyles from '../styles';
 
 const { MarketState } = MarketModules;
 const { MonitoringState } = MonitoringModule;
-const { PostOrderState, usePostOrderDispatch } = Modules;
+const { usePostOrderDispatch } = Modules;
 const BidsAsksHistory = (props) => {
     const { id } = props;
     const classes = useStyles();
