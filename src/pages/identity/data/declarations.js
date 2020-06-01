@@ -31,36 +31,6 @@ const declarations = {
       value: null,
       answerable: true,
       sublevel: true,
-      lastLine: true,
-    },
-    {
-      key: 'declaration5',
-      content:
-        'The User declares that he/she has the authority to open an account with InvestaX on behalf of the Applicant and bind the Applicant, and to submit all documents on behalf of the Applicant in connection with the account opening.',
-      value: null,
-      answerable: true,
-      lastLine: true,
-    },
-    {
-      key: 'declaration6',
-      content:
-        'The Applicant qualifies as a "Corporate Accredited Investor" as defined in Section 4A(1)(a)(ii) of the Securities and Futures Act (“SFA”), Chapter 289, under Singapore law.',
-    },
-    {
-      key: 'declaration7',
-      content:
-        'An entity or corporation with net assets exceeding $10 million or its equivalent in foreign currency; or',
-      value: null,
-      answerable: true,
-      sublevel: true,
-    },
-    {
-      key: 'declaration8',
-      content:
-        'A corporation where all the shareholders are accredited investors; or',
-      value: null,
-      answerable: true,
-      sublevel: true,
     },
     {
       key: 'declaration9',
@@ -114,7 +84,6 @@ const declarations = {
       content:
         'Applicant has been informed of and understands the consequences of being treated as an Accredited Investor, in particular the reduced regulatory investor safeguards for Accredited Investors.',
       value: null,
-      answerable: true,
       sublevel: true,
     },
     {
@@ -122,7 +91,6 @@ const declarations = {
       content:
         'Applicant has been informed of and understands its right to opt out of the Accredited Investors status with InvestaX at any point in time after consent has been given, upon which InvestaX will process your election to opt out within 14 business days from receipt.',
       value: null,
-      answerable: true,
       sublevel: true,
       lastLine: true,
     },

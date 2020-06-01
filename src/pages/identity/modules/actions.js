@@ -1,6 +1,6 @@
 // @flow
 import moment from 'moment';
-import { findIndex, forEach } from 'lodash';
+import { forEach } from 'lodash';
 import {
   getRequest,
   putRequest,
@@ -17,19 +17,24 @@ const formatDeclarations = (
   type: 'individual' | 'corporate'
 ) => {
   const declarations = [];
-  forEach(payloadItems, (d) => {
+  const payload = {};
+  forEach(payloadItems, (item) => {
+    const key = Object.keys(item)[0];
+    payload[key] = item[key];
+  });
+
+  forEach(declarationTemplate[type], (d) => {
     // get item key
-    const key = Object.keys(d)[0];
-    // get index of template with same key
-    const index = findIndex(
-      declarationTemplate[type],
-      (item) => item.key === key
-    );
-    // add merged object
-    declarations.push({
-      ...declarationTemplate[type][index],
-      value: d[key],
-    });
+    const { key } = d;
+    if (payload[key]) {
+      // add merged object
+      declarations.push({
+        ...d,
+        value: payload[key],
+      });
+    } else {
+      declarations.push(d);
+    }
   });
 
   return declarations;
