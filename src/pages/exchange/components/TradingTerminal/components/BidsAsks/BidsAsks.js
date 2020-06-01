@@ -86,8 +86,6 @@ const BidsAsksHistory = (props) => {
     );
 
     const dispatch = usePostOrderDispatch();
-    const orderState = PostOrderState();
-    
     const _handlePostOrder = side => {
         PostOrderActions.postOrder(dispatch, {
             pair: id,

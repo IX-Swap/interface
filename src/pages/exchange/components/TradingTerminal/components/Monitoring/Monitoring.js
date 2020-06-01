@@ -23,7 +23,6 @@ import useStyles from '../styles'
 const { MonitoringState, useMonitoringDispatch } = Modules;
 function Monitoring(props) {
     const dispatch = useMonitoringDispatch();
-    const state = MonitoringState();
     const classes = useStyles();
     const [ fav, setFav ] = useState(false);
     const [ search, setSearch ] = useState(false);

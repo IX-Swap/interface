@@ -33,8 +33,6 @@ function OverviewExchange() {
   const marketState = MarketState();
   const mountedRef = useRef(true);
 
-  const payloadState = MonitoringState();
-
   // @Paul here
   // eslint-disable-next-line no-unused-vars
   const { status, page, total, limit, items, statusCode, error } = marketState;
