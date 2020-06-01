@@ -45,18 +45,33 @@ const DsoTitle = (
       )}
       {edit && (
         <Grid item style={{ display: 'flex', flexDirection: 'column' }}>
-          <TextField
-            label="Token Symbol"
-            margin="normal"
-            name="tokenSymbol"
-            inputRef={ref}
-            InputLabelProps={{
-              className: classesE.largeInputLabel,
-            }}
-            InputProps={{
-              className: classesE.largeInputValue,
-            }}
-          />
+          <Grid item style={{ display: 'flex', flexDirection: 'row' }}>
+            <TextField
+              label="Token Name"
+              margin="normal"
+              name="tokenName"
+              inputRef={ref}
+              InputLabelProps={{
+                className: classesE.largeInputLabel,
+              }}
+              InputProps={{
+                className: classesE.largeInputValue,
+              }}
+            />
+            <TextField
+              label="Symbol"
+              margin="normal"
+              name="tokenSymbol"
+              inputRef={ref}
+              className={classesE.tokenSymbol}
+              InputLabelProps={{
+                className: classesE.largeInputLabel,
+              }}
+              InputProps={{
+                className: classesE.largeInputValue,
+              }}
+            />
+          </Grid>
           <TextField
             inputRef={ref}
             name="issuerName"

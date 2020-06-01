@@ -2,7 +2,15 @@
 /* eslint-disable react/no-danger */
 import React, { useState, useRef } from 'react';
 import { useHistory } from 'react-router-dom';
-import { Paper, Box, Grid, Typography, Button } from '@material-ui/core';
+import {
+  Paper,
+  Box,
+  Grid,
+  Typography,
+  Button,
+  ListItem,
+} from '@material-ui/core';
+import RemoveIcon from '@material-ui/icons/Remove';
 import { useForm } from 'react-hook-form';
 
 import { assignWith, set } from 'lodash';
@@ -17,12 +25,48 @@ import TeamMember from './DsoTeamMember';
 import OfferingTerms from '../OfferingTerms';
 import OfferDetails from '../OfferDetails';
 import SectionContainer from '../SectionContianer';
+import Uploader from '../Uploader';
+
+const baseDsoRequest = {
+  issuerName: '',
+  launchDate: '',
+  capitalStructure: '',
+  currency: '',
+  pricePerUnit: '',
+  totalFundraisingAmount: '',
+  minimumInvestment: '',
+  tokenName: '',
+  tokenSymbol: '',
+  investmentPeriod: '',
+  dividendYeild: '',
+  grossIRR: '',
+  investmentStructure: '',
+  equityMultiple: '',
+  distributionFrequency: '',
+  interestRate: '',
+  leverage: '',
+  subscriptionDocument: '',
+  introduction: '',
+  businessModel: '',
+  useOfProceeds: '',
+  documents: [],
+  fundraisingMilestone: '',
+  team: [
+    {
+      name: '',
+      position: '',
+      about: '',
+      photo: '',
+    },
+  ],
+};
 
 const useDsoLogic = (dso, action) => {
-  const rteRefs = useRef<{ values: Dso }>({});
+  // $FlowFixMe
+  const rteRefs = useRef<{ values: Dso }>({ ...baseDsoRequest });
   const isIssuer = useIsIssuer();
   const history = useHistory();
-  const [editableDso, setEditableDso] = useState(dso || {});
+  const [editableDso, setEditableDso] = useState(dso);
   const def = rteRefs.current.values ? rteRefs.current.values : editableDso;
   const { register, getValues, reset, control } = useForm({
     defaultValues: { ...def },
@@ -75,12 +119,28 @@ const useDsoLogic = (dso, action) => {
       }
     });
 
+    const richtextKeys = [
+      'businessModel',
+      'fundraisingMilestone',
+      'introduction',
+      'useOfProceeds',
+    ];
+
     const data = getValues({ nest: true });
+    console.log('formdata', data);
     const finalData = assignWith(data, rteRefs.current.values, (a, b, key) => {
       if (key === 'team') {
         return merge(a, b);
       }
+
+      if (richtextKeys.includes(key)) {
+        return b;
+      }
+
+      return a || b;
     });
+
+    finalData.documents = editableDso.documents;
 
     if (dso._id) {
       finalData.launchDate = dso.launchDate;
@@ -91,6 +151,8 @@ const useDsoLogic = (dso, action) => {
     if (!finalData.team) {
       finalData.team = [];
     }
+
+    console.log(finalData);
 
     return finalData;
   };
@@ -134,6 +196,28 @@ const useDsoLogic = (dso, action) => {
     reset(values);
   };
 
+  const onRemoveDocument = (index) => {
+    const values = getFinalValues();
+    console.log(values);
+    const documents = (values.documents || []).filter((e, i) => i !== index);
+    if (
+      // $FlowFixMe
+      rteRefs.current.documents &&
+      rteRefs.current.documents.length &&
+      rteRefs.current.documents.length > index
+    ) {
+      rteRefs.current.documents.splice(index, 1);
+    }
+
+    values.documents = [...documents];
+    rteRefs.current.values = { ...values };
+    setEditableDso({
+      ...values,
+    });
+
+    reset(values);
+  };
+
   const setRefValue = (key, value) => {
     if (!rteRefs.current.values) {
       rteRefs.current.values = {};
@@ -144,6 +228,30 @@ const useDsoLogic = (dso, action) => {
 
   const registerRichText = (key, ref) => {
     set(rteRefs.current, key, ref);
+  };
+
+  const onSubscriptionUpload = (res: any) => {
+    const values = getFinalValues();
+    values.subscriptionDocument = res._id;
+    rteRefs.current.values = { ...values };
+    setEditableDso({
+      ...values,
+    });
+    reset(values);
+  };
+
+  const onDataroomDocumentUploaded = (res: any) => {
+    const values = getFinalValues();
+    if (!values.documents) {
+      values.documents = [];
+    }
+
+    values.documents.push(res);
+    rteRefs.current.values = { ...values };
+    setEditableDso({
+      ...values,
+    });
+    reset(values);
   };
 
   return {
@@ -158,6 +266,9 @@ const useDsoLogic = (dso, action) => {
     register,
     control,
     getFinalValues,
+    onSubscriptionUpload,
+    onDataroomDocumentUploaded,
+    onRemoveDocument,
   };
 };
 
@@ -188,7 +299,10 @@ const DsoInformation = ({
     control,
     editableDso,
     getFinalValues,
-  } = useDsoLogic(dso || {}, action);
+    onSubscriptionUpload,
+    onDataroomDocumentUploaded,
+    onRemoveDocument,
+  } = useDsoLogic(dso || { ...baseDsoRequest }, action);
 
   return (
     <Paper>
@@ -211,7 +325,7 @@ const DsoInformation = ({
                   color="primary"
                   onClick={() =>
                     edit
-                      ? headerButtonAction(dso._id, getFinalValues())
+                      ? headerButtonAction((dso || {})._id, getFinalValues())
                       : headerButtonAction()
                   }
                 >
@@ -244,22 +358,37 @@ const DsoInformation = ({
               </Grid>
               <OfferDetails
                 dso={editableDso || {}}
-                register={register}
+                ref={register}
                 edit={edit}
               />
             </Grid>
           </Box>
 
+          {action === 'create' && (
+            <Box mt={4}>
+              <SectionContainer title="Subscription Document">
+                <Uploader
+                  document={{
+                    title: 'Subscription Document',
+                    label: 'subscription-document',
+                    type: 'subscriptionDocument',
+                  }}
+                  disabled={!!editableDso.subscriptionDocument}
+                  edit={action === 'create'}
+                  onUpload={onSubscriptionUpload}
+                />
+              </SectionContainer>
+            </Box>
+          )}
+
           <Box mt={4}>
             <OfferingTerms
               dso={editableDso || {}}
-              register={register}
               edit={edit}
               ref={register}
               control={control}
             />
           </Box>
-
           <Box mt={4}>
             <SectionContainer title="Business Model">
               {!edit && (
@@ -285,11 +414,13 @@ const DsoInformation = ({
             <SectionContainer title="Token Address">
               <Grid container item justify="space-between">
                 <Typography color="primary">
-                  {(dso.deploymentInfo && dso.deploymentInfo.token) || '-'}
+                  {((dso || {}).deploymentInfo &&
+                    ((dso || {}).deploymentInfo || {}).token) ||
+                    '-'}
                 </Typography>
                 {isIssuer &&
-                  !dso.deploymentInfo &&
-                  dso.status === 'Approved' &&
+                  !(dso || {}).deploymentInfo &&
+                  (dso || {}).status === 'Approved' &&
                   !edit && (
                     <Button
                       variant="contained"
@@ -330,16 +461,39 @@ const DsoInformation = ({
             <Grid container spacing={4}>
               <Grid item xs={6}>
                 <SectionContainer title="Dataroom">
-                  {!edit &&
-                    (dso.documents || []).map((document) => (
+                  {(editableDso.documents || []).map((document, i) => (
+                    <ListItem
+                      style={{
+                        display: 'flex',
+                        justifyContent: 'space-between',
+                      }}
+                      key={i}
+                    >
                       <Button
                         key={document._id}
                         onClick={() => onClickDocument(document)}
                       >
-                        <Typography>{document.title}</Typography>
+                        <Typography>{document.originalFileName}</Typography>
                       </Button>
-                    ))}
-                  {edit && <span>upload subscriptionDocument</span>}
+                      {edit && (
+                        <Button>
+                          <RemoveIcon onClick={() => onRemoveDocument(i)} />
+                        </Button>
+                      )}
+                    </ListItem>
+                  ))}
+
+                  {edit && (
+                    <Uploader
+                      document={{
+                        title: 'Dataroom Dso Document',
+                        label: 'dso-document',
+                        type: 'dsoDocument',
+                      }}
+                      edit={edit}
+                      onUpload={onDataroomDocumentUploaded}
+                    />
+                  )}
                 </SectionContainer>
               </Grid>
               <Grid item xs={6}>

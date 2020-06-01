@@ -21,8 +21,9 @@ const DsoView = () => {
   };
 
   const save = async (id, finalData) => {
-    const isGood = await saveIssuance(finalData);
-    console.log(id, finalData);
+    const payload = { ...finalData };
+    payload.documents = (finalData.documents || []).map((a) => a._id);
+    const isGood = await saveIssuance(payload);
     const sData = { type: 'error', message: 'Failed to save digital security' };
     if (isGood) {
       sData.type = 'success';
@@ -30,7 +31,7 @@ const DsoView = () => {
       history.goBack();
     }
 
-    setAction('view');
+    setAction('create');
 
     snackbarService.showSnackbar(sData.message, sData.type);
   };
@@ -40,10 +41,9 @@ const DsoView = () => {
       <PageTitle title="Create Digital" subPage />
       <Box mb={4} />
       <DsoInformation
-        dso={{ team: [] }}
         action={action}
         headerButtonAction={save}
-        headerButtonText={action === 'edit' ? 'Save' : 'Edit'}
+        headerButtonText="Save"
         onClickDocument={onClickDocument}
       />
     </Container>

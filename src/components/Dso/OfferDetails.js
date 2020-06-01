@@ -6,31 +6,22 @@ import SectionContainer from './SectionContianer';
 import OfferDetail from './OfferDetail';
 
 const OfferDetails = (
-  {
-    register,
-    dso = {},
-    edit = false,
-  }: { register: any, dso: Dso, edit?: boolean },
+  { dso = {}, edit = false }: { dso: Dso, edit?: boolean },
   ref: any
 ) => (
   <Grid item xs={4}>
     <SectionContainer>
-      <OfferDetail
-        name="status"
-        ref={register}
-        label="Status"
-        value={dso.status}
-      />
+      <OfferDetail name="status" ref={ref} label="Status" value={dso.status} />
       <OfferDetail
         name="capitalStructure"
-        ref={register}
+        ref={ref}
         edit={edit}
         label="Capital Structure"
         value={dso.capitalStructure}
       />
       <OfferDetail
         name="pricePerUnit"
-        ref={register}
+        ref={ref}
         edit={edit}
         label="Unit Price"
         value={formatMoney(dso.pricePerUnit || 0, (dso.currency || {}).symbol)}
@@ -38,7 +29,7 @@ const OfferDetails = (
       />
       <OfferDetail
         name="totalFundraisingAmount"
-        ref={register}
+        ref={ref}
         edit={edit}
         label="Total Fundraising Amount"
         value={formatMoney(
@@ -49,7 +40,7 @@ const OfferDetails = (
       />
       <OfferDetail
         name="minimumInvestment"
-        ref={register}
+        ref={ref}
         edit={edit}
         label="Minimum Investment"
         value={formatMoney(

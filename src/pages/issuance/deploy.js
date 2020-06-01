@@ -22,6 +22,7 @@ import type { Dso } from 'context/dso/types';
 import { getDso, deployDso } from './modules/actions';
 
 const useDeployLogic = (id: string) => {
+  // $FlowFixMe
   const [dso, setDso] = useState<Dso>({});
   const [loading, setLoading] = useState<boolean>(false);
   const [messages, setMessages] = useState<Array<string>>([]);

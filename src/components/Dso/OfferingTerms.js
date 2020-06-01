@@ -12,6 +12,7 @@ import { toPercentage } from 'helpers/formatNumbers';
 import SectionContainer from './SectionContianer';
 
 const getOfferingTermComponent = (name, ref, control) => {
+  console.log('register', name, ref, control);
   switch (name) {
     case 'distributionFrequency':
       return (
@@ -74,19 +75,14 @@ const OfferingTermItem = React.forwardRef(
 OfferingTermItem.displayName = 'OfferingTermItem';
 
 const OfferingTerms = (
-  {
-    register,
-    edit,
-    dso,
-    control,
-  }: { register: any, edit: boolean, dso: Dso, control: any },
+  { edit, dso, control }: { edit: boolean, dso: Dso, control: any },
   ref: any
 ) => (
   <SectionContainer title="Offering Terms">
     <Grid container spacing={2}>
       <OfferingTermItem
         name="investmentPeriod"
-        ref={register}
+        ref={ref}
         label="Investment Period"
         edit={edit}
         // TODO:  Check if what the number denotes (eg months, yrs?)
@@ -94,14 +90,14 @@ const OfferingTerms = (
       />
       <OfferingTermItem
         name="dividendYeild"
-        ref={register}
+        ref={ref}
         label="Divident Yield"
         edit={edit}
         value={toPercentage(dso.dividendYeild)}
       />
       <OfferingTermItem
         name="grossIRR"
-        ref={register}
+        ref={ref}
         label="Gross IRR"
         edit={edit}
         value={toPercentage(dso.grossIRR)}
@@ -109,21 +105,21 @@ const OfferingTerms = (
 
       <OfferingTermItem
         name="investmentStructure"
-        ref={register}
+        ref={ref}
         label="Investment Structure"
         edit={edit}
         value={dso.investmentStructure}
       />
       <OfferingTermItem
         name="equityMultiple"
-        ref={register}
+        ref={ref}
         label="Equity Multiple"
         edit={edit}
         value={dso.equityMultiple}
       />
       <OfferingTermItem
         name="distributionFrequency"
-        ref={register}
+        ref={ref}
         label="Distribution Frequency"
         edit={edit}
         control={control}
@@ -131,14 +127,14 @@ const OfferingTerms = (
       />
       <OfferingTermItem
         name="interestRate"
-        ref={register}
+        ref={ref}
         label="Interest Rate"
         edit={edit}
         value={toPercentage(dso.interestRate)}
       />
       <OfferingTermItem
         name="leverage"
-        ref={register}
+        ref={ref}
         label="Leverage"
         value={dso.leverage || '-'}
       />

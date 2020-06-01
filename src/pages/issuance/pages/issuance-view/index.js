@@ -32,7 +32,9 @@ const DsoView = () => {
   };
 
   const saveEdit = async (id, finalData) => {
-    const isGood = await saveIssuance(id, finalData);
+    const payload = { ...finalData };
+    payload.documents = (finalData.documents || []).map((a) => a._id);
+    const isGood = await saveIssuance(id, payload);
     const sData = { type: 'error', message: 'Failed to save digital security' };
     if (isGood) {
       sData.type = 'success';
@@ -40,7 +42,10 @@ const DsoView = () => {
     }
 
     snackbarService.showSnackbar(sData.message, sData.type);
-    history.goBack();
+
+    if (isGood) {
+      history.goBack();
+    }
   };
 
   return (
