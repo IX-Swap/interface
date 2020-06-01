@@ -127,7 +127,6 @@ const useDsoLogic = (dso, action) => {
     ];
 
     const data = getValues({ nest: true });
-    console.log('formdata', data);
     const finalData = assignWith(data, rteRefs.current.values, (a, b, key) => {
       if (key === 'team') {
         return merge(a, b);
@@ -151,8 +150,6 @@ const useDsoLogic = (dso, action) => {
     if (!finalData.team) {
       finalData.team = [];
     }
-
-    console.log(finalData);
 
     return finalData;
   };
@@ -198,7 +195,6 @@ const useDsoLogic = (dso, action) => {
 
   const onRemoveDocument = (index) => {
     const values = getFinalValues();
-    console.log(values);
     const documents = (values.documents || []).filter((e, i) => i !== index);
     if (
       // $FlowFixMe
@@ -313,8 +309,14 @@ const DsoInformation = ({
               <DsoTitle
                 edit={action === 'create'}
                 ref={register}
-                issuerName={editableDso.issuerName}
-                tokenSymbol={editableDso.tokenSymbol}
+                issuerName={
+                  action === 'create' ? editableDso.issuerName : dso.issuerName
+                }
+                tokenSymbol={
+                  action === 'create'
+                    ? editableDso.tokenSymbol
+                    : dso.tokenSymbol
+                }
               />
             </Grid>
 

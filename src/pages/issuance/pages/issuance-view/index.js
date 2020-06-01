@@ -23,7 +23,6 @@ const DsoView = () => {
       await downloadFile(document);
     } catch (error) {
       snackbarService.showSnackbar(error.message, 'error');
-      console.log(error);
     }
   };
 
