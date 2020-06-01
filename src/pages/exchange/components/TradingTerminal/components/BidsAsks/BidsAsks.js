@@ -26,193 +26,201 @@ import useStyles from '../styles';
 
 const { MarketState } = MarketModules;
 const { MonitoringState } = MonitoringModule;
-const { PostOrderState, usePostOrderDispatch } = Modules;
+const {
+  // PostOrderState,
+  usePostOrderDispatch,
+} = Modules;
 const BidsAsksHistory = (props) => {
-    const { id } = props;
-    const classes = useStyles();
-    const bearerToken = localStore.getAccessToken();
-    const _userId = localStore.getUserId();
-    const socket = io(`${API_URL}?token=${bearerToken}`);
+  const { id } = props;
+  const classes = useStyles();
+  const bearerToken = localStore.getAccessToken();
+  const _userId = localStore.getUserId();
+  const socket = io(`${API_URL}?token=${bearerToken}`);
 
-    // Initialized Asks/Bids History state for  Payload
-    const asksBidsHistoryData = MonitoringState();
-    const marketStateData = MarketState();
+  // Initialized Asks/Bids History state for  Payload
+  const asksBidsHistoryData = MonitoringState();
+  const marketStateData = MarketState();
 
-    const { items } = marketStateData;
-    const marketListItem = items.length && items.find(item => item._id === id);
+  const { items } = marketStateData;
+  const marketListItem = items.length && items.find((item) => item._id === id);
 
-    // eslint-disable-next-line
+  // eslint-disable-next-line
     const [collection, setCollection] = useState(false); 
-    const { SUBSCRIBE_API } = ENDPOINT_URL;
-    const { BIDS_ASKS } = SUBSCRIBE_API;
+  const { SUBSCRIBE_API } = ENDPOINT_URL;
+  const { BIDS_ASKS } = SUBSCRIBE_API;
 
-    // State for the RESET FORM fields
-    const [form, setFields] = useState({
-        price: 0,
-        amount: 0,
-        total: 0,
+  // State for the RESET FORM fields
+  const [form, setFields] = useState({
+    price: 0,
+    amount: 0,
+    total: 0,
+  });
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+
+  // Handle change/update for the fields
+  const updateField = (e) => {
+    const { name } = e.target;
+    const { value } = e.target;
+    setFields({
+      ...form,
+      [name]: value,
+    });
+  };
+
+  // Subscribe to the bids/asks
+  // TODO: Better way to implement this locally/globally
+  useEffect(() => {
+    socket.emit(BIDS_ASKS.emit, id);
+    socket.on(`${BIDS_ASKS.on}/${_userId}`, (data) => {
+      setCollection(data);
     });
     // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
-    // Handle change/update for the fields
-    const updateField = (e) => {
-        const { name } = e.target;
-        const { value } = e.target;
-        setFields({
-            ...form,
-            [name]: value,
-        });
-    };
+  // Update FORM values when toggling asks/bids history
+  useMemo(() => {
+    setFields(asksBidsHistoryData);
+  }, [asksBidsHistoryData]);
 
-    // Subscribe to the bids/asks
-    // TODO: Better way to implement this locally/globally
-    useEffect(() => {
-        socket.emit(BIDS_ASKS.emit, id);
-        socket.on(`${BIDS_ASKS.on}/${_userId}`, (data) => {
-            setCollection(data);
-        });
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, []);
+  const sellButtonClassName = classNames(
+    classes.formButton,
+    classes.sellButton
+  );
 
-    // Update FORM values when toggling asks/bids history
-    useMemo(() => {
-        setFields(asksBidsHistoryData)
-    }, [asksBidsHistoryData]);
+  const dispatch = usePostOrderDispatch();
+  // const orderState = PostOrderState();
 
+  const _handlePostOrder = (side) => {
+    PostOrderActions.postOrder(dispatch, {
+      pair: id,
+      side,
+      type: 'LIMIT',
+      price: form.price,
+      amount: form.amount,
+    });
+  };
 
-    const sellButtonClassName = classNames(
-        classes.formButton,
-        classes.sellButton
-    );
+  const fields = [
+    {
+      id: 'price',
+      name: 'price',
+      label: 'Price:',
+      value: form.price,
+      onChange: updateField,
+      placeholder: 'Price...',
+      type: 'number',
+    },
+    {
+      id: 'amount',
+      name: 'amount',
+      label: 'Amount:',
+      value: form.amount,
+      onChange: updateField,
+      placeholder: 'Amount...',
+      type: 'number',
+    },
+    {
+      id: 'total',
+      name: 'total',
+      label: 'Total:',
+      value: form.total,
+      onChange: updateField,
+      placeholder: 'Total...',
+      type: 'number',
+    },
+  ];
 
-    const dispatch = usePostOrderDispatch();
-    const orderState = PostOrderState();
-    
-    const _handlePostOrder = side => {
-        PostOrderActions.postOrder(dispatch, {
-            pair: id,
-            side: side, 
-            type: 'LIMIT', 
-            price: form.price, 
-            amount: form.amount,
-        });
-    }
+  const isQuoteItem =
+    collection &&
+    collection.length &&
+    collection.find((item) => item.assetId === marketListItem?.quote?._id);
+  const isListingItem =
+    collection &&
+    collection.length &&
+    collection.find((item) => item.assetId !== marketListItem?.quote?._id);
 
-    const fields = [
-        {
-            id: 'price',
-            name: 'price',
-            label: 'Price:',
-            value: form.price,
-            onChange: updateField,
-            placeholder: 'Price...',
-            type: 'number',
-        },
-        {
-            id: 'amount',
-            name: 'amount',
-            label: 'Amount:',
-            value: form.amount,
-            onChange: updateField,
-            placeholder: 'Amount...',
-            type: 'number',
-        },
-        {
-            id: 'total',
-            name: 'total',
-            label: 'Total:',
-            value: form.total,
-            onChange: updateField,
-            placeholder: 'Total...',
-            type: 'number',
-        },
-    ];
-
-    const isQuoteItem = collection && collection.length && collection.find(item => item.assetId === marketListItem?.quote?._id);
-    const isListingItem = collection && collection.length && collection.find(item => item.assetId !== marketListItem?.quote?._id);
-
-    return (
-        <Paper className={classes.bidsAsksContainer}>
-            <form className={classes.formContainer}>
-                <Box className={classes.formHeader}>
-                    <Typography className={classes.formTitle} variant="h3">
-                        Buy {isQuoteItem?.symbol}
-                    </Typography>
-                    <Box className={classes.formValue}>
-                        <AccountBalanceWalletIcon color="action" /> 
-                        <span className={classes.availableBalance}>
-                            {isQuoteItem?.available}
-                        </span>
-                        {isQuoteItem?.symbol}
-                    </Box>
-                </Box>
-                {fields.map(field => 
-                    <Box className={classes.inputContainer}>
-                        <label>{field.label}</label>
-                        <input
-                            className={classes.inputField}
-                            key={field.id}
-                            id={`${field.id}-buy`}
-                            value={field.value}
-                            onChange={field.onChange}
-                            placeholder={field.placeholder}
-                            type={field.type}
-                            name={field.name}
-                        />
-                    </Box>
-                )}
-                <Button 
-                    className={classes.formButton}
-                    variant="contained" 
-                    color="primary" 
-                    disableElevation
-                    onClick={() => _handlePostOrder('BID')}
-                    disabled={isQuoteItem?.balance < 0}
-                >
-                    Buy IXPS
-                </Button>
-            </form>
-            <form className={classes.formContainer}>
-                <Box className={classes.formHeader}>
-                    <Typography className={classes.formTitle} variant="h3">
-                        Sell {isQuoteItem?.symbol}
-                    </Typography>
-                    <Box className={classes.formValue}>
-                        <AccountBalanceWalletIcon color="action" /> 
-                        <span className={classes.availableBalance}>
-                            {isListingItem?.available}
-                        </span>
-                        {isListingItem?.symbol}
-                    </Box>
-                </Box>
-                {fields.map(field => 
-                    <Box className={classes.inputContainer}>
-                        <label>{field.label}</label>
-                        <input
-                            className={classes.inputField}
-                            key={field.id}
-                            id={`${field.id}-sell`}
-                            value={field.value}
-                            onChange={field.onChange}
-                            placeholder={field.placeholder}
-                            type={field.type}
-                            name={field.name}
-                        />
-                    </Box>
-                )}
-                <Button 
-                    className={sellButtonClassName}
-                    variant="contained" 
-                    color="primary" 
-                    onClick={() => _handlePostOrder('ASK')}
-                    disableElevation
-                    disabled={isListingItem?.balance < 0}
-                >
-                    Sell IXPS
-                </Button>
-            </form>
-        </Paper>
-    );
+  return (
+    <Paper className={classes.bidsAsksContainer}>
+      <form className={classes.formContainer}>
+        <Box className={classes.formHeader}>
+          <Typography className={classes.formTitle} variant="h3">
+            Buy {isQuoteItem?.symbol}
+          </Typography>
+          <Box className={classes.formValue}>
+            <AccountBalanceWalletIcon color="action" />
+            <span className={classes.availableBalance}>
+              {isQuoteItem?.available}
+            </span>
+            {isQuoteItem?.symbol}
+          </Box>
+        </Box>
+        {fields.map((field) => (
+          <Box className={classes.inputContainer}>
+            <label>{field.label}</label>
+            <input
+              className={classes.inputField}
+              key={field.id}
+              id={`${field.id}-buy`}
+              value={field.value}
+              onChange={field.onChange}
+              placeholder={field.placeholder}
+              type={field.type}
+              name={field.name}
+            />
+          </Box>
+        ))}
+        <Button
+          className={classes.formButton}
+          variant="contained"
+          color="primary"
+          disableElevation
+          onClick={() => _handlePostOrder('BID')}
+          disabled={isQuoteItem?.balance < 0}
+        >
+          Buy IXPS
+        </Button>
+      </form>
+      <form className={classes.formContainer}>
+        <Box className={classes.formHeader}>
+          <Typography className={classes.formTitle} variant="h3">
+            Sell {isQuoteItem?.symbol}
+          </Typography>
+          <Box className={classes.formValue}>
+            <AccountBalanceWalletIcon color="action" />
+            <span className={classes.availableBalance}>
+              {isListingItem?.available}
+            </span>
+            {isListingItem?.symbol}
+          </Box>
+        </Box>
+        {fields.map((field) => (
+          <Box className={classes.inputContainer}>
+            <label>{field.label}</label>
+            <input
+              className={classes.inputField}
+              key={field.id}
+              id={`${field.id}-sell`}
+              value={field.value}
+              onChange={field.onChange}
+              placeholder={field.placeholder}
+              type={field.type}
+              name={field.name}
+            />
+          </Box>
+        ))}
+        <Button
+          className={sellButtonClassName}
+          variant="contained"
+          color="primary"
+          onClick={() => _handlePostOrder('ASK')}
+          disableElevation
+          disabled={isListingItem?.balance < 0}
+        >
+          Sell IXPS
+        </Button>
+      </form>
+    </Paper>
+  );
 };
 
 export default BidsAsksHistory;

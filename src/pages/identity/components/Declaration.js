@@ -23,6 +23,8 @@ const Declaration = ({
 }) => {
   const classes = useStyles();
 
+  console.log(declarations);
+
   return (
     <List>
       {declarations.map((declaration) => {
