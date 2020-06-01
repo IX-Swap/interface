@@ -131,7 +131,6 @@ function Monitoring(props) {
                             </li>
                         </ul>
                     </React.Fragment>
-                    
                 )}
                 <ul className={classes.monitoringList}>
                     {filteredData.map((d, i ) => {
