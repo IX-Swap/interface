@@ -1,6 +1,6 @@
 // @flow
 import { monitoringActions } from './types';
-async function setBidAndAsk(dispatch, payload) {
+function setBidAndAsk(dispatch, payload) {
   dispatch({ 
     type: monitoringActions.SET_BID_ASK_PAYLOAD,
     data: payload,

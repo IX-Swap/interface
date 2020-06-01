@@ -6,11 +6,11 @@ import { monitoringReducer } from './reducers';
 import { initialState } from './state';
 import type { MonitoringInitState } from './types';
 
-const MonitoringContext = React.createContext<MonitoringInitState>(initialState);
+const MonitoringStateContext = React.createContext<MonitoringInitState>(initialState);
 const MonitoringDispatchContext = React.createContext();
 
 export function MonitoringState() {
-  const context = React.useContext(MonitoringContext);
+  const context = React.useContext(MonitoringStateContext);
   if (context === undefined) {
     throw new Error('Monitoring must be used within a MonitoringProvider');
   }
@@ -36,11 +36,11 @@ export function MonitoringProvider({ children }: { children: Node }) {
   );
 
   return (
-    <MonitoringContext.Provider value={state}>
+    <MonitoringStateContext.Provider value={state}>
       <MonitoringDispatchContext.Provider value={dispatch}>
         {children}
       </MonitoringDispatchContext.Provider>
-    </MonitoringContext.Provider>
+    </MonitoringStateContext.Provider>
   );
 }
 

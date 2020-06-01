@@ -1,10 +1,11 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useMemo } from 'react';
 import classNames from 'classnames';
 import { Button, Typography } from '@material-ui/core';
 import io from 'socket.io-client';
 
 // Components
-import { Paper } from '@material-ui/core';
+import { Paper, Box } from '@material-ui/core';
+import AccountBalanceWalletIcon from '@material-ui/icons/AccountBalanceWallet';
 
 // Config/Endpoints
 import { ENDPOINT_URL, API_URL } from 'config';
@@ -14,12 +15,16 @@ import localStore from 'services/storageHelper';
 import PostOrderActions from './modules/actions';
 import Modules from './modules';
 
+// Market Modules
+import MarketModules from '../../modules';
+
 // Monitoring Module
 import MonitoringModule from '../Monitoring/modules';
 
 // Styles
 import useStyles from '../styles';
 
+const { MarketState } = MarketModules;
 const { MonitoringState } = MonitoringModule;
 const { PostOrderState, usePostOrderDispatch } = Modules;
 const BidsAsksHistory = (props) => {
@@ -29,20 +34,17 @@ const BidsAsksHistory = (props) => {
     const _userId = localStore.getUserId();
     const socket = io(`${API_URL}?token=${bearerToken}`);
 
+    // Initialized Asks/Bids History state for  Payload
+    const asksBidsHistoryData = MonitoringState();
+    const marketStateData = MarketState();
+
+    const { items } = marketStateData;
+    const marketListItem = items.length && items.find(item => item._id === id);
+
     // eslint-disable-next-line
     const [collection, setCollection] = useState(false); 
     const { SUBSCRIBE_API } = ENDPOINT_URL;
     const { BIDS_ASKS } = SUBSCRIBE_API;
-
-    // Subscribe to the bids/asks
-    // TODO: Better way to implement this locally/globally
-    useEffect(() => {
-        socket.emit(BIDS_ASKS.emit, id);
-        socket.on(`${BIDS_ASKS.on}/${_userId}`, (data) => {
-            setCollection(data);
-        });
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, []);
 
     // State for the RESET FORM fields
     const [form, setFields] = useState({
@@ -62,6 +64,22 @@ const BidsAsksHistory = (props) => {
         });
     };
 
+    // Subscribe to the bids/asks
+    // TODO: Better way to implement this locally/globally
+    useEffect(() => {
+        socket.emit(BIDS_ASKS.emit, id);
+        socket.on(`${BIDS_ASKS.on}/${_userId}`, (data) => {
+            setCollection(data);
+        });
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, []);
+
+    // Update FORM values when toggling asks/bids history
+    useMemo(() => {
+        setFields(asksBidsHistoryData)
+    }, [asksBidsHistoryData]);
+
+
     const sellButtonClassName = classNames(
         classes.formButton,
         classes.sellButton
@@ -69,17 +87,17 @@ const BidsAsksHistory = (props) => {
 
     const dispatch = usePostOrderDispatch();
     const orderState = PostOrderState();
-    const payloadState = MonitoringState();
     
-    const _handleBidAsk = evt => {
+    const _handlePostOrder = side => {
         PostOrderActions.postOrder(dispatch, {
             pair: id,
-            side: 'BID', 
+            side: side, 
             type: 'LIMIT', 
-            price: 100, 
-            amount: 10
+            price: form.price, 
+            amount: form.amount,
         });
     }
+
     const fields = [
         {
             id: 'price',
@@ -110,19 +128,26 @@ const BidsAsksHistory = (props) => {
         },
     ];
 
+    const isQuoteItem = collection && collection.length && collection.find(item => item.assetId === marketListItem?.quote?._id);
+    const isListingItem = collection && collection.length && collection.find(item => item.assetId !== marketListItem?.quote?._id);
+
     return (
         <Paper className={classes.bidsAsksContainer}>
             <form className={classes.formContainer}>
-                <div className={classes.formHeader}>
+                <Box className={classes.formHeader}>
                     <Typography className={classes.formTitle} variant="h3">
-                        Buy {(collection.length && collection[1].symbol)}
+                        Buy {isQuoteItem?.symbol}
                     </Typography>
-                    <div>
-                        {(collection.length && collection[1].available || 0)}
-                    </div>
-                </div>
+                    <Box className={classes.formValue}>
+                        <AccountBalanceWalletIcon color="action" /> 
+                        <span className={classes.availableBalance}>
+                            {isQuoteItem?.available}
+                        </span>
+                        {isQuoteItem?.symbol}
+                    </Box>
+                </Box>
                 {fields.map(field => 
-                    <div className={classes.inputContainer}>
+                    <Box className={classes.inputContainer}>
                         <label>{field.label}</label>
                         <input
                             className={classes.inputField}
@@ -134,29 +159,34 @@ const BidsAsksHistory = (props) => {
                             type={field.type}
                             name={field.name}
                         />
-                    </div>
+                    </Box>
                 )}
                 <Button 
                     className={classes.formButton}
                     variant="contained" 
                     color="primary" 
                     disableElevation
-                    onClick={_handleBidAsk}
+                    onClick={() => _handlePostOrder('BID')}
+                    disabled={isQuoteItem?.balance < 0}
                 >
-                    BID IXPS
+                    Buy IXPS
                 </Button>
             </form>
             <form className={classes.formContainer}>
-                <div className={classes.formHeader}>
+                <Box className={classes.formHeader}>
                     <Typography className={classes.formTitle} variant="h3">
-                        Buy {(collection.length && collection[0].symbol)}
+                        Sell {isQuoteItem?.symbol}
                     </Typography>
-                    <div>
-                        {(collection.length && collection[0].available || 0)}
-                    </div>
-                </div>
+                    <Box className={classes.formValue}>
+                        <AccountBalanceWalletIcon color="action" /> 
+                        <span className={classes.availableBalance}>
+                            {isListingItem?.available}
+                        </span>
+                        {isListingItem?.symbol}
+                    </Box>
+                </Box>
                 {fields.map(field => 
-                    <div className={classes.inputContainer}>
+                    <Box className={classes.inputContainer}>
                         <label>{field.label}</label>
                         <input
                             className={classes.inputField}
@@ -168,15 +198,17 @@ const BidsAsksHistory = (props) => {
                             type={field.type}
                             name={field.name}
                         />
-                    </div>
+                    </Box>
                 )}
                 <Button 
                     className={sellButtonClassName}
                     variant="contained" 
                     color="primary" 
+                    onClick={() => _handlePostOrder('ASK')}
                     disableElevation
+                    disabled={isListingItem?.balance < 0}
                 >
-                    ASK IXPS
+                    Sell IXPS
                 </Button>
             </form>
         </Paper>

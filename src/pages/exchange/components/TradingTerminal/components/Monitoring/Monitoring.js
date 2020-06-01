@@ -47,6 +47,8 @@ function Monitoring(props) {
             });
 
             setSearch(filterData);
+        } else {
+            setSearch(data);
         }
     };
 
@@ -133,7 +135,7 @@ function Monitoring(props) {
                 )}
                 <ul className={classes.monitoringList}>
                     {filteredData.map((d, i ) => {
-                        const activeStyle = type === 'bids' ? classes.positiveCell : classes.negativeCell;
+                        const activeStyle = d.side?.toLowerCase() === 'bid' || type === 'bids'  ? classes.positiveCell : classes.negativeCell;
                         const priceStyle = classNames(
                             classes.defaultListItemStyle, 
                             activeStyle
