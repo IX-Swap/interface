@@ -32,7 +32,6 @@ const BidsAsksHistory = (props) => {
     const classes = useStyles();
     const bearerToken = localStore.getAccessToken();
     const _userId = localStore.getUserId();
-    const socket = io(`${API_URL}?token=${bearerToken}`);
 
     // Initialized Asks/Bids History state for  Payload
     const asksBidsHistoryData = MonitoringState();
@@ -83,6 +82,7 @@ const BidsAsksHistory = (props) => {
     // TODO: Better way to implement this locally/globally
     /*eslint-disable */
     useEffect(() => {
+        const socket = io(`${API_URL}?token=${bearerToken}`);
         socket.emit(BIDS_ASKS.emit, id);
         socket.on(`${BIDS_ASKS.on}/${_userId}`, (data) => {
             setCollection(data);
