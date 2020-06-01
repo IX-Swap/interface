@@ -24,7 +24,7 @@ const TradeHistory = (props) => {
         socket.on(`${TRADE_HISTORY.on}/${id}`, data => {
             setTradeStory(data);
         });
-    }, []);
+    }, [tradeStory]);
     /*eslint-disable */
     
     const data = tradeStory ? tradeStory : [];

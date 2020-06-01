@@ -19,21 +19,19 @@ import MarketActions from './modules/actions';
 import Modules from './modules';
 
 // Monitoring Modules
-// import MonitornigModule from './components/Monitoring/modules';
+import MonitornigModule from './components/Monitoring/modules';
 
 // Styles
 import useStyles from './styles';
 
 const { MarketState, useMarketDispatch } = Modules;
-// const { MonitoringState } = MonitornigModule;
+const { MonitoringState } = MonitornigModule;
 function OverviewExchange() {
-  const { id: tradingPairId } = useParams();
+  let { id: tradingPairId } = useParams();
   const classes = useStyles();
   const dispatch = useMarketDispatch();
   const marketState = MarketState();
   const mountedRef = useRef(true);
-
-  // const payloadState = MonitoringState();
 
   // @Paul here
   // eslint-disable-next-line no-unused-vars
@@ -46,7 +44,7 @@ function OverviewExchange() {
       ref: mountedRef,
     });
   }, [page, limit, dispatch]);
-  const item = items.length && items.find((item) => item._id === tradingPairId);
+  const item = items.length && items.find(item => item._id === tradingPairId);
 
   return (
     <Grid>
