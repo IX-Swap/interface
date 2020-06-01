@@ -57,7 +57,7 @@ export default makeStyles(theme => ({
     boxShadow: '0px 2px 1px -1px rgba(0,0,0,0.2), 0px 1px 1px 0px rgba(0,0,0,0.14), 0px 1px 3px 0px rgba(0,0,0,0.12)',
     marginBottom: theme.spacing.unit,
     maxHeight: 380,
-    overflow: 'hidden',
+    overflow: 'scroll',
   },
   monitoringTitle: {
     fontSize: 16,
@@ -119,7 +119,7 @@ export default makeStyles(theme => ({
     margin: 0,
     minHeight: 400,
     maxHeight: 450,
-    overflow: 'scroll',
+    overflow: 'hidden',
     padding: theme.spacing.unit,
   },
   monitoringListItem: {
@@ -194,5 +194,13 @@ export default makeStyles(theme => ({
   },
   sellButton: {
     backgroundColor: '#01A2FF',
+  },
+  formValue: {
+    alignItems: 'center',
+    display: 'flex',
+  },
+  availableBalance: {
+    marginLeft: 5,
+    marginRight: 5,
   },
 }))

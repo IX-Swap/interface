@@ -80,7 +80,7 @@ export default function TableMyOrders(props) {
           </TableHead>
           <TableBody>
             {myOrders &&
-              myOrders.length &&
+              myOrders.length ?
               myOrders.map((row) => (
                 <TableRow key={row.id}>
                   <TableCell>
@@ -96,7 +96,7 @@ export default function TableMyOrders(props) {
                     <Button color="primary">Cancel</Button>
                   </TableCell>
                 </TableRow>
-              ))}
+              )) : null}
           </TableBody>
         </Table>
       </TableContainer>

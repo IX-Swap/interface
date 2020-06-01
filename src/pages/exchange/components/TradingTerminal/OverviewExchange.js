@@ -18,17 +18,22 @@ import TableMyOrders from './components/MyOrders';
 import MarketActions from './modules/actions';
 import Modules from './modules';
 
+// Monitoring Modules
+import MonitornigModule from './components/Monitoring/modules';
+
 // Styles
 import useStyles from './styles';
 
 const { MarketState, useMarketDispatch } = Modules;
-
+const { MonitoringState } = MonitornigModule;
 function OverviewExchange() {
   let { id: tradingPairId } = useParams();
   const classes = useStyles();
   const dispatch = useMarketDispatch();
   const marketState = MarketState();
   const mountedRef = useRef(true);
+
+  const payloadState = MonitoringState();
 
   // @Paul here
   // eslint-disable-next-line no-unused-vars
@@ -42,6 +47,7 @@ function OverviewExchange() {
     });
   }, [page, limit, dispatch]);
   const item = items.length && items.find(item => item._id === tradingPairId);
+
   return (
     <Grid>
       <OverviewHeader data={item && item} />
