@@ -63,6 +63,7 @@ function Sidebar({ location }: { location: any }) {
       link: '/exchange',
       icon: <TrendingUpIcon />,
       children: [
+        { label: 'Markets', link: '/markets', icon: <SecurityIcon /> },
         {
           label: 'Trade History',
           link: '/trade-history',
@@ -73,7 +74,6 @@ function Sidebar({ location }: { location: any }) {
           link: '/order-history',
           icon: <SecurityIcon />,
         },
-        { label: 'Markets', link: '/markets', icon: <SecurityIcon /> },
         { label: 'Listings', link: '/listings', icon: <SecurityIcon /> },
       ],
     },

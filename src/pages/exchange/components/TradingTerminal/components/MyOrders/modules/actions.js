@@ -1,16 +1,12 @@
 // @flow
 import { postRequest } from 'services/httpRequests';
 
-import { postOrderActions, OrderState} from './types';
-
-async function postOrder(dispatch: Function, payload: OrderState) {
+async function cancelOrder(userId, orderId, payload: OrderState) {
   try {
-    dispatch({ type: postOrderActions.GET_POST_ORDER_REQUEST });
-
-    const uri = `/exchange/orders`;
+    const uri = `/exchange/orders/cancel/${userId}/${orderId}`;
     const result = await postRequest(uri, payload);
     const response = await result.json();
-
+    
     if (result.status === 200) {
       return response;
     } else {
@@ -18,14 +14,10 @@ async function postOrder(dispatch: Function, payload: OrderState) {
     }
 
   } catch (err) {
-      dispatch({ 
-        ...err,
-        type: postOrderActions.GET_POST_ORDER_FAILURE
-      });
       throw new Error(err);
   }
 }
 
 export default {
-  postOrder,
+  cancelOrder,
 };

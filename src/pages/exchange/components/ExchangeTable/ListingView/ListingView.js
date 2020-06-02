@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import { withRouter, useParams, Link as ReactLink } from 'react-router-dom';
+import { withRouter, useParams, Link as ReactLink, useHistory } from 'react-router-dom';
 
 // Material Components
 import {
@@ -25,6 +25,7 @@ const { ListViewState, useListViewDispatch } = ListModule;
 
 const HeaderContent = (d) => {
   const classes = useStyles();
+  const history = useHistory();
   const preventDefault = (evt) => evt.preventDefault();
   const { props } = d;
 
@@ -61,8 +62,12 @@ const HeaderContent = (d) => {
             (0%)
           </Typography>
         </Box>
-        <Button variant="contained" color="primary">
-          Trade
+        <Button 
+          variant="contained" 
+          color="primary"
+          onClick={() => history.replace('/exchange')}
+        >
+            Trade
         </Button>
       </Box>
       <Grid className={classes.companyContainer} container alignItems="center">
