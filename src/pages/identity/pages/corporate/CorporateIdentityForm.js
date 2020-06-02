@@ -19,11 +19,13 @@ const CorporateIdentityForm = ({
   editMode,
   dataroom,
   handleCreateIdentity,
+  onCancelEdit,
 }: {
   corporate: Identity,
   editMode: boolean,
   dataroom: Document[],
   handleCreateIdentity?: Function,
+  onCancelEdit?: Function,
 }) => {
   const methods = useForm();
 
@@ -136,10 +138,25 @@ const CorporateIdentityForm = ({
           />
 
           {editMode && (
-            <Grid container justify="flex-end">
-              <Button type="submit" variant="contained" color="primary">
-                Submit
-              </Button>
+            <Grid container justify="flex-end" spacing={2}>
+              {corporate && (
+                <Grid item>
+                  <Button
+                    type="button"
+                    variant="contained"
+                    color="default"
+                    onClick={onCancelEdit}
+                  >
+                    Cancel
+                  </Button>
+                </Grid>
+              )}
+
+              <Grid item>
+                <Button type="submit" variant="contained" color="primary">
+                  Submit
+                </Button>
+              </Grid>
             </Grid>
           )}
         </IdentitySection>
