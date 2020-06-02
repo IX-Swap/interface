@@ -14,6 +14,8 @@ import {
   Paper,
   LinearProgress,
   Typography,
+  Grid,
+  Button,
 } from '@material-ui/core';
 import { snackbarService } from 'uno-material-ui';
 import moment from 'moment';
@@ -211,17 +213,27 @@ const Withdraws = ({
     <TableBody>
       {list.length ? (
         list.map((row) => (
-          <TableRow hover key={row._id} onClick={() => viewDso(row._id)}>
+          <TableRow hover key={row._id}>
             {columns.map((e) => (
               <TableCell align={e.align || 'left'}>
                 {e.render ? e.render(row[e.key]) : row[e.key]}
               </TableCell>
             ))}
             <TableCell align="left">
-              <RowStatusComponent
-                dso={row}
-                handleSelectChange={handleSelectChange}
-              />
+              <Grid container direction="row" alignItems="center">
+                <RowStatusComponent
+                  dso={row}
+                  handleSelectChange={handleSelectChange}
+                />
+                <Button
+                  onClick={() => viewDso(row._id)}
+                  style={{
+                    marginLeft: '16px',
+                  }}
+                >
+                  View
+                </Button>
+              </Grid>
             </TableCell>
           </TableRow>
         ))
