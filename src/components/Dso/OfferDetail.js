@@ -1,15 +1,29 @@
 // @flow
 import React from 'react';
-import { Box, Typography } from '@material-ui/core';
+import { Box, Typography, TextField } from '@material-ui/core';
 
-const OfferDetail = ({ label, value }: { label: string, value: string }) => (
+const OfferDetail = (
+  {
+    label,
+    value,
+    edit = false,
+    name,
+  }: {
+    edit?: boolean,
+    label: string,
+    value: string,
+    name?: string,
+  },
+  ref: any
+) => (
   <Box py={2}>
     <Typography>
       <b>{label}</b>
     </Typography>
     <Box pt={1} />
-    <Typography>{value}</Typography>
+    {!edit && <Typography>{value}</Typography>}
+    {edit && <TextField inputRef={ref} name={name || ''} />}
   </Box>
 );
 
-export default OfferDetail;
+export default React.forwardRef<any, any>(OfferDetail);

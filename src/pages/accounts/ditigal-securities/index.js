@@ -8,9 +8,11 @@ import WSModule from './withdraw/modules/index';
 const { DSDepositsListProvider } = DSModule;
 const { DSWithdrawalsListProvider } = WSModule;
 
+const Summary = React.lazy(() => import('components/Summary'));
 const DSDeposit = React.lazy(() => import('./deposit/'));
 const DSWithdraw = React.lazy(() => import('./withdraw/'));
 const DSList = React.lazy(() => import('./list'));
+const ViewAsset = React.lazy(() => import('./view'));
 
 const routes = [
   {
@@ -20,6 +22,14 @@ const routes = [
   {
     route: '/accounts/wallets/deposit/:assetId',
     component: (props) => <DSDeposit {...props} />,
+  },
+  {
+    route: '/accounts/wallets/withdraw-view',
+    component: (props) => <Summary {...props} hasBack />,
+  },
+  {
+    route: '/accounts/wallets/view/:assetId',
+    component: (props) => <ViewAsset {...props} hasBack />,
   },
   {
     route: '/accounts/wallets/withdraw/:assetId',

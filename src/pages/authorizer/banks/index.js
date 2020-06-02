@@ -1,7 +1,8 @@
 // @flow
 /* eslint-disable react-hooks/exhaustive-deps */
 import React, { useCallback, useState } from 'react';
-import { Typography, Select, MenuItem } from '@material-ui/core';
+import { useHistory } from 'react-router-dom';
+import { Typography, Select, MenuItem, Button, Grid } from '@material-ui/core';
 import TableWithPagination from 'components/TableWithPagination';
 import type { Bank } from 'pages/accounts/bank/modules/types';
 import { makeStyles } from '@material-ui/core/styles';
@@ -105,21 +106,92 @@ const RowStatusComponent = ({
   }
 };
 
-const MemoizedTable = React.memo(({ handleSelectChange, onMount }: any) => (
-  <TableWithPagination
-    id="authorizerBanksList"
-    endpoint="/accounts/banks/list/"
-    columns={columns}
-    onMount={onMount}
-  >
-    {(mBank: Bank) => (
-      <RowStatusComponent
-        bank={mBank}
-        handleSelectChange={handleSelectChange}
-      />
-    )}
-  </TableWithPagination>
-));
+const redirectModel = [
+  {
+    label: 'Bank Name',
+    key: 'bankName',
+  },
+  {
+    label: 'Account Holder Name',
+    key: 'accountHolderName',
+  },
+  {
+    label: 'Currency',
+    // $FlowFixMe
+    key: 'asset.symbol',
+  },
+  {
+    label: 'Bank AccountNumber',
+    key: 'bankAccountNumber',
+  },
+  {
+    label: 'Swift Code',
+    key: 'swiftCode',
+  },
+  {
+    label: '',
+    // $FlowFixMe
+    key: '',
+  },
+  {
+    label: 'Line 1',
+    key: 'address.line1',
+  },
+  {
+    label: 'Line 2',
+    key: 'address.line2',
+  },
+  {
+    label: 'City',
+    key: 'address.city',
+  },
+  {
+    label: 'State',
+    key: 'address.state',
+  },
+  {
+    label: 'Country',
+    key: 'address.country',
+  },
+  {
+    label: 'Postal Code',
+    key: 'address.postalCode',
+  },
+];
+
+const MemoizedTable = React.memo(({ handleSelectChange, onMount }: any) => {
+  const history = useHistory();
+  return (
+    <TableWithPagination
+      id="authorizerBanksList"
+      endpoint="/accounts/banks/list/"
+      columns={columns}
+      onMount={onMount}
+    >
+      {(mBank: Bank) => (
+        <Grid container direction="row" alignItems="center">
+          <RowStatusComponent
+            bank={mBank}
+            handleSelectChange={handleSelectChange}
+          />
+          <Button
+            onClick={() =>
+              history.push({
+                pathname: '/authorizer/summary',
+                state: { data: mBank, model: redirectModel },
+              })
+            }
+            style={{
+              marginLeft: '16px',
+            }}
+          >
+            View
+          </Button>
+        </Grid>
+      )}
+    </TableWithPagination>
+  );
+});
 MemoizedTable.displayName = 'MemoizedTable';
 
 export default function Banks() {

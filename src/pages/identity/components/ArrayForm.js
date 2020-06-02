@@ -17,7 +17,9 @@ const ArrayForm = ({
   if (editMode) {
     return [...Array(count)].map((_, i) => {
       const name = `${rootName}[${i}]`;
-      return <IdentityForm editMode key={name} rootName={name} />;
+      return (
+        <IdentityForm editMode key={name} rootName={name} identity={data[i]} />
+      );
     });
   }
 

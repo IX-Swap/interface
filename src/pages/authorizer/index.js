@@ -11,6 +11,7 @@ const DepositsView = React.lazy(() => import('./deposits/view'));
 const Withdrawals = React.lazy(() => import('./withdrawals'));
 const WithdrawalsView = React.lazy(() => import('./withdrawals/view'));
 const DSWithdrawals = React.lazy(() => import('./ds-withdrawals'));
+const DSWithdrawalsView = React.lazy(() => import('./ds-withdrawals/view'));
 const DSOs = React.lazy(() => import('./digital-securities'));
 const DSOView = React.lazy(() => import('./digital-securities/view'));
 const IndividualIdentities = React.lazy(() =>
@@ -55,6 +56,13 @@ const routes = [
     route: '/authorizer/ds-withdrawals',
     title: 'DS Withdrawals',
     component: DSWithdrawals,
+    exact: true,
+  },
+  {
+    route: '/authorizer/ds-withdrawals/view',
+    title: 'View DS Withdrawal',
+    component: DSWithdrawalsView,
+    hasBack: true,
   },
   {
     route: '/authorizer/individual-identities',
@@ -127,6 +135,8 @@ const getTitle = (path: string): string => {
       return 'View Deposit';
     case '/authorizer/withdrawals/view':
       return 'View Withdrawal';
+    case '/authorizer/ds-withdrawals/view':
+      return 'View DS Withdrawal';
     default:
       return '';
   }
@@ -140,6 +150,7 @@ function Authorizer(props: RouteProps) {
       '/authorizer/withdrawals/view',
       '/authorizer/deposits/view',
       '/authorizer/summary',
+      '/authorizer/ds-withdrawals/view',
     ].includes(a);
 
   return (

@@ -1,10 +1,10 @@
 // @flow
 import React from 'react';
 import { Redirect } from 'react-router-dom';
-import { Box, Typography } from '@material-ui/core';
+import { Box, Button } from '@material-ui/core';
 import CorporateIdentityForm from './CorporateIdentityForm';
 import { useIdentityState, useIdentityDispatch } from '../../modules';
-import { createIdentity } from '../../modules/actions';
+import { createIdentity, toggleEditMode } from '../../modules/actions';
 
 const CorporateIdentity = () => {
   const {
@@ -20,16 +20,21 @@ const CorporateIdentity = () => {
   }
 
   const handleOnCreate = (data) => {
-    createIdentity(identityDispatch, data, 'corporate');
+    const id = corporate ? corporate._id : undefined;
+    createIdentity(identityDispatch, data, 'corporate', id);
   };
 
   return (
     <Box position="relative">
-      {corporate && (
-        <Box position="absolute" top="-2.5em" right="0">
-          <Typography>
-            <b>{corporate.status}</b>
-          </Typography>
+      {corporate && !editMode && (
+        <Box position="absolute" top="-3em" right="0">
+          <Button
+            variant="contained"
+            color="primary"
+            onClick={() => toggleEditMode(identityDispatch, true)}
+          >
+            Edit
+          </Button>
         </Box>
       )}
       <CorporateIdentityForm
@@ -37,6 +42,7 @@ const CorporateIdentity = () => {
         corporate={corporate}
         handleCreateIdentity={handleOnCreate}
         dataroom={dataroom}
+        onCancelEdit={() => toggleEditMode(identityDispatch, false)}
       />
     </Box>
   );

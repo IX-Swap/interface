@@ -72,18 +72,13 @@ function AccountsPanel({ location }: any) {
     },
     {
       route: '/accounts/banks',
-      label: 'CASH',
+      label: 'Bank',
       component: <BankComponent />,
     },
     {
       route: '/accounts/wallets',
       label: 'DIGITAL SECURITIES',
       component: <Wallets />,
-    },
-    {
-      route: '/accounts/reports',
-      label: 'REPORT',
-      component: <span>REPORTS</span>,
     },
     {
       route: '/accounts/transactions',

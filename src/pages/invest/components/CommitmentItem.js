@@ -61,6 +61,7 @@ const CommitmentItem = ({
   const [saving, setSaving] = useState(false);
   const [balance, setBalance] = useState(null);
   const [estimatedValue, setEstimatedValue] = useState(0);
+  const [numberOfUnits, setNumberOfUnits] = useState(0);
   const [subscriptionDocument, setSubscriptionDocument] = useState(null);
   const { editMode } = useInvestState();
 
@@ -68,7 +69,7 @@ const CommitmentItem = ({
 
   const onSubmit = async (data) => {
     setSaving(true);
-    const { walletAddress, numberOfUnits, otp } = data;
+    const { walletAddress, otp } = data;
     const { currency, _id, minimumInvestment } = dso;
 
     if (numberOfUnits < minimumInvestment) {
@@ -149,8 +150,8 @@ const CommitmentItem = ({
     if (dso) {
       fetch();
 
-      const units = watch('numberOfUnits');
-      if (units) setEstimatedValue(units * dso.pricePerUnit);
+      const amount = watch('amount');
+      if (amount) setNumberOfUnits(amount / dso.pricePerUnit);
     }
   }, [dso, watch, asset]);
 
@@ -224,6 +225,35 @@ const CommitmentItem = ({
 
               {editMode ? (
                 <TextField
+                  error={!!errors.amount}
+                  name="amount"
+                  inputRef={register({ required: true })}
+                  fullWidth
+                  type="number"
+                  label="Investment Amount"
+                  style={{ marginBottom: '1em' }}
+                  disabled={saving}
+                />
+              ) : (
+                <TextField
+                  fullWidth
+                  label="Investment Amount"
+                  value={commitment ? formatMoney(commitment.totalAmount) : 0}
+                  style={{ marginBottom: '1em' }}
+                  disabled
+                />
+              )}
+
+              <TextField
+                fullWidth
+                label="Unit Price"
+                value={formatMoney(dso ? dso.pricePerUnit : 0)}
+                style={{ marginBottom: '1em' }}
+                disabled
+              />
+
+              {editMode ? (
+                <TextField
                   error={!!errors.numberOfUnits}
                   name="numberOfUnits"
                   inputRef={register({ required: true })}
@@ -231,7 +261,7 @@ const CommitmentItem = ({
                   type="number"
                   label="Number of Units"
                   style={{ marginBottom: '1em' }}
-                  disabled={saving}
+                  value={numberOfUnits}
                 />
               ) : (
                 <TextField

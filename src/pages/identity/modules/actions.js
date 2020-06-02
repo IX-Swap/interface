@@ -160,15 +160,20 @@ const createIndividualIdentity = async ({
   throw new Error('Creating profile failed.');
 };
 
-const createCorporateIdentity = async (corporatePayload: any) => {
+const createCorporateIdentity = async (corporatePayload: any, id?: string) => {
   const userId = localStore.getUserId();
+  let result;
 
-  const uri = `/identity/corporates/${userId}`;
-  const result = await postRequest(uri, corporatePayload);
+  if (id) {
+    const uri = `/identity/corporates/${userId}/${id}`;
+    result = await putRequest(uri, corporatePayload);
+  } else {
+    const uri = `/identity/corporates/${userId}`;
+    result = await postRequest(uri, corporatePayload);
+  }
 
   if (result) {
     const response = await result.json();
-    console.log(response);
 
     const payload = response.data;
     const mDeclarations = formatDeclarations(
@@ -184,7 +189,8 @@ const createCorporateIdentity = async (corporatePayload: any) => {
 export const createIdentity = async (
   dispatch: Function,
   identity: $Shape<Identity>,
-  type: 'corporate' | 'individual'
+  type: 'corporate' | 'individual',
+  id?: string
 ) => {
   dispatch({ type: actions.CREATE_IDENTITY_REQUEST });
 
@@ -278,19 +284,22 @@ export const createIdentity = async (
     }
   } else if (type === 'corporate') {
     try {
-      const createdIdentity = await createCorporateIdentity({
-        companyLegalName,
-        registrationNumber,
-        countryOfFormation,
-        dateOfIncorporation,
-        companyAddress,
-        representatives,
-        directors,
-        beneficialOwners,
-        documents,
-        declarations,
-        walletAddress: '0x65356f2ab79dac8a0a930c18a83b214ef9fca6a7', // TODO
-      });
+      const createdIdentity = await createCorporateIdentity(
+        {
+          companyLegalName,
+          registrationNumber,
+          countryOfFormation,
+          dateOfIncorporation,
+          companyAddress,
+          representatives,
+          directors,
+          beneficialOwners,
+          documents,
+          declarations,
+          walletAddress: '0x65356f2ab79dac8a0a930c18a83b214ef9fca6a7', // TODO
+        },
+        id
+      );
 
       if (createdIdentity) {
         dispatch({
@@ -341,12 +350,12 @@ export async function uploadFile(
 
       dispatch({ type: actions.SAVE_FILE_SUCCESS, payload: { data, type } });
     } else {
-      throw new Error(response.message);
+      dispatch({ type: actions.SAVE_FILE_FAILURE, payload: response.message });
     }
   } catch (err) {
     const errMsg = err.message || err.toString() || 'Upload failed.';
     dispatch({ type: actions.SAVE_FILE_FAILURE, payload: errMsg });
-    throw new Error(errMsg);
+    console.log(err);
   }
 }
 

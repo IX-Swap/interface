@@ -20,12 +20,12 @@ export const bankSaveStatus = {
 };
 
 type BankAddress = {
-  line1: string,
-  line2: string,
-  city: string,
-  state: string,
-  country: string,
-  postalCode: string,
+  line1?: string,
+  line2?: string,
+  city?: string,
+  state?: string,
+  country?: string,
+  postalCode?: string,
 };
 
 export type BankRequest = {
@@ -66,7 +66,7 @@ export type Bank = {
   swiftCode: string,
   authorized: boolean,
   createdAt: string,
-  address: BankAddress,
+  address?: ?BankAddress,
 };
 
 export type BanksListState = {

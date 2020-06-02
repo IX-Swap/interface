@@ -8,14 +8,14 @@ import {
   Button,
 } from '@material-ui/core';
 
-import type { Withdraw } from './modules/types';
+import type { DSWithdrawal } from './modules/types';
 
 type Prop = {
-  withdraw: Withdraw,
+  withdraw: DSWithdrawal,
   newStatus: string,
   open: boolean,
   handleClose: Function,
-  handleConfirm: (withdraw: Withdraw, newStatus: string) => Promise<void>,
+  handleConfirm: (withdraw: DSWithdrawal, newStatus: string) => Promise<void>,
 };
 
 export default function DialogAuthorizeConfirmation({

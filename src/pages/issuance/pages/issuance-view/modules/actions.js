@@ -1,7 +1,7 @@
 // @flow
-import { getRequest } from 'services/httpRequests';
+import { putRequest, getRequest } from 'services/httpRequests';
 import type { Document } from 'context/dso/types';
-
+import localStore from 'services/storageHelper';
 // TODO: Move to another place for reusability
 export const downloadFile = async (document: Document) => {
   const { user, _id } = document;
@@ -16,5 +16,21 @@ export const downloadFile = async (document: Document) => {
     });
   } else {
     throw new Error('Download Failed.');
+  }
+};
+
+export const saveIssuance = async (id: string, payload: any) => {
+  const uri = `/issuance/dso/${localStore.getUserId()}/${id}`;
+
+  try {
+    const res = await putRequest(uri, payload);
+
+    if (res.status !== 200) return undefined;
+
+    const { data } = await res.json();
+
+    return data;
+  } catch (e) {
+    return undefined;
   }
 };
