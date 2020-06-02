@@ -8,6 +8,7 @@ import type { Bank } from '../modules/types';
 
 import BankActions from '../modules/actions';
 import BanksListModule from '../modules/index';
+import WithdrawalList from './list';
 
 const { getBank } = BankActions;
 const { useBanksListDispatch } = BanksListModule;
@@ -83,6 +84,12 @@ function BankWithdrawComponent({ match }: RouteProps) {
         {bank && <Typography variant="h3">Withdraw Cash</Typography>}
       </Box>
       {toRender}
+      <Box m={4}>
+        {bank && <Typography variant="h3">Recent Withdrawals</Typography>}
+      </Box>
+      <Box m={4}>
+        <WithdrawalList />
+      </Box>
     </>
   );
 }

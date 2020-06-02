@@ -24,8 +24,4 @@ export const columns = [
     label: 'Amount',
     render: (val: string, row: any) => `${row.asset.symbol} ${val}`,
   },
-  {
-    key: '',
-    label: 'Actions',
-  },
 ];

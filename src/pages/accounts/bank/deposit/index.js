@@ -9,6 +9,7 @@ import type { Bank } from '../modules/types';
 
 import BankActions from '../modules/actions';
 import BanksListModule from '../modules/index';
+import DepositList from './list';
 
 const { getBank } = BankActions;
 const { useBanksListDispatch } = BanksListModule;
@@ -60,12 +61,24 @@ const useGenericBankLogic = (bankId: string) => {
 function BankDepositComponent({ bankId, code }: any) {
   const { bank, deposit, amount, isConfirmation } = useGenericBankLogic(bankId);
 
+  if (!bank) return <span>invalid</span>;
+
+  const investaxBank: Bank = { ...bank };
+
+  investaxBank.bankName = 'OVERSEA-CHINESE BANKING CORPORATION LIMITED';
+  investaxBank.swiftCode = 'CBCSGSG';
+  investaxBank.accountHolderName = 'IC SG PTE LTD';
+  investaxBank.bankAccountNumber = '501123956001';
+  investaxBank.address = {
+    line1: 'OCBC Centre, Floor 9, 65 Chulia Street, Singapore 049513',
+  };
+
   let toRender = <span>loading</span>;
 
   if (bank) {
     toRender = (
       <BankDepositForm
-        bank={bank}
+        bank={investaxBank}
         code={code}
         deposit={(toDeposit: number) => deposit(toDeposit)}
       />
@@ -73,7 +86,7 @@ function BankDepositComponent({ bankId, code }: any) {
     if (isConfirmation) {
       toRender = (
         <DepositConfirmation
-          bank={bank}
+          bank={investaxBank}
           amount={amount}
           transactionCode={code}
         />
@@ -87,6 +100,13 @@ function BankDepositComponent({ bankId, code }: any) {
         {bank && <Typography variant="h3">Deposit Cash</Typography>}
       </Box>
       {toRender}
+
+      <Box m={4}>
+        {bank && <Typography variant="h3">Recent Deposits</Typography>}
+      </Box>
+      <Box m={4}>
+        <DepositList />
+      </Box>
     </>
   );
 }

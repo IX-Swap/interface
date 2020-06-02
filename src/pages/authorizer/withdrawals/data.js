@@ -20,9 +20,9 @@ export const columns = [
     label: 'Bank name',
   },
   {
-    key: 'asset.symbol',
+    key: 'amount',
     label: 'Amount',
-    render: (val: string, row: any) => `${val} ${row.amount}`,
+    render: (val: string, row: any) => `${row.asset.symbol} ${val}`,
   },
   {
     key: '',

@@ -326,7 +326,7 @@ export default function BankFormComponent({
             <Box ml={3} m={1}>
               <FormControl fullWidth>
                 <CountrySelect
-                  value={{ label: bankAddress.country }}
+                  value={{ label: (bankAddress || {}).country || '' }}
                   onChange={(_, value) => {
                     setBankAddress({
                       ...bankAddress,

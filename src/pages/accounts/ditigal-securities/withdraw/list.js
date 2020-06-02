@@ -11,6 +11,7 @@ import {
   TableHead,
   LinearProgress,
 } from '@material-ui/core';
+import { useHistory } from 'react-router-dom';
 import { get } from 'lodash';
 import moment from 'moment';
 import DSModule from './modules/index';
@@ -77,32 +78,55 @@ type TableColumn = {
 
 const columns: Array<TableColumn> = [
   {
-    label: "Digital Security",
+    label: 'Digital Security',
     // $FlowFixMe
-    key: "asset.symbol",
+    key: 'asset.symbol',
   },
   {
-    label: "Status",
-    key: "status",
+    label: 'Status',
+    key: 'status',
   },
   {
-    label: "Amount",
-    key: "amount",
-    align: "right",
+    label: 'Amount',
+    key: 'amount',
+    align: 'right',
     render: (value) =>
       value &&
       parseFloat(value)
         .toFixed(2)
-        .replace(/\d(?=(\d{3})+\.)/g, "$&,"),
+        .replace(/\d(?=(\d{3})+\.)/g, '$&,'),
   },
   {
-    label: "Date",
-    key: "date",
-    render: (value) => moment(value).format("MM/DD/YYYY"),
+    label: 'Date',
+    key: 'date',
+    render: (value) => moment(value).format('MM/DD/YYYY'),
   },
   {
-    label: "Memo",
-    key: "memo",
+    label: 'Memo',
+    key: 'memo',
+  },
+];
+
+const redirectModel = [
+  {
+    label: 'Name of Token',
+    key: 'asset.name',
+  },
+  {
+    label: 'Amount',
+    key: 'amount',
+  },
+  {
+    label: 'Memo',
+    key: 'memo',
+  },
+  {
+    label: 'Date and Time',
+    key: 'createdAt',
+  },
+  {
+    label: 'Id',
+    key: 'transaction',
   },
 ];
 
@@ -116,6 +140,16 @@ export default function WithdrawalList({ assetId }: { assetId: string }) {
     handleChangePage,
     handleChangeRowsPerPage,
   } = useWithdrawalsListLogic(assetId);
+
+  const history = useHistory();
+
+  const showDetails = (row) => {
+    history.push({
+      pathname: '/accounts/wallets/withdraw-view',
+      state: { data: row, model: redirectModel },
+    });
+  };
+
   return (
     <TableContainer>
       {status === DS_WITHDRAWALS_LIST_STATUS.GETTING && <LinearProgress />}
@@ -139,7 +173,7 @@ export default function WithdrawalList({ assetId }: { assetId: string }) {
         {items && status === DS_WITHDRAWALS_LIST_STATUS.IDLE && (
           <TableBody>
             {items.map((row, index) => (
-              <TableRow key={index}>
+              <TableRow key={index} hover onClick={() => showDetails(row)}>
                 {columns.map((e) => (
                   <TableCell key={e.key} align={e.align || 'left'}>
                     {(e.render &&
