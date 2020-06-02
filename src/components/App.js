@@ -112,6 +112,7 @@ function App() {
       {
         route: '/exchange',
         component: () => <TableMarketListings />,
+        exact: true,
       },
       {
         route: '/trade-history',
