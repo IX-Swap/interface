@@ -12,22 +12,44 @@ const BankDepositComponent = React.lazy(() => import('./deposit'));
 const BankWithrawComponent = React.lazy(() => import('./withdraw'));
 const BankCreateComponent = React.lazy(() => import('./BankCreateComponent'));
 const BankListComponent = React.lazy(() => import('./BankListComponent'));
+const BankDepositView = React.lazy(() => import('./deposit/view'));
+const BankWithdrawalView = React.lazy(() => import('./withdraw/view'));
+const Summary = React.lazy(() => import('components/Summary'));
 
 const routes = [
   {
+    route: '/accounts/banks/view',
+    exact: true,
+    component: (props) => <Summary {...props} hasBack />,
+  },
+  {
     route: '/accounts/banks',
+    exact: true,
     component: (props) => <BankListComponent {...props} />,
   },
   {
+    route: '/accounts/banks/deposit-view',
+    exact: true,
+    component: (props) => <BankDepositView {...props} />,
+  },
+  {
     route: '/accounts/banks/deposit/:bankId',
+    exact: true,
     component: (props) => <BankDepositComponent {...props} />,
   },
   {
+    route: '/accounts/banks/withdrawal-view',
+    exact: true,
+    component: (props) => <BankWithdrawalView {...props} />,
+  },
+  {
     route: '/accounts/banks/withdraw/:bankId',
+    exact: true,
     component: (props) => <BankWithrawComponent {...props} />,
   },
   {
     route: '/accounts/banks/bank-create',
+    exact: true,
     component: (props) => <BankCreateComponent {...props} />,
   },
 ];
@@ -54,9 +76,7 @@ const useUpdateAssets = () => {
 };
 
 function BankRoutes() {
-  const { assetsStatus, type } = useUpdateAssets();
-
-  console.log('atype', type);
+  const { assetsStatus } = useUpdateAssets();
 
   return (
     assetsStatus === ASSETS_STATUS.IDLE && (
@@ -64,7 +84,7 @@ function BankRoutes() {
         {routes.map((route, index) => (
           <Route
             key={route.route}
-            exact={index === 0}
+            exact={route.exact || index === 0}
             path={route.route}
             component={route.component}
           />

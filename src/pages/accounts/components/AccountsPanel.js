@@ -72,7 +72,7 @@ function AccountsPanel({ location }: any) {
     },
     {
       route: '/accounts/banks',
-      label: 'CASH',
+      label: 'Bank',
       component: <BankComponent />,
     },
     {

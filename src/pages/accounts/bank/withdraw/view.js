@@ -1,6 +1,7 @@
 import React from 'react';
-import { Paper, Grid, Typography, Box } from '@material-ui/core';
-import { withRouter } from 'react-router-dom';
+import ArrowBackIosIcon from '@material-ui/icons/ArrowBackIos';
+import { Paper, Grid, Typography, Box, Button } from '@material-ui/core';
+import { withRouter, useHistory } from 'react-router-dom';
 import { makeStyles } from '@material-ui/styles';
 import { formatNumber } from 'helpers/formatNumbers';
 import BankDetails from 'pages/accounts/bank/deposit/BankDetails';
@@ -29,14 +30,25 @@ const BoldTypography = ({ children, ...others }: any) => (
 
 function WithdrawalView({ location }: RouteProps) {
   const { withdrawal } = location.state || {};
-
+  const history = useHistory();
   const classes = useStyles();
 
   if (!withdrawal) return <span>nothing to display</span>;
 
   return (
     <Grid container justify="center" direction="column" component={Paper}>
-      <Box p={4} />
+      <Box p={4}>
+        <Grid container item xs={12} alignItems="center">
+          <Grid item>
+            <Button type="button" onClick={() => history.goBack()}>
+              <ArrowBackIosIcon />
+            </Button>
+          </Grid>
+          <Grid item>
+            <Typography variant="h3">Withdrawal Information</Typography>
+          </Grid>
+        </Grid>
+      </Box>
       <Grid container className={classes.infoGrid}>
         <Grid item xs={6}>
           <BoldTypography variant="subtitle2" className={classes.labels}>
