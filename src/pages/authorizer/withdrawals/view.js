@@ -30,7 +30,6 @@ const BoldTypography = ({ children, ...others }: any) => (
 function WithdrawalView({ location }: RouteProps) {
   const { withdrawal } = location.state || {};
 
-  console.log(withdrawal);
   const classes = useStyles();
 
   if (!withdrawal) return <span>nothing to display</span>;

@@ -143,12 +143,10 @@ export default function DigitalSecurities({ match }: RouteProps) {
   ) => option.assetId === value.assetId;
 
   const onCoinChange = (ev, value: UserSecurityBalance) => {
-    console.log('handle coin change', value);
     setDsState({
       ...dsState,
       selectedCoin: value,
     });
-    console.log(dsState);
   };
 
   return (
