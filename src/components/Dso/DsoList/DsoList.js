@@ -4,6 +4,8 @@ import {
   Container,
   TextField,
   Box,
+  Grid,
+  Button,
   Table,
   TableRow,
   TableBody,
@@ -12,6 +14,8 @@ import {
   TablePagination,
   LinearProgress,
 } from '@material-ui/core';
+import { useHistory } from 'react-router-dom';
+import { useIsIssuer } from 'services/acl';
 import OfferCard from './OfferCard';
 import DsoListModule from './modules';
 import Actions from './modules/actions';
@@ -20,6 +24,7 @@ const { useDsoListState, useDsoListDispatch, DSO_LIST_STATUS } = DsoListModule;
 const { getDsoList, setPage, setRowsPerPage, clearApiStatus } = Actions;
 
 const useDsoListLogic = () => {
+  const isIssuer = useIsIssuer();
   const dsoListDispatch = useDsoListDispatch();
   const dsoListState = useDsoListState();
   const { status, page, total, limit, items, statusCode, error } = dsoListState;
@@ -64,11 +69,13 @@ const useDsoListLogic = () => {
     handleChangePage,
     handleChangeRowsPerPage,
     setPage,
+    isIssuer,
   };
 };
 
 const DsoList = ({ onClickView }: { onClickView: Function }) => {
   const {
+    isIssuer,
     status: loadingStatus,
     items: dsoList = [],
     total,
@@ -78,6 +85,8 @@ const DsoList = ({ onClickView }: { onClickView: Function }) => {
     handleChangePage,
   } = useDsoListLogic();
 
+  const history = useHistory();
+
   return (
     <Container>
       {[DSO_LIST_STATUS.GETTING].includes(loadingStatus) ? (
@@ -85,7 +94,23 @@ const DsoList = ({ onClickView }: { onClickView: Function }) => {
       ) : null}
 
       <Box mb={4}>
-        <TextField fullWidth variant="outlined" placeholder="Search" />
+        <Grid container style={{ padding: '0 16px' }}>
+          <TextField
+            variant="outlined"
+            placeholder="Search"
+            style={{ flexGrow: 1 }}
+          />
+          {isIssuer && (
+            <Button
+              variant="contained"
+              color="primary"
+              style={{ minWidth: '100px', marginLeft: '10px' }}
+              onClick={() => history.push(`/issuance/create`)}
+            >
+              Add
+            </Button>
+          )}
+        </Grid>
       </Box>
 
       <Table aria-label="accounts table">

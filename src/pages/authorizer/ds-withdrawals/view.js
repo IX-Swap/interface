@@ -3,7 +3,6 @@ import { Paper, Grid, Typography, Box } from '@material-ui/core';
 import { withRouter } from 'react-router-dom';
 import { makeStyles } from '@material-ui/styles';
 import { formatNumber } from 'helpers/formatNumbers';
-import BankDetails from 'pages/accounts/bank/deposit/BankDetails';
 
 const useStyles = makeStyles(() => ({
   infoGrid: {
@@ -36,7 +35,7 @@ function WithdrawalView({ location }: RouteProps) {
 
   return (
     <Grid container justify="center" direction="column" component={Paper}>
-      <Box p={4} />
+      <Box pb={4} />
       <Grid container className={classes.infoGrid}>
         <Grid item xs={6}>
           <BoldTypography variant="subtitle2" className={classes.labels}>
@@ -55,7 +54,7 @@ function WithdrawalView({ location }: RouteProps) {
 
         <Grid item xs={6}>
           <BoldTypography variant="subtitle2" className={classes.labels}>
-            Account No:
+            Address:
           </BoldTypography>
         </Grid>
         <Grid item xs={6}>
@@ -64,7 +63,7 @@ function WithdrawalView({ location }: RouteProps) {
             className={classes.values}
             color="primary"
           >
-            {withdrawal.bankAccount.bankAccountNumber}
+            {withdrawal.recipientWallet}
           </BoldTypography>
         </Grid>
 
@@ -98,7 +97,7 @@ function WithdrawalView({ location }: RouteProps) {
           </BoldTypography>
         </Grid>
       </Grid>
-      <BankDetails bank={withdrawal.bankAccount} />
+      <Box pb={4} />
     </Grid>
   );
 }

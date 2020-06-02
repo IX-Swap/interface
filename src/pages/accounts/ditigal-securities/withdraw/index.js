@@ -152,7 +152,6 @@ function useDigitalSecuritiesLogic(asset: string) {
   }, [items, setDsState, asset]);
 
   useEffect(() => {
-    console.log('effect');
     itemsChanged();
   }, [itemsChanged]);
 
