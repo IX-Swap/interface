@@ -21,7 +21,7 @@ const { useRef, useEffect } = React;
 type TableColumn<T> = {
   key: $Keys<T>,
   label: string,
-  render: (val: any) => string,
+  render?: ?(val: any, row: any) => string,
   align?: ?string,
 };
 
@@ -121,7 +121,7 @@ const Items = ({ items, columns, children }: ItemsProps) => (
           {columns.map((e) => (
             <TableCell align="left" key={e.key}>
               {e.key &&
-                (e.render ? e.render(get(row, e.key)) : get(row, e.key))}
+                (e.render ? e.render(get(row, e.key), row) : get(row, e.key))}
               {!e.key && children && children(row)}
             </TableCell>
           ))}

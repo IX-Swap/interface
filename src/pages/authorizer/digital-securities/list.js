@@ -307,6 +307,7 @@ export default function BanksList() {
               </TableCell>
             </TableRow>
           </TableHead>
+          {/* $FlowFixMe */}
           <Withdraws list={items} handleSelectChange={handleSelectChange} />
           {total && (
             <TableFooter>
