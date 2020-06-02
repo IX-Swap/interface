@@ -30,6 +30,7 @@ type BaseRequirements<T> = {
   columns: Array<TableColumn<T>>,
   endpoint: string,
   onMount: Function,
+  onRowClick?: ?Function,
   children?: (...props: any) => Node | React.Element<any>,
 };
 
@@ -37,12 +38,14 @@ type ItemsProps = {
   items: Array<any>,
   columns: Array<TableColumn<any>>,
   children?: (...props: any) => Node | React.Element<any>,
+  clickProp?: ?{ onClick?: ?Function },
 };
 
 type TableWithPaginationProps<T> = {
   requirements: Module,
   columns: Array<TableColumn<T>>,
-  onMount: Function,
+  onMount?: ?Function,
+  onRowClick?: ?Function,
   children?: (...props: any) => Node | React.Element<any>,
 };
 
@@ -113,35 +116,40 @@ const usePaginationLogic = (actions: ModuleActions, meta: ModuleMeta) => {
   };
 };
 
-const Items = ({ items, columns, children }: ItemsProps) => (
-  <TableBody>
-    {items.length ? (
-      items.map((row) => (
-        <TableRow hover key={row._id}>
-          {columns.map((e) => (
-            <TableCell align="left" key={e.key}>
-              {e.key &&
-                (e.render ? e.render(get(row, e.key), row) : get(row, e.key))}
-              {!e.key && children && children(row)}
-            </TableCell>
-          ))}
+const Items = ({ items, columns, children, clickProp }: ItemsProps) => {
+  const { onClick } = clickProp || {};
+
+  return (
+    <TableBody>
+      {items.length ? (
+        items.map((row) => (
+          <TableRow hover key={row._id} onClick={() => onClick && onClick(row)}>
+            {columns.map((e) => (
+              <TableCell align="left" key={`row-${e.key}`}>
+                {e.key && // $FlowFixMe
+                  (e.render ? e.render(get(row, e.key), row) : get(row, e.key))}
+                {!e.key && children && children(row)}
+              </TableCell>
+            ))}
+          </TableRow>
+        ))
+      ) : (
+        <TableRow>
+          <TableCell align="center" colSpan={5}>
+            No Data
+          </TableCell>
         </TableRow>
-      ))
-    ) : (
-      <TableRow>
-        <TableCell align="center" colSpan={5}>
-          No Data
-        </TableCell>
-      </TableRow>
-    )}
-  </TableBody>
-);
+      )}
+    </TableBody>
+  );
+};
 
 const TableWithPagination = ({
   columns,
   requirements,
   children,
   onMount,
+  onRowClick,
 }: TableWithPaginationProps<any>) => {
   const { actions, meta } = requirements;
   const {
@@ -156,8 +164,14 @@ const TableWithPagination = ({
     reload,
   } = usePaginationLogic(actions, meta);
 
+  const clickProp = { onClick: undefined };
+
   if (onMount && isFunction(onMount)) {
     onMount(reload);
+  }
+
+  if (onRowClick && isFunction(onRowClick)) {
+    clickProp.onClick = onRowClick;
   }
 
   return (
@@ -174,7 +188,7 @@ const TableWithPagination = ({
               ))}
             </TableRow>
           </TableHead>
-          <Items items={items} columns={columns}>
+          <Items items={items} columns={columns} clickProp={clickProp}>
             {children}
           </Items>
           {total && (
@@ -206,6 +220,7 @@ const MainComponent = ({
   columns,
   children,
   onMount,
+  onRowClick,
 }: BaseRequirements<any>) => {
   const Reqts = initializeRequirements(id, endpoint);
 
@@ -215,6 +230,7 @@ const MainComponent = ({
         columns={columns}
         requirements={Reqts}
         onMount={onMount}
+        onRowClick={onRowClick}
       >
         {children}
       </TableWithPagination>

@@ -39,6 +39,59 @@ const {
 } = BankListModule;
 const { getBankAccounts, setPage, setRowsPerPage, clearApiStatus } = Actions;
 
+const redirectModel = [
+  {
+    label: 'Bank Name',
+    key: 'bankName',
+  },
+  {
+    label: 'Account Holder Name',
+    key: 'accountHolderName',
+  },
+  {
+    label: 'Currency',
+    // $FlowFixMe
+    key: 'asset.symbol',
+  },
+  {
+    label: 'Bank AccountNumber',
+    key: 'bankAccountNumber',
+  },
+  {
+    label: 'Swift Code',
+    key: 'swiftCode',
+  },
+  {
+    label: '',
+    // $FlowFixMe
+    key: '',
+  },
+  {
+    label: 'Line 1',
+    key: 'address.line1',
+  },
+  {
+    label: 'Line 2',
+    key: 'address.line2',
+  },
+  {
+    label: 'City',
+    key: 'address.city',
+  },
+  {
+    label: 'State',
+    key: 'address.state',
+  },
+  {
+    label: 'Country',
+    key: 'address.country',
+  },
+  {
+    label: 'Postal Code',
+    key: 'address.postalCode',
+  },
+];
+
 function useBankListLogic() {
   const bankDispatch = useBanksListDispatch();
   const bankListState = useBanksListState();
@@ -71,7 +124,7 @@ function useBankListLogic() {
     bankName: bank.bankName,
     swiftCode: bank.swiftCode,
     bankAccountNumber: bank.bankAccountNumber,
-    address: bank.address,
+    address: bank.address || {},
   });
 
   const editBank = (bank: Bank) => {
@@ -256,6 +309,19 @@ function ListBankAccounts({
             color="primary"
             aria-label="text primary button group"
           >
+            <Button
+              onClick={() =>
+                history.push({
+                  pathname: '/accounts/banks/view',
+                  state: { data: bank, model: redirectModel },
+                })
+              }
+              style={{
+                marginLeft: '16px',
+              }}
+            >
+              View
+            </Button>
             <Button
               onClick={() => {
                 history.push(`/accounts/banks/deposit/${bank._id}`);
