@@ -18,16 +18,16 @@ const IndividualIdentityForm = ({
   editMode,
   dataroom,
   handleCreateIdentity,
+  onCancelEdit,
 }: {
   identity: Identity,
   editMode: boolean,
   dataroom: Document[],
   handleCreateIdentity?: Function,
+  onCancelEdit?: Function,
 }) => {
   const methods = useForm();
   const { handleSubmit } = methods;
-
-  console.log(identity);
 
   const onSubmit = (data: any) => {
     const formattedDeclarations = [];
@@ -141,10 +141,25 @@ const IndividualIdentityForm = ({
             declarations={identity.declarations || declarations.individual}
           />
           {editMode && (
-            <Grid container justify="flex-end">
-              <Button type="submit" vairant="contained" color="primary">
-                Submit
-              </Button>
+            <Grid container justify="flex-end" spacing={2}>
+              {identity && (
+                <Grid item>
+                  <Button
+                    type="button"
+                    variant="contained"
+                    color="default"
+                    onClick={onCancelEdit}
+                  >
+                    Cancel
+                  </Button>
+                </Grid>
+              )}
+
+              <Grid item>
+                <Button type="submit" variant="contained" color="primary">
+                  Submit
+                </Button>
+              </Grid>
             </Grid>
           )}
         </IdentitySection>

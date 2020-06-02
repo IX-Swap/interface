@@ -1,10 +1,10 @@
 // @flow
 import React from 'react';
 import { Redirect } from 'react-router-dom';
-import { Box, Typography } from '@material-ui/core';
+import { Box, Button } from '@material-ui/core';
 import IndividualIdentityForm from './IndividualIdentityForm';
 import { useIdentityState, useIdentityDispatch } from '../../modules';
-import { createIdentity } from '../../modules/actions';
+import { createIdentity, toggleEditMode } from '../../modules/actions';
 
 const IndividualIdentity = () => {
   const { status, identity, editMode, dataroom } = useIdentityState();
@@ -18,15 +18,17 @@ const IndividualIdentity = () => {
     return <Redirect to="/identity" />;
   }
 
-  console.log('im here');
-
   return (
     <Box position="relative">
-      {identity && (
-        <Box position="absolute" top="-2.5em" right="0">
-          <Typography>
-            <b>{identity.status}</b>
-          </Typography>
+      {identity && !editMode && (
+        <Box position="absolute" top="-3em" right="0">
+          <Button
+            variant="contained"
+            color="primary"
+            onClick={() => toggleEditMode(identityDispatch, true)}
+          >
+            Edit
+          </Button>
         </Box>
       )}
       <IndividualIdentityForm
@@ -34,6 +36,7 @@ const IndividualIdentity = () => {
         editMode={editMode}
         identity={identity}
         handleCreateIdentity={handleOnCreate}
+        onCancelEdit={() => toggleEditMode(identityDispatch, false)}
       />
     </Box>
   );
