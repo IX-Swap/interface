@@ -81,11 +81,6 @@ function AccountsPanel({ location }: any) {
       component: <Wallets />,
     },
     {
-      route: '/accounts/reports',
-      label: 'REPORT',
-      component: <span>REPORTS</span>,
-    },
-    {
       route: '/accounts/transactions',
       label: 'TRANSACTIONS',
       component: <Transactions />,
