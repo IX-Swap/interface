@@ -1,7 +1,7 @@
 // @flow
 import React, { useRef, useEffect } from 'react';
 import { Switch, withRouter, Route } from 'react-router-dom';
-import { Grid, Container } from '@material-ui/core';
+import { Grid } from '@material-ui/core';
 import { AccountProvider } from 'context/AccountContext';
 import * as AssetsModule from 'context/assets';
 import { IdentityProvider } from 'context/IdentityContext';
@@ -71,9 +71,7 @@ function AccountRoutes() {
 
   return (
     status === ASSETS_STATUS.IDLE && (
-      <Container>
-        <Route path="/accounts" component={() => <AccountsPanel />} />
-      </Container>
+      <Route path="/accounts" component={() => <AccountsPanel />} />
     )
   );
 }

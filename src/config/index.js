@@ -5,7 +5,7 @@ export const TIME_FORMAT = 'HH:MM:SS';
 
 export const INVESTAX_BANK = {
   bankName: 'OVERSEA-CHINESE BANKING CORPORATION LIMITED',
-  swiftCode: 'CBCSGSG',
+  swiftCode: 'OCBCSGSG',
   accountHolderName: 'IC SG PTE LTD',
   bankAccountNumber: '501123956001',
   address: {
