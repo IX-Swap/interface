@@ -123,7 +123,7 @@ export default function SidebarLink({
       </ListItem>
       {children && (
         <Collapse
-          in={isOpen && isSidebarOpened}
+          in={isOpen}
           timeout="auto"
           unmountOnExit
           className={classes.nestedList}

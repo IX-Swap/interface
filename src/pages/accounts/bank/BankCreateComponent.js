@@ -134,6 +134,7 @@ const BankCreateComponent = ({
   bankListStatus,
   statusCode,
   error,
+  bank,
   goBack,
   setIsConfirmation,
   setBank,
@@ -170,7 +171,7 @@ const BankCreateComponent = ({
         </Grid>
       </Grid>
       <Grid item lg={12}>
-        <BankFormComponent onChange={onChange} />
+        <BankFormComponent bank={bank} onChange={onChange} />
       </Grid>
       <Grid item lg={12} container justify="center">
         <Box p={3}>
@@ -285,6 +286,7 @@ const BankCreateHolder = () => {
 
   let toRender = (
     <BankCreateComponent
+      bank={bank}
       bankListStatus={bankListStatus}
       statusCode={statusCode}
       error={error}
@@ -301,7 +303,7 @@ const BankCreateHolder = () => {
         bank={bank}
         bankListStatus={bankListStatus}
         submit={handleSubmitBank}
-        cancel={() => goBack(false)}
+        cancel={() => setIsConfirmation(false)}
       />
     );
   }
