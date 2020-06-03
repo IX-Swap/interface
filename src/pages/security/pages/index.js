@@ -129,10 +129,8 @@ const SettingsLandingPage = () => {
                 </Box>
               </Grid>
 
-              <Divider />
-
               <Grid container alignItems="center" justify="center">
-                <Box width="60%" mt={5} mb={5}>
+                <Box width="60%" mt={0} mb={5}>
                   <Grid container alignItems="center" justify="space-between">
                     <Grid item>
                       <b>Currency</b>
