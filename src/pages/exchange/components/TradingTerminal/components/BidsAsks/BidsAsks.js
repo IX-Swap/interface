@@ -87,6 +87,10 @@ const BidsAsksHistory = (props) => {
         socket.on(`${BIDS_ASKS.on}/${_userId}`, (data) => {
             setCollection(data);
         });
+
+        return () => {
+            socket.off(`${BIDS_ASKS.on}/${_userId}`);
+        };
     }, []); 
     /*eslint-disable */
 
@@ -145,35 +149,35 @@ const BidsAsksHistory = (props) => {
       },
   ];
 
-  const askFields = [
-    {
-        id: 'price',
-        name: 'price',
-        label: 'Price:',
-        value: askForm.price,
-        onChange: updateAskField,
-        placeholder: 'Price...',
-        type: 'number',
-    },
-    {
-        id: 'amount',
-        name: 'amount',
-        label: 'Amount:',
-        value: askForm.amount,
-        onChange: updateAskField,
-        placeholder: 'Amount...',
-        type: 'number',
-    },
-    {
-        id: 'total',
-        name: 'total',
-        label: 'Total:',
-        value: askForm.total,
-        onChange: updateAskField,
-        placeholder: 'Total...',
-        type: 'number',
-    },
-];
+    const askFields = [
+        {
+            id: 'price',
+            name: 'price',
+            label: 'Price:',
+            value: askForm.price,
+            onChange: updateAskField,
+            placeholder: 'Price...',
+            type: 'number',
+        },
+        {
+            id: 'amount',
+            name: 'amount',
+            label: 'Amount:',
+            value: askForm.amount,
+            onChange: updateAskField,
+            placeholder: 'Amount...',
+            type: 'number',
+        },
+        {
+            id: 'total',
+            name: 'total',
+            label: 'Total:',
+            value: askForm.total,
+            onChange: updateAskField,
+            placeholder: 'Total...',
+            type: 'number',
+        },
+    ];
 
     const isQuoteItem = collection && collection.length && collection.find(item => item.assetId === marketListItem?.quote?._id);
     const isListingItem = collection && collection.length && collection.find(item => item.assetId !== marketListItem?.quote?._id);
@@ -197,21 +201,24 @@ const BidsAsksHistory = (props) => {
                   const totalAmount = bidForm.amount * bidForm.price;
                     
                   return (
-                      <Box className={classes.inputContainer}>
-                          <label>{field.label}</label>
-                          <input
-                              className={classes.inputField}
-                              key={field.id}
-                              id={`${field.id}-bid`}
-                              value={field.id === 'total' ? totalAmount : field.value}
-                              onChange={field.onChange} // eslint-disable-line
-                              placeholder={field.placeholder}
-                              type={field.type}
-                              name={field.name}
-                              min={0}
-                              disabled={field.id === 'total'}
-                          />
-                      </Box>
+                    <Box 
+                        key={field.id}
+                        className={classes.inputContainer}
+                    >
+                        <label>{field.label}</label>
+                        <input
+                            className={classes.inputField}
+                            key={field.id}
+                            id={`${field.id}-bid`}
+                            value={field.id === 'total' ? totalAmount : field.value}
+                            onChange={field.onChange} // eslint-disable-line
+                            placeholder={field.placeholder}
+                            type={field.type}
+                            name={field.name}
+                            min={0}
+                            disabled={field.id === 'total'}
+                        />
+                     </Box>
                   );
                 })}
                 <Button 
@@ -222,7 +229,7 @@ const BidsAsksHistory = (props) => {
                     onClick={() => _handlePostOrder('BID')}
                     disabled={isQuoteItem?.balance < 0}
                 >
-                    Buy IXPS
+                    Buy {isListingItem?.symbol}
                 </Button>
             </form>
             <form className={classes.formContainer}>
@@ -267,7 +274,7 @@ const BidsAsksHistory = (props) => {
                     disableElevation
                     disabled={isListingItem?.balance < 0}
                 >
-                    Sell IXPS
+                    Sell {isListingItem?.symbol}
                 </Button>
             </form>
         </Paper>

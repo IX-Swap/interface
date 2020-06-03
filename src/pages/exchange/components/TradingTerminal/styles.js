@@ -8,6 +8,9 @@ const defaultListItemStyle = {
 };
 
 export default makeStyles(theme => ({
+  container: {
+    display: 'flex',
+  },
   overviewHeader: {
     marginBottom: theme.spacing.unit * 5,
   },

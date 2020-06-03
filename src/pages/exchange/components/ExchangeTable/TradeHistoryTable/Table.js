@@ -34,64 +34,48 @@ import { numberWithCommas } from 'utils/utils';
 // Styles
 import useStyles from 'pages/exchange/components/ExchangeTable/styles';
 
-// Orders Modules
-import OrdersActions from './modules/actions';
-import OrdersModule from './modules';
+// Trade History Modules
+import TradeHistoryActions from './modules/actions';
+import TradeHistoryModules from './modules';
 
 // Market Modules
 import MarketActions from '../../TradingTerminal/modules/actions';
 import MarketModules from '../../TradingTerminal/modules';
 
-const { OrdersListState, useOrdersListDispatch } = OrdersModule;
+const { TradeHistoryListState, useTradeHistoryListDispatch } = TradeHistoryModules;
 
-const { setPage, setRowsPerPage } = OrdersActions;
+const { setPage, setRowsPerPage } = TradeHistoryActions;
 
 const { MarketState, useMarketDispatch } = MarketModules;
 
 const columns = [
   {
-    id: 'date',
-    label: 'Date',
+      id: 'date', 
+      label: 'Date',
   },
   {
-    id: 'pair',
-    label: 'Pair',
+      id: 'pair', 
+      label: 'Pair',
   },
   {
-    id: 'type',
-    label: 'Type',
+      id: 'side', 
+      label: 'Side',
   },
   {
-    id: 'side',
-    label: 'Side',
+      id: 'price', 
+      label: 'Price',
   },
   {
-    id: 'average',
-    label: 'Average',
+      id: 'filled', 
+      label: 'Filled',
   },
   {
-    id: 'price',
-    label: 'Price',
+      id: 'fee', 
+      label: 'Fee',
   },
   {
-    id: 'filled',
-    label: 'Filled',
-  },
-  {
-    id: 'amount',
-    label: 'Amount',
-  },
-  {
-    id: 'total',
-    label: 'Total',
-  },
-  {
-    id: 'triggerConditions',
-    label: 'Trigger Conditions',
-  },
-  {
-    id: 'status',
-    label: 'Status',
+      id: 'total', 
+      label: 'Total',
   },
 ];
 
@@ -101,11 +85,7 @@ const ListingsList = ({ list, goToPage }) => {
   return (
     <TableBody>
       {list.map((row, i) => {
-        const statusBadge = classNames({
-          disabledBadge: row.status.toLowerCase() === 'cancelled',
-          positiveBadge: row.status.toLowerCase() === 'filled',
-          primaryBadge: row.status.toLowerCase() === 'open',
-        });
+        const positiveCell = row.side?.toLowerCase() === 'buy';
 
         return (
           <TableRow key={i}>
@@ -113,15 +93,19 @@ const ListingsList = ({ list, goToPage }) => {
               {moment(row.date).format('DD/MM/YYYY HH:mm')}
             </TableCell>
             <TableCell className={classes.defaultCell}>{row.pair}</TableCell>
-            <TableCell className={classes.defaultCell}>{row.type}</TableCell>
-            <TableCell className={classes.defaultCell}>{row.side}</TableCell>
-            <TableCell className={classes.defaultCell}>{numberWithCommas(row.average)}</TableCell>
+            {positiveCell ?
+              <TableCell className={classes.positiveCell}>
+                Buy
+              </TableCell>
+              :
+              <TableCell className={classes.negativeCell}>
+                Sell
+              </TableCell>
+            }
             <TableCell className={classes.defaultCell}>{numberWithCommas(row.price.toFixed(2))}</TableCell>
-            <TableCell className={classes.defaultCell}>{row.filled}</TableCell>
-            <TableCell className={classes.defaultCell}>{numberWithCommas(row.amount.toFixed(4))}</TableCell>
-            <TableCell className={classes.defaultCell}>{numberWithCommas(row.total.toFixed(2))}</TableCell>
-            <TableCell className={classes.defaultCell}>--</TableCell>
-            <TableCell className={classes[statusBadge]}>{row.status}</TableCell>
+            <TableCell className={classes.defaultCell}>{row.filled?.toFixed(4)}</TableCell>
+            <TableCell className={classes.defaultCell}>{numberWithCommas(row.fee.toFixed(6))}</TableCell>
+            <TableCell className={classes.defaultCell}>{numberWithCommas(row.total.toFixed(6))}</TableCell>
           </TableRow>
         );
       })}
@@ -136,7 +120,7 @@ const ListingsList = ({ list, goToPage }) => {
   );
 };
 
-function OrdersTable(props) {
+function TradeHistoryTable(props) {
   const [fromDate, setFrom] = useState('');
   const [toDate, setTo] = useState('');
   const [pairId, setPair] = useState('');
@@ -144,13 +128,13 @@ function OrdersTable(props) {
   const { title } = props;
   const classes = useStyles();
 
-  const dispatch = useOrdersListDispatch();
-  const ordersState = OrdersListState();
+  const dispatch = useTradeHistoryListDispatch();
+  const tradeHistoryState = TradeHistoryListState();
 
   const marketDispatch = useMarketDispatch();
   const marketState = MarketState();
   const mountedRef = useRef(true);
-  const { page, total, limit, items, status } = ordersState;
+  const { page, total, limit, items, status } = tradeHistoryState;
 
   const {
     page: marketPage,
@@ -175,8 +159,8 @@ function OrdersTable(props) {
     });
   }, [marketPage, marketLimit, marketDispatch, limit]);
 
-  const _searchOrders = () => {
-    OrdersActions.getOrdersList(dispatch, {
+  const _searchTradeHistory = () => {
+    TradeHistoryActions.getTradeHistory(dispatch, {
       skip: page * limit,
       limit,
       from: fromDate || new Date(),
@@ -218,7 +202,7 @@ function OrdersTable(props) {
               <Button
                 color="primary"
                 className={searchStyle}
-                onClick={_searchOrders}
+                onClick={_searchTradeHistory}
               >
                 Search
               </Button>
@@ -267,4 +251,4 @@ function OrdersTable(props) {
   );
 }
 
-export default withRouter(OrdersTable);
+export default withRouter(TradeHistoryTable);

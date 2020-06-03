@@ -13,6 +13,9 @@ import { Typography } from '@material-ui/core';
 // Local
 import { TIME_FORMAT } from 'config';
 
+// Utils
+import { numberWithCommas } from 'utils/utils';
+
 // Modules
 import MonitoringActions from './modules/actions';
 import Modules from './modules';
@@ -29,7 +32,6 @@ function Monitoring(props) {
     const { title, type, data = [] } = props;
     const maxValue = data.length && Math.max(...data.map(d =>d.price));
     const minValue = data.length && Math.min(...data.map(d =>d.price));
-
     const isAsksBids = props.type === 'asks' ||  props.type === 'bids';
 
     let filteredData = search ? search : data;
@@ -62,15 +64,15 @@ function Monitoring(props) {
 
     return (
         <React.Fragment>
-            {title && (
-                <Typography 
-                    className={classes.monitoringTitle} 
-                    variant="h1"
-                >
-                    {title}
-                </Typography>
-            )}
             <section className={classes.monitoring}>
+                {title && (
+                    <Typography 
+                        className={classes.monitoringTitle} 
+                        variant="h1"
+                    >
+                        {title}
+                    </Typography>
+                )}
                 {type === 'bids' && (
                     <section className={classes.bidsHeader}>
                         <Typography 
@@ -90,13 +92,13 @@ function Monitoring(props) {
                 {type === 'asks' && (
                     <ul className={classes.monitoringHeader}>
                         <li>
-                        Price(SGD) {maxValue}
+                        Price({props.quoteData?.symbol}) {maxValue}
                         </li>
                         <li>
-                        Amount(IXPS) 
+                        Amount({props.listingData?.asset?.symbol}) 
                         </li>
                         <li>
-                        Total(SGD) 
+                        Total({props.quoteData?.symbol}) 
                         </li>
                     </ul>
                 )}
@@ -151,13 +153,13 @@ function Monitoring(props) {
                                     </p>
                                 )}
                                 {type !== 'marketList' && (
-                                    <p className={priceStyle}>{d.price}</p>
+                                    <p className={priceStyle}>{numberWithCommas(d.price?.toFixed(4))}</p>
                                 )}
-                                <p className={classes.defaultListItemStyle}>{d.amount || 0}</p>
+                                <p className={classes.defaultListItemStyle}>{numberWithCommas(d.amount?.toFixed(4) || 0)}</p>
                                 {type === 'tradeHistory' ?
                                     <p className={classes.defaultListItemStyle}>{moment(d.createdAt).format(TIME_FORMAT)}</p>
                                     :
-                                    <p className={classes.defaultListItemStyle}>{d.total}</p>
+                                    <p className={classes.defaultListItemStyle}>{numberWithCommas(d.total?.toFixed(4))}</p>
                                 }
                             </li>   
                         );

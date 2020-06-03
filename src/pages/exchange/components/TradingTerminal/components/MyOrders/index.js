@@ -17,6 +17,9 @@ import Paper from '@material-ui/core/Paper';
 import { ENDPOINT_URL, API_URL, DATE_FORMAT } from 'config';
 import localStore from 'services/storageHelper';
 
+// Utils
+import { numberWithCommas } from 'utils/utils';
+
 // Modules
 import MyOrderActions from './modules/actions';
 
@@ -61,6 +64,10 @@ export default function TableMyOrders(props) {
     socket.on(`${MY_ORDERS.on}/${id}`, (data) => {
       setMyOrders(data);
     });
+
+    return () => {
+      socket.off(`${MY_ORDERS.on}/${id}`);
+  };
   }, []);
   /*eslint-disable */
 
@@ -105,10 +112,10 @@ export default function TableMyOrders(props) {
                   </TableCell>
                   <TableCell>{data && data.name}</TableCell>
                   <TableCell>{row.side}</TableCell>
-                  <TableCell>{row.price}</TableCell>
-                  <TableCell>{row.amount}</TableCell>
+                  <TableCell>{numberWithCommas(row.price)}</TableCell>
+                  <TableCell>{numberWithCommas(row.amount)}</TableCell>
                   <TableCell>{row.totalFilled}</TableCell>
-                  <TableCell>{row.price * row.amount}</TableCell>
+                  <TableCell>{numberWithCommas(row.price * row.amount)}</TableCell>
                   <TableCell>
                     <Button 
                       color="primary"
