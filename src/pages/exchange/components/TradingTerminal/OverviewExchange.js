@@ -2,7 +2,7 @@
 import React, { useEffect, useRef } from 'react';
 import { withRouter, useParams } from 'react-router-dom';
 import TradingViewWidget from 'react-tradingview-widget';
-import { Grid } from '@material-ui/core';
+import { Grid, CircularProgress } from '@material-ui/core';
 
 // Local Components
 import OverviewHeader from './OverviewHeader';
@@ -29,10 +29,10 @@ function OverviewExchange() {
   const marketState = MarketState();
   const mountedRef = useRef(true);
 
-  // @Paul here
   // eslint-disable-next-line no-unused-vars
   const { status, page, total, limit, items, statusCode, error } = marketState;
 
+  /*eslint-disable */
   useEffect(() => {
     MarketActions.getMarketList(dispatch, {
       skip: page * limit,
@@ -40,28 +40,35 @@ function OverviewExchange() {
       ref: mountedRef,
     });
   }, [page, limit, dispatch]);
-  const item = items.length && items.find(item => item._id === tradingPairId);
+  /*eslint-disable */
 
+  const item = items.length && items.find(item => item._id === tradingPairId);
+  
   return (
-    <Grid>
-      <OverviewHeader data={item && item} />
-      <Grid container spacing={1}>
-        <Grid container item xs direction="column">
-          <BidsAsksHistory id={tradingPairId} />
+    <React.Fragment>
+      {status === 'GETTING' ? (<CircularProgress size={50} />)
+        :  
+        <Grid>
+          <OverviewHeader data={item && item} />
+          <Grid container spacing={1}>
+            <Grid container item xs direction="column" className={classes.containerItem}>
+              <BidsAsksHistory id={tradingPairId} />
+            </Grid>
+            <Grid container item xs={7} direction="column" className={classes.containerItem}>
+              <section className={classes.graphContainer}>
+                <TradingViewWidget symbol="NASDAQ:AAPL" locale="fr" autosize />
+              </section>
+              <BidsAsks id={tradingPairId} />
+            </Grid>
+            <Grid container item xs direction="column" className={classes.containerItem}>
+              <Monitoring type="marketList" data={items} />
+              <TradeHistory id={tradingPairId} />
+            </Grid>
+          </Grid>
+          <TableMyOrders id={tradingPairId} data={item && item} />
         </Grid>
-        <Grid container item xs={7} direction="column">
-          <section className={classes.graphContainer}>
-            <TradingViewWidget symbol="NASDAQ:AAPL" locale="fr" autosize />
-          </section>
-          <BidsAsks id={tradingPairId} />
-        </Grid>
-        <Grid container item xs direction="column">
-          <Monitoring type="marketList" data={items} />
-          <TradeHistory id={tradingPairId} />
-        </Grid>
-      </Grid>
-      <TableMyOrders id={tradingPairId} data={item && item} />
-    </Grid>
+      }
+    </React.Fragment>
   );
 }
 

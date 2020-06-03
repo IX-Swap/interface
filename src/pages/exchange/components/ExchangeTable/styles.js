@@ -59,8 +59,19 @@ export default makeStyles(theme => ({
         alignItems: 'center',
         display: 'flex',
     },
+    searchStyle: {
+        color: '#01A2FF',
+        border: '1px solid #01A2FF',
+    },
+    resetStyle: {
+        color: '#4F4F4F',
+        background: '#EFEFEF',
+        border: 0,
+    },
     btnStyle: {
         marginRight: 15,
+        minWidth: 90,
+        fontSize: 12,
     },
     dateFilter: {
         alignItems: 'center',
