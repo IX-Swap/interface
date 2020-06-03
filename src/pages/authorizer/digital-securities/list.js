@@ -123,13 +123,21 @@ const RowStatusComponent = ({
   switch (dso.status) {
     case 'Approved':
       return (
-        <Typography className={classes.formControl} display="inline" color="primary">
+        <Typography
+          className={classes.formControl}
+          display="inline"
+          color="primary"
+        >
           Approved
         </Typography>
       );
     case 'Rejected':
       return (
-        <Typography className={classes.formControl} display="inline" color="error">
+        <Typography
+          className={classes.formControl}
+          display="inline"
+          color="error"
+        >
           Rejected
         </Typography>
       );

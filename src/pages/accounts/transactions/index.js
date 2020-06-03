@@ -11,6 +11,8 @@ import {
   LinearProgress,
   TablePagination,
   Box,
+  Grid,
+  Typography,
 } from '@material-ui/core';
 import moment from 'moment';
 import type { BaseStateWithPagination } from 'context/base/withPagination/types';
@@ -203,6 +205,11 @@ export default function Transactions() {
 
   return (
     <>
+      <Box mx={4} mt={4} mb={2}>
+        <Grid item xs={3}>
+          <Typography variant="h3">Transactions</Typography>
+        </Grid>
+      </Box>
       <FiltersComponent
         filters={filter}
         assets={assets}

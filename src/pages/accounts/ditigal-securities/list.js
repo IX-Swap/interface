@@ -14,6 +14,8 @@ import {
   ButtonGroup,
   Button,
   Box,
+  Grid,
+  Typography,
 } from '@material-ui/core';
 
 import { useAssetsState, useAssetsDispatch } from 'context/assets';
@@ -209,7 +211,11 @@ export default function DigitalSecurities() {
   );
 
   return (
-    <Box mx={4} my={2}>
+    <Box m={4}>
+      <Grid item xs={3}>
+        <Typography variant="h3">Digital Securities</Typography>
+      </Grid>
+      <Box mt={2} />
       <TableContainer>
         {status === PERSONAL_BALANCE_LIST_STATUS.GETTING && <LinearProgress />}
         <Table aria-label="simple table">
