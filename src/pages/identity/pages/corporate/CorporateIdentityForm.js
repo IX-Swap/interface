@@ -134,7 +134,7 @@ const CorporateIdentityForm = ({
         >
           <Declaration
             editMode={editMode}
-            declarations={corporate.declarations || declarations.individual}
+            declarations={corporate.declarations || declarations.corporate}
           />
 
           {editMode && (

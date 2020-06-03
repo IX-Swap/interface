@@ -113,7 +113,7 @@ export const getIdentity = async (
     if (corporateIdentity !== null) {
       const declarations = formatDeclarations(
         corporateIdentity.declarations,
-        'individual'
+        'corporate'
       );
 
       dispatchPayload = {
@@ -176,10 +176,8 @@ const createCorporateIdentity = async (corporatePayload: any, id?: string) => {
     const response = await result.json();
 
     const payload = response.data;
-    const mDeclarations = formatDeclarations(
-      payload.declarations,
-      'individual'
-    );
+    const mDeclarations = formatDeclarations(payload.declarations, 'corporate');
+    console.log(mDeclarations);
     return { ...payload, declarations: mDeclarations };
   }
 
