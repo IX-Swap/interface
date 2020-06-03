@@ -12,7 +12,7 @@ import IconButton from '@material-ui/core/IconButton';
 import EditIcon from '@material-ui/icons/Edit';
 import Alert from '@material-ui/lab/Alert';
 
-import { withRouter, useHistory, RouteProps } from 'react-router-dom';
+import { withRouter, useHistory } from 'react-router-dom';
 import storageHelper from 'services/storageHelper';
 import { useIsAccredited } from 'services/acl';
 import { snackbarService } from 'uno-material-ui';
