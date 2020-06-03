@@ -12,12 +12,14 @@ import DialogAuthorizeConfirmation from './confirm';
 const { downloadFile, getDso, toggleWithdrawStatus } = Actions;
 
 const ViewDS = ({
+  location,
   match: {
     params: { id },
   },
 }: RouteProps) => {
   // $FlowFixMe
-  const [dso, setDso] = useState<Dso>({});
+  const { data } = location.state || {};
+  const [dso, setDso] = useState<Dso>(data);
   const [open, setOpen] = useState(false);
 
   const handleClose = () => {
@@ -55,8 +57,10 @@ const ViewDS = ({
   }, [id]);
 
   useEffect(() => {
-    getDsoCallback();
-  }, [getDsoCallback]);
+    if (!data) {
+      getDsoCallback();
+    }
+  }, [data, getDsoCallback]);
 
   const onClickDocument = async (document: Document) => {
     try {

@@ -205,8 +205,11 @@ const Withdraws = ({
 }) => {
   const history = useHistory();
 
-  const viewDso = (id: string) => {
-    history.push(`/authorizer/digital-securities/${id}`);
+  const viewDso = (id: string, row: Dso) => {
+    history.push({
+      pathname: `/authorizer/digital-securities/${id}`,
+      state: { data: row },
+    });
   };
 
   return (
@@ -226,7 +229,7 @@ const Withdraws = ({
                   handleSelectChange={handleSelectChange}
                 />
                 <Button
-                  onClick={() => viewDso(row._id)}
+                  onClick={() => viewDso(row._id, row)}
                   style={{
                     marginLeft: '16px',
                   }}
