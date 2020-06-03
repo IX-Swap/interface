@@ -81,9 +81,9 @@ const RowStatusComponent = ({
   const classes = useStyles();
   switch (withdraw.status) {
     case 'Approved':
-      return <Typography color="primary">Approved</Typography>;
+      return <Typography className={classes.formControl} color="primary">Approved</Typography>;
     case 'Rejected':
-      return <Typography color="error">Rejected</Typography>;
+      return <Typography className={classes.formControl} color="error">Rejected</Typography>;
     default:
       return (
         <Select
