@@ -1,5 +1,6 @@
 import React from 'react';
 import { Paper, Grid, Typography, Box } from '@material-ui/core';
+import { INVESTAX_BANK } from 'config';
 import { withRouter } from 'react-router-dom';
 import { makeStyles } from '@material-ui/styles';
 import { formatNumber } from 'helpers/formatNumbers';
@@ -35,10 +36,12 @@ function DepositView({ location }: RouteProps) {
     return <span>nothing to display</span>;
   }
 
+  deposit.bankAccount = { ...INVESTAX_BANK };
+
   return (
     <>
       <Grid container justify="center" direction="column" component={Paper}>
-        <Box pb={4} />
+        <Box mt={4} />
         <Grid container className={classes.infoGrid}>
           <Grid item xs={6}>
             <BoldTypography variant="subtitle2" className={classes.labels}>
@@ -67,21 +70,6 @@ function DepositView({ location }: RouteProps) {
               color="primary"
             >
               {deposit.depositCode}
-            </BoldTypography>
-          </Grid>
-
-          <Grid item xs={6}>
-            <BoldTypography variant="subtitle2" className={classes.labels}>
-              Account No:
-            </BoldTypography>
-          </Grid>
-          <Grid item xs={6}>
-            <BoldTypography
-              variant="subtitle2"
-              className={classes.values}
-              color="primary"
-            >
-              {deposit.bankAccount.bankAccountNumber}
             </BoldTypography>
           </Grid>
 
