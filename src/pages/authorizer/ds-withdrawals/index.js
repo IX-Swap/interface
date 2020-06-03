@@ -2,7 +2,14 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import React, { useCallback, useState } from 'react';
 import { useHistory } from 'react-router-dom';
-import { Typography, Select, MenuItem, Button, Grid, Paper } from '@material-ui/core';
+import {
+  Typography,
+  Select,
+  MenuItem,
+  Button,
+  Grid,
+  Paper,
+} from '@material-ui/core';
 import TableWithPagination from 'components/TableWithPagination';
 import { makeStyles } from '@material-ui/core/styles';
 import { snackbarService } from 'uno-material-ui';
@@ -81,9 +88,17 @@ const RowStatusComponent = ({
   const classes = useStyles();
   switch (withdraw.status) {
     case 'Approved':
-      return <Typography color="primary">Approved</Typography>;
+      return (
+        <Typography className={classes.formControl} color="primary">
+          Approved
+        </Typography>
+      );
     case 'Rejected':
-      return <Typography color="error">Rejected</Typography>;
+      return (
+        <Typography className={classes.formControl} color="error">
+          Rejected
+        </Typography>
+      );
     default:
       return (
         <Select
@@ -113,34 +128,34 @@ const MemoizedTable = React.memo(({ handleSelectChange, onMount }: any) => {
   const history = useHistory();
   return (
     <Paper style={{ width: '100%' }}>
-    <TableWithPagination
-      id="authorizerWithdrawsList"
-      endpoint="/accounts/security/withdrawals/"
-      columns={columns}
-      onMount={onMount}
-    >
-      {(mWithdraw: DSWithdrawal) => (
-        <Grid container direction="row" alignItems="center">
-          <RowStatusComponent
-            withdraw={mWithdraw}
-            handleSelectChange={handleSelectChange}
-          />
-          <Button
-            onClick={() =>
-              history.push({
-                pathname: '/authorizer/ds-withdrawals/view',
-                state: { withdrawal: mWithdraw },
-              })
-            }
-            style={{
-              marginLeft: '16px',
-            }}
-          >
-            View
-          </Button>
-        </Grid>
-      )}
-    </TableWithPagination>
+      <TableWithPagination
+        id="authorizerWithdrawsList"
+        endpoint="/accounts/security/withdrawals/"
+        columns={columns}
+        onMount={onMount}
+      >
+        {(mWithdraw: DSWithdrawal) => (
+          <Grid container direction="row" alignItems="center">
+            <RowStatusComponent
+              withdraw={mWithdraw}
+              handleSelectChange={handleSelectChange}
+            />
+            <Button
+              onClick={() =>
+                history.push({
+                  pathname: '/authorizer/ds-withdrawals/view',
+                  state: { withdrawal: mWithdraw },
+                })
+              }
+              style={{
+                marginLeft: '16px',
+              }}
+            >
+              View
+            </Button>
+          </Grid>
+        )}
+      </TableWithPagination>
     </Paper>
   );
 });
