@@ -53,10 +53,9 @@ export default makeStyles(theme => ({
     textAlign: 'left',
   },
   monitoring: {
-    backgroundColor: '#fff',
     boxShadow: '0px 2px 1px -1px rgba(0,0,0,0.2), 0px 1px 1px 0px rgba(0,0,0,0.14), 0px 1px 3px 0px rgba(0,0,0,0.12)',
     marginBottom: theme.spacing.unit,
-    maxHeight: 380,
+    maxHeight: 400,
     overflow: 'scroll',
   },
   monitoringTitle: {
@@ -114,12 +113,13 @@ export default makeStyles(theme => ({
     color: '#000',
   },
   monitoringList: {
+    backgroundColor: '#fff',
     cursor: 'pointer',
     listStyle: 'none',
     margin: 0,
     minHeight: 400,
     maxHeight: 450,
-    overflow: 'hidden',
+    overflow: 'scroll',
     padding: theme.spacing.unit,
   },
   monitoringListItem: {

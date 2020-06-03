@@ -18,7 +18,7 @@ import Invest from '../pages/invest';
 import Users from '../pages/users';
 import Security from '../pages/security';
 import Authorizer from '../pages/authorizer';
-import TableMyTrades from '../pages/exchange/components/ExchangeTable/TableMyTrades';
+import TradeHistoryTable from '../pages/exchange/components/ExchangeTable/TradeHistoryTable';
 import TableMyOrders from '../pages/exchange/components/ExchangeTable/OrdersTable';
 import TableMarketListings from '../pages/exchange/components/ExchangeTable/MarketListingTable';
 import TableListings from '../pages/exchange/components/ExchangeTable/ListingTable/';
@@ -116,7 +116,7 @@ function App() {
       },
       {
         route: '/trade-history',
-        component: () => <TableMyTrades title="My Trades" />,
+        component: () => <TradeHistoryTable />,
       },
       {
         route: '/order-history',

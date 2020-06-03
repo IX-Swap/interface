@@ -24,6 +24,10 @@ const TradeHistory = (props) => {
         socket.on(`${TRADE_HISTORY.on}/${id}`, data => {
             setTradeStory(data);
         });
+
+        return () => {
+            socket.off(`${TRADE_HISTORY.on}/${id}`);
+        };
     }, []);
     /*eslint-disable */
     
