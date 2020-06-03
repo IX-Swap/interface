@@ -268,7 +268,8 @@ function BankListComponent(props: RouteProps) {
                     }}
                   >
                     <EditIcon />
-                  </IconButton><Button
+                  </IconButton>
+                  <Button
                     onClick={() =>
                       history.push({
                         pathname: '/accounts/banks/view',

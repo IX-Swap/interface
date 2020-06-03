@@ -67,6 +67,7 @@ const useDsoLogic = (dso, action) => {
   const rteRefs = useRef<{ values: Dso }>({ ...baseDsoRequest });
   const isIssuer = useIsIssuer();
   const history = useHistory();
+  const [subsTitle, setSubsTitle] = useState('');
   const [editableDso, setEditableDso] = useState(dso);
   const def = rteRefs.current.values ? rteRefs.current.values : editableDso;
   const { register, getValues, reset, control } = useForm({
@@ -233,6 +234,7 @@ const useDsoLogic = (dso, action) => {
 
   const onSubscriptionUpload = (res: any) => {
     const values = getFinalValues();
+    setSubsTitle(res.originalFileName);
     values.subscriptionDocument = res._id;
     rteRefs.current.values = { ...values };
     setEditableDso({
@@ -266,6 +268,7 @@ const useDsoLogic = (dso, action) => {
     history,
     register,
     control,
+    subsTitle,
     getFinalValues,
     onSubscriptionUpload,
     onDataroomDocumentUploaded,
@@ -301,6 +304,7 @@ const DsoInformation = ({
     register,
     control,
     editableDso,
+    subsTitle,
     getFinalValues,
     onSubscriptionUpload,
     onDataroomDocumentUploaded,
@@ -380,7 +384,7 @@ const DsoInformation = ({
               <SectionContainer title="Subscription Document">
                 <Uploader
                   document={{
-                    title: 'Subscription Document',
+                    title: subsTitle || 'Subscription Document',
                     label: 'subscription-document',
                     type: 'subscriptionDocument',
                   }}

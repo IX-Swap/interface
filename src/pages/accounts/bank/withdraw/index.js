@@ -19,7 +19,6 @@ import WithdrawalList from './list';
 
 const { getBankAccounts } = BankActions;
 const {
-  BanksListProvider,
   BANK_LIST_STATUS,
   useBanksListState,
   useBanksListDispatch,
@@ -141,11 +140,5 @@ function BankWithdrawComponent() {
     </>
   );
 }
-
-const WithdrawWithProvider = () => (
-  <BanksListProvider>
-    <BankWithdrawComponent />
-  </BanksListProvider>
-);
 
 export default BankWithdrawComponent;
