@@ -2,7 +2,7 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import React, { useCallback, useState } from 'react';
 import { useHistory } from 'react-router-dom';
-import { Typography, Select, MenuItem, Button, Grid } from '@material-ui/core';
+import { Typography, Select, MenuItem, Button, Grid, Paper } from '@material-ui/core';
 import TableWithPagination from 'components/TableWithPagination';
 import { makeStyles } from '@material-ui/core/styles';
 import { snackbarService } from 'uno-material-ui';
@@ -112,6 +112,7 @@ const RowStatusComponent = ({
 const MemoizedTable = React.memo(({ handleSelectChange, onMount }: any) => {
   const history = useHistory();
   return (
+    <Paper style={{ width: '100%' }}>
     <TableWithPagination
       id="authorizerWithdrawsList"
       endpoint="/accounts/cash/withdrawals/"
@@ -140,6 +141,7 @@ const MemoizedTable = React.memo(({ handleSelectChange, onMount }: any) => {
         </Grid>
       )}
     </TableWithPagination>
+    </Paper>
   );
 });
 MemoizedTable.displayName = 'MemoizedTable';

@@ -111,7 +111,9 @@ function BankWithdrawForm({
               </Box>
             </Grid>
           </Grid>
-          <BankDetails bank={bank} />
+          <Grid container>
+            <BankDetails bank={bank} />
+          </Grid>
           <Grid container justify="center">
             <Box mb={4}>
               <Button

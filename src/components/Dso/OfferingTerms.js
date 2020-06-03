@@ -135,7 +135,8 @@ const OfferingTerms = (
         name="leverage"
         ref={ref}
         label="Leverage"
-        value={dso.leverage || '-'}
+        edit={edit}
+        value={dso.leverage ? toPercentage(dso.leverage) : '-'}
       />
     </Grid>
   </SectionContainer>

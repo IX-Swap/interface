@@ -30,6 +30,7 @@ const override = {
     root: {
       backgroundColor: '#ebebeb',
       height: '100%',
+      minHeight: '40px',
     },
     container: {
       display: 'flex',
@@ -49,9 +50,10 @@ const override = {
     placeHolder: {
       backgroundColor: '#ebebeb',
       paddingLeft: 20,
-      width: 'inherit',
-      position: 'absolute',
-      top: '20px',
+      width: '100%',
+      height: '100%',
+      bottom: '0',
+      position: 'inherit',
     },
   },
 };

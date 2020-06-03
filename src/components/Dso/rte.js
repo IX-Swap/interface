@@ -7,7 +7,8 @@ function RichEditor(
   { value, save }: { value: string, save: Function },
   ref: any
 ) {
-  const contentHTML = convertFromHTML(value || '');
+  console.log('value of rte', value);
+  const contentHTML = convertFromHTML(value || '<p>&nbsp some value</p>');
   const state = ContentState.createFromBlockArray(
     contentHTML.contentBlocks,
     contentHTML.entityMap
@@ -20,6 +21,7 @@ function RichEditor(
     <MUIRichTextEditor
       ref={ref}
       defaultValue={content}
+      label="Start typing..."
       onSave={onSave}
       inlineToolbar
     />

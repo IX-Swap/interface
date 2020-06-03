@@ -67,7 +67,7 @@ function AccountsPanel({ location }: any) {
   const routes = [
     {
       route: '/accounts',
-      label: 'OVERVIEW',
+      label: 'BALANCES',
       component: <Overview />,
     },
     {
@@ -100,7 +100,7 @@ function AccountsPanel({ location }: any) {
 
   return (
     <Grid container justify="center">
-      <Grid item lg={9}>
+      <Grid item xs={12}>
         <Paper className={classes.paper} elevation={0}>
           <AppBar position="static" color="default" elevation={1}>
             <Tabs

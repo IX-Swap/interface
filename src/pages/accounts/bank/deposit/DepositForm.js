@@ -1,6 +1,6 @@
 // @flow
 /* eslint-disable react/jsx-props-no-spreading */
-import React, { useState } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import {
   FormControl,
   Grid,
@@ -8,12 +8,49 @@ import {
   Box,
   Typography,
   Button,
+  Select,
+  MenuItem,
+  InputLabel,
 } from '@material-ui/core';
 import NumberFormat from 'react-number-format';
-import type { Bank } from '../modules/types';
-import BankDetails from './BankDetails';
 
-const NumberFormatCustom = ({ symbol, inputRef, onChange, ...others }: any) => (
+import * as AssetsModule from 'context/assets';
+import * as AssetActions from 'context/assets/actions';
+import { ASSETS_STATUS } from 'context/assets/types';
+import type { Asset } from 'context/assets/types';
+import BankDetails from './BankDetails';
+import type { Bank } from '../modules/types';
+
+const { AssetsProvider, useAssetsState, useAssetsDispatch } = AssetsModule;
+const { getAssets } = AssetActions;
+
+const useAssetsGetter = () => {
+  const mountedRef = useRef(true);
+  const aDispatch = useAssetsDispatch();
+  const { status, type, assets } = useAssetsState();
+  const [asset, setAsset] = useState(null);
+  const acceptType = 'Currency';
+
+  useEffect(() => {
+    if (status === ASSETS_STATUS.INIT || type !== acceptType) {
+      getAssets(aDispatch, {
+        ref: mountedRef,
+        type: acceptType,
+      });
+    }
+  }, [aDispatch, status, type]);
+
+  useEffect(
+    () => () => {
+      mountedRef.current = false;
+    },
+    []
+  );
+
+  return { status, assets, asset, setAsset };
+};
+
+const NumberFormatCustom = ({ inputRef, onChange, ...others }: any) => (
   <NumberFormat
     thousandSeparator
     {...others}
@@ -29,7 +66,6 @@ const NumberFormatCustom = ({ symbol, inputRef, onChange, ...others }: any) => (
       });
     }}
     isNumericString
-    prefix={`${symbol}  `}
   />
 );
 
@@ -56,53 +92,87 @@ function BankDepositForm({
 }: {
   bank: Bank,
   code: string,
-  deposit: (amount: number) => void,
+  deposit: (amount: number, asset: Asset) => void,
 }) {
   const { amount, handleChange } = useBankDepositLogic();
+  const { assets, asset, setAsset } = useAssetsGetter();
+
+  const handleSelectChange = (val) => {
+    setAsset(val.target.value);
+  };
 
   return (
     <>
-      {bank && (
-        <>
-          <Grid container justify="center">
-            <FormControl>
-              <TextField
-                label="Amount"
-                value={amount}
-                onChange={handleChange}
-                name="numberformat"
-                id="formatted-numberformat-input"
-                inputProps={{
-                  symbol: bank.asset.symbol,
-                }}
-                // this is not duplicate
-                // eslint-disable-next-line
+      <Grid container justify="center">
+        <FormControl style={{ minWidth: '75px' }}>
+          <InputLabel id="currency-selector-input">Currency</InputLabel>
+          <Select
+            labelId="currency-selector"
+            id="currency-selector-value"
+            value={asset || {}}
+            onChange={handleSelectChange}
+          >
+            {assets.map((item) => (
+              <MenuItem key={item._id} value={item}>
+                {item.symbol}
+              </MenuItem>
+            ))}
+          </Select>
+        </FormControl>
+        {asset && (
+          <FormControl style={{ marginLeft: '16px' }}>
+            <TextField
+              label="Amount"
+              value={amount}
+              onChange={handleChange}
+              name="numberformat"
+              id="formatted-numberformat-input"
+              inputProps={{
+                symbol: asset.symbol,
+              }}
+              // this is not duplicate
+              // eslint-disable-next-line
                 InputProps={{
-                  inputComponent: NumberFormatCustom,
-                }}
-              />
-              <Typography variant="caption">
-                Transaction fees may apply
-              </Typography>
-            </FormControl>
-          </Grid>
-          <BankDetails bank={bank} code={code} />
-          <Grid container justify="center">
-            <Box mb={4}>
-              <Button
-                disabled={!amount}
-                variant="contained"
-                color="primary"
-                onClick={() => deposit(parseFloat(amount))}
-              >
-                Continue
-              </Button>
-            </Box>
-          </Grid>
-        </>
-      )}
+                inputComponent: NumberFormatCustom,
+              }}
+            />
+            <Typography variant="caption">
+              Transaction fees may apply
+            </Typography>
+          </FormControl>
+        )}
+      </Grid>
+      <BankDetails bank={bank} code={code} />
+      <Grid container justify="center">
+        {asset && (
+          <Box mb={4}>
+            <Button
+              disabled={!amount}
+              variant="contained"
+              color="primary"
+              onClick={() => deposit(parseFloat(amount), asset)}
+            >
+              Continue
+            </Button>
+          </Box>
+        )}
+      </Grid>
     </>
   );
 }
 
-export default BankDepositForm;
+const BankDepositFormWithProvider = ({
+  bank,
+  deposit,
+  code,
+}: {
+  bank: Bank,
+  code: string,
+  deposit: (amount: number, asset: Asset) => void,
+}) => (
+  <AssetsProvider>
+    <BankDepositForm bank={bank} deposit={deposit} code={code} />
+  </AssetsProvider>
+);
+
+export default BankDepositFormWithProvider;

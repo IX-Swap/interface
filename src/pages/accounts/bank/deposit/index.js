@@ -1,46 +1,27 @@
 // @flow
-import React, { useCallback, useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
+import { INVESTAX_BANK } from 'config';
 import RouteProps from 'react-router-dom';
 import { Typography, Box } from '@material-ui/core';
 import storage from 'services/storageHelper';
+import type { Asset } from 'context/assets/types';
 import BankDepositForm from './DepositForm';
 import DepositConfirmation from './DepositConfirmation';
 import type { Bank } from '../modules/types';
 
-import BankActions from '../modules/actions';
-import BanksListModule from '../modules/index';
 import DepositList from './list';
 
-const { getBank } = BankActions;
-const { useBanksListDispatch } = BanksListModule;
-
-const useGenericBankLogic = (bankId: string) => {
-  const [bank, setBank] = useState<Bank | null>(null);
+const useGenericBankLogic = () => {
   const [amount, setAmount] = useState<number>(0);
-  const dispatch = useBanksListDispatch();
+  const [asset, setAsset] = useState<Asset | null>(null);
   const mountedRef = useRef(true);
   const [isConfirmation, setIsConfirmation] = useState<boolean>(false);
 
-  const getBankData = useCallback(
-    async (bId: string) => {
-      const bankData = await getBank(dispatch, { bankId: bId });
-      if (!mountedRef.current) {
-        return;
-      }
-
-      setBank(bankData);
-    },
-    [dispatch]
-  );
-
-  const deposit = (toDeposit: number) => {
+  const deposit = (toDeposit: number, mAsset: Asset) => {
     setAmount(toDeposit);
     setIsConfirmation(true);
+    setAsset(mAsset);
   };
-
-  useEffect(() => {
-    getBankData(bankId);
-  }, [getBankData, bankId]);
 
   useEffect(
     () => () => {
@@ -50,7 +31,8 @@ const useGenericBankLogic = (bankId: string) => {
   );
 
   return {
-    bank,
+    asset,
+    setAsset,
     deposit,
     amount,
     isConfirmation,
@@ -58,51 +40,40 @@ const useGenericBankLogic = (bankId: string) => {
   };
 };
 
-function BankDepositComponent({ bankId, code }: any) {
-  const { bank, deposit, amount, isConfirmation } = useGenericBankLogic(bankId);
+function BankDepositComponent({ code }: any) {
+  const { deposit, amount, isConfirmation, asset } = useGenericBankLogic();
 
-  if (!bank) return <span>invalid</span>;
+  // $FlowFixMe
+  const investaxBank: Bank = { ...INVESTAX_BANK };
 
-  const investaxBank: Bank = { ...bank };
+  let toRender = (
+    <BankDepositForm
+      bank={investaxBank}
+      code={code}
+      deposit={(toDeposit: number, mAsset: Asset) => deposit(toDeposit, mAsset)}
+    />
+  );
 
-  investaxBank.bankName = 'OVERSEA-CHINESE BANKING CORPORATION LIMITED';
-  investaxBank.swiftCode = 'CBCSGSG';
-  investaxBank.accountHolderName = 'IC SG PTE LTD';
-  investaxBank.bankAccountNumber = '501123956001';
-  investaxBank.address = {
-    line1: 'OCBC Centre, Floor 9, 65 Chulia Street, Singapore 049513',
-  };
-
-  let toRender = <span>loading</span>;
-
-  if (bank) {
+  if (isConfirmation && asset) {
     toRender = (
-      <BankDepositForm
+      <DepositConfirmation
         bank={investaxBank}
-        code={code}
-        deposit={(toDeposit: number) => deposit(toDeposit)}
+        amount={amount}
+        transactionCode={code}
+        asset={asset}
       />
     );
-    if (isConfirmation) {
-      toRender = (
-        <DepositConfirmation
-          bank={investaxBank}
-          amount={amount}
-          transactionCode={code}
-        />
-      );
-    }
   }
 
   return (
     <>
       <Box m={4}>
-        {bank && <Typography variant="h3">Deposit Cash</Typography>}
+        <Typography variant="h3">Deposit Cash</Typography>
       </Box>
       {toRender}
 
       <Box m={4}>
-        {bank && <Typography variant="h3">Recent Deposits</Typography>}
+        <Typography variant="h3">Recent Deposits</Typography>
       </Box>
       <Box m={4}>
         <DepositList />
