@@ -4,6 +4,7 @@ import { Typography, TextField, Button, Grid, Box } from '@material-ui/core';
 import { makeStyles } from '@material-ui/styles';
 import { useHistory } from 'react-router-dom';
 import { snackbarService, ButtonWithLoading } from 'uno-material-ui';
+import type { Asset } from 'context/assets/types';
 import BankDetails from './BankDetails';
 import { deposit } from './modules/actions';
 import type { Bank } from '../modules/types';
@@ -32,10 +33,12 @@ const BoldTypography = ({ children, ...others }: any) => (
 
 export default function DepositConfirmation({
   bank,
+  asset,
   amount,
   transactionCode,
 }: {
   transactionCode: string,
+  asset: Asset,
   bank: Bank,
   amount: number,
 }) {
@@ -45,6 +48,8 @@ export default function DepositConfirmation({
   const [saving, setSaving] = useState(false);
 
   const fAmount = amount.toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,');
+
+  console.log(asset);
 
   const handleBackButton = () => {
     history.push({
@@ -62,7 +67,7 @@ export default function DepositConfirmation({
     setSaving(true);
     const status = await deposit({
       amount,
-      bank: bank._id,
+      asset: asset._id,
       depositCode: transactionCode,
       otp: twoFa,
     });
@@ -129,17 +134,17 @@ export default function DepositConfirmation({
             className={classes.values}
             color="primary"
           >
-            {bank.asset.symbol} {fAmount}
+            {asset.symbol} {fAmount}
           </BoldTypography>
         </Grid>
       </Grid>
       <BankDetails bank={bank} />
 
       <Typography variant="caption" align="center">
-        You will be transferring {bank.asset.symbol}
-        {fAmount} in the following bank account. Use the transfer code in the{' '}
-        <br /> transfer remarks field. Please confirm your bank account before
-        proceeding.
+        You will be transferring {asset.symbol}
+        {fAmount} in the above-mentioned bank account. Use the transfer code in
+        the <br /> transfer remarks field. Please confirm your bank account
+        before proceeding.
       </Typography>
 
       <Box my={4} alignSelf="center">

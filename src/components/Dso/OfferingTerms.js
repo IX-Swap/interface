@@ -73,6 +73,11 @@ const OfferingTermItem = React.forwardRef(
 
 OfferingTermItem.displayName = 'OfferingTermItem';
 
+const isNa = (val: any) => {
+  console.log('val', val);
+  return (val || '').toString().trim() === '';
+};
+
 const OfferingTerms = (
   { edit, dso, control }: { edit: boolean, dso: Dso, control: any },
   ref: any
@@ -85,21 +90,23 @@ const OfferingTerms = (
         label="Investment Period"
         edit={edit}
         // TODO:  Check if what the number denotes (eg months, yrs?)
-        value={(dso.investmentPeriod || '').toString()}
+        value={isNa(dso.investmentPeriod) ? 'n/a' : dso.investmentPeriod}
       />
       <OfferingTermItem
         name="dividendYeild"
         ref={ref}
         label="Divident Yield"
         edit={edit}
-        value={toPercentage(dso.dividendYeild)}
+        value={
+          isNa(dso.dividendYeild) ? 'n/a' : toPercentage(dso.dividendYeild)
+        }
       />
       <OfferingTermItem
         name="grossIRR"
         ref={ref}
         label="Gross IRR"
         edit={edit}
-        value={toPercentage(dso.grossIRR)}
+        value={isNa(dso.grossIRR) ? 'n/a' : toPercentage(dso.grossIRR)}
       />
 
       <OfferingTermItem
@@ -107,14 +114,14 @@ const OfferingTerms = (
         ref={ref}
         label="Investment Structure"
         edit={edit}
-        value={dso.investmentStructure}
+        value={isNa(dso.investmentStructure) ? 'n/a' : dso.investmentStructure}
       />
       <OfferingTermItem
         name="equityMultiple"
         ref={ref}
         label="Equity Multiple"
         edit={edit}
-        value={dso.equityMultiple}
+        value={isNa(dso.equityMultiple) ? 'n/a' : dso.equityMultiple}
       />
       <OfferingTermItem
         name="distributionFrequency"
@@ -122,20 +129,23 @@ const OfferingTerms = (
         label="Distribution Frequency"
         edit={edit}
         control={control}
-        value={dso.distributionFrequency}
+        value={
+          isNa(dso.distributionFrequency) ? 'n/a' : dso.distributionFrequency
+        }
       />
       <OfferingTermItem
         name="interestRate"
         ref={ref}
         label="Interest Rate"
         edit={edit}
-        value={toPercentage(dso.interestRate)}
+        value={isNa(dso.interestRate) ? 'n/a' : toPercentage(dso.interestRate)}
       />
       <OfferingTermItem
         name="leverage"
         ref={ref}
         label="Leverage"
-        value={dso.leverage || '-'}
+        edit={edit}
+        value={isNa(dso.leverage) ? 'n/a' : toPercentage(dso.leverage)}
       />
     </Grid>
   </SectionContainer>

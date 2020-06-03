@@ -11,6 +11,10 @@ export const columns = [
     render: (val: string) => moment(val).format('MM/DD/YY'),
   },
   {
+    key: 'status',
+    label: 'Status',
+  },
+  {
     key: 'bankAccount.bankName',
     label: 'Account Holder Name',
   },

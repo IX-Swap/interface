@@ -1,5 +1,6 @@
 import React from 'react';
 import ArrowBackIosIcon from '@material-ui/icons/ArrowBackIos';
+import { INVESTAX_BANK } from 'config';
 import { Paper, Grid, Typography, Box, Button } from '@material-ui/core';
 import { withRouter, useHistory } from 'react-router-dom';
 import { makeStyles } from '@material-ui/styles';
@@ -36,6 +37,8 @@ function DepositView({ location }: RouteProps) {
   if (!deposit) {
     return <span>nothing to display</span>;
   }
+
+  deposit.bankAccount = { ...INVESTAX_BANK };
 
   return (
     <>
@@ -80,21 +83,6 @@ function DepositView({ location }: RouteProps) {
               color="primary"
             >
               {deposit.depositCode}
-            </BoldTypography>
-          </Grid>
-
-          <Grid item xs={6}>
-            <BoldTypography variant="subtitle2" className={classes.labels}>
-              Account No:
-            </BoldTypography>
-          </Grid>
-          <Grid item xs={6}>
-            <BoldTypography
-              variant="subtitle2"
-              className={classes.values}
-              color="primary"
-            >
-              {deposit.bankAccount.bankAccountNumber}
             </BoldTypography>
           </Grid>
 

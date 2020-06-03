@@ -115,9 +115,12 @@ const DsoList = ({ onClickView }: { onClickView: Function }) => {
 
       <Table aria-label="accounts table">
         <TableBody>
+          {/* $FlowFixMe */}
           {dsoList.map((dso) => (
+            // $FlowFixMe
             <TableRow key={dso._id}>
               <TableCell style={{ borderBottom: 'none' }}>
+                {/* $FlowFixMe */}
                 <OfferCard dso={dso} onClickView={() => onClickView(dso)} />
               </TableCell>
             </TableRow>

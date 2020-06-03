@@ -2,7 +2,14 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import React, { useCallback, useState } from 'react';
 import { useHistory } from 'react-router-dom';
-import { Typography, Select, MenuItem, Button, Grid } from '@material-ui/core';
+import {
+  Typography,
+  Select,
+  MenuItem,
+  Button,
+  Grid,
+  Paper,
+} from '@material-ui/core';
 import TableWithPagination from 'components/TableWithPagination';
 import type { Bank } from 'pages/accounts/bank/modules/types';
 import { makeStyles } from '@material-ui/core/styles';
@@ -162,34 +169,36 @@ const redirectModel = [
 const MemoizedTable = React.memo(({ handleSelectChange, onMount }: any) => {
   const history = useHistory();
   return (
-    <TableWithPagination
-      id="authorizerBanksList"
-      endpoint="/accounts/banks/list/"
-      columns={columns}
-      onMount={onMount}
-    >
-      {(mBank: Bank) => (
-        <Grid container direction="row" alignItems="center">
-          <RowStatusComponent
-            bank={mBank}
-            handleSelectChange={handleSelectChange}
-          />
-          <Button
-            onClick={() =>
-              history.push({
-                pathname: '/authorizer/summary',
-                state: { data: mBank, model: redirectModel },
-              })
-            }
-            style={{
-              marginLeft: '16px',
-            }}
-          >
-            View
-          </Button>
-        </Grid>
-      )}
-    </TableWithPagination>
+    <Paper style={{ width: '100%' }}>
+      <TableWithPagination
+        id="authorizerBanksList"
+        endpoint="/accounts/banks/list/"
+        columns={columns}
+        onMount={onMount}
+      >
+        {(mBank: Bank) => (
+          <Grid container direction="row" alignItems="center">
+            <RowStatusComponent
+              bank={mBank}
+              handleSelectChange={handleSelectChange}
+            />
+            <Button
+              onClick={() =>
+                history.push({
+                  pathname: '/authorizer/summary',
+                  state: { data: mBank, model: redirectModel },
+                })
+              }
+              style={{
+                marginLeft: '16px',
+              }}
+            >
+              View
+            </Button>
+          </Grid>
+        )}
+      </TableWithPagination>
+    </Paper>
   );
 });
 MemoizedTable.displayName = 'MemoizedTable';

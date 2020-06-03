@@ -11,13 +11,8 @@ export const columns = [
     render: (val: string) => moment(val).format('MM/DD/YY'),
   },
   {
-    key: 'bankAccount.bankName',
-    label: 'Account Holder Name',
-  },
-  {
-    // $FlowFixMe
-    key: 'asset.symbol',
-    label: 'Bank name',
+    key: 'status',
+    label: 'Status',
   },
   {
     key: 'amount',

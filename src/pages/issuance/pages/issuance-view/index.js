@@ -33,6 +33,16 @@ const DsoView = () => {
   const saveEdit = async (id, finalData) => {
     const payload = { ...finalData };
     payload.documents = (finalData.documents || []).map((a) => a._id);
+    const stringable = ['equityMultiple', 'investmentStructure'];
+    Object.keys(payload).forEach((key) => {
+      if (
+        payload[key] !== null &&
+        payload[key] !== undefined &&
+        payload[key].toString().trim() === ''
+      ) {
+        payload[key] = stringable.includes(key) ? 'n/a' : null;
+      }
+    });
     const isGood = await saveIssuance(id, payload);
     const sData = { type: 'error', message: 'Failed to save digital security' };
     if (isGood) {

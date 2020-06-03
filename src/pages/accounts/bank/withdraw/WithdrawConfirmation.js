@@ -151,8 +151,8 @@ export default function WithdrawConfirmation({
       <Typography variant="caption" align="center" my={4}>
         <Box my={3}>
           You will be withdrawing {bank.asset.symbol}
-          {fAmount} in the following bank account. <br /> Please confirm your
-          bank account before proceeding.
+          {fAmount} to the above-mentioned bank account. <br /> Please confirm
+          your bank account before proceeding.
         </Box>
       </Typography>
 

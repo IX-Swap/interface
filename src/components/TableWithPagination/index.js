@@ -3,7 +3,6 @@ import * as React from 'react';
 import {
   TableContainer,
   TableBody,
-  Paper,
   Table,
   TableHead,
   TableRow,
@@ -29,7 +28,7 @@ type BaseRequirements<T> = {
   id: string,
   columns: Array<TableColumn<T>>,
   endpoint: string,
-  onMount: Function,
+  onMount?: Function,
   onRowClick?: ?Function,
   children?: (...props: any) => Node | React.Element<any>,
 };
@@ -122,10 +121,14 @@ const Items = ({ items, columns, children, clickProp }: ItemsProps) => {
   return (
     <TableBody>
       {items.length ? (
-        items.map((row) => (
-          <TableRow hover key={row._id} onClick={() => onClick && onClick(row)}>
+        items.map((row, i) => (
+          <TableRow
+            hover
+            key={row._id || i}
+            onClick={() => onClick && onClick(row)}
+          >
             {columns.map((e) => (
-              <TableCell align="left" key={`row-${e.key}`}>
+              <TableCell align={e.align || 'left'} key={`row-${e.key}`}>
                 {e.key && // $FlowFixMe
                   (e.render ? e.render(get(row, e.key), row) : get(row, e.key))}
                 {!e.key && children && children(row)}
@@ -135,7 +138,7 @@ const Items = ({ items, columns, children, clickProp }: ItemsProps) => {
         ))
       ) : (
         <TableRow>
-          <TableCell align="center" colSpan={5}>
+          <TableCell align="center" colSpan={columns.length}>
             No Data
           </TableCell>
         </TableRow>
@@ -177,7 +180,7 @@ const TableWithPagination = ({
   return (
     <>
       {[PAGINATION_STATUS.GETTING].includes(status) ? <LinearProgress /> : null}
-      <TableContainer component={Paper}>
+      <TableContainer>
         <Table aria-label="accounts table">
           <TableHead>
             <TableRow>

@@ -2,7 +2,14 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import React, { useCallback, useState } from 'react';
 import { useHistory } from 'react-router-dom';
-import { Typography, Select, MenuItem, Button, Grid } from '@material-ui/core';
+import {
+  Typography,
+  Select,
+  MenuItem,
+  Button,
+  Grid,
+  Paper,
+} from '@material-ui/core';
 import TableWithPagination from 'components/TableWithPagination';
 import { makeStyles } from '@material-ui/core/styles';
 import { snackbarService } from 'uno-material-ui';
@@ -112,34 +119,36 @@ const RowStatusComponent = ({
 const MemoizedTable = React.memo(({ handleSelectChange, onMount }: any) => {
   const history = useHistory();
   return (
-    <TableWithPagination
-      id="authorizerDepositsList"
-      endpoint="/accounts/cash/deposits/"
-      columns={columns}
-      onMount={onMount}
-    >
-      {(mDeposit: Deposit) => (
-        <Grid container direction="row" alignItems="center">
-          <RowStatusComponent
-            deposit={mDeposit}
-            handleSelectChange={handleSelectChange}
-          />
-          <Button
-            onClick={() =>
-              history.push({
-                pathname: '/authorizer/deposits/view',
-                state: { deposit: mDeposit },
-              })
-            }
-            style={{
-              marginLeft: '16px',
-            }}
-          >
-            View
-          </Button>
-        </Grid>
-      )}
-    </TableWithPagination>
+    <Paper style={{ width: '100%' }}>
+      <TableWithPagination
+        id="authorizerDepositsList"
+        endpoint="/accounts/cash/deposits/"
+        columns={columns}
+        onMount={onMount}
+      >
+        {(mDeposit: Deposit) => (
+          <Grid container direction="row" alignItems="center">
+            <RowStatusComponent
+              deposit={mDeposit}
+              handleSelectChange={handleSelectChange}
+            />
+            <Button
+              onClick={() =>
+                history.push({
+                  pathname: '/authorizer/deposits/view',
+                  state: { deposit: mDeposit },
+                })
+              }
+              style={{
+                marginLeft: '16px',
+              }}
+            >
+              View
+            </Button>
+          </Grid>
+        )}
+      </TableWithPagination>
+    </Paper>
   );
 });
 MemoizedTable.displayName = 'MemoizedTable';

@@ -1,7 +1,14 @@
 // @flow
-import React, { useCallback, useState, useEffect, useRef } from 'react';
-import RouteProps from 'react-router-dom';
-import { Typography, Box } from '@material-ui/core';
+import React, { useState, useEffect, useRef } from 'react';
+import {
+  Typography,
+  Box,
+  FormControl,
+  InputLabel,
+  Select,
+  MenuItem,
+  Grid,
+} from '@material-ui/core';
 import BankWithdrawForm from './WithdrawForm';
 import WithdrawConfirmation from './WithdrawConfirmation';
 import type { Bank } from '../modules/types';
@@ -10,27 +17,37 @@ import BankActions from '../modules/actions';
 import BanksListModule from '../modules/index';
 import WithdrawalList from './list';
 
-const { getBank } = BankActions;
-const { useBanksListDispatch } = BanksListModule;
+const { getBankAccounts } = BankActions;
+const {
+  BANK_LIST_STATUS,
+  useBanksListState,
+  useBanksListDispatch,
+} = BanksListModule;
 
-const useGenericBankLogic = (bankId: string) => {
+const useGenericBankLogic = () => {
   const [bank, setBank] = useState<Bank | null>(null);
   const [memo, setMemo] = useState<string>('');
   const [amount, setAmount] = useState<number>(0);
   const dispatch = useBanksListDispatch();
+  const { items: banks, status } = useBanksListState();
   const mountedRef = useRef(true);
   const [isConfirmation, setIsConfirmation] = useState<boolean>(false);
 
-  const getBankData = useCallback(
-    async (bId: string) => {
-      const bankData = await getBank(dispatch, { bankId: bId });
-      if (!mountedRef.current) {
-        return;
-      }
+  useEffect(() => {
+    if (status === BANK_LIST_STATUS.INIT) {
+      getBankAccounts(dispatch, {
+        ref: mountedRef,
+        skip: 0,
+        limit: 50,
+      });
+    }
+  }, [dispatch, status]);
 
-      setBank(bankData);
+  useEffect(
+    () => () => {
+      mountedRef.current = false;
     },
-    [dispatch]
+    []
   );
 
   const withdraw = (toWithdraw: number, mMemo: string) => {
@@ -39,9 +56,9 @@ const useGenericBankLogic = (bankId: string) => {
     setIsConfirmation(true);
   };
 
-  useEffect(() => {
-    getBankData(bankId);
-  }, [getBankData, bankId]);
+  const onBankSelect = (evt) => {
+    setBank(evt.target.value);
+  };
 
   useEffect(
     () => () => {
@@ -55,19 +72,26 @@ const useGenericBankLogic = (bankId: string) => {
     withdraw,
     amount,
     memo,
+    banks,
     setMemo,
     isConfirmation,
     setIsConfirmation,
+    onBankSelect,
   };
 };
 
-function BankWithdrawComponent({ match }: RouteProps) {
-  const { bankId } = match.params;
-  const { bank, withdraw, amount, isConfirmation, memo } = useGenericBankLogic(
-    bankId
-  );
+function BankWithdrawComponent() {
+  const {
+    bank,
+    withdraw,
+    amount,
+    isConfirmation,
+    memo,
+    banks,
+    onBankSelect,
+  } = useGenericBankLogic();
 
-  let toRender = <span>loading</span>;
+  let toRender = null;
 
   if (bank) {
     toRender = <BankWithdrawForm bank={bank} withdraw={withdraw} />;
@@ -81,9 +105,32 @@ function BankWithdrawComponent({ match }: RouteProps) {
   return (
     <>
       <Box m={4}>
-        {bank && <Typography variant="h3">Withdraw Cash</Typography>}
+        <Typography variant="h3">Withdraw Cash</Typography>
       </Box>
-      {toRender}
+      <Grid container justify="center">
+        {!isConfirmation && (
+          <FormControl style={{ minWidth: '200px' }}>
+            <InputLabel id="currency-selector-input">
+              To Bank Account
+            </InputLabel>
+            <Select
+              labelId="currency-selector"
+              id="currency-selector-value"
+              value={bank || {}}
+              onChange={onBankSelect}
+            >
+              {banks.map((item) => (
+                <MenuItem key={item._id} value={item}>
+                  {item.bankName} - {item.bankAccountNumber}
+                </MenuItem>
+              ))}
+            </Select>
+          </FormControl>
+        )}
+        <Grid item container style={{ marginTop: '16px' }}>
+          {toRender}
+        </Grid>
+      </Grid>
       <Box m={4}>
         {bank && <Typography variant="h3">Recent Withdrawals</Typography>}
       </Box>

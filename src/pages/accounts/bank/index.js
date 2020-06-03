@@ -33,7 +33,7 @@ const routes = [
     component: (props) => <BankDepositView {...props} />,
   },
   {
-    route: '/accounts/banks/deposit/:bankId',
+    route: '/accounts/banks/deposit',
     exact: true,
     component: (props) => <BankDepositComponent {...props} />,
   },
@@ -43,7 +43,7 @@ const routes = [
     component: (props) => <BankWithdrawalView {...props} />,
   },
   {
-    route: '/accounts/banks/withdraw/:bankId',
+    route: '/accounts/banks/withdraw',
     exact: true,
     component: (props) => <BankWithrawComponent {...props} />,
   },
