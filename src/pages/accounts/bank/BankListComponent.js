@@ -13,7 +13,7 @@ import Alert from '@material-ui/lab/Alert';
 
 import { withRouter, useHistory, RouteProps } from 'react-router-dom';
 import storageHelper from 'services/storageHelper';
-
+import { useIsAccredited } from 'services/acl';
 import { snackbarService } from 'uno-material-ui';
 import TableWithPagination from 'components/TableWithPagination';
 import { columns } from './data';
@@ -188,6 +188,7 @@ function BankListComponent(props: RouteProps) {
     editBank,
   } = useBankListLogic();
   const history = useHistory();
+  const isAccredited = useIsAccredited();
   let componentToRender = <CircularProgress />;
 
   if ([BANK_LIST_STATUS.IDLE].includes(status)) {
@@ -209,27 +210,29 @@ function BankListComponent(props: RouteProps) {
             </Grid>
 
             <Grid item container xs={9} justify="flex-end">
-              <Box pr={4}>
-                <Button
-                  variant="contained"
-                  color="primary"
-                  style={{ marginRight: '8px' }}
-                  onClick={() => {
-                    history.push(`/accounts/banks/deposit`);
-                  }}
-                >
-                  Deposit
-                </Button>
-                <Button
-                  variant="contained"
-                  color="primary"
-                  onClick={() => {
-                    history.push(`/accounts/banks/withdraw`);
-                  }}
-                >
-                  Withdraw
-                </Button>
-              </Box>
+              {isAccredited && (
+                <Box pr={4}>
+                  <Button
+                    variant="contained"
+                    color="primary"
+                    style={{ marginRight: '8px' }}
+                    onClick={() => {
+                      history.push(`/accounts/banks/deposit`);
+                    }}
+                  >
+                    Deposit
+                  </Button>
+                  <Button
+                    variant="contained"
+                    color="primary"
+                    onClick={() => {
+                      history.push(`/accounts/banks/withdraw`);
+                    }}
+                  >
+                    Withdraw
+                  </Button>
+                </Box>
+              )}
               <Button
                 m={3}
                 variant="contained"

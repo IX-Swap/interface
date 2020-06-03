@@ -17,7 +17,7 @@ import BankActions from '../modules/actions';
 import BanksListModule from '../modules/index';
 import WithdrawalList from './list';
 
-const { getBankAccounts } = BankActions;
+const { getBankAccounts, setPage } = BankActions;
 const {
   BANK_LIST_STATUS,
   useBanksListState,
@@ -39,16 +39,17 @@ const useGenericBankLogic = () => {
         ref: mountedRef,
         skip: 0,
         limit: 50,
+        status: 'Approved',
       });
     }
   }, [dispatch, status]);
 
-  useEffect(
-    () => () => {
+  useEffect(() => {
+    setPage(dispatch, { page: 0 });
+    return () => {
       mountedRef.current = false;
-    },
-    []
-  );
+    };
+  }, [dispatch]);
 
   const withdraw = (toWithdraw: number, mMemo: string) => {
     setMemo(mMemo);

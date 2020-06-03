@@ -2,7 +2,7 @@
 import React, { Suspense } from 'react';
 import { withRouter, Route, RouteProps } from 'react-router-dom';
 import ArrowBackIosIcon from '@material-ui/icons/ArrowBackIos';
-import { Grid, Button } from '@material-ui/core';
+import { Grid, Button, Container, Paper, Box } from '@material-ui/core';
 import PageTitle from 'components/PageTitle';
 
 const Banks = React.lazy(() => import('./banks'));
@@ -19,8 +19,23 @@ const IndividualIdentities = React.lazy(() =>
 );
 const CorporateIdentities = React.lazy(() => import('./corporate-identities'));
 const Commitments = React.lazy(() => import('./commitments'));
+const BankView = React.lazy(() => import('pages/accounts/bank/view'));
 
 const Summary = React.lazy(() => import('components/Summary'));
+
+const BankSummary = ({ location }: RouteProps) => {
+  const { data } = location.state || {};
+  if (!data) return <span>nothing to display</span>;
+  return (
+    <Grid container component={Paper}>
+      <Container>
+        <Box m={4}>
+          <BankView bank={data} />
+        </Box>
+      </Container>
+    </Grid>
+  );
+};
 
 const routes = [
   {
@@ -93,7 +108,7 @@ const routes = [
   {
     route: '/authorizer/summary',
     title: 'Summary',
-    component: Summary,
+    component: BankSummary,
     hasBack: true,
   },
 ];

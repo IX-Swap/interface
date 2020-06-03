@@ -36,6 +36,7 @@ export type BankRequest = {
   accountHolderName: string,
   swiftCode: string,
   address: BankAddress,
+  status?: string,
 };
 
 export const baseBankRequest: BankRequest = Object.freeze({

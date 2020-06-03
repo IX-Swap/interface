@@ -20,6 +20,10 @@ export const columns = [
     label: 'Swift Code',
   },
   {
+    key: 'status',
+    label: 'Status',
+  },
+  {
     key: '',
     label: 'Actions',
   },

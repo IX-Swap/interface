@@ -286,7 +286,7 @@ const DsoInformation = ({
   assets = [],
 }: {
   dso: Dso,
-  assets: Array<any>,
+  assets?: Array<any>,
   action?: string,
   headerButtonShown?: boolean,
   headerButtonText?: string,

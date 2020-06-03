@@ -199,7 +199,7 @@ const TableWithPagination = ({
               <TableRow>
                 <TablePagination
                   rowsPerPageOptions={[5, 10, 25]}
-                  colSpan={6}
+                  colSpan={columns.length}
                   count={total}
                   rowsPerPage={limit}
                   page={page}

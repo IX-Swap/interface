@@ -35,14 +35,21 @@ async function createBankAccount(
 ) {
   dispatch({ type: userAddBankActions.USER_ADD_BANK_REQUEST });
   const userId = localStore.getUserId();
+  const updateParams = {};
 
   try {
     const {
       bank: { _id, ...bank },
     } = payload;
+
+    // prepare handler for status reset
+    /* if (_id) {
+      updateParams.status = 'Unauthorized';
+    } */
+
     const uri = `/accounts/banks/${userId}${_id ? `/${_id}` : ''}`;
     const method = _id ? putRequest : postRequest;
-    const result = await method(uri, { ...bank });
+    const result = await method(uri, { ...bank, ...updateParams });
     const response = await result.json();
 
     if (result.status === 200) {
