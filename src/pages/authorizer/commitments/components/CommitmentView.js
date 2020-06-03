@@ -78,9 +78,11 @@ const CommitmentItem = ({ label, value }: { label: string, value: string }) => (
 const CommitmentView = ({
   commitment,
   onClickBack,
+  onViewIdentity,
 }: {
   commitment: Commitment,
   onClickBack: Function,
+  onViewIdentity: Function,
 }) => {
   const { dso, individual, status } = commitment;
   const [saving, setSaving] = useState(false);
@@ -152,7 +154,11 @@ const CommitmentView = ({
                     </Typography>
                   </Grid>
                   <Grid item xs={6}>
-                    <Button variant="contained" color="primary">
+                    <Button
+                      variant="contained"
+                      color="primary"
+                      onClick={() => onViewIdentity(individual)}
+                    >
                       View
                     </Button>
                   </Grid>
