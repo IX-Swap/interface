@@ -21,8 +21,6 @@ const CorporateIdentities = React.lazy(() => import('./corporate-identities'));
 const Commitments = React.lazy(() => import('./commitments'));
 const BankView = React.lazy(() => import('pages/accounts/bank/view'));
 
-const Summary = React.lazy(() => import('components/Summary'));
-
 const BankSummary = ({ location }: RouteProps) => {
   const { data } = location.state || {};
   if (!data) return <span>nothing to display</span>;

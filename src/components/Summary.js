@@ -1,7 +1,7 @@
 import React from 'react';
 import { RouteProps, useHistory } from 'react-router-dom';
 import ArrowBackIosIcon from '@material-ui/icons/ArrowBackIos';
-import { Typography, Grid, Box, Paper, Button } from '@material-ui/core';
+import { Typography, Grid, Box, Button } from '@material-ui/core';
 import { get } from 'lodash';
 
 export default function Overview({ location, hasBack }: RouteProps) {
