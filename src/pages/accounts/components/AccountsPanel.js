@@ -129,7 +129,9 @@ function AccountsPanel({ location }: any) {
                   key={route.route}
                   exact={index === 0}
                   path={route.route}
-                  render={() => route.component}
+                  render={() => (
+                    <Box style={{ minHeight: '500px' }}>{route.component}</Box>
+                  )}
                 />
               ))}
             </Switch>

@@ -4,16 +4,16 @@ import { grey } from '@material-ui/core/colors';
 
 export default makeStyles(() => ({
   largeInputLabel: {
-    fontSize: '16px',
+    fontSize: '1.25em',
   },
   largeInputValue: {
-    fontSize: '22px',
+    fontSize: '1.8em',
   },
   smallInputLabel: {
-    fontSize: '12px',
+    fontSize: '1em',
   },
   smallInputValue: {
-    fontSize: '16px',
+    fontSize: '1.25em',
   },
   tokenSymbol: {
     width: '80px',
