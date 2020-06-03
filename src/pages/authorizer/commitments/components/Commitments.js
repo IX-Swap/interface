@@ -3,6 +3,7 @@ import React, { useState } from 'react';
 import CommitmentsList from './CommitmentsList';
 import CommitmentView from './CommitmentView';
 import IdentityView from './IndentityView';
+import DsoView from './DsoView';
 
 const authorizeCommitmentsPage = {
   LIST: 'LIST',
@@ -15,16 +16,10 @@ const authorizeCommitmentsPage = {
 const Commitments = () => {
   const [page, setPage] = useState(authorizeCommitmentsPage.LIST);
   const [commitment, setCommitment] = useState(null);
-  const [identity, setIdentity] = useState(null);
 
   const onClickView = (selected) => {
     setCommitment(selected);
     setPage(authorizeCommitmentsPage.VIEW);
-  };
-
-  const onViewIdentity = (mIdentity) => {
-    setIdentity(mIdentity);
-    setPage(authorizeCommitmentsPage.VIEW_IDENTITY);
   };
 
   if (page === authorizeCommitmentsPage.LIST) {
@@ -36,16 +31,34 @@ const Commitments = () => {
       <CommitmentView
         commitment={commitment}
         onClickBack={() => setPage(authorizeCommitmentsPage.LIST)}
-        onViewIdentity={onViewIdentity}
+        onViewIdentity={() => setPage(authorizeCommitmentsPage.VIEW_IDENTITY)}
+        onViewDso={() => setPage(authorizeCommitmentsPage.VIEW_DSO)}
       />
     );
   }
 
-  if (identity && page === authorizeCommitmentsPage.VIEW_IDENTITY) {
+  if (
+    commitment &&
+    commitment.individual &&
+    page === authorizeCommitmentsPage.VIEW_IDENTITY
+  ) {
     return (
       <IdentityView
-        identity={identity}
+        identity={commitment.individual}
         onClickBack={() => setPage(authorizeCommitmentsPage.VIEW)}
+      />
+    );
+  }
+
+  if (
+    commitment &&
+    commitment.dso &&
+    page === authorizeCommitmentsPage.VIEW_DSO
+  ) {
+    return (
+      <DsoView
+        onClickBack={() => setPage(authorizeCommitmentsPage.VIEW)}
+        dso={commitment.dso}
       />
     );
   }

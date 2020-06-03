@@ -17,7 +17,13 @@ import { snackbarService } from 'uno-material-ui';
 import AuthorizeConfirmDialog from './AuthorizeConfirmDialog';
 import { toggleCommitmentStatus } from '../modules/actions';
 
-const DsoSummary = ({ dso }: { dso: Dso }) => (
+const DsoSummary = ({
+  dso,
+  onClickView,
+}: {
+  dso: Dso,
+  onClickView: Function,
+}) => (
   <Paper style={{ height: '96%' }}>
     <Box
       px={4}
@@ -59,9 +65,13 @@ const DsoSummary = ({ dso }: { dso: Dso }) => (
         <span style={{ marginLeft: '1em' }}>{dso.investmentStructure}</span>
       </Typography>
       <Box mt={2}>
-        <Typography paragraph>{dso.introduction}</Typography>
+        <Typography paragraph>
+          <span dangerouslySetInnerHTML={{ __html: dso.introduction }} />
+        </Typography>
       </Box>
-      <Button variant="contained">View</Button>
+      <Button variant="contained" onClick={onClickView}>
+        View
+      </Button>
     </Box>
   </Paper>
 );
@@ -79,10 +89,12 @@ const CommitmentView = ({
   commitment,
   onClickBack,
   onViewIdentity,
+  onViewDso,
 }: {
   commitment: Commitment,
   onClickBack: Function,
   onViewIdentity: Function,
+  onViewDso: Function,
 }) => {
   const { dso, individual, status } = commitment;
   const [saving, setSaving] = useState(false);
@@ -215,7 +227,7 @@ const CommitmentView = ({
           </Grid>
         </Grid>
         <Grid item xs={4}>
-          <DsoSummary dso={dso} />
+          <DsoSummary dso={dso} onClickView={onViewDso} />
         </Grid>
       </Grid>
 
