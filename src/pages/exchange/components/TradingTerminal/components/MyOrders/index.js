@@ -17,6 +17,9 @@ import Paper from '@material-ui/core/Paper';
 import { ENDPOINT_URL, API_URL, DATE_FORMAT } from 'config';
 import localStore from 'services/storageHelper';
 
+// Modules
+import MyOrderActions from './modules/actions';
+
 const StyledTableCell = withStyles((theme) => ({
   head: {
     backgroundColor: '#f7f7f7',
@@ -42,6 +45,7 @@ const useStyles = makeStyles({
 
 // Subscribe to SOCKET.IO
 const bearerToken = localStore.getAccessToken();
+const userId = localStore.getUserId();
 
 export default function TableMyOrders(props) {
   const { id, data } = props;
@@ -57,8 +61,19 @@ export default function TableMyOrders(props) {
     socket.on(`${MY_ORDERS.on}/${id}`, (data) => {
       setMyOrders(data);
     });
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
+  /*eslint-disable */
+
+  /*eslint-disable */
+  const _handleCancelOrder = order => {
+    const payload = {
+      ...order,
+      pair: id,
+      type: 'LIMIT',
+    };
+
+    MyOrderActions.cancelOrder(userId, order._id, payload);
+  };
   /*eslint-disable */
 
   return (
@@ -95,7 +110,12 @@ export default function TableMyOrders(props) {
                   <TableCell>{row.totalFilled}</TableCell>
                   <TableCell>{row.price * row.amount}</TableCell>
                   <TableCell>
-                    <Button color="primary">Cancel</Button>
+                    <Button 
+                      color="primary"
+                      onClick={() => _handleCancelOrder(row)}
+                    >
+                      Cancel
+                    </Button>
                   </TableCell>
                 </TableRow>
               )) : null}

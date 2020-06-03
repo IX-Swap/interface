@@ -49,7 +49,7 @@ const IdentityField = ({
   const classes = useStyles();
   const { control, register } = useFormContext();
 
-  if (!value && editMode) {
+  if (editMode) {
     let inputComponent;
 
     switch (type) {
@@ -68,7 +68,7 @@ const IdentityField = ({
               control={control}
               onChange={([e]) => e.target.value}
               className={classes.selectField}
-              value={value}
+              defaultValue={value || ''}
             >
               {children}
             </Controller>
@@ -86,6 +86,7 @@ const IdentityField = ({
             inputRef={register({ required })}
             placeholder={label}
             className={classes.textField}
+            defaultValue={value || ''}
           />
         );
         break;
