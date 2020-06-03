@@ -1,4 +1,5 @@
 // @flow
+/* eslint-disable react-hooks/exhaustive-deps */
 import React, { useEffect, useRef, useState } from 'react';
 import {
   Box,
@@ -174,7 +175,7 @@ function useBankListLogic() {
   };
 }
 
-function BankListComponent(props: RouteProps) {
+function BankListComponent({ hasApproved }: { hasApproved: boolean }) {
   const {
     error,
     items,
@@ -192,7 +193,7 @@ function BankListComponent(props: RouteProps) {
   let componentToRender = <CircularProgress />;
 
   if ([BANK_LIST_STATUS.IDLE].includes(status)) {
-    componentToRender = <AddBankAccount props={props} />;
+    componentToRender = <AddBankAccount />;
   }
 
   if (items && items.length > 0) {
@@ -210,7 +211,7 @@ function BankListComponent(props: RouteProps) {
             </Grid>
 
             <Grid item container xs={9} justify="flex-end">
-              {isAccredited && (
+              {isAccredited && hasApproved && (
                 <Box pr={4}>
                   <Button
                     variant="contained"
@@ -335,4 +336,45 @@ function AddBankAccount({ props }: any) {
   );
 }
 
-export default withRouter(BankListComponent);
+const ApprovedGetter = () => {
+  const mountedRef = useRef(true);
+  const bankDispatch = useBanksListDispatch();
+  const bankListState = useBanksListState();
+  const [checked, setChecked] = useState(false);
+  const [hasApproved, setHasApproved] = useState(false);
+  const { status, page, limit, items } = bankListState;
+
+  useEffect(() => {
+    if (status === BANK_LIST_STATUS.INIT) {
+      getBankAccounts(bankDispatch, {
+        skip: page * limit,
+        limit,
+        status: 'Approved',
+        ref: mountedRef,
+      });
+      clearApiStatus(bankDispatch);
+    }
+
+    if (status === BANK_LIST_STATUS.IDLE) {
+      if (checked) return;
+      if (items.length && items[0].status === 'Approved') {
+        setHasApproved(true);
+      }
+
+      setChecked(true);
+      getBankAccounts(bankDispatch, {
+        skip: page * limit,
+        limit,
+        ref: mountedRef,
+      });
+    }
+  }, [page, limit, status, bankDispatch]);
+
+  return status === BANK_LIST_STATUS.IDLE && checked ? (
+    <BankListComponent hasApproved={hasApproved} />
+  ) : (
+    <span>loading</span>
+  );
+};
+
+export default withRouter(ApprovedGetter);
