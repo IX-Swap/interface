@@ -8,7 +8,7 @@ const ArrayForm = ({
   editMode,
 }: {
   rootName: string,
-  data: IdentityProfile[],
+  data?: IdentityProfile[],
   editMode: boolean,
 }) => {
   // TODO: Add/Subtract forms
@@ -18,7 +18,12 @@ const ArrayForm = ({
     return [...Array(count)].map((_, i) => {
       const name = `${rootName}[${i}]`;
       return (
-        <IdentityForm editMode key={name} rootName={name} identity={data[i]} />
+        <IdentityForm
+          editMode
+          key={name}
+          rootName={name}
+          identity={data ? data[i] : {}}
+        />
       );
     });
   }
