@@ -34,5 +34,9 @@ export const ENDPOINT_URL = {
       emit: 'balances/get',
       on: 'balances',
     },
+    LAST_PRICE: {
+      emit: 'price/get',
+      on: 'price',
+    },
   },
 };

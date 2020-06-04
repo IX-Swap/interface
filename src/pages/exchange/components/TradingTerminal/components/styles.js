@@ -126,6 +126,7 @@ export default makeStyles(theme => ({
   monitoringListItem: {
     display: 'flex',
     justifyContent: 'space-between',
+    position: 'relative',
 
     '&:hover': {
       fontWeight: 600,
@@ -138,9 +139,8 @@ export default makeStyles(theme => ({
   defaultListItemStyle: {
     ...defaultListItemStyle,
 
-    '&:last-child, &:nth-child(2)': {
+    '&:last-child': {
       justifyContent: 'flex-end',
-      textAlign: 'right',
     }
   },
   positiveCell: {
@@ -150,6 +150,9 @@ export default makeStyles(theme => ({
   negativeCell: {
     ...defaultListItemStyle,
     color: '#D83070',
+  },
+  rightAlign: {
+    justifyContent: 'flex-end',
   },
   bidsAsksContainer: {
     display: 'flex',
@@ -217,4 +220,14 @@ export default makeStyles(theme => ({
     fontWeight: 600,
     marginTop: 20,
   },
+  marketLink: {
+    color: '#000',
+    textDecoration: 'none',
+  },
+  barGraph: {
+    background: 'rgba(0,0,0,0.3)',
+    position: 'absolute',
+    height: '100%',
+    right: 0,
+  }
 }))

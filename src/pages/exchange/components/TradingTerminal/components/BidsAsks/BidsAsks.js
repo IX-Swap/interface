@@ -187,7 +187,7 @@ const BidsAsksHistory = (props) => {
             <form className={classes.formContainer}>
                 <Box className={classes.formHeader}>
                     <Typography className={classes.formTitle} variant="h3">
-                        Buy {isQuoteItem?.symbol}
+                        Buy {isListingItem?.symbol}
                     </Typography>
                     <Box className={classes.formValue}>
                         <AccountBalanceWalletIcon color="action" /> 
@@ -235,7 +235,7 @@ const BidsAsksHistory = (props) => {
             <form className={classes.formContainer}>
                 <Box className={classes.formHeader}>
                     <Typography className={classes.formTitle} variant="h3">
-                        Sell {isQuoteItem?.symbol}
+                        Sell {isListingItem?.symbol}
                     </Typography>
                     <Box className={classes.formValue}>
                         <AccountBalanceWalletIcon color="action" /> 
