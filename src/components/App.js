@@ -1,11 +1,12 @@
 // @flow
-import React, { useMemo } from 'react';
+import React, { useMemo, useState, useEffect } from 'react';
 import type { Node } from 'react';
 import { Route, Switch, Redirect, HashRouter } from 'react-router-dom';
 import classnames from 'classnames';
 
 import { useIsAdmin, useIsAuthorizer, useIsIssuer } from 'services/acl';
 import useRedirectTo2faSetup from 'hooks/useRedirectTo2faSetup';
+import { _subscribeToSocket } from 'services/socket';
 import Auth from '../pages/auth';
 
 import Header from './Header';
@@ -21,7 +22,7 @@ import Authorizer from '../pages/authorizer';
 import TradeHistoryTable from '../pages/exchange/components/ExchangeTable/TradeHistoryTable';
 import TableMyOrders from '../pages/exchange/components/ExchangeTable/OrdersTable';
 import TableMarketListings from '../pages/exchange/components/ExchangeTable/MarketListingTable';
-import TableListings from '../pages/exchange/components/ExchangeTable/ListingTable/';
+import TableListings from '../pages/exchange/components/ExchangeTable/ListingTable';
 import OverviewExchange from '../pages/exchange/components/TradingTerminal';
 import ListingView from '../pages/exchange/components/ExchangeTable/ListingView';
 import Issuance from '../pages/issuance';
@@ -39,8 +40,16 @@ type RouteProps = $Shape<{
 
 function App() {
   const { isAuthenticated } = useUserState();
+  const [hasSocket, setHasSocket] = useState(false);
   const classes = useStyles();
-  
+
+  useEffect(() => {
+    (async () => {
+      await _subscribeToSocket();
+      setHasSocket(true);
+    })();
+  }, [isAuthenticated]);
+
   function PublicRoute({
     component,
     path,
@@ -62,6 +71,10 @@ function App() {
         }
       />
     );
+  }
+
+  if (!hasSocket && isAuthenticated) {
+    return <span>loading</span>;
   }
 
   return (
@@ -131,7 +144,7 @@ function App() {
       },
       {
         route: '/listings-view/:id',
-        component: () => <ListingView title='Listing View'/>,
+        component: () => <ListingView title="Listing View" />,
       },
       // Show only when user has issuer role
       ...(isIssuer

@@ -1,5 +1,6 @@
 import { postRequest, getRequest } from 'services/httpRequests';
 import localStore from 'services/storageHelper';
+import { _subscribeToSocket, subscribeToSocket } from 'services/socket';
 import { userActions } from './types';
 
 export async function loginUser(
@@ -75,6 +76,13 @@ export function signOut(dispatch: Function) {
   localStore.remove();
   dispatch({ type: userActions.SIGN_OUT_SUCCESS });
 
+  const socket = subscribeToSocket();
+
+  if (socket) {
+    socket.removeAllListeners();
+    socket.disconnect();
+  }
+
   // TODO: Fix to not hacky solution
   window.location = '#/auth/sign-in';
 }
@@ -110,6 +118,7 @@ export async function getUser(dispatch: Function) {
     const result = await getRequest(`/auth/profiles/${userId}`);
     if (result.status === 200) {
       const response = await result.json();
+      await _subscribeToSocket();
       dispatch({
         type: userActions.GET_AUTH_ME_SUCCESS,
         payload: response.data,

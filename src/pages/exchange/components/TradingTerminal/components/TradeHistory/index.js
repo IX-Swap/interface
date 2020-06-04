@@ -1,25 +1,23 @@
 import React, { useState, useEffect } from 'react';
-import io from 'socket.io-client';
 
 // Config/Endpoints
-import { ENDPOINT_URL, API_URL } from 'config';
-import localStore from 'services/storageHelper';
+import { ENDPOINT_URL } from 'config';
 
 // Component
+import { subscribeToSocket } from 'services/socket';
 import Monitoring from '../Monitoring';
 
 const TradeHistory = (props) => {
-    const { id } = props;
-    const bearerToken = localStore.getAccessToken();
-    
-    const [tradeStory, setTradeStory] = useState(false);
-    const { SUBSCRIBE_API } = ENDPOINT_URL;
-    const { TRADE_HISTORY } = SUBSCRIBE_API;
+  const { id } = props;
 
-    // Update after demo
-    /*eslint-disable */
+  const [tradeStory, setTradeStory] = useState(false);
+  const { SUBSCRIBE_API } = ENDPOINT_URL;
+  const { TRADE_HISTORY } = SUBSCRIBE_API;
+
+  // Update after demo
+  /*eslint-disable */
     useEffect(() => {
-        const socket = io(`${API_URL}?token=${bearerToken}`);
+        const socket = subscribeToSocket();
         socket.emit(TRADE_HISTORY.emit, id);
         socket.on(`${TRADE_HISTORY.on}/${id}`, data => {
             setTradeStory(data);
@@ -30,14 +28,14 @@ const TradeHistory = (props) => {
         };
     }, []);
     /*eslint-disable */
-    
+
     const data = tradeStory ? tradeStory : [];
 
     return (
-        <Monitoring 
+        <Monitoring
             title="Trade History"
             type="tradeHistory"
-            data={data} 
+            data={data}
         />
     );
 };

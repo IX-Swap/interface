@@ -37,36 +37,36 @@ type TableColumn = {
 
 const columns: Array<TableColumn> = [
   {
-    label: "Symbol",
-    key: "symbol",
+    label: 'Symbol',
+    key: 'symbol',
   },
   {
-    label: "Name",
-    key: "name",
+    label: 'Name',
+    key: 'name',
   },
   {
-    label: "Total Balance",
-    key: "balance",
-    headAlign: "right",
-    align: "right",
+    label: 'Total Balance',
+    key: 'balance',
+    headAlign: 'right',
+    align: 'right',
     render: (value) =>
-      value && value.toFixed(2).replace(/\d(?=(\d{3})+\.)/g, "$&,"),
+      value && value.toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,'),
   },
   {
-    label: "Available Balance",
-    key: "available",
-    headAlign: "right",
-    align: "right",
+    label: 'Available Balance',
+    key: 'available',
+    headAlign: 'right',
+    align: 'right',
     render: (value) =>
-      value && value.toFixed(2).replace(/\d(?=(\d{3})+\.)/g, "$&,"),
+      value && value.toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,'),
   },
   {
-    label: "On Hold",
-    key: "onHold",
-    headAlign: "right",
-    align: "right",
+    label: 'On Hold',
+    key: 'onHold',
+    headAlign: 'right',
+    align: 'right',
     render: (value) =>
-      value && value.toFixed(2).replace(/\d(?=(\d{3})+\.)/g, "$&,"),
+      value && value.toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,'),
   },
 ];
 

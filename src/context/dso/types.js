@@ -8,6 +8,8 @@ export type Document = {
   user: string,
   originalFileName: string,
   url?: string,
+  createdAt: string,
+  updatedAt: string,
 };
 
 export type DsoTeamMember = {
@@ -48,7 +50,7 @@ export type Dso = {
   issuerName: string,
   launchDate: string,
   capitalStructure: string,
-  currency: Asset,
+  currency: Array<Asset>,
   pricePerUnit: number,
   totalFundraisingAmount: number,
   tokenName: string,

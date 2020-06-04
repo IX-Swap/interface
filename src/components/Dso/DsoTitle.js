@@ -16,17 +16,9 @@ import {
   MuiPickersUtilsProvider,
 } from '@material-ui/pickers';
 import DateFnsUtils from '@date-io/date-fns';
-import { makeStyles } from '@material-ui/styles';
+import type { Document } from 'context/dso/types';
 import useEditableStyles from './styles';
-
-const useStyles = makeStyles(() => ({
-  logo: {
-    width: '50px',
-    height: '50px',
-    borderRadius: '50px',
-    backgroundColor: '#f0f0f0',
-  },
-}));
+import DsoImage from './DsoImage';
 
 const DsoTitle = (
   {
@@ -35,7 +27,11 @@ const DsoTitle = (
     edit = false,
     control,
     assets = [],
+    children = undefined,
+    documents,
   }: {
+    documents?: Array<Document>,
+    children: any,
     assets: Array<any>,
     control?: any,
     edit?: boolean,
@@ -44,13 +40,13 @@ const DsoTitle = (
   },
   ref: any
 ) => {
-  const classes = useStyles();
   const classesE = useEditableStyles();
 
   return (
     <Grid container alignItems="center">
       <Box mr={2}>
-        <div className={classes.logo} />
+        <DsoImage documents={documents} />
+        {children}
       </Box>
       {!edit && (
         <Grid item>

@@ -12,56 +12,70 @@ const OfferCard = ({
 }: {
   dso: Dso,
   onClickView: Function,
-}) => (
-  <Paper>
-    <Box px={4} pt={2} pb={4}>
-      <Grid container justify="space-between" spacing={2}>
-        <Grid item container xs={9} justify="space-between" direction="column">
-          <Box pt={1}>
-            <DsoTitle
-              tokenSymbol={dso.tokenSymbol}
-              issuerName={dso.issuerName}
-            />
+}) => {
+  const currency = dso.currency.length ? dso.currency[0] : {};
 
-            <Box mt={4}>
-              <Typography paragraph>
-                <span
-                  dangerouslySetInnerHTML={{
-                    __html: dso.introduction,
-                  }}
-                />
-              </Typography>
-            </Box>
-          </Box>
-
-          <Button
-            style={{ width: '120px' }}
-            variant="contained"
-            color="primary"
-            onClick={onClickView}
+  return (
+    <Paper>
+      <Box px={4} pt={2} pb={4}>
+        <Grid container justify="space-between" spacing={2}>
+          <Grid
+            item
+            container
+            xs={9}
+            justify="space-between"
+            direction="column"
           >
-            View
-          </Button>
+            <Box pt={1}>
+              <DsoTitle
+                tokenSymbol={dso.tokenSymbol}
+                issuerName={dso.issuerName}
+                documents={dso.documents}
+              />
+
+              <Box mt={4}>
+                <Typography paragraph>
+                  <span
+                    dangerouslySetInnerHTML={{
+                      __html: dso.introduction,
+                    }}
+                  />
+                </Typography>
+              </Box>
+            </Box>
+
+            <Button
+              style={{ width: '120px' }}
+              variant="contained"
+              color="primary"
+              onClick={onClickView}
+            >
+              View
+            </Button>
+          </Grid>
+          <Grid item xs={3}>
+            <OfferDetail label="Status" value={dso.status} />
+            <OfferDetail
+              label="Capital Structure"
+              value={dso.capitalStructure}
+            />
+            <OfferDetail
+              label="Unit Price"
+              value={formatMoney(dso.pricePerUnit, currency.symbol)}
+            />
+            <OfferDetail
+              label="Total Fundraising Amount"
+              value={formatMoney(dso.totalFundraisingAmount, currency.symbol)}
+            />
+            <OfferDetail
+              label="Minimum Investment"
+              value={formatMoney(dso.minimumInvestment, dso.tokenSymbol)}
+            />
+          </Grid>
         </Grid>
-        <Grid item xs={3}>
-          <OfferDetail label="Status" value={dso.status} />
-          <OfferDetail label="Capital Structure" value={dso.capitalStructure} />
-          <OfferDetail
-            label="Unit Price"
-            value={formatMoney(dso.pricePerUnit, dso.currency.symbol)}
-          />
-          <OfferDetail
-            label="Total Fundraising Amount"
-            value={formatMoney(dso.totalFundraisingAmount, dso.currency.symbol)}
-          />
-          <OfferDetail
-            label="Minimum Investment"
-            value={formatMoney(dso.minimumInvestment, dso.currency.symbol)}
-          />
-        </Grid>
-      </Grid>
-    </Box>
-  </Paper>
-);
+      </Box>
+    </Paper>
+  );
+};
 
 export default OfferCard;
