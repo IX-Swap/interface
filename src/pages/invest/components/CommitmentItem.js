@@ -149,11 +149,15 @@ const CommitmentItem = ({
 
     if (dso) {
       fetch();
+    }
+  }, [dso, asset]);
 
+  useEffect(() => {
+    if (dso) {
       const amount = watch('amount');
       if (amount) setNumberOfUnits(amount / dso.pricePerUnit);
     }
-  }, [dso, watch, asset]);
+  }, [dso, watch]);
 
   useEffect(() => {
     if (commitment) {
