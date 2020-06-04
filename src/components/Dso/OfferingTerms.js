@@ -24,9 +24,7 @@ const getOfferingTermComponent = (name, ref, control) => {
                 name,
               }}
             >
-              <MenuItem value="">
-                <em>None</em>
-              </MenuItem>
+              <MenuItem value="Not Applicable">Not Applicable</MenuItem>
               <MenuItem value="Monthly">Monthly</MenuItem>
               <MenuItem value="Quarterly">Quarterly</MenuItem>
               <MenuItem value="Semi-Annually">Semi-Annually</MenuItem>
