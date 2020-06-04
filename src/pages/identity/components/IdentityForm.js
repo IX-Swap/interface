@@ -6,6 +6,7 @@ import {
   GENDERS_OPTS,
   MARITAL_STATUSES_OPTS,
   COUNTRIES_OPTS,
+  NATIONALITIES_OPTS,
 } from 'const/const';
 import { useUserState } from 'context/user';
 import IdentityField from './IdentityField';
@@ -64,7 +65,17 @@ const IdentityForm = ({
         value={identity.nationality}
         required
         editMode={editMode}
-      />
+        type="select"
+      >
+        <MenuItem disabled value={undefined}>
+          Nationality
+        </MenuItem>
+        {NATIONALITIES_OPTS.map(({ value, label }) => (
+          <MenuItem key={value} value={value}>
+            {label}
+          </MenuItem>
+        ))}
+      </IdentityField>
       <IdentityField
         name={getFieldName('countryOfResidence')}
         label="Country of Residence"
