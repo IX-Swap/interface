@@ -14,6 +14,7 @@ export const columns = [
   {
     key: 'amount',
     label: 'Amount',
+    headAlign: 'right',
     align: 'right',
     render: (val: string, row: any) => formatMoney(val, row.asset.symbol),
   },

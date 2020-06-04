@@ -186,18 +186,21 @@ const columns: Array<TableColumns> = [
   },
   {
     align: 'right',
+    headAlign: 'right',
     key: 'pricePerUnit',
     label: 'Unit Price',
     render: (a: number) => formatMoney(a),
   },
   {
     align: 'right',
+    headAlign: 'right',
     key: 'totalFundraisingAmount',
     label: 'Total Fundraising Amount',
     render: (amount: number) => formatMoney(amount),
   },
   {
     align: 'right',
+    headAlign: 'right',
     key: 'minimumInvestment',
     label: 'Minimum Investment',
     render: (amount: number) => formatMoney(amount),
@@ -321,7 +324,7 @@ export default function BanksList() {
           <TableHead>
             <TableRow>
               {columns.map((e) => (
-                <TableCell key={e.key}>
+                <TableCell key={e.key} align={e.headAlign || "left"}>
                   <b>{e.label}</b>
                 </TableCell>
               ))}

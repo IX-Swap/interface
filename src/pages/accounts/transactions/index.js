@@ -41,6 +41,7 @@ type TableColumn = {
   label: string,
   key: $Keys<Transaction>,
   align?: string,
+  headAlign?: string,
   render?: any,
 };
 
@@ -65,6 +66,7 @@ const columns: Array<TableColumn> = [
   {
     label: 'Debit',
     key: 'debit',
+    headAlign: 'right',
     align: 'right',
     render: (value) =>
       value && value.toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,'),
@@ -72,6 +74,7 @@ const columns: Array<TableColumn> = [
   {
     label: 'Credit',
     key: 'credit',
+    headAlign: 'right',
     align: 'right',
     render: (value) =>
       value && value.toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,'),
@@ -79,6 +82,7 @@ const columns: Array<TableColumn> = [
   {
     label: 'Balance',
     key: 'runningTotal',
+    headAlign: 'right',
     align: 'right',
     render: (value) =>
       value && value.toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,'),
@@ -223,7 +227,7 @@ export default function Transactions() {
             <TableHead>
               <TableRow>
                 {columns.map((e) => (
-                  <TableCell key={e.label}>
+                  <TableCell key={e.label} align={e.headAlign || 'left'}>
                     <b>{e.label}</b>
                   </TableCell>
                 ))}

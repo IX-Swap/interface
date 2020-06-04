@@ -5,5 +5,6 @@ export type TableColumns = {
   key: $Keys<Dso>,
   label: string,
   align?: ?string,
+  headAlign?: ?string,
   render?: ?(val: any) => string,
 };

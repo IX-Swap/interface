@@ -11,12 +11,17 @@ export const columns = [
     render: (val: string) => moment(val).format('MM/DD/YY'),
   },
   {
-    key: 'status',
-    label: 'Status',
-  },
-  {
     key: 'amount',
     label: 'Amount',
-    render: (val: string, row: any) => `${row.asset.symbol} ${val}`,
+    align: 'right',
+    headAlign: 'right',
+    render: (val: string, row: any) =>
+      `${row.asset.symbol} ${val
+        .toFixed(2)
+        .replace(/\d(?=(\d{3})+\.)/g, '$&,')}`,
+  },
+  {
+    key: 'status',
+    label: 'Status',
   },
 ];

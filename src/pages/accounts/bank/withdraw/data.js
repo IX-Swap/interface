@@ -11,10 +11,6 @@ export const columns = [
     render: (val: string) => moment(val).format('MM/DD/YY'),
   },
   {
-    key: 'status',
-    label: 'Status',
-  },
-  {
     key: 'bankAccount.bankName',
     label: 'Bank Name',
   },
@@ -25,7 +21,15 @@ export const columns = [
   {
     key: 'amount',
     align: 'right',
+    headAlign: 'right',
     label: 'Amount',
-    render: (val: string, row: any) => `${row.asset.symbol} ${val}`,
+    render: (val: string, row: any) =>
+      `${row.asset.symbol} ${val
+        .toFixed(2)
+        .replace(/\d(?=(\d{3})+\.)/g, '$&,')}`,
+  },
+  {
+    key: 'status',
+    label: 'Status',
   },
 ];

@@ -72,6 +72,7 @@ type TableColumn = {
   label: string,
   key: $Keys<DSDeposit>,
   align?: string,
+  headAlign?: string,
   render?: any,
 };
 
@@ -89,6 +90,7 @@ const columns: Array<TableColumn> = [
     label: 'Amount',
     key: 'amount',
     align: 'right',
+    headAlign: 'right',
     render: (value) =>
       value && value.toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,'),
   },
@@ -120,7 +122,7 @@ export default function DepositList({ assetId }: { assetId: string }) {
         <TableHead>
           <TableRow>
             {columns.map((e) => (
-              <TableCell key={e.label}>
+              <TableCell key={e.label} align={e.headAlign || 'left'}>
                 <b>{e.label}</b>
               </TableCell>
             ))}
