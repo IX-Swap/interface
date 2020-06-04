@@ -22,6 +22,7 @@ type TableColumn<T> = {
   label: string,
   render?: ?(val: any, row: any) => string,
   align?: ?string,
+  headAlign: string,
 };
 
 type BaseRequirements<T> = {
@@ -185,7 +186,7 @@ const TableWithPagination = ({
           <TableHead>
             <TableRow>
               {columns.map((e) => (
-                <TableCell key={e.key} align="left">
+                <TableCell key={e.key} align={e.headAlign || 'left'}>
                   <b>{e.label}</b>
                 </TableCell>
               ))}

@@ -122,10 +122,10 @@ const CommitmentsList = ({ onClickView }: { onClickView: Function }) => {
               <TableCell>
                 <b>Project Name</b>
               </TableCell>
-              <TableCell>
+              <TableCell align="right">
                 <b>Amount</b>
               </TableCell>
-              <TableCell>
+              <TableCell align="right">
                 <b>DSO Tokens</b>
               </TableCell>
               <TableCell>

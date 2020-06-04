@@ -10,18 +10,21 @@ export const columns = [
   {
     key: 'balance',
     label: 'Balance',
+    headAlign: 'right',
     align: 'right',
     render: (val: number) => formatNumber(val),
   },
   {
     key: 'onHold',
     label: 'On Hold',
+    headAlign: 'right',
     align: 'right',
     render: (val: number) => formatNumber(val),
   },
   {
     key: 'available',
     label: 'Available',
+    headAlign: 'right',
     align: 'right',
     render: (val: number) => formatNumber(val),
   },

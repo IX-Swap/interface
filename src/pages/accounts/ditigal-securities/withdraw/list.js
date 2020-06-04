@@ -73,6 +73,7 @@ type TableColumn = {
   label: string,
   key: $Keys<DSWithdrawal>,
   align?: string,
+  headAlign?: string,
   render?: (val: string) => string,
 };
 
@@ -89,6 +90,7 @@ const columns: Array<TableColumn> = [
   {
     label: 'Amount',
     key: 'amount',
+    headAlign: 'right',
     align: 'right',
     render: (value) =>
       value &&
@@ -157,7 +159,7 @@ export default function WithdrawalList({ assetId }: { assetId: string }) {
         <TableHead>
           <TableRow>
             {columns.map((e) => (
-              <TableCell key={e.label}>
+              <TableCell key={e.label} align={e.headAlign || 'left'}>
                 <b>{e.label}</b>
               </TableCell>
             ))}

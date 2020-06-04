@@ -1,4 +1,5 @@
 import moment from 'moment';
+import { formatMoney } from 'helpers/formatNumbers';
 
 export const columns = [
   {
@@ -22,7 +23,9 @@ export const columns = [
   {
     key: 'amount',
     label: 'Amount',
-    render: (val: string, row: any) => `${row.asset.symbol} ${val}`,
+    headAlign: 'right',
+    align: 'right',
+    render: (val: string, row: any) => formatMoney(val, row.asset.symbol),
   },
   {
     key: '',

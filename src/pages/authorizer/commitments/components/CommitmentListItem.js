@@ -28,8 +28,10 @@ const CommitmentListItem = ({
       <TableCell>{`${individual.firstName} ${individual.lastName}`}</TableCell>
       <TableCell>{dso.issuerName}</TableCell>
       <TableCell>{dso.tokenName}</TableCell>
-      <TableCell>{formatMoney(totalAmount, currency.symbol)}</TableCell>
-      <TableCell>{formatNumber(numberOfUnits)}</TableCell>
+      <TableCell align="right">
+        {formatMoney(totalAmount, currency.symbol)}
+      </TableCell>
+      <TableCell align="right">{formatNumber(numberOfUnits)}</TableCell>
       <TableCell>
         <Button
           variant="contained"

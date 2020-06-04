@@ -30,39 +30,43 @@ import Actions from 'context/balance/personal/actions';
 type TableColumn = {
   label: string,
   key: $Keys<UserSecurityBalance>,
+  headAlign?: string,
   align?: string,
   render?: any,
 };
 
 const columns: Array<TableColumn> = [
   {
-    label: 'Symbol',
-    key: 'symbol',
+    label: "Symbol",
+    key: "symbol",
   },
   {
-    label: 'Name',
-    key: 'name',
+    label: "Name",
+    key: "name",
   },
   {
-    label: 'Total Balance',
-    key: 'balance',
-    align: 'right',
+    label: "Total Balance",
+    key: "balance",
+    headAlign: "right",
+    align: "right",
     render: (value) =>
-      value && value.toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,'),
+      value && value.toFixed(2).replace(/\d(?=(\d{3})+\.)/g, "$&,"),
   },
   {
-    label: 'Available Balance',
-    key: 'available',
-    align: 'right',
+    label: "Available Balance",
+    key: "available",
+    headAlign: "right",
+    align: "right",
     render: (value) =>
-      value && value.toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,'),
+      value && value.toFixed(2).replace(/\d(?=(\d{3})+\.)/g, "$&,"),
   },
   {
-    label: 'On Hold',
-    key: 'onHold',
-    align: 'right',
+    label: "On Hold",
+    key: "onHold",
+    headAlign: "right",
+    align: "right",
     render: (value) =>
-      value && value.toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,'),
+      value && value.toFixed(2).replace(/\d(?=(\d{3})+\.)/g, "$&,"),
   },
 ];
 
@@ -222,7 +226,7 @@ export default function DigitalSecurities() {
           <TableHead>
             <TableRow>
               {columns.map((e) => (
-                <TableCell key={e.label}>
+                <TableCell align={e.headAlign || 'left'} key={e.label}>
                   <b>{e.label}</b>
                 </TableCell>
               ))}
