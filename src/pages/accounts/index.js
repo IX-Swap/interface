@@ -1,7 +1,7 @@
 // @flow
 import React, { useRef, useEffect } from 'react';
 import { Switch, withRouter, Route } from 'react-router-dom';
-import { Grid } from '@material-ui/core';
+import { Grid, Container } from '@material-ui/core';
 import { AccountProvider } from 'context/AccountContext';
 import * as AssetsModule from 'context/assets';
 import { IdentityProvider } from 'context/IdentityContext';
@@ -54,7 +54,9 @@ function Accounts() {
               <IdentityProvider>
                 <PersonalBalancesListProvider>
                   <TransactionsListProvider>
-                    <AccountRoutes />
+                    <Container>
+                      <AccountRoutes />
+                    </Container>
                   </TransactionsListProvider>
                 </PersonalBalancesListProvider>
               </IdentityProvider>

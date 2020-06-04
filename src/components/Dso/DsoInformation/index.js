@@ -70,7 +70,7 @@ const useDsoLogic = (dso, action) => {
   const [subsTitle, setSubsTitle] = useState('');
   const [editableDso, setEditableDso] = useState(dso);
   const def = rteRefs.current.values ? rteRefs.current.values : editableDso;
-  const { register, getValues, reset, control } = useForm({
+  const { register, getValues, setValue, reset, control } = useForm({
     defaultValues: {
       ...def,
       launchDate: moment().format('MM/DD/yyyy'),
@@ -164,7 +164,7 @@ const useDsoLogic = (dso, action) => {
     const values = getFinalValues();
     values.team.push({
       _id: undefined,
-      photo: undefined,
+      photo: '',
       name: '',
       position: '',
       about: '',
@@ -258,6 +258,7 @@ const useDsoLogic = (dso, action) => {
   };
 
   return {
+    setValue,
     editableDso,
     registerRichText,
     setRefValue,
@@ -294,6 +295,7 @@ const DsoInformation = ({
   onClickDocument: Function,
 }) => {
   const {
+    setValue,
     registerRichText,
     setRefValue,
     onRemove,
@@ -547,6 +549,7 @@ const DsoInformation = ({
                 <TeamMember
                   index={i}
                   edit={edit}
+                  setValue={setValue}
                   member={member}
                   key={member._id || i}
                   remove={() => onRemove(i)}

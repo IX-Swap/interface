@@ -23,10 +23,6 @@ const BankDetails = ({ bank }: { bank: Bank }) => (
           <b>Account Number:</b>
           &nbsp;{bank.bankAccountNumber}
         </p>
-        <p>
-          <b>Voucher Code:</b>
-          &nbsp;Where to get?
-        </p>
       </Box>
     </Paper>
   </Box>

@@ -16,15 +16,15 @@ export const columns = [
   },
   {
     key: 'bankAccount.bankName',
-    label: 'Account Holder Name',
+    label: 'Bank Name',
   },
   {
-    // $FlowFixMe
-    key: 'asset.symbol',
-    label: 'Bank name',
+    key: 'bankAccount.bankAccountNumber',
+    label: 'Bank Account Number',
   },
   {
     key: 'amount',
+    align: 'right',
     label: 'Amount',
     render: (val: string, row: any) => `${row.asset.symbol} ${val}`,
   },

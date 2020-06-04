@@ -117,6 +117,7 @@ const CommitmentsList = () => {
             <TableCell>
               <b>Status</b>
             </TableCell>
+            <TableCell>&nbsp;</TableCell>
           </TableRow>
         </TableHead>
         <TableBody>
@@ -129,7 +130,7 @@ const CommitmentsList = () => {
             <TableRow>
               <TablePagination
                 rowsPerPageOptions={[5, 10, 25]}
-                colSpan={6}
+                colSpan={8}
                 count={total}
                 rowsPerPage={limit}
                 page={page}

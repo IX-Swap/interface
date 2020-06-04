@@ -342,6 +342,7 @@ const ApprovedGetter = () => {
   const bankListState = useBanksListState();
   const [checked, setChecked] = useState(false);
   const [hasApproved, setHasApproved] = useState(false);
+  const [filter, setFilter] = useState('');
   const { status, page, limit, items } = bankListState;
 
   useEffect(() => {
@@ -352,10 +353,16 @@ const ApprovedGetter = () => {
         status: 'Approved',
         ref: mountedRef,
       });
+      setFilter('Approved');
       clearApiStatus(bankDispatch);
     }
 
     if (status === BANK_LIST_STATUS.IDLE) {
+      if (!filter) {
+        setPage(bankDispatch, { page: 0 });
+        return;
+      }
+
       if (checked) return;
       if (items.length && items[0].status === 'Approved') {
         setHasApproved(true);
@@ -368,7 +375,9 @@ const ApprovedGetter = () => {
         ref: mountedRef,
       });
     }
-  }, [page, limit, status, bankDispatch]);
+  }, [status]);
+
+  console.log('im an approve getter', hasApproved, checked);
 
   return status === BANK_LIST_STATUS.IDLE && checked ? (
     <BankListComponent hasApproved={hasApproved} />

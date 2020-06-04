@@ -23,7 +23,7 @@ import Actions from './modules/actions';
 const { useDsoListState, useDsoListDispatch, DSO_LIST_STATUS } = DsoListModule;
 const { getDsoList, setPage, setRowsPerPage, clearApiStatus } = Actions;
 
-const useDsoListLogic = () => {
+const useDsoListLogic = (statusFilter?: string) => {
   const isIssuer = useIsIssuer();
   const dsoListDispatch = useDsoListDispatch();
   const dsoListState = useDsoListState();
@@ -44,11 +44,12 @@ const useDsoListLogic = () => {
       getDsoList(dsoListDispatch, {
         skip: page * limit,
         limit,
+        status: statusFilter,
         ref: mountedRef,
       });
       clearApiStatus(dsoListDispatch);
     }
-  }, [page, limit, status, dsoListDispatch]);
+  }, [page, limit, status, statusFilter, dsoListDispatch]);
 
   useEffect(
     () => () => {
@@ -73,7 +74,13 @@ const useDsoListLogic = () => {
   };
 };
 
-const DsoList = ({ onClickView }: { onClickView: Function }) => {
+const DsoList = ({
+  onClickView,
+  status = undefined,
+}: {
+  status?: string,
+  onClickView: Function,
+}) => {
   const {
     isIssuer,
     status: loadingStatus,
@@ -83,7 +90,7 @@ const DsoList = ({ onClickView }: { onClickView: Function }) => {
     page,
     handleChangeRowsPerPage,
     handleChangePage,
-  } = useDsoListLogic();
+  } = useDsoListLogic(status);
 
   const history = useHistory();
 

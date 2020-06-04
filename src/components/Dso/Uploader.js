@@ -12,7 +12,9 @@ const Uploader = ({
   onUpload,
   originalFileName = '',
   disabled = false,
+  showTitle = true,
 }: {
+  showTitle?: boolean,
   originalFileName?: string,
   disabled?: boolean,
   document: DocumentGuide,
@@ -48,14 +50,16 @@ const Uploader = ({
   return (
     <ListItem className={classes.listItem}>
       <Grid container>
-        <Grid container item xs={8}>
-          <Typography>
-            {document.title}
-            {originalFileName ? ` - ${originalFileName}` : ''}
-          </Typography>
-        </Grid>
+        {showTitle && (
+          <Grid container item xs={8}>
+            <Typography>
+              {document.title}
+              {originalFileName ? ` - ${originalFileName}` : ''}
+            </Typography>
+          </Grid>
+        )}
 
-        <Grid container item xs={4} justify="flex-end">
+        <Grid container item xs={showTitle ? 4 : 12} justify="flex-end">
           {edit ? (
             <>
               <input
