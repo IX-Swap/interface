@@ -1,14 +1,13 @@
 import React, { useState, useEffect, useMemo } from 'react';
 import classNames from 'classnames';
 import { Button, Typography } from '@material-ui/core';
-import io from 'socket.io-client';
 
 // Components
 import { Paper, Box } from '@material-ui/core';
 import AccountBalanceWalletIcon from '@material-ui/icons/AccountBalanceWallet';
 
 // Config/Endpoints
-import { ENDPOINT_URL, API_URL } from 'config';
+import { ENDPOINT_URL } from 'config';
 import localStore from 'services/storageHelper';
 
 // Modules
@@ -24,13 +23,14 @@ import MonitoringModule from '../Monitoring/modules';
 // Styles
 import useStyles from '../styles';
 
+import { subscribeToSocket } from "services/socket";
+
 const { MarketState } = MarketModules;
 const { MonitoringState } = MonitoringModule;
 const { usePostOrderDispatch } = Modules;
 const BidsAsksHistory = (props) => {
     const { id } = props;
     const classes = useStyles();
-    const bearerToken = localStore.getAccessToken();
     const _userId = localStore.getUserId();
 
     // Initialized Asks/Bids History state for  Payload
@@ -41,7 +41,7 @@ const BidsAsksHistory = (props) => {
     const marketListItem = items.length && items.find(item => item._id === id);
 
     // eslint-disable-next-line
-    const [collection, setCollection] = useState(false); 
+    const [collection, setCollection] = useState(false);
     const { SUBSCRIBE_API } = ENDPOINT_URL;
     const { BIDS_ASKS } = SUBSCRIBE_API;
 
@@ -82,7 +82,7 @@ const BidsAsksHistory = (props) => {
     // TODO: Better way to implement this locally/globally
     /*eslint-disable */
     useEffect(() => {
-        const socket = io(`${API_URL}?token=${bearerToken}`);
+        const socket = subscribeToSocket();
         socket.emit(BIDS_ASKS.emit, id);
         socket.on(`${BIDS_ASKS.on}/${_userId}`, (data) => {
             setCollection(data);
@@ -91,7 +91,7 @@ const BidsAsksHistory = (props) => {
         return () => {
             socket.off(`${BIDS_ASKS.on}/${_userId}`);
         };
-    }, []); 
+    }, []);
     /*eslint-disable */
 
     // Update FORM values when toggling asks/bids history
@@ -99,7 +99,7 @@ const BidsAsksHistory = (props) => {
     useMemo(() => {
         setBidFields(asksBidsHistoryData)
         setAskFields(asksBidsHistoryData)
-    }, [asksBidsHistoryData]); 
+    }, [asksBidsHistoryData]);
     /*eslint-disable */
 
     const sellButtonClassName = classNames(
@@ -112,9 +112,9 @@ const BidsAsksHistory = (props) => {
         const isBid = side.toLowerCase() === 'bid';
         PostOrderActions.postOrder(dispatch, {
             pair: id,
-            side: side, 
-            type: 'LIMIT', 
-            price: isBid ? bidForm.price : askForm.price, 
+            side: side,
+            type: 'LIMIT',
+            price: isBid ? bidForm.price : askForm.price,
             amount: isBid ? bidForm.amount : askForm.amount,
         });
     }
@@ -190,7 +190,7 @@ const BidsAsksHistory = (props) => {
                         Buy {isQuoteItem?.symbol}
                     </Typography>
                     <Box className={classes.formValue}>
-                        <AccountBalanceWalletIcon color="action" /> 
+                        <AccountBalanceWalletIcon color="action" />
                         <span className={classes.availableBalance}>
                             {isQuoteItem?.available}
                         </span>
@@ -199,9 +199,9 @@ const BidsAsksHistory = (props) => {
                 </Box>
                 {bidFields.map((field, i) => {
                   const totalAmount = bidForm.amount * bidForm.price;
-                    
+
                   return (
-                    <Box 
+                    <Box
                         key={i}
                         className={classes.inputContainer}
                     >
@@ -221,10 +221,10 @@ const BidsAsksHistory = (props) => {
                      </Box>
                   );
                 })}
-                <Button 
+                <Button
                     className={classes.formButton}
-                    variant="contained" 
-                    color="primary" 
+                    variant="contained"
+                    color="primary"
                     disableElevation
                     onClick={() => _handlePostOrder('BID')}
                     disabled={isQuoteItem?.balance < 0}
@@ -238,7 +238,7 @@ const BidsAsksHistory = (props) => {
                         Sell {isQuoteItem?.symbol}
                     </Typography>
                     <Box className={classes.formValue}>
-                        <AccountBalanceWalletIcon color="action" /> 
+                        <AccountBalanceWalletIcon color="action" />
                         <span className={classes.availableBalance}>
                             {isListingItem?.available}
                         </span>
@@ -247,9 +247,9 @@ const BidsAsksHistory = (props) => {
                 </Box>
                 {askFields.map((field, i) => {
                   const totalAmount = askForm.amount * askForm.price;
-                    
+
                   return (
-                    <Box 
+                    <Box
                         key={i}
                         className={classes.inputContainer}
                     >
@@ -269,10 +269,10 @@ const BidsAsksHistory = (props) => {
                     </Box>
                   );
                 })}
-                <Button 
+                <Button
                     className={sellButtonClassName}
-                    variant="contained" 
-                    color="primary" 
+                    variant="contained"
+                    color="primary"
                     onClick={() => _handlePostOrder('ASK')}
                     disableElevation
                     disabled={isListingItem?.balance < 0}

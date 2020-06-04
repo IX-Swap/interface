@@ -3,8 +3,6 @@ import React, { useState, useEffect } from 'react';
 import { RouteProps } from 'react-router-dom';
 
 import moment from 'moment';
-import io from 'socket.io-client';
-import { API_URL } from 'config';
 import {
   Paper,
   Grid,
@@ -17,6 +15,7 @@ import {
 import { ButtonWithLoading } from 'uno-material-ui';
 
 import localStore from 'services/storageHelper';
+import { subscribeToSocket } from 'services/socket';
 
 import type { Dso } from 'context/dso/types';
 import { getDso, deployDso } from './modules/actions';
@@ -29,7 +28,7 @@ const useDeployLogic = (id: string) => {
   const bearerToken = localStore.getAccessToken();
   let socket;
   if (bearerToken) {
-    socket = io(`${API_URL}?token=${bearerToken}`);
+    socket = subscribeToSocket();
   }
 
   const listener = (data) => {

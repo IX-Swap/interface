@@ -1,5 +1,6 @@
 import { postRequest, getRequest } from 'services/httpRequests';
 import localStore from 'services/storageHelper';
+import { _subscribeToSocket } from 'services/socket';
 import { userActions } from './types';
 
 export async function loginUser(
@@ -110,6 +111,7 @@ export async function getUser(dispatch: Function) {
     const result = await getRequest(`/auth/profiles/${userId}`);
     if (result.status === 200) {
       const response = await result.json();
+      await _subscribeToSocket();
       dispatch({
         type: userActions.GET_AUTH_ME_SUCCESS,
         payload: response.data,

@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react';
 import moment from 'moment';
-import io from 'socket.io-client';
 
 import { withStyles, makeStyles } from '@material-ui/core/styles';
 import Button from '@material-ui/core/Button';
@@ -14,7 +13,7 @@ import TableRow from '@material-ui/core/TableRow';
 import Paper from '@material-ui/core/Paper';
 
 // Config/Endpoints
-import { ENDPOINT_URL, API_URL, DATE_FORMAT } from 'config';
+import { ENDPOINT_URL, DATE_FORMAT } from 'config';
 import localStore from 'services/storageHelper';
 
 // Utils
@@ -22,6 +21,7 @@ import { numberWithCommas } from 'utils/utils';
 
 // Modules
 import MyOrderActions from './modules/actions';
+import { subscribeToSocket } from 'services/socket';
 
 const StyledTableCell = withStyles((theme) => ({
   head: {
@@ -47,7 +47,6 @@ const useStyles = makeStyles({
 });
 
 // Subscribe to SOCKET.IO
-const bearerToken = localStore.getAccessToken();
 const userId = localStore.getUserId();
 
 export default function TableMyOrders(props) {
@@ -59,7 +58,7 @@ export default function TableMyOrders(props) {
 
   /*eslint-disable */
   useEffect(() => {
-    const socket = io(`${API_URL}?token=${bearerToken}`);
+    const socket = subscribeToSocket();
     socket.emit(MY_ORDERS.emit, id);
     socket.on(`${MY_ORDERS.on}/${id}`, (data) => {
       setMyOrders(data);
@@ -117,7 +116,7 @@ export default function TableMyOrders(props) {
                   <TableCell>{row.totalFilled}</TableCell>
                   <TableCell>{numberWithCommas(row.price * row.amount)}</TableCell>
                   <TableCell>
-                    <Button 
+                    <Button
                       color="primary"
                       onClick={() => _handleCancelOrder(row)}
                     >
