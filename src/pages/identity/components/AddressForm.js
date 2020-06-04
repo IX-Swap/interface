@@ -19,7 +19,6 @@ const AddressForm = ({
       name={`${rootName}.line1`}
       label="Line 1"
       value={address.line1}
-      size={6}
       editMode={editMode}
       required
     />
@@ -27,7 +26,6 @@ const AddressForm = ({
       name={`${rootName}.line2`}
       label="Line 2"
       value={address.line2}
-      size={6}
       editMode={editMode}
     />
     <IdentityField
@@ -35,6 +33,12 @@ const AddressForm = ({
       label="City"
       value={address.city}
       required
+      editMode={editMode}
+    />
+    <IdentityField
+      name={`${rootName}.postalCode`}
+      label="Postal Code"
+      value={address.postalCode}
       editMode={editMode}
     />
     <IdentityField

@@ -5,7 +5,7 @@ const declarations = {
     {
       key: 'declaration1',
       content:
-        'The Applicant qualifies as a "Corporate Accredited Investor" as defined in Section 4A(1)(a)(i) of the Securities and Futures  Act (“SFA”), Chapter 289, under Singapore law.',
+        'The User declares that he/she has the authority to open an account with InvestaX on behalf of the Applicant and bind the Applicant, and to submit all documents on behalf of the Applicant in connection with the account opening.',
       value: null,
       answerable: true,
     },
