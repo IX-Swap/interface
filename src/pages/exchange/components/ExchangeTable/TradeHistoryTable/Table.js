@@ -1,7 +1,7 @@
 import React, { useRef, useEffect, useState } from 'react';
 import moment from 'moment';
 import classNames from 'classnames';
-import { withRouter } from 'react-router-dom';
+import { withRouter, useHistory } from 'react-router-dom';
 
 // Material Components
 import {
@@ -23,10 +23,12 @@ import {
 // Date Utils
 import DateFnsUtils from '@date-io/date-fns';
 import { MuiPickersUtilsProvider } from '@material-ui/pickers';
+import Utils from 'utils/utils';
 
 // Local component
 import DateFilter from 'pages/exchange/components/ExchangeTable/DateFilter';
 import DropdownFilter from 'pages/exchange/components/ExchangeTable/DropdownFilter';
+import SandboxModal from '../../TradingTerminal/components/SandboxModal';
 
 // Utils
 import { numberWithCommas } from 'utils/utils';
@@ -127,6 +129,7 @@ function TradeHistoryTable(props) {
   const [side, setSide] = useState('');
   const { title } = props;
   const classes = useStyles();
+  const history = useHistory();
 
   const dispatch = useTradeHistoryListDispatch();
   const tradeHistoryState = TradeHistoryListState();
@@ -180,9 +183,12 @@ function TradeHistoryTable(props) {
     classes.btnStyle, 
     classes.resetStyle,
   );
+  
+  const isVisitedPage = Utils.isVisited(history.location.pathname);
 
   return (
     <Grid>
+      {!isVisitedPage && (<SandboxModal />)}
       <Typography className={classes.title} variant="h1">
         {title}
       </Typography>

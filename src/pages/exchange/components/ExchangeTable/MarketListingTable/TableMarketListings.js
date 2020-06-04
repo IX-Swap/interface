@@ -20,9 +20,13 @@ import {
 
 // Utils
 import TableUtils from 'pages/exchange/utils';
+import Utils from 'utils/utils';
 
 // Styles
 import useStyles from 'pages/exchange/components/ExchangeTable/styles';
+
+// Local components
+import SandboxModal from '../../TradingTerminal/components/SandboxModal';
 
 // Modules
 import MarketActions from '../../TradingTerminal/modules/actions';
@@ -157,9 +161,12 @@ function ExchangeTable(props) {
     const goToPage = id => {
         history.push(`/market-list/${id}`);
     }
+
+    const isVisitedPage = Utils.isVisited(history.location.pathname);
     
     return (
         <Grid>
+            {!isVisitedPage && (<SandboxModal />)}
             <Typography 
                 className={classes.title} 
                 variant="h1"

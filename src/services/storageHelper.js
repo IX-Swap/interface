@@ -10,7 +10,10 @@ const get = () => {
   return storedCredentials ? JSON.parse(storedCredentials) : {};
 };
 
-const remove = () => localStorage.removeItem('user');
+const remove = () => {
+  localStorage.removeItem('user');
+  localStorage.removeItem('visitedUrl');
+};
 
 const getAccessToken = () => get().accessToken;
 
@@ -21,7 +24,8 @@ const store = (key: string, value: any) => {
 };
 
 const retrieve = (key: string, def: any) => {
-  const stored = localStorage.getItem('key');
+  const stored = localStorage.getItem(key);
+
   if (!stored) return def;
 
   return JSON.parse(stored);

@@ -21,6 +21,7 @@ export async function loginUser(
         totpConfirmed,
       } = response.data;
       localStore.set({ _id, accessToken });
+      localStore.store('visitedUrl', []);
       const newUser = {
         _id,
         email,

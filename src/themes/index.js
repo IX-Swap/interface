@@ -4,6 +4,7 @@ import defaultTheme from './default';
 const overrides = {
   typography: {
     fontFamily: '"Open Sans", "Helvetica Neue", sans-serif !important',
+    fontSize: 12,
     h1: {
       fontSize: '3rem',
     },

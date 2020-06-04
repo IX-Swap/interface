@@ -141,26 +141,43 @@ function Monitoring(props) {
                             activeStyle
                         );
 
+                        const renderMonitoringEl = item => {
+                            switch(item) {
+                                case 'marketList':
+                                    return (
+                                        <React.Fragment>
+                                            <p className={classes.defaultListItemStyle} data-value={i}>
+                                                <StarBorderIcon fontSize='small' /> {d.name}
+                                            </p>
+                                            <p className={classes.defaultListItemStyle}>{numberWithCommas(d.amount?.toFixed(4) || 0)}</p>
+                                        </React.Fragment>
+                                    )
+                                case 'tradeHistory':
+                                    return (
+                                        <React.Fragment>
+                                            <p className={priceStyle}>{numberWithCommas(d.price?.toFixed(4))}</p>
+                                            <p className={classes.defaultListItemStyle}>{numberWithCommas(d.amount?.toFixed(4) || 0)}</p>
+                                            <p className={classes.defaultListItemStyle}>{moment(d.createdAt).format(TIME_FORMAT)}</p>
+                                        </React.Fragment>
+                                    );
+                                default: 
+                                    return (
+                                        <React.Fragment>
+                                            <p className={priceStyle}>{numberWithCommas(d.price?.toFixed(4))}</p>
+                                            <p className={classes.defaultListItemStyle}>{numberWithCommas(d.amount?.toFixed(4) || 0)}</p>
+                                            <p className={classes.defaultListItemStyle}>{numberWithCommas(d.total?.toFixed(4))}</p>
+                                        </React.Fragment>
+                                    );
+                            }
+                        }
+
                         return (
                             <li 
                                 key={i}
                                 className={classes.monitoringListItem}
                                 onClick={() => _handleStorePayload(d)}
                             >   
-                                {type === 'marketList' && ( 
-                                    <p className={classes.defaultListItemStyle} data-value={i}>
-                                        <StarBorderIcon fontSize='small' /> {d.name}
-                                    </p>
-                                )}
-                                {type !== 'marketList' && (
-                                    <p className={priceStyle}>{numberWithCommas(d.price?.toFixed(4))}</p>
-                                )}
-                                <p className={classes.defaultListItemStyle}>{numberWithCommas(d.amount?.toFixed(4) || 0)}</p>
-                                {type === 'tradeHistory' ?
-                                    <p className={classes.defaultListItemStyle}>{moment(d.createdAt).format(TIME_FORMAT)}</p>
-                                    :
-                                    <p className={classes.defaultListItemStyle}>{numberWithCommas(d.total?.toFixed(4))}</p>
-                                }
+                                {renderMonitoringEl(type)}
                             </li>   
                         );
                     })}
