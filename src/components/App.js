@@ -6,7 +6,7 @@ import classnames from 'classnames';
 
 import { useIsAdmin, useIsAuthorizer, useIsIssuer } from 'services/acl';
 import useRedirectTo2faSetup from 'hooks/useRedirectTo2faSetup';
-import { _subscribeToSocket, subscribeToSocket } from 'services/socket';
+import { _subscribeToSocket } from 'services/socket';
 import Auth from '../pages/auth';
 
 import Header from './Header';
