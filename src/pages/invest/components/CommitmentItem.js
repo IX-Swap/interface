@@ -251,7 +251,10 @@ const CommitmentItem = ({
               <TextField
                 fullWidth
                 label="Unit Price"
-                value={formatMoney(dso ? dso.pricePerUnit : 0)}
+                value={formatMoney(
+                  dso ? dso.pricePerUnit : 0,
+                  dso ? dso.currency[0].symbol : undefined
+                )}
                 style={{ marginBottom: '1em' }}
                 disabled
               />
