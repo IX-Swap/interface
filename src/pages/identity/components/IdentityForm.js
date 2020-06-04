@@ -42,7 +42,6 @@ const IdentityForm = ({
         label="Middle Name"
         value={identity.middleName}
         editMode={editMode}
-        required
       />
       <IdentityField
         name={getFieldName('lastName')}
