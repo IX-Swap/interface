@@ -1,4 +1,5 @@
 import arrToOpts from 'helpers/arrToOpts';
+import nationalities from './nationalities';
 
 export * from './countries';
 export const MARITAL_STATUSES = ['Married', 'Widowed', 'Separated', 'Single'];
@@ -14,3 +15,5 @@ export const YES_OR_NO_OPTS = [
 ];
 
 export const ALPHA_NUMERIC_OR_EMPTY_REGEX = /^([a-z0-9]|(?![\s\S]))+$/i;
+
+export const NATIONALITIES_OPTS = arrToOpts(nationalities);
