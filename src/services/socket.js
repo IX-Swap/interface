@@ -2,13 +2,19 @@
 import io from 'socket.io-client';
 
 import { API_URL } from 'config';
+import { reject } from 'ramda';
 import localStore from './storageHelper';
 
 let socket;
 
 export const _subscribeToSocket = (): Promise<any> =>
-  new Promise((resolve) => {
+  new Promise((resolve, reject) => {
     const bearerToken = localStore.getAccessToken();
+    if (!bearerToken) {
+      resolve(undefined);
+      return;
+    }
+
     // Check if socket is not connected then connect
     if (!socket || !socket.connected) {
       console.log('will subscribe', socket);
