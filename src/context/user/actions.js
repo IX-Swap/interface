@@ -1,6 +1,6 @@
 import { postRequest, getRequest } from 'services/httpRequests';
 import localStore from 'services/storageHelper';
-import { _subscribeToSocket } from 'services/socket';
+import { _subscribeToSocket, subscribeToSocket } from 'services/socket';
 import { userActions } from './types';
 
 export async function loginUser(
@@ -75,6 +75,13 @@ export function setActiveTabId(dispatch: Function, activeTabId: number) {
 export function signOut(dispatch: Function) {
   localStore.remove();
   dispatch({ type: userActions.SIGN_OUT_SUCCESS });
+
+  const socket = subscribeToSocket();
+
+  if (socket) {
+    socket.removeAllListeners();
+    socket.disconnect();
+  }
 
   // TODO: Fix to not hacky solution
   window.location = '#/auth/sign-in';
