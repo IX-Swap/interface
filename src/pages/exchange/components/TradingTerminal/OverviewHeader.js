@@ -25,18 +25,18 @@ function OverviewHeader (props) {
     const { LAST_PRICE } = SUBSCRIBE_API;
 
     /*eslint-disable */
-    // useEffect(() => {
-    //     const socket = io(`${API_URL}?token=${bearerToken}`);
+    useEffect(() => {
+        const socket = io(`${API_URL}?token=${bearerToken}`);
         
-    //     socket.on(`${LAST_PRICE.on}/${id}`, data => {
-    //         setLastPrice(data);
-    //     });
-    //     socket.emit(LAST_PRICE.emit, id)
+        socket.on(`${LAST_PRICE.on}/${id}`, data => {
+            setLastPrice(data);
+        });
+        socket.emit(LAST_PRICE.emit, id)
 
-    //     return () => {
-    //         socket.off(`${LAST_PRICE.on}/${id}`);
-    //     };
-    // }, []);
+        return () => {
+            socket.off(`${LAST_PRICE.on}/${id}`);
+        };
+    }, []);
     /*eslint-disable */
 
     return (
