@@ -29,8 +29,7 @@ function Monitoring(props) {
     const classes = useStyles();
     const [ fav, setFav ] = useState(false);
     const [ search, setSearch ] = useState(false);
-    const { title, type, data = [] } = props;
-    const maxValue = data.length && Math.max(...data.map(d =>d.price));
+    const { title, type, data = [], lastPrice } = props;
     const minValue = data.length && Math.min(...data.map(d =>d.price));
     const isAsksBids = props.type === 'asks' ||  props.type === 'bids';
 
@@ -80,7 +79,7 @@ function Monitoring(props) {
                             className={classes.maxBidsTitle} 
                             variant="h3"
                         >
-                            {maxValue}<ArrowUpwardRoundedIcon fontSize='small' />
+                            {lastPrice}<ArrowUpwardRoundedIcon fontSize='small' />
                         </Typography>
                         <Typography 
                             className={classes.minBidsTitle} 
@@ -93,7 +92,7 @@ function Monitoring(props) {
                 {type === 'asks' && (
                     <ul className={classes.monitoringHeader}>
                         <li>
-                        Price({props.quoteData?.symbol}) {maxValue}
+                        Price({props.quoteData?.symbol}) {lastPrice}
                         </li>
                         <li>
                         Amount({props.listingData?.asset?.symbol}) 

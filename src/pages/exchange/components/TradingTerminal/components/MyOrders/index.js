@@ -67,7 +67,7 @@ export default function TableMyOrders(props) {
     return () => {
       socket.off(`${MY_ORDERS.on}/${id}`);
   };
-  }, []);
+  }, [id]);
   /*eslint-disable */
 
   /*eslint-disable */

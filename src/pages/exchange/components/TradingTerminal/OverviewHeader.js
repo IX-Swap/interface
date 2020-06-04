@@ -8,6 +8,7 @@ import {
 } from '@material-ui/core'
 import ChevronLeftIcon from '@material-ui/icons/ChevronLeft'
 
+import { subscribeToSocket } from 'services/socket';
 import localStore from 'services/storageHelper';
 import { ENDPOINT_URL, API_URL } from 'config';
 import { numberWithCommas } from 'utils/utils';
@@ -26,7 +27,7 @@ function OverviewHeader (props) {
 
     /*eslint-disable */
     useEffect(() => {
-        const socket = io(`${API_URL}?token=${bearerToken}`);
+        const socket = subscribeToSocket();
         
         socket.on(`${LAST_PRICE.on}/${id}`, data => {
             setLastPrice(data);
@@ -36,7 +37,7 @@ function OverviewHeader (props) {
         return () => {
             socket.off(`${LAST_PRICE.on}/${id}`);
         };
-    }, []);
+    }, [id]);
     /*eslint-disable */
 
     return (
@@ -88,7 +89,7 @@ function OverviewHeader (props) {
                     className={classes.price} 
                     variant="h6"
                 >
-                    $ {numberWithCommas(lastPrice.toFixed(2))}
+                    {data?.quote?.numberFormat?.currency} {numberWithCommas(lastPrice.toFixed(2))}
                 </Typography>
             </Grid>
         </Grid>

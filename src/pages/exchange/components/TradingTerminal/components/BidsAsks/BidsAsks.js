@@ -91,7 +91,7 @@ const BidsAsksHistory = (props) => {
         return () => {
             socket.off(`${BIDS_ASKS.on}/${_userId}`);
         };
-    }, []);
+    }, [id]);
     /*eslint-disable */
 
     // Update FORM values when toggling asks/bids history
