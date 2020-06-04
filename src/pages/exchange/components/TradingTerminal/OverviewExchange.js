@@ -43,7 +43,7 @@ function OverviewExchange() {
   /*eslint-disable */
 
   const item = items.length && items.find(item => item._id === tradingPairId);
-  
+
   return (
     <React.Fragment>
       {status === 'GETTING' ? (<CircularProgress size={50} />)

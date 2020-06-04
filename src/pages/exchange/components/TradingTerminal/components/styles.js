@@ -6,6 +6,7 @@ const defaultListItemStyle = {
     margin: 0,
     padding: '2px 0',
     textAlign: 'left',
+    flex: 1,
 };
 
 const bidsTitle = {
@@ -138,6 +139,7 @@ export default makeStyles(theme => ({
     ...defaultListItemStyle,
 
     '&:last-child, &:nth-child(2)': {
+      justifyContent: 'flex-end',
       textAlign: 'right',
     }
   },
@@ -202,5 +204,17 @@ export default makeStyles(theme => ({
   availableBalance: {
     marginLeft: 5,
     marginRight: 5,
+  },
+  modalFooter: {
+    display: 'flex',
+    justifyContent: 'flex-end',
+  },
+  modalDescription: {
+    lineHeight: 1.5,
+  },
+  confirmBtn: {
+    color: '#01A2FF',
+    fontWeight: 600,
+    marginTop: 20,
   },
 }))

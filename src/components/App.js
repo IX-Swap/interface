@@ -40,7 +40,7 @@ type RouteProps = $Shape<{
 function App() {
   const { isAuthenticated } = useUserState();
   const classes = useStyles();
-
+  
   function PublicRoute({
     component,
     path,
@@ -82,7 +82,6 @@ function App() {
     const isAdmin = useIsAdmin();
     const isAuthorizer = useIsAuthorizer();
     const isIssuer = useIsIssuer();
-
     useMemo(() => {
       if (status === 'INIT') getUser(userDispatch);
     }, [status, userDispatch]);
