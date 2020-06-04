@@ -56,11 +56,11 @@ const CorporateIdentityPreview = ({
   const handleConfirm = async () => {
     setSaving(true);
     const confirm = await actions.toggleIdentityStatus(identity, newStatus);
-    let message = 'Failed to update withdraw status!';
+    let message = 'Failed to update identity status!';
     let type = 'error';
 
     if (confirm) {
-      message = 'Successfully updated withdraw status!';
+      message = 'Successfully updated identity status!';
       type = 'success';
       setOpen(false);
     }
