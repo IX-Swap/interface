@@ -20,6 +20,9 @@ import type { Dso } from 'context/dso/types';
 import { useIsIssuer } from 'services/acl';
 
 import moment from 'moment';
+
+import { downloadFile } from '../modules/actions';
+
 import RichEditor from '../rte';
 import DsoTitle from '../DsoTitle';
 import TeamMember from './DsoTeamMember';
@@ -149,7 +152,7 @@ const useDsoLogic = (dso, action) => {
 
     if (dso._id) {
       finalData.launchDate = dso.launchDate;
-      finalData.currency = dso.currency[0]._id;
+      finalData.currency = dso.currency.length ? dso.currency[0]._id : {};
       finalData.subscriptionDocument = dso.subscriptionDocument;
     }
 
@@ -332,7 +335,21 @@ const DsoInformation = ({
                     ? editableDso.tokenSymbol
                     : dso.tokenSymbol
                 }
-              />
+                documents={dso.documents || []}
+              >
+                {edit && (
+                  <Uploader
+                    document={{
+                      title: 'Token Logo',
+                      label: 'token-logo',
+                      type: 'tokenLogo',
+                    }}
+                    edit={edit}
+                    showTitle={false}
+                    onUpload={onDataroomDocumentUploaded}
+                  />
+                )}
+              </DsoTitle>
             </Grid>
 
             {headerButtonAction && headerButtonText && headerButtonShown && (
@@ -381,9 +398,19 @@ const DsoInformation = ({
             </Grid>
           </Box>
 
-          {action === 'create' && (
-            <Box mt={4}>
-              <SectionContainer title="Subscription Document">
+          <Box mt={4}>
+            <SectionContainer title="Subscription Document">
+              {['view', 'edit'].includes(action) &&
+                editableDso.subscriptionDocument && (
+                  <Button
+                    onClick={() =>
+                      downloadFile(editableDso.subscriptionDocument)
+                    }
+                  >
+                    Download
+                  </Button>
+                )}
+              {action === 'create' && (
                 <Uploader
                   document={{
                     title: subsTitle || 'Subscription Document',
@@ -394,9 +421,9 @@ const DsoInformation = ({
                   edit={action === 'create'}
                   onUpload={onSubscriptionUpload}
                 />
-              </SectionContainer>
-            </Box>
-          )}
+              )}
+            </SectionContainer>
+          </Box>
 
           <Box mt={4}>
             <OfferingTerms

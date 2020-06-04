@@ -1,4 +1,5 @@
-import { postRequest } from 'services/httpRequests';
+import { getRequest, postRequest, deleteRequest } from 'services/httpRequests';
+import { snackbarService } from 'uno-material-ui';
 
 export async function uploadFile(payload: {
   title: string,
@@ -28,3 +29,31 @@ export async function uploadFile(payload: {
     return undefined;
   }
 }
+
+export const downloadFile = async (documentId) => {
+  try {
+    const uri = `/dataroom/raw/${documentId}`;
+    const result = await getRequest(uri);
+
+    if (result.status === 200) {
+      result.blob().then((blob) => {
+        const url = window.URL.createObjectURL(blob);
+        window.open(url);
+      });
+      return;
+    }
+
+    snackbarService.showSnackbar('Download failed', 'error');
+  } catch (err) {
+    snackbarService.showSnackbar('Download failed', 'error');
+  }
+};
+
+export const deleteFile = async (userId, documentId) => {
+  try {
+    const uri = `/dataroom/${userId}/${documentId}`;
+    await deleteRequest(uri);
+  } catch (err) {
+    // empty catch
+  }
+};

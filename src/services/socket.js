@@ -21,9 +21,19 @@ export const _subscribeToSocket = (): Promise<any> =>
       socket.on('connect', () => {
         resolve(socket);
       });
+      socket.on('connect_failed', function () {
+        resolve(socket);
+      });
     } else {
       return resolve(socket);
     }
   });
 
-export const subscribeToSocket = () => socket;
+export const subscribeToSocket = () => {
+  if (!socket.connected) {
+    const bearerToken = localStore.getAccessToken();
+    socket = io(`${API_URL}?token=${bearerToken}`);
+  }
+
+  return socket;
+};
