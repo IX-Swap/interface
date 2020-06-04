@@ -12,7 +12,7 @@ export default makeStyles(theme => ({
     display: 'flex',
   },
   overviewHeader: {
-    marginBottom: theme.spacing.unit * 5,
+    marginBottom: 7 * 5,
   },
   overviewHeaderContent: {
     display: 'flex',
@@ -30,7 +30,7 @@ export default makeStyles(theme => ({
     color: '#000',
     fontWeight: 600,
     fontSize: 25,
-    marginBottom: theme.spacing.unit,
+    marginBottom: 7,
   },
   subTitle: {
     color: "#bcbcbc",
@@ -41,7 +41,7 @@ export default makeStyles(theme => ({
     color: "#9c9c9c",
     fontSize: 14,
     fontWeight: 600,
-    marginBottom: theme.spacing.unit * 1.5,
+    marginBottom: 7 * 1.5,
     textAlign: 'left',
   },
   price: {
