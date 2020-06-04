@@ -143,6 +143,11 @@ function Monitoring(props) {
                             activeStyle
                         );
 
+                        const amountStyle = classNames(
+                            classes.defaultListItemStyle, 
+                            classes.rightAlign,
+                        );
+
                         const renderMonitoringEl = item => {
                             switch(item) {
                                 case 'marketList':
@@ -163,16 +168,24 @@ function Monitoring(props) {
                                     return (
                                         <React.Fragment>
                                             <p className={priceStyle}>{numberWithCommas(d.price?.toFixed(2))}</p>
-                                            <p className={classes.defaultListItemStyle}>{numberWithCommas(d.amount?.toFixed(2) || 0)}</p>
+                                            <p className={amountStyle}>{numberWithCommas(d.amount?.toFixed(2) || 0)}</p>
                                             <p className={classes.defaultListItemStyle}>{moment(d.createdAt).format(TIME_FORMAT)}</p>
                                         </React.Fragment>
                                     );
-                                default: 
+                                default:
+                                    const sum = filteredData.reduce((acc, curr) => acc + curr.price, 0);
+                                    const red = 'rgba(216, 48, 112, 0.3)';
+                                    const green = 'rgba(125, 165, 50, 0.3)';
+                                    const barStyle = {
+                                        width: `${d.price / sum * 100}%`,
+                                        backgroundColor: type === 'bids' ? green : red,
+                                    };
+
                                     return (
                                         <React.Fragment>
-                                            <div className={classes.graph} />
+                                            <div className={classes.barGraph} style={barStyle} />
                                             <p className={priceStyle}>{numberWithCommas(d.price?.toFixed(4))}</p>
-                                            <p className={classes.defaultListItemStyle}>{numberWithCommas(d.amount?.toFixed(4) || 0)}</p>
+                                            <p className={amountStyle}>{numberWithCommas(d.amount?.toFixed(4) || 0)}</p>
                                             <p className={classes.defaultListItemStyle}>{numberWithCommas(d.total?.toFixed(4))}</p>
                                         </React.Fragment>
                                     );

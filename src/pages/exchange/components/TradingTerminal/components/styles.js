@@ -139,9 +139,8 @@ export default makeStyles(theme => ({
   defaultListItemStyle: {
     ...defaultListItemStyle,
 
-    '&:last-child, &:nth-child(2)': {
+    '&:last-child': {
       justifyContent: 'flex-end',
-      textAlign: 'right',
     }
   },
   positiveCell: {
@@ -151,6 +150,9 @@ export default makeStyles(theme => ({
   negativeCell: {
     ...defaultListItemStyle,
     color: '#D83070',
+  },
+  rightAlign: {
+    justifyContent: 'flex-end',
   },
   bidsAsksContainer: {
     display: 'flex',
@@ -222,10 +224,10 @@ export default makeStyles(theme => ({
     color: '#000',
     textDecoration: 'none',
   },
-  graph: {
+  barGraph: {
     background: 'rgba(0,0,0,0.3)',
     position: 'absolute',
-    width: '100%',
     height: '100%',
+    right: 0,
   }
 }))
