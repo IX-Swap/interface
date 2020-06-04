@@ -126,6 +126,7 @@ export default makeStyles(theme => ({
   monitoringListItem: {
     display: 'flex',
     justifyContent: 'space-between',
+    position: 'relative',
 
     '&:hover': {
       fontWeight: 600,
@@ -217,4 +218,14 @@ export default makeStyles(theme => ({
     fontWeight: 600,
     marginTop: 20,
   },
+  marketLink: {
+    color: '#000',
+    textDecoration: 'none',
+  },
+  graph: {
+    background: 'rgba(0,0,0,0.3)',
+    position: 'absolute',
+    width: '100%',
+    height: '100%',
+  }
 }))

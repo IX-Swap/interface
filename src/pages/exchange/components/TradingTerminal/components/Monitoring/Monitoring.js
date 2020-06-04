@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { withRouter } from 'react-router-dom'
+import { withRouter, Link } from 'react-router-dom'
 import classNames from 'classnames'
 import moment from 'moment';
 
@@ -35,11 +35,12 @@ function Monitoring(props) {
     const isAsksBids = props.type === 'asks' ||  props.type === 'bids';
 
     let filteredData = search ? search : data;
-    
+    // handle on search function in the Trading Terminal
     const _onSearch = evt => {
         const target = evt.target;
         const value = target.value;
 
+        // Start searching if the input value is more than 3 characters
         if (value.length > 3) {
             const filterData = data.filter(d => {
                 return (
@@ -112,6 +113,7 @@ function Monitoring(props) {
                                     <StarBorderIcon fontSize='small' />
                                 }
                             </button>
+                            {/* TODO: Implementation of the Filter Buttons */}
                             <button className={classes.actionBtn}>SGD</button>
                             <button className={classes.actionBtn}>USD</button>
                         </div>
@@ -147,22 +149,28 @@ function Monitoring(props) {
                                     return (
                                         <React.Fragment>
                                             <p className={classes.defaultListItemStyle} data-value={i}>
-                                                <StarBorderIcon fontSize='small' /> {d.name}
+                                                <StarBorderIcon fontSize='small' />
+                                                <Link 
+                                                    className={classes.marketLink}
+                                                    to={`/market-list/${d._id}`}>
+                                                    {d.name}
+                                                </Link>
                                             </p>
-                                            <p className={classes.defaultListItemStyle}>{numberWithCommas(d.amount?.toFixed(4) || 0)}</p>
+                                            <p className={classes.defaultListItemStyle}>{numberWithCommas(d.amount?.toFixed(2) || 0)}</p>
                                         </React.Fragment>
                                     )
                                 case 'tradeHistory':
                                     return (
                                         <React.Fragment>
-                                            <p className={priceStyle}>{numberWithCommas(d.price?.toFixed(4))}</p>
-                                            <p className={classes.defaultListItemStyle}>{numberWithCommas(d.amount?.toFixed(4) || 0)}</p>
+                                            <p className={priceStyle}>{numberWithCommas(d.price?.toFixed(2))}</p>
+                                            <p className={classes.defaultListItemStyle}>{numberWithCommas(d.amount?.toFixed(2) || 0)}</p>
                                             <p className={classes.defaultListItemStyle}>{moment(d.createdAt).format(TIME_FORMAT)}</p>
                                         </React.Fragment>
                                     );
                                 default: 
                                     return (
                                         <React.Fragment>
+                                            <div className={classes.graph} />
                                             <p className={priceStyle}>{numberWithCommas(d.price?.toFixed(4))}</p>
                                             <p className={classes.defaultListItemStyle}>{numberWithCommas(d.amount?.toFixed(4) || 0)}</p>
                                             <p className={classes.defaultListItemStyle}>{numberWithCommas(d.total?.toFixed(4))}</p>
