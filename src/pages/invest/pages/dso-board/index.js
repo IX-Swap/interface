@@ -45,7 +45,7 @@ const DsoBoard = () => {
           <Container>
             <Box py={4}>
               {tab === 0 ? (
-                <DsoList onClickView={onClickView} />
+                <DsoList onClickView={onClickView} status="Approved" />
               ) : (
                 <CommitmentsList />
               )}

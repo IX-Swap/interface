@@ -1,10 +1,14 @@
 // @flow
-import React from 'react';
+/* eslint-disable react-hooks/exhaustive-deps */
+import React, { useState, useEffect } from 'react';
+import storage from 'services/storageHelper';
+import { getImgUrl } from 'services/httpRequests';
 import type { DsoTeamMember } from 'context/dso/types';
 import RemoveIcon from '@material-ui/icons/Remove';
 import { Box, Typography, Grid, TextField, Button } from '@material-ui/core';
 import { makeStyles } from '@material-ui/styles';
 
+import Uploader from '../Uploader';
 import RichEditor from '../rte';
 
 const useStyles = makeStyles(() => ({
@@ -24,8 +28,10 @@ const TeamMember = (
     remove,
     index,
     save,
+    setValue,
   }: {
     index: number,
+    setValue: Function,
     remove: Function,
     edit?: boolean,
     save?: (string) => void,
@@ -34,6 +40,24 @@ const TeamMember = (
   ref: any
 ) => {
   const classes = useStyles();
+  const [imgUrl, setImgUrl] = useState('');
+
+  const setPhoto = async (id) => {
+    const x = await getImgUrl(
+      `/dataroom/raw/${storage.getUserId()}/${id || ''}`
+    );
+
+    setImgUrl(x);
+  };
+
+  useEffect(() => {
+    setPhoto(member.photo);
+  }, []);
+
+  const onDataroomDocumentUploaded = (res) => {
+    setValue(`${`team[${index}].photo`}`, res._id);
+    setPhoto(res._id);
+  };
 
   return (
     <Box pt={4} px={4} pb={2} style={{ borderBottom: '1px solid #f0f0f0' }}>
@@ -48,8 +72,32 @@ const TeamMember = (
         <Box mr={2}>
           <div
             className={classes.photo}
-            style={{ backgroundImage: `url('${member.photo || ''}')` }}
+            style={{
+              backgroundImage: `url(${imgUrl})`,
+              backgroundSize: 'contain',
+              backgroundPosition: 'center',
+              margin: '0 auto',
+            }}
           />
+          <input
+            type="text"
+            style={{ opacity: 0, width: 1, height: 1, position: 'absolute' }}
+            name={`team[${index}].photo`}
+            defaultValue={member.photo}
+            ref={ref}
+          />
+          {edit && (
+            <Uploader
+              document={{
+                title: `Photo ${index}`,
+                label: 'team member photo',
+                type: 'teamMemberPhoto',
+              }}
+              showTitle={false}
+              edit={edit}
+              onUpload={onDataroomDocumentUploaded}
+            />
+          )}
         </Box>
         {!edit && (
           <Grid item>

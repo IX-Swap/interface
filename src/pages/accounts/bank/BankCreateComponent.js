@@ -222,8 +222,20 @@ const BankConfirmationComponent = ({
             before you confirm or click on the back button to edit.
           </Typography>
         </Grid>
-        <Grid item xs={12}>
-          <BankViewComponent bank={bank} asset={asset} />
+        <Grid
+          item
+          xs={12}
+          style={{ display: 'flex', justifyContent: 'center' }}
+        >
+          <Box
+            p={2}
+            border={1}
+            borderRadius={5}
+            borderColor="grey.300"
+            maxWidth={1000}
+          >
+            <BankViewComponent bank={bank} asset={asset} />
+          </Box>
         </Grid>
         <Grid item lg={12} container justify="center">
           <Box p={3}>

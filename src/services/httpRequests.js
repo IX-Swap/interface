@@ -78,3 +78,21 @@ export const putRequest = async (uri: string, payload: any) => {
 
   return result;
 };
+
+export const getImgUrl = async (uri: string) => {
+  const response = await getRequest(uri);
+  const buffer = await response.arrayBuffer();
+  const arrayBufferToBase64 = (mBuffer) => {
+    let binary = '';
+    const bytes = [].slice.call(new Uint8Array(mBuffer));
+
+    bytes.forEach((b) => (binary += String.fromCharCode(b)));
+
+    return window.btoa(binary);
+  };
+
+  const base64Flag = `data:${response.headers['content-type']};base64,`;
+  const imageStr = arrayBufferToBase64(buffer);
+
+  return base64Flag + imageStr;
+};

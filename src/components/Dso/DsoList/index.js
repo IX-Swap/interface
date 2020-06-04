@@ -5,9 +5,15 @@ import DsoList from './DsoList';
 
 const { DsoListProvider } = DsoListModule;
 
-const DsoListWithProvider = ({ onClickView }: { onClickView: Function }) => (
+const DsoListWithProvider = ({
+  onClickView,
+  status,
+}: {
+  status: string,
+  onClickView: Function,
+}) => (
   <DsoListProvider>
-    <DsoList onClickView={onClickView} />
+    <DsoList onClickView={onClickView} status={status} />
   </DsoListProvider>
 );
 
