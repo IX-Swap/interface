@@ -149,11 +149,15 @@ const CommitmentItem = ({
 
     if (dso) {
       fetch();
+    }
+  }, [dso, asset]);
 
+  useEffect(() => {
+    if (dso) {
       const amount = watch('amount');
       if (amount) setNumberOfUnits(amount / dso.pricePerUnit);
     }
-  }, [dso, watch, asset]);
+  }, [dso, watch]);
 
   useEffect(() => {
     if (commitment) {
@@ -247,7 +251,10 @@ const CommitmentItem = ({
               <TextField
                 fullWidth
                 label="Unit Price"
-                value={formatMoney(dso ? dso.pricePerUnit : 0)}
+                value={formatMoney(
+                  dso ? dso.pricePerUnit : 0,
+                  dso ? dso.currency[0].symbol : undefined
+                )}
                 style={{ marginBottom: '1em' }}
                 disabled
               />

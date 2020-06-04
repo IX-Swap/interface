@@ -14,15 +14,18 @@ import { formatMoney } from 'helpers/formatNumbers';
 import { blue } from '@material-ui/core/colors';
 import ArrowBackIosIcon from '@material-ui/icons/ArrowBackIos';
 import { snackbarService } from 'uno-material-ui';
+import moment from 'moment';
 import AuthorizeConfirmDialog from './AuthorizeConfirmDialog';
 import { toggleCommitmentStatus } from '../modules/actions';
 
 const DsoSummary = ({
   dso,
   onClickView,
+  status,
 }: {
   dso: Dso,
   onClickView: Function,
+  status: string,
 }) => (
   <Paper style={{ height: '96%' }}>
     <Box
@@ -38,7 +41,7 @@ const DsoSummary = ({
           px={4}
           style={{ backgroundColor: blue[500], color: 'white' }}
         >
-          {dso.status}
+          {status}
         </Box>
       </Box>
       <Typography variant="h5">
@@ -111,11 +114,18 @@ const CommitmentView = ({
       message = 'Successfully updated withdraw status!';
       type = 'success';
       setOpen(false);
+
+      // Temporary solution
+      setTimeout(() => {
+        window.location.reload();
+      }, 500);
     }
 
     snackbarService.showSnackbar(message, type);
     setSaving(false);
   };
+
+  console.log(commitment);
 
   return (
     <Container>
@@ -143,17 +153,15 @@ const CommitmentView = ({
                   label="Country"
                   value={individual.countryOfResidence}
                 />
-                <CommitmentItem
-                  label="Bank Name"
-                  value={individual.bankAccountName}
-                />
+                <CommitmentItem label="Bank Name" value={individual.bankName} />
                 <CommitmentItem
                   label="Bank Account Number"
                   value={individual.bankAccountNumber}
                 />
                 <CommitmentItem
                   label="Accredation Status"
-                  value={individual.status}
+                  // TODO: Currently no way of knowing which type
+                  value="Individual"
                 />
                 <CommitmentItem
                   label="US National"
@@ -184,10 +192,28 @@ const CommitmentView = ({
                 <b>Investor Commitment</b>
               </Typography>
               <Grid container spacing={2}>
-                <CommitmentItem label="Investor Name" value="Name" />
-                <CommitmentItem label="Investor Name" value="Name" />
-                <CommitmentItem label="Investor Name" value="Name" />
-                <CommitmentItem label="Investor Name" value="Name" />
+                <CommitmentItem
+                  label="DSO Tokens"
+                  value={commitment.numberOfUnits}
+                />
+                <CommitmentItem
+                  label="Price Per Token"
+                  value={formatMoney(
+                    commitment.pricePerUnit,
+                    commitment.currency.symbol
+                  )}
+                />
+                <CommitmentItem
+                  label="Total Committed Amount"
+                  value={formatMoney(
+                    commitment.totalAmount,
+                    commitment.currency.symbol
+                  )}
+                />
+                <CommitmentItem
+                  label="Date of Commitment"
+                  value={moment(commitment.createdAt).format('MM/DD/YYYY')}
+                />
               </Grid>
 
               <Box mt={6}>
@@ -227,7 +253,7 @@ const CommitmentView = ({
           </Grid>
         </Grid>
         <Grid item xs={4}>
-          <DsoSummary dso={dso} onClickView={onViewDso} />
+          <DsoSummary dso={dso} onClickView={onViewDso} status={status} />
         </Grid>
       </Grid>
 
