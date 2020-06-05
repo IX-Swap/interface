@@ -1,7 +1,7 @@
 // @flow
 import { postRequest } from 'services/httpRequests';
 
-import { postOrderActions, OrderState} from './types';
+import { postOrderActions, OrderState } from './types';
 
 async function postOrder(dispatch: Function, payload: OrderState) {
   try {
@@ -13,16 +13,15 @@ async function postOrder(dispatch: Function, payload: OrderState) {
 
     if (result.status === 200) {
       return response;
-    } else {
-      throw new Error(response.message);
     }
 
+    throw new Error(response.message);
   } catch (err) {
-      dispatch({ 
-        ...err,
-        type: postOrderActions.GET_POST_ORDER_FAILURE
-      });
-      throw new Error(err);
+    dispatch({
+      ...err,
+      type: postOrderActions.GET_POST_ORDER_FAILURE,
+    });
+    throw new Error(err);
   }
 }
 

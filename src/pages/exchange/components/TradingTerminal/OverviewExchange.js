@@ -113,7 +113,7 @@ function OverviewExchange() {
               <section className={classes.graphContainer}>
                 <ChartMemoed id={tradingPairId} />
               </section>
-              <BidsAsks id={tradingPairId} />
+              <BidsAsks id={tradingPairId} items={items} />
             </Grid>
             <Grid
               container
