@@ -38,5 +38,9 @@ export const ENDPOINT_URL = {
       emit: 'price/get',
       on: 'price',
     },
+    CHART: {
+      emit: 'chart/get',
+      on: 'chart',
+    },
   },
 };
