@@ -19,6 +19,7 @@
     "draftjs-to-html": "^0.9.1",
     "font-awesome": "^4.7.0",
     "history": "^4.10.1",
+    "kaktana-react-lightweight-charts": "^1.1.2",
     "lightweight-charts": "^2.0.0",
     "lodash": "^4.17.15",
     "moment": "^2.25.3",

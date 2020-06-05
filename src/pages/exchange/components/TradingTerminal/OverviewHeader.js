@@ -1,34 +1,31 @@
 import React, { useEffect, useState } from 'react'
 import { withRouter, useParams, Link } from 'react-router-dom';
-import io from 'socket.io-client';
 
-import { 
-    Grid, 
+import {
+    Grid,
     Typography,
 } from '@material-ui/core'
 import ChevronLeftIcon from '@material-ui/icons/ChevronLeft'
 
 import { subscribeToSocket } from 'services/socket';
-import localStore from 'services/storageHelper';
-import { ENDPOINT_URL, API_URL } from 'config';
+import { ENDPOINT_URL } from 'config';
 import { numberWithCommas } from 'utils/utils';
 
 import useStyles from './styles'
 
-const bearerToken = localStore.getAccessToken();
 function OverviewHeader (props) {
     const [ lastPrice, setLastPrice ] = useState(0);
     const { id } = useParams();
     const { data } = props;
     const classes = useStyles();
-    
+
     const { SUBSCRIBE_API } = ENDPOINT_URL;
     const { LAST_PRICE } = SUBSCRIBE_API;
 
     /*eslint-disable */
     useEffect(() => {
         const socket = subscribeToSocket();
-        
+
         socket.on(`${LAST_PRICE.on}/${id}`, data => {
             setLastPrice(data);
         });
@@ -47,25 +44,25 @@ function OverviewHeader (props) {
             justify="space-between"
             className={classes.overviewHeader}
         >
-            <section className={classes.overviewHeaderContent}> 
-                <Link 
-                    to="/markets"  
-                    className={classes.overviewHeaderLink}> 
-                    <ChevronLeftIcon /> 
+            <section className={classes.overviewHeaderContent}>
+                <Link
+                    to="/markets"
+                    className={classes.overviewHeaderLink}>
+                    <ChevronLeftIcon />
                 </Link>
                 <Grid
                     container
                     direction="column"
                     justify="flex-start"
                 >
-                    <Typography 
-                        className={classes.stockTitle} 
+                    <Typography
+                        className={classes.stockTitle}
                         variant="h1"
                     >
                         {data && data.name}
                     </Typography>
-                    <Typography 
-                        className={classes.subTitle} 
+                    <Typography
+                        className={classes.subTitle}
                         variant="h3"
                     >
                         {data && data.listing.name}
@@ -79,14 +76,14 @@ function OverviewHeader (props) {
                 item
                 xs={6}
             >
-                <Typography 
-                    className={classes.priceTitle} 
+                <Typography
+                    className={classes.priceTitle}
                     variant="h3"
                 >
                     Last Prices
                 </Typography>
-                <Typography 
-                    className={classes.price} 
+                <Typography
+                    className={classes.price}
                     variant="h6"
                 >
                     {data?.quote?.numberFormat?.currency} {numberWithCommas(lastPrice.toFixed(2))}

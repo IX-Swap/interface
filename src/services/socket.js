@@ -19,12 +19,27 @@ export const _subscribeToSocket = (): Promise<any> =>
       console.log('will subscribe', socket);
       socket = io(`${API_URL}?token=${bearerToken}`);
       socket.on('connect', () => {
+        console.log('connect');
         resolve(socket);
       });
-      socket.on('connect_failed', function () {
+      socket.on('connect_error', function () {
+        console.log('no connect');
+        resolve(socket);
+      });
+      socket.on('connect_timeout', function () {
+        console.log('no timeout');
+        resolve(socket);
+      });
+      socket.on('error', function () {
+        console.log('no connect');
+        resolve(socket);
+      });
+      socket.on('reconnecting', function () {
+        console.log('reconnecting connect');
         resolve(socket);
       });
     } else {
+      console.log('else');
       return resolve(socket);
     }
   });

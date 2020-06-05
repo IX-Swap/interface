@@ -1,10 +1,13 @@
 // @flow
-import React, { useEffect, useRef } from 'react';
+/* eslint-disable react-hooks/exhaustive-deps */
+import React, { useEffect, useRef, useState } from 'react';
 import { withRouter, useParams } from 'react-router-dom';
-import TradingViewWidget from 'react-tradingview-widget';
+import Chart from 'kaktana-react-lightweight-charts';
 import { Grid, CircularProgress } from '@material-ui/core';
+import { subscribeToSocket } from 'services/socket';
 
 // Local Components
+import { ENDPOINT_URL } from 'config';
 import OverviewHeader from './OverviewHeader';
 import Monitoring from './components/Monitoring';
 import BidsAsksHistory from './components/BidsAsksHistory';
@@ -21,9 +24,48 @@ import Modules from './modules';
 // Styles
 import useStyles from './styles';
 
+import { chartOptions } from './data';
+
 const { MarketState, useMarketDispatch } = Modules;
+
+const ChartWithData = ({ id }: { id: string }) => {
+  const {
+    SUBSCRIBE_API: { CHART },
+  } = ENDPOINT_URL;
+  const [series, setSeries] = useState([
+    {
+      data: [],
+    },
+  ]);
+
+  useEffect(() => {
+    const socket = subscribeToSocket();
+    socket.emit(CHART.emit, id);
+    socket.on(`${CHART.on}/${id}`, (data) => {
+      setSeries([{ data }]);
+    });
+
+    return () => {
+      socket.off(`${CHART.on}/${id}`);
+    };
+  }, [id]);
+
+  return (
+    <Chart
+      options={chartOptions}
+      candlestickSeries={series}
+      autoWidth
+      height={320}
+    />
+  );
+};
+
+const ChartMemoed = React.memo(({ id }: { id: string }) => (
+  <ChartWithData id={id} />
+));
+
 function OverviewExchange() {
-  let { id: tradingPairId } = useParams();
+  const { id: tradingPairId } = useParams();
   const classes = useStyles();
   const dispatch = useMarketDispatch();
   const marketState = MarketState();
@@ -46,28 +88,47 @@ function OverviewExchange() {
 
   return (
     <React.Fragment>
-      {status === 'GETTING' ? (<CircularProgress size={50} />)
-        :  
+      {status !== "IDLE" ? (
+        <CircularProgress size={50} />
+      ) : (
         <Grid>
           <OverviewHeader data={item && item} />
           <Grid container spacing={1}>
-            <Grid container item xs direction="column" className={classes.containerItem}>
+            <Grid
+              container
+              item
+              xs
+              direction="column"
+              className={classes.containerItem}
+            >
               <BidsAsksHistory id={tradingPairId} />
             </Grid>
-            <Grid container item xs={7} direction="column" className={classes.containerItem}>
+            <Grid
+              container
+              item
+              xs={7}
+              direction="column"
+              className={classes.containerItem}
+            >
               <section className={classes.graphContainer}>
-                <TradingViewWidget symbol="NASDAQ:AAPL" locale="fr" autosize />
+                <ChartMemoed id={tradingPairId} />
               </section>
               <BidsAsks id={tradingPairId} />
             </Grid>
-            <Grid container item xs direction="column" className={classes.containerItem}>
+            <Grid
+              container
+              item
+              xs
+              direction="column"
+              className={classes.containerItem}
+            >
               <Monitoring type="marketList" data={items} />
               <TradeHistory id={tradingPairId} />
             </Grid>
           </Grid>
           <TableMyOrders id={tradingPairId} data={item && item} />
         </Grid>
-      }
+      )}
     </React.Fragment>
   );
 }

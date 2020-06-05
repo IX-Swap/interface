@@ -7730,6 +7730,14 @@ just-debounce@^1.0.0:
   resolved "https://registry.yarnpkg.com/just-debounce/-/just-debounce-1.0.0.tgz#87fccfaeffc0b68cd19d55f6722943f929ea35ea"
   integrity sha1-h/zPrv/AtozRnVX2cilD+SnqNeo=
 
+kaktana-react-lightweight-charts@^1.1.2:
+  version "1.1.2"
+  resolved "https://registry.yarnpkg.com/kaktana-react-lightweight-charts/-/kaktana-react-lightweight-charts-1.1.2.tgz#fd61d0490e368271118e85235587dddb17a57975"
+  integrity sha512-1B+h+3hiD8ntzPYJuBtFps2jR8qOizJZscGdRWFhilLezWz3h78KHwoPN/6piRqXKRb+E2Tue82xQGW2WH9G1A==
+  dependencies:
+    fast-deep-equal "^3.1.1"
+    lightweight-charts "^2.0.0"
+
 keycode@^2.1.7:
   version "2.2.0"
   resolved "https://registry.yarnpkg.com/keycode/-/keycode-2.2.0.tgz#3d0af56dc7b8b8e5cba8d0a97f107204eec22b04"
