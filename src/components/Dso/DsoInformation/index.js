@@ -335,7 +335,7 @@ const DsoInformation = ({
                     ? editableDso.tokenSymbol
                     : dso.tokenSymbol
                 }
-                documents={dso.documents || []}
+                documents={(dso || {}).documents || []}
               >
                 {edit && (
                   <Uploader

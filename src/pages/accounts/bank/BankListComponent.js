@@ -314,6 +314,7 @@ function BankListComponent({ hasApproved }: { hasApproved: boolean }) {
 
 // TODO: fix this any
 function AddBankAccount({ props }: any) {
+  const history = useHistory();
   return (
     <Grid>
       <Box m={4} p={4}>
@@ -325,7 +326,7 @@ function AddBankAccount({ props }: any) {
             variant="contained"
             color="primary"
             onClick={() => {
-              props.history.push(`/accounts/banks/bank-create`);
+              history.push(`/accounts/banks/bank-create`);
             }}
           >
             ADD BANK ACCOUNT
@@ -376,8 +377,6 @@ const ApprovedGetter = () => {
       });
     }
   }, [status]);
-
-  console.log('im an approve getter', hasApproved, checked);
 
   return status === BANK_LIST_STATUS.IDLE && checked ? (
     <BankListComponent hasApproved={hasApproved} />
