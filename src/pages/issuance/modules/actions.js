@@ -10,9 +10,9 @@ export const setSelectedDso = (dispatch: Function, dso: Dso) => {
   dispatch({ type: actions.SET_SELECTED_DSO, payload: dso });
 };
 
-export const getDso = async (id: string): Promise<?Dso> => {
+export const getDso = async (userId: string, id: string): Promise<?Dso> => {
   try {
-    const url = `/issuance/dso/${storageHelper.getUserId()}/${id}`;
+    const url = `/issuance/dso/${userId}/${id}`;
     const res = await getRequest(url);
 
     if (res.status !== 200) {

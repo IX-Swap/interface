@@ -22,16 +22,16 @@ export const _subscribeToSocket = (): Promise<any> =>
         console.log('connect');
         resolve(socket);
       });
-      socket.on('connect_error', function () {
-        console.log('no connect');
+      socket.on('connect_error', function (...props) {
+        console.log('no connect', props);
         resolve(socket);
       });
       socket.on('connect_timeout', function () {
         console.log('no timeout');
         resolve(socket);
       });
-      socket.on('error', function () {
-        console.log('no connect');
+      socket.on('error', function (...props) {
+        console.log('no connect', props);
         resolve(socket);
       });
       socket.on('reconnecting', function () {

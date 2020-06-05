@@ -1,4 +1,5 @@
 // @flow
+/* eslint-disable react-hooks/exhaustive-deps */
 import React, { useState, useEffect } from 'react';
 import { RouteProps } from 'react-router-dom';
 
@@ -20,7 +21,7 @@ import { subscribeToSocket } from 'services/socket';
 import type { Dso } from 'context/dso/types';
 import { getDso, deployDso } from './modules/actions';
 
-const useDeployLogic = (id: string) => {
+const useDeployLogic = (userId: string, id: string) => {
   // $FlowFixMe
   const [dso, setDso] = useState<Dso>({});
   const [loading, setLoading] = useState<boolean>(false);
@@ -44,7 +45,7 @@ const useDeployLogic = (id: string) => {
       ((mId) => {
         setTimeout(async () => {
           socket.removeEventListener(`x-token/${id}`);
-          const newDso = await getDso(mId);
+          const newDso = await getDso(userId, mId);
           if (newDso) {
             setDso(newDso);
           }
@@ -78,7 +79,7 @@ const useDeployLogic = (id: string) => {
 
   useEffect(() => {
     (async (mId) => {
-      const mDso = await getDso(mId);
+      const mDso = await getDso(userId, mId);
       if (mDso) {
         setDso(mDso);
       }
@@ -95,9 +96,9 @@ const useDeployLogic = (id: string) => {
 
 const Deploy = ({ match }: RouteProps) => {
   const {
-    params: { id },
+    params: { userId, id },
   } = match;
-  const { dso, messages, loading, deploy } = useDeployLogic(id);
+  const { dso, messages, loading, deploy } = useDeployLogic(userId, id);
 
   return dso ? (
     <Container>

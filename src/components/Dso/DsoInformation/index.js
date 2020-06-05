@@ -470,7 +470,9 @@ const DsoInformation = ({
                       variant="contained"
                       color="primary"
                       onClick={() =>
-                        history.push(`/issuance/${dso._id}/deploy`)
+                        history.push(
+                          `/issuance/${dso.createdBy}/${dso._id}/deploy`
+                        )
                       }
                     >
                       Deploy

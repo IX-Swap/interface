@@ -54,7 +54,11 @@ const Issuance = () => {
             exact
             component={(props) => <IssuanceCreate {...props} assets={assets} />}
           />
-          <Route path="/issuance/:id/deploy" exact component={DeployToken} />
+          <Route
+            path="/issuance/:userId/:id/deploy"
+            exact
+            component={DeployToken}
+          />
         </Switch>
       </IssuanceProvider>
     )
