@@ -12,6 +12,8 @@ import localStore from 'services/storageHelper';
 
 // Modules
 import { subscribeToSocket } from 'services/socket';
+import { numberWithCommas } from 'utils/utils';
+import NumberFormat from 'react-number-format';
 import PostOrderActions from './modules/actions';
 import Modules from './modules';
 
@@ -178,12 +180,11 @@ const BidsAsksHistory = (props) => {
         },
     ];
 
-    console.log(marketListItem);
-
     let isQuoteItem = collection && collection.length && collection.find(item => item.assetId === marketListItem?.quote?._id);
-    let isListingItem = collection && collection.length && collection.find(item => item.assetId === marketListItem?.listing?._id);
+    let isListingItem = collection && collection.length && collection.find(item => item.assetId === marketListItem?.listing?.asset?._id);
 
-    console.log(marketListItem);
+    const quoteCurrency = marketListItem?.quote?.numberFormat?.currency;
+    const listCurrency = marketListItem?.listing?.asset?.numberFormat?.currency;
 
     return (
       <Paper className={classes.bidsAsksContainer}>
@@ -195,7 +196,7 @@ const BidsAsksHistory = (props) => {
             <Box className={classes.formValue}>
               <AccountBalanceWalletIcon color="action" />
               <span className={classes.availableBalance}>
-                {isQuoteItem?.available || 0}
+                {numberWithCommas((isQuoteItem?.available || 0).toFixed(4))}
               </span>
               {marketListItem?.quote?.numberFormat?.currency}
             </Box>
@@ -206,17 +207,25 @@ const BidsAsksHistory = (props) => {
             return (
               <Box key={i} className={classes.inputContainer}>
                 <label>{field.label}</label>
-                <input
+                <NumberFormat
                   className={classes.inputField}
-                  key={field.id}
-                  id={`${field.id}-bid`}
-                  value={field.id === "total" ? totalAmount : field.value}
-                  onChange={field.onChange} // eslint-disable-line
-                  placeholder={field.placeholder}
-                  type={field.type}
-                  name={field.name}
-                  min={0}
+                  allowEmptyFormatting
+                  value={field.id === "total" ? totalAmount : field.value || ""}
                   disabled={field.id === "total"}
+                  inputMode="numeric"
+                  thousandSeparator
+                  prefix={`${
+                    field.id === "amount" ? listCurrency : quoteCurrency
+                  } `}
+                  onValueChange={(values) => {
+                    field.onChange({
+                      target: {
+                        name: field.name,
+                        value: values.value,
+                      },
+                    });
+                  }}
+                  isNumericString
                 />
               </Box>
             );
@@ -235,12 +244,12 @@ const BidsAsksHistory = (props) => {
         <form className={classes.formContainer}>
           <Box className={classes.formHeader}>
             <Typography className={classes.formTitle} variant="h3">
-              Sell {marketListItem?.quote?.numberFormat?.currency}
+              Sell {marketListItem?.listing?.asset?.numberFormat?.currency}
             </Typography>
             <Box className={classes.formValue}>
               <AccountBalanceWalletIcon color="action" />
               <span className={classes.availableBalance}>
-                {isListingItem?.available || 0}
+                {numberWithCommas((isListingItem?.available || 0).toFixed(4))}
               </span>
               {marketListItem?.listing?.asset?.numberFormat?.currency}
             </Box>
@@ -251,17 +260,25 @@ const BidsAsksHistory = (props) => {
             return (
               <Box key={i} className={classes.inputContainer}>
                 <label>{field.label}</label>
-                <input
+                <NumberFormat
                   className={classes.inputField}
-                  key={field.id}
-                  id={`${field.id}-sell`}
-                  value={field.id === "total" ? totalAmount : field.value}
-                  onChange={field.onChange} // eslint-disable-line
-                  placeholder={field.placeholder}
-                  type={field.type}
-                  name={field.name}
-                  min={0}
+                  allowEmptyFormatting
+                  value={field.id === "total" ? totalAmount : field.value || ""}
                   disabled={field.id === "total"}
+                  inputMode="numeric"
+                  thousandSeparator
+                  prefix={`${
+                    field.id === "amount" ? listCurrency : quoteCurrency
+                  } `}
+                  onValueChange={(values) => {
+                    field.onChange({
+                      target: {
+                        name: field.name,
+                        value: values.value,
+                      },
+                    });
+                  }}
+                  isNumericString
                 />
               </Box>
             );
@@ -274,7 +291,7 @@ const BidsAsksHistory = (props) => {
             disableElevation
             disabled={isListingItem?.balance < 0}
           >
-            Buy {marketListItem?.listing?.asset?.numberFormat?.currency}
+            Sell {marketListItem?.listing?.asset?.numberFormat?.currency}
           </Button>
         </form>
       </Paper>
