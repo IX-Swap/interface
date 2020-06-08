@@ -8,12 +8,14 @@ const { DsoListProvider } = DsoListModule;
 const DsoListWithProvider = ({
   onClickView,
   status,
+  user = '',
 }: {
-  status: string,
+  user?: string,
+  status?: string,
   onClickView: Function,
 }) => (
   <DsoListProvider>
-    <DsoList onClickView={onClickView} status={status} />
+    <DsoList onClickView={onClickView} status={status} user={user} />
   </DsoListProvider>
 );
 

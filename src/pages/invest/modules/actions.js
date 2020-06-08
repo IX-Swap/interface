@@ -111,10 +111,9 @@ export async function uploadFile(payload: {
   }
 }
 
-export const downloadFile = async (documentId: string) => {
-  const userId = localStore.getUserId();
+export const downloadFile = async (dsoId: string) => {
   try {
-    const uri = `/dataroom/raw/${userId}/${documentId}`;
+    const uri = `/issuance/dso/dataroom/subscription/raw/${dsoId}`;
     const result = await getRequest(uri);
 
     if (result.status === 200) {

@@ -89,7 +89,7 @@ function Monitoring(props) {
   }
 
   useEffect(() => {
-    if (lastElement && lastElement.current && ['asks', 'bids'].includes(type)) {
+    if (lastElement && lastElement.current && ['asks'].includes(type)) {
       lastElement.current.scrollTop = lastElement.current?.scrollHeight;
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -266,8 +266,8 @@ function Monitoring(props) {
                   );
                 default:
                   const max = Math.max(...filteredData.map((e) => e.total));
-                  const green = 'rgba(4, 119, 98, .3)';
-                  const red = 'rgba(181, 0, 0, .3)';
+                  const green = 'rgba(4, 119, 98, .1)';
+                  const red = 'rgba(181, 0, 0, .1)';
                   const barStyle = {
                     width: `${(d.total / max) * 100}%`,
                     backgroundColor: type === 'bids' ? green : red,

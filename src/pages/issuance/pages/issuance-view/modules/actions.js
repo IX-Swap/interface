@@ -3,10 +3,10 @@ import { putRequest, getRequest } from 'services/httpRequests';
 import type { Document } from 'context/dso/types';
 import localStore from 'services/storageHelper';
 // TODO: Move to another place for reusability
-export const downloadFile = async (document: Document) => {
-  const { user, _id } = document;
+export const downloadFile = async (dsoId: string, document: Document) => {
+  const { _id } = document;
 
-  const uri = `/dataroom/raw/${user}/${_id}`;
+  const uri = `/issuance/dso/dataroom/documents/raw/${dsoId}/${_id}`;
   const result = await getRequest(uri);
 
   if (result.status === 200) {

@@ -31,6 +31,8 @@ const OfferCard = ({
                 tokenSymbol={dso.tokenSymbol}
                 issuerName={dso.issuerName}
                 documents={dso.documents}
+                logo={(dso || {}).logo}
+                dsoId={(dso || {})._id}
               />
 
               <Box mt={4}>

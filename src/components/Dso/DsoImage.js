@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
-import type { Document } from 'context/dso/types';
 import { makeStyles } from '@material-ui/styles';
 import { getImgUrl } from 'services/httpRequests';
+import storage from 'services/storageHelper';
 
 const useStyles = makeStyles(() => ({
   logo: {
@@ -12,25 +12,43 @@ const useStyles = makeStyles(() => ({
   },
 }));
 
-const DsoImage = ({ documents }: { documents: Array<Document> }) => {
+const DsoImage = ({
+  logo,
+  edit = false,
+  dsoId = '',
+}: {
+  dsoId: string,
+  edit: boolean,
+  logo: string,
+}) => {
   const classes = useStyles();
   const [imgUrl, setImgUrl] = useState('');
 
-  const image = (documents || [])
-    .sort((a, b) => new Date(b.createdAt) - new Date(a.updatedAt))
-    .find((e) => e.type === 'tokenLogo');
-
-  const setPhoto = async (user, id) => {
-    const x = await getImgUrl(`/dataroom/raw/${user}/${id || ''}`);
+  const setPhoto = async (id) => {
+    const x = await getImgUrl(
+      edit
+        ? `/dataroom/raw/${storage.getUserId()}/${id || ''}`
+        : `/issuance/dso/dataroom/logo/raw/${id}`
+    );
 
     setImgUrl(x);
   };
 
   useEffect(() => {
-    if (image) {
-      setPhoto(image.user, image._id);
+    if (edit) {
+      if (logo) {
+        setPhoto(logo);
+      }
+
+      return;
     }
-  }, [image]);
+
+    if (dsoId) {
+      setPhoto(dsoId);
+    }
+
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [edit, dsoId, logo]);
 
   return (
     <div
