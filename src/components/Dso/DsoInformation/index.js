@@ -246,6 +246,16 @@ const useDsoLogic = (dso, action) => {
     reset(values);
   };
 
+  const onLogoUpload = (res: any) => {
+    const values = getFinalValues();
+    values.logo = res._id;
+    rteRefs.current.values = { ...values };
+    setEditableDso({
+      ...values,
+    });
+    reset(values);
+  };
+
   const onDataroomDocumentUploaded = (res: any) => {
     const values = getFinalValues();
     if (!values.documents) {
@@ -267,6 +277,7 @@ const useDsoLogic = (dso, action) => {
     setRefValue,
     onRemove,
     addMember,
+    onLogoUpload,
     edit,
     isIssuer,
     history,
@@ -313,6 +324,7 @@ const DsoInformation = ({
     getFinalValues,
     onSubscriptionUpload,
     onDataroomDocumentUploaded,
+    onLogoUpload,
     onRemoveDocument,
   } = useDsoLogic(dso || { ...baseDsoRequest }, action);
 
@@ -325,6 +337,7 @@ const DsoInformation = ({
               <DsoTitle
                 control={control}
                 edit={action === 'create'}
+                updatePreview={action === 'edit'}
                 assets={assets}
                 ref={register}
                 issuerName={
@@ -335,7 +348,8 @@ const DsoInformation = ({
                     ? editableDso.tokenSymbol
                     : dso.tokenSymbol
                 }
-                documents={(dso || {}).documents || []}
+                logo={(editableDso || {}).logo}
+                dsoId={(dso || {})._id}
               >
                 {edit && (
                   <Uploader
@@ -346,7 +360,7 @@ const DsoInformation = ({
                     }}
                     edit={edit}
                     showTitle={false}
-                    onUpload={onDataroomDocumentUploaded}
+                    onUpload={onLogoUpload}
                   />
                 )}
               </DsoTitle>
@@ -402,11 +416,7 @@ const DsoInformation = ({
             <SectionContainer title="Subscription Document">
               {['view', 'edit'].includes(action) &&
                 editableDso.subscriptionDocument && (
-                  <Button
-                    onClick={() =>
-                      downloadFile(editableDso.subscriptionDocument)
-                    }
-                  >
+                  <Button onClick={() => downloadFile(dso._id)}>
                     Download
                   </Button>
                 )}
@@ -576,6 +586,7 @@ const DsoInformation = ({
             <SectionContainer title="Team">
               {(editableDso.team || []).map((member, i) => (
                 <TeamMember
+                  dsoId={dso._id}
                   index={i}
                   edit={edit}
                   setValue={setValue}

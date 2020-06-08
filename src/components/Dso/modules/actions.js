@@ -32,7 +32,7 @@ export async function uploadFile(payload: {
 
 export const downloadFile = async (documentId) => {
   try {
-    const uri = `/dataroom/raw/${documentId}`;
+    const uri = `/issuance/dso/dataroom/subscription/raw/${documentId}`;
     const result = await getRequest(uri);
 
     if (result.status === 200) {

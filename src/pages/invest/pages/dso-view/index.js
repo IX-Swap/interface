@@ -21,7 +21,7 @@ const DsoView = () => {
 
   const onClickDocument = async (document: Document) => {
     try {
-      await downloadFile(document);
+      await downloadFile(dso._id, document);
     } catch (error) {
       snackbarService.showSnackbar(error.message, 'error');
       console.log(error);

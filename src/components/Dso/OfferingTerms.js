@@ -72,7 +72,6 @@ const OfferingTermItem = React.forwardRef(
 OfferingTermItem.displayName = 'OfferingTermItem';
 
 const isNa = (val: any) => {
-  console.log('val', val);
   return (val || '').toString().trim() === '';
 };
 

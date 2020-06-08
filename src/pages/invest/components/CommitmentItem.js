@@ -127,7 +127,7 @@ const CommitmentItem = ({
 
   const onClickDownload = async (documentId) => {
     try {
-      await downloadFile(documentId);
+      await downloadFile(dso._id);
     } catch (error) {
       snackbarService.showSnackbar(
         error.message ? error.message : 'Something went wrong.',

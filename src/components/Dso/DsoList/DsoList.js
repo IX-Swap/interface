@@ -1,5 +1,6 @@
 // @flow
-import React, { useRef, useEffect } from 'react';
+/* eslint-disable react-hooks/exhaustive-deps */
+import React, { useRef, useEffect, useState } from 'react';
 import {
   Container,
   TextField,
@@ -19,37 +20,61 @@ import { useIsIssuer } from 'services/acl';
 import OfferCard from './OfferCard';
 import DsoListModule from './modules';
 import Actions from './modules/actions';
+import { init } from './modules/actions_filtered';
 
 const { useDsoListState, useDsoListDispatch, DSO_LIST_STATUS } = DsoListModule;
-const { getDsoList, setPage, setRowsPerPage, clearApiStatus } = Actions;
+let {
+  getDsoList: getList,
+  setPage: _setPage,
+  setRowsPerPage: _setRowsPerPage,
+  clearApiStatus: _clearApiStatus,
+} = Actions;
 
-const useDsoListLogic = (statusFilter?: string) => {
+const useDsoListLogic = (statusFilter?: string, user?: string) => {
   const isIssuer = useIsIssuer();
   const dsoListDispatch = useDsoListDispatch();
   const dsoListState = useDsoListState();
+  const [search, setSearch] = useState('');
   const { status, page, total, limit, items, statusCode, error } = dsoListState;
   const mountedRef = useRef(true);
 
+  useEffect(() => {
+    const override = user ? init(user) : Actions;
+    getList = override.getDsoList;
+    _setPage = override.setPage;
+    _setRowsPerPage = override.setRowsPerPage;
+    _clearApiStatus = override.clearApiStatus;
+  }, [user]);
+
   const handleChangePage = (_, newPage: number) => {
-    setPage(dsoListDispatch, { page: newPage });
+    _setPage(dsoListDispatch, { page: newPage });
   };
 
   const handleChangeRowsPerPage = (newRows: number) => {
-    setRowsPerPage(dsoListDispatch, { rows: newRows });
-    setPage(dsoListDispatch, { page: 0 });
+    _setRowsPerPage(dsoListDispatch, { rows: newRows });
+    _setPage(dsoListDispatch, { page: 0 });
+  };
+
+  const onSearch = (evt) => {
+    setSearch(evt.target.value);
   };
 
   useEffect(() => {
+    _setPage(dsoListDispatch, { page: 0 });
+  }, [search]);
+
+  useEffect(() => {
     if (status === DSO_LIST_STATUS.INIT) {
-      getDsoList(dsoListDispatch, {
+      getList(dsoListDispatch, {
         skip: page * limit,
         limit,
         status: statusFilter,
+        search,
         ref: mountedRef,
       });
-      clearApiStatus(dsoListDispatch);
+      _clearApiStatus(dsoListDispatch);
     }
-  }, [page, limit, status, statusFilter, dsoListDispatch]);
+  }, [page, limit, status, statusFilter, dsoListDispatch, user]);
 
   useEffect(
     () => () => {
@@ -66,10 +91,11 @@ const useDsoListLogic = (statusFilter?: string) => {
     limit,
     page,
     statusCode,
+    onSearch,
     error,
     handleChangePage,
     handleChangeRowsPerPage,
-    setPage,
+    _setPage,
     isIssuer,
   };
 };
@@ -77,7 +103,9 @@ const useDsoListLogic = (statusFilter?: string) => {
 const DsoList = ({
   onClickView,
   status = undefined,
+  user = '',
 }: {
+  user?: string,
   status?: string,
   onClickView: Function,
 }) => {
@@ -87,10 +115,11 @@ const DsoList = ({
     items: dsoList = [],
     total,
     limit,
+    onSearch,
     page,
     handleChangeRowsPerPage,
     handleChangePage,
-  } = useDsoListLogic(status);
+  } = useDsoListLogic(status, user);
 
   const history = useHistory();
 
@@ -105,6 +134,7 @@ const DsoList = ({
           <TextField
             variant="outlined"
             placeholder="Search"
+            onChange={onSearch}
             style={{ flexGrow: 1 }}
           />
           {isIssuer && (

@@ -29,10 +29,12 @@ const TeamMember = (
     index,
     save,
     setValue,
+    dsoId = '',
   }: {
     index: number,
     setValue: Function,
     remove: Function,
+    dsoId: string,
     edit?: boolean,
     save?: (string) => void,
     member: DsoTeamMember,
@@ -42,9 +44,11 @@ const TeamMember = (
   const classes = useStyles();
   const [imgUrl, setImgUrl] = useState('');
 
-  const setPhoto = async (id) => {
+  const setPhoto = async (id = '') => {
     const x = await getImgUrl(
-      `/dataroom/raw/${storage.getUserId()}/${id || ''}`
+      edit
+        ? `/dataroom/raw/${storage.getUserId()}/${id || ''}`
+        : `/issuance/dso/dataroom/photos/raw/${dsoId}/${id}`
     );
 
     setImgUrl(x);

@@ -16,7 +16,6 @@ import {
   MuiPickersUtilsProvider,
 } from '@material-ui/pickers';
 import DateFnsUtils from '@date-io/date-fns';
-import type { Document } from 'context/dso/types';
 import useEditableStyles from './styles';
 import DsoImage from './DsoImage';
 
@@ -28,9 +27,13 @@ const DsoTitle = (
     control,
     assets = [],
     children = undefined,
-    documents,
+    updatePreview = false,
+    logo,
+    dsoId = '',
   }: {
-    documents?: Array<Document>,
+    dsoId?: string,
+    updatePreview?: boolean,
+    logo?: string,
     children: any,
     assets: Array<any>,
     control?: any,
@@ -45,7 +48,7 @@ const DsoTitle = (
   return (
     <Grid container alignItems="center">
       <Box mr={2}>
-        <DsoImage documents={documents} />
+        <DsoImage logo={logo} edit={updatePreview} dsoId={dsoId} />
         {children}
       </Box>
       {!edit && (
