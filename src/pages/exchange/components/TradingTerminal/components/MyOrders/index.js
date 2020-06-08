@@ -20,8 +20,8 @@ import localStore from 'services/storageHelper';
 import { numberWithCommas } from 'utils/utils';
 
 // Modules
-import MyOrderActions from './modules/actions';
 import { subscribeToSocket } from 'services/socket';
+import MyOrderActions from './modules/actions';
 
 const StyledTableCell = withStyles((theme) => ({
   head: {
@@ -87,8 +87,12 @@ export default function TableMyOrders(props) {
       <Typography className={classes.tableTitle} variant="h3">
         Open Orders
       </Typography>
-      <TableContainer component={Paper}>
-        <Table className={classes.table} aria-label="simple table">
+      <TableContainer component={Paper} style={{ maxHeight: "400px" }}>
+        <Table
+          className={classes.table}
+          stickyHeader size="small"
+          aria-label="simple table"
+        >
           <TableHead>
             <TableRow>
               <StyledTableCell>Date</StyledTableCell>
@@ -102,29 +106,31 @@ export default function TableMyOrders(props) {
             </TableRow>
           </TableHead>
           <TableBody>
-            {myOrders &&
-              myOrders.length ?
-              myOrders.map((row) => (
-                <TableRow key={row.id}>
-                  <TableCell>
-                    {moment(row.createdAt).format(DATE_FORMAT)}
-                  </TableCell>
-                  <TableCell>{data && data.name}</TableCell>
-                  <TableCell>{row.side}</TableCell>
-                  <TableCell>{numberWithCommas(row.price)}</TableCell>
-                  <TableCell>{numberWithCommas(row.amount)}</TableCell>
-                  <TableCell>{row.totalFilled}</TableCell>
-                  <TableCell>{numberWithCommas(row.price * row.amount)}</TableCell>
-                  <TableCell>
-                    <Button
-                      color="primary"
-                      onClick={() => _handleCancelOrder(row)}
-                    >
-                      Cancel
-                    </Button>
-                  </TableCell>
-                </TableRow>
-              )) : null}
+            {myOrders && myOrders.length
+              ? myOrders.map((row) => (
+                  <TableRow key={row.id}>
+                    <TableCell>
+                      {moment(row.createdAt).format(DATE_FORMAT)}
+                    </TableCell>
+                    <TableCell>{data && data.name}</TableCell>
+                    <TableCell>{row.side}</TableCell>
+                    <TableCell>{numberWithCommas(row.price)}</TableCell>
+                    <TableCell>{numberWithCommas(row.amount)}</TableCell>
+                    <TableCell>{row.totalFilled}</TableCell>
+                    <TableCell>
+                      {numberWithCommas(row.price * row.amount)}
+                    </TableCell>
+                    <TableCell>
+                      <Button
+                        color="primary"
+                        onClick={() => _handleCancelOrder(row)}
+                      >
+                        Cancel
+                      </Button>
+                    </TableCell>
+                  </TableRow>
+                ))
+              : null}
           </TableBody>
         </Table>
       </TableContainer>

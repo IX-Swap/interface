@@ -16,7 +16,7 @@ const ViewCommitment = () => {
     <CommitmentItem
       dso={commitment.dso}
       commitment={commitment}
-      asset={commitment.currency._id}
+      asset={(commitment.currency || {})._id}
     />
   );
 };

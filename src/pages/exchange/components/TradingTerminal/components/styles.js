@@ -1,31 +1,32 @@
-import { makeStyles } from '@material-ui/styles'
+import { makeStyles } from '@material-ui/styles';
+
 const defaultListItemStyle = {
-    alignItems: 'center',
-    display: 'flex',
-    fontSize: 11,
-    margin: 0,
-    padding: '2px 0',
-    textAlign: 'left',
-    flex: 1,
+  alignItems: 'center',
+  display: 'flex',
+  fontSize: 11,
+  margin: 0,
+  padding: '2px 0',
+  textAlign: 'left',
+  flex: 1,
 };
 
 const bidsTitle = {
-    alignItems: 'center',
-    display: 'flex',
-    fontSize: 14,
-    fontWeight: 600,
-    paddingLeft: 15,
+  alignItems: 'center',
+  display: 'flex',
+  fontSize: 14,
+  fontWeight: 600,
+  paddingLeft: 15,
 };
 
 const header = {
-    color: '#bcbcbc',
-    display: 'flex',
-    fontSize: 11,
-    listStyle: 'none',
-    margin: 0,
+  color: '#bcbcbc',
+  display: 'flex',
+  fontSize: 11,
+  listStyle: 'none',
+  margin: 0,
 };
 
-export default makeStyles(theme => ({
+export default makeStyles((theme) => ({
   overviewHeader: {
     marginBottom: theme.spacing.unit * 5,
   },
@@ -36,33 +37,37 @@ export default makeStyles(theme => ({
     marginBottom: theme.spacing.unit,
   },
   subTitle: {
-    color: "#bcbcbc",
+    color: '#bcbcbc',
     fontSize: 16,
     fontWeight: 600,
   },
   priceTitle: {
-    color: "#9c9c9c",
+    color: '#9c9c9c',
     fontSize: 14,
     fontWeight: 600,
     marginBottom: theme.spacing.unit * 1.5,
     textAlign: 'left',
   },
   price: {
-    color: "#000",
+    color: '#000',
     fontSize: 14,
     fontWeight: 600,
     textAlign: 'left',
   },
   monitoring: {
-    boxShadow: '0px 2px 1px -1px rgba(0,0,0,0.2), 0px 1px 1px 0px rgba(0,0,0,0.14), 0px 1px 3px 0px rgba(0,0,0,0.12)',
+    boxShadow:
+      '0px 2px 1px -1px rgba(0,0,0,0.2), 0px 1px 1px 0px rgba(0,0,0,0.14), 0px 1px 3px 0px rgba(0,0,0,0.12)',
     marginBottom: theme.spacing.unit,
-    maxHeight: 400,
-    overflow: 'scroll',
+    display: 'flex',
+    flexDirection: 'column',
+    height: 400,
+    overflow: 'auto',
   },
   monitoringTitle: {
     fontSize: 16,
     fontWeight: 600,
     margin: '10px 0',
+    paddingLeft: '15px',
   },
   monitoringHeader: {
     ...header,
@@ -91,8 +96,8 @@ export default makeStyles(theme => ({
     margin: '0 6px',
 
     '&:last-child': {
-        marginLeft: 0,
-    }
+      marginLeft: 0,
+    },
   },
   searchContainer: {
     padding: '6px 6px 0px',
@@ -118,9 +123,9 @@ export default makeStyles(theme => ({
     cursor: 'pointer',
     listStyle: 'none',
     margin: 0,
-    minHeight: 400,
-    maxHeight: 450,
-    overflow: 'scroll',
+    minHeight: 0,
+    maxHeight: 'fill',
+    overflow: 'auto',
     padding: theme.spacing.unit,
   },
   monitoringListItem: {
@@ -130,18 +135,18 @@ export default makeStyles(theme => ({
 
     '&:hover': {
       fontWeight: 600,
-    }
+    },
   },
   marketHeaderItem: {
-      display: 'flex',
-      alignItems: 'center',
+    display: 'flex',
+    alignItems: 'center',
   },
   defaultListItemStyle: {
     ...defaultListItemStyle,
 
     '&:last-child': {
       justifyContent: 'flex-end',
-    }
+    },
   },
   positiveCell: {
     defaultListItemStyle,
@@ -169,7 +174,7 @@ export default makeStyles(theme => ({
       border: 0,
       paddingLeft: 25,
       paddingRight: 0,
-    }
+    },
   },
   formHeader: {
     alignItems: 'center',
@@ -229,5 +234,5 @@ export default makeStyles(theme => ({
     position: 'absolute',
     height: '100%',
     right: 0,
-  }
-}))
+  },
+}));

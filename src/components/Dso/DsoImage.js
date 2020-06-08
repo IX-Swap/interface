@@ -20,8 +20,6 @@ const DsoImage = ({ documents }: { documents: Array<Document> }) => {
     .sort((a, b) => new Date(b.createdAt) - new Date(a.updatedAt))
     .find((e) => e.type === 'tokenLogo');
 
-  console.log(documents);
-
   const setPhoto = async (user, id) => {
     const x = await getImgUrl(`/dataroom/raw/${user}/${id || ''}`);
 
