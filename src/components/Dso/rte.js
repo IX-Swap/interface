@@ -7,7 +7,6 @@ function RichEditor(
   { value, save }: { value: string, save: Function },
   ref: any
 ) {
-  console.log('value of rte', value);
   const contentHTML = convertFromHTML(value || '<p>&nbsp some value</p>');
   const state = ContentState.createFromBlockArray(
     contentHTML.contentBlocks,

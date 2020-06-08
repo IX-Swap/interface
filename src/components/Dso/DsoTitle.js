@@ -27,10 +27,12 @@ const DsoTitle = (
     control,
     assets = [],
     children = undefined,
+    updatePreview = false,
     logo,
     dsoId = '',
   }: {
     dsoId?: string,
+    updatePreview?: boolean,
     logo?: string,
     children: any,
     assets: Array<any>,
@@ -46,7 +48,7 @@ const DsoTitle = (
   return (
     <Grid container alignItems="center">
       <Box mr={2}>
-        <DsoImage logo={logo} edit={edit} dsoId={dsoId} />
+        <DsoImage logo={logo} edit={updatePreview} dsoId={dsoId} />
         {children}
       </Box>
       {!edit && (

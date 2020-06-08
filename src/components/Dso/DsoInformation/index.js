@@ -337,6 +337,7 @@ const DsoInformation = ({
               <DsoTitle
                 control={control}
                 edit={action === 'create'}
+                updatePreview={action === 'edit'}
                 assets={assets}
                 ref={register}
                 issuerName={
@@ -347,7 +348,7 @@ const DsoInformation = ({
                     ? editableDso.tokenSymbol
                     : dso.tokenSymbol
                 }
-                logo={(dso || {}).logo}
+                logo={(editableDso || {}).logo}
                 dsoId={(dso || {})._id}
               >
                 {edit && (

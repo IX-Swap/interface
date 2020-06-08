@@ -49,6 +49,7 @@ export type Dso = {
   createdBy: string,
   issuerName: string,
   launchDate: string,
+  logo?: string,
   capitalStructure: string,
   currency: Array<Asset>,
   pricePerUnit: number,
