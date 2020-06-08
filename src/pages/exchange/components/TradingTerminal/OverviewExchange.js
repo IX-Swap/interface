@@ -3,7 +3,7 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { withRouter, useParams } from 'react-router-dom';
 import Chart from 'kaktana-react-lightweight-charts';
-import { Grid, CircularProgress } from '@material-ui/core';
+import { Grid, CircularProgress, Paper } from '@material-ui/core';
 import { subscribeToSocket } from 'services/socket';
 
 // Local Components
@@ -111,7 +111,11 @@ function OverviewExchange() {
               className={classes.containerItem}
             >
               <section className={classes.graphContainer}>
-                <ChartMemoed id={tradingPairId} />
+                <Paper>
+                  <div  style={{width: 'calc(100% - 8px)'}}>
+                    <ChartMemoed id={tradingPairId} />
+                  </div>
+                </Paper>
               </section>
               <BidsAsks id={tradingPairId} items={items} />
             </Grid>

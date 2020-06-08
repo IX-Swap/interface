@@ -1,6 +1,7 @@
 // @flow
 import { postRequest } from 'services/httpRequests';
 
+import { snackbarService } from 'uno-material-ui';
 import { postOrderActions, OrderState } from './types';
 
 async function postOrder(dispatch: Function, payload: OrderState) {
@@ -17,11 +18,12 @@ async function postOrder(dispatch: Function, payload: OrderState) {
 
     throw new Error(response.message);
   } catch (err) {
+    console.log(err.toString());
     dispatch({
       ...err,
       type: postOrderActions.GET_POST_ORDER_FAILURE,
     });
-    throw new Error(err);
+    snackbarService.showSnackbar(err.toString(), 'error');
   }
 }
 

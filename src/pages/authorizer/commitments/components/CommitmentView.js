@@ -50,7 +50,7 @@ const DsoSummary = ({
       <Typography>
         <b>{dso.issuerName}</b>
       </Typography>
-      <Typography>Prefered Equity</Typography>
+      <Typography>{dso.capitalStructure}</Typography>
     </Box>
     <Box p={4}>
       <Typography>
@@ -60,7 +60,7 @@ const DsoSummary = ({
       <Typography>
         <b>DSO Price</b>
         <span style={{ marginLeft: '1em' }}>
-          {formatMoney(dso.pricePerUnit, dso.currency.symbol)}
+          {formatMoney(dso.pricePerUnit, (dso || {}).symbol)}
         </span>
       </Typography>
       <Typography>
@@ -200,14 +200,14 @@ const CommitmentView = ({
                   label="Price Per Token"
                   value={formatMoney(
                     commitment.pricePerUnit,
-                    commitment.currency.symbol
+                    (commitment.currency || {}).symbol
                   )}
                 />
                 <CommitmentItem
                   label="Total Committed Amount"
                   value={formatMoney(
                     commitment.totalAmount,
-                    commitment.currency.symbol
+                    (commitment.currency || {}).symbol
                   )}
                 />
                 <CommitmentItem

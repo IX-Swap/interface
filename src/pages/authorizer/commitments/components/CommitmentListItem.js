@@ -29,7 +29,7 @@ const CommitmentListItem = ({
       <TableCell>{dso.issuerName}</TableCell>
       <TableCell>{dso.tokenName}</TableCell>
       <TableCell align="right">
-        {formatMoney(totalAmount, currency.symbol)}
+        {formatMoney(totalAmount, (currency || {}).symbol)}
       </TableCell>
       <TableCell align="right">{formatNumber(numberOfUnits)}</TableCell>
       <TableCell>

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import { withRouter, Link } from 'react-router-dom';
 import classNames from 'classnames';
 import moment from 'moment';
@@ -25,12 +25,12 @@ import useStyles from '../styles';
 
 const { useMonitoringDispatch } = Modules;
 function Monitoring(props) {
+  const lastElement = useRef(null);
   const dispatch = useMonitoringDispatch();
   const classes = useStyles();
   const [fav, setFav] = useState(false);
   const [search, setSearch] = useState(false);
   const { title, type, data = [], lastPrice } = props;
-  const minValue = data.length && Math.min(...data.map((d) => d.price));
   const isAsksBids = props.type === 'asks' || props.type === 'bids';
 
   const filteredData = search || data;
@@ -60,6 +60,13 @@ function Monitoring(props) {
     };
   }
 
+  useEffect(() => {
+    if (lastElement && lastElement.current && ['asks', 'bids'].includes(type)) {
+      lastElement.current.scrollTop = lastElement.current?.scrollHeight;
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [filteredData]);
+
   return (
     <>
       <section className={classes.monitoring}>
@@ -73,9 +80,6 @@ function Monitoring(props) {
             <Typography className={classes.maxBidsTitle} variant="h3">
               {lastPrice}
               <ArrowUpwardRoundedIcon fontSize="small" />
-            </Typography>
-            <Typography className={classes.minBidsTitle} variant="h3">
-              {minValue}
             </Typography>
           </section>
         )}
@@ -118,7 +122,7 @@ function Monitoring(props) {
             </ul>
           </>
         )}
-        <ul className={classes.monitoringList}>
+        <ul className={classes.monitoringList} ref={lastElement}>
           {filteredData.map((d, i) => {
             const activeStyle =
               d.side?.toLowerCase() === 'bid' || type === 'bids'
@@ -157,10 +161,10 @@ function Monitoring(props) {
                   return (
                     <>
                       <p className={priceStyle}>
-                        {numberWithCommas(d.price?.toFixed(2))}
+                        {numberWithCommas(d.price?.toFixed(4))}
                       </p>
                       <p className={amountStyle}>
-                        {numberWithCommas(d.amount?.toFixed(2) || 0)}
+                        {numberWithCommas(d.amount?.toFixed(4) || 0)}
                       </p>
                       <p className={classes.defaultListItemStyle}>
                         {moment(d.createdAt).format(TIME_FORMAT)}
@@ -168,14 +172,11 @@ function Monitoring(props) {
                     </>
                   );
                 default:
-                  const sum = filteredData.reduce(
-                    (acc, curr) => acc + curr.price,
-                    0
-                  );
+                  const max = Math.max(...filteredData.map((e) => e.total));
                   const red = 'rgba(216, 48, 112, 0.3)';
                   const green = 'rgba(125, 165, 50, 0.3)';
                   const barStyle = {
-                    width: `${(d.price / sum) * 100}%`,
+                    width: `${(d.total / max) * 100}%`,
                     backgroundColor: type === 'bids' ? green : red,
                   };
 
