@@ -17,10 +17,13 @@ const BidsAsksHistory = (props) => {
   const { items } = marketStateData;
 
     const [ lastPrice, setLastPrice ] = useState(0);
+    const [ isBid, setIsBid ] = useState(false);
+    const [ lastTrade, setLastTrade ] = useState({});
     const [ activeTrade, setActiveTrade ] = useState(false);
     const { SUBSCRIBE_API } = ENDPOINT_URL;
     const { LAST_PRICE } = SUBSCRIBE_API;
     const { ORDER_BOOK } = SUBSCRIBE_API;
+    const { TRADE_HISTORY } = SUBSCRIBE_API;
     // Subscribe to the bids/asks history
     // TODO: Better way to implement this locally/globally
     // Update after MAS
@@ -37,6 +40,22 @@ const BidsAsksHistory = (props) => {
             setLastPrice(data);
         });
     }, [id]);
+
+    useEffect(() => {
+        const socket = subscribeToSocket();
+        socket.emit(TRADE_HISTORY.emit, id);
+        socket.on(`${TRADE_HISTORY.on}/${id}`, data => {
+            setLastTrade(data.length ? data[0]: {});
+        });
+
+        return () => {
+            socket.off(`${TRADE_HISTORY.on}/${id}`);
+        };
+    }, [id]);
+
+    useEffect(() => {
+        setIsBid(lastPrice === lastTrade.price && lastTrade.side === "BID");
+    }, [lastPrice, lastTrade]);
     /*eslint-disable */
     const tradingItem = items.length && items.find(item => item._id === id);
     const bids = activeTrade ? activeTrade.bids : [];
@@ -58,7 +77,8 @@ const BidsAsksHistory = (props) => {
                 listingData={listingData}
                 data={bids}
                 lastPrice={lastPrice}
-                type="bids" 
+                isBid={isBid}
+                type="bids"
             />
         </React.Fragment>
     );

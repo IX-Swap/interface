@@ -5,6 +5,7 @@ import DsoInformation from 'components/Dso/DsoInformation';
 import PageTitle from 'components/PageTitle';
 import type { Document } from 'context/dso/types';
 import { snackbarService } from 'uno-material-ui';
+import storageHelper from 'services/storageHelper';
 import { useIssuanceState } from '../../modules';
 import { downloadFile, saveIssuance } from './modules/actions';
 
@@ -66,6 +67,7 @@ const DsoView = () => {
         action={action}
         headerButtonAction={action === 'edit' ? saveEdit : startEdit}
         headerButtonText={action === 'edit' ? 'Save' : 'Edit'}
+        headerButtonShown={dso && dso.createdBy === storageHelper.getUserId()}
         onClickDocument={onClickDocument}
       />
     </Container>
