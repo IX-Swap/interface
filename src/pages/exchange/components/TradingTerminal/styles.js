@@ -47,9 +47,9 @@ export default makeStyles((theme) => ({
   },
   price: {
     color: '#000',
-    fontSize: 14,
+    marginRight: '24px',
     fontWeight: 600,
-    textAlign: 'left',
+    textAlign: 'right',
   },
   positiveCell: {
     defaultListItemStyle,
@@ -57,7 +57,7 @@ export default makeStyles((theme) => ({
   },
   negativeCell: {
     ...defaultListItemStyle,
-    color: '#D83070',
+    color: '#b50000',
   },
   graphContainer: {
     height: 500,

@@ -72,19 +72,14 @@ function OverviewHeader (props) {
             <Grid
                 container
                 direction="column"
-                justify="center"
+                justify="flex-end"
                 item
                 xs={6}
             >
                 <Typography
-                    className={classes.priceTitle}
-                    variant="h3"
-                >
-                    Last Prices
-                </Typography>
-                <Typography
                     className={classes.price}
-                    variant="h6"
+                    variant="h4"
+                    align="right"
                 >
                     {data?.quote?.numberFormat?.currency} {numberWithCommas(lastPrice.toFixed(2))}
                 </Typography>

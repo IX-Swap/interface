@@ -5,10 +5,17 @@ import moment from 'moment';
 
 // Material Components
 import ArrowUpwardRoundedIcon from '@material-ui/icons/ArrowUpwardRounded';
+import ArrowDownwardRoundedIcon from '@material-ui/icons/ArrowDownwardRounded';
 import ArrowDropUpIcon from '@material-ui/icons/ArrowDropUp';
 import StarBorderIcon from '@material-ui/icons/StarBorder';
 import StarIcon from '@material-ui/icons/Star';
-import { Typography } from '@material-ui/core';
+import {
+  Typography,
+  ButtonGroup,
+  Button,
+  Tooltip,
+  IconButton,
+} from '@material-ui/core';
 
 // Local
 import { TIME_FORMAT } from 'config';
@@ -30,10 +37,13 @@ function Monitoring(props) {
   const classes = useStyles();
   const [fav, setFav] = useState(false);
   const [search, setSearch] = useState(false);
+  const [faveMarkets, setFaveMarkets] = useState(window.favMarkets || {});
+  const [availableQuotes, setAvailableQuotes] = useState([]);
+  const [quotesSelected, setQuotesSelected] = useState({});
   const { title, type, data = [], lastPrice } = props;
   const isAsksBids = props.type === 'asks' || props.type === 'bids';
 
-  const filteredData = search || data;
+  let filteredData = search || data;
   // handle on search function in the Trading Terminal
   const _onSearch = (evt) => {
     const { target } = evt;
@@ -49,6 +59,24 @@ function Monitoring(props) {
     } else {
       setSearch(data);
     }
+  };
+
+  const toggleSelected = (id) => {
+    const isSelected = !quotesSelected[id];
+    setQuotesSelected({
+      ...quotesSelected,
+      [id]: isSelected,
+    });
+
+  };
+
+  const toggleFavoriteMarket = (id) => {
+    const isSelected = !faveMarkets[id];
+    const newMarkets = {
+      ...faveMarkets,
+      [id]: isSelected,
+    };
+    setFaveMarkets(newMarkets);
   };
 
   let _handleStorePayload = () => {};
@@ -67,6 +95,27 @@ function Monitoring(props) {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [filteredData]);
 
+  useEffect(() => {
+    let mAvailableQuote = [];
+    const selected = {};
+    if (type === 'marketList') {
+      const seen = new Set();
+      mAvailableQuote = (props.data || []).filter((e) => {
+        const duplicate = seen.has(e.quote._id);
+        seen.add(e.quote._id);
+        selected[e.quote._id] = true;
+        return !duplicate;
+      });
+      setQuotesSelected(selected);
+      setAvailableQuotes(mAvailableQuote);
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
+  if (type === 'marketList' && fav) {
+    filteredData = filteredData.filter((e) => faveMarkets[e._id]);
+  }
+
   return (
     <>
       <section className={classes.monitoring}>
@@ -77,9 +126,19 @@ function Monitoring(props) {
         )}
         {type === 'bids' && (
           <section className={classes.bidsHeader}>
-            <Typography className={classes.maxBidsTitle} variant="h3">
+            <Typography
+              className={classes.maxBidsTitle}
+              variant="h3"
+              style={{
+                color: props.isBid ? '#047762' : '#b50000',
+              }}
+            >
               {lastPrice}
-              <ArrowUpwardRoundedIcon fontSize="small" />
+              {props.isBid ? (
+                <ArrowUpwardRoundedIcon fontSize="small" />
+              ) : (
+                <ArrowDownwardRoundedIcon fontSize="small" />
+              )}
             </Typography>
           </section>
         )}
@@ -95,16 +154,28 @@ function Monitoring(props) {
         {type === 'marketList' && (
           <>
             <div className={classes.actionContainer}>
-              <button onClick={() => setFav(!fav)}>
+              <IconButton onClick={() => setFav(!fav)}>
                 {fav ? (
                   <StarIcon fontSize="small" />
                 ) : (
                   <StarBorderIcon fontSize="small" />
                 )}
-              </button>
-              {/* TODO: Implementation of the Filter Buttons */}
-              <button className={classes.actionBtn}>SGD</button>
-              <button className={classes.actionBtn}>USD</button>
+              </IconButton>
+              <ButtonGroup
+                color="primary"
+                aria-label="outlined primary button group"
+              >
+                {availableQuotes.map((e) => (
+                  <Button
+                    key={e.quote._id}
+                    variant={quotesSelected[e.quote._id] ? 'contained' : ''}
+                    onClick={() => toggleSelected(e.quote._id)}
+                    style={{ boxShadow: 'none' }}
+                  >
+                    {e.quote.numberFormat.currency}
+                  </Button>
+                ))}
+              </ButtonGroup>
             </div>
             <div className={classes.searchContainer}>
               <input
@@ -142,20 +213,35 @@ function Monitoring(props) {
               switch (item) {
                 case 'marketList':
                   return (
-                    <Link
-                      style={{ width: '100%', justifyContent: 'flex-start' }}
-                      className={classes.marketLink}
-                      to={`/market-list/${d._id}`}
-                    >
-                      <p
+                    quotesSelected[d.quote._id] && (
+                      <Link
                         style={{ width: '100%', justifyContent: 'flex-start' }}
-                        className={classes.defaultListItemStyle}
-                        data-value={i}
+                        className={classes.marketLink}
+                        to={`/market-list/${d._id}`}
                       >
-                        <StarBorderIcon fontSize="small" />
-                        {d.name}
-                      </p>
-                    </Link>
+                        <p
+                          style={{
+                            width: '100%',
+                            justifyContent: 'flex-start',
+                          }}
+                          className={classes.defaultListItemStyle}
+                          data-value={i}
+                        >
+                          {faveMarkets[d._id] ? (
+                            <StarIcon
+                              fontSize="small"
+                              onClick={() => toggleFavoriteMarket(d._id)}
+                            />
+                          ) : (
+                            <StarBorderIcon
+                              fontSize="small"
+                              onClick={() => toggleFavoriteMarket(d._id)}
+                            />
+                          )}
+                          {d.name}
+                        </p>
+                      </Link>
+                    )
                   );
                 case 'tradeHistory':
                   return (
@@ -166,15 +252,22 @@ function Monitoring(props) {
                       <p className={amountStyle}>
                         {numberWithCommas(d.amount?.toFixed(4) || 0)}
                       </p>
-                      <p className={classes.defaultListItemStyle}>
-                        {moment(d.createdAt).format(TIME_FORMAT)}
-                      </p>
+                      <Tooltip
+                        title={`${moment(d.createdAt).fromNow()} (${
+                          d.createdAt
+                        })`}
+                        placement="top"
+                      >
+                        <p className={classes.defaultListItemStyle}>
+                          {moment(d.createdAt).format(TIME_FORMAT)}
+                        </p>
+                      </Tooltip>
                     </>
                   );
                 default:
                   const max = Math.max(...filteredData.map((e) => e.total));
-                  const red = 'rgba(216, 48, 112, 0.3)';
-                  const green = 'rgba(125, 165, 50, 0.3)';
+                  const green = 'rgba(4, 119, 98, .3)';
+                  const red = 'rgba(181, 0, 0, .3)';
                   const barStyle = {
                     width: `${(d.total / max) * 100}%`,
                     backgroundColor: type === 'bids' ? green : red,

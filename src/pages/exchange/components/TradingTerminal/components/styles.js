@@ -111,7 +111,7 @@ export default makeStyles((theme) => ({
   },
   maxBidsTitle: {
     ...bidsTitle,
-    color: '#7DA532',
+    color: '#047762',
     fontSize: 18,
   },
   minBidsTitle: {
@@ -150,11 +150,11 @@ export default makeStyles((theme) => ({
   },
   positiveCell: {
     defaultListItemStyle,
-    color: '#7DA532',
+    color: '#047762',
   },
   negativeCell: {
     ...defaultListItemStyle,
-    color: '#D83070',
+    color: '#b50000',
   },
   rightAlign: {
     justifyContent: 'flex-end',
@@ -197,6 +197,8 @@ export default makeStyles((theme) => ({
     border: '1px solid #d4d4d4',
     fontSize: 12,
     outline: 0,
+    width: '100%',
+    maxWidth: '300px',
   },
   formButton: {
     fontWeight: 600,
