@@ -1,6 +1,6 @@
 // @flow
 /* eslint-disable react/no-danger */
-import React, { useState, useRef } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import { useHistory } from 'react-router-dom';
 import {
   Paper,
@@ -11,7 +11,7 @@ import {
   ListItem,
 } from '@material-ui/core';
 import RemoveIcon from '@material-ui/icons/Remove';
-import { useForm } from 'react-hook-form';
+import { useForm, FormContext } from 'react-hook-form';
 
 import { assignWith, set } from 'lodash';
 
@@ -73,13 +73,22 @@ const useDsoLogic = (dso, action) => {
   const [subsTitle, setSubsTitle] = useState('');
   const [editableDso, setEditableDso] = useState(dso);
   const def = rteRefs.current.values ? rteRefs.current.values : editableDso;
-  const { register, getValues, setValue, reset, control } = useForm({
+  const methods = useForm({
     defaultValues: {
       ...def,
       launchDate: moment().format('MM/DD/yyyy'),
       currency: '',
     },
   });
+  const {
+    register,
+    getValues,
+    setValue,
+    reset,
+    control,
+    errors,
+    triggerValidation,
+  } = methods;
 
   const edit = ['edit', 'create'].includes(action);
 
@@ -270,6 +279,12 @@ const useDsoLogic = (dso, action) => {
     reset(values);
   };
 
+  useEffect(() => {
+    console.log(errors);
+  }, [errors]);
+
+  console.log('here', errors);
+
   return {
     setValue,
     editableDso,
@@ -287,7 +302,9 @@ const useDsoLogic = (dso, action) => {
     getFinalValues,
     onSubscriptionUpload,
     onDataroomDocumentUploaded,
+    triggerValidation,
     onRemoveDocument,
+    methods,
   };
 };
 
@@ -324,303 +341,315 @@ const DsoInformation = ({
     getFinalValues,
     onSubscriptionUpload,
     onDataroomDocumentUploaded,
+    triggerValidation,
     onLogoUpload,
     onRemoveDocument,
+    methods,
   } = useDsoLogic(dso || { ...baseDsoRequest }, action);
 
   return (
-    <Paper>
-      <form>
-        <Box p={4}>
-          <Grid container alignItems="center" justify="space-between">
-            <Grid item>
-              <DsoTitle
-                control={control}
-                edit={action === 'create'}
-                updatePreview={['edit', 'create'].includes(action)}
-                assets={assets}
-                ref={register}
-                issuerName={
-                  action === 'create' ? editableDso.issuerName : dso.issuerName
-                }
-                tokenSymbol={
-                  action === 'create'
-                    ? editableDso.tokenSymbol
-                    : dso.tokenSymbol
-                }
-                logo={(editableDso || {}).logo}
-                dsoId={(dso || {})._id}
-              >
-                {edit && (
-                  <Uploader
-                    document={{
-                      title: 'Token Logo',
-                      label: 'token-logo',
-                      type: 'tokenLogo',
-                    }}
-                    edit={edit}
-                    showTitle={false}
-                    onUpload={onLogoUpload}
-                  />
-                )}
-              </DsoTitle>
-            </Grid>
-
-            {headerButtonAction && headerButtonText && headerButtonShown && (
+    <FormContext {...methods}>
+      <Paper>
+        <form>
+          <Box p={4}>
+            <Grid container alignItems="center" justify="space-between">
               <Grid item>
-                <Button
-                  variant="contained"
-                  color="primary"
-                  onClick={() =>
-                    edit
-                      ? headerButtonAction((dso || {})._id, getFinalValues())
-                      : headerButtonAction()
-                  }
-                >
-                  {headerButtonText}
-                </Button>
-              </Grid>
-            )}
-          </Grid>
-          <Box mt={4}>
-            <Grid container spacing={4}>
-              <Grid item xs={8}>
-                <SectionContainer title="Introduction">
-                  {!edit && (
-                    <Typography paragraph>
-                      <span
-                        dangerouslySetInnerHTML={{ __html: dso.introduction }}
-                      />
-                    </Typography>
-                  )}
-                  {edit && (
-                    <RichEditor
-                      value={editableDso.introduction || 'Introduction'}
-                      ref={(ref) => registerRichText('introduction', ref)}
-                      save={(val) => {
-                        setRefValue('introduction', val);
-                      }}
-                    />
-                  )}
-                </SectionContainer>
-              </Grid>
-              <OfferDetails
-                dso={editableDso || {}}
-                ref={register}
-                edit={edit}
-              />
-            </Grid>
-          </Box>
-
-          <Box mt={4}>
-            <SectionContainer title="Subscription Document">
-              {['view', 'edit'].includes(action) &&
-                editableDso.subscriptionDocument && (
-                  <Button onClick={() => downloadFile(dso._id)}>
-                    Download
-                  </Button>
-                )}
-              {action === 'create' && (
-                <Uploader
-                  document={{
-                    title: subsTitle || 'Subscription Document',
-                    label: 'subscription-document',
-                    type: 'subscriptionDocument',
-                  }}
-                  disabled={!!editableDso.subscriptionDocument}
+                <DsoTitle
+                  control={control}
                   edit={action === 'create'}
-                  onUpload={onSubscriptionUpload}
-                />
-              )}
-            </SectionContainer>
-          </Box>
-
-          <Box mt={4}>
-            <OfferingTerms
-              dso={editableDso || {}}
-              edit={edit}
-              ref={register}
-              control={control}
-            />
-          </Box>
-          <Box mt={4}>
-            <SectionContainer title="Business Model">
-              {!edit && (
-                <Typography>
-                  <span
-                    dangerouslySetInnerHTML={{ __html: dso.businessModel }}
-                  />
-                </Typography>
-              )}
-              {edit && (
-                <RichEditor
-                  value={editableDso.businessModel || 'Business Model'}
-                  ref={(ref) => registerRichText('businessModel', ref)}
-                  save={(val) => {
-                    setRefValue('businessModel', val);
-                  }}
-                />
-              )}
-            </SectionContainer>
-          </Box>
-
-          <Box mt={4}>
-            <SectionContainer title="Token Address">
-              <Grid container item justify="space-between">
-                <Typography color="primary">
-                  {((dso || {}).deploymentInfo &&
-                    ((dso || {}).deploymentInfo || {}).token) ||
-                    '-'}
-                </Typography>
-                {isIssuer &&
-                  !(dso || {}).deploymentInfo &&
-                  (dso || {}).status === 'Approved' &&
-                  !edit && (
-                    <Button
-                      variant="contained"
-                      color="primary"
-                      onClick={() =>
-                        history.push(
-                          `/issuance/${dso.createdBy}/${dso._id}/deploy`
-                        )
-                      }
-                    >
-                      Deploy
-                    </Button>
-                  )}
-              </Grid>
-            </SectionContainer>
-          </Box>
-
-          <Box mt={4}>
-            <SectionContainer title="Use of Proceeds">
-              {!edit && (
-                <Typography>
-                  <span
-                    dangerouslySetInnerHTML={{ __html: dso.useOfProceeds }}
-                  />
-                </Typography>
-              )}
-              {edit && (
-                <RichEditor
-                  value={editableDso.useOfProceeds || 'Use of Proceeds'}
-                  ref={(ref) => registerRichText('useOfProceeds', ref)}
-                  save={(val) => {
-                    setRefValue('useOfProceeds', val);
-                  }}
-                />
-              )}
-            </SectionContainer>
-          </Box>
-
-          <Box mt={4}>
-            <Grid container spacing={4}>
-              <Grid item xs={6}>
-                <SectionContainer title="Dataroom">
-                  {(editableDso.documents || []).map((document, i) => (
-                    <ListItem
-                      style={{
-                        display: 'flex',
-                        justifyContent: 'space-between',
-                      }}
-                      key={i}
-                    >
-                      <Button
-                        key={document._id}
-                        onClick={() => onClickDocument(document)}
-                      >
-                        <Typography>{document.originalFileName}</Typography>
-                      </Button>
-                      {edit && (
-                        <Button>
-                          <RemoveIcon onClick={() => onRemoveDocument(i)} />
-                        </Button>
-                      )}
-                    </ListItem>
-                  ))}
-
+                  updatePreview={['edit', 'create'].includes(action)}
+                  assets={assets}
+                  ref={register}
+                  issuerName={
+                    action === 'create'
+                      ? editableDso.issuerName
+                      : dso.issuerName
+                  }
+                  tokenSymbol={
+                    action === 'create'
+                      ? editableDso.tokenSymbol
+                      : dso.tokenSymbol
+                  }
+                  logo={(editableDso || {}).logo}
+                  dsoId={(dso || {})._id}
+                >
                   {edit && (
                     <Uploader
                       document={{
-                        title: 'Dataroom Dso Document',
-                        label: 'dso-document',
-                        type: 'dsoDocument',
+                        title: 'Token Logo',
+                        label: 'token-logo',
+                        type: 'tokenLogo',
                       }}
                       edit={edit}
-                      onUpload={onDataroomDocumentUploaded}
+                      showTitle={false}
+                      onUpload={onLogoUpload}
                     />
                   )}
-                </SectionContainer>
+                </DsoTitle>
               </Grid>
-              <Grid item xs={6}>
-                <SectionContainer title="Fund Raising Milestone">
-                  {!edit && (
-                    <Typography>
-                      <span
-                        dangerouslySetInnerHTML={{
-                          __html: dso.fundraisingMilestone,
+
+              {headerButtonAction && headerButtonText && headerButtonShown && (
+                <Grid item>
+                  <Button
+                    variant="contained"
+                    color="primary"
+                    onClick={async () => {
+                      const valid = await triggerValidation();
+                      console.log('triggered validation', valid);
+                      if (edit && valid) {
+                        headerButtonAction((dso || {})._id, getFinalValues());
+                      }
+
+                      if (!edit) {
+                        headerButtonAction();
+                      }
+                    }}
+                  >
+                    {headerButtonText}
+                  </Button>
+                </Grid>
+              )}
+            </Grid>
+            <Box mt={4}>
+              <Grid container spacing={4}>
+                <Grid item xs={8}>
+                  <SectionContainer title="Introduction">
+                    {!edit && (
+                      <Typography paragraph>
+                        <span
+                          dangerouslySetInnerHTML={{ __html: dso.introduction }}
+                        />
+                      </Typography>
+                    )}
+                    {edit && (
+                      <RichEditor
+                        value={editableDso.introduction || 'Introduction'}
+                        ref={(ref) => registerRichText('introduction', ref)}
+                        save={(val) => {
+                          setRefValue('introduction', val);
                         }}
                       />
-                    </Typography>
-                  )}
-                  {edit && (
-                    <RichEditor
-                      value={
-                        editableDso.fundraisingMilestone ||
-                        'Fund raising Milestone'
-                      }
-                      ref={(ref) =>
-                        registerRichText('fundRaisingMilestone', ref)
-                      }
-                      save={(val) => {
-                        setRefValue('fundraisingMilestone', val);
-                      }}
-                    />
-                  )}
-                </SectionContainer>
-              </Grid>
-            </Grid>
-          </Box>
-
-          <Box mt={4}>
-            <SectionContainer title="Team">
-              {(editableDso.team || []).map((member, i) => (
-                <TeamMember
-                  dsoId={(dso || {})._id}
-                  index={i}
+                    )}
+                  </SectionContainer>
+                </Grid>
+                <OfferDetails
+                  dso={editableDso || {}}
+                  ref={register}
                   edit={edit}
-                  setValue={setValue}
-                  member={member}
-                  key={member._id || i}
-                  remove={() => onRemove(i)}
-                  ref={(ref) => {
-                    if (ref && ref.save) {
-                      registerRichText(`team[${i}]`, ref);
-                      return;
-                    }
-
-                    if (ref) {
-                      register(ref);
-                    }
-                  }}
-                  save={(val) => {
-                    setRefValue(`team[${i}].about`, val);
-                  }}
                 />
-              ))}
+              </Grid>
+            </Box>
 
-              {edit && (
-                <Box style={{ textAlign: 'right' }}>
-                  <Button onClick={() => addMember()}>
-                    <AddIcon /> Add
-                  </Button>
-                </Box>
-              )}
-            </SectionContainer>
+            <Box mt={4}>
+              <SectionContainer title="Subscription Document">
+                {['view', 'edit'].includes(action) &&
+                  editableDso.subscriptionDocument && (
+                    <Button onClick={() => downloadFile(dso._id)}>
+                      Download
+                    </Button>
+                  )}
+                {action === 'create' && (
+                  <Uploader
+                    document={{
+                      title: subsTitle || 'Subscription Document',
+                      label: 'subscription-document',
+                      type: 'subscriptionDocument',
+                    }}
+                    disabled={!!editableDso.subscriptionDocument}
+                    edit={action === 'create'}
+                    onUpload={onSubscriptionUpload}
+                  />
+                )}
+              </SectionContainer>
+            </Box>
+
+            <Box mt={4}>
+              <OfferingTerms
+                dso={editableDso || {}}
+                edit={edit}
+                ref={register}
+                control={control}
+              />
+            </Box>
+            <Box mt={4}>
+              <SectionContainer title="Business Model">
+                {!edit && (
+                  <Typography>
+                    <span
+                      dangerouslySetInnerHTML={{ __html: dso.businessModel }}
+                    />
+                  </Typography>
+                )}
+                {edit && (
+                  <RichEditor
+                    value={editableDso.businessModel || 'Business Model'}
+                    ref={(ref) => registerRichText('businessModel', ref)}
+                    save={(val) => {
+                      setRefValue('businessModel', val);
+                    }}
+                  />
+                )}
+              </SectionContainer>
+            </Box>
+
+            <Box mt={4}>
+              <SectionContainer title="Token Address">
+                <Grid container item justify="space-between">
+                  <Typography color="primary">
+                    {((dso || {}).deploymentInfo &&
+                      ((dso || {}).deploymentInfo || {}).token) ||
+                      '-'}
+                  </Typography>
+                  {isIssuer &&
+                    !(dso || {}).deploymentInfo &&
+                    (dso || {}).status === 'Approved' &&
+                    !edit && (
+                      <Button
+                        variant="contained"
+                        color="primary"
+                        onClick={() =>
+                          history.push(
+                            `/issuance/${dso.createdBy}/${dso._id}/deploy`
+                          )
+                        }
+                      >
+                        Deploy
+                      </Button>
+                    )}
+                </Grid>
+              </SectionContainer>
+            </Box>
+
+            <Box mt={4}>
+              <SectionContainer title="Use of Proceeds">
+                {!edit && (
+                  <Typography>
+                    <span
+                      dangerouslySetInnerHTML={{ __html: dso.useOfProceeds }}
+                    />
+                  </Typography>
+                )}
+                {edit && (
+                  <RichEditor
+                    value={editableDso.useOfProceeds || 'Use of Proceeds'}
+                    ref={(ref) => registerRichText('useOfProceeds', ref)}
+                    save={(val) => {
+                      setRefValue('useOfProceeds', val);
+                    }}
+                  />
+                )}
+              </SectionContainer>
+            </Box>
+
+            <Box mt={4}>
+              <Grid container spacing={4}>
+                <Grid item xs={6}>
+                  <SectionContainer title="Dataroom">
+                    {(editableDso.documents || []).map((document, i) => (
+                      <ListItem
+                        style={{
+                          display: 'flex',
+                          justifyContent: 'space-between',
+                        }}
+                        key={i}
+                      >
+                        <Button
+                          key={document._id}
+                          onClick={() => onClickDocument(document)}
+                        >
+                          <Typography>{document.originalFileName}</Typography>
+                        </Button>
+                        {edit && (
+                          <Button>
+                            <RemoveIcon onClick={() => onRemoveDocument(i)} />
+                          </Button>
+                        )}
+                      </ListItem>
+                    ))}
+
+                    {edit && (
+                      <Uploader
+                        document={{
+                          title: 'Dataroom Dso Document',
+                          label: 'dso-document',
+                          type: 'dsoDocument',
+                        }}
+                        edit={edit}
+                        onUpload={onDataroomDocumentUploaded}
+                      />
+                    )}
+                  </SectionContainer>
+                </Grid>
+                <Grid item xs={6}>
+                  <SectionContainer title="Fund Raising Milestone">
+                    {!edit && (
+                      <Typography>
+                        <span
+                          dangerouslySetInnerHTML={{
+                            __html: dso.fundraisingMilestone,
+                          }}
+                        />
+                      </Typography>
+                    )}
+                    {edit && (
+                      <RichEditor
+                        value={
+                          editableDso.fundraisingMilestone ||
+                          'Fund raising Milestone'
+                        }
+                        ref={(ref) =>
+                          registerRichText('fundRaisingMilestone', ref)
+                        }
+                        save={(val) => {
+                          setRefValue('fundraisingMilestone', val);
+                        }}
+                      />
+                    )}
+                  </SectionContainer>
+                </Grid>
+              </Grid>
+            </Box>
+
+            <Box mt={4}>
+              <SectionContainer title="Team">
+                {(editableDso.team || []).map((member, i) => (
+                  <TeamMember
+                    dsoId={(dso || {})._id}
+                    index={i}
+                    edit={edit}
+                    setValue={setValue}
+                    member={member}
+                    key={member._id || i}
+                    remove={() => onRemove(i)}
+                    ref={(ref) => {
+                      if (ref && ref.save) {
+                        registerRichText(`team[${i}]`, ref);
+                        return;
+                      }
+
+                      if (ref) {
+                        register(ref);
+                      }
+                    }}
+                    save={(val) => {
+                      setRefValue(`team[${i}].about`, val);
+                    }}
+                  />
+                ))}
+
+                {edit && (
+                  <Box style={{ textAlign: 'right' }}>
+                    <Button onClick={() => addMember()}>
+                      <AddIcon /> Add
+                    </Button>
+                  </Box>
+                )}
+              </SectionContainer>
+            </Box>
           </Box>
-        </Box>
-      </form>
-    </Paper>
+        </form>
+      </Paper>
+    </FormContext>
   );
 };
 

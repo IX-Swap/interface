@@ -45,7 +45,11 @@ const DsoView = () => {
       }
     });
     const isGood = await saveIssuance(id, payload);
-    const sData = { type: 'error', message: 'Failed to save digital security' };
+    const sData = {
+      type: 'error',
+      message:
+        'Failed to save digital security, please check if you have uploaded a logo and subscription document',
+    };
     if (isGood) {
       sData.type = 'success';
       sData.message = 'Successfully saved digital security';

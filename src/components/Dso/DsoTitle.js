@@ -10,7 +10,7 @@ import {
   FormControl,
   InputLabel,
 } from '@material-ui/core';
-import { Controller } from 'react-hook-form';
+import { Controller, useFormContext } from 'react-hook-form';
 import {
   KeyboardDatePicker,
   MuiPickersUtilsProvider,
@@ -24,7 +24,7 @@ const DsoTitle = (
     tokenSymbol,
     issuerName,
     edit = false,
-    control,
+    control: a,
     assets = [],
     children = undefined,
     updatePreview = false,
@@ -44,6 +44,7 @@ const DsoTitle = (
   ref: any
 ) => {
   const classesE = useEditableStyles();
+  const { errors = {}, control } = useFormContext() || {};
 
   return (
     <Grid container alignItems="center">
@@ -66,7 +67,8 @@ const DsoTitle = (
               label="Token Name"
               margin="normal"
               name="tokenName"
-              inputRef={ref}
+              error={errors.tokenName}
+              inputRef={ref({ required: true })}
               InputLabelProps={{
                 className: classesE.largeInputLabel,
               }}
@@ -78,7 +80,8 @@ const DsoTitle = (
               label="Symbol"
               margin="normal"
               name="tokenSymbol"
-              inputRef={ref}
+              error={errors.tokenSymbol}
+              inputRef={ref({ required: true })}
               className={classesE.tokenSymbol}
               InputLabelProps={{
                 className: classesE.largeInputLabel,
@@ -119,19 +122,26 @@ const DsoTitle = (
           </Grid>
           <Grid item style={{ display: 'flex', flexDirection: 'row' }}>
             <TextField
-              inputRef={ref}
+              inputRef={ref({ required: true })}
               name="issuerName"
+              error={errors.issuerName}
               label="Issuer Name"
               margin="normal"
               style={{ flexGrow: 1 }}
             />
-            <FormControl className={classesE.currency} margin="normal">
+            <FormControl
+              className={classesE.currency}
+              margin="normal"
+              error={errors.currency}
+            >
               <InputLabel id="currency-selector-input">Currency</InputLabel>
               <Controller
+                error={errors.currency}
                 as={
                   <Select
                     inputRef={ref}
                     name="currency"
+                    error={errors.currency}
                     inputProps={{
                       name: 'currency',
                     }}
@@ -144,6 +154,7 @@ const DsoTitle = (
                   </Select>
                 }
                 name="currency"
+                rules={{ required: 'this field is required' }}
                 control={control}
               />
             </FormControl>

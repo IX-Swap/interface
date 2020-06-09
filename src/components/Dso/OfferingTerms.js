@@ -7,17 +7,18 @@ import {
   MenuItem,
 } from '@material-ui/core';
 import type { Dso } from 'context/dso/types';
-import { Controller } from 'react-hook-form';
+import { Controller, useFormContext } from 'react-hook-form';
 import { toPercentage } from 'helpers/formatNumbers';
 import SectionContainer from './SectionContianer';
 
-const getOfferingTermComponent = (name, ref, control) => {
+const getOfferingTermComponent = (name, ref, control, error) => {
   switch (name) {
     case 'distributionFrequency':
       return (
         <Controller
           as={
             <Select
+              error={error}
               inputRef={ref}
               name={name}
               inputProps={{
@@ -32,11 +33,12 @@ const getOfferingTermComponent = (name, ref, control) => {
             </Select>
           }
           name={name}
+          rules={{ required: 'this field is required' }}
           control={control}
         />
       );
     default:
-      return <TextField name={name || ''} inputRef={ref} />;
+      return <TextField name={name || ''} inputRef={ref} error={error} />;
   }
 };
 
@@ -56,24 +58,25 @@ const OfferingTermItem = React.forwardRef(
       value: string,
     },
     ref: any
-  ) => (
-    <Grid container item xs={4} spacing={2}>
-      <Grid item xs={6}>
-        <Typography>{label}:</Typography>
+  ) => {
+    const { errors } = useFormContext();
+    return (
+      <Grid container item xs={4} spacing={2}>
+        <Grid item xs={6}>
+          <Typography>{label}:</Typography>
+        </Grid>
+        <Grid item xs={6}>
+          {!edit && <Typography>{value}</Typography>}
+          {edit && getOfferingTermComponent(name, ref, control, errors[name])}
+        </Grid>
       </Grid>
-      <Grid item xs={6}>
-        {!edit && <Typography>{value}</Typography>}
-        {edit && getOfferingTermComponent(name, ref, control)}
-      </Grid>
-    </Grid>
-  )
+    );
+  }
 );
 
 OfferingTermItem.displayName = 'OfferingTermItem';
 
-const isNa = (val: any) => {
-  return (val || '').toString().trim() === '';
-};
+const isNa = (val: any) => (val || '').toString().trim() === '';
 
 const OfferingTerms = (
   { edit, dso, control }: { edit: boolean, dso: Dso, control: any },
@@ -122,7 +125,7 @@ const OfferingTerms = (
       />
       <OfferingTermItem
         name="distributionFrequency"
-        ref={ref}
+        ref={ref({ required: true })}
         label="Distribution Frequency"
         edit={edit}
         control={control}
