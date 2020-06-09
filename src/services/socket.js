@@ -45,7 +45,7 @@ export const _subscribeToSocket = (): Promise<any> =>
   });
 
 export const subscribeToSocket = () => {
-  if (!socket.connected) {
+  if (socket && !socket.connected) {
     const bearerToken = localStore.getAccessToken();
     socket = io(`${API_URL}?token=${bearerToken}`);
   }

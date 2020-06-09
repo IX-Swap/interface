@@ -126,6 +126,14 @@ const IndividualIdentityForm = ({
             label="Bank Account Number"
             value={identity.bankAccountNumber}
           />
+          <IdentityField
+            editMode={editMode}
+            name="toArrangeCustody"
+            label="To Arrange Custody"
+            type="check"
+            size={12}
+            value={identity.toArrangeCustody}
+          />
         </IdentitySection>
 
         <IdentitySection title="Documents">

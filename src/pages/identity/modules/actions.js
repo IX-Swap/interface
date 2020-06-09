@@ -8,6 +8,7 @@ import {
   deleteRequest,
 } from 'services/httpRequests';
 import localStore from 'services/storageHelper';
+import { snackbarService } from 'uno-material-ui';
 import { actions } from './types';
 import type { Identity } from './types';
 import declarationTemplate from '../data/declarations';
@@ -142,19 +143,21 @@ const createIndividualIdentity = async ({
   const userId = localStore.getUserId();
 
   const profileUri = `/identity/individuals/${userId}`;
-  const profileResult = await putRequest(profileUri, initialPayload);
+  const profileResult = await putRequest(profileUri, {
+    ...initialPayload,
+    ...financialPayload,
+  });
 
-  const financialsUri = `/identity/individuals/${userId}/financials`;
-  const financialsResult = await putRequest(financialsUri, financialPayload);
-
-  if (profileResult && financialsResult) {
-    const response = await financialsResult.json();
-    const payload = response.data;
-    const mDeclarations = formatDeclarations(
-      payload.declarations,
-      'individual'
-    );
-    return { ...payload, declarations: mDeclarations };
+  if (profileResult) {
+    if (profileResult.status === 200) {
+      const response = await profileResult.json();
+      const payload = response.data;
+      const mDeclarations = formatDeclarations(
+        payload.declarations,
+        'individual'
+      );
+      return { ...payload, declarations: mDeclarations };
+    }
   }
 
   throw new Error('Creating profile failed.');
@@ -197,6 +200,7 @@ export const createIdentity = async (
     middleName,
     lastName,
     dob,
+    toArrangeCustody,
     gender,
     nationality,
     countryOfResidence,
@@ -258,6 +262,7 @@ export const createIdentity = async (
       houseHoldIncome,
       sourceOfWealth,
       politicallyExposed,
+      toArrangeCustody,
     };
 
     try {
@@ -278,7 +283,7 @@ export const createIdentity = async (
     } catch (err) {
       const errMsg = err.message || err.toString() || 'Saving profile failed.';
       dispatch({ type: actions.CREATE_IDENTITY_FAILURE, payload: errMsg });
-      throw new Error(errMsg);
+      snackbarService.showSnackbar(err.toString(), 'error');
     }
   } else if (type === 'corporate') {
     try {

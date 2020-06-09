@@ -84,6 +84,7 @@ export type IndentityFinancials = {
   occupation: string,
   politicallyExposed: boolean,
   sourceOfWealth: string,
+  toArrangeCustody: boolean,
 };
 
 export type Document = {

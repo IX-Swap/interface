@@ -8,6 +8,8 @@ import {
   Select,
   FormControl,
   InputLabel,
+  Checkbox,
+  FormControlLabel,
 } from '@material-ui/core';
 import { makeStyles } from '@material-ui/styles';
 import { useFormContext, Controller } from 'react-hook-form';
@@ -27,10 +29,10 @@ const useStyles = makeStyles(() => ({
 
 type IdentityFieldProps = {
   label: string,
-  value?: string,
+  value?: string | boolean,
   size?: number,
   name: string,
-  type?: 'text' | 'select' | 'date',
+  type?: 'text' | 'select' | 'date' | 'check',
   children?: Node,
   required?: boolean,
   editMode: boolean,
@@ -76,6 +78,23 @@ const IdentityField = ({
         );
         break;
 
+      case 'check':
+        inputComponent = (
+          <FormControlLabel
+            label={label}
+            control={
+              <Controller
+                as={Checkbox}
+                name={name}
+                type="checkbox"
+                control={control}
+                defaultValue={value || false}
+              />
+            }
+          />
+        );
+        break;
+
       case 'text':
       case 'date':
       default:
@@ -99,10 +118,19 @@ const IdentityField = ({
     );
   }
 
+  const getValueDisplay = (mType, mValue) => {
+    let val = mValue || '-';
+    if (mType === 'check') {
+      val = mValue ? 'Yes' : 'No';
+    }
+
+    return val;
+  };
+
   return (
     <Grid item xs={size}>
       <Typography className={classes.fieldLabel}>{label}</Typography>
-      <Typography>{value || '-'}</Typography>
+      <Typography>{getValueDisplay(type, value)}</Typography>
     </Grid>
   );
 };

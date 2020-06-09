@@ -586,7 +586,7 @@ const DsoInformation = ({
             <SectionContainer title="Team">
               {(editableDso.team || []).map((member, i) => (
                 <TeamMember
-                  dsoId={dso._id}
+                  dsoId={(dso || {})._id}
                   index={i}
                   edit={edit}
                   setValue={setValue}
