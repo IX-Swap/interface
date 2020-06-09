@@ -19,12 +19,16 @@ const CommitmentListItem = ({
     totalAmount,
     numberOfUnits,
     currency,
+    status,
   } = commitment;
+
+  console.log(commitment);
 
   return (
     <TableRow>
       <TableCell>Individual</TableCell>
       <TableCell>{moment(createdAt).format('MM/DD/YYYY')}</TableCell>
+      <TableCell>{status}</TableCell>
       <TableCell>{`${individual.firstName} ${individual.lastName}`}</TableCell>
       <TableCell>{dso.issuerName}</TableCell>
       <TableCell>{dso.tokenName}</TableCell>

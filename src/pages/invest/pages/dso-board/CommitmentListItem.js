@@ -2,23 +2,13 @@
 import React from 'react';
 import { useHistory } from 'react-router-dom';
 import { TableRow, TableCell, Button } from '@material-ui/core';
-import { makeStyles } from '@material-ui/styles';
 import { formatMoney, formatNumber } from 'helpers/formatNumbers';
+import DsoImage from 'components/Dso/DsoImage';
 import { Commitment } from './modules/types';
 import { useInvestDispatch } from '../../modules';
 import { setSelectedCommitment } from '../../modules/actions';
 
-const useStyles = makeStyles(() => ({
-  logo: {
-    height: '42px',
-    width: '42px',
-    borderRadius: '42px',
-    backgroundColor: '#eaeaea',
-  },
-}));
-
 const CommitmentListItem = ({ commitment }: { commitment: Commitment }) => {
-  const classes = useStyles();
   const dispatch = useInvestDispatch();
   const history = useHistory();
   const { dso, pricePerUnit, totalAmount, numberOfUnits, status } = commitment;
@@ -33,7 +23,7 @@ const CommitmentListItem = ({ commitment }: { commitment: Commitment }) => {
   return (
     <TableRow>
       <TableCell>
-        <div className={classes.logo} />
+        <DsoImage dsoId={(dso || {})._id} />
       </TableCell>
       <TableCell>{dso.tokenSymbol}</TableCell>
       <TableCell>{formatMoney(pricePerUnit)}</TableCell>

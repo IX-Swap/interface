@@ -272,9 +272,12 @@ export default function DigitalSecurities({ match }: RouteProps) {
         <Grid item>
           <Button
             disabled={
+              !dsState.selectedCoin ||
               !transferDetails.amount ||
               !transferDetails.memo ||
-              !transferDetails.recipientWallet
+              !transferDetails.recipientWallet ||
+              parseFloat(transferDetails.amount) >
+                dsState.selectedCoin.available
             }
             variant="contained"
             color="primary"

@@ -1,4 +1,5 @@
 // @flow
+/* eslint-disable react-hooks/exhaustive-deps */
 import React, { useState, useEffect } from 'react';
 import {
   Container,
@@ -61,7 +62,9 @@ const CommitmentItem = ({
   const [saving, setSaving] = useState(false);
   const [balance, setBalance] = useState(null);
   const [estimatedValue, setEstimatedValue] = useState(0);
-  const [numberOfUnits, setNumberOfUnits] = useState(0);
+  const [numberOfUnits, setNumberOfUnits] = useState(
+    commitment && commitment.numberOfUnits ? commitment.numberOfUnits : 0
+  );
   const [subscriptionDocument, setSubscriptionDocument] = useState(null);
   const { editMode } = useInvestState();
 
@@ -162,6 +165,10 @@ const CommitmentItem = ({
   useEffect(() => {
     setEstimatedValue(numberOfUnits * dso.pricePerUnit);
   }, [numberOfUnits, dso]);
+
+  useEffect(() => {
+    setEstimatedValue(numberOfUnits * dso.pricePerUnit);
+  }, []);
 
   return (
     <Container>

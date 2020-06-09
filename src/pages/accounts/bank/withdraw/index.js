@@ -103,7 +103,13 @@ function BankWithdrawComponent() {
   let toRender = null;
 
   if (bank) {
-    toRender = <BankWithdrawForm bank={bank} withdraw={withdraw} />;
+    toRender = (
+      <BankWithdrawForm
+        bank={bank}
+        withdraw={withdraw}
+        available={availableBalance}
+      />
+    );
     if (isConfirmation) {
       toRender = (
         <WithdrawConfirmation memo={memo} bank={bank} amount={amount} />

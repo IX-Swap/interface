@@ -114,6 +114,9 @@ const CommitmentsList = ({ onClickView }: { onClickView: Function }) => {
                 <b>Date of Commitment</b>
               </TableCell>
               <TableCell>
+                <b>Status</b>
+              </TableCell>
+              <TableCell>
                 <b>Name</b>
               </TableCell>
               <TableCell>

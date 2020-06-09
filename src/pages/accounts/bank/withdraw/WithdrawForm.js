@@ -61,7 +61,9 @@ const useBankWithdrawLogic = () => {
 function BankWithdrawForm({
   bank,
   withdraw,
+  available,
 }: {
+  available: number,
   bank: Bank,
   withdraw: (amount: number, memo: string) => void,
 }) {
@@ -117,7 +119,7 @@ function BankWithdrawForm({
           <Grid container justify="center">
             <Box mb={4}>
               <Button
-                disabled={!amount}
+                disabled={!amount || amount > available}
                 variant="contained"
                 color="primary"
                 onClick={() => withdraw(parseFloat(amount), memo)}
