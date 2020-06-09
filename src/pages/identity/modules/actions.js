@@ -158,6 +158,9 @@ const createIndividualIdentity = async ({
       );
       return { ...payload, declarations: mDeclarations };
     }
+
+    const x = await profileResult.json();
+    throw new Error(x.message);
   }
 
   throw new Error('Creating profile failed.');
