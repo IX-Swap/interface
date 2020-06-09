@@ -1,9 +1,10 @@
 // @flow
-import React from 'react';
+import React, { useEffect } from 'react';
 import { forOwn } from 'lodash';
 import { useForm, FormContext } from 'react-hook-form';
 import { Button, Grid, MenuItem } from '@material-ui/core';
 import { COUNTRIES_OPTS } from 'const/const';
+import { snackbarService } from 'uno-material-ui';
 import ArrayForm from 'pages/identity/components/ArrayForm';
 import IdentitySection from '../../components/IdentitySection';
 import IdentityField from '../../components/IdentityField';
@@ -29,7 +30,7 @@ const CorporateIdentityForm = ({
 }) => {
   const methods = useForm();
 
-  const { handleSubmit } = methods;
+  const { handleSubmit, errors } = methods;
 
   const onSubmit = (data: any) => {
     const formattedDeclarations = [];
@@ -45,6 +46,15 @@ const CorporateIdentityForm = ({
       });
     }
   };
+
+  useEffect(() => {
+    if (Object.keys(errors).length) {
+      snackbarService.showSnackbar(
+        'Make sure all fields are filled out and declarations are checked',
+        'error'
+      );
+    }
+  }, [errors]);
 
   return (
     // eslint-disable-next-line react/jsx-props-no-spreading
