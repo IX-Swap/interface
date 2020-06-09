@@ -219,7 +219,7 @@ export const createIdentity = async (
     houseHoldIncome,
     sourceOfWealth,
     politicallyExposed,
-    // walletAddress,
+    walletAddress,
     // Corporate Fields
     companyLegalName,
     registrationNumber,
@@ -247,7 +247,7 @@ export const createIdentity = async (
       address,
       dob: moment(dob).format('YYYY-MM-DDTmm:hh:ss'),
       declarations,
-      walletAddress: '0x65356f2ab79dac8a0a930c18a83b214ef9fca6a7', // TODO
+      walletAddress,
     };
 
     const financialPayload = {
@@ -290,6 +290,7 @@ export const createIdentity = async (
       const createdIdentity = await createCorporateIdentity(
         {
           companyLegalName,
+          toArrangeCustody,
           registrationNumber,
           countryOfFormation,
           dateOfIncorporation,
@@ -299,7 +300,7 @@ export const createIdentity = async (
           beneficialOwners,
           documents,
           declarations,
-          walletAddress: '0x65356f2ab79dac8a0a930c18a83b214ef9fca6a7', // TODO
+          walletAddress,
         },
         id
       );
@@ -316,7 +317,7 @@ export const createIdentity = async (
     } catch (err) {
       const errMsg = err.message || err.toString() || 'Saving profile failed.';
       dispatch({ type: actions.CREATE_IDENTITY_FAILURE, payload: errMsg });
-      throw new Error(errMsg);
+      snackbarService.showSnackbar(err.toString(), 'error');
     }
   }
 };

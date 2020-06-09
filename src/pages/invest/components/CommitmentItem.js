@@ -160,10 +160,8 @@ const CommitmentItem = ({
   }, [dso, watch]);
 
   useEffect(() => {
-    if (commitment) {
-      setEstimatedValue(commitment.numberOfUnits * dso.pricePerUnit);
-    }
-  }, [commitment, dso]);
+    setEstimatedValue(numberOfUnits * dso.pricePerUnit);
+  }, [numberOfUnits, dso]);
 
   return (
     <Container>
@@ -171,6 +169,7 @@ const CommitmentItem = ({
         <Grid container>
           <Grid item xs={6}>
             <DsoTitle
+              dsoId={dso._id}
               issuerName={dso.issuerName}
               tokenSymbol={dso.tokenSymbol}
             />

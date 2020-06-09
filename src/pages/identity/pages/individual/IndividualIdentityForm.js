@@ -86,8 +86,7 @@ const IndividualIdentityForm = ({
             name="walletAddress"
             label="Digital Wallet Address"
             value={
-              identity.walletAddress ||
-              '0x65356f2ab79dac8a0a930c18a83b214ef9fca6a7' // temporary
+              identity.walletAddress || ''
             }
           />
           <IdentityField
@@ -129,7 +128,7 @@ const IndividualIdentityForm = ({
           <IdentityField
             editMode={editMode}
             name="toArrangeCustody"
-            label="To Arrange Custody"
+            label="I would like InvestaX to arrange digital security custody"
             type="check"
             size={12}
             value={identity.toArrangeCustody}

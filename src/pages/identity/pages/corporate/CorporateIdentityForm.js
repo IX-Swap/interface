@@ -106,6 +106,15 @@ const CorporateIdentityForm = ({
             data={corporate.representatives}
             rootName="representatives"
           />
+
+          <IdentityField
+            editMode={editMode}
+            name="toArrangeCustody"
+            label="I would like InvestaX to arrange digital security custody"
+            type="check"
+            size={12}
+            value={corporate.toArrangeCustody}
+          />
         </IdentitySection>
 
         <IdentitySection title="Director">

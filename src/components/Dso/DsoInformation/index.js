@@ -337,7 +337,7 @@ const DsoInformation = ({
               <DsoTitle
                 control={control}
                 edit={action === 'create'}
-                updatePreview={action === 'edit'}
+                updatePreview={['edit', 'create'].includes(action)}
                 assets={assets}
                 ref={register}
                 issuerName={

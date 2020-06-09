@@ -11,6 +11,7 @@ import {
   Checkbox,
   FormControlLabel,
 } from '@material-ui/core';
+import moment from 'moment';
 import { makeStyles } from '@material-ui/styles';
 import { useFormContext, Controller } from 'react-hook-form';
 
@@ -50,6 +51,11 @@ const IdentityField = ({
 }: IdentityFieldProps) => {
   const classes = useStyles();
   const { control, register } = useFormContext();
+  let lValue = value;
+
+  if (type === 'date') {
+    lValue = moment(value).format('yyyy-MM-DD');
+  }
 
   if (editMode) {
     let inputComponent;
@@ -105,7 +111,7 @@ const IdentityField = ({
             inputRef={register({ required })}
             placeholder={label}
             className={classes.textField}
-            defaultValue={value || ''}
+            defaultValue={lValue || ''}
           />
         );
         break;

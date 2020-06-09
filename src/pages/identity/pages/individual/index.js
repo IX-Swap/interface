@@ -11,6 +11,7 @@ const IndividualIdentity = () => {
   const identityDispatch = useIdentityDispatch();
 
   const handleOnCreate = (data: any) => {
+    console.log('handlecreat');
     createIdentity(identityDispatch, data, 'individual');
   };
 
