@@ -90,6 +90,12 @@ const CorporateIdentityForm = ({
             type="date"
             editMode={editMode}
           />
+          <IdentityField
+            editMode={editMode}
+            name="walletAddress"
+            label="Digital Wallet Address"
+            value={corporate.walletAddress || ''}
+          />
         </IdentitySection>
 
         <IdentitySection title="Company Address">

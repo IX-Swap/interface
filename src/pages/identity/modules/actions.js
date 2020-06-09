@@ -179,12 +179,20 @@ const createCorporateIdentity = async (corporatePayload: any, id?: string) => {
   }
 
   if (result) {
-    const response = await result.json();
+    if (result.status === 200) {
+      const response = await result.json();
 
-    const payload = response.data;
-    const mDeclarations = formatDeclarations(payload.declarations, 'corporate');
-    console.log(mDeclarations);
-    return { ...payload, declarations: mDeclarations };
+      const payload = response.data;
+      const mDeclarations = formatDeclarations(
+        payload.declarations,
+        'corporate'
+      );
+      console.log(mDeclarations);
+      return { ...payload, declarations: mDeclarations };
+    }
+
+    const x = await result.json();
+    throw new Error(x.message);
   }
 
   throw new Error('Creating profile failed.');
