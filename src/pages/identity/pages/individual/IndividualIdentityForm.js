@@ -85,9 +85,7 @@ const IndividualIdentityForm = ({
             editMode={editMode}
             name="walletAddress"
             label="Digital Wallet Address"
-            value={
-              identity.walletAddress || ''
-            }
+            value={identity.walletAddress || ''}
           />
           <IdentityField
             editMode={editMode}

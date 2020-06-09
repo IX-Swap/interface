@@ -21,10 +21,10 @@ const toggleWithdrawStatus = async (dso: Dso, newStatus: string) => {
 };
 
 // TODO: Move to another place for reusability
-const downloadFile = async (document: Document) => {
-  const { user, _id } = document;
+const downloadFile = async (dsoId: string, document: Document) => {
+  const { _id } = document;
 
-  const uri = `/dataroom/raw/${user}/${_id}`;
+  const uri = `/issuance/dso/dataroom/documents/raw/${dsoId}/${_id}`;
   const result = await getRequest(uri);
 
   if (result.status === 200) {
