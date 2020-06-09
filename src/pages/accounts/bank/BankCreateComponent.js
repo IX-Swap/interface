@@ -139,6 +139,7 @@ const BankCreateComponent = ({
   setIsConfirmation,
   setBank,
 }: any) => {
+  const [isValidForm, setIsValidForm] = useState(false);
   const handleClickSubmit = () => {
     setIsConfirmation(true);
   };
@@ -148,8 +149,9 @@ const BankCreateComponent = ({
   };
 
   const onChange = useCallback(
-    (mBank: BankRequest) => {
+    (mBank: BankRequest, result: boolean) => {
       setBank(mBank);
+      setIsValidForm(result);
     },
     [setBank]
   );
@@ -186,6 +188,7 @@ const BankCreateComponent = ({
                 disableElevation
                 variant="contained"
                 color="primary"
+                disabled={!isValidForm}
                 onClick={handleClickSubmit}
               >
                 Add Bank Account

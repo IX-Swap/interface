@@ -1,8 +1,9 @@
 // @flow
-import React from 'react';
+import React, { useEffect } from 'react';
 import { forOwn } from 'lodash';
 import { useForm, FormContext } from 'react-hook-form';
 import { Button, Grid } from '@material-ui/core';
+import { snackbarService } from 'uno-material-ui';
 import IdentitySection from '../../components/IdentitySection';
 import IdentityField from '../../components/IdentityField';
 import IdentityForm from '../../components/IdentityForm';
@@ -27,9 +28,11 @@ const IndividualIdentityForm = ({
   onCancelEdit?: Function,
 }) => {
   const methods = useForm();
-  const { handleSubmit } = methods;
+  const { handleSubmit, errors } = methods;
 
   const onSubmit = (data: any) => {
+    console.log('joketime');
+    console.log('here', data);
     const formattedDeclarations = [];
     forOwn(data.declarations, (value, key) => {
       formattedDeclarations.push({ [key]: value });
@@ -43,6 +46,15 @@ const IndividualIdentityForm = ({
       });
     }
   };
+
+  useEffect(() => {
+    if (Object.keys(errors).length) {
+      snackbarService.showSnackbar(
+        'Make sure all fields are filled out and declarations are checked',
+        'error'
+      );
+    }
+  }, [errors]);
 
   return (
     // eslint-disable-next-line react/jsx-props-no-spreading

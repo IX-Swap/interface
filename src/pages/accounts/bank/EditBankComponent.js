@@ -28,10 +28,13 @@ function useEditBankLogic(baseBank: BankRequest, onFinish) {
   const [bank, setBank] = useState(baseBank);
   const bankListDispatch = useBanksListDispatch();
   const [snackbarOpen, setSnackbarOpen] = useState(false);
+  const [isValidForm, setIsValidForm] = useState(false);
+
   // setBank(bank);
   const onChange = useCallback(
-    (mBank: BankRequest) => {
+    (mBank: BankRequest, result: boolean) => {
       setBank(mBank);
+      setIsValidForm(result);
     },
     [setBank]
   );
@@ -65,6 +68,7 @@ function useEditBankLogic(baseBank: BankRequest, onFinish) {
 
   return {
     snackbarOpen,
+    isValidForm,
     onChange,
     onSave,
     error,
@@ -77,10 +81,13 @@ export default function EditBankComponent({
   bank,
   onFinish,
 }: EditBankComponentProps) {
-  const { onChange, onSave, snackbarOpen, error } = useEditBankLogic(
-    bank,
-    onFinish
-  );
+  const {
+    onChange,
+    onSave,
+    snackbarOpen,
+    error,
+    isValidForm,
+  } = useEditBankLogic(bank, onFinish);
 
   return (
     <div>
@@ -102,7 +109,7 @@ export default function EditBankComponent({
           <Button onClick={handleClose} color="primary">
             Cancel
           </Button>
-          <Button onClick={onSave} color="primary">
+          <Button onClick={onSave} color="primary" disabled={!isValidForm}>
             Save
           </Button>
         </DialogActions>

@@ -21,7 +21,6 @@ const useStyles = makeStyles(() => ({
   },
   textField: {
     width: '100%',
-    padding: '1em 0',
   },
   selectField: {
     width: '100%',
@@ -106,6 +105,7 @@ const IdentityField = ({
       default:
         inputComponent = (
           <TextField
+            label={label}
             type={type}
             name={name}
             inputRef={register({ required })}
