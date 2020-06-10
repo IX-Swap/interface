@@ -8,7 +8,7 @@ import { snackbarService } from 'uno-material-ui';
 import { downloadFile, saveIssuance } from './modules/actions';
 
 const DsoView = ({ assets }: any) => {
-  const [action, setAction] = useState('create');
+  const [action] = useState('create');
   const history = useHistory();
 
   const onClickDocument = async (document: Document) => {
@@ -43,8 +43,6 @@ const DsoView = ({ assets }: any) => {
       sData.message = 'Successfully saved digital security';
       history.goBack();
     }
-
-    setAction('create');
 
     snackbarService.showSnackbar(sData.message, sData.type);
   };

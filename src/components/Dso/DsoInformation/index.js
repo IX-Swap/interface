@@ -392,23 +392,8 @@ const DsoInformation = ({
                     variant="contained"
                     color="primary"
                     onClick={async () => {
-                      const valid = await triggerValidation();
+                      const valid = !edit || (await triggerValidation());
                       const values = getFinalValues();
-                      if (!values.logo) {
-                        snackbarService.showSnackbar(
-                          'Please upload a logo',
-                          'error'
-                        );
-                        return;
-                      }
-
-                      if (!values.subscriptionDocument) {
-                        snackbarService.showSnackbar(
-                          'Please upload a subscription document',
-                          'error'
-                        );
-                        return;
-                      }
 
                       if (!valid) {
                         snackbarService.showSnackbar(
@@ -419,6 +404,22 @@ const DsoInformation = ({
                       }
 
                       if (edit) {
+                        if (!values.logo) {
+                          snackbarService.showSnackbar(
+                            'Please upload a logo',
+                            'error'
+                          );
+                          return;
+                        }
+
+                        if (!values.subscriptionDocument) {
+                          snackbarService.showSnackbar(
+                            'Please upload a subscription document',
+                            'error'
+                          );
+                          return;
+                        }
+
                         headerButtonAction((dso || {})._id, values);
                       }
 
