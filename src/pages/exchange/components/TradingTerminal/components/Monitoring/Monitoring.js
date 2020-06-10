@@ -98,11 +98,19 @@ function Monitoring(props) {
 
   if (isAsksBids) {
     // SET PAYLOAD DATA FOR ORDERS
+    if (type === 'asks') {
+      data.reverse();
+    }
+
     data.reduce((acc: number, datum: any) => {
       const val = acc + datum.amount;
       datum.max = val;
       return val;
     }, 0);
+
+    if (type === 'asks') {
+      data.reverse();
+    }
 
     _handleStorePayload = (data, side) => {
       MonitoringActions.setBidAndAsk(dispatch, {
