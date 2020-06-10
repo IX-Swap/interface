@@ -30,6 +30,9 @@ export default makeStyles((theme) => ({
   overviewHeader: {
     marginBottom: theme.spacing.unit * 5,
   },
+  label: {
+    minWidth: '75px',
+  },
   stockTitle: {
     color: '#000',
     fontWeight: 600,

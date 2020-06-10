@@ -1,5 +1,6 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import React, { useState, useRef, useEffect } from 'react';
-import { withRouter, Link } from 'react-router-dom';
+import { withRouter, Link, useParams } from 'react-router-dom';
 import classNames from 'classnames';
 import moment from 'moment';
 
@@ -42,6 +43,21 @@ function Monitoring(props) {
   const [quotesSelected, setQuotesSelected] = useState({});
   const { title, type, data = [], lastPrice } = props;
   const isAsksBids = props.type === 'asks' || props.type === 'bids';
+  const { id } = useParams();
+
+  useEffect(
+    () => () => {
+      MonitoringActions.setBidAndAsk(dispatch, {
+        amount: 0,
+        count: 0,
+        max: 0,
+        price: 0,
+        total: 0,
+        side: 'both',
+      });
+    },
+    [id]
+  );
 
   let filteredData = search || data;
   // handle on search function in the Trading Terminal
@@ -67,7 +83,6 @@ function Monitoring(props) {
       ...quotesSelected,
       [id]: isSelected,
     });
-
   };
 
   const toggleFavoriteMarket = (id) => {
@@ -83,8 +98,17 @@ function Monitoring(props) {
 
   if (isAsksBids) {
     // SET PAYLOAD DATA FOR ORDERS
-    _handleStorePayload = (data) => {
-      MonitoringActions.setBidAndAsk(dispatch, data);
+    data.reduce((acc: number, datum: any) => {
+      const val = acc + datum.amount;
+      datum.max = val;
+      return val;
+    }, 0);
+
+    _handleStorePayload = (data, side) => {
+      MonitoringActions.setBidAndAsk(dispatch, {
+        ...data,
+        side,
+      });
     };
   }
 
@@ -294,7 +318,7 @@ function Monitoring(props) {
               <li
                 key={i}
                 className={classes.monitoringListItem}
-                onClick={() => _handleStorePayload(d)}
+                onClick={() => _handleStorePayload(d, type)}
               >
                 {renderMonitoringEl(type)}
               </li>
