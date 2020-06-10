@@ -283,6 +283,13 @@ const useDsoLogic = (dso, action) => {
     reset(values);
   };
 
+  const setFormData = (values: any) => {
+    setEditableDso({
+      ...values,
+    });
+    reset(values);
+  };
+
   return {
     setValue,
     editableDso,
@@ -298,6 +305,7 @@ const useDsoLogic = (dso, action) => {
     control,
     subsTitle,
     getFinalValues,
+    setFormData,
     onSubscriptionUpload,
     onDataroomDocumentUploaded,
     triggerValidation,
@@ -335,6 +343,7 @@ const DsoInformation = ({
     register,
     control,
     editableDso,
+    setFormData,
     subsTitle,
     getFinalValues,
     onSubscriptionUpload,
@@ -420,6 +429,7 @@ const DsoInformation = ({
                           return;
                         }
 
+                        setFormData(values);
                         headerButtonAction((dso || {})._id, values);
                       }
 
