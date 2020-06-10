@@ -98,6 +98,7 @@ const BidsAsksHistory = (props) => {
     // Update FORM values when toggling asks/bids history
     /*eslint-disable */
     useMemo (() => {
+      asksBidsHistoryData.amount = asksBidsHistoryData.max;
       switch (asksBidsHistoryData.side) {
         case 'asks': return setBidFields(asksBidsHistoryData);
         case 'bids': return setAskFields(asksBidsHistoryData);
@@ -207,8 +208,8 @@ const BidsAsksHistory = (props) => {
             </Box>
           </Box>
           {bidFields.map((field, i) => {
-            let totalAmount = bidForm.max * bidForm.price;
-            let totalPcs = bidForm.max;
+            let totalAmount = bidForm.amount * bidForm.price;
+            let totalPcs = bidForm.amount;
             if (totalAmount > (isQuoteItem ? isQuoteItem.available : 0)) {
               totalAmount = isQuoteItem ? (isQuoteItem.available / bidForm.price) * bidForm.price : 0;
               totalPcs =  isQuoteItem ? isQuoteItem.available / bidForm.price : 0;
@@ -273,8 +274,8 @@ const BidsAsksHistory = (props) => {
             </Box>
           </Box>
           {askFields.map((field, i) => {
-            let totalAmount = askForm.max * askForm.price;
-            let totalPcs = askForm.max;
+            let totalAmount = askForm.amount * askForm.price;
+            let totalPcs = askForm.amount;
             if (totalPcs > (isListingItem ? isListingItem.available : 0)) {
               totalAmount = isListingItem ? isListingItem.available * askForm.price : 0;
               totalPcs = isListingItem? isListingItem.available : 0;
