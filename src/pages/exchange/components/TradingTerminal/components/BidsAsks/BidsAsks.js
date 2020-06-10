@@ -277,7 +277,7 @@ const BidsAsksHistory = (props) => {
             let totalPcs = askForm.max;
             if (totalPcs > (isListingItem ? isListingItem.available : 0)) {
               totalAmount = isListingItem ? isListingItem.available * askForm.price : 0;
-              totalPcs = isListingItem.available;
+              totalPcs = isListingItem? isListingItem.available : 0;
             }
 
             const getValue = (id) => {
