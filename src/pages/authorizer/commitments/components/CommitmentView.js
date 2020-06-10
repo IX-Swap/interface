@@ -293,6 +293,7 @@ const CommitmentView = ({
                   {commitment.status !== 'Unauthorized' && (
                     <Grid item xs={6}>
                       <Button
+                        disabled={!commitment.countersignedSubscriptionDocument}
                         variant="contained"
                         color="primary"
                         style={{ width: '120px' }}
