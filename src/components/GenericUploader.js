@@ -3,7 +3,7 @@ import React, { useRef, useState } from 'react';
 import { Button, Typography, ListItem, Grid } from '@material-ui/core';
 import type { DocumentGuide } from 'pages/identity/modules/types';
 import { snackbarService } from 'uno-material-ui';
-import { uploadFile } from './modules/actions';
+import { uploadFile } from 'context/base/actions';
 import useStyles from './styles';
 
 const Uploader = ({
@@ -14,7 +14,9 @@ const Uploader = ({
   disabled = false,
   showTitle = true,
   justify = 'flex-end',
+  width = '100%',
 }: {
+  width?: string,
   showTitle?: boolean,
   originalFileName?: string,
   justify?: string,
@@ -50,7 +52,7 @@ const Uploader = ({
   };
 
   return (
-    <ListItem className={classes.listItem}>
+    <ListItem className={classes.listItem} style={{ width }}>
       <Grid container>
         {showTitle && (
           <Grid container item xs={8}>
@@ -80,11 +82,12 @@ const Uploader = ({
               {/* eslint-disable-next-line */}
               <label htmlFor={`${document.title}-file`}>
                 <Button
+                  style={{ minWidth: '120px', margin: '-1.15em' }}
                   variant="contained"
                   component="span"
                   disabled={disabled || saving}
                 >
-                  Upload
+                  {originalFileName || 'Upload'}
                 </Button>
               </label>
             </>

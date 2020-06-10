@@ -17,6 +17,7 @@ const useStyles = makeStyles(() => ({
     width: '272px',
     borderRadius: '5px',
     backgroundColor: '#f0f0f0',
+    backgroundSize: 'cover',
     marginRight: '18px',
   },
 }));
@@ -78,7 +79,7 @@ const TeamMember = (
             className={classes.photo}
             style={{
               backgroundImage: `url(${imgUrl})`,
-              backgroundSize: 'contain',
+              backgroundSize: 'cover',
               backgroundPosition: 'center',
               margin: '0 auto',
             }}

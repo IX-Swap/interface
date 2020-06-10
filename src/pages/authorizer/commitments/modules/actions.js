@@ -42,7 +42,40 @@ export const downloadFile = async (documentId: string) => {
   }
 };
 
+export const uploadSigned = async (
+  commitmentId: string,
+  documentId: string
+) => {
+  let response;
+  const payload = {
+    countersignedSubscriptionDocument: documentId,
+  };
+
+  try {
+    const uri = `/issuance/commitment/dataroom/subscription/counter-signed/${commitmentId}`;
+    const result = await putRequest(uri, payload);
+    response = await result.json();
+
+    if (result.status === 200) {
+      return true;
+    }
+
+    snackbarService.showSnackbar(
+      (response && response.message) ||
+        'Failed to update countersigned document',
+      'error'
+    );
+  } catch (err) {
+    snackbarService.showSnackbar(
+      (response && response.message) ||
+        'Failed to update countersigned document',
+      'error'
+    );
+  }
+};
+
 export default {
+  uploadSigned,
   toggleCommitmentStatus,
   getCommitments,
   ...pageMethods,

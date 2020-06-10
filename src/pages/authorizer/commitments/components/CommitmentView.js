@@ -1,5 +1,6 @@
 // @flow
-import React, { useState } from 'react';
+/* eslint-disable react-hooks/exhaustive-deps */
+import React, { useState, useEffect } from 'react';
 import {
   Container,
   Grid,
@@ -8,6 +9,7 @@ import {
   Paper,
   Typography,
 } from '@material-ui/core';
+import CloudDownloadIcon from '@material-ui/icons/CloudDownload';
 import type { Commitment } from 'context/commitment/types';
 import type { Dso } from 'context/dso/types';
 import { formatMoney } from 'helpers/formatNumbers';
@@ -15,8 +17,10 @@ import { blue } from '@material-ui/core/colors';
 import ArrowBackIosIcon from '@material-ui/icons/ArrowBackIos';
 import { snackbarService } from 'uno-material-ui';
 import moment from 'moment';
+import { downloadByUri } from 'context/base/authorizer/actions';
+import Uploader from 'components/GenericUploader';
 import AuthorizeConfirmDialog from './AuthorizeConfirmDialog';
-import { toggleCommitmentStatus, downloadFile } from '../modules/actions';
+import { toggleCommitmentStatus, uploadSigned } from '../modules/actions';
 
 const DsoSummary = ({
   dso,
@@ -102,11 +106,8 @@ const CommitmentView = ({
   const { dso, individual, status } = commitment;
   const [saving, setSaving] = useState(false);
   const [newStatus, setNewStatus] = useState('');
+  const [file, setFile] = useState('');
   const [open, setOpen] = useState(false);
-
-  const downloadSubscription = () => {
-    downloadFile(dso._id);
-  };
 
   const handleConfirm = async () => {
     setSaving(true);
@@ -129,7 +130,17 @@ const CommitmentView = ({
     setSaving(false);
   };
 
-  console.log(commitment);
+  const onUploadCountersigned = (res: any) => {
+    const update = uploadSigned(commitment._id, res._id);
+    if (update) {
+      console.log(res);
+      setFile(res.originalFileName);
+    }
+  };
+
+  useEffect(() => {
+    setFile(dso.countersignedSubscriptionDocument ? 'Download' : '');
+  }, []);
 
   return (
     <Container>
@@ -232,7 +243,11 @@ const CommitmentView = ({
                       variant="contained"
                       color="primary"
                       style={{ width: '120px' }}
-                      onClick={downloadSubscription}
+                      onClick={() =>
+                        downloadByUri(
+                          `/issuance/commitment/dataroom/subscription/signed/raw/${commitment._id}`
+                        )
+                      }
                     >
                       Download
                     </Button>
@@ -247,11 +262,50 @@ const CommitmentView = ({
                       Subscription Document Signed by Issuer
                     </Typography>
                   </Grid>
-                  <Grid item xs={6}>
-                    <Button variant="contained" style={{ width: '120px' }}>
-                      Upload
-                    </Button>
-                  </Grid>
+                  {commitment.status === 'Unauthorized' && (
+                    <Grid item xs={6} style={{ display: 'flex' }}>
+                      <Uploader
+                        edit
+                        showTitle={false}
+                        justify="flex-start"
+                        originalFileName={file}
+                        onUpload={onUploadCountersigned}
+                        width="initial"
+                        document={{
+                          title: 'Document Signed by Issuer',
+                          label: 'commitment-countersigned-document',
+                          type: 'commitmentCounterSignedDocument',
+                        }}
+                      />
+                      {commitment.countersignedSubscriptionDocument && (
+                        <Button
+                          onClick={() =>
+                            downloadByUri(
+                              `/issuance/commitment/dataroom/subscription/counter-signed/raw/${commitment._id}`
+                            )
+                          }
+                        >
+                          <CloudDownloadIcon />
+                        </Button>
+                      )}
+                    </Grid>
+                  )}
+                  {commitment.status !== 'Unauthorized' && (
+                    <Grid item xs={6}>
+                      <Button
+                        variant="contained"
+                        color="primary"
+                        style={{ width: '120px' }}
+                        onClick={() =>
+                          downloadByUri(
+                            `/issuance/commitment/dataroom/subscription/counter-signed/raw/${commitment._id}`
+                          )
+                        }
+                      >
+                        Download
+                      </Button>
+                    </Grid>
+                  )}
                 </Grid>
               </Box>
             </Box>
@@ -273,7 +327,9 @@ const CommitmentView = ({
                   setOpen(true);
                   setNewStatus('approve');
                 }}
-                disabled={saving}
+                disabled={
+                  saving || !commitment.countersignedSubscriptionDocument
+                }
               >
                 Approve
               </Button>
