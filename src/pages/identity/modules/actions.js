@@ -187,7 +187,6 @@ const createCorporateIdentity = async (corporatePayload: any, id?: string) => {
         payload.declarations,
         'corporate'
       );
-      console.log(mDeclarations);
       return { ...payload, declarations: mDeclarations };
     }
 

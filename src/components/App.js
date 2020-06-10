@@ -228,21 +228,23 @@ function App() {
       <div className={classes.root}>
         <Header />
         <Sidebar />
-        <div
-          className={classnames(classes.content, {
-            [classes.contentShift]: isSidebarOpened,
-          })}
-        >
-          <div className={classes.fakeToolbar} />
-          <Route exact path="/" render={GotoDashboard} />
-          {privateRoutes.map((route, i) => (
-            <PrivateRoute
-              key={i}
-              path={route.route}
-              component={route.component}
-            />
-          ))}
-        </div>
+        {status === 'IDLE' && (
+          <div
+            className={classnames(classes.content, {
+              [classes.contentShift]: isSidebarOpened,
+            })}
+          >
+            <div className={classes.fakeToolbar} />
+            <Route exact path="/" render={GotoDashboard} />
+            {privateRoutes.map((route, i) => (
+              <PrivateRoute
+                key={i}
+                path={route.route}
+                component={route.component}
+              />
+            ))}
+          </div>
+        )}
 
         {/** Modal showing invalid access when user is not yet accredited */}
         <NoAccessDialog />

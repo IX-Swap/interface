@@ -6,8 +6,6 @@ const declarations = {
       key: 'IndividualAccreditedInvestor',
       content:
         'The Applicant qualifies as an "Individual Accredited Investor" (as defined in Section 4A (1)(a)(i) of the Securities and Futures Act (“SFA”), Chapter 289):',
-      value: null,
-      answerable: true,
     },
     {
       key: 'NetPersonalAssets',
@@ -15,6 +13,7 @@ const declarations = {
         'Individual total net personal assets (including up to SGD$1 million of your primary residence) exceed SGD$2 million or its equivalent in foreign currency ; or',
       value: null,
       sublevel: true,
+      answerable: true,
     },
     {
       key: 'IndividualIncome',

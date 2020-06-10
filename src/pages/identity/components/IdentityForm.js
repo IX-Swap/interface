@@ -24,7 +24,7 @@ const IdentityForm = ({
   editMode: boolean,
 }) => {
   const {
-    user: { email },
+    user: { email = '' },
   } = useUserState();
 
   const getFieldName = (name) => (rootName ? `${rootName}.${name}` : name);

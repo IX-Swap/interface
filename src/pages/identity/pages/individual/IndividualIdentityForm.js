@@ -31,8 +31,6 @@ const IndividualIdentityForm = ({
   const { handleSubmit, errors } = methods;
 
   const onSubmit = (data: any) => {
-    console.log('joketime');
-    console.log('here', data);
     const formattedDeclarations = [];
     forOwn(data.declarations, (value, key) => {
       formattedDeclarations.push({ [key]: value });
