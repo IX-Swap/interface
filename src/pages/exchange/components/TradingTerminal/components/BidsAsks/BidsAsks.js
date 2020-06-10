@@ -275,9 +275,9 @@ const BidsAsksHistory = (props) => {
           {askFields.map((field, i) => {
             let totalAmount = askForm.max * askForm.price;
             let totalPcs = askForm.max;
-            if (totalAmount > (isListingItem ? isListingItem.available : 0)) {
-              totalAmount = isListingItem ? (isListingItem.available / askForm.price) * askForm.price : 0;
-              totalPcs = isListingItem ? isListingItem.available / askForm.price : 0;
+            if (totalPcs > (isListingItem ? isListingItem.available : 0)) {
+              totalAmount = isListingItem ? isListingItem.available * askForm.price : 0;
+              totalPcs = isListingItem.available;
             }
 
             const getValue = (id) => {
