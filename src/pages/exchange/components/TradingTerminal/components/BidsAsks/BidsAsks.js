@@ -303,7 +303,6 @@ const BidsAsksHistory = (props) => {
                     field.id === "amount" ? listCurrency : quoteCurrency
                   } `}
                   onValueChange={(values) => {
-                    console.log('change here')
                     field.onChange({
                       target: {
                         name: field.name,
