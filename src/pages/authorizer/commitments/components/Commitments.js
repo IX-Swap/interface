@@ -42,9 +42,10 @@ const Commitments = () => {
     commitment.individual &&
     page === authorizeCommitmentsPage.VIEW_IDENTITY
   ) {
+    const individual = { ...commitment.individual, user: commitment.user };
     return (
       <IdentityView
-        identity={commitment.individual}
+        identity={individual}
         onClickBack={() => setPage(authorizeCommitmentsPage.VIEW)}
       />
     );

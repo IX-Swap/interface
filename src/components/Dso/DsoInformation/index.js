@@ -1,6 +1,6 @@
 // @flow
 /* eslint-disable react/no-danger */
-import React, { useState, useRef, useEffect } from 'react';
+import React, { useState, useRef } from 'react';
 import { useHistory } from 'react-router-dom';
 import {
   Paper,
@@ -21,6 +21,7 @@ import { useIsIssuer } from 'services/acl';
 
 import moment from 'moment';
 
+import { snackbarService } from 'uno-material-ui';
 import { downloadFile } from '../modules/actions';
 
 import RichEditor from '../rte';
@@ -86,7 +87,6 @@ const useDsoLogic = (dso, action) => {
     setValue,
     reset,
     control,
-    errors,
     triggerValidation,
   } = methods;
 
@@ -163,6 +163,10 @@ const useDsoLogic = (dso, action) => {
       finalData.launchDate = dso.launchDate;
       finalData.currency = dso.currency.length ? dso.currency[0]._id : {};
       finalData.subscriptionDocument = dso.subscriptionDocument;
+    }
+
+    if (!finalData.logo) {
+      finalData.logo = dso.logo;
     }
 
     if (!finalData.team) {
@@ -279,12 +283,6 @@ const useDsoLogic = (dso, action) => {
     reset(values);
   };
 
-  useEffect(() => {
-    console.log(errors);
-  }, [errors]);
-
-  console.log('here', errors);
-
   return {
     setValue,
     editableDso,
@@ -395,9 +393,33 @@ const DsoInformation = ({
                     color="primary"
                     onClick={async () => {
                       const valid = await triggerValidation();
-                      console.log('triggered validation', valid);
-                      if (edit && valid) {
-                        headerButtonAction((dso || {})._id, getFinalValues());
+                      const values = getFinalValues();
+                      if (!values.logo) {
+                        snackbarService.showSnackbar(
+                          'Please upload a logo',
+                          'error'
+                        );
+                        return;
+                      }
+
+                      if (!values.subscriptionDocument) {
+                        snackbarService.showSnackbar(
+                          'Please upload a subscription document',
+                          'error'
+                        );
+                        return;
+                      }
+
+                      if (!valid) {
+                        snackbarService.showSnackbar(
+                          'Please fill out the fields',
+                          'error'
+                        );
+                        return;
+                      }
+
+                      if (edit) {
+                        headerButtonAction((dso || {})._id, values);
                       }
 
                       if (!edit) {

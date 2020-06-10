@@ -29,6 +29,8 @@ const IdentityForm = ({
 
   const getFieldName = (name) => (rootName ? `${rootName}.${name}` : name);
 
+  console.log(identity);
+
   return (
     <>
       <IdentityField
@@ -96,7 +98,7 @@ const IdentityForm = ({
       <IdentityField
         name={getFieldName('email')}
         label="Email"
-        value={useOwnEmail ? email : identity.email}
+        value={useOwnEmail ? email : ((identity || {}).user || {}).email}
         required
         editMode={editMode}
       />

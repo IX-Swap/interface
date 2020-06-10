@@ -103,7 +103,7 @@ const CorporateIdentityForm = ({
           <IdentityField
             editMode={editMode}
             name="walletAddress"
-            label="Digital Wallet Address"
+            label="Digital Security Wallet Address"
             value={corporate.walletAddress || ''}
           />
         </IdentitySection>

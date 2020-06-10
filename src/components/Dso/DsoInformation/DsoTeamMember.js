@@ -13,9 +13,9 @@ import RichEditor from '../rte';
 
 const useStyles = makeStyles(() => ({
   photo: {
-    height: '50px',
-    width: '50px',
-    borderRadius: '50px',
+    height: '272px',
+    width: '272px',
+    borderRadius: '5px',
     backgroundColor: '#f0f0f0',
     marginRight: '18px',
   },
@@ -72,7 +72,7 @@ const TeamMember = (
           </Button>
         </Box>
       )}
-      <Grid container>
+      <Box style={{ display: 'flex' }}>
         <Box mr={2}>
           <div
             className={classes.photo}
@@ -99,48 +99,53 @@ const TeamMember = (
               }}
               showTitle={false}
               edit={edit}
+              justify="center"
               onUpload={onDataroomDocumentUploaded}
             />
           )}
         </Box>
-        {!edit && (
-          <Grid item>
-            <Typography>{member.name}</Typography>
-            <Typography>
-              <b>{member.position}</b>
-            </Typography>
+        <Box>
+          <Grid container>
+            {!edit && (
+              <Grid item>
+                <Typography variant="h5">{member.name}</Typography>
+                <Typography>
+                  <b>{member.position}</b>
+                </Typography>
+              </Grid>
+            )}
+            {edit && (
+              <Grid item style={{ display: 'flex', flexDirection: 'column' }}>
+                <TextField
+                  label="Name"
+                  margin="normal"
+                  inputRef={ref}
+                  name={`team[${index}].name`}
+                />
+                <TextField
+                  label="Position"
+                  margin="normal"
+                  inputRef={ref}
+                  name={`team[${index}].position`}
+                />
+              </Grid>
+            )}
           </Grid>
-        )}
-        {edit && (
-          <Grid item style={{ display: 'flex', flexDirection: 'column' }}>
-            <TextField
-              label="Name"
-              margin="normal"
-              inputRef={ref}
-              name={`team[${index}].name`}
-            />
-            <TextField
-              label="Position"
-              margin="normal"
-              inputRef={ref}
-              name={`team[${index}].position`}
-            />
-          </Grid>
-        )}
-      </Grid>
-      <Box mt={4}>
-        {!edit && (
-          <Typography>
-            <span dangerouslySetInnerHTML={{ __html: member.about }} />
-          </Typography>
-        )}
-        {edit && (
-          <RichEditor
-            value={member.about || 'About the member'}
-            ref={ref}
-            save={save}
-          />
-        )}
+          <Box mt={4}>
+            {!edit && (
+              <Typography>
+                <span dangerouslySetInnerHTML={{ __html: member.about }} />
+              </Typography>
+            )}
+            {edit && (
+              <RichEditor
+                value={member.about || 'About the member'}
+                ref={ref}
+                save={save}
+              />
+            )}
+          </Box>
+        </Box>
       </Box>
     </Box>
   );

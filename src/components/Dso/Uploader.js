@@ -13,9 +13,11 @@ const Uploader = ({
   originalFileName = '',
   disabled = false,
   showTitle = true,
+  justify = 'flex-end',
 }: {
   showTitle?: boolean,
   originalFileName?: string,
+  justify?: string,
   disabled?: boolean,
   document: DocumentGuide,
   edit: boolean,
@@ -59,7 +61,7 @@ const Uploader = ({
           </Grid>
         )}
 
-        <Grid container item xs={showTitle ? 4 : 12} justify="flex-end">
+        <Grid container item xs={showTitle ? 4 : 12} justify={justify || 'flex-end'}>
           {edit ? (
             <>
               <input

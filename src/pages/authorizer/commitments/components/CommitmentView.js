@@ -16,7 +16,7 @@ import ArrowBackIosIcon from '@material-ui/icons/ArrowBackIos';
 import { snackbarService } from 'uno-material-ui';
 import moment from 'moment';
 import AuthorizeConfirmDialog from './AuthorizeConfirmDialog';
-import { toggleCommitmentStatus } from '../modules/actions';
+import { toggleCommitmentStatus, downloadFile } from '../modules/actions';
 
 const DsoSummary = ({
   dso,
@@ -103,6 +103,10 @@ const CommitmentView = ({
   const [saving, setSaving] = useState(false);
   const [newStatus, setNewStatus] = useState('');
   const [open, setOpen] = useState(false);
+
+  const downloadSubscription = () => {
+    downloadFile(dso._id);
+  };
 
   const handleConfirm = async () => {
     setSaving(true);
@@ -228,6 +232,7 @@ const CommitmentView = ({
                       variant="contained"
                       color="primary"
                       style={{ width: '120px' }}
+                      onClick={downloadSubscription}
                     >
                       Download
                     </Button>
@@ -253,7 +258,7 @@ const CommitmentView = ({
           </Grid>
         </Grid>
         <Grid item xs={4}>
-          <DsoSummary dso={dso} onClickView={onViewDso} status={status} />
+          <DsoSummary dso={dso} onClickView={onViewDso} status={dso.status} />
         </Grid>
       </Grid>
 

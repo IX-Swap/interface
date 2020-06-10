@@ -19,10 +19,12 @@ const IndividualIdentityForm = ({
   editMode,
   dataroom,
   handleCreateIdentity,
+  useOwnEmail = true,
   onCancelEdit,
 }: {
   identity: Identity,
   editMode: boolean,
+  useOwnEmail?: boolean,
   dataroom: Document[],
   handleCreateIdentity?: Function,
   onCancelEdit?: Function,
@@ -59,7 +61,11 @@ const IndividualIdentityForm = ({
     <FormContext {...methods}>
       <form onSubmit={handleSubmit(onSubmit)}>
         <IdentitySection title="My Identity">
-          <IdentityForm identity={identity} useOwnEmail editMode={editMode} />
+          <IdentityForm
+            identity={identity}
+            useOwnEmail={useOwnEmail}
+            editMode={editMode}
+          />
         </IdentitySection>
 
         <IdentitySection title="Address">
@@ -94,7 +100,7 @@ const IndividualIdentityForm = ({
           <IdentityField
             editMode={editMode}
             name="walletAddress"
-            label="Digital Wallet Address"
+            label="Digital Security Wallet Address"
             value={identity.walletAddress || ''}
           />
           <IdentityField

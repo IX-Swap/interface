@@ -89,6 +89,7 @@ const IndividualIdentityPreview = ({
             <IndividualIdentityForm
               identity={{ ...identity, declarations }}
               editMode={false}
+              useOwnEmail={false}
               dataroom={identity.documents}
             />
           </IdentityProvider>
