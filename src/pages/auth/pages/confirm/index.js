@@ -36,7 +36,6 @@ const Confirm = () => {
         if (result.status === 200) {
           setState({ ...state, isVerified: true, isLoading: false });
         } else {
-          console.log(result);
           setState({
             ...state,
             isVerified: false,

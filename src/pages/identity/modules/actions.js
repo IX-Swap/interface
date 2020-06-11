@@ -373,8 +373,11 @@ export async function uploadFile(
   }
 }
 
-export const downloadFile = async (dispatch: Function, documentId: string) => {
-  const userId = localStore.getUserId();
+export const downloadFile = async (
+  dispatch: Function,
+  userId: string,
+  documentId: string
+) => {
   try {
     dispatch({ type: actions.DOWNLOAD_FILE_REQUEST });
     const uri = `/dataroom/raw/${userId}/${documentId}`;
