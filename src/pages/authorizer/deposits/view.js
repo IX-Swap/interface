@@ -43,6 +43,26 @@ function DepositView({ location }: RouteProps) {
       <Grid container justify="center" direction="column" component={Paper}>
         <Box mt={4} />
         <Grid container className={classes.infoGrid}>
+          {deposit.individual && (
+            <>
+              <Grid item xs={6}>
+                <BoldTypography variant="subtitle2" className={classes.labels}>
+                  By:
+              </BoldTypography>
+              </Grid>
+              <Grid item xs={6}>
+                <BoldTypography
+                  variant="subtitle2"
+                  className={classes.values}
+                  color="primary"
+                >
+                  {deposit.individual.firstName}{' '}
+                  {deposit.individual.lastName}
+                </BoldTypography>
+              </Grid>
+            </>
+          )}
+
           <Grid item xs={6}>
             <BoldTypography variant="subtitle2" className={classes.labels}>
               Status:

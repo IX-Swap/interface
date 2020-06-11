@@ -3,6 +3,15 @@ import moment from 'moment';
 
 export const columns = [
   {
+    key: 'level',
+    label: 'Level',
+  },
+  {
+    key: 'individual.firstName',
+    label: 'User',
+    render: (val: string, row: any) => `${val} ${row.individual.lastName}`,
+  },
+  {
     key: 'createdAt',
     label: 'Date of Application',
     // $$FlowFixMe

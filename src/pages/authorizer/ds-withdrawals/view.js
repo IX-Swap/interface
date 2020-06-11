@@ -6,7 +6,7 @@ import { formatNumber } from 'helpers/formatNumbers';
 
 const useStyles = makeStyles(() => ({
   infoGrid: {
-    width: '300px',
+    width: '500px',
     alignSelf: 'center',
     textAlign: 'center',
     padding: '10px',
@@ -37,6 +37,26 @@ function WithdrawalView({ location }: RouteProps) {
     <Grid container justify="center" direction="column" component={Paper}>
       <Box pb={4} />
       <Grid container className={classes.infoGrid}>
+        {withdrawal.individual && (
+          <>
+            <Grid item xs={6}>
+              <BoldTypography variant="subtitle2" className={classes.labels}>
+                By:
+              </BoldTypography>
+            </Grid>
+            <Grid item xs={6}>
+              <BoldTypography
+                variant="subtitle2"
+                className={classes.values}
+                color="primary"
+              >
+                {withdrawal.individual.firstName}{' '}
+                {withdrawal.individual.lastName}
+              </BoldTypography>
+            </Grid>
+          </>
+        )}
+
         <Grid item xs={6}>
           <BoldTypography variant="subtitle2" className={classes.labels}>
             Status:
@@ -52,12 +72,12 @@ function WithdrawalView({ location }: RouteProps) {
           </BoldTypography>
         </Grid>
 
-        <Grid item xs={6}>
+        <Grid item xs={4}>
           <BoldTypography variant="subtitle2" className={classes.labels}>
             Address:
           </BoldTypography>
         </Grid>
-        <Grid item xs={6}>
+        <Grid item xs={8}>
           <BoldTypography
             variant="subtitle2"
             className={classes.values}

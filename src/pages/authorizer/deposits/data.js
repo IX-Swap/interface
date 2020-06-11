@@ -7,9 +7,14 @@ export const columns = [
     label: 'Level',
   },
   {
+    key: 'individual.firstName',
+    label: 'User',
+    render: (val: string, row: any) => `${val} ${row.individual.lastName}`,
+  },
+  {
     key: 'createdAt',
     label: 'Date',
-    render: (val: string) => moment(val).format('MM/DD/YY'),
+    render: (val: string) => moment(val).format('MM/DD/YYYY'),
   },
   {
     key: 'amount',
