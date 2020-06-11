@@ -94,7 +94,7 @@ const routes = [
   },
   {
     route: '/authorizer/digital-securities',
-    title: 'Digital Securities',
+    title: 'Offerings',
     exact: true,
     component: DSOs,
   },

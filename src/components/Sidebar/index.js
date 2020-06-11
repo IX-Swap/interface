@@ -62,9 +62,9 @@ function Sidebar({ location }: { location: any }) {
       link: '/exchange',
       icon: <TrendingUpIcon />,
       children: [
-        { 
-          label: 'Markets', 
-          link: '/markets' 
+        {
+          label: 'Markets',
+          link: '/markets'
         },
         {
           label: 'Trade History',
@@ -112,15 +112,15 @@ function Sidebar({ location }: { location: any }) {
                 link: '/authorizer/corporate-identities',
               },
               {
-                label: 'Digital Securities',
+                label: 'Offerings',
                 link: '/authorizer/digital-securities',
               },
               {
                 label: 'Commitments',
                 link: '/authorizer/commitments',
               },
-              { 
-                label: 'Listings', 
+              {
+                label: 'Listings',
                 link: '/listings'
               },
             ],

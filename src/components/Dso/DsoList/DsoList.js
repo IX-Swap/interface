@@ -15,6 +15,7 @@ import {
   TablePagination,
   LinearProgress,
 } from '@material-ui/core';
+import { debounce } from 'lodash';
 import { useHistory } from 'react-router-dom';
 import { useIsIssuer } from 'services/acl';
 import OfferCard from './OfferCard';
@@ -37,6 +38,9 @@ const useDsoListLogic = (statusFilter?: string, user?: string) => {
   const [search, setSearch] = useState('');
   const { status, page, total, limit, items, statusCode, error } = dsoListState;
   const mountedRef = useRef(true);
+  const [onSearch] = useState(() =>
+    debounce((evt) => setSearch(evt.target.value), 500)
+  );
 
   useEffect(() => {
     const override = user ? init(user) : Actions;
@@ -55,8 +59,9 @@ const useDsoListLogic = (statusFilter?: string, user?: string) => {
     _setPage(dsoListDispatch, { page: 0 });
   };
 
-  const onSearch = (evt) => {
-    setSearch(evt.target.value);
+  const _onSearch = (evt) => {
+    evt.persist();
+    onSearch(evt);
   };
 
   useEffect(() => {
@@ -91,7 +96,7 @@ const useDsoListLogic = (statusFilter?: string, user?: string) => {
     limit,
     page,
     statusCode,
-    onSearch,
+    onSearch: _onSearch,
     error,
     handleChangePage,
     handleChangeRowsPerPage,
