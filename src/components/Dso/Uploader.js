@@ -13,9 +13,11 @@ const Uploader = ({
   originalFileName = '',
   disabled = false,
   showTitle = true,
+  onDelete,
   justify = 'flex-end',
 }: {
   showTitle?: boolean,
+  onDelete?: (document: DocumentGuide) => void,
   originalFileName?: string,
   justify?: string,
   disabled?: boolean,
@@ -86,6 +88,9 @@ const Uploader = ({
                 >
                   Upload
                 </Button>
+                {onDelete && (
+                  <Button onClick={() => onDelete(document)}>Delete</Button>
+                )}
               </label>
             </>
           ) : (
