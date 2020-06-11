@@ -1,5 +1,5 @@
 // @flow
-import { isEmpty, findIndex } from 'lodash';
+import { isEmpty } from 'lodash';
 import { STATUS, actions } from './types';
 import type { IdentityState } from './types';
 
@@ -118,18 +118,19 @@ export const identityReducer = (
 
     case actions.DELETE_FILE_SUCCESS:
       // eslint-disable-next-line no-case-declarations
-      const index = findIndex(
-        state.dataroom,
-        (data) => data._id === payload._id
+      const individualDataroom = state.dataroom.filter(
+        (datum) => datum._id !== payload._id
+      );
+      // eslint-disable-next-line no-case-declarations
+      const corporateDataroom = state.corporateDataroom.filter(
+        (datum) => datum._id !== payload._id
       );
 
       return {
         ...state,
         status: STATUS.IDLE,
-        dataroom: [
-          ...state.dataroom.slice(0, index),
-          ...state.dataroom.slice(index + 1),
-        ],
+        dataroom: [...individualDataroom],
+        corporateDataroom: [...corporateDataroom],
         error: { ...state.error, get: null },
       };
 

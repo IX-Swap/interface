@@ -23,8 +23,6 @@ const Declaration = ({
 }) => {
   const classes = useStyles();
 
-  console.log(declarations);
-
   return (
     <List>
       {declarations.map((declaration) => {
@@ -50,7 +48,7 @@ const Declaration = ({
                 className={sublevel ? classes.sublevel : ''}
               >
                 {/* eslint-disable-next-line */}
-                <span dangerouslySetInnerHTML={{ __html: content }} /> 
+                <span dangerouslySetInnerHTML={{ __html: content }} />
               </Typography>
             </DeclarationItem>
             {lastLine && <br />}

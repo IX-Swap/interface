@@ -41,7 +41,9 @@ const DocumentItem = ({ document }: { document: Document }) => {
             </Button>
           ) : (
             <Button
-              onClick={() => downloadFile(identityDispatch, document.user, document._id)}
+              onClick={() =>
+                downloadFile(identityDispatch, document.user, document._id)
+              }
               disabled={status === 'GETTING'}
             >
               <CloudDownloadIcon />
