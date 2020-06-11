@@ -11,7 +11,7 @@ import { subscribeToSocket } from 'services/socket';
 import { ENDPOINT_URL } from 'config';
 import { numberWithCommas } from 'utils/utils';
 
-import useStyles from './styles'
+import useStyles from './styles';
 
 function OverviewHeader (props) {
     const [ lastPrice, setLastPrice ] = useState(0);

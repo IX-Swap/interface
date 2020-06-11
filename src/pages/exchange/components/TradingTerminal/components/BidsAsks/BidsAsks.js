@@ -42,7 +42,7 @@ const BidsAsksHistory = (props) => {
   const marketListItem = items.length && items.find((item) => item._id === id);
 
   // eslint-disable-next-line
-    const [collection, setCollection] = useState(false);
+  const [collection, setCollection] = useState(false);
   const { SUBSCRIBE_API } = ENDPOINT_URL;
   const { BIDS_ASKS } = SUBSCRIBE_API;
 
@@ -97,9 +97,15 @@ const BidsAsksHistory = (props) => {
 
     // Update FORM values when toggling asks/bids history
     /*eslint-disable */
-    useMemo(() => {
-        setBidFields(asksBidsHistoryData)
-        setAskFields(asksBidsHistoryData)
+    useMemo (() => {
+      asksBidsHistoryData.amount = asksBidsHistoryData.max;
+      switch (asksBidsHistoryData.side) {
+        case 'asks': return setBidFields(asksBidsHistoryData);
+        case 'bids': return setAskFields(asksBidsHistoryData);
+        default:
+          setBidFields(asksBidsHistoryData);
+          setAskFields(asksBidsHistoryData);
+      }
     }, [asksBidsHistoryData]);
     /*eslint-disable */
 
@@ -202,15 +208,28 @@ const BidsAsksHistory = (props) => {
             </Box>
           </Box>
           {bidFields.map((field, i) => {
-            const totalAmount = bidForm.amount * bidForm.price;
+            let totalAmount = bidForm.amount * bidForm.price;
+            let totalPcs = bidForm.amount;
+            if (totalAmount > (isQuoteItem ? isQuoteItem.available : 0)) {
+              totalAmount = isQuoteItem ? (isQuoteItem.available / bidForm.price) * bidForm.price : 0;
+              totalPcs =  isQuoteItem ? isQuoteItem.available / bidForm.price : 0;
+            }
+
+            const getValue = (id) => {
+              switch(id) {
+                case 'total': return totalAmount;
+                case 'amount': return totalPcs;
+                default: return field.value;
+              }
+            }
 
             return (
               <Box key={i} className={classes.inputContainer}>
-                <label>{field.label}</label>
+                <label className={classes.label}>{field.label}</label>
                 <NumberFormat
                   className={classes.inputField}
                   allowEmptyFormatting
-                  value={field.id === "total" ? totalAmount : field.value || ""}
+                  value={getValue(field.id) || ''}
                   disabled={field.id === "total"}
                   inputMode="numeric"
                   thousandSeparator
@@ -255,15 +274,28 @@ const BidsAsksHistory = (props) => {
             </Box>
           </Box>
           {askFields.map((field, i) => {
-            const totalAmount = askForm.amount * askForm.price;
+            let totalAmount = askForm.amount * askForm.price;
+            let totalPcs = askForm.amount;
+            if (totalPcs > (isListingItem ? isListingItem.available : 0)) {
+              totalAmount = isListingItem ? isListingItem.available * askForm.price : 0;
+              totalPcs = isListingItem? isListingItem.available : 0;
+            }
+
+            const getValue = (id) => {
+              switch (id) {
+                case 'total': return totalAmount;
+                case 'amount': return totalPcs;
+                default: return field.value;
+              }
+            }
 
             return (
               <Box key={i} className={classes.inputContainer}>
-                <label>{field.label}</label>
+                <label className={classes.label}>{field.label}</label>
                 <NumberFormat
                   className={classes.inputField}
                   allowEmptyFormatting
-                  value={field.id === "total" ? totalAmount : field.value || ""}
+                  value={getValue(field.id)}
                   disabled={field.id === "total"}
                   inputMode="numeric"
                   thousandSeparator
