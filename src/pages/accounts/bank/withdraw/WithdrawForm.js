@@ -83,6 +83,7 @@ function BankWithdrawForm({
               <FormControl>
                 <TextField
                   label="Amount"
+                  autoComplete="off"
                   value={amount}
                   onChange={handleChange}
                   name="numberformat"

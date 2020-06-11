@@ -160,6 +160,7 @@ export default function WithdrawConfirmation({
         <TextField
           id="two-fa"
           label="2-Factor Auth Code"
+          autoComplete="off"
           variant="outlined"
           onChange={handle2faChange}
         />

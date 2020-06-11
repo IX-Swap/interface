@@ -308,6 +308,7 @@ export default function DigitalSecurities({ match }: RouteProps) {
           <TextField
             id="two-fa"
             label="2-Factor Auth Code"
+            autoComplete="off"
             variant="outlined"
             onChange={(ev) =>
               setTransferDetails({ ...transferDetails, otp: ev.target.value })

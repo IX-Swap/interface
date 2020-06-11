@@ -76,6 +76,7 @@ const LoginForm = () => {
         value={otpValue}
         onChange={(e) => setOtpValue(e.target.value)}
         margin="normal"
+        autoComplete="off"
         placeholder="OTP Code (optional)"
         type="otpValue"
         fullWidth

@@ -123,6 +123,7 @@ function BankDepositForm({
           <FormControl style={{ marginLeft: '16px' }}>
             <TextField
               label="Amount"
+              autoComplete="off"
               value={amount}
               onChange={handleChange}
               name="numberformat"

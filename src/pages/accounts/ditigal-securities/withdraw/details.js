@@ -36,6 +36,7 @@ export default function WithdrawalDetailsInput({
             fullWidth
             value={transferDetails.amount}
             label="Amount"
+            autoComplete="off"
             onChange={(ev) => setTransferDetails('amount', ev.target.value)}
           />
         </Grid>
