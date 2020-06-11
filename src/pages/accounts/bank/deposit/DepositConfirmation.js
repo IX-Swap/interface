@@ -152,6 +152,7 @@ export default function DepositConfirmation({
           id="two-fa"
           label="2-Factor Auth Code"
           variant="outlined"
+          autoComplete="off"
           onChange={handle2faChange}
         />
       </Box>

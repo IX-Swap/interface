@@ -48,7 +48,7 @@ function DepositView({ location }: RouteProps) {
               <Grid item xs={6}>
                 <BoldTypography variant="subtitle2" className={classes.labels}>
                   By:
-              </BoldTypography>
+                </BoldTypography>
               </Grid>
               <Grid item xs={6}>
                 <BoldTypography
@@ -56,8 +56,7 @@ function DepositView({ location }: RouteProps) {
                   className={classes.values}
                   color="primary"
                 >
-                  {deposit.individual.firstName}{' '}
-                  {deposit.individual.lastName}
+                  {deposit.individual.firstName} {deposit.individual.lastName}
                 </BoldTypography>
               </Grid>
             </>

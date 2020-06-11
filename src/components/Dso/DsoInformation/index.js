@@ -162,7 +162,8 @@ const useDsoLogic = (dso, action) => {
     if (dso._id) {
       finalData.launchDate = dso.launchDate;
       finalData.currency = dso.currency.length ? dso.currency[0]._id : {};
-      finalData.subscriptionDocument = dso.subscriptionDocument;
+      finalData.subscriptionDocument =
+        editableDso.subscriptionDocument || dso.subscriptionDocument;
     }
 
     if (!finalData.logo) {
@@ -259,6 +260,17 @@ const useDsoLogic = (dso, action) => {
     reset(values);
   };
 
+  const removeSubscriptionDocument = () => {
+    const values = getFinalValues();
+    setSubsTitle('');
+    values.subscriptionDocument = '';
+    rteRefs.current.values = { ...values };
+    setEditableDso({
+      ...values,
+    });
+    reset(values);
+  };
+
   const onLogoUpload = (res: any) => {
     const values = getFinalValues();
     values.logo = res._id;
@@ -310,6 +322,7 @@ const useDsoLogic = (dso, action) => {
     onDataroomDocumentUploaded,
     triggerValidation,
     onRemoveDocument,
+    removeSubscriptionDocument,
     methods,
   };
 };
@@ -351,6 +364,7 @@ const DsoInformation = ({
     triggerValidation,
     onLogoUpload,
     onRemoveDocument,
+    removeSubscriptionDocument,
     methods,
   } = useDsoLogic(dso || { ...baseDsoRequest }, action);
 
@@ -475,13 +489,13 @@ const DsoInformation = ({
 
             <Box mt={4}>
               <SectionContainer title="Subscription Document">
-                {['view', 'edit'].includes(action) &&
+                {['view'].includes(action) &&
                   editableDso.subscriptionDocument && (
                     <Button onClick={() => downloadFile(dso._id)}>
                       Download
                     </Button>
                   )}
-                {action === 'create' && (
+                {['create', 'edit'].includes(action) && (
                   <Uploader
                     document={{
                       title: subsTitle || 'Subscription Document',
@@ -489,8 +503,11 @@ const DsoInformation = ({
                       type: 'subscriptionDocument',
                     }}
                     disabled={!!editableDso.subscriptionDocument}
-                    edit={action === 'create'}
+                    edit
                     onUpload={onSubscriptionUpload}
+                    onDelete={() => {
+                      removeSubscriptionDocument();
+                    }}
                   />
                 )}
               </SectionContainer>
