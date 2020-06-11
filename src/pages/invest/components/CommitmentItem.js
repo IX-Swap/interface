@@ -311,6 +311,7 @@ const CommitmentItem = ({
                   error={!!errors.otp}
                   name="otp"
                   fullWidth
+                  autoComplete="off"
                   inputRef={register({ required: true })}
                   variant="outlined"
                   label="OTP"

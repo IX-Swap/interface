@@ -133,7 +133,7 @@ const CommitmentView = ({
   const onUploadCountersigned = (res: any) => {
     const update = uploadSigned(commitment._id, res._id);
     if (update) {
-      console.log(res);
+      commitment.countersignedSubscriptionDocument = res._id;
       setFile(res.originalFileName);
     }
   };

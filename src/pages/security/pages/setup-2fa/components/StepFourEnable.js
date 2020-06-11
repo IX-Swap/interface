@@ -24,6 +24,7 @@ const StepFourEnable = () => {
           <TextField
             disabled={status === TFA_STATUS.SAVING}
             name="otp"
+            autoComplete="off"
             inputRef={register({ required: true })}
             className={classes.textField}
             placeholder="Google Authentication Code"
