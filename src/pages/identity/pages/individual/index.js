@@ -32,7 +32,7 @@ const IndividualIdentity = () => {
         </Box>
       )}
       <IndividualIdentityForm
-        useOwnEmail={false}
+        useOwnEmail
         dataroom={dataroom}
         editMode={editMode}
         identity={identity}
