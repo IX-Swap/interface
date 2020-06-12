@@ -3,10 +3,10 @@ import moment from 'moment';
 
 // Material Component
 import { KeyboardDatePicker } from '@material-ui/pickers';
-import Typography from '@material-ui/core/Typography';
-
 // Styles
 import useStyles from 'pages/exchange/components/ExchangeTable/styles';
+
+import { Typography } from '@material-ui/core';
 
 const DATE_FORMAT = 'MM/dd/yyyy';
 

@@ -1,14 +1,9 @@
 import React from 'react'
 
-// Material Component
-import Typography from '@material-ui/core/Typography';
-import InputLabel from '@material-ui/core/InputLabel';
-import MenuItem from '@material-ui/core/MenuItem';
-import FormControl from '@material-ui/core/FormControl';
-import Select from '@material-ui/core/Select';
-
 // Styles
 import useStyles from 'pages/exchange/components/ExchangeTable/styles';
+
+import { Typography, InputLabel, MenuItem, FormControl, Select } from '@material-ui/core';
 
 const DropdownFilter = (props) => {
     const { setSide, setPair } = props;

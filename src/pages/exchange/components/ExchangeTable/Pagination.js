@@ -2,14 +2,14 @@ import React from 'react'
 
 // Material Component
 import { useTheme } from '@material-ui/core/styles';
-import IconButton from '@material-ui/core/IconButton';
 import FirstPageIcon from '@material-ui/icons/FirstPage';
 import KeyboardArrowLeft from '@material-ui/icons/KeyboardArrowLeft';
 import KeyboardArrowRight from '@material-ui/icons/KeyboardArrowRight';
 import LastPageIcon from '@material-ui/icons/LastPage';
-
 // Styles
 import useStyles from 'pages/exchange/components/ExchangeTable/styles';
+
+import { IconButton } from '@material-ui/core';
 
 const Pagination = (props) => {
     const classes = useStyles();

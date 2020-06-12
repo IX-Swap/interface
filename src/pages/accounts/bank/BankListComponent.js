@@ -1,14 +1,7 @@
 // @flow
 /* eslint-disable react-hooks/exhaustive-deps */
 import React, { useEffect, useRef, useState } from 'react';
-import {
-  Box,
-  Grid,
-  Typography,
-  Button,
-  CircularProgress,
-} from '@material-ui/core';
-import IconButton from '@material-ui/core/IconButton';
+import { Box, Grid, Typography, Button, CircularProgress, IconButton } from '@material-ui/core';
 import EditIcon from '@material-ui/icons/Edit';
 import Alert from '@material-ui/lab/Alert';
 

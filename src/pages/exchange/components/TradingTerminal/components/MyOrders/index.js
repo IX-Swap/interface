@@ -2,15 +2,6 @@ import React, { useState, useEffect } from 'react';
 import moment from 'moment';
 
 import { withStyles, makeStyles } from '@material-ui/core/styles';
-import Button from '@material-ui/core/Button';
-import Typography from '@material-ui/core/Typography';
-import Table from '@material-ui/core/Table';
-import TableBody from '@material-ui/core/TableBody';
-import TableCell from '@material-ui/core/TableCell';
-import TableContainer from '@material-ui/core/TableContainer';
-import TableHead from '@material-ui/core/TableHead';
-import TableRow from '@material-ui/core/TableRow';
-import Paper from '@material-ui/core/Paper';
 
 // Config/Endpoints
 import { ENDPOINT_URL, DATE_FORMAT } from 'config';
@@ -22,6 +13,18 @@ import { numberWithCommas } from 'utils/utils';
 // Modules
 import { subscribeToSocket } from 'services/socket';
 import MyOrderActions from './modules/actions';
+
+import {
+  Button,
+  Typography,
+  Table,
+  TableBody,
+  TableCell,
+  TableContainer,
+  TableHead,
+  TableRow,
+  Paper,
+} from '@material-ui/core';
 
 const StyledTableCell = withStyles((theme) => ({
   head: {
