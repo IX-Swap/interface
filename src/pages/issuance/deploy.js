@@ -64,6 +64,13 @@ const useDeployLogic = (userId: string, id: string) => {
 
     if (newDso) {
       setLoading(false);
+    } else {
+      window[`deploy_message_${id}`].push(
+        `[${moment().format(
+          'MM/DD/YYYY hh:mm:ss a'
+        )}] Error Deploying DSO, Please try again later.`
+      );
+      setMessages(window[`deploy_message_${id}`]);
     }
   };
 
@@ -75,6 +82,10 @@ const useDeployLogic = (userId: string, id: string) => {
     }
 
     socket.on(`x-token/${id}`, listener);
+
+    return () => {
+      socket.off(`x-token/${id}`);
+    };
   }, [id]); // eslint-disable-line
 
   useEffect(() => {
