@@ -1,37 +1,12 @@
 # InvestaX Platform WebApp
+
+![Standard Js](https://cdn.rawgit.com/feross/standard/master/badge.svg)
+
 Built with [React](https://facebook.github.io/react/), [Material-UI](https://material-ui.com), [React Router](https://reacttraining.com/react-router/).
-
-
-## Features
-
-- React (**16.8.6**)
-- React Hooks
-- React Context
-- Mobile friendly layout (responsive)
-- Create-react-app under the hood
-- React Router v5
-- Material-UI v4
-- Modular Architecture
-- CSS-in-JS styles
-- Webpack build
-- Stylish, clean, responsive layout
-
-## Pages
-
-We have implemented some basic pages, so you can see our template in action.
-
-- Terminal
-- Issuance
-- Exchange
-- Custody
-- Identity
-
 
 ## Quick Start
 
 #### 1. Get the latest version
-
-
 
 ```shell
 $ git clone git@github.com:investax/ixwebapp
@@ -56,11 +31,8 @@ Builds the app for production to the build folder.
 It correctly bundles React in production mode and optimizes the build for the best performance.
 
 The build is minified and the filenames include the hashes.
-Your app is ready to be deployed!
+Your app is ready to be deployed !
 
 ## Support
 
-This project is managed by the IvestaX technology team:
-
 chad@investax.io
-binod@investax.io

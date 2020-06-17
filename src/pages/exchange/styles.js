@@ -1,114 +1,47 @@
 import { makeStyles } from '@material-ui/styles'
 
 export default makeStyles(theme => ({
-  card: {
-    minHeight: '100%',
-    display: 'flex',
-    flexDirection: 'column'
+  root: {
+    backgroundColor: theme.palette.background.paper
   },
-  visitsNumberContainer: {
-    display: 'flex',
-    alignItems: 'center',
-    flexGrow: 1,
-    paddingBottom: theme.spacing(1)
+  roundImage: {
+    borderRadius: '50%'
   },
-  progressSection: {
-    marginBottom: theme.spacing(1)
+  flexGrow: 1,
+  paper: {
+    border: '1px solid #e3e3e3'
   },
-  progressTitle: {
-    marginBottom: theme.spacing(2)
+  tableRow: {
+    '&:hover': {
+      backgroundColor: '#EFEFEF'
+    },
+    height: 10
   },
-  progress: {
-    marginBottom: theme.spacing(1),
-    backgroundColor: theme.palette.primary.main
+  lastTableRow: {
+    borderTop: '2px solid gray'
   },
-  pieChartLegendWrapper: {
-    height: '100%',
-    display: 'flex',
-    flexDirection: 'column',
-    justifyContent: 'center',
-    marginRight: theme.spacing(1)
+  market: {
+    minWidth: 300
   },
-  legendItemContainer: {
-    display: 'flex',
-    alignItems: 'center',
-    marginBottom: theme.spacing(1)
+  balance: {
+    minWidth: 300
   },
-  fullHeightBody: {
-    display: 'flex',
-    flexGrow: 1,
-    flexDirection: 'column',
-    justifyContent: 'space-between'
+  orders: {
+    minWidth: 300
   },
-  tableWidget: {
-    overflowX: 'auto'
+  priceChart: {
+    minWidth: 300
   },
-  progressBar: {
-    backgroundColor: theme.palette.warning.main
+  dilligence: {
+    minWidth: 300
   },
-  performanceLegendWrapper: {
-    display: 'flex',
-    flexGrow: 1,
-    alignItems: 'center',
-    marginBottom: theme.spacing(1)
+  orderbook: {
+    minWidth: 300
   },
-  legendElement: {
-    display: 'flex',
-    alignItems: 'center',
-    marginRight: theme.spacing(2)
+  markets: {
+    minWidth: 300
   },
-  legendElementText: {
-    marginLeft: theme.spacing(1)
-  },
-  serverOverviewElement: {
-    display: 'flex',
-    alignItems: 'center',
-    maxWidth: '100%'
-  },
-  serverOverviewElementText: {
-    minWidth: 145,
-    paddingRight: theme.spacing(2)
-  },
-  serverOverviewElementChartWrapper: {
-    width: '100%'
-  },
-  mainChartBody: {
-    overflowX: 'auto'
-  },
-  mainChartHeader: {
-    width: '100%',
-    display: 'flex',
-    alignItems: 'center',
-    justifyContent: 'space-between',
-    [theme.breakpoints.only('xs')]: {
-      flexWrap: 'wrap'
-    }
-  },
-  mainChartHeaderLabels: {
-    display: 'flex',
-    alignItems: 'center',
-    [theme.breakpoints.only('xs')]: {
-      order: 3,
-      width: '100%',
-      justifyContent: 'center',
-      marginTop: theme.spacing(3),
-      marginBottom: theme.spacing(2)
-    }
-  },
-  mainChartHeaderLabel: {
-    display: 'flex',
-    alignItems: 'center',
-    marginLeft: theme.spacing(3)
-  },
-  mainChartSelectRoot: {
-    borderColor: theme.palette.text.hint + '80 !important'
-  },
-  mainChartSelect: {
-    padding: 10,
-    paddingRight: 25
-  },
-  mainChartLegentElement: {
-    fontSize: '18px !important',
-    marginLeft: theme.spacing(1)
+  trades: {
+    minWidth: 300
   }
 }))

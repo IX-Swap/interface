@@ -3,7 +3,6 @@ import {
   AppBar,
   Toolbar,
   IconButton,
-  InputBase,
   Menu,
   MenuItem,
   Fab,
@@ -12,9 +11,7 @@ import {
 import {
   Menu as MenuIcon,
   MailOutline as MailIcon,
-  NotificationsNone as NotificationsIcon,
   Person as AccountIcon,
-  Search as SearchIcon,
   Send as SendIcon,
   ArrowBack as ArrowBackIcon
 } from '@material-ui/icons'
@@ -56,28 +53,6 @@ const messages = [
   }
 ]
 
-const notifications = [
-  { id: 0, color: 'warning', message: 'Check out this awesome ticket' },
-  {
-    id: 1,
-    color: 'success',
-    type: 'info',
-    message: 'What is the best way to get ...'
-  },
-  {
-    id: 2,
-    color: 'secondary',
-    type: 'notification',
-    message: 'This is just a simple notification'
-  },
-  {
-    id: 3,
-    color: 'primary',
-    type: 'e-commerce',
-    message: '12 new orders has arrived today'
-  }
-]
-
 const Header = ({ classes, isSidebarOpened, toggleSidebar, ...props }) => (
   <AppBar position='fixed' className={classes.appBar}>
     <Toolbar className={classes.toolbar}>
@@ -103,45 +78,18 @@ const Header = ({ classes, isSidebarOpened, toggleSidebar, ...props }) => (
           />
         )}
       </IconButton>
-      <Typography variant='h6' weight='medium' className={classes.logotype}>React Material Admin</Typography>
+      <Typography variant='h6' weight='medium' className={classes.logotype}>
+        Digital Securities
+      </Typography>
       <div className={classes.grow} />
-      <div
-        className={classNames(classes.search, {
-          [classes.searchFocused]: props.isSearchOpen
-        })}
-      >
-        <div
-          className={classNames(classes.searchIcon, {
-            [classes.searchIconOpened]: props.isSearchOpen
-          })}
-          onClick={props.toggleSearch}
-        >
-          <SearchIcon classes={{ root: classes.headerIcon }} />
-        </div>
-        <InputBase
-          placeholder='Search…'
-          classes={{
-            root: classes.inputRoot,
-            input: classes.inputInput
-          }}
-        />
-      </div>
+
       <IconButton
         color='inherit'
         aria-haspopup='true'
         aria-controls='mail-menu'
         onClick={props.openNotificationsMenu}
         className={classes.headerMenuButton}
-      >
-        <Badge
-          badgeContent={
-            props.isNotificationsUnread ? notifications.length : null
-          }
-          colortheme='warning'
-        >
-          <NotificationsIcon classes={{ root: classes.headerIcon }} />
-        </Badge>
-      </IconButton>
+      />
       <IconButton
         color='inherit'
         aria-haspopup='true'
@@ -345,22 +293,22 @@ const styles = theme => ({
       width: 250
     }
   },
-  searchIcon: {
-    width: 36,
-    right: 0,
-    height: '100%',
-    position: 'absolute',
-    display: 'flex',
-    alignItems: 'center',
-    justifyContent: 'center',
-    transition: theme.transitions.create('right'),
-    '&:hover': {
-      cursor: 'pointer'
-    }
-  },
-  searchIconOpened: {
-    right: theme.spacing.unit * 1.25
-  },
+  // searchIcon: {
+  //   width: 36,
+  //   right: 0,
+  //   height: '100%',
+  //   position: 'absolute',
+  //   display: 'flex',
+  //   alignItems: 'center',
+  //   justifyContent: 'center',
+  //   transition: theme.transitions.create('right'),
+  //   '&:hover': {
+  //     cursor: 'pointer'
+  //   }
+  // },
+  // searchIconOpened: {
+  //   right: theme.spacing.unit * 1.25
+  // },
   inputRoot: {
     color: 'inherit',
     width: '100%'

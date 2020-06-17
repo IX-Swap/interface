@@ -1,7 +1,11 @@
 import React from 'react'
 
-var LayoutStateContext = React.createContext()
-var LayoutDispatchContext = React.createContext()
+const LayoutStateContext = React.createContext()
+const LayoutDispatchContext = React.createContext()
+
+const initialState = {
+  isSidebarOpened: false
+}
 
 function layoutReducer (state, action) {
   switch (action.type) {
@@ -14,9 +18,7 @@ function layoutReducer (state, action) {
 }
 
 function LayoutProvider ({ children }) {
-  var [state, dispatch] = React.useReducer(layoutReducer, {
-    isSidebarOpened: false
-  })
+  const [state, dispatch] = React.useReducer(layoutReducer, initialState)
   return (
     <LayoutStateContext.Provider value={state}>
       <LayoutDispatchContext.Provider value={dispatch}>
@@ -27,7 +29,7 @@ function LayoutProvider ({ children }) {
 }
 
 function useLayoutState () {
-  var context = React.useContext(LayoutStateContext)
+  const context = React.useContext(LayoutStateContext)
   if (context === undefined) {
     throw new Error('useLayoutState must be used within a LayoutProvider')
   }
@@ -35,7 +37,7 @@ function useLayoutState () {
 }
 
 function useLayoutDispatch () {
-  var context = React.useContext(LayoutDispatchContext)
+  const context = React.useContext(LayoutDispatchContext)
   if (context === undefined) {
     throw new Error('useLayoutDispatch must be used within a LayoutProvider')
   }

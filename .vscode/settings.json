@@ -1,0 +1,18 @@
+{
+  "diffEditor.ignoreTrimWhitespace": true,
+  "typescript.validate.enable": false,
+  "git.autofetch": true,
+  "extensions.ignoreRecommendations": false,
+  "javascript.format.enable": false,
+  "typescript.format.enable": false,
+  "javascript.validate.enable": false,
+  "editor.codeActionsOnSave": {
+    "source.fixAll.eslint": true
+  },
+  "[javascript]": {
+    "editor.formatOnSave": false
+  },
+  "eslint.alwaysShowStatus": true,
+  "javascript.updateImportsOnFileMove.enabled": "always",
+  "git.ignoreLimitWarning": true
+}

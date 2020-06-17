@@ -2,6 +2,7 @@ import { makeStyles } from '@material-ui/styles'
 
 export default makeStyles(theme => ({
   root: {
+    background: '#fff',
     display: 'flex',
     maxWidth: '100vw',
     overflowX: 'hidden'
