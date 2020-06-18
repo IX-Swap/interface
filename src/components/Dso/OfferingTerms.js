@@ -49,8 +49,10 @@ const OfferingTermItem = React.forwardRef(
       label,
       value,
       edit = false,
+      unit = '',
       control,
     }: {
+      unit?: string,
       control?: any,
       name?: string,
       edit?: boolean,
@@ -66,7 +68,12 @@ const OfferingTermItem = React.forwardRef(
           <Typography>{label}:</Typography>
         </Grid>
         <Grid item xs={6}>
-          {!edit && <Typography>{value}</Typography>}
+          {!edit && (
+            <Typography>
+              {value}
+              {unit ? ` ${unit}` : ''}
+            </Typography>
+          )}
           {edit && getOfferingTermComponent(name, ref, control, errors[name])}
         </Grid>
       </Grid>
@@ -87,6 +94,7 @@ const OfferingTerms = (
       <OfferingTermItem
         name="investmentPeriod"
         ref={ref}
+        unit="Months"
         label="Investment Period"
         edit={edit}
         // TODO:  Check if what the number denotes (eg months, yrs?)
@@ -95,7 +103,7 @@ const OfferingTerms = (
       <OfferingTermItem
         name="dividendYeild"
         ref={ref}
-        label="Divident Yield"
+        label="Dividend Yield"
         edit={edit}
         value={
           isNa(dso.dividendYeild) ? 'n/a' : toPercentage(dso.dividendYeild)
