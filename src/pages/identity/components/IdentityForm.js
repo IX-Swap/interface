@@ -1,22 +1,22 @@
 // @flow
-import React from 'react';
-import moment from 'moment';
-import { MenuItem } from '@material-ui/core';
+import React from 'react'
+import moment from 'moment'
+import { MenuItem } from '@material-ui/core'
 import {
   GENDERS_OPTS,
   MARITAL_STATUSES_OPTS,
   COUNTRIES_OPTS,
-  NATIONALITIES_OPTS,
-} from 'const/const';
-import { useUserState } from 'context/user';
-import IdentityField from './IdentityField';
-import type { Identity } from '../modules/types';
+  NATIONALITIES_OPTS
+} from 'const/const'
+import { useUserState } from 'context/user'
+import IdentityField from './IdentityField'
+import type { Identity } from '../modules/types'
 
 const IdentityForm = ({
   identity = {},
   useOwnEmail = false,
   rootName,
-  editMode,
+  editMode
 }: {
   identity?: Identity,
   useOwnEmail: boolean,
@@ -24,48 +24,48 @@ const IdentityForm = ({
   editMode: boolean,
 }) => {
   const {
-    user: { email = '' },
-  } = useUserState();
+    user: { email = '' }
+  } = useUserState()
 
-  const getFieldName = (name) => (rootName ? `${rootName}.${name}` : name);
+  const getFieldName = (name) => (rootName ? `${rootName}.${name}` : name)
 
   return (
     <>
       <IdentityField
         name={getFieldName('firstName')}
-        label="First Name"
+        label='First Name'
         value={identity.firstName}
         editMode={editMode}
         required
       />
       <IdentityField
         name={getFieldName('middleName')}
-        label="Middle Name"
+        label='Middle Name'
         value={identity.middleName}
         editMode={editMode}
       />
       <IdentityField
         name={getFieldName('lastName')}
-        label="Last Name"
+        label='Last Name'
         value={identity.lastName}
         editMode={editMode}
         required
       />
       <IdentityField
         name={getFieldName('dob')}
-        label="Date of Birth"
-        type="date"
+        label='Date of Birth'
+        type='date'
         value={identity.dob ? moment(identity.dob).format('MM/DD/YYYY') : ''}
         editMode={editMode}
         required
       />
       <IdentityField
         name={getFieldName('nationality')}
-        label="Nationality"
+        label='Nationality'
         value={identity.nationality}
         required
         editMode={editMode}
-        type="select"
+        type='select'
       >
         <MenuItem disabled value={undefined}>
           Nationality
@@ -78,10 +78,10 @@ const IdentityForm = ({
       </IdentityField>
       <IdentityField
         name={getFieldName('countryOfResidence')}
-        label="Country of Residence"
+        label='Country of Residence'
         value={identity.countryOfResidence}
         required
-        type="select"
+        type='select'
         editMode={editMode}
       >
         <MenuItem disabled value={undefined}>
@@ -95,23 +95,23 @@ const IdentityForm = ({
       </IdentityField>
       <IdentityField
         name={getFieldName('email')}
-        label="Email"
+        label='Email'
         value={useOwnEmail ? email : ((identity || {}).user || {}).email}
         required
         editMode={editMode}
       />
       <IdentityField
         name={getFieldName('contactNumber')}
-        label="Contact Number"
+        label='Contact Number'
         value={identity.contactNumber}
         required
         editMode={editMode}
       />
       <IdentityField
         name={getFieldName('gender')}
-        label="Gender"
+        label='Gender'
         value={identity.gender}
-        type="select"
+        type='select'
         editMode={editMode}
         required
       >
@@ -126,9 +126,9 @@ const IdentityForm = ({
       </IdentityField>
       <IdentityField
         name={getFieldName('maritalStatus')}
-        label="Marital Status"
+        label='Marital Status'
         value={identity.maritalStatus}
-        type="select"
+        type='select'
         required
         editMode={editMode}
       >
@@ -142,7 +142,7 @@ const IdentityForm = ({
         ))}
       </IdentityField>
     </>
-  );
-};
+  )
+}
 
-export default IdentityForm;
+export default IdentityForm

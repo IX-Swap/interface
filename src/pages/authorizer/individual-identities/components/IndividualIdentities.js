@@ -1,26 +1,26 @@
 // @flow
-import React, { useState } from 'react';
-import IdentityList from './IdentityList';
-import IndividualIdentityPreview from './IndividualIdentityPreview';
+import React, { useState } from 'react'
+import IdentityList from './IdentityList'
+import IndividualIdentityPreview from './IndividualIdentityPreview'
 
 const authorizeIdentitiesPage = {
   LIST: 'LIST',
-  VIEW: 'VIEW',
-};
+  VIEW: 'VIEW'
+}
 
 const IndividualIdentities = () => {
-  const [page, setPage] = useState(authorizeIdentitiesPage.LIST);
-  const [identity, setIdentity] = useState(null);
+  const [page, setPage] = useState(authorizeIdentitiesPage.LIST)
+  const [identity, setIdentity] = useState(null)
 
-  console.log(identity);
+  console.log(identity)
 
   const onClickView = (selected) => {
-    setIdentity(selected);
-    setPage(authorizeIdentitiesPage.VIEW);
-  };
+    setIdentity(selected)
+    setPage(authorizeIdentitiesPage.VIEW)
+  }
 
   if (page === authorizeIdentitiesPage.LIST) {
-    return <IdentityList onClickView={onClickView} />;
+    return <IdentityList onClickView={onClickView} />
   }
 
   if (identity && page === authorizeIdentitiesPage.VIEW) {
@@ -29,8 +29,8 @@ const IndividualIdentities = () => {
         identity={identity}
         onClickBack={() => setPage(authorizeIdentitiesPage.LIST)}
       />
-    );
+    )
   }
-};
+}
 
-export default IndividualIdentities;
+export default IndividualIdentities

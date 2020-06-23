@@ -1,46 +1,46 @@
 // @flow
-import React from 'react';
-import { useHistory } from 'react-router-dom';
-import { useForm, FormContext } from 'react-hook-form';
-import { Button, Box } from '@material-ui/core';
-import { isEmpty } from 'lodash';
-import { useIsAccredited } from 'services/acl';
-import IdentitySection from '../../components/IdentitySection';
-import IdentityField from '../../components/IdentityField';
-import IdentityForm from '../../components/IdentityForm';
-import { useIdentityState, useIdentityDispatch } from '../../modules';
-import { toggleEditMode } from '../../modules/actions';
+import React from 'react'
+import { useHistory } from 'react-router-dom'
+import { useForm, FormContext } from 'react-hook-form'
+import { Button, Box } from '@material-ui/core'
+import { isEmpty } from 'lodash'
+import { useIsAccredited } from 'services/acl'
+import IdentitySection from '../../components/IdentitySection'
+import IdentityField from '../../components/IdentityField'
+import IdentityForm from '../../components/IdentityForm'
+import { useIdentityState, useIdentityDispatch } from '../../modules'
+import { toggleEditMode } from '../../modules/actions'
 
 // NOTE: Temporary component should fix/refactor later
 const IdentityPreview = () => {
-  const methods = useForm();
-  const history = useHistory();
-  const { identity, corporate } = useIdentityState();
-  const dispatch = useIdentityDispatch();
-  const isAccredited = useIsAccredited();
+  const methods = useForm()
+  const history = useHistory()
+  const { identity, corporate } = useIdentityState()
+  const dispatch = useIdentityDispatch()
+  const isAccredited = useIsAccredited()
 
   const handleCreateCorporate = () => {
-    toggleEditMode(dispatch, true);
+    toggleEditMode(dispatch, true)
 
-    history.push('/identity/corporate');
-  };
+    history.push('/identity/corporate')
+  }
 
   const handleViewIdentity = () => {
     // change type, populate dataroom
-    history.push('/identity/individual');
-  };
+    history.push('/identity/individual')
+  }
 
   const handleViewCorporate = () => {
     // change type, populate dataroom
-    history.push('/identity/corporate');
-  };
+    history.push('/identity/corporate')
+  }
 
   return (
     <>
       {!isEmpty(identity) && (
         // eslint-disable-next-line react/jsx-props-no-spreading
         <FormContext {...methods}>
-          <Box position="relative">
+          <Box position='relative'>
             <form onSubmit={() => {}}>
               <IdentitySection
                 title={`${identity.firstName} ${identity.lastName}`}
@@ -52,8 +52,8 @@ const IdentityPreview = () => {
                 />
               </IdentitySection>
             </form>
-            <Box position="absolute" right="5em" top="0.8em">
-              <Button color="primary" onClick={handleViewIdentity}>
+            <Box position='absolute' right='5em' top='0.8em'>
+              <Button color='primary' onClick={handleViewIdentity}>
                 <b>View</b>
               </Button>
             </Box>
@@ -66,43 +66,43 @@ const IdentityPreview = () => {
       {!isEmpty(corporate) ? (
         // eslint-disable-next-line react/jsx-props-no-spreading
         <FormContext {...methods}>
-          <Box position="relative">
+          <Box position='relative'>
             <form onSubmit={() => {}}>
               <IdentitySection title={corporate.companyLegalName}>
                 <IdentityField
                   editMode={false}
-                  name="companyLegalName"
-                  label="Company Name"
+                  name='companyLegalName'
+                  label='Company Name'
                   size={6}
                   value={corporate.companyLegalName}
                 />
                 <IdentityField
                   editMode={false}
-                  name="registrationNumber"
-                  label="Company Registration Number"
+                  name='registrationNumber'
+                  label='Company Registration Number'
                   size={6}
                   value={corporate.registrationNumber}
                 />
                 <IdentityField
                   editMode={false}
-                  name="countryOfFormation"
-                  label="Country of Formation"
+                  name='countryOfFormation'
+                  label='Country of Formation'
                   size={6}
                   value={corporate.countryOfFormation}
-                  type="select"
+                  type='select'
                 />
                 <IdentityField
                   editMode={false}
-                  name="dateOfIncorporation"
-                  label="Date of Incorporation"
+                  name='dateOfIncorporation'
+                  label='Date of Incorporation'
                   size={6}
                   value={corporate.dateOfIncorporation}
-                  type="date"
+                  type='date'
                 />
               </IdentitySection>
             </form>
-            <Box position="absolute" right="5em" top="0.8em">
-              <Button color="primary" onClick={handleViewCorporate}>
+            <Box position='absolute' right='5em' top='0.8em'>
+              <Button color='primary' onClick={handleViewCorporate}>
                 <b> View</b>
               </Button>
             </Box>
@@ -110,9 +110,9 @@ const IdentityPreview = () => {
         </FormContext>
       ) : (
         <Button
-          type="button"
-          variant="contained"
-          color="primary"
+          type='button'
+          variant='contained'
+          color='primary'
           onClick={handleCreateCorporate}
           disabled={!isAccredited}
         >
@@ -120,7 +120,7 @@ const IdentityPreview = () => {
         </Button>
       )}
     </>
-  );
-};
+  )
+}
 
-export default IdentityPreview;
+export default IdentityPreview

@@ -1,9 +1,9 @@
-import React from 'react';
-import MarketModulee from './modules';
-import MonitornigModule from './components/Monitoring/modules';
-import OverviewExchange from './OverviewExchange';
-const { MarketProvider } = MarketModulee;
-const { MonitoringProvider } = MonitornigModule;
+import React from 'react'
+import MarketModulee from './modules'
+import MonitornigModule from './components/Monitoring/modules'
+import OverviewExchange from './OverviewExchange'
+const { MarketProvider } = MarketModulee
+const { MonitoringProvider } = MonitornigModule
 
 const Overview = () => {
   return (
@@ -12,7 +12,7 @@ const Overview = () => {
         <OverviewExchange />
       </MonitoringProvider>
     </MarketProvider>
-  );
-};
+  )
+}
 
-export default Overview;
+export default Overview

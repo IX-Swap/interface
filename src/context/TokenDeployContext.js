@@ -1,17 +1,17 @@
-import React from 'react';
-import logger from 'use-reducer-logger';
-import { postRequest } from '../services/httpRequests';
+import React from 'react'
+import logger from 'use-reducer-logger'
+import { postRequest } from '../services/httpRequests'
 
-const TokenDeployStateContext = React.createContext();
-const TokenDeployDispatchContext = React.createContext();
+const TokenDeployStateContext = React.createContext()
+const TokenDeployDispatchContext = React.createContext()
 
 export const tokenDeployActions = {
   TOKEN_DEPLOY_REQUEST: 'TOKEN_DEPLOY_REQUEST',
   TOKEN_DEPLOY_SUCCESS: 'TOKEN_DEPLOY_SUCCESS',
-  TOKEN_DEPLOY_FAILURE: 'TOKEN_DEPLOY_FAILURE',
-};
+  TOKEN_DEPLOY_FAILURE: 'TOKEN_DEPLOY_FAILURE'
+}
 
-export function tokenDeployReducer(state, action) {
+export function tokenDeployReducer (state, action) {
   switch (action.type) {
     case tokenDeployActions.TOKEN_DEPLOY_REQUEST:
       return {
@@ -20,8 +20,8 @@ export function tokenDeployReducer(state, action) {
         success: false,
         error: null,
         message: 'Deploying Contract...',
-        data: null,
-      };
+        data: null
+      }
     case tokenDeployActions.TOKEN_DEPLOY_SUCCESS:
       return {
         ...state,
@@ -29,8 +29,8 @@ export function tokenDeployReducer(state, action) {
         success: true,
         error: null,
         message: action.payload.message,
-        data: action.payload.data,
-      };
+        data: action.payload.data
+      }
     case tokenDeployActions.TOKEN_DEPLOY_FAILURE:
       return {
         ...state,
@@ -38,79 +38,81 @@ export function tokenDeployReducer(state, action) {
         success: false,
         error: action.payload.message,
         message: null,
-        data: null,
-      };
+        data: null
+      }
     default:
-      throw new Error(`Unhandled action type: ${action.type}`);
+      throw new Error(`Unhandled action type: ${action.type}`)
   }
 }
 
-export function TokenDeployProvider({ children }) {
+export function TokenDeployProvider ({ children }) {
   const thisReducer =
     process.env.NODE_ENV === 'development'
       ? logger(tokenDeployReducer)
-      : tokenDeployReducer;
+      : tokenDeployReducer
   const [state, dispatch] = React.useReducer(thisReducer, {
     isLoading: false,
     success: false,
     error: null,
     message: null,
-    data: null,
-  });
+    data: null
+  })
   return (
     <TokenDeployStateContext.Provider value={state}>
       <TokenDeployDispatchContext.Provider value={dispatch}>
         {children}
       </TokenDeployDispatchContext.Provider>
     </TokenDeployStateContext.Provider>
-  );
+  )
 }
 
-export function useTokenDeployState() {
-  const context = React.useContext(TokenDeployStateContext);
-  if (context === undefined)
+export function useTokenDeployState () {
+  const context = React.useContext(TokenDeployStateContext)
+  if (context === undefined) {
     throw new Error(
       'useTokenDeployState ' + 'must be called in a ' + 'TokenDeployProvider'
-    );
-  return context;
+    )
+  }
+  return context
 }
 
-export function useTokenDeployDispatch() {
-  const context = React.useContext(TokenDeployDispatchContext);
-  if (context === undefined)
+export function useTokenDeployDispatch () {
+  const context = React.useContext(TokenDeployDispatchContext)
+  if (context === undefined) {
     throw new Error(
       'useTokenDeployDispatch ' +
         'must be called within a ' +
         'TokenDeployProvider'
-    );
-  return context;
+    )
+  }
+  return context
 }
 
-async function deployToken(dispatch, name, symbol, decimals) {
-  dispatch({ type: tokenDeployActions.TOKEN_DEPLOY_REQUEST });
+async function deployToken (dispatch, name, symbol, decimals) {
+  dispatch({ type: tokenDeployActions.TOKEN_DEPLOY_REQUEST })
 
   try {
-    const uri = '/blockchain/contracts/deploy';
-    const result = postRequest(uri, { name, symbol, decimals });
-    const response = await result.json();
+    const uri = '/blockchain/contracts/deploy'
+    const result = postRequest(uri, { name, symbol, decimals })
+    const response = await result.json()
 
     if (result.status === 200) {
       dispatch({
         type: tokenDeployActions.TOKEN_DEPLOY_SUCCESS,
-        payload: response,
-      });
+        payload: response
+      })
     } else {
       dispatch({
         type: tokenDeployActions.TOKEN_DEPLOY_FAILURE,
-        payload: response,
-      });
+        payload: response
+      })
     }
   } catch (err) {
     dispatch({
       type: tokenDeployActions.TOKEN_DEPLOY_FAILURE,
-      payload: { message: 'Failed to deploy the token contract.' },
-    });
+      payload: { message: 'Failed to deploy the token contract.' }
+    })
   }
 }
 
-export { deployToken };
+export { deployToken }

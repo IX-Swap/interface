@@ -1,12 +1,12 @@
 // @flow
-import { monitoringActions } from './types';
-function setBidAndAsk(dispatch, payload) {
-  dispatch({ 
+import { monitoringActions } from './types'
+function setBidAndAsk (dispatch, payload) {
+  dispatch({
     type: monitoringActions.SET_BID_ASK_PAYLOAD,
-    data: payload,
-  });
+    data: payload
+  })
 }
 
 export default {
-  setBidAndAsk,
-};
+  setBidAndAsk
+}

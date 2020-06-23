@@ -1,24 +1,24 @@
-import React from 'react';
-import { useHistory } from 'react-router-dom';
-import TableWithPagination from 'components/TableWithPagination';
-import storage from 'services/storageHelper';
-import { columns } from './data';
+import React from 'react'
+import { useHistory } from 'react-router-dom'
+import TableWithPagination from 'components/TableWithPagination'
+import storage from 'services/storageHelper'
+import { columns } from './data'
 
 const DepositList = () => {
-  const history = useHistory();
+  const history = useHistory()
   return (
     <TableWithPagination
-      id="accountDepositList"
+      id='accountDepositList'
       endpoint={`/accounts/cash/withdrawals/list/${storage.getUserId()}`}
       columns={columns}
       onRowClick={(mWidhrawal) => {
         history.push({
           pathname: '/accounts/banks/withdrawal-view',
-          state: { withdrawal: mWidhrawal },
-        });
+          state: { withdrawal: mWidhrawal }
+        })
       }}
     />
-  );
-};
+  )
+}
 
-export default DepositList;
+export default DepositList

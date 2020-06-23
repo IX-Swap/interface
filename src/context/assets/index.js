@@ -1,46 +1,46 @@
 // @flow
-import React, { useMemo } from 'react';
-import logger from 'use-reducer-logger';
-import type { Node } from 'react';
-import { initialState } from './state';
-import assetsReducer from './reducers';
+import React, { useMemo } from 'react'
+import logger from 'use-reducer-logger'
+import type { Node } from 'react'
+import { initialState } from './state'
+import assetsReducer from './reducers'
 
-import type { AssetsListState } from './types';
+import type { AssetsListState } from './types'
 
-const StateContext = React.createContext<AssetsListState>(initialState);
-const DispatchContext = React.createContext();
+const StateContext = React.createContext<AssetsListState>(initialState)
+const DispatchContext = React.createContext()
 
-export function useAssetsState(): AssetsListState {
-  const context = React.useContext<AssetsListState>(StateContext);
+export function useAssetsState (): AssetsListState {
+  const context = React.useContext<AssetsListState>(StateContext)
   if (context === undefined) {
-    throw new Error('useAssetsState must be used within a AssetsProvider');
+    throw new Error('useAssetsState must be used within a AssetsProvider')
   }
 
-  return context;
+  return context
 }
 
-export function useAssetsDispatch() {
-  const context = React.useContext(DispatchContext);
+export function useAssetsDispatch () {
+  const context = React.useContext(DispatchContext)
   if (context === undefined) {
-    throw new Error('useAssetsDispatch must be used within a AssetsProvider');
+    throw new Error('useAssetsDispatch must be used within a AssetsProvider')
   }
 
-  return context;
+  return context
 }
 
-export function AssetsProvider({ children }: { children?: Node }) {
+export function AssetsProvider ({ children }: { children?: Node }) {
   const thisReducer = useMemo(
     () =>
       process.env.NODE_ENV === 'development'
         ? logger(assetsReducer)
         : assetsReducer,
     []
-  );
+  )
 
   const [state, dispatch] = React.useReducer<AssetsListState, AssetsListState>(
     thisReducer,
     initialState
-  );
+  )
 
   return (
     <StateContext.Provider value={state}>
@@ -48,5 +48,5 @@ export function AssetsProvider({ children }: { children?: Node }) {
         {children}
       </DispatchContext.Provider>
     </StateContext.Provider>
-  );
+  )
 }

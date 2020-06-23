@@ -1,37 +1,37 @@
 // @flow
-import { getRequest } from 'services/httpRequests';
+import { getRequest } from 'services/httpRequests'
 
-import { listViewActions } from './types';
+import { listViewActions } from './types'
 
-async function getListItem(dispatch: Function, listId: string) {
+async function getListItem (dispatch: Function, listId: string) {
   try {
-    dispatch({ type: listViewActions.GET_LISTING_ITEM_REQUEST });
+    dispatch({ type: listViewActions.GET_LISTING_ITEM_REQUEST })
 
-    const uri = `/exchange/listings/${listId}`;
-    const result = await getRequest(uri);
-    const response = await result.json();
+    const uri = `/exchange/listings/${listId}`
+    const result = await getRequest(uri)
+    const response = await result.json()
 
     if (result.status === 200) {
-      dispatch({ 
+      dispatch({
         type: listViewActions.GET_LISTING_ITEM_SUCCESS,
-        data: response.data,
-      });
-      
-      return response.data;
+        data: response.data
+      })
+
+      return response.data
     } else {
-      dispatch({ type: listViewActions.GET_LISTING_ITEM_FAILURE });
+      dispatch({ type: listViewActions.GET_LISTING_ITEM_FAILURE })
     }
 
-    throw new Error(response.message);
+    throw new Error(response.message)
   } catch (err) {
-      dispatch({ 
-        ...err,
-        type: listViewActions.GET_LISTING_ITEM_FAILURE
-      });
-      throw new Error(err);
+    dispatch({
+      ...err,
+      type: listViewActions.GET_LISTING_ITEM_FAILURE
+    })
+    throw new Error(err)
   }
 }
 
 export default {
-  getListItem,
-};
+  getListItem
+}

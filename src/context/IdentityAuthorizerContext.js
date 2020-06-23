@@ -1,21 +1,20 @@
-import React, { useMemo } from 'react';
-import logger from 'use-reducer-logger';
-import { getRequest, putRequest, postRequest } from '../services/httpRequests';
+import React, { useMemo } from 'react'
+import logger from 'use-reducer-logger'
 
 // constants
-const StateContext = React.createContext();
-const DispatchContext = React.createContext();
+const StateContext = React.createContext()
+const DispatchContext = React.createContext()
 
-const actions = {};
+const actions = {}
 
 export const IDENTITY_STATUS = {
   INIT: 'INIT',
   IDLE: 'IDLE',
   GETTING: 'GETTING',
-  SAVING: 'SAVING',
-};
+  SAVING: 'SAVING'
+}
 
-const STATUS = IDENTITY_STATUS;
+const STATUS = IDENTITY_STATUS
 
 const initialState = {
   identity: {},
@@ -26,36 +25,36 @@ const initialState = {
   shouldCreateNew: false,
   error: {
     save: null,
-    get: null,
-  },
-};
+    get: null
+  }
+}
 
 // reducer
-export function identityAuthorizerReducer(state, { type, payload }) {
+export function identityAuthorizerReducer (state, { type, payload }) {
   switch (type) {
     case actions.GET_IDENTITY_REQUEST:
       return {
         ...state,
         status: STATUS.GETTING,
-        error: { ...state.error, get: null },
-      };
+        error: { ...state.error, get: null }
+      }
 
     default:
-      throw new Error(`Unhandled action type: ${type}`);
+      throw new Error(`Unhandled action type: ${type}`)
   }
 }
 
 // context and hooks
-export function IdentityAuthorizerProvider({ children }) {
+export function IdentityAuthorizerProvider ({ children }) {
   const thisReducer = useMemo(
     () =>
       process.env.NODE_ENV === 'development'
         ? logger(identityAuthorizerReducer)
         : identityAuthorizerReducer,
     []
-  );
+  )
 
-  const [state, dispatch] = React.useReducer(thisReducer, initialState);
+  const [state, dispatch] = React.useReducer(thisReducer, initialState)
 
   return (
     <StateContext.Provider value={state}>
@@ -63,25 +62,25 @@ export function IdentityAuthorizerProvider({ children }) {
         {children}
       </DispatchContext.Provider>
     </StateContext.Provider>
-  );
+  )
 }
 
-export function useIdentityAuthorzierState() {
-  const context = React.useContext(StateContext);
+export function useIdentityAuthorzierState () {
+  const context = React.useContext(StateContext)
   if (context === undefined) {
     throw new Error(
       'useIdentityAuthorizerState must be used within a IdentityAuthorizerProvider'
-    );
+    )
   }
-  return context;
+  return context
 }
 
-export function useIdentityAuthorizerDispatch() {
-  const context = React.useContext(DispatchContext);
+export function useIdentityAuthorizerDispatch () {
+  const context = React.useContext(DispatchContext)
   if (context === undefined) {
     throw new Error(
       'useIdentityAuthorizerDispatch must be used within a IdentityAuthorizerProvider'
-    );
+    )
   }
-  return context;
+  return context
 }

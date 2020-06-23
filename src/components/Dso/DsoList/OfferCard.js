@@ -1,30 +1,30 @@
 // @flow
-import React from 'react';
-import { Paper, Grid, Box, Typography, Button } from '@material-ui/core';
-import type { Dso } from 'context/dso/types';
-import { formatMoney } from 'helpers/formatNumbers';
-import OfferDetail from '../OfferDetail';
-import DsoTitle from '../DsoTitle';
+import React from 'react'
+import { Paper, Grid, Box, Typography, Button } from '@material-ui/core'
+import type { Dso } from 'context/dso/types'
+import { formatMoney } from 'helpers/formatNumbers'
+import OfferDetail from '../OfferDetail'
+import DsoTitle from '../DsoTitle'
 
 const OfferCard = ({
   dso,
-  onClickView,
+  onClickView
 }: {
   dso: Dso,
   onClickView: Function,
 }) => {
-  const currency = dso.currency.length ? dso.currency[0] : {};
+  const currency = dso.currency.length ? dso.currency[0] : {}
 
   return (
     <Paper>
       <Box px={4} pt={2} pb={4}>
-        <Grid container justify="space-between" spacing={2}>
+        <Grid container justify='space-between' spacing={2}>
           <Grid
             item
             container
             xs={9}
-            justify="space-between"
-            direction="column"
+            justify='space-between'
+            direction='column'
           >
             <Box pt={1}>
               <DsoTitle
@@ -39,7 +39,7 @@ const OfferCard = ({
                 <Typography paragraph>
                   <span
                     dangerouslySetInnerHTML={{
-                      __html: dso.introduction,
+                      __html: dso.introduction
                     }}
                   />
                 </Typography>
@@ -48,36 +48,36 @@ const OfferCard = ({
 
             <Button
               style={{ width: '120px' }}
-              variant="contained"
-              color="primary"
+              variant='contained'
+              color='primary'
               onClick={onClickView}
             >
               View
             </Button>
           </Grid>
           <Grid item xs={3}>
-            <OfferDetail label="Status" value={dso.status} />
+            <OfferDetail label='Status' value={dso.status} />
             <OfferDetail
-              label="Capital Structure"
+              label='Capital Structure'
               value={dso.capitalStructure}
             />
             <OfferDetail
-              label="Unit Price"
+              label='Unit Price'
               value={formatMoney(dso.pricePerUnit, currency.symbol)}
             />
             <OfferDetail
-              label="Total Fundraising Amount"
+              label='Total Fundraising Amount'
               value={formatMoney(dso.totalFundraisingAmount, currency.symbol)}
             />
             <OfferDetail
-              label="Minimum Investment"
+              label='Minimum Investment'
               value={formatMoney(dso.minimumInvestment, dso.tokenSymbol)}
             />
           </Grid>
         </Grid>
       </Box>
     </Paper>
-  );
-};
+  )
+}
 
-export default OfferCard;
+export default OfferCard

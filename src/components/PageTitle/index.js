@@ -1,34 +1,34 @@
 // @flow
-import React from 'react';
-import { useHistory } from 'react-router-dom';
-import { Typography, Grid, IconButton } from '@material-ui/core';
-import ArrowBackIosIcon from '@material-ui/icons/ArrowBackIos';
-import { makeStyles } from '@material-ui/styles';
+import React from 'react'
+import { useHistory } from 'react-router-dom'
+import { Typography, Grid, IconButton } from '@material-ui/core'
+import ArrowBackIosIcon from '@material-ui/icons/ArrowBackIos'
+import { makeStyles } from '@material-ui/styles'
 
 const useStyles = makeStyles(() => ({
   pageTitle: {
-    lineHeight: '2em',
-  },
-}));
+    lineHeight: '2em'
+  }
+}))
 
 const PageTitle = ({
   title,
   subPage = false,
-  backUrl,
+  backUrl
 }: {
   title: string,
   subPage?: boolean,
   backUrl?: string,
 }) => {
-  const classes = useStyles();
-  const history = useHistory();
+  const classes = useStyles()
+  const history = useHistory()
 
   return (
-    <Grid container alignItems="center">
+    <Grid container alignItems='center'>
       {subPage && (
         <Grid item>
           <IconButton
-            size="small"
+            size='small'
             onClick={() => (backUrl ? history.push(backUrl) : history.goBack())}
           >
             <ArrowBackIosIcon />
@@ -44,7 +44,7 @@ const PageTitle = ({
         </Typography>
       </Grid>
     </Grid>
-  );
-};
+  )
+}
 
-export default PageTitle;
+export default PageTitle

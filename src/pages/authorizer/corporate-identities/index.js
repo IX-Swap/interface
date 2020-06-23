@@ -1,13 +1,13 @@
-import React from 'react';
-import CorporateIdentities from './components/CorporateIdentities';
-import AuthorizerIdentityModule from './modules';
+import React from 'react'
+import CorporateIdentities from './components/CorporateIdentities'
+import AuthorizerIdentityModule from './modules'
 
-const { AuthorizerIdentityListProvider } = AuthorizerIdentityModule;
+const { AuthorizerIdentityListProvider } = AuthorizerIdentityModule
 
 const Identities = () => (
   <AuthorizerIdentityListProvider>
     <CorporateIdentities />
   </AuthorizerIdentityListProvider>
-);
+)
 
-export default Identities;
+export default Identities

@@ -1,5 +1,5 @@
 // @flow
-import actionGenerator from 'context/base/withPagination/actions';
+import actionGenerator from 'context/base/withPagination/actions'
 
 export const init = (id: string) => {
   // Dso List
@@ -7,10 +7,10 @@ export const init = (id: string) => {
     'dsoList',
     `/issuance/dso/list/${id}`,
     {}
-  );
+  )
 
   return {
     getDsoList,
-    ...dsoListPageMethods,
-  };
-};
+    ...dsoListPageMethods
+  }
+}

@@ -1,83 +1,81 @@
-import React, { useState, useEffect, useMemo } from 'react';
-import classNames from 'classnames';
-import { Button, Typography } from '@material-ui/core';
+import React, { useState, useEffect, useMemo } from 'react'
+import classNames from 'classnames'
 
 // Components
-import { Paper, Box } from '@material-ui/core';
-import AccountBalanceWalletIcon from '@material-ui/icons/AccountBalanceWallet';
+import { Paper, Box, Button, Typography } from '@material-ui/core'
+import AccountBalanceWalletIcon from '@material-ui/icons/AccountBalanceWallet'
 
 // Config/Endpoints
-import { ENDPOINT_URL } from 'config';
-import localStore from 'services/storageHelper';
+import { ENDPOINT_URL } from 'config'
+import localStore from 'services/storageHelper'
 
 // Modules
-import { subscribeToSocket } from 'services/socket';
-import { numberWithCommas } from 'utils/utils';
-import NumberFormat from 'react-number-format';
-import PostOrderActions from './modules/actions';
-import Modules from './modules';
+import { subscribeToSocket } from 'services/socket'
+import { numberWithCommas } from 'utils/utils'
+import NumberFormat from 'react-number-format'
+import PostOrderActions from './modules/actions'
+import Modules from './modules'
 
 // Market Modules
-import MarketModules from '../../modules';
+import MarketModules from '../../modules'
 
 // Monitoring Module
-import MonitoringModule from '../Monitoring/modules';
+import MonitoringModule from '../Monitoring/modules'
 
 // Styles
-import useStyles from '../styles';
+import useStyles from '../styles'
 
-const { MarketState } = MarketModules;
-const { MonitoringState } = MonitoringModule;
-const { usePostOrderDispatch } = Modules;
+const { MarketState } = MarketModules
+const { MonitoringState } = MonitoringModule
+const { usePostOrderDispatch } = Modules
 const BidsAsksHistory = (props) => {
-  const { id } = props;
-  const classes = useStyles();
-  const _userId = localStore.getUserId();
+  const { id } = props
+  const classes = useStyles()
+  const _userId = localStore.getUserId()
 
   // Initialized Asks/Bids History state for  Payload
-  const asksBidsHistoryData = MonitoringState();
-  const marketStateData = MarketState();
+  const asksBidsHistoryData = MonitoringState()
+  const marketStateData = MarketState()
 
-  const { items } = marketStateData;
-  const marketListItem = items.length && items.find((item) => item._id === id);
+  const { items } = marketStateData
+  const marketListItem = items.length && items.find((item) => item._id === id)
 
   // eslint-disable-next-line
   const [collection, setCollection] = useState(false);
-  const { SUBSCRIBE_API } = ENDPOINT_URL;
-  const { BIDS_ASKS } = SUBSCRIBE_API;
+  const { SUBSCRIBE_API } = ENDPOINT_URL
+  const { BIDS_ASKS } = SUBSCRIBE_API
 
   // State for the RESET FORM fields
   const [bidForm, setBidFields] = useState({
     price: 0,
     amount: 0,
-    total: 0,
-  });
+    total: 0
+  })
 
   const [askForm, setAskFields] = useState({
     price: 0,
     amount: 0,
-    total: 0,
-  });
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    total: 0
+  })
 
   // Handle change/update for the fields
   const updateBidField = (e) => {
-    const { name } = e.target;
-    const { value } = e.target;
+    const { name } = e.target
+    const { value } = e.target
     setBidFields({
       ...bidForm,
-      [name]: value,
-    });
-  };
+      [name]: value
+    })
+  }
 
   const updateAskField = (e) => {
-    const { name } = e.target;
-    const { value } = e.target;
+    const { name } = e.target
+    const { value } = e.target
     setAskFields({
       ...askForm,
-      [name]: value,
-    });
-  };
+      [name]: value
+    })
+  }
 
   // Subscribe to the bids/asks
   // TODO: Better way to implement this locally/globally

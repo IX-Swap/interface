@@ -1,6 +1,6 @@
 // @flow
-import { postRequest } from 'services/httpRequests';
-import storage from 'services/storageHelper';
+import { postRequest } from 'services/httpRequests'
+import storage from 'services/storageHelper'
 
 export const deposit = async (payload: {
   depositCode: string,
@@ -8,8 +8,8 @@ export const deposit = async (payload: {
   asset: string,
   otp: string,
 }) => {
-  const url = `/accounts/cash/deposits/${storage.getUserId()}`;
-  const response = await postRequest(url, payload);
+  const url = `/accounts/cash/deposits/${storage.getUserId()}`
+  const response = await postRequest(url, payload)
 
-  return response.status === 200;
-};
+  return response.status === 200
+}

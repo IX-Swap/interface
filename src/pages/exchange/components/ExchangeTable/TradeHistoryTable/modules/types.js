@@ -4,4 +4,3 @@ export type TradeHistoryListState = {
     message?: string,
     error?: string,
 };
-    

@@ -4,15 +4,15 @@ export const assetsActions = {
   GET_ASSETS_SUCCESS: 'GET_ASSETS_SUCCESS',
   GET_ASSETS_FAILURE: 'GET_ASSETS_FAILURE',
 
-  SET_ASSET_TYPE: 'SET_ASSET_TYPE',
-};
+  SET_ASSET_TYPE: 'SET_ASSET_TYPE'
+}
 
 export const ASSETS_STATUS = {
   INIT: 'INIT',
   IDLE: 'IDLE',
   GETTING: 'GETTING',
-  SAVING: 'SAVING',
-};
+  SAVING: 'SAVING'
+}
 
 export interface BaseAsset {
   _id: string;

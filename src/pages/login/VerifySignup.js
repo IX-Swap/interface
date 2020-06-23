@@ -1,43 +1,43 @@
-import React, { useState } from 'react';
+import React, { useState } from 'react'
 import {
   Grid,
   Box,
   CircularProgress,
   Button,
-  Typography,
-} from '@material-ui/core';
+  Typography
+} from '@material-ui/core'
 
-import { withRouter } from 'react-router-dom';
+import { withRouter } from 'react-router-dom'
 import {
   useUserDispatch,
   useUserState,
-  verifySignup,
-} from 'context/UserContext';
+  verifySignup
+} from 'context/UserContext'
 
-function VerifySignup(props) {
-  const userDispatch = useUserDispatch();
-  const userState = useUserState();
+function VerifySignup (props) {
+  const userDispatch = useUserDispatch()
+  const userState = useUserState()
   const handleSubmit = () => {
-    verifySignup(userDispatch, props.token);
-  };
+    verifySignup(userDispatch, props.token)
+  }
 
   return (
-    <Grid container justify="center">
+    <Grid container justify='center'>
       {userState?.isVerified ? (
         props.history.push('/login')
       ) : userState?.isLoading ? (
         <RenderSpinner />
       ) : (
-        <Grid container justify="center" alignItems="center">
+        <Grid container justify='center' alignItems='center'>
           <form>
             <Box m={5} p={5}>
-              <Typography component="h3">
+              <Typography component='h3'>
                 Please click the button below to verify signup.
               </Typography>
               <Box m={4}>
                 <Button
-                  variant="contained"
-                  color="primary"
+                  variant='contained'
+                  color='primary'
                   onClick={() => handleSubmit()}
                 >
                   Verify Sign Up
@@ -50,13 +50,13 @@ function VerifySignup(props) {
         </Grid>
       )}
     </Grid>
-  );
+  )
 }
 
 const RenderSpinner = () => (
-  <Box m={3} display="flex">
+  <Box m={3} display='flex'>
     <CircularProgress />
   </Box>
-);
+)
 
-export default withRouter(VerifySignup);
+export default withRouter(VerifySignup)

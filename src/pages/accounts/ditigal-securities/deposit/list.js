@@ -1,5 +1,5 @@
 // @flow
-import React, { useEffect, useRef } from 'react';
+import React, { useEffect, useRef } from 'react'
 import {
   TableContainer,
   TableRow,
@@ -9,35 +9,35 @@ import {
   TablePagination,
   Table,
   TableHead,
-  LinearProgress,
-} from '@material-ui/core';
-import { get } from 'lodash';
-import moment from 'moment';
-import DSModule from './modules/index';
-import DSActions from './modules/actions';
-import type { DSDeposit } from './modules/types';
+  LinearProgress
+} from '@material-ui/core'
+import { get } from 'lodash'
+import moment from 'moment'
+import DSModule from './modules/index'
+import DSActions from './modules/actions'
+import type { DSDeposit } from './modules/types'
 
 const {
   useDSDepositsListDispatch,
   useDSDepositsListState,
-  DS_DEPOSITS_LIST_STATUS,
-} = DSModule;
+  DS_DEPOSITS_LIST_STATUS
+} = DSModule
 
-const { setPage, setRowsPerPage, getDigitalSecurityDeposits } = DSActions;
+const { setPage, setRowsPerPage, getDigitalSecurityDeposits } = DSActions
 
 const useDepositsListLogic = (assetId: string) => {
-  const mountedRef = useRef(true);
-  const dsDispatch = useDSDepositsListDispatch();
-  const { page, limit, items, status, total } = useDSDepositsListState();
+  const mountedRef = useRef(true)
+  const dsDispatch = useDSDepositsListDispatch()
+  const { page, limit, items, status, total } = useDSDepositsListState()
 
   const handleChangeRowsPerPage = (newRows: number) => {
-    setRowsPerPage(dsDispatch, { rows: newRows });
-    setPage(dsDispatch, { page: 0 });
-  };
+    setRowsPerPage(dsDispatch, { rows: newRows })
+    setPage(dsDispatch, { page: 0 })
+  }
 
   const handleChangePage = (_, newPage: number) => {
-    setPage(dsDispatch, { page: newPage });
-  };
+    setPage(dsDispatch, { page: newPage })
+  }
 
   useEffect(() => {
     if (status === DS_DEPOSITS_LIST_STATUS.INIT) {
@@ -45,17 +45,17 @@ const useDepositsListLogic = (assetId: string) => {
         skip: page * limit,
         limit,
         // assetId,
-        ref: mountedRef,
-      });
+        ref: mountedRef
+      })
     }
-  }, [page, limit, status, dsDispatch, assetId]);
+  }, [page, limit, status, dsDispatch, assetId])
 
   useEffect(
     () => () => {
-      mountedRef.current = false;
+      mountedRef.current = false
     },
     []
-  );
+  )
 
   return {
     items,
@@ -64,9 +64,9 @@ const useDepositsListLogic = (assetId: string) => {
     total,
     limit,
     page,
-    status,
-  };
-};
+    status
+  }
+}
 
 type TableColumn = {
   label: string,
@@ -80,11 +80,11 @@ const columns: Array<TableColumn> = [
   {
     label: 'Digital Security',
     // $FlowFixMe
-    key: 'asset.symbol',
+    key: 'asset.symbol'
   },
   {
     label: 'Status',
-    key: 'status',
+    key: 'status'
   },
   {
     label: 'Amount',
@@ -92,20 +92,20 @@ const columns: Array<TableColumn> = [
     align: 'right',
     headAlign: 'right',
     render: (value) =>
-      value && value.toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,'),
+      value && value.toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,')
   },
   {
     label: 'Date',
     key: 'date',
-    render: (value) => moment(value).format('MM/DD/YYYY'),
+    render: (value) => moment(value).format('MM/DD/YYYY')
   },
   {
     label: 'Information',
-    key: 'hash',
-  },
-];
+    key: 'hash'
+  }
+]
 
-export default function DepositList({ assetId }: { assetId: string }) {
+export default function DepositList ({ assetId }: { assetId: string }) {
   const {
     status,
     total,
@@ -113,12 +113,12 @@ export default function DepositList({ assetId }: { assetId: string }) {
     page,
     items,
     handleChangePage,
-    handleChangeRowsPerPage,
-  } = useDepositsListLogic(assetId);
+    handleChangeRowsPerPage
+  } = useDepositsListLogic(assetId)
   return (
     <TableContainer>
       {status === DS_DEPOSITS_LIST_STATUS.GETTING && <LinearProgress />}
-      <Table aria-label="simple table">
+      <Table aria-label='simple table'>
         <TableHead>
           <TableRow>
             {columns.map((e) => (
@@ -158,8 +158,7 @@ export default function DepositList({ assetId }: { assetId: string }) {
                 rowsPerPage={limit}
                 page={page}
                 onChangeRowsPerPage={(evt: SyntheticInputEvent<HTMLElement>) =>
-                  handleChangeRowsPerPage(parseInt(evt.target.value))
-                }
+                  handleChangeRowsPerPage(parseInt(evt.target.value))}
                 onChangePage={handleChangePage}
               />
             </TableRow>
@@ -167,5 +166,5 @@ export default function DepositList({ assetId }: { assetId: string }) {
         )}
       </Table>
     </TableContainer>
-  );
+  )
 }

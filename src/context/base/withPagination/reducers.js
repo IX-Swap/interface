@@ -2,10 +2,10 @@
 import type {
   GenericActions,
   GenericStatus,
-  BaseStateWithPagination,
-} from './types';
+  BaseStateWithPagination
+} from './types'
 
-export default function generateReducers<T>(
+export default function generateReducers<T> (
   actionTypes: GenericActions,
   statusTypes: GenericStatus,
   additionalReducer?: (
@@ -18,8 +18,8 @@ export default function generateReducers<T>(
     state: BaseStateWithPagination<T>,
     load: any
   ): BaseStateWithPagination<T> => {
-    const { type, payload } = load;
-    const items = (payload && payload.items) || state.items;
+    const { type, payload } = load
+    const items = (payload && payload.items) || state.items
 
     switch (type) {
       case actionTypes.GET_REQUEST:
@@ -27,8 +27,8 @@ export default function generateReducers<T>(
           ...state,
           status: statusTypes.GETTING,
           error: '',
-          statusCode: null,
-        };
+          statusCode: null
+        }
       case actionTypes.GET_SUCCESS:
         return {
           ...state,
@@ -36,27 +36,27 @@ export default function generateReducers<T>(
           error: null,
           items: payload.items,
           total: payload.total,
-          statusCode: payload.statusCode,
-        };
+          statusCode: payload.statusCode
+        }
       case actionTypes.GET_FAILURE:
         return {
           ...state,
           status: statusTypes.IDLE,
           error: payload.message,
           statusCode: payload.statusCode,
-          items,
-        };
+          items
+        }
       case actionTypes.PAGE_CHANGE:
         return {
           ...state,
           status: statusTypes.INIT,
-          page: payload.page || 0,
-        };
+          page: payload.page || 0
+        }
       case actionTypes.ROWS_PER_PAGE_CHANGE:
         return {
           ...state,
-          limit: payload.rows,
-        };
+          limit: payload.rows
+        }
       case actionTypes.CLEAR_DATA:
         return {
           ...state,
@@ -64,23 +64,23 @@ export default function generateReducers<T>(
           items: [],
           error: '',
           errorCode: undefined,
-          statusCode: undefined,
-        };
+          statusCode: undefined
+        }
       case actionTypes.CLEAR_API:
         return {
           ...state,
           error: '',
           errorCode: undefined,
-          statusCode: undefined,
-        };
+          statusCode: undefined
+        }
       default:
         if (additionalReducer) {
-          return additionalReducer(statusTypes, state, load);
+          return additionalReducer(statusTypes, state, load)
         }
 
-        throw new Error(`Unhandled action type: ${type}`);
+        throw new Error(`Unhandled action type: ${type}`)
     }
-  };
+  }
 
-  return reducer;
+  return reducer
 }

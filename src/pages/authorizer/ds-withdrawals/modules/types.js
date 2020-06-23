@@ -1,5 +1,5 @@
 // @flow
-import type { Asset } from 'context/assets/types';
+import type { Asset } from 'context/assets/types'
 
 export type DSWithdrawal = {
   _id: string,

@@ -1,49 +1,49 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import React, { useState, useRef, useEffect } from 'react';
-import { withRouter, Link, useParams } from 'react-router-dom';
-import classNames from 'classnames';
-import moment from 'moment';
+import React, { useState, useRef, useEffect } from 'react'
+import { withRouter, Link, useParams } from 'react-router-dom'
+import classNames from 'classnames'
+import moment from 'moment'
 
 // Material Components
-import ArrowUpwardRoundedIcon from '@material-ui/icons/ArrowUpwardRounded';
-import ArrowDownwardRoundedIcon from '@material-ui/icons/ArrowDownwardRounded';
-import ArrowDropUpIcon from '@material-ui/icons/ArrowDropUp';
-import StarBorderIcon from '@material-ui/icons/StarBorder';
-import StarIcon from '@material-ui/icons/Star';
+import ArrowUpwardRoundedIcon from '@material-ui/icons/ArrowUpwardRounded'
+import ArrowDownwardRoundedIcon from '@material-ui/icons/ArrowDownwardRounded'
+import ArrowDropUpIcon from '@material-ui/icons/ArrowDropUp'
+import StarBorderIcon from '@material-ui/icons/StarBorder'
+import StarIcon from '@material-ui/icons/Star'
 import {
   Typography,
   ButtonGroup,
   Button,
   Tooltip,
-  IconButton,
-} from '@material-ui/core';
+  IconButton
+} from '@material-ui/core'
 
 // Local
-import { TIME_FORMAT } from 'config';
+import { TIME_FORMAT } from 'config'
 
 // Utils
-import { numberWithCommas } from 'utils/utils';
+import { numberWithCommas } from 'utils/utils'
 
 // Modules
-import MonitoringActions from './modules/actions';
-import Modules from './modules';
+import MonitoringActions from './modules/actions'
+import Modules from './modules'
 
 // Styles
-import useStyles from '../styles';
+import useStyles from '../styles'
 
-const { useMonitoringDispatch } = Modules;
-function Monitoring(props) {
-  const lastElement = useRef(null);
-  const dispatch = useMonitoringDispatch();
-  const classes = useStyles();
-  const [fav, setFav] = useState(false);
-  const [search, setSearch] = useState(false);
-  const [faveMarkets, setFaveMarkets] = useState(window.favMarkets || {});
-  const [availableQuotes, setAvailableQuotes] = useState([]);
-  const [quotesSelected, setQuotesSelected] = useState({});
-  const { title, type, data = [], lastPrice } = props;
-  const isAsksBids = props.type === 'asks' || props.type === 'bids';
-  const { id } = useParams();
+const { useMonitoringDispatch } = Modules
+function Monitoring (props) {
+  const lastElement = useRef(null)
+  const dispatch = useMonitoringDispatch()
+  const classes = useStyles()
+  const [fav, setFav] = useState(false)
+  const [search, setSearch] = useState(false)
+  const [faveMarkets, setFaveMarkets] = useState(window.favMarkets || {})
+  const [availableQuotes, setAvailableQuotes] = useState([])
+  const [quotesSelected, setQuotesSelected] = useState({})
+  const { title, type, data = [], lastPrice } = props
+  const isAsksBids = props.type === 'asks' || props.type === 'bids'
+  const { id } = useParams()
 
   useEffect(
     () => () => {
@@ -53,106 +53,104 @@ function Monitoring(props) {
         max: 0,
         price: 0,
         total: 0,
-        side: 'both',
-      });
+        side: 'both'
+      })
     },
     [id]
-  );
+  )
 
-  let filteredData = search || data;
+  let filteredData = search || data
   // handle on search function in the Trading Terminal
   const _onSearch = (evt) => {
-    const { target } = evt;
-    const { value } = target;
+    const { target } = evt
+    const { value } = target
 
     // Start searching if the input value is more than 3 characters
     if (value.length > 3) {
       const filterData = data.filter(
         (d) => d.name.toLowerCase().search(value.toLowerCase()) !== -1
-      );
+      )
 
-      setSearch(filterData);
+      setSearch(filterData)
     } else {
-      setSearch(data);
+      setSearch(data)
     }
-  };
+  }
 
   const toggleSelected = (id) => {
-    const isSelected = !quotesSelected[id];
+    const isSelected = !quotesSelected[id]
     setQuotesSelected({
       ...quotesSelected,
-      [id]: isSelected,
-    });
-  };
+      [id]: isSelected
+    })
+  }
 
   const toggleFavoriteMarket = (id) => {
-    const isSelected = !faveMarkets[id];
+    const isSelected = !faveMarkets[id]
     const newMarkets = {
       ...faveMarkets,
-      [id]: isSelected,
-    };
-    setFaveMarkets(newMarkets);
-  };
+      [id]: isSelected
+    }
+    setFaveMarkets(newMarkets)
+  }
 
-  let _handleStorePayload = () => {};
+  let _handleStorePayload = () => {}
 
   if (isAsksBids) {
     // SET PAYLOAD DATA FOR ORDERS
     if (type === 'asks') {
-      data.reverse();
+      data.reverse()
     }
 
     data.reduce((acc: number, datum: any) => {
-      const val = acc + datum.amount;
-      datum.max = val;
-      return val;
-    }, 0);
+      const val = acc + datum.amount
+      datum.max = val
+      return val
+    }, 0)
 
     if (type === 'asks') {
-      data.reverse();
+      data.reverse()
     }
 
     _handleStorePayload = (data, side) => {
       MonitoringActions.setBidAndAsk(dispatch, {
         ...data,
-        side,
-      });
-    };
+        side
+      })
+    }
   }
 
   useEffect(() => {
     if (lastElement && lastElement.current && ['asks'].includes(type)) {
-      lastElement.current.scrollTop = lastElement.current?.scrollHeight;
+      lastElement.current.scrollTop = lastElement.current?.scrollHeight
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [filteredData]);
+  }, [filteredData])
 
   useEffect(() => {
-    let mAvailableQuote = [];
-    const selected = {};
+    let mAvailableQuote = []
+    const selected = {}
     if (type === 'marketList') {
-      const seen = new Set();
+      const seen = new Set()
       mAvailableQuote = (props.data || []).filter((e) => {
-        const duplicate = seen.has(e.quote._id);
-        seen.add(e.quote._id);
-        selected[e.quote._id] = true;
-        return !duplicate;
-      });
-      setQuotesSelected(selected);
-      setAvailableQuotes(mAvailableQuote);
+        const duplicate = seen.has(e.quote._id)
+        seen.add(e.quote._id)
+        selected[e.quote._id] = true
+        return !duplicate
+      })
+      setQuotesSelected(selected)
+      setAvailableQuotes(mAvailableQuote)
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, [])
 
   if (type === 'marketList' && fav) {
-    filteredData = filteredData.filter((e) => faveMarkets[e._id]);
+    filteredData = filteredData.filter((e) => faveMarkets[e._id])
   }
 
   return (
     <>
       <section className={classes.monitoring}>
         {title && (
-          <Typography className={classes.monitoringTitle} variant="h1">
+          <Typography className={classes.monitoringTitle} variant='h1'>
             {title}
           </Typography>
         )}
@@ -160,16 +158,16 @@ function Monitoring(props) {
           <section className={classes.bidsHeader}>
             <Typography
               className={classes.maxBidsTitle}
-              variant="h3"
+              variant='h3'
               style={{
-                color: props.isBid ? '#047762' : '#b50000',
+                color: props.isBid ? '#047762' : '#b50000'
               }}
             >
               {lastPrice}
               {props.isBid ? (
-                <ArrowUpwardRoundedIcon fontSize="small" />
+                <ArrowUpwardRoundedIcon fontSize='small' />
               ) : (
-                <ArrowDownwardRoundedIcon fontSize="small" />
+                <ArrowDownwardRoundedIcon fontSize='small' />
               )}
             </Typography>
           </section>
@@ -188,14 +186,14 @@ function Monitoring(props) {
             <div className={classes.actionContainer}>
               <IconButton onClick={() => setFav(!fav)}>
                 {fav ? (
-                  <StarIcon fontSize="small" />
+                  <StarIcon fontSize='small' />
                 ) : (
-                  <StarBorderIcon fontSize="small" />
+                  <StarBorderIcon fontSize='small' />
                 )}
               </IconButton>
               <ButtonGroup
-                color="primary"
-                aria-label="outlined primary button group"
+                color='primary'
+                aria-label='outlined primary button group'
               >
                 {availableQuotes.map((e) => (
                   <Button
@@ -213,13 +211,13 @@ function Monitoring(props) {
               <input
                 onChange={_onSearch}
                 className={classes.searchInput}
-                type="search"
-                placeholder="search..."
+                type='search'
+                placeholder='search...'
               />
             </div>
             <ul className={classes.marketHeader}>
               <li className={classes.marketHeaderItem}>
-                Pair <ArrowDropUpIcon fontSize="small" color="disabled" />
+                Pair <ArrowDropUpIcon fontSize='small' color='disabled' />
               </li>
               <li className={classes.marketHeaderItem}>Price</li>
             </ul>
@@ -230,18 +228,25 @@ function Monitoring(props) {
             const activeStyle =
               d.side?.toLowerCase() === 'bid' || type === 'bids'
                 ? classes.positiveCell
-                : classes.negativeCell;
+                : classes.negativeCell
             const priceStyle = classNames(
               classes.defaultListItemStyle,
               activeStyle
-            );
+            )
 
             const amountStyle = classNames(
               classes.defaultListItemStyle,
               classes.rightAlign
-            );
+            )
 
             const renderMonitoringEl = (item) => {
+              const max = Math.max(...filteredData.map((e) => e.total))
+              const green = 'rgba(4, 119, 98, .1)'
+              const red = 'rgba(181, 0, 0, .1)'
+              const barStyle = {
+                width: `${(d.total / max) * 100}%`,
+                backgroundColor: type === 'bids' ? green : red
+              }
               switch (item) {
                 case 'marketList':
                   return (
@@ -254,19 +259,19 @@ function Monitoring(props) {
                         <p
                           style={{
                             width: '100%',
-                            justifyContent: 'flex-start',
+                            justifyContent: 'flex-start'
                           }}
                           className={classes.defaultListItemStyle}
                           data-value={i}
                         >
                           {faveMarkets[d._id] ? (
                             <StarIcon
-                              fontSize="small"
+                              fontSize='small'
                               onClick={() => toggleFavoriteMarket(d._id)}
                             />
                           ) : (
                             <StarBorderIcon
-                              fontSize="small"
+                              fontSize='small'
                               onClick={() => toggleFavoriteMarket(d._id)}
                             />
                           )}
@@ -274,7 +279,7 @@ function Monitoring(props) {
                         </p>
                       </Link>
                     )
-                  );
+                  )
                 case 'tradeHistory':
                   return (
                     <>
@@ -288,23 +293,15 @@ function Monitoring(props) {
                         title={`${moment(d.createdAt).fromNow()} (${
                           d.createdAt
                         })`}
-                        placement="top"
+                        placement='top'
                       >
                         <p className={classes.defaultListItemStyle}>
                           {moment(d.createdAt).format(TIME_FORMAT)}
                         </p>
                       </Tooltip>
                     </>
-                  );
+                  )
                 default:
-                  const max = Math.max(...filteredData.map((e) => e.total));
-                  const green = 'rgba(4, 119, 98, .1)';
-                  const red = 'rgba(181, 0, 0, .1)';
-                  const barStyle = {
-                    width: `${(d.total / max) * 100}%`,
-                    backgroundColor: type === 'bids' ? green : red,
-                  };
-
                   return (
                     <>
                       <div className={classes.barGraph} style={barStyle} />
@@ -318,9 +315,9 @@ function Monitoring(props) {
                         {numberWithCommas(d.total?.toFixed(4))}
                       </p>
                     </>
-                  );
+                  )
               }
-            };
+            }
 
             return (
               <li
@@ -330,12 +327,12 @@ function Monitoring(props) {
               >
                 {renderMonitoringEl(type)}
               </li>
-            );
+            )
           })}
         </ul>
       </section>
     </>
-  );
+  )
 }
 
-export default withRouter(Monitoring);
+export default withRouter(Monitoring)

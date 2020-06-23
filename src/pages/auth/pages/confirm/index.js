@@ -1,66 +1,66 @@
-import React, { useEffect, useState } from 'react';
-import { useHistory } from 'react-router-dom';
+/* eslint-disable react-hooks/exhaustive-deps */
+import React, { useEffect, useState } from 'react'
+import { useHistory } from 'react-router-dom'
 import {
   CircularProgress,
   Typography,
   Grid,
   Box,
-  Button,
-} from '@material-ui/core';
-import useQuery from 'hooks/useQuery';
+  Button
+} from '@material-ui/core'
+import useQuery from 'hooks/useQuery'
 
-import { postRequest } from 'services/httpRequests';
+import { postRequest } from 'services/httpRequests'
 
 // styles
-import useStyles from '../../styles';
+import useStyles from '../../styles'
 
 const initialState = {
   error: null,
   isVerified: false,
-  isLoading: true,
-};
+  isLoading: true
+}
 
 // TODO: Convert to Context later
 const Confirm = () => {
-  const classes = useStyles();
-  const history = useHistory();
-  const query = useQuery();
-  const token = query.get('token');
-  const [state, setState] = useState(initialState);
+  const classes = useStyles()
+  const history = useHistory()
+  const query = useQuery()
+  const token = query.get('token')
+  const [state, setState] = useState(initialState)
 
   useEffect(() => {
     const confirmSignup = async () => {
       try {
-        const uri = `/auth/registrations/confirm`;
-        const result = await postRequest(uri, { verificationToken: token });
+        const uri = '/auth/registrations/confirm'
+        const result = await postRequest(uri, { verificationToken: token })
         if (result.status === 200) {
-          setState({ ...state, isVerified: true, isLoading: false });
+          setState({ ...state, isVerified: true, isLoading: false })
         } else {
           setState({
             ...state,
             isVerified: false,
             isLoading: false,
             error:
-              'The token has already been verified, has expired, or is invalid.',
-          });
+              'The token has already been verified, has expired, or is invalid.'
+          })
         }
       } catch (err) {
         setState({
           ...state,
           isVerified: false,
           isLoading: false,
-          error: 'Something went wrong. Please try again.',
-        });
+          error: 'Something went wrong. Please try again.'
+        })
       }
-    };
+    }
 
-    confirmSignup();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+    confirmSignup()
+  }, [])
 
   return (
     <Grid container className={classes.container}>
-      <Grid container justify="center" alignItems="center">
+      <Grid container justify='center' alignItems='center'>
         {state.isLoading ? (
           <CircularProgress size={26} />
         ) : (
@@ -72,7 +72,7 @@ const Confirm = () => {
             </Typography>
             <Box mt={4}>
               <Button
-                variant="outlined"
+                variant='outlined'
                 onClick={() => history.push('/auth/sign-in')}
               >
                 Back to Login
@@ -82,7 +82,7 @@ const Confirm = () => {
         )}
       </Grid>
     </Grid>
-  );
-};
+  )
+}
 
-export default Confirm;
+export default Confirm

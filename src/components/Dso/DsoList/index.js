@@ -1,14 +1,14 @@
 // @flow
-import React from 'react';
-import DsoListModule from './modules';
-import DsoList from './DsoList';
+import React from 'react'
+import DsoListModule from './modules'
+import DsoList from './DsoList'
 
-const { DsoListProvider } = DsoListModule;
+const { DsoListProvider } = DsoListModule
 
 const DsoListWithProvider = ({
   onClickView,
   status,
-  user = '',
+  user = ''
 }: {
   user?: string,
   status?: string,
@@ -17,6 +17,6 @@ const DsoListWithProvider = ({
   <DsoListProvider>
     <DsoList onClickView={onClickView} status={status} user={user} />
   </DsoListProvider>
-);
+)
 
-export default DsoListWithProvider;
+export default DsoListWithProvider

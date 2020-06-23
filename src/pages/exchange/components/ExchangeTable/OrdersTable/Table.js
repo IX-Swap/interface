@@ -1,7 +1,7 @@
-import React, { useRef, useEffect, useState } from 'react';
-import moment from 'moment';
-import classNames from 'classnames';
-import { withRouter, useHistory } from 'react-router-dom';
+import React, { useRef, useEffect, useState } from 'react'
+import moment from 'moment'
+import classNames from 'classnames'
+import { withRouter, useHistory } from 'react-router-dom'
 
 // Material Components
 import {
@@ -17,88 +17,87 @@ import {
   TableRow,
   TableFooter,
   TablePagination,
-  LinearProgress,
-} from '@material-ui/core';
+  LinearProgress
+} from '@material-ui/core'
 
 // Date Utils
-import DateFnsUtils from '@date-io/date-fns';
-import { MuiPickersUtilsProvider } from '@material-ui/pickers';
-import Utils from 'utils/utils';
+import DateFnsUtils from '@date-io/date-fns'
+import { MuiPickersUtilsProvider } from '@material-ui/pickers'
 
 // Local component
-import DateFilter from 'pages/exchange/components/ExchangeTable/DateFilter';
-import DropdownFilter from 'pages/exchange/components/ExchangeTable/DropdownFilter';
-import SandboxModal from '../../TradingTerminal/components/SandboxModal';
+import DateFilter from 'pages/exchange/components/ExchangeTable/DateFilter'
+import DropdownFilter from 'pages/exchange/components/ExchangeTable/DropdownFilter'
+import SandboxModal from '../../TradingTerminal/components/SandboxModal'
 
 // Utils
-import { numberWithCommas } from 'utils/utils';
+import Utils, { numberWithCommas } from 'utils/utils'
 
 // Styles
-import useStyles from 'pages/exchange/components/ExchangeTable/styles';
+import useStyles from 'pages/exchange/components/ExchangeTable/styles'
 
 // Orders Modules
-import OrdersActions from './modules/actions';
-import OrdersModule from './modules';
+import OrdersActions from './modules/actions'
+import OrdersModule from './modules'
 
 // Market Modules
-import MarketActions from '../../TradingTerminal/modules/actions';
-import MarketModules from '../../TradingTerminal/modules';
+import MarketActions from '../../TradingTerminal/modules/actions'
+import MarketModules from '../../TradingTerminal/modules'
 
-const { OrdersListState, useOrdersListDispatch } = OrdersModule;
+const { OrdersListState, useOrdersListDispatch } = OrdersModule
 
-const { setPage, setRowsPerPage } = OrdersActions;
+const { setPage, setRowsPerPage } = OrdersActions
 
-const { MarketState, useMarketDispatch } = MarketModules;
+const { MarketState, useMarketDispatch } = MarketModules
 
 const columns = [
   {
     id: 'date',
-    label: 'Date',
+    label: 'Date'
   },
   {
     id: 'pair',
-    label: 'Pair',
+    label: 'Pair'
   },
   {
     id: 'type',
-    label: 'Type',
+    label: 'Type'
   },
   {
     id: 'side',
-    label: 'Side',
+    label: 'Side'
   },
   {
     id: 'average',
-    label: 'Average',
+    label: 'Average'
   },
   {
     id: 'price',
-    label: 'Price',
+    label: 'Price'
   },
   {
     id: 'filled',
-    label: 'Filled',
+    label: 'Filled'
   },
   {
     id: 'amount',
-    label: 'Amount',
+    label: 'Amount'
   },
   {
     id: 'total',
-    label: 'Total',
+    label: 'Total'
   },
   {
     id: 'triggerConditions',
-    label: 'Trigger Conditions',
+    label: 'Trigger Conditions'
   },
   {
     id: 'status',
-    label: 'Status',
-  },
-];
+    label: 'Status'
+  }
+]
 
 const ListingsList = ({ list, goToPage }) => {
-  const classes = useStyles();
+  const classes = useStyles()
 
   return (
     <TableBody>
@@ -106,8 +105,8 @@ const ListingsList = ({ list, goToPage }) => {
         const statusBadge = classNames({
           disabledBadge: row.status.toLowerCase() === 'cancelled',
           positiveBadge: row.status.toLowerCase() === 'filled',
-          primaryBadge: row.status.toLowerCase() === 'open',
-        });
+          primaryBadge: row.status.toLowerCase() === 'open'
+        })
 
         return (
           <TableRow key={i}>
@@ -125,7 +124,7 @@ const ListingsList = ({ list, goToPage }) => {
             <TableCell className={classes.defaultCell}>--</TableCell>
             <TableCell className={classes[statusBadge]}>{row.status}</TableCell>
           </TableRow>
-        );
+        )
       })}
       {list.length === 0 && (
         <TableRow>
@@ -135,48 +134,48 @@ const ListingsList = ({ list, goToPage }) => {
         </TableRow>
       )}
     </TableBody>
-  );
-};
+  )
+}
 
-function OrdersTable(props) {
-  const [fromDate, setFrom] = useState('');
-  const [toDate, setTo] = useState('');
-  const [pairId, setPair] = useState('');
-  const [side, setSide] = useState('');
-  const { title } = props;
-  const classes = useStyles();
-  const history = useHistory();
+function OrdersTable (props) {
+  const [fromDate, setFrom] = useState('')
+  const [toDate, setTo] = useState('')
+  const [pairId, setPair] = useState('')
+  const [side, setSide] = useState('')
+  const { title } = props
+  const classes = useStyles()
+  const history = useHistory()
 
-  const dispatch = useOrdersListDispatch();
-  const ordersState = OrdersListState();
+  const dispatch = useOrdersListDispatch()
+  const ordersState = OrdersListState()
 
-  const marketDispatch = useMarketDispatch();
-  const marketState = MarketState();
-  const mountedRef = useRef(true);
-  const { page, total, limit, items, status } = ordersState;
+  const marketDispatch = useMarketDispatch()
+  const marketState = MarketState()
+  const mountedRef = useRef(true)
+  const { page, total, limit, items, status } = ordersState
 
   const {
     page: marketPage,
     limit: marketLimit,
-    items: marketItems,
-  } = marketState;
+    items: marketItems
+  } = marketState
 
   const handleChangePage = (_, newPage: number) => {
-    setPage(dispatch, { page: newPage });
-  };
+    setPage(dispatch, { page: newPage })
+  }
 
   const handleChangeRowsPerPage = (newRows: number) => {
-    setRowsPerPage(dispatch, { rows: newRows });
-    setPage(dispatch, { page: 0 });
-  };
+    setRowsPerPage(dispatch, { rows: newRows })
+    setPage(dispatch, { page: 0 })
+  }
 
   useEffect(() => {
     MarketActions.getMarketList(marketDispatch, {
       skip: marketPage * marketLimit,
       limit,
-      ref: mountedRef,
-    });
-  }, [marketPage, marketLimit, marketDispatch, limit]);
+      ref: mountedRef
+    })
+  }, [marketPage, marketLimit, marketDispatch, limit])
 
   const _searchOrders = () => {
     OrdersActions.getOrdersList(dispatch, {
@@ -186,26 +185,26 @@ function OrdersTable(props) {
       to: toDate || new Date(),
       pair: pairId,
       side,
-      ref: mountedRef,
-    });
-  };
+      ref: mountedRef
+    })
+  }
 
   const searchStyle = classNames(
-    classes.btnStyle, 
+    classes.btnStyle,
     classes.searchStyle
-  );
+  )
 
   const resetStyle = classNames(
-    classes.btnStyle, 
-    classes.resetStyle,
-  );
+    classes.btnStyle,
+    classes.resetStyle
+  )
 
-  const isVisitedPage = Utils.isVisited(history.location.pathname);
+  const isVisitedPage = Utils.isVisited(history.location.pathname)
 
   return (
     <Grid>
       {!isVisitedPage && (<SandboxModal />)}
-      <Typography className={classes.title} variant="h1">
+      <Typography className={classes.title} variant='h1'>
         {title}
       </Typography>
       <Grid className={classes.componentStyle}>
@@ -222,14 +221,14 @@ function OrdersTable(props) {
             />
             <section className={classes.buttonFilter}>
               <Button
-                color="primary"
+                color='primary'
                 className={searchStyle}
                 onClick={_searchOrders}
               >
                 Search
               </Button>
               <Button
-                color="primary"
+                color='primary'
                 className={resetStyle}
               >
                 Reset
@@ -239,7 +238,7 @@ function OrdersTable(props) {
         </MuiPickersUtilsProvider>
         <TableContainer component={Paper}>
           {status === 'GETTING' && <LinearProgress />}
-          <Table aria-label="ordres table">
+          <Table aria-label='ordres table'>
             <TableHead>
               <TableRow>
                 {columns.map((column) => (
@@ -270,7 +269,7 @@ function OrdersTable(props) {
         </TableContainer>
       </Grid>
     </Grid>
-  );
+  )
 }
 
-export default withRouter(OrdersTable);
+export default withRouter(OrdersTable)

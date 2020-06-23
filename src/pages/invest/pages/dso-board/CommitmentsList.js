@@ -1,5 +1,5 @@
 // @flow
-import React, { useEffect, useRef } from 'react';
+import React, { useEffect, useRef } from 'react'
 import {
   TableHead,
   Table,
@@ -9,22 +9,22 @@ import {
   TableContainer,
   LinearProgress,
   TableFooter,
-  TablePagination,
-} from '@material-ui/core';
-import CommitmentListItem from './CommitmentListItem';
-import Module from './modules';
-import Actions from './modules/actions';
+  TablePagination
+} from '@material-ui/core'
+import CommitmentListItem from './CommitmentListItem'
+import Module from './modules'
+import Actions from './modules/actions'
 
 const {
   useCommitmentsListState,
   useCommitmentsListDispatch,
-  COMMITMENTS_LIST_STATUS,
-} = Module;
-const { getCommitmentsList, setPage, setRowsPerPage, clearApiStatus } = Actions;
+  COMMITMENTS_LIST_STATUS
+} = Module
+const { getCommitmentsList, setPage, setRowsPerPage, clearApiStatus } = Actions
 
 const useCommitmentsListLogic = () => {
-  const commitmentsListState = useCommitmentsListState();
-  const commitmentsListDispatch = useCommitmentsListDispatch();
+  const commitmentsListState = useCommitmentsListState()
+  const commitmentsListDispatch = useCommitmentsListDispatch()
   const {
     status,
     page,
@@ -32,36 +32,36 @@ const useCommitmentsListLogic = () => {
     limit,
     items,
     statusCode,
-    error,
-  } = commitmentsListState;
-  const mountedRef = useRef(true);
+    error
+  } = commitmentsListState
+  const mountedRef = useRef(true)
 
   const handleChangePage = (_, newPage: number) => {
-    setPage(commitmentsListDispatch, { page: newPage });
-  };
+    setPage(commitmentsListDispatch, { page: newPage })
+  }
 
   const handleChangeRowsPerPage = (newRows: number) => {
-    setRowsPerPage(commitmentsListDispatch, { rows: newRows });
-    setPage(commitmentsListDispatch, { page: 0 });
-  };
+    setRowsPerPage(commitmentsListDispatch, { rows: newRows })
+    setPage(commitmentsListDispatch, { page: 0 })
+  }
 
   useEffect(() => {
     if (status === COMMITMENTS_LIST_STATUS.INIT) {
       getCommitmentsList(commitmentsListDispatch, {
         skip: page * limit,
         limit,
-        ref: mountedRef,
-      });
-      clearApiStatus(commitmentsListDispatch);
+        ref: mountedRef
+      })
+      clearApiStatus(commitmentsListDispatch)
     }
-  }, [page, limit, status, commitmentsListDispatch]);
+  }, [page, limit, status, commitmentsListDispatch])
 
   useEffect(
     () => () => {
-      mountedRef.current = false;
+      mountedRef.current = false
     },
     []
-  );
+  )
 
   return {
     commitmentsListDispatch,
@@ -74,9 +74,9 @@ const useCommitmentsListLogic = () => {
     error,
     handleChangePage,
     handleChangeRowsPerPage,
-    setPage,
-  };
-};
+    setPage
+  }
+}
 
 const CommitmentsList = () => {
   const {
@@ -86,8 +86,8 @@ const CommitmentsList = () => {
     limit,
     page,
     handleChangeRowsPerPage,
-    handleChangePage,
-  } = useCommitmentsListLogic();
+    handleChangePage
+  } = useCommitmentsListLogic()
 
   return (
     <TableContainer>
@@ -135,8 +135,7 @@ const CommitmentsList = () => {
                 rowsPerPage={limit}
                 page={page}
                 onChangeRowsPerPage={(evt: SyntheticInputEvent<HTMLElement>) =>
-                  handleChangeRowsPerPage(parseInt(evt.target.value))
-                }
+                  handleChangeRowsPerPage(parseInt(evt.target.value))}
                 onChangePage={handleChangePage}
               />
             </TableRow>
@@ -144,7 +143,7 @@ const CommitmentsList = () => {
         )}
       </Table>
     </TableContainer>
-  );
-};
+  )
+}
 
-export default CommitmentsList;
+export default CommitmentsList

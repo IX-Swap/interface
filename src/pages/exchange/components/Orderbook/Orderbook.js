@@ -49,10 +49,10 @@ export default function Orderbook ({ book }) {
       </TabPanel>
       <Grid container spacing={3} justify='center'>
         <Grid item sm={5} md={5} lg={5}>
-          <BuySide side={book.bid}></BuySide>
+          <BuySide side={book.bid} />
         </Grid>
         <Grid item sm={5} md={5} lg={5}>
-          <SellSide side={book.ask}></SellSide>
+          <SellSide side={book.ask} />
         </Grid>
       </Grid>
     </Paper>

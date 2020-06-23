@@ -1,6 +1,6 @@
 // @flow
-import { actions } from './types';
-import type { InvestState } from './types';
+import { actions } from './types'
+import type { InvestState } from './types'
 
 export const investReducer = (
   state: InvestState,
@@ -10,23 +10,23 @@ export const investReducer = (
     case actions.SET_SELECTED_DSO:
       return {
         ...state,
-        dso: payload,
-      };
+        dso: payload
+      }
 
     case actions.SET_SELECTED_COMMITMENT:
       return {
         ...state,
         commitment: payload,
-        editMode: false,
-      };
+        editMode: false
+      }
 
     case actions.TOGGLE_EDIT_MODE:
       return {
         ...state,
-        editMode: payload !== undefined ? payload : !state.editMode,
-      };
+        editMode: payload !== undefined ? payload : !state.editMode
+      }
 
     default:
-      throw new Error(`Unhandled action type: ${type}`);
+      throw new Error(`Unhandled action type: ${type}`)
   }
-};
+}

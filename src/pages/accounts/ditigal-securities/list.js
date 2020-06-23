@@ -1,6 +1,6 @@
 // @flow
-import React, { useRef, useEffect } from 'react';
-import { useHistory } from 'react-router-dom';
+import React, { useRef, useEffect } from 'react'
+import { useHistory } from 'react-router-dom'
 import {
   Table,
   TableContainer,
@@ -15,17 +15,17 @@ import {
   Button,
   Box,
   Grid,
-  Typography,
-} from '@material-ui/core';
+  Typography
+} from '@material-ui/core'
 
-import { useAssetsState, useAssetsDispatch } from 'context/assets';
-import { ASSETS_STATUS } from 'context/assets/types';
-import * as AssetsActions from 'context/assets/actions';
-import PersonalBalancesListModule from 'context/balance/personal';
+import { useAssetsState, useAssetsDispatch } from 'context/assets'
+import { ASSETS_STATUS } from 'context/assets/types'
+import * as AssetsActions from 'context/assets/actions'
+import PersonalBalancesListModule from 'context/balance/personal'
 
-import type { UserSecurityBalance } from 'context/balance/types';
+import type { UserSecurityBalance } from 'context/balance/types'
 
-import Actions from 'context/balance/personal/actions';
+import Actions from 'context/balance/personal/actions'
 
 type TableColumn = {
   label: string,
@@ -38,11 +38,11 @@ type TableColumn = {
 const columns: Array<TableColumn> = [
   {
     label: 'Symbol',
-    key: 'symbol',
+    key: 'symbol'
   },
   {
     label: 'Name',
-    key: 'name',
+    key: 'name'
   },
   {
     label: 'Total Balance',
@@ -50,7 +50,7 @@ const columns: Array<TableColumn> = [
     headAlign: 'right',
     align: 'right',
     render: (value) =>
-      value && value.toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,'),
+      value && value.toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,')
   },
   {
     label: 'Available Balance',
@@ -58,7 +58,7 @@ const columns: Array<TableColumn> = [
     headAlign: 'right',
     align: 'right',
     render: (value) =>
-      value && value.toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,'),
+      value && value.toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,')
   },
   {
     label: 'On Hold',
@@ -66,28 +66,28 @@ const columns: Array<TableColumn> = [
     headAlign: 'right',
     align: 'right',
     render: (value) =>
-      value && value.toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,'),
-  },
-];
+      value && value.toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,')
+  }
+]
 
-const { setAssetType } = AssetsActions;
+const { setAssetType } = AssetsActions
 
 const {
   usePersonalBalancesListDispatch,
   usePersonalBalancesListState,
-  PERSONAL_BALANCE_LIST_STATUS,
-} = PersonalBalancesListModule;
+  PERSONAL_BALANCE_LIST_STATUS
+} = PersonalBalancesListModule
 const {
   getPersonalBalanceList,
   clearApiStatus,
   setPage,
-  setRowsPerPage,
-} = Actions;
+  setRowsPerPage
+} = Actions
 
 const useBalancesLogic = () => {
-  const mountedRef = useRef(true);
-  const pBDispatch = usePersonalBalancesListDispatch();
-  const { status, page, limit, items, total } = usePersonalBalancesListState();
+  const mountedRef = useRef(true)
+  const pBDispatch = usePersonalBalancesListDispatch()
+  const { status, page, limit, items, total } = usePersonalBalancesListState()
 
   useEffect(() => {
     if (status === PERSONAL_BALANCE_LIST_STATUS.INIT) {
@@ -95,18 +95,18 @@ const useBalancesLogic = () => {
         skip: page * limit,
         limit,
         ref: mountedRef,
-        type: 'Security',
-      });
-      clearApiStatus(pBDispatch);
+        type: 'Security'
+      })
+      clearApiStatus(pBDispatch)
     }
-  }, [page, limit, status, pBDispatch]);
+  }, [page, limit, status, pBDispatch])
 
   useEffect(
     () => () => {
-      mountedRef.current = false;
+      mountedRef.current = false
     },
     []
-  );
+  )
 
   return {
     items,
@@ -114,52 +114,52 @@ const useBalancesLogic = () => {
     pBDispatch,
     status,
     total,
-    limit,
-  };
-};
+    limit
+  }
+}
 
-function useGetters() {
-  const mountedRef = useRef(true);
-  const { status: assetsStatus, type } = useAssetsState();
-  const aDispatch = useAssetsDispatch();
+function useGetters () {
+  const mountedRef = useRef(true)
+  const { status: assetsStatus, type } = useAssetsState()
+  const aDispatch = useAssetsDispatch()
 
   useEffect(() => {
     if (assetsStatus === ASSETS_STATUS.INIT || type !== 'Security') {
-      setAssetType(aDispatch, { ref: mountedRef, type: 'Security' });
+      setAssetType(aDispatch, { ref: mountedRef, type: 'Security' })
     }
-  }, [aDispatch, assetsStatus, type]);
+  }, [aDispatch, assetsStatus, type])
 
   useEffect(
     () => () => {
-      mountedRef.current = false;
+      mountedRef.current = false
     },
     []
-  );
+  )
 
   return {
     type,
-    assetsStatus,
-  };
+    assetsStatus
+  }
 }
 
-function useDigitalSecuritiesLogic() {
-  const { type, assetsStatus } = useGetters();
-  const { items, page, pBDispatch, status, total, limit } = useBalancesLogic();
+function useDigitalSecuritiesLogic () {
+  const { type, assetsStatus } = useGetters()
+  const { items, page, pBDispatch, status, total, limit } = useBalancesLogic()
 
   useEffect(() => {
     if (assetsStatus === ASSETS_STATUS.IDLE && type === 'Security') {
-      setPage(pBDispatch, { page });
+      setPage(pBDispatch, { page })
     }
-  }, [type, assetsStatus, page, pBDispatch]);
+  }, [type, assetsStatus, page, pBDispatch])
 
   const handleChangePage = (_, newPage: number) => {
-    setPage(pBDispatch, { page: newPage });
-  };
+    setPage(pBDispatch, { page: newPage })
+  }
 
   const handleChangeRowsPerPage = (newRows: number) => {
-    setRowsPerPage(pBDispatch, { rows: newRows });
-    setPage(pBDispatch, { page: 0 });
-  };
+    setRowsPerPage(pBDispatch, { rows: newRows })
+    setPage(pBDispatch, { page: 0 })
+  }
 
   return {
     items,
@@ -168,11 +168,11 @@ function useDigitalSecuritiesLogic() {
     page,
     limit,
     handleChangeRowsPerPage,
-    handleChangePage,
-  };
+    handleChangePage
+  }
 }
 
-export default function DigitalSecurities() {
+export default function DigitalSecurities () {
   const {
     items,
     status,
@@ -180,49 +180,49 @@ export default function DigitalSecurities() {
     page,
     limit,
     handleChangeRowsPerPage,
-    handleChangePage,
-  } = useDigitalSecuritiesLogic();
-  const history = useHistory();
+    handleChangePage
+  } = useDigitalSecuritiesLogic()
+  const history = useHistory()
 
   const renderRowActions = (row: UserSecurityBalance) => (
     <ButtonGroup
-      variant="text"
-      color="primary"
-      aria-label="text primary button group"
+      variant='text'
+      color='primary'
+      aria-label='text primary button group'
     >
       <Button
         onClick={() => {
-          history.push(`/accounts/wallets/view/${row.assetId}`);
+          history.push(`/accounts/wallets/view/${row.assetId}`)
         }}
       >
         View
       </Button>
       <Button
         onClick={() => {
-          history.push(`/accounts/wallets/deposit/${row.assetId}`);
+          history.push(`/accounts/wallets/deposit/${row.assetId}`)
         }}
       >
         Deposit
       </Button>
       <Button
         onClick={() => {
-          history.push(`/accounts/wallets/withdraw/${row.assetId}`);
+          history.push(`/accounts/wallets/withdraw/${row.assetId}`)
         }}
       >
         Withdraw
       </Button>
     </ButtonGroup>
-  );
+  )
 
   return (
     <Box m={4}>
       <Grid item xs={3}>
-        <Typography variant="h3">Digital Securities</Typography>
+        <Typography variant='h3'>Digital Securities</Typography>
       </Grid>
       <Box mt={2} />
       <TableContainer>
         {status === PERSONAL_BALANCE_LIST_STATUS.GETTING && <LinearProgress />}
-        <Table aria-label="simple table">
+        <Table aria-label='simple table'>
           <TableHead>
             <TableRow>
               {columns.map((e) => (
@@ -267,5 +267,5 @@ export default function DigitalSecurities() {
         </Table>
       </TableContainer>
     </Box>
-  );
+  )
 }

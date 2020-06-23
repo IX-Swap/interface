@@ -1,7 +1,7 @@
 // @flow
-import React from 'react';
-import { makeStyles, useTheme } from '@material-ui/styles';
-import classnames from 'classnames';
+import React from 'react'
+import { makeStyles, useTheme } from '@material-ui/styles'
+import classnames from 'classnames'
 
 // styles
 const useStyles = makeStyles((theme) => ({
@@ -10,21 +10,21 @@ const useStyles = makeStyles((theme) => ({
     height: 0,
     backgroundColor: theme.palette.text.hint,
     borderRadius: '50%',
-    transition: theme.transitions.create('background-color'),
-  },
-}));
+    transition: theme.transitions.create('background-color')
+  }
+}))
 
-export default function Dot({ color }: { color: string }) {
-  const classes = useStyles();
-  const theme = useTheme();
+export default function Dot ({ color }: { color: string }) {
+  const classes = useStyles()
+  const theme = useTheme()
 
   return (
     <div
       className={classnames(classes.dotBase)}
       style={{
         backgroundColor:
-          color && theme.palette[color] && theme.palette[color].main,
+          color && theme.palette[color] && theme.palette[color].main
       }}
     />
-  );
+  )
 }

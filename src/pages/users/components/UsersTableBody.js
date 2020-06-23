@@ -1,7 +1,7 @@
 // @flow
-import React, { useState, useCallback, useEffect } from 'react';
+import React, { useState, useCallback, useEffect } from 'react'
 
-import { makeStyles } from '@material-ui/core/styles';
+import { makeStyles } from '@material-ui/core/styles'
 import {
   Select,
   MenuItem,
@@ -11,16 +11,16 @@ import {
   FormControl,
   Checkbox,
   ListItemText,
-  Input,
-} from '@material-ui/core';
+  Input
+} from '@material-ui/core'
 
-import type { User, TableColumns } from '../modules/types';
+import type { User, TableColumns } from '../modules/types'
 
 const useStyles = makeStyles({
   formControl: {
-    width: 220,
-  },
-});
+    width: 220
+  }
+})
 
 type Prop = {
   open: boolean,
@@ -29,42 +29,42 @@ type Prop = {
   handleChange: (newRole: string, row: User) => void,
 };
 
-export default function UsersTableBody({
+export default function UsersTableBody ({
   open,
   users,
   columns,
-  handleChange,
+  handleChange
 }: Prop) {
-  const classes = useStyles();
+  const classes = useStyles()
   const [roles, setRoles] = useState(
     users.map((user) => user.roles.split(','))
-  );
+  )
 
   const updateRoles = useCallback(() => {
     if (!open) {
-      setRoles(users.map((user) => user.roles.split(',')));
+      setRoles(users.map((user) => user.roles.split(',')))
     }
-  }, [open, users]);
+  }, [open, users])
 
   useEffect(() => {
-    updateRoles();
-  }, [updateRoles]);
+    updateRoles()
+  }, [updateRoles])
 
   const handleRoleChange = (value: Array<string>, index: number) => {
     setRoles(
       users.map((user, i: number) =>
         index === i ? value : user.roles.split(',')
       )
-    );
-  };
+    )
+  }
 
   const possibleValues = [
     'user',
     'accredited',
     'authorizer',
     'admin',
-    'issuer',
-  ];
+    'issuer'
+  ]
 
   return (
     <TableBody>
@@ -80,8 +80,8 @@ export default function UsersTableBody({
             <TableCell>
               <FormControl className={classes.formControl}>
                 <Select
-                  labelId="demo-mutiple-checkbox-label"
-                  id="demo-mutiple-checkbox"
+                  labelId='demo-mutiple-checkbox-label'
+                  id='demo-mutiple-checkbox'
                   multiple
                   value={roles[index]}
                   onChange={(ev) => handleRoleChange(ev.target.value, index)}
@@ -101,5 +101,5 @@ export default function UsersTableBody({
           </TableRow>
         ))}
     </TableBody>
-  );
+  )
 }

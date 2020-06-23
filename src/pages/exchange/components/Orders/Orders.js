@@ -3,7 +3,7 @@ import PropTypes from 'prop-types'
 import { useTheme } from '@material-ui/core/styles'
 import useStyles from 'pages/exchange/styles'
 
-import { AppBar, Tabs, Tab, Typography, Box, Paper } from '@material-ui/core';
+import { AppBar, Tabs, Tab, Typography, Box, Paper } from '@material-ui/core'
 
 function TabPanel (props) {
   const { children, value, index, ...other } = props

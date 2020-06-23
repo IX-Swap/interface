@@ -44,6 +44,7 @@
     "recharts": "^1.6.2",
     "sanitize-html": "^1.22.1",
     "socket.io-client": "^2.3.0",
+    "standard": "^14.3.4",
     "tinycolor2": "^1.4.1",
     "uno-material-ui": "^2.0.4",
     "use-reducer-logger": "^1.0.1",
@@ -61,7 +62,7 @@
     "eslint-config-airbnb": "^18.1.0",
     "eslint-config-airbnb-base": "^14.1.0",
     "eslint-config-prettier": "^6.11.0",
-    "eslint-plugin-flowtype": "^4.7.0",
+    "eslint-plugin-flowtype": "^5.1.3",
     "eslint-plugin-html": "^6.0.2",
     "eslint-plugin-import": "^2.20.2",
     "eslint-plugin-jsx-a11y": "^6.2.3",
@@ -82,10 +83,47 @@
     "build": "babel src/ -d lib/ && react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
-    "deploy": "gulp deploy"
+    "deploy": "gulp deploy",
+    "std": "standard --fix"
+  },
+  "standard": {
+    "parser": "babel-eslint",
+    "globals": [
+      "Node",
+      "FormData",
+      "RouteProps",
+      "$Exact",
+      "SyntheticInputEvent",
+      "HTMLElement",
+      "$Keys",
+      "$Shape",
+      "alert",
+      "fetch"
+    ],
+    "extends": [
+      "plugin:flowtype/recommended"
+    ],
+    "plugins": [
+      "flowtype",
+      "react-hooks"
+    ],
+    "ignore": [
+      "gulpfile.js"
+    ]
   },
   "eslintConfig": {
-    "extends": "react-app"
+    "extends": "react-app",
+    "rules": {
+      "react-hooks/exhaustive-deps": "error"
+    },
+    "overrides": [
+      {
+        "files": ["**/*.tj?(x)"],
+        "rules": {
+          "react-hooks/exhaustive-deps": "error"
+        }
+      }
+    ]
   },
   "browserslist": {
     "production": [

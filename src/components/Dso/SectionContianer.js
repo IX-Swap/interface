@@ -1,9 +1,9 @@
-import React from 'react';
-import { Box, Typography } from '@material-ui/core';
+import React from 'react'
+import { Box, Typography } from '@material-ui/core'
 
 const SectionContainer = ({
   children,
-  title,
+  title
 }: {
   children: Node,
   title?: string,
@@ -12,8 +12,8 @@ const SectionContainer = ({
     py={2}
     px={4}
     border={1}
-    borderColor="#eaeaea"
-    height="100%"
+    borderColor='#eaeaea'
+    height='100%'
     style={{ display: 'flex', flexDirection: 'column' }}
   >
     {title && (
@@ -27,6 +27,6 @@ const SectionContainer = ({
       {children}
     </Box>
   </Box>
-);
+)
 
-export default SectionContainer;
+export default SectionContainer

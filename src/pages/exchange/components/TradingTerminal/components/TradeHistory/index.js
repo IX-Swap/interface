@@ -1,18 +1,18 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect } from 'react'
 
 // Config/Endpoints
-import { ENDPOINT_URL } from 'config';
+import { ENDPOINT_URL } from 'config'
 
 // Component
-import { subscribeToSocket } from 'services/socket';
-import Monitoring from '../Monitoring';
+import { subscribeToSocket } from 'services/socket'
+import Monitoring from '../Monitoring'
 
 const TradeHistory = (props) => {
-  const { id } = props;
+  const { id } = props
 
-  const [tradeStory, setTradeStory] = useState(false);
-  const { SUBSCRIBE_API } = ENDPOINT_URL;
-  const { TRADE_HISTORY } = SUBSCRIBE_API;
+  const [tradeStory, setTradeStory] = useState(false)
+  const { SUBSCRIBE_API } = ENDPOINT_URL
+  const { TRADE_HISTORY } = SUBSCRIBE_API
 
   // Update after demo
   /*eslint-disable */

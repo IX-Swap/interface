@@ -1,28 +1,28 @@
 export const chartOptions = {
   height: 500,
   localization: {
-    dateFormat: 'yyyy MMM dd',
+    dateFormat: 'yyyy MMM dd'
   },
   layout: {
     backgroundColor: '#fff',
-    textColor: 'rgba(10, 10, 10, 0.9)',
+    textColor: 'rgba(10, 10, 10, 0.9)'
   },
   grid: {
     vertLines: {
       color: 'rgba(100, 100, 100, 0.5)',
       style: 1,
-      visible: true,
+      visible: true
     },
     horzLines: {
       color: 'rgba(100, 100, 100, 0.5)',
       style: 1,
-      visible: true,
-    },
+      visible: true
+    }
   },
   priceScale: {
     position: 'right',
     mode: 1,
-    borderColor: 'rgba(197, 203, 206, 0.8)',
+    borderColor: 'rgba(197, 203, 206, 0.8)'
   },
   timeScale: {
     rightOffset: 12,
@@ -34,15 +34,15 @@ export const chartOptions = {
     borderColor: '#fff000',
     visible: true,
     timeVisible: true,
-    secondsVisible: true,
+    secondsVisible: true
   },
   handleScroll: {
     mouseWheel: true,
-    pressedMouseMove: true,
+    pressedMouseMove: true
   },
   handleScale: {
     axisPressedMouseMove: true,
     mouseWheel: true,
-    pinch: true,
-  },
-};
+    pinch: true
+  }
+}

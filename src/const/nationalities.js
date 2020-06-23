@@ -191,5 +191,5 @@ export default [
   'Welsh',
   'Yemenite',
   'Zambian',
-  'Zimbabwean',
-];
+  'Zimbabwean'
+]

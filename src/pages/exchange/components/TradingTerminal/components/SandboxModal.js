@@ -1,27 +1,27 @@
-import React from 'react';
-import Modal from 'react-modal';
-import { useHistory } from 'react-router-dom';
+import React from 'react'
+import Modal from 'react-modal'
+import { useHistory } from 'react-router-dom'
 
-import { Button, Typography, Box } from '@material-ui/core';
+import { Button, Typography, Box } from '@material-ui/core'
 
 // Utils
-import Utils from 'utils/utils';
+import Utils from 'utils/utils'
 
 // Styles
-import useStyles from './styles';
+import useStyles from './styles'
 
 const SandboxModal = () => {
-  const history = useHistory();
-  const classes = useStyles();
-  const [isOpen, setOpen] = React.useState(true);
+  const history = useHistory()
+  const classes = useStyles()
+  const [isOpen, setOpen] = React.useState(true)
   const _handleToggle = () => {
-    setOpen(!isOpen);
-    Utils.addVisitedPages(history.location.pathname);
-  };
+    setOpen(!isOpen)
+    Utils.addVisitedPages(history.location.pathname)
+  }
 
   const customStyles = {
     overlay: {
-      background: 'rgba(0, 0, 0, 0.3)',
+      background: 'rgba(0, 0, 0, 0.3)'
     },
     content: {
       bacground: '#fff',
@@ -34,33 +34,33 @@ const SandboxModal = () => {
       marginRight: '-50%',
       transform: 'translate(-50%, -50%)',
       padding: '35px',
-      width: '60%',
-    },
-  };
+      width: '60%'
+    }
+  }
 
   const description =
-    'InvestaX  operates its secondary trading platform (“Echange”) in a regulatory sandbox under a Recognized Market Operator (“RMO”) approval issued by the Monetary Authority of Singapore  (“MAS”) during the period [DDMMYYYY to DDMMYYYY], subject to extension. While in the sandbox, the Exchange will operate under predetermined parameters and is not required to meet some of the standard requirements imposed on RMOs under the SFA. It may be possible that InvestaX may not continue to conduct regulated activities as an RMO under the SFA during or after the sandbox period as determined by the MAS.';
+    'InvestaX  operates its secondary trading platform (“Echange”) in a regulatory sandbox under a Recognized Market Operator (“RMO”) approval issued by the Monetary Authority of Singapore  (“MAS”) during the period [DDMMYYYY to DDMMYYYY], subject to extension. While in the sandbox, the Exchange will operate under predetermined parameters and is not required to meet some of the standard requirements imposed on RMOs under the SFA. It may be possible that InvestaX may not continue to conduct regulated activities as an RMO under the SFA during or after the sandbox period as determined by the MAS.'
   return (
     <Modal
       isOpen={isOpen}
       onRequestClose={() => _handleToggle}
       style={customStyles}
-      contentLabel="Sandbox Modal"
+      contentLabel='Sandbox Modal'
     >
-      <Typography component="p" className={classes.modalDescription}>
+      <Typography component='p' className={classes.modalDescription}>
         {description}
       </Typography>
       <Box className={classes.modalFooter}>
         <Button
           className={classes.confirmBtn}
           onClick={_handleToggle}
-          color="primary"
+          color='primary'
         >
           Confirm
         </Button>
       </Box>
     </Modal>
-  );
-};
+  )
+}
 
-export default SandboxModal;
+export default SandboxModal

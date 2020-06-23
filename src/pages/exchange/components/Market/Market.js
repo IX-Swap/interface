@@ -52,9 +52,9 @@ export default function Market ({ state, market }) {
                 <Typography>
                   <NumberFormat
                     value={marketCap}
-                    displayType={'text'}
-                    thousandSeparator={true}
-                    prefix={'$'}
+                    displayType='text'
+                    thousandSeparator
+                    prefix='$'
                   />
                 </Typography>
               </Box>

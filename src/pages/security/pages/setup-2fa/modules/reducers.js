@@ -1,6 +1,6 @@
 // @flow
-import { STATUS, actions } from './types';
-import type { TwoFactorState } from './types';
+import { STATUS, actions } from './types'
+import type { TwoFactorState } from './types'
 
 export const twoFactorReducer = (
   state: TwoFactorState,
@@ -11,45 +11,45 @@ export const twoFactorReducer = (
       return {
         ...state,
         status: STATUS.GETTING,
-        error: null,
-      };
+        error: null
+      }
 
     case actions.SETUP_2FA_SUCCESS:
       return {
         ...state,
         status: STATUS.IDLE,
-        data: payload,
-      };
+        data: payload
+      }
 
     case actions.SETUP_2FA_FAILURE:
       return {
         ...state,
         status: STATUS.IDLE,
-        error: payload,
-      };
+        error: payload
+      }
 
     case actions.CONFIRM_2FA_REQUEST:
       return {
         ...state,
         status: STATUS.SAVING,
-        error: null,
-      };
+        error: null
+      }
 
     case actions.CONFIRM_2FA_SUCCESS:
       return {
         ...state,
         status: STATUS.IDLE,
-        confirmed: true,
-      };
+        confirmed: true
+      }
 
     case actions.CONFIRM_2FA_FAILURE:
       return {
         ...state,
         status: STATUS.IDLE,
-        error: payload,
-      };
+        error: payload
+      }
 
     default:
-      throw new Error(`Unhandled action type: ${type}`);
+      throw new Error(`Unhandled action type: ${type}`)
   }
-};
+}

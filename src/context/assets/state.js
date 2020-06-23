@@ -1,7 +1,7 @@
 // @flow
-import { ASSETS_STATUS } from './types';
+import { ASSETS_STATUS } from './types'
 
-import type { AssetsListState } from './types';
+import type { AssetsListState } from './types'
 
 export const initialState: AssetsListState = {
   assets: [],
@@ -10,5 +10,5 @@ export const initialState: AssetsListState = {
   type: 'Currency',
   page: 0,
   limit: 5,
-  total: null,
-};
+  total: null
+}

@@ -1,82 +1,82 @@
 // @flow
-import React, { useState, useCallback, useEffect } from 'react';
-import { RouteProps } from 'react-router-dom';
-import { Container, Box } from '@material-ui/core';
-import DsoInformation from 'components/Dso/DsoInformation';
-import PageTitle from 'components/PageTitle';
-import type { Document, Dso } from 'context/dso/types';
-import { snackbarService } from 'uno-material-ui';
-import Actions from './modules/actions';
-import DialogAuthorizeConfirmation from './confirm';
+import React, { useState, useCallback, useEffect } from 'react'
+import { RouteProps } from 'react-router-dom'
+import { Container, Box } from '@material-ui/core'
+import DsoInformation from 'components/Dso/DsoInformation'
+import PageTitle from 'components/PageTitle'
+import type { Document, Dso } from 'context/dso/types'
+import { snackbarService } from 'uno-material-ui'
+import Actions from './modules/actions'
+import DialogAuthorizeConfirmation from './confirm'
 
-const { downloadFile, getDso, toggleWithdrawStatus } = Actions;
+const { downloadFile, getDso, toggleWithdrawStatus } = Actions
 
 const ViewDS = ({
   location,
   match: {
-    params: { id },
-  },
+    params: { id }
+  }
 }: RouteProps) => {
   // $FlowFixMe
-  const { data } = location.state || {};
-  const [dso, setDso] = useState<Dso>(data);
-  const [open, setOpen] = useState(false);
+  const { data } = location.state || {}
+  const [dso, setDso] = useState<Dso>(data)
+  const [open, setOpen] = useState(false)
 
   const handleClose = () => {
-    setOpen(false);
-  };
+    setOpen(false)
+  }
 
   const handleConfirm = async (mDso: Dso, status: string) => {
-    const confirm = await toggleWithdrawStatus(mDso, status);
-    let message = 'Failed to update digital security status!';
-    let type = 'error';
+    const confirm = await toggleWithdrawStatus(mDso, status)
+    let message = 'Failed to update digital security status!'
+    let type = 'error'
 
     if (confirm) {
-      message = 'Successfully updated digital security status!';
-      type = 'success';
-      const cDso = await getDso(id);
+      message = 'Successfully updated digital security status!'
+      type = 'success'
+      const cDso = await getDso(id)
 
       if (cDso) {
-        setDso(cDso);
+        setDso(cDso)
       }
 
-      setOpen(false);
+      setOpen(false)
     }
 
-    snackbarService.showSnackbar(message, type);
-  };
+    snackbarService.showSnackbar(message, type)
+  }
 
   const getDsoCallback = useCallback(() => {
     (async (mId) => {
-      const mDso = await getDso(mId);
+      const mDso = await getDso(mId)
 
       if (mDso) {
-        setDso(mDso);
+        setDso(mDso)
       }
-    })(id);
-  }, [id]);
+    })(id)
+  }, [id])
 
   useEffect(() => {
     if (!data) {
-      getDsoCallback();
+      getDsoCallback()
     }
-  }, [data, getDsoCallback]);
+  }, [data, getDsoCallback])
 
   const onClickDocument = async (document: Document) => {
     try {
-      await downloadFile(dso._id, document);
+      await downloadFile(dso._id, document)
     } catch (error) {
-      snackbarService.showSnackbar(error.message, 'error');
-      console.log(error);
+      snackbarService.showSnackbar(error.message, 'error')
+      console.log(error)
     }
-  };
+  }
 
   return dso && dso.tokenName ? (
     <Container>
       <DialogAuthorizeConfirmation
         open={open}
         withdraw={dso}
-        newStatus="approved"
+        newStatus='approved'
         handleClose={handleClose}
         handleConfirm={handleConfirm}
       />
@@ -85,14 +85,14 @@ const ViewDS = ({
       <DsoInformation
         dso={dso}
         headerButtonAction={() => setOpen(true)}
-        headerButtonText="Approve"
+        headerButtonText='Approve'
         headerButtonShown={dso.status === 'Unauthorized'}
         onClickDocument={onClickDocument}
       />
     </Container>
   ) : (
     <span>loading</span>
-  );
-};
+  )
+}
 
-export default ViewDS;
+export default ViewDS

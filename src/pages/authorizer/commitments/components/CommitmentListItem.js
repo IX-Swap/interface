@@ -1,13 +1,13 @@
 // @flow
-import React from 'react';
-import moment from 'moment';
-import type { Commitment } from 'context/commitment/types';
-import { TableRow, TableCell, Button } from '@material-ui/core';
-import { formatMoney, formatNumber } from 'helpers/formatNumbers';
+import React from 'react'
+import moment from 'moment'
+import type { Commitment } from 'context/commitment/types'
+import { TableRow, TableCell, Button } from '@material-ui/core'
+import { formatMoney, formatNumber } from 'helpers/formatNumbers'
 
 const CommitmentListItem = ({
   commitment,
-  onClickView,
+  onClickView
 }: {
   commitment: Commitment,
   onClickView: Function,
@@ -19,10 +19,10 @@ const CommitmentListItem = ({
     totalAmount,
     numberOfUnits,
     currency,
-    status,
-  } = commitment;
+    status
+  } = commitment
 
-  console.log(commitment);
+  console.log(commitment)
 
   return (
     <TableRow>
@@ -32,23 +32,23 @@ const CommitmentListItem = ({
       <TableCell>{`${individual.firstName} ${individual.lastName}`}</TableCell>
       <TableCell>{dso.issuerName}</TableCell>
       <TableCell>{dso.tokenName}</TableCell>
-      <TableCell align="right">
+      <TableCell align='right'>
         {formatMoney(totalAmount, (currency || {}).symbol)}
       </TableCell>
-      <TableCell align="right">{formatNumber(numberOfUnits)}</TableCell>
+      <TableCell align='right'>{formatNumber(numberOfUnits)}</TableCell>
       <TableCell>
         <Button
-          variant="contained"
-          color="primary"
+          variant='contained'
+          color='primary'
           onClick={() => {
-            onClickView(commitment);
+            onClickView(commitment)
           }}
         >
           View
         </Button>
       </TableCell>
     </TableRow>
-  );
-};
+  )
+}
 
-export default CommitmentListItem;
+export default CommitmentListItem

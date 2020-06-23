@@ -1,15 +1,15 @@
 // @flow
-import React from 'react';
+import React from 'react'
 import {
   Dialog,
   DialogActions,
   DialogContent,
   DialogTitle,
   Button,
-  Box,
-} from '@material-ui/core';
+  Box
+} from '@material-ui/core'
 
-import type { Bank } from 'pages/accounts/bank/modules/types';
+import type { Bank } from 'pages/accounts/bank/modules/types'
 
 type Prop = {
   bank: Bank,
@@ -19,12 +19,12 @@ type Prop = {
   handleConfirm: (bank: Bank, newStatus: string) => Promise<void>,
 };
 
-export default function DialogAuthorizeConfirmation({
+export default function DialogAuthorizeConfirmation ({
   bank,
   open,
   newStatus,
   handleClose,
-  handleConfirm,
+  handleConfirm
 }: Prop) {
   return (
     <Dialog
@@ -56,13 +56,13 @@ export default function DialogAuthorizeConfirmation({
         </Box>
       </DialogContent>
       <DialogActions>
-        <Button onClick={handleClose} color="primary">
+        <Button onClick={handleClose} color='primary'>
           Cancel
         </Button>
-        <Button onClick={() => handleConfirm(bank, newStatus)} color="primary">
+        <Button onClick={() => handleConfirm(bank, newStatus)} color='primary'>
           Ok
         </Button>
       </DialogActions>
     </Dialog>
-  );
+  )
 }

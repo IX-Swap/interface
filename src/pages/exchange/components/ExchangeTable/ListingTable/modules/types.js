@@ -17,4 +17,3 @@ export type ListingsState = {
     message?: string,
     error?: string,
 };
-    

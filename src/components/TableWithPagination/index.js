@@ -1,5 +1,6 @@
+/* global $Keys Node SyntheticInputEvent HTMLElement */
 // @flow
-import * as React from 'react';
+import * as React from 'react'
 import {
   TableContainer,
   TableBody,
@@ -9,13 +10,13 @@ import {
   TableCell,
   TableFooter,
   TablePagination,
-  LinearProgress,
-} from '@material-ui/core';
-import { get, isFunction } from 'lodash';
-import init from './modules';
-import type { Module, ModuleActions, ModuleMeta } from './modules';
+  LinearProgress
+} from '@material-ui/core'
+import { get, isFunction } from 'lodash'
+import init from './modules'
+import type { Module, ModuleActions, ModuleMeta } from './modules'
 
-const { useRef, useEffect } = React;
+const { useRef, useEffect } = React
 
 type TableColumn<T> = {
   key: $Keys<T>,
@@ -50,37 +51,37 @@ type TableWithPaginationProps<T> = {
 };
 
 const initializeRequirements = (id: string, endpoint: string) =>
-  init(id, endpoint);
+  init(id, endpoint)
 
 const usePaginationLogic = (actions: ModuleActions, meta: ModuleMeta) => {
-  const { PAGINATION_STATUS, useDispatch, useState } = meta;
-  const { setPage, setRowsPerPage, getter, clearApiStatus } = actions;
-  const dispatch = useDispatch();
-  const state = useState();
-  const { status, page, total, limit, items, statusCode, error } = state;
-  const mountedRef = useRef(true);
+  const { PAGINATION_STATUS, useDispatch, useState } = meta
+  const { setPage, setRowsPerPage, getter, clearApiStatus } = actions
+  const dispatch = useDispatch()
+  const state = useState()
+  const { status, page, total, limit, items, statusCode, error } = state
+  const mountedRef = useRef(true)
 
   const handleChangePage = (_, newPage: number) => {
-    setPage(dispatch, { page: newPage });
-  };
+    setPage(dispatch, { page: newPage })
+  }
 
   const handleChangeRowsPerPage = (newRows: number) => {
-    setRowsPerPage(dispatch, { rows: newRows });
-    setPage(dispatch, { page: 0 });
-  };
+    setRowsPerPage(dispatch, { rows: newRows })
+    setPage(dispatch, { page: 0 })
+  }
 
   const reload = () => {
-    setPage(dispatch, { page });
-  };
+    setPage(dispatch, { page })
+  }
 
   useEffect(() => {
     if (status === PAGINATION_STATUS.INIT) {
       getter(dispatch, {
         skip: page * limit,
         limit,
-        ref: mountedRef,
-      });
-      clearApiStatus(dispatch);
+        ref: mountedRef
+      })
+      clearApiStatus(dispatch)
     }
   }, [
     page,
@@ -89,15 +90,15 @@ const usePaginationLogic = (actions: ModuleActions, meta: ModuleMeta) => {
     dispatch,
     getter,
     clearApiStatus,
-    PAGINATION_STATUS,
-  ]);
+    PAGINATION_STATUS
+  ])
 
   useEffect(
     () => () => {
-      mountedRef.current = false;
+      mountedRef.current = false
     },
     []
-  );
+  )
 
   return {
     dispatch,
@@ -112,12 +113,12 @@ const usePaginationLogic = (actions: ModuleActions, meta: ModuleMeta) => {
     handleChangePage,
     handleChangeRowsPerPage,
     setPage,
-    PAGINATION_STATUS,
-  };
-};
+    PAGINATION_STATUS
+  }
+}
 
 const Items = ({ items, columns, children, clickProp }: ItemsProps) => {
-  const { onClick } = clickProp || {};
+  const { onClick } = clickProp || {}
 
   return (
     <TableBody>
@@ -139,23 +140,23 @@ const Items = ({ items, columns, children, clickProp }: ItemsProps) => {
         ))
       ) : (
         <TableRow>
-          <TableCell align="center" colSpan={columns.length}>
+          <TableCell align='center' colSpan={columns.length}>
             No Data
           </TableCell>
         </TableRow>
       )}
     </TableBody>
-  );
-};
+  )
+}
 
 const TableWithPagination = ({
   columns,
   requirements,
   children,
   onMount,
-  onRowClick,
+  onRowClick
 }: TableWithPaginationProps<any>) => {
-  const { actions, meta } = requirements;
+  const { actions, meta } = requirements
   const {
     items,
     total,
@@ -165,24 +166,24 @@ const TableWithPagination = ({
     handleChangeRowsPerPage,
     handleChangePage,
     status,
-    reload,
-  } = usePaginationLogic(actions, meta);
+    reload
+  } = usePaginationLogic(actions, meta)
 
-  const clickProp = { onClick: undefined };
+  const clickProp = { onClick: undefined }
 
   if (onMount && isFunction(onMount)) {
-    onMount(reload);
+    onMount(reload)
   }
 
   if (onRowClick && isFunction(onRowClick)) {
-    clickProp.onClick = onRowClick;
+    clickProp.onClick = onRowClick
   }
 
   return (
     <>
       {[PAGINATION_STATUS.GETTING].includes(status) ? <LinearProgress /> : null}
       <TableContainer>
-        <Table aria-label="accounts table">
+        <Table aria-label='accounts table'>
           <TableHead>
             <TableRow>
               {columns.map((e) => (
@@ -215,8 +216,8 @@ const TableWithPagination = ({
         </Table>
       </TableContainer>
     </>
-  );
-};
+  )
+}
 
 const MainComponent = ({
   id,
@@ -224,9 +225,9 @@ const MainComponent = ({
   columns,
   children,
   onMount,
-  onRowClick,
+  onRowClick
 }: BaseRequirements<any>) => {
-  const Reqts = initializeRequirements(id, endpoint);
+  const Reqts = initializeRequirements(id, endpoint)
 
   return (
     <Reqts.meta.Provider>
@@ -239,7 +240,7 @@ const MainComponent = ({
         {children}
       </TableWithPagination>
     </Reqts.meta.Provider>
-  );
-};
+  )
+}
 
-export default MainComponent;
+export default MainComponent

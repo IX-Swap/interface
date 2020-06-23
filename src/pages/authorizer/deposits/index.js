@@ -1,71 +1,71 @@
 // @flow
 /* eslint-disable react-hooks/exhaustive-deps */
-import React, { useCallback, useState } from 'react';
-import { useHistory } from 'react-router-dom';
+import React, { useCallback, useState } from 'react'
+import { useHistory } from 'react-router-dom'
 import {
   Typography,
   Select,
   MenuItem,
   Button,
   Grid,
-  Paper,
-} from '@material-ui/core';
-import TableWithPagination from 'components/TableWithPagination';
-import { makeStyles } from '@material-ui/core/styles';
-import { snackbarService } from 'uno-material-ui';
-import { isFunction } from 'lodash';
-import type { Deposit } from './modules/types';
-import DialogAuthorizeConfirmation from './confirm';
-import Actions from './modules/actions';
-import { columns } from './data';
+  Paper
+} from '@material-ui/core'
+import TableWithPagination from 'components/TableWithPagination'
+import { makeStyles } from '@material-ui/core/styles'
+import { snackbarService } from 'uno-material-ui'
+import { isFunction } from 'lodash'
+import type { Deposit } from './modules/types'
+import DialogAuthorizeConfirmation from './confirm'
+import Actions from './modules/actions'
+import { columns } from './data'
 
-const { toggleDepositStatus } = Actions;
+const { toggleDepositStatus } = Actions
 
 const useStyles = makeStyles({
   formControl: {
-    minWidth: 120,
-  },
-});
+    minWidth: 120
+  }
+})
 
 const useDepositsListLogic = () => {
-  const [deposit, setDeposit] = useState<Deposit | null>(null);
-  const [open, setOpen] = useState<boolean>(false);
-  const [cb, setCb] = useState(() => () => {});
-  const [newStatus, setNewStatus] = useState<string>('');
+  const [deposit, setDeposit] = useState<Deposit | null>(null)
+  const [open, setOpen] = useState<boolean>(false)
+  const [cb, setCb] = useState(() => () => {})
+  const [newStatus, setNewStatus] = useState<string>('')
   const handleSelectChange = useCallback(
     (mDeposit: Deposit, status: string) => {
-      setDeposit(mDeposit);
-      setNewStatus(status);
-      setOpen(true);
+      setDeposit(mDeposit)
+      setNewStatus(status)
+      setOpen(true)
     },
     []
-  );
+  )
 
   const handleCbChange = useCallback((mCb: any) => {
-    setCb(mCb);
-  }, []);
+    setCb(mCb)
+  }, [])
 
   const handleClose = () => {
-    setOpen(false);
-  };
+    setOpen(false)
+  }
 
   const handleConfirm = async (mDeposit: Deposit, status: string) => {
-    const confirm = await toggleDepositStatus(mDeposit, status);
-    let message = 'Failed to update deposit status!';
-    let type = 'error';
+    const confirm = await toggleDepositStatus(mDeposit, status)
+    let message = 'Failed to update deposit status!'
+    let type = 'error'
 
     if (confirm) {
-      message = 'Successfully updated deposit status!';
-      type = 'success';
-      setOpen(false);
+      message = 'Successfully updated deposit status!'
+      type = 'success'
+      setOpen(false)
     }
 
     if (cb && isFunction(cb)) {
-      cb();
+      cb()
     }
 
-    snackbarService.showSnackbar(message, type);
-  };
+    snackbarService.showSnackbar(message, type)
+  }
 
   return {
     deposit,
@@ -74,68 +74,67 @@ const useDepositsListLogic = () => {
     handleSelectChange,
     handleClose,
     handleConfirm,
-    handleCbChange,
-  };
-};
+    handleCbChange
+  }
+}
 
 const RowStatusComponent = ({
   deposit,
-  handleSelectChange,
+  handleSelectChange
 }: {
   deposit: Deposit,
   handleSelectChange: (deposit: Deposit, status: string) => void,
 }) => {
-  const classes = useStyles();
+  const classes = useStyles()
   switch (deposit.status) {
     case 'Approved':
       return (
-        <Typography className={classes.formControl} color="primary">
+        <Typography className={classes.formControl} color='primary'>
           Approved
         </Typography>
-      );
+      )
     case 'Rejected':
       return (
-        <Typography className={classes.formControl} color="error">
+        <Typography className={classes.formControl} color='error'>
           Rejected
         </Typography>
-      );
+      )
     default:
       return (
         <Select
           className={classes.formControl}
           value={deposit.status}
           onClick={(evt) => {
-            evt.stopPropagation();
-            evt.preventDefault();
-            evt.nativeEvent.stopPropagation();
-            evt.nativeEvent.stopImmediatePropagation();
+            evt.stopPropagation()
+            evt.preventDefault()
+            evt.nativeEvent.stopPropagation()
+            evt.nativeEvent.stopImmediatePropagation()
           }}
           onChange={(evt: SyntheticInputEvent<HTMLElement>) =>
-            handleSelectChange(deposit, evt.target.value)
-          }
+            handleSelectChange(deposit, evt.target.value)}
           inputProps={{
-            name: 'status',
+            name: 'status'
           }}
         >
-          <MenuItem value="Approved">Approved</MenuItem>
-          <MenuItem value="Rejected">Rejected</MenuItem>
+          <MenuItem value='Approved'>Approved</MenuItem>
+          <MenuItem value='Rejected'>Rejected</MenuItem>
         </Select>
-      );
+      )
   }
-};
+}
 
 const MemoizedTable = React.memo(({ handleSelectChange, onMount }: any) => {
-  const history = useHistory();
+  const history = useHistory()
   return (
     <Paper style={{ width: '100%' }}>
       <TableWithPagination
-        id="authorizerDepositsList"
-        endpoint="/accounts/cash/deposits/"
+        id='authorizerDepositsList'
+        endpoint='/accounts/cash/deposits/'
         columns={columns}
         onMount={onMount}
       >
         {(mDeposit: Deposit) => (
-          <Grid container direction="row" alignItems="center">
+          <Grid container direction='row' alignItems='center'>
             <RowStatusComponent
               deposit={mDeposit}
               handleSelectChange={handleSelectChange}
@@ -144,11 +143,10 @@ const MemoizedTable = React.memo(({ handleSelectChange, onMount }: any) => {
               onClick={() =>
                 history.push({
                   pathname: '/authorizer/deposits/view',
-                  state: { deposit: mDeposit },
-                })
-              }
+                  state: { deposit: mDeposit }
+                })}
               style={{
-                marginLeft: '16px',
+                marginLeft: '16px'
               }}
             >
               View
@@ -157,11 +155,11 @@ const MemoizedTable = React.memo(({ handleSelectChange, onMount }: any) => {
         )}
       </TableWithPagination>
     </Paper>
-  );
-});
-MemoizedTable.displayName = 'MemoizedTable';
+  )
+})
+MemoizedTable.displayName = 'MemoizedTable'
 
-export default function Deposits() {
+export default function Deposits () {
   const {
     open,
     newStatus,
@@ -169,19 +167,19 @@ export default function Deposits() {
     deposit,
     handleConfirm,
     handleSelectChange,
-    handleCbChange,
-  } = useDepositsListLogic();
+    handleCbChange
+  } = useDepositsListLogic()
 
   const mHandleSelectChange = useCallback(
     (mDeposit: Deposit, status: string) => {
-      handleSelectChange(mDeposit, status);
+      handleSelectChange(mDeposit, status)
     },
     []
-  );
+  )
 
   const onMount = useCallback((callback) => {
-    handleCbChange(() => callback);
-  }, []);
+    handleCbChange(() => callback)
+  }, [])
 
   return (
     <>
@@ -199,5 +197,5 @@ export default function Deposits() {
         onMount={onMount}
       />
     </>
-  );
+  )
 }

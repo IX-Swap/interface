@@ -1,28 +1,28 @@
 import React, { useEffect, useState } from 'react'
-import { withRouter, useParams, Link } from 'react-router-dom';
+import { withRouter, useParams, Link } from 'react-router-dom'
 
 import {
-    Grid,
-    Typography,
+  Grid,
+  Typography
 } from '@material-ui/core'
 import ChevronLeftIcon from '@material-ui/icons/ChevronLeft'
 
-import { subscribeToSocket } from 'services/socket';
-import { ENDPOINT_URL } from 'config';
-import { numberWithCommas } from 'utils/utils';
+import { subscribeToSocket } from 'services/socket'
+import { ENDPOINT_URL } from 'config'
+import { numberWithCommas } from 'utils/utils'
 
-import useStyles from './styles';
+import useStyles from './styles'
 
 function OverviewHeader (props) {
-    const [ lastPrice, setLastPrice ] = useState(0);
-    const { id } = useParams();
-    const { data } = props;
-    const classes = useStyles();
+  const [lastPrice, setLastPrice] = useState(0)
+  const { id } = useParams()
+  const { data } = props
+  const classes = useStyles()
 
-    const { SUBSCRIBE_API } = ENDPOINT_URL;
-    const { LAST_PRICE } = SUBSCRIBE_API;
+  const { SUBSCRIBE_API } = ENDPOINT_URL
+  const { LAST_PRICE } = SUBSCRIBE_API
 
-    /*eslint-disable */
+  /*eslint-disable */
     useEffect(() => {
         const socket = subscribeToSocket();
 

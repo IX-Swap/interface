@@ -1,10 +1,10 @@
 // @flow
 /* eslint-disable react/jsx-props-no-spreading */
-import React, { Suspense } from 'react';
-import PropTypes from 'prop-types';
-import useStyles from 'pages/exchange/styles';
-import { withRouter, Route, Link, Switch } from 'react-router-dom';
-import { useTheme } from '@material-ui/core/styles';
+import React, { Suspense } from 'react'
+import PropTypes from 'prop-types'
+import useStyles from 'pages/exchange/styles'
+import { withRouter, Route, Link, Switch } from 'react-router-dom'
+import { useTheme } from '@material-ui/core/styles'
 import {
   Grid,
   Paper,
@@ -12,19 +12,19 @@ import {
   Tabs,
   Tab,
   Typography,
-  Box,
-} from '@material-ui/core';
-import BankComponent from '../bank';
+  Box
+} from '@material-ui/core'
+import BankComponent from '../bank'
 
-const Overview = React.lazy(() => import('../overview/Overview'));
-const Transactions = React.lazy(() => import('../transactions'));
-const Wallets = React.lazy(() => import('../ditigal-securities'));
+const Overview = React.lazy(() => import('../overview/Overview'))
+const Transactions = React.lazy(() => import('../transactions'))
+const Wallets = React.lazy(() => import('../ditigal-securities'))
 
-function useAccountsLogic() {
-  const classes = useStyles();
-  const theme = useTheme();
+function useAccountsLogic () {
+  const classes = useStyles()
+  const theme = useTheme()
 
-  return { classes, theme };
+  return { classes, theme }
 }
 
 type TabProps = {
@@ -32,13 +32,13 @@ type TabProps = {
   'aria-controls': string,
 };
 
-function TabPanel(props) {
-  const { children, value, index, ...other } = props;
+function TabPanel (props) {
+  const { children, value, index, ...other } = props
 
   return (
     <Typography
-      component="div"
-      role="tabpanel"
+      component='div'
+      role='tabpanel'
       hidden={value !== index}
       id={`full-width-tabpanel-${index}`}
       aria-labelledby={`full-width-tab-${index}`}
@@ -46,69 +46,69 @@ function TabPanel(props) {
     >
       {value === index && <Box p={3}>{children}</Box>}
     </Typography>
-  );
+  )
 }
 
 TabPanel.propTypes = {
   children: PropTypes.node,
   index: PropTypes.any.isRequired,
-  value: PropTypes.any.isRequired,
-};
-
-function a11yProps(index): TabProps {
-  return {
-    id: `full-width-tab-${index}`,
-    'aria-controls': `full-width-tabpanel-${index}`,
-  };
+  value: PropTypes.any.isRequired
 }
 
-function AccountsPanel({ location }: any) {
-  const { classes } = useAccountsLogic();
+function a11yProps (index): TabProps {
+  return {
+    id: `full-width-tab-${index}`,
+    'aria-controls': `full-width-tabpanel-${index}`
+  }
+}
+
+function AccountsPanel ({ location }: any) {
+  const { classes } = useAccountsLogic()
   const routes = [
     {
       route: '/accounts',
       label: 'BALANCES',
-      component: <Overview />,
+      component: <Overview />
     },
     {
       route: '/accounts/banks',
       label: 'Bank',
-      component: <BankComponent />,
+      component: <BankComponent />
     },
     {
       route: '/accounts/wallets',
       label: 'DIGITAL SECURITIES',
-      component: <Wallets />,
+      component: <Wallets />
     },
     {
       route: '/accounts/transactions',
       label: 'TRANSACTIONS',
-      component: <Transactions />,
-    },
-  ];
+      component: <Transactions />
+    }
+  ]
 
-  let { pathname } = location;
+  let { pathname } = location
   const matched = (path: string): boolean =>
-    routes.some((p) => p.route === path);
+    routes.some((p) => p.route === path)
 
   // TODO: remove this hack, use proper routing
   while (!matched(pathname) && pathname !== '/') {
-    pathname = pathname.split('/').filter(Boolean);
-    pathname.pop();
-    pathname = `/${pathname.join('/')}`;
+    pathname = pathname.split('/').filter(Boolean)
+    pathname.pop()
+    pathname = `/${pathname.join('/')}`
   }
 
   return (
-    <Grid container justify="center">
+    <Grid container justify='center'>
       <Grid item xs={12}>
         <Paper className={classes.paper} elevation={0}>
-          <AppBar position="static" color="default" elevation={1}>
+          <AppBar position='static' color='default' elevation={1}>
             <Tabs
               value={pathname}
-              indicatorColor="primary"
-              textColor="primary"
-              variant="fullWidth"
-              aria-label="full width tabs example"
+              indicatorColor='primary'
+              textColor='primary'
+              variant='fullWidth'
+              aria-label='full width tabs example'
             >
               {routes.map((route, index) => (
                 <Tab
@@ -139,7 +139,7 @@ function AccountsPanel({ location }: any) {
         </Paper>
       </Grid>
     </Grid>
-  );
+  )
 }
 
-export default withRouter(AccountsPanel);
+export default withRouter(AccountsPanel)

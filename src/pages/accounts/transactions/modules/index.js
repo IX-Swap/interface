@@ -1,17 +1,17 @@
 // @flow
-import { generateModule } from 'context/base/withPagination';
-import type { Transaction } from './types';
+import { generateModule } from 'context/base/withPagination'
+import type { Transaction } from './types'
 
 const {
   Provider,
   useState,
   useDispatch,
-  statusList,
-} = generateModule<Transaction>('transactionsList');
+  statusList
+} = generateModule<Transaction>('transactionsList')
 
 export default {
   TransactionsListProvider: Provider,
   useTransactionsListState: useState,
   useTransactionsListDispatch: useDispatch,
-  TRANSACTIONS_LIST_STATUS: statusList,
-};
+  TRANSACTIONS_LIST_STATUS: statusList
+}

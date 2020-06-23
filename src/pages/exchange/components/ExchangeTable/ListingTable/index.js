@@ -1,16 +1,15 @@
-import React from 'react';
-import TableListings from './TableListings';
-import ListingsModule from './modules';
+import React from 'react'
+import TableListings from './TableListings'
+import ListingsModule from './modules'
 
-const { ListingsProvider } = ListingsModule;
+const { ListingsProvider } = ListingsModule
 
 const ListingsTable = () => {
   return (
-      <ListingsProvider>
-        <TableListings title='Listings' />
-      </ListingsProvider>
-    );
-};
+    <ListingsProvider>
+      <TableListings title='Listings' />
+    </ListingsProvider>
+  )
+}
 
-export default ListingsTable;
-
+export default ListingsTable

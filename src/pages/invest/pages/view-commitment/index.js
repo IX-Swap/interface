@@ -1,15 +1,15 @@
 // @flow
-import React from 'react';
-import { Redirect } from 'react-router-dom';
-import CommitmentItem from '../../components/CommitmentItem';
-import { useInvestState } from '../../modules';
+import React from 'react'
+import { Redirect } from 'react-router-dom'
+import CommitmentItem from '../../components/CommitmentItem'
+import { useInvestState } from '../../modules'
 
 const ViewCommitment = () => {
-  const { commitment } = useInvestState();
+  const { commitment } = useInvestState()
 
   // TODO: Fetch instead on redirecting
   if (!commitment) {
-    return <Redirect to="/invest" />;
+    return <Redirect to='/invest' />
   }
 
   return (
@@ -18,7 +18,7 @@ const ViewCommitment = () => {
       commitment={commitment}
       asset={(commitment.currency || {})._id}
     />
-  );
-};
+  )
+}
 
-export default ViewCommitment;
+export default ViewCommitment

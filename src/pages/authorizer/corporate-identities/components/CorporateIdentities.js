@@ -1,24 +1,24 @@
 // @flow
-import React, { useState } from 'react';
-import IdentityList from './IdentityList';
-import CorporateIdentityPreview from './CorporateIdentityPreview';
+import React, { useState } from 'react'
+import IdentityList from './IdentityList'
+import CorporateIdentityPreview from './CorporateIdentityPreview'
 
 const authorizeIdentitiesPage = {
   LIST: 'LIST',
-  VIEW: 'VIEW',
-};
+  VIEW: 'VIEW'
+}
 
 const CorporateIdentities = () => {
-  const [page, setPage] = useState(authorizeIdentitiesPage.LIST);
-  const [identity, setIdentity] = useState(null);
+  const [page, setPage] = useState(authorizeIdentitiesPage.LIST)
+  const [identity, setIdentity] = useState(null)
 
   const onClickView = (selected) => {
-    setIdentity(selected);
-    setPage(authorizeIdentitiesPage.VIEW);
-  };
+    setIdentity(selected)
+    setPage(authorizeIdentitiesPage.VIEW)
+  }
 
   if (page === authorizeIdentitiesPage.LIST) {
-    return <IdentityList onClickView={onClickView} />;
+    return <IdentityList onClickView={onClickView} />
   }
 
   if (identity && page === authorizeIdentitiesPage.VIEW) {
@@ -27,8 +27,8 @@ const CorporateIdentities = () => {
         identity={identity}
         onClickBack={() => setPage(authorizeIdentitiesPage.LIST)}
       />
-    );
+    )
   }
-};
+}
 
-export default CorporateIdentities;
+export default CorporateIdentities

@@ -83,7 +83,7 @@ function BalancesTab ({ state }) {
               </TableRow>
             </TableHead>
             <TableBody>
-              {tabsTemplate ? tabsTemplate : <CircularProgress />}
+              {tabsTemplate || <CircularProgress />}
             </TableBody>
           </Table>
         </TableContainer>
@@ -96,9 +96,9 @@ function BalancesTab ({ state }) {
     const keys = Object.keys(state.accounts)
 
     keys.forEach((a, i) => {
-      let pair = a + ':SGD'
-      let balance = state.accounts[a].balance
-      let value = state.markets[pair]
+      const pair = a + ':SGD'
+      const balance = state.accounts[a].balance
+      const value = state.markets[pair]
         ? state.markets[pair].market.price * balance
         : state.accounts[a].balance
       tabsTemplate.push(
@@ -109,16 +109,16 @@ function BalancesTab ({ state }) {
           <TableCell align='right'>
             <NumberFormat
               value={balance}
-              displayType={'text'}
-              thousandSeparator={true}
+              displayType='text'
+              thousandSeparator
             />
           </TableCell>
           <TableCell align='right'>
             <NumberFormat
               value={value}
-              displayType={'text'}
-              thousandSeparator={true}
-              prefix={'$'}
+              displayType='text'
+              thousandSeparator
+              prefix='$'
             />
           </TableCell>
         </TableRow>

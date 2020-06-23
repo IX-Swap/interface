@@ -1,8 +1,8 @@
 // @flow
-import React, { useState } from 'react';
-import type { Node } from 'react';
-import { Grid, ListItem, Radio } from '@material-ui/core';
-import { useFormContext } from 'react-hook-form';
+import React, { useState } from 'react'
+import type { Node } from 'react'
+import { Grid, ListItem, Radio } from '@material-ui/core'
+import { useFormContext } from 'react-hook-form'
 
 type DeclarationItemProps = {
   children: Node,
@@ -17,18 +17,18 @@ const DeclarationItem = ({
   answerable = false,
   name,
   value,
-  editMode,
+  editMode
 }: DeclarationItemProps) => {
-  const { register } = useFormContext();
-  const [selected, setSelected] = useState(value);
+  const { register } = useFormContext()
+  const [selected, setSelected] = useState(value)
 
   const handleChange = (e) => {
-    setSelected(e.target.value);
-  };
+    setSelected(e.target.value)
+  }
 
   return (
     <ListItem>
-      <Grid container alignItems="center" spacing={1}>
+      <Grid container alignItems='center' spacing={1}>
         <Grid item xs={10}>
           {children}
         </Grid>
@@ -38,9 +38,9 @@ const DeclarationItem = ({
               container
               item
               xs={1}
-              justify="center"
-              direction="column"
-              alignItems="center"
+              justify='center'
+              direction='column'
+              alignItems='center'
             >
               Yes
               <Radio
@@ -49,7 +49,7 @@ const DeclarationItem = ({
                 checked={selected === 'Yes'}
                 inputRef={register({ required: true })}
                 onChange={handleChange}
-                value="Yes"
+                value='Yes'
                 inputProps={{ 'aria-label': 'Yes' }}
               />
             </Grid>
@@ -57,9 +57,9 @@ const DeclarationItem = ({
               container
               item
               xs={1}
-              justify="center"
-              direction="column"
-              alignItems="center"
+              justify='center'
+              direction='column'
+              alignItems='center'
             >
               No
               <Radio
@@ -68,7 +68,7 @@ const DeclarationItem = ({
                 checked={selected === 'No'}
                 inputRef={register({ required: true })}
                 onChange={handleChange}
-                value="No"
+                value='No'
                 inputProps={{ 'aria-label': 'No' }}
               />
             </Grid>
@@ -76,7 +76,7 @@ const DeclarationItem = ({
         )}
       </Grid>
     </ListItem>
-  );
-};
+  )
+}
 
-export default DeclarationItem;
+export default DeclarationItem

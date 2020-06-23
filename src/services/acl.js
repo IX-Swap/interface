@@ -1,6 +1,6 @@
 // @flow
-import { includes } from 'lodash';
-import { useUserState } from 'context/user';
+import { includes } from 'lodash'
+import { useUserState } from 'context/user'
 
 // RBACL Algorithm for Frontend
 
@@ -19,22 +19,22 @@ const appRoles = {
   AUTHORIZER: 'authorizer',
   ISSUER: 'issuer',
   USER: 'user',
-  ACCREDITED: 'accredited',
-};
+  ACCREDITED: 'accredited'
+}
 
 /**
  * Converts payload (csv) roles to array
  */
-const rolesCsvToArray = (roles: string): string[] => roles.split(',');
+const rolesCsvToArray = (roles: string): string[] => roles.split(',')
 
 /**
  * Generic role checker
  */
 const hasRole = (roles: string, roleToCheck: string): boolean => {
-  const rolesList = rolesCsvToArray(roles);
+  const rolesList = rolesCsvToArray(roles)
 
-  return includes(rolesList, roleToCheck);
-};
+  return includes(rolesList, roleToCheck)
+}
 
 /**
  * Roles hooks
@@ -42,33 +42,33 @@ const hasRole = (roles: string, roleToCheck: string): boolean => {
  */
 
 export const useIsAdmin = (): boolean => {
-  const { user: { roles = '' } = {} } = useUserState();
+  const { user: { roles = '' } = {} } = useUserState()
 
-  return hasRole(roles, appRoles.ADMIN);
-};
+  return hasRole(roles, appRoles.ADMIN)
+}
 
 export const useIsAuthorizer = (): boolean => {
-  const { user: { roles = '' } = {} } = useUserState();
+  const { user: { roles = '' } = {} } = useUserState()
 
-  return hasRole(roles, appRoles.AUTHORIZER);
-};
+  return hasRole(roles, appRoles.AUTHORIZER)
+}
 
 export const useIsIssuer = (): boolean => {
-  const { user: { roles = '' } = {} } = useUserState();
+  const { user: { roles = '' } = {} } = useUserState()
 
-  return hasRole(roles, appRoles.ISSUER);
-};
+  return hasRole(roles, appRoles.ISSUER)
+}
 
 export const useIsAccredited = (): boolean => {
-  const { user: { roles = '' } = {} } = useUserState();
+  const { user: { roles = '' } = {} } = useUserState()
 
-  return hasRole(roles, appRoles.ACCREDITED);
-};
+  return hasRole(roles, appRoles.ACCREDITED)
+}
 
 export const useHasSpecialRole = (): boolean => {
-  const isAdmin = useIsAdmin();
-  const isAuthorizer = useIsAuthorizer();
-  const isIssuer = useIsIssuer();
+  const isAdmin = useIsAdmin()
+  const isAuthorizer = useIsAuthorizer()
+  const isIssuer = useIsIssuer()
 
-  return isAdmin || isAuthorizer || isIssuer;
-};
+  return isAdmin || isAuthorizer || isIssuer
+}

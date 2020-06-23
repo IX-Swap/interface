@@ -1,12 +1,12 @@
 // @flow
-import React, { useMemo } from 'react';
-import type { Node } from 'react';
-import logger from 'use-reducer-logger';
-import { issuanceReducer } from './reducers';
-import { initialState } from './state';
+import React, { useMemo } from 'react'
+import type { Node } from 'react'
+import logger from 'use-reducer-logger'
+import { issuanceReducer } from './reducers'
+import { initialState } from './state'
 
-const StateContext = React.createContext<any>();
-const DispatchContext = React.createContext();
+const StateContext = React.createContext<any>()
+const DispatchContext = React.createContext()
 
 export const IssuanceProvider = ({ children }: { children: Node }) => {
   const thisReducer = useMemo(
@@ -15,12 +15,12 @@ export const IssuanceProvider = ({ children }: { children: Node }) => {
         ? logger(issuanceReducer)
         : issuanceReducer,
     []
-  );
+  )
 
   const [state, dispatch] = React.useReducer<any, any>(
     thisReducer,
     initialState
-  );
+  )
 
   return (
     <StateContext.Provider value={state}>
@@ -28,25 +28,25 @@ export const IssuanceProvider = ({ children }: { children: Node }) => {
         {children}
       </DispatchContext.Provider>
     </StateContext.Provider>
-  );
-};
+  )
+}
 
 export const useIssuanceState = () => {
-  const context = React.useContext(StateContext);
+  const context = React.useContext(StateContext)
   if (context === undefined) {
-    throw new Error('useIssuanceState must be used within a IssuanceProvider');
+    throw new Error('useIssuanceState must be used within a IssuanceProvider')
   }
 
-  return context;
-};
+  return context
+}
 
 export const useIssuanceDispatch = () => {
-  const context = React.useContext(DispatchContext);
+  const context = React.useContext(DispatchContext)
   if (context === undefined) {
     throw new Error(
       'useIssuanceDispatch must be used within a IssuanceProvider'
-    );
+    )
   }
 
-  return context;
-};
+  return context
+}

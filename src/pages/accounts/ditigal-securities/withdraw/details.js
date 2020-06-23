@@ -1,12 +1,12 @@
-import React from 'react';
-import { Grid, Typography, Box, TextField } from '@material-ui/core';
-import type { UserSecurityBalance } from 'context/balance/types';
-import type { TransferDetails } from '../modules/types';
+import React from 'react'
+import { Grid, Typography, Box, TextField } from '@material-ui/core'
+import type { UserSecurityBalance } from 'context/balance/types'
+import type { TransferDetails } from '../modules/types'
 
-export default function WithdrawalDetailsInput({
+export default function WithdrawalDetailsInput ({
   asset,
   transferDetails,
-  setTransferDetails,
+  setTransferDetails
 }: {
   asset: UserSecurityBalance,
   transferDetails: TransferDetails,
@@ -15,7 +15,7 @@ export default function WithdrawalDetailsInput({
   return (
     <Box my={3}>
       <Grid container spacing={3}>
-        <Typography variant="caption">
+        <Typography variant='caption'>
           <b>
             Please double check the address because we are unable to recover{' '}
             {asset.symbol} sent to a wrong address.
@@ -27,16 +27,15 @@ export default function WithdrawalDetailsInput({
             value={transferDetails.recipientWallet}
             label={`Recipients ${asset.symbol} Address`}
             onChange={(ev) =>
-              setTransferDetails('recipientWallet', ev.target.value)
-            }
+              setTransferDetails('recipientWallet', ev.target.value)}
           />
         </Grid>
         <Grid item my={2} xs={12}>
           <TextField
             fullWidth
             value={transferDetails.amount}
-            label="Amount"
-            autoComplete="off"
+            label='Amount'
+            autoComplete='off'
             onChange={(ev) => setTransferDetails('amount', ev.target.value)}
           />
         </Grid>
@@ -44,11 +43,11 @@ export default function WithdrawalDetailsInput({
           <TextField
             fullWidth
             value={transferDetails.memo}
-            label="Memo"
+            label='Memo'
             onChange={(ev) => setTransferDetails('memo', ev.target.value)}
           />
         </Grid>
       </Grid>
     </Box>
-  );
+  )
 }

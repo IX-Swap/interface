@@ -7,15 +7,15 @@ export const actions = {
 
   CONFIRM_2FA_REQUEST: 'CONFIRM_2FA_REQUEST',
   CONFIRM_2FA_SUCCESS: ' CONFIRM_2FA_SUCCESS',
-  CONFIRM_2FA_FAILURE: 'CONFIRM_2FA_FAILURE',
-};
+  CONFIRM_2FA_FAILURE: 'CONFIRM_2FA_FAILURE'
+}
 
 export const STATUS = {
   INIT: 'INIT',
   IDLE: 'IDLE',
   GETTING: 'GETTING',
-  SAVING: 'SAVING',
-};
+  SAVING: 'SAVING'
+}
 
 export type TwoFactorState = {
   status: string,

@@ -1,5 +1,5 @@
 // @flow
-import React, { useState, useRef, useEffect } from 'react';
+import React, { useState, useRef, useEffect } from 'react'
 import {
   Table,
   TableContainer,
@@ -12,30 +12,30 @@ import {
   TablePagination,
   Box,
   Grid,
-  Typography,
-} from '@material-ui/core';
-import moment from 'moment';
-import type { BaseStateWithPagination } from 'context/base/withPagination/types';
+  Typography
+} from '@material-ui/core'
+import moment from 'moment'
+import type { BaseStateWithPagination } from 'context/base/withPagination/types'
 
-import { useAssetsState, useAssetsDispatch } from 'context/assets';
-import { ASSETS_STATUS } from 'context/assets/types';
-import * as AssetsActions from 'context/assets/actions';
+import { useAssetsState, useAssetsDispatch } from 'context/assets'
+import { ASSETS_STATUS } from 'context/assets/types'
+import * as AssetsActions from 'context/assets/actions'
 
-import type { Transaction } from './modules/types';
-import TransactionsListModule from './modules';
-import FiltersComponent from './Filters';
+import type { Transaction } from './modules/types'
+import TransactionsListModule from './modules'
+import FiltersComponent from './Filters'
 
-import Actions from './modules/actions';
+import Actions from './modules/actions'
 
-const { setAssetType } = AssetsActions;
+const { setAssetType } = AssetsActions
 
 const {
   useTransactionsListDispatch,
   useTransactionsListState,
-  TRANSACTIONS_LIST_STATUS,
-} = TransactionsListModule;
+  TRANSACTIONS_LIST_STATUS
+} = TransactionsListModule
 
-const { getTransactionsList, setPage, setRowsPerPage } = Actions;
+const { getTransactionsList, setPage, setRowsPerPage } = Actions
 
 type TableColumn = {
   label: string,
@@ -48,20 +48,20 @@ type TableColumn = {
 const columns: Array<TableColumn> = [
   {
     label: 'Transaction ID',
-    key: 'transactionId',
+    key: 'transactionId'
   },
   {
     label: 'Date',
     key: 'date',
-    render: (value) => moment(value).format('MM/DD/YYYY'),
+    render: (value) => moment(value).format('MM/DD/YYYY')
   },
   {
     label: 'Type',
-    key: 'type',
+    key: 'type'
   },
   {
     label: 'Reference',
-    key: 'reference',
+    key: 'reference'
   },
   {
     label: 'Debit',
@@ -69,7 +69,7 @@ const columns: Array<TableColumn> = [
     headAlign: 'right',
     align: 'right',
     render: (value) =>
-      value && value.toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,'),
+      value && value.toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,')
   },
   {
     label: 'Credit',
@@ -77,7 +77,7 @@ const columns: Array<TableColumn> = [
     headAlign: 'right',
     align: 'right',
     render: (value) =>
-      value && value.toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,'),
+      value && value.toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,')
   },
   {
     label: 'Balance',
@@ -85,77 +85,77 @@ const columns: Array<TableColumn> = [
     headAlign: 'right',
     align: 'right',
     render: (value) =>
-      value && value.toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,'),
-  },
-];
+      value && value.toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,')
+  }
+]
 
 const useAssets = () => {
-  const mountedRef = useRef(true);
-  const { status: assetsStatus, type, assets } = useAssetsState();
-  const aDispatch = useAssetsDispatch();
+  const mountedRef = useRef(true)
+  const { status: assetsStatus, type, assets } = useAssetsState()
+  const aDispatch = useAssetsDispatch()
 
   useEffect(() => {
     if (
       assetsStatus === ASSETS_STATUS.INIT ||
       ['Currency', 'Security'].includes(type)
     ) {
-      setAssetType(aDispatch, { ref: mountedRef, type: undefined });
+      setAssetType(aDispatch, { ref: mountedRef, type: undefined })
     }
-  }, [aDispatch, assetsStatus, type]);
+  }, [aDispatch, assetsStatus, type])
 
   useEffect(
     () => () => {
-      mountedRef.current = false;
+      mountedRef.current = false
     },
     []
-  );
+  )
 
-  return { assets, type };
-};
+  return { assets, type }
+}
 
-type Filters = {
+export type Filters = {
   asset: string,
   from: Date,
   to: Date,
 };
 
 const useTransactionsListLogic = () => {
-  const tDispatch = useTransactionsListDispatch();
-  const tState: BaseStateWithPagination<Transaction> = useTransactionsListState();
-  const { assets, type } = useAssets();
-  const { status, page, total, limit, items } = tState;
-  const mountedRef = useRef(true);
+  const tDispatch = useTransactionsListDispatch()
+  const tState: BaseStateWithPagination<Transaction> = useTransactionsListState()
+  const { assets, type } = useAssets()
+  const { status, page, total, limit, items } = tState
+  const mountedRef = useRef(true)
   const [filter, setFilter] = useState<Filters>({
     asset: (assets.length && assets[0]._id) || '',
     from: new Date(),
-    to: new Date(),
-  });
+    to: new Date()
+  })
 
   const handleChangeRowsPerPage = (newRows: number) => {
-    setRowsPerPage(tDispatch, { rows: newRows });
-    setPage(tDispatch, { page: 0 });
-  };
+    setRowsPerPage(tDispatch, { rows: newRows })
+    setPage(tDispatch, { page: 0 })
+  }
 
   const handleAssetChange = (ev: SyntheticInputEvent<HTMLElement>) => {
     setFilter({
       ...filter,
-      asset: ev.target.value,
-    });
+      asset: ev.target.value
+    })
 
-    setPage(tDispatch, { page });
-  };
+    setPage(tDispatch, { page })
+  }
 
   const handleChangePage = (_, newPage: number) => {
-    setPage(tDispatch, { page: newPage });
-  };
+    setPage(tDispatch, { page: newPage })
+  }
 
   const handleDateChange = (name: 'to' | 'from', date: Date) => {
-    const mFilter = { ...filter };
-    mFilter[name] = date;
-    setFilter(mFilter);
+    const mFilter = { ...filter }
+    mFilter[name] = date
+    setFilter(mFilter)
 
-    setPage(tDispatch, { page });
-  };
+    setPage(tDispatch, { page })
+  }
 
   useEffect(() => {
     if (!type && status === TRANSACTIONS_LIST_STATUS.INIT) {
@@ -164,17 +164,17 @@ const useTransactionsListLogic = () => {
         limit,
         ...filter,
         ref: mountedRef,
-        asset: filter.asset,
-      });
+        asset: filter.asset
+      })
     }
-  }, [type, filter, page, limit, status, tDispatch, assets]);
+  }, [type, filter, page, limit, status, tDispatch, assets])
 
   useEffect(
     () => () => {
-      mountedRef.current = false;
+      mountedRef.current = false
     },
     []
-  );
+  )
 
   return {
     filter,
@@ -188,11 +188,11 @@ const useTransactionsListLogic = () => {
     handleChangeRowsPerPage,
     handleChangePage,
     handleAssetChange,
-    handleDateChange,
-  };
-};
+    handleDateChange
+  }
+}
 
-export default function Transactions() {
+export default function Transactions () {
   const {
     items,
     status,
@@ -204,14 +204,14 @@ export default function Transactions() {
     handleChangeRowsPerPage,
     handleChangePage,
     handleAssetChange,
-    handleDateChange,
-  } = useTransactionsListLogic();
+    handleDateChange
+  } = useTransactionsListLogic()
 
   return (
     <>
       <Box mx={4} mt={4} mb={2}>
         <Grid item xs={3}>
-          <Typography variant="h3">Transactions</Typography>
+          <Typography variant='h3'>Transactions</Typography>
         </Grid>
       </Box>
       <FiltersComponent
@@ -223,7 +223,7 @@ export default function Transactions() {
       <Box mx={4} my={2}>
         <TableContainer>
           {status === TRANSACTIONS_LIST_STATUS.GETTING && <LinearProgress />}
-          <Table aria-label="simple table">
+          <Table aria-label='simple table'>
             <TableHead>
               <TableRow>
                 {columns.map((e) => (
@@ -274,5 +274,5 @@ export default function Transactions() {
         </TableContainer>
       </Box>
     </>
-  );
+  )
 }

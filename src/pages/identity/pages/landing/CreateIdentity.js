@@ -1,32 +1,32 @@
-import React from 'react';
-import { useHistory } from 'react-router-dom';
-import { Button, Paper, Grid, Typography } from '@material-ui/core';
-import { makeStyles } from '@material-ui/styles';
+import React from 'react'
+import { useHistory } from 'react-router-dom'
+import { Button, Paper, Grid, Typography } from '@material-ui/core'
+import { makeStyles } from '@material-ui/styles'
 
 const useStyles = makeStyles((theme) => ({
   paperContainer: {
-    marginTop: '3em',
+    marginTop: '3em'
   },
   buttonGroup: {
-    marginTop: '2em',
+    marginTop: '2em'
   },
   corporateButton: {
     backgroundColor: theme.palette.secondary.main,
     color: 'white',
-    fontWeight: 'bold',
-  },
-}));
+    fontWeight: 'bold'
+  }
+}))
 
 const CreateIdentity = () => {
-  const classes = useStyles();
-  const history = useHistory();
+  const classes = useStyles()
+  const history = useHistory()
 
   return (
     <Paper elevation={0} className={classes.paperContainer}>
       <Grid
         container
-        alignItems="center"
-        justify="center"
+        alignItems='center'
+        justify='center'
         style={{ width: '100%', height: '500px' }}
       >
         <div>
@@ -34,8 +34,8 @@ const CreateIdentity = () => {
 
           <Grid
             container
-            alignItems="center"
-            justify="center"
+            alignItems='center'
+            justify='center'
             className={classes.buttonGroup}
           >
             {/* <Button
@@ -45,7 +45,7 @@ const CreateIdentity = () => {
               Individual
             </Button> */}
             <Button
-              type="button"
+              type='button'
               className={classes.corporateButton}
               onClick={() => history.push('/identity/individual')}
             >
@@ -55,7 +55,7 @@ const CreateIdentity = () => {
         </div>
       </Grid>
     </Paper>
-  );
-};
+  )
+}
 
-export default CreateIdentity;
+export default CreateIdentity

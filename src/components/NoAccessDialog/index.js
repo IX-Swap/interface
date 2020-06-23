@@ -1,22 +1,22 @@
-import React from 'react';
+import React from 'react'
 import {
   Dialog,
   DialogTitle,
   DialogContent,
   Typography,
   Button,
-  DialogActions,
-} from '@material-ui/core';
-import { useHasSpecialRole, useIsAccredited } from 'services/acl';
-import { useUserState } from 'context/user';
-import { useLocation, useHistory } from 'react-router-dom';
+  DialogActions
+} from '@material-ui/core'
+import { useHasSpecialRole, useIsAccredited } from 'services/acl'
+import { useUserState } from 'context/user'
+import { useLocation, useHistory } from 'react-router-dom'
 
 const NoAccessDialog = () => {
-  const hasSpecialRole = useHasSpecialRole();
-  const isAccreditted = useIsAccredited();
-  const { user: { totpConfirmed = false } = {} } = useUserState();
-  const { pathname } = useLocation();
-  const history = useHistory();
+  const hasSpecialRole = useHasSpecialRole()
+  const isAccreditted = useIsAccredited()
+  const { user: { totpConfirmed = false } = {} } = useUserState()
+  const { pathname } = useLocation()
+  const history = useHistory()
 
   if (
     isAccreditted ||
@@ -24,12 +24,12 @@ const NoAccessDialog = () => {
     !totpConfirmed ||
     pathname.match(/^\/identity.*$/)
   ) {
-    return <></>;
+    return <></>
   }
 
   return (
-    <Dialog aria-labelledby="simple-dialog-title" open fullWidth>
-      <DialogTitle id="simple-dialog-title">
+    <Dialog aria-labelledby='simple-dialog-title' open fullWidth>
+      <DialogTitle id='simple-dialog-title'>
         <b>Setup Identity</b>
       </DialogTitle>
       <DialogContent>
@@ -39,8 +39,8 @@ const NoAccessDialog = () => {
         </Typography>
         <DialogActions>
           <Button
-            variant="contained"
-            color="primary"
+            variant='contained'
+            color='primary'
             onClick={() => history.push('/identity')}
           >
             Setup Identity
@@ -48,7 +48,7 @@ const NoAccessDialog = () => {
         </DialogActions>
       </DialogContent>
     </Dialog>
-  );
-};
+  )
+}
 
-export default NoAccessDialog;
+export default NoAccessDialog

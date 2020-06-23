@@ -1,18 +1,18 @@
-import React, { useState, useEffect } from 'react';
-import moment from 'moment';
+import React, { useState, useEffect } from 'react'
+import moment from 'moment'
 
-import { withStyles, makeStyles } from '@material-ui/core/styles';
+import { withStyles, makeStyles } from '@material-ui/core/styles'
 
 // Config/Endpoints
-import { ENDPOINT_URL, DATE_FORMAT } from 'config';
-import localStore from 'services/storageHelper';
+import { ENDPOINT_URL, DATE_FORMAT } from 'config'
+import localStore from 'services/storageHelper'
 
 // Utils
-import { numberWithCommas } from 'utils/utils';
+import { numberWithCommas } from 'utils/utils'
 
 // Modules
-import { subscribeToSocket } from 'services/socket';
-import MyOrderActions from './modules/actions';
+import { subscribeToSocket } from 'services/socket'
+import MyOrderActions from './modules/actions'
 
 import {
   Button,
@@ -23,41 +23,41 @@ import {
   TableContainer,
   TableHead,
   TableRow,
-  Paper,
-} from '@material-ui/core';
+  Paper
+} from '@material-ui/core'
 
 const StyledTableCell = withStyles((theme) => ({
   head: {
     backgroundColor: '#f7f7f7',
-    color: '#a7a7a7',
+    color: '#a7a7a7'
   },
   body: {
-    fontSize: 12,
-  },
-}))(TableCell);
+    fontSize: 12
+  }
+}))(TableCell)
 
 const useStyles = makeStyles({
   table: {
     minWidth: 650,
-    maxHeight: 450,
+    maxHeight: 450
   },
   tableTitle: {
     color: '#000',
     fontSize: 18,
     fontWeight: 600,
-    margin: '15px 0 10px',
-  },
-});
+    margin: '15px 0 10px'
+  }
+})
 
 // Subscribe to SOCKET.IO
-const userId = localStore.getUserId();
+const userId = localStore.getUserId()
 
-export default function TableMyOrders(props) {
-  const { id, data } = props;
-  const [myOrders, setMyOrders] = useState(false);
-  const classes = useStyles();
-  const { SUBSCRIBE_API } = ENDPOINT_URL;
-  const { MY_ORDERS } = SUBSCRIBE_API;
+export default function TableMyOrders (props) {
+  const { id, data } = props
+  const [myOrders, setMyOrders] = useState(false)
+  const classes = useStyles()
+  const { SUBSCRIBE_API } = ENDPOINT_URL
+  const { MY_ORDERS } = SUBSCRIBE_API
 
   /*eslint-disable */
   useEffect(() => {
