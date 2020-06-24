@@ -112,9 +112,10 @@ function Monitoring (props) {
       data.reverse()
     }
 
-    _handleStorePayload = (data, side) => {
+    _handleStorePayload = (data, side, sum) => {
       MonitoringActions.setBidAndAsk(dispatch, {
         ...data,
+        sum,
         side
       })
     }
@@ -236,7 +237,8 @@ function Monitoring (props) {
 
             const amountStyle = classNames(
               classes.defaultListItemStyle,
-              classes.rightAlign
+              classes.rightAlign,
+              classes.upper
             )
 
             const renderMonitoringEl = (item) => {
@@ -305,10 +307,16 @@ function Monitoring (props) {
                   return (
                     <>
                       <div className={classes.barGraph} style={barStyle} />
-                      <p className={priceStyle}>
+                      <p
+                        className={priceStyle}
+                        onClick={() => _handleStorePayload(d, type, false)}
+                      >
                         {numberWithCommas(d.price?.toFixed(4))}
                       </p>
-                      <p className={amountStyle}>
+                      <p
+                        className={amountStyle}
+                        onClick={() => _handleStorePayload(d, type, true)}
+                      >
                         {numberWithCommas(d.amount?.toFixed(4) || 0)}
                       </p>
                       <p className={classes.defaultListItemStyle}>
@@ -323,7 +331,6 @@ function Monitoring (props) {
               <li
                 key={i}
                 className={classes.monitoringListItem}
-                onClick={() => _handleStorePayload(d, type)}
               >
                 {renderMonitoringEl(type)}
               </li>
