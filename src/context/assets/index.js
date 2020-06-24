@@ -1,5 +1,5 @@
 // @flow
-import React, { useMemo } from 'react'
+import React from 'react'
 import logger from 'use-reducer-logger'
 import type { Node } from 'react'
 import { initialState } from './state'
@@ -29,13 +29,9 @@ export function useAssetsDispatch () {
 }
 
 export function AssetsProvider ({ children }: { children?: Node }) {
-  const thisReducer = useMemo(
-    () =>
-      process.env.NODE_ENV === 'development'
-        ? logger(assetsReducer)
-        : assetsReducer,
-    []
-  )
+  const thisReducer = process.env.NODE_ENV === 'development'
+    ? logger(assetsReducer)
+    : assetsReducer
 
   const [state, dispatch] = React.useReducer<AssetsListState, AssetsListState>(
     thisReducer,

@@ -1,4 +1,4 @@
-import React, { useMemo } from 'react'
+import React from 'react'
 import logger from 'use-reducer-logger'
 import { getRequest, putRequest } from '../services/httpRequests'
 
@@ -71,13 +71,9 @@ export function accreditationReducer (state, { type, payload }) {
 
 // context and hooks
 export function AccreditationProvider ({ children }) {
-  const thisReducer = useMemo(
-    () =>
-      process.env.NODE_ENV === 'development'
-        ? logger(accreditationReducer)
-        : accreditationReducer,
-    []
-  )
+  const thisReducer = process.env.NODE_ENV === 'development'
+    ? logger(accreditationReducer)
+    : accreditationReducer
 
   const [state, dispatch] = React.useReducer(thisReducer, initialState)
 

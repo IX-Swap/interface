@@ -1,5 +1,5 @@
 // @flow
-import React, { useMemo } from 'react'
+import React from 'react'
 import logger from 'use-reducer-logger'
 import type { Node } from 'react'
 import generateInitialState from './state'
@@ -49,11 +49,7 @@ export function generateModule<X> (
   }
 
   function Provider ({ children }: { children?: Node }) {
-    const thisReducer = useMemo(
-      () =>
-        process.env.NODE_ENV === 'development' ? logger(reducer) : reducer,
-      []
-    )
+    const thisReducer = process.env.NODE_ENV === 'development' ? logger(reducer) : reducer
 
     const [state, dispatch] = React.useReducer<any, any>(
       thisReducer,

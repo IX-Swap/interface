@@ -22,7 +22,7 @@ export class TableWithPaginationStore<T> {
   @action
   async getItems (filter: {}, skip = 0, limit = 50) {
     this.status = GENERIC_STATUS.GETTING
-    const resp = await getItemsFromApi<T>(this.uri, {}, skip, limit)
+    const resp = await getItemsFromApi<T>(this.uri, filter, skip, limit)
     runInAction(() => {
       this.filter = filter
 

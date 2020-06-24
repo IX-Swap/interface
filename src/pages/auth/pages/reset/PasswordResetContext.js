@@ -1,4 +1,4 @@
-import React, { useMemo } from 'react'
+import React from 'react'
 import logger from 'use-reducer-logger'
 import { postRequest } from 'services/httpRequests'
 
@@ -100,13 +100,9 @@ export function passwordResetReducer (state, { type, payload }) {
 
 // context and hooks
 export function PasswordResetProvider ({ children }) {
-  const thisReducer = useMemo(
-    () =>
-      process.env.NODE_ENV === 'development'
-        ? logger(passwordResetReducer)
-        : passwordResetReducer,
-    []
-  )
+  const thisReducer = process.env.NODE_ENV === 'development'
+    ? logger(passwordResetReducer)
+    : passwordResetReducer
 
   const [state, dispatch] = React.useReducer(thisReducer, initialState)
 

@@ -1,4 +1,4 @@
-import React, { useMemo } from 'react'
+import React from 'react'
 import logger from 'use-reducer-logger'
 import { getRequest, putRequest, postRequest } from '../services/httpRequests'
 import { compareAsc } from 'date-fns'
@@ -206,13 +206,9 @@ export function identityReducer (state, { type, payload }) {
 
 // context and hooks
 export function IdentityProvider ({ children }) {
-  const thisReducer = useMemo(
-    () =>
-      process.env.NODE_ENV === 'development'
-        ? logger(identityReducer)
-        : identityReducer,
-    []
-  )
+  const thisReducer = process.env.NODE_ENV === 'development'
+    ? logger(identityReducer)
+    : identityReducer
 
   const [state, dispatch] = React.useReducer(thisReducer, initialState)
 

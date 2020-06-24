@@ -1,5 +1,5 @@
 // @flow
-import React, { useMemo } from 'react'
+import React from 'react'
 import type { Node } from 'react'
 import logger from 'use-reducer-logger'
 import { investReducer } from './reducers'
@@ -9,13 +9,9 @@ const StateContext = React.createContext<any>()
 const DispatchContext = React.createContext()
 
 export const InvestProvider = ({ children }: { children: Node }) => {
-  const thisReducer = useMemo(
-    () =>
-      process.env.NODE_ENV === 'development'
-        ? logger(investReducer)
-        : investReducer,
-    []
-  )
+  const thisReducer = process.env.NODE_ENV === 'development'
+    ? logger(investReducer)
+    : investReducer
 
   const [state, dispatch] = React.useReducer<any, any>(
     thisReducer,

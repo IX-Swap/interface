@@ -1,4 +1,4 @@
-import React, { useMemo } from 'react'
+import React from 'react'
 import logger from 'use-reducer-logger'
 
 // constants
@@ -46,13 +46,9 @@ export function identityAuthorizerReducer (state, { type, payload }) {
 
 // context and hooks
 export function IdentityAuthorizerProvider ({ children }) {
-  const thisReducer = useMemo(
-    () =>
-      process.env.NODE_ENV === 'development'
-        ? logger(identityAuthorizerReducer)
-        : identityAuthorizerReducer,
-    []
-  )
+  const thisReducer = process.env.NODE_ENV === 'development'
+    ? logger(identityAuthorizerReducer)
+    : identityAuthorizerReducer
 
   const [state, dispatch] = React.useReducer(thisReducer, initialState)
 
