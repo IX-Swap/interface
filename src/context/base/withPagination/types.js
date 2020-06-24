@@ -18,7 +18,7 @@ export type GenericStatus = {
 };
 
 const camelToSnake = (string) =>
-  string.replace(/[\w]([A-Z])/g, (m) => `${m[0]}_${m[1]}`).toUpperCase();
+  string.replace(/[\w]([A-Z])/g, (m) => `${m[0]}_${m[1]}`).toUpperCase()
 
 const generateActions = (name): GenericActions => ({
   GET_REQUEST: `GET_${camelToSnake(name)}_REQUEST`,
@@ -28,19 +28,19 @@ const generateActions = (name): GenericActions => ({
   PAGE_CHANGE: `GET_${camelToSnake(name)}_PAGE_CHANGE`,
   ROWS_PER_PAGE_CHANGE: `GET_${camelToSnake(name)}_ROWS_PERPAGE_CHANGE`,
   CLEAR_DATA: `GET_${camelToSnake(name)}_CLEAR_INITIAL_DATA`,
-  CLEAR_API: `GET_${camelToSnake(name)}_CLEAR_API_STATUS`,
-});
+  CLEAR_API: `GET_${camelToSnake(name)}_CLEAR_API_STATUS`
+})
 
 export const generateStatus = (): GenericStatus => ({
   INIT: 'INIT',
   IDLE: 'IDLE',
-  GETTING: 'GETTING',
-});
+  GETTING: 'GETTING'
+})
 
 export default (name: string) => ({
   actionTypes: generateActions(name),
-  status: generateStatus(),
-});
+  status: generateStatus()
+})
 
 export type BaseStateWithPagination<T> = {
   items: Array<T>,

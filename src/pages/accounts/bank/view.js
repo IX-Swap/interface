@@ -1,7 +1,7 @@
-import React from 'react';
-import { Grid, Typography } from '@material-ui/core';
-import type { Asset } from 'context/assets/types';
-import type { Bank } from './modules/types';
+import React from 'react'
+import { Grid, Typography } from '@material-ui/core'
+import type { Asset } from 'context/assets/types'
+import type { Bank } from './modules/types'
 
 const BankView = ({ bank, asset = {} }: { bank: Bank, asset?: Asset }) => (
   <Grid container spacing={4} style={{ maxWidth: '1000px' }}>
@@ -45,7 +45,7 @@ const BankView = ({ bank, asset = {} }: { bank: Bank, asset?: Asset }) => (
     {bank.address && Object.values(bank.address).join('').trim() && (
       <>
         <Grid item>
-          <Typography variant="h6">Bank Address</Typography>
+          <Typography variant='h6'>Bank Address</Typography>
         </Grid>
         <Grid item container>
           <Grid item xs={5}>
@@ -90,6 +90,6 @@ const BankView = ({ bank, asset = {} }: { bank: Bank, asset?: Asset }) => (
       </>
     )}
   </Grid>
-);
+)
 
-export default BankView;
+export default BankView

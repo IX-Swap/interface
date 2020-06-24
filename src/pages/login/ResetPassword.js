@@ -31,8 +31,7 @@ function ResetPassword (props) {
   }
 
   const handleCompleteResetSubmit = () => {
-    if ((email, resetToken, newPassword))
-      completeResetPassword(identityDispatch, email, resetToken, newPassword)
+    if ((email, resetToken, newPassword)) { completeResetPassword(identityDispatch, email, resetToken, newPassword) }
   }
 
   return (

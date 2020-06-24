@@ -1,5 +1,5 @@
-import type { Dso } from 'context/dso/types';
-import type { Asset } from 'context/assets/types';
+import type { Dso } from 'context/dso/types'
+import type { Asset } from 'context/assets/types'
 
 export type Commitment = {
   _id: string,

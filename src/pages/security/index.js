@@ -1,28 +1,28 @@
-import React, { Suspense } from 'react';
-import { Route, withRouter, Switch } from 'react-router-dom';
-import { Container } from '@material-ui/core';
+import React, { Suspense } from 'react'
+import { Route, withRouter, Switch } from 'react-router-dom'
+import { Container } from '@material-ui/core'
 
-const SettingsLanding = React.lazy(() => import('./pages'));
-const ChangPassword = React.lazy(() => import('./pages/change-password'));
-const GoogleAuthenticatorSetup = React.lazy(() => import('./pages/setup-2fa'));
+const SettingsLanding = React.lazy(() => import('./pages'))
+const ChangPassword = React.lazy(() => import('./pages/change-password'))
+const GoogleAuthenticatorSetup = React.lazy(() => import('./pages/setup-2fa'))
 
 const routes = [
   {
     title: 'Security',
     route: '/security',
-    component: SettingsLanding,
+    component: SettingsLanding
   },
   {
     title: 'Change Password',
     route: '/security/change-password',
-    component: ChangPassword,
+    component: ChangPassword
   },
   {
     title: 'Google Authenticator Setup',
     route: '/security/setup-2fa',
-    component: GoogleAuthenticatorSetup,
-  },
-];
+    component: GoogleAuthenticatorSetup
+  }
+]
 
 const SettingsRoutes = () => (
   <Container>
@@ -39,6 +39,6 @@ const SettingsRoutes = () => (
       </Suspense>
     </Switch>
   </Container>
-);
+)
 
-export default withRouter(SettingsRoutes);
+export default withRouter(SettingsRoutes)

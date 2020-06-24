@@ -1,29 +1,29 @@
 // @flow
-import React, { Suspense } from 'react';
-import { withRouter, Route, RouteProps } from 'react-router-dom';
-import ArrowBackIosIcon from '@material-ui/icons/ArrowBackIos';
-import { Grid, Button, Container, Paper, Box } from '@material-ui/core';
-import PageTitle from 'components/PageTitle';
+import React, { Suspense } from 'react'
+import { withRouter, Route, RouteProps } from 'react-router-dom'
+import ArrowBackIosIcon from '@material-ui/icons/ArrowBackIos'
+import { Grid, Button, Container, Paper, Box } from '@material-ui/core'
+import PageTitle from 'components/PageTitle'
 
-const Banks = React.lazy(() => import('./banks'));
-const Deposits = React.lazy(() => import('./deposits'));
-const DepositsView = React.lazy(() => import('./deposits/view'));
-const Withdrawals = React.lazy(() => import('./withdrawals'));
-const WithdrawalsView = React.lazy(() => import('./withdrawals/view'));
-const DSWithdrawals = React.lazy(() => import('./ds-withdrawals'));
-const DSWithdrawalsView = React.lazy(() => import('./ds-withdrawals/view'));
-const DSOs = React.lazy(() => import('./digital-securities'));
-const DSOView = React.lazy(() => import('./digital-securities/view'));
+const Banks = React.lazy(() => import('./banks'))
+const Deposits = React.lazy(() => import('./deposits'))
+const DepositsView = React.lazy(() => import('./deposits/view'))
+const Withdrawals = React.lazy(() => import('./withdrawals'))
+const WithdrawalsView = React.lazy(() => import('./withdrawals/view'))
+const DSWithdrawals = React.lazy(() => import('./ds-withdrawals'))
+const DSWithdrawalsView = React.lazy(() => import('./ds-withdrawals/view'))
+const DSOs = React.lazy(() => import('./digital-securities'))
+const DSOView = React.lazy(() => import('./digital-securities/view'))
 const IndividualIdentities = React.lazy(() =>
   import('./individual-identities')
-);
-const CorporateIdentities = React.lazy(() => import('./corporate-identities'));
-const Commitments = React.lazy(() => import('./commitments'));
-const BankView = React.lazy(() => import('pages/accounts/bank/view'));
+)
+const CorporateIdentities = React.lazy(() => import('./corporate-identities'))
+const Commitments = React.lazy(() => import('./commitments'))
+const BankView = React.lazy(() => import('pages/accounts/bank/view'))
 
 const BankSummary = ({ location }: RouteProps) => {
-  const { data } = location.state || {};
-  if (!data) return <span>nothing to display</span>;
+  const { data } = location.state || {}
+  if (!data) return <span>nothing to display</span>
   return (
     <Grid container component={Paper}>
       <Container>
@@ -32,84 +32,84 @@ const BankSummary = ({ location }: RouteProps) => {
         </Box>
       </Container>
     </Grid>
-  );
-};
+  )
+}
 
 const routes = [
   {
     route: '/authorizer/banks',
     title: 'Banks',
-    component: Banks,
+    component: Banks
   },
   {
     route: '/authorizer/deposits',
     title: 'Deposits',
     exact: true,
-    component: Deposits,
+    component: Deposits
   },
   {
     route: '/authorizer/deposits/view',
     title: 'View Deposit',
     component: DepositsView,
-    hasBack: true,
+    hasBack: true
   },
   {
     route: '/authorizer/withdrawals',
     title: 'Withdrawals',
     exact: true,
-    component: Withdrawals,
+    component: Withdrawals
   },
   {
     route: '/authorizer/withdrawals/view',
     title: 'View Withdrawal',
     component: WithdrawalsView,
-    hasBack: true,
+    hasBack: true
   },
   {
     route: '/authorizer/ds-withdrawals',
     title: 'DS Withdrawals',
     component: DSWithdrawals,
-    exact: true,
+    exact: true
   },
   {
     route: '/authorizer/ds-withdrawals/view',
     title: 'View DS Withdrawal',
     component: DSWithdrawalsView,
-    hasBack: true,
+    hasBack: true
   },
   {
     route: '/authorizer/individual-identities',
     title: 'Individual Identities',
-    component: IndividualIdentities,
+    component: IndividualIdentities
   },
   {
     route: '/authorizer/corporate-identities',
     title: 'Corporate Identities',
-    component: CorporateIdentities,
+    component: CorporateIdentities
   },
   {
     route: '/authorizer/digital-securities/:id',
     title: 'View Digital Security',
-    component: DSOView,
+    component: DSOView
   },
   {
     route: '/authorizer/digital-securities',
     title: 'Offerings',
     exact: true,
-    component: DSOs,
+    component: DSOs
   },
   {
     route: '/authorizer/commitments',
     title: 'Commitments',
-    component: Commitments,
+    component: Commitments
   },
   {
     route: '/authorizer/summary',
     title: 'Summary',
     component: BankSummary,
-    hasBack: true,
-  },
-];
+    hasBack: true
+  }
+]
 
 const Routes = () => (
   <Suspense fallback={<span>loading</span>}>
@@ -122,57 +122,57 @@ const Routes = () => (
       />
     ))}
   </Suspense>
-);
+)
 
 const getTitle = (path: string): string => {
   switch (path) {
     case '/authorizer/banks':
-      return 'Banks';
+      return 'Banks'
     case '/authorizer/deposits':
-      return 'Deposits';
+      return 'Deposits'
     case '/authorizer/withdrawals':
-      return 'Withdrawals';
+      return 'Withdrawals'
     case '/authorizer/individual-identities':
-      return 'Individual Identities';
+      return 'Individual Identities'
     case '/authorizer/corporate-identities':
-      return 'Corporate Identities';
+      return 'Corporate Identities'
     case '/authorizer/ds-withdrawals':
-      return 'DS Withdrawals';
+      return 'DS Withdrawals'
     case '/authorizer/digital-securities':
-      return 'Digital Securities';
+      return 'Digital Securities'
     case '/authorizer/commitments':
-      return 'Commitments';
+      return 'Commitments'
     case '/authorizer/summary':
-      return 'Summary';
+      return 'Summary'
     case '/authorizer/deposits/view':
-      return 'View Deposit';
+      return 'View Deposit'
     case '/authorizer/withdrawals/view':
-      return 'View Withdrawal';
+      return 'View Withdrawal'
     case '/authorizer/ds-withdrawals/view':
-      return 'View DS Withdrawal';
+      return 'View DS Withdrawal'
     default:
-      return '';
+      return ''
   }
-};
+}
 
-function Authorizer(props: RouteProps) {
-  const { location, history } = props;
+function Authorizer (props: RouteProps) {
+  const { location, history } = props
 
   const hasBack = (a: string) =>
     [
       '/authorizer/withdrawals/view',
       '/authorizer/deposits/view',
       '/authorizer/summary',
-      '/authorizer/ds-withdrawals/view',
-    ].includes(a);
+      '/authorizer/ds-withdrawals/view'
+    ].includes(a)
 
   return (
     <>
-      <Grid container title="Accounts" justify="center" alignItems="center">
-        <Grid container item xs={12} alignItems="center">
+      <Grid container title='Accounts' justify='center' alignItems='center'>
+        <Grid container item xs={12} alignItems='center'>
           <Grid item>
             {hasBack(location.pathname) && (
-              <Button type="button" onClick={() => history.goBack()}>
+              <Button type='button' onClick={() => history.goBack()}>
                 <ArrowBackIosIcon />
               </Button>
             )}
@@ -184,7 +184,7 @@ function Authorizer(props: RouteProps) {
         <Routes />
       </Grid>
     </>
-  );
+  )
 }
 
-export default withRouter(Authorizer);
+export default withRouter(Authorizer)

@@ -1,27 +1,27 @@
 // @flow
-import React, { useState } from 'react';
-import type { Node } from 'react';
+import React, { useState } from 'react'
+import type { Node } from 'react'
 import {
   Container,
   Typography,
   ExpansionPanel,
   ExpansionPanelSummary,
   ExpansionPanelDetails,
-  Grid,
-} from '@material-ui/core';
-import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
-import { makeStyles } from '@material-ui/styles';
+  Grid
+} from '@material-ui/core'
+import ExpandMoreIcon from '@material-ui/icons/ExpandMore'
+import { makeStyles } from '@material-ui/styles'
 
 const useStyles = makeStyles(() => ({
   column: {
     display: 'flex',
     justifyContent: 'space-between',
-    alignItems: 'center',
+    alignItems: 'center'
   },
   sectionHeader: {
-    fontWeight: 'bold',
-  },
-}));
+    fontWeight: 'bold'
+  }
+}))
 
 type IdentitySectionProps = {
   title: string,
@@ -32,30 +32,30 @@ type IdentitySectionProps = {
 const IdentitySection = ({
   title,
   subtitle,
-  children,
+  children
 }: IdentitySectionProps) => {
-  const classes = useStyles();
+  const classes = useStyles()
 
-  const [expanded, setExpanded] = useState(true);
+  const [expanded, setExpanded] = useState(true)
 
   return (
     <ExpansionPanel
       expanded={expanded}
       onChange={() => {
-        setExpanded(!expanded);
+        setExpanded(!expanded)
       }}
     >
       <ExpansionPanelSummary
         expandIcon={<ExpandMoreIcon />}
-        aria-controls="panel1a-content"
-        id="panel1a-header"
+        aria-controls='panel1a-content'
+        id='panel1a-header'
       >
         <Container className={classes.column}>
-          <Typography variant="h6" className={classes.sectionHeader}>
+          <Typography variant='h6' className={classes.sectionHeader}>
             {title}
           </Typography>
           {subtitle && (
-            <Typography variant="h6" className={classes.sectionHeader}>
+            <Typography variant='h6' className={classes.sectionHeader}>
               {subtitle}
             </Typography>
           )}
@@ -69,7 +69,7 @@ const IdentitySection = ({
         </Container>
       </ExpansionPanelDetails>
     </ExpansionPanel>
-  );
-};
+  )
+}
 
-export default IdentitySection;
+export default IdentitySection

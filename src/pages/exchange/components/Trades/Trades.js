@@ -107,8 +107,8 @@ function TradesTable ({ trades }) {
               <TableCell align='right'>
                 <NumberFormat
                   value={t.amount}
-                  displayType={'text'}
-                  thousandSeparator={true}
+                  displayType='text'
+                  thousandSeparator
                 />
               </TableCell>
             </TableRow>

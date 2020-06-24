@@ -1,13 +1,13 @@
 // @flow
-import React from 'react';
-import { Paper, Box } from '@material-ui/core';
+import React from 'react'
+import { Paper, Box } from '@material-ui/core'
 
-import type { Bank } from '../modules/types';
+import type { Bank } from '../modules/types'
 
 const BankDetails = ({
   bank,
   code,
-  address,
+  address
 }: {
   bank: Bank,
   address?: ?string,
@@ -51,6 +51,6 @@ const BankDetails = ({
       </Box>
     </Paper>
   </Box>
-);
+)
 
-export default BankDetails;
+export default BankDetails

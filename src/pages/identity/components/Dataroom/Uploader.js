@@ -1,26 +1,26 @@
 // @flow
-import React, { useRef } from 'react';
-import { Button, Typography, ListItem, Grid } from '@material-ui/core';
-import type { DocumentGuide } from '../../modules/types';
-import { useIdentityState, useIdentityDispatch } from '../../modules';
-import { uploadFile } from '../../modules/actions';
-import useStyles from './styles';
+import React, { useRef } from 'react'
+import { Button, Typography, ListItem, Grid } from '@material-ui/core'
+import type { DocumentGuide } from '../../modules/types'
+import { useIdentityState, useIdentityDispatch } from '../../modules'
+import { uploadFile } from '../../modules/actions'
+import useStyles from './styles'
 
 const Uploader = ({ document }: { document: DocumentGuide }) => {
-  const classes = useStyles();
-  const inputRef = useRef();
-  const dispatch = useIdentityDispatch();
-  const { status, editMode } = useIdentityState();
+  const classes = useStyles()
+  const inputRef = useRef()
+  const dispatch = useIdentityDispatch()
+  const { status, editMode } = useIdentityState()
 
   const handleChange = () => {
     if (inputRef.current) {
       uploadFile(dispatch, {
         file: inputRef.current?.files?.[0],
         title: document.title,
-        type: document.type,
-      });
+        type: document.type
+      })
     }
-  };
+  }
 
   return (
     <ListItem className={classes.listItem}>
@@ -29,7 +29,7 @@ const Uploader = ({ document }: { document: DocumentGuide }) => {
           <Typography>{document.title}</Typography>
         </Grid>
 
-        <Grid container item xs={4} justify="flex-end">
+        <Grid container item xs={4} justify='flex-end'>
           {editMode ? (
             <>
               <input
@@ -37,14 +37,14 @@ const Uploader = ({ document }: { document: DocumentGuide }) => {
                 id={`${document.title}-file`}
                 multiple
                 hidden
-                type="file"
+                type='file'
                 onChange={handleChange}
               />
               {/* eslint-disable-next-line */}
               <label htmlFor={`${document.title}-file`}>
                 <Button
-                  variant="contained"
-                  component="span"
+                  variant='contained'
+                  component='span'
                   disabled={status === 'SAVING'}
                 >
                   Upload
@@ -57,7 +57,7 @@ const Uploader = ({ document }: { document: DocumentGuide }) => {
         </Grid>
       </Grid>
     </ListItem>
-  );
-};
+  )
+}
 
-export default Uploader;
+export default Uploader

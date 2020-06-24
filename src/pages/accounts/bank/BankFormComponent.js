@@ -1,7 +1,7 @@
 // @flow
 /* eslint-disable react-hooks/exhaustive-deps */
-import React, { useState, useEffect, useRef, useCallback } from 'react';
-import { useForm, FormContext } from 'react-hook-form';
+import React, { useState, useEffect, useRef, useCallback } from 'react'
+import { useForm, FormContext } from 'react-hook-form'
 import {
   Box,
   Grid,
@@ -11,83 +11,83 @@ import {
   Typography,
   MenuItem,
   Select,
-  Paper,
-} from '@material-ui/core';
+  Paper
+} from '@material-ui/core'
 
-import { useAssetsDispatch, useAssetsState } from 'context/assets';
-import { getAssets } from 'context/assets/actions';
-import { ASSETS_STATUS } from 'context/assets/types';
-import CountrySelect from 'components/CountrySelect';
-import type { BankRequest } from './modules/types';
+import { useAssetsDispatch, useAssetsState } from 'context/assets'
+import { getAssets } from 'context/assets/actions'
+import { ASSETS_STATUS } from 'context/assets/types'
+import CountrySelect from 'components/CountrySelect'
+import type { BankRequest } from './modules/types'
 
-function useGetters() {
-  const { status: assetsStatus, assets } = useAssetsState();
+function useGetters () {
+  const { status: assetsStatus, assets } = useAssetsState()
 
-  const assetsDispatch = useAssetsDispatch();
-  const [assetsReady, setAssetsReady] = useState(false);
-  const mountedRef = useRef(true);
+  const assetsDispatch = useAssetsDispatch()
+  const [assetsReady, setAssetsReady] = useState(false)
+  const mountedRef = useRef(true)
 
   const currencies = assets
     ? assets.filter((asset) => asset.type === 'Currency')
-    : [];
+    : []
 
   useEffect(() => {
     if (assetsStatus === ASSETS_STATUS.INIT) {
       getAssets(assetsDispatch, {
-        ref: mountedRef,
-      });
+        ref: mountedRef
+      })
     }
 
     if (assetsStatus === ASSETS_STATUS.IDLE) {
-      setAssetsReady(true);
+      setAssetsReady(true)
     }
-  }, [assetsStatus, assetsDispatch]);
+  }, [assetsStatus, assetsDispatch])
 
   useEffect(
     () => () => {
-      mountedRef.current = false;
+      mountedRef.current = false
     },
     []
-  );
+  )
 
   return {
     assetsReady,
-    currencies,
-  };
+    currencies
+  }
 }
 
-function useBankFormLogic(bank?: BankRequest) {
-  const [symbol, setSymbol] = useState(bank?.asset || '');
-  const mountedRef = useRef(true);
+function useBankFormLogic (bank?: BankRequest) {
+  const [symbol, setSymbol] = useState(bank?.asset || '')
+  const mountedRef = useRef(true)
 
-  const [bankAccountName, setBankAccountName] = useState(bank?.bankName || '');
+  const [bankAccountName, setBankAccountName] = useState(bank?.bankName || '')
   const [bankAddress, setBankAddress] = useState({
     line1: (bank && bank.address && bank.address.line1) || '',
     line2: (bank && bank.address && bank.address.line2) || '',
     city: (bank && bank.address && bank.address.city) || '',
     state: (bank && bank.address && bank.address.state) || '',
     country: (bank && bank.address && bank.address.country) || '',
-    postalCode: (bank && bank.address && bank.address.postalCode) || '',
-  });
+    postalCode: (bank && bank.address && bank.address.postalCode) || ''
+  })
   const [bankAccountHolderName, setBankAccountHolderName] = useState(
     bank?.accountHolderName || ''
-  );
-  const [swiftCode, setSwiftCode] = useState(bank?.swiftCode || '');
+  )
+  const [swiftCode, setSwiftCode] = useState(bank?.swiftCode || '')
   const [bankAccountNumber, setBankAccountNumber] = useState(
     bank?.bankAccountNumber || ''
-  );
+  )
 
   const handleSelectChange = (ev) => {
-    ev.preventDefault();
-    setSymbol(ev.target.value);
-  };
+    ev.preventDefault()
+    setSymbol(ev.target.value)
+  }
 
   useEffect(
     () => () => {
-      mountedRef.current = false;
+      mountedRef.current = false
     },
     []
-  );
+  )
 
   return {
     symbol,
@@ -101,8 +101,8 @@ function useBankFormLogic(bank?: BankRequest) {
     swiftCode,
     setSwiftCode,
     bankAccountNumber,
-    setBankAccountNumber,
-  };
+    setBankAccountNumber
+  }
 }
 
 type BankFormComponentProps = {
@@ -110,9 +110,9 @@ type BankFormComponentProps = {
   onChange: (bank: BankRequest, isValid: boolean) => void,
 };
 
-export default function BankFormComponent({
+export default function BankFormComponent ({
   bank,
-  onChange,
+  onChange
 }: BankFormComponentProps) {
   const {
     symbol,
@@ -126,26 +126,26 @@ export default function BankFormComponent({
     swiftCode,
     setSwiftCode,
     bankAccountNumber,
-    setBankAccountNumber,
-  } = useBankFormLogic(bank);
+    setBankAccountNumber
+  } = useBankFormLogic(bank)
 
-  const methods = useForm();
-  const { register, triggerValidation } = methods;
+  const methods = useForm()
+  const { register, triggerValidation } = methods
 
-  const { assetsReady, currencies } = useGetters();
+  const { assetsReady, currencies } = useGetters()
 
   const onChangeCallback = useCallback(
     (mBank: BankRequest, result) => {
-      onChange(mBank, result);
+      onChange(mBank, result)
     },
     [onChange]
-  );
+  )
 
   useEffect(() => {
-    triggerValidation();
+    triggerValidation()
     console.log('triggered validation');
     (async () => {
-      const result = await triggerValidation();
+      const result = await triggerValidation()
       onChangeCallback(
         {
           accountHolderName: bankAccountHolderName,
@@ -153,11 +153,11 @@ export default function BankFormComponent({
           bankAccountNumber,
           asset: symbol,
           swiftCode,
-          address: bankAddress,
+          address: bankAddress
         },
         result
-      );
-    })();
+      )
+    })()
   }, [
     bankAccountHolderName,
     bankAccountName,
@@ -165,8 +165,8 @@ export default function BankFormComponent({
     symbol,
     swiftCode,
     bankAddress,
-    onChangeCallback,
-  ]);
+    onChangeCallback
+  ])
 
   return (
     <FormContext {...methods}>
@@ -176,15 +176,15 @@ export default function BankFormComponent({
             <Grid item sm={12} md={12} lg={6}>
               <Box ml={3} m={1}>
                 <FormControl required fullWidth>
-                  <InputLabel htmlFor="bank-name">Bank Name</InputLabel>
+                  <InputLabel htmlFor='bank-name'>Bank Name</InputLabel>
                   <Input
                     defaultValue={bankAccountName}
-                    id="bank-name"
+                    id='bank-name'
                     required
-                    name="bankAccountName"
+                    name='bankAccountName'
                     inputRef={register({ required: true })}
                     onChange={(e) => {
-                      setBankAccountName(e.target.value);
+                      setBankAccountName(e.target.value)
                     }}
                   />
                 </FormControl>
@@ -193,17 +193,17 @@ export default function BankFormComponent({
             <Grid item sm={12} md={12} lg={6}>
               <Box mr={3} m={1}>
                 <FormControl required fullWidth>
-                  <InputLabel htmlFor="account-holder-name-input">
+                  <InputLabel htmlFor='account-holder-name-input'>
                     Account Holder Name
                   </InputLabel>
                   <Input
                     defaultValue={bankAccountHolderName}
-                    id="account-holder-name-input"
-                    name="bankAccountHolderName"
+                    id='account-holder-name-input'
+                    name='bankAccountHolderName'
                     inputRef={register({ required: true })}
                     required
                     onChange={(e) => {
-                      setBankAccountHolderName(e.target.value);
+                      setBankAccountHolderName(e.target.value)
                     }}
                   />
                 </FormControl>
@@ -215,13 +215,13 @@ export default function BankFormComponent({
             <Grid item sm={12} md={12} lg={3}>
               <Box ml={3} m={1}>
                 <FormControl required fullWidth>
-                  <InputLabel id="currency-selector-input">Currency</InputLabel>
+                  <InputLabel id='currency-selector-input'>Currency</InputLabel>
                   {assetsReady && (
                     <Select
                       fullWidth
                       required
-                      labelId="currency-selector"
-                      id="currency-selector-value"
+                      labelId='currency-selector'
+                      id='currency-selector-value'
                       value={symbol}
                       onChange={handleSelectChange}
                     >
@@ -238,18 +238,18 @@ export default function BankFormComponent({
             <Grid item sm={12} md={12} lg={6}>
               <Box ml={3} m={1}>
                 <FormControl required fullWidth>
-                  <InputLabel htmlFor="bank-account-number-input">
+                  <InputLabel htmlFor='bank-account-number-input'>
                     Bank Account Number
                   </InputLabel>
 
                   <Input
                     required
-                    id="bank-account-number-input"
-                    name="bankAccountNumber"
+                    id='bank-account-number-input'
+                    name='bankAccountNumber'
                     inputRef={register({ required: true })}
                     defaultValue={bankAccountNumber}
                     onChange={(e) => {
-                      setBankAccountNumber(e.target.value);
+                      setBankAccountNumber(e.target.value)
                     }}
                   />
                 </FormControl>
@@ -258,15 +258,15 @@ export default function BankFormComponent({
             <Grid item sm={12} md={12} lg={3}>
               <Box mr={3} m={1}>
                 <FormControl required fullWidth>
-                  <InputLabel htmlFor="swift-code-input">Swift Code</InputLabel>
+                  <InputLabel htmlFor='swift-code-input'>Swift Code</InputLabel>
                   <Input
                     required
-                    name="swiftCode"
+                    name='swiftCode'
                     inputRef={register({ required: true })}
-                    id="swift-code-input"
+                    id='swift-code-input'
                     defaultValue={swiftCode}
                     onChange={(e) => {
-                      setSwiftCode(e.target.value);
+                      setSwiftCode(e.target.value)
                     }}
                   />
                 </FormControl>
@@ -276,23 +276,23 @@ export default function BankFormComponent({
           <Grid container>
             <Grid item sm={12} md={12} lg={12}>
               <Box ml={3} mt={3}>
-                <Typography variant="h5">Bank Address</Typography>
+                <Typography variant='h5'>Bank Address</Typography>
               </Box>
             </Grid>
             <Grid item sm={12} md={12} lg={6}>
               <Box ml={3} m={1}>
                 <FormControl fullWidth>
-                  <InputLabel htmlFor="bank-address-line1-input">
+                  <InputLabel htmlFor='bank-address-line1-input'>
                     Line 1
                   </InputLabel>
                   <Input
-                    id="bank-address-line1-input"
+                    id='bank-address-line1-input'
                     value={bankAddress.line1}
                     onChange={(e) => {
                       setBankAddress({
                         ...bankAddress,
-                        line1: e.target.value,
-                      });
+                        line1: e.target.value
+                      })
                     }}
                   />
                 </FormControl>
@@ -301,17 +301,17 @@ export default function BankFormComponent({
             <Grid item sm={12} md={12} lg={6}>
               <Box mr={3} m={1}>
                 <FormControl fullWidth>
-                  <InputLabel htmlFor="bank-address-line2-input">
+                  <InputLabel htmlFor='bank-address-line2-input'>
                     Line 2
                   </InputLabel>
                   <Input
-                    id="bank-address-line2-input"
+                    id='bank-address-line2-input'
                     value={bankAddress.line2}
                     onChange={(e) => {
                       setBankAddress({
                         ...bankAddress,
-                        line2: e.target.value,
-                      });
+                        line2: e.target.value
+                      })
                     }}
                   />
                 </FormControl>
@@ -322,17 +322,17 @@ export default function BankFormComponent({
             <Grid item sm={12} md={12} lg={6}>
               <Box ml={3} m={1}>
                 <FormControl fullWidth>
-                  <InputLabel htmlFor="bank-address-city-input">
+                  <InputLabel htmlFor='bank-address-city-input'>
                     City
                   </InputLabel>
                   <Input
-                    id="bank-address-city-input"
+                    id='bank-address-city-input'
                     value={bankAddress.city}
                     onChange={(e) => {
                       setBankAddress({
                         ...bankAddress,
-                        city: e.target.value,
-                      });
+                        city: e.target.value
+                      })
                     }}
                   />
                 </FormControl>
@@ -341,17 +341,17 @@ export default function BankFormComponent({
             <Grid item sm={12} md={12} lg={6}>
               <Box mr={3} m={1}>
                 <FormControl fullWidth>
-                  <InputLabel htmlFor="bank-address-state-input">
+                  <InputLabel htmlFor='bank-address-state-input'>
                     State
                   </InputLabel>
                   <Input
-                    id="bank-address-state-input"
+                    id='bank-address-state-input'
                     value={bankAddress.state}
                     onChange={(e) => {
                       setBankAddress({
                         ...bankAddress,
-                        state: e.target.value,
-                      });
+                        state: e.target.value
+                      })
                     }}
                   />
                 </FormControl>
@@ -366,8 +366,8 @@ export default function BankFormComponent({
                       onChange={(_, value) => {
                         setBankAddress({
                           ...bankAddress,
-                          country: (value && value.label) || '',
-                        });
+                          country: (value && value.label) || ''
+                        })
                       }}
                     />
                   </FormControl>
@@ -376,17 +376,17 @@ export default function BankFormComponent({
               <Grid item sm={12} md={12} lg={6}>
                 <Box mr={3} m={1}>
                   <FormControl fullWidth>
-                    <InputLabel htmlFor="bank-address-postal-code-input">
+                    <InputLabel htmlFor='bank-address-postal-code-input'>
                       Postal Code
                     </InputLabel>
                     <Input
-                      id="bank-address-postalcode-input"
+                      id='bank-address-postalcode-input'
                       value={bankAddress.postalCode}
                       onChange={(e) => {
                         setBankAddress({
                           ...bankAddress,
-                          postalCode: e.target.value,
-                        });
+                          postalCode: e.target.value
+                        })
                       }}
                     />
                   </FormControl>
@@ -397,5 +397,5 @@ export default function BankFormComponent({
         </Paper>
       </form>
     </FormContext>
-  );
+  )
 }

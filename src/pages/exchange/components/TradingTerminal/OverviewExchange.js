@@ -1,54 +1,54 @@
 // @flow
 /* eslint-disable react-hooks/exhaustive-deps */
-import React, { useEffect, useRef, useState } from 'react';
-import { withRouter, useParams } from 'react-router-dom';
-import Chart from 'kaktana-react-lightweight-charts';
-import { Grid, CircularProgress, Paper } from '@material-ui/core';
-import { subscribeToSocket } from 'services/socket';
+import React, { useEffect, useRef, useState } from 'react'
+import { withRouter, useParams } from 'react-router-dom'
+import Chart from 'kaktana-react-lightweight-charts'
+import { Grid, CircularProgress, Paper } from '@material-ui/core'
+import { subscribeToSocket } from 'services/socket'
 
 // Local Components
-import { ENDPOINT_URL } from 'config';
-import OverviewHeader from './OverviewHeader';
-import Monitoring from './components/Monitoring';
-import BidsAsksHistory from './components/BidsAsksHistory';
-import TradeHistory from './components/TradeHistory';
-import BidsAsks from './components/BidsAsks';
+import { ENDPOINT_URL } from 'config'
+import OverviewHeader from './OverviewHeader'
+import Monitoring from './components/Monitoring'
+import BidsAsksHistory from './components/BidsAsksHistory'
+import TradeHistory from './components/TradeHistory'
+import BidsAsks from './components/BidsAsks'
 
 // Table Component
-import TableMyOrders from './components/MyOrders';
+import TableMyOrders from './components/MyOrders'
 
 // Modules
-import MarketActions from './modules/actions';
-import Modules from './modules';
+import MarketActions from './modules/actions'
+import Modules from './modules'
 
 // Styles
-import useStyles from './styles';
+import useStyles from './styles'
 
-import { chartOptions } from './data';
+import { chartOptions } from './data'
 
-const { MarketState, useMarketDispatch } = Modules;
+const { MarketState, useMarketDispatch } = Modules
 
 const ChartWithData = ({ id }: { id: string }) => {
   const {
-    SUBSCRIBE_API: { CHART },
-  } = ENDPOINT_URL;
+    SUBSCRIBE_API: { CHART }
+  } = ENDPOINT_URL
   const [series, setSeries] = useState([
     {
-      data: [],
-    },
-  ]);
+      data: []
+    }
+  ])
 
   useEffect(() => {
-    const socket = subscribeToSocket();
-    socket.emit(CHART.emit, id);
+    const socket = subscribeToSocket()
+    socket.emit(CHART.emit, id)
     socket.on(`${CHART.on}/${id}`, (data) => {
-      setSeries([{ data }]);
-    });
+      setSeries([{ data }])
+    })
 
     return () => {
-      socket.off(`${CHART.on}/${id}`);
-    };
-  }, [id]);
+      socket.off(`${CHART.on}/${id}`)
+    }
+  }, [id])
 
   return (
     <Chart
@@ -57,22 +57,22 @@ const ChartWithData = ({ id }: { id: string }) => {
       autoWidth
       height={320}
     />
-  );
-};
+  )
+}
 
 const ChartMemoed = React.memo(({ id }: { id: string }) => (
   <ChartWithData id={id} />
-));
+))
 
-function OverviewExchange() {
-  const { id: tradingPairId } = useParams();
-  const classes = useStyles();
-  const dispatch = useMarketDispatch();
-  const marketState = MarketState();
-  const mountedRef = useRef(true);
+function OverviewExchange () {
+  const { id: tradingPairId } = useParams()
+  const classes = useStyles()
+  const dispatch = useMarketDispatch()
+  const marketState = MarketState()
+  const mountedRef = useRef(true)
 
   // eslint-disable-next-line no-unused-vars
-  const { status, page, total, limit, items, statusCode, error } = marketState;
+  const { status, page, total, limit, items, statusCode, error } = marketState
 
   /*eslint-disable */
   useEffect(() => {

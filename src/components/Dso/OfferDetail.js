@@ -1,14 +1,14 @@
 // @flow
-import React from 'react';
-import { Box, Typography, TextField } from '@material-ui/core';
-import { useFormContext } from 'react-hook-form';
+import React from 'react'
+import { Box, Typography, TextField } from '@material-ui/core'
+import { useFormContext } from 'react-hook-form'
 
 const OfferDetail = (
   {
     label,
     value,
     edit = false,
-    name,
+    name
   }: {
     edit?: boolean,
     label: string,
@@ -17,7 +17,7 @@ const OfferDetail = (
   },
   ref: any
 ) => {
-  const { errors = {} } = useFormContext() || {};
+  const { errors = {} } = useFormContext() || {}
   return (
     <Box py={2}>
       <Typography>
@@ -33,7 +33,7 @@ const OfferDetail = (
         />
       )}
     </Box>
-  );
-};
+  )
+}
 
-export default React.forwardRef<any, any>(OfferDetail);
+export default React.forwardRef<any, any>(OfferDetail)

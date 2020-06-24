@@ -1,21 +1,21 @@
 // @flow
 /* eslint-disable no-use-before-define, react/jsx-props-no-spreading */
 // COPIED FROM https://material-ui.com/components/autocomplete/
-import React from 'react';
-import TextField from '@material-ui/core/TextField';
-import Autocomplete from '@material-ui/lab/Autocomplete';
-import { makeStyles } from '@material-ui/core/styles';
+import React from 'react'
+import Autocomplete from '@material-ui/lab/Autocomplete'
+import { makeStyles } from '@material-ui/core/styles'
+import { TextField } from '@material-ui/core'
 
 // ISO 3166-1 alpha-2
 // ⚠️ No support for IE 11
-function countryToFlag(isoCode) {
+function countryToFlag (isoCode) {
   return typeof String.fromCodePoint !== 'undefined'
     ? isoCode
-        .toUpperCase()
-        .replace(/./g, (char) =>
-          String.fromCodePoint(char.charCodeAt(0) + 127397)
-        )
-    : isoCode;
+      .toUpperCase()
+      .replace(/./g, (char) =>
+        String.fromCodePoint(char.charCodeAt(0) + 127397)
+      )
+    : isoCode
 }
 
 const useStyles = makeStyles({
@@ -23,55 +23,57 @@ const useStyles = makeStyles({
     fontSize: 15,
     '& > span': {
       marginRight: 10,
-      fontSize: 18,
-    },
-  },
-});
+      fontSize: 18
+    }
+  }
+})
 
-export default function CountrySelect({
+export default function CountrySelect ({
   onChange,
-  value,
+  value
 }: {
   onChange: (e: any, value: { label: string }) => void,
   value: { label: string },
 }) {
-  const classes = useStyles();
+  const classes = useStyles()
 
   const isSelected = (option: { label: string }, val: { label: string }) =>
-    option.label === val.label;
+    option.label === val.label
 
   return (
     <Autocomplete
-      id="country-select-demo"
+      id='country-select-demo'
       onChange={onChange}
       options={countries}
       value={value}
       getOptionSelected={isSelected}
       classes={{
-        option: classes.option,
+        option: classes.option
       }}
       autoHighlight
       getOptionLabel={(option) => option.label}
-      renderOption={(option) =>
-        option.label && (
+      renderOption={(option) => {
+        return option.label && (
           <>
             <span>{countryToFlag(option.code)}</span>
             {option.label} ({option.code})
           </>
         )
-      }
-      renderInput={(params) => (
-        <TextField
-          {...params}
-          label="Choose a country"
-          inputProps={{
-            ...params.inputProps,
-            autoComplete: 'new-password', // disable autocomplete and autofill
-          }}
-        />
-      )}
+      }}
+      renderInput={(params) => {
+        return (
+          <TextField
+            {...params}
+            label='Choose a country'
+            inputProps={{
+              ...params.inputProps,
+              autoComplete: 'new-password' // disable autocomplete and autofill
+            }}
+          />
+        )
+      }}
     />
-  );
+  )
 }
 
 // From https://bitbucket.org/atlassian/atlaskit-mk-2/raw/4ad0e56649c3e6c973e226b7efaeb28cb240ccb0/packages/core/select/src/data/countries.js
@@ -168,7 +170,7 @@ const countries = [
   {
     code: 'GS',
     label: 'South Georgia and the South Sandwich Islands',
-    phone: '500',
+    phone: '500'
   },
   { code: 'GT', label: 'Guatemala', phone: '502' },
   { code: 'GU', label: 'Guam', phone: '1-671' },
@@ -226,7 +228,7 @@ const countries = [
   {
     code: 'MK',
     label: 'Macedonia, the Former Yugoslav Republic of',
-    phone: '389',
+    phone: '389'
   },
   { code: 'ML', label: 'Mali', phone: '223' },
   { code: 'MM', label: 'Myanmar', phone: '95' },
@@ -332,5 +334,5 @@ const countries = [
   { code: 'YT', label: 'Mayotte', phone: '262' },
   { code: 'ZA', label: 'South Africa', phone: '27' },
   { code: 'ZM', label: 'Zambia', phone: '260' },
-  { code: 'ZW', label: 'Zimbabwe', phone: '263' },
-];
+  { code: 'ZW', label: 'Zimbabwe', phone: '263' }
+]

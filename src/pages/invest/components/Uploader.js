@@ -1,42 +1,42 @@
-import React, { useRef, useState } from 'react';
-import { Box, Button } from '@material-ui/core';
-import { uploadFile } from '../modules/actions';
+import React, { useRef, useState } from 'react'
+import { Box, Button } from '@material-ui/core'
+import { uploadFile } from '../modules/actions'
 
 const Uploader = ({ onUploadSuccess }: { onUploadSuccess: Function }) => {
-  const inputRef = useRef();
-  const [uploading, setUploading] = useState(false);
-  const [doc, setDoc] = useState(null);
+  const inputRef = useRef()
+  const [uploading, setUploading] = useState(false)
+  const [doc, setDoc] = useState(null)
 
   const handleChange = async () => {
     if (inputRef.current) {
-      setUploading(true);
+      setUploading(true)
       const uploaded = await uploadFile({
         file: inputRef.current?.files?.[0],
         title: 'Signed Subscription Document',
-        type: 'commitment',
-      });
+        type: 'commitment'
+      })
 
-      onUploadSuccess(uploaded);
-      setDoc(uploaded);
-      setUploading(false);
+      onUploadSuccess(uploaded)
+      setDoc(uploaded)
+      setUploading(false)
     }
-  };
+  }
 
   return (
     <Box mb={4}>
       <input
         ref={inputRef}
-        id="upload"
+        id='upload'
         hidden
-        type="file"
+        type='file'
         onChange={handleChange}
         disabled={uploading}
       />
       {/* eslint-disable-next-line */}
       <label htmlFor='upload'>
         <Button
-          component="span"
-          variant="contained"
+          component='span'
+          variant='contained'
           fullWidth
           disabled={uploading}
         >
@@ -44,7 +44,7 @@ const Uploader = ({ onUploadSuccess }: { onUploadSuccess: Function }) => {
         </Button>
       </label>
     </Box>
-  );
-};
+  )
+}
 
-export default Uploader;
+export default Uploader

@@ -1,5 +1,5 @@
 // @flow
-import type { User } from 'context/user/types';
+import type { User } from 'context/user/types'
 
 export const actions = {
   GET_IDENTITY_REQUEST: 'GET_IDENTITY_REQUEST',
@@ -38,15 +38,15 @@ export const actions = {
   UPDATE_CORPORATE_SUCCESS: 'UPDATE_CORPORATE_SUCCESS',
   UPDATE_CORPORATE_FAILURE: 'UPDATE_CORPORATE_FAILURE',
 
-  TOGGLE_EDIT_MODE: 'TOGGLE_EDIT_MODE',
-};
+  TOGGLE_EDIT_MODE: 'TOGGLE_EDIT_MODE'
+}
 
 export const STATUS = {
   INIT: 'INIT',
   IDLE: 'IDLE',
   GETTING: 'GETTING',
-  SAVING: 'SAVING',
-};
+  SAVING: 'SAVING'
+}
 
 export type IdentityAddress = {
   line1: string,

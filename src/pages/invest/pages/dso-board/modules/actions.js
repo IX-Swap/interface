@@ -1,6 +1,6 @@
 // @flow
-import actionGenerator from 'context/base/withPagination/actions';
-import localStore from 'services/storageHelper';
+import actionGenerator from 'context/base/withPagination/actions'
+import localStore from 'services/storageHelper'
 
 // Commitments List
 const {
@@ -10,9 +10,9 @@ const {
   'commitmentsList',
   `/issuance/commitments/list/${localStore.getUserId()}`,
   {}
-);
+)
 
 export default {
   getCommitmentsList,
-  ...commitmentsListPageMethods,
-};
+  ...commitmentsListPageMethods
+}

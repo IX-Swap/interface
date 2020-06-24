@@ -1,6 +1,6 @@
 // @flow
-import { STATUS } from './types';
-import type { IdentityState } from './types';
+import { STATUS } from './types'
+import type { IdentityState } from './types'
 
 export const initialState: IdentityState = {
   identity: {},
@@ -12,7 +12,7 @@ export const initialState: IdentityState = {
   editMode: false,
   error: {
     save: null,
-    get: null,
+    get: null
   },
-  type: undefined,
-};
+  type: undefined
+}

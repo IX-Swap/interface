@@ -1,27 +1,27 @@
-import React from 'react';
-import { RouteProps, useHistory } from 'react-router-dom';
-import ArrowBackIosIcon from '@material-ui/icons/ArrowBackIos';
-import { Typography, Grid, Box, Button } from '@material-ui/core';
-import { get } from 'lodash';
+import React from 'react'
+import { RouteProps, useHistory } from 'react-router-dom'
+import ArrowBackIosIcon from '@material-ui/icons/ArrowBackIos'
+import { Typography, Grid, Box, Button } from '@material-ui/core'
+import { get } from 'lodash'
 
-export default function Overview({ location, hasBack }: RouteProps) {
-  const { model, data } = location.state || {};
-  const history = useHistory();
+export default function Overview ({ location, hasBack }: RouteProps) {
+  const { model, data } = location.state || {}
+  const history = useHistory()
 
-  if (!model || !data) return <span>nothing to display</span>;
+  if (!model || !data) return <span>nothing to display</span>
 
   return (
     <>
       {hasBack && (
         <Box py={4} px={2}>
-          <Grid container item xs={12} alignItems="center">
+          <Grid container item xs={12} alignItems='center'>
             <Grid item>
-              <Button type="button" onClick={() => history.goBack()}>
+              <Button type='button' onClick={() => history.goBack()}>
                 <ArrowBackIosIcon />
               </Button>
             </Grid>
             <Grid item>
-              <Typography variant="h3">Information</Typography>
+              <Typography variant='h3'>Information</Typography>
             </Grid>
           </Grid>
         </Box>
@@ -43,5 +43,5 @@ export default function Overview({ location, hasBack }: RouteProps) {
         ))}
       </Grid>
     </>
-  );
+  )
 }

@@ -32,12 +32,12 @@ const cloudfront = new Cloudfront()
 
 // need to update the index.html ( Default Root Object) include version tag
 function updateCloudfrontRootObject (file) {
-  let params = { Id: process.env.AWS_DISTRO_ID }
+  const params = { Id: process.env.AWS_DISTRO_ID }
   cloudfront.getDistributionConfig(params, (err, data) => {
     if (err) {
       console.log(err)
     } else {
-      let distConfig = data.DistributionConfig
+      const distConfig = data.DistributionConfig
       params.IfMatch = data.ETag
       distConfig.DefaultRootObject = file
       params.DistributionConfig = distConfig
@@ -63,10 +63,10 @@ function publish () {
       // go through files and updated the index.html file with a tag
       .pipe(
         through.obj(function (chunk, enc, cb) {
-          let path = chunk.path
-          let array = path.split('/')
-          let re = /(?:index|html)/
-          let flag = 0
+          const path = chunk.path
+          const array = path.split('/')
+          const re = /(?:index|html)/
+          const flag = 0
           array.forEach(e => {
             if (re.test(path)) {
               if (array.length === 8 && re.test(e)) {

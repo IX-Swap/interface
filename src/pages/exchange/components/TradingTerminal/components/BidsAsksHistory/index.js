@@ -1,33 +1,33 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect } from 'react'
 // Config/Endpoints
-import { ENDPOINT_URL } from 'config';
-import { subscribeToSocket } from 'services/socket';
+import { ENDPOINT_URL } from 'config'
+import { subscribeToSocket } from 'services/socket'
 
 // Component
-import Monitoring from '../Monitoring';
+import Monitoring from '../Monitoring'
 
 // Market State/Modules
-import MarketModules from '../../modules';
+import MarketModules from '../../modules'
 
-const { MarketState } = MarketModules;
+const { MarketState } = MarketModules
 
 const BidsAsksHistory = (props) => {
-  const { id } = props;
-  const marketStateData = MarketState();
-  const { items } = marketStateData;
+  const { id } = props
+  const marketStateData = MarketState()
+  const { items } = marketStateData
 
-    const [ lastPrice, setLastPrice ] = useState(0);
-    const [ isBid, setIsBid ] = useState(false);
-    const [ lastTrade, setLastTrade ] = useState({});
-    const [ activeTrade, setActiveTrade ] = useState(false);
-    const { SUBSCRIBE_API } = ENDPOINT_URL;
-    const { LAST_PRICE } = SUBSCRIBE_API;
-    const { ORDER_BOOK } = SUBSCRIBE_API;
-    const { TRADE_HISTORY } = SUBSCRIBE_API;
-    // Subscribe to the bids/asks history
-    // TODO: Better way to implement this locally/globally
-    // Update after MAS
-    /*eslint-disable */
+  const [lastPrice, setLastPrice] = useState(0)
+  const [isBid, setIsBid] = useState(false)
+  const [lastTrade, setLastTrade] = useState({})
+  const [activeTrade, setActiveTrade] = useState(false)
+  const { SUBSCRIBE_API } = ENDPOINT_URL
+  const { LAST_PRICE } = SUBSCRIBE_API
+  const { ORDER_BOOK } = SUBSCRIBE_API
+  const { TRADE_HISTORY } = SUBSCRIBE_API
+  // Subscribe to the bids/asks history
+  // TODO: Better way to implement this locally/globally
+  // Update after MAS
+  /*eslint-disable */
     useEffect(() => {
         const socket = subscribeToSocket();
         socket.emit(ORDER_BOOK.emit, id);

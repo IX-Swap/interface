@@ -1,30 +1,30 @@
 export const columns = [
   {
     key: 'asset.symbol',
-    label: 'Currency',
+    label: 'Currency'
   },
   {
     key: 'bankName',
-    label: 'Bank Name',
+    label: 'Bank Name'
   },
   {
     key: 'bankAccountNumber',
-    label: 'Account Number',
+    label: 'Account Number'
   },
   {
     key: 'accountHolderName',
-    label: 'Account Name',
+    label: 'Account Name'
   },
   {
     key: 'swiftCode',
-    label: 'Swift Code',
+    label: 'Swift Code'
   },
   {
     key: 'status',
-    label: 'Status',
+    label: 'Status'
   },
   {
     key: '',
-    label: 'Actions',
-  },
-];
+    label: 'Actions'
+  }
+]

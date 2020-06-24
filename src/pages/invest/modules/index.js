@@ -1,26 +1,22 @@
 // @flow
-import React, { useMemo } from 'react';
-import type { Node } from 'react';
-import logger from 'use-reducer-logger';
-import { investReducer } from './reducers';
-import { initialState } from './state';
+import React from 'react'
+import type { Node } from 'react'
+import logger from 'use-reducer-logger'
+import { investReducer } from './reducers'
+import { initialState } from './state'
 
-const StateContext = React.createContext<any>();
-const DispatchContext = React.createContext();
+const StateContext = React.createContext<any>()
+const DispatchContext = React.createContext()
 
 export const InvestProvider = ({ children }: { children: Node }) => {
-  const thisReducer = useMemo(
-    () =>
-      process.env.NODE_ENV === 'development'
-        ? logger(investReducer)
-        : investReducer,
-    []
-  );
+  const thisReducer = process.env.NODE_ENV === 'development'
+    ? logger(investReducer)
+    : investReducer
 
   const [state, dispatch] = React.useReducer<any, any>(
     thisReducer,
     initialState
-  );
+  )
 
   return (
     <StateContext.Provider value={state}>
@@ -28,23 +24,23 @@ export const InvestProvider = ({ children }: { children: Node }) => {
         {children}
       </DispatchContext.Provider>
     </StateContext.Provider>
-  );
-};
+  )
+}
 
 export const useInvestState = () => {
-  const context = React.useContext(StateContext);
+  const context = React.useContext(StateContext)
   if (context === undefined) {
-    throw new Error('useInvestState must be used within a InvestProvider');
+    throw new Error('useInvestState must be used within a InvestProvider')
   }
 
-  return context;
-};
+  return context
+}
 
 export const useInvestDispatch = () => {
-  const context = React.useContext(DispatchContext);
+  const context = React.useContext(DispatchContext)
   if (context === undefined) {
-    throw new Error('useInvestDispatch must be used within a InvestProvider');
+    throw new Error('useInvestDispatch must be used within a InvestProvider')
   }
 
-  return context;
-};
+  return context
+}

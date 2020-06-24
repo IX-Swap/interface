@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from 'react';
+import React, { useEffect, useRef } from 'react'
 import {
   Table,
   TableHead,
@@ -9,29 +9,29 @@ import {
   TableBody,
   TableFooter,
   TablePagination,
-  LinearProgress,
-} from '@material-ui/core';
+  LinearProgress
+} from '@material-ui/core'
 
-import CommitmentListItem from './CommitmentListItem';
-import Module from '../modules';
-import Actions from '../modules/actions';
+import CommitmentListItem from './CommitmentListItem'
+import Module from '../modules'
+import Actions from '../modules/actions'
 
 const {
   useAuthorizerCommitmentListState,
   useAuthorizerCommitmentListDispatch,
-  AUTHORIZER_COMMITMENT_LIST_STATUS,
-} = Module;
+  AUTHORIZER_COMMITMENT_LIST_STATUS
+} = Module
 const {
   getCommitments,
   setPage,
   setRowsPerPage,
   clearApiStatus,
-  toggleIdentityStatus,
-} = Actions;
+  toggleIdentityStatus
+} = Actions
 
 const useCommitmentsListLogic = () => {
-  const commitmentListDispatch = useAuthorizerCommitmentListDispatch();
-  const commitmentListState = useAuthorizerCommitmentListState();
+  const commitmentListDispatch = useAuthorizerCommitmentListDispatch()
+  const commitmentListState = useAuthorizerCommitmentListState()
   const {
     status,
     page,
@@ -39,36 +39,36 @@ const useCommitmentsListLogic = () => {
     limit,
     items,
     statusCode,
-    error,
-  } = commitmentListState;
-  const mountedRef = useRef(true);
+    error
+  } = commitmentListState
+  const mountedRef = useRef(true)
 
   const handleChangePage = (_, newPage: number) => {
-    setPage(commitmentListDispatch, { page: newPage });
-  };
+    setPage(commitmentListDispatch, { page: newPage })
+  }
 
   const handleChangeRowsPerPage = (newRows: number) => {
-    setRowsPerPage(commitmentListDispatch, { rows: newRows });
-    setPage(commitmentListDispatch, { page: 0 });
-  };
+    setRowsPerPage(commitmentListDispatch, { rows: newRows })
+    setPage(commitmentListDispatch, { page: 0 })
+  }
 
   useEffect(() => {
     if (status === AUTHORIZER_COMMITMENT_LIST_STATUS.INIT) {
       getCommitments(commitmentListDispatch, {
         skip: page * limit,
         limit,
-        ref: mountedRef,
-      });
-      clearApiStatus(commitmentListDispatch);
+        ref: mountedRef
+      })
+      clearApiStatus(commitmentListDispatch)
     }
-  }, [page, limit, status, commitmentListDispatch]);
+  }, [page, limit, status, commitmentListDispatch])
 
   useEffect(
     () => () => {
-      mountedRef.current = false;
+      mountedRef.current = false
     },
     []
-  );
+  )
 
   return {
     commitmentListDispatch,
@@ -82,9 +82,9 @@ const useCommitmentsListLogic = () => {
     handleChangePage,
     handleChangeRowsPerPage,
     setPage,
-    toggleIdentityStatus,
-  };
-};
+    toggleIdentityStatus
+  }
+}
 
 const CommitmentsList = ({ onClickView }: { onClickView: Function }) => {
   const {
@@ -94,8 +94,8 @@ const CommitmentsList = ({ onClickView }: { onClickView: Function }) => {
     limit,
     page,
     handleChangeRowsPerPage,
-    handleChangePage,
-  } = useCommitmentsListLogic();
+    handleChangePage
+  } = useCommitmentsListLogic()
 
   return (
     <>
@@ -125,10 +125,10 @@ const CommitmentsList = ({ onClickView }: { onClickView: Function }) => {
               <TableCell>
                 <b>Project Name</b>
               </TableCell>
-              <TableCell align="right">
+              <TableCell align='right'>
                 <b>Amount</b>
               </TableCell>
-              <TableCell align="right">
+              <TableCell align='right'>
                 <b>DSO Tokens</b>
               </TableCell>
               <TableCell>
@@ -165,7 +165,7 @@ const CommitmentsList = ({ onClickView }: { onClickView: Function }) => {
         </Table>
       </TableContainer>
     </>
-  );
-};
+  )
+}
 
-export default CommitmentsList;
+export default CommitmentsList

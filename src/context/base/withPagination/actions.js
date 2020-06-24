@@ -1,12 +1,12 @@
 // @flow
-import { postRequest } from 'services/httpRequests';
-import generateTypes from './types';
+import { postRequest } from 'services/httpRequests'
+import generateTypes from './types'
 
 export default (name: string, uri: string, additionalPayload: any) => {
-  const sName = name.charAt(0).toUpperCase() + name.slice(1);
-  const { actionTypes } = generateTypes(sName);
+  const sName = name.charAt(0).toUpperCase() + name.slice(1)
+  const { actionTypes } = generateTypes(sName)
 
-  async function getter(
+  async function getter (
     dispatch: Function,
     payload: {
       ref: { current: boolean, ... },
@@ -15,23 +15,23 @@ export default (name: string, uri: string, additionalPayload: any) => {
       ...
     }
   ) {
-    const { ref, ...data } = payload || { ref: {} };
+    const { ref, ...data } = payload || { ref: {} }
 
     try {
-      dispatch({ type: actionTypes.GET_REQUEST });
+      dispatch({ type: actionTypes.GET_REQUEST })
       const result = await postRequest(uri, {
         skip: 0,
         limit: 50,
         ...additionalPayload,
-        ...data,
-      });
+        ...data
+      })
 
-      const response = await result.json();
-      if (!ref.current) return null;
+      const response = await result.json()
+      if (!ref.current) return null
       if (result.status === 200) {
         const { limit, count, skip, documents } = response.data.length
           ? response.data[0]
-          : {};
+          : {}
 
         dispatch({
           type: actionTypes.GET_SUCCESS,
@@ -39,53 +39,53 @@ export default (name: string, uri: string, additionalPayload: any) => {
             page: Math.floor(skip / limit) + 1,
             total: count,
             items: documents || [],
-            statusCode: result.status,
-          },
-        });
+            statusCode: result.status
+          }
+        })
       } else {
         const pld = {
           ...response,
-          statusCode: result.status,
-        };
+          statusCode: result.status
+        }
 
         if (result.status === 403) {
-          pld.items = [];
+          pld.items = []
         }
 
         dispatch({
           type: actionTypes.GET_FAILURE,
-          payload: pld,
-        });
+          payload: pld
+        })
       }
     } catch (err) {
       dispatch({
         type: actionTypes.GET_FAILURE,
-        payload: { message: JSON.stringify(err), statusCode: 0 },
-      });
+        payload: { message: JSON.stringify(err), statusCode: 0 }
+      })
     }
   }
 
-  function setPage(dispatch: Function, payload: { page: number }) {
-    dispatch({ type: actionTypes.PAGE_CHANGE, payload });
+  function setPage (dispatch: Function, payload: { page: number }) {
+    dispatch({ type: actionTypes.PAGE_CHANGE, payload })
   }
 
-  function setRowsPerPage(dispatch: Function, payload: { rows: number }) {
+  function setRowsPerPage (dispatch: Function, payload: { rows: number }) {
     dispatch({
       type: actionTypes.ROWS_PER_PAGE_CHANGE,
-      payload,
-    });
+      payload
+    })
   }
 
-  function clearBaseData(dispatch: Function) {
+  function clearBaseData (dispatch: Function) {
     dispatch({
-      type: actionTypes.CLEAR_DATA,
-    });
+      type: actionTypes.CLEAR_DATA
+    })
   }
 
-  function clearApiStatus(dispatch: Function) {
+  function clearApiStatus (dispatch: Function) {
     dispatch({
-      type: actionTypes.CLEAR_API,
-    });
+      type: actionTypes.CLEAR_API
+    })
   }
 
   return {
@@ -93,6 +93,6 @@ export default (name: string, uri: string, additionalPayload: any) => {
     setPage,
     clearBaseData,
     clearApiStatus,
-    setRowsPerPage,
-  };
-};
+    setRowsPerPage
+  }
+}

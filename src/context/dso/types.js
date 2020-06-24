@@ -1,5 +1,5 @@
 // @flow
-import type { Asset } from '../assets/types';
+import type { Asset } from '../assets/types'
 
 export type Document = {
   _id: string,

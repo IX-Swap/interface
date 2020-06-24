@@ -1,65 +1,66 @@
-import React, { useState } from 'react';
+import React, { useState } from 'react'
 import {
   Grid,
   Box,
   CircularProgress,
   TextField,
   Button,
-  Typography,
-} from '@material-ui/core';
-import { withRouter } from 'react-router-dom';
+  Typography
+} from '@material-ui/core'
+import { withRouter } from 'react-router-dom'
 
-import useStyles from '../../styles';
+import useStyles from '../../styles'
 
 import {
   usePasswordResetDispatch,
   usePasswordResetState,
   beginResetPassword,
-  completeResetPassword,
-} from './PasswordResetContext';
+  completeResetPassword
+} from './PasswordResetContext'
 
-function ResetPassword(props) {
-  const classes = useStyles();
+function ResetPassword (props) {
+  const classes = useStyles()
 
   // State for the RESET FORM fields
   const [form, setFields] = useState({
     email: '',
     resetToken: '',
-    newPassword: '',
-  });
+    newPassword: ''
+  })
 
-  const passwordResetDispatch = usePasswordResetDispatch();
-  const passwordResetState = usePasswordResetState();
+  const passwordResetDispatch = usePasswordResetDispatch()
+  const passwordResetState = usePasswordResetState()
 
   // Handle change/update for the fields
   const updateField = e => {
-    const name = e.target.name;
-    const value = e.target.value;
+    const name = e.target.name
+    const value = e.target.value
     setFields({
       ...form,
-      [name]: value,
-    });
-  };
+      [name]: value
+    })
+  }
 
   // Reset fields for the for the RESET PASSWORD FORM
   const handleBeginResetSubmit = () => {
-    setFields(form);
-    if (form.email) beginResetPassword(passwordResetDispatch, form.email);
-  };
+    setFields(form)
+    if (form.email) beginResetPassword(passwordResetDispatch, form.email)
+  }
 
   // Handle submit complete RESET PASSWORD FORM
   /**
    * TODO: Handling of errors for the RESET PASSWORD FORM
    */
   const handleCompleteResetSubmit = () => {
-    if ((form.email, form.resetToken, form.newPassword))
+    if ((form.email, form.resetToken, form.newPassword)) {
       completeResetPassword(
         passwordResetDispatch,
         form.email,
         form.resetToken,
         form.newPassword
-      );
-  };
+      )
+    }
+  }
 
   const fields = [
     {
@@ -69,7 +70,7 @@ function ResetPassword(props) {
       onChange: updateField,
       margin: 'normal',
       placeholder: 'Email Address...',
-      type: 'email',
+      type: 'email'
     },
     {
       id: 'token',
@@ -78,7 +79,7 @@ function ResetPassword(props) {
       onChange: updateField,
       margin: 'normal',
       placeholder: 'Paste Reset Token...',
-      type: 'text',
+      type: 'text'
     },
     {
       id: 'new-password',
@@ -87,16 +88,16 @@ function ResetPassword(props) {
       onChange: updateField,
       margin: 'normal',
       placeholder: 'New Password...',
-      type: 'password',
-    },
-  ];
+      type: 'password'
+    }
+  ]
 
   /**
    * TODO: Refactor condition rendering of the forms
    */
   return (
     <Grid container className={classes.container}>
-      <Grid container justify="center" alignItems="center">
+      <Grid container justify='center' alignItems='center'>
         {passwordResetState?.status === 'GETTING' ? (
           <Grid item>
             <CircularProgress />
@@ -105,15 +106,15 @@ function ResetPassword(props) {
           <Grid item md={5} lg={5}>
             <Box p={3}>
               <form onSubmit={handleCompleteResetSubmit}>
-                <Typography comonent="p">
+                <Typography comonent='p'>
                   {passwordResetState?.passwordResetMessage}
                 </Typography>
-                {fields.map(field => 
+                {fields.map(field =>
                   <TextField
                     key={field.id}
                     id={field.id}
                     value={field.value}
-                    onChange={field.onChange}
+                    onChange={(e) => field.onChange(e)}
                     margin={field.margin}
                     placeholder={field.placeholder}
                     type={field.type}
@@ -122,7 +123,7 @@ function ResetPassword(props) {
                   />
                 )}
                 <Box mt={4}>
-                  <Button variant="outlined" type="submit">
+                  <Button variant='outlined' type='submit'>
                     Complete Reset
                   </Button>
                 </Box>
@@ -138,14 +139,14 @@ function ResetPassword(props) {
             <Box p={3}>
               <form onSubmit={handleBeginResetSubmit}>
                 <Box>
-                  <Typography comonent="p">
+                  <Typography comonent='p'>
                     {passwordResetState?.passwordResetMessage}
                   </Typography>
                   <Grid>
                     <TextField
                       id={fields[0].id}
                       value={fields[0].valuee}
-                      onChange={fields[0].onChange}
+                      onChange={(e) => fields[0].onChange(e)}
                       margin={fields[0].margin}
                       placeholder={fields[0].placeholder}
                       type={fields[0].type}
@@ -153,7 +154,7 @@ function ResetPassword(props) {
                       fullWidth
                     />
                     <Box mt={4}>
-                      <Button variant="outlined" type="submit">
+                      <Button variant='outlined' type='submit'>
                         Request Reset
                       </Button>
                     </Box>
@@ -163,12 +164,12 @@ function ResetPassword(props) {
             </Box>
           </Grid>
         ) : (
-          <Grid container justify="center" alignItems="center">
+          <Grid container justify='center' alignItems='center'>
             <Grid item>
               <center>{passwordResetState?.passwordResetMessage}</center>
               <Box mt={4}>
                 <Button
-                  variant="outlined"
+                  variant='outlined'
                   onClick={() => props.history.push('/auth/sign-in')}
                 >
                   Login
@@ -179,7 +180,7 @@ function ResetPassword(props) {
         )}
       </Grid>
     </Grid>
-  );
+  )
 }
 
-export default withRouter(ResetPassword);
+export default withRouter(ResetPassword)

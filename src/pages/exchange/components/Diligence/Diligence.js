@@ -1,15 +1,10 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import { useTheme } from '@material-ui/core/styles'
-import AppBar from '@material-ui/core/AppBar'
-import Tabs from '@material-ui/core/Tabs'
-import Tab from '@material-ui/core/Tab'
-import Typography from '@material-ui/core/Typography'
-import Box from '@material-ui/core/Box'
-import Paper from '@material-ui/core/Paper'
 import useStyles from 'pages/exchange/styles'
-import Grid from '@material-ui/core/Grid'
 import InsertDriveFileIcon from '@material-ui/icons/InsertDriveFile'
+
+import { AppBar, Tabs, Tab, Typography, Box, Paper, Grid } from '@material-ui/core'
 
 function TabPanel (props) {
   const { children, value, index, ...other } = props

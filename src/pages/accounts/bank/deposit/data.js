@@ -1,14 +1,14 @@
-import moment from 'moment';
+import moment from 'moment'
 
 export const columns = [
   {
     key: 'level',
-    label: 'Level',
+    label: 'Level'
   },
   {
     key: 'createdAt',
     label: 'Date',
-    render: (val: string) => moment(val).format('MM/DD/YY'),
+    render: (val: string) => moment(val).format('MM/DD/YY')
   },
   {
     key: 'amount',
@@ -18,10 +18,10 @@ export const columns = [
     render: (val: string, row: any) =>
       `${row.asset.symbol} ${val
         .toFixed(2)
-        .replace(/\d(?=(\d{3})+\.)/g, '$&,')}`,
+        .replace(/\d(?=(\d{3})+\.)/g, '$&,')}`
   },
   {
     key: 'status',
-    label: 'Status',
-  },
-];
+    label: 'Status'
+  }
+]

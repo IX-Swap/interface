@@ -1,7 +1,7 @@
-import { userActions, USER_STATUS } from './types';
-import { initialState } from './state';
+import { userActions, USER_STATUS } from './types'
+import { initialState } from './state'
 
-export function userReducer(state, action) {
+export function userReducer (state, action) {
   switch (action.type) {
     case userActions.LOGIN_REQUEST:
       return {
@@ -10,8 +10,8 @@ export function userReducer(state, action) {
         isAuthenticated: false,
         isLoading: true,
         message: '',
-        error: null,
-      };
+        error: null
+      }
     case userActions.LOGIN_SUCCESS:
       return {
         ...state,
@@ -20,81 +20,81 @@ export function userReducer(state, action) {
         isLoading: false,
         isVerified: true,
         message: '',
-        error: null,
-      };
+        error: null
+      }
     case userActions.LOGIN_FAILURE:
       return {
         ...state,
         user: initialState.user,
         isAuthenticated: false,
         isLoading: false,
-        error: action.payload,
-      };
+        error: action.payload
+      }
     case userActions.GET_AUTH_ME_REQUEST:
       return {
         ...state,
         user: action.payload,
         status: USER_STATUS.GETTING,
         isLoading: true,
-        error: null,
-      };
+        error: null
+      }
     case userActions.GET_AUTH_ME_SUCCESS:
       return {
         ...state,
         status: USER_STATUS.IDLE,
         user: action.payload,
         isLoading: false,
-        error: null,
-      };
+        error: null
+      }
     case userActions.GET_AUTH_ME_FAILURE:
       return {
         ...state,
         status: USER_STATUS.IDLE,
         isLoading: false,
         user: initialState.user,
-        error: action.payload,
-      };
+        error: action.payload
+      }
     case userActions.SIGN_OUT_SUCCESS:
       return {
         ...state,
-        isAuthenticated: false,
-      };
+        isAuthenticated: false
+      }
     case userActions.SIGN_UP_REQUEST:
       return {
         ...state,
         isAuthenticated: false,
         isLoading: true,
-        error: null,
-      };
+        error: null
+      }
     case userActions.SIGN_UP_SUCCESS:
       return {
         ...state,
         isAuthenticated: false,
         isLoading: false,
         error: null,
-        activeTabId: 0,
-      };
+        activeTabId: 0
+      }
     case userActions.SIGN_UP_FAILURE:
       return {
         ...state,
         isAuthenticated: false,
         isLoading: false,
-        error: action.payload,
-      };
+        error: action.payload
+      }
     case userActions.SET_ACTIVE_TAB_ID:
       return {
         ...state,
         activeTabId: action.payload,
-        error: null,
-      };
+        error: null
+      }
 
     case userActions.VERIFY_SIGNUP_REQUEST:
       return {
         ...state,
         isLoading: true,
         isVerified: false,
-        error: '',
-      };
+        error: ''
+      }
 
     case userActions.VERIFY_SIGNUP_SUCCESS:
       return {
@@ -102,38 +102,38 @@ export function userReducer(state, action) {
         isLoading: false,
         isVerified: true,
         message: action.payload,
-        error: '',
-      };
+        error: ''
+      }
     case userActions.VERIFY_SIGNUP_FAILURE:
       return {
         ...state,
         isLoading: false,
         isVerified: false,
-        error: action.payload,
-      };
+        error: action.payload
+      }
 
     case userActions.CONFIRM_2FA_REQUEST:
-      return {};
+      return {}
     case userActions.CONFIRM_2FA_SUCCESS:
-      return {};
+      return {}
     case userActions.CONFIRM_2FA_FAILURE:
-      return {};
+      return {}
 
     case userActions.SETUP_2FA_REQUEST:
-      return {};
+      return {}
     case userActions.SETUP_2FA_SUCCESS:
-      return {};
+      return {}
     case userActions.SETUP_2FA_FAILURE:
-      return {};
+      return {}
 
     case userActions.VERIFY_2FA_REQUEST:
-      return {};
+      return {}
     case userActions.VERIFY_2FA_SUCCESS:
-      return {};
+      return {}
     case userActions.VERIFY_2FA_FAILURE:
-      return {};
+      return {}
 
     default:
-      throw new Error(`Unhandled action type: ${action.type}`);
+      throw new Error(`Unhandled action type: ${action.type}`)
   }
 }

@@ -1,10 +1,10 @@
 // @flow
-import { generateModule } from 'context/base/withPagination';
-import actionGenerator from 'context/base/withPagination/actions';
+import { generateModule } from 'context/base/withPagination'
+import actionGenerator from 'context/base/withPagination/actions'
 import type {
   BaseStateWithPagination,
-  GenericStatus,
-} from 'context/base/withPagination/types';
+  GenericStatus
+} from 'context/base/withPagination/types'
 
 export type ModuleMeta = {
   Provider: any,
@@ -26,17 +26,17 @@ export type Module = {
   actions: ModuleActions,
 };
 
-function init<T>(key: string, endpoint: string): Module {
+function init<T> (key: string, endpoint: string): Module {
   const { Provider, useState, useDispatch, statusList } = generateModule<T>(
     key
-  );
+  )
 
-  const actions = actionGenerator(key, endpoint, {});
+  const actions = actionGenerator(key, endpoint, {})
 
   return {
     meta: { Provider, useState, useDispatch, PAGINATION_STATUS: statusList },
-    actions,
-  };
+    actions
+  }
 }
 
-export default init;
+export default init

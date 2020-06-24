@@ -1,7 +1,7 @@
-import { snackbarService } from 'uno-material-ui';
-import { getRequest, postRequest } from 'services/httpRequests';
+import { snackbarService } from 'uno-material-ui'
+import { getRequest, postRequest } from 'services/httpRequests'
 
-export async function uploadFile(payload: {
+export async function uploadFile (payload: {
   title: string,
   type: string,
   file: any,
@@ -15,46 +15,46 @@ export async function uploadFile(payload: {
    * @param String id individal document id or corporate document id
    */
 
-  const { title, file, type } = payload;
+  const { title, file, type } = payload
 
   try {
-    const formData = new FormData();
+    const formData = new FormData()
 
-    formData.append('title', title);
-    formData.append('documents', file);
-    formData.append('type', type);
+    formData.append('title', title)
+    formData.append('documents', file)
+    formData.append('type', type)
 
-    const uri = '/dataroom';
-    const result = await postRequest(uri, formData);
+    const uri = '/dataroom'
+    const result = await postRequest(uri, formData)
 
-    const response = await result.json();
+    const response = await result.json()
     if (result.status === 200) {
-      const data = response.data[0];
+      const data = response.data[0]
 
-      return data;
+      return data
     }
 
-    throw new Error(response.message);
+    throw new Error(response.message)
   } catch (err) {
-    const errMsg = err.message || err.toString() || 'Upload failed.';
-    throw new Error(errMsg);
+    const errMsg = err.message || err.toString() || 'Upload failed.'
+    throw new Error(errMsg)
   }
 }
 
 export const downloadByUri = async (uri: string) => {
   try {
-    const result = await getRequest(uri);
+    const result = await getRequest(uri)
 
     if (result.status === 200) {
       result.blob().then((blob) => {
-        const url = window.URL.createObjectURL(blob);
-        window.open(url);
-      });
-      return;
+        const url = window.URL.createObjectURL(blob)
+        window.open(url)
+      })
+      return
     }
 
-    snackbarService.showSnackbar('Download failed', 'error');
+    snackbarService.showSnackbar('Download failed', 'error')
   } catch (err) {
-    snackbarService.showSnackbar('Download failed', 'error');
+    snackbarService.showSnackbar('Download failed', 'error')
   }
-};
+}

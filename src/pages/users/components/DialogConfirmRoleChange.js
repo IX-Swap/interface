@@ -1,12 +1,9 @@
 // @flow
-import React from 'react';
-import Dialog from '@material-ui/core/Dialog';
-import DialogActions from '@material-ui/core/DialogActions';
-import DialogContent from '@material-ui/core/DialogContent';
-import DialogTitle from '@material-ui/core/DialogTitle';
-import Button from '@material-ui/core/Button';
+import React from 'react'
 
-import type { User } from '../modules/types';
+import type { User } from '../modules/types'
+
+import { Dialog, DialogActions, DialogContent, DialogTitle, Button } from '@material-ui/core'
 
 type Prop = {
   user: User,
@@ -16,12 +13,12 @@ type Prop = {
   handleConfirm: (user: User, newRole: string) => Promise<void>,
 };
 
-export default function DialogConfirmRoleChange({
+export default function DialogConfirmRoleChange ({
   user,
   newRole,
   open,
   handleClose,
-  handleConfirm,
+  handleConfirm
 }: Prop) {
   return (
     <Dialog
@@ -36,13 +33,13 @@ export default function DialogConfirmRoleChange({
         {user.roles} to {newRole}?
       </DialogContent>
       <DialogActions>
-        <Button onClick={handleClose} color="primary">
+        <Button onClick={handleClose} color='primary'>
           Cancel
         </Button>
-        <Button onClick={() => handleConfirm(user, newRole)} color="primary">
+        <Button onClick={() => handleConfirm(user, newRole)} color='primary'>
           Ok
         </Button>
       </DialogActions>
     </Dialog>
-  );
+  )
 }

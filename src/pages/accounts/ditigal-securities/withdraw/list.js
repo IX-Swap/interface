@@ -1,5 +1,5 @@
 // @flow
-import React, { useEffect, useRef } from 'react';
+import React, { useEffect, useRef } from 'react'
 import {
   TableContainer,
   TableRow,
@@ -9,36 +9,36 @@ import {
   TablePagination,
   Table,
   TableHead,
-  LinearProgress,
-} from '@material-ui/core';
-import { useHistory } from 'react-router-dom';
-import { get } from 'lodash';
-import moment from 'moment';
-import DSModule from './modules/index';
-import DSActions from './modules/actions';
-import type { DSWithdrawal } from './modules/types';
+  LinearProgress
+} from '@material-ui/core'
+import { useHistory } from 'react-router-dom'
+import { get } from 'lodash'
+import moment from 'moment'
+import DSModule from './modules/index'
+import DSActions from './modules/actions'
+import type { DSWithdrawal } from './modules/types'
 
 const {
   useDSWithdrawalsListDispatch,
   useDSWithdrawalsListState,
-  DS_WITHDRAWALS_LIST_STATUS,
-} = DSModule;
+  DS_WITHDRAWALS_LIST_STATUS
+} = DSModule
 
-const { setPage, setRowsPerPage, getDigitalSecurityWithdrawals } = DSActions;
+const { setPage, setRowsPerPage, getDigitalSecurityWithdrawals } = DSActions
 
 const useWithdrawalsListLogic = (assetId: string) => {
-  const mountedRef = useRef(true);
-  const dsDispatch = useDSWithdrawalsListDispatch();
-  const { page, limit, items, status, total } = useDSWithdrawalsListState();
+  const mountedRef = useRef(true)
+  const dsDispatch = useDSWithdrawalsListDispatch()
+  const { page, limit, items, status, total } = useDSWithdrawalsListState()
 
   const handleChangeRowsPerPage = (newRows: number) => {
-    setRowsPerPage(dsDispatch, { rows: newRows });
-    setPage(dsDispatch, { page: 0 });
-  };
+    setRowsPerPage(dsDispatch, { rows: newRows })
+    setPage(dsDispatch, { page: 0 })
+  }
 
   const handleChangePage = (_, newPage: number) => {
-    setPage(dsDispatch, { page: newPage });
-  };
+    setPage(dsDispatch, { page: newPage })
+  }
 
   useEffect(() => {
     if (status === DS_WITHDRAWALS_LIST_STATUS.INIT) {
@@ -46,17 +46,17 @@ const useWithdrawalsListLogic = (assetId: string) => {
         skip: page * limit,
         limit,
         asset: assetId,
-        ref: mountedRef,
-      });
+        ref: mountedRef
+      })
     }
-  }, [page, limit, status, dsDispatch, assetId]);
+  }, [page, limit, status, dsDispatch, assetId])
 
   useEffect(
     () => () => {
-      mountedRef.current = false;
+      mountedRef.current = false
     },
     []
-  );
+  )
 
   return {
     items,
@@ -65,9 +65,9 @@ const useWithdrawalsListLogic = (assetId: string) => {
     total,
     limit,
     page,
-    status,
-  };
-};
+    status
+  }
+}
 
 type TableColumn = {
   label: string,
@@ -81,11 +81,11 @@ const columns: Array<TableColumn> = [
   {
     label: 'Digital Security',
     // $FlowFixMe
-    key: 'asset.symbol',
+    key: 'asset.symbol'
   },
   {
     label: 'Status',
-    key: 'status',
+    key: 'status'
   },
   {
     label: 'Amount',
@@ -96,43 +96,43 @@ const columns: Array<TableColumn> = [
       value &&
       parseFloat(value)
         .toFixed(2)
-        .replace(/\d(?=(\d{3})+\.)/g, '$&,'),
+        .replace(/\d(?=(\d{3})+\.)/g, '$&,')
   },
   {
     label: 'Date',
     key: 'date',
-    render: (value) => moment(value).format('MM/DD/YYYY'),
+    render: (value) => moment(value).format('MM/DD/YYYY')
   },
   {
     label: 'Memo',
-    key: 'memo',
-  },
-];
+    key: 'memo'
+  }
+]
 
 const redirectModel = [
   {
     label: 'Name of Token',
-    key: 'asset.name',
+    key: 'asset.name'
   },
   {
     label: 'Amount',
-    key: 'amount',
+    key: 'amount'
   },
   {
     label: 'Memo',
-    key: 'memo',
+    key: 'memo'
   },
   {
     label: 'Date and Time',
-    key: 'createdAt',
+    key: 'createdAt'
   },
   {
     label: 'Id',
-    key: 'transaction',
-  },
-];
+    key: 'transaction'
+  }
+]
 
-export default function WithdrawalList({ assetId }: { assetId: string }) {
+export default function WithdrawalList ({ assetId }: { assetId: string }) {
   const {
     status,
     total,
@@ -140,22 +140,22 @@ export default function WithdrawalList({ assetId }: { assetId: string }) {
     page,
     items,
     handleChangePage,
-    handleChangeRowsPerPage,
-  } = useWithdrawalsListLogic(assetId);
+    handleChangeRowsPerPage
+  } = useWithdrawalsListLogic(assetId)
 
-  const history = useHistory();
+  const history = useHistory()
 
   const showDetails = (row) => {
     history.push({
       pathname: '/accounts/wallets/withdraw-view',
-      state: { data: row, model: redirectModel },
-    });
-  };
+      state: { data: row, model: redirectModel }
+    })
+  }
 
   return (
     <TableContainer>
       {status === DS_WITHDRAWALS_LIST_STATUS.GETTING && <LinearProgress />}
-      <Table aria-label="simple table">
+      <Table aria-label='simple table'>
         <TableHead>
           <TableRow>
             {columns.map((e) => (
@@ -197,8 +197,7 @@ export default function WithdrawalList({ assetId }: { assetId: string }) {
                 rowsPerPage={limit}
                 page={page}
                 onChangeRowsPerPage={(evt: SyntheticInputEvent<HTMLElement>) =>
-                  handleChangeRowsPerPage(parseInt(evt.target.value))
-                }
+                  handleChangeRowsPerPage(parseInt(evt.target.value))}
                 onChangePage={handleChangePage}
               />
             </TableRow>
@@ -206,5 +205,5 @@ export default function WithdrawalList({ assetId }: { assetId: string }) {
         )}
       </Table>
     </TableContainer>
-  );
+  )
 }

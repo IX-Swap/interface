@@ -1,36 +1,36 @@
 // @flow
 /* eslint-disable react/no-danger */
-import React, { useState, useRef } from 'react';
-import { useHistory } from 'react-router-dom';
+import React, { useState, useRef } from 'react'
+import { useHistory } from 'react-router-dom'
 import {
   Paper,
   Box,
   Grid,
   Typography,
   Button,
-  ListItem,
-} from '@material-ui/core';
-import RemoveIcon from '@material-ui/icons/Remove';
-import { useForm, FormContext } from 'react-hook-form';
+  ListItem
+} from '@material-ui/core'
+import RemoveIcon from '@material-ui/icons/Remove'
+import { useForm, FormContext } from 'react-hook-form'
 
-import { assignWith, set } from 'lodash';
+import { assignWith, set } from 'lodash'
 
-import AddIcon from '@material-ui/icons/Add';
-import type { Dso } from 'context/dso/types';
-import { useIsIssuer } from 'services/acl';
+import AddIcon from '@material-ui/icons/Add'
+import type { Dso } from 'context/dso/types'
+import { useIsIssuer } from 'services/acl'
 
-import moment from 'moment';
+import moment from 'moment'
 
-import { snackbarService } from 'uno-material-ui';
-import { downloadFile } from '../modules/actions';
+import { snackbarService } from 'uno-material-ui'
+import { downloadFile } from '../modules/actions'
 
-import RichEditor from '../rte';
-import DsoTitle from '../DsoTitle';
-import TeamMember from './DsoTeamMember';
-import OfferingTerms from '../OfferingTerms';
-import OfferDetails from '../OfferDetails';
-import SectionContainer from '../SectionContianer';
-import Uploader from '../Uploader';
+import RichEditor from '../rte'
+import DsoTitle from '../DsoTitle'
+import TeamMember from './DsoTeamMember'
+import OfferingTerms from '../OfferingTerms'
+import OfferDetails from '../OfferDetails'
+import SectionContainer from '../SectionContianer'
+import Uploader from '../Uploader'
 
 const baseDsoRequest = {
   issuerName: '',
@@ -61,246 +61,246 @@ const baseDsoRequest = {
       name: '',
       position: '',
       about: '',
-      photo: '',
-    },
-  ],
-};
+      photo: ''
+    }
+  ]
+}
 
 const useDsoLogic = (dso, action) => {
   // $FlowFixMe
-  const rteRefs = useRef<{ values: Dso }>({ ...baseDsoRequest });
-  const isIssuer = useIsIssuer();
-  const history = useHistory();
-  const [subsTitle, setSubsTitle] = useState('');
-  const [editableDso, setEditableDso] = useState(dso);
-  const def = rteRefs.current.values ? rteRefs.current.values : editableDso;
+  const rteRefs = useRef<{ values: Dso }>({ ...baseDsoRequest })
+  const isIssuer = useIsIssuer()
+  const history = useHistory()
+  const [subsTitle, setSubsTitle] = useState('')
+  const [editableDso, setEditableDso] = useState(dso)
+  const def = rteRefs.current.values ? rteRefs.current.values : editableDso
   const methods = useForm({
     defaultValues: {
       ...def,
       launchDate: moment().format('MM/DD/yyyy'),
-      currency: '',
-    },
-  });
+      currency: ''
+    }
+  })
   const {
     register,
     getValues,
     setValue,
     reset,
     control,
-    triggerValidation,
-  } = methods;
+    triggerValidation
+  } = methods
 
-  const edit = ['edit', 'create'].includes(action);
+  const edit = ['edit', 'create'].includes(action)
 
   const merge = (destArr, sourceArr) =>
     sourceArr.map((source, i) => {
-      const dest = destArr[i];
+      const dest = destArr[i]
 
       Object.keys(source).forEach((key) => {
         if (!source[key]) {
-          delete source[key];
+          delete source[key]
         }
 
         if (!dest[key]) {
-          delete dest[key];
+          delete dest[key]
         }
-      });
+      })
 
       Object.keys(dest).forEach((key) => {
         if (!source[key]) {
-          delete source[key];
+          delete source[key]
         }
 
         if (!dest[key]) {
-          delete dest[key];
+          delete dest[key]
         }
-      });
+      })
 
-      return { ...source, ...dest };
-    });
+      return { ...source, ...dest }
+    })
 
   const getFinalValues = () => {
     Object.values(rteRefs.current).forEach((e) => {
       // $FlowFixMe
       if (e.save) {
         // $FlowFixMe
-        e.save();
+        e.save()
       }
 
       if (Array.isArray(e)) {
         e.forEach((v) => {
           // $FlowFixMe
           if (v.save) {
-            v.save();
+            v.save()
           }
-        });
+        })
       }
-    });
+    })
 
     const richtextKeys = [
       'businessModel',
       'fundraisingMilestone',
       'introduction',
-      'useOfProceeds',
-    ];
+      'useOfProceeds'
+    ]
 
-    const data = getValues({ nest: true });
+    const data = getValues({ nest: true })
     const finalData = assignWith(data, rteRefs.current.values, (a, b, key) => {
       if (key === 'team') {
-        return merge(a, b);
+        return merge(a, b)
       }
 
       if (richtextKeys.includes(key)) {
-        return b;
+        return b
       }
 
-      return a || b;
-    });
+      return a || b
+    })
 
-    finalData.documents = editableDso.documents;
+    finalData.documents = editableDso.documents
 
     if (dso._id) {
-      finalData.launchDate = dso.launchDate;
-      finalData.currency = dso.currency.length ? dso.currency[0]._id : {};
+      finalData.launchDate = dso.launchDate
+      finalData.currency = dso.currency.length ? dso.currency[0]._id : {}
       finalData.subscriptionDocument =
-        editableDso.subscriptionDocument || dso.subscriptionDocument;
+        editableDso.subscriptionDocument || dso.subscriptionDocument
     }
 
     if (!finalData.logo) {
-      finalData.logo = dso.logo;
+      finalData.logo = dso.logo
     }
 
     if (!finalData.team) {
-      finalData.team = [];
+      finalData.team = []
     }
 
-    return finalData;
-  };
+    return finalData
+  }
 
   const addMember = () => {
-    const values = getFinalValues();
+    const values = getFinalValues()
     values.team.push({
       _id: undefined,
       photo: '',
       name: '',
       position: '',
-      about: '',
-    });
+      about: ''
+    })
 
-    rteRefs.current.values = { ...values };
+    rteRefs.current.values = { ...values }
     setEditableDso({
-      ...values,
-    });
+      ...values
+    })
 
-    reset(values);
-  };
+    reset(values)
+  }
 
   const onRemove = (index) => {
-    const values = getFinalValues();
-    const team = values.team.filter((e, i) => i !== index);
+    const values = getFinalValues()
+    const team = values.team.filter((e, i) => i !== index)
     if (
       // $FlowFixMe
       rteRefs.current.team &&
       rteRefs.current.team.length &&
       rteRefs.current.team.length > index
     ) {
-      rteRefs.current.team.splice(index, 1);
+      rteRefs.current.team.splice(index, 1)
     }
 
-    values.team = [...team];
-    rteRefs.current.values = { ...values };
+    values.team = [...team]
+    rteRefs.current.values = { ...values }
     setEditableDso({
-      ...values,
-    });
+      ...values
+    })
 
-    reset(values);
-  };
+    reset(values)
+  }
 
   const onRemoveDocument = (index) => {
-    const values = getFinalValues();
-    const documents = (values.documents || []).filter((e, i) => i !== index);
+    const values = getFinalValues()
+    const documents = (values.documents || []).filter((e, i) => i !== index)
     if (
       // $FlowFixMe
       rteRefs.current.documents &&
       rteRefs.current.documents.length &&
       rteRefs.current.documents.length > index
     ) {
-      rteRefs.current.documents.splice(index, 1);
+      rteRefs.current.documents.splice(index, 1)
     }
 
-    values.documents = [...documents];
-    rteRefs.current.values = { ...values };
+    values.documents = [...documents]
+    rteRefs.current.values = { ...values }
     setEditableDso({
-      ...values,
-    });
+      ...values
+    })
 
-    reset(values);
-  };
+    reset(values)
+  }
 
   const setRefValue = (key, value) => {
     if (!rteRefs.current.values) {
-      rteRefs.current.values = {};
+      rteRefs.current.values = {}
     }
 
-    set(rteRefs.current.values, key, value);
-  };
+    set(rteRefs.current.values, key, value)
+  }
 
   const registerRichText = (key, ref) => {
-    set(rteRefs.current, key, ref);
-  };
+    set(rteRefs.current, key, ref)
+  }
 
   const onSubscriptionUpload = (res: any) => {
-    const values = getFinalValues();
-    setSubsTitle(res.originalFileName);
-    values.subscriptionDocument = res._id;
-    rteRefs.current.values = { ...values };
+    const values = getFinalValues()
+    setSubsTitle(res.originalFileName)
+    values.subscriptionDocument = res._id
+    rteRefs.current.values = { ...values }
     setEditableDso({
-      ...values,
-    });
-    reset(values);
-  };
+      ...values
+    })
+    reset(values)
+  }
 
   const removeSubscriptionDocument = () => {
-    const values = getFinalValues();
-    setSubsTitle('');
-    values.subscriptionDocument = '';
-    rteRefs.current.values = { ...values };
+    const values = getFinalValues()
+    setSubsTitle('')
+    values.subscriptionDocument = ''
+    rteRefs.current.values = { ...values }
     setEditableDso({
-      ...values,
-    });
-    reset(values);
-  };
+      ...values
+    })
+    reset(values)
+  }
 
   const onLogoUpload = (res: any) => {
-    const values = getFinalValues();
-    values.logo = res._id;
-    rteRefs.current.values = { ...values };
+    const values = getFinalValues()
+    values.logo = res._id
+    rteRefs.current.values = { ...values }
     setEditableDso({
-      ...values,
-    });
-    reset(values);
-  };
+      ...values
+    })
+    reset(values)
+  }
 
   const onDataroomDocumentUploaded = (res: any) => {
-    const values = getFinalValues();
+    const values = getFinalValues()
     if (!values.documents) {
-      values.documents = [];
+      values.documents = []
     }
 
-    values.documents.push(res);
-    rteRefs.current.values = { ...values };
+    values.documents.push(res)
+    rteRefs.current.values = { ...values }
     setEditableDso({
-      ...values,
-    });
-    reset(values);
-  };
+      ...values
+    })
+    reset(values)
+  }
 
   const setFormData = (values: any) => {
     setEditableDso({
-      ...values,
-    });
-    reset(values);
-  };
+      ...values
+    })
+    reset(values)
+  }
 
   return {
     setValue,
@@ -323,9 +323,9 @@ const useDsoLogic = (dso, action) => {
     triggerValidation,
     onRemoveDocument,
     removeSubscriptionDocument,
-    methods,
-  };
-};
+    methods
+  }
+}
 
 const DsoInformation = ({
   dso,
@@ -334,7 +334,7 @@ const DsoInformation = ({
   onClickDocument,
   headerButtonShown = true,
   action = 'view',
-  assets = [],
+  assets = []
 }: {
   dso: Dso,
   assets?: Array<any>,
@@ -365,15 +365,16 @@ const DsoInformation = ({
     onLogoUpload,
     onRemoveDocument,
     removeSubscriptionDocument,
-    methods,
-  } = useDsoLogic(dso || { ...baseDsoRequest }, action);
+    methods
+  } = useDsoLogic(dso || { ...baseDsoRequest }, action)
+  const isVisible = isIssuer && !(dso || {}).deploymentInfo && (dso || {}).status === 'Approved' && !edit
 
   return (
     <FormContext {...methods}>
       <Paper>
         <form>
           <Box p={4}>
-            <Grid container alignItems="center" justify="space-between">
+            <Grid container alignItems='center' justify='space-between'>
               <Grid item>
                 <DsoTitle
                   control={control}
@@ -399,7 +400,7 @@ const DsoInformation = ({
                       document={{
                         title: 'Token Logo',
                         label: 'token-logo',
-                        type: 'tokenLogo',
+                        type: 'tokenLogo'
                       }}
                       edit={edit}
                       showTitle={false}
@@ -412,18 +413,18 @@ const DsoInformation = ({
               {headerButtonAction && headerButtonText && headerButtonShown && (
                 <Grid item>
                   <Button
-                    variant="contained"
-                    color="primary"
+                    variant='contained'
+                    color='primary'
                     onClick={async () => {
-                      const valid = !edit || (await triggerValidation());
-                      const values = getFinalValues();
+                      const valid = !edit || (await triggerValidation())
+                      const values = getFinalValues()
 
                       if (!valid) {
                         snackbarService.showSnackbar(
                           'Please fill out the fields',
                           'error'
-                        );
-                        return;
+                        )
+                        return
                       }
 
                       if (edit) {
@@ -431,24 +432,24 @@ const DsoInformation = ({
                           snackbarService.showSnackbar(
                             'Please upload a logo',
                             'error'
-                          );
-                          return;
+                          )
+                          return
                         }
 
                         if (!values.subscriptionDocument) {
                           snackbarService.showSnackbar(
                             'Please upload a subscription document',
                             'error'
-                          );
-                          return;
+                          )
+                          return
                         }
 
-                        setFormData(values);
-                        headerButtonAction((dso || {})._id, values);
+                        setFormData(values)
+                        headerButtonAction((dso || {})._id, values)
                       }
 
                       if (!edit) {
-                        headerButtonAction();
+                        headerButtonAction()
                       }
                     }}
                   >
@@ -460,7 +461,7 @@ const DsoInformation = ({
             <Box mt={4}>
               <Grid container spacing={4}>
                 <Grid item xs={8}>
-                  <SectionContainer title="Introduction">
+                  <SectionContainer title='Introduction'>
                     {!edit && (
                       <Typography paragraph>
                         <span
@@ -473,7 +474,7 @@ const DsoInformation = ({
                         value={editableDso.introduction || 'Introduction'}
                         ref={(ref) => registerRichText('introduction', ref)}
                         save={(val) => {
-                          setRefValue('introduction', val);
+                          setRefValue('introduction', val)
                         }}
                       />
                     )}
@@ -488,9 +489,10 @@ const DsoInformation = ({
             </Box>
 
             <Box mt={4}>
-              <SectionContainer title="Subscription Document">
+              <SectionContainer title='Subscription Document'>
                 {['view'].includes(action) &&
-                  editableDso.subscriptionDocument && (
+                  editableDso.subscriptionDocument &&
+                  (
                     <Button onClick={() => downloadFile(dso._id)}>
                       Download
                     </Button>
@@ -500,13 +502,13 @@ const DsoInformation = ({
                     document={{
                       title: subsTitle || 'Subscription Document',
                       label: 'subscription-document',
-                      type: 'subscriptionDocument',
+                      type: 'subscriptionDocument'
                     }}
                     disabled={!!editableDso.subscriptionDocument}
                     edit
                     onUpload={onSubscriptionUpload}
                     onDelete={() => {
-                      removeSubscriptionDocument();
+                      removeSubscriptionDocument()
                     }}
                   />
                 )}
@@ -522,7 +524,7 @@ const DsoInformation = ({
               />
             </Box>
             <Box mt={4}>
-              <SectionContainer title="Business Model">
+              <SectionContainer title='Business Model'>
                 {!edit && (
                   <Typography>
                     <span
@@ -535,7 +537,7 @@ const DsoInformation = ({
                     value={editableDso.businessModel || 'Business Model'}
                     ref={(ref) => registerRichText('businessModel', ref)}
                     save={(val) => {
-                      setRefValue('businessModel', val);
+                      setRefValue('businessModel', val)
                     }}
                   />
                 )}
@@ -543,35 +545,30 @@ const DsoInformation = ({
             </Box>
 
             <Box mt={4}>
-              <SectionContainer title="Token Address">
-                <Grid container item justify="space-between">
-                  <Typography color="primary">
+              <SectionContainer title='Token Address'>
+                <Grid container item justify='space-between'>
+                  <Typography color='primary'>
                     {((dso || {}).deploymentInfo &&
                       ((dso || {}).deploymentInfo || {}).token) ||
                       '-'}
                   </Typography>
-                  {isIssuer &&
-                    !(dso || {}).deploymentInfo &&
-                    (dso || {}).status === 'Approved' &&
-                    !edit && (
-                      <Button
-                        variant="contained"
-                        color="primary"
-                        onClick={() =>
-                          history.push(
-                            `/issuance/${dso.createdBy}/${dso._id}/deploy`
-                          )
-                        }
-                      >
+                  {isVisible && (
+                    <Button
+                      variant='contained'
+                      color='primary'
+                      onClick={() => {
+                        history.push(`/issuance/${dso.createdBy}/${dso._id}/deploy`)
+                      }}
+                    >
                         Deploy
-                      </Button>
-                    )}
+                    </Button>
+                  )}
                 </Grid>
               </SectionContainer>
             </Box>
 
             <Box mt={4}>
-              <SectionContainer title="Use of Proceeds">
+              <SectionContainer title='Use of Proceeds'>
                 {!edit && (
                   <Typography>
                     <span
@@ -584,7 +581,7 @@ const DsoInformation = ({
                     value={editableDso.useOfProceeds || 'Use of Proceeds'}
                     ref={(ref) => registerRichText('useOfProceeds', ref)}
                     save={(val) => {
-                      setRefValue('useOfProceeds', val);
+                      setRefValue('useOfProceeds', val)
                     }}
                   />
                 )}
@@ -594,12 +591,12 @@ const DsoInformation = ({
             <Box mt={4}>
               <Grid container spacing={4}>
                 <Grid item xs={6}>
-                  <SectionContainer title="Dataroom">
+                  <SectionContainer title='Dataroom'>
                     {(editableDso.documents || []).map((document, i) => (
                       <ListItem
                         style={{
                           display: 'flex',
-                          justifyContent: 'space-between',
+                          justifyContent: 'space-between'
                         }}
                         key={i}
                       >
@@ -622,7 +619,7 @@ const DsoInformation = ({
                         document={{
                           title: 'Dataroom Dso Document',
                           label: 'dso-document',
-                          type: 'dsoDocument',
+                          type: 'dsoDocument'
                         }}
                         edit={edit}
                         onUpload={onDataroomDocumentUploaded}
@@ -631,12 +628,12 @@ const DsoInformation = ({
                   </SectionContainer>
                 </Grid>
                 <Grid item xs={6}>
-                  <SectionContainer title="Fund Raising Milestone">
+                  <SectionContainer title='Fund Raising Milestone'>
                     {!edit && (
                       <Typography>
                         <span
                           dangerouslySetInnerHTML={{
-                            __html: dso.fundraisingMilestone,
+                            __html: dso.fundraisingMilestone
                           }}
                         />
                       </Typography>
@@ -645,13 +642,12 @@ const DsoInformation = ({
                       <RichEditor
                         value={
                           editableDso.fundraisingMilestone ||
-                          'Fund raising Milestone'
+                        'Fund raising Milestone'
                         }
                         ref={(ref) =>
-                          registerRichText('fundRaisingMilestone', ref)
-                        }
+                          registerRichText('fundRaisingMilestone', ref)}
                         save={(val) => {
-                          setRefValue('fundraisingMilestone', val);
+                          setRefValue('fundraisingMilestone', val)
                         }}
                       />
                     )}
@@ -661,7 +657,7 @@ const DsoInformation = ({
             </Box>
 
             <Box mt={4}>
-              <SectionContainer title="Team">
+              <SectionContainer title='Team'>
                 {(editableDso.team || []).map((member, i) => (
                   <TeamMember
                     dsoId={(dso || {})._id}
@@ -673,16 +669,16 @@ const DsoInformation = ({
                     remove={() => onRemove(i)}
                     ref={(ref) => {
                       if (ref && ref.save) {
-                        registerRichText(`team[${i}]`, ref);
-                        return;
+                        registerRichText(`team[${i}]`, ref)
+                        return
                       }
 
                       if (ref) {
-                        register(ref);
+                        register(ref)
                       }
                     }}
                     save={(val) => {
-                      setRefValue(`team[${i}].about`, val);
+                      setRefValue(`team[${i}].about`, val)
                     }}
                   />
                 ))}
@@ -700,7 +696,7 @@ const DsoInformation = ({
         </form>
       </Paper>
     </FormContext>
-  );
-};
+  )
+}
 
-export default DsoInformation;
+export default DsoInformation

@@ -1,6 +1,6 @@
 // @flow
-import React from 'react';
-import type { Node } from 'react';
+import React from 'react'
+import type { Node } from 'react'
 import {
   Typography,
   Grid,
@@ -9,23 +9,23 @@ import {
   FormControl,
   InputLabel,
   Checkbox,
-  FormControlLabel,
-} from '@material-ui/core';
-import moment from 'moment';
-import { makeStyles } from '@material-ui/styles';
-import { useFormContext, Controller } from 'react-hook-form';
+  FormControlLabel
+} from '@material-ui/core'
+import moment from 'moment'
+import { makeStyles } from '@material-ui/styles'
+import { useFormContext, Controller } from 'react-hook-form'
 
 const useStyles = makeStyles(() => ({
   fieldLabel: {
-    fontWeight: 'bold',
+    fontWeight: 'bold'
   },
   textField: {
-    width: '100%',
+    width: '100%'
   },
   selectField: {
-    width: '100%',
-  },
-}));
+    width: '100%'
+  }
+}))
 
 type IdentityFieldProps = {
   label: string,
@@ -46,18 +46,18 @@ const IdentityField = ({
   type,
   children,
   required = false,
-  editMode,
+  editMode
 }: IdentityFieldProps) => {
-  const classes = useStyles();
-  const { control, register } = useFormContext();
-  let lValue = value;
+  const classes = useStyles()
+  const { control, register } = useFormContext()
+  let lValue = value
 
   if (type === 'date') {
-    lValue = moment(value).format('yyyy-MM-DD');
+    lValue = moment(value).format('yyyy-MM-DD')
   }
 
   if (editMode) {
-    let inputComponent;
+    let inputComponent
 
     switch (type) {
       case 'select':
@@ -80,8 +80,8 @@ const IdentityField = ({
               {children}
             </Controller>
           </FormControl>
-        );
-        break;
+        )
+        break
 
       case 'check':
         inputComponent = (
@@ -91,14 +91,14 @@ const IdentityField = ({
               <Controller
                 as={Checkbox}
                 name={name}
-                type="checkbox"
+                type='checkbox'
                 control={control}
                 defaultValue={value || false}
               />
             }
           />
-        );
-        break;
+        )
+        break
 
       case 'text':
       case 'date':
@@ -113,32 +113,32 @@ const IdentityField = ({
             className={classes.textField}
             defaultValue={lValue || ''}
           />
-        );
-        break;
+        )
+        break
     }
 
     return (
       <Grid item xs={size}>
         {inputComponent}
       </Grid>
-    );
+    )
   }
 
   const getValueDisplay = (mType, mValue) => {
-    let val = mValue || '-';
+    let val = mValue || '-'
     if (mType === 'check') {
-      val = mValue ? 'Yes' : 'No';
+      val = mValue ? 'Yes' : 'No'
     }
 
-    return val;
-  };
+    return val
+  }
 
   return (
     <Grid item xs={size}>
       <Typography className={classes.fieldLabel}>{label}</Typography>
       <Typography>{getValueDisplay(type, value)}</Typography>
     </Grid>
-  );
-};
+  )
+}
 
-export default IdentityField;
+export default IdentityField

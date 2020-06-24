@@ -1,15 +1,15 @@
-import React from 'react';
+import React from 'react'
 import {
   Grid,
   Typography,
   TextField,
   Select,
-  MenuItem,
-} from '@material-ui/core';
-import type { Dso } from 'context/dso/types';
-import { Controller, useFormContext } from 'react-hook-form';
-import { toPercentage } from 'helpers/formatNumbers';
-import SectionContainer from './SectionContianer';
+  MenuItem
+} from '@material-ui/core'
+import type { Dso } from 'context/dso/types'
+import { Controller, useFormContext } from 'react-hook-form'
+import { toPercentage } from 'helpers/formatNumbers'
+import SectionContainer from './SectionContianer'
 
 const getOfferingTermComponent = (name, ref, control, error) => {
   switch (name) {
@@ -22,25 +22,25 @@ const getOfferingTermComponent = (name, ref, control, error) => {
               inputRef={ref}
               name={name}
               inputProps={{
-                name,
+                name
               }}
             >
-              <MenuItem value="Not Applicable">Not Applicable</MenuItem>
-              <MenuItem value="Monthly">Monthly</MenuItem>
-              <MenuItem value="Quarterly">Quarterly</MenuItem>
-              <MenuItem value="Semi-Annually">Semi-Annually</MenuItem>
-              <MenuItem value="Annually">Annually</MenuItem>
+              <MenuItem value='Not Applicable'>Not Applicable</MenuItem>
+              <MenuItem value='Monthly'>Monthly</MenuItem>
+              <MenuItem value='Quarterly'>Quarterly</MenuItem>
+              <MenuItem value='Semi-Annually'>Semi-Annually</MenuItem>
+              <MenuItem value='Annually'>Annually</MenuItem>
             </Select>
           }
           name={name}
           rules={{ required: 'this field is required' }}
           control={control}
         />
-      );
+      )
     default:
-      return <TextField name={name || ''} inputRef={ref} error={error} />;
+      return <TextField name={name || ''} inputRef={ref} error={error} />
   }
-};
+}
 
 const OfferingTermItem = React.forwardRef(
   (
@@ -50,7 +50,7 @@ const OfferingTermItem = React.forwardRef(
       value,
       edit = false,
       unit = '',
-      control,
+      control
     }: {
       unit?: string,
       control?: any,
@@ -61,7 +61,7 @@ const OfferingTermItem = React.forwardRef(
     },
     ref: any
   ) => {
-    const { errors } = useFormContext();
+    const { errors } = useFormContext()
     return (
       <Grid container item xs={4} spacing={2}>
         <Grid item xs={6}>
@@ -77,64 +77,64 @@ const OfferingTermItem = React.forwardRef(
           {edit && getOfferingTermComponent(name, ref, control, errors[name])}
         </Grid>
       </Grid>
-    );
+    )
   }
-);
+)
 
-OfferingTermItem.displayName = 'OfferingTermItem';
+OfferingTermItem.displayName = 'OfferingTermItem'
 
-const isNa = (val: any) => (val || '').toString().trim() === '';
+const isNa = (val: any) => (val || '').toString().trim() === ''
 
 const OfferingTerms = (
   { edit, dso, control }: { edit: boolean, dso: Dso, control: any },
   ref: any
 ) => (
-  <SectionContainer title="Offering Terms">
+  <SectionContainer title='Offering Terms'>
     <Grid container spacing={2}>
       <OfferingTermItem
-        name="investmentPeriod"
+        name='investmentPeriod'
         ref={ref}
-        unit="Months"
-        label="Investment Period"
+        unit='Months'
+        label='Investment Period'
         edit={edit}
         // TODO:  Check if what the number denotes (eg months, yrs?)
         value={isNa(dso.investmentPeriod) ? 'n/a' : dso.investmentPeriod}
       />
       <OfferingTermItem
-        name="dividendYeild"
+        name='dividendYeild'
         ref={ref}
-        label="Dividend Yield"
+        label='Dividend Yield'
         edit={edit}
         value={
           isNa(dso.dividendYeild) ? 'n/a' : toPercentage(dso.dividendYeild)
         }
       />
       <OfferingTermItem
-        name="grossIRR"
+        name='grossIRR'
         ref={ref}
-        label="Gross IRR"
+        label='Gross IRR'
         edit={edit}
         value={isNa(dso.grossIRR) ? 'n/a' : toPercentage(dso.grossIRR)}
       />
 
       <OfferingTermItem
-        name="investmentStructure"
+        name='investmentStructure'
         ref={ref}
-        label="Investment Structure"
+        label='Investment Structure'
         edit={edit}
         value={isNa(dso.investmentStructure) ? 'n/a' : dso.investmentStructure}
       />
       <OfferingTermItem
-        name="equityMultiple"
+        name='equityMultiple'
         ref={ref}
-        label="Equity Multiple"
+        label='Equity Multiple'
         edit={edit}
         value={isNa(dso.equityMultiple) ? 'n/a' : dso.equityMultiple}
       />
       <OfferingTermItem
-        name="distributionFrequency"
+        name='distributionFrequency'
         ref={ref({ required: true })}
-        label="Distribution Frequency"
+        label='Distribution Frequency'
         edit={edit}
         control={control}
         value={
@@ -142,20 +142,20 @@ const OfferingTerms = (
         }
       />
       <OfferingTermItem
-        name="interestRate"
+        name='interestRate'
         ref={ref}
-        label="Interest Rate"
+        label='Interest Rate'
         edit={edit}
         value={isNa(dso.interestRate) ? 'n/a' : toPercentage(dso.interestRate)}
       />
       <OfferingTermItem
-        name="leverage"
+        name='leverage'
         ref={ref}
-        label="Leverage"
+        label='Leverage'
         edit={edit}
         value={isNa(dso.leverage) ? 'n/a' : toPercentage(dso.leverage)}
       />
     </Grid>
   </SectionContainer>
-);
-export default React.forwardRef(OfferingTerms);
+)
+export default React.forwardRef(OfferingTerms)

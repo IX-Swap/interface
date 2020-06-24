@@ -1,6 +1,6 @@
 // @flow
 /* eslint-disable react-hooks/exhaustive-deps */
-import React, { useRef, useEffect, useState } from 'react';
+import React, { useRef, useEffect, useState } from 'react'
 import {
   Container,
   TextField,
@@ -13,60 +13,60 @@ import {
   TableCell,
   TableFooter,
   TablePagination,
-  LinearProgress,
-} from '@material-ui/core';
-import { debounce } from 'lodash';
-import { useHistory } from 'react-router-dom';
-import { useIsIssuer } from 'services/acl';
-import OfferCard from './OfferCard';
-import DsoListModule from './modules';
-import Actions from './modules/actions';
-import { init } from './modules/actions_filtered';
+  LinearProgress
+} from '@material-ui/core'
+import { debounce } from 'lodash'
+import { useHistory } from 'react-router-dom'
+import { useIsIssuer } from 'services/acl'
+import OfferCard from './OfferCard'
+import DsoListModule from './modules'
+import Actions from './modules/actions'
+import { init } from './modules/actions_filtered'
 
-const { useDsoListState, useDsoListDispatch, DSO_LIST_STATUS } = DsoListModule;
+const { useDsoListState, useDsoListDispatch, DSO_LIST_STATUS } = DsoListModule
 let {
   getDsoList: getList,
   setPage: _setPage,
   setRowsPerPage: _setRowsPerPage,
-  clearApiStatus: _clearApiStatus,
-} = Actions;
+  clearApiStatus: _clearApiStatus
+} = Actions
 
 const useDsoListLogic = (statusFilter?: string, user?: string) => {
-  const isIssuer = useIsIssuer();
-  const dsoListDispatch = useDsoListDispatch();
-  const dsoListState = useDsoListState();
-  const [search, setSearch] = useState('');
-  const { status, page, total, limit, items, statusCode, error } = dsoListState;
-  const mountedRef = useRef(true);
+  const isIssuer = useIsIssuer()
+  const dsoListDispatch = useDsoListDispatch()
+  const dsoListState = useDsoListState()
+  const [search, setSearch] = useState('')
+  const { status, page, total, limit, items, statusCode, error } = dsoListState
+  const mountedRef = useRef(true)
   const [onSearch] = useState(() =>
     debounce((evt) => setSearch(evt.target.value), 500)
-  );
+  )
 
   useEffect(() => {
-    const override = user ? init(user) : Actions;
-    getList = override.getDsoList;
-    _setPage = override.setPage;
-    _setRowsPerPage = override.setRowsPerPage;
-    _clearApiStatus = override.clearApiStatus;
-  }, [user]);
+    const override = user ? init(user) : Actions
+    getList = override.getDsoList
+    _setPage = override.setPage
+    _setRowsPerPage = override.setRowsPerPage
+    _clearApiStatus = override.clearApiStatus
+  }, [user])
 
   const handleChangePage = (_, newPage: number) => {
-    _setPage(dsoListDispatch, { page: newPage });
-  };
+    _setPage(dsoListDispatch, { page: newPage })
+  }
 
   const handleChangeRowsPerPage = (newRows: number) => {
-    _setRowsPerPage(dsoListDispatch, { rows: newRows });
-    _setPage(dsoListDispatch, { page: 0 });
-  };
+    _setRowsPerPage(dsoListDispatch, { rows: newRows })
+    _setPage(dsoListDispatch, { page: 0 })
+  }
 
   const _onSearch = (evt) => {
-    evt.persist();
-    onSearch(evt);
-  };
+    evt.persist()
+    onSearch(evt)
+  }
 
   useEffect(() => {
-    _setPage(dsoListDispatch, { page: 0 });
-  }, [search]);
+    _setPage(dsoListDispatch, { page: 0 })
+  }, [search])
 
   useEffect(() => {
     if (status === DSO_LIST_STATUS.INIT) {
@@ -75,18 +75,18 @@ const useDsoListLogic = (statusFilter?: string, user?: string) => {
         limit,
         status: statusFilter,
         search,
-        ref: mountedRef,
-      });
-      _clearApiStatus(dsoListDispatch);
+        ref: mountedRef
+      })
+      _clearApiStatus(dsoListDispatch)
     }
-  }, [page, limit, status, statusFilter, dsoListDispatch, user]);
+  }, [page, limit, status, statusFilter, dsoListDispatch, user])
 
   useEffect(
     () => () => {
-      mountedRef.current = false;
+      mountedRef.current = false
     },
     []
-  );
+  )
 
   return {
     dsoListDispatch,
@@ -101,14 +101,14 @@ const useDsoListLogic = (statusFilter?: string, user?: string) => {
     handleChangePage,
     handleChangeRowsPerPage,
     _setPage,
-    isIssuer,
-  };
-};
+    isIssuer
+  }
+}
 
 const DsoList = ({
   onClickView,
   status = undefined,
-  user = '',
+  user = ''
 }: {
   user?: string,
   status?: string,
@@ -123,10 +123,10 @@ const DsoList = ({
     onSearch,
     page,
     handleChangeRowsPerPage,
-    handleChangePage,
-  } = useDsoListLogic(status, user);
+    handleChangePage
+  } = useDsoListLogic(status, user)
 
-  const history = useHistory();
+  const history = useHistory()
 
   return (
     <Container>
@@ -137,17 +137,17 @@ const DsoList = ({
       <Box mb={4}>
         <Grid container style={{ padding: '0 16px' }}>
           <TextField
-            variant="outlined"
-            placeholder="Search"
+            variant='outlined'
+            placeholder='Search'
             onChange={onSearch}
             style={{ flexGrow: 1 }}
           />
           {isIssuer && (
             <Button
-              variant="contained"
-              color="primary"
+              variant='contained'
+              color='primary'
               style={{ minWidth: '100px', marginLeft: '10px' }}
-              onClick={() => history.push(`/issuance/create`)}
+              onClick={() => history.push('/issuance/create')}
             >
               Add
             </Button>
@@ -155,7 +155,7 @@ const DsoList = ({
         </Grid>
       </Box>
 
-      <Table aria-label="accounts table">
+      <Table aria-label='accounts table'>
         <TableBody>
           {/* $FlowFixMe */}
           {dsoList.map((dso) => (
@@ -179,8 +179,7 @@ const DsoList = ({
                 rowsPerPage={limit}
                 page={page}
                 onChangeRowsPerPage={(evt: SyntheticInputEvent<HTMLElement>) =>
-                  handleChangeRowsPerPage(parseInt(evt.target.value))
-                }
+                  handleChangeRowsPerPage(parseInt(evt.target.value))}
                 onChangePage={handleChangePage}
               />
             </TableRow>
@@ -188,7 +187,7 @@ const DsoList = ({
         )}
       </Table>
     </Container>
-  );
-};
+  )
+}
 
-export default DsoList;
+export default DsoList

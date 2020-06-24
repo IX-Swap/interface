@@ -1,12 +1,12 @@
 export const listViewActions = {
   GET_LISTING_ITEM_REQUEST: 'GET_LISTING_ITEM_REQUEST',
   GET_LISTING_ITEM_SUCCESS: 'GET_LISTING_ITEM_SUCCESS',
-  GET_LISTING_ITEM_FAILURE: 'GET_LISTING_ITEM_FAILURE',
-};
+  GET_LISTING_ITEM_FAILURE: 'GET_LISTING_ITEM_FAILURE'
+}
 
 export type ListItemAssetState = {
   _id: string,
-  name: string, 
+  name: string,
   type: string,
   createdAt: string,
   updatedAt: string,
@@ -14,9 +14,9 @@ export type ListItemAssetState = {
 
 export type ListItemState = {
   _id: string,
-  name: string, 
-  asset: ListItemAssetState, 
-  companyName: string, 
+  name: string,
+  asset: ListItemAssetState,
+  companyName: string,
   description: string,
   createdAt: string,
   updatedAt: string,
@@ -28,4 +28,3 @@ export type ListingViewState = {
   message?: string,
   error?: string,
 };
-  

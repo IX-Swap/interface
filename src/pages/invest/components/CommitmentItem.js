@@ -1,6 +1,6 @@
 // @flow
 /* eslint-disable react-hooks/exhaustive-deps */
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect } from 'react'
 import {
   Container,
   Grid,
@@ -8,94 +8,94 @@ import {
   Box,
   Button,
   TextField,
-  Typography,
-} from '@material-ui/core';
-import DsoTitle from 'components/Dso/DsoTitle';
-import { makeStyles } from '@material-ui/styles';
-import { formatMoney } from 'helpers/formatNumbers';
-import { useHistory } from 'react-router-dom';
-import { useForm } from 'react-hook-form';
-import { snackbarService } from 'uno-material-ui';
-import type { Dso } from 'context/dso/types';
-import type { Commitment } from 'context/commitment/types';
+  Typography
+} from '@material-ui/core'
+import DsoTitle from 'components/Dso/DsoTitle'
+import { makeStyles } from '@material-ui/styles'
+import { formatMoney } from 'helpers/formatNumbers'
+import { useHistory } from 'react-router-dom'
+import { useForm } from 'react-hook-form'
+import { snackbarService } from 'uno-material-ui'
+import type { Dso } from 'context/dso/types'
+import type { Commitment } from 'context/commitment/types'
 import {
   fetchAccountBalanceByAsset,
   addCommitment,
-  downloadFile,
-} from '../modules/actions';
-import { useInvestState } from '../modules';
-import Uploader from './Uploader';
+  downloadFile
+} from '../modules/actions'
+import { useInvestState } from '../modules'
+import Uploader from './Uploader'
 
 const useStyles = makeStyles(() => ({
   label: {
     fontWeight: 'bold',
     color: '#999999',
-    fontSize: '0.95em',
+    fontSize: '0.95em'
   },
   value: {
     fontWeight: 'bold',
-    fontSize: '1.45em',
-  },
-}));
+    fontSize: '1.45em'
+  }
+}))
 
 const BalanceHeader = ({ label, value }: { label: string, value: string }) => {
-  const classes = useStyles();
+  const classes = useStyles()
 
   return (
-    <Grid item xs={3} container justify="center" direction="column">
+    <Grid item xs={3} container justify='center' direction='column'>
       <Typography className={classes.label}>{label}:</Typography>
       <Typography className={classes.value}>{value}</Typography>
     </Grid>
-  );
-};
+  )
+}
 
 const CommitmentItem = ({
   dso,
   commitment,
-  asset,
+  asset
 }: {
   dso: Dso,
   commitment?: Commitment,
   asset: string,
 }) => {
-  const history = useHistory();
-  const [saving, setSaving] = useState(false);
-  const [balance, setBalance] = useState(null);
-  const [estimatedValue, setEstimatedValue] = useState(0);
+  const history = useHistory()
+  const [saving, setSaving] = useState(false)
+  const [balance, setBalance] = useState(null)
+  const [estimatedValue, setEstimatedValue] = useState(0)
   const [numberOfUnits, setNumberOfUnits] = useState(
     commitment && commitment.numberOfUnits ? commitment.numberOfUnits : 0
-  );
-  const [subscriptionDocument, setSubscriptionDocument] = useState(null);
-  const { editMode } = useInvestState();
+  )
+  const [subscriptionDocument, setSubscriptionDocument] = useState(null)
+  const { editMode } = useInvestState()
 
-  const { register, handleSubmit, watch, errors } = useForm();
+  const { register, handleSubmit, watch, errors } = useForm()
 
   const onSubmit = async (data) => {
-    setSaving(true);
-    const { walletAddress, otp } = data;
-    const { currency, _id, minimumInvestment } = dso;
+    setSaving(true)
+    const { walletAddress, otp } = data
+    const { currency, _id, minimumInvestment } = dso
 
     if (numberOfUnits < minimumInvestment) {
       snackbarService.showSnackbar(
         'Number of units is below minimum investment',
         'error'
-      );
+      )
 
-      setSaving(false);
-      return;
+      setSaving(false)
+      return
     }
 
     if (!subscriptionDocument) {
       snackbarService.showSnackbar(
         'You need to upload a signed subscription document',
         'error'
-      );
+      )
 
-      setSaving(false);
-      return;
+      setSaving(false)
+      return
     }
 
-    const signedSubscriptionDocument = subscriptionDocument._id;
+    const signedSubscriptionDocument = subscriptionDocument._id
 
     try {
       const res = await addCommitment({
@@ -104,71 +104,71 @@ const CommitmentItem = ({
         otp,
         currency: currency[0]._id,
         dso: _id,
-        signedSubscriptionDocument,
-      });
+        signedSubscriptionDocument
+      })
 
       if (res) {
         snackbarService.showSnackbar(
           'Successfully added commitment.',
           'success'
-        );
+        )
         setTimeout(() => {
           // update this later to a less hacky solution
-          window.location.reload();
-        }, 1000);
+          window.location.reload()
+        }, 1000)
       }
 
-      setSaving(false);
+      setSaving(false)
     } catch (error) {
       snackbarService.showSnackbar(
         error.message ? error.message : 'Something went wrong.',
         'error'
-      );
-      setSaving(false);
+      )
+      setSaving(false)
     }
-  };
+  }
 
   const onClickDownload = async (documentId) => {
     try {
-      await downloadFile(dso._id);
+      await downloadFile(dso._id)
     } catch (error) {
       snackbarService.showSnackbar(
         error.message ? error.message : 'Something went wrong.',
         'error'
-      );
+      )
     }
-  };
+  }
 
   useEffect(() => {
     const fetch = async () => {
       try {
         // get balance of account with same currency as dso
-        const res = await fetchAccountBalanceByAsset(asset);
-        setBalance(res);
+        const res = await fetchAccountBalanceByAsset(asset)
+        setBalance(res)
       } catch (error) {
-        console.log(error);
+        console.log(error)
       }
-    };
+    }
 
     if (dso) {
-      fetch();
+      fetch()
     }
-  }, [dso, asset]);
+  }, [dso, asset])
 
   useEffect(() => {
     if (dso) {
-      const amount = watch('amount');
-      if (amount) setNumberOfUnits(amount / dso.pricePerUnit);
+      const amount = watch('amount')
+      if (amount) setNumberOfUnits(amount / dso.pricePerUnit)
     }
-  }, [dso, watch]);
+  }, [dso, watch])
 
   useEffect(() => {
-    setEstimatedValue(numberOfUnits * dso.pricePerUnit);
-  }, [numberOfUnits, dso]);
+    setEstimatedValue(numberOfUnits * dso.pricePerUnit)
+  }, [numberOfUnits, dso])
 
   useEffect(() => {
-    setEstimatedValue(numberOfUnits * dso.pricePerUnit);
-  }, []);
+    setEstimatedValue(numberOfUnits * dso.pricePerUnit)
+  }, [])
 
   return (
     <Container>
@@ -183,7 +183,7 @@ const CommitmentItem = ({
           </Grid>
 
           <BalanceHeader
-            label="Account Balance"
+            label='Account Balance'
             value={
               balance
                 ? formatMoney(balance.available, dso.currency[0].symbol)
@@ -191,17 +191,17 @@ const CommitmentItem = ({
             }
           />
           <BalanceHeader
-            label="Estimated Value"
+            label='Estimated Value'
             value={formatMoney(estimatedValue, dso.currency[0].symbol)}
           />
         </Grid>
-        <Grid container alignItems="center" direction="column">
+        <Grid container alignItems='center' direction='column'>
           <form onSubmit={handleSubmit(onSubmit)}>
-            <Box width="400px" p={4} mt={4}>
+            <Box width='400px' p={4} mt={4}>
               <Box mb={2}>
                 <Button
-                  variant="contained"
-                  color="primary"
+                  variant='contained'
+                  color='primary'
                   component={Button}
                   fullWidth
                   disabled={saving}
@@ -218,13 +218,13 @@ const CommitmentItem = ({
               ) : (
                 <Box mb={2}>
                   <Button
-                    variant="contained"
+                    variant='contained'
                     component={Button}
                     fullWidth
                     disabled={saving}
                     onClick={() => {
                       if (commitment) {
-                        onClickDownload(commitment.signedSubscriptionDocument);
+                        onClickDownload(commitment.signedSubscriptionDocument)
                       }
                     }}
                   >
@@ -236,18 +236,18 @@ const CommitmentItem = ({
               {editMode ? (
                 <TextField
                   error={!!errors.amount}
-                  name="amount"
+                  name='amount'
                   inputRef={register({ required: true })}
                   fullWidth
-                  type="number"
-                  label="Investment Amount"
+                  type='number'
+                  label='Investment Amount'
                   style={{ marginBottom: '1em' }}
                   disabled={saving}
                 />
               ) : (
                 <TextField
                   fullWidth
-                  label="Investment Amount"
+                  label='Investment Amount'
                   value={commitment ? formatMoney(commitment.totalAmount) : 0}
                   style={{ marginBottom: '1em' }}
                   disabled
@@ -256,7 +256,7 @@ const CommitmentItem = ({
 
               <TextField
                 fullWidth
-                label="Unit Price"
+                label='Unit Price'
                 value={formatMoney(
                   dso ? dso.pricePerUnit : 0,
                   dso ? dso.currency[0].symbol : undefined
@@ -268,18 +268,18 @@ const CommitmentItem = ({
               {editMode ? (
                 <TextField
                   error={!!errors.numberOfUnits}
-                  name="numberOfUnits"
+                  name='numberOfUnits'
                   inputRef={register({ required: true })}
                   fullWidth
-                  type="number"
-                  label="Number of Units"
+                  type='number'
+                  label='Number of Units'
                   style={{ marginBottom: '1em' }}
                   value={numberOfUnits}
                 />
               ) : (
                 <TextField
                   fullWidth
-                  label="Number of Units"
+                  label='Number of Units'
                   style={{ marginBottom: '2em' }}
                   disabled
                   value={commitment && commitment.numberOfUnits}
@@ -289,17 +289,17 @@ const CommitmentItem = ({
               {editMode ? (
                 <TextField
                   error={!!errors.walletAddress}
-                  name="walletAddress"
+                  name='walletAddress'
                   inputRef={register({ required: true })}
                   fullWidth
-                  label="Destination Wallet Address"
+                  label='Destination Wallet Address'
                   style={{ marginBottom: '2em' }}
                   disabled={saving}
                 />
               ) : (
                 <TextField
                   fullWidth
-                  label="Destination Wallet Address"
+                  label='Destination Wallet Address'
                   style={{ marginBottom: '2em' }}
                   disabled
                   value={commitment && commitment.walletAddress}
@@ -309,28 +309,28 @@ const CommitmentItem = ({
               {editMode && (
                 <TextField
                   error={!!errors.otp}
-                  name="otp"
+                  name='otp'
                   fullWidth
-                  autoComplete="off"
+                  autoComplete='off'
                   inputRef={register({ required: true })}
-                  variant="outlined"
-                  label="OTP"
+                  variant='outlined'
+                  label='OTP'
                   style={{ marginBottom: '1em' }}
                   disabled={saving}
                 />
               )}
             </Box>
 
-            <Box width="400px">
+            <Box width='400px'>
               <Grid container spacing={2}>
                 <Grid item xs={6}>
                   {editMode ? (
                     <Button
                       fullWidth
-                      variant="contained"
-                      color="secondary"
-                      size="large"
-                      type="submit"
+                      variant='contained'
+                      color='secondary'
+                      size='large'
+                      type='submit'
                       disabled={saving}
                     >
                       Invest
@@ -338,18 +338,18 @@ const CommitmentItem = ({
                   ) : (
                     <Button
                       fullWidth
-                      variant="contained"
-                      color="secondary"
-                      size="large"
-                      type="button"
+                      variant='contained'
+                      color='secondary'
+                      size='large'
+                      type='button'
                       disabled={
                         saving ||
                         (commitment && commitment.status !== 'Unauthorized')
                       }
                       onClick={(e) => {
-                        e.preventDefault();
+                        e.preventDefault()
                         if (!editMode) {
-                          alert('Feature not yet available');
+                          alert('Feature not yet available')
                         }
                       }}
                     >
@@ -360,8 +360,8 @@ const CommitmentItem = ({
                 <Grid item xs={6}>
                   <Button
                     fullWidth
-                    variant="contained"
-                    size="large"
+                    variant='contained'
+                    size='large'
                     onClick={() => history.push('/invest/view')}
                     disabled={saving}
                   >
@@ -374,7 +374,7 @@ const CommitmentItem = ({
         </Grid>
       </Box>
     </Container>
-  );
-};
+  )
+}
 
-export default CommitmentItem;
+export default CommitmentItem

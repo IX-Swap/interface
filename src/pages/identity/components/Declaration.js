@@ -1,27 +1,27 @@
 // @flow
-import React, { Fragment } from 'react';
-import { Typography, List } from '@material-ui/core';
-import { makeStyles } from '@material-ui/styles';
-import DeclarationItem from './DeclarationItem';
-import type { DeclarationTemplate } from '../modules/types';
+import React, { Fragment } from 'react'
+import { Typography, List } from '@material-ui/core'
+import { makeStyles } from '@material-ui/styles'
+import DeclarationItem from './DeclarationItem'
+import type { DeclarationTemplate } from '../modules/types'
 
 const useStyles = makeStyles(() => ({
   pageTitle: {
-    lineHeight: '2em',
+    lineHeight: '2em'
   },
   sublevel: {
-    marginLeft: '3em',
-  },
-}));
+    marginLeft: '3em'
+  }
+}))
 
 const Declaration = ({
   declarations,
-  editMode,
+  editMode
 }: {
   declarations: DeclarationTemplate[],
   editMode: boolean,
 }) => {
-  const classes = useStyles();
+  const classes = useStyles()
 
   return (
     <List>
@@ -32,8 +32,8 @@ const Declaration = ({
           sublevel,
           answerable,
           lastLine,
-          value,
-        } = declaration;
+          value
+        } = declaration
 
         return (
           <Fragment key={key}>
@@ -53,10 +53,10 @@ const Declaration = ({
             </DeclarationItem>
             {lastLine && <br />}
           </Fragment>
-        );
+        )
       })}
     </List>
-  );
-};
+  )
+}
 
-export default Declaration;
+export default Declaration

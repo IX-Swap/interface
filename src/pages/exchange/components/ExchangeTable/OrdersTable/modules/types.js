@@ -4,4 +4,3 @@ export type OrdersListState = {
     message?: string,
     error?: string,
 };
-    

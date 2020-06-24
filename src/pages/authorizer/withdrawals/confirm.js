@@ -1,14 +1,14 @@
 // @flow
-import React from 'react';
+import React from 'react'
 import {
   Dialog,
   DialogActions,
   DialogContent,
   DialogTitle,
-  Button,
-} from '@material-ui/core';
+  Button
+} from '@material-ui/core'
 
-import type { Withdraw } from './modules/types';
+import type { Withdraw } from './modules/types'
 
 type Prop = {
   withdraw: Withdraw,
@@ -18,12 +18,12 @@ type Prop = {
   handleConfirm: (withdraw: Withdraw, newStatus: string) => Promise<void>,
 };
 
-export default function DialogAuthorizeConfirmation({
+export default function DialogAuthorizeConfirmation ({
   withdraw,
   open,
   newStatus,
   handleClose,
-  handleConfirm,
+  handleConfirm
 }: Prop) {
   return (
     <Dialog
@@ -37,16 +37,16 @@ export default function DialogAuthorizeConfirmation({
         Are you sure you want to set this withrawal's status to {newStatus}?
       </DialogContent>
       <DialogActions>
-        <Button onClick={handleClose} color="primary">
+        <Button onClick={handleClose} color='primary'>
           Cancel
         </Button>
         <Button
           onClick={() => handleConfirm(withdraw, newStatus)}
-          color="primary"
+          color='primary'
         >
           Ok
         </Button>
       </DialogActions>
     </Dialog>
-  );
+  )
 }

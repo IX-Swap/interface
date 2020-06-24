@@ -1,9 +1,9 @@
 // @flow
-import { assetsActions, ASSETS_STATUS } from './types';
+import { assetsActions, ASSETS_STATUS } from './types'
 
-import type { AssetsListState } from './types';
+import type { AssetsListState } from './types'
 
-export default function assetsReducer(
+export default function assetsReducer (
   state: AssetsListState,
   { type, payload }: { type: string, ...any }
 ): AssetsListState {
@@ -12,30 +12,30 @@ export default function assetsReducer(
       return {
         ...state,
         status: ASSETS_STATUS.GETTING,
-        error: '',
-      };
+        error: ''
+      }
     case assetsActions.GET_ASSETS_SUCCESS:
       return {
         ...state,
         status: ASSETS_STATUS.IDLE,
         error: null,
         assets: payload.assets,
-        total: payload.total,
-      };
+        total: payload.total
+      }
     case assetsActions.GET_ASSETS_FAILURE:
       return {
         ...state,
         status: ASSETS_STATUS.IDLE,
-        error: payload.message,
-      };
+        error: payload.message
+      }
     case assetsActions.SET_ASSET_TYPE:
       return {
         ...state,
         status: ASSETS_STATUS.INIT,
         type: payload.type,
-        page: 0,
-      };
+        page: 0
+      }
     default:
-      throw new Error(`Unhandled action type: ${type}`);
+      throw new Error(`Unhandled action type: ${type}`)
   }
 }

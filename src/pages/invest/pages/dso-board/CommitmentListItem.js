@@ -1,24 +1,24 @@
 // @flow
-import React from 'react';
-import { useHistory } from 'react-router-dom';
-import { TableRow, TableCell, Button } from '@material-ui/core';
-import { formatMoney, formatNumber } from 'helpers/formatNumbers';
-import DsoImage from 'components/Dso/DsoImage';
-import { Commitment } from './modules/types';
-import { useInvestDispatch } from '../../modules';
-import { setSelectedCommitment } from '../../modules/actions';
+import React from 'react'
+import { useHistory } from 'react-router-dom'
+import { TableRow, TableCell, Button } from '@material-ui/core'
+import { formatMoney, formatNumber } from 'helpers/formatNumbers'
+import DsoImage from 'components/Dso/DsoImage'
+import { Commitment } from './modules/types'
+import { useInvestDispatch } from '../../modules'
+import { setSelectedCommitment } from '../../modules/actions'
 
 const CommitmentListItem = ({ commitment }: { commitment: Commitment }) => {
-  const dispatch = useInvestDispatch();
-  const history = useHistory();
-  const { dso, pricePerUnit, totalAmount, numberOfUnits, status } = commitment;
+  const dispatch = useInvestDispatch()
+  const history = useHistory()
+  const { dso, pricePerUnit, totalAmount, numberOfUnits, status } = commitment
 
   const onClickView = (e) => {
-    e.preventDefault();
+    e.preventDefault()
 
-    setSelectedCommitment(dispatch, commitment);
-    history.push('/invest/view-commitment');
-  };
+    setSelectedCommitment(dispatch, commitment)
+    history.push('/invest/view-commitment')
+  }
 
   return (
     <TableRow>
@@ -35,7 +35,7 @@ const CommitmentListItem = ({ commitment }: { commitment: Commitment }) => {
         <Button onClick={onClickView}>View</Button>
       </TableCell>
     </TableRow>
-  );
-};
+  )
+}
 
-export default CommitmentListItem;
+export default CommitmentListItem

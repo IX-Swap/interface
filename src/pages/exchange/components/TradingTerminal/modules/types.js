@@ -4,9 +4,9 @@ export const marketListActions = {
   GET_MARKET_LIST_FAILURE: 'GET_MARKET_LIST_FAILURE',
 
   SUBSCRIBE_MARKET_TRADE_REQUEST: 'SUBSCRIBE_MARKET_TRADE_REQUEST',
-  SUBSCRIBE_MARKET_TRADE_SUCCESS: 'SUBSCRIBE_MARKET_TRADE_SUCCESS',
-};
-  
+  SUBSCRIBE_MARKET_TRADE_SUCCESS: 'SUBSCRIBE_MARKET_TRADE_SUCCESS'
+}
+
 export type Documents = {
   _id: string,
   listing: {},
@@ -18,7 +18,7 @@ export type TradeMarketState = {
   amunt: number,
   count: number,
   price: number,
-  total: numbeer,
+  total: number,
 };
 
 export type MarketList = {
@@ -34,4 +34,3 @@ export type MarketListState = {
   message?: string,
   error?: string,
 };
-  

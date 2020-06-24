@@ -1,6 +1,6 @@
 // @flow
-import type { IssuanceState } from './types';
+import type { IssuanceState } from './types'
 
 export const initialState: IssuanceState = {
-  dso: null,
-};
+  dso: null
+}

@@ -1,84 +1,84 @@
-import React, { useState } from 'react';
+import React, { useState } from 'react'
 import {
   CircularProgress,
   Typography,
   Button,
   TextField,
-  Fade,
-} from '@material-ui/core';
+  Fade
+} from '@material-ui/core'
 
 // context
 import {
   useUserDispatch,
   useUserState,
-  signupUser,
-} from '../../context/UserContext';
+  signupUser
+} from '../../context/UserContext'
 
 // styles
-import useStyles from './styles';
+import useStyles from './styles'
 
 const SignupForm = () => {
-  const classes = useStyles();
-  const userState = useUserState();
-  const userDispatch = useUserDispatch();
+  const classes = useStyles()
+  const userState = useUserState()
+  const userDispatch = useUserDispatch()
 
-  const [emailValue, setEmailValue] = useState('');
-  const [nameValue, setNameValue] = useState('');
-  const [passwordValue, setPasswordValue] = useState('');
+  const [emailValue, setEmailValue] = useState('')
+  const [nameValue, setNameValue] = useState('')
+  const [passwordValue, setPasswordValue] = useState('')
 
   return (
     <>
-      <Typography variant="h4" className={classes.greeting}>
+      <Typography variant='h4' className={classes.greeting}>
         Create Account
       </Typography>
       <Fade in={userState.error !== ''}>
-        <Typography color="secondary" className={classes.errorMessage}>
+        <Typography color='secondary' className={classes.errorMessage}>
           {userState.error}
         </Typography>
       </Fade>
       <TextField
-        id="name"
+        id='name'
         InputProps={{
           classes: {
             underline: classes.textFieldUnderline,
-            input: classes.textField,
-          },
+            input: classes.textField
+          }
         }}
         value={nameValue}
         onChange={(e) => setNameValue(e.target.value)}
-        margin="normal"
-        placeholder="Name"
-        type="text"
+        margin='normal'
+        placeholder='Name'
+        type='text'
         fullWidth
       />
       <TextField
-        id="email"
+        id='email'
         InputProps={{
           classes: {
             underline: classes.textFieldUnderline,
-            input: classes.textField,
-          },
+            input: classes.textField
+          }
         }}
         value={emailValue}
         onChange={(e) => setEmailValue(e.target.value)}
-        margin="normal"
-        placeholder="Email Address"
-        type="email"
+        margin='normal'
+        placeholder='Email Address'
+        type='email'
         fullWidth
       />
       <TextField
-        id="password"
+        id='password'
         InputProps={{
           classes: {
             underline: classes.textFieldUnderline,
-            input: classes.textField,
-          },
+            input: classes.textField
+          }
         }}
         value={passwordValue}
         onChange={(e) => setPasswordValue(e.target.value)}
-        margin="normal"
-        placeholder="Password"
-        type="password"
+        margin='normal'
+        placeholder='Password'
+        type='password'
         fullWidth
       />
       <div className={classes.creatingButtonContainer}>
@@ -90,17 +90,16 @@ const SignupForm = () => {
               signupUser(userDispatch, {
                 email: emailValue,
                 password: passwordValue,
-                name: nameValue,
-              })
-            }
+                name: nameValue
+              })}
             disabled={
               emailValue.length === 0 ||
               passwordValue.length === 0 ||
               nameValue.length === 0
             }
-            size="large"
-            variant="contained"
-            color="primary"
+            size='large'
+            variant='contained'
+            color='primary'
             fullWidth
           >
             CREATE
@@ -108,7 +107,7 @@ const SignupForm = () => {
         )}
       </div>
     </>
-  );
-};
+  )
+}
 
-export default SignupForm;
+export default SignupForm

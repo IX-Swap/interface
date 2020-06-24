@@ -1,0 +1,44 @@
+{
+    "env": {
+        "browser": true,
+        "es6": true
+    },
+    "extends": [
+        "standard",
+        "plugin:react/recommended"
+    ],
+    "globals": {
+        "Atomics": "readonly",
+        "SharedArrayBuffer": "readonly"
+    },
+    "parserOptions": {
+        "ecmaFeatures": {
+            "jsx": true
+        },
+        "ecmaVersion": 2018,
+        "sourceType": "module"
+    },
+    "plugins": [
+        "react"
+    ],
+    "overrides": [
+        {
+            "files": [
+                "*.js"
+            ],
+            "rules": {
+                "import/no-unused-modules": [
+                    "error",
+                    {
+                        "missingExports": false,
+                        "unusedExports": true
+                    }
+                ],
+                "react-hooks/exhaustive-deps": false
+            }
+        }
+    ],
+    "rules": {
+        "react-hooks/exhaustive-deps": "error"
+    }
+}

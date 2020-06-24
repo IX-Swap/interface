@@ -1,5 +1,5 @@
 import React from 'react'
-import { Grid, Paper, Box, makeStyles } from '@material-ui/core'
+import { Grid, Paper, Box } from '@material-ui/core'
 import useStyles from 'pages/exchange/styles'
 
 export default function News () {

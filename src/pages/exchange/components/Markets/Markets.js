@@ -63,8 +63,7 @@ function MarketTab ({ state, setMarket, type }) {
   const filtered = []
 
   markets.map(m => {
-    if (state.markets[m].market.capitalStructure === type)
-      filtered.push(state.markets[m].market)
+    if (state.markets[m].market.capitalStructure === type) { filtered.push(state.markets[m].market) }
     return 0
   })
 
@@ -90,18 +89,18 @@ function MarketTab ({ state, setMarket, type }) {
             <TableBody>
               {filtered
                 ? filtered.map((m, i) => (
-                    <TableRow
-                      key={i}
-                      onClick={() => setMarket(m.base + ':' + m.quote)}
-                      className={classes.tableRow}
-                    >
-                      <TableCell component='th' scope='row'>
-                        {m.pair}
-                      </TableCell>
-                      <TableCell align='right'>{m.change}%</TableCell>
-                      <TableCell align='right'>${m.price}</TableCell>
-                    </TableRow>
-                  ))
+                  <TableRow
+                    key={i}
+                    onClick={() => setMarket(m.base + ':' + m.quote)}
+                    className={classes.tableRow}
+                  >
+                    <TableCell component='th' scope='row'>
+                      {m.pair}
+                    </TableCell>
+                    <TableCell align='right'>{m.change}%</TableCell>
+                    <TableCell align='right'>${m.price}</TableCell>
+                  </TableRow>
+                ))
                 : null}
             </TableBody>
           </Table>

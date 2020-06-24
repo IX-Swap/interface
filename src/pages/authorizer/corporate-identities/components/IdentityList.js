@@ -1,5 +1,5 @@
 // @flow
-import React, { useRef, useEffect } from 'react';
+import React, { useRef, useEffect } from 'react'
 import {
   TableContainer,
   Table,
@@ -10,28 +10,28 @@ import {
   TablePagination,
   Paper,
   LinearProgress,
-  TableBody,
-} from '@material-ui/core';
-import IdentityListModule from '../modules';
-import Actions from '../modules/actions';
-import IdentityListItem from './IdentityListItem';
+  TableBody
+} from '@material-ui/core'
+import IdentityListModule from '../modules'
+import Actions from '../modules/actions'
+import IdentityListItem from './IdentityListItem'
 
 const {
   useAuhorizerIdentityListState,
   useAuhorizerIdentityListDispatch,
-  AUTHORIZER_IDENTITY_LIST_STATUS,
-} = IdentityListModule;
+  AUTHORIZER_IDENTITY_LIST_STATUS
+} = IdentityListModule
 const {
   getIdentities,
   setPage,
   setRowsPerPage,
   clearApiStatus,
-  toggleIdentityStatus,
-} = Actions;
+  toggleIdentityStatus
+} = Actions
 
 const useIdentityListLogic = () => {
-  const identityListDispatch = useAuhorizerIdentityListDispatch();
-  const identityListState = useAuhorizerIdentityListState();
+  const identityListDispatch = useAuhorizerIdentityListDispatch()
+  const identityListState = useAuhorizerIdentityListState()
   const {
     status,
     page,
@@ -39,36 +39,36 @@ const useIdentityListLogic = () => {
     limit,
     items,
     statusCode,
-    error,
-  } = identityListState;
-  const mountedRef = useRef(true);
+    error
+  } = identityListState
+  const mountedRef = useRef(true)
 
   const handleChangePage = (_, newPage: number) => {
-    setPage(identityListDispatch, { page: newPage });
-  };
+    setPage(identityListDispatch, { page: newPage })
+  }
 
   const handleChangeRowsPerPage = (newRows: number) => {
-    setRowsPerPage(identityListDispatch, { rows: newRows });
-    setPage(identityListDispatch, { page: 0 });
-  };
+    setRowsPerPage(identityListDispatch, { rows: newRows })
+    setPage(identityListDispatch, { page: 0 })
+  }
 
   useEffect(() => {
     if (status === AUTHORIZER_IDENTITY_LIST_STATUS.INIT) {
       getIdentities(identityListDispatch, {
         skip: page * limit,
         limit,
-        ref: mountedRef,
-      });
-      clearApiStatus(identityListDispatch);
+        ref: mountedRef
+      })
+      clearApiStatus(identityListDispatch)
     }
-  }, [page, limit, status, identityListDispatch]);
+  }, [page, limit, status, identityListDispatch])
 
   useEffect(
     () => () => {
-      mountedRef.current = false;
+      mountedRef.current = false
     },
     []
-  );
+  )
 
   return {
     identityListDispatch,
@@ -82,9 +82,9 @@ const useIdentityListLogic = () => {
     handleChangePage,
     handleChangeRowsPerPage,
     setPage,
-    toggleIdentityStatus,
-  };
-};
+    toggleIdentityStatus
+  }
+}
 
 const IdentityList = ({ onClickView }: { onClickView: Function }) => {
   const {
@@ -94,8 +94,8 @@ const IdentityList = ({ onClickView }: { onClickView: Function }) => {
     limit,
     page,
     handleChangeRowsPerPage,
-    handleChangePage,
-  } = useIdentityListLogic();
+    handleChangePage
+  } = useIdentityListLogic()
 
   return (
     <>
@@ -104,25 +104,25 @@ const IdentityList = ({ onClickView }: { onClickView: Function }) => {
       ) : null}
 
       <TableContainer component={Paper}>
-        <Table aria-label="accounts table">
+        <Table aria-label='accounts table'>
           <TableHead>
             <TableRow>
-              <TableCell align="left">
+              <TableCell align='left'>
                 <b>Applicant Type</b>
               </TableCell>
-              <TableCell align="left">
+              <TableCell align='left'>
                 <b>Date of Application</b>
               </TableCell>
-              <TableCell align="left">
+              <TableCell align='left'>
                 <b>Company Name</b>
               </TableCell>
-              <TableCell align="left">
+              <TableCell align='left'>
                 <b>Country Of Formation</b>
               </TableCell>
-              <TableCell align="left">
+              <TableCell align='left'>
                 <b>Status</b>
               </TableCell>
-              <TableCell align="left">
+              <TableCell align='left'>
                 <b>&nbsp;</b>
               </TableCell>
             </TableRow>
@@ -138,7 +138,7 @@ const IdentityList = ({ onClickView }: { onClickView: Function }) => {
               ))
             ) : (
               <TableRow>
-                <TableCell colSpan="5" align="center">
+                <TableCell colSpan='5' align='center'>
                   No Data
                 </TableCell>
               </TableRow>
@@ -164,7 +164,7 @@ const IdentityList = ({ onClickView }: { onClickView: Function }) => {
         </Table>
       </TableContainer>
     </>
-  );
-};
+  )
+}
 
-export default IdentityList;
+export default IdentityList

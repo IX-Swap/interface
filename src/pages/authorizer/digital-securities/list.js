@@ -1,5 +1,5 @@
 // @flow
-import React, { useRef, useEffect, useState } from 'react';
+import React, { useRef, useEffect, useState } from 'react'
 import {
   TableContainer,
   Table,
@@ -15,41 +15,41 @@ import {
   LinearProgress,
   Typography,
   Grid,
-  Button,
-} from '@material-ui/core';
-import { snackbarService } from 'uno-material-ui';
-import moment from 'moment';
-import { makeStyles } from '@material-ui/core/styles';
-import type { Dso } from 'context/dso/types';
-import { useHistory } from 'react-router-dom';
-import { formatMoney } from 'helpers/formatNumbers';
-import type { TableColumns } from './modules/types';
-import WithdrawListModule from './modules';
-import Actions from './modules/actions';
-import DialogAuthorizeConfirmation from './confirm';
+  Button
+} from '@material-ui/core'
+import { snackbarService } from 'uno-material-ui'
+import moment from 'moment'
+import { makeStyles } from '@material-ui/core/styles'
+import type { Dso } from 'context/dso/types'
+import { useHistory } from 'react-router-dom'
+import { formatMoney } from 'helpers/formatNumbers'
+import type { TableColumns } from './modules/types'
+import WithdrawListModule from './modules'
+import Actions from './modules/actions'
+import DialogAuthorizeConfirmation from './confirm'
 
 const useStyles = makeStyles({
   formControl: {
-    minWidth: 120,
-  },
-});
+    minWidth: 120
+  }
+})
 
 const {
   useAuhorizerDsoListDispatch,
   useAuhorizerDsoListState,
-  AUTHORIZER_DSO_LIST_STATUS,
-} = WithdrawListModule;
+  AUTHORIZER_DSO_LIST_STATUS
+} = WithdrawListModule
 const {
   getWithdraws,
   setPage,
   setRowsPerPage,
   clearApiStatus,
-  toggleWithdrawStatus,
-} = Actions;
+  toggleWithdrawStatus
+} = Actions
 
-function useWithdrawListLogic() {
-  const withdrawDispatch = useAuhorizerDsoListDispatch();
-  const withdrawListState = useAuhorizerDsoListState();
+function useWithdrawListLogic () {
+  const withdrawDispatch = useAuhorizerDsoListDispatch()
+  const withdrawListState = useAuhorizerDsoListState()
   const {
     status,
     page,
@@ -57,39 +57,39 @@ function useWithdrawListLogic() {
     limit,
     items,
     statusCode,
-    error,
-  } = withdrawListState;
-  const mountedRef = useRef(true);
-  const [withdraw, setWithdraw] = useState<Dso | null>(null);
-  const [open, setOpen] = useState<boolean>(false);
-  const [newStatus, setNewStatus] = useState<string>('');
+    error
+  } = withdrawListState
+  const mountedRef = useRef(true)
+  const [withdraw, setWithdraw] = useState<Dso | null>(null)
+  const [open, setOpen] = useState<boolean>(false)
+  const [newStatus, setNewStatus] = useState<string>('')
 
   const handleChangePage = (_, newPage: number) => {
-    setPage(withdrawDispatch, { page: newPage });
-  };
+    setPage(withdrawDispatch, { page: newPage })
+  }
 
   const handleChangeRowsPerPage = (newRows: number) => {
-    setRowsPerPage(withdrawDispatch, { rows: newRows });
-    setPage(withdrawDispatch, { page: 0 });
-  };
+    setRowsPerPage(withdrawDispatch, { rows: newRows })
+    setPage(withdrawDispatch, { page: 0 })
+  }
 
   useEffect(() => {
     if (status === AUTHORIZER_DSO_LIST_STATUS.INIT) {
       getWithdraws(withdrawDispatch, {
         skip: page * limit,
         limit,
-        ref: mountedRef,
-      });
-      clearApiStatus(withdrawDispatch);
+        ref: mountedRef
+      })
+      clearApiStatus(withdrawDispatch)
     }
-  }, [page, limit, status, withdrawDispatch]);
+  }, [page, limit, status, withdrawDispatch])
 
   useEffect(
     () => () => {
-      mountedRef.current = false;
+      mountedRef.current = false
     },
     []
-  );
+  )
 
   return {
     withdrawDispatch,
@@ -108,120 +108,120 @@ function useWithdrawListLogic() {
     setWithdraw,
     setPage,
     newStatus,
-    setNewStatus,
-  };
+    setNewStatus
+  }
 }
 
 const RowStatusComponent = ({
   dso,
-  handleSelectChange,
+  handleSelectChange
 }: {
   dso: Dso,
   handleSelectChange: (dso: Dso, status: string) => void,
 }) => {
-  const classes = useStyles();
+  const classes = useStyles()
   switch (dso.status) {
     case 'Approved':
       return (
         <Typography
           className={classes.formControl}
-          display="inline"
-          color="primary"
+          display='inline'
+          color='primary'
         >
           Approved
         </Typography>
-      );
+      )
     case 'Rejected':
       return (
         <Typography
           className={classes.formControl}
-          display="inline"
-          color="error"
+          display='inline'
+          color='error'
         >
           Rejected
         </Typography>
-      );
+      )
     default:
       return (
         <Select
           className={classes.formControl}
           value={dso.status}
           onClick={(evt) => {
-            evt.stopPropagation();
-            evt.preventDefault();
-            evt.nativeEvent.stopPropagation();
-            evt.nativeEvent.stopImmediatePropagation();
+            evt.stopPropagation()
+            evt.preventDefault()
+            evt.nativeEvent.stopPropagation()
+            evt.nativeEvent.stopImmediatePropagation()
           }}
           onChange={(evt: SyntheticInputEvent<HTMLElement>) => {
-            handleSelectChange(dso, evt.target.value);
+            handleSelectChange(dso, evt.target.value)
           }}
           inputProps={{
-            name: 'status',
+            name: 'status'
           }}
         >
-          <MenuItem value="Approved">Approved</MenuItem>
-          <MenuItem value="Rejected">Rejected</MenuItem>
+          <MenuItem value='Approved'>Approved</MenuItem>
+          <MenuItem value='Rejected'>Rejected</MenuItem>
         </Select>
-      );
+      )
   }
-};
+}
 
 const columns: Array<TableColumns> = [
   {
     key: 'createdAt',
     label: 'Date of Application',
-    render: (a: string) => moment(a).format('MM/DD/YY'),
+    render: (a: string) => moment(a).format('MM/DD/YY')
   },
   {
     key: 'tokenName',
-    label: 'Digital Security',
+    label: 'Digital Security'
   },
   {
     key: 'tokenSymbol',
-    label: 'Symbol',
+    label: 'Symbol'
   },
   {
     key: 'capitalStructure',
-    label: 'Capital Structure',
+    label: 'Capital Structure'
   },
   {
     align: 'right',
     headAlign: 'right',
     key: 'pricePerUnit',
     label: 'Unit Price',
-    render: (a: number) => formatMoney(a),
+    render: (a: number) => formatMoney(a)
   },
   {
     align: 'right',
     headAlign: 'right',
     key: 'totalFundraisingAmount',
     label: 'Total Fundraising Amount',
-    render: (amount: number) => formatMoney(amount),
+    render: (amount: number) => formatMoney(amount)
   },
   {
     align: 'right',
     headAlign: 'right',
     key: 'minimumInvestment',
     label: 'Minimum Investment',
-    render: (amount: number) => formatMoney(amount),
-  },
-];
+    render: (amount: number) => formatMoney(amount)
+  }
+]
 
 const Withdraws = ({
   list,
-  handleSelectChange,
+  handleSelectChange
 }: {
   list: Array<Dso>,
   handleSelectChange: (dso: Dso, status: string) => void,
 }) => {
-  const history = useHistory();
+  const history = useHistory()
 
   const viewDso = (id: string, row: Dso) => {
     history.push({
       pathname: `/authorizer/digital-securities/${id}`,
-      state: { data: row },
-    });
-  };
+      state: { data: row }
+    })
+  }
 
   return (
     <TableBody>
@@ -229,12 +229,12 @@ const Withdraws = ({
         list.map((row) => (
           <TableRow hover key={row._id}>
             {columns.map((e) => (
-              <TableCell align={e.align || 'left'}>
+              <TableCell align={e.align || 'left'} key={e.key}>
                 {e.render ? e.render(row[e.key]) : row[e.key]}
               </TableCell>
             ))}
-            <TableCell align="left">
-              <Grid container direction="row" alignItems="center">
+            <TableCell align='left'>
+              <Grid container direction='row' alignItems='center'>
                 <RowStatusComponent
                   dso={row}
                   handleSelectChange={handleSelectChange}
@@ -242,7 +242,7 @@ const Withdraws = ({
                 <Button
                   onClick={() => viewDso(row._id, row)}
                   style={{
-                    marginLeft: '16px',
+                    marginLeft: '16px'
                   }}
                 >
                   View
@@ -253,16 +253,16 @@ const Withdraws = ({
         ))
       ) : (
         <TableRow>
-          <TableCell align="center" colSpan={5}>
+          <TableCell align='center' colSpan={5}>
             No Data
           </TableCell>
         </TableRow>
       )}
     </TableBody>
-  );
-};
+  )
+}
 
-export default function BanksList() {
+export default function BanksList () {
   const {
     status: loadingStatus,
     items,
@@ -277,33 +277,33 @@ export default function BanksList() {
     withdraw,
     setWithdraw,
     newStatus,
-    setNewStatus,
-  } = useWithdrawListLogic();
+    setNewStatus
+  } = useWithdrawListLogic()
 
   const handleSelectChange = (mDso: Dso, status: string) => {
-    setWithdraw(mDso);
-    setNewStatus(status);
-    setOpen(true);
-  };
+    setWithdraw(mDso)
+    setNewStatus(status)
+    setOpen(true)
+  }
 
   const handleClose = () => {
-    setOpen(false);
-  };
+    setOpen(false)
+  }
 
   const handleConfirm = async (mDso: Dso, status: string) => {
-    const confirm = await toggleWithdrawStatus(mDso, status);
-    let message = 'Failed to update digital security status!';
-    let type = 'error';
+    const confirm = await toggleWithdrawStatus(mDso, status)
+    let message = 'Failed to update digital security status!'
+    let type = 'error'
 
     if (confirm) {
-      message = 'Successfully updated digital security status!';
-      type = 'success';
-      handleChangePage(null, page);
-      setOpen(false);
+      message = 'Successfully updated digital security status!'
+      type = 'success'
+      handleChangePage(null, page)
+      setOpen(false)
     }
 
-    snackbarService.showSnackbar(message, type);
-  };
+    snackbarService.showSnackbar(message, type)
+  }
 
   return (
     <>
@@ -320,11 +320,11 @@ export default function BanksList() {
         <LinearProgress />
       ) : null}
       <TableContainer component={Paper}>
-        <Table aria-label="accounts table">
+        <Table aria-label='accounts table'>
           <TableHead>
             <TableRow>
               {columns.map((e) => (
-                <TableCell key={e.key} align={e.headAlign || "left"}>
+                <TableCell key={e.key} align={e.headAlign || 'left'}>
                   <b>{e.label}</b>
                 </TableCell>
               ))}
@@ -355,5 +355,5 @@ export default function BanksList() {
         </Table>
       </TableContainer>
     </>
-  );
+  )
 }

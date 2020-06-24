@@ -1,93 +1,86 @@
 // @flow
 /* eslint-disable react-hooks/exhaustive-deps */
-import React, { useEffect, useRef, useState } from 'react';
-import {
-  Box,
-  Grid,
-  Typography,
-  Button,
-  CircularProgress,
-} from '@material-ui/core';
-import IconButton from '@material-ui/core/IconButton';
-import EditIcon from '@material-ui/icons/Edit';
-import Alert from '@material-ui/lab/Alert';
+import React, { useEffect, useRef, useState } from 'react'
+import { Box, Grid, Typography, Button, CircularProgress, IconButton } from '@material-ui/core'
+import EditIcon from '@material-ui/icons/Edit'
+import Alert from '@material-ui/lab/Alert'
 
-import { withRouter, useHistory } from 'react-router-dom';
-import storageHelper from 'services/storageHelper';
-import { useIsAccredited } from 'services/acl';
-import { snackbarService } from 'uno-material-ui';
-import TableWithPagination from 'components/TableWithPagination';
-import { columns } from './data';
+import { withRouter, useHistory } from 'react-router-dom'
+import storageHelper from 'services/storageHelper'
+import { useIsAccredited } from 'services/acl'
+import { snackbarService } from 'uno-material-ui'
+import TableWithPagination from 'components/TableWithPagination'
+import { columns } from './data'
 
-import EditBankComponent from './EditBankComponent';
-import BankListModule from './modules';
-import Actions from './modules/actions';
-import { baseBankRequest } from './modules/types';
-import type { Bank, BankRequest } from './modules/types';
+import EditBankComponent from './EditBankComponent'
+import BankListModule from './modules'
+import Actions from './modules/actions'
+import { baseBankRequest } from './modules/types'
+import type { Bank, BankRequest } from './modules/types'
 
 const {
   useBanksListDispatch,
   useBanksListState,
-  BANK_LIST_STATUS,
-} = BankListModule;
-const { getBankAccounts, setPage, setRowsPerPage, clearApiStatus } = Actions;
+  BANK_LIST_STATUS
+} = BankListModule
+const { getBankAccounts, setPage, setRowsPerPage, clearApiStatus } = Actions
 
 const redirectModel = [
   {
     label: 'Bank Name',
-    key: 'bankName',
+    key: 'bankName'
   },
   {
     label: 'Account Holder Name',
-    key: 'accountHolderName',
+    key: 'accountHolderName'
   },
   {
     label: 'Currency',
     // $FlowFixMe
-    key: 'asset.symbol',
+    key: 'asset.symbol'
   },
   {
     label: 'Bank AccountNumber',
-    key: 'bankAccountNumber',
+    key: 'bankAccountNumber'
   },
   {
     label: 'Swift Code',
-    key: 'swiftCode',
+    key: 'swiftCode'
   },
   {
     label: '',
     // $FlowFixMe
-    key: '',
+    key: ''
   },
   {
     label: 'Line 1',
-    key: 'address.line1',
+    key: 'address.line1'
   },
   {
     label: 'Line 2',
-    key: 'address.line2',
+    key: 'address.line2'
   },
   {
     label: 'City',
-    key: 'address.city',
+    key: 'address.city'
   },
   {
     label: 'State',
-    key: 'address.state',
+    key: 'address.state'
   },
   {
     label: 'Country',
-    key: 'address.country',
+    key: 'address.country'
   },
   {
     label: 'Postal Code',
-    key: 'address.postalCode',
-  },
-];
+    key: 'address.postalCode'
+  }
+]
 
-function useBankListLogic() {
-  const bankDispatch = useBanksListDispatch();
-  const bankListState = useBanksListState();
+function useBankListLogic () {
+  const bankDispatch = useBanksListDispatch()
+  const bankListState = useBanksListState()
   const {
     status,
     page,
@@ -95,20 +88,20 @@ function useBankListLogic() {
     limit,
     items,
     statusCode,
-    error,
-  } = bankListState;
-  const mountedRef = useRef(true);
-  const [activeBank, setActiveBank] = useState<BankRequest>(baseBankRequest);
-  const [editOpen, setEditOpen] = useState(false);
+    error
+  } = bankListState
+  const mountedRef = useRef(true)
+  const [activeBank, setActiveBank] = useState<BankRequest>(baseBankRequest)
+  const [editOpen, setEditOpen] = useState(false)
 
   const handleChangePage = (_, newPage: number) => {
-    setPage(bankDispatch, { page: newPage });
-  };
+    setPage(bankDispatch, { page: newPage })
+  }
 
   const handleChangeRowsPerPage = (newRows: number) => {
-    setRowsPerPage(bankDispatch, { rows: newRows });
-    setPage(bankDispatch, { page: 0 });
-  };
+    setRowsPerPage(bankDispatch, { rows: newRows })
+    setPage(bankDispatch, { page: 0 })
+  }
 
   const bankToBankRequest = (bank: Bank): BankRequest => ({
     _id: bank._id,
@@ -117,45 +110,45 @@ function useBankListLogic() {
     bankName: bank.bankName,
     swiftCode: bank.swiftCode,
     bankAccountNumber: bank.bankAccountNumber,
-    address: bank.address || {},
-  });
+    address: bank.address || {}
+  })
 
   const editBank = (bank: Bank) => {
-    clearApiStatus(bankDispatch);
-    setActiveBank(bankToBankRequest(bank));
-    setEditOpen(true);
-  };
+    clearApiStatus(bankDispatch)
+    setActiveBank(bankToBankRequest(bank))
+    setEditOpen(true)
+  }
 
   const closeEdit = (saved: boolean) => {
-    setEditOpen(false);
-    setPage(bankDispatch, { page });
-    setActiveBank(baseBankRequest);
+    setEditOpen(false)
+    setPage(bankDispatch, { page })
+    setActiveBank(baseBankRequest)
 
     if (saved) {
       snackbarService.showSnackbar(
         'Successfully updated bank account details!',
         false
-      );
+      )
     }
-  };
+  }
 
   useEffect(() => {
     if (status === BANK_LIST_STATUS.INIT) {
       getBankAccounts(bankDispatch, {
         skip: page * limit,
         limit,
-        ref: mountedRef,
-      });
-      clearApiStatus(bankDispatch);
+        ref: mountedRef
+      })
+      clearApiStatus(bankDispatch)
     }
-  }, [page, limit, status, bankDispatch]);
+  }, [page, limit, status, bankDispatch])
 
   useEffect(
     () => () => {
-      mountedRef.current = false;
+      mountedRef.current = false
     },
     []
-  );
+  )
 
   return {
     bankDispatch,
@@ -171,11 +164,11 @@ function useBankListLogic() {
     closeEdit,
     editBank,
     handleChangePage,
-    handleChangeRowsPerPage,
-  };
+    handleChangeRowsPerPage
+  }
 }
 
-function BankListComponent({ hasApproved }: { hasApproved: boolean }) {
+function BankListComponent ({ hasApproved }: { hasApproved: boolean }) {
   const {
     error,
     items,
@@ -186,14 +179,14 @@ function BankListComponent({ hasApproved }: { hasApproved: boolean }) {
     closeEdit,
     activeBank,
 
-    editBank,
-  } = useBankListLogic();
-  const history = useHistory();
-  const isAccredited = useIsAccredited();
-  let componentToRender = <CircularProgress />;
+    editBank
+  } = useBankListLogic()
+  const history = useHistory()
+  const isAccredited = useIsAccredited()
+  let componentToRender = <CircularProgress />
 
   if ([BANK_LIST_STATUS.IDLE].includes(status)) {
-    componentToRender = <AddBankAccount />;
+    componentToRender = <AddBankAccount />
   }
 
   if (items && items.length > 0) {
@@ -202,32 +195,32 @@ function BankListComponent({ hasApproved }: { hasApproved: boolean }) {
         <Box mx={4} mt={4}>
           <Grid
             container
-            direction="row"
-            justify="space-between"
-            alignItems="center"
+            direction='row'
+            justify='space-between'
+            alignItems='center'
           >
             <Grid item xs={3}>
-              <Typography variant="h3">Bank Accounts</Typography>
+              <Typography variant='h3'>Bank Accounts</Typography>
             </Grid>
 
-            <Grid item container xs={9} justify="flex-end">
+            <Grid item container xs={9} justify='flex-end'>
               {isAccredited && hasApproved && (
                 <Box pr={4}>
                   <Button
-                    variant="contained"
-                    color="primary"
+                    variant='contained'
+                    color='primary'
                     style={{ marginRight: '8px' }}
                     onClick={() => {
-                      history.push(`/accounts/banks/deposit`);
+                      history.push('/accounts/banks/deposit')
                     }}
                   >
                     Deposit
                   </Button>
                   <Button
-                    variant="contained"
-                    color="primary"
+                    variant='contained'
+                    color='primary'
                     onClick={() => {
-                      history.push(`/accounts/banks/withdraw`);
+                      history.push('/accounts/banks/withdraw')
                     }}
                   >
                     Withdraw
@@ -236,10 +229,10 @@ function BankListComponent({ hasApproved }: { hasApproved: boolean }) {
               )}
               <Button
                 m={3}
-                variant="contained"
-                color="primary"
+                variant='contained'
+                color='primary'
                 onClick={() => {
-                  history.push(`/accounts/banks/bank-create`);
+                  history.push('/accounts/banks/bank-create')
                 }}
               >
                 ADD BANK ACCOUNT
@@ -259,16 +252,16 @@ function BankListComponent({ hasApproved }: { hasApproved: boolean }) {
         <Grid item md={12}>
           <Box p={3}>
             <TableWithPagination
-              id="accountBankList"
+              id='accountBankList'
               endpoint={`/accounts/banks/list/${storageHelper.getUserId()}`}
               columns={columns}
             >
               {(mBank: Bank) => (
                 <>
                   <IconButton
-                    aria-label="edit"
+                    aria-label='edit'
                     onClick={() => {
-                      editBank(mBank);
+                      editBank(mBank)
                     }}
                   >
                     <EditIcon />
@@ -277,11 +270,10 @@ function BankListComponent({ hasApproved }: { hasApproved: boolean }) {
                     onClick={() =>
                       history.push({
                         pathname: '/accounts/banks/view',
-                        state: { data: mBank, model: redirectModel },
-                      })
-                    }
+                        state: { data: mBank, model: redirectModel }
+                      })}
                     style={{
-                      marginLeft: '16px',
+                      marginLeft: '16px'
                     }}
                   >
                     View
@@ -292,41 +284,41 @@ function BankListComponent({ hasApproved }: { hasApproved: boolean }) {
           </Box>
         </Grid>
       </>
-    );
+    )
   }
 
   if (statusCode === 403) {
     componentToRender = (
       <Box m={3}>
-        <Alert severity="error">{error}</Alert>
+        <Alert severity='error'>{error}</Alert>
       </Box>
-    );
+    )
   }
 
   return (
-    <Grid container justify="center" alignItems="center">
+    <Grid container justify='center' alignItems='center'>
       <Grid item xs={12} sm={12} md={12} lg={12}>
         {componentToRender}
       </Grid>
     </Grid>
-  );
+  )
 }
 
 // TODO: fix this any
-function AddBankAccount({ props }: any) {
-  const history = useHistory();
+function AddBankAccount ({ props }: any) {
+  const history = useHistory()
   return (
     <Grid>
       <Box m={4} p={4}>
-        <Grid container direction="column" justify="center" alignItems="center">
+        <Grid container direction='column' justify='center' alignItems='center'>
           <Typography paragraph>
             You have not added a bank account. Please add a bank account.
           </Typography>
           <Button
-            variant="contained"
-            color="primary"
+            variant='contained'
+            color='primary'
             onClick={() => {
-              history.push(`/accounts/banks/bank-create`);
+              history.push('/accounts/banks/bank-create')
             }}
           >
             ADD BANK ACCOUNT
@@ -334,17 +326,17 @@ function AddBankAccount({ props }: any) {
         </Grid>
       </Box>
     </Grid>
-  );
+  )
 }
 
 const ApprovedGetter = () => {
-  const mountedRef = useRef(true);
-  const bankDispatch = useBanksListDispatch();
-  const bankListState = useBanksListState();
-  const [checked, setChecked] = useState(false);
-  const [hasApproved, setHasApproved] = useState(false);
-  const [filter, setFilter] = useState('');
-  const { status, page, limit, items } = bankListState;
+  const mountedRef = useRef(true)
+  const bankDispatch = useBanksListDispatch()
+  const bankListState = useBanksListState()
+  const [checked, setChecked] = useState(false)
+  const [hasApproved, setHasApproved] = useState(false)
+  const [filter, setFilter] = useState('')
+  const { status, page, limit, items } = bankListState
 
   useEffect(() => {
     if (status === BANK_LIST_STATUS.INIT) {
@@ -352,37 +344,38 @@ const ApprovedGetter = () => {
         skip: page * limit,
         limit,
         status: 'Approved',
-        ref: mountedRef,
-      });
-      setFilter('Approved');
-      clearApiStatus(bankDispatch);
+        ref: mountedRef
+      })
+      setFilter('Approved')
+      setChecked(false)
+      clearApiStatus(bankDispatch)
     }
 
     if (status === BANK_LIST_STATUS.IDLE) {
       if (!filter) {
-        setPage(bankDispatch, { page: 0 });
-        return;
+        setPage(bankDispatch, { page: 0 })
+        return
       }
 
-      if (checked) return;
+      if (checked) return
       if (items.length && items[0].status === 'Approved') {
-        setHasApproved(true);
+        setHasApproved(true)
       }
 
-      setChecked(true);
+      setChecked(true)
       getBankAccounts(bankDispatch, {
         skip: page * limit,
         limit,
-        ref: mountedRef,
-      });
+        ref: mountedRef
+      })
     }
-  }, [status]);
+  }, [status])
 
   return status === BANK_LIST_STATUS.IDLE && checked ? (
     <BankListComponent hasApproved={hasApproved} />
   ) : (
     <span>loading</span>
-  );
-};
+  )
+}
 
-export default withRouter(ApprovedGetter);
+export default withRouter(ApprovedGetter)

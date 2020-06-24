@@ -28,15 +28,15 @@ export const userActions = {
 
   VERIFY_2FA_REQUEST: 'VERIFY_2FA_REQUEST',
   VERIFY_2FA_SUCCESS: 'VERIFY_2FA_SUCCESS',
-  VERIFY_2FA_FAILURE: 'VERIFY_2FA_FAILURE',
-};
+  VERIFY_2FA_FAILURE: 'VERIFY_2FA_FAILURE'
+}
 
 export const USER_STATUS = {
   INIT: 'INIT',
   IDLE: 'IDLE',
   GETTING: 'GETTING',
-  SAVING: 'SAVING',
-};
+  SAVING: 'SAVING'
+}
 
 export type User = {
   _id: string,

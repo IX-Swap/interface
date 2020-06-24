@@ -1,10 +1,10 @@
 // @flow
-import React, { useRef, useState } from 'react';
-import { Button, Typography, ListItem, Grid } from '@material-ui/core';
-import type { DocumentGuide } from 'pages/identity/modules/types';
-import { snackbarService } from 'uno-material-ui';
-import { uploadFile } from './modules/actions';
-import useStyles from './styles';
+import React, { useRef, useState } from 'react'
+import { Button, Typography, ListItem, Grid } from '@material-ui/core'
+import type { DocumentGuide } from 'pages/identity/modules/types'
+import { snackbarService } from 'uno-material-ui'
+import { uploadFile } from './modules/actions'
+import useStyles from './styles'
 
 const Uploader = ({
   document,
@@ -14,7 +14,7 @@ const Uploader = ({
   disabled = false,
   showTitle = true,
   onDelete,
-  justify = 'flex-end',
+  justify = 'flex-end'
 }: {
   showTitle?: boolean,
   onDelete?: (document: DocumentGuide) => void,
@@ -25,31 +25,31 @@ const Uploader = ({
   edit: boolean,
   onUpload: (id: string, type: string) => void,
 }) => {
-  const [saving, setSaving] = useState(false);
-  const classes = useStyles();
-  const inputRef = useRef();
+  const [saving, setSaving] = useState(false)
+  const classes = useStyles()
+  const inputRef = useRef()
 
   const handleChange = async () => {
     if (inputRef.current) {
-      setSaving(true);
+      setSaving(true)
       const res = await uploadFile({
         file: inputRef.current?.files?.[0],
         title: document.title,
-        type: document.type,
-      });
+        type: document.type
+      })
 
       if (res) {
-        onUpload(res, document.type);
+        onUpload(res, document.type)
 
         snackbarService.showSnackbar(
           `Successfully uploaded ${document.title}`,
           'success'
-        );
+        )
       }
 
-      setSaving(false);
+      setSaving(false)
     }
-  };
+  }
 
   return (
     <ListItem className={classes.listItem}>
@@ -76,14 +76,14 @@ const Uploader = ({
                 id={`${document.title}-file`}
                 multiple
                 hidden
-                type="file"
+                type='file'
                 onChange={handleChange}
               />
               {/* eslint-disable-next-line */}
               <label htmlFor={`${document.title}-file`}>
                 <Button
-                  variant="contained"
-                  component="span"
+                  variant='contained'
+                  component='span'
                   disabled={disabled || saving}
                 >
                   Upload
@@ -99,7 +99,7 @@ const Uploader = ({
         </Grid>
       </Grid>
     </ListItem>
-  );
-};
+  )
+}
 
-export default Uploader;
+export default Uploader
