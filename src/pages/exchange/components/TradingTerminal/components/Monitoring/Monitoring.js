@@ -43,6 +43,7 @@ function Monitoring (props) {
   const [quotesSelected, setQuotesSelected] = useState({})
   const { title, type, data = [], lastPrice } = props
   const isAsksBids = props.type === 'asks' || props.type === 'bids'
+  const isTradeHistory = props.type === 'tradeHistory'
   const { id } = useParams()
 
   useEffect(
@@ -96,7 +97,7 @@ function Monitoring (props) {
 
   let _handleStorePayload = () => {}
 
-  if (isAsksBids) {
+  if (isAsksBids || isTradeHistory) {
     // SET PAYLOAD DATA FOR ORDERS
     if (type === 'asks') {
       data.reverse()
@@ -285,10 +286,16 @@ function Monitoring (props) {
                 case 'tradeHistory':
                   return (
                     <>
-                      <p className={priceStyle}>
+                      <p
+                        className={priceStyle}
+                        onClick={() => _handleStorePayload(d, d.side === 'ASK' ? 'asks' : 'bids', false)}
+                      >
                         {numberWithCommas(d.price?.toFixed(4))}
                       </p>
-                      <p className={amountStyle}>
+                      <p
+                        className={amountStyle}
+                        onClick={() => _handleStorePayload(d, d.side === 'ASK' ? 'asks' : 'bids', false)}
+                      >
                         {numberWithCommas(d.amount?.toFixed(4) || 0)}
                       </p>
                       <Tooltip
