@@ -50,7 +50,7 @@ const OfferingTermItem = React.forwardRef(
       value,
       edit = false,
       unit = '',
-      control,
+      control
     }: {
       unit?: string,
       control?: any,
