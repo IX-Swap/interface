@@ -1,18 +1,12 @@
 // @flow
 /* eslint-disable react/jsx-props-no-spreading */
 import React, { Suspense } from 'react'
-import PropTypes from 'prop-types'
 import useStyles from 'pages/exchange/styles'
-import { withRouter, Route, Link, Switch } from 'react-router-dom'
+import { withRouter, Route, Switch } from 'react-router-dom'
 import { useTheme } from '@material-ui/core/styles'
 import {
   Grid,
-  Paper,
-  AppBar,
-  Tabs,
-  Tab,
-  Typography,
-  Box
+  Paper
 } from '@material-ui/core'
 import BankComponent from '../bank'
 
@@ -25,41 +19,6 @@ function useAccountsLogic () {
   const theme = useTheme()
 
   return { classes, theme }
-}
-
-type TabProps = {
-  id: string,
-  'aria-controls': string,
-};
-
-function TabPanel (props) {
-  const { children, value, index, ...other } = props
-
-  return (
-    <Typography
-      component='div'
-      role='tabpanel'
-      hidden={value !== index}
-      id={`full-width-tabpanel-${index}`}
-      aria-labelledby={`full-width-tab-${index}`}
-      {...other}
-    >
-      {value === index && <Box p={3}>{children}</Box>}
-    </Typography>
-  )
-}
-
-TabPanel.propTypes = {
-  children: PropTypes.node,
-  index: PropTypes.any.isRequired,
-  value: PropTypes.any.isRequired
-}
-
-function a11yProps (index): TabProps {
-  return {
-    id: `full-width-tab-${index}`,
-    'aria-controls': `full-width-tabpanel-${index}`
-  }
 }
 
 function AccountsPanel ({ location }: any) {
@@ -101,27 +60,7 @@ function AccountsPanel ({ location }: any) {
   return (
     <Grid container justify='center'>
       <Grid item xs={12}>
-        <Paper className={classes.paper} elevation={0}>
-          <AppBar position='static' color='default' elevation={1}>
-            <Tabs
-              value={pathname}
-              indicatorColor='primary'
-              textColor='primary'
-              variant='fullWidth'
-              aria-label='full width tabs example'
-            >
-              {routes.map((route, index) => (
-                <Tab
-                  key={route.route}
-                  component={Link}
-                  to={route.route}
-                  value={route.route}
-                  label={route.label}
-                  {...a11yProps(index)}
-                />
-              ))}
-            </Tabs>
-          </AppBar>
+        <Paper className={classes.paper}>
           <Suspense fallback={<span>loading</span>}>
             <Switch>
               {routes.map((route, index) => (
@@ -129,9 +68,7 @@ function AccountsPanel ({ location }: any) {
                   key={route.route}
                   exact={index === 0}
                   path={route.route}
-                  render={() => (
-                    <Box style={{ minHeight: '500px' }}>{route.component}</Box>
-                  )}
+                  render={() => route.component}
                 />
               ))}
             </Switch>

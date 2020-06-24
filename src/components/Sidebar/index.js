@@ -30,12 +30,16 @@ import {
   toggleSidebar
 } from '../../context/LayoutContext'
 
+import AuthorizerRoutes from 'v2/pages/app/pages/authorizer/routes'
+
 function Sidebar ({ location }: { location: any }) {
   const classes = useStyles()
   const theme = useTheme()
   const isAdmin = useIsAdmin()
   const isAuthorizer = useIsAuthorizer()
   const isIssuer = useIsIssuer()
+
+  const authorizerRoot = '/authorizer'
 
   const structure = [
     {
@@ -54,7 +58,25 @@ function Sidebar ({ location }: { location: any }) {
       id: 'accounts',
       label: 'Accounts',
       link: '/accounts',
-      icon: <AccountBalanceIcon />
+      icon: <AccountBalanceIcon />,
+      children: [
+        {
+          label: 'Asset Balances',
+          link: '/accounts'
+        },
+        {
+          label: 'Banks',
+          link: '/accounts/banks'
+        },
+        {
+          label: 'Digital Securities',
+          link: '/accounts/wallets'
+        },
+        {
+          label: 'Transactions',
+          link: '/accounts/transactions'
+        }
+      ]
     },
     {
       id: 'exchange',
@@ -93,36 +115,13 @@ function Sidebar ({ location }: { location: any }) {
         {
           id: 'authorizer',
           label: 'Authorizer',
-          link: '/authorizer',
+          link: authorizerRoot,
           icon: <AccountBoxIcon />,
           children: [
-            { label: 'Bank Accounts', link: '/authorizer/banks' },
-            { label: 'Cash Deposits', link: '/authorizer/deposits' },
-            { label: 'Cash Withdrawals', link: '/authorizer/withdrawals' },
-            {
-              label: 'DS Withdrawals',
-              link: '/authorizer/ds-withdrawals'
-            },
-            {
-              label: 'Indentities (Individual)',
-              link: '/authorizer/individual-identities'
-            },
-            {
-              label: 'Indentities (Corporate)',
-              link: '/authorizer/corporate-identities'
-            },
-            {
-              label: 'Offerings',
-              link: '/authorizer/digital-securities'
-            },
-            {
-              label: 'Commitments',
-              link: '/authorizer/commitments'
-            },
-            {
-              label: 'Listings',
-              link: '/listings'
-            }
+            ...AuthorizerRoutes.map(({ label, path }) => ({
+              label,
+              link: `${authorizerRoot}${path}`
+            }))
           ]
         }
       ]

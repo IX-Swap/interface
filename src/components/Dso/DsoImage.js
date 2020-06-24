@@ -1,3 +1,6 @@
+// @ts-ignore
+// @ts-nocheck
+// @flow
 /* eslint-disable react-hooks/exhaustive-deps */
 import React, { useState, useEffect } from 'react'
 import { makeStyles } from '@material-ui/styles'

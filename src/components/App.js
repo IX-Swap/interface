@@ -19,7 +19,7 @@ import Identity from '../pages/identity'
 import Invest from '../pages/invest'
 import Users from '../pages/users'
 import Security from '../pages/security'
-import Authorizer from '../pages/authorizer'
+import Authorizer from '../v2/pages/app/pages/authorizer'
 import TradeHistoryTable from '../pages/exchange/components/ExchangeTable/TradeHistoryTable'
 import TableMyOrders from '../pages/exchange/components/ExchangeTable/OrdersTable'
 import TableMarketListings from '../pages/exchange/components/ExchangeTable/MarketListingTable'
@@ -32,6 +32,7 @@ import { useLayoutState, LayoutProvider } from '../context/LayoutContext'
 import { useUserState, useUserDispatch } from '../context/user'
 import { getUser } from '../context/user/actions'
 import NoAccessDialog from './NoAccessDialog'
+import Commitments from '../pages/authorizer/commitments/components/Commitments'
 
 type Location = $Shape<{ pathname: string }>;
 
@@ -166,6 +167,10 @@ function App () {
           {
             route: '/authorizer',
             component: Authorizer
+          },
+          {
+            route: '/authorizer/commitments/view',
+            component: Commitments
           }
         ]
         : [])
