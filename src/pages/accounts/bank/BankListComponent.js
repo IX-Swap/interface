@@ -347,6 +347,7 @@ const ApprovedGetter = () => {
         ref: mountedRef
       })
       setFilter('Approved')
+      setChecked(false)
       clearApiStatus(bankDispatch)
     }
 
