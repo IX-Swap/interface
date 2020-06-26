@@ -77,7 +77,7 @@ const EditableField = ({
     switch (type) {
       case 'select':
         inputComponent = (
-          <FormControl className={classes.selectField} {...others}>
+          <FormControl className={classes.selectField} {...others} margin={margin}>
             <InputLabel id={`select-${name}`}>{label}</InputLabel>
             <Controller
               as={Select}
@@ -115,11 +115,11 @@ const EditableField = ({
       default:
         inputComponent = (
           <TextField
+            margin={margin}
             style={others.style}
             label={label}
             type={type}
             name={name}
-            margin={margin}
             inputRef={register({ required })}
             placeholder={label}
             className={classes.textField}
