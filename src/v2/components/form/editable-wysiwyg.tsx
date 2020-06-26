@@ -1,7 +1,6 @@
-import React, { memo, useRef } from 'react'
+import React, { useRef } from 'react'
 import MUIRichTextEditor from 'mui-rte'
 import { useFormContext, Controller } from 'react-hook-form'
-import { convertToRaw } from 'draft-js'
 import { TMUIRichTextEditorRef } from 'mui-rte/src/MUIRichTextEditor'
 
 interface EditableWysiwygProps {
