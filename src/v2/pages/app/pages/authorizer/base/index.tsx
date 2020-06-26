@@ -256,11 +256,11 @@ const AuthorizerPage = <T extends unknown>(props: AuthorizerPageProps<T> & Viewa
       <Grid item xs={12} md={3} className={classes.filters}>
         <Filter onApplyFilter={(mFilters) => setFilters({ ...mFilters })} />
       </Grid>
-      <Grid item container xs={12} md={9} direction='column' className={classes.content}>
-        <Grid item xs={12} style={{ flex: '0' }}>
+      <Grid item xs={12} md={9} className={classes.content}>
+        <Grid item xs={12}>
           <Typography variant='h3'>{props.title}</Typography>
         </Grid>
-        <Grid item xs={12} style={{ flex: '0', marginTop: '48px' }} component={Paper}>
+        <Grid item xs={12} style={{ marginTop: '48px' }} component={Paper}>
           <TableMemoed<T>
             uri={props.uri}
             columns={columns}
