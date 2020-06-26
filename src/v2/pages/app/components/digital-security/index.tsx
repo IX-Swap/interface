@@ -1,4 +1,3 @@
-import ReactDOM from 'react-dom'
 import React, { useState } from 'react'
 import { convertFromHTML, ContentState, convertToRaw } from 'draft-js'
 
@@ -148,14 +147,11 @@ const useDsoLogic = ({
     const unflattened = { ...unflatten(form.getValues()) } as DsoRequest
     unflattened.documents = docs.map((e) => e._id)
 
+    form.reset(unflattened)
 
-    ReactDOM.unstable_batchedUpdates(() => {
-      form.reset(unflattened)
-
-      setDsoState({
-        ...dsoState,
-        documents: docs
-      })
+    setDsoState({
+      ...dsoState,
+      documents: docs
     })
   }
 
