@@ -26,7 +26,7 @@ import TableMarketListings from '../pages/exchange/components/ExchangeTable/Mark
 import TableListings from '../pages/exchange/components/ExchangeTable/ListingTable'
 import OverviewExchange from '../pages/exchange/components/TradingTerminal'
 import ListingView from '../pages/exchange/components/ExchangeTable/ListingView'
-import Issuance from '../pages/issuance'
+import Issuance from '../v2/pages/app/pages/issuance'
 
 import { LayoutProvider } from '../context/LayoutContext'
 import { useUserState, useUserDispatch } from '../context/user'
