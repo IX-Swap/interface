@@ -6,7 +6,7 @@ import EditableWithLabel from '../../../../../components/form/hard-label-editabl
 
 interface OfferProps {
   dso: Dso
-  currency: Asset
+  currency?: Asset
   editMode?: boolean
 }
 
@@ -28,14 +28,14 @@ const OfferDetails = ({ dso, currency, editMode = false }: OfferProps) => {
         name='pricePerUnit'
         editMode={editMode}
         label='Unit Price'
-        value={formatMoney(dso.pricePerUnit || 0, currency.symbol)}
+        value={formatMoney(dso.pricePerUnit || 0, currency?.symbol)}
         raw={`${dso.pricePerUnit || ''}`}
       />
       <EditableWithLabel
         name='totalFundraisingAmount'
         editMode={editMode}
         label='Total Fundraising Amount'
-        value={formatMoney(dso.totalFundraisingAmount || 0, currency.symbol)}
+        value={formatMoney(dso.totalFundraisingAmount || 0, currency?.symbol)}
         raw={`${dso.totalFundraisingAmount || ''}`}
       />
       <EditableWithLabel

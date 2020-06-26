@@ -1,15 +1,5 @@
 import { Asset } from './asset'
-
-export interface Document {
-  _id: string
-  title: string
-  type: string
-  user: string
-  originalFileName: string
-  url?: string
-  createdAt: string
-  updatedAt: string
-}
+import { Document } from './document'
 
 export interface DsoTeamMember {
   _id?: string
@@ -39,29 +29,28 @@ export interface DeploymentInfo {
 
 // export interface PolicyBuilder {}
 
-export interface Dso {
+export interface BaseDso {
   _id: string
-  minimumInvestment: number
-  documents: Document[]
+  minimumInvestment: number | null
   status: string
   deleted: boolean
   createdBy: string
   issuerName: string
   launchDate: string
+  corporate: string
   logo?: string
   capitalStructure: string
-  currency: Asset[]
-  pricePerUnit: number
-  totalFundraisingAmount: number
+  pricePerUnit: number | null
+  totalFundraisingAmount: number | null
   tokenName: string
   tokenSymbol: string
-  investmentPeriod: number
-  dividendYeild: number
-  grossIRR: number
+  investmentPeriod: number | null
+  dividendYeild: number | null
+  grossIRR: number | null
   investmentStructure: string
   equityMultiple: string
   distributionFrequency: string
-  interestRate: number
+  interestRate: number | null
   leverage: string
   subscriptionDocument: string
   introduction: string
@@ -73,4 +62,55 @@ export interface Dso {
   asset: string
   deploymentInfo?: DeploymentInfo
   policyBuilder?: {}
+}
+
+export interface Dso extends BaseDso {
+  documents: Document[]
+  currency: Partial<Asset>[] | Asset[]
+}
+
+export interface DsoRequest extends BaseDso {
+  documents: string[];
+  currency: string;
+}
+
+export const inititialValues: Dso = {
+  _id: '',
+  minimumInvestment: null,
+  documents: [],
+  status: '',
+  deleted: false,
+  createdBy: '',
+  issuerName: '',
+  launchDate: '06/06/2020',
+  corporate: '',
+  logo: '',
+  capitalStructure: '',
+  currency: [{ _id: '' }],
+  pricePerUnit: null,
+  totalFundraisingAmount: null,
+  tokenName: '',
+  tokenSymbol: '',
+  investmentPeriod: null,
+  dividendYeild: null,
+  grossIRR: null,
+  investmentStructure: '',
+  equityMultiple: '',
+  distributionFrequency: '',
+  interestRate: null,
+  leverage: '',
+  subscriptionDocument: '',
+  introduction: '',
+  businessModel: '',
+  useOfProceeds: '',
+  fundraisingMilestone: '',
+  team: [
+    {
+      name: '',
+      position: '',
+      about: 'About the member'
+    }
+  ],
+  asset: '',
+  createdAt: ''
 }

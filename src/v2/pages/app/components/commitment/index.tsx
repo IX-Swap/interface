@@ -1,10 +1,11 @@
+/* global alert */
 import React, { useState, useEffect } from 'react'
 import CommitmentViewHeader from './components/header'
 import NumberFormat from 'react-number-format'
 import { Commitment } from '../../../../types/commitment'
 import { Container, Box, Paper, Grid, Button, TextField } from '@material-ui/core'
 import { useForm, Controller } from 'react-hook-form'
-import { Document } from '../../../../types/identity'
+import { Document } from '../../../../types/document'
 import { useHistory } from 'react-router-dom'
 import { downloadFile } from '../../../../helpers/httpRequests'
 import { noop } from 'lodash'
@@ -14,16 +15,19 @@ interface CommitmentViewProps {
   editMode?: boolean
 }
 
-const Uploader = (props: any) => { return <span>uploader</span> }
+const Uploader = ({ onUploadSuccess }: { onUploadSuccess: (doc: Document) => void }) => {
+  console.log(onUploadSuccess)
+  return <span>uploader</span>
+}
 
-const NumberFormatCustom = ({ symbol, inputRef, ...others }: any) => (
+const NumberFormatCustom = ({ symbol, ...others }: any) => (
   <NumberFormat
     decimalScale={2}
     fixedDecimalScale
     thousandSeparator
     {...others}
     allowEmptyFormatting
-    inputMode="numeric"
+    inputMode='numeric'
     isNumericString
     prefix={`${symbol}  `}
   />
@@ -67,11 +71,9 @@ const CommitmentView = ({ editMode = false, commitment }: CommitmentViewProps) =
     downloadFile(doc).then(noop).catch(noop)
   }
 
-  const setSubscriptionDocument = (doc: Document) => {}
+  const setSubscriptionDocument = (doc: Document) => { console.log('doc', doc) }
 
   const saving = false
-
-  console.log('i render')
 
   return (
     <Container>
@@ -81,21 +83,21 @@ const CommitmentView = ({ editMode = false, commitment }: CommitmentViewProps) =
           currency={commitment.currency}
           estimated={estimatedValue}
         />
-        <Grid container alignItems="center" direction="column">
+        <Grid container alignItems='center' direction='column'>
           <form onSubmit={handleSubmit(onSubmit)}>
-            <Box width="400px" p={4} mt={4}>
+            <Box width='400px' p={4} mt={4}>
               <Box mb={2}>
                 <Button
-                  variant="contained"
-                  color="primary"
+                  variant='contained'
+                  color='primary'
                   component={Button}
                   fullWidth
                   disabled={false}
-                  onClick={() =>
+                  onClick={() => {
                     onClickDownload(
                       `/issuance/dso/dataroom/subscription/raw/${commitment.dso._id}`
                     )
-                  }
+                  }}
                 >
                   Download Subscription Document
                 </Button>
@@ -104,13 +106,12 @@ const CommitmentView = ({ editMode = false, commitment }: CommitmentViewProps) =
               {editMode ? (
                 <Uploader
                   onUploadSuccess={(doc: Document) =>
-                    setSubscriptionDocument(doc)
-                  }
+                    setSubscriptionDocument(doc)}
                 />
               ) : (
                 <Box mb={2}>
                   <Button
-                    variant="contained"
+                    variant='contained'
                     component={Button}
                     fullWidth
                     disabled={false}
@@ -128,14 +129,14 @@ const CommitmentView = ({ editMode = false, commitment }: CommitmentViewProps) =
               )}
 
               <Controller
-                name="totalAmount"
+                name='totalAmount'
                 control={control}
                 as={
                   <TextField
                     error={!!errors.totalAmount}
                     fullWidth
                     disabled={saving || !editMode}
-                    label="Investment Amount"
+                    label='Investment Amount'
                     style={{ marginBottom: '1em' }}
                     inputProps={{
                       symbol: commitment.currency.numberFormat.currency
@@ -159,14 +160,14 @@ const CommitmentView = ({ editMode = false, commitment }: CommitmentViewProps) =
               />
 
               <Controller
-                name="pricePerUnit"
+                name='pricePerUnit'
                 control={control}
                 as={
                   <TextField
                     error={!!errors.totalAmount}
                     fullWidth
                     disabled={saving || !editMode}
-                    label="Unit Price"
+                    label='Unit Price'
                     style={{ marginBottom: '1em' }}
                     // disabled={!editMode}
                     inputProps={{
@@ -193,21 +194,21 @@ const CommitmentView = ({ editMode = false, commitment }: CommitmentViewProps) =
 
               <TextField
                 error={!!errors.numberOfUnits}
-                name="numberOfUnits"
+                name='numberOfUnits'
                 inputRef={register({ required: true })}
                 fullWidth
-                type="number"
-                label="Number of Units"
+                type='number'
+                label='Number of Units'
                 style={{ marginBottom: '1em' }}
                 disabled={!editMode}
               />
 
               <TextField
                 error={!!errors.walletAddress}
-                name="walletAddress"
+                name='walletAddress'
                 inputRef={register({ required: true })}
                 fullWidth
-                label="Destination Wallet Address"
+                label='Destination Wallet Address'
                 style={{ marginBottom: '2em' }}
                 disabled={!editMode}
               />
@@ -215,28 +216,28 @@ const CommitmentView = ({ editMode = false, commitment }: CommitmentViewProps) =
               {editMode && (
                 <TextField
                   error={!!errors.otp}
-                  name="otp"
+                  name='otp'
                   fullWidth
-                  autoComplete="off"
+                  autoComplete='off'
                   inputRef={register({ required: true })}
-                  variant="outlined"
-                  label="OTP"
+                  variant='outlined'
+                  label='OTP'
                   style={{ marginBottom: '1em' }}
                   disabled={saving}
                 />
               )}
             </Box>
 
-            <Box width="400px">
+            <Box width='400px'>
               <Grid container spacing={2}>
                 <Grid item xs={6}>
                   {editMode ? (
                     <Button
                       fullWidth
-                      variant="contained"
-                      color="secondary"
-                      size="large"
-                      type="submit"
+                      variant='contained'
+                      color='secondary'
+                      size='large'
+                      type='submit'
                       disabled={saving}
                     >
                       Invest
@@ -244,10 +245,10 @@ const CommitmentView = ({ editMode = false, commitment }: CommitmentViewProps) =
                   ) : (
                     <Button
                       fullWidth
-                      variant="contained"
-                      color="secondary"
-                      size="large"
-                      type="button"
+                      variant='contained'
+                      color='secondary'
+                      size='large'
+                      type='button'
                       disabled={
                         saving ||
                         (commitment && commitment.status !== 'Unauthorized')
@@ -266,8 +267,8 @@ const CommitmentView = ({ editMode = false, commitment }: CommitmentViewProps) =
                 <Grid item xs={6}>
                   <Button
                     fullWidth
-                    variant="contained"
-                    size="large"
+                    variant='contained'
+                    size='large'
                     onClick={() => history.goBack()}
                     disabled={saving}
                   >

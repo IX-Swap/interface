@@ -110,8 +110,7 @@ const TableView = <T extends unknown>({
                 </TableCell>
               ))}
               {hasActions && (
-                <TableCell>
-                </TableCell>
+                <TableCell />
               )}
             </TableRow>
           </TableHead>

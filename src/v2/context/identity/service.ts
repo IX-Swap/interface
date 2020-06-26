@@ -23,10 +23,11 @@ export async function getIndividualIdentity (id: string): Promise<HttpResponse<I
 }
 
 export async function getCorporateIdentities (
-  id: string
+  id: string,
+  uri?: string
 ): Promise<HttpResponse<CorporateIdentity[]>> {
   try {
-    const corporatesUri = `/identity/corporates/${id}/list`
+    const corporatesUri = uri ?? `/identity/corporates/${id}/list`
 
     const result = await postRequest(corporatesUri, { skip: 0, limit: 50 })
     const response = await result.json()

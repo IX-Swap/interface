@@ -2,10 +2,13 @@ import { action, observable, runInAction } from 'mobx'
 import { IndividualIdentity, CorporateIdentity } from '../../types/identity'
 import { getIndividualIdentity, getCorporateIdentities } from './service'
 import { snackbarService } from 'uno-material-ui'
+import storageHelper from '../../helpers/storageHelper'
 
 export class IdentityStore {
   @observable individualIdentity?: IndividualIdentity
   @observable corporateIdentities?: CorporateIdentity[]
+
+  @observable accessibleCorporates?: CorporateIdentity[]
 
   @action
   getIdentities = async (id: string) => {
@@ -24,7 +27,6 @@ export class IdentityStore {
 
     runInAction(() => {
       this.individualIdentity = identity.data
-      console.log('set identity to', identity.data)
     })
   }
 
@@ -42,7 +44,30 @@ export class IdentityStore {
 
     runInAction(() => {
       this.corporateIdentities = identities.data
-      console.log('set identity to', identities.data)
+    })
+  }
+
+  @action
+  getAccessibleCorporateIdentities = async (isAuthorizer: boolean, isAdmin: boolean) => {
+    const userId = storageHelper.getUserId()
+    let uri
+
+    if (isAuthorizer || isAdmin) {
+      uri = '/identity/corporates/list'
+    }
+
+    const identities = await getCorporateIdentities(userId, uri)
+
+    if (!identities.status) {
+      await snackbarService.showSnackbar(
+        identities.message ?? 'Unable to get available identities',
+        'error'
+      )
+      return
+    }
+
+    runInAction(() => {
+      this.accessibleCorporates = identities.data
     })
   }
 }

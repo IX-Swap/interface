@@ -37,11 +37,10 @@ const AssetBalance = ({ asset }: {asset: string}) => {
 
   return useObserver(() => (
     <BalanceHeader
-      label="Account Balance"
+      label='Account Balance'
       value={balanceState.balances[asset]
         ? formatMoney(balanceState.balances[asset].available || 0, balanceState.balances[asset].numberFormat.currency)
-        : '0'
-      }
+        : '0'}
     />
   ))
 }
@@ -50,7 +49,7 @@ const BalanceHeader = ({ label, value }: { label: string, value: string }) => {
   const classes = useStyles()
 
   return (
-    <Grid item xs={3} container justify="center" direction="column">
+    <Grid item xs={3} container justify='center' direction='column'>
       <Typography className={classes.label}>{label}:</Typography>
       <Typography className={classes.value}>{value}</Typography>
     </Grid>
@@ -59,7 +58,7 @@ const BalanceHeader = ({ label, value }: { label: string, value: string }) => {
 
 const CommitmentViewHeader = ({ dso, currency, estimated }: CommitmentViewHeaderProps) => {
   return (
-    <Grid container justify="space-between">
+    <Grid container justify='space-between'>
       <Grid item xs={6}>
         <DsoTitle
           dso={dso}
@@ -67,7 +66,7 @@ const CommitmentViewHeader = ({ dso, currency, estimated }: CommitmentViewHeader
       </Grid>
       <AssetBalance asset={currency._id} />
       <BalanceHeader
-        label="Estimated Value"
+        label='Estimated Value'
         value={formatMoney(estimated, currency.symbol)}
       />
     </Grid>

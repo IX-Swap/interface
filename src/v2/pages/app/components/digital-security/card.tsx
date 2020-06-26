@@ -3,6 +3,7 @@ import { Dso } from '../../../../types/dso'
 import { Paper, Box, Typography, Button, Grid } from '@material-ui/core'
 import DsoTitle from './title'
 import OfferDetails from './components/offer-details'
+import { Asset } from '../../../../types/asset'
 
 const DsoOfferingCard = ({ dso, onClickView }: {dso: Dso, onClickView: (dso: Dso) => void }) => {
   return (
@@ -42,7 +43,7 @@ const DsoOfferingCard = ({ dso, onClickView }: {dso: Dso, onClickView: (dso: Dso
             </Button>
           </Grid>
           <Grid item xs={3}>
-            <OfferDetails dso={dso} currency={dso.currency[0]} />
+            <OfferDetails dso={dso} currency={dso.currency[0] as Asset} />
           </Grid>
         </Grid>
       </Box>

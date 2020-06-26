@@ -4,7 +4,7 @@ import { Typography, List, ListSubheader, Grid } from '@material-ui/core'
 import { findIndex } from 'lodash'
 import DocumentItem from './item'
 import useStyles from './styles'
-import { DocumentGuide, Document } from '../../../../../../types/identity'
+import { DocumentGuide, Document } from '../../../../../../types/document'
 import Uploader from './uploader'
 
 const DataRoom = ({

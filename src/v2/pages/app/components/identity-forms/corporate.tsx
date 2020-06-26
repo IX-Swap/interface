@@ -18,7 +18,10 @@ const IndividualIdentityForm = ({ identity, editMode, useOwnEmail }: { identity:
     if (source.length === 1) {
       await snackbarService.showSnackbar('Cannot delete only entry', 'error')
     }
+
+    console.log('will remove', i)
   }
+
   const onAdd = () => console.log('will add')
 
   return (

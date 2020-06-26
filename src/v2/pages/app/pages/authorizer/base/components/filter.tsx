@@ -4,11 +4,9 @@ import {
   TextField,
   InputAdornment,
   Button,
-  Grid,
+  Grid
 } from '@material-ui/core'
-import {
-  makeStyles
-} from '@material-ui/styles'
+import { makeStyles } from '@material-ui/styles'
 import {
   Subject as UnauthorizedIcon,
   Assignment as AllIcon,
@@ -25,7 +23,7 @@ import DateFnsUtils from '@date-io/date-fns'
 import StatusFilter from './status-filter'
 import { BaseFilter, AuthorizableStatus } from '../../../../../../types/util'
 
-const useStyles = makeStyles((theme) => ({
+const useStyles = makeStyles(() => ({
   spaced: {
     paddingLeft: '24px!important',
     paddingRight: '24px!important'
@@ -37,7 +35,7 @@ interface FilterProps {
 }
 
 interface StatusFilterItemType {
-  icon: () => React.ReactElement
+  icon: () => React.ReactNode
   title: string
   value: AuthorizableStatus
   isSelected: boolean
@@ -179,7 +177,7 @@ const Filter = ({ onApplyFilter }: FilterProps) => {
           />
         </Grid>
       </MuiPickersUtilsProvider>
-      <Grid container item xs={12} justify="flex-end" className={classes.spaced}>
+      <Grid container item xs={12} justify='flex-end' className={classes.spaced}>
         <Button
           variant='contained'
           size='small'

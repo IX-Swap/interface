@@ -33,21 +33,21 @@ function WithdrawalView ({ withdrawal }: { withdrawal: CashWithdrawal}) {
   if (!withdrawal) return <span>nothing to display</span>
 
   return (
-    <Grid container justify="center" direction="column" component={Paper}>
+    <Grid container justify='center' direction='column' component={Paper}>
       <Box p={4} />
       <Grid container className={classes.infoGrid}>
         {withdrawal.individual && (
           <>
             <Grid item xs={6}>
-              <BoldTypography variant="subtitle2" className={classes.labels}>
+              <BoldTypography variant='subtitle2' className={classes.labels}>
                 By:
               </BoldTypography>
             </Grid>
             <Grid item xs={6}>
               <BoldTypography
-                variant="subtitle2"
+                variant='subtitle2'
                 className={classes.values}
-                color="primary"
+                color='primary'
               >
                 {withdrawal.individual.firstName}{' '}
                 {withdrawal.individual.lastName}
@@ -57,60 +57,60 @@ function WithdrawalView ({ withdrawal }: { withdrawal: CashWithdrawal}) {
         )}
 
         <Grid item xs={6}>
-          <BoldTypography variant="subtitle2" className={classes.labels}>
+          <BoldTypography variant='subtitle2' className={classes.labels}>
             Status:
           </BoldTypography>
         </Grid>
         <Grid item xs={6}>
           <BoldTypography
-            variant="subtitle2"
+            variant='subtitle2'
             className={classes.values}
-            color="primary"
+            color='primary'
           >
             {withdrawal.status}
           </BoldTypography>
         </Grid>
 
         <Grid item xs={6}>
-          <BoldTypography variant="subtitle2" className={classes.labels}>
+          <BoldTypography variant='subtitle2' className={classes.labels}>
             Account No:
           </BoldTypography>
         </Grid>
         <Grid item xs={6}>
           <BoldTypography
-            variant="subtitle2"
+            variant='subtitle2'
             className={classes.values}
-            color="primary"
+            color='primary'
           >
             {withdrawal.bankAccount.bankAccountNumber}
           </BoldTypography>
         </Grid>
 
         <Grid item xs={6}>
-          <BoldTypography variant="subtitle2" className={classes.labels}>
+          <BoldTypography variant='subtitle2' className={classes.labels}>
             Withdrawal Amount:
           </BoldTypography>
         </Grid>
         <Grid item xs={6}>
           <BoldTypography
-            variant="subtitle2"
+            variant='subtitle2'
             className={classes.values}
-            color="primary"
+            color='primary'
           >
             {formatMoney(withdrawal.amount, withdrawal.asset.symbol)}
           </BoldTypography>
         </Grid>
 
         <Grid item xs={6}>
-          <BoldTypography variant="subtitle2" className={classes.labels}>
+          <BoldTypography variant='subtitle2' className={classes.labels}>
             Memo:
           </BoldTypography>
         </Grid>
         <Grid item xs={6}>
           <BoldTypography
-            variant="subtitle2"
+            variant='subtitle2'
             className={classes.values}
-            color="primary"
+            color='primary'
           >
             {withdrawal.memo}
           </BoldTypography>

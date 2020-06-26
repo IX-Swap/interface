@@ -1,7 +1,7 @@
-import React from 'react'
+import React, { useRef } from 'react'
 import MUIRichTextEditor from 'mui-rte'
 import { useFormContext, Controller } from 'react-hook-form'
-import { convertToRaw } from 'draft-js'
+import { TMUIRichTextEditorRef } from 'mui-rte/src/MUIRichTextEditor'
 
 interface EditableWysiwygProps {
   editMode?: boolean
@@ -10,14 +10,21 @@ interface EditableWysiwygProps {
 }
 
 const Editor = (props: any) => {
-  console.log(props)
+  const ref = useRef<TMUIRichTextEditorRef>(null);
   return (
     <MUIRichTextEditor
       {...props}
+      ref={ref}
       label='Start typing...'
       inlineToolbar
+      onBlur={() => {
+        ref.current?.save()
+      }}
       onChange={(data) => {
-        props.onChange(JSON.stringify(convertToRaw(data.getCurrentContent())))
+        // props.onChange(JSON.stringify(convertToRaw(data.getCurrentContent())))
+      }}
+      onSave={(data: string) => {
+        props.onChange(data)
       }}
     />
   )
@@ -26,19 +33,17 @@ const Editor = (props: any) => {
 const EditableWysiwyg = ({ editMode = false, name, value }: EditableWysiwygProps) => {
   const { control } = useFormContext()
 
-  const editor = <Editor label='Start typing...' inlineToolbar />
-
   if (!editMode) {
     return <span dangerouslySetInnerHTML={{ __html: value }} />
   }
 
   return (
     <Controller
-      as={editor}
+      as={<Editor label="Start typing..." inlineToolbar />}
       name={name}
       control={control}
     />
-  )
+  );
 }
 
 export default EditableWysiwyg

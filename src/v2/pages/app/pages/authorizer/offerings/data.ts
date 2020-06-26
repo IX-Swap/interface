@@ -22,7 +22,7 @@ export const columns: Array<TableColumn<Dso>> = [
     headAlign: 'right',
     key: 'pricePerUnit',
     label: 'Unit Price',
-    render: (a: number, row: Dso) => formatMoney(a, row.currency[0].numberFormat.currency)
+    render: (a: number, row: Dso) => formatMoney(a, row.currency[0]?.numberFormat?.currency ?? '')
   },
   {
     align: 'right',

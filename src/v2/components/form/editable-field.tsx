@@ -7,11 +7,12 @@ import {
   FormControl,
   InputLabel,
   Checkbox,
-  FormControlLabel
+  FormControlLabel,
+  FormControlProps
 } from '@material-ui/core'
 import moment from 'moment'
 import { makeStyles } from '@material-ui/styles'
-import { useFormContext, Controller } from 'react-hook-form'
+import { useFormContext, Controller, useForm } from 'react-hook-form'
 
 const useStyles = makeStyles(() => ({
   fieldLabel: {
@@ -21,7 +22,8 @@ const useStyles = makeStyles(() => ({
     width: '100%'
   },
   selectField: {
-    width: '100%'
+    width: '100%',
+    minWidth: '125px'
   }
 }))
 
@@ -49,10 +51,18 @@ const EditableField = ({
   children,
   previewMode,
   required = false,
-  editMode = false
-}: EditableFieldProps) => {
+  editMode = false,
+  ...others
+}: Omit<FormControlProps, 'size'> & EditableFieldProps) => {
   const classes = useStyles()
-  const { control, register } = useFormContext() || { control: {}, register: {} }
+  const form = useForm()
+  let { control, register } = useFormContext() || { control: null, register: null }
+
+  if (!control || !register) {
+    control = form.control
+    register = form.register
+  }
+
   let lValue = value
 
   if (type === 'date') {
@@ -65,7 +75,7 @@ const EditableField = ({
     switch (type) {
       case 'select':
         inputComponent = (
-          <FormControl className={classes.selectField}>
+          <FormControl className={classes.selectField} {...others}>
             <InputLabel id={`select-${name}`}>{label}</InputLabel>
             <Controller
               as={Select}

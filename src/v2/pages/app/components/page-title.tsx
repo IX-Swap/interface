@@ -1,5 +1,6 @@
 import React from 'react'
-import { makeStyles, Grid, IconButton, Typography } from '@material-ui/core'
+import { Grid, IconButton, Typography } from '@material-ui/core'
+import { makeStyles } from '@material-ui/styles'
 import { useHistory } from 'react-router-dom'
 import ArrowBackIosIcon from '@material-ui/icons/ArrowBackIos'
 

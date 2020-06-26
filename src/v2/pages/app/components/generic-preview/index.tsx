@@ -28,20 +28,20 @@ function GenericPreview ({ items }: { items: Array<{label: string, value: string
   const classes = useStyles()
 
   return (
-    <Grid container justify="center" direction="column">
+    <Grid container justify='center' direction='column'>
       <Grid container className={classes.infoGrid}>
         {items.map((e, i) => (
           <React.Fragment key={i}>
             <Grid item xs={6}>
-              <BoldTypography variant="subtitle2" className={classes.labels}>
+              <BoldTypography variant='subtitle2' className={classes.labels}>
                 {e.label}:
               </BoldTypography>
             </Grid>
             <Grid item xs={6}>
               <BoldTypography
-                variant="subtitle2"
+                variant='subtitle2'
                 className={classes.values}
-                color="primary"
+                color='primary'
               >
                 {e.value}
               </BoldTypography>
