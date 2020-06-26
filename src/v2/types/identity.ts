@@ -1,10 +1,5 @@
 import User from './user'
-
-export interface DocumentGuide {
-  title: string
-  label: string
-  type: string
-};
+import { Document, DocumentGuide } from './document'
 
 export interface IdentityState {
   dataroom: Array<Document | DocumentGuide>
@@ -58,17 +53,6 @@ export interface IndentityFinancials {
   politicallyExposed: boolean
   sourceOfWealth: string
   toArrangeCustody: boolean
-};
-
-export interface Document {
-  _id: string
-  user: string
-  title: string
-  type: string
-  originalFileName: string
-  checksum: string
-  url: string
-  createdAt: string
 };
 
 export interface CorporateFields {

@@ -79,7 +79,6 @@ const OfferingTermItem = (
 const isNa = (val: any) => (val || '').toString().trim() === ''
 
 const OfferingTerms = ({ editMode = false, dso }: OfferingTermsProps) => {
-  console.log(editMode)
   return (
     <Grid container spacing={2}>
       <OfferingTermItem
@@ -94,14 +93,14 @@ const OfferingTerms = ({ editMode = false, dso }: OfferingTermsProps) => {
         label='Divident Yield'
         editMode={editMode}
         value={
-          isNa(dso.dividendYeild) ? 'n/a' : toPercentage(dso.dividendYeild)
+          isNa(dso.dividendYeild) ? 'n/a' : toPercentage(dso.dividendYeild || 0)
         }
       />
       <OfferingTermItem
         name='grossIRR'
         label='Gross IRR'
         editMode={editMode}
-        value={isNa(dso.grossIRR) ? 'n/a' : toPercentage(dso.grossIRR)}
+        value={isNa(dso.grossIRR) ? 'n/a' : toPercentage(dso.grossIRR || 0)}
       />
 
       <OfferingTermItem
@@ -129,13 +128,19 @@ const OfferingTerms = ({ editMode = false, dso }: OfferingTermsProps) => {
         name='interestRate'
         label='Interest Rate'
         editMode={editMode}
-        value={isNa(dso.interestRate) ? 'n/a' : toPercentage(dso.interestRate)}
+        value={
+          isNa(dso.interestRate) ? 'n/a' : toPercentage(dso.interestRate || 0)
+        }
       />
       <OfferingTermItem
         name='leverage'
         label='Leverage'
         editMode={editMode}
-        value={isNa(dso.leverage) ? 'n/a' : toPercentage(parseFloat(dso.leverage ?? '0'))}
+        value={
+          isNa(dso.leverage)
+            ? 'n/a'
+            : toPercentage(parseFloat(dso.leverage ?? '0'))
+        }
       />
     </Grid>
   )

@@ -10,9 +10,10 @@ interface OfferingsListProps {
   filter?: BaseFilter
   user?: string
   handleRowClick: (row: Dso) => void
+  children?: React.ReactNode
 }
 
-const OfferingsList = ({ user = undefined, filter = { status: '' }, handleRowClick }: OfferingsListProps) => {
+const OfferingsList = ({ user = undefined, filter = { status: '' }, handleRowClick, children }: OfferingsListProps) => {
   const [search, setSearch] = useState('')
   const [_onSearch] = useState(() =>
     debounce<any>((evt: React.ChangeEvent<HTMLInputElement>) => setSearch(evt.target.value), 500)
@@ -31,8 +32,9 @@ const OfferingsList = ({ user = undefined, filter = { status: '' }, handleRowCli
             variant='outlined'
             placeholder='Search'
             onChange={onSearch}
-            style={{ flexGrow: 1 }}
+            style={{ flexGrow: 1, marginRight: '16px' }}
           />
+          {children ?? null}
         </Grid>
       </Box>
 

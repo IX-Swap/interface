@@ -1,65 +1,41 @@
-import React, { useState, useEffect, useCallback } from 'react'
-import { makeStyles } from '@material-ui/styles'
+import React from 'react'
 import storageHelper from '../../../../helpers/storageHelper'
 import { getImgUrl } from '../../../../helpers/httpRequests'
-import { noop } from 'lodash'
-
-const useStyles = makeStyles(() => ({
-  logo: {
-    width: '50px',
-    height: '50px',
-    borderRadius: '50px',
-    backgroundColor: '#f0f0f0'
-  }
-}))
+import ImageUploader from '../../../../components/form/image-uploader'
 
 const DsoImage = ({
-  logo,
   editMode = false,
   dsoId = ''
 }: {
   dsoId: string
   editMode?: boolean
-  logo?: string
 }) => {
-  const classes = useStyles()
-  const [imgUrl, setImgUrl] = useState('')
+  const guide = {
+    title: 'DSO Logo',
+    label: 'DSO Logo',
+    type: 'dsoLogo'
+  }
 
-  const setPhoto = useCallback((id: string) => {
-    (async (mId) => {
-      const x = await getImgUrl(
-        editMode
-          ? `/dataroom/raw/${storageHelper.getUserId()}/${id || ''}`
-          : `/issuance/dso/dataroom/logo/raw/${id}`
-      )
+  const setPhoto = async ({ _id = '' }: { _id: string }) => {
+    const x = await getImgUrl(
+      editMode
+        ? `/dataroom/raw/${storageHelper.getUserId()}/${_id || ''}`
+        : `/issuance/dso/dataroom/logo/raw/${dsoId}`
+    )
 
-      setImgUrl(x)
-    })(id).then(noop).catch(noop)
-  }, [editMode])
-
-  useEffect(() => {
-    if (editMode) {
-      if (logo) {
-        setPhoto(logo)
-      }
-
-      return
-    }
-
-    if (dsoId) {
-      setPhoto(dsoId)
-    }
-  }, [editMode, dsoId, logo, setPhoto])
+    return x
+  }
 
   return (
-    <div
-      className={classes.logo}
-      style={{
-        backgroundImage: `url(${imgUrl})`,
-        backgroundSize: 'contain',
-        backgroundPosition: 'center',
-        margin: '0 auto'
-      }}
+    <ImageUploader
+      editMode={editMode}
+      hasDelete={false}
+      variant='circle'
+      name='logo'
+      defaultValue={dsoId}
+      getter={setPhoto}
+      width={50}
+      guide={guide}
     />
   )
 }

@@ -28,7 +28,7 @@ import OverviewExchange from '../pages/exchange/components/TradingTerminal'
 import ListingView from '../pages/exchange/components/ExchangeTable/ListingView'
 import Issuance from '../pages/issuance'
 
-import { useLayoutState, LayoutProvider } from '../context/LayoutContext'
+import { LayoutProvider } from '../context/LayoutContext'
 import { useUserState, useUserDispatch } from '../context/user'
 import { getUser } from '../context/user/actions'
 import NoAccessDialog from './NoAccessDialog'
@@ -87,7 +87,7 @@ function App () {
 
   function Authenticated () {
     const userDispatch = useUserDispatch()
-    const { isSidebarOpened } = useLayoutState()
+    const { isSidebarOpened } = { isSidebarOpened: true }
     const { status } = useUserState()
     const isAdmin = useIsAdmin()
     const isAuthorizer = useIsAuthorizer()

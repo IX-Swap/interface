@@ -3,11 +3,7 @@ import React, { useState, ReactNode } from 'react'
 import {
   Grid, Typography, IconButton, Paper, Popper, ClickAwayListener, ListItemIcon, ListItemText, ListItem
 } from '@material-ui/core'
-
-import {
-  makeStyles
-} from '@material-ui/styles'
-
+import { makeStyles } from '@material-ui/styles'
 import {
   AssignmentTurnedIn as ApproveIcon,
   Gavel as RejectIcon,
@@ -161,11 +157,12 @@ const Actions = <T extends unknown>({ onView, item }: {item: T} & {onView: (row:
       <IconButton onClick={() => onView?.(item)}>
         <LaunchIcon />
       </IconButton>
-      <Popper open={open} anchorEl={anchorEl}
-        placement="bottom-end"
+      <Popper
+        open={open} anchorEl={anchorEl}
+        placement='bottom-end'
         modifiers={{
           flip: {
-            enabled: true
+            enabled: false
           }
         }}
       >
@@ -195,14 +192,14 @@ const Actions = <T extends unknown>({ onView, item }: {item: T} & {onView: (row:
 
 const Preview = ({ children, onBack }: { children: ReactNode, onBack: () => void }) => {
   return (
-    <Grid container spacing={4} direction="column">
+    <Grid container spacing={4} direction='column'>
       <Grid item container xs={12} alignItems='center' style={{ flex: '0' }}>
         <IconButton aria-label='back' onClick={() => onBack()}>
           <ChevronLeftIcon fontSize='inherit' />
         </IconButton>
         <Typography variant='h3'>Preview</Typography>
       </Grid>
-      <Grid container item xs={12} style={{ flex: '0' }} justify="center">
+      <Grid container item xs={12} style={{ flex: '0' }} justify='center'>
         {children}
       </Grid>
     </Grid>
@@ -259,9 +256,9 @@ const AuthorizerPage = <T extends unknown>(props: AuthorizerPageProps<T> & Viewa
       <Grid item xs={12} md={3} className={classes.filters}>
         <Filter onApplyFilter={(mFilters) => setFilters({ ...mFilters })} />
       </Grid>
-      <Grid item container xs={12} md={9} direction="column" className={classes.content}>
+      <Grid item container xs={12} md={9} direction='column' className={classes.content}>
         <Grid item xs={12} style={{ flex: '0' }}>
-          <Typography variant="h3">{props.title}</Typography>
+          <Typography variant='h3'>{props.title}</Typography>
         </Grid>
         <Grid item xs={12} style={{ flex: '0', marginTop: '48px' }} component={Paper}>
           <TableMemoed<T>

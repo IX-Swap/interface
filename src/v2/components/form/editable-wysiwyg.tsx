@@ -10,7 +10,6 @@ interface EditableWysiwygProps {
 }
 
 const Editor = (props: any) => {
-  console.log(props)
   return (
     <MUIRichTextEditor
       {...props}
@@ -23,20 +22,28 @@ const Editor = (props: any) => {
   )
 }
 
-const EditableWysiwyg = ({ editMode = false, name, value }: EditableWysiwygProps) => {
-  const { control } = useFormContext()
+const StateAwareEditor = ({ name, control }: any) => {
+  return (
+    <Controller
+      as={<Editor label='Start typing...' inlineToolbar />}
+      name={name}
+      control={control}
+    />
+  )
+}
 
-  const editor = <Editor label='Start typing...' inlineToolbar />
+const EditableWysiwyg = ({ editMode = false, name, value }: EditableWysiwygProps) => {
+  const { control, formState } = useFormContext()
 
   if (!editMode) {
     return <span dangerouslySetInnerHTML={{ __html: value }} />
   }
 
   return (
-    <Controller
-      as={editor}
-      name={name}
+    <StateAwareEditor
+      formState={formState}
       control={control}
+      name={name}
     />
   )
 }

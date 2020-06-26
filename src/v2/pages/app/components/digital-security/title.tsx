@@ -15,7 +15,7 @@ const DsoTitle = ({
   return (
     <Grid container direction='row' spacing={2}>
       <Grid item>
-        <DsoImage dsoId={dso._id} logo={dso.logo ?? ''} editMode={editMode} />
+        <DsoImage dsoId={dso._id} editMode={editMode} />
       </Grid>
       <Grid item>
         <Typography variant='h4'>{dso.tokenSymbol}</Typography>

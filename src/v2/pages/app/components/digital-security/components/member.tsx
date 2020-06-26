@@ -1,94 +1,65 @@
-import React, { useState, useEffect, useCallback } from 'react'
+import React from 'react'
 import { Box, Button, Grid, Typography } from '@material-ui/core'
-import { makeStyles } from '@material-ui/styles'
 import RemoveIcon from '@material-ui/icons/Remove'
 import { DsoTeamMember } from '../../../../../types/dso'
 import { getImgUrl } from '../../../../../helpers/httpRequests'
 import storageHelper from '../../../../../helpers/storageHelper'
-import { noop } from 'lodash'
 import EditableField from '../../../../../components/form/editable-field'
 import EditableWysiwyg from '../../../../../components/form/editable-wysiwyg'
-
-const useStyles = makeStyles(() => ({
-  photo: {
-    height: '272px',
-    width: '272px',
-    borderRadius: '5px',
-    backgroundColor: '#f0f0f0',
-    backgroundSize: 'cover',
-    marginRight: '18px'
-  }
-}))
+import ImageUploader from '../../../../../components/form/image-uploader'
+import { DocumentGuide } from '../../../../../types/document'
 
 interface TeamMemberProps {
   member: DsoTeamMember
   index: number
   editMode?: boolean
   dsoId: string
+  onRemoveTeamMember: () => void
 }
 
-const TeamMember = ({ member, editMode = false, dsoId, index }: TeamMemberProps) => {
-  const classes = useStyles()
-  const remove = () => console.log('must remove')
+const TeamMember = ({
+  member,
+  editMode = false,
+  dsoId,
+  index,
+  onRemoveTeamMember
+}: TeamMemberProps) => {
+  const guide: DocumentGuide = {
+    title: 'Team member photo',
+    label: 'Member Photo',
+    type: 'dsoTeamMemberPhoto'
+  }
 
-  const [imgUrl, setImgUrl] = useState('')
+  const setPhoto = async ({ _id = '' } : {_id: string}) => {
+    const x = await getImgUrl(
+      editMode
+        ? `/dataroom/raw/${storageHelper.getUserId()}/${_id || ''}`
+        : `/issuance/dso/dataroom/photos/raw/${dsoId}/${_id}`
+    )
 
-  const setPhoto = useCallback((id = '') => {
-    (async (id = '') => {
-      const x = await getImgUrl(
-        editMode
-          ? `/dataroom/raw/${storageHelper.getUserId()}/${id || ''}`
-          : `/issuance/dso/dataroom/photos/raw/${dsoId}/${id}`
-      )
-
-      setImgUrl(x)
-    })(id).then(noop).catch(noop)
-  }, [dsoId, editMode])
-
-  useEffect(() => {
-    setPhoto(member.photo ?? '')
-  }, [setPhoto, member.photo])
+    return x
+  }
 
   return (
     <Box pt={4} px={4} pb={2} style={{ borderBottom: '1px solid #f0f0f0' }}>
       {editMode && (
         <Box style={{ textAlign: 'right' }}>
-          <Button onClick={() => remove()}>
+          <Button onClick={() => onRemoveTeamMember()}>
             <RemoveIcon /> Remove
           </Button>
         </Box>
       )}
       <Box style={{ display: 'flex' }}>
         <Box mr={2}>
-          <div
-            className={classes.photo}
-            style={{
-              backgroundImage: `url(${imgUrl})`,
-              backgroundSize: 'cover',
-              backgroundPosition: 'center',
-              margin: '0 auto'
-            }}
+          <ImageUploader
+            hasDelete={false}
+            editMode={editMode}
+            variant='square'
+            name={`team.${index}.photo`}
+            getter={setPhoto}
+            width={272}
+            guide={guide}
           />
-          <input
-            type='text'
-            style={{ opacity: 0, width: 1, height: 1, position: 'absolute' }}
-            name={`team[${index}].photo`}
-            defaultValue={member.photo}
-          />
-          {editMode && (
-            <span>uploader here</span>
-            /* <Uploader
-              document={{
-                title: `Photo ${index}`,
-                label: 'team member photo',
-                type: 'teamMemberPhoto'
-              }}
-              showTitle={false}
-              editMode={editMode}
-              justify="center"
-              onUpload={onDataroomDocumentUploaded}
-            /> */
-          )}
         </Box>
         <Box>
           <Grid container>
@@ -106,19 +77,21 @@ const TeamMember = ({ member, editMode = false, dsoId, index }: TeamMemberProps)
                   editMode={editMode}
                   label='Name'
                   value={member.name}
-                  name={`team[${index}].name`}
-                  previewMode={<Typography variant='h5'>{member.name}</Typography>}
+                  name={`team.${index}.name`}
+                  previewMode={
+                    <Typography variant='h5'>{member.name}</Typography>
+                  }
                 />
                 <EditableField
                   editMode={editMode}
                   label='Position'
                   value={member.position}
-                  name={`team[${index}].position`}
-                  previewMode={(
+                  name={`team.${index}.position`}
+                  previewMode={
                     <Typography>
                       <b>{member.position}</b>
                     </Typography>
-                  )}
+                  }
                 />
               </Grid>
             )}
@@ -132,7 +105,7 @@ const TeamMember = ({ member, editMode = false, dsoId, index }: TeamMemberProps)
             {editMode && (
               <EditableWysiwyg
                 value={member.about || 'About the member'}
-                name={`team[${index}].about`}
+                name={`team.${index}.about`}
                 editMode={editMode}
               />
             )}

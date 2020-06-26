@@ -1,9 +1,11 @@
-export const API_URL = process.env.REACT_APP_API_URL || ''
+import { Bank } from '../types/bank'
+
+export const API_URL = process.env.REACT_APP_API_URL ?? ''
 
 export const DATE_FORMAT = 'MM/DD/YYYY'
 export const TIME_FORMAT = 'HH:MM:SS'
 
-export const INVESTAX_BANK = {
+export const INVESTAX_BANK: Partial<Bank> = {
   bankName: 'OVERSEA-CHINESE BANKING CORPORATION LIMITED',
   swiftCode: 'OCBCSGSG',
   accountHolderName: 'IC SG PTE LTD',

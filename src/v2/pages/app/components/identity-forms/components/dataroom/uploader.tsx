@@ -1,7 +1,7 @@
 import React, { useRef } from 'react'
 import { Button, Typography, ListItem, Grid } from '@material-ui/core'
 import useStyles from './styles'
-import { DocumentGuide } from '../../../../../../types/identity'
+import { DocumentGuide } from '../../../../../../types/document'
 
 const Uploader = ({ document, editMode = false }: { document: DocumentGuide, editMode: boolean }) => {
   const classes = useStyles()

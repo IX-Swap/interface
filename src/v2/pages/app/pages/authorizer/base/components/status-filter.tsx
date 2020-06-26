@@ -2,12 +2,10 @@ import React from 'react'
 import {
   ListItem, ListItemIcon, ListItemText
 } from '@material-ui/core'
-import {
-  makeStyles
-} from '@material-ui/styles'
+import { makeStyles } from '@material-ui/styles'
 
 interface StatusFilterProps {
-  children: React.ReactElement
+  children: React.ReactNode
   isSelected: boolean
   title: string
   handleItemClick: (evt: React.MouseEvent<HTMLDivElement, MouseEvent>) => void

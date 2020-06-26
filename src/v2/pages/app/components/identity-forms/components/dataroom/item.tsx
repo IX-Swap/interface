@@ -5,7 +5,7 @@ import { Typography, ListItem, Grid, Button } from '@material-ui/core'
 import CloudDownloadIcon from '@material-ui/icons/CloudDownload'
 import DeleteOutlineIcon from '@material-ui/icons/DeleteOutline'
 import useStyles from './styles'
-import { Document } from '../../../../../../types/identity'
+import { Document } from '../../../../../../types/document'
 import { downloadFile } from '../../../../../../helpers/httpRequests'
 
 const DocumentItem = ({ document, editMode }: { document: Document, editMode: boolean }) => {

@@ -1,7 +1,7 @@
 import React from 'react'
 import BaseView from '../base'
 import columns from './data'
-import DigitalSecurity from '../../../components/digital-security'
+import DigitalSecurity from '../../../components/digital-security/index'
 
 const Offerings = () => {
   return (
