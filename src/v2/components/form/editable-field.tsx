@@ -19,7 +19,7 @@ const useStyles = makeStyles(() => ({
     fontWeight: 'bold'
   },
   textField: {
-    width: '100%'
+    minWidth: '100px'
   },
   selectField: {
     width: '100%',
@@ -40,6 +40,7 @@ interface EditableFieldProps {
   editMode?: boolean
   raw?: string
   previewMode?: JSX.Element
+  margin?: string
 };
 
 const EditableField = ({
@@ -48,6 +49,7 @@ const EditableField = ({
   size = 4,
   name,
   type = 'text',
+  margin,
   children,
   previewMode,
   required = false,
@@ -113,15 +115,17 @@ const EditableField = ({
       default:
         inputComponent = (
           <TextField
+            style={others.style}
             label={label}
             type={type}
             name={name}
+            margin={margin}
             inputRef={register({ required })}
             placeholder={label}
             className={classes.textField}
-            defaultValue={lValue || ''}
+            defaultValue={lValue || ""}
           />
-        )
+        );
         break
     }
 

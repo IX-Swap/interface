@@ -22,6 +22,7 @@ import DateFnsUtils from '@date-io/date-fns'
 
 import StatusFilter from './status-filter'
 import { BaseFilter, AuthorizableStatus } from '../../../../../../types/util'
+import { formatISO } from 'date-fns'
 
 const useStyles = makeStyles(() => ({
   spaced: {
@@ -101,9 +102,9 @@ const Filter = ({ onApplyFilter }: FilterProps) => {
 
     onApplyFilter({
       status,
-      search: searchItem // ,
-      // from: (fromDate && formatISO(fromDate)) ?? undefined,
-      // to: (toDate && formatISO(toDate)) ?? undefined
+      search: searchItem,
+      from: (fromDate && formatISO(fromDate)) ?? undefined,
+      to: (toDate && formatISO(toDate)) ?? undefined
     })
   }
 

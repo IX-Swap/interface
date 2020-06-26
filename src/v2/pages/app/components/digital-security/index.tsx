@@ -200,42 +200,42 @@ const DigitalSecurity = ({
         <Paper>
           <Box p={4}>
             <Grid container spacing={4}>
-              <Grid item container xs={12} justify='space-between'>
+              <Grid item container xs={12} justify="space-between">
                 <Grid item>
-                  {
-                    create
-                      ? <DSTitleEditor editMode dso={dso} />
-                      : <DsoTitle editMode={editMode} dso={dso} />
-                  }
+                  {create ? (
+                    <DSTitleEditor editMode dso={dso} />
+                  ) : (
+                    <DsoTitle editMode={editMode} dso={dso} />
+                  )}
                 </Grid>
                 <Grid item>
-                  {
-                    buttonString && (
-                      <Button
-                        variant='contained' color='primary' onClick={() => {
-                          if (buttonAction) {
-                            buttonAction(getFinalValue())
-                          }
-                        }}
-                      >
-                        {buttonString}
-                      </Button>
-                    )
-                  }
+                  {buttonString && (
+                    <Button
+                      variant="contained"
+                      color="primary"
+                      onClick={() => {
+                        if (buttonAction) {
+                          buttonAction(getFinalValue());
+                        }
+                      }}
+                    >
+                      {buttonString}
+                    </Button>
+                  )}
                 </Grid>
               </Grid>
               <Grid item xs={8}>
-                <SectionContainer title='Introduction'>
+                <SectionContainer title="Introduction">
                   <EditableWysiwyg
                     editMode={editMode}
-                    name='introduction'
+                    name="introduction"
                     value={dso.introduction}
                   />
                 </SectionContainer>
               </Grid>
               <Grid item xs={4}>
                 <SectionContainer>
-                  {(editMode && !create) && <CorporateSelector />}
+                  {editMode && !create && <CorporateSelector />}
 
                   <OfferDetails
                     editMode={editMode}
@@ -245,16 +245,16 @@ const DigitalSecurity = ({
                 </SectionContainer>
               </Grid>
               <Grid item xs={12}>
-                <SectionContainer title='Subscription & Documents'>
+                <SectionContainer title="Subscription & Documents">
                   <Uploader
                     showTitle
                     editMode={editMode}
                     override
-                    name='subscriptionDocument'
+                    name="subscriptionDocument"
                     guide={{
-                      type: 'subscriptionDocument',
-                      label: 'Subscription Document',
-                      title: 'Subscription Document'
+                      type: "subscriptionDocument",
+                      label: "Subscription Document",
+                      title: "Subscription Document",
                     }}
                     download={onDownloadSubscription}
                   />
@@ -264,61 +264,57 @@ const DigitalSecurity = ({
                 </SectionContainer>
               </Grid>
               <Grid item xs={12}>
-                <SectionContainer title='Offering Terms'>
+                <SectionContainer title="Offering Terms">
                   <OfferingTerms editMode={editMode} dso={dso} />
                 </SectionContainer>
               </Grid>
               <Grid item xs={12}>
-                <SectionContainer title='Business Model'>
+                <SectionContainer title="Business Model">
                   <EditableWysiwyg
                     editMode={editMode}
-                    name='businessModel'
+                    name="businessModel"
                     value={dso.businessModel}
                   />
                 </SectionContainer>
               </Grid>
               <Grid item xs={12}>
-                <SectionContainer title='Token Address'>
-                  <Grid container item justify='space-between'>
-                    <Typography color='primary'>
+                <SectionContainer title="Token Address">
+                  <Grid container item justify="space-between">
+                    <Typography color="primary">
                       {((dso || {}).deploymentInfo &&
                         ((dso || {}).deploymentInfo ?? {}).token) ??
-                        '-'}
+                        "-"}
                     </Typography>
-                    {
-                      (
-                        isIssuer &&
-                        !(dso || {}).deploymentInfo &&
-                        (dso || {}).status === 'Approved' &&
-                        !editMode
-                      ) && (
+                    {isIssuer &&
+                      !(dso || {}).deploymentInfo &&
+                      (dso || {}).status === "Approved" &&
+                      !editMode && (
                         <Button
-                          variant='contained'
-                          color='primary'
+                          variant="contained"
+                          color="primary"
                           onClick={() => {
                             history.push(
-                                `/app/issuance/${dso.createdBy}/${dso._id}/deploy`
-                            )
+                              `/app/issuance/${dso.createdBy}/${dso._id}/deploy`
+                            );
                           }}
                         >
                           Deploy
                         </Button>
-                      )
-                    }
+                      )}
                   </Grid>
                 </SectionContainer>
               </Grid>
               <Grid item xs={12}>
-                <SectionContainer title='Use of Proceeds'>
+                <SectionContainer title="Use of Proceeds">
                   <EditableWysiwyg
                     editMode={editMode}
-                    name='useOfProceeds'
+                    name="useOfProceeds"
                     value={dso.useOfProceeds}
                   />
                 </SectionContainer>
               </Grid>
               <Grid item xs={6}>
-                <SectionContainer title='Dataroom'>
+                <SectionContainer title="Dataroom">
                   <DSDataroom
                     documents={dsoState.documents}
                     editMode={editMode}
@@ -328,16 +324,16 @@ const DigitalSecurity = ({
                 </SectionContainer>
               </Grid>
               <Grid item xs={6}>
-                <SectionContainer title='Fund Raising Milestone'>
+                <SectionContainer title="Fund Raising Milestone">
                   <EditableWysiwyg
                     editMode={editMode}
-                    name='fundraisingMilestone'
+                    name="fundraisingMilestone"
                     value={dso.fundraisingMilestone}
                   />
                 </SectionContainer>
               </Grid>
               <Grid item xs={12}>
-                <SectionContainer title='Team'>
+                <SectionContainer title="Team">
                   {dsoState.team.map((e, i) => (
                     <TeamMember
                       key={e._id ?? `team-member-${i}`}
@@ -348,9 +344,17 @@ const DigitalSecurity = ({
                       onRemoveTeamMember={() => onRemoveTeamMember(i)}
                     />
                   ))}
-                  <Button variant='contained' onClick={onAddTeamMember}>
-                    Add
-                  </Button>
+                  {
+                    editMode && (
+                      <Grid container justify="flex-end">
+                        <Box m={4}>
+                          <Button variant="contained" onClick={onAddTeamMember}>
+                            Add
+                          </Button>
+                        </Box>
+                      </Grid>
+                    )
+                  }
                 </SectionContainer>
               </Grid>
             </Grid>
@@ -358,7 +362,7 @@ const DigitalSecurity = ({
         </Paper>
       </Container>
     </FormContext>
-  )
+  );
 }
 
 export default DigitalSecurity
