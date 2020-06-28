@@ -34,10 +34,6 @@ export const columns: Array<TableColumn<DSWithdrawal>> = [
     align: 'right',
     headAlign: 'right',
     render: (amount: number, row: DSWithdrawal) => formatMoney(amount, row.asset.numberFormat.currency, true)
-  },
-  {
-    key: 'memo',
-    label: 'Memo'
   }
 ]
 

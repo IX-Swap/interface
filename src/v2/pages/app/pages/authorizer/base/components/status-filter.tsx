@@ -21,7 +21,7 @@ const StatusFilter = ({ isSelected, children, title, handleItemClick }: StatusFi
   const classes = useStyles()
   return (
     <ListItem
-      style={{ padding: '0 48px' }}
+      style={{ padding: '2px 48px' }}
       classes={{
         selected: classes.selected
       }}

@@ -25,6 +25,11 @@ import { BaseFilter, AuthorizableStatus } from '../../../../../../types/util'
 import { formatISO } from 'date-fns'
 
 const useStyles = makeStyles(() => ({
+  filtersLabel: {
+    color: '#999999',
+    fontSize: '1rem',
+    fontWeight: 900
+  },
   spaced: {
     paddingLeft: '24px!important',
     paddingRight: '24px!important'
@@ -49,7 +54,7 @@ const DatePickerInputComponent = (props: any) => (
     size='small'
     InputProps={{
       endAdornment: (
-        <InputAdornment position='end'>
+        <InputAdornment position='end' style={{color: '#AAAAAA'}}>
           <DateIcon />
         </InputAdornment>
       )
@@ -68,10 +73,8 @@ const Filter = ({ onApplyFilter }: FilterProps) => {
   const classes = useStyles()
   const [searchItem, setSearchItem] = useState('')
   const [statusFilters, setStatusFilters] = useState([...initialStatusFilter])
-  const [fromDate, setFromDate] = useState<Date| null>(
-    new Date()
-  )
-  const [toDate, setToDate] = useState<Date | null>(new Date())
+  const [fromDate, setFromDate] = useState<Date| null>(null)
+  const [toDate, setToDate] = useState<Date | null>(null)
 
   const handleFromDateChange = (date: Date | null) => {
     if (date) {
@@ -93,8 +96,8 @@ const Filter = ({ onApplyFilter }: FilterProps) => {
     setSearchItem(evt.target.value)
   }
 
-  const handleApply = () => {
-    const selected = statusFilters.find((e) => e.isSelected)
+  const handleApply = (statusIndex?: number) => {
+    const selected = statusIndex !== undefined ? statusFilters[statusIndex] : statusFilters.find((e) => e.isSelected)
     let status: AuthorizableStatus = ''
     if (selected) {
       status = selected.value
@@ -111,7 +114,7 @@ const Filter = ({ onApplyFilter }: FilterProps) => {
   return (
     <Grid container spacing={2}>
       <Grid item xs={12} style={{ padding: '0 32px' }}>
-        <Typography variant='button'><b>FILTERS</b></Typography>
+        <Typography variant='button' className={classes.filtersLabel}>FILTERS</Typography>
       </Grid>
       <Grid item xs={12}>
         {statusFilters.map((e, i) => (
@@ -119,6 +122,7 @@ const Filter = ({ onApplyFilter }: FilterProps) => {
             key={i}
             isSelected={e.isSelected}
             handleItemClick={() => {
+              handleApply(i)
               setStatusFilters(
                 statusFilters.map((j, k) => ({
                   ...j,
@@ -143,7 +147,7 @@ const Filter = ({ onApplyFilter }: FilterProps) => {
           onChange={handleTextChange}
           InputProps={{
             endAdornment: (
-              <InputAdornment position='end'>
+              <InputAdornment position='end' style={{color: '#AAAAAA'}}>
                 <SearchIcon />
               </InputAdornment>
             )
@@ -183,7 +187,7 @@ const Filter = ({ onApplyFilter }: FilterProps) => {
           variant='contained'
           size='small'
           color='primary'
-          onClick={handleApply}
+          onClick={() => handleApply()}
         >
           Apply
         </Button>

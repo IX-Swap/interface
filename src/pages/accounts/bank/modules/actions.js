@@ -52,6 +52,8 @@ async function createBankAccount (
     const result = await method(uri, { ...bank, ...updateParams })
     const response = await result.json()
 
+    console.log(response, result)
+
     if (result.status === 200) {
       dispatch({
         type: userAddBankActions.USER_ADD_BANK_SUCCESS,
