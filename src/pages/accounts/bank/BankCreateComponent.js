@@ -77,7 +77,7 @@ function useGetters () {
     }
 
     if (bankListStatus === BANK_LIST_STATUS.IDLE && isSaving) {
-      let message = 'Failed to add bank account'
+      let message = error
       let type = 'error'
 
       setIsSaving(false)

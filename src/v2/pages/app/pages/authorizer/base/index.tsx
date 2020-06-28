@@ -38,6 +38,7 @@ const useStyles = makeStyles((theme: any) => ({
     height: '24px',
     display: 'flex',
     justifyContent: 'center',
+    fontSize: '0.875rem',
     alignItems: 'center'
   },
   approved: {
@@ -51,6 +52,12 @@ const useStyles = makeStyles((theme: any) => ({
   unauthorized: {
     color: '#666666',
     borderColor: '#666666'
+  },
+  viewColor: {
+    color: '#DADADA'
+  },
+  moreColor: {
+    color: '#C4C4C4'
   },
   filters: {
     backgroundColor: '#FAFAFA',
@@ -155,7 +162,7 @@ const Actions = <T extends unknown>({ onView, item }: {item: T} & {onView: (row:
   return (
     <Grid container>
       <IconButton onClick={() => onView?.(item)}>
-        <LaunchIcon />
+        <LaunchIcon className={classes.viewColor}/>
       </IconButton>
       <Popper
         open={open} anchorEl={anchorEl}
@@ -183,7 +190,7 @@ const Actions = <T extends unknown>({ onView, item }: {item: T} & {onView: (row:
       </Popper>
       {(item as any).status === 'Unauthorized' && (
         <IconButton onClick={togglePopper}>
-          <MoreHorizIcon />
+          <MoreHorizIcon className={classes.moreColor} />
         </IconButton>
       )}
     </Grid>
@@ -219,11 +226,11 @@ const AuthorizerPage = <T extends unknown>(props: AuthorizerPageProps<T> & Viewa
     render: (a: string) => {
       switch (a) {
         case 'Approved':
-          return <span className={classNames(classes.authStatus, classes.approved)}>A</span>
+          return <Typography className={classNames(classes.authStatus, classes.approved)}>A</Typography>
         case 'Rejected':
-          return <span className={classNames(classes.authStatus, classes.rejected)}>R</span>
+          return <Typography className={classNames(classes.authStatus, classes.rejected)}>R</Typography>
         default:
-          return <span className={classNames(classes.authStatus, classes.unauthorized)}>U</span>
+          return <Typography className={classNames(classes.authStatus, classes.unauthorized)}>U</Typography>
       }
     }
   }
