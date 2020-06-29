@@ -20,6 +20,7 @@ const OfferDetails = ({ dso, currency, editMode = false }: OfferProps) => {
       />
       <EditableWithLabel
         name='capitalStructure'
+        required
         editMode={editMode}
         label='Capital Structure'
         value={dso.capitalStructure}
