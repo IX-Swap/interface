@@ -55,6 +55,8 @@ export const useIsAuthorizer = (): boolean => {
 export const useIsIssuer = (): boolean => {
   const { user: { roles = '' } = {} } = useStore()
 
+  console.log(roles)
+
   return hasRole(roles, appRoles.ISSUER)
 }
 

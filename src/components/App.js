@@ -27,12 +27,14 @@ import TableListings from '../pages/exchange/components/ExchangeTable/ListingTab
 import OverviewExchange from '../pages/exchange/components/TradingTerminal'
 import ListingView from '../pages/exchange/components/ExchangeTable/ListingView'
 import Issuance from '../v2/pages/app/pages/issuance'
+import DeployToken from '../pages/issuance/deploy'
 
 import { LayoutProvider } from '../context/LayoutContext'
 import { useUserState, useUserDispatch } from '../context/user'
 import { getUser } from '../context/user/actions'
 import NoAccessDialog from './NoAccessDialog'
 import Commitments from '../pages/authorizer/commitments/components/Commitments'
+import { useStore } from '../v2/context/user'
 
 type Location = $Shape<{ pathname: string }>;
 
@@ -88,13 +90,17 @@ function App () {
   function Authenticated () {
     const userDispatch = useUserDispatch()
     const { isSidebarOpened } = { isSidebarOpened: true }
-    const { status } = useUserState()
+    const { user, status } = useUserState()
     const isAdmin = useIsAdmin()
     const isAuthorizer = useIsAuthorizer()
     const isIssuer = useIsIssuer()
+    const userStore = useStore()
+
     useMemo(() => {
       if (status === 'INIT') getUser(userDispatch)
     }, [status, userDispatch])
+
+    if (status === 'IDLE') userStore.setUser(user)
 
     const privateRoutes = [
       {
@@ -149,6 +155,10 @@ function App () {
           {
             route: '/issuance',
             component: Issuance
+          },
+          {
+            route: '/issuance/:userId/:id/deploy',
+            component: DeployToken
           }
         ]
         : []),
