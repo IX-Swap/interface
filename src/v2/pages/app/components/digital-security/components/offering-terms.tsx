@@ -17,7 +17,8 @@ const OfferingTermComponent = ({ name, required = false }: {name: string, requir
         <Controller
           as={
             <Select
-              error={errors[name]}
+              fullWidth
+              error={!!errors[name]}
               inputRef={register}
               name={name}
               inputProps={{

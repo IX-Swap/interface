@@ -13,6 +13,7 @@ import {
 import moment from 'moment'
 import { makeStyles } from '@material-ui/styles'
 import { useFormContext, Controller, useForm } from 'react-hook-form'
+import { flatten } from 'flat'
 
 const useStyles = makeStyles(() => ({
   fieldLabel: {
@@ -58,11 +59,15 @@ const EditableField = ({
 }: Omit<FormControlProps, 'size'> & EditableFieldProps) => {
   const classes = useStyles()
   const form = useForm()
-  let { control, register } = useFormContext() || { control: null, register: null }
+  let { control, register, errors } = useFormContext() || { control: null, register: null }
+
+  let flatErrors = flatten(errors) as {[key: string]: any}
 
   if (!control || !register) {
     control = form.control
     register = form.register
+    errors = {}
+    flatErrors = {}
   }
 
   let lValue = value
@@ -77,21 +82,27 @@ const EditableField = ({
     switch (type) {
       case 'select':
         inputComponent = (
-          <FormControl className={classes.selectField} {...others} margin={margin}>
+          <FormControl
+            className={classes.selectField}
+            {...others}
+            margin={margin}
+            error={!!(errors[name] || flatErrors[`${name}.type`])}
+          >
             <InputLabel id={`select-${name}`}>{label}</InputLabel>
             <Controller
               as={Select}
               name={name}
               id={`select-${name}`}
+              rules={{ required }}
               control={control}
               onChange={([e]) => e.target.value}
               className={classes.selectField}
-              defaultValue={value || ''}
+              defaultValue={value || ""}
             >
               {children}
             </Controller>
           </FormControl>
-        )
+        );
         break
 
       case 'check':
@@ -115,6 +126,7 @@ const EditableField = ({
       default:
         inputComponent = (
           <TextField
+            error={!!(errors[name] || flatErrors[`${name}.type`])}
             margin={margin}
             style={others.style}
             label={label}

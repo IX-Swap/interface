@@ -32,7 +32,7 @@ const DsoTitle = ({
             label='Token Name'
             margin='normal'
             name='tokenName'
-            error={errors.tokenName}
+            error={!!errors.tokenName}
             inputRef={register({ required: true })}
             InputLabelProps={{
               className: classesE.largeInputLabel
@@ -45,7 +45,7 @@ const DsoTitle = ({
             label='Symbol'
             margin='normal'
             name='tokenSymbol'
-            error={errors.tokenSymbol}
+            error={!!errors.tokenSymbol}
             inputRef={register({ required: true })}
             className={classesE.tokenSymbol}
             InputLabelProps={{
@@ -92,16 +92,17 @@ const DsoTitle = ({
             className={classesE.issuer}
             inputRef={register({ required: true })}
             name='issuerName'
-            error={errors.issuerName}
+            error={!!errors.issuerName}
             label='Issuer Name'
             margin='normal'
             style={{ flexGrow: 1 }}
           />
           <AssetsSelect
             className={classesE.currency}
+            required
             margin='normal'
             name='currency'
-            error={errors.currency}
+            error={!!errors.currency}
           />
         </Grid>
       </Grid>

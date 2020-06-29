@@ -27,7 +27,7 @@ const EditableWithLabel = ({ editMode = false, required = false, label, value, n
         <TextField
           inputRef={register({ required })}
           name={name || ''}
-          error={errors[name || '']}
+          error={!!errors[name || '']}
         />
       )}
     </Box>
