@@ -9,7 +9,12 @@ import { snackbarService } from 'uno-material-ui'
 import storageHelper from '../../../../../helpers/storageHelper'
 
 const DsoCreate = () => {
-  const save = async (formValues: DsoRequest) => {
+  const save = async (formValues: DsoRequest, isValid: boolean) => {
+    if (!isValid) {
+      snackbarService.showSnackbar('Unable to save, please fill out the fields and upload logo and a subscription document', 'error')
+      return
+    }
+
     const res = await saveDso(formValues, storageHelper.getUserId())
     if (res.status) {
       snackbarService.showSnackbar(`Successfully saved Digital Security (${formValues?.tokenSymbol})`)

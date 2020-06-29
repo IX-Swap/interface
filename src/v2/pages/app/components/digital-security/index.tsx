@@ -29,7 +29,7 @@ import { wysiwygToHtml } from '../../../../helpers/rendering'
 import CorporateSelector from '../corporate-selector'
 
 interface DigitalSecurityProps {
-  buttonAction?: (form: DsoRequest) => void
+  buttonAction?: (form: DsoRequest, valid: boolean) => void
   buttonString?: string
   editMode?: boolean
   create?: boolean
@@ -213,9 +213,10 @@ const DigitalSecurity = ({
                     <Button
                       variant="contained"
                       color="primary"
-                      onClick={() => {
+                      onClick={async () => {
                         if (buttonAction) {
-                          buttonAction(getFinalValue());
+                          const isValid = await form.triggerValidation()
+                          buttonAction(getFinalValue(), isValid);
                         }
                       }}
                     >

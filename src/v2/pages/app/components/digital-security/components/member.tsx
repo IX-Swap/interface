@@ -77,6 +77,7 @@ const TeamMember = ({
                   style={{ minWidth: "250px" }}
                   editMode={editMode}
                   label="Name"
+                  required
                   value={member.name}
                   name={`team.${index}.name`}
                   previewMode={
@@ -88,6 +89,7 @@ const TeamMember = ({
                   margin="normal"
                   editMode={editMode}
                   label="Position"
+                  required
                   value={member.position}
                   name={`team.${index}.position`}
                   previewMode={
