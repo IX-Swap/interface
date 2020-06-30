@@ -1,6 +1,6 @@
 // @flow
 /* eslint-disable react-hooks/exhaustive-deps */
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useRef } from 'react'
 import { RouteProps } from 'react-router-dom'
 
 import moment from 'moment'
@@ -19,13 +19,13 @@ import localStore from 'services/storageHelper'
 import { subscribeToSocket } from 'services/socket'
 
 import type { Dso } from 'context/dso/types'
-import { getDso, deployDso } from './modules/actions'
+import { getDso } from './modules/actions'
 
 const useDeployLogic = (userId: string, id: string) => {
   // $FlowFixMe
   const [dso, setDso] = useState<Dso>({})
   const [loading, setLoading] = useState<boolean>(false)
-  const [messages, setMessages] = useState<Array<string>>([])
+  const messages = useRef([])
   const bearerToken = localStore.getAccessToken()
   let socket
   if (bearerToken) {
@@ -33,15 +33,26 @@ const useDeployLogic = (userId: string, id: string) => {
   }
 
   const listener = (data) => {
+    let date = moment().format('MM/DD/YYYY hh:mm:ss a')
+    let message = data
     if (!window[`deploy_message_${id}`]) {
       window[`deploy_message_${id}`] = []
     }
 
+    if (data.at) {
+      date = moment(data.at).format('MM/DD/YYYY hh:mm:ss a')
+      message = data.message
+    }
+
+    if (message.toLowerCase().includes('deploying')) {
+      setLoading(true)
+    }
+
     window[`deploy_message_${id}`].push(
-      `[${moment().format('MM/DD/YYYY hh:mm:ss a')}] ${data}`
+      `[${date}] ${message}`
     )
 
-    if (data.toLowerCase() === 'ok') {
+    if (message.toLowerCase() === 'ok') {
       ((mId) => {
         setTimeout(async () => {
           socket.removeEventListener(`x-token/${id}`)
@@ -55,23 +66,12 @@ const useDeployLogic = (userId: string, id: string) => {
       })(id)
     }
 
-    setMessages(window[`deploy_message_${id}`])
+    messages.current = window[`deploy_message_${id}`]
   }
 
   const deploy = async () => {
     setLoading(true)
-    const newDso = await deployDso(dso._id)
-
-    if (newDso) {
-      setLoading(false)
-    } else {
-      window[`deploy_message_${id}`].push(
-        `[${moment().format(
-          'MM/DD/YYYY hh:mm:ss a'
-        )}] Error Deploying DSO, Please try again later.`
-      )
-      setMessages(window[`deploy_message_${id}`])
-    }
+    socket.emit('x-token/deploy/begin', id)
   }
 
   useEffect(() => {
@@ -82,8 +82,10 @@ const useDeployLogic = (userId: string, id: string) => {
     }
 
     socket.on(`x-token/${id}`, listener)
+    socket.emit('x-token/deploy/initialize', id)
 
     return () => {
+      console.log('unmount is real')
       socket.off(`x-token/${id}`)
     }
   }, [id]); // eslint-disable-line
@@ -156,7 +158,7 @@ const Deploy = ({ match }: RouteProps) => {
           )}
         </Grid>
       </Box>
-      <Box my={4}>
+      <Box my={4} style={{ marginLeft: '-16px', marginRight: '-16px' }}>
         <Grid container>
           <Grid item xs={12} component={Paper}>
             <TextField
@@ -164,7 +166,7 @@ const Deploy = ({ match }: RouteProps) => {
               label='Message'
               multiline
               fullWidth
-              value={messages.length ? messages.join('\n') : ''}
+              value={messages.current.length ? messages.current.join('\n') : ''}
               disabled
               rows={12}
               variant='outlined'

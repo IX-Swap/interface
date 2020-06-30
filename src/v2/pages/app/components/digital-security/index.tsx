@@ -295,7 +295,7 @@ const DigitalSecurity = ({
                           color="primary"
                           onClick={() => {
                             history.push(
-                              `/app/issuance/${dso.createdBy}/${dso._id}/deploy`
+                              `/issuance/${dso.createdBy}/${dso._id}/deploy`
                             );
                           }}
                         >
