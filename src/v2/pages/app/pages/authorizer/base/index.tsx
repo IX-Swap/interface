@@ -197,7 +197,7 @@ const Actions = <T extends unknown>({ onView, item }: {item: T} & {onView: (row:
   )
 }
 
-const Preview = ({ children, onBack }: { children: ReactNode, onBack: () => void }) => {
+const Preview = ({ children, onBack }: { children: ReactNode; onBack: () => void }) => {
   return (
     <Grid container spacing={4} direction='column'>
       <Grid item container xs={12} alignItems='center' style={{ flex: '0' }}>

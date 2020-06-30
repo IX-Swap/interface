@@ -12,7 +12,7 @@ import { FormContext, useForm } from 'react-hook-form'
 import CompanyInformation from './components/company-info'
 import { snackbarService } from 'uno-material-ui'
 
-const IndividualIdentityForm = ({ identity, editMode, useOwnEmail }: { identity: CorporateIdentity, editMode: boolean, useOwnEmail: boolean }) => {
+const IndividualIdentityForm = ({ identity, editMode, useOwnEmail }: { identity: CorporateIdentity; editMode: boolean; useOwnEmail: boolean }) => {
   const form = useForm()
   const onDelete = async (source: IdentityProfile[], i: number) => {
     if (source.length === 1) {

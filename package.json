@@ -139,17 +139,7 @@
     },
     "rules": {
       "react-hooks/exhaustive-deps": "error"
-    },
-    "overrides": [
-      {
-        "files": [
-          "**/*.tj?(x)"
-        ],
-        "rules": {
-          "react-hooks/exhaustive-deps": "error"
-        }
-      }
-    ]
+    }
   },
   "browserslist": {
     "production": [

@@ -7,7 +7,7 @@ import {
 } from '@material-ui/core'
 import { get } from 'lodash'
 
-function Items<T> ({ items, columns, hasActions = false, actions }: {items: T[], columns: Array<TableColumn<T>>, hasActions? : boolean, actions?: RowAction<T> }) {
+function Items<T> ({ items, columns, hasActions = false, actions }: {items: T[]; columns: Array<TableColumn<T>>; hasActions? : boolean; actions?: RowAction<T> }) {
   return (
     <TableBody>
       {items.length ? (

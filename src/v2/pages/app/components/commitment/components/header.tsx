@@ -45,7 +45,7 @@ const AssetBalance = ({ asset }: {asset: string}) => {
   ))
 }
 
-const BalanceHeader = ({ label, value }: { label: string, value: string }) => {
+const BalanceHeader = ({ label, value }: { label: string; value: string }) => {
   const classes = useStyles()
 
   return (

@@ -3,7 +3,7 @@ import { Button, Typography, ListItem, Grid } from '@material-ui/core'
 import useStyles from './styles'
 import { DocumentGuide } from '../../../../../../types/document'
 
-const Uploader = ({ document, editMode = false }: { document: DocumentGuide, editMode: boolean }) => {
+const Uploader = ({ document, editMode = false }: { document: DocumentGuide; editMode: boolean }) => {
   const classes = useStyles()
   const inputRef = useRef<HTMLInputElement | null>(null)
 

@@ -16,7 +16,7 @@ npm start
 ## Run StandardJS Fixes
 
 ```
-yarn std
+yarn std // or npm run std
 ```
 
 **Hosted Instance**
