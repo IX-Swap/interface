@@ -23,8 +23,8 @@ interface UploaderProps {
 }
 
 interface UploaderState {
-  guide: DocumentGuide,
-  docId: string,
+  guide: DocumentGuide
+  docId: string
   uploaded: boolean
 }
 

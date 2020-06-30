@@ -11,7 +11,7 @@ import declarations, { formatDeclarations } from './const/declarations'
 import documents from './const/documents'
 import { FormContext, useForm } from 'react-hook-form'
 
-const IndividualIdentityForm = ({ identity, editMode, useOwnEmail }: {identity: IndividualIdentity, editMode: boolean, useOwnEmail: boolean}) => {
+const IndividualIdentityForm = ({ identity, editMode, useOwnEmail }: {identity: IndividualIdentity; editMode: boolean; useOwnEmail: boolean}) => {
   const form = useForm()
 
   return (

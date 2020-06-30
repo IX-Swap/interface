@@ -8,7 +8,7 @@ import useStyles from './styles'
 import { Document } from '../../../../../../types/document'
 import { downloadFile } from '../../../../../../helpers/httpRequests'
 
-const DocumentItem = ({ document, editMode }: { document: Document, editMode: boolean }) => {
+const DocumentItem = ({ document, editMode }: { document: Document; editMode: boolean }) => {
   const classes = useStyles()
   const [isInAction, setIsInAction] = useState(false)
 

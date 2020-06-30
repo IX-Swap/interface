@@ -8,7 +8,7 @@ interface OfferingTermsProps {
   dso: Dso
 }
 
-const OfferingTermComponent = ({ name, required = false }: {name: string, required: boolean}) => {
+const OfferingTermComponent = ({ name, required = false }: {name: string; required: boolean}) => {
   const { errors, control, register } = useFormContext()
 
   switch (name) {

@@ -70,8 +70,8 @@ export interface Dso extends BaseDso {
 }
 
 export interface DsoRequest extends BaseDso {
-  documents: string[];
-  currency: string;
+  documents: string[]
+  currency: string
 }
 
 export const inititialValues: Dso = {

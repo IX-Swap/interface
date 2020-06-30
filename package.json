@@ -85,6 +85,7 @@
     "gulp-rev-all": "^2.0.3",
     "prettier": "^2.0.5",
     "react-app-rewired": "^2.1.6",
+    "standardx": "^5.0.0",
     "through2": "^3.0.1"
   },
   "scripts": {
@@ -93,7 +94,15 @@
     "test": "react-scripts test",
     "eject": "react-scripts eject",
     "deploy": "gulp deploy",
-    "std": "standard --fix"
+    "std:ts": "standardx --fix \"src/**/*.ts*\"",
+    "std:js": "standard --fix \"src/**/*.js*\"",
+    "std": "yarn std:js && yarn std:ts"
+  },
+  "standardx": {
+    "parser": "@typescript-eslint/parser",
+    "plugins": [
+      "@typescript-eslint/eslint-plugin"
+    ]
   },
   "standard": {
     "parser": "babel-eslint",
@@ -117,7 +126,8 @@
       "react-hooks"
     ],
     "ignore": [
-      "gulpfile.js"
+      "gulpfile.js",
+      "src/**/package.json"
     ]
   },
   "eslintConfig": {
@@ -129,17 +139,7 @@
     },
     "rules": {
       "react-hooks/exhaustive-deps": "error"
-    },
-    "overrides": [
-      {
-        "files": [
-          "**/*.tj?(x)"
-        ],
-        "rules": {
-          "react-hooks/exhaustive-deps": "error"
-        }
-      }
-    ]
+    }
   },
   "browserslist": {
     "production": [

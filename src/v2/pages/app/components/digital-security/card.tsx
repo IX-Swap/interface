@@ -5,7 +5,7 @@ import DsoTitle from './title'
 import OfferDetails from './components/offer-details'
 import { Asset } from '../../../../types/asset'
 
-const DsoOfferingCard = ({ dso, onClickView }: {dso: Dso, onClickView: (dso: Dso) => void }) => {
+const DsoOfferingCard = ({ dso, onClickView }: {dso: Dso; onClickView: (dso: Dso) => void }) => {
   return (
     <Paper>
       <Box px={4} pt={2} pb={4}>

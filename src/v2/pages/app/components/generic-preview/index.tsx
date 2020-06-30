@@ -24,7 +24,7 @@ const BoldTypography = ({ children, ...others }: any) => (
   </Typography>
 )
 
-function GenericPreview ({ items }: { items: Array<{label: string, value: string}> }) {
+function GenericPreview ({ items }: { items: Array<{label: string; value: string}> }) {
   const classes = useStyles()
 
   return (
