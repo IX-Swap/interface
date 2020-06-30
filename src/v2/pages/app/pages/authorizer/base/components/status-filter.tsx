@@ -14,6 +14,9 @@ interface StatusFilterProps {
 const useStyles = makeStyles(() => ({
   selected: {
     color: '#0C469C'
+  },
+  normal: {
+    color: '#979797'
   }
 }))
 
@@ -28,10 +31,10 @@ const StatusFilter = ({ isSelected, children, title, handleItemClick }: StatusFi
       button selected={isSelected}
       onClick={handleItemClick}
     >
-      <ListItemIcon className={isSelected ? classes.selected : ''}>
+      <ListItemIcon className={isSelected ? classes.selected : classes.normal}>
         {children}
       </ListItemIcon>
-      <ListItemText>
+      <ListItemText className={isSelected ? classes.selected : classes.normal}>
         {title}
       </ListItemText>
     </ListItem>

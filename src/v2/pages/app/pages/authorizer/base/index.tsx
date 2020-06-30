@@ -265,7 +265,7 @@ const AuthorizerPage = <T extends unknown>(props: AuthorizerPageProps<T> & Viewa
       </Grid>
       <Grid item xs={12} md={9} className={classes.content}>
         <Grid item xs={12}>
-          <Typography variant='h3'>{props.title}</Typography>
+          <Typography style={{fontWeight: 'bold', fontSize: '1.875rem'}}>{props.title}</Typography>
         </Grid>
         <Grid item xs={12} style={{ marginTop: '48px' }} component={Paper}>
           <TableMemoed<T>
