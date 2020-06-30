@@ -6,7 +6,7 @@ import WithdrawalView from '../../../components/withdrawal-preview'
 const CashWithdrawals = () => {
   return (
     <BaseView
-      title='Cash Withdraw Authorization'
+      title='Authorize Cash Withdraw'
       uri='/accounts/cash/withdrawals'
       name='authorizerCashWithdrawals'
       columns={columns}
