@@ -13,7 +13,6 @@ const DsoCreate = () => {
   const history = useHistory()
 
   const save = async (formValues: DsoRequest, isValid: boolean) => {
-
     if (!isValid) {
       snackbarService.showSnackbar('Unable to save, please fill out the fields and upload logo and a subscription document', 'error')
       return
