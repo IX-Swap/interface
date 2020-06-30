@@ -162,7 +162,7 @@ const Actions = <T extends unknown>({ onView, item }: {item: T} & {onView: (row:
   return (
     <Grid container>
       <IconButton onClick={() => onView?.(item)}>
-        <LaunchIcon className={classes.viewColor}/>
+        <LaunchIcon className={classes.viewColor} />
       </IconButton>
       <Popper
         open={open} anchorEl={anchorEl}
@@ -265,7 +265,7 @@ const AuthorizerPage = <T extends unknown>(props: AuthorizerPageProps<T> & Viewa
       </Grid>
       <Grid item xs={12} md={9} className={classes.content}>
         <Grid item xs={12}>
-          <Typography style={{fontWeight: 'bold', fontSize: '1.875rem'}}>{props.title}</Typography>
+          <Typography style={{ fontWeight: 'bold', fontSize: '1.875rem' }}>{props.title}</Typography>
         </Grid>
         <Grid item xs={12} style={{ marginTop: '48px' }} component={Paper}>
           <TableMemoed<T>

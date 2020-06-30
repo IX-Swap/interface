@@ -97,12 +97,12 @@ const EditableField = ({
               control={control}
               onChange={([e]) => e.target.value}
               className={classes.selectField}
-              defaultValue={value || ""}
+              defaultValue={value || ''}
             >
               {children}
             </Controller>
           </FormControl>
-        );
+        )
         break
 
       case 'check':
@@ -135,9 +135,9 @@ const EditableField = ({
             inputRef={register({ required })}
             placeholder={label}
             className={classes.textField}
-            defaultValue={lValue || ""}
+            defaultValue={lValue || ''}
           />
-        );
+        )
         break
     }
 

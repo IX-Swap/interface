@@ -13,7 +13,12 @@ cp .env.example .env #and update .env file
 npm start
 ```
 
+## Run StandardJS Fixes
+
+```
+yarn std
+```
+
 **Hosted Instance**
 
 [https://www.mozork.com/](https://www.mozork.com/)
-

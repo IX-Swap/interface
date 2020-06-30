@@ -41,20 +41,20 @@ const TeamMember = ({
   }
 
   return (
-    <Box pt={4} px={4} pb={2} style={{ borderBottom: "1px solid #f0f0f0" }}>
+    <Box pt={4} px={4} pb={2} style={{ borderBottom: '1px solid #f0f0f0' }}>
       {editMode && (
-        <Box style={{ textAlign: "right" }}>
+        <Box style={{ textAlign: 'right' }}>
           <Button onClick={() => onRemoveTeamMember()}>
             <RemoveIcon /> Remove
           </Button>
         </Box>
       )}
-      <Box style={{ display: "flex" }}>
+      <Box style={{ display: 'flex' }}>
         <Box mr={2}>
           <ImageUploader
             hasDelete={false}
             editMode={editMode}
-            variant="square"
+            variant='square'
             name={`team.${index}.photo`}
             getter={setPhoto}
             width={272}
@@ -65,30 +65,30 @@ const TeamMember = ({
           <Grid container>
             {!editMode && (
               <Grid item>
-                <Typography variant="h5">{member.name}</Typography>
+                <Typography variant='h5'>{member.name}</Typography>
                 <Typography>
                   <b>{member.position}</b>
                 </Typography>
               </Grid>
             )}
             {editMode && (
-              <Grid item style={{ display: "flex", flexDirection: "column" }}>
+              <Grid item style={{ display: 'flex', flexDirection: 'column' }}>
                 <EditableField
-                  style={{ minWidth: "250px" }}
+                  style={{ minWidth: '250px' }}
                   editMode={editMode}
-                  label="Name"
+                  label='Name'
                   required
                   value={member.name}
                   name={`team.${index}.name`}
                   previewMode={
-                    <Typography variant="h5">{member.name}</Typography>
+                    <Typography variant='h5'>{member.name}</Typography>
                   }
                 />
                 <EditableField
-                  style={{ minWidth: "250px" }}
-                  margin="normal"
+                  style={{ minWidth: '250px' }}
+                  margin='normal'
                   editMode={editMode}
-                  label="Position"
+                  label='Position'
                   required
                   value={member.position}
                   name={`team.${index}.position`}
@@ -109,7 +109,7 @@ const TeamMember = ({
             )}
             {editMode && (
               <EditableWysiwyg
-                value={member.about || "About the member"}
+                value={member.about || 'About the member'}
                 name={`team.${index}.about`}
                 editMode={editMode}
               />
@@ -118,7 +118,7 @@ const TeamMember = ({
         </Box>
       </Box>
     </Box>
-  );
+  )
 }
 
 export default TeamMember

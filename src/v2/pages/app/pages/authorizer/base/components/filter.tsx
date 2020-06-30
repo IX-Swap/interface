@@ -54,7 +54,7 @@ const DatePickerInputComponent = (props: any) => (
     size='small'
     InputProps={{
       endAdornment: (
-        <InputAdornment position='end' style={{color: '#AAAAAA'}}>
+        <InputAdornment position='end' style={{ color: '#AAAAAA' }}>
           <DateIcon />
         </InputAdornment>
       )
@@ -147,7 +147,7 @@ const Filter = ({ onApplyFilter }: FilterProps) => {
           onChange={handleTextChange}
           InputProps={{
             endAdornment: (
-              <InputAdornment position='end' style={{color: '#AAAAAA'}}>
+              <InputAdornment position='end' style={{ color: '#AAAAAA' }}>
                 <SearchIcon />
               </InputAdornment>
             )

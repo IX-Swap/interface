@@ -10,7 +10,7 @@ interface EditableWysiwygProps {
 }
 
 const Editor = (props: any) => {
-  const ref = useRef<TMUIRichTextEditorRef>(null);
+  const ref = useRef<TMUIRichTextEditorRef>(null)
   return (
     <MUIRichTextEditor
       {...props}
@@ -18,9 +18,11 @@ const Editor = (props: any) => {
       label='Start typing...'
       inlineToolbar
       onBlur={() => {
-        ref.current?.save()
+        if (ref.current) {
+          ref.current.save()
+        }
       }}
-      onChange={(data) => {
+      onChange={() => {
         // props.onChange(JSON.stringify(convertToRaw(data.getCurrentContent())))
       }}
       onSave={(data: string) => {
@@ -39,11 +41,11 @@ const EditableWysiwyg = ({ editMode = false, name, value }: EditableWysiwygProps
 
   return (
     <Controller
-      as={<Editor label="Start typing..." inlineToolbar />}
+      as={<Editor label='Start typing...' inlineToolbar />}
       name={name}
       control={control}
     />
-  );
+  )
 }
 
 export default EditableWysiwyg

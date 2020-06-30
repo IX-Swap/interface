@@ -31,7 +31,7 @@ export default function Header () {
 
   const userStore = useUserStore()
 
-  const [profileMenu, setProfileMenu] = useState<Element | null>(null)
+  const [profileMenu, setProfileMenu] = useState < Element | null >(null)
 
   return useObserver(() => (
     <AppBar position='fixed' elevation={1} className={classes.appBar}>
