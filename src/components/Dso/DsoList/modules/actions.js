@@ -1,4 +1,4 @@
-// @flow
+//
 import actionGenerator from 'context/base/withPagination/actions'
 
 // Dso List

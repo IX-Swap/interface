@@ -1,8 +1,6 @@
-// @flow
-import { STATUS } from './types'
-import type { IdentityState } from './types'
+//
 
-export const initialState: IdentityState = {
+export const initialState = {
   identity: {},
   corporate: {},
   corporateDataroom: [],

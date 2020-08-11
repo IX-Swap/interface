@@ -14,12 +14,13 @@ interface DsoTitleProps {
   editMode?: boolean
 }
 
-const DsoTitle = ({
-  editMode = false,
-  dso
-}: DsoTitleProps) => {
+const DsoTitle = ({ editMode = false, dso }: DsoTitleProps) => {
   const classesE = useEditableStyles()
-  const { register, errors, control } = useFormContext() || { control: () => {}, errors: {}, register: () => {} }
+  const { register, errors, control } = useFormContext() || {
+    control: () => {},
+    errors: {},
+    register: () => {}
+  }
 
   return (
     <Grid container direction='row' spacing={2}>
@@ -79,7 +80,7 @@ const DsoTitle = ({
               name='launchDate'
               defaultValue=''
               control={control}
-              onChange={(val) => {
+              onChange={val => {
                 control.setValue('launchDate', val[1])
                 return val[1]
               }}

@@ -77,9 +77,7 @@ export function useBlockInfoState () {
 export function useBlockInfoDispatch () {
   const context = React.useContext(BlockInfoDispatchContext)
   if (context === undefined) {
-    throw new Error(
-      'BlockInfoDispatch must be used within a BlockInfoProvider'
-    )
+    throw new Error('BlockInfoDispatch must be used within a BlockInfoProvider')
   }
   return context
 }

@@ -1,4 +1,4 @@
-// @flow
+//
 import React from 'react'
 import WithdrawList from './list'
 import AuthorizerDsoModule from './modules'

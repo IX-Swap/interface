@@ -1,4 +1,4 @@
-// @flow
+//
 import React from 'react'
 import { useHistory } from 'react-router-dom'
 import { Typography, Grid, IconButton } from '@material-ui/core'
@@ -11,15 +11,7 @@ const useStyles = makeStyles(() => ({
   }
 }))
 
-const PageTitle = ({
-  title,
-  subPage = false,
-  backUrl
-}: {
-  title: string,
-  subPage?: boolean,
-  backUrl?: string,
-}) => {
+const PageTitle = ({ title, subPage = false, backUrl }) => {
   const classes = useStyles()
   const history = useHistory()
 

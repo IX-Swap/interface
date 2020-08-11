@@ -1,13 +1,9 @@
-// @flow
+//
 import { generateModule } from 'context/base/withPagination'
-import type { Commitment } from 'context/commitment/types'
 
-const {
-  Provider,
-  useState,
-  useDispatch,
-  statusList
-} = generateModule<Commitment>('authorizerCommitmentList')
+const { Provider, useState, useDispatch, statusList } = generateModule(
+  'authorizerCommitmentList'
+)
 
 export default {
   AuthorizerCommitmentListProvider: Provider,

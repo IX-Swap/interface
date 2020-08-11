@@ -1,5 +1,10 @@
 import React, { useEffect } from 'react'
-import { withRouter, useParams, Link as ReactLink, useHistory } from 'react-router-dom'
+import {
+  withRouter,
+  useParams,
+  Link as ReactLink,
+  useHistory
+} from 'react-router-dom'
 
 // Material Components
 import {
@@ -18,15 +23,14 @@ import useStyles from './styles'
 
 // Modules
 import ListActions from './modules/actions'
-// import {listViewActions} from './modules/types';
 import ListModule from './modules'
 
 const { ListViewState, useListViewDispatch } = ListModule
 
-const HeaderContent = (d) => {
+const HeaderContent = d => {
   const classes = useStyles()
   const history = useHistory()
-  const preventDefault = (evt) => evt.preventDefault()
+  const preventDefault = evt => evt.preventDefault()
   const { props } = d
 
   const companyName = props.data && props.data.companyName
@@ -96,57 +100,41 @@ function ListingsView () {
 
   useEffect(() => {
     /*eslint-disable */
-        ListActions.getListItem(dispatch, listId);
-        /*eslint-disable */
-    }, [dispatch]);
+    ListActions.getListItem(dispatch, listId);
+    /*eslint-disable */
+  }, [dispatch]);
 
-    return (
-        <Grid>
-            {state.isLoading ? (
-                <CircularProgress size={50} className={classes.loginLoader} />
-            )
-                :
-                <React.Fragment>
-                    <Grid
-                        container
-                        alignItems="center"
-                    >
-                        <ReactLink 
-                            to="/listings"  
-                            className={classes.pageLink}
-                        > 
-                            <ChevronLeftIcon /> 
-                        </ReactLink>
-                        <Typography 
-                            className={classes.pageTitle} 
-                            variant="h1"
-                        >
-                            {name}
-                        </Typography>
-                    </Grid>
-                    <Grid className={classes.cotentContainer}>
-                        <Paper elevation={3} className={classes.content}>
-                            <HeaderContent props={state}/>
-                            <Box className={classes.listDescContainer}>
-                            <Typography 
-                                    className={classes.listDescTitle} 
-                                    variant="h6"
-                                >
-                                    Description
-                                </Typography>
-                                <Typography 
-                                    className={classes.listDesc} 
-                                    variant="p"
-                                >
-                                    {description}
-                                </Typography>
-                            </Box>
-                        </Paper>
-                    </Grid>
-                </React.Fragment>
-            }
-        </Grid>
-    )
+  return (
+    <Grid>
+      {state.isLoading ? (
+        <CircularProgress size={50} className={classes.loginLoader} />
+      ) : (
+        <React.Fragment>
+          <Grid container alignItems="center">
+            <ReactLink to="/listings" className={classes.pageLink}>
+              <ChevronLeftIcon />
+            </ReactLink>
+            <Typography className={classes.pageTitle} variant="h1">
+              {name}
+            </Typography>
+          </Grid>
+          <Grid className={classes.cotentContainer}>
+            <Paper elevation={3} className={classes.content}>
+              <HeaderContent props={state} />
+              <Box className={classes.listDescContainer}>
+                <Typography className={classes.listDescTitle} variant="h6">
+                  Description
+                </Typography>
+                <Typography className={classes.listDesc} variant="p">
+                  {description}
+                </Typography>
+              </Box>
+            </Paper>
+          </Grid>
+        </React.Fragment>
+      )}
+    </Grid>
+  );
 }
 
-export default withRouter(ListingsView)
+export default withRouter(ListingsView);

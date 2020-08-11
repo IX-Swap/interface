@@ -1,7 +1,6 @@
-/* global $Shape */
-// @flow
+//
 import React, { useMemo, useState, useEffect } from 'react'
-import type { Node } from 'react'
+
 import { Route, Switch, Redirect, HashRouter } from 'react-router-dom'
 import classnames from 'classnames'
 
@@ -34,13 +33,7 @@ import { useUserState, useUserDispatch } from '../context/user'
 import { getUser } from '../context/user/actions'
 import NoAccessDialog from './NoAccessDialog'
 import Commitments from '../pages/authorizer/commitments/components/Commitments'
-import { useStore } from '../v2/context/user'
-
-type Location = $Shape<{ pathname: string }>;
-
-type RouteProps = $Shape<{
-  location: Location,
-}>;
+import { useUserStore } from '../v2/context/user'
 
 function App () {
   const { isAuthenticated } = useUserState()
@@ -48,26 +41,23 @@ function App () {
   const classes = useStyles()
 
   useEffect(() => {
-    (async () => {
+    ;(async () => {
       await _subscribeToSocket()
       setHasSocket(true)
     })()
   }, [isAuthenticated])
 
-  function PublicRoute ({
-    component,
-    path,
-    ...rest
-  }: {
-    component: Node,
-    path: string,
-  }) {
+  function PublicRoute ({ component, path, ...rest }) {
     return (
       <Route
         {...rest}
         path={path}
-        render={(props: RouteProps) =>
-          isAuthenticated ? <Redirect to={{ pathname: '/identity' }} /> : React.createElement(component, props)}
+        render={props =>
+          isAuthenticated ? (
+            <Redirect to={{ pathname: '/identity' }} />
+          ) : (
+            React.createElement(component, props)
+          )}
       />
     )
   }
@@ -94,7 +84,7 @@ function App () {
     const isAdmin = useIsAdmin()
     const isAuthorizer = useIsAuthorizer()
     const isIssuer = useIsIssuer()
-    const userStore = useStore()
+    const userStore = useUserStore()
 
     useMemo(() => {
       if (status === 'INIT') getUser(userDispatch)
@@ -186,7 +176,7 @@ function App () {
         : [])
     ]
 
-    function GotoDashboard ({ location }: { location: Location }) {
+    function GotoDashboard ({ location }) {
       return (
         <Redirect
           to={{
@@ -204,7 +194,7 @@ function App () {
         return (
           <Route
             {...rest}
-            render={(props: RouteProps) => (
+            render={props => (
               <Redirect
                 to={{
                   pathname: '/security',
@@ -219,7 +209,7 @@ function App () {
       return (
         <Route
           {...rest}
-          render={(props: RouteProps) => {
+          render={props => {
             const redirectView = (
               <Redirect
                 to={{

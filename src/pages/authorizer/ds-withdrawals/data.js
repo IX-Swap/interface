@@ -1,4 +1,4 @@
-// @flow
+//
 import moment from 'moment'
 
 export const columns = [
@@ -9,19 +9,19 @@ export const columns = [
   {
     key: 'individual.firstName',
     label: 'User',
-    render: (val: string, row: any) => `${val} ${row.individual.lastName}`
+    render: (val, row) => `${val} ${row.individual.lastName}`
   },
   {
     key: 'createdAt',
     label: 'Date of Application',
     // $$FlowFixMe
-    render: (a: string) => moment(a).format('MM/DD/YYYY hh:mm:ss a')
+    render: a => moment(a).format('MM/DD/YYYY hh:mm:ss a')
   },
   {
     key: 'asset',
     label: 'Digital Security',
     // $$FlowFixMe
-    render: (a: any) => a.symbol
+    render: a => a.symbol
   },
   {
     key: 'recipientWallet',
@@ -33,8 +33,7 @@ export const columns = [
     align: 'right',
     headAlign: 'right',
     // $$FlowFixMe
-    render: (amount: number) =>
-      amount.toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,')
+    render: amount => amount.toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,')
   },
   {
     key: 'memo',

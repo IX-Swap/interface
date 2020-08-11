@@ -6,7 +6,7 @@ import {
   Select,
   MenuItem
 } from '@material-ui/core'
-import type { Dso } from 'context/dso/types'
+
 import { Controller, useFormContext } from 'react-hook-form'
 import { toPercentage } from 'helpers/formatNumbers'
 import SectionContainer from './SectionContianer'
@@ -57,7 +57,7 @@ const OfferingTermItem = React.forwardRef(
       name?: string,
       edit?: boolean,
       label: string,
-      value: string,
+      value: string
     },
     ref: any
   ) => {

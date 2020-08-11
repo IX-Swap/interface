@@ -1,4 +1,4 @@
-// @flow
+//
 /* eslint-disable react/no-danger */
 import React, { useState, useRef } from 'react'
 import { useHistory } from 'react-router-dom'
@@ -16,7 +16,7 @@ import { useForm, FormContext } from 'react-hook-form'
 import { assignWith, set } from 'lodash'
 
 import AddIcon from '@material-ui/icons/Add'
-import type { Dso } from 'context/dso/types'
+
 import { useIsIssuer } from 'services/acl'
 
 import moment from 'moment'
@@ -68,7 +68,7 @@ const baseDsoRequest = {
 
 const useDsoLogic = (dso, action) => {
   // $FlowFixMe
-  const rteRefs = useRef<{ values: Dso }>({ ...baseDsoRequest })
+  const rteRefs = useRef({ ...baseDsoRequest })
   const isIssuer = useIsIssuer()
   const history = useHistory()
   const [subsTitle, setSubsTitle] = useState('')
@@ -96,7 +96,7 @@ const useDsoLogic = (dso, action) => {
     sourceArr.map((source, i) => {
       const dest = destArr[i]
 
-      Object.keys(source).forEach((key) => {
+      Object.keys(source).forEach(key => {
         if (!source[key]) {
           delete source[key]
         }
@@ -106,7 +106,7 @@ const useDsoLogic = (dso, action) => {
         }
       })
 
-      Object.keys(dest).forEach((key) => {
+      Object.keys(dest).forEach(key => {
         if (!source[key]) {
           delete source[key]
         }
@@ -120,7 +120,7 @@ const useDsoLogic = (dso, action) => {
     })
 
   const getFinalValues = () => {
-    Object.values(rteRefs.current).forEach((e) => {
+    Object.values(rteRefs.current).forEach(e => {
       // $FlowFixMe
       if (e.save) {
         // $FlowFixMe
@@ -128,7 +128,7 @@ const useDsoLogic = (dso, action) => {
       }
 
       if (Array.isArray(e)) {
-        e.forEach((v) => {
+        e.forEach(v => {
           // $FlowFixMe
           if (v.save) {
             v.save()
@@ -195,7 +195,7 @@ const useDsoLogic = (dso, action) => {
     reset(values)
   }
 
-  const onRemove = (index) => {
+  const onRemove = index => {
     const values = getFinalValues()
     const team = values.team.filter((e, i) => i !== index)
     if (
@@ -216,7 +216,7 @@ const useDsoLogic = (dso, action) => {
     reset(values)
   }
 
-  const onRemoveDocument = (index) => {
+  const onRemoveDocument = index => {
     const values = getFinalValues()
     const documents = (values.documents || []).filter((e, i) => i !== index)
     if (
@@ -249,7 +249,7 @@ const useDsoLogic = (dso, action) => {
     set(rteRefs.current, key, ref)
   }
 
-  const onSubscriptionUpload = (res: any) => {
+  const onSubscriptionUpload = res => {
     const values = getFinalValues()
     setSubsTitle(res.originalFileName)
     values.subscriptionDocument = res._id
@@ -271,7 +271,7 @@ const useDsoLogic = (dso, action) => {
     reset(values)
   }
 
-  const onLogoUpload = (res: any) => {
+  const onLogoUpload = res => {
     const values = getFinalValues()
     values.logo = res._id
     rteRefs.current.values = { ...values }
@@ -281,7 +281,7 @@ const useDsoLogic = (dso, action) => {
     reset(values)
   }
 
-  const onDataroomDocumentUploaded = (res: any) => {
+  const onDataroomDocumentUploaded = res => {
     const values = getFinalValues()
     if (!values.documents) {
       values.documents = []
@@ -295,7 +295,7 @@ const useDsoLogic = (dso, action) => {
     reset(values)
   }
 
-  const setFormData = (values: any) => {
+  const setFormData = values => {
     setEditableDso({
       ...values
     })
@@ -335,14 +335,6 @@ const DsoInformation = ({
   headerButtonShown = true,
   action = 'view',
   assets = []
-}: {
-  dso: Dso,
-  assets?: Array<any>,
-  action?: string,
-  headerButtonShown?: boolean,
-  headerButtonText?: string,
-  headerButtonAction?: Function,
-  onClickDocument: Function,
 }) => {
   const {
     setValue,
@@ -367,7 +359,11 @@ const DsoInformation = ({
     removeSubscriptionDocument,
     methods
   } = useDsoLogic(dso || { ...baseDsoRequest }, action)
-  const isVisible = isIssuer && !(dso || {}).deploymentInfo && (dso || {}).status === 'Approved' && !edit
+  const isVisible =
+    isIssuer &&
+    !(dso || {}).deploymentInfo &&
+    (dso || {}).status === 'Approved' &&
+    !edit
 
   return (
     <FormContext {...methods}>
@@ -472,8 +468,8 @@ const DsoInformation = ({
                     {edit && (
                       <RichEditor
                         value={editableDso.introduction || 'Introduction'}
-                        ref={(ref) => registerRichText('introduction', ref)}
-                        save={(val) => {
+                        ref={ref => registerRichText('introduction', ref)}
+                        save={val => {
                           setRefValue('introduction', val)
                         }}
                       />
@@ -491,12 +487,11 @@ const DsoInformation = ({
             <Box mt={4}>
               <SectionContainer title='Subscription Document'>
                 {['view'].includes(action) &&
-                  editableDso.subscriptionDocument &&
-                  (
+                  editableDso.subscriptionDocument && (
                     <Button onClick={() => downloadFile(dso._id)}>
                       Download
-                    </Button>
-                  )}
+                  </Button>
+                )}
                 {['create', 'edit'].includes(action) && (
                   <Uploader
                     document={{
@@ -535,8 +530,8 @@ const DsoInformation = ({
                 {edit && (
                   <RichEditor
                     value={editableDso.businessModel || 'Business Model'}
-                    ref={(ref) => registerRichText('businessModel', ref)}
-                    save={(val) => {
+                    ref={ref => registerRichText('businessModel', ref)}
+                    save={val => {
                       setRefValue('businessModel', val)
                     }}
                   />
@@ -557,7 +552,9 @@ const DsoInformation = ({
                       variant='contained'
                       color='primary'
                       onClick={() => {
-                        history.push(`/issuance/${dso.createdBy}/${dso._id}/deploy`)
+                        history.push(
+                          `/issuance/${dso.createdBy}/${dso._id}/deploy`
+                        )
                       }}
                     >
                       Deploy
@@ -579,8 +576,8 @@ const DsoInformation = ({
                 {edit && (
                   <RichEditor
                     value={editableDso.useOfProceeds || 'Use of Proceeds'}
-                    ref={(ref) => registerRichText('useOfProceeds', ref)}
-                    save={(val) => {
+                    ref={ref => registerRichText('useOfProceeds', ref)}
+                    save={val => {
                       setRefValue('useOfProceeds', val)
                     }}
                   />
@@ -644,9 +641,9 @@ const DsoInformation = ({
                           editableDso.fundraisingMilestone ||
                         'Fund raising Milestone'
                         }
-                        ref={(ref) =>
+                        ref={ref =>
                           registerRichText('fundRaisingMilestone', ref)}
-                        save={(val) => {
+                        save={val => {
                           setRefValue('fundraisingMilestone', val)
                         }}
                       />
@@ -667,7 +664,7 @@ const DsoInformation = ({
                     member={member}
                     key={member._id || i}
                     remove={() => onRemove(i)}
-                    ref={(ref) => {
+                    ref={ref => {
                       if (ref && ref.save) {
                         registerRichText(`team[${i}]`, ref)
                         return
@@ -677,7 +674,7 @@ const DsoInformation = ({
                         register(ref)
                       }
                     }}
-                    save={(val) => {
+                    save={val => {
                       setRefValue(`team[${i}].about`, val)
                     }}
                   />

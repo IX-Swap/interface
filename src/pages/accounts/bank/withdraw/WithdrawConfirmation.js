@@ -1,11 +1,10 @@
-// @flow
+//
 import React, { useState } from 'react'
 import { Typography, TextField, Button, Grid, Box } from '@material-ui/core'
 import { makeStyles } from '@material-ui/styles'
 import { useHistory } from 'react-router-dom'
 import { snackbarService, ButtonWithLoading } from 'uno-material-ui'
 import { withdraw } from './modules/actions'
-import type { Bank } from '../modules/types'
 
 const useStyles = makeStyles(() => ({
   infoGrid: {
@@ -22,22 +21,14 @@ const useStyles = makeStyles(() => ({
   }
 }))
 
-const BoldTypography = ({ children, ...others }: any) => (
+const BoldTypography = ({ children, ...others }) => (
   // eslint-disable-next-line
   <Typography {...others}>
     <b>{children}</b>
   </Typography>
 )
 
-export default function WithdrawConfirmation ({
-  bank,
-  memo,
-  amount
-}: {
-  bank: Bank,
-  amount: number,
-  memo: string,
-}) {
+export default function WithdrawConfirmation ({ bank, memo, amount }) {
   const classes = useStyles()
   const history = useHistory()
   const [twoFa, setTwoFa] = useState('')
@@ -51,7 +42,7 @@ export default function WithdrawConfirmation ({
     })
   }
 
-  const handle2faChange = (evt: SyntheticInputEvent<HTMLElement>) => {
+  const handle2faChange = evt => {
     setTwoFa(evt.target.value)
   }
 

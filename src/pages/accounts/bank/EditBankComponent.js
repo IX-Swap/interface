@@ -1,25 +1,23 @@
-// @flow
+//
 import React, { useCallback, useState, useEffect } from 'react'
 import Alert from '@material-ui/lab/Alert'
 import BankFormComponent from './BankFormComponent'
 import Actions from './modules/actions'
 import BankListModule from './modules'
 
-import type { BankRequest } from './modules/types'
-
-import { Button, Dialog, DialogActions, DialogContent, DialogTitle, Box } from '@material-ui/core'
+import {
+  Button,
+  Dialog,
+  DialogActions,
+  DialogContent,
+  DialogTitle,
+  Box
+} from '@material-ui/core'
 
 const { useBanksListDispatch, useBanksListState } = BankListModule
 const { createBankAccount } = Actions
 
-type EditBankComponentProps = {
-  open: boolean,
-  handleClose: Function,
-  onFinish: Function,
-  bank: BankRequest,
-};
-
-function useEditBankLogic (baseBank: BankRequest, onFinish) {
+function useEditBankLogic (baseBank, onFinish) {
   const { statusCode, error } = useBanksListState()
   const [bank, setBank] = useState(baseBank)
   const bankListDispatch = useBanksListDispatch()
@@ -28,7 +26,7 @@ function useEditBankLogic (baseBank: BankRequest, onFinish) {
 
   // setBank(bank);
   const onChange = useCallback(
-    (mBank: BankRequest, result: boolean) => {
+    (mBank, result) => {
       setBank(mBank)
       setIsValidForm(result)
     },
@@ -76,7 +74,7 @@ export default function EditBankComponent ({
   handleClose,
   bank,
   onFinish
-}: EditBankComponentProps) {
+}) {
   const {
     onChange,
     onSave,

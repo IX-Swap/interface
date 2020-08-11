@@ -1,4 +1,3 @@
-
 import React, { useContext, createContext } from 'react'
 
 import { BalancesStore } from './store'

@@ -1,4 +1,4 @@
-// @flow
+//
 import React, { useRef, useEffect, useState } from 'react'
 import { RouteProps } from 'react-router-dom'
 
@@ -7,11 +7,9 @@ import LabelValue from 'components/LabelValue'
 import { Autocomplete } from '@material-ui/lab'
 
 import { useAssetsState, useAssetsDispatch } from 'context/assets'
-import { ASSETS_STATUS } from 'context/assets/types'
+
 import * as AssetsActions from 'context/assets/actions'
 import PersonalBalancesListModule from 'context/balance/personal'
-
-import type { UserSecurityBalance } from 'context/balance/types'
 
 import Actions from 'context/balance/personal/actions'
 import DepositList from './list'
@@ -81,14 +79,10 @@ function useGetters () {
   }
 }
 
-type DSState = {
-  selectedCoin: ?UserSecurityBalance,
-};
-
-function useDigitalSecuritiesLogic (asset: string) {
+function useDigitalSecuritiesLogic (asset) {
   const { type, assetsStatus } = useGetters()
   const { items, page, pBDispatch } = useBalancesLogic()
-  const [dsState, setDsState] = useState<DSState>({ selectedCoin: undefined })
+  const [dsState, setDsState] = useState({ selectedCoin: undefined })
 
   useEffect(() => {
     if (assetsStatus === ASSETS_STATUS.IDLE && type === 'Security') {
@@ -100,7 +94,7 @@ function useDigitalSecuritiesLogic (asset: string) {
     !dsState.selectedCoin ||
     (dsState.selectedCoin && dsState.selectedCoin.assetId !== asset)
   ) {
-    const filtered = items.filter((e) => e.assetId === asset)
+    const filtered = items.filter(e => e.assetId === asset)
 
     if (filtered.length) {
       setDsState({
@@ -120,29 +114,26 @@ function useDigitalSecuritiesLogic (asset: string) {
 const balanceValues = [
   {
     label: 'Total Balance:',
-    value: (ds: UserSecurityBalance) => ds.balance
+    value: ds => ds.balance
   },
   {
     label: 'On Hold Balance:',
-    value: (ds: UserSecurityBalance) => ds.onHold
+    value: ds => ds.onHold
   },
   {
     label: 'Available Balance:',
-    value: (ds: UserSecurityBalance) => ds.available
+    value: ds => ds.available
   }
 ]
 
-export default function DigitalSecurities ({ match }: RouteProps) {
+export default function DigitalSecurities ({ match }) {
   const { items, setDsState, dsState } = useDigitalSecuritiesLogic(
     match.params.assetId
   )
 
-  const isSelected = (
-    option: UserSecurityBalance,
-    value: UserSecurityBalance
-  ) => option.assetId === value.assetId
+  const isSelected = (option, value) => option.assetId === value.assetId
 
-  const onCoinChange = (ev, value: UserSecurityBalance) => {
+  const onCoinChange = (ev, value) => {
     setDsState({
       ...dsState,
       selectedCoin: value
@@ -161,11 +152,10 @@ export default function DigitalSecurities ({ match }: RouteProps) {
             options={items}
             value={dsState.selectedCoin || {}}
             getOptionSelected={isSelected}
-            getOptionLabel={(option: UserSecurityBalance) =>
-              `${option.name} (${option.symbol})`}
+            getOptionLabel={option => `${option.name} (${option.symbol})`}
             id='coin'
             onChange={onCoinChange}
-            renderInput={(params) => (
+            renderInput={params => (
               <TextField {...params} label="Digital Security" margin="normal" /> // eslint-disable-line
             )}
           />

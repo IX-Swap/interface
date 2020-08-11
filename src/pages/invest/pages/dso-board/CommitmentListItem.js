@@ -1,19 +1,19 @@
-// @flow
+//
 import React from 'react'
 import { useHistory } from 'react-router-dom'
 import { TableRow, TableCell, Button } from '@material-ui/core'
 import { formatMoney, formatNumber } from 'helpers/formatNumbers'
 import DsoImage from 'components/Dso/DsoImage'
-import { Commitment } from './modules/types'
+
 import { useInvestDispatch } from '../../modules'
 import { setSelectedCommitment } from '../../modules/actions'
 
-const CommitmentListItem = ({ commitment }: { commitment: Commitment }) => {
+const CommitmentListItem = ({ commitment }) => {
   const dispatch = useInvestDispatch()
   const history = useHistory()
   const { dso, pricePerUnit, totalAmount, numberOfUnits, status } = commitment
 
-  const onClickView = (e) => {
+  const onClickView = e => {
     e.preventDefault()
 
     setSelectedCommitment(dispatch, commitment)

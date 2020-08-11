@@ -1,4 +1,4 @@
-// @flow
+//
 import React, { useEffect, useRef } from 'react'
 import {
   TableContainer,
@@ -15,7 +15,6 @@ import { get } from 'lodash'
 import moment from 'moment'
 import DSModule from './modules/index'
 import DSActions from './modules/actions'
-import type { DSDeposit } from './modules/types'
 
 const {
   useDSDepositsListDispatch,
@@ -25,17 +24,17 @@ const {
 
 const { setPage, setRowsPerPage, getDigitalSecurityDeposits } = DSActions
 
-const useDepositsListLogic = (assetId: string) => {
+const useDepositsListLogic = assetId => {
   const mountedRef = useRef(true)
   const dsDispatch = useDSDepositsListDispatch()
   const { page, limit, items, status, total } = useDSDepositsListState()
 
-  const handleChangeRowsPerPage = (newRows: number) => {
+  const handleChangeRowsPerPage = newRows => {
     setRowsPerPage(dsDispatch, { rows: newRows })
     setPage(dsDispatch, { page: 0 })
   }
 
-  const handleChangePage = (_, newPage: number) => {
+  const handleChangePage = (_, newPage) => {
     setPage(dsDispatch, { page: newPage })
   }
 
@@ -68,15 +67,7 @@ const useDepositsListLogic = (assetId: string) => {
   }
 }
 
-type TableColumn = {
-  label: string,
-  key: $Keys<DSDeposit>,
-  align?: string,
-  headAlign?: string,
-  render?: any,
-};
-
-const columns: Array<TableColumn> = [
+const columns = [
   {
     label: 'Digital Security',
     // $FlowFixMe
@@ -91,13 +82,13 @@ const columns: Array<TableColumn> = [
     key: 'amount',
     align: 'right',
     headAlign: 'right',
-    render: (value) =>
+    render: value =>
       value && value.toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,')
   },
   {
     label: 'Date',
     key: 'date',
-    render: (value) => moment(value).format('MM/DD/YYYY')
+    render: value => moment(value).format('MM/DD/YYYY')
   },
   {
     label: 'Information',
@@ -105,7 +96,7 @@ const columns: Array<TableColumn> = [
   }
 ]
 
-export default function DepositList ({ assetId }: { assetId: string }) {
+export default function DepositList ({ assetId }) {
   const {
     status,
     total,
@@ -121,7 +112,7 @@ export default function DepositList ({ assetId }: { assetId: string }) {
       <Table aria-label='simple table'>
         <TableHead>
           <TableRow>
-            {columns.map((e) => (
+            {columns.map(e => (
               <TableCell key={e.label} align={e.headAlign || 'left'}>
                 <b>{e.label}</b>
               </TableCell>
@@ -139,7 +130,7 @@ export default function DepositList ({ assetId }: { assetId: string }) {
           <TableBody>
             {items.map((row, index) => (
               <TableRow key={index}>
-                {columns.map((e) => (
+                {columns.map(e => (
                   <TableCell key={e.key} align={e.align || 'left'}>
                     {(e.render && e.render(get(row, e.key))) || get(row, e.key)}
                   </TableCell>
@@ -157,7 +148,7 @@ export default function DepositList ({ assetId }: { assetId: string }) {
                 count={total}
                 rowsPerPage={limit}
                 page={page}
-                onChangeRowsPerPage={(evt: SyntheticInputEvent<HTMLElement>) =>
+                onChangeRowsPerPage={evt =>
                   handleChangeRowsPerPage(parseInt(evt.target.value))}
                 onChangePage={handleChangePage}
               />

@@ -49,7 +49,7 @@ const LoginForm = () => {
           }
         }}
         value={emailValue}
-        onChange={(e) => setEmailValue(e.target.value)}
+        onChange={e => setEmailValue(e.target.value)}
         margin='normal'
         placeholder='Email Address'
         type='email'
@@ -64,7 +64,7 @@ const LoginForm = () => {
           }
         }}
         value={passwordValue}
-        onChange={(e) => setPasswordValue(e.target.value)}
+        onChange={e => setPasswordValue(e.target.value)}
         margin='normal'
         placeholder='Password'
         type='password'
@@ -74,7 +74,7 @@ const LoginForm = () => {
         id='otpValue'
         variant='outlined'
         value={otpValue}
-        onChange={(e) => setOtpValue(e.target.value)}
+        onChange={e => setOtpValue(e.target.value)}
         margin='normal'
         autoComplete='off'
         placeholder='OTP Code (optional)'

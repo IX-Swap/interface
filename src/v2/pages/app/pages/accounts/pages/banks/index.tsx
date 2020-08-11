@@ -32,8 +32,14 @@ const AccountsBanks = () => {
   const match = useRouteMatch()
   const location = useLocation()
 
-  const matchTrimmed = match.path.split('/').filter(Boolean).join('/')
-  const locationTrimmed = location.pathname.split('/').filter(Boolean).join('/')
+  const matchTrimmed = match.path
+    .split('/')
+    .filter(Boolean)
+    .join('/')
+  const locationTrimmed = location.pathname
+    .split('/')
+    .filter(Boolean)
+    .join('/')
 
   return (
     <Grid container direction='column'>

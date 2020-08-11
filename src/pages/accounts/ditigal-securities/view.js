@@ -36,7 +36,7 @@ const ViewAsset = ({ match }: RouteProps) => {
   const { assets } = useAssetsGetter()
   const history = useHistory()
   const assetFiltered = (assets || []).filter(
-    (e) => e._id === match.params.assetId
+    e => e._id === match.params.assetId
   )
 
   if (!assetFiltered.length) return <span>nothing to show</span>

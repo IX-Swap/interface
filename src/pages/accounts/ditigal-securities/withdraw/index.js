@@ -1,4 +1,4 @@
-// @flow
+//
 import React, { useRef, useEffect, useState, useCallback } from 'react'
 import { RouteProps } from 'react-router-dom'
 
@@ -16,11 +16,9 @@ import { ButtonWithLoading, snackbarService } from 'uno-material-ui'
 import moment from 'moment'
 
 import { useAssetsState, useAssetsDispatch } from 'context/assets'
-import { ASSETS_STATUS } from 'context/assets/types'
+
 import * as AssetsActions from 'context/assets/actions'
 import PersonalBalancesListModule from 'context/balance/personal'
-
-import type { UserSecurityBalance } from 'context/balance/types'
 
 import Actions from 'context/balance/personal/actions'
 import WithdrawalList from './list'
@@ -29,8 +27,6 @@ import DSWithdrawalConfirmation from './confirmation'
 
 import WithdrawalModule from './modules'
 import WithdrawalActions, { withdraw } from './modules/actions'
-
-import type { DSState, TransferDetails } from '../modules/types'
 
 const { setAssetType } = AssetsActions
 
@@ -113,15 +109,15 @@ const withdrawalInitialState = {
   otp: ''
 }
 
-function useDigitalSecuritiesLogic (asset: string) {
+function useDigitalSecuritiesLogic (asset) {
   const { type, assetsStatus } = useGetters()
   const { items, page, pBDispatch } = useBalancesLogic()
   const withdrawalListDispatch = useDSWithdrawalsListDispatch()
-  const [dsState, setDsState] = useState<DSState>({ selectedCoin: undefined })
+  const [dsState, setDsState] = useState({ selectedCoin: undefined })
   const [withdrawalState, setWithdrawalState] = useState({
     ...withdrawalInitialState
   })
-  const [transferDetails, setTransferDetails] = useState<TransferDetails>({
+  const [transferDetails, setTransferDetails] = useState({
     asset,
     ...baseTransferDetails
   })
@@ -130,7 +126,7 @@ function useDigitalSecuritiesLogic (asset: string) {
     !dsState.selectedCoin ||
     (dsState.selectedCoin && dsState.selectedCoin.assetId !== asset)
   ) {
-    const filtered = items.filter((e) => e.assetId === asset)
+    const filtered = items.filter(e => e.assetId === asset)
 
     if (filtered.length) {
       setDsState({
@@ -141,7 +137,7 @@ function useDigitalSecuritiesLogic (asset: string) {
   }
 
   const itemsChanged = useCallback(() => {
-    const filtered = items.filter((e) => e.assetId === asset)
+    const filtered = items.filter(e => e.assetId === asset)
 
     if (filtered.length) {
       setDsState({
@@ -204,19 +200,19 @@ function useDigitalSecuritiesLogic (asset: string) {
 const balanceValues = [
   {
     label: 'Total Balance:',
-    value: (ds: UserSecurityBalance) => ds.balance
+    value: ds => ds.balance
   },
   {
     label: 'On Hold Balance:',
-    value: (ds: UserSecurityBalance) => ds.onHold
+    value: ds => ds.onHold
   },
   {
     label: 'Available Balance:',
-    value: (ds: UserSecurityBalance) => ds.available
+    value: ds => ds.available
   }
 ]
 
-export default function DigitalSecurities ({ match }: RouteProps) {
+export default function DigitalSecurities ({ match }) {
   const {
     items,
     setDsState,
@@ -228,7 +224,7 @@ export default function DigitalSecurities ({ match }: RouteProps) {
     onConfirmClicked
   } = useDigitalSecuritiesLogic(match.params.assetId)
 
-  const setDetails = (key: $Keys<TransferDetails>, value: string) => {
+  const setDetails = (key, value) => {
     const details = {
       ...transferDetails
     }
@@ -244,12 +240,9 @@ export default function DigitalSecurities ({ match }: RouteProps) {
     })
   }
 
-  const isSelected = (
-    option: UserSecurityBalance,
-    value: UserSecurityBalance
-  ) => option.assetId === value.assetId
+  const isSelected = (option, value) => option.assetId === value.assetId
 
-  const onCoinChange = (ev, value: UserSecurityBalance) => {
+  const onCoinChange = (ev, value) => {
     setDsState({
       ...dsState,
       selectedCoin: value
@@ -310,7 +303,7 @@ export default function DigitalSecurities ({ match }: RouteProps) {
             label='2-Factor Auth Code'
             autoComplete='off'
             variant='outlined'
-            onChange={(ev) =>
+            onChange={ev =>
               setTransferDetails({ ...transferDetails, otp: ev.target.value })}
           />
         </Box>
@@ -354,11 +347,10 @@ export default function DigitalSecurities ({ match }: RouteProps) {
             options={items}
             value={dsState.selectedCoin || {}}
             getOptionSelected={isSelected}
-            getOptionLabel={(option: UserSecurityBalance) =>
-              `${option.name} (${option.symbol})`}
+            getOptionLabel={option => `${option.name} (${option.symbol})`}
             id='coin'
             onChange={onCoinChange}
-            renderInput={(params) => (
+            renderInput={params => (
               <TextField {...params} label="Digital Security" margin="normal" /> // eslint-disable-line
             )}
           />

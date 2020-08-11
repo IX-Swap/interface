@@ -134,9 +134,10 @@ export function investReducer (state, { type, payload }) {
 
 // context and hooks
 export function InvestProvider ({ children }) {
-  const thisReducer = process.env.NODE_ENV === 'development'
-    ? logger(investReducer)
-    : investReducer
+  const thisReducer =
+    process.env.NODE_ENV === 'development'
+      ? logger(investReducer)
+      : investReducer
 
   const [state, dispatch] = React.useReducer(thisReducer, initialState)
 

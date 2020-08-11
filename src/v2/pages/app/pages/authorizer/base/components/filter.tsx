@@ -63,9 +63,24 @@ const DatePickerInputComponent = (props: any) => (
 )
 
 const initialStatusFilter: StatusFilterItemType[] = [
-  { icon: () => <UnauthorizedIcon />, value: 'Unauthorized', title: 'Unauthorized', isSelected: true },
-  { icon: () => <ApprovedIcon />, value: 'Approved', title: 'Approved', isSelected: false },
-  { icon: () => <RejectedIcon />, value: 'Rejected', title: 'Rejected', isSelected: false },
+  {
+    icon: () => <UnauthorizedIcon />,
+    value: 'Unauthorized',
+    title: 'Unauthorized',
+    isSelected: true
+  },
+  {
+    icon: () => <ApprovedIcon />,
+    value: 'Approved',
+    title: 'Approved',
+    isSelected: false
+  },
+  {
+    icon: () => <RejectedIcon />,
+    value: 'Rejected',
+    title: 'Rejected',
+    isSelected: false
+  },
   { icon: () => <AllIcon />, value: '', title: 'All', isSelected: false }
 ]
 
@@ -73,7 +88,7 @@ const Filter = ({ onApplyFilter }: FilterProps) => {
   const classes = useStyles()
   const [searchItem, setSearchItem] = useState('')
   const [statusFilters, setStatusFilters] = useState([...initialStatusFilter])
-  const [fromDate, setFromDate] = useState<Date| null>(null)
+  const [fromDate, setFromDate] = useState<Date | null>(null)
   const [toDate, setToDate] = useState<Date | null>(null)
 
   const handleFromDateChange = (date: Date | null) => {
@@ -97,7 +112,10 @@ const Filter = ({ onApplyFilter }: FilterProps) => {
   }
 
   const handleApply = (statusIndex?: number) => {
-    const selected = statusIndex !== undefined ? statusFilters[statusIndex] : statusFilters.find((e) => e.isSelected)
+    const selected =
+      statusIndex !== undefined
+        ? statusFilters[statusIndex]
+        : statusFilters.find(e => e.isSelected)
     let status: AuthorizableStatus = ''
     if (selected) {
       status = selected.value
@@ -114,7 +132,9 @@ const Filter = ({ onApplyFilter }: FilterProps) => {
   return (
     <Grid container spacing={2}>
       <Grid item xs={12} style={{ padding: '0 32px' }}>
-        <Typography variant='button' className={classes.filtersLabel}>FILTERS</Typography>
+        <Typography variant='button' className={classes.filtersLabel}>
+          FILTERS
+        </Typography>
       </Grid>
       <Grid item xs={12}>
         {statusFilters.map((e, i) => (
@@ -136,7 +156,12 @@ const Filter = ({ onApplyFilter }: FilterProps) => {
           </StatusFilter>
         ))}
       </Grid>
-      <Grid item xs={12} className={classes.spaced} style={{ paddingTop: '24px' }}>
+      <Grid
+        item
+        xs={12}
+        className={classes.spaced}
+        style={{ paddingTop: '24px' }}
+      >
         <TextField
           fullWidth
           style={{ marginBottom: '8px' }}
@@ -182,7 +207,13 @@ const Filter = ({ onApplyFilter }: FilterProps) => {
           />
         </Grid>
       </MuiPickersUtilsProvider>
-      <Grid container item xs={12} justify='flex-end' className={classes.spaced}>
+      <Grid
+        container
+        item
+        xs={12}
+        justify='flex-end'
+        className={classes.spaced}
+      >
         <Button
           variant='contained'
           size='small'

@@ -10,7 +10,7 @@ const Offerings = () => {
       uri='/issuance/dso/list'
       name='authorizerDsoList'
       columns={columns}
-      onView={(row) => <DigitalSecurity dso={row} editMode={false} />}
+      onView={row => <DigitalSecurity dso={row} editMode={false} />}
     />
   )
 }

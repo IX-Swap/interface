@@ -1,7 +1,6 @@
-// @flow
+//
 import actionGenerator from 'context/base/withPagination/actions'
 import { putRequest } from 'services/httpRequests'
-import type { Deposit } from './types'
 
 const { getter: getDeposits, ...pageMethods } = actionGenerator(
   'authorizerDepositsList',
@@ -9,7 +8,7 @@ const { getter: getDeposits, ...pageMethods } = actionGenerator(
   {}
 )
 
-const toggleDepositStatus = async (deposit: Deposit, newStatus: string) => {
+const toggleDepositStatus = async (deposit, newStatus) => {
   const action = newStatus.toLowerCase().includes('approve')
     ? 'approve'
     : 'reject'

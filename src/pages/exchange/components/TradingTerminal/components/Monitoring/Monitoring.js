@@ -62,14 +62,14 @@ function Monitoring (props) {
 
   let filteredData = search || data
   // handle on search function in the Trading Terminal
-  const _onSearch = (evt) => {
+  const _onSearch = evt => {
     const { target } = evt
     const { value } = target
 
     // Start searching if the input value is more than 3 characters
     if (value.length > 3) {
       const filterData = data.filter(
-        (d) => d.name.toLowerCase().search(value.toLowerCase()) !== -1
+        d => d.name.toLowerCase().search(value.toLowerCase()) !== -1
       )
 
       setSearch(filterData)
@@ -78,7 +78,7 @@ function Monitoring (props) {
     }
   }
 
-  const toggleSelected = (id) => {
+  const toggleSelected = id => {
     const isSelected = !quotesSelected[id]
     setQuotesSelected({
       ...quotesSelected,
@@ -86,7 +86,7 @@ function Monitoring (props) {
     })
   }
 
-  const toggleFavoriteMarket = (id) => {
+  const toggleFavoriteMarket = id => {
     const isSelected = !faveMarkets[id]
     const newMarkets = {
       ...faveMarkets,
@@ -133,7 +133,7 @@ function Monitoring (props) {
     const selected = {}
     if (type === 'marketList') {
       const seen = new Set()
-      mAvailableQuote = (props.data || []).filter((e) => {
+      mAvailableQuote = (props.data || []).filter(e => {
         const duplicate = seen.has(e.quote._id)
         seen.add(e.quote._id)
         selected[e.quote._id] = true
@@ -145,7 +145,7 @@ function Monitoring (props) {
   }, [])
 
   if (type === 'marketList' && fav) {
-    filteredData = filteredData.filter((e) => faveMarkets[e._id])
+    filteredData = filteredData.filter(e => faveMarkets[e._id])
   }
 
   return (
@@ -197,7 +197,7 @@ function Monitoring (props) {
                 color='primary'
                 aria-label='outlined primary button group'
               >
-                {availableQuotes.map((e) => (
+                {availableQuotes.map(e => (
                   <Button
                     key={e.quote._id}
                     variant={quotesSelected[e.quote._id] ? 'contained' : ''}
@@ -242,8 +242,8 @@ function Monitoring (props) {
               classes.upper
             )
 
-            const renderMonitoringEl = (item) => {
-              const max = Math.max(...filteredData.map((e) => e.total))
+            const renderMonitoringEl = item => {
+              const max = Math.max(...filteredData.map(e => e.total))
               const green = 'rgba(4, 119, 98, .1)'
               const red = 'rgba(181, 0, 0, .1)'
               const barStyle = {
@@ -288,13 +288,23 @@ function Monitoring (props) {
                     <>
                       <p
                         className={priceStyle}
-                        onClick={() => _handleStorePayload(d, d.side === 'ASK' ? 'asks' : 'bids', false)}
+                        onClick={() =>
+                          _handleStorePayload(
+                            d,
+                            d.side === 'ASK' ? 'asks' : 'bids',
+                            false
+                          )}
                       >
                         {numberWithCommas(d.price?.toFixed(4))}
                       </p>
                       <p
                         className={amountStyle}
-                        onClick={() => _handleStorePayload(d, d.side === 'ASK' ? 'asks' : 'bids', false)}
+                        onClick={() =>
+                          _handleStorePayload(
+                            d,
+                            d.side === 'ASK' ? 'asks' : 'bids',
+                            false
+                          )}
                       >
                         {numberWithCommas(d.amount?.toFixed(4) || 0)}
                       </p>
@@ -335,10 +345,7 @@ function Monitoring (props) {
             }
 
             return (
-              <li
-                key={i}
-                className={classes.monitoringListItem}
-              >
+              <li key={i} className={classes.monitoringListItem}>
                 {renderMonitoringEl(type)}
               </li>
             )

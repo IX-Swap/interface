@@ -1,6 +1,6 @@
-// @flow
+//
 import React, { useState } from 'react'
-import type { Node } from 'react'
+
 import {
   Container,
   Typography,
@@ -23,17 +23,7 @@ const useStyles = makeStyles(() => ({
   }
 }))
 
-type IdentitySectionProps = {
-  title: string,
-  subtitle?: string,
-  children: Node,
-};
-
-const IdentitySection = ({
-  title,
-  subtitle,
-  children
-}: IdentitySectionProps) => {
+const IdentitySection = ({ title, subtitle, children }) => {
   const classes = useStyles()
 
   const [expanded, setExpanded] = useState(true)

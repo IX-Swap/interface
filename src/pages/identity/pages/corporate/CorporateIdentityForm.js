@@ -1,4 +1,4 @@
-// @flow
+//
 import React, { useEffect } from 'react'
 import { forOwn } from 'lodash'
 import { useForm, FormContext } from 'react-hook-form'
@@ -12,7 +12,7 @@ import AddressForm from '../../components/AddressForm'
 import Dataroom from '../../components/Dataroom'
 import Declaration from '../../components/Declaration'
 import declarations from '../../data/declarations'
-import type { Identity, Document } from '../../modules/types'
+
 import documents from '../../data/documents'
 
 const CorporateIdentityForm = ({
@@ -21,18 +21,12 @@ const CorporateIdentityForm = ({
   dataroom,
   handleCreateIdentity,
   onCancelEdit
-}: {
-  corporate: Identity,
-  editMode: boolean,
-  dataroom: Document[],
-  handleCreateIdentity?: Function,
-  onCancelEdit?: Function,
 }) => {
   const methods = useForm()
 
   const { handleSubmit, errors } = methods
 
-  const onSubmit = (data: any) => {
+  const onSubmit = data => {
     const formattedDeclarations = []
     forOwn(data.declarations, (value, key) => {
       formattedDeclarations.push({ [key]: value })

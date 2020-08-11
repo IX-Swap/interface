@@ -1,7 +1,6 @@
-// @flow
-import type { MarketListState } from './types'
+//
 
-export const initialState: MarketListState = {
+export const initialState = {
   data: [],
   isLoading: false,
   message: '',

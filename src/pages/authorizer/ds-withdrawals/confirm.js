@@ -1,4 +1,4 @@
-// @flow
+//
 import React from 'react'
 import {
   Dialog,
@@ -8,23 +8,13 @@ import {
   Button
 } from '@material-ui/core'
 
-import type { DSWithdrawal } from './modules/types'
-
-type Prop = {
-  withdraw: DSWithdrawal,
-  newStatus: string,
-  open: boolean,
-  handleClose: Function,
-  handleConfirm: (withdraw: DSWithdrawal, newStatus: string) => Promise<void>,
-};
-
 export default function DialogAuthorizeConfirmation ({
   withdraw,
   open,
   newStatus,
   handleClose,
   handleConfirm
-}: Prop) {
+}) {
   return (
     <Dialog
       disableBackdropClick

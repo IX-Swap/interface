@@ -1,4 +1,4 @@
-// @flow
+//
 import React from 'react'
 import { Redirect } from 'react-router-dom'
 import { Box, Button } from '@material-ui/core'
@@ -10,7 +10,7 @@ const IndividualIdentity = () => {
   const { status, identity, editMode, dataroom } = useIdentityState()
   const identityDispatch = useIdentityDispatch()
 
-  const handleOnCreate = (data: any) => {
+  const handleOnCreate = data => {
     createIdentity(identityDispatch, data, 'individual')
   }
 

@@ -1,13 +1,6 @@
-// @flow
-import type { GenericStatus } from 'context/base/withPagination/types'
-import type { BanksListState } from './types'
-import { userAddBankActions, bankSaveStatus } from './types'
+//
 
-export default function addBankReducer (
-  statusTypes: GenericStatus,
-  state: BanksListState,
-  action: any
-): BanksListState {
+export default function addBankReducer (statusTypes, state, action) {
   switch (action.type) {
     case userAddBankActions.USER_ADD_BANK_REQUEST:
       return {

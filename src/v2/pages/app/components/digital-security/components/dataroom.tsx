@@ -28,7 +28,9 @@ const DSDataRoom = ({
       uri = `/dataroom/raw/${storageHelper.getUserId()}/${id}`
     }
 
-    downloadFile(uri).then(noop).catch(noop)
+    downloadFile(uri)
+      .then(noop)
+      .catch(noop)
   }
   const items = (documents || []).map((document, i) => (
     <Grid container direction='row' key={document._id} alignItems='center'>
@@ -51,15 +53,13 @@ const DSDataRoom = ({
           }}
         />
       </Grid>
-      {
-        editMode && (
-          <Grid item>
-            <IconButton onClick={() => onRemoveDocument(document._id)}>
-              <RemoveIcon />
-            </IconButton>
-          </Grid>
-        )
-      }
+      {editMode && (
+        <Grid item>
+          <IconButton onClick={() => onRemoveDocument(document._id)}>
+            <RemoveIcon />
+          </IconButton>
+        </Grid>
+      )}
     </Grid>
   ))
 

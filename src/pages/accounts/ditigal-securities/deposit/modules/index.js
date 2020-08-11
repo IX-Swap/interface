@@ -1,13 +1,9 @@
-// @flow
+//
 import { generateModule } from 'context/base/withPagination'
-import type { DSDeposit } from './types'
 
-const {
-  Provider,
-  useState,
-  useDispatch,
-  statusList
-} = generateModule<DSDeposit>('getDigitalSecurityDepositsList')
+const { Provider, useState, useDispatch, statusList } = generateModule(
+  'getDigitalSecurityDepositsList'
+)
 
 export default {
   DSDepositsListProvider: Provider,

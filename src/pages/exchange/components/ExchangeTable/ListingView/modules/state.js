@@ -1,7 +1,6 @@
-// @flow
-import type { ListingViewState } from './types'
+//
 
-export const initialState: ListingViewState = {
+export const initialState = {
   data: null,
   isLoading: false,
   message: '',

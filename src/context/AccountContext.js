@@ -44,7 +44,9 @@ export const getAssetsActions = {
  */
 export function useAccountState () {
   const context = React.useContext(StateContext)
-  if (context === undefined) { throw new Error('useAccountState must be called in a AccountProvider') }
+  if (context === undefined) {
+    throw new Error('useAccountState must be called in a AccountProvider')
+  }
   return context
 }
 

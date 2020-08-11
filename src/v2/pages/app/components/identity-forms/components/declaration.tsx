@@ -24,7 +24,7 @@ const Declaration = ({
 
   return (
     <List>
-      {declarations.map((declaration) => {
+      {declarations.map(declaration => {
         const {
           key,
           content,

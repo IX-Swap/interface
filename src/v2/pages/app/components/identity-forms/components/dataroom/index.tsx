@@ -41,16 +41,25 @@ const DataRoom = ({
           </Grid>
         </Grid>
       </ListSubheader>
-      {documentsList.map((document) => {
-        const idx = findIndex(
-          dataroom,
-          (file) => file.title === document.title
-        )
+      {documentsList.map(document => {
+        const idx = findIndex(dataroom, file => file.title === document.title)
         if (idx < 0) {
-          return <Uploader key={document.title} document={document} editMode={false} />
+          return (
+            <Uploader
+              key={document.title}
+              document={document}
+              editMode={false}
+            />
+          )
         }
 
-        return <DocumentItem key={document.title} document={dataroom[idx]} editMode={editMode} />
+        return (
+          <DocumentItem
+            key={document.title}
+            document={dataroom[idx]}
+            editMode={editMode}
+          />
+        )
       })}
     </List>
   )

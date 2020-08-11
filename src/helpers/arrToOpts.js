@@ -1,3 +1,3 @@
 export default function arrToOpts (arr) {
-  return arr.map((value) => ({ value, label: value }))
+  return arr.map(value => ({ value, label: value }))
 }

@@ -1,4 +1,4 @@
-// @flow
+//
 import React, { useState } from 'react'
 import CommitmentView from './CommitmentView'
 import IdentityView from './IndentityView'
@@ -12,7 +12,7 @@ const authorizeCommitmentsPage = {
 }
 
 // TODO: Make the views router based not state based
-const Commitments = ({ location } : any) => {
+const Commitments = ({ location }) => {
   const { commitment } = location.state || {}
   const history = useHistory()
 

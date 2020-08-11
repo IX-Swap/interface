@@ -1,7 +1,6 @@
 import { postRequest, getRequest } from 'services/httpRequests'
 import localStore from 'services/storageHelper'
 import { _subscribeToSocket, subscribeToSocket } from 'services/socket'
-import { userActions } from './types'
 
 export async function loginUser (
   dispatch: Function,

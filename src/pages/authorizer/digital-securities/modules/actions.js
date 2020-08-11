@@ -1,8 +1,7 @@
-// @flow
+//
 import actionGenerator from 'context/base/withPagination/actions'
 import { putRequest, getRequest } from 'services/httpRequests'
 import storageHelper from 'services/storageHelper'
-import type { Dso, Document } from 'context/dso/types'
 
 const { getter: getWithdraws, ...pageMethods } = actionGenerator(
   'authorizerDsoList',
@@ -10,7 +9,7 @@ const { getter: getWithdraws, ...pageMethods } = actionGenerator(
   {}
 )
 
-const toggleWithdrawStatus = async (dso: Dso, newStatus: string) => {
+const toggleWithdrawStatus = async (dso, newStatus) => {
   const action = newStatus.toLowerCase().includes('approve')
     ? 'approve'
     : 'reject'
@@ -21,14 +20,14 @@ const toggleWithdrawStatus = async (dso: Dso, newStatus: string) => {
 }
 
 // TODO: Move to another place for reusability
-const downloadFile = async (dsoId: string, document: Document) => {
+const downloadFile = async (dsoId, document) => {
   const { _id } = document
 
   const uri = `/issuance/dso/dataroom/documents/raw/${dsoId}/${_id}`
   const result = await getRequest(uri)
 
   if (result.status === 200) {
-    result.blob().then((blob) => {
+    result.blob().then(blob => {
       const url = window.URL.createObjectURL(blob)
       window.open(url)
     })
@@ -37,7 +36,7 @@ const downloadFile = async (dsoId: string, document: Document) => {
   }
 }
 
-const getDso = async (id: string): Promise<?Dso> => {
+const getDso = async id => {
   try {
     const url = `/issuance/dso/${storageHelper.getUserId()}/${id}`
     const res = await getRequest(url)

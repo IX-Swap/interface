@@ -1,4 +1,4 @@
-// @flow
+//
 import React, { useRef, useEffect } from 'react'
 import {
   TableContainer,
@@ -43,11 +43,11 @@ const useIdentityListLogic = () => {
   } = identityListState
   const mountedRef = useRef(true)
 
-  const handleChangePage = (_, newPage: number) => {
+  const handleChangePage = (_, newPage) => {
     setPage(identityListDispatch, { page: newPage })
   }
 
-  const handleChangeRowsPerPage = (newRows: number) => {
+  const handleChangeRowsPerPage = newRows => {
     setRowsPerPage(identityListDispatch, { rows: newRows })
     setPage(identityListDispatch, { page: 0 })
   }
@@ -86,7 +86,7 @@ const useIdentityListLogic = () => {
   }
 }
 
-const IdentityList = ({ onClickView }: { onClickView: Function }) => {
+const IdentityList = ({ onClickView }) => {
   const {
     status: loadingStatus,
     items = [],
@@ -129,7 +129,7 @@ const IdentityList = ({ onClickView }: { onClickView: Function }) => {
           </TableHead>
           <TableBody>
             {items.length ? (
-              items.map((identity) => (
+              items.map(identity => (
                 <IdentityListItem
                   key={identity._id}
                   identity={identity}
@@ -153,9 +153,8 @@ const IdentityList = ({ onClickView }: { onClickView: Function }) => {
                   count={total}
                   rowsPerPage={limit}
                   page={page}
-                  onChangeRowsPerPage={(
-                    evt: SyntheticInputEvent<HTMLElement>
-                  ) => handleChangeRowsPerPage(parseInt(evt.target.value))}
+                  onChangeRowsPerPage={evt =>
+                    handleChangeRowsPerPage(parseInt(evt.target.value))}
                   onChangePage={handleChangePage}
                 />
               </TableRow>

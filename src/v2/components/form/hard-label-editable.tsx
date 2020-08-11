@@ -14,7 +14,13 @@ interface EditableWithLabelProps {
   editMode?: boolean
 }
 
-const EditableWithLabel = ({ editMode = false, required = false, label, value, name }: EditableWithLabelProps) => {
+const EditableWithLabel = ({
+  editMode = false,
+  required = false,
+  label,
+  value,
+  name
+}: EditableWithLabelProps) => {
   const { register, errors } = useFormContext() || { register: noop }
   return (
     <Box py={2}>

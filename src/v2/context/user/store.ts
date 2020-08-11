@@ -106,7 +106,7 @@ export class UserStore {
     if (response.data) {
       this.isVerified = true
     } else {
-      this.error = response.data!
+      this.error = response.data
     }
 
     this.isLoading = false

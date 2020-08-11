@@ -32,7 +32,11 @@ const Editor = (props: any) => {
   )
 }
 
-const EditableWysiwyg = ({ editMode = false, name, value }: EditableWysiwygProps) => {
+const EditableWysiwyg = ({
+  editMode = false,
+  name,
+  value
+}: EditableWysiwygProps) => {
   const { control } = useFormContext()
 
   if (!editMode) {

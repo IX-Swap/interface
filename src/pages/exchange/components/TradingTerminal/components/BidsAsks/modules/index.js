@@ -1,12 +1,11 @@
-// @flow
+//
 import React from 'react'
-import type { Node } from 'react'
+
 import logger from '../../../../../../../v2/helpers/logger'
 import { postOrderReducer } from './reducers'
 import { initialState } from './state'
-import type { PostOrderInitState } from './types'
 
-const PostOrderStateContext = React.createContext<PostOrderInitState>(initialState)
+const PostOrderStateContext = React.createContext(initialState)
 const PostOrderDispatchContext = React.createContext()
 
 export function PostOrderState () {
@@ -21,19 +20,20 @@ export function PostOrderState () {
 export function usePostOrderDispatch () {
   const context = React.useContext(PostOrderDispatchContext)
   if (context === undefined) {
-    throw new Error('usePostOrderDispatch must be used within a PostOrderProvider')
+    throw new Error(
+      'usePostOrderDispatch must be used within a PostOrderProvider'
+    )
   }
 
   return context
 }
 
-export function PostOrderProvider ({ children }: { children: Node }) {
+export function PostOrderProvider ({ children }) {
   const thisReducer =
-    process.env.NODE_ENV === 'development' ? logger(postOrderReducer) : postOrderReducer
-  const [state, dispatch] = React.useReducer<PostOrderInitState, PostOrderInitState>(
-    thisReducer,
-    initialState
-  )
+    process.env.NODE_ENV === 'development'
+      ? logger(postOrderReducer)
+      : postOrderReducer
+  const [state, dispatch] = React.useReducer(thisReducer, initialState)
 
   return (
     <PostOrderStateContext.Provider value={state}>

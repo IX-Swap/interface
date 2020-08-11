@@ -16,7 +16,9 @@ import classnames from 'classnames'
 // styles
 import useStyles from './styles'
 
-const ListItemLink = React.forwardRef(({ ...props }: any, ref: any) => <Link ref={ref} {...props} />)
+const ListItemLink = React.forwardRef(({ ...props }: any, ref: any) => (
+  <Link ref={ref} {...props} />
+))
 
 export default function SidebarLink ({
   link,
@@ -31,7 +33,7 @@ export default function SidebarLink ({
   link?: string
   icon?: JSX.Element
   label?: string
-  children?: Array<{link: string; label: string}>
+  children?: Array<{ link: string; label: string }>
   location: any
   isSidebarOpened: boolean
   nested: any
@@ -41,9 +43,10 @@ export default function SidebarLink ({
 
   // local
   const [isOpen, setIsOpen] = useState(false)
-  const isLinkActive =
-    !!(link &&
-    (location.pathname === link || location.pathname.indexOf(link) !== -1))
+  const isLinkActive = !!(
+    link &&
+    (location.pathname === link || location.pathname.indexOf(link) !== -1)
+  )
 
   if (type === 'title') {
     return (
@@ -130,7 +133,7 @@ export default function SidebarLink ({
           className={classes.nestedList}
         >
           <List component='div' disablePadding>
-            {children.map((childrenLink) => (
+            {children.map(childrenLink => (
               <SidebarLink
                 key={childrenLink?.link}
                 location={location}

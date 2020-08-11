@@ -1,13 +1,9 @@
-// @flow
+//
 import { generateModule } from 'context/base/withPagination'
-import type { Withdraw } from './types'
 
-const {
-  Provider,
-  useState,
-  useDispatch,
-  statusList
-} = generateModule<Withdraw>('authorizerWithdrawsList')
+const { Provider, useState, useDispatch, statusList } = generateModule(
+  'authorizerWithdrawsList'
+)
 
 export default {
   AuthorizerWithdrawListProvider: Provider,

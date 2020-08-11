@@ -1,10 +1,10 @@
-// @flow
+//
 import React from 'react'
 import { makeStyles, useTheme } from '@material-ui/styles'
 import classnames from 'classnames'
 
 // styles
-const useStyles = makeStyles((theme) => ({
+const useStyles = makeStyles(theme => ({
   dotBase: {
     width: 0,
     height: 0,
@@ -14,7 +14,7 @@ const useStyles = makeStyles((theme) => ({
   }
 }))
 
-export default function Dot ({ color }: { color: string }) {
+export default function Dot ({ color }) {
   const classes = useStyles()
   const theme = useTheme()
 

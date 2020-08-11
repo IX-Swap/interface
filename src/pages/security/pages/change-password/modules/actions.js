@@ -6,7 +6,7 @@ export const requestChangePassword = async ({
   newPassword
 }: {
   oldPassword: string,
-  newPassword: string,
+  newPassword: string
 }) => {
   try {
     const url = `/auth/password/change/${localStore.getUserId()}`

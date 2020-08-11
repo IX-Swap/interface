@@ -6,7 +6,7 @@ const SectionContainer = ({
   title
 }: {
   children: Node,
-  title?: string,
+  title?: string
 }) => (
   <Box
     py={2}

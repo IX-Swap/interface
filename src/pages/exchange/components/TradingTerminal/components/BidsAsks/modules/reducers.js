@@ -1,5 +1,3 @@
-import { postOrderActions } from './types'
-
 export function postOrderReducer (state, action) {
   switch (action.type) {
     case postOrderActions.GET_POST_ORDER_REQUEST:

@@ -1,7 +1,17 @@
 import React, { useEffect } from 'react'
-import { MuiPickersUtilsProvider, KeyboardDatePicker } from '@material-ui/pickers'
+import {
+  MuiPickersUtilsProvider,
+  KeyboardDatePicker
+} from '@material-ui/pickers'
 import DateFnsUtils from '@date-io/date-fns'
-import { Box, Grid, FormControl, Select, InputLabel, MenuItem } from '@material-ui/core'
+import {
+  Box,
+  Grid,
+  FormControl,
+  Select,
+  InputLabel,
+  MenuItem
+} from '@material-ui/core'
 import { makeStyles } from '@material-ui/styles'
 import { BaseFilter } from '../../../../../../../types/util'
 import { Asset } from '../../../../../../../types/asset'
@@ -14,9 +24,9 @@ import { noop } from 'lodash'
 interface FilterProps {
   filters: BaseFilter
   assets: Asset[]
-  handleAssetChange: (ev: React.ChangeEvent<{value: unknown}>) => void
+  handleAssetChange: (ev: React.ChangeEvent<{ value: unknown }>) => void
   handleDateChange: (name: 'to' | 'from', date: MaterialUiPickersDate) => void
-};
+}
 
 const useStyles = makeStyles({
   form: {
@@ -24,12 +34,16 @@ const useStyles = makeStyles({
   }
 })
 
-const BalancesSelect = ({ handleAssetChange, filters }: Partial<FilterProps>) => {
+const BalancesSelect = ({
+  handleAssetChange,
+  filters
+}: Partial<FilterProps>) => {
   const classes = useStyles()
   const balancesState = useStore()
 
   useEffect(() => {
-    balancesState.getAllBalances(storageHelper.getUserId())
+    balancesState
+      .getAllBalances(storageHelper.getUserId())
       .then(noop)
       .catch(noop)
   }, [balancesState])
@@ -45,7 +59,7 @@ const BalancesSelect = ({ handleAssetChange, filters }: Partial<FilterProps>) =>
         value={filters?.asset ?? ''}
         onChange={handleAssetChange}
       >
-        {Object.values(balancesState.balances).map((item) => (
+        {Object.values(balancesState.balances).map(item => (
           <MenuItem key={item.assetId} value={item.assetId}>
             {item.symbol}
           </MenuItem>
@@ -55,7 +69,11 @@ const BalancesSelect = ({ handleAssetChange, filters }: Partial<FilterProps>) =>
   ))
 }
 
-const TransactionsFilter = ({ filters, handleAssetChange, handleDateChange }: FilterProps) => {
+const TransactionsFilter = ({
+  filters,
+  handleAssetChange,
+  handleDateChange
+}: FilterProps) => {
   const classes = useStyles()
 
   return (
@@ -73,7 +91,7 @@ const TransactionsFilter = ({ filters, handleAssetChange, handleDateChange }: Fi
                 id='from-filter'
                 label='From'
                 value={filters.from}
-                onChange={(date) => handleDateChange('from', date)}
+                onChange={date => handleDateChange('from', date)}
                 KeyboardButtonProps={{
                   'aria-label': 'change date'
                 }}
@@ -89,7 +107,7 @@ const TransactionsFilter = ({ filters, handleAssetChange, handleDateChange }: Fi
               id='to-filter'
               label='To'
               value={filters.to}
-              onChange={(date) => handleDateChange('to', date)}
+              onChange={date => handleDateChange('to', date)}
               KeyboardButtonProps={{
                 'aria-label': 'change date'
               }}
@@ -97,7 +115,10 @@ const TransactionsFilter = ({ filters, handleAssetChange, handleDateChange }: Fi
             />
           </Grid>
           <Grid item xs={12} sm={3} justify='flex-end' container>
-            <BalancesSelect filters={filters} handleAssetChange={handleAssetChange} />
+            <BalancesSelect
+              filters={filters}
+              handleAssetChange={handleAssetChange}
+            />
           </Grid>
         </Grid>
       </Box>

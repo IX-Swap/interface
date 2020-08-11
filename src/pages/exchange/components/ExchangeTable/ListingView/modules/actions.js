@@ -1,9 +1,7 @@
-// @flow
+//
 import { getRequest } from 'services/httpRequests'
 
-import { listViewActions } from './types'
-
-async function getListItem (dispatch: Function, listId: string) {
+async function getListItem (dispatch, listId) {
   try {
     dispatch({ type: listViewActions.GET_LISTING_ITEM_REQUEST })
 

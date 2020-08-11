@@ -1,4 +1,4 @@
-// @flow
+//
 import React from 'react'
 import { Container, Typography, Grid, Link, Box } from '@material-ui/core'
 import appStoreLogo from '../../../assets/appstore.png'

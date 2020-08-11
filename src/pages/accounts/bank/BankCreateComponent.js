@@ -1,4 +1,4 @@
-// @flow
+//
 import React, { useRef, useEffect, useState, useCallback } from 'react'
 import { useHistory } from 'react-router-dom'
 
@@ -13,14 +13,12 @@ import {
 import Alert from '@material-ui/lab/Alert'
 import { snackbarService } from 'uno-material-ui'
 import { useAssetsState, useAssetsDispatch } from 'context/assets'
-import { ASSETS_STATUS } from 'context/assets/types'
-import type { Asset } from 'context/assets/types'
+
 import * as AssetsActions from 'context/assets/actions'
 import BankFormComponent from './BankFormComponent'
 
 import Actions from './modules/actions'
-import type { BankRequest } from './modules/types'
-import { baseBankRequest, bankSaveStatus } from './modules/types'
+
 import BankListModule from './modules'
 import BankViewComponent from './view'
 
@@ -50,11 +48,11 @@ function useGetters () {
 
   const assetsReady = ![ASSETS_STATUS.INIT].includes(assetsStatus)
   const currencies = assets
-    ? assets.filter((asset) => asset.type === 'Currency')
+    ? assets.filter(asset => asset.type === 'Currency')
     : []
 
   const goBack = useCallback(
-    (isSaved: boolean) => {
+    isSaved => {
       history.push({
         pathname: '/accounts/banks',
         state: {
@@ -138,7 +136,7 @@ const BankCreateComponent = ({
   goBack,
   setIsConfirmation,
   setBank
-}: any) => {
+}) => {
   const [isValidForm, setIsValidForm] = useState(false)
   const handleClickSubmit = () => {
     setIsConfirmation(true)
@@ -149,7 +147,7 @@ const BankCreateComponent = ({
   }
 
   const onChange = useCallback(
-    (mBank: BankRequest, result: boolean) => {
+    (mBank, result) => {
       setBank(mBank)
       setIsValidForm(result)
     },
@@ -209,12 +207,6 @@ const BankConfirmationComponent = ({
   bankListStatus,
   submit,
   cancel
-}: {
-  bank: BankRequest,
-  asset: Asset,
-  submit: Function,
-  cancel: Function,
-  bankListStatus: string,
 }) => (
   <Container>
     <Box m={4}>
@@ -281,9 +273,9 @@ const BankCreateHolder = () => {
   const [bank, setBank] = useState(baseBankRequest)
   const [asset, setAsset] = useState(currencies[0])
 
-  const mSetBank = useCallback((mBank: BankRequest) => {
+  const mSetBank = useCallback(mBank => {
     setBank(mBank)
-    const mAsset = currencies.filter((e) => e._id === mBank.asset)
+    const mAsset = currencies.filter(e => e._id === mBank.asset)
     if (mAsset.length) {
       // $FlowFixMe
       setAsset(mAsset[0])

@@ -1,4 +1,4 @@
-// @flow
+//
 /* eslint-disable no-use-before-define, react/jsx-props-no-spreading */
 // COPIED FROM https://material-ui.com/components/autocomplete/
 import React from 'react'
@@ -12,7 +12,7 @@ function countryToFlag (isoCode) {
   return typeof String.fromCodePoint !== 'undefined'
     ? isoCode
       .toUpperCase()
-      .replace(/./g, (char) =>
+      .replace(/./g, char =>
         String.fromCodePoint(char.charCodeAt(0) + 127397)
       )
     : isoCode
@@ -28,17 +28,10 @@ const useStyles = makeStyles({
   }
 })
 
-export default function CountrySelect ({
-  onChange,
-  value
-}: {
-  onChange: (e: any, value: { label: string }) => void,
-  value: { label: string },
-}) {
+export default function CountrySelect ({ onChange, value }) {
   const classes = useStyles()
 
-  const isSelected = (option: { label: string }, val: { label: string }) =>
-    option.label === val.label
+  const isSelected = (option, val) => option.label === val.label
 
   return (
     <Autocomplete
@@ -51,16 +44,18 @@ export default function CountrySelect ({
         option: classes.option
       }}
       autoHighlight
-      getOptionLabel={(option) => option.label}
-      renderOption={(option) => {
-        return option.label && (
-          <>
-            <span>{countryToFlag(option.code)}</span>
-            {option.label} ({option.code})
-          </>
+      getOptionLabel={option => option.label}
+      renderOption={option => {
+        return (
+          option.label && (
+            <>
+              <span>{countryToFlag(option.code)}</span>
+              {option.label} ({option.code})
+            </>
+          )
         )
       }}
-      renderInput={(params) => {
+      renderInput={params => {
         return (
           <TextField
             {...params}

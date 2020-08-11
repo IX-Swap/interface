@@ -14,7 +14,7 @@ function RichEditor (
   )
   const content = JSON.stringify(convertToRaw(state))
 
-  const onSave = (data) => save(draftToHtml(JSON.parse(data)))
+  const onSave = data => save(draftToHtml(JSON.parse(data)))
 
   return (
     <MUIRichTextEditor

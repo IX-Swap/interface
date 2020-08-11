@@ -1,7 +1,6 @@
-// @flow
-import type { PayloadState } from './types'
+//
 
-export const initialState: PayloadState = {
+export const initialState = {
   pair: '',
   side: '',
   type: 'LIMIT',

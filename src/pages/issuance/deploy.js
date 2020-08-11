@@ -1,4 +1,4 @@
-// @flow
+//
 /* eslint-disable react-hooks/exhaustive-deps */
 import React, { useState, useEffect, useRef } from 'react'
 import { RouteProps } from 'react-router-dom'
@@ -18,13 +18,12 @@ import { ButtonWithLoading } from 'uno-material-ui'
 import localStore from 'services/storageHelper'
 import { subscribeToSocket } from 'services/socket'
 
-import type { Dso } from 'context/dso/types'
 import { getDso } from './modules/actions'
 
-const useDeployLogic = (userId: string, id: string) => {
+const useDeployLogic = (userId, id) => {
   // $FlowFixMe
-  const [dso, setDso] = useState<Dso>({})
-  const [loading, setLoading] = useState<boolean>(false)
+  const [dso, setDso] = useState({})
+  const [loading, setLoading] = useState(false)
   const messages = useRef([])
   const bearerToken = localStore.getAccessToken()
   let socket
@@ -32,7 +31,7 @@ const useDeployLogic = (userId: string, id: string) => {
     socket = subscribeToSocket()
   }
 
-  const listener = (data) => {
+  const listener = data => {
     let date = moment().format('MM/DD/YYYY hh:mm:ss a')
     let message = data
     if (!window[`deploy_message_${id}`]) {
@@ -48,12 +47,10 @@ const useDeployLogic = (userId: string, id: string) => {
       setLoading(true)
     }
 
-    window[`deploy_message_${id}`].push(
-      `[${date}] ${message}`
-    )
+    window[`deploy_message_${id}`].push(`[${date}] ${message}`)
 
     if (message.toLowerCase() === 'ok') {
-      ((mId) => {
+      (mId => {
         setTimeout(async () => {
           socket.removeEventListener(`x-token/${id}`)
           const newDso = await getDso(userId, mId)
@@ -91,7 +88,7 @@ const useDeployLogic = (userId: string, id: string) => {
   }, [id]); // eslint-disable-line
 
   useEffect(() => {
-    (async (mId) => {
+    (async mId => {
       const mDso = await getDso(userId, mId)
       if (mDso) {
         setDso(mDso)
@@ -107,7 +104,7 @@ const useDeployLogic = (userId: string, id: string) => {
   }
 }
 
-const Deploy = ({ match }: RouteProps) => {
+const Deploy = ({ match }) => {
   const {
     params: { userId, id }
   } = match

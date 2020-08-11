@@ -4,7 +4,7 @@ import { snackbarService } from 'uno-material-ui'
 export async function uploadFile (payload: {
   title: string,
   type: string,
-  file: any,
+  file: any
 }) {
   const { title, file, type } = payload
   try {
@@ -30,13 +30,13 @@ export async function uploadFile (payload: {
   }
 }
 
-export const downloadFile = async (documentId) => {
+export const downloadFile = async documentId => {
   try {
     const uri = `/issuance/dso/dataroom/subscription/raw/${documentId}`
     const result = await getRequest(uri)
 
     if (result.status === 200) {
-      result.blob().then((blob) => {
+      result.blob().then(blob => {
         const url = window.URL.createObjectURL(blob)
         window.open(url)
       })

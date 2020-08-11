@@ -7,7 +7,7 @@ import { get } from 'lodash'
 import { uploadFile } from '../../helpers/httpRequests'
 import { snackbarService } from 'uno-material-ui'
 
-type ValueOf<T> = T[keyof T];
+type ValueOf<T> = T[keyof T]
 
 interface UploaderProps {
   guide: DocumentGuide
@@ -44,7 +44,10 @@ const Uploader = ({
     docId: docId,
     uploaded: false
   })
-  const updateState = (key: keyof UploaderState, value: ValueOf<UploaderState>) => {
+  const updateState = (
+    key: keyof UploaderState,
+    value: ValueOf<UploaderState>
+  ) => {
     setState({
       ...state,
       [key]: value
@@ -95,9 +98,9 @@ const Uploader = ({
 
     // TODO: fix this inifnite loop
     // eslint-disable-next-line
-  }, []);
+  }, [])
 
-  const columns = (showTitle && state.guide.title !== state.guide.label) ? 4 : 6
+  const columns = showTitle && state.guide.title !== state.guide.label ? 4 : 6
 
   return (
     <>
@@ -107,20 +110,18 @@ const Uploader = ({
         justify='space-between'
         alignItems='center'
       >
-        {
-          showTitle && (
-            <Grid item xs={columns}>
-              <span>{state.guide.title}</span>
-            </Grid>
-          )
-        }
-        {
-          (state.guide.title !== state.guide.label) && (
-            <Grid item xs={columns}>
-              <span>{state.guide.title !== state.guide.label ? state.guide.label : ''}</span>
-            </Grid>
-          )
-        }
+        {showTitle && (
+          <Grid item xs={columns}>
+            <span>{state.guide.title}</span>
+          </Grid>
+        )}
+        {state.guide.title !== state.guide.label && (
+          <Grid item xs={columns}>
+            <span>
+              {state.guide.title !== state.guide.label ? state.guide.label : ''}
+            </span>
+          </Grid>
+        )}
         <Grid item container direction='row' xs={columns} justify='flex-end'>
           {editMode && (!state.docId || override) && (
             <Grid item>

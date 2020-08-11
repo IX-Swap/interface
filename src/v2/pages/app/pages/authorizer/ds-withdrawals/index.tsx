@@ -10,7 +10,7 @@ const DSWithdrawals = () => {
       uri='/accounts/security/withdrawals'
       name='authorizerSecurityWithdrawals'
       columns={columns}
-      onView={(row) => <DSWithdrawalView withdrawal={row} />}
+      onView={row => <DSWithdrawalView withdrawal={row} />}
     />
   )
 }

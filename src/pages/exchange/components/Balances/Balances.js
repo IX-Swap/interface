@@ -82,9 +82,7 @@ function BalancesTab ({ state }) {
                 </TableCell>
               </TableRow>
             </TableHead>
-            <TableBody>
-              {tabsTemplate || <CircularProgress />}
-            </TableBody>
+            <TableBody>{tabsTemplate || <CircularProgress />}</TableBody>
           </Table>
         </TableContainer>
       </Box>

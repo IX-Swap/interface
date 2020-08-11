@@ -1,9 +1,8 @@
-// @flow
+//
 import { postRequest } from 'services/httpRequests'
 import localStore from 'services/storageHelper'
-import { actions } from './types'
 
-export const setupTwoFactor = async (dispatch: Function) => {
+export const setupTwoFactor = async dispatch => {
   dispatch({ type: actions.SETUP_2FA_REQUEST })
 
   try {
@@ -23,7 +22,7 @@ export const setupTwoFactor = async (dispatch: Function) => {
   }
 }
 
-export const confirmTwoFactor = async (dispatch: Function, otp: string) => {
+export const confirmTwoFactor = async (dispatch, otp) => {
   dispatch({ type: actions.CONFIRM_2FA_REQUEST })
 
   try {

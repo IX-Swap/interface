@@ -1,8 +1,7 @@
-// @flow
+//
 import { generateModule } from 'context/base/withPagination'
-import type { Dso } from 'context/dso/types'
 
-const { Provider, useState, useDispatch, statusList } = generateModule<Dso>(
+const { Provider, useState, useDispatch, statusList } = generateModule(
   'authorizerDsoList'
 )
 

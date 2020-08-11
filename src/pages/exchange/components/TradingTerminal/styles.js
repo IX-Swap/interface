@@ -8,7 +8,7 @@ const defaultListItemStyle = {
   padding: '2px 0'
 }
 
-export default makeStyles((theme) => ({
+export default makeStyles(theme => ({
   container: {
     display: 'flex'
   },

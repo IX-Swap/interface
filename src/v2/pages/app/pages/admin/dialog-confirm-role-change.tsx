@@ -13,7 +13,7 @@ interface DialogConfirmRoleChangeProp {
   open: boolean
   handleClose: (evt: React.MouseEvent<HTMLButtonElement, MouseEvent>) => void
   handleConfirm: () => Promise<void>
-};
+}
 
 export default function DialogConfirmRoleChange ({
   user,
@@ -31,17 +31,14 @@ export default function DialogConfirmRoleChange ({
     >
       <DialogTitle>Confirm Role Change</DialogTitle>
       <DialogContent>
-        Are you sure you want to change {user.email}&apos;s <br />{' '}
-        role from {user.roles} to {newRole}?
+        Are you sure you want to change {user.email}&apos;s <br /> role from{' '}
+        {user.roles} to {newRole}?
       </DialogContent>
       <DialogActions>
         <Button onClick={handleClose} color='primary'>
           Cancel
         </Button>
-        <Button
-          onClick={async () => await handleConfirm()}
-          color='primary'
-        >
+        <Button onClick={async () => await handleConfirm()} color='primary'>
           Ok
         </Button>
       </DialogActions>

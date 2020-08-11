@@ -16,7 +16,7 @@ import { COUNTRIES_OPTS } from '../../../../../components/identity-forms/const'
 import { Bank } from '../../../../../../../types/bank'
 import AssetsSelect from './assets-select'
 
-const BankCreateForm = ({ bank }: { bank? : Bank }) => {
+const BankCreateForm = ({ bank }: { bank?: Bank }) => {
   const defaultBank = bank ?? { asset: { _id: '' } }
   const bankValues = { ...defaultBank, asset: defaultBank.asset._id }
   const methods = useForm({

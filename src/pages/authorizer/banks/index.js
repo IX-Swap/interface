@@ -1,4 +1,4 @@
-// @flow
+//
 /* eslint-disable react-hooks/exhaustive-deps */
 import React, { useCallback, useState } from 'react'
 import { useHistory } from 'react-router-dom'
@@ -11,7 +11,7 @@ import {
   Paper
 } from '@material-ui/core'
 import TableWithPagination from 'components/TableWithPagination'
-import type { Bank } from 'pages/accounts/bank/modules/types'
+
 import { makeStyles } from '@material-ui/core/styles'
 import { snackbarService } from 'uno-material-ui'
 import { isFunction } from 'lodash'
@@ -28,17 +28,17 @@ const useStyles = makeStyles({
 })
 
 const useBanksListLogic = () => {
-  const [bank, setBank] = useState<Bank | null>(null)
-  const [open, setOpen] = useState<boolean>(false)
+  const [bank, setBank] = useState(null)
+  const [open, setOpen] = useState(false)
   const [cb, setCb] = useState(() => () => {})
-  const [newStatus, setNewStatus] = useState<string>('')
-  const handleSelectChange = useCallback((mBank: Bank, status: string) => {
+  const [newStatus, setNewStatus] = useState('')
+  const handleSelectChange = useCallback((mBank, status) => {
     setBank(mBank)
     setNewStatus(status)
     setOpen(true)
   }, [])
 
-  const handleCbChange = useCallback((mCb: any) => {
+  const handleCbChange = useCallback(mCb => {
     setCb(mCb)
   }, [])
 
@@ -46,7 +46,7 @@ const useBanksListLogic = () => {
     setOpen(false)
   }
 
-  const handleConfirm = async (mBank: Bank, status: string) => {
+  const handleConfirm = async (mBank, status) => {
     const confirm = await toggleBankStatus(mBank, status)
     let message = 'Failed to update bank status!'
     let type = 'error'
@@ -75,13 +75,7 @@ const useBanksListLogic = () => {
   }
 }
 
-const RowStatusComponent = ({
-  bank,
-  handleSelectChange
-}: {
-  bank: Bank,
-  handleSelectChange: (bank: Bank, status: string) => void,
-}) => {
+const RowStatusComponent = ({ bank, handleSelectChange }) => {
   const classes = useStyles()
   switch (bank.status) {
     case 'Approved':
@@ -101,14 +95,13 @@ const RowStatusComponent = ({
         <Select
           className={classes.formControl}
           value={bank.status}
-          onClick={(evt) => {
+          onClick={evt => {
             evt.stopPropagation()
             evt.preventDefault()
             evt.nativeEvent.stopPropagation()
             evt.nativeEvent.stopImmediatePropagation()
           }}
-          onChange={(evt: SyntheticInputEvent<HTMLElement>) =>
-            handleSelectChange(bank, evt.target.value)}
+          onChange={evt => handleSelectChange(bank, evt.target.value)}
           inputProps={{
             name: 'status'
           }}
@@ -173,7 +166,7 @@ const redirectModel = [
   }
 ]
 
-const MemoizedTable = React.memo(({ handleSelectChange, onMount }: any) => {
+const MemoizedTable = React.memo(({ handleSelectChange, onMount }) => {
   const history = useHistory()
   return (
     <Paper style={{ width: '100%' }}>
@@ -183,7 +176,7 @@ const MemoizedTable = React.memo(({ handleSelectChange, onMount }: any) => {
         columns={columns}
         onMount={onMount}
       >
-        {(mBank: Bank) => (
+        {mBank => (
           <Grid container direction='row' alignItems='center'>
             <RowStatusComponent
               bank={mBank}
@@ -220,11 +213,11 @@ export default function Banks () {
     handleCbChange
   } = useBanksListLogic()
 
-  const mHandleSelectChange = useCallback((mBank: Bank, status: string) => {
+  const mHandleSelectChange = useCallback((mBank, status) => {
     handleSelectChange(mBank, status)
   }, [])
 
-  const onMount = useCallback((callback) => {
+  const onMount = useCallback(callback => {
     handleCbChange(() => callback)
   }, [])
 

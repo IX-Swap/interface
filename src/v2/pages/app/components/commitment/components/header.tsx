@@ -28,19 +28,26 @@ const useStyles = makeStyles(() => ({
   }
 }))
 
-const AssetBalance = ({ asset }: {asset: string}) => {
+const AssetBalance = ({ asset }: { asset: string }) => {
   const balanceState = useStore()
   useEffect(() => {
-    balanceState.getBalance(storageHelper.getUserId(), asset)
-      .then(noop).catch(noop)
+    balanceState
+      .getBalance(storageHelper.getUserId(), asset)
+      .then(noop)
+      .catch(noop)
   }, [balanceState, asset])
 
   return useObserver(() => (
     <BalanceHeader
       label='Account Balance'
-      value={balanceState.balances[asset]
-        ? formatMoney(balanceState.balances[asset].available || 0, balanceState.balances[asset].numberFormat.currency)
-        : '0'}
+      value={
+        balanceState.balances[asset]
+          ? formatMoney(
+              balanceState.balances[asset].available || 0,
+              balanceState.balances[asset].numberFormat.currency
+            )
+          : '0'
+      }
     />
   ))
 }
@@ -56,13 +63,15 @@ const BalanceHeader = ({ label, value }: { label: string; value: string }) => {
   )
 }
 
-const CommitmentViewHeader = ({ dso, currency, estimated }: CommitmentViewHeaderProps) => {
+const CommitmentViewHeader = ({
+  dso,
+  currency,
+  estimated
+}: CommitmentViewHeaderProps) => {
   return (
     <Grid container justify='space-between'>
       <Grid item xs={6}>
-        <DsoTitle
-          dso={dso}
-        />
+        <DsoTitle dso={dso} />
       </Grid>
       <AssetBalance asset={currency._id} />
       <BalanceHeader

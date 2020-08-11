@@ -1,4 +1,4 @@
-// @flow
+//
 import React, { useState } from 'react'
 import {
   Paper,
@@ -16,7 +16,7 @@ import PageTitle from 'components/PageTitle'
 import Alert from '@material-ui/lab/Alert'
 import { requestChangePassword } from './modules/actions'
 
-const useStyles = makeStyles((theme) => ({
+const useStyles = makeStyles(theme => ({
   formContainer: {
     padding: '3em 2em'
   },
@@ -47,7 +47,7 @@ const ChangePassword = () => {
   const [saving, setSaving] = useState(null)
   const [error, setError] = useState('')
 
-  const onSubmit = async (data) => {
+  const onSubmit = async data => {
     const { oldPassword, newPassword, confirmNewPassword } = data
 
     if (newPassword !== confirmNewPassword) {
@@ -75,7 +75,7 @@ const ChangePassword = () => {
     }
   }
 
-  const InlineError = ({ message }: { message: string }) => (
+  const InlineError = ({ message }) => (
     <span className={classes.inlineError}>{message}</span>
   )
 

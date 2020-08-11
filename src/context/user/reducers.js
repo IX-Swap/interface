@@ -1,5 +1,5 @@
-import { userActions, USER_STATUS } from './types'
 import { initialState } from './state'
+import { USER_STATUS } from '../../const/status'
 
 export function userReducer (state, action) {
   switch (action.type) {

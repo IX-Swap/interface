@@ -8,7 +8,10 @@ import { noop } from 'lodash'
 
 import BankDetails from '../../../../../../components/bank-details'
 import { INVESTAX_BANK } from '../../../../../../../../config'
-import { generateRandom, formatMoney } from '../../../../../../../../helpers/numbers'
+import {
+  generateRandom,
+  formatMoney
+} from '../../../../../../../../helpers/numbers'
 import GenericPreview from '../../../../../../components/generic-preview'
 import { useStore as useAssetsStore } from '../../../../../../../../context/assets'
 import { LabelValue } from '../../../../../../../../types/util'
@@ -43,7 +46,7 @@ const ConfirmationButtons = ({
   const [, setTwoFa] = useState('')
   const assetsStore = useAssetsStore()
   const assetObject = assetsStore.currencies.find(
-    (e) => e._id === data.asset
+    e => e._id === data.asset
   ) ?? { numberFormat: { currency: 'SGD' } }
   const money = formatMoney(
     parseFloat(data.amount ?? '0'),
@@ -52,7 +55,10 @@ const ConfirmationButtons = ({
   const saving = false
 
   useEffect(() => {
-    assetsStore.getCurrencies().then(noop).catch(noop)
+    assetsStore
+      .getCurrencies()
+      .then(noop)
+      .catch(noop)
   }, [assetsStore])
 
   const handle2faChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -99,7 +105,7 @@ const ConfirmationButtons = ({
   ))
 }
 
-const BankDeposit = ({ code }: {code: string}) => {
+const BankDeposit = ({ code }: { code: string }) => {
   const [isPreview, setIsPreview] = useState(false)
   const [previewData, setPreviewData] = useState<LabelValue[]>([])
   const assetsStore = useAssetsStore()
@@ -109,7 +115,7 @@ const BankDeposit = ({ code }: {code: string}) => {
     if (isValid) {
       const values = methods.getValues()
       const assetObject = assetsStore.currencies.find(
-        (e) => e._id === values.asset
+        e => e._id === values.asset
       ) ?? { numberFormat: { currency: 'SGD' } }
       const money = formatMoney(
         parseFloat(values.amount ?? '0'),
@@ -155,7 +161,9 @@ const BankDeposit = ({ code }: {code: string}) => {
               variant='contained'
               color='primary'
               onClick={() => {
-                deposit().then(noop).catch(noop)
+                deposit()
+                  .then(noop)
+                  .catch(noop)
               }}
             >
               Deposit

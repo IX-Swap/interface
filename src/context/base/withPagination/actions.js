@@ -1,20 +1,11 @@
-// @flow
+//
 import { postRequest } from 'services/httpRequests'
-import generateTypes from './types'
 
-export default (name: string, uri: string, additionalPayload: any) => {
+export default (name, uri, additionalPayload) => {
   const sName = name.charAt(0).toUpperCase() + name.slice(1)
   const { actionTypes } = generateTypes(sName)
 
-  async function getter (
-    dispatch: Function,
-    payload: {
-      ref: { current: boolean, ... },
-      skip?: number,
-      limit?: number,
-      ...
-    }
-  ) {
+  async function getter (dispatch, payload) {
     const { ref, ...data } = payload || { ref: {} }
 
     try {
@@ -65,24 +56,24 @@ export default (name: string, uri: string, additionalPayload: any) => {
     }
   }
 
-  function setPage (dispatch: Function, payload: { page: number }) {
+  function setPage (dispatch, payload) {
     dispatch({ type: actionTypes.PAGE_CHANGE, payload })
   }
 
-  function setRowsPerPage (dispatch: Function, payload: { rows: number }) {
+  function setRowsPerPage (dispatch, payload) {
     dispatch({
       type: actionTypes.ROWS_PER_PAGE_CHANGE,
       payload
     })
   }
 
-  function clearBaseData (dispatch: Function) {
+  function clearBaseData (dispatch) {
     dispatch({
       type: actionTypes.CLEAR_DATA
     })
   }
 
-  function clearApiStatus (dispatch: Function) {
+  function clearApiStatus (dispatch) {
     dispatch({
       type: actionTypes.CLEAR_API
     })

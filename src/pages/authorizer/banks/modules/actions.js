@@ -1,8 +1,8 @@
-// @flow
-import type { Bank } from 'pages/accounts/bank/modules/types'
+//
+
 import { putRequest } from 'services/httpRequests'
 
-const toggleBankStatus = async (bank: Bank, newStatus: string) => {
+const toggleBankStatus = async (bank, newStatus) => {
   const action = newStatus.toLowerCase().includes('approve')
     ? 'approve'
     : 'reject'

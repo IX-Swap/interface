@@ -3,7 +3,13 @@ import { Button, Typography, ListItem, Grid } from '@material-ui/core'
 import useStyles from './styles'
 import { DocumentGuide } from '../../../../../../types/document'
 
-const Uploader = ({ document, editMode = false }: { document: DocumentGuide; editMode: boolean }) => {
+const Uploader = ({
+  document,
+  editMode = false
+}: {
+  document: DocumentGuide
+  editMode: boolean
+}) => {
   const classes = useStyles()
   const inputRef = useRef<HTMLInputElement | null>(null)
 
@@ -31,11 +37,7 @@ const Uploader = ({ document, editMode = false }: { document: DocumentGuide; edi
               />
               {/* eslint-disable-next-line */}
               <label htmlFor={`${document.title}-file`}>
-                <Button
-                  variant='contained'
-                  component='span'
-                  disabled={false}
-                >
+                <Button variant='contained' component='span' disabled={false}>
                   Upload
                 </Button>
               </label>

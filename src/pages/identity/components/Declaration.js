@@ -1,9 +1,8 @@
-// @flow
+//
 import React, { Fragment } from 'react'
 import { Typography, List } from '@material-ui/core'
 import { makeStyles } from '@material-ui/styles'
 import DeclarationItem from './DeclarationItem'
-import type { DeclarationTemplate } from '../modules/types'
 
 const useStyles = makeStyles(() => ({
   pageTitle: {
@@ -14,18 +13,12 @@ const useStyles = makeStyles(() => ({
   }
 }))
 
-const Declaration = ({
-  declarations,
-  editMode
-}: {
-  declarations: DeclarationTemplate[],
-  editMode: boolean,
-}) => {
+const Declaration = ({ declarations, editMode }) => {
   const classes = useStyles()
 
   return (
     <List>
-      {declarations.map((declaration) => {
+      {declarations.map(declaration => {
         const {
           key,
           content,

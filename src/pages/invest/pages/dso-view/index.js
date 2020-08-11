@@ -3,7 +3,7 @@ import { Redirect, useHistory } from 'react-router-dom'
 import { Container, Box } from '@material-ui/core'
 import DsoInformation from 'components/Dso/DsoInformation'
 import PageTitle from 'components/PageTitle'
-import type { Document } from 'context/dso/types'
+
 import { snackbarService } from 'uno-material-ui'
 import { useInvestState, useInvestDispatch } from '../../modules'
 import { toggleEditMode } from '../../modules/actions'

@@ -1,9 +1,9 @@
-// @flow
+//
 import React, { Suspense, useRef, useEffect } from 'react'
 import { withRouter, Route } from 'react-router-dom'
 
 import { useAssetsState, useAssetsDispatch } from 'context/assets'
-import { ASSETS_STATUS } from 'context/assets/types'
+
 import * as AssetsActions from 'context/assets/actions'
 
 const { setAssetType } = AssetsActions
@@ -20,37 +20,37 @@ const routes = [
   {
     route: '/accounts/banks/view',
     exact: true,
-    component: (props) => <Summary {...props} hasBack />
+    component: props => <Summary {...props} hasBack />
   },
   {
     route: '/accounts/banks',
     exact: true,
-    component: (props) => <BankListComponent {...props} />
+    component: props => <BankListComponent {...props} />
   },
   {
     route: '/accounts/banks/deposit-view',
     exact: true,
-    component: (props) => <BankDepositView {...props} />
+    component: props => <BankDepositView {...props} />
   },
   {
     route: '/accounts/banks/deposit',
     exact: true,
-    component: (props) => <BankDepositComponent {...props} />
+    component: props => <BankDepositComponent {...props} />
   },
   {
     route: '/accounts/banks/withdrawal-view',
     exact: true,
-    component: (props) => <BankWithdrawalView {...props} />
+    component: props => <BankWithdrawalView {...props} />
   },
   {
     route: '/accounts/banks/withdraw',
     exact: true,
-    component: (props) => <BankWithrawComponent {...props} />
+    component: props => <BankWithrawComponent {...props} />
   },
   {
     route: '/accounts/banks/bank-create',
     exact: true,
-    component: (props) => <BankCreateComponent {...props} />
+    component: props => <BankCreateComponent {...props} />
   }
 ]
 

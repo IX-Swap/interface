@@ -1,4 +1,4 @@
-// @flow
+//
 /* eslint-disable react-hooks/exhaustive-deps */
 import React, { useEffect, useRef, useState } from 'react'
 import { withRouter, useParams } from 'react-router-dom'
@@ -28,7 +28,7 @@ import { chartOptions } from './data'
 
 const { MarketState, useMarketDispatch } = Modules
 
-const ChartWithData = ({ id }: { id: string }) => {
+const ChartWithData = ({ id }) => {
   const {
     SUBSCRIBE_API: { CHART }
   } = ENDPOINT_URL
@@ -41,7 +41,7 @@ const ChartWithData = ({ id }: { id: string }) => {
   useEffect(() => {
     const socket = subscribeToSocket()
     socket.emit(CHART.emit, id)
-    socket.on(`${CHART.on}/${id}`, (data) => {
+    socket.on(`${CHART.on}/${id}`, data => {
       setSeries([{ data }])
     })
 
@@ -60,9 +60,7 @@ const ChartWithData = ({ id }: { id: string }) => {
   )
 }
 
-const ChartMemoed = React.memo(({ id }: { id: string }) => (
-  <ChartWithData id={id} />
-))
+const ChartMemoed = React.memo(({ id }) => <ChartWithData id={id} />)
 
 function OverviewExchange () {
   const { id: tradingPairId } = useParams()
@@ -79,7 +77,7 @@ function OverviewExchange () {
     MarketActions.getMarketList(dispatch, {
       skip: page * limit,
       limit,
-      ref: mountedRef,
+      ref: mountedRef
     });
   }, [page, limit, dispatch]);
   /*eslint-disable */
@@ -112,7 +110,7 @@ function OverviewExchange () {
             >
               <section className={classes.graphContainer}>
                 <Paper>
-                  <div  style={{width: 'calc(100% - 8px)'}}>
+                  <div style={{ width: "calc(100% - 8px)" }}>
                     <ChartMemoed id={tradingPairId} />
                   </div>
                 </Paper>

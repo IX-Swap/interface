@@ -1,4 +1,4 @@
-// @flow
+//
 import React from 'react'
 import Commitments from './components/Commitments'
 import Module from './modules'

@@ -1,4 +1,4 @@
-// @flow
+//
 import React from 'react'
 import {
   Dialog,
@@ -9,23 +9,13 @@ import {
   Box
 } from '@material-ui/core'
 
-import type { Bank } from 'pages/accounts/bank/modules/types'
-
-type Prop = {
-  bank: Bank,
-  newStatus: string,
-  open: boolean,
-  handleClose: Function,
-  handleConfirm: (bank: Bank, newStatus: string) => Promise<void>,
-};
-
 export default function DialogAuthorizeConfirmation ({
   bank,
   open,
   newStatus,
   handleClose,
   handleConfirm
-}: Prop) {
+}) {
   return (
     <Dialog
       disableBackdropClick

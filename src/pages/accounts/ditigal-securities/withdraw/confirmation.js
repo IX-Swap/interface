@@ -1,6 +1,5 @@
 import React from 'react'
 import { Grid, Typography, Box } from '@material-ui/core'
-import type { TransferDetails, UserSecurityBalance } from '../modules/types'
 
 const BoldTypography = ({ children }: { children: Node }) => (
   <Typography>
@@ -13,7 +12,7 @@ const DSWithdrawalConfirmation = ({
   asset
 }: {
   transferDetails: TransferDetails,
-  asset: UserSecurityBalance,
+  asset: UserSecurityBalance
 }) => (
   <Grid container>
     <Grid item container direction='column' justify='flex-end' mb={2}>

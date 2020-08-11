@@ -1,18 +1,12 @@
-// @flow
+//
 import React from 'react'
 import { Paper, Grid, Box, Typography, Button } from '@material-ui/core'
-import type { Dso } from 'context/dso/types'
+
 import { formatMoney } from 'helpers/formatNumbers'
 import OfferDetail from '../OfferDetail'
 import DsoTitle from '../DsoTitle'
 
-const OfferCard = ({
-  dso,
-  onClickView
-}: {
-  dso: Dso,
-  onClickView: Function,
-}) => {
+const OfferCard = ({ dso, onClickView }) => {
   const currency = dso.currency.length ? dso.currency[0] : {}
 
   return (

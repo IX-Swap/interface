@@ -27,7 +27,7 @@ const BoldTypography = ({ children, ...others }: any) => (
   </Typography>
 )
 
-function WithdrawalView ({ withdrawal }: { withdrawal: CashWithdrawal}) {
+function WithdrawalView ({ withdrawal }: { withdrawal: CashWithdrawal }) {
   const classes = useStyles()
 
   if (!withdrawal) return <span>nothing to display</span>

@@ -1,12 +1,11 @@
-// @flow
+//
 import React from 'react'
-import type { Node } from 'react'
+
 import logger from '../../../../../../v2/helpers/logger'
 import { listViewReducer } from './reducers'
 import { initialState } from './state'
-import type { ListingViewState } from './types'
 
-const ListViewStateContext = React.createContext<ListingViewState>(initialState)
+const ListViewStateContext = React.createContext(initialState)
 const ListViewDispatchContext = React.createContext()
 
 export function ListViewState () {
@@ -21,19 +20,20 @@ export function ListViewState () {
 export function useListViewDispatch () {
   const context = React.useContext(ListViewDispatchContext)
   if (context === undefined) {
-    throw new Error('useListViewDispatch must be used within a ListViewProvider')
+    throw new Error(
+      'useListViewDispatch must be used within a ListViewProvider'
+    )
   }
 
   return context
 }
 
-export function ListViewProvider ({ children }: { children: Node }) {
+export function ListViewProvider ({ children }) {
   const thisReducer =
-    process.env.NODE_ENV === 'development' ? logger(listViewReducer) : listViewReducer
-  const [state, dispatch] = React.useReducer<ListingViewState, ListingViewState>(
-    thisReducer,
-    initialState
-  )
+    process.env.NODE_ENV === 'development'
+      ? logger(listViewReducer)
+      : listViewReducer
+  const [state, dispatch] = React.useReducer(thisReducer, initialState)
 
   return (
     <ListViewStateContext.Provider value={state}>

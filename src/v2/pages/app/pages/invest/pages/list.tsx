@@ -39,7 +39,10 @@ const InvestList = () => {
         <Container>
           <Box p={4}>
             {tab === 0 ? (
-              <OfferingsList handleRowClick={handleRowClick} filter={{ status: 'Approved' }} />
+              <OfferingsList
+                handleRowClick={handleRowClick}
+                filter={{ status: 'Approved' }}
+              />
             ) : (
               <MyCommitments />
             )}

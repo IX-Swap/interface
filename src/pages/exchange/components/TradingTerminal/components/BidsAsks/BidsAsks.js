@@ -29,7 +29,7 @@ import useStyles from '../styles'
 const { MarketState } = MarketModules
 const { MonitoringState } = MonitoringModule
 const { usePostOrderDispatch } = Modules
-const BidsAsksHistory = (props) => {
+const BidsAsksHistory = props => {
   const { id } = props
   const classes = useStyles()
   const _userId = localStore.getUserId()
@@ -39,7 +39,7 @@ const BidsAsksHistory = (props) => {
   const marketStateData = MarketState()
 
   const { items } = marketStateData
-  const marketListItem = items.length && items.find((item) => item._id === id)
+  const marketListItem = items.length && items.find(item => item._id === id)
 
   // eslint-disable-next-line
   const [collection, setCollection] = useState(false);
@@ -60,7 +60,7 @@ const BidsAsksHistory = (props) => {
   })
 
   // Handle change/update for the fields
-  const updateBidField = (e) => {
+  const updateBidField = e => {
     const { name } = e.target
     const { value } = e.target
     setBidFields({
@@ -69,7 +69,7 @@ const BidsAsksHistory = (props) => {
     })
   }
 
-  const updateAskField = (e) => {
+  const updateAskField = e => {
     const { name } = e.target
     const { value } = e.target
     setAskFields({
@@ -81,7 +81,7 @@ const BidsAsksHistory = (props) => {
   useEffect(() => {
     const socket = subscribeToSocket()
     socket.emit(BIDS_ASKS.emit, id)
-    socket.on(`${BIDS_ASKS.on}/${_userId}`, (data) => {
+    socket.on(`${BIDS_ASKS.on}/${_userId}`, data => {
       setCollection(data)
     })
 
@@ -96,8 +96,10 @@ const BidsAsksHistory = (props) => {
     }
 
     switch (asksBidsHistoryData.side) {
-      case 'asks': return setBidFields(asksBidsHistoryData)
-      case 'bids': return setAskFields(asksBidsHistoryData)
+      case 'asks':
+        return setBidFields(asksBidsHistoryData)
+      case 'bids':
+        return setAskFields(asksBidsHistoryData)
       default:
         setBidFields(asksBidsHistoryData)
         setAskFields(asksBidsHistoryData)
@@ -181,8 +183,16 @@ const BidsAsksHistory = (props) => {
     }
   ]
 
-  const isQuoteItem = collection && collection.length && collection.find(item => item.assetId === marketListItem?.quote?._id)
-  const isListingItem = collection && collection.length && collection.find(item => item.assetId === marketListItem?.listing?.asset?._id)
+  const isQuoteItem =
+    collection &&
+    collection.length &&
+    collection.find(item => item.assetId === marketListItem?.quote?._id)
+  const isListingItem =
+    collection &&
+    collection.length &&
+    collection.find(
+      item => item.assetId === marketListItem?.listing?.asset?._id
+    )
 
   const quoteCurrency = marketListItem?.quote?.numberFormat?.currency
   const listCurrency = marketListItem?.listing?.asset?.numberFormat?.currency
@@ -206,15 +216,20 @@ const BidsAsksHistory = (props) => {
           let totalAmount = bidForm.amount * bidForm.price
           let totalPcs = bidForm.amount
           if (totalAmount > (isQuoteItem ? isQuoteItem.available : 0)) {
-            totalAmount = isQuoteItem ? (isQuoteItem.available / bidForm.price) * bidForm.price : 0
+            totalAmount = isQuoteItem
+              ? (isQuoteItem.available / bidForm.price) * bidForm.price
+              : 0
             totalPcs = isQuoteItem ? isQuoteItem.available / bidForm.price : 0
           }
 
-          const getValue = (id) => {
+          const getValue = id => {
             switch (id) {
-              case 'total': return totalAmount
-              case 'amount': return totalPcs
-              default: return field.value
+              case 'total':
+                return totalAmount
+              case 'amount':
+                return totalPcs
+              default:
+                return field.value
             }
           }
 
@@ -231,7 +246,7 @@ const BidsAsksHistory = (props) => {
                 prefix={`${
                   field.id === 'amount' ? listCurrency : quoteCurrency
                 } `}
-                onValueChange={(values) => {
+                onValueChange={values => {
                   field.onChange({
                     target: {
                       name: field.name,
@@ -272,15 +287,20 @@ const BidsAsksHistory = (props) => {
           let totalAmount = askForm.amount * askForm.price
           let totalPcs = askForm.amount
           if (totalPcs > (isListingItem ? isListingItem.available : 0)) {
-            totalAmount = isListingItem ? isListingItem.available * askForm.price : 0
+            totalAmount = isListingItem
+              ? isListingItem.available * askForm.price
+              : 0
             totalPcs = isListingItem ? isListingItem.available : 0
           }
 
-          const getValue = (id) => {
+          const getValue = id => {
             switch (id) {
-              case 'total': return totalAmount
-              case 'amount': return totalPcs
-              default: return field.value
+              case 'total':
+                return totalAmount
+              case 'amount':
+                return totalPcs
+              default:
+                return field.value
             }
           }
 
@@ -297,7 +317,7 @@ const BidsAsksHistory = (props) => {
                 prefix={`${
                   field.id === 'amount' ? listCurrency : quoteCurrency
                 } `}
-                onValueChange={(values) => {
+                onValueChange={values => {
                   field.onChange({
                     target: {
                       name: field.name,

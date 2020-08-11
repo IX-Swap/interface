@@ -1,4 +1,4 @@
-// @flow
+//
 /* eslint-disable react-hooks/exhaustive-deps */
 import React, { useCallback, useState } from 'react'
 import { useHistory } from 'react-router-dom'
@@ -14,7 +14,7 @@ import TableWithPagination from 'components/TableWithPagination'
 import { makeStyles } from '@material-ui/core/styles'
 import { snackbarService } from 'uno-material-ui'
 import { isFunction } from 'lodash'
-import type { Deposit } from './modules/types'
+
 import DialogAuthorizeConfirmation from './confirm'
 import Actions from './modules/actions'
 import { columns } from './data'
@@ -28,20 +28,17 @@ const useStyles = makeStyles({
 })
 
 const useDepositsListLogic = () => {
-  const [deposit, setDeposit] = useState<Deposit | null>(null)
-  const [open, setOpen] = useState<boolean>(false)
+  const [deposit, setDeposit] = useState(null)
+  const [open, setOpen] = useState(false)
   const [cb, setCb] = useState(() => () => {})
-  const [newStatus, setNewStatus] = useState<string>('')
-  const handleSelectChange = useCallback(
-    (mDeposit: Deposit, status: string) => {
-      setDeposit(mDeposit)
-      setNewStatus(status)
-      setOpen(true)
-    },
-    []
-  )
+  const [newStatus, setNewStatus] = useState('')
+  const handleSelectChange = useCallback((mDeposit, status) => {
+    setDeposit(mDeposit)
+    setNewStatus(status)
+    setOpen(true)
+  }, [])
 
-  const handleCbChange = useCallback((mCb: any) => {
+  const handleCbChange = useCallback(mCb => {
     setCb(mCb)
   }, [])
 
@@ -49,7 +46,7 @@ const useDepositsListLogic = () => {
     setOpen(false)
   }
 
-  const handleConfirm = async (mDeposit: Deposit, status: string) => {
+  const handleConfirm = async (mDeposit, status) => {
     const confirm = await toggleDepositStatus(mDeposit, status)
     let message = 'Failed to update deposit status!'
     let type = 'error'
@@ -78,13 +75,7 @@ const useDepositsListLogic = () => {
   }
 }
 
-const RowStatusComponent = ({
-  deposit,
-  handleSelectChange
-}: {
-  deposit: Deposit,
-  handleSelectChange: (deposit: Deposit, status: string) => void,
-}) => {
+const RowStatusComponent = ({ deposit, handleSelectChange }) => {
   const classes = useStyles()
   switch (deposit.status) {
     case 'Approved':
@@ -104,14 +95,13 @@ const RowStatusComponent = ({
         <Select
           className={classes.formControl}
           value={deposit.status}
-          onClick={(evt) => {
+          onClick={evt => {
             evt.stopPropagation()
             evt.preventDefault()
             evt.nativeEvent.stopPropagation()
             evt.nativeEvent.stopImmediatePropagation()
           }}
-          onChange={(evt: SyntheticInputEvent<HTMLElement>) =>
-            handleSelectChange(deposit, evt.target.value)}
+          onChange={evt => handleSelectChange(deposit, evt.target.value)}
           inputProps={{
             name: 'status'
           }}
@@ -123,7 +113,7 @@ const RowStatusComponent = ({
   }
 }
 
-const MemoizedTable = React.memo(({ handleSelectChange, onMount }: any) => {
+const MemoizedTable = React.memo(({ handleSelectChange, onMount }) => {
   const history = useHistory()
   return (
     <Paper style={{ width: '100%' }}>
@@ -133,7 +123,7 @@ const MemoizedTable = React.memo(({ handleSelectChange, onMount }: any) => {
         columns={columns}
         onMount={onMount}
       >
-        {(mDeposit: Deposit) => (
+        {mDeposit => (
           <Grid container direction='row' alignItems='center'>
             <RowStatusComponent
               deposit={mDeposit}
@@ -170,14 +160,11 @@ export default function Deposits () {
     handleCbChange
   } = useDepositsListLogic()
 
-  const mHandleSelectChange = useCallback(
-    (mDeposit: Deposit, status: string) => {
-      handleSelectChange(mDeposit, status)
-    },
-    []
-  )
+  const mHandleSelectChange = useCallback((mDeposit, status) => {
+    handleSelectChange(mDeposit, status)
+  }, [])
 
-  const onMount = useCallback((callback) => {
+  const onMount = useCallback(callback => {
     handleCbChange(() => callback)
   }, [])
 

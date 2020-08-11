@@ -116,11 +116,19 @@ const ListingsList = ({ list, goToPage }) => {
             <TableCell className={classes.defaultCell}>{row.pair}</TableCell>
             <TableCell className={classes.defaultCell}>{row.type}</TableCell>
             <TableCell className={classes.defaultCell}>{row.side}</TableCell>
-            <TableCell className={classes.defaultCell}>{numberWithCommas(row.average)}</TableCell>
-            <TableCell className={classes.defaultCell}>{numberWithCommas(row.price.toFixed(2))}</TableCell>
+            <TableCell className={classes.defaultCell}>
+              {numberWithCommas(row.average)}
+            </TableCell>
+            <TableCell className={classes.defaultCell}>
+              {numberWithCommas(row.price.toFixed(2))}
+            </TableCell>
             <TableCell className={classes.defaultCell}>{row.filled}</TableCell>
-            <TableCell className={classes.defaultCell}>{numberWithCommas(row.amount.toFixed(4))}</TableCell>
-            <TableCell className={classes.defaultCell}>{numberWithCommas(row.total.toFixed(2))}</TableCell>
+            <TableCell className={classes.defaultCell}>
+              {numberWithCommas(row.amount.toFixed(4))}
+            </TableCell>
+            <TableCell className={classes.defaultCell}>
+              {numberWithCommas(row.total.toFixed(2))}
+            </TableCell>
             <TableCell className={classes.defaultCell}>--</TableCell>
             <TableCell className={classes[statusBadge]}>{row.status}</TableCell>
           </TableRow>
@@ -189,21 +197,15 @@ function OrdersTable (props) {
     })
   }
 
-  const searchStyle = classNames(
-    classes.btnStyle,
-    classes.searchStyle
-  )
+  const searchStyle = classNames(classes.btnStyle, classes.searchStyle)
 
-  const resetStyle = classNames(
-    classes.btnStyle,
-    classes.resetStyle
-  )
+  const resetStyle = classNames(classes.btnStyle, classes.resetStyle)
 
   const isVisitedPage = Utils.isVisited(history.location.pathname)
 
   return (
     <Grid>
-      {!isVisitedPage && (<SandboxModal />)}
+      {!isVisitedPage && <SandboxModal />}
       <Typography className={classes.title} variant='h1'>
         {title}
       </Typography>
@@ -211,13 +213,13 @@ function OrdersTable (props) {
         <MuiPickersUtilsProvider utils={DateFnsUtils}>
           <section className={classes.filterContainer}>
             <DateFilter
-              setFrom={(fromDate) => setFrom(fromDate)}
-              setTo={(toDate) => setTo(toDate)}
+              setFrom={fromDate => setFrom(fromDate)}
+              setTo={toDate => setTo(toDate)}
             />
             <DropdownFilter
               items={marketItems}
-              setPair={(pairId) => setPair(pairId)}
-              setSide={(side) => setSide(side)}
+              setPair={pairId => setPair(pairId)}
+              setSide={side => setSide(side)}
             />
             <section className={classes.buttonFilter}>
               <Button
@@ -227,10 +229,7 @@ function OrdersTable (props) {
               >
                 Search
               </Button>
-              <Button
-                color='primary'
-                className={resetStyle}
-              >
+              <Button color='primary' className={resetStyle}>
                 Reset
               </Button>
             </section>
@@ -241,7 +240,7 @@ function OrdersTable (props) {
           <Table aria-label='ordres table'>
             <TableHead>
               <TableRow>
-                {columns.map((column) => (
+                {columns.map(column => (
                   <TableCell className={classes.tableHeader} key={column.id}>
                     {column.label}
                   </TableCell>

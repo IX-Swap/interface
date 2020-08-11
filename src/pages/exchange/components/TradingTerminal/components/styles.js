@@ -26,7 +26,7 @@ const header = {
   margin: 0
 }
 
-export default makeStyles((theme) => ({
+export default makeStyles(theme => ({
   overviewHeader: {
     marginBottom: theme.spacing.unit * 5
   },

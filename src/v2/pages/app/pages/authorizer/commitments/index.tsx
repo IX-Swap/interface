@@ -11,7 +11,7 @@ const Offerings = () => {
       uri='/issuance/commitments/list'
       name='authorizerCommitmentsList'
       columns={columns}
-      onView={(row) => {
+      onView={row => {
         history.push({
           pathname: '/authorizer/commitments/view',
           state: {

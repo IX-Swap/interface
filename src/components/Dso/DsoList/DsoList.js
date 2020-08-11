@@ -1,4 +1,4 @@
-// @flow
+//
 /* eslint-disable react-hooks/exhaustive-deps */
 import React, { useRef, useEffect, useState } from 'react'
 import {
@@ -31,7 +31,7 @@ let {
   clearApiStatus: _clearApiStatus
 } = Actions
 
-const useDsoListLogic = (statusFilter?: string, user?: string) => {
+const useDsoListLogic = (statusFilter, user) => {
   const isIssuer = useIsIssuer()
   const dsoListDispatch = useDsoListDispatch()
   const dsoListState = useDsoListState()
@@ -39,7 +39,7 @@ const useDsoListLogic = (statusFilter?: string, user?: string) => {
   const { status, page, total, limit, items, statusCode, error } = dsoListState
   const mountedRef = useRef(true)
   const [onSearch] = useState(() =>
-    debounce((evt) => setSearch(evt.target.value), 500)
+    debounce(evt => setSearch(evt.target.value), 500)
   )
 
   useEffect(() => {
@@ -50,16 +50,16 @@ const useDsoListLogic = (statusFilter?: string, user?: string) => {
     _clearApiStatus = override.clearApiStatus
   }, [user])
 
-  const handleChangePage = (_, newPage: number) => {
+  const handleChangePage = (_, newPage) => {
     _setPage(dsoListDispatch, { page: newPage })
   }
 
-  const handleChangeRowsPerPage = (newRows: number) => {
+  const handleChangeRowsPerPage = newRows => {
     _setRowsPerPage(dsoListDispatch, { rows: newRows })
     _setPage(dsoListDispatch, { page: 0 })
   }
 
-  const _onSearch = (evt) => {
+  const _onSearch = evt => {
     evt.persist()
     onSearch(evt)
   }
@@ -105,15 +105,7 @@ const useDsoListLogic = (statusFilter?: string, user?: string) => {
   }
 }
 
-const DsoList = ({
-  onClickView,
-  status = undefined,
-  user = ''
-}: {
-  user?: string,
-  status?: string,
-  onClickView: Function,
-}) => {
+const DsoList = ({ onClickView, status = undefined, user = '' }) => {
   const {
     isIssuer,
     status: loadingStatus,
@@ -158,7 +150,7 @@ const DsoList = ({
       <Table aria-label='accounts table'>
         <TableBody>
           {/* $FlowFixMe */}
-          {dsoList.map((dso) => (
+          {dsoList.map(dso => (
             // $FlowFixMe
             <TableRow key={dso._id}>
               <TableCell style={{ borderBottom: 'none' }}>
@@ -178,7 +170,7 @@ const DsoList = ({
                 count={total}
                 rowsPerPage={limit}
                 page={page}
-                onChangeRowsPerPage={(evt: SyntheticInputEvent<HTMLElement>) =>
+                onChangeRowsPerPage={evt =>
                   handleChangeRowsPerPage(parseInt(evt.target.value))}
                 onChangePage={handleChangePage}
               />

@@ -1,20 +1,15 @@
-// @flow
+//
 import { postRequest } from 'services/httpRequests'
 import storage from 'services/storageHelper'
 
-export const withdraw = async (payload: {
-  memo: string,
-  amount: number,
-  bank: string,
-  otp: string,
-}) => {
+export const withdraw = async payload => {
   const url = `/accounts/cash/withdrawals/${storage.getUserId()}`
   const response = await postRequest(url, payload)
 
   return response.status === 200
 }
 
-export const getAssetBalance = async (id: string) => {
+export const getAssetBalance = async id => {
   try {
     const url = `/accounts/balance/${storage.getUserId()}/${id}`
     const result = await postRequest(url, { skip: 0, limit: 50 })

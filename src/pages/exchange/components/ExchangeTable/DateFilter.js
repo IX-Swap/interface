@@ -10,7 +10,7 @@ import { Typography } from '@material-ui/core'
 
 const DATE_FORMAT = 'MM/dd/yyyy'
 
-const DateFilter = (props) => {
+const DateFilter = props => {
   const classes = useStyles()
   // const today = moment().format('MM/dd/YYYY');
 
@@ -18,12 +18,12 @@ const DateFilter = (props) => {
 
   const [toDate, setTo] = React.useState(new Date())
 
-  const _handleSetFrom = (date) => {
+  const _handleSetFrom = date => {
     setFrom(date)
     props.setFrom(moment(fromDate).format('YYYY-MM-DD HH:mm:ss'))
   }
 
-  const _handleSetTo = (date) => {
+  const _handleSetTo = date => {
     setTo(date)
     props.setTo(moment(fromDate).format('YYYY-MM-DD HH:mm:ss'))
   }

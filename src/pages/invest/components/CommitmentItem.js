@@ -1,4 +1,4 @@
-// @flow
+//
 /* eslint-disable react-hooks/exhaustive-deps */
 import React, { useState, useEffect } from 'react'
 import {
@@ -16,8 +16,7 @@ import { formatMoney } from 'helpers/formatNumbers'
 import { useHistory } from 'react-router-dom'
 import { useForm } from 'react-hook-form'
 import { snackbarService } from 'uno-material-ui'
-import type { Dso } from 'context/dso/types'
-import type { Commitment } from 'context/commitment/types'
+
 import {
   fetchAccountBalanceByAsset,
   addCommitment,
@@ -38,7 +37,7 @@ const useStyles = makeStyles(() => ({
   }
 }))
 
-const BalanceHeader = ({ label, value }: { label: string, value: string }) => {
+const BalanceHeader = ({ label, value }) => {
   const classes = useStyles()
 
   return (
@@ -49,15 +48,7 @@ const BalanceHeader = ({ label, value }: { label: string, value: string }) => {
   )
 }
 
-const CommitmentItem = ({
-  dso,
-  commitment,
-  asset
-}: {
-  dso: Dso,
-  commitment?: Commitment,
-  asset: string,
-}) => {
+const CommitmentItem = ({ dso, commitment, asset }) => {
   const history = useHistory()
   const [saving, setSaving] = useState(false)
   const [balance, setBalance] = useState(null)
@@ -70,7 +61,7 @@ const CommitmentItem = ({
 
   const { register, handleSubmit, watch, errors } = useForm()
 
-  const onSubmit = async (data) => {
+  const onSubmit = async data => {
     setSaving(true)
     const { walletAddress, otp } = data
     const { currency, _id, minimumInvestment } = dso
@@ -128,7 +119,7 @@ const CommitmentItem = ({
     }
   }
 
-  const onClickDownload = async (documentId) => {
+  const onClickDownload = async documentId => {
     try {
       await downloadFile(dso._id)
     } catch (error) {
@@ -213,7 +204,7 @@ const CommitmentItem = ({
 
               {editMode ? (
                 <Uploader
-                  onUploadSuccess={(doc) => setSubscriptionDocument(doc)}
+                  onUploadSuccess={doc => setSubscriptionDocument(doc)}
                 />
               ) : (
                 <Box mb={2}>
@@ -346,7 +337,7 @@ const CommitmentItem = ({
                         saving ||
                         (commitment && commitment.status !== 'Unauthorized')
                       }
-                      onClick={(e) => {
+                      onClick={e => {
                         e.preventDefault()
                         if (!editMode) {
                           alert('Feature not yet available')

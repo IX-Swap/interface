@@ -1,11 +1,9 @@
-// @flow
+//
 import actionGenerator from 'context/base/withPagination/actions'
 
 import { postRequest } from 'services/httpRequests'
 
-import { marketListActions } from './types'
-
-async function postMarkets (dispatch: Function, payload: { skip: number, limit: number }) {
+async function postMarkets (dispatch, payload) {
   try {
     dispatch({ type: marketListActions.GET_MARKET_LIST_REQUEST })
 

@@ -1,12 +1,12 @@
-// @flow
+//
 import React, { useRef } from 'react'
 import { Button, Typography, ListItem, Grid } from '@material-ui/core'
-import type { DocumentGuide } from '../../modules/types'
+
 import { useIdentityState, useIdentityDispatch } from '../../modules'
 import { uploadFile } from '../../modules/actions'
 import useStyles from './styles'
 
-const Uploader = ({ document }: { document: DocumentGuide }) => {
+const Uploader = ({ document }) => {
   const classes = useStyles()
   const inputRef = useRef()
   const dispatch = useIdentityDispatch()

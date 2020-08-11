@@ -1,8 +1,3 @@
-
-import type { GenericStatus } from 'context/base/withPagination/types'
-import type { UsersListState } from './types'
-import { userUpdateRoleActions } from './types'
-
 export default function userReducer (
   statusTypes: GenericStatus,
   state: UsersListState,

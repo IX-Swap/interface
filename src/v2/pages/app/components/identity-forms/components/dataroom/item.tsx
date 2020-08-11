@@ -8,7 +8,13 @@ import useStyles from './styles'
 import { Document } from '../../../../../../types/document'
 import { downloadFile } from '../../../../../../helpers/httpRequests'
 
-const DocumentItem = ({ document, editMode }: { document: Document; editMode: boolean }) => {
+const DocumentItem = ({
+  document,
+  editMode
+}: {
+  document: Document
+  editMode: boolean
+}) => {
   const classes = useStyles()
   const [isInAction, setIsInAction] = useState(false)
 
@@ -31,16 +37,16 @@ const DocumentItem = ({ document, editMode }: { document: Document; editMode: bo
         </Grid>
         <Grid container item xs={1} justify='flex-end'>
           {editMode ? (
-            <Button
-              disabled={isInAction}
-            >
+            <Button disabled={isInAction}>
               <DeleteOutlineIcon />
             </Button>
           ) : (
             <Button
               onClick={async () => {
                 setIsInAction(true)
-                await downloadFile(`/dataroom/raw/${document.user}/${document._id}`)
+                await downloadFile(
+                  `/dataroom/raw/${document.user}/${document._id}`
+                )
                 setIsInAction(false)
               }}
               disabled={isInAction}

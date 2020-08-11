@@ -1,4 +1,4 @@
-// @flow
+//
 import React, { useRef, useEffect, useState } from 'react'
 import {
   TableContainer,
@@ -20,10 +20,10 @@ import {
 import { snackbarService } from 'uno-material-ui'
 import moment from 'moment'
 import { makeStyles } from '@material-ui/core/styles'
-import type { Dso } from 'context/dso/types'
+
 import { useHistory } from 'react-router-dom'
 import { formatMoney } from 'helpers/formatNumbers'
-import type { TableColumns } from './modules/types'
+
 import WithdrawListModule from './modules'
 import Actions from './modules/actions'
 import DialogAuthorizeConfirmation from './confirm'
@@ -60,15 +60,15 @@ function useWithdrawListLogic () {
     error
   } = withdrawListState
   const mountedRef = useRef(true)
-  const [withdraw, setWithdraw] = useState<Dso | null>(null)
-  const [open, setOpen] = useState<boolean>(false)
-  const [newStatus, setNewStatus] = useState<string>('')
+  const [withdraw, setWithdraw] = useState(null)
+  const [open, setOpen] = useState(false)
+  const [newStatus, setNewStatus] = useState('')
 
-  const handleChangePage = (_, newPage: number) => {
+  const handleChangePage = (_, newPage) => {
     setPage(withdrawDispatch, { page: newPage })
   }
 
-  const handleChangeRowsPerPage = (newRows: number) => {
+  const handleChangeRowsPerPage = newRows => {
     setRowsPerPage(withdrawDispatch, { rows: newRows })
     setPage(withdrawDispatch, { page: 0 })
   }
@@ -112,13 +112,7 @@ function useWithdrawListLogic () {
   }
 }
 
-const RowStatusComponent = ({
-  dso,
-  handleSelectChange
-}: {
-  dso: Dso,
-  handleSelectChange: (dso: Dso, status: string) => void,
-}) => {
+const RowStatusComponent = ({ dso, handleSelectChange }) => {
   const classes = useStyles()
   switch (dso.status) {
     case 'Approved':
@@ -146,13 +140,13 @@ const RowStatusComponent = ({
         <Select
           className={classes.formControl}
           value={dso.status}
-          onClick={(evt) => {
+          onClick={evt => {
             evt.stopPropagation()
             evt.preventDefault()
             evt.nativeEvent.stopPropagation()
             evt.nativeEvent.stopImmediatePropagation()
           }}
-          onChange={(evt: SyntheticInputEvent<HTMLElement>) => {
+          onChange={evt => {
             handleSelectChange(dso, evt.target.value)
           }}
           inputProps={{
@@ -166,11 +160,11 @@ const RowStatusComponent = ({
   }
 }
 
-const columns: Array<TableColumns> = [
+const columns = [
   {
     key: 'createdAt',
     label: 'Date of Application',
-    render: (a: string) => moment(a).format('MM/DD/YY')
+    render: a => moment(a).format('MM/DD/YY')
   },
   {
     key: 'tokenName',
@@ -189,34 +183,28 @@ const columns: Array<TableColumns> = [
     headAlign: 'right',
     key: 'pricePerUnit',
     label: 'Unit Price',
-    render: (a: number) => formatMoney(a)
+    render: a => formatMoney(a)
   },
   {
     align: 'right',
     headAlign: 'right',
     key: 'totalFundraisingAmount',
     label: 'Total Fundraising Amount',
-    render: (amount: number) => formatMoney(amount)
+    render: amount => formatMoney(amount)
   },
   {
     align: 'right',
     headAlign: 'right',
     key: 'minimumInvestment',
     label: 'Minimum Investment',
-    render: (amount: number) => formatMoney(amount)
+    render: amount => formatMoney(amount)
   }
 ]
 
-const Withdraws = ({
-  list,
-  handleSelectChange
-}: {
-  list: Array<Dso>,
-  handleSelectChange: (dso: Dso, status: string) => void,
-}) => {
+const Withdraws = ({ list, handleSelectChange }) => {
   const history = useHistory()
 
-  const viewDso = (id: string, row: Dso) => {
+  const viewDso = (id, row) => {
     history.push({
       pathname: `/authorizer/digital-securities/${id}`,
       state: { data: row }
@@ -226,9 +214,9 @@ const Withdraws = ({
   return (
     <TableBody>
       {list.length ? (
-        list.map((row) => (
+        list.map(row => (
           <TableRow hover key={row._id}>
-            {columns.map((e) => (
+            {columns.map(e => (
               <TableCell align={e.align || 'left'} key={e.key}>
                 {e.render ? e.render(row[e.key]) : row[e.key]}
               </TableCell>
@@ -280,7 +268,7 @@ export default function BanksList () {
     setNewStatus
   } = useWithdrawListLogic()
 
-  const handleSelectChange = (mDso: Dso, status: string) => {
+  const handleSelectChange = (mDso, status) => {
     setWithdraw(mDso)
     setNewStatus(status)
     setOpen(true)
@@ -290,7 +278,7 @@ export default function BanksList () {
     setOpen(false)
   }
 
-  const handleConfirm = async (mDso: Dso, status: string) => {
+  const handleConfirm = async (mDso, status) => {
     const confirm = await toggleWithdrawStatus(mDso, status)
     let message = 'Failed to update digital security status!'
     let type = 'error'
@@ -323,7 +311,7 @@ export default function BanksList () {
         <Table aria-label='accounts table'>
           <TableHead>
             <TableRow>
-              {columns.map((e) => (
+              {columns.map(e => (
                 <TableCell key={e.key} align={e.headAlign || 'left'}>
                   <b>{e.label}</b>
                 </TableCell>
@@ -344,9 +332,8 @@ export default function BanksList () {
                   count={total}
                   rowsPerPage={limit}
                   page={page}
-                  onChangeRowsPerPage={(
-                    evt: SyntheticInputEvent<HTMLElement>
-                  ) => handleChangeRowsPerPage(parseInt(evt.target.value))}
+                  onChangeRowsPerPage={evt =>
+                    handleChangeRowsPerPage(parseInt(evt.target.value))}
                   onChangePage={handleChangePage}
                 />
               </TableRow>

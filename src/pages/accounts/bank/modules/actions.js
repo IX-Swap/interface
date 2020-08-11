@@ -1,9 +1,7 @@
-// @flow
+//
 import localStore from 'services/storageHelper'
 import actionGenerator from 'context/base/withPagination/actions'
 import { postRequest, putRequest, getRequest } from 'services/httpRequests'
-import { userAddBankActions } from './types'
-import type { BankRequest } from './types'
 
 const { getter: getBankAccounts, ...pageMethods } = actionGenerator(
   'bankList',
@@ -11,7 +9,7 @@ const { getter: getBankAccounts, ...pageMethods } = actionGenerator(
   {}
 )
 
-async function getBank (dispatch: Function, payload: { bankId: string }) {
+async function getBank (dispatch, payload) {
   try {
     const { bankId } = payload
     const userId = localStore.getUserId()
@@ -29,10 +27,7 @@ async function getBank (dispatch: Function, payload: { bankId: string }) {
   }
 }
 
-async function createBankAccount (
-  dispatch: Function,
-  payload: { bank: BankRequest }
-) {
+async function createBankAccount (dispatch, payload) {
   dispatch({ type: userAddBankActions.USER_ADD_BANK_REQUEST })
   const userId = localStore.getUserId()
   const updateParams = {}

@@ -10,7 +10,13 @@ const CorporateIdentities = () => {
       uri='/identity/corporates/list'
       name='authorizerCorporatesList'
       columns={columns}
-      onView={(row) => <CorporateIdentityForm identity={row} editMode={false} useOwnEmail={false} />}
+      onView={row => (
+        <CorporateIdentityForm
+          identity={row}
+          editMode={false}
+          useOwnEmail={false}
+        />
+      )}
     />
   )
 }

@@ -1,4 +1,4 @@
-// @flow
+//
 import React, { Suspense } from 'react'
 import { withRouter, Route, RouteProps } from 'react-router-dom'
 import ArrowBackIosIcon from '@material-ui/icons/ArrowBackIos'
@@ -21,7 +21,7 @@ const CorporateIdentities = React.lazy(() => import('./corporate-identities'))
 const Commitments = React.lazy(() => import('./commitments'))
 const BankView = React.lazy(() => import('pages/accounts/bank/view'))
 
-const BankSummary = ({ location }: RouteProps) => {
+const BankSummary = ({ location }) => {
   const { data } = location.state || {}
   if (!data) return <span>nothing to display</span>
   return (
@@ -124,7 +124,7 @@ const Routes = () => (
   </Suspense>
 )
 
-const getTitle = (path: string): string => {
+const getTitle = path => {
   switch (path) {
     case '/authorizer/banks':
       return 'Banks'
@@ -155,10 +155,10 @@ const getTitle = (path: string): string => {
   }
 }
 
-function Authorizer (props: RouteProps) {
+function Authorizer (props) {
   const { location, history } = props
 
-  const hasBack = (a: string) =>
+  const hasBack = a =>
     [
       '/authorizer/withdrawals/view',
       '/authorizer/deposits/view',

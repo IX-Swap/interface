@@ -1,4 +1,4 @@
-// @flow
+//
 import React, { useState, useEffect, useRef } from 'react'
 import {
   Typography,
@@ -12,7 +12,7 @@ import {
 import { formatMoney } from 'helpers/formatNumbers'
 import BankWithdrawForm from './WithdrawForm'
 import WithdrawConfirmation from './WithdrawConfirmation'
-import type { Bank } from '../modules/types'
+
 import { getAssetBalance } from './modules/actions'
 import BankActions from '../modules/actions'
 import BanksListModule from '../modules/index'
@@ -26,14 +26,14 @@ const {
 } = BanksListModule
 
 const useGenericBankLogic = () => {
-  const [bank, setBank] = useState<Bank | null>(null)
-  const [memo, setMemo] = useState<string>('')
-  const [amount, setAmount] = useState<number>(0)
+  const [bank, setBank] = useState(null)
+  const [memo, setMemo] = useState('')
+  const [amount, setAmount] = useState(0)
   const [availableBalance, setAvailableBalance] = useState(0)
   const dispatch = useBanksListDispatch()
   const { items: banks, status } = useBanksListState()
   const mountedRef = useRef(true)
-  const [isConfirmation, setIsConfirmation] = useState<boolean>(false)
+  const [isConfirmation, setIsConfirmation] = useState(false)
 
   useEffect(() => {
     if (status === BANK_LIST_STATUS.INIT) {
@@ -53,13 +53,13 @@ const useGenericBankLogic = () => {
     }
   }, [dispatch])
 
-  const withdraw = (toWithdraw: number, mMemo: string) => {
+  const withdraw = (toWithdraw, mMemo) => {
     setMemo(mMemo)
     setAmount(toWithdraw)
     setIsConfirmation(true)
   }
 
-  const onBankSelect = async (evt) => {
+  const onBankSelect = async evt => {
     const asset = await getAssetBalance(evt.target.value.asset._id)
     if (!asset) return
 
@@ -134,7 +134,7 @@ function BankWithdrawComponent () {
               value={bank || {}}
               onChange={onBankSelect}
             >
-              {banks.map((item) => (
+              {banks.map(item => (
                 <MenuItem key={item._id} value={item}>
                   {item.bankName} - {item.bankAccountNumber}
                 </MenuItem>

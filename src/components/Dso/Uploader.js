@@ -1,7 +1,7 @@
-// @flow
+//
 import React, { useRef, useState } from 'react'
 import { Button, Typography, ListItem, Grid } from '@material-ui/core'
-import type { DocumentGuide } from 'pages/identity/modules/types'
+
 import { snackbarService } from 'uno-material-ui'
 import { uploadFile } from './modules/actions'
 import useStyles from './styles'
@@ -15,15 +15,6 @@ const Uploader = ({
   showTitle = true,
   onDelete,
   justify = 'flex-end'
-}: {
-  showTitle?: boolean,
-  onDelete?: (document: DocumentGuide) => void,
-  originalFileName?: string,
-  justify?: string,
-  disabled?: boolean,
-  document: DocumentGuide,
-  edit: boolean,
-  onUpload: (id: string, type: string) => void,
 }) => {
   const [saving, setSaving] = useState(false)
   const classes = useStyles()

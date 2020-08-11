@@ -1,8 +1,7 @@
-// @flow
+//
 import { generateModule } from 'context/base/withPagination'
-import type { TradeHistoryListState } from './types'
 
-const { Provider, useState, useDispatch, statusList } = generateModule<TradeHistoryListState>(
+const { Provider, useState, useDispatch, statusList } = generateModule(
   'tradesHistoryList'
 )
 

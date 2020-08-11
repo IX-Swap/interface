@@ -7,7 +7,7 @@ import { ENDPOINT_URL } from 'config'
 import { subscribeToSocket } from 'services/socket'
 import Monitoring from '../Monitoring'
 
-const TradeHistory = (props) => {
+const TradeHistory = props => {
   const { id } = props
 
   const [tradeStory, setTradeStory] = useState(false)
@@ -16,28 +16,22 @@ const TradeHistory = (props) => {
 
   // Update after demo
   /*eslint-disable */
-    useEffect(() => {
-        const socket = subscribeToSocket();
-        socket.emit(TRADE_HISTORY.emit, id);
-        socket.on(`${TRADE_HISTORY.on}/${id}`, data => {
-            setTradeStory(data);
-        });
+  useEffect(() => {
+    const socket = subscribeToSocket();
+    socket.emit(TRADE_HISTORY.emit, id);
+    socket.on(`${TRADE_HISTORY.on}/${id}`, data => {
+      setTradeStory(data);
+    });
 
-        return () => {
-            socket.off(`${TRADE_HISTORY.on}/${id}`);
-        };
-    }, [id]);
-    /*eslint-disable */
+    return () => {
+      socket.off(`${TRADE_HISTORY.on}/${id}`);
+    };
+  }, [id]);
+  /*eslint-disable */
 
-    const data = tradeStory ? tradeStory : [];
+  const data = tradeStory ? tradeStory : [];
 
-    return (
-        <Monitoring
-            title="Trade History"
-            type="tradeHistory"
-            data={data}
-        />
-    );
+  return <Monitoring title="Trade History" type="tradeHistory" data={data} />;
 };
 
 export default TradeHistory;

@@ -10,7 +10,7 @@ const CashDeposits = () => {
       uri='/accounts/cash/deposits'
       name='authorizerCashDeposits'
       columns={columns}
-      onView={(row) => <DepositView deposit={row} />}
+      onView={row => <DepositView deposit={row} />}
     />
   )
 }

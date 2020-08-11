@@ -1,15 +1,14 @@
-// @flow
+//
 
 // Adds decimal places and commas
-export const formatMoney = (value: number, symbol?: string = 'SGD'): string =>
+export const formatMoney = (value, symbol = 'SGD') =>
   `${symbol} ${(+value || 0).toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,')}`
 
 // Adds commas
-export const formatNumber = (value: number): string =>
+export const formatNumber = value =>
   value
     .toFixed(2)
     .toString()
     .replace(/\B(?=(\d{3})+(?!\d))/g, ',')
 
-export const toPercentage = (value: number): string =>
-  `${(value * 100).toFixed(2)}%`
+export const toPercentage = value => `${(value * 100).toFixed(2)}%`

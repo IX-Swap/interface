@@ -1,7 +1,14 @@
-// @flow
+//
 /* eslint-disable react-hooks/exhaustive-deps */
 import React, { useEffect, useRef, useState } from 'react'
-import { Box, Grid, Typography, Button, CircularProgress, IconButton } from '@material-ui/core'
+import {
+  Box,
+  Grid,
+  Typography,
+  Button,
+  CircularProgress,
+  IconButton
+} from '@material-ui/core'
 import EditIcon from '@material-ui/icons/Edit'
 import Alert from '@material-ui/lab/Alert'
 
@@ -15,8 +22,6 @@ import { columns } from './data'
 import EditBankComponent from './EditBankComponent'
 import BankListModule from './modules'
 import Actions from './modules/actions'
-import { baseBankRequest } from './modules/types'
-import type { Bank, BankRequest } from './modules/types'
 
 const {
   useBanksListDispatch,
@@ -91,19 +96,19 @@ function useBankListLogic () {
     error
   } = bankListState
   const mountedRef = useRef(true)
-  const [activeBank, setActiveBank] = useState<BankRequest>(baseBankRequest)
+  const [activeBank, setActiveBank] = useState(baseBankRequest)
   const [editOpen, setEditOpen] = useState(false)
 
-  const handleChangePage = (_, newPage: number) => {
+  const handleChangePage = (_, newPage) => {
     setPage(bankDispatch, { page: newPage })
   }
 
-  const handleChangeRowsPerPage = (newRows: number) => {
+  const handleChangeRowsPerPage = newRows => {
     setRowsPerPage(bankDispatch, { rows: newRows })
     setPage(bankDispatch, { page: 0 })
   }
 
-  const bankToBankRequest = (bank: Bank): BankRequest => ({
+  const bankToBankRequest = bank => ({
     _id: bank._id,
     asset: bank.asset._id,
     accountHolderName: bank.accountHolderName,
@@ -113,13 +118,13 @@ function useBankListLogic () {
     address: bank.address || {}
   })
 
-  const editBank = (bank: Bank) => {
+  const editBank = bank => {
     clearApiStatus(bankDispatch)
     setActiveBank(bankToBankRequest(bank))
     setEditOpen(true)
   }
 
-  const closeEdit = (saved: boolean) => {
+  const closeEdit = saved => {
     setEditOpen(false)
     setPage(bankDispatch, { page })
     setActiveBank(baseBankRequest)
@@ -168,7 +173,7 @@ function useBankListLogic () {
   }
 }
 
-function BankListComponent ({ hasApproved }: { hasApproved: boolean }) {
+function BankListComponent ({ hasApproved }) {
   const {
     error,
     items,
@@ -256,7 +261,7 @@ function BankListComponent ({ hasApproved }: { hasApproved: boolean }) {
               endpoint={`/accounts/banks/list/${storageHelper.getUserId()}`}
               columns={columns}
             >
-              {(mBank: Bank) => (
+              {mBank => (
                 <>
                   <IconButton
                     aria-label='edit'
@@ -305,7 +310,7 @@ function BankListComponent ({ hasApproved }: { hasApproved: boolean }) {
 }
 
 // TODO: fix this any
-function AddBankAccount ({ props }: any) {
+function AddBankAccount ({ props }) {
   const history = useHistory()
   return (
     <Grid>

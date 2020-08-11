@@ -48,19 +48,13 @@ export default function Header (props) {
           {layoutState.isSidebarOpened ? (
             <ArrowBackIcon
               classes={{
-                root: classNames(
-                  classes.headerIcon,
-                  classes.headerIconCollapse
-                )
+                root: classNames(classes.headerIcon, classes.headerIconCollapse)
               }}
             />
           ) : (
             <MenuIcon
               classes={{
-                root: classNames(
-                  classes.headerIcon,
-                  classes.headerIconCollapse
-                )
+                root: classNames(classes.headerIcon, classes.headerIconCollapse)
               }}
             />
           )}
@@ -75,7 +69,7 @@ export default function Header (props) {
           color='inherit'
           className={classes.headerMenuButton}
           aria-controls='profile-menu'
-          onClick={(e) => setProfileMenu(e.currentTarget)}
+          onClick={e => setProfileMenu(e.currentTarget)}
         >
           <AccountIcon classes={{ root: classes.headerIcon }} />
         </IconButton>

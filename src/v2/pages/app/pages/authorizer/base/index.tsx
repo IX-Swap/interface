@@ -1,7 +1,15 @@
 import React, { useState, ReactNode } from 'react'
 
 import {
-  Grid, Typography, IconButton, Paper, Popper, ClickAwayListener, ListItemIcon, ListItemText, ListItem
+  Grid,
+  Typography,
+  IconButton,
+  Paper,
+  Popper,
+  ClickAwayListener,
+  ListItemIcon,
+  ListItemText,
+  ListItem
 } from '@material-ui/core'
 import { makeStyles } from '@material-ui/styles'
 import {
@@ -14,7 +22,12 @@ import {
 
 import Filter from './components/filter'
 import TableWithPagination from '../../../../../components/table-with-pagination'
-import { TableColumn, BaseFilter, Viewable, RowAction } from '../../../../../types/util'
+import {
+  TableColumn,
+  BaseFilter,
+  Viewable,
+  RowAction
+} from '../../../../../types/util'
 import { useStore } from './store'
 import classNames from 'classnames'
 
@@ -121,7 +134,10 @@ const AuthorizerTable = <T extends unknown>({
 
 const TableMemoed = React.memo(AuthorizerTable)
 
-const Actions = <T extends unknown>({ onView, item }: {item: T} & {onView: (row: T) => void}) => {
+const Actions = <T extends unknown>({
+  onView,
+  item
+}: { item: T } & { onView: (row: T) => void }) => {
   const authorizerGenericStore = useStore()
   const classes = useStyles()
   const [anchorEl, setAnchorEl] = useState<HTMLElement | null>(null)
@@ -165,7 +181,8 @@ const Actions = <T extends unknown>({ onView, item }: {item: T} & {onView: (row:
         <LaunchIcon className={classes.viewColor} />
       </IconButton>
       <Popper
-        open={open} anchorEl={anchorEl}
+        open={open}
+        anchorEl={anchorEl}
         placement='bottom-end'
         modifiers={{
           flip: {
@@ -175,9 +192,12 @@ const Actions = <T extends unknown>({ onView, item }: {item: T} & {onView: (row:
       >
         <ClickAwayListener onClickAway={handleClickAway}>
           <Paper className={classes.popover}>
-            {actions.map((e) => (
+            {actions.map(e => (
               <ListItem button key={e.label} onClick={() => e.onClick()}>
-                <ListItemIcon className={classes.popoverDark} style={{ minWidth: '40px' }}>
+                <ListItemIcon
+                  className={classes.popoverDark}
+                  style={{ minWidth: '40px' }}
+                >
                   {e.icon()}
                 </ListItemIcon>
                 <ListItemText className={classes.popoverText}>
@@ -197,7 +217,13 @@ const Actions = <T extends unknown>({ onView, item }: {item: T} & {onView: (row:
   )
 }
 
-const Preview = ({ children, onBack }: { children: ReactNode; onBack: () => void }) => {
+const Preview = ({
+  children,
+  onBack
+}: {
+  children: ReactNode
+  onBack: () => void
+}) => {
   return (
     <Grid container spacing={4} direction='column'>
       <Grid item container xs={12} alignItems='center' style={{ flex: '0' }}>
@@ -213,7 +239,9 @@ const Preview = ({ children, onBack }: { children: ReactNode; onBack: () => void
   )
 }
 
-const AuthorizerPage = <T extends unknown>(props: AuthorizerPageProps<T> & Viewable<T>) => {
+const AuthorizerPage = <T extends unknown>(
+  props: AuthorizerPageProps<T> & Viewable<T>
+) => {
   const authorizerGenericStore = useStore()
   const classes = useStyles()
   const [filters, setFilters] = useState<BaseFilter>({ status: 'Unauthorized' })
@@ -226,11 +254,29 @@ const AuthorizerPage = <T extends unknown>(props: AuthorizerPageProps<T> & Viewa
     render: (a: string) => {
       switch (a) {
         case 'Approved':
-          return <Typography className={classNames(classes.authStatus, classes.approved)}>A</Typography>
+          return (
+            <Typography
+              className={classNames(classes.authStatus, classes.approved)}
+            >
+              A
+            </Typography>
+          )
         case 'Rejected':
-          return <Typography className={classNames(classes.authStatus, classes.rejected)}>R</Typography>
+          return (
+            <Typography
+              className={classNames(classes.authStatus, classes.rejected)}
+            >
+              R
+            </Typography>
+          )
         default:
-          return <Typography className={classNames(classes.authStatus, classes.unauthorized)}>U</Typography>
+          return (
+            <Typography
+              className={classNames(classes.authStatus, classes.unauthorized)}
+            >
+              U
+            </Typography>
+          )
       }
     }
   }
@@ -259,13 +305,22 @@ const AuthorizerPage = <T extends unknown>(props: AuthorizerPageProps<T> & Viewa
   }
 
   return (
-    <Grid container style={{ margin: '-24px', width: 'calc(100% + 48px)', height: 'calc(100% - 24px)' }}>
+    <Grid
+      container
+      style={{
+        margin: '-24px',
+        width: 'calc(100% + 48px)',
+        height: 'calc(100% - 24px)'
+      }}
+    >
       <Grid item xs={12} md={3} className={classes.filters}>
-        <Filter onApplyFilter={(mFilters) => setFilters({ ...mFilters })} />
+        <Filter onApplyFilter={mFilters => setFilters({ ...mFilters })} />
       </Grid>
       <Grid item xs={12} md={9} className={classes.content}>
         <Grid item xs={12}>
-          <Typography style={{ fontWeight: 'bold', fontSize: '1.875rem' }}>{props.title}</Typography>
+          <Typography style={{ fontWeight: 'bold', fontSize: '1.875rem' }}>
+            {props.title}
+          </Typography>
         </Grid>
         <Grid item xs={12} style={{ marginTop: '48px' }} component={Paper}>
           <TableMemoed<T>

@@ -67,7 +67,9 @@ export function TokenListProvider ({ children }) {
 
 export function useTokenListState () {
   const context = React.useContext(TokenListStateContext)
-  if (context === undefined) { throw new Error('useTokenListState must be called in a TokenListProvider') }
+  if (context === undefined) {
+    throw new Error('useTokenListState must be called in a TokenListProvider')
+  }
   return context
 }
 

@@ -1,13 +1,10 @@
-// @flow
+//
 /* eslint-disable react/jsx-props-no-spreading */
 import React, { Suspense } from 'react'
 import useStyles from 'pages/exchange/styles'
 import { withRouter, Route, Switch } from 'react-router-dom'
 import { useTheme } from '@material-ui/core/styles'
-import {
-  Grid,
-  Paper
-} from '@material-ui/core'
+import { Grid, Paper } from '@material-ui/core'
 import BankComponent from '../bank'
 
 const Overview = React.lazy(() => import('../overview/Overview'))
@@ -21,7 +18,7 @@ function useAccountsLogic () {
   return { classes, theme }
 }
 
-function AccountsPanel ({ location }: any) {
+function AccountsPanel ({ location }) {
   const { classes } = useAccountsLogic()
   const routes = [
     {
@@ -47,8 +44,7 @@ function AccountsPanel ({ location }: any) {
   ]
 
   let { pathname } = location
-  const matched = (path: string): boolean =>
-    routes.some((p) => p.route === path)
+  const matched = path => routes.some(p => p.route === path)
 
   // TODO: remove this hack, use proper routing
   while (!matched(pathname) && pathname !== '/') {

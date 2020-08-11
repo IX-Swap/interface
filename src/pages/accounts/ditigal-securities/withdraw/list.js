@@ -1,4 +1,4 @@
-// @flow
+//
 import React, { useEffect, useRef } from 'react'
 import {
   TableContainer,
@@ -16,7 +16,6 @@ import { get } from 'lodash'
 import moment from 'moment'
 import DSModule from './modules/index'
 import DSActions from './modules/actions'
-import type { DSWithdrawal } from './modules/types'
 
 const {
   useDSWithdrawalsListDispatch,
@@ -26,17 +25,17 @@ const {
 
 const { setPage, setRowsPerPage, getDigitalSecurityWithdrawals } = DSActions
 
-const useWithdrawalsListLogic = (assetId: string) => {
+const useWithdrawalsListLogic = assetId => {
   const mountedRef = useRef(true)
   const dsDispatch = useDSWithdrawalsListDispatch()
   const { page, limit, items, status, total } = useDSWithdrawalsListState()
 
-  const handleChangeRowsPerPage = (newRows: number) => {
+  const handleChangeRowsPerPage = newRows => {
     setRowsPerPage(dsDispatch, { rows: newRows })
     setPage(dsDispatch, { page: 0 })
   }
 
-  const handleChangePage = (_, newPage: number) => {
+  const handleChangePage = (_, newPage) => {
     setPage(dsDispatch, { page: newPage })
   }
 
@@ -69,15 +68,7 @@ const useWithdrawalsListLogic = (assetId: string) => {
   }
 }
 
-type TableColumn = {
-  label: string,
-  key: $Keys<DSWithdrawal>,
-  align?: string,
-  headAlign?: string,
-  render?: (val: string) => string,
-};
-
-const columns: Array<TableColumn> = [
+const columns = [
   {
     label: 'Digital Security',
     // $FlowFixMe
@@ -92,7 +83,7 @@ const columns: Array<TableColumn> = [
     key: 'amount',
     headAlign: 'right',
     align: 'right',
-    render: (value) =>
+    render: value =>
       value &&
       parseFloat(value)
         .toFixed(2)
@@ -101,7 +92,7 @@ const columns: Array<TableColumn> = [
   {
     label: 'Date',
     key: 'date',
-    render: (value) => moment(value).format('MM/DD/YYYY')
+    render: value => moment(value).format('MM/DD/YYYY')
   },
   {
     label: 'Memo',
@@ -132,7 +123,7 @@ const redirectModel = [
   }
 ]
 
-export default function WithdrawalList ({ assetId }: { assetId: string }) {
+export default function WithdrawalList ({ assetId }) {
   const {
     status,
     total,
@@ -145,7 +136,7 @@ export default function WithdrawalList ({ assetId }: { assetId: string }) {
 
   const history = useHistory()
 
-  const showDetails = (row) => {
+  const showDetails = row => {
     history.push({
       pathname: '/accounts/wallets/withdraw-view',
       state: { data: row, model: redirectModel }
@@ -158,7 +149,7 @@ export default function WithdrawalList ({ assetId }: { assetId: string }) {
       <Table aria-label='simple table'>
         <TableHead>
           <TableRow>
-            {columns.map((e) => (
+            {columns.map(e => (
               <TableCell key={e.label} align={e.headAlign || 'left'}>
                 <b>{e.label}</b>
               </TableCell>
@@ -176,11 +167,9 @@ export default function WithdrawalList ({ assetId }: { assetId: string }) {
           <TableBody>
             {items.map((row, index) => (
               <TableRow key={index} hover onClick={() => showDetails(row)}>
-                {columns.map((e) => (
+                {columns.map(e => (
                   <TableCell key={e.key} align={e.align || 'left'}>
-                    {(e.render &&
-                      e.render(get<DSWithdrawal, string>(row, e.key))) ||
-                      get(row, e.key)}
+                    {(e.render && e.render(get(row, e.key))) || get(row, e.key)}
                   </TableCell>
                 ))}
               </TableRow>
@@ -196,7 +185,7 @@ export default function WithdrawalList ({ assetId }: { assetId: string }) {
                 count={total}
                 rowsPerPage={limit}
                 page={page}
-                onChangeRowsPerPage={(evt: SyntheticInputEvent<HTMLElement>) =>
+                onChangeRowsPerPage={evt =>
                   handleChangeRowsPerPage(parseInt(evt.target.value))}
                 onChangePage={handleChangePage}
               />

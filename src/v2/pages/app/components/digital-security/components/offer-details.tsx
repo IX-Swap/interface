@@ -13,11 +13,7 @@ interface OfferProps {
 const OfferDetails = ({ dso, currency, editMode = false }: OfferProps) => {
   return (
     <>
-      <EditableWithLabel
-        name='status'
-        label='Status'
-        value={dso.status}
-      />
+      <EditableWithLabel name='status' label='Status' value={dso.status} />
       <EditableWithLabel
         name='capitalStructure'
         required

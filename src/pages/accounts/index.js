@@ -1,4 +1,4 @@
-// @flow
+//
 import React, { useRef, useEffect } from 'react'
 import { Switch, withRouter, Route } from 'react-router-dom'
 import { Grid, Container } from '@material-ui/core'
@@ -9,7 +9,6 @@ import PersonalBalanceListModule from 'context/balance/personal'
 
 import * as AssetActions from 'context/assets/actions'
 
-import { ASSETS_STATUS } from 'context/assets/types'
 import BanksModule from './bank/modules'
 import TransactionsModule from './transactions/modules'
 import AccountsPanel from './components/AccountsPanel'

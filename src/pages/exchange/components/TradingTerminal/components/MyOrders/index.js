@@ -26,7 +26,7 @@ import {
   Paper
 } from '@material-ui/core'
 
-const StyledTableCell = withStyles((theme) => ({
+const StyledTableCell = withStyles(theme => ({
   head: {
     backgroundColor: '#f7f7f7',
     color: '#a7a7a7'
@@ -63,13 +63,13 @@ export default function TableMyOrders (props) {
   useEffect(() => {
     const socket = subscribeToSocket();
     socket.emit(MY_ORDERS.emit, id);
-    socket.on(`${MY_ORDERS.on}/${id}`, (data) => {
+    socket.on(`${MY_ORDERS.on}/${id}`, data => {
       setMyOrders(data);
     });
 
     return () => {
       socket.off(`${MY_ORDERS.on}/${id}`);
-  };
+    };
   }, [id]);
   /*eslint-disable */
 
@@ -78,7 +78,7 @@ export default function TableMyOrders (props) {
     const payload = {
       ...order,
       pair: id,
-      type: 'LIMIT',
+      type: "LIMIT"
     };
 
     MyOrderActions.cancelOrder(userId, order._id, payload);
@@ -93,7 +93,8 @@ export default function TableMyOrders (props) {
       <TableContainer component={Paper} style={{ maxHeight: "400px" }}>
         <Table
           className={classes.table}
-          stickyHeader size="small"
+          stickyHeader
+          size="small"
           aria-label="simple table"
         >
           <TableHead>
@@ -110,7 +111,7 @@ export default function TableMyOrders (props) {
           </TableHead>
           <TableBody>
             {myOrders && myOrders.length
-              ? myOrders.map((row) => (
+              ? myOrders.map(row => (
                   <TableRow key={row.id}>
                     <TableCell>
                       {moment(row.createdAt).format(DATE_FORMAT)}

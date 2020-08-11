@@ -1,11 +1,6 @@
-// @flow
-import { STATUS, actions } from './types'
-import type { TwoFactorState } from './types'
+//
 
-export const twoFactorReducer = (
-  state: TwoFactorState,
-  { type, payload }: { type: string, payload: any }
-) => {
+export const twoFactorReducer = (state, { type, payload }) => {
   switch (type) {
     case actions.SETUP_2FA_REQUEST:
       return {

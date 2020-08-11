@@ -11,7 +11,7 @@ const DepositList = () => {
       id='accountDepositList'
       endpoint={`/accounts/cash/deposits/list/${storage.getUserId()}`}
       columns={columns}
-      onRowClick={(mDeposit) => {
+      onRowClick={mDeposit => {
         history.push({
           pathname: '/accounts/banks/deposit-view',
           state: { deposit: mDeposit }

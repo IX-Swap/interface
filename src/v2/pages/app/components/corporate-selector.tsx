@@ -27,7 +27,7 @@ const CorporateSelector = () => {
         <MenuItem disabled value={undefined}>
           Corporate
         </MenuItem>
-        {identityStore.accessibleCorporates?.map((e) => {
+        {identityStore.accessibleCorporates?.map(e => {
           return (
             <MenuItem value={e._id} key={e._id}>
               {e.companyLegalName}

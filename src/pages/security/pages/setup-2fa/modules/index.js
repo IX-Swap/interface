@@ -1,22 +1,20 @@
-// @flow
+//
 import React from 'react'
-import type { Node } from 'react'
+
 import logger from '../../../../../v2/helpers/logger'
 import { twoFactorReducer } from './reducers'
 import { initialState } from './state'
 
-const StateContext = React.createContext<any>()
+const StateContext = React.createContext()
 const DispatchContext = React.createContext()
 
-export const TwoFactorProvider = ({ children }: { children: Node }) => {
-  const thisReducer = process.env.NODE_ENV === 'development'
-    ? logger(twoFactorReducer)
-    : twoFactorReducer
+export const TwoFactorProvider = ({ children }) => {
+  const thisReducer =
+    process.env.NODE_ENV === 'development'
+      ? logger(twoFactorReducer)
+      : twoFactorReducer
 
-  const [state, dispatch] = React.useReducer<any, any>(
-    thisReducer,
-    initialState
-  )
+  const [state, dispatch] = React.useReducer(thisReducer, initialState)
 
   return (
     <StateContext.Provider value={state}>

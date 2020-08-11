@@ -1,4 +1,4 @@
-// @flow
+//
 import io from 'socket.io-client'
 
 import { API_URL } from 'config'
@@ -6,8 +6,8 @@ import localStore from './storageHelper'
 
 let socket
 
-export const _subscribeToSocket = (): Promise<any> =>
-  new Promise((resolve) => {
+export const _subscribeToSocket = () =>
+  new Promise(resolve => {
     const bearerToken = localStore.getAccessToken()
     if (!bearerToken) {
       resolve(undefined)

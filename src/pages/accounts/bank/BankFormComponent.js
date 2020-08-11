@@ -1,4 +1,4 @@
-// @flow
+//
 /* eslint-disable react-hooks/exhaustive-deps */
 import React, { useState, useEffect, useRef, useCallback } from 'react'
 import { useForm, FormContext } from 'react-hook-form'
@@ -16,9 +16,8 @@ import {
 
 import { useAssetsDispatch, useAssetsState } from 'context/assets'
 import { getAssets } from 'context/assets/actions'
-import { ASSETS_STATUS } from 'context/assets/types'
+
 import CountrySelect from 'components/CountrySelect'
-import type { BankRequest } from './modules/types'
 
 function useGetters () {
   const { status: assetsStatus, assets } = useAssetsState()
@@ -28,7 +27,7 @@ function useGetters () {
   const mountedRef = useRef(true)
 
   const currencies = assets
-    ? assets.filter((asset) => asset.type === 'Currency')
+    ? assets.filter(asset => asset.type === 'Currency')
     : []
 
   useEffect(() => {
@@ -56,7 +55,7 @@ function useGetters () {
   }
 }
 
-function useBankFormLogic (bank?: BankRequest) {
+function useBankFormLogic (bank) {
   const [symbol, setSymbol] = useState(bank?.asset || '')
   const mountedRef = useRef(true)
 
@@ -77,7 +76,7 @@ function useBankFormLogic (bank?: BankRequest) {
     bank?.bankAccountNumber || ''
   )
 
-  const handleSelectChange = (ev) => {
+  const handleSelectChange = ev => {
     ev.preventDefault()
     setSymbol(ev.target.value)
   }
@@ -105,15 +104,7 @@ function useBankFormLogic (bank?: BankRequest) {
   }
 }
 
-type BankFormComponentProps = {
-  bank?: BankRequest,
-  onChange: (bank: BankRequest, isValid: boolean) => void,
-};
-
-export default function BankFormComponent ({
-  bank,
-  onChange
-}: BankFormComponentProps) {
+export default function BankFormComponent ({ bank, onChange }) {
   const {
     symbol,
     handleSelectChange,
@@ -135,7 +126,7 @@ export default function BankFormComponent ({
   const { assetsReady, currencies } = useGetters()
 
   const onChangeCallback = useCallback(
-    (mBank: BankRequest, result) => {
+    (mBank, result) => {
       onChange(mBank, result)
     },
     [onChange]
@@ -183,7 +174,7 @@ export default function BankFormComponent ({
                     required
                     name='bankAccountName'
                     inputRef={register({ required: true })}
-                    onChange={(e) => {
+                    onChange={e => {
                       setBankAccountName(e.target.value)
                     }}
                   />
@@ -202,7 +193,7 @@ export default function BankFormComponent ({
                     name='bankAccountHolderName'
                     inputRef={register({ required: true })}
                     required
-                    onChange={(e) => {
+                    onChange={e => {
                       setBankAccountHolderName(e.target.value)
                     }}
                   />
@@ -225,7 +216,7 @@ export default function BankFormComponent ({
                       value={symbol}
                       onChange={handleSelectChange}
                     >
-                      {currencies.map((item) => (
+                      {currencies.map(item => (
                         <MenuItem key={item._id} value={item._id}>
                           {item.symbol}
                         </MenuItem>
@@ -248,7 +239,7 @@ export default function BankFormComponent ({
                     name='bankAccountNumber'
                     inputRef={register({ required: true })}
                     defaultValue={bankAccountNumber}
-                    onChange={(e) => {
+                    onChange={e => {
                       setBankAccountNumber(e.target.value)
                     }}
                   />
@@ -265,7 +256,7 @@ export default function BankFormComponent ({
                     inputRef={register({ required: true })}
                     id='swift-code-input'
                     defaultValue={swiftCode}
-                    onChange={(e) => {
+                    onChange={e => {
                       setSwiftCode(e.target.value)
                     }}
                   />
@@ -288,7 +279,7 @@ export default function BankFormComponent ({
                   <Input
                     id='bank-address-line1-input'
                     value={bankAddress.line1}
-                    onChange={(e) => {
+                    onChange={e => {
                       setBankAddress({
                         ...bankAddress,
                         line1: e.target.value
@@ -307,7 +298,7 @@ export default function BankFormComponent ({
                   <Input
                     id='bank-address-line2-input'
                     value={bankAddress.line2}
-                    onChange={(e) => {
+                    onChange={e => {
                       setBankAddress({
                         ...bankAddress,
                         line2: e.target.value
@@ -328,7 +319,7 @@ export default function BankFormComponent ({
                   <Input
                     id='bank-address-city-input'
                     value={bankAddress.city}
-                    onChange={(e) => {
+                    onChange={e => {
                       setBankAddress({
                         ...bankAddress,
                         city: e.target.value
@@ -347,7 +338,7 @@ export default function BankFormComponent ({
                   <Input
                     id='bank-address-state-input'
                     value={bankAddress.state}
-                    onChange={(e) => {
+                    onChange={e => {
                       setBankAddress({
                         ...bankAddress,
                         state: e.target.value
@@ -382,7 +373,7 @@ export default function BankFormComponent ({
                     <Input
                       id='bank-address-postalcode-input'
                       value={bankAddress.postalCode}
-                      onChange={(e) => {
+                      onChange={e => {
                         setBankAddress({
                           ...bankAddress,
                           postalCode: e.target.value

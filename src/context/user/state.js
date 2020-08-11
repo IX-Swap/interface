@@ -1,10 +1,9 @@
-// @flow
+//
 import { isEmpty } from 'lodash'
 import localStore from 'services/storageHelper'
-import { USER_STATUS } from './types'
-import type { UserAuthState } from './types'
+import { USER_STATUS } from '../../const/status'
 
-export const initialState: UserAuthState = {
+export const initialState = {
   user: {
     _id: '',
     roles: '',

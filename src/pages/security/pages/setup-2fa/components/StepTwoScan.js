@@ -1,4 +1,4 @@
-// @flow
+//
 import React from 'react'
 import { Typography, Container, Grid, Box } from '@material-ui/core'
 import { makeStyles } from '@material-ui/styles'

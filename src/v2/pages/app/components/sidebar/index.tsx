@@ -18,7 +18,11 @@ import classNames from 'classnames'
 import { useLocation, withRouter } from 'react-router-dom'
 
 // styles
-import { useIsAdmin, useIsAuthorizer, useIsIssuer } from '../../../../helpers/acl'
+import {
+  useIsAdmin,
+  useIsAuthorizer,
+  useIsIssuer
+} from '../../../../helpers/acl'
 import useStyles from './styles'
 
 // components
@@ -28,9 +32,7 @@ import AuthorizerRoutes from '../../pages/authorizer/routes'
 import AccountRoutes from '../../pages/accounts/routes'
 
 // context
-import {
-  useStore as useLayoutStore
-} from '../../../../context/layout'
+import { useStore as useLayoutStore } from '../../../../context/layout'
 
 const authorizerRoot = '/app/authorizer'
 const accountsRoot = '/app/accounts'
@@ -94,41 +96,41 @@ function Sidebar () {
     // Show only when user has issuer role
     ...(isIssuer
       ? [
-        {
-          id: 'issuance',
-          label: 'Issuance',
-          link: issuanceRoot,
-          icon: <LocalAtmIcon />
-        }
-      ]
+          {
+            id: 'issuance',
+            label: 'Issuance',
+            link: issuanceRoot,
+            icon: <LocalAtmIcon />
+          }
+        ]
       : []),
     // Show only when user has authorizer role
     ...(isAuthorizer
       ? [
-        {
-          id: 'authorizer',
-          label: 'Authorizer',
-          link: authorizerRoot,
-          icon: <AccountBoxIcon />,
-          children: [
-            ...AuthorizerRoutes.map(({ label, path }) => ({
-              label,
-              link: `${authorizerRoot}${path}`
-            }))
-          ]
-        }
-      ]
+          {
+            id: 'authorizer',
+            label: 'Authorizer',
+            link: authorizerRoot,
+            icon: <AccountBoxIcon />,
+            children: [
+              ...AuthorizerRoutes.map(({ label, path }) => ({
+                label,
+                link: `${authorizerRoot}${path}`
+              }))
+            ]
+          }
+        ]
       : []),
     // Show only when user has admin role
     ...(isAdmin
       ? [
-        {
-          id: 'users',
-          label: 'User Management',
-          link: adminRoot,
-          icon: <PeopleIcon />
-        }
-      ]
+          {
+            id: 'users',
+            label: 'User Management',
+            link: adminRoot,
+            icon: <PeopleIcon />
+          }
+        ]
       : []),
     { id: 6, type: 'divider' },
     {

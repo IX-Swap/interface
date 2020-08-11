@@ -1,4 +1,4 @@
-// @flow
+//
 import React from 'react'
 import moment from 'moment'
 import { Typography, ListItem, Grid, Button } from '@material-ui/core'
@@ -6,10 +6,10 @@ import CloudDownloadIcon from '@material-ui/icons/CloudDownload'
 import DeleteOutlineIcon from '@material-ui/icons/DeleteOutline'
 import { useIdentityState, useIdentityDispatch } from '../../modules'
 import { downloadFile, deleteFile } from '../../modules/actions'
-import type { Document } from '../../modules/types'
+
 import useStyles from './styles'
 
-const DocumentItem = ({ document }: { document: Document }) => {
+const DocumentItem = ({ document }) => {
   const classes = useStyles()
   const { status, editMode } = useIdentityState()
   const identityDispatch = useIdentityDispatch()

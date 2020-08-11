@@ -2,7 +2,13 @@ import React from 'react'
 import EditableField from '../../../../../components/form/editable-field'
 import { IndentityFinancials } from '../../../../../types/identity'
 
-const Financials = ({ identity, editMode }: { editMode: boolean; identity: Partial<IndentityFinancials & {walletAddress?: string}> }) => {
+const Financials = ({
+  identity,
+  editMode
+}: {
+  editMode: boolean
+  identity: Partial<IndentityFinancials & { walletAddress?: string }>
+}) => {
   return (
     <>
       <EditableField

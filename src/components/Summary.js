@@ -27,7 +27,7 @@ export default function Overview ({ location, hasBack }: RouteProps) {
         </Box>
       )}
       <Grid container>
-        {(model || []).map((e) => (
+        {(model || []).map(e => (
           <Grid item key={e.key} xs={4}>
             {e.key && get(data, e.key) && (
               <Box p={4}>

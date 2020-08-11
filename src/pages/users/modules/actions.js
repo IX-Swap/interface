@@ -1,7 +1,6 @@
-// @flow
+//
 import { putRequest } from 'services/httpRequests'
 import actionGenerator from 'context/base/withPagination/actions'
-import { userUpdateRoleActions } from './types'
 
 const { getter: getUsersList, ...pageMethods } = actionGenerator(
   'usersList',
@@ -9,10 +8,7 @@ const { getter: getUsersList, ...pageMethods } = actionGenerator(
   {}
 )
 
-async function updateUserRole (
-  dispatch: Function,
-  payload: { roles: string, userId: string }
-) {
+async function updateUserRole (dispatch, payload) {
   dispatch({ type: userUpdateRoleActions.USER_UPDATE_ROLE_REQUEST })
 
   try {

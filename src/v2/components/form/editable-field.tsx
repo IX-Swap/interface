@@ -42,7 +42,7 @@ interface EditableFieldProps {
   raw?: string
   previewMode?: JSX.Element
   margin?: string
-};
+}
 
 const EditableField = ({
   label,
@@ -59,9 +59,12 @@ const EditableField = ({
 }: Omit<FormControlProps, 'size'> & EditableFieldProps) => {
   const classes = useStyles()
   const form = useForm()
-  let { control, register, errors } = useFormContext() || { control: null, register: null }
+  let { control, register, errors } = useFormContext() || {
+    control: null,
+    register: null
+  }
 
-  let flatErrors = flatten(errors) as {[key: string]: any}
+  let flatErrors = flatten(errors) as { [key: string]: any }
 
   if (!control || !register) {
     control = form.control
@@ -148,7 +151,10 @@ const EditableField = ({
     )
   }
 
-  const getValueDisplay = (mType: ValidInputTypes, mValue: string | boolean) => {
+  const getValueDisplay = (
+    mType: ValidInputTypes,
+    mValue: string | boolean
+  ) => {
     let val = mValue || '-'
     if (mType === 'check') {
       val = mValue ? 'Yes' : 'No'

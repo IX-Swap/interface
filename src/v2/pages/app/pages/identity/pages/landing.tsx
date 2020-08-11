@@ -9,7 +9,10 @@ import storageHelper from '../../../../../helpers/storageHelper'
 import IdentitySection from '../../../components/identity-forms/components/section'
 import UserInfoComponent from '../../../components/identity-forms/components/user-info'
 import CompanyInformation from '../../../components/identity-forms/components/company-info'
-import { IndividualIdentity, CorporateIdentity } from '../../../../../types/identity'
+import {
+  IndividualIdentity,
+  CorporateIdentity
+} from '../../../../../types/identity'
 import { useRouteMatch, useHistory } from 'react-router-dom'
 
 const Identity = () => {
@@ -66,7 +69,7 @@ const Identity = () => {
           </Box>
         </Grid>
 
-        {identityStore.corporateIdentities?.map((identity) => {
+        {identityStore.corporateIdentities?.map(identity => {
           return (
             <Grid item xs={12} key={identity._id}>
               <Box position='relative'>

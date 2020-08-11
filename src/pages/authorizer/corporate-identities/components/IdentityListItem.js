@@ -1,14 +1,13 @@
 import React from 'react'
 import moment from 'moment'
 import { TableCell, TableRow, Button, Typography } from '@material-ui/core'
-import type { Identity } from 'pages/identity/modules/types'
 
 const IdentityListItem = ({
   identity,
   onClickView
 }: {
   identity: Identity,
-  onClickView: (identity: Identity) => void,
+  onClickView: (identity: Identity) => void
 }) => {
   const { companyLegalName, createdAt, countryOfFormation, status } = identity
   let statusColor = 'initial'

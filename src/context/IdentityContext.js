@@ -206,9 +206,10 @@ export function identityReducer (state, { type, payload }) {
 
 // context and hooks
 export function IdentityProvider ({ children }) {
-  const thisReducer = process.env.NODE_ENV === 'development'
-    ? logger(identityReducer)
-    : identityReducer
+  const thisReducer =
+    process.env.NODE_ENV === 'development'
+      ? logger(identityReducer)
+      : identityReducer
 
   const [state, dispatch] = React.useReducer(thisReducer, initialState)
 
@@ -254,8 +255,7 @@ export async function getIdentity (dispatch) {
         type: actions.GET_IDENTITY_SUCCESS,
         payload: {
           identity: response.data,
-          shouldCreateNew:
-            response.message === 'shouldCreateNew'
+          shouldCreateNew: response.message === 'shouldCreateNew'
         }
       })
     } else {
@@ -373,7 +373,7 @@ export const downloadFile = async (dispatch, documentId) => {
     const result = await getRequest(uri)
 
     if (result.status === 200) {
-      result.blob().then((blob) => {
+      result.blob().then(blob => {
         const url = window.URL.createObjectURL(blob)
         window.open(url)
         dispatch({ type: actions.DOWNLOAD_FILE_SUCCESS })
@@ -390,7 +390,7 @@ export const downloadFile = async (dispatch, documentId) => {
 // selectors
 export const selectFile = (state, title) =>
   state.identity.documents
-    ?.filter?.((f) => f.title === title)
+    ?.filter?.(f => f.title === title)
     .reduce((lastFile, currFile) => {
       if (!lastFile) return currFile
       const lastDate = new Date(lastFile.createdAt)
@@ -450,7 +450,7 @@ export const completeResetPassword = async (
   }
 }
 
-export const getCorporate = async (dispatch) => {
+export const getCorporate = async dispatch => {
   try {
     const uri = '/identity/profile/corporate'
     const result = await getRequest(uri)

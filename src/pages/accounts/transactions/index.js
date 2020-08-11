@@ -1,4 +1,4 @@
-// @flow
+//
 import React, { useState, useRef, useEffect } from 'react'
 import {
   Table,
@@ -15,13 +15,11 @@ import {
   Typography
 } from '@material-ui/core'
 import moment from 'moment'
-import type { BaseStateWithPagination } from 'context/base/withPagination/types'
 
 import { useAssetsState, useAssetsDispatch } from 'context/assets'
-import { ASSETS_STATUS } from 'context/assets/types'
+
 import * as AssetsActions from 'context/assets/actions'
 
-import type { Transaction } from './modules/types'
 import TransactionsListModule from './modules'
 import FiltersComponent from './Filters'
 
@@ -37,15 +35,7 @@ const {
 
 const { getTransactionsList, setPage, setRowsPerPage } = Actions
 
-type TableColumn = {
-  label: string,
-  key: $Keys<Transaction>,
-  align?: string,
-  headAlign?: string,
-  render?: any,
-};
-
-const columns: Array<TableColumn> = [
+const columns = [
   {
     label: 'Transaction ID',
     key: 'transactionId'
@@ -53,7 +43,7 @@ const columns: Array<TableColumn> = [
   {
     label: 'Date',
     key: 'date',
-    render: (value) => moment(value).format('MM/DD/YYYY')
+    render: value => moment(value).format('MM/DD/YYYY')
   },
   {
     label: 'Type',
@@ -68,7 +58,7 @@ const columns: Array<TableColumn> = [
     key: 'debit',
     headAlign: 'right',
     align: 'right',
-    render: (value) =>
+    render: value =>
       value && value.toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,')
   },
   {
@@ -76,7 +66,7 @@ const columns: Array<TableColumn> = [
     key: 'credit',
     headAlign: 'right',
     align: 'right',
-    render: (value) =>
+    render: value =>
       value && value.toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,')
   },
   {
@@ -84,7 +74,7 @@ const columns: Array<TableColumn> = [
     key: 'runningTotal',
     headAlign: 'right',
     align: 'right',
-    render: (value) =>
+    render: value =>
       value && value.toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,')
   }
 ]
@@ -113,30 +103,24 @@ const useAssets = () => {
   return { assets, type }
 }
 
-export type Filters = {
-  asset: string,
-  from: Date,
-  to: Date,
-};
-
 const useTransactionsListLogic = () => {
   const tDispatch = useTransactionsListDispatch()
-  const tState: BaseStateWithPagination<Transaction> = useTransactionsListState()
+  const tState = useTransactionsListState()
   const { assets, type } = useAssets()
   const { status, page, total, limit, items } = tState
   const mountedRef = useRef(true)
-  const [filter, setFilter] = useState<Filters>({
+  const [filter, setFilter] = useState({
     asset: (assets.length && assets[0]._id) || '',
     from: new Date(),
     to: new Date()
   })
 
-  const handleChangeRowsPerPage = (newRows: number) => {
+  const handleChangeRowsPerPage = newRows => {
     setRowsPerPage(tDispatch, { rows: newRows })
     setPage(tDispatch, { page: 0 })
   }
 
-  const handleAssetChange = (ev: SyntheticInputEvent<HTMLElement>) => {
+  const handleAssetChange = ev => {
     setFilter({
       ...filter,
       asset: ev.target.value
@@ -145,11 +129,11 @@ const useTransactionsListLogic = () => {
     setPage(tDispatch, { page })
   }
 
-  const handleChangePage = (_, newPage: number) => {
+  const handleChangePage = (_, newPage) => {
     setPage(tDispatch, { page: newPage })
   }
 
-  const handleDateChange = (name: 'to' | 'from', date: Date) => {
+  const handleDateChange = (name, date) => {
     const mFilter = { ...filter }
     mFilter[name] = date
     setFilter(mFilter)
@@ -226,7 +210,7 @@ export default function Transactions () {
           <Table aria-label='simple table'>
             <TableHead>
               <TableRow>
-                {columns.map((e) => (
+                {columns.map(e => (
                   <TableCell key={e.label} align={e.headAlign || 'left'}>
                     <b>{e.label}</b>
                   </TableCell>
@@ -242,9 +226,9 @@ export default function Transactions () {
             )}
             {items && status === TRANSACTIONS_LIST_STATUS.IDLE && (
               <TableBody>
-                {items.map((row: Transaction, index) => (
+                {items.map((row, index) => (
                   <TableRow key={index}>
-                    {columns.map((e) => (
+                    {columns.map(e => (
                       <TableCell key={e.key} align={e.align || 'left'}>
                         {(e.render && e.render(row[e.key])) || row[e.key]}
                       </TableCell>
@@ -262,9 +246,8 @@ export default function Transactions () {
                     count={total}
                     rowsPerPage={limit}
                     page={page}
-                    onChangeRowsPerPage={(
-                      evt: SyntheticInputEvent<HTMLElement>
-                    ) => handleChangeRowsPerPage(parseInt(evt.target.value))}
+                    onChangeRowsPerPage={evt =>
+                      handleChangeRowsPerPage(parseInt(evt.target.value))}
                     onChangePage={handleChangePage}
                   />
                 </TableRow>

@@ -1,12 +1,6 @@
-// @flow
-import { assetsActions, ASSETS_STATUS } from './types'
+//
 
-import type { AssetsListState } from './types'
-
-export default function assetsReducer (
-  state: AssetsListState,
-  { type, payload }: { type: string, ...any }
-): AssetsListState {
+export default function assetsReducer (state, { type, payload }) {
   switch (type) {
     case assetsActions.GET_ASSETS_REQUEST:
       return {

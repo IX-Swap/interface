@@ -1,5 +1,5 @@
 import { includes } from 'lodash'
-import { useStore } from '../context/user'
+import { useUserStore } from '../context/user'
 
 // RBACL Algorithm for Frontend
 
@@ -41,19 +41,19 @@ const hasRole = (roles: string, roleToCheck: string): boolean => {
  */
 
 export const useIsAdmin = (): boolean => {
-  const { user: { roles = '' } = {} } = useStore()
+  const { user: { roles = '' } = {} } = useUserStore()
 
   return hasRole(roles, appRoles.ADMIN)
 }
 
 export const useIsAuthorizer = (): boolean => {
-  const { user: { roles = '' } = {} } = useStore()
+  const { user: { roles = '' } = {} } = useUserStore()
 
   return hasRole(roles, appRoles.AUTHORIZER)
 }
 
 export const useIsIssuer = (): boolean => {
-  const { user: { roles = '' } = {} } = useStore()
+  const { user: { roles = '' } = {} } = useUserStore()
 
   console.log(roles)
 
@@ -61,7 +61,7 @@ export const useIsIssuer = (): boolean => {
 }
 
 export const useIsAccredited = (): boolean => {
-  const { user: { roles = '' } = {} } = useStore()
+  const { user: { roles = '' } = {} } = useUserStore()
 
   return hasRole(roles, appRoles.ACCREDITED)
 }

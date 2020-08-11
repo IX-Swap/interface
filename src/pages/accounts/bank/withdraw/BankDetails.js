@@ -1,10 +1,8 @@
-// @flow
+//
 import React from 'react'
 import { Paper, Box } from '@material-ui/core'
 
-import type { Bank } from '../modules/types'
-
-const BankDetails = ({ bank }: { bank: Bank }) => (
+const BankDetails = ({ bank }) => (
   <Box m={4} style={{ width: '100%' }}>
     <Paper>
       <Box px={4} py={2}>

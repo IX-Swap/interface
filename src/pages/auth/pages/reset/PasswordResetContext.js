@@ -100,9 +100,10 @@ export function passwordResetReducer (state, { type, payload }) {
 
 // context and hooks
 export function PasswordResetProvider ({ children }) {
-  const thisReducer = process.env.NODE_ENV === 'development'
-    ? logger(passwordResetReducer)
-    : passwordResetReducer
+  const thisReducer =
+    process.env.NODE_ENV === 'development'
+      ? logger(passwordResetReducer)
+      : passwordResetReducer
 
   const [state, dispatch] = React.useReducer(thisReducer, initialState)
 

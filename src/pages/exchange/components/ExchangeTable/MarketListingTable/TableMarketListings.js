@@ -32,15 +32,9 @@ import SandboxModal from '../../TradingTerminal/components/SandboxModal'
 import MarketActions from '../../TradingTerminal/modules/actions'
 import MarketModules from '../../TradingTerminal/modules'
 
-const {
-  MarketState,
-  useMarketDispatch
-} = MarketModules
+const { MarketState, useMarketDispatch } = MarketModules
 
-const {
-  setPage,
-  setRowsPerPage
-} = MarketActions
+const { setPage, setRowsPerPage } = MarketActions
 
 const columns = [
   {
@@ -73,10 +67,7 @@ const columns = [
   }
 ]
 
-const MarketList = ({
-  list,
-  goToPage
-}) => {
+const MarketList = ({ list, goToPage }) => {
   const classes = useStyles()
 
   return (
@@ -90,26 +81,20 @@ const MarketList = ({
             className={classes.tableRowHover}
             onClick={() => goToPage(row._id)}
           >
-            <TableCell className={classes.defaultCell}>
-              {row.name}
-            </TableCell>
-            <TableCell className={classes.defaultCell}>
-              {name}
-            </TableCell>
+            <TableCell className={classes.defaultCell}>{row.name}</TableCell>
+            <TableCell className={classes.defaultCell}>{name}</TableCell>
             <TableCell className={classes.defaultCell}>
               {row.price || 0}
             </TableCell>
-            {positiveCell
-              ? (
-                <TableCell className={classes.positiveCell}>
-                  {row.change || 0}
-                </TableCell>
-              )
-              : (
-                <TableCell className={classes.negativeCell}>
-                  {row.change || 0}
-                </TableCell>
-              )}
+            {positiveCell ? (
+              <TableCell className={classes.positiveCell}>
+                {row.change || 0}
+              </TableCell>
+            ) : (
+              <TableCell className={classes.negativeCell}>
+                {row.change || 0}
+              </TableCell>
+            )}
             <TableCell className={classes.defaultCell}>
               {row.high || 0}
             </TableCell>
@@ -134,13 +119,7 @@ function ExchangeTable (props) {
   const dispatch = useMarketDispatch()
   const marketState = MarketState()
   const mountedRef = useRef(true)
-  const {
-    page,
-    total,
-    limit,
-    items,
-    status
-  } = marketState
+  const { page, total, limit, items, status } = marketState
 
   useEffect(() => {
     MarketActions.getMarketList(dispatch, {
@@ -168,31 +147,24 @@ function ExchangeTable (props) {
 
   return (
     <Grid>
-      {!isVisitedPage && (<SandboxModal />)}
-      <Typography
-        className={classes.title}
-        variant='h1'
-      >
+      {!isVisitedPage && <SandboxModal />}
+      <Typography className={classes.title} variant='h1'>
         {title}
       </Typography>
       <Grid className={classes.componentStyle}>
         <TableContainer component={Paper}>
-          {status === 'GETTING' &&
-            <LinearProgress />}
+          {status === 'GETTING' && <LinearProgress />}
           <Table aria-label='Market Lists'>
             <TableHead>
               <TableRow>
-                {columns.map((column) => (
-                  <TableCell
-                    className={classes.tableHeader}
-                    key={column.id}
-                  >
+                {columns.map(column => (
+                  <TableCell className={classes.tableHeader} key={column.id}>
                     {column.label}
                   </TableCell>
                 ))}
               </TableRow>
             </TableHead>
-            <MarketList list={items} goToPage={(id) => goToPage(id)} />
+            <MarketList list={items} goToPage={id => goToPage(id)} />
             {total && status === 'IDLE' && (
               <TableFooter>
                 <TableRow>

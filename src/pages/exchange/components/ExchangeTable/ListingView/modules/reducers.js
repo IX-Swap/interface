@@ -1,5 +1,3 @@
-import { listViewActions } from './types'
-
 export function listViewReducer (state, action) {
   switch (action.type) {
     case listViewActions.GET_LISTING_ITEM_REQUEST:

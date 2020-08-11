@@ -1,4 +1,4 @@
-// @flow
+//
 import React, { useRef, useEffect } from 'react'
 import { useHistory } from 'react-router-dom'
 import {
@@ -19,23 +19,13 @@ import {
 } from '@material-ui/core'
 
 import { useAssetsState, useAssetsDispatch } from 'context/assets'
-import { ASSETS_STATUS } from 'context/assets/types'
+
 import * as AssetsActions from 'context/assets/actions'
 import PersonalBalancesListModule from 'context/balance/personal'
 
-import type { UserSecurityBalance } from 'context/balance/types'
-
 import Actions from 'context/balance/personal/actions'
 
-type TableColumn = {
-  label: string,
-  key: $Keys<UserSecurityBalance>,
-  headAlign?: string,
-  align?: string,
-  render?: any,
-};
-
-const columns: Array<TableColumn> = [
+const columns = [
   {
     label: 'Symbol',
     key: 'symbol'
@@ -49,7 +39,7 @@ const columns: Array<TableColumn> = [
     key: 'balance',
     headAlign: 'right',
     align: 'right',
-    render: (value) =>
+    render: value =>
       value && value.toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,')
   },
   {
@@ -57,7 +47,7 @@ const columns: Array<TableColumn> = [
     key: 'available',
     headAlign: 'right',
     align: 'right',
-    render: (value) =>
+    render: value =>
       value && value.toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,')
   },
   {
@@ -65,7 +55,7 @@ const columns: Array<TableColumn> = [
     key: 'onHold',
     headAlign: 'right',
     align: 'right',
-    render: (value) =>
+    render: value =>
       value && value.toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,')
   }
 ]
@@ -152,11 +142,11 @@ function useDigitalSecuritiesLogic () {
     }
   }, [type, assetsStatus, page, pBDispatch])
 
-  const handleChangePage = (_, newPage: number) => {
+  const handleChangePage = (_, newPage) => {
     setPage(pBDispatch, { page: newPage })
   }
 
-  const handleChangeRowsPerPage = (newRows: number) => {
+  const handleChangeRowsPerPage = newRows => {
     setRowsPerPage(pBDispatch, { rows: newRows })
     setPage(pBDispatch, { page: 0 })
   }
@@ -184,7 +174,7 @@ export default function DigitalSecurities () {
   } = useDigitalSecuritiesLogic()
   const history = useHistory()
 
-  const renderRowActions = (row: UserSecurityBalance) => (
+  const renderRowActions = row => (
     <ButtonGroup
       variant='text'
       color='primary'
@@ -225,7 +215,7 @@ export default function DigitalSecurities () {
         <Table aria-label='simple table'>
           <TableHead>
             <TableRow>
-              {columns.map((e) => (
+              {columns.map(e => (
                 <TableCell align={e.headAlign || 'left'} key={e.label}>
                   <b>{e.label}</b>
                 </TableCell>
@@ -236,9 +226,9 @@ export default function DigitalSecurities () {
             </TableRow>
           </TableHead>
           <TableBody>
-            {items.map((row: UserSecurityBalance, index) => (
+            {items.map((row, index) => (
               <TableRow key={index}>
-                {columns.map((e) => (
+                {columns.map(e => (
                   <TableCell key={e.key} align={e.align || 'left'}>
                     {(e.render && e.render(row[e.key])) || row[e.key]}
                   </TableCell>
@@ -256,9 +246,8 @@ export default function DigitalSecurities () {
                   count={total}
                   rowsPerPage={limit}
                   page={page}
-                  onChangeRowsPerPage={(
-                    evt: SyntheticInputEvent<HTMLElement>
-                  ) => handleChangeRowsPerPage(parseInt(evt.target.value))}
+                  onChangeRowsPerPage={evt =>
+                    handleChangeRowsPerPage(parseInt(evt.target.value))}
                   onChangePage={handleChangePage}
                 />
               </TableRow>

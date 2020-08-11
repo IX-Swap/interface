@@ -8,11 +8,7 @@ export const columns: Array<TableColumn<Commitment>> = [
   {
     key: '_id',
     label: '',
-    render: (a: string, row: Commitment) => (
-      <DsoImage
-        dsoId={row.dso._id}
-      />
-    )
+    render: (a: string, row: Commitment) => <DsoImage dsoId={row.dso._id} />
   },
   {
     key: 'dso.tokenSymbol',
@@ -23,7 +19,8 @@ export const columns: Array<TableColumn<Commitment>> = [
     label: 'Unit Price',
     align: 'right',
     headAlign: 'right',
-    render: (a: number, row: Commitment) => formatMoney(a, row.currency.numberFormat.currency)
+    render: (a: number, row: Commitment) =>
+      formatMoney(a, row.currency.numberFormat.currency)
   },
   {
     key: 'dso.capitalStructure',
@@ -34,7 +31,8 @@ export const columns: Array<TableColumn<Commitment>> = [
     label: 'Investment Amount',
     align: 'right',
     headAlign: 'right',
-    render: (a: number, row: Commitment) => formatMoney(a, row.currency.numberFormat.currency)
+    render: (a: number, row: Commitment) =>
+      formatMoney(a, row.currency.numberFormat.currency)
   },
   {
     key: 'numberOfUnits',

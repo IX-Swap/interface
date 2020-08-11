@@ -2,13 +2,16 @@ import React, { useState } from 'react'
 import { convertFromHTML, ContentState, convertToRaw } from 'draft-js'
 
 import DsoTitle from './title'
-import {
-  Dso,
-  DsoRequest,
-  inititialValues
-} from '../../../../types/dso'
+import { Dso, DsoRequest, inititialValues } from '../../../../types/dso'
 import { Document } from '../../../../types/document'
-import { Grid, Paper, Container, Box, Button, Typography } from '@material-ui/core'
+import {
+  Grid,
+  Paper,
+  Container,
+  Box,
+  Button,
+  Typography
+} from '@material-ui/core'
 import SectionContainer from './components/container'
 import { useForm, FormContext } from 'react-hook-form'
 import OfferDetails from './components/offer-details'
@@ -49,8 +52,17 @@ const useDsoLogic = ({
   editMode = false,
   dso = inititialValues
 }: DigitalSecurityProps) => {
-  const wysiwygItems: Array<keyof Dso> = ['introduction', 'businessModel', 'useOfProceeds', 'fundraisingMilestone']
-  const dsoForm: DsoRequest = { ...dso, documents: dso.documents.map((e) => e._id), currency: dso.currency[0]._id ?? '' }
+  const wysiwygItems: Array<keyof Dso> = [
+    'introduction',
+    'businessModel',
+    'useOfProceeds',
+    'fundraisingMilestone'
+  ]
+  const dsoForm: DsoRequest = {
+    ...dso,
+    documents: dso.documents.map(e => e._id),
+    currency: dso.currency[0]._id ?? ''
+  }
   const [dsoState, setDsoState] = useState({ ...dso })
   const isIssuer = useIsIssuer()
   const history = useHistory()
@@ -59,19 +71,19 @@ const useDsoLogic = ({
     const unflattened = { ...unflatten(form.getValues()) } as DsoRequest
 
     wysiwygItems.forEach((key: keyof Dso) => {
-      const value = wysiwygToHtml(unflattened[key] as string || '{}')
+      const value = wysiwygToHtml((unflattened[key] as string) || '{}')
       // @ts-ignore
       unflattened[key] = value
     })
 
-    unflattened.team.forEach((e) => {
+    unflattened.team.forEach(e => {
       e.about = wysiwygToHtml(e.about || '{}')
     })
 
     unflattened.documents = (unflattened.documents || []).filter(Boolean)
 
     const stringable = ['equityMultiple', 'investmentStructure']
-    Object.keys(unflattened).forEach((key) => {
+    Object.keys(unflattened).forEach(key => {
       const value = unflattened[key as keyof DsoRequest]
       if (
         value !== null &&
@@ -94,7 +106,7 @@ const useDsoLogic = ({
     set(dsoForm, key, generateRteValue(get(dso, key)?.toString() ?? ''))
   })
 
-  dsoForm.team = dsoForm.team.map((e) => {
+  dsoForm.team = dsoForm.team.map(e => {
     return {
       ...e,
       about: generateRteValue(e.about ?? '')
@@ -113,7 +125,7 @@ const useDsoLogic = ({
   const onAddDocument = (doc: Document) => {
     const docs = [...dsoState.documents, doc]
     const unflattened = { ...unflatten(form.getValues()) } as DsoRequest
-    unflattened.documents = docs.map((e) => e._id)
+    unflattened.documents = docs.map(e => e._id)
 
     form.reset(unflattened)
 
@@ -131,7 +143,7 @@ const useDsoLogic = ({
     unflattened.team.splice(index, 1)
     const finalValues: { [key: string]: string } = flatten(unflattened.team)
 
-    Object.keys(finalValues).forEach((key) => {
+    Object.keys(finalValues).forEach(key => {
       const value =
         key === 'about' ? generateRteValue(finalValues[key]) : finalValues[key]
       form.setValue(`team.${key}`, value)
@@ -143,9 +155,9 @@ const useDsoLogic = ({
   }
 
   const onRemoveDocument = (id: string) => {
-    const docs = dsoState.documents.filter((e) => e._id !== id)
+    const docs = dsoState.documents.filter(e => e._id !== id)
     const unflattened = { ...unflatten(form.getValues()) } as DsoRequest
-    unflattened.documents = docs.map((e) => e._id)
+    unflattened.documents = docs.map(e => e._id)
 
     form.reset(unflattened)
 
@@ -161,7 +173,9 @@ const useDsoLogic = ({
       uri = `/dataroom/raw/${storageHelper.getUserId()}/${id}`
     }
 
-    downloadFile(uri).then(noop).catch(noop)
+    downloadFile(uri)
+      .then(noop)
+      .catch(noop)
   }
 
   return {
@@ -186,12 +200,18 @@ const DigitalSecurity = ({
   create = false,
   dso = inititialValues
 }: DigitalSecurityProps) => {
-  const editMode = (create || edit)
+  const editMode = create || edit
   const {
-    form, getFinalValue,
-    isIssuer, onDownloadSubscription,
-    onAddTeamMember, onRemoveTeamMember, onAddDocument,
-    history, onRemoveDocument, dsoState
+    form,
+    getFinalValue,
+    isIssuer,
+    onDownloadSubscription,
+    onAddTeamMember,
+    onRemoveTeamMember,
+    onAddDocument,
+    history,
+    onRemoveDocument,
+    dsoState
   } = useDsoLogic({ editMode, dso })
 
   return (
@@ -286,13 +306,10 @@ const DigitalSecurity = ({
                         ((dso || {}).deploymentInfo ?? {}).token) ??
                         '-'}
                     </Typography>
-                    {
-                      (
-                        isIssuer &&
-                        !(dso || {}).deploymentInfo &&
-                        (dso || {}).status === 'Approved' &&
-                        !editMode
-                      ) && (
+                    {isIssuer &&
+                      !(dso || {}).deploymentInfo &&
+                      (dso || {}).status === 'Approved' &&
+                      !editMode && (
                         <Button
                           variant='contained'
                           color='primary'
@@ -304,8 +321,7 @@ const DigitalSecurity = ({
                         >
                           Deploy
                         </Button>
-                      )
-                    }
+                      )}
                   </Grid>
                 </SectionContainer>
               </Grid>
@@ -349,17 +365,15 @@ const DigitalSecurity = ({
                       onRemoveTeamMember={() => onRemoveTeamMember(i)}
                     />
                   ))}
-                  {
-                    editMode && (
-                      <Grid container justify='flex-end'>
-                        <Box m={4}>
-                          <Button variant='contained' onClick={onAddTeamMember}>
-                            Add
-                          </Button>
-                        </Box>
-                      </Grid>
-                    )
-                  }
+                  {editMode && (
+                    <Grid container justify='flex-end'>
+                      <Box m={4}>
+                        <Button variant='contained' onClick={onAddTeamMember}>
+                          Add
+                        </Button>
+                      </Box>
+                    </Grid>
+                  )}
                 </SectionContainer>
               </Grid>
             </Grid>

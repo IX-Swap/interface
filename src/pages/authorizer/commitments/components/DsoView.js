@@ -2,7 +2,6 @@ import React from 'react'
 import { Container, Box, Grid, Button, Typography } from '@material-ui/core'
 import ArrowBackIosIcon from '@material-ui/icons/ArrowBackIos'
 import DsoInformation from 'components/Dso/DsoInformation'
-import type { Dso } from 'context/dso/types'
 
 const DsoView = ({ onClickBack, dso }: { onClickBack: Function, dso: Dso }) => (
   <Container>

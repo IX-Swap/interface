@@ -8,7 +8,7 @@ import { Dso } from '../../../../../types/dso'
 import { Box, Container } from '@material-ui/core'
 import PageTitle from '../../../components/page-title'
 
-const DsoView = ({ dso }: {dso: Dso}) => {
+const DsoView = ({ dso }: { dso: Dso }) => {
   return (
     <Container>
       <PageTitle title={dso.tokenName} subPage />
@@ -23,7 +23,13 @@ const MemoedDsoView = React.memo(DsoView)
 const InvestViewDso = () => {
   const dsoState = useStore()
 
-  return useObserver(() => dsoState.selectedDso ? <MemoedDsoView dso={dsoState.selectedDso} /> : <Redirect to='../' />)
+  return useObserver(() =>
+    dsoState.selectedDso ? (
+      <MemoedDsoView dso={dsoState.selectedDso} />
+    ) : (
+      <Redirect to='../' />
+    )
+  )
 }
 
 export default InvestViewDso

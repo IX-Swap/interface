@@ -1,4 +1,4 @@
-// @flow
+//
 import React, { forwardRef } from 'react'
 import {
   Typography,
@@ -30,18 +30,9 @@ const DsoTitle = (
     updatePreview = false,
     logo,
     dsoId = ''
-  }: {
-    dsoId?: string,
-    updatePreview?: boolean,
-    logo?: string,
-    children: any,
-    assets: Array<any>,
-    control?: any,
-    edit?: boolean,
-    tokenSymbol: string,
-    issuerName: string,
   },
-  ref: any
+
+  ref
 ) => {
   const classesE = useEditableStyles()
   const { errors = {}, control } = useFormContext() || {}
@@ -112,7 +103,7 @@ const DsoTitle = (
                 }
                 name='launchDate'
                 control={control}
-                onChange={(val) => {
+                onChange={val => {
                   // $FlowFixMe
                   control.setValue('launchDate', val[1])
                   return val[1]
@@ -146,7 +137,7 @@ const DsoTitle = (
                       name: 'currency'
                     }}
                   >
-                    {(assets || []).map((e) => (
+                    {(assets || []).map(e => (
                       <MenuItem key={e._id} value={e._id}>
                         {e.symbol}
                       </MenuItem>
@@ -165,4 +156,4 @@ const DsoTitle = (
   )
 }
 
-export default forwardRef<any, any>(DsoTitle)
+export default forwardRef(DsoTitle)

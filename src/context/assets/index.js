@@ -1,17 +1,15 @@
-// @flow
+//
 import React from 'react'
 import logger from '../../v2/helpers/logger'
-import type { Node } from 'react'
+
 import { initialState } from './state'
 import assetsReducer from './reducers'
 
-import type { AssetsListState } from './types'
-
-const StateContext = React.createContext<AssetsListState>(initialState)
+const StateContext = React.createContext(initialState)
 const DispatchContext = React.createContext()
 
-export function useAssetsState (): AssetsListState {
-  const context = React.useContext<AssetsListState>(StateContext)
+export function useAssetsState () {
+  const context = React.useContext(StateContext)
   if (context === undefined) {
     throw new Error('useAssetsState must be used within a AssetsProvider')
   }
@@ -28,15 +26,13 @@ export function useAssetsDispatch () {
   return context
 }
 
-export function AssetsProvider ({ children }: { children?: Node }) {
-  const thisReducer = process.env.NODE_ENV === 'development'
-    ? logger(assetsReducer)
-    : assetsReducer
+export function AssetsProvider ({ children }) {
+  const thisReducer =
+    process.env.NODE_ENV === 'development'
+      ? logger(assetsReducer)
+      : assetsReducer
 
-  const [state, dispatch] = React.useReducer<AssetsListState, AssetsListState>(
-    thisReducer,
-    initialState
-  )
+  const [state, dispatch] = React.useReducer(thisReducer, initialState)
 
   return (
     <StateContext.Provider value={state}>

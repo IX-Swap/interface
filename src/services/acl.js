@@ -1,4 +1,4 @@
-// @flow
+//
 import { includes } from 'lodash'
 import { useUserState } from 'context/user'
 
@@ -25,12 +25,12 @@ const appRoles = {
 /**
  * Converts payload (csv) roles to array
  */
-const rolesCsvToArray = (roles: string): string[] => roles.split(',')
+const rolesCsvToArray = roles => roles.split(',')
 
 /**
  * Generic role checker
  */
-const hasRole = (roles: string, roleToCheck: string): boolean => {
+const hasRole = (roles, roleToCheck) => {
   const rolesList = rolesCsvToArray(roles)
 
   return includes(rolesList, roleToCheck)
@@ -41,31 +41,31 @@ const hasRole = (roles: string, roleToCheck: string): boolean => {
  * Assumption: Theses hooks are used inside UserContext
  */
 
-export const useIsAdmin = (): boolean => {
+export const useIsAdmin = () => {
   const { user: { roles = '' } = {} } = useUserState()
 
   return hasRole(roles, appRoles.ADMIN)
 }
 
-export const useIsAuthorizer = (): boolean => {
+export const useIsAuthorizer = () => {
   const { user: { roles = '' } = {} } = useUserState()
 
   return hasRole(roles, appRoles.AUTHORIZER)
 }
 
-export const useIsIssuer = (): boolean => {
+export const useIsIssuer = () => {
   const { user: { roles = '' } = {} } = useUserState()
 
   return hasRole(roles, appRoles.ISSUER)
 }
 
-export const useIsAccredited = (): boolean => {
+export const useIsAccredited = () => {
   const { user: { roles = '' } = {} } = useUserState()
 
   return hasRole(roles, appRoles.ACCREDITED)
 }
 
-export const useHasSpecialRole = (): boolean => {
+export const useHasSpecialRole = () => {
   const isAdmin = useIsAdmin()
   const isAuthorizer = useIsAuthorizer()
   const isIssuer = useIsIssuer()

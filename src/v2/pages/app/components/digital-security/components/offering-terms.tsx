@@ -1,6 +1,12 @@
 import React from 'react'
 import { Dso } from '../../../../../types/dso'
-import { Grid, Typography, Select, MenuItem, TextField } from '@material-ui/core'
+import {
+  Grid,
+  Typography,
+  Select,
+  MenuItem,
+  TextField
+} from '@material-ui/core'
 import { useFormContext, Controller } from 'react-hook-form'
 import { toPercentage } from '../../../../../helpers/numbers'
 interface OfferingTermsProps {
@@ -8,7 +14,13 @@ interface OfferingTermsProps {
   dso: Dso
 }
 
-const OfferingTermComponent = ({ name, required = false }: {name: string; required: boolean}) => {
+const OfferingTermComponent = ({
+  name,
+  required = false
+}: {
+  name: string
+  required: boolean
+}) => {
   const { errors, control, register } = useFormContext()
 
   switch (name) {
@@ -49,21 +61,19 @@ const OfferingTermComponent = ({ name, required = false }: {name: string; requir
   }
 }
 
-const OfferingTermItem = (
-  {
-    name,
-    label,
-    value,
-    editMode = false,
-    required = false
-  }: {
-    name?: string
-    editMode?: boolean
-    label: string
-    value: string
-    required?: boolean
-  }
-) => {
+const OfferingTermItem = ({
+  name,
+  label,
+  value,
+  editMode = false,
+  required = false
+}: {
+  name?: string
+  editMode?: boolean
+  label: string
+  value: string
+  required?: boolean
+}) => {
   return (
     <Grid container item xs={4} spacing={2}>
       <Grid item xs={6}>
@@ -71,7 +81,9 @@ const OfferingTermItem = (
       </Grid>
       <Grid item xs={6}>
         {!editMode && <Typography>{value}</Typography>}
-        {editMode && <OfferingTermComponent name={name ?? ''} required={required} />}
+        {editMode && (
+          <OfferingTermComponent name={name ?? ''} required={required} />
+        )}
       </Grid>
     </Grid>
   )

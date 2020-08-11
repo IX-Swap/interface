@@ -30,7 +30,7 @@ const TeamMember = ({
     type: 'dsoTeamMemberPhoto'
   }
 
-  const setPhoto = async ({ _id = '' } : {_id: string}) => {
+  const setPhoto = async ({ _id = '' }: { _id: string }) => {
     const x = await getImgUrl(
       editMode
         ? `/dataroom/raw/${storageHelper.getUserId()}/${_id || ''}`

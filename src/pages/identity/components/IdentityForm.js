@@ -1,4 +1,4 @@
-// @flow
+//
 import React from 'react'
 import moment from 'moment'
 import { MenuItem } from '@material-ui/core'
@@ -10,24 +10,18 @@ import {
 } from 'const/const'
 import { useUserState } from 'context/user'
 import IdentityField from './IdentityField'
-import type { Identity } from '../modules/types'
 
 const IdentityForm = ({
   identity = {},
   useOwnEmail = false,
   rootName,
   editMode
-}: {
-  identity?: Identity,
-  useOwnEmail: boolean,
-  rootName?: string,
-  editMode: boolean,
 }) => {
   const {
     user: { email = '' }
   } = useUserState()
 
-  const getFieldName = (name) => (rootName ? `${rootName}.${name}` : name)
+  const getFieldName = name => (rootName ? `${rootName}.${name}` : name)
 
   return (
     <>

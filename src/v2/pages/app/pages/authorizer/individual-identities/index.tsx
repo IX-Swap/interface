@@ -11,7 +11,13 @@ const IndividualIdentities = () => {
       name='authorizerIntdividualIdentitesList'
       idKey='user._id'
       columns={columns}
-      onView={(row) => <IndividualIdentityForm identity={row} editMode={false} useOwnEmail={false} />}
+      onView={row => (
+        <IndividualIdentityForm
+          identity={row}
+          editMode={false}
+          useOwnEmail={false}
+        />
+      )}
     />
   )
 }

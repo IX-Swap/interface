@@ -14,14 +14,13 @@ import {
 import DateFnsUtils from '@date-io/date-fns'
 import { makeStyles } from '@material-ui/core/styles'
 
-import type { Asset } from 'context/assets/types'
 import type { Filters } from 'pages/accouns/transactions'
 
 type FilterProps = {
   filters: Filters,
   assets: Array<Asset>,
   handleAssetChange: (ev: SyntheticInputEvent<HTMLElement>) => void,
-  handleDateChange: (name: 'to' | 'from', date: Date) => void,
+  handleDateChange: (name: "to" | "from", date: Date) => void
 };
 
 const useStyles = makeStyles({
@@ -52,7 +51,7 @@ const FiltersComponent = ({
                 id='from-filter'
                 label='From'
                 value={filters.from}
-                onChange={(date) => handleDateChange('from', date)}
+                onChange={date => handleDateChange('from', date)}
                 KeyboardButtonProps={{
                   'aria-label': 'change date'
                 }}
@@ -68,7 +67,7 @@ const FiltersComponent = ({
               id='to-filter'
               label='To'
               value={filters.to}
-              onChange={(date) => handleDateChange('to', date)}
+              onChange={date => handleDateChange('to', date)}
               KeyboardButtonProps={{
                 'aria-label': 'change date'
               }}
@@ -89,7 +88,7 @@ const FiltersComponent = ({
                   value={filters.asset}
                   onChange={handleAssetChange}
                 >
-                  {assets.map((item) => (
+                  {assets.map(item => (
                     <MenuItem key={item._id} value={item._id}>
                       {item.symbol}
                     </MenuItem>

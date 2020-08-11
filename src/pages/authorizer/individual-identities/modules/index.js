@@ -1,13 +1,9 @@
-// @flow
+//
 import { generateModule } from 'context/base/withPagination'
-import type { Identity } from 'pages/identity/modules/types'
 
-const {
-  Provider,
-  useState,
-  useDispatch,
-  statusList
-} = generateModule<Identity>('authorizerIdentityList')
+const { Provider, useState, useDispatch, statusList } = generateModule(
+  'authorizerIdentityList'
+)
 
 export default {
   AuthorizerIdentityListProvider: Provider,

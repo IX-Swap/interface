@@ -1,10 +1,9 @@
-// @flow
+//
 import React from 'react'
 import { Container, Typography, Box, TextField, Grid } from '@material-ui/core'
 import { makeStyles } from '@material-ui/styles'
 import { useFormContext } from 'react-hook-form'
 import { useTwoFactorState } from '../modules'
-import { STATUS as TFA_STATUS } from '../modules/types'
 
 const useStyles = makeStyles(() => ({
   textField: {

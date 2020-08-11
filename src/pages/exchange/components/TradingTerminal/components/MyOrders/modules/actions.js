@@ -1,7 +1,7 @@
-// @flow
+//
 import { postRequest } from 'services/httpRequests'
-import type { OrderState } from '../../BidAsks/modules/types'
-async function cancelOrder (userId, orderId, payload: OrderState) {
+
+async function cancelOrder (userId, orderId, payload) {
   try {
     const uri = `/exchange/orders/cancel/${userId}/${orderId}`
     const result = await postRequest(uri, payload)

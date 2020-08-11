@@ -15,13 +15,7 @@ import columns from './data'
 import User from '../../../../types/user'
 import DialogConfirmRoleChange from './dialog-confirm-role-change'
 
-const possibleValues = [
-  'user',
-  'accredited',
-  'authorizer',
-  'admin',
-  'issuer'
-]
+const possibleValues = ['user', 'accredited', 'authorizer', 'admin', 'issuer']
 
 const useStyles = makeStyles({
   formControl: {
@@ -29,11 +23,7 @@ const useStyles = makeStyles({
   }
 })
 
-const Actions = ({
-  user
-}: {
-  user: User
-}) => {
+const Actions = ({ user }: { user: User }) => {
   const classes = useStyles()
   const [open, setOpen] = useState(false)
   const [roles, setRoles] = useState<string[]>(user.roles.split(','))
@@ -83,12 +73,14 @@ const Actions = ({
           multiple
           onClose={() => handleChange(roles.join(','))}
           input={<Input />}
-          onChange={(
-            ev: React.ChangeEvent<{ value: unknown }>
-          ) => handleRoleChange(ev.target.value as string[])}
-          renderValue={(selected: unknown) => <>{(selected as string[]).join(', ')}</>}
+          onChange={(ev: React.ChangeEvent<{ value: unknown }>) =>
+            handleRoleChange(ev.target.value as string[])
+          }
+          renderValue={(selected: unknown) => (
+            <>{(selected as string[]).join(', ')}</>
+          )}
         >
-          {possibleValues.map((name) => (
+          {possibleValues.map(name => (
             <MenuItem key={name} value={name}>
               <Checkbox checked={roles.includes(name)} />
               <ListItemText primary={name} />

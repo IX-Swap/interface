@@ -15,7 +15,7 @@ const NumberFormatCustom = ({ ...others }: any) => {
       inputMode='numeric'
       isNumericString
       onChange={noop}
-      onValueChange={(e) => {
+      onValueChange={e => {
         others.onChange(e.value)
       }}
     />

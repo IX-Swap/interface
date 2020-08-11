@@ -1,7 +1,7 @@
-// @flow
+//
 import actionGenerator from 'context/base/withPagination/actions'
 
-export const init = (id: string) => {
+export const init = id => {
   // Dso List
   const { getter: getDsoList, ...dsoListPageMethods } = actionGenerator(
     'dsoList',

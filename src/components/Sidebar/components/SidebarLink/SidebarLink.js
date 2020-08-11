@@ -1,6 +1,6 @@
-// @flow
+//
 import React, { useState } from 'react'
-import type { Node } from 'react'
+
 import {
   Collapse,
   Divider,
@@ -26,15 +26,6 @@ export default function SidebarLink ({
   isSidebarOpened,
   nested,
   type
-}: {
-  link: string,
-  icon: Node,
-  label: string,
-  children?: Node,
-  location: any,
-  isSidebarOpened: boolean,
-  nested: any,
-  type: any,
 }) {
   const classes = useStyles()
 
@@ -129,7 +120,7 @@ export default function SidebarLink ({
           className={classes.nestedList}
         >
           <List component='div' disablePadding>
-            {children.map((childrenLink) => (
+            {children.map(childrenLink => (
               <SidebarLink
                 key={childrenLink && childrenLink.link}
                 location={location}

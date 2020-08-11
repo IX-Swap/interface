@@ -1,13 +1,9 @@
-// @flow
+//
 import { generateModule } from 'context/base/withPagination'
-import type { DSWithdrawal } from './types'
 
-const {
-  Provider,
-  useState,
-  useDispatch,
-  statusList
-} = generateModule<DSWithdrawal>('getDigitalSecurityWithdrawalsList')
+const { Provider, useState, useDispatch, statusList } = generateModule(
+  'getDigitalSecurityWithdrawalsList'
+)
 
 export default {
   DSWithdrawalsListProvider: Provider,

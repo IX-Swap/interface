@@ -3,7 +3,7 @@ import { useHistory } from 'react-router-dom'
 import { Button, Paper, Grid, Typography } from '@material-ui/core'
 import { makeStyles } from '@material-ui/styles'
 
-const useStyles = makeStyles((theme) => ({
+const useStyles = makeStyles(theme => ({
   paperContainer: {
     marginTop: '3em'
   },

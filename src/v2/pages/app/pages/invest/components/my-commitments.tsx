@@ -7,10 +7,18 @@ import { Button } from '@material-ui/core'
 import { useHistory, useRouteMatch } from 'react-router-dom'
 import { useStore } from '../context'
 
-const Actions = ({ item, handleSelectCommitment }: { item: Commitment; handleSelectCommitment: (item: Commitment) => void }) => {
+const Actions = ({
+  item,
+  handleSelectCommitment
+}: {
+  item: Commitment
+  handleSelectCommitment: (item: Commitment) => void
+}) => {
   return (
     <>
-      <Button color='primary' onClick={() => handleSelectCommitment(item)}>View</Button>
+      <Button color='primary' onClick={() => handleSelectCommitment(item)}>
+        View
+      </Button>
     </>
   )
 }
@@ -32,7 +40,9 @@ const MyCommitments = () => {
       columns={columns}
       filter={{ status: '' }}
       hasActions
-      actions={(row: Commitment) => <Actions handleSelectCommitment={handleSelectCommitment} item={row} />}
+      actions={(row: Commitment) => (
+        <Actions handleSelectCommitment={handleSelectCommitment} item={row} />
+      )}
     />
   )
 }

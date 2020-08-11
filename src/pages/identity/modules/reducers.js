@@ -1,12 +1,7 @@
-// @flow
+//
 import { isEmpty } from 'lodash'
-import { STATUS, actions } from './types'
-import type { IdentityState } from './types'
 
-export const identityReducer = (
-  state: IdentityState,
-  { type, payload }: { type: string, payload: any }
-) => {
+export const identityReducer = (state, { type, payload }) => {
   switch (type) {
     case actions.GET_IDENTITY_REQUEST:
       return {
@@ -119,11 +114,11 @@ export const identityReducer = (
     case actions.DELETE_FILE_SUCCESS:
       // eslint-disable-next-line no-case-declarations
       const individualDataroom = state.dataroom.filter(
-        (datum) => datum._id !== payload._id
+        datum => datum._id !== payload._id
       )
       // eslint-disable-next-line no-case-declarations
       const corporateDataroom = state.corporateDataroom.filter(
-        (datum) => datum._id !== payload._id
+        datum => datum._id !== payload._id
       )
 
       return {

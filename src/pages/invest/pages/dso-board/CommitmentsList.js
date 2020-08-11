@@ -1,4 +1,4 @@
-// @flow
+//
 import React, { useEffect, useRef } from 'react'
 import {
   TableHead,
@@ -36,11 +36,11 @@ const useCommitmentsListLogic = () => {
   } = commitmentsListState
   const mountedRef = useRef(true)
 
-  const handleChangePage = (_, newPage: number) => {
+  const handleChangePage = (_, newPage) => {
     setPage(commitmentsListDispatch, { page: newPage })
   }
 
-  const handleChangeRowsPerPage = (newRows: number) => {
+  const handleChangeRowsPerPage = newRows => {
     setRowsPerPage(commitmentsListDispatch, { rows: newRows })
     setPage(commitmentsListDispatch, { page: 0 })
   }
@@ -121,7 +121,7 @@ const CommitmentsList = () => {
           </TableRow>
         </TableHead>
         <TableBody>
-          {commitmentsList.map((commitment) => (
+          {commitmentsList.map(commitment => (
             <CommitmentListItem key={commitment._id} commitment={commitment} />
           ))}
         </TableBody>
@@ -134,7 +134,7 @@ const CommitmentsList = () => {
                 count={total}
                 rowsPerPage={limit}
                 page={page}
-                onChangeRowsPerPage={(evt: SyntheticInputEvent<HTMLElement>) =>
+                onChangeRowsPerPage={evt =>
                   handleChangeRowsPerPage(parseInt(evt.target.value))}
                 onChangePage={handleChangePage}
               />

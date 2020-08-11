@@ -12,7 +12,7 @@ import { IdentityProfile } from '../../../../../types/identity'
 import EditableField from '../../../../../components/form/editable-field'
 import User from '../../../../../types/user'
 import { renderMenu } from '../../../../../helpers/rendering'
-import { useStore } from '../../../../../context/user'
+import { useUserStore } from '../../../../../context/user'
 
 interface IdentityForm {
   identity?: Partial<IdentityProfile> & Partial<{ user: Partial<User> }>
@@ -27,10 +27,11 @@ const IdentityForm = ({
   rootName,
   editMode
 }: IdentityForm) => {
-  const userState = useStore()
+  const userState = useUserStore()
   const email = userState.user?.email
 
-  const getFieldName = (name: string) => (rootName ? `${rootName}.${name}` : name)
+  const getFieldName = (name: string) =>
+    rootName ? `${rootName}.${name}` : name
 
   return (
     <>

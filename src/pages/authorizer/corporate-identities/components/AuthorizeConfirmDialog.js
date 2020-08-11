@@ -1,4 +1,4 @@
-// @flow
+//
 import React from 'react'
 import {
   Dialog,
@@ -8,19 +8,12 @@ import {
   Button
 } from '@material-ui/core'
 
-type Prop = {
-  newStatus: string,
-  open: boolean,
-  handleClose: Function,
-  handleConfirm: () => Promise<void>,
-};
-
 export default function DialogAuthorizeConfirmation ({
   open,
   newStatus,
   handleClose,
   handleConfirm
-}: Prop) {
+}) {
   const title =
     newStatus === 'approve'
       ? 'Confirm Approve Identity'

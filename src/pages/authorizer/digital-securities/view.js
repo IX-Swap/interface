@@ -1,10 +1,10 @@
-// @flow
+//
 import React, { useState, useCallback, useEffect } from 'react'
 import { RouteProps } from 'react-router-dom'
 import { Container, Box } from '@material-ui/core'
 import DsoInformation from 'components/Dso/DsoInformation'
 import PageTitle from 'components/PageTitle'
-import type { Document, Dso } from 'context/dso/types'
+
 import { snackbarService } from 'uno-material-ui'
 import Actions from './modules/actions'
 import DialogAuthorizeConfirmation from './confirm'
@@ -16,17 +16,17 @@ const ViewDS = ({
   match: {
     params: { id }
   }
-}: RouteProps) => {
+}) => {
   // $FlowFixMe
   const { data } = location.state || {}
-  const [dso, setDso] = useState<Dso>(data)
+  const [dso, setDso] = useState(data)
   const [open, setOpen] = useState(false)
 
   const handleClose = () => {
     setOpen(false)
   }
 
-  const handleConfirm = async (mDso: Dso, status: string) => {
+  const handleConfirm = async (mDso, status) => {
     const confirm = await toggleWithdrawStatus(mDso, status)
     let message = 'Failed to update digital security status!'
     let type = 'error'
@@ -47,7 +47,7 @@ const ViewDS = ({
   }
 
   const getDsoCallback = useCallback(() => {
-    (async (mId) => {
+    (async mId => {
       const mDso = await getDso(mId)
 
       if (mDso) {
@@ -62,7 +62,7 @@ const ViewDS = ({
     }
   }, [data, getDsoCallback])
 
-  const onClickDocument = async (document: Document) => {
+  const onClickDocument = async document => {
     try {
       await downloadFile(dso._id, document)
     } catch (error) {

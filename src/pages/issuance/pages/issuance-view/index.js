@@ -3,7 +3,7 @@ import { Redirect, useHistory } from 'react-router-dom'
 import { Container, Box } from '@material-ui/core'
 import DsoInformation from 'components/Dso/DsoInformation'
 import PageTitle from 'components/PageTitle'
-import type { Document } from 'context/dso/types'
+
 import { snackbarService } from 'uno-material-ui'
 import storageHelper from 'services/storageHelper'
 import { useIssuanceState } from '../../modules'
@@ -33,9 +33,9 @@ const DsoView = () => {
 
   const saveEdit = async (id, finalData) => {
     const payload = { ...finalData }
-    payload.documents = (finalData.documents || []).map((a) => a._id)
+    payload.documents = (finalData.documents || []).map(a => a._id)
     const stringable = ['equityMultiple', 'investmentStructure']
-    Object.keys(payload).forEach((key) => {
+    Object.keys(payload).forEach(key => {
       if (
         payload[key] !== null &&
         payload[key] !== undefined &&

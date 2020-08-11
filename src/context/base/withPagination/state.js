@@ -1,10 +1,8 @@
-// @flow
-import { generateStatus } from './types'
-import type { BaseStateWithPagination } from './types'
+//
 
 const statusList = generateStatus()
 
-export default function generateInitialState<T> (): BaseStateWithPagination<T> {
+export default function generateInitialState () {
   return {
     items: [],
     page: 0,

@@ -1,6 +1,6 @@
 // @ts-ignore
 // @ts-nocheck
-// @flow
+//
 /* eslint-disable react-hooks/exhaustive-deps */
 import React, { useState, useEffect } from 'react'
 import { makeStyles } from '@material-ui/styles'
@@ -16,19 +16,11 @@ const useStyles = makeStyles(() => ({
   }
 }))
 
-const DsoImage = ({
-  logo,
-  edit = false,
-  dsoId = ''
-}: {
-  dsoId: string,
-  edit: boolean,
-  logo: string,
-}) => {
+const DsoImage = ({ logo, edit = false, dsoId = '' }) => {
   const classes = useStyles()
   const [imgUrl, setImgUrl] = useState('')
 
-  const setPhoto = async (id) => {
+  const setPhoto = async id => {
     const x = await getImgUrl(
       edit
         ? `/dataroom/raw/${storage.getUserId()}/${id || ''}`

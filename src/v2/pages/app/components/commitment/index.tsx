@@ -3,7 +3,14 @@ import React, { useState, useEffect } from 'react'
 import CommitmentViewHeader from './components/header'
 import NumberFormat from 'react-number-format'
 import { Commitment } from '../../../../types/commitment'
-import { Container, Box, Paper, Grid, Button, TextField } from '@material-ui/core'
+import {
+  Container,
+  Box,
+  Paper,
+  Grid,
+  Button,
+  TextField
+} from '@material-ui/core'
 import { useForm, Controller } from 'react-hook-form'
 import { Document } from '../../../../types/document'
 import { useHistory } from 'react-router-dom'
@@ -15,7 +22,11 @@ interface CommitmentViewProps {
   editMode?: boolean
 }
 
-const Uploader = ({ onUploadSuccess }: { onUploadSuccess: (doc: Document) => void }) => {
+const Uploader = ({
+  onUploadSuccess
+}: {
+  onUploadSuccess: (doc: Document) => void
+}) => {
   console.log(onUploadSuccess)
   return <span>uploader</span>
 }
@@ -33,11 +44,14 @@ const NumberFormatCustom = ({ symbol, ...others }: any) => (
   />
 )
 
-const CommitmentView = ({ editMode = false, commitment }: CommitmentViewProps) => {
+const CommitmentView = ({
+  editMode = false,
+  commitment
+}: CommitmentViewProps) => {
   const history = useHistory()
   const [estimatedValue, setEstimatedValue] = useState(0)
   const [numberOfUnits, setNumberOfUnits] = useState(
-    (commitment?.numberOfUnits) ? commitment.numberOfUnits : 0
+    commitment?.numberOfUnits ? commitment.numberOfUnits : 0
   )
   const { register, handleSubmit, watch, errors, control } = useForm({
     defaultValues: {
@@ -68,10 +82,14 @@ const CommitmentView = ({ editMode = false, commitment }: CommitmentViewProps) =
   }
 
   const onClickDownload = (doc: string) => {
-    downloadFile(doc).then(noop).catch(noop)
+    downloadFile(doc)
+      .then(noop)
+      .catch(noop)
   }
 
-  const setSubscriptionDocument = (doc: Document) => { console.log('doc', doc) }
+  const setSubscriptionDocument = (doc: Document) => {
+    console.log('doc', doc)
+  }
 
   const saving = false
 
@@ -106,7 +124,8 @@ const CommitmentView = ({ editMode = false, commitment }: CommitmentViewProps) =
               {editMode ? (
                 <Uploader
                   onUploadSuccess={(doc: Document) =>
-                    setSubscriptionDocument(doc)}
+                    setSubscriptionDocument(doc)
+                  }
                 />
               ) : (
                 <Box mb={2}>
@@ -253,7 +272,7 @@ const CommitmentView = ({ editMode = false, commitment }: CommitmentViewProps) =
                         saving ||
                         (commitment && commitment.status !== 'Unauthorized')
                       }
-                      onClick={(e) => {
+                      onClick={e => {
                         e.preventDefault()
                         if (!editMode) {
                           alert('Feature not yet available')

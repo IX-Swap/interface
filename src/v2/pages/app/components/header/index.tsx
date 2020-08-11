@@ -16,13 +16,9 @@ import classNames from 'classnames'
 import useStyles from './styles'
 import { useObserver } from 'mobx-react'
 
-import {
-  useStore as useLayoutStore
-} from '../../../../context/layout'
+import { useStore as useLayoutStore } from '../../../../context/layout'
 
-import {
-  useStore as useUserStore
-} from '../../../../context/user'
+import { useUserStore } from '../../../../context/user'
 
 export default function Header () {
   const classes = useStyles()
@@ -31,7 +27,7 @@ export default function Header () {
 
   const userStore = useUserStore()
 
-  const [profileMenu, setProfileMenu] = useState < Element | null >(null)
+  const [profileMenu, setProfileMenu] = useState<Element | null>(null)
 
   return useObserver(() => (
     <AppBar position='fixed' elevation={1} className={classes.appBar}>
@@ -47,19 +43,13 @@ export default function Header () {
           {layoutState.isSidebarOpened ? (
             <ArrowBackIcon
               classes={{
-                root: classNames(
-                  classes.headerIcon,
-                  classes.headerIconCollapse
-                )
+                root: classNames(classes.headerIcon, classes.headerIconCollapse)
               }}
             />
           ) : (
             <MenuIcon
               classes={{
-                root: classNames(
-                  classes.headerIcon,
-                  classes.headerIconCollapse
-                )
+                root: classNames(classes.headerIcon, classes.headerIconCollapse)
               }}
             />
           )}
@@ -74,7 +64,7 @@ export default function Header () {
           color='inherit'
           className={classes.headerMenuButton}
           aria-controls='profile-menu'
-          onClick={(e) => setProfileMenu(e.currentTarget)}
+          onClick={e => setProfileMenu(e.currentTarget)}
         >
           <AccountIcon classes={{ root: classes.headerIcon }} />
         </IconButton>

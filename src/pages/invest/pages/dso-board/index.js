@@ -1,9 +1,9 @@
-// @flow
+//
 import React, { useState } from 'react'
 import { useHistory } from 'react-router-dom'
 import { Container, Paper, Tabs, Tab, Box, Divider } from '@material-ui/core'
 import DsoList from 'components/Dso/DsoList'
-import type { Dso } from 'context/dso/types'
+
 import { useInvestDispatch } from '../../modules'
 import { setSelectedDso } from '../../modules/actions'
 import CommitmentsList from './CommitmentsList'
@@ -20,7 +20,7 @@ const DsoBoard = () => {
     setTab(newValue)
   }
 
-  const onClickView = (dso: Dso) => {
+  const onClickView = dso => {
     setSelectedDso(investDispatch, dso)
 
     history.push('/invest/view')

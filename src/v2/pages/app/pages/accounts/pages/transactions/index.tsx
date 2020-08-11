@@ -17,14 +17,17 @@ const useTransactionsLogic = () => {
     to: moment().toISOString()
   })
 
-  const handleAssetChange = (ev: React.ChangeEvent<{value: unknown}>) => {
+  const handleAssetChange = (ev: React.ChangeEvent<{ value: unknown }>) => {
     setFilter({
       ...filter,
       asset: ev.target.value as string
     })
   }
 
-  const handleDateChange = (name: 'to' | 'from', date: MaterialUiPickersDate) => {
+  const handleDateChange = (
+    name: 'to' | 'from',
+    date: MaterialUiPickersDate
+  ) => {
     const mFilter = { ...filter }
     mFilter[name] = date?.toISOString() ?? ''
     setFilter(mFilter)
@@ -38,9 +41,7 @@ const useTransactionsLogic = () => {
 }
 
 const Transactions = () => {
-  const {
-    filter, handleAssetChange, handleDateChange
-  } = useTransactionsLogic()
+  const { filter, handleAssetChange, handleDateChange } = useTransactionsLogic()
   return (
     <Paper>
       <Grid container direction='column'>

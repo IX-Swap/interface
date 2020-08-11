@@ -1,10 +1,9 @@
-// @flow
+//
 import { postRequest } from 'services/httpRequests'
 
 import { snackbarService } from 'uno-material-ui'
-import { postOrderActions, OrderState } from './types'
 
-async function postOrder (dispatch: Function, payload: OrderState) {
+async function postOrder (dispatch, payload) {
   try {
     dispatch({ type: postOrderActions.GET_POST_ORDER_REQUEST })
 

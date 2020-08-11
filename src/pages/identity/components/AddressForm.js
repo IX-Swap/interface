@@ -1,19 +1,10 @@
-// @flow
+//
 import React from 'react'
 import { MenuItem } from '@material-ui/core'
 import { COUNTRIES_OPTS } from 'const/const'
 import IdentityField from './IdentityField'
-import type { IdentityAddress } from '../modules/types'
 
-const AddressForm = ({
-  address = {},
-  rootName = 'address',
-  editMode
-}: {
-  address?: IdentityAddress,
-  rootName?: 'address' | 'companyAddress',
-  editMode: boolean,
-}) => (
+const AddressForm = ({ address = {}, rootName = 'address', editMode }) => (
   <>
     <IdentityField
       name={`${rootName}.line1`}

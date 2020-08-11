@@ -8,10 +8,7 @@ interface DsoTitleProps {
   editMode?: boolean
 }
 
-const DsoTitle = ({
-  editMode = false,
-  dso
-}: DsoTitleProps) => {
+const DsoTitle = ({ editMode = false, dso }: DsoTitleProps) => {
   return (
     <Grid container direction='row' spacing={2}>
       <Grid item>

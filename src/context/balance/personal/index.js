@@ -1,8 +1,7 @@
-// @flow
+//
 import { generateModule } from 'context/base/withPagination'
-import type { Balance } from '../types'
 
-const { Provider, useState, useDispatch, statusList } = generateModule<Balance>(
+const { Provider, useState, useDispatch, statusList } = generateModule(
   'personalBalanceList'
 )
 

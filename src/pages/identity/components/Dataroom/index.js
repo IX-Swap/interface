@@ -1,19 +1,13 @@
-// @flow
+//
 import React from 'react'
 import { Typography, List, ListSubheader, Grid } from '@material-ui/core'
 import { findIndex } from 'lodash'
 import Uploader from './Uploader'
 import DocumentItem from './DocumentItem'
-import type { DocumentGuide, Document } from '../../modules/types'
+
 import useStyles from './styles'
 
-const DocumentsList = ({
-  documentsList,
-  dataroom
-}: {
-  documentsList: DocumentGuide[],
-  dataroom: Document[],
-}) => {
+const DocumentsList = ({ documentsList, dataroom }) => {
   const classes = useStyles()
 
   return (
@@ -39,11 +33,8 @@ const DocumentsList = ({
           </Grid>
         </Grid>
       </ListSubheader>
-      {documentsList.map((document) => {
-        const idx = findIndex(
-          dataroom,
-          (file) => file.title === document.title
-        )
+      {documentsList.map(document => {
+        const idx = findIndex(dataroom, file => file.title === document.title)
         if (idx < 0) {
           return <Uploader key={document.title} document={document} />
         }

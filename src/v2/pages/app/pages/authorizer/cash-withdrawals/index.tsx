@@ -10,7 +10,7 @@ const CashWithdrawals = () => {
       uri='/accounts/cash/withdrawals'
       name='authorizerCashWithdrawals'
       columns={columns}
-      onView={(row) => <WithdrawalView withdrawal={row} />}
+      onView={row => <WithdrawalView withdrawal={row} />}
     />
   )
 }

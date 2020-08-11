@@ -137,7 +137,7 @@ const CommitmentsList = ({ onClickView }: { onClickView: Function }) => {
             </TableRow>
           </TableHead>
           <TableBody>
-            {commitments.map((commitment) => (
+            {commitments.map(commitment => (
               <CommitmentListItem
                 key={commitment._id}
                 commitment={commitment}

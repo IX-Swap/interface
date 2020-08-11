@@ -1,23 +1,11 @@
-// @flow
-import type {
-  GenericActions,
-  GenericStatus,
-  BaseStateWithPagination
-} from './types'
+//
 
-export default function generateReducers<T> (
-  actionTypes: GenericActions,
-  statusTypes: GenericStatus,
-  additionalReducer?: (
-    statusTypes: GenericStatus,
-    state: BaseStateWithPagination<T>,
-    load: any
-  ) => BaseStateWithPagination<T>
+export default function generateReducers (
+  actionTypes,
+  statusTypes,
+  additionalReducer
 ) {
-  const reducer = (
-    state: BaseStateWithPagination<T>,
-    load: any
-  ): BaseStateWithPagination<T> => {
+  const reducer = (state, load) => {
     const { type, payload } = load
     const items = (payload && payload.items) || state.items
 

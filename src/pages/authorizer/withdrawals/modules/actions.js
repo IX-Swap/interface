@@ -1,7 +1,6 @@
-// @flow
+//
 import actionGenerator from 'context/base/withPagination/actions'
 import { putRequest } from 'services/httpRequests'
-import type { Withdraw } from './types'
 
 const { getter: getWithdraws, ...pageMethods } = actionGenerator(
   'authorizerWithdrawsList',
@@ -9,7 +8,7 @@ const { getter: getWithdraws, ...pageMethods } = actionGenerator(
   {}
 )
 
-const toggleWithdrawStatus = async (withdraw: Withdraw, newStatus: string) => {
+const toggleWithdrawStatus = async (withdraw, newStatus) => {
   const action = newStatus.toLowerCase().includes('approve')
     ? 'approve'
     : 'reject'

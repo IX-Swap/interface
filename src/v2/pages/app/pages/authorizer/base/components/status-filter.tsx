@@ -1,7 +1,5 @@
 import React from 'react'
-import {
-  ListItem, ListItemIcon, ListItemText
-} from '@material-ui/core'
+import { ListItem, ListItemIcon, ListItemText } from '@material-ui/core'
 import { makeStyles } from '@material-ui/styles'
 
 interface StatusFilterProps {
@@ -20,7 +18,12 @@ const useStyles = makeStyles(() => ({
   }
 }))
 
-const StatusFilter = ({ isSelected, children, title, handleItemClick }: StatusFilterProps) => {
+const StatusFilter = ({
+  isSelected,
+  children,
+  title,
+  handleItemClick
+}: StatusFilterProps) => {
   const classes = useStyles()
   return (
     <ListItem
@@ -28,7 +31,8 @@ const StatusFilter = ({ isSelected, children, title, handleItemClick }: StatusFi
       classes={{
         selected: classes.selected
       }}
-      button selected={isSelected}
+      button
+      selected={isSelected}
       onClick={handleItemClick}
     >
       <ListItemIcon className={isSelected ? classes.selected : classes.normal}>

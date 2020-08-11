@@ -1,8 +1,6 @@
-/* global localStorage */
-// @flow
-import type { User } from 'context/user/types'
+//
 
-const set = (user: User) => {
+const set = user => {
   localStorage.setItem('user', JSON.stringify(user))
 }
 
@@ -20,11 +18,11 @@ const getAccessToken = () => get().accessToken
 
 const getUserId = () => get()._id
 
-const store = (key: string, value: any) => {
+const store = (key, value) => {
   localStorage.setItem(key, JSON.stringify(value))
 }
 
-const retrieve = (key: string, def: any) => {
+const retrieve = (key, def) => {
   const stored = localStorage.getItem(key)
 
   if (!stored) return def
@@ -32,7 +30,7 @@ const retrieve = (key: string, def: any) => {
   return JSON.parse(stored)
 }
 
-const generateRandom = (length: number, chars: string) => {
+const generateRandom = (length, chars) => {
   let mask = ''
   if (chars.indexOf('a') > -1) mask += 'abcdefghijklmnopqrstuvwxyz'
   if (chars.indexOf('A') > -1) mask += 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'

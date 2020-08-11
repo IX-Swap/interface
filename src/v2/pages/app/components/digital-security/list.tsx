@@ -1,5 +1,12 @@
 import React, { useState } from 'react'
-import { Box, Grid, TextField, TableBody, TableRow, TableCell } from '@material-ui/core'
+import {
+  Box,
+  Grid,
+  TextField,
+  TableBody,
+  TableRow,
+  TableCell
+} from '@material-ui/core'
 import TableWithPagination from '../../../../components/table-with-pagination'
 import { Dso } from '../../../../types/dso'
 import DsoOfferingCard from './card'
@@ -13,10 +20,18 @@ interface OfferingsListProps {
   children?: React.ReactNode
 }
 
-const OfferingsList = ({ user = undefined, filter = { status: '' }, handleRowClick, children }: OfferingsListProps) => {
+const OfferingsList = ({
+  user = undefined,
+  filter = { status: '' },
+  handleRowClick,
+  children
+}: OfferingsListProps) => {
   const [search, setSearch] = useState('')
   const [_onSearch] = useState(() =>
-    debounce<any>((evt: React.ChangeEvent<HTMLInputElement>) => setSearch(evt.target.value), 500)
+    debounce<any>(
+      (evt: React.ChangeEvent<HTMLInputElement>) => setSearch(evt.target.value),
+      500
+    )
   )
 
   const onSearch = (evt: React.ChangeEvent<HTMLInputElement>) => {
@@ -45,21 +60,19 @@ const OfferingsList = ({ user = undefined, filter = { status: '' }, handleRowCli
         name={`invest-${user ?? 'invest'}`}
         uri={`/issuance/dso/list/${user ?? ''}`}
       >
-        {
-          ({ items }: { items: Dso[] }) => {
-            return (
-              <TableBody>
-                {items.map((dso: Dso) => (
-                  <TableRow key={dso._id}>
-                    <TableCell style={{ borderBottom: 'none' }}>
-                      <DsoOfferingCard dso={dso} onClickView={handleRowClick} />
-                    </TableCell>
-                  </TableRow>
-                ))}
-              </TableBody>
-            )
-          }
-        }
+        {({ items }: { items: Dso[] }) => {
+          return (
+            <TableBody>
+              {items.map((dso: Dso) => (
+                <TableRow key={dso._id}>
+                  <TableCell style={{ borderBottom: 'none' }}>
+                    <DsoOfferingCard dso={dso} onClickView={handleRowClick} />
+                  </TableCell>
+                </TableRow>
+              ))}
+            </TableBody>
+          )
+        }}
       </TableWithPagination>
     </>
   )

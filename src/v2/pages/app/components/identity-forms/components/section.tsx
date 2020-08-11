@@ -69,20 +69,24 @@ const IdentitySection = ({
               )}
               {onDelete && (
                 <Button
-                  color='primary' onClick={(e) => {
+                  color='primary'
+                  onClick={e => {
                     e.stopPropagation()
                     onDelete()
                   }}
-                >Delete
+                >
+                  Delete
                 </Button>
               )}
               {onAdd && (
                 <Button
-                  color='primary' onClick={(e) => {
+                  color='primary'
+                  onClick={e => {
                     e.stopPropagation()
                     onAdd()
                   }}
-                >Add
+                >
+                  Add
                 </Button>
               )}
             </Grid>

@@ -33,7 +33,7 @@ const Uploader = ({ onUploadSuccess }: { onUploadSuccess: Function }) => {
         disabled={uploading}
       />
       {/* eslint-disable-next-line */}
-      <label htmlFor='upload'>
+      <label htmlFor="upload">
         <Button
           component='span'
           variant='contained'

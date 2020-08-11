@@ -19,7 +19,8 @@ export const columns: Array<TableColumn<CorporateIdentity>> = [
   {
     key: 'representatives[0].firstname',
     label: 'Representative',
-    render: (a: string, row: CorporateIdentity) => `${a} ${row.representatives[0].lastName}`
+    render: (a: string, row: CorporateIdentity) =>
+      `${a} ${row.representatives[0].lastName}`
   }
 ]
 

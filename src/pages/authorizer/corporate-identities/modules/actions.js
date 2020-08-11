@@ -1,6 +1,6 @@
-// @flow
+//
 import actionGenerator from 'context/base/withPagination/actions'
-import type { Identity } from 'pages/identity/modules/types'
+
 import { putRequest } from 'services/httpRequests'
 
 const { getter: getIdentities, ...pageMethods } = actionGenerator(
@@ -9,7 +9,7 @@ const { getter: getIdentities, ...pageMethods } = actionGenerator(
   {}
 )
 
-const toggleIdentityStatus = async (identity: Identity, newStatus: string) => {
+const toggleIdentityStatus = async (identity, newStatus) => {
   const action = newStatus.toLowerCase().includes('approve')
     ? 'approve'
     : 'reject'

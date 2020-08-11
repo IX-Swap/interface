@@ -16,8 +16,7 @@ const DsoView = ({ dso }: { dso: Dso }) => {
 
   const save = (formValues?: DsoRequest) => {
     if (!formValues) return
-
-    (async () => {
+    ;(async () => {
       const res = await editDso(dso._id, formValues, storageHelper.getUserId())
       if (res.status) {
         setState({
@@ -27,12 +26,17 @@ const DsoView = ({ dso }: { dso: Dso }) => {
           button: 'Edit'
         })
 
-        snackbarService.showSnackbar(`Successfully saved Digital Security (${res.data!.tokenSymbol})`)
+        snackbarService.showSnackbar(
+          `Successfully saved Digital Security (${res.data!.tokenSymbol})`
+        )
         history.push('.')
         return
       }
 
-      snackbarService.showSnackbar(`Unable to save ${formValues?.tokenSymbol}. (${res.message})`, 'error')
+      snackbarService.showSnackbar(
+        `Unable to save ${formValues?.tokenSymbol}. (${res.message})`,
+        'error'
+      )
     })()
   }
 
@@ -55,7 +59,12 @@ const DsoView = ({ dso }: { dso: Dso }) => {
     <Container>
       <PageTitle title={dso.tokenName} subPage />
       <Box mb={4} />
-      <DigitalSecurity dso={dso} editMode={state.editMode} buttonAction={state.action} buttonString={state.button} />
+      <DigitalSecurity
+        dso={dso}
+        editMode={state.editMode}
+        buttonAction={state.action}
+        buttonString={state.button}
+      />
     </Container>
   )
 }
@@ -65,7 +74,13 @@ const MemoedDsoView = React.memo(DsoView)
 const InvestViewDso = () => {
   const dsoState = useStore()
 
-  return useObserver(() => dsoState.selectedDso ? <MemoedDsoView dso={dsoState.selectedDso} /> : <Redirect to='.' />)
+  return useObserver(() =>
+    dsoState.selectedDso ? (
+      <MemoedDsoView dso={dsoState.selectedDso} />
+    ) : (
+      <Redirect to='.' />
+    )
+  )
 }
 
 export default InvestViewDso

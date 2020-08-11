@@ -11,24 +11,24 @@ import useStyles from 'pages/exchange/components/ExchangeTable/styles'
 
 import { IconButton } from '@material-ui/core'
 
-const Pagination = (props) => {
+const Pagination = props => {
   const classes = useStyles()
   const theme = useTheme()
   const { count, page, rowsPerPage, onChangePage } = props
 
-  const handleFirstPageButtonClick = (event) => {
+  const handleFirstPageButtonClick = event => {
     onChangePage(event, 0)
   }
 
-  const handleBackButtonClick = (event) => {
+  const handleBackButtonClick = event => {
     onChangePage(event, page - 1)
   }
 
-  const handleNextButtonClick = (event) => {
+  const handleNextButtonClick = event => {
     onChangePage(event, page + 1)
   }
 
-  const handleLastPageButtonClick = (event) => {
+  const handleLastPageButtonClick = event => {
     onChangePage(event, Math.max(0, Math.ceil(count / rowsPerPage) - 1))
   }
 
@@ -41,15 +41,27 @@ const Pagination = (props) => {
       >
         {theme.direction === 'rtl' ? <LastPageIcon /> : <FirstPageIcon />}
       </IconButton>
-      <IconButton onClick={handleBackButtonClick} disabled={page === 0} aria-label='previous page'>
-        {theme.direction === 'rtl' ? <KeyboardArrowRight /> : <KeyboardArrowLeft />}
+      <IconButton
+        onClick={handleBackButtonClick}
+        disabled={page === 0}
+        aria-label='previous page'
+      >
+        {theme.direction === 'rtl' ? (
+          <KeyboardArrowRight />
+        ) : (
+          <KeyboardArrowLeft />
+        )}
       </IconButton>
       <IconButton
         onClick={handleNextButtonClick}
         disabled={page >= Math.ceil(count / rowsPerPage) - 1}
         aria-label='next page'
       >
-        {theme.direction === 'rtl' ? <KeyboardArrowLeft /> : <KeyboardArrowRight />}
+        {theme.direction === 'rtl' ? (
+          <KeyboardArrowLeft />
+        ) : (
+          <KeyboardArrowRight />
+        )}
       </IconButton>
       <IconButton
         onClick={handleLastPageButtonClick}

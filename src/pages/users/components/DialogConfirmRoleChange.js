@@ -1,17 +1,13 @@
-// @flow
+//
 import React from 'react'
 
-import type { User } from '../modules/types'
-
-import { Dialog, DialogActions, DialogContent, DialogTitle, Button } from '@material-ui/core'
-
-type Prop = {
-  user: User,
-  newRole: string,
-  open: boolean,
-  handleClose: Function,
-  handleConfirm: (user: User, newRole: string) => Promise<void>,
-};
+import {
+  Dialog,
+  DialogActions,
+  DialogContent,
+  DialogTitle,
+  Button
+} from '@material-ui/core'
 
 export default function DialogConfirmRoleChange ({
   user,
@@ -19,7 +15,7 @@ export default function DialogConfirmRoleChange ({
   open,
   handleClose,
   handleConfirm
-}: Prop) {
+}) {
   return (
     <Dialog
       disableBackdropClick

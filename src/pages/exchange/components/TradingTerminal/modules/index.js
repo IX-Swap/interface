@@ -1,23 +1,24 @@
-// @flow
+//
 import React from 'react'
-import type { Node } from 'react'
+
 import logger from '../../../../../v2/helpers/logger'
 import { marketReducer } from './reducers'
 import { initialState } from './state'
 import { generateModule } from 'context/base/withPagination'
-import type { MarketListState } from './types'
 
-const MarketListStateContext = React.createContext<MarketListState>(initialState)
+const MarketListStateContext = React.createContext(initialState)
 const MarketListDispatchContext = React.createContext()
 
-const { Provider, useState, useDispatch, statusList } = generateModule<MarketListState>(
+const { Provider, useState, useDispatch, statusList } = generateModule(
   'marketList'
 )
 
 export function MarketListingState () {
   const context = React.useContext(MarketListStateContext)
   if (context === undefined) {
-    throw new Error('MarketListingState must be used within a MarketListProver')
+    throw new Error(
+      'MarketListingState must be used within a MarketListProver'
+    )
   }
 
   return context
@@ -26,19 +27,20 @@ export function MarketListingState () {
 export function useMarketListDispatch () {
   const context = React.useContext(MarketListDispatchContext)
   if (context === undefined) {
-    throw new Error('useMarketListDispatch must be used within a MarketListProver')
+    throw new Error(
+      'useMarketListDispatch must be used within a MarketListProver'
+    )
   }
 
   return context
 }
 
-export function MarketListProvider ({ children }: { children: Node }) {
+export function MarketListProvider ({ children }) {
   const thisReducer =
-    process.env.NODE_ENV === 'development' ? logger(marketReducer) : marketReducer
-  const [state, dispatch] = React.useReducer<MarketListState, MarketListState>(
-    thisReducer,
-    initialState
-  )
+    process.env.NODE_ENV === 'development'
+      ? logger(marketReducer)
+      : marketReducer
+  const [state, dispatch] = React.useReducer(thisReducer, initialState)
 
   return (
     <MarketListStateContext.Provider value={state}>

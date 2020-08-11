@@ -2,7 +2,13 @@ import React, { useEffect } from 'react'
 import { useStore } from '../../../../../../../context/assets'
 import { noop } from 'lodash'
 import { useObserver } from 'mobx-react'
-import { FormControl, InputLabel, MenuItem, Select, FormControlProps } from '@material-ui/core'
+import {
+  FormControl,
+  InputLabel,
+  MenuItem,
+  Select,
+  FormControlProps
+} from '@material-ui/core'
 import { Controller, useFormContext } from 'react-hook-form'
 
 interface AssetsSelectProps {
@@ -11,12 +17,20 @@ interface AssetsSelectProps {
   name?: string
 }
 
-const AssetsSelect = ({ fullWidth = true, required = false, name = 'asset', ...others }: Partial<AssetsSelectProps> & FormControlProps) => {
+const AssetsSelect = ({
+  fullWidth = true,
+  required = false,
+  name = 'asset',
+  ...others
+}: Partial<AssetsSelectProps> & FormControlProps) => {
   const assetsStore = useStore()
   const methods = useFormContext() || { errors: {}, control: () => {} }
 
   useEffect(() => {
-    assetsStore.getCurrencies().then(noop).catch(noop)
+    assetsStore
+      .getCurrencies()
+      .then(noop)
+      .catch(noop)
   }, [assetsStore])
 
   return useObserver(() => {
@@ -42,7 +56,7 @@ const AssetsSelect = ({ fullWidth = true, required = false, name = 'asset', ...o
           <MenuItem disabled value={undefined}>
             Currency
           </MenuItem>
-          {assetsStore.currencies.map((e) => (
+          {assetsStore.currencies.map(e => (
             <MenuItem key={e._id} value={e._id}>
               {e.numberFormat.currency}
             </MenuItem>

@@ -39,7 +39,9 @@ const ImageUploader = ({
     setValue: () => {},
     getValues: () => {}
   }
-  const [imageKey, setImageKey] = useState(get(getValues(), name) ?? defaultValue)
+  const [imageKey, setImageKey] = useState(
+    get(getValues(), name) ?? defaultValue
+  )
   const calcWidth = width / 10
   const padding = 5
   const inputRef = useRef<HTMLInputElement>(null)
@@ -63,7 +65,7 @@ const ImageUploader = ({
         )
 
         if (onUpload) {
-          onUpload(res as unknown as Document)
+          onUpload((res as unknown) as Document)
         }
       }
     }
@@ -94,10 +96,10 @@ const ImageUploader = ({
       position: 'relative',
       '&:hover': editMode
         ? {
-          '& $uploadButton': {
-            display: 'flex'
+            '& $uploadButton': {
+              display: 'flex'
+            }
           }
-        }
         : undefined
     }
   }))
@@ -105,7 +107,7 @@ const ImageUploader = ({
   const classes = useStyles()
 
   useEffect(() => {
-    (async () => {
+    ;(async () => {
       const mSrc = await getter({ _id: imageKey })
       setImgSrc(mSrc.includes('application/json') ? '' : mSrc)
     })()

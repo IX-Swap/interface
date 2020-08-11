@@ -1,16 +1,8 @@
-// @flow
+//
 import React, { useState } from 'react'
-import type { Node } from 'react'
+
 import { Grid, ListItem, Radio } from '@material-ui/core'
 import { useFormContext } from 'react-hook-form'
-
-type DeclarationItemProps = {
-  children: Node,
-  answerable?: boolean,
-  name: string,
-  value: string | null,
-  editMode: boolean,
-};
 
 const DeclarationItem = ({
   children,
@@ -18,11 +10,11 @@ const DeclarationItem = ({
   name,
   value,
   editMode
-}: DeclarationItemProps) => {
+}) => {
   const { register } = useFormContext()
   const [selected, setSelected] = useState(value)
 
-  const handleChange = (e) => {
+  const handleChange = e => {
     setSelected(e.target.value)
   }
 

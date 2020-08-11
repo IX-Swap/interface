@@ -37,47 +37,73 @@ const Progress = <T extends unknown>({ name, uri }: ProgressProps<T>) => {
   const tableState = useTableStoreState()
 
   return useObserver(() =>
-    [GENERIC_STATUS.GETTING].includes(tableState.status) ? <LinearProgress /> : null
+    [GENERIC_STATUS.GETTING].includes(tableState.status) ? (
+      <LinearProgress />
+    ) : null
   )
 }
 Progress.whyDidYouRender = true
 
-const GTableRows = <T extends unknown>({ name, uri, columns, hasActions, actions, children }: TableViewProps<T>) => {
+const GTableRows = <T extends unknown>({
+  name,
+  uri,
+  columns,
+  hasActions,
+  actions,
+  children
+}: TableViewProps<T>) => {
   const { useStore: useTableStoreState } = init<T>(name, uri)
   const tableState = useTableStoreState()
 
   return useObserver(() =>
-    children
-      ? children({ items: tableState.items, columns, hasActions, actions })
-      : <Items items={tableState.items} columns={columns} hasActions={hasActions} actions={actions} />
+    children ? (
+      children({ items: tableState.items, columns, hasActions, actions })
+    ) : (
+      <Items
+        items={tableState.items}
+        columns={columns}
+        hasActions={hasActions}
+        actions={actions}
+      />
+    )
   )
 }
 GTableRows.whyDidYouRender = true
 
-const GTableFooter = <T extends unknown>({ name, uri, columns, hasActions, bordered }: TableViewProps<T>) => {
+const GTableFooter = <T extends unknown>({
+  name,
+  uri,
+  columns,
+  hasActions,
+  bordered
+}: TableViewProps<T>) => {
   const { useStore: useTableStoreState } = init<T>(name, uri)
   const tableState = useTableStoreState()
 
   return useObserver(() => {
-    return (tableState.total && (
-      <TableFooter>
-        <TableRow>
-          <TablePagination
-            style={!bordered ? { borderBottom: 'none' } : {}}
-            rowsPerPageOptions={[5, 10, 25]}
-            colSpan={columns.length + (+!!hasActions)}
-            count={tableState.total}
-            rowsPerPage={tableState.limit}
-            page={tableState.page}
-            onChangeRowsPerPage={(evt) =>
-              tableState.setRowsPerPage(parseInt(evt.target.value))}
-            onChangePage={(evt, newPage: number) => {
-              tableState.setPage(newPage)
-            }}
-          />
-        </TableRow>
-      </TableFooter>
-    )) || null
+    return (
+      (tableState.total && (
+        <TableFooter>
+          <TableRow>
+            <TablePagination
+              style={!bordered ? { borderBottom: 'none' } : {}}
+              rowsPerPageOptions={[5, 10, 25]}
+              colSpan={columns.length + +!!hasActions}
+              count={tableState.total}
+              rowsPerPage={tableState.limit}
+              page={tableState.page}
+              onChangeRowsPerPage={evt =>
+                tableState.setRowsPerPage(parseInt(evt.target.value))
+              }
+              onChangePage={(evt, newPage: number) => {
+                tableState.setPage(newPage)
+              }}
+            />
+          </TableRow>
+        </TableFooter>
+      )) ||
+      null
+    )
   })
 }
 GTableFooter.whyDidYouRender = true
@@ -106,14 +132,12 @@ const TableView = <T extends unknown>({
         <Table aria-label='table'>
           <TableHead>
             <TableRow>
-              {columns.map((e) => (
+              {columns.map(e => (
                 <TableCell key={e.key} align={e.headAlign ?? 'left'}>
                   <b>{e.label}</b>
                 </TableCell>
               ))}
-              {hasActions && (
-                <TableCell />
-              )}
+              {hasActions && <TableCell />}
             </TableRow>
           </TableHead>
           <GTableRows

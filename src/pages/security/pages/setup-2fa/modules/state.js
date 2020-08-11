@@ -1,8 +1,6 @@
-// @flow
-import { STATUS } from './types'
-import type { TwoFactorState } from './types'
+//
 
-export const initialState: TwoFactorState = {
+export const initialState = {
   confirmed: false,
   status: STATUS.INIT,
   error: null,

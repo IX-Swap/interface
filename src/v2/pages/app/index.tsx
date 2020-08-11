@@ -20,7 +20,7 @@ import Identity from './pages/identity'
 import Invest from './pages/invest'
 import Admin from './pages/admin'
 
-import { useStore as useUserStore } from '../../context/user'
+import { useUserStore } from '../../context/user'
 import { useStore as useLayoutStore } from '../../context/layout'
 
 const Routes = React.memo(({ path }: { path: string }) => (

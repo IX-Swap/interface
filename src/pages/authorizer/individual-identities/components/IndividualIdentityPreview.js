@@ -1,9 +1,9 @@
-// @flow
+//
 /* eslint-disable react-hooks/exhaustive-deps */
 import React, { useState, useEffect } from 'react'
 import { forEach, findIndex } from 'lodash'
 import { Container, Button, Typography, Box, Grid } from '@material-ui/core'
-import type { Identity } from 'pages/identity/modules/types'
+
 import { snackbarService } from 'uno-material-ui'
 import declarationTemplate from 'pages/identity/data/declarations'
 import IndividualIdentityForm from 'pages/identity/pages/individual/IndividualIdentityForm'
@@ -12,18 +12,15 @@ import ArrowBackIosIcon from '@material-ui/icons/ArrowBackIos'
 import AuthorizeConfirmDialog from './AuthorizeConfirmDialog'
 import actions from '../modules/actions'
 
-const formatDeclarations = (
-  payloadItems: Array<any>,
-  type: 'individual' | 'corporate'
-) => {
+const formatDeclarations = (payloadItems, type) => {
   const declarations = []
-  forEach(payloadItems, (d) => {
+  forEach(payloadItems, d => {
     // get item key
     const key = Object.keys(d)[0]
     // get index of template with same key
     const index = findIndex(
       declarationTemplate[type],
-      (item) => item.key === key
+      item => item.key === key
     )
     // add merged object
     declarations.push({
@@ -35,13 +32,7 @@ const formatDeclarations = (
   return declarations
 }
 
-const IndividualIdentityPreview = ({
-  onClickBack,
-  identity
-}: {
-  identity: Identity,
-  onClickBack: Function,
-}) => {
+const IndividualIdentityPreview = ({ onClickBack, identity }) => {
   const [saving, setSaving] = useState(false)
   const [newStatus, setNewStatus] = useState('')
   const [open, setOpen] = useState(false)

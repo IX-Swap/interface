@@ -3,9 +3,15 @@ import React from 'react'
 // Styles
 import useStyles from 'pages/exchange/components/ExchangeTable/styles'
 
-import { Typography, InputLabel, MenuItem, FormControl, Select } from '@material-ui/core'
+import {
+  Typography,
+  InputLabel,
+  MenuItem,
+  FormControl,
+  Select
+} from '@material-ui/core'
 
-const DropdownFilter = (props) => {
+const DropdownFilter = props => {
   const { setSide, setPair } = props
   const classes = useStyles()
   const { items = [] } = props
@@ -37,56 +43,36 @@ const DropdownFilter = (props) => {
 
   return (
     <section className={classes.dropdownFilter}>
-      <Typography
-        className={classes.filterTitle}
-        variant='h3'
-      >
+      <Typography className={classes.filterTitle} variant='h3'>
         Pair
       </Typography>
       <FormControl className={classes.formControl}>
         <InputLabel htmlFor='grouped-native-select'>Pair</InputLabel>
-        <Select
-          defaultValue=''
-          id='grouped-select'
-          onChange={_handleSetPair}
-        >
+        <Select defaultValue='' id='grouped-select' onChange={_handleSetPair}>
           <MenuItem value=''>
             <em>None</em>
           </MenuItem>
-          {items.map(option =>
-            <MenuItem
-              key={option._id}
-              value={option._id}
-            >
+          {items.map(option => (
+            <MenuItem key={option._id} value={option._id}>
               {option.name}
             </MenuItem>
-          )}
+          ))}
         </Select>
       </FormControl>
-      <Typography
-        className={classes.filterTitle}
-        variant='h3'
-      >
+      <Typography className={classes.filterTitle} variant='h3'>
         Side
       </Typography>
       <FormControl className={classes.formControl}>
         <InputLabel htmlFor='grouped-select'>All</InputLabel>
-        <Select
-          defaultValue=''
-          id='grouped-select'
-          onChange={_handleSetSide}
-        >
+        <Select defaultValue='' id='grouped-select' onChange={_handleSetSide}>
           <MenuItem value=''>
             <em>None</em>
           </MenuItem>
-          {sides.map(option =>
-            <MenuItem
-              key={option.side}
-              value={option.side}
-            >
+          {sides.map(option => (
+            <MenuItem key={option.side} value={option.side}>
               {option.label}
             </MenuItem>
-          )}
+          ))}
         </Select>
       </FormControl>
     </section>

@@ -1,4 +1,4 @@
-// @flow
+//
 import React from 'react'
 import { Redirect } from 'react-router-dom'
 import { Box, Button } from '@material-ui/core'
@@ -19,7 +19,7 @@ const CorporateIdentity = () => {
     return <Redirect to='/identity' />
   }
 
-  const handleOnCreate = (data) => {
+  const handleOnCreate = data => {
     const id = corporate ? corporate._id : undefined
     createIdentity(identityDispatch, data, 'corporate', id)
   }

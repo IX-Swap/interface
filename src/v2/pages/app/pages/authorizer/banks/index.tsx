@@ -11,7 +11,7 @@ const Authorizer = () => {
         uri='/accounts/banks/list'
         columns={columns}
         name='authorizerBanksList'
-        onView={(row) => <BankView bank={row} asset={row.asset} />}
+        onView={row => <BankView bank={row} asset={row.asset} />}
       />
     </>
   )

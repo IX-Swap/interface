@@ -1,22 +1,20 @@
-// @flow
+//
 import React from 'react'
-import type { Node } from 'react'
+
 import logger from '../../../v2/helpers/logger'
 import { identityReducer } from './reducers'
 import { initialState } from './state'
 
-const StateContext = React.createContext<any>()
+const StateContext = React.createContext()
 const DispatchContext = React.createContext()
 
-export const IdentityProvider = ({ children }: { children: Node }) => {
-  const thisReducer = process.env.NODE_ENV === 'development'
-    ? logger(identityReducer)
-    : identityReducer
+export const IdentityProvider = ({ children }) => {
+  const thisReducer =
+    process.env.NODE_ENV === 'development'
+      ? logger(identityReducer)
+      : identityReducer
 
-  const [state, dispatch] = React.useReducer<any, any>(
-    thisReducer,
-    initialState
-  )
+  const [state, dispatch] = React.useReducer(thisReducer, initialState)
 
   return (
     <StateContext.Provider value={state}>

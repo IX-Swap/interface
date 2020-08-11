@@ -1,7 +1,5 @@
 import React from 'react'
 import { Grid, Typography, Box, TextField } from '@material-ui/core'
-import type { UserSecurityBalance } from 'context/balance/types'
-import type { TransferDetails } from '../modules/types'
 
 export default function WithdrawalDetailsInput ({
   asset,
@@ -10,7 +8,7 @@ export default function WithdrawalDetailsInput ({
 }: {
   asset: UserSecurityBalance,
   transferDetails: TransferDetails,
-  setTransferDetails: (key: $Keys<TransferDetails>, value: string) => void,
+  setTransferDetails: (key: $Keys<TransferDetails>, value: string) => void
 }) {
   return (
     <Box my={3}>
@@ -26,7 +24,7 @@ export default function WithdrawalDetailsInput ({
             fullWidth
             value={transferDetails.recipientWallet}
             label={`Recipients ${asset.symbol} Address`}
-            onChange={(ev) =>
+            onChange={ev =>
               setTransferDetails('recipientWallet', ev.target.value)}
           />
         </Grid>
@@ -36,7 +34,7 @@ export default function WithdrawalDetailsInput ({
             value={transferDetails.amount}
             label='Amount'
             autoComplete='off'
-            onChange={(ev) => setTransferDetails('amount', ev.target.value)}
+            onChange={ev => setTransferDetails('amount', ev.target.value)}
           />
         </Grid>
         <Grid item my={2} xs={12}>
@@ -44,7 +42,7 @@ export default function WithdrawalDetailsInput ({
             fullWidth
             value={transferDetails.memo}
             label='Memo'
-            onChange={(ev) => setTransferDetails('memo', ev.target.value)}
+            onChange={ev => setTransferDetails('memo', ev.target.value)}
           />
         </Grid>
       </Grid>

@@ -1,17 +1,11 @@
-// @flow
+//
 import React from 'react'
 import moment from 'moment'
-import type { Commitment } from 'context/commitment/types'
+
 import { TableRow, TableCell, Button } from '@material-ui/core'
 import { formatMoney, formatNumber } from 'helpers/formatNumbers'
 
-const CommitmentListItem = ({
-  commitment,
-  onClickView
-}: {
-  commitment: Commitment,
-  onClickView: Function,
-}) => {
+const CommitmentListItem = ({ commitment, onClickView }) => {
   const {
     createdAt,
     dso,

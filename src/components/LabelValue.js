@@ -7,9 +7,9 @@ type LabelValueProps = {
   value: string,
   classes: {
     label: string,
-    value: string,
-  },
-};
+    value: string
+  }
+}
 
 const useStyles = makeStyles({
   label: {

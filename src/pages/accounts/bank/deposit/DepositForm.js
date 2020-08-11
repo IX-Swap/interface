@@ -1,4 +1,4 @@
-// @flow
+//
 /* eslint-disable react/jsx-props-no-spreading */
 import React, { useState, useEffect, useRef } from 'react'
 import {
@@ -16,10 +16,8 @@ import NumberFormat from 'react-number-format'
 
 import * as AssetsModule from 'context/assets'
 import * as AssetActions from 'context/assets/actions'
-import { ASSETS_STATUS } from 'context/assets/types'
-import type { Asset } from 'context/assets/types'
+
 import BankDetails from './BankDetails'
-import type { Bank } from '../modules/types'
 
 const { AssetsProvider, useAssetsState, useAssetsDispatch } = AssetsModule
 const { getAssets } = AssetActions
@@ -50,14 +48,14 @@ const useAssetsGetter = () => {
   return { status, assets, asset, setAsset }
 }
 
-const NumberFormatCustom = ({ inputRef, onChange, ...others }: any) => (
+const NumberFormatCustom = ({ inputRef, onChange, ...others }) => (
   <NumberFormat
     thousandSeparator
     {...others}
     allowEmptyFormatting
     inputMode='numeric'
     getInputRef={inputRef}
-    onValueChange={(values) => {
+    onValueChange={values => {
       onChange({
         target: {
           name: others.name,
@@ -70,9 +68,9 @@ const NumberFormatCustom = ({ inputRef, onChange, ...others }: any) => (
 )
 
 const useBankDepositLogic = () => {
-  const [amount, setAmount] = useState<string>('')
+  const [amount, setAmount] = useState('')
 
-  const handleChange = (event: { target: { name: string, value: number } }) => {
+  const handleChange = event => {
     setAmount(`${event.target.value}`)
   }
 
@@ -85,19 +83,11 @@ const useBankDepositLogic = () => {
   }
 }
 
-function BankDepositForm ({
-  bank,
-  deposit,
-  code
-}: {
-  bank: Bank,
-  code: string,
-  deposit: (amount: number, asset: Asset) => void,
-}) {
+function BankDepositForm ({ bank, deposit, code }) {
   const { amount, handleChange } = useBankDepositLogic()
   const { assets, asset, setAsset } = useAssetsGetter()
 
-  const handleSelectChange = (val) => {
+  const handleSelectChange = val => {
     setAsset(val.target.value)
   }
 
@@ -112,7 +102,7 @@ function BankDepositForm ({
             value={asset || {}}
             onChange={handleSelectChange}
           >
-            {assets.map((item) => (
+            {assets.map(item => (
               <MenuItem key={item._id} value={item}>
                 {item.symbol}
               </MenuItem>
@@ -161,15 +151,7 @@ function BankDepositForm ({
   )
 }
 
-const BankDepositFormWithProvider = ({
-  bank,
-  deposit,
-  code
-}: {
-  bank: Bank,
-  code: string,
-  deposit: (amount: number, asset: Asset) => void,
-}) => (
+const BankDepositFormWithProvider = ({ bank, deposit, code }) => (
   <AssetsProvider>
     <BankDepositForm bank={bank} deposit={deposit} code={code} />
   </AssetsProvider>

@@ -1,9 +1,9 @@
-// @flow
+//
 /* eslint-disable react-hooks/exhaustive-deps */
 import React, { useState, useEffect } from 'react'
 import storage from 'services/storageHelper'
 import { getImgUrl } from 'services/httpRequests'
-import type { DsoTeamMember } from 'context/dso/types'
+
 import RemoveIcon from '@material-ui/icons/Remove'
 import { Box, Typography, Grid, TextField, Button } from '@material-ui/core'
 import { makeStyles } from '@material-ui/styles'
@@ -23,24 +23,9 @@ const useStyles = makeStyles(() => ({
 }))
 
 const TeamMember = (
-  {
-    member,
-    edit = false,
-    remove,
-    index,
-    save,
-    setValue,
-    dsoId = ''
-  }: {
-    index: number,
-    setValue: Function,
-    remove: Function,
-    dsoId: string,
-    edit?: boolean,
-    save?: (string) => void,
-    member: DsoTeamMember,
-  },
-  ref: any
+  { member, edit = false, remove, index, save, setValue, dsoId = '' },
+
+  ref
 ) => {
   const classes = useStyles()
   const [imgUrl, setImgUrl] = useState('')
@@ -59,7 +44,7 @@ const TeamMember = (
     setPhoto(member.photo)
   }, [])
 
-  const onDataroomDocumentUploaded = (res) => {
+  const onDataroomDocumentUploaded = res => {
     setValue(`${`team[${index}].photo`}`, res._id)
     setPhoto(res._id)
   }
@@ -152,4 +137,4 @@ const TeamMember = (
   )
 }
 
-export default React.forwardRef<any, any>(TeamMember)
+export default React.forwardRef(TeamMember)

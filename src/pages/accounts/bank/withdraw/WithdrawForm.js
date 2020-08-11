@@ -1,4 +1,4 @@
-// @flow
+//
 /* eslint-disable react/jsx-props-no-spreading */
 import React, { useState } from 'react'
 import {
@@ -10,17 +10,17 @@ import {
   Button
 } from '@material-ui/core'
 import NumberFormat from 'react-number-format'
-import type { Bank } from '../modules/types'
+
 import BankDetails from './BankDetails'
 
-const NumberFormatCustom = ({ symbol, inputRef, onChange, ...others }: any) => (
+const NumberFormatCustom = ({ symbol, inputRef, onChange, ...others }) => (
   <NumberFormat
     thousandSeparator
     {...others}
     allowEmptyFormatting
     inputMode='numeric'
     getInputRef={inputRef}
-    onValueChange={(values) => {
+    onValueChange={values => {
       onChange({
         target: {
           name: others.name,
@@ -34,16 +34,14 @@ const NumberFormatCustom = ({ symbol, inputRef, onChange, ...others }: any) => (
 )
 
 const useBankWithdrawLogic = () => {
-  const [amount, setAmount] = useState<string>('')
-  const [memo, setMemo] = useState<string>('')
+  const [amount, setAmount] = useState('')
+  const [memo, setMemo] = useState('')
 
-  const handleChange = (event: { target: { name: string, value: number } }) => {
+  const handleChange = event => {
     setAmount(`${event.target.value}`)
   }
 
-  const handleMemoChange = (event: {
-    target: { name: string, value: string },
-  }) => {
+  const handleMemoChange = event => {
     setMemo(event.target.value)
   }
 
@@ -58,15 +56,7 @@ const useBankWithdrawLogic = () => {
   }
 }
 
-function BankWithdrawForm ({
-  bank,
-  withdraw,
-  available
-}: {
-  available: number,
-  bank: Bank,
-  withdraw: (amount: number, memo: string) => void,
-}) {
+function BankWithdrawForm ({ bank, withdraw, available }) {
   const {
     amount,
     handleChange,

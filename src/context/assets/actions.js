@@ -1,11 +1,10 @@
 import { postRequest } from 'services/httpRequests'
-import { assetsActions } from './types'
 
 export function setAssetType (
   dispatch: Function,
   payload: {
     ref: { current: boolean, ... },
-    type: string,
+    type: string
   }
 ) {
   if (!payload.ref.current) return null

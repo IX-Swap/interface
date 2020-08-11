@@ -1,4 +1,3 @@
-import { marketListActions } from './types'
 // import { initialState } from './state';
 
 export function marketReducer (state, action) {

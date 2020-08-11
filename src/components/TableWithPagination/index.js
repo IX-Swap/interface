@@ -1,5 +1,4 @@
-/* global $Keys Node SyntheticInputEvent HTMLElement */
-// @flow
+//
 import * as React from 'react'
 import {
   TableContainer,
@@ -14,46 +13,12 @@ import {
 } from '@material-ui/core'
 import { get, isFunction } from 'lodash'
 import init from './modules'
-import type { Module, ModuleActions, ModuleMeta } from './modules'
 
 const { useRef, useEffect } = React
 
-type TableColumn<T> = {
-  key: $Keys<T>,
-  label: string,
-  render?: ?(val: any, row: any) => string,
-  align?: ?string,
-  headAlign: string,
-};
+const initializeRequirements = (id, endpoint) => init(id, endpoint)
 
-type BaseRequirements<T> = {
-  id: string,
-  columns: Array<TableColumn<T>>,
-  endpoint: string,
-  onMount?: Function,
-  onRowClick?: ?Function,
-  children?: (...props: any) => Node | React.Element<any>,
-};
-
-type ItemsProps = {
-  items: Array<any>,
-  columns: Array<TableColumn<any>>,
-  children?: (...props: any) => Node | React.Element<any>,
-  clickProp?: ?{ onClick?: ?Function },
-};
-
-type TableWithPaginationProps<T> = {
-  requirements: Module,
-  columns: Array<TableColumn<T>>,
-  onMount?: ?Function,
-  onRowClick?: ?Function,
-  children?: (...props: any) => Node | React.Element<any>,
-};
-
-const initializeRequirements = (id: string, endpoint: string) =>
-  init(id, endpoint)
-
-const usePaginationLogic = (actions: ModuleActions, meta: ModuleMeta) => {
+const usePaginationLogic = (actions, meta) => {
   const { PAGINATION_STATUS, useDispatch, useState } = meta
   const { setPage, setRowsPerPage, getter, clearApiStatus } = actions
   const dispatch = useDispatch()
@@ -61,11 +26,11 @@ const usePaginationLogic = (actions: ModuleActions, meta: ModuleMeta) => {
   const { status, page, total, limit, items, statusCode, error } = state
   const mountedRef = useRef(true)
 
-  const handleChangePage = (_, newPage: number) => {
+  const handleChangePage = (_, newPage) => {
     setPage(dispatch, { page: newPage })
   }
 
-  const handleChangeRowsPerPage = (newRows: number) => {
+  const handleChangeRowsPerPage = newRows => {
     setRowsPerPage(dispatch, { rows: newRows })
     setPage(dispatch, { page: 0 })
   }
@@ -117,7 +82,7 @@ const usePaginationLogic = (actions: ModuleActions, meta: ModuleMeta) => {
   }
 }
 
-const Items = ({ items, columns, children, clickProp }: ItemsProps) => {
+const Items = ({ items, columns, children, clickProp }) => {
   const { onClick } = clickProp || {}
 
   return (
@@ -129,7 +94,7 @@ const Items = ({ items, columns, children, clickProp }: ItemsProps) => {
             key={row._id || i}
             onClick={() => onClick && onClick(row)}
           >
-            {columns.map((e) => (
+            {columns.map(e => (
               <TableCell align={e.align || 'left'} key={`row-${e.key}`}>
                 {e.key && // $FlowFixMe
                   (e.render ? e.render(get(row, e.key), row) : get(row, e.key))}
@@ -155,7 +120,7 @@ const TableWithPagination = ({
   children,
   onMount,
   onRowClick
-}: TableWithPaginationProps<any>) => {
+}) => {
   const { actions, meta } = requirements
   const {
     items,
@@ -186,7 +151,7 @@ const TableWithPagination = ({
         <Table aria-label='accounts table'>
           <TableHead>
             <TableRow>
-              {columns.map((e) => (
+              {columns.map(e => (
                 <TableCell key={e.key} align={e.headAlign || 'left'}>
                   <b>{e.label}</b>
                 </TableCell>
@@ -205,9 +170,8 @@ const TableWithPagination = ({
                   count={total}
                   rowsPerPage={limit}
                   page={page}
-                  onChangeRowsPerPage={(
-                    evt: SyntheticInputEvent<HTMLElement>
-                  ) => handleChangeRowsPerPage(parseInt(evt.target.value))}
+                  onChangeRowsPerPage={evt =>
+                    handleChangeRowsPerPage(parseInt(evt.target.value))}
                   onChangePage={handleChangePage}
                 />
               </TableRow>
@@ -226,7 +190,7 @@ const MainComponent = ({
   children,
   onMount,
   onRowClick
-}: BaseRequirements<any>) => {
+}) => {
   const Reqts = initializeRequirements(id, endpoint)
 
   return (

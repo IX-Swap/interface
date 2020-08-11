@@ -13,10 +13,7 @@ const IndividualIdentityPreview = () => {
   return (
     <Grid container>
       <Grid item>
-        <PageTitle
-          subPage
-          title={name}
-        />
+        <PageTitle subPage title={name} />
       </Grid>
       <Grid item>
         <IndividualIdentityForm

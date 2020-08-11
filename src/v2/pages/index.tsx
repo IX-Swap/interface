@@ -1,22 +1,19 @@
 import React from 'react'
-import {
-  HashRouter as Router,
-  Route,
-  Redirect
-} from 'react-router-dom'
+import { Router, Route, Redirect } from 'react-router-dom'
 
-import App from './app'
-import Auth from './auth'
-import { useStore } from '../context/user'
+import AppRoot from './app'
+import AuthRoot from './auth'
+import { useUserStore } from '../context/user'
+import history from '../history'
 
 const EntryPoint = () => {
-  const { isAuthenticated } = useStore()
+  const { isAuthenticated } = useUserStore()
 
   return (
-    <Router>
+    <Router history={history}>
       <Redirect to={isAuthenticated ? '/app' : 'auth'} />
-      <Route path='/app' component={App} />
-      <Route path='/auth' component={Auth} />
+      <Route path='/app' component={AppRoot} />
+      <Route path='/auth' component={AuthRoot} />
     </Router>
   )
 }

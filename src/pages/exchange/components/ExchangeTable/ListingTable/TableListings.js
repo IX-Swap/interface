@@ -25,15 +25,9 @@ import useStyles from 'pages/exchange/components/ExchangeTable/styles'
 import ListingsAction from './modules/actions'
 import ListingsModule from './modules'
 
-const {
-  ListingsState,
-  useListingsDispatch
-} = ListingsModule
+const { ListingsState, useListingsDispatch } = ListingsModule
 
-const {
-  setPage,
-  setRowsPerPage
-} = ListingsAction
+const { setPage, setRowsPerPage } = ListingsAction
 
 const columns = [
   {
@@ -54,10 +48,7 @@ const columns = [
   }
 ]
 
-const ListingsList = ({
-  list,
-  goToPage
-}) => {
+const ListingsList = ({ list, goToPage }) => {
   const classes = useStyles()
 
   return (
@@ -65,9 +56,7 @@ const ListingsList = ({
       {list.map((row, i) => {
         return (
           <TableRow key={i}>
-            <TableCell className={classes.defaultCell}>
-              {row.name}
-            </TableCell>
+            <TableCell className={classes.defaultCell}>{row.name}</TableCell>
             <TableCell className={classes.defaultCell}>
               {row.asset.name}
             </TableCell>
@@ -99,13 +88,7 @@ function ExchangeTable (props) {
   const listState = ListingsState()
   const mountedRef = useRef(true)
 
-  const {
-    page,
-    total,
-    limit,
-    items,
-    status
-  } = listState
+  const { page, total, limit, items, status } = listState
 
   const handleChangePage = (_, newPage: number) => {
     setPage(dispatch, { page: newPage })
@@ -126,24 +109,17 @@ function ExchangeTable (props) {
 
   return (
     <Grid>
-      <Typography
-        className={classes.title}
-        variant='h1'
-      >
+      <Typography className={classes.title} variant='h1'>
         {title}
       </Typography>
       <Grid className={classes.componentStyle}>
         <TableContainer component={Paper}>
-          {status === 'GETTING' &&
-            <LinearProgress />}
+          {status === 'GETTING' && <LinearProgress />}
           <Table aria-label='listings table'>
             <TableHead>
               <TableRow>
-                {columns.map((column) => (
-                  <TableCell
-                    className={classes.tableHeader}
-                    key={column.id}
-                  >
+                {columns.map(column => (
+                  <TableCell className={classes.tableHeader} key={column.id}>
                     {column.label}
                   </TableCell>
                 ))}

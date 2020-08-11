@@ -1,6 +1,6 @@
 import React from 'react'
 import { Grid } from '@material-ui/core'
-import type { Dso } from 'context/dso/types'
+
 import { formatMoney } from 'helpers/formatNumbers'
 import SectionContainer from './SectionContianer'
 import OfferDetail from './OfferDetail'

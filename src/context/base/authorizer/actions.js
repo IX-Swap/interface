@@ -4,7 +4,7 @@ import { getRequest, postRequest } from 'services/httpRequests'
 export async function uploadFile (payload: {
   title: string,
   type: string,
-  file: any,
+  file: any
 }) {
   /**
    * saveFile requires the following params in payload
@@ -46,7 +46,7 @@ export const downloadByUri = async (uri: string) => {
     const result = await getRequest(uri)
 
     if (result.status === 200) {
-      result.blob().then((blob) => {
+      result.blob().then(blob => {
         const url = window.URL.createObjectURL(blob)
         window.open(url)
       })

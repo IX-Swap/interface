@@ -1,5 +1,3 @@
-import { monitoringActions } from './types'
-
 export function monitoringReducer (state, action) {
   switch (action.type) {
     case monitoringActions.SET_BID_ASK_PAYLOAD:

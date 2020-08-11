@@ -1,27 +1,21 @@
-// @flow
+//
 import { postRequest, getRequest } from 'services/httpRequests'
 import localStore from 'services/storageHelper'
-import type { Dso } from 'context/dso/types'
-import type { Commitment } from 'context/commitment/types'
-import { actions } from './types'
 
-export const setSelectedDso = (dispatch: Function, dso: Dso) => {
+export const setSelectedDso = (dispatch, dso) => {
   dispatch({ type: actions.SET_SELECTED_DSO, payload: dso })
 }
 
-export const setSelectedCommitment = (
-  dispatch: Function,
-  commitment: Commitment
-) => {
+export const setSelectedCommitment = (dispatch, commitment) => {
   dispatch({ type: actions.SET_SELECTED_COMMITMENT, payload: commitment })
 }
 
-export const toggleEditMode = (dispatch: Function, value?: boolean) => {
+export const toggleEditMode = (dispatch, value) => {
   dispatch({ type: actions.TOGGLE_EDIT_MODE, payload: value })
 }
 
 // not using context
-export const fetchAccountBalanceByAsset = async (asset: string) => {
+export const fetchAccountBalanceByAsset = async asset => {
   const userId = localStore.getUserId()
   const url = `/accounts/balance/${userId}/${asset}`
 
@@ -43,13 +37,6 @@ export const addCommitment = async ({
   walletAddress,
   numberOfUnits,
   otp
-}: {
-  dso: string,
-  signedSubscriptionDocument: string,
-  currency: string,
-  walletAddress: string,
-  numberOfUnits: number,
-  otp: string,
 }) => {
   const userId = localStore.getUserId()
   const url = `/issuance/commitments/${userId}`
@@ -71,11 +58,7 @@ export const addCommitment = async ({
   throw new Error(result.message)
 }
 
-export async function uploadFile (payload: {
-  title: string,
-  type: string,
-  file: any,
-}) {
+export async function uploadFile (payload) {
   /**
    * saveFile requires the following params in payload
    * @param String title
@@ -111,13 +94,13 @@ export async function uploadFile (payload: {
   }
 }
 
-export const downloadFile = async (dsoId: string) => {
+export const downloadFile = async dsoId => {
   try {
     const uri = `/issuance/dso/dataroom/subscription/raw/${dsoId}`
     const result = await getRequest(uri)
 
     if (result.status === 200) {
-      result.blob().then((blob) => {
+      result.blob().then(blob => {
         const url = window.URL.createObjectURL(blob)
         window.open(url)
       })

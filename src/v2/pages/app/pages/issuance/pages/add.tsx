@@ -14,18 +14,26 @@ const DsoCreate = () => {
 
   const save = async (formValues: DsoRequest, isValid: boolean) => {
     if (!isValid) {
-      snackbarService.showSnackbar('Unable to save, please fill out the fields and upload logo and a subscription document', 'error')
+      snackbarService.showSnackbar(
+        'Unable to save, please fill out the fields and upload logo and a subscription document',
+        'error'
+      )
       return
     }
 
     const res = await saveDso(formValues, storageHelper.getUserId())
     if (res.status) {
-      snackbarService.showSnackbar(`Successfully saved Digital Security (${formValues?.tokenSymbol})`)
+      snackbarService.showSnackbar(
+        `Successfully saved Digital Security (${formValues?.tokenSymbol})`
+      )
       history.push('.')
       return
     }
 
-    snackbarService.showSnackbar(`Unable to save ${formValues?.tokenSymbol}. (${res.message})`, 'error')
+    snackbarService.showSnackbar(
+      `Unable to save ${formValues?.tokenSymbol}. (${res.message})`,
+      'error'
+    )
   }
 
   return (

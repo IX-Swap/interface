@@ -1,4 +1,4 @@
-// @flow
+//
 /* eslint-disable react-hooks/exhaustive-deps */
 import React, { useState, useEffect } from 'react'
 import {
@@ -10,8 +10,7 @@ import {
   Typography
 } from '@material-ui/core'
 import CloudDownloadIcon from '@material-ui/icons/CloudDownload'
-import type { Commitment } from 'context/commitment/types'
-import type { Dso } from 'context/dso/types'
+
 import { formatMoney } from 'helpers/formatNumbers'
 import { blue } from '@material-ui/core/colors'
 import ArrowBackIosIcon from '@material-ui/icons/ArrowBackIos'
@@ -22,15 +21,7 @@ import Uploader from 'components/GenericUploader'
 import AuthorizeConfirmDialog from './AuthorizeConfirmDialog'
 import { toggleCommitmentStatus, uploadSigned } from '../modules/actions'
 
-const DsoSummary = ({
-  dso,
-  onClickView,
-  status
-}: {
-  dso: Dso,
-  onClickView: Function,
-  status: string,
-}) => (
+const DsoSummary = ({ dso, onClickView, status }) => (
   <Paper style={{ height: '96%' }}>
     <Box
       px={4}
@@ -83,7 +74,7 @@ const DsoSummary = ({
   </Paper>
 )
 
-const CommitmentItem = ({ label, value }: { label: string, value: string }) => (
+const CommitmentItem = ({ label, value }) => (
   <Grid item xs={3}>
     <Typography>
       <b>{label}</b>
@@ -97,11 +88,6 @@ const CommitmentView = ({
   onClickBack,
   onViewIdentity,
   onViewDso
-}: {
-  commitment: Commitment,
-  onClickBack: Function,
-  onViewIdentity: Function,
-  onViewDso: Function,
 }) => {
   const { dso, individual, status } = commitment
   const [saving, setSaving] = useState(false)
@@ -130,7 +116,7 @@ const CommitmentView = ({
     setSaving(false)
   }
 
-  const onUploadCountersigned = (res: any) => {
+  const onUploadCountersigned = res => {
     const update = uploadSigned(commitment._id, res._id)
     if (update) {
       commitment.countersignedSubscriptionDocument = res._id

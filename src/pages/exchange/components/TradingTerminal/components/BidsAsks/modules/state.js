@@ -1,7 +1,6 @@
-// @flow
-import type { PostOrderInitState } from './types'
+//
 
-export const initialState: PostOrderInitState = {
+export const initialState = {
   data: [],
   isLoading: false,
   message: '',

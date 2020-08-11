@@ -1,9 +1,9 @@
-// @flow
+//
 import { generateModule } from 'context/base/withPagination'
-import type { Bank } from './types'
+
 import reducer from './reducers'
 
-const { Provider, useState, useDispatch, statusList } = generateModule<Bank>(
+const { Provider, useState, useDispatch, statusList } = generateModule(
   'bankList',
   reducer
 )

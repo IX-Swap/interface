@@ -1,7 +1,6 @@
-// @flow
-import type { InvestState } from './types'
+//
 
-export const initialState: InvestState = {
+export const initialState = {
   dso: null,
   commitment: null,
   editMode: false

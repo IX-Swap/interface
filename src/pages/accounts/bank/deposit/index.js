@@ -1,23 +1,22 @@
-// @flow
+//
 import React, { useState, useEffect, useRef } from 'react'
 import { INVESTAX_BANK } from 'config'
 import RouteProps from 'react-router-dom'
 import { Typography, Box } from '@material-ui/core'
 import storage from 'services/storageHelper'
-import type { Asset } from 'context/assets/types'
+
 import BankDepositForm from './DepositForm'
 import DepositConfirmation from './DepositConfirmation'
-import type { Bank } from '../modules/types'
 
 import DepositList from './list'
 
 const useGenericBankLogic = () => {
-  const [amount, setAmount] = useState<number>(0)
-  const [asset, setAsset] = useState<Asset | null>(null)
+  const [amount, setAmount] = useState(0)
+  const [asset, setAsset] = useState(null)
   const mountedRef = useRef(true)
-  const [isConfirmation, setIsConfirmation] = useState<boolean>(false)
+  const [isConfirmation, setIsConfirmation] = useState(false)
 
-  const deposit = (toDeposit: number, mAsset: Asset) => {
+  const deposit = (toDeposit, mAsset) => {
     setAmount(toDeposit)
     setIsConfirmation(true)
     setAsset(mAsset)
@@ -40,17 +39,17 @@ const useGenericBankLogic = () => {
   }
 }
 
-function BankDepositComponent ({ code }: any) {
+function BankDepositComponent ({ code }) {
   const { deposit, amount, isConfirmation, asset } = useGenericBankLogic()
 
   // $FlowFixMe
-  const investaxBank: Bank = { ...INVESTAX_BANK }
+  const investaxBank = { ...INVESTAX_BANK }
 
   let toRender = (
     <BankDepositForm
       bank={investaxBank}
       code={code}
-      deposit={(toDeposit: number, mAsset: Asset) => deposit(toDeposit, mAsset)}
+      deposit={(toDeposit, mAsset) => deposit(toDeposit, mAsset)}
     />
   )
 
@@ -82,7 +81,7 @@ function BankDepositComponent ({ code }: any) {
   )
 }
 
-function BankDepositHolder ({ match }: RouteProps) {
+function BankDepositHolder ({ match }) {
   const { bankId } = match.params
   const code = storage.generateRandom(8, 'A#')
 

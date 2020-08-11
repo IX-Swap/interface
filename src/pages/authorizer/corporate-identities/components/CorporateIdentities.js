@@ -1,4 +1,4 @@
-// @flow
+//
 import React, { useState } from 'react'
 import IdentityList from './IdentityList'
 import CorporateIdentityPreview from './CorporateIdentityPreview'
@@ -12,7 +12,7 @@ const CorporateIdentities = () => {
   const [page, setPage] = useState(authorizeIdentitiesPage.LIST)
   const [identity, setIdentity] = useState(null)
 
-  const onClickView = (selected) => {
+  const onClickView = selected => {
     setIdentity(selected)
     setPage(authorizeIdentitiesPage.VIEW)
   }

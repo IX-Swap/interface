@@ -1,10 +1,9 @@
-// @flow
+//
 import React, { useRef, useEffect } from 'react'
 import { Switch, Route } from 'react-router-dom'
 
 import * as AssetsModule from 'context/assets'
 import * as AssetActions from 'context/assets/actions'
-import { ASSETS_STATUS } from 'context/assets/types'
 
 import IssuanceList from './pages/issuance-list'
 import IssuanceView from './pages/issuance-view'
@@ -52,7 +51,7 @@ const Issuance = () => {
           <Route
             path='/issuance/create'
             exact
-            component={(props) => <IssuanceCreate {...props} assets={assets} />}
+            component={props => <IssuanceCreate {...props} assets={assets} />}
           />
           <Route
             path='/issuance/:userId/:id/deploy'

@@ -1,4 +1,4 @@
-// @flow
+//
 import React, { useEffect, useRef } from 'react'
 import { withRouter } from 'react-router-dom'
 
@@ -25,7 +25,6 @@ import UsersTableBody from './components/UsersTableBody'
 
 import UsersModule from './modules/index'
 import Actions from './modules/actions'
-import type { User, TableColumns } from './modules/types'
 
 const { getUsersList, setPage, setRowsPerPage, updateUserRole } = Actions
 const {
@@ -49,9 +48,9 @@ function useUsersListLogic () {
   } = useUsersListState()
   const usersDispatch = useUsersListDispatch()
 
-  const [open, setOpen] = React.useState<boolean>(false)
-  const [user, setUser] = React.useState<User | null>(null)
-  const [role, setRole] = React.useState<string>('')
+  const [open, setOpen] = React.useState(false)
+  const [user, setUser] = React.useState(null)
+  const [role, setRole] = React.useState('')
 
   const handleClose = () => {
     setOpen(false)
@@ -64,7 +63,7 @@ function useUsersListLogic () {
     setOpen(true)
   }
 
-  const handleConfirm = async (userToUpdate: User, newRole: string) => {
+  const handleConfirm = async (userToUpdate, newRole) => {
     await updateUserRole(usersDispatch, {
       userId: userToUpdate._id,
       roles: newRole
@@ -79,11 +78,11 @@ function useUsersListLogic () {
     })
   }
 
-  const handleChangePage = (_, newPage: number) => {
+  const handleChangePage = (_, newPage) => {
     setPage(usersDispatch, { page: newPage })
   }
 
-  const handleChangeRowsPerPage = (newRows: number) => {
+  const handleChangeRowsPerPage = newRows => {
     setRowsPerPage(usersDispatch, { rows: newRows })
     setPage(usersDispatch, { page: 0 })
   }
@@ -124,7 +123,7 @@ function useUsersListLogic () {
   }
 }
 
-const columns: Array<TableColumns> = [
+const columns = [
   {
     key: 'accountType',
     label: 'Account Type'
@@ -140,7 +139,7 @@ const columns: Array<TableColumns> = [
   {
     key: 'twoFactorAuth',
     label: '2-Factor Auth',
-    render: (is2fa) =>
+    render: is2fa =>
       is2fa ? (
         <Typography color='primary'>Yes</Typography>
       ) : (
@@ -198,7 +197,7 @@ function Users () {
             <Table aria-label='simple table'>
               <TableHead>
                 <TableRow>
-                  {columns.map((col) => (
+                  {columns.map(col => (
                     <TableCell key={col.key}>
                       <b>{col.label}</b>
                     </TableCell>
@@ -233,9 +232,8 @@ function Users () {
                       count={total}
                       rowsPerPage={limit}
                       page={page}
-                      onChangeRowsPerPage={(
-                        evt: SyntheticInputEvent<HTMLElement>
-                      ) => handleChangeRowsPerPage(parseInt(evt.target.value))}
+                      onChangeRowsPerPage={evt =>
+                        handleChangeRowsPerPage(parseInt(evt.target.value))}
                       onChangePage={handleChangePage}
                     />
                   </TableRow>

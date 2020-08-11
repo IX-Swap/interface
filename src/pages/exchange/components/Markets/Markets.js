@@ -63,7 +63,9 @@ function MarketTab ({ state, setMarket, type }) {
   const filtered = []
 
   markets.map(m => {
-    if (state.markets[m].market.capitalStructure === type) { filtered.push(state.markets[m].market) }
+    if (state.markets[m].market.capitalStructure === type) {
+      filtered.push(state.markets[m].market)
+    }
     return 0
   })
 

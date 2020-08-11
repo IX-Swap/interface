@@ -1,4 +1,4 @@
-// @flow
+//
 import React, { useState, useCallback, useEffect } from 'react'
 
 import { makeStyles } from '@material-ui/core/styles'
@@ -14,35 +14,19 @@ import {
   Input
 } from '@material-ui/core'
 
-import type { User, TableColumns } from '../modules/types'
-
 const useStyles = makeStyles({
   formControl: {
     width: 220
   }
 })
 
-type Prop = {
-  open: boolean,
-  users: Array<User>,
-  columns: Array<TableColumns>,
-  handleChange: (newRole: string, row: User) => void,
-};
-
-export default function UsersTableBody ({
-  open,
-  users,
-  columns,
-  handleChange
-}: Prop) {
+export default function UsersTableBody ({ open, users, columns, handleChange }) {
   const classes = useStyles()
-  const [roles, setRoles] = useState(
-    users.map((user) => user.roles.split(','))
-  )
+  const [roles, setRoles] = useState(users.map(user => user.roles.split(',')))
 
   const updateRoles = useCallback(() => {
     if (!open) {
-      setRoles(users.map((user) => user.roles.split(',')))
+      setRoles(users.map(user => user.roles.split(',')))
     }
   }, [open, users])
 
@@ -50,11 +34,9 @@ export default function UsersTableBody ({
     updateRoles()
   }, [updateRoles])
 
-  const handleRoleChange = (value: Array<string>, index: number) => {
+  const handleRoleChange = (value, index) => {
     setRoles(
-      users.map((user, i: number) =>
-        index === i ? value : user.roles.split(',')
-      )
+      users.map((user, i) => (index === i ? value : user.roles.split(',')))
     )
   }
 
@@ -72,7 +54,7 @@ export default function UsersTableBody ({
         users.length === roles.length &&
         users.map((row, index) => (
           <TableRow key={row._id}>
-            {columns.map((col) => (
+            {columns.map(col => (
               <TableCell key={`${row._id}-${col.label}`}>
                 {col.render ? col.render(row[col.key]) : row[col.key]}
               </TableCell>
@@ -84,12 +66,12 @@ export default function UsersTableBody ({
                   id='demo-mutiple-checkbox'
                   multiple
                   value={roles[index]}
-                  onChange={(ev) => handleRoleChange(ev.target.value, index)}
+                  onChange={ev => handleRoleChange(ev.target.value, index)}
                   onClose={() => handleChange(roles[index].join(','), row)}
                   input={<Input />}
-                  renderValue={(selected) => selected.join(', ')}
+                  renderValue={selected => selected.join(', ')}
                 >
-                  {possibleValues.map((name) => (
+                  {possibleValues.map(name => (
                     <MenuItem key={name} value={name}>
                       <Checkbox checked={roles[index].indexOf(name) > -1} />
                       <ListItemText primary={name} />

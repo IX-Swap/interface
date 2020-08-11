@@ -1,9 +1,6 @@
-// @flow
-import { ASSETS_STATUS } from './types'
+//
 
-import type { AssetsListState } from './types'
-
-export const initialState: AssetsListState = {
+export const initialState = {
   assets: [],
   status: ASSETS_STATUS.INIT,
   error: null,

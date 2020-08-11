@@ -1,4 +1,4 @@
-// @flow
+//
 import React, { Suspense } from 'react'
 import { withRouter, Route } from 'react-router-dom'
 
@@ -17,23 +17,23 @@ const ViewAsset = React.lazy(() => import('./view'))
 const routes = [
   {
     route: '/accounts/wallets',
-    component: (props) => <DSList {...props} />
+    component: props => <DSList {...props} />
   },
   {
     route: '/accounts/wallets/deposit/:assetId',
-    component: (props) => <DSDeposit {...props} />
+    component: props => <DSDeposit {...props} />
   },
   {
     route: '/accounts/wallets/withdraw-view',
-    component: (props) => <Summary {...props} hasBack />
+    component: props => <Summary {...props} hasBack />
   },
   {
     route: '/accounts/wallets/view/:assetId',
-    component: (props) => <ViewAsset {...props} hasBack />
+    component: props => <ViewAsset {...props} hasBack />
   },
   {
     route: '/accounts/wallets/withdraw/:assetId',
-    component: (props) => <DSWithdraw {...props} />
+    component: props => <DSWithdraw {...props} />
   }
   /* {
     route: "/accounts/banks/bank-create",

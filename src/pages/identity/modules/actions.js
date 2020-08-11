@@ -1,4 +1,4 @@
-// @flow
+//
 import moment from 'moment'
 import { forEach } from 'lodash'
 import {
@@ -9,22 +9,18 @@ import {
 } from 'services/httpRequests'
 import localStore from 'services/storageHelper'
 import { snackbarService } from 'uno-material-ui'
-import { actions } from './types'
-import type { Identity } from './types'
+
 import declarationTemplate from '../data/declarations'
 
-const formatDeclarations = (
-  payloadItems: Array<any>,
-  type: 'individual' | 'corporate'
-) => {
+const formatDeclarations = (payloadItems, type) => {
   const declarations = []
   const payload = {}
-  forEach(payloadItems, (item) => {
+  forEach(payloadItems, item => {
     const key = Object.keys(item)[0]
     payload[key] = item[key]
   })
 
-  forEach(declarationTemplate[type], (d) => {
+  forEach(declarationTemplate[type], d => {
     // get item key
     const { key } = d
     if (payload[key]) {
@@ -71,10 +67,7 @@ const fetchIndividualIdentity = async () => {
   throw new Error(response.message)
 }
 
-export const getIdentity = async (
-  dispatch: Function,
-  indcludeCorporate: boolean = false
-) => {
+export const getIdentity = async (dispatch, indcludeCorporate = false) => {
   dispatch({ type: actions.GET_IDENTITY_REQUEST })
 
   let dispatchPayload = {
@@ -166,7 +159,7 @@ const createIndividualIdentity = async ({
   throw new Error('Creating profile failed.')
 }
 
-const createCorporateIdentity = async (corporatePayload: any, id?: string) => {
+const createCorporateIdentity = async (corporatePayload, id) => {
   const userId = localStore.getUserId()
   let result
 
@@ -197,12 +190,7 @@ const createCorporateIdentity = async (corporatePayload: any, id?: string) => {
   throw new Error('Creating profile failed.')
 }
 
-export const createIdentity = async (
-  dispatch: Function,
-  identity: $Shape<Identity>,
-  type: 'corporate' | 'individual',
-  id?: string
-) => {
+export const createIdentity = async (dispatch, identity, type, id) => {
   dispatch({ type: actions.CREATE_IDENTITY_REQUEST })
 
   const {
@@ -241,7 +229,7 @@ export const createIdentity = async (
     beneficialOwners
   } = identity
 
-  const documents = identity.documents?.map((document) => document._id)
+  const documents = identity.documents?.map(document => document._id)
 
   if (type === 'individual') {
     const initialPayload = {
@@ -332,10 +320,7 @@ export const createIdentity = async (
   }
 }
 
-export async function uploadFile (
-  dispatch: Function,
-  payload: { title: string, type: string, file: any }
-) {
+export async function uploadFile (dispatch, payload) {
   /**
    * saveFile requires the following params in payload
    * @param String title
@@ -373,18 +358,14 @@ export async function uploadFile (
   }
 }
 
-export const downloadFile = async (
-  dispatch: Function,
-  userId: string,
-  documentId: string
-) => {
+export const downloadFile = async (dispatch, userId, documentId) => {
   try {
     dispatch({ type: actions.DOWNLOAD_FILE_REQUEST })
     const uri = `/dataroom/raw/${userId}/${documentId}`
     const result = await getRequest(uri)
 
     if (result.status === 200) {
-      result.blob().then((blob) => {
+      result.blob().then(blob => {
         const url = window.URL.createObjectURL(blob)
         window.open(url)
         dispatch({ type: actions.DOWNLOAD_FILE_SUCCESS })
@@ -398,7 +379,7 @@ export const downloadFile = async (
   }
 }
 
-export const deleteFile = async (dispatch: Function, documentId: string) => {
+export const deleteFile = async (dispatch, documentId) => {
   const userId = localStore.getUserId()
   try {
     dispatch({ type: actions.DELETE_FILE_REQUEST })
@@ -420,6 +401,6 @@ export const deleteFile = async (dispatch: Function, documentId: string) => {
   }
 }
 
-export const toggleEditMode = (dispatch: Function, payload: boolean) => {
+export const toggleEditMode = (dispatch, payload) => {
   dispatch({ type: actions.TOGGLE_EDIT_MODE, payload })
 }

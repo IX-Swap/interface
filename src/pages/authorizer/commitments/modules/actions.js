@@ -1,6 +1,6 @@
-// @flow
+//
 import actionGenerator from 'context/base/withPagination/actions'
-import type { Commitment } from 'context/commitment/types'
+
 import { snackbarService } from 'uno-material-ui'
 import { putRequest, getRequest } from 'services/httpRequests'
 
@@ -10,10 +10,7 @@ const { getter: getCommitments, ...pageMethods } = actionGenerator(
   {}
 )
 
-export const toggleCommitmentStatus = async (
-  commitment: Commitment,
-  newStatus: string
-) => {
+export const toggleCommitmentStatus = async (commitment, newStatus) => {
   const action = newStatus.toLowerCase().includes('approve')
     ? 'approve'
     : 'reject'
@@ -23,13 +20,13 @@ export const toggleCommitmentStatus = async (
   return response.status === 200
 }
 
-export const downloadFile = async (documentId: string) => {
+export const downloadFile = async documentId => {
   try {
     const uri = `/issuance/dso/dataroom/subscription/raw/${documentId}`
     const result = await getRequest(uri)
 
     if (result.status === 200) {
-      result.blob().then((blob) => {
+      result.blob().then(blob => {
         const url = window.URL.createObjectURL(blob)
         window.open(url)
       })
@@ -42,10 +39,7 @@ export const downloadFile = async (documentId: string) => {
   }
 }
 
-export const uploadSigned = async (
-  commitmentId: string,
-  documentId: string
-) => {
+export const uploadSigned = async (commitmentId, documentId) => {
   let response
   const payload = {
     countersignedSubscriptionDocument: documentId

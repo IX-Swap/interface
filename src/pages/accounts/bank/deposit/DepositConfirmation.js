@@ -1,14 +1,12 @@
-/* global SyntheticInputEvent HTMLElement */
-// @flow
+//
 import React, { useState } from 'react'
 import { Typography, TextField, Button, Grid, Box } from '@material-ui/core'
 import { makeStyles } from '@material-ui/styles'
 import { useHistory } from 'react-router-dom'
 import { snackbarService, ButtonWithLoading } from 'uno-material-ui'
-import type { Asset } from 'context/assets/types'
+
 import BankDetails from './BankDetails'
 import { deposit } from './modules/actions'
-import type { Bank } from '../modules/types'
 
 const useStyles = makeStyles(() => ({
   infoGrid: {
@@ -25,7 +23,7 @@ const useStyles = makeStyles(() => ({
   }
 }))
 
-const BoldTypography = ({ children, ...others }: any) => (
+const BoldTypography = ({ children, ...others }) => (
   // eslint-disable-next-line
   <Typography {...others}>
     <b>{children}</b>
@@ -37,11 +35,6 @@ export default function DepositConfirmation ({
   asset,
   amount,
   transactionCode
-}: {
-  transactionCode: string,
-  asset: Asset,
-  bank: Bank,
-  amount: number,
 }) {
   const classes = useStyles()
   const history = useHistory()
@@ -58,7 +51,7 @@ export default function DepositConfirmation ({
     })
   }
 
-  const handle2faChange = (evt: SyntheticInputEvent<HTMLElement>) => {
+  const handle2faChange = evt => {
     setTwoFa(evt.target.value)
   }
 

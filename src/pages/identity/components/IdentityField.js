@@ -1,6 +1,6 @@
-// @flow
+//
 import React from 'react'
-import type { Node } from 'react'
+
 import {
   Typography,
   Grid,
@@ -27,17 +27,6 @@ const useStyles = makeStyles(() => ({
   }
 }))
 
-type IdentityFieldProps = {
-  label: string,
-  value?: string | boolean,
-  size?: number,
-  name: string,
-  type?: 'text' | 'select' | 'date' | 'check',
-  children?: Node,
-  required?: boolean,
-  editMode: boolean,
-};
-
 const IdentityField = ({
   label,
   value,
@@ -47,7 +36,7 @@ const IdentityField = ({
   children,
   required = false,
   editMode
-}: IdentityFieldProps) => {
+}) => {
   const classes = useStyles()
   const { control, register } = useFormContext()
   let lValue = value
