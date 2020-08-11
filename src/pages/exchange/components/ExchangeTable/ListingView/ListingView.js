@@ -67,7 +67,7 @@ const HeaderContent = (d) => {
           color='primary'
           onClick={() => history.replace('/exchange')}
         >
-            Trade
+          Trade
         </Button>
       </Box>
       <Grid className={classes.companyContainer} container alignItems='center'>

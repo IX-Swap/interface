@@ -10,9 +10,10 @@ import { CssBaseline } from '@material-ui/core'
 import { SnackbarContainer } from 'uno-material-ui'
 
 import Themes from './themes'
-import App from './components/App'
+// import App from './components/App'
 import * as serviceWorker from './serviceWorker'
 import { UserProvider } from './context/user'
+import EntryPoint from './v2/pages'
 
 const generateClassName = createGenerateClassName({
   productionPrefix: 'ix'
@@ -24,7 +25,8 @@ ReactDOM.render(
       <SnackbarContainer />
       <CssBaseline />
       <UserProvider>
-        <App />
+        <EntryPoint />
+        {/* <App /> */}
       </UserProvider>
     </ThemeProvider>
   </StylesProvider>,

@@ -1,5 +1,5 @@
 import React from 'react'
-import logger from 'use-reducer-logger'
+import logger from '../v2/helpers/logger'
 import { getRequest, putRequest, postRequest } from '../services/httpRequests'
 import { compareAsc } from 'date-fns'
 

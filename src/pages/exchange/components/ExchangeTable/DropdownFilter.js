@@ -41,7 +41,7 @@ const DropdownFilter = (props) => {
         className={classes.filterTitle}
         variant='h3'
       >
-                Pair
+        Pair
       </Typography>
       <FormControl className={classes.formControl}>
         <InputLabel htmlFor='grouped-native-select'>Pair</InputLabel>
@@ -67,7 +67,7 @@ const DropdownFilter = (props) => {
         className={classes.filterTitle}
         variant='h3'
       >
-                Side
+        Side
       </Typography>
       <FormControl className={classes.formControl}>
         <InputLabel htmlFor='grouped-select'>All</InputLabel>

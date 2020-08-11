@@ -1,7 +1,7 @@
 // @flow
 import React from 'react'
 import type { Node } from 'react'
-import logger from 'use-reducer-logger'
+import logger from '../../../../../../v2/helpers/logger'
 import { listViewReducer } from './reducers'
 import { initialState } from './state'
 import type { ListingViewState } from './types'

@@ -1,6 +1,6 @@
 // @flow
 import React from 'react'
-import logger from 'use-reducer-logger'
+import logger from '../../../v2/helpers/logger'
 import type { Node } from 'react'
 import generateInitialState from './state'
 import generateReducers from './reducers'

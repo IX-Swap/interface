@@ -59,7 +59,7 @@ const CorporateIdentityForm = ({
   return (
     // eslint-disable-next-line react/jsx-props-no-spreading
     <FormContext {...methods}>
-      <form onSubmit={handleSubmit(onSubmit)}>
+      <div onSubmit={handleSubmit(onSubmit)}>
         <IdentitySection title='Company Registration'>
           <IdentityField
             name='companyLegalName'
@@ -185,7 +185,7 @@ const CorporateIdentityForm = ({
             </Grid>
           )}
         </IdentitySection>
-      </form>
+      </div>
     </FormContext>
   )
 }

@@ -560,7 +560,7 @@ const DsoInformation = ({
                         history.push(`/issuance/${dso.createdBy}/${dso._id}/deploy`)
                       }}
                     >
-                        Deploy
+                      Deploy
                     </Button>
                   )}
                 </Grid>

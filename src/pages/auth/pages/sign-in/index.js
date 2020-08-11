@@ -43,7 +43,7 @@ function SignIn () {
 
   return (
     <Grid container className={classes.container}>
-      <form className={classes.form}>
+      <div className={classes.form}>
         <Tabs
           value={userState.activeTabId}
           onChange={(e, id) => setActiveTabId(userDispatch, id)}
@@ -56,7 +56,7 @@ function SignIn () {
         </Tabs>
         {userState.activeTabId === 0 && <LoginForm />}
         {userState.activeTabId === 1 && <SignupForm />}
-      </form>
+      </div>
       <Typography color='primary' className={classes.copyright}>
         © 2020 InvestaX, All rights reserved.
       </Typography>

@@ -80,7 +80,7 @@ const ListingsList = ({
                   className={classes.tableLink}
                   to={`/listings-view/${row._id}`}
                 >
-                                    View
+                  View
                 </Link>
               </Button>
             </TableCell>

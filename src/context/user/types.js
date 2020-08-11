@@ -48,11 +48,6 @@ export type User = {
   totpConfirmed: boolean,
 };
 
-export type LocalUser = {
-  _id: string,
-  accessToken: string,
-};
-
 export type UserAuthState = {
   user: User,
   status: string,

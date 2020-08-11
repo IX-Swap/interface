@@ -133,7 +133,7 @@ const AuthenticatorStepper = () => {
           </Stepper>
           {/* eslint-disable-next-line react/jsx-props-no-spreading */}
           <FormContext {...methods}>
-            <form onSubmit={handleSubmit(onSubmit)}>
+            <div onSubmit={handleSubmit(onSubmit)}>
               <Box height='300px' pb={8}>
                 <Grid
                   style={{ height: 'inherit' }}
@@ -164,7 +164,7 @@ const AuthenticatorStepper = () => {
                   </Button>
                 )}
               </Grid>
-            </form>
+            </div>
           </FormContext>
           <Box p={3}>
             <Button size='small' onClick={handleBack}>

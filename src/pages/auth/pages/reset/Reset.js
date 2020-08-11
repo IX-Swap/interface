@@ -105,7 +105,7 @@ function ResetPassword (props) {
         ) : passwordResetState?.resetStatus ? (
           <Grid item md={5} lg={5}>
             <Box p={3}>
-              <form onSubmit={handleCompleteResetSubmit}>
+              <div onSubmit={handleCompleteResetSubmit}>
                 <Typography comonent='p'>
                   {passwordResetState?.passwordResetMessage}
                 </Typography>
@@ -127,7 +127,7 @@ function ResetPassword (props) {
                     Complete Reset
                   </Button>
                 </Box>
-              </form>
+              </div>
             </Box>
           </Grid>
         ) : passwordResetState?.resetComplete === 'request' ? (
@@ -137,7 +137,7 @@ function ResetPassword (props) {
         ) : passwordResetState?.resetComplete !== 'success' ? (
           <Grid item xs={12} sm={8} md={3} lg={3}>
             <Box p={3}>
-              <form onSubmit={handleBeginResetSubmit}>
+              <div onSubmit={handleBeginResetSubmit}>
                 <Box>
                   <Typography comonent='p'>
                     {passwordResetState?.passwordResetMessage}
@@ -160,7 +160,7 @@ function ResetPassword (props) {
                     </Box>
                   </Grid>
                 </Box>
-              </form>
+              </div>
             </Box>
           </Grid>
         ) : (

@@ -170,7 +170,7 @@ export default function BankFormComponent ({
 
   return (
     <FormContext {...methods}>
-      <form>
+      <div>
         <Paper elevation={0}>
           <Grid container>
             <Grid item sm={12} md={12} lg={6}>
@@ -395,7 +395,7 @@ export default function BankFormComponent ({
             </Grid>
           </Grid>
         </Paper>
-      </form>
+      </div>
     </FormContext>
   )
 }

@@ -59,7 +59,7 @@ const IndividualIdentityForm = ({
   return (
     // eslint-disable-next-line react/jsx-props-no-spreading
     <FormContext {...methods}>
-      <form onSubmit={handleSubmit(onSubmit)}>
+      <div onSubmit={handleSubmit(onSubmit)}>
         <IdentitySection title='My Identity'>
           <IdentityForm
             identity={identity}
@@ -184,7 +184,7 @@ const IndividualIdentityForm = ({
             </Grid>
           )}
         </IdentitySection>
-      </form>
+      </div>
     </FormContext>
   )
 }

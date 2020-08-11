@@ -41,7 +41,7 @@ const IdentityPreview = () => {
         // eslint-disable-next-line react/jsx-props-no-spreading
         <FormContext {...methods}>
           <Box position='relative'>
-            <form onSubmit={() => {}}>
+            <div onSubmit={() => {}}>
               <IdentitySection
                 title={`${identity.firstName} ${identity.lastName}`}
               >
@@ -51,7 +51,7 @@ const IdentityPreview = () => {
                   useOwnEmail
                 />
               </IdentitySection>
-            </form>
+            </div>
             <Box position='absolute' right='5em' top='0.8em'>
               <Button color='primary' onClick={handleViewIdentity}>
                 <b>View</b>
@@ -67,7 +67,7 @@ const IdentityPreview = () => {
         // eslint-disable-next-line react/jsx-props-no-spreading
         <FormContext {...methods}>
           <Box position='relative'>
-            <form onSubmit={() => {}}>
+            <div onSubmit={() => {}}>
               <IdentitySection title={corporate.companyLegalName}>
                 <IdentityField
                   editMode={false}
@@ -100,7 +100,7 @@ const IdentityPreview = () => {
                   type='date'
                 />
               </IdentitySection>
-            </form>
+            </div>
             <Box position='absolute' right='5em' top='0.8em'>
               <Button color='primary' onClick={handleViewCorporate}>
                 <b> View</b>

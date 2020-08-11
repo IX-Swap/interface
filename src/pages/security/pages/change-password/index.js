@@ -90,7 +90,7 @@ const ChangePassword = () => {
             </Alert>
           )}
           <Paper>
-            <form onSubmit={handleSubmit(onSubmit)}>
+            <div onSubmit={handleSubmit(onSubmit)}>
               <Container className={classes.formContainer}>
                 <FormControl fullWidth>
                   <TextField
@@ -139,7 +139,7 @@ const ChangePassword = () => {
                   </Grid>
                 </Grid>
               </Box>
-            </form>
+            </div>
           </Paper>
         </Box>
       </Grid>

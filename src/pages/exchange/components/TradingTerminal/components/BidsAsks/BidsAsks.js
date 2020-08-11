@@ -189,7 +189,7 @@ const BidsAsksHistory = (props) => {
 
   return (
     <Paper className={classes.bidsAsksContainer}>
-      <form className={classes.formContainer}>
+      <div className={classes.formContainer}>
         <Box className={classes.formHeader}>
           <Typography className={classes.formTitle} variant='h3'>
             Buy {marketListItem?.listing?.asset?.numberFormat?.currency}
@@ -254,8 +254,8 @@ const BidsAsksHistory = (props) => {
         >
           Buy {marketListItem?.listing?.asset?.numberFormat?.currency}
         </Button>
-      </form>
-      <form className={classes.formContainer}>
+      </div>
+      <div className={classes.formContainer}>
         <Box className={classes.formHeader}>
           <Typography className={classes.formTitle} variant='h3'>
             Sell {marketListItem?.listing?.asset?.numberFormat?.currency}
@@ -320,7 +320,7 @@ const BidsAsksHistory = (props) => {
         >
           Sell {marketListItem?.listing?.asset?.numberFormat?.currency}
         </Button>
-      </form>
+      </div>
     </Paper>
   )
 }

@@ -100,7 +100,7 @@ const ListingsList = ({ list, goToPage }) => {
               )
               : (
                 <TableCell className={classes.negativeCell}>
-                Sell
+                  Sell
                 </TableCell>
               )}
             <TableCell className={classes.defaultCell}>{numberWithCommas(row.price.toFixed(2))}</TableCell>
