@@ -2,8 +2,10 @@ import { action, observable } from 'mobx'
 
 import { GENERIC_STATUS } from '../../types/status'
 import User from '../../types/user'
-import { loginUser } from './service'
+import authService from 'v2/services/api/auth'
 import storageHelper from '../../helpers/storageHelper'
+import socketService from '../../services/socket'
+import { LoginArgs, SignupArgs } from '../../services/api/auth/types'
 
 export class UserStore {
   @observable
@@ -13,19 +15,22 @@ export class UserStore {
   status: string = GENERIC_STATUS.INIT
 
   @observable
-  isAuthenticated: boolean = false
+  isAuthenticated = false
 
   @observable
-  isLoading: boolean = false
+  isVerified = false
 
   @observable
-  activeTab: number = 0
+  isLoading = false
 
   @observable
-  message: string = ''
+  activeTab = 0
 
   @observable
-  error: string = ''
+  message = ''
+
+  @observable
+  error = ''
 
   @action
   setUser = (mUser: User) => {
@@ -38,33 +43,93 @@ export class UserStore {
   }
 
   @action
-  login = async (username: string, password: string, otp: string) => {
+  login = async (args: LoginArgs) => {
     this.isLoading = true
     this.error = ''
 
-    const user = await loginUser(username, password, otp)
-    if (!user.status) {
-      this.isLoading = false
-      if (user.message) {
-        this.error = user.message
-      }
+    const { data, message } = await authService.login(args)
 
-      return
+    if (data) {
+      this.user = data
+      this.message = message
+    } else {
+      this.error = message
     }
 
-    this.user = user.data
     this.isLoading = false
   }
 
   @action
-  signup = async (...payload: any) => {
-    console.log(payload)
+  signup = async (args: SignupArgs) => {
+    this.isLoading = true
+    this.error = ''
+
+    const { data, message } = await authService.signup(args)
+
+    if (data) {
+      this.message = message
+      this.activeTab = 2
+    } else {
+      this.error = message
+    }
+
+    this.isLoading = false
   }
 
   @action
   logout = () => {
     this.user = undefined
+
     storageHelper.remove()
+    const socket = socketService.subscribeToSocket()
+
+    if (socket) {
+      socket.removeAllListeners()
+      socket.disconnect()
+    }
+
+    // TODO: Fix to not hacky solution
+    // @ts-ignore
+    window.location = '#/auth/sign-in'
+  }
+
+  @action
+  verifySignup = async (token: string) => {
+    this.isLoading = true
+    this.isVerified = false
+    this.message = ''
+    this.error = ''
+
+    const response = await authService.verifySignup({ token })
+    this.message = response.message
+
+    if (response.data) {
+      this.isVerified = true
+    } else {
+      this.error = response.data!
+    }
+
+    this.isLoading = false
+  }
+
+  @action
+  getUser = async () => {
+    this.isLoading = true
+    this.error = ''
+    this.status = GENERIC_STATUS.GETTING
+    this.user = undefined
+
+    const response = await authService.getUser()
+    this.status = GENERIC_STATUS.IDLE
+
+    if (response.data) {
+      this.user = response.data
+    } else {
+      this.error = response.message
+      this.logout()
+    }
+
+    this.isLoading = false
   }
 
   hydrate = (mUser: User) => {

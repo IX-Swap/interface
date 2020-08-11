@@ -1,5 +1,3 @@
-/* global localStorage */
-
 import User from '../types/user'
 
 const set = (user: User) => {

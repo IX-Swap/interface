@@ -14,35 +14,3 @@ export const INVESTAX_BANK: Partial<Bank> = {
     line1: 'OCBC Centre, Floor 9, 65 Chulia Street, Singapore 049513'
   }
 }
-
-export const ENDPOINT_URL = {
-  EXCHANGE_API: {
-    GET_MARKET_LIST: '/exchange/markets/list'
-  },
-  SUBSCRIBE_API: {
-    ORDER_BOOK: {
-      emit: 'orderbook/get',
-      on: 'orderbook'
-    },
-    MY_ORDERS: {
-      emit: 'myorders/get',
-      on: 'myorders'
-    },
-    TRADE_HISTORY: {
-      emit: 'fills/get',
-      on: 'fills'
-    },
-    BIDS_ASKS: {
-      emit: 'balances/get',
-      on: 'balances'
-    },
-    LAST_PRICE: {
-      emit: 'price/get',
-      on: 'price'
-    },
-    CHART: {
-      emit: 'chart/get',
-      on: 'chart'
-    }
-  }
-}

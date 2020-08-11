@@ -22,6 +22,8 @@ interface ProgressProps<T> {
 }
 
 interface TableViewProps<T> extends ProgressProps<T> {
+  name: string
+  uri: string
   columns: Array<TableColumn<T>>
   bordered?: boolean
   filter?: BaseFilter

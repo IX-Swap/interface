@@ -26,7 +26,7 @@ const AssetsSelect = ({ fullWidth = true, required = false, name = 'asset', ...o
         fullWidth={fullWidth}
         style={{ minWidth: '75px' }}
         required={required}
-        error={!!methods.errors[name]}
+        error={!!methods.errors.asset}
       >
         <InputLabel id='select-asset'>Currency</InputLabel>
         <Controller
