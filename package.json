@@ -4,7 +4,7 @@
   "private": true,
   "dependencies": {
     "@date-io/date-fns": "^1.3.13",
-    "@material-ui/core": "^4.10.0",
+    "@material-ui/core": "^4.10.2",
     "@material-ui/icons": "^4.2.1",
     "@material-ui/lab": "^4.0.0-alpha.46",
     "@material-ui/pickers": "^3.2.10",
@@ -19,6 +19,7 @@
     "@types/react-dom": "^16.9.8",
     "@types/react-router-dom": "^5.1.5",
     "@welldone-software/why-did-you-render": "^4.2.4",
+    "axios": "^0.19.2",
     "babel-loader": "^8.1.0",
     "classnames": "^2.2.6",
     "country-json": "^1.1.0",
@@ -26,6 +27,8 @@
     "draft-js": "^0.11.5",
     "draftjs-to-html": "^0.9.1",
     "flat": "^5.0.0",
+    "formik": "^2.1.5",
+    "formik-material-ui": "^3.0.0-alpha.0",
     "kaktana-react-lightweight-charts": "^1.1.2",
     "lodash": "^4.17.15",
     "mobx": "^5.15.4",
@@ -62,6 +65,12 @@
     "@babel/preset-flow": "^7.9.0",
     "@babel/preset-react": "^7.9.4",
     "@babel/preset-typescript": "^7.10.1",
+    "@testing-library/jest-dom": "^5.11.2",
+    "@testing-library/react": "^10.4.8",
+    "@testing-library/react-hooks": "^3.4.1",
+    "@types/axios": "^0.14.0",
+    "@types/socket.io-client": "^1.4.33",
+    "@types/yup": "^0.29.4",
     "@typescript-eslint/eslint-plugin": "^3.4.0",
     "@typescript-eslint/parser": "^3.4.0",
     "aws-sdk": "^2.649.0",
@@ -77,16 +86,21 @@
     "eslint-plugin-jsx-a11y": "^6.2.3",
     "eslint-plugin-prettier": "^3.1.3",
     "eslint-plugin-react": "^7.20.0",
-    "eslint-plugin-react-hooks": "^4.0.2",
+    "eslint-plugin-react-hooks": "^4.0.8",
     "eslint-plugin-react-redux": "^3.0.3",
     "flow-bin": "^0.124.0",
     "gulp": "^4.0.2",
     "gulp-awspublish": "^4.1.1",
     "gulp-rev-all": "^2.0.3",
+    "jest-environment-jsdom-sixteen": "^1.0.3",
+    "jest-localstorage-mock": "^2.4.3",
     "prettier": "^2.0.5",
+    "prettier-standard": "^16.4.1",
     "react-app-rewired": "^2.1.6",
+    "react-test-renderer": "^16.13.1",
     "standardx": "^5.0.0",
-    "through2": "^3.0.1"
+    "through2": "^3.0.1",
+    "ts-jest": "^26.1.4"
   },
   "scripts": {
     "start": "react-app-rewired start",
@@ -94,14 +108,18 @@
     "test": "react-scripts test",
     "eject": "react-scripts eject",
     "deploy": "gulp deploy",
-    "std:ts": "standardx --fix \"src/**/*.ts*\"",
-    "std:js": "standard --fix \"src/**/*.js*\"",
-    "std": "yarn std:js && yarn std:ts"
+    "std:ts": "standardx --fix --jest src/v2/**/*.{ts,tsx}",
+    "std:js": "standard --fix 'src/**/*.js'",
+    "std": "npm run std:js && npm run std:ts",
+    "format": "prettier-standard --format src/**/*.{ts,tsx,js}"
   },
   "standardx": {
     "parser": "@typescript-eslint/parser",
     "plugins": [
       "@typescript-eslint/eslint-plugin"
+    ],
+    "ignore": [
+      "src/**/*.js"
     ]
   },
   "standard": {
@@ -110,20 +128,11 @@
       "Node",
       "FormData",
       "RouteProps",
-      "$Exact",
       "SyntheticInputEvent",
       "HTMLElement",
-      "$Keys",
-      "$Shape",
       "alert",
-      "fetch"
-    ],
-    "extends": [
-      "plugin:flowtype/recommended"
-    ],
-    "plugins": [
-      "flowtype",
-      "react-hooks"
+      "fetch",
+      "localStorage"
     ],
     "ignore": [
       "gulpfile.js",
@@ -138,7 +147,9 @@
       }
     },
     "rules": {
-      "react-hooks/exhaustive-deps": "error"
+      "react-hooks/exhaustive-deps": "error",
+      "no-unused-vars": "off",
+      "@typescript-eslint/no-unused-vars": "error"
     }
   },
   "browserslist": {

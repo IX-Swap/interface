@@ -1,0 +1,29 @@
+export const url = 'http://example.com'
+
+export const successfulResponse = {
+  data: {},
+  message: 'success'
+}
+
+export const unsuccessfulResponse = {
+  data: undefined,
+  message: 'error'
+}
+
+export const headers = {
+  Authorization: 'Bearer undefined'
+}
+
+export const customConfig = {
+  headers: { 'Custom-Header': '12345' }
+}
+
+export const postJSON = { message: 'hello' }
+export const postJSONString = JSON.stringify(postJSON)
+export const postJSONHeaders = {
+  ...headers,
+  'Content-Type': 'application/json'
+}
+
+export const postFormData = new FormData()
+export const postFormDataHeaders = headers
