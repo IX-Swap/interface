@@ -1,11 +1,22 @@
 import io from 'socket.io-client'
 
-import { API_URL } from 'config/index'
+import { API_URL } from 'config'
 import storageHelper from '../../helpers/storageHelper'
 
-let _socket: SocketIOClient.Socket
+let _socket: SocketIOClient.Socket | undefined
 
 const socketService = {
+  getConnection () {
+    return _socket
+  },
+
+  disconnect () {
+    if (_socket) {
+      _socket.removeAllListeners()
+      _socket.disconnect()
+    }
+  },
+
   subscribeToSocket () {
     if (_socket && !_socket.connected) {
       const bearerToken = storageHelper.getAccessToken()

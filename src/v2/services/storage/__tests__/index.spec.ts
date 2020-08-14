@@ -4,42 +4,53 @@ import { userKey, userValue, userValueString } from '__fixtures__/storage'
 describe('storageService', () => {
   beforeEach(() => {
     localStorage.clear()
+    jest.clearAllMocks()
   })
 
-  it('should set item to localStorage', () => {
-    const key = userKey
-    const value = userValue
-    const stringifiedValue = userValueString
+  describe('set', () => {
+    it('should set item to localStorage', () => {
+      const stringifiedValue = userValueString
 
-    storageService.set(key, value)
+      storageService.set(userKey, userValue)
 
-    expect(localStorage.setItem).toHaveBeenCalledTimes(1)
-    expect(localStorage.setItem).toHaveBeenCalledWith(key, stringifiedValue)
-    expect(Object.keys(localStorage.__STORE__).length).toBe(1)
-    expect(localStorage.__STORE__[key]).toBe(stringifiedValue)
+      expect(localStorage.setItem).toHaveBeenCalledTimes(1)
+      expect(localStorage.setItem).toHaveBeenCalledWith(
+        userKey,
+        stringifiedValue
+      )
+      expect(Object.keys(localStorage.__STORE__).length).toBe(1)
+      expect(localStorage.__STORE__[userKey]).toBe(stringifiedValue)
+    })
   })
 
-  it('should get item from localStorage', () => {
-    const key = userKey
-    const value = userValue
+  describe('get', () => {
+    it('should retrieve item from localStorage', () => {
+      storageService.set(userKey, userValue)
+      const item = storageService.get(userKey)
 
-    storageService.set(key, value)
-    const item = storageService.get(key)
+      expect(localStorage.getItem).toHaveBeenCalledTimes(1)
+      expect(localStorage.getItem).toHaveBeenCalledWith(userKey)
+      expect(item).toEqual(userValue)
+    })
 
-    expect(localStorage.getItem).toHaveBeenCalledTimes(1)
-    expect(localStorage.getItem).toHaveBeenCalledWith(key)
-    expect(item).toEqual(value)
+    it('should return undefined if there is no item in the storage', () => {
+      const item = storageService.get(userKey)
+
+      expect(localStorage.getItem).toHaveBeenCalledTimes(1)
+      expect(localStorage.getItem).toHaveBeenCalledWith(userKey)
+      expect(item).toBeUndefined()
+    })
   })
 
-  it('should remove item from localStorage', () => {
-    const key = userKey
-    const value = userValue
-    localStorage.__STORE__[key] = userValueString
+  describe('remove', () => {
+    it('should remove item from localStorage', () => {
+      localStorage.__STORE__[userKey] = userValueString
 
-    storageService.remove(key)
+      storageService.remove(userKey)
 
-    expect(localStorage.removeItem).toHaveBeenCalledTimes(1)
-    expect(localStorage.removeItem).toHaveBeenCalledWith(key)
-    expect(Object.keys(localStorage.__STORE__).length).toBe(0)
+      expect(localStorage.removeItem).toHaveBeenCalledTimes(1)
+      expect(localStorage.removeItem).toHaveBeenCalledWith(userKey)
+      expect(Object.keys(localStorage.__STORE__).length).toBe(0)
+    })
   })
 })

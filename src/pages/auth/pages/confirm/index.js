@@ -73,7 +73,7 @@ const Confirm = () => {
             <Box mt={4}>
               <Button
                 variant='outlined'
-                onClick={() => history.push('/auth/sign-in')}
+                onClick={() => history.push('/auth/login')}
               >
                 Back to Login
               </Button>

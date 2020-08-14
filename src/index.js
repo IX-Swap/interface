@@ -2,8 +2,8 @@ import './wdyr'
 import React from 'react'
 import ReactDOM from 'react-dom'
 import {
-  StylesProvider,
-  createGenerateClassName
+  createGenerateClassName,
+  StylesProvider
 } from '@material-ui/core/styles'
 import { ThemeProvider } from '@material-ui/styles'
 import { CssBaseline } from '@material-ui/core'
@@ -11,8 +11,8 @@ import { SnackbarContainer } from 'uno-material-ui'
 
 import Themes from './themes'
 import * as serviceWorker from './serviceWorker'
-import { UserProvider } from 'v2/context/user'
-import EntryPoint from './v2/pages'
+import { UserProvider } from 'v2/auth/context'
+import EntryPoint from './v2'
 
 const generateClassName = createGenerateClassName({
   productionPrefix: 'ix'

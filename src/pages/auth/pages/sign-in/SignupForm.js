@@ -7,7 +7,7 @@ import {
   Fade
 } from '@material-ui/core'
 
-// context
+// password-reset
 import { useUserDispatch, useUserState } from 'context/user'
 import { signupUser } from 'context/user/actions'
 
@@ -42,7 +42,7 @@ const SignupForm = () => {
           }
         }}
         value={nameValue}
-        onChange={e => setNameValue(e.target.value)}
+        onChange={(e) => setNameValue(e.target.value)}
         margin='normal'
         placeholder='Name'
         type='text'
@@ -57,7 +57,7 @@ const SignupForm = () => {
           }
         }}
         value={emailValue}
-        onChange={e => setEmailValue(e.target.value)}
+        onChange={(e) => setEmailValue(e.target.value)}
         margin='normal'
         placeholder='Email Address'
         type='email'
@@ -72,7 +72,7 @@ const SignupForm = () => {
           }
         }}
         value={passwordValue}
-        onChange={e => setPasswordValue(e.target.value)}
+        onChange={(e) => setPasswordValue(e.target.value)}
         margin='normal'
         placeholder='Password'
         type='password'

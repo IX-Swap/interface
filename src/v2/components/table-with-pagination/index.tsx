@@ -14,7 +14,7 @@ import { useObserver } from 'mobx-react'
 import { init } from './context'
 import Items from './items'
 import { TableColumn, BaseFilter, RowAction } from '../../types/util'
-import { GENERIC_STATUS } from '../../types/status'
+import { GenericStatus } from '../../types/status'
 
 interface ProgressProps<T> {
   name: string
@@ -37,9 +37,7 @@ const Progress = <T extends unknown>({ name, uri }: ProgressProps<T>) => {
   const tableState = useTableStoreState()
 
   return useObserver(() =>
-    [GENERIC_STATUS.GETTING].includes(tableState.status) ? (
-      <LinearProgress />
-    ) : null
+    [GenericStatus.Busy].includes(tableState.status) ? <LinearProgress /> : null
   )
 }
 Progress.whyDidYouRender = true
@@ -92,9 +90,8 @@ const GTableFooter = <T extends unknown>({
               count={tableState.total}
               rowsPerPage={tableState.limit}
               page={tableState.page}
-              onChangeRowsPerPage={evt =>
-                tableState.setRowsPerPage(parseInt(evt.target.value))
-              }
+              onChangeRowsPerPage={(evt) =>
+                tableState.setRowsPerPage(parseInt(evt.target.value))}
               onChangePage={(evt, newPage: number) => {
                 tableState.setPage(newPage)
               }}
@@ -132,7 +129,7 @@ const TableView = <T extends unknown>({
         <Table aria-label='table'>
           <TableHead>
             <TableRow>
-              {columns.map(e => (
+              {columns.map((e) => (
                 <TableCell key={e.key} align={e.headAlign ?? 'left'}>
                   <b>{e.label}</b>
                 </TableCell>

@@ -1,18 +1,18 @@
 import { action, observable, runInAction } from 'mobx'
 import { getItems as getItemsFromApi } from './service'
-import { GENERIC_STATUS } from '../../../types/status'
+import { GenericStatus } from '../../../types/status'
 
 export class TableWithPaginationStore<T> {
-  @observable uri: string = ''
-  @observable filter: {} = {}
-  @observable items: T[] = []
-  @observable page = 0
-  @observable limit = 25
-  @observable total?: number = undefined
-  @observable error?: string = undefined
-  @observable statusCode?: number = undefined
-  @observable errorCode?: number = undefined
-  @observable status = GENERIC_STATUS.INIT
+  @observable uri: string = '';
+  @observable filter: {} = {};
+  @observable items: T[] = [];
+  @observable page = 0;
+  @observable limit = 25;
+  @observable total?: number = undefined;
+  @observable error?: string = undefined;
+  @observable statusCode?: number = undefined;
+  @observable errorCode?: number = undefined;
+  @observable status = GenericStatus.Init;
 
   constructor (mUri: string, filter: {}) {
     this.uri = mUri
@@ -21,7 +21,7 @@ export class TableWithPaginationStore<T> {
 
   @action
   async getItems (filter: {}, skip = 0, limit = 50) {
-    this.status = GENERIC_STATUS.GETTING
+    this.status = GenericStatus.Busy
     const resp = await getItemsFromApi<T>(this.uri, filter, skip, limit)
     runInAction(() => {
       this.filter = filter
@@ -31,7 +31,7 @@ export class TableWithPaginationStore<T> {
         this.page = resp.data.page - 1
         this.total = resp.data.total
       }
-      this.status = GENERIC_STATUS.IDLE
+      this.status = GenericStatus.Idle
     })
   }
 

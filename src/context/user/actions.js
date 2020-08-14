@@ -8,7 +8,7 @@ export async function loginUser (
 ) {
   dispatch({ type: userActions.LOGIN_REQUEST })
   try {
-    const uri = '/auth/sign-in'
+    const uri = '/auth/login'
     const result = await postRequest(uri, { ...payload })
     const response = await result.json()
     if (result.status === 200) {
@@ -83,7 +83,7 @@ export function signOut (dispatch: Function) {
   }
 
   // TODO: Fix to not hacky solution
-  window.location = '#/auth/sign-in'
+  window.location = '#/auth/login'
 }
 
 export async function verifySignup (

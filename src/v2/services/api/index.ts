@@ -1,9 +1,14 @@
 import axios, { AxiosRequestConfig } from 'axios'
 import { API_URL } from '../../config'
 import storageHelper from '../../helpers/storageHelper'
-import { APIServiceRequestConfig, APIServiceResponse, KeyValueMap } from './types'
+import {
+  APIServiceRequestConfig,
+  APIServiceResponse,
+  KeyValueMap
+} from './types'
 
 const defaultResponse = {
+  success: false,
   data: undefined,
   message: ''
 }
@@ -13,7 +18,7 @@ _axios.defaults.baseURL = API_URL
 _axios.defaults.withCredentials = true
 
 const apiService = {
-  get: async function get <T = any> (uri: string, config?: AxiosRequestConfig) {
+  get: async function get<T = any> (uri: string, config?: AxiosRequestConfig) {
     return this._request<T>({
       method: 'get',
       uri,
@@ -36,7 +41,11 @@ const apiService = {
     const response: APIServiceResponse<T> = defaultResponse
 
     try {
-      const { data } = await _axios.request<APIServiceResponse<T>>(axiosConfig)
+      const { data, status } = await _axios.request<APIServiceResponse<T>>(
+        axiosConfig
+      )
+
+      response.success = Boolean(data.data) || status === 200
       response.data = data.data
       response.message = data.message
     } catch (error) {
@@ -58,7 +67,12 @@ const apiService = {
     return message
   },
 
-  _prepareRequestConfig ({ uri, axiosConfig, data, method }: APIServiceRequestConfig): AxiosRequestConfig {
+  _prepareRequestConfig ({
+    uri,
+    axiosConfig,
+    data,
+    method
+  }: APIServiceRequestConfig): AxiosRequestConfig {
     const body = this._prepareBody(data)
     const headers = this._prepareHeaders(data)
     const requestConfig: AxiosRequestConfig = {

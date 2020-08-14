@@ -7,7 +7,10 @@ import {
   headers,
   postJSON,
   postJSONString,
-  postJSONHeaders, postFormData, postFormDataHeaders, customConfig
+  postJSONHeaders,
+  postFormData,
+  postFormDataHeaders,
+  customConfig
 } from '__fixtures__/api'
 
 const axiosMock = axios as jest.Mocked<AxiosStatic>
@@ -47,7 +50,10 @@ describe('apiService', () => {
       apiService.get(url, customConfig)
 
       expect(axiosMock.request).toHaveBeenCalledTimes(1)
-      expect(axiosMock.request).toHaveBeenCalledWith({ ...customConfig, ...expectedConfig })
+      expect(axiosMock.request).toHaveBeenCalledWith({
+        ...customConfig,
+        ...expectedConfig
+      })
     })
 
     it('should handle success', async () => {
@@ -95,7 +101,10 @@ describe('apiService', () => {
       apiService.post(url, postJSON, customConfig)
 
       expect(axiosMock.request).toHaveBeenCalledTimes(1)
-      expect(axiosMock.request).toHaveBeenCalledWith({ ...customConfig, ...expectedConfig })
+      expect(axiosMock.request).toHaveBeenCalledWith({
+        ...customConfig,
+        ...expectedConfig
+      })
     })
 
     it('should send a request with FormData', () => {
@@ -128,6 +137,31 @@ describe('apiService', () => {
 
       expect(axiosMock.request).toHaveBeenCalledTimes(1)
       expect(response).toEqual(unsuccessfulResponse)
+    })
+
+    it("should set response message to the server's response error if request failed", async () => {
+      axiosMock.request.mockImplementationOnce(() => {
+        return Promise.reject({
+          response: {
+            data: unsuccessfulResponse
+          }
+        })
+      })
+
+      const response = await apiService.post(url, {})
+
+      expect(response.message).toBe(unsuccessfulResponse.message)
+    })
+
+    it('should set response message to the catched error if one were thrown', async () => {
+      const errorMessage = 'Spooky error'
+      axiosMock.request.mockImplementationOnce(() => {
+        throw new Error(errorMessage)
+      })
+
+      const response = await apiService.post(url, {})
+
+      expect(response.message).toBe(errorMessage)
     })
   })
 })

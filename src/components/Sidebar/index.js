@@ -23,7 +23,7 @@ import useStyles from './styles'
 // components
 import SidebarLink from './components/SidebarLink/SidebarLink'
 
-// context
+// password-reset
 import {
   useLayoutState,
   useLayoutDispatch,
@@ -205,7 +205,7 @@ function Sidebar ({ location }: { location: any }) {
         </IconButton>
       </div>
       <List className={classes.sidebarList}>
-        {structure.map(link => (
+        {structure.map((link) => (
           <SidebarLink
             key={link.id}
             location={location}

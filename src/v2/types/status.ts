@@ -1,13 +1,5 @@
-export default interface Status {
-  INIT: string
-  IDLE: string
-  GETTING: string
-  SAVING: string
-}
-
-export const GENERIC_STATUS: Status = {
-  INIT: 'INIT',
-  IDLE: 'IDLE',
-  GETTING: 'GETTING',
-  SAVING: 'SAVING'
+export enum GenericStatus {
+  Init = 'Init', // initialized but haven't been used yet
+  Idle = 'Idle', // initialized and have been used
+  Busy = 'Busy',
 }

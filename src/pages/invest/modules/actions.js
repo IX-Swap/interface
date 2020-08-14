@@ -14,8 +14,8 @@ export const toggleEditMode = (dispatch, value) => {
   dispatch({ type: actions.TOGGLE_EDIT_MODE, payload: value })
 }
 
-// not using context
-export const fetchAccountBalanceByAsset = async asset => {
+// not using password-reset
+export const fetchAccountBalanceByAsset = async (asset) => {
   const userId = localStore.getUserId()
   const url = `/accounts/balance/${userId}/${asset}`
 
@@ -29,7 +29,7 @@ export const fetchAccountBalanceByAsset = async asset => {
   throw new Error(result.message)
 }
 
-// not using context
+// not using password-reset
 export const addCommitment = async ({
   dso,
   signedSubscriptionDocument,
@@ -94,13 +94,13 @@ export async function uploadFile (payload) {
   }
 }
 
-export const downloadFile = async dsoId => {
+export const downloadFile = async (dsoId) => {
   try {
     const uri = `/issuance/dso/dataroom/subscription/raw/${dsoId}`
     const result = await getRequest(uri)
 
     if (result.status === 200) {
-      result.blob().then(blob => {
+      result.blob().then((blob) => {
         const url = window.URL.createObjectURL(blob)
         window.open(url)
       })

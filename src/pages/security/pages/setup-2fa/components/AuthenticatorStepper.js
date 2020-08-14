@@ -25,7 +25,7 @@ import StepFourEnable from './StepFourEnable'
 import { useTwoFactorState, useTwoFactorDispatch } from '../modules'
 import { setupTwoFactor, confirmTwoFactor } from '../modules/actions'
 
-const useStyles = makeStyles(theme => ({
+const useStyles = makeStyles((theme) => ({
   button: {
     backgroundColor: theme.palette.secondary.main,
     color: 'white',
@@ -43,7 +43,7 @@ const getSteps = () => [
   'Enable Google Authenticator'
 ]
 
-const getStepContent = stepIndex => {
+const getStepContent = (stepIndex) => {
   switch (stepIndex) {
     case 0:
       return <StepOneDownload />
@@ -106,7 +106,7 @@ const AuthenticatorStepper = () => {
       return
     }
 
-    setActiveStep(prevActiveStep => prevActiveStep + 1)
+    setActiveStep((prevActiveStep) => prevActiveStep + 1)
   }
 
   const handleBack = () => {
@@ -114,7 +114,7 @@ const AuthenticatorStepper = () => {
       history.push('/security')
     }
 
-    setActiveStep(prevActiveStep => prevActiveStep - 1)
+    setActiveStep((prevActiveStep) => prevActiveStep - 1)
   }
 
   return (
@@ -124,7 +124,7 @@ const AuthenticatorStepper = () => {
       <Box mt={8}>
         <Paper elevation={0}>
           <Stepper activeStep={activeStep} alternativeLabel>
-            {steps.map(label => (
+            {steps.map((label) => (
               <Step key={label}>
                 <StepLabel>{label}</StepLabel>
               </Step>

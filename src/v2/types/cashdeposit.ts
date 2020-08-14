@@ -3,7 +3,7 @@ import { Asset } from './asset'
 import { IndividualIdentity, CorporateIdentity } from './identity'
 import { Bank } from './bank'
 
-export interface CashDeposit{
+export interface CashDeposit {
   _id: string
   status: AuthorizableStatus
   user: string

@@ -32,7 +32,7 @@ function ResetPassword (props) {
   const passwordResetState = usePasswordResetState()
 
   // Handle change/update for the fields
-  const updateField = e => {
+  const updateField = (e) => {
     const name = e.target.name
     const value = e.target.value
     setFields({
@@ -109,12 +109,12 @@ function ResetPassword (props) {
                 <Typography comonent='p'>
                   {passwordResetState?.passwordResetMessage}
                 </Typography>
-                {fields.map(field => (
+                {fields.map((field) => (
                   <TextField
                     key={field.id}
                     id={field.id}
                     value={field.value}
-                    onChange={e => field.onChange(e)}
+                    onChange={(e) => field.onChange(e)}
                     margin={field.margin}
                     placeholder={field.placeholder}
                     type={field.type}
@@ -146,7 +146,7 @@ function ResetPassword (props) {
                     <TextField
                       id={fields[0].id}
                       value={fields[0].valuee}
-                      onChange={e => fields[0].onChange(e)}
+                      onChange={(e) => fields[0].onChange(e)}
                       margin={fields[0].margin}
                       placeholder={fields[0].placeholder}
                       type={fields[0].type}
@@ -170,7 +170,7 @@ function ResetPassword (props) {
               <Box mt={4}>
                 <Button
                   variant='outlined'
-                  onClick={() => props.history.push('/auth/sign-in')}
+                  onClick={() => props.history.push('/auth/login')}
                 >
                   Login
                 </Button>

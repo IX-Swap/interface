@@ -34,5 +34,7 @@ const AllProviders: React.FC = ({ children }) => {
 const customRenderer = (ui: any, options?: Omit<RenderOptions, 'queries'>) =>
   render(ui, { wrapper: AllProviders, ...options })
 
+export const testComponentId = 'test-component'
+
 export * from '@testing-library/react'
 export { customRenderer as render }

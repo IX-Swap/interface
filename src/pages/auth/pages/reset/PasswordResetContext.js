@@ -98,7 +98,7 @@ export function passwordResetReducer (state, { type, payload }) {
   }
 }
 
-// context and hooks
+// password-reset and hooks
 export function PasswordResetProvider ({ children }) {
   const thisReducer =
     process.env.NODE_ENV === 'development'

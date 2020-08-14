@@ -25,7 +25,7 @@ const appRoles = {
 /**
  * Converts payload (csv) roles to array
  */
-const rolesCsvToArray = roles => roles.split(',')
+const rolesCsvToArray = (roles) => roles.split(',')
 
 /**
  * Generic role checker

@@ -69,7 +69,7 @@ export function accreditationReducer (state, { type, payload }) {
   }
 }
 
-// context and hooks
+// password-reset and hooks
 export function AccreditationProvider ({ children }) {
   const thisReducer =
     process.env.NODE_ENV === 'development'
