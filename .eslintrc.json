@@ -1,74 +1,28 @@
 {
     "env": {
+        "jest": true,
         "browser": true,
         "es6": true
     },
+    "plugins": ["prettierx"],
     "extends": [
-        "plugin:react/recommended",
-        "standard"
+        "standard-with-typescript",
+        "react-app",
+        "plugin:prettierx/standardx",
+        "plugin:prettierx/@typescript-eslint",
+        "plugin:prettierx/react"
     ],
-    "globals": {
-        "Atomics": "readonly",
-        "SharedArrayBuffer": "readonly"
-    },
-    "parserOptions": {
-        "ecmaFeatures": {
-            "jsx": true
-        },
-        "ecmaVersion": 2018,
-        "sourceType": "module"
-    },
-    "plugins": [
-        "react"
-    ],
-    "overrides": [
-        {
-            "files": [
-                "*.js"
-            ],
-            "rules": {
-                "import/no-unused-modules": [
-                    "error",
-                    {
-                        "missingExports": false,
-                        "unusedExports": true
-                    }
-                ],
-                "react-hooks/exhaustive-deps": 0
-            }
-        },
-        {
-            "files": [
-                "*.ts*"
-            ],
-            "rules": {
-                "@typescript-eslint/strict-boolean-expressions": 0,
-                "@typescript-eslint/explicit-function-return-type": 0,
-                "@typescript-eslint/restrict-template-expressions": 0,
-                "react/display-name": 0,
-                "no-unused-vars": 0,
-                "@typescript-eslint/no-unused-vars": [
-                    "error"
-                ],
-                "@typescript-eslint/member-delimiter-style": ["error", {
-                    "multiline": {
-                        "delimiter": "none",
-                        "requireLast": true
-                    },
-                    "singleline": {
-                        "delimiter": "semi",
-                        "requireLast": false
-                    }
-                }]
-            }
-        }
-    ],
-    "rules": {
-        "react-hooks/exhaustive-deps": 0
-    },
     "settings": {
         "react": {
             "version": "detect"
         }
+    },
+    "parserOptions": {
+        "project": "./tsconfig.json"
+    },
+    "rules": {
+        "react-hooks/exhaustive-deps": "error",
+        "no-unused-vars": "off",
+        "@typescript-eslint/no-unused-vars": "error"
     }
 }
