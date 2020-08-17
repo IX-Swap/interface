@@ -79,7 +79,7 @@ const AuthenticatorStepper = () => {
     // Display confirm response
     if (prevStatus === TFA_STATUS.SAVING && status === TFA_STATUS.IDLE) {
       let message =
-        'Google Authenticator Setup Success! You will be redirected to login page.'
+        'Google Authenticator Setup Success! You will be redirected to Login page.'
       let type = 'success'
 
       if (confirmed) {

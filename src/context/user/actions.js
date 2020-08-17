@@ -8,7 +8,7 @@ export async function loginUser (
 ) {
   dispatch({ type: userActions.LOGIN_REQUEST })
   try {
-    const uri = '/auth/login'
+    const uri = '/Auth/Login'
     const result = await postRequest(uri, { ...payload })
     const response = await result.json()
     if (result.status === 200) {
@@ -47,7 +47,7 @@ export async function signupUser (
 ) {
   dispatch({ type: userActions.SIGN_UP_REQUEST })
   try {
-    const uri = '/auth/registrations'
+    const uri = '/Auth/registrations'
     const result = await postRequest(uri, { ...payload })
     const response = await result.json()
 
@@ -83,7 +83,7 @@ export function signOut (dispatch: Function) {
   }
 
   // TODO: Fix to not hacky solution
-  window.location = '#/auth/login'
+  window.location = '#/Auth/Login'
 }
 
 export async function verifySignup (
@@ -92,12 +92,12 @@ export async function verifySignup (
 ) {
   try {
     dispatch({ type: userActions.VERIFY_SIGNUP_REQUEST })
-    const uri = '/auth/registrations/confirm'
+    const uri = '/Auth/registrations/confirm'
     const result = await postRequest(uri, { verificationToken })
     if (result.status === 200) {
       dispatch({
         type: userActions.VERIFY_SIGNUP_SUCCESS,
-        payload: 'Successfully verfied. Please login in, again.'
+        payload: 'Successfully verfied. Please Login in, again.'
       })
     } else {
       dispatch({

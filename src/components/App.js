@@ -18,14 +18,14 @@ import Identity from '../pages/identity'
 import Invest from '../pages/invest'
 import Users from '../pages/users'
 import Security from '../pages/security'
-import Authorizer from '../v2/app/pages/authorizer'
+import Authorizer from '../v2/App/pages/authorizer'
 import TradeHistoryTable from '../pages/exchange/components/ExchangeTable/TradeHistoryTable'
 import TableMyOrders from '../pages/exchange/components/ExchangeTable/OrdersTable'
 import TableMarketListings from '../pages/exchange/components/ExchangeTable/MarketListingTable'
 import TableListings from '../pages/exchange/components/ExchangeTable/ListingTable'
 import OverviewExchange from '../pages/exchange/components/TradingTerminal'
 import ListingView from '../pages/exchange/components/ExchangeTable/ListingView'
-import Issuance from '../v2/app/pages/issuance'
+import Issuance from '../v2/App/pages/issuance'
 import DeployToken from '../pages/issuance/deploy'
 
 import { LayoutProvider } from '../context/LayoutContext'
@@ -33,7 +33,7 @@ import { useUserState, useUserDispatch } from '../context/user'
 import { getUser } from '../context/user/actions'
 import NoAccessDialog from './NoAccessDialog'
 import Commitments from '../pages/authorizer/commitments/components/Commitments'
-import { useUserStore } from '../v2/auth/context'
+import { useUserStore } from '../v2/Auth/context'
 
 function App () {
   const { isAuthenticated } = useUserState()
@@ -41,7 +41,7 @@ function App () {
   const classes = useStyles()
 
   useEffect(() => {
-    (async () => {
+    ;(async () => {
       await _subscribeToSocket()
       setHasSocket(true)
     })()
@@ -52,12 +52,13 @@ function App () {
       <Route
         {...rest}
         path={path}
-        render={(props) =>
+        render={props =>
           isAuthenticated ? (
             <Redirect to={{ pathname: '/identity' }} />
           ) : (
             React.createElement(component, props)
-          )}
+          )
+        }
       />
     )
   }
@@ -194,7 +195,7 @@ function App () {
         return (
           <Route
             {...rest}
-            render={(props) => (
+            render={props => (
               <Redirect
                 to={{
                   pathname: '/security',
@@ -209,7 +210,7 @@ function App () {
       return (
         <Route
           {...rest}
-          render={(props) => {
+          render={props => {
             const redirectView = (
               <Redirect
                 to={{

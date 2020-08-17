@@ -32,7 +32,7 @@ const Confirm = () => {
   useEffect(() => {
     const confirmSignup = async () => {
       try {
-        const uri = '/auth/registrations/confirm'
+        const uri = '/Auth/registrations/confirm'
         const result = await postRequest(uri, { verificationToken: token })
         if (result.status === 200) {
           setState({ ...state, isVerified: true, isLoading: false })
@@ -68,12 +68,12 @@ const Confirm = () => {
             <Typography>
               {state.error
                 ? state.error
-                : 'Successfully verfied. Please login in, again.'}
+                : 'Successfully verfied. Please Login in, again.'}
             </Typography>
             <Box mt={4}>
               <Button
                 variant='outlined'
-                onClick={() => history.push('/auth/login')}
+                onClick={() => history.push('/Auth/Login')}
               >
                 Back to Login
               </Button>

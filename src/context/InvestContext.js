@@ -132,7 +132,7 @@ export function investReducer (state, { type, payload }) {
   }
 }
 
-// password-reset and hooks
+// PasswordReset and hooks
 export function InvestProvider ({ children }) {
   const thisReducer =
     process.env.NODE_ENV === 'development'

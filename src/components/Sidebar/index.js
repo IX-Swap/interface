@@ -30,7 +30,7 @@ import {
   toggleSidebar
 } from '../../context/LayoutContext'
 
-import AuthorizerRoutes from 'v2/pages/app/pages/authorizer/routes'
+import AuthorizerRoutes from 'v2/pages/App/pages/authorizer/routes'
 
 function Sidebar ({ location }: { location: any }) {
   const classes = useStyles()
@@ -205,7 +205,7 @@ function Sidebar ({ location }: { location: any }) {
         </IconButton>
       </div>
       <List className={classes.sidebarList}>
-        {structure.map((link) => (
+        {structure.map(link => (
           <SidebarLink
             key={link.id}
             location={location}

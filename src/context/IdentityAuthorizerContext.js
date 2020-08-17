@@ -44,7 +44,7 @@ export function identityAuthorizerReducer (state, { type, payload }) {
   }
 }
 
-// password-reset and hooks
+// PasswordReset and hooks
 export function IdentityAuthorizerProvider ({ children }) {
   const thisReducer =
     process.env.NODE_ENV === 'development'

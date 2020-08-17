@@ -489,8 +489,8 @@ const DsoInformation = ({
                 {['view'].includes(action) &&
                   editableDso.subscriptionDocument && (
                     <Button onClick={() => downloadFile(dso._id)}>
-                      Download
-                  </Button>
+                    Download
+                    </Button>
                 )}
                 {['create', 'edit'].includes(action) && (
                   <Uploader

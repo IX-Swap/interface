@@ -14,7 +14,7 @@ export const toggleEditMode = (dispatch, value) => {
   dispatch({ type: actions.TOGGLE_EDIT_MODE, payload: value })
 }
 
-// not using password-reset
+// not using PasswordReset
 export const fetchAccountBalanceByAsset = async (asset) => {
   const userId = localStore.getUserId()
   const url = `/accounts/balance/${userId}/${asset}`
@@ -29,7 +29,7 @@ export const fetchAccountBalanceByAsset = async (asset) => {
   throw new Error(result.message)
 }
 
-// not using password-reset
+// not using PasswordReset
 export const addCommitment = async ({
   dso,
   signedSubscriptionDocument,

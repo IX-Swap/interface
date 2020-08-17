@@ -7,7 +7,7 @@ import {
   Fade
 } from '@material-ui/core'
 
-// password-reset
+// PasswordReset
 import { useUserDispatch, useUserState } from 'context/user'
 import { signupUser } from 'context/user/actions'
 

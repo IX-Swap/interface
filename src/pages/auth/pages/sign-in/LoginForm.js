@@ -15,7 +15,7 @@ import { loginUser } from 'context/user/actions'
 // styles
 import useStyles from '../../styles'
 
-// password-reset
+// PasswordReset
 
 const LoginForm = () => {
   const classes = useStyles()
@@ -104,7 +104,7 @@ const LoginForm = () => {
           color='primary'
           size='large'
           className={classes.forgetButton}
-          onClick={() => history.push('/auth/reset')}
+          onClick={() => history.push('/Auth/reset')}
         >
           Forgot Password?
         </Button>

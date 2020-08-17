@@ -204,7 +204,7 @@ export function identityReducer (state, { type, payload }) {
   }
 }
 
-// password-reset and hooks
+// PasswordReset and hooks
 export function IdentityProvider ({ children }) {
   const thisReducer =
     process.env.NODE_ENV === 'development'
@@ -373,7 +373,7 @@ export const downloadFile = async (dispatch, documentId) => {
     const result = await getRequest(uri)
 
     if (result.status === 200) {
-      result.blob().then((blob) => {
+      result.blob().then(blob => {
         const url = window.URL.createObjectURL(blob)
         window.open(url)
         dispatch({ type: actions.DOWNLOAD_FILE_SUCCESS })
@@ -390,7 +390,7 @@ export const downloadFile = async (dispatch, documentId) => {
 // selectors
 export const selectFile = (state, title) =>
   state.identity.documents
-    ?.filter?.((f) => f.title === title)
+    ?.filter?.(f => f.title === title)
     .reduce((lastFile, currFile) => {
       if (!lastFile) return currFile
       const lastDate = new Date(lastFile.createdAt)
@@ -402,7 +402,7 @@ export const selectFile = (state, title) =>
 export const beginResetPassword = async (dispatch, email) => {
   dispatch({ type: actions.BEGIN_RESET_PASSWORD_REQUEST })
   try {
-    const uri = '/auth/password/reset/start'
+    const uri = '/Auth/password/reset/start'
     const result = await postRequest(uri, { email })
     const response = await result.json()
     if (result.status === 200) {
@@ -425,7 +425,7 @@ export const completeResetPassword = async (
 ) => {
   dispatch({ type: actions.COMPLETE_RESET_PASSWORD_REQUEST })
   try {
-    const uri = '/auth/password/reset/confirm'
+    const uri = '/Auth/password/reset/confirm'
     const payload = {
       email,
       resetToken,
@@ -450,7 +450,7 @@ export const completeResetPassword = async (
   }
 }
 
-export const getCorporate = async (dispatch) => {
+export const getCorporate = async dispatch => {
   try {
     const uri = '/identity/profile/corporate'
     const result = await getRequest(uri)

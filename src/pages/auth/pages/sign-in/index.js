@@ -10,7 +10,7 @@ import useStyles from '../../styles'
 import SignupForm from './SignupForm'
 import LoginForm from './LoginForm'
 
-// password-reset
+// PasswordReset
 
 function SignIn () {
   const classes = useStyles()

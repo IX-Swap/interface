@@ -170,7 +170,7 @@ function ResetPassword (props) {
               <Box mt={4}>
                 <Button
                   variant='outlined'
-                  onClick={() => props.history.push('/auth/login')}
+                  onClick={() => props.history.push('/Auth/Login')}
                 >
                   Login
                 </Button>
