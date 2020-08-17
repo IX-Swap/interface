@@ -2,7 +2,9 @@ import HttpResponse from '../../types/httpResponse'
 import { IndividualIdentity, CorporateIdentity } from '../../types/identity'
 import { getRequest, postRequest } from '../../helpers/httpRequests'
 
-export async function getIndividualIdentity (id: string): Promise<HttpResponse<IndividualIdentity>> {
+export async function getIndividualIdentity(
+  id: string
+): Promise<HttpResponse<IndividualIdentity>> {
   try {
     const individualUri = `/identity/individuals/${id}`
 
@@ -13,16 +15,24 @@ export async function getIndividualIdentity (id: string): Promise<HttpResponse<I
       console.log(user)
       return new HttpResponse<IndividualIdentity>(true, user)
     } else {
-      return new HttpResponse<IndividualIdentity>(false, undefined, response.message)
+      return new HttpResponse<IndividualIdentity>(
+        false,
+        undefined,
+        response.message
+      )
     }
   } catch (err) {
     console.log(err)
     console.log(err.response)
-    return new HttpResponse<IndividualIdentity>(false, undefined, 'Login Failed')
+    return new HttpResponse<IndividualIdentity>(
+      false,
+      undefined,
+      'Login Failed'
+    )
   }
 }
 
-export async function getCorporateIdentities (
+export async function getCorporateIdentities(
   id: string,
   uri?: string
 ): Promise<HttpResponse<CorporateIdentity[]>> {

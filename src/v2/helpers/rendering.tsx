@@ -2,7 +2,7 @@ import React from 'react'
 import { MenuItem } from '@material-ui/core'
 import draftToHtml from 'draftjs-to-html'
 
-export const renderMenu = (arr: any[]) => {
+export const renderMenu = (arr: any[]): JSX.Element[] => {
   const options = arr.map(
     ({
       value,

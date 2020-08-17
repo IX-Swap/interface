@@ -2,7 +2,10 @@ import HttpResponse from '../types/httpResponse'
 import { Dso, DsoRequest } from '../types/dso'
 import { postRequest, putRequest } from '../helpers/httpRequests'
 
-export async function saveDso (request: DsoRequest, userId: string): Promise<HttpResponse<Dso>> {
+export async function saveDso (
+  request: DsoRequest,
+  userId: string
+): Promise<HttpResponse<Dso>> {
   try {
     const uri = `/issuance/dso/${userId}`
 
@@ -12,22 +15,18 @@ export async function saveDso (request: DsoRequest, userId: string): Promise<Htt
       const dso = response.data
       return new HttpResponse<Dso>(true, dso)
     } else {
-      return new HttpResponse<Dso>(
-        false,
-        undefined,
-        response.message
-      )
+      return new HttpResponse<Dso>(false, undefined, response.message)
     }
   } catch (err) {
-    return new HttpResponse<Dso>(
-      false,
-      undefined,
-      'Unable to save Dso'
-    )
+    return new HttpResponse<Dso>(false, undefined, 'Unable to save Dso')
   }
 }
 
-export async function editDso (dsoId: string, request: DsoRequest, userId: string): Promise<HttpResponse<Dso>> {
+export async function editDso (
+  dsoId: string,
+  request: DsoRequest,
+  userId: string
+): Promise<HttpResponse<Dso>> {
   try {
     const uri = `/issuance/dso/${userId}/${dsoId}`
 
@@ -37,17 +36,9 @@ export async function editDso (dsoId: string, request: DsoRequest, userId: strin
       const dso = response.data
       return new HttpResponse<Dso>(true, dso)
     } else {
-      return new HttpResponse<Dso>(
-        false,
-        undefined,
-        response.message
-      )
+      return new HttpResponse<Dso>(false, undefined, response.message)
     }
   } catch (err) {
-    return new HttpResponse<Dso>(
-      false,
-      undefined,
-      'Unable to save Dso'
-    )
+    return new HttpResponse<Dso>(false, undefined, 'Unable to save Dso')
   }
 }

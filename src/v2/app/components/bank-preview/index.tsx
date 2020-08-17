@@ -47,53 +47,56 @@ const BankView = ({ bank, asset }: BankViewProps) => (
         <Typography>{bank.swiftCode}</Typography>
       </Grid>
     </Grid>
-    {bank.address && Object.values(bank.address).join('').trim() && (
-      <>
-        <Grid item>
-          <Typography variant='h6'>Bank Address</Typography>
-        </Grid>
-        <Grid item container>
-          <Grid item xs={5}>
-            <Typography>
-              <b>Line 1</b>
-            </Typography>
-            <Typography>{bank.address.line1}</Typography>
+    {bank.address &&
+      Object.values(bank.address)
+        .join('')
+        .trim() && (
+        <>
+          <Grid item>
+            <Typography variant='h6'>Bank Address</Typography>
           </Grid>
-          <Grid item xs={5}>
-            <Typography>
-              <b>Line 2</b>
-            </Typography>
-            <Typography>{bank.address.line2}</Typography>
+          <Grid item container>
+            <Grid item xs={5}>
+              <Typography>
+                <b>Line 1</b>
+              </Typography>
+              <Typography>{bank.address.line1}</Typography>
+            </Grid>
+            <Grid item xs={5}>
+              <Typography>
+                <b>Line 2</b>
+              </Typography>
+              <Typography>{bank.address.line2}</Typography>
+            </Grid>
+            <Grid item xs={2}>
+              <Typography>
+                <b>City</b>
+              </Typography>
+              <Typography>{bank.address.city}</Typography>
+            </Grid>
           </Grid>
-          <Grid item xs={2}>
-            <Typography>
-              <b>City</b>
-            </Typography>
-            <Typography>{bank.address.city}</Typography>
+          <Grid item container>
+            <Grid item xs={5}>
+              <Typography>
+                <b>State</b>
+              </Typography>
+              <Typography>{bank.address.state}</Typography>
+            </Grid>
+            <Grid item xs={5}>
+              <Typography>
+                <b>Country</b>
+              </Typography>
+              <Typography>{bank.address.country}</Typography>
+            </Grid>
+            <Grid item xs={2}>
+              <Typography>
+                <b>Postal Code</b>
+              </Typography>
+              <Typography>{bank.address.postalCode}</Typography>
+            </Grid>
           </Grid>
-        </Grid>
-        <Grid item container>
-          <Grid item xs={5}>
-            <Typography>
-              <b>State</b>
-            </Typography>
-            <Typography>{bank.address.state}</Typography>
-          </Grid>
-          <Grid item xs={5}>
-            <Typography>
-              <b>Country</b>
-            </Typography>
-            <Typography>{bank.address.country}</Typography>
-          </Grid>
-          <Grid item xs={2}>
-            <Typography>
-              <b>Postal Code</b>
-            </Typography>
-            <Typography>{bank.address.postalCode}</Typography>
-          </Grid>
-        </Grid>
-      </>
-    )}
+        </>
+      )}
   </Grid>
 )
 

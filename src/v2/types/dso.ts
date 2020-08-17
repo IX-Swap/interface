@@ -66,7 +66,7 @@ export interface BaseDso {
 
 export interface Dso extends BaseDso {
   documents: Document[]
-  currency: Partial<Asset>[] | Asset[]
+  currency: Array<Partial<Asset>> | Asset[]
 }
 
 export interface DsoRequest extends BaseDso {

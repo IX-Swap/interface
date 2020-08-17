@@ -2,7 +2,15 @@ import { postRequest } from '../../helpers/httpRequests'
 import HttpResponse from '../../types/httpResponse'
 import { Asset } from '../../types/asset'
 
-export async function getAssets ({ skip = 0, limit = 50, type }: { skip?: number; limit?: number; type: 'Currency' | 'Security' }) {
+export async function getAssets({
+  skip = 0,
+  limit = 50,
+  type
+}: {
+  skip?: number
+  limit?: number
+  type: 'Currency' | 'Security'
+}) {
   try {
     const uri = '/accounts/assets/list'
     const result = await postRequest(uri, { skip, limit, type })

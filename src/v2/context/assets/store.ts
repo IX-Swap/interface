@@ -13,7 +13,10 @@ export class AssetStore {
     const assets = await getAssets({ type: 'Currency' })
 
     if (!assets.status) {
-      await snackbarService.showSnackbar(assets.message ?? 'Cannot get currencies', 'error')
+      await snackbarService.showSnackbar(
+        assets.message ?? 'Cannot get currencies',
+        'error'
+      )
       return
     }
 

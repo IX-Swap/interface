@@ -13,4 +13,4 @@ export interface DocumentGuide {
   title: string
   label: string
   type: string
-};
+}

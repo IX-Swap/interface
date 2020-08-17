@@ -19,7 +19,7 @@ _axios.defaults.withCredentials = true
 
 const apiService = {
   get: async function get<T = any> (uri: string, config?: AxiosRequestConfig) {
-    return this._request<T>({
+    return await this._request<T>({
       method: 'get',
       uri,
       data: undefined,
@@ -28,7 +28,7 @@ const apiService = {
   },
 
   async post<T = any> (uri: string, data: any, config?: AxiosRequestConfig) {
-    return this._request<T>({
+    return await this._request<T>({
       method: 'post',
       uri,
       data,
@@ -49,6 +49,7 @@ const apiService = {
       response.data = data.data
       response.message = data.message
     } catch (error) {
+      response.success = false
       response.message = this._getErrorMessage(error)
     }
 

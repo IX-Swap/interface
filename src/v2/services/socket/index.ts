@@ -6,18 +6,18 @@ import storageHelper from '../../helpers/storageHelper'
 let _socket: SocketIOClient.Socket | undefined
 
 const socketService = {
-  getConnection () {
+  getConnection() {
     return _socket
   },
 
-  disconnect () {
+  disconnect() {
     if (_socket) {
       _socket.removeAllListeners()
       _socket.disconnect()
     }
   },
 
-  subscribeToSocket () {
+  subscribeToSocket() {
     if (_socket && !_socket.connected) {
       const bearerToken = storageHelper.getAccessToken()
       _socket = io(`${API_URL}?token=${bearerToken}`)
@@ -26,7 +26,7 @@ const socketService = {
     return _socket
   },
 
-  _subscribeToSocket (): Promise<SocketIOClient.Socket> {
+  _subscribeToSocket(): Promise<SocketIOClient.Socket> {
     return new Promise((resolve) => {
       const bearerToken = storageHelper.getAccessToken()
       if (!bearerToken) {
@@ -42,19 +42,19 @@ const socketService = {
           console.log('connect')
           resolve(_socket)
         })
-        _socket.on('connect_error', function (...props: any) {
+        _socket.on('connect_error', function(...props: any) {
           console.log('no connect', props)
           resolve(_socket)
         })
-        _socket.on('connect_timeout', function () {
+        _socket.on('connect_timeout', function() {
           console.log('no timeout')
           resolve(_socket)
         })
-        _socket.on('error', function (...props: any) {
+        _socket.on('error', function(...props: any) {
           console.log('no connect', props)
           resolve(_socket)
         })
-        _socket.on('reconnecting', function () {
+        _socket.on('reconnecting', function() {
           console.log('reconnecting connect')
           resolve(_socket)
         })

@@ -21,7 +21,10 @@ export class IdentityStore {
     const identity = await getIndividualIdentity(id)
 
     if (!identity.status) {
-      await snackbarService.showSnackbar(identity.message ?? 'Unable to get identity', 'error')
+      await snackbarService.showSnackbar(
+        identity.message ?? 'Unable to get identity',
+        'error'
+      )
       return
     }
 
@@ -48,7 +51,10 @@ export class IdentityStore {
   }
 
   @action
-  getAccessibleCorporateIdentities = async (isAuthorizer: boolean, isAdmin: boolean) => {
+  getAccessibleCorporateIdentities = async (
+    isAuthorizer: boolean,
+    isAdmin: boolean
+  ) => {
     const userId = storageHelper.getUserId()
     let uri
 

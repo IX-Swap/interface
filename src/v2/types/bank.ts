@@ -7,7 +7,7 @@ interface BankAddress {
   state?: string
   country?: string
   postalCode?: string
-};
+}
 
 export interface Bank {
   _id: string
@@ -21,4 +21,4 @@ export interface Bank {
   createdAt: string
   address?: BankAddress
   asset: Asset
-};
+}

@@ -14,7 +14,7 @@ export interface IdentityState {
     get: string | null
   }
   type?: 'individual' | 'corporate'
-};
+}
 
 export interface IdentityAddress {
   line1: string
@@ -24,7 +24,7 @@ export interface IdentityAddress {
   state: string
   countryOfResidence?: string // for individual
   country?: string // for corporate
-};
+}
 
 export interface IdentityProfile {
   firstName: string
@@ -38,7 +38,7 @@ export interface IdentityProfile {
   contactNumber: string
   address: IdentityAddress
   email?: string
-};
+}
 
 export interface IndentityFinancials {
   annualIncome: string
@@ -53,7 +53,7 @@ export interface IndentityFinancials {
   politicallyExposed: boolean
   sourceOfWealth: string
   toArrangeCustody: boolean
-};
+}
 
 export interface CorporateFields {
   companyLegalName: string
@@ -64,7 +64,7 @@ export interface CorporateFields {
   representatives: IdentityProfile[]
   directors: IdentityProfile[]
   beneficialOwners: IdentityProfile[]
-};
+}
 
 export interface BaseIdentity {
   _id: string
@@ -86,6 +86,8 @@ export interface DeclarationTemplate {
   sublevel?: boolean
 }
 
-export type IndividualIdentity = BaseIdentity & IdentityProfile & Partial<IndentityFinancials>
+export type IndividualIdentity = BaseIdentity &
+  IdentityProfile &
+  Partial<IndentityFinancials>
 
 export type CorporateIdentity = BaseIdentity & CorporateFields

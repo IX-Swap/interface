@@ -7,7 +7,7 @@ const initialState = new IdentityStore()
 export const StoreContext = createContext<IdentityStore>(initialState)
 export const StoreProvider = StoreContext.Provider
 
-export function UserProvider ({ children }: { children: Node }) {
+export function UserProvider({ children }: { children: Node }) {
   return <StoreProvider value={initialState}>{children}</StoreProvider>
 }
 

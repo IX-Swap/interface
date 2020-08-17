@@ -1,9 +1,9 @@
 import { includes } from 'lodash'
-import { useUserStore } from 'v2/auth/context'
+import { useUserStore } from 'v2/Auth/context'
 
 // RBACL Algorithm for Frontend
 
-// - A user can login without 2-factor authentication.
+// - A user can Login without 2-factor authentication.
 // - The user must complete 2-factor authentication before accessing any page.
 //   It will always force redirect to 2-Factor Authentication page if not complete
 // - Once 2-FA is complete, the user will be redirected to complete identity before they can access any pages.

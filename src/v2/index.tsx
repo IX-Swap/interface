@@ -1,12 +1,12 @@
 import React from 'react'
 import { Router, Route, Redirect } from 'react-router-dom'
 
-import AppRoot from './app'
-import AuthRoot from './auth'
-import { useUserStore } from 'v2/auth/context'
+import AppRoot from './App'
+import AuthRoot from 'v2/Auth/AuthRoot'
+import { useUserStore } from 'v2/Auth/context'
 import history from './history'
 
-const EntryPoint = () => {
+const EntryPoint: React.FC = () => {
   const { isAuthenticated } = useUserStore()
 
   return (

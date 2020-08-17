@@ -1,5 +1,3 @@
-import history from 'v2/history'
+const useAppRouter = (): void => {}
 
-const useAppRouter = () => {}
-
-export default useAppRouter()
+export default useAppRouter

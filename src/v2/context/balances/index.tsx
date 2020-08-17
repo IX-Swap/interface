@@ -7,7 +7,7 @@ const initialState = new BalancesStore()
 export const StoreContext = createContext<BalancesStore>(initialState)
 export const StoreProvider = StoreContext.Provider
 
-export function BalancesProvider ({ children }: { children: Node }) {
+export function BalancesProvider({ children }: { children: Node }) {
   return <StoreProvider value={initialState}>{children}</StoreProvider>
 }
 

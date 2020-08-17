@@ -4,32 +4,32 @@ import { GenericStatus } from 'v2/types/status'
 
 class AsyncStore extends BaseStore {
   @observable
-  message = '';
+  message = ''
 
   @observable
-  error = '';
+  error = ''
 
   @computed
-  get isLoading () {
+  get isLoading (): boolean {
     return this.status === GenericStatus.Busy
   }
 
   @action
-  protected setBusy () {
+  protected setBusy (): void {
     this.status = GenericStatus.Busy
     this.error = ''
     this.message = ''
   }
 
   @action
-  protected completeWithSuccess (message: string) {
+  protected completeWithSuccess (message: string): void {
     this.status = GenericStatus.Idle
     this.message = message
     this.error = ''
   }
 
   @action
-  protected completeWithError (error: string) {
+  protected completeWithError (error: string): void {
     this.status = GenericStatus.Idle
     this.error = error
     this.message = ''

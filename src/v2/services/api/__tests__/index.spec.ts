@@ -151,6 +151,7 @@ describe('apiService', () => {
       const response = await apiService.post(url, {})
 
       expect(response.message).toBe(unsuccessfulResponse.message)
+      expect(response.success).toBeFalsy()
     })
 
     it('should set response message to the catched error if one were thrown', async () => {
@@ -162,6 +163,7 @@ describe('apiService', () => {
       const response = await apiService.post(url, {})
 
       expect(response.message).toBe(errorMessage)
+      expect(response.success).toBeFalsy()
     })
   })
 })
