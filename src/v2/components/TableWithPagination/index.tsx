@@ -15,24 +15,25 @@ import { init } from './context'
 import Items from './items'
 import { TableColumn, BaseFilter, RowAction } from '../../types/util'
 import { GenericStatus } from '../../types/status'
+import { Actions } from 'v2/app/authorizer/components/Actions'
 
 interface ProgressProps<T> {
   name: string
   uri: string
 }
 
-interface TableViewProps<T> extends ProgressProps<T> {
+export interface TableViewProps<T> extends ProgressProps<T> {
   name: string
   uri: string
   columns: Array<TableColumn<T>>
   bordered?: boolean
   filter?: BaseFilter
   hasActions?: boolean
-  actions?: RowAction<T>
+  actions?: Actions<T>
   children?: any
 }
 
-const Progress = <T extends unknown>({ name, uri }: ProgressProps<T>) => {
+const Progress = <T,>({ name, uri }: ProgressProps<T>) => {
   const { useStore: useTableStoreState } = init<T>(name, uri)
   const tableState = useTableStoreState()
 
@@ -42,7 +43,7 @@ const Progress = <T extends unknown>({ name, uri }: ProgressProps<T>) => {
 }
 Progress.whyDidYouRender = true
 
-const GTableRows = <T extends unknown>({
+const GTableRows = <T,>({
   name,
   uri,
   columns,
@@ -68,7 +69,7 @@ const GTableRows = <T extends unknown>({
 }
 GTableRows.whyDidYouRender = true
 
-const GTableFooter = <T extends unknown>({
+const GTableFooter = <T,>({
   name,
   uri,
   columns,
@@ -90,7 +91,7 @@ const GTableFooter = <T extends unknown>({
               count={tableState.total}
               rowsPerPage={tableState.limit}
               page={tableState.page}
-              onChangeRowsPerPage={(evt) =>
+              onChangeRowsPerPage={evt =>
                 tableState.setRowsPerPage(parseInt(evt.target.value))
               }
               onChangePage={(evt, newPage: number) => {
@@ -106,7 +107,7 @@ const GTableFooter = <T extends unknown>({
 }
 GTableFooter.whyDidYouRender = true
 
-const TableView = <T extends unknown>({
+const TableView = <T,>({
   name,
   uri,
   filter = { status: '' },
@@ -130,7 +131,7 @@ const TableView = <T extends unknown>({
         <Table aria-label='table'>
           <TableHead>
             <TableRow>
-              {columns.map((e) => (
+              {columns.map(e => (
                 <TableCell key={e.key} align={e.headAlign ?? 'left'}>
                   <b>{e.label}</b>
                 </TableCell>
@@ -160,6 +161,5 @@ const TableView = <T extends unknown>({
     </>
   )
 }
-TableView.whyDidYouRender = true
 
 export default TableView

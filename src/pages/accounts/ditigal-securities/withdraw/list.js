@@ -186,7 +186,8 @@ export default function WithdrawalList ({ assetId }) {
                 rowsPerPage={limit}
                 page={page}
                 onChangeRowsPerPage={evt =>
-                  handleChangeRowsPerPage(parseInt(evt.target.value))}
+                  handleChangeRowsPerPage(parseInt(evt.target.value))
+                }
                 onChangePage={handleChangePage}
               />
             </TableRow>

@@ -2,7 +2,7 @@ import HttpResponse from '../../types/httpResponse'
 import { IndividualIdentity, CorporateIdentity } from '../../types/identity'
 import { getRequest, postRequest } from '../../helpers/httpRequests'
 
-export async function getIndividualIdentity(
+export async function getIndividualIdentity (
   id: string
 ): Promise<HttpResponse<IndividualIdentity>> {
   try {
@@ -32,7 +32,7 @@ export async function getIndividualIdentity(
   }
 }
 
-export async function getCorporateIdentities(
+export async function getCorporateIdentities (
   id: string,
   uri?: string
 ): Promise<HttpResponse<CorporateIdentity[]>> {

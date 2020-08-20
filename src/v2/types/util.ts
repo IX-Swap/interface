@@ -19,14 +19,19 @@ export interface TableColumn<T> {
   render?: (val: any, row: T) => React.ReactNode | JSX.Element | string
 }
 
-export type AuthorizableStatus = 'Unauthorized' | 'Approved' | 'Rejected' | ''
+export type AuthorizableStatus =
+  | 'Unauthorized'
+  | 'Approved'
+  | 'Rejected'
+  | 'Submitted'
+  | ''
 
 export interface NumberFormat {
   currency: string
 }
 
 export interface Viewable<T> {
-  onView?: (item: T) => JSX.Element
+  renderView?: (item: T) => JSX.Element
 }
 
 export type RowAction<T> = (row: T) => ReactNode

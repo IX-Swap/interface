@@ -18,10 +18,7 @@ const formatDeclarations = (payloadItems, type) => {
     // get item key
     const key = Object.keys(d)[0]
     // get index of template with same key
-    const index = findIndex(
-      declarationTemplate[type],
-      item => item.key === key
-    )
+    const index = findIndex(declarationTemplate[type], item => item.key === key)
     // add merged object
     declarations.push({
       ...declarationTemplate[type][index],

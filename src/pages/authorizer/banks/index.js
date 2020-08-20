@@ -187,7 +187,8 @@ const MemoizedTable = React.memo(({ handleSelectChange, onMount }) => {
                 history.push({
                   pathname: '/authorizer/summary',
                   state: { data: mBank, model: redirectModel }
-                })}
+                })
+              }
               style={{
                 marginLeft: '16px'
               }}

@@ -104,7 +104,7 @@ const LoginForm = () => {
           color='primary'
           size='large'
           className={classes.forgetButton}
-          onClick={() => history.push('/Auth/reset')}
+          onClick={() => history.push('/auth/reset')}
         >
           Forgot Password?
         </Button>

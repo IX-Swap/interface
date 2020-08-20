@@ -138,7 +138,7 @@ const columns = [
   },
   {
     key: 'twoFactorAuth',
-    label: '2-Factor Auth',
+    label: '2-Factor auth',
     render: is2fa =>
       is2fa ? (
         <Typography color='primary'>Yes</Typography>

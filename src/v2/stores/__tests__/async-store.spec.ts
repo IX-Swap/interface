@@ -9,7 +9,7 @@ describe('AsyncStore', () => {
       expect(store.isLoading).toBe(false)
     })
 
-    it('returns true if store.status is busy', () => {
+    it('returns true if context.status is busy', () => {
       const store = new AsyncStore()
 
       store.status = GenericStatus.Busy

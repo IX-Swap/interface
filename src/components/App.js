@@ -18,14 +18,14 @@ import Identity from '../pages/identity'
 import Invest from '../pages/invest'
 import Users from '../pages/users'
 import Security from '../pages/security'
-import Authorizer from '../v2/App/pages/authorizer'
+import AuthorizerRoot from '../v2/app/authorizer/AuthorizerRoot'
 import TradeHistoryTable from '../pages/exchange/components/ExchangeTable/TradeHistoryTable'
 import TableMyOrders from '../pages/exchange/components/ExchangeTable/OrdersTable'
 import TableMarketListings from '../pages/exchange/components/ExchangeTable/MarketListingTable'
 import TableListings from '../pages/exchange/components/ExchangeTable/ListingTable'
 import OverviewExchange from '../pages/exchange/components/TradingTerminal'
 import ListingView from '../pages/exchange/components/ExchangeTable/ListingView'
-import Issuance from '../v2/App/pages/issuance'
+import Issuance from '../v2/app/issuance'
 import DeployToken from '../pages/issuance/deploy'
 
 import { LayoutProvider } from '../context/LayoutContext'
@@ -33,7 +33,7 @@ import { useUserState, useUserDispatch } from '../context/user'
 import { getUser } from '../context/user/actions'
 import NoAccessDialog from './NoAccessDialog'
 import Commitments from '../pages/authorizer/commitments/components/Commitments'
-import { useUserStore } from '../v2/Auth/context'
+import { useUserStore } from '../v2/auth/context'
 
 function App () {
   const { isAuthenticated } = useUserState()
@@ -167,7 +167,7 @@ function App () {
         ? [
           {
             route: '/authorizer',
-            component: Authorizer
+            component: AuthorizerRoot
           },
           {
             route: '/authorizer/commitments/view',

@@ -11,7 +11,7 @@ import { SnackbarContainer } from 'uno-material-ui'
 
 import Themes from './themes'
 import * as serviceWorker from './serviceWorker'
-import { UserProvider } from 'v2/Auth/context'
+import { UserProvider } from 'v2/auth/context'
 import EntryPoint from './v2'
 
 const generateClassName = createGenerateClassName({

@@ -38,7 +38,7 @@ const DsoBoard = () => {
             onChange={handleChange}
             aria-label='disabled tabs example'
           >
-            <Tab value={0} label='Offerings' />
+            <Tab value={0} label='Listings' />
             <Tab value={1} label='My Commitments' />
           </Tabs>
           <Divider />

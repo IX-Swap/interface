@@ -37,7 +37,7 @@ const useStyles = makeStyles((theme) => ({
 const FINAL_STEP = 3
 
 const getSteps = () => [
-  'Download App',
+  'Download app',
   'Scan QR Code',
   'Backup Key',
   'Enable Google Authenticator'

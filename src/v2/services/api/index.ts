@@ -36,6 +36,15 @@ const apiService = {
     })
   },
 
+  async put<T = any> (uri: string, data: any, config?: AxiosRequestConfig) {
+    return await this._request<T>({
+      method: 'put',
+      uri,
+      data,
+      axiosConfig: config || {}
+    })
+  },
+
   async _request<T> (config: APIServiceRequestConfig) {
     const axiosConfig = this._prepareRequestConfig(config)
     const response: APIServiceResponse<T> = defaultResponse

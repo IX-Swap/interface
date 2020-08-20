@@ -134,7 +134,8 @@ const MemoizedTable = React.memo(({ handleSelectChange, onMount }) => {
                 history.push({
                   pathname: '/authorizer/deposits/view',
                   state: { deposit: mDeposit }
-                })}
+                })
+              }
               style={{
                 marginLeft: '16px'
               }}

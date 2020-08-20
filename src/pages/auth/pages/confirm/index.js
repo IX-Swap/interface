@@ -32,7 +32,7 @@ const Confirm = () => {
   useEffect(() => {
     const confirmSignup = async () => {
       try {
-        const uri = '/Auth/registrations/confirm'
+        const uri = '/auth/registrations/confirm'
         const result = await postRequest(uri, { verificationToken: token })
         if (result.status === 200) {
           setState({ ...state, isVerified: true, isLoading: false })
@@ -73,7 +73,7 @@ const Confirm = () => {
             <Box mt={4}>
               <Button
                 variant='outlined'
-                onClick={() => history.push('/Auth/Login')}
+                onClick={() => history.push('/auth/Login')}
               >
                 Back to Login
               </Button>

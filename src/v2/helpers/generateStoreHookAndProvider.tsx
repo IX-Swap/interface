@@ -1,6 +1,6 @@
 import React, { createContext, useContext } from 'react'
 
-interface ProviderProps<T> {
+export interface ProviderProps<T> {
   value?: Partial<T>
 }
 

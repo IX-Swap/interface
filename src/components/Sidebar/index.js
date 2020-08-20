@@ -30,7 +30,7 @@ import {
   toggleSidebar
 } from '../../context/LayoutContext'
 
-import AuthorizerRoutes from 'v2/pages/App/pages/authorizer/routes'
+import AuthorizerRoutes from 'v2/pages/app/pages/authorizer/router'
 
 function Sidebar ({ location }: { location: any }) {
   const classes = useStyles()

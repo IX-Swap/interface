@@ -86,15 +86,7 @@ const redirectModel = [
 function useBankListLogic () {
   const bankDispatch = useBanksListDispatch()
   const bankListState = useBanksListState()
-  const {
-    status,
-    page,
-    total,
-    limit,
-    items,
-    statusCode,
-    error
-  } = bankListState
+  const { status, page, total, limit, items, statusCode, error } = bankListState
   const mountedRef = useRef(true)
   const [activeBank, setActiveBank] = useState(baseBankRequest)
   const [editOpen, setEditOpen] = useState(false)
@@ -276,7 +268,8 @@ function BankListComponent ({ hasApproved }) {
                       history.push({
                         pathname: '/accounts/banks/view',
                         state: { data: mBank, model: redirectModel }
-                      })}
+                      })
+                    }
                     style={{
                       marginLeft: '16px'
                     }}

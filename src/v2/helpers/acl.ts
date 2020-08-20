@@ -1,5 +1,5 @@
 import { includes } from 'lodash'
-import { useUserStore } from 'v2/Auth/context'
+import { useUserStore } from 'v2/auth/context'
 
 // RBACL Algorithm for Frontend
 

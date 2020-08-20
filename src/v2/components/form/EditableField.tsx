@@ -98,7 +98,12 @@ const EditableField = ({
               id={`select-${name}`}
               rules={{ required }}
               control={control}
-              onChange={([e]) => e.target.value}
+              onChange={(
+                e: React.ChangeEvent<{
+                  name?: string | undefined
+                  value: unknown
+                }>
+              ) => e.target.value}
               className={classes.selectField}
               defaultValue={value || ''}
             >

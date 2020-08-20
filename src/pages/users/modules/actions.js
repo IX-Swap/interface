@@ -4,7 +4,7 @@ import actionGenerator from 'context/base/withPagination/actions'
 
 const { getter: getUsersList, ...pageMethods } = actionGenerator(
   'usersList',
-  '/Auth/users/list',
+  '/auth/users/list',
   {}
 )
 

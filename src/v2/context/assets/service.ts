@@ -2,7 +2,7 @@ import { postRequest } from '../../helpers/httpRequests'
 import HttpResponse from '../../types/httpResponse'
 import { Asset } from '../../types/asset'
 
-export async function getAssets({
+export async function getAssets ({
   skip = 0,
   limit = 50,
   type

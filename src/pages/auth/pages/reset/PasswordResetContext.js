@@ -140,7 +140,7 @@ export function usePasswordResetDispatch () {
 export const beginResetPassword = async (dispatch, email) => {
   dispatch({ type: actions.BEGIN_RESET_PASSWORD_REQUEST })
   try {
-    const uri = '/Auth/password/reset/start'
+    const uri = '/auth/password/reset/start'
     const result = await postRequest(uri, { email })
     const response = await result.json()
     if (result.status === 200) {
@@ -163,7 +163,7 @@ export const completeResetPassword = async (
 ) => {
   dispatch({ type: actions.COMPLETE_RESET_PASSWORD_REQUEST })
   try {
-    const uri = '/Auth/password/reset/confirm'
+    const uri = '/auth/password/reset/confirm'
     const payload = {
       email,
       resetToken,

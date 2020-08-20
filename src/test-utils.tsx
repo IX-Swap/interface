@@ -6,16 +6,15 @@ import {
   StylesProvider
 } from '@material-ui/core/styles'
 import { ThemeProvider } from '@material-ui/styles'
-import { CssBaseline } from '@material-ui/core'
-import { SnackbarContainer } from 'uno-material-ui'
-
 import Themes from './themes'
 import history from './v2/history'
-import { UserProvider } from 'v2/Auth/context'
-import { UserStore } from 'v2/Auth/context/store'
-import { PasswordResetProvider } from 'v2/Auth/context/password-reset'
-import PasswordResetStore from 'v2/Auth/context/password-reset/store'
-import { PasswordResetStep } from 'v2/Auth/context/password-reset/types'
+import { UserProvider } from 'v2/auth/context'
+import { UserStore } from 'v2/auth/context/store'
+import { PasswordResetProvider } from 'v2/auth/context/password-reset'
+import PasswordResetStore from 'v2/auth/context/password-reset/store'
+import { PasswordResetStep } from 'v2/auth/context/password-reset/types'
+import { AuthorizerTableStore } from 'v2/app/authorizer/context/store'
+import { AuthorizerTableStoreProvider } from 'v2/app/authorizer/context'
 
 const generateClassName = createGenerateClassName({
   productionPrefix: 'ix'
@@ -25,8 +24,6 @@ const BaseProviders: React.FC = ({ children }) => {
   return (
     <StylesProvider generateClassName={generateClassName}>
       <ThemeProvider theme={Themes.default}>
-        <SnackbarContainer />
-        <CssBaseline />
         <Router history={history}>{children}</Router>
       </ThemeProvider>
     </StylesProvider>
@@ -76,6 +73,28 @@ export const renderWithPasswordResetStore = (
       <PasswordResetProvider value={{ ...fakePasswordResetStore, ...store }}>
         {children}
       </PasswordResetProvider>
+    </BaseProviders>
+  )
+
+  return render(ui, { wrapper: WithUserProvider })
+}
+
+export const fakeAuthorizerTableStore: Partial<AuthorizerTableStore> = {
+  idKey: '__',
+  uri: '/api/source'
+}
+
+export const renderWithAuthorizerTableStore = (
+  ui: any,
+  store?: Partial<AuthorizerTableStore>
+): RenderResult => {
+  const WithUserProvider: React.FC = ({ children }) => (
+    <BaseProviders>
+      <AuthorizerTableStoreProvider
+        value={{ ...fakeAuthorizerTableStore, ...store }}
+      >
+        {children}
+      </AuthorizerTableStoreProvider>
     </BaseProviders>
   )
 

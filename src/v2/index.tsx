@@ -1,13 +1,23 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { Router, Route, Redirect } from 'react-router-dom'
-
-import AppRoot from './App'
-import AuthRoot from 'v2/Auth/AuthRoot'
-import { useUserStore } from 'v2/Auth/context'
+import { observer } from 'mobx-react'
+import AppRoot from 'v2/app/AppRoot'
+import AuthRoot from 'v2/auth/AuthRoot'
+import { useUserStore } from 'v2/auth/context'
 import history from './history'
+import { UserLoadingPlaceholder } from 'v2/auth/components/UserLoadingPlaceholder'
 
 const EntryPoint: React.FC = () => {
-  const { isAuthenticated } = useUserStore()
+  const { isAuthenticated, getUser, isLoading } = useUserStore()
+
+  useEffect(() => {
+    // eslint-disable-next-line no-void
+    void getUser()
+  }, [getUser])
+
+  if (!isAuthenticated && isLoading) {
+    return <UserLoadingPlaceholder />
+  }
 
   return (
     <Router history={history}>
@@ -18,4 +28,4 @@ const EntryPoint: React.FC = () => {
   )
 }
 
-export default EntryPoint
+export default observer(EntryPoint)
