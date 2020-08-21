@@ -6,7 +6,7 @@ import useStyles from '../styles'
 import { observer } from 'mobx-react'
 import { useAuthRouter } from 'v2/auth/router'
 
-const AuthTabs: React.FC = () => {
+export const AuthTabs: React.FC = observer(() => {
   const { routes } = useAuthRouter()
   const classes = useStyles()
   const userStore = useUserStore()
@@ -40,6 +40,4 @@ const AuthTabs: React.FC = () => {
       />
     </Tabs>
   )
-}
-
-export default observer(AuthTabs)
+})

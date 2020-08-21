@@ -58,7 +58,7 @@ describe('UserStore', () => {
       expect(authService.login).toHaveBeenCalledWith(loginArgs)
     })
 
-    it('should set the user to received value if Login succeeded', async () => {
+    it('should set the user to received value if login succeeded', async () => {
       authServiceMocked.login.mockResolvedValueOnce(loginResponseSuccess)
       const store = new UserStore()
 
@@ -68,7 +68,7 @@ describe('UserStore', () => {
       expect(store.message).toBe(loginResponseSuccess.message)
     })
 
-    it('should have user value as undefined and error set if Login failed', async () => {
+    it('should have user value as undefined and error set if login failed', async () => {
       authServiceMocked.login.mockResolvedValueOnce(loginResponseFailure)
       const store = new UserStore()
 

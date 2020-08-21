@@ -14,6 +14,7 @@ interface AppRouter<T> {
   routes: T
   renderRoutes: () => JSX.Element
   push: (route: keyof T) => void
+  query: URLSearchParams
 }
 
 export function generateAppRouterHook<T> (
@@ -34,6 +35,7 @@ export function generateAppRouterHook<T> (
     const history = useHistory()
 
     return {
+      query: new URLSearchParams(history.location.search),
       routes: routeMap,
       current: getCurrentRouteFromLocation(location),
       push: route => {

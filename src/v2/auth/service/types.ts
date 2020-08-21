@@ -13,7 +13,7 @@ export interface SignupArgs extends Base {
 }
 
 export interface VerifySignupArgs extends Base {
-  token: string
+  verificationToken: string
 }
 
 export interface RequestPasswordResetArgs extends Base {

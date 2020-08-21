@@ -5,7 +5,7 @@ import AppRoot from 'v2/app/AppRoot'
 import AuthRoot from 'v2/auth/AuthRoot'
 import { useUserStore } from 'v2/auth/context'
 import history from './history'
-import { UserLoadingPlaceholder } from 'v2/auth/components/UserLoadingPlaceholder'
+import { LoadingFullScreen } from 'v2/auth/components/LoadingFullScreen'
 
 const EntryPoint: React.FC = () => {
   const { isAuthenticated, getUser, isLoading } = useUserStore()
@@ -16,14 +16,18 @@ const EntryPoint: React.FC = () => {
   }, [getUser])
 
   if (!isAuthenticated && isLoading) {
-    return <UserLoadingPlaceholder />
+    return <LoadingFullScreen />
   }
 
   return (
     <Router history={history}>
-      <Redirect to={isAuthenticated ? '/app' : 'auth'} />
       <Route path='/app' component={AppRoot} />
       <Route path='/auth' component={AuthRoot} />
+      <Route
+        exact
+        path='/'
+        render={() => <Redirect to={isAuthenticated ? '/app' : '/auth'} />}
+      />
     </Router>
   )
 }

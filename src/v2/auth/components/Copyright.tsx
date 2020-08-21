@@ -3,7 +3,7 @@ import { Typography } from '@material-ui/core'
 
 import useStyles from '../styles'
 
-const Copyright: React.FC = () => {
+export const Copyright: React.FC = () => {
   const classes = useStyles()
 
   return (
@@ -12,5 +12,3 @@ const Copyright: React.FC = () => {
     </Typography>
   )
 }
-
-export default Copyright

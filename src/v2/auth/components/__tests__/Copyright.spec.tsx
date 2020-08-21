@@ -1,6 +1,6 @@
 import React from 'react'
 import { render } from 'test-utils'
-import Copyright from 'v2/auth/components/Copyright'
+import { Copyright } from 'v2/auth/components/Copyright'
 
 describe('Copyright', () => {
   it('renders with copyright text', () => {

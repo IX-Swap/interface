@@ -1,12 +1,14 @@
-import Login from 'v2/auth/Login/Login'
-import Register from 'v2/auth/Register/Register'
-import PasswordReset from 'v2/auth/PasswordReset/PasswordReset'
+import { Login } from 'v2/auth/login/Login'
+import { Register } from 'v2/auth/register/Register'
+import { PasswordReset } from 'v2/auth/password-reset/PasswordReset'
 import { InternalRouteProps } from 'v2/types/util'
 import { generateAppRouterHook } from 'v2/helpers/generateAppRouterHook'
+import { Confirmation } from 'v2/auth/confirmation/Confirmation'
 
 export const AuthRoute = {
   login: '/auth/login',
   signup: '/auth/register',
+  confirm: '/auth/confirm',
   passwordReset: '/auth/password-reset'
 }
 
@@ -27,6 +29,12 @@ const authRoutes: InternalRouteProps[] = [
     label: 'Reset Password',
     path: AuthRoute.passwordReset,
     component: PasswordReset,
+    exact: true
+  },
+  {
+    label: 'Confirm Registration',
+    path: AuthRoute.confirm,
+    component: Confirmation,
     exact: true
   }
 ]

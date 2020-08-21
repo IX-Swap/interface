@@ -4,8 +4,8 @@ import { Grid } from '@material-ui/core'
 import { observer } from 'mobx-react'
 import { useUserStore } from 'v2/auth/context'
 import useStyles from './styles'
-import Copyright from 'v2/auth/components/Copyright'
-import AuthTabs from 'v2/auth/components/AuthTabs'
+import { Copyright } from 'v2/auth/components/Copyright'
+import { AuthTabs } from 'v2/auth/components/AuthTabs'
 import { useAuthRouter } from 'v2/auth/router'
 
 const AuthRoot: React.FC = () => {

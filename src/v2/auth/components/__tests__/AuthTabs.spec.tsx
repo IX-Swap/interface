@@ -1,6 +1,6 @@
 import React from 'react'
 import { fireEvent, renderWithUserStore, fakeUserStore } from 'test-utils'
-import AuthTabs from 'v2/auth/components/AuthTabs'
+import { AuthTabs } from 'v2/auth/components/AuthTabs'
 import { cleanup } from '@testing-library/react'
 
 describe('AuthTabs', () => {

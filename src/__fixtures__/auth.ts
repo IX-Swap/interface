@@ -34,7 +34,7 @@ export const signupArgs: SignupArgs = {
 }
 
 export const verifySignupArgs: VerifySignupArgs = {
-  token: 'mytoken'
+  verificationToken: 'mytoken'
 }
 
 export const requestPasswordResetArgs: RequestPasswordResetArgs = {

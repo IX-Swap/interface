@@ -5,7 +5,7 @@ import { observer } from 'mobx-react'
 import { useUserStore } from 'v2/auth/context'
 import useStyles from '../styles'
 
-const FormMessage: React.FC = () => {
+export const AuthFormMessage: React.FC = observer(() => {
   const classes = useStyles()
   const { error, message } = useUserStore()
 
@@ -31,6 +31,4 @@ const FormMessage: React.FC = () => {
       </Fade>
     </>
   )
-}
-
-export default observer(FormMessage)
+})

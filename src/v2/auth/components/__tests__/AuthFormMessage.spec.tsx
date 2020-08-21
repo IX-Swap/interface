@@ -1,6 +1,6 @@
 import React from 'react'
 import { renderWithUserStore } from 'test-utils'
-import AuthFormMessage from 'v2/auth/components/AuthFormMessage'
+import { AuthFormMessage } from 'v2/auth/components/AuthFormMessage'
 import { cleanup } from '@testing-library/react'
 
 describe('Copyright', () => {

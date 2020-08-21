@@ -39,7 +39,7 @@ const authService = {
     storageService.remove('user')
     storageService.remove('visitedUrl')
     socketService.disconnect()
-    history.replace('/auth/Login')
+    history.replace('/auth/login')
   },
 
   async verifySignup (args: VerifySignupArgs) {
@@ -55,8 +55,6 @@ const authService = {
 
     if (response.success) {
       await socketService._subscribeToSocket()
-    } else {
-      // signout
     }
 
     return response
