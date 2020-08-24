@@ -99,6 +99,7 @@
     "gulp-rev-all": "^2.0.3",
     "jest-environment-jsdom-sixteen": "^1.0.3",
     "jest-localstorage-mock": "^2.4.3",
+    "jest-sonar-reporter": "^2.0.0",
     "react-app-rewired": "^2.1.6",
     "react-test-renderer": "^16.13.1",
     "through2": "^3.0.1",
@@ -108,11 +109,13 @@
     "start": "react-app-rewired start",
     "build": "react-app-rewired build",
     "test": "react-scripts test",
+    "test:ci": "CI=true react-scripts test --silent --coverage --testResultsProcessor jest-sonar-reporter",
     "eject": "react-scripts eject",
     "deploy": "gulp deploy",
     "std:ts": "eslint --fix src/v2/**/*.{ts,tsx}",
     "std:js": "standard --fix 'src/**/*.js'",
-    "std": "npm run std:js && npm run std:ts"
+    "std": "npm run std:js && npm run std:ts",
+    "sonar": "npm run test:ci && sonar-scanner -Dsonar.login=$SONAR_KEY"
   },
   "browserslist": {
     "production": [
@@ -125,5 +128,9 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
+  },
+  "jestSonar": {
+    "reportPath": "reports",
+    "reportFile": "test-report.xml"
   }
 }

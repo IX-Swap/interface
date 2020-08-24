@@ -19,6 +19,7 @@ module.exports = {
   testRegex: '(/__tests__/.*|(\\.|/)(test|spec))\\.tsx?$',
   moduleFileExtensions: ['ts', 'tsx', 'js', 'jsx', 'json', 'node'],
   collectCoverage: true,
+  testResultsProcessor: 'jest-sonar-reporter',
   collectCoverageFrom: ['src/v2/**/*.{ts,tsx}'],
   coverageDirectory: 'coverage',
   coverageThreshold: {

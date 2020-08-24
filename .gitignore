@@ -10,8 +10,9 @@ bfg.jar
 .idea/
 
 # testing
-/coverage
-!/coverage/lcov.info
+.scannerwork
+coverage
+reports
 
 # production
 /build
