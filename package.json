@@ -115,7 +115,7 @@
     "std:ts": "eslint --fix src/v2/**/*.{ts,tsx}",
     "std:js": "standard --fix 'src/**/*.js'",
     "std": "npm run std:js && npm run std:ts",
-    "sonar": "npm run test:ci && sonar-scanner -Dsonar.login=$SONAR_TOKEN"
+    "sonar": "export $(grep -v '^#' .env.dev | xargs -0) npm run test:ci && sonar-scanner -Dsonar.login=$SONAR_TOKEN"
   },
   "browserslist": {
     "production": [
