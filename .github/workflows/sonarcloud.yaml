@@ -27,5 +27,5 @@ jobs:
       - run: npm run sonar
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          SONAR_KEY: ${{ secrets.SONAR_KEY }}
+          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
           REACT_APP_API_URL: https://devapi.mozork.com
