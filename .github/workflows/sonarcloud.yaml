@@ -25,7 +25,7 @@ jobs:
       - run: npm install sonar-scanner --save-dev
       - run: npm run build --if-present
       - run: npm run sonar
-      env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        SONAR_KEY: ${{ secrets.SONAR_KEY }}
-        REACT_APP_API_URL: https://devapi.mozork.com
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          SONAR_KEY: ${{ secrets.SONAR_KEY }}
+          REACT_APP_API_URL: https://devapi.mozork.com
