@@ -21,7 +21,13 @@ const passwordSchema = yup
   .test(
     'Password strength',
     'Password does not meet complexity requirement',
-    value => passwordPatterns.every(x => x.test(value))
+    value => {
+      if (value !== null && value !== undefined) {
+        return passwordPatterns.every(x => x.test(value))
+      }
+
+      return false
+    }
   )
   .required('Required')
 
