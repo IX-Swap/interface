@@ -268,8 +268,7 @@ function BankListComponent ({ hasApproved }) {
                       history.push({
                         pathname: '/accounts/banks/view',
                         state: { data: mBank, model: redirectModel }
-                      })
-                    }
+                      })}
                     style={{
                       marginLeft: '16px'
                     }}

@@ -13,7 +13,7 @@ import { useObserver } from 'mobx-react'
 
 import { init } from './context'
 import Items from './items'
-import { TableColumn, BaseFilter, RowAction } from '../../types/util'
+import { TableColumn, BaseFilter } from '../../types/util'
 import { GenericStatus } from '../../types/status'
 import { Actions } from 'v2/app/authorizer/components/Actions'
 

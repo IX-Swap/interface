@@ -57,8 +57,7 @@ function App () {
             <Redirect to={{ pathname: '/identity' }} />
           ) : (
             React.createElement(component, props)
-          )
-        }
+          )}
       />
     )
   }

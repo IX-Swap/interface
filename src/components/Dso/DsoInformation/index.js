@@ -490,7 +490,7 @@ const DsoInformation = ({
                   editableDso.subscriptionDocument && (
                     <Button onClick={() => downloadFile(dso._id)}>
                     Download
-                    </Button>
+                  </Button>
                 )}
                 {['create', 'edit'].includes(action) && (
                   <Uploader

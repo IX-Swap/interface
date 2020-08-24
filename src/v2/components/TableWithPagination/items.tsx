@@ -1,5 +1,5 @@
 import React from 'react'
-import { TableColumn, RowAction } from '../../types/util'
+import { TableColumn } from '../../types/util'
 import { TableBody, TableRow, TableCell } from '@material-ui/core'
 import { get } from 'lodash'
 import { Actions } from 'v2/app/authorizer/components/Actions'
