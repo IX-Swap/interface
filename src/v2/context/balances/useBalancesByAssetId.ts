@@ -1,8 +1,5 @@
 import { QueryStatus, useInfiniteQuery } from 'react-query'
-import {
-  convertDataArrayToMap,
-  convertPaginatedResultToFlatArray
-} from 'v2/context/assets/utils'
+import { convertDataArrayToMap } from 'v2/context/assets/utils'
 import { AssetBalance } from 'v2/types/balance'
 import { useUserStore } from 'v2/auth/context'
 import { BalancesService } from 'v2/context/balances/service'

@@ -1,6 +1,3 @@
-import HTTPResponse from '../../types/httpResponse'
-import { AssetBalance } from 'v2/types/balance'
-import { postRequest } from 'v2/helpers/httpRequests'
 import apiService from 'v2/services/api'
 import {
   GetAllBalancesArgs,

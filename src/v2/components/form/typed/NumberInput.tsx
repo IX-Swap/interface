@@ -4,8 +4,7 @@ import {
   Input,
   FormControl,
   FormHelperText,
-  InputProps,
-  InputAdornment
+  InputProps
 } from '@material-ui/core'
 import React from 'react'
 import { useTypedController } from '@hookform/strictly-typed'

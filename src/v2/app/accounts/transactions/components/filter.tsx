@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import React from 'react'
 import {
   MuiPickersUtilsProvider,
   KeyboardDatePicker
@@ -17,8 +17,6 @@ import { BaseFilter } from 'v2/types/util'
 import { Asset } from 'v2/types/asset'
 import { MaterialUiPickersDate } from '@material-ui/pickers/typings/date'
 import { useObserver } from 'mobx-react'
-import storageHelper from 'v2/helpers/storageHelper'
-import { noop } from 'lodash'
 import { useAllBalances } from 'v2/context/balances/useAllBalances'
 
 interface FilterProps {

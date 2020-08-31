@@ -1,14 +1,11 @@
-import React, { useEffect } from 'react'
-import { useBalancesStore } from '../../../../context/balances'
-import { Dso } from '../../../../types/dso'
-import storageHelper from '../../../../helpers/storageHelper'
-import { noop } from 'lodash'
+import React from 'react'
+import { Dso } from 'v2/types/dso'
 import { Grid, Typography } from '@material-ui/core'
 import { makeStyles } from '@material-ui/styles'
 import DsoTitle from '../../digital-security/title'
 import { useObserver } from 'mobx-react'
-import { Asset } from '../../../../types/asset'
-import { formatMoney } from '../../../../helpers/numbers'
+import { Asset } from 'v2/types/asset'
+import { formatMoney } from 'v2/helpers/numbers'
 import { useBalancesByAssetId } from 'v2/context/balances/useBalancesByAssetId'
 
 interface CommitmentViewHeaderProps {
