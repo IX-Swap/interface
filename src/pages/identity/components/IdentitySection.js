@@ -4,9 +4,9 @@ import React, { useState } from 'react'
 import {
   Container,
   Typography,
-  ExpansionPanel,
-  ExpansionPanelSummary,
-  ExpansionPanelDetails,
+  Accordion,
+  AccordionSummary,
+  AccordionDetails,
   Grid
 } from '@material-ui/core'
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore'
@@ -29,13 +29,13 @@ const IdentitySection = ({ title, subtitle, children }) => {
   const [expanded, setExpanded] = useState(true)
 
   return (
-    <ExpansionPanel
+    <Accordion
       expanded={expanded}
       onChange={() => {
         setExpanded(!expanded)
       }}
     >
-      <ExpansionPanelSummary
+      <AccordionSummary
         expandIcon={<ExpandMoreIcon />}
         aria-controls='panel1a-content'
         id='panel1a-header'
@@ -50,15 +50,15 @@ const IdentitySection = ({ title, subtitle, children }) => {
             </Typography>
           )}
         </Container>
-      </ExpansionPanelSummary>
-      <ExpansionPanelDetails>
+      </AccordionSummary>
+      <AccordionDetails>
         <Container>
           <Grid container spacing={3}>
             {children}
           </Grid>
         </Container>
-      </ExpansionPanelDetails>
-    </ExpansionPanel>
+      </AccordionDetails>
+    </Accordion>
   )
 }
 

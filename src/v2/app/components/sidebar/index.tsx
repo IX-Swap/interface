@@ -21,7 +21,7 @@ import useStyles from './styles'
 import SidebarLink from './components/sidebarlink'
 
 import { useAuthorizerRouter } from 'v2/app/authorizer/router'
-import AccountRoutes from '../../accounts/routes'
+import { useAccountsRouter } from 'v2/app/accounts/router'
 
 // PasswordReset
 import { useStore as useLayoutStore } from '../../../context/layout'
@@ -40,6 +40,7 @@ function Sidebar () {
   const isAuthorizer = useIsAuthorizer()
   const isIssuer = useIsIssuer()
   const { routes: authorizerRoutes } = useAuthorizerRouter()
+  const { routes: accountRoutes } = useAccountsRouter()
 
   const structure = [
     {
@@ -60,9 +61,9 @@ function Sidebar () {
       link: accountsRoot,
       icon: <AccountBalanceIcon />,
       children: [
-        ...AccountRoutes.map(({ label, path }) => ({
+        ...Object.entries(accountRoutes).map(([label, link]) => ({
           label,
-          link: `${accountsRoot}${path}`
+          link
         }))
       ]
     },

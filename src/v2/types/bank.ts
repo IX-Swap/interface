@@ -1,12 +1,12 @@
 import { Asset } from './asset'
 
-interface BankAddress {
-  line1?: string
+export interface Address {
+  line1: string
   line2?: string
-  city?: string
-  state?: string
-  country?: string
-  postalCode?: string
+  city: string
+  state: string
+  country: string
+  postalCode: string
 }
 
 export interface Bank {
@@ -19,6 +19,6 @@ export interface Bank {
   swiftCode: string
   authorized: boolean
   createdAt: string
-  address?: BankAddress
+  address: Address
   asset: Asset
 }

@@ -27,7 +27,6 @@ const InvestList = () => {
           <OfferingsList
             user={storageHelper.getUserId()}
             handleRowClick={handleRowClick}
-            filter={{ status: '' }}
           >
             <Button
               style={{ minWidth: '100px' }}

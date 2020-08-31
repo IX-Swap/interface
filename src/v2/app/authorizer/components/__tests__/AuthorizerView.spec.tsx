@@ -7,11 +7,13 @@ import {
   AuthorizerViewReturnValue
 } from 'v2/app/authorizer/hooks/useAuthorizerView'
 import { Filters } from 'v2/app/authorizer/components/Filters'
-import TableWithPagination from 'v2/components/TableWithPagination'
+import { TableView } from 'v2/components/TableWithPagination/TableView'
 import { Preview } from 'v2/app/authorizer/components/Preview'
 import { withExtraActions } from 'v2/app/authorizer/components/withExtraActions'
 
-jest.mock('v2/components/TableWithPagination', () => jest.fn(() => null))
+jest.mock('v2/components/TableWithPagination/TableView', () => ({
+  TableView: jest.fn(() => null)
+}))
 jest.mock('v2/app/authorizer/components/withExtraActions', () => ({
   withExtraActions: jest.fn(() => null)
 }))
@@ -76,7 +78,7 @@ describe('AuthorizerView', () => {
 
     expect(title).toBeTruthy()
     expect(Filters).toHaveBeenCalledTimes(1)
-    expect(TableWithPagination).toHaveBeenCalledTimes(1)
+    expect(TableView).toHaveBeenCalledTimes(1)
   })
 
   it('passes result of calling withExtraActions to the table', async () => {
@@ -88,7 +90,7 @@ describe('AuthorizerView', () => {
     expect(withExtraActions).toHaveBeenCalledWith({
       onView: useBaseViewMockReturnValue.setItem
     })
-    expect(TableWithPagination).toHaveBeenCalledWith(
+    expect(TableView).toHaveBeenCalledWith(
       {
         name: props.name,
         uri: props.uri,

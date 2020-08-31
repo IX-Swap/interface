@@ -1,7 +1,8 @@
-import axios, { AxiosRequestConfig } from 'axios'
-import { API_URL } from '../../config'
+import axios, { AxiosRequestConfig, Method } from 'axios'
+import { API_URL } from 'v2/config'
 import storageHelper from '../../helpers/storageHelper'
 import {
+  APIResponse,
   APIServiceRequestConfig,
   APIServiceResponse,
   KeyValueMap
@@ -23,16 +24,38 @@ const apiService = {
       method: 'get',
       uri,
       data: undefined,
-      axiosConfig: config || {}
+      axiosConfig: config ?? {}
     })
   },
 
-  async post<T = any> (uri: string, data: any, config?: AxiosRequestConfig) {
+  async request<T = any> (
+    method: Method,
+    uri: string,
+    data: any,
+    axiosConfig: AxiosRequestConfig = {}
+  ) {
+    const requestConfig: APIServiceRequestConfig = {
+      uri,
+      method,
+      data: data,
+      axiosConfig
+    }
+
+    return await _axios.request<APIResponse<T>>(
+      this._prepareRequestConfig(requestConfig)
+    )
+  },
+
+  async post<T = any> (
+    uri: string,
+    data: any,
+    axiosConfig: AxiosRequestConfig = {}
+  ) {
     return await this._request<T>({
       method: 'post',
       uri,
       data,
-      axiosConfig: config || {}
+      axiosConfig
     })
   },
 
@@ -41,7 +64,7 @@ const apiService = {
       method: 'put',
       uri,
       data,
-      axiosConfig: config || {}
+      axiosConfig: config ?? {}
     })
   },
 
@@ -68,7 +91,7 @@ const apiService = {
   _getErrorMessage (error: any) {
     let message = 'Unknown error'
 
-    if (error.response) {
+    if (error.response !== undefined) {
       message = error.response.data.message
     } else {
       message = error.message
@@ -92,7 +115,7 @@ const apiService = {
       method
     }
 
-    if (method !== 'get' && data) {
+    if (method !== 'get' && data !== undefined) {
       requestConfig.data = body
     }
 
@@ -108,7 +131,7 @@ const apiService = {
 
     headers.Authorization = `Bearer ${storageHelper.getAccessToken()}`
 
-    if (data && !this._isFormData(data)) {
+    if (data !== undefined && !this._isFormData(data)) {
       headers['Content-Type'] = 'application/json'
     }
 

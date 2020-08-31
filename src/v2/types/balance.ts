@@ -1,6 +1,7 @@
 import { NumberFormat } from './util'
 
 export interface Balance {
+  _id: string
   debitTotal: number
   creditTotal: number
   balance: number

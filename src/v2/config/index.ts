@@ -11,6 +11,11 @@ export const INVESTAX_BANK: Partial<Bank> = {
   accountHolderName: 'IC SG PTE LTD',
   bankAccountNumber: '501123956001',
   address: {
-    line1: 'OCBC Centre, Floor 9, 65 Chulia Street, Singapore 049513'
+    line1: 'OCBC Centre, Floor 9, 65 Chulia Street',
+    line2: '',
+    postalCode: '049513',
+    state: '',
+    country: 'Singapore',
+    city: 'Singapore'
   }
 }

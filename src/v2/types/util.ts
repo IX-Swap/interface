@@ -37,7 +37,7 @@ export interface Viewable<T> {
 export type RowAction<T> = (row: T) => ReactNode
 
 export interface BaseFilter {
-  status: AuthorizableStatus
+  status?: AuthorizableStatus
   asset?: string
   type?: string
   search?: string

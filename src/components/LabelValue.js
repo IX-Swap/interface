@@ -2,15 +2,6 @@ import React from 'react'
 import { ListItem, ListItemText } from '@material-ui/core'
 import { makeStyles } from '@material-ui/core/styles'
 
-type LabelValueProps = {
-  label: string,
-  value: string,
-  classes: {
-    label: string,
-    value: string
-  }
-}
-
 const useStyles = makeStyles({
   label: {
     width: '50%'
@@ -21,11 +12,7 @@ const useStyles = makeStyles({
   }
 })
 
-const LabelValue = ({
-  label,
-  value,
-  classes = { label: '', value: '' }
-}: LabelValueProps) => {
+const LabelValue = ({ label, value, classes = { label: '', value: '' } }) => {
   const mClasses = useStyles()
   const labelClass = `${mClasses.label} ${classes.label}`
   const valueClass = `${mClasses.value} ${classes.label}`

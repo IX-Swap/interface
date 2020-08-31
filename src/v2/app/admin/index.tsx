@@ -10,7 +10,7 @@ import {
   Checkbox
 } from '@material-ui/core'
 import { makeStyles } from '@material-ui/styles'
-import TableView from 'v2/components/TableWithPagination'
+import { TableView } from 'v2/components/TableWithPagination/TableView'
 import columns from 'v2/app/admin/data'
 import User from 'v2/types/user'
 import DialogConfirmRoleChange from 'v2/app/admin/dialog-confirm-role-change'
@@ -100,7 +100,6 @@ const UserManagement = () => {
           uri='/auth/users/list'
           name='usersList'
           columns={columns}
-          filter={{ status: '' }}
           hasActions
           actions={({ item }) => <Actions user={item} />}
         />

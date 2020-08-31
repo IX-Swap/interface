@@ -14,11 +14,11 @@ const AuthRoot: React.FC = () => {
   const history = useHistory()
   const { renderRoutes, routes, current } = useAuthRouter()
   const tabbedRoutes = [routes.login, routes.signup]
-  const isLoginOrSignup = tabbedRoutes.includes(current)
+  const isLoginOrSignup = tabbedRoutes.includes(current.path)
 
   useEffect(() => {
     if (isLoginOrSignup) {
-      const tabIndex = tabbedRoutes.indexOf(current)
+      const tabIndex = tabbedRoutes.indexOf(current.path)
       setActiveTab(tabIndex)
     }
   }, [setActiveTab, current, tabbedRoutes, isLoginOrSignup])

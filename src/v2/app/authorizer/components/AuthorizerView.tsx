@@ -6,9 +6,10 @@ import { Filters } from 'v2/app/authorizer/components/Filters'
 import { Preview } from 'v2/app/authorizer/components/Preview'
 import { useAuthorizerView } from 'v2/app/authorizer/hooks/useAuthorizerView'
 import { withExtraActions } from 'v2/app/authorizer/components/withExtraActions'
-import TableWithPagination, {
+import {
+  TableView,
   TableViewProps
-} from 'v2/components/TableWithPagination'
+} from 'v2/components/TableWithPagination/TableView'
 
 interface AuthorizerViewProps<T>
   extends Omit<TableViewProps<T>, 'actions'>,
@@ -54,7 +55,7 @@ export const AuthorizerView = <T,>(
           </Typography>
         </Grid>
         <Grid item xs={12} style={{ marginTop: '48px' }} component={Paper}>
-          <TableWithPagination<T>
+          <TableView<T>
             name={name}
             uri={uri}
             columns={getColumns()}

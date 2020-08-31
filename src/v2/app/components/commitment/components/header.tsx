@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react'
-import { useStore } from '../../../../context/balances'
+import { useBalancesStore } from '../../../../context/balances'
 import { Dso } from '../../../../types/dso'
 import storageHelper from '../../../../helpers/storageHelper'
 import { noop } from 'lodash'
@@ -9,6 +9,7 @@ import DsoTitle from '../../digital-security/title'
 import { useObserver } from 'mobx-react'
 import { Asset } from '../../../../types/asset'
 import { formatMoney } from '../../../../helpers/numbers'
+import { useBalancesByAssetId } from 'v2/context/balances/useBalancesByAssetId'
 
 interface CommitmentViewHeaderProps {
   dso: Dso
@@ -29,25 +30,15 @@ const useStyles = makeStyles(() => ({
 }))
 
 const AssetBalance = ({ asset }: { asset: string }) => {
-  const balanceState = useStore()
-  useEffect(() => {
-    balanceState
-      .getBalance(storageHelper.getUserId(), asset)
-      .then(noop)
-      .catch(noop)
-  }, [balanceState, asset])
+  const { data } = useBalancesByAssetId(asset)
 
   return useObserver(() => (
     <BalanceHeader
       label='Account Balance'
-      value={
-        balanceState.balances[asset]
-          ? formatMoney(
-              balanceState.balances[asset].available || 0,
-              balanceState.balances[asset].numberFormat.currency
-            )
-          : '0'
-      }
+      value={formatMoney(
+        data.map[asset].available ?? 0,
+        data.map[asset].numberFormat.currency
+      )}
     />
   ))
 }

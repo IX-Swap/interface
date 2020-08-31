@@ -3,9 +3,9 @@ import React, { useState } from 'react'
 import {
   Container,
   Typography,
-  ExpansionPanel,
-  ExpansionPanelSummary,
-  ExpansionPanelDetails,
+  Accordion,
+  AccordionSummary,
+  AccordionDetails,
   Grid,
   Button
 } from '@material-ui/core'
@@ -43,13 +43,13 @@ const IdentitySection = ({
   const [expanded, setExpanded] = useState(true)
 
   return (
-    <ExpansionPanel
+    <Accordion
       expanded={expanded}
       onChange={() => {
         setExpanded(!expanded)
       }}
     >
-      <ExpansionPanelSummary
+      <AccordionSummary
         expandIcon={<ExpandMoreIcon />}
         aria-controls='panel1a-content'
         id='panel1a-header'
@@ -70,7 +70,7 @@ const IdentitySection = ({
               {onDelete && (
                 <Button
                   color='primary'
-                  onClick={(e) => {
+                  onClick={e => {
                     e.stopPropagation()
                     onDelete()
                   }}
@@ -81,7 +81,7 @@ const IdentitySection = ({
               {onAdd && (
                 <Button
                   color='primary'
-                  onClick={(e) => {
+                  onClick={e => {
                     e.stopPropagation()
                     onAdd()
                   }}
@@ -92,15 +92,15 @@ const IdentitySection = ({
             </Grid>
           </Grid>
         </Container>
-      </ExpansionPanelSummary>
-      <ExpansionPanelDetails>
+      </AccordionSummary>
+      <AccordionDetails>
         <Container>
           <Grid container spacing={3}>
             {children}
           </Grid>
         </Container>
-      </ExpansionPanelDetails>
-    </ExpansionPanel>
+      </AccordionDetails>
+    </Accordion>
   )
 }
 

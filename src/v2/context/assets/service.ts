@@ -1,30 +1,19 @@
-import { postRequest } from '../../helpers/httpRequests'
-import HttpResponse from '../../types/httpResponse'
-import { Asset } from '../../types/asset'
+import { Asset } from 'v2/types/asset'
+import { GetAssetsArgs } from 'v2/context/assets/types'
+import apiService from 'v2/services/api'
+import { PaginatedData } from 'v2/services/api/types'
 
-export async function getAssets ({
-  skip = 0,
-  limit = 50,
-  type
-}: {
-  skip?: number
-  limit?: number
-  type: 'Currency' | 'Security'
-}) {
-  try {
+export const assetsService = {
+  async getAssets (queryKey: string, args: GetAssetsArgs) {
     const uri = '/accounts/assets/list'
-    const result = await postRequest(uri, { skip, limit, type })
-    const response = await result.json()
-    if (result.status === 200) {
-      const { documents = [] } = response.data.length ? response.data[0] : {}
-
-      return new HttpResponse<Asset[]>(true, documents)
-    } else {
-      return new HttpResponse<Asset[]>(false, undefined, response.message)
+    const paginationArgs = {
+      skip: 0,
+      limit: 50
     }
-  } catch (err) {
-    console.log(err)
-    console.log(err.response)
-    return new HttpResponse<Asset[]>(false, undefined, 'Get asset failed')
+
+    return await apiService.request<PaginatedData<Asset>>('POST', uri, {
+      ...paginationArgs,
+      ...args
+    })
   }
 }

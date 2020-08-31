@@ -13,7 +13,7 @@ import { useUserStore } from 'v2/auth/context'
 /**
  * Roles definition
  */
-const appRoles = {
+export const appRoles = {
   ADMIN: 'admin',
   AUTHORIZER: 'authorizer',
   ISSUER: 'issuer',
@@ -54,8 +54,6 @@ export const useIsAuthorizer = (): boolean => {
 
 export const useIsIssuer = (): boolean => {
   const { user: { roles = '' } = {} } = useUserStore()
-
-  console.log(roles)
 
   return hasRole(roles, appRoles.ISSUER)
 }

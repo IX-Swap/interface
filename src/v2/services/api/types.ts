@@ -16,3 +16,24 @@ export interface APIServiceResponse<T = undefined> {
 export interface KeyValueMap<V = string> {
   [key: string]: V
 }
+
+export interface APIError {
+  message: string
+}
+
+export interface APIResponse<T = undefined> {
+  data: T
+  message: string
+}
+
+export type PaginatedData<DataType> = Array<{
+  documents: DataType[]
+  count: number
+  limit: number
+  skip: number
+}>
+
+export interface PaginationArgs {
+  skip: number
+  limit: number
+}

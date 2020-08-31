@@ -6,7 +6,6 @@ import { useFormContext, Controller } from 'react-hook-form'
 import { MuiPickersUtilsProvider, DatePicker } from '@material-ui/pickers'
 import DateFnsUtils from '@date-io/date-fns'
 import useEditableStyles from './styles'
-import AssetsSelect from '../../../accounts/pages/banks/components/assets-select'
 import CorporateSelector from '../../corporate-selector'
 
 interface DsoTitleProps {
@@ -94,13 +93,13 @@ const DsoTitle = ({ editMode = false, dso }: DsoTitleProps) => {
             margin='normal'
             style={{ flexGrow: 1 }}
           />
-          <AssetsSelect
-            className={classesE.currency}
-            required
-            margin='normal'
-            name='currency'
-            error={!!errors.currency}
-          />
+          {/* <AssetsSelect */}
+          {/*  className={classesE.currency} */}
+          {/*  required */}
+          {/*  margin='normal' */}
+          {/*  name='currency' */}
+          {/*  error={!!errors.currency} */}
+          {/* /> */}
         </Grid>
       </Grid>
     </Grid>

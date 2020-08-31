@@ -1,20 +1,53 @@
-import React from 'react'
+import React, { useMemo } from 'react'
 import { Location } from 'history'
 import {
   Redirect,
   Route,
   Switch,
   useLocation,
-  useHistory
+  useHistory,
+  generatePath
 } from 'react-router-dom'
-import { InternalRouteProps } from 'v2/types/util'
+import { InternalRouteBase, InternalRouteProps } from 'v2/types/util'
 
 interface AppRouter<T> {
-  current: string
+  current: InternalRouteBase
   routes: T
   renderRoutes: () => JSX.Element
-  push: (route: keyof T) => void
+  push: (route: keyof T, state?: {}) => void
   query: URLSearchParams
+}
+
+const getRouteLabel = (path: string, routes: InternalRouteProps[]): string => {
+  const route = routes.find(r => r.path === path)
+  return route !== undefined ? route.label : ''
+}
+
+interface GetCurrentRouteArgs<T> {
+  location: Location
+  routes: InternalRouteProps[]
+  defaultRoute: string
+  routeMap: T
+}
+
+const getCurrentRouteFromLocation = <T,>(
+  args: GetCurrentRouteArgs<T>
+): InternalRouteBase => {
+  const { location, routes, routeMap, defaultRoute } = args
+  const { pathname, state } = location
+
+  const route = Object.values(routeMap).find(path => {
+    if (state !== null && state !== undefined) {
+      return pathname === generatePath(path, state)
+    }
+
+    return pathname === path
+  })
+
+  return {
+    label: getRouteLabel(route, routes),
+    path: route ?? defaultRoute
+  }
 }
 
 export function generateAppRouterHook<T> (
@@ -22,24 +55,26 @@ export function generateAppRouterHook<T> (
   defaultRoute: string,
   routes: InternalRouteProps[]
 ): () => AppRouter<T> {
-  const getCurrentRouteFromLocation = ({ pathname }: Location): string => {
-    const route = Object.values(routeMap).find(path => {
-      return pathname.includes(path) && path
-    })
-
-    return route ?? defaultRoute
-  }
-
   return (): AppRouter<T> => {
     const location = useLocation()
     const history = useHistory()
+    const current = useMemo(
+      () =>
+        getCurrentRouteFromLocation({
+          location,
+          routes,
+          routeMap,
+          defaultRoute
+        }),
+      [location]
+    )
 
     return {
+      current,
       query: new URLSearchParams(history.location.search),
       routes: routeMap,
-      current: getCurrentRouteFromLocation(location),
-      push: route => {
-        history.push(routeMap[route])
+      push: (route, state) => {
+        history.push(routeMap[route] as any, state)
       },
       renderRoutes: () => (
         <Switch>

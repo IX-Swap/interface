@@ -1,9 +1,9 @@
-import { useContext, createContext } from 'react'
+import { AssetsStore } from './store'
+import generateStoreHookAndProvider from 'v2/helpers/generateStoreHookAndProvider'
 
-import { AssetStore } from './store'
+const store = new AssetsStore()
 
-const initialState = new AssetStore()
-
-export const StoreContext = createContext<AssetStore>(initialState)
-
-export const useStore = (): AssetStore => useContext(StoreContext)
+export const {
+  useStore: useAssetsStore,
+  Provider: AssetsProvider
+} = generateStoreHookAndProvider<AssetsStore>(store)

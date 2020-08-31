@@ -3,26 +3,19 @@ import { MenuItem } from '@material-ui/core'
 import draftToHtml from 'draftjs-to-html'
 
 export const renderMenu = (arr: any[]): JSX.Element[] => {
-  const options = arr.map(
+  return arr.map(
     ({
       value,
       label
     }: {
       value: string | number
       label: string
-    }): JSX.Element => {
-      return React.createElement(
-        MenuItem,
-        {
-          key: value,
-          value
-        },
-        label
-      )
-    }
+    }): JSX.Element => (
+      <MenuItem key={value} value={value}>
+        {label}
+      </MenuItem>
+    )
   )
-
-  return options
 }
 
 export const wysiwygToHtml = (draft: string): string => {

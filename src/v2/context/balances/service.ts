@@ -1,54 +1,57 @@
 import HTTPResponse from '../../types/httpResponse'
-import { AssetBalance } from '../../types/balance'
-import { postRequest } from '../../helpers/httpRequests'
+import { AssetBalance } from 'v2/types/balance'
+import { postRequest } from 'v2/helpers/httpRequests'
+import apiService from 'v2/services/api'
+import {
+  GetAllBalancesArgs,
+  GetBalanceByAssetIdArgs,
+  GetBalanceByTypeArgs
+} from 'v2/context/balances/types'
 
-export async function getBalance(
-  userId: string,
-  assetId: string
-): Promise<HTTPResponse<AssetBalance[]>> {
-  try {
-    const uri = `/accounts/balance/${userId}/${assetId}`
-    const result = await postRequest(uri, { skip: 0, limit: 50 })
-    const response = await result.json()
-    if (result.status === 200) {
-      const { documents = [] } = response.data.length ? response.data[0] : {}
+// eslint-disable-next-line @typescript-eslint/no-extraneous-class
+export class BalancesService {
+  static _baseURL = '/accounts/balance'
 
-      return new HTTPResponse<AssetBalance[]>(true, documents)
-    } else {
-      return new HTTPResponse<AssetBalance[]>(
-        false,
-        undefined,
-        response.message
-      )
-    }
-  } catch (err) {
-    console.log(err)
-    console.log(err.response)
-    return new HTTPResponse<AssetBalance[]>(false, undefined, 'Login Failed')
+  static _buildURL = (uri: string): string => {
+    return `${BalancesService._baseURL}${uri}`
   }
-}
 
-export async function getAllBalances(
-  userId: string
-): Promise<HTTPResponse<AssetBalance[]>> {
-  try {
-    const uri = `/accounts/balance/${userId}`
-    const result = await postRequest(uri, { skip: 0, limit: 50 })
-    const response = await result.json()
-    if (result.status === 200) {
-      const { documents = [] } = response.data.length ? response.data[0] : {}
+  static getAllBalances = (queryKey: string, args: GetAllBalancesArgs): any => {
+    const { userId, ...payload } = args
+    const uri = `/${userId}`
 
-      return new HTTPResponse<AssetBalance[]>(true, documents)
-    } else {
-      return new HTTPResponse<AssetBalance[]>(
-        false,
-        undefined,
-        response.message
-      )
-    }
-  } catch (err) {
-    console.log(err)
-    console.log(err.response)
-    return new HTTPResponse<AssetBalance[]>(false, undefined, 'Login Failed')
+    return apiService.request<any>(
+      'POST',
+      BalancesService._buildURL(uri),
+      payload
+    )
+  }
+
+  static getBalancesByAssetId = (
+    queryKey: string,
+    args: GetBalanceByAssetIdArgs
+  ): any => {
+    const { assetId, userId, ...payload } = args
+    const uri = `/${userId}/${assetId}`
+
+    return apiService.request<any>(
+      'POST',
+      BalancesService._buildURL(uri),
+      payload
+    )
+  }
+
+  static getBalancesByType = (
+    queryKey: string,
+    args: GetBalanceByTypeArgs
+  ): any => {
+    const { userId, ...payload } = args
+    const uri = `/${userId}`
+
+    return apiService.request<any>(
+      'POST',
+      BalancesService._buildURL(uri),
+      payload
+    )
   }
 }

@@ -7,7 +7,7 @@ import {
   TableRow,
   TableCell
 } from '@material-ui/core'
-import TableWithPagination from '../../../components/TableWithPagination'
+import { TableView } from 'v2/components/TableWithPagination/TableView'
 import { Dso } from '../../../types/dso'
 import DsoOfferingCard from './card'
 import { debounce } from 'lodash'
@@ -53,7 +53,7 @@ const OfferingsList = ({
         </Grid>
       </Box>
 
-      <TableWithPagination
+      <TableView
         filter={{ ...filter, search }}
         columns={[]}
         bordered={false}
@@ -73,7 +73,7 @@ const OfferingsList = ({
             </TableBody>
           )
         }}
-      </TableWithPagination>
+      </TableView>
     </>
   )
 }

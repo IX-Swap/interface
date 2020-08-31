@@ -1,7 +1,7 @@
 import { InternalRouteProps } from 'v2/types/util'
 import { AuthorizerRoot } from 'v2/app/authorizer/AuthorizerRoot'
 import Identity from 'v2/app/identity'
-import Accounts from 'v2/app/accounts'
+import { Accounts } from 'v2/app/accounts/Accounts'
 import Issuance from 'v2/app/issuance'
 import Invest from 'v2/app/invest'
 import Admin from 'v2/app/admin'

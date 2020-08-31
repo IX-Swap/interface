@@ -1,4 +1,5 @@
 import { NumberFormat } from './util'
+import { AssetType } from 'v2/context/assets/types'
 
 export interface Asset {
   _id: string
@@ -6,8 +7,9 @@ export interface Asset {
   createdBy: string
   symbol: string
   name: string
-  type: string // TODO: update to securities, currency, etc
+  type: AssetType
   numberFormat: NumberFormat
   createdAt: string
   updatedAt: string
+  description: any
 }
