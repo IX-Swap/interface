@@ -1,0 +1,30 @@
+//
+import React from 'react'
+import { Container, Paper, Box } from '@material-ui/core'
+import DsoList from 'v1/components/Dso/DsoList'
+
+import { useHistory } from 'react-router-dom'
+import storage from 'v1/services/storageHelper'
+import { useIssuanceDispatch } from '../../modules'
+import { setSelectedDso } from '../../modules/actions'
+
+const IssuanceList = () => {
+  const issuanceDispatch = useIssuanceDispatch()
+  const history = useHistory()
+
+  const onClickView = dso => {
+    setSelectedDso(issuanceDispatch, dso)
+
+    history.push('/issuance/view')
+  }
+
+  return (
+    <Container>
+      <Box component={Paper} p={4}>
+        <DsoList onClickView={onClickView} user={storage.getUserId()} />
+      </Box>
+    </Container>
+  )
+}
+
+export default IssuanceList

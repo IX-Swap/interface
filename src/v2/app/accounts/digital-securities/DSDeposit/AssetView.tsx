@@ -3,7 +3,7 @@ import { useAllBalances } from 'v2/context/balances/useAllBalances'
 import { useParams } from 'react-router-dom'
 import { Box, Button, Grid, Typography } from '@material-ui/core'
 // @ts-expect-error
-import { ReactComponent as QRCode } from 'assets/qr.svg'
+import { ReactComponent as QRCode } from 'v1/assets/qr.svg'
 import { useSnackbar } from 'v2/hooks/useSnackbar'
 
 export const AssetView: React.FC = () => {

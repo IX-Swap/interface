@@ -1,5 +1,5 @@
 import React from 'react'
-import LabelValue from 'components/LabelValue'
+import LabelValue from 'v1/components/LabelValue'
 import { List, Box } from '@material-ui/core'
 import { AssetBalance } from 'v2/types/balance'
 import { useAllBalances } from 'v2/context/balances/useAllBalances'

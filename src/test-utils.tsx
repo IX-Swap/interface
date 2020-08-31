@@ -6,7 +6,7 @@ import {
   StylesProvider
 } from '@material-ui/core/styles'
 import { ThemeProvider } from '@material-ui/styles'
-import Themes from './themes'
+import Themes from './v1/themes'
 import history from './v2/history'
 import { UserProvider } from 'v2/auth/context'
 import { UserStore } from 'v2/auth/context/store'
