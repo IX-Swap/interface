@@ -170,12 +170,13 @@ const EditableField = ({
 
   return (
     <Grid item xs={size}>
-      {previewMode && previewMode}
-      {!previewMode && (
+      {previewMode === undefined ? (
         <>
           <Typography className={classes.fieldLabel}>{label}</Typography>
           <Typography>{getValueDisplay(type, value)}</Typography>
         </>
+      ) : (
+        previewMode
       )}
     </Grid>
   )

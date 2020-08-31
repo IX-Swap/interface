@@ -90,7 +90,7 @@ function OverviewExchange () {
         <CircularProgress size={50} />
       ) : (
         <Grid>
-          <OverviewHeader data={item && item} />
+          <OverviewHeader data={item} />
           <Grid container spacing={1}>
             <Grid
               container
@@ -128,7 +128,7 @@ function OverviewExchange () {
               <TradeHistory id={tradingPairId} />
             </Grid>
           </Grid>
-          <TableMyOrders id={tradingPairId} data={item && item} />
+          <TableMyOrders id={tradingPairId} data={item} />
         </Grid>
       )}
     </React.Fragment>
