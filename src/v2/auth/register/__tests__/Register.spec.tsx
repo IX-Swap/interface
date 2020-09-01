@@ -3,7 +3,7 @@ import React from 'react'
 import { fireEvent, cleanup, waitFor, renderWithUserStore } from 'test-utils'
 import { Register, registerFormInitialValues } from 'v2/auth/register/Register'
 import { signupArgs } from '__fixtures__/auth'
-import history from 'history'
+import { history } from 'v2/history'
 
 describe('Register', () => {
   beforeEach(() => {
@@ -22,8 +22,8 @@ describe('Register', () => {
     const form = getByTestId('register-form')
     const signupButton = getByText(/create/i)
 
-    expect(container).toBeTruthy()
-    expect(signupButton).toBeTruthy()
+    expect(container).toBeTruthy
+    expect(signupButton).toBeTruthy
     expect(signupButton.parentElement).toBeDisabled()
     expect(form).toHaveFormValues(registerFormInitialValues)
   })
@@ -80,7 +80,7 @@ describe('Register', () => {
 
     await waitFor(() => {
       expect(signupButton.parentElement).toBeDisabled()
-      expect(getByText('Required')).toBeTruthy()
+      expect(getByText('Required')).toBeTruthy
     })
   })
 
@@ -105,7 +105,7 @@ describe('Register', () => {
 
     await waitFor(() => {
       expect(signupButton.parentElement).toBeDisabled()
-      expect(getByText('email must be a valid email')).toBeTruthy()
+      expect(getByText('email must be a valid email')).toBeTruthy
     })
   })
 

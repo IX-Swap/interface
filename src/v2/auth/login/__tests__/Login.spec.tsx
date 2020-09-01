@@ -3,7 +3,7 @@ import React from 'react'
 import { fireEvent, cleanup, waitFor, renderWithUserStore } from 'test-utils'
 import { Login, loginFormInitialValues } from 'v2/auth/login/Login'
 import { loginArgs } from '__fixtures__/auth'
-import history from 'history'
+import { history } from 'v2/history'
 import { AuthRoute } from 'v2/auth/router'
 
 describe('LoginForm', () => {
@@ -22,10 +22,10 @@ describe('LoginForm', () => {
     const loginButton = getByText(/login/i)
     const forgotPasswordButton = getByText(/forgot password/i)
 
-    expect(container).toBeTruthy()
-    expect(loginButton).toBeTruthy()
+    expect(container).toBeTruthy
+    expect(loginButton).toBeTruthy
     expect(loginButton.parentElement).toBeDisabled()
-    expect(forgotPasswordButton).toBeTruthy()
+    expect(forgotPasswordButton).toBeTruthy
     expect(form).toHaveFormValues(loginFormInitialValues)
   })
 
@@ -92,7 +92,7 @@ describe('LoginForm', () => {
 
     await waitFor(() => {
       expect(loginButton.parentElement).toBeDisabled()
-      expect(getByText('email must be a valid email')).toBeTruthy()
+      expect(getByText('email must be a valid email')).toBeTruthy
     })
   })
 

@@ -21,7 +21,7 @@ describe('SearchAndDateFilter', () => {
     const form = getByTestId('form')
     const submitButton = getByText(/submit/i)
 
-    expect(submitButton).toBeTruthy()
+    expect(submitButton).toBeTruthy
     expect(form).toHaveFormValues({ ...initialValues, from: '', to: '' })
   })
 

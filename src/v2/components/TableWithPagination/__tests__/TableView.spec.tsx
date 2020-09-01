@@ -61,6 +61,6 @@ describe('TableView', () => {
     const { getByTestId } = render(<TableView {...props} />)
     const table = getByTestId('table')
 
-    expect(table).toBeTruthy()
+    expect(table).toBeTruthy
   })
 })

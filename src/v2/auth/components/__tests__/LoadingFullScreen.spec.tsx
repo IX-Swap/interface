@@ -8,6 +8,6 @@ describe('LoadingFullScreen', () => {
     const { getByText } = render(<LoadingFullScreen />)
     const message = getByText(/loading/i)
 
-    expect(message).toBeTruthy()
+    expect(message).toBeTruthy
   })
 })

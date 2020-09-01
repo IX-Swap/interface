@@ -27,7 +27,7 @@ describe('ResetStep', () => {
     const form = getByTestId('reset-step')
     const submitButton = getByText(/complete/i)
 
-    expect(form).toBeInTheDOM()
+    expect(form).toBeTruthy()
     expect(form).toHaveFormValues(completePasswordResetInitialValues)
     expect(submitButton.parentElement).toBeDisabled()
   })

@@ -7,7 +7,7 @@ import {
 } from 'v2/auth/password-reset/RequestStep'
 import { cleanup } from '@testing-library/react'
 import { requestPasswordResetArgs } from '__fixtures__/auth'
-import history from 'history'
+import { history } from 'v2/history'
 
 describe('RequestStep', () => {
   afterEach(async () => {
@@ -22,7 +22,7 @@ describe('RequestStep', () => {
     const form = getByTestId('request-step')
     const submitButton = getByText(/reset/i)
 
-    expect(form).toBeInTheDOM()
+    expect(form).toBeTruthy()
     expect(form).toHaveFormValues(requestPasswordResetInitialValues)
     expect(submitButton.parentElement).toBeDisabled()
   })
@@ -62,7 +62,7 @@ describe('RequestStep', () => {
 
     await waitFor(() => {
       expect(submitButton.parentElement).toBeDisabled()
-      expect(getByText('email must be a valid email')).toBeTruthy()
+      expect(getByText('email must be a valid email')).toBeTruthy
     })
   })
 

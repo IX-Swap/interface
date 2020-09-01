@@ -16,9 +16,9 @@ describe('AuthTabs', () => {
     const loginTab = getByTestId('login')
     const registerTab = getByTestId('register')
 
-    expect(tabs).toBeInTheDOM()
-    expect(loginTab).toBeInTheDOM()
-    expect(registerTab).toBeInTheDOM()
+    expect(tabs).toBeTruthy()
+    expect(loginTab).toBeTruthy()
+    expect(registerTab).toBeTruthy()
     expect(loginTab).toHaveClass('Mui-selected')
   })
 
@@ -26,7 +26,7 @@ describe('AuthTabs', () => {
     const { getByTestId } = renderWithUserStore(<AuthTabs />)
     const registerTab = getByTestId('register')
 
-    expect(registerTab).toBeInTheDOM()
+    expect(registerTab).toBeTruthy()
 
     fireEvent.click(registerTab)
 
@@ -38,7 +38,7 @@ describe('AuthTabs', () => {
     const { getByTestId } = renderWithUserStore(<AuthTabs />)
     const loginTab = getByTestId('login')
 
-    expect(loginTab).toBeInTheDOM()
+    expect(loginTab).toBeTruthy()
 
     fireEvent.click(loginTab)
 

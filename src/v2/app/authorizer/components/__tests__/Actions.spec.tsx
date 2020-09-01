@@ -24,7 +24,7 @@ describe('Actions', () => {
     )
     const viewButton = getByTestId('view-button')
 
-    expect(viewButton).toBeTruthy()
+    expect(viewButton).toBeTruthy
   })
 
   it('renders dropdown button if item.status = "Submitted"', () => {
@@ -33,7 +33,7 @@ describe('Actions', () => {
     )
     const moreButton = getByTestId('more-button')
 
-    expect(moreButton).toBeTruthy()
+    expect(moreButton).toBeTruthy
   })
 
   it('does not render dropdown button if item.status != "Submitted"', () => {
@@ -58,7 +58,7 @@ describe('Actions', () => {
     fireEvent.click(moreButton)
     await waitFor(() => {
       const dropdown = getByTestId('dropdown')
-      expect(dropdown).toBeTruthy()
+      expect(dropdown).toBeTruthy
     })
 
     const viewButton = getByText('View')
@@ -80,7 +80,7 @@ describe('Actions', () => {
     fireEvent.click(moreButton)
     await waitFor(() => {
       const dropdown = getByTestId('dropdown')
-      expect(dropdown).toBeTruthy()
+      expect(dropdown).toBeTruthy
     })
 
     const approveButton = getByText('Approve')
@@ -102,7 +102,7 @@ describe('Actions', () => {
     fireEvent.click(moreButton)
     await waitFor(() => {
       const dropdown = getByTestId('dropdown')
-      expect(dropdown).toBeTruthy()
+      expect(dropdown).toBeTruthy
     })
 
     const rejectButton = getByText('Reject')

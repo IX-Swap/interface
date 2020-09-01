@@ -19,9 +19,9 @@ describe('Preview', () => {
     const backButton = getByTestId('back-button')
     const child = getByTestId('children')
 
-    expect(title).toBeTruthy()
-    expect(backButton).toBeTruthy()
-    expect(child).toBeTruthy()
+    expect(title).toBeTruthy
+    expect(backButton).toBeTruthy
+    expect(child).toBeTruthy
   })
 
   it('fires onBack callback when back button is pressed', async () => {

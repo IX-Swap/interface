@@ -10,7 +10,7 @@ import {
 import { Confirmation } from 'v2/auth/confirmation/Confirmation'
 import { AuthFormMessage } from 'v2/auth/components/AuthFormMessage'
 import { AuthRoute } from 'v2/auth/router'
-import history from 'history'
+import { history } from 'v2/history'
 
 jest.mock('v2/auth/components/AuthFormMessage', () => ({
   AuthFormMessage: jest.fn(() => null)
@@ -34,7 +34,7 @@ describe('VerifyRegistration', () => {
     const { getByText } = renderWithUserStore(<Confirmation />)
     const backToLoginButton = getByText(/back to login/i)
 
-    expect(backToLoginButton).toBeTruthy()
+    expect(backToLoginButton).toBeTruthy
     expect(AuthFormMessage).toHaveBeenCalledTimes(1)
   })
 
@@ -44,7 +44,7 @@ describe('VerifyRegistration', () => {
     })
     const loadingIndicator = getByTestId('loading')
 
-    expect(loadingIndicator).toBeTruthy()
+    expect(loadingIndicator).toBeTruthy
   })
 
   it('handles back to login button click', async () => {

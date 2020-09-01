@@ -25,8 +25,8 @@ describe('Filters', () => {
     const statusFilter = getByTestId('status-filter')
     const searchAndDateFilter = getByTestId('search-date-filter')
 
-    expect(title).toBeTruthy()
-    expect(statusFilter).toBeTruthy()
-    expect(searchAndDateFilter).toBeTruthy()
+    expect(title).toBeTruthy
+    expect(statusFilter).toBeTruthy
+    expect(searchAndDateFilter).toBeTruthy
   })
 })

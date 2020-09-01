@@ -2,7 +2,7 @@
 import React from 'react'
 import { fireEvent, renderWithUserStore } from 'test-utils'
 import { cleanup } from '@testing-library/react'
-import history from 'history'
+import { history } from 'v2/history'
 import { ConfirmationStep } from 'v2/auth/password-reset/ConfirmationStep'
 
 describe('ConfirmationStep', () => {
@@ -16,8 +16,8 @@ describe('ConfirmationStep', () => {
     const text = getByText(/Your password has been successfully reset/)
     const backToLoginButton = getByText(/back to login/i)
 
-    expect(text).toBeInTheDOM()
-    expect(backToLoginButton).toBeInTheDOM()
+    expect(text).toBeTruthy()
+    expect(backToLoginButton).toBeTruthy()
     expect(backToLoginButton.parentElement).toBeEnabled()
   })
 

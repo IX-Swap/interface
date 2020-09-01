@@ -2,7 +2,7 @@
 import React from 'react'
 import { fakeUserStore, renderWithUserStore } from 'test-utils'
 import AuthEntryPoint from 'v2/auth/AuthRoot'
-import history from 'history'
+import { history } from 'v2/history'
 import { cleanup } from '@testing-library/react'
 import { AuthRoute } from 'v2/auth/router'
 import { Login } from 'v2/auth/login/Login'

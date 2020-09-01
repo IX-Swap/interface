@@ -11,7 +11,7 @@ describe('Copyright', () => {
     const { getByTestId } = renderWithUserStore(<AuthFormMessage />, { error })
     const errorEl = getByTestId('error')
 
-    expect(errorEl).toBeInTheDOM()
+    expect(errorEl).toBeTruthy()
     expect(errorEl).toHaveTextContent(error)
   })
 
@@ -22,7 +22,7 @@ describe('Copyright', () => {
     })
     const messageEl = getByTestId('message')
 
-    expect(messageEl).toBeInTheDOM()
+    expect(messageEl).toBeTruthy()
     expect(messageEl).toHaveTextContent(message)
   })
 })

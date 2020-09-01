@@ -32,6 +32,6 @@ describe('Banks', () => {
   it('renders ', () => {
     render(<Banks />)
 
-    expect(renderRoutes).toHaveBeenCalledTimes(0)
+    expect(renderRoutes).toHaveBeenCalledTimes(1)
   })
 })

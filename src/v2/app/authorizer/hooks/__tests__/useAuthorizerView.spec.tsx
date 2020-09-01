@@ -62,7 +62,7 @@ describe('useAuthorizerView', () => {
     })
 
     expect(result.current.item).toEqual(item)
-    expect(result.current.isViewing).toBeTruthy()
+    expect(result.current.isViewing).toBeTruthy
 
     // eslint-disable-next-line no-void
     void act(() => {

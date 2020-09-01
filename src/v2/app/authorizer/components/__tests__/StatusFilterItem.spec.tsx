@@ -21,8 +21,8 @@ describe('StatusFilterItem', () => {
     const child = getByTestId('child')
     const title = getByText(props.title)
 
-    expect(child).toBeTruthy()
-    expect(title).toBeTruthy()
+    expect(child).toBeTruthy
+    expect(title).toBeTruthy
   })
 
   it('renders without selected class if item is not selected', async () => {
