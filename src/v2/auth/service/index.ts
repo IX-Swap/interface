@@ -9,7 +9,7 @@ import {
   VerifySignupArgs
 } from './types'
 import storageService from '../../services/storage'
-import history from 'v2/history'
+import { history } from 'v2/history'
 
 const authService = {
   _baseURL: '/auth',

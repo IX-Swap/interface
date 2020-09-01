@@ -8,10 +8,10 @@ import { ThemeProvider } from '@material-ui/styles'
 import { CssBaseline } from '@material-ui/core'
 import { SnackbarContainer } from 'uno-material-ui'
 
-import Themes from './themes'
-import * as serviceWorker from '../serviceWorker'
+import Themes from './v1/themes'
+import * as serviceWorker from './serviceWorker'
 import { UserProvider } from 'v2/auth/context'
-import EntryPoint from '../v2'
+import { EntryPoint } from 'v2/EntryPoint'
 
 const generateClassName = createGenerateClassName({
   productionPrefix: 'ix'

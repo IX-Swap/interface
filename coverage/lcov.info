@@ -250,7 +250,7 @@ BRF:0
 BRH:0
 end_of_record
 TN:
-SF:/Users/alex/code/javascript/IXWebApp/src/v1/index.js
+SF:/Users/alex/code/javascript/IXWebApp/src/v1/index.tsx
 FNF:0
 FNH:0
 DA:16,0
@@ -868,7 +868,7 @@ BRF:21
 BRH:0
 end_of_record
 TN:
-SF:/Users/alex/code/javascript/IXWebApp/src/v1/components/Dso/DsoInformation/index.js
+SF:/Users/alex/code/javascript/IXWebApp/src/v1/components/Dso/DsoInformation/index.tsx
 FN:69,(anonymous_0)
 FN:95,(anonymous_1)
 FN:96,(anonymous_2)
@@ -1389,7 +1389,7 @@ BRF:6
 BRH:0
 end_of_record
 TN:
-SF:/Users/alex/code/javascript/IXWebApp/src/v1/components/Dso/DsoList/index.js
+SF:/Users/alex/code/javascript/IXWebApp/src/v1/components/Dso/DsoList/index.tsx
 FN:8,(anonymous_0)
 FNF:1
 FNH:0
@@ -1428,7 +1428,7 @@ BRF:0
 BRH:0
 end_of_record
 TN:
-SF:/Users/alex/code/javascript/IXWebApp/src/v1/components/Dso/DsoList/modules/index.js
+SF:/Users/alex/code/javascript/IXWebApp/src/v1/components/Dso/DsoList/modules/index.tsx
 FNF:0
 FNH:0
 DA:9,0
@@ -1488,7 +1488,7 @@ BRF:4
 BRH:0
 end_of_record
 TN:
-SF:/Users/alex/code/javascript/IXWebApp/src/v1/components/Header/index.js
+SF:/Users/alex/code/javascript/IXWebApp/src/v1/components/Header/index.tsx
 FN:27,Header
 FN:42,(anonymous_1)
 FN:72,(anonymous_2)
@@ -1544,7 +1544,7 @@ BRF:0
 BRH:0
 end_of_record
 TN:
-SF:/Users/alex/code/javascript/IXWebApp/src/v1/components/NoAccessDialog/index.js
+SF:/Users/alex/code/javascript/IXWebApp/src/v1/components/NoAccessDialog/index.tsx
 FN:14,(anonymous_0)
 FN:44,(anonymous_1)
 FNF:2
@@ -1575,7 +1575,7 @@ BRF:8
 BRH:0
 end_of_record
 TN:
-SF:/Users/alex/code/javascript/IXWebApp/src/v1/components/PageTitle/index.js
+SF:/Users/alex/code/javascript/IXWebApp/src/v1/components/PageTitle/index.tsx
 FN:8,(anonymous_0)
 FN:14,(anonymous_1)
 FN:24,(anonymous_2)
@@ -1603,7 +1603,7 @@ BRF:7
 BRH:0
 end_of_record
 TN:
-SF:/Users/alex/code/javascript/IXWebApp/src/v1/components/Sidebar/index.js
+SF:/Users/alex/code/javascript/IXWebApp/src/v1/components/Sidebar/index.tsx
 FN:35,Sidebar
 FN:121,(anonymous_1)
 FN:162,(anonymous_2)
@@ -1767,7 +1767,7 @@ BRF:0
 BRH:0
 end_of_record
 TN:
-SF:/Users/alex/code/javascript/IXWebApp/src/v1/components/TableWithPagination/index.js
+SF:/Users/alex/code/javascript/IXWebApp/src/v1/components/TableWithPagination/index.tsx
 FN:19,(anonymous_0)
 FN:21,(anonymous_1)
 FN:29,(anonymous_2)
@@ -1885,7 +1885,7 @@ BRF:33
 BRH:0
 end_of_record
 TN:
-SF:/Users/alex/code/javascript/IXWebApp/src/v1/components/TableWithPagination/modules/index.js
+SF:/Users/alex/code/javascript/IXWebApp/src/v1/components/TableWithPagination/modules/index.tsx
 FN:5,init
 FNF:1
 FNH:0
@@ -1930,7 +1930,7 @@ BRF:0
 BRH:0
 end_of_record
 TN:
-SF:/Users/alex/code/javascript/IXWebApp/src/v1/config/index.js
+SF:/Users/alex/code/javascript/IXWebApp/src/v1/config/index.tsx
 FNF:0
 FNH:0
 DA:1,44
@@ -3219,7 +3219,7 @@ BRF:14
 BRH:0
 end_of_record
 TN:
-SF:/Users/alex/code/javascript/IXWebApp/src/v1/context/assets/index.js
+SF:/Users/alex/code/javascript/IXWebApp/src/v1/context/assets/index.tsx
 FN:11,useAssetsState
 FN:20,useAssetsDispatch
 FN:29,AssetsProvider
@@ -3295,7 +3295,7 @@ BRF:0
 BRH:0
 end_of_record
 TN:
-SF:/Users/alex/code/javascript/IXWebApp/src/v1/context/balance/personal/index.js
+SF:/Users/alex/code/javascript/IXWebApp/src/v1/context/balance/personal/index.tsx
 FNF:0
 FNH:0
 DA:4,0
@@ -3453,7 +3453,7 @@ BRF:12
 BRH:0
 end_of_record
 TN:
-SF:/Users/alex/code/javascript/IXWebApp/src/v1/context/base/withPagination/index.js
+SF:/Users/alex/code/javascript/IXWebApp/src/v1/context/base/withPagination/index.tsx
 FN:8,generateModule
 FN:18,useState
 FN:29,useDispatch
@@ -3636,7 +3636,7 @@ BRF:10
 BRH:0
 end_of_record
 TN:
-SF:/Users/alex/code/javascript/IXWebApp/src/v1/context/user/index.js
+SF:/Users/alex/code/javascript/IXWebApp/src/v1/context/user/index.tsx
 FN:9,useUserState
 FN:18,useUserDispatch
 FN:27,UserProvider
@@ -4296,7 +4296,7 @@ BRF:5
 BRH:0
 end_of_record
 TN:
-SF:/Users/alex/code/javascript/IXWebApp/src/v1/pages/exchange/components/ExchangeTable/ListingTable/index.js
+SF:/Users/alex/code/javascript/IXWebApp/src/v1/pages/exchange/components/ExchangeTable/ListingTable/index.tsx
 FN:7,(anonymous_0)
 FNF:1
 FNH:0
@@ -4320,7 +4320,7 @@ BRF:0
 BRH:0
 end_of_record
 TN:
-SF:/Users/alex/code/javascript/IXWebApp/src/v1/pages/exchange/components/ExchangeTable/ListingTable/modules/index.js
+SF:/Users/alex/code/javascript/IXWebApp/src/v1/pages/exchange/components/ExchangeTable/ListingTable/modules/index.tsx
 FNF:0
 FNH:0
 DA:4,0
@@ -4386,7 +4386,7 @@ BRF:16
 BRH:0
 end_of_record
 TN:
-SF:/Users/alex/code/javascript/IXWebApp/src/v1/pages/exchange/components/ExchangeTable/ListingView/index.js
+SF:/Users/alex/code/javascript/IXWebApp/src/v1/pages/exchange/components/ExchangeTable/ListingView/index.tsx
 FN:6,(anonymous_0)
 FNF:1
 FNH:0
@@ -4437,7 +4437,7 @@ BRF:2
 BRH:0
 end_of_record
 TN:
-SF:/Users/alex/code/javascript/IXWebApp/src/v1/pages/exchange/components/ExchangeTable/ListingView/modules/index.js
+SF:/Users/alex/code/javascript/IXWebApp/src/v1/pages/exchange/components/ExchangeTable/ListingView/modules/index.tsx
 FN:11,ListViewState
 FN:20,useListViewDispatch
 FN:31,ListViewProvider
@@ -4586,7 +4586,7 @@ BRF:21
 BRH:0
 end_of_record
 TN:
-SF:/Users/alex/code/javascript/IXWebApp/src/v1/pages/exchange/components/ExchangeTable/MarketListingTable/index.js
+SF:/Users/alex/code/javascript/IXWebApp/src/v1/pages/exchange/components/ExchangeTable/MarketListingTable/index.tsx
 FN:6,(anonymous_0)
 FNF:1
 FNH:0
@@ -4690,7 +4690,7 @@ BRF:13
 BRH:0
 end_of_record
 TN:
-SF:/Users/alex/code/javascript/IXWebApp/src/v1/pages/exchange/components/ExchangeTable/OrdersTable/index.js
+SF:/Users/alex/code/javascript/IXWebApp/src/v1/pages/exchange/components/ExchangeTable/OrdersTable/index.tsx
 FN:9,(anonymous_0)
 FNF:1
 FNH:0
@@ -4715,7 +4715,7 @@ BRF:0
 BRH:0
 end_of_record
 TN:
-SF:/Users/alex/code/javascript/IXWebApp/src/v1/pages/exchange/components/ExchangeTable/OrdersTable/modules/index.js
+SF:/Users/alex/code/javascript/IXWebApp/src/v1/pages/exchange/components/ExchangeTable/OrdersTable/modules/index.tsx
 FNF:0
 FNH:0
 DA:4,0
@@ -4817,7 +4817,7 @@ BRF:15
 BRH:0
 end_of_record
 TN:
-SF:/Users/alex/code/javascript/IXWebApp/src/v1/pages/exchange/components/ExchangeTable/TradeHistoryTable/index.js
+SF:/Users/alex/code/javascript/IXWebApp/src/v1/pages/exchange/components/ExchangeTable/TradeHistoryTable/index.tsx
 FN:9,(anonymous_0)
 FNF:1
 FNH:0
@@ -4842,7 +4842,7 @@ BRF:0
 BRH:0
 end_of_record
 TN:
-SF:/Users/alex/code/javascript/IXWebApp/src/v1/pages/exchange/components/ExchangeTable/TradeHistoryTable/modules/index.js
+SF:/Users/alex/code/javascript/IXWebApp/src/v1/pages/exchange/components/ExchangeTable/TradeHistoryTable/modules/index.tsx
 FNF:0
 FNH:0
 DA:4,0
@@ -5211,7 +5211,7 @@ BRF:0
 BRH:0
 end_of_record
 TN:
-SF:/Users/alex/code/javascript/IXWebApp/src/v1/pages/exchange/components/TradingTerminal/index.js
+SF:/Users/alex/code/javascript/IXWebApp/src/v1/pages/exchange/components/TradingTerminal/index.tsx
 FN:8,(anonymous_0)
 FNF:1
 FNH:0
@@ -5455,7 +5455,7 @@ BRF:49
 BRH:0
 end_of_record
 TN:
-SF:/Users/alex/code/javascript/IXWebApp/src/v1/pages/exchange/components/TradingTerminal/components/BidsAsks/index.js
+SF:/Users/alex/code/javascript/IXWebApp/src/v1/pages/exchange/components/TradingTerminal/components/BidsAsks/index.tsx
 FN:6,(anonymous_0)
 FNF:1
 FNH:0
@@ -5493,7 +5493,7 @@ BRF:2
 BRH:0
 end_of_record
 TN:
-SF:/Users/alex/code/javascript/IXWebApp/src/v1/pages/exchange/components/TradingTerminal/components/BidsAsks/modules/index.js
+SF:/Users/alex/code/javascript/IXWebApp/src/v1/pages/exchange/components/TradingTerminal/components/BidsAsks/modules/index.tsx
 FN:11,PostOrderState
 FN:20,usePostOrderDispatch
 FN:31,PostOrderProvider
@@ -5557,7 +5557,7 @@ BRF:0
 BRH:0
 end_of_record
 TN:
-SF:/Users/alex/code/javascript/IXWebApp/src/v1/pages/exchange/components/TradingTerminal/components/BidsAsksHistory/index.js
+SF:/Users/alex/code/javascript/IXWebApp/src/v1/pages/exchange/components/TradingTerminal/components/BidsAsksHistory/index.tsx
 FN:14,(anonymous_0)
 FN:31,(anonymous_1)
 FN:34,(anonymous_2)
@@ -5842,7 +5842,7 @@ BRF:67
 BRH:0
 end_of_record
 TN:
-SF:/Users/alex/code/javascript/IXWebApp/src/v1/pages/exchange/components/TradingTerminal/components/Monitoring/index.js
+SF:/Users/alex/code/javascript/IXWebApp/src/v1/pages/exchange/components/TradingTerminal/components/Monitoring/index.tsx
 FN:4,(anonymous_0)
 FNF:1
 FNH:0
@@ -5867,7 +5867,7 @@ BRF:0
 BRH:0
 end_of_record
 TN:
-SF:/Users/alex/code/javascript/IXWebApp/src/v1/pages/exchange/components/TradingTerminal/components/Monitoring/modules/index.js
+SF:/Users/alex/code/javascript/IXWebApp/src/v1/pages/exchange/components/TradingTerminal/components/Monitoring/modules/index.tsx
 FN:11,MonitoringState
 FN:20,useMonitoringDispatch
 FN:31,MonitoringProvider
@@ -5927,7 +5927,7 @@ BRF:0
 BRH:0
 end_of_record
 TN:
-SF:/Users/alex/code/javascript/IXWebApp/src/v1/pages/exchange/components/TradingTerminal/components/MyOrders/index.js
+SF:/Users/alex/code/javascript/IXWebApp/src/v1/pages/exchange/components/TradingTerminal/components/MyOrders/index.tsx
 FN:29,(anonymous_0)
 FN:55,TableMyOrders
 FN:63,(anonymous_2)
@@ -6000,7 +6000,7 @@ BRF:2
 BRH:0
 end_of_record
 TN:
-SF:/Users/alex/code/javascript/IXWebApp/src/v1/pages/exchange/components/TradingTerminal/components/TradeHistory/index.js
+SF:/Users/alex/code/javascript/IXWebApp/src/v1/pages/exchange/components/TradingTerminal/components/TradeHistory/index.tsx
 FN:10,(anonymous_0)
 FN:19,(anonymous_1)
 FN:22,(anonymous_2)
@@ -6059,7 +6059,7 @@ BRF:2
 BRH:0
 end_of_record
 TN:
-SF:/Users/alex/code/javascript/IXWebApp/src/v1/pages/exchange/components/TradingTerminal/modules/index.js
+SF:/Users/alex/code/javascript/IXWebApp/src/v1/pages/exchange/components/TradingTerminal/modules/index.tsx
 FN:16,MarketListingState
 FN:27,useMarketListDispatch
 FN:38,MarketListProvider
@@ -6128,7 +6128,7 @@ BRF:0
 BRH:0
 end_of_record
 TN:
-SF:/Users/alex/code/javascript/IXWebApp/src/v1/pages/identity/index.js
+SF:/Users/alex/code/javascript/IXWebApp/src/v1/pages/identity/index.tsx
 FN:7,(anonymous_0)
 FN:8,(anonymous_1)
 FN:9,(anonymous_2)
@@ -6435,7 +6435,7 @@ BRF:4
 BRH:0
 end_of_record
 TN:
-SF:/Users/alex/code/javascript/IXWebApp/src/v1/pages/identity/components/Dataroom/index.js
+SF:/Users/alex/code/javascript/IXWebApp/src/v1/pages/identity/components/Dataroom/index.tsx
 FN:10,(anonymous_0)
 FN:36,(anonymous_1)
 FN:37,(anonymous_2)
@@ -6818,7 +6818,7 @@ BRF:53
 BRH:0
 end_of_record
 TN:
-SF:/Users/alex/code/javascript/IXWebApp/src/v1/pages/identity/modules/index.js
+SF:/Users/alex/code/javascript/IXWebApp/src/v1/pages/identity/modules/index.tsx
 FN:11,(anonymous_0)
 FN:28,(anonymous_1)
 FN:37,(anonymous_2)
@@ -6975,7 +6975,7 @@ BRF:12
 BRH:0
 end_of_record
 TN:
-SF:/Users/alex/code/javascript/IXWebApp/src/v1/pages/identity/pages/corporate/index.js
+SF:/Users/alex/code/javascript/IXWebApp/src/v1/pages/identity/pages/corporate/index.tsx
 FN:9,(anonymous_0)
 FN:22,(anonymous_1)
 FN:34,(anonymous_2)
@@ -7053,7 +7053,7 @@ BRF:13
 BRH:0
 end_of_record
 TN:
-SF:/Users/alex/code/javascript/IXWebApp/src/v1/pages/identity/pages/individual/index.js
+SF:/Users/alex/code/javascript/IXWebApp/src/v1/pages/identity/pages/individual/index.tsx
 FN:9,(anonymous_0)
 FN:13,(anonymous_1)
 FN:28,(anonymous_2)
@@ -7145,7 +7145,7 @@ BRF:4
 BRH:0
 end_of_record
 TN:
-SF:/Users/alex/code/javascript/IXWebApp/src/v1/pages/identity/pages/landing/index.js
+SF:/Users/alex/code/javascript/IXWebApp/src/v1/pages/identity/pages/landing/index.tsx
 FN:9,(anonymous_0)
 FN:14,(anonymous_1)
 FNF:2
@@ -7173,7 +7173,7 @@ BRF:6
 BRH:0
 end_of_record
 TN:
-SF:/Users/alex/code/javascript/IXWebApp/src/v1/pages/invest/index.js
+SF:/Users/alex/code/javascript/IXWebApp/src/v1/pages/invest/index.tsx
 FN:5,(anonymous_0)
 FN:6,(anonymous_1)
 FN:7,(anonymous_2)
@@ -7484,7 +7484,7 @@ BRF:14
 BRH:0
 end_of_record
 TN:
-SF:/Users/alex/code/javascript/IXWebApp/src/v1/pages/invest/modules/index.js
+SF:/Users/alex/code/javascript/IXWebApp/src/v1/pages/invest/modules/index.tsx
 FN:11,(anonymous_0)
 FN:28,(anonymous_1)
 FN:37,(anonymous_2)
@@ -7554,7 +7554,7 @@ BRF:0
 BRH:0
 end_of_record
 TN:
-SF:/Users/alex/code/javascript/IXWebApp/src/v1/pages/invest/pages/commit/index.js
+SF:/Users/alex/code/javascript/IXWebApp/src/v1/pages/invest/pages/commit/index.tsx
 FN:7,(anonymous_0)
 FNF:1
 FNH:0
@@ -7655,7 +7655,7 @@ BRF:7
 BRH:0
 end_of_record
 TN:
-SF:/Users/alex/code/javascript/IXWebApp/src/v1/pages/invest/pages/dso-board/index.js
+SF:/Users/alex/code/javascript/IXWebApp/src/v1/pages/invest/pages/dso-board/index.tsx
 FN:14,(anonymous_0)
 FN:19,(anonymous_1)
 FN:23,(anonymous_2)
@@ -7693,7 +7693,7 @@ BRF:0
 BRH:0
 end_of_record
 TN:
-SF:/Users/alex/code/javascript/IXWebApp/src/v1/pages/invest/pages/dso-board/modules/index.js
+SF:/Users/alex/code/javascript/IXWebApp/src/v1/pages/invest/pages/dso-board/modules/index.tsx
 FNF:0
 FNH:0
 DA:9,0
@@ -7703,7 +7703,7 @@ BRF:0
 BRH:0
 end_of_record
 TN:
-SF:/Users/alex/code/javascript/IXWebApp/src/v1/pages/invest/pages/dso-view/index.js
+SF:/Users/alex/code/javascript/IXWebApp/src/v1/pages/invest/pages/dso-view/index.tsx
 FN:12,(anonymous_0)
 FN:22,(anonymous_1)
 FN:37,(anonymous_2)
@@ -7758,7 +7758,7 @@ BRF:2
 BRH:0
 end_of_record
 TN:
-SF:/Users/alex/code/javascript/IXWebApp/src/v1/pages/invest/pages/view-commitment/index.js
+SF:/Users/alex/code/javascript/IXWebApp/src/v1/pages/invest/pages/view-commitment/index.tsx
 FN:7,(anonymous_0)
 FNF:1
 FNH:0
@@ -7890,7 +7890,7 @@ BRF:31
 BRH:0
 end_of_record
 TN:
-SF:/Users/alex/code/javascript/IXWebApp/src/v1/pages/issuance/index.js
+SF:/Users/alex/code/javascript/IXWebApp/src/v1/pages/issuance/index.tsx
 FN:17,(anonymous_0)
 FN:23,(anonymous_1)
 FN:33,(anonymous_2)
@@ -7978,7 +7978,7 @@ BRF:4
 BRH:0
 end_of_record
 TN:
-SF:/Users/alex/code/javascript/IXWebApp/src/v1/pages/issuance/modules/index.js
+SF:/Users/alex/code/javascript/IXWebApp/src/v1/pages/issuance/modules/index.tsx
 FN:11,(anonymous_0)
 FN:28,(anonymous_1)
 FN:37,(anonymous_2)
@@ -8042,7 +8042,7 @@ BRF:0
 BRH:0
 end_of_record
 TN:
-SF:/Users/alex/code/javascript/IXWebApp/src/v1/pages/issuance/pages/issuance-create/index.js
+SF:/Users/alex/code/javascript/IXWebApp/src/v1/pages/issuance/pages/issuance-create/index.tsx
 FN:10,(anonymous_0)
 FN:14,(anonymous_1)
 FN:22,(anonymous_2)
@@ -8130,7 +8130,7 @@ BRF:4
 BRH:0
 end_of_record
 TN:
-SF:/Users/alex/code/javascript/IXWebApp/src/v1/pages/issuance/pages/issuance-list/index.js
+SF:/Users/alex/code/javascript/IXWebApp/src/v1/pages/issuance/pages/issuance-list/index.tsx
 FN:11,(anonymous_0)
 FN:15,(anonymous_1)
 FNF:2
@@ -8150,7 +8150,7 @@ BRF:0
 BRH:0
 end_of_record
 TN:
-SF:/Users/alex/code/javascript/IXWebApp/src/v1/pages/issuance/pages/issuance-view/index.js
+SF:/Users/alex/code/javascript/IXWebApp/src/v1/pages/issuance/pages/issuance-view/index.tsx
 FN:12,(anonymous_0)
 FN:22,(anonymous_1)
 FN:30,(anonymous_2)
@@ -8256,7 +8256,7 @@ BRF:4
 BRH:0
 end_of_record
 TN:
-SF:/Users/alex/code/javascript/IXWebApp/src/v1/pages/security/index.js
+SF:/Users/alex/code/javascript/IXWebApp/src/v1/pages/security/index.tsx
 FN:5,(anonymous_0)
 FN:6,(anonymous_1)
 FN:7,(anonymous_2)
@@ -8282,7 +8282,7 @@ BRF:0
 BRH:0
 end_of_record
 TN:
-SF:/Users/alex/code/javascript/IXWebApp/src/v1/pages/security/pages/index.js
+SF:/Users/alex/code/javascript/IXWebApp/src/v1/pages/security/pages/index.tsx
 FN:20,(anonymous_0)
 FN:43,(anonymous_1)
 FN:87,(anonymous_2)
@@ -8321,7 +8321,7 @@ BRF:4
 BRH:0
 end_of_record
 TN:
-SF:/Users/alex/code/javascript/IXWebApp/src/v1/pages/security/pages/change-password/index.js
+SF:/Users/alex/code/javascript/IXWebApp/src/v1/pages/security/pages/change-password/index.tsx
 FN:19,(anonymous_0)
 FN:44,(anonymous_1)
 FN:50,(anonymous_2)
@@ -8393,7 +8393,7 @@ BRF:2
 BRH:0
 end_of_record
 TN:
-SF:/Users/alex/code/javascript/IXWebApp/src/v1/pages/security/pages/setup-2fa/index.js
+SF:/Users/alex/code/javascript/IXWebApp/src/v1/pages/security/pages/setup-2fa/index.tsx
 FN:5,(anonymous_0)
 FNF:1
 FNH:0
@@ -8617,7 +8617,7 @@ BRF:10
 BRH:0
 end_of_record
 TN:
-SF:/Users/alex/code/javascript/IXWebApp/src/v1/pages/security/pages/setup-2fa/modules/index.js
+SF:/Users/alex/code/javascript/IXWebApp/src/v1/pages/security/pages/setup-2fa/modules/index.tsx
 FN:11,(anonymous_0)
 FN:28,(anonymous_1)
 FN:39,(anonymous_2)
@@ -8691,7 +8691,7 @@ BRF:0
 BRH:0
 end_of_record
 TN:
-SF:/Users/alex/code/javascript/IXWebApp/src/v1/pages/users/index.js
+SF:/Users/alex/code/javascript/IXWebApp/src/v1/pages/users/index.tsx
 FN:37,useUsersListLogic
 FN:55,(anonymous_1)
 FN:59,(anonymous_2)
@@ -8886,7 +8886,7 @@ BRF:2
 BRH:0
 end_of_record
 TN:
-SF:/Users/alex/code/javascript/IXWebApp/src/v1/pages/users/modules/index.js
+SF:/Users/alex/code/javascript/IXWebApp/src/v1/pages/users/modules/index.tsx
 FNF:0
 FNH:0
 DA:6,0
@@ -9172,7 +9172,7 @@ BRF:0
 BRH:0
 end_of_record
 TN:
-SF:/Users/alex/code/javascript/IXWebApp/src/v1/themes/index.js
+SF:/Users/alex/code/javascript/IXWebApp/src/v1/themes/index.tsx
 FNF:0
 FNH:0
 DA:4,40
@@ -9233,7 +9233,7 @@ BRF:2
 BRH:1
 end_of_record
 TN:
-SF:/Users/alex/code/javascript/IXWebApp/src/v2/index.tsx
+SF:/Users/alex/code/javascript/IXWebApp/src/v2/EntryPoint.tsx
 FN:10,(anonymous_0)
 FN:13,(anonymous_1)
 FN:29,(anonymous_2)
@@ -9993,7 +9993,7 @@ BRF:2
 BRH:0
 end_of_record
 TN:
-SF:/Users/alex/code/javascript/IXWebApp/src/v2/app/accounts/banks/context/index.ts
+SF:/Users/alex/code/javascript/IXWebApp/src/v2/app/accounts/banks/context/index.tsx
 FNF:0
 FNH:0
 DA:4,5
@@ -10096,7 +10096,7 @@ BRF:0
 BRH:0
 end_of_record
 TN:
-SF:/Users/alex/code/javascript/IXWebApp/src/v2/app/accounts/banks/service/index.ts
+SF:/Users/alex/code/javascript/IXWebApp/src/v2/app/accounts/banks/service/index.tsx
 FN:16,(anonymous_0)
 FN:23,(anonymous_1)
 FN:30,(anonymous_2)
@@ -10556,7 +10556,7 @@ BRF:0
 BRH:0
 end_of_record
 TN:
-SF:/Users/alex/code/javascript/IXWebApp/src/v2/app/accounts/transactions/index.tsx
+SF:/Users/alex/code/javascript/IXWebApp/src/v2/app/accounts/transactions/EntryPoint.tsx
 FN:12,(anonymous_0)
 FN:20,(anonymous_1)
 FN:27,(anonymous_2)
@@ -10654,7 +10654,7 @@ BRF:0
 BRH:0
 end_of_record
 TN:
-SF:/Users/alex/code/javascript/IXWebApp/src/v2/app/admin/index.tsx
+SF:/Users/alex/code/javascript/IXWebApp/src/v2/app/admin/EntryPoint.tsx
 FN:26,(anonymous_0)
 FN:31,(anonymous_1)
 FN:37,(anonymous_2)
@@ -11112,7 +11112,7 @@ BRF:0
 BRH:0
 end_of_record
 TN:
-SF:/Users/alex/code/javascript/IXWebApp/src/v2/app/authorizer/context/index.tsx
+SF:/Users/alex/code/javascript/IXWebApp/src/v2/app/authorizer/context/EntryPoint.tsx
 FNF:0
 FNH:0
 DA:4,43
@@ -11409,7 +11409,7 @@ BRF:7
 BRH:0
 end_of_record
 TN:
-SF:/Users/alex/code/javascript/IXWebApp/src/v2/app/components/bank-details/index.tsx
+SF:/Users/alex/code/javascript/IXWebApp/src/v2/app/components/bank-details/EntryPoint.tsx
 FN:6,(anonymous_0)
 FNF:1
 FNH:0
@@ -11426,7 +11426,7 @@ BRF:4
 BRH:0
 end_of_record
 TN:
-SF:/Users/alex/code/javascript/IXWebApp/src/v2/app/components/bank-preview/index.tsx
+SF:/Users/alex/code/javascript/IXWebApp/src/v2/app/components/bank-preview/EntryPoint.tsx
 FN:9,(anonymous_0)
 FNF:1
 FNH:0
@@ -11446,7 +11446,7 @@ BRF:5
 BRH:0
 end_of_record
 TN:
-SF:/Users/alex/code/javascript/IXWebApp/src/v2/app/components/commitment/index.tsx
+SF:/Users/alex/code/javascript/IXWebApp/src/v2/app/components/commitment/EntryPoint.tsx
 FN:25,(anonymous_0)
 FN:34,(anonymous_1)
 FN:47,(anonymous_2)
@@ -11578,7 +11578,7 @@ BRF:2
 BRH:0
 end_of_record
 TN:
-SF:/Users/alex/code/javascript/IXWebApp/src/v2/app/components/deposit-preview/index.tsx
+SF:/Users/alex/code/javascript/IXWebApp/src/v2/app/components/deposit-preview/EntryPoint.tsx
 FN:9,(anonymous_0)
 FN:24,(anonymous_1)
 FN:31,DepositView
@@ -11645,7 +11645,7 @@ BRF:7
 BRH:0
 end_of_record
 TN:
-SF:/Users/alex/code/javascript/IXWebApp/src/v2/app/components/digital-security/index.tsx
+SF:/Users/alex/code/javascript/IXWebApp/src/v2/app/components/digital-security/EntryPoint.tsx
 FN:42,(anonymous_0)
 FN:51,(anonymous_1)
 FN:63,(anonymous_2)
@@ -12123,7 +12123,7 @@ BRF:3
 BRH:0
 end_of_record
 TN:
-SF:/Users/alex/code/javascript/IXWebApp/src/v2/app/components/ds-withdrawal-preview/index.tsx
+SF:/Users/alex/code/javascript/IXWebApp/src/v2/app/components/ds-withdrawal-preview/EntryPoint.tsx
 FN:7,(anonymous_0)
 FN:22,(anonymous_1)
 FN:29,DSWithdrawalView
@@ -12148,7 +12148,7 @@ BRF:4
 BRH:0
 end_of_record
 TN:
-SF:/Users/alex/code/javascript/IXWebApp/src/v2/app/components/generic-preview/index.tsx
+SF:/Users/alex/code/javascript/IXWebApp/src/v2/app/components/generic-preview/EntryPoint.tsx
 FN:5,(anonymous_0)
 FN:20,(anonymous_1)
 FN:27,GenericPreview
@@ -12171,7 +12171,7 @@ BRF:0
 BRH:0
 end_of_record
 TN:
-SF:/Users/alex/code/javascript/IXWebApp/src/v2/app/components/header/index.tsx
+SF:/Users/alex/code/javascript/IXWebApp/src/v2/app/components/header/EntryPoint.tsx
 FN:23,Header
 FN:32,(anonymous_1)
 FN:37,(anonymous_2)
@@ -12462,7 +12462,7 @@ BRF:8
 BRH:0
 end_of_record
 TN:
-SF:/Users/alex/code/javascript/IXWebApp/src/v2/app/components/identity-forms/components/dataroom/index.tsx
+SF:/Users/alex/code/javascript/IXWebApp/src/v2/app/components/identity-forms/components/dataroom/EntryPoint.tsx
 FN:10,(anonymous_0)
 FN:44,(anonymous_1)
 FN:45,(anonymous_2)
@@ -12594,7 +12594,7 @@ BRF:0
 BRH:0
 end_of_record
 TN:
-SF:/Users/alex/code/javascript/IXWebApp/src/v2/app/components/identity-forms/const/index.ts
+SF:/Users/alex/code/javascript/IXWebApp/src/v2/app/components/identity-forms/const/index.tsx
 FNF:0
 FNH:0
 DA:5,6
@@ -12619,7 +12619,7 @@ BRF:0
 BRH:0
 end_of_record
 TN:
-SF:/Users/alex/code/javascript/IXWebApp/src/v2/app/components/sidebar/index.tsx
+SF:/Users/alex/code/javascript/IXWebApp/src/v2/app/components/sidebar/EntryPoint.tsx
 FN:35,Sidebar
 FN:64,(anonymous_1)
 FN:110,(anonymous_2)
@@ -12787,7 +12787,7 @@ BRF:0
 BRH:0
 end_of_record
 TN:
-SF:/Users/alex/code/javascript/IXWebApp/src/v2/app/components/withdrawal-preview/index.tsx
+SF:/Users/alex/code/javascript/IXWebApp/src/v2/app/components/withdrawal-preview/EntryPoint.tsx
 FN:8,(anonymous_0)
 FN:23,(anonymous_1)
 FN:30,WithdrawalView
@@ -12812,7 +12812,7 @@ BRF:4
 BRH:0
 end_of_record
 TN:
-SF:/Users/alex/code/javascript/IXWebApp/src/v2/app/identity/index.tsx
+SF:/Users/alex/code/javascript/IXWebApp/src/v2/app/identity/EntryPoint.tsx
 FN:7,(anonymous_0)
 FN:10,(anonymous_1)
 FN:25,(anonymous_2)
@@ -12844,7 +12844,7 @@ BRF:0
 BRH:0
 end_of_record
 TN:
-SF:/Users/alex/code/javascript/IXWebApp/src/v2/app/identity/context/index.tsx
+SF:/Users/alex/code/javascript/IXWebApp/src/v2/app/identity/context/EntryPoint.tsx
 FN:9,(anonymous_0)
 FNF:1
 FNH:0
@@ -12961,7 +12961,7 @@ BRF:6
 BRH:0
 end_of_record
 TN:
-SF:/Users/alex/code/javascript/IXWebApp/src/v2/app/invest/index.tsx
+SF:/Users/alex/code/javascript/IXWebApp/src/v2/app/invest/EntryPoint.tsx
 FN:6,(anonymous_0)
 FN:8,(anonymous_1)
 FN:22,(anonymous_2)
@@ -13046,7 +13046,7 @@ BRF:0
 BRH:0
 end_of_record
 TN:
-SF:/Users/alex/code/javascript/IXWebApp/src/v2/app/invest/context/index.tsx
+SF:/Users/alex/code/javascript/IXWebApp/src/v2/app/invest/context/EntryPoint.tsx
 FN:10,InvestProvider
 FN:14,(anonymous_1)
 FNF:2
@@ -13156,7 +13156,7 @@ BRF:2
 BRH:0
 end_of_record
 TN:
-SF:/Users/alex/code/javascript/IXWebApp/src/v2/app/issuance/index.tsx
+SF:/Users/alex/code/javascript/IXWebApp/src/v2/app/issuance/EntryPoint.tsx
 FN:6,(anonymous_0)
 FN:8,(anonymous_1)
 FN:22,(anonymous_2)
@@ -13188,7 +13188,7 @@ BRF:0
 BRH:0
 end_of_record
 TN:
-SF:/Users/alex/code/javascript/IXWebApp/src/v2/app/issuance/context/index.tsx
+SF:/Users/alex/code/javascript/IXWebApp/src/v2/app/issuance/context/EntryPoint.tsx
 FN:10,InvestProvider
 FN:14,(anonymous_1)
 FNF:2
@@ -13504,7 +13504,7 @@ BRF:4
 BRH:4
 end_of_record
 TN:
-SF:/Users/alex/code/javascript/IXWebApp/src/v2/auth/context/index.ts
+SF:/Users/alex/code/javascript/IXWebApp/src/v2/auth/context/index.tsx
 FNF:0
 FNH:0
 DA:4,41
@@ -13590,7 +13590,7 @@ BRF:8
 BRH:8
 end_of_record
 TN:
-SF:/Users/alex/code/javascript/IXWebApp/src/v2/auth/context/password-reset/index.tsx
+SF:/Users/alex/code/javascript/IXWebApp/src/v2/auth/context/password-reset/EntryPoint.tsx
 FNF:0
 FNH:0
 DA:4,40
@@ -13804,7 +13804,7 @@ BRF:0
 BRH:0
 end_of_record
 TN:
-SF:/Users/alex/code/javascript/IXWebApp/src/v2/auth/service/index.ts
+SF:/Users/alex/code/javascript/IXWebApp/src/v2/auth/service/index.tsx
 FN:17,(anonymous_0)
 FN:21,(anonymous_1)
 FN:33,(anonymous_2)
@@ -14759,7 +14759,7 @@ BRF:2
 BRH:0
 end_of_record
 TN:
-SF:/Users/alex/code/javascript/IXWebApp/src/v2/config/index.ts
+SF:/Users/alex/code/javascript/IXWebApp/src/v2/config/index.tsx
 FNF:0
 FNH:0
 DA:3,49
@@ -14774,7 +14774,7 @@ BRF:2
 BRH:1
 end_of_record
 TN:
-SF:/Users/alex/code/javascript/IXWebApp/src/v2/context/assets/index.tsx
+SF:/Users/alex/code/javascript/IXWebApp/src/v2/context/assets/EntryPoint.tsx
 FNF:0
 FNH:0
 DA:4,0
@@ -14876,7 +14876,7 @@ BRF:0
 BRH:0
 end_of_record
 TN:
-SF:/Users/alex/code/javascript/IXWebApp/src/v2/context/balances/index.tsx
+SF:/Users/alex/code/javascript/IXWebApp/src/v2/context/balances/EntryPoint.tsx
 FNF:0
 FNH:0
 DA:4,0
@@ -15000,7 +15000,7 @@ BRF:2
 BRH:0
 end_of_record
 TN:
-SF:/Users/alex/code/javascript/IXWebApp/src/v2/context/identity/index.tsx
+SF:/Users/alex/code/javascript/IXWebApp/src/v2/context/identity/EntryPoint.tsx
 FN:10,UserProvider
 FN:14,(anonymous_1)
 FNF:2
@@ -15126,7 +15126,7 @@ BRF:16
 BRH:0
 end_of_record
 TN:
-SF:/Users/alex/code/javascript/IXWebApp/src/v2/context/layout/index.tsx
+SF:/Users/alex/code/javascript/IXWebApp/src/v2/context/layout/EntryPoint.tsx
 FN:9,(anonymous_0)
 FNF:1
 FNH:0
@@ -15778,7 +15778,7 @@ BRF:4
 BRH:0
 end_of_record
 TN:
-SF:/Users/alex/code/javascript/IXWebApp/src/v2/services/api/index.ts
+SF:/Users/alex/code/javascript/IXWebApp/src/v2/services/api/index.tsx
 FN:22,get
 FN:31,(anonymous_1)
 FN:49,(anonymous_2)
@@ -15874,7 +15874,7 @@ BRF:0
 BRH:0
 end_of_record
 TN:
-SF:/Users/alex/code/javascript/IXWebApp/src/v2/services/socket/index.ts
+SF:/Users/alex/code/javascript/IXWebApp/src/v2/services/socket/index.tsx
 FN:9,(anonymous_0)
 FN:13,(anonymous_1)
 FN:20,(anonymous_2)
@@ -15942,7 +15942,7 @@ BRF:12
 BRH:0
 end_of_record
 TN:
-SF:/Users/alex/code/javascript/IXWebApp/src/v2/services/storage/index.ts
+SF:/Users/alex/code/javascript/IXWebApp/src/v2/services/storage/index.tsx
 FN:2,(anonymous_0)
 FN:10,(anonymous_1)
 FN:14,(anonymous_2)

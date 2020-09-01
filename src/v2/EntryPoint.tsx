@@ -4,10 +4,10 @@ import { observer } from 'mobx-react'
 import AppRoot from 'v2/app/AppRoot'
 import AuthRoot from 'v2/auth/AuthRoot'
 import { useUserStore } from 'v2/auth/context'
-import history from './history'
+import { history } from 'v2/history'
 import { LoadingFullScreen } from 'v2/auth/components/LoadingFullScreen'
 
-const EntryPoint: React.FC = () => {
+export const EntryPoint: React.FC = observer(() => {
   const { isAuthenticated, getUser, isLoading } = useUserStore()
 
   useEffect(() => {
@@ -30,6 +30,4 @@ const EntryPoint: React.FC = () => {
       />
     </Router>
   )
-}
-
-export default observer(EntryPoint)
+})

@@ -7,7 +7,7 @@ import {
 } from 'v2/auth/password-reset/RequestStep'
 import { cleanup } from '@testing-library/react'
 import { requestPasswordResetArgs } from '__fixtures__/auth'
-import history from 'v2/history'
+import history from 'history'
 
 describe('RequestStep', () => {
   afterEach(async () => {

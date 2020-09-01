@@ -2,7 +2,7 @@
 import React from 'react'
 import { fireEvent, renderWithUserStore } from 'test-utils'
 import { cleanup } from '@testing-library/react'
-import history from 'v2/history'
+import history from 'history'
 import { ConfirmationStep } from 'v2/auth/password-reset/ConfirmationStep'
 
 describe('ConfirmationStep', () => {

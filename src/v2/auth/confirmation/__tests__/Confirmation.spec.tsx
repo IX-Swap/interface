@@ -10,7 +10,7 @@ import {
 import { Confirmation } from 'v2/auth/confirmation/Confirmation'
 import { AuthFormMessage } from 'v2/auth/components/AuthFormMessage'
 import { AuthRoute } from 'v2/auth/router'
-import history from 'v2/history'
+import history from 'history'
 
 jest.mock('v2/auth/components/AuthFormMessage', () => ({
   AuthFormMessage: jest.fn(() => null)

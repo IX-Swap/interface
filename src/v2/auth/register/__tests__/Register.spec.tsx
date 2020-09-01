@@ -3,7 +3,7 @@ import React from 'react'
 import { fireEvent, cleanup, waitFor, renderWithUserStore } from 'test-utils'
 import { Register, registerFormInitialValues } from 'v2/auth/register/Register'
 import { signupArgs } from '__fixtures__/auth'
-import history from 'v2/history'
+import history from 'history'
 
 describe('Register', () => {
   beforeEach(() => {

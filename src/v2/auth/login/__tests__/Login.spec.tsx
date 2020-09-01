@@ -3,7 +3,7 @@ import React from 'react'
 import { fireEvent, cleanup, waitFor, renderWithUserStore } from 'test-utils'
 import { Login, loginFormInitialValues } from 'v2/auth/login/Login'
 import { loginArgs } from '__fixtures__/auth'
-import history from 'v2/history'
+import history from 'history'
 import { AuthRoute } from 'v2/auth/router'
 
 describe('LoginForm', () => {
