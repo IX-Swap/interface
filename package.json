@@ -100,6 +100,7 @@
     "gulp": "^4.0.2",
     "gulp-awspublish": "^4.1.1",
     "gulp-rev-all": "^2.0.3",
+    "husky": "^4.2.5",
     "jest-environment-jsdom-sixteen": "^1.0.3",
     "jest-localstorage-mock": "^2.4.3",
     "jest-sonar-reporter": "^2.0.0",
@@ -135,5 +136,11 @@
   "jestSonar": {
     "reportPath": "reports",
     "reportFile": "test-report.xml"
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "npm run std:ts",
+      "pre-push": "npm run test:ci"
+    }
   }
 }
