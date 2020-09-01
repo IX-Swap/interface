@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useMemo } from 'react'
 import { useHistory } from 'react-router-dom'
 import { Grid } from '@material-ui/core'
 import { observer } from 'mobx-react'
@@ -13,7 +13,7 @@ const AuthRoot: React.FC = () => {
   const { setActiveTab, isAuthenticated } = useUserStore()
   const history = useHistory()
   const { renderRoutes, routes, current } = useAuthRouter()
-  const tabbedRoutes = [routes.login, routes.signup]
+  const tabbedRoutes = useMemo(() => [routes.login, routes.signup], [routes])
   const isLoginOrSignup = tabbedRoutes.includes(current.path)
 
   useEffect(() => {
