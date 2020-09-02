@@ -17,7 +17,7 @@ import { TypedFormFieldProps } from 'v2/components/form/typed/types'
 import { pathToString } from 'v2/components/form/typed/utils'
 import FormHelperText from '@material-ui/core/FormHelperText'
 
-export const createTypedSelect = <FormType extends Record<string, any>>() => <
+export const useTypedSelect = <FormType extends Record<string, any>>() => <
   Path extends DeepPath<FormType, Path>
 >(
   props: TypedFormFieldProps<FormType, Path> & Omit<MUISelectProps, 'name'>
@@ -29,10 +29,7 @@ export const Select = <
 >(
   props: TypedFormFieldProps<FormType, Path> & Omit<MUISelectProps, 'name'>
 ): JSX.Element => {
-  const { name, defaultValue, ...selectProps } = props
-  const { control, errors, formState, setValue, trigger } = useFormContext<
-    FormType
-  >()
+  const { control, errors, formState, setValue } = useFormContext<FormType>()
   // @ts-expect-error
   const TypedController = useTypedController<FormType>({ control })
   const path = pathToString(props.name)
@@ -41,20 +38,17 @@ export const Select = <
   const handleChange = (
     e: React.ChangeEvent<{ name?: string | undefined; value: unknown }>
   ): void => {
-    setValue(path, e.target.value as any)
-    // eslint-disable-next-line no-void
-    void trigger()
+    setValue(path, e.target.value as any, { shouldValidate: true })
   }
 
   return (
     <TypedController
-      name={name}
-      defaultValue={defaultValue}
+      name={props.name}
+      defaultValue={props.defaultValue}
       render={controllerProps => (
         <FormControl fullWidth>
           <InputLabel error={hasError}>{props.label}</InputLabel>
           <MUISelect
-            {...selectProps}
             {...controllerProps}
             onChange={handleChange}
             error={hasError}

@@ -6,6 +6,7 @@ import {
   convertPaginatedResultToFlatArray
 } from 'v2/context/assets/utils'
 import { useAssetsService } from 'v2/hooks/useAssetsService'
+import { useMemo } from 'react'
 
 export const ASSETS_QUERY_KEY = 'assets'
 
@@ -33,9 +34,10 @@ export const useAssets = (type: AssetType): UseAssetsReturnType => {
   const raw = data ?? []
   const list = convertPaginatedResultToFlatArray<Asset>(raw)
   const map = convertDataArrayToMap<Asset>('_id', list)
+  const memoedData = useMemo(() => ({ raw, list, map }), [status])
 
   return {
-    data: { raw, list, map },
+    data: memoedData,
     status
   }
 }

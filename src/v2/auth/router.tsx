@@ -1,9 +1,9 @@
-import { Login } from 'v2/auth/login/Login'
-import { Register } from 'v2/auth/register/Register'
-import { PasswordReset } from 'v2/auth/password-reset/PasswordReset'
+import { Login } from 'v2/auth/pages/login/Login'
+import { Register } from 'v2/auth/pages/register/Register'
+import { PasswordReset } from 'v2/auth/pages/password-reset/PasswordReset'
 import { InternalRouteProps } from 'v2/types/util'
 import { generateAppRouterHook } from 'v2/helpers/generateAppRouterHook'
-import { Confirmation } from 'v2/auth/confirmation/Confirmation'
+import { Confirmation } from 'v2/auth/pages/confirmation/Confirmation'
 
 export const AuthRoute = {
   login: '/auth/login',

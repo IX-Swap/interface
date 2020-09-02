@@ -5,50 +5,31 @@ import {
   GetBalanceByTypeArgs
 } from 'v2/context/balances/types'
 
-// eslint-disable-next-line @typescript-eslint/no-extraneous-class
-export class BalancesService {
-  static _baseURL = '/accounts/balance'
+export const balancesService = {
+  _baseURL: '/accounts/balance',
 
-  static _buildURL = (uri: string): string => {
-    return `${BalancesService._baseURL}${uri}`
-  }
+  _buildURL (uri: string) {
+    return `${this._baseURL}${uri}`
+  },
 
-  static getAllBalances = (queryKey: string, args: GetAllBalancesArgs): any => {
+  async getAllBalances (queryKey: string, args: GetAllBalancesArgs) {
     const { userId, ...payload } = args
     const uri = `/${userId}`
 
-    return apiService.request<any>(
-      'POST',
-      BalancesService._buildURL(uri),
-      payload
-    )
-  }
+    return await apiService.request('POST', this._buildURL(uri), payload)
+  },
 
-  static getBalancesByAssetId = (
-    queryKey: string,
-    args: GetBalanceByAssetIdArgs
-  ): any => {
+  async getBalancesByAssetId (queryKey: string, args: GetBalanceByAssetIdArgs) {
     const { assetId, userId, ...payload } = args
     const uri = `/${userId}/${assetId}`
 
-    return apiService.request<any>(
-      'POST',
-      BalancesService._buildURL(uri),
-      payload
-    )
-  }
+    return await apiService.request('POST', this._buildURL(uri), payload)
+  },
 
-  static getBalancesByType = (
-    queryKey: string,
-    args: GetBalanceByTypeArgs
-  ): any => {
+  async getBalancesByType (queryKey: string, args: GetBalanceByTypeArgs) {
     const { userId, ...payload } = args
     const uri = `/${userId}`
 
-    return apiService.request<any>(
-      'POST',
-      BalancesService._buildURL(uri),
-      payload
-    )
+    return await apiService.request<any>('POST', this._buildURL(uri), payload)
   }
 }

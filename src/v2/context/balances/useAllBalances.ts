@@ -2,7 +2,7 @@ import { QueryStatus, useInfiniteQuery } from 'react-query'
 import { convertDataArrayToMap } from 'v2/context/assets/utils'
 import { AssetBalance } from 'v2/types/balance'
 import { useUserStore } from 'v2/auth/context'
-import { BalancesService } from 'v2/context/balances/service'
+import { balancesService } from 'v2/context/balances/service'
 import { list } from './fakeBalances'
 
 export const ALL_BALANCES_QUERY_KEY = 'allBalances'
@@ -20,10 +20,11 @@ interface UseAllBalancesReturnType {
 
 export const useAllBalances = (): UseAllBalancesReturnType => {
   const { user } = useUserStore()
+  const queryFn = balancesService.getAllBalances.bind(balancesService)
   const payload = { userId: user?._id, skip: 0, limit: 5 }
   const { data, status } = useInfiniteQuery(
     [ALL_BALANCES_QUERY_KEY, payload],
-    BalancesService.getAllBalances
+    queryFn
   )
   const raw = data ?? []
   // const list = convertPaginatedResultToFlatArray<AssetBalance>(raw)

@@ -13,8 +13,8 @@ import { UserStore } from 'v2/auth/context/store'
 import { PasswordResetProvider } from 'v2/auth/context/password-reset'
 import PasswordResetStore from 'v2/auth/context/password-reset/store'
 import { PasswordResetStep } from 'v2/auth/context/password-reset/types'
-import { AuthorizerTableStore } from 'v2/app/authorizer/context/store'
-import { AuthorizerTableStoreProvider } from 'v2/app/authorizer/context'
+import { AuthorizerTableStore } from 'v2/app/pages/authorizer/context/store'
+import { AuthorizerTableStoreProvider } from 'v2/app/pages/authorizer/context'
 
 const generateClassName = createGenerateClassName({
   productionPrefix: 'ix'

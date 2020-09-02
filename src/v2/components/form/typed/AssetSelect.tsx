@@ -1,75 +1,38 @@
-import { Control, useFormContext, FieldError } from 'react-hook-form'
-import { useTypedController } from '@hookform/strictly-typed'
-import { FormControl, InputLabel, SelectProps } from '@material-ui/core'
-import React from 'react'
-import {
-  DeepPath,
-  FieldValuesFromControl,
-  UnpackNestedValue
-} from '@hookform/strictly-typed/dist/types'
-import get from 'lodash/get'
-import { TypedFormFieldProps } from 'v2/components/form/typed/types'
-import { pathToString } from 'v2/components/form/typed/utils'
-import { AssetsSelect } from 'v2/components/form/AssetsSelect'
-import FormHelperText from '@material-ui/core/FormHelperText'
+import React, { useMemo, ComponentProps } from 'react'
+import { useTypedSelect } from 'v2/components/form/typed/Select'
 import { AssetType } from 'v2/context/assets/types'
+import { useAssets } from 'v2/context/assets/useAssets'
+import { MenuItem } from '@material-ui/core'
 
-type AssetSelectProps = Omit<SelectProps, 'name'> & {
-  assetType: AssetType
-}
+// eslint-disable-next-line @typescript-eslint/explicit-function-return-type
+export const useAssetSelect = <FormType,>(type: AssetType) => {
+  const TypedSelect = useTypedSelect<FormType>()
+  const { status, data } = useAssets(type)
 
-export const createTypedAssetSelect = <
-  FormType extends Record<string, any>
->() => <Path extends DeepPath<FormType, Path>>(
-  props: TypedFormFieldProps<FormType, Path> & AssetSelectProps
-) => <AssetSelect {...props} />
+  return useMemo(
+    () => (props: ComponentProps<typeof TypedSelect>): JSX.Element => {
+      if (status === 'loading') {
+        return <div>loading...</div>
+      }
 
-export const AssetSelect = <
-  FormType extends UnpackNestedValue<FieldValuesFromControl<Control>>,
-  Path extends DeepPath<FormType, Path>
->(
-  props: TypedFormFieldProps<FormType, Path> & AssetSelectProps
-): JSX.Element => {
-  const {
-    name,
-    defaultValue,
-    assetType,
-    fullWidth = true,
-    ...selectProps
-  } = props
-  const { control, errors, formState, setValue, trigger } = useFormContext<
-    FormType
-  >()
-  // @ts-expect-error
-  const TypedController = useTypedController<FormType>({ control })
-  const path = pathToString(props.name)
-  const error = get(errors, path) as FieldError
-  const hasError = get(formState.touched, path) === true && Boolean(error)
-  const handleChange = (
-    e: React.ChangeEvent<{ name?: string | undefined; value: unknown }>
-  ): void => {
-    setValue(path, e.target.value as any)
-    // eslint-disable-next-line no-void
-    void trigger()
-  }
+      if (status === 'error') {
+        return <div>error...</div>
+      }
 
-  return (
-    <TypedController
-      name={name}
-      defaultValue={defaultValue}
-      render={controllerProps => (
-        <FormControl fullWidth={fullWidth}>
-          <InputLabel error={hasError}>Assets</InputLabel>
-          <AssetsSelect
-            {...controllerProps}
-            {...selectProps}
-            type={assetType}
-            error={hasError}
-            onChange={handleChange}
-          />
-          {hasError && <FormHelperText error>{error.message}</FormHelperText>}
-        </FormControl>
-      )}
-    />
+      return (
+        // @ts-expect-error
+        <TypedSelect {...props}>
+          <MenuItem disabled value={undefined}>
+            {type}
+          </MenuItem>
+          {data.list.map(({ _id, numberFormat }) => (
+            <MenuItem key={_id} value={_id}>
+              {numberFormat.currency}
+            </MenuItem>
+          ))}
+        </TypedSelect>
+      )
+    },
+    [data, type, status]
   )
 }

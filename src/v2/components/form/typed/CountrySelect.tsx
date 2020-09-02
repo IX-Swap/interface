@@ -1,57 +1,20 @@
-import { Control, useFormContext, FieldError } from 'react-hook-form'
-import { useTypedController } from '@hookform/strictly-typed'
-import { FormControl, InputLabel, SelectProps } from '@material-ui/core'
 import React from 'react'
-import {
-  DeepPath,
-  FieldValuesFromControl,
-  UnpackNestedValue
-} from '@hookform/strictly-typed/dist/types'
-import get from 'lodash/get'
-import { TypedFormFieldProps } from 'v2/components/form/typed/types'
-import { pathToString } from 'v2/components/form/typed/utils'
-import FormHelperText from '@material-ui/core/FormHelperText'
-import { CountriesSelect } from 'v2/components/form/CountriesSelect'
+import { useTypedSelect } from 'v2/components/form/typed/Select'
+import { MenuItem } from '@material-ui/core'
+import { renderMenu } from 'v2/helpers/rendering'
+import { COUNTRIES_OPTS } from 'v2/app/components/identity-forms/const'
 
-export const createTypedCountrySelect = <
-  FormType extends Record<string, any>
->() => <Path extends DeepPath<FormType, Path>>(
-  props: TypedFormFieldProps<FormType, Path> & Omit<SelectProps, 'name'>
-) => <CountrySelect {...props} />
+// eslint-disable-next-line @typescript-eslint/explicit-function-return-type
+export const useCountrySelect = <FormType,>() => {
+  const TypedSelect = useTypedSelect<FormType>()
 
-export const CountrySelect = <
-  FormType extends UnpackNestedValue<FieldValuesFromControl<Control>>,
-  Path extends DeepPath<FormType, Path>
->(
-  props: TypedFormFieldProps<FormType, Path> & Omit<SelectProps, 'name'>
-): JSX.Element => {
-  const { control, errors, formState, setValue, trigger } = useFormContext<
-    FormType
-  >()
   // @ts-expect-error
-  const TypedController = useTypedController<FormType>({ control })
-  const path = pathToString(props.name)
-  const error = get(errors, path) as FieldError
-  const hasError = get(formState.touched, path) === true && Boolean(error)
-  const handleChange = (
-    e: React.ChangeEvent<{ name?: string | undefined; value: unknown }>
-  ): void => {
-    setValue(path, e.target.value as any)
-    // eslint-disable-next-line no-void
-    void trigger()
-  }
-
-  return (
-    <TypedController
-      name={props.name}
-      defaultValue={props.defaultValue}
-      render={p => (
-        <FormControl fullWidth>
-          <InputLabel error={hasError}>Country</InputLabel>
-          <CountriesSelect {...p} error={hasError} onChange={handleChange} />
-          {hasError && <FormHelperText error>{error.message}</FormHelperText>}
-        </FormControl>
-      )}
-    />
+  return props => (
+    <TypedSelect {...props}>
+      <MenuItem disabled value={undefined}>
+        Country
+      </MenuItem>
+      {renderMenu(COUNTRIES_OPTS)}
+    </TypedSelect>
   )
 }

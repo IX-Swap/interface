@@ -20,8 +20,8 @@ import { useIsAdmin, useIsAuthorizer, useIsIssuer } from '../../../helpers/acl'
 import useStyles from './styles'
 import SidebarLink from './components/sidebarlink'
 
-import { useAuthorizerRouter } from 'v2/app/authorizer/router'
-import { useAccountsRouter } from 'v2/app/accounts/router'
+import { useAuthorizerRouter } from 'v2/app/pages/authorizer/router'
+import { useAccountsRouter } from 'v2/app/pages/accounts/router'
 
 // PasswordReset
 import { useStore as useLayoutStore } from '../../../context/layout'

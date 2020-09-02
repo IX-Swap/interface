@@ -5,21 +5,21 @@ import AuthEntryPoint from 'v2/auth/AuthRoot'
 import { history } from 'v2/history'
 import { cleanup } from '@testing-library/react'
 import { AuthRoute } from 'v2/auth/router'
-import { Login } from 'v2/auth/login/Login'
-import { Register } from 'v2/auth/register/Register'
-import { PasswordReset } from 'v2/auth/password-reset/PasswordReset'
-import { Confirmation } from 'v2/auth/confirmation/Confirmation'
+import { Login } from 'v2/auth/pages/login/Login'
+import { Register } from 'v2/auth/pages/register/Register'
+import { PasswordReset } from 'v2/auth/pages/password-reset/PasswordReset'
+import { Confirmation } from 'v2/auth/pages/confirmation/Confirmation'
 
-jest.mock('v2/auth/login/Login', () => ({
+jest.mock('v2/auth/pages/login/Login', () => ({
   Login: jest.fn(() => null)
 }))
-jest.mock('v2/auth/register/Register', () => ({
+jest.mock('v2/auth/pages/register/Register', () => ({
   Register: jest.fn(() => null)
 }))
-jest.mock('v2/auth/password-reset/PasswordReset', () => ({
+jest.mock('v2/auth/pages/password-reset/PasswordReset', () => ({
   PasswordReset: jest.fn(() => null)
 }))
-jest.mock('v2/auth/confirmation/Confirmation', () => ({
+jest.mock('v2/auth/pages/confirmation/Confirmation', () => ({
   Confirmation: jest.fn(() => null)
 }))
 

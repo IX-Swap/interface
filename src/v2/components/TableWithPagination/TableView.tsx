@@ -10,7 +10,7 @@ import {
   TablePagination
 } from '@material-ui/core'
 import { TableColumn, BaseFilter } from 'v2/types/util'
-import { Actions } from 'v2/app/authorizer/components/Actions'
+import { Actions } from 'v2/app/pages/authorizer/components/Actions'
 import { useTableWithPagination } from 'v2/components/TableWithPagination/hooks/useTableWithPagination'
 import { TableRows } from 'v2/components/TableWithPagination/TableRows'
 
