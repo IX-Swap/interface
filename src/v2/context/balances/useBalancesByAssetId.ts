@@ -1,39 +1,25 @@
-import { QueryStatus, useInfiniteQuery } from 'react-query'
-import { convertDataArrayToMap } from 'v2/context/assets/utils'
+import { useInfiniteQuery } from 'react-query'
 import { AssetBalance } from 'v2/types/balance'
 import { useUserStore } from 'v2/auth/context'
 import { balancesService } from 'v2/context/balances/service'
 import { list } from './fakeBalances'
+import { UsePaginatedData, useParsedData } from 'v2/hooks/useParsedData'
+import { paginationArgs } from 'v2/config/defaults'
 
 export const BALANCES_BY_ASSET_ID_QUERY_KEY = 'balancesByAssetId'
 
-interface DataStorage<T> {
-  raw: any
-  map: { [key: string]: T }
-  list: T[]
-}
-
-interface UseBalancesByAssetIdReturnType {
-  data: DataStorage<AssetBalance>
-  status: QueryStatus
-}
-
 export const useBalancesByAssetId = (
   assetId: string
-): UseBalancesByAssetIdReturnType => {
+): UsePaginatedData<AssetBalance> => {
   const { user } = useUserStore()
-  const queryFn = balancesService.getBalancesByAssetId.bind(balancesService)
-  const payload = { userId: user?._id, assetId, skip: 0, limit: 5 }
+  const payload = { ...paginationArgs, userId: user?._id, assetId }
   const { data, status } = useInfiniteQuery(
     [BALANCES_BY_ASSET_ID_QUERY_KEY, payload],
-    queryFn
+    balancesService.getBalancesByAssetId.bind(balancesService)
   )
-  const raw = data ?? []
-  // const list = convertPaginatedResultToFlatArray<AssetBalance>(raw)
-  const map = convertDataArrayToMap<AssetBalance>('_id', list)
 
   return {
-    data: { raw, list, map },
+    data: { ...useParsedData<AssetBalance>(data, '_id'), list },
     status
   }
 }

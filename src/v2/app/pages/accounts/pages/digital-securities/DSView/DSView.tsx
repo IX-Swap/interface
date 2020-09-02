@@ -2,12 +2,12 @@ import React from 'react'
 import { Box, Grid, Typography } from '@material-ui/core'
 import { useParams } from 'react-router-dom'
 import { useAllBalances } from 'v2/context/balances/useAllBalances'
-import { useAssets } from 'v2/context/assets/useAssets'
+import { useAssetsData } from 'v2/context/assets/useAssetsData'
 
 export const DSView: React.FC = () => {
   const { balanceId } = useParams<{ balanceId: string }>()
   const { data: balances, status: balancesStatus } = useAllBalances()
-  const { data: assets, status: assetsStatus } = useAssets('Security')
+  const { data: assets, status: assetsStatus } = useAssetsData('Security')
   const asset = assets.map[balances.map[balanceId].assetId]
 
   if (balancesStatus === 'loading' || assetsStatus === 'loading') {

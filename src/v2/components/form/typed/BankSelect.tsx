@@ -1,12 +1,13 @@
 import React, { useMemo, ComponentPropsWithRef } from 'react'
 import { useTypedSelect } from 'v2/components/form/typed/Select'
 import { MenuItem } from '@material-ui/core'
-import { useBanks } from 'v2/app/pages/accounts/pages/banks/hooks/useBanks'
+import { useBanksData } from 'v2/app/pages/accounts/pages/banks/hooks/useBanksData'
 
 // eslint-disable-next-line @typescript-eslint/explicit-function-return-type
 export const useBankSelect = <FormType,>() => {
   const TypedSelect = useTypedSelect<FormType>()
-  const { status, data } = useBanks()
+
+  const { data, status } = useBanksData()
 
   return useMemo(
     () => (props: ComponentPropsWithRef<typeof TypedSelect>): JSX.Element => {

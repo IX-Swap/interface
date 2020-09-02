@@ -116,7 +116,7 @@
     "test:ci": "CI=true react-scripts test --silent --coverage --testResultsProcessor jest-sonar-reporter",
     "eject": "react-scripts eject",
     "deploy": "gulp deploy",
-    "std:ts": "eslint --fix src/v2/**/*.{ts,tsx}",
+    "std:ts": "eslint --cache --fix src/v2/**/*.{ts,tsx}",
     "std:js": "standard --fix 'src/**/*.js'",
     "std": "npm run std:js && npm run std:ts",
     "sonar": "export $(grep -v '^#' .env.dev | xargs -0) && npm run test:ci && sonar-scanner -Dsonar.login=$SONAR_TOKEN"

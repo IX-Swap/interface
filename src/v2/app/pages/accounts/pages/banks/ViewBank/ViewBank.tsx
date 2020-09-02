@@ -2,11 +2,11 @@ import React from 'react'
 import { useParams } from 'react-router-dom'
 import BankPreview from 'v2/app/components/bank-preview'
 import { Box } from '@material-ui/core'
-import { useBanks } from 'v2/app/pages/accounts/pages/banks/hooks/useBanks'
+import { useBanksData } from 'v2/app/pages/accounts/pages/banks/hooks/useBanksData'
 
 const ViewBank: React.FC = () => {
   const { bankId } = useParams<{ bankId: string }>()
-  const { data, status } = useBanks()
+  const { data, status } = useBanksData()
 
   if (status === 'loading') {
     return null

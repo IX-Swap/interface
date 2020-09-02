@@ -7,14 +7,14 @@ import { useFormContext } from 'react-hook-form'
 import { WithdrawDSFormValues } from 'v2/app/pages/accounts/types'
 import { useParams } from 'react-router-dom'
 import { useAllBalances } from 'v2/context/balances/useAllBalances'
-import { useAssets } from 'v2/context/assets/useAssets'
+import { useAssetsData } from 'v2/context/assets/useAssetsData'
 
 export const Summary: React.FC = () => {
   const { balanceId } = useParams<{ balanceId: string }>()
   const { getValues } = useFormContext<WithdrawDSFormValues>()
   const { memo, amount } = getValues()
   const { data: balances, status: balancesStatus } = useAllBalances()
-  const { data: assets, status: assetsStatus } = useAssets('Security')
+  const { data: assets, status: assetsStatus } = useAssetsData('Security')
   const asset = assets.map[balances.map[balanceId].assetId]
 
   if (balancesStatus === 'loading' || assetsStatus === 'loading') {

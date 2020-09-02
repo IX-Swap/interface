@@ -3,12 +3,12 @@ import { Typography } from '@material-ui/core'
 import { CashTransactionAlert } from 'v2/app/pages/accounts/pages/banks/components/CashTransactionAlert'
 import { useFormContext } from 'react-hook-form'
 import { WithdrawCashFormValues } from 'v2/app/pages/accounts//types'
-import { useBanks } from 'v2/app/pages/accounts/pages/banks/hooks/useBanks'
+import { useBanksData } from 'v2/app/pages/accounts/pages/banks/hooks/useBanksData'
 
 export const WithdrawCashAlert: React.FC = () => {
   const { getValues } = useFormContext<WithdrawCashFormValues>()
   const { bank: bankId } = getValues()
-  const { data, status } = useBanks()
+  const { data, status } = useBanksData()
   const bank = data.map[bankId]
 
   if (status === 'loading') {

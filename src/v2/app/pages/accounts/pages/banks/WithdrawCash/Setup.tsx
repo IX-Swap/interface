@@ -5,7 +5,7 @@ import { createTypedNumberInput } from 'v2/components/form/typed/NumberInput'
 import { createTypedTextInput } from 'v2/components/form/typed/TextInput'
 import { Box, Grid, InputAdornment } from '@material-ui/core'
 import { useFormContext } from 'react-hook-form'
-import { useBanks } from 'v2/app/pages/accounts/pages/banks/hooks/useBanks'
+import { useBanksData } from 'v2/app/pages/accounts/pages/banks/hooks/useBanksData'
 
 const NumberInput = createTypedNumberInput<WithdrawCashFormValues>()
 const TextInput = createTypedTextInput<WithdrawCashFormValues>()
@@ -14,7 +14,7 @@ export const Setup: React.FC = () => {
   const BankSelect = useBankSelect<WithdrawCashFormValues>()
   const { watch } = useFormContext<WithdrawCashFormValues>()
   const bankId = watch('bank')
-  const { data } = useBanks()
+  const { data } = useBanksData()
   const bank = data.map[bankId]
 
   return (

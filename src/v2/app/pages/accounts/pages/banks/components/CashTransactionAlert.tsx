@@ -1,7 +1,7 @@
 import React from 'react'
 import { TransactionBase } from 'v2/app/pages/accounts/types'
 import { useFormContext } from 'react-hook-form'
-import { useAssets } from 'v2/context/assets/useAssets'
+import { useAssetsData } from 'v2/context/assets/useAssetsData'
 import { formatMoney } from 'v2/helpers/numbers'
 import { Grid } from '@material-ui/core'
 
@@ -13,7 +13,7 @@ export interface CashTransactionAlertProps {
 export const CashTransactionAlert: React.FC<CashTransactionAlertProps> = props => {
   const { assetId, children } = props
   const { getValues } = useFormContext<TransactionBase>()
-  const { data, status } = useAssets('Currency')
+  const { data, status } = useAssetsData('Currency')
   const { amount } = getValues()
   const asset = data.map[assetId]
 
