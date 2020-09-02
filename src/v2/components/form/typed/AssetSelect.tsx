@@ -33,6 +33,7 @@ export const useAssetSelect = <FormType,>(type: AssetType) => {
         </TypedSelect>
       )
     },
+    // eslint-disable-next-line
     [data, type, status]
   )
 }

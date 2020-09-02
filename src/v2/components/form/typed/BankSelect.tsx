@@ -33,6 +33,7 @@ export const useBankSelect = <FormType,>() => {
         </TypedSelect>
       )
     },
+    // eslint-disable-next-line
     [data, status]
   )
 }
