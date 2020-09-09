@@ -30,11 +30,8 @@ export const useTableWithPagination = <TData>(
   const fetcher = async (key: string, p: number, r: number, f?: BaseFilter) => {
     const payload: KeyValueMap<any> = {
       skip: p * r,
-      limit: r
-    }
-
-    if (f !== undefined && f !== null) {
-      payload.filter = f
+      limit: r,
+      ...(filter || {})
     }
 
     return await apiService.request<PaginatedData<TData>>('POST', uri, payload)
@@ -56,14 +53,14 @@ export const useTableWithPagination = <TData>(
   ])
   const previousPageData =
     cached !== undefined
-      ? cached.map(page => page.data.data[0].documents)[0]
+      ? cached.map(page => page.data.data.length ? page.data.data[0].documents : [])[0]
       : []
   const currentPageData =
-    data !== undefined ? data.map(page => page.data.data[0].documents)[0] : []
+    data !== undefined ? data.map(page => page.data.data.length ? page.data.data[0].documents: [])[0] : []
   const total =
-    data !== undefined && data.length > 0
+    data !== undefined && data.length > 0 && data[data.length - 1].data.data.length > 0
       ? data[data.length - 1].data.data[0].count ?? 0
-      : 0
+      : 0;
   const items = isFetching ? previousPageData : currentPageData
   const _page = status === 'loading' ? 0 : page
 

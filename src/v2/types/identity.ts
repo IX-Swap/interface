@@ -68,7 +68,7 @@ export interface CorporateFields {
 
 export interface BaseIdentity {
   _id: string
-  status: 'Rejected' | 'Authorized' | 'Unauthorized'
+  status: 'Rejected' | 'Authorized' | 'Submitted'
   user: User
   createdAt: string
   updatedAt: string

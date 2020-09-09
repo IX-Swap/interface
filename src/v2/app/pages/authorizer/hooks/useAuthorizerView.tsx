@@ -56,7 +56,7 @@ export const useAuthorizerView = <T,>(
   }
 
   const getColumns = (): Array<TableColumn<T>> => {
-    return filter.status === 'Submitted' ? [...columns, statusColumn] : columns
+    return filter.status === '' ? [...columns, statusColumn] : columns
   }
 
   useEffect(() => {

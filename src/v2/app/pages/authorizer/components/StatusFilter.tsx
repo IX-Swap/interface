@@ -49,7 +49,7 @@ export const StatusFilter: React.FC<StatusFilterProps> = props => {
 export const statusFilters: StatusFilterItemType[] = [
   {
     icon: UnauthorizedIcon,
-    value: 'Unauthorized',
+    value: 'Submitted',
     title: 'Unauthorized'
   },
   {
