@@ -1,4 +1,4 @@
-import React from 'react'
+import React from "react";
 import {
   TableContainer,
   Table,
@@ -35,8 +35,9 @@ export const TableView = <T,>({
   bordered = true,
   actions,
   children,
-  fakeItems
-}: TableViewProps<T>): JSX.Element => {
+  fakeItems,
+  innerRef
+}: TableViewProps<T> & { innerRef?: any }): JSX.Element => {
   const {
     items,
     status,
@@ -46,6 +47,10 @@ export const TableView = <T,>({
     rowsPerPage,
     total
   } = useTableWithPagination<T>(name, uri, filter)
+
+  if (innerRef) {
+    innerRef.current = { refresh: () => setPage(page) }
+  }
 
   return (
     <>

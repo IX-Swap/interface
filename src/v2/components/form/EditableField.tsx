@@ -61,7 +61,8 @@ const EditableField = ({
   const form = useForm()
   let { control, register, errors } = useFormContext() || {
     control: null,
-    register: null
+    register: null,
+    errors: []
   }
 
   let flatErrors: any = flatten(errors)

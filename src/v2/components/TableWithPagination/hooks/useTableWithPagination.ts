@@ -68,6 +68,10 @@ export const useTableWithPagination = <TData>(
   const _page = status === 'loading' ? 0 : page
 
   const _setPage = (nextPage: number): void => {
+    if (nextPage === page) {
+      queryCache.invalidateQueries(queryKey);
+      return
+    }
     setPrevPage(page)
     setPage(nextPage)
   }
