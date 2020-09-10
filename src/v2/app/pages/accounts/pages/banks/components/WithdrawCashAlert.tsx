@@ -2,7 +2,7 @@ import React from 'react'
 import { Typography } from '@material-ui/core'
 import { CashTransactionAlert } from 'v2/app/pages/accounts/pages/banks/components/CashTransactionAlert'
 import { useFormContext } from 'react-hook-form'
-import { WithdrawCashFormValues } from 'v2/app/pages/accounts//types'
+import { WithdrawCashFormValues } from 'v2/app/pages/accounts/types'
 import { useBanksData } from 'v2/app/pages/accounts/pages/banks/hooks/useBanksData'
 
 export const WithdrawCashAlert: React.FC = () => {
