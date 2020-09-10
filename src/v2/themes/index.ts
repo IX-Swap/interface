@@ -1,9 +1,21 @@
-import { createMuiTheme } from '@material-ui/core/styles'
+import { createMuiTheme, ThemeOptions, Theme } from '@material-ui/core/styles'
 import defaultTheme from 'v2/themes/default'
+import { CSSProperties } from '@material-ui/styles'
 
-const overrides = {
+interface Overrides extends ThemeOptions {
+  MUIRichTextEditor: {
+    root?: CSSProperties
+    container?: CSSProperties
+    editor?: CSSProperties
+    toolbar?: CSSProperties
+    placeHolder?: CSSProperties
+    anchorLink?: CSSProperties
+  }
+}
+
+const overrides: Overrides = {
   typography: {
-    fontFamily: '"Bai+Jamjuree", "Helvetica Neue", sans-serif !important',
+    fontFamily: '"Bai Jamjuree", "Helvetica Neue", sans-serif !important',
     fontSize: 12,
     h1: {
       fontSize: '3rem'
@@ -56,9 +68,15 @@ const overrides = {
   }
 }
 
-export default {
+interface Themes {
+  [key: string]: Theme
+}
+
+const themes: Themes = {
   default: createMuiTheme({
     ...defaultTheme,
     ...overrides
   })
 }
+
+export default themes
