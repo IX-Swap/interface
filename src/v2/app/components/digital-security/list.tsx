@@ -47,7 +47,7 @@ const OfferingsList = ({
             variant='outlined'
             placeholder='Search'
             onChange={onSearch}
-            style={{ flexGrow: 1, marginRight: '16px' }}
+            style={{ flexGrow: 1, marginRight: children ? '16px' : '0' }}
           />
           {children ?? null}
         </Grid>
