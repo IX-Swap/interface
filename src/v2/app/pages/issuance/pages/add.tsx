@@ -1,5 +1,4 @@
 import React from 'react'
-
 import DigitalSecurity from 'v2/app/components/digital-security'
 import { Box, Container } from '@material-ui/core'
 import PageTitle from 'v2/app/components/page-title'
@@ -14,7 +13,7 @@ const DsoCreate = () => {
 
   const save = async (formValues: DsoRequest, isValid: boolean) => {
     if (!isValid) {
-      snackbarService.showSnackbar(
+      await snackbarService.showSnackbar(
         'Unable to save, please fill out the fields and upload logo and a subscription document',
         'error'
       )
@@ -23,15 +22,15 @@ const DsoCreate = () => {
 
     const res = await saveDso(formValues, storageHelper.getUserId())
     if (res.status) {
-      snackbarService.showSnackbar(
+      await snackbarService.showSnackbar(
         `Successfully saved Digital Security (${formValues?.tokenSymbol})`
       )
       history.push('.')
       return
     }
 
-    snackbarService.showSnackbar(
-      `Unable to save ${formValues?.tokenSymbol}. (${res.message})`,
+    await snackbarService.showSnackbar(
+      `Unable to save ${formValues?.tokenSymbol}. (${res.message ?? ''})`,
       'error'
     )
   }

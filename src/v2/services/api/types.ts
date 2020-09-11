@@ -1,4 +1,4 @@
-import { AxiosRequestConfig, Method, AxiosResponse } from 'axios'
+import { AxiosRequestConfig, Method } from 'axios'
 
 export interface APIServiceRequestConfig {
   method: Method

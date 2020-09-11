@@ -1,6 +1,6 @@
 import React from 'react'
 import storageHelper from '../../../helpers/storageHelper'
-import { getImgUrl } from '../../../helpers/httpRequests'
+import { getImgUrl } from 'v2/helpers/httpRequests'
 import ImageUploader from 'v2/components/form/ImageUploader'
 
 const DsoImage = ({
@@ -19,7 +19,7 @@ const DsoImage = ({
   const setPhoto = async ({ _id = '' }: { _id: string }) => {
     const x = await getImgUrl(
       editMode
-        ? `/dataroom/raw/${storageHelper.getUserId()}/${_id || ''}`
+        ? `/dataroom/raw/${storageHelper.getUserId()}/${_id ?? ''}`
         : `/issuance/dso/dataroom/logo/raw/${dsoId}`
     )
 

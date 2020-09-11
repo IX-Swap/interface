@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react'
 import { Drawer, IconButton, List } from '@material-ui/core'
-
 import LocalAtmIcon from '@material-ui/icons/LocalAtm'
 import HelpIcon from '@material-ui/icons/Help'
 import ArrowBackIcon from '@material-ui/icons/ArrowBack'
@@ -11,20 +10,15 @@ import PieChartIcon from '@material-ui/icons/PieChart'
 import PersonIcon from '@material-ui/icons/Person'
 import PeopleIcon from '@material-ui/icons/People'
 import AccountBoxIcon from '@material-ui/icons/AccountBox'
-
 import { useTheme } from '@material-ui/core/styles'
 import classNames from 'classnames'
-
 import { useLocation, withRouter } from 'react-router-dom'
-import { useIsAdmin, useIsAuthorizer, useIsIssuer } from '../../../helpers/acl'
+import { useIsAdmin, useIsAuthorizer, useIsIssuer } from 'v2/helpers/acl'
 import useStyles from './styles'
 import SidebarLink from './components/sidebarlink'
-
 import { useAuthorizerRouter } from 'v2/app/pages/authorizer/router'
 import { useAccountsRouter } from 'v2/app/pages/accounts/router'
 import { useIdentitiesRouter } from 'v2/app/pages/identity/router'
-
-// PasswordReset
 import { useStore as useLayoutStore } from '../../../context/layout'
 
 const authorizerRoot = '/app/authorizer'
@@ -204,7 +198,7 @@ function Sidebar () {
           <SidebarLink
             link={link}
             key={others.id}
-            nested={others.children && others.children.length > 0}
+            nested={others.children !== undefined && others.children.length > 0}
             location={location}
             isSidebarOpened={layoutStore.isSidebarOpened}
             {...others} // eslint-disable-line react/jsx-props-no-spreading

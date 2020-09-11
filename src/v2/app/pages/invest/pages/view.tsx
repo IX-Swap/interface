@@ -1,5 +1,4 @@
 import React from 'react'
-
 import { useStore } from 'v2/app/pages/invest/context'
 import { useObserver } from 'mobx-react'
 import DigitalSecurity from 'v2/app/components/digital-security'
@@ -24,7 +23,7 @@ const InvestViewDso = () => {
   const dsoState = useStore()
 
   return useObserver(() =>
-    dsoState.selectedDso ? (
+    dsoState.selectedDso !== undefined ? (
       <MemoedDsoView dso={dsoState.selectedDso} />
     ) : (
       <Redirect to='../' />

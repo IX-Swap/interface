@@ -1,10 +1,10 @@
 import React from 'react'
 import { Grid, Typography, Box, Paper } from '@material-ui/core'
 import { makeStyles } from '@material-ui/styles'
-import { INVESTAX_BANK } from '../../../config'
-import { CashDeposit } from '../../../types/cashdeposit'
+import { INVESTAX_BANK } from 'v2/config'
+import { CashDeposit } from 'v2/types/cashdeposit'
 import BankDetails from '../bank-details'
-import { formatMoney } from '../../../helpers/numbers'
+import { formatMoney } from 'v2/helpers/numbers'
 
 const useStyles = makeStyles(() => ({
   infoGrid: {
@@ -30,10 +30,6 @@ const BoldTypography = ({ children, ...others }: any) => (
 
 function DepositView ({ deposit }: { deposit: CashDeposit }) {
   const classes = useStyles()
-
-  if (!deposit) {
-    return <span>nothing to display</span>
-  }
 
   const bankAccount = { ...INVESTAX_BANK }
 

@@ -1,8 +1,7 @@
-/* global alert */
 import React, { useState, useEffect } from 'react'
 import CommitmentViewHeader from './components/header'
 import NumberFormat from 'react-number-format'
-import { Commitment } from '../../../types/commitment'
+import { Commitment } from 'v2/types/commitment'
 import {
   Container,
   Box,
@@ -12,9 +11,9 @@ import {
   TextField
 } from '@material-ui/core'
 import { useForm, Controller } from 'react-hook-form'
-import { Document } from '../../../types/document'
+import { Document } from 'v2/types/document'
 import { useHistory } from 'react-router-dom'
-import { downloadFile } from '../../../helpers/httpRequests'
+import { downloadFile } from 'v2/helpers/httpRequests'
 import { noop } from 'lodash'
 
 interface CommitmentViewProps {
@@ -40,7 +39,7 @@ const NumberFormatCustom = ({ symbol, ...others }: any) => (
     allowEmptyFormatting
     inputMode='numeric'
     isNumericString
-    prefix={`${symbol}  `}
+    prefix={`${symbol as string}  `}
   />
 )
 
@@ -51,7 +50,7 @@ const CommitmentView = ({
   const history = useHistory()
   const [estimatedValue, setEstimatedValue] = useState(0)
   const [numberOfUnits, setNumberOfUnits] = useState(
-    commitment?.numberOfUnits ? commitment.numberOfUnits : 0
+    Number.isInteger(commitment?.numberOfUnits) ? commitment.numberOfUnits : 0
   )
   const { register, handleSubmit, watch, errors, control } = useForm({
     defaultValues: {
@@ -71,9 +70,11 @@ const CommitmentView = ({
   }, [])
 
   useEffect(() => {
-    if (commitment) {
+    if (commitment !== undefined) {
       const amount = watch('totalAmount')
-      if (amount) setNumberOfUnits(amount / commitment.pricePerUnit)
+      if (Number.isInteger(amount)) {
+        setNumberOfUnits(amount / commitment.pricePerUnit)
+      }
     }
   }, [commitment, watch])
 
@@ -133,11 +134,9 @@ const CommitmentView = ({
                     fullWidth
                     disabled={false}
                     onClick={() => {
-                      if (commitment) {
-                        onClickDownload(
-                          `/issuance/commitment/dataroom/subscription/signed/raw/${commitment._id}`
-                        )
-                      }
+                      onClickDownload(
+                        `/issuance/commitment/dataroom/subscription/signed/raw/${commitment._id}`
+                      )
                     }}
                   >
                     Download Signed Subscription Document
@@ -150,7 +149,7 @@ const CommitmentView = ({
                 control={control}
                 as={
                   <TextField
-                    error={!!errors.totalAmount}
+                    error={errors.totalAmount === null}
                     fullWidth
                     disabled={saving || !editMode}
                     label='Investment Amount'
@@ -186,7 +185,7 @@ const CommitmentView = ({
                 control={control}
                 as={
                   <TextField
-                    error={!!errors.totalAmount}
+                    error={errors.totalAmount === null}
                     fullWidth
                     disabled={saving || !editMode}
                     label='Unit Price'
@@ -220,7 +219,7 @@ const CommitmentView = ({
               />
 
               <TextField
-                error={!!errors.numberOfUnits}
+                error={errors.numberOfUnits === null}
                 name='numberOfUnits'
                 inputRef={register({ required: true })}
                 fullWidth
@@ -231,7 +230,7 @@ const CommitmentView = ({
               />
 
               <TextField
-                error={!!errors.walletAddress}
+                error={errors.walletAddress === null}
                 name='walletAddress'
                 inputRef={register({ required: true })}
                 fullWidth
@@ -242,7 +241,7 @@ const CommitmentView = ({
 
               {editMode && (
                 <TextField
-                  error={!!errors.otp}
+                  error={errors.otp === null}
                   name='otp'
                   fullWidth
                   autoComplete='off'
@@ -276,10 +275,7 @@ const CommitmentView = ({
                       color='secondary'
                       size='large'
                       type='button'
-                      disabled={
-                        saving ||
-                        (commitment && commitment.status !== 'Unauthorized')
-                      }
+                      disabled={saving || commitment.status !== 'Unauthorized'}
                       onClick={e => {
                         e.preventDefault()
                         if (!editMode) {

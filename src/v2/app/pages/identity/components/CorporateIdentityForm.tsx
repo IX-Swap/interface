@@ -52,7 +52,7 @@ export const CorporateIdentityForm = (
             <Address isEditing={editMode} />
           </Section>
         </Grid>
-        {identity.representatives.map((e, i) => (
+        {identity.representatives.map(e => (
           <Grid item xs={12} key={e.email ?? 'email'}>
             {/* <IdentitySection */}
             {/*  title='Company Representative' */}
@@ -141,7 +141,7 @@ export const CorporateIdentityForm = (
             <Declaration
               isEditing={editMode}
               declarations={formatDeclarations(
-                identity.declarations || declarations.corporate,
+                identity.declarations ?? declarations.corporate,
                 'corporate'
               )}
             />

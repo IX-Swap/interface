@@ -1,8 +1,5 @@
 import React, { useRef } from 'react'
-import {
-  Container,
-  Paper
-} from '@material-ui/core'
+import { Container, Paper } from '@material-ui/core'
 import { TableView } from 'v2/components/TableWithPagination/TableView'
 import columns from 'v2/app/pages/admin/columns'
 import User from 'v2/types/user'

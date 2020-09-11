@@ -1,5 +1,5 @@
 import React, { forwardRef } from 'react'
-import { FormControl, Input } from '@material-ui/core'
+import { FormControl } from '@material-ui/core'
 import { makeStyles } from '@material-ui/styles'
 import DialogConfirmRoleChange from 'v2/app/pages/admin/components/DialogConfirmRoleChange'
 import User from 'v2/types/user'
@@ -25,7 +25,7 @@ export const Actions = forwardRef(({ user }: ActionsProps, ref: any) => {
     handleConfirm,
     handleChange,
     handleRoleChange
-  } = useAdminView(user, ref && ref.current && ref.current.refresh)
+  } = useAdminView(user, ref ?? ref.current ?? ref.current.refresh)
   const onClose = () => {
     if (roles.join(',') !== user.roles) {
       handleChange(roles.join(','))

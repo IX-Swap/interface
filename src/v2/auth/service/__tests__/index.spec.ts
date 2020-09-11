@@ -1,34 +1,14 @@
 import authService from '../index'
 import apiService from 'v2/services/api'
-import storageService from 'v2/services/storage'
-import socketService from 'v2/services/socket'
 import {
   loginArgs,
-  loginResponseFailure,
-  loginResponseSuccess,
   authURLs,
-  signupResponseSuccess,
   signupArgs,
-  signupResponseFailure,
-  verifySignupResponseSuccess,
   verifySignupArgs,
-  verifySignupResponseFailure,
-  getUserResponseSuccess,
-  getUserResponseFailure,
-  requestPasswordResetResponseSuccess,
   requestPasswordResetArgs,
-  requestPasswordResetResponseFailure,
-  completePasswordResetResponseSuccess,
-  completePasswordResetArgs,
-  completePasswordResetResponseFailure
+  completePasswordResetArgs
 } from '__fixtures__/auth'
-import {
-  userKey,
-  userValue,
-  visitedURLKey,
-  visitedURLValue
-} from '__fixtures__/storage'
-import { UserStore } from 'v2/auth/context/store'
+import { userValue } from '__fixtures__/storage'
 
 // jest.mock('v2/services/api')
 // jest.mock('v2/services/storage')

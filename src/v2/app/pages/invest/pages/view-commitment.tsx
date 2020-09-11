@@ -7,7 +7,7 @@ import { Redirect } from 'react-router-dom'
 const ViewCommitment = () => {
   const state = useStore()
   return useObserver(() =>
-    state.selectedCommitment ? (
+    state.selectedCommitment !== undefined ? (
       <CommitmentView commitment={state.selectedCommitment} />
     ) : (
       <Redirect to='../' />

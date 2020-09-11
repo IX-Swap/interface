@@ -1,5 +1,5 @@
 import React from 'react'
-import { Dso } from '../../../../types/dso'
+import { Dso } from 'v2/types/dso'
 import {
   Grid,
   Typography,
@@ -8,7 +8,7 @@ import {
   TextField
 } from '@material-ui/core'
 import { useFormContext, Controller } from 'react-hook-form'
-import { toPercentage } from '../../../../helpers/numbers'
+import { toPercentage } from 'v2/helpers/numbers'
 interface OfferingTermsProps {
   editMode?: boolean
   dso: Dso
@@ -30,7 +30,7 @@ const OfferingTermComponent = ({
           as={
             <Select
               fullWidth
-              error={!!errors[name]}
+              error={errors[name] !== undefined}
               inputRef={register}
               name={name}
               inputProps={{
@@ -52,7 +52,7 @@ const OfferingTermComponent = ({
     default:
       return (
         <TextField
-          name={name || ''}
+          name={name ?? ''}
           required={required}
           inputRef={register}
           error={errors[name]}
@@ -89,7 +89,7 @@ const OfferingTermItem = ({
   )
 }
 
-const isNa = (val: any) => (val || '').toString().trim() === ''
+const isNa = (val: any) => (val ?? '').toString().trim() === ''
 
 const OfferingTerms = ({ editMode = false, dso }: OfferingTermsProps) => {
   return (
@@ -99,21 +99,25 @@ const OfferingTerms = ({ editMode = false, dso }: OfferingTermsProps) => {
         label='Investment Period'
         editMode={editMode}
         // TODO:  Check if what the number denotes (eg months, yrs?)
-        value={isNa(dso.investmentPeriod) ? 'n/a' : `${dso.investmentPeriod}`}
+        value={
+          Number.isNaN(dso.investmentPeriod)
+            ? 'n/a'
+            : `${dso.investmentPeriod ?? ''}`
+        }
       />
       <OfferingTermItem
         name='dividendYeild'
         label='Divident Yield'
         editMode={editMode}
         value={
-          isNa(dso.dividendYeild) ? 'n/a' : toPercentage(dso.dividendYeild || 0)
+          isNa(dso.dividendYeild) ? 'n/a' : toPercentage(dso.dividendYeild ?? 0)
         }
       />
       <OfferingTermItem
         name='grossIRR'
         label='Gross IRR'
         editMode={editMode}
-        value={isNa(dso.grossIRR) ? 'n/a' : toPercentage(dso.grossIRR || 0)}
+        value={isNa(dso.grossIRR) ? 'n/a' : toPercentage(dso.grossIRR ?? 0)}
       />
 
       <OfferingTermItem
@@ -142,7 +146,7 @@ const OfferingTerms = ({ editMode = false, dso }: OfferingTermsProps) => {
         label='Interest Rate'
         editMode={editMode}
         value={
-          isNa(dso.interestRate) ? 'n/a' : toPercentage(dso.interestRate || 0)
+          isNa(dso.interestRate) ? 'n/a' : toPercentage(dso.interestRate ?? 0)
         }
       />
       <OfferingTermItem

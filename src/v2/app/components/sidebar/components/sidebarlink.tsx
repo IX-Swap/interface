@@ -1,4 +1,3 @@
-// @flow
 import React, { useState } from 'react'
 import {
   Collapse,
@@ -12,8 +11,6 @@ import {
 import InboxIcon from '@material-ui/icons/Inbox'
 import { Link } from 'react-router-dom'
 import classnames from 'classnames'
-
-// styles
 import useStyles from './styles'
 
 const ListItemLink = React.forwardRef(({ ...props }: any, ref: any) => (
@@ -43,10 +40,9 @@ export default function SidebarLink ({
 
   // local
   const [isOpen, setIsOpen] = useState(false)
-  const isLinkActive = !!(
-    link &&
+  const isLinkActive =
+    link !== undefined &&
     (location.pathname === link || location.pathname.indexOf(link) !== -1)
-  )
 
   if (type === 'title') {
     return (
@@ -62,7 +58,7 @@ export default function SidebarLink ({
 
   if (type === 'divider') return <Divider className={classes.divider} />
 
-  if (!children) {
+  if (children === undefined) {
     return (
       <ListItem
         component={ListItemLink}
@@ -71,7 +67,7 @@ export default function SidebarLink ({
         className={classes.link}
         classes={{
           root: classnames({
-            [classes.linkActive]: isLinkActive && !nested,
+            [classes.linkActive]: isLinkActive && nested,
             [classes.linkNested]: nested
           })
         }}
@@ -83,7 +79,7 @@ export default function SidebarLink ({
             [classes.linkIconNested]: nested
           })}
         >
-          {nested ? <>&nbsp;</> : icon}
+          {nested !== undefined ? <>&nbsp;</> : icon}
         </ListItemIcon>
         <ListItemText
           classes={{
@@ -125,7 +121,7 @@ export default function SidebarLink ({
           primary={label}
         />
       </ListItem>
-      {children && (
+      {children !== undefined && (
         <Collapse
           in={isOpen}
           timeout='auto'

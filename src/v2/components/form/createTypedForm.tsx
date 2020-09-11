@@ -59,6 +59,7 @@ const formatValue = (value: any): string => {
   return value
 }
 
+// TODO: optimize performance
 export const createTypedForm = <FormType extends Record<string, any>>() => {
   const TypedField = createTypedField<FormType>()
 
@@ -220,7 +221,6 @@ export const createTypedForm = <FormType extends Record<string, any>>() => {
       component = ViewComponent
     }
 
-    console.log('re-rendered')
     return React.createElement(component, fieldProps)
   }
 

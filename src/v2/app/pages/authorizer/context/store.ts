@@ -17,7 +17,7 @@ export class AuthorizerTableStore {
     this.uri = uri
   }
 
-  _getItemId (item: any): string {
+  _getItemId = (item: any): string => {
     if (this.idKey in item) {
       return item[this.idKey] as string
     }

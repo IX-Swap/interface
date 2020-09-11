@@ -2,7 +2,6 @@ import React from 'react'
 import { useAllBalances } from 'v2/hooks/balance/useAllBalances'
 import { useParams } from 'react-router-dom'
 import { Box, Button, Grid, Typography } from '@material-ui/core'
-// @ts-expect-error
 import { ReactComponent as QRCode } from 'v1/assets/qr.svg'
 import { useSnackbar } from 'v2/hooks/useSnackbar'
 
