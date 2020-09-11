@@ -1,21 +1,7 @@
 import { AuthorizerTableStore } from 'v2/app/pages/authorizer/context/store'
-import apiService from 'v2/services/api'
-import { snackbarService } from 'uno-material-ui'
-import {
-  approveResponseFailure,
-  approveResponseSuccess,
-  authorizerURLs,
-  bank,
-  rejectResponseFailure,
-  rejectResponseSuccess
-} from '__fixtures__/authorizer'
+import { bank } from '__fixtures__/authorizer'
 
 jest.mock('v2/services/api')
-
-const apiServiceMock = apiService as jest.Mocked<typeof apiService>
-const snackbarServiceMock = snackbarService as jest.Mocked<
-  typeof snackbarService
->
 
 describe('AuthorizerTableStore', () => {
   afterEach(() => {

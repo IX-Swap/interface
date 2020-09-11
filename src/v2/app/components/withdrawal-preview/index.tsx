@@ -1,9 +1,9 @@
 import React from 'react'
 import { Paper, Grid, Typography, Box } from '@material-ui/core'
 import { makeStyles } from '@material-ui/styles'
-import { formatMoney } from '../../../helpers/numbers'
+import { formatMoney } from 'v2/helpers/numbers'
 import BankDetails from '../bank-details'
-import { CashWithdrawal } from '../../../types/cash-withdrawal'
+import { CashWithdrawal } from 'v2/types/cash-withdrawal'
 
 const useStyles = makeStyles(() => ({
   infoGrid: {
@@ -30,13 +30,13 @@ const BoldTypography = ({ children, ...others }: any) => (
 function WithdrawalView ({ withdrawal }: { withdrawal: CashWithdrawal }) {
   const classes = useStyles()
 
-  if (!withdrawal) return <span>nothing to display</span>
+  if (withdrawal === undefined) return <span>nothing to display</span>
 
   return (
     <Grid container justify='center' direction='column' component={Paper}>
       <Box p={4} />
       <Grid container className={classes.infoGrid}>
-        {withdrawal.individual && (
+        {withdrawal.individual !== undefined && (
           <>
             <Grid item xs={6}>
               <BoldTypography variant='subtitle2' className={classes.labels}>

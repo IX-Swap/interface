@@ -12,13 +12,9 @@ import {
   ArrowBack as ArrowBackIcon
 } from '@material-ui/icons'
 import classNames from 'classnames'
-
 import useStyles from './styles'
 import { useObserver } from 'mobx-react'
-
 import { useStore as useLayoutStore } from '../../../context/layout'
-
-import { useUserStore } from 'v2/auth/context'
 import { useLogout } from 'v2/auth/hooks/useLogout'
 
 export default function Header () {

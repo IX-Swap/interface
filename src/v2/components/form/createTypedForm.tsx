@@ -5,8 +5,8 @@ import React, {
   useMemo
 } from 'react'
 import { DeepPath } from '@hookform/strictly-typed/dist/types'
-import { Form, FormProps } from 'v2/components/form/typed/Form'
-import { createTypedField } from 'v2/components/form/typed/createTypedField'
+import { Form, FormProps } from 'v2/components/form/Form'
+import { createTypedField } from 'v2/components/form/createTypedField'
 import {
   Checkbox as MUICheckbox,
   FormControlLabel,
@@ -14,26 +14,23 @@ import {
   Input,
   Typography
 } from '@material-ui/core'
-import {
-  AssetSelect,
-  AssetSelectProps
-} from 'v2/components/form/typed/AssetSelect'
-import { Submit } from 'v2/components/form/typed/Submit'
-import { BalanceSelect } from 'v2/components/form/typed/BalanceSelect'
-import { BankSelect } from 'v2/components/form/typed/BankSelect'
-import { CountrySelect } from 'v2/components/form/typed/CountrySelect'
+import { AssetSelect, AssetSelectProps } from 'v2/components/form/AssetSelect'
+import { Submit } from 'v2/components/form/Submit'
+import { BalanceSelect } from 'v2/components/form/BalanceSelect'
+import { BankSelect } from 'v2/components/form/BankSelect'
+import { CountrySelect } from 'v2/components/form/CountrySelect'
 import {
   NumericInput,
   NumericInputProps
-} from 'v2/components/form/typed/NumericField'
+} from 'v2/components/form/NumericField'
 import { NumberFormatValues } from 'react-number-format'
-import { TypedFieldProps } from 'v2/components/form/typed/types'
-import { NationalitySelect } from './NationalitySelect'
-import { GenderSelect } from 'v2/components/form/typed/GenderSelect'
-import { MartialStatusSelect } from 'v2/components/form/typed/MartialStatusSelect'
+import { TypedFieldProps } from 'v2/components/form/types'
+import { NationalitySelect } from 'v2/components/form/NationalitySelect'
+import { GenderSelect } from 'v2/components/form/GenderSelect'
+import { MartialStatusSelect } from 'v2/components/form/MartialStatusSelect'
 import { useFormContext } from 'react-hook-form'
-import { pathToString } from 'v2/components/form/typed/utils'
-import { YesOrNo } from 'v2/components/form/typed/YesOrNo'
+import { pathToString } from 'v2/components/form/utils'
+import { YesOrNo } from 'v2/components/form/YesOrNo'
 
 const booleanValueExtractor = (
   _: React.ChangeEvent<{}>,
@@ -62,6 +59,7 @@ const formatValue = (value: any): string => {
   return value
 }
 
+// TODO: optimize performance
 export const createTypedForm = <FormType extends Record<string, any>>() => {
   const TypedField = createTypedField<FormType>()
 
@@ -223,7 +221,6 @@ export const createTypedForm = <FormType extends Record<string, any>>() => {
       component = ViewComponent
     }
 
-    console.log('re-rendered')
     return React.createElement(component, fieldProps)
   }
 

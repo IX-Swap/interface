@@ -1,7 +1,7 @@
 import React from 'react'
 import { MenuItem, Select } from '@material-ui/core'
 import { useBanksData } from 'v2/app/pages/accounts/pages/banks/hooks/useBanksData'
-import { queryStatusRenderer } from 'v2/components/form/typed/renderUtils'
+import { queryStatusRenderer } from 'v2/components/form/renderUtils'
 
 export const BankSelect = (props: any): JSX.Element => {
   const { data, status } = useBanksData()

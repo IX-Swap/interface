@@ -5,7 +5,7 @@ import { RequestPasswordResetArgs } from 'v2/auth/service/types'
 import { requestPasswordResetValidationSchema } from 'v2/auth/validation'
 import { useAuthRouter } from 'v2/auth/router'
 import { useRequestPasswordReset } from 'v2/auth/hooks/useRequestPasswordReset'
-import { createTypedForm } from 'v2/components/form/typed/createTypedForm'
+import { createTypedForm } from 'v2/components/form/createTypedForm'
 import { AppRouterLink } from 'v2/components/AppRouterLink'
 import { usePasswordResetStore } from 'v2/auth/context/password-reset'
 

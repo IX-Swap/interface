@@ -2,7 +2,7 @@ import React from 'react'
 import { DepositCashFormValues } from 'v2/app/pages/accounts/types'
 import { depositCashFormValidationSchema } from 'v2/app/pages/accounts/validation'
 import { useDepositCash } from 'v2/app/pages/accounts/pages/banks/hooks/useDepositCash'
-import { createTypedForm } from 'v2/components/form/typed/createTypedForm'
+import { createTypedForm } from 'v2/components/form/createTypedForm'
 
 export const useDepositCashForm = createTypedForm<DepositCashFormValues>()
 

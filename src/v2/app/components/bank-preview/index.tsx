@@ -48,7 +48,7 @@ const BankView: React.FC<BankViewProps> = ({ bank }) => {
           <Typography>{bank.swiftCode}</Typography>
         </Grid>
       </Grid>
-      {bank.address && Object.values(bank.address).join('').trim() && (
+      {Object.values(bank.address).join('').trim() !== '' && (
         <>
           <Grid item>
             <Typography variant='h6'>Bank Address</Typography>

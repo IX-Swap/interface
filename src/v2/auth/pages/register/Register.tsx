@@ -4,7 +4,7 @@ import { registerFormValidationSchema } from 'v2/auth/validation'
 import { SignupArgs } from 'v2/auth/service/types'
 import { observer } from 'mobx-react'
 import { useSignup } from 'v2/auth/hooks/useSignup'
-import { createTypedForm } from 'v2/components/form/typed/createTypedForm'
+import { createTypedForm } from 'v2/components/form/createTypedForm'
 
 export const useRegisterForm = createTypedForm<SignupArgs>()
 

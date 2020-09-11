@@ -121,7 +121,7 @@ describe('Actions', () => {
 
   it('invokes props.onView function with props.item as an argument', async () => {
     const props = {
-      item: { id: 1, status: 'Unauthorized' },
+      item: { id: 1, status: 'Submitted' },
       onView: jest.fn()
     }
 

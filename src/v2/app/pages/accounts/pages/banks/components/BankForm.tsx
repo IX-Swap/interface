@@ -5,7 +5,7 @@ import { BankFormValues } from 'v2/app/pages/accounts/types'
 import { bankFormValidationSchema } from 'v2/app/pages/accounts/validation'
 import { useBanksRouter } from 'v2/app/pages/accounts/pages/banks/router'
 import { AppRouterLink } from 'v2/components/AppRouterLink'
-import { createTypedForm } from 'v2/components/form/typed/createTypedForm'
+import { createTypedForm } from 'v2/components/form/createTypedForm'
 
 const formDefaultValues: BankFormValues = {
   bankName: '',

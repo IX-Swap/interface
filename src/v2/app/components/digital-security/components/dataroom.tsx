@@ -1,10 +1,10 @@
 import React from 'react'
 import { Grid, IconButton } from '@material-ui/core'
 import RemoveIcon from '@material-ui/icons/Remove'
-import { Document } from '../../../../types/document'
+import { Document } from 'v2/types/document'
 import Uploader from 'v2/components/form/Uploader'
 import storageHelper from '../../../../helpers/storageHelper'
-import { downloadFile } from '../../../../helpers/httpRequests'
+import { downloadFile } from 'v2/helpers/httpRequests'
 import { noop } from 'lodash'
 
 interface DSDataRoomProps {
@@ -30,7 +30,7 @@ const DSDataRoom = ({
 
     downloadFile(uri).then(noop).catch(noop)
   }
-  const items = (documents || []).map((document, i) => (
+  const items = (documents ?? []).map((document, i) => (
     <Grid container direction='row' key={document._id} alignItems='center'>
       <Grid item style={{ flexGrow: 1 }}>
         <Uploader
@@ -46,6 +46,7 @@ const DSDataRoom = ({
           download={() => {
             download(
               document._id,
+              // eslint-disable-next-line @typescript-eslint/strict-boolean-expressions
               !document.user || document.user === storageHelper.getUserId()
             )
           }}

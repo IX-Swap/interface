@@ -8,10 +8,10 @@ import {
   TableCell
 } from '@material-ui/core'
 import { TableView } from 'v2/components/TableWithPagination/TableView'
-import { Dso } from '../../../types/dso'
+import { Dso } from 'v2/types/dso'
 import DsoOfferingCard from './card'
 import { debounce } from 'lodash'
-import { BaseFilter } from '../../../types/util'
+import { BaseFilter } from 'v2/types/util'
 
 interface OfferingsListProps {
   filter?: BaseFilter
@@ -47,7 +47,10 @@ const OfferingsList = ({
             variant='outlined'
             placeholder='Search'
             onChange={onSearch}
-            style={{ flexGrow: 1, marginRight: '16px' }}
+            style={{
+              flexGrow: 1,
+              marginRight: children !== undefined ? '16px' : '0'
+            }}
           />
           {children ?? null}
         </Grid>

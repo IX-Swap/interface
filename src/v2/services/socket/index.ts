@@ -11,14 +11,14 @@ const socketService = {
   },
 
   disconnect () {
-    if (_socket) {
+    if (_socket !== undefined) {
       _socket.removeAllListeners()
       _socket.disconnect()
     }
   },
 
   subscribeToSocket () {
-    if (_socket && !_socket.connected) {
+    if (_socket !== undefined && !_socket.connected) {
       const bearerToken = storageHelper.getAccessToken()
       _socket = io(`${API_URL}?token=${bearerToken}`)
     }
@@ -26,23 +26,23 @@ const socketService = {
     return _socket
   },
 
-  _subscribeToSocket (): Promise<SocketIOClient.Socket> {
-    return new Promise(resolve => {
+  async _subscribeToSocket (): Promise<SocketIOClient.Socket> {
+    return await new Promise(resolve => {
       const bearerToken = storageHelper.getAccessToken()
-      if (!bearerToken) {
+      if (bearerToken === undefined) {
         resolve(undefined)
         return
       }
 
       // Check if socket is not connected then connect
-      if (!_socket || !_socket.connected) {
+      if (_socket === undefined || !_socket.connected) {
         // console.log('will subscribe', _socket)
         _socket = io(`${API_URL}?token=${bearerToken}`)
         _socket.on('connect', () => {
           // console.log('connect')
           resolve(_socket)
         })
-        _socket.on('connect_error', function (...props: any) {
+        _socket.on('connect_error', function () {
           // console.log('no connect', props)
           resolve(_socket)
         })
@@ -50,7 +50,7 @@ const socketService = {
           // console.log('no timeout')
           resolve(_socket)
         })
-        _socket.on('error', function (...props: any) {
+        _socket.on('error', function () {
           // console.log('no connect', props)
           resolve(_socket)
         })

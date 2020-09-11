@@ -1,7 +1,6 @@
-// @flow
 import React from 'react'
 import { Paper, Box } from '@material-ui/core'
-import { Bank } from '../../../types/bank'
+import { Bank } from 'v2/types/bank'
 
 const BankDetails = ({
   bank,
@@ -19,7 +18,7 @@ const BankDetails = ({
         <b>Swift:</b>
         &nbsp;{bank.swiftCode}
       </p>
-      {bank.address && (
+      {bank.address !== undefined && (
         <p>
           <b>Bank Address:</b>
           &nbsp;{bank.address.line1}
@@ -38,7 +37,7 @@ const BankDetails = ({
         <b>Account Number:</b>
         &nbsp;{bank.bankAccountNumber}
       </p>
-      {code && (
+      {code !== undefined && (
         <p>
           <b>Deposit Code:</b>
           &nbsp;{code}

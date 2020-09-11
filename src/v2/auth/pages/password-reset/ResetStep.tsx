@@ -5,7 +5,7 @@ import { completePasswordResetValidationSchema } from 'v2/auth/validation'
 import { usePasswordResetStore } from 'v2/auth/context/password-reset'
 import { PasswordResetStep } from 'v2/auth/context/password-reset/types'
 import { useCompletePasswordReset } from 'v2/auth/hooks/useCompletePasswordReset'
-import { createTypedForm } from 'v2/components/form/typed/createTypedForm'
+import { createTypedForm } from 'v2/components/form/createTypedForm'
 import { Button } from '@material-ui/core'
 
 type CompletePasswordResetFormValues = Omit<CompletePasswordResetArgs, 'email'>

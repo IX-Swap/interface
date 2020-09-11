@@ -1,34 +1,33 @@
 import React, { useState } from 'react'
-import { convertFromHTML, ContentState, convertToRaw } from 'draft-js'
-
+import { ContentState, convertFromHTML, convertToRaw } from 'draft-js'
 import DsoTitle from './title'
-import { Dso, DsoRequest, inititialValues } from '../../../types/dso'
-import { Document } from '../../../types/document'
+import { Dso, DsoRequest, inititialValues } from 'v2/types/dso'
+import { Document } from 'v2/types/document'
 import {
-  Grid,
-  Paper,
-  Container,
   Box,
   Button,
+  Container,
+  Grid,
+  Paper,
   Typography
 } from '@material-ui/core'
 import SectionContainer from './components/container'
-import { useForm, FormProvider } from 'react-hook-form'
+import { FormProvider, useForm } from 'react-hook-form'
 import OfferDetails from './components/offer-details'
 import EditableWysiwyg from 'v2/components/form/EditableWysiwyg'
-import { get, set, noop } from 'lodash'
+import { get, noop, set } from 'lodash'
 import TeamMember from './components/member'
 import OfferingTerms from './components/offering-terms'
 import DSDataroom from './components/dataroom'
 import DSTitleEditor from './components/title-editor'
-import { downloadFile } from '../../../helpers/httpRequests'
-import { useIsIssuer } from '../../../helpers/acl'
+import { downloadFile } from 'v2/helpers/httpRequests'
+import { useIsIssuer } from 'v2/helpers/acl'
 import { useHistory } from 'react-router-dom'
 import { flatten, unflatten } from 'flat'
 import Uploader from 'v2/components/form/Uploader'
 import storageHelper from '../../../helpers/storageHelper'
-import { Asset } from '../../../types/asset'
-import { wysiwygToHtml } from '../../../helpers/rendering'
+import { Asset } from 'v2/types/asset'
+import { wysiwygToHtml } from 'v2/helpers/rendering'
 import CorporateSelector from '../corporate-selector'
 
 interface DigitalSecurityProps {
@@ -71,16 +70,15 @@ const useDsoLogic = ({
     const unflattened = { ...unflatten(form.getValues()) } as DsoRequest
 
     wysiwygItems.forEach((key: keyof Dso) => {
-      const value = wysiwygToHtml((unflattened[key] as string) || '{}')
       // @ts-expect-error
-      unflattened[key] = value
+      unflattened[key] = wysiwygToHtml((unflattened[key] as string) ?? '{}')
     })
 
     unflattened.team.forEach(e => {
-      e.about = wysiwygToHtml(e.about || '{}')
+      e.about = wysiwygToHtml(e.about ?? '{}')
     })
 
-    unflattened.documents = (unflattened.documents || []).filter(Boolean)
+    unflattened.documents = (unflattened.documents ?? []).filter(Boolean)
 
     const stringable = ['equityMultiple', 'investmentStructure']
     Object.keys(unflattened).forEach(key => {
@@ -88,6 +86,7 @@ const useDsoLogic = ({
       if (
         value !== null &&
         value !== undefined &&
+        // eslint-disable-next-line @typescript-eslint/no-base-to-string
         value.toString().trim() === ''
       ) {
         // @ts-expect-error
@@ -227,12 +226,12 @@ const DigitalSecurity = ({
                   )}
                 </Grid>
                 <Grid item>
-                  {buttonString && (
+                  {buttonString !== undefined && (
                     <Button
                       variant='contained'
                       color='primary'
                       onClick={async () => {
-                        if (buttonAction) {
+                        if (buttonAction !== undefined) {
                           // const isValid = await form.triggerValidation()
                           const isValid = true
                           buttonAction(getFinalValue(), isValid)
@@ -301,13 +300,13 @@ const DigitalSecurity = ({
                 <SectionContainer title='Token Address'>
                   <Grid container item justify='space-between'>
                     <Typography color='primary'>
-                      {((dso || {}).deploymentInfo &&
-                        ((dso || {}).deploymentInfo ?? {}).token) ??
+                      {((dso ?? {}).deploymentInfo !== undefined &&
+                        ((dso ?? {}).deploymentInfo ?? {}).token) ??
                         '-'}
                     </Typography>
                     {isIssuer &&
-                      !(dso || {}).deploymentInfo &&
-                      (dso || {}).status === 'Approved' &&
+                      (dso ?? {}).deploymentInfo !== undefined &&
+                      (dso ?? {}).status === 'Approved' &&
                       !editMode && (
                         <Button
                           variant='contained'

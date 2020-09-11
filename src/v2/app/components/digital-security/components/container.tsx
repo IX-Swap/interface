@@ -16,7 +16,7 @@ const SectionContainer = ({
     height='100%'
     style={{ display: 'flex', flexDirection: 'column' }}
   >
-    {title && (
+    {title !== undefined && (
       <Box mt={2}>
         <Typography>
           <b>{title}</b>

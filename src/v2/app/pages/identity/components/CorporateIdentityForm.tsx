@@ -11,7 +11,7 @@ import declarations, {
 } from 'v2/app/pages/identity/const/declarations'
 import documents from 'v2/app/pages/identity/const/documents'
 import { CompanyInformation } from 'v2/app/pages/identity/components/CompanyInfo'
-import { createTypedForm } from 'v2/components/form/typed/createTypedForm'
+import { createTypedForm } from 'v2/components/form/createTypedForm'
 import { CorporateIdentityFormValues } from 'v2/app/pages/identity/components/types'
 import { corporateIdentityFormValidationSchema } from 'v2/app/pages/identity/components/validation'
 
@@ -52,7 +52,7 @@ export const CorporateIdentityForm = (
             <Address isEditing={editMode} />
           </Section>
         </Grid>
-        {identity.representatives.map((e, i) => (
+        {identity.representatives.map(e => (
           <Grid item xs={12} key={e.email ?? 'email'}>
             {/* <IdentitySection */}
             {/*  title='Company Representative' */}
@@ -141,7 +141,7 @@ export const CorporateIdentityForm = (
             <Declaration
               isEditing={editMode}
               declarations={formatDeclarations(
-                identity.declarations || declarations.corporate,
+                identity.declarations ?? declarations.corporate,
                 'corporate'
               )}
             />

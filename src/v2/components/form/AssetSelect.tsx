@@ -2,7 +2,7 @@ import React from 'react'
 import { AssetType } from 'v2/services/assets/types'
 import { useAssetsData } from 'v2/hooks/asset/useAssetsData'
 import { MenuItem, Select } from '@material-ui/core'
-import { queryStatusRenderer } from 'v2/components/form/typed/renderUtils'
+import { queryStatusRenderer } from 'v2/components/form/renderUtils'
 
 export interface AssetSelectProps {
   assetType: AssetType

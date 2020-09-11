@@ -1,13 +1,13 @@
 import React from 'react'
 import { Box, Button, Grid, Typography } from '@material-ui/core'
 import RemoveIcon from '@material-ui/icons/Remove'
-import { DsoTeamMember } from '../../../../types/dso'
-import { getImgUrl } from '../../../../helpers/httpRequests'
+import { DsoTeamMember } from 'v2/types/dso'
+import { getImgUrl } from 'v2/helpers/httpRequests'
 import storageHelper from '../../../../helpers/storageHelper'
 import EditableField from 'v2/components/form/EditableField'
 import EditableWysiwyg from 'v2/components/form/EditableWysiwyg'
 import ImageUploader from 'v2/components/form/ImageUploader'
-import { DocumentGuide } from '../../../../types/document'
+import { DocumentGuide } from 'v2/types/document'
 
 interface TeamMemberProps {
   member: DsoTeamMember
@@ -31,13 +31,11 @@ const TeamMember = ({
   }
 
   const setPhoto = async ({ _id = '' }: { _id: string }) => {
-    const x = await getImgUrl(
+    return await getImgUrl(
       editMode
-        ? `/dataroom/raw/${storageHelper.getUserId()}/${_id || ''}`
+        ? `/dataroom/raw/${storageHelper.getUserId()}/${_id ?? ''}`
         : `/issuance/dso/dataroom/photos/raw/${dsoId}/${_id}`
     )
-
-    return x
   }
 
   return (
@@ -109,7 +107,7 @@ const TeamMember = ({
             )}
             {editMode && (
               <EditableWysiwyg
-                value={member.about || 'About the member'}
+                value={member.about ?? 'About the member'}
                 name={`team.${index}.about`}
                 editMode={editMode}
               />

@@ -73,7 +73,7 @@ export interface Declaration {
 
 export interface BaseIdentity {
   _id: string
-  status: 'Rejected' | 'Authorized' | 'Unauthorized' | undefined
+  status: 'Rejected' | 'Authorized' | 'Submitted' | undefined
   user: User
   createdAt: string
   updatedAt: string

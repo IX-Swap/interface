@@ -7,6 +7,7 @@ import socketService from 'v2/services/socket'
 import storageService from 'v2/services/storage'
 import authService from 'v2/auth/service'
 import { banksService } from 'v2/app/pages/accounts/pages/banks/service'
+import { adminService } from 'v2/app/pages/admin/service'
 
 const services = {
   apiService,
@@ -16,7 +17,8 @@ const services = {
   banksService,
   identityService,
   socketService,
-  storageService
+  storageService,
+  adminService
 }
 
 export const {

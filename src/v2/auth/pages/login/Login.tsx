@@ -5,7 +5,7 @@ import { LoginArgs } from 'v2/auth/service/types'
 import { loginFormValidationSchema } from 'v2/auth/validation'
 import { useAuthRouter } from 'v2/auth/router'
 import { useLogin } from 'v2/auth/hooks/useLogin'
-import { createTypedForm } from 'v2/components/form/typed/createTypedForm'
+import { createTypedForm } from 'v2/components/form/createTypedForm'
 import { AppRouterLink } from 'v2/components/AppRouterLink'
 
 export const loginFormInitialValues = {

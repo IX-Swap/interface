@@ -1,5 +1,4 @@
 import React, { useState } from 'react'
-
 import { useStore } from 'v2/app/pages/issuance/context'
 import { useObserver } from 'mobx-react'
 import DigitalSecurity from 'v2/app/components/digital-security'
@@ -14,30 +13,31 @@ import { snackbarService } from 'uno-material-ui'
 const DsoView = ({ dso }: { dso: Dso }) => {
   const history = useHistory()
 
-  const save = (formValues?: DsoRequest) => {
-    if (!formValues) return
-    ;(async () => {
-      const res = await editDso(dso._id, formValues, storageHelper.getUserId())
-      if (res.status) {
-        setState({
-          ...state,
-          editMode: false,
-          action: edit,
-          button: 'Edit'
-        })
+  const save = async (formValues?: DsoRequest) => {
+    if (formValues === undefined) {
+      return
+    }
 
-        snackbarService.showSnackbar(
-          `Successfully saved Digital Security (${res.data!.tokenSymbol})`
-        )
-        history.push('.')
-        return
-      }
+    const res = await editDso(dso._id, formValues, storageHelper.getUserId())
+    if (res.status) {
+      setState({
+        ...state,
+        editMode: false,
+        action: edit,
+        button: 'Edit'
+      })
 
-      snackbarService.showSnackbar(
-        `Unable to save ${formValues?.tokenSymbol}. (${res.message})`,
-        'error'
+      await snackbarService.showSnackbar(
+        `Successfully saved Digital Security (${res.data?.tokenSymbol ?? ''})`
       )
-    })()
+      history.push('.')
+      return
+    }
+
+    await snackbarService.showSnackbar(
+      `Unable to save ${formValues?.tokenSymbol}. (${res.message ?? ''})`,
+      'error'
+    )
   }
 
   const edit = () => {
@@ -75,7 +75,7 @@ const InvestViewDso = () => {
   const dsoState = useStore()
 
   return useObserver(() =>
-    dsoState.selectedDso ? (
+    dsoState.selectedDso !== undefined ? (
       <MemoedDsoView dso={dsoState.selectedDso} />
     ) : (
       <Redirect to='.' />

@@ -1,6 +1,6 @@
 import React from 'react'
 import DsoImage from '../image'
-import { Dso } from '../../../../types/dso'
+import { Dso } from 'v2/types/dso'
 import { Grid, TextField } from '@material-ui/core'
 import { useFormContext, Controller } from 'react-hook-form'
 import { MuiPickersUtilsProvider, DatePicker } from '@material-ui/pickers'
@@ -15,11 +15,7 @@ interface DsoTitleProps {
 
 const DsoTitle = ({ editMode = false, dso }: DsoTitleProps) => {
   const classesE = useEditableStyles()
-  const { register, errors, control } = useFormContext() || {
-    control: () => {},
-    errors: {},
-    register: () => {}
-  }
+  const { register, errors, control } = useFormContext()
 
   return (
     <Grid container direction='row' spacing={2}>
@@ -32,7 +28,7 @@ const DsoTitle = ({ editMode = false, dso }: DsoTitleProps) => {
             label='Token Name'
             margin='normal'
             name='tokenName'
-            error={!!errors.tokenName}
+            error={errors.tokenName !== undefined}
             inputRef={register({ required: true })}
             InputLabelProps={{
               className: classesE.largeInputLabel
@@ -45,7 +41,7 @@ const DsoTitle = ({ editMode = false, dso }: DsoTitleProps) => {
             label='Symbol'
             margin='normal'
             name='tokenSymbol'
-            error={!!errors.tokenSymbol}
+            error={errors.tokenSymbol !== undefined}
             inputRef={register({ required: true })}
             className={classesE.tokenSymbol}
             InputLabelProps={{
@@ -88,7 +84,7 @@ const DsoTitle = ({ editMode = false, dso }: DsoTitleProps) => {
             className={classesE.issuer}
             inputRef={register({ required: true })}
             name='issuerName'
-            error={!!errors.issuerName}
+            error={errors.issuerName !== undefined}
             label='Issuer Name'
             margin='normal'
             style={{ flexGrow: 1 }}

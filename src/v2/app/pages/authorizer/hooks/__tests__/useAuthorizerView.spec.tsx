@@ -87,11 +87,18 @@ describe('useAuthorizerView', () => {
     expect(result.current.filter).toEqual({ ...initialFilterValue, ...filter })
   })
 
-  it('return columns and additional statusColumn if status is "Submitted"', () => {
+  it('has a status column if status ""(empty)', () => {
+    const { result } = renderHook(() => useAuthorizerView(hookArgs))
+    const columns = result.current.getColumns()
+
+    expect(columns).toEqual([statusColumn])
+  })
+
+  it('doesnt return additional statusColumn if status is not ""(empty)', () => {
     const { result } = renderHook(() => useAuthorizerView(hookArgs))
     let columns = result.current.getColumns()
 
-    expect(columns).toEqual(hookArgs.columns)
+    expect(columns).toEqual([...hookArgs.columns, statusColumn])
 
     // eslint-disable-next-line no-void
     void act(() => {
@@ -99,7 +106,7 @@ describe('useAuthorizerView', () => {
     })
 
     columns = result.current.getColumns()
-    expect(columns).toEqual([...hookArgs.columns, statusColumn])
+    expect(columns).toEqual([...hookArgs.columns])
   })
 
   it('sets viewing status to false after onBack has been called', () => {

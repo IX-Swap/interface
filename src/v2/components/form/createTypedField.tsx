@@ -10,8 +10,8 @@ import {
 import {
   TypedFieldProps,
   TypedFieldWithChildren
-} from 'v2/components/form/typed/types'
-import { pathToString } from 'v2/components/form/typed/utils'
+} from 'v2/components/form/types'
+import { pathToString } from 'v2/components/form/utils'
 import get from 'lodash/get'
 
 export const createTypedField = <FormType extends Record<string, any>>() => {

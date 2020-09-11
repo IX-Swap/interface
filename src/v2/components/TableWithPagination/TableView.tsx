@@ -35,8 +35,9 @@ export const TableView = <T,>({
   bordered = true,
   actions,
   children,
-  fakeItems
-}: TableViewProps<T>): JSX.Element => {
+  fakeItems,
+  innerRef
+}: TableViewProps<T> & { innerRef?: any }): JSX.Element => {
   const {
     items,
     status,
@@ -47,32 +48,45 @@ export const TableView = <T,>({
     total
   } = useTableWithPagination<T>(name, uri, filter)
 
+  if (innerRef !== undefined) {
+    innerRef.current = { refresh: () => setPage(page) }
+  }
+
   return (
     <>
       {status === 'loading' && <LinearProgress />}
       <TableContainer>
         <Table aria-label='table' data-testid='table'>
-          <TableHead>
-            <TableRow>
-              {columns.map(e => (
-                <TableCell key={e.key} align={e.headAlign ?? 'left'}>
-                  <b>{e.label}</b>
-                </TableCell>
-              ))}
-              {hasActions && <TableCell />}
-            </TableRow>
-          </TableHead>
-          <TableRows
-            items={Array.isArray(fakeItems) ? fakeItems : items}
-            bordered={bordered}
-            name={name}
-            uri={uri}
-            columns={columns}
-            hasActions={hasActions}
-            actions={actions}
-          >
-            {children}
-          </TableRows>
+          {columns.length > 0 ? (
+            <TableHead>
+              <TableRow>
+                {columns.map(e => (
+                  <TableCell key={e.key} align={e.headAlign ?? 'left'}>
+                    <b>{e.label}</b>
+                  </TableCell>
+                ))}
+                {hasActions && <TableCell />}
+              </TableRow>
+            </TableHead>
+          ) : null}
+          {typeof children === 'function' ? (
+            children({
+              items: Array.isArray(fakeItems) ? fakeItems : items,
+              columns,
+              hasActions,
+              actions
+            })
+          ) : (
+            <TableRows
+              items={Array.isArray(fakeItems) ? fakeItems : items}
+              bordered={bordered}
+              name={name}
+              uri={uri}
+              columns={columns}
+              hasActions={hasActions}
+              actions={actions}
+            />
+          )}
           {total > 0 && (
             <TableFooter>
               <TableRow>

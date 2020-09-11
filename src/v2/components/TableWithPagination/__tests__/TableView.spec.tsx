@@ -5,19 +5,10 @@ import {
   TableView,
   TableViewProps
 } from 'v2/components/TableWithPagination/TableView'
-import {
-  useTableWithPagination,
-  UseTableWithPaginationReturnType
-} from 'v2/components/TableWithPagination/hooks/useTableWithPagination'
+import * as useTableWithPaginationHook from 'v2/components/TableWithPagination/hooks/useTableWithPagination'
 import { QueryStatus } from 'react-query'
 
-jest.mock('v2/components/TableWithPagination/hooks/useTableWithPagination')
-
-const useTableWithPaginationMock = useTableWithPagination as jest.Mock<
-  Partial<ReturnType<typeof useTableWithPagination>>
->
-
-const useTableWithPaginationMockReturnValue: UseTableWithPaginationReturnType<any> = {
+const useTableWithPaginationMockReturnValue: useTableWithPaginationHook.UseTableWithPaginationReturnType<any> = {
   total: 0,
   items: [],
   setRowsPerPage: jest.fn(),
@@ -46,17 +37,17 @@ describe('TableView', () => {
   })
 
   it('renders without error', async () => {
-    useTableWithPaginationMock.mockReturnValueOnce(
-      useTableWithPaginationMockReturnValue
-    )
+    jest
+      .spyOn(useTableWithPaginationHook, 'useTableWithPagination')
+      .mockReturnValueOnce(useTableWithPaginationMockReturnValue)
 
     render(<TableView {...props} />)
   })
 
-  it('render', async () => {
-    useTableWithPaginationMock.mockReturnValueOnce(
-      useTableWithPaginationMockReturnValue
-    )
+  it('renders table', async () => {
+    jest
+      .spyOn(useTableWithPaginationHook, 'useTableWithPagination')
+      .mockReturnValueOnce(useTableWithPaginationMockReturnValue)
 
     const { getByTestId } = render(<TableView {...props} />)
     const table = getByTestId('table')
