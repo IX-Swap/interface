@@ -1,7 +1,10 @@
 /**  * @jest-environment jsdom-sixteen  */
 import React from 'react'
 import { render, cleanup } from 'test-utils'
-import { Offerings, renderDSOView } from 'v2/app/pages/authorizer/pages/offerings/Offerings'
+import {
+  Offerings,
+  renderDSOView
+} from 'v2/app/pages/authorizer/pages/offerings/Offerings'
 import DigitalSecurity from 'v2/app/components/digital-security'
 import { dso } from '__fixtures__/authorizer'
 

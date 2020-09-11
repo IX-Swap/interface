@@ -26,7 +26,7 @@ const BoldTypography = ({ children, ...others }: any) => (
   </Typography>
 )
 
-function DSWithdrawalView({ withdrawal }: { withdrawal: DSWithdrawal }) {
+function DSWithdrawalView ({ withdrawal }: { withdrawal: DSWithdrawal }) {
   const classes = useStyles()
 
   if (!withdrawal) return <span>nothing to display</span>

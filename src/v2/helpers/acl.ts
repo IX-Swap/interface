@@ -1,5 +1,6 @@
 import { includes } from 'lodash'
 import { useUserStore } from 'v2/auth/context'
+import { useUser } from 'v2/auth/hooks/useUser'
 
 // RBACL Algorithm for Frontend
 
@@ -41,27 +42,35 @@ const hasRole = (roles: string, roleToCheck: string): boolean => {
  */
 
 export const useIsAdmin = (): boolean => {
-  const { user: { roles = '' } = {} } = useUserStore()
+  const { data: user } = useUser()
 
-  return hasRole(roles, appRoles.ADMIN)
+  if (user === undefined) return false
+
+  return hasRole(user.roles, appRoles.ADMIN)
 }
 
 export const useIsAuthorizer = (): boolean => {
-  const { user: { roles = '' } = {} } = useUserStore()
+  const { data: user } = useUser()
 
-  return hasRole(roles, appRoles.AUTHORIZER)
+  if (user === undefined) return false
+
+  return hasRole(user.roles, appRoles.AUTHORIZER)
 }
 
 export const useIsIssuer = (): boolean => {
-  const { user: { roles = '' } = {} } = useUserStore()
+  const { data: user } = useUser()
 
-  return hasRole(roles, appRoles.ISSUER)
+  if (user === undefined) return false
+
+  return hasRole(user.roles, appRoles.ISSUER)
 }
 
 export const useIsAccredited = (): boolean => {
-  const { user: { roles = '' } = {} } = useUserStore()
+  const { data: user } = useUser()
 
-  return hasRole(roles, appRoles.ACCREDITED)
+  if (user === undefined) return false
+
+  return hasRole(user.roles, appRoles.ACCREDITED)
 }
 
 export const useHasSpecialRole = (): boolean => {

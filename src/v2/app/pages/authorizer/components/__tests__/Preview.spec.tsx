@@ -1,7 +1,10 @@
 /**  * @jest-environment jsdom-sixteen  */
 import React from 'react'
 import { render, cleanup, fireEvent, waitFor } from 'test-utils'
-import { Preview, PreviewProps } from 'v2/app/pages/authorizer/components/Preview'
+import {
+  Preview,
+  PreviewProps
+} from 'v2/app/pages/authorizer/components/Preview'
 
 describe('Preview', () => {
   const props: PreviewProps = { onBack: jest.fn() }
@@ -19,9 +22,9 @@ describe('Preview', () => {
     const backButton = getByTestId('back-button')
     const child = getByTestId('children')
 
-    expect(title).toBeTruthy
-    expect(backButton).toBeTruthy
-    expect(child).toBeTruthy
+    expect(title).toBeTruthy()
+    expect(backButton).toBeTruthy()
+    expect(child).toBeTruthy()
   })
 
   it('fires onBack callback when back button is pressed', async () => {

@@ -1,4 +1,4 @@
-import { assetsService } from 'v2/context/assets/service'
+import { assetsService } from 'v2/services/assets'
 import generateStoreHookAndProvider from 'v2/helpers/generateStoreHookAndProvider'
 
 export const {

@@ -17,7 +17,7 @@ import { BaseFilter } from 'v2/types/util'
 import { Asset } from 'v2/types/asset'
 import { MaterialUiPickersDate } from '@material-ui/pickers/typings/date'
 import { useObserver } from 'mobx-react'
-import { useAllBalances } from 'v2/context/balances/useAllBalances'
+import { useAllBalances } from 'v2/hooks/balance/useAllBalances'
 
 interface FilterProps {
   filters: BaseFilter

@@ -7,10 +7,12 @@ import useStyles from './styles'
 import { Copyright } from 'v2/auth/components/Copyright'
 import { AuthTabs } from 'v2/auth/components/AuthTabs'
 import { useAuthRouter } from 'v2/auth/router'
+import { useAuth } from 'v2/hooks/auth/useAuth'
 
-const AuthRoot: React.FC = () => {
+export const AuthRoot: React.FC = observer(() => {
   const classes = useStyles()
-  const { setActiveTab, isAuthenticated } = useUserStore()
+  const { setActiveTab } = useUserStore()
+  const { isAuthenticated } = useAuth()
   const history = useHistory()
   const { renderRoutes, routes, current } = useAuthRouter()
   const tabbedRoutes = useMemo(() => [routes.login, routes.signup], [routes])
@@ -38,6 +40,4 @@ const AuthRoot: React.FC = () => {
       <Copyright />
     </Grid>
   )
-}
-
-export default observer(AuthRoot)
+})

@@ -5,7 +5,7 @@ import { formatMoney } from 'v2/helpers/numbers'
 import { INVESTAX_BANK } from 'v2/config'
 import { useFormContext } from 'react-hook-form'
 import { DepositCashFormValues } from 'v2/app/pages/accounts/types'
-import { useAssetsData } from 'v2/context/assets/useAssetsData'
+import { useAssetsData } from 'v2/hooks/asset/useAssetsData'
 
 export interface DepositTransactionPreviewProps {
   depositCode: string

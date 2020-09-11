@@ -16,8 +16,8 @@ describe('Action', () => {
     const icon = getByTestId('icon')
     const container = getByRole('button')
 
-    expect(label).toBeTruthy
-    expect(icon).toBeTruthy
+    expect(label).toBeTruthy()
+    expect(icon).toBeTruthy()
 
     fireEvent.click(container)
 

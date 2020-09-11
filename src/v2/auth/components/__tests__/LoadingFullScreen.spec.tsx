@@ -5,9 +5,9 @@ import { LoadingFullScreen } from 'v2/auth/components/LoadingFullScreen'
 
 describe('LoadingFullScreen', () => {
   it('renders with loading message', async () => {
-    const { getByText } = render(<LoadingFullScreen />)
-    const message = getByText(/loading/i)
+    const { getByTestId } = render(<LoadingFullScreen />)
+    const progress = getByTestId(/progress/i)
 
-    expect(message).toBeTruthy
+    expect(progress).toBeTruthy()
   })
 })

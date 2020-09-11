@@ -1,19 +1,21 @@
 import React from 'react'
 import { Box, Grid } from '@material-ui/core'
-import { WithdrawForm } from 'v2/app/pages/accounts/pages/banks/WithdrawCash/WithdrawForm'
+import {
+  useWithdrawCashForm,
+  WithdrawForm
+} from 'v2/app/pages/accounts/pages/banks/WithdrawCash/WithdrawForm'
 import { useDepositStore } from 'v2/app/pages/accounts/pages/banks/context'
 import { Setup } from 'v2/app/pages/accounts/pages/banks/WithdrawCash/Setup'
 import { Preview } from 'v2/app/pages/accounts/pages/banks/WithdrawCash/Preview'
 import { observer } from 'mobx-react'
 import { ContinueButton } from 'v2/app/pages/accounts/pages/banks/WithdrawCash/ContinueButton'
-import { OTP } from 'v2/app/pages/accounts/pages/banks/components/OTP'
 import { BankPreview } from 'v2/app/pages/accounts/pages/banks/WithdrawCash/BankPreview'
 import { WithdrawCashAlert } from 'v2/app/pages/accounts/pages/banks/components/WithdrawCashAlert'
 import { CancelButton } from 'v2/app/pages/accounts/pages/banks/components/CancelButton'
-import { SubmitButton } from 'v2/components/form/SubmitButton'
 
 export const WithdrawView: React.FC = observer(() => {
   const { isPreview } = useDepositStore()
+  const { TextField, Submit } = useWithdrawCashForm()
 
   return (
     <WithdrawForm>
@@ -24,7 +26,17 @@ export const WithdrawView: React.FC = observer(() => {
       {isPreview && (
         <Grid item>
           <WithdrawCashAlert />
-          <OTP />
+          <Grid item container direction='column'>
+            <Box my={4} alignSelf='center'>
+              <TextField
+                name='otp'
+                label='2-Factor Auth Code'
+                inputProps={{
+                  autoComplete: 'off'
+                }}
+              />
+            </Box>
+          </Grid>
         </Grid>
       )}
       <Grid item>
@@ -33,7 +45,7 @@ export const WithdrawView: React.FC = observer(() => {
             <>
               <CancelButton />
               <Box mx={1} />
-              <SubmitButton>Confirm Withdrawal</SubmitButton>
+              <Submit>Confirm Withdrawal</Submit>
             </>
           ) : (
             <ContinueButton />

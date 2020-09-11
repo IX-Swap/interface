@@ -37,7 +37,7 @@ export const useTableWithPagination = <TData>(
       payload.filter = f
     }
 
-    return await apiService.request<PaginatedData<TData>>('POST', uri, payload)
+    return await apiService.post<PaginatedData<TData>>(uri, payload)
   }
 
   const { data, status, fetchMore, isFetching } = useInfiniteQuery(
@@ -54,15 +54,14 @@ export const useTableWithPagination = <TData>(
     rowsPerPage,
     filter
   ])
+  debugger
   const previousPageData =
-    cached !== undefined
-      ? cached.map(page => page.data.data[0].documents)[0]
-      : []
+    cached !== undefined ? cached.map(page => page.data[0].documents)[0] : []
   const currentPageData =
-    data !== undefined ? data.map(page => page.data.data[0].documents)[0] : []
+    data !== undefined ? data.map(page => page.data[0].documents)[0] : []
   const total =
     data !== undefined && data.length > 0
-      ? data[data.length - 1].data.data[0].count ?? 0
+      ? data[data.length - 1].data[0].count ?? 0
       : 0
   const items = isFetching ? previousPageData : currentPageData
   const _page = status === 'loading' ? 0 : page

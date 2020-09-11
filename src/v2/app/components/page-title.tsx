@@ -28,7 +28,7 @@ const PageTitle = ({
   if (title.length === 0) return null
 
   return (
-    <Grid container alignItems='center'>
+    <Grid item container alignItems='center' xs={10}>
       {subPage && (
         <Grid item>
           <IconButton size='small' onClick={goBack}>

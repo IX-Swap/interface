@@ -5,6 +5,7 @@ import { Header } from 'v2/app/pages/accounts/pages/banks/BanksList/Header'
 import { AppRouterLink } from 'v2/components/AppRouterLink'
 import { appRoles } from 'v2/helpers/acl'
 import { user } from '__fixtures__/user'
+import * as useAuthHook from 'v2/hooks/auth/useAuth'
 
 jest.mock('v2/components/AppRouterLink', () => ({
   AppRouterLink: jest.fn(() => null)
@@ -27,10 +28,13 @@ describe('Header', () => {
   })
 
   it('renders deposit & withdraw buttons if user is accredited', () => {
-    renderWithUserStore(<Header />, {
-      user: { ...user, roles: appRoles.ACCREDITED }
+    jest.spyOn(useAuthHook, 'useAuth').mockReturnValue({
+      user: { ...user, roles: appRoles.ACCREDITED },
+      isAuthenticated: true
     })
 
-    expect(AppRouterLink).toHaveBeenCalledTimes(3)
+    renderWithUserStore(<Header />)
+
+    expect(AppRouterLink).toHaveBeenCalledTimes(1)
   })
 })

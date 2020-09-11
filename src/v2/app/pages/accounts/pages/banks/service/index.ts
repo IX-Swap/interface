@@ -17,14 +17,14 @@ export const banksService = {
     const userId = this._getUserId()
     const uri = `/accounts/banks/list/${userId}`
 
-    return await apiService.request<PaginatedData<Bank>>('POST', uri, args)
+    return await apiService.post<PaginatedData<Bank>>(uri, args)
   },
 
   async createBank (args: CreateBankArgs) {
     const userId = this._getUserId()
     const uri = `/accounts/banks/${userId}`
 
-    return await apiService.request<Bank>('POST', uri, args)
+    return await apiService.post<Bank>(uri, args)
   },
 
   async updateBank (args: UpdateBankArgs) {
@@ -32,28 +32,28 @@ export const banksService = {
     const { bankId, ...bank } = args
     const uri = `/accounts/banks/${userId}/${bankId}`
 
-    return await apiService.request<Bank>('PUT', uri, bank)
+    return await apiService.put<Bank>(uri, bank)
   },
 
   async depositCash (args: DepositCashArgs) {
     const userId = this._getUserId()
     const uri = `/accounts/cash/deposits/${userId}`
 
-    return await apiService.request('POST', uri, args)
+    return await apiService.post(uri, args)
   },
 
   async withdrawCash (args: WithdrawCashArgs) {
     const userId = this._getUserId()
     const uri = `/accounts/cash/withdrawals/${userId}`
 
-    return await apiService.request('POST', uri, args)
+    return await apiService.post(uri, args)
   },
 
   async withdrawDS (args: WithdrawDSArgs) {
     const userId = this._getUserId()
     const uri = `/accounts/security/withdrawals/${userId}`
 
-    return await apiService.request('POST', uri, args)
+    return await apiService.post(uri, args)
   },
 
   _getUserId (): string {

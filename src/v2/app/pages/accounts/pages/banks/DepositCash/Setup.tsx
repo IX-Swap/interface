@@ -1,14 +1,11 @@
 import { Box, Grid } from '@material-ui/core'
 import React from 'react'
-import { useAssetSelect } from 'v2/components/form/typed/AssetSelect'
-import { createTypedNumberInput } from 'v2/components/form/typed/NumberInput'
 import { DepositCashFormValues } from 'v2/app/pages/accounts/types'
+import { useDepositCashForm } from './DepositForm'
 import { useFormContext } from 'react-hook-form'
 
-const NumberInput = createTypedNumberInput<DepositCashFormValues>()
-
 export const Setup: React.FC = () => {
-  const AssetSelect = useAssetSelect<DepositCashFormValues>('Currency')
+  const { AssetSelect, NumericField } = useDepositCashForm()
   const { watch } = useFormContext<DepositCashFormValues>()
   const asset = watch('asset')
 
@@ -16,19 +13,16 @@ export const Setup: React.FC = () => {
     <Grid container justify='center'>
       <Box m={3}>
         <Grid container justify='space-between' style={{ width: 230 }}>
-          <AssetSelect
-            name='asset'
-            label='Currency'
-            fullWidth={false}
-            style={{ width: 70 }}
-          />
-          <NumberInput
+          <AssetSelect assetType='Currency' name='asset' label='Currency' />
+          <NumericField
             name='amount'
             label='Amount'
-            fullWidth={false}
-            style={{ width: 150 }}
-            disabled={asset === undefined}
             helperText='Transaction fees may apply'
+            formControlProps={{
+              disabled: asset === undefined,
+              fullWidth: false,
+              style: { width: 150 }
+            }}
             numberFormat={{
               decimalScale: 2,
               inputMode: 'numeric',

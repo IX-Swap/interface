@@ -1,29 +1,34 @@
 import useStyles from 'v2/auth/styles'
-import { Form, Formik } from 'formik'
-import FormikTextField from 'v2/components/form/FormikTextField'
-import { Button } from '@material-ui/core'
 import React from 'react'
 import { CompletePasswordResetArgs } from 'v2/auth/service/types'
-import { isSubmitDisabled } from 'v2/helpers/formik'
 import { completePasswordResetValidationSchema } from 'v2/auth/validation'
-import { AuthFormMessage } from 'v2/auth/components/AuthFormMessage'
 import { usePasswordResetStore } from 'v2/auth/context/password-reset'
 import { PasswordResetStep } from 'v2/auth/context/password-reset/types'
+import { useCompletePasswordReset } from 'v2/auth/hooks/useCompletePasswordReset'
+import { createTypedForm } from 'v2/components/form/typed/createTypedForm'
+import { Button } from '@material-ui/core'
+
+type CompletePasswordResetFormValues = Omit<CompletePasswordResetArgs, 'email'>
 
 export const completePasswordResetInitialValues = {
   resetToken: '',
   newPassword: ''
 }
 
+export const useCompleteResetPasswordForm = createTypedForm<
+  CompletePasswordResetFormValues
+>()
+
 export const ResetStep: React.FC = () => {
   const classes = useStyles()
-  const { completeReset, setCurrentStep, email } = usePasswordResetStore()
+  const [completeReset] = useCompletePasswordReset()
+  const { setCurrentStep, email } = usePasswordResetStore()
+  const { Form, Submit, TextField } = useCompleteResetPasswordForm()
 
   const handleSubmit = async (
-    values: Omit<CompletePasswordResetArgs, 'email'>
+    values: CompletePasswordResetFormValues
   ): Promise<void> => {
-    const args = { ...values, email } as CompletePasswordResetArgs
-    await completeReset(args)
+    await completeReset({ ...values, email } as CompletePasswordResetArgs)
   }
 
   const goBack = (): void => {
@@ -31,45 +36,28 @@ export const ResetStep: React.FC = () => {
   }
 
   return (
-    <>
-      <AuthFormMessage />
-      <Formik
-        initialValues={completePasswordResetInitialValues}
-        validationSchema={completePasswordResetValidationSchema}
-        onSubmit={handleSubmit}
-      >
-        {({ submitForm, ...formik }) => (
-          <Form data-testid='reset-step'>
-            <FormikTextField
-              fieldKey='resetToken'
-              placeholder='Password Reset Token'
-            />
-            <FormikTextField
-              fieldKey='newPassword'
-              placeholder='New Password'
-            />
-            <div className={classes.formButtons}>
-              <Button
-                color='primary'
-                size='large'
-                className={classes.forgetButton}
-                onClick={goBack}
-              >
-                Back
-              </Button>
+    <Form
+      data-testid='reset-step'
+      defaultValues={completePasswordResetInitialValues}
+      validationSchema={completePasswordResetValidationSchema}
+      onSubmit={handleSubmit}
+    >
+      <TextField name='resetToken' label='Password Reset Token' />
+      <TextField name='newPassword' label='New Password' />
+      <div className={classes.formButtons}>
+        <Button
+          color='primary'
+          size='large'
+          className={classes.forgetButton}
+          onClick={goBack}
+        >
+          Back
+        </Button>
 
-              <Button
-                variant='contained'
-                color='primary'
-                onClick={submitForm}
-                disabled={isSubmitDisabled(formik)}
-              >
-                Complete
-              </Button>
-            </div>
-          </Form>
-        )}
-      </Formik>
-    </>
+        <Submit variant='contained' color='primary'>
+          Complete
+        </Submit>
+      </div>
+    </Form>
   )
 }

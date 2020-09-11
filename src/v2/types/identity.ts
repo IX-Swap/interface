@@ -1,5 +1,6 @@
 import User from './user'
 import { Document, DocumentGuide } from './document'
+import { DeclarationValue } from 'v2/app/pages/identity/const/declarations'
 
 export interface IdentityState {
   dataroom: Array<Document | DocumentGuide>
@@ -31,16 +32,16 @@ export interface IdentityProfile {
   middleName: string
   lastName: string
   dob: string
-  gender: 'M' | 'F'
+  gender: 'M' | 'F' | undefined
   nationality: string
   countryOfResidence: string
-  maritalStatus: 'Single' | 'Married'
+  maritalStatus: 'Single' | 'Married' | undefined
   contactNumber: string
-  address: IdentityAddress
+  address: Omit<IdentityAddress, 'countryOfResidence'>
   email?: string
 }
 
-export interface IndentityFinancials {
+export interface IdentityFinancials {
   annualIncome: string
   bankAccountName: string
   bankAccountNumber: string
@@ -50,7 +51,7 @@ export interface IndentityFinancials {
   houseHoldIncome: string
   industryOfEmployment: string
   occupation: string
-  politicallyExposed: boolean
+  // politicallyExposed: boolean
   sourceOfWealth: string
   toArrangeCustody: boolean
 }
@@ -66,28 +67,34 @@ export interface CorporateFields {
   beneficialOwners: IdentityProfile[]
 }
 
+export interface Declaration {
+  [key: string]: DeclarationValue
+}
+
 export interface BaseIdentity {
   _id: string
-  status: 'Rejected' | 'Authorized' | 'Unauthorized'
+  status: 'Rejected' | 'Authorized' | 'Unauthorized' | undefined
   user: User
   createdAt: string
   updatedAt: string
   documents?: Document[]
-  declarations: Array<{ [key: string]: 'Yes' | 'No' | null }>
+  declarations: Declaration[]
   walletAddress: string
 }
 
 export interface DeclarationTemplate {
   key: string
   content: string
-  value: boolean | null
+  value?: boolean | null
+  header?: string
+  footer?: string | string[]
   answerable?: boolean
   lastLine?: boolean
-  sublevel?: boolean
+  subLevel?: boolean
 }
 
 export type IndividualIdentity = BaseIdentity &
   IdentityProfile &
-  Partial<IndentityFinancials>
+  IdentityFinancials
 
 export type CorporateIdentity = BaseIdentity & CorporateFields

@@ -1,17 +1,11 @@
 import React from 'react'
 import { Box, Grid, Typography, Paper, Button } from '@material-ui/core'
 import { Bank } from 'v2/types/bank'
-import { createTypedTextInput } from 'v2/components/form/typed/TextInput'
-import { useAssetSelect } from 'v2/components/form/typed/AssetSelect'
-import { useCountrySelect } from 'v2/components/form/typed/CountrySelect'
 import { BankFormValues } from 'v2/app/pages/accounts/types'
 import { bankFormValidationSchema } from 'v2/app/pages/accounts/validation'
 import { useBanksRouter } from 'v2/app/pages/accounts/pages/banks/router'
-import { Form } from 'v2/components/form/Form'
-import { SubmitButton } from 'v2/components/form/SubmitButton'
 import { AppRouterLink } from 'v2/components/AppRouterLink'
-
-const TextInput = createTypedTextInput<BankFormValues>()
+import { createTypedForm } from 'v2/components/form/typed/createTypedForm'
 
 const formDefaultValues: BankFormValues = {
   bankName: '',
@@ -35,22 +29,23 @@ export interface BankFormProps {
   bank?: Bank
 }
 
+const useBankForm = createTypedForm<BankFormValues>()
+
 export const BankForm: React.FC<BankFormProps> = props => {
   const { submitButtonLabel, onSubmit, bank } = props
-  const AssetSelect = useAssetSelect<BankFormValues>('Currency')
-  const CountrySelect = useCountrySelect<BankFormValues>()
+  const { Form, TextField, AssetSelect, CountrySelect, Submit } = useBankForm()
   const { routes } = useBanksRouter()
+  const defaultValues =
+    bank === undefined
+      ? formDefaultValues
+      : {
+        ...bank,
+        asset: bank.asset._id
+      }
 
   return (
-    <Form<BankFormValues>
-      defaultValues={
-        bank === undefined
-          ? formDefaultValues
-          : {
-            ...bank,
-            asset: bank.asset._id
-          }
-      }
+    <Form
+      defaultValues={defaultValues}
       validationSchema={bankFormValidationSchema}
       onSubmit={async values => await onSubmit(values)}
     >
@@ -63,12 +58,12 @@ export const BankForm: React.FC<BankFormProps> = props => {
           </Grid>
           <Grid item sm={12} md={12} lg={6}>
             <Box ml={3} m={1}>
-              <TextInput name='bankName' label='Bank Name' />
+              <TextField name='bankName' label='Bank Name' />
             </Box>
           </Grid>
           <Grid item sm={12} md={12} lg={6}>
             <Box mr={3} m={1}>
-              <TextInput name='accountHolderName' label='Account Holder Name' />
+              <TextField name='accountHolderName' label='Account Holder Name' />
             </Box>
           </Grid>
         </Grid>
@@ -76,17 +71,17 @@ export const BankForm: React.FC<BankFormProps> = props => {
         <Grid container>
           <Grid item sm={12} md={12} lg={3}>
             <Box ml={3} m={1}>
-              <AssetSelect name='asset' label='Currency' />
+              <AssetSelect name='asset' label='Currency' assetType='Currency' />
             </Box>
           </Grid>
           <Grid item sm={12} md={12} lg={6}>
             <Box ml={3} m={1}>
-              <TextInput name='bankAccountNumber' label='Bank Account Number' />
+              <TextField name='bankAccountNumber' label='Bank Account Number' />
             </Box>
           </Grid>
           <Grid item sm={12} md={12} lg={3}>
             <Box mr={3} m={1}>
-              <TextInput name='swiftCode' label='Swift Code' />
+              <TextField name='swiftCode' label='Swift Code' />
             </Box>
           </Grid>
         </Grid>
@@ -99,12 +94,12 @@ export const BankForm: React.FC<BankFormProps> = props => {
           </Grid>
           <Grid item sm={12} md={12} lg={6}>
             <Box ml={3} m={1}>
-              <TextInput name={['address', 'line1']} label='Line 1' />
+              <TextField name={['address', 'line1']} label='Line 1' />
             </Box>
           </Grid>
           <Grid item sm={12} md={12} lg={6}>
             <Box mr={3} m={1}>
-              <TextInput name={['address', 'line2']} label='Line 2' />
+              <TextField name={['address', 'line2']} label='Line 2' />
             </Box>
           </Grid>
         </Grid>
@@ -112,12 +107,12 @@ export const BankForm: React.FC<BankFormProps> = props => {
         <Grid container>
           <Grid item sm={12} md={12} lg={6}>
             <Box ml={3} m={1}>
-              <TextInput name={['address', 'city']} label='City' />
+              <TextField name={['address', 'city']} label='City' />
             </Box>
           </Grid>
           <Grid item sm={12} md={12} lg={6}>
             <Box mr={3} m={1}>
-              <TextInput name={['address', 'state']} label='State' />
+              <TextField name={['address', 'state']} label='State' />
             </Box>
           </Grid>
           <Grid container>
@@ -128,7 +123,7 @@ export const BankForm: React.FC<BankFormProps> = props => {
             </Grid>
             <Grid item sm={12} md={12} lg={6}>
               <Box mr={3} m={1}>
-                <TextInput
+                <TextField
                   name={['address', 'postalCode']}
                   label='Postal Code'
                 />
@@ -143,7 +138,7 @@ export const BankForm: React.FC<BankFormProps> = props => {
                   <AppRouterLink to={routes.list}>Cancel</AppRouterLink>
                 </Button>
                 <Box marginX={1} />
-                <SubmitButton>{submitButtonLabel}</SubmitButton>
+                <Submit>{submitButtonLabel}</Submit>
               </Box>
             </Grid>
           </Grid>

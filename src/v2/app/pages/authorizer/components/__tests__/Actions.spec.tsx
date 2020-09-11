@@ -7,6 +7,8 @@ import {
   cleanup
 } from 'test-utils'
 import { Actions } from 'v2/app/pages/authorizer/components/Actions'
+import * as useApproveOrRejectHook from 'v2/app/pages/authorizer/hooks/useApproveOrReject'
+import { generateMutationResult } from '__fixtures__/useQuery'
 
 describe('Actions', () => {
   const props = {
@@ -24,7 +26,7 @@ describe('Actions', () => {
     )
     const viewButton = getByTestId('view-button')
 
-    expect(viewButton).toBeTruthy
+    expect(viewButton).toBeTruthy()
   })
 
   it('renders dropdown button if item.status = "Submitted"', () => {
@@ -33,7 +35,7 @@ describe('Actions', () => {
     )
     const moreButton = getByTestId('more-button')
 
-    expect(moreButton).toBeTruthy
+    expect(moreButton).toBeTruthy()
   })
 
   it('does not render dropdown button if item.status != "Submitted"', () => {
@@ -58,7 +60,7 @@ describe('Actions', () => {
     fireEvent.click(moreButton)
     await waitFor(() => {
       const dropdown = getByTestId('dropdown')
-      expect(dropdown).toBeTruthy
+      expect(dropdown).toBeTruthy()
     })
 
     const viewButton = getByText('View')
@@ -69,47 +71,51 @@ describe('Actions', () => {
     })
   })
 
-  it('invokes store.approve function when approve item clicked', async () => {
+  it('invokes approve function when approve item clicked', async () => {
     const approve = jest.fn()
+    jest
+      .spyOn(useApproveOrRejectHook, 'useApproveOrReject')
+      .mockReturnValue([approve, generateMutationResult({})])
+
     const { getByTestId, getByText } = renderWithAuthorizerTableStore(
-      <Actions {...props} />,
-      { approve }
+      <Actions {...props} />
     )
 
     const moreButton = getByTestId('more-button')
     fireEvent.click(moreButton)
     await waitFor(() => {
       const dropdown = getByTestId('dropdown')
-      expect(dropdown).toBeTruthy
+      expect(dropdown).toBeTruthy()
     })
 
     const approveButton = getByText('Approve')
     fireEvent.click(approveButton)
     await waitFor(() => {
       expect(approve).toHaveBeenCalledTimes(1)
-      expect(approve).toHaveBeenCalledWith(props.item)
     })
   })
 
   it('invokes store.reject function when approve item clicked', async () => {
     const reject = jest.fn()
+    jest
+      .spyOn(useApproveOrRejectHook, 'useApproveOrReject')
+      .mockReturnValue([reject, generateMutationResult({})])
+
     const { getByTestId, getByText } = renderWithAuthorizerTableStore(
-      <Actions {...props} />,
-      { reject }
+      <Actions {...props} />
     )
 
     const moreButton = getByTestId('more-button')
     fireEvent.click(moreButton)
     await waitFor(() => {
       const dropdown = getByTestId('dropdown')
-      expect(dropdown).toBeTruthy
+      expect(dropdown).toBeTruthy()
     })
 
     const rejectButton = getByText('Reject')
     fireEvent.click(rejectButton)
     await waitFor(() => {
       expect(reject).toHaveBeenCalledTimes(1)
-      expect(reject).toHaveBeenCalledWith(props.item)
     })
   })
 

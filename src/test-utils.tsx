@@ -81,7 +81,8 @@ export const renderWithPasswordResetStore = (
 
 export const fakeAuthorizerTableStore: Partial<AuthorizerTableStore> = {
   idKey: '__',
-  uri: '/api/source'
+  uri: '/api/source',
+  _getItemId: jest.fn()
 }
 
 export const renderWithAuthorizerTableStore = (

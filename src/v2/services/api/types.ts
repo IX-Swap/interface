@@ -1,4 +1,4 @@
-import { AxiosRequestConfig, Method } from 'axios'
+import { AxiosRequestConfig, Method, AxiosResponse } from 'axios'
 
 export interface APIServiceRequestConfig {
   method: Method
@@ -15,10 +15,6 @@ export interface APIServiceResponse<T = undefined> {
 
 export interface KeyValueMap<V = string> {
   [key: string]: V
-}
-
-export interface APIError {
-  message: string
 }
 
 export interface APIResponse<T = undefined> {
