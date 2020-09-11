@@ -1,15 +1,12 @@
 import { AxiosResponse } from 'axios'
-import { APIResponse, PaginatedData } from 'v2/services/api/types'
+import { PaginatedData } from 'v2/services/api/types'
 
 export const convertPaginatedResultToFlatArray = <DataType = any>(
-  pages: Array<AxiosResponse<APIResponse<PaginatedData<DataType>>>>
+  pages: Array<AxiosResponse<PaginatedData<DataType>>>
 ): DataType[] => {
   return pages
     .map(page =>
-      page.data.data.reduce<DataType[]>(
-        (acc, cur) => [...acc, ...cur.documents],
-        []
-      )
+      page.data.reduce<DataType[]>((acc, cur) => [...acc, ...cur.documents], [])
     )
     .flat()
 }

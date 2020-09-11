@@ -1,7 +1,7 @@
 import { makeStyles } from '@material-ui/core/styles'
 import { LightTypeBackground } from '../../../../types/util'
 
-export default makeStyles((theme) => ({
+export default makeStyles(theme => ({
   link: {
     textDecoration: 'none',
     '&:hover, &:focus': {

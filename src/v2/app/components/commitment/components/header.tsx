@@ -6,7 +6,7 @@ import DsoTitle from '../../digital-security/title'
 import { useObserver } from 'mobx-react'
 import { Asset } from 'v2/types/asset'
 import { formatMoney } from 'v2/helpers/numbers'
-import { useBalancesByAssetId } from 'v2/context/balances/useBalancesByAssetId'
+import { useBalancesByAssetId } from 'v2/hooks/balance/useBalancesByAssetId'
 
 interface CommitmentViewHeaderProps {
   dso: Dso

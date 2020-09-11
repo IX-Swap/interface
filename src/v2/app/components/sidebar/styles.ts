@@ -2,7 +2,7 @@ import { makeStyles } from '@material-ui/core/styles'
 
 const drawerWidth = 280
 
-export default makeStyles((theme) => ({
+export default makeStyles(theme => ({
   menuButton: {
     marginLeft: 12,
     marginRight: 36

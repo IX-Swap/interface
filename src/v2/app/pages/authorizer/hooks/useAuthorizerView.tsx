@@ -25,7 +25,7 @@ export const renderStatusColumn = (s: string): JSX.Element => (
 
 export const statusColumn = {
   key: 'status',
-  label: '',
+  label: 'Status',
   render: renderStatusColumn
 }
 

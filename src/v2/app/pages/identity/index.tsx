@@ -1,31 +1,8 @@
 import React from 'react'
-import { Switch, Route, useRouteMatch } from 'react-router-dom'
+import { useIdentitiesRouter } from 'v2/app/pages/identity/router'
 
-import routes from 'v2/app/pages/identity/routes'
-import { Container } from '@material-ui/core'
+export const Identity: React.FC = () => {
+  const { renderRoutes } = useIdentitiesRouter()
 
-const Routes = ({ parent }: { parent: string }) => (
-  <Container>
-    <Switch>
-      {routes.map(({ path, component, exact }) => (
-        <Route
-          key={path}
-          path={`${parent}${path}`}
-          component={component}
-          exact={exact}
-        />
-      ))}
-      Invest
-    </Switch>
-  </Container>
-)
-
-const MemoedRoutes = React.memo(Routes)
-
-const Identity = () => {
-  const match = useRouteMatch()
-
-  return <MemoedRoutes parent={match.path} />
+  return renderRoutes()
 }
-
-export default Identity

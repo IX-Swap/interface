@@ -22,11 +22,13 @@ import SidebarLink from './components/sidebarlink'
 
 import { useAuthorizerRouter } from 'v2/app/pages/authorizer/router'
 import { useAccountsRouter } from 'v2/app/pages/accounts/router'
+import { useIdentitiesRouter } from 'v2/app/pages/identity/router'
 
 // PasswordReset
 import { useStore as useLayoutStore } from '../../../context/layout'
 
 const authorizerRoot = '/app/authorizer'
+const identityRoot = '/app/identity'
 const accountsRoot = '/app/accounts'
 const issuanceRoot = '/app/issuance'
 const investRoot = '/app/invest'
@@ -41,13 +43,18 @@ function Sidebar () {
   const isIssuer = useIsIssuer()
   const { routes: authorizerRoutes } = useAuthorizerRouter()
   const { routes: accountRoutes } = useAccountsRouter()
+  const { routes: identityRoutes } = useIdentitiesRouter()
 
   const structure = [
     {
       id: 'identity',
       label: 'Identity',
-      link: '/app/identity',
-      icon: <PersonIcon />
+      link: identityRoot,
+      icon: <PersonIcon />,
+      children: Object.entries(identityRoutes).map(([label, link]) => ({
+        label,
+        link
+      }))
     },
     {
       id: 'invest',

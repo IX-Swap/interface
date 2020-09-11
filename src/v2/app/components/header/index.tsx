@@ -19,15 +19,13 @@ import { useObserver } from 'mobx-react'
 import { useStore as useLayoutStore } from '../../../context/layout'
 
 import { useUserStore } from 'v2/auth/context'
+import { useLogout } from 'v2/auth/hooks/useLogout'
 
 export default function Header () {
   const classes = useStyles()
-
   const layoutState = useLayoutStore()
-
-  const userStore = useUserStore()
-
   const [profileMenu, setProfileMenu] = useState<Element | null>(null)
+  const logout = useLogout()
 
   return useObserver(() => (
     <AppBar position='fixed' elevation={1} className={classes.appBar}>
@@ -79,10 +77,7 @@ export default function Header () {
           disableAutoFocusItem
         >
           <div className={classes.profileMenuUser}>
-            <Typography
-              className={classes.profileMenuLink}
-              onClick={() => userStore.logout()}
-            >
+            <Typography className={classes.profileMenuLink} onClick={logout}>
               Sign Out
             </Typography>
           </div>

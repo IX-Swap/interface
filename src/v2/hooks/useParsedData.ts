@@ -1,15 +1,20 @@
 import { AxiosResponse } from 'axios'
-import { APIResponse, PaginatedData } from 'v2/services/api/types'
+import { PaginatedData } from 'v2/services/api/types'
 import { useMemo } from 'react'
 import {
   convertDataArrayToMap,
   convertPaginatedResultToFlatArray
 } from 'v2/hooks/utils'
-import { QueryStatus } from 'react-query'
+import { QueryResult } from 'react-query/types/core/types'
 
-export interface UsePaginatedData<T> {
+export interface UseQueryData<T>
+  extends Omit<QueryResult<AxiosResponse<T>, any>, 'data'> {
+  data: T | undefined
+}
+
+export interface UsePaginatedQueryData<T>
+  extends Omit<QueryResult<PaginatedQueryResponse<T>, any>, 'data'> {
   data: DataBucket<T>
-  status: QueryStatus
 }
 
 export interface DataBucket<T> {
@@ -18,9 +23,7 @@ export interface DataBucket<T> {
   list: T[]
 }
 
-type PaginatedQueryResponse<T> = Array<
-  AxiosResponse<APIResponse<PaginatedData<T>>>
->
+type PaginatedQueryResponse<T> = Array<AxiosResponse<PaginatedData<T>>>
 
 export const useParsedData = <T>(
   data: PaginatedQueryResponse<T> | undefined,

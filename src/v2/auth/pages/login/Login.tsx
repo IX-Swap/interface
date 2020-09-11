@@ -1,16 +1,12 @@
 import React from 'react'
 import { Button } from '@material-ui/core'
-import { Formik, Form } from 'formik'
-import { observer } from 'mobx-react'
-
-import { useUserStore } from 'v2/auth/context'
 import useStyles from 'v2/auth/styles'
-import { AuthFormMessage } from 'v2/auth/components/AuthFormMessage'
 import { LoginArgs } from 'v2/auth/service/types'
 import { loginFormValidationSchema } from 'v2/auth/validation'
-import FormikTextField from 'v2/components/form/FormikTextField'
-import { isSubmitDisabled } from 'v2/helpers/formik'
 import { useAuthRouter } from 'v2/auth/router'
+import { useLogin } from 'v2/auth/hooks/useLogin'
+import { createTypedForm } from 'v2/components/form/createTypedForm'
+import { AppRouterLink } from 'v2/components/AppRouterLink'
 
 export const loginFormInitialValues = {
   email: '',
@@ -18,67 +14,47 @@ export const loginFormInitialValues = {
   otp: ''
 }
 
-export const Login: React.FC = observer(() => {
-  const classes = useStyles()
-  const { push } = useAuthRouter()
-  const { login } = useUserStore()
+const useLoginForm = createTypedForm<LoginArgs>()
 
-  const handleSubmit = async (values: LoginArgs): Promise<void> => {
+export const Login: React.FC = () => {
+  const classes = useStyles()
+  const { routes } = useAuthRouter()
+  const [login] = useLogin()
+  const { Form, TextField, Submit } = useLoginForm()
+  const handleSubmit = async (values: LoginArgs) => {
     await login(values)
   }
 
-  const goToReset = (): void => {
-    push('passwordReset')
-  }
-
   return (
-    <>
-      <AuthFormMessage />
-      <Formik<LoginArgs>
-        initialValues={loginFormInitialValues}
-        validationSchema={loginFormValidationSchema}
-        onSubmit={handleSubmit}
-      >
-        {({ submitForm, ...formik }) => (
-          <Form data-testid='login-form'>
-            <FormikTextField
-              fieldKey='email'
-              type='email'
-              placeholder='Email Address'
-            />
-            <FormikTextField
-              fieldKey='password'
-              placeholder='Password'
-              type='password'
-            />
-            <FormikTextField
-              fieldKey='otp'
-              variant='outlined'
-              label='OTP Code (optional)'
-              autoComplete='off'
-            />
-            <div className={classes.formButtons}>
-              <Button
-                variant='contained'
-                color='primary'
-                disabled={isSubmitDisabled(formik)}
-                onClick={submitForm}
-              >
-                Login
-              </Button>
-
-              <Button
-                color='primary'
-                size='large'
-                className={classes.forgetButton}
-                onClick={goToReset}
-              >
-                Forgot Password?
-              </Button>
-            </div>
-          </Form>
-        )}
-      </Formik>
-    </>
+    <Form
+      data-testid='login-form'
+      defaultValues={loginFormInitialValues}
+      validationSchema={loginFormValidationSchema}
+      onSubmit={handleSubmit}
+    >
+      <TextField name='email' label='Email Address' />
+      <TextField
+        name='password'
+        label='Password'
+        inputProps={{
+          type: 'password'
+        }}
+      />
+      <TextField
+        name='otp'
+        label='OTP Code (optional)'
+        inputProps={{
+          autoComplete: 'off'
+        }}
+      />
+      <div className={classes.formButtons}>
+        <Submit>Login</Submit>
+        <Button color='primary' size='large' className={classes.forgetButton}>
+          <AppRouterLink to={routes.passwordReset}>
+            Forgot Password?
+          </AppRouterLink>
+        </Button>
+      </div>
+    </Form>
   )
-})
+}

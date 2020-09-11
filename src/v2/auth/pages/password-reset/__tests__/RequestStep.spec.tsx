@@ -8,6 +8,8 @@ import {
 import { cleanup } from '@testing-library/react'
 import { requestPasswordResetArgs } from '__fixtures__/auth'
 import { history } from 'v2/history'
+import * as useRequestPasswordResetHook from 'v2/auth/hooks/useRequestPasswordReset'
+import { generateMutationResult } from '__fixtures__/useQuery'
 
 describe('RequestStep', () => {
   afterEach(async () => {
@@ -16,23 +18,19 @@ describe('RequestStep', () => {
   })
 
   it('renders the form with correct default values and disabled button', () => {
-    const { getByTestId, getByText } = renderWithPasswordResetStore(
-      <RequestStep />
-    )
+    const { getByTestId } = renderWithPasswordResetStore(<RequestStep />)
     const form = getByTestId('request-step')
-    const submitButton = getByText(/reset/i)
 
     expect(form).toBeTruthy()
     expect(form).toHaveFormValues(requestPasswordResetInitialValues)
-    expect(submitButton.parentElement).toBeDisabled()
   })
 
   it('handles user input', () => {
-    const { getByPlaceholderText, getByTestId } = renderWithPasswordResetStore(
+    const { getByLabelText, getByTestId } = renderWithPasswordResetStore(
       <RequestStep />
     )
     const form = getByTestId('request-step')
-    const email = getByPlaceholderText(/email/i)
+    const email = getByLabelText(/email/i)
 
     fireEvent.change(email, {
       target: { value: requestPasswordResetArgs.email }
@@ -45,9 +43,9 @@ describe('RequestStep', () => {
     const {
       getByText,
       getAllByText,
-      getByPlaceholderText
+      getByLabelText
     } = renderWithPasswordResetStore(<RequestStep />)
-    const email = getByPlaceholderText(/email address/i)
+    const email = getByLabelText(/email address/i)
     const submitButton = getByText(/reset/i)
 
     fireEvent.blur(email)
@@ -62,19 +60,22 @@ describe('RequestStep', () => {
 
     await waitFor(() => {
       expect(submitButton.parentElement).toBeDisabled()
-      expect(getByText('email must be a valid email')).toBeTruthy
+      expect(getByText('email must be a valid email')).toBeTruthy()
     })
   })
 
   it('handles submit', async () => {
-    const store = {
-      requestReset: jest.fn()
-    }
-    const { getByText, getByPlaceholderText } = renderWithPasswordResetStore(
-      <RequestStep />,
-      store
-    )
-    const email = getByPlaceholderText(/email address/i)
+    const requestReset = jest.fn()
+    const setEmail = jest.fn()
+    jest
+      .spyOn(useRequestPasswordResetHook, 'useRequestPasswordReset')
+      .mockReturnValue([requestReset, generateMutationResult({})])
+
+    const {
+      getByText,
+      getByLabelText
+    } = renderWithPasswordResetStore(<RequestStep />, { setEmail })
+    const email = getByLabelText(/email address/i)
     const submitButton = getByText(/reset/i)
 
     fireEvent.change(email, {
@@ -86,8 +87,8 @@ describe('RequestStep', () => {
     expect(submitButton.parentElement).toBeDisabled()
 
     await waitFor(() => {
-      expect(store.requestReset).toHaveBeenCalledTimes(1)
-      expect(store.requestReset).toHaveBeenCalledWith(requestPasswordResetArgs)
+      expect(setEmail).toHaveBeenCalledWith(requestPasswordResetArgs.email)
+      expect(requestReset).toHaveBeenCalledWith(requestPasswordResetArgs)
     })
   })
 

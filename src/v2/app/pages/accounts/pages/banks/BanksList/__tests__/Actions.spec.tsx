@@ -1,7 +1,10 @@
 /**  * @jest-environment jsdom-sixteen  */
 import React from 'react'
 import { render, cleanup } from 'test-utils'
-import { Actions, ActionsProps } from 'v2/app/pages/accounts/pages/banks/BanksList/Actions'
+import {
+  Actions,
+  ActionsProps
+} from 'v2/app/pages/accounts/pages/banks/BanksList/Actions'
 import { bank } from '__fixtures__/authorizer'
 import { AppRouterLink } from 'v2/components/AppRouterLink'
 import { BanksRoute } from 'v2/app/pages/accounts/pages/banks/router'

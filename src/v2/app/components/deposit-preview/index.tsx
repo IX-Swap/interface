@@ -28,7 +28,7 @@ const BoldTypography = ({ children, ...others }: any) => (
   </Typography>
 )
 
-function DepositView({ deposit }: { deposit: CashDeposit }) {
+function DepositView ({ deposit }: { deposit: CashDeposit }) {
   const classes = useStyles()
 
   if (!deposit) {

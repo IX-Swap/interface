@@ -10,6 +10,7 @@ import {
 import { Grid, IconButton, Paper } from '@material-ui/core'
 import { Action } from 'v2/app/pages/authorizer/components/Action'
 import { DropdownMenu } from 'v2/app/pages/authorizer/components/DropdownMenu'
+import { useApproveOrReject } from 'v2/app/pages/authorizer/hooks/useApproveOrReject'
 
 export interface ActionsProps<T> {
   item: T
@@ -20,11 +21,11 @@ export type Actions<T> = (props: ActionsProps<T>) => ReactElement
 
 export const Actions = <T,>(props: ActionsProps<T>): JSX.Element => {
   const { onView, item } = props
-  const { reject, approve } = useAuthorizerTableStore()
+  const { uri, _getItemId } = useAuthorizerTableStore()
+  const [approve] = useApproveOrReject(uri, _getItemId(item), 'approve')
+  const [reject] = useApproveOrReject(uri, _getItemId(item), 'reject')
   const classes = useStyles()
   const isUnauthorized = (item as any).status === 'Submitted'
-  const doApprove = async (): Promise<void> => await approve(item)
-  const doReject = async (): Promise<void> => await reject(item)
   const viewItem = (): void => {
     if (onView !== undefined) onView(item)
   }
@@ -44,8 +45,8 @@ export const Actions = <T,>(props: ActionsProps<T>): JSX.Element => {
           }
           content={
             <Paper className={classes.popover} data-testid='dropdown'>
-              <Action label='Approve' icon={ApproveIcon} onClick={doApprove} />
-              <Action label='Reject' icon={RejectIcon} onClick={doReject} />
+              <Action label='Approve' icon={ApproveIcon} onClick={approve} />
+              <Action label='Reject' icon={RejectIcon} onClick={reject} />
               <Action label='View' icon={LaunchIcon} onClick={viewItem} />
             </Paper>
           }

@@ -20,7 +20,7 @@ const ListItemLink = React.forwardRef(({ ...props }: any, ref: any) => (
   <Link ref={ref} {...props} />
 ))
 
-export default function SidebarLink({
+export default function SidebarLink ({
   link,
   icon,
   label,
@@ -133,7 +133,7 @@ export default function SidebarLink({
           className={classes.nestedList}
         >
           <List component='div' disablePadding>
-            {children.map((childrenLink) => (
+            {children.map(childrenLink => (
               <SidebarLink
                 key={childrenLink?.link}
                 location={location}
@@ -150,7 +150,7 @@ export default function SidebarLink({
 
   // ###########################################################
 
-  function toggleCollapse(e: Event, isActive: boolean) {
+  function toggleCollapse (e: Event, isActive: boolean) {
     if (isSidebarOpened) {
       if (isActive) {
         e.preventDefault()

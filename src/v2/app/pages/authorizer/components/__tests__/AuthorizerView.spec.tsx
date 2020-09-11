@@ -76,7 +76,7 @@ describe('AuthorizerView', () => {
     const { getByText } = render(<AuthorizerView {...props} />)
     const title = getByText(props.title)
 
-    expect(title).toBeTruthy
+    expect(title).toBeTruthy()
     expect(Filters).toHaveBeenCalledTimes(1)
     expect(TableView).toHaveBeenCalledTimes(1)
   })

@@ -13,6 +13,8 @@ import {
 import { cleanup } from '@testing-library/react'
 import { completePasswordResetArgs } from '__fixtures__/auth'
 import { PasswordResetStep } from 'v2/auth/context/password-reset/types'
+import * as useCompletePasswordResetHook from 'v2/auth/hooks/useCompletePasswordReset'
+import { generateMutationResult } from '__fixtures__/useQuery'
 
 describe('ResetStep', () => {
   afterEach(async () => {
@@ -21,24 +23,20 @@ describe('ResetStep', () => {
   })
 
   it('renders the form with correct default values and disabled button', () => {
-    const { getByTestId, getByText } = renderWithPasswordResetStore(
-      <ResetStep />
-    )
+    const { getByTestId } = renderWithPasswordResetStore(<ResetStep />)
     const form = getByTestId('reset-step')
-    const submitButton = getByText(/complete/i)
 
     expect(form).toBeTruthy()
     expect(form).toHaveFormValues(completePasswordResetInitialValues)
-    expect(submitButton.parentElement).toBeDisabled()
   })
 
   it('handles user input', () => {
-    const { getByPlaceholderText, getByTestId } = renderWithPasswordResetStore(
+    const { getByLabelText, getByTestId } = renderWithPasswordResetStore(
       <ResetStep />
     )
     const form = getByTestId('reset-step')
-    const token = getByPlaceholderText(/password reset token/i)
-    const password = getByPlaceholderText(/new password/i)
+    const token = getByLabelText(/password reset token/i)
+    const password = getByLabelText(/new password/i)
 
     fireEvent.change(token, {
       target: { value: completePasswordResetArgs.resetToken }
@@ -58,9 +56,9 @@ describe('ResetStep', () => {
     const {
       getByText,
       getAllByText,
-      getByPlaceholderText
+      getByLabelText
     } = renderWithPasswordResetStore(<ResetStep />)
-    const token = getByPlaceholderText(/password reset token/i)
+    const token = getByLabelText(/password reset token/i)
     const submitButton = getByText(/complete/i)
 
     fireEvent.blur(token)
@@ -75,9 +73,9 @@ describe('ResetStep', () => {
     const {
       getByText,
       getAllByText,
-      getByPlaceholderText
+      getByLabelText
     } = renderWithPasswordResetStore(<ResetStep />)
-    const password = getByPlaceholderText(/new password/i)
+    const password = getByLabelText(/new password/i)
     const submitButton = getByText(/complete/i)
 
     fireEvent.blur(password)
@@ -85,22 +83,26 @@ describe('ResetStep', () => {
     await waitFor(() => {
       expect(submitButton.parentElement).toBeDisabled()
       expect(
-        getAllByText('Password does not meet complexity requirement').length
+        getAllByText('Password must be at least 12 characters long').length
       ).toBe(1)
     })
   })
 
   it('handles submit', async () => {
+    const completeReset = jest.fn()
+    jest
+      .spyOn(useCompletePasswordResetHook, 'useCompletePasswordReset')
+      .mockReturnValue([completeReset, generateMutationResult({})])
+
     const store = {
-      completeReset: jest.fn(),
       email: completePasswordResetArgs.email
     }
-    const { getByText, getByPlaceholderText } = renderWithPasswordResetStore(
+    const { getByText, getByLabelText } = renderWithPasswordResetStore(
       <ResetStep />,
       store
     )
-    const token = getByPlaceholderText(/password reset token/i)
-    const password = getByPlaceholderText(/new password/i)
+    const token = getByLabelText(/password reset token/i)
+    const password = getByLabelText(/new password/i)
     const submitButton = getByText(/complete/i)
 
     fireEvent.change(token, {
@@ -116,10 +118,8 @@ describe('ResetStep', () => {
     expect(submitButton.parentElement).toBeDisabled()
 
     await waitFor(() => {
-      expect(store.completeReset).toHaveBeenCalledTimes(1)
-      expect(store.completeReset).toHaveBeenCalledWith(
-        completePasswordResetArgs
-      )
+      expect(completeReset).toHaveBeenCalledTimes(1)
+      expect(completeReset).toHaveBeenCalledWith(completePasswordResetArgs)
     })
   })
 

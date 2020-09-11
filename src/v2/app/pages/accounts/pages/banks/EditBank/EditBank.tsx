@@ -8,11 +8,8 @@ import { useBanksRouter } from 'v2/app/pages/accounts/pages/banks/router'
 
 export const EditBank: React.FC = () => {
   const { bankId } = useParams<{ bankId: string }>()
-  const { push } = useBanksRouter()
   const { data, status } = useBanksData()
-  const { mutate: updateBank } = useUpdateBank({
-    onSuccess: () => push('list')
-  })
+  const [updateBank] = useUpdateBank()
   const handleSubmit = async (values: BankFormValues): Promise<void> => {
     await updateBank({ ...values, bankId })
   }

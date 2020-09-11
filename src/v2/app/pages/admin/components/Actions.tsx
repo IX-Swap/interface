@@ -1,18 +1,10 @@
 import React, { forwardRef } from 'react'
-import {
-  FormControl,
-  Select,
-  Input,
-  ListItemText,
-  MenuItem,
-  Checkbox
-} from '@material-ui/core'
-import { makeStyles } from "@material-ui/styles";
+import { FormControl, Input } from '@material-ui/core'
+import { makeStyles } from '@material-ui/styles'
 import DialogConfirmRoleChange from 'v2/app/pages/admin/components/DialogConfirmRoleChange'
-import User from "v2/types/user"
+import User from 'v2/types/user'
 import { useAdminView } from '../hooks/useAdminView'
-
-const possibleValues = ['user', 'accredited', 'authorizer', 'admin', 'issuer']
+import { RoleSelect } from 'v2/components/form/RoleSelect'
 
 const useStyles = makeStyles({
   formControl: {
@@ -20,13 +12,25 @@ const useStyles = makeStyles({
   }
 })
 
-export const Actions = forwardRef(({ user }: { user: User }, ref: any) => {
+export interface ActionsProps {
+  user: User
+}
+
+export const Actions = forwardRef(({ user }: ActionsProps, ref: any) => {
   const classes = useStyles()
   const {
-    open, handleClose, roles,
-    handleConfirm, handleChange,
+    open,
+    handleClose,
+    roles,
+    handleConfirm,
+    handleChange,
     handleRoleChange
   } = useAdminView(user, ref && ref.current && ref.current.refresh)
+  const onClose = () => {
+    if (roles.join(',') !== user.roles) {
+      handleChange(roles.join(','))
+    }
+  }
 
   return (
     <>
@@ -38,27 +42,13 @@ export const Actions = forwardRef(({ user }: { user: User }, ref: any) => {
         handleConfirm={handleConfirm}
       />
       <FormControl className={classes.formControl}>
-        <Select
+        <RoleSelect
           value={roles}
-          labelId='demo-mutiple-checkbox-label'
-          id='demo-mutiple-checkbox'
-          multiple
-          onClose={() => handleChange(roles.join(','))}
-          input={<Input />}
+          onClose={onClose}
           onChange={(ev: React.ChangeEvent<{ value: unknown }>) =>
             handleRoleChange(ev.target.value as string[])
           }
-          renderValue={(selected: unknown) => (
-            <>{(selected as string[]).join(', ')}</>
-          )}
-        >
-          {possibleValues.map(name => (
-            <MenuItem key={name} value={name}>
-              <Checkbox checked={roles.includes(name)} />
-              <ListItemText primary={name} />
-            </MenuItem>
-          ))}
-        </Select>
+        />
       </FormControl>
     </>
   )

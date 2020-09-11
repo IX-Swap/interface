@@ -1,5 +1,5 @@
 import { NumberFormat } from './util'
-import { AssetType } from 'v2/context/assets/types'
+import { AssetType } from 'v2/services/assets/types'
 
 export interface Asset {
   _id: string

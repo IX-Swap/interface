@@ -1,9 +1,20 @@
 /**  * @jest-environment jsdom-sixteen  */
 import React from 'react'
-import { fireEvent, cleanup, waitFor, renderWithUserStore } from 'test-utils'
-import { Register, registerFormInitialValues } from 'v2/auth/pages/register/Register'
+import {
+  fireEvent,
+  cleanup,
+  waitFor,
+  renderWithUserStore,
+  render
+} from 'test-utils'
+import {
+  Register,
+  registerFormInitialValues
+} from 'v2/auth/pages/register/Register'
 import { signupArgs } from '__fixtures__/auth'
 import { history } from 'v2/history'
+import * as useSignupHook from 'v2/auth/hooks/useSignup'
+import { generateMutationResult } from '__fixtures__/useQuery'
 
 describe('Register', () => {
   beforeEach(() => {
@@ -22,20 +33,17 @@ describe('Register', () => {
     const form = getByTestId('register-form')
     const signupButton = getByText(/create/i)
 
-    expect(container).toBeTruthy
-    expect(signupButton).toBeTruthy
-    expect(signupButton.parentElement).toBeDisabled()
+    expect(container).toBeTruthy()
+    expect(signupButton).toBeTruthy()
     expect(form).toHaveFormValues(registerFormInitialValues)
   })
 
   it('handles user input', () => {
-    const { getByPlaceholderText, getByTestId } = renderWithUserStore(
-      <Register />
-    )
+    const { getByLabelText, getByTestId } = render(<Register />)
     const form = getByTestId('register-form')
-    const name = getByPlaceholderText(/name/i)
-    const email = getByPlaceholderText(/email address/i)
-    const password = getByPlaceholderText(/password/i)
+    const name = getByLabelText(/name/i)
+    const email = getByLabelText(/email address/i)
+    const password = getByLabelText(/password/i)
 
     fireEvent.change(name, { target: { value: signupArgs.name } })
     fireEvent.change(email, { target: { value: signupArgs.email } })
@@ -46,13 +54,14 @@ describe('Register', () => {
 
   it('handles submit', async () => {
     const signup = jest.fn()
-    const {
-      getByText,
-      getByPlaceholderText
-    } = renderWithUserStore(<Register />, { signup })
-    const name = getByPlaceholderText(/name/i)
-    const email = getByPlaceholderText(/email address/i)
-    const password = getByPlaceholderText(/password/i)
+    jest
+      .spyOn(useSignupHook, 'useSignup')
+      .mockReturnValueOnce([signup, generateMutationResult({})])
+
+    const { getByText, getByLabelText } = renderWithUserStore(<Register />)
+    const name = getByLabelText(/name/i)
+    const email = getByLabelText(/email address/i)
+    const password = getByLabelText(/password/i)
     const signupButton = getByText(/create/i)
 
     fireEvent.change(name, { target: { value: signupArgs.name } })
@@ -70,27 +79,23 @@ describe('Register', () => {
   })
 
   it('handles name validation', async () => {
-    const { getByText, getByPlaceholderText } = renderWithUserStore(
-      <Register />
-    )
-    const name = getByPlaceholderText(/name/i)
+    const { getByText, getByLabelText } = renderWithUserStore(<Register />)
+    const name = getByLabelText(/name/i)
     const signupButton = getByText(/create/i)
 
     fireEvent.blur(name)
 
     await waitFor(() => {
       expect(signupButton.parentElement).toBeDisabled()
-      expect(getByText('Required')).toBeTruthy
+      expect(getByText('Required')).toBeTruthy()
     })
   })
 
   it('handles email validation', async () => {
-    const {
-      getByText,
-      getAllByText,
-      getByPlaceholderText
-    } = renderWithUserStore(<Register />)
-    const email = getByPlaceholderText(/email address/i)
+    const { getByText, getAllByText, getByLabelText } = renderWithUserStore(
+      <Register />
+    )
+    const email = getByLabelText(/email address/i)
     const signupButton = getByText(/create/i)
 
     fireEvent.blur(email)
@@ -105,17 +110,15 @@ describe('Register', () => {
 
     await waitFor(() => {
       expect(signupButton.parentElement).toBeDisabled()
-      expect(getByText('email must be a valid email')).toBeTruthy
+      expect(getByText('email must be a valid email')).toBeTruthy()
     })
   })
 
   it('handles password validation', async () => {
-    const {
-      getByText,
-      getAllByText,
-      getByPlaceholderText
-    } = renderWithUserStore(<Register />)
-    const password = getByPlaceholderText(/password/i)
+    const { getByText, getAllByText, getByLabelText } = renderWithUserStore(
+      <Register />
+    )
+    const password = getByLabelText(/password/i)
     const signupButton = getByText(/create/i)
 
     fireEvent.blur(password)
@@ -123,7 +126,7 @@ describe('Register', () => {
     await waitFor(() => {
       expect(signupButton.parentElement).toBeDisabled()
       expect(
-        getAllByText('Password does not meet complexity requirement').length
+        getAllByText('Password must be at least 12 characters long').length
       ).toBe(1)
     })
   })

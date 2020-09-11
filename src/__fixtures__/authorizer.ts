@@ -5,9 +5,9 @@ import { Asset } from 'v2/types/asset'
 import { CorporateIdentity, IndividualIdentity } from 'v2/types/identity'
 import { user } from '__fixtures__/user'
 import { CashWithdrawal } from 'v2/types/cash-withdrawal'
-import { Commitment } from 'v2/types/commitment'
 import { DSWithdrawal } from 'v2/types/ds-withdrawal'
 import { Dso } from 'v2/types/dso'
+import declarations from 'v2/app/pages/identity/const/declarations'
 
 export const asset: Asset = {
   _id: '2',
@@ -89,12 +89,12 @@ export const individual: IndividualIdentity = {
   middleName: '',
   nationality: 'Russian',
   occupation: 'Occupied',
-  politicallyExposed: false,
+  // politicallyExposed: false,
   sourceOfWealth: '___',
   status: 'Authorized',
   toArrangeCustody: true,
   walletAddress: '1234567890_',
-  declarations: [],
+  declarations: declarations.individual.map(({ key }) => ({ [key]: null })),
   documents: [],
   address,
   user

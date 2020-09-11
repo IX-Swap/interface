@@ -10,7 +10,7 @@ import { PasswordResetStep } from 'v2/auth/context/password-reset/types'
 import { observer } from 'mobx-react'
 
 export const PasswordReset: React.FC = observer(() => {
-  const { currentStep, error, message } = usePasswordResetStore()
+  const { currentStep } = usePasswordResetStore()
   let element
 
   switch (currentStep) {
@@ -27,11 +27,5 @@ export const PasswordReset: React.FC = observer(() => {
       return null
   }
 
-  return (
-    <PasswordResetProvider>
-      <div>{error ?? error}</div>
-      <div>{message ?? message}</div>
-      {element}
-    </PasswordResetProvider>
-  )
+  return <PasswordResetProvider>{element}</PasswordResetProvider>
 })

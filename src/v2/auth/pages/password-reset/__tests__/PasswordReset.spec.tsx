@@ -40,7 +40,7 @@ describe('PasswordReset', () => {
 
     renderWithPasswordResetStore(<PasswordReset />, store)
 
-    expect(ConfirmationStep).toBeTruthy
+    expect(ConfirmationStep).toBeTruthy()
   })
 
   it('renders nothing if currentStep is something else', () => {

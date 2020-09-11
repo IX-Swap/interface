@@ -1,4 +1,3 @@
-// @flow
 import React from 'react'
 import Dialog from '@material-ui/core/Dialog'
 import DialogActions from '@material-ui/core/DialogActions'
@@ -15,7 +14,7 @@ interface DialogConfirmRoleChangeProp {
   handleConfirm: () => Promise<void>
 }
 
-export default function DialogConfirmRoleChange({
+export default function DialogConfirmRoleChange ({
   user,
   newRole,
   open,

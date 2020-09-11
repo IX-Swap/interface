@@ -2,14 +2,13 @@ import React, { useEffect } from 'react'
 import { Box, Button, CircularProgress, Grid } from '@material-ui/core'
 import useStyles from 'v2/auth/styles'
 import { useAuthRouter } from 'v2/auth/router'
-import { useUserStore } from 'v2/auth/context'
-import { AuthFormMessage } from 'v2/auth/components/AuthFormMessage'
+import { useVerifySignup } from 'v2/auth/hooks/useVerifySignup'
+import { AppRouterLink } from 'v2/components/AppRouterLink'
 
 export const Confirmation: React.FC = () => {
-  const { push, query } = useAuthRouter()
-  const { verifySignup, isLoading } = useUserStore()
   const classes = useStyles()
-  const backToLogin = (): void => push('login')
+  const { routes, query, push } = useAuthRouter()
+  const [verifySignup, { isLoading }] = useVerifySignup()
   let content: JSX.Element
 
   useEffect(() => {
@@ -27,10 +26,9 @@ export const Confirmation: React.FC = () => {
   } else {
     content = (
       <Box mt={4}>
-        <AuthFormMessage />
         <Box mt={4}>
-          <Button variant='outlined' onClick={backToLogin}>
-            Back to Login
+          <Button variant='outlined'>
+            <AppRouterLink to={routes.login}>Back to Login</AppRouterLink>
           </Button>
         </Box>
       </Box>
