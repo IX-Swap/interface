@@ -1,19 +1,17 @@
 import React from 'react'
 import { IdentityProfile } from 'v2/types/identity'
-import User from 'v2/types/user'
-import { useIndividualIdentityForm } from 'v2/app/pages/identity/components/IndividualIdentityForm'
 import { Grid } from '@material-ui/core'
+import { useTypedForm } from 'v2/components/form/useTypedForm'
 
 interface IdentityForm {
-  identity?: Partial<IdentityProfile> & Partial<{ user: Partial<User> }>
   useOwnEmail: boolean
-  rootName?: string
+  rootPath?: string
   isEditing: boolean
 }
 
 const UserInfo = (props: IdentityForm): JSX.Element => {
-  const { isEditing } = props
-  const { EditableField } = useIndividualIdentityForm()
+  const { isEditing, rootPath } = props
+  const { EditableField } = useTypedForm<IdentityProfile>()
 
   return (
     <Grid container spacing={3}>
@@ -21,6 +19,7 @@ const UserInfo = (props: IdentityForm): JSX.Element => {
         <EditableField
           fieldType='TextField'
           isEditing={isEditing}
+          root={rootPath}
           name='firstName'
           label='First Name'
         />
@@ -29,6 +28,7 @@ const UserInfo = (props: IdentityForm): JSX.Element => {
         <EditableField
           fieldType='TextField'
           isEditing={isEditing}
+          root={rootPath}
           name='middleName'
           label='Middle Name'
         />
@@ -37,6 +37,7 @@ const UserInfo = (props: IdentityForm): JSX.Element => {
         <EditableField
           fieldType='TextField'
           isEditing={isEditing}
+          root={rootPath}
           name='lastName'
           label='Last Name'
         />
@@ -44,6 +45,7 @@ const UserInfo = (props: IdentityForm): JSX.Element => {
       <Grid item xs={4}>
         <EditableField
           isEditing={isEditing}
+          root={rootPath}
           name='dob'
           label='Date of Birth'
           fieldType='TextField'
@@ -53,6 +55,7 @@ const UserInfo = (props: IdentityForm): JSX.Element => {
         <EditableField
           fieldType='NationalitySelect'
           isEditing={isEditing}
+          root={rootPath}
           name='nationality'
           label='Nationality'
         />
@@ -61,6 +64,7 @@ const UserInfo = (props: IdentityForm): JSX.Element => {
         <EditableField
           fieldType='CountrySelect'
           isEditing={isEditing}
+          root={rootPath}
           name='countryOfResidence'
           label='Country of Residence'
         />
@@ -69,6 +73,7 @@ const UserInfo = (props: IdentityForm): JSX.Element => {
         <EditableField
           fieldType='TextField'
           isEditing={isEditing}
+          root={rootPath}
           name='email'
           label='Email'
         />
@@ -77,6 +82,7 @@ const UserInfo = (props: IdentityForm): JSX.Element => {
         <EditableField
           fieldType='TextField'
           isEditing={isEditing}
+          root={rootPath}
           name='contactNumber'
           label='Contact Number'
         />
@@ -85,6 +91,7 @@ const UserInfo = (props: IdentityForm): JSX.Element => {
         <EditableField
           fieldType='GenderSelect'
           isEditing={isEditing}
+          root={rootPath}
           name='gender'
           label='Gender'
         />
@@ -93,6 +100,7 @@ const UserInfo = (props: IdentityForm): JSX.Element => {
         <EditableField
           fieldType='MartialStatusSelect'
           isEditing={isEditing}
+          root={rootPath}
           name='maritalStatus'
           label='Marital Status'
         />

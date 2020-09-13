@@ -1,5 +1,10 @@
 import { Declaration, DeclarationTemplate } from 'v2/types/identity'
 
+export enum DeclarationValue {
+  Yes = 'Yes',
+  No = 'No'
+}
+
 export const declarations: {
   individual: DeclarationTemplate[]
   corporate: DeclarationTemplate[]
@@ -126,13 +131,9 @@ export const declarations: {
       lastLine: true
     },
     {
-      key: 'CorporateAccreditedInvestor',
-      content:
-        'The Applicant qualifies as a "Corporate Accredited Investor" as defined in Section 4A(1)(a)(ii) of the Securities and Futures Act (“SFA”), Chapter 289, under Singapore law.',
-      value: null
-    },
-    {
       key: 'NetAssets',
+      header:
+        'The Applicant qualifies as a "Corporate Accredited Investor" as defined in Section 4A(1)(a)(ii) of the Securities and Futures Act (“SFA”), Chapter 289, under Singapore law.',
       content:
         'An entity or corporation with net assets exceeding $10 million or its equivalent in foreign currency; or',
       value: null,
@@ -192,29 +193,16 @@ export const declarations: {
       content:
         'The Applicant elects to be and agrees to be treated as an "Accredited Investor".',
       value: null,
-      answerable: true
-    },
-    {
-      key: 'ConsequencesAsAccreditedInvestor',
-      content:
+      footer: [
         'Applicant has been informed of and understands the consequences of being treated as an Accredited Investor, in particular the reduced regulatory investor safeguards for Accredited Investors.',
-      value: null,
-      subLevel: true
-    },
-    {
-      key: 'OptOutAsAccreditedInvestor',
-      content:
-        'Applicant has been informed of and understands its right to opt out of the Accredited Investors status with InvestaX at any point in time after consent has been given, upon which InvestaX will process your election to opt out within 14 business days from receipt.',
-      value: null,
-      subLevel: true,
+        'Applicant has been informed of and understands its right to opt out of the Accredited Investors status with InvestaX at any point in time after consent has been given, upon which InvestaX will process your election to opt out within 14 business days from receipt.'
+      ],
+      answerable: true,
       lastLine: true
     },
     {
-      key: 'ApplicantAcknowledgement',
-      content: 'The Applicant acknowledges and understands:'
-    },
-    {
       key: 'PrimaryIssuancePlatform',
+      header: 'The Applicant acknowledges and understands:',
       content:
         'InvestaX operates its primary issuance platform as a capital markets services licensee under the SFA (Cap. 289) of Singapore for dealing in capital markets products that are securities and units in a collective investment schemes, and an exempt financial advisor for the provision of advice on units in collective investment schemes, under license number CMS100635-1.',
       value: null,
@@ -268,7 +256,5 @@ export const formatDeclarations = (
 
   return mDeclarations
 }
-
-export type DeclarationValue = 'Yes' | 'No' | null
 
 export default declarations

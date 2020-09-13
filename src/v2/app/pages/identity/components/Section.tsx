@@ -4,7 +4,8 @@ import {
   Accordion,
   AccordionSummary,
   AccordionDetails,
-  Grid
+  Grid,
+  AccordionActions
 } from '@material-ui/core'
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore'
 import { makeStyles } from '@material-ui/styles'
@@ -24,12 +25,13 @@ interface IdentitySectionProps {
   title: string
   subtitle?: string
   actions?: JSX.Element | null
+  footer?: JSX.Element | null
 }
 
 export const Section = (
   props: PropsWithChildren<IdentitySectionProps>
 ): JSX.Element => {
-  const { title, subtitle, children, actions = null } = props
+  const { title, subtitle, children, actions = null, footer = null } = props
   const classes = useStyles()
   const [expanded, setExpanded] = useState(true)
   const toggleExpanded = (): void => {
@@ -56,6 +58,7 @@ export const Section = (
       <AccordionDetails>
         <Grid container>{children}</Grid>
       </AccordionDetails>
+      {footer !== null && <AccordionActions>{footer}</AccordionActions>}
     </Accordion>
   )
 }

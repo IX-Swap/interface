@@ -7,7 +7,7 @@ import UserInfoComponent from 'v2/app/pages/identity/components/UserInfo'
 import { useIndividualIdentity } from 'v2/hooks/identity/useIndividualIdentity'
 import { useIdentitiesRouter } from 'v2/app/pages/identity/router'
 import { useIndividualIdentityForm } from 'v2/app/pages/identity/pages/IdentitiesList'
-import { NoIndividualId } from 'v2/app/pages/identity/pages/individual/NoIndividualId'
+import { NoIdentity } from 'v2/app/pages/identity/components/NoIdentity'
 
 export const IndividualIdPreview: React.FC = () => {
   const { data, status } = useIndividualIdentity()
@@ -19,7 +19,9 @@ export const IndividualIdPreview: React.FC = () => {
   }
 
   if (data === undefined) {
-    return <NoIndividualId />
+    return (
+      <NoIdentity text='Create Individual Identity' link='createIndividual' />
+    )
   }
 
   const viewIndividualIdentity = (
@@ -29,7 +31,7 @@ export const IndividualIdPreview: React.FC = () => {
   )
 
   return (
-    <Grid item>
+    <Grid container item direction='column'>
       <Section
         title={`${data.firstName} ${data.lastName}`}
         actions={viewIndividualIdentity}
@@ -40,7 +42,7 @@ export const IndividualIdPreview: React.FC = () => {
           onSubmit={alert}
         >
           <Grid container>
-            <UserInfoComponent identity={data} isEditing={false} useOwnEmail />
+            <UserInfoComponent isEditing={false} useOwnEmail />
           </Grid>
         </Form>
       </Section>

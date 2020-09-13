@@ -1,7 +1,9 @@
 import { IndividualIdentity, CorporateIdentity } from 'v2/types/identity'
 import {
+  CreateCorporateIdentityArgs,
   CreateOrUpdateIndividualIdentityArgs,
-  GetIndividualIdentityArgs
+  GetIndividualIdentityArgs,
+  UpdateCorporateIdentityArgs
 } from 'v2/services/identity/types'
 import apiService from 'v2/services/api'
 import { paginationArgs } from 'v2/config/defaults'
@@ -20,6 +22,20 @@ export const identityService = {
     const uri = `/identity/individuals/${userId}`
 
     return await apiService.put<IndividualIdentity>(uri, identity)
+  },
+
+  async createCorporate (args: CreateCorporateIdentityArgs) {
+    const { userId, ...identity } = args
+    const uri = `/identity/corporates/${userId}`
+
+    return await apiService.post<CorporateIdentity>(uri, identity)
+  },
+
+  async updateCorporate (args: UpdateCorporateIdentityArgs) {
+    const { userId, id, ...identity } = args
+    const uri = `/identity/corporates/${userId}/${id}`
+
+    return await apiService.put<CorporateIdentity>(uri, identity)
   },
 
   async getAllCorporates (queryKey: string, args: GetIndividualIdentityArgs) {

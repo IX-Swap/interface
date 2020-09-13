@@ -174,7 +174,7 @@ export const createTypedForm = <FormType extends Record<string, any>>() => {
     props: Omit<TypedFieldProps<FormType, DeepPath<FormType, Path>>, 'children'>
   ): JSX.Element => {
     const { watch } = useFormContext()
-    const value = watch(pathToString(props.name))
+    const value = watch(pathToString(props.name, props.root))
 
     return (
       <Grid item>

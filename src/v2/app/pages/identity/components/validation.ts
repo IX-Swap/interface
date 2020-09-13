@@ -84,5 +84,6 @@ export const corporateIdentityFormValidationSchema = yup
     dateOfIncorporation: yup.string().required(),
     countryOfFormation: yup.string().required(),
     companyLegalName: yup.string().required(),
-    walletAddress: yup.string().required()
+    walletAddress: yup.string().required(),
+    toArrangeCustody: yup.boolean().required()
   })
