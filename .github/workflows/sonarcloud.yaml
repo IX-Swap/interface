@@ -21,6 +21,7 @@ jobs:
           node-version: ${{ matrix.node-version }}
       - name: SonarCloud Scan
         uses: SonarSource/sonarcloud-github-action@master
+      - name: Build & Tests
         uses: actions/setup-node@v1
       - run: npm install
       - run: npm install sonar-scanner --save-dev
