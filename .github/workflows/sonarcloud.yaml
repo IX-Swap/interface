@@ -11,17 +11,15 @@ jobs:
   sonarcloud:
     name: SonarCloud
     runs-on: ubuntu-latest
-    strategy:
-      matrix:
-        node-version: [14.x]
     steps:
       - uses: actions/checkout@v2
         with:
           fetch-depth: 0
-          node-version: ${{ matrix.node-version }}
 
       - name: Build & Tests
         uses: actions/setup-node@v1
+        with:
+          node-version: 14.x
       - run: npm install
       - run: npm install sonar-scanner --save-dev
       - run: npm run build --if-present
