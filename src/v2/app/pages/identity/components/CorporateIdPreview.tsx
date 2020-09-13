@@ -1,5 +1,5 @@
 import React from 'react'
-import { Button, Grid } from '@material-ui/core'
+import { Button, Grid, Typography } from '@material-ui/core'
 import { CompanyInformation } from 'v2/app/pages/identity/components/CompanyInfo'
 import { useAllCorporateIdentities } from 'v2/hooks/identity/useAllCorporateIdentities'
 import { Section } from 'v2/app/pages/identity/components/Section'
@@ -7,6 +7,7 @@ import { useCorporateIdentityForm } from 'v2/app/pages/identity/components/Corpo
 import { corporateIdentityFormValidationSchema } from 'v2/app/pages/identity/components/validation'
 import { AppRouterLink } from 'v2/components/AppRouterLink'
 import { useIdentitiesRouter } from 'v2/app/pages/identity/router'
+import { NoIdentity } from 'v2/app/pages/identity/components/NoIdentity'
 
 export const CorporateIdPreview: React.FC = () => {
   const { Form } = useCorporateIdentityForm()
@@ -17,12 +18,18 @@ export const CorporateIdPreview: React.FC = () => {
     return null
   }
 
-  if (data === undefined) {
-    return null
+  if (data.list.length === 0) {
+    return (
+      <NoIdentity text='Create Corporate Identity' link='createCorporate' />
+    )
   }
 
   return (
-    <Grid container item direction='column'>
+    <Grid container item direction='column' spacing={2}>
+      <Grid item xs={12}>
+        <Typography variant='h4'>Corporate Identities</Typography>
+      </Grid>
+
       {data.list.map(identity => {
         const viewCorporateIdentity = (
           <Button color='primary'>

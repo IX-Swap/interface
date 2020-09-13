@@ -14,8 +14,9 @@ interface AppRouter<T> {
   current: InternalRouteBase
   routes: T
   renderRoutes: () => JSX.Element
-  push: (route: keyof T, state?: {}) => void
   query: URLSearchParams
+  push: (route: keyof T, state?: {}) => void
+  replace: (route: keyof T, state?: {}) => void
 }
 
 const getRouteLabel = (path: string, routes: InternalRouteProps[]): string => {
@@ -75,6 +76,9 @@ export function generateAppRouterHook<T> (
       routes: routeMap,
       push: (route, state) => {
         history.push(routeMap[route] as any, state)
+      },
+      replace: (route, state) => {
+        history.replace(routeMap[route] as any, state)
       },
       renderRoutes: () => (
         <Switch>

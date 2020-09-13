@@ -81,7 +81,7 @@ export const Declaration = (props: DeclarationProps): JSX.Element => {
         if (footer !== undefined) {
           if (typeof footer === 'string') {
             items.push(
-              <ListItem key={header}>
+              <ListItem key={footer}>
                 <Grid container alignItems='center' spacing={1}>
                   <Grid item xs={10}>
                     <Typography className={classes.subLevel}>
@@ -94,7 +94,7 @@ export const Declaration = (props: DeclarationProps): JSX.Element => {
           } else {
             footer.forEach(text =>
               items.push(
-                <ListItem key={header}>
+                <ListItem key={text}>
                   <Grid container alignItems='center' spacing={1}>
                     <Grid item xs={10}>
                       <Typography className={classes.subLevel}>

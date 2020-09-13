@@ -1,14 +1,18 @@
 import React from 'react'
-import { useIndividualIdentityForm } from 'v2/app/pages/identity/components/IndividualIdentityForm'
 import { Grid } from '@material-ui/core'
+import { useTypedForm } from 'v2/components/form/useTypedForm'
+import { IdentityAddress } from 'v2/types/identity'
 
-export interface AddressFieldsProps {
+export interface AddressFieldsProps<FormType> {
   isEditing: boolean
+  rootPath?: 'address' | 'companyAddress'
 }
 
-export const Address = (props: AddressFieldsProps): JSX.Element => {
-  const { isEditing } = props
-  const { EditableField } = useIndividualIdentityForm()
+export const Address = <FormType,>(
+  props: AddressFieldsProps<FormType>
+): JSX.Element => {
+  const { isEditing, rootPath = 'address' } = props
+  const { EditableField } = useTypedForm<IdentityAddress>()
 
   return (
     <Grid container spacing={3}>
@@ -16,7 +20,8 @@ export const Address = (props: AddressFieldsProps): JSX.Element => {
         <EditableField
           fieldType='TextField'
           isEditing={isEditing}
-          name={['address', 'line1']}
+          root={rootPath}
+          name='line1'
           label='Line 1'
         />
       </Grid>
@@ -24,7 +29,8 @@ export const Address = (props: AddressFieldsProps): JSX.Element => {
         <EditableField
           fieldType='TextField'
           isEditing={isEditing}
-          name={['address', 'line2']}
+          root={rootPath}
+          name='line2'
           label='Line 2'
         />
       </Grid>
@@ -32,7 +38,8 @@ export const Address = (props: AddressFieldsProps): JSX.Element => {
         <EditableField
           fieldType='TextField'
           isEditing={isEditing}
-          name={['address', 'city']}
+          root={rootPath}
+          name='city'
           label='City'
         />
       </Grid>
@@ -40,7 +47,8 @@ export const Address = (props: AddressFieldsProps): JSX.Element => {
         <EditableField
           fieldType='TextField'
           isEditing={isEditing}
-          name={['address', 'postalCode']}
+          root={rootPath}
+          name='postalCode'
           label='Postal Code'
         />
       </Grid>
@@ -48,7 +56,8 @@ export const Address = (props: AddressFieldsProps): JSX.Element => {
         <EditableField
           fieldType='TextField'
           isEditing={isEditing}
-          name={['address', 'state']}
+          root={rootPath}
+          name='state'
           label='State'
         />
       </Grid>
@@ -56,7 +65,8 @@ export const Address = (props: AddressFieldsProps): JSX.Element => {
         <EditableField
           fieldType='CountrySelect'
           isEditing={isEditing}
-          name={['address', 'country']}
+          root={rootPath}
+          name='country'
           label='Country'
         />
       </Grid>

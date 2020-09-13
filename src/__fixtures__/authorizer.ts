@@ -26,7 +26,7 @@ export const asset: Asset = {
 
 export const address = {
   city: 'Omsk',
-  country: 'Russia',
+  country: 'Russian Federation',
   state: 'Siberia',
   line1: 'Address line 1',
   line2: 'Address line 2',
@@ -63,6 +63,7 @@ export const corporate: CorporateIdentity = {
   directors: [],
   registrationNumber: '123456',
   representatives: [],
+  toArrangeCustody: true,
   user
 }
 
@@ -76,7 +77,7 @@ export const individual: IndividualIdentity = {
   contactNumber: '1234567890',
   createdAt: '01-01-2000',
   updatedAt: '01-01-2000',
-  countryOfResidence: 'Russia',
+  countryOfResidence: 'Russian Federation',
   dob: 'DOB',
   employer: 'InvestaX',
   employmentStatus: 'Employed',
@@ -94,7 +95,9 @@ export const individual: IndividualIdentity = {
   status: 'Authorized',
   toArrangeCustody: true,
   walletAddress: '1234567890_',
-  declarations: declarations.individual.map(({ key }) => ({ [key]: null })),
+  declarations: declarations.individual.map(({ key }) => ({
+    [key]: undefined
+  })),
   documents: [],
   address,
   user

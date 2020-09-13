@@ -9,7 +9,7 @@ import {
 } from '@hookform/strictly-typed/dist/types'
 import {
   TypedFieldProps,
-  TypedFieldWithChildren
+  TypedFieldPropsWithChildren
 } from 'v2/components/form/types'
 import { pathToString } from 'v2/components/form/utils'
 import get from 'lodash/get'
@@ -19,7 +19,7 @@ export const createTypedField = <FormType extends Record<string, any>>() => {
     children,
     ...props
   }: TypedFieldProps<FormType, Path> &
-    TypedFieldWithChildren<FormType, Path>) => (
+    TypedFieldPropsWithChildren<FormType, Path>) => (
     <TypedField {...props}>{children}</TypedField>
   )
 }
@@ -29,11 +29,12 @@ export const TypedField = <
   Path extends DeepPath<FormType, Path>
 >(
   props: TypedFieldProps<FormType, Path> &
-    TypedFieldWithChildren<FormType, Path>
+    TypedFieldPropsWithChildren<FormType, Path>
 ): JSX.Element => {
   const {
     name,
-    defaultValue = '',
+    root,
+    defaultValue,
     helperText,
     children,
     valueProvider,
@@ -46,7 +47,7 @@ export const TypedField = <
   >()
   // @ts-expect-error
   const TypedController = useTypedController<FormType>({ control })
-  const path = pathToString(name)
+  const path = pathToString(name, root)
   const error = get(errors, path) as FieldError
   const hasError = get(formState.touched, path) === true && Boolean(error)
   const handleChange = (
@@ -64,11 +65,11 @@ export const TypedField = <
   const destructValue = (value: any): any => {
     return valueProvider !== undefined ? valueProvider(value) : value
   }
-
+  console.log(path)
   return (
     <TypedController
-      name={name}
-      defaultValue={defaultValue as any}
+      name={path}
+      defaultValue={defaultValue}
       render={controllerProps => (
         <FormControl {...formControlProps}>
           {typeof children !== 'function' && (

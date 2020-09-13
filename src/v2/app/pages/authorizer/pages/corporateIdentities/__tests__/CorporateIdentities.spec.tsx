@@ -27,7 +27,7 @@ describe('CorporateIdentities', () => {
       expect(corporateIdentityForm).toEqual(
         <CorporateIdentityForm
           identity={corporate}
-          editMode={false}
+          isEditing={false}
           useOwnEmail={false}
         />
       )

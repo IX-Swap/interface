@@ -8,7 +8,7 @@ import { Control } from 'react-hook-form'
 import { FormControlProps, InputProps } from '@material-ui/core'
 import React from 'react'
 
-export interface TypedFieldWithChildren<
+export interface TypedFieldPropsWithChildren<
   FormType extends UnpackNestedValue<FieldValuesFromControl<Control>>,
   Path extends DeepPath<FormType, Path>
 > {
@@ -29,6 +29,7 @@ export interface TypedFieldProps<
   name: Path
   defaultValue?: DeepPathValue<FormType, Path>
   label: string
+  root?: string
   helperText?: string
   formControlProps?: Omit<FormControlProps, 'name'>
   inputProps?: Omit<InputProps, 'name'>

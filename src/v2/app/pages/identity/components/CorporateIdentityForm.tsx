@@ -1,41 +1,57 @@
 import React from 'react'
 import { CorporateIdentity } from 'v2/types/identity'
-import { Grid } from '@material-ui/core'
+import { Box, Grid } from '@material-ui/core'
 import { Address } from 'v2/app/pages/identity/components/Address'
 import { Section } from 'v2/app/pages/identity/components/Section'
 import { Declaration } from 'v2/app/pages/identity/components/Declaration'
-import UserInfoComponent from 'v2/app/pages/identity/components/UserInfo'
 import { Dataroom } from 'v2/app/pages/identity/components/dataroom/Dataroom'
-import declarations, {
-  formatDeclarations
-} from 'v2/app/pages/identity/const/declarations'
 import documents from 'v2/app/pages/identity/const/documents'
 import { CompanyInformation } from 'v2/app/pages/identity/components/CompanyInfo'
 import { createTypedForm } from 'v2/components/form/createTypedForm'
 import { CorporateIdentityFormValues } from 'v2/app/pages/identity/components/types'
 import { corporateIdentityFormValidationSchema } from 'v2/app/pages/identity/components/validation'
+import { CorporateProfiles } from 'v2/app/pages/identity/components/CorporateIdProfiles'
+import {
+  getIdentityDeclarations,
+  getIdentityFormDefaultValue
+} from 'v2/app/pages/identity/utils'
 
 export const useCorporateIdentityForm = createTypedForm<
   CorporateIdentityFormValues
 >()
 
 export interface CorporateIdentityFormProps {
-  identity: CorporateIdentity
-  editMode: boolean
+  identity: CorporateIdentity | undefined
+  isEditing: boolean
   useOwnEmail: boolean
+  onSubmit?: (values: CorporateIdentityFormValues) => void
+  submitButtonText?: string
+  cancelButton?: JSX.Element
 }
 
 export const CorporateIdentityForm = (
   props: CorporateIdentityFormProps
 ): JSX.Element => {
-  const { identity, editMode, useOwnEmail } = props
-  const { Form } = useCorporateIdentityForm()
+  const {
+    identity,
+    isEditing,
+    useOwnEmail,
+    submitButtonText,
+    cancelButton,
+    onSubmit
+  } = props
+  const { Form, Submit } = useCorporateIdentityForm()
+  const handleSubmit = (values: CorporateIdentityFormValues) => {
+    if (onSubmit !== undefined) {
+      onSubmit(values)
+    }
+  }
 
   return (
     <Form
-      defaultValues={identity}
+      defaultValues={getIdentityFormDefaultValue(identity, 'corporate')}
       validationSchema={corporateIdentityFormValidationSchema}
-      onSubmit={alert}
+      onSubmit={handleSubmit}
     >
       <Grid container spacing={2}>
         <Grid item xs={12}>
@@ -43,93 +59,36 @@ export const CorporateIdentityForm = (
             <CompanyInformation
               corporate={identity}
               useOwnEmail={useOwnEmail}
-              isEditing={editMode}
+              isEditing={isEditing}
             />
           </Section>
         </Grid>
         <Grid item xs={12}>
           <Section title='Company Address'>
-            <Address isEditing={editMode} />
+            <Address isEditing={isEditing} rootPath='companyAddress' />
           </Section>
         </Grid>
-        {identity.representatives.map(e => (
-          <Grid item xs={12} key={e.email ?? 'email'}>
-            {/* <IdentitySection */}
-            {/*  title='Company Representative' */}
-            {/*  onAdd={ */}
-            {/*    editMode && i === identity.representatives.length - 1 */}
-            {/*      ? onAdd */}
-            {/*      : undefined */}
-            {/*  } */}
-            {/*  onDelete={ */}
-            {/*    editMode */}
-            {/*      ? async () => await onDelete(identity.representatives, i) */}
-            {/*      : undefined */}
-            {/*  } */}
-            {/* > */}
-            <Section title='Company Representative'>
-              <UserInfoComponent
-                identity={e}
-                useOwnEmail={false}
-                isEditing={editMode}
-              />
-            </Section>
-          </Grid>
-        ))}
-        {identity.directors.map((e, i) => (
-          <Grid item xs={12} key={e.email ?? 'email'}>
-            {/* <IdentitySection */}
-            {/*  title='Company Director' */}
-            {/*  onAdd={ */}
-            {/*    editMode && i === identity.directors.length - 1 */}
-            {/*      ? onAdd */}
-            {/*      : undefined */}
-            {/*  } */}
-            {/*  onDelete={ */}
-            {/*    editMode */}
-            {/*      ? async () => await onDelete(identity.directors, i) */}
-            {/*      : undefined */}
-            {/*  } */}
-            {/* > */}
-            <Section title='Company Director'>
-              <UserInfoComponent
-                identity={e}
-                useOwnEmail={false}
-                isEditing={editMode}
-              />
-            </Section>
-          </Grid>
-        ))}
-        {identity.beneficialOwners.map((e, i) => (
-          <Grid item xs={12} key={e.email ?? 'email'}>
-            {/* <IdentitySection */}
-            {/*  title='Beneficial Owner' */}
-            {/*  onAdd={ */}
-            {/*    editMode && i === identity.beneficialOwners.length - 1 */}
-            {/*      ? onAdd */}
-            {/*      : undefined */}
-            {/*  } */}
-            {/*  onDelete={ */}
-            {/*    editMode */}
-            {/*      ? async () => await onDelete(identity.beneficialOwners, i) */}
-            {/*      : undefined */}
-            {/*  } */}
-            {/* > */}
-            <Section title='Beneficial Owner'>
-              <UserInfoComponent
-                identity={e}
-                useOwnEmail={false}
-                isEditing={editMode}
-              />
-            </Section>
-          </Grid>
-        ))}
+        <CorporateProfiles
+          title='Company Representative'
+          type='representatives'
+          isEditing={isEditing}
+        />
+        <CorporateProfiles
+          title='Company Director'
+          type='directors'
+          isEditing={isEditing}
+        />
+        <CorporateProfiles
+          title='Beneficial Owner'
+          type='beneficialOwners'
+          isEditing={isEditing}
+        />
         <Grid item xs={12}>
           <Section title='Documents'>
             <Dataroom
               documentsList={documents.corporate}
-              dataroom={identity.documents ?? []}
-              editMode={editMode}
+              dataroom={identity?.documents ?? []}
+              editMode={isEditing}
             />
           </Section>
         </Grid>
@@ -139,13 +98,20 @@ export const CorporateIdentityForm = (
             subtitle='Confirmation'
           >
             <Declaration
-              isEditing={editMode}
-              declarations={formatDeclarations(
-                identity.declarations ?? declarations.corporate,
-                'corporate'
-              )}
+              isEditing={isEditing}
+              declarations={getIdentityDeclarations(identity, 'corporate')}
             />
           </Section>
+        </Grid>
+        {isEditing && (
+          <Grid container justify='center' item xs={12}>
+            {cancelButton}
+            <Box px={1} />
+            <Submit>{submitButtonText}</Submit>
+          </Grid>
+        )}
+        <Grid item>
+          <Box my={10} />
         </Grid>
       </Grid>
     </Form>

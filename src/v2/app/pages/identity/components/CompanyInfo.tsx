@@ -58,6 +58,14 @@ export const CompanyInformation = (
           label='Digital Security Wallet Address'
         />
       </Grid>
+      <Grid item xs={5}>
+        <EditableField
+          fieldType='Checkbox'
+          isEditing={isEditing}
+          name='toArrangeCustody'
+          label='I would like InvestaX to arrange digital security custody'
+        />
+      </Grid>
     </Grid>
   )
 }

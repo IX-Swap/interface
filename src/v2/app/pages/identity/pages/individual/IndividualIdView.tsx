@@ -16,12 +16,14 @@ export const IndividualIdView: React.FC = () => {
 
   const editButton = (
     <Button color='primary'>
-      <AppRouterLink to={routes.individualEdit}>Edit</AppRouterLink>
+      <AppRouterLink to={routes.editIndividual}>Edit</AppRouterLink>
     </Button>
   )
   const cancelButton = (
     <Button color='primary'>
-      <AppRouterLink to={routes.individual}>Cancel</AppRouterLink>
+      <AppRouterLink to={routes.individual} replace>
+        Cancel
+      </AppRouterLink>
     </Button>
   )
 

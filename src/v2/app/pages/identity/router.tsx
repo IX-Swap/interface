@@ -1,17 +1,21 @@
 import { InternalRouteProps } from 'v2/types/util'
 import { IdentitiesList } from 'v2/app/pages/identity/pages/IdentitiesList'
 import { IndividualIdView } from 'v2/app/pages/identity/pages/individual/IndividualIdView'
-import { CorporateIdentity } from 'v2/app/pages/identity/pages/corporate/CorporateIdentity'
+import { CorporateIdView } from 'v2/app/pages/identity/pages/corporate/CorporateIdView'
 import { generateAppRouterHook } from 'v2/helpers/generateAppRouterHook'
 import { IndividualIdEdit } from 'v2/app/pages/identity/pages/individual/IndividualIdEdit'
 import { IndividualIdCreate } from 'v2/app/pages/identity/pages/individual/IndividualIdCreate'
+import { CorporateIdCreate } from 'v2/app/pages/identity/pages/corporate/CorporateIdCreate'
+import { CorporateIdEdit } from 'v2/app/pages/identity/pages/corporate/CorporateIdEdit'
 
 export const IdentityRoute = {
   list: '/app/identity/list',
   individual: '/app/identity/individual',
   createIndividual: '/app/identity/individual/create',
-  individualEdit: '/app/identity/individual/edit',
-  corporate: '/app/identity/corporate/:identityId'
+  editIndividual: '/app/identity/individual/edit',
+  createCorporate: '/app/identity/corporate/create',
+  corporate: '/app/identity/corporate/:identityId',
+  editCorporate: '/app/identity/corporate/:identityId/edit'
 }
 
 export const identityRoutes: InternalRouteProps[] = [
@@ -29,7 +33,7 @@ export const identityRoutes: InternalRouteProps[] = [
   },
   {
     label: 'Edit Individual',
-    path: IdentityRoute.individualEdit,
+    path: IdentityRoute.editIndividual,
     exact: true,
     component: IndividualIdEdit
   },
@@ -40,10 +44,22 @@ export const identityRoutes: InternalRouteProps[] = [
     component: IndividualIdCreate
   },
   {
+    label: 'Create Corporate',
+    path: IdentityRoute.createCorporate,
+    exact: true,
+    component: CorporateIdCreate
+  },
+  {
     label: 'View Corporate',
     path: IdentityRoute.corporate,
     exact: true,
-    component: CorporateIdentity
+    component: CorporateIdView
+  },
+  {
+    label: 'View Corporate',
+    path: IdentityRoute.editCorporate,
+    exact: true,
+    component: CorporateIdEdit
   }
 ]
 

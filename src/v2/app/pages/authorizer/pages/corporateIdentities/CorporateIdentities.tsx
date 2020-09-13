@@ -15,5 +15,5 @@ export const CorporateIdentities: React.FC = () => (
 )
 
 export const renderCorporateIdentity = (i: CorporateIdentity): JSX.Element => (
-  <CorporateIdentityForm identity={i} editMode={false} useOwnEmail={false} />
+  <CorporateIdentityForm identity={i} isEditing={false} useOwnEmail={false} />
 )

@@ -65,10 +65,11 @@ export interface CorporateFields {
   representatives: IdentityProfile[]
   directors: IdentityProfile[]
   beneficialOwners: IdentityProfile[]
+  toArrangeCustody: boolean
 }
 
 export interface Declaration {
-  [key: string]: DeclarationValue
+  [key: string]: DeclarationValue | undefined
 }
 
 export interface BaseIdentity {

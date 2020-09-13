@@ -7,38 +7,16 @@ import documents from 'v2/app/pages/identity/const/documents'
 import { createTypedForm } from 'v2/components/form/createTypedForm'
 import { IndividualIdentityFormValues } from 'v2/app/pages/identity/components/types'
 import { individualIdentityFormValidationSchema } from 'v2/app/pages/identity/components/validation'
-import { useCreateOrUpdateIndividualMutation } from 'v2/hooks/identity/useCreateOrUpdateIndividualMutation'
-import { useAuth } from 'v2/hooks/auth/useAuth'
+import { useCreateOrUpdateIndividual } from 'v2/hooks/identity/useCreateOrUpdateIndividual'
 import {
   getIdentityDeclarations,
-  getIdentityDocuments
+  getIdentityDocuments,
+  getIdentityFormDefaultValue
 } from 'v2/app/pages/identity/utils'
-import declarations from 'v2/app/pages/identity/const/declarations'
-
-const Declaration = React.lazy(
-  async () =>
-    await import(
-      'v2/app/pages/identity/components/Declaration'
-    ).then(module => ({ default: module.Declaration }))
-)
-const Address = React.lazy(
-  async () =>
-    await import('v2/app/pages/identity/components/Address').then(module => ({
-      default: module.Address
-    }))
-)
-const Financials = React.lazy(
-  async () =>
-    await import(
-      'v2/app/pages/identity/components/Financials'
-    ).then(module => ({ default: module.Financials }))
-)
-const Dataroom = React.lazy(
-  async () =>
-    await import(
-      'v2/app/pages/identity/components/dataroom/Dataroom'
-    ).then(module => ({ default: module.Dataroom }))
-)
+import { Address } from './Address'
+import { Financials } from './Financials'
+import { Dataroom } from './dataroom/Dataroom'
+import { Declaration } from './Declaration'
 
 export const useIndividualIdentityForm = createTypedForm<
   IndividualIdentityFormValues
@@ -63,31 +41,21 @@ export const IndividualIdentityForm = (
     cancelButton
   } = props
   const { Form, Submit } = useIndividualIdentityForm()
-  const [createOrUpdateIndividual] = useCreateOrUpdateIndividualMutation()
-  const { user } = useAuth()
+  const [createOrUpdateIndividual] = useCreateOrUpdateIndividual()
   const handleSubmit = async (values: IndividualIdentityFormValues) => {
-    if (user === undefined) {
-      throw new Error('No user found')
-    }
-
-    await createOrUpdateIndividual({ userId: user._id, ...values })
+    await createOrUpdateIndividual(values)
   }
 
   return (
     <Form
       onSubmit={handleSubmit}
       validationSchema={individualIdentityFormValidationSchema}
-      defaultValues={
-        identity !== undefined
-          ? identity
-          : ({ declarations: declarations.individual } as any) // TODO: fix any
-      }
+      defaultValues={getIdentityFormDefaultValue(identity, 'individual')}
     >
       <Grid container spacing={2}>
         <Grid item xs={12}>
           <Section title='Identity'>
             <UserInfoComponent
-              identity={identity}
               useOwnEmail={useOwnEmail}
               isEditing={isEditing}
             />
@@ -123,7 +91,7 @@ export const IndividualIdentityForm = (
             <Suspense fallback={'loading...'}>
               <Declaration
                 isEditing={isEditing}
-                declarations={getIdentityDeclarations(identity)}
+                declarations={getIdentityDeclarations(identity, 'individual')}
               />
             </Suspense>
           </Section>
