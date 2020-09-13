@@ -11,23 +11,21 @@ jobs:
   sonarcloud:
     name: SonarCloud
     runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        node-version: 14.x
     steps:
       - uses: actions/checkout@v2
-        with:
-          fetch-depth: 0
-
-      - name: Build & Tests
+      - name: Perform SonarCloud check ${{ matrix.node-version }}
         uses: actions/setup-node@v1
         with:
-          node-version: 14.x
-        env:
-          REACT_APP_API_URL: https://devapi.mozork.com
+          node-version: ${{ matrix.node-version }}
+          fetch-depth: 0
       - run: npm install
       - run: npm install sonar-scanner --save-dev
       - run: npm run sonar
-
-      - name: SonarCloud Scan
-        uses: SonarSource/sonarcloud-github-action@master
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+          REACT_APP_API_URL: https://devapi.mozork.com
+
