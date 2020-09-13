@@ -20,11 +20,11 @@ jobs:
         uses: actions/setup-node@v1
         with:
           node-version: 14.x
+        env:
+          REACT_APP_API_URL: https://devapi.mozork.com
       - run: npm install
       - run: npm install sonar-scanner --save-dev
       - run: npm run sonar
-      env:
-        REACT_APP_API_URL: https://devapi.mozork.com
 
       - name: SonarCloud Scan
         uses: SonarSource/sonarcloud-github-action@master
