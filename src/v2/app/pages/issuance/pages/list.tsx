@@ -1,8 +1,8 @@
 import React from 'react'
 import { Container, Paper, Box, Button } from '@material-ui/core'
 import { useHistory, useRouteMatch } from 'react-router-dom'
-import { Dso } from 'v2/types/dso'
-import OfferingsList from 'v2/app/components/digital-security/list'
+import { DigitalSecurityOffering } from 'v2/types/dso'
+import { DSOList } from 'v2/app/components/DSO/DSOList'
 import { useStore } from 'v2/app/pages/issuance/context'
 import storageHelper from 'v2/helpers/storageHelper'
 
@@ -11,7 +11,7 @@ const InvestList = () => {
   const history = useHistory()
   const match = useRouteMatch()
 
-  const handleRowClick = (dso: Dso) => {
+  const handleRowClick = (dso: DigitalSecurityOffering) => {
     state.selectDso(dso)
     history.push(`${match.path}view`)
   }
@@ -24,7 +24,7 @@ const InvestList = () => {
     <Container>
       <Paper square>
         <Box p={4}>
-          <OfferingsList
+          <DSOList
             user={storageHelper.getUserId()}
             handleRowClick={handleRowClick}
           >
@@ -36,7 +36,7 @@ const InvestList = () => {
             >
               Add
             </Button>
-          </OfferingsList>
+          </DSOList>
         </Box>
       </Paper>
     </Container>

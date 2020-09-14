@@ -1,16 +1,16 @@
 import React, { useState } from 'react'
 import { useStore } from 'v2/app/pages/issuance/context'
 import { useObserver } from 'mobx-react'
-import DigitalSecurity from 'v2/app/components/digital-security'
+import { DSO } from 'v2/app/components/DSO/DSO'
 import { Redirect, useHistory } from 'react-router-dom'
-import { Dso, DsoRequest } from 'v2/types/dso'
+import { DigitalSecurityOffering, DsoRequest } from 'v2/types/dso'
 import { Box, Container } from '@material-ui/core'
-import PageTitle from 'v2/app/components/page-title'
+import { PageTitle } from 'v2/app/components/PageTitle'
 import { editDso } from 'v2/services/dso'
 import storageHelper from 'v2/helpers/storageHelper'
 import { snackbarService } from 'uno-material-ui'
 
-const DsoView = ({ dso }: { dso: Dso }) => {
+const DsoView = ({ dso }: { dso: DigitalSecurityOffering }) => {
   const history = useHistory()
 
   const save = async (formValues?: DsoRequest) => {
@@ -59,7 +59,7 @@ const DsoView = ({ dso }: { dso: Dso }) => {
     <Container>
       <PageTitle title={dso.tokenName} subPage />
       <Box mb={4} />
-      <DigitalSecurity
+      <DSO
         dso={dso}
         editMode={state.editMode}
         buttonAction={state.action}

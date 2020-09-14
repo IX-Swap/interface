@@ -1,6 +1,6 @@
 import React from 'react'
 import { useBanksRouter } from 'v2/app/pages/accounts/pages/banks/router'
-import PageTitle from 'v2/app/components/page-title'
+import { PageTitle } from 'v2/app/components/PageTitle'
 import { Box, Grid, Paper } from '@material-ui/core'
 
 export const Banks: React.FC = () => {

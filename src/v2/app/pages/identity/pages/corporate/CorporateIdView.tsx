@@ -1,5 +1,5 @@
 import React from 'react'
-import PageTitle from 'v2/app/components/page-title'
+import { PageTitle } from 'v2/app/components/PageTitle'
 import { Button, Grid } from '@material-ui/core'
 import { CorporateIdentityForm } from 'v2/app/pages/identity/components/CorporateIdentityForm'
 import { useAllCorporateIdentities } from 'v2/hooks/identity/useAllCorporateIdentities'

@@ -2,8 +2,8 @@ import React, { useState } from 'react'
 import { Container, Paper, Box, Tabs, Tab, Divider } from '@material-ui/core'
 import { useStore } from 'v2/app/pages/invest/context'
 import { useHistory, useRouteMatch } from 'react-router-dom'
-import { Dso } from 'v2/types/dso'
-import OfferingsList from 'v2/app/components/digital-security/list'
+import { DigitalSecurityOffering } from 'v2/types/dso'
+import { DSOList } from 'v2/app/components/DSO/DSOList'
 import MyCommitments from 'v2/app/pages/invest/components/my-commitments'
 
 const InvestList = () => {
@@ -16,7 +16,7 @@ const InvestList = () => {
     setTab(newValue)
   }
 
-  const handleRowClick = (dso: Dso) => {
+  const handleRowClick = (dso: DigitalSecurityOffering) => {
     investState.selectDso(dso)
     history.push(`${match.path}view`)
   }
@@ -39,7 +39,7 @@ const InvestList = () => {
         <Container>
           <Box p={4}>
             {tab === 0 ? (
-              <OfferingsList
+              <DSOList
                 handleRowClick={handleRowClick}
                 filter={{ status: 'Approved' }}
               />

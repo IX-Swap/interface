@@ -29,7 +29,7 @@ export interface DeploymentInfo {
 
 // export interface PolicyBuilder {}
 
-export interface BaseDso {
+export interface BaseDigitalSecurityOffering {
   _id: string
   minimumInvestment: number | null
   status: string
@@ -45,7 +45,7 @@ export interface BaseDso {
   tokenName: string
   tokenSymbol: string
   investmentPeriod: number | null
-  dividendYeild: number | null
+  dividendYield: number | null
   grossIRR: number | null
   investmentStructure: string
   equityMultiple: string
@@ -64,17 +64,17 @@ export interface BaseDso {
   policyBuilder?: {}
 }
 
-export interface Dso extends BaseDso {
+export interface DigitalSecurityOffering extends BaseDigitalSecurityOffering {
   documents: Document[]
   currency: Array<Partial<Asset>> | Asset[]
 }
 
-export interface DsoRequest extends BaseDso {
+export interface DsoRequest extends BaseDigitalSecurityOffering {
   documents: string[]
   currency: string
 }
 
-export const inititialValues: Dso = {
+export const inititialValues: DigitalSecurityOffering = {
   _id: '',
   minimumInvestment: null,
   documents: [],
@@ -92,7 +92,7 @@ export const inititialValues: Dso = {
   tokenName: '',
   tokenSymbol: '',
   investmentPeriod: null,
-  dividendYeild: null,
+  dividendYield: null,
   grossIRR: null,
   investmentStructure: '',
   equityMultiple: '',

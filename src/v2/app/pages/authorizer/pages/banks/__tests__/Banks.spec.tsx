@@ -2,7 +2,7 @@
 import React from 'react'
 import { render, cleanup } from 'test-utils'
 import { Banks, renderBank } from 'v2/app/pages/authorizer/pages/banks/Banks'
-import BankView from 'v2/app/components/bank-preview'
+import { BankView } from 'v2/app/components/BankPreview/BankPreview'
 import { bank } from '__fixtures__/authorizer'
 
 jest.mock('v2/app/components/bank-preview', () => jest.fn(() => null))

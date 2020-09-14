@@ -3,7 +3,7 @@ import { useFormContext } from 'react-hook-form'
 import { INVESTAX_BANK } from 'v2/config'
 import { formatMoney } from 'v2/helpers/numbers'
 import { Box, Typography } from '@material-ui/core'
-import GenericPreview from 'v2/app/components/generic-preview'
+import { GenericPreview } from 'v2/app/components/GenericPreview/GenericPreview'
 import { useBanksData } from 'v2/app/pages/accounts/pages/banks/hooks/useBanksData'
 import { WithdrawCashFormValues } from 'v2/app/pages/accounts/types'
 

@@ -1,6 +1,6 @@
 import React from 'react'
 import { Box, Typography } from '@material-ui/core'
-import GenericPreview from 'v2/app/components/generic-preview'
+import { GenericPreview } from 'v2/app/components/GenericPreview/GenericPreview'
 import { formatMoney } from 'v2/helpers/numbers'
 import { INVESTAX_BANK } from 'v2/config'
 import { useFormContext } from 'react-hook-form'

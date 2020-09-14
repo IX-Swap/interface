@@ -1,8 +1,8 @@
 import React from 'react'
 import { AuthorizerView as BaseView } from 'v2/app/pages/authorizer/components/AuthorizerView'
 import { columns } from 'v2/app/pages/authorizer/pages/offerings/columns'
-import DigitalSecurity from 'v2/app/components/digital-security'
-import { Dso } from 'v2/types/dso'
+import { DSO } from 'v2/app/components/DSO/DSO'
+import { DigitalSecurityOffering } from 'v2/types/dso'
 
 export const Offerings: React.FC = () => (
   <BaseView
@@ -14,6 +14,6 @@ export const Offerings: React.FC = () => (
   />
 )
 
-export const renderDSOView = (d: Dso): JSX.Element => (
-  <DigitalSecurity dso={d} editMode={false} />
+export const renderDSOView = (d: DigitalSecurityOffering): JSX.Element => (
+  <DSO dso={d} editMode={false} />
 )

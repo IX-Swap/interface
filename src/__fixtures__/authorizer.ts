@@ -6,7 +6,7 @@ import { CorporateIdentity, IndividualIdentity } from 'v2/types/identity'
 import { user } from '__fixtures__/user'
 import { CashWithdrawal } from 'v2/types/cash-withdrawal'
 import { DSWithdrawal } from 'v2/types/ds-withdrawal'
-import { Dso } from 'v2/types/dso'
+import { DigitalSecurityOffering } from 'v2/types/dso'
 import declarations from 'v2/app/pages/identity/const/declarations'
 
 export const asset: Asset = {
@@ -136,7 +136,7 @@ export const cashWithdrawal: CashWithdrawal = {
   asset
 }
 
-export const dso: Dso = {
+export const dso: DigitalSecurityOffering = {
   _id: '1',
   asset: 'asset',
   businessModel: 'business model',
@@ -148,7 +148,7 @@ export const dso: Dso = {
   deleted: false,
   deploymentInfo: undefined,
   distributionFrequency: 'distribution frequency',
-  dividendYeild: 1,
+  dividendYield: 1,
   documents: [],
   equityMultiple: 'equity multiple',
   fundraisingMilestone: 'fundraising milestone',
