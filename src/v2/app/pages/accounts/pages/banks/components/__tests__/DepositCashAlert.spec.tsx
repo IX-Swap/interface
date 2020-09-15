@@ -4,7 +4,7 @@ import { render, cleanup } from 'test-utils'
 import { DepositCashAlert } from 'v2/app/pages/accounts/pages/banks/components/DepositCashAlert'
 
 import { CashTransactionAlert } from 'v2/app/pages/accounts/pages/banks/components/CashTransactionAlert'
-import { useFormContext } from 'react-hook-form'
+import * as reactHookForm from 'react-hook-form'
 import { asset } from '__fixtures__/authorizer'
 
 jest.mock('react-hook-form')
@@ -23,16 +23,27 @@ describe('DepositCashAlert', () => {
     jest.clearAllMocks()
   })
 
-  it('renders without error', () => {
-    useFormContext.mockReturnValue({
-      getValues () {
+  it('renders CashTransactionAlert without error', () => {
+    jest.spyOn(reactHookForm, 'useFormContext').mockReturnValue({
+             getValues () {
         return { asset: asset._id }
       }
     })
 
-    const { getByTestId } = render(<DepositCashAlert />)
+    const { queryByTestId } = render(<DepositCashAlert />)
 
     expect(CashTransactionAlert).toHaveBeenCalledTimes(1)
-    expect(getByTestId('cta-wrapper')).toHaveTextContent('money123')
+    expect(queryByTestId('cta-wrapper')).not.toBeNull()
+  })
+
+  it('renders CashTransactionAlert with correct children', () => {
+    jest.spyOn(reactHookForm, 'useFormContext').mockReturnValue({
+             getValues () {
+        return { asset: asset._id }
+      }
+    })
+
+    const { queryByTestId } = render(<DepositCashAlert />)
+    expect(queryByTestId('cta-wrapper')).toHaveTextContent('money123')
   })
 })

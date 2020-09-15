@@ -18,7 +18,7 @@ describe('BankForm', () => {
     await cleanup()
   })
 
-  it('renders without error', () => {
+  it('renders with props correctly', () => {
     render(<BankForm {...props} />)
 
     expect(testFn).toHaveBeenCalledTimes(0)

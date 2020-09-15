@@ -16,13 +16,13 @@ describe('DepositCash', () => {
     await cleanup()
   })
 
-  it('renders without error', () => {
+  it('renders DepositView and RecentDeposits without error', () => {
     const { queryByTestId } = render(<DepositCash />)
 
-    const el1 = queryByTestId('deposit-view')
-    const el2 = queryByTestId('recent-deposits')
+    const depositView = queryByTestId('deposit-view')
+    const recentDeposits = queryByTestId('recent-deposits')
 
-    expect(el1).toBeTruthy()
-    expect(el2).toBeTruthy()
+    expect(depositView).not.toBeNull()
+    expect(recentDeposits).not.toBeNull()
   })
 })

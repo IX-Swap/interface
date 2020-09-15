@@ -3,8 +3,7 @@ import React from 'react'
 import { render, cleanup } from 'test-utils'
 import ViewBank from 'v2/app/pages/accounts/pages/banks/ViewBank/ViewBank'
 
-import { asset } from '__fixtures__/authorizer'
-
+import { bank } from '__fixtures__/authorizer'
 import BankPreview from 'v2/app/components/bank-preview'
 import { useBanksData } from 'v2/app/pages/accounts/pages/banks/hooks/useBanksData'
 
@@ -20,6 +19,10 @@ jest.mock('v2/app/components/bank-preview', () => {
 
 jest.mock('v2/app/pages/accounts/pages/banks/hooks/useBanksData')
 
+const useBanksDataMock = useBanksData as jest.Mock<
+  Partial<ReturnType<typeof useBanksData>>
+>
+
 describe('ViewBank', () => {
   afterEach(async () => {
     await cleanup()
@@ -27,8 +30,8 @@ describe('ViewBank', () => {
   })
 
   it('renders nothing if loading', () => {
-    useBanksData.mockReturnValue({
-      data: { map: { testBankId: { asset } } },
+    useBanksDataMock.mockReturnValue({
+      data: { map: { testBankId: bank } },
       status: 'loading'
     })
 
@@ -37,14 +40,15 @@ describe('ViewBank', () => {
     expect(BankPreview).toHaveBeenCalledTimes(0)
   })
 
-  it('renders without error', () => {
-    useBanksData.mockReturnValue({
-      data: { map: { testBankId: { asset } } },
+  it('renders BankPreview without error', () => {
+    useBanksDataMock.mockReturnValue({
+      data: { map: { testBankId: bank } },
       status: 'success'
     })
 
     render(<ViewBank />)
 
     expect(BankPreview).toHaveBeenCalledTimes(1)
+    expect(BankPreview).toHaveBeenCalledWith({ bank: bank }, {})
   })
 })

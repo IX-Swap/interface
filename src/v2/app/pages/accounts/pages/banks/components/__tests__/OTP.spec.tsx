@@ -15,11 +15,11 @@ describe('OTP', () => {
     await cleanup()
   })
 
-  it('renders without error', () => {
-    const { getByTestId } = render(<OTP />)
+  it('renders TextInput without error', () => {
+    const { queryByTestId } = render(<OTP />)
 
-    const input = getByTestId('textinput')
+    const input = queryByTestId('textinput')
 
-    expect(input).toBeTruthy()
+    expect(input).not.toBeNull()
   })
 })

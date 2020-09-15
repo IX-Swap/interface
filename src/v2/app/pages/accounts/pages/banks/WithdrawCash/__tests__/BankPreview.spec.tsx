@@ -1,18 +1,23 @@
 /**  * @jest-environment jsdom-sixteen  */
 import React from 'react'
 import { render, cleanup } from 'test-utils'
-import { useFormContext } from 'react-hook-form'
+import * as reactHookForm from 'react-hook-form'
 
-import { bank, asset } from '__fixtures__/authorizer'
+import { bank } from '__fixtures__/authorizer'
 import { useBanksData } from 'v2/app/pages/accounts/pages/banks/hooks/useBanksData'
+import BankDetails from 'v2/app/components/bank-details'
 import { BankPreview } from 'v2/app/pages/accounts/pages/banks/WithdrawCash/BankPreview'
 
 jest.mock('v2/app/pages/accounts/pages/banks/hooks/useBanksData')
-jest.mock('react-hook-form')
 
-jest.mock('v2/app/components/bank-details', () => () => (
-  <div data-testid='bank-details'></div>
-))
+const useBanksDataMock = useBanksData as jest.Mock<
+  Partial<ReturnType<typeof useBanksData>>
+>
+
+jest.mock('v2/app/components/bank-details', () => {
+  const BankDetails = jest.fn(() => <div data-testid='bank-details'></div>)
+  return BankDetails
+})
 
 describe('BankPreview', () => {
   afterEach(async () => {
@@ -21,25 +26,26 @@ describe('BankPreview', () => {
   })
 
   it('renders if bank is defined', () => {
-    useFormContext.mockReturnValue({
-      getValues () {
+    jest.spyOn(reactHookForm, 'useFormContext').mockReturnValue({
+             getValues () {
         return { bank: bank._id }
       }
     })
-    useBanksData.mockReturnValue({ data: { map: { [bank._id]: { asset } } } })
+    useBanksDataMock.mockReturnValue({ data: { map: { [bank._id]: bank } } })
 
     const { queryByTestId } = render(<BankPreview />)
 
     expect(queryByTestId('bank-details')).not.toBeNull()
+    expect(BankDetails).toHaveBeenCalledWith({ bank: bank }, {})
   })
 
   it('renders nothing if bank does not exist in banksdata', () => {
-    useFormContext.mockReturnValue({
-      getValues () {
+    jest.spyOn(reactHookForm, 'useFormContext').mockReturnValue({
+             getValues () {
         return { bank: bank._id }
       }
     })
-    useBanksData.mockReturnValue({ data: { map: {} } })
+    useBanksDataMock.mockReturnValue({ data: { map: {} } })
 
     const { queryByTestId, container } = render(<BankPreview />)
 

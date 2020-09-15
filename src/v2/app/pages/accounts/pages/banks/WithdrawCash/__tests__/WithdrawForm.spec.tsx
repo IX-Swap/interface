@@ -10,5 +10,6 @@ describe('WithdrawForm', () => {
 
   it('renders without error', () => {
     render(<WithdrawForm />)
+    // TODO: to be implemented
   })
 })

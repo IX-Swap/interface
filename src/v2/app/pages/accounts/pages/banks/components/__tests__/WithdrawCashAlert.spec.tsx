@@ -5,7 +5,7 @@ import { bank, asset } from '__fixtures__/authorizer'
 import { WithdrawCashAlert } from 'v2/app/pages/accounts/pages/banks/components/WithdrawCashAlert'
 
 import { CashTransactionAlert } from 'v2/app/pages/accounts/pages/banks/components/CashTransactionAlert'
-import { useFormContext } from 'react-hook-form'
+import * as reactHookForm from 'react-hook-form'
 import { useBanksData } from 'v2/app/pages/accounts/pages/banks/hooks/useBanksData'
 
 jest.mock('v2/app/pages/accounts/pages/banks/hooks/useBanksData')
@@ -26,8 +26,8 @@ describe('WithdrawCashAlert', () => {
   })
 
   it('renders CashTransactionAlert if status is error', () => {
-    useFormContext.mockReturnValue({
-      getValues () {
+    jest.spyOn(reactHookForm, 'useFormContext').mockReturnValue({
+             getValues () {
         return { bank: bank._id }
       }
     })
@@ -42,8 +42,8 @@ describe('WithdrawCashAlert', () => {
   })
 
   it('renders nothing if status is loading', () => {
-    useFormContext.mockReturnValue({
-      getValues () {
+    jest.spyOn(reactHookForm, 'useFormContext').mockReturnValue({
+             getValues () {
         return { bank: bank._id }
       }
     })

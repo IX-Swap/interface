@@ -26,16 +26,16 @@ describe('WithdrawCash', () => {
     await cleanup()
   })
 
-  it('renders without error', () => {
+  it('renders RecentWithdrawals and WithdrawView without error', () => {
     const { getByTestId } = render(<WithdrawCash />)
 
-    const input1 = getByTestId('RecentWithdrawals')
+    const recentWithdrawls = getByTestId('RecentWithdrawals')
     expect(RecentWithdrawals).toHaveBeenCalledTimes(1)
 
-    const input2 = getByTestId('WithdrawView')
+    const withdrawView = getByTestId('WithdrawView')
     expect(WithdrawView).toHaveBeenCalledTimes(1)
 
-    expect(input1).toBeTruthy()
-    expect(input2).toBeTruthy()
+    expect(recentWithdrawls).toBeTruthy()
+    expect(withdrawView).toBeTruthy()
   })
 })
