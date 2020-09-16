@@ -6,7 +6,6 @@ import { renderAmount } from 'v2/helpers/tables'
 export const columns: Array<TableColumn<CashDeposit>> = [
   {
     key: 'level',
-
     label: 'Level'
   },
   {
