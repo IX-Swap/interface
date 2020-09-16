@@ -6,15 +6,9 @@ import { CashTransactionAlert } from 'v2/app/pages/accounts/pages/banks/componen
 import * as reactHookForm from 'react-hook-form'
 import * as assetsContext from 'v2/context/assets/useAssetsData'
 import { cashDeposit, asset } from '__fixtures__/authorizer'
-import { formatMoney } from 'v2/helpers/numbers'
-
-jest.mock('react-hook-form')
+import * as helpers from 'v2/helpers/numbers'
 
 const testFn = jest.fn()
-
-jest.mock('v2/helpers/numbers', () => ({
-  formatMoney: jest.fn(() => 'hello')
-}))
 
 jest.spyOn(reactHookForm, 'useFormContext').mockReturnValue({
   getValues () {
@@ -28,18 +22,23 @@ describe('CashTransactionAlert', () => {
     jest.clearAllMocks()
   })
 
-  it('renders child funcion correctly', () => {
+  it('renders testFn function correctly', () => {
     jest.spyOn(assetsContext, 'useAssetsData').mockReturnValue({
       data: { map: { [asset._id]: asset } },
       status: 'success'
     })
+
+    const money = helpers.formatMoney(
+      cashDeposit.amount,
+      asset.numberFormat.currency
+    )
 
     render(
       <CashTransactionAlert assetId={asset._id}>{testFn}</CashTransactionAlert>
     )
 
     expect(testFn).toHaveBeenCalledTimes(1)
-    expect(testFn).toHaveBeenCalledWith('hello')
+    expect(testFn).toHaveBeenCalledWith(money)
   })
 
   it('calls formatMoney with correct parameters', () => {
@@ -47,6 +46,9 @@ describe('CashTransactionAlert', () => {
       data: { map: { [asset._id]: asset } },
       status: 'success'
     })
+
+    const formatMoney = jest.fn(() => 'hello')
+    jest.spyOn(helpers, 'formatMoney').mockImplementation(formatMoney)
 
     render(
       <CashTransactionAlert assetId={asset._id}>{testFn}</CashTransactionAlert>
@@ -70,7 +72,5 @@ describe('CashTransactionAlert', () => {
     )
 
     expect(container).toBeEmptyDOMElement()
-    expect(testFn).toHaveBeenCalledTimes(0)
-    expect(formatMoney).toHaveBeenCalledTimes(0)
   })
 })

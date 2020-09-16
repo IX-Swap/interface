@@ -5,8 +5,7 @@ import { Setup } from 'v2/app/pages/accounts/pages/banks/DepositCash/Setup'
 
 import * as reactHookForm from 'react-hook-form'
 import { asset } from '__fixtures__/authorizer'
-
-jest.mock('react-hook-form')
+import * as assetSelect from 'v2/components/form/typed/AssetSelect'
 
 jest.mock('v2/components/form/typed/NumberInput', () => ({
   createTypedNumberInput: () =>
@@ -14,20 +13,32 @@ jest.mock('v2/components/form/typed/NumberInput', () => ({
 }))
 
 describe('Setup', () => {
-  afterEach(async () => {
-    await cleanup()
-  })
+  const AssetSelect = jest.fn(() => null)
+  beforeEach(() => {
+    jest
+      .spyOn(assetSelect, 'useAssetSelect')
+      .mockImplementation(() => AssetSelect)
 
-  it('renders NumberInput without error', () => {
     jest.spyOn(reactHookForm, 'useFormContext').mockReturnValue({
-             watch (arg1) {
+      watch (arg1) {
         if (arg1 === 'asset') return asset
         throw new Error('arg1 is invalid')
       }
     })
+  })
+  afterEach(async () => {
+    await cleanup()
+    jest.clearAllMocks()
+  })
 
+  it('renders NumberInput without error', () => {
     const { queryByTestId } = render(<Setup />)
     expect(queryByTestId('number-input')).not.toBeNull()
-    expect(queryByTestId('number-input')).not.toBeDisabled()
+  })
+
+  it('enables NumberInput if asset is not defined', () => {
+    const { queryByTestId } = render(<Setup />)
+    // TODO: needs be improved as the test passes even asset is undefined
+    expect(queryByTestId('number-input')?.parentElement).not.toBeDisabled()
   })
 })

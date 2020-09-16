@@ -61,7 +61,7 @@ describe('Setup', () => {
     expect(numberInput).toBeNull()
   })
 
-  it('render inputs without error', () => {
+  it('render inputs without if bankId is not undefined', () => {
     jest.spyOn(reactHookForm, 'useFormContext').mockReturnValue({
       watch (arg1) {
         if (arg1 === 'bank') return bank._id
