@@ -27,7 +27,7 @@ describe('BankPreview', () => {
 
   it('renders if bank is defined', () => {
     jest.spyOn(reactHookForm, 'useFormContext').mockReturnValue({
-             getValues () {
+      getValues () {
         return { bank: bank._id }
       }
     })
@@ -41,7 +41,7 @@ describe('BankPreview', () => {
 
   it('renders nothing if bank does not exist in banksdata', () => {
     jest.spyOn(reactHookForm, 'useFormContext').mockReturnValue({
-             getValues () {
+      getValues () {
         return { bank: bank._id }
       }
     })

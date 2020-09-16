@@ -22,7 +22,7 @@ describe('Preview', () => {
     })
 
     jest.spyOn(reactHookForm, 'useFormContext').mockReturnValue({
-             getValues () {
+      getValues () {
         return { asset: asset._id, amount: cashDeposit.amount }
       }
     })

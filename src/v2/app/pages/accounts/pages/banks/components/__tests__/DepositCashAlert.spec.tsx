@@ -25,7 +25,7 @@ describe('DepositCashAlert', () => {
 
   it('renders CashTransactionAlert without error', () => {
     jest.spyOn(reactHookForm, 'useFormContext').mockReturnValue({
-             getValues () {
+      getValues () {
         return { asset: asset._id }
       }
     })
@@ -38,7 +38,7 @@ describe('DepositCashAlert', () => {
 
   it('renders CashTransactionAlert with correct children', () => {
     jest.spyOn(reactHookForm, 'useFormContext').mockReturnValue({
-             getValues () {
+      getValues () {
         return { asset: asset._id }
       }
     })

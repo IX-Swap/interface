@@ -27,7 +27,7 @@ describe('WithdrawCashAlert', () => {
 
   it('renders CashTransactionAlert if status is error', () => {
     jest.spyOn(reactHookForm, 'useFormContext').mockReturnValue({
-             getValues () {
+      getValues () {
         return { bank: bank._id }
       }
     })
@@ -43,7 +43,7 @@ describe('WithdrawCashAlert', () => {
 
   it('renders nothing if status is loading', () => {
     jest.spyOn(reactHookForm, 'useFormContext').mockReturnValue({
-             getValues () {
+      getValues () {
         return { bank: bank._id }
       }
     })
