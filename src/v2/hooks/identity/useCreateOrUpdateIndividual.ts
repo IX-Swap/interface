@@ -1,16 +1,22 @@
 import { useServices } from 'v2/services/useServices'
 import { useMutation } from 'react-query'
 import { useIdentitiesRouter } from 'v2/app/pages/identity/router'
-import { allDeclarationsAreChecked } from 'v2/app/pages/identity/utils'
+import {
+  allDeclarationsAreChecked,
+  prepareDocumentsForUpload
+} from 'v2/app/pages/identity/utils'
 import { useAuth } from 'v2/hooks/auth/useAuth'
-import { IndividualIdentityFormValues } from 'v2/app/pages/identity/components/types'
+import {
+  CorporateIdentityFormValues,
+  IndividualIdentityFormValues
+} from 'v2/app/pages/identity/components/types'
 
 export const useCreateOrUpdateIndividual = () => {
   const { identityService, snackbarService } = useServices()
   const { user } = useAuth()
   const { push } = useIdentitiesRouter()
   const createOrUpdateIndividual = async (
-    values: IndividualIdentityFormValues
+    values: IndividualIdentityFormValues | CorporateIdentityFormValues
   ) => {
     if (user === undefined) {
       throw new Error('No user found')
@@ -21,8 +27,9 @@ export const useCreateOrUpdateIndividual = () => {
     }
 
     return await identityService.createOrUpdateIndividual({
+      ...values,
       userId: user._id,
-      ...values
+      documents: prepareDocumentsForUpload(values.documents)
     })
   }
 

@@ -1,13 +1,13 @@
 import { TableColumn } from 'v2/types/util'
 import { CashDeposit } from 'v2/types/cashdeposit'
-import { convertStringToMMDDYY } from 'v2/helpers/dates'
+import { formatDateToMMDDYY } from 'v2/helpers/dates'
 import { renderAmount, renderFirstName } from 'v2/helpers/tables'
 
 export const columns: Array<TableColumn<CashDeposit>> = [
   {
     key: 'createdAt',
     label: 'Date',
-    render: convertStringToMMDDYY
+    render: formatDateToMMDDYY
   },
   {
     key: 'individual.firstName',

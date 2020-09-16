@@ -1,7 +1,7 @@
 import React from 'react'
-import DigitalSecurity from 'v2/app/components/digital-security'
+import { DSO } from 'v2/app/components/DSO/DSO'
 import { Box, Container } from '@material-ui/core'
-import PageTitle from 'v2/app/components/page-title'
+import { PageTitle } from 'v2/app/components/PageTitle'
 import { DsoRequest } from 'v2/types/dso'
 import { saveDso } from 'v2/services/dso'
 import { snackbarService } from 'uno-material-ui'
@@ -39,7 +39,7 @@ const DsoCreate = () => {
     <Container>
       <PageTitle title='Create Dso' subPage />
       <Box mb={4} />
-      <DigitalSecurity create buttonAction={save} buttonString='Save' />
+      <DSO create buttonAction={save} buttonString='Save' />
     </Container>
   )
 }

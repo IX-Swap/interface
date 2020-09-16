@@ -8,6 +8,7 @@ import {
   IdentityAddress,
   IdentityProfile
 } from 'v2/types/identity'
+import { DocumentWithGuide } from 'v2/types/document'
 
 export const individualIdentityFormValidationSchema = yup
   .object()
@@ -43,7 +44,7 @@ export const individualIdentityFormValidationSchema = yup
     walletAddress: yup.string().required(),
     // politicallyExposed: yup.boolean().required(),
 
-    documents: yup.array<any>(),
+    documents: yup.array<DocumentWithGuide>().required(),
     declarations: yup.array<Declaration>().required(),
 
     address: yup
@@ -66,7 +67,7 @@ export const corporateIdentityFormValidationSchema = yup
     representatives: yup.array<IdentityProfile>().required(),
     directors: yup.array<IdentityProfile>().required(),
     beneficialOwners: yup.array<IdentityProfile>().required(),
-    documents: yup.array<any>(),
+    documents: yup.array<DocumentWithGuide>().required(),
     declarations: yup.array<Declaration>().required(),
     companyAddress: yup
       .object()

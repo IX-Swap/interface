@@ -65,7 +65,7 @@ export const TypedField = <
   const destructValue = (value: any): any => {
     return valueProvider !== undefined ? valueProvider(value) : value
   }
-  console.log(path)
+
   return (
     <TypedController
       name={path}
@@ -81,8 +81,9 @@ export const TypedField = <
             ? children({
               ...{ ...inputProps, id: path },
               ...controllerProps,
-              value: destructValue(controllerProps.value),
               label: props.label,
+              name: path,
+              value: destructValue(controllerProps.value),
               onChange: handleChange
             })
             : React.cloneElement(children, {

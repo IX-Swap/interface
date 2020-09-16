@@ -1,60 +1,66 @@
-import React, { useState } from 'react'
-import moment from 'moment'
-import { Typography, ListItem, Grid, Button } from '@material-ui/core'
-import CloudDownloadIcon from '@material-ui/icons/CloudDownload'
-import DeleteOutlineIcon from '@material-ui/icons/DeleteOutline'
+import React from 'react'
 import useStyles from 'v2/app/pages/identity/components/dataroom/styles'
-import { Document } from 'v2/types/document'
-import { downloadFile } from 'v2/helpers/httpRequests'
+import { useTypedForm } from 'v2/components/form/useTypedForm'
+import { DocumentWithGuide } from 'v2/types/document'
+import { Button, Typography, Grid, ListItem } from '@material-ui/core'
+import { DataroomColumns } from 'v2/app/pages/identity/components/dataroom/DataroomColumns'
+import { DownloadDocument } from 'v2/app/pages/identity/components/dataroom/DownloadDocument'
 
-interface DataroomItemProps {
-  document: Document
-  editMode: boolean
+export interface DataroomItemProps {
+  title: string
+  isEditing: boolean
+  index: number
 }
 
-export const DataroomItem = (props: DataroomItemProps): JSX.Element => {
-  const { document, editMode } = props
+export const DataroomItem: React.FC<DataroomItemProps> = props => {
+  const { index, title, isEditing } = props
   const classes = useStyles()
-  const [isInAction, setIsInAction] = useState(false)
+  const { EditableField, FormValue } = useTypedForm<{
+    documents: DocumentWithGuide[]
+  }>()
+  const documentPath = ['documents', index, 'document'] as const
 
   return (
-    <ListItem className={classes.listItem}>
-      <Grid container>
-        <Grid container item xs={3}>
-          <Typography>{document.originalFileName}</Typography>
-        </Grid>
-        <Grid container item xs={2} justify='center'>
-          <Typography>
-            {moment(document.createdAt).format('DD/MM/YYYY')}
-          </Typography>
-        </Grid>
-        <Grid container item xs={3} justify='center'>
-          <Typography>{document.title}</Typography>
-        </Grid>
-        <Grid container item xs={3} justify='center'>
-          <Typography>{document.type}</Typography>
-        </Grid>
-        <Grid container item xs={1} justify='flex-end'>
-          {editMode ? (
-            <Button disabled={isInAction}>
-              <DeleteOutlineIcon />
-            </Button>
-          ) : (
-            <Button
-              onClick={async () => {
-                setIsInAction(true)
-                await downloadFile(
-                  `/dataroom/raw/${document.user}/${document._id}`
-                )
-                setIsInAction(false)
-              }}
-              disabled={isInAction}
-            >
-              <CloudDownloadIcon />
-            </Button>
+    <EditableField
+      isEditing={isEditing}
+      fieldType='DocumentUploader'
+      title={title}
+      label='Upload'
+      name={documentPath as any}
+      uploadComponent={<Button component='span'>Upload</Button>}
+      deleteComponent={<Button component='span'>Delete</Button>}
+      viewRenderer={
+        <FormValue name={documentPath}>
+          {value => (
+            <ListItem className={classes.listItem}>
+              <Grid container>
+                <DataroomColumns title={title} document={value} />
+                <Grid container item xs={1} justify='flex-end'>
+                  {value === null ? (
+                    <Typography>No file uploaded</Typography>
+                  ) : (
+                    <DownloadDocument document={value} />
+                  )}
+                </Grid>
+              </Grid>
+            </ListItem>
           )}
-        </Grid>
-      </Grid>
-    </ListItem>
+        </FormValue>
+      }
+      editRenderer={input => (
+        <FormValue name={documentPath}>
+          {value => (
+            <ListItem className={classes.listItem}>
+              <Grid container>
+                <DataroomColumns title={title} document={value} />
+                <Grid container item xs={1} justify='flex-end'>
+                  {input}
+                </Grid>
+              </Grid>
+            </ListItem>
+          )}
+        </FormValue>
+      )}
+    />
   )
 }

@@ -8,6 +8,7 @@ import { useIndividualIdentity } from 'v2/hooks/identity/useIndividualIdentity'
 import { useIdentitiesRouter } from 'v2/app/pages/identity/router'
 import { useIndividualIdentityForm } from 'v2/app/pages/identity/pages/IdentitiesList'
 import { NoIdentity } from 'v2/app/pages/identity/components/NoIdentity'
+import { getIdentityFormDefaultValue } from 'v2/app/pages/identity/utils'
 
 export const IndividualIdPreview: React.FC = () => {
   const { data, status } = useIndividualIdentity()
@@ -37,7 +38,7 @@ export const IndividualIdPreview: React.FC = () => {
         actions={viewIndividualIdentity}
       >
         <Form
-          defaultValues={data}
+          defaultValues={getIdentityFormDefaultValue(data, 'individual')}
           validationSchema={individualIdentityFormValidationSchema}
           onSubmit={alert}
         >

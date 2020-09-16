@@ -1,5 +1,5 @@
 import React from 'react'
-import BankDetails from 'v2/app/components/bank-details'
+import { BankDetails } from 'v2/app/components/BankDetails'
 import { useFormContext } from 'react-hook-form'
 import { useBanksData } from 'v2/app/pages/accounts/pages/banks/hooks/useBanksData'
 import { Box } from '@material-ui/core'

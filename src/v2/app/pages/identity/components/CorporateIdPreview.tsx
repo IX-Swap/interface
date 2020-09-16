@@ -8,6 +8,7 @@ import { corporateIdentityFormValidationSchema } from 'v2/app/pages/identity/com
 import { AppRouterLink } from 'v2/components/AppRouterLink'
 import { useIdentitiesRouter } from 'v2/app/pages/identity/router'
 import { NoIdentity } from 'v2/app/pages/identity/components/NoIdentity'
+import { getIdentityFormDefaultValue } from 'v2/app/pages/identity/utils'
 
 export const CorporateIdPreview: React.FC = () => {
   const { Form } = useCorporateIdentityForm()
@@ -51,7 +52,10 @@ export const CorporateIdPreview: React.FC = () => {
               <Form
                 validationSchema={corporateIdentityFormValidationSchema}
                 onSubmit={console.log}
-                defaultValues={identity}
+                defaultValues={getIdentityFormDefaultValue(
+                  identity,
+                  'corporate'
+                )}
               >
                 <Grid container>
                   <CompanyInformation

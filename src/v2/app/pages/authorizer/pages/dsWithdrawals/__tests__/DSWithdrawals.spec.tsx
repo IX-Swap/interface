@@ -8,7 +8,7 @@ import {
 import DSWithdrawalView from 'v2/app/components/ds-withdrawal-preview'
 import { dsWithdrawal } from '__fixtures__/authorizer'
 
-jest.mock('v2/app/components/withdrawal-preview', () => jest.fn(() => null))
+jest.mock('v2/app/components/ds-withdrawal-preview', () => jest.fn(() => null))
 
 describe('DSWithdrawals', () => {
   afterEach(async () => {

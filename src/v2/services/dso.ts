@@ -1,11 +1,11 @@
 import HttpResponse from '../types/httpResponse'
-import { Dso, DsoRequest } from '../types/dso'
+import { DigitalSecurityOffering, DsoRequest } from '../types/dso'
 import { postRequest, putRequest } from '../helpers/httpRequests'
 
 export async function saveDso (
   request: DsoRequest,
   userId: string
-): Promise<HttpResponse<Dso>> {
+): Promise<HttpResponse<DigitalSecurityOffering>> {
   try {
     const uri = `/issuance/dso/${userId}`
 
@@ -13,12 +13,20 @@ export async function saveDso (
     const response = await result.json()
     if (result.status === 200) {
       const dso = response.data
-      return new HttpResponse<Dso>(true, dso)
+      return new HttpResponse<DigitalSecurityOffering>(true, dso)
     } else {
-      return new HttpResponse<Dso>(false, undefined, response.message)
+      return new HttpResponse<DigitalSecurityOffering>(
+        false,
+        undefined,
+        response.message
+      )
     }
   } catch (err) {
-    return new HttpResponse<Dso>(false, undefined, 'Unable to save Dso')
+    return new HttpResponse<DigitalSecurityOffering>(
+      false,
+      undefined,
+      'Unable to save Dso'
+    )
   }
 }
 
@@ -26,7 +34,7 @@ export async function editDso (
   dsoId: string,
   request: DsoRequest,
   userId: string
-): Promise<HttpResponse<Dso>> {
+): Promise<HttpResponse<DigitalSecurityOffering>> {
   try {
     const uri = `/issuance/dso/${userId}/${dsoId}`
 
@@ -34,11 +42,19 @@ export async function editDso (
     const response = await result.json()
     if (result.status === 200) {
       const dso = response.data
-      return new HttpResponse<Dso>(true, dso)
+      return new HttpResponse<DigitalSecurityOffering>(true, dso)
     } else {
-      return new HttpResponse<Dso>(false, undefined, response.message)
+      return new HttpResponse<DigitalSecurityOffering>(
+        false,
+        undefined,
+        response.message
+      )
     }
   } catch (err) {
-    return new HttpResponse<Dso>(false, undefined, 'Unable to save Dso')
+    return new HttpResponse<DigitalSecurityOffering>(
+      false,
+      undefined,
+      'Unable to save Dso'
+    )
   }
 }

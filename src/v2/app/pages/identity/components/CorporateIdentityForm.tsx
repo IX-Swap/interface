@@ -5,7 +5,6 @@ import { Address } from 'v2/app/pages/identity/components/Address'
 import { Section } from 'v2/app/pages/identity/components/Section'
 import { Declaration } from 'v2/app/pages/identity/components/Declaration'
 import { Dataroom } from 'v2/app/pages/identity/components/dataroom/Dataroom'
-import documents from 'v2/app/pages/identity/const/documents'
 import { CompanyInformation } from 'v2/app/pages/identity/components/CompanyInfo'
 import { createTypedForm } from 'v2/components/form/createTypedForm'
 import { CorporateIdentityFormValues } from 'v2/app/pages/identity/components/types'
@@ -85,11 +84,7 @@ export const CorporateIdentityForm = (
         />
         <Grid item xs={12}>
           <Section title='Documents'>
-            <Dataroom
-              documentsList={documents.corporate}
-              dataroom={identity?.documents ?? []}
-              editMode={isEditing}
-            />
+            <Dataroom isEditing={isEditing} />
           </Section>
         </Grid>
         <Grid item xs={12}>

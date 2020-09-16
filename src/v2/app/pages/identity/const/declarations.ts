@@ -1,4 +1,5 @@
 import { Declaration, DeclarationTemplate } from 'v2/types/identity'
+import { IdentityType } from 'v2/app/pages/identity/utils'
 
 export enum DeclarationValue {
   Yes = 'Yes',
@@ -239,7 +240,7 @@ export const declarations: {
 
 export const formatDeclarations = (
   payloadItems: Declaration[],
-  type: 'individual' | 'corporate'
+  type: IdentityType
 ): DeclarationTemplate[] => {
   const mDeclarations: DeclarationTemplate[] = []
   payloadItems.forEach(d => {

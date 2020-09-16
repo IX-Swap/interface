@@ -5,7 +5,7 @@ import {
   DepositForm,
   useDepositCashForm
 } from 'v2/app/pages/accounts/pages/banks/DepositCash/DepositForm'
-import BankDetails from 'v2/app/components/bank-details'
+import { BankDetails } from 'v2/app/components/BankDetails'
 import { observer } from 'mobx-react'
 import { generateRandom } from 'v2/helpers/numbers'
 import { useDepositStore } from 'v2/app/pages/accounts/pages/banks/context'

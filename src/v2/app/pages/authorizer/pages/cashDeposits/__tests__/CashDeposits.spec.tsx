@@ -5,10 +5,12 @@ import {
   CashDeposits,
   renderDeposit
 } from 'v2/app/pages/authorizer/pages/cashDeposits/CashDeposits'
-import DepositView from 'v2/app/components/deposit-preview'
+import { DepositView } from 'v2/app/components/DepositView/DepositView'
 import { cashDeposit } from '__fixtures__/authorizer'
 
-jest.mock('v2/app/components/deposit-preview', () => jest.fn(() => null))
+jest.mock('v2/app/components/DepositView/DepositView', () => ({
+  DepositView: jest.fn(() => null)
+}))
 
 describe('CashDeposits', () => {
   afterEach(async () => {

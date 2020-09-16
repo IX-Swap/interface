@@ -1,6 +1,6 @@
 import React from 'react'
 import { useParams } from 'react-router-dom'
-import BankPreview from 'v2/app/components/bank-preview'
+import { BankPreview } from 'v2/app/components/BankPreview/BankPreview'
 import { Box } from '@material-ui/core'
 import { useBanksData } from 'v2/app/pages/accounts/pages/banks/hooks/useBanksData'
 

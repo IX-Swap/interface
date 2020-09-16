@@ -4,7 +4,11 @@ import React, {
   PropsWithChildren,
   useMemo
 } from 'react'
-import { DeepPath } from '@hookform/strictly-typed/dist/types'
+import {
+  DeepPath,
+  DeepPathValue,
+  UnpackNestedValue
+} from '@hookform/strictly-typed/dist/types'
 import { Form, FormProps } from 'v2/components/form/Form'
 import { createTypedField } from 'v2/components/form/createTypedField'
 import {
@@ -31,6 +35,10 @@ import { MartialStatusSelect } from 'v2/components/form/MartialStatusSelect'
 import { useFormContext } from 'react-hook-form'
 import { pathToString } from 'v2/components/form/utils'
 import { YesOrNo } from 'v2/components/form/YesOrNo'
+import {
+  DocumentUploader,
+  DocumentUploaderProps
+} from 'v2/components/form/DocumentUploader'
 
 const booleanValueExtractor = (
   _: React.ChangeEvent<{}>,
@@ -97,6 +105,27 @@ export const createTypedForm = <FormType extends Record<string, any>>() => {
           {...fieldProps}
           label={props.label}
           control={<MUICheckbox />}
+        />
+      )}
+    </TypedField>
+  )
+
+  const DocumentUploaderComponent = <Path extends DeepPath<FormType, Path>>({
+    title,
+    deleteComponent,
+    uploadComponent,
+    ...props
+  }: Omit<TypedFieldProps<FormType, DeepPath<FormType, Path>>, 'children'> &
+    DocumentUploaderProps): JSX.Element => (
+    <TypedField {...props} valueExtractor={value => value}>
+      {fieldProps => (
+        <DocumentUploader
+          {...fieldProps}
+          name={pathToString(props.name, props.root)}
+          onChange={fieldProps.onChange}
+          title={title}
+          uploadComponent={uploadComponent}
+          deleteComponent={deleteComponent}
         />
       )}
     </TypedField>
@@ -170,11 +199,24 @@ export const createTypedForm = <FormType extends Record<string, any>>() => {
     </TypedField>
   )
 
+  interface EditableFieldWithCustomRendererProps {
+    viewRenderer?: JSX.Element
+    editRenderer?: (input: JSX.Element) => JSX.Element
+  }
+
   const ViewComponent = <Path extends DeepPath<FormType, Path>>(
-    props: Omit<TypedFieldProps<FormType, DeepPath<FormType, Path>>, 'children'>
+    props: Omit<
+      TypedFieldProps<FormType, DeepPath<FormType, Path>>,
+      'children'
+    > &
+      EditableFieldWithCustomRendererProps
   ): JSX.Element => {
     const { watch } = useFormContext()
     const value = watch(pathToString(props.name, props.root))
+
+    if (props.viewRenderer !== undefined) {
+      return props.viewRenderer
+    }
 
     return (
       <Grid item>
@@ -184,55 +226,81 @@ export const createTypedForm = <FormType extends Record<string, any>>() => {
     )
   }
 
-  const fields = {
-    TextField: TextFieldComponent,
-    NumericField: NumericFieldComponent,
-    AssetSelect: AssetSelectComponent,
-    BalanceSelect: BalanceSelectComponent,
-    BankSelect: BankSelectComponent,
-    CountrySelect: CountrySelectComponent,
-    NationalitySelect: NationalitySelectComponent,
-    GenderSelect: GenderSelectComponent,
-    MartialStatusSelect: MartialStatusSelectComponent,
-    Checkbox: CheckboxComponent,
-    YesOrNo: YesOrNoComponent
-  }
+  return () => {
+    const fields = useMemo(
+      () => ({
+        TextField: TextFieldComponent,
+        NumericField: NumericFieldComponent,
+        AssetSelect: AssetSelectComponent,
+        BalanceSelect: BalanceSelectComponent,
+        BankSelect: BankSelectComponent,
+        CountrySelect: CountrySelectComponent,
+        NationalitySelect: NationalitySelectComponent,
+        GenderSelect: GenderSelectComponent,
+        MartialStatusSelect: MartialStatusSelectComponent,
+        Checkbox: CheckboxComponent,
+        YesOrNo: YesOrNoComponent,
+        DocumentUploader: DocumentUploaderComponent
+      }),
+      []
+    )
+    type Fields = typeof fields
+    type FieldTypes = keyof Fields
+    type FieldProps<FieldType extends keyof Fields> = Fields[FieldType] extends
+      | keyof JSX.IntrinsicElements
+      | JSXElementConstructor<any>
+      ? ComponentProps<Fields[FieldType]>
+      : never
 
-  type Fields = typeof fields
-  type FieldTypes = keyof Fields
-  type FieldProps<FieldType extends keyof Fields> = Fields[FieldType] extends
-    | keyof JSX.IntrinsicElements
-    | JSXElementConstructor<any>
-    ? ComponentProps<Fields[FieldType]>
-    : never
-
-  const EditableField = <FieldType extends FieldTypes>(
-    props: {
+    interface EditableFieldProps<FieldType> {
       fieldType: FieldType
       isEditing: boolean
-    } & FieldProps<FieldType>
-  ): JSX.Element => {
-    const { fieldType, isEditing, ...fieldProps } = props
-    let component: any
-
-    if (props.isEditing) {
-      component = fields[fieldType]
-    } else {
-      component = ViewComponent
     }
 
-    return React.createElement(component, fieldProps)
-  }
+    const EditableField = <FieldType extends FieldTypes>(
+      props: EditableFieldProps<FieldType> &
+        FieldProps<FieldType> &
+        EditableFieldWithCustomRendererProps
+    ): JSX.Element => {
+      const { fieldType, isEditing, editRenderer, ...fieldProps } = props
+      let component: any
 
-  return () => {
+      if (props.isEditing) {
+        component = fields[fieldType]
+
+        if (editRenderer !== undefined) {
+          return editRenderer(React.createElement(component, fieldProps))
+        }
+      } else {
+        component = ViewComponent
+      }
+
+      return React.createElement(component, fieldProps)
+    }
+
+    const FormValue = <Path extends DeepPath<FormType, Path>>(props: {
+      name: Path
+      root?: string
+      children: (
+        value: UnpackNestedValue<DeepPathValue<FormType, Path>>
+      ) => JSX.Element
+    }): JSX.Element => {
+      const { name, root, children } = props
+      const { watch } = useFormContext()
+      const value = watch(pathToString(name, root))
+
+      return children(value)
+    }
+
     return useMemo(
       () => ({
         ...fields,
-        Form: React.memo(FormComponent),
+        Form: FormComponent,
         EditableField: EditableField,
+        FormValue: FormValue,
         Submit: Submit
       }),
-      []
+      [] // eslint-disable-line
     )
   }
 }

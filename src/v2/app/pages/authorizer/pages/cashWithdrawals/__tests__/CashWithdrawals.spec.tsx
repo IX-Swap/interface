@@ -5,10 +5,10 @@ import {
   CashWithdrawals,
   renderWithdrawal
 } from 'v2/app/pages/authorizer/pages/cashWithdrawals/CashWithdrawals'
-import WithdrawalView from 'v2/app/components/withdrawal-preview'
+import WithdrawalView from 'v2/app/components/WithdrawalPreview'
 import { cashWithdrawal } from '__fixtures__/authorizer'
 
-jest.mock('v2/app/components/withdrawal-preview', () => jest.fn(() => null))
+jest.mock('v2/app/components/WithdrawalPreview', () => jest.fn(() => null))
 
 describe('CashWithdrawals', () => {
   afterEach(async () => {

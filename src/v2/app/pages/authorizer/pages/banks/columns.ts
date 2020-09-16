@@ -1,12 +1,12 @@
 import { TableColumn } from 'v2/types/util'
 import { Bank } from 'v2/types/bank'
-import { convertStringToMMDDYY } from 'v2/helpers/dates'
+import { formatDateToMMDDYY } from 'v2/helpers/dates'
 
 export const columns: Array<TableColumn<Bank>> = [
   {
     key: 'createdAt',
     label: 'Date of Application',
-    render: convertStringToMMDDYY
+    render: formatDateToMMDDYY
   },
   {
     key: 'accountHolderName',
