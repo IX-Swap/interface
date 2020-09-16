@@ -1,13 +1,13 @@
 import { TableColumn } from 'v2/types/util'
 import { IndividualIdentity } from 'v2/types/identity'
-import { convertStringToMMDDYY } from 'v2/helpers/dates'
+import { formatDateToMMDDYY } from 'v2/helpers/dates'
 import { renderIncome, renderLastName } from 'v2/helpers/tables'
 
 export const columns: Array<TableColumn<IndividualIdentity>> = [
   {
     key: 'createdAt',
     label: 'Date of Application',
-    render: convertStringToMMDDYY
+    render: formatDateToMMDDYY
   },
   {
     key: 'firstName',

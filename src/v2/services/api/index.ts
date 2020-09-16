@@ -41,6 +41,19 @@ const apiService = {
     return await _axios.request<T>(this._prepareRequestConfig(requestConfig))
   },
 
+  async delete<T = any> (
+    uri: string,
+    data: any,
+    axiosConfig: AxiosRequestConfig = {}
+  ) {
+    return await this.request<T>({
+      method: 'delete',
+      uri,
+      data,
+      axiosConfig
+    })
+  },
+
   async post<T = any> (
     uri: string,
     data: any,

@@ -3,14 +3,12 @@ import { IndividualIdentity } from 'v2/types/identity'
 import UserInfoComponent from 'v2/app/pages/identity/components/UserInfo'
 import { Box, Grid } from '@material-ui/core'
 import { Section } from 'v2/app/pages/identity/components/Section'
-import documents from 'v2/app/pages/identity/const/documents'
 import { createTypedForm } from 'v2/components/form/createTypedForm'
 import { IndividualIdentityFormValues } from 'v2/app/pages/identity/components/types'
 import { individualIdentityFormValidationSchema } from 'v2/app/pages/identity/components/validation'
 import { useCreateOrUpdateIndividual } from 'v2/hooks/identity/useCreateOrUpdateIndividual'
 import {
   getIdentityDeclarations,
-  getIdentityDocuments,
   getIdentityFormDefaultValue
 } from 'v2/app/pages/identity/utils'
 import { Address } from './Address'
@@ -61,31 +59,27 @@ export const IndividualIdentityForm = (
             />
           </Section>
         </Grid>
-        <Grid item xs={12}>
-          <Section title='Address'>
-            <Suspense fallback={'loading...'}>
+        <Suspense fallback={'loading...'}>
+          <Grid item xs={12}>
+            <Section title='Address'>
               <Address isEditing={isEditing} />
-            </Suspense>
-          </Section>
-        </Grid>
-        <Grid item xs={12}>
-          <Section title='Financials'>
-            <Suspense fallback={'loading...'}>
+            </Section>
+          </Grid>
+        </Suspense>
+        <Suspense fallback={'loading...'}>
+          <Grid item xs={12}>
+            <Section title='Financials'>
               <Financials isEditing={isEditing} />
-            </Suspense>
-          </Section>
-        </Grid>
-        <Grid item xs={12}>
-          <Section title='Documents'>
-            <Suspense fallback={'loading...'}>
-              <Dataroom
-                documentsList={documents.individual}
-                dataroom={getIdentityDocuments(identity)}
-                editMode={isEditing}
-              />
-            </Suspense>
-          </Section>
-        </Grid>
+            </Section>
+          </Grid>
+        </Suspense>
+        <Suspense fallback={'loading...'}>
+          <Grid item xs={12}>
+            <Section title='Documents'>
+              <Dataroom isEditing={isEditing} />
+            </Section>
+          </Grid>
+        </Suspense>
         <Grid item xs={12}>
           <Section title='Declaration & Acknowledgement'>
             <Suspense fallback={'loading...'}>

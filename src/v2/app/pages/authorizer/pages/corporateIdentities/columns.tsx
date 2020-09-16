@@ -1,13 +1,13 @@
 import { TableColumn } from 'v2/types/util'
 import { CorporateIdentity } from 'v2/types/identity'
-import { convertStringToMMDDYY } from 'v2/helpers/dates'
+import { formatDateToMMDDYY } from 'v2/helpers/dates'
 import { renderLastName } from 'v2/helpers/tables'
 
 export const columns: Array<TableColumn<CorporateIdentity>> = [
   {
     key: 'createdAt',
     label: 'Date',
-    render: convertStringToMMDDYY
+    render: formatDateToMMDDYY
   },
   {
     key: 'companyLegalName',

@@ -2,7 +2,10 @@ import { useServices } from 'v2/services/useServices'
 import { useAuth } from 'v2/hooks/auth/useAuth'
 import { useIdentitiesRouter } from 'v2/app/pages/identity/router'
 import { CorporateIdentityFormValues } from 'v2/app/pages/identity/components/types'
-import { allDeclarationsAreChecked } from 'v2/app/pages/identity/utils'
+import {
+  allDeclarationsAreChecked,
+  prepareDocumentsForUpload
+} from 'v2/app/pages/identity/utils'
 import { useMutation } from 'react-query'
 
 export const useCreateCorporateIdentity = () => {
@@ -19,8 +22,9 @@ export const useCreateCorporateIdentity = () => {
     }
 
     return await identityService.createCorporate({
+      ...values,
       userId: user._id,
-      ...values
+      documents: prepareDocumentsForUpload(values.documents)
     })
   }
 

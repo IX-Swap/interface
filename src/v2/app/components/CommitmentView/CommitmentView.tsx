@@ -26,7 +26,6 @@ const Uploader = ({
 }: {
   onUploadSuccess: (doc: Document) => void
 }) => {
-  console.log(onUploadSuccess)
   return <span>uploader</span>
 }
 

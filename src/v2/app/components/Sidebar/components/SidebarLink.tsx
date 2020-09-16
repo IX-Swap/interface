@@ -124,26 +124,24 @@ export const SidebarLink = (props: SidebarLinkProps) => {
           primary={label}
         />
       </ListItem>
-      {children !== undefined && (
-        <Collapse
-          in={isOpen}
-          timeout='auto'
-          unmountOnExit
-          className={classes.nestedList}
-        >
-          <List component='div' disablePadding>
-            {children.map(childrenLink => (
-              <SidebarLink
-                key={childrenLink?.link}
-                location={location}
-                isSidebarOpened={isSidebarOpened}
-                nested
-                {...childrenLink}
-              />
-            ))}
-          </List>
-        </Collapse>
-      )}
+      <Collapse
+        in={isOpen}
+        timeout='auto'
+        unmountOnExit
+        className={classes.nestedList}
+      >
+        <List component='div' disablePadding>
+          {children.map(childrenLink => (
+            <SidebarLink
+              key={childrenLink?.link}
+              location={location}
+              isSidebarOpened={isSidebarOpened}
+              nested
+              {...childrenLink}
+            />
+          ))}
+        </List>
+      </Collapse>
     </>
   )
 

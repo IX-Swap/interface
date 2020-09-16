@@ -1,5 +1,5 @@
 import { TypeBackground } from '@material-ui/core/styles/createPalette'
-import { ReactNode } from 'react'
+import { ReactNode, ComponentType } from 'react'
 import { RouteComponentProps } from 'react-router-dom'
 
 export interface LightTypeBackground extends TypeBackground {
@@ -16,7 +16,7 @@ export interface TableColumn<T> {
   label: string
   align?: 'inherit' | 'left' | 'center' | 'right' | 'justify'
   headAlign?: 'inherit' | 'left' | 'center' | 'right' | 'justify'
-  render?: (val: any, row: T) => React.ReactNode | JSX.Element | string
+  render?: (val: any, row: T) => ReactNode | JSX.Element | string
 }
 
 export type AuthorizableStatus =
@@ -34,8 +34,6 @@ export interface Viewable<T> {
   renderView?: (item: T) => JSX.Element
 }
 
-export type RowAction<T> = (row: T) => ReactNode
-
 export interface BaseFilter {
   status?: AuthorizableStatus
   asset?: string
@@ -50,9 +48,7 @@ export interface InternalRouteBase {
   path: string
 }
 export interface InternalRouteProps extends InternalRouteBase {
-  component:
-    | React.ComponentType<RouteComponentProps<any>>
-    | React.ComponentType<any>
+  component: ComponentType<RouteComponentProps<any>> | ComponentType<any>
   exact?: boolean
 }
 
@@ -67,3 +63,5 @@ export interface InternalRoute<T> {
   meta: RouteMeta
   columns: TableColumn<T>
 }
+
+export type Maybe<T> = T | null

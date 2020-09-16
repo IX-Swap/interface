@@ -14,6 +14,6 @@ export const convertDateToISO = (
   return formatISO(date)
 }
 
-export const convertStringToMMDDYY = (s: string): string => {
+export const formatDateToMMDDYY = (s: string): string => {
   return format(new Date(s), 'MM/dd/yy')
 }

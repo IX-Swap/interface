@@ -12,15 +12,27 @@ export interface GetAllCorporateIdentities extends PaginationArgs {
   userId: string
 }
 
-export type CreateOrUpdateIndividualIdentityArgs = IndividualIdentityFormValues & {
+export type CreateOrUpdateIndividualIdentityArgs = (
+  | Omit<IndividualIdentityFormValues, 'documents'>
+  | Omit<CorporateIdentityFormValues, 'documents'>
+) & {
+  documents?: string[]
   userId: string
 }
 
-export type CreateCorporateIdentityArgs = CorporateIdentityFormValues & {
+export type CreateCorporateIdentityArgs = Omit<
+  CorporateIdentityFormValues,
+  'documents'
+> & {
+  documents?: string[]
   userId: string
 }
 
-export type UpdateCorporateIdentityArgs = CorporateIdentityFormValues & {
+export type UpdateCorporateIdentityArgs = Omit<
+  CorporateIdentityFormValues,
+  'documents'
+> & {
+  documents?: string[]
   id: string
   userId: string
 }

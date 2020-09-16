@@ -23,9 +23,17 @@ export const responseErrorInterceptor = (error: any) => {
 export const responseSuccessInterceptor = (
   response: AxiosResponse<APIResponse>
 ) => {
+  let data: any
+
+  if (response.data instanceof Blob) {
+    data = response.data
+  } else {
+    data = response.data.data
+  }
+
   return {
     ...response,
-    data: response.data.data,
-    message: response.data.message
+    message: response.data.message,
+    data
   }
 }

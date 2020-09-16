@@ -8,22 +8,28 @@ import { Control } from 'react-hook-form'
 import { FormControlProps, InputProps } from '@material-ui/core'
 import React from 'react'
 
+export interface TypedFieldChildProps<
+  FormType extends UnpackNestedValue<FieldValuesFromControl<Control>>,
+  Path extends DeepPath<FormType, Path>
+> {
+  label: string
+  name: string
+  onChange: (...event: any[]) => void
+  onBlur: () => void
+  value: DeepPathValue<FormType, Path>
+}
+
 export interface TypedFieldPropsWithChildren<
   FormType extends UnpackNestedValue<FieldValuesFromControl<Control>>,
   Path extends DeepPath<FormType, Path>
 > {
   children:
-    | ((props: {
-        label: string
-        onChange: (...event: any[]) => void
-        onBlur: () => void
-        value: DeepPathValue<FormType, Path>
-      }) => React.ReactElement)
+    | ((props: TypedFieldChildProps<FormType, Path>) => React.ReactElement)
     | JSX.Element
 }
 
 export interface TypedFieldProps<
-  FormType extends UnpackNestedValue<FieldValuesFromControl<Control>>,
+  FormType extends UnpackNestedValue<Record<string, any>>,
   Path extends DeepPath<FormType, Path>
 > {
   name: Path

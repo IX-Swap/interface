@@ -196,12 +196,12 @@ export const Sidebar = () => {
       <List>
         {structure.map(({ link, ...others }) => (
           <SidebarLink
+            {...others}
             link={link}
             key={others.id}
             nested={others.children !== undefined && others.children.length > 0}
             location={location}
             isSidebarOpened={layoutStore.isSidebarOpened}
-            {...others} // eslint-disable-line react/jsx-props-no-spreading
           />
         ))}
       </List>

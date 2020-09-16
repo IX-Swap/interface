@@ -1,6 +1,6 @@
 import { TableColumn } from 'v2/types/util'
 import { DSWithdrawal } from 'v2/types/ds-withdrawal'
-import { convertStringToMMDDYY } from 'v2/helpers/dates'
+import { formatDateToMMDDYY } from 'v2/helpers/dates'
 import {
   renderAmount,
   renderAssetName,
@@ -11,7 +11,7 @@ export const columns: Array<TableColumn<DSWithdrawal>> = [
   {
     key: 'createdAt',
     label: 'Date',
-    render: convertStringToMMDDYY
+    render: formatDateToMMDDYY
   },
   {
     key: 'individual.firstName',
