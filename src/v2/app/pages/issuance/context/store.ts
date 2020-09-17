@@ -1,11 +1,11 @@
 import { action, observable } from 'mobx'
-import { Dso } from 'v2/types/dso'
+import { DigitalSecurityOffering } from 'v2/types/dso'
 
 export class IssuanceStore {
-  @observable selectedDso?: Dso
+  @observable selectedDso?: DigitalSecurityOffering
 
   @action
-  selectDso(dso: Dso) {
+  selectDso (dso: DigitalSecurityOffering) {
     this.selectedDso = dso
   }
 }

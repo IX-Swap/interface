@@ -25,7 +25,7 @@ export const renderStatusColumn = (s: string): JSX.Element => (
 
 export const statusColumn = {
   key: 'status',
-  label: '',
+  label: 'Status',
   render: renderStatusColumn
 }
 
@@ -56,7 +56,7 @@ export const useAuthorizerView = <T,>(
   }
 
   const getColumns = (): Array<TableColumn<T>> => {
-    return filter.status === 'Submitted' ? [...columns, statusColumn] : columns
+    return filter.status === '' ? [...columns, statusColumn] : columns
   }
 
   useEffect(() => {

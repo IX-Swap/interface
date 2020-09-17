@@ -4,15 +4,11 @@ import { useUpdateBank } from 'v2/app/pages/accounts/pages/banks/hooks/useUpdate
 import { BankFormValues } from 'v2/app/pages/accounts/types'
 import { useParams } from 'react-router-dom'
 import { useBanksData } from 'v2/app/pages/accounts/pages/banks/hooks/useBanksData'
-import { useBanksRouter } from 'v2/app/pages/accounts/pages/banks/router'
 
 export const EditBank: React.FC = () => {
   const { bankId } = useParams<{ bankId: string }>()
-  const { push } = useBanksRouter()
   const { data, status } = useBanksData()
-  const { mutate: updateBank } = useUpdateBank({
-    onSuccess: () => push('list')
-  })
+  const [updateBank] = useUpdateBank()
   const handleSubmit = async (values: BankFormValues): Promise<void> => {
     await updateBank({ ...values, bankId })
   }

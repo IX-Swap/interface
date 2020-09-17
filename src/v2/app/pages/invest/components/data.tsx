@@ -2,13 +2,13 @@ import React from 'react'
 import { TableColumn } from 'v2/types/util'
 import { formatMoney } from 'v2/helpers/numbers'
 import { Commitment } from 'v2/types/commitment'
-import DsoImage from 'v2/app/components/digital-security/image'
+import { DSOImage } from 'v2/app/components/DSO/DSOImage'
 
 export const columns: Array<TableColumn<Commitment>> = [
   {
     key: '_id',
     label: '',
-    render: (a: string, row: Commitment) => <DsoImage dsoId={row.dso._id} />
+    render: (a: string, row: Commitment) => <DSOImage dsoId={row.dso._id} />
   },
   {
     key: 'dso.tokenSymbol',

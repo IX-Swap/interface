@@ -14,3 +14,7 @@ export interface DocumentGuide {
   label: string
   type: string
 }
+
+export interface DocumentWithGuide extends DocumentGuide {
+  document: Document | null
+}

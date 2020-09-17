@@ -1,20 +1,22 @@
 import React from 'react'
 import { INVESTAX_BANK } from 'v2/config'
 import { Box, Grid } from '@material-ui/core'
-import { DepositForm } from 'v2/app/pages/accounts/pages/banks/DepositCash/DepositForm'
-import BankDetails from 'v2/app/components/bank-details'
+import {
+  DepositForm,
+  useDepositCashForm
+} from 'v2/app/pages/accounts/pages/banks/DepositCash/DepositForm'
+import { BankDetails } from 'v2/app/components/BankDetails'
 import { observer } from 'mobx-react'
-import { OTP } from 'v2/app/pages/accounts/pages/banks/components/OTP'
 import { generateRandom } from 'v2/helpers/numbers'
 import { useDepositStore } from 'v2/app/pages/accounts/pages/banks/context'
 import { Preview } from 'v2/app/pages/accounts/pages/banks/DepositCash/Preview'
 import { Setup } from 'v2/app/pages/accounts/pages/banks/DepositCash/Setup'
 import { CancelButton } from 'v2/app/pages/accounts/pages/banks/components/CancelButton'
-import { SubmitButton } from 'v2/components/form/SubmitButton'
 import { ContinueButton } from 'v2/app/pages/accounts/pages/banks/DepositCash/ContinueButton'
 import { DepositCashAlert } from 'v2/app/pages/accounts/pages/banks/components/DepositCashAlert'
 
 export const DepositView: React.FC = observer(() => {
+  const { TextField, Submit } = useDepositCashForm()
   const { isPreview } = useDepositStore()
   const depositCode = generateRandom(8, 'A#')
 
@@ -30,7 +32,17 @@ export const DepositView: React.FC = observer(() => {
         {isPreview && (
           <Grid item container justify='center'>
             <DepositCashAlert />
-            <OTP />
+            <Grid item container direction='column'>
+              <Box my={4} alignSelf='center'>
+                <TextField
+                  name='otp'
+                  label='2-Factor Auth Code'
+                  inputProps={{
+                    autoComplete: 'off'
+                  }}
+                />
+              </Box>
+            </Grid>
           </Grid>
         )}
         <Grid item>
@@ -39,7 +51,7 @@ export const DepositView: React.FC = observer(() => {
               <>
                 <CancelButton />
                 <Box mx={1} />
-                <SubmitButton>Confirm Deposit</SubmitButton>
+                <Submit>Confirm Deposit</Submit>
               </>
             ) : (
               <ContinueButton />

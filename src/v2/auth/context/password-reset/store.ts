@@ -1,13 +1,7 @@
 import { action, observable } from 'mobx'
 import { PasswordResetStep } from 'v2/auth/context/password-reset/types'
-import {
-  CompletePasswordResetArgs,
-  RequestPasswordResetArgs
-} from 'v2/auth/service/types'
-import authService from 'v2/auth/service'
-import AsyncStore from 'v2/stores/async-store'
 
-class PasswordResetStore extends AsyncStore {
+class PasswordResetStore {
   @observable
   email = ''
 
@@ -15,35 +9,13 @@ class PasswordResetStore extends AsyncStore {
   currentStep = PasswordResetStep.Request
 
   @action
-  setCurrentStep = (step: PasswordResetStep): void => {
+  setCurrentStep = (step: PasswordResetStep) => {
     this.currentStep = step
   }
 
   @action
-  requestReset = async (args: RequestPasswordResetArgs): Promise<void> => {
-    this.setBusy()
-    const { success, message } = await authService.requestPasswordReset(args)
-
-    if (success) {
-      this.email = args.email
-      this.currentStep = PasswordResetStep.Reset
-      this.completeWithSuccess(message)
-    } else {
-      this.completeWithError(message)
-    }
-  }
-
-  @action
-  completeReset = async (args: CompletePasswordResetArgs): Promise<void> => {
-    this.setBusy()
-    const { success, message } = await authService.completePasswordReset(args)
-
-    if (success) {
-      this.currentStep = PasswordResetStep.Confirmation
-      this.completeWithSuccess(message)
-    } else {
-      this.completeWithError(message)
-    }
+  setEmail = (email: string) => {
+    this.email = email
   }
 }
 

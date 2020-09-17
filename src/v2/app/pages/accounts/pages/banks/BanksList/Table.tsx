@@ -3,10 +3,10 @@ import { TableView } from 'v2/components/TableWithPagination/TableView'
 import { columns } from 'v2/app/pages/accounts/pages/banks/BanksList/columns'
 import { Bank } from 'v2/types/bank'
 import { Actions } from 'v2/app/pages/accounts/pages/banks/BanksList/Actions'
-import { useUserStore } from 'v2/auth/context'
+import { useUser } from 'v2/auth/hooks/useUser'
 
 export const Table: React.FC = () => {
-  const { user } = useUserStore()
+  const { data: user } = useUser()
   const userId = user !== undefined ? user._id : ''
 
   return (

@@ -1,17 +1,15 @@
-import { APIServiceResponse } from 'v2/services/api/types'
+import { APIResponse } from 'v2/services/api/types'
 
 export const url = 'http://example.com'
 
-export const successfulResponse: APIServiceResponse<any> = {
+export const successfulResponse: APIResponse<any> = {
   data: {},
-  message: 'success',
-  success: true
+  message: 'success'
 }
 
-export const unsuccessfulResponse: APIServiceResponse = {
+export const unsuccessfulResponse: APIResponse = {
   data: undefined,
-  message: 'error',
-  success: false
+  message: 'error'
 }
 
 export const headers = {

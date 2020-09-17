@@ -13,11 +13,11 @@ const passwordPatterns = [
   /[^A-Za-z0-9]/ // not an uppercase or lowercase character or a number (meaning, at least one symbol)
 ]
 
-const emailSchema = yup.string().email().required('Required')
-const passwordSchema = yup
+export const emailSchema = yup.string().email().required('Required')
+export const passwordSchema = yup
   .string()
-  .min(12)
-  .max(48)
+  .min(12, 'Password must be at least 12 characters long')
+  .max(48, 'Password cannot be longer than 48 characters')
   .test(
     'Password strength',
     'Password does not meet complexity requirement',

@@ -30,14 +30,11 @@ export const useTableWithPagination = <TData>(
   const fetcher = async (key: string, p: number, r: number, f?: BaseFilter) => {
     const payload: KeyValueMap<any> = {
       skip: p * r,
-      limit: r
+      limit: r,
+      ...(filter ?? {})
     }
 
-    if (f !== undefined && f !== null) {
-      payload.filter = f
-    }
-
-    return await apiService.request<PaginatedData<TData>>('POST', uri, payload)
+    return await apiService.post<PaginatedData<TData>>(uri, payload)
   }
 
   const { data, status, fetchMore, isFetching } = useInfiniteQuery(
@@ -56,18 +53,31 @@ export const useTableWithPagination = <TData>(
   ])
   const previousPageData =
     cached !== undefined
-      ? cached.map(page => page.data.data[0].documents)[0]
+      ? cached.map(page =>
+        page.data.length > 0 ? page.data[0].documents : []
+      )[0]
       : []
   const currentPageData =
-    data !== undefined ? data.map(page => page.data.data[0].documents)[0] : []
+    data !== undefined
+      ? data.map(page =>
+        page.data.length > 0 ? page.data[0].documents : []
+      )[0]
+      : []
   const total =
-    data !== undefined && data.length > 0
-      ? data[data.length - 1].data.data[0].count ?? 0
+    data !== undefined &&
+    data.length > 0 &&
+    data[data.length - 1].data.length > 0
+      ? data[data.length - 1].data[0].count ?? 0
       : 0
   const items = isFetching ? previousPageData : currentPageData
   const _page = status === 'loading' ? 0 : page
 
   const _setPage = (nextPage: number): void => {
+    if (nextPage === page) {
+      // eslint-disable-next-line no-void
+      void queryCache.invalidateQueries(queryKey)
+      return
+    }
     setPrevPage(page)
     setPage(nextPage)
   }

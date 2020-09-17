@@ -17,10 +17,6 @@ export interface KeyValueMap<V = string> {
   [key: string]: V
 }
 
-export interface APIError {
-  message: string
-}
-
 export interface APIResponse<T = undefined> {
   data: T
   message: string

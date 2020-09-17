@@ -1,7 +1,7 @@
 /**  * @jest-environment jsdom-sixteen  */
 import React from 'react'
 import { fakeUserStore, renderWithUserStore } from 'test-utils'
-import AuthEntryPoint from 'v2/auth/AuthRoot'
+import { AuthRoot } from 'v2/auth/AuthRoot'
 import { history } from 'v2/history'
 import { cleanup } from '@testing-library/react'
 import { AuthRoute } from 'v2/auth/router'
@@ -9,6 +9,9 @@ import { Login } from 'v2/auth/pages/login/Login'
 import { Register } from 'v2/auth/pages/register/Register'
 import { PasswordReset } from 'v2/auth/pages/password-reset/PasswordReset'
 import { Confirmation } from 'v2/auth/pages/confirmation/Confirmation'
+import * as useAuthHook from 'v2/hooks/auth/useAuth'
+import { user } from '__fixtures__/user'
+import { AuthTabs } from 'v2/auth/components/AuthTabs'
 
 jest.mock('v2/auth/pages/login/Login', () => ({
   Login: jest.fn(() => null)
@@ -22,6 +25,9 @@ jest.mock('v2/auth/pages/password-reset/PasswordReset', () => ({
 jest.mock('v2/auth/pages/confirmation/Confirmation', () => ({
   Confirmation: jest.fn(() => null)
 }))
+jest.mock('v2/auth/components/AuthTabs', () => ({
+  AuthTabs: jest.fn(() => null)
+}))
 
 describe('AuthRoot', () => {
   beforeEach(() => {
@@ -29,14 +35,14 @@ describe('AuthRoot', () => {
   })
 
   afterEach(async () => {
-    jest.clearAllMocks()
     await cleanup()
+    jest.clearAllMocks()
   })
 
   it('sets active tab to 0 if path is /auth/login', () => {
     history.push(AuthRoute.login)
 
-    renderWithUserStore(<AuthEntryPoint />)
+    renderWithUserStore(<AuthRoot />)
 
     expect(fakeUserStore.setActiveTab).toBeCalledTimes(1)
     expect(fakeUserStore.setActiveTab).toBeCalledWith(0)
@@ -45,41 +51,35 @@ describe('AuthRoot', () => {
   it('sets active tab to 1 if path is /auth/register', () => {
     history.push(AuthRoute.signup)
 
-    renderWithUserStore(<AuthEntryPoint />)
+    renderWithUserStore(<AuthRoot />)
 
     expect(fakeUserStore.setActiveTab).toBeCalledTimes(1)
     expect(fakeUserStore.setActiveTab).toBeCalledWith(1)
   })
 
   it('redirects to /app if user is authenticated', () => {
-    const store = {
-      isAuthenticated: true
-    }
+    jest.spyOn(useAuthHook, 'useAuth').mockReturnValueOnce({
+      isAuthenticated: true,
+      user
+    })
 
-    renderWithUserStore(<AuthEntryPoint />, store)
+    renderWithUserStore(<AuthRoot />)
 
     expect(history.location.pathname).toBe('/app')
   })
 
-  it('redirects to /auth/login if path does not match', () => {
-    history.push('/wrong/path')
-    renderWithUserStore(<AuthEntryPoint />)
-
-    expect(history.location.pathname).toBe('/auth/login')
-  })
-
   it('does not render AuthTabs on /password-reset route', () => {
     history.push(AuthRoute.passwordReset)
-    const { queryByTestId } = renderWithUserStore(<AuthEntryPoint />)
-    const authTabs = queryByTestId('auth-tabs')
 
-    expect(authTabs).toBeFalsy()
+    renderWithUserStore(<AuthRoot />)
+
+    expect(AuthTabs).not.toHaveBeenCalled()
   })
 
   it('renders Login if path is /auth/login', () => {
     history.push(AuthRoute.login)
 
-    renderWithUserStore(<AuthEntryPoint />)
+    renderWithUserStore(<AuthRoot />)
 
     expect(Login).toHaveBeenCalledTimes(1)
   })
@@ -87,7 +87,7 @@ describe('AuthRoot', () => {
   it('renders Register if path is /auth/register', () => {
     history.push(AuthRoute.signup)
 
-    renderWithUserStore(<AuthEntryPoint />)
+    renderWithUserStore(<AuthRoot />)
 
     expect(Register).toHaveBeenCalledTimes(1)
   })
@@ -95,7 +95,7 @@ describe('AuthRoot', () => {
   it('renders Confirmation if path is /auth/confirm', () => {
     history.push(AuthRoute.confirm)
 
-    renderWithUserStore(<AuthEntryPoint />)
+    renderWithUserStore(<AuthRoot />)
 
     expect(Confirmation).toHaveBeenCalledTimes(1)
   })
@@ -103,7 +103,7 @@ describe('AuthRoot', () => {
   it('renders PasswordReset if path is /auth/reset-password', () => {
     history.push(AuthRoute.passwordReset)
 
-    renderWithUserStore(<AuthEntryPoint />)
+    renderWithUserStore(<AuthRoot />)
 
     expect(PasswordReset).toHaveBeenCalledTimes(1)
   })

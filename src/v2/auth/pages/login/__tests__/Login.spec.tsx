@@ -1,10 +1,13 @@
 /**  * @jest-environment jsdom-sixteen  */
 import React from 'react'
-import { fireEvent, cleanup, waitFor, renderWithUserStore } from 'test-utils'
+import { fireEvent, cleanup, waitFor, render } from 'test-utils'
 import { Login, loginFormInitialValues } from 'v2/auth/pages/login/Login'
 import { loginArgs } from '__fixtures__/auth'
 import { history } from 'v2/history'
 import { AuthRoute } from 'v2/auth/router'
+import * as useLoginHook from 'v2/auth/hooks/useLogin'
+import { generateMutationResult } from '__fixtures__/useQuery'
+import { user } from '__fixtures__/user'
 
 describe('LoginForm', () => {
   beforeEach(() => {
@@ -17,23 +20,22 @@ describe('LoginForm', () => {
   })
 
   it('renders with empty initial values', () => {
-    const { container, getByTestId, getByText } = renderWithUserStore(<Login />)
+    const { container, getByTestId, getByText } = render(<Login />)
     const form = getByTestId('login-form')
     const loginButton = getByText(/login/i)
     const forgotPasswordButton = getByText(/forgot password/i)
 
-    expect(container).toBeTruthy
-    expect(loginButton).toBeTruthy
-    expect(loginButton.parentElement).toBeDisabled()
-    expect(forgotPasswordButton).toBeTruthy
+    expect(container).toBeTruthy()
+    expect(loginButton).toBeTruthy()
+    expect(forgotPasswordButton).toBeTruthy()
     expect(form).toHaveFormValues(loginFormInitialValues)
   })
 
   it('handles user input', () => {
-    const { getByPlaceholderText, getByTestId } = renderWithUserStore(<Login />)
+    const { getByLabelText, getByTestId } = render(<Login />)
     const form = getByTestId('login-form')
-    const email = getByPlaceholderText(/email address/i)
-    const password = getByPlaceholderText(/password/i)
+    const email = getByLabelText(/email address/i)
+    const password = getByLabelText(/password/i)
 
     fireEvent.change(email, { target: { value: loginArgs.email } })
     fireEvent.change(password, { target: { value: loginArgs.password } })
@@ -43,11 +45,13 @@ describe('LoginForm', () => {
 
   it('handles submit', async () => {
     const login = jest.fn()
-    const { getByText, getByPlaceholderText } = renderWithUserStore(<Login />, {
-      login
-    })
-    const email = getByPlaceholderText(/email address/i)
-    const password = getByPlaceholderText(/password/i)
+    jest
+      .spyOn(useLoginHook, 'useLogin')
+      .mockReturnValue([login, generateMutationResult({ data: user })])
+
+    const { getByText, getByLabelText } = render(<Login />)
+    const email = getByLabelText(/email address/i)
+    const password = getByLabelText(/password/i)
     const loginButton = getByText(/login/i)
 
     fireEvent.change(email, { target: { value: loginArgs.email } })
@@ -64,7 +68,7 @@ describe('LoginForm', () => {
   })
 
   it('handles click on "Forgot Password?"', async () => {
-    const { getByText } = renderWithUserStore(<Login />)
+    const { getByText } = render(<Login />)
     const forgotPasswordButton = getByText(/forgot password/i)
 
     fireEvent.click(forgotPasswordButton)
@@ -72,12 +76,8 @@ describe('LoginForm', () => {
   })
 
   it('handles email validation', async () => {
-    const {
-      getByText,
-      getAllByText,
-      getByPlaceholderText
-    } = renderWithUserStore(<Login />)
-    const email = getByPlaceholderText(/email address/i)
+    const { getByText, getAllByText, getByLabelText } = render(<Login />)
+    const email = getByLabelText(/email address/i)
     const loginButton = getByText(/login/i)
 
     fireEvent.blur(email)
@@ -92,17 +92,13 @@ describe('LoginForm', () => {
 
     await waitFor(() => {
       expect(loginButton.parentElement).toBeDisabled()
-      expect(getByText('email must be a valid email')).toBeTruthy
+      expect(getByText('email must be a valid email')).toBeTruthy()
     })
   })
 
   it('handles password validation', async () => {
-    const {
-      getByText,
-      getAllByText,
-      getByPlaceholderText
-    } = renderWithUserStore(<Login />)
-    const password = getByPlaceholderText(/password/i)
+    const { getByText, getAllByText, getByLabelText } = render(<Login />)
+    const password = getByLabelText(/password/i)
     const loginButton = getByText(/login/i)
 
     fireEvent.blur(password)
@@ -110,7 +106,7 @@ describe('LoginForm', () => {
     await waitFor(() => {
       expect(loginButton.parentElement).toBeDisabled()
       expect(
-        getAllByText('Password does not meet complexity requirement').length
+        getAllByText('Password must be at least 12 characters long').length
       ).toBe(1)
     })
   })

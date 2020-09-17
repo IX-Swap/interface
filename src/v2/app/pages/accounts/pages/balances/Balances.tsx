@@ -3,10 +3,10 @@ import { TableView } from 'v2/components/TableWithPagination/TableView'
 import { AssetBalance } from 'v2/types/balance'
 import { columns } from 'v2/app/pages/accounts/pages/balances/columns'
 import { Paper } from '@material-ui/core'
-import { useUserStore } from 'v2/auth/context'
+import { useAuth } from 'v2/hooks/auth/useAuth'
 
 export const Balances: React.FC = () => {
-  const { user } = useUserStore()
+  const { user } = useAuth()
 
   if (user === undefined) return null
 

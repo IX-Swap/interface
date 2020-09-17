@@ -15,7 +15,7 @@ describe('DropdownMenu', () => {
     const { getByTestId } = render(<DropdownMenu {...props} />)
     const toggle = getByTestId('toggle')
 
-    expect(toggle).toBeTruthy
+    expect(toggle).toBeTruthy()
   })
 
   it('does not render content initially', () => {
@@ -33,7 +33,7 @@ describe('DropdownMenu', () => {
     await waitFor(() => {
       const content = getByTestId('content')
 
-      expect(content).toBeTruthy
+      expect(content).toBeTruthy()
     })
   })
 
@@ -46,7 +46,7 @@ describe('DropdownMenu', () => {
     fireEvent.click(toggle)
     await waitFor(() => {
       const content = getByTestId('content')
-      expect(content).toBeTruthy
+      expect(content).toBeTruthy()
     })
 
     fireEvent.click(container)

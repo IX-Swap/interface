@@ -2,7 +2,7 @@ import { InternalRouteProps } from 'v2/types/util'
 
 import { Balances } from 'v2/app/pages/accounts/pages/balances/Balances'
 import { Banks } from 'v2/app/pages/accounts/pages/banks/Banks'
-import { DigitalSecurities } from 'v2/app/pages/accounts/pages/digital-securities/DigitalSecurities'
+import { DigitalSecurities } from 'v2/app/pages/accounts/pages/digitalSecurities/DigitalSecurities'
 import Transactions from 'v2/app/pages/accounts/pages/transactions'
 import { generateAppRouterHook } from 'v2/helpers/generateAppRouterHook'
 

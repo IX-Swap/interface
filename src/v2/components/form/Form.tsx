@@ -12,9 +12,9 @@ export interface FormProps<T extends {}> {
 export const Form = <T,>(
   props: PropsWithChildren<FormProps<T>>
 ): JSX.Element => {
-  const { defaultValues, onSubmit, validationSchema, children } = props
+  const { defaultValues, onSubmit, validationSchema, children, ...rest } = props
   const form = useForm({
-    mode: 'onChange',
+    mode: 'all',
     defaultValues,
     resolver: yupResolver(validationSchema)
   })
@@ -22,7 +22,13 @@ export const Form = <T,>(
 
   return (
     <FormProvider {...form}>
-      <form onSubmit={handleSubmit(onSubmit)}>{children}</form>
+      <form
+        {...rest}
+        style={{ width: '100%' }}
+        onSubmit={handleSubmit(onSubmit, console.error)}
+      >
+        {children}
+      </form>
     </FormProvider>
   )
 }

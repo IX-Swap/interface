@@ -6,7 +6,7 @@ import {
   StylesProvider
 } from '@material-ui/core/styles'
 import { ThemeProvider } from '@material-ui/styles'
-import Themes from './v1/themes'
+import Themes from './v2/themes'
 import { history } from 'v2/history'
 import { UserProvider } from 'v2/auth/context'
 import { UserStore } from 'v2/auth/context/store'
@@ -81,7 +81,8 @@ export const renderWithPasswordResetStore = (
 
 export const fakeAuthorizerTableStore: Partial<AuthorizerTableStore> = {
   idKey: '__',
-  uri: '/api/source'
+  uri: '/api/source',
+  _getItemId: jest.fn()
 }
 
 export const renderWithAuthorizerTableStore = (

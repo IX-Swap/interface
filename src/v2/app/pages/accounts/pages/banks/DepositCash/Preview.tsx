@@ -1,11 +1,11 @@
 import React from 'react'
 import { Box, Typography } from '@material-ui/core'
-import GenericPreview from 'v2/app/components/generic-preview'
+import { GenericPreview } from 'v2/app/components/GenericPreview/GenericPreview'
 import { formatMoney } from 'v2/helpers/numbers'
 import { INVESTAX_BANK } from 'v2/config'
 import { useFormContext } from 'react-hook-form'
 import { DepositCashFormValues } from 'v2/app/pages/accounts/types'
-import { useAssetsData } from 'v2/context/assets/useAssetsData'
+import { useAssetsData } from 'v2/hooks/asset/useAssetsData'
 
 export interface DepositTransactionPreviewProps {
   depositCode: string

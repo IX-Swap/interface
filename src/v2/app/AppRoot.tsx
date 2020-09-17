@@ -1,32 +1,26 @@
-import React, { useEffect, useCallback } from 'react'
+import React, { useEffect } from 'react'
 import { useHistory } from 'react-router-dom'
 import { observer } from 'mobx-react'
 import classnames from 'classnames'
-
-import Header from './components/header'
-import Sidebar from './components/sidebar'
+import { Header } from 'v2/app/components/Header/Header'
+import { Sidebar } from 'v2/app/components/Sidebar/Sidebar'
 import useStyles from './styles'
-
-import { useUserStore } from 'v2/auth/context'
 import { useStore as useLayoutStore } from '../context/layout'
 import { useAppRouter } from 'v2/app/router'
+import { useAuth } from 'v2/hooks/auth/useAuth'
 
-const AppRoot: React.FC = () => {
-  const userState = useUserStore()
+export const AppRoot: React.FC = observer(() => {
+  const { isAuthenticated } = useAuth()
   const layoutState = useLayoutStore()
   const history = useHistory()
   const classes = useStyles()
   const { renderRoutes } = useAppRouter()
 
-  const updateAppAuthStatus = useCallback(() => {
-    if (!userState.isAuthenticated) {
+  useEffect(() => {
+    if (!isAuthenticated) {
       history.replace('/auth')
     }
-  }, [history, userState.isAuthenticated])
-
-  useEffect(() => {
-    updateAppAuthStatus()
-  }, [userState.isAuthenticated, updateAppAuthStatus])
+  }, [isAuthenticated, history])
 
   return (
     <div className={classes.root}>
@@ -41,6 +35,4 @@ const AppRoot: React.FC = () => {
       </div>
     </div>
   )
-}
-
-export default observer(AppRoot)
+})

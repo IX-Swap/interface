@@ -1,7 +1,7 @@
+/* eslint-disable */
 import React, { useState, useEffect, useRef } from 'react'
 import { noop, get } from 'lodash'
 import { useFormContext } from 'react-hook-form'
-
 import { IconButton } from '@material-ui/core'
 import { makeStyles } from '@material-ui/styles'
 import CloseIcon from '@material-ui/icons/Close'
@@ -96,10 +96,10 @@ const ImageUploader = ({
       position: 'relative',
       '&:hover': editMode
         ? {
-            '& $uploadButton': {
-              display: 'flex'
-            }
+          '& $uploadButton': {
+            display: 'flex'
           }
+        }
         : undefined
     }
   }))

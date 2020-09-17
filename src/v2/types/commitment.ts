@@ -1,4 +1,4 @@
-import { Dso } from './dso'
+import { DigitalSecurityOffering } from './dso'
 import { Asset } from './asset'
 import { CorporateIdentity, IndividualIdentity } from './identity'
 
@@ -6,7 +6,7 @@ export interface Commitment {
   _id: string
   status: string
   createdBy: string
-  dso: Dso
+  dso: DigitalSecurityOffering
   currency: Asset
   walletAddress: string
   numberOfUnits: number

@@ -1,6 +1,12 @@
-import { banksService } from 'v2/app/pages/accounts/pages/banks/service'
-import { generateMutationHook } from 'v2/helpers/generateMutationHook'
+import { useMutation } from 'react-query'
+import { useServices } from 'v2/services/useServices'
+import { useBanksRouter } from 'v2/app/pages/accounts/pages/banks/router'
 
-export const useWithdrawDS = generateMutationHook(
-  banksService.withdrawDS.bind(banksService)
-)
+export const useWithdrawDS = () => {
+  const { push } = useBanksRouter()
+  const { banksService } = useServices()
+
+  return useMutation(banksService.withdrawDS.bind(banksService), {
+    onSuccess: () => push('list')
+  })
+}

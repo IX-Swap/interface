@@ -1,3 +1,4 @@
+/* eslint-disable */
 import React, { useRef } from 'react'
 import MUIRichTextEditor from 'mui-rte'
 import { useFormContext, Controller } from 'react-hook-form'

@@ -5,11 +5,13 @@ import { Commitment } from 'v2/types/commitment'
 import { CorporateIdentity, IndividualIdentity } from 'v2/types/identity'
 import { DSWithdrawal } from 'v2/types/ds-withdrawal'
 import { Asset } from 'v2/types/asset'
-import { Dso } from 'v2/types/dso'
+import { DigitalSecurityOffering } from 'v2/types/dso'
 import { AssetBalance } from 'v2/types/balance'
 
-export const renderMinimumInvestment = (amount: number, row: Dso): string =>
-  formatMoney(amount, row.tokenSymbol)
+export const renderMinimumInvestment = (
+  amount: number,
+  row: DigitalSecurityOffering
+): string => formatMoney(amount, row.tokenSymbol)
 
 export const renderIncome = (i: string): string => `SGD ${i}`
 
@@ -50,7 +52,7 @@ export const renderAmount = (
     | CashWithdrawal
     | Commitment
     | DSWithdrawal
-    | Dso
+    | DigitalSecurityOffering
     | AssetBalance
 ): string => {
   const amount = Number.isNaN(val) ? 0 : parseFloat(val)

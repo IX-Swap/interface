@@ -5,9 +5,9 @@ import { Asset } from 'v2/types/asset'
 import { CorporateIdentity, IndividualIdentity } from 'v2/types/identity'
 import { user } from '__fixtures__/user'
 import { CashWithdrawal } from 'v2/types/cash-withdrawal'
-import { Commitment } from 'v2/types/commitment'
 import { DSWithdrawal } from 'v2/types/ds-withdrawal'
-import { Dso } from 'v2/types/dso'
+import { DigitalSecurityOffering } from 'v2/types/dso'
+import declarations from 'v2/app/pages/identity/const/declarations'
 
 export const asset: Asset = {
   _id: '2',
@@ -26,7 +26,7 @@ export const asset: Asset = {
 
 export const address = {
   city: 'Omsk',
-  country: 'Russia',
+  country: 'Russian Federation',
   state: 'Siberia',
   line1: 'Address line 1',
   line2: 'Address line 2',
@@ -63,6 +63,7 @@ export const corporate: CorporateIdentity = {
   directors: [],
   registrationNumber: '123456',
   representatives: [],
+  toArrangeCustody: true,
   user
 }
 
@@ -76,7 +77,7 @@ export const individual: IndividualIdentity = {
   contactNumber: '1234567890',
   createdAt: '01-01-2000',
   updatedAt: '01-01-2000',
-  countryOfResidence: 'Russia',
+  countryOfResidence: 'Russian Federation',
   dob: 'DOB',
   employer: 'InvestaX',
   employmentStatus: 'Employed',
@@ -89,12 +90,14 @@ export const individual: IndividualIdentity = {
   middleName: '',
   nationality: 'Russian',
   occupation: 'Occupied',
-  politicallyExposed: false,
+  // politicallyExposed: false,
   sourceOfWealth: '___',
   status: 'Authorized',
   toArrangeCustody: true,
   walletAddress: '1234567890_',
-  declarations: [],
+  declarations: declarations.individual.map(({ key }) => ({
+    [key]: undefined
+  })),
   documents: [],
   address,
   user
@@ -133,7 +136,7 @@ export const cashWithdrawal: CashWithdrawal = {
   asset
 }
 
-export const dso: Dso = {
+export const dso: DigitalSecurityOffering = {
   _id: '1',
   asset: 'asset',
   businessModel: 'business model',
@@ -145,7 +148,7 @@ export const dso: Dso = {
   deleted: false,
   deploymentInfo: undefined,
   distributionFrequency: 'distribution frequency',
-  dividendYeild: 1,
+  dividendYield: 1,
   documents: [],
   equityMultiple: 'equity multiple',
   fundraisingMilestone: 'fundraising milestone',

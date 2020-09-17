@@ -1,14 +1,12 @@
 import React from 'react'
-import { Button } from '@material-ui/core'
-import { Formik, Form } from 'formik'
-import { useUserStore } from 'v2/auth/context'
-import { AuthFormMessage } from 'v2/auth/components/AuthFormMessage'
 import useStyles from 'v2/auth/styles'
 import { registerFormValidationSchema } from 'v2/auth/validation'
-import FormikTextField from 'v2/components/form/FormikTextField'
-import { isSubmitDisabled } from 'v2/helpers/formik'
 import { SignupArgs } from 'v2/auth/service/types'
 import { observer } from 'mobx-react'
+import { useSignup } from 'v2/auth/hooks/useSignup'
+import { createTypedForm } from 'v2/components/form/createTypedForm'
+
+export const useRegisterForm = createTypedForm<SignupArgs>()
 
 export const registerFormInitialValues = {
   name: '',
@@ -17,49 +15,42 @@ export const registerFormInitialValues = {
 }
 
 export const Register: React.FC = observer(() => {
-  const { signup } = useUserStore()
+  const { Form, TextField, Submit } = useRegisterForm()
+  const [signup] = useSignup()
   const classes = useStyles()
-
-  const handleSubmit = async (values: SignupArgs): Promise<void> => {
+  const handleSubmit = async (values: SignupArgs) => {
     await signup(values)
   }
 
   return (
     <>
-      <AuthFormMessage />
-      <Formik<SignupArgs>
-        initialValues={registerFormInitialValues}
+      <Form
+        data-testid='register-form'
+        defaultValues={registerFormInitialValues}
         validationSchema={registerFormValidationSchema}
         onSubmit={handleSubmit}
       >
-        {({ submitForm, ...formik }) => (
-          <Form data-testid='register-form'>
-            <FormikTextField fieldKey='name' placeholder='Name' />
-            <FormikTextField
-              fieldKey='email'
-              placeholder='Email Address'
-              type='email'
-            />
-            <FormikTextField
-              fieldKey='password'
-              placeholder='Password'
-              type='password'
-            />
-            <div className={classes.creatingButtonContainer}>
-              <Button
-                onClick={submitForm}
-                disabled={isSubmitDisabled(formik)}
-                size='large'
-                variant='contained'
-                color='primary'
-                fullWidth
-              >
-                Create
-              </Button>
-            </div>
-          </Form>
-        )}
-      </Formik>
+        <TextField name='name' label='Name' />
+        <TextField
+          name='email'
+          label='Email Address'
+          inputProps={{
+            type: 'email'
+          }}
+        />
+        <TextField
+          name='password'
+          label='Password'
+          inputProps={{
+            type: 'password'
+          }}
+        />
+        <div className={classes.creatingButtonContainer}>
+          <Submit size='large' variant='contained' color='primary' fullWidth>
+            Create
+          </Submit>
+        </div>
+      </Form>
     </>
   )
 })
