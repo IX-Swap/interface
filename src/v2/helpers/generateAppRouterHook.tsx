@@ -15,6 +15,7 @@ interface AppRouter<T> {
   routes: T
   renderRoutes: () => JSX.Element
   query: URLSearchParams
+  params: { [key: string]: string }
   push: (route: keyof T, state?: {}) => void
   replace: (route: keyof T, state?: {}) => void
 }
@@ -80,6 +81,7 @@ export function generateAppRouterHook<T> (
       replace: (route, state) => {
         history.replace(routeMap[route] as any, state)
       },
+      params: location.state ?? {},
       renderRoutes: () => (
         <Switch>
           {routes.map((route, i) => (

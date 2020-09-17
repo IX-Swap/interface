@@ -13,7 +13,7 @@ export interface UseQueryData<T>
 }
 
 export interface UsePaginatedQueryData<T>
-  extends Omit<QueryResult<PaginatedQueryResponse<T>, any>, 'data'> {
+  extends Omit<QueryResult<PaginatedQueryResponse<T>, any>, 'data' | 'query'> {
   data: DataBucket<T>
 }
 

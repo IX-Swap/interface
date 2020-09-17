@@ -15,6 +15,8 @@ import PasswordResetStore from 'v2/auth/context/password-reset/store'
 import { PasswordResetStep } from 'v2/auth/context/password-reset/types'
 import { AuthorizerTableStore } from 'v2/app/pages/authorizer/context/store'
 import { AuthorizerTableStoreProvider } from 'v2/app/pages/authorizer/context'
+import { DepositStore } from 'v2/app/pages/accounts/pages/banks/context/store'
+import { DepositStoreProvider } from 'v2/app/pages/accounts/pages/banks/context'
 
 const generateClassName = createGenerateClassName({
   productionPrefix: 'ix'
@@ -96,6 +98,23 @@ export const renderWithAuthorizerTableStore = (
       >
         {children}
       </AuthorizerTableStoreProvider>
+    </BaseProviders>
+  )
+
+  return render(ui, { wrapper: WithUserProvider })
+}
+
+export const fakeDepositStore: Partial<DepositStore> = {}
+
+export const renderWithDepositStore = (
+  ui: any,
+  store?: Partial<DepositStore>
+): RenderResult => {
+  const WithUserProvider: React.FC = ({ children }) => (
+    <BaseProviders>
+      <DepositStoreProvider value={{ ...fakeDepositStore, ...store }}>
+        {children}
+      </DepositStoreProvider>
     </BaseProviders>
   )
 
