@@ -1,7 +1,6 @@
 /**  * @jest-environment jsdom-sixteen  */
 import React from 'react'
 import { render, cleanup } from 'test-utils'
-import * as reactHookForm from 'react-hook-form'
 import { bank } from '__fixtures__/authorizer'
 import { useBanksData } from 'v2/app/pages/accounts/pages/banks/hooks/useBanksData'
 import { BankDetails } from 'v2/app/components/BankDetails'
