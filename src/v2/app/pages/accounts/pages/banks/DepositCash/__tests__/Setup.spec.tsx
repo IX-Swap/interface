@@ -1,44 +1,53 @@
 /**  * @jest-environment jsdom-sixteen  */
 import React from 'react'
-import { render, cleanup } from 'test-utils'
+import { render, cleanup, fireEvent, waitFor } from 'test-utils'
 import { Setup } from 'v2/app/pages/accounts/pages/banks/DepositCash/Setup'
-
-import * as reactHookForm from 'react-hook-form'
 import { asset } from '__fixtures__/authorizer'
-import * as assetSelect from 'v2/components/form/typed/AssetSelect'
+import { Form } from 'v2/components/form/Form'
+import { AssetSelect } from 'v2/components/form/AssetSelect'
 
-jest.mock('v2/components/form/typed/NumberInput', () => ({
-  createTypedNumberInput: () =>
-    jest.fn(() => <div data-testid='number-input'></div>)
+jest.mock('v2/components/form/AssetSelect', () => ({
+  AssetSelect: jest.fn(() => null)
 }))
 
 describe('Setup', () => {
-  const AssetSelect = jest.fn(() => null)
-  beforeEach(() => {
-    jest
-      .spyOn(assetSelect, 'useAssetSelect')
-      .mockImplementation(() => AssetSelect)
-
-    jest.spyOn(reactHookForm, 'useFormContext').mockReturnValue({
-      watch (arg1) {
-        if (arg1 === 'asset') return asset
-        throw new Error('arg1 is invalid')
-      }
-    })
-  })
   afterEach(async () => {
     await cleanup()
     jest.clearAllMocks()
   })
 
-  it('renders NumberInput without error', () => {
-    const { queryByTestId } = render(<Setup />)
-    expect(queryByTestId('number-input')).not.toBeNull()
+  it('renders without error', () => {
+    const { getByLabelText } = render(
+      <Form>
+        <Setup />
+      </Form>
+    )
+
+    const amountInput = getByLabelText(/amount/i)
+
+    expect(AssetSelect).toHaveBeenCalledTimes(1)
+    expect(amountInput).toBeTruthy()
   })
 
-  it('enables NumberInput if asset is not defined', () => {
-    const { queryByTestId } = render(<Setup />)
-    // TODO: needs be improved as the test passes even asset is undefined
-    expect(queryByTestId('number-input')?.parentElement).not.toBeDisabled()
+  it('renders amount input disabled if asset is undefined', () => {
+    const { getByLabelText } = render(
+      <Form defaultValues={{ asset: undefined }}>
+        <Setup />
+      </Form>
+    )
+    const amountInput = getByLabelText(/amount/i)
+
+    expect(amountInput).toBeDisabled()
+  })
+
+  it('renders amount input editable if asset is defined', () => {
+    const { getByLabelText } = render(
+      <Form defaultValues={{ asset: asset._id }}>
+        <Setup />
+      </Form>
+    )
+    const amountInput = getByLabelText(/amount/i)
+
+    expect(amountInput).not.toBeDisabled()
   })
 })

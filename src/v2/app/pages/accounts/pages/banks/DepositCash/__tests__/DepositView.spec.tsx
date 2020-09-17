@@ -1,36 +1,36 @@
 /**  * @jest-environment jsdom-sixteen  */
 import React from 'react'
-import { render, cleanup } from 'test-utils'
+import { cleanup, renderWithDepositStore } from 'test-utils'
 import { DepositView } from 'v2/app/pages/accounts/pages/banks/DepositCash/DepositView'
-
-import * as context from 'v2/app/pages/accounts/pages/banks/context'
+import { Setup } from 'v2/app/pages/accounts/pages/banks/DepositCash/Setup'
+import { DepositCashAlert } from 'v2/app/pages/accounts/pages/banks/components/DepositCashAlert'
+import { Preview } from 'v2/app/pages/accounts/pages/banks/DepositCash/Preview'
+import { CancelButton } from 'v2/app/pages/accounts/pages/banks/components/CancelButton'
+import { ContinueButton } from 'v2/app/pages/accounts/pages/banks/DepositCash/ContinueButton'
 
 jest.mock('v2/app/pages/accounts/pages/banks/DepositCash/Setup', () => ({
-  Setup: () => <div data-testid='setup'></div>
+  Setup: jest.fn(() => null)
 }))
 
 jest.mock(
   'v2/app/pages/accounts/pages/banks/components/DepositCashAlert',
   () => ({
-    DepositCashAlert: () => <div data-testid='deposit-cash-alert'></div>
+    DepositCashAlert: jest.fn(() => null)
   })
 )
-jest.mock('v2/app/pages/accounts/pages/banks/components/OTP', () => ({
-  OTP: () => <div data-testid='otp'></div>
-}))
+
 jest.mock('v2/app/pages/accounts/pages/banks/DepositCash/Preview', () => ({
-  Preview: () => <div data-testid='preview'></div>
+  Preview: jest.fn(() => null)
 }))
+
 jest.mock('v2/app/pages/accounts/pages/banks/components/CancelButton', () => ({
-  CancelButton: () => <div data-testid='cancel-button'></div>
+  CancelButton: jest.fn(() => null)
 }))
-jest.mock('v2/components/form/SubmitButton', () => ({
-  SubmitButton: () => <div data-testid='submit-button'></div>
-}))
+
 jest.mock(
   'v2/app/pages/accounts/pages/banks/DepositCash/ContinueButton',
   () => ({
-    ContinueButton: () => <div data-testid='continue-button'></div>
+    ContinueButton: jest.fn(() => null)
   })
 )
 
@@ -41,34 +41,36 @@ describe('DepositView', () => {
   })
 
   it('renders Setup and ContinueButton if preview is false', () => {
-    jest.spyOn(context, 'useDepositStore').mockReturnValue({
-      isPreview: false
-    })
+    const { queryByLabelText, queryByText } = renderWithDepositStore(
+      <DepositView />,
+      {
+        isPreview: false
+      }
+    )
 
-    const { queryByTestId } = render(<DepositView />)
-    expect(queryByTestId('setup')).not.toBeNull()
-    expect(queryByTestId('continue-button')).not.toBeNull()
+    expect(Setup).toHaveBeenCalledTimes(1)
+    expect(ContinueButton).toHaveBeenCalledTimes(1)
 
-    expect(queryByTestId('cancel-button')).toBeNull()
-    expect(queryByTestId('submit-button')).toBeNull()
-    expect(queryByTestId('otp')).toBeNull()
-    expect(queryByTestId('preview')).toBeNull()
-    expect(queryByTestId('deposit-cash-alert')).toBeNull()
+    expect(CancelButton).toHaveBeenCalledTimes(0)
+    expect(queryByText('Confirm Deposit')).toBeFalsy()
+    expect(queryByLabelText('2-Factor Auth Code')).toBeFalsy()
+    expect(Preview).toHaveBeenCalledTimes(0)
+    expect(DepositCashAlert).toHaveBeenCalledTimes(0)
   })
 
   it('renders DepositCashAlert,Preview, OTP, CancelButton and SubmitButton if preview is true', () => {
-    jest.spyOn(context, 'useDepositStore').mockReturnValue({
-      isPreview: true
-    })
+    const {
+      queryByLabelText,
+      queryByText
+    } = renderWithDepositStore(<DepositView />, { isPreview: true })
 
-    const { queryByTestId } = render(<DepositView />)
-    expect(queryByTestId('cancel-button')).not.toBeNull()
-    expect(queryByTestId('submit-button')).not.toBeNull()
-    expect(queryByTestId('otp')).not.toBeNull()
-    expect(queryByTestId('preview')).not.toBeNull()
-    expect(queryByTestId('deposit-cash-alert')).not.toBeNull()
+    expect(Setup).toHaveBeenCalledTimes(0)
+    expect(ContinueButton).toHaveBeenCalledTimes(0)
 
-    expect(queryByTestId('setup')).toBeNull()
-    expect(queryByTestId('continue-button')).toBeNull()
+    expect(CancelButton).toHaveBeenCalledTimes(1)
+    expect(queryByText('Confirm Deposit')).toBeTruthy()
+    expect(queryByLabelText('2-Factor Auth Code')).toBeTruthy()
+    expect(Preview).toHaveBeenCalledTimes(1)
+    expect(DepositCashAlert).toHaveBeenCalledTimes(1)
   })
 })

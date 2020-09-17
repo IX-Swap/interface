@@ -1,24 +1,19 @@
 /**  * @jest-environment jsdom-sixteen  */
 import React from 'react'
-import { render, cleanup } from 'test-utils'
+import { cleanup, render } from 'test-utils'
 import { Preview } from 'v2/app/pages/accounts/pages/banks/WithdrawCash/Preview'
-
 import { bank, cashDeposit } from '__fixtures__/authorizer'
-import * as reactHookForm from 'react-hook-form'
 import { useBanksData } from 'v2/app/pages/accounts/pages/banks/hooks/useBanksData'
-import GenericPreview from 'v2/app/components/generic-preview'
-
+import { GenericPreview } from 'v2/app/components/GenericPreview/GenericPreview'
 import { INVESTAX_BANK } from 'v2/config'
 import { formatMoney } from 'v2/helpers/numbers'
+import { generateInfiniteQueryResult } from '__fixtures__/useQuery'
+import { Form } from 'v2/components/form/Form'
 
-jest.mock('v2/app/components/generic-preview', () => {
-  const GenericPreview = jest.fn(() => (
-    <div data-testid='generic-preview'></div>
-  ))
-  return GenericPreview
-})
+jest.mock('v2/app/components/GenericPreview/GenericPreview', () => ({
+  GenericPreview: jest.fn(() => null)
+}))
 
-jest.mock('react-hook-form')
 jest.mock('v2/app/pages/accounts/pages/banks/hooks/useBanksData')
 
 const useBanksDataMock = useBanksData as jest.Mock<
@@ -26,52 +21,62 @@ const useBanksDataMock = useBanksData as jest.Mock<
 >
 
 describe('Preview', () => {
+  const formValues = {
+    bank: bank._id,
+    amount: cashDeposit.amount,
+    memo: 'hello'
+  }
+
   afterEach(async () => {
     await cleanup()
     jest.clearAllMocks()
   })
 
-  it('renders nothing if status is loading', () => {
-    jest.spyOn(reactHookForm, 'useFormContext').mockReturnValue({
-      getValues () {
-        return { bank: bank._id }
-      }
-    })
-    useBanksDataMock.mockReturnValue({
-      data: { map: { [bank._id]: bank } },
-      status: 'loading'
-    })
+  it('renders without error', () => {
+    useBanksDataMock.mockReturnValue(
+      generateInfiniteQueryResult({
+        map: { [bank._id]: bank }
+      })
+    )
 
-    const { container } = render(<Preview />)
-
-    expect(container).toBeEmptyDOMElement()
+    render(
+      <Form defaultValues={formValues}>
+        <Preview />
+      </Form>
+    )
   })
 
-  it('renders without error', () => {
-    jest.spyOn(reactHookForm, 'useFormContext').mockReturnValue({
-      getValues () {
-        return { bank: bank._id }
-      }
-    })
-    useBanksDataMock.mockReturnValue({
-      data: { map: { [bank._id]: bank } }
-    })
+  it('renders nothing if status is loading', () => {
+    useBanksDataMock.mockReturnValue(
+      generateInfiniteQueryResult({
+        map: { [bank._id]: bank },
+        isLoading: true
+      })
+    )
 
-    render(<Preview />)
+    const { getByTestId } = render(
+      <Form data-testid='form' defaultValues={formValues}>
+        <Preview />
+      </Form>
+    )
+
+    expect(getByTestId('form')).toBeEmptyDOMElement()
   })
 
   it('calls GenericPreview with correct items', () => {
-    jest.spyOn(reactHookForm, 'useFormContext').mockReturnValue({
-      getValues () {
-        return { bank: bank._id, amount: cashDeposit.amount }
-      }
-    })
-    useBanksDataMock.mockReturnValue({
-      data: { map: { [bank._id]: bank } }
-    })
+    useBanksDataMock.mockReturnValue(
+      generateInfiniteQueryResult({
+        map: { [bank._id]: bank },
+        isLoading: false
+      })
+    )
 
-    render(<Preview />)
-    expect(GenericPreview).toHaveBeenCalledTimes(1)
+    render(
+      <Form defaultValues={formValues}>
+        <Preview />
+      </Form>
+    )
+
     expect(GenericPreview).toHaveBeenCalledWith(
       {
         items: [
@@ -93,6 +98,10 @@ describe('Preview', () => {
               cashDeposit.amount,
               bank.asset.numberFormat.currency
             )
+          },
+          {
+            label: 'Memo',
+            value: formValues.memo
           }
         ]
       },

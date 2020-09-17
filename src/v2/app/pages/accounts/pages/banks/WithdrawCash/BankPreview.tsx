@@ -6,9 +6,9 @@ import { Box } from '@material-ui/core'
 import { WithdrawCashFormValues } from 'v2/app/pages/accounts/types'
 
 export const BankPreview: React.FC = () => {
-  const { getValues } = useFormContext<WithdrawCashFormValues>()
+  const { watch } = useFormContext<WithdrawCashFormValues>()
   const { data } = useBanksData()
-  const { bank: bankId } = getValues()
+  const bankId = watch('bank')
   const bank = data.map[bankId]
 
   if (bank === undefined) {
@@ -16,7 +16,7 @@ export const BankPreview: React.FC = () => {
   }
 
   return (
-    <Box py={4}>
+    <Box py={4} data-testid='BankPreview'>
       <BankDetails bank={bank} />
     </Box>
   )

@@ -12,19 +12,19 @@ export interface CashTransactionAlertProps {
 
 export const CashTransactionAlert: React.FC<CashTransactionAlertProps> = props => {
   const { assetId, children } = props
-  const { getValues } = useFormContext<TransactionBase>()
-  const { data, status } = useAssetsData('Currency')
-  const { amount } = getValues()
+  const { watch } = useFormContext<TransactionBase>()
+  const { data, isLoading } = useAssetsData('Currency')
+  const amount = watch('amount')
   const asset = data.map[assetId]
 
-  if (status === 'loading') {
+  if (isLoading) {
     return null
   }
 
   const money = formatMoney(amount, asset.numberFormat.currency)
 
   return (
-    <Grid item container direction='column'>
+    <Grid data-testid='CashTransactionAlert' item container direction='column'>
       {children(money)}
     </Grid>
   )

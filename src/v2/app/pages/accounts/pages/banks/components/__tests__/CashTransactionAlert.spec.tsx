@@ -1,40 +1,37 @@
 /**  * @jest-environment jsdom-sixteen  */
 import React from 'react'
-import { render, cleanup } from 'test-utils'
+import { cleanup, render } from 'test-utils'
 import { CashTransactionAlert } from 'v2/app/pages/accounts/pages/banks/components/CashTransactionAlert'
-
-import * as reactHookForm from 'react-hook-form'
-import * as assetsContext from 'v2/context/assets/useAssetsData'
-import { cashDeposit, asset } from '__fixtures__/authorizer'
+import * as assetsContext from 'v2/hooks/asset/useAssetsData'
+import { asset, cashDeposit } from '__fixtures__/authorizer'
 import * as helpers from 'v2/helpers/numbers'
-
-const testFn = jest.fn()
-
-jest.spyOn(reactHookForm, 'useFormContext').mockReturnValue({
-  getValues () {
-    return { amount: cashDeposit.amount }
-  }
-})
+import { generateInfiniteQueryResult } from '__fixtures__/useQuery'
+import { Form } from 'v2/components/form/Form'
 
 describe('CashTransactionAlert', () => {
+  const testFn = jest.fn(() => <div />)
+  const amount = cashDeposit.amount
+
   afterEach(async () => {
     await cleanup()
     jest.clearAllMocks()
   })
 
   it('renders testFn function correctly', () => {
-    jest.spyOn(assetsContext, 'useAssetsData').mockReturnValue({
-      data: { map: { [asset._id]: asset } },
-      status: 'success'
-    })
+    jest
+      .spyOn(assetsContext, 'useAssetsData')
+      .mockReturnValue(
+        generateInfiniteQueryResult({ map: { [asset._id]: asset } })
+      )
 
-    const money = helpers.formatMoney(
-      cashDeposit.amount,
-      asset.numberFormat.currency
-    )
+    const money = helpers.formatMoney(amount, asset.numberFormat.currency)
 
     render(
-      <CashTransactionAlert assetId={asset._id}>{testFn}</CashTransactionAlert>
+      <Form defaultValues={{ amount }}>
+        <CashTransactionAlert assetId={asset._id}>
+          {testFn}
+        </CashTransactionAlert>
+      </Form>
     )
 
     expect(testFn).toHaveBeenCalledTimes(1)
@@ -42,35 +39,44 @@ describe('CashTransactionAlert', () => {
   })
 
   it('calls formatMoney with correct parameters', () => {
-    jest.spyOn(assetsContext, 'useAssetsData').mockReturnValue({
-      data: { map: { [asset._id]: asset } },
-      status: 'success'
-    })
+    jest
+      .spyOn(assetsContext, 'useAssetsData')
+      .mockReturnValue(
+        generateInfiniteQueryResult({ map: { [asset._id]: asset } })
+      )
 
-    const formatMoney = jest.fn(() => 'hello')
+    const formatMoney = jest.fn()
     jest.spyOn(helpers, 'formatMoney').mockImplementation(formatMoney)
 
     render(
-      <CashTransactionAlert assetId={asset._id}>{testFn}</CashTransactionAlert>
+      <Form defaultValues={{ amount }}>
+        <CashTransactionAlert assetId={asset._id}>
+          {testFn}
+        </CashTransactionAlert>
+      </Form>
     )
 
     expect(formatMoney).toHaveBeenCalledTimes(1)
     expect(formatMoney).toHaveBeenCalledWith(
-      cashDeposit.amount,
+      amount,
       asset.numberFormat.currency
     )
   })
 
   it('renders nothing if loading', () => {
-    jest.spyOn(assetsContext, 'useAssetsData').mockReturnValue({
-      data: { map: { [asset._id]: asset } },
-      status: 'loading'
-    })
+    jest
+      .spyOn(assetsContext, 'useAssetsData')
+      .mockReturnValue(generateInfiniteQueryResult({ isLoading: true }))
 
-    const { container } = render(
-      <CashTransactionAlert assetId={asset._id}>{testFn}</CashTransactionAlert>
+    const { queryByTestId } = render(
+      <Form defaultValues={{ amount }}>
+        <CashTransactionAlert assetId={asset._id}>
+          {testFn}
+        </CashTransactionAlert>
+      </Form>
     )
+    const cashTransactionAlert = queryByTestId('CashTransactionAlert')
 
-    expect(container).toBeEmptyDOMElement()
+    expect(cashTransactionAlert).toBeFalsy()
   })
 })

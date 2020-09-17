@@ -1,4 +1,5 @@
 import { MutationResult, QueryStatus } from 'react-query'
+import { UsePaginatedQueryData } from 'v2/hooks/useParsedData'
 
 export interface GenerateMutationResultArgs {
   data?: any
@@ -45,3 +46,39 @@ export const mutationHookResult: MutationResult<any> = {
   isSuccess: false,
   reset: jest.fn()
 }
+
+export interface GenerateInfinityQueryResultArgs {
+  map?: any
+  list?: any[]
+  raw?: any[]
+  error?: any
+  isLoading?: boolean
+  queryStatus?: QueryStatus
+}
+
+export const generateInfiniteQueryResult = ({
+  map = {},
+  list = [],
+  raw = [],
+  error = undefined,
+  isLoading = false,
+  queryStatus = QueryStatus.Success
+}: GenerateInfinityQueryResultArgs): UsePaginatedQueryData<any> => ({
+  data: { list, raw, map },
+  status: queryStatus,
+  isError: false,
+  isIdle: false,
+  isLoading,
+  isSuccess: false,
+  isFetched: false,
+  isFetching: false,
+  isFetchingMore: undefined,
+  canFetchMore: false,
+  fetchMore: jest.fn(),
+  clear: jest.fn(),
+  failureCount: 0,
+  isStale: false,
+  refetch: jest.fn(),
+  updatedAt: 0,
+  error
+})

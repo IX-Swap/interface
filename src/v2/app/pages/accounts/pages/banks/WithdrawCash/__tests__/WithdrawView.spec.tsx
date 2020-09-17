@@ -1,59 +1,43 @@
 /**  * @jest-environment jsdom-sixteen  */
 import React from 'react'
-import { render, cleanup } from 'test-utils'
+import { cleanup, renderWithDepositStore } from 'test-utils'
 import { WithdrawView } from 'v2/app/pages/accounts/pages/banks/WithdrawCash/WithdrawView'
-
 import { Setup } from 'v2/app/pages/accounts/pages/banks/WithdrawCash/Setup'
 import { Preview } from 'v2/app/pages/accounts/pages/banks/WithdrawCash/Preview'
 import { BankPreview } from 'v2/app/pages/accounts/pages/banks/WithdrawCash/BankPreview'
-import { useDepositStore } from 'v2/app/pages/accounts/pages/banks/context'
 import { WithdrawCashAlert } from 'v2/app/pages/accounts/pages/banks/components/WithdrawCashAlert'
+import { CancelButton } from 'v2/app/pages/accounts/pages/banks/components/CancelButton'
+import { ContinueButton } from 'v2/app/pages/accounts/pages/banks/WithdrawCash/ContinueButton'
 
-jest.mock('v2/app/pages/accounts/pages/banks/context')
-jest.mock('v2/app/pages/accounts/pages/banks/components/OTP', () => ({
-  OTP: () => <div data-testid='otp'></div>
-}))
 jest.mock('v2/app/pages/accounts/pages/banks/components/CancelButton', () => ({
-  CancelButton: () => <div data-testid='cancel-button'></div>
+  CancelButton: jest.fn(() => null)
 }))
-jest.mock('v2/components/form/SubmitButton', () => ({
-  SubmitButton: () => <div data-testid='submit-button'></div>
-}))
+
 jest.mock(
   'v2/app/pages/accounts/pages/banks/WithdrawCash/ContinueButton',
   () => ({
-    ContinueButton: () => <div data-testid='continue-button'></div>
+    ContinueButton: jest.fn(() => null)
   })
 )
 
-const useDepositStoreMock = useDepositStore as jest.Mock<
-  Partial<ReturnType<typeof useDepositStore>>
->
-
-jest.mock('v2/app/pages/accounts/pages/banks/WithdrawCash/BankPreview', () => {
-  const BankPreview = jest.fn(() => <div data-testid='bank-preview'></div>)
-  return { BankPreview }
-})
+jest.mock('v2/app/pages/accounts/pages/banks/WithdrawCash/BankPreview', () => ({
+  BankPreview: jest.fn(() => null)
+}))
 
 jest.mock(
   'v2/app/pages/accounts/pages/banks/components/WithdrawCashAlert',
-  () => {
-    const WithdrawCashAlert = jest.fn(() => (
-      <div data-testid='withdraw-cash-alert'></div>
-    ))
-    return { WithdrawCashAlert }
-  }
+  () => ({
+    WithdrawCashAlert: jest.fn(() => null)
+  })
 )
 
-jest.mock('v2/app/pages/accounts/pages/banks/WithdrawCash/Preview', () => {
-  const Preview = jest.fn(() => <div data-testid='preview'></div>)
-  return { Preview }
-})
+jest.mock('v2/app/pages/accounts/pages/banks/WithdrawCash/Preview', () => ({
+  Preview: jest.fn(() => null)
+}))
 
-jest.mock('v2/app/pages/accounts/pages/banks/WithdrawCash/Setup', () => {
-  const Setup = jest.fn(() => <div data-testid='setup'></div>)
-  return { Setup }
-})
+jest.mock('v2/app/pages/accounts/pages/banks/WithdrawCash/Setup', () => ({
+  Setup: jest.fn(() => null)
+}))
 
 describe('WithdrawView', () => {
   afterEach(async () => {
@@ -62,36 +46,32 @@ describe('WithdrawView', () => {
   })
 
   it('renders Setup and ContinueButton if preview is false', () => {
-    useDepositStoreMock.mockReturnValue({
+    const { queryByText } = renderWithDepositStore(<WithdrawView />, {
       isPreview: false
     })
-    const { queryByTestId } = render(<WithdrawView />)
+
+    expect(BankPreview).toHaveBeenCalledTimes(1)
+    expect(Setup).toHaveBeenCalledTimes(1)
+    expect(ContinueButton).toHaveBeenCalledTimes(1)
 
     expect(Preview).toHaveBeenCalledTimes(0)
     expect(WithdrawCashAlert).toHaveBeenCalledTimes(0)
-    expect(BankPreview).toHaveBeenCalledTimes(1)
-    expect(Setup).toHaveBeenCalledTimes(1)
-
-    expect(queryByTestId('cancel-button')).toBeNull()
-    expect(queryByTestId('submit-button')).toBeNull()
-    expect(queryByTestId('continue-button')).not.toBeNull()
-    expect(queryByTestId('otp')).toBeNull()
+    expect(CancelButton).toHaveBeenCalledTimes(0)
+    expect(queryByText('Confirm Withdrawal')).toBeFalsy()
   })
 
   it('renders Preview,OTP,WithdrawCashAlert,BankPreview if preview is true', () => {
-    useDepositStoreMock.mockReturnValue({
+    const { queryByText } = renderWithDepositStore(<WithdrawView />, {
       isPreview: true
     })
-    const { queryByTestId } = render(<WithdrawView />)
+
+    expect(Setup).toHaveBeenCalledTimes(0)
+    expect(ContinueButton).toHaveBeenCalledTimes(0)
 
     expect(Preview).toHaveBeenCalledTimes(1)
     expect(BankPreview).toHaveBeenCalledTimes(1)
     expect(WithdrawCashAlert).toHaveBeenCalledTimes(1)
-    expect(Setup).toHaveBeenCalledTimes(0)
-
-    expect(queryByTestId('cancel-button')).not.toBeNull()
-    expect(queryByTestId('submit-button')).not.toBeNull()
-    expect(queryByTestId('continue-button')).toBeNull()
-    expect(queryByTestId('otp')).not.toBeNull()
+    expect(CancelButton).toHaveBeenCalledTimes(1)
+    expect(queryByText('Confirm Withdrawal')).toBeTruthy()
   })
 })
