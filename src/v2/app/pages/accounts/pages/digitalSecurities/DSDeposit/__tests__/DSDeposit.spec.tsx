@@ -8,15 +8,11 @@ import { DSDeposit } from 'v2/app/pages/accounts/pages/digitalSecurities/DSDepos
 
 jest.mock(
   'v2/app/pages/accounts/pages/digitalSecurities/DSDeposit/RecentDeposits',
-  () => ({
-    RecentDeposits: jest.fn(() => <div data-testid='RecentDeposits'></div>)
-  })
+  () => ({ RecentDeposits: jest.fn(() => null) })
 )
 jest.mock(
   'v2/app/pages/accounts/pages/digitalSecurities/DSDeposit/DepositView',
-  () => ({
-    DepositView: jest.fn(() => <div data-testid='DepositView'></div>)
-  })
+  () => ({ DepositView: jest.fn(() => null) })
 )
 
 describe('DepositView', () => {
@@ -30,7 +26,7 @@ describe('DepositView', () => {
   })
 
   it('renders RecentDeposits & DepositView', () => {
-    const { queryByTestId } = render(<DSDeposit />)
+    render(<DSDeposit />)
 
     expect(RecentDeposits).toHaveBeenCalledTimes(1)
     expect(DepositView).toHaveBeenCalledTimes(1)

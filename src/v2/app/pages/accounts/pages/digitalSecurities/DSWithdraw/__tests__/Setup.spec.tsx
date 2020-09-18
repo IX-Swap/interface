@@ -9,9 +9,7 @@ import { ContinueButton } from 'v2/app/pages/accounts/pages/digitalSecurities/DS
 
 jest.mock(
   'v2/app/pages/accounts/pages/digitalSecurities/DSWithdraw/ContinueButton',
-  () => ({
-    ContinueButton: jest.fn(() => <div data-testid='ContinueButton' />)
-  })
+  () => ({ ContinueButton: jest.fn(() => null) })
 )
 
 jest.mock('react-router-dom', () => ({

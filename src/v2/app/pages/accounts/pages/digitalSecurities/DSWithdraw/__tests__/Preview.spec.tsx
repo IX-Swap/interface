@@ -7,9 +7,7 @@ import * as withdrawForm from 'v2/app/pages/accounts/pages/digitalSecurities/DSW
 
 jest.mock(
   'v2/app/pages/accounts/pages/digitalSecurities/DSWithdraw/Summary',
-  () => ({
-    Summary: jest.fn(() => <div data-testid='Summary' />)
-  })
+  () => ({ Summary: jest.fn(() => null) })
 )
 
 describe('Preview', () => {

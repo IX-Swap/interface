@@ -9,21 +9,15 @@ import { DSDepositInput } from 'v2/app/pages/accounts/pages/digitalSecurities/DS
 
 jest.mock(
   'v2/app/pages/accounts/pages/digitalSecurities/DSDeposit/AssetView',
-  () => ({
-    AssetView: jest.fn(() => <div data-testid='AssetView'></div>)
-  })
+  () => ({ AssetView: jest.fn(() => null) })
 )
 jest.mock(
   'v2/app/pages/accounts/pages/digitalSecurities/DSDeposit/BalancesList',
-  () => ({
-    BalancesList: jest.fn(() => <div data-testid='BalancesList'></div>)
-  })
+  () => ({ BalancesList: jest.fn(() => null) })
 )
 jest.mock(
   'v2/app/pages/accounts/pages/digitalSecurities/DSDeposit/Setup',
-  () => ({
-    DSDepositInput: jest.fn(() => <div data-testid='DSDepositInput'></div>)
-  })
+  () => ({ DSDepositInput: jest.fn(() => null) })
 )
 
 describe('DepositView', () => {

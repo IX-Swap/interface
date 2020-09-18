@@ -16,9 +16,7 @@ jest.mock(
 )
 jest.mock(
   'v2/app/pages/accounts/pages/digitalSecurities/DSWithdraw/WithdrawView',
-  () => ({
-    WithdrawView: jest.fn(() => <div data-testid='WithdrawView'></div>)
-  })
+  () => ({ WithdrawView: jest.fn(() => null) })
 )
 
 describe('DSWithdraw', () => {

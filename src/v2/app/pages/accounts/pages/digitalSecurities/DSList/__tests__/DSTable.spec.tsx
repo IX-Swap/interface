@@ -6,7 +6,7 @@ import { TableView } from 'v2/components/TableWithPagination/TableView'
 import storageHelper from 'v2/helpers/storageHelper'
 
 jest.mock('v2/components/TableWithPagination/TableView', () => ({
-  TableView: jest.fn(() => <div data-testid='TableView'></div>)
+  TableView: jest.fn(() => null)
 }))
 
 describe('DSTable', () => {

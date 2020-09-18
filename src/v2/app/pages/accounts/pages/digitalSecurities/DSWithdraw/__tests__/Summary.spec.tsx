@@ -19,7 +19,7 @@ jest.mock('react-router-dom', () => ({
 }))
 
 jest.mock('v2/app/components/GenericPreview/GenericPreview', () => ({
-  GenericPreview: jest.fn(() => <div data-testid='generic-preview'></div>)
+  GenericPreview: jest.fn(() => null)
 }))
 
 describe('Summary', () => {
