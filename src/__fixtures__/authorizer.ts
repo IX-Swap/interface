@@ -170,7 +170,8 @@ export const dso: DigitalSecurityOffering = {
   tokenSymbol: 'token symbol',
   totalFundraisingAmount: 100000,
   useOfProceeds: 'use of proceeds',
-  policyBuilder: undefined
+  policyBuilder: undefined,
+  user: 'userid'
 }
 
 // export const commitment: Commitment = {

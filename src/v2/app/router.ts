@@ -3,7 +3,7 @@ import { AuthorizerRoot } from 'v2/app/pages/authorizer/AuthorizerRoot'
 import { Identity } from 'v2/app/pages/identity'
 import { Accounts } from 'v2/app/pages/accounts/Accounts'
 import Issuance from 'v2/app/pages/issuance'
-import Invest from 'v2/app/pages/invest'
+import { Invest } from 'v2/app/pages/invest/Invest'
 import Admin from 'v2/app/pages/admin'
 import { generateAppRouterHook } from 'v2/helpers/generateAppRouterHook'
 

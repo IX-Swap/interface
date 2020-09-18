@@ -20,6 +20,7 @@ import { useAuthorizerRouter } from 'v2/app/pages/authorizer/router'
 import { useAccountsRouter } from 'v2/app/pages/accounts/router'
 import { useIdentitiesRouter } from 'v2/app/pages/identity/router'
 import { useStore as useLayoutStore } from '../../../context/layout'
+import { useInvestRouter } from 'v2/app/pages/invest/router'
 
 const authorizerRoot = '/app/authorizer'
 const identityRoot = '/app/identity'
@@ -38,22 +39,19 @@ export const Sidebar = () => {
   const { routes: authorizerRoutes } = useAuthorizerRouter()
   const { routes: accountRoutes } = useAccountsRouter()
   const { routes: identityRoutes } = useIdentitiesRouter()
+  const { routes: investRoutes } = useInvestRouter()
 
   const structure = [
     {
       id: 'identity',
       label: 'Identity',
-      link: identityRoot,
-      icon: <PersonIcon />,
-      children: Object.entries(identityRoutes).map(([label, link]) => ({
-        label,
-        link
-      }))
+      link: identityRoutes.list,
+      icon: <PersonIcon />
     },
     {
       id: 'invest',
       label: 'Invest',
-      link: investRoot,
+      link: investRoutes.list,
       icon: <PieChartIcon />
     },
     {

@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React from 'react'
 import {
   Box,
   Grid,
@@ -10,35 +10,18 @@ import {
 import { TableView } from 'v2/components/TableWithPagination/TableView'
 import { DigitalSecurityOffering } from 'v2/types/dso'
 import { DSOCard } from 'v2/app/components/DSO/DSOCard'
-import { debounce } from 'lodash'
-import { BaseFilter } from 'v2/types/util'
+import { Maybe, BaseFilter } from 'v2/types/util'
+import User from 'v2/types/user'
 
 interface DSOfferingsListProps {
-  filter?: BaseFilter
-  user?: string
-  handleRowClick: (row: DigitalSecurityOffering) => void
-  children?: React.ReactNode
+  user: Maybe<User>
+  filter: BaseFilter
 }
 
-export const DSOList = (props: DSOfferingsListProps) => {
-  const {
-    user = undefined,
-    filter = { status: '' },
-    handleRowClick,
-    children
-  } = props
-  const [search, setSearch] = useState('')
-  const [_onSearch] = useState(() =>
-    debounce<any>(
-      (evt: React.ChangeEvent<HTMLInputElement>) => setSearch(evt.target.value),
-      500
-    )
-  )
+export const DSO_LIST_QUERY_KEY = 'dsoList'
 
-  const onSearch = (evt: React.ChangeEvent<HTMLInputElement>) => {
-    evt.persist()
-    _onSearch(evt)
-  }
+export const DSOList = (props: DSOfferingsListProps) => {
+  const { user, filter } = props
 
   return (
     <>
@@ -47,36 +30,31 @@ export const DSOList = (props: DSOfferingsListProps) => {
           <TextField
             variant='outlined'
             placeholder='Search'
-            onChange={onSearch}
             style={{
-              flexGrow: 1,
-              marginRight: children !== undefined ? '16px' : '0'
+              flexGrow: 1
             }}
           />
-          {children ?? null}
         </Grid>
       </Box>
 
-      <TableView
-        filter={{ ...filter, search }}
+      <TableView<DigitalSecurityOffering>
+        filter={{ ...filter, search: '' }}
         columns={[]}
         bordered={false}
-        name={`invest-${user ?? 'invest'}`}
-        uri={`/issuance/dso/list/${user ?? ''}`}
+        name={DSO_LIST_QUERY_KEY}
+        uri={`/issuance/dso/list/${user?._id ?? ''}`}
       >
-        {({ items }: { items: DigitalSecurityOffering[] }) => {
-          return (
-            <TableBody>
-              {items.map((dso: DigitalSecurityOffering) => (
-                <TableRow key={dso._id}>
-                  <TableCell style={{ borderBottom: 'none' }}>
-                    <DSOCard dso={dso} onClickView={handleRowClick} />
-                  </TableCell>
-                </TableRow>
-              ))}
-            </TableBody>
-          )
-        }}
+        {({ items }) => (
+          <TableBody>
+            {items.map(dso => (
+              <TableRow key={dso._id}>
+                <TableCell style={{ borderBottom: 'none' }}>
+                  <DSOCard dso={dso} />
+                </TableCell>
+              </TableRow>
+            ))}
+          </TableBody>
+        )}
       </TableView>
     </>
   )

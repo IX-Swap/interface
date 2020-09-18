@@ -63,7 +63,7 @@ const useDsoLogic = ({
   ]
   const dsoForm: DsoRequest = {
     ...dso,
-    documents: dso.documents.map(e => e._id),
+    documents: dso.documents?.map(e => e._id) ?? [],
     currency: dso.currency[0]._id ?? ''
   }
   const [dsoState, setDsoState] = useState({ ...dso })
@@ -126,7 +126,7 @@ const useDsoLogic = ({
   }
 
   const onAddDocument = (doc: Document) => {
-    const docs = [...dsoState.documents, doc]
+    const docs = [...(dsoState.documents ?? []), doc]
     const unflattened = { ...unflatten(form.getValues()) } as DsoRequest
     unflattened.documents = docs.map(e => e._id)
 
@@ -158,7 +158,7 @@ const useDsoLogic = ({
   }
 
   const onRemoveDocument = (id: string) => {
-    const docs = dsoState.documents.filter(e => e._id !== id)
+    const docs = dsoState.documents?.filter(e => e._id !== id) ?? []
     const unflattened = { ...unflatten(form.getValues()) } as DsoRequest
     unflattened.documents = docs.map(e => e._id)
 
@@ -340,7 +340,7 @@ export const DSO = (props: DigitalSecurityProps) => {
               <Grid item xs={6}>
                 <DSOContainer title='Dataroom'>
                   <DSODataroom
-                    documents={dsoState.documents}
+                    documents={dsoState.documents ?? []}
                     editMode={editMode}
                     onAddDocument={onAddDocument}
                     onRemoveDocument={onRemoveDocument}

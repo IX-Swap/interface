@@ -1,5 +1,6 @@
 import { Asset } from './asset'
 import { Document } from './document'
+import { Maybe } from './util'
 
 export interface DsoTeamMember {
   _id?: string
@@ -62,10 +63,11 @@ export interface BaseDigitalSecurityOffering {
   asset: string
   deploymentInfo?: DeploymentInfo
   policyBuilder?: {}
+  user: string
 }
 
 export interface DigitalSecurityOffering extends BaseDigitalSecurityOffering {
-  documents: Document[]
+  documents: Maybe<Document[]>
   currency: Array<Partial<Asset>> | Asset[]
 }
 
@@ -112,5 +114,6 @@ export const inititialValues: DigitalSecurityOffering = {
     }
   ],
   asset: '',
-  createdAt: ''
+  createdAt: '',
+  user: ''
 }

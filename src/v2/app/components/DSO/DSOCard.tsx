@@ -4,14 +4,16 @@ import { Paper, Box, Typography, Button, Grid } from '@material-ui/core'
 import { DSOTitle } from 'v2/app/components/DSO/DSOTitle'
 import { DSODetails } from 'v2/app/components/DSO/components/DSODetails'
 import { Asset } from 'v2/types/asset'
+import { useInvestRouter } from 'v2/app/pages/invest/router'
+import { AppRouterLink } from 'v2/components/AppRouterLink'
 
 export interface DSOfferingCardProps {
   dso: DigitalSecurityOffering
-  onClickView: (dso: DigitalSecurityOffering) => void
 }
 
 export const DSOCard = (props: DSOfferingCardProps) => {
-  const { dso, onClickView } = props
+  const { dso } = props
+  const { routes } = useInvestRouter()
 
   return (
     <Paper>
@@ -42,9 +44,13 @@ export const DSOCard = (props: DSOfferingCardProps) => {
               style={{ width: '120px' }}
               variant='contained'
               color='primary'
-              onClick={() => onClickView(dso)}
             >
-              View
+              <AppRouterLink
+                to={routes.offeringView}
+                params={{ offeringId: dso._id, issuerId: dso.user }}
+              >
+                View
+              </AppRouterLink>
             </Button>
           </Grid>
           <Grid item xs={3}>
