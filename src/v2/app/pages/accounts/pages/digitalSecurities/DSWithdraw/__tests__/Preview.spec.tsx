@@ -17,7 +17,7 @@ describe('Preview', () => {
   beforeEach(() => {
     jest
       .spyOn(withdrawForm, 'useDSWithdrawForm')
-      .mockImplementation(() => ({ TextField, Submit }))
+      .mockReturnValue({ TextField, Submit })
   })
 
   afterEach(async () => {

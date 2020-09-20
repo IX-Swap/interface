@@ -11,8 +11,9 @@ import { useAssetsData } from 'v2/hooks/asset/useAssetsData'
 
 export const Summary: React.FC = () => {
   const { balanceId } = useParams<{ balanceId: string }>()
-  const { getValues } = useFormContext<WithdrawDSFormValues>()
-  const { memo, amount } = getValues()
+  const { watch } = useFormContext<WithdrawDSFormValues>()
+  const amount = watch('amount')
+  const memo = watch('memo')
   const { data: balances, status: balancesStatus } = useAllBalances()
   const { data: assets, status: assetsStatus } = useAssetsData('Security')
   const asset = assets.map[balances.map[balanceId].assetId]

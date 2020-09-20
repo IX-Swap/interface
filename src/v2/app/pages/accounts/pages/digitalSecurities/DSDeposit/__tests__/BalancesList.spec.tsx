@@ -4,6 +4,7 @@ import { render, cleanup } from 'test-utils'
 import * as balances from 'v2/hooks/balance/useAllBalances'
 import { BalancesList } from 'v2/app/pages/accounts/pages/digitalSecurities/DSDeposit/BalancesList'
 import { balance } from '__fixtures__/balance'
+import { generateInfiniteQueryResult } from '__fixtures__/useQuery'
 
 jest.mock('react-router-dom', () => ({
   ...jest.requireActual('react-router-dom'),
@@ -16,7 +17,9 @@ describe('BalancesList', () => {
   beforeEach(() => {
     jest
       .spyOn(balances, 'useAllBalances')
-      .mockReturnValue({ data: { map: { [balanceId]: balance } } })
+      .mockReturnValue(
+        generateInfiniteQueryResult({ map: { [balanceId]: balance } })
+      )
   })
 
   afterEach(async () => {

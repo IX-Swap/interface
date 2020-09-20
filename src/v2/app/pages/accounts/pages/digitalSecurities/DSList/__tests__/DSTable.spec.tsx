@@ -2,6 +2,7 @@
 import React from 'react'
 import { render, cleanup } from 'test-utils'
 import { DSTable } from 'v2/app/pages/accounts/pages/digitalSecurities/DSList/DSTable'
+import { columns } from 'v2/app/pages/accounts/pages/digitalSecurities/DSList/columns'
 import { TableView } from 'v2/components/TableWithPagination/TableView'
 import storageHelper from 'v2/helpers/storageHelper'
 
@@ -28,7 +29,7 @@ describe('DSTable', () => {
     render(<DSTable />)
     expect(TableView).toHaveBeenCalledTimes(1)
     expect(TableView).toHaveBeenCalledWith(
-      expect.objectContaining({ uri, name }),
+      expect.objectContaining({ uri, name, columns }),
       {}
     )
   })

@@ -4,7 +4,6 @@ import { render, cleanup } from 'test-utils'
 import { Summary } from 'v2/app/pages/accounts/pages/digitalSecurities/DSWithdraw/Summary'
 
 import { QueryStatus } from 'react-query'
-import * as reactHookForm from 'react-hook-form'
 import * as assetsData from 'v2/hooks/asset/useAssetsData'
 import * as balancesData from 'v2/hooks/balance/useAllBalances'
 import { INVESTAX_BANK } from 'v2/config'
@@ -12,6 +11,8 @@ import { balance } from '__fixtures__/balance'
 import { asset, dsWithdrawal } from '__fixtures__/authorizer'
 import { GenericPreview } from 'v2/app/components/GenericPreview/GenericPreview'
 import { formatMoney } from 'v2/helpers/numbers'
+import { Form } from 'v2/components/form/Form'
+import { generateInfiniteQueryResult } from '__fixtures__/useQuery'
 
 jest.mock('react-router-dom', () => ({
   ...jest.requireActual('react-router-dom'),
@@ -23,76 +24,80 @@ jest.mock('v2/app/components/GenericPreview/GenericPreview', () => ({
 }))
 
 describe('Summary', () => {
-  const balances = { map: { testId: balance } }
-  const assets = { map: { [balance.assetId]: asset } }
-
   afterEach(async () => {
     await cleanup()
     jest.clearAllMocks()
   })
 
   it('renders without error', () => {
-    jest.spyOn(reactHookForm, 'useFormContext').mockReturnValue({
-      getValues () {
-        return { memo: '', amount: dsWithdrawal.amount }
-      }
-    })
-    jest.spyOn(assetsData, 'useAssetsData').mockImplementation(() => ({
-      data: assets,
-      status: QueryStatus.Success
-    }))
-    jest.spyOn(balancesData, 'useAllBalances').mockImplementation(() => ({
-      data: balances,
-      status: QueryStatus.Success
-    }))
+    jest
+      .spyOn(assetsData, 'useAssetsData')
+      .mockReturnValue(
+        generateInfiniteQueryResult({ map: { [balance.assetId]: asset } })
+      )
+    jest
+      .spyOn(balancesData, 'useAllBalances')
+      .mockReturnValue(
+        generateInfiniteQueryResult({ map: { testId: balance } })
+      )
 
-    render(<Summary />)
+    render(
+      <Form defaultValues={{ memo: '', amount: dsWithdrawal.amount }}>
+        <Summary />
+      </Form>
+    )
   })
 
   it('renders nothing if balancesStatus is loading', () => {
-    jest.spyOn(reactHookForm, 'useFormContext').mockReturnValue({
-      getValues () {
-        return { memo: '', amount: dsWithdrawal.amount }
-      }
-    })
-    jest.spyOn(assetsData, 'useAssetsData').mockImplementation(() => ({
-      data: assets,
-      status: QueryStatus.Loading
-    }))
-    jest.spyOn(balancesData, 'useAllBalances').mockImplementation(() => ({
-      data: balances,
-      status: QueryStatus.Success
-    }))
+    jest.spyOn(assetsData, 'useAssetsData').mockReturnValue(
+      generateInfiniteQueryResult({
+        map: { [balance.assetId]: asset }
+      })
+    )
 
-    const { container } = render(<Summary />)
-    expect(container).toBeEmptyDOMElement()
+    jest.spyOn(balancesData, 'useAllBalances').mockReturnValue(
+      generateInfiniteQueryResult({
+        map: { testId: balance },
+        queryStatus: QueryStatus.Loading
+      })
+    )
+
+    const { getByTestId } = render(
+      <Form
+        data-testid='form'
+        defaultValues={{ memo: '', amount: dsWithdrawal.amount }}
+      >
+        <Summary />
+      </Form>
+    )
+    expect(getByTestId('form')).toBeEmptyDOMElement()
   })
 
   it('renders nothing if assetsStatus is loading', () => {
-    jest.spyOn(reactHookForm, 'useFormContext').mockReturnValue({
-      getValues () {
-        return { memo: '', amount: dsWithdrawal.amount }
-      }
-    })
-    jest.spyOn(assetsData, 'useAssetsData').mockImplementation(() => ({
-      data: assets,
-      status: QueryStatus.Success
-    }))
-    jest.spyOn(balancesData, 'useAllBalances').mockImplementation(() => ({
-      data: balances,
-      status: QueryStatus.Loading
-    }))
+    jest.spyOn(assetsData, 'useAssetsData').mockReturnValue(
+      generateInfiniteQueryResult({
+        map: { [balance.assetId]: asset },
+        queryStatus: QueryStatus.Loading
+      })
+    )
+    jest.spyOn(balancesData, 'useAllBalances').mockReturnValue(
+      generateInfiniteQueryResult({
+        map: { testId: balance }
+      })
+    )
 
-    const { container } = render(<Summary />)
-    expect(container).toBeEmptyDOMElement()
+    const { getByTestId } = render(
+      <Form
+        data-testid='form'
+        defaultValues={{ memo: '', amount: dsWithdrawal.amount }}
+      >
+        <Summary />
+      </Form>
+    )
+    expect(getByTestId('form')).toBeEmptyDOMElement()
   })
 
   it('GenericPreview is rendered with correct props', () => {
-    jest.spyOn(reactHookForm, 'useFormContext').mockReturnValue({
-      getValues () {
-        return { memo: '', amount: dsWithdrawal.amount }
-      }
-    })
     const items = [
       {
         label: 'Name of Token',
@@ -108,30 +113,31 @@ describe('Summary', () => {
       },
       {
         label: 'Memo',
-        value: ''
+        value: 'hello'
       }
     ]
-    jest.spyOn(assetsData, 'useAssetsData').mockImplementation(() => ({
-      data: assets,
-      status: QueryStatus.Success
-    }))
-    jest.spyOn(balancesData, 'useAllBalances').mockImplementation(() => ({
-      data: balances,
-      status: QueryStatus.Success
-    }))
+    jest
+      .spyOn(assetsData, 'useAssetsData')
+      .mockReturnValue(
+        generateInfiniteQueryResult({ map: { [balance.assetId]: asset } })
+      )
+    jest
+      .spyOn(balancesData, 'useAllBalances')
+      .mockReturnValue(
+        generateInfiniteQueryResult({ map: { testId: balance } })
+      )
 
-    render(<Summary />)
+    render(
+      <Form defaultValues={{ memo: 'hello', amount: dsWithdrawal.amount }}>
+        <Summary />
+      </Form>
+    )
 
     expect(GenericPreview).toHaveBeenCalledTimes(1)
     expect(GenericPreview).toHaveBeenCalledWith({ items }, {})
   })
 
   it('GenericPreview is rendered with correct props if memo is undefined', () => {
-    jest.spyOn(reactHookForm, 'useFormContext').mockReturnValue({
-      getValues () {
-        return { memo: undefined, amount: dsWithdrawal.amount }
-      }
-    })
     const items = [
       {
         label: 'Name of Token',
@@ -146,16 +152,22 @@ describe('Summary', () => {
         value: INVESTAX_BANK.bankAccountNumber ?? ''
       }
     ]
-    jest.spyOn(assetsData, 'useAssetsData').mockImplementation(() => ({
-      data: assets,
-      status: QueryStatus.Success
-    }))
-    jest.spyOn(balancesData, 'useAllBalances').mockImplementation(() => ({
-      data: balances,
-      status: QueryStatus.Success
-    }))
+    jest
+      .spyOn(assetsData, 'useAssetsData')
+      .mockReturnValue(
+        generateInfiniteQueryResult({ map: { [balance.assetId]: asset } })
+      )
+    jest
+      .spyOn(balancesData, 'useAllBalances')
+      .mockReturnValue(
+        generateInfiniteQueryResult({ map: { testId: balance } })
+      )
 
-    render(<Summary />)
+    render(
+      <Form defaultValues={{ memo: undefined, amount: dsWithdrawal.amount }}>
+        <Summary />
+      </Form>
+    )
 
     expect(GenericPreview).toHaveBeenCalledTimes(1)
     expect(GenericPreview).toHaveBeenCalledWith({ items }, {})

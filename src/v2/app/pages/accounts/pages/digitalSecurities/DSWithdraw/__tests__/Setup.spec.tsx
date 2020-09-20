@@ -6,6 +6,7 @@ import { balance } from '__fixtures__/balance'
 import * as balancesData from 'v2/hooks/balance/useAllBalances'
 import * as withdrawForm from 'v2/app/pages/accounts/pages/digitalSecurities/DSWithdraw/WithdrawForm'
 import { ContinueButton } from 'v2/app/pages/accounts/pages/digitalSecurities/DSWithdraw/ContinueButton'
+import { generateInfiniteQueryResult } from '__fixtures__/useQuery'
 
 jest.mock(
   'v2/app/pages/accounts/pages/digitalSecurities/DSWithdraw/ContinueButton',
@@ -18,18 +19,19 @@ jest.mock('react-router-dom', () => ({
 }))
 
 describe('Setup', () => {
-  const balances = { map: { testId: balance } }
   const TextField = jest.fn(() => null)
   const NumericField = jest.fn(() => null)
 
   beforeEach(() => {
-    jest.spyOn(balancesData, 'useAllBalances').mockImplementation(() => ({
-      data: balances
-    }))
+    jest
+      .spyOn(balancesData, 'useAllBalances')
+      .mockReturnValue(
+        generateInfiniteQueryResult({ map: { testId: balance } })
+      )
 
     jest
       .spyOn(withdrawForm, 'useDSWithdrawForm')
-      .mockImplementation(() => ({ TextField, NumericField }))
+      .mockReturnValue({ TextField, NumericField })
   })
 
   afterEach(async () => {

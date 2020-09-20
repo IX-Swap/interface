@@ -6,6 +6,7 @@ import * as snackbar from 'v2/hooks/useSnackbar'
 import { asset } from '__fixtures__/authorizer'
 import * as balances from 'v2/hooks/balance/useAllBalances'
 import { fireEvent, waitFor } from '@testing-library/react'
+import { generateInfiniteQueryResult } from '__fixtures__/useQuery'
 
 jest.mock('react-router-dom', () => ({
   ...jest.requireActual('react-router-dom'),
@@ -14,9 +15,7 @@ jest.mock('react-router-dom', () => ({
 
 Object.assign(navigator, { clipboard: { writeText: () => {} } })
 
-jest
-  .spyOn(navigator.clipboard, 'writeText')
-  .mockImplementation(async () => null)
+jest.spyOn(navigator.clipboard, 'writeText').mockImplementation(async () => {})
 
 describe('AssetView', () => {
   const showSnackbar = jest.fn()
@@ -24,12 +23,12 @@ describe('AssetView', () => {
   const address = '12nfq3r45678900awn2noag3459an'
 
   beforeEach(() => {
-    jest
-      .spyOn(snackbar, 'useSnackbar')
-      .mockImplementation(() => ({ showSnackbar }))
+    jest.spyOn(snackbar, 'useSnackbar').mockReturnValue({ showSnackbar })
     jest
       .spyOn(balances, 'useAllBalances')
-      .mockReturnValue({ data: { map: { [balanceId]: asset } } })
+      .mockReturnValue(
+        generateInfiniteQueryResult({ map: { [balanceId]: asset } })
+      )
   })
 
   afterEach(async () => {

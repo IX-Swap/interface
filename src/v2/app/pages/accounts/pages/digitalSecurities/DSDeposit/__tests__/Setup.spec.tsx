@@ -5,6 +5,7 @@ import * as balances from 'v2/hooks/balance/useAllBalances'
 
 import { DSDepositInput } from 'v2/app/pages/accounts/pages/digitalSecurities/DSDeposit/Setup'
 import { asset } from '__fixtures__/authorizer'
+import { generateInfiniteQueryResult } from '__fixtures__/useQuery'
 
 jest.mock('react-router-dom', () => ({
   ...jest.requireActual('react-router-dom'),
@@ -17,7 +18,9 @@ describe('DSDepositInput', () => {
   beforeEach(() => {
     jest
       .spyOn(balances, 'useAllBalances')
-      .mockReturnValue({ data: { map: { [balanceId]: asset } } })
+      .mockReturnValue(
+        generateInfiniteQueryResult({ map: { [balanceId]: asset } })
+      )
   })
   afterEach(async () => {
     await cleanup()
