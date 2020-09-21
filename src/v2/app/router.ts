@@ -2,6 +2,7 @@ import { InternalRouteProps } from 'v2/types/util'
 import { AuthorizerRoot } from 'v2/app/pages/authorizer/AuthorizerRoot'
 import { Identity } from 'v2/app/pages/identity'
 import { Accounts } from 'v2/app/pages/accounts/Accounts'
+import { SecurityRoot } from 'v2/app/pages/security'
 import Issuance from 'v2/app/pages/issuance'
 import Invest from 'v2/app/pages/invest'
 import Admin from 'v2/app/pages/admin'
@@ -13,7 +14,8 @@ export const AppRoute = {
   accounts: '/app/accounts',
   issuance: '/app/issuance',
   invest: '/app/invest',
-  admin: '/app/admin'
+  admin: '/app/admin',
+  security: '/app/security'
 }
 
 const appRoutes: InternalRouteProps[] = [
@@ -46,6 +48,11 @@ const appRoutes: InternalRouteProps[] = [
     label: 'Admin',
     path: AppRoute.admin,
     component: Admin
+  },
+  {
+    label: 'Security',
+    path: AppRoute.security,
+    component: SecurityRoot
   }
 ]
 
