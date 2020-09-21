@@ -4,6 +4,7 @@ import { render, cleanup } from 'test-utils'
 import { DSTableActions } from 'v2/app/pages/accounts/pages/digitalSecurities/DSList/DSTableActions'
 import { balance } from '__fixtures__/balance'
 import { AppRouterLink } from 'v2/components/AppRouterLink'
+import { DSRoute } from 'v2/app/pages/accounts/pages/digitalSecurities/router'
 
 jest.mock('v2/components/AppRouterLink', () => ({
   AppRouterLink: jest.fn(() => null)
@@ -11,12 +12,6 @@ jest.mock('v2/components/AppRouterLink', () => ({
 
 describe('DSTableActions', () => {
   const props = { item: balance }
-  const DSRouter = {
-    list: '/app/accounts/digital-securities',
-    view: '/app/accounts/digital-securities/:balanceId/view',
-    deposit: '/app/accounts/digital-securities/:balanceId/deposit',
-    withdraw: '/app/accounts/digital-securities/:balanceId/withdraw'
-  }
 
   afterEach(async () => {
     await cleanup()
@@ -35,7 +30,7 @@ describe('DSTableActions', () => {
       1,
       {
         children: 'View',
-        to: DSRouter.view,
+        to: DSRoute.view,
         params: { balanceId: props.item._id }
       },
       {}
@@ -45,7 +40,7 @@ describe('DSTableActions', () => {
       2,
       {
         children: 'Deposit',
-        to: DSRouter.deposit,
+        to: DSRoute.deposit,
         params: { balanceId: props.item._id }
       },
       {}
@@ -54,7 +49,7 @@ describe('DSTableActions', () => {
       3,
       {
         children: 'Withdraw',
-        to: DSRouter.withdraw,
+        to: DSRoute.withdraw,
         params: { balanceId: props.item._id }
       },
       {}

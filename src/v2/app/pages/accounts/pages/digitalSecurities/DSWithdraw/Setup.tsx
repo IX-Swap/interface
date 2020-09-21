@@ -1,14 +1,16 @@
 import React from 'react'
 import { Box, Grid } from '@material-ui/core'
 import { useAllBalances } from 'v2/hooks/balance/useAllBalances'
-import { useParams } from 'react-router-dom'
+import { useDSRouter } from 'v2/app/pages/accounts/pages/digitalSecurities/router'
 import { Alert } from '@material-ui/lab'
 import { ContinueButton } from 'v2/app/pages/accounts/pages/digitalSecurities/DSWithdraw/ContinueButton'
 import { useDSWithdrawForm } from 'v2/app/pages/accounts/pages/digitalSecurities/DSWithdraw/WithdrawForm'
 
 export const Setup: React.FC = () => {
   const { NumericField, TextField } = useDSWithdrawForm()
-  const { balanceId } = useParams<{ balanceId: string }>()
+  const {
+    params: { balanceId }
+  } = useDSRouter()
   const { data } = useAllBalances()
   const balance = data.map[balanceId]
 

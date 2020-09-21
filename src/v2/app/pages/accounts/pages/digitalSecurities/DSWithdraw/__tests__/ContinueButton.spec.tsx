@@ -5,7 +5,7 @@ import { ContinueButton } from 'v2/app/pages/accounts/pages/digitalSecurities/DS
 import { dsWithdrawal } from '__fixtures__/authorizer'
 import { Form } from 'v2/components/form/Form'
 import { fireEvent } from '@testing-library/react'
-import { DepositStoreStep, DepositStore } from '../../../banks/context/store'
+import { DepositStoreStep } from '../../../banks/context/store'
 
 describe('ContinueButton', () => {
   afterEach(async () => {
@@ -58,9 +58,7 @@ describe('ContinueButton', () => {
   })
 
   it('handles click on "Continue"', async () => {
-    const fakeDepositStore: Partial<DepositStore> = {
-      setCurrentStep: jest.fn()
-    }
+    const fakeDepositStore = { setCurrentStep: jest.fn() }
     const { getByText } = renderWithDepositStore(
       <Form
         defaultValues={{

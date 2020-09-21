@@ -2,6 +2,7 @@
 import React from 'react'
 import { render, cleanup } from 'test-utils'
 import { Preview } from 'v2/app/pages/accounts/pages/digitalSecurities/DSWithdraw/Preview'
+import { generateCreateTypedFormResult } from '__fixtures__/createTypedForm'
 import { Summary } from 'v2/app/pages/accounts/pages/digitalSecurities/DSWithdraw/Summary'
 import * as withdrawForm from 'v2/app/pages/accounts/pages/digitalSecurities/DSWithdraw/WithdrawForm'
 
@@ -11,13 +12,15 @@ jest.mock(
 )
 
 describe('Preview', () => {
-  const TextField = jest.fn(() => null)
+  const TextField = jest.fn(() => null) as any
   const Submit = jest.fn(() => null)
 
   beforeEach(() => {
-    jest
-      .spyOn(withdrawForm, 'useDSWithdrawForm')
-      .mockReturnValue({ TextField, Submit })
+    jest.spyOn(withdrawForm, 'useDSWithdrawForm').mockReturnValue({
+      ...generateCreateTypedFormResult(),
+      TextField,
+      Submit
+    })
   })
 
   afterEach(async () => {

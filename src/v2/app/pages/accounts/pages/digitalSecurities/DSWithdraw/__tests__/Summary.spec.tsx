@@ -13,21 +13,22 @@ import { GenericPreview } from 'v2/app/components/GenericPreview/GenericPreview'
 import { formatMoney } from 'v2/helpers/numbers'
 import { Form } from 'v2/components/form/Form'
 import { generateInfiniteQueryResult } from '__fixtures__/useQuery'
-
-jest.mock('react-router-dom', () => ({
-  ...jest.requireActual('react-router-dom'),
-  useParams: () => ({ balanceId: 'testId' })
-}))
+import { history } from 'v2/history'
+import { DSRoute } from 'v2/app/pages/accounts/pages/digitalSecurities/router'
 
 jest.mock('v2/app/components/GenericPreview/GenericPreview', () => ({
   GenericPreview: jest.fn(() => null)
 }))
 
 describe('Summary', () => {
+  beforeEach(() => {
+    history.push(DSRoute.withdraw, { balanceId: 'testId' })
+  })
   afterEach(async () => {
     await cleanup()
     jest.clearAllMocks()
   })
+  afterAll(() => history.push('/'))
 
   it('renders without error', () => {
     jest

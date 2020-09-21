@@ -8,17 +8,20 @@ import { QueryStatus } from 'react-query'
 import { balance } from '__fixtures__/balance'
 import { asset } from '__fixtures__/authorizer'
 import { generateInfiniteQueryResult } from '__fixtures__/useQuery'
-
-jest.mock('react-router-dom', () => ({
-  ...jest.requireActual('react-router-dom'),
-  useParams: () => ({ balanceId: 'testId' })
-}))
+import { history } from 'v2/history'
+import { DSRoute } from 'v2/app/pages/accounts/pages/digitalSecurities/router'
 
 describe('DSView', () => {
+  const balanceId = balance._id
+
+  beforeEach(() => {
+    history.push(DSRoute.view, { balanceId })
+  })
   afterEach(async () => {
     await cleanup()
     jest.clearAllMocks()
   })
+  afterAll(() => history.push('/'))
 
   it('renders without error', () => {
     jest
@@ -29,13 +32,13 @@ describe('DSView', () => {
     jest
       .spyOn(balancesData, 'useAllBalances')
       .mockReturnValue(
-        generateInfiniteQueryResult({ map: { testId: balance } })
+        generateInfiniteQueryResult({ map: { [balanceId]: balance } })
       )
 
     render(<DSView />)
   })
 
-  it('renders asset description', () => {
+  it('renders asset name,symbol & description', () => {
     jest
       .spyOn(assetsData, 'useAssetsData')
       .mockReturnValue(
@@ -44,10 +47,12 @@ describe('DSView', () => {
     jest
       .spyOn(balancesData, 'useAllBalances')
       .mockReturnValue(
-        generateInfiniteQueryResult({ map: { testId: balance } })
+        generateInfiniteQueryResult({ map: { [balanceId]: balance } })
       )
 
     const { container } = render(<DSView />)
+    expect(container).toHaveTextContent(asset.name)
+    expect(container).toHaveTextContent(asset.symbol)
     expect(container).toHaveTextContent(asset.description)
   })
 
@@ -61,7 +66,7 @@ describe('DSView', () => {
     jest
       .spyOn(balancesData, 'useAllBalances')
       .mockReturnValue(
-        generateInfiniteQueryResult({ map: { testId: balance } })
+        generateInfiniteQueryResult({ map: { [balanceId]: balance } })
       )
 
     const { container } = render(<DSView />)

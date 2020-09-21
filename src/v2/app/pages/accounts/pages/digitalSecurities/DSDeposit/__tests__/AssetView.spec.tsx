@@ -1,17 +1,14 @@
 /**  * @jest-environment jsdom-sixteen  */
 import React from 'react'
-import { render, cleanup } from 'test-utils'
+import { cleanup, render } from 'test-utils'
 import { AssetView } from 'v2/app/pages/accounts/pages/digitalSecurities/DSDeposit/AssetView'
 import * as snackbar from 'v2/hooks/useSnackbar'
 import { asset } from '__fixtures__/authorizer'
 import * as balances from 'v2/hooks/balance/useAllBalances'
 import { fireEvent, waitFor } from '@testing-library/react'
 import { generateInfiniteQueryResult } from '__fixtures__/useQuery'
-
-jest.mock('react-router-dom', () => ({
-  ...jest.requireActual('react-router-dom'),
-  useParams: () => ({ balanceId: 'testId' })
-}))
+import { history } from 'v2/history'
+import { DSRoute } from 'v2/app/pages/accounts/pages/digitalSecurities/router'
 
 Object.assign(navigator, { clipboard: { writeText: () => {} } })
 
@@ -23,6 +20,7 @@ describe('AssetView', () => {
   const address = '12nfq3r45678900awn2noag3459an'
 
   beforeEach(() => {
+    history.push(DSRoute.deposit, { balanceId })
     jest.spyOn(snackbar, 'useSnackbar').mockReturnValue({ showSnackbar })
     jest
       .spyOn(balances, 'useAllBalances')

@@ -5,22 +5,25 @@ import { formatMoney } from 'v2/helpers/numbers'
 import { GenericPreview } from 'v2/app/components/GenericPreview/GenericPreview'
 import { useFormContext } from 'react-hook-form'
 import { WithdrawDSFormValues } from 'v2/app/pages/accounts/types'
-import { useParams } from 'react-router-dom'
+import { useDSRouter } from 'v2/app/pages/accounts/pages/digitalSecurities/router'
 import { useAllBalances } from 'v2/hooks/balance/useAllBalances'
 import { useAssetsData } from 'v2/hooks/asset/useAssetsData'
 
 export const Summary: React.FC = () => {
-  const { balanceId } = useParams<{ balanceId: string }>()
+  const {
+    params: { balanceId }
+  } = useDSRouter()
   const { watch } = useFormContext<WithdrawDSFormValues>()
   const amount = watch('amount')
   const memo = watch('memo')
   const { data: balances, status: balancesStatus } = useAllBalances()
   const { data: assets, status: assetsStatus } = useAssetsData('Security')
-  const asset = assets.map[balances.map[balanceId].assetId]
 
   if (balancesStatus === 'loading' || assetsStatus === 'loading') {
     return null
   }
+
+  const asset = assets.map[balances.map[balanceId].assetId]
 
   const items = [
     {

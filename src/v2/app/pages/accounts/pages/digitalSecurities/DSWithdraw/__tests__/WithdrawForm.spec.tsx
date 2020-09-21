@@ -10,17 +10,15 @@ import {
 } from '__fixtures__/useQuery'
 import { fireEvent, waitFor } from '@testing-library/react'
 import * as useWithdrawDSHook from 'v2/app/pages/accounts/pages/banks/hooks/useWithdrawDS'
-
-jest.mock('react-router-dom', () => ({
-  ...jest.requireActual('react-router-dom'),
-  useParams: () => ({ balanceId: 'testId' })
-}))
+import { history } from 'v2/history'
+import { DSRoute } from 'v2/app/pages/accounts/pages/digitalSecurities/router'
 
 describe('WithdrawForm', () => {
   const withdrawDS = jest.fn()
   const balanceId = 'testId'
 
   beforeEach(() => {
+    history.push(DSRoute.deposit, { balanceId })
     jest
       .spyOn(balances, 'useAllBalances')
       .mockReturnValue(
@@ -34,6 +32,7 @@ describe('WithdrawForm', () => {
     await cleanup()
     jest.clearAllMocks()
   })
+  afterAll(() => history.push('/'))
 
   it('renders without error', () => {
     render(<WithdrawForm />)
