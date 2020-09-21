@@ -1,9 +1,11 @@
 /**  * @jest-environment jsdom-sixteen  */
 import React from 'react'
-import { render, cleanup } from 'test-utils'
+import { cleanup, renderWithDepositStore } from 'test-utils'
 import { ContinueButton } from 'v2/app/pages/accounts/pages/digitalSecurities/DSWithdraw/ContinueButton'
 import { dsWithdrawal } from '__fixtures__/authorizer'
 import { Form } from 'v2/components/form/Form'
+import { fireEvent } from '@testing-library/react'
+import { DepositStoreStep, DepositStore } from '../../../banks/context/store'
 
 describe('ContinueButton', () => {
   afterEach(async () => {
@@ -12,7 +14,7 @@ describe('ContinueButton', () => {
   })
 
   it('renders Button without error', () => {
-    const { queryByRole } = render(
+    const { queryByRole } = renderWithDepositStore(
       <Form
         defaultValues={{
           recipientWallet: dsWithdrawal.recipientWallet,
@@ -26,7 +28,7 @@ describe('ContinueButton', () => {
   })
 
   it('will disable Button if recipientWallet is undefined', () => {
-    const { getByText } = render(
+    const { getByText } = renderWithDepositStore(
       <Form
         defaultValues={{
           recipientWallet: undefined,
@@ -41,7 +43,7 @@ describe('ContinueButton', () => {
   })
 
   it('will disable Button if amount is undefined', () => {
-    const { getByText } = render(
+    const { getByText } = renderWithDepositStore(
       <Form
         defaultValues={{
           recipientWallet: dsWithdrawal.recipientWallet,
@@ -53,5 +55,30 @@ describe('ContinueButton', () => {
     )
     const continueButton = getByText(/continue/i)
     expect(continueButton.parentElement).toBeDisabled()
+  })
+
+  it('handles click on "Continue"', async () => {
+    const fakeDepositStore: Partial<DepositStore> = {
+      setCurrentStep: jest.fn()
+    }
+    const { getByText } = renderWithDepositStore(
+      <Form
+        defaultValues={{
+          recipientWallet: dsWithdrawal.recipientWallet,
+          amount: dsWithdrawal.amount
+        }}
+      >
+        <ContinueButton />
+      </Form>,
+      fakeDepositStore
+    )
+    const continueButton = getByText(/continue/i)
+
+    fireEvent.click(continueButton)
+
+    expect(fakeDepositStore.setCurrentStep).toBeCalledTimes(1)
+    expect(fakeDepositStore.setCurrentStep).toBeCalledWith(
+      DepositStoreStep.PREVIEW
+    )
   })
 })
