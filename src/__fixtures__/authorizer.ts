@@ -17,7 +17,7 @@ export const asset: Asset = {
   deleted: false,
   name: 'XXX',
   symbol: 'ø',
-  description: '',
+  description: 'test asset description',
   type: 'Security',
   numberFormat: {
     currency: 'xXx'
