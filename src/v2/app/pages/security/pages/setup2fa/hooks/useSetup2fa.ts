@@ -7,7 +7,7 @@ export const useSetup2fa = () => {
   const store = useSetup2faStore()
 
   return useMutation(setup2faService.setup2fa.bind(setup2faService), {
-    onSuccess: (e: any) => {
+    onSuccess: e => {
       const { image, key, encoded } = e.data
       store.image = image
       store.key = key
