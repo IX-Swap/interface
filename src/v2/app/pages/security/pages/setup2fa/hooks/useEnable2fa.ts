@@ -7,7 +7,7 @@ export const useEnable2fa = () => {
   const logout = useLogout()
 
   return useMutation(setup2faService.enable2fa.bind(setup2faService), {
-    onSuccess: e => {
+    onSuccess: () => {
       void snackbarService.showSnackbar(
         'Google Authenticator Setup Success! You will be redirected to Login page.',
         'success'

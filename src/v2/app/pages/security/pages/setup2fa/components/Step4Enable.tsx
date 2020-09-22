@@ -36,7 +36,7 @@ export const Step4Enable = () => {
           <Form
             defaultValues={defaultValues}
             validationSchema={enable2faFormValuesSchema}
-            onSubmit={async values => await onSubmit(values)}
+            onSubmit={onSubmit}
           >
             <TextField
               label='OTP'

@@ -30,7 +30,7 @@ export const ChangePassword = () => {
           <Form
             defaultValues={defaultValues}
             validationSchema={changePasswordFormValuesSchema}
-            onSubmit={async values => await onSubmit(values)}
+            onSubmit={onSubmit}
           >
             <Paper elevation={1}>
               <Box p={3}>

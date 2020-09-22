@@ -9,8 +9,8 @@ export const useChangePassword = () => {
   return useMutation(
     changePasswordService.changePassword.bind(changePasswordService),
     {
-      onSuccess: async e => {
-        await push('landing')
+      onSuccess: () => {
+        push('landing')
         void snackbarService.showSnackbar(
           'Successfully changed password',
           'success'
