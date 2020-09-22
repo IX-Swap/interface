@@ -16,6 +16,7 @@ describe('DialogConfirmRoleChange', () => {
     handleClose: jest.fn(),
     handleConfirm: jest.fn()
   }
+
   afterEach(async () => {
     await cleanup()
     jest.clearAllMocks()

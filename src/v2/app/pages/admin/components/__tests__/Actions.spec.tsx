@@ -24,6 +24,7 @@ jest.mock('v2/components/form/RoleSelect', () => ({
     </>
   )
 }))
+
 describe('Actions', () => {
   const props: ActionsProps = { user }
   const fakeAdminView = {
@@ -41,6 +42,7 @@ describe('Actions', () => {
       .spyOn(adminViewHook, 'useAdminView')
       .mockImplementation(() => fakeAdminView)
   })
+
   afterEach(async () => {
     await cleanup()
     jest.clearAllMocks()
@@ -49,6 +51,7 @@ describe('Actions', () => {
   it('renders without error', () => {
     render(<Actions {...props} ref={ref} />)
   })
+
   it('renders DialogConfirmRoleChange with correct props', () => {
     render(<Actions {...props} ref={ref} />)
 
