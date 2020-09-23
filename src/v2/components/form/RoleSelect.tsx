@@ -14,11 +14,12 @@ export interface RoleSelectProps extends SelectProps {
 }
 
 export const RoleSelect = (props: RoleSelectProps) => {
+  // TODO: Need to fix TypeScript error for BackdropProps
   return (
     <Select
       {...props}
       multiple
-      MenuProps={{ BackdropProps: { 'data-testid': 'backdrop' } }}
+      MenuProps={{ BackdropProps: { 'data-testid': 'backdrop' } as any }}
       renderValue={selected => (selected as string[]).join(', ')}
     >
       {ROLES.map(name => (
