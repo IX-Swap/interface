@@ -21,6 +21,7 @@ import { useAccountsRouter } from 'v2/app/pages/accounts/router'
 import { useIdentitiesRouter } from 'v2/app/pages/identity/router'
 import { useStore as useLayoutStore } from '../../../context/layout'
 
+const securityRoot = '/app/security'
 const authorizerRoot = '/app/authorizer'
 const identityRoot = '/app/identity'
 const accountsRoot = '/app/accounts'
@@ -131,7 +132,7 @@ export const Sidebar = () => {
     {
       id: 'security',
       label: 'Security',
-      link: '/security',
+      link: securityRoot,
       icon: <SecurityIcon />
     },
     {

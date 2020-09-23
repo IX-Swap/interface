@@ -1,0 +1,17 @@
+import { useServices } from 'v2/services/useServices'
+import { useQuery } from 'react-query'
+import { useSetup2faStore } from '../context'
+
+export const useSetup2fa = () => {
+  const { setup2faService } = useServices()
+  const store = useSetup2faStore()
+
+  return useQuery('get2fa', setup2faService.setup2fa.bind(setup2faService), {
+    onSuccess: e => {
+      const { image, key, encoded } = e.data
+      store.image = image
+      store.key = key
+      store.encoded = encoded
+    }
+  })
+}
