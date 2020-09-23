@@ -6,7 +6,7 @@ import { user } from '__fixtures__/user'
 import * as adminViewHook from '../../hooks/useAdminView'
 import DialogConfirmRoleChange from 'v2/app/pages/admin/components/DialogConfirmRoleChange'
 import { appRoles } from 'v2/helpers/acl'
-// import { waitFor, fireEvent } from '@testing-library/react'
+import { waitFor, fireEvent } from '@testing-library/react'
 
 jest.mock('v2/app/pages/admin/components/DialogConfirmRoleChange', () =>
   jest.fn(() => null)
@@ -55,38 +55,42 @@ describe('Actions', () => {
     )
   })
 
-  // it('does not invoke handleChange if roles match', async () => {
-  //   render(
-  //     <Actions
-  //       user={{ ...props.user, roles: fakeAdminView.roles.join(',') }}
-  //       ref={ref}
-  //     />
-  //   )
+  it('does not invoke handleChange if roles match', async () => {
+    const { getByTestId, getByRole } = render(
+      <Actions
+        user={{ ...props.user, roles: fakeAdminView.roles.join(',') }}
+        ref={ref}
+      />
+    )
 
-  //   // invoke onClose
-  //   await waitFor(() => {
-  //     expect(fakeAdminView.handleChange).toHaveBeenCalledTimes(0)
-  //   })
-  // })
+    fireEvent.mouseDown(getByRole('button'))
+    await waitFor(() => {
+      fireEvent.click(getByTestId('backdrop'))
+      expect(fakeAdminView.handleChange).toHaveBeenCalledTimes(0)
+    })
+  })
 
-  // it('invokes handleChange with correct arguments if roles does not match', async () => {
-  //   render(<Actions {...props} ref={ref} />)
+  it('invokes handleChange with correct arguments if roles does not match', async () => {
+    const { getByTestId, getByRole } = render(<Actions {...props} ref={ref} />)
 
-  //   // invoke onClose
-  //   await waitFor(() => {
-  //     expect(fakeAdminView.handleChange).toHaveBeenCalledTimes(1)
-  //     expect(fakeAdminView.handleChange).toHaveBeenCalledWith(
-  //       `${fakeAdminView.roles[0]},${fakeAdminView.roles[1]}`
-  //     )
-  //   })
-  // })
+    fireEvent.mouseDown(getByRole('button'))
+    await waitFor(() => {
+      fireEvent.click(getByTestId('backdrop'))
+      expect(fakeAdminView.handleChange).toHaveBeenCalledTimes(1)
+      expect(fakeAdminView.handleChange).toHaveBeenCalledWith(
+        `${fakeAdminView.roles[0]},${fakeAdminView.roles[1]}`
+      )
+    })
+  })
 
-  // it('invokes handleRoleChange correctly', async () => {
-  //   render(<Actions {...props} ref={ref} />)
+  it('invokes handleRoleChange correctly', async () => {
+    const { getByRole, getAllByRole } = render(<Actions {...props} ref={ref} />)
 
-  //   // invoke onChange
-  //   await waitFor(() => {
-  //     expect(fakeAdminView.handleRoleChange).toHaveBeenCalledTimes(1)
-  //   })
-  // })
+    fireEvent.mouseDown(getByRole('button'))
+    await waitFor(() => {
+      const options = getAllByRole('option')
+      fireEvent.click(options[2])
+      expect(fakeAdminView.handleRoleChange).toHaveBeenCalledTimes(1)
+    })
+  })
 })

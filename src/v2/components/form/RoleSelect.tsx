@@ -18,6 +18,7 @@ export const RoleSelect = (props: RoleSelectProps) => {
     <Select
       {...props}
       multiple
+      MenuProps={{ BackdropProps: { 'data-testid': 'backdrop' } }}
       renderValue={selected => (selected as string[]).join(', ')}
     >
       {ROLES.map(name => (
