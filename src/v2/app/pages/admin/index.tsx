@@ -17,11 +17,15 @@ const UserManagement = () => {
           name='usersList'
           columns={columns}
           hasActions
-          actions={({ item }) => <Actions user={item} ref={ref} />}
+          actions={({ item }) => renderActions(item, ref)}
         />
       </Paper>
     </Container>
   )
 }
+
+export const renderActions = (item: User, ref: any) => (
+  <Actions user={item} ref={ref} />
+)
 
 export default UserManagement

@@ -6,7 +6,7 @@ import DialogTitle from '@material-ui/core/DialogTitle'
 import Button from '@material-ui/core/Button'
 import User from 'v2/types/user'
 
-interface DialogConfirmRoleChangeProp {
+export interface DialogConfirmRoleChangeProps {
   user: User
   newRole: string
   open: boolean
@@ -20,16 +20,17 @@ export default function DialogConfirmRoleChange ({
   open,
   handleClose,
   handleConfirm
-}: DialogConfirmRoleChangeProp) {
+}: DialogConfirmRoleChangeProps) {
   return (
     <Dialog
       disableBackdropClick
       disableEscapeKeyDown
       open={open}
       onClose={handleClose}
+      data-testid='dialog-wrapper'
     >
       <DialogTitle>Confirm Role Change</DialogTitle>
-      <DialogContent>
+      <DialogContent data-testid='dialog-content'>
         Are you sure you want to change {user.email}&apos;s <br /> role from{' '}
         {user.roles} to {newRole}?
       </DialogContent>
