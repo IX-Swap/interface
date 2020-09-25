@@ -26,6 +26,17 @@ describe('SettingsRow', () => {
     render(<SettingsRow {...props} />)
   })
 
+  it('renders name correctly', () => {
+    const { container } = render(<SettingsRow {...props} />)
+
+    expect(container).toHaveTextContent(props.name as string)
+  })
+  it('renders name as row-image by default', () => {
+    const { container } = render(<SettingsRow {...props} name={undefined} />)
+
+    expect(container).toHaveTextContent('row-image')
+  })
+
   it('invokes buttonClick when button is disabled & clicked', async () => {
     const { getByRole } = render(<SettingsRow {...props} buttonDisabled />)
 
