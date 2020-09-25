@@ -1,6 +1,6 @@
 import { useServices } from 'v2/services/useServices'
 import { useMutation } from 'react-query'
-import { useSecurityRouter } from '../../../routes'
+import { useSecurityRouter } from 'v2/app/pages/security/routes'
 
 export const useChangePassword = () => {
   const { changePasswordService, snackbarService } = useServices()

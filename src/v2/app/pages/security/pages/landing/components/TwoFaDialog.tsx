@@ -4,7 +4,7 @@ import gAuthImg from '../assets/googleauth.png'
 
 import { makeStyles } from '@material-ui/styles'
 
-interface TwoFaDialogProps {
+export interface TwoFaDialogProps {
   closeFn: () => void
   nextFn: () => void
   isOpen: boolean

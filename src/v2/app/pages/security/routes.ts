@@ -5,7 +5,7 @@ import { ChangePassword } from './pages/changePassword/ChangePassword'
 import { Landing } from './pages/landing/Landing'
 import { Setup2fa } from './pages/setup2fa/Setup2fa'
 
-const SecurityRoute = {
+export const SecurityRoute = {
   landing: '/app/security',
   changePassword: '/app/security/change-password',
   setup2fa: '/app/security/setup-2fa'

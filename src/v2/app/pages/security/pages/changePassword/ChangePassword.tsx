@@ -13,9 +13,9 @@ const defaultValues = {
   confirmPassword: ''
 }
 
-const useChangePasswordForm = createTypedForm<ChangePasswordFormValues>()
-
 export const ChangePassword = () => {
+  const useChangePasswordForm = createTypedForm<ChangePasswordFormValues>()
+
   const { Form, TextField, Submit } = useChangePasswordForm()
   const [changePassword] = useChangePassword()
   const onSubmit = async (values: ChangePasswordFormValues) => {
