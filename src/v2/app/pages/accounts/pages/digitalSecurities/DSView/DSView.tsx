@@ -1,11 +1,13 @@
 import React from 'react'
 import { Box, Grid, Typography } from '@material-ui/core'
-import { useParams } from 'react-router-dom'
+import { useDSRouter } from 'v2/app/pages/accounts/pages/digitalSecurities/router'
 import { useAllBalances } from 'v2/hooks/balance/useAllBalances'
 import { useAssetsData } from 'v2/hooks/asset/useAssetsData'
 
 export const DSView: React.FC = () => {
-  const { balanceId } = useParams<{ balanceId: string }>()
+  const {
+    params: { balanceId }
+  } = useDSRouter()
   const { data: balances, status: balancesStatus } = useAllBalances()
   const { data: assets, status: assetsStatus } = useAssetsData('Security')
 

@@ -112,7 +112,7 @@
     "start": "react-app-rewired start",
     "build": "react-app-rewired build",
     "test": "react-scripts test",
-    "test:ci": "CI=true react-scripts test --silent --coverage --testResultsProcessor jest-sonar-reporter",
+    "test:ci": "CI=true react-scripts test --silent --coverage --testResultsProcessor jest-sonar-reporter --coveragePathIgnorePatterns src/v1 --coveragePathIgnorePatterns src/__fixtures__",
     "eject": "react-scripts eject",
     "deploy": "gulp deploy",
     "lint": "eslint --cache --fix \"src/**/*.{ts,tsx}\"",
