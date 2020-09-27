@@ -1,6 +1,7 @@
 import { Asset } from './asset'
-import { Document } from './document'
+import { Document, DocumentWithGuide } from './document'
 import { Maybe } from './util'
+import { asset } from '__fixtures__/authorizer'
 
 export interface DsoTeamMember {
   _id?: string
@@ -39,7 +40,7 @@ export interface BaseDigitalSecurityOffering {
   issuerName: string
   launchDate: string
   corporate: string
-  logo?: string
+  logo: string
   capitalStructure: string
   pricePerUnit: number | null
   totalFundraisingAmount: number | null
@@ -68,12 +69,37 @@ export interface BaseDigitalSecurityOffering {
 
 export interface DigitalSecurityOffering extends BaseDigitalSecurityOffering {
   documents: Maybe<Document[]>
-  currency: Array<Partial<Asset>> | Asset[]
+  currency: Asset
 }
 
-export interface DsoRequest extends BaseDigitalSecurityOffering {
-  documents: string[]
+export type DeploymentInfoFormValues = Omit<
+  DeploymentInfo,
+  '_id' | 'createdBy' | 'createdAt' | 'updatedAt' | '__v'
+>
+
+export interface DSOFormValues
+  extends Omit<
+    DigitalSecurityOffering,
+    | '_id'
+    | 'deleted'
+    | 'createdBy'
+    | 'createdAt'
+    | 'user'
+    | 'deploymentInfo'
+    | 'documents'
+    | 'asset'
+    | 'status'
+    | 'team'
+    | 'currency'
+  > {
+  status?: string
   currency: string
+  documents: Maybe<DocumentWithGuide[]>
+  team: Maybe<DsoTeamMember[]>
+}
+
+export interface DSORequestArgs extends Omit<DSOFormValues, 'documents'> {
+  documents: string[]
 }
 
 export const inititialValues: DigitalSecurityOffering = {
@@ -88,7 +114,7 @@ export const inititialValues: DigitalSecurityOffering = {
   corporate: '',
   logo: '',
   capitalStructure: '',
-  currency: [{ _id: '' }],
+  currency: asset,
   pricePerUnit: null,
   totalFundraisingAmount: null,
   tokenName: '',

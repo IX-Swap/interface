@@ -19,6 +19,7 @@ import {
   Typography
 } from '@material-ui/core'
 import { AssetSelect, AssetSelectProps } from 'v2/components/form/AssetSelect'
+import { CorporateSelect } from 'v2/components/form/CorporateSelect'
 import { Submit } from 'v2/components/form/Submit'
 import { BalanceSelect } from 'v2/components/form/BalanceSelect'
 import { BankSelect } from 'v2/components/form/BankSelect'
@@ -32,13 +33,16 @@ import { TypedFieldProps } from 'v2/components/form/types'
 import { NationalitySelect } from 'v2/components/form/NationalitySelect'
 import { GenderSelect } from 'v2/components/form/GenderSelect'
 import { MartialStatusSelect } from 'v2/components/form/MartialStatusSelect'
-import { useFormContext } from 'react-hook-form'
+import { useFieldArray, useFormContext } from 'react-hook-form'
 import { pathToString } from 'v2/components/form/utils'
 import { YesOrNo } from 'v2/components/form/YesOrNo'
 import {
   DocumentUploader,
   DocumentUploaderProps
 } from 'v2/components/form/DocumentUploader'
+import { RichTextEditor } from './RichTextEditor'
+import { Maybe } from 'v2/types/util'
+import { DistributionFrequencySelect } from 'v2/components/form/DistributionFrequencySelect'
 
 const booleanValueExtractor = (
   _: React.ChangeEvent<{}>,
@@ -48,6 +52,8 @@ const booleanValueExtractor = (
 const numericValueExtractor = (
   values: NumberFormatValues
 ): number | undefined => values.floatValue
+
+const plainValueExtractor = (value: any) => value
 
 const formatValue = (value: any): string => {
   const empty = '–'
@@ -71,6 +77,24 @@ const formatValue = (value: any): string => {
 export const createTypedForm = <FormType extends Record<string, any>>() => {
   const TypedField = createTypedField<FormType>()
 
+  interface FieldsArrayComponentProps {
+    name: string
+    children: (props: {
+      fields: any[]
+      append: (field: any) => void
+      remove: (index: number) => void
+    }) => Maybe<JSX.Element>
+  }
+
+  const FieldsArrayComponent = <Path extends DeepPath<FormType, Path>>(
+    props: FieldsArrayComponentProps
+  ) => {
+    const { name, children } = props
+    const fieldArray = useFieldArray({ name })
+
+    return children(fieldArray)
+  }
+
   const FormComponent = ({
     children,
     ...props
@@ -83,6 +107,14 @@ export const createTypedForm = <FormType extends Record<string, any>>() => {
   ): JSX.Element => (
     <TypedField {...props}>
       <Input />
+    </TypedField>
+  )
+
+  const RichTextEditorComponent = <Path extends DeepPath<FormType, Path>>(
+    props: Omit<TypedFieldProps<FormType, DeepPath<FormType, Path>>, 'children'>
+  ): JSX.Element => (
+    <TypedField {...props} valueExtractor={value => value}>
+      {fieldProps => <RichTextEditor {...fieldProps} label={props.label} />}
     </TypedField>
   )
 
@@ -114,18 +146,25 @@ export const createTypedForm = <FormType extends Record<string, any>>() => {
     title,
     deleteComponent,
     uploadComponent,
+    onDelete,
+    canDelete,
     ...props
   }: Omit<TypedFieldProps<FormType, DeepPath<FormType, Path>>, 'children'> &
     DocumentUploaderProps): JSX.Element => (
-    <TypedField {...props} valueExtractor={value => value}>
+    <TypedField
+      {...props}
+      valueExtractor={props.valueExtractor ?? plainValueExtractor}
+    >
       {fieldProps => (
         <DocumentUploader
           {...fieldProps}
           name={pathToString(props.name, props.root)}
-          onChange={fieldProps.onChange}
           title={title}
+          onChange={fieldProps.onChange}
+          onDelete={onDelete}
           uploadComponent={uploadComponent}
           deleteComponent={deleteComponent}
+          canDelete={canDelete}
         />
       )}
     </TypedField>
@@ -151,6 +190,14 @@ export const createTypedForm = <FormType extends Record<string, any>>() => {
     </TypedField>
   )
 
+  const CorporateSelectComponent = <Path extends DeepPath<FormType, Path>>(
+    props: Omit<TypedFieldProps<FormType, DeepPath<FormType, Path>>, 'children'>
+  ): JSX.Element => (
+    <TypedField {...props}>
+      <CorporateSelect />
+    </TypedField>
+  )
+
   const BalanceSelectComponent = <Path extends DeepPath<FormType, Path>>(
     props: Omit<TypedFieldProps<FormType, DeepPath<FormType, Path>>, 'children'>
   ): JSX.Element => (
@@ -172,6 +219,16 @@ export const createTypedForm = <FormType extends Record<string, any>>() => {
   ): JSX.Element => (
     <TypedField {...props}>
       <CountrySelect />
+    </TypedField>
+  )
+
+  const DistributionFrequencySelectComponent = <
+    Path extends DeepPath<FormType, Path>
+  >(
+    props: Omit<TypedFieldProps<FormType, DeepPath<FormType, Path>>, 'children'>
+  ): JSX.Element => (
+    <TypedField {...props}>
+      <DistributionFrequencySelect />
     </TypedField>
   )
 
@@ -235,12 +292,15 @@ export const createTypedForm = <FormType extends Record<string, any>>() => {
         BalanceSelect: BalanceSelectComponent,
         BankSelect: BankSelectComponent,
         CountrySelect: CountrySelectComponent,
+        DistributionFrequency: DistributionFrequencySelectComponent,
         NationalitySelect: NationalitySelectComponent,
         GenderSelect: GenderSelectComponent,
         MartialStatusSelect: MartialStatusSelectComponent,
         Checkbox: CheckboxComponent,
         YesOrNo: YesOrNoComponent,
-        DocumentUploader: DocumentUploaderComponent
+        DocumentUploader: DocumentUploaderComponent,
+        CorporateSelect: CorporateSelectComponent,
+        RichTextEditor: RichTextEditorComponent
       }),
       []
     )
@@ -283,8 +343,8 @@ export const createTypedForm = <FormType extends Record<string, any>>() => {
       root?: string
       children: (
         value: UnpackNestedValue<DeepPathValue<FormType, Path>>
-      ) => JSX.Element
-    }): JSX.Element => {
+      ) => Maybe<JSX.Element>
+    }): Maybe<JSX.Element> => {
       const { name, root, children } = props
       const { watch } = useFormContext()
       const value = watch(pathToString(name, root))
@@ -298,6 +358,7 @@ export const createTypedForm = <FormType extends Record<string, any>>() => {
         Form: FormComponent,
         EditableField: EditableField,
         FormValue: FormValue,
+        FieldsArray: FieldsArrayComponent,
         Submit: Submit
       }),
       [] // eslint-disable-line

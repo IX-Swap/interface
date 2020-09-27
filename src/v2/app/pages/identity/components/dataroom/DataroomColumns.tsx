@@ -22,16 +22,16 @@ export const DataroomColumns: React.FC<DataroomColumnsProps> = props => {
 
   return (
     <>
-      <Grid container item xs={3}>
+      <Grid container item xs={3} alignItems='center'>
         <Typography>{document.originalFileName}</Typography>
       </Grid>
-      <Grid container item xs={2} justify='center'>
+      <Grid container item xs={2} alignItems='center' justify='center'>
         <Typography>{formatDateToMMDDYY(document.createdAt)}</Typography>
       </Grid>
-      <Grid container item xs={3} justify='center'>
+      <Grid container item xs={3} alignItems='center' justify='center'>
         <Typography>{document.title}</Typography>
       </Grid>
-      <Grid container item xs={3} justify='center'>
+      <Grid container item xs={3} alignItems='center' justify='center'>
         <Typography>{document.type}</Typography>
       </Grid>
     </>

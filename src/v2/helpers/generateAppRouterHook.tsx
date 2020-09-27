@@ -8,7 +8,7 @@ import {
   useHistory,
   generatePath
 } from 'react-router-dom'
-import { InternalRouteBase, InternalRouteProps, Maybe } from 'v2/types/util'
+import { InternalRouteBase, InternalRouteProps } from 'v2/types/util'
 
 interface AppRouter<T> {
   current: InternalRouteBase

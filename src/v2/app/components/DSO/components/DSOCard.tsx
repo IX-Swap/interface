@@ -1,19 +1,17 @@
 import React from 'react'
 import { DigitalSecurityOffering } from 'v2/types/dso'
 import { Paper, Box, Typography, Button, Grid } from '@material-ui/core'
-import { DSOTitle } from 'v2/app/components/DSO/DSOTitle'
+import { DSOTitle } from 'v2/app/components/DSO/components/DSOTitle'
 import { DSODetails } from 'v2/app/components/DSO/components/DSODetails'
-import { Asset } from 'v2/types/asset'
-import { useInvestRouter } from 'v2/app/pages/invest/router'
 import { AppRouterLink } from 'v2/components/AppRouterLink'
 
 export interface DSOfferingCardProps {
   dso: DigitalSecurityOffering
+  viewURL: string
 }
 
 export const DSOCard = (props: DSOfferingCardProps) => {
-  const { dso } = props
-  const { routes } = useInvestRouter()
+  const { dso, viewURL } = props
 
   return (
     <Paper>
@@ -46,15 +44,19 @@ export const DSOCard = (props: DSOfferingCardProps) => {
               color='primary'
             >
               <AppRouterLink
-                to={routes.offeringView}
-                params={{ offeringId: dso._id, issuerId: dso.user }}
+                to={viewURL}
+                params={{ dsoId: dso._id, issuerId: dso.user }}
               >
                 View
               </AppRouterLink>
             </Button>
           </Grid>
           <Grid item xs={3}>
-            <DSODetails dso={dso} currency={dso.currency[0] as Asset} />
+            <DSODetails
+              dso={dso}
+              // currency={dso.currency[0] as Asset}
+              currency={undefined}
+            />
           </Grid>
         </Grid>
       </Box>

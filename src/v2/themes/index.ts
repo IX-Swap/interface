@@ -23,7 +23,10 @@ const overrides = {
     h6: {
       fontSize: '1.142rem'
     }
-  },
+  }
+}
+
+const rte = {
   MUIRichTextEditor: {
     root: {
       backgroundColor: '#ebebeb',
@@ -51,7 +54,7 @@ const overrides = {
       width: '100%',
       height: '100%',
       bottom: '0',
-      position: 'inherit'
+      position: 'static'
     }
   }
 }
@@ -59,6 +62,10 @@ const overrides = {
 export default {
   default: createMuiTheme({
     ...defaultTheme,
-    ...overrides
+    ...overrides,
+    overrides: {
+      ...defaultTheme.overrides,
+      ...rte
+    }
   })
 }

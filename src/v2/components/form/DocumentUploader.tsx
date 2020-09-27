@@ -9,26 +9,53 @@ import { Maybe } from 'v2/types/util'
 export interface DocumentUploaderInputProps {
   name: string
   onChange: (document: Maybe<Document>) => any
+  value?: Document | null
 }
 
 export interface DocumentUploaderProps {
   title: string
   uploadComponent?: JSX.Element
   deleteComponent?: JSX.Element
+  onDelete?: () => any
+  canDelete?: boolean
+}
+
+export const getDocumentId = (document: any) => {
+  if (document === undefined || document === null) {
+    return ''
+  }
+
+  if (typeof document === 'string') {
+    return document
+  }
+
+  return (document as Document)._id
 }
 
 export const DocumentUploader: React.FC<
   DocumentUploaderProps & DocumentUploaderInputProps
 > = props => {
-  const { name, title, uploadComponent, deleteComponent, onChange } = props
+  const {
+    name,
+    title,
+    uploadComponent,
+    deleteComponent,
+    onChange,
+    onDelete,
+    canDelete = true,
+    value: defaultValue
+  } = props
   const inputRef = useRef<HTMLInputElement | null>(null)
-  const document = useWatch<Document>({ name })
-  const [uploadFile] = useUploadFile(d => onChange(d[0])) // TODO: refactor to callback free implementation
-  const [deleteFile] = useDeleteFile(document?._id ?? '')
+  const value = useWatch<Document>({ name })
+  const document = value === undefined ? defaultValue : value
+  const [deleteFile] = useDeleteFile(getDocumentId(document))
+  const [uploadFile] = useUploadFile({
+    onSuccess: response => onChange(response.data[0])
+  })
   let buttonElement: JSX.Element
   const handleChange = async () => {
     // eslint-disable-next-line
-    if (inputRef.current !== null && inputRef.current.files !== null) {
+    if (inputRef.current !== null && inputRef.current.files !== null && inputRef.current.files.length > 0) {
       const file = inputRef.current.files[0]
       await uploadFile({ type: file.type, title, file })
     }
@@ -36,9 +63,10 @@ export const DocumentUploader: React.FC<
   const handleDeleteClick = async () => {
     await deleteFile()
     onChange(null)
+    onDelete?.()
   }
 
-  if (document !== undefined && document !== null) {
+  if (canDelete && document !== undefined && document !== null) {
     buttonElement = (
       <div onClick={handleDeleteClick}>
         {deleteComponent ?? (

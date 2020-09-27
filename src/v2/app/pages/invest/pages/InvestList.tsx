@@ -27,7 +27,7 @@ export const InvestList = () => {
             value={1}
             label='My Commitments'
             component={Link}
-            to={routes.commiments}
+            to={routes.commitments}
           />
         </Tabs>
         <Divider />

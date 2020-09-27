@@ -1,17 +1,9 @@
-import React, { useContext, createContext } from 'react'
-
 import { IssuanceStore } from 'v2/app/pages/issuance/context/store'
+import generateStoreHookAndProvider from 'v2/helpers/generateStoreHookAndProvider'
 
-const initialState = new IssuanceStore()
+const store = new IssuanceStore()
 
-export const StoreContext = createContext<IssuanceStore>(initialState)
-export const StoreProvider = StoreContext.Provider
-
-export function InvestProvider ({ children }: { children: Node }) {
-  return <StoreProvider value={initialState}>{children}</StoreProvider>
-}
-
-export const useStore = (): IssuanceStore => {
-  const store = useContext(StoreContext)
-  return store
-}
+export const {
+  Provider: IssuanceStoreProvider,
+  useStore: useIssuanceStore
+} = generateStoreHookAndProvider(store)

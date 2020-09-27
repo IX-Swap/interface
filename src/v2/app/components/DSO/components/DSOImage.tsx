@@ -1,5 +1,5 @@
 import React from 'react'
-import storageHelper from '../../../helpers/storageHelper'
+import storageHelper from 'v2/helpers/storageHelper'
 import { getImgUrl } from 'v2/helpers/httpRequests'
 import ImageUploader from 'v2/components/form/ImageUploader'
 

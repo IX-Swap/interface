@@ -1,30 +1,33 @@
 import React from 'react'
-import { DSOList } from 'v2/app/components/DSO/DSOList'
+import { DSOList } from 'v2/app/components/DSO/components/DSOList'
 import { generateAppRouterHook } from 'v2/helpers/generateAppRouterHook'
 import MyCommitments from './components/my-commitments'
+import { InvestRoute } from 'v2/app/pages/invest/router'
 
-export const InvestListPath = {
-  offerings: '/app/invest/list/offerings',
-  commiments: '/app/invest/list/commitments'
+export const InvestListRoute = {
+  offerings: '/app/invest/offerings',
+  commitments: '/app/invest/commitments'
 }
 
 export const investListRoutes = [
   {
     label: 'Offerings',
-    path: InvestListPath.offerings,
+    path: InvestListRoute.offerings,
     exact: true,
-    component: () => <DSOList user={null} filter={{}} />
+    component: () => (
+      <DSOList user={null} filter={{}} viewURL={InvestRoute.offeringView} />
+    )
   },
   {
     label: 'My Commitments',
-    path: InvestListPath.commiments,
+    path: InvestListRoute.commitments,
     exact: true,
     component: MyCommitments
   }
 ]
 
 export const useInvestListRouter = generateAppRouterHook(
-  InvestListPath,
-  InvestListPath.offerings,
+  InvestListRoute,
+  InvestListRoute.offerings,
   investListRoutes
 )

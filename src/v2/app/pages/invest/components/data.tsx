@@ -2,7 +2,7 @@ import React from 'react'
 import { TableColumn } from 'v2/types/util'
 import { formatMoney } from 'v2/helpers/numbers'
 import { Commitment } from 'v2/types/commitment'
-import { DSOImage } from 'v2/app/components/DSO/DSOImage'
+import { DSOImage } from 'v2/app/components/DSO/components/DSOImage'
 
 export const columns: Array<TableColumn<Commitment>> = [
   {

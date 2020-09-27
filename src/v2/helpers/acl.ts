@@ -1,5 +1,5 @@
 import { includes } from 'lodash'
-import { useUser } from 'v2/auth/hooks/useUser'
+import { useAuth } from 'v2/hooks/auth/useAuth'
 
 // RBACL Algorithm for Frontend
 
@@ -41,7 +41,7 @@ const hasRole = (roles: string, roleToCheck: string): boolean => {
  */
 
 export const useIsAdmin = (): boolean => {
-  const { data: user } = useUser()
+  const { user } = useAuth()
 
   if (user === undefined) return false
 
@@ -49,7 +49,7 @@ export const useIsAdmin = (): boolean => {
 }
 
 export const useIsAuthorizer = (): boolean => {
-  const { data: user } = useUser()
+  const { user } = useAuth()
 
   if (user === undefined) return false
 
@@ -57,7 +57,7 @@ export const useIsAuthorizer = (): boolean => {
 }
 
 export const useIsIssuer = (): boolean => {
-  const { data: user } = useUser()
+  const { user } = useAuth()
 
   if (user === undefined) return false
 
@@ -65,7 +65,7 @@ export const useIsIssuer = (): boolean => {
 }
 
 export const useIsAccredited = (): boolean => {
-  const { data: user } = useUser()
+  const { user } = useAuth()
 
   if (user === undefined) return false
 

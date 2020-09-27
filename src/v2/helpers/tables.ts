@@ -61,6 +61,8 @@ export const renderAmount = (
   if ('currency' in row) {
     if (Array.isArray(row.currency)) {
       symbol = row.currency[0]?.numberFormat?.currency ?? ''
+    } else if (typeof row.currency === 'string') {
+      symbol = row.currency
     } else {
       symbol = row.currency.numberFormat.currency
     }

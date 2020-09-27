@@ -1,6 +1,7 @@
 import { useMutation } from 'react-query'
 import { useServices } from 'v2/services/useServices'
 import { Document } from 'v2/types/document'
+import { QueryOrMutationCallbacks } from 'v2/hooks/types'
 
 export interface UploadFileArgs {
   title: string
@@ -8,7 +9,9 @@ export interface UploadFileArgs {
   file: File
 }
 
-export const useUploadFile = (cb: (d: Document[]) => any) => {
+export const useUploadFile = (
+  callbacks?: QueryOrMutationCallbacks<Document[]>
+) => {
   const { snackbarService, apiService } = useServices()
   const uploadFile = async (args: UploadFileArgs) => {
     const { title, file, type } = args
@@ -24,10 +27,11 @@ export const useUploadFile = (cb: (d: Document[]) => any) => {
   return useMutation(uploadFile, {
     onSuccess: data => {
       void snackbarService.showSnackbar('File uploaded', 'success')
-      cb(data.data)
+      callbacks?.onSuccess?.(data)
     },
-    onError: () => {
+    onError: error => {
       void snackbarService.showSnackbar('Failed to upload the file', 'error')
+      callbacks?.onError?.(error)
     }
   })
 }
