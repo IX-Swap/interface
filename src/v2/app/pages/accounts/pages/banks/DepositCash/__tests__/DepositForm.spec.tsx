@@ -2,7 +2,6 @@
 import { fireEvent } from '@testing-library/react'
 import React from 'react'
 import { render, cleanup } from 'test-utils'
-
 import * as useDepositCashHook from 'v2/app/pages/accounts/pages/banks/hooks/useDepositCash'
 import { DepositForm } from 'v2/app/pages/accounts/pages/banks/DepositCash/DepositForm'
 import { generateMutationResult } from '__fixtures__/useQuery'

@@ -8,12 +8,14 @@ import { useBanksData } from 'v2/app/pages/accounts/pages/banks/hooks/useBanksDa
 import { WithdrawCashFormValues } from 'v2/app/pages/accounts/types'
 
 export const Preview: React.FC = () => {
-  const { getValues } = useFormContext<WithdrawCashFormValues>()
-  const { data, status } = useBanksData()
-  const { bank: bankId, amount: amountFormatted, memo } = getValues()
+  const { watch } = useFormContext<WithdrawCashFormValues>()
+  const { data, isLoading } = useBanksData()
+  const bankId = watch('bank')
+  const amountFormatted = watch('amount')
+  const memo = watch('memo')
   const bank = data.map[bankId]
 
-  if (status === 'loading') {
+  if (isLoading) {
     return null
   }
 

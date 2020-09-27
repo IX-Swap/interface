@@ -3,7 +3,7 @@ import LabelValue from 'v1/components/LabelValue'
 import { List, Box } from '@material-ui/core'
 import { AssetBalance } from 'v2/types/balance'
 import { useAllBalances } from 'v2/hooks/balance/useAllBalances'
-import { useParams } from 'react-router-dom'
+import { useDSRouter } from 'v2/app/pages/accounts/pages/digitalSecurities/router'
 
 const balanceValues = [
   {
@@ -21,7 +21,9 @@ const balanceValues = [
 ]
 
 export const BalancesList: React.FC = () => {
-  const { balanceId } = useParams<{ balanceId: string }>()
+  const {
+    params: { balanceId }
+  } = useDSRouter()
   const { data } = useAllBalances()
 
   return (

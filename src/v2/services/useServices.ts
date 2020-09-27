@@ -8,6 +8,8 @@ import storageService from 'v2/services/storage'
 import authService from 'v2/auth/service'
 import { banksService } from 'v2/app/pages/accounts/pages/banks/service'
 import { adminService } from 'v2/app/pages/admin/service'
+import { changePasswordService } from 'v2/app/pages/security/pages/changePassword/service'
+import { setup2faService } from 'v2/app/pages/security/pages/setup2fa/service'
 import { snackbarService } from 'uno-material-ui'
 
 const services = {
@@ -20,7 +22,9 @@ const services = {
   socketService,
   storageService,
   adminService,
-  snackbarService
+  snackbarService,
+  setup2faService,
+  changePasswordService
 }
 
 export const {

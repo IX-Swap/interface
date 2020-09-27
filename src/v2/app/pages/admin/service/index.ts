@@ -1,4 +1,4 @@
-import apiService from '../../../../services/api'
+import apiService from 'v2/services/api'
 import { UpdateUserRoleArgs } from './types'
 
 export const adminService = {

@@ -13,9 +13,10 @@ export interface DepositTransactionPreviewProps {
 
 export const Preview: React.FC<DepositTransactionPreviewProps> = props => {
   const { depositCode } = props
-  const { getValues } = useFormContext<DepositCashFormValues>()
+  const { watch } = useFormContext<DepositCashFormValues>()
   const { data } = useAssetsData('Currency')
-  const { asset: assetId, amount } = getValues()
+  const assetId = watch('asset')
+  const amount = watch('amount')
   const asset = data.map[assetId]
 
   const items = [

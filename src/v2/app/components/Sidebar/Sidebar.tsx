@@ -22,6 +22,7 @@ import { useStore as useLayoutStore } from '../../../context/layout'
 import { useInvestRouter } from 'v2/app/pages/invest/router'
 import { useIssuanceRouter } from 'v2/app/pages/issuance/router'
 
+const securityRoot = '/app/security'
 const authorizerRoot = '/app/authorizer'
 const accountsRoot = '/app/accounts'
 const adminRoot = '/app/admin'
@@ -127,7 +128,7 @@ export const Sidebar = () => {
     {
       id: 'security',
       label: 'Security',
-      link: '/security',
+      link: securityRoot,
       icon: <SecurityIcon />
     },
     {

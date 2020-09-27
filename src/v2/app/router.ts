@@ -13,7 +13,8 @@ export const AppRoute = {
   accounts: '/app/accounts',
   issuance: '/app/issuance',
   invest: '/app/invest',
-  admin: '/app/admin'
+  admin: '/app/admin',
+  security: '/app/security'
 }
 
 const appRoutes: InternalRouteProps[] = [
@@ -46,6 +47,11 @@ const appRoutes: InternalRouteProps[] = [
     label: 'Admin',
     path: AppRoute.admin,
     component: Admin
+  },
+  {
+    label: 'Security',
+    path: AppRoute.security,
+    component: SecurityRoot
   }
 ]
 

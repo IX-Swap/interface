@@ -1,12 +1,14 @@
 import React from 'react'
 import { useAllBalances } from 'v2/hooks/balance/useAllBalances'
-import { useParams } from 'react-router-dom'
 import { Box, Button, Grid, Typography } from '@material-ui/core'
 import { ReactComponent as QRCode } from 'v1/assets/qr.svg'
 import { useSnackbar } from 'v2/hooks/useSnackbar'
+import { useDSRouter } from 'v2/app/pages/accounts/pages/digitalSecurities/router'
 
 export const AssetView: React.FC = () => {
-  const { balanceId } = useParams<{ balanceId: string }>()
+  const {
+    params: { balanceId }
+  } = useDSRouter()
   const { data } = useAllBalances()
   const snackbar = useSnackbar()
   const asset = data.map[balanceId]
