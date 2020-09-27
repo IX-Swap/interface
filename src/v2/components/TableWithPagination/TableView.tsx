@@ -14,6 +14,13 @@ import { Actions } from 'v2/app/pages/authorizer/components/Actions'
 import { useTableWithPagination } from 'v2/components/TableWithPagination/hooks/useTableWithPagination'
 import { TableRows } from 'v2/components/TableWithPagination/TableRows'
 
+export interface TableViewRendererProps<T> {
+  items: T[]
+  columns: Array<TableColumn<T>>
+  hasActions: boolean
+  actions?: Actions<T>
+}
+
 export interface TableViewProps<T> {
   name: string
   uri: string
@@ -22,8 +29,9 @@ export interface TableViewProps<T> {
   filter?: BaseFilter
   hasActions?: boolean
   actions?: Actions<T>
-  children?: any
+  children?: (props: TableViewRendererProps<T>) => JSX.Element
   fakeItems?: T[]
+  innerRef?: any
 }
 
 export const TableView = <T,>({
@@ -37,7 +45,7 @@ export const TableView = <T,>({
   children,
   fakeItems,
   innerRef
-}: TableViewProps<T> & { innerRef?: any }): JSX.Element => {
+}: TableViewProps<T>): JSX.Element => {
   const {
     items,
     status,

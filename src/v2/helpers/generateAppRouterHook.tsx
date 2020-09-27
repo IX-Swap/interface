@@ -32,6 +32,22 @@ interface GetCurrentRouteArgs<T> {
   routeMap: T
 }
 
+const shouldGeneratePath = (
+  path: string,
+  state: Record<string, any> | null | undefined
+): state is Record<string, string> => {
+  if (state === undefined || state === null) {
+    return false
+  }
+
+  const params = path
+    .split('/')
+    .filter(s => s.startsWith(':'))
+    .map(s => s.replace(/:/, ''))
+
+  return params.every(p => state[p] !== undefined)
+}
+
 const getCurrentRouteFromLocation = <T,>(
   args: GetCurrentRouteArgs<T>
 ): InternalRouteBase => {
@@ -39,7 +55,7 @@ const getCurrentRouteFromLocation = <T,>(
   const { pathname, state } = location
 
   const route = Object.values(routeMap).find(path => {
-    if (state !== null && state !== undefined) {
+    if (shouldGeneratePath(path, state)) {
       return pathname === generatePath(path, state)
     }
 

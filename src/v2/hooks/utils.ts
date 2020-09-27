@@ -23,3 +23,20 @@ export const convertDataArrayToMap = <T>(
     {}
   )
 }
+
+export const convertBlobToFile = (blob: Blob, filename?: string) => {
+  return new File([blob], filename ?? '', { type: blob.type }) // TODO: fix file name
+}
+
+export const createObjectURLFromFile = (file: File) => {
+  return window.URL.createObjectURL(file)
+}
+
+export const revokeObjectURL = (url: string) => {
+  return window.URL.revokeObjectURL(url)
+}
+
+export const openFileInNewTab = (file: File) => {
+  const url = createObjectURLFromFile(file)
+  window.open(url)
+}

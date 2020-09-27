@@ -8,6 +8,14 @@ import { Control } from 'react-hook-form'
 import { FormControlProps, InputProps } from '@material-ui/core'
 import React from 'react'
 
+export interface ControllerRenderProps {
+  name: string
+  label: string
+  value: any
+  onChange: (...args: any[]) => any
+  onBlur: (...args: any[]) => any
+}
+
 export interface TypedFieldChildProps<
   FormType extends UnpackNestedValue<FieldValuesFromControl<Control>>,
   Path extends DeepPath<FormType, Path>

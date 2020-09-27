@@ -5,7 +5,6 @@ import HelpIcon from '@material-ui/icons/Help'
 import ArrowBackIcon from '@material-ui/icons/ArrowBack'
 import SecurityIcon from '@material-ui/icons/Security'
 import AccountBalanceIcon from '@material-ui/icons/AccountBalance'
-import TrendingUpIcon from '@material-ui/icons/TrendingUp'
 import PieChartIcon from '@material-ui/icons/PieChart'
 import PersonIcon from '@material-ui/icons/Person'
 import PeopleIcon from '@material-ui/icons/People'
@@ -20,13 +19,12 @@ import { useAuthorizerRouter } from 'v2/app/pages/authorizer/router'
 import { useAccountsRouter } from 'v2/app/pages/accounts/router'
 import { useIdentitiesRouter } from 'v2/app/pages/identity/router'
 import { useStore as useLayoutStore } from '../../../context/layout'
+import { useInvestRouter } from 'v2/app/pages/invest/router'
+import { useIssuanceRouter } from 'v2/app/pages/issuance/router'
 
 const securityRoot = '/app/security'
 const authorizerRoot = '/app/authorizer'
-const identityRoot = '/app/identity'
 const accountsRoot = '/app/accounts'
-const issuanceRoot = '/app/issuance'
-const investRoot = '/app/invest'
 const adminRoot = '/app/admin'
 
 export const Sidebar = () => {
@@ -39,22 +37,20 @@ export const Sidebar = () => {
   const { routes: authorizerRoutes } = useAuthorizerRouter()
   const { routes: accountRoutes } = useAccountsRouter()
   const { routes: identityRoutes } = useIdentitiesRouter()
+  const { routes: investRoutes } = useInvestRouter()
+  const { routes: issuanceRoutes } = useIssuanceRouter()
 
   const structure = [
     {
       id: 'identity',
       label: 'Identity',
-      link: identityRoot,
-      icon: <PersonIcon />,
-      children: Object.entries(identityRoutes).map(([label, link]) => ({
-        label,
-        link
-      }))
+      link: identityRoutes.list,
+      icon: <PersonIcon />
     },
     {
       id: 'invest',
       label: 'Invest',
-      link: investRoot,
+      link: investRoutes.list,
       icon: <PieChartIcon />
     },
     {
@@ -69,33 +65,33 @@ export const Sidebar = () => {
         }))
       ]
     },
-    {
-      id: 'exchange',
-      label: 'Exchange',
-      link: '/exchange',
-      icon: <TrendingUpIcon />,
-      children: [
-        {
-          label: 'Markets',
-          link: '/markets'
-        },
-        {
-          label: 'Trade History',
-          link: '/trade-history'
-        },
-        {
-          label: 'Order History',
-          link: '/order-history'
-        }
-      ]
-    },
+    // {
+    //   id: 'exchange',
+    //   label: 'Exchange',
+    //   link: '/exchange',
+    //   icon: <TrendingUpIcon />,
+    //   children: [
+    //     {
+    //       label: 'Markets',
+    //       link: '/markets'
+    //     },
+    //     {
+    //       label: 'Trade History',
+    //       link: '/trade-history'
+    //     },
+    //     {
+    //       label: 'Order History',
+    //       link: '/order-history'
+    //     }
+    //   ]
+    // },
     // Show only when user has issuer role
     ...(isIssuer
       ? [
         {
           id: 'issuance',
           label: 'Issuance',
-          link: issuanceRoot,
+          link: issuanceRoutes.list,
           icon: <LocalAtmIcon />
         }
       ]

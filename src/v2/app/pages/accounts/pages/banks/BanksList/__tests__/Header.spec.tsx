@@ -35,6 +35,6 @@ describe('Header', () => {
 
     renderWithUserStore(<Header />)
 
-    expect(AppRouterLink).toHaveBeenCalledTimes(1)
+    expect(AppRouterLink).toHaveBeenCalledTimes(3)
   })
 })

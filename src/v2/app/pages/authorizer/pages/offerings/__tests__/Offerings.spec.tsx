@@ -5,10 +5,12 @@ import {
   Offerings,
   renderDSOView
 } from 'v2/app/pages/authorizer/pages/offerings/Offerings'
-import { DSO } from 'v2/app/components/DSO/DSO'
+import { DSOForm } from 'v2/app/components/DSO/DSOForm'
 import { dso } from '__fixtures__/authorizer'
 
-jest.mock('v2/app/components/DSO/DSO', () => ({ DSO: jest.fn(() => null) }))
+jest.mock('v2/app/components/DSO/DSOForm', () => ({
+  DSOForm: jest.fn(() => null)
+}))
 
 describe('Offerings', () => {
   afterEach(async () => {
@@ -23,7 +25,7 @@ describe('Offerings', () => {
     it('renders DigitalSecurity component with correct data', () => {
       const digitalSecurity = renderDSOView(dso)
 
-      expect(digitalSecurity).toEqual(<DSO dso={dso} editMode={false} />)
+      expect(digitalSecurity).toEqual(<DSOForm dso={dso} isEditing={false} />)
     })
   })
 })

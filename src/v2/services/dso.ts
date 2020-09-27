@@ -1,9 +1,9 @@
 import HttpResponse from '../types/httpResponse'
-import { DigitalSecurityOffering, DsoRequest } from '../types/dso'
+import { DigitalSecurityOffering, DSORequestArgs } from '../types/dso'
 import { postRequest, putRequest } from '../helpers/httpRequests'
 
 export async function saveDso (
-  request: DsoRequest,
+  request: DSORequestArgs,
   userId: string
 ): Promise<HttpResponse<DigitalSecurityOffering>> {
   try {
@@ -32,7 +32,7 @@ export async function saveDso (
 
 export async function editDso (
   dsoId: string,
-  request: DsoRequest,
+  request: DSORequestArgs,
   userId: string
 ): Promise<HttpResponse<DigitalSecurityOffering>> {
   try {

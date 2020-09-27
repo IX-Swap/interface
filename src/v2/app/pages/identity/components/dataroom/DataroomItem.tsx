@@ -1,63 +1,59 @@
 import React from 'react'
-import useStyles from 'v2/app/pages/identity/components/dataroom/styles'
 import { useTypedForm } from 'v2/components/form/useTypedForm'
 import { DocumentWithGuide } from 'v2/types/document'
-import { Button, Typography, Grid, ListItem } from '@material-ui/core'
-import { DataroomColumns } from 'v2/app/pages/identity/components/dataroom/DataroomColumns'
-import { DownloadDocument } from 'v2/app/pages/identity/components/dataroom/DownloadDocument'
+import { Button } from '@material-ui/core'
+import { DataroomViewRow } from 'v2/app/pages/identity/components/dataroom/DataroomViewRow'
+import { DataroomEditRow } from 'v2/app/pages/identity/components/dataroom/DataroomEditRow'
 
 export interface DataroomItemProps {
-  title: string
   isEditing: boolean
   index: number
+  document: DocumentWithGuide
+  removeItem: (index: number) => any
 }
 
 export const DataroomItem: React.FC<DataroomItemProps> = props => {
-  const { index, title, isEditing } = props
-  const classes = useStyles()
+  const { index, isEditing, document, removeItem } = props
   const { EditableField, FormValue } = useTypedForm<{
     documents: DocumentWithGuide[]
   }>()
   const documentPath = ['documents', index, 'document'] as const
+  const defaultValue = document.document
+  const title = document.title
+  const handleRemoveItem = () => removeItem(index)
 
   return (
     <EditableField
       isEditing={isEditing}
       fieldType='DocumentUploader'
+      defaultValue={defaultValue as any} // TODO: fix type
       title={title}
       label='Upload'
-      name={documentPath as any}
+      name={documentPath as any} // TODO: fix type
+      onDelete={handleRemoveItem}
       uploadComponent={<Button component='span'>Upload</Button>}
       deleteComponent={<Button component='span'>Delete</Button>}
+      formControlProps={{
+        fullWidth: false
+      }}
       viewRenderer={
         <FormValue name={documentPath}>
           {value => (
-            <ListItem className={classes.listItem}>
-              <Grid container>
-                <DataroomColumns title={title} document={value} />
-                <Grid container item xs={1} justify='flex-end'>
-                  {value === null ? (
-                    <Typography>No file uploaded</Typography>
-                  ) : (
-                    <DownloadDocument document={value} />
-                  )}
-                </Grid>
-              </Grid>
-            </ListItem>
+            <DataroomViewRow
+              document={value === undefined ? defaultValue : value}
+              title={title}
+            />
           )}
         </FormValue>
       }
       editRenderer={input => (
         <FormValue name={documentPath}>
           {value => (
-            <ListItem className={classes.listItem}>
-              <Grid container>
-                <DataroomColumns title={title} document={value} />
-                <Grid container item xs={1} justify='flex-end'>
-                  {input}
-                </Grid>
-              </Grid>
-            </ListItem>
+            <DataroomEditRow
+              document={value === undefined ? defaultValue : value}
+              title={title}
+              input={input}
+            />
           )}
         </FormValue>
       )}
