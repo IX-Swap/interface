@@ -6,6 +6,7 @@ import { Issuance } from 'v2/app/pages/issuance/Issuance'
 import { Invest } from 'v2/app/pages/invest/Invest'
 import Admin from 'v2/app/pages/admin'
 import { generateAppRouterHook } from 'v2/helpers/generateAppRouterHook'
+import { SecurityRoot } from 'v2/app/pages/security'
 
 export const AppRoute = {
   authorizer: '/app/authorizer',

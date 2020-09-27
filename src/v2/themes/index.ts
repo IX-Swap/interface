@@ -1,19 +1,7 @@
-import { createMuiTheme, ThemeOptions, Theme } from '@material-ui/core/styles'
+import { createMuiTheme, Theme } from '@material-ui/core/styles'
 import defaultTheme from 'v2/themes/default'
-import { CSSProperties } from '@material-ui/styles'
 
-interface Overrides extends ThemeOptions {
-  MUIRichTextEditor: {
-    root?: CSSProperties
-    container?: CSSProperties
-    editor?: CSSProperties
-    toolbar?: CSSProperties
-    placeHolder?: CSSProperties
-    anchorLink?: CSSProperties
-  }
-}
-
-const overrides: Overrides = {
+const overrides = {
   typography: {
     fontFamily: '"Bai Jamjuree", "Helvetica Neue", sans-serif !important',
     fontSize: 12,
