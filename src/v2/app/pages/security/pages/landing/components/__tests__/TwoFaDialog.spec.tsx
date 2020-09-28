@@ -27,7 +27,7 @@ describe('TwoFaDialog', () => {
     expect(container).toBeEmptyDOMElement()
   })
 
-  it('invokes closeFn on (Google Authenticator) button click', async () => {
+  it('invokes nextFn on (Google Authenticator) button click', async () => {
     const { getAllByRole } = render(<TwoFaDialog {...props} />)
 
     const buttons = getAllByRole('button')
