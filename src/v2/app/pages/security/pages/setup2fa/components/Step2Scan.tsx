@@ -41,6 +41,7 @@ export const Step2Scan = () => {
             <Grid container justify='center' alignItems='center'>
               <Grid item>
                 <div
+                  data-testid='store-image'
                   className={classes.image}
                   style={{ backgroundImage: `url('${store.image}')` }}
                 />

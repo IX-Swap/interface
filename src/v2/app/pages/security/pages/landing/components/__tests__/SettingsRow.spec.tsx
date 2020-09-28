@@ -31,17 +31,17 @@ describe('SettingsRow', () => {
 
     expect(container).toHaveTextContent(props.name as string)
   })
+
   it('renders name as row-image by default', () => {
     const { container } = render(<SettingsRow {...props} name={undefined} />)
 
     expect(container).toHaveTextContent('row-image')
   })
 
-  it('invokes buttonClick when button is disabled & clicked', async () => {
+  it('does not invoke buttonClick when button is disabled & clicked', async () => {
     const { getByRole } = render(<SettingsRow {...props} buttonDisabled />)
 
     fireEvent.click(getByRole('button'))
-
     await waitFor(() => {
       expect(props.buttonClick).toHaveBeenCalledTimes(0)
     })
@@ -51,7 +51,6 @@ describe('SettingsRow', () => {
     const { getByRole } = render(<SettingsRow {...props} />)
 
     fireEvent.click(getByRole('button'))
-
     await waitFor(() => {
       expect(props.buttonClick).toHaveBeenCalledTimes(1)
     })

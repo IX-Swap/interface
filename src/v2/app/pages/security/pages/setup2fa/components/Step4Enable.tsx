@@ -37,6 +37,7 @@ export const Step4Enable = () => {
             defaultValues={defaultValues}
             validationSchema={enable2faFormValuesSchema}
             onSubmit={onSubmit}
+            data-testid='form'
           >
             <TextField
               label='OTP'

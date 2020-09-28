@@ -7,6 +7,7 @@ import { Step3Backup } from '../components/Step3Backup'
 import { Step4Enable } from '../components/Step4Enable'
 import * as setupContext from '../context'
 import { Setup2fa } from 'v2/app/pages/security/pages/setup2fa/Setup2fa'
+import { waitFor, fireEvent } from '@testing-library/react'
 
 jest.mock('../components/Step1Download', () => ({
   Step1Download: jest.fn(() => null)
@@ -22,6 +23,21 @@ jest.mock('../components/Step4Enable', () => ({
 }))
 
 describe('Setup2fa', () => {
+  const baseContext = {
+    activeStep: 0,
+    image: '',
+    key: '',
+    encoded: '',
+    setActiveStep: jest.fn() as any,
+    nextPage: jest.fn() as any,
+    prevPage: jest.fn() as any,
+    steps: [
+      'Download app',
+      'Scan QR Code',
+      'Backup Key',
+      'Enable Google Authenticator'
+    ]
+  }
   afterEach(async () => {
     await cleanup()
     jest.clearAllMocks()
@@ -33,10 +49,8 @@ describe('Setup2fa', () => {
 
   it('renders Step1Download if activeStep is 0', () => {
     jest.spyOn(setupContext, 'useSetup2faStore').mockReturnValue({
-      activeStep: 0,
-      setActiveStep: jest.fn(),
-      nextPage: jest.fn(),
-      steps: ['a', 'b', 'c', 'd']
+      ...baseContext,
+      activeStep: 0
     })
 
     render(<Setup2fa />)
@@ -46,10 +60,8 @@ describe('Setup2fa', () => {
 
   it('renders Step2Scan if activeStep is 1', () => {
     jest.spyOn(setupContext, 'useSetup2faStore').mockReturnValue({
-      activeStep: 1,
-      setActiveStep: jest.fn(),
-      nextPage: jest.fn(),
-      steps: ['a', 'b', 'c', 'd']
+      ...baseContext,
+      activeStep: 1
     })
 
     render(<Setup2fa />)
@@ -59,10 +71,8 @@ describe('Setup2fa', () => {
 
   it('renders Step3Backup if activeStep is 2', () => {
     jest.spyOn(setupContext, 'useSetup2faStore').mockReturnValue({
-      activeStep: 2,
-      setActiveStep: jest.fn(),
-      nextPage: jest.fn(),
-      steps: ['a', 'b', 'c', 'd']
+      ...baseContext,
+      activeStep: 2
     })
 
     render(<Setup2fa />)
@@ -72,10 +82,8 @@ describe('Setup2fa', () => {
 
   it('renders Step4Enable if activeStep is 3', () => {
     jest.spyOn(setupContext, 'useSetup2faStore').mockReturnValue({
-      activeStep: 3,
-      setActiveStep: jest.fn(),
-      nextPage: jest.fn(),
-      steps: ['a', 'b', 'c', 'd']
+      ...baseContext,
+      activeStep: 3
     })
 
     render(<Setup2fa />)
@@ -85,14 +93,51 @@ describe('Setup2fa', () => {
 
   it("renders Step1Download if activeStep doesn't match", () => {
     jest.spyOn(setupContext, 'useSetup2faStore').mockReturnValue({
-      activeStep: 8,
-      setActiveStep: jest.fn(),
-      nextPage: jest.fn(),
-      steps: ['a', 'b', 'c', 'd']
+      ...baseContext,
+      activeStep: 8
     })
 
     render(<Setup2fa />)
 
     expect(Step1Download).toHaveBeenCalledTimes(1)
+  })
+
+  it('renders Next button if step is not last', () => {
+    jest.spyOn(setupContext, 'useSetup2faStore').mockReturnValue({
+      ...baseContext,
+      activeStep: 0
+    })
+
+    const { queryByRole } = render(<Setup2fa />)
+
+    const nextButton = queryByRole('button')
+    expect(nextButton).not.toBeNull()
+  })
+
+  it('does not render Next button if step is last', () => {
+    jest.spyOn(setupContext, 'useSetup2faStore').mockReturnValue({
+      ...baseContext,
+      activeStep: baseContext.steps.length - 1
+    })
+
+    const { queryByRole } = render(<Setup2fa />)
+
+    const nextButton = queryByRole('button')
+    expect(nextButton).toBeNull()
+  })
+
+  it('invokes nextPage when Next button is clicked', async () => {
+    jest.spyOn(setupContext, 'useSetup2faStore').mockReturnValue({
+      ...baseContext,
+      activeStep: 0
+    })
+
+    const { getByRole } = render(<Setup2fa />)
+
+    const nextButton = getByRole('button')
+    fireEvent.click(nextButton)
+    await waitFor(() => {
+      expect(baseContext.nextPage).toHaveBeenCalledTimes(1)
+    })
   })
 })
