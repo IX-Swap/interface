@@ -1,4 +1,5 @@
 import { action, observable } from 'mobx'
+import { TwoFaData } from 'v2/app/pages/security/pages/setup2fa/types'
 
 export class Setup2faStore {
   public steps = [
@@ -31,5 +32,12 @@ export class Setup2faStore {
 
   @action prevPage = (): void => {
     this.activeStep = Math.max(this.activeStep - 1, 0)
+  }
+
+  @action
+  set2faData = (data: TwoFaData) => {
+    this.image = data.image
+    this.key = data.key
+    this.encoded = data.encoded
   }
 }

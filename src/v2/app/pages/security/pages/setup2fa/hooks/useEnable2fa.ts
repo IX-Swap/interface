@@ -1,12 +1,20 @@
 import { useServices } from 'v2/services/useServices'
 import { useMutation } from 'react-query'
 import { useLogout } from 'v2/auth/hooks/useLogout'
+import { useAuth } from 'v2/hooks/auth/useAuth'
+import { Enable2faFormValues } from '../types'
 
 export const useEnable2fa = () => {
-  const { setup2faService, snackbarService } = useServices()
+  const { snackbarService, apiService } = useServices()
   const logout = useLogout()
+  const { user } = useAuth()
 
-  return useMutation(setup2faService.enable2fa.bind(setup2faService), {
+  const enable2fa = async ({ otp }: Enable2faFormValues) => {
+    const uri = `/auth/2fa/setup/${user?._id ?? ''}/confirm/${otp}`
+    return await apiService.post(uri, {})
+  }
+
+  return useMutation(enable2fa, {
     onSuccess: () => {
       void snackbarService.showSnackbar(
         'Google Authenticator Setup Success! You will be redirected to Login page.',

@@ -2,7 +2,7 @@ import React from 'react'
 import { Grid, Box, Button } from '@material-ui/core'
 import { makeStyles } from '@material-ui/styles'
 
-interface SettingsRowProps {
+export interface SettingsRowProps {
   name?: string
   image: string
   buttonDisabled: boolean
