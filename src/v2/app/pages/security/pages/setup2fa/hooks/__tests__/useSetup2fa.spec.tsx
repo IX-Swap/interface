@@ -36,22 +36,12 @@ describe('useSetup2fa', () => {
         key: 'key',
         encoded: 'encoded'
       }
-      const post = jest.fn().mockResolvedValueOnce({
-        data
-      })
+      const post = jest.fn().mockResolvedValueOnce({ data })
 
       renderHook(() => useSetup2fa(), {
-        wrapper: (
-          { children } // TODO: extract to a separate WrapperComponent for re-usability
-        ) => (
-          <ServicesProvider
-            value={{
-              apiService: {
-                ...apiService,
-                post
-              }
-            }}
-          >
+        // TODO: extract to a separate WrapperComponent for re-usability
+        wrapper: ({ children }) => (
+          <ServicesProvider value={{ apiService: { ...apiService, post } }}>
             {children}
           </ServicesProvider>
         )
@@ -69,18 +59,11 @@ describe('useSetup2fa', () => {
 
   it('it does not call useSetup2faStore.set2faData', async () => {
     await act(async () => {
-      const post = jest.fn().mockReturnValueOnce(unsuccessfulResponse)
+      const post = jest.fn().mockRejectedValueOnce(unsuccessfulResponse)
 
       renderHook(() => useSetup2fa(), {
         wrapper: ({ children }) => (
-          <ServicesProvider
-            value={{
-              apiService: {
-                ...apiService,
-                post
-              }
-            }}
-          >
+          <ServicesProvider value={{ apiService: { ...apiService, post } }}>
             {children}
           </ServicesProvider>
         )
