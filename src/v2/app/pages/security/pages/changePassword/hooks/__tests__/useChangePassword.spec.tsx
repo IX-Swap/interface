@@ -8,7 +8,7 @@ import * as SecurityRouter from 'v2/app/pages/security/routes'
 import { useChangePassword } from 'v2/app/pages/security/pages/changePassword/hooks/useChangePassword'
 import { generateRouter } from '__fixtures__/useRouter'
 import { changePasswordArgs } from '__fixtures__/security'
-import { unsuccessfulResponse } from '__fixtures__/api'
+import { unsuccessfulResponse, successfulResponse } from '__fixtures__/api'
 
 describe('useChangePassword', () => {
   beforeEach(() => {
@@ -23,7 +23,7 @@ describe('useChangePassword', () => {
 
   it('it calls snackbarService.showSnackbar with success message', async () => {
     await act(async () => {
-      const post = jest.fn().mockResolvedValueOnce({ data: {} })
+      const post = jest.fn().mockResolvedValueOnce(successfulResponse)
       const showSnackbar = jest.fn()
 
       const { result } = renderHook(() => useChangePassword(), {

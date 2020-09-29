@@ -5,7 +5,7 @@ import apiService from 'v2/services/api'
 import { snackbarService } from 'uno-material-ui'
 import { ServicesProvider } from 'v2/services/useServices'
 import { useEnable2fa } from 'v2/app/pages/security/pages/setup2fa/hooks/useEnable2fa'
-import { unsuccessfulResponse } from '__fixtures__/api'
+import { unsuccessfulResponse, successfulResponse } from '__fixtures__/api'
 import { useLogout } from 'v2/auth/hooks/useLogout'
 import { enable2faArgs } from '__fixtures__/security'
 
@@ -29,7 +29,7 @@ describe('useEnable2fa', () => {
 
   it('it calls snackbarService.showSnackbar with success message', async () => {
     await act(async () => {
-      const post = jest.fn().mockResolvedValueOnce({ data: {} })
+      const post = jest.fn().mockResolvedValueOnce(successfulResponse)
       const showSnackbar = jest.fn()
 
       const { result } = renderHook(() => useEnable2fa(), {
