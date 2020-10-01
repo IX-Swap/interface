@@ -3,7 +3,7 @@ import { Grid } from '@material-ui/core'
 import { CorporateFields } from 'v2/types/identity'
 import { useCorporateIdentityForm } from 'v2/app/pages/identity/components/CorporateIdentityForm'
 
-interface CompanyInformationProps {
+export interface CompanyInformationProps {
   corporate?: Partial<CorporateFields> & { walletAddress: string }
   useOwnEmail: boolean
   rootName?: string

@@ -14,7 +14,7 @@ const useStyles = makeStyles(() => ({
   }
 }))
 
-interface DeclarationProps {
+export interface DeclarationProps {
   declarations: DeclarationTemplate[]
   isEditing: boolean
 }
@@ -23,9 +23,7 @@ export const Declaration = (props: DeclarationProps): JSX.Element => {
   const { declarations, isEditing } = props
   const { YesOrNo } = useIndividualIdentityForm()
   const classes = useStyles()
-  const { fields } = useFieldArray({
-    name: 'declarations'
-  })
+  const { fields } = useFieldArray({ name: 'declarations' })
 
   return (
     <List>

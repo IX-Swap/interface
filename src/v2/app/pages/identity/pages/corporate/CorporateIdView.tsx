@@ -3,14 +3,15 @@ import { PageTitle } from 'v2/app/components/PageTitle'
 import { Button, Grid } from '@material-ui/core'
 import { CorporateIdentityForm } from 'v2/app/pages/identity/components/CorporateIdentityForm'
 import { useAllCorporateIdentities } from 'v2/hooks/identity/useAllCorporateIdentities'
-import { useParams } from 'react-router-dom'
 import { AppRouterLink } from 'v2/components/AppRouterLink'
 import { useIdentitiesRouter } from 'v2/app/pages/identity/router'
 
 export const CorporateIdView: React.FC = () => {
   const { data, status } = useAllCorporateIdentities()
-  const { identityId } = useParams<{ identityId: string }>()
-  const { routes } = useIdentitiesRouter()
+  const {
+    routes,
+    params: { identityId }
+  } = useIdentitiesRouter()
 
   if (status === 'loading' || data === undefined) {
     return null

@@ -3,7 +3,7 @@ import { IdentityProfile } from 'v2/types/identity'
 import { Grid } from '@material-ui/core'
 import { useTypedForm } from 'v2/components/form/useTypedForm'
 
-interface IdentityForm {
+export interface IdentityForm {
   useOwnEmail: boolean
   rootPath?: string
   isEditing: boolean

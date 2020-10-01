@@ -4,14 +4,17 @@ import { PageTitle } from 'v2/app/components/PageTitle'
 import { AppRouterLink } from 'v2/components/AppRouterLink'
 import { useIdentitiesRouter } from 'v2/app/pages/identity/router'
 import { useAllCorporateIdentities } from 'v2/hooks/identity/useAllCorporateIdentities'
-import { useParams } from 'react-router-dom'
+// import { useParams } from 'react-router-dom'
 import { CorporateIdentityForm } from 'v2/app/pages/identity/components/CorporateIdentityForm'
 import { useUpdateCorporateIdentity } from 'v2/hooks/identity/useUpdateCorporateIdentity'
 
 export const CorporateIdEdit: React.FC = () => {
   const { data, status } = useAllCorporateIdentities()
-  const { identityId } = useParams<{ identityId: string }>()
-  const { routes } = useIdentitiesRouter()
+  // const { identityId } = useParams<{ identityId: string }>()
+  const {
+    routes,
+    params: { identityId }
+  } = useIdentitiesRouter()
   const [updateCorporateId] = useUpdateCorporateIdentity(identityId)
 
   if (status === 'loading' || data === undefined) {
