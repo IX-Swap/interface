@@ -1,7 +1,6 @@
 /**  * @jest-environment jsdom-sixteen  */
 import React, { PropsWithChildren } from 'react'
 import { render, cleanup } from 'test-utils'
-
 import {
   Section,
   IdentitySectionProps
@@ -12,7 +11,8 @@ describe('Section', () => {
     title: 'Test Title',
     subtitle: 'Test Subitle',
     actions: <div data-testid='actions' />,
-    footer: <div data-testid='footer' />
+    footer: <div data-testid='footer' />,
+    children: <div data-testid='children' />
   }
   afterEach(async () => {
     await cleanup()
@@ -21,5 +21,24 @@ describe('Section', () => {
 
   it('renders without error', () => {
     render(<Section {...props} />)
+  })
+
+  it('renders footer correctly', () => {
+    const { queryByTestId } = render(<Section {...props} />)
+
+    expect(queryByTestId('footer')).not.toBeNull()
+  })
+
+  it('renders actions correctly', () => {
+    const { queryByTestId } = render(<Section {...props} />)
+
+    expect(queryByTestId('actions')).not.toBeNull()
+  })
+
+  it('renders title & subtitle correctly', () => {
+    const { container } = render(<Section {...props} />)
+
+    expect(container).toHaveTextContent(props.title)
+    expect(container).toHaveTextContent(props.subtitle as string)
   })
 })

@@ -15,6 +15,7 @@ jest.mock('v2/app/pages/identity/components/dataroom/DataroomColumns', () => ({
 jest.mock('v2/app/pages/identity/components/dataroom/DownloadDocument', () => ({
   DownloadDocument: jest.fn(() => null)
 }))
+
 describe('DataroomViewRow', () => {
   const props: DataroomRowProps = { title: 'test title', document: document }
   afterEach(async () => {

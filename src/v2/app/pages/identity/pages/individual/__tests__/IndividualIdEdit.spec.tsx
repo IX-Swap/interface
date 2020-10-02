@@ -2,15 +2,18 @@
 import React from 'react'
 import { render, cleanup } from 'test-utils'
 import { IndividualIdEdit } from 'v2/app/pages/identity/pages/individual/IndividualIdEdit'
-import { IdentityRoute } from 'v2/app/pages/identity/router'
-import { AppRouterLink } from 'v2/components/AppRouterLink'
 import { generateQueryResult } from '__fixtures__/useQuery'
 import { individual } from '__fixtures__/identity'
 import { QueryStatus } from 'react-query'
 import * as individualIdentityHook from 'v2/hooks/identity/useIndividualIdentity'
+import { PageTitle } from 'v2/app/components/PageTitle'
+import { IndividualIdentityForm } from 'v2/app/pages/identity/components/IndividualIdentityForm'
 
-jest.mock('v2/components/AppRouterLink', () => ({
-  AppRouterLink: jest.fn(() => null)
+jest.mock('v2/app/components/PageTitle', () => ({
+  PageTitle: jest.fn(() => null)
+}))
+jest.mock('v2/app/pages/identity/components/IndividualIdentityForm', () => ({
+  IndividualIdentityForm: jest.fn(() => null)
 }))
 
 describe('IndividualIdEdit', () => {
@@ -26,28 +29,52 @@ describe('IndividualIdEdit', () => {
   it('renders nothing if loading', () => {
     jest
       .spyOn(individualIdentityHook, 'useIndividualIdentity')
-      .mockImplementation(() => ({
-        ...generateQueryResult({ queryStatus: QueryStatus.Loading })
-      }))
+      .mockReturnValue(
+        generateQueryResult({ queryStatus: QueryStatus.Loading })
+      )
     const { container } = render(<IndividualIdEdit />)
 
     expect(container).toBeEmptyDOMElement()
   })
 
-  it('renders cancel link', () => {
+  it('renders nothing if data is undefined', () => {
     jest
       .spyOn(individualIdentityHook, 'useIndividualIdentity')
-      .mockImplementation(() => ({
-        ...generateQueryResult({ data: individual })
-      }))
+      .mockReturnValue(generateQueryResult({ data: undefined }))
+    const { container } = render(<IndividualIdEdit />)
+
+    expect(container).toBeEmptyDOMElement()
+  })
+
+  it('renders IndividualIdentityForm with correct props', () => {
+    jest
+      .spyOn(individualIdentityHook, 'useIndividualIdentity')
+      .mockReturnValue(generateQueryResult({ data: individual }))
     render(<IndividualIdEdit />)
 
-    expect(AppRouterLink).toHaveBeenCalledTimes(1)
-    expect(AppRouterLink).toHaveBeenNthCalledWith(
+    expect(IndividualIdentityForm).toHaveBeenCalledTimes(1)
+    expect(IndividualIdentityForm).toHaveBeenNthCalledWith(
       1,
       {
-        children: 'Cancel',
-        to: IdentityRoute.individual
+        identity: individual,
+        isEditing: true,
+        useOwnEmail: false,
+        submitButtonText: 'Save',
+        cancelButton: expect.anything()
+      },
+      {}
+    )
+  })
+
+  it('renders PageTitle with correct props', () => {
+    render(<IndividualIdEdit />)
+
+    expect(PageTitle).toHaveBeenCalledTimes(1)
+    expect(PageTitle).toHaveBeenNthCalledWith(
+      1,
+      {
+        subPage: true,
+        title: `${individual.firstName} ${individual.lastName}`
       },
       {}
     )

@@ -2,12 +2,14 @@
 import React from 'react'
 import { render, cleanup } from 'test-utils'
 import { CorporateIdCreate } from 'v2/app/pages/identity/pages/corporate/CorporateIdCreate'
-import { IdentityRoute } from 'v2/app/pages/identity/router'
-import { AppRouterLink } from 'v2/components/AppRouterLink'
-// import { CorporateIdentityForm } from 'v2/app/pages/identity/components/CorporateIdentityForm'
+import { PageTitle } from 'v2/app/components/PageTitle'
+import { CorporateIdentityForm } from 'v2/app/pages/identity/components/CorporateIdentityForm'
 
-jest.mock('v2/components/AppRouterLink', () => ({
-  AppRouterLink: jest.fn(() => null)
+jest.mock('v2/app/components/PageTitle', () => ({
+  PageTitle: jest.fn(() => null)
+}))
+jest.mock('v2/app/pages/identity/components/CorporateIdentityForm', () => ({
+  CorporateIdentityForm: jest.fn(() => null)
 }))
 
 describe('CorporateIdCreate', () => {
@@ -20,28 +22,31 @@ describe('CorporateIdCreate', () => {
     render(<CorporateIdCreate />)
   })
 
-  it('renders cancel link', () => {
+  it('renders CorporateIdentityForm with correct props', () => {
     render(<CorporateIdCreate />)
 
-    expect(AppRouterLink).toHaveBeenCalledTimes(1)
-    expect(AppRouterLink).toHaveBeenNthCalledWith(
-      1,
+    expect(CorporateIdentityForm).toHaveBeenCalledTimes(1)
+    expect(CorporateIdentityForm).toHaveBeenCalledWith(
       {
-        replace: true,
-        children: 'Cancel',
-        to: IdentityRoute.list
+        identity: undefined,
+        isEditing: true,
+        useOwnEmail: false,
+        submitButtonText: 'Create',
+        onSubmit: expect.any(Function),
+        cancelButton: expect.anything()
       },
       {}
     )
   })
 
-  // it('renders CorporateIdentityForm', () => {
-  //   jest.doMock(
-  //     'v2/app/pages/identity/components/CorporateIdentityForm',
-  //     () => ({ CorporateIdentityForm: jest.fn(() => null) })
-  //   )
-  //   render(<CorporateIdCreate />)
+  it('renders PageTitle with correct props', () => {
+    render(<CorporateIdCreate />)
 
-  //   expect(CorporateIdentityForm).toHaveBeenCalledTimes(1)
-  // })
+    expect(PageTitle).toHaveBeenCalledTimes(1)
+    expect(PageTitle).toHaveBeenNthCalledWith(
+      1,
+      { subPage: true, title: 'Create Corporate Identity' },
+      {}
+    )
+  })
 })

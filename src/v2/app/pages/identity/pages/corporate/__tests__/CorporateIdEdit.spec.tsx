@@ -3,15 +3,19 @@ import React from 'react'
 import { render, cleanup } from 'test-utils'
 import { CorporateIdEdit } from 'v2/app/pages/identity/pages/corporate/CorporateIdEdit'
 import { IdentityRoute } from 'v2/app/pages/identity/router'
-import { AppRouterLink } from 'v2/components/AppRouterLink'
 import { generateInfiniteQueryResult } from '__fixtures__/useQuery'
 import { corporate } from '__fixtures__/identity'
 import { QueryStatus } from 'react-query'
 import * as allCorporateIdentitiesHook from 'v2/hooks/identity/useAllCorporateIdentities'
 import { history } from 'v2/history'
+import { PageTitle } from 'v2/app/components/PageTitle'
+import { CorporateIdentityForm } from 'v2/app/pages/identity/components/CorporateIdentityForm'
 
-jest.mock('v2/components/AppRouterLink', () => ({
-  AppRouterLink: jest.fn(() => null)
+jest.mock('v2/app/pages/identity/components/CorporateIdentityForm', () => ({
+  CorporateIdentityForm: jest.fn(() => null)
+}))
+jest.mock('v2/app/components/PageTitle', () => ({
+  PageTitle: jest.fn(() => null)
 }))
 
 describe('CorporateIdEdit', () => {
@@ -32,31 +36,53 @@ describe('CorporateIdEdit', () => {
   it('renders nothing if loading', () => {
     jest
       .spyOn(allCorporateIdentitiesHook, 'useAllCorporateIdentities')
-      .mockImplementation(() => ({
-        ...generateInfiniteQueryResult({ queryStatus: QueryStatus.Loading })
-      }))
+      .mockImplementation(() =>
+        generateInfiniteQueryResult({ queryStatus: QueryStatus.Loading })
+      )
     const { container } = render(<CorporateIdEdit />)
 
     expect(container).toBeEmptyDOMElement()
   })
 
-  it('renders cancel link', () => {
+  it('renders nothing if data is undefined', () => {
     jest
       .spyOn(allCorporateIdentitiesHook, 'useAllCorporateIdentities')
-      .mockImplementation(() => ({
-        ...generateInfiniteQueryResult({ map: { [identityId]: corporate } })
-      }))
+      .mockImplementation(() => generateInfiniteQueryResult({ noData: true }))
+    const { container } = render(<CorporateIdEdit />)
+
+    expect(container).toBeEmptyDOMElement()
+  })
+
+  it('renders CorporateIdentityForm with correct props', () => {
+    jest
+      .spyOn(allCorporateIdentitiesHook, 'useAllCorporateIdentities')
+      .mockImplementation(() =>
+        generateInfiniteQueryResult({ map: { [identityId]: corporate } })
+      )
     render(<CorporateIdEdit />)
 
-    expect(AppRouterLink).toHaveBeenCalledTimes(1)
-    expect(AppRouterLink).toHaveBeenNthCalledWith(
+    expect(CorporateIdentityForm).toHaveBeenCalledTimes(1)
+    expect(CorporateIdentityForm).toHaveBeenNthCalledWith(
       1,
       {
-        params: { identityId },
-        replace: true,
-        children: 'Cancel',
-        to: IdentityRoute.corporate
+        identity: corporate,
+        isEditing: true,
+        useOwnEmail: false,
+        submitButtonText: 'Save',
+        onSubmit: expect.any(Function),
+        cancelButton: expect.anything()
       },
+      {}
+    )
+  })
+
+  it('renders PageTitle with correct props', () => {
+    render(<CorporateIdEdit />)
+
+    expect(PageTitle).toHaveBeenCalledTimes(1)
+    expect(PageTitle).toHaveBeenNthCalledWith(
+      1,
+      { subPage: true, title: corporate.companyLegalName },
       {}
     )
   })

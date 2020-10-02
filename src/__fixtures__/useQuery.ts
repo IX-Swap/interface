@@ -54,6 +54,7 @@ export interface GenerateInfinityQueryResultArgs {
   error?: any
   isLoading?: boolean
   queryStatus?: QueryStatus
+  noData?: boolean
 }
 
 export const generateInfiniteQueryResult = ({
@@ -62,9 +63,10 @@ export const generateInfiniteQueryResult = ({
   raw = [],
   error = undefined,
   isLoading = false,
-  queryStatus = QueryStatus.Success
+  queryStatus = QueryStatus.Success,
+  noData = false
 }: GenerateInfinityQueryResultArgs): UsePaginatedQueryData<any> => ({
-  data: { list, raw, map },
+  data: noData ? undefined : { list, raw, map },
   status: queryStatus,
   isError: false,
   isIdle: false,

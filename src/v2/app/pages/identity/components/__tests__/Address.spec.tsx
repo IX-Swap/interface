@@ -9,14 +9,16 @@ import * as typedForm from 'v2/components/form/useTypedForm'
 import { generateCreateTypedFormResult } from '__fixtures__/createTypedForm'
 
 describe('Address', () => {
-  const props: AddressFieldsProps<any> = { isEditing: false }
+  const props: AddressFieldsProps<any> = {
+    isEditing: false,
+    rootPath: 'companyAddress'
+  }
   const EditableField = jest.fn(() => null) as any
 
   beforeEach(() => {
-    jest.spyOn(typedForm, 'useTypedForm').mockReturnValue({
-      ...generateCreateTypedFormResult(),
-      EditableField
-    })
+    jest
+      .spyOn(typedForm, 'useTypedForm')
+      .mockReturnValue({ ...generateCreateTypedFormResult(), EditableField })
   })
   afterEach(async () => {
     await cleanup()
@@ -26,8 +28,9 @@ describe('Address', () => {
   it('renders without error', () => {
     render(<Address {...props} />)
   })
-  it('renders EditableField correctly', () => {
-    render(<Address {...props} />)
+
+  it('defaults rootPath to "address"', () => {
+    render(<Address {...props} rootPath={undefined} />)
 
     expect(EditableField).toHaveBeenCalledTimes(6)
     expect(EditableField).toHaveBeenNthCalledWith(
@@ -41,6 +44,23 @@ describe('Address', () => {
       },
       {}
     )
+  })
+
+  it('renders EditableField correctly', () => {
+    render(<Address {...props} />)
+
+    expect(EditableField).toHaveBeenCalledTimes(6)
+    expect(EditableField).toHaveBeenNthCalledWith(
+      1,
+      {
+        fieldType: 'TextField',
+        isEditing: false,
+        label: 'Line 1',
+        name: 'line1',
+        root: props.rootPath
+      },
+      {}
+    )
     expect(EditableField).toHaveBeenNthCalledWith(
       2,
       {
@@ -48,7 +68,7 @@ describe('Address', () => {
         isEditing: false,
         label: 'Line 2',
         name: 'line2',
-        root: 'address'
+        root: props.rootPath
       },
       {}
     )
@@ -59,7 +79,7 @@ describe('Address', () => {
         isEditing: false,
         label: 'City',
         name: 'city',
-        root: 'address'
+        root: props.rootPath
       },
       {}
     )
@@ -70,7 +90,7 @@ describe('Address', () => {
         isEditing: false,
         label: 'Postal Code',
         name: 'postalCode',
-        root: 'address'
+        root: props.rootPath
       },
       {}
     )
@@ -81,7 +101,7 @@ describe('Address', () => {
         isEditing: false,
         label: 'State',
         name: 'state',
-        root: 'address'
+        root: props.rootPath
       },
       {}
     )
@@ -92,7 +112,7 @@ describe('Address', () => {
         isEditing: false,
         label: 'Country',
         name: 'country',
-        root: 'address'
+        root: props.rootPath
       },
       {}
     )

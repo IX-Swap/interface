@@ -29,6 +29,7 @@ describe('CompanyInformation', () => {
   it('renders without error', () => {
     render(<CompanyInformation {...props} />)
   })
+
   it('renders EditableField correctly', () => {
     render(<CompanyInformation {...props} />)
 

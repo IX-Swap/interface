@@ -23,6 +23,7 @@ describe('DataroomAddDocument', () => {
   it('renders without error', () => {
     render(<DataroomAddDocument {...props} />)
   })
+
   it('renders DocumentUploader correctly', () => {
     render(<DataroomAddDocument {...props} />)
 

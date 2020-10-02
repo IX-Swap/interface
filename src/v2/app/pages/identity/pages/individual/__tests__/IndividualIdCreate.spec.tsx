@@ -1,12 +1,15 @@
 /**  * @jest-environment jsdom-sixteen  */
 import React from 'react'
 import { render, cleanup } from 'test-utils'
-import { IdentityRoute } from 'v2/app/pages/identity/router'
-import { AppRouterLink } from 'v2/components/AppRouterLink'
 import { IndividualIdCreate } from 'v2/app/pages/identity/pages/individual/IndividualIdCreate'
+import { PageTitle } from 'v2/app/components/PageTitle'
+import { IndividualIdentityForm } from 'v2/app/pages/identity/components/IndividualIdentityForm'
 
-jest.mock('v2/components/AppRouterLink', () => ({
-  AppRouterLink: jest.fn(() => null)
+jest.mock('v2/app/components/PageTitle', () => ({
+  PageTitle: jest.fn(() => null)
+}))
+jest.mock('v2/app/pages/identity/components/IndividualIdentityForm', () => ({
+  IndividualIdentityForm: jest.fn(() => null)
 }))
 
 describe('IndividualIdCreate', () => {
@@ -19,16 +22,30 @@ describe('IndividualIdCreate', () => {
     render(<IndividualIdCreate />)
   })
 
-  it('renders edit link', () => {
+  it('renders IndividualIdentityForm with correct props', () => {
     render(<IndividualIdCreate />)
 
-    expect(AppRouterLink).toHaveBeenCalledTimes(1)
-    expect(AppRouterLink).toHaveBeenNthCalledWith(
+    expect(IndividualIdentityForm).toHaveBeenCalledTimes(1)
+    expect(IndividualIdentityForm).toHaveBeenNthCalledWith(
       1,
       {
-        children: 'Cancel',
-        to: IdentityRoute.individual
+        identity: undefined,
+        isEditing: true,
+        useOwnEmail: false,
+        submitButtonText: 'Create',
+        cancelButton: expect.anything()
       },
+      {}
+    )
+  })
+
+  it('renders PageTitle with correct props', () => {
+    render(<IndividualIdCreate />)
+
+    expect(PageTitle).toHaveBeenCalledTimes(1)
+    expect(PageTitle).toHaveBeenNthCalledWith(
+      1,
+      { subPage: true, title: 'Create Individual Identity' },
       {}
     )
   })

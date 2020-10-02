@@ -11,6 +11,7 @@ import { document } from '__fixtures__/identity'
 jest.mock('v2/app/pages/identity/components/dataroom/DataroomColumns', () => ({
   DataroomColumns: jest.fn(() => null)
 }))
+
 describe('DataroomEditRow', () => {
   const props: DataroomEditRowProps = {
     input: <div data-testid='input' />,
@@ -25,6 +26,13 @@ describe('DataroomEditRow', () => {
   it('renders without error', () => {
     render(<DataroomEditRow {...props} />)
   })
+
+  it('renders input correctly', () => {
+    const { queryByTestId } = render(<DataroomEditRow {...props} />)
+
+    expect(queryByTestId('input')).not.toBeNull()
+  })
+
   it('renders DataroomColumns correctly', () => {
     render(<DataroomEditRow {...props} />)
 

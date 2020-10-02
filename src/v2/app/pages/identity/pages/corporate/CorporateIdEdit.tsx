@@ -1,16 +1,14 @@
 import React from 'react'
-import { Button, Grid } from '@material-ui/core'
+import { Grid } from '@material-ui/core'
 import { PageTitle } from 'v2/app/components/PageTitle'
-import { AppRouterLink } from 'v2/components/AppRouterLink'
 import { useIdentitiesRouter } from 'v2/app/pages/identity/router'
 import { useAllCorporateIdentities } from 'v2/hooks/identity/useAllCorporateIdentities'
-// import { useParams } from 'react-router-dom'
 import { CorporateIdentityForm } from 'v2/app/pages/identity/components/CorporateIdentityForm'
 import { useUpdateCorporateIdentity } from 'v2/hooks/identity/useUpdateCorporateIdentity'
+import { CancelButton } from 'v2/app/pages/identity/components/CancelButton'
 
 export const CorporateIdEdit: React.FC = () => {
   const { data, status } = useAllCorporateIdentities()
-  // const { identityId } = useParams<{ identityId: string }>()
   const {
     routes,
     params: { identityId }
@@ -22,13 +20,6 @@ export const CorporateIdEdit: React.FC = () => {
   }
 
   const identity = data.map[identityId]
-  const cancelButton = (
-    <Button color='primary'>
-      <AppRouterLink to={routes.corporate} params={{ identityId }} replace>
-        Cancel
-      </AppRouterLink>
-    </Button>
-  )
 
   return (
     <Grid container>
@@ -42,7 +33,13 @@ export const CorporateIdEdit: React.FC = () => {
           useOwnEmail={false}
           submitButtonText='Save'
           onSubmit={updateCorporateId}
-          cancelButton={cancelButton}
+          cancelButton={
+            <CancelButton
+              link={routes.corporate}
+              params={{ identityId }}
+              replace
+            />
+          }
         />
       </Grid>
     </Grid>

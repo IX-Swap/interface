@@ -23,6 +23,7 @@ describe('allDeclarationsAreChecked', () => {
   it('returns true if all declarations have first property value "Yes"', () => {
     expect(allDeclarationsAreChecked(declarations)).toEqual(true)
   })
+
   it('returns false if all declarations does not have first property value "Yes"', () => {
     expect(allDeclarationsAreChecked(unCheckedDeclarations)).toEqual(false)
   })
@@ -40,6 +41,7 @@ describe('prepareDocumentsForUpload', () => {
       documents[1]._id
     ])
   })
+
   it('returns empty array if documents does not exist', () => {
     expect(
       prepareDocumentsForUpload([

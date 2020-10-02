@@ -11,6 +11,7 @@ import { IdentityRoute } from '../../router'
 jest.mock('v2/components/AppRouterLink', () => ({
   AppRouterLink: jest.fn(({ children }) => children)
 }))
+
 describe('NoIdentity', () => {
   const props: NoIdentityProps = {
     link: Object.keys(IdentityRoute)[0] as keyof typeof IdentityRoute,
