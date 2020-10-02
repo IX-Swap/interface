@@ -1,7 +1,6 @@
 /**  * @jest-environment jsdom-sixteen  */
 import React from 'react'
 import { render, cleanup } from 'test-utils'
-
 import { Landing } from 'v2/app/pages/security/pages/landing/Landing'
 import * as authHook from 'v2/hooks/auth/useAuth'
 import * as routerHook from 'v2/app/pages/security/routes'

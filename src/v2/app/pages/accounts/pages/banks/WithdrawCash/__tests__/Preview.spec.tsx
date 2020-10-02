@@ -13,7 +13,6 @@ import { Form } from 'v2/components/form/Form'
 jest.mock('v2/app/components/GenericPreview/GenericPreview', () => ({
   GenericPreview: jest.fn(() => null)
 }))
-
 jest.mock('v2/app/pages/accounts/pages/banks/hooks/useBanksData')
 
 const useBanksDataMock = useBanksData as jest.Mock<

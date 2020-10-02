@@ -31,6 +31,7 @@ describe('BalancesList', () => {
   it('renders without error', () => {
     render(<BalancesList />)
   })
+
   it('renders LabelValue with correct props', () => {
     render(<BalancesList />)
 

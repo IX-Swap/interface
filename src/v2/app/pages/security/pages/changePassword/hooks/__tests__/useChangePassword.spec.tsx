@@ -57,6 +57,7 @@ describe('useChangePassword', () => {
       )
     })
   })
+
   it('it calls snackbarService.showSnackbar with error message', async () => {
     await act(async () => {
       const post = jest.fn().mockRejectedValueOnce(unsuccessfulResponse)
