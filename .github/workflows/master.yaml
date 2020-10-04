@@ -1,4 +1,4 @@
-name: ixwebapp
+name: Build & Deploy Master
 on:
   push:
     branches: [master]
