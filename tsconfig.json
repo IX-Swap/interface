@@ -24,7 +24,6 @@
   "apiUrl": "https://api.mozork.com",
   "include": [
     "src/v2/**/*",
-    "src/__mocks__/**/*",
     "src/index.tsx",
     "src/react-app-env.d.ts",
     "src/serviceWorker.ts",
@@ -33,6 +32,8 @@
   ],
   "exclude": [
     "src/**/*.js",
-    "**/*.test.{ts,tsx}"
+    "**/*.test.{ts,tsx}",
+    "src/__mocks__/**/*",
+    "src/__fixtures__/**/*"
   ]
 }
