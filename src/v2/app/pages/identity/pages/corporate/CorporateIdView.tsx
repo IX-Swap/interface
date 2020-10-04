@@ -13,7 +13,7 @@ export const CorporateIdView: React.FC = () => {
     params: { identityId }
   } = useIdentitiesRouter()
 
-  if (status === 'loading' || data === undefined) {
+  if (status === 'loading') {
     return null
   }
 

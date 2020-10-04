@@ -15,7 +15,7 @@ export const CorporateIdEdit: React.FC = () => {
   } = useIdentitiesRouter()
   const [updateCorporateId] = useUpdateCorporateIdentity(identityId)
 
-  if (status === 'loading' || data === undefined) {
+  if (status === 'loading') {
     return null
   }
 

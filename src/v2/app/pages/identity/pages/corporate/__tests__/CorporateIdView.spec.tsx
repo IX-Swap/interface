@@ -48,15 +48,6 @@ describe('CorporateIdView', () => {
     expect(container).toBeEmptyDOMElement()
   })
 
-  it('renders nothing if data is undefined', () => {
-    jest
-      .spyOn(allCorporateIdentitiesHook, 'useAllCorporateIdentities')
-      .mockImplementation(() => generateInfiniteQueryResult({ noData: true }))
-    const { container } = render(<CorporateIdView />)
-
-    expect(container).toBeEmptyDOMElement()
-  })
-
   it('renders EditButton with correct props', () => {
     jest
       .spyOn(allCorporateIdentitiesHook, 'useAllCorporateIdentities')

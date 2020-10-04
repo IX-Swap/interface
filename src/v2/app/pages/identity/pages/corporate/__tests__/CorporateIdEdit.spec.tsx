@@ -44,15 +44,6 @@ describe('CorporateIdEdit', () => {
     expect(container).toBeEmptyDOMElement()
   })
 
-  it('renders nothing if data is undefined', () => {
-    jest
-      .spyOn(allCorporateIdentitiesHook, 'useAllCorporateIdentities')
-      .mockImplementation(() => generateInfiniteQueryResult({ noData: true }))
-    const { container } = render(<CorporateIdEdit />)
-
-    expect(container).toBeEmptyDOMElement()
-  })
-
   it('renders CorporateIdentityForm with correct props', () => {
     jest
       .spyOn(allCorporateIdentitiesHook, 'useAllCorporateIdentities')
