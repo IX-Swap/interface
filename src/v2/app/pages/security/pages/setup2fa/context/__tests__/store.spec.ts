@@ -17,6 +17,7 @@ describe('Setup2faStore', () => {
     store.setActiveStep(3)
     expect(store.activeStep).toBe(3)
   })
+
   it('sets activeStep to 0 by default', () => {
     const store = new Setup2faStore()
 
@@ -25,6 +26,7 @@ describe('Setup2faStore', () => {
     store.setActiveStep()
     expect(store.activeStep).toBe(0)
   })
+
   it('goes to nextPage', () => {
     const store = new Setup2faStore()
 

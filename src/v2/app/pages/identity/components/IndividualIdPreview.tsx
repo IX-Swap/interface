@@ -1,9 +1,9 @@
 import React from 'react'
-import { Button, Grid } from '@material-ui/core'
-import { AppRouterLink } from 'v2/components/AppRouterLink'
+import { Grid } from '@material-ui/core'
 import { Section } from 'v2/app/pages/identity/components/Section'
 import { individualIdentityFormValidationSchema } from 'v2/app/pages/identity/components/validation'
 import UserInfoComponent from 'v2/app/pages/identity/components/UserInfo'
+import { ViewButton } from 'v2/app/pages/identity/components/ViewButton'
 import { useIndividualIdentity } from 'v2/hooks/identity/useIndividualIdentity'
 import { useIdentitiesRouter } from 'v2/app/pages/identity/router'
 import { useIndividualIdentityForm } from 'v2/app/pages/identity/pages/IdentitiesList'
@@ -25,17 +25,11 @@ export const IndividualIdPreview: React.FC = () => {
     )
   }
 
-  const viewIndividualIdentity = (
-    <Button color='primary'>
-      <AppRouterLink to={routes.individual}>View</AppRouterLink>
-    </Button>
-  )
-
   return (
     <Grid container item direction='column'>
       <Section
         title={`${data.firstName} ${data.lastName}`}
-        actions={viewIndividualIdentity}
+        actions={<ViewButton link={routes.individual} />}
       >
         <Form
           defaultValues={getIdentityFormDefaultValue(data, 'individual')}

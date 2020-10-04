@@ -1,13 +1,13 @@
 import React from 'react'
-import { Button, Grid, Typography } from '@material-ui/core'
+import { Grid, Typography } from '@material-ui/core'
 import { CompanyInformation } from 'v2/app/pages/identity/components/CompanyInfo'
 import { useAllCorporateIdentities } from 'v2/hooks/identity/useAllCorporateIdentities'
 import { Section } from 'v2/app/pages/identity/components/Section'
 import { useCorporateIdentityForm } from 'v2/app/pages/identity/components/CorporateIdentityForm'
 import { corporateIdentityFormValidationSchema } from 'v2/app/pages/identity/components/validation'
-import { AppRouterLink } from 'v2/components/AppRouterLink'
 import { useIdentitiesRouter } from 'v2/app/pages/identity/router'
 import { NoIdentity } from 'v2/app/pages/identity/components/NoIdentity'
+import { ViewButton } from 'v2/app/pages/identity/components/ViewButton'
 import { getIdentityFormDefaultValue } from 'v2/app/pages/identity/utils'
 
 export const CorporateIdPreview: React.FC = () => {
@@ -32,22 +32,16 @@ export const CorporateIdPreview: React.FC = () => {
       </Grid>
 
       {data.list.map(identity => {
-        const viewCorporateIdentity = (
-          <Button color='primary'>
-            <AppRouterLink
-              to={routes.corporate}
-              params={{ identityId: identity._id }}
-            >
-              View
-            </AppRouterLink>
-          </Button>
-        )
-
         return (
           <Grid item xs={12} key={identity._id}>
             <Section
               title={identity.companyLegalName}
-              actions={viewCorporateIdentity}
+              actions={
+                <ViewButton
+                  link={routes.corporate}
+                  params={{ identityId: identity._id }}
+                />
+              }
             >
               <Form
                 validationSchema={corporateIdentityFormValidationSchema}

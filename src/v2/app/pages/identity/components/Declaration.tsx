@@ -4,8 +4,10 @@ import { makeStyles } from '@material-ui/styles'
 import { DeclarationTemplate } from 'v2/types/identity'
 import { useFieldArray } from 'react-hook-form'
 import { useIndividualIdentityForm } from 'v2/app/pages/identity/components/IndividualIdentityForm'
+import { DeclarationHeader } from 'v2/app/pages/identity/components/DeclarationHeader'
+import { DeclarationFooter } from 'v2/app/pages/identity/components/DeclarationFooter'
 
-const useStyles = makeStyles(() => ({
+export const useStyles = makeStyles(() => ({
   pageTitle: {
     lineHeight: '2em'
   },
@@ -14,23 +16,20 @@ const useStyles = makeStyles(() => ({
   }
 }))
 
-interface DeclarationProps {
+export interface DeclarationProps {
   declarations: DeclarationTemplate[]
   isEditing: boolean
 }
 
-export const Declaration = (props: DeclarationProps): JSX.Element => {
+export const Declaration: React.FC<DeclarationProps> = props => {
   const { declarations, isEditing } = props
   const { YesOrNo } = useIndividualIdentityForm()
   const classes = useStyles()
-  const { fields } = useFieldArray({
-    name: 'declarations'
-  })
+  const { fields } = useFieldArray({ name: 'declarations' })
 
   return (
     <List>
       {fields.map((field, index) => {
-        const items = []
         const {
           key,
           lastLine,
@@ -40,85 +39,38 @@ export const Declaration = (props: DeclarationProps): JSX.Element => {
           footer
         } = declarations[index]
 
-        if (header !== undefined) {
-          items.push(
-            <ListItem key={header}>
+        return (
+          <React.Fragment key={index}>
+            {header !== undefined ? (
+              <DeclarationHeader header={header} />
+            ) : null}
+            <ListItem>
               <Grid container alignItems='center' spacing={1}>
                 <Grid item xs={10}>
-                  <Typography>
-                    <span dangerouslySetInnerHTML={{ __html: header }} />
+                  <Typography
+                    className={subLevel === true ? classes.subLevel : ''}
+                  >
+                    <span dangerouslySetInnerHTML={{ __html: content }} />
                   </Typography>
+                </Grid>
+                <Grid item xs={2}>
+                  <YesOrNo
+                    label={''}
+                    key={field.id}
+                    name={['declarations', index, key] as any} // TODO: think of the fix for this
+                    inputProps={{ disabled: !isEditing }}
+                  />
                 </Grid>
               </Grid>
             </ListItem>
-          )
-        }
-
-        items.push(
-          <ListItem key={index}>
-            <Grid container alignItems='center' spacing={1}>
-              <Grid item xs={10}>
-                <Typography
-                  className={subLevel === true ? classes.subLevel : ''}
-                >
-                  <span dangerouslySetInnerHTML={{ __html: content }} />
-                </Typography>
-              </Grid>
-              <Grid item xs={2}>
-                <YesOrNo
-                  label={''}
-                  key={field.id}
-                  name={['declarations', index, key] as any} // TODO: think of the fix for this
-                  inputProps={{
-                    disabled: !isEditing
-                  }}
-                />
-              </Grid>
-            </Grid>
-          </ListItem>
+            {footer !== undefined ? (
+              <DeclarationFooter footer={footer} classes={classes} />
+            ) : null}
+            {lastLine === true ? (
+              <Divider light style={{ marginTop: 15, marginBottom: 15 }} />
+            ) : null}
+          </React.Fragment>
         )
-
-        if (footer !== undefined) {
-          if (typeof footer === 'string') {
-            items.push(
-              <ListItem key={footer}>
-                <Grid container alignItems='center' spacing={1}>
-                  <Grid item xs={10}>
-                    <Typography className={classes.subLevel}>
-                      <span dangerouslySetInnerHTML={{ __html: footer }} />
-                    </Typography>
-                  </Grid>
-                </Grid>
-              </ListItem>
-            )
-          } else {
-            footer.forEach(text =>
-              items.push(
-                <ListItem key={text}>
-                  <Grid container alignItems='center' spacing={1}>
-                    <Grid item xs={10}>
-                      <Typography className={classes.subLevel}>
-                        <span dangerouslySetInnerHTML={{ __html: text }} />
-                      </Typography>
-                    </Grid>
-                  </Grid>
-                </ListItem>
-              )
-            )
-          }
-        }
-
-        if (lastLine === true) {
-          items.push(
-            <Divider
-              key={`divider-${index}`}
-              light
-              style={{ marginTop: 15, marginBottom: 15 }}
-            />
-          )
-        }
-
-        return items
       })}
     </List>
   )

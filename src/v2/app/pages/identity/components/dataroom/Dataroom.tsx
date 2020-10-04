@@ -5,7 +5,7 @@ import { DataroomItem } from 'v2/app/pages/identity/components/dataroom/Dataroom
 import { DataroomAddDocument } from 'v2/app/pages/identity/components/dataroom/DataroomAddDocument'
 import { useTypedForm } from 'v2/components/form/useTypedForm'
 
-interface DataRoomProps {
+export interface DataRoomProps {
   isEditing: boolean
   editable?: boolean
 }

@@ -1,15 +1,14 @@
 /**  * @jest-environment jsdom-sixteen  */
 import React from 'react'
 import { render, cleanup } from 'test-utils'
-import { bank, asset } from '__fixtures__/authorizer'
+import { bank } from '__fixtures__/authorizer'
 import { WithdrawCashAlert } from 'v2/app/pages/accounts/pages/banks/components/WithdrawCashAlert'
-
 import { CashTransactionAlert } from 'v2/app/pages/accounts/pages/banks/components/CashTransactionAlert'
-import * as reactHookForm from 'react-hook-form'
+import { Form } from 'v2/components/form/Form'
 import { useBanksData } from 'v2/app/pages/accounts/pages/banks/hooks/useBanksData'
+import { generateInfiniteQueryResult } from '__fixtures__/useQuery'
+import { QueryStatus } from 'react-query'
 
-jest.mock('v2/app/pages/accounts/pages/banks/hooks/useBanksData')
-jest.mock('react-hook-form')
 jest.mock(
   'v2/app/pages/accounts/pages/banks/components/CashTransactionAlert',
   () => ({
@@ -18,6 +17,11 @@ jest.mock(
     ))
   })
 )
+jest.mock('v2/app/pages/accounts/pages/banks/hooks/useBanksData')
+
+const useBanksDataMock = useBanksData as jest.Mock<
+  Partial<ReturnType<typeof useBanksData>>
+>
 
 describe('WithdrawCashAlert', () => {
   afterEach(async () => {
@@ -25,31 +29,30 @@ describe('WithdrawCashAlert', () => {
     jest.clearAllMocks()
   })
 
-  it('renders CashTransactionAlert if status is error', () => {
-    jest.spyOn(reactHookForm, 'useFormContext').mockReturnValue({
-      getValues () {
-        return { bank: bank._id }
-      }
-    })
-    useBanksData.mockReturnValue({
-      data: { map: { [bank._id]: { asset } } },
-      status: 'error'
-    })
-    const { getByTestId } = render(<WithdrawCashAlert />)
+  it('renders CashTransactionAlert correctly', () => {
+    useBanksDataMock.mockReturnValue(
+      generateInfiniteQueryResult({ map: { [bank._id]: bank } })
+    )
+    const { getByTestId } = render(
+      <Form defaultValues={{ bank: bank._id }}>
+        <WithdrawCashAlert />
+      </Form>
+    )
 
     expect(CashTransactionAlert).toHaveBeenCalledTimes(1)
     expect(getByTestId('cta-wrapper')).toHaveTextContent('money123')
   })
 
   it('renders nothing if status is loading', () => {
-    jest.spyOn(reactHookForm, 'useFormContext').mockReturnValue({
-      getValues () {
-        return { bank: bank._id }
-      }
-    })
-    useBanksData.mockReturnValue({ data: [], status: 'loading' })
+    useBanksDataMock.mockReturnValue(
+      generateInfiniteQueryResult({ queryStatus: QueryStatus.Loading })
+    )
+    const { getByTestId } = render(
+      <Form data-testid='form' defaultValues={{ bank: bank._id }}>
+        <WithdrawCashAlert />
+      </Form>
+    )
 
-    const { container } = render(<WithdrawCashAlert />)
-    expect(container).toBeEmptyDOMElement()
+    expect(getByTestId('form')).toBeEmptyDOMElement()
   })
 })

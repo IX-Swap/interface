@@ -21,7 +21,7 @@ const useStyles = makeStyles(() => ({
   }
 }))
 
-interface IdentitySectionProps {
+export interface IdentitySectionProps {
   title: string
   subtitle?: string
   actions?: JSX.Element | null

@@ -8,6 +8,7 @@ bfg.jar
 /.pnp
 .pnp.js
 .idea/
+.vscode/
 
 # testing
 .scannerwork

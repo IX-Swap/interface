@@ -20,7 +20,7 @@ export const useIndividualIdentityForm = createTypedForm<
   IndividualIdentityFormValues
 >()
 
-interface IndividualIdentityFormProps {
+export interface IndividualIdentityFormProps {
   identity: IndividualIdentity | undefined
   isEditing: boolean
   useOwnEmail: boolean

@@ -5,6 +5,7 @@ import { Setup } from 'v2/app/pages/accounts/pages/banks/WithdrawCash/Setup'
 import { bank } from '__fixtures__/authorizer'
 import { useBanksData } from 'v2/app/pages/accounts/pages/banks/hooks/useBanksData'
 import { Form } from 'v2/components/form/Form'
+import { generateInfiniteQueryResult } from '__fixtures__/useQuery'
 
 jest.mock('v2/app/pages/accounts/pages/banks/hooks/useBanksData')
 
@@ -14,11 +15,10 @@ const useBanksDataMock = useBanksData as jest.Mock<
 
 describe('Setup', () => {
   beforeEach(() => {
-    useBanksDataMock.mockReturnValue({
-      data: { map: { [bank._id]: bank }, raw: [], list: [] }
-    })
+    useBanksDataMock.mockReturnValue(
+      generateInfiniteQueryResult({ map: { [bank._id]: bank } })
+    )
   })
-
   afterEach(async () => {
     jest.clearAllMocks()
     await cleanup()
@@ -30,7 +30,6 @@ describe('Setup', () => {
         <Setup />
       </Form>
     )
-
     const amount = queryByLabelText(/amount/i)
     const memo = queryByLabelText(/memo/i)
 
@@ -38,13 +37,12 @@ describe('Setup', () => {
     expect(memo).toBeNull()
   })
 
-  it('render inputs without if bankId is not undefined', async () => {
+  it('render inputs without if bankId is defined', async () => {
     const { getByLabelText } = render(
       <Form defaultValues={{ bank: bank._id }}>
         <Setup />
       </Form>
     )
-
     const amount = getByLabelText(/amount/i)
     const memo = getByLabelText(/memo/i)
 
