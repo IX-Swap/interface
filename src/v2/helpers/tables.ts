@@ -1,12 +1,13 @@
-import { CashDeposit } from 'v2/types/cashdeposit'
+import { CashDeposit } from 'v2/types/cashDeposit'
 import { formatMoney } from 'v2/helpers/numbers'
-import { CashWithdrawal } from 'v2/types/cash-withdrawal'
+import { CashWithdrawal } from 'v2/types/cashWithdrawal'
 import { Commitment } from 'v2/types/commitment'
 import { CorporateIdentity, IndividualIdentity } from 'v2/types/identity'
-import { DSWithdrawal } from 'v2/types/ds-withdrawal'
+import { DSWithdrawal } from 'v2/types/dsWithdrawal'
 import { Asset } from 'v2/types/asset'
 import { DigitalSecurityOffering } from 'v2/types/dso'
 import { AssetBalance } from 'v2/types/balance'
+import { PersonName } from './types'
 
 export const renderMinimumInvestment = (
   amount: number,
@@ -28,6 +29,22 @@ export const renderFirstName = (
   // return `${val} ${row.individual.lastName}`
 }
 
+export const renderName = (val: string, row: PersonName) => {
+  const names = [row.firstName, row.middleName, row.lastName]
+  return names.filter(s => s !== undefined).join(' ')
+}
+
+export const renderRepresentativeName = (
+  val: string,
+  row: CorporateIdentity
+) => {
+  if (row.representatives.length === 0) {
+    return ''
+  }
+
+  return row.representatives.map(r => renderName(val, r)).join(', ')
+}
+
 export const renderLastName = (
   val: string,
   row: CorporateIdentity | DSWithdrawal | IndividualIdentity
@@ -39,7 +56,8 @@ export const renderLastName = (
   } else if ('individual' in row) {
     lastName = row.individual.lastName
   } else {
-    lastName = row.representatives[0].lastName
+    const representative = row.representatives[0]
+    lastName = representative?.lastName ?? ''
   }
 
   return `${val} ${lastName}`

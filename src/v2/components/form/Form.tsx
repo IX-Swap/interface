@@ -6,7 +6,7 @@ import { DeepMap, FieldError } from '@hookform/error-message/dist/types'
 import { useServices } from 'v2/services/useServices'
 
 export interface FormProps<T extends {}> {
-  defaultValues?: T
+  defaultValues?: Partial<T>
   onSubmit?: SubmitHandler<T>
   validationSchema?: ObjectSchema<Shape<object | undefined, T>>
 }
@@ -30,8 +30,8 @@ export const Form = <T,>(
     ...rest
   } = props
   const form = useForm({
-    mode: 'onBlur',
-    defaultValues,
+    mode: 'onChange',
+    defaultValues: defaultValues as any,
     resolver: yupResolver(validationSchema)
   })
   const { handleSubmit } = form
@@ -44,6 +44,9 @@ export const Form = <T,>(
 
   return (
     <FormProvider {...form}>
+      {/* <pre style={{ fontSize: 12, width: 300 }}> */}
+      {/*  {JSON.stringify(form.getValues(), null, 4)} */}
+      {/* </pre> */}
       <form
         {...rest}
         style={{ width: '100%' }}

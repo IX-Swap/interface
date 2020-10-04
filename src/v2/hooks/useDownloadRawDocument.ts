@@ -1,6 +1,7 @@
 import { useServices } from 'v2/services/useServices'
 import { useMutation } from 'react-query'
 import { QueryOrMutationCallbacks } from './types'
+import { useAuth } from './auth/useAuth'
 
 export interface DownloadDocument {
   documentId: string
@@ -12,7 +13,9 @@ export const useDownloadRawDocument = (
   callbacks?: QueryOrMutationCallbacks<Blob>
 ) => {
   const { snackbarService, apiService } = useServices()
-  const url = `/dataroom/raw/${document.ownerId}/${document.documentId}`
+  const { user } = useAuth()
+  const ownerId = document.ownerId === '' ? user?._id ?? '' : document.ownerId
+  const url = `/dataroom/raw/${ownerId}/${document.documentId}`
   const downloadFile = async () => {
     return await apiService.get<Blob>(url, { responseType: 'blob' })
   }

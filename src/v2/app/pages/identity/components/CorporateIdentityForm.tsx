@@ -20,7 +20,7 @@ export const useCorporateIdentityForm = createTypedForm<
 >()
 
 export interface CorporateIdentityFormProps {
-  identity: CorporateIdentity | undefined
+  data: CorporateIdentity | undefined
   isEditing: boolean
   useOwnEmail: boolean
   onSubmit?: (values: CorporateIdentityFormValues) => void
@@ -32,7 +32,7 @@ export const CorporateIdentityForm = (
   props: CorporateIdentityFormProps
 ): JSX.Element => {
   const {
-    identity,
+    data,
     isEditing,
     useOwnEmail,
     submitButtonText,
@@ -48,7 +48,7 @@ export const CorporateIdentityForm = (
 
   return (
     <Form
-      defaultValues={getIdentityFormDefaultValue(identity, 'corporate')}
+      defaultValues={getIdentityFormDefaultValue(data, 'corporate')}
       validationSchema={corporateIdentityFormValidationSchema}
       onSubmit={handleSubmit}
     >
@@ -56,7 +56,7 @@ export const CorporateIdentityForm = (
         <Grid item xs={12}>
           <Section title='Company Information'>
             <CompanyInformation
-              corporate={identity}
+              corporate={data}
               useOwnEmail={useOwnEmail}
               isEditing={isEditing}
             />
@@ -94,7 +94,7 @@ export const CorporateIdentityForm = (
           >
             <Declaration
               isEditing={isEditing}
-              declarations={getIdentityDeclarations(identity, 'corporate')}
+              declarations={getIdentityDeclarations(data, 'corporate')}
             />
           </Section>
         </Grid>

@@ -1,5 +1,5 @@
 import { TableColumn } from 'v2/types/util'
-import { CashDeposit } from 'v2/types/cashdeposit'
+import { CashDeposit } from 'v2/types/cashDeposit'
 import { formatDateToMMDDYY } from 'v2/helpers/dates'
 import { renderAmount, renderFirstName } from 'v2/helpers/tables'
 

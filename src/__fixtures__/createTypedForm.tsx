@@ -10,7 +10,7 @@ export const generateCreateTypedFormResult = () => ({
   MartialStatusSelect: jest.fn(() => null) as any,
   Checkbox: jest.fn(() => null) as any,
   YesOrNo: jest.fn(() => null) as any,
-  DocumentUploader: jest.fn(() => null) as any,
+  DataroomDocument: jest.fn(() => null) as any,
   Form: jest.fn(() => null) as any,
   EditableField: jest.fn(() => null) as any,
   FormValue: jest.fn(() => null) as any,

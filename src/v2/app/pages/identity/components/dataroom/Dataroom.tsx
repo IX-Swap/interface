@@ -1,42 +1,102 @@
 import React from 'react'
-import { Grid, List } from '@material-ui/core'
 import { DataroomHeader } from 'v2/app/pages/identity/components/dataroom/DataroomHeader'
 import { DataroomItem } from 'v2/app/pages/identity/components/dataroom/DataroomItem'
-import { DataroomAddDocument } from 'v2/app/pages/identity/components/dataroom/DataroomAddDocument'
+import {
+  DataroomAddDocument,
+  DataroomAddDocumentInfoProps
+} from 'v2/app/pages/identity/components/dataroom/DataroomAddDocument'
 import { useTypedForm } from 'v2/components/form/useTypedForm'
+import { Maybe } from 'v2/types/util'
+import { DataroomViewRow, DataroomViewRowProps } from './DataroomViewRow'
+import { DataroomEditRow, DataroomEditRowProps } from './DataroomEditRow'
+import { DataroomDocumentProps } from '../../../../../components/form/DataroomDocument'
+import { Grid, GridDirection } from '@material-ui/core'
+import { FieldsArrayRendererProps } from '../../../../../components/form/createTypedForm'
 
-interface DataRoomProps {
+export type DataroomViewComponent = (
+  props: DataroomViewRowProps
+) => Maybe<JSX.Element>
+
+export type DataroomEditComponent = (
+  props: DataroomEditRowProps
+) => Maybe<JSX.Element>
+
+interface DataroomProps {
   isEditing: boolean
+  name?: string
   editable?: boolean
+  multiple?: boolean
+  ContainerComponent?: React.ComponentType
+  HeaderComponent?: React.ComponentType
+  ViewComponent?: DataroomViewComponent
+  EditComponent?: DataroomEditComponent
+  dataroomDocumentProps?: DataroomDocumentProps
+  dataroomAddDocumentProps?: DataroomAddDocumentInfoProps
+  direction?: GridDirection
+  children?: (
+    props: FieldsArrayRendererProps & {
+      items: JSX.Element[]
+      addButton: JSX.Element
+    }
+  ) => JSX.Element
 }
 
 export const noop = () => {}
+export const Noop = () => null
 
-export const Dataroom = (props: DataRoomProps): JSX.Element => {
-  const { isEditing, editable = false } = props
+export const Dataroom = (props: DataroomProps): JSX.Element => {
+  const {
+    isEditing,
+    name = 'documents',
+    editable = false,
+    HeaderComponent = DataroomHeader,
+    EditComponent = DataroomEditRow,
+    ViewComponent = DataroomViewRow,
+    direction = 'column',
+    dataroomDocumentProps,
+    dataroomAddDocumentProps,
+    children
+  } = props
   const { FieldsArray } = useTypedForm()
+  const showAddButton = editable && isEditing
 
   return (
-    <Grid container direction='column'>
-      <List style={{ width: '100%' }}>
-        <FieldsArray name='documents'>
-          {({ fields, remove, append }) => (
+    <Grid container direction={direction}>
+      <FieldsArray name={name}>
+        {({ fields, remove, append }) => {
+          const items = fields.map((field, index) => (
+            <DataroomItem
+              name={name}
+              key={field.id}
+              index={index}
+              ViewComponent={ViewComponent}
+              EditComponent={EditComponent}
+              isEditing={isEditing}
+              document={fields[index]}
+              removeItem={editable ? remove : noop}
+              dataroomDocumentProps={dataroomDocumentProps}
+            />
+          ))
+          const addButton = (
+            <DataroomAddDocument
+              {...dataroomAddDocumentProps}
+              append={append}
+            />
+          )
+
+          if (children !== undefined) {
+            return children({ fields, append, remove, items, addButton })
+          }
+
+          return (
             <>
-              {fields.length > 0 && <DataroomHeader />}
-              {fields.map((field, index) => (
-                <DataroomItem
-                  key={field.id}
-                  isEditing={isEditing}
-                  document={fields[index]}
-                  removeItem={editable ? remove : noop}
-                  index={index}
-                />
-              ))}
-              {editable && isEditing && <DataroomAddDocument append={append} />}
+              {fields.length > 0 && <HeaderComponent />}
+              {items}
+              {showAddButton && addButton}
             </>
-          )}
-        </FieldsArray>
-      </List>
+          )
+        }}
+      </FieldsArray>
     </Grid>
   )
 }

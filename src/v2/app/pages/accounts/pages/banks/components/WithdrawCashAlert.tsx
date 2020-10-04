@@ -16,7 +16,7 @@ export const WithdrawCashAlert: React.FC = () => {
   }
 
   return (
-    <CashTransactionAlert assetId={bank.asset._id}>
+    <CashTransactionAlert assetId={bank.currency._id}>
       {money => (
         <Typography variant='caption' align='center'>
           You will be withdrawing {money} to the above-mentioned bank account.

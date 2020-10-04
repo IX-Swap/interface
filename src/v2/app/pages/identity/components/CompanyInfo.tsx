@@ -2,6 +2,7 @@ import React from 'react'
 import { Grid } from '@material-ui/core'
 import { CorporateFields } from 'v2/types/identity'
 import { useCorporateIdentityForm } from 'v2/app/pages/identity/components/CorporateIdentityForm'
+import { UserAvatar } from '../../../components/UserAvatar'
 
 interface CompanyInformationProps {
   corporate?: Partial<CorporateFields> & { walletAddress: string }
@@ -18,6 +19,9 @@ export const CompanyInformation = (
 
   return (
     <Grid container spacing={3}>
+      <Grid item xs={12}>
+        <UserAvatar name='logo' isEditing={isEditing} ownerId='' />
+      </Grid>
       <Grid item xs={4}>
         <EditableField
           fieldType='TextField'
@@ -56,6 +60,23 @@ export const CompanyInformation = (
           isEditing={isEditing}
           name='walletAddress'
           label='Digital Security Wallet Address'
+        />
+      </Grid>
+      <Grid item xs={4} />
+      <Grid item xs={4}>
+        <EditableField
+          fieldType='TextField'
+          isEditing={isEditing}
+          name='email'
+          label='Email Address'
+        />
+      </Grid>
+      <Grid item xs={4}>
+        <EditableField
+          fieldType='TextField'
+          isEditing={isEditing}
+          name='contactNumber'
+          label='Contact Number'
         />
       </Grid>
       <Grid item xs={5}>

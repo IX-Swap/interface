@@ -1,45 +1,58 @@
 import React from 'react'
 import { useTypedForm } from 'v2/components/form/useTypedForm'
-import { DocumentWithGuide } from 'v2/types/document'
-import { Button } from '@material-ui/core'
-import { DataroomViewRow } from 'v2/app/pages/identity/components/dataroom/DataroomViewRow'
-import { DataroomEditRow } from 'v2/app/pages/identity/components/dataroom/DataroomEditRow'
+import { DataroomFileWithGuide } from 'v2/types/dataroomFile'
+import { DataroomEditComponent, DataroomViewComponent } from './Dataroom'
+import { DataroomDocumentProps } from '../../../../../components/form/DataroomDocument'
 
 export interface DataroomItemProps {
+  name: string
   isEditing: boolean
   index: number
-  document: DocumentWithGuide
+  document: DataroomFileWithGuide
   removeItem: (index: number) => any
+  ViewComponent: DataroomViewComponent
+  EditComponent: DataroomEditComponent
+  dataroomDocumentProps?: DataroomDocumentProps
 }
 
 export const DataroomItem: React.FC<DataroomItemProps> = props => {
-  const { index, isEditing, document, removeItem } = props
-  const { EditableField, FormValue } = useTypedForm<{
-    documents: DocumentWithGuide[]
-  }>()
-  const documentPath = ['documents', index, 'document'] as const
+  const {
+    name,
+    index,
+    isEditing,
+    document,
+    removeItem,
+    ViewComponent,
+    EditComponent,
+    dataroomDocumentProps
+  } = props
+  const { EditableField, FormValue } = useTypedForm()
+  const documentPath = [name, index, 'document'] as const
   const defaultValue = document.document
   const title = document.title
   const handleRemoveItem = () => removeItem(index)
 
   return (
     <EditableField
+      {...dataroomDocumentProps}
+      documentInfo={{
+        ...dataroomDocumentProps?.documentInfo,
+        title,
+        type: document.type
+      }}
       isEditing={isEditing}
-      fieldType='DocumentUploader'
-      defaultValue={defaultValue as any} // TODO: fix type
-      title={title}
-      label='Upload'
+      fieldType='DataroomDocument'
       name={documentPath as any} // TODO: fix type
+      defaultValue={defaultValue as any} // TODO: fix type
+      label='Upload'
       onDelete={handleRemoveItem}
-      uploadComponent={<Button component='span'>Upload</Button>}
-      deleteComponent={<Button component='span'>Delete</Button>}
       formControlProps={{
         fullWidth: false
       }}
       viewRenderer={
         <FormValue name={documentPath}>
           {value => (
-            <DataroomViewRow
+            <ViewComponent
               document={value === undefined ? defaultValue : value}
               title={title}
             />
@@ -49,7 +62,7 @@ export const DataroomItem: React.FC<DataroomItemProps> = props => {
       editRenderer={input => (
         <FormValue name={documentPath}>
           {value => (
-            <DataroomEditRow
+            <EditComponent
               document={value === undefined ? defaultValue : value}
               title={title}
               input={input}

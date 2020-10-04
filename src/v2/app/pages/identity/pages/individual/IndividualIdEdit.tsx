@@ -27,7 +27,7 @@ export const IndividualIdEdit: React.FC = () => {
       </Grid>
       <Grid item>
         <IndividualIdentityForm
-          identity={data}
+          data={data}
           isEditing={true}
           useOwnEmail={false}
           submitButtonText='Save'

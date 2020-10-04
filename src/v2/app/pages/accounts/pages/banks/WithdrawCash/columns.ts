@@ -1,5 +1,5 @@
 import moment from 'moment'
-import { CashWithdrawal } from 'v2/types/cash-withdrawal'
+import { CashWithdrawal } from 'v2/types/cashWithdrawal'
 import { TableColumn } from 'v2/types/util'
 
 const columns: Array<TableColumn<CashWithdrawal>> = [

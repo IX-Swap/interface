@@ -32,6 +32,19 @@ interface GetCurrentRouteArgs<T> {
   routeMap: T
 }
 
+const getHistoryPayload = (route: any, state?: {}) => {
+  let pathname = route as string
+
+  if (state !== undefined) {
+    pathname = generatePath(route, state)
+  }
+
+  return {
+    pathname,
+    state
+  }
+}
+
 const shouldGeneratePath = (
   path: string,
   state: Record<string, any> | null | undefined
@@ -92,10 +105,10 @@ export function generateAppRouterHook<T> (
       query: new URLSearchParams(history.location.search),
       routes: routeMap,
       push: (route, state) => {
-        history.push(routeMap[route] as any, state)
+        history.push(getHistoryPayload(routeMap[route], state))
       },
       replace: (route, state) => {
-        history.replace(routeMap[route] as any, state)
+        history.replace(getHistoryPayload(routeMap[route], state))
       },
       params: location.state ?? {},
       renderRoutes: () => (

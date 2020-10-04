@@ -24,7 +24,7 @@ describe('CashDeposits', () => {
   describe('renderDeposit', () => {
     it('renders DepositView component with correct data', () => {
       const depositView = renderDeposit(cashDeposit)
-      expect(depositView).toEqual(<DepositView deposit={cashDeposit} />)
+      expect(depositView).toEqual(<DepositView data={cashDeposit} />)
     })
   })
 })

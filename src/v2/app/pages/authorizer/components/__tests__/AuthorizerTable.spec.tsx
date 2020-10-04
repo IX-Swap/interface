@@ -1,7 +1,7 @@
 /**  * @jest-environment jsdom-sixteen  */
 import React from 'react'
 import { render, cleanup } from 'test-utils'
-import { AuthorizerView } from 'v2/app/pages/authorizer/components/AuthorizerView'
+import { AuthorizerTable } from 'v2/app/pages/authorizer/components/AuthorizerTable'
 import {
   useAuthorizerView,
   AuthorizerViewReturnValue
@@ -41,7 +41,7 @@ const useBaseViewMockReturnValue: AuthorizerViewReturnValue<any> = {
   onBack: jest.fn()
 }
 
-describe('AuthorizerView', () => {
+describe('AuthorizerTable', () => {
   const props = {
     title: 'Banks',
     name: 'Bank Account(s)',
@@ -61,7 +61,7 @@ describe('AuthorizerView', () => {
       isViewing: true
     })
 
-    render(<AuthorizerView {...props} />)
+    render(<AuthorizerTable {...props} />)
 
     expect(Preview).toHaveBeenCalledTimes(1)
     expect(props.renderView).toHaveBeenCalledTimes(1)
@@ -73,7 +73,7 @@ describe('AuthorizerView', () => {
   it('renders as expected in normal mode', async () => {
     useBaseViewMock.mockReturnValueOnce(useBaseViewMockReturnValue)
 
-    const { getByText } = render(<AuthorizerView {...props} />)
+    const { getByText } = render(<AuthorizerTable {...props} />)
     const title = getByText(props.title)
 
     expect(title).toBeTruthy()
@@ -84,7 +84,7 @@ describe('AuthorizerView', () => {
   it('passes result of calling withExtraActions to the table', async () => {
     useBaseViewMock.mockReturnValueOnce(useBaseViewMockReturnValue)
 
-    render(<AuthorizerView {...props} />)
+    render(<AuthorizerTable {...props} />)
 
     expect(withExtraActions).toHaveBeenCalledTimes(1)
     expect(withExtraActions).toHaveBeenCalledWith({

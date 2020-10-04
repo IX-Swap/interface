@@ -1,47 +1,46 @@
 import React from 'react'
-import { Paper, Box } from '@material-ui/core'
+import { Paper, Box, Typography, Grid } from '@material-ui/core'
 import { Bank } from 'v2/types/bank'
+import { LabelledValue } from '../../components/LabelledValue'
+import { convertAddressToString } from '../pages/authorizer/components/utils'
 
 interface BankDetailsProps {
   bank: Partial<Bank>
   code?: string
 }
 
-export const BankDetails = ({ bank, code }: BankDetailsProps) => (
+export const BankDetails = ({ bank }: BankDetailsProps) => (
   <Paper>
     <Box px={4} py={2}>
-      <p>
-        <b>{bank.bankName}</b>
-      </p>
-      <p>
-        <b>Swift:</b>
-        &nbsp;{bank.swiftCode}
-      </p>
-      {bank.address !== undefined && (
-        <p>
-          <b>Bank Address:</b>
-          &nbsp;{bank.address.line1}
-          {bank.address.line2}
-          {bank.address.city}
-          {bank.address.state}
-          {bank.address.country}
-          {bank.address.postalCode}
-        </p>
-      )}
-      <p>
-        <b>Account:</b>
-        &nbsp;{bank.accountHolderName}
-      </p>
-      <p>
-        <b>Account Number:</b>
-        &nbsp;{bank.bankAccountNumber}
-      </p>
-      {code !== undefined && (
-        <p>
-          <b>Deposit Code:</b>
-          &nbsp;{code}
-        </p>
-      )}
+      <Grid container direction='column' spacing={1}>
+        <Grid item>
+          <Typography variant='subtitle2'>{bank.bankName}</Typography>
+        </Grid>
+        <LabelledValue
+          label='Swift'
+          value={bank.swiftCode}
+          labelWeight='thin'
+          row
+        />
+        <LabelledValue
+          label='Bank Address'
+          value={convertAddressToString(bank.address)}
+          labelWeight='thin'
+          row
+        />
+        <LabelledValue
+          label={'Account'}
+          value={bank.accountHolderName}
+          labelWeight='thin'
+          row
+        />
+        <LabelledValue
+          label={'Account Number'}
+          value={bank.bankAccountNumber}
+          labelWeight='thin'
+          row
+        />
+      </Grid>
     </Box>
   </Paper>
 )

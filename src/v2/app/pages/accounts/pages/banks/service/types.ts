@@ -5,9 +5,13 @@ import {
 } from 'v2/app/pages/accounts/types'
 import { PaginationArgs } from 'v2/services/api/types'
 
-export type CreateBankArgs = BankFormValues
+export type BankArgs = Omit<BankFormValues, 'supportingDocuments'> & {
+  supportingDocuments: string[]
+}
 
-export type UpdateBankArgs = BankFormValues & {
+export type CreateBankArgs = BankArgs
+
+export type UpdateBankArgs = BankArgs & {
   bankId: string
 }
 

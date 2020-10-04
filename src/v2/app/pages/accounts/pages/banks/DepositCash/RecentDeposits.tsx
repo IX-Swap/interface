@@ -1,6 +1,6 @@
 import React from 'react'
 import { TableView } from 'v2/components/TableWithPagination/TableView'
-import { CashDeposit } from 'v2/types/cashdeposit'
+import { CashDeposit } from 'v2/types/cashDeposit'
 import { columns } from 'v2/app/pages/accounts/pages/banks/DepositCash/columns'
 import { useAuth } from 'v2/hooks/auth/useAuth'
 

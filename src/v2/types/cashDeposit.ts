@@ -2,20 +2,18 @@ import { AuthorizableStatus } from './util'
 import { Asset } from './asset'
 import { IndividualIdentity, CorporateIdentity } from './identity'
 import { Bank } from './bank'
+import { AuthorizableWithIdentity } from './authorizer'
 
-export interface CashWithdrawal {
+export interface CashDeposit extends AuthorizableWithIdentity {
   _id: string
   status: AuthorizableStatus
   user: string
   amount: number
-  bank: string
   asset: Asset
-  hold: string
-  memo?: string
-  corporates: CorporateIdentity[]
-  individual: IndividualIdentity
-  bankAccount: Bank
-  level: string
+  depositCode: string
   createdAt: string
   updatedAt: string
+  individual: IndividualIdentity
+  corporates: CorporateIdentity[]
+  bankAccount?: Bank
 }

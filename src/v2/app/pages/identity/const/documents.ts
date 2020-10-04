@@ -1,9 +1,9 @@
-import { Document, DocumentWithGuide } from 'v2/types/document'
+import { DataroomFile, DataroomFileWithGuide } from 'v2/types/dataroomFile'
 import { IdentityType } from 'v2/app/pages/identity/utils'
 
 const documents: {
-  individual: DocumentWithGuide[]
-  corporate: DocumentWithGuide[]
+  individual: DataroomFileWithGuide[]
+  corporate: DataroomFileWithGuide[]
 } = {
   individual: [
     {
@@ -118,9 +118,9 @@ const documents: {
 }
 
 export const formatDocuments = (
-  items: Document[],
+  items: DataroomFile[],
   type: IdentityType
-): DocumentWithGuide[] => {
+): DataroomFileWithGuide[] => {
   return documents[type].map(document => {
     const item = items.find(item => item.title === document.title)
 

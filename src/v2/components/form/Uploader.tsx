@@ -1,6 +1,6 @@
 /* eslint-disable */
 import React, { useRef, useState, useEffect } from 'react'
-import { Document, DocumentGuide } from "v2/types/document"
+import { DataroomFile, FileGuide } from "v2/types/dataroomFile"
 import { useFormContext } from 'react-hook-form'
 import CloudDownloadIcon from '@material-ui/icons/CloudDownload'
 import { Grid, Button } from '@material-ui/core'
@@ -11,7 +11,7 @@ import { snackbarService } from 'uno-material-ui'
 type ValueOf<T> = T[keyof T]
 
 interface UploaderProps {
-  guide: DocumentGuide
+  guide: FileGuide
   name: string
   download: (id: string, newUpload: boolean) => void
   docId?: string
@@ -20,11 +20,11 @@ interface UploaderProps {
   override?: boolean
   delete?: () => void
   showTitle?: boolean
-  onUpload?: (doc: Document) => void
+  onUpload?: (doc: DataroomFile) => void
 }
 
 interface UploaderState {
-  guide: DocumentGuide
+  guide: FileGuide
   docId: string
   uploaded: boolean
 }

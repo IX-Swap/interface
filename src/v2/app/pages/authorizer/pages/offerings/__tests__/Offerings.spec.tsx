@@ -25,7 +25,7 @@ describe('Offerings', () => {
     it('renders DigitalSecurity component with correct data', () => {
       const digitalSecurity = renderDSOView(dso)
 
-      expect(digitalSecurity).toEqual(<DSOForm dso={dso} isEditing={false} />)
+      expect(digitalSecurity).toEqual(<DSOForm data={dso} isEditing={false} />)
     })
   })
 })

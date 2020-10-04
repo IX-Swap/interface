@@ -1,13 +1,14 @@
 import { Bank } from 'v2/types/bank'
 import { APIServiceResponse } from 'v2/services/api/types'
-import { CashDeposit } from 'v2/types/cashdeposit'
+import { CashDeposit } from 'v2/types/cashDeposit'
 import { Asset } from 'v2/types/asset'
 import { CorporateIdentity, IndividualIdentity } from 'v2/types/identity'
 import { user } from '__fixtures__/user'
-import { CashWithdrawal } from 'v2/types/cash-withdrawal'
-import { DSWithdrawal } from 'v2/types/ds-withdrawal'
+import { CashWithdrawal } from 'v2/types/cashWithdrawal'
+import { DSWithdrawal } from 'v2/types/dsWithdrawal'
 import { DigitalSecurityOffering } from 'v2/types/dso'
 import declarations from 'v2/app/pages/identity/const/declarations'
+import { AuthorizationInfo } from '../v2/types/authorizer'
 
 export const asset: Asset = {
   _id: '2',
@@ -33,28 +34,22 @@ export const address = {
   postalCode: '123456'
 }
 
-export const bank: Bank = {
-  _id: '1',
-  status: 'Approved',
-  deleted: false,
-  bankName: 'Rocketbank',
-  bankAccountNumber: '1234567890',
-  accountHolderName: 'Oleg Tinkoff',
-  swiftCode: 'SWIFTCODE',
-  authorized: true,
-  createdAt: '01-01-2000',
-  address,
-  asset
+export const authorizationInfo: AuthorizationInfo = {
+  authorizer: 'id',
+  comment: '',
+  sharedWithUser: false,
+  timestamp: ''
 }
 
 export const corporate: CorporateIdentity = {
   _id: '1',
+  logo: '',
   createdAt: '01-01-2000',
   updatedAt: '01-01-2000',
   documents: [],
   declarations: [],
   walletAddress: 'address',
-  status: 'Authorized',
+  status: 'Submitted',
   beneficialOwners: [],
   companyAddress: address,
   companyLegalName: 'InvestaX',
@@ -64,16 +59,22 @@ export const corporate: CorporateIdentity = {
   registrationNumber: '123456',
   representatives: [],
   toArrangeCustody: true,
-  user
+  email: '',
+  contactNumber: '',
+  user: '',
+  authorizationDocuments: [],
+  authorization: authorizationInfo,
+  authorizations: []
 }
 
 export const individual: IndividualIdentity = {
+  photo: '',
   _id: '1',
   email: 'email@example.com',
   annualIncome: '100000',
-  bankAccountName: bank.accountHolderName,
-  bankAccountNumber: bank.bankAccountNumber,
-  bankName: bank.bankName,
+  bankAccountName: '',
+  bankAccountNumber: '',
+  bankName: '',
   contactNumber: '1234567890',
   createdAt: '01-01-2000',
   updatedAt: '01-01-2000',
@@ -92,7 +93,10 @@ export const individual: IndividualIdentity = {
   occupation: 'Occupied',
   // politicallyExposed: false,
   sourceOfWealth: '___',
-  status: 'Authorized',
+  status: 'Submitted',
+  authorization: authorizationInfo,
+  authorizationDocuments: [],
+  authorizations: [],
   toArrangeCustody: true,
   walletAddress: '1234567890_',
   declarations: declarations.individual.map(({ key }) => ({
@@ -100,7 +104,7 @@ export const individual: IndividualIdentity = {
   })),
   documents: [],
   address,
-  user
+  user: ''
 }
 
 export const dsWithdrawal: DSWithdrawal = {
@@ -116,24 +120,14 @@ export const dsWithdrawal: DSWithdrawal = {
   status: 'Approved',
   recipientWallet: '0000000',
   individual,
-  asset
-}
-
-export const cashWithdrawal: CashWithdrawal = {
-  _id: '1',
-  createdAt: '01-01-2000',
-  updatedAt: '01-01-2000',
-  user: 'user',
-  amount: 100000,
-  bank: 'bank',
-  corporates: [],
-  hold: 'hold',
-  level: '1',
-  memo: 'memo',
-  status: 'Approved',
-  bankAccount: bank,
-  individual,
-  asset
+  asset,
+  authorizationDocuments: [],
+  authorization: authorizationInfo,
+  authorizations: [],
+  identity: {
+    individual,
+    corporates: []
+  }
 }
 
 export const dso: DigitalSecurityOffering = {
@@ -141,8 +135,9 @@ export const dso: DigitalSecurityOffering = {
   asset: 'asset',
   businessModel: 'business model',
   capitalStructure: 'capital structure',
-  corporate: 'corporate',
+  corporate,
   createdAt: '01-01-2000',
+  updatedAt: '01-01-2000',
   createdBy: 'created by',
   currency: asset,
   deleted: false,
@@ -163,7 +158,6 @@ export const dso: DigitalSecurityOffering = {
   logo: '5f4f7d87f3e2c40bbab8a3f1',
   minimumInvestment: 100,
   pricePerUnit: 1,
-  status: 'status',
   subscriptionDocument: 'subscription document',
   team: [],
   tokenName: 'token name',
@@ -171,7 +165,15 @@ export const dso: DigitalSecurityOffering = {
   totalFundraisingAmount: 100000,
   useOfProceeds: 'use of proceeds',
   policyBuilder: undefined,
-  user: 'userid'
+  user: 'userid',
+  authorizationDocuments: [],
+  authorization: authorizationInfo,
+  authorizations: [],
+  identity: {
+    individual,
+    corporates: []
+  },
+  status: 'Approved'
 }
 
 // export const commitment: Commitment = {
@@ -185,6 +187,30 @@ export const dso: DigitalSecurityOffering = {
 //   createdBy: 'user',
 // }
 
+export const bank: Bank = {
+  _id: '1',
+  status: 'Approved',
+  deleted: false,
+  bankName: 'Rocketbank',
+  bankAccountNumber: '1234567890',
+  accountHolderName: 'Oleg Tinkoff',
+  swiftCode: 'SWIFTCODE',
+  authorized: true,
+  authorizationDocuments: [],
+  authorizations: [],
+  supportingDocuments: [],
+  createdAt: '01-01-2000',
+  updatedAt: '01-01-2000',
+  authorization: authorizationInfo,
+  identity: {
+    corporates: [corporate],
+    individual
+  },
+  user,
+  address,
+  currency: asset
+}
+
 export const cashDeposit: CashDeposit = {
   _id: '1',
   amount: 10000,
@@ -196,7 +222,38 @@ export const cashDeposit: CashDeposit = {
   bankAccount: bank,
   individual,
   corporates: [],
-  asset
+  asset,
+  identity: {
+    individual,
+    corporates: []
+  },
+  authorizations: [],
+  authorizationDocuments: [],
+  authorization: undefined
+}
+
+export const cashWithdrawal: CashWithdrawal = {
+  _id: '1',
+  createdAt: '01-01-2000',
+  updatedAt: '01-01-2000',
+  user: 'user',
+  amount: 100000,
+  bank: 'bank',
+  corporates: [],
+  hold: 'hold',
+  level: '1',
+  memo: 'memo',
+  status: 'Approved',
+  bankAccount: bank,
+  individual,
+  asset,
+  identity: {
+    individual,
+    corporates: []
+  },
+  authorizations: [],
+  authorizationDocuments: [],
+  authorization: undefined
 }
 
 export const authorizerURLs = {

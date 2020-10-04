@@ -21,7 +21,7 @@ export const IndividualIdCreate: React.FC = () => {
       </Grid>
       <Grid item>
         <IndividualIdentityForm
-          identity={undefined}
+          data={undefined}
           isEditing={true}
           useOwnEmail={false}
           submitButtonText='Create'

@@ -1,7 +1,7 @@
 import { BaseFilter, TableColumn } from 'v2/types/util'
 import React, { useState, useEffect } from 'react'
 import { useAuthorizerTableStore } from 'v2/app/pages/authorizer/context'
-import { StatusColumn } from 'v2/app/pages/authorizer/components/StatusColumn'
+import { AuthorizableStatus } from 'v2/app/pages/authorizer/components/AuthorizableStatus'
 
 export interface AuthorizerViewReturnValue<T> {
   item: T | undefined
@@ -20,7 +20,7 @@ interface UseAuthorizerViewArgs<T> {
 }
 
 export const renderStatusColumn = (s: string): JSX.Element => (
-  <StatusColumn status={s} />
+  <AuthorizableStatus status={s} />
 )
 
 export const statusColumn = {

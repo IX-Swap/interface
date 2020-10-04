@@ -8,11 +8,12 @@ import {
   IdentityAddress,
   IdentityProfile
 } from 'v2/types/identity'
-import { DocumentWithGuide } from 'v2/types/document'
+import { DataroomFileWithGuide } from 'v2/types/dataroomFile'
 
 export const individualIdentityFormValidationSchema = yup
   .object()
   .shape<IndividualIdentityFormValues>({
+    photo: yup.string().required(),
     firstName: yup.string().required(),
     middleName: yup.string().required(),
     lastName: yup.string().required(),
@@ -44,7 +45,7 @@ export const individualIdentityFormValidationSchema = yup
     walletAddress: yup.string().required(),
     // politicallyExposed: yup.boolean().required(),
 
-    documents: yup.array<DocumentWithGuide>().required(),
+    documents: yup.array<DataroomFileWithGuide>().required(),
     declarations: yup.array<Declaration>().required(),
 
     address: yup
@@ -64,10 +65,11 @@ export const individualIdentityFormValidationSchema = yup
 export const corporateIdentityFormValidationSchema = yup
   .object()
   .shape<CorporateIdentityFormValues>({
+    logo: yup.string().required(),
     representatives: yup.array<IdentityProfile>().required(),
     directors: yup.array<IdentityProfile>().required(),
     beneficialOwners: yup.array<IdentityProfile>().required(),
-    documents: yup.array<DocumentWithGuide>().required(),
+    documents: yup.array<DataroomFileWithGuide>().required(),
     declarations: yup.array<Declaration>().required(),
     companyAddress: yup
       .object()
@@ -86,5 +88,7 @@ export const corporateIdentityFormValidationSchema = yup
     countryOfFormation: yup.string().required(),
     companyLegalName: yup.string().required(),
     walletAddress: yup.string().required(),
-    toArrangeCustody: yup.boolean().required()
+    toArrangeCustody: yup.boolean().required(),
+    email: yup.string().email().required(),
+    contactNumber: yup.string().required()
   })

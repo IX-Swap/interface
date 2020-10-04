@@ -97,7 +97,7 @@ export const Sidebar = () => {
       ]
       : []),
     // Show only when user has authorizer role
-    ...(isAuthorizer
+    ...(true || isAuthorizer
       ? [
         {
           id: 'authorizer',

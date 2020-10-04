@@ -1,7 +1,8 @@
 import { Asset } from './asset'
-import { Document, DocumentWithGuide } from './document'
+import { DataroomFile, DataroomFileWithGuide } from './dataroomFile'
 import { Maybe } from './util'
-import { asset } from '__fixtures__/authorizer'
+import { CorporateIdentity } from './identity'
+import { AuthorizableWithIdentity } from './authorizer'
 
 export interface DsoTeamMember {
   _id?: string
@@ -31,15 +32,14 @@ export interface DeploymentInfo {
 
 // export interface PolicyBuilder {}
 
-export interface BaseDigitalSecurityOffering {
+export interface BaseDigitalSecurityOffering extends AuthorizableWithIdentity {
   _id: string
   minimumInvestment: number | null
-  status: string
   deleted: boolean
   createdBy: string
   issuerName: string
   launchDate: string
-  corporate: string
+  corporate: CorporateIdentity
   logo: string
   capitalStructure: string
   pricePerUnit: number | null
@@ -68,7 +68,7 @@ export interface BaseDigitalSecurityOffering {
 }
 
 export interface DigitalSecurityOffering extends BaseDigitalSecurityOffering {
-  documents: Maybe<Document[]>
+  documents: Maybe<DataroomFile[]>
   currency: Asset
 }
 
@@ -91,55 +91,20 @@ export interface DSOFormValues
     | 'status'
     | 'team'
     | 'currency'
+    | 'corporate'
+    | 'updatedAt'
+    | 'identity'
+    | 'authorizations'
+    | 'authorization'
+    | 'authorizationDocuments'
   > {
   status?: string
   currency: string
-  documents: Maybe<DocumentWithGuide[]>
+  corporate: string
+  documents: Maybe<DataroomFileWithGuide[]>
   team: Maybe<DsoTeamMember[]>
 }
 
 export interface DSORequestArgs extends Omit<DSOFormValues, 'documents'> {
   documents: string[]
-}
-
-export const inititialValues: DigitalSecurityOffering = {
-  _id: '',
-  minimumInvestment: null,
-  documents: [],
-  status: '',
-  deleted: false,
-  createdBy: '',
-  issuerName: '',
-  launchDate: '06/06/2020',
-  corporate: '',
-  logo: '',
-  capitalStructure: '',
-  currency: asset,
-  pricePerUnit: null,
-  totalFundraisingAmount: null,
-  tokenName: '',
-  tokenSymbol: '',
-  investmentPeriod: null,
-  dividendYield: null,
-  grossIRR: null,
-  investmentStructure: '',
-  equityMultiple: '',
-  distributionFrequency: '',
-  interestRate: null,
-  leverage: '',
-  subscriptionDocument: '',
-  introduction: '',
-  businessModel: '',
-  useOfProceeds: '',
-  fundraisingMilestone: '',
-  team: [
-    {
-      name: '',
-      position: '',
-      about: 'About the member'
-    }
-  ],
-  asset: '',
-  createdAt: '',
-  user: ''
 }

@@ -1,8 +1,10 @@
 import React from 'react'
-import { AuthorizerView as BaseView } from 'v2/app/pages/authorizer/components/AuthorizerView'
+import { AuthorizerTable as BaseView } from 'v2/app/pages/authorizer/components/AuthorizerTable'
 import { columns } from 'v2/app/pages/authorizer/pages/banks/columns'
 import { BankPreview } from 'v2/app/components/BankPreview/BankPreview'
+import { AuthorizerView } from 'v2/app/pages/authorizer/components/AuthorizerView'
 import { Bank } from 'v2/types/bank'
+import { DataroomFeature } from '../../../../../types/authorizer'
 
 export const Banks: React.FC = () => (
   <BaseView
@@ -14,4 +16,8 @@ export const Banks: React.FC = () => (
   />
 )
 
-export const renderBank = (b: Bank): JSX.Element => <BankPreview bank={b} />
+export const renderBank = (b: Bank): JSX.Element => (
+  <AuthorizerView title={b.bankName} data={b} feature={DataroomFeature.banks}>
+    <BankPreview data={b} />
+  </AuthorizerView>
+)
