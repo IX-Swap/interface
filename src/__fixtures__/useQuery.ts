@@ -81,6 +81,10 @@ export const generateInfiniteQueryResult = ({
   isStale: false,
   refetch: jest.fn(),
   updatedAt: 0,
+  isFetchedAfterMount: false,
+  isInitialData: false,
+  isPreviousData: false,
+  remove: jest.fn(),
   error
 })
 
