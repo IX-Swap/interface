@@ -6,14 +6,14 @@ import { IconButton } from '@material-ui/core'
 import { makeStyles } from '@material-ui/styles'
 import CloseIcon from '@material-ui/icons/Close'
 import UploadIcon from '@material-ui/icons/CloudUpload'
-import { DocumentGuide } from '../../types/document'
+import { FileGuide } from '../../types/dataroomFile'
 import { uploadFile } from '../../helpers/httpRequests'
 import { snackbarService } from 'uno-material-ui'
 
 interface ImageUploaderProps {
   name: string
   getter: (doc: { _id: string }) => Promise<string>
-  guide: DocumentGuide
+  guide: FileGuide
   defaultValue?: string
   variant?: 'square' | 'circle'
   hasDelete?: boolean

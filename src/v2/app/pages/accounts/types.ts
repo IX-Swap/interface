@@ -1,5 +1,6 @@
 import { Bank, Address } from 'v2/types/bank'
 import { Asset } from 'v2/types/asset'
+import { DataroomFile } from '../../../types/dataroomFile'
 
 export type BankFormValues = Pick<
   Bank,
@@ -7,6 +8,7 @@ export type BankFormValues = Pick<
 > & {
   asset: Asset['_id']
   address: Bank['address']
+  supportingDocuments: Array<{ document: DataroomFile }>
 }
 
 export type AddressValues = Address

@@ -27,7 +27,7 @@ describe('IndividualIdentities', () => {
 
       expect(individualIdentityForm).toEqual(
         <IndividualIdentityForm
-          identity={individual}
+          data={individual}
           isEditing={false}
           useOwnEmail={false}
         />

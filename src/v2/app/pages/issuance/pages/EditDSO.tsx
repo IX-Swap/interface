@@ -27,7 +27,7 @@ export const EditDSO = () => {
       <PageTitle title={data.tokenName} subPage />
       <Box mb={4} />
       <DSOForm
-        dso={data}
+        data={data}
         onSubmit={handleSubmit}
         submitButtonLabel='Save'
         isEditing

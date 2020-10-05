@@ -1,78 +1,34 @@
 import React from 'react'
-import { Grid, Typography, Box, Paper } from '@material-ui/core'
-import { useStyles } from './styles'
+import { Grid, Box } from '@material-ui/core'
 import { INVESTAX_BANK } from 'v2/config'
-import { CashDeposit } from 'v2/types/cashdeposit'
+import { CashDeposit } from 'v2/types/cashDeposit'
 import { BankDetails } from 'v2/app/components/BankDetails'
 import { formatMoney } from 'v2/helpers/numbers'
-
-const BoldTypography = ({ children, ...others }: any) => (
-  // eslint-disable-next-line
-  <Typography {...others}>
-    <b>{children}</b>
-  </Typography>
-)
+import { LabelledValue } from '../../../components/LabelledValue'
 
 export interface DepositView {
-  deposit: CashDeposit
+  data: CashDeposit
 }
 
-export const DepositView = ({ deposit }: DepositView) => {
-  const classes = useStyles()
+export const DepositView = (props: DepositView) => {
+  const { data } = props
   const bankAccount = { ...INVESTAX_BANK }
 
   return (
-    <Grid container justify='center' direction='column' component={Paper}>
-      <Box p={4} />
-      <Grid container className={classes.infoGrid}>
+    <Grid container justify='center' direction='column'>
+      <Grid container>
         <Grid item xs={6}>
-          <BoldTypography variant='subtitle2' className={classes.labels}>
-            Status:
-          </BoldTypography>
+          <LabelledValue
+            label='Deposit Amount'
+            value={formatMoney(data.amount, data.asset.symbol)}
+          />
         </Grid>
         <Grid item xs={6}>
-          <BoldTypography
-            variant='subtitle2'
-            className={classes.values}
-            color='primary'
-          >
-            {deposit.status}
-          </BoldTypography>
-        </Grid>
-
-        <Grid item xs={6}>
-          <BoldTypography variant='subtitle2' className={classes.labels}>
-            Deposit Code:
-          </BoldTypography>
-        </Grid>
-        <Grid item xs={6}>
-          <BoldTypography
-            variant='subtitle2'
-            className={classes.values}
-            color='primary'
-          >
-            {deposit.depositCode}
-          </BoldTypography>
-        </Grid>
-
-        <Grid item xs={6}>
-          <BoldTypography variant='subtitle2' className={classes.labels}>
-            Deposit Amount:
-          </BoldTypography>
-        </Grid>
-        <Grid item xs={6}>
-          <BoldTypography
-            variant='subtitle2'
-            className={classes.values}
-            color='primary'
-          >
-            {formatMoney(deposit.amount, deposit.asset.symbol)}
-          </BoldTypography>
+          <LabelledValue label='Deposit Code' value={data.depositCode} />
         </Grid>
       </Grid>
-      <Box m={4}>
-        <BankDetails bank={bankAccount} />
-      </Box>
+      <Box py={2} />
+      <BankDetails bank={bankAccount} />
     </Grid>
   )
 }

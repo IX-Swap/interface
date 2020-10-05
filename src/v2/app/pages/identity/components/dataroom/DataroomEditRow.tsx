@@ -2,9 +2,9 @@ import React from 'react'
 import { Grid, ListItem } from '@material-ui/core'
 import { DataroomColumns } from 'v2/app/pages/identity/components/dataroom/DataroomColumns'
 import useStyles from './styles'
-import { DataroomRowProps } from 'v2/app/pages/identity/components/dataroom/DataroomViewRow'
+import { DataroomViewRowProps } from 'v2/app/pages/identity/components/dataroom/DataroomViewRow'
 
-export interface DataroomEditRowProps extends DataroomRowProps {
+export interface DataroomEditRowProps extends DataroomViewRowProps {
   input: JSX.Element
 }
 

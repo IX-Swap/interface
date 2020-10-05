@@ -25,7 +25,7 @@ export const Actions = forwardRef(({ user }: ActionsProps, ref: any) => {
     handleConfirm,
     handleChange,
     handleRoleChange
-  } = useAdminView(user, ref ?? ref.current ?? ref.current.refresh)
+  } = useAdminView(user, ref.current.refresh)
   const onClose = () => {
     if (roles.join(',') !== user.roles) {
       handleChange(roles.join(','))

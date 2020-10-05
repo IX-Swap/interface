@@ -81,10 +81,6 @@ export const generateInfiniteQueryResult = ({
   isStale: false,
   refetch: jest.fn(),
   updatedAt: 0,
-  isFetchedAfterMount: false,
-  isInitialData: false,
-  isPreviousData: false,
-  remove: jest.fn(),
   error
 })
 
@@ -116,10 +112,7 @@ export const generateQueryResult = ({
   clear: jest.fn(),
   fetchMore: jest.fn(),
   updatedAt: 0,
-  remove: jest.fn(),
-  isPreviousData: false,
-  isInitialData: false,
-  isFetchedAfterMount: false,
+  query: {} as any,
   isFetchingMore: undefined,
   status: queryStatus
 })

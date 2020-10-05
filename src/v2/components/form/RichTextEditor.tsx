@@ -24,7 +24,7 @@ export const RichTextEditor = React.memo(
     const content = JSON.stringify(convertToRaw(state))
 
     return (
-      <Box style={{ paddingBottom: 30 }}>
+      <Box>
         <MUIRichTextEditor
           ref={ref}
           label='Start typing...'

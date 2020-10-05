@@ -6,26 +6,16 @@ import { bankFormValidationSchema } from 'v2/app/pages/accounts/validation'
 import { useBanksRouter } from 'v2/app/pages/accounts/pages/banks/router'
 import { AppRouterLink } from 'v2/components/AppRouterLink'
 import { createTypedForm } from 'v2/components/form/createTypedForm'
-
-const formDefaultValues: BankFormValues = {
-  bankName: '',
-  bankAccountNumber: '',
-  accountHolderName: '',
-  asset: '',
-  swiftCode: '',
-  address: {
-    line1: '',
-    line2: '',
-    country: '',
-    state: '',
-    city: '',
-    postalCode: ''
-  }
-}
+import { Dataroom } from '../../../../identity/components/dataroom/Dataroom'
+import {
+  getBankFormDefaultValues,
+  transformBankFormValuesToArgs
+} from '../utils'
+import { BankArgs } from '../service/types'
 
 export interface BankFormProps {
   submitButtonLabel: string
-  onSubmit: (bank: BankFormValues) => Promise<any>
+  onSubmit: (bank: BankArgs) => Promise<any>
   bank?: Bank
 }
 
@@ -35,19 +25,15 @@ export const BankForm: React.FC<BankFormProps> = props => {
   const { submitButtonLabel, onSubmit, bank } = props
   const { Form, TextField, AssetSelect, CountrySelect, Submit } = useBankForm()
   const { routes } = useBanksRouter()
-  const defaultValues =
-    bank === undefined
-      ? formDefaultValues
-      : {
-        ...bank,
-        asset: bank.asset._id
-      }
+  const handleSubmit = async (values: BankFormValues) => {
+    await onSubmit(transformBankFormValuesToArgs(values))
+  }
 
   return (
     <Form
-      defaultValues={defaultValues}
+      defaultValues={getBankFormDefaultValues(bank)}
       validationSchema={bankFormValidationSchema}
-      onSubmit={async values => await onSubmit(values)}
+      onSubmit={handleSubmit}
     >
       <Paper elevation={0}>
         <Grid container>
@@ -126,6 +112,27 @@ export const BankForm: React.FC<BankFormProps> = props => {
                 <TextField
                   name={['address', 'postalCode']}
                   label='Postal Code'
+                />
+              </Box>
+            </Grid>
+          </Grid>
+
+          <Grid container>
+            <Grid item sm={12} md={12} lg={12}>
+              <Box ml={3} mt={3}>
+                <Typography variant='h5'>Supporting Documents</Typography>
+              </Box>
+            </Grid>
+            <Grid item sm={12} md={12} lg={12}>
+              <Box ml={3} mt={3}>
+                <Dataroom
+                  editable
+                  name='supportingDocuments'
+                  isEditing={true}
+                  dataroomDocumentProps={{ setValueToNullOnDelete: false }}
+                  dataroomAddDocumentProps={{
+                    documentInfo: { type: 'Supporting Document' }
+                  }}
                 />
               </Box>
             </Grid>

@@ -1,33 +1,51 @@
 import React from 'react'
-import { DocumentWithGuide, Document } from 'v2/types/document'
-import { DocumentUploader } from 'v2/components/form/DocumentUploader'
-import { Maybe } from 'v2/types/util'
-import { Button, Grid } from '@material-ui/core'
+import { DataroomFileWithGuide, DataroomFile } from 'v2/types/dataroomFile'
+import { Button } from '@material-ui/core'
+import { DataroomUploader } from '../../../../../components/form/DataroomUploader'
+import {
+  defaultUploadDocumentInfo,
+  UploadDocumentInfo
+} from '../../../../../hooks/useUploadFile'
 
-export interface DataroomAddDocumentProps {
-  append: (document: DocumentWithGuide) => void
+export interface DataroomAddDocumentInfoProps {
+  documentInfo?: UploadDocumentInfo
 }
 
-export const DataroomAddDocument: React.FC<DataroomAddDocumentProps> = props => {
-  const { append } = props
-  const handleChange = (document: Maybe<Document>) => {
-    if (document !== null && document !== undefined) {
-      append({ title: 'TITLE', label: 'LABEL', type: 'TYPE', document })
-    }
+export interface DataroomAddDocumentProps {
+  append: (document: DataroomFileWithGuide) => void
+}
+
+export const DataroomAddDocument: React.FC<
+  DataroomAddDocumentProps & DataroomAddDocumentInfoProps
+> = props => {
+  const { documentInfo = defaultUploadDocumentInfo, append } = props
+  const handleChange = (documents: DataroomFile[]) => {
+    documents.forEach(document =>
+      append({
+        title: document.title,
+        label: document.originalFileName,
+        type: document.type,
+        document
+      })
+    )
   }
 
   return (
-    <Grid container item justify='flex-end'>
-      <DocumentUploader
-        title='TITLE'
-        name='NAME'
-        onChange={handleChange}
-        uploadComponent={
-          <Button variant='contained' color='primary' component='span'>
-            Upload Document
-          </Button>
-        }
-      />
-    </Grid>
+    // <Grid container item justify='flex-end'>
+    <DataroomUploader
+      documentInfo={documentInfo}
+      onChange={handleChange}
+      buttonComponent={
+        <Button
+          variant='contained'
+          color='primary'
+          component='span'
+          size='large'
+        >
+          Upload
+        </Button>
+      }
+    />
+    // </Grid>
   )
 }

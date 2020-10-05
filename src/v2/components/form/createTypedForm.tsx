@@ -14,9 +14,8 @@ import { createTypedField } from 'v2/components/form/createTypedField'
 import {
   Checkbox as MUICheckbox,
   FormControlLabel,
-  Grid,
   Input,
-  Typography
+  SelectProps
 } from '@material-ui/core'
 import { AssetSelect, AssetSelectProps } from 'v2/components/form/AssetSelect'
 import { CorporateSelect } from 'v2/components/form/CorporateSelect'
@@ -37,12 +36,14 @@ import { useFieldArray, useFormContext } from 'react-hook-form'
 import { pathToString } from 'v2/components/form/utils'
 import { YesOrNo } from 'v2/components/form/YesOrNo'
 import {
-  DocumentUploader,
-  DocumentUploaderProps
-} from 'v2/components/form/DocumentUploader'
+  DataroomDocument,
+  DataroomDocumentProps
+} from 'v2/components/form/DataroomDocument'
 import { RichTextEditor } from './RichTextEditor'
 import { Maybe } from 'v2/types/util'
 import { DistributionFrequencySelect } from 'v2/components/form/DistributionFrequencySelect'
+import { DataroomFileTypeSelect } from './DataroomFileTypeSelect'
+import { LabelledValue } from '../LabelledValue'
 
 const booleanValueExtractor = (
   _: React.ChangeEvent<{}>,
@@ -55,22 +56,10 @@ const numericValueExtractor = (
 
 const plainValueExtractor = (value: any) => value
 
-const formatValue = (value: any): string => {
-  const empty = '–'
-
-  if (value === undefined || value === null) {
-    return empty
-  }
-
-  if (typeof value === 'boolean') {
-    return value ? 'Yes' : 'No'
-  }
-
-  if (typeof value === 'string' && value.length === 0) {
-    return empty
-  }
-
-  return value
+export interface FieldsArrayRendererProps {
+  fields: any[]
+  append: (field: any) => void
+  remove: (index: number) => void
 }
 
 // TODO: optimize performance
@@ -79,11 +68,7 @@ export const createTypedForm = <FormType extends Record<string, any>>() => {
 
   interface FieldsArrayComponentProps {
     name: string
-    children: (props: {
-      fields: any[]
-      append: (field: any) => void
-      remove: (index: number) => void
-    }) => Maybe<JSX.Element>
+    children: (props: FieldsArrayRendererProps) => Maybe<JSX.Element>
   }
 
   const FieldsArrayComponent = <Path extends DeepPath<FormType, Path>>(
@@ -132,39 +117,43 @@ export const createTypedForm = <FormType extends Record<string, any>>() => {
     props: Omit<TypedFieldProps<FormType, DeepPath<FormType, Path>>, 'children'>
   ): JSX.Element => (
     <TypedField {...props} valueExtractor={booleanValueExtractor}>
-      {fieldProps => (
-        <FormControlLabel
-          {...fieldProps}
-          label={props.label}
-          control={<MUICheckbox />}
-        />
-      )}
+      {fieldProps => {
+        return (
+          <FormControlLabel
+            {...fieldProps}
+            label={props.label}
+            control={<MUICheckbox defaultChecked={fieldProps.value} />}
+          />
+        )
+      }}
     </TypedField>
   )
 
-  const DocumentUploaderComponent = <Path extends DeepPath<FormType, Path>>({
-    title,
+  const DataroomDocumentComponent = <Path extends DeepPath<FormType, Path>>({
+    documentInfo,
     deleteComponent,
     uploadComponent,
     onDelete,
     canDelete,
+    setValueToNullOnDelete,
     ...props
   }: Omit<TypedFieldProps<FormType, DeepPath<FormType, Path>>, 'children'> &
-    DocumentUploaderProps): JSX.Element => (
+    DataroomDocumentProps): JSX.Element => (
     <TypedField
       {...props}
       valueExtractor={props.valueExtractor ?? plainValueExtractor}
     >
       {fieldProps => (
-        <DocumentUploader
+        <DataroomDocument
           {...fieldProps}
           name={pathToString(props.name, props.root)}
-          title={title}
+          documentInfo={documentInfo}
           onChange={fieldProps.onChange}
           onDelete={onDelete}
           uploadComponent={uploadComponent}
           deleteComponent={deleteComponent}
           canDelete={canDelete}
+          setValueToNullOnDelete={setValueToNullOnDelete}
         />
       )}
     </TypedField>
@@ -222,6 +211,17 @@ export const createTypedForm = <FormType extends Record<string, any>>() => {
     </TypedField>
   )
 
+  const DataroomFileTypeSelectComponent = <
+    Path extends DeepPath<FormType, Path>
+  >(
+    props: SelectProps &
+      Omit<TypedFieldProps<FormType, DeepPath<FormType, Path>>, 'children'>
+  ): JSX.Element => (
+    <TypedField {...props}>
+      <DataroomFileTypeSelect />
+    </TypedField>
+  )
+
   const DistributionFrequencySelectComponent = <
     Path extends DeepPath<FormType, Path>
   >(
@@ -275,12 +275,7 @@ export const createTypedForm = <FormType extends Record<string, any>>() => {
       return props.viewRenderer
     }
 
-    return (
-      <Grid item>
-        <Typography style={{ fontWeight: 600 }}>{props.label}</Typography>
-        <Typography>{formatValue(value)}</Typography>
-      </Grid>
-    )
+    return <LabelledValue label={props.label} value={value} />
   }
 
   return () => {
@@ -298,12 +293,14 @@ export const createTypedForm = <FormType extends Record<string, any>>() => {
         MartialStatusSelect: MartialStatusSelectComponent,
         Checkbox: CheckboxComponent,
         YesOrNo: YesOrNoComponent,
-        DocumentUploader: DocumentUploaderComponent,
+        DataroomDocument: DataroomDocumentComponent,
         CorporateSelect: CorporateSelectComponent,
-        RichTextEditor: RichTextEditorComponent
+        RichTextEditor: RichTextEditorComponent,
+        DataroomFileTypeSelect: DataroomFileTypeSelectComponent
       }),
       []
     )
+
     type Fields = typeof fields
     type FieldTypes = keyof Fields
     type FieldProps<FieldType extends keyof Fields> = Fields[FieldType] extends
@@ -338,7 +335,7 @@ export const createTypedForm = <FormType extends Record<string, any>>() => {
       return React.createElement(component, fieldProps)
     }
 
-    const FormValue = <Path extends DeepPath<FormType, Path>>(props: {
+    const FormValueComponent = <Path extends DeepPath<FormType, Path>>(props: {
       name: Path
       root?: string
       children: (
@@ -357,7 +354,7 @@ export const createTypedForm = <FormType extends Record<string, any>>() => {
         ...fields,
         Form: FormComponent,
         EditableField: EditableField,
-        FormValue: FormValue,
+        FormValue: FormValueComponent,
         FieldsArray: FieldsArrayComponent,
         Submit: Submit
       }),

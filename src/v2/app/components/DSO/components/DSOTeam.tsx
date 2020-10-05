@@ -1,12 +1,8 @@
 import React from 'react'
-import { Button, Grid, IconButton } from '@material-ui/core'
-import {
-  documentValueExtractor,
-  renderStringToHTML
-} from 'v2/app/components/DSO/utils'
-import { DSOAvatar } from 'v2/app/components/DSO/components/DSOAvatar'
-import { PhotoCamera } from '@material-ui/icons'
+import { Button, Grid } from '@material-ui/core'
+import { renderStringToHTML } from 'v2/app/components/DSO/utils'
 import { useDSOForm } from 'v2/app/components/DSO/DSOForm'
+import { UserAvatar } from '../../UserAvatar'
 
 export interface DSOTeamProps {
   isEditing: boolean
@@ -30,44 +26,12 @@ export const DSOTeam = (props: DSOTeamProps) => {
               spacing={3}
             >
               <Grid item>
-                <EditableField
-                  fieldType='DocumentUploader'
+                <UserAvatar
+                  name={`team[${index}].photo`}
                   isEditing={isEditing}
-                  title='Team Member photo'
-                  label='Photo'
-                  name={['team', index, 'photo'] as any} // TODO: fix type
-                  valueExtractor={documentValueExtractor}
-                  canDelete={false}
-                  uploadComponent={
-                    <IconButton component='span'>
-                      <PhotoCamera />
-                    </IconButton>
-                  }
-                  viewRenderer={
-                    <FormValue name={['team', index, 'photo'] as any}>
-                      {photo => (
-                        <DSOAvatar
-                          imageId={photo}
-                          dsoOwnerId={dsoOwnerId}
-                          size={270}
-                          variant='rounded'
-                        />
-                      )}
-                    </FormValue>
-                  }
-                  editRenderer={button => (
-                    <FormValue name={['team', index, 'photo'] as any}>
-                      {photo => (
-                        <DSOAvatar
-                          imageId={photo}
-                          dsoOwnerId={dsoOwnerId}
-                          button={button}
-                          size={270}
-                          variant='rounded'
-                        />
-                      )}
-                    </FormValue>
-                  )}
+                  ownerId={dsoOwnerId}
+                  size={270}
+                  variant='rounded'
                 />
               </Grid>
               <Grid item>

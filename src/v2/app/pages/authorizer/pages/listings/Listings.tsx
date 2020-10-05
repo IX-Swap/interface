@@ -1,5 +1,5 @@
 import React from 'react'
-import { AuthorizerView as BaseView } from 'v2/app/pages/authorizer/components/AuthorizerView'
+import { AuthorizerTable as BaseView } from 'v2/app/pages/authorizer/components/AuthorizerTable'
 import { columns } from 'v2/app/pages/authorizer/pages/listings/columns'
 
 export const Listings: React.FC = () => (

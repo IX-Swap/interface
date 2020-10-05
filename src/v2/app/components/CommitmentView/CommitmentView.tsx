@@ -11,7 +11,7 @@ import {
   TextField
 } from '@material-ui/core'
 import { useForm, Controller } from 'react-hook-form'
-import { Document } from 'v2/types/document'
+import { DataroomFile } from 'v2/types/dataroomFile'
 import { useHistory } from 'react-router-dom'
 import { downloadFile } from 'v2/helpers/httpRequests'
 import { noop } from 'lodash'
@@ -24,7 +24,7 @@ interface CommitmentProps {
 const Uploader = ({
   onUploadSuccess
 }: {
-  onUploadSuccess: (doc: Document) => void
+  onUploadSuccess: (doc: DataroomFile) => void
 }) => {
   return <span>uploader</span>
 }
@@ -83,7 +83,7 @@ export const CommitmentView = (props: CommitmentProps) => {
     downloadFile(doc).then(noop).catch(noop)
   }
 
-  const setSubscriptionDocument = (doc: Document) => {
+  const setSubscriptionDocument = (doc: DataroomFile) => {
     console.log('doc', doc)
   }
 
@@ -119,7 +119,7 @@ export const CommitmentView = (props: CommitmentProps) => {
 
               {editMode ? (
                 <Uploader
-                  onUploadSuccess={(doc: Document) =>
+                  onUploadSuccess={(doc: DataroomFile) =>
                     setSubscriptionDocument(doc)
                   }
                 />

@@ -1,8 +1,10 @@
 import React from 'react'
-import { AuthorizerView as BaseView } from 'v2/app/pages/authorizer/components/AuthorizerView'
+import { AuthorizerTable as BaseView } from 'v2/app/pages/authorizer/components/AuthorizerTable'
 import { columns } from 'v2/app/pages/authorizer/pages/corporateIdentities/columns'
-import { CorporateIdentityForm } from 'v2/app/pages/identity/components/CorporateIdentityForm'
 import { CorporateIdentity } from 'v2/types/identity'
+import { AuthorizerView } from '../../components/AuthorizerView'
+import { DataroomFeature } from '../../../../../types/authorizer'
+import { CorporateIdentityForm } from '../../../identity/components/CorporateIdentityForm'
 
 export const CorporateIdentities: React.FC = () => (
   <BaseView
@@ -15,5 +17,11 @@ export const CorporateIdentities: React.FC = () => (
 )
 
 export const renderCorporateIdentity = (i: CorporateIdentity): JSX.Element => (
-  <CorporateIdentityForm identity={i} isEditing={false} useOwnEmail={false} />
+  <AuthorizerView
+    title='About This Corporate'
+    data={i}
+    feature={DataroomFeature.corporateIdentities}
+  >
+    <CorporateIdentityForm data={i} isEditing={false} useOwnEmail={false} />
+  </AuthorizerView>
 )

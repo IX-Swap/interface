@@ -1,68 +1,70 @@
-import { Viewable } from 'v2/types/util'
-import { useStyles } from 'v2/app/pages/authorizer/components/styles'
-import React from 'react'
-import { Grid, Paper, Typography } from '@material-ui/core'
-import { Filters } from 'v2/app/pages/authorizer/components/Filters'
-import { Preview } from 'v2/app/pages/authorizer/components/Preview'
-import { useAuthorizerView } from 'v2/app/pages/authorizer/hooks/useAuthorizerView'
-import { withExtraActions } from 'v2/app/pages/authorizer/components/withExtraActions'
-import {
-  TableView,
-  TableViewProps
-} from 'v2/components/TableWithPagination/TableView'
+import { Grid, Typography, Box } from '@material-ui/core'
+import React, { PropsWithChildren } from 'react'
+import { AuthorizationDocuments } from 'v2/app/pages/authorizer/components/AuthorizationDocuments'
+import { AuthorizerForm } from './AuthorizerForm'
+import { AuthorizableWithIdentity, DataroomFeature } from 'v2/types/authorizer'
+import { AuthorizableStatus } from './AuthorizableStatus'
+import { VSpacer } from '../../../../components/VSpacer'
+import { formatDateAndTime } from '../../../../helpers/dates'
+import { AuthorizerIdentities } from './AuthorizerIdentities'
+import { AuthorizableLevel } from './AuthorizableLevel'
 
-interface AuthorizerViewProps<T>
-  extends Omit<TableViewProps<T>, 'actions'>,
-    Viewable<T> {
-  idKey?: string
+export interface AuthorizerViewProps<T> {
   title: string
+  data: T & AuthorizableWithIdentity
+  feature: DataroomFeature
 }
 
 export const AuthorizerView = <T,>(
-  props: AuthorizerViewProps<T>
-): JSX.Element => {
-  const { columns, idKey, name, renderView, title, uri } = props
-  const classes = useStyles()
-  const {
-    filter,
-    setFilter,
-    isViewing,
-    item,
-    setItem,
-    getColumns
-  } = useAuthorizerView<T>({ idKey, uri, columns })
-
-  if (isViewing && typeof renderView === 'function' && item !== undefined) {
-    return <Preview onBack={setItem}>{renderView(item)}</Preview>
-  }
+  props: PropsWithChildren<AuthorizerViewProps<T>>
+) => {
+  const { title, data, feature, children } = props
+  const hasIdentity = data.identity !== undefined
 
   return (
-    <Grid
-      container
-      style={{
-        margin: '-24px',
-        width: 'calc(100% + 48px)',
-        height: 'calc(100% - 24px)'
-      }}
-    >
-      <Grid item xs={12} md={3} className={classes.filters}>
-        <Filters onApplyFilter={setFilter} />
-      </Grid>
-      <Grid item xs={12} md={9} className={classes.content}>
-        <Grid item xs={12}>
-          <Typography style={{ fontWeight: 'bold', fontSize: '1.875rem' }}>
-            {title}
-          </Typography>
-        </Grid>
-        <Grid item xs={12} style={{ marginTop: '48px' }} component={Paper}>
-          <TableView<T>
-            name={name}
-            uri={uri}
-            columns={getColumns()}
-            filter={filter}
-            actions={withExtraActions<T>({ onView: setItem })}
-            hasActions
-          />
+    <Grid container spacing={6}>
+      {hasIdentity && (
+        <AuthorizerIdentities
+          corporates={data.identity?.corporates}
+          individual={data.identity?.individual}
+        />
+      )}
+      <Grid item xs={hasIdentity ? 9 : 12}>
+        <Grid container direction='column' spacing={3}>
+          <Grid item>
+            <Typography>{formatDateAndTime(data.createdAt)}</Typography>
+          </Grid>
+
+          <Grid item container justify='space-between'>
+            <Typography variant='h2'>{title}</Typography>
+            <Box display='flex'>
+              <AuthorizableLevel level={data.level} compact={false} />
+              <Box px={0.5} />
+              <AuthorizableStatus status={data.status} compact={false} />
+            </Box>
+          </Grid>
+
+          <Grid item>{children}</Grid>
+          <VSpacer size='large' />
+
+          <Grid item>
+            <Typography variant='h3'>Authorization Documents</Typography>
+            <AuthorizationDocuments
+              documents={data.authorizationDocuments ?? []}
+              resourceId={data._id}
+              feature={feature}
+            />
+          </Grid>
+
+          <Grid item>
+            <AuthorizerForm
+              itemId={data._id}
+              defaultValues={{
+                sharedWithUser: data.authorization?.sharedWithUser ?? false,
+                comment: data.authorization?.comment ?? ''
+              }}
+            />
+          </Grid>
         </Grid>
       </Grid>
     </Grid>

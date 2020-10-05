@@ -5,10 +5,10 @@ import {
   DSWithdrawals,
   renderDSWithdrawal
 } from 'v2/app/pages/authorizer/pages/dsWithdrawals/DSWithdrawals'
-import DSWithdrawalView from 'v2/app/components/ds-withdrawal-preview'
+import DSWithdrawalView from 'v2/app/components/DSWithdrawalPreview/DSWithdrawalPreview'
 import { dsWithdrawal } from '__fixtures__/authorizer'
 
-jest.mock('v2/app/components/ds-withdrawal-preview', () => jest.fn(() => null))
+jest.mock('v2/app/components/DSWithdrawalPreview', () => jest.fn(() => null))
 
 describe('DSWithdrawals', () => {
   afterEach(async () => {

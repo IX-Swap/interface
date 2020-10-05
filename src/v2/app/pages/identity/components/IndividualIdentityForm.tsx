@@ -21,7 +21,7 @@ export const useIndividualIdentityForm = createTypedForm<
 >()
 
 export interface IndividualIdentityFormProps {
-  identity: IndividualIdentity | undefined
+  data: IndividualIdentity | undefined
   isEditing: boolean
   useOwnEmail: boolean
   submitButtonText?: string
@@ -31,13 +31,7 @@ export interface IndividualIdentityFormProps {
 export const IndividualIdentityForm = (
   props: IndividualIdentityFormProps
 ): JSX.Element => {
-  const {
-    identity,
-    isEditing,
-    useOwnEmail,
-    submitButtonText,
-    cancelButton
-  } = props
+  const { data, isEditing, useOwnEmail, submitButtonText, cancelButton } = props
   const { Form, Submit } = useIndividualIdentityForm()
   const [createOrUpdateIndividual] = useCreateOrUpdateIndividual()
   const handleSubmit = async (values: IndividualIdentityFormValues) => {
@@ -48,7 +42,7 @@ export const IndividualIdentityForm = (
     <Form
       onSubmit={handleSubmit}
       validationSchema={individualIdentityFormValidationSchema}
-      defaultValues={getIdentityFormDefaultValue(identity, 'individual')}
+      defaultValues={getIdentityFormDefaultValue(data, 'individual')}
     >
       <Grid container spacing={2}>
         <Grid item xs={12}>
@@ -85,7 +79,7 @@ export const IndividualIdentityForm = (
             <Suspense fallback={'loading...'}>
               <Declaration
                 isEditing={isEditing}
-                declarations={getIdentityDeclarations(identity, 'individual')}
+                declarations={getIdentityDeclarations(data, 'individual')}
               />
             </Suspense>
           </Section>

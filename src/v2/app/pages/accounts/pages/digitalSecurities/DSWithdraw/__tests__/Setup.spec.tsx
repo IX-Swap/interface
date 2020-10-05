@@ -9,7 +9,7 @@ import { ContinueButton } from 'v2/app/pages/accounts/pages/digitalSecurities/DS
 import { generateInfiniteQueryResult } from '__fixtures__/useQuery'
 import { history } from 'v2/history'
 import { DSRoute } from 'v2/app/pages/accounts/pages/digitalSecurities/router'
-import {useTypedForm} from "../../../../../../../../__fixtures__/createTypedForm";
+import { useTypedForm } from '../../../../../../../../__fixtures__/createTypedForm'
 
 jest.mock(
   'v2/app/pages/accounts/pages/digitalSecurities/DSWithdraw/ContinueButton',
@@ -18,8 +18,8 @@ jest.mock(
 
 describe('Setup', () => {
   const balanceId = 'testId'
-  const TextField = jest.fn(() => <div/>)
-  const NumericField = jest.fn(() => <div/>)
+  const TextField = jest.fn(() => <div />)
+  const NumericField = jest.fn(() => <div />)
 
   beforeEach(() => {
     history.push(DSRoute.withdraw, { balanceId })

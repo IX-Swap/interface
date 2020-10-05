@@ -2,7 +2,7 @@
 import { API_URL } from '../config'
 import localStore from './storageHelper'
 import { snackbarService } from 'uno-material-ui'
-import { DocumentGuide, Document } from '../types/document'
+import { FileGuide, DataroomFile } from '../types/dataroomFile'
 
 export const postRequest = async (
   uri: string,
@@ -105,8 +105,8 @@ export const downloadFile = async (uri: string): Promise<void> => {
 
 export const uploadFile = async (
   file: File,
-  guide: DocumentGuide
-): Promise<Document | undefined> => {
+  guide: FileGuide
+): Promise<DataroomFile | undefined> => {
   const { title, type } = guide
   try {
     const formData = new FormData()

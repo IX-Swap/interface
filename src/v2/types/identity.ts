@@ -1,10 +1,10 @@
-import User from './user'
-import { Document, DocumentGuide } from './document'
+import { DataroomFile, FileGuide } from './dataroomFile'
 import { DeclarationValue } from 'v2/app/pages/identity/const/declarations'
+import { Authorizable } from './authorizer'
 
 export interface IdentityState {
-  dataroom: Array<Document | DocumentGuide>
-  corporateDataroom: Array<Document | DocumentGuide>
+  dataroom: Array<DataroomFile | FileGuide>
+  corporateDataroom: Array<DataroomFile | FileGuide>
   identity: IndividualIdentity | {}
   corporate: CorporateIdentity | {}
   status: string
@@ -19,7 +19,7 @@ export interface IdentityState {
 
 export interface IdentityAddress {
   line1: string
-  line2: string
+  line2?: string
   city: string
   postalCode?: string
   state: string
@@ -31,6 +31,7 @@ export interface IdentityProfile {
   firstName: string
   middleName: string
   lastName: string
+  photo: string
   dob: string
   gender: 'M' | 'F' | undefined
   nationality: string
@@ -57,6 +58,9 @@ export interface IdentityFinancials {
 }
 
 export interface CorporateFields {
+  logo: string
+  email: string
+  contactNumber: string
   companyLegalName: string
   registrationNumber: string
   countryOfFormation: string
@@ -75,10 +79,10 @@ export interface Declaration {
 export interface BaseIdentity {
   _id: string
   status: 'Rejected' | 'Authorized' | 'Submitted' | undefined
-  user: User
+  user: string
   createdAt: string
   updatedAt: string
-  documents?: Document[]
+  documents?: DataroomFile[]
   declarations: Declaration[]
   walletAddress: string
 }
@@ -96,6 +100,7 @@ export interface DeclarationTemplate {
 
 export type IndividualIdentity = BaseIdentity &
   IdentityProfile &
-  IdentityFinancials
+  IdentityFinancials &
+  Authorizable
 
-export type CorporateIdentity = BaseIdentity & CorporateFields
+export type CorporateIdentity = BaseIdentity & CorporateFields & Authorizable

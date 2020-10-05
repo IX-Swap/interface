@@ -4,7 +4,7 @@ import {
   BaseIdentity,
   CorporateFields
 } from 'v2/types/identity'
-import { DocumentWithGuide } from 'v2/types/document'
+import { DataroomFileWithGuide } from 'v2/types/dataroomFile'
 
 export type IndividualIdentityFormValues = IdentityProfile &
   IdentityFinancials &
@@ -12,7 +12,7 @@ export type IndividualIdentityFormValues = IdentityProfile &
     BaseIdentity,
     '_id' | 'status' | 'user' | 'createdAt' | 'updatedAt' | 'documents'
   > & {
-    documents: DocumentWithGuide[]
+    documents: DataroomFileWithGuide[]
   }
 
 export type CorporateIdentityFormValues = CorporateFields &
@@ -20,5 +20,5 @@ export type CorporateIdentityFormValues = CorporateFields &
     BaseIdentity,
     '_id' | 'status' | 'user' | 'createdAt' | 'updatedAt' | 'documents'
   > & {
-    documents: DocumentWithGuide[]
+    documents: DataroomFileWithGuide[]
   }

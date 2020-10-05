@@ -27,7 +27,7 @@ export const CorporateIdView: React.FC = () => {
       </Grid>
       <Grid item>
         <CorporateIdentityForm
-          identity={identity}
+          data={identity}
           isEditing={false}
           useOwnEmail={false}
         />

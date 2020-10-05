@@ -17,11 +17,14 @@ export const DSOSubscriptionAndDocuments = (
 
   return (
     <EditableField
-      fieldType='DocumentUploader'
+      fieldType='DataroomDocument'
       isEditing={isEditing}
       label='Subscription & Documents'
       name='subscriptionDocument'
-      title='Subscription Document'
+      documentInfo={{
+        title: 'Subscription Document',
+        type: 'Subscription Document'
+      }}
       canDelete={false}
       valueExtractor={documentValueExtractor}
       viewRenderer={

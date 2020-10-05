@@ -27,7 +27,7 @@ export const ViewDSO = () => {
         </AppRouterLink>
       </Button>
       <Box mb={4} />
-      <DSOForm dso={data} />
+      <DSOForm data={data} />
     </Container>
   )
 }

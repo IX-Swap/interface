@@ -1,10 +1,9 @@
-import { AuthorizableStatus } from './util'
 import { Asset } from './asset'
 import { IndividualIdentity, CorporateIdentity } from './identity'
+import { AuthorizableWithIdentity } from './authorizer'
 
-export interface DSWithdrawal {
+export interface DSWithdrawal extends AuthorizableWithIdentity {
   _id: string
-  status: AuthorizableStatus
   user: string
   amount: number
   asset: Asset

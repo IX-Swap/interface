@@ -30,7 +30,7 @@ export const Setup: React.FC = () => {
                 inputProps={{
                   startAdornment: (
                     <InputAdornment position='start'>
-                      {bank.asset.numberFormat.currency}
+                      {bank.currency.numberFormat.currency}
                     </InputAdornment>
                   )
                 }}

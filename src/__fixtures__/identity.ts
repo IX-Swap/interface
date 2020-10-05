@@ -1,17 +1,18 @@
 import { user } from './user'
-import { address, bank } from './authorizer'
+import { address, authorizationInfo } from './authorizer'
 import { CorporateIdentity, IndividualIdentity } from 'v2/types/identity'
 import declarations from 'v2/app/pages/identity/const/declarations'
-import { Document } from 'v2/types/document'
+import { DataroomFile } from '../v2/types/dataroomFile'
 
 export const corporate: CorporateIdentity = {
   _id: '1',
+  logo: '',
   createdAt: '01-01-2000',
   updatedAt: '01-01-2000',
   documents: [],
   declarations: [],
   walletAddress: 'address',
-  status: 'Authorized',
+  status: 'Submitted',
   beneficialOwners: [],
   companyAddress: address,
   companyLegalName: 'InvestaX',
@@ -21,16 +22,22 @@ export const corporate: CorporateIdentity = {
   registrationNumber: '123456',
   representatives: [],
   toArrangeCustody: true,
-  user
+  email: '',
+  contactNumber: '',
+  user: '',
+  authorizationDocuments: [],
+  authorization: authorizationInfo,
+  authorizations: []
 }
 
 export const individual: IndividualIdentity = {
+  photo: '',
   _id: '1',
   email: 'email@example.com',
   annualIncome: '100000',
-  bankAccountName: bank.accountHolderName,
-  bankAccountNumber: bank.bankAccountNumber,
-  bankName: bank.bankName,
+  bankAccountName: '',
+  bankAccountNumber: '',
+  bankName: '',
   contactNumber: '1234567890',
   createdAt: '01-01-2000',
   updatedAt: '01-01-2000',
@@ -49,7 +56,10 @@ export const individual: IndividualIdentity = {
   occupation: 'Occupied',
   // politicallyExposed: false,
   sourceOfWealth: '___',
-  status: 'Authorized',
+  status: 'Submitted',
+  authorization: authorizationInfo,
+  authorizationDocuments: [],
+  authorizations: [],
   toArrangeCustody: true,
   walletAddress: '1234567890_',
   declarations: declarations.individual.map(({ key }) => ({
@@ -57,10 +67,10 @@ export const individual: IndividualIdentity = {
   })),
   documents: [],
   address,
-  user
+  user: ''
 }
 
-export const document: Document = {
+export const document: DataroomFile = {
   _id: '1',
   createdAt: '01-01-2000',
   updatedAt: '01-01-2000',
@@ -71,7 +81,7 @@ export const document: Document = {
   url: 'https://docurl/'
 }
 
-export const documents: Document[] = [
+export const documents: DataroomFile[] = [
   { ...document, _id: '1' },
   { ...document, _id: '2' }
 ]

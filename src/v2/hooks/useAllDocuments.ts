@@ -4,7 +4,7 @@ import { useAuth } from 'v2/hooks/auth/useAuth'
 import { PaginatedData } from 'v2/services/api/types'
 import { paginationArgs } from 'v2/config/defaults'
 import { useParsedData } from 'v2/hooks/useParsedData'
-import { Document } from 'v2/types/document'
+import { DataroomFile } from 'v2/types/dataroomFile'
 
 export const USE_DOCUMENT_QUERY_KEY = 'useDocument'
 
@@ -13,7 +13,7 @@ export const useAllDocuments = () => {
   const { user } = useAuth()
   const url = `/dataroom/list/${user?._id ?? ''}`
   const downloadFile = async () => {
-    return await apiService.post<PaginatedData<Document>>(url, {
+    return await apiService.post<PaginatedData<DataroomFile>>(url, {
       ...paginationArgs,
       skip: 100
     })
@@ -25,6 +25,6 @@ export const useAllDocuments = () => {
 
   return {
     ...rest,
-    data: useParsedData<Document>(data, '_id')
+    data: useParsedData<DataroomFile>(data, '_id')
   }
 }

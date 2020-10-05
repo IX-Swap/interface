@@ -3,15 +3,15 @@ import { ListItem, Grid } from '@material-ui/core'
 import useStyles from './styles'
 import { DataroomColumns } from './DataroomColumns'
 import { DownloadDocument } from './DownloadDocument'
-import { Document } from 'v2/types/document'
+import { DataroomFile } from 'v2/types/dataroomFile'
 import { Maybe } from 'v2/types/util'
 
-export interface DataroomRowProps {
+export interface DataroomViewRowProps {
   title: string
-  document: Maybe<Document>
+  document: Maybe<DataroomFile>
 }
 
-export const DataroomViewRow = (props: DataroomRowProps) => {
+export const DataroomViewRow = (props: DataroomViewRowProps) => {
   const { document, title } = props
   const classes = useStyles()
 

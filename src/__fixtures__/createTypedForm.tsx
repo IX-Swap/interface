@@ -1,6 +1,9 @@
 import { createTypedForm } from 'v2/components/form/createTypedForm'
 
-export const useTypedForm = (): ReturnType<ReturnType<typeof createTypedForm>> => ({
+export const useTypedForm = (): ReturnType<
+  ReturnType<typeof createTypedForm>
+> =>
+  ({
     TextField: jest.fn(() => null),
     NumericField: jest.fn(() => null),
     AssetSelect: jest.fn(() => null),
@@ -12,12 +15,12 @@ export const useTypedForm = (): ReturnType<ReturnType<typeof createTypedForm>> =
     MartialStatusSelect: jest.fn(() => null),
     Checkbox: jest.fn(() => null),
     YesOrNo: jest.fn(() => null),
-    DocumentUploader: jest.fn(() => null),
+    DataroomDocument: jest.fn(() => null),
     Form: jest.fn(() => null),
     EditableField: jest.fn(() => null),
     FormValue: jest.fn(() => null),
     Submit: jest.fn(() => null)
-} as any)
+  } as any)
 
-
+// eslint-disable-next-line react-hooks/rules-of-hooks
 export const generateCreateTypedFormResult = () => useTypedForm()

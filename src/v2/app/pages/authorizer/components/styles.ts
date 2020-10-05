@@ -3,13 +3,19 @@ import { makeStyles } from '@material-ui/styles'
 export const useStyles = makeStyles((theme: any) => ({
   authStatus: {
     border: '1px solid red',
-    borderRadius: '6px',
-    width: '24px',
-    height: '24px',
+    borderRadius: 4,
     display: 'flex',
     justifyContent: 'center',
     fontSize: '0.875rem',
-    alignItems: 'center'
+    alignItems: 'center',
+    height: 27,
+    paddingLeft: 28,
+    paddingRight: 28
+  },
+  compact: {
+    width: 24,
+    height: 24,
+    padding: 0
   },
   approved: {
     color: '#0BBE12',

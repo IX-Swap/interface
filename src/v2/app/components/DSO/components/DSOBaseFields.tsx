@@ -1,9 +1,7 @@
 import React from 'react'
-import { Grid, IconButton } from '@material-ui/core'
-import { PhotoCamera } from '@material-ui/icons'
-import { DSOAvatar } from 'v2/app/components/DSO/components/DSOAvatar'
-import { documentValueExtractor } from 'v2/app/components/DSO/utils'
+import { Grid } from '@material-ui/core'
 import { useDSOForm } from 'v2/app/components/DSO/DSOForm'
+import { UserAvatar } from '../../UserAvatar'
 
 export interface DSOBaseFieldsProps {
   isEditing: boolean
@@ -12,41 +10,12 @@ export interface DSOBaseFieldsProps {
 
 export const DSOBaseFields = (props: DSOBaseFieldsProps) => {
   const { isEditing, dsoOwnerId } = props
-  const { EditableField, FormValue } = useDSOForm()
+  const { EditableField } = useDSOForm()
 
   return (
     <Grid container direction='row' spacing={2}>
       <Grid item>
-        <EditableField
-          fieldType='DocumentUploader'
-          isEditing={isEditing}
-          title='DSO Logo'
-          label='Logo'
-          name='logo'
-          valueExtractor={documentValueExtractor}
-          canDelete={false}
-          uploadComponent={
-            <IconButton component='span'>
-              <PhotoCamera />
-            </IconButton>
-          }
-          viewRenderer={
-            <FormValue name='logo'>
-              {logo => <DSOAvatar imageId={logo} dsoOwnerId={dsoOwnerId} />}
-            </FormValue>
-          }
-          editRenderer={input => (
-            <FormValue name='logo'>
-              {logo => (
-                <DSOAvatar
-                  imageId={logo}
-                  dsoOwnerId={dsoOwnerId}
-                  button={input}
-                />
-              )}
-            </FormValue>
-          )}
-        />
+        <UserAvatar name='logo' isEditing={isEditing} ownerId={dsoOwnerId} />
       </Grid>
 
       <Grid item>

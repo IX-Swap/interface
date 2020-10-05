@@ -5,14 +5,12 @@ import { get } from 'lodash'
 
 interface TableRowsProps<T> extends TableViewProps<T> {
   items: T[]
+  cacheQueryKey: any
 }
 
-export const TableRows = <T,>({
-  items,
-  columns,
-  hasActions = false,
-  actions
-}: TableRowsProps<T>): JSX.Element => {
+export const TableRows = <T,>(props: TableRowsProps<T>): JSX.Element => {
+  const { items, columns, hasActions = false, actions, cacheQueryKey } = props
+
   return (
     <TableBody>
       {items.length > 0 ? (
@@ -31,7 +29,7 @@ export const TableRows = <T,>({
             ))}
             {hasActions && (
               <TableCell align='center'>
-                {actions?.({ item: row }) ?? null}
+                {actions?.({ item: row, cacheQueryKey }) ?? null}
               </TableCell>
             )}
           </TableRow>

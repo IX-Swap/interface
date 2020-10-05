@@ -1,8 +1,10 @@
 import React from 'react'
-import { AuthorizerView as BaseView } from 'v2/app/pages/authorizer/components/AuthorizerView'
+import { AuthorizerTable as BaseView } from 'v2/app/pages/authorizer/components/AuthorizerTable'
 import { columns } from 'v2/app/pages/authorizer/pages/cashWithdrawals/columns'
-import WithdrawalView from 'v2/app/components/WithdrawalPreview'
-import { CashWithdrawal } from 'v2/types/cash-withdrawal'
+import { WithdrawalPreview } from 'v2/app/components/WithdrawalPreview'
+import { CashWithdrawal } from 'v2/types/cashWithdrawal'
+import { AuthorizerView } from '../../components/AuthorizerView'
+import { DataroomFeature } from '../../../../../types/authorizer'
 
 export const CashWithdrawals: React.FC = () => (
   <BaseView
@@ -15,5 +17,11 @@ export const CashWithdrawals: React.FC = () => (
 )
 
 export const renderWithdrawal = (w: CashWithdrawal) => (
-  <WithdrawalView withdrawal={w} />
+  <AuthorizerView
+    title='About This Withdrawal'
+    data={w}
+    feature={DataroomFeature.withdrawals}
+  >
+    <WithdrawalPreview data={w} />
+  </AuthorizerView>
 )

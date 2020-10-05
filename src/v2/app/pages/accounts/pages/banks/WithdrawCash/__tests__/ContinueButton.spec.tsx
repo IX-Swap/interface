@@ -14,11 +14,11 @@ describe('ContinueButton', () => {
 
   it('renders Button without error', () => {
     const { queryByRole } = render(
-        <DepositStoreProvider>
-      <Form defaultValues={{ bank, amount: cashDeposit.amount }}>
-        <ContinueButton />
-      </Form>
-        </DepositStoreProvider>
+      <DepositStoreProvider>
+        <Form defaultValues={{ bank, amount: cashDeposit.amount }}>
+          <ContinueButton />
+        </Form>
+      </DepositStoreProvider>
     )
 
     expect(queryByRole('button')).not.toBeNull()
@@ -26,11 +26,11 @@ describe('ContinueButton', () => {
 
   it('will disable Button if bank is undefined', () => {
     const { getByText } = render(
-        <DepositStoreProvider>
-      <Form defaultValues={{ amount: cashDeposit.amount }}>
-        <ContinueButton />
-      </Form>
-        </DepositStoreProvider>
+      <DepositStoreProvider>
+        <Form defaultValues={{ amount: cashDeposit.amount }}>
+          <ContinueButton />
+        </Form>
+      </DepositStoreProvider>
     )
     const continueButton = getByText(/continue/i)
 
@@ -39,11 +39,11 @@ describe('ContinueButton', () => {
 
   it('will disable Button if amount is undefined', () => {
     const { getByText } = render(
-        <DepositStoreProvider>
-      <Form defaultValues={{ bank }}>
-        <ContinueButton />
-      </Form>
-          </DepositStoreProvider>
+      <DepositStoreProvider>
+        <Form defaultValues={{ bank }}>
+          <ContinueButton />
+        </Form>
+      </DepositStoreProvider>
     )
     const continueButton = getByText(/continue/i)
 

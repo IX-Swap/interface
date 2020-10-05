@@ -1,100 +1,53 @@
 import React from 'react'
-import { Grid, Typography } from '@material-ui/core'
+import { Grid } from '@material-ui/core'
 import { Bank } from 'v2/types/bank'
+import { convertAddressToString } from 'v2/app/pages/authorizer/components/utils'
+import { LabelledValue } from '../../../components/LabelledValue'
 
 interface BankViewProps {
-  bank: Bank
+  data: Bank
 }
 
-export const BankPreview: React.FC<BankViewProps> = ({ bank }) => {
-  if (bank === null) {
+export const BankPreview: React.FC<BankViewProps> = ({ data }) => {
+  if (data === null) {
     return null
   }
 
   return (
     <Grid container spacing={4} style={{ maxWidth: '1000px' }}>
       <Grid item container>
-        <Grid item xs={5}>
-          <Typography>
-            <b>Bank Name</b>
-          </Typography>
-          <Typography>{bank.bankName}</Typography>
+        <Grid item xs={4}>
+          <LabelledValue label='Bank Name' value={data.bankName} />
         </Grid>
-        <Grid item xs={5}>
-          <Typography>
-            <b>Account Holder Name</b>
-          </Typography>
-          <Typography>{bank.accountHolderName}</Typography>
+        <Grid item xs={4}>
+          <LabelledValue
+            label='Account Holder Name'
+            value={data.accountHolderName}
+          />
         </Grid>
-        <Grid item xs={2} />
+        <Grid item xs={4}>
+          <LabelledValue label='Currency' value={data.currency.symbol} />
+        </Grid>
+      </Grid>
+      <Grid item container>
+        <Grid item xs={4}>
+          <LabelledValue
+            label='Bank Account Number'
+            value={data.bankAccountNumber}
+          />
+        </Grid>
+        <Grid item xs={4}>
+          <LabelledValue label='Swift Code' value={data.swiftCode} />
+        </Grid>
       </Grid>
       <Grid item container>
         <Grid item xs={5}>
-          <Typography>
-            <b>Currency</b>
-          </Typography>
-          <Typography>{bank.asset.symbol}</Typography>
-        </Grid>
-        <Grid item xs={5}>
-          <Typography>
-            <b>Bank Account Number</b>
-          </Typography>
-          <Typography>{bank.bankAccountNumber}</Typography>
-        </Grid>
-        <Grid item xs={2}>
-          <Typography>
-            <b>Swift Code</b>
-          </Typography>
-          <Typography>{bank.swiftCode}</Typography>
+          <LabelledValue
+            label='Bank Address'
+            value={convertAddressToString(data.address)}
+          />
         </Grid>
       </Grid>
-      {Object.values(bank.address).join('').trim() !== '' && (
-        <>
-          <Grid item>
-            <Typography variant='h6'>Bank Address</Typography>
-          </Grid>
-          <Grid item container>
-            <Grid item xs={5}>
-              <Typography>
-                <b>Line 1</b>
-              </Typography>
-              <Typography>{bank.address.line1}</Typography>
-            </Grid>
-            <Grid item xs={5}>
-              <Typography>
-                <b>Line 2</b>
-              </Typography>
-              <Typography>{bank.address.line2}</Typography>
-            </Grid>
-            <Grid item xs={2}>
-              <Typography>
-                <b>City</b>
-              </Typography>
-              <Typography>{bank.address.city}</Typography>
-            </Grid>
-          </Grid>
-          <Grid item container>
-            <Grid item xs={5}>
-              <Typography>
-                <b>State</b>
-              </Typography>
-              <Typography>{bank.address.state}</Typography>
-            </Grid>
-            <Grid item xs={5}>
-              <Typography>
-                <b>Country</b>
-              </Typography>
-              <Typography>{bank.address.country}</Typography>
-            </Grid>
-            <Grid item xs={2}>
-              <Typography>
-                <b>Postal Code</b>
-              </Typography>
-              <Typography>{bank.address.postalCode}</Typography>
-            </Grid>
-          </Grid>
-        </>
-      )}
     </Grid>
   )
 }

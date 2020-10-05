@@ -1,4 +1,7 @@
 import { Asset } from './asset'
+import User from './user'
+import { AuthorizableWithIdentity } from './authorizer'
+import { DataroomFile } from './dataroomFile'
 
 export interface Address {
   line1: string
@@ -9,9 +12,8 @@ export interface Address {
   postalCode: string
 }
 
-export interface Bank {
+export interface Bank extends AuthorizableWithIdentity {
   _id: string
-  status: string
   deleted: boolean
   bankName: string
   bankAccountNumber: string
@@ -19,6 +21,9 @@ export interface Bank {
   swiftCode: string
   authorized: boolean
   createdAt: string
+  updatedAt: string
   address: Address
-  asset: Asset
+  currency: Asset
+  supportingDocuments: DataroomFile[]
+  user: User
 }

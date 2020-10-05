@@ -1,8 +1,10 @@
 import React from 'react'
-import { AuthorizerView as BaseView } from 'v2/app/pages/authorizer/components/AuthorizerView'
+import { AuthorizerTable as BaseView } from 'v2/app/pages/authorizer/components/AuthorizerTable'
 import { columns } from 'v2/app/pages/authorizer/pages/dsWithdrawals/columns'
-import DSWithdrawalView from 'v2/app/components/ds-withdrawal-preview'
-import { DSWithdrawal } from 'v2/types/ds-withdrawal'
+import { DSWithdrawal } from 'v2/types/dsWithdrawal'
+import { AuthorizerView } from '../../components/AuthorizerView'
+import { DataroomFeature } from '../../../../../types/authorizer'
+import { DSWithdrawalPreview } from '../../../../components/DSWithdrawalPreview/DSWithdrawalPreview'
 
 export const DSWithdrawals: React.FC = () => (
   <BaseView
@@ -15,5 +17,11 @@ export const DSWithdrawals: React.FC = () => (
 )
 
 export const renderDSWithdrawal = (w: DSWithdrawal): JSX.Element => (
-  <DSWithdrawalView withdrawal={w} />
+  <AuthorizerView
+    title='About This Withdrawal'
+    data={w}
+    feature={DataroomFeature.dsWithdrawals}
+  >
+    <DSWithdrawalPreview data={w} />
+  </AuthorizerView>
 )

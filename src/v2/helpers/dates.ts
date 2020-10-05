@@ -17,3 +17,7 @@ export const convertDateToISO = (
 export const formatDateToMMDDYY = (s: string): string => {
   return format(new Date(s), 'MM/dd/yy')
 }
+
+export const formatDateAndTime = (s: string): string => {
+  return format(new Date(s), 'LLL d, yyyy hh:mm a')
+}

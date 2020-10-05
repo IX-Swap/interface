@@ -11,7 +11,7 @@ import {
 import documents, {
   formatDocuments
 } from 'v2/app/pages/identity/const/documents'
-import { DocumentWithGuide } from 'v2/types/document'
+import { DataroomFileWithGuide } from 'v2/types/dataroomFile'
 
 export type IdentityType = 'corporate' | 'individual'
 
@@ -53,7 +53,7 @@ export const getIdentityFormDefaultValue = <
 >(
   identity: T,
   type: IdentityType
-): T & { documents: DocumentWithGuide[] } => {
+): T & { documents: DataroomFileWithGuide[] } => {
   return identity !== undefined
     ? {
       ...identity,
@@ -65,7 +65,9 @@ export const getIdentityFormDefaultValue = <
     } as any) // TODO: fix any
 }
 
-export const prepareDocumentsForUpload = (documents: DocumentWithGuide[]) => {
+export const prepareDocumentsForUpload = (
+  documents: DataroomFileWithGuide[]
+) => {
   return documents
     .map(d => d.document?._id ?? null)
     .filter(d => d !== null) as string[]

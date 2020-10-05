@@ -1,4 +1,4 @@
-export interface Document {
+export interface DataroomFile {
   _id: string
   title: string
   type: string
@@ -9,12 +9,12 @@ export interface Document {
   updatedAt: string
 }
 
-export interface DocumentGuide {
+export interface FileGuide {
   title: string
   label: string
   type: string
 }
 
-export interface DocumentWithGuide extends DocumentGuide {
-  document: Document | null
+export interface DataroomFileWithGuide extends FileGuide {
+  document: DataroomFile | null
 }

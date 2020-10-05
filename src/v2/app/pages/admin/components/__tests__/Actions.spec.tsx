@@ -7,7 +7,7 @@ import * as adminViewHook from '../../hooks/useAdminView'
 import DialogConfirmRoleChange from 'v2/app/pages/admin/components/DialogConfirmRoleChange'
 import { appRoles } from 'v2/helpers/acl'
 import { waitFor, fireEvent } from '@testing-library/react'
-import {useAdminView} from "../../hooks/useAdminView";
+import { useAdminView } from '../../hooks/useAdminView'
 
 jest.mock('v2/app/pages/admin/components/DialogConfirmRoleChange', () =>
   jest.fn(() => null)
