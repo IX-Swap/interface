@@ -10,7 +10,7 @@ const columns: Array<TableColumn<CashWithdrawal>> = [
   {
     key: 'createdAt',
     label: 'Date',
-    render: (val: string) => moment(val).format('MM/DD/YY')
+    render: (val, row) => moment(val).format('MM/DD/YY')
   },
   {
     key: 'bankAccount.bankName',

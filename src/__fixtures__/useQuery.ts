@@ -114,8 +114,12 @@ export const generateQueryResult = ({
   canFetchMore: false,
   isFetched: false,
   clear: jest.fn(),
-  query: {} as any,
   fetchMore: jest.fn(),
   updatedAt: 0,
+  remove: jest.fn(),
+  isPreviousData: false,
+  isInitialData: false,
+  isFetchedAfterMount: false,
+  isFetchingMore: undefined,
   status: queryStatus
 })

@@ -5,19 +5,16 @@ import { DSOForm } from 'v2/app/components/DSO/DSOForm'
 import { useCreateDSO } from 'v2/app/pages/issuance/hooks/useCreateDSO'
 import { DSOFormValues, DSORequestArgs } from 'v2/types/dso'
 import { wysiwygToHtml } from 'v2/components/form/RichTextEditor'
+import omit from 'lodash/omit'
 
 export const transformDSOFormValuesToRequestArgs = (
   values: DSOFormValues,
   isUpdating = false
 ): DSORequestArgs => {
-  const dso = values
-
-  delete dso.status
+  let dso = omit(values, ['status'])
 
   if (isUpdating) {
-    delete dso.tokenName
-    delete dso.tokenSymbol
-    delete dso.issuerName
+    dso = omit(dso, ['tokenName', 'tokenSymbol', 'issuerName']) as any
   }
 
   return {

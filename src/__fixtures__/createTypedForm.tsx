@@ -1,9 +1,6 @@
 import { createTypedForm } from 'v2/components/form/createTypedForm'
 
-export const generateCreateTypedFormResult = (): ReturnType<
-  typeof createTypedForm
-> =>
-  ({
+export const useTypedForm = (): ReturnType<ReturnType<typeof createTypedForm>> => ({
     TextField: jest.fn(() => null),
     NumericField: jest.fn(() => null),
     AssetSelect: jest.fn(() => null),
@@ -20,4 +17,7 @@ export const generateCreateTypedFormResult = (): ReturnType<
     EditableField: jest.fn(() => null),
     FormValue: jest.fn(() => null),
     Submit: jest.fn(() => null)
-  } as any)
+} as any)
+
+
+export const generateCreateTypedFormResult = () => useTypedForm()

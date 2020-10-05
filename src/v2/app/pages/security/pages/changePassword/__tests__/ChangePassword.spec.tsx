@@ -59,6 +59,7 @@ describe('ChangePassword', () => {
       Form,
       Submit
     }))
+
     render(<ChangePassword />)
 
     expect(Form).toHaveBeenCalledTimes(1)
@@ -70,8 +71,9 @@ describe('ChangePassword', () => {
       ...generateCreateTypedFormResult(),
       TextField,
       Form,
-      Submit
+      Submit,
     }))
+
     render(<ChangePassword />)
 
     expect(TextField).toHaveBeenCalledTimes(3)

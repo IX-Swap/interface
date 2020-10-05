@@ -9,6 +9,8 @@ describe('Banks', () => {
 
   beforeEach(() => {
     jest.spyOn(banksRouter, 'useBanksRouter').mockImplementation(() => ({
+      params: {},
+      replace: jest.fn(),
       push: jest.fn(),
       query: new URLSearchParams(),
       current: {

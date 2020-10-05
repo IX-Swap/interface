@@ -23,7 +23,7 @@ describe('TableView', () => {
   const props: TableViewProps<any> = {
     actions: undefined,
     bordered: false,
-    children: null,
+    children: undefined,
     columns: [],
     filter: undefined,
     hasActions: false,

@@ -6,21 +6,22 @@ import {
   CompanyInformationProps
 } from 'v2/app/pages/identity/components/CompanyInfo'
 import * as typedForm from 'v2/app/pages/identity/components/CorporateIdentityForm'
-import { generateCreateTypedFormResult } from '__fixtures__/createTypedForm'
+import { useTypedForm } from '__fixtures__/createTypedForm'
 
 describe('CompanyInformation', () => {
   const props: CompanyInformationProps = {
     isEditing: false,
     useOwnEmail: false
   }
-  const EditableField = jest.fn(() => null)
+  const EditableField = jest.fn(() => <div />)
 
   beforeEach(() => {
     jest.spyOn(typedForm, 'useCorporateIdentityForm').mockReturnValue({
-      ...generateCreateTypedFormResult(),
+      ...useTypedForm(),
       EditableField
-    })
+    } as any)
   })
+
   afterEach(async () => {
     await cleanup()
     jest.clearAllMocks()

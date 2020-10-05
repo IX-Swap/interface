@@ -21,7 +21,7 @@ describe('AssetView', () => {
 
   beforeEach(() => {
     history.push(DSRoute.deposit, { balanceId })
-    jest.spyOn(snackbar, 'useSnackbar').mockReturnValue({ showSnackbar })
+    jest.spyOn(snackbar, 'useSnackbar').mockReturnValue({ showSnackbar } as any)
     jest
       .spyOn(balances, 'useAllBalances')
       .mockReturnValue(

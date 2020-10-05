@@ -77,8 +77,8 @@ export type DeploymentInfoFormValues = Omit<
   '_id' | 'createdBy' | 'createdAt' | 'updatedAt' | '__v'
 >
 
-export interface DSOFormValues
-  extends Omit<
+export type DSOFormValues =
+  Omit<
     DigitalSecurityOffering,
     | '_id'
     | 'deleted'
@@ -91,14 +91,14 @@ export interface DSOFormValues
     | 'status'
     | 'team'
     | 'currency'
-  > {
+  > & {
   status?: string
   currency: string
   documents: Maybe<DocumentWithGuide[]>
   team: Maybe<DsoTeamMember[]>
 }
 
-export interface DSORequestArgs extends Omit<DSOFormValues, 'documents'> {
+export type DSORequestArgs = Omit<DSOFormValues, 'documents'> & {
   documents: string[]
 }
 

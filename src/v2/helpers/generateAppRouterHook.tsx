@@ -20,13 +20,15 @@ interface AppRouter<T> {
   replace: (route: keyof T, state?: {}) => void
 }
 
+type LocationState = Record<string, any> | null | undefined
+
 const getRouteLabel = (path: string, routes: InternalRouteProps[]): string => {
   const route = routes.find(r => r.path === path)
   return route !== undefined ? route.label : ''
 }
 
 interface GetCurrentRouteArgs<T> {
-  location: Location
+  location: Location<Record<string, any>>
   routes: InternalRouteProps[]
   defaultRoute: string
   routeMap: T
@@ -34,7 +36,7 @@ interface GetCurrentRouteArgs<T> {
 
 const shouldGeneratePath = (
   path: string,
-  state: Record<string, any> | null | undefined
+  state: LocationState
 ): state is Record<string, string> => {
   if (state === undefined || state === null) {
     return false
@@ -74,7 +76,7 @@ export function generateAppRouterHook<T> (
   routes: InternalRouteProps[]
 ): () => AppRouter<T> {
   return (): AppRouter<T> => {
-    const location = useLocation()
+    const location = useLocation<Record<string, any>>()
     const history = useHistory()
     const current = useMemo(
       () =>
@@ -97,7 +99,7 @@ export function generateAppRouterHook<T> (
       replace: (route, state) => {
         history.replace(routeMap[route] as any, state)
       },
-      params: location.state ?? {},
+      params: (location.state as any) ?? {},
       renderRoutes: () => (
         <Switch>
           {routes.map((route, i) => (

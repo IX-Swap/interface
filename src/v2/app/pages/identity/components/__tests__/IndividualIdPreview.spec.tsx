@@ -10,7 +10,7 @@ import { QueryStatus } from 'react-query'
 import { Section } from 'v2/app/pages/identity/components/Section'
 import { NoIdentity } from 'v2/app/pages/identity/components/NoIdentity'
 import UserInfoComponent from 'v2/app/pages/identity/components/UserInfo'
-import { generateCreateTypedFormResult } from '__fixtures__/createTypedForm'
+import { useTypedForm } from '__fixtures__/createTypedForm'
 import { individualIdentityFormValidationSchema } from 'v2/app/pages/identity/components/validation'
 import { getIdentityFormDefaultValue } from 'v2/app/pages/identity/utils'
 
@@ -29,7 +29,7 @@ describe('IndividualIdPreview', () => {
   beforeEach(() => {
     jest
       .spyOn(individualIdentityFormHook, 'useIndividualIdentityForm')
-      .mockReturnValue({ ...generateCreateTypedFormResult(), Form })
+      .mockReturnValue({ ...useTypedForm(), Form })
   })
   afterEach(async () => {
     await cleanup()

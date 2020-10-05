@@ -8,6 +8,7 @@ import { Step4Enable } from '../components/Step4Enable'
 import * as setupContext from '../context'
 import { Setup2fa } from 'v2/app/pages/security/pages/setup2fa/Setup2fa'
 import { waitFor, fireEvent } from '@testing-library/react'
+import {Setup2faStore} from "../context/store";
 
 jest.mock('../components/Step1Download', () => ({
   Step1Download: jest.fn(() => null)
@@ -23,14 +24,15 @@ jest.mock('../components/Step4Enable', () => ({
 }))
 
 describe('Setup2fa', () => {
-  const baseContext = {
+  const baseContext: Setup2faStore = {
     activeStep: 0,
     image: '',
     key: '',
     encoded: '',
-    setActiveStep: jest.fn() as any,
-    nextPage: jest.fn() as any,
-    prevPage: jest.fn() as any,
+    setActiveStep: jest.fn(),
+    nextPage: jest.fn(),
+    prevPage: jest.fn(),
+    set2faData: jest.fn(),
     steps: [
       'Download app',
       'Scan QR Code',
@@ -38,6 +40,7 @@ describe('Setup2fa', () => {
       'Enable Google Authenticator'
     ]
   }
+
   afterEach(async () => {
     await cleanup()
     jest.clearAllMocks()

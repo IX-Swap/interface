@@ -1,12 +1,13 @@
 import React, { PropsWithChildren } from 'react'
-import { SubmitHandler, useForm, FormProvider } from 'react-hook-form'
+import {SubmitHandler, useForm, FormProvider, DeepPartial} from 'react-hook-form'
 import { ObjectSchema, Shape, object } from 'yup'
 import { yupResolver } from '@hookform/resolvers'
 import { DeepMap, FieldError } from '@hookform/error-message/dist/types'
 import { useServices } from 'v2/services/useServices'
+import {UnpackNestedValue } from "@hookform/strictly-typed/dist/types";
 
 export interface FormProps<T extends {}> {
-  defaultValues?: T
+  defaultValues?: UnpackNestedValue<DeepPartial<T>>
   onSubmit?: SubmitHandler<T>
   validationSchema?: ObjectSchema<Shape<object | undefined, T>>
 }
@@ -33,7 +34,7 @@ export const Form = <T,>(
     mode: 'onBlur',
     defaultValues,
     resolver: yupResolver(validationSchema)
-  })
+  } as any)
   const { handleSubmit } = form
   const { snackbarService } = useServices()
   const onError = (errors: FormErrorsMap) => {
