@@ -1,8 +1,10 @@
 import React from 'react'
-import { AuthorizerView as BaseView } from 'v2/app/pages/authorizer/components/AuthorizerView'
+import { AuthorizerTable as BaseView } from 'v2/app/pages/authorizer/components/AuthorizerTable'
 import { columns } from 'v2/app/pages/authorizer/pages/offerings/columns'
 import { DigitalSecurityOffering } from 'v2/types/dso'
-import { DSOForm } from 'v2/app/components/DSO/DSOForm'
+import { AuthorizerView } from '../../components/AuthorizerView'
+import { DataroomFeature } from '../../../../../types/authorizer'
+import { DSOForm } from '../../../../components/DSO/DSOForm'
 
 export const Offerings: React.FC = () => (
   <BaseView
@@ -15,5 +17,11 @@ export const Offerings: React.FC = () => (
 )
 
 export const renderDSOView = (d: DigitalSecurityOffering): JSX.Element => (
-  <DSOForm dso={d} isEditing={false} />
+  <AuthorizerView
+    title='About This Offering'
+    data={d}
+    feature={DataroomFeature.offerings}
+  >
+    <DSOForm data={d} isEditing={false} />
+  </AuthorizerView>
 )

@@ -20,7 +20,7 @@ const InvestView = () => {
     <Container>
       <PageTitle title={'Page title'} subPage />
       <Box mb={4} />
-      <DSOForm dso={data} />
+      <DSOForm data={data} />
     </Container>
   )
 }

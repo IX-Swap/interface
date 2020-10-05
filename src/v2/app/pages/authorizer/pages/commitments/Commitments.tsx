@@ -1,5 +1,5 @@
 import React from 'react'
-import { AuthorizerView as BaseView } from 'v2/app/pages/authorizer/components/AuthorizerView'
+import { AuthorizerTable as BaseView } from 'v2/app/pages/authorizer/components/AuthorizerTable'
 import { columns } from 'v2/app/pages/authorizer/pages/commitments/columns'
 
 export const Commitments: React.FC = () => (

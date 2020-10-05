@@ -1,13 +1,12 @@
 import React, { PropsWithChildren } from 'react'
-import {SubmitHandler, useForm, FormProvider, DeepPartial} from 'react-hook-form'
+import { SubmitHandler, useForm, FormProvider} from 'react-hook-form'
 import { ObjectSchema, Shape, object } from 'yup'
 import { yupResolver } from '@hookform/resolvers'
 import { DeepMap, FieldError } from '@hookform/error-message/dist/types'
 import { useServices } from 'v2/services/useServices'
-import {UnpackNestedValue } from "@hookform/strictly-typed/dist/types";
 
 export interface FormProps<T extends {}> {
-  defaultValues?: UnpackNestedValue<DeepPartial<T>>
+  defaultValues?: Partial<T>
   onSubmit?: SubmitHandler<T>
   validationSchema?: ObjectSchema<Shape<object | undefined, T>>
 }
@@ -31,8 +30,8 @@ export const Form = <T,>(
     ...rest
   } = props
   const form = useForm({
-    mode: 'onBlur',
-    defaultValues,
+    mode: 'onChange',
+    defaultValues: defaultValues as any,
     resolver: yupResolver(validationSchema)
   } as any)
   const { handleSubmit } = form
@@ -45,6 +44,9 @@ export const Form = <T,>(
 
   return (
     <FormProvider {...form}>
+      {/* <pre style={{ fontSize: 12, width: 300 }}> */}
+      {/*  {JSON.stringify(form.getValues(), null, 4)} */}
+      {/* </pre> */}
       <form
         {...rest}
         style={{ width: '100%' }}

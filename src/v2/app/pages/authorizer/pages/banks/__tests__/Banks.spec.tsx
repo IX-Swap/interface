@@ -21,7 +21,7 @@ describe('Banks', () => {
   describe('renderBank', () => {
     it('renders BankView component with correct data', () => {
       const bankView = renderBank(bank)
-      expect(bankView).toEqual(<BankPreview bank={bank} />)
+      expect(bankView).toEqual(<BankPreview data={bank} />)
     })
   })
 })

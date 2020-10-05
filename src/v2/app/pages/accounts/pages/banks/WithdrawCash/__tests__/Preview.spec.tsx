@@ -95,7 +95,7 @@ describe('Preview', () => {
             label: 'Withdraw Amount',
             value: formatMoney(
               cashDeposit.amount,
-              bank.asset.numberFormat.currency
+              bank.currency.numberFormat.currency
             )
           },
           {

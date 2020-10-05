@@ -26,7 +26,7 @@ describe('CorporateIdentities', () => {
       const corporateIdentityForm = renderCorporateIdentity(corporate)
       expect(corporateIdentityForm).toEqual(
         <CorporateIdentityForm
-          identity={corporate}
+          data={corporate}
           isEditing={false}
           useOwnEmail={false}
         />

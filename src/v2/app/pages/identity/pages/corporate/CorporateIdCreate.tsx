@@ -17,7 +17,7 @@ export const CorporateIdCreate: React.FC = () => {
       </Grid>
       <Grid item>
         <CorporateIdentityForm
-          identity={undefined}
+          data={undefined}
           isEditing={true}
           useOwnEmail={false}
           submitButtonText='Create'

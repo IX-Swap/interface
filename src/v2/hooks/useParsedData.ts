@@ -23,7 +23,7 @@ export interface DataBucket<T> {
   list: T[]
 }
 
-type PaginatedQueryResponse<T> = Array<AxiosResponse<PaginatedData<T>>>
+export type PaginatedQueryResponse<T> = Array<AxiosResponse<PaginatedData<T>>>
 
 export const useParsedData = <T>(
   data: PaginatedQueryResponse<T> | undefined,

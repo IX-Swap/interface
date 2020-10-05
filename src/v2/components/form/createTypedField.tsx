@@ -1,6 +1,6 @@
 import { Control, FieldError, useFormContext } from 'react-hook-form'
 import { InputLabel, FormControl, FormHelperText } from '@material-ui/core'
-import React from 'react'
+import React, { useRef } from 'react'
 import { useTypedController } from '@hookform/strictly-typed'
 import {
   DeepPath,
@@ -40,7 +40,8 @@ export const TypedField = <
     valueProvider,
     valueExtractor,
     formControlProps = { fullWidth: true },
-    inputProps = {}
+    inputProps = {},
+    variant = 'standard'
   } = props
   const { control, errors, setValue, trigger, formState } = useFormContext<
     FormType
@@ -65,6 +66,9 @@ export const TypedField = <
   const destructValue = (value: any): any => {
     return valueProvider !== undefined ? valueProvider(value) : value
   }
+  // const labelRef = useRef<HTMLLabelElement>()
+  // const labelWidth =
+  //   labelRef.current !== undefined ? labelRef.current.clientWidth : 0
 
   return (
     <TypedController
@@ -73,7 +77,12 @@ export const TypedField = <
       render={controllerProps => (
         <FormControl {...formControlProps}>
           {typeof children !== 'function' && (
-            <InputLabel error={hasError} htmlFor={path}>
+            <InputLabel
+              error={hasError}
+              htmlFor={path}
+              // variant={variant}
+              // shrink
+            >
               {props.label}
             </InputLabel>
           )}
@@ -85,6 +94,8 @@ export const TypedField = <
               name: path,
               value: destructValue(controllerProps.value),
               onChange: handleChange
+              // labelWidth,
+              // variant
             })
             : React.cloneElement(children, {
               ...{ ...inputProps, id: path },
@@ -92,6 +103,8 @@ export const TypedField = <
               value: destructValue(controllerProps.value),
               error: hasError,
               onChange: handleChange
+              // labelWidth,
+              // variant
             })}
           <FormHelperText error={hasError}>
             {hasError ? error.message : helperText}

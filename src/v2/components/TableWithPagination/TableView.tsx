@@ -19,6 +19,7 @@ export interface TableViewRendererProps<T> {
   columns: Array<TableColumn<T>>
   hasActions: boolean
   actions?: Actions<T>
+  cacheQueryKey: any
 }
 
 export interface TableViewProps<T> {
@@ -55,6 +56,7 @@ export const TableView = <T,>({
     rowsPerPage,
     total
   } = useTableWithPagination<T>(name, uri, filter)
+  const cacheQueryKey = [name, page, rowsPerPage, filter]
 
   if (innerRef !== undefined) {
     innerRef.current = { refresh: () => setPage(page) }
@@ -82,7 +84,8 @@ export const TableView = <T,>({
               items: Array.isArray(fakeItems) ? fakeItems : items,
               columns,
               hasActions,
-              actions
+              actions,
+              cacheQueryKey
             })
           ) : (
             <TableRows
@@ -93,6 +96,7 @@ export const TableView = <T,>({
               columns={columns}
               hasActions={hasActions}
               actions={actions}
+              cacheQueryKey={cacheQueryKey}
             />
           )}
           {total > 0 && (

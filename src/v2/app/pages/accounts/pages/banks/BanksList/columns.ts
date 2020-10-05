@@ -1,6 +1,6 @@
 export const columns = [
   {
-    key: 'asset.symbol',
+    key: 'currency.symbol',
     label: 'Currency'
   },
   {

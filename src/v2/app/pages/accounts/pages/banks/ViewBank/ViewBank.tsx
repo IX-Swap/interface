@@ -14,7 +14,7 @@ const ViewBank: React.FC = () => {
 
   return (
     <Box p={4}>
-      <BankPreview bank={data.map[params.bankId]} />
+      <BankPreview data={data.map[params.bankId]} />
     </Box>
   )
 }

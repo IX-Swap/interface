@@ -34,7 +34,7 @@ export const Preview: React.FC = () => {
     },
     {
       label: 'Withdraw Amount',
-      value: formatMoney(amountFormatted, bank.asset.numberFormat.currency)
+      value: formatMoney(amountFormatted, bank.currency.numberFormat.currency)
     }
   ]
 

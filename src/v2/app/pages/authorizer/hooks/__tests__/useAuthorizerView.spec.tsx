@@ -8,7 +8,7 @@ import {
 } from 'v2/app/pages/authorizer/hooks/useAuthorizerView'
 import { AuthorizerTableStoreProvider } from 'v2/app/pages/authorizer/context'
 import { BaseFilter } from 'v2/types/util'
-import { StatusColumn } from 'v2/app/pages/authorizer/components/StatusColumn'
+import { AuthorizableStatus } from 'v2/app/pages/authorizer/components/AuthorizableStatus'
 
 describe('useAuthorizerView', () => {
   const hookArgs = { columns: [], idKey: '__', uri: '/uri/' }
@@ -126,10 +126,10 @@ describe('useAuthorizerView', () => {
     expect(result.current.isViewing).toBeFalsy()
   })
 
-  it('renders StatusColumn component as expected', () => {
+  it('renders AuthorizableStatus component as expected', () => {
     const status = 'Approved'
     const statusColumn = renderStatusColumn(status)
 
-    expect(statusColumn).toEqual(<StatusColumn status={status} />)
+    expect(statusColumn).toEqual(<AuthorizableStatus status={status} />)
   })
 })

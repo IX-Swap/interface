@@ -1,27 +1,42 @@
 import { useMutation } from 'react-query'
 import { useServices } from 'v2/services/useServices'
-import { Document } from 'v2/types/document'
+import { DataroomFile } from 'v2/types/dataroomFile'
 import { QueryOrMutationCallbacks } from 'v2/hooks/types'
 
-export interface UploadFileArgs {
-  title: string
-  type: string
-  file: File
+export interface UploadDocumentInfo {
+  title?: string
+  type?: string
+  feature?: string
+  resourceId?: string
+}
+
+export interface UploadDocumentArgs extends UploadDocumentInfo {
+  documents: File | File[]
+}
+
+export const defaultUploadDocumentInfo: UploadDocumentInfo = {
+  title: '',
+  type: ''
 }
 
 export const useUploadFile = (
-  callbacks?: QueryOrMutationCallbacks<Document[]>
+  callbacks?: QueryOrMutationCallbacks<DataroomFile[]>
 ) => {
   const { snackbarService, apiService } = useServices()
-  const uploadFile = async (args: UploadFileArgs) => {
-    const { title, file, type } = args
+  const uploadFile = async (args: UploadDocumentArgs) => {
     const formData = new FormData()
 
-    formData.append('title', title)
-    formData.append('documents', file)
-    formData.append('type', type)
+    Object.entries(args).forEach(([key, value]) => {
+      if (typeof value === 'string') {
+        formData.append(key, value)
+      } else {
+        Array.isArray(value)
+          ? value.forEach(v => formData.append(key, v))
+          : formData.append(key, value)
+      }
+    })
 
-    return await apiService.post<Document[]>('/dataroom', formData)
+    return await apiService.post<DataroomFile[]>('/dataroom', formData)
   }
 
   return useMutation(uploadFile, {

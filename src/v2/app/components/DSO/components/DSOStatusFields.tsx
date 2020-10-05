@@ -20,6 +20,7 @@ export const DSOStatusFields = (props: DSOStatusFieldsProps) => {
           isEditing={isEditing}
           label='Corporate'
           name='corporate'
+          valueExtractor={value => value}
         />
       )}
 

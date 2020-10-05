@@ -12,7 +12,7 @@ export const useTypedForm = (): ReturnType<ReturnType<typeof createTypedForm>> =
     MartialStatusSelect: jest.fn(() => null),
     Checkbox: jest.fn(() => null),
     YesOrNo: jest.fn(() => null),
-    DocumentUploader: jest.fn(() => null),
+    DataroomDocument: jest.fn(() => null),
     Form: jest.fn(() => null),
     EditableField: jest.fn(() => null),
     FormValue: jest.fn(() => null),

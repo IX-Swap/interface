@@ -21,7 +21,7 @@ import { createTypedForm } from 'v2/components/form/createTypedForm'
 export interface DSOFormProps {
   submitButtonLabel?: string
   onSubmit?: (values: DSOFormValues) => any
-  dso?: DigitalSecurityOffering
+  data?: DigitalSecurityOffering
   isEditing?: boolean
   isNew?: boolean
 }
@@ -31,7 +31,7 @@ export const useDSOForm = createTypedForm<DSOFormValues>()
 export const DSOForm = (props: DSOFormProps) => {
   const {
     submitButtonLabel = 'Submit',
-    dso,
+    data,
     onSubmit = noop,
     isEditing = false,
     isNew = false
@@ -42,9 +42,9 @@ export const DSOForm = (props: DSOFormProps) => {
     <Form
       onSubmit={onSubmit}
       validationSchema={dsoFormValidationSchema}
-      defaultValues={transformDSOToFormValues(dso)}
+      defaultValues={transformDSOToFormValues(data)}
     >
-      <DSOBaseFields isEditing={isEditing} dsoOwnerId={dso?.user ?? ''} />
+      <DSOBaseFields isEditing={isEditing} dsoOwnerId={data?.user ?? ''} />
 
       <Grid container direction='row' spacing={2}>
         <Grid item xs={8}>
@@ -66,7 +66,7 @@ export const DSOForm = (props: DSOFormProps) => {
             <DSOStatusFields
               isEditing={isEditing}
               isNew={isNew}
-              dsoOwnerId={dso?.user ?? ''}
+              dsoOwnerId={data?.user ?? ''}
             />
           </DSOContainer>
         </Grid>
@@ -75,8 +75,8 @@ export const DSOForm = (props: DSOFormProps) => {
           <DSOContainer title='Subscription & Documents'>
             <DSOSubscriptionAndDocuments
               isEditing={isEditing}
-              dsoOwnerId={dso?.user ?? ''}
-              dsoId={dso?._id ?? ''}
+              dsoOwnerId={data?.user ?? ''}
+              dsoId={data?._id ?? ''}
             />
           </DSOContainer>
         </Grid>
@@ -85,7 +85,7 @@ export const DSOForm = (props: DSOFormProps) => {
           <DSOContainer title='Offering Terms'>
             <DSOOfferingTerms
               isEditing={isEditing}
-              dsoOwnerId={dso?.user ?? ''}
+              dsoOwnerId={data?.user ?? ''}
             />
           </DSOContainer>
         </Grid>
@@ -146,7 +146,7 @@ export const DSOForm = (props: DSOFormProps) => {
 
         <Grid item xs={12}>
           <DSOContainer title='Team'>
-            <DSOTeam isEditing={isEditing} dsoOwnerId={dso?.user ?? ''} />
+            <DSOTeam isEditing={isEditing} dsoOwnerId={data?.user ?? ''} />
           </DSOContainer>
         </Grid>
 

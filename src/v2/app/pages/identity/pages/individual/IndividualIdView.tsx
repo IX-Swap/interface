@@ -23,7 +23,7 @@ export const IndividualIdView: React.FC = () => {
       </Grid>
       <Grid item>
         <IndividualIdentityForm
-          identity={data}
+          data={data}
           isEditing={false}
           useOwnEmail={false}
           cancelButton={<CancelButton link={routes.individual} replace />}

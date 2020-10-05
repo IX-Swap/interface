@@ -1,5 +1,5 @@
 import { TableColumn } from 'v2/types/util'
-import { DSWithdrawal } from 'v2/types/ds-withdrawal'
+import { DSWithdrawal } from 'v2/types/dsWithdrawal'
 import { formatDateToMMDDYY } from 'v2/helpers/dates'
 import {
   renderAmount,

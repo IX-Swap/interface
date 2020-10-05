@@ -1,6 +1,6 @@
 import React from 'react'
 import { DigitalSecurityOffering, DSOFormValues } from 'v2/types/dso'
-import { Document } from 'v2/types/document'
+import { DataroomFile } from 'v2/types/dataroomFile'
 
 export const transformDSOToFormValues = (
   dso: DigitalSecurityOffering | undefined
@@ -18,6 +18,7 @@ export const transformDSOToFormValues = (
 
   return {
     ...dso,
+    corporate: dso.corporate._id,
     currency: dso.currency?._id ?? '',
     documents:
       dso.documents?.map(document => ({
@@ -29,7 +30,7 @@ export const transformDSOToFormValues = (
   }
 }
 
-export const documentValueExtractor = (value?: Document) => {
+export const documentValueExtractor = (value?: DataroomFile) => {
   return value?._id
 }
 

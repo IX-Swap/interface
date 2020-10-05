@@ -1,12 +1,12 @@
 import React from 'react'
 import { Grid, Typography } from '@material-ui/core'
 import { formatDateToMMDDYY } from 'v2/helpers/dates'
-import { Document } from 'v2/types/document'
+import { DataroomFile } from 'v2/types/dataroomFile'
 import { Maybe } from 'v2/types/util'
 
 export interface DataroomColumnsProps {
   title: string
-  document: Maybe<Document>
+  document: Maybe<DataroomFile>
 }
 
 export const DataroomColumns: React.FC<DataroomColumnsProps> = props => {
