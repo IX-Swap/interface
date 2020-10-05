@@ -1,6 +1,6 @@
 import { Asset } from './asset'
 import { IndividualIdentity, CorporateIdentity } from './identity'
-import { Authorizable, AuthorizableWithIdentity } from './authorizer'
+import { AuthorizableWithIdentity } from './authorizer'
 
 export interface DSWithdrawal extends AuthorizableWithIdentity {
   _id: string

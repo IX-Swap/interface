@@ -1,6 +1,6 @@
 import React from 'react'
 import { DataroomFileWithGuide, DataroomFile } from 'v2/types/dataroomFile'
-import { Button, Grid } from '@material-ui/core'
+import { Button } from '@material-ui/core'
 import { DataroomUploader } from '../../../../../components/form/DataroomUploader'
 import {
   defaultUploadDocumentInfo,

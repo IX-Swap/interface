@@ -1,5 +1,5 @@
 /**  * @jest-environment jsdom-sixteen  */
-import React, {ComponentProps} from 'react'
+import React from 'react'
 import { render, cleanup } from 'test-utils'
 import * as allCorporateIdentitiesHook from 'v2/hooks/identity/useAllCorporateIdentities'
 import * as corporateIdentityFormHook from 'v2/app/pages/identity/components/CorporateIdentityForm'
@@ -9,11 +9,10 @@ import { QueryStatus } from 'react-query'
 import { corporate } from '__fixtures__/identity'
 import { CompanyInformation } from 'v2/app/pages/identity/components/CompanyInfo'
 import { NoIdentity } from 'v2/app/pages/identity/components/NoIdentity'
-import {useTypedForm} from '__fixtures__/createTypedForm'
+import { useTypedForm } from '__fixtures__/createTypedForm'
 import { Section } from 'v2/app/pages/identity/components/Section'
 import { corporateIdentityFormValidationSchema } from 'v2/app/pages/identity/components/validation'
 import { getIdentityFormDefaultValue } from 'v2/app/pages/identity/utils'
-import { CorporateIdentityForm } from "v2/app/pages/identity/components/CorporateIdentityForm";
 
 jest.mock('v2/app/pages/identity/components/Section', () => ({
   Section: jest.fn(({ children }) => children)

@@ -22,7 +22,6 @@ const generateClassName = createGenerateClassName({
   productionPrefix: 'ix'
 })
 
-
 const BaseProviders: React.FC = ({ children }) => {
   return (
     <StylesProvider generateClassName={generateClassName}>
@@ -81,7 +80,6 @@ export const renderWithPasswordResetStore = (
 
   return render(ui, { wrapper: WithUserProvider })
 }
-
 
 export const fakeAuthorizerTableStore: Partial<AuthorizerTableStore> = {
   idKey: '__',

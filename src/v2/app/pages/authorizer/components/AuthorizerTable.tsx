@@ -10,7 +10,6 @@ import {
   TableView,
   TableViewProps
 } from 'v2/components/TableWithPagination/TableView'
-import { cashWithdrawal } from '../../../../../__fixtures__/authorizer'
 
 interface AuthorizerViewProps<T>
   extends Omit<TableViewProps<T>, 'actions'>,

@@ -8,7 +8,7 @@ import { Step4Enable } from '../components/Step4Enable'
 import * as setupContext from '../context'
 import { Setup2fa } from 'v2/app/pages/security/pages/setup2fa/Setup2fa'
 import { waitFor, fireEvent } from '@testing-library/react'
-import {Setup2faStore} from "../context/store";
+import { Setup2faStore } from '../context/store'
 
 jest.mock('../components/Step1Download', () => ({
   Step1Download: jest.fn(() => null)

@@ -77,27 +77,26 @@ export type DeploymentInfoFormValues = Omit<
   '_id' | 'createdBy' | 'createdAt' | 'updatedAt' | '__v'
 >
 
-export type DSOFormValues =
-  Omit<
-    DigitalSecurityOffering,
-    | '_id'
-    | 'deleted'
-    | 'createdBy'
-    | 'createdAt'
-    | 'user'
-    | 'deploymentInfo'
-    | 'documents'
-    | 'asset'
-    | 'status'
-    | 'team'
-    | 'currency'
-    | 'corporate'
-    | 'updatedAt'
-    | 'identity'
-    | 'authorizations'
-    | 'authorization'
-    | 'authorizationDocuments'
-  > & {
+export type DSOFormValues = Omit<
+  DigitalSecurityOffering,
+  | '_id'
+  | 'deleted'
+  | 'createdBy'
+  | 'createdAt'
+  | 'user'
+  | 'deploymentInfo'
+  | 'documents'
+  | 'asset'
+  | 'status'
+  | 'team'
+  | 'currency'
+  | 'corporate'
+  | 'updatedAt'
+  | 'identity'
+  | 'authorizations'
+  | 'authorization'
+  | 'authorizationDocuments'
+> & {
   status?: string
   currency: string
   corporate: string

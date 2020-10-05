@@ -71,7 +71,7 @@ describe('ChangePassword', () => {
       ...generateCreateTypedFormResult(),
       TextField,
       Form,
-      Submit,
+      Submit
     }))
 
     render(<ChangePassword />)

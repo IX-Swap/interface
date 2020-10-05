@@ -1,4 +1,3 @@
-import User from './user'
 import { DataroomFile, FileGuide } from './dataroomFile'
 import { DeclarationValue } from 'v2/app/pages/identity/const/declarations'
 import { Authorizable } from './authorizer'

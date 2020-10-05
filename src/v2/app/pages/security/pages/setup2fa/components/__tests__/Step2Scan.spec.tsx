@@ -4,8 +4,8 @@ import { render, cleanup } from 'test-utils'
 import { Step2Scan } from 'v2/app/pages/security/pages/setup2fa/components/Step2Scan'
 import * as setupContext from '../../context'
 import * as setupHook from '../../hooks/useSetup2fa'
-import {generateQueryResult} from "../../../../../../../../__fixtures__/useQuery";
-import {Setup2faStore} from "../../context/store";
+import { generateQueryResult } from '../../../../../../../../__fixtures__/useQuery'
+import { Setup2faStore } from '../../context/store'
 
 describe('Step2Scan', () => {
   const store: Setup2faStore = {
@@ -28,7 +28,9 @@ describe('Step2Scan', () => {
 
   beforeEach(() => {
     jest.spyOn(setupContext, 'useSetup2faStore').mockReturnValue({ ...store })
-    jest.spyOn(setupHook, 'useSetup2fa').mockReturnValue(generateQueryResult({ isLoading: false }))
+    jest
+      .spyOn(setupHook, 'useSetup2fa')
+      .mockReturnValue(generateQueryResult({ isLoading: false }))
   })
 
   afterEach(async () => {

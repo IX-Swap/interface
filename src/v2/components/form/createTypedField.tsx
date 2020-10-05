@@ -1,6 +1,6 @@
 import { Control, FieldError, useFormContext } from 'react-hook-form'
 import { InputLabel, FormControl, FormHelperText } from '@material-ui/core'
-import React, { useRef } from 'react'
+import React from 'react'
 import { useTypedController } from '@hookform/strictly-typed'
 import {
   DeepPath,
@@ -40,8 +40,7 @@ export const TypedField = <
     valueProvider,
     valueExtractor,
     formControlProps = { fullWidth: true },
-    inputProps = {},
-    variant = 'standard'
+    inputProps = {}
   } = props
   const { control, errors, setValue, trigger, formState } = useFormContext<
     FormType

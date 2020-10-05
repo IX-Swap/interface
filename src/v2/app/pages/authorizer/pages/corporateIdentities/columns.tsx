@@ -1,7 +1,7 @@
 import { TableColumn } from 'v2/types/util'
 import { CorporateIdentity } from 'v2/types/identity'
 import { formatDateToMMDDYY } from 'v2/helpers/dates'
-import { renderLastName, renderRepresentativeName } from 'v2/helpers/tables'
+import { renderRepresentativeName } from 'v2/helpers/tables'
 
 export const columns: Array<TableColumn<CorporateIdentity>> = [
   {

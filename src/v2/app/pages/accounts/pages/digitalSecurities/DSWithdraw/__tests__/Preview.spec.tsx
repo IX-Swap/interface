@@ -2,7 +2,7 @@
 import React from 'react'
 import { render, cleanup } from 'test-utils'
 import { Preview } from 'v2/app/pages/accounts/pages/digitalSecurities/DSWithdraw/Preview'
-import { useTypedForm  } from '__fixtures__/createTypedForm'
+import { useTypedForm } from '__fixtures__/createTypedForm'
 import { Summary } from 'v2/app/pages/accounts/pages/digitalSecurities/DSWithdraw/Summary'
 import * as withdrawForm from 'v2/app/pages/accounts/pages/digitalSecurities/DSWithdraw/WithdrawForm'
 

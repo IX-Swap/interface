@@ -14,10 +14,8 @@ import { createTypedField } from 'v2/components/form/createTypedField'
 import {
   Checkbox as MUICheckbox,
   FormControlLabel,
-  Grid,
   Input,
-  SelectProps,
-  Typography
+  SelectProps
 } from '@material-ui/core'
 import { AssetSelect, AssetSelectProps } from 'v2/components/form/AssetSelect'
 import { CorporateSelect } from 'v2/components/form/CorporateSelect'
