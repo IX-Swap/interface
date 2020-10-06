@@ -16,7 +16,7 @@ describe('RecentWithdrawals', () => {
     jest.clearAllMocks()
   })
 
-  it('renders TableView with props correctly', () => {
+  it('renders TableView with correct props', () => {
     jest.spyOn(storageHelper, 'getUserId').mockReturnValue(user._id)
     const uri = `/accounts/cash/withdrawals/list/${user._id}`
     const name = `cash-withdrawals-${user._id}`

@@ -14,7 +14,7 @@ describe('StatusFilterItem', () => {
 
   afterEach(cleanup)
 
-  it('renders with props correctly', async () => {
+  it('renders with correct props', async () => {
     const { getByText, getByTestId } = render(
       <StatusFilterItem {...props}>{children}</StatusFilterItem>
     )

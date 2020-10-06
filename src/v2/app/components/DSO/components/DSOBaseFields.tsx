@@ -1,7 +1,7 @@
 import React from 'react'
 import { Grid } from '@material-ui/core'
 import { useDSOForm } from 'v2/app/components/DSO/DSOForm'
-import { UserAvatar } from '../../UserAvatar'
+import { UserAvatar } from 'v2/app/components/UserAvatar'
 
 export interface DSOBaseFieldsProps {
   isEditing: boolean

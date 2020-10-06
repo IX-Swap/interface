@@ -17,7 +17,7 @@ describe('RecentDeposits', () => {
     jest.clearAllMocks()
   })
 
-  it('renders TableView with props correctly', () => {
+  it('renders TableView with correct props', () => {
     jest.spyOn(useAuthHook, 'useAuth').mockReturnValue({
       isAuthenticated: true,
       user

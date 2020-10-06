@@ -19,7 +19,7 @@ describe('RecentDeposits', () => {
     render(<RecentDeposits />)
   })
 
-  it('renders TableView with props correctly', () => {
+  it('renders TableView with correct props', () => {
     const userId = 'testUserId'
     jest.spyOn(storageHelper, 'getUserId').mockReturnValue(userId)
     const uri = `/accounts/security/deposits/list/${userId}`

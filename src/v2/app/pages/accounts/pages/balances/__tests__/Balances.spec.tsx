@@ -26,7 +26,7 @@ describe('Balances', () => {
     expect(container).toBeEmptyDOMElement()
   })
 
-  it('renders TableView with correct props if user is presented', () => {
+  it('renders TableView with correct props if user exists', () => {
     jest.spyOn(useAuthHook, 'useAuth').mockReturnValue({
       isAuthenticated: true,
       user

@@ -1,8 +1,10 @@
 import React from 'react'
-import { Button, Grid } from '@material-ui/core'
+import { Grid } from '@material-ui/core'
 import { renderStringToHTML } from 'v2/app/components/DSO/utils'
 import { useDSOForm } from 'v2/app/components/DSO/DSOForm'
 import { UserAvatar } from '../../UserAvatar'
+import { DSOTeamRemoveButton } from './DSOTeamRemoveButton'
+import { DSOTeamAddButton } from './DSOTeamAddButton'
 
 export interface DSOTeamProps {
   isEditing: boolean
@@ -17,13 +19,14 @@ export const DSOTeam = (props: DSOTeamProps) => {
     <FieldsArray name='team'>
       {({ fields, append, remove }) => (
         <Grid container direction='column' spacing={4}>
-          {fields.map((field, index) => (
+          {fields.map((_field, index) => (
             <Grid
               item
               container
               alignItems='flex-start'
               wrap='nowrap'
               spacing={3}
+              key={index}
             >
               <Grid item>
                 <UserAvatar
@@ -67,20 +70,14 @@ export const DSOTeam = (props: DSOTeamProps) => {
               </Grid>
               {isEditing && (
                 <Grid item>
-                  <Button onClick={() => remove(index)}>Remove</Button>
+                  <DSOTeamRemoveButton remove={remove} index={index} />
                 </Grid>
               )}
             </Grid>
           ))}
           {isEditing && (
             <Grid item container justify='flex-end'>
-              <Button
-                color='primary'
-                variant={'contained'}
-                onClick={() => append({})}
-              >
-                Add Team Member
-              </Button>
+              <DSOTeamAddButton append={append} />
             </Grid>
           )}
         </Grid>
