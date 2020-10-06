@@ -21,6 +21,7 @@ describe('UserInfo', () => {
       EditableField
     })
   })
+
   afterEach(async () => {
     await cleanup()
     jest.clearAllMocks()
@@ -33,9 +34,18 @@ describe('UserInfo', () => {
   it('renders EditableField correctly', () => {
     render(<UserInfo {...props} />)
 
-    expect(EditableField).toHaveBeenCalledTimes(10)
+    expect(EditableField).toHaveBeenCalledTimes(11)
     expect(EditableField).toHaveBeenNthCalledWith(
       1,
+      expect.objectContaining({
+        fieldType: 'DataroomDocument',
+        isEditing: props.isEditing,
+        name: 'photo'
+      }),
+      {}
+    )
+    expect(EditableField).toHaveBeenNthCalledWith(
+      2,
       {
         fieldType: 'TextField',
         isEditing: props.isEditing,
@@ -46,7 +56,7 @@ describe('UserInfo', () => {
       {}
     )
     expect(EditableField).toHaveBeenNthCalledWith(
-      2,
+      3,
       {
         fieldType: 'TextField',
         isEditing: props.isEditing,
@@ -57,7 +67,7 @@ describe('UserInfo', () => {
       {}
     )
     expect(EditableField).toHaveBeenNthCalledWith(
-      3,
+      4,
       {
         fieldType: 'TextField',
         isEditing: props.isEditing,
@@ -68,7 +78,7 @@ describe('UserInfo', () => {
       {}
     )
     expect(EditableField).toHaveBeenNthCalledWith(
-      4,
+      5,
       {
         fieldType: 'TextField',
         isEditing: props.isEditing,
@@ -79,7 +89,7 @@ describe('UserInfo', () => {
       {}
     )
     expect(EditableField).toHaveBeenNthCalledWith(
-      5,
+      6,
       {
         fieldType: 'NationalitySelect',
         isEditing: props.isEditing,
@@ -90,7 +100,7 @@ describe('UserInfo', () => {
       {}
     )
     expect(EditableField).toHaveBeenNthCalledWith(
-      6,
+      7,
       {
         fieldType: 'CountrySelect',
         isEditing: props.isEditing,
@@ -101,7 +111,7 @@ describe('UserInfo', () => {
       {}
     )
     expect(EditableField).toHaveBeenNthCalledWith(
-      7,
+      8,
       {
         fieldType: 'TextField',
         isEditing: props.isEditing,
@@ -112,7 +122,7 @@ describe('UserInfo', () => {
       {}
     )
     expect(EditableField).toHaveBeenNthCalledWith(
-      8,
+      9,
       {
         fieldType: 'TextField',
         isEditing: props.isEditing,
@@ -123,7 +133,7 @@ describe('UserInfo', () => {
       {}
     )
     expect(EditableField).toHaveBeenNthCalledWith(
-      9,
+      10,
       {
         fieldType: 'GenderSelect',
         isEditing: props.isEditing,
@@ -134,7 +144,7 @@ describe('UserInfo', () => {
       {}
     )
     expect(EditableField).toHaveBeenNthCalledWith(
-      10,
+      11,
       {
         fieldType: 'MartialStatusSelect',
         isEditing: props.isEditing,

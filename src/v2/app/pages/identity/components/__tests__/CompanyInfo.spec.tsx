@@ -7,6 +7,7 @@ import {
 } from 'v2/app/pages/identity/components/CompanyInfo'
 import * as typedForm from 'v2/app/pages/identity/components/CorporateIdentityForm'
 import { useTypedForm } from '__fixtures__/createTypedForm'
+import { Form } from 'v2/components/form/Form'
 
 describe('CompanyInformation', () => {
   const props: CompanyInformationProps = {
@@ -19,7 +20,7 @@ describe('CompanyInformation', () => {
     jest.spyOn(typedForm, 'useCorporateIdentityForm').mockReturnValue({
       ...useTypedForm(),
       EditableField
-    } as any)
+    })
   })
 
   afterEach(async () => {
@@ -28,13 +29,21 @@ describe('CompanyInformation', () => {
   })
 
   it('renders without error', () => {
-    render(<CompanyInformation {...props} />)
+    render(
+      <Form>
+        <CompanyInformation {...props} />
+      </Form>
+    )
   })
 
   it('renders EditableField correctly', () => {
-    render(<CompanyInformation {...props} />)
+    render(
+      <Form>
+        <CompanyInformation {...props} />
+      </Form>
+    )
 
-    expect(EditableField).toHaveBeenCalledTimes(6)
+    expect(EditableField).toHaveBeenCalledTimes(8)
     expect(EditableField).toHaveBeenNthCalledWith(
       1,
       {
@@ -87,6 +96,26 @@ describe('CompanyInformation', () => {
     )
     expect(EditableField).toHaveBeenNthCalledWith(
       6,
+      {
+        fieldType: 'TextField',
+        isEditing: false,
+        label: 'Email Address',
+        name: 'email'
+      },
+      {}
+    )
+    expect(EditableField).toHaveBeenNthCalledWith(
+      7,
+      {
+        fieldType: 'TextField',
+        isEditing: false,
+        label: 'Contact Number',
+        name: 'contactNumber'
+      },
+      {}
+    )
+    expect(EditableField).toHaveBeenNthCalledWith(
+      8,
       {
         fieldType: 'Checkbox',
         isEditing: false,

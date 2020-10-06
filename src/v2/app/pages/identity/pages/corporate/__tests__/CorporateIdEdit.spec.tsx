@@ -23,10 +23,12 @@ describe('CorporateIdEdit', () => {
   beforeEach(() => {
     history.push(IdentityRoute.editCorporate, { identityId })
   })
+
   afterEach(async () => {
     await cleanup()
     jest.clearAllMocks()
   })
+
   afterAll(() => history.push('/'))
 
   it('renders without error', () => {
@@ -52,11 +54,9 @@ describe('CorporateIdEdit', () => {
       )
     render(<CorporateIdEdit />)
 
-    expect(CorporateIdentityForm).toHaveBeenCalledTimes(1)
-    expect(CorporateIdentityForm).toHaveBeenNthCalledWith(
-      1,
+    expect(CorporateIdentityForm).toHaveBeenCalledWith(
       {
-        identity: corporate,
+        data: corporate,
         isEditing: true,
         useOwnEmail: false,
         submitButtonText: 'Save',

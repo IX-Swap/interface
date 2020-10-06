@@ -18,17 +18,13 @@ describe('DownloadDocument', () => {
   })
 
   it("renders 'No file uploaded' if documentId is undefined", () => {
-    const { container } = render(
-      <DownloadDocument {...props} documentId={undefined} />
-    )
+    const { container } = render(<DownloadDocument {...props} documentId='' />)
 
     expect(container).toHaveTextContent('No file uploaded')
   })
 
   it("renders 'No file uploaded' if ownerId is undefined", () => {
-    const { container } = render(
-      <DownloadDocument {...props} ownerId={undefined} />
-    )
+    const { container } = render(<DownloadDocument {...props} ownerId='' />)
 
     expect(container).toHaveTextContent('No file uploaded')
   })

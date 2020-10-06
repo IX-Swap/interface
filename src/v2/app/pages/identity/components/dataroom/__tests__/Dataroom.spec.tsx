@@ -7,7 +7,7 @@ import { DataroomAddDocument } from 'v2/app/pages/identity/components/dataroom/D
 import {
   noop,
   Dataroom,
-  DataRoomProps
+  DataroomProps
 } from 'v2/app/pages/identity/components/dataroom/Dataroom'
 import { Form } from 'v2/components/form/Form'
 import { documents } from '__fixtures__/identity'
@@ -24,12 +24,16 @@ jest.mock(
 )
 
 describe('Dataroom', () => {
-  const props: DataRoomProps = {
+  const props: DataroomProps = {
+    name: 'docs',
     isEditing: false,
-    editable: false
+    editable: false,
+    EditComponent: jest.fn(() => null),
+    ViewComponent: jest.fn(() => null),
+    dataroomDocumentProps: { canDelete: false }
   }
   const defaultValues = {
-    documents: documents.map(d => ({ ...d, id: d._id }))
+    docs: documents.map(d => ({ ...d, id: d._id }))
   }
 
   afterEach(async () => {
@@ -65,37 +69,18 @@ describe('Dataroom', () => {
     )
 
     expect(DataroomHeader).toHaveBeenCalledTimes(1)
-    expect(DataroomItem).toHaveBeenCalledTimes(defaultValues.documents.length)
-    defaultValues.documents.forEach((doc, n) =>
+    expect(DataroomItem).toHaveBeenCalledTimes(defaultValues.docs.length)
+    defaultValues.docs.forEach((doc, n) =>
       expect(DataroomItem).toHaveBeenNthCalledWith(
         n + 1,
         {
+          name: props.name,
           isEditing: props.isEditing,
+          EditComponent: props.EditComponent,
+          ViewComponent: props.ViewComponent,
+          dataroomDocumentProps: props.dataroomDocumentProps,
           document: doc,
           removeItem: noop,
-          index: n
-        },
-        {}
-      )
-    )
-  })
-
-  it('renders DataroomItem & DataroomHeader correctly if editable is true', () => {
-    render(
-      <Form defaultValues={defaultValues}>
-        <Dataroom {...props} editable />
-      </Form>
-    )
-
-    expect(DataroomHeader).toHaveBeenCalledTimes(1)
-    expect(DataroomItem).toHaveBeenCalledTimes(defaultValues.documents.length)
-    defaultValues.documents.forEach((doc, n) =>
-      expect(DataroomItem).toHaveBeenNthCalledWith(
-        n + 1,
-        {
-          isEditing: props.isEditing,
-          document: doc,
-          removeItem: expect.any(Function),
           index: n
         },
         {}

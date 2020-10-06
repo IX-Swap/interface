@@ -5,10 +5,18 @@ import {
   DSWithdrawals,
   renderDSWithdrawal
 } from 'v2/app/pages/authorizer/pages/dsWithdrawals/DSWithdrawals'
-import DSWithdrawalView from 'v2/app/components/DSWithdrawalPreview/DSWithdrawalPreview'
+import { DSWithdrawalPreview } from 'v2/app/components/DSWithdrawalPreview/DSWithdrawalPreview'
 import { dsWithdrawal } from '__fixtures__/authorizer'
+import { DataroomFeature } from '../../../../../../types/authorizer'
+import { AuthorizerView } from '../../../components/AuthorizerView'
 
-jest.mock('v2/app/components/DSWithdrawalPreview', () => jest.fn(() => null))
+jest.mock('v2/app/components/DSWithdrawalPreview/DSWithdrawalPreview', () => ({
+  DSWithdrawalPreview: jest.fn(() => null)
+}))
+
+jest.mock('v2/app/pages/authorizer/components/AuthorizerView', () => ({
+  AuthorizerView: jest.fn(() => null)
+}))
 
 describe('DSWithdrawals', () => {
   afterEach(async () => {
@@ -22,8 +30,15 @@ describe('DSWithdrawals', () => {
   describe('renderDSWithdrawal', () => {
     it('renders DSWithdrawalView component with correct data', () => {
       const dsWithdrawalView = renderDSWithdrawal(dsWithdrawal)
+
       expect(dsWithdrawalView).toEqual(
-        <DSWithdrawalView withdrawal={dsWithdrawal} />
+        <AuthorizerView
+          title='About This Withdrawal'
+          data={dsWithdrawal}
+          feature={DataroomFeature.dsWithdrawals}
+        >
+          <DSWithdrawalPreview data={dsWithdrawal} />
+        </AuthorizerView>
       )
     })
   })

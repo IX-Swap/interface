@@ -30,7 +30,7 @@ export const Form = <T,>(
     ...rest
   } = props
   const form = useForm({
-    mode: 'onChange',
+    mode: 'onBlur',
     defaultValues: defaultValues as any,
     resolver: yupResolver(validationSchema)
   } as any)

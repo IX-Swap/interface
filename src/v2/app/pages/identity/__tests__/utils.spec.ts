@@ -6,7 +6,7 @@ import {
   getIdentityDocuments
 } from '../utils'
 import { Declaration } from 'v2/types/identity'
-import { DocumentWithGuide } from 'v2/types/document'
+import { DataroomFileWithGuide } from 'v2/types/dataroomFile'
 import { documents } from '__fixtures__/identity'
 
 const declarations: Declaration[] = [
@@ -29,7 +29,7 @@ describe('allDeclarationsAreChecked', () => {
   })
 })
 
-const documentsWithGuide: DocumentWithGuide[] = [
+const documentsWithGuide: DataroomFileWithGuide[] = [
   { title: '', label: '', type: '', document: documents[0] },
   { title: '', label: '', type: '', document: documents[1] }
 ]

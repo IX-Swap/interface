@@ -7,9 +7,15 @@ import {
 } from 'v2/app/pages/authorizer/pages/offerings/Offerings'
 import { DSOForm } from 'v2/app/components/DSO/DSOForm'
 import { dso } from '__fixtures__/authorizer'
+import { AuthorizerView } from '../../../components/AuthorizerView'
+import { DataroomFeature } from '../../../../../../types/authorizer'
 
 jest.mock('v2/app/components/DSO/DSOForm', () => ({
   DSOForm: jest.fn(() => null)
+}))
+
+jest.mock('v2/app/pages/authorizer/components/AuthorizerView', () => ({
+  AuthorizerView: jest.fn(() => null)
 }))
 
 describe('Offerings', () => {
@@ -25,7 +31,15 @@ describe('Offerings', () => {
     it('renders DigitalSecurity component with correct data', () => {
       const digitalSecurity = renderDSOView(dso)
 
-      expect(digitalSecurity).toEqual(<DSOForm data={dso} isEditing={false} />)
+      expect(digitalSecurity).toEqual(
+        <AuthorizerView
+          title='About This Offering'
+          data={dso}
+          feature={DataroomFeature.offerings}
+        >
+          <DSOForm data={dso} isEditing={false} />
+        </AuthorizerView>
+      )
     })
   })
 })

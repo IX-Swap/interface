@@ -61,6 +61,8 @@ describe('WithdrawView', () => {
   })
 
   it('renders Preview,OTP,WithdrawCashAlert,BankPreview if preview is true', () => {
+    console.error = jest.fn()
+
     const { queryByText } = renderWithDepositStore(<WithdrawView />, {
       isPreview: true
     })

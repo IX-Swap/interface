@@ -31,12 +31,17 @@ jest.mock('v2/app/pages/identity/components/Declaration', () => ({
 
 describe('IndividualIdentityForm', () => {
   const props: IndividualIdentityFormProps = {
-    identity: individual,
+    data: individual,
     isEditing: false,
     useOwnEmail: false,
     submitButtonText: 'Submit',
     cancelButton: <div data-testid='cancelButton' />
   }
+
+  beforeAll(() => {
+    window.URL.revokeObjectURL = jest.fn()
+  })
+
   afterEach(async () => {
     await cleanup()
     jest.clearAllMocks()
@@ -105,7 +110,7 @@ describe('IndividualIdentityForm', () => {
     expect(Declaration).toHaveBeenCalledWith(
       {
         isEditing: props.isEditing,
-        declarations: getIdentityDeclarations(props.identity, 'individual')
+        declarations: getIdentityDeclarations(props.data, 'individual')
       },
       {}
     )

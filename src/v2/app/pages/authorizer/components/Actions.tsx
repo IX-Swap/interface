@@ -20,11 +20,11 @@ export type Actions<T> = (props: ActionsProps<T>) => ReactElement
 export const Actions = <T,>(props: ActionsProps<T>): JSX.Element => {
   const { item, cacheQueryKey } = props
   const { push, current } = useAuthorizerRouter()
-  const ownerId = getItemOwnerId((item as any).user)
-  const id = (item as any)._id
   const classes = useStyles()
 
   const viewItem = (): void => {
+    const ownerId = getItemOwnerId((item as any).user)
+    const id = (item as any)._id
     const splitted = current.path.split('/')
     const category = splitted[splitted.length - 1]
 

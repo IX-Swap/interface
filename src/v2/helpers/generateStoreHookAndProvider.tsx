@@ -1,7 +1,9 @@
 import React, { createContext, useContext } from 'react'
+import { DeepPartial } from '../types/util'
+import merge from 'lodash/merge'
 
 export interface ProviderProps<T> {
-  value?: Partial<T>
+  value?: DeepPartial<T>
 }
 
 interface GeneratedStoreHookAndProvider<T> {
@@ -20,6 +22,14 @@ function generateStoreHookAndProvider<T> (
       let storeValue = store
 
       if (value !== undefined) {
+        if (
+          Object.values(value).some(
+            v => typeof v === 'object' || Array.isArray(v)
+          )
+        ) {
+          storeValue = merge(storeValue, { ...value })
+        }
+
         storeValue = { ...storeValue, ...value }
       }
 

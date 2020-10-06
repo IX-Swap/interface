@@ -7,10 +7,10 @@ import {
 } from 'v2/app/pages/identity/components/dataroom/DataroomItem'
 import { document } from '__fixtures__/identity'
 import { Form } from 'v2/components/form/Form'
-import { fireEvent, waitFor } from '@testing-library/react'
 
 describe('DataroomItem', () => {
   const props: DataroomItemProps = {
+    name: 'name',
     document: {
       document,
       label: 'test label',
@@ -19,7 +19,10 @@ describe('DataroomItem', () => {
     },
     index: 1,
     isEditing: false,
-    removeItem: jest.fn() as any
+    removeItem: jest.fn(),
+    dataroomDocumentProps: undefined,
+    ViewComponent: () => null,
+    EditComponent: () => null
   }
   afterEach(async () => {
     await cleanup()
@@ -32,19 +35,5 @@ describe('DataroomItem', () => {
         <DataroomItem {...props} />
       </Form>
     )
-  })
-
-  it('handles delete item', async () => {
-    const { getByRole } = render(
-      <Form defaultValues={{}}>
-        <DataroomItem {...props} isEditing />
-      </Form>
-    )
-
-    fireEvent.click(getByRole('button'))
-    await waitFor(() => {
-      expect(props.removeItem).toHaveBeenCalledTimes(1)
-      expect(props.removeItem).toHaveBeenCalledWith(props.index)
-    })
   })
 })

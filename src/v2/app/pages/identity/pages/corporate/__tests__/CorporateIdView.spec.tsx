@@ -84,7 +84,7 @@ describe('CorporateIdView', () => {
     expect(CorporateIdentityForm).toHaveBeenCalledTimes(1)
     expect(CorporateIdentityForm).toHaveBeenNthCalledWith(
       1,
-      { useOwnEmail: false, isEditing: false, identity: corporate },
+      { useOwnEmail: false, isEditing: false, data: corporate },
       {}
     )
   })

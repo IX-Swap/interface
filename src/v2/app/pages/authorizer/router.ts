@@ -11,7 +11,7 @@ import { InternalRouteProps } from 'v2/types/util'
 import { generateAppRouterHook } from 'v2/helpers/generateAppRouterHook'
 import { ViewAuthorizableItem } from './components/ViewAuthorizableItem'
 
-const AuthorizerRoute = {
+export const AuthorizerRoute = {
   viewItem: '/app/authorizer/:category/:itemId',
   banks: '/app/authorizer/banks',
   deposits: '/app/authorizer/deposits',

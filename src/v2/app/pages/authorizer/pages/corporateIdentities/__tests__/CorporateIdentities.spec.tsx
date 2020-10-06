@@ -6,10 +6,16 @@ import {
   renderCorporateIdentity
 } from 'v2/app/pages/authorizer/pages/corporateIdentities/CorporateIdentities'
 import { CorporateIdentityForm } from 'v2/app/pages/identity/components/CorporateIdentityForm'
+import { AuthorizerView } from 'v2/app/pages/authorizer/components/AuthorizerView'
 import { corporate } from '__fixtures__/authorizer'
+import { DataroomFeature } from '../../../../../../types/authorizer'
 
 jest.mock('v2/app/pages/identity/components/CorporateIdentityForm', () => ({
   CorporateIdentityForm: jest.fn(() => null)
+}))
+
+jest.mock('v2/app/pages/authorizer/components/AuthorizerView', () => ({
+  AuthorizerView: jest.fn(() => null)
 }))
 
 describe('CorporateIdentities', () => {
@@ -24,12 +30,19 @@ describe('CorporateIdentities', () => {
   describe('renderCorporateIdentity', () => {
     it('renders CorporateIdentityForm component with correct data', () => {
       const corporateIdentityForm = renderCorporateIdentity(corporate)
+
       expect(corporateIdentityForm).toEqual(
-        <CorporateIdentityForm
+        <AuthorizerView
+          title='About This Corporate'
           data={corporate}
-          isEditing={false}
-          useOwnEmail={false}
-        />
+          feature={DataroomFeature.corporateIdentities}
+        >
+          <CorporateIdentityForm
+            data={corporate}
+            isEditing={false}
+            useOwnEmail={false}
+          />
+        </AuthorizerView>
       )
     })
   })

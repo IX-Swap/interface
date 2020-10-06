@@ -36,7 +36,7 @@ jest.mock('v2/app/pages/identity/components/CompanyInfo', () => ({
 
 describe('CorporateIdentityForm', () => {
   const props: CorporateIdentityFormProps = {
-    identity: corporate,
+    data: corporate,
     isEditing: false,
     useOwnEmail: false,
     cancelButton: <div data-testid='cancelButton' />,
@@ -81,7 +81,7 @@ describe('CorporateIdentityForm', () => {
     expect(CompanyInformation).toHaveBeenNthCalledWith(
       1,
       {
-        corporate: props.identity,
+        corporate: props.data,
         isEditing: props.isEditing,
         useOwnEmail: props.useOwnEmail
       },
@@ -169,7 +169,7 @@ describe('CorporateIdentityForm', () => {
     expect(Declaration).toHaveBeenCalledWith(
       {
         isEditing: props.isEditing,
-        declarations: utils.getIdentityDeclarations(props.identity, 'corporate')
+        declarations: utils.getIdentityDeclarations(props.data, 'corporate')
       },
       {}
     )

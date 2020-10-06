@@ -17,7 +17,11 @@ export const Banks: React.FC = () => (
 )
 
 export const renderBank = (b: Bank): JSX.Element => (
-  <AuthorizerView title={b.bankName} data={b} feature={DataroomFeature.banks}>
+  <AuthorizerView
+    title='About This Bank'
+    data={b}
+    feature={DataroomFeature.banks}
+  >
     <BankPreview data={b} />
   </AuthorizerView>
 )

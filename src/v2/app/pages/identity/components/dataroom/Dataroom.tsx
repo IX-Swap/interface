@@ -21,7 +21,7 @@ export type DataroomEditComponent = (
   props: DataroomEditRowProps
 ) => Maybe<JSX.Element>
 
-interface DataroomProps {
+export interface DataroomProps {
   isEditing: boolean
   name?: string
   editable?: boolean

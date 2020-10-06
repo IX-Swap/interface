@@ -1,19 +1,23 @@
 import React from 'react'
 import { DataroomFileWithGuide, DataroomFile } from 'v2/types/dataroomFile'
 import { Button } from '@material-ui/core'
-import { DataroomUploader } from '../../../../../components/form/DataroomUploader'
+import { DataroomUploader } from 'v2/components/form/DataroomUploader'
 import {
   defaultUploadDocumentInfo,
   UploadDocumentInfo
-} from '../../../../../hooks/useUploadFile'
+} from 'v2/hooks/useUploadFile'
 
 export interface DataroomAddDocumentInfoProps {
   documentInfo?: UploadDocumentInfo
 }
 
-export interface DataroomAddDocumentProps {
+export interface DataroomAddDocumentBaseProps {
   append: (document: DataroomFileWithGuide) => void
 }
+
+export interface DataroomAddDocumentProps
+  extends DataroomAddDocumentInfoProps,
+    DataroomAddDocumentBaseProps {}
 
 export const DataroomAddDocument: React.FC<
   DataroomAddDocumentProps & DataroomAddDocumentInfoProps

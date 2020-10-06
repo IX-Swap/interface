@@ -1,4 +1,3 @@
-import AsyncStore from 'v2/stores/async-store'
 import { action, computed, observable } from 'mobx'
 
 export enum DepositStoreStep {
@@ -6,7 +5,7 @@ export enum DepositStoreStep {
   PREVIEW
 }
 
-export class DepositStore extends AsyncStore {
+export class DepositStore {
   @observable
   currentStep = DepositStoreStep.SETUP
 

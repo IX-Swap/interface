@@ -56,7 +56,7 @@ describe('IndividualIdEdit', () => {
     expect(IndividualIdentityForm).toHaveBeenNthCalledWith(
       1,
       {
-        identity: individual,
+        data: individual,
         isEditing: true,
         useOwnEmail: false,
         submitButtonText: 'Save',

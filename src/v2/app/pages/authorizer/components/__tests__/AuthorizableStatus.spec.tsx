@@ -2,7 +2,7 @@ import React from 'react'
 import { render } from 'test-utils'
 import { AuthorizableStatus } from 'v2/app/pages/authorizer/components/AuthorizableStatus'
 
-describe('StatusColumn', () => {
+describe('AuthorizableStatus', () => {
   it('renders A if status Approved', () => {
     const { getByText } = render(<AuthorizableStatus status='Approved' />)
 
@@ -15,9 +15,9 @@ describe('StatusColumn', () => {
     expect(getByText('R')).toBeTruthy()
   })
 
-  it('renders U if status is empty', () => {
-    const { getByText } = render(<AuthorizableStatus status='' />)
+  it('renders S if status is Submitted', () => {
+    const { getByText } = render(<AuthorizableStatus status='Submitted' />)
 
-    expect(getByText('U')).toBeTruthy()
+    expect(getByText('S')).toBeTruthy()
   })
 })

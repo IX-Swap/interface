@@ -60,7 +60,7 @@ describe('IndividualIdView', () => {
     expect(IndividualIdentityForm).toHaveBeenCalledTimes(1)
     expect(IndividualIdentityForm).toHaveBeenCalledWith(
       {
-        identity: individual,
+        data: individual,
         isEditing: false,
         cancelButton: expect.anything(),
         useOwnEmail: false

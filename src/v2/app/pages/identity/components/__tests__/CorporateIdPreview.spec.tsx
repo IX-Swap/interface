@@ -29,7 +29,7 @@ describe('CorporateIdPreview', () => {
   beforeEach(() => {
     jest
       .spyOn(corporateIdentityFormHook, 'useCorporateIdentityForm')
-      .mockReturnValue({ ...useTypedForm(), Form } as any)
+      .mockReturnValue({ ...useTypedForm(), Form })
   })
   afterEach(async () => {
     await cleanup()

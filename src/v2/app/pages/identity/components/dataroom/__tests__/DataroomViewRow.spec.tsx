@@ -4,7 +4,7 @@ import { render, cleanup } from 'test-utils'
 import { DownloadDocument } from 'v2/app/pages/identity/components/dataroom/DownloadDocument'
 import {
   DataroomViewRow,
-  DataroomRowProps
+  DataroomViewRowProps
 } from 'v2/app/pages/identity/components/dataroom/DataroomViewRow'
 import { document } from '__fixtures__/identity'
 import { DataroomColumns } from 'v2/app/pages/identity/components/dataroom/DataroomColumns'
@@ -17,7 +17,11 @@ jest.mock('v2/app/pages/identity/components/dataroom/DownloadDocument', () => ({
 }))
 
 describe('DataroomViewRow', () => {
-  const props: DataroomRowProps = { title: 'test title', document: document }
+  const props: DataroomViewRowProps = {
+    title: 'test title',
+    document: document
+  }
+
   afterEach(async () => {
     await cleanup()
     jest.clearAllMocks()

@@ -31,7 +31,7 @@ describe('Setup', () => {
 
     jest
       .spyOn(withdrawForm, 'useDSWithdrawForm')
-      .mockReturnValue({ ...useTypedForm(), TextField, NumericField } as any)
+      .mockReturnValue({ ...useTypedForm(), TextField, NumericField })
   })
   afterEach(async () => {
     await cleanup()

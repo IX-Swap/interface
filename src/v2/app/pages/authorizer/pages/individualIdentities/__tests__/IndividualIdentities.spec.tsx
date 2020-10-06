@@ -7,9 +7,15 @@ import {
 } from 'v2/app/pages/authorizer/pages/individualIdentities/IndividualIdentities'
 import { IndividualIdentityForm } from 'v2/app/pages/identity/components/IndividualIdentityForm'
 import { individual } from '__fixtures__/authorizer'
+import { DataroomFeature } from '../../../../../../types/authorizer'
+import { AuthorizerView } from '../../../components/AuthorizerView'
 
 jest.mock('v2/app/pages/identity/components/IndividualIdentityForm', () => ({
   IndividualIdentityForm: jest.fn(() => null)
+}))
+
+jest.mock('v2/app/pages/authorizer/components/AuthorizerView', () => ({
+  AuthorizerView: jest.fn(() => null)
 }))
 
 describe('IndividualIdentities', () => {
@@ -26,11 +32,17 @@ describe('IndividualIdentities', () => {
       const individualIdentityForm = renderIndividualIdentityForm(individual)
 
       expect(individualIdentityForm).toEqual(
-        <IndividualIdentityForm
+        <AuthorizerView
+          title='About This Identity'
           data={individual}
-          isEditing={false}
-          useOwnEmail={false}
-        />
+          feature={DataroomFeature.individualIdentities}
+        >
+          <IndividualIdentityForm
+            data={individual}
+            isEditing={false}
+            useOwnEmail={false}
+          />
+        </AuthorizerView>
       )
     })
   })

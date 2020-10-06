@@ -19,12 +19,12 @@ describe('withExtraActions', () => {
 
   it('extends Actions component with provided props', () => {
     const ExtendedActions = withExtraActions(props)
-    render(<ExtendedActions item={item} />)
+    render(<ExtendedActions item={item} cacheQueryKey={[]} />)
 
-    expect(Actions).toHaveBeenCalledTimes(1)
     expect(Actions).toHaveBeenCalledWith(
       {
         onView: props.onView,
+        cacheQueryKey: [],
         item
       },
       {}

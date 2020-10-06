@@ -1,8 +1,4 @@
-import { createTypedForm } from 'v2/components/form/createTypedForm'
-
-export const useTypedForm = (): ReturnType<
-  ReturnType<typeof createTypedForm>
-> =>
+export const useTypedForm = (): any =>
   ({
     TextField: jest.fn(() => null),
     NumericField: jest.fn(() => null),
