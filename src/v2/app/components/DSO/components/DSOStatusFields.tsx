@@ -1,6 +1,7 @@
 import React from 'react'
 import { moneyNumberFormat } from 'v2/app/components/DSO/utils'
 import { useDSOForm } from 'v2/app/components/DSO/DSOForm'
+import { plainValueExtractor } from 'v2/components/form/createTypedForm'
 
 export interface DSOStatusFieldsProps {
   isEditing: boolean
@@ -20,7 +21,7 @@ export const DSOStatusFields = (props: DSOStatusFieldsProps) => {
           isEditing={isEditing}
           label='Corporate'
           name='corporate'
-          valueExtractor={value => value}
+          valueExtractor={plainValueExtractor}
         />
       )}
 

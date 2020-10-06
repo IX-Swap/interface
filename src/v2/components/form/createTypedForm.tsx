@@ -54,7 +54,7 @@ const numericValueExtractor = (
   values: NumberFormatValues
 ): number | undefined => values.floatValue
 
-const plainValueExtractor = (value: any) => value
+export const plainValueExtractor = (value: any) => value
 
 export interface FieldsArrayRendererProps {
   fields: any[]
