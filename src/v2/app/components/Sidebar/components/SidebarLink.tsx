@@ -1,163 +1,33 @@
-import React, { useState } from 'react'
-import {
-  Collapse,
-  Divider,
-  List,
-  ListItem,
-  ListItemIcon,
-  ListItemText,
-  Typography
-} from '@material-ui/core'
-import InboxIcon from '@material-ui/icons/Inbox'
-import { Link } from 'react-router-dom'
-import classnames from 'classnames'
-import useStyles from './styles'
-
-const ListItemLink = React.forwardRef(({ ...props }: any, ref: any) => (
-  <Link ref={ref} {...props} />
-))
+import React from 'react'
+import { Box, Grid, ListItem, Typography } from '@material-ui/core'
+import { Link, useLocation } from 'react-router-dom'
+import useStyles from './SidebarLink.styles'
+import classNames from 'classnames'
 
 export interface SidebarLinkProps {
-  link?: string
-  icon?: JSX.Element
-  label?: string
-  children?: Array<{ link: string; label: string }>
-  location: any
-  isSidebarOpened: boolean
-  nested: any
-  type?: any
+  link: string
+  icon: any
+  label: string
 }
 
 export const SidebarLink = (props: SidebarLinkProps) => {
-  const {
-    link,
-    icon,
-    label,
-    children,
-    location,
-    isSidebarOpened,
-    nested,
-    type
-  } = props
+  const { link, icon, label } = props
+  const { pathname } = useLocation()
   const classes = useStyles()
-
-  // local
-  const [isOpen, setIsOpen] = useState(false)
-  const isLinkActive =
-    link !== undefined &&
-    (location.pathname === link || location.pathname.indexOf(link) !== -1)
-
-  if (type === 'title') {
-    return (
-      <Typography
-        className={classnames(classes.linkText, classes.sectionTitle, {
-          [classes.linkTextHidden]: !isSidebarOpened
-        })}
-      >
-        {label}
-      </Typography>
-    )
-  }
-
-  if (type === 'divider') return <Divider className={classes.divider} />
-
-  if (children === undefined) {
-    return (
-      <ListItem
-        component={ListItemLink}
-        to={link ?? ''}
-        button
-        className={classes.link}
-        classes={{
-          root: classnames({
-            [classes.linkActive]: isLinkActive && nested,
-            [classes.linkNested]: nested
-          })
-        }}
-        disableRipple
-      >
-        <ListItemIcon
-          className={classnames(classes.linkIcon, {
-            [classes.linkIconActive]: isLinkActive,
-            [classes.linkIconNested]: nested
-          })}
-        >
-          {nested !== undefined ? <>&nbsp;</> : icon}
-        </ListItemIcon>
-        <ListItemText
-          classes={{
-            primary: classnames(classes.linkText, {
-              [classes.linkTextActive]: isLinkActive,
-              [classes.linkTextHidden]: !isSidebarOpened
-            })
-          }}
-          primary={label}
-        />
-      </ListItem>
-    )
-  }
+  const isActive = pathname.startsWith(link)
 
   return (
-    <>
-      <ListItem
-        to={link ?? ''}
-        component={ListItemLink}
-        button
-        onClick={(e: Event) => toggleCollapse(e, isLinkActive)}
-        className={classes.link}
-        disableRipple
-      >
-        <ListItemIcon
-          className={classnames(classes.linkIcon, {
-            [classes.linkIconActive]: isLinkActive
-          })}
-        >
-          {icon ?? <InboxIcon />}
-        </ListItemIcon>
-        <ListItemText
-          classes={{
-            primary: classnames(classes.linkText, {
-              [classes.linkTextActive]: isLinkActive,
-              [classes.linkTextHidden]: !isSidebarOpened
-            })
-          }}
-          primary={label}
-        />
-      </ListItem>
-      <Collapse
-        in={isOpen}
-        timeout='auto'
-        unmountOnExit
-        className={classes.nestedList}
-      >
-        <List component='div' disablePadding>
-          {children.map(childrenLink => (
-            <SidebarLink
-              key={childrenLink?.link}
-              location={location}
-              isSidebarOpened={isSidebarOpened}
-              nested
-              {...childrenLink}
-            />
-          ))}
-        </List>
-      </Collapse>
-    </>
+    <ListItem
+      component={Link}
+      className={classNames(classes.link, { [classes.active]: isActive })}
+      disableRipple
+      to={link}
+      button
+    >
+      <Grid container direction='column' alignItems='center'>
+        <Box>{React.createElement(icon, { className: classes.icon })}</Box>
+        <Typography variant='subtitle2'>{label}</Typography>
+      </Grid>
+    </ListItem>
   )
-
-  // ###########################################################
-
-  function toggleCollapse (e: Event, isActive: boolean) {
-    if (isSidebarOpened) {
-      if (isActive) {
-        e.preventDefault()
-        if (isOpen) {
-          setIsOpen(false)
-          return
-        }
-      }
-
-      setIsOpen(true)
-    }
-  }
 }

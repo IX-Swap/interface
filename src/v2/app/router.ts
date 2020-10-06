@@ -58,6 +58,6 @@ const appRoutes: InternalRouteProps[] = [
 
 export const useAppRouter = generateAppRouterHook<typeof AppRoute>(
   AppRoute,
-  AppRoute.identity,
+  AppRoute.accounts,
   appRoutes
 )

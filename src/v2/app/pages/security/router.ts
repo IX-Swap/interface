@@ -1,6 +1,5 @@
 import { InternalRouteProps } from 'v2/types/util'
 import { generateAppRouterHook } from 'v2/helpers/generateAppRouterHook'
-
 import { ChangePassword } from './pages/changePassword/ChangePassword'
 import { Landing } from './pages/landing/Landing'
 import { Setup2fa } from './pages/setup2fa/Setup2fa'

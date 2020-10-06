@@ -23,7 +23,7 @@ describe('DSOSubscriptionDocumentView', () => {
   beforeEach(() => {
     jest
       .spyOn(dsoForm, 'useDSOForm')
-      .mockReturnValue({ ...useTypedForm(), FormValue } as any)
+      .mockReturnValue({ ...useTypedForm(), FormValue })
   })
   afterEach(async () => {
     await cleanup()

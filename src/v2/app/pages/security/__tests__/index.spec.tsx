@@ -2,9 +2,9 @@
 import React from 'react'
 import { render, cleanup } from 'test-utils'
 import { SecurityRoot } from 'v2/app/pages/security'
-import { useSecurityRouter } from 'v2/app/pages/security/routes'
+import { useSecurityRouter } from 'v2/app/pages/security/router'
 
-jest.mock('v2/app/pages/security/routes')
+jest.mock('v2/app/pages/security/router')
 
 const useSecurityRouterMock = useSecurityRouter as jest.Mock<
   Partial<ReturnType<typeof useSecurityRouter>>
