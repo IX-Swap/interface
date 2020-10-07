@@ -32,12 +32,6 @@ export interface AuthorizableWithIdentity extends Authorizable {
   }
 }
 
-export interface AuthorizerViewParams {
-  category: keyof typeof DataroomFeature
-  itemId: string
-  ownerId: string
-}
-
 export enum DataroomFeature {
   banks = 'authorization/accounts/bank-accounts',
   deposits = 'authorization/accounts/deposits',
@@ -47,4 +41,10 @@ export enum DataroomFeature {
   corporateIdentities = 'authorization/identity/corporates',
   offerings = 'authorization/issuance/dsos',
   commitments = 'authorization/issuance/commitments'
+}
+
+export interface AuthorizerViewParams {
+  category: keyof typeof DataroomFeature
+  itemId: string
+  ownerId: string
 }
