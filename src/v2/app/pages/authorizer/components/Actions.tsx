@@ -3,7 +3,7 @@ import { useStyles } from 'v2/app/pages/authorizer/components/styles'
 import { Launch as LaunchIcon } from '@material-ui/icons'
 import { Grid, IconButton } from '@material-ui/core'
 import { useAuthorizerRouter } from '../router'
-import User from '../../../../types/user'
+import User from 'v2/types/user'
 
 export interface ActionsProps<T> {
   item: T

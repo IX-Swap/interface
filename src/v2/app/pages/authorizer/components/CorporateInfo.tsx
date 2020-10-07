@@ -1,8 +1,8 @@
 import React from 'react'
-import { CorporateIdentity } from '../../../../types/identity'
+import { CorporateIdentity } from 'v2/types/identity'
 import { Grid, Typography } from '@material-ui/core'
 import { convertAddressToString } from './utils'
-import { LabelledValue } from '../../../../components/LabelledValue'
+import { LabelledValue } from 'v2/components/LabelledValue'
 
 export interface CorporateInfoProps {
   data: CorporateIdentity
