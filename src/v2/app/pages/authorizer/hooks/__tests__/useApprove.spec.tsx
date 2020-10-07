@@ -54,6 +54,40 @@ describe('useApprove', () => {
     })
   })
 
+  it('it calls snackbarService.showSnackbar with success message if comment is undefined', async () => {
+    await act(async () => {
+      const putFn = jest.fn().mockResolvedValueOnce(successfulResponse)
+      const showSnackbar = jest.fn()
+
+      const { result } = renderHook(() => useApprove(props), {
+        // TODO: extract to a separate WrapperComponent for re-usability
+        wrapper: ({ children }) => (
+          <ServicesProvider
+            value={
+              {
+                apiService: { ...apiService, put: putFn },
+                snackbarService: { ...snackbarService, showSnackbar }
+              } as any
+            }
+          >
+            {children}
+          </ServicesProvider>
+        )
+      })
+
+      await waitFor(
+        () => {
+          const [mutate] = result.current
+          void mutate({ ...approveArgs, comment: undefined })
+
+          expect(showSnackbar).toHaveBeenCalledTimes(1)
+          expect(showSnackbar).toHaveBeenNthCalledWith(1, 'success', 'success')
+        },
+        { timeout: 1000 }
+      )
+    })
+  })
+
   it('it calls snackbarService.showSnackbar with error message', async () => {
     await act(async () => {
       const putFn = jest.fn().mockRejectedValueOnce(unsuccessfulResponse)
