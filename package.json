@@ -19,6 +19,7 @@
     "date-fns": "^2.14.0",
     "draft-js": "^0.11.5",
     "draftjs-to-html": "^0.9.1",
+    "eslint-config-react-app": "^5.2.1",
     "flat": "^5.0.0",
     "kaktana-react-lightweight-charts": "^1.1.2",
     "lodash": "^4.17.15",
@@ -117,7 +118,7 @@
     "eject": "react-scripts eject",
     "deploy": "gulp deploy",
     "lint": "eslint --cache --fix \"src/**/*.{ts,tsx}\"",
-    "sonar": "export $(grep -v '^#' .env.dev | xargs -0) && npm run test:ci && sonar-scanner -Dsonar.login=$SONAR_TOKEN"
+    "sonar": "export $(grep -v '^#' .env.dev | xargs -0) && yarn test:ci && sonar-scanner -Dsonar.login=$SONAR_TOKEN"
   },
   "browserslist": {
     "production": [
@@ -137,8 +138,8 @@
   },
   "husky": {
     "hooks": {
-      "pre-commit": "tsc --noEmit && npm run lint",
-      "pre-push": "npm run test:ci"
+      "pre-commit": "tsc --noEmit && yarn lint",
+      "pre-push": "yarn test:ci"
     }
   }
 }

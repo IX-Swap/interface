@@ -16,14 +16,14 @@ jobs:
         with:
           fetch-depth: 0
 
-      - name: Install NPM
-        run: npm install
+      - name: Install packages
+        run: yarn
 
       - name: Build
-        run: npm run build --if-present
+        run: yarn build --if-present
 
       - name: Run Tests
-        run: npm run test:ci
+        run: yarn test:ci
         env:
           REACT_APP_API_URL: https://devapi.mozork.com
 
