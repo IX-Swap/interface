@@ -33,7 +33,7 @@ describe('DSOTeam', () => {
       EditableField,
       FieldsArray,
       FormValue
-    } as any)
+    })
   })
   afterEach(async () => {
     await cleanup()

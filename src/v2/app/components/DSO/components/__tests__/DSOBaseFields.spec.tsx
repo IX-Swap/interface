@@ -21,7 +21,7 @@ describe('DSOBaseFields', () => {
   beforeEach(() => {
     jest
       .spyOn(dsoForm, 'useDSOForm')
-      .mockReturnValue({ ...useTypedForm(), EditableField } as any)
+      .mockReturnValue({ ...useTypedForm(), EditableField })
   })
   afterEach(async () => {
     await cleanup()

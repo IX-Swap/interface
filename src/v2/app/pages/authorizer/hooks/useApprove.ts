@@ -5,7 +5,7 @@ import { wysiwygToHtml } from '../../../../components/form/RichTextEditor'
 
 export interface ApproveArgs {
   comment?: string
-  shareWithUser: boolean
+  sharedWithUser: boolean
 }
 
 export const useApprove = (args: AuthorizerActionArgs) => {

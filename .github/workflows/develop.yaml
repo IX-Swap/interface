@@ -19,9 +19,9 @@ jobs:
       - name: Build and Optimize for Production
         env:
           REACT_APP_API_URL: https://devapi.mozork.com
-        run: npm install && npm run build
+        run: yarn && yarn build
       - name: Deploy Build to S3 bucket
-        run: npm run deploy
+        run: yarn deploy
         env:
           AWS_BUCKET: app.mozork.com
           AWS_REGION: ap-southeast-1

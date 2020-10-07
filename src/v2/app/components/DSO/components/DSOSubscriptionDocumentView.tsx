@@ -4,7 +4,7 @@ import { useDSOForm } from 'v2/app/components/DSO/DSOForm'
 
 export interface DSOSubscriptionDocumentViewProps {
   dsoOwnerId: string
-  dsoId: string
+  dsoId?: string
 }
 
 export const DSOSubscriptionDocumentView: React.FC<DSOSubscriptionDocumentViewProps> = ({
