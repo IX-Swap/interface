@@ -7,7 +7,7 @@ import { observer } from 'mobx-react'
 import { useAuthRouter } from 'v2/auth/router'
 
 export const AuthTabs: React.FC = observer(() => {
-  const { routes } = useAuthRouter()
+  const { paths } = useAuthRouter()
   const classes = useStyles()
   const userStore = useUserStore()
 
@@ -27,14 +27,14 @@ export const AuthTabs: React.FC = observer(() => {
       <Tab
         label='Log in'
         classes={{ root: classes.tab }}
-        to={routes.login}
+        to={paths.login}
         component={Link}
         data-testid='login'
       />
       <Tab
         label='New User'
         classes={{ root: classes.tab }}
-        to={routes.signup}
+        to={paths.signup}
         component={Link}
         data-testid='register'
       />

@@ -1,11 +1,11 @@
 /* eslint-disable */
 import React, { useRef, useState, useEffect } from 'react'
-import { DataroomFile, FileGuide } from "v2/types/dataroomFile"
+import { DataroomFile, FileGuide } from 'v2/types/dataroomFile'
 import { useFormContext } from 'react-hook-form'
 import CloudDownloadIcon from '@material-ui/icons/CloudDownload'
 import { Grid, Button } from '@material-ui/core'
 import { get } from 'lodash'
-import { uploadFile } from "v2/helpers/httpRequests"
+import { uploadFile } from 'v2/helpers/httpRequests'
 import { snackbarService } from 'uno-material-ui'
 
 type ValueOf<T> = T[keyof T]

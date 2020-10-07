@@ -9,23 +9,23 @@ interface DSTableActionsProps {
 }
 
 export const DSTableActions: React.FC<DSTableActionsProps> = props => {
-  const { routes } = useDSRouter()
+  const { paths } = useDSRouter()
   const { item } = props
 
   return (
     <ButtonGroup color='primary'>
       <Button>
-        <AppRouterLink to={routes.view} params={{ balanceId: item._id }}>
+        <AppRouterLink to={paths.view} params={{ balanceId: item._id }}>
           View
         </AppRouterLink>
       </Button>
       <Button>
-        <AppRouterLink to={routes.deposit} params={{ balanceId: item._id }}>
+        <AppRouterLink to={paths.deposit} params={{ balanceId: item._id }}>
           Deposit
         </AppRouterLink>
       </Button>
       <Button>
-        <AppRouterLink to={routes.withdraw} params={{ balanceId: item._id }}>
+        <AppRouterLink to={paths.withdraw} params={{ balanceId: item._id }}>
           Withdraw
         </AppRouterLink>
       </Button>

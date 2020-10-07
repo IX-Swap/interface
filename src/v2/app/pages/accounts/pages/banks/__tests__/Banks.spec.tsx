@@ -17,7 +17,7 @@ describe('Banks', () => {
         path: '',
         label: ''
       },
-      routes: banksRouter.BanksRoute,
+      paths: banksRouter.BanksRoute,
       renderRoutes
     }))
   })

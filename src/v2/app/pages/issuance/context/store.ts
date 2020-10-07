@@ -5,7 +5,7 @@ export class IssuanceStore {
   @observable selectedDso?: DigitalSecurityOffering
 
   @action
-  selectDso (dso: DigitalSecurityOffering) {
+  selectDso(dso: DigitalSecurityOffering) {
     this.selectedDso = dso
   }
 }

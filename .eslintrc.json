@@ -4,13 +4,15 @@
         "browser": true,
         "es6": true
     },
-    "plugins": ["prettierx"],
+    "ignorePatterns": ["node_modules", "coverage", "reports", "public", ".github", ".scannerwork"],
+    "plugins": ["prettier"],
     "extends": [
         "standard-with-typescript",
         "react-app",
-        "plugin:prettierx/standardx",
-        "plugin:prettierx/@typescript-eslint",
-        "plugin:prettierx/react"
+        "plugin:prettier/recommended",
+        "prettier/@typescript-eslint",
+        "prettier/react",
+        "prettier/standard"
     ],
     "settings": {
         "react": {

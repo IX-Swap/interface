@@ -1,10 +1,10 @@
 import React, { useState } from 'react'
 import { TableView } from 'v2/components/TableWithPagination/TableView'
 import storageHelper from 'v2/helpers/storageHelper'
-import columns from 'v2/app/pages/accounts/pages/transactions/data'
+import columns from 'v2/app/pages/accounts/pages/transactions/columns'
 import { Paper, Grid } from '@material-ui/core'
 import { Transaction } from 'v2/types/transaction'
-import TransactionsFilter from 'v2/app/pages/accounts/pages/transactions/components/filter'
+import { TransactionsFilter } from 'v2/app/pages/accounts/pages/transactions/components/TransactionsFilter'
 import { BaseFilter } from 'v2/types/util'
 import moment from 'moment'
 import { MaterialUiPickersDate } from '@material-ui/pickers/typings/date'
@@ -40,8 +40,9 @@ const useTransactionsLogic = () => {
   }
 }
 
-const Transactions = () => {
+export const Transactions = () => {
   const { filter, handleAssetChange, handleDateChange } = useTransactionsLogic()
+
   return (
     <Paper>
       <Grid container direction='column'>
@@ -65,5 +66,3 @@ const Transactions = () => {
     </Paper>
   )
 }
-
-export default Transactions

@@ -5,11 +5,12 @@ import { CorporateIdentityForm } from 'v2/app/pages/identity/components/Corporat
 import { useAllCorporateIdentities } from 'v2/hooks/identity/useAllCorporateIdentities'
 import { useIdentitiesRouter } from 'v2/app/pages/identity/router'
 import { EditButton } from 'v2/app/pages/identity/components/EditButton'
+import { VSpacer } from '../../../../../components/VSpacer'
 
 export const CorporateIdView: React.FC = () => {
   const { data, status } = useAllCorporateIdentities()
   const {
-    routes,
+    paths,
     params: { identityId }
   } = useIdentitiesRouter()
 
@@ -21,9 +22,11 @@ export const CorporateIdView: React.FC = () => {
 
   return (
     <Grid container>
-      <Grid container item justify='space-between' alignItems='center'>
-        <PageTitle subPage title={identity.companyLegalName} />
-        <EditButton link={routes.editCorporate} params={{ identityId }} />
+      <Grid container item justify='flex-end' alignItems='center'>
+        <EditButton link={paths.editCorporate} params={{ identityId }} />
+      </Grid>
+      <Grid item container>
+        <VSpacer size='small' />
       </Grid>
       <Grid item>
         <CorporateIdentityForm

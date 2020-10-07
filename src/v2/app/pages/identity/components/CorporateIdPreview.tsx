@@ -13,7 +13,7 @@ import { getIdentityFormDefaultValue } from 'v2/app/pages/identity/utils'
 export const CorporateIdPreview: React.FC = () => {
   const { Form } = useCorporateIdentityForm()
   const { data, status } = useAllCorporateIdentities()
-  const { routes } = useIdentitiesRouter()
+  const { paths } = useIdentitiesRouter()
 
   if (status === 'loading') {
     return null
@@ -38,7 +38,7 @@ export const CorporateIdPreview: React.FC = () => {
               title={identity.companyLegalName}
               actions={
                 <ViewButton
-                  link={routes.corporate}
+                  link={paths.corporate}
                   params={{ identityId: identity._id }}
                 />
               }

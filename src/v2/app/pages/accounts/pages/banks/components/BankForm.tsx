@@ -24,7 +24,7 @@ const useBankForm = createTypedForm<BankFormValues>()
 export const BankForm: React.FC<BankFormProps> = props => {
   const { submitButtonLabel, onSubmit, bank } = props
   const { Form, TextField, AssetSelect, CountrySelect, Submit } = useBankForm()
-  const { routes } = useBanksRouter()
+  const { paths } = useBanksRouter()
   const handleSubmit = async (values: BankFormValues) => {
     await onSubmit(transformBankFormValuesToArgs(values))
   }
@@ -142,7 +142,7 @@ export const BankForm: React.FC<BankFormProps> = props => {
             <Grid item sm={12} md={12} lg={12}>
               <Box m={3} display='flex' justifyContent='center'>
                 <Button color='default'>
-                  <AppRouterLink to={routes.list}>Cancel</AppRouterLink>
+                  <AppRouterLink to={paths.list}>Cancel</AppRouterLink>
                 </Button>
                 <Box marginX={1} />
                 <Submit>{submitButtonLabel}</Submit>

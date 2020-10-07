@@ -60,7 +60,7 @@ const BalancesSelect = ({
   ))
 }
 
-const TransactionsFilter = ({
+export const TransactionsFilter = ({
   filters,
   handleAssetChange,
   handleDateChange
@@ -116,5 +116,3 @@ const TransactionsFilter = ({
     </MuiPickersUtilsProvider>
   )
 }
-
-export default TransactionsFilter

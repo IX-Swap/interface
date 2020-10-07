@@ -12,7 +12,7 @@ export const ViewDSO = () => {
     dsoId: string
   }>()
   const { isLoading, data } = useDSOById(dsoId)
-  const { routes } = useIssuanceRouter()
+  const { paths } = useIssuanceRouter()
 
   if (isLoading || data === undefined) {
     return null
@@ -22,7 +22,7 @@ export const ViewDSO = () => {
     <Container>
       <PageTitle title={data.tokenName} subPage />
       <Button>
-        <AppRouterLink to={routes.edit} params={{ dsoId }}>
+        <AppRouterLink to={paths.edit} params={{ dsoId }}>
           Edit
         </AppRouterLink>
       </Button>

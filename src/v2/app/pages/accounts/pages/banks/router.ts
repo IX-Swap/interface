@@ -11,8 +11,6 @@ export const BanksRoute = {
   list: '/app/accounts/banks',
   view: '/app/accounts/banks/:bankId/view',
   edit: '/app/accounts/banks/:bankId/edit',
-  deposit: '/app/accounts/banks/deposit',
-  withdraw: '/app/accounts/banks/withdraw',
   create: '/app/accounts/banks/create'
 }
 
@@ -27,18 +25,6 @@ export const banksRoutes: InternalRouteProps[] = [
     label: 'View Bank',
     path: BanksRoute.view,
     component: BankPreview,
-    exact: true
-  },
-  {
-    label: 'Deposit',
-    path: BanksRoute.deposit,
-    component: DepositCash,
-    exact: true
-  },
-  {
-    label: 'Withdraw',
-    path: BanksRoute.withdraw,
-    component: WithdrawCash,
     exact: true
   },
   {

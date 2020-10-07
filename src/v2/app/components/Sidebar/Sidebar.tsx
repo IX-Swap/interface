@@ -15,16 +15,16 @@ import { ReactComponent as AuthorizerIcon } from 'assets/icons/navigation/author
 export const Sidebar = () => {
   const isAuthorizer = useIsAuthorizer()
   const isIssuer = useIsIssuer()
-  const { routes: authorizerRoutes } = useAuthorizerRouter()
-  const { routes: accountRoutes } = useAccountsRouter()
-  const { routes: investRoutes } = useInvestRouter()
-  const { routes: issuanceRoutes } = useIssuanceRouter()
+  const { paths: authorizerRoutes } = useAuthorizerRouter()
+  const { paths: accountRoutes } = useAccountsRouter()
+  const { paths: investRoutes } = useInvestRouter()
+  const { paths: issuanceRoutes } = useIssuanceRouter()
   const styles = useStyles()
 
   const links = [
     {
       label: 'Accounts',
-      link: accountRoutes.balances,
+      link: accountRoutes.landing,
       icon: AccountsIcon
     },
     {
@@ -34,21 +34,21 @@ export const Sidebar = () => {
     },
     ...(isIssuer
       ? [
-        {
-          label: 'Issuance',
-          link: issuanceRoutes.list,
-          icon: IssuanceIcon
-        }
-      ]
+          {
+            label: 'Issuance',
+            link: issuanceRoutes.list,
+            icon: IssuanceIcon
+          }
+        ]
       : []),
     ...(isAuthorizer
       ? [
-        {
-          label: 'Authorizer',
-          link: authorizerRoutes.banks,
-          icon: AuthorizerIcon
-        }
-      ]
+          {
+            label: 'Authorizer',
+            link: authorizerRoutes.landing,
+            icon: AuthorizerIcon
+          }
+        ]
       : [])
   ]
 

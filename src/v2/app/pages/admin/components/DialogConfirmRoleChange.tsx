@@ -14,7 +14,7 @@ export interface DialogConfirmRoleChangeProps {
   handleConfirm: () => Promise<void>
 }
 
-export default function DialogConfirmRoleChange ({
+export default function DialogConfirmRoleChange({
   user,
   newRole,
   open,

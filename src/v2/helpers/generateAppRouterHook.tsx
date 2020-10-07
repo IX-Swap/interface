@@ -1,4 +1,4 @@
-import React, { useMemo } from 'react'
+import React, { useEffect, useMemo, useRef } from 'react'
 import { Location } from 'history'
 import {
   Redirect,
@@ -9,15 +9,18 @@ import {
   generatePath
 } from 'react-router-dom'
 import { InternalRouteBase, InternalRouteProps } from 'v2/types/util'
+import { getRoutesByType } from '../app/components/LandingPage/utils'
+import { LandingPage } from '../app/components/LandingPage/LandingPage'
 
 interface AppRouter<T> {
   current: InternalRouteBase
-  routes: T
+  paths: T
   renderRoutes: () => JSX.Element
   query: URLSearchParams
   params: { [key: string]: string }
   push: (route: keyof T, state?: {}) => void
   replace: (route: keyof T, state?: {}) => void
+  routes: InternalRouteProps[]
 }
 
 type LocationState = Record<string, any> | null | undefined
@@ -47,7 +50,7 @@ const getHistoryPayload = (route: any, state?: {}) => {
   }
 }
 
-const shouldGeneratePath = (
+export const shouldGeneratePath = (
   path: string,
   state: LocationState
 ): state is Record<string, string> => {
@@ -63,7 +66,7 @@ const shouldGeneratePath = (
   return params.every(p => state[p] !== undefined)
 }
 
-const getCurrentRouteFromLocation = <T,>(
+export const getCurrentRouteFromLocation = <T,>(
   args: GetCurrentRouteArgs<T>
 ): InternalRouteBase => {
   const { location, routes, routeMap, defaultRoute } = args
@@ -83,7 +86,7 @@ const getCurrentRouteFromLocation = <T,>(
   }
 }
 
-export function generateAppRouterHook<T> (
+export function generateAppRouterHook<T>(
   routeMap: T,
   defaultRoute: string,
   routes: InternalRouteProps[]
@@ -101,11 +104,13 @@ export function generateAppRouterHook<T> (
         }),
       [location]
     )
+    const { landing, nested, generic } = getRoutesByType(routes)
 
     return {
       current,
+      routes,
       query: new URLSearchParams(history.location.search),
-      routes: routeMap,
+      paths: routeMap,
       push: (route, state) => {
         history.push(getHistoryPayload(routeMap[route], state))
       },
@@ -115,9 +120,17 @@ export function generateAppRouterHook<T> (
       params: (location.state as any) ?? {},
       renderRoutes: () => (
         <Switch>
-          {routes.map((route, i) => (
+          {[...nested, ...generic].map((route, i) => (
             <Route key={i} {...route} />
           ))}
+          {landing !== undefined && (
+            <Route
+              key='landing'
+              path={landing.path}
+              exact={true}
+              component={() => <LandingPage {...landing} links={nested} />}
+            />
+          )}
           <Redirect to={defaultRoute} />
         </Switch>
       )

@@ -8,7 +8,7 @@ import { DSOForm } from '../../../../components/DSO/DSOForm'
 
 export const Offerings: React.FC = () => (
   <BaseView
-    title='Authorize Issuance'
+    title='Authorize IssuanceRoot'
     uri='/issuance/dso/list'
     name='authorizerDsoList'
     columns={columns}

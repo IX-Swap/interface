@@ -13,7 +13,7 @@ export const EditButton: React.FC<EditButtonProps> = ({
   params = {},
   replace = false
 }) => (
-  <Button color='primary'>
+  <Button color='primary' variant='contained'>
     <AppRouterLink to={link} params={params} replace={replace}>
       Edit
     </AppRouterLink>

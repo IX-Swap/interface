@@ -5,6 +5,10 @@ export const useStyles = makeStyles(theme => ({
     border: `1px solid ${theme.palette.divider}`,
     marginTop: 64,
     width: 90,
-    boxShadow: theme.shadows[2]
+    boxShadow: theme.shadows[2],
+    position: 'fixed',
+    left: 0,
+    top: 0,
+    bottom: 0
   }
 }))

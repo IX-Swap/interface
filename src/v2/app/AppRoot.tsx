@@ -1,14 +1,13 @@
 import React, { useEffect } from 'react'
 import { useHistory } from 'react-router-dom'
-import { observer } from 'mobx-react'
-import classnames from 'classnames'
 import { Header } from 'v2/app/components/Header/Header'
 import { Sidebar } from 'v2/app/components/Sidebar/Sidebar'
-import useStyles from './styles'
+import useStyles from './AppRoot.styles'
 import { useAppRouter } from 'v2/app/router'
 import { useAuth } from 'v2/hooks/auth/useAuth'
+import { Grid } from '@material-ui/core'
 
-export const AppRoot: React.FC = observer(() => {
+export const AppRoot: React.FC = () => {
   const { isAuthenticated } = useAuth()
   const history = useHistory()
   const classes = useStyles()
@@ -21,10 +20,14 @@ export const AppRoot: React.FC = observer(() => {
   }, [isAuthenticated, history])
 
   return (
-    <div className={classes.root}>
-      <Header />
+    <Grid container direction='column' className={classes.container}>
+      <Grid item>
+        <Header />
+      </Grid>
       <Sidebar />
-      <div className={classnames(classes.content)}>{renderRoutes()}</div>
-    </div>
+      <Grid item container className={classes.content}>
+        {renderRoutes()}
+      </Grid>
+    </Grid>
   )
-})
+}

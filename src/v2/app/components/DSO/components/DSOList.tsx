@@ -18,7 +18,7 @@ export const DSO_LIST_QUERY_KEY = 'dsoList'
 
 export const DSOList = (props: DSOfferingsListProps) => {
   const { user, filter, viewURL } = props
-  const { routes } = useIssuanceRouter()
+  const { paths } = useIssuanceRouter()
 
   return (
     <>
@@ -34,7 +34,7 @@ export const DSOList = (props: DSOfferingsListProps) => {
           </Grid>
           <Grid item xs={1}>
             <Button size='large' color='primary' variant='contained'>
-              <AppRouterLink to={routes.create}>Add</AppRouterLink>
+              <AppRouterLink to={paths.create}>Add</AppRouterLink>
             </Button>
           </Grid>
         </Grid>

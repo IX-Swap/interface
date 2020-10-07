@@ -56,13 +56,13 @@ export const getIdentityFormDefaultValue = <
 ): T & { documents: DataroomFileWithGuide[] } => {
   return identity !== undefined
     ? {
-      ...identity,
-      documents: formatDocuments(identity.documents ?? [], type)
-    }
+        ...identity,
+        documents: formatDocuments(identity.documents ?? [], type)
+      }
     : ({
-      declarations: declarations[type],
-      documents: formatDocuments([], type)
-    } as any) // TODO: fix any
+        declarations: declarations[type],
+        documents: formatDocuments([], type)
+      } as any) // TODO: fix any
 }
 
 export const prepareDocumentsForUpload = (

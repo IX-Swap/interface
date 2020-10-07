@@ -37,14 +37,7 @@ export const AuthorizerTable = <T,>(
   }
 
   return (
-    <Grid
-      container
-      style={{
-        margin: '-24px',
-        width: 'calc(100% + 48px)',
-        height: 'calc(100% - 24px)'
-      }}
-    >
+    <Grid container>
       <Grid item xs={12} md={3} className={classes.filters}>
         <Filters onApplyFilter={setFilter} />
       </Grid>

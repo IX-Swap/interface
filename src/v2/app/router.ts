@@ -1,12 +1,12 @@
 import { InternalRouteProps } from 'v2/types/util'
 import { AuthorizerRoot } from 'v2/app/pages/authorizer/AuthorizerRoot'
-import { Identity } from 'v2/app/pages/identity'
-import { Accounts } from 'v2/app/pages/accounts/Accounts'
-import { Issuance } from 'v2/app/pages/issuance/Issuance'
-import { Invest } from 'v2/app/pages/invest/Invest'
-import Admin from 'v2/app/pages/admin'
+import { IdentityRoot } from 'v2/app/pages/identity/IdentityRoot'
+import { AccountsRoot } from 'v2/app/pages/accounts/AccountsRoot'
+import { IssuanceRoot } from 'v2/app/pages/issuance/IssuanceRoot'
+import { InvestRoot } from 'v2/app/pages/invest/InvestRoot'
+import { AdminRoot } from 'v2/app/pages/admin/AdminRoot'
 import { generateAppRouterHook } from 'v2/helpers/generateAppRouterHook'
-import { SecurityRoot } from 'v2/app/pages/security'
+import { SecurityRoot } from 'v2/app/pages/security/SecurityRoot'
 
 export const AppRoute = {
   authorizer: '/app/authorizer',
@@ -18,7 +18,7 @@ export const AppRoute = {
   security: '/app/security'
 }
 
-const appRoutes: InternalRouteProps[] = [
+export const appRoutes: InternalRouteProps[] = [
   {
     label: 'Authorizer',
     path: AppRoute.authorizer,
@@ -27,27 +27,27 @@ const appRoutes: InternalRouteProps[] = [
   {
     label: 'Identity',
     path: AppRoute.identity,
-    component: Identity
+    component: IdentityRoot
   },
   {
     label: 'Accounts',
     path: AppRoute.accounts,
-    component: Accounts
+    component: AccountsRoot
   },
   {
     label: 'Issuance',
     path: AppRoute.issuance,
-    component: Issuance
+    component: IssuanceRoot
   },
   {
     label: 'Invest',
     path: AppRoute.invest,
-    component: Invest
+    component: InvestRoot
   },
   {
     label: 'Admin',
     path: AppRoute.admin,
-    component: Admin
+    component: AdminRoot
   },
   {
     label: 'Security',

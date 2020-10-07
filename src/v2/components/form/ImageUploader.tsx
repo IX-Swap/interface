@@ -96,10 +96,10 @@ const ImageUploader = ({
       position: 'relative',
       '&:hover': editMode
         ? {
-          '& $uploadButton': {
-            display: 'flex'
+            '& $uploadButton': {
+              display: 'flex'
+            }
           }
-        }
         : undefined
     }
   }))

@@ -1,7 +1,7 @@
 /**  * @jest-environment jsdom-sixteen  */
 import React from 'react'
 import { render, cleanup } from 'test-utils'
-import { SecurityRoot } from 'v2/app/pages/security'
+import { SecurityRoot } from 'v2/app/pages/security/SecurityRoot'
 import { useSecurityRouter } from 'v2/app/pages/security/router'
 
 jest.mock('v2/app/pages/security/router')

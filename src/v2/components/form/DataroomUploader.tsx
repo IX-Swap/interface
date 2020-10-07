@@ -18,7 +18,11 @@ export const DataroomUploader = (props: DataroomUploaderProps) => {
   })
   const handleChange = async () => {
     // eslint-disable-next-line
-    if (inputRef.current !== null && inputRef.current.files !== null && inputRef.current.files.length > 0) {
+    if (
+      inputRef.current !== null &&
+      inputRef.current.files !== null &&
+      inputRef.current.files.length > 0
+    ) {
       await uploadFile({
         ...documentInfo,
         documents: Array.from(inputRef.current.files)

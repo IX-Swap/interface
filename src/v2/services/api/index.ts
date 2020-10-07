@@ -16,7 +16,7 @@ _axios.interceptors.response.use(
 )
 
 const apiService = {
-  get: async function get<T = any> (uri: string, config?: AxiosRequestConfig) {
+  get: async function get<T = any>(uri: string, config?: AxiosRequestConfig) {
     return await this.request<T>({
       method: 'get',
       uri,
@@ -25,7 +25,7 @@ const apiService = {
     })
   },
 
-  async request<T = any> ({
+  async request<T = any>({
     method,
     uri,
     data,
@@ -41,7 +41,7 @@ const apiService = {
     return await _axios.request<T>(this._prepareRequestConfig(requestConfig))
   },
 
-  async delete<T = any> (
+  async delete<T = any>(
     uri: string,
     data: any,
     axiosConfig: AxiosRequestConfig = {}
@@ -54,7 +54,7 @@ const apiService = {
     })
   },
 
-  async post<T = any> (
+  async post<T = any>(
     uri: string,
     data: any,
     axiosConfig: AxiosRequestConfig = {}
@@ -67,7 +67,7 @@ const apiService = {
     })
   },
 
-  async put<T = any> (uri: string, data: any, config?: AxiosRequestConfig) {
+  async put<T = any>(uri: string, data: any, config?: AxiosRequestConfig) {
     return await this.request<T>({
       method: 'put',
       uri,
@@ -76,7 +76,7 @@ const apiService = {
     })
   },
 
-  _getErrorMessage (error: any) {
+  _getErrorMessage(error: any) {
     let message = 'Unknown error'
 
     if (error.response !== undefined) {
@@ -88,7 +88,7 @@ const apiService = {
     return message
   },
 
-  _prepareRequestConfig ({
+  _prepareRequestConfig({
     uri,
     axiosConfig,
     data,
@@ -110,11 +110,11 @@ const apiService = {
     return requestConfig
   },
 
-  _isFormData (data: any) {
+  _isFormData(data: any) {
     return data instanceof FormData
   },
 
-  _prepareHeaders (data: any) {
+  _prepareHeaders(data: any) {
     const headers: KeyValueMap = {}
 
     headers.Authorization = `Bearer ${storageHelper.getAccessToken()}`
@@ -126,7 +126,7 @@ const apiService = {
     return headers
   },
 
-  _prepareBody (data: any) {
+  _prepareBody(data: any) {
     return this._isFormData(data) ? data : JSON.stringify(data)
   }
 }

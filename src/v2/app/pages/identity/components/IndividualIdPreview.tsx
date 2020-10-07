@@ -12,7 +12,7 @@ import { getIdentityFormDefaultValue } from 'v2/app/pages/identity/utils'
 
 export const IndividualIdPreview: React.FC = () => {
   const { data, status } = useIndividualIdentity()
-  const { routes } = useIdentitiesRouter()
+  const { paths } = useIdentitiesRouter()
   const { Form } = useIndividualIdentityForm()
 
   if (status === 'loading') {
@@ -29,7 +29,7 @@ export const IndividualIdPreview: React.FC = () => {
     <Grid container item direction='column'>
       <Section
         title={`${data.firstName} ${data.lastName}`}
-        actions={<ViewButton link={routes.individual} />}
+        actions={<ViewButton link={paths.individual} />}
       >
         <Form
           defaultValues={getIdentityFormDefaultValue(data, 'individual')}

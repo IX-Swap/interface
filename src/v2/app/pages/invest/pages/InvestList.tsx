@@ -4,8 +4,8 @@ import { Link } from 'react-router-dom'
 import { useInvestListRouter } from '../investListRouter'
 
 export const InvestList = () => {
-  const { current, routes, renderRoutes } = useInvestListRouter()
-  const currentTabIdx = current.path === routes.offerings ? 0 : 1
+  const { current, paths, renderRoutes } = useInvestListRouter()
+  const currentTabIdx = current.path === paths.offerings ? 0 : 1
 
   return (
     <Container>
@@ -21,19 +21,17 @@ export const InvestList = () => {
             value={0}
             label='Listings'
             component={Link}
-            to={routes.offerings}
+            to={paths.offerings}
           />
           <Tab
             value={1}
             label='My Commitments'
             component={Link}
-            to={routes.commitments}
+            to={paths.commitments}
           />
         </Tabs>
         <Divider />
-        <Container>
-          <Box p={4}>{renderRoutes()}</Box>
-        </Container>
+        <Container>{renderRoutes()}</Container>
       </Paper>
     </Container>
   )

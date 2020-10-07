@@ -10,7 +10,7 @@ export class DepositStore {
   currentStep = DepositStoreStep.SETUP
 
   @computed
-  get isPreview (): boolean {
+  get isPreview(): boolean {
     return this.currentStep === DepositStoreStep.PREVIEW
   }
 

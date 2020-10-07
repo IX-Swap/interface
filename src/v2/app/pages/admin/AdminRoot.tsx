@@ -5,7 +5,7 @@ import columns from 'v2/app/pages/admin/columns'
 import User from 'v2/types/user'
 import { Actions } from './components/Actions'
 
-const UserManagement = () => {
+export const AdminRoot = () => {
   const ref = useRef(null)
 
   return (
@@ -27,5 +27,3 @@ const UserManagement = () => {
 export const renderActions = (item: User, ref: any) => (
   <Actions user={item} ref={ref} />
 )
-
-export default UserManagement

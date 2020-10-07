@@ -13,19 +13,19 @@ class AsyncStore extends BaseStore {
   error = ''
 
   @computed
-  get isLoading (): boolean {
+  get isLoading(): boolean {
     return this.status === GenericStatus.Busy
   }
 
   @action
-  protected setBusy (): void {
+  protected setBusy(): void {
     this.status = GenericStatus.Busy
     this.error = ''
     this.message = ''
   }
 
   @action
-  protected completeWithSuccess (
+  protected completeWithSuccess(
     message: string,
     showSnackbarMessage = false
   ): void {
@@ -40,7 +40,7 @@ class AsyncStore extends BaseStore {
   }
 
   @action
-  protected completeWithError (
+  protected completeWithError(
     error: string,
     showSnackbarMessage = false
   ): void {

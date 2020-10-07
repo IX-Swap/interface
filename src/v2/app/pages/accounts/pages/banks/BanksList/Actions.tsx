@@ -10,17 +10,17 @@ export interface ActionsProps {
 
 export const Actions: React.FC<ActionsProps> = props => {
   const { item } = props
-  const { routes } = useBanksRouter()
+  const { paths } = useBanksRouter()
 
   return (
     <ButtonGroup color='primary'>
       <Button>
-        <AppRouterLink to={routes.edit} params={{ bankId: item._id }}>
+        <AppRouterLink to={paths.edit} params={{ bankId: item._id }}>
           Edit
         </AppRouterLink>
       </Button>
       <Button>
-        <AppRouterLink to={routes.view} params={{ bankId: item._id }}>
+        <AppRouterLink to={paths.view} params={{ bankId: item._id }}>
           View
         </AppRouterLink>
       </Button>

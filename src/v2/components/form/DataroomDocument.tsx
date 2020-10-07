@@ -61,7 +61,11 @@ export const DataroomDocument: React.FC<
   let buttonElement: JSX.Element
   const handleChange = async () => {
     // eslint-disable-next-line
-    if (inputRef.current !== null && inputRef.current.files !== null && inputRef.current.files.length > 0) {
+    if (
+      inputRef.current !== null &&
+      inputRef.current.files !== null &&
+      inputRef.current.files.length > 0
+    ) {
       const file = inputRef.current.files[0]
       await uploadFile({
         ...documentInfo,

@@ -5,11 +5,11 @@ import { useBanksRouter } from 'v2/app/pages/accounts/pages/banks/router'
 import { AppRouterLink } from 'v2/components/AppRouterLink'
 
 export const CancelButton: React.FC = observer(() => {
-  const { routes } = useBanksRouter()
+  const { paths } = useBanksRouter()
 
   return (
     <Button color='default'>
-      <AppRouterLink to={routes.list}>Cancel</AppRouterLink>
+      <AppRouterLink to={paths.list}>Cancel</AppRouterLink>
     </Button>
   )
 })

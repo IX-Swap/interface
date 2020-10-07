@@ -5,10 +5,11 @@ import { CancelButton } from 'v2/app/pages/identity/components/CancelButton'
 import { PageTitle } from 'v2/app/components/PageTitle'
 import { useIndividualIdentity } from 'v2/hooks/identity/useIndividualIdentity'
 import { useIdentitiesRouter } from 'v2/app/pages/identity/router'
+import { VSpacer } from '../../../../../components/VSpacer'
 
 export const IndividualIdEdit: React.FC = () => {
   const { data, status } = useIndividualIdentity()
-  const { routes } = useIdentitiesRouter()
+  const { paths } = useIdentitiesRouter()
 
   if (status === 'loading' || data === undefined) {
     return null
@@ -16,8 +17,8 @@ export const IndividualIdEdit: React.FC = () => {
 
   return (
     <Grid container>
-      <Grid container item justify='space-between' alignItems='center'>
-        <PageTitle subPage title={`${data.firstName} ${data.lastName}`} />
+      <Grid container item>
+        <VSpacer size='medium' />
       </Grid>
       <Grid item>
         <IndividualIdentityForm
@@ -25,7 +26,7 @@ export const IndividualIdEdit: React.FC = () => {
           isEditing={true}
           useOwnEmail={false}
           submitButtonText='Save'
-          cancelButton={<CancelButton link={routes.individual} />}
+          cancelButton={<CancelButton link={paths.individual} />}
         />
       </Grid>
     </Grid>
