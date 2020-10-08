@@ -1,7 +1,7 @@
 /**  * @jest-environment jsdom-sixteen  */
 import React from 'react'
 import { render, cleanup } from 'test-utils'
-import AdminRoot, { renderActions } from 'v2/app/pages/admin/AdminRoot'
+import { AdminRoot, renderActions } from 'v2/app/pages/admin/AdminRoot'
 import { TableView } from 'v2/components/TableWithPagination/TableView'
 import columns from 'v2/app/pages/admin/columns'
 import { user } from '__fixtures__/user'

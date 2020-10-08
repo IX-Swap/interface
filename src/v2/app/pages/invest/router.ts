@@ -10,7 +10,7 @@ export const InvestRoute = {
   commitmentView: '/app/invest/commitments/:commitmentId'
 }
 
-const investRoutes: InternalRouteProps[] = [
+export const investRoutes: InternalRouteProps[] = [
   {
     label: 'View Offering',
     path: InvestRoute.offeringView,
@@ -24,7 +24,7 @@ const investRoutes: InternalRouteProps[] = [
     component: ViewCommitment
   },
   {
-    label: 'List',
+    label: 'Invest',
     path: InvestRoute.list,
     component: InvestList
   }

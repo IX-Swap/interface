@@ -15,6 +15,7 @@ export const Balances: React.FC = () => {
       <TableView<AssetBalance>
         uri={`/accounts/balance/${user._id}`}
         name={`balance-${user._id}`}
+        filter={{ type: 'Currency' }}
         columns={columns}
       />
     </Paper>

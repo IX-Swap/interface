@@ -25,11 +25,15 @@ export const IndividualIdPreview: React.FC = () => {
     )
   }
 
+  const name = `${data.firstName} ${data.lastName}`
+
   return (
     <Grid container item direction='column'>
       <Section
-        title={`${data.firstName} ${data.lastName}`}
-        actions={<ViewButton link={paths.individual} />}
+        title={name}
+        actions={
+          <ViewButton link={paths.individual} params={{ label: name }} />
+        }
       >
         <Form
           defaultValues={getIdentityFormDefaultValue(data, 'individual')}

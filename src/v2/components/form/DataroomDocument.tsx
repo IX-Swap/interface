@@ -60,8 +60,8 @@ export const DataroomDocument: React.FC<
   })
   let buttonElement: JSX.Element
   const handleChange = async () => {
-    // eslint-disable-next-line
     if (
+      // eslint-disable-next-line
       inputRef.current !== null &&
       inputRef.current.files !== null &&
       inputRef.current.files.length > 0

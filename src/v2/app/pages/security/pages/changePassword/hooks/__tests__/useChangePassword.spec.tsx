@@ -7,16 +7,23 @@ import { snackbarService } from 'uno-material-ui'
 import { ServicesProvider } from 'v2/services/useServices'
 import * as SecurityRouter from 'v2/app/pages/security/router'
 import { useChangePassword } from 'v2/app/pages/security/pages/changePassword/hooks/useChangePassword'
-import { generateRouter } from '__fixtures__/useRouter'
 import { changePasswordArgs } from '__fixtures__/security'
 import { unsuccessfulResponse, successfulResponse } from '__fixtures__/api'
 
 describe('useChangePassword', () => {
   beforeEach(() => {
-    jest
-      .spyOn(SecurityRouter, 'useSecurityRouter')
-      .mockReturnValue(generateRouter({}))
+    jest.spyOn(SecurityRouter, 'useSecurityRouter').mockImplementation(() => ({
+      current: { path: '', label: '' },
+      paths: SecurityRouter.SecurityRoute,
+      renderRoutes: jest.fn(() => <div />),
+      routes: [],
+      push: jest.fn(),
+      replace: jest.fn(),
+      query: new URLSearchParams(),
+      params: {}
+    }))
   })
+
   afterEach(async () => {
     await cleanup()
     jest.clearAllMocks()

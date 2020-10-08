@@ -1,12 +1,11 @@
 import React from 'react'
 import { Grid } from '@material-ui/core'
-import { PageTitle } from 'v2/app/components/PageTitle'
 import { useIdentitiesRouter } from 'v2/app/pages/identity/router'
 import { useAllCorporateIdentities } from 'v2/hooks/identity/useAllCorporateIdentities'
 import { CorporateIdentityForm } from 'v2/app/pages/identity/components/CorporateIdentityForm'
 import { useUpdateCorporateIdentity } from 'v2/hooks/identity/useUpdateCorporateIdentity'
 import { CancelButton } from 'v2/app/pages/identity/components/CancelButton'
-import { VSpacer } from '../../../../../components/VSpacer'
+import { VSpacer } from 'v2/components/VSpacer'
 
 export const CorporateIdEdit: React.FC = () => {
   const { data, status } = useAllCorporateIdentities()
@@ -19,7 +18,7 @@ export const CorporateIdEdit: React.FC = () => {
   if (status === 'loading') {
     return null
   }
-
+  console.log('id', identityId)
   const identity = data.map[identityId]
 
   return (

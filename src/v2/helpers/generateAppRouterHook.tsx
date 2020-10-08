@@ -1,4 +1,4 @@
-import React, { useEffect, useMemo, useRef } from 'react'
+import React, { useMemo } from 'react'
 import { Location } from 'history'
 import {
   Redirect,
@@ -11,8 +11,9 @@ import {
 import { InternalRouteBase, InternalRouteProps } from 'v2/types/util'
 import { getRoutesByType } from '../app/components/LandingPage/utils'
 import { LandingPage } from '../app/components/LandingPage/LandingPage'
+import { isTestENV } from 'v2/history'
 
-interface AppRouter<T> {
+export interface AppRouter<T> {
   current: InternalRouteBase
   paths: T
   renderRoutes: () => JSX.Element
@@ -117,7 +118,7 @@ export function generateAppRouterHook<T>(
       replace: (route, state) => {
         history.replace(getHistoryPayload(routeMap[route], state))
       },
-      params: (location.state as any) ?? {},
+      params: isTestENV ? location.state : window.history.state ?? {},
       renderRoutes: () => (
         <Switch>
           {[...nested, ...generic].map((route, i) => (

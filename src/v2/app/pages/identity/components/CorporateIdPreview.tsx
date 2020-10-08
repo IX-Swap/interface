@@ -39,7 +39,10 @@ export const CorporateIdPreview: React.FC = () => {
               actions={
                 <ViewButton
                   link={paths.corporate}
-                  params={{ identityId: identity._id }}
+                  params={{
+                    identityId: identity._id,
+                    label: identity.companyLegalName
+                  }}
                 />
               }
             >

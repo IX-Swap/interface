@@ -11,15 +11,24 @@ import { observer } from 'mobx-react'
 import { ContinueButton } from 'v2/app/pages/accounts/pages/banks/WithdrawCash/ContinueButton'
 import { BankPreview } from 'v2/app/pages/accounts/pages/banks/WithdrawCash/BankPreview'
 import { WithdrawCashAlert } from 'v2/app/pages/accounts/pages/banks/components/WithdrawCashAlert'
-import { CancelButton } from 'v2/app/pages/accounts/pages/banks/components/CancelButton'
+import { BackButton } from 'v2/app/pages/accounts/pages/banks/components/BackButton'
+import { DisplayNone } from '../../../../../components/DisplayNone'
+import { useUnmountCallback } from '../../../../../../hooks/useUnmountCallback'
 
 export const WithdrawView: React.FC = observer(() => {
-  const { isPreview } = useDepositStore()
+  const { isPreview, clear } = useDepositStore()
   const { TextField, Submit } = useWithdrawCashForm()
+
+  useUnmountCallback(clear)
 
   return (
     <WithdrawForm>
-      <Grid item>{isPreview ? <Preview /> : <Setup />}</Grid>
+      <Grid item>
+        <DisplayNone when={isPreview}>
+          <Setup />
+        </DisplayNone>
+        {isPreview && <Preview />}
+      </Grid>
       <Grid item>
         <BankPreview />
       </Grid>
@@ -43,7 +52,7 @@ export const WithdrawView: React.FC = observer(() => {
         <Grid container justify='center'>
           {isPreview ? (
             <>
-              <CancelButton />
+              <BackButton />
               <Box mx={1} />
               <Submit>Confirm Withdrawal</Submit>
             </>

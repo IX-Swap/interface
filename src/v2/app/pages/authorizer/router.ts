@@ -12,9 +12,7 @@ import { ViewAuthorizableItem } from './components/ViewAuthorizableItem'
 import { ReactComponent as AccountIcon } from 'assets/icons/navigation/account.svg'
 import { ReactComponent as CashDepositIcon } from 'assets/icons/navigation/cash-deposit.svg'
 import { ReactComponent as CashWithdrawalIcon } from 'assets/icons/navigation/cash-withdrawal.svg'
-import { ReactComponent as AssetBalanceIcon } from 'assets/icons/navigation/asset-balance.svg'
 import { ReactComponent as DSWithdrawalIcon } from 'assets/icons/navigation/ds-withdrawal.svg'
-import { ReactComponent as TransactionIcon } from 'assets/icons/navigation/transaction.svg'
 import { ReactComponent as IndividualIcon } from 'assets/icons/navigation/individual.svg'
 import { ReactComponent as CorporateIcon } from 'assets/icons/navigation/corporate.svg'
 import { ReactComponent as OfferingIcon } from 'assets/icons/navigation/offering.svg'
@@ -34,7 +32,7 @@ export const AuthorizerRoute = {
   viewItem: '/app/authorizer/:category/:itemId'
 }
 
-const authorizerRoutes: InternalRouteProps[] = [
+export const authorizerRoutes: InternalRouteProps[] = [
   {
     label: 'View Item',
     path: AuthorizerRoute.viewItem,
@@ -43,7 +41,7 @@ const authorizerRoutes: InternalRouteProps[] = [
     generic: true
   },
   {
-    label: 'Bank AccountsRoot',
+    label: 'Bank Accounts',
     path: AuthorizerRoute.banks,
     component: Banks,
     exact: true,

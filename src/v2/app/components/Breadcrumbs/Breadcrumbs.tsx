@@ -1,11 +1,11 @@
 import React from 'react'
-import { AppRouterLink } from '../../../components/AppRouterLink'
+import { AppRouterLink } from 'v2/components/AppRouterLink'
 import {
   Grid,
   Typography,
   Breadcrumbs as MUIBreadcrumbs
 } from '@material-ui/core'
-import { InternalRouteBase } from '../../../types/util'
+import { InternalRouteBase } from 'v2/types/util'
 
 export interface BreadcrumbsProps {
   items: InternalRouteBase[]
@@ -20,7 +20,7 @@ export const Breadcrumbs = (props: BreadcrumbsProps) => {
     <Grid container>
       <MUIBreadcrumbs aria-label='breadcrumb'>
         {links.map(({ label, path }) => (
-          <AppRouterLink to={path} color='inherit'>
+          <AppRouterLink to={path} underline='hover' color='primary'>
             {label}
           </AppRouterLink>
         ))}

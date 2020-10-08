@@ -5,7 +5,7 @@ import { DepositView } from 'v2/app/pages/accounts/pages/banks/DepositCash/Depos
 import { Setup } from 'v2/app/pages/accounts/pages/banks/DepositCash/Setup'
 import { DepositCashAlert } from 'v2/app/pages/accounts/pages/banks/components/DepositCashAlert'
 import { Preview } from 'v2/app/pages/accounts/pages/banks/DepositCash/Preview'
-import { CancelButton } from 'v2/app/pages/accounts/pages/banks/components/CancelButton'
+import { BackButton } from 'v2/app/pages/accounts/pages/banks/components/BackButton'
 import { ContinueButton } from 'v2/app/pages/accounts/pages/banks/DepositCash/ContinueButton'
 
 jest.mock('v2/app/pages/accounts/pages/banks/DepositCash/Setup', () => ({
@@ -23,8 +23,8 @@ jest.mock('v2/app/pages/accounts/pages/banks/DepositCash/Preview', () => ({
   Preview: jest.fn(() => null)
 }))
 
-jest.mock('v2/app/pages/accounts/pages/banks/components/CancelButton', () => ({
-  CancelButton: jest.fn(() => null)
+jest.mock('v2/app/pages/accounts/pages/banks/components/BackButton', () => ({
+  BackButton: jest.fn(() => null)
 }))
 
 jest.mock(
@@ -51,7 +51,7 @@ describe('DepositView', () => {
     expect(Setup).toHaveBeenCalledTimes(1)
     expect(ContinueButton).toHaveBeenCalledTimes(1)
 
-    expect(CancelButton).toHaveBeenCalledTimes(0)
+    expect(BackButton).toHaveBeenCalledTimes(0)
     expect(queryByText('Confirm Deposit')).toBeFalsy()
     expect(queryByLabelText('2-Factor Auth Code')).toBeFalsy()
     expect(Preview).toHaveBeenCalledTimes(0)
@@ -64,10 +64,10 @@ describe('DepositView', () => {
       queryByText
     } = renderWithDepositStore(<DepositView />, { isPreview: true })
 
-    expect(Setup).toHaveBeenCalledTimes(0)
     expect(ContinueButton).toHaveBeenCalledTimes(0)
 
-    expect(CancelButton).toHaveBeenCalledTimes(1)
+    expect(Setup).toHaveBeenCalledTimes(1)
+    expect(BackButton).toHaveBeenCalledTimes(1)
     expect(queryByText('Confirm Deposit')).toBeTruthy()
     expect(queryByLabelText('2-Factor Auth Code')).toBeTruthy()
     expect(Preview).toHaveBeenCalledTimes(1)

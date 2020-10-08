@@ -1,7 +1,7 @@
 import { createHashHistory, createMemoryHistory } from 'history'
 
-const isTest = process.env.NODE_ENV === 'test'
+export const isTestENV = process.env.NODE_ENV === 'test'
 
-export const history = isTest
+export const history = isTestENV
   ? createMemoryHistory({ initialEntries: ['/'] })
   : createHashHistory()

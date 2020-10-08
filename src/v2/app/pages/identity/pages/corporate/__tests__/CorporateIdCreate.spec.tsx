@@ -2,7 +2,6 @@
 import React from 'react'
 import { render, cleanup } from 'test-utils'
 import { CorporateIdCreate } from 'v2/app/pages/identity/pages/corporate/CorporateIdCreate'
-import { PageTitle } from 'v2/app/components/PageTitle'
 import { CorporateIdentityForm } from 'v2/app/pages/identity/components/CorporateIdentityForm'
 
 jest.mock('v2/app/components/PageTitle', () => ({
@@ -35,17 +34,6 @@ describe('CorporateIdCreate', () => {
         onSubmit: expect.any(Function),
         cancelButton: expect.anything()
       },
-      {}
-    )
-  })
-
-  it('renders PageTitle with correct props', () => {
-    render(<CorporateIdCreate />)
-
-    expect(PageTitle).toHaveBeenCalledTimes(1)
-    expect(PageTitle).toHaveBeenNthCalledWith(
-      1,
-      { subPage: true, title: 'Create Corporate Identity' },
       {}
     )
   })

@@ -1,8 +1,6 @@
 import { InternalRouteProps } from 'v2/types/util'
 import { BanksList } from 'v2/app/pages/accounts/pages/banks/BanksList/BanksList'
 import BankPreview from 'v2/app/pages/accounts/pages/banks/ViewBank/ViewBank'
-import { DepositCash } from 'v2/app/pages/accounts/pages/banks/DepositCash/DepositCash'
-import { WithdrawCash } from 'v2/app/pages/accounts/pages/banks/WithdrawCash/WithdrawCash'
 import { CreateBank } from 'v2/app/pages/accounts/pages/banks/CreateBank/CreateBank'
 import { EditBank } from 'v2/app/pages/accounts/pages/banks/EditBank/EditBank'
 import { generateAppRouterHook } from 'v2/helpers/generateAppRouterHook'

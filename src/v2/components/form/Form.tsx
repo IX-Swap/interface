@@ -1,4 +1,4 @@
-import React, { PropsWithChildren } from 'react'
+import React, { PropsWithChildren, useEffect } from 'react'
 import { SubmitHandler, useForm, FormProvider } from 'react-hook-form'
 import { ObjectSchema, Shape, object } from 'yup'
 import { yupResolver } from '@hookform/resolvers'
@@ -42,11 +42,14 @@ export const Form = <T,>(
     )
   }
 
+  useEffect(() => {
+    return () => {
+      form.reset()
+    }
+  }, []) // eslint-disable-line
+
   return (
     <FormProvider {...form}>
-      {/* <pre style={{ fontSize: 12, width: 300 }}> */}
-      {/*  {JSON.stringify(form.getValues(), null, 4)} */}
-      {/* </pre> */}
       <form
         {...rest}
         style={{ width: '100%' }}

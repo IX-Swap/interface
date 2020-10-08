@@ -1,11 +1,10 @@
 import React from 'react'
-import { PageTitle } from 'v2/app/components/PageTitle'
 import { Grid } from '@material-ui/core'
 import { CorporateIdentityForm } from 'v2/app/pages/identity/components/CorporateIdentityForm'
 import { useAllCorporateIdentities } from 'v2/hooks/identity/useAllCorporateIdentities'
 import { useIdentitiesRouter } from 'v2/app/pages/identity/router'
 import { EditButton } from 'v2/app/pages/identity/components/EditButton'
-import { VSpacer } from '../../../../../components/VSpacer'
+import { VSpacer } from 'v2/components/VSpacer'
 
 export const CorporateIdView: React.FC = () => {
   const { data, status } = useAllCorporateIdentities()

@@ -6,19 +6,28 @@ import { banksRoutes } from 'v2/app/pages/accounts/pages/banks/router'
 import { dsRoutes } from '../app/pages/accounts/pages/digitalSecurities/router'
 import { shouldGeneratePath } from '../helpers/generateAppRouterHook'
 import { identityRoutes } from '../app/pages/identity/router'
+import { authorizerRoutes } from '../app/pages/authorizer/router'
+import { investListRoutes } from 'v2/app/pages/invest/investListRouter'
+import { investRoutes } from 'v2/app/pages/invest/router'
+import { issuanceRoutes } from 'v2/app/pages/issuance/router'
 
 const routes = [
   ...accountRoutes,
   ...banksRoutes,
   ...dsRoutes,
-  ...identityRoutes
+  ...identityRoutes,
+  ...authorizerRoutes,
+  ...investRoutes,
+  ...investListRoutes,
+  ...issuanceRoutes
 ]
 
 export const useBreadcrumbs = () => {
-  const { pathname, state } = useLocation()
+  const { pathname } = useLocation()
+  const state = window.history.state
   const current = routes.find(({ path }) => {
-    return shouldGeneratePath(path, state as any)
-      ? generatePath(path, state as any) === pathname
+    return shouldGeneratePath(path, state)
+      ? generatePath(path, state) === pathname
       : path === pathname
   })
   const initialState = current !== undefined ? [current] : []
@@ -44,13 +53,16 @@ export const useBreadcrumbs = () => {
         const exists = indexOfCurrent !== -1
 
         if (!exists) {
-          setBreadcrumbs(b => [...b, current])
+          setBreadcrumbs(b => [
+            ...b,
+            { ...current, label: state?.label ?? current.label }
+          ])
         } else {
           setBreadcrumbs(b => b.slice(0, indexOfCurrent + 1))
         }
       }
     }
-  }, [current, breadcrumbs])
+  }, [current, breadcrumbs]) // eslint-disable-line
 
   return breadcrumbs
 }

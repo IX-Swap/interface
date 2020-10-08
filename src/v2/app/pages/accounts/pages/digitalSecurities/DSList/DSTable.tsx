@@ -11,6 +11,7 @@ export const DSTable: React.FC = () => {
       name={`ds-${storageHelper.getUserId()}`}
       columns={columns}
       hasActions
+      filter={{ type: 'Security' }}
       actions={({ item }) => <DSTableActions item={item} />}
     />
   )

@@ -1,4 +1,4 @@
-import React, { Suspense } from 'react'
+import React, { Suspense, useEffect } from 'react'
 import { Router, Route, Redirect } from 'react-router-dom'
 import { observer } from 'mobx-react'
 import { history } from 'v2/history'
@@ -18,6 +18,14 @@ const AppRoot = React.lazy(
 
 export const EntryPoint: React.FC = observer(() => {
   const { isAuthenticated } = useAuth()
+
+  useEffect(() => {
+    history.listen((location, action) => {
+      if (action === 'PUSH') {
+        window.history.replaceState(location.state, 'history')
+      }
+    })
+  }, [])
 
   return (
     <Suspense fallback={<LoadingFullScreen />}>

@@ -5,8 +5,8 @@ import { useFormContext } from 'react-hook-form'
 import { DepositCashFormValues } from 'v2/app/pages/accounts/types'
 
 export const DepositCashAlert: React.FC = () => {
-  const { getValues } = useFormContext<DepositCashFormValues>()
-  const { asset } = getValues()
+  const { watch } = useFormContext<DepositCashFormValues>()
+  const asset = watch('asset')
 
   return (
     <CashTransactionAlert assetId={asset}>

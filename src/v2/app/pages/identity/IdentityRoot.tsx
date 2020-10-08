@@ -1,21 +1,14 @@
 import React from 'react'
 import { useIdentitiesRouter } from 'v2/app/pages/identity/router'
 import { Container } from '@material-ui/core'
-import { PageHeader } from '../../components/PageHeader/PageHeader'
-import { useBreadcrumbs } from '../../../hooks/useBreadcrumbs'
+import { PageHeader } from 'v2/app/components/PageHeader/PageHeader'
 
 export const IdentityRoot: React.FC = () => {
-  const { renderRoutes, paths } = useIdentitiesRouter()
-  const breadcrumbs = useBreadcrumbs()
-  const current = breadcrumbs[breadcrumbs.length - 1]
-  const isLandingPage = current.path === paths.list
+  const { renderRoutes } = useIdentitiesRouter()
 
   return (
     <Container>
-      <PageHeader
-        label={current.label}
-        breadcrumbs={isLandingPage ? undefined : breadcrumbs}
-      />
+      <PageHeader />
       {renderRoutes()}
     </Container>
   )

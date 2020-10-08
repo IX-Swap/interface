@@ -7,7 +7,7 @@ import {
   cleanup
 } from 'test-utils'
 import { Actions } from 'v2/app/pages/authorizer/components/Actions'
-import { bank } from '../../../../../../__fixtures__/authorizer'
+import { bank } from '__fixtures__/authorizer'
 import { history } from 'v2/history'
 import { AuthorizerRoute } from '../../router'
 
@@ -50,8 +50,7 @@ describe('Actions', () => {
       expect(history.location.state).toEqual({
         cacheQueryKey: props.cacheQueryKey,
         itemId: bank._id,
-        category: 'banks',
-        ownerId: bank.user._id
+        category: 'banks'
       })
     })
   })
