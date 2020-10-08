@@ -1,15 +1,15 @@
 import React from 'react'
 import { AuthorizerView } from './AuthorizerView'
-import { DataroomFeature } from '../../../../types/authorizer'
+import { DataroomFeature } from 'v2/types/authorizer'
 import { useAuthorizerRouter } from '../router'
-import { BankPreview } from '../../../components/BankPreview/BankPreview'
+import { BankPreview } from 'v2/app/components/BankPreview/BankPreview'
 import { DepositView } from 'v2/app/components/DepositView/DepositView'
-import { WithdrawalPreview } from '../../../components/WithdrawalPreview'
-import { CorporateIdentityForm } from '../../identity/components/CorporateIdentityForm'
-import { IndividualIdentityForm } from '../../identity/components/IndividualIdentityForm'
-import { DSWithdrawalPreview } from '../../../components/DSWithdrawalPreview/DSWithdrawalPreview'
-import { DSOForm } from '../../../components/DSO/DSOForm'
-import { useCachedPaginatedTableData } from '../../../../hooks/useCachedPaginatedTableData'
+import { WithdrawalPreview } from 'v2/app/components/WithdrawalPreview'
+import { CorporateIdentityForm } from 'v2/app/pages/identity/components/CorporateIdentityForm'
+import { IndividualIdentityForm } from 'v2/app/pages/identity/components/IndividualIdentityForm'
+import { DSWithdrawalPreview } from 'v2/app/components/DSWithdrawalPreview/DSWithdrawalPreview'
+import { DSOForm } from 'v2/app/components/DSO/DSOForm'
+import { useCachedPaginatedTableData } from 'v2/hooks/useCachedPaginatedTableData'
 
 export const viewsMap = {
   banks: BankPreview,

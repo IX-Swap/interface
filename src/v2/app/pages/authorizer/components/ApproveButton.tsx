@@ -2,8 +2,11 @@ import React from 'react'
 import { Button } from '@material-ui/core'
 import { useWatch } from 'react-hook-form'
 import { AuthorizerFormValues } from './AuthorizerForm'
-import { useAuthorizerTableStore } from '../context'
-import { ApproveArgs, useApprove } from '../hooks/useApprove'
+import { useAuthorizerTableStore } from 'v2/app/pages/authorizer/context'
+import {
+  ApproveArgs,
+  useApprove
+} from 'v2/app/pages/authorizer/hooks/useApprove'
 
 export interface ApproveButtonProps {
   itemId: string

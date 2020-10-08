@@ -4,9 +4,12 @@ import { useTypedForm } from 'v2/components/form/useTypedForm'
 import { DataroomFileWithGuide, DataroomFile } from 'v2/types/dataroomFile'
 import { AuthorizationDocument } from './AuthorizationDocument'
 import { Delete } from '@material-ui/icons'
-import { Dataroom, Noop } from '../../identity/components/dataroom/Dataroom'
-import { DataroomFileType } from '../../../../components/form/DataroomFileTypeSelect'
-import { DataroomFeature } from '../../../../types/authorizer'
+import {
+  Dataroom,
+  Noop
+} from 'v2/app/pages/identity/components/dataroom/Dataroom'
+import { DataroomFileType } from 'v2/components/form/DataroomFileTypeSelect'
+import { DataroomFeature } from 'v2/types/authorizer'
 
 export interface AuthorizationDocumentsProps {
   resourceId: string

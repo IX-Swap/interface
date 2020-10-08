@@ -1,13 +1,13 @@
 import { Grid, Typography, Box } from '@material-ui/core'
 import React, { PropsWithChildren } from 'react'
-import { AuthorizationDocuments } from 'v2/app/pages/authorizer/components/AuthorizationDocuments'
-import { AuthorizerForm } from './AuthorizerForm'
-import { AuthorizableWithIdentity, DataroomFeature } from 'v2/types/authorizer'
-import { AuthorizableStatus } from './AuthorizableStatus'
 import { VSpacer } from 'v2/components/VSpacer'
 import { formatDateAndTime } from 'v2/helpers/dates'
-import { AuthorizerIdentities } from './AuthorizerIdentities'
-import { AuthorizableLevel } from './AuthorizableLevel'
+import { AuthorizableWithIdentity, DataroomFeature } from 'v2/types/authorizer'
+import { AuthorizationDocuments } from 'v2/app/pages/authorizer/components/AuthorizationDocuments'
+import { AuthorizerForm } from 'v2/app/pages/authorizer/components/AuthorizerForm'
+import { AuthorizableLevel } from 'v2/app/pages/authorizer/components/AuthorizableLevel'
+import { AuthorizableStatus } from 'v2/app/pages/authorizer/components/AuthorizableStatus'
+import { AuthorizerIdentities } from 'v2/app/pages/authorizer/components/AuthorizerIdentities'
 
 export interface AuthorizerViewProps<T> {
   title: string

@@ -1,4 +1,4 @@
-import { IdentityAddress } from '../../../../types/identity'
+import { IdentityAddress } from 'v2/types/identity'
 
 export const convertAddressToString = (
   address: IdentityAddress | undefined

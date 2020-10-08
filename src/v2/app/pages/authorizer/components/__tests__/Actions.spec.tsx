@@ -9,7 +9,7 @@ import {
 import { Actions } from 'v2/app/pages/authorizer/components/Actions'
 import { bank } from '__fixtures__/authorizer'
 import { history } from 'v2/history'
-import { AuthorizerRoute } from '../../router'
+import { AuthorizerRoute } from 'v2/app/pages/authorizer/router'
 
 describe('Actions', () => {
   const props = {
