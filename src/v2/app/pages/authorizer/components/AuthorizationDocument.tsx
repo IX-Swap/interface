@@ -5,10 +5,10 @@ import { DataroomFile } from 'v2/types/dataroomFile'
 import { Maybe } from 'v2/types/util'
 import { useStyles } from './AuthorizationDocument.styles'
 import { documentIcons } from 'v2/helpers/rendering'
-import { DownloadDocument } from '../../identity/components/dataroom/DownloadDocument'
+import { DownloadDocument } from 'v2/app/pages/identity/components/dataroom/DownloadDocument'
 import { Visibility } from '@material-ui/icons'
 
-interface AuthorizationDocumentProps {
+export interface AuthorizationDocumentProps {
   document: Maybe<DataroomFile>
   title: string
   input: JSX.Element

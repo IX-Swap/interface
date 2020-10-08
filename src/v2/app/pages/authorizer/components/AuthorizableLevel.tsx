@@ -3,7 +3,7 @@ import { useStyles } from 'v2/app/pages/authorizer/components/styles'
 import { Typography } from '@material-ui/core'
 import classNames from 'classnames'
 
-interface AuthorizableLevelProps {
+export interface AuthorizableLevelProps {
   level?: string
   compact?: boolean
 }

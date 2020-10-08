@@ -1,5 +1,5 @@
 import React from 'react'
-import { useTypedForm } from '../../../../components/form/useTypedForm'
+import { useTypedForm } from 'v2/components/form/useTypedForm'
 import { Box, Grid } from '@material-ui/core'
 import { ApproveButton } from './ApproveButton'
 import { RejectButton } from './RejectButton'

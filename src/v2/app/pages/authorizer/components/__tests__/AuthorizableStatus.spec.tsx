@@ -20,4 +20,28 @@ describe('AuthorizableStatus', () => {
 
     expect(getByText('S')).toBeTruthy()
   })
+
+  it('renders Approved if status Approved & compact is false', () => {
+    const { getByText } = render(
+      <AuthorizableStatus status='Approved' compact={false} />
+    )
+
+    expect(getByText('Approved')).toBeTruthy()
+  })
+
+  it('renders Rejected if status Rejected & compact is false', () => {
+    const { getByText } = render(
+      <AuthorizableStatus status='Rejected' compact={false} />
+    )
+
+    expect(getByText('Rejected')).toBeTruthy()
+  })
+
+  it('renders Submitted if status is Submitted & compact is false', () => {
+    const { getByText } = render(
+      <AuthorizableStatus status='Submitted' compact={false} />
+    )
+
+    expect(getByText('Submitted')).toBeTruthy()
+  })
 })

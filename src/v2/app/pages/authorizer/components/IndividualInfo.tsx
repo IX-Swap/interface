@@ -1,10 +1,10 @@
 import React from 'react'
-import { IndividualIdentity } from '../../../../types/identity'
+import { IndividualIdentity } from 'v2/types/identity'
 import { Avatar, Grid, Typography } from '@material-ui/core'
 import { convertAddressToString } from './utils'
-import { ViewDocument } from '../../../components/DSO/components/ViewDocument'
-import { LabelledValue } from '../../../../components/LabelledValue'
-import { renderName } from '../../../../helpers/tables'
+import { ViewDocument } from 'v2/app/components/DSO/components/ViewDocument'
+import { LabelledValue } from 'v2/components/LabelledValue'
+import { renderName } from 'v2/helpers/tables'
 
 export interface IndividualInfoProps {
   data: IndividualIdentity
