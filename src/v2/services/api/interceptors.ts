@@ -2,7 +2,7 @@ import { AxiosResponse } from 'axios'
 import { APIResponse } from 'v2/services/api/types'
 
 class APIError extends Error {
-  constructor (message: string) {
+  constructor(message: string) {
     super()
     this.message = message
   }

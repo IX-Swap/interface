@@ -38,7 +38,7 @@ const DsoView = () => {
           toggleEditMode(dispatch, true)
           history.push('/invest/commit')
         }}
-        headerButtonText='Invest'
+        headerButtonText='InvestRoot'
         onClickDocument={onClickDocument}
       />
     </Container>

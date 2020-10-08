@@ -8,17 +8,17 @@ export class InvestStore {
   @observable isPreview = false
 
   @action
-  setActiveCommitment (commitment: Commitment) {
+  setActiveCommitment(commitment: Commitment) {
     this.selectedCommitment = commitment
   }
 
   @action
-  setIsPreview (preview: boolean) {
+  setIsPreview(preview: boolean) {
     this.isPreview = preview
   }
 
   @action
-  selectDso (dso: DigitalSecurityOffering) {
+  selectDso(dso: DigitalSecurityOffering) {
     this.selectedDso = dso
   }
 }

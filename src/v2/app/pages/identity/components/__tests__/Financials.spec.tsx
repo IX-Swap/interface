@@ -16,7 +16,7 @@ describe('Financials', () => {
     jest.spyOn(typedForm, 'useIndividualIdentityForm').mockReturnValue({
       ...generateCreateTypedFormResult(),
       EditableField
-    } as any)
+    })
   })
   afterEach(async () => {
     await cleanup()

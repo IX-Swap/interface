@@ -13,13 +13,13 @@ export interface NoIdentityProps {
 
 export const NoIdentity: React.FC<NoIdentityProps> = props => {
   const { text, link } = props
-  const { routes } = useIdentitiesRouter()
+  const { paths } = useIdentitiesRouter()
 
   return (
     <Grid container justify='center' alignItems='center'>
       <Box padding={4}>
         <Button color='primary' variant='contained'>
-          <AppRouterLink to={routes[link]}>{text}</AppRouterLink>
+          <AppRouterLink to={paths[link]}>{text}</AppRouterLink>
         </Button>
       </Box>
     </Grid>

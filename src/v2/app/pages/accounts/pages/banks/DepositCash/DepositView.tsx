@@ -11,20 +11,27 @@ import { generateRandom } from 'v2/helpers/numbers'
 import { useDepositStore } from 'v2/app/pages/accounts/pages/banks/context'
 import { Preview } from 'v2/app/pages/accounts/pages/banks/DepositCash/Preview'
 import { Setup } from 'v2/app/pages/accounts/pages/banks/DepositCash/Setup'
-import { CancelButton } from 'v2/app/pages/accounts/pages/banks/components/CancelButton'
+import { BackButton } from 'v2/app/pages/accounts/pages/banks/components/BackButton'
 import { ContinueButton } from 'v2/app/pages/accounts/pages/banks/DepositCash/ContinueButton'
 import { DepositCashAlert } from 'v2/app/pages/accounts/pages/banks/components/DepositCashAlert'
+import { DisplayNone } from 'v2/app/components/DisplayNone'
+import { useUnmountCallback } from 'v2/hooks/useUnmountCallback'
 
 export const DepositView: React.FC = observer(() => {
   const { TextField, Submit } = useDepositCashForm()
-  const { isPreview } = useDepositStore()
+  const { isPreview, clear } = useDepositStore()
   const depositCode = generateRandom(8, 'A#')
+
+  useUnmountCallback(clear)
 
   return (
     <DepositForm depositCode={depositCode}>
       <Grid container direction='column' spacing={4}>
         <Grid item>
-          {isPreview ? <Preview depositCode={depositCode} /> : <Setup />}
+          <DisplayNone when={isPreview}>
+            <Setup />
+          </DisplayNone>
+          {isPreview && <Preview depositCode={depositCode} />}
         </Grid>
         <Grid item>
           <BankDetails bank={INVESTAX_BANK} code={depositCode} />
@@ -49,7 +56,7 @@ export const DepositView: React.FC = observer(() => {
           <Grid container justify='center'>
             {isPreview ? (
               <>
-                <CancelButton />
+                <BackButton />
                 <Box mx={1} />
                 <Submit>Confirm Deposit</Submit>
               </>

@@ -17,7 +17,7 @@ import keyImg from './assets/key.png'
 import gAuthImg from './assets/googleauth.png'
 import { PageTitle } from 'v2/app/components/PageTitle'
 
-import { useSecurityRouter } from '../../routes'
+import { useSecurityRouter } from '../../router'
 
 export const Landing = () => {
   const { user = { totpConfirmed: false } } = useAuth()

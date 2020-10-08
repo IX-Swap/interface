@@ -6,14 +6,10 @@ import {
   renderWithAuthorizerTableStore,
   cleanup
 } from 'test-utils'
-import {
-  Actions,
-  getItemOwnerId
-} from 'v2/app/pages/authorizer/components/Actions'
+import { Actions } from 'v2/app/pages/authorizer/components/Actions'
 import { bank } from '__fixtures__/authorizer'
 import { history } from 'v2/history'
 import { AuthorizerRoute } from 'v2/app/pages/authorizer/router'
-import { user } from '__fixtures__/user'
 
 describe('Actions', () => {
   const props = {
@@ -54,19 +50,8 @@ describe('Actions', () => {
       expect(history.location.state).toEqual({
         cacheQueryKey: props.cacheQueryKey,
         itemId: bank._id,
-        category: 'banks',
-        ownerId: bank.user._id
+        category: 'banks'
       })
     })
-  })
-})
-
-describe('getItemOwnerId', () => {
-  it('returns user if provided value is string', () => {
-    expect(getItemOwnerId('user')).toBe('user')
-  })
-
-  it('returns user id if provided value is an object', () => {
-    expect(getItemOwnerId(user)).toBe(user._id)
   })
 })

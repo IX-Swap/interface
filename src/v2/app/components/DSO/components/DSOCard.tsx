@@ -1,6 +1,13 @@
 import React from 'react'
 import { DigitalSecurityOffering } from 'v2/types/dso'
-import { Paper, Box, Typography, Button, Grid } from '@material-ui/core'
+import {
+  Box,
+  Typography,
+  Button,
+  Grid,
+  Card,
+  CardContent
+} from '@material-ui/core'
 import { DSOTitle } from 'v2/app/components/DSO/components/DSOTitle'
 import { DSODetails } from 'v2/app/components/DSO/components/DSODetails'
 import { AppRouterLink } from 'v2/components/AppRouterLink'
@@ -14,8 +21,8 @@ export const DSOCard = (props: DSOfferingCardProps) => {
   const { dso, viewURL } = props
 
   return (
-    <Paper>
-      <Box px={4} pt={2} pb={4}>
+    <Card>
+      <CardContent>
         <Grid container justify='space-between' spacing={2}>
           <Grid
             item
@@ -59,7 +66,7 @@ export const DSOCard = (props: DSOfferingCardProps) => {
             />
           </Grid>
         </Grid>
-      </Box>
-    </Paper>
+      </CardContent>
+    </Card>
   )
 }

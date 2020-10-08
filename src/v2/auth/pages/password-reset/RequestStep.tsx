@@ -22,7 +22,7 @@ export const RequestStep: React.FC = () => {
   const { Form, TextField, Submit } = useRequestPasswordResetForm()
   const [requestReset] = useRequestPasswordReset()
   const { setEmail } = usePasswordResetStore()
-  const { routes } = useAuthRouter()
+  const { paths } = useAuthRouter()
 
   const handleSubmit = async (
     values: RequestPasswordResetArgs
@@ -41,7 +41,7 @@ export const RequestStep: React.FC = () => {
       <TextField name='email' label='Email Address' />
       <div className={classes.formButtons}>
         <Button color='primary' size='large' className={classes.forgetButton}>
-          <AppRouterLink to={routes.login}>Back to Login</AppRouterLink>
+          <AppRouterLink to={paths.login}>Back to Login</AppRouterLink>
         </Button>
 
         <Submit variant='contained' color='primary'>

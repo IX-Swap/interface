@@ -3,19 +3,26 @@ import React from 'react'
 import { render, cleanup } from 'test-utils'
 import { Landing } from 'v2/app/pages/security/pages/landing/Landing'
 import * as authHook from 'v2/hooks/auth/useAuth'
-import * as routerHook from 'v2/app/pages/security/routes'
+import * as SecurityRouter from 'v2/app/pages/security/router'
 import { fireEvent, waitFor } from '@testing-library/react'
 import { user } from '__fixtures__/user'
-import { generateRouter } from '__fixtures__/useRouter'
 
 describe('Landing', () => {
   const push = jest.fn()
+
   beforeEach(() => {
-    jest.spyOn(routerHook, 'useSecurityRouter').mockImplementation(() => ({
-      ...generateRouter({}),
-      push
+    jest.spyOn(SecurityRouter, 'useSecurityRouter').mockImplementation(() => ({
+      current: { path: '', label: '' },
+      paths: SecurityRouter.SecurityRoute,
+      renderRoutes: jest.fn(() => <div />),
+      routes: [],
+      push,
+      replace: jest.fn(),
+      query: new URLSearchParams(),
+      params: {}
     }))
   })
+
   afterEach(async () => {
     await cleanup()
     jest.clearAllMocks()

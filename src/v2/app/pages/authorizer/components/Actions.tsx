@@ -23,7 +23,6 @@ export const Actions = <T,>(props: ActionsProps<T>): JSX.Element => {
   const classes = useStyles()
 
   const viewItem = (): void => {
-    const ownerId = getItemOwnerId((item as any).user)
     const id = (item as any)._id
     const splitted = current.path.split('/')
     const category = splitted[splitted.length - 1]
@@ -31,7 +30,6 @@ export const Actions = <T,>(props: ActionsProps<T>): JSX.Element => {
     push('viewItem', {
       itemId: id,
       category,
-      ownerId,
       cacheQueryKey
     })
   }

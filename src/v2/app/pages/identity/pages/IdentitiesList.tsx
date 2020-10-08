@@ -9,7 +9,7 @@ export const useIndividualIdentityForm = createTypedForm<
   IndividualIdentityFormValues
 >()
 
-export const IdentitiesList: React.FC = () => {
+export const IdentityRoot: React.FC = () => {
   return (
     <Grid container direction='column' alignItems='flex-start' spacing={2}>
       <IndividualIdPreview />

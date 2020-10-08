@@ -6,7 +6,6 @@ import {
   useAuthorizerView,
   AuthorizerViewReturnValue
 } from 'v2/app/pages/authorizer/hooks/useAuthorizerView'
-import { Filters } from 'v2/app/pages/authorizer/components/Filters'
 import { TableView } from 'v2/components/TableWithPagination/TableView'
 import { Preview } from 'v2/app/pages/authorizer/components/Preview'
 import { withExtraActions } from 'v2/app/pages/authorizer/components/withExtraActions'
@@ -73,11 +72,8 @@ describe('AuthorizerTable', () => {
   it('renders as expected in normal mode', async () => {
     useBaseViewMock.mockReturnValueOnce(useBaseViewMockReturnValue)
 
-    const { getByText } = render(<AuthorizerTable {...props} />)
-    const title = getByText(props.title)
+    render(<AuthorizerTable {...props} />)
 
-    expect(title).toBeTruthy()
-    expect(Filters).toHaveBeenCalledTimes(1)
     expect(TableView).toHaveBeenCalledTimes(1)
   })
 

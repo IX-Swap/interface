@@ -14,8 +14,8 @@ export const AuthRoot: React.FC = observer(() => {
   const { setActiveTab } = useUserStore()
   const { isAuthenticated } = useAuth()
   const history = useHistory()
-  const { renderRoutes, routes, current } = useAuthRouter()
-  const tabbedRoutes = useMemo(() => [routes.login, routes.signup], [routes])
+  const { renderRoutes, paths, current } = useAuthRouter()
+  const tabbedRoutes = useMemo(() => [paths.login, paths.signup], [paths])
   const isLoginOrSignup = tabbedRoutes.includes(current.path)
 
   useEffect(() => {

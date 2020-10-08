@@ -5,7 +5,7 @@ import { PaginatedData } from 'v2/services/api/types'
 import { paginationArgs } from 'v2/config/defaults'
 
 export const assetsService = {
-  async getAssets (queryKey: string, args: GetAssetsArgs) {
+  async getAssets(queryKey: string, args: GetAssetsArgs) {
     const uri = '/accounts/assets/list'
 
     return await apiService.post<PaginatedData<Asset>>(uri, {

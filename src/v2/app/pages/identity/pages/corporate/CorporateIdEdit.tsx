@@ -1,16 +1,16 @@
 import React from 'react'
 import { Grid } from '@material-ui/core'
-import { PageTitle } from 'v2/app/components/PageTitle'
 import { useIdentitiesRouter } from 'v2/app/pages/identity/router'
 import { useAllCorporateIdentities } from 'v2/hooks/identity/useAllCorporateIdentities'
 import { CorporateIdentityForm } from 'v2/app/pages/identity/components/CorporateIdentityForm'
 import { useUpdateCorporateIdentity } from 'v2/hooks/identity/useUpdateCorporateIdentity'
 import { CancelButton } from 'v2/app/pages/identity/components/CancelButton'
+import { VSpacer } from 'v2/components/VSpacer'
 
 export const CorporateIdEdit: React.FC = () => {
   const { data, status } = useAllCorporateIdentities()
   const {
-    routes,
+    paths,
     params: { identityId }
   } = useIdentitiesRouter()
   const [updateCorporateId] = useUpdateCorporateIdentity(identityId)
@@ -18,13 +18,13 @@ export const CorporateIdEdit: React.FC = () => {
   if (status === 'loading') {
     return null
   }
-
+  console.log('id', identityId)
   const identity = data.map[identityId]
 
   return (
     <Grid container>
-      <Grid container item justify='space-between' alignItems='center'>
-        <PageTitle subPage title={identity.companyLegalName} />
+      <Grid container item>
+        <VSpacer size='medium' />
       </Grid>
       <Grid item>
         <CorporateIdentityForm
@@ -35,7 +35,7 @@ export const CorporateIdEdit: React.FC = () => {
           onSubmit={updateCorporateId}
           cancelButton={
             <CancelButton
-              link={routes.corporate}
+              link={paths.corporate}
               params={{ identityId }}
               replace
             />

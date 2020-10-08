@@ -12,7 +12,7 @@ export const DSRoute = {
   withdraw: '/app/accounts/digital-securities/:balanceId/withdraw'
 }
 
-const dsRoutes: InternalRouteProps[] = [
+export const dsRoutes: InternalRouteProps[] = [
   {
     label: 'Digital Securities',
     path: DSRoute.list,

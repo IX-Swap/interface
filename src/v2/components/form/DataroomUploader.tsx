@@ -1,6 +1,6 @@
 import React, { useRef } from 'react'
-import { DataroomFile } from '../../types/dataroomFile'
-import { UploadDocumentInfo, useUploadFile } from '../../hooks/useUploadFile'
+import { DataroomFile } from 'v2/types/dataroomFile'
+import { UploadDocumentInfo, useUploadFile } from 'v2/hooks/useUploadFile'
 import { Button } from '@material-ui/core'
 
 export interface DataroomUploaderProps {
@@ -17,8 +17,12 @@ export const DataroomUploader = (props: DataroomUploaderProps) => {
     onSuccess: response => onChange(response.data)
   })
   const handleChange = async () => {
-    // eslint-disable-next-line
-    if (inputRef.current !== null && inputRef.current.files !== null && inputRef.current.files.length > 0) {
+    if (
+      // eslint-disable-next-line
+      inputRef.current !== null &&
+      inputRef.current.files !== null &&
+      inputRef.current.files.length > 0
+    ) {
       await uploadFile({
         ...documentInfo,
         documents: Array.from(inputRef.current.files)

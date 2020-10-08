@@ -5,7 +5,7 @@ import { Banks } from 'v2/app/pages/accounts/pages/banks/Banks'
 import * as banksRouter from 'v2/app/pages/accounts/pages/banks/router'
 
 describe('Banks', () => {
-  const renderRoutes = jest.fn()
+  const renderRoutes = jest.fn(() => <div />)
 
   beforeEach(() => {
     jest.spyOn(banksRouter, 'useBanksRouter').mockImplementation(() => ({
@@ -17,8 +17,9 @@ describe('Banks', () => {
         path: '',
         label: ''
       },
-      routes: banksRouter.BanksRoute,
-      renderRoutes
+      paths: banksRouter.BanksRoute,
+      renderRoutes,
+      routes: []
     }))
   })
 

@@ -7,7 +7,7 @@ import { AppRouterLink } from 'v2/components/AppRouterLink'
 
 export const Confirmation: React.FC = () => {
   const classes = useStyles()
-  const { routes, query, push } = useAuthRouter()
+  const { paths, query, push } = useAuthRouter()
   const [verifySignup, { isLoading }] = useVerifySignup()
   let content: JSX.Element
 
@@ -28,7 +28,7 @@ export const Confirmation: React.FC = () => {
       <Box mt={4}>
         <Box mt={4}>
           <Button variant='outlined'>
-            <AppRouterLink to={routes.login}>Back to Login</AppRouterLink>
+            <AppRouterLink to={paths.login}>Back to Login</AppRouterLink>
           </Button>
         </Box>
       </Box>

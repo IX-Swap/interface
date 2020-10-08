@@ -8,18 +8,15 @@ import { corporate } from '__fixtures__/identity'
 import { QueryStatus } from 'react-query'
 import * as allCorporateIdentitiesHook from 'v2/hooks/identity/useAllCorporateIdentities'
 import { history } from 'v2/history'
-import { PageTitle } from 'v2/app/components/PageTitle'
 import { CorporateIdentityForm } from 'v2/app/pages/identity/components/CorporateIdentityForm'
 
 jest.mock('v2/app/pages/identity/components/CorporateIdentityForm', () => ({
   CorporateIdentityForm: jest.fn(() => null)
 }))
-jest.mock('v2/app/components/PageTitle', () => ({
-  PageTitle: jest.fn(() => null)
-}))
 
 describe('CorporateIdEdit', () => {
   const identityId = corporate._id
+
   beforeEach(() => {
     history.push(IdentityRoute.editCorporate, { identityId })
   })
@@ -52,6 +49,7 @@ describe('CorporateIdEdit', () => {
       .mockImplementation(() =>
         generateInfiniteQueryResult({ map: { [identityId]: corporate } })
       )
+
     render(<CorporateIdEdit />)
 
     expect(CorporateIdentityForm).toHaveBeenCalledWith(
@@ -63,17 +61,6 @@ describe('CorporateIdEdit', () => {
         onSubmit: expect.any(Function),
         cancelButton: expect.anything()
       },
-      {}
-    )
-  })
-
-  it('renders PageTitle with correct props', () => {
-    render(<CorporateIdEdit />)
-
-    expect(PageTitle).toHaveBeenCalledTimes(1)
-    expect(PageTitle).toHaveBeenNthCalledWith(
-      1,
-      { subPage: true, title: corporate.companyLegalName },
       {}
     )
   })

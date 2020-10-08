@@ -12,10 +12,10 @@ export const getBankFormDefaultValues = (bank: Bank | undefined) => {
   return bank === undefined
     ? { supportingDocuments: [] }
     : {
-      ...bank,
-      asset: bank.currency._id,
-      supportingDocuments: bank.supportingDocuments.map(d => ({
-        document: d
-      }))
-    }
+        ...bank,
+        asset: bank.currency._id,
+        supportingDocuments: bank.supportingDocuments.map(d => ({
+          document: d
+        }))
+      }
 }

@@ -1,207 +1,62 @@
-import React, { useState, useEffect } from 'react'
-import { Drawer, IconButton, List } from '@material-ui/core'
-import LocalAtmIcon from '@material-ui/icons/LocalAtm'
-import HelpIcon from '@material-ui/icons/Help'
-import ArrowBackIcon from '@material-ui/icons/ArrowBack'
-import SecurityIcon from '@material-ui/icons/Security'
-import AccountBalanceIcon from '@material-ui/icons/AccountBalance'
-import PieChartIcon from '@material-ui/icons/PieChart'
-import PersonIcon from '@material-ui/icons/Person'
-import PeopleIcon from '@material-ui/icons/People'
-import AccountBoxIcon from '@material-ui/icons/AccountBox'
-import { useTheme } from '@material-ui/core/styles'
-import classNames from 'classnames'
-import { useLocation } from 'react-router-dom'
-import { useIsAdmin, useIsAuthorizer, useIsIssuer } from 'v2/helpers/acl'
-import useStyles from './styles'
+import React from 'react'
+import { List } from '@material-ui/core'
+import { useIsAuthorizer, useIsIssuer } from 'v2/helpers/acl'
 import { SidebarLink } from 'v2/app/components/Sidebar/components/SidebarLink'
 import { useAuthorizerRouter } from 'v2/app/pages/authorizer/router'
 import { useAccountsRouter } from 'v2/app/pages/accounts/router'
-import { useIdentitiesRouter } from 'v2/app/pages/identity/router'
-import { useStore as useLayoutStore } from '../../../context/layout'
 import { useInvestRouter } from 'v2/app/pages/invest/router'
 import { useIssuanceRouter } from 'v2/app/pages/issuance/router'
-
-const securityRoot = '/app/security'
-const authorizerRoot = '/app/authorizer'
-const accountsRoot = '/app/accounts'
-const adminRoot = '/app/admin'
+import { useStyles } from './Sidebar.styles'
+import { ReactComponent as InvestIcon } from 'assets/icons/navigation/invest.svg'
+import { ReactComponent as AccountsIcon } from 'assets/icons/navigation/account.svg'
+import { ReactComponent as IssuanceIcon } from 'assets/icons/navigation/issuance.svg'
+import { ReactComponent as AuthorizerIcon } from 'assets/icons/navigation/authorizer.svg'
 
 export const Sidebar = () => {
-  const location = useLocation()
-  const classes = useStyles()
-  const theme = useTheme()
-  const isAdmin = useIsAdmin()
   const isAuthorizer = useIsAuthorizer()
   const isIssuer = useIsIssuer()
-  const { routes: authorizerRoutes } = useAuthorizerRouter()
-  const { routes: accountRoutes } = useAccountsRouter()
-  const { routes: identityRoutes } = useIdentitiesRouter()
-  const { routes: investRoutes } = useInvestRouter()
-  const { routes: issuanceRoutes } = useIssuanceRouter()
+  const { paths: authorizerRoutes } = useAuthorizerRouter()
+  const { paths: accountRoutes } = useAccountsRouter()
+  const { paths: investRoutes } = useInvestRouter()
+  const { paths: issuanceRoutes } = useIssuanceRouter()
+  const styles = useStyles()
 
-  const structure = [
+  const links = [
     {
-      id: 'identity',
-      label: 'Identity',
-      link: identityRoutes.list,
-      icon: <PersonIcon />
+      label: 'Accounts',
+      link: accountRoutes.landing,
+      icon: AccountsIcon
     },
     {
-      id: 'invest',
       label: 'Invest',
       link: investRoutes.list,
-      icon: <PieChartIcon />
+      icon: InvestIcon
     },
-    {
-      id: 'accounts',
-      label: 'Accounts',
-      link: accountsRoot,
-      icon: <AccountBalanceIcon />,
-      children: [
-        ...Object.entries(accountRoutes).map(([label, link]) => ({
-          label,
-          link
-        }))
-      ]
-    },
-    // {
-    //   id: 'exchange',
-    //   label: 'Exchange',
-    //   link: '/exchange',
-    //   icon: <TrendingUpIcon />,
-    //   children: [
-    //     {
-    //       label: 'Markets',
-    //       link: '/markets'
-    //     },
-    //     {
-    //       label: 'Trade History',
-    //       link: '/trade-history'
-    //     },
-    //     {
-    //       label: 'Order History',
-    //       link: '/order-history'
-    //     }
-    //   ]
-    // },
-    // Show only when user has issuer role
     ...(isIssuer
       ? [
-        {
-          id: 'issuance',
-          label: 'Issuance',
-          link: issuanceRoutes.list,
-          icon: <LocalAtmIcon />
-        }
-      ]
+          {
+            label: 'Issuance',
+            link: issuanceRoutes.list,
+            icon: IssuanceIcon
+          }
+        ]
       : []),
-    // Show only when user has authorizer role
     ...(isAuthorizer
       ? [
-        {
-          id: 'authorizer',
-          label: 'Authorizer',
-          link: authorizerRoot,
-          icon: <AccountBoxIcon />,
-          children: [
-            ...Object.entries(authorizerRoutes).map(([label, link]) => ({
-              label,
-              link
-            }))
-          ]
-        }
-      ]
-      : []),
-    // Show only when user has admin role
-    ...(isAdmin
-      ? [
-        {
-          id: 'users',
-          label: 'User Management',
-          link: adminRoot,
-          icon: <PeopleIcon />
-        }
-      ]
-      : []),
-    { id: 6, type: 'divider' },
-    {
-      id: 'security',
-      label: 'Security',
-      link: securityRoot,
-      icon: <SecurityIcon />
-    },
-    {
-      id: 5,
-      label: 'Support',
-      link: '/primary',
-      icon: <HelpIcon />
-    }
+          {
+            label: 'Authorizer',
+            link: authorizerRoutes.landing,
+            icon: AuthorizerIcon
+          }
+        ]
+      : [])
   ]
 
-  // global
-  const layoutStore = useLayoutStore()
-
-  // local
-  const [isPermanent, setPermanent] = useState(true)
-
-  const handleWindowWidthChange = () => {
-    const windowWidth = window.innerWidth
-    const breakpointWidth = theme.breakpoints.values.md
-    const isSmallScreen = windowWidth < breakpointWidth
-
-    if (isSmallScreen && isPermanent) {
-      setPermanent(false)
-    } else if (!isSmallScreen && !isPermanent) {
-      setPermanent(true)
-    }
-  }
-
-  useEffect(function () {
-    window.addEventListener('resize', handleWindowWidthChange)
-    handleWindowWidthChange()
-    return function cleanup () {
-      window.removeEventListener('resize', handleWindowWidthChange)
-    }
-  })
-
   return (
-    <Drawer
-      variant={isPermanent ? 'permanent' : 'temporary'}
-      className={classNames(classes.drawer, {
-        [classes.drawerOpen]: layoutStore.isSidebarOpened,
-        [classes.drawerClose]: !layoutStore.isSidebarOpened
-      })}
-      classes={{
-        paper: classNames({
-          [classes.drawerOpen]: layoutStore.isSidebarOpened,
-          [classes.drawerClose]: !layoutStore.isSidebarOpened
-        })
-      }}
-      open={layoutStore.isSidebarOpened}
-    >
-      <div className={classes.toolbar} />
-      <div className={classes.mobileBackButton}>
-        <IconButton onClick={() => layoutStore.toggleSidebar()}>
-          <ArrowBackIcon
-            classes={{
-              root: classNames(classes.headerIcon, classes.headerIconCollapse)
-            }}
-          />
-        </IconButton>
-      </div>
-      <List>
-        {structure.map(({ link, ...others }) => (
-          <SidebarLink
-            {...others}
-            link={link}
-            key={others.id}
-            nested={others.children !== undefined && others.children.length > 0}
-            location={location}
-            isSidebarOpened={layoutStore.isSidebarOpened}
-          />
-        ))}
-      </List>
-    </Drawer>
+    <List className={styles.container}>
+      {links.map(link => (
+        <SidebarLink {...link} key={link.label} />
+      ))}
+    </List>
   )
 }

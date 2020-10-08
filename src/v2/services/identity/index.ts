@@ -10,35 +10,35 @@ import { paginationArgs } from 'v2/config/defaults'
 import { PaginatedData } from 'v2/services/api/types'
 
 export const identityService = {
-  async getIndividual (queryKey: string, args: GetIndividualIdentityArgs) {
+  async getIndividual(queryKey: string, args: GetIndividualIdentityArgs) {
     const { userId } = args
     const uri = `/identity/individuals/${userId}`
 
     return await apiService.get<IndividualIdentity>(uri)
   },
 
-  async createOrUpdateIndividual (args: CreateOrUpdateIndividualIdentityArgs) {
+  async createOrUpdateIndividual(args: CreateOrUpdateIndividualIdentityArgs) {
     const { userId, ...identity } = args
     const uri = `/identity/individuals/${userId}`
 
     return await apiService.put<IndividualIdentity>(uri, identity)
   },
 
-  async createCorporate (args: CreateCorporateIdentityArgs) {
+  async createCorporate(args: CreateCorporateIdentityArgs) {
     const { userId, ...identity } = args
     const uri = `/identity/corporates/${userId}`
 
     return await apiService.post<CorporateIdentity>(uri, identity)
   },
 
-  async updateCorporate (args: UpdateCorporateIdentityArgs) {
+  async updateCorporate(args: UpdateCorporateIdentityArgs) {
     const { userId, id, ...identity } = args
     const uri = `/identity/corporates/${userId}/${id}`
 
     return await apiService.put<CorporateIdentity>(uri, identity)
   },
 
-  async getAllCorporates (queryKey: string, args: GetIndividualIdentityArgs) {
+  async getAllCorporates(queryKey: string, args: GetIndividualIdentityArgs) {
     const { userId } = args
     const uri = `/identity/corporates/${userId}/list`
 

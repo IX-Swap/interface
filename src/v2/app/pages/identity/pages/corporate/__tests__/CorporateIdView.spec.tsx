@@ -10,7 +10,6 @@ import { QueryStatus } from 'react-query'
 import { CorporateIdView } from 'v2/app/pages/identity/pages/corporate/CorporateIdView'
 import * as allCorporateIdentitiesHook from 'v2/hooks/identity/useAllCorporateIdentities'
 import { history } from 'v2/history'
-import { PageTitle } from 'v2/app/components/PageTitle'
 
 jest.mock('v2/app/pages/identity/components/CorporateIdentityForm', () => ({
   CorporateIdentityForm: jest.fn(() => null)
@@ -18,19 +17,19 @@ jest.mock('v2/app/pages/identity/components/CorporateIdentityForm', () => ({
 jest.mock('v2/app/pages/identity/components/EditButton', () => ({
   EditButton: jest.fn(() => null)
 }))
-jest.mock('v2/app/components/PageTitle', () => ({
-  PageTitle: jest.fn(() => null)
-}))
 
 describe('CorporateIdView', () => {
   const identityId = corporate._id
+
   beforeEach(() => {
     history.push(IdentityRoute.editCorporate, { identityId })
   })
+
   afterEach(async () => {
     await cleanup()
     jest.clearAllMocks()
   })
+
   afterAll(() => history.push('/'))
 
   it('renders without error', () => {
@@ -63,17 +62,6 @@ describe('CorporateIdView', () => {
         params: { identityId },
         link: IdentityRoute.editCorporate
       },
-      {}
-    )
-  })
-
-  it('renders PageTitle with correct props', () => {
-    render(<CorporateIdView />)
-
-    expect(PageTitle).toHaveBeenCalledTimes(1)
-    expect(PageTitle).toHaveBeenNthCalledWith(
-      1,
-      { subPage: true, title: corporate.companyLegalName },
       {}
     )
   })

@@ -18,7 +18,7 @@ const useLoginForm = createTypedForm<LoginArgs>()
 
 export const Login: React.FC = () => {
   const classes = useStyles()
-  const { routes } = useAuthRouter()
+  const { paths } = useAuthRouter()
   const [login] = useLogin()
   const { Form, TextField, Submit } = useLoginForm()
   const handleSubmit = async (values: LoginArgs) => {
@@ -50,7 +50,7 @@ export const Login: React.FC = () => {
       <div className={classes.formButtons}>
         <Submit>Login</Submit>
         <Button color='primary' size='large' className={classes.forgetButton}>
-          <AppRouterLink to={routes.passwordReset}>
+          <AppRouterLink to={paths.passwordReset}>
             Forgot Password?
           </AppRouterLink>
         </Button>

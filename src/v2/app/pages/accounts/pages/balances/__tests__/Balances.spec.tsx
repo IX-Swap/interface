@@ -39,7 +39,10 @@ describe('Balances', () => {
       {
         name: `balance-${user._id}`,
         uri: `/accounts/balance/${user._id}`,
-        columns
+        columns,
+        filter: {
+          type: 'Currency'
+        }
       },
       {}
     )

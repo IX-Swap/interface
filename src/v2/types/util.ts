@@ -48,8 +48,12 @@ export interface InternalRouteBase {
   path: string
 }
 export interface InternalRouteProps extends InternalRouteBase {
-  component: ComponentType<RouteComponentProps<any>> | ComponentType<any>
+  component?: ComponentType<RouteComponentProps<any>> | ComponentType<any>
+  icon?: any
   exact?: boolean
+  color?: string
+  root?: boolean
+  generic?: boolean
 }
 
 export interface RouteMeta {
@@ -70,8 +74,8 @@ export type DeepPartial<T> = {
   [K in keyof T]?: T[K] extends Array<infer U>
     ? Array<DeepPartial<U>>
     : T[K] extends ReadonlyArray<infer U>
-      ? ReadonlyArray<DeepPartial<U>>
-      : T[K] extends Record<string, unknown>
-        ? DeepPartial<T[K]>
-        : T[K]
+    ? ReadonlyArray<DeepPartial<U>>
+    : T[K] extends Record<string, unknown>
+    ? DeepPartial<T[K]>
+    : T[K]
 }

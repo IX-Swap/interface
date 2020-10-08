@@ -8,7 +8,6 @@ import { generateQueryResult } from '__fixtures__/useQuery'
 import { individual } from '__fixtures__/identity'
 import { QueryStatus } from 'react-query'
 import * as individualIdentityHook from 'v2/hooks/identity/useIndividualIdentity'
-import { PageTitle } from 'v2/app/components/PageTitle'
 import { IndividualIdentityForm } from 'v2/app/pages/identity/components/IndividualIdentityForm'
 
 jest.mock('v2/app/components/PageTitle', () => ({
@@ -64,20 +63,6 @@ describe('IndividualIdView', () => {
         isEditing: false,
         cancelButton: expect.anything(),
         useOwnEmail: false
-      },
-      {}
-    )
-  })
-
-  it('renders PageTitle with correct props', () => {
-    render(<IndividualIdView />)
-
-    expect(PageTitle).toHaveBeenCalledTimes(1)
-    expect(PageTitle).toHaveBeenNthCalledWith(
-      1,
-      {
-        subPage: true,
-        title: `${individual.firstName} ${individual.lastName}`
       },
       {}
     )

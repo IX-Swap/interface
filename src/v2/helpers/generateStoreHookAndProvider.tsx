@@ -11,7 +11,7 @@ interface GeneratedStoreHookAndProvider<T> {
   useStore: () => T
 }
 
-function generateStoreHookAndProvider<T> (
+function generateStoreHookAndProvider<T>(
   store: T,
   hookEnhancer?: (context: T) => void
 ): GeneratedStoreHookAndProvider<T> {

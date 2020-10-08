@@ -75,7 +75,13 @@ const themes: Themes = {
     ...overrides,
     overrides: {
       ...defaultTheme.overrides,
-      ...rte
+      ...rte,
+      MuiContainer: {
+        root: {
+          paddingTop: 40,
+          paddingBottom: 40
+        }
+      }
     }
   })
 }

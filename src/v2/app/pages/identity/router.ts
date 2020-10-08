@@ -1,5 +1,5 @@
 import { InternalRouteProps } from 'v2/types/util'
-import { IdentitiesList } from 'v2/app/pages/identity/pages/IdentitiesList'
+import { IdentityRoot } from 'v2/app/pages/identity/pages/IdentitiesList'
 import { IndividualIdView } from 'v2/app/pages/identity/pages/individual/IndividualIdView'
 import { CorporateIdView } from 'v2/app/pages/identity/pages/corporate/CorporateIdView'
 import { generateAppRouterHook } from 'v2/helpers/generateAppRouterHook'
@@ -20,10 +20,10 @@ export const IdentityRoute = {
 
 export const identityRoutes: InternalRouteProps[] = [
   {
-    label: 'List',
+    label: 'Identity',
     path: IdentityRoute.list,
     exact: true,
-    component: IdentitiesList
+    component: IdentityRoot
   },
   {
     label: 'View Individual',
@@ -38,13 +38,13 @@ export const identityRoutes: InternalRouteProps[] = [
     component: IndividualIdEdit
   },
   {
-    label: 'Create Individual',
+    label: 'Create Individual Identity',
     path: IdentityRoute.createIndividual,
     exact: true,
     component: IndividualIdCreate
   },
   {
-    label: 'Create Corporate',
+    label: 'Create Corporate Identity',
     path: IdentityRoute.createCorporate,
     exact: true,
     component: CorporateIdCreate
@@ -56,7 +56,7 @@ export const identityRoutes: InternalRouteProps[] = [
     component: CorporateIdView
   },
   {
-    label: 'View Corporate',
+    label: 'Edit Corporate',
     path: IdentityRoute.editCorporate,
     exact: true,
     component: CorporateIdEdit

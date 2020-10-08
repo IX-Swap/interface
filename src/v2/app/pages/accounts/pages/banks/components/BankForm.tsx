@@ -1,5 +1,12 @@
 import React from 'react'
-import { Box, Grid, Typography, Paper, Button } from '@material-ui/core'
+import {
+  Box,
+  Grid,
+  Typography,
+  Button,
+  Card,
+  CardContent
+} from '@material-ui/core'
 import { Bank } from 'v2/types/bank'
 import { BankFormValues } from 'v2/app/pages/accounts/types'
 import { bankFormValidationSchema } from 'v2/app/pages/accounts/validation'
@@ -24,7 +31,7 @@ const useBankForm = createTypedForm<BankFormValues>()
 export const BankForm: React.FC<BankFormProps> = props => {
   const { submitButtonLabel, onSubmit, bank } = props
   const { Form, TextField, AssetSelect, CountrySelect, Submit } = useBankForm()
-  const { routes } = useBanksRouter()
+  const { paths } = useBanksRouter()
   const handleSubmit = async (values: BankFormValues) => {
     await onSubmit(transformBankFormValuesToArgs(values))
   }
@@ -35,96 +42,80 @@ export const BankForm: React.FC<BankFormProps> = props => {
       validationSchema={bankFormValidationSchema}
       onSubmit={handleSubmit}
     >
-      <Paper elevation={0}>
-        <Grid container>
-          <Grid item sm={12} md={12} lg={12}>
-            <Box ml={3} mt={3}>
-              <Typography variant='h5'>Account Info</Typography>
-            </Box>
-          </Grid>
-          <Grid item sm={12} md={12} lg={6}>
-            <Box ml={3} m={1}>
-              <TextField name='bankName' label='Bank Name' />
-            </Box>
-          </Grid>
-          <Grid item sm={12} md={12} lg={6}>
-            <Box mr={3} m={1}>
-              <TextField name='accountHolderName' label='Account Holder Name' />
-            </Box>
-          </Grid>
-        </Grid>
-
-        <Grid container>
-          <Grid item sm={12} md={12} lg={3}>
-            <Box ml={3} m={1}>
-              <AssetSelect name='asset' label='Currency' assetType='Currency' />
-            </Box>
-          </Grid>
-          <Grid item sm={12} md={12} lg={6}>
-            <Box ml={3} m={1}>
-              <TextField name='bankAccountNumber' label='Bank Account Number' />
-            </Box>
-          </Grid>
-          <Grid item sm={12} md={12} lg={3}>
-            <Box mr={3} m={1}>
-              <TextField name='swiftCode' label='Swift Code' />
-            </Box>
-          </Grid>
-        </Grid>
-
-        <Grid container>
-          <Grid item sm={12} md={12} lg={12}>
-            <Box ml={3} mt={3}>
-              <Typography variant='h5'>Bank Address</Typography>
-            </Box>
-          </Grid>
-          <Grid item sm={12} md={12} lg={6}>
-            <Box ml={3} m={1}>
-              <TextField name={['address', 'line1']} label='Line 1' />
-            </Box>
-          </Grid>
-          <Grid item sm={12} md={12} lg={6}>
-            <Box mr={3} m={1}>
-              <TextField name={['address', 'line2']} label='Line 2' />
-            </Box>
-          </Grid>
-        </Grid>
-
-        <Grid container>
-          <Grid item sm={12} md={12} lg={6}>
-            <Box ml={3} m={1}>
-              <TextField name={['address', 'city']} label='City' />
-            </Box>
-          </Grid>
-          <Grid item sm={12} md={12} lg={6}>
-            <Box mr={3} m={1}>
-              <TextField name={['address', 'state']} label='State' />
-            </Box>
-          </Grid>
-          <Grid container>
-            <Grid item sm={12} md={12} lg={6}>
-              <Box ml={3} m={1}>
-                <CountrySelect name={['address', 'country']} label='Country' />
-              </Box>
+      <Card>
+        <CardContent>
+          <Grid container spacing={5}>
+            <Grid item container spacing={3}>
+              <Grid item sm={12} md={12} lg={12}>
+                <Typography variant='h5'>Account Info</Typography>
+              </Grid>
+              <Grid item sm={12} md={12} lg={6}>
+                <TextField name='bankName' label='Bank Name' />
+              </Grid>
+              <Grid item sm={12} md={12} lg={6}>
+                <TextField
+                  name='accountHolderName'
+                  label='Account Holder Name'
+                />
+              </Grid>
             </Grid>
-            <Grid item sm={12} md={12} lg={6}>
-              <Box mr={3} m={1}>
+
+            <Grid item container spacing={3}>
+              <Grid item sm={12} md={12} lg={3}>
+                <AssetSelect
+                  name='asset'
+                  label='Currency'
+                  assetType='Currency'
+                />
+              </Grid>
+              <Grid item sm={12} md={12} lg={6}>
+                <TextField
+                  name='bankAccountNumber'
+                  label='Bank Account Number'
+                />
+              </Grid>
+              <Grid item sm={12} md={12} lg={3}>
+                <TextField name='swiftCode' label='Swift Code' />
+              </Grid>
+            </Grid>
+
+            <Grid item container spacing={3}>
+              <Grid item sm={12} md={12} lg={12}>
+                <Typography variant='h5'>Bank Address</Typography>
+              </Grid>
+              <Grid item sm={12} md={12} lg={6}>
+                <TextField name={['address', 'line1']} label='Line 1' />
+              </Grid>
+              <Grid item sm={12} md={12} lg={6}>
+                <TextField name={['address', 'line2']} label='Line 2' />
+              </Grid>
+            </Grid>
+
+            <Grid item container spacing={3}>
+              <Grid item sm={12} md={12} lg={6}>
+                <TextField name={['address', 'city']} label='City' />
+              </Grid>
+
+              <Grid item sm={12} md={12} lg={6}>
+                <TextField name={['address', 'state']} label='State' />
+              </Grid>
+
+              <Grid item sm={12} md={12} lg={6}>
+                <CountrySelect name={['address', 'country']} label='Country' />
+              </Grid>
+              <Grid item sm={12} md={12} lg={6}>
                 <TextField
                   name={['address', 'postalCode']}
                   label='Postal Code'
                 />
-              </Box>
+              </Grid>
             </Grid>
-          </Grid>
 
-          <Grid container>
-            <Grid item sm={12} md={12} lg={12}>
-              <Box ml={3} mt={3}>
+            <Grid item container spacing={3}>
+              <Grid item sm={12} md={12} lg={12}>
                 <Typography variant='h5'>Supporting Documents</Typography>
-              </Box>
-            </Grid>
-            <Grid item sm={12} md={12} lg={12}>
-              <Box ml={3} mt={3}>
+              </Grid>
+              <Grid item sm={12} md={12} lg={12}>
                 <Dataroom
                   editable
                   name='supportingDocuments'
@@ -134,23 +125,22 @@ export const BankForm: React.FC<BankFormProps> = props => {
                     documentInfo: { type: 'Supporting Document' }
                   }}
                 />
-              </Box>
+              </Grid>
             </Grid>
           </Grid>
-
-          <Grid container>
-            <Grid item sm={12} md={12} lg={12}>
-              <Box m={3} display='flex' justifyContent='center'>
-                <Button color='default'>
-                  <AppRouterLink to={routes.list}>Cancel</AppRouterLink>
-                </Button>
-                <Box marginX={1} />
-                <Submit>{submitButtonLabel}</Submit>
-              </Box>
-            </Grid>
-          </Grid>
+        </CardContent>
+      </Card>
+      <Grid container>
+        <Grid item sm={12} md={12} lg={12}>
+          <Box m={3} display='flex' justifyContent='center'>
+            <Button color='default'>
+              <AppRouterLink to={paths.list}>Cancel</AppRouterLink>
+            </Button>
+            <Box marginX={1} />
+            <Submit>{submitButtonLabel}</Submit>
+          </Box>
         </Grid>
-      </Paper>
+      </Grid>
     </Form>
   )
 }

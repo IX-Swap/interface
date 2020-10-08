@@ -12,9 +12,9 @@ export const IssuanceRoute = {
   create: '/app/issuance/create'
 }
 
-const issuanceRoutes: InternalRouteProps[] = [
+export const issuanceRoutes: InternalRouteProps[] = [
   {
-    label: 'Create Dso',
+    label: 'Create Digital Security Offering',
     path: IssuanceRoute.create,
     component: CreateDSO,
     exact: true
@@ -32,7 +32,7 @@ const issuanceRoutes: InternalRouteProps[] = [
     component: EditDSO
   },
   {
-    label: 'List',
+    label: 'Issuance',
     path: IssuanceRoute.list,
     exact: true,
     component: DSOList

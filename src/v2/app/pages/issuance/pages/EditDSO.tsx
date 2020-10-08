@@ -1,12 +1,12 @@
 import React from 'react'
 import { useParams } from 'react-router-dom'
-import { Box, Container } from '@material-ui/core'
-import { PageTitle } from 'v2/app/components/PageTitle'
 import { useDSOById } from 'v2/app/pages/invest/hooks/useDSOById'
 import { DSOForm } from 'v2/app/components/DSO/DSOForm'
 import { useUpdateDSO } from 'v2/app/pages/issuance/hooks/useUpdateDSO'
 import { DSOFormValues } from 'v2/types/dso'
-import { transformDSOFormValuesToRequestArgs } from 'v2/app/pages/issuance/pages/CreateDSO'
+import { transformDSOFormValuesToRequestArgs } from 'v2/app/pages/issuance/utils'
+import { Grid } from '@material-ui/core'
+import { VSpacer } from 'v2/components/VSpacer'
 
 export const EditDSO = () => {
   const { dsoId } = useParams<{
@@ -23,15 +23,18 @@ export const EditDSO = () => {
   }
 
   return (
-    <Container>
-      <PageTitle title={data.tokenName} subPage />
-      <Box mb={4} />
-      <DSOForm
-        data={data}
-        onSubmit={handleSubmit}
-        submitButtonLabel='Save'
-        isEditing
-      />
-    </Container>
+    <Grid container>
+      <Grid item>
+        <VSpacer size='medium' />
+      </Grid>
+      <Grid item>
+        <DSOForm
+          data={data}
+          onSubmit={handleSubmit}
+          submitButtonLabel='Save'
+          isEditing
+        />
+      </Grid>
+    </Grid>
   )
 }

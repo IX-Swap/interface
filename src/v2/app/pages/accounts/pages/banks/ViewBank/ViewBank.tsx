@@ -1,6 +1,5 @@
 import React from 'react'
 import { BankPreview } from 'v2/app/components/BankPreview/BankPreview'
-import { Box } from '@material-ui/core'
 import { useBanksData } from 'v2/app/pages/accounts/pages/banks/hooks/useBanksData'
 import { useBanksRouter } from 'v2/app/pages/accounts/pages/banks/router'
 
@@ -12,11 +11,7 @@ const ViewBank: React.FC = () => {
     return null
   }
 
-  return (
-    <Box p={4}>
-      <BankPreview data={data.map[params.bankId]} />
-    </Box>
-  )
+  return <BankPreview data={data.map[params.bankId]} />
 }
 
 export default ViewBank

@@ -6,18 +6,18 @@ import storageHelper from '../../helpers/storageHelper'
 let _socket: SocketIOClient.Socket | undefined
 
 const socketService = {
-  getConnection () {
+  getConnection() {
     return _socket
   },
 
-  disconnect () {
+  disconnect() {
     if (_socket !== undefined) {
       _socket.removeAllListeners()
       _socket.disconnect()
     }
   },
 
-  subscribeToSocket () {
+  subscribeToSocket() {
     if (_socket !== undefined && !_socket.connected) {
       const bearerToken = storageHelper.getAccessToken()
       _socket = io(`${API_URL}?token=${bearerToken}`)
@@ -26,7 +26,7 @@ const socketService = {
     return _socket
   },
 
-  async _subscribeToSocket (): Promise<SocketIOClient.Socket> {
+  async _subscribeToSocket(): Promise<SocketIOClient.Socket> {
     return await new Promise(resolve => {
       const bearerToken = storageHelper.getAccessToken()
       if (bearerToken === undefined) {

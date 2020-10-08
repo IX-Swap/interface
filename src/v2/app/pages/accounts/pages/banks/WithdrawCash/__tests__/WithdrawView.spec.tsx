@@ -6,11 +6,11 @@ import { Setup } from 'v2/app/pages/accounts/pages/banks/WithdrawCash/Setup'
 import { Preview } from 'v2/app/pages/accounts/pages/banks/WithdrawCash/Preview'
 import { BankPreview } from 'v2/app/pages/accounts/pages/banks/WithdrawCash/BankPreview'
 import { WithdrawCashAlert } from 'v2/app/pages/accounts/pages/banks/components/WithdrawCashAlert'
-import { CancelButton } from 'v2/app/pages/accounts/pages/banks/components/CancelButton'
+import { BackButton } from 'v2/app/pages/accounts/pages/banks/components/BackButton'
 import { ContinueButton } from 'v2/app/pages/accounts/pages/banks/WithdrawCash/ContinueButton'
 
-jest.mock('v2/app/pages/accounts/pages/banks/components/CancelButton', () => ({
-  CancelButton: jest.fn(() => null)
+jest.mock('v2/app/pages/accounts/pages/banks/components/BackButton', () => ({
+  BackButton: jest.fn(() => null)
 }))
 
 jest.mock(
@@ -56,7 +56,7 @@ describe('WithdrawView', () => {
 
     expect(Preview).toHaveBeenCalledTimes(0)
     expect(WithdrawCashAlert).toHaveBeenCalledTimes(0)
-    expect(CancelButton).toHaveBeenCalledTimes(0)
+    expect(BackButton).toHaveBeenCalledTimes(0)
     expect(queryByText('Confirm Withdrawal')).toBeFalsy()
   })
 
@@ -67,13 +67,13 @@ describe('WithdrawView', () => {
       isPreview: true
     })
 
-    expect(Setup).toHaveBeenCalledTimes(0)
     expect(ContinueButton).toHaveBeenCalledTimes(0)
 
+    expect(Setup).toHaveBeenCalledTimes(1)
     expect(Preview).toHaveBeenCalledTimes(1)
     expect(BankPreview).toHaveBeenCalledTimes(1)
     expect(WithdrawCashAlert).toHaveBeenCalledTimes(1)
-    expect(CancelButton).toHaveBeenCalledTimes(1)
+    expect(BackButton).toHaveBeenCalledTimes(1)
     expect(queryByText('Confirm Withdrawal')).toBeTruthy()
   })
 })

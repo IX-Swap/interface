@@ -1,7 +1,5 @@
 import React from 'react'
 import { DSOForm } from 'v2/app/components/DSO/DSOForm'
-import { Box, Container } from '@material-ui/core'
-import { PageTitle } from 'v2/app/components/PageTitle'
 import { useParams } from 'react-router-dom'
 import { useDSOById } from '../hooks/useDSOById'
 
@@ -16,13 +14,7 @@ const InvestView = () => {
     return null
   }
 
-  return (
-    <Container>
-      <PageTitle title={'Page title'} subPage />
-      <Box mb={4} />
-      <DSOForm data={data} />
-    </Container>
-  )
+  return <DSOForm data={data} />
 }
 
 export default InvestView

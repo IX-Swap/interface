@@ -87,24 +87,25 @@ export const TypedField = <
           )}
           {typeof children === 'function'
             ? children({
-              ...{ ...inputProps, id: path },
-              ...controllerProps,
-              label: props.label,
-              name: path,
-              value: destructValue(controllerProps.value),
-              onChange: handleChange
-              // labelWidth,
-              // variant
-            })
+                ...{ ...inputProps, id: path },
+                ...controllerProps,
+                label: props.label,
+                name: path,
+                value: destructValue(controllerProps.value),
+                onChange: handleChange
+                // labelWidth,
+                // variant
+              })
             : React.cloneElement(children, {
-              ...{ ...inputProps, id: path },
-              ...controllerProps,
-              value: destructValue(controllerProps.value),
-              error: hasError,
-              onChange: handleChange
-              // labelWidth,
-              // variant
-            })}
+                ...{ ...inputProps, id: path },
+                ...controllerProps,
+                value: destructValue(controllerProps.value),
+
+                error: hasError,
+                onChange: handleChange
+                // labelWidth,
+                // variant
+              })}
           <FormHelperText error={hasError}>
             {hasError ? error.message : helperText}
           </FormHelperText>
