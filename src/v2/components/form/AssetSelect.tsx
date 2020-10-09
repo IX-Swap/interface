@@ -1,5 +1,5 @@
 import React from 'react'
-import { AssetType } from 'v2/services/assets/types'
+import { AssetType } from 'v2/types/asset'
 import { useAssetsData } from 'v2/hooks/asset/useAssetsData'
 import { MenuItem, Select } from '@material-ui/core'
 import { queryStatusRenderer } from 'v2/components/form/renderUtils'

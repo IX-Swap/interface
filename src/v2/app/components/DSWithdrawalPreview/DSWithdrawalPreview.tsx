@@ -2,7 +2,7 @@ import React from 'react'
 import { Grid } from '@material-ui/core'
 import { DSWithdrawal } from 'v2/types/dsWithdrawal'
 import { formatMoney } from 'v2/helpers/numbers'
-import { LabelledValue } from '../../../components/LabelledValue'
+import { LabelledValue } from 'v2/components/LabelledValue'
 
 export interface DSWithdrawalPreviewProps {
   data: DSWithdrawal

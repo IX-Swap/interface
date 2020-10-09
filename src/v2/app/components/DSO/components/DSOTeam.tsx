@@ -2,7 +2,7 @@ import React from 'react'
 import { Grid } from '@material-ui/core'
 import { renderStringToHTML } from 'v2/app/components/DSO/utils'
 import { useDSOForm } from 'v2/app/components/DSO/DSOForm'
-import { UserAvatar } from '../../UserAvatar'
+import { UserAvatar } from 'v2/app/components/UserAvatar'
 import { DSOTeamRemoveButton } from './DSOTeamRemoveButton'
 import { DSOTeamAddButton } from './DSOTeamAddButton'
 

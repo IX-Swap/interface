@@ -1,6 +1,11 @@
 import { DataroomFile, FileGuide } from './dataroomFile'
 import { DeclarationValue } from 'v2/app/pages/identity/const/declarations'
 import { Authorizable } from './authorizer'
+import { PaginationArgs } from 'v2/services/api/types'
+import {
+  CorporateIdentityFormValues,
+  IndividualIdentityFormValues
+} from 'v2/app/pages/identity/components/types'
 
 export interface IdentityState {
   dataroom: Array<DataroomFile | FileGuide>
@@ -104,3 +109,34 @@ export type IndividualIdentity = BaseIdentity &
   Authorizable
 
 export type CorporateIdentity = BaseIdentity & CorporateFields & Authorizable
+
+export interface GetIndividualIdentityArgs {
+  userId: string
+}
+
+export interface GetAllCorporateIdentities extends PaginationArgs {
+  userId: string
+}
+
+export type CreateOrUpdateIndividualIdentityArgs = (
+  | Omit<IndividualIdentityFormValues, 'documents'>
+  | Omit<CorporateIdentityFormValues, 'documents'>
+) & {
+  documents?: string[]
+  userId: string
+}
+
+export type CreateCorporateIdentityArgs = Omit<
+  CorporateIdentityFormValues,
+  'documents'
+> & {
+  documents?: string[]
+  userId: string
+}
+
+export type UpdateCorporateIdentityArgs = Omit<
+  CorporateIdentityFormValues,
+  'documents'
+> & {
+  documents?: string[]
+}

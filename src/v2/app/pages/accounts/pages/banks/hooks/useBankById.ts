@@ -1,8 +1,8 @@
 import { UseQueryData } from 'v2/hooks/useParsedData'
 import { useServices } from 'v2/services/useServices'
 import { useQuery } from 'react-query'
-import { useAuth } from '../../../../../../hooks/auth/useAuth'
-import { Bank } from '../../../../../../types/bank'
+import { useAuth } from 'v2/hooks/auth/useAuth'
+import { Bank } from 'v2/types/bank'
 
 export const USER_BANK_BY_ID_KEY = 'bank'
 

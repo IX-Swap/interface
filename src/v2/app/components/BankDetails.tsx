@@ -1,8 +1,8 @@
 import React from 'react'
 import { Paper, Box, Typography, Grid } from '@material-ui/core'
 import { Bank } from 'v2/types/bank'
-import { LabelledValue } from '../../components/LabelledValue'
-import { convertAddressToString } from '../pages/authorizer/components/utils'
+import { LabelledValue } from 'v2/components/LabelledValue'
+import { convertAddressToString } from 'v2/app/pages/authorizer/components/utils'
 
 interface BankDetailsProps {
   bank: Partial<Bank>

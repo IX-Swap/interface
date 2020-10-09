@@ -2,7 +2,7 @@ import { user } from './user'
 import { address, authorizationInfo } from './authorizer'
 import { CorporateIdentity, IndividualIdentity } from 'v2/types/identity'
 import declarations from 'v2/app/pages/identity/const/declarations'
-import { DataroomFile } from '../v2/types/dataroomFile'
+import { DataroomFile } from 'v2/types/dataroomFile'
 
 export const corporate: CorporateIdentity = {
   _id: '1',

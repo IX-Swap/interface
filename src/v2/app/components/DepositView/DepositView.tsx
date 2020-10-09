@@ -4,7 +4,7 @@ import { INVESTAX_BANK } from 'v2/config'
 import { CashDeposit } from 'v2/types/cashDeposit'
 import { BankDetails } from 'v2/app/components/BankDetails'
 import { formatMoney } from 'v2/helpers/numbers'
-import { LabelledValue } from '../../../components/LabelledValue'
+import { LabelledValue } from 'v2/components/LabelledValue'
 
 export interface DepositView {
   data: CashDeposit

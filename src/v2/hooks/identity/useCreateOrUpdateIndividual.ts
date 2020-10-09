@@ -10,9 +10,14 @@ import {
   CorporateIdentityFormValues,
   IndividualIdentityFormValues
 } from 'v2/app/pages/identity/components/types'
+import apiService from 'v2/services/api'
+import {
+  CreateOrUpdateIndividualIdentityArgs,
+  IndividualIdentity
+} from 'v2/types/identity'
 
 export const useCreateOrUpdateIndividual = () => {
-  const { identityService, snackbarService } = useServices()
+  const { snackbarService } = useServices()
   const { user } = useAuth()
   const { push } = useIdentitiesRouter()
   const createOrUpdateIndividual = async (
@@ -26,11 +31,15 @@ export const useCreateOrUpdateIndividual = () => {
       throw new Error('All declaration fields are required')
     }
 
-    return await identityService.createOrUpdateIndividual({
+    const args: CreateOrUpdateIndividualIdentityArgs = {
       ...values,
       userId: user._id,
       documents: prepareDocumentsForUpload(values.documents)
-    })
+    }
+    const { userId, ...identity } = args
+    const uri = `/identity/individuals/${userId}`
+
+    return await apiService.put<IndividualIdentity>(uri, identity)
   }
 
   return useMutation(createOrUpdateIndividual, {
