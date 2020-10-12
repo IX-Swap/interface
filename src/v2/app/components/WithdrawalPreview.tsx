@@ -3,7 +3,7 @@ import { Grid, Box } from '@material-ui/core'
 import { formatMoney } from 'v2/helpers/numbers'
 import { BankDetails } from 'v2/app/components/BankDetails'
 import { CashWithdrawal } from 'v2/types/cashWithdrawal'
-import { LabelledValue } from '../../components/LabelledValue'
+import { LabelledValue } from 'v2/components/LabelledValue'
 
 export interface WithdrawalViewProps {
   data: CashWithdrawal

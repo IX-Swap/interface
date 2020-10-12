@@ -1,8 +1,15 @@
 import { user } from './user'
 import { address, authorizationInfo } from './authorizer'
-import { CorporateIdentity, IndividualIdentity } from 'v2/types/identity'
-import declarations from 'v2/app/pages/identity/const/declarations'
-import { DataroomFile } from '../v2/types/dataroomFile'
+import {
+  CorporateIdentity,
+  IndividualIdentity,
+  Declaration
+} from 'v2/types/identity'
+import declarations, {
+  DeclarationValue
+} from 'v2/app/pages/identity/const/declarations'
+import { DataroomFile } from 'v2/types/dataroomFile'
+import { CorporateIdentityFormValues } from 'v2/app/pages/identity/components/types'
 
 export const corporate: CorporateIdentity = {
   _id: '1',
@@ -85,3 +92,31 @@ export const documents: DataroomFile[] = [
   { ...document, _id: '1' },
   { ...document, _id: '2' }
 ]
+
+export const checkedDeclarations: Declaration[] = [
+  { a: DeclarationValue.Yes },
+  { a: DeclarationValue.Yes }
+]
+
+export const unCheckedDeclarations: Declaration[] = [
+  { a: DeclarationValue.Yes },
+  { a: DeclarationValue.No }
+]
+
+export const createCorporateArgs: CorporateIdentityFormValues = {
+  ...corporate,
+  documents: [
+    { title: '', label: '', type: '', document: documents[0] },
+    { title: '', label: '', type: '', document: documents[1] }
+  ],
+  declarations: checkedDeclarations
+}
+
+export const updateCorporateArgs: CorporateIdentityFormValues = {
+  ...corporate,
+  documents: [
+    { title: '', label: '', type: '', document: documents[0] },
+    { title: '', label: '', type: '', document: documents[1] }
+  ],
+  declarations: checkedDeclarations
+}

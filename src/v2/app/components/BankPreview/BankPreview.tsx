@@ -2,7 +2,7 @@ import React from 'react'
 import { Card, CardContent, Grid } from '@material-ui/core'
 import { Bank } from 'v2/types/bank'
 import { convertAddressToString } from 'v2/app/pages/authorizer/components/utils'
-import { LabelledValue } from '../../../components/LabelledValue'
+import { LabelledValue } from 'v2/components/LabelledValue'
 
 interface BankViewProps {
   data: Bank

@@ -1,10 +1,7 @@
 /** * @jest-environment jsdom-sixteen */
-import React from 'react'
-import { waitFor, cleanup } from 'test-utils'
-import { renderHook, act } from '@testing-library/react-hooks'
+import { act } from '@testing-library/react-hooks'
+import { waitFor, cleanup, renderHookWithServiceProvider } from 'test-utils'
 import { useSetup2fa } from 'v2/app/pages/security/pages/setup2fa/hooks/useSetup2fa'
-import { ServicesProvider } from 'v2/services/useServices'
-import apiService from 'v2/services/api'
 import { useSetup2faStore } from '../../context'
 import { TwoFaData } from 'v2/app/pages/security/pages/setup2fa/types'
 import { unsuccessfulResponse } from '__fixtures__/api'
@@ -37,15 +34,9 @@ describe('useSetup2fa', () => {
         encoded: 'encoded'
       }
       const post = jest.fn().mockResolvedValueOnce({ data })
+      const apiObj = { post }
 
-      renderHook(() => useSetup2fa(), {
-        // TODO: extract to a separate WrapperComponent for re-usability
-        wrapper: ({ children }) => (
-          <ServicesProvider value={{ apiService: { ...apiService, post } }}>
-            {children}
-          </ServicesProvider>
-        )
-      })
+      renderHookWithServiceProvider(() => useSetup2fa(), { apiService: apiObj })
 
       await waitFor(
         () => {
@@ -60,14 +51,9 @@ describe('useSetup2fa', () => {
   it('it does not call useSetup2faStore.set2faData', async () => {
     await act(async () => {
       const post = jest.fn().mockRejectedValueOnce(unsuccessfulResponse)
+      const apiObj = { post }
 
-      renderHook(() => useSetup2fa(), {
-        wrapper: ({ children }) => (
-          <ServicesProvider value={{ apiService: { ...apiService, post } }}>
-            {children}
-          </ServicesProvider>
-        )
-      })
+      renderHookWithServiceProvider(() => useSetup2fa(), { apiService: apiObj })
 
       await waitFor(
         () => {

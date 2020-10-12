@@ -1,10 +1,7 @@
 /**  * @jest-environment jsdom-sixteen  */
 import React from 'react'
-import { renderHook, act } from '@testing-library/react-hooks'
-import { waitFor, cleanup } from 'test-utils'
-import apiService from 'v2/services/api'
-import { snackbarService } from 'uno-material-ui'
-import { ServicesProvider } from 'v2/services/useServices'
+import { act } from '@testing-library/react-hooks'
+import { waitFor, cleanup, renderHookWithServiceProvider } from 'test-utils'
 import * as SecurityRouter from 'v2/app/pages/security/router'
 import { useChangePassword } from 'v2/app/pages/security/pages/changePassword/hooks/useChangePassword'
 import { changePasswordArgs } from '__fixtures__/security'
@@ -34,27 +31,18 @@ describe('useChangePassword', () => {
       const post = jest.fn().mockResolvedValueOnce(successfulResponse)
       const showSnackbar = jest.fn()
 
-      const { result } = renderHook(() => useChangePassword(), {
-        // TODO: extract to a separate WrapperComponent for re-usability
-        wrapper: ({ children }) => (
-          <ServicesProvider
-            value={
-              {
-                apiService: { ...apiService, post },
-                snackbarService: { ...snackbarService, showSnackbar }
-              } as any
-            }
-          >
-            {children}
-          </ServicesProvider>
-        )
-      })
+      const apiObj = { post }
+      const snackbarObj = { showSnackbar }
+      const { result } = renderHookWithServiceProvider(
+        () => useChangePassword(),
+        { apiService: apiObj, snackbarService: snackbarObj }
+      )
+
       await waitFor(
         () => {
           const [mutate] = result.current
           void mutate(changePasswordArgs)
 
-          // expect(showSnackbar).toHaveBeenCalledTimes(1)
           expect(showSnackbar).toHaveBeenNthCalledWith(
             1,
             'Successfully changed password',
@@ -71,21 +59,13 @@ describe('useChangePassword', () => {
       const post = jest.fn().mockRejectedValueOnce(unsuccessfulResponse)
       const showSnackbar = jest.fn()
 
-      const { result } = renderHook(() => useChangePassword(), {
-        // TODO: extract to a separate WrapperComponent for re-usability
-        wrapper: ({ children }) => (
-          <ServicesProvider
-            value={
-              {
-                apiService: { ...apiService, post },
-                snackbarService: { ...snackbarService, showSnackbar }
-              } as any
-            }
-          >
-            {children}
-          </ServicesProvider>
-        )
-      })
+      const apiObj = { post }
+      const snackbarObj = { showSnackbar }
+      const { result } = renderHookWithServiceProvider(
+        () => useChangePassword(),
+        { apiService: apiObj, snackbarService: snackbarObj }
+      )
+
       await waitFor(
         () => {
           const [mutate] = result.current

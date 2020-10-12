@@ -5,7 +5,7 @@ import {
   convertDataArrayToMap,
   convertPaginatedResultToFlatArray
 } from 'v2/hooks/utils'
-import { QueryResult } from 'react-query/types/core/types'
+import { QueryResult } from 'react-query'
 
 export interface UseQueryData<T>
   extends Omit<QueryResult<AxiosResponse<T>, any>, 'data'> {

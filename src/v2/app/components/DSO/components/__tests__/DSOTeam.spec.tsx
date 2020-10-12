@@ -6,16 +6,16 @@ import { Form } from 'v2/components/form/Form'
 import { useTypedForm } from '__fixtures__/createTypedForm'
 import * as dsoForm from 'v2/app/components/DSO/DSOForm'
 import { UserAvatar } from 'v2/app/components/UserAvatar'
-import { DSOTeamRemoveButton } from '../DSOTeamRemoveButton'
-import { DSOTeamAddButton } from '../DSOTeamAddButton'
+import { DSOTeamRemoveButton } from 'v2/app/components/DSO/components/DSOTeamRemoveButton'
+import { DSOTeamAddButton } from 'v2/app/components/DSO/components/DSOTeamAddButton'
 
 jest.mock('v2/app/components/UserAvatar', () => ({
   UserAvatar: jest.fn(() => null)
 }))
-jest.mock('../DSOTeamRemoveButton', () => ({
+jest.mock('v2/app/components/DSO/components/DSOTeamRemoveButton', () => ({
   DSOTeamRemoveButton: jest.fn(() => null)
 }))
-jest.mock('../DSOTeamAddButton', () => ({
+jest.mock('v2/app/components/DSO/components/DSOTeamAddButton', () => ({
   DSOTeamAddButton: jest.fn(() => null)
 }))
 

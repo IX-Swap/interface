@@ -7,9 +7,14 @@ import {
   prepareDocumentsForUpload
 } from 'v2/app/pages/identity/utils'
 import { useMutation } from 'react-query'
+import {
+  CorporateIdentity,
+  UpdateCorporateIdentityArgs
+} from 'v2/types/identity'
+import apiService from 'v2/services/api'
 
 export const useUpdateCorporateIdentity = (id: string) => {
-  const { identityService, snackbarService } = useServices()
+  const { snackbarService } = useServices()
   const { user } = useAuth()
   const { push } = useIdentitiesRouter()
   const updateCorporate = async (values: CorporateIdentityFormValues) => {
@@ -20,13 +25,13 @@ export const useUpdateCorporateIdentity = (id: string) => {
     if (!allDeclarationsAreChecked(values.declarations)) {
       throw new Error('All declaration fields are required')
     }
-
-    return await identityService.updateCorporate({
+    const identity: UpdateCorporateIdentityArgs = {
       ...values,
-      userId: user._id,
-      documents: prepareDocumentsForUpload(values.documents),
-      id
-    })
+      documents: prepareDocumentsForUpload(values.documents)
+    }
+    const uri = `/identity/corporates/${user._id}/${id}`
+
+    return await apiService.put<CorporateIdentity>(uri, identity)
   }
 
   return useMutation(updateCorporate, {

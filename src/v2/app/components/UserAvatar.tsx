@@ -3,7 +3,7 @@ import { documentValueExtractor } from './DSO/utils'
 import { Box, IconButton } from '@material-ui/core'
 import { PhotoCamera } from '@material-ui/icons'
 import { DSOAvatar, DSOAvatarSettingsProps } from './DSO/components/DSOAvatar'
-import { useTypedForm } from '../../components/form/useTypedForm'
+import { useTypedForm } from 'v2/components/form/useTypedForm'
 
 interface UserAvatarProps extends Partial<DSOAvatarSettingsProps> {
   name: string

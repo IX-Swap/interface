@@ -8,7 +8,7 @@ import { CashWithdrawal } from 'v2/types/cashWithdrawal'
 import { DSWithdrawal } from 'v2/types/dsWithdrawal'
 import { DigitalSecurityOffering } from 'v2/types/dso'
 import declarations from 'v2/app/pages/identity/const/declarations'
-import { AuthorizationInfo } from '../v2/types/authorizer'
+import { AuthorizationInfo } from 'v2/types/authorizer'
 
 export const asset: Asset = {
   _id: '2',

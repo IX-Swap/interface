@@ -7,9 +7,14 @@ import {
   prepareDocumentsForUpload
 } from 'v2/app/pages/identity/utils'
 import { useMutation } from 'react-query'
+import {
+  CreateCorporateIdentityArgs,
+  CorporateIdentity
+} from 'v2/types/identity'
+import apiService from 'v2/services/api'
 
 export const useCreateCorporateIdentity = () => {
-  const { identityService, snackbarService } = useServices()
+  const { snackbarService } = useServices()
   const { user } = useAuth()
   const { push } = useIdentitiesRouter()
   const createCorporate = async (values: CorporateIdentityFormValues) => {
@@ -21,11 +26,14 @@ export const useCreateCorporateIdentity = () => {
       throw new Error('All declaration fields are required')
     }
 
-    return await identityService.createCorporate({
+    const args: CreateCorporateIdentityArgs = {
       ...values,
       userId: user._id,
       documents: prepareDocumentsForUpload(values.documents)
-    })
+    }
+    const { userId, ...identity } = args
+    const uri = `/identity/corporates/${userId}`
+    return await apiService.post<CorporateIdentity>(uri, identity)
   }
 
   return useMutation(createCorporate, {

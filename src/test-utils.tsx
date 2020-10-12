@@ -17,6 +17,8 @@ import { AuthorizerTableStore } from 'v2/app/pages/authorizer/context/store'
 import { AuthorizerTableStoreProvider } from 'v2/app/pages/authorizer/context'
 import { DepositStore } from 'v2/app/pages/accounts/pages/banks/context/store'
 import { DepositStoreProvider } from 'v2/app/pages/accounts/pages/banks/context'
+import { ServicesProvider } from 'v2/services/useServices'
+import { renderHook, RenderHookResult } from '@testing-library/react-hooks'
 
 const generateClassName = createGenerateClassName({
   productionPrefix: 'ix'
@@ -119,6 +121,17 @@ export const renderWithDepositStore = (
   )
 
   return render(ui, { wrapper: WithUserProvider })
+}
+
+export const renderHookWithServiceProvider = (
+  hookFn: any,
+  store: object = {}
+): RenderHookResult<any, any> => {
+  const WithServiceProvider: React.FC = ({ children }) => (
+    <ServicesProvider value={store}>{children}</ServicesProvider>
+  )
+
+  return renderHook(hookFn, { wrapper: WithServiceProvider })
 }
 
 export * from '@testing-library/react'
