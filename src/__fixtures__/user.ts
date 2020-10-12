@@ -7,5 +7,6 @@ export const user: User = {
   _id: '5f3152ef2d2dfb4291fccce2',
   email: 'alex@investax.io',
   name: 'Alex Solovev',
-  roles: 'admin'
+  roles: 'admin',
+  accessToken: ''
 }

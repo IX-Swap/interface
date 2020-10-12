@@ -6,6 +6,8 @@ import useStyles from './AppRoot.styles'
 import { useAppRouter } from 'v2/app/router'
 import { useAuth } from 'v2/hooks/auth/useAuth'
 import { Grid } from '@material-ui/core'
+import { NotificationsProvider } from 'v2/app/pages/notifications/components/NotificationsProvider'
+import { ReactQueryDevtools } from 'react-query-devtools'
 
 export const AppRoot: React.FC = () => {
   const { isAuthenticated } = useAuth()
@@ -20,14 +22,17 @@ export const AppRoot: React.FC = () => {
   }, [isAuthenticated, history])
 
   return (
-    <Grid container direction='column' className={classes.container}>
-      <Grid item>
-        <Header />
+    <NotificationsProvider>
+      <ReactQueryDevtools initialIsOpen={false} />
+      <Grid container direction='column' className={classes.container}>
+        <Grid item>
+          <Header />
+        </Grid>
+        <Sidebar />
+        <Grid item container className={classes.content}>
+          {renderRoutes()}
+        </Grid>
       </Grid>
-      <Sidebar />
-      <Grid item container className={classes.content}>
-        {renderRoutes()}
-      </Grid>
-    </Grid>
+    </NotificationsProvider>
   )
 }
