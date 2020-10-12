@@ -38,6 +38,7 @@
     "react-query": "^2.12.1",
     "react-router-dom": "^5.0.1",
     "react-scripts": "^3.4.3",
+    "react-window": "^1.8.5",
     "socket.io-client": "^2.3.0",
     "standard": "^14.3.4",
     "tinycolor2": "^1.4.1",
@@ -73,6 +74,7 @@
     "@types/react": "^16.9.38",
     "@types/react-dom": "^16.9.8",
     "@types/react-router-dom": "^5.1.5",
+    "@types/react-window": "^1.8.2",
     "@types/socket.io-client": "^1.4.33",
     "@types/tinycolor2": "^1.4.2",
     "@types/yup": "^0.29.4",
@@ -107,6 +109,7 @@
     "jest-localstorage-mock": "^2.4.3",
     "jest-sonar-reporter": "^2.0.0",
     "react-app-rewired": "^2.1.6",
+    "react-query-devtools": "^2.6.0",
     "react-test-renderer": "^16.13.1",
     "through2": "^3.0.1",
     "ts-jest": "^26.1.4"
