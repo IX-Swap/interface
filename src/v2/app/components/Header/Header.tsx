@@ -1,9 +1,9 @@
 import React from 'react'
 import { AppBar, Box, Toolbar } from '@material-ui/core'
 import useStyles from './Header.styles'
-import { UserMenu } from './UserMenu'
-import { NotificationsDropdown } from './NotificationsDropdown'
-import { AppLogo } from './AppLogo'
+import { UserDropdown } from 'v2/app/components/UserDropdown/UserDropdown'
+import { NotificationsDropdown } from 'v2/app/pages/notifications/components/NotificationsDropdown'
+import { AppLogo } from 'v2/app/components/AppLogo/AppLogo'
 
 export const Header = () => {
   const classes = useStyles()
@@ -14,7 +14,7 @@ export const Header = () => {
         <AppLogo />
         <Box className={classes.grow} />
         <NotificationsDropdown />
-        <UserMenu />
+        <UserDropdown />
       </Toolbar>
     </AppBar>
   )
