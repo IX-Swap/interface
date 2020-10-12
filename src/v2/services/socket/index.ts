@@ -1,7 +1,5 @@
 import io from 'socket.io-client'
-
 import { API_URL } from 'v2/config'
-import storageHelper from 'v2/helpers/storageHelper'
 
 let _socket: SocketIOClient.Socket | undefined
 
@@ -19,14 +17,6 @@ const socketService = {
       _socket.removeAllListeners()
       _socket.disconnect()
     }
-  },
-
-  subscribeToSocket(token?: string) {
-    if (_socket !== undefined && !_socket.connected) {
-      _socket = io(`${API_URL}?token=${token ?? ''}`)
-    }
-
-    return _socket
   },
 
   _subscribeToSocket(bearerToken: string | undefined) {

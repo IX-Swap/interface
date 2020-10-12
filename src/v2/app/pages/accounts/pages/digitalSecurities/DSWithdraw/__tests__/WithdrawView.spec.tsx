@@ -2,18 +2,13 @@
 import React from 'react'
 import { cleanup, renderWithDepositStore } from 'test-utils'
 import { WithdrawView } from 'v2/app/pages/accounts/pages/digitalSecurities/DSWithdraw/WithdrawView'
-import { DSDepositInput } from 'v2/app/pages/accounts/pages/digitalSecurities/DSDeposit/Setup'
-import { BalancesList } from 'v2/app/pages/accounts/pages/digitalSecurities/DSDeposit/BalancesList'
+import { AssetInfo } from 'v2/app/pages/accounts/pages/digitalSecurities/DSDeposit/AssetInfo'
 import { Preview } from 'v2/app/pages/accounts/pages/digitalSecurities/DSWithdraw/Preview'
 import { Setup } from 'v2/app/pages/accounts/pages/digitalSecurities/DSWithdraw/Setup'
 
 jest.mock(
-  'v2/app/pages/accounts/pages/digitalSecurities/DSDeposit/Setup',
-  () => ({ DSDepositInput: jest.fn(() => null) })
-)
-jest.mock(
-  'v2/app/pages/accounts/pages/digitalSecurities/DSDeposit/BalancesList',
-  () => ({ BalancesList: jest.fn(() => null) })
+  'v2/app/pages/accounts/pages/digitalSecurities/DSDeposit/AssetInfo',
+  () => ({ AssetInfo: jest.fn(() => null) })
 )
 jest.mock(
   'v2/app/pages/accounts/pages/digitalSecurities/DSWithdraw/Preview',
@@ -34,18 +29,17 @@ describe('WithdrawView', () => {
     renderWithDepositStore(<WithdrawView />, { isPreview: true })
   })
 
-  it('renders DSDepositInput & BalancesList', () => {
+  it('renders AssetInfo', () => {
     renderWithDepositStore(<WithdrawView />, { isPreview: true })
 
-    expect(DSDepositInput).toHaveBeenCalledTimes(1)
-    expect(BalancesList).toHaveBeenCalledTimes(1)
+    expect(AssetInfo).toHaveBeenCalledTimes(1)
   })
 
   it('renders Preview if isPreview is true', () => {
     renderWithDepositStore(<WithdrawView />, { isPreview: true })
 
     expect(Preview).toHaveBeenCalledTimes(1)
-    expect(Setup).toHaveBeenCalledTimes(0)
+    expect(Setup).toHaveBeenCalledTimes(1)
   })
 
   it('renders Preview if isPreview is false', () => {

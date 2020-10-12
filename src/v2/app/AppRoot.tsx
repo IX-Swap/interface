@@ -8,6 +8,8 @@ import { useAuth } from 'v2/hooks/auth/useAuth'
 import { Grid } from '@material-ui/core'
 import { NotificationsProvider } from 'v2/app/pages/notifications/components/NotificationsProvider'
 import { ReactQueryDevtools } from 'react-query-devtools'
+import { ErrorBoundary } from 'react-error-boundary'
+import { AppError } from 'v2/app/components/AppError'
 
 export const AppRoot: React.FC = () => {
   const { isAuthenticated } = useAuth()
@@ -30,7 +32,12 @@ export const AppRoot: React.FC = () => {
         </Grid>
         <Sidebar />
         <Grid item container className={classes.content}>
-          {renderRoutes()}
+          <ErrorBoundary
+            FallbackComponent={AppError}
+            onError={error => console.error(error)}
+          >
+            {renderRoutes()}
+          </ErrorBoundary>
         </Grid>
       </Grid>
     </NotificationsProvider>

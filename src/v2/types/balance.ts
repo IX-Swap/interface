@@ -3,7 +3,6 @@ import { PaginationArgs } from 'v2/services/api/types'
 import { AssetType } from 'v2/types/asset'
 
 export interface Balance {
-  _id: string
   debitTotal: number
   creditTotal: number
   balance: number

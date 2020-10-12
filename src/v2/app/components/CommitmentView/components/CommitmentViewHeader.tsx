@@ -3,7 +3,6 @@ import { DigitalSecurityOffering } from 'v2/types/dso'
 import { Grid, Typography } from '@material-ui/core'
 import { makeStyles } from '@material-ui/styles'
 import { DSOTitle } from 'v2/app/components/DSO/components/DSOTitle'
-import { useObserver } from 'mobx-react'
 import { Asset } from 'v2/types/asset'
 import { formatMoney } from 'v2/helpers/numbers'
 import { useBalancesByAssetId } from 'v2/hooks/balance/useBalancesByAssetId'
@@ -27,9 +26,13 @@ const useStyles = makeStyles(() => ({
 }))
 
 const AssetBalance = ({ asset }: { asset: string }) => {
-  const { data } = useBalancesByAssetId(asset)
+  const { data, isLoading } = useBalancesByAssetId(asset)
 
-  return useObserver(() => (
+  if (isLoading) {
+    return null
+  }
+
+  return (
     <BalanceHeader
       label='Account Balance'
       value={formatMoney(
@@ -37,7 +40,7 @@ const AssetBalance = ({ asset }: { asset: string }) => {
         data.map[asset].numberFormat.currency
       )}
     />
-  ))
+  )
 }
 
 const BalanceHeader = ({ label, value }: { label: string; value: string }) => {

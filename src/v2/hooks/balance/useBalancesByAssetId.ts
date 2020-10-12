@@ -31,6 +31,6 @@ export const useBalancesByAssetId = (
 
   return {
     ...rest,
-    data: useParsedData<AssetBalance>(data, '_id')
+    data: useParsedData<AssetBalance>(data, 'assetId')
   }
 }

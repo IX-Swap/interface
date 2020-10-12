@@ -1,5 +1,5 @@
 import React from 'react'
-import { Box, Grid } from '@material-ui/core'
+import { Grid } from '@material-ui/core'
 import {
   useWithdrawCashForm,
   WithdrawForm
@@ -12,8 +12,9 @@ import { ContinueButton } from 'v2/app/pages/accounts/pages/banks/WithdrawCash/C
 import { BankPreview } from 'v2/app/pages/accounts/pages/banks/WithdrawCash/BankPreview'
 import { WithdrawCashAlert } from 'v2/app/pages/accounts/pages/banks/components/WithdrawCashAlert'
 import { BackButton } from 'v2/app/pages/accounts/pages/banks/components/BackButton'
-import { DisplayNone } from '../../../../../components/DisplayNone'
-import { useUnmountCallback } from '../../../../../../hooks/useUnmountCallback'
+import { DisplayNone } from 'v2/app/components/DisplayNone'
+import { useUnmountCallback } from 'v2/hooks/useUnmountCallback'
+import { VSpacer } from 'v2/components/VSpacer'
 
 export const WithdrawView: React.FC = observer(() => {
   const { isPreview, clear } = useDepositStore()
@@ -22,45 +23,55 @@ export const WithdrawView: React.FC = observer(() => {
   useUnmountCallback(clear)
 
   return (
-    <WithdrawForm>
-      <Grid item>
-        <DisplayNone when={isPreview}>
-          <Setup />
-        </DisplayNone>
-        {isPreview && <Preview />}
-      </Grid>
-      <Grid item>
-        <BankPreview />
-      </Grid>
-      {isPreview && (
-        <Grid item>
-          <WithdrawCashAlert />
-          <Grid item container direction='column'>
-            <Box my={4} alignSelf='center'>
-              <TextField
-                name='otp'
-                label='2-Factor Auth Code'
-                inputProps={{
-                  autoComplete: 'off'
-                }}
-              />
-            </Box>
+    <Grid container justify='center'>
+      <Grid item xs={5}>
+        <WithdrawForm>
+          <Grid item>
+            <DisplayNone when={isPreview}>
+              <Setup />
+            </DisplayNone>
+            {isPreview && <Preview />}
           </Grid>
-        </Grid>
-      )}
-      <Grid item>
-        <Grid container justify='center'>
-          {isPreview ? (
-            <>
-              <BackButton />
-              <Box mx={1} />
-              <Submit>Confirm Withdrawal</Submit>
-            </>
-          ) : (
-            <ContinueButton />
+          <Grid item>
+            <BankPreview />
+          </Grid>
+          {isPreview && (
+            <Grid item>
+              <WithdrawCashAlert />
+              <Grid item container direction='column'>
+                <TextField
+                  name='otp'
+                  label='2-Factor Auth Code'
+                  inputProps={{
+                    autoComplete: 'off'
+                  }}
+                />
+              </Grid>
+              <VSpacer size='small' />
+            </Grid>
           )}
-        </Grid>
+          <Grid item>
+            <Grid container direction='column' spacing={1}>
+              {isPreview && (
+                <Grid item>
+                  <Submit fullWidth>Confirm Withdrawal</Submit>
+                </Grid>
+              )}
+              {isPreview && (
+                <Grid item>
+                  <BackButton fullWidth />
+                </Grid>
+              )}
+              {!isPreview && (
+                <Grid item>
+                  <VSpacer size='small' />
+                  <ContinueButton fullWidth />
+                </Grid>
+              )}
+            </Grid>
+          </Grid>
+        </WithdrawForm>
       </Grid>
-    </WithdrawForm>
+    </Grid>
   )
 })

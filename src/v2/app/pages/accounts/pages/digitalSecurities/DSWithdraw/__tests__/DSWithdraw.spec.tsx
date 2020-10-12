@@ -2,9 +2,9 @@
 import React from 'react'
 import { render, cleanup } from 'test-utils'
 import { DSWithdraw } from 'v2/app/pages/accounts/pages/digitalSecurities/DSWithdraw/DSWithdraw'
-
 import { WithdrawForm } from 'v2/app/pages/accounts/pages/digitalSecurities/DSWithdraw/WithdrawForm'
 import { WithdrawView } from 'v2/app/pages/accounts/pages/digitalSecurities/DSWithdraw/WithdrawView'
+import { RecentWithdrawals } from 'v2/app/pages/accounts/pages/digitalSecurities/DSWithdraw/RecentWithdrawals'
 
 jest.mock(
   'v2/app/pages/accounts/pages/digitalSecurities/DSWithdraw/WithdrawForm',
@@ -14,9 +14,17 @@ jest.mock(
     ))
   })
 )
+
 jest.mock(
   'v2/app/pages/accounts/pages/digitalSecurities/DSWithdraw/WithdrawView',
   () => ({ WithdrawView: jest.fn(() => null) })
+)
+
+jest.mock(
+  'v2/app/pages/accounts/pages/digitalSecurities/DSWithdraw/RecentWithdrawals',
+  () => ({
+    RecentWithdrawals: jest.fn(() => <div />)
+  })
 )
 
 describe('DSWithdraw', () => {
@@ -34,5 +42,6 @@ describe('DSWithdraw', () => {
 
     expect(WithdrawForm).toHaveBeenCalledTimes(1)
     expect(WithdrawView).toHaveBeenCalledTimes(1)
+    expect(RecentWithdrawals).toHaveBeenCalledTimes(1)
   })
 })

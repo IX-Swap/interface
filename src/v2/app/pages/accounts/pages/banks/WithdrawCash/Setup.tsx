@@ -1,6 +1,6 @@
 import React from 'react'
 import { WithdrawCashFormValues } from 'v2/app/pages/accounts/types'
-import { Box, Grid, InputAdornment } from '@material-ui/core'
+import { Grid, InputAdornment } from '@material-ui/core'
 import { useFormContext } from 'react-hook-form'
 import { useBanksData } from 'v2/app/pages/accounts/pages/banks/hooks/useBanksData'
 import { useWithdrawCashForm } from 'v2/app/pages/accounts/pages/banks/WithdrawCash/WithdrawForm'
@@ -14,19 +14,17 @@ export const Setup: React.FC = () => {
 
   return (
     <Grid container justify='center'>
-      <Box m={3}>
-        <Grid container justify='space-between' style={{ width: 230 }}>
+      <Grid container direction='column' spacing={2}>
+        <Grid item>
           <BankSelect name='bank' label='To Bank Account' />
-          {bankId !== undefined ? (
-            <>
+        </Grid>
+        {bankId !== undefined ? (
+          <>
+            <Grid item>
               <NumericField
                 name='amount'
                 label='Amount'
                 helperText='Transaction fees may apply'
-                formControlProps={{
-                  fullWidth: false,
-                  style: { width: 150 }
-                }}
                 inputProps={{
                   startAdornment: (
                     <InputAdornment position='start'>
@@ -42,11 +40,13 @@ export const Setup: React.FC = () => {
                   isNumericString: true
                 }}
               />
+            </Grid>
+            <Grid item>
               <TextField name='memo' label='Memo' />
-            </>
-          ) : null}
-        </Grid>
-      </Box>
+            </Grid>
+          </>
+        ) : null}
+      </Grid>
     </Grid>
   )
 }

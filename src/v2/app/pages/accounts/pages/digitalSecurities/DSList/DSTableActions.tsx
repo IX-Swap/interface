@@ -15,17 +15,17 @@ export const DSTableActions: React.FC<DSTableActionsProps> = props => {
   return (
     <ButtonGroup color='primary'>
       <Button>
-        <AppRouterLink to={paths.view} params={{ balanceId: item._id }}>
+        <AppRouterLink to={paths.view} params={{ balanceId: item.assetId }}>
           View
         </AppRouterLink>
       </Button>
       <Button>
-        <AppRouterLink to={paths.deposit} params={{ balanceId: item._id }}>
+        <AppRouterLink to={paths.deposit} params={{ balanceId: item.assetId }}>
           Deposit
         </AppRouterLink>
       </Button>
       <Button>
-        <AppRouterLink to={paths.withdraw} params={{ balanceId: item._id }}>
+        <AppRouterLink to={paths.withdraw} params={{ balanceId: item.assetId }}>
           Withdraw
         </AppRouterLink>
       </Button>

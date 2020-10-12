@@ -10,6 +10,7 @@ import { IndividualIdentityForm } from 'v2/app/pages/identity/components/Individ
 import { DSWithdrawalPreview } from 'v2/app/components/DSWithdrawalPreview/DSWithdrawalPreview'
 import { DSOForm } from 'v2/app/components/DSO/DSOForm'
 import { useCachedPaginatedTableData } from 'v2/hooks/useCachedPaginatedTableData'
+import { CommitmentPreview } from 'v2/app/components/CommitmentPreview/CommitmentPreview'
 
 export const viewsMap = {
   banks: BankPreview,
@@ -19,7 +20,7 @@ export const viewsMap = {
   individualIdentities: IndividualIdentityForm,
   withdrawals: WithdrawalPreview,
   deposits: DepositView,
-  commitments: BankPreview
+  commitments: CommitmentPreview
 }
 
 export const ViewAuthorizableItem = () => {

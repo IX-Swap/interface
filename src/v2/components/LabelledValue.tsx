@@ -1,5 +1,5 @@
 import React from 'react'
-import { Box, Grid, Typography } from '@material-ui/core'
+import { Box, Grid, GridProps, Typography } from '@material-ui/core'
 
 const formatValue = (value: any): string => {
   const empty = '–'
@@ -32,12 +32,12 @@ export interface LabelledValueProps {
   labelWeight?: keyof typeof labelWeightMap
 }
 
-export const LabelledValue = (props: LabelledValueProps) => {
-  const { label, value, row = false, labelWeight = 'normal' } = props
+export const LabelledValue = (props: LabelledValueProps & GridProps) => {
+  const { label, value, row = false, labelWeight = 'normal', ...rest } = props
   const direction = row ? 'row' : 'column'
 
   return (
-    <Grid item container direction={direction}>
+    <Grid {...rest} item container direction={direction}>
       <Typography style={{ fontWeight: labelWeightMap[labelWeight] }}>
         {label}
         {row && ':'}

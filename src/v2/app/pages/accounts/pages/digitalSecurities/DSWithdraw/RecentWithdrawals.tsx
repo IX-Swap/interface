@@ -5,7 +5,7 @@ import { useDSRouter } from 'v2/app/pages/accounts/pages/digitalSecurities/route
 import { useAuth } from 'v2/hooks/auth/useAuth'
 import { Card, CardContent } from '@material-ui/core'
 
-export const RecentDeposits: React.FC = () => {
+export const RecentWithdrawals: React.FC = () => {
   const { params } = useDSRouter()
   const { user } = useAuth()
   const userId = user !== undefined ? user._id : ''
@@ -14,7 +14,7 @@ export const RecentDeposits: React.FC = () => {
     <Card>
       <CardContent>
         <TableView
-          uri={`/accounts/security/deposits/list/${userId}`}
+          uri={`/accounts/security/withdrawals/list/${userId}`}
           name={`ds-deposits-${userId}`}
           columns={columns}
           filter={{

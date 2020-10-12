@@ -2,10 +2,11 @@ import React from 'react'
 import { useFormContext } from 'react-hook-form'
 import { INVESTAX_BANK } from 'v2/config'
 import { formatMoney } from 'v2/helpers/numbers'
-import { Box, Typography } from '@material-ui/core'
 import { GenericPreview } from 'v2/app/components/GenericPreview/GenericPreview'
 import { useBanksData } from 'v2/app/pages/accounts/pages/banks/hooks/useBanksData'
 import { WithdrawCashFormValues } from 'v2/app/pages/accounts/types'
+import { Alert } from '@material-ui/lab'
+import { VSpacer } from 'v2/components/VSpacer'
 
 export const Preview: React.FC = () => {
   const { watch } = useFormContext<WithdrawCashFormValues>()
@@ -47,11 +48,10 @@ export const Preview: React.FC = () => {
 
   return (
     <>
-      <Box p={2}>
-        <Typography variant='subtitle1' align='center'>
-          <b>Are you sure you want to continue with this transaction?</b>
-        </Typography>
-      </Box>
+      <Alert severity='info'>
+        Are you sure you want to continue with this transaction?
+      </Alert>
+      <VSpacer size='small' />
       <GenericPreview items={items} />
     </>
   )
