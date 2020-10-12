@@ -1,10 +1,10 @@
 import { ListItemIcon, ListItemText, MenuItem } from '@material-ui/core'
-import { AppRouterLink } from '../../../components/AppRouterLink'
+import { AppRouterLink } from 'v2/components/AppRouterLink'
 import React from 'react'
-import { useStyles } from './UserMenuItem.styles'
+import { useStyles } from 'v2/app/components/UserDropdown/UserDropdownItem.styles'
 import { useLocation } from 'react-router-dom'
 
-export interface UserMenuItemProps {
+export interface UserDropdownItemProps {
   icon: any
   label: string
   onClose: () => any
@@ -12,7 +12,7 @@ export interface UserMenuItemProps {
   onClick?: () => any
 }
 
-export const UserMenuItem = (props: UserMenuItemProps) => {
+export const UserDropdownItem = (props: UserDropdownItemProps) => {
   const { icon, label, link, onClick, onClose } = props
   const { pathname } = useLocation()
   const isActive = typeof link === 'string' ? pathname.startsWith(link) : false

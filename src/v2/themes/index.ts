@@ -26,8 +26,10 @@ const overrides = {
       fontWeight: 500
     },
     h6: {
-      fontSize: '1.142rem',
-      fontWeight: 500
+      fontSize: '1rem',
+      fontWeight: 600,
+      color: '#999999',
+      textTransform: 'uppercase' as const
     }
   }
 }

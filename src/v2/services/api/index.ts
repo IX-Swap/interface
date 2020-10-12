@@ -16,15 +16,6 @@ _axios.interceptors.response.use(
 )
 
 const apiService = {
-  get: async function get<T = any>(uri: string, config?: AxiosRequestConfig) {
-    return await this.request<T>({
-      method: 'get',
-      uri,
-      data: undefined,
-      axiosConfig: config ?? {}
-    })
-  },
-
   async request<T = any>({
     method,
     uri,
@@ -39,6 +30,28 @@ const apiService = {
     }
 
     return await _axios.request<T>(this._prepareRequestConfig(requestConfig))
+  },
+
+  get: async function get<T = any>(uri: string, config?: AxiosRequestConfig) {
+    return await this.request<T>({
+      method: 'get',
+      uri,
+      data: undefined,
+      axiosConfig: config ?? {}
+    })
+  },
+
+  async patch<T = any>(
+    uri: string,
+    data: any,
+    axiosConfig: AxiosRequestConfig = {}
+  ) {
+    return await this.request<T>({
+      method: 'patch',
+      uri,
+      data,
+      axiosConfig
+    })
   },
 
   async delete<T = any>(

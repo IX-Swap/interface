@@ -6,4 +6,5 @@ export default interface User {
   verified: boolean
   accountType: string
   totpConfirmed: boolean
+  accessToken: string
 }
