@@ -31,11 +31,10 @@ describe('useEnable2fa', () => {
 
       const apiObj = { post }
       const snackbarObj = { showSnackbar }
-      const { result } = renderHookWithServiceProvider(
-        () => useEnable2fa(),
-        apiObj,
-        snackbarObj
-      )
+      const { result } = renderHookWithServiceProvider(() => useEnable2fa(), {
+        apiService: apiObj,
+        snackbarService: snackbarObj
+      })
 
       await waitFor(
         () => {
@@ -43,7 +42,6 @@ describe('useEnable2fa', () => {
           void mutate(enable2faArgs)
 
           expect(logout).toHaveBeenCalledTimes(1)
-          // expect(showSnackbar).toHaveBeenCalledTimes(1)
           expect(showSnackbar).toHaveBeenNthCalledWith(
             1,
             'Google Authenticator Setup Success! You will be redirected to Login page.',
@@ -62,11 +60,10 @@ describe('useEnable2fa', () => {
 
       const apiObj = { post }
       const snackbarObj = { showSnackbar }
-      const { result } = renderHookWithServiceProvider(
-        () => useEnable2fa(),
-        apiObj,
-        snackbarObj
-      )
+      const { result } = renderHookWithServiceProvider(() => useEnable2fa(), {
+        apiService: apiObj,
+        snackbarService: snackbarObj
+      })
 
       await waitFor(
         () => {

@@ -1,6 +1,6 @@
 import { useInfiniteQuery } from 'react-query'
 import { AssetBalance, GetBalanceByTypeArgs } from 'v2/types/balance'
-import { useUser } from 'v2/auth/hooks/useUser'
+import { useAuth } from 'v2/hooks/auth/useAuth'
 import { AssetType } from 'v2/types/asset'
 import { UsePaginatedQueryData, useParsedData } from 'v2/hooks/useParsedData'
 import { paginationArgs } from 'v2/config/defaults'
@@ -11,7 +11,7 @@ export const BALANCES_BY_TYPE_QUERY_KEY = 'balancesByAssetId'
 export const useBalancesByType = (
   type: AssetType
 ): UsePaginatedQueryData<AssetBalance> => {
-  const { data: user } = useUser()
+  const { user } = useAuth()
   const payload = { ...paginationArgs, userId: user?._id, type }
   const getBalancesByType = async (
     queryKey: string,

@@ -17,8 +17,6 @@ import { AuthorizerTableStore } from 'v2/app/pages/authorizer/context/store'
 import { AuthorizerTableStoreProvider } from 'v2/app/pages/authorizer/context'
 import { DepositStore } from 'v2/app/pages/accounts/pages/banks/context/store'
 import { DepositStoreProvider } from 'v2/app/pages/accounts/pages/banks/context'
-import apiService from 'v2/services/api'
-import { snackbarService } from 'uno-material-ui'
 import { ServicesProvider } from 'v2/services/useServices'
 import { renderHook, RenderHookResult } from '@testing-library/react-hooks'
 
@@ -127,20 +125,10 @@ export const renderWithDepositStore = (
 
 export const renderHookWithServiceProvider = (
   hookFn: any,
-  apiObj: object = {},
-  snackbarObj: object = {}
+  store: object = {}
 ): RenderHookResult<any, any> => {
   const WithServiceProvider: React.FC = ({ children }) => (
-    <ServicesProvider
-      value={
-        {
-          apiService: { ...apiService, ...apiObj },
-          snackbarService: { ...snackbarService, ...snackbarObj }
-        } as any
-      }
-    >
-      {children}
-    </ServicesProvider>
+    <ServicesProvider value={store}>{children}</ServicesProvider>
   )
 
   return renderHook(hookFn, { wrapper: WithServiceProvider })

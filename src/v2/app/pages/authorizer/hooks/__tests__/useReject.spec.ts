@@ -19,11 +19,10 @@ describe('useReject', () => {
 
       const apiObj = { put: putFn }
       const snackbarObj = { showSnackbar }
-      const { result } = renderHookWithServiceProvider(
-        () => useReject(props),
-        apiObj,
-        snackbarObj
-      )
+      const { result } = renderHookWithServiceProvider(() => useReject(props), {
+        apiService: apiObj,
+        snackbarService: snackbarObj
+      })
 
       await waitFor(
         () => {
@@ -45,11 +44,10 @@ describe('useReject', () => {
 
       const apiObj = { put: putFn }
       const snackbarObj = { showSnackbar }
-      const { result } = renderHookWithServiceProvider(
-        () => useReject(props),
-        apiObj,
-        snackbarObj
-      )
+      const { result } = renderHookWithServiceProvider(() => useReject(props), {
+        apiService: apiObj,
+        snackbarService: snackbarObj
+      })
 
       await waitFor(
         () => {

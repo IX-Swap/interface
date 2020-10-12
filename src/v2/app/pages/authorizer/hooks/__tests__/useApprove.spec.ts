@@ -25,8 +25,7 @@ describe('useApprove', () => {
       const snackbarObj = { showSnackbar }
       const { result } = renderHookWithServiceProvider(
         () => useApprove(props),
-        apiObj,
-        snackbarObj
+        { apiService: apiObj, snackbarService: snackbarObj }
       )
 
       await waitFor(
@@ -51,8 +50,7 @@ describe('useApprove', () => {
       const snackbarObj = { showSnackbar }
       const { result } = renderHookWithServiceProvider(
         () => useApprove(props),
-        apiObj,
-        snackbarObj
+        { apiService: apiObj, snackbarService: snackbarObj }
       )
 
       await waitFor(
@@ -77,8 +75,7 @@ describe('useApprove', () => {
       const snackbarObj = { showSnackbar }
       const { result } = renderHookWithServiceProvider(
         () => useApprove(props),
-        apiObj,
-        snackbarObj
+        { apiService: apiObj, snackbarService: snackbarObj }
       )
 
       await waitFor(

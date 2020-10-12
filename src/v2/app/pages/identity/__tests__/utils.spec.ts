@@ -1,27 +1,19 @@
-import { DeclarationValue } from 'v2/app/pages/identity/const/declarations'
 import docs from 'v2/app/pages/identity/const/documents'
 import {
   allDeclarationsAreChecked,
   prepareDocumentsForUpload,
   getIdentityDocuments
 } from '../utils'
-import { Declaration } from 'v2/types/identity'
 import { DataroomFileWithGuide } from 'v2/types/dataroomFile'
-import { documents } from '__fixtures__/identity'
-
-const declarations: Declaration[] = [
-  { a: DeclarationValue.Yes },
-  { a: DeclarationValue.Yes }
-]
-
-const unCheckedDeclarations: Declaration[] = [
-  { a: DeclarationValue.Yes },
-  { a: DeclarationValue.No }
-]
+import {
+  documents,
+  checkedDeclarations,
+  unCheckedDeclarations
+} from '__fixtures__/identity'
 
 describe('allDeclarationsAreChecked', () => {
   it('returns true if all declarations have first property value "Yes"', () => {
-    expect(allDeclarationsAreChecked(declarations)).toEqual(true)
+    expect(allDeclarationsAreChecked(checkedDeclarations)).toEqual(true)
   })
 
   it('returns false if all declarations does not have first property value "Yes"', () => {

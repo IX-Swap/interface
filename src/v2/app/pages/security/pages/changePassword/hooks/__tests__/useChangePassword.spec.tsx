@@ -35,8 +35,7 @@ describe('useChangePassword', () => {
       const snackbarObj = { showSnackbar }
       const { result } = renderHookWithServiceProvider(
         () => useChangePassword(),
-        apiObj,
-        snackbarObj
+        { apiService: apiObj, snackbarService: snackbarObj }
       )
 
       await waitFor(
@@ -44,7 +43,6 @@ describe('useChangePassword', () => {
           const [mutate] = result.current
           void mutate(changePasswordArgs)
 
-          // expect(showSnackbar).toHaveBeenCalledTimes(1)
           expect(showSnackbar).toHaveBeenNthCalledWith(
             1,
             'Successfully changed password',
@@ -65,8 +63,7 @@ describe('useChangePassword', () => {
       const snackbarObj = { showSnackbar }
       const { result } = renderHookWithServiceProvider(
         () => useChangePassword(),
-        apiObj,
-        snackbarObj
+        { apiService: apiObj, snackbarService: snackbarObj }
       )
 
       await waitFor(
