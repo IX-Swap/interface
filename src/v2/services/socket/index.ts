@@ -19,9 +19,13 @@ const socketService = {
     }
   },
 
-  _subscribeToSocket(bearerToken: string | undefined) {
+  subscribeToSocket(bearerToken: string | undefined) {
     try {
-      _socket = io(`${API_URL}?token=${bearerToken ?? ''}`)
+      _socket = io(
+        process.env.NODE_ENV === 'test'
+          ? ''
+          : `${API_URL}?token=${bearerToken ?? ''}`
+      )
     } catch (error) {
       console.error(error)
     }

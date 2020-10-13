@@ -11,7 +11,7 @@ export const useSubscribeToNotifications = () => {
 
   useEffect(() => {
     const user = storageService.get<User>('user')
-    void socketService._subscribeToSocket(user?.accessToken)
+    void socketService.subscribeToSocket(user?.accessToken)
   }, []) // eslint-disable-line
 
   useEffect(() => {
