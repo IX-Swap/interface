@@ -7,7 +7,7 @@ import { Asset } from 'v2/types/asset'
 import { formatMoney } from 'v2/helpers/numbers'
 import { useBalancesByAssetId } from 'v2/hooks/balance/useBalancesByAssetId'
 
-interface CommitmentViewHeaderProps {
+export interface CommitmentViewHeaderProps {
   dso: DigitalSecurityOffering
   currency: Asset
   estimated: number

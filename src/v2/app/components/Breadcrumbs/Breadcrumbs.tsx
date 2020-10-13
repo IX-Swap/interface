@@ -24,7 +24,7 @@ export const Breadcrumbs = (props: BreadcrumbsProps) => {
     <Grid container>
       <MUIBreadcrumbs aria-label='breadcrumb'>
         {links.map(({ label, path }) => (
-          <AppRouterLink to={path} underline='hover' color='primary'>
+          <AppRouterLink key={path} to={path} underline='hover' color='primary'>
             {label}
           </AppRouterLink>
         ))}

@@ -15,7 +15,7 @@ import { useHistory } from 'react-router-dom'
 import { downloadFile } from 'v2/helpers/httpRequests'
 import { noop } from 'lodash'
 
-interface CommitmentProps {
+export interface CommitmentProps {
   data: ICommitment
   editMode?: boolean
 }

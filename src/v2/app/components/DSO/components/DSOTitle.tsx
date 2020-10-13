@@ -3,7 +3,7 @@ import { DSOImage } from 'v2/app/components/DSO/components/DSOImage'
 import { DigitalSecurityOffering } from 'v2/types/dso'
 import { Grid, Typography } from '@material-ui/core'
 
-interface DsoTitleProps {
+export interface DsoTitleProps {
   dso: DigitalSecurityOffering
   editMode?: boolean
 }

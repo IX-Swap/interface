@@ -4,7 +4,7 @@ import { DigitalSecurityOffering } from 'v2/types/dso'
 import { Asset } from 'v2/types/asset'
 import EditableWithLabel from 'v2/components/form/HardLabelEditable'
 
-interface OfferProps {
+export interface OfferProps {
   dso: DigitalSecurityOffering
   currency?: Asset
   editMode?: boolean
