@@ -8,7 +8,7 @@ export const IdentityRoot: React.FC = () => {
 
   return (
     <Container>
-      <PageHeader />
+      <PageHeader alignment='flex-start' />
       {renderRoutes()}
     </Container>
   )

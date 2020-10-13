@@ -7,15 +7,33 @@ import { IndividualIdEdit } from 'v2/app/pages/identity/pages/individual/Individ
 import { IndividualIdCreate } from 'v2/app/pages/identity/pages/individual/IndividualIdCreate'
 import { CorporateIdCreate } from 'v2/app/pages/identity/pages/corporate/CorporateIdCreate'
 import { CorporateIdEdit } from 'v2/app/pages/identity/pages/corporate/CorporateIdEdit'
+import { makeURL } from 'v2/config/urls'
 
 export const IdentityRoute = {
-  list: '/app/identity/list',
-  individual: '/app/identity/individual',
-  createIndividual: '/app/identity/individual/create',
-  editIndividual: '/app/identity/individual/edit',
-  createCorporate: '/app/identity/corporate/create',
-  corporate: '/app/identity/corporate/:identityId',
-  editCorporate: '/app/identity/corporate/:identityId/edit'
+  list: makeURL(['app', 'identity']),
+  individual: makeURL(['app', 'identity', 'individualIdentity', 'view']),
+  createIndividual: makeURL([
+    'app',
+    'identity',
+    'individualIdentity',
+    'create'
+  ]),
+  editIndividual: makeURL(['app', 'identity', 'individualIdentity', 'edit']),
+  createCorporate: makeURL(['app', 'identity', 'corporateIdentity', 'create']),
+  corporate: makeURL([
+    'app',
+    'identity',
+    'corporateIdentity',
+    'identityId',
+    'view'
+  ]),
+  editCorporate: makeURL([
+    'app',
+    'identity',
+    'corporateIdentity',
+    'identityId',
+    'edit'
+  ])
 }
 
 export const identityRoutes: InternalRouteProps[] = [

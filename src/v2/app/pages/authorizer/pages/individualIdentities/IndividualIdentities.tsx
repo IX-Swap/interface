@@ -4,7 +4,7 @@ import { columns } from 'v2/app/pages/authorizer/pages/individualIdentities/colu
 import { IndividualIdentityForm } from 'v2/app/pages/identity/components/IndividualIdentityForm'
 import { IndividualIdentity } from 'v2/types/identity'
 import { AuthorizerView } from '../../components/AuthorizerView'
-import { DataroomFeature } from '../../../../../types/authorizer'
+import { DataroomFeature } from 'v2/types/authorizer'
 
 export const IndividualIdentities: React.FC = () => (
   <BaseView

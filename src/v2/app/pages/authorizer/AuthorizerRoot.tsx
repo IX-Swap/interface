@@ -4,15 +4,11 @@ import { Container } from '@material-ui/core'
 import { PageHeader } from '../../components/PageHeader/PageHeader'
 
 export const AuthorizerRoot: React.FC = () => {
-  const { renderRoutes, paths, current } = useAuthorizerRouter()
-  const isLandingPage = current.path === paths.landing
+  const { renderRoutes } = useAuthorizerRouter()
 
   return (
     <Container>
-      <PageHeader
-        label={current.label}
-        alignment={isLandingPage ? 'center' : 'flex-start'}
-      />
+      <PageHeader />
       {renderRoutes()}
     </Container>
   )

@@ -4,12 +4,14 @@ import { TableView } from 'v2/components/TableWithPagination/TableView'
 import columns from 'v2/app/pages/admin/columns'
 import User from 'v2/types/user'
 import { Actions } from './components/Actions'
+import { PageHeader } from 'v2/app/components/PageHeader/PageHeader'
 
 export const AdminRoot = () => {
   const ref = useRef(null)
 
   return (
     <Container>
+      <PageHeader alignment='flex-start' />
       <Paper>
         <TableView<User>
           innerRef={ref}

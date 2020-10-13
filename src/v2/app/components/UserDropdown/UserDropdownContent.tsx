@@ -24,7 +24,7 @@ export const UserDropdownContent = (props: DropdownContentProps) => {
       />
       <UserDropdownItem
         icon={SecurityIcon}
-        label='Security'
+        label='Settings'
         link={SecurityRoute.landing}
         onClose={handleClose}
       />

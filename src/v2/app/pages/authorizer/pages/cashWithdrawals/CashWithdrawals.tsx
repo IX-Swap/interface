@@ -1,7 +1,7 @@
 import React from 'react'
 import { AuthorizerTable as BaseView } from 'v2/app/pages/authorizer/components/AuthorizerTable'
 import { columns } from 'v2/app/pages/authorizer/pages/cashWithdrawals/columns'
-import { WithdrawalPreview } from 'v2/app/components/WithdrawalPreview'
+import { WithdrawalPreview } from 'v2/app/components/WithdrawalPreview/WithdrawalPreview'
 import { CashWithdrawal } from 'v2/types/cashWithdrawal'
 import { AuthorizerView } from '../../components/AuthorizerView'
 import { DataroomFeature } from 'v2/types/authorizer'

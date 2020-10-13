@@ -10,9 +10,6 @@ import { QueryStatus } from 'react-query'
 import * as individualIdentityHook from 'v2/hooks/identity/useIndividualIdentity'
 import { IndividualIdentityForm } from 'v2/app/pages/identity/components/IndividualIdentityForm'
 
-jest.mock('v2/app/components/PageTitle', () => ({
-  PageTitle: jest.fn(() => null)
-}))
 jest.mock('v2/app/pages/identity/components/IndividualIdentityForm', () => ({
   IndividualIdentityForm: jest.fn(() => null)
 }))

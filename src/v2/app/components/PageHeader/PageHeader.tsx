@@ -12,19 +12,20 @@ export interface PageHeaderProps {
 }
 
 export const PageHeader = (props: PageHeaderProps) => {
-  const { label, alignment = 'flex-start', showBreadcrumbs = true } = props
-  const breadcrumbs = useBreadcrumbs()
-  const current = breadcrumbs[breadcrumbs.length - 1]
+  const { label, alignment, showBreadcrumbs = true } = props
+  const { crumbs } = useBreadcrumbs()
+  const current = crumbs[crumbs.length - 1]
+  const justify = alignment ?? (crumbs.length === 1 ? 'center' : 'flex-start')
 
   return (
     <>
-      <Grid container justify={alignment}>
-        <Typography variant='h2'>{label ?? current?.label ?? ''}</Typography>
+      <Grid container justify={justify}>
+        <Typography variant='h2'>{current?.label ?? label ?? ''}</Typography>
       </Grid>
       <VSpacer size='small' />
       {showBreadcrumbs && (
         <Grid>
-          <Breadcrumbs items={breadcrumbs} />
+          <Breadcrumbs items={crumbs} />
         </Grid>
       )}
       <VSpacer size='small' />

@@ -4,7 +4,6 @@ import { useParsedData } from 'v2/hooks/useParsedData'
 import { paginationArgs } from 'v2/config/defaults'
 import { PaginatedData } from 'v2/services/api/types'
 import { useServices } from 'v2/services/useServices'
-import { useAuthorizerRouter } from 'v2/app/pages/authorizer/router'
 import { useLocation } from 'react-router-dom'
 
 export const getAuthorizerCategoryFromPath = (path: string) => {

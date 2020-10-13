@@ -10,12 +10,15 @@ import { NotificationsProvider } from 'v2/app/pages/notifications/components/Not
 import { ReactQueryDevtools } from 'react-query-devtools'
 import { ErrorBoundary } from 'react-error-boundary'
 import { AppError } from 'v2/app/components/AppError'
+import { useDataFromURL } from 'v2/hooks/location/useDataFromURL'
 
 export const AppRoot: React.FC = () => {
   const { isAuthenticated } = useAuth()
   const history = useHistory()
   const classes = useStyles()
   const { renderRoutes } = useAppRouter()
+
+  useDataFromURL()
 
   useEffect(() => {
     if (!isAuthenticated) {

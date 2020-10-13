@@ -1,7 +1,5 @@
 import React from 'react'
 import { Container, Paper, Grid, Box } from '@material-ui/core'
-
-import { PageTitle } from 'v2/app/components/PageTitle'
 import { createTypedForm } from 'v2/components/form/createTypedForm'
 import { ChangePasswordFormValues } from './types'
 import { changePasswordFormValuesSchema } from './validation'
@@ -24,7 +22,6 @@ export const ChangePassword = () => {
 
   return (
     <Container>
-      <PageTitle title='Change Password' subPage={true} />
       <Grid container alignItems='center' justify='center'>
         <Grid container lg={4} item>
           <Form

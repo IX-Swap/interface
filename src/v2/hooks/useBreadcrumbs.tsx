@@ -14,7 +14,7 @@ export interface BreadcrumbsState {
 
 export const BreadcrumbsContext = createContext<BreadcrumbsState | null>(null)
 
-export const useNewBreadcrumbs = () => {
+export const useBreadcrumbs = () => {
   const context = useContext(BreadcrumbsContext)
 
   if (context === null) {

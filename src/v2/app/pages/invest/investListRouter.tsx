@@ -3,10 +3,11 @@ import { DSOList } from 'v2/app/components/DSO/components/DSOList'
 import { generateAppRouterHook } from 'v2/helpers/generateAppRouterHook'
 import MyCommitments from './components/my-commitments'
 import { InvestRoute } from 'v2/app/pages/invest/router'
+import { makeURL } from 'v2/config/urls'
 
 export const InvestListRoute = {
-  offerings: '/app/invest/offerings',
-  commitments: '/app/invest/commitments'
+  offerings: makeURL(['app', 'invest', 'offerings']),
+  commitments: makeURL(['app', 'invest', 'commitments'])
 }
 
 export const investListRoutes = [

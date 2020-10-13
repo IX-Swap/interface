@@ -47,19 +47,25 @@ describe('markAllNotificationsAsRead', () => {
 
 describe('filterNotifications', () => {
   it('returns filtered notifications based on filters passed', () => {
-    const n1: Notification = { ...notification, feature: AppFeature.Deposits }
+    const n1: Notification = {
+      ...notification,
+      feature: AppFeature['Cash Deposits']
+    }
     const n2: Notification = { ...notification, feature: AppFeature.Offerings }
     const n3: Notification = { ...notification, feature: AppFeature.Corporates }
 
     const filteredNotifications = filterNotifications(
-      [AppFeature.Deposits, AppFeature.Offerings],
+      [AppFeature['Cash Deposits'], AppFeature.Offerings],
       [n1, n2, n3]
     )
     expect(filteredNotifications).toEqual([n1, n2])
   })
 
   it('returns all notifications if filter is undefined', () => {
-    const n1: Notification = { ...notification, feature: AppFeature.Deposits }
+    const n1: Notification = {
+      ...notification,
+      feature: AppFeature['Cash Deposits']
+    }
     const n2: Notification = { ...notification, feature: AppFeature.Offerings }
     const n3: Notification = { ...notification, feature: AppFeature.Corporates }
 
@@ -68,7 +74,10 @@ describe('filterNotifications', () => {
   })
 
   it('returns empty array if filter is empty', () => {
-    const n1: Notification = { ...notification, feature: AppFeature.Deposits }
+    const n1: Notification = {
+      ...notification,
+      feature: AppFeature['Cash Deposits']
+    }
     const n2: Notification = { ...notification, feature: AppFeature.Offerings }
     const n3: Notification = { ...notification, feature: AppFeature.Corporates }
 
@@ -77,7 +86,9 @@ describe('filterNotifications', () => {
   })
 
   it('returns empty array if notifications does not exist', () => {
-    const filteredNotifications = filterNotifications([AppFeature.Deposits])
+    const filteredNotifications = filterNotifications([
+      AppFeature['Cash Deposits']
+    ])
     expect(filteredNotifications).toEqual([])
   })
 })

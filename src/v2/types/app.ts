@@ -1,12 +1,24 @@
+export enum AppService {
+  Authentication = 'authentication',
+  Accounts = 'accounts',
+  Identity = 'identity',
+  Issuance = 'issuance',
+  Invest = 'invest',
+  Authorizer = 'authorizer'
+}
+
 export enum AppFeature {
   Authentication = 'logins',
   'Bank Accounts' = 'bank-accounts',
-  Deposits = 'deposits',
+  'Cash Deposits' = 'cash-deposits',
+  'Cash Withdrawals' = 'cash-withdrawals',
+  'Digital Security' = 'digital-security',
+  'Digital Security Deposits' = 'digital-security-deposits',
   'Digital Security Withdrawals' = 'digital-security-withdrawals',
-  'Cash Withdrawals' = 'withdrawals',
   Corporates = 'corporates',
   Individuals = 'individuals',
   Commitments = 'commitments',
   Offerings = 'offerings',
-  Deployments = 'deployments'
+  Deployments = 'deployments',
+  Issuance = 'issuance'
 }

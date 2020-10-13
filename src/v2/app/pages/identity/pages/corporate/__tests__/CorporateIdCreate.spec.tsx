@@ -4,9 +4,6 @@ import { render, cleanup } from 'test-utils'
 import { CorporateIdCreate } from 'v2/app/pages/identity/pages/corporate/CorporateIdCreate'
 import { CorporateIdentityForm } from 'v2/app/pages/identity/components/CorporateIdentityForm'
 
-jest.mock('v2/app/components/PageTitle', () => ({
-  PageTitle: jest.fn(() => null)
-}))
 jest.mock('v2/app/pages/identity/components/CorporateIdentityForm', () => ({
   CorporateIdentityForm: jest.fn(() => null)
 }))

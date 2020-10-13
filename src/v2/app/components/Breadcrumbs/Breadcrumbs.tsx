@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import React from 'react'
 import { AppRouterLink } from 'v2/components/AppRouterLink'
 import {
   Grid,
@@ -6,22 +6,20 @@ import {
   Breadcrumbs as MUIBreadcrumbs
 } from '@material-ui/core'
 import { InternalRouteBase } from 'v2/types/util'
-import { useNewBreadcrumbs } from 'v2/hooks/useNewBreadcrumbs'
 
 export interface BreadcrumbsProps {
   items: InternalRouteBase[]
 }
 
 export const Breadcrumbs = (props: BreadcrumbsProps) => {
-  // const { items } = props
-  const { crumbs: items, reset } = useNewBreadcrumbs()
+  const { items } = props
   const lastItem = items[items.length - 1]
   const links = items.slice(0, items.length - 1)
 
-  useEffect(() => {
-    return () => reset()
-  }, [])
-  // console.log(data)
+  if (items.length === 1) {
+    return null
+  }
+
   return (
     <Grid container>
       <MUIBreadcrumbs aria-label='breadcrumb'>

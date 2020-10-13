@@ -39,10 +39,7 @@ export const useTableWithPagination = <TData>(
 
   const { data, status, fetchMore, isFetching } = useInfiniteQuery(
     [queryKey, page, rowsPerPage, filter],
-    fetcher,
-    {
-      refetchOnWindowFocus: false
-    }
+    fetcher
   )
 
   const cached = queryCache.getQueryData<typeof data>([

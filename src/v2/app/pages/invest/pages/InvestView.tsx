@@ -1,20 +1,17 @@
 import React from 'react'
 import { DSOForm } from 'v2/app/components/DSO/DSOForm'
-import { useParams } from 'react-router-dom'
 import { useDSOById } from '../hooks/useDSOById'
+import { useInvestListRouter } from 'v2/app/pages/invest/investListRouter'
 
-const InvestView = () => {
-  const { dsoId, issuerId } = useParams<{
-    dsoId: string
-    issuerId: string
-  }>()
+export const InvestView = () => {
+  const {
+    params: { dsoId, issuerId }
+  } = useInvestListRouter()
   const { isLoading, data } = useDSOById(dsoId, issuerId)
 
-  if (isLoading || data === undefined) {
+  if (isLoading) {
     return null
   }
 
   return <DSOForm data={data} />
 }
-
-export default InvestView
