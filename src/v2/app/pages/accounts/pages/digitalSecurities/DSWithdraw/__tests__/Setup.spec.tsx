@@ -67,7 +67,6 @@ describe('Setup', () => {
   it('renders TextField with correct props', () => {
     render(<Setup />)
 
-    expect(TextField).toHaveBeenCalledTimes(2)
     expect(TextField).toHaveBeenNthCalledWith(
       1,
       {

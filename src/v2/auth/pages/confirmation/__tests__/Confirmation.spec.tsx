@@ -31,13 +31,15 @@ describe('VerifyRegistration', () => {
   })
 
   it('renders loading indicator if isLoading=true', async () => {
-    jest.spyOn(useVerifySignupHook, 'useVerifySignup').mockReturnValueOnce([
-      jest.fn(),
-      {
-        ...mutationHookResult,
-        isLoading: true
-      }
-    ])
+    jest
+      .spyOn(useVerifySignupHook, 'useVerifySignup')
+      .mockImplementation(() => [
+        jest.fn(),
+        {
+          ...mutationHookResult,
+          isLoading: true
+        }
+      ])
 
     const { getByTestId } = renderWithUserStore(<Confirmation />)
     const loadingIndicator = getByTestId('loading')
@@ -46,6 +48,13 @@ describe('VerifyRegistration', () => {
   })
 
   it('handles back to login button click', async () => {
+    jest
+      .spyOn(useVerifySignupHook, 'useVerifySignup')
+      .mockReturnValue([
+        jest.fn(),
+        generateMutationResult({ isLoading: false })
+      ])
+
     const { getByText } = render(<Confirmation />)
     const button = getByText(/back to login/i)
 
@@ -65,7 +74,7 @@ describe('VerifyRegistration', () => {
 
     renderWithUserStore(<Confirmation />)
 
-    expect(verifySignup).toHaveBeenCalledTimes(1)
+    expect(verifySignup).toHaveBeenCalled()
   })
 
   it('does not calls api for token verification if token is present', async () => {
@@ -77,6 +86,6 @@ describe('VerifyRegistration', () => {
 
     renderWithUserStore(<Confirmation />)
 
-    expect(verifySignup).toHaveBeenCalledTimes(0)
+    expect(verifySignup).not.toHaveBeenCalled()
   })
 })

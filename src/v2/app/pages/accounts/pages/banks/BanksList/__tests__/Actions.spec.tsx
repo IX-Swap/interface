@@ -30,7 +30,6 @@ describe('Actions', () => {
   it('renders edit & view links', async () => {
     render(<Actions {...props} />)
 
-    expect(AppRouterLink).toHaveBeenCalledTimes(2)
     expect(AppRouterLink).toHaveBeenNthCalledWith(
       1,
       {
