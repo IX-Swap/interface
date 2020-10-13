@@ -24,7 +24,7 @@ jest.mock('v2/app/pages/identity/components/dataroom/Dataroom', () => ({
 describe('AuthorizationDocuments', () => {
   const props: AuthorizationDocumentsProps = {
     documents: [document],
-    feature: DataroomFeature.banks,
+    feature: DataroomFeature['bank-accounts'],
     resourceId: 'testResourceId'
   }
   const DataroomFileTypeSelect = jest.fn(() => null)

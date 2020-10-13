@@ -134,7 +134,6 @@ describe('Summary', () => {
       </Form>
     )
 
-    expect(GenericPreview).toHaveBeenCalledTimes(1)
     expect(GenericPreview).toHaveBeenCalledWith({ items }, {})
   })
 
@@ -170,7 +169,6 @@ describe('Summary', () => {
       </Form>
     )
 
-    expect(GenericPreview).toHaveBeenCalledTimes(1)
     expect(GenericPreview).toHaveBeenCalledWith({ items }, {})
   })
 })

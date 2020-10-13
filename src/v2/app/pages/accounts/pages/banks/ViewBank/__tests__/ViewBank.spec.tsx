@@ -48,7 +48,6 @@ describe('ViewBank', () => {
     )
     render(<ViewBank />)
 
-    expect(BankPreview).toHaveBeenCalledTimes(1)
     expect(BankPreview).toHaveBeenCalledWith({ data: bank }, {})
   })
 })

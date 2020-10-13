@@ -57,7 +57,6 @@ describe('CorporateIdPreview', () => {
       .mockReturnValue(generateInfiniteQueryResult({ list: [] }))
     render(<CorporateIdPreview />)
 
-    expect(NoIdentity).toHaveBeenCalledTimes(1)
     expect(NoIdentity).toHaveBeenCalledWith(
       { link: 'createCorporate', text: 'Create Corporate Identity' },
       {}
@@ -70,7 +69,6 @@ describe('CorporateIdPreview', () => {
       .mockReturnValue(generateInfiniteQueryResult({ list: [corporate] }))
     render(<CorporateIdPreview />)
 
-    expect(CompanyInformation).toHaveBeenCalledTimes(1)
     expect(CompanyInformation).toHaveBeenCalledWith(
       {
         corporate,
@@ -87,7 +85,6 @@ describe('CorporateIdPreview', () => {
       .mockReturnValue(generateInfiniteQueryResult({ list: [corporate] }))
     render(<CorporateIdPreview />)
 
-    expect(Section).toHaveBeenCalledTimes(1)
     expect(Section).toHaveBeenCalledWith(
       {
         actions: expect.anything(),
@@ -104,7 +101,6 @@ describe('CorporateIdPreview', () => {
       .mockReturnValue(generateInfiniteQueryResult({ list: [corporate] }))
     render(<CorporateIdPreview />)
 
-    expect(Form).toHaveBeenCalledTimes(1)
     expect(Form).toHaveBeenCalledWith(
       {
         validationSchema: corporateIdentityFormValidationSchema,

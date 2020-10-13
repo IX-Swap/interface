@@ -35,7 +35,7 @@ describe('IndividualIdentities', () => {
         <AuthorizerView
           title='About This Identity'
           data={individual}
-          feature={DataroomFeature.individualIdentities}
+          feature={DataroomFeature.individuals}
         >
           <IndividualIdentityForm
             data={individual}

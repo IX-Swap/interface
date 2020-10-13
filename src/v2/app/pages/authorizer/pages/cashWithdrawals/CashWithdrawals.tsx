@@ -20,7 +20,7 @@ export const renderWithdrawal = (w: CashWithdrawal) => (
   <AuthorizerView
     title='About This Withdrawal'
     data={w}
-    feature={DataroomFeature.withdrawals}
+    feature={DataroomFeature['cash-withdrawals']}
   >
     <WithdrawalPreview data={w} />
   </AuthorizerView>

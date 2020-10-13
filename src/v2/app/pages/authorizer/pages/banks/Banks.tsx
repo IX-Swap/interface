@@ -21,7 +21,7 @@ export const renderBank = (b: Bank): JSX.Element => {
     <AuthorizerView
       title='About This Bank'
       data={b}
-      feature={DataroomFeature.banks}
+      feature={DataroomFeature['bank-accounts']}
     >
       <BankPreview data={b} />
     </AuthorizerView>

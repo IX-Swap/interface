@@ -7,8 +7,8 @@ import {
 } from 'v2/app/pages/authorizer/pages/cashDeposits/CashDeposits'
 import { DepositView } from 'v2/app/components/DepositView/DepositView'
 import { cashDeposit } from '__fixtures__/authorizer'
-import { DataroomFeature } from '../../../../../../types/authorizer'
-import { AuthorizerView } from '../../../components/AuthorizerView'
+import { DataroomFeature } from 'v2/types/authorizer'
+import { AuthorizerView } from 'v2/app/pages/authorizer/components/AuthorizerView'
 
 jest.mock('v2/app/components/DepositView/DepositView', () => ({
   DepositView: jest.fn(() => null)
@@ -35,7 +35,7 @@ describe('CashDeposits', () => {
         <AuthorizerView
           title='About This Deposit'
           data={cashDeposit}
-          feature={DataroomFeature.deposits}
+          feature={DataroomFeature['cash-deposits']}
         >
           <DepositView data={cashDeposit} />
         </AuthorizerView>

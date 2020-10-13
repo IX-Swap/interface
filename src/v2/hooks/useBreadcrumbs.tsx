@@ -1,7 +1,9 @@
 import React, {
   createContext,
   PropsWithChildren,
+  useCallback,
   useContext,
+  useMemo,
   useState
 } from 'react'
 import { InternalRouteBase } from 'v2/types/util'
@@ -18,7 +20,7 @@ export const useBreadcrumbs = () => {
   const context = useContext(BreadcrumbsContext)
 
   if (context === null) {
-    throw new Error()
+    throw new Error('useBreadcrumbs must be used inside of BreadcrumbsProvider')
   }
 
   return context
@@ -26,24 +28,32 @@ export const useBreadcrumbs = () => {
 
 export const BreadcrumbsProvider = ({ children }: PropsWithChildren<any>) => {
   const [data, setData] = useState<BreadcrumbsState['crumbs']>([])
-  const push = (crumb: InternalRouteBase) =>
-    setData(prevData => {
-      const crumbIdx = prevData.findIndex(({ path }) => crumb.path === path)
-      const lastIdx = prevData.length - 1
+  const push = useCallback(
+    () => (crumb: InternalRouteBase) => {
+      setData(prevData => {
+        const crumbIdx = prevData.findIndex(({ path }) => crumb.path === path)
+        const lastIdx = prevData.length - 1
 
-      if (crumbIdx !== -1) {
-        return crumbIdx < lastIdx ? prevData : prevData
-      }
+        if (crumbIdx !== -1) {
+          return crumbIdx < lastIdx ? prevData : prevData
+        }
 
-      return [...prevData, crumb]
-    })
-  const replace = () => {
+        return [...prevData, crumb]
+      })
+    },
+    []
+  )
+  const replace = useCallback(() => {
     setData([])
-  }
+  }, [])
+  const crumbs = useMemo(() => data, [data])
 
-  return (
-    <BreadcrumbsContext.Provider value={{ crumbs: data, push, reset: replace }}>
-      {children}
-    </BreadcrumbsContext.Provider>
+  return useMemo(
+    () => (
+      <BreadcrumbsContext.Provider value={{ crumbs, push, reset: replace }}>
+        {children}
+      </BreadcrumbsContext.Provider>
+    ),
+    [] // eslint-disable-line
   )
 }

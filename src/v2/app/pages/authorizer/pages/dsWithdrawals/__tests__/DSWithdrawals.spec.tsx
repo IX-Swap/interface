@@ -35,7 +35,7 @@ describe('DSWithdrawals', () => {
         <AuthorizerView
           title='About This Withdrawal'
           data={dsWithdrawal}
-          feature={DataroomFeature.dsWithdrawals}
+          feature={DataroomFeature['digital-security-withdrawals']}
         >
           <DSWithdrawalPreview data={dsWithdrawal} />
         </AuthorizerView>

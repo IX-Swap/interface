@@ -48,9 +48,7 @@ describe('IndividualIdEdit', () => {
       .mockReturnValue(generateQueryResult({ data: individual }))
     render(<IndividualIdEdit />)
 
-    expect(IndividualIdentityForm).toHaveBeenCalledTimes(1)
-    expect(IndividualIdentityForm).toHaveBeenNthCalledWith(
-      1,
+    expect(IndividualIdentityForm).toHaveBeenCalledWith(
       {
         data: individual,
         isEditing: true,

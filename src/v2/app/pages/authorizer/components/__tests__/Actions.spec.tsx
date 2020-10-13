@@ -46,11 +46,11 @@ describe('Actions', () => {
 
     fireEvent.click(viewButton)
     await waitFor(() => {
-      expect(history.location.pathname).toBe('/app/authorizer/banks/1')
+      expect(history.location.pathname).toBe('/app/authorizer/bank-accounts/1')
       expect(history.location.state).toEqual({
         cacheQueryKey: props.cacheQueryKey,
         itemId: bank._id,
-        category: 'banks'
+        category: 'bank-accounts'
       })
     })
   })

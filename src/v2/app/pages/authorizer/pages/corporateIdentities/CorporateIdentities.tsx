@@ -20,7 +20,7 @@ export const renderCorporateIdentity = (i: CorporateIdentity): JSX.Element => (
   <AuthorizerView
     title='About This Corporate'
     data={i}
-    feature={DataroomFeature.corporateIdentities}
+    feature={DataroomFeature.corporates}
   >
     <CorporateIdentityForm data={i} isEditing={false} useOwnEmail={false} />
   </AuthorizerView>

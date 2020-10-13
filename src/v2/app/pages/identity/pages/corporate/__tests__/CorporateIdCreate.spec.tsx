@@ -21,7 +21,6 @@ describe('CorporateIdCreate', () => {
   it('renders CorporateIdentityForm with correct props', () => {
     render(<CorporateIdCreate />)
 
-    expect(CorporateIdentityForm).toHaveBeenCalledTimes(1)
     expect(CorporateIdentityForm).toHaveBeenCalledWith(
       {
         identity: undefined,

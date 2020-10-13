@@ -38,7 +38,6 @@ describe('RecentDeposits', () => {
 
     render(<RecentDeposits />)
 
-    expect(TableView).toHaveBeenCalledTimes(1)
     expect(TableView).toHaveBeenCalledWith(
       expect.objectContaining({
         uri,

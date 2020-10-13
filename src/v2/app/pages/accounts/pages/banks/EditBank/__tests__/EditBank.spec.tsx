@@ -46,6 +46,6 @@ describe('EditBank', () => {
     )
     render(<EditBank />)
 
-    expect(BankForm).toHaveBeenCalledTimes(1)
+    expect(BankForm).toHaveBeenCalled()
   })
 })

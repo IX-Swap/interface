@@ -20,7 +20,7 @@ export const renderDSWithdrawal = (w: DSWithdrawal): JSX.Element => (
   <AuthorizerView
     title='About This Withdrawal'
     data={w}
-    feature={DataroomFeature.dsWithdrawals}
+    feature={DataroomFeature['digital-security-withdrawals']}
   >
     <DSWithdrawalPreview data={w} />
   </AuthorizerView>

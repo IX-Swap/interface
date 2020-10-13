@@ -21,9 +21,7 @@ describe('IndividualIdCreate', () => {
   it('renders IndividualIdentityForm with correct props', () => {
     render(<IndividualIdCreate />)
 
-    expect(IndividualIdentityForm).toHaveBeenCalledTimes(1)
-    expect(IndividualIdentityForm).toHaveBeenNthCalledWith(
-      1,
+    expect(IndividualIdentityForm).toHaveBeenCalledWith(
       {
         identity: undefined,
         isEditing: true,

@@ -5,23 +5,31 @@ import { ViewAuthorizableItem } from 'v2/app/pages/authorizer/components/ViewAut
 import { AuthorizerView } from 'v2/app/pages/authorizer/components/AuthorizerView'
 import { history } from 'v2/history'
 import { DataroomFeature } from 'v2/types/authorizer'
+import * as useAuthorizerDataHook from 'v2/app/pages/authorizer/hooks/useAuthorizerData'
+import { generateInfiniteQueryResult } from '__fixtures__/useQuery'
+import { AppFeature } from 'v2/types/app'
+import { bank } from '__fixtures__/authorizer'
 
 jest.mock('v2/app/pages/authorizer/components/AuthorizerView', () => ({
-  AuthorizerView: jest.fn(() => null)
+  AuthorizerView: jest.fn(() => <div />)
 }))
 
 describe('ViewAuthorizableItem', () => {
   beforeEach(() => {
-    history.push('/', {
-      category: 'withdrawals',
-      itemId: 'testItemId',
-      cacheQueryKey: 'testCacheQueryKey'
-    })
+    jest
+      .spyOn(useAuthorizerDataHook, 'useAuthorizerData')
+      .mockImplementation(() => ({
+        ...generateInfiniteQueryResult({}),
+        data: bank,
+        category: 'bank-accounts' as AppFeature
+      }))
   })
+
   afterEach(async () => {
     await cleanup()
     jest.clearAllMocks()
   })
+
   afterAll(() => history.push('/'))
 
   it('renders without error', () => {
@@ -31,12 +39,12 @@ describe('ViewAuthorizableItem', () => {
   it('renders AuthorizerView with correct props', () => {
     render(<ViewAuthorizableItem />)
 
-    expect(AuthorizerView).toHaveBeenCalledTimes(1)
     expect(AuthorizerView).toHaveBeenCalledWith(
       {
         title: 'View Item',
-        feature: DataroomFeature.withdrawals,
-        children: expect.anything()
+        feature: DataroomFeature['bank-accounts'],
+        data: bank,
+        children: expect.any(Object)
       },
       {}
     )

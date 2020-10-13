@@ -53,7 +53,6 @@ describe('IndividualIdView', () => {
       .mockReturnValue(generateQueryResult({ data: individual }))
     render(<IndividualIdView />)
 
-    expect(IndividualIdentityForm).toHaveBeenCalledTimes(1)
     expect(IndividualIdentityForm).toHaveBeenCalledWith(
       {
         data: individual,
@@ -68,9 +67,7 @@ describe('IndividualIdView', () => {
   it('renders EditButton with correct props', () => {
     render(<IndividualIdView />)
 
-    expect(EditButton).toHaveBeenCalledTimes(1)
-    expect(EditButton).toHaveBeenNthCalledWith(
-      1,
+    expect(EditButton).toHaveBeenCalledWith(
       {
         link: IdentityRoute.editIndividual
       },

@@ -14,7 +14,7 @@ import { DataroomFeature } from 'v2/types/authorizer'
 export interface AuthorizationDocumentsProps {
   resourceId: string
   documents: DataroomFile[]
-  feature: DataroomFeature
+  feature: typeof DataroomFeature[keyof typeof DataroomFeature]
 }
 
 export const AuthorizationDocuments = (props: AuthorizationDocumentsProps) => {

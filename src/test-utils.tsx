@@ -19,6 +19,7 @@ import { DepositStore } from 'v2/app/pages/accounts/pages/banks/context/store'
 import { DepositStoreProvider } from 'v2/app/pages/accounts/pages/banks/context'
 import { ServicesProvider } from 'v2/services/useServices'
 import { renderHook, RenderHookResult } from '@testing-library/react-hooks'
+import { BreadcrumbsProvider } from 'v2/hooks/useBreadcrumbs'
 
 const generateClassName = createGenerateClassName({
   productionPrefix: 'ix'
@@ -28,7 +29,9 @@ const BaseProviders: React.FC = ({ children }) => {
   return (
     <StylesProvider generateClassName={generateClassName}>
       <ThemeProvider theme={Themes.default}>
-        <Router history={history}>{children}</Router>
+        <BreadcrumbsProvider>
+          <Router history={history}>{children}</Router>
+        </BreadcrumbsProvider>
       </ThemeProvider>
     </StylesProvider>
   )

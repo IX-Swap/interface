@@ -40,7 +40,7 @@ describe('AuthorizerView', () => {
         corporates: [corporate]
       }
     },
-    feature: DataroomFeature.banks
+    feature: DataroomFeature['bank-accounts']
   }
   afterEach(async () => {
     await cleanup()
@@ -64,7 +64,7 @@ describe('AuthorizerView', () => {
     expect(AuthorizationDocuments).toHaveBeenCalledWith(
       {
         documents: props.data.authorizationDocuments,
-        feature: DataroomFeature.banks,
+        feature: DataroomFeature['bank-accounts'],
         resourceId: props.data._id
       },
       {}
