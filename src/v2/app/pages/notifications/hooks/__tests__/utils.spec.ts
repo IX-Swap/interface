@@ -38,6 +38,11 @@ describe('markAllNotificationsAsRead', () => {
     const readNotifications = markAllNotificationsAsRead([])
     expect(readNotifications).toEqual([])
   })
+
+  it('returns empty array if notifications does not exist', () => {
+    const newNotifications = markAllNotificationsAsRead()
+    expect(newNotifications).toEqual([])
+  })
 })
 
 describe('filterNotifications', () => {
@@ -70,6 +75,11 @@ describe('filterNotifications', () => {
     const filteredNotifications = filterNotifications([], [n1, n2, n3])
     expect(filteredNotifications).toEqual([])
   })
+
+  it('returns empty array if notifications does not exist', () => {
+    const filteredNotifications = filterNotifications([AppFeature.Deposits])
+    expect(filteredNotifications).toEqual([])
+  })
 })
 
 describe('markNotificationAsRead', () => {
@@ -89,5 +99,10 @@ describe('markNotificationAsRead', () => {
 
     const newNotifications = markNotificationAsRead('4', [n1, n2, n3])
     expect(newNotifications).toEqual([n1, n2, n3])
+  })
+
+  it('returns empty array if notifications does not exist', () => {
+    const newNotifications = markNotificationAsRead('1')
+    expect(newNotifications).toEqual([])
   })
 })
