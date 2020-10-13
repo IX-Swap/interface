@@ -1,7 +1,6 @@
 import io from 'socket.io-client'
 
 import { API_URL } from 'v2/config'
-import storageHelper from 'v2/helpers/storageHelper'
 
 let _socket: SocketIOClient.Socket | undefined
 

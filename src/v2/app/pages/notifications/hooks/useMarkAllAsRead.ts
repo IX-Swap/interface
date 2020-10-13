@@ -1,6 +1,6 @@
-import { useServices } from 'v2/services/useServices'
-import { useAuth } from 'v2/hooks/auth/useAuth'
 import { queryCache, useMutation } from 'react-query'
+import { useAuth } from 'v2/hooks/auth/useAuth'
+import { useServices } from 'v2/services/useServices'
 import { Notification } from 'v2/types/notification'
 import { markAllNotificationsAsRead } from 'v2/app/pages/notifications/hooks/utils'
 
