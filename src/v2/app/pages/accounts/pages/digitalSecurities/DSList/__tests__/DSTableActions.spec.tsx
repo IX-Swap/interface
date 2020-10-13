@@ -25,7 +25,6 @@ describe('DSTableActions', () => {
   it('renders view, deposit & withdraw links', async () => {
     render(<DSTableActions {...props} />)
 
-    expect(AppRouterLink).toHaveBeenCalledTimes(3)
     expect(AppRouterLink).toHaveBeenNthCalledWith(
       1,
       {

@@ -8,6 +8,7 @@ export interface GenerateMutationResultArgs {
   status?: number
   error?: any
   queryStatus?: QueryStatus
+  isLoading?: boolean
 }
 
 export const generateMutationResult = ({
@@ -16,7 +17,8 @@ export const generateMutationResult = ({
   statusText = 'OK',
   status = 200,
   error = undefined,
-  queryStatus = QueryStatus.Success
+  queryStatus = QueryStatus.Success,
+  isLoading = false
 }: GenerateMutationResultArgs) => ({
   error,
   data: {
@@ -31,7 +33,7 @@ export const generateMutationResult = ({
   status: queryStatus,
   isError: false,
   isIdle: false,
-  isLoading: false,
+  isLoading,
   isSuccess: false,
   reset: () => null
 })

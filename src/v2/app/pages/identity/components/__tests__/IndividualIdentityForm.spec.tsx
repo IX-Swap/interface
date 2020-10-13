@@ -54,7 +54,6 @@ describe('IndividualIdentityForm', () => {
   it('renders Section with correct props', () => {
     render(<IndividualIdentityForm {...props} />)
 
-    expect(Section).toHaveBeenCalledTimes(5)
     expect(Section).toHaveBeenNthCalledWith(
       1,
       { title: 'Identity', children: expect.anything() },
@@ -85,28 +84,24 @@ describe('IndividualIdentityForm', () => {
   it('renders Address with correct props', () => {
     render(<IndividualIdentityForm {...props} />)
 
-    expect(Address).toHaveBeenCalledTimes(1)
     expect(Address).toHaveBeenCalledWith({ isEditing: props.isEditing }, {})
   })
 
   it('renders Financials with correct props', () => {
     render(<IndividualIdentityForm {...props} />)
 
-    expect(Financials).toHaveBeenCalledTimes(1)
     expect(Financials).toHaveBeenCalledWith({ isEditing: props.isEditing }, {})
   })
 
   it('renders Dataroom with correct props', () => {
     render(<IndividualIdentityForm {...props} />)
 
-    expect(Dataroom).toHaveBeenCalledTimes(1)
     expect(Dataroom).toHaveBeenCalledWith({ isEditing: props.isEditing }, {})
   })
 
   it('renders Declaration with correct props', () => {
     render(<IndividualIdentityForm {...props} />)
 
-    expect(Declaration).toHaveBeenCalledTimes(1)
     expect(Declaration).toHaveBeenCalledWith(
       {
         isEditing: props.isEditing,
