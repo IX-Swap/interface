@@ -32,10 +32,9 @@ export const BreadcrumbsProvider = ({ children }: PropsWithChildren<any>) => {
     () => (crumb: InternalRouteBase) => {
       setData(prevData => {
         const crumbIdx = prevData.findIndex(({ path }) => crumb.path === path)
-        const lastIdx = prevData.length - 1
 
         if (crumbIdx !== -1) {
-          return crumbIdx < lastIdx ? prevData : prevData
+          return prevData
         }
 
         return [...prevData, crumb]
