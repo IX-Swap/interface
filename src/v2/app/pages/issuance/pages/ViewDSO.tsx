@@ -1,5 +1,4 @@
 import React from 'react'
-import { useParams } from 'react-router-dom'
 import { Button, Grid } from '@material-ui/core'
 import { useDSOById } from 'v2/app/pages/invest/hooks/useDSOById'
 import { DSOForm } from 'v2/app/components/DSO/DSOForm'
@@ -8,13 +7,13 @@ import { AppRouterLink } from 'v2/components/AppRouterLink'
 import { VSpacer } from 'v2/components/VSpacer'
 
 export const ViewDSO = () => {
-  const { dsoId } = useParams<{
-    dsoId: string
-  }>()
+  const {
+    params: { dsoId }
+  } = useIssuanceRouter()
   const { isLoading, data } = useDSOById(dsoId)
   const { paths } = useIssuanceRouter()
 
-  if (isLoading || data === undefined) {
+  if (isLoading) {
     return null
   }
 

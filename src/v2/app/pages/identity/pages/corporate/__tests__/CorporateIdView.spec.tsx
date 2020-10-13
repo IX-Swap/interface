@@ -55,9 +55,7 @@ describe('CorporateIdView', () => {
       )
     render(<CorporateIdView />)
 
-    expect(EditButton).toHaveBeenCalledTimes(1)
-    expect(EditButton).toHaveBeenNthCalledWith(
-      1,
+    expect(EditButton).toHaveBeenCalledWith(
       {
         params: { identityId },
         link: IdentityRoute.editCorporate
@@ -69,9 +67,7 @@ describe('CorporateIdView', () => {
   it('renders CorporateIdentityForm with correct props', () => {
     render(<CorporateIdView />)
 
-    expect(CorporateIdentityForm).toHaveBeenCalledTimes(1)
-    expect(CorporateIdentityForm).toHaveBeenNthCalledWith(
-      1,
+    expect(CorporateIdentityForm).toHaveBeenCalledWith(
       { useOwnEmail: false, isEditing: false, data: corporate },
       {}
     )

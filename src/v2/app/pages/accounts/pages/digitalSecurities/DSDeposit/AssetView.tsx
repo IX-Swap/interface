@@ -4,12 +4,14 @@ import { Box, Button, Grid, Typography } from '@material-ui/core'
 import { ReactComponent as QRCode } from 'v1/assets/qr.svg'
 import { useSnackbar } from 'v2/hooks/useSnackbar'
 import { useDSRouter } from 'v2/app/pages/accounts/pages/digitalSecurities/router'
+import { VSpacer } from 'v2/components/VSpacer'
+import { Alert } from '@material-ui/lab'
 
 export const AssetView: React.FC = () => {
   const {
     params: { balanceId }
   } = useDSRouter()
-  const { data } = useAllBalances()
+  const { data, isLoading } = useAllBalances()
   const snackbar = useSnackbar()
   const asset = data.map[balanceId]
   const address = '12nfq3r45678900awn2noag3459an'
@@ -18,9 +20,19 @@ export const AssetView: React.FC = () => {
     await snackbar.showSnackbar('Copied to clipboard', 'info')
   }
 
+  if (isLoading) {
+    return null
+  }
+
   return (
     <Box my={3}>
       <Grid container spacing={3}>
+        <Grid item xs={12}>
+          <Alert severity='warning'>
+            Please only send {asset.symbol} to this address. We may not be able
+            to recover if you transfer to the wrong address.
+          </Alert>
+        </Grid>
         <Grid container item xs={12} sm={8} direction='column' justify='center'>
           <Typography variant='h4'>
             <b>{asset.symbol} Address</b>
@@ -28,17 +40,13 @@ export const AssetView: React.FC = () => {
           <Typography variant='body1' color='primary'>
             <b>{address}</b>
           </Typography>
-          <Button onClick={handleCopy}>Copy Address</Button>
+          <VSpacer size='small' />
+          <Button onClick={handleCopy} variant='contained' color='primary'>
+            Copy Address
+          </Button>
         </Grid>
         <Grid item xs={12} sm={4}>
           <QRCode />
-        </Grid>
-        <Grid item xs={12}>
-          <Typography variant='subtitle1'>Be careful</Typography>
-          <Typography variant='subtitle2'>
-            Please only send {asset.symbol} to this address. We may not be able
-            to recover if you transfer to the wrong address.
-          </Typography>
         </Grid>
       </Grid>
     </Box>

@@ -40,5 +40,5 @@ export const filterNotifications = (
     return []
   }
 
-  return data.filter(n => filter.includes(n.feature as AppFeature))
+  return data.filter(n => filter.includes(n.feature))
 }

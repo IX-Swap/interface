@@ -31,7 +31,7 @@ describe('DSTableActions', () => {
       {
         children: 'View',
         to: DSRoute.view,
-        params: { balanceId: props.item._id }
+        params: { balanceId: props.item.assetId }
       },
       {}
     )
@@ -41,7 +41,7 @@ describe('DSTableActions', () => {
       {
         children: 'Deposit',
         to: DSRoute.deposit,
-        params: { balanceId: props.item._id }
+        params: { balanceId: props.item.assetId }
       },
       {}
     )
@@ -50,7 +50,7 @@ describe('DSTableActions', () => {
       {
         children: 'Withdraw',
         to: DSRoute.withdraw,
-        params: { balanceId: props.item._id }
+        params: { balanceId: props.item.assetId }
       },
       {}
     )

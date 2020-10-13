@@ -11,6 +11,6 @@ export const adminService = {
   async setUserRole(args: UpdateUserRoleArgs) {
     const { userId, ...payload } = args
     const url = this._buildURL(`/users/${userId}/roles`)
-    return await apiService.put(url, payload)
+    return await apiService.patch(url, payload)
   }
 }

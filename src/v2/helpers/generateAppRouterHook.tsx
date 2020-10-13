@@ -1,17 +1,23 @@
-import React, { useMemo } from 'react'
+import React, { useEffect, useMemo } from 'react'
 import { Location } from 'history'
 import {
   Redirect,
   Route,
   Switch,
   useLocation,
-  useHistory,
-  generatePath
+  useHistory
 } from 'react-router-dom'
 import { InternalRouteBase, InternalRouteProps } from 'v2/types/util'
 import { getRoutesByType } from '../app/components/LandingPage/utils'
 import { LandingPage } from '../app/components/LandingPage/LandingPage'
 import { isTestENV } from 'v2/history'
+import { useBreadcrumbs } from 'v2/hooks/useBreadcrumbs'
+import {
+  getCurrentRouteFromLocation,
+  getHistoryPayload,
+  safeGeneratePath
+} from 'v2/helpers/router'
+import { AppRoute } from 'v2/components/AppRoute'
 
 export interface AppRouter<T> {
   current: InternalRouteBase
@@ -24,67 +30,13 @@ export interface AppRouter<T> {
   routes: InternalRouteProps[]
 }
 
-type LocationState = Record<string, any> | null | undefined
+export type LocationState = Record<string, any> | null | undefined
 
-const getRouteLabel = (path: string, routes: InternalRouteProps[]): string => {
-  const route = routes.find(r => r.path === path)
-  return route !== undefined ? route.label : ''
-}
-
-interface GetCurrentRouteArgs<T> {
+export interface GetCurrentRouteArgs<T> {
   location: Location<Record<string, any>>
   routes: InternalRouteProps[]
   defaultRoute: string
   routeMap: T
-}
-
-const getHistoryPayload = (route: any, state?: {}) => {
-  let pathname = route as string
-
-  if (state !== undefined) {
-    pathname = generatePath(route, state)
-  }
-
-  return {
-    pathname,
-    state
-  }
-}
-
-export const shouldGeneratePath = (
-  path: string,
-  state: LocationState
-): state is Record<string, string> => {
-  if (state === undefined || state === null) {
-    return false
-  }
-
-  const params = path
-    .split('/')
-    .filter(s => s.startsWith(':'))
-    .map(s => s.replace(/:/, ''))
-
-  return params.every(p => state[p] !== undefined)
-}
-
-export const getCurrentRouteFromLocation = <T,>(
-  args: GetCurrentRouteArgs<T>
-): InternalRouteBase => {
-  const { location, routes, routeMap, defaultRoute } = args
-  const { pathname, state } = location
-
-  const route = Object.values(routeMap).find(path => {
-    if (shouldGeneratePath(path, state)) {
-      return pathname === generatePath(path, state)
-    }
-
-    return pathname === path
-  })
-
-  return {
-    label: getRouteLabel(route, routes),
-    path: route ?? defaultRoute
-  }
 }
 
 export function generateAppRouterHook<T>(
@@ -106,6 +58,12 @@ export function generateAppRouterHook<T>(
       [location]
     )
     const { landing, nested, generic } = getRoutesByType(routes)
+    const params = isTestENV ? location.state : window.history.state ?? {}
+    const { reset } = useBreadcrumbs()
+
+    useEffect(() => {
+      reset()
+    }, [location.pathname]) // eslint-disable-line
 
     return {
       current,
@@ -118,12 +76,21 @@ export function generateAppRouterHook<T>(
       replace: (route, state) => {
         history.replace(getHistoryPayload(routeMap[route], state))
       },
-      params: isTestENV ? location.state : window.history.state ?? {},
+      params,
       renderRoutes: () => (
         <Switch>
-          {[...nested, ...generic].map((route, i) => (
-            <Route key={i} {...route} />
-          ))}
+          {[...nested, ...generic].map((route, i) => {
+            return (
+              <Route
+                key={i}
+                exact={route.exact}
+                path={safeGeneratePath(route.path, params)}
+                render={props => (
+                  <AppRoute {...props} params={params} route={route} />
+                )}
+              />
+            )
+          })}
           {landing !== undefined && (
             <Route
               key='landing'

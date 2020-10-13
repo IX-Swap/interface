@@ -9,7 +9,7 @@ export interface DsoTeamMember {
   name: string
   position: string
   about: string
-  photo?: string // documentId
+  photo?: string
 }
 
 export interface DeploymentInfo {
@@ -29,8 +29,6 @@ export interface DeploymentInfo {
   updatedAt: string
   __v: number
 }
-
-// export interface PolicyBuilder {}
 
 export interface BaseDigitalSecurityOffering extends AuthorizableWithIdentity {
   _id: string

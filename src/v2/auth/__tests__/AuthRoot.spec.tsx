@@ -81,7 +81,7 @@ describe('AuthRoot', () => {
 
     renderWithUserStore(<AuthRoot />)
 
-    expect(Login).toHaveBeenCalledTimes(1)
+    expect(Login).toHaveBeenCalled()
   })
 
   it('renders Register if path is /auth/register', () => {
@@ -89,7 +89,7 @@ describe('AuthRoot', () => {
 
     renderWithUserStore(<AuthRoot />)
 
-    expect(Register).toHaveBeenCalledTimes(1)
+    expect(Register).toHaveBeenCalled()
   })
 
   it('renders Confirmation if path is /auth/confirm', () => {
@@ -97,7 +97,7 @@ describe('AuthRoot', () => {
 
     renderWithUserStore(<AuthRoot />)
 
-    expect(Confirmation).toHaveBeenCalledTimes(1)
+    expect(Confirmation).toHaveBeenCalled()
   })
 
   it('renders PasswordReset if path is /auth/reset-password', () => {
@@ -105,6 +105,6 @@ describe('AuthRoot', () => {
 
     renderWithUserStore(<AuthRoot />)
 
-    expect(PasswordReset).toHaveBeenCalledTimes(1)
+    expect(PasswordReset).toHaveBeenCalled()
   })
 })

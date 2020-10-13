@@ -11,22 +11,13 @@ import {
   TextField
 } from '@material-ui/core'
 import { useForm, Controller } from 'react-hook-form'
-import { DataroomFile } from 'v2/types/dataroomFile'
 import { useHistory } from 'react-router-dom'
 import { downloadFile } from 'v2/helpers/httpRequests'
 import { noop } from 'lodash'
 
 interface CommitmentProps {
-  commitment: ICommitment
+  data: ICommitment
   editMode?: boolean
-}
-
-const Uploader = ({
-  onUploadSuccess
-}: {
-  onUploadSuccess: (doc: DataroomFile) => void
-}) => {
-  return <span>uploader</span>
 }
 
 const NumberFormatCustom = ({ symbol, ...others }: any) => (
@@ -43,37 +34,37 @@ const NumberFormatCustom = ({ symbol, ...others }: any) => (
 )
 
 export const CommitmentView = (props: CommitmentProps) => {
-  const { editMode = false, commitment } = props
+  const { editMode = false, data } = props
   const history = useHistory()
   const [estimatedValue, setEstimatedValue] = useState(0)
   const [numberOfUnits, setNumberOfUnits] = useState(
-    Number.isInteger(commitment?.numberOfUnits) ? commitment.numberOfUnits : 0
+    Number.isInteger(data?.numberOfUnits) ? data.numberOfUnits : 0
   )
   const { register, handleSubmit, watch, errors, control } = useForm({
     defaultValues: {
-      ...commitment,
+      ...data,
       otp: ''
     }
   })
 
   useEffect(() => {
-    setEstimatedValue(numberOfUnits * commitment.pricePerUnit)
-  }, [numberOfUnits, commitment])
+    setEstimatedValue(numberOfUnits * data.pricePerUnit)
+  }, [numberOfUnits, data])
 
   useEffect(() => {
-    setEstimatedValue(numberOfUnits * commitment.pricePerUnit)
+    setEstimatedValue(numberOfUnits * data.pricePerUnit)
     // run on start
     // eslint-disable-next-line
   }, [])
 
   useEffect(() => {
-    if (commitment !== undefined) {
+    if (data !== undefined) {
       const amount = watch('totalAmount')
       if (Number.isInteger(amount)) {
-        setNumberOfUnits(amount / commitment.pricePerUnit)
+        setNumberOfUnits(amount / data.pricePerUnit)
       }
     }
-  }, [commitment, watch])
+  }, [data, watch])
 
   const onSubmit = (data: any) => {
     console.log('submit', data)
@@ -83,18 +74,18 @@ export const CommitmentView = (props: CommitmentProps) => {
     downloadFile(doc).then(noop).catch(noop)
   }
 
-  const setSubscriptionDocument = (doc: DataroomFile) => {
-    console.log('doc', doc)
-  }
-
   const saving = false
+
+  if (data === undefined) {
+    return null
+  }
 
   return (
     <Container>
       <Box component={Paper} p={4}>
         <CommitmentViewHeader
-          dso={commitment.dso}
-          currency={commitment.currency}
+          dso={data.dso}
+          currency={data.currency}
           estimated={estimatedValue}
         />
         <Grid container alignItems='center' direction='column'>
@@ -109,7 +100,7 @@ export const CommitmentView = (props: CommitmentProps) => {
                   disabled={false}
                   onClick={() => {
                     onClickDownload(
-                      `/issuance/dso/dataroom/subscription/raw/${commitment.dso._id}`
+                      `/issuance/dso/dataroom/subscription/raw/${data.dso._id}`
                     )
                   }}
                 >
@@ -117,29 +108,21 @@ export const CommitmentView = (props: CommitmentProps) => {
                 </Button>
               </Box>
 
-              {editMode ? (
-                <Uploader
-                  onUploadSuccess={(doc: DataroomFile) =>
-                    setSubscriptionDocument(doc)
-                  }
-                />
-              ) : (
-                <Box mb={2}>
-                  <Button
-                    variant='contained'
-                    component={Button}
-                    fullWidth
-                    disabled={false}
-                    onClick={() => {
-                      onClickDownload(
-                        `/issuance/commitment/dataroom/subscription/signed/raw/${commitment._id}`
-                      )
-                    }}
-                  >
-                    Download Signed Subscription Document
-                  </Button>
-                </Box>
-              )}
+              <Box mb={2}>
+                <Button
+                  variant='contained'
+                  component={Button}
+                  fullWidth
+                  disabled={false}
+                  onClick={() => {
+                    onClickDownload(
+                      `/issuance/commitment/dataroom/subscription/signed/raw/${data._id}`
+                    )
+                  }}
+                >
+                  Download Signed Subscription Document
+                </Button>
+              </Box>
 
               <Controller
                 name='totalAmount'
@@ -152,7 +135,7 @@ export const CommitmentView = (props: CommitmentProps) => {
                     label='Investment Amount'
                     style={{ marginBottom: '1em' }}
                     inputProps={{
-                      symbol: commitment.currency.numberFormat.currency
+                      symbol: data.currency.numberFormat.currency
                     }}
                     InputLabelProps={{
                       shrink: true
@@ -189,7 +172,7 @@ export const CommitmentView = (props: CommitmentProps) => {
                     style={{ marginBottom: '1em' }}
                     // disabled={!editMode}
                     inputProps={{
-                      symbol: commitment.currency.numberFormat.currency
+                      symbol: data.currency.numberFormat.currency
                     }}
                     InputLabelProps={{
                       shrink: true
@@ -272,7 +255,7 @@ export const CommitmentView = (props: CommitmentProps) => {
                       color='secondary'
                       size='large'
                       type='button'
-                      disabled={saving || commitment.status !== 'Unauthorized'}
+                      disabled={saving || data.status !== 'Unauthorized'}
                       onClick={e => {
                         e.preventDefault()
                         if (!editMode) {

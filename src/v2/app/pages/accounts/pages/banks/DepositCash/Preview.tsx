@@ -1,11 +1,12 @@
 import React from 'react'
-import { Box, Typography } from '@material-ui/core'
 import { GenericPreview } from 'v2/app/components/GenericPreview/GenericPreview'
 import { formatMoney } from 'v2/helpers/numbers'
 import { INVESTAX_BANK } from 'v2/config'
 import { useFormContext } from 'react-hook-form'
 import { DepositCashFormValues } from 'v2/app/pages/accounts/types'
 import { useAssetsData } from 'v2/hooks/asset/useAssetsData'
+import { Alert } from '@material-ui/lab'
+import { VSpacer } from 'v2/components/VSpacer'
 
 export interface DepositTransactionPreviewProps {
   depositCode: string
@@ -36,11 +37,10 @@ export const Preview: React.FC<DepositTransactionPreviewProps> = props => {
 
   return (
     <>
-      <Box p={2}>
-        <Typography variant='subtitle1' align='center'>
-          <b>Are you sure you want to continue with this transaction?</b>
-        </Typography>
-      </Box>
+      <Alert severity='info'>
+        Are you sure you want to continue with this transaction?
+      </Alert>
+      <VSpacer size='small' />
       <GenericPreview items={items} />
     </>
   )

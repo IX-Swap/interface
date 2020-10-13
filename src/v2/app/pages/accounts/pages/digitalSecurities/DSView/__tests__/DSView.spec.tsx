@@ -12,7 +12,7 @@ import { history } from 'v2/history'
 import { DSRoute } from 'v2/app/pages/accounts/pages/digitalSecurities/router'
 
 describe('DSView', () => {
-  const balanceId = balance._id
+  const balanceId = balance.assetId
 
   beforeEach(() => {
     history.push(DSRoute.view, { balanceId })

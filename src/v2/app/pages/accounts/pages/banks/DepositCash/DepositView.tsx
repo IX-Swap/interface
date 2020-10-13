@@ -1,6 +1,6 @@
 import React from 'react'
 import { INVESTAX_BANK } from 'v2/config'
-import { Box, Grid } from '@material-ui/core'
+import { Grid } from '@material-ui/core'
 import {
   DepositForm,
   useDepositCashForm
@@ -16,6 +16,7 @@ import { ContinueButton } from 'v2/app/pages/accounts/pages/banks/DepositCash/Co
 import { DepositCashAlert } from 'v2/app/pages/accounts/pages/banks/components/DepositCashAlert'
 import { DisplayNone } from 'v2/app/components/DisplayNone'
 import { useUnmountCallback } from 'v2/hooks/useUnmountCallback'
+import { VSpacer } from 'v2/components/VSpacer'
 
 export const DepositView: React.FC = observer(() => {
   const { TextField, Submit } = useDepositCashForm()
@@ -26,43 +27,54 @@ export const DepositView: React.FC = observer(() => {
 
   return (
     <DepositForm depositCode={depositCode}>
-      <Grid container direction='column' spacing={4}>
-        <Grid item>
-          <DisplayNone when={isPreview}>
-            <Setup />
-          </DisplayNone>
-          {isPreview && <Preview depositCode={depositCode} />}
-        </Grid>
-        <Grid item>
-          <BankDetails bank={INVESTAX_BANK} code={depositCode} />
-        </Grid>
-        {isPreview && (
-          <Grid item container justify='center'>
-            <DepositCashAlert />
-            <Grid item container direction='column'>
-              <Box my={4} alignSelf='center'>
+      <Grid container justify='center'>
+        <Grid item xs={5} container direction='column' spacing={4}>
+          <Grid item>
+            <DisplayNone when={isPreview}>
+              <Setup />
+            </DisplayNone>
+            {isPreview && <Preview depositCode={depositCode} />}
+          </Grid>
+          <Grid item>
+            <BankDetails bank={INVESTAX_BANK} code={depositCode} />
+          </Grid>
+          {isPreview && (
+            <Grid item container justify='center'>
+              <DepositCashAlert />
+              <Grid item container direction='column' xs={12}>
+                <VSpacer size='small' />
                 <TextField
                   name='otp'
                   label='2-Factor Auth Code'
+                  formControlProps={{
+                    fullWidth: true
+                  }}
                   inputProps={{
                     autoComplete: 'off'
                   }}
                 />
-              </Box>
+                <VSpacer size='small' />
+              </Grid>
             </Grid>
-          </Grid>
-        )}
-        <Grid item>
-          <Grid container justify='center'>
-            {isPreview ? (
-              <>
-                <BackButton />
-                <Box mx={1} />
-                <Submit>Confirm Deposit</Submit>
-              </>
-            ) : (
-              <ContinueButton />
-            )}
+          )}
+          <Grid item>
+            <Grid container direction='column' spacing={1}>
+              {isPreview && (
+                <Grid item>
+                  <Submit fullWidth>Confirm Deposit</Submit>
+                </Grid>
+              )}
+              {isPreview && (
+                <Grid item>
+                  <BackButton fullWidth />
+                </Grid>
+              )}
+              {!isPreview && (
+                <Grid item>
+                  <ContinueButton />
+                </Grid>
+              )}
+            </Grid>
           </Grid>
         </Grid>
       </Grid>

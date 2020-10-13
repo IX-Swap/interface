@@ -1,6 +1,7 @@
 import { AuthorizableStatus } from './util'
 import { DataroomFile } from './dataroomFile'
 import { CorporateIdentity, IndividualIdentity } from './identity'
+import { AppFeature } from 'v2/types/app'
 
 export interface AuthorizationInfo {
   authorizer: string
@@ -32,15 +33,16 @@ export interface AuthorizableWithIdentity extends Authorizable {
   }
 }
 
-export enum DataroomFeature {
-  banks = 'authorization/accounts/bank-accounts',
-  deposits = 'authorization/accounts/deposits',
-  withdrawals = 'authorization/accounts/withdrawals',
-  dsWithdrawals = 'authorization/accounts/security-withdrawals',
-  individualIdentities = 'authorization/identity/individuals',
-  corporateIdentities = 'authorization/identity/corporates',
-  offerings = 'authorization/issuance/dsos',
-  commitments = 'authorization/issuance/commitments'
+export const DataroomFeature = {
+  [AppFeature['Bank Accounts']]: 'authorization/accounts/bank-accounts',
+  [AppFeature['Cash Deposits']]: 'authorization/accounts/deposits',
+  [AppFeature['Cash Withdrawals']]: 'authorization/accounts/withdrawals',
+  [AppFeature['Digital Security Withdrawals']]:
+    'authorization/accounts/security-withdrawals',
+  [AppFeature.Individuals]: 'authorization/identity/individuals',
+  [AppFeature.Corporates]: 'authorization/identity/corporates',
+  [AppFeature.Offerings]: 'authorization/issuance/dsos',
+  [AppFeature.Commitments]: 'authorization/issuance/commitments'
 }
 
 export interface AuthorizerViewParams {

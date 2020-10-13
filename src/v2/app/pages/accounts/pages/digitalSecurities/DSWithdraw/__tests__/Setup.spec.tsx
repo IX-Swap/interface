@@ -42,13 +42,12 @@ describe('Setup', () => {
   it('renders ContinueButton', () => {
     render(<Setup />)
 
-    expect(ContinueButton).toHaveBeenCalledTimes(1)
+    expect(ContinueButton).toHaveBeenCalled()
   })
 
   it('renders NumericField with correct props', () => {
     render(<Setup />)
 
-    expect(NumericField).toHaveBeenCalledTimes(1)
     expect(NumericField).toHaveBeenCalledWith(
       {
         label: 'Amount',

@@ -17,19 +17,19 @@ import { ReactComponent as IndividualIcon } from 'assets/icons/navigation/indivi
 import { ReactComponent as CorporateIcon } from 'assets/icons/navigation/corporate.svg'
 import { ReactComponent as OfferingIcon } from 'assets/icons/navigation/offering.svg'
 import { ReactComponent as CommitmentIcon } from 'assets/icons/navigation/commitment.svg'
+import { makeURL } from 'v2/config/urls'
 
 export const AuthorizerRoute = {
-  landing: '/app/authorizer',
-  banks: '/app/authorizer/banks',
-  deposits: '/app/authorizer/deposits',
-  withdrawals: '/app/authorizer/withdrawals',
-  dsWithdrawals: '/app/authorizer/dsWithdrawals',
-  individualIdentities: '/app/authorizer/individualIdentities',
-  corporateIdentities: '/app/authorizer/corporateIdentities',
-  offerings: '/app/authorizer/offerings',
-  commitments: '/app/authorizer/commitments',
-  listings: '/app/authorizer/listings',
-  viewItem: '/app/authorizer/:category/:itemId'
+  landing: makeURL(['app', 'authorizer']),
+  banks: makeURL(['app', 'authorizer', 'bankAccount']),
+  cashDeposits: makeURL(['app', 'authorizer', 'cashDeposit']),
+  cashWithdrawals: makeURL(['app', 'authorizer', 'cashWithdrawal']),
+  dsWithdrawals: makeURL(['app', 'authorizer', 'dsWithdrawal']),
+  individualIdentities: makeURL(['app', 'authorizer', 'individualIdentity']),
+  corporateIdentities: makeURL(['app', 'authorizer', 'corporateIdentity']),
+  offerings: makeURL(['app', 'authorizer', 'offerings']),
+  commitments: makeURL(['app', 'authorizer', 'commitments']),
+  viewItem: makeURL(['app', 'authorizer', 'category', 'itemId'])
 }
 
 export const authorizerRoutes: InternalRouteProps[] = [
@@ -50,7 +50,7 @@ export const authorizerRoutes: InternalRouteProps[] = [
   },
   {
     label: 'Cash Deposits',
-    path: AuthorizerRoute.deposits,
+    path: AuthorizerRoute.cashDeposits,
     component: CashDeposits,
     exact: true,
     color: '#43B526',
@@ -58,7 +58,7 @@ export const authorizerRoutes: InternalRouteProps[] = [
   },
   {
     label: 'Cash Withdrawals',
-    path: AuthorizerRoute.withdrawals,
+    path: AuthorizerRoute.cashWithdrawals,
     component: CashWithdrawals,
     exact: true,
     color: '#E6D200',

@@ -4,12 +4,11 @@ import { Container } from '@material-ui/core'
 import { PageHeader } from '../../components/PageHeader/PageHeader'
 
 export const AccountsRoot: React.FC = () => {
-  const { renderRoutes, paths, current } = useAccountsRouter()
-  const isLandingPage = current.path === paths.landing
+  const { renderRoutes } = useAccountsRouter()
 
   return (
     <Container>
-      <PageHeader alignment={isLandingPage ? 'center' : 'flex-start'} />
+      <PageHeader />
       {renderRoutes()}
     </Container>
   )

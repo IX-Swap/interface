@@ -9,6 +9,7 @@ import { DSWithdrawal } from 'v2/types/dsWithdrawal'
 import { DigitalSecurityOffering } from 'v2/types/dso'
 import declarations from 'v2/app/pages/identity/const/declarations'
 import { AuthorizationInfo } from 'v2/types/authorizer'
+import { Commitment } from 'v2/types/commitment'
 
 export const asset: Asset = {
   _id: '2',
@@ -176,16 +177,30 @@ export const dso: DigitalSecurityOffering = {
   status: 'Approved'
 }
 
-// export const commitment: Commitment = {
-//   _id: '1',
-//   createdAt: '01-01-2000',
-//   updatedAt: '01-01-2000',
-//   status: 'Approved',
-//   individual,
-//   corporates: [],
-//   currency: asset,
-//   createdBy: 'user',
-// }
+export const commitment: Commitment = {
+  _id: '1',
+  createdAt: '01-01-2000',
+  updatedAt: '01-01-2000',
+  status: 'Approved',
+  currency: asset,
+  createdBy: 'user',
+  dso,
+  identity: {
+    individual,
+    corporates: []
+  },
+  totalAmount: 0,
+  authorizationDocuments: [],
+  authorization: undefined,
+  authorizations: [],
+  hold: 'dsadas',
+  level: undefined,
+  numberOfUnits: 0,
+  pricePerUnit: 0,
+  signedSubscriptionDocument: '',
+  user,
+  walletAddress: ''
+}
 
 export const bank: Bank = {
   _id: '1',
@@ -238,13 +253,12 @@ export const cashWithdrawal: CashWithdrawal = {
   updatedAt: '01-01-2000',
   user: 'user',
   amount: 100000,
-  bank: 'bank',
   corporates: [],
   hold: 'hold',
   level: '1',
   memo: 'memo',
   status: 'Approved',
-  bankAccount: bank,
+  bank,
   individual,
   asset,
   identity: {

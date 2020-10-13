@@ -1,9 +1,10 @@
 import React, { Suspense, useEffect } from 'react'
-import { Router, Route, Redirect } from 'react-router-dom'
+import { Router, Route, Redirect, Switch } from 'react-router-dom'
 import { observer } from 'mobx-react'
 import { history } from 'v2/history'
 import { LoadingFullScreen } from 'v2/auth/components/LoadingFullScreen'
 import { useAuth } from 'v2/hooks/auth/useAuth'
+import { BreadcrumbsProvider } from 'v2/hooks/useBreadcrumbs'
 
 const AuthRoot = React.lazy(
   async () =>
@@ -29,15 +30,15 @@ export const EntryPoint: React.FC = observer(() => {
 
   return (
     <Suspense fallback={<LoadingFullScreen />}>
-      <Router history={history}>
-        <Route path='/app' component={AppRoot} />
-        <Route path='/auth' component={AuthRoot} />
-        <Route
-          exact
-          path='*'
-          render={() => <Redirect to={isAuthenticated ? '/app' : '/auth'} />}
-        />
-      </Router>
+      <BreadcrumbsProvider>
+        <Router history={history}>
+          <Switch>
+            <Route path='/app' exact={false} component={AppRoot} />
+            <Route path='/auth' exact={false} component={AuthRoot} />
+            <Redirect to={isAuthenticated ? '/app' : '/auth'} />
+          </Switch>
+        </Router>
+      </BreadcrumbsProvider>
     </Suspense>
   )
 })

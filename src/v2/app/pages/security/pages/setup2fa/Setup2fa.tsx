@@ -10,7 +10,6 @@ import {
   Grid
 } from '@material-ui/core'
 import { useObserver } from 'mobx-react'
-import { PageTitle } from 'v2/app/components/PageTitle'
 import { useSetup2faStore } from './context'
 import { Step1Download } from './components/Step1Download'
 import { Step2Scan } from './components/Step2Scan'
@@ -37,8 +36,6 @@ export const Setup2fa = () => {
 
   return useObserver(() => (
     <Container>
-      <PageTitle title='Enable Google Authenticator' />
-
       <Box mt={8}>
         <Paper elevation={0}></Paper>
         <Stepper activeStep={store.activeStep} alternativeLabel>

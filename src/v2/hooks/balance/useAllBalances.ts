@@ -22,5 +22,5 @@ export const useAllBalances = (): UsePaginatedQueryData<AssetBalance> => {
     getAllBalances
   )
 
-  return { ...rest, data: useParsedData<AssetBalance>(data, '_id') }
+  return { ...rest, data: useParsedData<AssetBalance>(data, 'assetId') }
 }

@@ -4,12 +4,25 @@ import { generateAppRouterHook } from 'v2/helpers/generateAppRouterHook'
 import { DSDeposit } from 'v2/app/pages/accounts/pages/digitalSecurities/DSDeposit/DSDeposit'
 import { DSWithdraw } from 'v2/app/pages/accounts/pages/digitalSecurities/DSWithdraw/DSWithdraw'
 import { DSView } from 'v2/app/pages/accounts/pages/digitalSecurities/DSView/DSView'
+import { makeURL } from 'v2/config/urls'
 
 export const DSRoute = {
-  list: '/app/accounts/digital-securities',
-  view: '/app/accounts/digital-securities/:balanceId/view',
-  deposit: '/app/accounts/digital-securities/:balanceId/deposit',
-  withdraw: '/app/accounts/digital-securities/:balanceId/withdraw'
+  list: makeURL(['app', 'account', 'digitalSecurity']),
+  view: makeURL(['app', 'account', 'digitalSecurity', 'balanceId', 'view']),
+  deposit: makeURL([
+    'app',
+    'account',
+    'digitalSecurity',
+    'balanceId',
+    'deposit'
+  ]),
+  withdraw: makeURL([
+    'app',
+    'account',
+    'digitalSecurity',
+    'balanceId',
+    'withdraw'
+  ])
 }
 
 export const dsRoutes: InternalRouteProps[] = [

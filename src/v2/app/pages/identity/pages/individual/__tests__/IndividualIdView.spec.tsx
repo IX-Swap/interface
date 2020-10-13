@@ -10,9 +10,6 @@ import { QueryStatus } from 'react-query'
 import * as individualIdentityHook from 'v2/hooks/identity/useIndividualIdentity'
 import { IndividualIdentityForm } from 'v2/app/pages/identity/components/IndividualIdentityForm'
 
-jest.mock('v2/app/components/PageTitle', () => ({
-  PageTitle: jest.fn(() => null)
-}))
 jest.mock('v2/app/pages/identity/components/IndividualIdentityForm', () => ({
   IndividualIdentityForm: jest.fn(() => null)
 }))
@@ -56,7 +53,6 @@ describe('IndividualIdView', () => {
       .mockReturnValue(generateQueryResult({ data: individual }))
     render(<IndividualIdView />)
 
-    expect(IndividualIdentityForm).toHaveBeenCalledTimes(1)
     expect(IndividualIdentityForm).toHaveBeenCalledWith(
       {
         data: individual,
@@ -71,9 +67,7 @@ describe('IndividualIdView', () => {
   it('renders EditButton with correct props', () => {
     render(<IndividualIdView />)
 
-    expect(EditButton).toHaveBeenCalledTimes(1)
-    expect(EditButton).toHaveBeenNthCalledWith(
-      1,
+    expect(EditButton).toHaveBeenCalledWith(
       {
         link: IdentityRoute.editIndividual
       },

@@ -16,6 +16,10 @@ export const Breadcrumbs = (props: BreadcrumbsProps) => {
   const lastItem = items[items.length - 1]
   const links = items.slice(0, items.length - 1)
 
+  if (items.length === 1) {
+    return null
+  }
+
   return (
     <Grid container>
       <MUIBreadcrumbs aria-label='breadcrumb'>

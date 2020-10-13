@@ -4,12 +4,13 @@ import BankPreview from 'v2/app/pages/accounts/pages/banks/ViewBank/ViewBank'
 import { CreateBank } from 'v2/app/pages/accounts/pages/banks/CreateBank/CreateBank'
 import { EditBank } from 'v2/app/pages/accounts/pages/banks/EditBank/EditBank'
 import { generateAppRouterHook } from 'v2/helpers/generateAppRouterHook'
+import { makeURL } from 'v2/config/urls'
 
 export const BanksRoute = {
-  list: '/app/accounts/banks',
-  view: '/app/accounts/banks/:bankId/view',
-  edit: '/app/accounts/banks/:bankId/edit',
-  create: '/app/accounts/banks/create'
+  list: makeURL(['app', 'account', 'bankAccount']),
+  view: makeURL(['app', 'account', 'bankAccount', 'bankId', 'view']),
+  edit: makeURL(['app', 'account', 'bankAccount', 'bankId', 'edit']),
+  create: makeURL(['app', 'account', 'bankAccount', 'create'])
 }
 
 export const banksRoutes: InternalRouteProps[] = [

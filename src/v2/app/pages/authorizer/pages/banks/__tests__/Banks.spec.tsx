@@ -4,8 +4,8 @@ import { render, cleanup } from 'test-utils'
 import { Banks, renderBank } from 'v2/app/pages/authorizer/pages/banks/Banks'
 import { BankPreview } from 'v2/app/components/BankPreview/BankPreview'
 import { bank } from '__fixtures__/authorizer'
-import { DataroomFeature } from '../../../../../../types/authorizer'
-import { AuthorizerView } from '../../../components/AuthorizerView'
+import { DataroomFeature } from 'v2/types/authorizer'
+import { AuthorizerView } from 'v2/app/pages/authorizer/components/AuthorizerView'
 
 jest.mock('v2/app/components/BankPreview/BankPreview', () => ({
   BankPreview: jest.fn(() => null)
@@ -32,7 +32,7 @@ describe('Banks', () => {
         <AuthorizerView
           title='About This Bank'
           data={bank}
-          feature={DataroomFeature.banks}
+          feature={DataroomFeature['bank-accounts']}
         >
           <BankPreview data={bank} />
         </AuthorizerView>

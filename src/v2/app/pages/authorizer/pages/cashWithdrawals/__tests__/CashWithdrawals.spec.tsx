@@ -5,12 +5,12 @@ import {
   CashWithdrawals,
   renderWithdrawal
 } from 'v2/app/pages/authorizer/pages/cashWithdrawals/CashWithdrawals'
-import { WithdrawalPreview } from 'v2/app/components/WithdrawalPreview'
+import { WithdrawalPreview } from 'v2/app/components/WithdrawalPreview/WithdrawalPreview'
 import { cashWithdrawal } from '__fixtures__/authorizer'
-import { DataroomFeature } from '../../../../../../types/authorizer'
-import { AuthorizerView } from '../../../components/AuthorizerView'
+import { DataroomFeature } from 'v2/types/authorizer'
+import { AuthorizerView } from 'v2/app/pages/authorizer/components/AuthorizerView'
 
-jest.mock('v2/app/components/WithdrawalPreview', () => ({
+jest.mock('v2/app/components/WithdrawalPreview/WithdrawalPreview', () => ({
   WithdrawalPreview: jest.fn(() => null)
 }))
 
@@ -35,7 +35,7 @@ describe('CashWithdrawals', () => {
         <AuthorizerView
           title='About This Withdrawal'
           data={cashWithdrawal}
-          feature={DataroomFeature.withdrawals}
+          feature={DataroomFeature['cash-withdrawals']}
         >
           <WithdrawalPreview data={cashWithdrawal} />
         </AuthorizerView>

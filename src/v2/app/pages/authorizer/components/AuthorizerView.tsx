@@ -12,7 +12,7 @@ import { AuthorizerIdentities } from 'v2/app/pages/authorizer/components/Authori
 export interface AuthorizerViewProps<T> {
   title: string
   data: T & AuthorizableWithIdentity
-  feature: DataroomFeature
+  feature: typeof DataroomFeature[keyof typeof DataroomFeature]
 }
 
 export const AuthorizerView = <T,>(

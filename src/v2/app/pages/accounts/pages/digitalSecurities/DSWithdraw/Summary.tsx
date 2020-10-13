@@ -1,5 +1,4 @@
 import React from 'react'
-import { Box, Typography } from '@material-ui/core'
 import { INVESTAX_BANK } from 'v2/config'
 import { formatMoney } from 'v2/helpers/numbers'
 import { GenericPreview } from 'v2/app/components/GenericPreview/GenericPreview'
@@ -8,6 +7,8 @@ import { WithdrawDSFormValues } from 'v2/app/pages/accounts/types'
 import { useDSRouter } from 'v2/app/pages/accounts/pages/digitalSecurities/router'
 import { useAllBalances } from 'v2/hooks/balance/useAllBalances'
 import { useAssetsData } from 'v2/hooks/asset/useAssetsData'
+import { Alert } from '@material-ui/lab'
+import { VSpacer } from 'v2/components/VSpacer'
 
 export const Summary: React.FC = () => {
   const {
@@ -49,12 +50,12 @@ export const Summary: React.FC = () => {
 
   return (
     <>
-      <Box p={2}>
-        <Typography variant='subtitle1' align='center'>
-          <b>Are you sure you want to continue with this transaction?</b>
-        </Typography>
-      </Box>
+      <Alert severity='info'>
+        Are you sure you want to continue with this transaction?
+      </Alert>
+      <VSpacer size='small' />
       <GenericPreview items={items} />
+      <VSpacer size='small' />
     </>
   )
 }

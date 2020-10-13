@@ -57,7 +57,6 @@ describe('IndividualIdPreview', () => {
       .mockReturnValue(generateQueryResult({ data: undefined }))
     render(<IndividualIdPreview />)
 
-    expect(NoIdentity).toHaveBeenCalledTimes(1)
     expect(NoIdentity).toHaveBeenCalledWith(
       { link: 'createIndividual', text: 'Create Individual Identity' },
       {}
@@ -70,7 +69,6 @@ describe('IndividualIdPreview', () => {
       .mockReturnValue(generateQueryResult({ data: individual }))
     render(<IndividualIdPreview />)
 
-    expect(UserInfoComponent).toHaveBeenCalledTimes(1)
     expect(UserInfoComponent).toHaveBeenCalledWith(
       {
         isEditing: false,
@@ -86,7 +84,6 @@ describe('IndividualIdPreview', () => {
       .mockReturnValue(generateQueryResult({ data: individual }))
     render(<IndividualIdPreview />)
 
-    expect(Section).toHaveBeenCalledTimes(1)
     expect(Section).toHaveBeenCalledWith(
       {
         title: `${individual.firstName} ${individual.lastName}`,
@@ -103,7 +100,6 @@ describe('IndividualIdPreview', () => {
       .mockReturnValue(generateQueryResult({ data: individual }))
     render(<IndividualIdPreview />)
 
-    expect(Form).toHaveBeenCalledTimes(1)
     expect(Form).toHaveBeenCalledWith(
       {
         validationSchema: individualIdentityFormValidationSchema,

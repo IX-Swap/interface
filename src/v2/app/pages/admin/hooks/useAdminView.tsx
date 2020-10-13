@@ -32,7 +32,7 @@ export const useAdminView = (user: User, refresh: Function) => {
   const handleConfirm = async () => {
     await requestUpdateRoles({ userId: user._id, roles: roles.join(',') })
 
-    if (refresh !== undefined) {
+    if (typeof refresh === 'function') {
       refresh()
     }
 

@@ -9,13 +9,12 @@ export interface CashWithdrawal extends AuthorizableWithIdentity {
   status: AuthorizableStatus
   user: string
   amount: number
-  bank: string
   asset: Asset
   hold: string
   memo?: string
   corporates: CorporateIdentity[]
   individual: IndividualIdentity
-  bankAccount: Bank
+  bank: Bank
   level: string
   createdAt: string
   updatedAt: string

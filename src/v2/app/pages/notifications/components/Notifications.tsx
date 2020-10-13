@@ -10,7 +10,7 @@ export const Notifications = () => {
   return (
     <>
       <Grid item>
-        <PageHeader label='Notifications' alignment='flex-start' />
+        <PageHeader label='Notifications' />
       </Grid>
       <Grid item container justify='flex-end'>
         <MarkAllAsRead />

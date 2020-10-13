@@ -8,7 +8,7 @@ import {
 import { CorporateIdentityForm } from 'v2/app/pages/identity/components/CorporateIdentityForm'
 import { AuthorizerView } from 'v2/app/pages/authorizer/components/AuthorizerView'
 import { corporate } from '__fixtures__/authorizer'
-import { DataroomFeature } from '../../../../../../types/authorizer'
+import { DataroomFeature } from 'v2/types/authorizer'
 
 jest.mock('v2/app/pages/identity/components/CorporateIdentityForm', () => ({
   CorporateIdentityForm: jest.fn(() => null)
@@ -35,7 +35,7 @@ describe('CorporateIdentities', () => {
         <AuthorizerView
           title='About This Corporate'
           data={corporate}
-          feature={DataroomFeature.corporateIdentities}
+          feature={DataroomFeature.corporates}
         >
           <CorporateIdentityForm
             data={corporate}

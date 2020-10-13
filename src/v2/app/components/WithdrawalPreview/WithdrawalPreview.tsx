@@ -34,7 +34,7 @@ export const WithdrawalPreview = (props: WithdrawalViewProps) => {
         </Grid>
       </Grid>
       <Box py={2} />
-      <BankDetails bank={data.bankAccount} />
+      <BankDetails bank={data.bank} />
     </Grid>
   )
 }

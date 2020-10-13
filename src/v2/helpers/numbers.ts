@@ -1,5 +1,5 @@
 export const formatMoney = (
-  value: number,
+  value: number | null = 0,
   symbol: string = 'SGD',
   right = false
 ): string => {

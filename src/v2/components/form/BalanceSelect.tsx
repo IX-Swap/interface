@@ -13,8 +13,8 @@ export const BalanceSelect = (props: any): JSX.Element => {
       <MenuItem disabled value={undefined}>
         Balance
       </MenuItem>
-      {data.list.map(({ _id, symbol, name }) => (
-        <MenuItem key={_id} value={_id}>
+      {data.list.map(({ assetId, symbol, name }) => (
+        <MenuItem key={assetId} value={assetId}>
           {name} ({symbol})
         </MenuItem>
       ))}

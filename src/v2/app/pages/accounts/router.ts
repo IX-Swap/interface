@@ -12,24 +12,19 @@ import { ReactComponent as DSWithdrawalIcon } from 'assets/icons/navigation/ds-w
 import { ReactComponent as TransactionIcon } from 'assets/icons/navigation/transaction.svg'
 import { DepositCash } from './pages/banks/DepositCash/DepositCash'
 import { WithdrawCash } from './pages/banks/WithdrawCash/WithdrawCash'
+import { makeURL } from 'v2/config/urls'
 
 export const AccountsRoute = {
-  landing: '/app/accounts',
-  banks: '/app/accounts/banks',
-  balances: '/app/accounts/balances',
-  digitalSecurities: '/app/accounts/digital-securities',
-  transactions: '/app/accounts/transactions',
-  depositCash: '/app/accounts/deposit-cash',
-  withdrawCash: '/app/accounts/withdraw-cash'
+  landing: makeURL(['app', 'account']),
+  banks: makeURL(['app', 'account', 'bankAccount']),
+  balances: makeURL(['app', 'account', 'balances']),
+  digitalSecurities: makeURL(['app', 'account', 'digitalSecurity']),
+  transactions: makeURL(['app', 'account', 'transactions']),
+  depositCash: makeURL(['app', 'account', 'cashDeposit']),
+  withdrawCash: makeURL(['app', 'account', 'cashWithdrawal'])
 }
 
 export const accountRoutes: InternalRouteProps[] = [
-  {
-    label: 'Account',
-    path: AccountsRoute.landing,
-    exact: true,
-    root: true
-  },
   {
     label: 'Bank Accounts',
     path: AccountsRoute.banks,
@@ -72,6 +67,12 @@ export const accountRoutes: InternalRouteProps[] = [
     component: Transactions,
     color: '#90a30f',
     icon: TransactionIcon
+  },
+  {
+    label: 'Account',
+    path: AccountsRoute.landing,
+    exact: true,
+    root: true
   }
 ]
 

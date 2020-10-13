@@ -8,7 +8,7 @@ const ViewCommitment = () => {
   const state = useStore()
   return useObserver(() =>
     state.selectedCommitment !== undefined ? (
-      <CommitmentView commitment={state.selectedCommitment} />
+      <CommitmentView data={state.selectedCommitment} />
     ) : (
       <Redirect to='../' />
     )

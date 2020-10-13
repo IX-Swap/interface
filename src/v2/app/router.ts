@@ -8,16 +8,17 @@ import { AdminRoot } from 'v2/app/pages/admin/AdminRoot'
 import { generateAppRouterHook } from 'v2/helpers/generateAppRouterHook'
 import { SecurityRoot } from 'v2/app/pages/security/SecurityRoot'
 import { NotificationsRoot } from 'v2/app/pages/notifications/NotificationsRoot'
+import { makeURL } from 'v2/config/urls'
 
 export const AppRoute = {
-  authorizer: '/app/authorizer',
-  identity: '/app/identity',
-  accounts: '/app/accounts',
-  issuance: '/app/issuance',
-  invest: '/app/invest',
-  admin: '/app/admin',
-  security: '/app/security',
-  notifications: '/app/notifications'
+  authorizer: makeURL(['app', 'authorizer']),
+  identity: makeURL(['app', 'identity']),
+  accounts: makeURL(['app', 'account']),
+  issuance: makeURL(['app', 'issuance']),
+  invest: makeURL(['app', 'invest']),
+  admin: makeURL(['app', 'admin']),
+  security: makeURL(['app', 'settings']),
+  notifications: makeURL(['app', 'notifications'])
 }
 
 export const appRoutes: InternalRouteProps[] = [
@@ -47,12 +48,12 @@ export const appRoutes: InternalRouteProps[] = [
     component: InvestRoot
   },
   {
-    label: 'Admin',
+    label: 'Users',
     path: AppRoute.admin,
     component: AdminRoot
   },
   {
-    label: 'Security',
+    label: 'Settings',
     path: AppRoute.security,
     component: SecurityRoot
   },

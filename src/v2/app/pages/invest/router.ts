@@ -1,13 +1,27 @@
 import { InternalRouteProps } from 'v2/types/util'
-import ViewDso from 'v2/app/pages/invest/pages/InvestView'
+import { InvestView } from 'v2/app/pages/invest/pages/InvestView'
 import ViewCommitment from 'v2/app/pages/invest/pages/InvestCommitmentView'
 import { generateAppRouterHook } from 'v2/helpers/generateAppRouterHook'
 import { InvestList } from 'v2/app/pages/invest/pages/InvestList'
+import { makeURL } from 'v2/config/urls'
 
 export const InvestRoute = {
-  list: '/app/invest',
-  offeringView: '/app/invest/offerings/:issuerId/:dsoId',
-  commitmentView: '/app/invest/commitments/:commitmentId'
+  list: makeURL(['app', 'invest']),
+  offeringView: makeURL([
+    'app',
+    'invest',
+    'offerings',
+    'issuerId',
+    'dsoId',
+    'view'
+  ]),
+  commitmentView: makeURL([
+    'app',
+    'invest',
+    'commitments',
+    'commitmentId',
+    'view'
+  ])
 }
 
 export const investRoutes: InternalRouteProps[] = [
@@ -15,7 +29,7 @@ export const investRoutes: InternalRouteProps[] = [
     label: 'View Offering',
     path: InvestRoute.offeringView,
     exact: true,
-    component: ViewDso
+    component: InvestView
   },
   {
     label: 'View Commitment',

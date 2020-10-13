@@ -17,6 +17,7 @@ export const ContinueButton: React.FC = () => {
 
   return (
     <Button
+      fullWidth
       disabled={!canSubmit}
       onClick={handleClick}
       color='primary'

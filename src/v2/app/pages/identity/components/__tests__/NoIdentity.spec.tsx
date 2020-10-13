@@ -35,7 +35,6 @@ describe('NoIdentity', () => {
   it('renders AppRouterLink correctly', () => {
     render(<NoIdentity {...props} />)
 
-    expect(AppRouterLink).toHaveBeenCalledTimes(1)
     expect(AppRouterLink).toHaveBeenCalledWith(
       {
         to: IdentityRoute[props.link],

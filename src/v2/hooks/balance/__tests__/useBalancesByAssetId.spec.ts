@@ -38,11 +38,11 @@ describe('useBalancesByAssetId', () => {
         () => {
           expect(result.current.status).toBe('success')
           expect(parsedDataFn).toHaveBeenCalledTimes(2)
-          expect(parsedDataFn).toHaveBeenNthCalledWith(1, undefined, '_id')
+          expect(parsedDataFn).toHaveBeenNthCalledWith(1, undefined, 'assetId')
           expect(parsedDataFn).toHaveBeenNthCalledWith(
             2,
             [{ data: balance }],
-            '_id'
+            'assetId'
           )
           expect(post).toHaveBeenCalledWith(
             `/accounts/balance/${user._id}/${balance.assetId}`,

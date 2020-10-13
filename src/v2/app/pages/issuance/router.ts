@@ -4,12 +4,13 @@ import { ViewDSO } from 'v2/app/pages/issuance/pages/ViewDSO'
 import { CreateDSO } from 'v2/app/pages/issuance/pages/CreateDSO'
 import { EditDSO } from 'v2/app/pages/issuance/pages/EditDSO'
 import { generateAppRouterHook } from 'v2/helpers/generateAppRouterHook'
+import { makeURL } from 'v2/config/urls'
 
 export const IssuanceRoute = {
-  list: '/app/issuance',
-  view: '/app/issuance/:dsoId',
-  edit: '/app/issuance/:dsoId/edit',
-  create: '/app/issuance/create'
+  list: makeURL(['app', 'issuance', 'offerings']),
+  view: makeURL(['app', 'issuance', 'offerings', 'dsoId', 'view']),
+  edit: makeURL(['app', 'issuance', 'offerings', 'dsoId', 'edit']),
+  create: makeURL(['app', 'issuance', 'offerings', 'create'])
 }
 
 export const issuanceRoutes: InternalRouteProps[] = [

@@ -5,7 +5,7 @@ import { DigitalSecurities } from 'v2/app/pages/accounts/pages/digitalSecurities
 import * as DSRouter from 'v2/app/pages/accounts/pages/digitalSecurities/router'
 
 describe('DigitalSecurities', () => {
-  const renderRoutes = jest.fn()
+  const renderRoutes = jest.fn(() => <div />)
   const label = 'Test Label'
 
   beforeEach(() => {
