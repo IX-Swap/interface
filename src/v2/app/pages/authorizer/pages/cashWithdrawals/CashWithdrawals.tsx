@@ -4,7 +4,7 @@ import { columns } from 'v2/app/pages/authorizer/pages/cashWithdrawals/columns'
 import { WithdrawalPreview } from 'v2/app/components/WithdrawalPreview'
 import { CashWithdrawal } from 'v2/types/cashWithdrawal'
 import { AuthorizerView } from '../../components/AuthorizerView'
-import { DataroomFeature } from '../../../../../types/authorizer'
+import { DataroomFeature } from 'v2/types/authorizer'
 
 export const CashWithdrawals: React.FC = () => (
   <BaseView

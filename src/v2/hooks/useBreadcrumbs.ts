@@ -11,7 +11,7 @@ import { investListRoutes } from 'v2/app/pages/invest/investListRouter'
 import { investRoutes } from 'v2/app/pages/invest/router'
 import { issuanceRoutes } from 'v2/app/pages/issuance/router'
 
-const routes = [
+export const routes = [
   ...accountRoutes,
   ...banksRoutes,
   ...dsRoutes,

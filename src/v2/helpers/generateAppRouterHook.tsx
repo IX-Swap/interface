@@ -1,4 +1,4 @@
-import React, { useMemo } from 'react'
+import React, { useEffect, useMemo } from 'react'
 import { Location } from 'history'
 import {
   Redirect,
@@ -6,13 +6,16 @@ import {
   Switch,
   useLocation,
   useHistory,
-  generatePath
+  generatePath,
+  Link,
+  RouteComponentProps
 } from 'react-router-dom'
 import { InternalRouteBase, InternalRouteProps } from 'v2/types/util'
 import { getRoutesByType } from '../app/components/LandingPage/utils'
 import { LandingPage } from '../app/components/LandingPage/LandingPage'
 import { isTestENV } from 'v2/history'
-
+import { useNewBreadcrumbs } from 'v2/hooks/useNewBreadcrumbs'
+import { routes } from 'v2/hooks/useBreadcrumbs'
 export interface AppRouter<T> {
   current: InternalRouteBase
   paths: T
@@ -36,6 +39,19 @@ interface GetCurrentRouteArgs<T> {
   routes: InternalRouteProps[]
   defaultRoute: string
   routeMap: T
+}
+
+const genPath = (path: string, params: any) => {
+  if (params === undefined || params === null) {
+    return path
+  }
+
+  return Object.keys(params).length !== 0
+    ? Object.keys(params).reduce(
+        (path, param) => path.replace(`:${param}`, params[param]),
+        path
+      )
+    : path
 }
 
 const getHistoryPayload = (route: any, state?: {}) => {
@@ -87,6 +103,22 @@ export const getCurrentRouteFromLocation = <T,>(
   }
 }
 
+const AppRoute = (
+  props: { route: InternalRouteProps; params: any } & RouteComponentProps
+) => {
+  const { push } = useNewBreadcrumbs()
+  const { params, route } = props
+
+  push({
+    label: route.label,
+    path: genPath(route.path, params)
+  })
+
+  return route.component !== undefined
+    ? React.createElement(route.component)
+    : null
+}
+
 export function generateAppRouterHook<T>(
   routeMap: T,
   defaultRoute: string,
@@ -106,6 +138,12 @@ export function generateAppRouterHook<T>(
       [location]
     )
     const { landing, nested, generic } = getRoutesByType(routes)
+    const params = isTestENV ? location.state : window.history.state ?? {}
+    const { reset } = useNewBreadcrumbs()
+
+    useEffect(() => {
+      reset()
+    }, [current.path])
 
     return {
       current,
@@ -118,12 +156,21 @@ export function generateAppRouterHook<T>(
       replace: (route, state) => {
         history.replace(getHistoryPayload(routeMap[route], state))
       },
-      params: isTestENV ? location.state : window.history.state ?? {},
+      params,
       renderRoutes: () => (
         <Switch>
-          {[...nested, ...generic].map((route, i) => (
-            <Route key={i} {...route} />
-          ))}
+          {[...nested, ...generic].map((route, i) => {
+            return (
+              <Route
+                key={i}
+                exact={route.exact}
+                path={genPath(route.path, params)}
+                render={props => (
+                  <AppRoute {...props} params={params} route={route} />
+                )}
+              />
+            )
+          })}
           {landing !== undefined && (
             <Route
               key='landing'

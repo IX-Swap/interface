@@ -11,6 +11,11 @@ import { DSWithdrawalPreview } from 'v2/app/components/DSWithdrawalPreview/DSWit
 import { DSOForm } from 'v2/app/components/DSO/DSOForm'
 import { useCachedPaginatedTableData } from 'v2/hooks/useCachedPaginatedTableData'
 import { CommitmentPreview } from 'v2/app/components/CommitmentPreview/CommitmentPreview'
+import {
+  getAuthorizerCategoryFromPath,
+  useAuthorizerBanks
+} from 'v2/app/pages/accounts/pages/banks/hooks/useAuthorizerBanks'
+import { useLocation } from 'react-router-dom'
 
 export const viewsMap = {
   banks: BankPreview,
@@ -25,12 +30,25 @@ export const viewsMap = {
 
 export const ViewAuthorizableItem = () => {
   const { params } = useAuthorizerRouter()
-  const { category, itemId, cacheQueryKey } = params
+  const { pathname } = useLocation()
+  const {
+    category = getAuthorizerCategoryFromPath(pathname),
+    itemId,
+    cacheQueryKey
+  } = params
   const component = viewsMap[
     category as keyof typeof viewsMap
   ] as React.ComponentType<any>
-  const { data } = useCachedPaginatedTableData<any>(cacheQueryKey, '_id')
-  const item = data.map[itemId]
+  const { data: apiData, isLoading } = useAuthorizerBanks()
+  const { data: cachedData } = useCachedPaginatedTableData<any>(
+    cacheQueryKey,
+    '_id'
+  )
+  const item = cachedData.list.length > 0 ? cachedData.map[itemId] : apiData
+
+  if (cachedData.list.length > 0 || isLoading) {
+    return null
+  }
 
   return (
     <AuthorizerView

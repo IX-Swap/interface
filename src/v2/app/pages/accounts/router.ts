@@ -25,12 +25,6 @@ export const AccountsRoute = {
 
 export const accountRoutes: InternalRouteProps[] = [
   {
-    label: 'Account',
-    path: AccountsRoute.landing,
-    exact: true,
-    root: true
-  },
-  {
     label: 'Bank Accounts',
     path: AccountsRoute.banks,
     component: Banks,
@@ -72,6 +66,12 @@ export const accountRoutes: InternalRouteProps[] = [
     component: Transactions,
     color: '#90a30f',
     icon: TransactionIcon
+  },
+  {
+    label: 'Account',
+    path: AccountsRoute.landing,
+    exact: true,
+    root: true
   }
 ]
 

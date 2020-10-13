@@ -1,5 +1,5 @@
 import { Grid, Typography, Box } from '@material-ui/core'
-import React, { PropsWithChildren } from 'react'
+import React, { PropsWithChildren, useEffect } from 'react'
 import { VSpacer } from 'v2/components/VSpacer'
 import { formatDateAndTime } from 'v2/helpers/dates'
 import { AuthorizableWithIdentity, DataroomFeature } from 'v2/types/authorizer'
@@ -8,6 +8,11 @@ import { AuthorizerForm } from 'v2/app/pages/authorizer/components/AuthorizerFor
 import { AuthorizableLevel } from 'v2/app/pages/authorizer/components/AuthorizableLevel'
 import { AuthorizableStatus } from 'v2/app/pages/authorizer/components/AuthorizableStatus'
 import { AuthorizerIdentities } from 'v2/app/pages/authorizer/components/AuthorizerIdentities'
+import { useLocation } from 'react-router-dom'
+import { useQuery } from 'react-query'
+import { useServices } from 'v2/services/useServices'
+import { useBanksData } from 'v2/app/pages/accounts/pages/banks/hooks/useBanksData'
+import { useAuthorizerBanks } from 'v2/app/pages/accounts/pages/banks/hooks/useAuthorizerBanks'
 
 export interface AuthorizerViewProps<T> {
   title: string
