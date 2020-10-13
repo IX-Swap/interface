@@ -1,3 +1,4 @@
+import { AppFeature } from 'v2/types/app'
 import { Notification } from 'v2/types/notification'
 
 export const notification: Notification = {
@@ -6,7 +7,7 @@ export const notification: Notification = {
   createdAt: '',
   to: '',
   service: '',
-  feature: '',
+  feature: AppFeature.Authentication,
   resourceId: '',
   subject: '',
   type: 'success',
