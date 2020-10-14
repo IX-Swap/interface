@@ -8,7 +8,7 @@ import {
 
 describe('LandingPageItem', () => {
   const props: LandingPageItemProps = {
-    link: { label: 'Account', path: '/account' }
+    link: { label: 'Account', path: '/account', icon: jest.fn(() => null) }
   }
   afterEach(async () => {
     await cleanup()
@@ -17,5 +17,17 @@ describe('LandingPageItem', () => {
 
   it('renders without error', () => {
     render(<LandingPageItem {...props} />)
+  })
+
+  it('renders icon correctly', () => {
+    render(<LandingPageItem {...props} />)
+
+    expect(props.link.icon).toHaveBeenCalledTimes(1)
+  })
+
+  it('renders label correctly', () => {
+    const { container } = render(<LandingPageItem {...props} />)
+
+    expect(container).toHaveTextContent(props.link.label)
   })
 })

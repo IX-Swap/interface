@@ -5,6 +5,11 @@ import {
   GenericPreview,
   GenericPreviewProps
 } from 'v2/app/components/GenericPreview/GenericPreview'
+import { LabelledValue } from 'v2/components/LabelledValue'
+
+jest.mock('v2/components/LabelledValue', () => ({
+  LabelledValue: jest.fn(() => null)
+}))
 
 describe('GenericPreview', () => {
   const props: GenericPreviewProps = {
@@ -20,5 +25,23 @@ describe('GenericPreview', () => {
 
   it('renders without error', () => {
     render(<GenericPreview {...props} />)
+  })
+
+  it('renders LabelledValue with correct props for each item', () => {
+    render(<GenericPreview {...props} />)
+
+    expect(LabelledValue).toHaveBeenCalledTimes(2)
+    props.items.forEach((item, i) => {
+      expect(LabelledValue).toHaveBeenNthCalledWith(
+        i + 1,
+        {
+          label: item.label,
+          value: item.value,
+          row: true,
+          justify: 'space-between'
+        },
+        {}
+      )
+    })
   })
 })

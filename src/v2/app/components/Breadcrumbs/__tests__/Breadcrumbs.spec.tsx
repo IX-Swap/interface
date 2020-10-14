@@ -5,12 +5,18 @@ import {
   Breadcrumbs,
   BreadcrumbsProps
 } from 'v2/app/components/Breadcrumbs/Breadcrumbs'
+import { AppRouterLink } from 'v2/components/AppRouterLink'
+
+jest.mock('v2/components/AppRouterLink', () => ({
+  AppRouterLink: jest.fn(() => null)
+}))
 
 describe('Breadcrumbs', () => {
   const props: BreadcrumbsProps = {
     items: [
       { label: 'Account', path: '/account' },
-      { label: 'Asset Balance', path: '/balance' }
+      { label: 'Asset Balance', path: '/balance' },
+      { label: 'Banks', path: '/banks' }
     ]
   }
   afterEach(async () => {
@@ -28,5 +34,27 @@ describe('Breadcrumbs', () => {
     )
 
     expect(container).toBeEmptyDOMElement()
+  })
+
+  it('renders AppRouterLink for each item except last', () => {
+    render(<Breadcrumbs {...props} />)
+
+    expect(AppRouterLink).toHaveBeenCalledTimes(props.items.length - 1)
+
+    const newList = props.items.filter(
+      (item, i) => i !== props.items.length - 1
+    )
+    newList.forEach((item, i) => {
+      expect(AppRouterLink).toHaveBeenNthCalledWith(
+        i + 1,
+        {
+          to: item.path,
+          children: item.label,
+          underline: 'hover',
+          color: 'primary'
+        },
+        {}
+      )
+    })
   })
 })

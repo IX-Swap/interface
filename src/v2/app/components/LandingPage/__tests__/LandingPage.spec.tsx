@@ -5,6 +5,11 @@ import {
   LandingPage,
   LandingPageProps
 } from 'v2/app/components/LandingPage/LandingPage'
+import { LandingPageItem } from 'v2/app/components/LandingPage/LandingPageItem'
+
+jest.mock('v2/app/components/LandingPage/LandingPageItem', () => ({
+  LandingPageItem: jest.fn(() => null)
+}))
 
 describe('LandingPage', () => {
   const props: LandingPageProps = {
@@ -22,5 +27,14 @@ describe('LandingPage', () => {
 
   it('renders without error', () => {
     render(<LandingPage {...props} />)
+  })
+
+  it('renders LandingPageItem with correct props for each link', () => {
+    render(<LandingPage {...props} />)
+
+    expect(LandingPageItem).toHaveBeenCalledTimes(props.links.length)
+    props.links.forEach((link, i) => {
+      expect(LandingPageItem).toHaveBeenNthCalledWith(i + 1, { link: link }, {})
+    })
   })
 })

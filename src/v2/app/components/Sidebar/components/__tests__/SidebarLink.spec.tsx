@@ -8,9 +8,9 @@ import {
 
 describe('SidebarLink', () => {
   const props: SidebarLinkProps = {
-    link: '/',
+    link: '/test-link',
     label: 'Test Label',
-    icon: () => <div data-testid='icon' />
+    icon: jest.fn(() => null)
   }
   afterEach(async () => {
     await cleanup()
@@ -21,9 +21,21 @@ describe('SidebarLink', () => {
     render(<SidebarLink {...props} />)
   })
 
-  it('renders icon', () => {
-    const { getByTestId } = render(<SidebarLink {...props} />)
+  it('renders label correctly', () => {
+    const { container } = render(<SidebarLink {...props} />)
 
-    expect(getByTestId('icon')).toBeTruthy()
+    expect(container).toHaveTextContent(props.label)
+  })
+
+  it('renders link correctly', () => {
+    const { container } = render(<SidebarLink {...props} />)
+
+    expect(container.querySelector('a')).toHaveAttribute('href', props.link)
+  })
+
+  it('renders icon correctly', () => {
+    render(<SidebarLink {...props} />)
+
+    expect(props.icon).toHaveBeenCalledTimes(1)
   })
 })
