@@ -58,19 +58,20 @@ export const shouldGeneratePath = (
 export const getCurrentRouteFromLocation = <T>(
   args: GetCurrentRouteArgs<T>
 ): InternalRouteBase => {
-  const { location, routes, routeMap, defaultRoute } = args
+  const { location, routes, defaultRoute } = args
   const { pathname, state } = location
 
-  const route = Object.values(routeMap).find(path => {
+  const route = routes.find(({ path, exact = false }) => {
     if (shouldGeneratePath(path, state)) {
-      return pathname === generatePath(path, state)
+      const generated = generatePath(path, state)
+      return exact ? pathname === generated : pathname.startsWith(generated)
     }
 
-    return pathname === path
+    return exact ? pathname === path : pathname.startsWith(path)
   })
 
   return {
-    label: getRouteLabel(route, routes),
-    path: route ?? defaultRoute
+    label: getRouteLabel(route?.path ?? '', routes),
+    path: route?.path ?? defaultRoute
   }
 }

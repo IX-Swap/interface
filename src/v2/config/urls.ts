@@ -16,7 +16,8 @@ export const urlAction = {
   view: 'view',
   edit: 'edit',
   deposit: 'deposit',
-  withdraw: 'withdraw'
+  withdraw: 'withdraw',
+  makeInvestment: 'make-investment'
 }
 
 export const urlModule = {
