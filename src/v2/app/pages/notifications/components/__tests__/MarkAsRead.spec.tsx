@@ -5,6 +5,7 @@ import {
   MarkAsRead,
   MarkAsReadProps
 } from 'v2/app/pages/notifications/components/MarkAsRead'
+import { fireEvent, waitFor } from '@testing-library/react'
 
 describe('MarkAsRead', () => {
   const props: MarkAsReadProps = {
@@ -18,5 +19,15 @@ describe('MarkAsRead', () => {
 
   it('renders without error', () => {
     render(<MarkAsRead {...props} />)
+  })
+
+  it('invokes onClick when button is clicked', async () => {
+    const { getByRole } = render(<MarkAsRead {...props} />)
+
+    fireEvent.click(getByRole('button'))
+
+    await waitFor(() => {
+      expect(props.onClick).toHaveBeenCalledTimes(1)
+    })
   })
 })

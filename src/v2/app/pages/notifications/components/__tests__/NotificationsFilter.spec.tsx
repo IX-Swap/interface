@@ -1,7 +1,7 @@
 /**  * @jest-environment jsdom-sixteen  */
-import { fireEvent, waitFor } from '@testing-library/react'
 import React from 'react'
 import { render, cleanup } from 'test-utils'
+import { fireEvent, waitFor } from '@testing-library/react'
 import { AppFeature } from 'v2/types/app'
 import * as notificationsFilterHook from 'v2/app/pages/notifications/hooks/useNotificationsFilter'
 import { NotificationsFilter } from 'v2/app/pages/notifications/components/NotificationsFilter'
@@ -23,6 +23,13 @@ describe('NotificationsFilter', () => {
 
   it('renders without error', () => {
     render(<NotificationsFilter />)
+  })
+
+  it('checks filter checkbox based on filter value from hook', async () => {
+    const { getByLabelText } = render(<NotificationsFilter />)
+
+    expect(getByLabelText('Authentication')).toBeChecked()
+    expect(getByLabelText('Bank Accounts')).not.toBeChecked()
   })
 
   it('invokes handleClick', async () => {
