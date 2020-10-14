@@ -28,8 +28,8 @@ export const DSODetails = (props: OfferProps) => {
         required
         editMode={editMode}
         label='Unit Price'
-        value={formatMoney(dso.pricePerUnit ?? 0, currency?.symbol)}
-        raw={`${dso.pricePerUnit ?? ''}`}
+        value={formatMoney(dso.pricePerUnit, currency?.symbol)}
+        raw={`${dso.pricePerUnit}`}
       />
       <EditableWithLabel
         name='totalFundraisingAmount'

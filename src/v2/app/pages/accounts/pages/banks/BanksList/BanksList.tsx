@@ -2,7 +2,7 @@ import React from 'react'
 import { Paper, Grid } from '@material-ui/core'
 import { Header } from 'v2/app/pages/accounts/pages/banks/BanksList/Header'
 import { Table } from 'v2/app/pages/accounts/pages/banks/BanksList/Table'
-import { VSpacer } from '../../../../../../components/VSpacer'
+import { VSpacer } from 'v2/components/VSpacer'
 
 export const BanksList: React.FC = () => {
   return (

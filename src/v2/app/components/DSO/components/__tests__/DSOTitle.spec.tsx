@@ -15,6 +15,8 @@ describe('DSOTitle', () => {
   })
 
   it('renders without error', () => {
+    window.URL.revokeObjectURL = jest.fn()
+
     render(<DSOTitle {...props} />)
   })
 })

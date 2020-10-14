@@ -1,11 +1,11 @@
 import React from 'react'
 import { Container, Paper, Tabs, Tab, Divider } from '@material-ui/core'
 import { Link } from 'react-router-dom'
-import { useInvestListRouter } from '../investListRouter'
+import { useInvestListRouter } from 'v2/app/pages/invest/routers/investLandingRouter'
 
-export const InvestList = () => {
+export const InvestLanding = () => {
   const { current, paths, renderRoutes } = useInvestListRouter()
-  const currentTabIdx = current.path === paths.offerings ? 0 : 1
+  const currentTabIdx = current.path.startsWith(paths.offerings) ? 0 : 1
 
   return (
     <Paper square>

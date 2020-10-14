@@ -22,10 +22,6 @@ describe('DSODetails', () => {
     render(<DSODetails {...props} />)
   })
 
-  it('renders without error if dso.pricePerUnit is null', () => {
-    render(<DSODetails {...props} dso={{ ...dso, pricePerUnit: null }} />)
-  })
-
   it('renders without error if dso.totalFundraisingAmount is null', () => {
     render(
       <DSODetails {...props} dso={{ ...dso, totalFundraisingAmount: null }} />

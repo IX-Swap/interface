@@ -10,7 +10,7 @@ import { ReactComponent as AuthorizerIcon } from 'assets/icons/navigation/author
 import * as acl from 'v2/helpers/acl'
 import * as useAuthorizerRouterHook from 'v2/app/pages/authorizer/router'
 import * as useAccountsRouterHook from 'v2/app/pages/accounts/router'
-import * as useInvestRouterHook from 'v2/app/pages/invest/router'
+import * as useInvestRouterHook from 'v2/app/pages/invest/routers/router'
 import * as useIssuanceRouterHook from 'v2/app/pages/issuance/router'
 
 jest.mock('assets/icons/navigation/invest.svg', () => ({

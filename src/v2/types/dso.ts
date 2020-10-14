@@ -40,7 +40,7 @@ export interface BaseDigitalSecurityOffering extends AuthorizableWithIdentity {
   corporate: CorporateIdentity
   logo: string
   capitalStructure: string
-  pricePerUnit: number | null
+  pricePerUnit: number
   totalFundraisingAmount: number | null
   tokenName: string
   tokenSymbol: string

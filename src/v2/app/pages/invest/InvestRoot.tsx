@@ -1,5 +1,5 @@
 import React from 'react'
-import { useInvestRouter } from 'v2/app/pages/invest/router'
+import { useInvestRouter } from 'v2/app/pages/invest/routers/router'
 import { Container } from '@material-ui/core'
 import { PageHeader } from 'v2/app/components/PageHeader/PageHeader'
 
