@@ -3,7 +3,7 @@ import { TableView } from 'v2/components/TableWithPagination/TableView'
 import { columns } from 'v2/app/pages/accounts/pages/banks/BanksList/columns'
 import { Bank } from 'v2/types/bank'
 import { Actions } from 'v2/app/pages/accounts/pages/banks/BanksList/Actions'
-import { useAuth } from '../../../../../../hooks/auth/useAuth'
+import { useAuth } from 'v2/hooks/auth/useAuth'
 
 export const Table: React.FC = () => {
   const { user } = useAuth()

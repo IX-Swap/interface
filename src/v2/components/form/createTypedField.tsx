@@ -65,52 +65,46 @@ export const TypedField = <
   const destructValue = (value: any): any => {
     return valueProvider !== undefined ? valueProvider(value) : value
   }
-  // const labelRef = useRef<HTMLLabelElement>()
-  // const labelWidth =
-  //   labelRef.current !== undefined ? labelRef.current.clientWidth : 0
 
   return (
     <TypedController
       name={path}
       defaultValue={defaultValue}
-      render={controllerProps => (
-        <FormControl {...formControlProps}>
-          {typeof children !== 'function' && (
-            <InputLabel
-              error={hasError}
-              htmlFor={path}
-              // variant={variant}
-              // shrink
-            >
-              {props.label}
-            </InputLabel>
-          )}
-          {typeof children === 'function'
-            ? children({
-                ...{ ...inputProps, id: path },
-                ...controllerProps,
-                label: props.label,
-                name: path,
-                value: destructValue(controllerProps.value),
-                onChange: handleChange
-                // labelWidth,
-                // variant
-              })
-            : React.cloneElement(children, {
-                ...{ ...inputProps, id: path },
-                ...controllerProps,
-                value: destructValue(controllerProps.value),
+      render={controllerProps => {
+        const hasValue =
+          controllerProps.value !== undefined &&
+          controllerProps.value !== null &&
+          controllerProps.value !== ''
 
-                error: hasError,
-                onChange: handleChange
-                // labelWidth,
-                // variant
-              })}
-          <FormHelperText error={hasError}>
-            {hasError ? error.message : helperText}
-          </FormHelperText>
-        </FormControl>
-      )}
+        return (
+          <FormControl {...formControlProps}>
+            {typeof children !== 'function' && (
+              <InputLabel error={hasError} htmlFor={path} shrink={hasValue}>
+                {props.label}
+              </InputLabel>
+            )}
+            {typeof children === 'function'
+              ? children({
+                  ...{ ...inputProps, id: path },
+                  ...controllerProps,
+                  label: props.label,
+                  name: path,
+                  value: destructValue(controllerProps.value),
+                  onChange: handleChange
+                })
+              : React.cloneElement(children, {
+                  ...{ ...inputProps, id: path },
+                  ...controllerProps,
+                  value: destructValue(controllerProps.value),
+                  error: hasError,
+                  onChange: handleChange
+                })}
+            <FormHelperText error={hasError}>
+              {hasError ? error.message : helperText}
+            </FormHelperText>
+          </FormControl>
+        )
+      }}
     />
   )
 }

@@ -1,4 +1,4 @@
-import React, { useRef } from 'react'
+import React, { cloneElement, useRef } from 'react'
 import { DataroomFile } from 'v2/types/dataroomFile'
 import {
   defaultUploadDocumentInfo,
@@ -85,7 +85,9 @@ export const DataroomDocument: React.FC<
   if (canDelete && document !== undefined && document !== null) {
     buttonElement = (
       <div onClick={handleDeleteClick}>
-        {deleteComponent ?? (
+        {deleteComponent !== undefined ? (
+          cloneElement(deleteComponent, { name })
+        ) : (
           <Button variant='contained' component='span'>
             Delete
           </Button>
@@ -95,7 +97,9 @@ export const DataroomDocument: React.FC<
   } else {
     buttonElement = (
       <label htmlFor={name}>
-        {uploadComponent ?? (
+        {uploadComponent !== undefined ? (
+          cloneElement(uploadComponent, { name })
+        ) : (
           <Button variant='contained' component='span'>
             Upload
           </Button>
