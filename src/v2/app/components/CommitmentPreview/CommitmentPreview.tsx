@@ -6,7 +6,7 @@ import { formatDateAndTime } from 'v2/helpers/dates'
 import { DSOLink } from 'v2/app/components/DSOLink'
 import { formatMoney } from 'v2/helpers/numbers'
 
-interface CommitmentPreviewProps {
+export interface CommitmentPreviewProps {
   data: Commitment
 }
 

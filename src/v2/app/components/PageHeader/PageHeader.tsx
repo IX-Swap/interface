@@ -1,6 +1,6 @@
 import React from 'react'
 import { Grid, Typography } from '@material-ui/core'
-import { Breadcrumbs } from '../Breadcrumbs/Breadcrumbs'
+import { Breadcrumbs } from 'v2/app/components/Breadcrumbs/Breadcrumbs'
 import { GridJustification } from '@material-ui/core/Grid/Grid'
 import { VSpacer } from 'v2/components/VSpacer'
 import { useBreadcrumbs } from 'v2/hooks/useBreadcrumbs'

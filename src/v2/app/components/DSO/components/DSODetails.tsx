@@ -4,7 +4,7 @@ import { DigitalSecurityOffering } from 'v2/types/dso'
 import { Asset } from 'v2/types/asset'
 import EditableWithLabel from 'v2/components/form/HardLabelEditable'
 
-interface OfferProps {
+export interface OfferProps {
   dso: DigitalSecurityOffering
   currency?: Asset
   editMode?: boolean
@@ -28,8 +28,8 @@ export const DSODetails = (props: OfferProps) => {
         required
         editMode={editMode}
         label='Unit Price'
-        value={formatMoney(dso.pricePerUnit ?? 0, currency?.symbol)}
-        raw={`${dso.pricePerUnit ?? ''}`}
+        value={formatMoney(dso.pricePerUnit, currency?.symbol)}
+        raw={`${dso.pricePerUnit}`}
       />
       <EditableWithLabel
         name='totalFundraisingAmount'

@@ -6,11 +6,11 @@ import { BankDetails } from 'v2/app/components/BankDetails'
 import { formatMoney } from 'v2/helpers/numbers'
 import { LabelledValue } from 'v2/components/LabelledValue'
 
-export interface DepositView {
+export interface DepositViewProps {
   data: CashDeposit
 }
 
-export const DepositView = (props: DepositView) => {
+export const DepositView = (props: DepositViewProps) => {
   const { data } = props
   const bankAccount = { ...INVESTAX_BANK }
 

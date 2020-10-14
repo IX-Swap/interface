@@ -3,7 +3,7 @@ import { DigitalSecurityOffering } from 'v2/types/dso'
 import { Grid, Typography } from '@material-ui/core'
 import { DSOAvatar } from 'v2/app/components/DSO/components/DSOAvatar'
 
-interface DsoTitleProps {
+export interface DsoTitleProps {
   dso: DigitalSecurityOffering
 }
 

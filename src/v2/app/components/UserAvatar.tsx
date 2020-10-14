@@ -5,7 +5,7 @@ import { PhotoCamera } from '@material-ui/icons'
 import { DSOAvatar, DSOAvatarSettingsProps } from './DSO/components/DSOAvatar'
 import { useTypedForm } from 'v2/components/form/useTypedForm'
 
-interface UserAvatarProps extends Partial<DSOAvatarSettingsProps> {
+export interface UserAvatarProps extends Partial<DSOAvatarSettingsProps> {
   name: string
   isEditing: boolean
   ownerId: string
