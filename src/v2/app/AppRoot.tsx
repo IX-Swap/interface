@@ -1,4 +1,5 @@
 import React, { useEffect } from 'react'
+import { ErrorBoundary } from '@sentry/react'
 import { useHistory } from 'react-router-dom'
 import { Header } from 'v2/app/components/Header/Header'
 import { Sidebar } from 'v2/app/components/Sidebar/Sidebar'
@@ -8,7 +9,6 @@ import { useAuth } from 'v2/hooks/auth/useAuth'
 import { Grid } from '@material-ui/core'
 import { NotificationsProvider } from 'v2/app/pages/notifications/components/NotificationsProvider'
 import { ReactQueryDevtools } from 'react-query-devtools'
-import { ErrorBoundary } from 'react-error-boundary'
 import { AppError } from 'v2/app/components/AppError'
 import { useDataFromURL } from 'v2/hooks/location/useDataFromURL'
 
@@ -27,22 +27,19 @@ export const AppRoot: React.FC = () => {
   }, [isAuthenticated, history])
 
   return (
-    <NotificationsProvider>
-      <ReactQueryDevtools initialIsOpen={false} />
-      <Grid container direction='column' className={classes.container}>
-        <Grid item>
-          <Header />
-        </Grid>
-        <Sidebar />
-        <Grid item container className={classes.content}>
-          <ErrorBoundary
-            FallbackComponent={AppError}
-            onError={error => console.error(error)}
-          >
+    <ErrorBoundary fallback={AppError}>
+      <NotificationsProvider>
+        <ReactQueryDevtools initialIsOpen={false} />
+        <Grid container direction='column' className={classes.container}>
+          <Grid item>
+            <Header />
+          </Grid>
+          <Sidebar />
+          <Grid item container className={classes.content}>
             {renderRoutes()}
-          </ErrorBoundary>
+          </Grid>
         </Grid>
-      </Grid>
-    </NotificationsProvider>
+      </NotificationsProvider>
+    </ErrorBoundary>
   )
 }

@@ -1,10 +1,10 @@
 import React, { Suspense, useEffect } from 'react'
-import { Router, Route, Redirect, Switch } from 'react-router-dom'
-import { observer } from 'mobx-react'
+import { Router, Redirect, Switch } from 'react-router-dom'
 import { history } from 'v2/history'
 import { LoadingFullScreen } from 'v2/auth/components/LoadingFullScreen'
 import { useAuth } from 'v2/hooks/auth/useAuth'
 import { BreadcrumbsProvider } from 'v2/hooks/useBreadcrumbs'
+import { SentryRoute } from 'v2/components/SentryRoute'
 
 const AuthRoot = React.lazy(
   async () =>
@@ -17,7 +17,7 @@ const AppRoot = React.lazy(
     await import('v2/app/AppRoot').then(({ AppRoot }) => ({ default: AppRoot }))
 )
 
-export const EntryPoint: React.FC = observer(() => {
+export const EntryPoint = () => {
   const { isAuthenticated } = useAuth()
 
   useEffect(() => {
@@ -33,12 +33,16 @@ export const EntryPoint: React.FC = observer(() => {
       <BreadcrumbsProvider>
         <Router history={history}>
           <Switch>
-            <Route path='/app' exact={false} component={AppRoot} />
-            <Route path='/auth' exact={false} component={AuthRoot} />
-            <Redirect to={isAuthenticated ? '/app' : '/auth'} />
+            <SentryRoute path='/app' exact={false} component={AppRoot} />
+            <SentryRoute path='/auth' exact={false} component={AuthRoot} />
+            <SentryRoute
+              render={() => (
+                <Redirect to={isAuthenticated ? '/app' : '/auth'} />
+              )}
+            />
           </Switch>
         </Router>
       </BreadcrumbsProvider>
     </Suspense>
   )
-})
+}

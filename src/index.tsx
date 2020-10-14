@@ -10,10 +10,13 @@ import { SnackbarContainer } from 'uno-material-ui'
 import Themes from './v2/themes'
 import { UserProvider } from 'v2/auth/context'
 import { EntryPoint } from 'v2/EntryPoint'
+import { setupSentry } from 'setupSentry'
 
 const generateClassName = createGenerateClassName({
   productionPrefix: 'ix'
 })
+
+setupSentry()
 
 ReactDOM.render(
   <StylesProvider generateClassName={generateClassName}>

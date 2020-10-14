@@ -1,12 +1,6 @@
 import React, { useEffect, useMemo } from 'react'
 import { Location } from 'history'
-import {
-  Redirect,
-  Route,
-  Switch,
-  useLocation,
-  useHistory
-} from 'react-router-dom'
+import { Redirect, Switch, useLocation, useHistory } from 'react-router-dom'
 import { InternalRouteBase, InternalRouteProps } from 'v2/types/util'
 import { getRoutesByType } from '../app/components/LandingPage/utils'
 import { LandingPage } from '../app/components/LandingPage/LandingPage'
@@ -17,6 +11,7 @@ import {
   getHistoryPayload,
   safeGeneratePath
 } from 'v2/helpers/router'
+import { SentryRoute } from 'v2/components/SentryRoute'
 import { AppRoute } from 'v2/components/AppRoute'
 
 export interface AppRouter<T> {
@@ -81,7 +76,7 @@ export function generateAppRouterHook<T>(
         <Switch>
           {[...nested, ...generic].map((route, i) => {
             return (
-              <Route
+              <SentryRoute
                 key={i}
                 exact={route.exact}
                 path={safeGeneratePath(route.path, params)}
@@ -92,14 +87,14 @@ export function generateAppRouterHook<T>(
             )
           })}
           {landing !== undefined && (
-            <Route
+            <SentryRoute
               key='landing'
               path={landing.path}
               exact={true}
               component={() => <LandingPage {...landing} links={nested} />}
             />
           )}
-          <Redirect to={defaultRoute} />
+          <SentryRoute render={() => <Redirect to={defaultRoute} />} />
         </Switch>
       )
     }
