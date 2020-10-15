@@ -5,7 +5,7 @@ import { DSOTitle } from 'v2/app/components/DSO/components/DSOTitle'
 import { EstimatedValue } from 'v2/app/pages/invest/components/EstimatedValue'
 import { AssetBalance } from 'v2/app/pages/invest/components/AssetBalance'
 
-interface CommitmentHeaderProps {
+export interface CommitmentHeaderProps {
   dso: DigitalSecurityOffering
 }
 

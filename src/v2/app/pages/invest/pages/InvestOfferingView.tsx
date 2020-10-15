@@ -1,9 +1,9 @@
 import React from 'react'
-import { DSOForm } from 'v2/app/components/DSO/DSOForm'
-import { useDSOById } from '../hooks/useDSOById'
 import { Grid } from '@material-ui/core'
-import { InvestLink } from 'v2/app/pages/invest/components/InvestLink'
 import { VSpacer } from 'v2/components/VSpacer'
+import { DSOForm } from 'v2/app/components/DSO/DSOForm'
+import { useDSOById } from 'v2/app/pages/invest/hooks/useDSOById'
+import { InvestLink } from 'v2/app/pages/invest/components/InvestLink'
 import { useOfferingsRouter } from 'v2/app/pages/invest/routers/offeringsRouter'
 
 export const InvestOfferingView = () => {

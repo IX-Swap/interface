@@ -1,0 +1,64 @@
+/**  * @jest-environment jsdom-sixteen  */
+import React from 'react'
+import { render, cleanup } from 'test-utils'
+import {
+  AssetBalance,
+  AssetBalanceProps
+} from 'v2/app/pages/invest/components/AssetBalance'
+import * as useBalancesByAssetIdHook from 'v2/hooks/balance/useBalancesByAssetId'
+import { balance } from '__fixtures__/balance'
+import { generateInfiniteQueryResult } from '__fixtures__/useQuery'
+import { asset } from '__fixtures__/authorizer'
+import { LabelledValue } from 'v2/components/LabelledValue'
+import { formatMoney } from 'v2/helpers/numbers'
+
+jest.mock('v2/components/LabelledValue', () => ({
+  LabelledValue: jest.fn(() => null)
+}))
+
+describe('AssetBalance', () => {
+  const props: AssetBalanceProps = { assetId: asset._id }
+  afterEach(async () => {
+    await cleanup()
+    jest.clearAllMocks()
+  })
+
+  it('renders without error', () => {
+    jest
+      .spyOn(useBalancesByAssetIdHook, 'useBalancesByAssetId')
+      .mockReturnValue(
+        generateInfiniteQueryResult({ map: { [asset._id]: balance } })
+      )
+    render(<AssetBalance {...props} />)
+  })
+
+  it('renders nothing if loading', () => {
+    jest
+      .spyOn(useBalancesByAssetIdHook, 'useBalancesByAssetId')
+      .mockReturnValue({
+        ...generateInfiniteQueryResult({ map: { [asset._id]: balance } }),
+        isLoading: true
+      })
+    const { container } = render(<AssetBalance {...props} />)
+
+    expect(container).toBeEmptyDOMElement()
+  })
+
+  it('renders LabelledValue with correct props', () => {
+    jest
+      .spyOn(useBalancesByAssetIdHook, 'useBalancesByAssetId')
+      .mockReturnValue(
+        generateInfiniteQueryResult({ map: { [asset._id]: balance } })
+      )
+    render(<AssetBalance {...props} />)
+
+    expect(LabelledValue).toHaveBeenCalledTimes(1)
+    expect(LabelledValue).toHaveBeenCalledWith(
+      {
+        label: 'Account Balance',
+        value: formatMoney(balance.available, asset.numberFormat.currency)
+      },
+      {}
+    )
+  })
+})
