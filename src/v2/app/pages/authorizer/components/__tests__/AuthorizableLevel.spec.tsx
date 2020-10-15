@@ -43,16 +43,16 @@ describe('AuthorizableLevel', () => {
     const { container: container1 } = render(
       <AuthorizableLevel {...props} level='Level 1' />
     )
-    expect(container1).toHaveTextContent('Level 1')
+    expect(container1).toHaveTextContent('Level 1'.toUpperCase())
 
     const { container: container2 } = render(
       <AuthorizableLevel {...props} level='Level 2' />
     )
-    expect(container2).toHaveTextContent('Level 2')
+    expect(container2).toHaveTextContent('Level 2'.toUpperCase())
 
     const { container: container3 } = render(
       <AuthorizableLevel {...props} level='Level 3' />
     )
-    expect(container3).toHaveTextContent('Level 3')
+    expect(container3).toHaveTextContent('Level 3'.toUpperCase())
   })
 })

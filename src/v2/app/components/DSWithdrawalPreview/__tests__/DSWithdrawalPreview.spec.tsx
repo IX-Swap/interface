@@ -8,6 +8,7 @@ import {
 import { dsWithdrawal } from '__fixtures__/authorizer'
 import { LabelledValue } from 'v2/components/LabelledValue'
 import { formatMoney } from 'v2/helpers/numbers'
+import { renderName } from 'v2/helpers/tables'
 
 jest.mock('v2/components/LabelledValue', () => ({
   LabelledValue: jest.fn(() => null)
@@ -27,39 +28,48 @@ describe('DSWithdrawalPreview', () => {
   it('renders LabelledValue with correct props', () => {
     render(<DSWithdrawalPreview {...props} />)
 
-    expect(LabelledValue).toHaveBeenCalledTimes(4)
     expect(LabelledValue).toHaveBeenNthCalledWith(
       1,
       {
         label: 'Digital Security',
-        value: props.data.asset.name,
-        labelWeight: 'thin',
-        row: true
+        value: `${props.data.asset.name} (${props.data.asset.symbol})`
       },
       {}
     )
     expect(LabelledValue).toHaveBeenNthCalledWith(
       2,
       {
-        label: 'Withdrawal Amount',
-        value: formatMoney(props.data.amount, props.data.asset.symbol),
-        labelWeight: 'thin',
-        row: true
+        label: 'Withdrawal By',
+        value: renderName('', props.data.identity.individual)
       },
       {}
     )
     expect(LabelledValue).toHaveBeenNthCalledWith(
       3,
-      { label: 'Memo', value: props.data.memo, labelWeight: 'thin', row: true },
+      {
+        label: 'Withdrawal Address',
+        value: props.data.recipientWallet
+      },
       {}
     )
     expect(LabelledValue).toHaveBeenNthCalledWith(
       4,
       {
-        label: 'Withdrawal Address',
-        value: props.data.recipientWallet,
-        labelWeight: 'thin',
-        row: true
+        label: 'Withdrawal Amount',
+        value: formatMoney(props.data.amount, props.data.asset.symbol)
+      },
+      {}
+    )
+    expect(LabelledValue).toHaveBeenNthCalledWith(
+      5,
+      { label: 'Memo', value: props.data.memo },
+      {}
+    )
+    expect(LabelledValue).toHaveBeenNthCalledWith(
+      6,
+      {
+        label: 'Transaction',
+        value: expect.anything()
       },
       {}
     )

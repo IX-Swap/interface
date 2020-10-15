@@ -3,6 +3,7 @@ import { useTypedForm } from 'v2/components/form/useTypedForm'
 import { Box, Grid } from '@material-ui/core'
 import { ApproveButton } from './ApproveButton'
 import { RejectButton } from './RejectButton'
+import { VSpacer } from 'v2/components/VSpacer'
 
 export interface AuthorizerFormValues {
   comment: string
@@ -16,18 +17,24 @@ export interface AuthorizerFormProps {
 
 export const AuthorizerForm = (props: AuthorizerFormProps) => {
   const { itemId, defaultValues } = props
-  const { RichTextEditor, Checkbox, Form } = useTypedForm<
-    AuthorizerFormValues
-  >()
+  const { TextField, Checkbox, Form } = useTypedForm<AuthorizerFormValues>()
 
   return (
     <Form defaultValues={defaultValues}>
-      <RichTextEditor label='Comment' name='comment' />
+      <TextField
+        label='Comment / Remarks'
+        name='comment'
+        variant='outlined'
+        inputProps={{
+          multiline: true
+        }}
+      />
+      <VSpacer size='small' />
       <Checkbox
         label='Share this comment with the user'
         name='sharedWithUser'
       />
-      <Box my={3} />
+      <VSpacer size='medium' />
       <Grid container>
         <ApproveButton itemId={itemId} />
         <Box mx={1} />

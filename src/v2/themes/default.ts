@@ -1,11 +1,12 @@
 import tinycolor from 'tinycolor2'
 
 const primary = '#0c469c'
-const secondary = '#1C4F79'
+const secondary = '#DD0F0F'
+// const secondary = '#1C4F79'
 const warning = '#a31037'
 const success = '#348633'
 const info = '#9013FE'
-const error = '#DD0F0F'
+const error = '#D20000'
 
 const lightenRate = 7.5
 const darkenRate = 15

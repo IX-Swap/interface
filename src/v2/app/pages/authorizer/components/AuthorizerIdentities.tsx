@@ -1,12 +1,8 @@
 import React from 'react'
-import { VSpacer } from '../../../../components/VSpacer'
 import { Grid } from '@material-ui/core'
 import { CorporateInfo } from './CorporateInfo'
 import { IndividualInfo } from './IndividualInfo'
-import {
-  CorporateIdentity,
-  IndividualIdentity
-} from '../../../../types/identity'
+import { CorporateIdentity, IndividualIdentity } from 'v2/types/identity'
 
 export interface AuthorizerIdentitiesProps {
   corporates?: CorporateIdentity[]
@@ -21,7 +17,6 @@ export const AuthorizerIdentities = (props: AuthorizerIdentitiesProps) => {
       {corporates.map((c, index) => (
         <CorporateInfo data={c} key={index} />
       ))}
-      <VSpacer size='large' />
       {individual !== undefined && <IndividualInfo data={individual} />}
     </Grid>
   )

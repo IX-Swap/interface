@@ -96,9 +96,6 @@ export const IndividualIdentityForm = React.memo(
               <Submit>{submitButtonText}</Submit>
             </Grid>
           )}
-          <Grid item>
-            <Box my={10} />
-          </Grid>
         </Grid>
       </Form>
     )

@@ -20,10 +20,6 @@ export const UserAvatar = (props: UserAvatarProps) => {
       <EditableField
         fieldType='DataroomDocument'
         isEditing={isEditing}
-        documentInfo={{
-          title: '',
-          type: ''
-        }}
         label='Logo'
         name={name}
         valueExtractor={documentValueExtractor}

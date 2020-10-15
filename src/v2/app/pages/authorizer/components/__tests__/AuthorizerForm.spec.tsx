@@ -18,14 +18,14 @@ describe('AuthorizerForm', () => {
     itemId: 'test-itemId',
     defaultValues: { comment: 'test comment', sharedWithUser: false }
   }
-  const RichTextEditor = jest.fn(() => <div />)
+  const TextField = jest.fn(() => <div />)
   const Checkbox = jest.fn(() => <div />)
   const Form = jest.fn(({ children }) => children)
 
   beforeEach(() => {
     jest
       .spyOn(useTypedFormHook, 'useTypedForm')
-      .mockReturnValue({ ...useTypedForm(), RichTextEditor, Checkbox, Form })
+      .mockReturnValue({ ...useTypedForm(), TextField, Checkbox, Form })
   })
   afterEach(async () => {
     await cleanup()
@@ -36,12 +36,18 @@ describe('AuthorizerForm', () => {
     render(<AuthorizerForm {...props} />)
   })
 
-  it('renders RichTextEditor with correct props', () => {
+  it('renders TextInput  with correct props', () => {
     render(<AuthorizerForm {...props} />)
 
-    expect(RichTextEditor).toHaveBeenCalledTimes(1)
-    expect(RichTextEditor).toHaveBeenCalledWith(
-      { label: 'Comment', name: 'comment' },
+    expect(TextField).toHaveBeenCalledWith(
+      {
+        label: 'Comment / Remarks',
+        name: 'comment',
+        variant: 'outlined',
+        inputProps: {
+          multiline: true
+        }
+      },
       {}
     )
   })

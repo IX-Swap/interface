@@ -51,7 +51,6 @@ describe('AuthorizationDocuments', () => {
   it('renders DataroomFileTypeSelect with correct props', () => {
     render(<AuthorizationDocuments {...props} />)
 
-    expect(DataroomFileTypeSelect).toHaveBeenCalledTimes(1)
     expect(DataroomFileTypeSelect).toHaveBeenCalledWith(
       {
         formControlProps: {
@@ -59,8 +58,9 @@ describe('AuthorizationDocuments', () => {
             minWidth: 200
           }
         },
-        label: 'Document type',
-        name: 'documentType'
+        label: 'Document Type',
+        name: 'documentType',
+        variant: 'outlined'
       },
       {}
     )

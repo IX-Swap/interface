@@ -53,8 +53,8 @@ export const renderLastName = (
 
   if ('lastName' in row) {
     lastName = row.lastName
-  } else if ('individual' in row) {
-    lastName = row.individual.lastName
+  } else if ('identity' in row) {
+    lastName = row.identity.individual.lastName
   } else {
     const representative = row.representatives?.[0]
     lastName = representative?.lastName ?? ''

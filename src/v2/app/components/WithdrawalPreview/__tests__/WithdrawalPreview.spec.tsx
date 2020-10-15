@@ -7,8 +7,8 @@ import {
 } from 'v2/app/components/WithdrawalPreview/WithdrawalPreview'
 import { cashWithdrawal } from '__fixtures__/authorizer'
 import { LabelledValue } from 'v2/components/LabelledValue'
-import { BankDetails } from 'v2/app/components/BankDetails'
 import { formatMoney } from 'v2/helpers/numbers'
+import { convertAddressToString } from 'v2/app/pages/authorizer/components/utils'
 
 jest.mock('v2/components/LabelledValue', () => ({
   LabelledValue: jest.fn(() => null)
@@ -30,30 +30,71 @@ describe('WithdrawalPreview', () => {
     render(<WithdrawalPreview {...props} />)
   })
 
-  it('renders BankDetails with correct props', () => {
-    render(<WithdrawalPreview {...props} />)
-
-    expect(BankDetails).toHaveBeenCalledTimes(1)
-    expect(BankDetails).toHaveBeenCalledWith({ bank: props.data.bank }, {})
-  })
-
   it('renders LabelledValue with correct props', () => {
     render(<WithdrawalPreview {...props} />)
 
-    expect(LabelledValue).toHaveBeenCalledTimes(2)
     expect(LabelledValue).toHaveBeenNthCalledWith(
       1,
       {
-        label: 'Withdrawal Amount',
-        labelWeight: 'thin',
-        row: true,
-        value: formatMoney(props.data.amount, props.data.asset.symbol)
+        label: 'Bank Name',
+        value: props.data.bank.bankName
       },
       {}
     )
     expect(LabelledValue).toHaveBeenNthCalledWith(
       2,
-      { label: 'Memo', labelWeight: 'thin', row: true, value: props.data.memo },
+      {
+        label: 'Account Holder Name',
+        value: props.data.bank.accountHolderName
+      },
+      {}
+    )
+    expect(LabelledValue).toHaveBeenNthCalledWith(
+      3,
+      {
+        label: 'Bank Account Number',
+        value: props.data.bank.bankAccountNumber
+      },
+      {}
+    )
+    expect(LabelledValue).toHaveBeenNthCalledWith(
+      4,
+      {
+        label: 'Swift Code',
+        value: props.data.bank.swiftCode
+      },
+      {}
+    )
+    expect(LabelledValue).toHaveBeenNthCalledWith(
+      5,
+      {
+        label: 'Currency',
+        value: props.data.bank?.currency?.symbol
+      },
+      {}
+    )
+    expect(LabelledValue).toHaveBeenNthCalledWith(
+      6,
+      {
+        label: 'Bank Address',
+        value: convertAddressToString(props.data.bank.address)
+      },
+      {}
+    )
+    expect(LabelledValue).toHaveBeenNthCalledWith(
+      7,
+      {
+        label: 'Withdrawal Amount',
+        value: formatMoney(props.data.amount, props.data.asset.symbol)
+      },
+      {}
+    )
+    expect(LabelledValue).toHaveBeenNthCalledWith(
+      8,
+      {
+        label: 'Memo',
+        value: props.data.memo
+      },
       {}
     )
   })

@@ -69,8 +69,9 @@ export const AuthorizationDocuments = (props: AuthorizationDocumentsProps) => {
                     <Grid item container alignItems='center'>
                       <Box py={5}>
                         <DataroomFileTypeSelect
-                          label='Document type'
+                          label='Document Type'
                           name='documentType'
+                          variant='outlined'
                           formControlProps={{
                             style: {
                               minWidth: 200
@@ -82,11 +83,11 @@ export const AuthorizationDocuments = (props: AuthorizationDocumentsProps) => {
                         {addButton}
                       </Box>
                     </Grid>
-                    {items.length > 0 && <Box py={3} />}
+                    {items.length > 0 && <Box py={2} />}
                     <Grid item container>
                       {items}
                     </Grid>
-                    {items.length > 0 && <Box py={3} />}
+                    {items.length > 0 && <Box py={2} />}
                   </Grid>
                 )}
               </Dataroom>

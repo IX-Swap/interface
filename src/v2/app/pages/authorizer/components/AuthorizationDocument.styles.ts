@@ -2,6 +2,9 @@ import { makeStyles } from '@material-ui/core/styles'
 
 export const useStyles = makeStyles(theme => ({
   container: {
+    width: 170,
+    marginRight: theme.spacing(6),
+    marginBottom: theme.spacing(3),
     position: 'relative',
     '&:hover': {
       '& $inner': {
@@ -14,7 +17,7 @@ export const useStyles = makeStyles(theme => ({
     }
   },
   inner: {
-    padding: theme.spacing(4, 3, 2, 3),
+    padding: theme.spacing(2, 2, 3, 2),
     borderRadius: 12,
     border: '2px solid transparent'
   },
@@ -28,5 +31,12 @@ export const useStyles = makeStyles(theme => ({
   image: {
     width: 100,
     height: 'auto'
+  },
+  type: {
+    marginTop: theme.spacing(1),
+    marginBottom: theme.spacing(1)
+  },
+  imageWrapper: {
+    height: 128
   }
 }))

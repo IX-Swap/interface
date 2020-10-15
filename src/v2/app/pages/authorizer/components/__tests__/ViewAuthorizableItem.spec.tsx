@@ -7,7 +7,7 @@ import { history } from 'v2/history'
 import { DataroomFeature } from 'v2/types/authorizer'
 import * as useAuthorizerDataHook from 'v2/app/pages/authorizer/hooks/useAuthorizerData'
 import { generateInfiniteQueryResult } from '__fixtures__/useQuery'
-import { AppFeature } from 'v2/types/app'
+import { AuthorizerCategory } from 'v2/types/app'
 import { bank } from '__fixtures__/authorizer'
 
 jest.mock('v2/app/pages/authorizer/components/AuthorizerView', () => ({
@@ -21,7 +21,7 @@ describe('ViewAuthorizableItem', () => {
       .mockImplementation(() => ({
         ...generateInfiniteQueryResult({}),
         data: bank,
-        category: 'bank-accounts' as AppFeature
+        category: AuthorizerCategory['Bank Accounts']
       }))
   })
 

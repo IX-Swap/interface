@@ -1,6 +1,7 @@
 import React from 'react'
 import { Link as MUILink, LinkProps as MUILinkProps } from '@material-ui/core'
-import { generatePath, Link, LinkProps } from 'react-router-dom'
+import { Link, LinkProps } from 'react-router-dom'
+import { safeGeneratePath } from 'v2/helpers/router'
 
 export const AppRouterLink: React.FC<
   Omit<LinkProps, 'to'> & MUILinkProps & { to: string; params?: {} }
@@ -17,7 +18,7 @@ export const AppRouterLink: React.FC<
     <Link
       {...linkProps}
       to={{
-        pathname: params === undefined ? to : generatePath(to, params),
+        pathname: params === undefined ? to : safeGeneratePath(to, params),
         state: params
       }}
     />

@@ -1,4 +1,4 @@
-import { AppFeature } from 'v2/types/app'
+import { AppFeature, AuthorizerCategory } from 'v2/types/app'
 import { BankPreview } from 'v2/app/components/BankPreview/BankPreview'
 import { urlParams } from 'v2/config/urls'
 import { DSOForm } from 'v2/app/components/DSO/DSOForm'
@@ -9,7 +9,10 @@ import { IndividualIdentityForm } from 'v2/app/pages/identity/components/Individ
 import { DepositView } from 'v2/app/components/DepositView/DepositView'
 import { CommitmentPreview } from 'v2/app/components/CommitmentPreview/CommitmentPreview'
 
-export const authorizerItemMap = {
+export const authorizerItemMap: Record<
+  AuthorizerCategory,
+  { uri: string; component: any; paramKey: string }
+> = {
   [AppFeature['Bank Accounts']]: {
     uri: '/accounts/banks/list',
     component: BankPreview,

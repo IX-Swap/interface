@@ -23,6 +23,7 @@ describe('AuthorizationDocument', () => {
     input: <div data-testid='input' />,
     title: 'Test title'
   }
+
   afterEach(async () => {
     await cleanup()
     jest.clearAllMocks()
@@ -53,17 +54,14 @@ describe('AuthorizationDocument', () => {
   it('renders DownloadDocument with correct props', () => {
     render(<AuthorizationDocument {...props} />)
 
-    expect(DownloadDocument).toHaveBeenCalledTimes(1)
     expect(DownloadDocument).toHaveBeenCalledWith(
-      { documentId: document._id, children: expect.any(Function) },
+      {
+        documentId: document._id,
+        ownerId: document.user,
+        children: expect.any(Function)
+      },
       {}
     )
-  })
-
-  it('renders input correctly', () => {
-    const { getByTestId } = render(<AuthorizationDocument {...props} />)
-
-    expect(getByTestId('input')).toBeTruthy()
   })
 })
 

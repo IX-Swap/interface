@@ -6,7 +6,6 @@ import {
   statusColumn,
   useAuthorizerView
 } from 'v2/app/pages/authorizer/hooks/useAuthorizerView'
-import { AuthorizerTableStoreProvider } from 'v2/app/pages/authorizer/context'
 import { BaseFilter } from 'v2/types/util'
 import { AuthorizableStatus } from 'v2/app/pages/authorizer/components/AuthorizableStatus'
 
@@ -30,26 +29,6 @@ describe('useAuthorizerView', () => {
     expect(current.setFilter).toBeDefined()
     expect(current.setItem).toBeDefined()
     expect(current.filter).toEqual(initialFilterValue)
-  })
-
-  it('calls setUri and setIdKeu on the AuthorizerTableStore with provided values', () => {
-    const actions = {
-      setUri: jest.fn(),
-      setIdKey: jest.fn()
-    }
-
-    renderHook(() => useAuthorizerView(hookArgs), {
-      wrapper: AuthorizerTableStoreProvider,
-      initialProps: {
-        value: actions
-      }
-    })
-
-    expect(actions.setIdKey).toHaveBeenCalledTimes(1)
-    expect(actions.setIdKey).toHaveBeenCalledWith(hookArgs.idKey)
-
-    expect(actions.setUri).toHaveBeenCalledTimes(1)
-    expect(actions.setUri).toHaveBeenCalledWith(hookArgs.uri)
   })
 
   it('sets item to provided payload and to undefined if called with no arguments and updates isViewing state accordingly', () => {

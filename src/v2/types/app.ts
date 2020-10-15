@@ -22,3 +22,14 @@ export enum AppFeature {
   Deployments = 'deployments',
   Issuance = 'issuance'
 }
+
+export enum AuthorizerCategory {
+  'Bank Accounts' = 'bank-accounts',
+  'Cash Deposits' = 'cash-deposits',
+  'Cash Withdrawals' = 'cash-withdrawals',
+  'Digital Security Withdrawals' = 'digital-security-withdrawals',
+  Corporates = 'corporates',
+  Individuals = 'individuals',
+  Commitments = 'commitments',
+  Offerings = 'offerings'
+}

@@ -30,6 +30,7 @@ export interface DataroomProps {
   HeaderComponent?: React.ComponentType
   ViewComponent?: DataroomViewComponent
   EditComponent?: DataroomEditComponent
+  uploadButton?: JSX.Element
   dataroomDocumentProps?: DataroomDocumentProps
   dataroomAddDocumentProps?: DataroomAddDocumentInfoProps
   direction?: GridDirection
@@ -52,6 +53,7 @@ export const Dataroom = (props: DataroomProps): JSX.Element => {
     HeaderComponent = DataroomHeader,
     EditComponent = DataroomEditRow,
     ViewComponent = DataroomViewRow,
+    uploadButton,
     direction = 'column',
     dataroomDocumentProps,
     dataroomAddDocumentProps,
@@ -80,6 +82,7 @@ export const Dataroom = (props: DataroomProps): JSX.Element => {
           const addButton = (
             <DataroomAddDocument
               {...dataroomAddDocumentProps}
+              button={uploadButton}
               append={append}
             />
           )
