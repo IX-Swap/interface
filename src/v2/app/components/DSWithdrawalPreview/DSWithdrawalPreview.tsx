@@ -50,7 +50,7 @@ export const DSWithdrawalPreview = (props: DSWithdrawalPreviewProps) => {
         <Grid item xs={6}>
           <LabelledValue
             label='Transaction'
-            value={<Link href='javascript:void(0)'>{data.transaction}</Link>}
+            value={<Link href='#'>{data.transaction}</Link>}
           />
         </Grid>
       </Grid>
