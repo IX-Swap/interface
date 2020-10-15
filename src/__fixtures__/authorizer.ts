@@ -166,7 +166,7 @@ export const dso: DigitalSecurityOffering = {
   totalFundraisingAmount: 100000,
   useOfProceeds: 'use of proceeds',
   policyBuilder: undefined,
-  user: 'userid',
+  user: user._id,
   authorizationDocuments: [],
   authorization: authorizationInfo,
   authorizations: [],

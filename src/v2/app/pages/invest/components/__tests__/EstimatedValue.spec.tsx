@@ -1,0 +1,45 @@
+/**  * @jest-environment jsdom-sixteen  */
+import React from 'react'
+import { render, cleanup } from 'test-utils'
+import {
+  EstimatedValue,
+  EstimatedValueProps
+} from 'v2/app/pages/invest/components/EstimatedValue'
+import { asset } from '__fixtures__/authorizer'
+import { Form } from 'v2/components/form/Form'
+import { LabelledValue } from 'v2/components/LabelledValue'
+import { formatMoney } from 'v2/helpers/numbers'
+
+jest.mock('v2/components/LabelledValue', () => ({
+  LabelledValue: jest.fn(() => null)
+}))
+
+describe('EstimatedValue', () => {
+  const props: EstimatedValueProps = { symbol: asset.symbol }
+  afterEach(async () => {
+    await cleanup()
+    jest.clearAllMocks()
+  })
+
+  it('renders without error', () => {
+    render(
+      <Form defaultValues={{ totalAmount: 123 }}>
+        <EstimatedValue {...props} />
+      </Form>
+    )
+  })
+
+  it('renders LabelledValue with correct props', () => {
+    render(
+      <Form defaultValues={{ totalAmount: 123 }}>
+        <EstimatedValue {...props} />
+      </Form>
+    )
+
+    expect(LabelledValue).toHaveBeenCalledTimes(1)
+    expect(LabelledValue).toHaveBeenCalledWith(
+      { label: 'Estimated Value', value: formatMoney(123, asset.symbol) },
+      {}
+    )
+  })
+})
