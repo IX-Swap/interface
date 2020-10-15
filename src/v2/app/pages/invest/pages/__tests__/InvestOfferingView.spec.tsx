@@ -4,8 +4,8 @@ import { render, cleanup } from 'test-utils'
 import { InvestOfferingView } from 'v2/app/pages/invest/pages/InvestOfferingView'
 import { history } from 'v2/history'
 import { OfferingRoute } from 'v2/app/pages/invest/routers/offeringsRouter'
-// import { DSOForm } from 'v2/app/components/DSO/DSOForm'
-// import { InvestLink } from 'v2/app/pages/invest/components/InvestLink'
+import { DSOForm } from 'v2/app/components/DSO/DSOForm'
+import { InvestLink } from 'v2/app/pages/invest/components/InvestLink'
 import { dso } from '__fixtures__/authorizer'
 import * as useDSOByIdHook from 'v2/app/pages/invest/hooks/useDSOById'
 
@@ -42,22 +42,23 @@ describe('InvestOfferingView', () => {
     expect(container).toBeEmptyDOMElement()
   })
 
-  // it('renders DSOForm with correct props', () => {
-  //   jest
-  //     .spyOn(useDSOByIdHook, 'useDSOById')
-  //     .mockReturnValue({ isLoading: false, data: dso } as any)
-  //   render(<InvestOfferingView />)
+  it('renders DSOForm with correct props', () => {
+    jest
+      .spyOn(useDSOByIdHook, 'useDSOById')
+      .mockReturnValue({ isLoading: false, data: dso } as any)
+    render(<InvestOfferingView />)
 
-  //   expect(DSOForm).toHaveBeenCalledTimes(1)
-  //   expect(DSOForm).toHaveBeenCalledWith({ data: dso }, {})
-  // })
+    // expect(DSOForm).toHaveBeenCalledTimes(1)
+    expect(DSOForm).toHaveBeenCalledWith({ data: dso }, {})
+  })
 
-  // it('renders InvestLink with correct props', () => {
-  //   jest
-  //     .spyOn(useDSOByIdHook, 'useDSOById')
-  //     .mockReturnValue({ isLoading: false, data: dso } as any)
-  //   render(<InvestOfferingView />)
+  it('renders InvestLink with correct props', () => {
+    jest
+      .spyOn(useDSOByIdHook, 'useDSOById')
+      .mockReturnValue({ isLoading: false, data: dso } as any)
+    render(<InvestOfferingView />)
 
-  //   expect(InvestLink).toHaveBeenCalledTimes(1)
-  // })
+    // expect(InvestLink).toHaveBeenCalledTimes(1)
+    expect(InvestLink).toHaveBeenCalledWith({}, {})
+  })
 })

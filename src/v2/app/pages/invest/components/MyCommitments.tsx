@@ -12,7 +12,7 @@ export const MyCommitments = () => {
       name={`commitments-${storageHelper.getUserId()}`}
       columns={columns}
       hasActions
-      actions={({ item }) => <Actions item={item} />}
+      actions={Actions}
     />
   )
 }

@@ -51,6 +51,6 @@ describe('CommitmentFormWrapper', () => {
     render(<CommitmentFormWrapper />)
 
     // expect(CommitmentHeader).toHaveBeenCalledTimes(1)
-    expect(CommitmentHeader).toHaveBeenNthCalledWith(1, { dso: dso }, {})
+    expect(CommitmentHeader).toHaveBeenCalledWith({ dso: dso }, {})
   })
 })

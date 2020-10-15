@@ -29,4 +29,12 @@ describe('CommitmentFormFields', () => {
       </Form>
     )
   })
+
+  it('renders without error if totalAmount and pricePerUnit are 0', () => {
+    render(
+      <Form defaultValues={{ totalAmount: 0, pricePerUnit: 0 }}>
+        <CommitmentFormFields {...props} />
+      </Form>
+    )
+  })
 })

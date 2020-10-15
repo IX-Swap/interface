@@ -15,23 +15,37 @@ const useInvestListRouterMock = useInvestListRouter as jest.Mock<
 
 describe('InvestLanding', () => {
   const renderRoutes = jest.fn(() => <div />)
-  beforeEach(() => {
-    useInvestListRouterMock.mockReturnValueOnce({
-      renderRoutes,
-      current: { path: InvestListRoute.offerings },
-      paths: { offerings: InvestListRoute.offerings }
-    } as any)
-  })
   afterEach(async () => {
     await cleanup()
     jest.clearAllMocks()
   })
 
   it('renders without error', () => {
+    useInvestListRouterMock.mockReturnValueOnce({
+      renderRoutes,
+      current: { path: InvestListRoute.offerings },
+      paths: InvestListRoute
+    } as any)
     render(<InvestLanding />)
   })
 
   it('renders routes from hook', () => {
+    useInvestListRouterMock.mockReturnValueOnce({
+      renderRoutes,
+      current: { path: InvestListRoute.offerings },
+      paths: InvestListRoute
+    } as any)
+    render(<InvestLanding />)
+
+    expect(renderRoutes).toHaveBeenCalledTimes(1)
+  })
+
+  it('renders routes from hook if current path does not match offerings', () => {
+    useInvestListRouterMock.mockReturnValueOnce({
+      renderRoutes,
+      current: { path: InvestListRoute.commitments },
+      paths: InvestListRoute
+    } as any)
     render(<InvestLanding />)
 
     expect(renderRoutes).toHaveBeenCalledTimes(1)
