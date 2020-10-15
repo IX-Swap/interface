@@ -15,6 +15,11 @@ jest.mock('v2/components/LabelledValue', () => ({
 
 describe('CorporateInfo', () => {
   const props: CorporateInfoProps = { data: corporate }
+
+  beforeEach(() => {
+    window.URL.revokeObjectURL = jest.fn()
+  })
+
   afterEach(async () => {
     await cleanup()
     jest.clearAllMocks()

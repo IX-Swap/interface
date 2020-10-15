@@ -42,7 +42,7 @@ export const LabelledValue = (props: LabelledValueProps & GridProps) => {
         {label}
         {row && ':'}
       </Typography>
-      {row && <Box px={0.5} />}
+      {row ? <Box px={0.5} /> : <Box py={0.4} />}
       <Typography>{formatValue(value)}</Typography>
     </Grid>
   )

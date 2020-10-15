@@ -5,6 +5,7 @@ import { convertAddressToString } from './utils'
 import { ViewDocument } from 'v2/app/components/DSO/components/ViewDocument'
 import { LabelledValue } from 'v2/components/LabelledValue'
 import { renderName } from 'v2/helpers/tables'
+import { AuthorizerIdentityLink } from 'v2/app/components/AuthorizerIdentityLink'
 
 export interface IndividualInfoProps {
   data: IndividualIdentity
@@ -29,6 +30,10 @@ export const IndividualInfo = (props: IndividualInfoProps) => {
             />
           )}
         </ViewDocument>
+      </Grid>
+
+      <Grid item>
+        <AuthorizerIdentityLink identityId={data._id} type='individual' />
       </Grid>
 
       <Grid item>

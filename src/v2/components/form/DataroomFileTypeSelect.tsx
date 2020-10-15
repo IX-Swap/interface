@@ -1,6 +1,6 @@
 import React from 'react'
 import { MenuItem, Select } from '@material-ui/core'
-import { renderMenu } from '../../helpers/rendering'
+import { renderMenu } from 'v2/helpers/rendering'
 
 export enum DataroomFileType {
   SupportingDocument = 'Supporting Document',
@@ -11,7 +11,7 @@ export const DataroomFileTypeSelect = (props: any) => {
   return (
     <Select {...props}>
       <MenuItem disabled value={undefined}>
-        File Type
+        Document Type
       </MenuItem>
       {renderMenu(
         Object.values(DataroomFileType).map(value => ({

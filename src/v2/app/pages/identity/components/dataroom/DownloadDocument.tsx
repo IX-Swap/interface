@@ -4,13 +4,13 @@ import { useDownloadRawDocument } from 'v2/hooks/useDownloadRawDocument'
 import { convertBlobToFile, openFileInNewTab } from 'v2/hooks/utils'
 
 export interface DownloadDocumentProps {
-  documentId?: string
-  ownerId?: string
+  documentId: string
+  ownerId: string
   children?: (download: () => any) => JSX.Element
 }
 
 export const DownloadDocument: React.FC<DownloadDocumentProps> = props => {
-  const { documentId = '', ownerId = '', children } = props
+  const { documentId, ownerId, children } = props
   const [downloadDocument] = useDownloadRawDocument(
     { documentId, ownerId },
     {

@@ -10,9 +10,12 @@ export interface DSWithdrawal extends AuthorizableWithIdentity {
   hold: string
   memo?: string
   recipientWallet: string
-  corporates: CorporateIdentity[]
-  individual: IndividualIdentity
+  identity: {
+    corporates: CorporateIdentity[]
+    individual: IndividualIdentity
+  }
   level: string
   createdAt: string
   updatedAt: string
+  transaction: string
 }

@@ -9,9 +9,24 @@ import {
 import { Form } from 'v2/components/form/Form'
 import * as approveHook from 'v2/app/pages/authorizer/hooks/useApprove'
 import { generateMutationResult } from '__fixtures__/useQuery'
+import { history } from 'v2/history'
+import { AuthorizerRoute } from 'v2/app/pages/authorizer/router'
+import { bank } from '__fixtures__/authorizer'
+import { AuthorizerCategory } from 'v2/types/app'
 
 describe('ApproveButton', () => {
-  const props: ApproveButtonProps = { itemId: 'testItemId' }
+  const props: ApproveButtonProps = { itemId: bank._id }
+
+  beforeEach(() => {
+    history.push({
+      pathname: AuthorizerRoute.viewItem,
+      state: {
+        bankId: bank._id,
+        category: AuthorizerCategory['Bank Accounts']
+      }
+    })
+  })
+
   afterEach(async () => {
     await cleanup()
     jest.clearAllMocks()

@@ -6,13 +6,6 @@ import { PaginatedData } from 'v2/services/api/types'
 import { useServices } from 'v2/services/useServices'
 import { useLocation } from 'react-router-dom'
 
-export const getAuthorizerCategoryFromPath = (path: string) => {
-  const splitted = path.split('/')
-  const authorizerIdx = splitted.indexOf('authorizer')
-
-  return splitted[authorizerIdx + 1]
-}
-
 export const getBankIdFromPath = (path: string) => {
   const splitted = path.split('/')
   const banksIdx = splitted.indexOf('banks')

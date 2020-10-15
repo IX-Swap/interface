@@ -1,5 +1,5 @@
 import React from 'react'
-import { Paper, Box, Typography, Grid } from '@material-ui/core'
+import { Typography, Grid, CardContent, Card } from '@material-ui/core'
 import { Bank } from 'v2/types/bank'
 import { LabelledValue } from 'v2/components/LabelledValue'
 import { convertAddressToString } from 'v2/app/pages/authorizer/components/utils'
@@ -13,38 +13,26 @@ export const BankDetails = (props: BankDetailsProps) => {
   const { bank } = props
 
   return (
-    <Paper>
-      <Box px={4} py={2}>
-        <Grid container direction='column' spacing={1}>
+    <Card variant='outlined'>
+      <CardContent>
+        <Grid container direction='column' spacing={2}>
           <Grid item>
             <Typography variant='subtitle2'>{bank.bankName}</Typography>
           </Grid>
-          <LabelledValue
-            label='Swift'
-            value={bank.swiftCode}
-            labelWeight='thin'
-            row
-          />
+          <LabelledValue label='Swift' value={bank.swiftCode} row />
           <LabelledValue
             label='Bank Address'
             value={convertAddressToString(bank.address)}
-            labelWeight='thin'
             row
           />
-          <LabelledValue
-            label={'Account'}
-            value={bank.accountHolderName}
-            labelWeight='thin'
-            row
-          />
+          <LabelledValue label={'Account'} value={bank.accountHolderName} row />
           <LabelledValue
             label={'Account Number'}
             value={bank.bankAccountNumber}
-            labelWeight='thin'
             row
           />
         </Grid>
-      </Box>
-    </Paper>
+      </CardContent>
+    </Card>
   )
 }

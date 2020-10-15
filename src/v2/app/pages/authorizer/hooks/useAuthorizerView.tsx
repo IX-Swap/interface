@@ -1,6 +1,5 @@
 import { BaseFilter, TableColumn } from 'v2/types/util'
-import React, { useState, useEffect } from 'react'
-import { useAuthorizerTableStore } from 'v2/app/pages/authorizer/context'
+import React, { useState } from 'react'
 import { AuthorizableStatus } from 'v2/app/pages/authorizer/components/AuthorizableStatus'
 
 export interface AuthorizerViewReturnValue<T> {
@@ -36,8 +35,7 @@ export const initialFilterValue: BaseFilter = {
 export const useAuthorizerView = <T,>(
   args: UseAuthorizerViewArgs<T>
 ): AuthorizerViewReturnValue<T> => {
-  const { setUri, setIdKey } = useAuthorizerTableStore()
-  const { idKey, uri, columns } = args
+  const { columns } = args
   const [item, setItem] = useState<T | undefined>(undefined)
   const [isViewing, setIsViewing] = useState(false)
   const [filter, setFilter] = useState<BaseFilter>(initialFilterValue)
@@ -58,11 +56,6 @@ export const useAuthorizerView = <T,>(
   const getColumns = (): Array<TableColumn<T>> => {
     return filter.status === '' ? [...columns, statusColumn] : columns
   }
-
-  useEffect(() => {
-    setIdKey(idKey)
-    setUri(uri)
-  }, [idKey, uri, setIdKey, setUri])
 
   return {
     setItem: _setItem,

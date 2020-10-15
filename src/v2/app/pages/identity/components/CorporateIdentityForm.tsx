@@ -105,9 +105,6 @@ export const CorporateIdentityForm = (
             <Submit>{submitButtonText}</Submit>
           </Grid>
         )}
-        <Grid item>
-          <Box my={10} />
-        </Grid>
       </Grid>
     </Form>
   )

@@ -1,21 +1,24 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import { useLocation } from 'react-router-dom'
-import { AppFeature, AppService } from 'v2/types/app'
+import { AppFeature } from 'v2/types/app'
 import { urlParams } from 'v2/config/urls'
-
-export const getServiceFromURL = (service: string) => {
-  return Object.entries(AppService).find(([value]) => value === service)
-}
-
-export const stripColonFromURLParam = (param: string) => param.replace(/:/, '')
+import {
+  getCurrentLocationData,
+  stripColonFromURLParam
+} from 'v2/hooks/location/utils'
 
 export const useDataFromURL = () => {
   const { pathname } = useLocation()
-  const [_, module, service, feature, ...params] = pathname.split('/')
+  const { service, feature, params } = getCurrentLocationData(pathname)
   const state: any = {}
 
   if (params.length > 0) {
-    switch (feature as AppFeature) {
+    if (service === 'authorizer') {
+      const [itemId, action] = params
+      state[stripColonFromURLParam(urlParams.itemId)] = itemId
+    }
+
+    switch (feature) {
       case 'bank-accounts': {
         const [bankId, action] = params
         state[stripColonFromURLParam(urlParams.bankId)] = bankId

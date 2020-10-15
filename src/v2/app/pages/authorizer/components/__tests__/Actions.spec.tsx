@@ -1,11 +1,6 @@
 /**  * @jest-environment jsdom-sixteen  */
 import React from 'react'
-import {
-  fireEvent,
-  waitFor,
-  renderWithAuthorizerTableStore,
-  cleanup
-} from 'test-utils'
+import { render, fireEvent, waitFor, cleanup } from 'test-utils'
 import { Actions } from 'v2/app/pages/authorizer/components/Actions'
 import { bank } from '__fixtures__/authorizer'
 import { history } from 'v2/history'
@@ -28,9 +23,7 @@ describe('Actions', () => {
   })
 
   it('renders view button', () => {
-    const { getByTestId } = renderWithAuthorizerTableStore(
-      <Actions {...props} />
-    )
+    const { getByTestId } = render(<Actions {...props} />)
     const viewButton = getByTestId('view-button')
 
     expect(viewButton).toBeTruthy()
@@ -39,9 +32,7 @@ describe('Actions', () => {
   it('invokes props.onView function with props.item as an argument', async () => {
     history.push(AuthorizerRoute.banks)
 
-    const { getByTestId } = renderWithAuthorizerTableStore(
-      <Actions {...props} />
-    )
+    const { getByTestId } = render(<Actions {...props} />)
     const viewButton = getByTestId('view-button')
 
     fireEvent.click(viewButton)

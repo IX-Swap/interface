@@ -30,12 +30,19 @@ export const AuthorizerView = <T,>(
         />
       )}
       <Grid item xs={hasIdentity ? 9 : 12}>
-        <Grid container direction='column' spacing={3}>
+        <Grid container direction='column'>
           <Grid item>
-            <Typography>{formatDateAndTime(data.createdAt)}</Typography>
+            <Typography color='textSecondary'>
+              {formatDateAndTime(data.createdAt)}
+            </Typography>
           </Grid>
 
-          <Grid item container justify='space-between'>
+          <Grid
+            item
+            container
+            justify='space-between'
+            style={{ marginBottom: 24 }}
+          >
             <Typography variant='h2'>{title}</Typography>
             <Box display='flex'>
               <AuthorizableLevel level={data.level} compact={false} />
@@ -45,7 +52,10 @@ export const AuthorizerView = <T,>(
           </Grid>
 
           <Grid item>{children}</Grid>
-          <VSpacer size='large' />
+
+          <Grid item>
+            <VSpacer size='medium' />
+          </Grid>
 
           <Grid item>
             <Typography variant='h3'>Authorization Documents</Typography>

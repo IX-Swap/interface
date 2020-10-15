@@ -15,7 +15,7 @@ const overrides = {
     },
     h3: {
       fontSize: '1.64rem',
-      fontWeight: 500
+      fontWeight: 700
     },
     h4: {
       fontSize: '1.5rem',
@@ -30,6 +30,12 @@ const overrides = {
       fontWeight: 600,
       color: '#999999',
       textTransform: 'uppercase' as const
+    },
+    subtitle1: {
+      fontWeight: 700
+    },
+    subtitle2: {
+      fontWeight: 700
     }
   }
 }
@@ -82,6 +88,20 @@ const themes: Themes = {
         root: {
           paddingTop: 40,
           paddingBottom: 40
+        }
+      },
+      MuiLink: {
+        root: {
+          fontWeight: 500
+        }
+      },
+      MuiSelect: {
+        root: {
+          height: 38
+        },
+        selectMenu: {
+          paddingTop: 11,
+          paddingBottom: 11
         }
       }
     }

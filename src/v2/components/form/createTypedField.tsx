@@ -1,6 +1,6 @@
 import { Control, FieldError, useFormContext } from 'react-hook-form'
 import { InputLabel, FormControl, FormHelperText } from '@material-ui/core'
-import React from 'react'
+import React, { cloneElement } from 'react'
 import { useTypedController } from '@hookform/strictly-typed'
 import {
   DeepPath,
@@ -24,6 +24,14 @@ export const createTypedField = <FormType extends Record<string, any>>() => {
   )
 }
 
+export const hasValue = (value: any) => {
+  if (typeof value === 'string') {
+    return value.trim() !== ''
+  }
+
+  return value !== undefined && value !== null
+}
+
 export const TypedField = <
   FormType extends UnpackNestedValue<FieldValuesFromControl<Control>>,
   Path extends DeepPath<FormType, Path>
@@ -40,7 +48,8 @@ export const TypedField = <
     valueProvider,
     valueExtractor,
     formControlProps = { fullWidth: true },
-    inputProps = {}
+    inputProps = {},
+    variant = 'standard'
   } = props
   const { control, errors, setValue, trigger, formState } = useFormContext<
     FormType
@@ -65,43 +74,55 @@ export const TypedField = <
   const destructValue = (value: any): any => {
     return valueProvider !== undefined ? valueProvider(value) : value
   }
+  const elementProps = {
+    ...{ ...inputProps, id: path },
+    label: props.label,
+    name: path,
+    placeholder: '',
+    error: hasError,
+    variant
+  }
 
   return (
     <TypedController
       name={path}
       defaultValue={defaultValue}
       render={controllerProps => {
-        const hasValue =
-          controllerProps.value !== undefined &&
-          controllerProps.value !== null &&
-          controllerProps.value !== ''
-
         return (
-          <FormControl {...formControlProps}>
+          <FormControl
+            {...formControlProps}
+            variant={variant}
+            placeholder=''
+            error={hasError}
+          >
             {typeof children !== 'function' && (
-              <InputLabel error={hasError} htmlFor={path} shrink={hasValue}>
+              <InputLabel
+                placeholder=''
+                error={hasError}
+                htmlFor={path}
+                variant={variant}
+              >
                 {props.label}
               </InputLabel>
             )}
             {typeof children === 'function'
               ? children({
-                  ...{ ...inputProps, id: path },
+                  ...elementProps,
                   ...controllerProps,
-                  label: props.label,
-                  name: path,
                   value: destructValue(controllerProps.value),
                   onChange: handleChange
                 })
-              : React.cloneElement(children, {
-                  ...{ ...inputProps, id: path },
+              : cloneElement(children, {
+                  ...elementProps,
                   ...controllerProps,
                   value: destructValue(controllerProps.value),
-                  error: hasError,
                   onChange: handleChange
                 })}
-            <FormHelperText error={hasError}>
-              {hasError ? error.message : helperText}
-            </FormHelperText>
+            {hasError || helperText !== undefined ? (
+              <FormHelperText error={hasError}>
+                {hasError ? error.message : helperText}
+              </FormHelperText>
+            ) : null}
           </FormControl>
         )
       }}

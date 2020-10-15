@@ -17,12 +17,14 @@ export interface DataroomAddDocumentBaseProps {
 
 export interface DataroomAddDocumentProps
   extends DataroomAddDocumentInfoProps,
-    DataroomAddDocumentBaseProps {}
+    DataroomAddDocumentBaseProps {
+  button?: JSX.Element
+}
 
 export const DataroomAddDocument: React.FC<
   DataroomAddDocumentProps & DataroomAddDocumentInfoProps
 > = props => {
-  const { documentInfo = defaultUploadDocumentInfo, append } = props
+  const { button, documentInfo = defaultUploadDocumentInfo, append } = props
   const handleChange = (documents: DataroomFile[]) => {
     documents.forEach(document =>
       append({
@@ -33,23 +35,17 @@ export const DataroomAddDocument: React.FC<
       })
     )
   }
+  const defaultButton = (
+    <Button variant='contained' color='primary' component='span' size='large'>
+      Upload
+    </Button>
+  )
 
   return (
-    // <Grid container item justify='flex-end'>
     <DataroomUploader
       documentInfo={documentInfo}
       onChange={handleChange}
-      buttonComponent={
-        <Button
-          variant='contained'
-          color='primary'
-          component='span'
-          size='large'
-        >
-          Upload
-        </Button>
-      }
+      buttonComponent={button === undefined ? defaultButton : button}
     />
-    // </Grid>
   )
 }

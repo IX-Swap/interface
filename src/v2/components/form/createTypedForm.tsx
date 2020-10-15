@@ -15,7 +15,9 @@ import {
   Checkbox as MUICheckbox,
   FormControlLabel,
   Input,
-  SelectProps
+  OutlinedInput,
+  SelectProps,
+  TextFieldProps
 } from '@material-ui/core'
 import { AssetSelect, AssetSelectProps } from 'v2/components/form/AssetSelect'
 import { CorporateSelect } from 'v2/components/form/CorporateSelect'
@@ -88,10 +90,14 @@ export const createTypedForm = <FormType extends Record<string, any>>() => {
   )
 
   const TextFieldComponent = <Path extends DeepPath<FormType, Path>>(
-    props: Omit<TypedFieldProps<FormType, DeepPath<FormType, Path>>, 'children'>
+    props: Omit<
+      TypedFieldProps<FormType, DeepPath<FormType, Path>>,
+      'children'
+    > &
+      Omit<TextFieldProps, 'name'>
   ): JSX.Element => (
     <TypedField {...props}>
-      <Input />
+      {props.variant === 'outlined' ? <OutlinedInput /> : <Input />}
     </TypedField>
   )
 
@@ -122,7 +128,9 @@ export const createTypedForm = <FormType extends Record<string, any>>() => {
           <FormControlLabel
             {...fieldProps}
             label={props.label}
-            control={<MUICheckbox defaultChecked={fieldProps.value} />}
+            control={
+              <MUICheckbox color='primary' defaultChecked={fieldProps.value} />
+            }
           />
         )
       }}
