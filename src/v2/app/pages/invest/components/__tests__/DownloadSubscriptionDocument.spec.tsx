@@ -6,6 +6,16 @@ import {
   DownloadSubscriptionDocumentProps
 } from 'v2/app/pages/invest/components/DownloadSubscriptionDocument'
 import { dso } from '__fixtures__/authorizer'
+import { DownloadDocument } from 'v2/app/pages/identity/components/dataroom/DownloadDocument'
+import { DownloadSubscriptionDocumentButton } from 'v2/app/pages/invest/components/DownloadSubscriptionDocumentButton'
+
+jest.mock(
+  'v2/app/pages/invest/components/DownloadSubscriptionDocumentButton',
+  () => ({ DownloadSubscriptionDocumentButton: jest.fn(() => null) })
+)
+jest.mock('v2/app/pages/identity/components/dataroom/DownloadDocument', () => ({
+  DownloadDocument: jest.fn(({ children }) => children(console.log))
+}))
 
 describe('DownloadSubscriptionDocument', () => {
   const props: DownloadSubscriptionDocumentProps = { dso: dso }
@@ -16,5 +26,43 @@ describe('DownloadSubscriptionDocument', () => {
 
   it('renders without error', () => {
     render(<DownloadSubscriptionDocument {...props} />)
+  })
+
+  it('renders DownloadDocument with correct props', () => {
+    render(<DownloadSubscriptionDocument {...props} />)
+
+    expect(DownloadDocument).toHaveBeenCalledTimes(1)
+    expect(DownloadDocument).toHaveBeenCalledWith(
+      {
+        documentId: dso.subscriptionDocument,
+        ownerId: dso.user,
+        children: expect.anything()
+      },
+      {}
+    )
+  })
+
+  it('renders DownloadDocument with correct props', () => {
+    render(<DownloadSubscriptionDocument {...props} />)
+
+    expect(DownloadDocument).toHaveBeenCalledTimes(1)
+    expect(DownloadDocument).toHaveBeenCalledWith(
+      {
+        documentId: dso.subscriptionDocument,
+        ownerId: dso.user,
+        children: expect.anything()
+      },
+      {}
+    )
+  })
+
+  it('renders DownloadSubscriptionDocumentButton with correct callback', () => {
+    render(<DownloadSubscriptionDocument {...props} />)
+
+    expect(DownloadSubscriptionDocumentButton).toHaveBeenCalledTimes(1)
+    expect(DownloadSubscriptionDocumentButton).toHaveBeenCalledWith(
+      { download: console.log },
+      {}
+    )
   })
 })

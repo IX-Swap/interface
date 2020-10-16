@@ -15,6 +15,7 @@ export const InvestLanding = () => {
         indicatorColor='primary'
         textColor='primary'
         aria-label='disabled tabs example'
+        data-testid='invest-tabs'
       >
         <Tab
           value={0}
@@ -22,6 +23,7 @@ export const InvestLanding = () => {
           component={Link}
           to={paths.offerings}
           replace
+          data-testid='listings'
         />
         <Tab
           value={1}
@@ -29,6 +31,7 @@ export const InvestLanding = () => {
           component={Link}
           to={paths.commitments}
           replace
+          data-testid='commitments'
         />
       </Tabs>
       <Divider />
