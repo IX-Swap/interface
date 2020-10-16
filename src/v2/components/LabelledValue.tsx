@@ -10,11 +10,6 @@ const formatValue = (value: any): string => {
     return empty
   }
 
-  if (value instanceof Date) {
-    alert('DAte')
-    return ''
-  }
-
   if (typeof value === 'boolean') {
     return value ? 'Yes' : 'No'
   }
