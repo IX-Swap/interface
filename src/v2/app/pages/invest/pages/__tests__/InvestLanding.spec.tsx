@@ -29,25 +29,39 @@ describe('InvestLanding', () => {
     render(<InvestLanding />)
   })
 
-  it('renders routes from hook', () => {
+  it('renders routes correctly with Listings tab active if current path match offerings', () => {
     useInvestListRouterMock.mockReturnValueOnce({
       renderRoutes,
       current: { path: InvestListRoute.offerings },
       paths: InvestListRoute
     } as any)
-    render(<InvestLanding />)
+    const { getByTestId } = render(<InvestLanding />)
 
-    expect(renderRoutes).toHaveBeenCalledTimes(1)
+    const tabs = getByTestId('invest-tabs')
+    const listingsTab = getByTestId('listings')
+    const commitmentsTab = getByTestId('commitments')
+
+    expect(tabs).toBeTruthy()
+    expect(listingsTab).toBeTruthy()
+    expect(commitmentsTab).toBeTruthy()
+    expect(listingsTab).toHaveClass('Mui-selected')
   })
 
-  it('renders routes from hook if current path does not match offerings', () => {
+  it('renders routes correctly with Listings tab active if current path does not match offerings', () => {
     useInvestListRouterMock.mockReturnValueOnce({
       renderRoutes,
       current: { path: InvestListRoute.commitments },
       paths: InvestListRoute
     } as any)
-    render(<InvestLanding />)
+    const { getByTestId } = render(<InvestLanding />)
 
-    expect(renderRoutes).toHaveBeenCalledTimes(1)
+    const tabs = getByTestId('invest-tabs')
+    const listingsTab = getByTestId('listings')
+    const commitmentsTab = getByTestId('commitments')
+
+    expect(tabs).toBeTruthy()
+    expect(listingsTab).toBeTruthy()
+    expect(commitmentsTab).toBeTruthy()
+    expect(commitmentsTab).toHaveClass('Mui-selected')
   })
 })

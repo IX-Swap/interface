@@ -62,7 +62,7 @@ describe('AssetBalance', () => {
     )
   })
 
-  it('renders LabelledValue with correct props available balance is undefined', () => {
+  it('renders LabelledValue with correct props if balance.available is undefined', () => {
     jest
       .spyOn(useBalancesByAssetIdHook, 'useBalancesByAssetId')
       .mockReturnValue(
