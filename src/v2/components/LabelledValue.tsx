@@ -1,5 +1,7 @@
 import React from 'react'
 import { Box, Grid, GridProps, Typography } from '@material-ui/core'
+import isValidDate from 'date-fns/isValid'
+import { formatDateToMMDDYY } from 'v2/helpers/dates'
 
 const formatValue = (value: any): string => {
   const empty = '–'
@@ -14,6 +16,10 @@ const formatValue = (value: any): string => {
 
   if (typeof value === 'string' && value.length === 0) {
     return empty
+  }
+
+  if (isValidDate(new Date(value))) {
+    return formatDateToMMDDYY(value)
   }
 
   return value

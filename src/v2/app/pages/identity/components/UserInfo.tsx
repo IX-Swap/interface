@@ -2,7 +2,7 @@ import React from 'react'
 import { IdentityProfile } from 'v2/types/identity'
 import { Grid } from '@material-ui/core'
 import { useTypedForm } from 'v2/components/form/useTypedForm'
-import { UserAvatar } from '../../../components/UserAvatar'
+import { UserAvatar } from 'v2/app/components/UserAvatar'
 
 export interface IdentityForm {
   useOwnEmail: boolean
@@ -52,7 +52,7 @@ const UserInfo = (props: IdentityForm): JSX.Element => {
           root={rootPath}
           name='dob'
           label='Date of Birth'
-          fieldType='TextField'
+          fieldType='DatePicker'
         />
       </Grid>
       <Grid item xs={4}>

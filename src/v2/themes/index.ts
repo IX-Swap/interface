@@ -92,7 +92,23 @@ const themes: Themes = {
       },
       MuiLink: {
         root: {
-          fontWeight: 500
+          fontWeight: 400
+        }
+      },
+      MuiInput: {
+        root: {
+          minHeight: 38
+        }
+      },
+      MuiInputLabel: {
+        formControl: {
+          transform: 'translate(0, 29px) scale(1)'
+        }
+      },
+      MuiOutlinedInput: {
+        root: {
+          padding: 0,
+          minHeight: 38
         }
       },
       MuiSelect: {

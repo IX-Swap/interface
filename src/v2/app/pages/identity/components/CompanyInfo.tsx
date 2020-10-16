@@ -48,7 +48,7 @@ export const CompanyInformation = (
       </Grid>
       <Grid item xs={4}>
         <EditableField
-          fieldType='TextField'
+          fieldType='DatePicker'
           isEditing={isEditing}
           name='dateOfIncorporation'
           label='Date of Incorporation'

@@ -38,7 +38,7 @@ export const DSOBaseFields = (props: DSOBaseFieldsProps) => {
 
       <Grid item>
         <EditableField
-          fieldType='TextField'
+          fieldType='DatePicker'
           isEditing={isEditing}
           label='Launch Date'
           name='launchDate'

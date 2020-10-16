@@ -26,7 +26,6 @@ export interface TypedFieldChildProps<
   onBlur: () => void
   value: DeepPathValue<FormType, Path>
   variant?: 'filled' | 'outlined' | 'standard'
-  labelWidth?: number
 }
 
 export interface TypedFieldPropsWithChildren<
@@ -52,5 +51,4 @@ export interface TypedFieldProps<
   valueExtractor?: (...args: any[]) => any
   valueProvider?: (...args: any[]) => any
   variant?: 'filled' | 'outlined' | 'standard'
-  labelWidth?: number
 }
