@@ -85,7 +85,7 @@ describe('DSOBaseFields', () => {
     expect(EditableField).toHaveBeenNthCalledWith(
       3,
       {
-        fieldType: 'TextField',
+        fieldType: 'DatePicker',
         isEditing: props.isEditing,
         label: 'Launch Date',
         name: 'launchDate'

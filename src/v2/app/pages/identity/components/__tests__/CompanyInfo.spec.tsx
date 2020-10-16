@@ -77,7 +77,7 @@ describe('CompanyInformation', () => {
     expect(EditableField).toHaveBeenNthCalledWith(
       4,
       {
-        fieldType: 'TextField',
+        fieldType: 'DatePicker',
         isEditing: false,
         label: 'Date of Incorporation',
         name: 'dateOfIncorporation'

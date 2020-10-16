@@ -80,7 +80,7 @@ describe('UserInfo', () => {
     expect(EditableField).toHaveBeenNthCalledWith(
       5,
       {
-        fieldType: 'TextField',
+        fieldType: 'DatePicker',
         isEditing: props.isEditing,
         root: props.rootPath,
         name: 'dob',

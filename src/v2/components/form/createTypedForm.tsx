@@ -46,6 +46,7 @@ import { Maybe } from 'v2/types/util'
 import { DistributionFrequencySelect } from 'v2/components/form/DistributionFrequencySelect'
 import { DataroomFileTypeSelect } from './DataroomFileTypeSelect'
 import { LabelledValue } from '../LabelledValue'
+import { DatePicker } from 'v2/components/form/DatePicker'
 
 const booleanValueExtractor = (
   _: React.ChangeEvent<{}>,
@@ -98,6 +99,19 @@ export const createTypedForm = <FormType extends Record<string, any>>() => {
   ): JSX.Element => (
     <TypedField {...props}>
       {props.variant === 'outlined' ? <OutlinedInput /> : <Input />}
+    </TypedField>
+  )
+
+  const DatePickerComponent = <Path extends DeepPath<FormType, Path>>(
+    props: Omit<TypedFieldProps<FormType, DeepPath<FormType, Path>>, 'children'>
+  ): JSX.Element => (
+    <TypedField
+      {...(props as any)}
+      valueExtractor={(value, stringValue) => {
+        return value
+      }}
+    >
+      {fieldProps => <DatePicker {...(fieldProps as any)} />}
     </TypedField>
   )
 
@@ -304,7 +318,8 @@ export const createTypedForm = <FormType extends Record<string, any>>() => {
         DataroomDocument: DataroomDocumentComponent,
         CorporateSelect: CorporateSelectComponent,
         RichTextEditor: RichTextEditorComponent,
-        DataroomFileTypeSelect: DataroomFileTypeSelectComponent
+        DataroomFileTypeSelect: DataroomFileTypeSelectComponent,
+        DatePicker: DatePickerComponent
       }),
       []
     )
