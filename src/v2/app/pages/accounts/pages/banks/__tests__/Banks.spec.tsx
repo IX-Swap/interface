@@ -13,10 +13,7 @@ describe('Banks', () => {
       replace: jest.fn(),
       push: jest.fn(),
       query: new URLSearchParams(),
-      current: {
-        path: '',
-        label: ''
-      },
+      current: { path: '', label: '' },
       paths: banksRouter.BanksRoute,
       renderRoutes,
       routes: []
