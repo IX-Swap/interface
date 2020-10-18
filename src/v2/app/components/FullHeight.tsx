@@ -3,7 +3,7 @@ import { Maybe } from 'v2/types/util'
 import debounce from '@material-ui/core/utils/debounce'
 
 export interface FullHeightProps {
-  children: (height: number, ref: Ref<HTMLElement>) => Maybe<JSX.Element>
+  children: (height: number, ref: Ref<any>) => Maybe<JSX.Element>
 }
 
 export const CONTAINER_VERTICAL_PADDING = 40

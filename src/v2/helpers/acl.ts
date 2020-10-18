@@ -2,7 +2,6 @@ import { includes } from 'lodash'
 import { useAuth } from 'v2/hooks/auth/useAuth'
 
 // RBACL Algorithm for Frontend
-
 // - A user can Login without 2-factor authentication.
 // - The user must complete 2-factor authentication before accessing any page.
 //   It will always force redirect to 2-Factor Authentication page if not complete
@@ -10,9 +9,6 @@ import { useAuth } from 'v2/hooks/auth/useAuth'
 // - Once Identity is "approved" for a user, the user will automatically have a new role called "accredited".
 // - Once accredited or "identity approved", the user will be able to access the web application features.
 
-/**
- * Roles definition
- */
 export const appRoles = {
   ADMIN: 'admin',
   AUTHORIZER: 'authorizer',
@@ -21,24 +17,13 @@ export const appRoles = {
   ACCREDITED: 'accredited'
 }
 
-/**
- * Converts payload (csv) roles to array
- */
 const rolesCsvToArray = (roles: string): string[] => roles.split(',')
 
-/**
- * Generic role checker
- */
 const hasRole = (roles: string, roleToCheck: string): boolean => {
   const rolesList = rolesCsvToArray(roles)
 
   return includes(rolesList, roleToCheck)
 }
-
-/**
- * Roles hooks
- * Assumption: Theses hooks are used inside UserContext
- */
 
 export const useIsAdmin = (): boolean => {
   const { user } = useAuth()

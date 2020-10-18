@@ -1,3 +1,4 @@
 export const queryKeys = {
-  notifications: 'notifications'
+  notifications: 'notifications',
+  deployments: 'deployments'
 }

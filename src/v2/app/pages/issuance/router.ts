@@ -5,10 +5,18 @@ import { CreateDSO } from 'v2/app/pages/issuance/pages/CreateDSO'
 import { EditDSO } from 'v2/app/pages/issuance/pages/EditDSO'
 import { generateAppRouterHook } from 'v2/helpers/generateAppRouterHook'
 import { makeURL } from 'v2/config/urls'
+import { DeployToken } from 'v2/app/pages/issuance/pages/DeployToken'
 
 export const IssuanceRoute = {
   list: makeURL(['app', 'issuance', 'offerings']),
   view: makeURL(['app', 'issuance', 'offerings', 'dsoId', 'view']),
+  deployToken: makeURL([
+    'app',
+    'issuance',
+    'offerings',
+    'dsoId',
+    'deployments'
+  ]),
   edit: makeURL(['app', 'issuance', 'offerings', 'dsoId', 'edit']),
   create: makeURL(['app', 'issuance', 'offerings', 'create'])
 }
@@ -31,6 +39,12 @@ export const issuanceRoutes: InternalRouteProps[] = [
     path: IssuanceRoute.edit,
     exact: true,
     component: EditDSO
+  },
+  {
+    label: 'Deploy Token',
+    path: IssuanceRoute.deployToken,
+    exact: true,
+    component: DeployToken
   },
   {
     label: 'Issuance',

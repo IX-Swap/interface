@@ -24,8 +24,8 @@ export const formatDateToMMDDYY = (s: string): string => {
   return format(new Date(s), 'MM/dd/yy')
 }
 
-export const formatDateAndTime = (s: string): string => {
-  return format(new Date(s), 'LLL d, yyyy hh:mm a')
+export const formatDateAndTime = (s: string, seconds = false): string => {
+  return format(new Date(s), `LLL d, yyyy hh:mm${seconds ? ':ss' : ''} a`)
 }
 
 export const getTimeAgo = (datetime: string) => {
