@@ -1,7 +1,6 @@
 import React from 'react'
 import { Button, Grid } from '@material-ui/core'
-import { useDSOById } from 'v2/app/pages/invest/hooks/useDSOById'
-import { DSOForm } from 'v2/app/components/DSO/DSOForm'
+import { DSO } from 'v2/app/pages/issuance/components/DSO'
 import { useIssuanceRouter } from 'v2/app/pages/issuance/router'
 import { AppRouterLink } from 'v2/components/AppRouterLink'
 import { VSpacer } from 'v2/components/VSpacer'
@@ -10,12 +9,7 @@ export const ViewDSO = () => {
   const {
     params: { dsoId }
   } = useIssuanceRouter()
-  const { isLoading, data } = useDSOById(dsoId)
   const { paths } = useIssuanceRouter()
-
-  if (isLoading) {
-    return null
-  }
 
   return (
     <Grid container direction='column'>
@@ -30,7 +24,7 @@ export const ViewDSO = () => {
         <VSpacer size='small' />
       </Grid>
       <Grid item>
-        <DSOForm data={data} />
+        <DSO dsoId={dsoId} />
       </Grid>
     </Grid>
   )
