@@ -6,6 +6,8 @@ import { DSOBaseFields } from 'v2/app/components/DSO/components/DSOBaseFields'
 import { DSOContainer } from 'v2/app/components/DSO/components/DSOContainer'
 import { DSOStatusFields } from 'v2/app/components/DSO/components/DSOStatusFields'
 import { dso } from '__fixtures__/authorizer'
+import { history } from 'v2/history'
+import { IssuanceRoute } from 'v2/app/pages/issuance/router'
 
 jest.mock('v2/app/components/DSO/components/DSOStatusFields', () => ({
   DSOStatusFields: jest.fn(() => null)
@@ -23,6 +25,11 @@ describe('DSOForm', () => {
     isNew: false,
     data: dso
   }
+
+  beforeEach(() => {
+    history.push(IssuanceRoute.view, { dsoId: dso._id })
+  })
+
   afterEach(async () => {
     await cleanup()
     jest.clearAllMocks()
@@ -138,7 +145,7 @@ describe('DSOForm', () => {
     )
     expect(DSOContainer).toHaveBeenNthCalledWith(
       6,
-      { title: 'Token Address', children: expect.anything() },
+      { title: 'Token', children: expect.anything() },
       {}
     )
     expect(DSOContainer).toHaveBeenNthCalledWith(

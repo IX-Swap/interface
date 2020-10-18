@@ -8,6 +8,7 @@ export const urlParams = {
   dsoId: ':dsoId',
   commitmentId: ':commitmentId',
   itemId: ':itemId',
+  tokenId: ':tokenId',
   category: ':category'
 }
 
@@ -46,7 +47,8 @@ export const urlFeature = {
   offerings: `${AppFeature.Offerings}`,
   commitments: `${AppFeature.Commitments}`,
   changePassword: 'change-password',
-  setup2fa: 'setup-2fa'
+  setup2fa: 'setup-2fa',
+  deployments: 'deployments'
 }
 
 export const urls = {

@@ -17,6 +17,7 @@ import {
 } from 'v2/app/components/DSO/utils'
 import { DSOSubscriptionAndDocuments } from 'v2/app/components/DSO/components/DSOSubscriptionAndDocuments'
 import { createTypedForm } from 'v2/components/form/createTypedForm'
+import { DSOToken } from './components/DSOToken'
 
 export interface DSOFormProps {
   submitButtonLabel?: string
@@ -105,7 +106,9 @@ export const DSOForm = (props: DSOFormProps) => {
         </Grid>
 
         <Grid item xs={12}>
-          <DSOContainer title='Token Address'>Token Address</DSOContainer>
+          <DSOContainer title='Token'>
+            <DSOToken />
+          </DSOContainer>
         </Grid>
 
         <Grid item xs={12}>
