@@ -1,21 +1,54 @@
-import React from 'react'
-import { InternalRouteProps } from 'v2/types/util'
-import { RouteComponentProps } from 'react-router-dom'
-import { useBreadcrumbs } from 'v2/hooks/useBreadcrumbs'
+import React, { createElement } from 'react'
+import { InternalRouteBase, InternalRouteProps } from 'v2/types/util'
+import { Redirect, RouteComponentProps } from 'react-router-dom'
 import { safeGeneratePath } from 'v2/helpers/router'
+import { useAuth } from 'v2/hooks/auth/useAuth'
+import { AppRole, getUserRoles, useIsEnabled2FA } from 'v2/helpers/acl'
+import { AppRoute as AppPath } from 'v2/app/router'
 
-export const AppRoute = (
-  props: { route: InternalRouteProps; params: any } & RouteComponentProps
-) => {
-  const { push } = useBreadcrumbs()
-  const { params, route } = props
+export interface AppRouteProps extends RouteComponentProps {
+  route: InternalRouteProps
+  params: any
+  pushCrumb: (crumb: InternalRouteBase) => void
+}
 
-  push({
+export const AppRoute = (props: AppRouteProps) => {
+  const { params, route, pushCrumb } = props
+  const { path, component } = route
+  const { user } = useAuth()
+  const is2FAEnabled = useIsEnabled2FA()
+  const roles = getUserRoles(user?.roles)
+  const isAccredited = roles.includes(AppRole.ACCREDITED)
+
+  pushCrumb({
     label: route.label,
     path: safeGeneratePath(route.path, params)
   })
 
-  return route.component !== undefined
-    ? React.createElement(route.component)
-    : null
+  if (component === undefined) {
+    return null
+  }
+
+  if (user === undefined) {
+    if (!path.startsWith('/auth')) {
+      return <Redirect to='/auth' />
+    }
+  } else {
+    if (!is2FAEnabled && !path.startsWith(AppPath.security)) {
+      return <Redirect to={AppPath.security} />
+    }
+
+    if (
+      !isAccredited &&
+      !(
+        path.startsWith(AppPath.identity) ||
+        path.startsWith(AppPath.security) ||
+        path.startsWith(AppPath.notifications)
+      )
+    ) {
+      return <Redirect to={AppPath.identity} />
+    }
+  }
+
+  return createElement(component)
 }

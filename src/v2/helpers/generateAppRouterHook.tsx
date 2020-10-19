@@ -7,12 +7,14 @@ import { LandingPage } from '../app/components/LandingPage/LandingPage'
 import { isTestENV } from 'v2/history'
 import { useBreadcrumbs } from 'v2/hooks/useBreadcrumbs'
 import {
+  filterRoutes,
   getCurrentRouteFromLocation,
   getHistoryPayload,
   safeGeneratePath
 } from 'v2/helpers/router'
 import { SentryRoute } from 'v2/components/SentryRoute'
 import { AppRoute } from 'v2/components/AppRoute'
+import { useUserRoles } from 'v2/hooks/auth/useUserRoles'
 
 export interface AppRouter<T> {
   current: InternalRouteBase
@@ -52,9 +54,13 @@ export function generateAppRouterHook<T>(
         }),
       [location]
     )
-    const { landing, nested, generic } = getRoutesByType(routes)
     const params = isTestENV ? location.state : window.history.state ?? {}
-    const { reset } = useBreadcrumbs()
+    const { reset, push } = useBreadcrumbs()
+    const roles = useUserRoles()
+    const { landing, nested, generic } = getRoutesByType(
+      filterRoutes(routes, roles)
+    )
+    console.log([...nested, ...generic])
 
     useEffect(() => {
       reset()
@@ -62,6 +68,7 @@ export function generateAppRouterHook<T>(
 
     return {
       current,
+      params,
       routes,
       query: new URLSearchParams(history.location.search),
       paths: routeMap,
@@ -71,7 +78,6 @@ export function generateAppRouterHook<T>(
       replace: (route, state) => {
         history.replace(getHistoryPayload(routeMap[route], state))
       },
-      params,
       renderRoutes: () => (
         <Switch>
           {[...nested, ...generic].map((route, i) => {
@@ -81,7 +87,12 @@ export function generateAppRouterHook<T>(
                 exact={route.exact}
                 path={safeGeneratePath(route.path, params)}
                 render={props => (
-                  <AppRoute {...props} params={params} route={route} />
+                  <AppRoute
+                    {...props}
+                    params={params}
+                    route={route}
+                    pushCrumb={push}
+                  />
                 )}
               />
             )
@@ -91,9 +102,34 @@ export function generateAppRouterHook<T>(
               key='landing'
               path={landing.path}
               exact={true}
-              component={() => <LandingPage {...landing} links={nested} />}
+              render={props => (
+                <AppRoute
+                  {...props}
+                  params={params}
+                  pushCrumb={push}
+                  route={{
+                    ...landing,
+                    component: () => <LandingPage {...landing} links={nested} />
+                  }}
+                />
+              )}
             />
           )}
+          <SentryRoute
+            path='*'
+            render={props => (
+              <AppRoute
+                {...props}
+                params={params}
+                pushCrumb={push}
+                route={{
+                  label: '',
+                  path: '*',
+                  component: () => <div>404</div>
+                }}
+              />
+            )}
+          />
           <SentryRoute render={() => <Redirect to={defaultRoute} />} />
         </Switch>
       )

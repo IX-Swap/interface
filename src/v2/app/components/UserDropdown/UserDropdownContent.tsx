@@ -9,9 +9,11 @@ import { ReactComponent as UsersIcon } from 'assets/icons/navigation/users.svg'
 import { ReactComponent as SignoutIcon } from 'assets/icons/navigation/logout.svg'
 import { DropdownContentProps } from 'v2/app/components/Dropdown/Dropdown'
 import { useLogout } from 'v2/auth/hooks/useLogout'
+import { useIsAdmin } from 'v2/helpers/acl'
 
 export const UserDropdownContent = (props: DropdownContentProps) => {
   const logout = useLogout()
+  const isAdmin = useIsAdmin()
   const handleClose = props.injectedProps.close
 
   return (
@@ -28,12 +30,14 @@ export const UserDropdownContent = (props: DropdownContentProps) => {
         link={SecurityRoute.landing}
         onClose={handleClose}
       />
-      <UserDropdownItem
-        icon={UsersIcon}
-        label='Users'
-        link={AdminRoute.users}
-        onClose={handleClose}
-      />
+      {isAdmin && (
+        <UserDropdownItem
+          icon={UsersIcon}
+          label='Users'
+          link={AdminRoute.users}
+          onClose={handleClose}
+        />
+      )}
       <UserDropdownItem
         icon={SignoutIcon}
         label='Sign Out'

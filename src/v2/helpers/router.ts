@@ -4,6 +4,7 @@ import {
   GetCurrentRouteArgs,
   LocationState
 } from 'v2/helpers/generateAppRouterHook'
+import { AppRole } from 'v2/helpers/acl'
 
 export const safeGeneratePath = (path: string, params: any) => {
   if (params === undefined || params === null) {
@@ -74,4 +75,28 @@ export const getCurrentRouteFromLocation = <T>(
     label: getRouteLabel(route?.path ?? '', routes),
     path: route?.path ?? defaultRoute
   }
+}
+
+export const canAccessRoute = (
+  roles: AppRole[],
+  authorizations?: AppRole[]
+) => {
+  if (authorizations === undefined) {
+    return true
+  }
+
+  return roles.some(role => authorizations.includes(role))
+}
+
+export const filterRoutes = (
+  routes: InternalRouteProps[],
+  roles: AppRole[]
+) => {
+  return routes.filter(({ authorizations }) => {
+    if (authorizations === undefined) {
+      return true
+    }
+
+    return authorizations.some(value => roles.includes(value))
+  })
 }

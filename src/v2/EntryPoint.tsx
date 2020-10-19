@@ -2,9 +2,9 @@ import React, { Suspense, useEffect } from 'react'
 import { Router, Redirect, Switch } from 'react-router-dom'
 import { history } from 'v2/history'
 import { LoadingFullScreen } from 'v2/auth/components/LoadingFullScreen'
-import { useAuth } from 'v2/hooks/auth/useAuth'
 import { BreadcrumbsProvider } from 'v2/hooks/useBreadcrumbs'
 import { SentryRoute } from 'v2/components/SentryRoute'
+import { useAppInit } from 'v2/hooks/useAppInit'
 
 const AuthRoot = React.lazy(
   async () =>
@@ -18,7 +18,7 @@ const AppRoot = React.lazy(
 )
 
 export const EntryPoint = () => {
-  const { isAuthenticated } = useAuth()
+  const { isAuthenticated, isLoading } = useAppInit()
 
   useEffect(() => {
     history.listen((location, action) => {
@@ -27,6 +27,10 @@ export const EntryPoint = () => {
       }
     })
   }, [])
+
+  if (isLoading) {
+    return <LoadingFullScreen />
+  }
 
   return (
     <Suspense fallback={<LoadingFullScreen />}>

@@ -1,7 +1,7 @@
 import React from 'react'
 import { Button } from '@material-ui/core'
 import useStyles from 'v2/auth/styles'
-import { LoginArgs } from 'v2/auth/service/types'
+import { LoginArgs } from 'v2/types/auth'
 import { loginFormValidationSchema } from 'v2/auth/validation'
 import { useAuthRouter } from 'v2/auth/router'
 import { useLogin } from 'v2/auth/hooks/useLogin'

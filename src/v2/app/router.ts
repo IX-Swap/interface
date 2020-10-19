@@ -4,11 +4,12 @@ import { IdentityRoot } from 'v2/app/pages/identity/IdentityRoot'
 import { AccountsRoot } from 'v2/app/pages/accounts/AccountsRoot'
 import { IssuanceRoot } from 'v2/app/pages/issuance/IssuanceRoot'
 import { InvestRoot } from 'v2/app/pages/invest/InvestRoot'
-import { AdminRoot } from 'v2/app/pages/admin/AdminRoot'
 import { generateAppRouterHook } from 'v2/helpers/generateAppRouterHook'
 import { SecurityRoot } from 'v2/app/pages/security/SecurityRoot'
 import { NotificationsRoot } from 'v2/app/pages/notifications/NotificationsRoot'
 import { makeURL } from 'v2/config/urls'
+import { AdminRoot } from 'v2/app/pages/admin/AdminRoot'
+import { AppRole } from 'v2/helpers/acl'
 
 export const AppRoute = {
   authorizer: makeURL(['app', 'authorizer']),
@@ -25,7 +26,8 @@ export const appRoutes: InternalRouteProps[] = [
   {
     label: 'Authorizer',
     path: AppRoute.authorizer,
-    component: AuthorizerRoot
+    component: AuthorizerRoot,
+    authorizations: [AppRole.AUTHORIZER]
   },
   {
     label: 'Identity',
@@ -35,22 +37,26 @@ export const appRoutes: InternalRouteProps[] = [
   {
     label: 'Accounts',
     path: AppRoute.accounts,
-    component: AccountsRoot
+    component: AccountsRoot,
+    authorizations: [AppRole.ACCREDITED]
   },
   {
     label: 'Issuance',
     path: AppRoute.issuance,
-    component: IssuanceRoot
+    component: IssuanceRoot,
+    authorizations: [AppRole.ISSUER]
   },
   {
     label: 'Invest',
     path: AppRoute.invest,
-    component: InvestRoot
+    component: InvestRoot,
+    authorizations: [AppRole.ACCREDITED]
   },
   {
     label: 'Users',
     path: AppRoute.admin,
-    component: AdminRoot
+    component: AdminRoot,
+    authorizations: [AppRole.ADMIN]
   },
   {
     label: 'Settings',

@@ -5,13 +5,13 @@ import { user } from '__fixtures__/user'
 import DialogConfirmRoleChange, {
   DialogConfirmRoleChangeProps
 } from 'v2/app/pages/admin/components/DialogConfirmRoleChange'
-import { appRoles } from 'v2/helpers/acl'
+import { AppRole } from 'v2/helpers/acl'
 import { waitFor, fireEvent } from '@testing-library/react'
 
 describe('DialogConfirmRoleChange', () => {
   const props: DialogConfirmRoleChangeProps = {
     user: user,
-    newRole: appRoles.ACCREDITED,
+    newRole: AppRole.ACCREDITED,
     open: true,
     handleClose: jest.fn(),
     handleConfirm: jest.fn()

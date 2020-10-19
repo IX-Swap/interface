@@ -8,6 +8,7 @@ export const useLogout = () => {
   return () => {
     storageService.remove('user')
     storageService.remove('visitedUrl')
+    storageService.remove('notificationFilter')
     socketService.disconnect()
     history.replace('/auth/login')
   }

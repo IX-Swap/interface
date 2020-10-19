@@ -2,14 +2,12 @@ import generateStoreHookAndProvider from 'v2/helpers/generateStoreHookAndProvide
 import apiService from 'v2/services/api'
 import socketService from 'v2/services/socket'
 import storageService from 'v2/services/storage'
-import authService from 'v2/auth/service'
 import { banksService } from 'v2/app/pages/accounts/pages/banks/service'
 import { adminService } from 'v2/app/pages/admin/service'
 import { snackbarService } from 'uno-material-ui'
 
 const services = {
   apiService,
-  authService,
   banksService,
   socketService,
   storageService,

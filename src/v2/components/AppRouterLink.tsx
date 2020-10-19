@@ -7,9 +7,14 @@ import {
 import { Link, LinkProps } from 'react-router-dom'
 import { safeGeneratePath } from 'v2/helpers/router'
 
+export interface AppRouterLinkProps {
+  to: string
+  params?: {}
+  disabled?: boolean
+}
+
 export const AppRouterLink: React.FC<
-  Omit<LinkProps, 'to'> &
-    MUILinkProps & { to: string; params?: {}; disabled?: boolean }
+  Omit<LinkProps, 'to'> & MUILinkProps & AppRouterLinkProps
 > = props => {
   const {
     to,

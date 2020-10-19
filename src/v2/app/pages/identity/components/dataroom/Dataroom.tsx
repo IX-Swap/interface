@@ -9,9 +9,9 @@ import { useTypedForm } from 'v2/components/form/useTypedForm'
 import { Maybe } from 'v2/types/util'
 import { DataroomViewRow, DataroomViewRowProps } from './DataroomViewRow'
 import { DataroomEditRow, DataroomEditRowProps } from './DataroomEditRow'
-import { DataroomDocumentProps } from '../../../../../components/form/DataroomDocument'
+import { DataroomDocumentProps } from 'v2/components/form/DataroomDocument'
 import { Grid, GridDirection } from '@material-ui/core'
-import { FieldsArrayRendererProps } from '../../../../../components/form/createTypedForm'
+import { FieldsArrayRendererProps } from 'v2/components/form/createTypedForm'
 
 export type DataroomViewComponent = (
   props: DataroomViewRowProps
