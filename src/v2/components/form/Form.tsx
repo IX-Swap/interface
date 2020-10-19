@@ -50,6 +50,7 @@ export const Form = <T,>(
 
   return (
     <FormProvider {...form}>
+      <pre>{JSON.stringify(form.getValues(), null, 2)}</pre>
       <form
         {...rest}
         style={{ width: '100%' }}
