@@ -9,7 +9,7 @@ export const Users = () => {
   const ref = useRef(null)
 
   return (
-    <Paper variant='outlined'>
+    <Paper variant='elevation'>
       <TableView<User>
         innerRef={ref}
         uri='/auth/users/list'

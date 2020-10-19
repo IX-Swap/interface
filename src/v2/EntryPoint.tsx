@@ -18,7 +18,7 @@ const AppRoot = React.lazy(
 )
 
 export const EntryPoint = () => {
-  const { isAuthenticated, isLoading } = useAppInit()
+  const { isSuccess, isFinished } = useAppInit()
 
   useEffect(() => {
     history.listen((location, action) => {
@@ -28,7 +28,7 @@ export const EntryPoint = () => {
     })
   }, [])
 
-  if (isLoading) {
+  if (!isFinished) {
     return <LoadingFullScreen />
   }
 
@@ -37,12 +37,15 @@ export const EntryPoint = () => {
       <BreadcrumbsProvider>
         <Router history={history}>
           <Switch>
-            <SentryRoute path='/app' exact={false} component={AppRoot} />
-            <SentryRoute path='/auth' exact={false} component={AuthRoot} />
+            {isSuccess ? (
+              <SentryRoute path='/app' exact={false} component={AppRoot} />
+            ) : (
+              <SentryRoute path='/auth' exact={false} component={AuthRoot} />
+            )}
             <SentryRoute
-              render={() => (
-                <Redirect to={isAuthenticated ? '/app' : '/auth'} />
-              )}
+              exact
+              path='*'
+              render={() => <Redirect to={isSuccess ? '/app' : '/auth'} />}
             />
           </Switch>
         </Router>

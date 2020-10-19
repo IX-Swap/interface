@@ -1,4 +1,9 @@
-import { ListItemIcon, ListItemText, MenuItem } from '@material-ui/core'
+import {
+  ListItemIcon,
+  ListItemText,
+  MenuItem,
+  Typography
+} from '@material-ui/core'
 import { AppRouterLink } from 'v2/components/AppRouterLink'
 import React, { createElement } from 'react'
 import { useStyles } from 'v2/app/components/UserDropdown/UserDropdownItem.styles'
@@ -15,14 +20,17 @@ export interface UserDropdownItemProps {
 export const UserDropdownItem = (props: UserDropdownItemProps) => {
   const { icon, label, link, onClick, onClose } = props
   const { pathname } = useLocation()
-  const isActive = typeof link === 'string' ? pathname.startsWith(link) : false
+  const isActive = typeof link === 'string' && pathname.startsWith(link)
+  console.log(link, isActive, pathname)
   const classes = useStyles()
   const handleClick = () => {
     onClick?.()
     onClose()
   }
   const iconElement = createElement(icon)
-  const LinkElement = (linkProps: any) => <AppRouterLink {...linkProps} />
+  const LinkElement = (linkProps: any) => (
+    <AppRouterLink {...linkProps} role='menuitem' />
+  )
 
   return (
     <MenuItem
@@ -31,8 +39,15 @@ export const UserDropdownItem = (props: UserDropdownItemProps) => {
       onClick={handleClick}
       to={link}
     >
-      <ListItemIcon className={classes.iconWrapper}>{iconElement}</ListItemIcon>
-      <ListItemText>{label}</ListItemText>
+      <ListItemIcon
+        className={classes.iconWrapper}
+        style={{ color: 'inherit' }}
+      >
+        {iconElement}
+      </ListItemIcon>
+      <ListItemText>
+        <Typography>{label}</Typography>
+      </ListItemText>
     </MenuItem>
   )
 }

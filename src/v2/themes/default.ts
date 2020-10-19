@@ -1,8 +1,8 @@
 import tinycolor from 'tinycolor2'
 
 const primary = '#0c469c'
-const secondary = '#DD0F0F'
-// const secondary = '#1C4F79'
+// const secondary = '#DD0F0F'
+const secondary = '#1C4F79'
 const warning = '#a31037'
 const success = '#348633'
 const info = '#9013FE'
@@ -61,6 +61,11 @@ export default {
       '0px 12px 33px 0px #E8EAFC, 0 3px 3px -2px #B2B2B21A, 0 1px 8px 0 #9A9A9A1A'
   },
   overrides: {
+    MuiButton: {
+      containedPrimary: {
+        color: 'white'
+      }
+    },
     MuiBackdrop: {
       root: {
         backgroundColor: '#4A4A4A1A'
@@ -80,7 +85,8 @@ export default {
     MuiListItem: {
       root: {
         '&$selected': {
-          backgroundColor: '#F3F5FF !important',
+          color: primary,
+          backgroundColor: '#e7ecf5 !important',
           '&:focus': {
             backgroundColor: '#F3F5FF'
           }
@@ -97,20 +103,25 @@ export default {
         backgroundColor: 'white'
       }
     },
-    MuiTableRow: {
-      root: {
-        height: 56
-      }
-    },
     MuiTableCell: {
       root: {
-        borderBottom: '1px solid rgba(224, 224, 224, .5)'
+        paddingTop: 12,
+        paddingBottom: 12
       },
       head: {
-        fontSize: '0.95rem'
+        fontSize: '0.85rem'
       },
       body: {
-        fontSize: '0.95rem'
+        fontSize: '0.85rem'
+      }
+    },
+    MuiLink: {
+      root: {
+        fontWeight: 400,
+        '&.MuiLink-underlineHover:active, &.MuiLink-underlineHover:visited, &.MuiLink-underlineAlways:active, &.MuiLink-underlineAlways:visited': {
+          color: primary,
+          textDecoration: 'none'
+        }
       }
     }
   }

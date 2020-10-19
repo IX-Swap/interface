@@ -1,6 +1,6 @@
 import React from 'react'
 import { List } from '@material-ui/core'
-import { useIsAuthorizer, useIsIssuer } from 'v2/helpers/acl'
+import { useIsAdmin, useIsAuthorizer, useIsIssuer } from 'v2/helpers/acl'
 import { SidebarLink } from 'v2/app/components/Sidebar/components/SidebarLink'
 import { useAuthorizerRouter } from 'v2/app/pages/authorizer/router'
 import { useAccountsRouter } from 'v2/app/pages/accounts/router'
@@ -15,6 +15,7 @@ import { ReactComponent as AuthorizerIcon } from 'assets/icons/navigation/author
 export const Sidebar = () => {
   const isAuthorizer = useIsAuthorizer()
   const isIssuer = useIsIssuer()
+  const isAdmin = useIsAdmin()
   const { paths: authorizerRoutes } = useAuthorizerRouter()
   const { paths: accountRoutes } = useAccountsRouter()
   const { paths: investRoutes } = useInvestRouter()
@@ -41,7 +42,7 @@ export const Sidebar = () => {
           }
         ]
       : []),
-    ...(isAuthorizer
+    ...(isAuthorizer || isAdmin
       ? [
           {
             label: 'Authorizer',

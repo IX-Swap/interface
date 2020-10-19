@@ -27,7 +27,7 @@ export const appRoutes: InternalRouteProps[] = [
     label: 'Authorizer',
     path: AppRoute.authorizer,
     component: AuthorizerRoot,
-    authorizations: [AppRole.AUTHORIZER]
+    authorizations: [AppRole.AUTHORIZER, AppRole.ADMIN]
   },
   {
     label: 'Identity',

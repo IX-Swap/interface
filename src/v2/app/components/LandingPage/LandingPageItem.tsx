@@ -38,7 +38,9 @@ export const LandingPageItem = (props: LandingPageItemProps) => {
         </Grid>
         <VSpacer size='small' />
         <Grid item>
-          <Typography className={classes.label}>{label}</Typography>
+          <Typography className={classes.label} color='textPrimary'>
+            {label}
+          </Typography>
         </Grid>
       </Grid>
     </AppRouterLink>

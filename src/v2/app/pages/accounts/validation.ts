@@ -7,7 +7,7 @@ import {
   AddressValues,
   BankFormValues
 } from 'v2/app/pages/accounts/types'
-import { DataroomFile } from '../../../types/dataroomFile'
+import { DataroomFile } from 'v2/types/dataroomFile'
 
 export const depositCashFormValidationSchema = yup
   .object()
@@ -42,20 +42,22 @@ export const withdrawDSFormValidationSchema = yup
   })
 
 export const addressValidationSchema = yup.object().shape<AddressValues>({
-  city: yup.string().required('City is required'),
-  country: yup.string().required('Country is required'),
-  line1: yup.string().required('Address line 1 is required'),
+  city: yup.string().required('Required'),
+  country: yup.string().required('Required'),
+  line1: yup.string().required('Required'),
   line2: yup.string(),
-  postalCode: yup.string().required('Postal Code is required'),
-  state: yup.string().required('State is required')
+  postalCode: yup.string().required('Required'),
+  state: yup.string()
 })
 
 export const bankFormValidationSchema = yup.object().shape<BankFormValues>({
-  bankName: yup.string().required('Bank Name is required'),
-  accountHolderName: yup.string().required('Account Holder Name is required'),
-  asset: yup.string().required('Asset is required'),
-  bankAccountNumber: yup.string().required('Bank Account Number is required'),
-  swiftCode: yup.string().required('Swift Code is required'),
-  address: addressValidationSchema.required(),
-  supportingDocuments: yup.array<{ document: DataroomFile }>().required()
+  bankName: yup.string().required('Required'),
+  accountHolderName: yup.string().required('Required'),
+  asset: yup.string().required('Required'),
+  bankAccountNumber: yup.string().required('Required'),
+  swiftCode: yup.string().required('Required'),
+  address: addressValidationSchema.required('Required'),
+  supportingDocuments: yup
+    .array<{ document: DataroomFile }>()
+    .required('Required')
 })

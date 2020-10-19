@@ -1,6 +1,6 @@
 import { useServices } from 'v2/services/useServices'
 import { useBeforeUnload } from 'v2/hooks/useBeforeUnload'
-import { useEffect, useState } from 'react'
+import { useEffect } from 'react'
 import { useUser } from 'v2/auth/hooks/useUser'
 import { useIsAccredited } from 'v2/helpers/acl'
 import { useAccessToken } from 'v2/hooks/auth/useAccessToken'
@@ -9,33 +9,26 @@ export const useAppInit = () => {
   const { socketService } = useServices()
   const accessToken = useAccessToken()
   const isAccredited = useIsAccredited()
-  const [getUser, { data, isLoading }] = useUser()
-  const [isAuthenticated, setIsAuthenticated] = useState(false)
+  const [getUser, { data, isLoading, isIdle, isError, isSuccess }] = useUser()
   const user = data?.data
 
   useEffect(() => {
-    if (accessToken === undefined) {
-      setIsAuthenticated(false)
+    if (isIdle && !isLoading && !(isError || isSuccess)) {
+      void getUser()
     } else {
-      if (user === undefined) {
-        if (!isLoading) {
-          void getUser()
-        } else {
-          setIsAuthenticated(false)
-        }
-      } else {
-        if (isAccredited) {
+      if (isSuccess) {
+        if (isAccredited && accessToken !== undefined) {
           socketService.subscribeToSocket(accessToken)
         }
-
-        setIsAuthenticated(true)
       }
     }
   }, [
     user,
     socketService,
     isLoading,
-    setIsAuthenticated,
+    isError,
+    isSuccess,
+    isIdle,
     accessToken,
     getUser,
     isAccredited
@@ -46,7 +39,7 @@ export const useAppInit = () => {
   })
 
   return {
-    isLoading: accessToken === undefined ? false : isLoading,
-    isAuthenticated
+    isSuccess,
+    isFinished: accessToken === undefined ? true : isError || isSuccess
   }
 }

@@ -4,7 +4,7 @@ import {
   IdentityRoute,
   useIdentitiesRouter
 } from 'v2/app/pages/identity/router'
-import { AppRouterLink } from 'v2/components/AppRouterLink'
+import { AppRouterLinkComponent } from 'v2/components/AppRouterLink'
 
 export interface NoIdentityProps {
   text: string
@@ -18,8 +18,13 @@ export const NoIdentity: React.FC<NoIdentityProps> = props => {
   return (
     <Grid container justify='center' alignItems='center'>
       <Box padding={4}>
-        <Button color='primary' variant='contained'>
-          <AppRouterLink to={paths[link]}>{text}</AppRouterLink>
+        <Button
+          component={AppRouterLinkComponent}
+          color='primary'
+          variant='contained'
+          to={paths[link]}
+        >
+          {text}
         </Button>
       </Box>
     </Grid>

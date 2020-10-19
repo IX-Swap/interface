@@ -77,17 +77,6 @@ export const getCurrentRouteFromLocation = <T>(
   }
 }
 
-export const canAccessRoute = (
-  roles: AppRole[],
-  authorizations?: AppRole[]
-) => {
-  if (authorizations === undefined) {
-    return true
-  }
-
-  return roles.some(role => authorizations.includes(role))
-}
-
 export const filterRoutes = (
   routes: InternalRouteProps[],
   roles: AppRole[]
@@ -97,6 +86,6 @@ export const filterRoutes = (
       return true
     }
 
-    return authorizations.some(value => roles.includes(value))
+    return roles.some(value => !authorizations.includes(value))
   })
 }

@@ -18,6 +18,7 @@ export const SidebarLink = (props: SidebarLinkProps) => {
 
   return (
     <ListItem
+      selected={isActive}
       component={Link}
       className={classNames(classes.link, { [classes.active]: isActive })}
       disableRipple
@@ -26,7 +27,7 @@ export const SidebarLink = (props: SidebarLinkProps) => {
     >
       <Grid container direction='column' alignItems='center'>
         <Box>{React.createElement(icon, { className: classes.icon })}</Box>
-        <Typography variant='subtitle2'>{label}</Typography>
+        <Typography variant='body2'>{label}</Typography>
       </Grid>
     </ListItem>
   )

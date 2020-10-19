@@ -60,7 +60,7 @@ export function generateAppRouterHook<T>(
     const { landing, nested, generic } = getRoutesByType(
       filterRoutes(routes, roles)
     )
-    console.log([...nested, ...generic])
+    // console.log([...nested, ...generic])
 
     useEffect(() => {
       reset()
@@ -115,21 +115,6 @@ export function generateAppRouterHook<T>(
               )}
             />
           )}
-          <SentryRoute
-            path='*'
-            render={props => (
-              <AppRoute
-                {...props}
-                params={params}
-                pushCrumb={push}
-                route={{
-                  label: '',
-                  path: '*',
-                  component: () => <div>404</div>
-                }}
-              />
-            )}
-          />
           <SentryRoute render={() => <Redirect to={defaultRoute} />} />
         </Switch>
       )

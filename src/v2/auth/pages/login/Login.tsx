@@ -6,7 +6,7 @@ import { loginFormValidationSchema } from 'v2/auth/validation'
 import { useAuthRouter } from 'v2/auth/router'
 import { useLogin } from 'v2/auth/hooks/useLogin'
 import { createTypedForm } from 'v2/components/form/createTypedForm'
-import { AppRouterLink } from 'v2/components/AppRouterLink'
+import { AppRouterLinkComponent } from 'v2/components/AppRouterLink'
 
 export const loginFormInitialValues = {
   email: '',
@@ -49,10 +49,14 @@ export const Login: React.FC = () => {
       />
       <div className={classes.formButtons}>
         <Submit>Login</Submit>
-        <Button color='primary' size='large' className={classes.forgetButton}>
-          <AppRouterLink to={paths.passwordReset}>
-            Forgot Password?
-          </AppRouterLink>
+        <Button
+          component={AppRouterLinkComponent}
+          color='primary'
+          size='large'
+          className={classes.forgetButton}
+          to={paths.passwordReset}
+        >
+          Forgot Password?
         </Button>
       </div>
     </Form>

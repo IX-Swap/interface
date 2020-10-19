@@ -7,10 +7,10 @@ import {
   OfferingRoute
 } from 'v2/app/pages/invest/routers/offeringsRouter'
 import { dso } from '__fixtures__/authorizer'
-import { AppRouterLink } from 'v2/components/AppRouterLink'
+import { AppRouterLinkComponent } from 'v2/components/AppRouterLink'
 
 jest.mock('v2/components/AppRouterLink', () => ({
-  AppRouterLink: jest.fn(({ children }) => children)
+  AppRouterLinkComponent: jest.fn(({ children }) => children)
 }))
 jest.mock('v2/app/pages/invest/routers/offeringsRouter')
 
@@ -37,13 +37,12 @@ describe('InvestLink', () => {
   it('renders AppRouterLink with correct props', () => {
     render(<InvestLink />)
 
-    expect(AppRouterLink).toHaveBeenCalledTimes(1)
-    expect(AppRouterLink).toHaveBeenCalledWith(
-      {
-        children: 'Invest',
+    expect(AppRouterLinkComponent).toHaveBeenCalledWith(
+      expect.objectContaining({
+        children: expect.anything(),
         to: OfferingRoute.makeInvestment,
         params: { dsoId: dso._id }
-      },
+      }),
       {}
     )
   })

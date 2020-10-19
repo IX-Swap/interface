@@ -1,8 +1,8 @@
 import React from 'react'
 import {
-  Link as MUILink,
   LinkProps as MUILinkProps,
-  Typography
+  Typography,
+  Link as MUILink
 } from '@material-ui/core'
 import { Link, LinkProps } from 'react-router-dom'
 import { safeGeneratePath } from 'v2/helpers/router'
@@ -11,6 +11,7 @@ export interface AppRouterLinkProps {
   to: string
   params?: {}
   disabled?: boolean
+  replace?: boolean
 }
 
 export const AppRouterLink: React.FC<
@@ -20,9 +21,8 @@ export const AppRouterLink: React.FC<
     to,
     params,
     children,
-    underline = 'none',
-    color = 'inherit',
     disabled = false,
+    underline = 'none',
     ...rest
   } = props
 
@@ -30,19 +30,22 @@ export const AppRouterLink: React.FC<
     return <Typography>{children}</Typography>
   }
 
-  const RRDLink = (linkProps: any) => (
-    <Link
-      {...linkProps}
+  return (
+    <MUILink
+      {...rest}
+      color='initial'
+      underline={underline}
+      component={Link}
       to={{
         pathname: params === undefined ? to : safeGeneratePath(to, params),
         state: params
       }}
-    />
-  )
-
-  return (
-    <MUILink {...rest} component={RRDLink} color={color} underline={underline}>
+    >
       {children}
     </MUILink>
   )
+}
+
+export const AppRouterLinkComponent = (props: AppRouterLinkProps) => {
+  return <AppRouterLink {...props} />
 }

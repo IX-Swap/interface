@@ -10,7 +10,7 @@ import {
 } from '@material-ui/core'
 import { DSOTitle } from 'v2/app/components/DSO/components/DSOTitle'
 import { DSODetails } from 'v2/app/components/DSO/components/DSODetails'
-import { AppRouterLink } from 'v2/components/AppRouterLink'
+import { AppRouterLinkComponent } from 'v2/components/AppRouterLink'
 
 export interface DSOfferingCardProps {
   dso: DigitalSecurityOffering
@@ -21,13 +21,14 @@ export const DSOCard = (props: DSOfferingCardProps) => {
   const { dso, viewURL } = props
 
   return (
-    <Card>
+    <Card variant='outlined'>
       <CardContent>
         <Grid container justify='space-between' spacing={2}>
           <Grid
             item
             container
             xs={9}
+            alignItems='flex-start'
             justify='space-between'
             direction='column'
           >
@@ -46,24 +47,18 @@ export const DSOCard = (props: DSOfferingCardProps) => {
             </Box>
 
             <Button
-              style={{ width: '120px' }}
+              component={AppRouterLinkComponent}
               variant='contained'
               color='primary'
+              disableElevation
+              to={viewURL}
+              params={{ dsoId: dso._id, issuerId: dso.user }}
             >
-              <AppRouterLink
-                to={viewURL}
-                params={{ dsoId: dso._id, issuerId: dso.user }}
-              >
-                View
-              </AppRouterLink>
+              View
             </Button>
           </Grid>
           <Grid item xs={3}>
-            <DSODetails
-              dso={dso}
-              // currency={dso.currency[0] as Asset}
-              currency={undefined}
-            />
+            <DSODetails dso={dso} currency={undefined} />
           </Grid>
         </Grid>
       </CardContent>

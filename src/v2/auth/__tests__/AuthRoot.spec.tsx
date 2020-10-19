@@ -9,8 +9,6 @@ import { Login } from 'v2/auth/pages/login/Login'
 import { Register } from 'v2/auth/pages/register/Register'
 import { PasswordReset } from 'v2/auth/pages/password-reset/PasswordReset'
 import { Confirmation } from 'v2/auth/pages/confirmation/Confirmation'
-import * as useAuthHook from 'v2/hooks/auth/useAuth'
-import { user } from '__fixtures__/user'
 import { AuthTabs } from 'v2/auth/components/AuthTabs'
 
 jest.mock('v2/auth/pages/login/Login', () => ({
@@ -55,17 +53,6 @@ describe('AuthRoot', () => {
 
     expect(fakeUserStore.setActiveTab).toBeCalledTimes(1)
     expect(fakeUserStore.setActiveTab).toBeCalledWith(1)
-  })
-
-  it('redirects to /app if user is authenticated', () => {
-    jest.spyOn(useAuthHook, 'useAuth').mockReturnValueOnce({
-      isAuthenticated: true,
-      user
-    })
-
-    renderWithUserStore(<AuthRoot />)
-
-    expect(history.location.pathname).toBe('/app')
   })
 
   it('does not render AuthTabs on /password-reset route', () => {

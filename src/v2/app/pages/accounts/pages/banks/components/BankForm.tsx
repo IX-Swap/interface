@@ -11,14 +11,14 @@ import { Bank } from 'v2/types/bank'
 import { BankFormValues } from 'v2/app/pages/accounts/types'
 import { bankFormValidationSchema } from 'v2/app/pages/accounts/validation'
 import { useBanksRouter } from 'v2/app/pages/accounts/pages/banks/router'
-import { AppRouterLink } from 'v2/components/AppRouterLink'
+import { AppRouterLinkComponent } from 'v2/components/AppRouterLink'
 import { createTypedForm } from 'v2/components/form/createTypedForm'
-import { Dataroom } from '../../../../identity/components/dataroom/Dataroom'
+import { Dataroom } from 'v2/app/pages/identity/components/dataroom/Dataroom'
 import {
   getBankFormDefaultValues,
   transformBankFormValuesToArgs
-} from '../utils'
-import { BankArgs } from '../service/types'
+} from 'v2/app/pages/accounts/pages/banks/utils'
+import { BankArgs } from 'v2/app/pages/accounts/pages/banks/service/types'
 
 export interface BankFormProps {
   submitButtonLabel: string
@@ -42,9 +42,9 @@ export const BankForm: React.FC<BankFormProps> = props => {
       validationSchema={bankFormValidationSchema}
       onSubmit={handleSubmit}
     >
-      <Card>
+      <Card variant='outlined'>
         <CardContent>
-          <Grid container spacing={5}>
+          <Grid container spacing={3}>
             <Grid item container spacing={3}>
               <Grid item sm={12} md={12} lg={12}>
                 <Typography variant='h5'>Account Info</Typography>
@@ -133,8 +133,12 @@ export const BankForm: React.FC<BankFormProps> = props => {
       <Grid container>
         <Grid item sm={12} md={12} lg={12}>
           <Box m={3} display='flex' justifyContent='center'>
-            <Button color='default'>
-              <AppRouterLink to={paths.list}>Cancel</AppRouterLink>
+            <Button
+              component={AppRouterLinkComponent}
+              to={paths.list}
+              color='default'
+            >
+              Cancel
             </Button>
             <Box marginX={1} />
             <Submit>{submitButtonLabel}</Submit>

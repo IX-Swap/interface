@@ -1,8 +1,6 @@
-import { useHistory } from 'react-router-dom'
 import { useServices } from 'v2/services/useServices'
 
 export const useLogout = () => {
-  const history = useHistory()
   const { storageService, socketService } = useServices()
 
   return () => {
@@ -10,6 +8,7 @@ export const useLogout = () => {
     storageService.remove('visitedUrl')
     storageService.remove('notificationFilter')
     socketService.disconnect()
-    history.replace('/auth/login')
+
+    window.location.reload()
   }
 }

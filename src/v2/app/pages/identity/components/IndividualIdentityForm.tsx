@@ -28,76 +28,70 @@ export interface IndividualIdentityFormProps {
   cancelButton?: JSX.Element
 }
 
-export const IndividualIdentityForm = React.memo(
-  (props: IndividualIdentityFormProps): JSX.Element => {
-    const {
-      data,
-      isEditing,
-      useOwnEmail,
-      submitButtonText,
-      cancelButton
-    } = props
-    const { Form, Submit } = useIndividualIdentityForm()
-    const [createOrUpdateIndividual] = useCreateOrUpdateIndividual()
-    const handleSubmit = async (values: IndividualIdentityFormValues) => {
-      await createOrUpdateIndividual(values)
-    }
-
-    return (
-      <Form
-        onSubmit={handleSubmit}
-        validationSchema={individualIdentityFormValidationSchema}
-        defaultValues={getIdentityFormDefaultValue(data, 'individual')}
-      >
-        <Grid container spacing={2}>
-          <Grid item xs={12}>
-            <Section title='Identity'>
-              <UserInfoComponent
-                useOwnEmail={useOwnEmail}
-                isEditing={isEditing}
-              />
-            </Section>
-          </Grid>
-          <Suspense fallback={'loading...'}>
-            <Grid item xs={12}>
-              <Section title='Address'>
-                <Address isEditing={isEditing} />
-              </Section>
-            </Grid>
-          </Suspense>
-          <Suspense fallback={'loading...'}>
-            <Grid item xs={12}>
-              <Section title='Financials'>
-                <Financials isEditing={isEditing} />
-              </Section>
-            </Grid>
-          </Suspense>
-          <Suspense fallback={'loading...'}>
-            <Grid item xs={12}>
-              <Section title='Documents'>
-                <Dataroom isEditing={isEditing} />
-              </Section>
-            </Grid>
-          </Suspense>
-          <Grid item xs={12}>
-            <Section title='Declaration & Acknowledgement'>
-              <Suspense fallback={'loading...'}>
-                <Declaration
-                  isEditing={isEditing}
-                  declarations={getIdentityDeclarations(data, 'individual')}
-                />
-              </Suspense>
-            </Section>
-          </Grid>
-          {isEditing && (
-            <Grid container justify='center' item xs={12}>
-              {cancelButton}
-              <Box px={1} />
-              <Submit>{submitButtonText}</Submit>
-            </Grid>
-          )}
-        </Grid>
-      </Form>
-    )
+export const IndividualIdentityForm = (
+  props: IndividualIdentityFormProps
+): JSX.Element => {
+  const { data, isEditing, useOwnEmail, submitButtonText, cancelButton } = props
+  const { Form, Submit } = useIndividualIdentityForm()
+  const [createOrUpdateIndividual] = useCreateOrUpdateIndividual()
+  const handleSubmit = async (values: IndividualIdentityFormValues) => {
+    await createOrUpdateIndividual(values)
   }
-)
+
+  return (
+    <Form
+      onSubmit={handleSubmit}
+      validationSchema={individualIdentityFormValidationSchema}
+      defaultValues={getIdentityFormDefaultValue(data, 'individual')}
+    >
+      <Grid container spacing={2}>
+        <Grid item xs={12}>
+          <Section title='Identity'>
+            <UserInfoComponent
+              useOwnEmail={useOwnEmail}
+              isEditing={isEditing}
+            />
+          </Section>
+        </Grid>
+        <Suspense fallback={'loading...'}>
+          <Grid item xs={12}>
+            <Section title='Address'>
+              <Address isEditing={isEditing} />
+            </Section>
+          </Grid>
+        </Suspense>
+        <Suspense fallback={'loading...'}>
+          <Grid item xs={12}>
+            <Section title='Financials'>
+              <Financials isEditing={isEditing} />
+            </Section>
+          </Grid>
+        </Suspense>
+        <Suspense fallback={'loading...'}>
+          <Grid item xs={12}>
+            <Section title='Documents'>
+              <Dataroom isEditing={isEditing} />
+            </Section>
+          </Grid>
+        </Suspense>
+        <Grid item xs={12}>
+          <Section title='Declaration & Acknowledgement'>
+            <Suspense fallback={'loading...'}>
+              <Declaration
+                isEditing={isEditing}
+                declarations={getIdentityDeclarations(data, 'individual')}
+              />
+            </Suspense>
+          </Section>
+        </Grid>
+        {isEditing && (
+          <Grid container justify='center' item xs={12}>
+            {cancelButton}
+            <Box px={1} />
+            <Submit>{submitButtonText}</Submit>
+          </Grid>
+        )}
+      </Grid>
+    </Form>
+  )
+}
