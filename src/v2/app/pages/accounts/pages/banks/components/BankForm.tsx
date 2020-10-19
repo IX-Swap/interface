@@ -8,7 +8,7 @@ import {
   CardContent
 } from '@material-ui/core'
 import { Bank } from 'v2/types/bank'
-import { BankFormValues } from 'v2/app/pages/accounts/types'
+import { BankFormValues, BankArgs } from 'v2/app/pages/accounts/types'
 import { bankFormValidationSchema } from 'v2/app/pages/accounts/validation'
 import { useBanksRouter } from 'v2/app/pages/accounts/pages/banks/router'
 import { AppRouterLink } from 'v2/components/AppRouterLink'
@@ -18,7 +18,6 @@ import {
   getBankFormDefaultValues,
   transformBankFormValuesToArgs
 } from '../utils'
-import { BankArgs } from '../service/types'
 
 export interface BankFormProps {
   submitButtonLabel: string

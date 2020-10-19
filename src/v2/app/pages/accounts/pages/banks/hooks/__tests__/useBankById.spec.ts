@@ -2,11 +2,14 @@
 import { act } from '@testing-library/react-hooks'
 import { waitFor, cleanup, renderHookWithServiceProvider } from 'test-utils'
 import * as useAuthHook from 'v2/hooks/auth/useAuth'
-import { useIndividualIdentity } from 'v2/hooks/identity/useIndividualIdentity'
+import {
+  useBankById,
+  UseBankByIdArgs
+} from 'v2/app/pages/accounts/pages/banks/hooks/useBankById'
 import { user } from '__fixtures__/user'
-import { individual } from '__fixtures__/identity'
+import { bank } from '__fixtures__/authorizer'
 
-describe('useIndividualIdentity', () => {
+describe('useBankById', () => {
   beforeEach(() => {
     jest
       .spyOn(useAuthHook, 'useAuth')
@@ -19,13 +22,12 @@ describe('useIndividualIdentity', () => {
 
   it('returns data with correct response from api', async () => {
     await act(async () => {
-      const getFn = jest
-        .fn()
-        .mockResolvedValueOnce({ data: { data: individual } })
+      const getFn = jest.fn().mockResolvedValueOnce({ data: bank })
       const apiObj = { get: getFn }
+      const args: UseBankByIdArgs = { bankId: bank._id, ownerId: '123' }
 
       const { result } = renderHookWithServiceProvider(
-        () => useIndividualIdentity(),
+        () => useBankById(args),
         { apiService: apiObj }
       )
 
@@ -33,10 +35,10 @@ describe('useIndividualIdentity', () => {
         () => {
           expect(result.current.status).toBe('success')
           expect(getFn).toHaveBeenCalledWith(
-            `/identity/individuals/${user._id}`
+            `accounts/banks/${args.ownerId as string}/${bank._id}`
           )
 
-          expect(result.current.data).toEqual({ data: individual })
+          expect(result.current.data).toEqual(bank)
         },
         { timeout: 1000 }
       )
