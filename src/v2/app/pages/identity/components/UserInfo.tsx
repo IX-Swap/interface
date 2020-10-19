@@ -17,13 +17,18 @@ const UserInfo = (props: IdentityForm): JSX.Element => {
   return (
     <Grid container spacing={3}>
       <Grid item xs={12}>
-        <UserAvatar name='photo' isEditing={isEditing} ownerId='' />
+        <UserAvatar
+          root={rootPath}
+          name='photo'
+          isEditing={isEditing}
+          ownerId=''
+        />
       </Grid>
       <Grid item xs={4}>
         <EditableField
           fieldType='TextField'
-          isEditing={isEditing}
           root={rootPath}
+          isEditing={isEditing}
           name='firstName'
           label='First Name'
         />
