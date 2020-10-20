@@ -10,9 +10,8 @@ export const WithdrawForm: React.FC = props => {
   const { children } = props
   const { Form } = useWithdrawCashForm()
   const [withdrawCash] = useWithdrawCash()
-  const handleSubmit = (values: WithdrawCashFormValues): void => {
-    // eslint-disable-next-line no-void
-    void withdrawCash(values)
+  const handleSubmit = async (values: WithdrawCashFormValues) => {
+    await withdrawCash(values)
   }
 
   return (

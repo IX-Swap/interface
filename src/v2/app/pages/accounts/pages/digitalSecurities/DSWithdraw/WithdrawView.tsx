@@ -7,28 +7,40 @@ import { useDepositStore } from 'v2/app/pages/accounts/pages/banks/context'
 import { observer } from 'mobx-react'
 import { useUnmountCallback } from 'v2/hooks/useUnmountCallback'
 import { DisplayNone } from 'v2/app/components/DisplayNone'
-import { VSpacer } from 'v2/components/VSpacer'
+import { SuccessView } from 'v2/app/pages/accounts/pages/banks/components/SuccessView'
+import { ResetButton } from 'v2/app/pages/accounts/pages/banks/components/ResetButton'
 
 export const WithdrawView: React.FC = observer(() => {
-  const { isPreview, clear } = useDepositStore()
+  const { isSetup, isSuccess, isPreview, clear } = useDepositStore()
 
   useUnmountCallback(clear)
 
   return (
     <Grid container justify='center'>
-      <Grid item xs={5} container direction='column'>
+      <Grid item xs={5} container direction='column' spacing={4}>
+        <Grid item>{(isSetup || isPreview) && <AssetInfo />}</Grid>
         <Grid item>
-          <AssetInfo />
+          {(isSetup || isPreview) && (
+            <DisplayNone when={isPreview}>
+              <Setup />
+            </DisplayNone>
+          )}
         </Grid>
-        <Grid item>
-          <VSpacer size='small' />
-        </Grid>
-        <Grid item>
-          <DisplayNone when={isPreview}>
-            <Setup />
-          </DisplayNone>
-          {isPreview && <Preview />}
-        </Grid>
+        {isPreview && (
+          <Grid item>
+            <Preview />
+          </Grid>
+        )}
+        {isSuccess && (
+          <>
+            <Grid item>
+              <SuccessView title='Withdrawal Successful' />
+            </Grid>
+            <Grid item>
+              <ResetButton fullWidth>Make Another Withdrawal</ResetButton>
+            </Grid>
+          </>
+        )}
       </Grid>
     </Grid>
   )

@@ -2,7 +2,7 @@ import React from 'react'
 import { BankDetails } from 'v2/app/components/BankDetails'
 import { useFormContext } from 'react-hook-form'
 import { useBanksData } from 'v2/app/pages/accounts/pages/banks/hooks/useBanksData'
-import { Box } from '@material-ui/core'
+import { Grid } from '@material-ui/core'
 import { WithdrawCashFormValues } from 'v2/app/pages/accounts/types'
 
 export const BankPreview: React.FC = () => {
@@ -16,8 +16,8 @@ export const BankPreview: React.FC = () => {
   }
 
   return (
-    <Box py={4} data-testid='BankPreview'>
+    <Grid item data-testid='BankPreview'>
       <BankDetails bank={bank} />
-    </Box>
+    </Grid>
   )
 }

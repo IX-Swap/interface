@@ -14,8 +14,8 @@ export const DepositForm: React.FC<DepositFormProps> = props => {
   const { depositCode, children } = props
   const { Form } = useDepositCashForm()
   const [depositCash] = useDepositCash()
-  const handleSubmit = (values: DepositCashFormValues) => {
-    void depositCash({ ...values, depositCode })
+  const handleSubmit = async (values: DepositCashFormValues) => {
+    await depositCash({ ...values, depositCode })
   }
 
   return (

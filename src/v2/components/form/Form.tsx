@@ -1,9 +1,10 @@
-import React, { PropsWithChildren, useEffect } from 'react'
+import React, { PropsWithChildren } from 'react'
 import { SubmitHandler, useForm, FormProvider } from 'react-hook-form'
 import { ObjectSchema, Shape, object } from 'yup'
 import { yupResolver } from '@hookform/resolvers'
 import { DeepMap, FieldError } from '@hookform/error-message/dist/types'
 import { useServices } from 'v2/services/useServices'
+import { useUnmountCallback } from 'v2/hooks/useUnmountCallback'
 
 export interface FormProps<T extends {}> {
   defaultValues?: Partial<T>
@@ -42,11 +43,7 @@ export const Form = <T,>(
     )
   }
 
-  useEffect(() => {
-    return () => {
-      form.reset()
-    }
-  }, []) // eslint-disable-line
+  useUnmountCallback(form.reset)
 
   return (
     <FormProvider {...form}>
