@@ -23,6 +23,19 @@ export enum AppFeature {
   Issuance = 'issuance'
 }
 
+export enum NotificationFilter {
+  Authentication = 'logins',
+  'Bank Accounts' = 'bank-accounts',
+  'Deposits' = 'deposits',
+  'Withdrawals' = 'withdrawals',
+  'Digital Security Withdrawals' = 'digital-security-withdrawals',
+  Corporates = 'corporates',
+  Individuals = 'individuals',
+  Commitments = 'commitments',
+  Offerings = 'offerings',
+  Deployments = 'deployments'
+}
+
 export enum AuthorizerCategory {
   'Bank Accounts' = 'bank-accounts',
   'Cash Deposits' = 'cash-deposits',
