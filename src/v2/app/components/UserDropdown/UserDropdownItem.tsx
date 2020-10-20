@@ -1,6 +1,11 @@
-import { ListItemIcon, ListItemText, MenuItem } from '@material-ui/core'
+import {
+  ListItemIcon,
+  ListItemText,
+  MenuItem,
+  Typography
+} from '@material-ui/core'
 import { AppRouterLink } from 'v2/components/AppRouterLink'
-import React from 'react'
+import React, { createElement } from 'react'
 import { useStyles } from 'v2/app/components/UserDropdown/UserDropdownItem.styles'
 import { useLocation } from 'react-router-dom'
 
@@ -15,26 +20,34 @@ export interface UserDropdownItemProps {
 export const UserDropdownItem = (props: UserDropdownItemProps) => {
   const { icon, label, link, onClick, onClose } = props
   const { pathname } = useLocation()
-  const isActive = typeof link === 'string' ? pathname.startsWith(link) : false
+  const isActive = typeof link === 'string' && pathname.startsWith(link)
+  console.log(link, isActive, pathname)
   const classes = useStyles()
   const handleClick = () => {
     onClick?.()
     onClose()
   }
-  let linkElement: JSX.Element | string
-
-  if (typeof link === 'string') {
-    linkElement = <AppRouterLink to={link}>{label}</AppRouterLink>
-  } else {
-    linkElement = label
-  }
+  const iconElement = createElement(icon)
+  const LinkElement = (linkProps: any) => (
+    <AppRouterLink {...linkProps} role='menuitem' />
+  )
 
   return (
-    <MenuItem selected={isActive} onClick={handleClick}>
-      <ListItemIcon className={classes.iconWrapper}>
-        {React.createElement(icon)}
+    <MenuItem
+      component={typeof link === 'string' ? LinkElement : 'li'}
+      selected={isActive}
+      onClick={handleClick}
+      to={link}
+    >
+      <ListItemIcon
+        className={classes.iconWrapper}
+        style={{ color: 'inherit' }}
+      >
+        {iconElement}
       </ListItemIcon>
-      <ListItemText>{linkElement}</ListItemText>
+      <ListItemText>
+        <Typography>{label}</Typography>
+      </ListItemText>
     </MenuItem>
   )
 }

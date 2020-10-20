@@ -36,7 +36,7 @@ export const Actions = <T,>(props: ActionsProps<T>): JSX.Element => {
 
   return (
     <Grid container>
-      <IconButton onClick={viewItem} data-testid='view-button'>
+      <IconButton onClick={viewItem} size='small' data-testid='view-button'>
         <LaunchIcon className={classes.viewColor} />
       </IconButton>
     </Grid>

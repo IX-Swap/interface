@@ -3,7 +3,7 @@ import { Box, Button, CircularProgress, Grid } from '@material-ui/core'
 import useStyles from 'v2/auth/styles'
 import { useAuthRouter } from 'v2/auth/router'
 import { useVerifySignup } from 'v2/auth/hooks/useVerifySignup'
-import { AppRouterLink } from 'v2/components/AppRouterLink'
+import { AppRouterLinkComponent } from 'v2/components/AppRouterLink'
 
 export const Confirmation: React.FC = () => {
   const classes = useStyles()
@@ -27,8 +27,12 @@ export const Confirmation: React.FC = () => {
     content = (
       <Box mt={4}>
         <Box mt={4}>
-          <Button variant='outlined'>
-            <AppRouterLink to={paths.login}>Back to Login</AppRouterLink>
+          <Button
+            component={AppRouterLinkComponent}
+            variant='contained'
+            to={paths.login}
+          >
+            Back to Login
           </Button>
         </Box>
       </Box>

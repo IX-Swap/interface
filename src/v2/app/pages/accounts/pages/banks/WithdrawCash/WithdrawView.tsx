@@ -15,26 +15,29 @@ import { BackButton } from 'v2/app/pages/accounts/pages/banks/components/BackBut
 import { DisplayNone } from 'v2/app/components/DisplayNone'
 import { useUnmountCallback } from 'v2/hooks/useUnmountCallback'
 import { VSpacer } from 'v2/components/VSpacer'
+import { SuccessView } from 'v2/app/pages/accounts/pages/banks/components/SuccessView'
+import { ResetButton } from 'v2/app/pages/accounts/pages/banks/components/ResetButton'
 
 export const WithdrawView: React.FC = observer(() => {
-  const { isPreview, clear } = useDepositStore()
+  const { isSetup, isPreview, isSuccess, clear } = useDepositStore()
   const { TextField, Submit } = useWithdrawCashForm()
 
   useUnmountCallback(clear)
 
   return (
-    <Grid container justify='center'>
-      <Grid item xs={5}>
-        <WithdrawForm>
+    <WithdrawForm>
+      <Grid container justify='center'>
+        <Grid item xs={5} container direction='column' spacing={4}>
           <Grid item>
-            <DisplayNone when={isPreview}>
-              <Setup />
-            </DisplayNone>
+            {(isSetup || isPreview) && (
+              <DisplayNone when={isPreview}>
+                <Setup />
+              </DisplayNone>
+            )}
             {isPreview && <Preview />}
+            {isSuccess && <SuccessView title='Withdrawal Successful' />}
           </Grid>
-          <Grid item>
-            <BankPreview />
-          </Grid>
+          {(isSetup || isPreview) && <BankPreview />}
           {isPreview && (
             <Grid item>
               <WithdrawCashAlert />
@@ -46,8 +49,8 @@ export const WithdrawView: React.FC = observer(() => {
                     autoComplete: 'off'
                   }}
                 />
+                <VSpacer size='small' />
               </Grid>
-              <VSpacer size='small' />
             </Grid>
           )}
           <Grid item>
@@ -62,16 +65,20 @@ export const WithdrawView: React.FC = observer(() => {
                   <BackButton fullWidth />
                 </Grid>
               )}
-              {!isPreview && (
+              {isSetup && (
                 <Grid item>
-                  <VSpacer size='small' />
                   <ContinueButton fullWidth />
+                </Grid>
+              )}
+              {isSuccess && (
+                <Grid item>
+                  <ResetButton fullWidth>Make Another Withdrawal</ResetButton>
                 </Grid>
               )}
             </Grid>
           </Grid>
-        </WithdrawForm>
+        </Grid>
       </Grid>
-    </Grid>
+    </WithdrawForm>
   )
 })

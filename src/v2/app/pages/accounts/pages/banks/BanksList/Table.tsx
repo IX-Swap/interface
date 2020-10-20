@@ -4,18 +4,21 @@ import { columns } from 'v2/app/pages/accounts/pages/banks/BanksList/columns'
 import { Bank } from 'v2/types/bank'
 import { Actions } from 'v2/app/pages/accounts/pages/banks/BanksList/Actions'
 import { useAuth } from 'v2/hooks/auth/useAuth'
+import { Paper } from '@material-ui/core'
 
 export const Table: React.FC = () => {
   const { user } = useAuth()
   const userId = user?._id ?? ''
 
   return (
-    <TableView<Bank>
-      uri={`/accounts/banks/list/${userId}`}
-      name={`banks-${userId}`}
-      columns={columns}
-      hasActions
-      actions={({ item }) => <Actions item={item} />}
-    />
+    <Paper variant='elevation'>
+      <TableView<Bank>
+        uri={`/accounts/banks/list/${userId}`}
+        name={`banks-${userId}`}
+        columns={columns}
+        hasActions
+        actions={({ item }) => <Actions item={item} />}
+      />
+    </Paper>
   )
 }

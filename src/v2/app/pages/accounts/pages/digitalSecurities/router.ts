@@ -3,8 +3,8 @@ import { DSList } from 'v2/app/pages/accounts/pages/digitalSecurities/DSList/DSL
 import { generateAppRouterHook } from 'v2/helpers/generateAppRouterHook'
 import { DSDeposit } from 'v2/app/pages/accounts/pages/digitalSecurities/DSDeposit/DSDeposit'
 import { DSWithdraw } from 'v2/app/pages/accounts/pages/digitalSecurities/DSWithdraw/DSWithdraw'
-import { DSView } from 'v2/app/pages/accounts/pages/digitalSecurities/DSView/DSView'
 import { makeURL } from 'v2/config/urls'
+import { DSPreview } from 'v2/app/components/DSPreview/DSPreview'
 
 export const DSRoute = {
   list: makeURL(['app', 'account', 'digitalSecurity']),
@@ -35,7 +35,7 @@ export const dsRoutes: InternalRouteProps[] = [
   {
     label: 'View Digital Security',
     path: DSRoute.view,
-    component: DSView,
+    component: DSPreview,
     exact: true
   },
   {

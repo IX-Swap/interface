@@ -90,14 +90,12 @@ const themes: Themes = {
           paddingBottom: 40
         }
       },
-      MuiLink: {
-        root: {
-          fontWeight: 400
-        }
-      },
       MuiInput: {
         root: {
           minHeight: 38
+        },
+        input: {
+          height: 22
         }
       },
       MuiInputLabel: {

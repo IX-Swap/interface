@@ -5,10 +5,10 @@ import { DataroomFile } from 'v2/types/dataroomFile'
 export const commitmentFormValidationSchema = yup
   .object()
   .shape<CommitmentFormValues>({
-    pricePerUnit: yup.number().required(),
-    totalAmount: yup.number().required(),
-    numberOfUnits: yup.number().required(),
-    otp: yup.string().required(),
-    signedSubscriptionDocument: yup.object<DataroomFile>().required(),
-    walletAddress: yup.string().required()
+    pricePerUnit: yup.number().required('Required'),
+    totalAmount: yup.number().required('Required'),
+    numberOfUnits: yup.number().required('Required'),
+    otp: yup.string().required('Required'),
+    signedSubscriptionDocument: yup.object<DataroomFile>().required('Required'),
+    walletAddress: yup.string().required('Required')
   })

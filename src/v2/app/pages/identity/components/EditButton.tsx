@@ -1,6 +1,6 @@
 import React from 'react'
 import { Button } from '@material-ui/core'
-import { AppRouterLink } from 'v2/components/AppRouterLink'
+import { AppRouterLinkComponent } from 'v2/components/AppRouterLink'
 
 export interface EditButtonProps {
   link: string
@@ -13,9 +13,14 @@ export const EditButton: React.FC<EditButtonProps> = ({
   params = {},
   replace = false
 }) => (
-  <Button color='primary' variant='contained'>
-    <AppRouterLink to={link} params={params} replace={replace}>
-      Edit
-    </AppRouterLink>
+  <Button
+    component={AppRouterLinkComponent}
+    color='primary'
+    variant='contained'
+    to={link}
+    params={params}
+    replace={replace}
+  >
+    Edit
   </Button>
 )

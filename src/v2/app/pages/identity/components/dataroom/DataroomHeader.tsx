@@ -6,7 +6,7 @@ export const DataroomHeader: React.FC = () => {
   const classes = useStyles()
 
   return (
-    <ListSubheader>
+    <ListSubheader disableSticky>
       <Grid container>
         <Grid container item xs={3}>
           <Typography className={classes.listItemHeader}>File Name</Typography>

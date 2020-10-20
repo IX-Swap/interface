@@ -8,13 +8,11 @@ import { useAuth } from 'v2/hooks/auth/useAuth'
 export const Balances: React.FC = () => {
   const { user } = useAuth()
 
-  if (user === undefined) return null
-
   return (
-    <Paper>
+    <Paper variant='elevation'>
       <TableView<AssetBalance>
-        uri={`/accounts/balance/${user._id}`}
-        name={`balance-${user._id}`}
+        uri={`/accounts/balance/${user?._id ?? ''}`}
+        name={`balance-${user?._id ?? ''}`}
         filter={{ type: 'Currency' }}
         columns={columns}
       />

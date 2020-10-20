@@ -104,7 +104,7 @@ export const TableView = <T,>({
               <TableRow>
                 <TablePagination
                   style={!bordered ? { borderBottom: 'none' } : {}}
-                  rowsPerPageOptions={[5, 10, 25]}
+                  rowsPerPageOptions={[5, 10, 25, 50]}
                   colSpan={columns.length + +hasActions}
                   count={total}
                   rowsPerPage={rowsPerPage}

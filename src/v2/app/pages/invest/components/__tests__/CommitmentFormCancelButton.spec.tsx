@@ -5,7 +5,7 @@ import {
   CommitmentFormCancelButton,
   CommitmentFormCancelButtonProps
 } from 'v2/app/pages/invest/components/CommitmentFormCancelButton'
-import { AppRouterLink } from 'v2/components/AppRouterLink'
+import { AppRouterLinkComponent } from 'v2/components/AppRouterLink'
 import {
   useOfferingsRouter,
   OfferingRoute
@@ -18,7 +18,7 @@ const useOfferingsRouterMock = useOfferingsRouter as jest.Mock<
   Partial<ReturnType<typeof useOfferingsRouter>>
 >
 jest.mock('v2/components/AppRouterLink', () => ({
-  AppRouterLink: jest.fn(() => null)
+  AppRouterLinkComponent: jest.fn(() => null)
 }))
 
 describe('CommitmentFormCancelButton', () => {
@@ -41,13 +41,12 @@ describe('CommitmentFormCancelButton', () => {
   it('renders AppRouterLink with correct props', () => {
     render(<CommitmentFormCancelButton {...props} />)
 
-    expect(AppRouterLink).toHaveBeenCalledTimes(1)
-    expect(AppRouterLink).toHaveBeenCalledWith(
-      {
+    expect(AppRouterLinkComponent).toHaveBeenCalledWith(
+      expect.objectContaining({
         children: expect.anything(),
         to: OfferingRoute.view,
         params: { dsoId: dso._id }
-      },
+      }),
       {}
     )
   })
