@@ -6,11 +6,11 @@ import {
   ActionsProps
 } from 'v2/app/pages/accounts/pages/banks/BanksList/Actions'
 import { bank } from '__fixtures__/authorizer'
-import { AppRouterLink } from 'v2/components/AppRouterLink'
+import { AppRouterLinkComponent } from 'v2/components/AppRouterLink'
 import { BanksRoute } from 'v2/app/pages/accounts/pages/banks/router'
 
 jest.mock('v2/components/AppRouterLink', () => ({
-  AppRouterLink: jest.fn(() => null)
+  AppRouterLinkComponent: jest.fn(() => null)
 }))
 
 describe('Actions', () => {
@@ -30,23 +30,23 @@ describe('Actions', () => {
   it('renders edit & view links', async () => {
     render(<Actions {...props} />)
 
-    expect(AppRouterLink).toHaveBeenNthCalledWith(
+    expect(AppRouterLinkComponent).toHaveBeenNthCalledWith(
       1,
-      {
-        children: 'Edit',
+      expect.objectContaining({
+        children: expect.anything(),
         to: BanksRoute.edit,
         params: { bankId: props.item._id }
-      },
+      }),
       {}
     )
 
-    expect(AppRouterLink).toHaveBeenNthCalledWith(
+    expect(AppRouterLinkComponent).toHaveBeenNthCalledWith(
       2,
-      {
-        children: 'View',
+      expect.objectContaining({
+        children: expect.anything(),
         to: BanksRoute.view,
         params: { bankId: props.item._id }
-      },
+      }),
       {}
     )
   })

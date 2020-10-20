@@ -5,7 +5,7 @@ import { Actions, ActionsProps } from 'v2/app/pages/admin/components/Actions'
 import { user } from '__fixtures__/user'
 import * as adminViewHook from '../../hooks/useAdminView'
 import DialogConfirmRoleChange from 'v2/app/pages/admin/components/DialogConfirmRoleChange'
-import { appRoles } from 'v2/helpers/acl'
+import { AppRole } from 'v2/helpers/acl'
 import { waitFor, fireEvent } from '@testing-library/react'
 import { useAdminView } from '../../hooks/useAdminView'
 
@@ -18,7 +18,7 @@ describe('Actions', () => {
   const fakeAdminView: ReturnType<typeof useAdminView> = {
     open: true,
     handleClose: jest.fn(),
-    roles: [appRoles.ACCREDITED, appRoles.AUTHORIZER],
+    roles: [AppRole.ACCREDITED, AppRole.AUTHORIZER],
     handleConfirm: jest.fn(),
     handleChange: jest.fn(),
     handleRoleChange: jest.fn(),

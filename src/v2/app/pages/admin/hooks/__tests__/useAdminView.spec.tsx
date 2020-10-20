@@ -1,7 +1,7 @@
 import { renderHook, cleanup, act } from '@testing-library/react-hooks'
 import { useAdminView } from 'v2/app/pages/admin/hooks/useAdminView'
 import { user } from '__fixtures__/user'
-import { appRoles } from 'v2/helpers/acl'
+import { AppRole } from 'v2/helpers/acl'
 
 describe('useAdminView', () => {
   const refresh = jest.fn()
@@ -44,14 +44,11 @@ describe('useAdminView', () => {
     const { result } = renderHook(() => useAdminView(user, refresh))
 
     void act(() => {
-      result.current.handleRoleChange([
-        appRoles.ACCREDITED,
-        appRoles.AUTHORIZER
-      ])
+      result.current.handleRoleChange([AppRole.ACCREDITED, AppRole.AUTHORIZER])
     })
     expect(result.current.roles).toEqual([
-      appRoles.ACCREDITED,
-      appRoles.AUTHORIZER
+      AppRole.ACCREDITED,
+      AppRole.AUTHORIZER
     ])
   })
 

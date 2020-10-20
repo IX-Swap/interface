@@ -7,6 +7,9 @@ import { DepositCashAlert } from 'v2/app/pages/accounts/pages/banks/components/D
 import { Preview } from 'v2/app/pages/accounts/pages/banks/DepositCash/Preview'
 import { BackButton } from 'v2/app/pages/accounts/pages/banks/components/BackButton'
 import { ContinueButton } from 'v2/app/pages/accounts/pages/banks/DepositCash/ContinueButton'
+import { BankDetails } from 'v2/app/components/BankDetails'
+import { SuccessView } from 'v2/app/pages/accounts/pages/banks/components/SuccessView'
+import { ResetButton } from 'v2/app/pages/accounts/pages/banks/components/ResetButton'
 
 jest.mock('v2/app/pages/accounts/pages/banks/DepositCash/Setup', () => ({
   Setup: jest.fn(() => null)
@@ -18,6 +21,22 @@ jest.mock(
     DepositCashAlert: jest.fn(() => null)
   })
 )
+
+jest.mock('v2/app/components/BankDetails', () => ({
+  BankDetails: jest.fn(() => null)
+}))
+
+jest.mock('v2/app/pages/accounts/pages/banks/components/SuccessView', () => ({
+  SuccessView: jest.fn(() => null)
+}))
+
+jest.mock('v2/app/pages/accounts/pages/banks/components/BackButton', () => ({
+  BackButton: jest.fn(() => null)
+}))
+
+jest.mock('v2/app/pages/accounts/pages/banks/components/ResetButton', () => ({
+  ResetButton: jest.fn(() => null)
+}))
 
 jest.mock('v2/app/pages/accounts/pages/banks/DepositCash/Preview', () => ({
   Preview: jest.fn(() => null)
@@ -40,37 +59,59 @@ describe('DepositView', () => {
     jest.clearAllMocks()
   })
 
-  it('renders Setup and ContinueButton if preview is false', () => {
+  it('renders correct components on the SETUP step', () => {
     const { queryByLabelText, queryByText } = renderWithDepositStore(
       <DepositView />,
       {
-        isPreview: false
+        isSetup: true
       }
     )
 
-    expect(Setup).toHaveBeenCalledTimes(1)
-    expect(ContinueButton).toHaveBeenCalledTimes(1)
-
-    expect(BackButton).toHaveBeenCalledTimes(0)
+    expect(Setup).toBeCalled()
+    expect(BankDetails).toBeCalled()
+    expect(ContinueButton).toBeCalled()
+    expect(Preview).not.toBeCalled()
+    expect(SuccessView).not.toBeCalled()
+    expect(DepositCashAlert).not.toBeCalled()
+    expect(BackButton).not.toBeCalled()
+    expect(ResetButton).not.toBeCalled()
     expect(queryByText('Confirm Deposit')).toBeFalsy()
     expect(queryByLabelText('2-Factor Auth Code')).toBeFalsy()
-    expect(Preview).toHaveBeenCalledTimes(0)
-    expect(DepositCashAlert).toHaveBeenCalledTimes(0)
   })
 
-  it('renders DepositCashAlert,Preview, OTP, CancelButton and SubmitButton if preview is true', () => {
+  it('renders correct components on the PREVIEW step', () => {
     const {
       queryByLabelText,
       queryByText
     } = renderWithDepositStore(<DepositView />, { isPreview: true })
 
-    expect(ContinueButton).toHaveBeenCalledTimes(0)
-
-    expect(Setup).toHaveBeenCalledTimes(1)
-    expect(BackButton).toHaveBeenCalledTimes(1)
+    expect(Setup).toBeCalled()
+    expect(BankDetails).toBeCalled()
+    expect(ContinueButton).not.toBeCalled()
+    expect(Preview).toBeCalled()
+    expect(SuccessView).not.toBeCalled()
+    expect(DepositCashAlert).toBeCalled()
+    expect(BackButton).toBeCalled()
+    expect(ResetButton).not.toBeCalled()
     expect(queryByText('Confirm Deposit')).toBeTruthy()
     expect(queryByLabelText('2-Factor Auth Code')).toBeTruthy()
-    expect(Preview).toHaveBeenCalledTimes(1)
-    expect(DepositCashAlert).toHaveBeenCalledTimes(1)
+  })
+
+  it('renders correct components on the SUCCESS step', () => {
+    const {
+      queryByLabelText,
+      queryByText
+    } = renderWithDepositStore(<DepositView />, { isSuccess: true })
+
+    expect(Setup).not.toBeCalled()
+    expect(BankDetails).not.toBeCalled()
+    expect(ContinueButton).not.toBeCalled()
+    expect(Preview).not.toBeCalled()
+    expect(SuccessView).toBeCalled()
+    expect(DepositCashAlert).not.toBeCalled()
+    expect(BackButton).not.toBeCalled()
+    expect(ResetButton).toBeCalled()
+    expect(queryByText('Confirm Deposit')).toBeFalsy()
+    expect(queryByLabelText('2-Factor Auth Code')).toBeFalsy()
   })
 })

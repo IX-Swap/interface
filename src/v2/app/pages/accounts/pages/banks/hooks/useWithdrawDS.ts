@@ -8,6 +8,7 @@ export const useWithdrawDS = () => {
   const { push } = useAccountsRouter()
   const { user } = useAuth()
   const { apiService } = useServices()
+  const { setCurrentStep } = useDepositStore()
 
   const withdrawDS = async (args: WithdrawDSArgs) => {
     const uri = `/accounts/security/withdrawals/${user?._id ?? ''}`
@@ -16,6 +17,12 @@ export const useWithdrawDS = () => {
   }
 
   return useMutation(withdrawDS, {
-    onSuccess: () => push('landing')
+    onSuccess: data => {
+      void snackbarService.showSnackbar(data.message, 'success')
+      setCurrentStep(DepositStoreStep.SUCCESS)
+    },
+    onError: (error: any) => {
+      void snackbarService.showSnackbar(error.message, 'error')
+    }
   })
 }

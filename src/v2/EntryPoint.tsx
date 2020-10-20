@@ -2,9 +2,9 @@ import React, { Suspense, useEffect } from 'react'
 import { Router, Redirect, Switch } from 'react-router-dom'
 import { history } from 'v2/history'
 import { LoadingFullScreen } from 'v2/auth/components/LoadingFullScreen'
-import { useAuth } from 'v2/hooks/auth/useAuth'
 import { BreadcrumbsProvider } from 'v2/hooks/useBreadcrumbs'
 import { SentryRoute } from 'v2/components/SentryRoute'
+import { useAppInit } from 'v2/hooks/useAppInit'
 
 const AuthRoot = React.lazy(
   async () =>
@@ -18,7 +18,7 @@ const AppRoot = React.lazy(
 )
 
 export const EntryPoint = () => {
-  const { isAuthenticated } = useAuth()
+  const { isSuccess, isFinished } = useAppInit()
 
   useEffect(() => {
     history.listen((location, action) => {
@@ -28,17 +28,24 @@ export const EntryPoint = () => {
     })
   }, [])
 
+  if (!isFinished) {
+    return <LoadingFullScreen />
+  }
+
   return (
     <Suspense fallback={<LoadingFullScreen />}>
       <BreadcrumbsProvider>
         <Router history={history}>
           <Switch>
-            <SentryRoute path='/app' exact={false} component={AppRoot} />
-            <SentryRoute path='/auth' exact={false} component={AuthRoot} />
+            {isSuccess ? (
+              <SentryRoute path='/app' exact={false} component={AppRoot} />
+            ) : (
+              <SentryRoute path='/auth' exact={false} component={AuthRoot} />
+            )}
             <SentryRoute
-              render={() => (
-                <Redirect to={isAuthenticated ? '/app' : '/auth'} />
-              )}
+              exact
+              path='*'
+              render={() => <Redirect to={isSuccess ? '/app' : '/auth'} />}
             />
           </Switch>
         </Router>

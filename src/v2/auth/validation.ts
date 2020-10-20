@@ -4,7 +4,7 @@ import {
   LoginArgs,
   RequestPasswordResetArgs,
   SignupArgs
-} from 'v2/auth/service/types'
+} from 'v2/types/auth'
 
 const passwordPatterns = [
   /[A-Z]/, // at least one uppercase character

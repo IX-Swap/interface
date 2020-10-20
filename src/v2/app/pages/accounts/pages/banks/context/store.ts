@@ -2,7 +2,8 @@ import { action, computed, observable } from 'mobx'
 
 export enum DepositStoreStep {
   SETUP,
-  PREVIEW
+  PREVIEW,
+  SUCCESS
 }
 
 export class DepositStore {
@@ -10,8 +11,18 @@ export class DepositStore {
   currentStep = DepositStoreStep.SETUP
 
   @computed
+  get isSetup(): boolean {
+    return this.currentStep === DepositStoreStep.SETUP
+  }
+
+  @computed
   get isPreview(): boolean {
     return this.currentStep === DepositStoreStep.PREVIEW
+  }
+
+  @computed
+  get isSuccess(): boolean {
+    return this.currentStep === DepositStoreStep.SUCCESS
   }
 
   @action

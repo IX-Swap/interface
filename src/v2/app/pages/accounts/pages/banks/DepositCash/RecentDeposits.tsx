@@ -10,7 +10,7 @@ export const RecentDeposits: React.FC = () => {
   const userId = user !== undefined ? user._id : ''
 
   return (
-    <Paper>
+    <Paper variant='elevation'>
       <TableView<CashDeposit>
         uri={`/accounts/cash/deposits/list/${userId}`}
         name={`cash-deposits-${userId}`}

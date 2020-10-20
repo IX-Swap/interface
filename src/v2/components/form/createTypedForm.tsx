@@ -69,6 +69,13 @@ export interface FieldsArrayRendererProps {
 export const createTypedForm = <FormType extends Record<string, any>>() => {
   const TypedField = createTypedField<FormType>()
 
+  const FormComponent = ({
+    children,
+    ...props
+  }: PropsWithChildren<FormProps<FormType>>): JSX.Element => (
+    <Form {...props}>{children}</Form>
+  )
+
   interface FieldsArrayComponentProps {
     name: string
     children: (props: FieldsArrayRendererProps) => Maybe<JSX.Element>
@@ -82,13 +89,6 @@ export const createTypedForm = <FormType extends Record<string, any>>() => {
 
     return children(fieldArray)
   }
-
-  const FormComponent = ({
-    children,
-    ...props
-  }: PropsWithChildren<FormProps<FormType>>): JSX.Element => (
-    <Form {...props}>{children}</Form>
-  )
 
   const TextFieldComponent = <Path extends DeepPath<FormType, Path>>(
     props: Omit<

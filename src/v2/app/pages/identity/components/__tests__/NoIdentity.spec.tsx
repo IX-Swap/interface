@@ -1,15 +1,15 @@
 /**  * @jest-environment jsdom-sixteen  */
 import React from 'react'
 import { render, cleanup } from 'test-utils'
-import { AppRouterLink } from 'v2/components/AppRouterLink'
+import { AppRouterLinkComponent } from 'v2/components/AppRouterLink'
 import {
   NoIdentity,
   NoIdentityProps
 } from 'v2/app/pages/identity/components/NoIdentity'
-import { IdentityRoute } from '../../router'
+import { IdentityRoute } from 'v2/app/pages/identity/router'
 
 jest.mock('v2/components/AppRouterLink', () => ({
-  AppRouterLink: jest.fn(({ children }) => children)
+  AppRouterLinkComponent: jest.fn(({ children }) => children)
 }))
 
 describe('NoIdentity', () => {
@@ -27,19 +27,19 @@ describe('NoIdentity', () => {
   })
 
   it('renders button correctly', () => {
-    const { getByRole } = render(<NoIdentity {...props} />)
+    const { getByText } = render(<NoIdentity {...props} />)
 
-    expect(getByRole('button')).toHaveTextContent(props.text)
+    expect(getByText(props.text)).toBeTruthy()
   })
 
   it('renders AppRouterLink correctly', () => {
     render(<NoIdentity {...props} />)
 
-    expect(AppRouterLink).toHaveBeenCalledWith(
-      {
+    expect(AppRouterLinkComponent).toBeCalledWith(
+      expect.objectContaining({
         to: IdentityRoute[props.link],
-        children: props.text
-      },
+        children: expect.anything()
+      }),
       {}
     )
   })

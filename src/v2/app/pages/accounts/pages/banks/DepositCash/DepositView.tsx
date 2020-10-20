@@ -17,10 +17,12 @@ import { DepositCashAlert } from 'v2/app/pages/accounts/pages/banks/components/D
 import { DisplayNone } from 'v2/app/components/DisplayNone'
 import { useUnmountCallback } from 'v2/hooks/useUnmountCallback'
 import { VSpacer } from 'v2/components/VSpacer'
+import { SuccessView } from 'v2/app/pages/accounts/pages/banks/components/SuccessView'
+import { ResetButton } from 'v2/app/pages/accounts/pages/banks/components/ResetButton'
 
 export const DepositView: React.FC = observer(() => {
   const { TextField, Submit } = useDepositCashForm()
-  const { isPreview, clear } = useDepositStore()
+  const { isPreview, isSuccess, isSetup, clear } = useDepositStore()
   const depositCode = generateRandom(8, 'A#')
 
   useUnmountCallback(clear)
@@ -30,14 +32,19 @@ export const DepositView: React.FC = observer(() => {
       <Grid container justify='center'>
         <Grid item xs={5} container direction='column' spacing={4}>
           <Grid item>
-            <DisplayNone when={isPreview}>
-              <Setup />
-            </DisplayNone>
+            {(isSetup || isPreview) && (
+              <DisplayNone when={isPreview}>
+                <Setup />
+              </DisplayNone>
+            )}
             {isPreview && <Preview depositCode={depositCode} />}
+            {isSuccess && <SuccessView title='Deposit Successful' />}
           </Grid>
-          <Grid item>
-            <BankDetails bank={INVESTAX_BANK} code={depositCode} />
-          </Grid>
+          {(isSetup || isPreview) && (
+            <Grid item>
+              <BankDetails bank={INVESTAX_BANK} code={depositCode} />
+            </Grid>
+          )}
           {isPreview && (
             <Grid item container justify='center'>
               <DepositCashAlert />
@@ -69,9 +76,14 @@ export const DepositView: React.FC = observer(() => {
                   <BackButton fullWidth />
                 </Grid>
               )}
-              {!isPreview && (
+              {isSetup && (
                 <Grid item>
                   <ContinueButton />
+                </Grid>
+              )}
+              {isSuccess && (
+                <Grid item>
+                  <ResetButton fullWidth>Make Another Deposit</ResetButton>
                 </Grid>
               )}
             </Grid>

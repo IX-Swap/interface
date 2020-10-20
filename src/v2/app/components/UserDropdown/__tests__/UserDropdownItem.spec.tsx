@@ -7,9 +7,12 @@ import {
 } from 'v2/app/components/UserDropdown/UserDropdownItem'
 import { AppRouterLink } from 'v2/components/AppRouterLink'
 import { fireEvent, waitFor } from '@testing-library/react'
+import { history } from 'v2/history'
 
 jest.mock('v2/components/AppRouterLink', () => ({
-  AppRouterLink: jest.fn(({ children }) => children)
+  AppRouterLink: jest.fn(({ children, ...rest }) => (
+    <li {...rest}>{children}</li>
+  ))
 }))
 
 describe('UserDropdownItem', () => {
@@ -20,6 +23,10 @@ describe('UserDropdownItem', () => {
     onClose: jest.fn(),
     onClick: jest.fn()
   }
+
+  beforeEach(() => {
+    history.push('/')
+  })
 
   afterEach(async () => {
     await cleanup()
@@ -56,12 +63,11 @@ describe('UserDropdownItem', () => {
   it('renders AppRouterLink with correct props if link is string', () => {
     render(<UserDropdownItem {...props} link='test-link' />)
 
-    expect(AppRouterLink).toHaveBeenCalledTimes(1)
     expect(AppRouterLink).toHaveBeenCalledWith(
-      {
+      expect.objectContaining({
         to: 'test-link',
-        children: props.label
-      },
+        children: expect.anything()
+      }),
       {}
     )
   })

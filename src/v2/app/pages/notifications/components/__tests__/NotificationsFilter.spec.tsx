@@ -2,13 +2,13 @@
 import React from 'react'
 import { render, cleanup } from 'test-utils'
 import { fireEvent, waitFor } from '@testing-library/react'
-import { AppFeature } from 'v2/types/app'
+import { NotificationFilter } from 'v2/types/app'
 import * as notificationsFilterHook from 'v2/app/pages/notifications/hooks/useNotificationsFilter'
 import { NotificationsFilter } from 'v2/app/pages/notifications/components/NotificationsFilter'
 
 describe('NotificationsFilter', () => {
   const hookReturnValues = {
-    filter: [AppFeature.Authentication],
+    filter: [NotificationFilter.Authentication],
     handleClick: jest.fn()
   }
   beforeEach(() => {
@@ -40,7 +40,7 @@ describe('NotificationsFilter', () => {
     await waitFor(() => {
       expect(hookReturnValues.handleClick).toHaveBeenCalledTimes(1)
       expect(hookReturnValues.handleClick).toHaveBeenCalledWith(
-        AppFeature.Authentication
+        NotificationFilter.Authentication
       )
     })
   })

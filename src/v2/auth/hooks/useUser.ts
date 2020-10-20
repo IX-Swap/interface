@@ -1,20 +1,14 @@
-import { UseQueryData } from 'v2/hooks/useParsedData'
 import User from 'v2/types/user'
-import { useServices } from 'v2/services/useServices'
-import { useQuery } from 'react-query'
+import { useMutation } from 'react-query'
+import { useAuth } from 'v2/hooks/auth/useAuth'
+import apiService from 'v2/services/api'
 
 export const USER_QUERY_KEY = 'user'
 
-export const useUser = (): UseQueryData<User> => {
-  const { authService, storageService } = useServices()
-  const user = storageService.get<User>('user')
-  const { data, ...rest } = useQuery(
-    [USER_QUERY_KEY, { userId: user?._id }],
-    authService.getUser.bind(authService)
-  )
+export const useUser = () => {
+  const { user: savedUser } = useAuth()
+  const url = `/auth/profiles/${savedUser?._id ?? ''}`
+  const mutateFn = async () => await apiService.get<User>(url)
 
-  return {
-    ...rest,
-    data: data?.data
-  }
+  return useMutation(mutateFn)
 }

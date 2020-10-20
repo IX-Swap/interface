@@ -20,12 +20,6 @@ describe('Balances', () => {
     renderWithUserStore(<Balances />)
   })
 
-  it('renders nothing if user is undefined', () => {
-    const { container } = renderWithUserStore(<Balances />)
-
-    expect(container).toBeEmptyDOMElement()
-  })
-
   it('renders TableView with correct props if user exists', () => {
     jest.spyOn(useAuthHook, 'useAuth').mockReturnValue({
       isAuthenticated: true,
@@ -34,7 +28,6 @@ describe('Balances', () => {
 
     renderWithUserStore(<Balances />)
 
-    expect(TableView).toHaveBeenCalledTimes(1)
     expect(TableView).toHaveBeenCalledWith(
       {
         name: `balance-${user._id}`,

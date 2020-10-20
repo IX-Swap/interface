@@ -2,10 +2,10 @@
 import React from 'react'
 import { render, cleanup } from 'test-utils'
 import { ViewButton } from 'v2/app/pages/identity/components/ViewButton'
-import { AppRouterLink } from 'v2/components/AppRouterLink'
+import { AppRouterLinkComponent } from 'v2/components/AppRouterLink'
 
 jest.mock('v2/components/AppRouterLink', () => ({
-  AppRouterLink: jest.fn(() => null)
+  AppRouterLinkComponent: jest.fn(() => null)
 }))
 
 describe('ViewButton', () => {
@@ -21,14 +21,13 @@ describe('ViewButton', () => {
   it('renders AppRouterLink with default params & replace', () => {
     render(<ViewButton link='/' />)
 
-    expect(AppRouterLink).toHaveBeenCalledTimes(1)
-    expect(AppRouterLink).toHaveBeenCalledWith(
-      {
+    expect(AppRouterLinkComponent).toHaveBeenCalledWith(
+      expect.objectContaining({
         to: '/',
         params: {},
         replace: false,
-        children: 'View'
-      },
+        children: expect.anything()
+      }),
       {}
     )
   })
@@ -36,14 +35,13 @@ describe('ViewButton', () => {
   it('renders AppRouterLink with correct props', () => {
     render(<ViewButton link='/' params={{ id: 'test-param' }} replace />)
 
-    expect(AppRouterLink).toHaveBeenCalledTimes(1)
-    expect(AppRouterLink).toHaveBeenCalledWith(
-      {
+    expect(AppRouterLinkComponent).toHaveBeenCalledWith(
+      expect.objectContaining({
         to: '/',
         params: { id: 'test-param' },
         replace: true,
-        children: 'View'
-      },
+        children: expect.anything()
+      }),
       {}
     )
   })

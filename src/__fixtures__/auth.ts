@@ -7,7 +7,7 @@ import {
   RequestPasswordResetArgs,
   SignupArgs,
   VerifySignupArgs
-} from 'v2/auth/service/types'
+} from 'v2/types/auth'
 
 const email = 'alex@investax.io'
 const password = 'Qwerty12345_'

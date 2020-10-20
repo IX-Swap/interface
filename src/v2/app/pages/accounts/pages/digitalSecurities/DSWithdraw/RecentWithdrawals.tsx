@@ -11,7 +11,7 @@ export const RecentWithdrawals: React.FC = () => {
   const userId = user !== undefined ? user._id : ''
 
   return (
-    <Card>
+    <Card variant='outlined'>
       <CardContent>
         <TableView
           uri={`/accounts/security/withdrawals/list/${userId}`}

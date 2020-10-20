@@ -8,6 +8,7 @@ export const useDepositCash = () => {
   const { user } = useAuth()
   const { push } = useAccountsRouter()
   const { apiService } = useServices()
+  const { setCurrentStep } = useDepositStore()
 
   const depositCash = async (args: DepositCashArgs) => {
     const uri = `/accounts/cash/deposits/${user?._id ?? ''}`
@@ -15,6 +16,12 @@ export const useDepositCash = () => {
   }
 
   return useMutation(depositCash, {
-    onSuccess: () => push('landing')
+    onSuccess: data => {
+      void snackbarService.showSnackbar(data.message, 'success')
+      setCurrentStep(DepositStoreStep.SUCCESS)
+    },
+    onError: (error: any) => {
+      void snackbarService.showSnackbar(error.message, 'error')
+    }
   })
 }

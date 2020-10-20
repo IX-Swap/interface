@@ -2,10 +2,12 @@
 import React from 'react'
 import { render, cleanup } from 'test-utils'
 import { ViewAllNotifications } from 'v2/app/pages/notifications/components/ViewAllNotifications'
-import { AppRouterLink } from 'v2/components/AppRouterLink'
+import { AppRouterLinkComponent } from 'v2/components/AppRouterLink'
 
 jest.mock('v2/components/AppRouterLink', () => ({
-  AppRouterLink: jest.fn(({ children }) => children)
+  AppRouterLinkComponent: jest.fn(({ children, ...rest }) => (
+    <div {...rest}>{children}</div>
+  ))
 }))
 
 describe('ViewAllNotifications', () => {
@@ -21,12 +23,11 @@ describe('ViewAllNotifications', () => {
   it('renders AppRouterLink with correct props', () => {
     render(<ViewAllNotifications />)
 
-    expect(AppRouterLink).toHaveBeenCalledTimes(1)
-    expect(AppRouterLink).toHaveBeenCalledWith(
-      {
+    expect(AppRouterLinkComponent).toHaveBeenCalledWith(
+      expect.objectContaining({
         to: '/app/notifications',
         children: expect.anything()
-      },
+      }),
       {}
     )
   })

@@ -2,7 +2,7 @@
 import React from 'react'
 import { render, cleanup } from 'test-utils'
 import { Actions, ActionsProps } from 'v2/app/pages/invest/components/Actions'
-import { AppRouterLink } from 'v2/components/AppRouterLink'
+import { AppRouterLinkComponent } from 'v2/components/AppRouterLink'
 import { commitment } from '__fixtures__/authorizer'
 import {
   useCommitmentRouter,
@@ -16,15 +16,17 @@ const useCommitmentRouterMock = useCommitmentRouter as jest.Mock<
 >
 
 jest.mock('v2/components/AppRouterLink', () => ({
-  AppRouterLink: jest.fn(({ children }) => children)
+  AppRouterLinkComponent: jest.fn(({ children }) => children)
 }))
 
 describe('Actions', () => {
   const props: ActionsProps = { item: commitment }
   const paths = CommitmentRoute
+
   beforeEach(() => {
     useCommitmentRouterMock.mockReturnValueOnce({ paths })
   })
+
   afterEach(async () => {
     await cleanup()
     jest.clearAllMocks()
@@ -37,13 +39,12 @@ describe('Actions', () => {
   it('renders AppRouterLink with correct props', () => {
     render(<Actions {...props} />)
 
-    expect(AppRouterLink).toHaveBeenCalledTimes(1)
-    expect(AppRouterLink).toHaveBeenCalledWith(
-      {
+    expect(AppRouterLinkComponent).toHaveBeenCalledWith(
+      expect.objectContaining({
         children: expect.anything(),
         to: paths.commitmentView,
         params: { commitmentId: commitment._id }
-      },
+      }),
       {}
     )
   })
