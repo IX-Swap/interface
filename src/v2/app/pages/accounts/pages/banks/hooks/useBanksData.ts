@@ -12,12 +12,11 @@ export const BANKS_QUERY_KEY = 'banks'
 export const useBanksData = (): UsePaginatedQueryData<Bank> => {
   const { apiService } = useServices()
   const { user } = useAuth()
+  const uri = `/accounts/banks/list/${user?._id ?? ''}`
 
   const getBanks = async (queryKey: string, args: GetBanksArgs) => {
-    const uri = `/accounts/banks/list/${user?._id ?? ''}`
     return await apiService.post<PaginatedData<Bank>>(uri, args)
   }
-
   const { data, ...queryResult } = useInfiniteQuery(
     [BANKS_QUERY_KEY, paginationArgs],
     getBanks

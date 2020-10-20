@@ -18,7 +18,6 @@ import {
   getBankFormDefaultValues,
   transformBankFormValuesToArgs
 } from 'v2/app/pages/accounts/pages/banks/utils'
-import { BankArgs } from 'v2/app/pages/accounts/pages/banks/service/types'
 
 export interface BankFormProps {
   submitButtonLabel: string

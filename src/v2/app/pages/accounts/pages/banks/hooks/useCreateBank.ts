@@ -9,9 +9,9 @@ export const useCreateBank = () => {
   const { apiService, snackbarService } = useServices()
   const { push } = useBanksRouter()
   const { user } = useAuth()
+  const uri = `/accounts/banks/${user?._id ?? ''}`
 
   const createBank = async (args: CreateBankArgs) => {
-    const uri = `/accounts/banks/${user?._id ?? ''}`
     return await apiService.post<Bank>(uri, args)
   }
 

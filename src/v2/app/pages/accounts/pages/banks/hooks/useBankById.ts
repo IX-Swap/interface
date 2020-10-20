@@ -17,6 +17,7 @@ export const useBankById = (args: UseBankByIdArgs): UseQueryData<Bank> => {
   const { user } = useAuth()
   const userId = ownerId ?? user?._id ?? ''
   const uri = `accounts/banks/${userId}/${bankId}`
+
   const getBank = async () => await apiService.get<Bank>(uri)
   const { data, ...rest } = useQuery(
     [USER_BANK_BY_ID_KEY, userId, bankId],

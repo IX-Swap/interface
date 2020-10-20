@@ -1,18 +1,17 @@
 import { useMutation } from 'react-query'
-import { useServices } from 'v2/services/useServices'
 import { useAuth } from 'v2/hooks/auth/useAuth'
+import { useServices } from 'v2/services/useServices'
 import { WithdrawDSArgs } from 'v2/app/pages/accounts/types'
-import { useAccountsRouter } from '../../../router'
+import { useDepositStore } from 'v2/app/pages/accounts/pages/banks/context'
+import { DepositStoreStep } from 'v2/app/pages/accounts/pages/banks/context/store'
 
 export const useWithdrawDS = () => {
-  const { push } = useAccountsRouter()
+  const { apiService, snackbarService } = useServices()
   const { user } = useAuth()
-  const { apiService } = useServices()
   const { setCurrentStep } = useDepositStore()
+  const uri = `/accounts/security/withdrawals/${user?._id ?? ''}`
 
   const withdrawDS = async (args: WithdrawDSArgs) => {
-    const uri = `/accounts/security/withdrawals/${user?._id ?? ''}`
-
     return await apiService.post(uri, args)
   }
 
