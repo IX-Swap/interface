@@ -5,7 +5,7 @@ import {
   defaultNotificationFilter,
   useNotificationsFilter
 } from 'v2/app/pages/notifications/hooks/useNotificationsFilter'
-import { AppFeature } from 'v2/types/app'
+import { NotificationFilter } from 'v2/types/app'
 
 describe('useNotificationsFilter', () => {
   afterEach(async () => {
@@ -23,13 +23,13 @@ describe('useNotificationsFilter', () => {
     const { result } = renderHook(() => useNotificationsFilter())
 
     await act(async () => {
-      result.current.handleClick(AppFeature.Authentication)
+      result.current.handleClick(NotificationFilter.Authentication)
 
       await waitFor(
         () => {
           expect(result.current.filter).toEqual(
             defaultNotificationFilter.filter(
-              i => i !== AppFeature.Authentication
+              i => i !== NotificationFilter.Authentication
             )
           )
         },
@@ -41,20 +41,23 @@ describe('useNotificationsFilter', () => {
   it('adds item from filter on click', async () => {
     const { result } = renderHook(() => useNotificationsFilter())
     const filtersWithoutAuth = defaultNotificationFilter.filter(
-      i => i !== AppFeature.Authentication
+      i => i !== NotificationFilter.Authentication
     )
 
     await act(async () => {
-      result.current.handleClick(AppFeature.Authentication)
+      result.current.handleClick(NotificationFilter.Authentication)
       await waitFor(
         () => expect(result.current.filter).toEqual(filtersWithoutAuth),
         { timeout: 1000 }
       )
     })
 
-    const filtersWithAuth = [...filtersWithoutAuth, AppFeature.Authentication]
+    const filtersWithAuth = [
+      ...filtersWithoutAuth,
+      NotificationFilter.Authentication
+    ]
     await act(async () => {
-      result.current.handleClick(AppFeature.Authentication)
+      result.current.handleClick(NotificationFilter.Authentication)
       await waitFor(
         () => expect(result.current.filter).toEqual(filtersWithAuth),
         { timeout: 1000 }

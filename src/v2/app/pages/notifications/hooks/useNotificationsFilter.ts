@@ -1,14 +1,16 @@
 import { useServices } from 'v2/services/useServices'
 import { useEffect, useState } from 'react'
-import { AppFeature } from 'v2/types/app'
+import { NotificationFilter } from 'v2/types/app'
 import { queryCache } from 'react-query'
 
-export const defaultNotificationFilter = Object.values(AppFeature)
+export const defaultNotificationFilter = Object.values(NotificationFilter)
 
 export const useNotificationsFilter = () => {
   const { storageService } = useServices()
-  const [filter, setFilter] = useState<AppFeature[]>(defaultNotificationFilter)
-  const handleClick = (value: AppFeature) => {
+  const [filter, setFilter] = useState<NotificationFilter[]>(
+    defaultNotificationFilter
+  )
+  const handleClick = (value: NotificationFilter) => {
     setFilter(f => {
       const nextFilter = f.includes(value)
         ? f.filter(v => v !== value)
@@ -22,7 +24,9 @@ export const useNotificationsFilter = () => {
   }
 
   useEffect(() => {
-    const savedFilters = storageService.get<AppFeature[]>('notificationFilter')
+    const savedFilters = storageService.get<NotificationFilter[]>(
+      'notificationFilter'
+    )
     setFilter(savedFilters ?? defaultNotificationFilter)
   }, []) //eslint-disable-line
 
