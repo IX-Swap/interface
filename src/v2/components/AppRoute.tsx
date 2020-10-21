@@ -20,10 +20,10 @@ export const AppRoute = (props: AppRouteProps) => {
   const roles = getUserRoles(user?.roles)
   const isAccredited = roles.includes(AppRole.ACCREDITED)
 
-  pushCrumb({
-    label: route.label,
-    path: safeGeneratePath(route.path, params)
-  })
+  // pushCrumb({
+  //   label: route.label,
+  //   path: safeGeneratePath(route.path, params)
+  // })
 
   if (component === undefined) {
     return null

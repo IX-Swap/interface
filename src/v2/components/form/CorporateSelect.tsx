@@ -12,7 +12,7 @@ export const CorporateSelect = (props: {}) => {
   queryStatusRenderer(status)
 
   return (
-    <Select {...props}>
+    <Select {...props} style={{ minWidth: 100 }}>
       <MenuItem disabled value={undefined}>
         Corporate
       </MenuItem>

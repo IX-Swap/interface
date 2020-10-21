@@ -2,6 +2,8 @@ import React from 'react'
 import { documentValueExtractor } from 'v2/app/components/DSO/utils'
 import { useDSOForm } from 'v2/app/components/DSO/DSOForm'
 import { DSOSubscriptionDocumentView } from 'v2/app/components/DSO/components/DSOSubscriptionDocumentView'
+import { DataroomEditRow } from 'v2/app/pages/identity/components/dataroom/DataroomEditRow'
+import { DataroomViewRow } from 'v2/app/pages/identity/components/dataroom/DataroomViewRow'
 
 export interface DSOSubscriptionAndDocumentsProps {
   isEditing: boolean
@@ -9,11 +11,11 @@ export interface DSOSubscriptionAndDocumentsProps {
   dsoId: string
 }
 
-export const DSOSubscriptionAndDocuments = (
+export const DSOSubscriptionDocument = (
   props: DSOSubscriptionAndDocumentsProps
 ) => {
   const { dsoId, dsoOwnerId, isEditing } = props
-  const { EditableField } = useDSOForm()
+  const { EditableField, FormValue } = useDSOForm()
 
   return (
     <EditableField
@@ -26,9 +28,23 @@ export const DSOSubscriptionAndDocuments = (
         type: 'Subscription Document'
       }}
       canDelete={false}
-      valueExtractor={documentValueExtractor}
+      editRenderer={input => (
+        <FormValue name='subscriptionDocument'>
+          {value => (
+            <DataroomEditRow
+              input={input}
+              title='Subscription Document'
+              document={value}
+            />
+          )}
+        </FormValue>
+      )}
       viewRenderer={
-        <DSOSubscriptionDocumentView dsoId={dsoId} dsoOwnerId={dsoOwnerId} />
+        <FormValue name='subscriptionDocument'>
+          {value => (
+            <DataroomViewRow title='Subscription Document' document={value} />
+          )}
+        </FormValue>
       }
     />
   )

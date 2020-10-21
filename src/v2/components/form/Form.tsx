@@ -54,6 +54,9 @@ export const Form = <T,>(
       >
         {children}
       </form>
+      <pre style={{ fontSize: 13, maxWidth: 1000, overflow: 'auto' }}>
+        {JSON.stringify(form.getValues(), null, 2)}
+      </pre>
     </FormProvider>
   )
 }

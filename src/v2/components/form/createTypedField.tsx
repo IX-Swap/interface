@@ -97,10 +97,10 @@ export const TypedField = <
           >
             {typeof children !== 'function' && (
               <InputLabel
-                placeholder=''
                 error={hasError}
                 htmlFor={path}
                 variant={variant}
+                shrink={hasValue(controllerProps.value)}
               >
                 {props.label}
               </InputLabel>

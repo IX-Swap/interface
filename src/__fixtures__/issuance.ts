@@ -1,5 +1,6 @@
 import { DSORequestArgs, DSOFormValues } from 'v2/types/dso'
 import { corporate, asset } from './authorizer'
+import { emptyFile } from '__fixtures__/file'
 
 export const createDSOArgs: DSORequestArgs = {
   businessModel: 'business model',
@@ -9,7 +10,7 @@ export const createDSOArgs: DSORequestArgs = {
   distributionFrequency: 'distribution frequency',
   dividendYield: 1,
   documents: [],
-  equityMultiple: 'equity multiple',
+  equityMultiple: 1,
   fundraisingMilestone: 'fundraising milestone',
   grossIRR: 0,
   interestRate: 1,
@@ -18,7 +19,7 @@ export const createDSOArgs: DSORequestArgs = {
   investmentStructure: 'investment structure',
   issuerName: 'issuer name',
   launchDate: '01-01-2000',
-  leverage: 'leverage',
+  leverage: 1,
   logo: '5f4f7d87f3e2c40bbab8a3f1',
   minimumInvestment: 100,
   pricePerUnit: 1,
@@ -64,10 +65,10 @@ export const formvalues: DSOFormValues = {
   totalFundraisingAmount: 100000,
   tokenSymbol: '$#',
   tokenName: 'IXWTKN',
-  subscriptionDocument: '5f898b02aa141c6d0d358ce4',
+  subscriptionDocument: emptyFile,
   pricePerUnit: 10,
   minimumInvestment: 200,
-  leverage: '1',
+  leverage: 1,
   launchDate: '2020-10-16T18:30:00.000Z',
   issuerName: 'IXIssuer',
   investmentStructure: '1',
@@ -78,7 +79,7 @@ export const formvalues: DSOFormValues = {
   grossIRR: 1,
   fundraisingMilestone:
     '{"blocks":[{"key":"2ofbo","text":"next month","type":"unstyled","depth":0,"inlineStyleRanges":[],"entityRanges":[],"data":{}}],"entityMap":{}}',
-  equityMultiple: '1',
+  equityMultiple: 1,
   dividendYield: 1,
   distributionFrequency: 'Monthly',
   currency: '5f732c5b8a568b50914d8373',
@@ -103,7 +104,7 @@ export const requestargs: DSORequestArgs = {
   subscriptionDocument: '5f898b02aa141c6d0d358ce4',
   pricePerUnit: 10,
   minimumInvestment: 200,
-  leverage: '1',
+  leverage: 1,
   launchDate: '2020-10-16T18:30:00.000Z',
   investmentStructure: '1',
   investmentPeriod: 2,
@@ -111,7 +112,7 @@ export const requestargs: DSORequestArgs = {
   interestRate: 1,
   grossIRR: 1,
   fundraisingMilestone: '<p>next month</p>\n',
-  equityMultiple: '1',
+  equityMultiple: 1,
   dividendYield: 1,
   distributionFrequency: 'Monthly',
   currency: '5f732c5b8a568b50914d8373',
