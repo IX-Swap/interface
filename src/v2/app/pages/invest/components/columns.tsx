@@ -50,7 +50,7 @@ export const columns: Array<TableColumn<Commitment>> = [
   },
   {
     key: 'status',
-    label: ''
+    label: 'Status'
   }
 ]
 
