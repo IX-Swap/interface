@@ -22,6 +22,6 @@ export const columns: Array<TableColumn<CashDeposit>> = [
   },
   {
     key: 'status',
-    label: ''
+    label: 'Status'
   }
 ]
