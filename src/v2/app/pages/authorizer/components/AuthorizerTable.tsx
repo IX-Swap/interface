@@ -1,13 +1,16 @@
-import { Viewable } from 'v2/types/util'
+import { BaseFilter, Viewable } from 'v2/types/util'
 import React from 'react'
 import { Paper } from '@material-ui/core'
-import { Preview } from 'v2/app/pages/authorizer/components/Preview'
-import { useAuthorizerView } from 'v2/app/pages/authorizer/hooks/useAuthorizerView'
+import {
+  initialFilterValue,
+  statusColumn
+} from 'v2/app/pages/authorizer/hooks/useAuthorizerView'
 import { withExtraActions } from 'v2/app/pages/authorizer/components/withExtraActions'
 import {
   TableView,
   TableViewProps
 } from 'v2/components/TableWithPagination/TableView'
+import { queryCache } from 'react-query'
 
 interface AuthorizerViewProps<T>
   extends Omit<TableViewProps<T>, 'actions'>,
@@ -16,26 +19,22 @@ interface AuthorizerViewProps<T>
   title: string
 }
 
+queryCache.setQueryData<BaseFilter>('authorizerFilter', initialFilterValue)
+
 export const AuthorizerTable = <T,>(
   props: AuthorizerViewProps<T>
 ): JSX.Element => {
-  const { columns, idKey, name, renderView, uri } = props
-  const { filter, isViewing, item, setItem, getColumns } = useAuthorizerView<T>(
-    { idKey, uri, columns }
-  )
-
-  if (isViewing && typeof renderView === 'function' && item !== undefined) {
-    return <Preview onBack={setItem}>{renderView(item)}</Preview>
-  }
+  const { columns, name, uri } = props
+  const filter = queryCache.getQueryData<BaseFilter>('authorizerFilter')
+  const isAll = filter?.status === ''
 
   return (
     <Paper>
       <TableView<T>
         name={name}
         uri={uri}
-        columns={getColumns()}
-        filter={filter}
-        actions={withExtraActions<T>({ onView: setItem })}
+        columns={isAll ? [...columns, statusColumn] : columns}
+        actions={withExtraActions<T>()}
         hasActions
       />
     </Paper>

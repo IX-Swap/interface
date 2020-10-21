@@ -1,6 +1,7 @@
 import React from 'react'
 import { DigitalSecurityOffering, DSOFormValues } from 'v2/types/dso'
 import { DataroomFile } from 'v2/types/dataroomFile'
+import { percentageToNumber } from 'v2/app/pages/issuance/utils'
 
 export const transformDSOToFormValues = (
   dso: DigitalSecurityOffering | undefined
@@ -20,6 +21,11 @@ export const transformDSOToFormValues = (
     ...dso,
     corporate: dso.corporate._id,
     currency: dso.currency?._id ?? '',
+    dividendYield: percentageToNumber(dso.dividendYield),
+    grossIRR: percentageToNumber(dso.grossIRR),
+    equityMultiple: percentageToNumber(dso.equityMultiple),
+    interestRate: percentageToNumber(dso.interestRate),
+    leverage: percentageToNumber(dso.leverage),
     documents:
       dso.documents?.map(document => ({
         title: '',

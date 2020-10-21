@@ -8,7 +8,7 @@ import { PaginatedData } from 'v2/services/api/types'
 export const ASSETS_QUERY_KEY = 'assets'
 
 export const useAssetsData = (
-  type: AssetType
+  type?: AssetType
 ): UsePaginatedQueryData<Asset> => {
   const payload = { ...paginationArgs, type }
   const getAssets = async (queryKey: string, args: GetAssetsArgs) => {

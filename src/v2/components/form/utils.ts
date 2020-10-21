@@ -13,3 +13,7 @@ export const pathToString = (path: any, rootPath?: string): string => {
     ? fieldPath
     : `${rootPath}.${fieldPath as string}`
 }
+
+export const hasValue = (value: any) => {
+  return value !== null || value !== undefined || value !== ''
+}

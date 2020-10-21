@@ -23,7 +23,7 @@ export const DataroomViewRow = (props: DataroomViewRowProps) => {
     <ListItem className={classes.listItem}>
       <Grid container>
         <DataroomColumns title={title} document={document} />
-        <Grid container item xs={2} justify='space-evenly'>
+        <Grid container item xs={1} justify='space-evenly'>
           <DownloadDocument
             documentId={document?._id}
             ownerId={document?.user}

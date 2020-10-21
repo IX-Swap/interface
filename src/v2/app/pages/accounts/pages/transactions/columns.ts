@@ -1,6 +1,6 @@
-import moment from 'moment'
 import { TableColumn } from 'v2/types/util'
 import { Transaction } from 'v2/types/transaction'
+import { formatDateToMMDDYY } from 'v2/helpers/dates'
 
 const columns: Array<TableColumn<Transaction>> = [
   {
@@ -10,7 +10,7 @@ const columns: Array<TableColumn<Transaction>> = [
   {
     label: 'Date',
     key: 'date',
-    render: (value: string) => moment(value).format('MM/DD/YYYY')
+    render: formatDateToMMDDYY
   },
   {
     label: 'Type',

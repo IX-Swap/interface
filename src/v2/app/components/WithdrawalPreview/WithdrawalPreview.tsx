@@ -40,7 +40,7 @@ export const WithdrawalPreview = (props: WithdrawalViewProps) => {
         </Grid>
 
         <Grid item xs={4}>
-          <LabelledValue label='Currency' value={data.bank?.currency?.symbol} />
+          <LabelledValue label='Currency' value={data.asset.symbol} />
         </Grid>
       </Grid>
 
@@ -59,10 +59,6 @@ export const WithdrawalPreview = (props: WithdrawalViewProps) => {
             label='Withdrawal Amount'
             value={formatMoney(data.amount, data.asset.symbol)}
           />
-        </Grid>
-
-        <Grid item xs={4}>
-          <LabelledValue label='Memo' value={data.memo} />
         </Grid>
       </Grid>
     </Grid>

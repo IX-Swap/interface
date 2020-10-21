@@ -2,6 +2,8 @@ import React from 'react'
 import { Grid } from '@material-ui/core'
 import { useDSOForm } from 'v2/app/components/DSO/DSOForm'
 import { UserAvatar } from 'v2/app/components/UserAvatar'
+import { DSOCorporateName } from 'v2/app/components/DSO/components/DSOCorporateName'
+import { DSOCurrencyName } from 'v2/app/components/DSO/components/DSOCurrencyName'
 
 export interface DSOBaseFieldsProps {
   isEditing: boolean
@@ -13,9 +15,20 @@ export const DSOBaseFields = (props: DSOBaseFieldsProps) => {
   const { EditableField } = useDSOForm()
 
   return (
-    <Grid container direction='row' spacing={2}>
+    <Grid
+      container
+      direction='row'
+      alignItems='flex-start'
+      spacing={2}
+      style={{ marginBottom: 20, marginTop: 20 }}
+    >
       <Grid item>
-        <UserAvatar name='logo' isEditing={isEditing} ownerId={dsoOwnerId} />
+        <UserAvatar
+          name='logo'
+          isEditing={isEditing}
+          ownerId={dsoOwnerId}
+          size={80}
+        />
       </Grid>
 
       <Grid item>
@@ -51,6 +64,7 @@ export const DSOBaseFields = (props: DSOBaseFieldsProps) => {
           isEditing={isEditing}
           label='Corporate'
           name='corporate'
+          viewRenderer={<DSOCorporateName />}
         />
       </Grid>
 
@@ -68,8 +82,9 @@ export const DSOBaseFields = (props: DSOBaseFieldsProps) => {
           fieldType='AssetSelect'
           assetType='Currency'
           isEditing={isEditing}
-          label='Asset'
+          label='Currency'
           name='currency'
+          viewRenderer={<DSOCurrencyName />}
         />
       </Grid>
     </Grid>

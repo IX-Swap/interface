@@ -13,7 +13,10 @@ export const DownloadSubscriptionDocument = (
   const { dso } = props
 
   return (
-    <DownloadDocument documentId={dso.subscriptionDocument} ownerId={dso.user}>
+    <DownloadDocument
+      documentId={dso.subscriptionDocument._id}
+      ownerId={dso.user}
+    >
       {download => <DownloadSubscriptionDocumentButton download={download} />}
     </DownloadDocument>
   )

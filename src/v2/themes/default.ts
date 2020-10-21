@@ -1,12 +1,12 @@
 import tinycolor from 'tinycolor2'
 
-const primary = '#0c469c'
+export const primary = '#0c469c'
 // const secondary = '#DD0F0F'
-const secondary = '#1C4F79'
-const warning = '#a31037'
-const success = '#348633'
-const info = '#9013FE'
-const error = '#D20000'
+export const secondary = '#1C4F79'
+export const warning = '#a31037'
+export const success = '#348633'
+export const info = '#9013FE'
+export const error = '#D20000'
 
 const lightenRate = 7.5
 const darkenRate = 15
@@ -61,11 +61,6 @@ export default {
       '0px 12px 33px 0px #E8EAFC, 0 3px 3px -2px #B2B2B21A, 0 1px 8px 0 #9A9A9A1A'
   },
   overrides: {
-    MuiButton: {
-      containedPrimary: {
-        color: 'white'
-      }
-    },
     MuiBackdrop: {
       root: {
         backgroundColor: '#4A4A4A1A'

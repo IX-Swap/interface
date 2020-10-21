@@ -12,7 +12,7 @@ export interface DataroomColumnsProps {
 export const DataroomColumns: React.FC<DataroomColumnsProps> = props => {
   const { title, document } = props
 
-  if (document === null) {
+  if (document === null || document === undefined) {
     return (
       <Grid container item xs={11}>
         <Typography>{title}</Typography>

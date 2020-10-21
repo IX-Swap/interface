@@ -1,29 +1,35 @@
 import React from 'react'
-import { Box, Typography } from '@material-ui/core'
+import {
+  Grid,
+  CardContent,
+  Card,
+  GridProps,
+  Typography
+} from '@material-ui/core'
 
-export interface DSOContainerProps {
+export interface DSOContainerProps extends GridProps {
   children: React.ReactNode
   title?: string
 }
 
-export const DSOContainer = ({ children, title }: DSOContainerProps) => (
-  <Box
-    py={2}
-    px={4}
-    border={1}
-    borderColor='#eaeaea'
-    height='100%'
-    style={{ display: 'flex', flexDirection: 'column' }}
-  >
-    {title !== undefined && (
-      <Box mt={2}>
-        <Typography>
-          <b>{title}</b>
-        </Typography>
-      </Box>
-    )}
-    <Box mt={2} style={{ flexGrow: 1 }}>
-      {children}
-    </Box>
-  </Box>
-)
+export const DSOContainer = (props: DSOContainerProps) => {
+  const { title, children, ...rest } = props
+
+  return (
+    <Grid {...rest}>
+      <Card variant='outlined' style={{ height: '100%' }}>
+        <CardContent>
+          <Grid container direction='column' spacing={2}>
+            {title !== undefined && (
+              <Grid item>
+                <Typography variant='h5'>{title}</Typography>
+              </Grid>
+            )}
+
+            <Grid item>{children}</Grid>
+          </Grid>
+        </CardContent>
+      </Card>
+    </Grid>
+  )
+}

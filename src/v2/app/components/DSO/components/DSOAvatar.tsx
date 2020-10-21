@@ -18,12 +18,14 @@ export const DSOAvatar = (props: DSOAvatarProps) => {
 
   return (
     <Box style={{ position: 'relative' }}>
-      {imageId === undefined ? (
+      {imageId === undefined || imageId === '' ? (
         <Avatar
           variant={variant}
           alt='avatar'
           style={{ width: size, height: size }}
-        />
+        >
+          {''}
+        </Avatar>
       ) : (
         <ViewDocument documentId={imageId} ownerId={dsoOwnerId ?? ''}>
           {url => (

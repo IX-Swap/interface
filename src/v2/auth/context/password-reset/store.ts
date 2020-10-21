@@ -1,5 +1,6 @@
 import { action, observable } from 'mobx'
 import { PasswordResetStep } from 'v2/auth/context/password-reset/types'
+import { Maybe } from 'v2/types/util'
 
 class PasswordResetStore {
   @observable
@@ -7,6 +8,9 @@ class PasswordResetStore {
 
   @observable
   currentStep = PasswordResetStep.Request
+
+  @observable
+  token: Maybe<string> = null
 
   @action
   setCurrentStep = (step: PasswordResetStep) => {
@@ -16,6 +20,17 @@ class PasswordResetStore {
   @action
   setEmail = (email: string) => {
     this.email = email
+  }
+
+  @action setToken = (token: string) => {
+    this.token = token
+    this.currentStep = PasswordResetStep.Reset
+  }
+
+  @action reset = () => {
+    this.token = null
+    this.email = ''
+    this.currentStep = PasswordResetStep.Request
   }
 }
 

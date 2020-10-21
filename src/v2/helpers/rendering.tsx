@@ -5,6 +5,7 @@ import pdfIcon from 'assets/icons/documents/pdf.svg'
 import docxIcon from 'assets/icons/documents/docx.svg'
 import txtIcon from 'assets/icons/documents/txt.svg'
 import unknownIcon from 'assets/icons/documents/unknown.svg'
+import { Maybe } from 'v2/types/util'
 
 export const renderMenu = (arr: any[]): JSX.Element[] => {
   return arr.map(
@@ -25,6 +26,8 @@ export const renderMenu = (arr: any[]): JSX.Element[] => {
 export const wysiwygToHtml = (draft: string): string => {
   return draftToHtml(JSON.parse(draft))
 }
+
+export const renderPercentage = (value: Maybe<Number>) => <span>{value} %</span>
 
 export const documentIcons = {
   pdf: pdfIcon,
