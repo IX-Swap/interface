@@ -5,6 +5,7 @@ import { DigitalSecurityOffering } from 'v2/types/dso'
 import { Maybe, BaseFilter } from 'v2/types/util'
 import User from 'v2/types/user'
 import { DSOListTableBody } from 'v2/app/components/DSO/components/DSOListTableBody'
+import { getIdFromObj } from 'v2/helpers/strings'
 
 export interface DSOfferingsListProps {
   user: Maybe<User>
@@ -24,7 +25,7 @@ export const DSOList = (props: DSOfferingsListProps) => {
         columns={[]}
         bordered={false}
         name={DSO_LIST_QUERY_KEY}
-        uri={`/issuance/dso/list/${user?._id ?? ''}`}
+        uri={`/issuance/dso/list/${getIdFromObj(user)}`}
       >
         {({ items }) => <DSOListTableBody viewURL={viewURL} items={items} />}
       </TableView>

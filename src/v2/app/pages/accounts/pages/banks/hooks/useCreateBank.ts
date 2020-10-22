@@ -4,12 +4,13 @@ import { useServices } from 'v2/services/useServices'
 import { useBanksRouter } from 'v2/app/pages/accounts/pages/banks/router'
 import { useAuth } from 'v2/hooks/auth/useAuth'
 import { CreateBankArgs } from 'v2/app/pages/accounts/types'
+import { getIdFromObj } from 'v2/helpers/strings'
 
 export const useCreateBank = () => {
   const { apiService, snackbarService } = useServices()
   const { push } = useBanksRouter()
   const { user } = useAuth()
-  const uri = `/accounts/banks/${user?._id ?? ''}`
+  const uri = `/accounts/banks/${getIdFromObj(user)}`
 
   const createBank = async (args: CreateBankArgs) => {
     return await apiService.post<Bank>(uri, args)

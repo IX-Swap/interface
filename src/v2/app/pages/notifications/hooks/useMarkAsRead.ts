@@ -3,11 +3,12 @@ import { useAuth } from 'v2/hooks/auth/useAuth'
 import { queryCache, useMutation } from 'react-query'
 import { Notification } from 'v2/types/notification'
 import { markNotificationAsRead } from 'v2/app/pages/notifications/hooks/utils'
+import { getIdFromObj } from 'v2/helpers/strings'
 
 export const useMarkAsRead = (notification: Notification) => {
   const { apiService, snackbarService } = useServices()
   const { user } = useAuth()
-  const userId = user?._id ?? ''
+  const userId = getIdFromObj(user)
   const uri = `/core/notifications/mark-read/${userId}/${notification._id}`
   const readNotification = async () => {
     return await apiService.patch(uri, {})

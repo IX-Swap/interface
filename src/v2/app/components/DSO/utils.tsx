@@ -1,6 +1,7 @@
 import React from 'react'
 import { DigitalSecurityOffering, DSOFormValues } from 'v2/types/dso'
 import { DataroomFile } from 'v2/types/dataroomFile'
+import { getIdFromObj } from 'v2/helpers/strings'
 
 export const transformDSOToFormValues = (
   dso: DigitalSecurityOffering | undefined
@@ -19,7 +20,7 @@ export const transformDSOToFormValues = (
   return {
     ...dso,
     corporate: dso.corporate._id,
-    currency: dso.currency?._id ?? '',
+    currency: getIdFromObj(dso.currency),
     documents:
       dso.documents?.map(document => ({
         title: '',
