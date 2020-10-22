@@ -122,7 +122,7 @@
     "start": "react-app-rewired start",
     "build": "react-app-rewired build",
     "test": "react-scripts test --env=jest-environment-jsdom-sixteen",
-    "test:ci": "CI=true react-scripts test --env=jest-environment-jsdom-sixteen --silent --coverage --testResultsProcessor jest-sonar-reporter --coveragePathIgnorePatterns src/v1 --coveragePathIgnorePatterns src/__fixtures__",
+    "test:ci": "CI=true react-scripts test --env=jest-environment-jsdom-sixteen --silent --coverage --testResultsProcessor jest-sonar-reporter",
     "eject": "react-scripts eject",
     "deploy": "gulp deploy",
     "lint": "eslint --cache --fix \"src/**/*.{ts,tsx}\"",
@@ -140,6 +140,24 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
+  },
+  "jest": {
+    "collectCoverageFrom": [
+      "src/**/*.{ts,tsx}",
+      "!node_modules/**",
+      "!src/v1/**",
+      "!src/__fixtures__/**",
+      "!src/**/*.styles.ts",
+      "!src/**/styles.ts"
+    ],
+    "coverageThreshold": {
+      "global": {
+        "branches": 50,
+        "functions": 50,
+        "lines": 50,
+        "statements": 50
+      }
+    }
   },
   "jestSonar": {
     "reportPath": "reports",

@@ -20,9 +20,6 @@ describe('PasswordResetStore', () => {
 
       store.setCurrentStep(PasswordResetStep.Reset)
       expect(store.currentStep).toBe(PasswordResetStep.Reset)
-
-      store.setCurrentStep(PasswordResetStep.Confirmation)
-      expect(store.currentStep).toBe(PasswordResetStep.Confirmation)
     })
   })
 

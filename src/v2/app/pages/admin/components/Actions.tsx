@@ -1,16 +1,10 @@
 import React, { forwardRef } from 'react'
 import { FormControl } from '@material-ui/core'
-import { makeStyles } from '@material-ui/styles'
+import useStyles from './Actions.styles'
 import DialogConfirmRoleChange from 'v2/app/pages/admin/components/DialogConfirmRoleChange'
 import User from 'v2/types/user'
 import { useAdminView } from '../hooks/useAdminView'
 import { RoleSelect } from 'v2/components/form/RoleSelect'
-
-const useStyles = makeStyles({
-  formControl: {
-    width: 220
-  }
-})
 
 export interface ActionsProps {
   user: User

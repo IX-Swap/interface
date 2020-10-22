@@ -1,6 +1,6 @@
 import { DSOFormValues, DSORequestArgs } from 'v2/types/dso'
 import omit from 'lodash/omit'
-import { wysiwygToHtml } from 'v2/components/form/RichTextEditor'
+import { wysiwygToHtml } from 'v2/helpers/rendering'
 import { Maybe } from 'v2/types/util'
 
 export const numberToPercentage = (number: Maybe<Number>) =>

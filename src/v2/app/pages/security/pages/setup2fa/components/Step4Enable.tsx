@@ -1,20 +1,12 @@
-//
 import React from 'react'
 import { Container, Typography, Box, Grid } from '@material-ui/core'
-import { makeStyles } from '@material-ui/core/styles'
-
 import { createTypedForm } from 'v2/components/form/createTypedForm'
+import useStyles from './Step4Enable.styles'
 import { useEnable2fa } from '../hooks/useEnable2fa'
 import { Enable2faFormValues } from '../types'
 import { enable2faFormValuesSchema } from '../validation'
 
 const useEnable2faForm = createTypedForm<Enable2faFormValues>()
-
-const useStyles = makeStyles(() => ({
-  textField: {
-    width: '100%'
-  }
-}))
 
 const defaultValues = {
   otp: ''

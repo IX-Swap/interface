@@ -1,10 +1,10 @@
 /**  * @jest-environment jsdom-sixteen  */
 import React from 'react'
 import { render, cleanup } from 'test-utils'
-import { statusColumn } from 'v2/app/pages/authorizer/hooks/useAuthorizerView'
 import { TableView } from 'v2/components/TableWithPagination/TableView'
 import { withExtraActions } from 'v2/app/pages/authorizer/components/withExtraActions'
 import { AuthorizerTable } from 'v2/app/pages/authorizer/components/AuthorizerTable'
+import { statusColumn } from 'v2/app/pages/authorizer/hooks/useAuthorizerView'
 
 jest.mock('v2/components/TableWithPagination/TableView', () => ({
   TableView: jest.fn(() => null)

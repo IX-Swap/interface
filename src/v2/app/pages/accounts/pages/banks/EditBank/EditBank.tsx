@@ -3,7 +3,7 @@ import { BankForm } from 'v2/app/pages/accounts/pages/banks/components/BankForm'
 import { useUpdateBank } from 'v2/app/pages/accounts/pages/banks/hooks/useUpdateBank'
 import { useBanksData } from 'v2/app/pages/accounts/pages/banks/hooks/useBanksData'
 import { useBanksRouter } from 'v2/app/pages/accounts/pages/banks/router'
-import { BankArgs } from '../service/types'
+import { BankArgs } from 'v2/app/pages/accounts/types'
 
 export const EditBank: React.FC = () => {
   const {

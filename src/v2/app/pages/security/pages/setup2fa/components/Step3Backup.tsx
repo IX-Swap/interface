@@ -1,22 +1,9 @@
-//
 import React from 'react'
 import { Container, Typography } from '@material-ui/core'
-import { makeStyles } from '@material-ui/styles'
-import { grey } from '@material-ui/core/colors'
+import useStyles from './Step3Backup.styles'
 import { useSetup2faStore } from '../context'
 import { useObserver } from 'mobx-react'
 
-const useStyles = makeStyles(() => ({
-  label: {
-    color: grey[500],
-    fontSize: '.95em',
-    paddingTop: '1.25em'
-  },
-  key: {
-    color: grey[700],
-    paddingTop: '2.5em'
-  }
-}))
 export const Step3Backup = () => {
   const classes = useStyles()
   const store = useSetup2faStore()

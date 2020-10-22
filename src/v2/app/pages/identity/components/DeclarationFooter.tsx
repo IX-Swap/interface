@@ -1,7 +1,7 @@
 import React from 'react'
 import { Typography, Grid, ListItem } from '@material-ui/core'
 import { DeclarationTemplate } from 'v2/types/identity'
-import { useStyles } from './Declaration'
+import useStyles from './Declaration.styles'
 
 export interface DeclarationFooterProps {
   footer: Exclude<DeclarationTemplate['footer'], undefined>

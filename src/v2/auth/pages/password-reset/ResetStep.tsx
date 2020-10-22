@@ -9,7 +9,10 @@ import { createTypedForm } from 'v2/components/form/createTypedForm'
 import { Button, Grid } from '@material-ui/core'
 import { useUnmountCallback } from 'v2/hooks/useUnmountCallback'
 
-type CompletePasswordResetFormValues = Omit<CompletePasswordResetArgs, 'email'>
+type CompletePasswordResetFormValues = Omit<
+  CompletePasswordResetArgs,
+  'resetToken'
+>
 
 export const completePasswordResetInitialValues = {
   resetToken: '',
@@ -44,7 +47,7 @@ export const ResetStep: React.FC = () => {
   return (
     <Form
       data-testid='reset-step'
-      defaultValues={{ resetToken: token, email }}
+      defaultValues={{ email }}
       validationSchema={completePasswordResetValidationSchema}
       onSubmit={handleSubmit}
     >

@@ -3,11 +3,12 @@ import { useAuth } from 'v2/hooks/auth/useAuth'
 import { useServices } from 'v2/services/useServices'
 import { Notification } from 'v2/types/notification'
 import { markAllNotificationsAsRead } from 'v2/app/pages/notifications/hooks/utils'
+import { getIdFromObj } from 'v2/helpers/strings'
 
 export const useMarkAllAsRead = () => {
   const { apiService, snackbarService } = useServices()
   const { user } = useAuth()
-  const userId = user?._id ?? ''
+  const userId = getIdFromObj(user)
   const uri = `/core/notifications/mark-read/all/${userId}`
   const readNotification = async () => {
     return await apiService.patch(uri, {})
