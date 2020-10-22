@@ -36,8 +36,10 @@ export const transformDSOToFormValues = (
   }
 }
 
-export const documentValueExtractor = (value?: DataroomFile) => {
-  return value?._id
+export const documentValueExtractor = (
+  value?: DataroomFile | DataroomFile[]
+) => {
+  return Array.isArray(value) ? value?.[0]._id : value?._id
 }
 
 export const moneyNumberFormat = {

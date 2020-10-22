@@ -1,4 +1,4 @@
-import { DSORequestArgs, DSOFormValues } from 'v2/types/dso'
+import { DSORequestArgs, DSOFormValues, DsoTeamMember } from 'v2/types/dso'
 import { corporate, asset } from './authorizer'
 import { emptyFile } from '__fixtures__/file'
 
@@ -31,6 +31,14 @@ export const createDSOArgs: DSORequestArgs = {
   useOfProceeds: 'use of proceeds',
   policyBuilder: undefined,
   status: 'Approved'
+}
+
+export const teamMember: DsoTeamMember = {
+  _id: '0',
+  about: 'about',
+  name: 'name',
+  photo: '1',
+  position: 'position'
 }
 
 export const formvalues: DSOFormValues = {

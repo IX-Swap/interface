@@ -25,16 +25,24 @@ export interface DataroomDocumentProps {
   setValueToNullOnDelete?: boolean
 }
 
-export const getDocumentId = (document: any) => {
-  if (document === undefined || document === null) {
+export const getDocumentId = (doc: any) => {
+  if (doc === undefined || doc === null) {
     return ''
   }
 
-  if (typeof document === 'string') {
-    return document
+  if (typeof doc === 'string') {
+    return doc
   }
 
-  return (document as DataroomFile)._id
+  if (Array.isArray(doc)) {
+    return doc[0]._id
+  }
+
+  if ('document' in doc) {
+    return doc.document?._id ?? ''
+  }
+
+  return doc._id
 }
 
 export const DataroomDocument: React.FC<

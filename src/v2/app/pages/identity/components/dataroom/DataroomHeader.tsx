@@ -8,19 +8,18 @@ export const DataroomHeader: React.FC = () => {
   return (
     <ListSubheader disableSticky>
       <Grid container>
-        <Grid container item xs={3}>
+        <Grid container item xs={4}>
           <Typography className={classes.listItemHeader}>File Name</Typography>
-        </Grid>
-        <Grid container item xs={2} justify='center'>
-          <Typography className={classes.listItemHeader}>Date</Typography>
-        </Grid>
-        <Grid container item xs={3} justify='center'>
-          <Typography className={classes.listItemHeader}>Title</Typography>
         </Grid>
         <Grid container item xs={3} justify='center'>
           <Typography className={classes.listItemHeader}>Type</Typography>
         </Grid>
-        <Grid container item xs={1}>
+        <Grid container item xs={3} justify='center'>
+          <Typography className={classes.listItemHeader}>
+            Uploaded At
+          </Typography>
+        </Grid>
+        <Grid container item xs={2}>
           &nbsp;
         </Grid>
       </Grid>

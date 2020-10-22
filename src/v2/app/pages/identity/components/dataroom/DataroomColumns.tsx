@@ -12,9 +12,9 @@ export interface DataroomColumnsProps {
 export const DataroomColumns: React.FC<DataroomColumnsProps> = props => {
   const { title, document } = props
 
-  if (document === null) {
+  if (document === null || document === undefined) {
     return (
-      <Grid container item xs={11}>
+      <Grid container item xs={10}>
         <Typography>{title}</Typography>
       </Grid>
     )
@@ -22,17 +22,14 @@ export const DataroomColumns: React.FC<DataroomColumnsProps> = props => {
 
   return (
     <>
-      <Grid container item xs={3} alignItems='center'>
+      <Grid container item xs={4} alignItems='center'>
         <Typography>{document.originalFileName}</Typography>
       </Grid>
-      <Grid container item xs={2} alignItems='center' justify='center'>
+      <Grid container item xs={3} alignItems='center' justify='center'>
+        <Typography>{document.type === '' ? '–' : document.type}</Typography>
+      </Grid>
+      <Grid container item xs={3} alignItems='center' justify='center'>
         <Typography>{formatDateToMMDDYY(document.createdAt)}</Typography>
-      </Grid>
-      <Grid container item xs={3} alignItems='center' justify='center'>
-        <Typography>{document.title}</Typography>
-      </Grid>
-      <Grid container item xs={3} alignItems='center' justify='center'>
-        <Typography>{document.type}</Typography>
       </Grid>
     </>
   )

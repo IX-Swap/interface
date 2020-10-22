@@ -1,40 +1,21 @@
 /**  * @jest-environment jsdom-sixteen  */
 import React from 'react'
 import { render, cleanup } from 'test-utils'
-import { DSOTeam, DSOTeamProps } from 'v2/app/components/DSO/components/DSOTeam'
+import { DSOTeam } from 'v2/app/components/DSO/components/DSOTeam'
 import { Form } from 'v2/components/form/Form'
-import { useTypedForm } from '__fixtures__/createTypedForm'
-import * as dsoForm from 'v2/app/components/DSO/DSOForm'
-import { UserAvatar } from 'v2/app/components/UserAvatar'
-import { DSOTeamRemoveButton } from 'v2/app/components/DSO/components/DSOTeamRemoveButton'
 import { DSOTeamAddButton } from 'v2/app/components/DSO/components/DSOTeamAddButton'
+import { DSOTeamMember } from 'v2/app/components/DSO/components/DSOTeamMember'
+import { teamMember } from '__fixtures__/issuance'
 
-jest.mock('v2/app/components/UserAvatar', () => ({
-  UserAvatar: jest.fn(() => null)
-}))
-jest.mock('v2/app/components/DSO/components/DSOTeamRemoveButton', () => ({
-  DSOTeamRemoveButton: jest.fn(() => null)
-}))
 jest.mock('v2/app/components/DSO/components/DSOTeamAddButton', () => ({
   DSOTeamAddButton: jest.fn(() => null)
 }))
 
-describe('DSOTeam', () => {
-  const props: DSOTeamProps = { isEditing: false, dsoOwnerId: '' }
-  const EditableField = jest.fn(() => <div />)
-  const FieldsArray = jest.fn(({ children }) =>
-    children({ fields: [{}], append: jest.fn(), remove: jest.fn() })
-  )
-  const FormValue = jest.fn(() => <div />)
+jest.mock('v2/app/components/DSO/components/DSOTeamMember', () => ({
+  DSOTeamMember: jest.fn(() => null)
+}))
 
-  beforeEach(() => {
-    jest.spyOn(dsoForm, 'useDSOForm').mockReturnValue({
-      ...useTypedForm(),
-      EditableField,
-      FieldsArray,
-      FormValue
-    })
-  })
+describe('DSOTeam', () => {
   afterEach(async () => {
     await cleanup()
     jest.clearAllMocks()
@@ -42,96 +23,39 @@ describe('DSOTeam', () => {
 
   it('renders without error', () => {
     render(
-      <Form>
-        <DSOTeam {...props} />
+      <Form defaultValues={{ team: [] }}>
+        <DSOTeam />
       </Form>
     )
   })
 
-  it('renders DSOTeamRemoveButton & DSOTeamAddButton if isEditing is true', () => {
+  it('renders DSOTeamAddButton', () => {
     render(
-      <Form>
-        <DSOTeam {...props} isEditing />
+      <Form defaultValues={{ team: [] }}>
+        <DSOTeam />
       </Form>
     )
 
-    expect(DSOTeamAddButton).toHaveBeenCalledTimes(1)
-    expect(DSOTeamAddButton).toHaveBeenCalledWith(
-      {
-        append: expect.any(Function)
-      },
-      {}
-    )
-    expect(DSOTeamRemoveButton).toHaveBeenCalledTimes(1)
-    expect(DSOTeamRemoveButton).toHaveBeenCalledWith(
-      {
-        remove: expect.any(Function),
-        index: 0
-      },
-      {}
-    )
+    expect(DSOTeamAddButton).toHaveBeenCalled()
   })
 
-  it('renders UserAvatar with correct props', () => {
+  it('calls DSOTeamMember for each element in the array', () => {
     render(
-      <Form>
-        <DSOTeam {...props} />
+      <Form defaultValues={{ team: [teamMember, teamMember, teamMember] }}>
+        <DSOTeam />
       </Form>
     )
 
-    expect(UserAvatar).toHaveBeenCalledTimes(1)
-    expect(UserAvatar).toHaveBeenCalledWith(
-      {
-        name: 'team[0].photo',
-        size: 270,
-        variant: 'rounded',
-        isEditing: props.isEditing,
-        ownerId: props.dsoOwnerId
-      },
-      {}
-    )
+    expect(DSOTeamMember).toBeCalledTimes(3)
   })
 
-  it('renders EditableField with correct props', () => {
+  it('does not call DSOTeamMember if array is empty', () => {
     render(
-      <Form>
-        <DSOTeam {...props} />
+      <Form defaultValues={{ team: [] }}>
+        <DSOTeam />
       </Form>
     )
 
-    expect(EditableField).toHaveBeenCalledTimes(3)
-    expect(EditableField).toHaveBeenNthCalledWith(
-      1,
-      {
-        fieldType: 'TextField',
-        isEditing: props.isEditing,
-        label: 'Name',
-        name: ['team', 0, 'name'],
-        formControlProps: expect.anything()
-      },
-      {}
-    )
-    expect(EditableField).toHaveBeenNthCalledWith(
-      2,
-      {
-        fieldType: 'TextField',
-        isEditing: props.isEditing,
-        label: 'Position',
-        name: ['team', 0, 'position'],
-        formControlProps: expect.anything()
-      },
-      {}
-    )
-    expect(EditableField).toHaveBeenNthCalledWith(
-      3,
-      {
-        fieldType: 'RichTextEditor',
-        isEditing: props.isEditing,
-        name: ['team', 0, 'about'],
-        label: 'About',
-        viewRenderer: expect.anything()
-      },
-      {}
-    )
+    expect(DSOTeamMember).toBeCalledTimes(0)
   })
 })

@@ -10,8 +10,7 @@ const useStyles = makeStyles(() => ({
     color: grey[900]
   },
   listItem: {
-    borderBottom: `1px solid ${grey[100]}`,
-    padding: '1.15em'
+    borderBottom: `1px solid ${grey[100]}`
   }
 }))
 

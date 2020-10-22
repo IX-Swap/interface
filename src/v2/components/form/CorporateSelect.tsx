@@ -4,7 +4,7 @@ import { useAllCorporateIdentities } from 'v2/hooks/identity/useAllCorporateIden
 import { MenuItem, Select } from '@material-ui/core'
 import { queryStatusRenderer } from './renderUtils'
 
-export const CorporateSelect = (props: {}) => {
+export const CorporateSelect = (props: any) => {
   const { data, status } = useAllCorporateIdentities()
   // const isAdmin = useIsAdmin()
   // const isAuthorizer = useIsAuthorizer()
@@ -12,7 +12,7 @@ export const CorporateSelect = (props: {}) => {
   queryStatusRenderer(status)
 
   return (
-    <Select {...props} style={{ minWidth: 100 }}>
+    <Select {...props} style={{ minWidth: 100 }} label='SELECT ME'>
       <MenuItem disabled value={undefined}>
         Corporate
       </MenuItem>

@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { cloneElement, createElement, PropsWithChildren } from 'react'
 import { Router } from 'react-router-dom'
 import { render, RenderOptions, RenderResult } from '@testing-library/react'
 import {
@@ -18,6 +18,7 @@ import { DepositStoreProvider } from 'v2/app/pages/accounts/pages/banks/context'
 import { ServicesProvider } from 'v2/services/useServices'
 import { renderHook, RenderHookResult } from '@testing-library/react-hooks'
 import { BreadcrumbsProvider } from 'v2/hooks/useBreadcrumbs'
+import { FormProvider, useForm } from 'react-hook-form'
 
 const generateClassName = createGenerateClassName({
   productionPrefix: 'ix'
@@ -33,6 +34,21 @@ const BaseProviders: React.FC = ({ children }) => {
       </ThemeProvider>
     </StylesProvider>
   )
+}
+
+export const renderWithFormControl = (ui: any): RenderResult => {
+  const WithUserProvider: React.FC = ({ children }: PropsWithChildren<any>) => {
+    const form = useForm()
+    return (
+      <BaseProviders>
+        <FormProvider {...form}>
+          {cloneElement(children, { control: form.control })}
+        </FormProvider>
+      </BaseProviders>
+    )
+  }
+
+  return render(ui, { wrapper: WithUserProvider })
 }
 
 const customRenderer = (

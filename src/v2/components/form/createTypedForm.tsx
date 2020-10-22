@@ -48,16 +48,20 @@ import { DataroomFileTypeSelect } from './DataroomFileTypeSelect'
 import { LabelledValue } from '../LabelledValue'
 import { DatePicker } from 'v2/components/form/DatePicker'
 
-const booleanValueExtractor = (
+export const booleanValueExtractor = (
   _: React.ChangeEvent<{}>,
   value: boolean
 ): boolean => value
 
-const numericValueExtractor = (
+export const numericValueExtractor = (
   values: NumberFormatValues
 ): number | undefined => values.floatValue
 
 export const plainValueExtractor = (value: any) => value
+
+export const dateTimeValueExtractor = (value: Date, stringValue: string) => {
+  return value
+}
 
 export interface FieldsArrayRendererProps {
   fields: any[]

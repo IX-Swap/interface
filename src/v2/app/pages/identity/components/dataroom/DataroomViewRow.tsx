@@ -5,14 +5,16 @@ import { DataroomColumns } from './DataroomColumns'
 import { DownloadDocument } from './DownloadDocument'
 import { DataroomFile } from 'v2/types/dataroomFile'
 import { Maybe } from 'v2/types/util'
+import classNames from 'classnames'
 
 export interface DataroomViewRowProps {
   title: string
   document: Maybe<DataroomFile>
+  disableBorder?: boolean
 }
 
 export const DataroomViewRow = (props: DataroomViewRowProps) => {
-  const { document, title } = props
+  const { document, title, disableBorder = false } = props
   const classes = useStyles()
 
   if (document === null) {
@@ -20,10 +22,10 @@ export const DataroomViewRow = (props: DataroomViewRowProps) => {
   }
 
   return (
-    <ListItem className={classes.listItem}>
+    <ListItem className={classNames({ [classes.listItem]: !disableBorder })}>
       <Grid container>
         <DataroomColumns title={title} document={document} />
-        <Grid container item xs={1} justify='space-evenly'>
+        <Grid container item xs={2} justify='flex-end'>
           <DownloadDocument
             documentId={document?._id}
             ownerId={document?.user}

@@ -1,29 +1,23 @@
 import React from 'react'
 import { EditableField } from 'v2/components/form/EditableField'
-import { TextField } from '@material-ui/core'
+import { RichTextEditor } from 'v2/components/form/RichTextEditor'
 import { plainValueExtractor } from 'v2/components/form/createTypedForm'
 import { DSOContainer } from 'v2/app/components/DSO/components/DSOContainer'
 import { useFormContext } from 'react-hook-form'
 import { DSOFormValues } from 'v2/types/dso'
-import { NewDataroomUploader } from 'v2/components/form/NewDataroomUploader'
-import { DataroomFileRow } from 'v2/components/form/DataroomFileRow'
 
-export const DSOSubscriptionDocument = () => {
+export const DSOBusinessModel = () => {
   const { control } = useFormContext<DSOFormValues>()
 
   return (
-    <DSOContainer title='Subscription Document' item xs={12}>
+    <DSOContainer title='Business Model' item xs={12}>
       {/* @ts-ignore */}
       <EditableField
         control={control}
-        component={NewDataroomUploader}
-        label='Subscription Document'
-        name='subscriptionDocument'
+        component={RichTextEditor}
+        label='Business Model'
+        name='businessModel'
         valueExtractor={plainValueExtractor}
-        render={DataroomFileRow}
-        documentInfo={{
-          type: 'Subscription Document'
-        }}
       />
     </DSOContainer>
   )

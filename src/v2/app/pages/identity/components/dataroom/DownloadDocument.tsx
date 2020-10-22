@@ -22,7 +22,7 @@ export const DownloadDocument: React.FC<DownloadDocumentProps> = props => {
   )
   const handleClick = async () => await downloadDocument()
 
-  if (documentId === '' || ownerId === '') {
+  if (documentId === undefined) {
     return <Typography>No file uploaded</Typography>
   }
 
@@ -30,5 +30,9 @@ export const DownloadDocument: React.FC<DownloadDocumentProps> = props => {
     return children(downloadDocument)
   }
 
-  return <Button onClick={handleClick}>Download</Button>
+  return (
+    <Button size='small' variant='outlined' onClick={handleClick}>
+      Download
+    </Button>
+  )
 }
