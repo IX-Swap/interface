@@ -28,7 +28,7 @@ export const ResetStep: React.FC = () => {
   const handleSubmit = async (
     values: CompletePasswordResetFormValues
   ): Promise<void> => {
-    await completeReset({ ...values, email } as CompletePasswordResetArgs)
+    await completeReset({ ...values, email })
   }
 
   const goBack = (): void => {

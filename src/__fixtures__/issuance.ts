@@ -1,5 +1,23 @@
-import { DSORequestArgs, DSOFormValues } from 'v2/types/dso'
+import { DSORequestArgs, DSOFormValues, DeploymentInfo } from 'v2/types/dso'
 import { corporate, asset } from './authorizer'
+
+export const deploymentInfo: DeploymentInfo = {
+  _id: '12',
+  createdBy: '',
+  transactionHash: '',
+  token: '',
+  owner: '',
+  name: '',
+  symbol: '',
+  decimals: 12345,
+  policyBuilder: '',
+  storageEngine: '',
+  controller: '',
+  documentController: '',
+  createdAt: '2020-10-16T12:00:18.823Z',
+  updatedAt: '2020-10-16T12:00:18.823Z',
+  __v: 123
+}
 
 export const createDSOArgs: DSORequestArgs = {
   businessModel: 'business model',

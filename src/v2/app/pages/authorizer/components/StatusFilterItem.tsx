@@ -1,6 +1,6 @@
 import React from 'react'
 import { ListItem, ListItemIcon, ListItemText } from '@material-ui/core'
-import { makeStyles } from '@material-ui/styles'
+import useStyles from './StatusFilterItem.styles'
 
 export interface StatusFilterItemProps {
   isSelected: boolean
@@ -35,12 +35,3 @@ export const StatusFilterItem: React.FC<StatusFilterItemProps> = ({
     </ListItem>
   )
 }
-
-const useStyles = makeStyles(() => ({
-  selected: {
-    color: '#0C469C'
-  },
-  normal: {
-    color: '#979797'
-  }
-}))

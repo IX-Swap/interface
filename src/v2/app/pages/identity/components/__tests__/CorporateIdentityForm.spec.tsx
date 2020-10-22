@@ -64,8 +64,6 @@ describe('CorporateIdentityForm', () => {
     expect(getByText(props.submitButtonText as string)).toBeTruthy()
   })
 
-  //
-
   it('handles form submission', async () => {
     //     const { getByText } = render(<CorporateIdentityForm {...props} isEditing />)
     //     fireEvent.click(getByText(props.submitButtonText as string))

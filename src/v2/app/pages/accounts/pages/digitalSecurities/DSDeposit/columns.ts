@@ -1,4 +1,5 @@
 import moment from 'moment'
+import { formatAmount } from 'v2/helpers/numbers'
 
 export const columns = [
   {
@@ -12,7 +13,7 @@ export const columns = [
   {
     label: 'Amount',
     key: 'amount',
-    render: (value: any) => value.toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,')
+    render: formatAmount
   },
   {
     label: 'Date',
