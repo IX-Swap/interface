@@ -44,4 +44,29 @@ describe('useBankById', () => {
       )
     })
   })
+
+  it('returns data with correct response from api if ownerId is undefined', async () => {
+    await act(async () => {
+      const getFn = jest.fn().mockResolvedValueOnce({ data: bank })
+      const apiObj = { get: getFn }
+      const args: UseBankByIdArgs = { bankId: bank._id }
+
+      const { result } = renderHookWithServiceProvider(
+        () => useBankById(args),
+        { apiService: apiObj }
+      )
+
+      await waitFor(
+        () => {
+          expect(result.current.status).toBe('success')
+          expect(getFn).toHaveBeenCalledWith(
+            `accounts/banks/${user._id}/${bank._id}`
+          )
+
+          expect(result.current.data).toEqual(bank)
+        },
+        { timeout: 1000 }
+      )
+    })
+  })
 })
