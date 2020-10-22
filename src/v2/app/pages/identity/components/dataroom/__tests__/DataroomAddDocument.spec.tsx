@@ -25,7 +25,7 @@ describe('DataroomAddDocument', () => {
   })
 
   it('renders without error', () => {
-    render(<DataroomAddDocument {...props} />)
+    render(<DataroomAddDocument {...props} button={<div />} />)
   })
 
   it('calls append function for every uploaded file', async () => {

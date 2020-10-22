@@ -8,7 +8,7 @@ import {
   DatePickerProps,
   MuiPickersUtilsProvider
 } from '@material-ui/pickers'
-import { makeStyles } from '@material-ui/styles'
+import useStyles from './SearchAndDateFilter.styles'
 import { BaseFilter } from 'v2/types/util'
 import { convertDateToISO } from 'v2/helpers/dates'
 
@@ -147,15 +147,3 @@ const TextFieldComponent: React.FC = (props: any) => (
     }}
   />
 )
-
-const useStyles = makeStyles(() => ({
-  filtersLabel: {
-    color: '#999999',
-    fontSize: '1rem',
-    fontWeight: 900
-  },
-  spaced: {
-    paddingLeft: '24px!important',
-    paddingRight: '24px!important'
-  }
-}))

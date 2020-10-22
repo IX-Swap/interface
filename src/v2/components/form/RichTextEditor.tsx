@@ -3,12 +3,7 @@ import MUIRichTextEditor from 'mui-rte'
 import { TMUIRichTextEditorRef } from 'mui-rte/src/MUIRichTextEditor'
 import { convertToRaw, convertFromHTML, ContentState } from 'draft-js'
 import { ControllerRenderProps } from './types'
-import draftToHtml from 'draftjs-to-html'
 import { Box } from '@material-ui/core'
-
-export const wysiwygToHtml = (draft: string): string => {
-  return draftToHtml(JSON.parse(draft))
-}
 
 export interface RichTextEditorProps extends ControllerRenderProps {}
 

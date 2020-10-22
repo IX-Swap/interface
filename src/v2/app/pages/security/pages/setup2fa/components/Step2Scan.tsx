@@ -1,29 +1,9 @@
 import React from 'react'
 import { Container, Typography, Box, Grid } from '@material-ui/core'
-import { makeStyles } from '@material-ui/core/styles'
-import { grey } from '@material-ui/core/colors'
+import useStyles from './Step2Scan.styles'
 import { useSetup2fa } from '../hooks/useSetup2fa'
 import { useSetup2faStore } from '../context'
 import { useObserver } from 'mobx-react'
-
-const useStyles = makeStyles(() => ({
-  image: {
-    height: '150px',
-    width: '150px',
-    backgroundPosition: 'center',
-    backgroundSize: 'contain',
-    backgroundRepeat: 'no-repeat',
-    marginRight: '1em'
-  },
-  label: {
-    color: grey[500],
-    fontSize: '.95em'
-  },
-  key: {
-    color: grey[700],
-    paddingTop: '1em'
-  }
-}))
 
 export const Step2Scan = () => {
   const classes = useStyles()

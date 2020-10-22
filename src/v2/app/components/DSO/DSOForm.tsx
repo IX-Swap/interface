@@ -18,6 +18,7 @@ import {
 import { DSOSubscriptionAndDocuments } from 'v2/app/components/DSO/components/DSOSubscriptionAndDocuments'
 import { createTypedForm } from 'v2/components/form/createTypedForm'
 import { DSOToken } from './components/DSOToken'
+import { getIdFromObj } from 'v2/helpers/strings'
 
 export interface DSOFormProps {
   submitButtonLabel?: string
@@ -26,6 +27,9 @@ export interface DSOFormProps {
   isEditing?: boolean
   isNew?: boolean
 }
+
+export const userExtractor = (data: DigitalSecurityOffering | undefined) =>
+  data?.user ?? ''
 
 export const useDSOForm = createTypedForm<DSOFormValues>()
 
@@ -45,7 +49,7 @@ export const DSOForm = (props: DSOFormProps) => {
       validationSchema={dsoFormValidationSchema}
       defaultValues={transformDSOToFormValues(data)}
     >
-      <DSOBaseFields isEditing={isEditing} dsoOwnerId={data?.user ?? ''} />
+      <DSOBaseFields isEditing={isEditing} dsoOwnerId={userExtractor(data)} />
 
       <Grid container direction='row' spacing={2}>
         <Grid item xs={8}>
@@ -67,7 +71,7 @@ export const DSOForm = (props: DSOFormProps) => {
             <DSOStatusFields
               isEditing={isEditing}
               isNew={isNew}
-              dsoOwnerId={data?.user ?? ''}
+              dsoOwnerId={userExtractor(data)}
             />
           </DSOContainer>
         </Grid>
@@ -76,8 +80,8 @@ export const DSOForm = (props: DSOFormProps) => {
           <DSOContainer title='Subscription & Documents'>
             <DSOSubscriptionAndDocuments
               isEditing={isEditing}
-              dsoOwnerId={data?.user ?? ''}
-              dsoId={data?._id ?? ''}
+              dsoOwnerId={userExtractor(data)}
+              dsoId={getIdFromObj(data)}
             />
           </DSOContainer>
         </Grid>
@@ -86,7 +90,7 @@ export const DSOForm = (props: DSOFormProps) => {
           <DSOContainer title='Offering Terms'>
             <DSOOfferingTerms
               isEditing={isEditing}
-              dsoOwnerId={data?.user ?? ''}
+              dsoOwnerId={userExtractor(data)}
             />
           </DSOContainer>
         </Grid>
@@ -149,7 +153,7 @@ export const DSOForm = (props: DSOFormProps) => {
 
         <Grid item xs={12}>
           <DSOContainer title='Team'>
-            <DSOTeam isEditing={isEditing} dsoOwnerId={data?.user ?? ''} />
+            <DSOTeam isEditing={isEditing} dsoOwnerId={userExtractor(data)} />
           </DSOContainer>
         </Grid>
 

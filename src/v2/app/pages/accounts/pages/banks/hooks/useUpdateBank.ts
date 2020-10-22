@@ -4,6 +4,7 @@ import { useAuth } from 'v2/hooks/auth/useAuth'
 import { useServices } from 'v2/services/useServices'
 import { useBanksRouter } from 'v2/app/pages/accounts/pages/banks/router'
 import { UpdateBankArgs } from 'v2/app/pages/accounts/types'
+import { getIdFromObj } from 'v2/helpers/strings'
 
 export const useUpdateBank = () => {
   const { user } = useAuth()
@@ -12,7 +13,7 @@ export const useUpdateBank = () => {
 
   const updateBank = async (args: UpdateBankArgs) => {
     const { bankId, ...bank } = args
-    const uri = `/accounts/banks/${user?._id ?? ''}/${bankId}`
+    const uri = `/accounts/banks/${getIdFromObj(user)}/${bankId}`
     return await apiService.put<Bank>(uri, bank)
   }
 

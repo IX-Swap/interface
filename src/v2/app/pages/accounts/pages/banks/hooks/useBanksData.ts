@@ -6,13 +6,14 @@ import { useServices } from 'v2/services/useServices'
 import { PaginatedData } from 'v2/services/api/types'
 import { useAuth } from 'v2/hooks/auth/useAuth'
 import { GetBanksArgs } from 'v2/app/pages/accounts/types'
+import { getIdFromObj } from 'v2/helpers/strings'
 
 export const BANKS_QUERY_KEY = 'banks'
 
 export const useBanksData = (): UsePaginatedQueryData<Bank> => {
   const { apiService } = useServices()
   const { user } = useAuth()
-  const uri = `/accounts/banks/list/${user?._id ?? ''}`
+  const uri = `/accounts/banks/list/${getIdFromObj(user)}`
 
   const getBanks = async (queryKey: string, args: GetBanksArgs) => {
     return await apiService.post<PaginatedData<Bank>>(uri, args)

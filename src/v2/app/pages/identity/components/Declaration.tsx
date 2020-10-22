@@ -1,20 +1,11 @@
 import React from 'react'
 import { Typography, List, Grid, ListItem, Divider } from '@material-ui/core'
-import { makeStyles } from '@material-ui/styles'
-import { DeclarationTemplate } from 'v2/types/identity'
 import { useFieldArray } from 'react-hook-form'
+import useStyles from './Declaration.styles'
+import { DeclarationTemplate } from 'v2/types/identity'
 import { useIndividualIdentityForm } from 'v2/app/pages/identity/components/IndividualIdentityForm'
 import { DeclarationHeader } from 'v2/app/pages/identity/components/DeclarationHeader'
 import { DeclarationFooter } from 'v2/app/pages/identity/components/DeclarationFooter'
-
-export const useStyles = makeStyles(() => ({
-  pageTitle: {
-    lineHeight: '2em'
-  },
-  subLevel: {
-    marginLeft: '3em'
-  }
-}))
 
 export interface DeclarationProps {
   declarations: DeclarationTemplate[]

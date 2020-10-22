@@ -1,6 +1,6 @@
 import React from 'react'
 import { Typography, Grid } from '@material-ui/core'
-import { makeStyles } from '@material-ui/styles'
+import useStyles from './Filters.styles'
 import { BaseFilter } from 'v2/types/util'
 import { StatusFilter } from 'v2/app/pages/authorizer/components/StatusFilter'
 import { SearchAndDateFilter } from 'v2/app/pages/authorizer/components/SearchAndDateFilter'
@@ -26,15 +26,3 @@ export const Filters: React.FC<FiltersProps> = ({ onApplyFilter }) => {
     </Grid>
   )
 }
-
-const useStyles = makeStyles(() => ({
-  filtersLabel: {
-    color: '#999999',
-    fontSize: '1rem',
-    fontWeight: 900
-  },
-  spaced: {
-    paddingLeft: '24px!important',
-    paddingRight: '24px!important'
-  }
-}))

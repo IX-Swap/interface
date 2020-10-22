@@ -1,6 +1,6 @@
 import React from 'react'
 import { Grid, Box, Button } from '@material-ui/core'
-import { makeStyles } from '@material-ui/styles'
+import useStyles from './SettingsRow.styles'
 
 export interface SettingsRowProps {
   name?: string
@@ -9,29 +9,6 @@ export interface SettingsRowProps {
   buttonMessage: string
   buttonClick: () => void
 }
-
-const useStyles = makeStyles(() => ({
-  button: {
-    fontWeight: 'bold',
-    width: '100px'
-  },
-  logoImg: {
-    height: '2.5em',
-    marginRight: '1em'
-  },
-  btnImg: {
-    height: '3rem',
-    marginRight: '1.5em'
-  },
-  btnLabel: {
-    fontSize: '0.95rem'
-  },
-  popupBtn: {
-    '&:hover': {
-      cursor: 'pointer'
-    }
-  }
-}))
 
 export const SettingsRow = ({
   name = 'row-image',

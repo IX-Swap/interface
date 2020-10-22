@@ -4,12 +4,13 @@ import { useServices } from 'v2/services/useServices'
 import { useDepositStore } from 'v2/app/pages/accounts/pages/banks/context'
 import { DepositStoreStep } from 'v2/app/pages/accounts/pages/banks/context/store'
 import { DepositCashArgs } from 'v2/app/pages/accounts/types'
+import { getIdFromObj } from 'v2/helpers/strings'
 
 export const useDepositCash = () => {
   const { user } = useAuth()
   const { setCurrentStep } = useDepositStore()
   const { apiService, snackbarService } = useServices()
-  const uri = `/accounts/cash/deposits/${user?._id ?? ''}`
+  const uri = `/accounts/cash/deposits/${getIdFromObj(user)}`
 
   const depositCash = async (args: DepositCashArgs) => {
     return await apiService.post(uri, args)
