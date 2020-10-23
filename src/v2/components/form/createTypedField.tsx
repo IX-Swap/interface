@@ -58,7 +58,7 @@ export const TypedField = <
   const TypedController = useTypedController<FormType>({ control })
   const path = pathToString(name, root)
   const error = get(errors, path) as FieldError
-  const hasError = get(formState.touched, path) === true && Boolean(error)
+  const hasError = formState.isSubmitted && Boolean(error)
   const handleChange = (
     event: React.ChangeEvent<HTMLTextAreaElement | HTMLInputElement>,
     ...restArgs: any[]

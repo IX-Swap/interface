@@ -16,7 +16,7 @@ export const AssetSelect = React.memo(
     queryStatusRenderer(status)
 
     return (
-      <Select {...rest} style={{ minWidth: 60 }}>
+      <Select {...rest} style={{ minWidth: 80 }}>
         <MenuItem disabled value={undefined}>
           {assetType}
         </MenuItem>
