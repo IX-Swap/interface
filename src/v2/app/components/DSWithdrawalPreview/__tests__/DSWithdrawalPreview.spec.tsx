@@ -62,11 +62,6 @@ describe('DSWithdrawalPreview', () => {
     )
     expect(LabelledValue).toHaveBeenNthCalledWith(
       5,
-      { label: 'Memo', value: props.data.memo },
-      {}
-    )
-    expect(LabelledValue).toHaveBeenNthCalledWith(
-      6,
       {
         label: 'Transaction',
         value: expect.anything()

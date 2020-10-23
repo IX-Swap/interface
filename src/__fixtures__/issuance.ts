@@ -1,6 +1,7 @@
 import { DSORequestArgs, DSOFormValues, DeploymentInfo } from 'v2/types/dso'
 import { corporate, asset } from './authorizer'
 import { emptyFile } from '__fixtures__/file'
+import { numberToPercentage } from 'v2/app/pages/issuance/utils'
 
 export const deploymentInfo: DeploymentInfo = {
   _id: '12',
@@ -119,19 +120,19 @@ export const requestargs: DSORequestArgs = {
   logo: '5f898b69aa141c6d0d358ce6',
   useOfProceeds: '<p>As usual</p>\n',
   totalFundraisingAmount: 100000,
-  subscriptionDocument: '5f898b02aa141c6d0d358ce4',
+  subscriptionDocument: formvalues.subscriptionDocument._id,
   pricePerUnit: 10,
   minimumInvestment: 200,
-  leverage: 1,
+  leverage: numberToPercentage(formvalues.leverage),
   launchDate: '2020-10-16T18:30:00.000Z',
   investmentStructure: '1',
   investmentPeriod: 2,
   introduction: '<p>Introducing IXW token</p>\n',
-  interestRate: 1,
-  grossIRR: 1,
+  interestRate: numberToPercentage(formvalues.interestRate),
+  grossIRR: numberToPercentage(formvalues.grossIRR),
   fundraisingMilestone: '<p>next month</p>\n',
-  equityMultiple: 1,
-  dividendYield: 1,
+  equityMultiple: numberToPercentage(formvalues.equityMultiple),
+  dividendYield: numberToPercentage(formvalues.dividendYield),
   distributionFrequency: 'Monthly',
   currency: '5f732c5b8a568b50914d8373',
   corporate: '5f898a64aa141c6d0d358ce1',

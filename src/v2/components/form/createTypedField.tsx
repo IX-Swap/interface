@@ -120,7 +120,10 @@ export const TypedField = <
                   value: destructValue(controllerProps.value),
                   onChange: handleChange,
                   onFocus: () => setIsFocused(true),
-                  onBlur: () => setIsFocused(false)
+                  onBlur: () => {
+                    setIsFocused(false)
+                    controllerProps.onBlur()
+                  }
                 })}
             {hasError || helperText !== undefined ? (
               <FormHelperText error={hasError}>

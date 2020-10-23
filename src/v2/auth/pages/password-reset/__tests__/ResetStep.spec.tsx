@@ -35,11 +35,11 @@ describe('ResetStep', () => {
       <ResetStep />
     )
     const form = getByTestId('reset-step')
-    const token = getByLabelText(/password reset token/i)
+    const email = getByLabelText(/email/i)
     const password = getByLabelText(/new password/i)
 
-    fireEvent.change(token, {
-      target: { value: completePasswordResetArgs.resetToken }
+    fireEvent.change(email, {
+      target: { value: completePasswordResetArgs.email }
     })
 
     fireEvent.change(password, {
@@ -47,21 +47,21 @@ describe('ResetStep', () => {
     })
 
     expect(form).toHaveFormValues({
-      resetToken: completePasswordResetArgs.resetToken,
+      email: completePasswordResetArgs.email,
       newPassword: completePasswordResetArgs.newPassword
     })
   })
 
-  it('handles token validation', async () => {
+  it('handles email validation', async () => {
     const {
       getByText,
       getAllByText,
       getByLabelText
     } = renderWithPasswordResetStore(<ResetStep />)
-    const token = getByLabelText(/password reset token/i)
+    const email = getByLabelText(/email/i)
     const submitButton = getByText(/complete/i)
 
-    fireEvent.blur(token)
+    fireEvent.blur(email)
 
     await waitFor(() => {
       expect(submitButton.parentElement).toBeDisabled()
@@ -83,7 +83,7 @@ describe('ResetStep', () => {
     await waitFor(() => {
       expect(submitButton.parentElement).toBeDisabled()
       expect(
-        getAllByText('Password must be at least 12 characters long').length
+        getAllByText('Password does not meet complexity requirement').length
       ).toBe(1)
     })
   })
@@ -95,18 +95,18 @@ describe('ResetStep', () => {
       .mockReturnValue([completeReset, generateMutationResult({})])
 
     const store = {
-      email: completePasswordResetArgs.email
+      token: completePasswordResetArgs.resetToken
     }
     const { getByText, getByLabelText } = renderWithPasswordResetStore(
       <ResetStep />,
       store
     )
-    const token = getByLabelText(/password reset token/i)
+    const email = getByLabelText(/email/i)
     const password = getByLabelText(/new password/i)
     const submitButton = getByText(/complete/i)
 
-    fireEvent.change(token, {
-      target: { value: completePasswordResetArgs.resetToken }
+    fireEvent.change(email, {
+      target: { value: completePasswordResetArgs.email }
     })
 
     fireEvent.change(password, {

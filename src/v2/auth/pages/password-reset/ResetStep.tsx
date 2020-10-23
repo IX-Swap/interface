@@ -15,7 +15,7 @@ type CompletePasswordResetFormValues = Omit<
 >
 
 export const completePasswordResetInitialValues = {
-  resetToken: '',
+  email: '',
   newPassword: ''
 }
 

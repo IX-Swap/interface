@@ -13,8 +13,8 @@ export const transformDSOToFormValues = (
       introduction: '',
       useOfProceeds: '',
       fundraisingMilestone: '',
-      team: undefined,
-      documents: undefined
+      team: [],
+      documents: []
     } as any
   }
 

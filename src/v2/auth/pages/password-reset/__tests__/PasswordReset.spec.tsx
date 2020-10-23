@@ -20,7 +20,7 @@ describe('PasswordReset', () => {
 
     renderWithPasswordResetStore(<PasswordReset />, store)
 
-    expect(RequestStep).toHaveBeenCalledTimes(1)
+    expect(RequestStep).toHaveBeenCalled()
   })
 
   it('renders ResetStep if currentStep is PasswordResetStep.Reset', () => {
@@ -28,7 +28,7 @@ describe('PasswordReset', () => {
 
     renderWithPasswordResetStore(<PasswordReset />, store)
 
-    expect(ResetStep).toHaveBeenCalledTimes(1)
+    expect(ResetStep).toHaveBeenCalled()
   })
 
   it('renders nothing if currentStep is something else', () => {

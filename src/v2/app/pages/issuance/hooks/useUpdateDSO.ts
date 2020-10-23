@@ -15,11 +15,11 @@ export const useUpdateDSO = (
   const { params, replace } = useIssuanceRouter()
   const { user } = useAuth()
   const url = `/issuance/dso/${getIdFromObj(user)}/${dsoId}`
-  const createDSO = async (args: DSORequestArgs) => {
+  const updateDSO = async (args: DSORequestArgs) => {
     return await apiService.put<DigitalSecurityOffering>(url, args)
   }
 
-  return useMutation(createDSO, {
+  return useMutation(updateDSO, {
     onSuccess: data => {
       callbacks?.onSuccess?.(data)
       replace('view', params)

@@ -19,7 +19,7 @@ export const DSOSubscriptionDocument = (
     <EditableField
       fieldType='DataroomDocument'
       isEditing={isEditing}
-      label='Subscription & Documents'
+      label='Subscription Document'
       name='subscriptionDocument'
       documentInfo={{
         title: 'Subscription Document',

@@ -47,67 +47,67 @@ describe('DSOStatusFields', () => {
     expect(EditableField).toHaveBeenCalledTimes(6)
     expect(EditableField).toHaveBeenNthCalledWith(
       1,
-      {
+      expect.objectContaining({
         fieldType: 'CorporateSelect',
         isEditing: props.isEditing,
         label: 'Corporate',
         name: 'corporate',
         valueExtractor: plainValueExtractor
-      },
+      }),
       {}
     )
     expect(EditableField).toHaveBeenNthCalledWith(
       2,
-      {
+      expect.objectContaining({
         fieldType: 'TextField',
         isEditing: props.isEditing,
         label: 'Status',
         name: 'status',
         inputProps: expect.anything()
-      },
+      }),
       {}
     )
     expect(EditableField).toHaveBeenNthCalledWith(
       3,
-      {
+      expect.objectContaining({
         fieldType: 'TextField',
         isEditing: props.isEditing,
         label: 'Capital Structure',
         name: 'capitalStructure'
-      },
+      }),
       {}
     )
     expect(EditableField).toHaveBeenNthCalledWith(
       4,
-      {
+      expect.objectContaining({
         fieldType: 'NumericField',
         isEditing: props.isEditing,
         label: 'Unit Price',
         name: 'pricePerUnit',
         numberFormat: moneyNumberFormat
-      },
+      }),
       {}
     )
     expect(EditableField).toHaveBeenNthCalledWith(
       5,
-      {
+      expect.objectContaining({
         fieldType: 'NumericField',
         isEditing: props.isEditing,
         label: 'Total Fundraising Amount',
         name: 'totalFundraisingAmount',
         numberFormat: moneyNumberFormat
-      },
+      }),
       {}
     )
     expect(EditableField).toHaveBeenNthCalledWith(
       6,
-      {
+      expect.objectContaining({
         fieldType: 'NumericField',
         isEditing: props.isEditing,
         label: 'Minimum Investment',
         name: 'minimumInvestment',
         numberFormat: moneyNumberFormat
-      },
+      }),
       {}
     )
   })
@@ -122,45 +122,45 @@ describe('DSOStatusFields', () => {
     expect(EditableField).toHaveBeenCalledTimes(4)
     expect(EditableField).toHaveBeenNthCalledWith(
       1,
-      {
+      expect.objectContaining({
         fieldType: 'TextField',
         isEditing: props.isEditing,
         label: 'Capital Structure',
         name: 'capitalStructure'
-      },
+      }),
       {}
     )
     expect(EditableField).toHaveBeenNthCalledWith(
       2,
-      {
+      expect.objectContaining({
         fieldType: 'NumericField',
         isEditing: props.isEditing,
         label: 'Unit Price',
         name: 'pricePerUnit',
         numberFormat: moneyNumberFormat
-      },
+      }),
       {}
     )
     expect(EditableField).toHaveBeenNthCalledWith(
       3,
-      {
+      expect.objectContaining({
         fieldType: 'NumericField',
         isEditing: props.isEditing,
         label: 'Total Fundraising Amount',
         name: 'totalFundraisingAmount',
         numberFormat: moneyNumberFormat
-      },
+      }),
       {}
     )
     expect(EditableField).toHaveBeenNthCalledWith(
       4,
-      {
+      expect.objectContaining({
         fieldType: 'NumericField',
         isEditing: props.isEditing,
         label: 'Minimum Investment',
         name: 'minimumInvestment',
         numberFormat: moneyNumberFormat
-      },
+      }),
       {}
     )
   })

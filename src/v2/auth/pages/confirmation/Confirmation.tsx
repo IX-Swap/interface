@@ -21,5 +21,5 @@ export const Confirmation: React.FC = () => {
     }
   }, [query, verifySignup, push]) // eslint-disable-line
 
-  return <LoadingFullScreen data-testid='loading' />
+  return <LoadingFullScreen />
 }
