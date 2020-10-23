@@ -159,7 +159,7 @@
     }
   },
   "jestSonar": {
-    "reportPath": "reports",
+    "reportPath": "coverage",
     "reportFile": "test-report.xml"
   },
   "husky": {
