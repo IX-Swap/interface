@@ -28,6 +28,7 @@
   "include": [
     "src/v2/**/*",
     "src/index.tsx",
+    "src/wdyr.ts",
     "src/react-app-env.d.ts",
     "src/setupTests.ts",
     "src/test-utils.tsx",

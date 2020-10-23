@@ -20,7 +20,7 @@ export interface RequestPasswordResetArgs extends BaseArgs {
   email: string
 }
 
-export interface CompletePasswordResetArgs extends BaseArgs {
+export interface CompletePasswordResetArgs {
   email: string
   resetToken: string
   newPassword: string

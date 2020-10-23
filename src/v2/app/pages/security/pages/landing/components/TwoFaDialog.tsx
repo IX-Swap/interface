@@ -1,24 +1,13 @@
 import React from 'react'
 import { Dialog, Box, Typography, Grid, Button } from '@material-ui/core'
 import gAuthImg from '../assets/googleauth.png'
-
-import { makeStyles } from '@material-ui/styles'
+import useStyles from './TwoFaDialog.styles'
 
 export interface TwoFaDialogProps {
   closeFn: () => void
   nextFn: () => void
   isOpen: boolean
 }
-
-const useStyles = makeStyles(() => ({
-  btnImg: {
-    height: '3rem',
-    marginRight: '1.5em'
-  },
-  btnLabel: {
-    fontSize: '0.95rem'
-  }
-}))
 
 export const TwoFaDialog = ({ closeFn, nextFn, isOpen }: TwoFaDialogProps) => {
   const classes = useStyles()

@@ -1,6 +1,5 @@
 import React from 'react'
 import { EditableField } from 'v2/components/form/EditableField'
-import { TextField } from '@material-ui/core'
 import { plainValueExtractor } from 'v2/components/form/createTypedForm'
 import { DSOContainer } from 'v2/app/components/DSO/components/DSOContainer'
 import { useFormContext } from 'react-hook-form'

@@ -11,9 +11,7 @@ import { DSOContainer } from 'v2/app/components/DSO/components/DSOContainer'
 import { useFormContext } from 'react-hook-form'
 import { DSOFormValues } from 'v2/types/dso'
 
-export interface DSODataroomProps {}
-
-export const DSODataroom = (props: DSODataroomProps) => {
+export const DSODataroom = () => {
   const { control } = useFormContext<DSOFormValues>()
 
   return (

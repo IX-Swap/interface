@@ -1,5 +1,6 @@
 import { TableColumn } from 'v2/types/util'
 import { AssetBalance } from 'v2/types/balance'
+import { formatAmount } from 'v2/helpers/numbers'
 
 export const columns: Array<TableColumn<AssetBalance>> = [
   {
@@ -15,23 +16,20 @@ export const columns: Array<TableColumn<AssetBalance>> = [
     key: 'balance',
     headAlign: 'right',
     align: 'right',
-    render: (value: number) =>
-      value?.toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,')
+    render: formatAmount
   },
   {
     label: 'Available Balance',
     key: 'available',
     headAlign: 'right',
     align: 'right',
-    render: (value: number) =>
-      value?.toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,')
+    render: formatAmount
   },
   {
     label: 'On Hold',
     key: 'onHold',
     headAlign: 'right',
     align: 'right',
-    render: (value: number) =>
-      value?.toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,')
+    render: formatAmount
   }
 ]

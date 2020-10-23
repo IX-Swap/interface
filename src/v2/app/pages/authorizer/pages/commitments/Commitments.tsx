@@ -1,13 +1,13 @@
 import React from 'react'
-import { AuthorizerTable as BaseView } from 'v2/app/pages/authorizer/components/AuthorizerTable'
 import { columns } from 'v2/app/pages/authorizer/pages/commitments/columns'
 import { Commitment } from 'v2/types/commitment'
 import { AuthorizerView } from 'v2/app/pages/authorizer/components/AuthorizerView'
 import { DataroomFeature } from 'v2/types/authorizer'
 import { CommitmentPreview } from 'v2/app/components/CommitmentPreview/CommitmentPreview'
+import { AuthorizerList } from 'v2/app/pages/authorizer/components/AuthorizerList'
 
 export const Commitments: React.FC = () => (
-  <BaseView
+  <AuthorizerList
     title='Authorize Commitment'
     uri='/issuance/commitments/list'
     name='authorizerCommitmentsList'

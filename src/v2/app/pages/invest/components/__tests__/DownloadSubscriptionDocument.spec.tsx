@@ -19,6 +19,7 @@ jest.mock('v2/app/pages/identity/components/dataroom/DownloadDocument', () => ({
 
 describe('DownloadSubscriptionDocument', () => {
   const props: DownloadSubscriptionDocumentProps = { dso: dso }
+
   afterEach(async () => {
     await cleanup()
     jest.clearAllMocks()
@@ -34,7 +35,7 @@ describe('DownloadSubscriptionDocument', () => {
     expect(DownloadDocument).toHaveBeenCalledTimes(1)
     expect(DownloadDocument).toHaveBeenCalledWith(
       {
-        documentId: dso.subscriptionDocument,
+        documentId: dso.subscriptionDocument._id,
         ownerId: dso.user,
         children: expect.anything()
       },
@@ -48,7 +49,7 @@ describe('DownloadSubscriptionDocument', () => {
     expect(DownloadDocument).toHaveBeenCalledTimes(1)
     expect(DownloadDocument).toHaveBeenCalledWith(
       {
-        documentId: dso.subscriptionDocument,
+        documentId: dso.subscriptionDocument._id,
         ownerId: dso.user,
         children: expect.anything()
       },

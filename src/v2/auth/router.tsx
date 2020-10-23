@@ -6,10 +6,10 @@ import { generateAppRouterHook } from 'v2/helpers/generateAppRouterHook'
 import { Confirmation } from 'v2/auth/pages/confirmation/Confirmation'
 
 export const AuthRoute = {
-  login: '/auth/login',
+  login: '/auth/sign-in',
   signup: '/auth/register',
   confirm: '/auth/confirm',
-  passwordReset: '/auth/password-reset'
+  passwordReset: '/auth/reset'
 }
 
 const authRoutes: InternalRouteProps[] = [

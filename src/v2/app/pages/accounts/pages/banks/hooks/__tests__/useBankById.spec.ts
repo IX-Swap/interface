@@ -1,0 +1,72 @@
+/** * @jest-environment jsdom-sixteen */
+import { act } from '@testing-library/react-hooks'
+import { waitFor, cleanup, renderHookWithServiceProvider } from 'test-utils'
+import * as useAuthHook from 'v2/hooks/auth/useAuth'
+import {
+  useBankById,
+  UseBankByIdArgs
+} from 'v2/app/pages/accounts/pages/banks/hooks/useBankById'
+import { user } from '__fixtures__/user'
+import { bank } from '__fixtures__/authorizer'
+
+describe('useBankById', () => {
+  beforeEach(() => {
+    jest
+      .spyOn(useAuthHook, 'useAuth')
+      .mockImplementation(() => ({ user, isAuthenticated: true }))
+  })
+  afterEach(async () => {
+    await cleanup()
+    jest.clearAllMocks()
+  })
+
+  it('returns data with correct response from api', async () => {
+    await act(async () => {
+      const getFn = jest.fn().mockResolvedValueOnce({ data: bank })
+      const apiObj = { get: getFn }
+      const args: UseBankByIdArgs = { bankId: bank._id, ownerId: '123' }
+
+      const { result } = renderHookWithServiceProvider(
+        () => useBankById(args),
+        { apiService: apiObj }
+      )
+
+      await waitFor(
+        () => {
+          expect(result.current.status).toBe('success')
+          expect(getFn).toHaveBeenCalledWith(
+            `accounts/banks/${args.ownerId as string}/${bank._id}`
+          )
+
+          expect(result.current.data).toEqual(bank)
+        },
+        { timeout: 1000 }
+      )
+    })
+  })
+
+  it('returns data with correct response from api if ownerId is undefined', async () => {
+    await act(async () => {
+      const getFn = jest.fn().mockResolvedValueOnce({ data: bank })
+      const apiObj = { get: getFn }
+      const args: UseBankByIdArgs = { bankId: bank._id }
+
+      const { result } = renderHookWithServiceProvider(
+        () => useBankById(args),
+        { apiService: apiObj }
+      )
+
+      await waitFor(
+        () => {
+          expect(result.current.status).toBe('success')
+          expect(getFn).toHaveBeenCalledWith(
+            `accounts/banks/${user._id}/${bank._id}`
+          )
+
+          expect(result.current.data).toEqual(bank)
+        },
+        { timeout: 1000 }
+      )
+    })
+  })
+})

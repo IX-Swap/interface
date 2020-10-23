@@ -18,7 +18,6 @@ export const DSOTeam = () => {
             <Grid item>
               {fields.map((value, index) => (
                 <DSOTeamMember
-                  control={control}
                   key={value.id}
                   defaultValue={fields[index] as any}
                   fieldId={value.id}

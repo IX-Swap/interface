@@ -3,9 +3,7 @@ import { useIssuanceRouter } from 'v2/app/pages/issuance/router'
 import { AppRouterLinkComponent } from 'v2/components/AppRouterLink'
 import { Button } from '@material-ui/core'
 
-export interface DSOFormBackButtonProps {}
-
-export const DSOFormBackButton = (props: DSOFormBackButtonProps) => {
+export const DSOFormBackButton = () => {
   const { paths, current, params } = useIssuanceRouter()
   const to = current.path === paths.create ? paths.list : paths.view
 

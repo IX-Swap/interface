@@ -1,9 +1,12 @@
+export const formatAmount = (value: number) =>
+  (value ?? 0).toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,')
+
 export const formatMoney = (
   value: number | null = 0,
   symbol: string = 'SGD',
   right = false
 ): string => {
-  const money = (value ?? 0).toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,')
+  const money = formatAmount(value ?? 0)
   const val = [symbol, money]
 
   return right ? val.reverse().join(' ') : val.join(' ')

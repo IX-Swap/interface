@@ -3,8 +3,8 @@ import { SubmitHandler, useForm, FormProvider } from 'react-hook-form'
 import { ObjectSchema, Shape, object } from 'yup'
 import { yupResolver } from '@hookform/resolvers'
 import { DeepMap, FieldError } from '@hookform/error-message/dist/types'
-import { useServices } from 'v2/services/useServices'
 import { useUnmountCallback } from 'v2/hooks/useUnmountCallback'
+import { noop } from 'v2/app/pages/identity/components/dataroom/Dataroom'
 
 export interface FormProps<T extends {}> {
   defaultValues?: Partial<T>
@@ -31,17 +31,12 @@ export const Form = <T,>(
     ...rest
   } = props
   const form = useForm({
-    mode: 'onBlur',
+    mode: 'onSubmit',
     defaultValues: defaultValues as any,
-    resolver: yupResolver(validationSchema)
-  } as any)
+    resolver: yupResolver(validationSchema),
+    shouldFocusError: true
+  })
   const { handleSubmit } = form
-  const { snackbarService } = useServices()
-  const onError = (errors: FormErrorsMap) => {
-    formErrorsToMessagesArray(errors).forEach(
-      error => void snackbarService.showSnackbar(error, 'error')
-    )
-  }
 
   useUnmountCallback(form.reset)
 
@@ -50,7 +45,7 @@ export const Form = <T,>(
       <form
         {...rest}
         style={{ width: '100%' }}
-        onSubmit={handleSubmit(onSubmit, onError)}
+        onSubmit={handleSubmit(onSubmit, noop)}
       >
         {children}
       </form>

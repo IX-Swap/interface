@@ -51,7 +51,7 @@ describe('Dataroom', () => {
 
   it('does not render DataroomAddDocument, DataroomItem & DataroomHeader correctly if documents does not exist', () => {
     render(
-      <Form defaultValues={{ documents: [] }}>
+      <Form defaultValues={{ docs: [] }}>
         <Dataroom {...props} />
       </Form>
     )
@@ -91,7 +91,7 @@ describe('Dataroom', () => {
   it('renders DataroomAddDocument if isEditing & editable are true', () => {
     render(
       <Form defaultValues={defaultValues}>
-        <Dataroom isEditing editable />
+        <Dataroom {...props} isEditing editable />
       </Form>
     )
     expect(DataroomAddDocument).toHaveBeenCalledTimes(1)

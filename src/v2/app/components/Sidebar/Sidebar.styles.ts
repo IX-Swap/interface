@@ -7,6 +7,7 @@ export const useStyles = makeStyles(theme => ({
     width: 90,
     boxShadow: theme.shadows[2],
     position: 'fixed',
+    zIndex: 11,
     left: 0,
     top: 0,
     bottom: 0

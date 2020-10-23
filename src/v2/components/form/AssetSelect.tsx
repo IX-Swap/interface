@@ -15,7 +15,7 @@ export const AssetSelect = (props: AssetSelectProps): JSX.Element => {
   queryStatusRenderer(status)
 
   return (
-    <Select {...rest} style={{ minWidth: 60 }}>
+    <Select {...rest} style={{ minWidth: 80 }}>
       <MenuItem disabled value={undefined}>
         {assetType}
       </MenuItem>

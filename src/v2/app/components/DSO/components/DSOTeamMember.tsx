@@ -7,20 +7,20 @@ import { NewDataroomUploader } from 'v2/components/form/NewDataroomUploader'
 import { DataroomAvatar } from 'v2/components/form/DataroomAvatar'
 import { RichTextEditor } from 'v2/components/form/RichTextEditor'
 import { plainValueExtractor } from 'v2/components/form/createTypedForm'
-import { Control, useFormContext } from 'react-hook-form'
-import { DSOFormValues, DsoTeamMember } from 'v2/types/dso'
+import { useFormContext } from 'react-hook-form'
+import { DsoTeamMember } from 'v2/types/dso'
 
 export interface DSOTeamMemberProps {
   fieldId: string
   index: number
   remove: (field: any) => void
   defaultValue: DsoTeamMember
-  control: Control
 }
 
 export const DSOTeamMember = memo(
   (props: DSOTeamMemberProps) => {
-    const { control, defaultValue, fieldId, index, remove } = props
+    const { defaultValue, fieldId, index, remove } = props
+    const { control } = useFormContext()
 
     return (
       <Grid item container alignItems='flex-start' wrap='nowrap' spacing={3}>

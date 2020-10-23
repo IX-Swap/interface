@@ -3,6 +3,7 @@ import { Button } from '@material-ui/core'
 import { useReject } from '../hooks/useReject'
 import { useAuthorizerCategory } from 'v2/hooks/location/useAuthorizerCategory'
 import { authorizerItemMap } from 'v2/app/pages/authorizer/authorizerItemMap'
+import { error } from 'v2/themes/default'
 
 export interface RejectButtonProps {
   itemId: string
@@ -21,6 +22,7 @@ export const RejectButton = (props: RejectButtonProps) => {
       variant='contained'
       onClick={handleClick}
       disabled={isLoading}
+      style={{ backgroundColor: error }}
     >
       Reject
     </Button>

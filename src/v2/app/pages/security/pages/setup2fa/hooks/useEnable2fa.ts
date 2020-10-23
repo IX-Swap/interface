@@ -3,6 +3,7 @@ import { useMutation } from 'react-query'
 import { useLogout } from 'v2/auth/hooks/useLogout'
 import { useAuth } from 'v2/hooks/auth/useAuth'
 import { Enable2faFormValues } from '../types'
+import { getIdFromObj } from 'v2/helpers/strings'
 
 export const useEnable2fa = () => {
   const { snackbarService, apiService } = useServices()
@@ -10,7 +11,7 @@ export const useEnable2fa = () => {
   const { user } = useAuth()
 
   const enable2fa = async ({ otp }: Enable2faFormValues) => {
-    const uri = `/auth/2fa/setup/${user?._id ?? ''}/confirm/${otp}`
+    const uri = `/auth/2fa/setup/${getIdFromObj(user)}/confirm/${otp}`
     return await apiService.post(uri, {})
   }
 

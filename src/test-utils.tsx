@@ -1,4 +1,4 @@
-import React, { cloneElement, createElement, PropsWithChildren } from 'react'
+import React, { cloneElement, PropsWithChildren } from 'react'
 import { Router } from 'react-router-dom'
 import { render, RenderOptions, RenderResult } from '@testing-library/react'
 import {
@@ -122,7 +122,9 @@ export const renderHookWithServiceProvider = (
   store: object = {}
 ): RenderHookResult<any, any> => {
   const WithServiceProvider: React.FC = ({ children }) => (
-    <ServicesProvider value={store}>{children}</ServicesProvider>
+    <BaseProviders>
+      <ServicesProvider value={store}>{children}</ServicesProvider>
+    </BaseProviders>
   )
 
   return renderHook(hookFn, { wrapper: WithServiceProvider })

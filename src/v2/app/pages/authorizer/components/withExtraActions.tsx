@@ -4,8 +4,8 @@ import {
   ActionsProps
 } from 'v2/app/pages/authorizer/components/Actions'
 
-export type WithExtraActionsProps<T> = Pick<ActionsProps<T>, 'onView'>
+export type WithExtraActionsProps<T> = ActionsProps<T>
 
-export const withExtraActions = <T,>(props: WithExtraActionsProps<T>) => (
+export const withExtraActions = <T,>() => (
   actionsProps: ActionsProps<T>
-): JSX.Element => <Actions<T> {...actionsProps} {...props} />
+): JSX.Element => <Actions<T> {...actionsProps} />

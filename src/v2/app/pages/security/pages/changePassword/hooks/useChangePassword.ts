@@ -3,6 +3,7 @@ import { useMutation } from 'react-query'
 import { useSecurityRouter } from 'v2/app/pages/security/router'
 import { ChangePasswordFormValues } from '../types'
 import { useAuth } from 'v2/hooks/auth/useAuth'
+import { getIdFromObj } from 'v2/helpers/strings'
 
 export const useChangePassword = () => {
   const { apiService, snackbarService } = useServices()
@@ -11,7 +12,7 @@ export const useChangePassword = () => {
 
   const changePassword = async (args: ChangePasswordFormValues) => {
     const { confirmPassword, ...payload } = args
-    const uri = `/auth/password/change/${user?._id ?? ''}`
+    const uri = `/auth/password/change/${getIdFromObj(user)}`
 
     return await apiService.post<any>(uri, payload)
   }

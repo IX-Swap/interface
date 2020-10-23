@@ -5,7 +5,7 @@ import { useFormContext } from 'react-hook-form'
 export const Submit: React.FC<ButtonProps> = props => {
   const { children, ...rest } = props
   const { formState } = useFormContext()
-  const { isValid, isSubmitting } = formState
+  const { isSubmitting } = formState
 
   return (
     <Button
@@ -13,7 +13,7 @@ export const Submit: React.FC<ButtonProps> = props => {
       disableElevation
       variant='contained'
       color='primary'
-      disabled={!isValid || isSubmitting}
+      disabled={isSubmitting}
       type='submit'
     >
       {children}

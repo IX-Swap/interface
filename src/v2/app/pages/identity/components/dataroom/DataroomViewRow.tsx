@@ -25,7 +25,7 @@ export const DataroomViewRow = (props: DataroomViewRowProps) => {
     <ListItem className={classNames({ [classes.listItem]: !disableBorder })}>
       <Grid container>
         <DataroomColumns title={title} document={document} />
-        <Grid container item xs={2} justify='flex-end'>
+        <Grid container item xs={1} justify='flex-end'>
           <DownloadDocument
             documentId={document?._id}
             ownerId={document?.user}

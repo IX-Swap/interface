@@ -35,11 +35,11 @@ describe('ResetStep', () => {
       <ResetStep />
     )
     const form = getByTestId('reset-step')
-    const token = getByLabelText(/password reset token/i)
+    const email = getByLabelText(/email/i)
     const password = getByLabelText(/new password/i)
 
-    fireEvent.change(token, {
-      target: { value: completePasswordResetArgs.resetToken }
+    fireEvent.change(email, {
+      target: { value: completePasswordResetArgs.email }
     })
 
     fireEvent.change(password, {
@@ -47,44 +47,8 @@ describe('ResetStep', () => {
     })
 
     expect(form).toHaveFormValues({
-      resetToken: completePasswordResetArgs.resetToken,
+      email: completePasswordResetArgs.email,
       newPassword: completePasswordResetArgs.newPassword
-    })
-  })
-
-  it('handles token validation', async () => {
-    const {
-      getByText,
-      getAllByText,
-      getByLabelText
-    } = renderWithPasswordResetStore(<ResetStep />)
-    const token = getByLabelText(/password reset token/i)
-    const submitButton = getByText(/complete/i)
-
-    fireEvent.blur(token)
-
-    await waitFor(() => {
-      expect(submitButton.parentElement).toBeDisabled()
-      expect(getAllByText('Required').length).toBe(1)
-    })
-  })
-
-  it('handles password validation', async () => {
-    const {
-      getByText,
-      getAllByText,
-      getByLabelText
-    } = renderWithPasswordResetStore(<ResetStep />)
-    const password = getByLabelText(/new password/i)
-    const submitButton = getByText(/complete/i)
-
-    fireEvent.blur(password)
-
-    await waitFor(() => {
-      expect(submitButton.parentElement).toBeDisabled()
-      expect(
-        getAllByText('Password must be at least 12 characters long').length
-      ).toBe(1)
     })
   })
 
@@ -95,25 +59,24 @@ describe('ResetStep', () => {
       .mockReturnValue([completeReset, generateMutationResult({})])
 
     const store = {
-      email: completePasswordResetArgs.email
+      token: completePasswordResetArgs.resetToken
     }
     const { getByText, getByLabelText } = renderWithPasswordResetStore(
       <ResetStep />,
       store
     )
-    const token = getByLabelText(/password reset token/i)
+    const email = getByLabelText(/email/i)
     const password = getByLabelText(/new password/i)
     const submitButton = getByText(/complete/i)
 
-    fireEvent.change(token, {
-      target: { value: completePasswordResetArgs.resetToken }
+    fireEvent.change(email, {
+      target: { value: completePasswordResetArgs.email }
     })
 
     fireEvent.change(password, {
       target: { value: completePasswordResetArgs.newPassword }
     })
 
-    expect(submitButton.parentElement).toBeEnabled()
     fireEvent.click(submitButton)
     expect(submitButton.parentElement).toBeDisabled()
 

@@ -7,8 +7,8 @@ import {
 } from 'v2/app/pages/authorizer/pages/offerings/Offerings'
 import { DSOForm } from 'v2/app/components/DSO/DSOForm'
 import { dso } from '__fixtures__/authorizer'
-import { AuthorizerView } from '../../../components/AuthorizerView'
-import { DataroomFeature } from '../../../../../../types/authorizer'
+import { AuthorizerView } from 'v2/app/pages/authorizer/components/AuthorizerView'
+import { DataroomFeature } from 'v2/types/authorizer'
 
 jest.mock('v2/app/components/DSO/DSOForm', () => ({
   DSOForm: jest.fn(() => null)

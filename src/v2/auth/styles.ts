@@ -54,6 +54,9 @@ export default makeStyles(theme => ({
   textField: {
     borderBottomColor: (theme.palette.background as LightTypeBackground).light
   },
+  otp: {
+    marginTop: theme.spacing(2)
+  },
   formButtons: {
     width: '100%',
     marginTop: theme.spacing(4),

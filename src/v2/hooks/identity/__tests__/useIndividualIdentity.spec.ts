@@ -17,7 +17,7 @@ describe('useIndividualIdentity', () => {
     jest.clearAllMocks()
   })
 
-  it('invokes useParsedData with correct response from api', async () => {
+  it('returns data with correct response from api', async () => {
     await act(async () => {
       const getFn = jest
         .fn()

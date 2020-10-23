@@ -43,9 +43,9 @@ describe('DSO', () => {
     jest
       .spyOn(useDSOByIdHook, 'useDSOById')
       .mockReturnValue({ isLoading: false, data: dso } as any)
+
     render(<DSO {...props} />)
 
-    expect(DSOForm).toHaveBeenCalledTimes(1)
     expect(DSOForm).toHaveBeenCalledWith(
       {
         isEditing: false,

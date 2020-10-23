@@ -89,7 +89,7 @@ export const createTypedForm = <FormType extends Record<string, any>>() => {
     props: FieldsArrayComponentProps
   ) => {
     const { name, children } = props
-    const { reset, control } = useFormContext()
+    const { control } = useFormContext()
     const fieldArray = useFieldArray({ name, control })
 
     return children(fieldArray)

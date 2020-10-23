@@ -1,4 +1,4 @@
-import React, { createElement, ElementType, useRef } from 'react'
+import React, { createElement, ElementType } from 'react'
 import { useTypedController } from '@hookform/strictly-typed'
 import {
   DeepPath,
@@ -7,10 +7,8 @@ import {
   FieldValuesFromControl
 } from '@hookform/strictly-typed/dist/types'
 import { Control } from 'react-hook-form'
-import { LabelledValue } from 'v2/components/LabelledValue'
 import { OverrideProps } from '@material-ui/core/OverridableComponent'
 import { pathToString } from 'v2/components/form/utils'
-import { FormValue } from 'v2/components/form/FormValue'
 
 export interface FormInputProps<
   TFieldValues extends Record<string, any>,
@@ -24,20 +22,18 @@ export interface FormInputProps<
   component: ElementType
 }
 
-interface OverridableComponent {
-  <
-    TFieldValues extends UnpackNestedValue<FieldValuesFromControl<TControl>>,
-    TFieldName extends DeepPath<TFieldValues, TFieldName>,
-    TControl extends Control,
-    C extends React.ElementType
-  >(
-    props: FormInputProps<TFieldValues, TFieldName, TControl> & {
-      component: C
-      valueExtractor?: (...args: any[]) => any
-    } & OverrideProps<React.ComponentProps<C>, C>,
-    context?: any
-  ): JSX.Element
-}
+type OverridableComponent = <
+  TFieldValues extends UnpackNestedValue<FieldValuesFromControl<TControl>>,
+  TFieldName extends DeepPath<TFieldValues, TFieldName>,
+  TControl extends Control,
+  C extends React.ElementType
+>(
+  props: FormInputProps<TFieldValues, TFieldName, TControl> & {
+    component: C
+    valueExtractor?: (...args: any[]) => any
+  } & OverrideProps<React.ComponentProps<C>, C>,
+  context?: any
+) => JSX.Element
 
 export const EditableField: OverridableComponent = props => {
   const {

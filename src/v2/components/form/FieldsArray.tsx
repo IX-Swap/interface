@@ -1,19 +1,11 @@
-import React, { ElementType } from 'react'
 import {
   DeepPath,
   DeepPathArray,
-  DeepPathArrayValue,
   DeepPathValue,
   FieldValuesFromControl,
   UnpackNestedValue
 } from '@hookform/strictly-typed/dist/types'
-import {
-  Control,
-  useFieldArray,
-  UseFieldArrayMethods,
-  useFormContext,
-  useWatch
-} from 'react-hook-form'
+import { Control, useFieldArray, UseFieldArrayMethods } from 'react-hook-form'
 import { pathToString } from 'v2/components/form/utils'
 import { Maybe } from 'v2/types/util'
 

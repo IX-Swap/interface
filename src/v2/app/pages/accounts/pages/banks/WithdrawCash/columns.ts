@@ -32,7 +32,7 @@ const columns: Array<TableColumn<CashWithdrawal>> = [
   },
   {
     key: 'status',
-    label: ''
+    label: 'Status'
   }
 ]
 

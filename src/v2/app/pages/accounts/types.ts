@@ -1,6 +1,7 @@
 import { Bank, Address } from 'v2/types/bank'
 import { Asset } from 'v2/types/asset'
-import { DataroomFile } from '../../../types/dataroomFile'
+import { DataroomFile } from 'v2/types/dataroomFile'
+import { PaginationArgs } from 'v2/services/api/types'
 
 export type BankFormValues = Pick<
   Bank,
@@ -44,3 +45,27 @@ export interface WithdrawDSFormValues
   recipientWallet: string
   memo?: string
 }
+
+export type BankArgs = Omit<BankFormValues, 'supportingDocuments'> & {
+  supportingDocuments: string[]
+}
+
+export type CreateBankArgs = BankArgs
+
+export type UpdateBankArgs = BankArgs & {
+  bankId: string
+}
+
+export interface DepositCashArgs {
+  depositCode: string
+  asset: string
+  amount: number
+  otp: string
+  memo?: string
+}
+
+export type WithdrawCashArgs = WithdrawCashFormValues
+
+export type WithdrawDSArgs = WithdrawDSFormValues & { asset: string }
+
+export interface GetBanksArgs extends PaginationArgs {}

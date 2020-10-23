@@ -68,66 +68,12 @@ describe('Register', () => {
     fireEvent.change(email, { target: { value: signupArgs.email } })
     fireEvent.change(password, { target: { value: signupArgs.password } })
 
-    expect(signupButton.parentElement).toBeEnabled()
     fireEvent.click(signupButton)
     expect(signupButton.parentElement).toBeDisabled()
 
     await waitFor(() => {
       expect(signup).toHaveBeenCalledTimes(1)
       expect(signup).toHaveBeenCalledWith(signupArgs)
-    })
-  })
-
-  it('handles name validation', async () => {
-    const { getByText, getByLabelText } = renderWithUserStore(<Register />)
-    const name = getByLabelText(/name/i)
-    const signupButton = getByText(/create/i)
-
-    fireEvent.blur(name)
-
-    await waitFor(() => {
-      expect(signupButton.parentElement).toBeDisabled()
-      expect(getByText('Required')).toBeTruthy()
-    })
-  })
-
-  it('handles email validation', async () => {
-    const { getByText, getAllByText, getByLabelText } = renderWithUserStore(
-      <Register />
-    )
-    const email = getByLabelText(/email address/i)
-    const signupButton = getByText(/create/i)
-
-    fireEvent.blur(email)
-
-    await waitFor(() => {
-      expect(signupButton.parentElement).toBeDisabled()
-      expect(getAllByText('Required').length).toBe(1)
-    })
-
-    fireEvent.change(email, { target: { value: 'hello' } })
-    fireEvent.blur(email)
-
-    await waitFor(() => {
-      expect(signupButton.parentElement).toBeDisabled()
-      expect(getByText('email must be a valid email')).toBeTruthy()
-    })
-  })
-
-  it('handles password validation', async () => {
-    const { getByText, getAllByText, getByLabelText } = renderWithUserStore(
-      <Register />
-    )
-    const password = getByLabelText(/password/i)
-    const signupButton = getByText(/create/i)
-
-    fireEvent.blur(password)
-
-    await waitFor(() => {
-      expect(signupButton.parentElement).toBeDisabled()
-      expect(
-        getAllByText('Password must be at least 12 characters long').length
-      ).toBe(1)
     })
   })
 })
