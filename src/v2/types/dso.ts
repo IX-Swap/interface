@@ -48,11 +48,11 @@ export interface BaseDigitalSecurityOffering extends AuthorizableWithIdentity {
   dividendYield: number | null
   grossIRR: number | null
   investmentStructure: string
-  equityMultiple: string
+  equityMultiple: number | null
   distributionFrequency: string
   interestRate: number | null
-  leverage: string
-  subscriptionDocument: string
+  leverage: number | null
+  subscriptionDocument: DataroomFile
   introduction: string
   businessModel: string
   useOfProceeds: string
@@ -102,6 +102,10 @@ export type DSOFormValues = Omit<
   team: Maybe<DsoTeamMember[]>
 }
 
-export type DSORequestArgs = Omit<DSOFormValues, 'documents'> & {
+export type DSORequestArgs = Omit<
+  DSOFormValues,
+  'documents' | 'subscriptionDocument'
+> & {
+  subscriptionDocument: string
   documents: string[]
 }

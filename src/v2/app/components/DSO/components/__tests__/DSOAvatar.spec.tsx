@@ -17,12 +17,13 @@ jest.mock('v2/app/components/DSO/components/ViewDocument', () => ({
 
 describe('DSOAvatar', () => {
   const props: DSOAvatarProps = {
-    imageId: '',
+    imageId: 'imageId',
     size: 2,
     variant: 'rounded',
     dsoOwnerId: '',
     button: <div data-testid='test-button' />
   }
+
   afterEach(async () => {
     await cleanup()
     jest.clearAllMocks()

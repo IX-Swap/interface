@@ -89,13 +89,5 @@ describe('WithdrawalPreview', () => {
       },
       {}
     )
-    expect(LabelledValue).toHaveBeenNthCalledWith(
-      8,
-      {
-        label: 'Memo',
-        value: props.data.memo
-      },
-      {}
-    )
   })
 })

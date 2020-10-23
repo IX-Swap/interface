@@ -7,7 +7,6 @@ import User from 'v2/types/user'
 
 export interface ActionsProps<T> {
   item: T
-  onView?: (row?: T) => void
   cacheQueryKey: any
 }
 

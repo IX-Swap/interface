@@ -5,7 +5,6 @@ import {
   CommitmentPreview,
   CommitmentPreviewProps
 } from 'v2/app/components/CommitmentPreview/CommitmentPreview'
-import { Commitment } from 'v2/types/commitment'
 import { commitment } from '__fixtures__/authorizer'
 import { LabelledValue } from 'v2/components/LabelledValue'
 import { formatDateAndTime } from 'v2/helpers/dates'
@@ -19,6 +18,7 @@ describe('CommitmentPreview', () => {
   const props: CommitmentPreviewProps = {
     data: commitment
   }
+
   afterEach(async () => {
     await cleanup()
     jest.clearAllMocks()
@@ -29,9 +29,7 @@ describe('CommitmentPreview', () => {
   })
 
   it('renders nothing if data is null', () => {
-    const { container } = render(
-      <CommitmentPreview data={(null as unknown) as Commitment} />
-    )
+    const { container } = render(<CommitmentPreview data={null} />)
 
     expect(container).toBeEmptyDOMElement()
   })
@@ -44,20 +42,20 @@ describe('CommitmentPreview', () => {
       1,
       {
         label: 'Company Name',
-        value: props.data.dso.corporate.companyLegalName
+        value: props.data?.dso.corporate.companyLegalName
       },
       {}
     )
     expect(LabelledValue).toHaveBeenNthCalledWith(
       2,
-      { label: 'Issued By', value: props.data.dso.issuerName },
+      { label: 'Issued By', value: props.data?.dso.issuerName },
       {}
     )
     expect(LabelledValue).toHaveBeenNthCalledWith(
       3,
       {
         label: 'Issued Date',
-        value: formatDateAndTime(props.data.dso.createdAt)
+        value: formatDateAndTime(props.data?.dso.createdAt ?? '')
       },
       {}
     )
@@ -71,22 +69,22 @@ describe('CommitmentPreview', () => {
       {
         label: 'Price Per Unit',
         value: formatMoney(
-          props.data.dso.pricePerUnit,
-          props.data.currency.symbol
+          props.data?.dso.pricePerUnit,
+          props.data?.currency.symbol
         )
       },
       {}
     )
     expect(LabelledValue).toHaveBeenNthCalledWith(
       6,
-      { label: 'Number Of Units', value: props.data.numberOfUnits },
+      { label: 'Number Of Units', value: props.data?.numberOfUnits },
       {}
     )
     expect(LabelledValue).toHaveBeenNthCalledWith(
       7,
       {
         label: 'Investment Structure',
-        value: props.data.dso.investmentStructure
+        value: props.data?.dso.investmentStructure
       },
       {}
     )
@@ -94,7 +92,7 @@ describe('CommitmentPreview', () => {
       8,
       {
         label: 'Total Amount',
-        value: formatMoney(props.data.totalAmount, props.data.currency.symbol)
+        value: formatMoney(props.data?.totalAmount, props.data?.currency.symbol)
       },
       {}
     )

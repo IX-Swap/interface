@@ -13,11 +13,9 @@ export const LayoutWithSidebar = memo(
     const classes = useStyles()
 
     return (
-      <Grid container>
-        <Grid item xs={3} className={classes.sidebar}>
-          <Container>{createElement(sidebar)}</Container>
-        </Grid>
-        <Grid item xs={9}>
+      <Grid container className={classes.container}>
+        <Grid className={classes.sidebar}>{createElement(sidebar)}</Grid>
+        <Grid className={classes.content}>
           <Container>{createElement(content)}</Container>
         </Grid>
       </Grid>

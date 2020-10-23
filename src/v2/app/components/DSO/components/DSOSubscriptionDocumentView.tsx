@@ -12,11 +12,12 @@ export const DSOSubscriptionDocumentView: React.FC<DSOSubscriptionDocumentViewPr
   dsoOwnerId
 }) => {
   const { FormValue } = useDSOForm()
+
   return (
     <FormValue name='subscriptionDocument'>
-      {documentId =>
-        dsoId === undefined ? null : (
-          <DownloadDocument documentId={documentId} ownerId={dsoOwnerId} />
+      {document =>
+        dsoId === undefined || document === undefined ? null : (
+          <DownloadDocument documentId={document._id} ownerId={dsoOwnerId} />
         )
       }
     </FormValue>

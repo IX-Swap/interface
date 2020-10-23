@@ -95,7 +95,11 @@ export const Dataroom = (props: DataroomProps): JSX.Element => {
             <>
               {fields.length > 0 && <HeaderComponent />}
               {items}
-              {showAddButton && addButton}
+              {showAddButton && (
+                <Grid container justify='flex-end' style={{ marginTop: 10 }}>
+                  {addButton}
+                </Grid>
+              )}
             </>
           )
         }}

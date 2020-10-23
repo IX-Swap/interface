@@ -10,6 +10,7 @@ import { requestPasswordResetArgs } from '__fixtures__/auth'
 import { history } from 'v2/history'
 import * as useRequestPasswordResetHook from 'v2/auth/hooks/useRequestPasswordReset'
 import { generateMutationResult } from '__fixtures__/useQuery'
+import { AuthRoute } from 'v2/auth/router'
 
 describe('RequestStep', () => {
   afterEach(async () => {
@@ -92,11 +93,11 @@ describe('RequestStep', () => {
     })
   })
 
-  it('handles click on "Forgot Password?"', async () => {
+  it('handles click on "Back To Login"', async () => {
     const { getByText } = renderWithPasswordResetStore(<RequestStep />)
     const backToLogin = getByText(/back to login/i)
 
     fireEvent.click(backToLogin)
-    expect(history.location.pathname).toBe('/auth/login')
+    expect(history.location.pathname).toBe(AuthRoute.login)
   })
 })

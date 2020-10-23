@@ -45,11 +45,11 @@ describe('DSOBaseFields', () => {
 
     expect(UserAvatar).toHaveBeenCalledTimes(1)
     expect(UserAvatar).toHaveBeenCalledWith(
-      {
+      expect.objectContaining({
         name: 'logo',
         isEditing: props.isEditing,
         ownerId: props.dsoOwnerId
-      },
+      }),
       {}
     )
   })
@@ -64,63 +64,63 @@ describe('DSOBaseFields', () => {
     expect(EditableField).toHaveBeenCalledTimes(6)
     expect(EditableField).toHaveBeenNthCalledWith(
       1,
-      {
+      expect.objectContaining({
         fieldType: 'TextField',
         isEditing: props.isEditing,
         label: 'Token Name',
         name: 'tokenName'
-      },
+      }),
       {}
     )
     expect(EditableField).toHaveBeenNthCalledWith(
       2,
-      {
+      expect.objectContaining({
         fieldType: 'TextField',
         isEditing: props.isEditing,
         label: 'Symbol',
         name: 'tokenSymbol'
-      },
+      }),
       {}
     )
     expect(EditableField).toHaveBeenNthCalledWith(
       3,
-      {
+      expect.objectContaining({
         fieldType: 'DatePicker',
         isEditing: props.isEditing,
         label: 'Launch Date',
         name: 'launchDate'
-      },
+      }),
       {}
     )
     expect(EditableField).toHaveBeenNthCalledWith(
       4,
-      {
+      expect.objectContaining({
         fieldType: 'CorporateSelect',
         isEditing: props.isEditing,
         label: 'Corporate',
         name: 'corporate'
-      },
+      }),
       {}
     )
     expect(EditableField).toHaveBeenNthCalledWith(
       5,
-      {
+      expect.objectContaining({
         fieldType: 'TextField',
         isEditing: props.isEditing,
         label: 'Issuer Name',
         name: 'issuerName'
-      },
+      }),
       {}
     )
     expect(EditableField).toHaveBeenNthCalledWith(
       6,
-      {
+      expect.objectContaining({
         fieldType: 'AssetSelect',
         isEditing: props.isEditing,
-        label: 'Asset',
+        label: 'Currency',
         assetType: 'Currency',
         name: 'currency'
-      },
+      }),
       {}
     )
   })

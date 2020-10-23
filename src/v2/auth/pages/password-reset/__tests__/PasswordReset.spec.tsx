@@ -5,13 +5,9 @@ import { cleanup } from '@testing-library/react'
 import { PasswordResetStep } from 'v2/auth/context/password-reset/types'
 import { RequestStep } from 'v2/auth/pages/password-reset/RequestStep'
 import { ResetStep } from 'v2/auth/pages/password-reset/ResetStep'
-import { ConfirmationStep } from 'v2/auth/pages/password-reset/ConfirmationStep'
 
 jest.mock('../RequestStep.tsx', () => ({ RequestStep: jest.fn(() => null) }))
 jest.mock('../ResetStep.tsx', () => ({ ResetStep: jest.fn(() => null) }))
-jest.mock('../ConfirmationStep.tsx', () => ({
-  ConfirmationStep: jest.fn(() => null)
-}))
 
 describe('PasswordReset', () => {
   afterEach(async () => {
@@ -24,7 +20,7 @@ describe('PasswordReset', () => {
 
     renderWithPasswordResetStore(<PasswordReset />, store)
 
-    expect(RequestStep).toHaveBeenCalledTimes(1)
+    expect(RequestStep).toHaveBeenCalled()
   })
 
   it('renders ResetStep if currentStep is PasswordResetStep.Reset', () => {
@@ -32,15 +28,7 @@ describe('PasswordReset', () => {
 
     renderWithPasswordResetStore(<PasswordReset />, store)
 
-    expect(ResetStep).toHaveBeenCalledTimes(1)
-  })
-
-  it('renders ConfirmationStep if currentStep is PasswordResetStep.Confirmation', () => {
-    const store = { currentStep: PasswordResetStep.Confirmation }
-
-    renderWithPasswordResetStore(<PasswordReset />, store)
-
-    expect(ConfirmationStep).toBeTruthy()
+    expect(ResetStep).toHaveBeenCalled()
   })
 
   it('renders nothing if currentStep is something else', () => {

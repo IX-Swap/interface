@@ -43,9 +43,11 @@ const overrides = {
 const rte = {
   MUIRichTextEditor: {
     root: {
-      backgroundColor: '#ebebeb',
+      backgroundColor: '#f0f0f0',
       height: '100%',
-      minHeight: '40px'
+      minHeight: '40px',
+      borderRadius: 4,
+      overflow: 'hidden'
     },
     container: {
       display: 'flex',
@@ -53,17 +55,17 @@ const rte = {
       flexDirection: 'column'
     },
     editor: {
-      backgroundColor: '#ebebeb',
+      backgroundColor: '#f0f0f0',
       padding: '20px',
       height: '100%',
       overflow: 'auto'
     },
     toolbar: {
       borderBottom: '1px solid gray',
-      backgroundColor: '#ebebeb'
+      backgroundColor: '#f0f0f0'
     },
     placeHolder: {
-      backgroundColor: '#ebebeb',
+      backgroundColor: '#f0f0f0',
       paddingLeft: 20,
       width: '100%',
       height: '100%',

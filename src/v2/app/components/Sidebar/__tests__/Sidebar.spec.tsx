@@ -119,6 +119,7 @@ describe('Sidebar', () => {
   it('renders SidebarLink correctly if user is authorizer', () => {
     jest.spyOn(acl, 'useIsAuthorizer').mockReturnValue(true)
     jest.spyOn(acl, 'useIsIssuer').mockReturnValue(false)
+
     render(<Sidebar />)
 
     expect(SidebarLink).toHaveBeenCalledTimes(3)

@@ -7,7 +7,7 @@ import {
 } from 'v2/app/pages/authorizer/pages/dsWithdrawals/DSWithdrawals'
 import { DSWithdrawalPreview } from 'v2/app/components/DSWithdrawalPreview/DSWithdrawalPreview'
 import { dsWithdrawal } from '__fixtures__/authorizer'
-import { DataroomFeature } from '../../../../../../types/authorizer'
+import { DataroomFeature } from 'v2/types/authorizer'
 import { AuthorizerView } from '../../../components/AuthorizerView'
 
 jest.mock('v2/app/components/DSWithdrawalPreview/DSWithdrawalPreview', () => ({

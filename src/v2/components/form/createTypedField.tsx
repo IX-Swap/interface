@@ -1,6 +1,6 @@
 import { Control, FieldError, useFormContext } from 'react-hook-form'
 import { InputLabel, FormControl, FormHelperText } from '@material-ui/core'
-import React, { cloneElement } from 'react'
+import React, { cloneElement, useState } from 'react'
 import { useTypedController } from '@hookform/strictly-typed'
 import {
   DeepPath,
@@ -38,7 +38,7 @@ export const TypedField = <
 >(
   props: TypedFieldProps<FormType, Path> &
     TypedFieldPropsWithChildren<FormType, Path>
-): JSX.Element => {
+) => {
   const {
     name,
     root,
@@ -74,11 +74,11 @@ export const TypedField = <
   const destructValue = (value: any): any => {
     return valueProvider !== undefined ? valueProvider(value) : value
   }
+  const [isFocused, setIsFocused] = useState(false)
   const elementProps = {
     ...{ ...inputProps, id: path },
     label: props.label,
     name: path,
-    placeholder: '',
     error: hasError,
     variant
   }
@@ -97,10 +97,10 @@ export const TypedField = <
           >
             {typeof children !== 'function' && (
               <InputLabel
-                placeholder=''
                 error={hasError}
                 htmlFor={path}
                 variant={variant}
+                shrink={isFocused || hasValue(controllerProps.value)}
               >
                 {props.label}
               </InputLabel>
@@ -110,13 +110,20 @@ export const TypedField = <
                   ...elementProps,
                   ...controllerProps,
                   value: destructValue(controllerProps.value),
-                  onChange: handleChange
+                  onChange: handleChange,
+                  onFocus: () => setIsFocused(true),
+                  onBlur: () => setIsFocused(false)
                 })
               : cloneElement(children, {
                   ...elementProps,
                   ...controllerProps,
                   value: destructValue(controllerProps.value),
-                  onChange: handleChange
+                  onChange: handleChange,
+                  onFocus: () => setIsFocused(true),
+                  onBlur: () => {
+                    setIsFocused(false)
+                    controllerProps.onBlur()
+                  }
                 })}
             {hasError || helperText !== undefined ? (
               <FormHelperText error={hasError}>

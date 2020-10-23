@@ -10,6 +10,7 @@ import { DigitalSecurityOffering } from 'v2/types/dso'
 import declarations from 'v2/app/pages/identity/const/declarations'
 import { AuthorizationInfo } from 'v2/types/authorizer'
 import { Commitment } from 'v2/types/commitment'
+import { emptyFile } from '__fixtures__/file'
 
 export const asset: Asset = {
   _id: '2',
@@ -44,6 +45,7 @@ export const authorizationInfo: AuthorizationInfo = {
 
 export const corporate: CorporateIdentity = {
   _id: '1',
+
   logo: '',
   createdAt: '01-01-2000',
   updatedAt: '01-01-2000',
@@ -145,7 +147,7 @@ export const dso: DigitalSecurityOffering = {
   distributionFrequency: 'distribution frequency',
   dividendYield: 1,
   documents: [],
-  equityMultiple: 'equity multiple',
+  equityMultiple: 0,
   fundraisingMilestone: 'fundraising milestone',
   grossIRR: 0,
   interestRate: 1,
@@ -154,11 +156,11 @@ export const dso: DigitalSecurityOffering = {
   investmentStructure: 'investment structure',
   issuerName: 'issuer name',
   launchDate: '01-01-2000',
-  leverage: 'leverage',
+  leverage: 0,
   logo: '5f4f7d87f3e2c40bbab8a3f1',
   minimumInvestment: 100,
   pricePerUnit: 1,
-  subscriptionDocument: 'subscription document',
+  subscriptionDocument: emptyFile,
   team: [],
   tokenName: 'token name',
   tokenSymbol: 'token symbol',

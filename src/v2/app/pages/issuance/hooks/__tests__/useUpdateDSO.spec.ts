@@ -7,15 +7,18 @@ import * as useAuthHook from 'v2/hooks/auth/useAuth'
 import { user } from '__fixtures__/user'
 import { createDSOArgs } from '__fixtures__/issuance'
 import { dso } from '__fixtures__/authorizer'
+import { history } from 'v2/history'
 
 describe('useUpdateDSO', () => {
   const callbacks = { onSuccess: jest.fn(), onError: jest.fn() }
 
   beforeEach(() => {
+    history.push('/', { dsoId: dso._id })
     jest
       .spyOn(useAuthHook, 'useAuth')
       .mockReturnValue({ user: user, isAuthenticated: false })
   })
+
   afterEach(async () => {
     await cleanup()
     jest.clearAllMocks()
@@ -38,9 +41,8 @@ describe('useUpdateDSO', () => {
           const [mutate] = result.current
           void mutate(createDSOArgs)
 
-          expect(callbacks.onSuccess).toHaveBeenCalledTimes(1)
-          expect(showSnackbar).toHaveBeenCalledTimes(1)
-          expect(showSnackbar).toHaveBeenNthCalledWith(1, 'Success', 'success')
+          expect(callbacks.onSuccess).toHaveBeenCalledWith(successfulResponse)
+          expect(showSnackbar).toHaveBeenCalledWith('Success', 'success')
         },
         { timeout: 1000 }
       )

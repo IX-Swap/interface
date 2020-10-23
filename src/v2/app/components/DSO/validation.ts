@@ -3,7 +3,7 @@ import {
   DSOFormValues,
   DsoTeamMember
 } from 'v2/types/dso'
-import { DataroomFileWithGuide } from 'v2/types/dataroomFile'
+import { DataroomFile, DataroomFileWithGuide } from 'v2/types/dataroomFile'
 import { string, number, array, object } from 'yup'
 
 export const deploymentInfoValidationSchema = object().shape<
@@ -29,7 +29,7 @@ export const dsoFormValidationSchema = object()
     currency: string().required('Required'),
     distributionFrequency: string().required('Required'),
     dividendYield: number().nullable().required('Required'),
-    equityMultiple: string().required('Required'),
+    equityMultiple: number().required('Required'),
     fundraisingMilestone: string().required('Required'),
     grossIRR: number().nullable().required('Required'),
     interestRate: number().nullable().required('Required'),
@@ -38,10 +38,10 @@ export const dsoFormValidationSchema = object()
     investmentStructure: string().required('Required'),
     issuerName: string().required('Required'),
     launchDate: string().required('Required'),
-    leverage: string().required('Required'),
+    leverage: number().required('Required'),
     minimumInvestment: number().nullable().required('Required'),
     pricePerUnit: number().nullable().required('Required'),
-    subscriptionDocument: string().required('Required'),
+    subscriptionDocument: object<DataroomFile>().required('Required'),
     tokenName: string().required('Required'),
     tokenSymbol: string().required('Required'),
     totalFundraisingAmount: number().nullable().required('Required'),

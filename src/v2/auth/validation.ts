@@ -50,8 +50,8 @@ export const requestPasswordResetValidationSchema = yup.object<
 })
 
 export const completePasswordResetValidationSchema = yup.object<
-  Omit<CompletePasswordResetArgs, 'email'>
+  Omit<CompletePasswordResetArgs, 'resetToken'>
 >({
-  resetToken: yup.string().required('Required'),
+  email: emailSchema,
   newPassword: passwordSchema
 })
