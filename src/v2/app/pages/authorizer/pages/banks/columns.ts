@@ -17,7 +17,7 @@ export const columns: Array<TableColumn<Bank>> = [
     label: 'Bank Name'
   },
   {
-    key: 'asset.symbol',
+    key: 'currency.symbol',
     label: 'Currency'
   },
   {

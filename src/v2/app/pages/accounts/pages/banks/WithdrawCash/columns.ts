@@ -1,6 +1,7 @@
-import moment from 'moment'
 import { CashWithdrawal } from 'v2/types/cashWithdrawal'
 import { TableColumn } from 'v2/types/util'
+import { formatDateToMMDDYY } from 'v2/helpers/dates'
+import { formatMoney } from 'v2/helpers/numbers'
 
 const columns: Array<TableColumn<CashWithdrawal>> = [
   {
@@ -10,14 +11,14 @@ const columns: Array<TableColumn<CashWithdrawal>> = [
   {
     key: 'createdAt',
     label: 'Date',
-    render: (val, row) => moment(val).format('MM/DD/YY')
+    render: formatDateToMMDDYY
   },
   {
-    key: 'bankAccount.bankName',
+    key: 'bank.bankName',
     label: 'Bank Name'
   },
   {
-    key: 'bankAccount.bankAccountNumber',
+    key: 'bank.bankAccountNumber',
     label: 'Bank Account Number'
   },
   {
@@ -26,9 +27,7 @@ const columns: Array<TableColumn<CashWithdrawal>> = [
     headAlign: 'right',
     label: 'Amount',
     render: (val: number, row: CashWithdrawal) =>
-      `${row.asset.symbol} ${val
-        .toFixed(2)
-        .replace(/\d(?=(\d{3})+\.)/g, '$&,')}`
+      formatMoney(val, row.asset.symbol)
   },
   {
     key: 'status',

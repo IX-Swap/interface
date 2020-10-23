@@ -21,7 +21,7 @@ export const convertDateToISO = (
 }
 
 export const formatDateToMMDDYY = (s: string): string => {
-  return format(new Date(s), 'MM/dd/yy')
+  return format(new Date(s), 'MM/dd/yyyy')
 }
 
 export const formatDateAndTime = (s: string, seconds = false): string => {
