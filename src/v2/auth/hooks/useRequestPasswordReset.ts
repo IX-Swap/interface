@@ -1,17 +1,22 @@
 import { useMutation } from 'react-query'
-import { usePasswordResetStore } from '../context/password-reset'
-import { PasswordResetStep } from 'v2/auth/context/password-reset/types'
-import apiService from 'v2/services/api'
 import { RequestPasswordResetArgs } from 'v2/types/auth'
+import { useServices } from 'v2/services/useServices'
+import { useAuthRouter } from 'v2/auth/router'
 
 export const useRequestPasswordReset = () => {
-  const { setCurrentStep } = usePasswordResetStore()
-  const url = '/password/reset/start'
+  const { apiService, snackbarService } = useServices()
+  const { replace } = useAuthRouter()
+  const url = '/auth/password/reset/start'
   const mutateFn = async (args: RequestPasswordResetArgs) => {
-    return await apiService.post(url, args)
+    return await apiService.post<{ email: string }>(url, args)
   }
 
   return useMutation(mutateFn, {
-    onSuccess: () => setCurrentStep(PasswordResetStep.Reset)
+    onSuccess: data => {
+      void snackbarService.showSnackbar(
+        `Email has been sent to ${data.data.email}`
+      )
+      replace('login')
+    }
   })
 }

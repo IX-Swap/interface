@@ -22,7 +22,7 @@ export const DownloadDocument: React.FC<DownloadDocumentProps> = props => {
   )
   const handleClick = async () => await downloadDocument()
 
-  if (documentId === '' || ownerId === '') {
+  if (documentId === undefined || documentId === '') {
     return <Typography>No file uploaded</Typography>
   }
 

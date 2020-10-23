@@ -120,52 +120,73 @@ describe('DSOForm', () => {
     expect(DSOContainer).toHaveBeenCalledTimes(10)
     expect(DSOContainer).toHaveBeenNthCalledWith(
       1,
-      { title: 'Introduction', children: expect.anything() },
+      expect.objectContaining({
+        title: 'Introduction',
+        children: expect.anything()
+      }),
       {}
     )
     expect(DSOContainer).toHaveBeenNthCalledWith(
       2,
-      { title: 'Status', children: expect.anything() },
+      expect.objectContaining({ title: 'Status', children: expect.anything() }),
       {}
     )
     expect(DSOContainer).toHaveBeenNthCalledWith(
       3,
-      { title: 'Subscription & Documents', children: expect.anything() },
+      expect.objectContaining({
+        title: 'Subscription Document',
+        children: expect.anything()
+      }),
       {}
     )
     expect(DSOContainer).toHaveBeenNthCalledWith(
       4,
-      { title: 'Offering Terms', children: expect.anything() },
+      expect.objectContaining({
+        title: 'Offering Terms',
+        children: expect.anything()
+      }),
       {}
     )
     expect(DSOContainer).toHaveBeenNthCalledWith(
       5,
-      { title: 'Business Model', children: expect.anything() },
+      expect.objectContaining({
+        title: 'Business Model',
+        children: expect.anything()
+      }),
       {}
     )
     expect(DSOContainer).toHaveBeenNthCalledWith(
       6,
-      { title: 'Token', children: expect.anything() },
+      expect.objectContaining({ title: 'Token', children: expect.anything() }),
       {}
     )
     expect(DSOContainer).toHaveBeenNthCalledWith(
       7,
-      { title: 'Use of Proceeds', children: expect.anything() },
+      expect.objectContaining({
+        title: 'Use of Proceeds',
+        children: expect.anything()
+      }),
       {}
     )
     expect(DSOContainer).toHaveBeenNthCalledWith(
       8,
-      { title: 'Dataroom', children: expect.anything() },
+      expect.objectContaining({
+        title: 'Dataroom',
+        children: expect.anything()
+      }),
       {}
     )
     expect(DSOContainer).toHaveBeenNthCalledWith(
       9,
-      { title: 'Fund Raising Milestone', children: expect.anything() },
+      expect.objectContaining({
+        title: 'Fund Raising Milestone',
+        children: expect.anything()
+      }),
       {}
     )
     expect(DSOContainer).toHaveBeenNthCalledWith(
       10,
-      { title: 'Team', children: expect.anything() },
+      expect.objectContaining({ title: 'Team', children: expect.anything() }),
       {}
     )
   })

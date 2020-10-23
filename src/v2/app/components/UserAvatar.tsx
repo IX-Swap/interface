@@ -11,6 +11,8 @@ export interface UserAvatarProps extends Partial<DSOAvatarSettingsProps> {
   isEditing: boolean
   ownerId: string
   root?: string
+  defaultValue?: string
+  keyValue?: string
 }
 
 export const UserAvatar = (props: UserAvatarProps) => {
@@ -20,6 +22,7 @@ export const UserAvatar = (props: UserAvatarProps) => {
     isEditing,
     ownerId,
     size = 50,
+    defaultValue,
     variant = 'circle'
   } = props
   const { EditableField, FormValue } = useTypedForm()
@@ -33,6 +36,7 @@ export const UserAvatar = (props: UserAvatarProps) => {
         label='Logo'
         root={root}
         name={name}
+        defaultValue={defaultValue}
         valueExtractor={documentValueExtractor}
         canDelete={false}
         uploadComponent={

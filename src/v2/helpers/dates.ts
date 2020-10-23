@@ -21,11 +21,13 @@ export const convertDateToISO = (
 }
 
 export const formatDateToMMDDYY = (s: string): string => {
-  return format(new Date(s), 'MM/dd/yy')
+  return s.length > 0 ? format(new Date(s), 'MM/dd/yy') : s
 }
 
 export const formatDateAndTime = (s: string, seconds = false): string => {
-  return format(new Date(s), `LLL d, yyyy hh:mm${seconds ? ':ss' : ''} a`)
+  return s.length > 0
+    ? format(new Date(s), `LLL d, yyyy hh:mm${seconds ? ':ss' : ''} a`)
+    : s
 }
 
 export const getTimeAgo = (datetime: string) => {

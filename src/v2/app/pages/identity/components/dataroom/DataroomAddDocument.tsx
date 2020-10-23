@@ -36,7 +36,7 @@ export const DataroomAddDocument: React.FC<
     )
   }
   const defaultButton = (
-    <Button variant='contained' color='primary' component='span' size='large'>
+    <Button variant='contained' color='primary' component='span'>
       Upload
     </Button>
   )

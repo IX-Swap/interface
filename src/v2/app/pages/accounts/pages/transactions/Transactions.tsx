@@ -1,23 +1,22 @@
 import React from 'react'
-import { TableView } from 'v2/components/TableWithPagination/TableView'
-import storageHelper from 'v2/helpers/storageHelper'
-import columns from 'v2/app/pages/accounts/pages/transactions/columns'
-import { Paper, Grid } from '@material-ui/core'
-import { Transaction } from 'v2/types/transaction'
+import { TransactionsFilter } from 'v2/app/pages/accounts/pages/transactions/components/TransactionsFilter'
+import { TransactionFilterForm } from 'v2/app/pages/accounts/pages/transactions/components/TransactionFilterForm'
+import { TransactionsTable } from 'v2/app/pages/accounts/pages/transactions/components/TransactionsTable'
+import { Grid } from '@material-ui/core'
 
 export const Transactions = () => {
   return (
-    <Paper>
+    <TransactionFilterForm>
       <Grid container direction='column'>
-        <Grid item xs={12}>
-          <TableView<Transaction>
-            uri={`/accounts/statement/${storageHelper.getUserId()}`}
-            name={`transactions-${storageHelper.getUserId()}`}
-            columns={columns}
-            filter={{ asset: '' }}
-          />
+        <Grid item>
+          <TransactionsFilter />
+        </Grid>
+        <Grid item>
+          <Grid item xs={12}>
+            <TransactionsTable />
+          </Grid>
         </Grid>
       </Grid>
-    </Paper>
+    </TransactionFilterForm>
   )
 }

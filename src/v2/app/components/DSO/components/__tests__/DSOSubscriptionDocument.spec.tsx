@@ -2,15 +2,14 @@
 import React from 'react'
 import { render, cleanup } from 'test-utils'
 import {
-  DSOSubscriptionAndDocuments,
+  DSOSubscriptionDocument,
   DSOSubscriptionAndDocumentsProps
-} from 'v2/app/components/DSO/components/DSOSubscriptionAndDocuments'
+} from 'v2/app/components/DSO/components/DSOSubscriptionDocument'
 import { Form } from 'v2/components/form/Form'
 import { useTypedForm } from '__fixtures__/createTypedForm'
 import * as dsoForm from 'v2/app/components/DSO/DSOForm'
-import { documentValueExtractor } from 'v2/app/components/DSO/utils'
 
-describe('DSOSubscriptionAndDocuments', () => {
+describe('DSOSubscriptionDocument', () => {
   const props: DSOSubscriptionAndDocumentsProps = {
     isEditing: false,
     dsoOwnerId: '',
@@ -31,7 +30,7 @@ describe('DSOSubscriptionAndDocuments', () => {
   it('renders without error', () => {
     render(
       <Form>
-        <DSOSubscriptionAndDocuments {...props} />
+        <DSOSubscriptionDocument {...props} />
       </Form>
     )
   })
@@ -39,25 +38,23 @@ describe('DSOSubscriptionAndDocuments', () => {
   it('renders EditableField with correct props', () => {
     render(
       <Form>
-        <DSOSubscriptionAndDocuments {...props} />
+        <DSOSubscriptionDocument {...props} />
       </Form>
     )
 
     expect(EditableField).toHaveBeenCalledTimes(1)
     expect(EditableField).toHaveBeenCalledWith(
-      {
+      expect.objectContaining({
         fieldType: 'DataroomDocument',
         isEditing: props.isEditing,
-        label: 'Subscription & Documents',
+        label: 'Subscription Document',
         name: 'subscriptionDocument',
         documentInfo: {
           title: 'Subscription Document',
           type: 'Subscription Document'
         },
-        canDelete: false,
-        valueExtractor: documentValueExtractor,
-        viewRenderer: expect.anything()
-      },
+        canDelete: false
+      }),
       {}
     )
   })

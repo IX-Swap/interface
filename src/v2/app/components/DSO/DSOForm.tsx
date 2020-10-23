@@ -1,8 +1,8 @@
 import React from 'react'
 import { DigitalSecurityOffering, DSOFormValues } from 'v2/types/dso'
-import { Grid } from '@material-ui/core'
-import { dsoFormValidationSchema } from './validation'
-import { DSOContainer } from './components/DSOContainer'
+import { Box, Grid } from '@material-ui/core'
+import { dsoFormValidationSchema } from 'v2/app/components/DSO/validation'
+import { DSOContainer } from 'v2/app/components/DSO/components/DSOContainer'
 import {
   Dataroom,
   noop
@@ -15,10 +15,10 @@ import {
   renderStringToHTML,
   transformDSOToFormValues
 } from 'v2/app/components/DSO/utils'
-import { DSOSubscriptionAndDocuments } from 'v2/app/components/DSO/components/DSOSubscriptionAndDocuments'
+import { DSOSubscriptionDocument } from 'v2/app/components/DSO/components/DSOSubscriptionDocument'
 import { createTypedForm } from 'v2/components/form/createTypedForm'
 import { DSOToken } from './components/DSOToken'
-import { getIdFromObj } from 'v2/helpers/strings'
+import { DSOFormBackButton } from 'v2/app/components/DSO/components/DSOFormBackButton'
 
 export interface DSOFormProps {
   submitButtonLabel?: string
@@ -52,113 +52,97 @@ export const DSOForm = (props: DSOFormProps) => {
       <DSOBaseFields isEditing={isEditing} dsoOwnerId={userExtractor(data)} />
 
       <Grid container direction='row' spacing={2}>
-        <Grid item xs={8}>
-          <DSOContainer title='Introduction'>
-            <EditableField
-              fieldType='RichTextEditor'
-              isEditing={isEditing}
-              label='Introduction'
-              name='introduction'
-              viewRenderer={
-                <FormValue name='introduction'>{renderStringToHTML}</FormValue>
-              }
-            />
-          </DSOContainer>
-        </Grid>
+        <DSOContainer title='Introduction' item xs={8}>
+          <EditableField
+            fieldType='RichTextEditor'
+            isEditing={isEditing}
+            label='Introduction'
+            name='introduction'
+            viewRenderer={
+              <FormValue name='introduction'>{renderStringToHTML}</FormValue>
+            }
+          />
+        </DSOContainer>
 
-        <Grid item xs={4}>
-          <DSOContainer title='Status'>
-            <DSOStatusFields
-              isEditing={isEditing}
-              isNew={isNew}
-              dsoOwnerId={userExtractor(data)}
-            />
-          </DSOContainer>
-        </Grid>
+        <DSOContainer title='Status' item xs={4}>
+          <DSOStatusFields
+            isEditing={isEditing}
+            isNew={isNew}
+            dsoOwnerId={userExtractor(data)}
+          />
+        </DSOContainer>
 
-        <Grid item xs={12}>
-          <DSOContainer title='Subscription & Documents'>
-            <DSOSubscriptionAndDocuments
-              isEditing={isEditing}
-              dsoOwnerId={userExtractor(data)}
-              dsoId={getIdFromObj(data)}
-            />
-          </DSOContainer>
-        </Grid>
+        <DSOContainer title='Subscription Document' item xs={12}>
+          <DSOSubscriptionDocument
+            isEditing={isEditing}
+            dsoOwnerId={userExtractor(data)}
+            dsoId={userExtractor(data)}
+          />
+        </DSOContainer>
 
-        <Grid item xs={12}>
-          <DSOContainer title='Offering Terms'>
-            <DSOOfferingTerms
-              isEditing={isEditing}
-              dsoOwnerId={userExtractor(data)}
-            />
-          </DSOContainer>
-        </Grid>
+        <DSOContainer title='Offering Terms' item xs={12}>
+          <DSOOfferingTerms
+            isEditing={isEditing}
+            dsoOwnerId={userExtractor(data)}
+          />
+        </DSOContainer>
 
-        <Grid item xs={12}>
-          <DSOContainer title='Business Model'>
-            <EditableField
-              fieldType='RichTextEditor'
-              isEditing={isEditing}
-              label='Business Model'
-              name='businessModel'
-              viewRenderer={
-                <FormValue name='businessModel'>{renderStringToHTML}</FormValue>
-              }
-            />
-          </DSOContainer>
-        </Grid>
+        <DSOContainer title='Business Model' item xs={12}>
+          <EditableField
+            fieldType='RichTextEditor'
+            isEditing={isEditing}
+            label='Business Model'
+            name='businessModel'
+            viewRenderer={
+              <FormValue name='businessModel'>{renderStringToHTML}</FormValue>
+            }
+          />
+        </DSOContainer>
 
-        <Grid item xs={12}>
-          <DSOContainer title='Token'>
+        {!isNew && (
+          <DSOContainer title='Token' item xs={12}>
             <DSOToken />
           </DSOContainer>
-        </Grid>
+        )}
 
-        <Grid item xs={12}>
-          <DSOContainer title='Use of Proceeds'>
-            <EditableField
-              fieldType='RichTextEditor'
-              isEditing={isEditing}
-              label='Use of Proceeds'
-              name='useOfProceeds'
-              viewRenderer={
-                <FormValue name='useOfProceeds'>{renderStringToHTML}</FormValue>
-              }
-            />
-          </DSOContainer>
-        </Grid>
+        <DSOContainer title='Use of Proceeds' item xs={12}>
+          <EditableField
+            fieldType='RichTextEditor'
+            isEditing={isEditing}
+            label='Use of Proceeds'
+            name='useOfProceeds'
+            viewRenderer={
+              <FormValue name='useOfProceeds'>{renderStringToHTML}</FormValue>
+            }
+          />
+        </DSOContainer>
 
-        <Grid item xs={12}>
-          <DSOContainer title='Dataroom'>
-            <Dataroom editable isEditing={isEditing} />
-          </DSOContainer>
-        </Grid>
+        <DSOContainer title='Dataroom' item xs={12}>
+          <Dataroom editable isEditing={isEditing} />
+        </DSOContainer>
 
-        <Grid item xs={12}>
-          <DSOContainer title='Fund Raising Milestone'>
-            <EditableField
-              fieldType='RichTextEditor'
-              isEditing={isEditing}
-              label='Fund Raising Milestone'
-              name='fundraisingMilestone'
-              viewRenderer={
-                <FormValue name='fundraisingMilestone'>
-                  {renderStringToHTML}
-                </FormValue>
-              }
-            />
-          </DSOContainer>
-        </Grid>
+        <DSOContainer title='Fund Raising Milestone' item xs={12}>
+          <EditableField
+            fieldType='RichTextEditor'
+            isEditing={isEditing}
+            label='Fund Raising Milestone'
+            name='fundraisingMilestone'
+            viewRenderer={
+              <FormValue name='fundraisingMilestone'>
+                {renderStringToHTML}
+              </FormValue>
+            }
+          />
+        </DSOContainer>
 
-        <Grid item xs={12}>
-          <DSOContainer title='Team'>
-            <DSOTeam isEditing={isEditing} dsoOwnerId={userExtractor(data)} />
-          </DSOContainer>
-        </Grid>
+        <DSOContainer title='Team' item xs={12}>
+          <DSOTeam isEditing={isEditing} dsoOwnerId={userExtractor(data)} />
+        </DSOContainer>
 
         {isEditing && (
-          <Grid item xs={12}>
+          <Grid container item xs={12} justify='center'>
+            <DSOFormBackButton />
+            <Box px={1} />
             <Submit>{submitButtonLabel}</Submit>
           </Grid>
         )}

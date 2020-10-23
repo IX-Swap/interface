@@ -106,7 +106,9 @@ export const renderHookWithServiceProvider = (
   store: object = {}
 ): RenderHookResult<any, any> => {
   const WithServiceProvider: React.FC = ({ children }) => (
-    <ServicesProvider value={store}>{children}</ServicesProvider>
+    <BaseProviders>
+      <ServicesProvider value={store}>{children}</ServicesProvider>
+    </BaseProviders>
   )
 
   return renderHook(hookFn, { wrapper: WithServiceProvider })

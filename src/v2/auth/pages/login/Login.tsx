@@ -1,5 +1,5 @@
 import React from 'react'
-import { Button } from '@material-ui/core'
+import { Button, Grid } from '@material-ui/core'
 import useStyles from 'v2/auth/styles'
 import { LoginArgs } from 'v2/types/auth'
 import { loginFormValidationSchema } from 'v2/auth/validation'
@@ -32,33 +32,47 @@ export const Login: React.FC = () => {
       validationSchema={loginFormValidationSchema}
       onSubmit={handleSubmit}
     >
-      <TextField name='email' label='Email Address' />
-      <TextField
-        name='password'
-        label='Password'
-        inputProps={{
-          type: 'password'
-        }}
-      />
-      <TextField
-        name='otp'
-        label='OTP Code (optional)'
-        inputProps={{
-          autoComplete: 'off'
-        }}
-      />
-      <div className={classes.formButtons}>
-        <Submit>Login</Submit>
-        <Button
-          component={AppRouterLinkComponent}
-          color='primary'
-          size='large'
-          className={classes.forgetButton}
-          to={paths.passwordReset}
-        >
-          Forgot Password?
-        </Button>
-      </div>
+      <Grid container direction='column' spacing={1}>
+        <Grid item>
+          <TextField name='email' label='Email Address' />
+        </Grid>
+
+        <Grid item>
+          <TextField
+            name='password'
+            label='Password'
+            inputProps={{
+              type: 'password'
+            }}
+          />
+        </Grid>
+
+        <Grid item className={classes.otp}>
+          <TextField
+            name='otp'
+            label='OTP Code (optional)'
+            variant='outlined'
+            inputProps={{
+              autoComplete: 'off'
+            }}
+          />
+        </Grid>
+
+        <Grid item>
+          <div className={classes.formButtons}>
+            <Submit size='large'>Login</Submit>
+            <Button
+              component={AppRouterLinkComponent}
+              color='primary'
+              size='large'
+              className={classes.forgetButton}
+              to={paths.passwordReset}
+            >
+              Forgot Password?
+            </Button>
+          </div>
+        </Grid>
+      </Grid>
     </Form>
   )
 }

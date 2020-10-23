@@ -50,7 +50,7 @@ export const statusFilters: StatusFilterItemType[] = [
   {
     icon: UnauthorizedIcon,
     value: 'Submitted',
-    title: 'Unauthorized'
+    title: 'Submitted'
   },
   {
     icon: ApprovedIcon,

@@ -6,8 +6,8 @@ import {
   DSOSubscriptionDocumentViewProps
 } from 'v2/app/components/DSO/components/DSOSubscriptionDocumentView'
 import { DownloadDocument } from 'v2/app/pages/identity/components/dataroom/DownloadDocument'
-import { useTypedForm } from '__fixtures__/createTypedForm'
-import * as dsoForm from 'v2/app/components/DSO/DSOForm'
+import { dso } from '__fixtures__/authorizer'
+import { Form } from 'v2/components/form/Form'
 
 jest.mock('v2/app/pages/identity/components/dataroom/DownloadDocument', () => ({
   DownloadDocument: jest.fn(() => null)
@@ -15,47 +15,43 @@ jest.mock('v2/app/pages/identity/components/dataroom/DownloadDocument', () => ({
 
 describe('DSOSubscriptionDocumentView', () => {
   const props: DSOSubscriptionDocumentViewProps = {
-    dsoOwnerId: 'test-dsoOwnerId',
-    dsoId: 'test-dsoId'
+    dsoOwnerId: dso.user,
+    dsoId: dso._id
   }
-  const FormValue = jest.fn(({ children }) => children('testDocId'))
 
-  beforeEach(() => {
-    jest
-      .spyOn(dsoForm, 'useDSOForm')
-      .mockReturnValue({ ...useTypedForm(), FormValue })
-  })
   afterEach(async () => {
     await cleanup()
     jest.clearAllMocks()
   })
 
   it('renders without error', () => {
-    render(<DSOSubscriptionDocumentView {...props} />)
-  })
-
-  it('renders FormValue with correct props', () => {
-    render(<DSOSubscriptionDocumentView {...props} />)
-
-    expect(FormValue).toHaveBeenCalledTimes(1)
-    expect(FormValue).toHaveBeenCalledWith(
-      { name: 'subscriptionDocument', children: expect.anything() },
-      {}
+    render(
+      <Form>
+        <DSOSubscriptionDocumentView {...props} />
+      </Form>
     )
   })
 
   it('renders DownloadDocument with correct props', () => {
-    render(<DSOSubscriptionDocumentView {...props} />)
+    render(
+      <Form defaultValues={{ subscriptionDocument: dso.subscriptionDocument }}>
+        <DSOSubscriptionDocumentView {...props} />
+      </Form>
+    )
 
     expect(DownloadDocument).toHaveBeenCalledTimes(1)
     expect(DownloadDocument).toHaveBeenCalledWith(
-      { documentId: 'testDocId', ownerId: props.dsoOwnerId },
+      { documentId: dso.subscriptionDocument._id, ownerId: props.dsoOwnerId },
       {}
     )
   })
 
   it('does not render DownloadDocument if dsoId is undefined', () => {
-    render(<DSOSubscriptionDocumentView {...props} dsoId={undefined} />)
+    render(
+      <Form>
+        <DSOSubscriptionDocumentView {...props} dsoId={undefined} />
+      </Form>
+    )
 
     expect(DownloadDocument).toHaveBeenCalledTimes(0)
   })

@@ -6,9 +6,10 @@ import { formatDateAndTime } from 'v2/helpers/dates'
 import { DSOLink } from 'v2/app/components/DSOLink'
 import { formatMoney } from 'v2/helpers/numbers'
 import { SubscriptionDocument } from 'v2/app/components/SubscriptionDocument'
+import { Maybe } from 'v2/types/util'
 
 export interface CommitmentPreviewProps {
-  data: Commitment
+  data: Maybe<Commitment>
 }
 
 export const CommitmentPreview: React.FC<CommitmentPreviewProps> = (

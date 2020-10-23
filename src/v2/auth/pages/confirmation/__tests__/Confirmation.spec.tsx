@@ -1,12 +1,6 @@
 /**  * @jest-environment jsdom-sixteen  */
 import React from 'react'
-import {
-  render,
-  cleanup,
-  fireEvent,
-  waitFor,
-  renderWithUserStore
-} from 'test-utils'
+import { render, cleanup, renderWithUserStore } from 'test-utils'
 import { Confirmation } from 'v2/auth/pages/confirmation/Confirmation'
 import { AuthRoute } from 'v2/auth/router'
 import { history } from 'v2/history'
@@ -17,8 +11,10 @@ import {
 } from '__fixtures__/useQuery'
 
 describe('VerifyRegistration', () => {
+  const token = 'interesnayaschitalochka...'
+
   beforeEach(() => {
-    history.push('/')
+    history.push(`${AuthRoute.confirm}?token=${token}`)
   })
 
   afterEach(async () => {
@@ -42,31 +38,12 @@ describe('VerifyRegistration', () => {
       ])
 
     const { getByTestId } = renderWithUserStore(<Confirmation />)
-    const loadingIndicator = getByTestId('loading')
+    const loadingIndicator = getByTestId('progress')
 
     expect(loadingIndicator).toBeTruthy()
   })
 
-  it('handles back to login button click', async () => {
-    jest
-      .spyOn(useVerifySignupHook, 'useVerifySignup')
-      .mockReturnValue([
-        jest.fn(),
-        generateMutationResult({ isLoading: false })
-      ])
-
-    const { getByText } = render(<Confirmation />)
-    const button = getByText(/back to login/i)
-
-    fireEvent.click(button)
-
-    await waitFor(() => {
-      expect(history.location.pathname).toBe(AuthRoute.login)
-    })
-  })
-
   it('calls api for token verification if token is present', async () => {
-    history.push(`${AuthRoute.confirm}?token=interesnayaschitalochka...`)
     const verifySignup = jest.fn()
     jest
       .spyOn(useVerifySignupHook, 'useVerifySignup')

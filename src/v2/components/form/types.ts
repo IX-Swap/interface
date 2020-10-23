@@ -23,6 +23,7 @@ export interface TypedFieldChildProps<
   label: string
   name: string
   onChange: (...event: any[]) => void
+  onFocus: (...event: any[]) => void
   onBlur: () => void
   value: DeepPathValue<FormType, Path>
   variant?: 'filled' | 'outlined' | 'standard'

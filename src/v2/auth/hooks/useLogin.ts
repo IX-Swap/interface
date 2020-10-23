@@ -6,7 +6,7 @@ import apiService from 'v2/services/api'
 import { AppRole, hasRole } from 'v2/helpers/acl'
 
 export const useLogin = () => {
-  const { storageService, socketService } = useServices()
+  const { storageService, socketService, snackbarService } = useServices()
   const url = '/auth/sign-in'
   const mutateFn = async (args: LoginArgs) => {
     return await apiService.post<User>(url, args)
@@ -24,6 +24,9 @@ export const useLogin = () => {
       }
 
       window.location.reload()
+    },
+    onError: (error: any) => {
+      void snackbarService.showSnackbar(error.message, 'error')
     }
   })
 }

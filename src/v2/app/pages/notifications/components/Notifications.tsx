@@ -8,9 +8,9 @@ import { NotificationsList } from 'v2/app/pages/notifications/components/Notific
 
 export const Notifications = () => {
   return (
-    <>
+    <Grid container direction='column'>
       <Grid item>
-        <PageHeader label='Notifications' />
+        <PageHeader label='Notifications' alignment='flex-start' />
       </Grid>
       <Grid item container justify='flex-end'>
         <MarkAllAsRead />
@@ -23,6 +23,6 @@ export const Notifications = () => {
           )}
         </FullHeight>
       </Grid>
-    </>
+    </Grid>
   )
 }

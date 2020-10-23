@@ -18,7 +18,7 @@ export const StatusFilterItem: React.FC<StatusFilterItemProps> = ({
 
   return (
     <ListItem
-      style={{ padding: '2px 48px' }}
+      style={{ padding: '2px 22px' }}
       classes={{
         selected: classes.selected
       }}
