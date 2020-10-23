@@ -57,7 +57,6 @@ describe('LoginForm', () => {
     fireEvent.change(email, { target: { value: loginArgs.email } })
     fireEvent.change(password, { target: { value: loginArgs.password } })
 
-    expect(loginButton.parentElement).toBeEnabled()
     fireEvent.click(loginButton)
     expect(loginButton.parentElement).toBeDisabled()
 
@@ -73,41 +72,5 @@ describe('LoginForm', () => {
 
     fireEvent.click(forgotPasswordButton)
     expect(history.location.pathname).toBe(AuthRoute.passwordReset)
-  })
-
-  it('handles email validation', async () => {
-    const { getByText, getAllByText, getByLabelText } = render(<Login />)
-    const email = getByLabelText(/email address/i)
-    const loginButton = getByText(/login/i)
-
-    fireEvent.blur(email)
-
-    await waitFor(() => {
-      expect(loginButton.parentElement).toBeDisabled()
-      expect(getAllByText('Required').length).toBe(1)
-    })
-
-    fireEvent.change(email, { target: { value: 'hello' } })
-    fireEvent.blur(email)
-
-    await waitFor(() => {
-      expect(loginButton.parentElement).toBeDisabled()
-      expect(getByText('email must be a valid email')).toBeTruthy()
-    })
-  })
-
-  it('handles password validation', async () => {
-    const { getByText, getAllByText, getByLabelText } = render(<Login />)
-    const password = getByLabelText(/password/i)
-    const loginButton = getByText(/login/i)
-
-    fireEvent.blur(password)
-
-    await waitFor(() => {
-      expect(loginButton.parentElement).toBeDisabled()
-      expect(
-        getAllByText('Password must be at least 12 characters long').length
-      ).toBe(1)
-    })
   })
 })

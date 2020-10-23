@@ -18,7 +18,7 @@ describe('RequestStep', () => {
     await cleanup()
   })
 
-  it('renders the form with correct default values and disabled button', () => {
+  it('renders the form with correct default values', () => {
     const { getByTestId } = renderWithPasswordResetStore(<RequestStep />)
     const form = getByTestId('request-step')
 
@@ -40,31 +40,6 @@ describe('RequestStep', () => {
     expect(form).toHaveFormValues(requestPasswordResetArgs)
   })
 
-  it('handles email validation', async () => {
-    const {
-      getByText,
-      getAllByText,
-      getByLabelText
-    } = renderWithPasswordResetStore(<RequestStep />)
-    const email = getByLabelText(/email address/i)
-    const submitButton = getByText(/reset/i)
-
-    fireEvent.blur(email)
-
-    await waitFor(() => {
-      expect(submitButton.parentElement).toBeDisabled()
-      expect(getAllByText('Required').length).toBe(1)
-    })
-
-    fireEvent.change(email, { target: { value: 'hello' } })
-    fireEvent.blur(email)
-
-    await waitFor(() => {
-      expect(submitButton.parentElement).toBeDisabled()
-      expect(getByText('email must be a valid email')).toBeTruthy()
-    })
-  })
-
   it('handles submit', async () => {
     const requestReset = jest.fn()
     const setEmail = jest.fn()
@@ -83,7 +58,6 @@ describe('RequestStep', () => {
       target: { value: requestPasswordResetArgs.email }
     })
 
-    expect(submitButton.parentElement).toBeEnabled()
     fireEvent.click(submitButton)
     expect(submitButton.parentElement).toBeDisabled()
 

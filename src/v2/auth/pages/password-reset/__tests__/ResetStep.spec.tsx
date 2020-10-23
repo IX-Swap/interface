@@ -52,42 +52,6 @@ describe('ResetStep', () => {
     })
   })
 
-  it('handles email validation', async () => {
-    const {
-      getByText,
-      getAllByText,
-      getByLabelText
-    } = renderWithPasswordResetStore(<ResetStep />)
-    const email = getByLabelText(/email/i)
-    const submitButton = getByText(/complete/i)
-
-    fireEvent.blur(email)
-
-    await waitFor(() => {
-      expect(submitButton.parentElement).toBeDisabled()
-      expect(getAllByText('Required').length).toBe(1)
-    })
-  })
-
-  it('handles password validation', async () => {
-    const {
-      getByText,
-      getAllByText,
-      getByLabelText
-    } = renderWithPasswordResetStore(<ResetStep />)
-    const password = getByLabelText(/new password/i)
-    const submitButton = getByText(/complete/i)
-
-    fireEvent.blur(password)
-
-    await waitFor(() => {
-      expect(submitButton.parentElement).toBeDisabled()
-      expect(
-        getAllByText('Password does not meet complexity requirement').length
-      ).toBe(1)
-    })
-  })
-
   it('handles submit', async () => {
     const completeReset = jest.fn()
     jest
@@ -113,7 +77,6 @@ describe('ResetStep', () => {
       target: { value: completePasswordResetArgs.newPassword }
     })
 
-    expect(submitButton.parentElement).toBeEnabled()
     fireEvent.click(submitButton)
     expect(submitButton.parentElement).toBeDisabled()
 
