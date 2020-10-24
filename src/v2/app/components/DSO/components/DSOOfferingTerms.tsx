@@ -1,5 +1,5 @@
 import React from 'react'
-import { Grid, TextField } from '@material-ui/core'
+import { Grid, Input } from '@material-ui/core'
 import { monthsFormat, percentageFormat } from 'v2/config/monthsFormat'
 import { EditableField } from 'v2/components/form/EditableField'
 import { NumericInput } from 'v2/components/form/NumericField'
@@ -30,7 +30,7 @@ export const DSOOfferingTerms = () => {
           <Grid item>
             <EditableField
               control={control}
-              component={TextField}
+              component={Input}
               label='Investment Structure'
               name='investmentStructure'
             />

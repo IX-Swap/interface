@@ -19,7 +19,7 @@ export interface FieldsArrayProps<
   defaultValue?: DeepPathValue<TFieldValues, TFieldName>
   children: (
     args: UseFieldArrayMethods<
-      DeepPathValue<TFieldValues, DeepPathArray<TFieldValues, ['1']>>
+      DeepPathValue<TFieldValues, DeepPathArray<TFieldValues, ['0']>>
     >
   ) => Maybe<JSX.Element>
 }
@@ -33,7 +33,7 @@ export const FieldsArray = <
 ) => {
   const { control, name, children } = props
   const fieldArray = useFieldArray<
-    DeepPathValue<TFieldValues, DeepPathArray<TFieldValues, ['1']>>
+    DeepPathValue<TFieldValues, DeepPathArray<TFieldValues, ['0']>>
   >({
     control,
     name: pathToString(name)

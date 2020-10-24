@@ -7,10 +7,10 @@ import {
 } from 'v2/app/pages/identity/components/IndividualIdentityForm'
 import { individual } from '__fixtures__/identity'
 import { Section } from 'v2/app/pages/identity/components/Section'
-import { Address } from 'v2/app/pages/identity/components/Address'
-import { Financials } from 'v2/app/pages/identity/components/Financials'
+import { AddressFields } from 'v2/app/pages/identity/components/AddressFields'
+import { FinancialFields } from 'v2/app/pages/identity/components/FinancialFields'
 import { Dataroom } from 'v2/app/pages/identity/components/dataroom/Dataroom'
-import { Declaration } from 'v2/app/pages/identity/components/Declaration'
+import { Declarations } from 'v2/app/pages/identity/components/Declarations'
 import { getIdentityDeclarations } from '../../utils'
 
 jest.mock('v2/app/pages/identity/components/Section', () => ({
@@ -84,13 +84,19 @@ describe('IndividualIdentityForm', () => {
   it('renders Address with correct props', () => {
     render(<IndividualIdentityForm {...props} />)
 
-    expect(Address).toHaveBeenCalledWith({ isEditing: props.isEditing }, {})
+    expect(AddressFields).toHaveBeenCalledWith(
+      { isEditing: props.isEditing },
+      {}
+    )
   })
 
   it('renders Financials with correct props', () => {
     render(<IndividualIdentityForm {...props} />)
 
-    expect(Financials).toHaveBeenCalledWith({ isEditing: props.isEditing }, {})
+    expect(FinancialFields).toHaveBeenCalledWith(
+      { isEditing: props.isEditing },
+      {}
+    )
   })
 
   it('renders Dataroom with correct props', () => {
@@ -102,7 +108,7 @@ describe('IndividualIdentityForm', () => {
   it('renders Declaration with correct props', () => {
     render(<IndividualIdentityForm {...props} />)
 
-    expect(Declaration).toHaveBeenCalledWith(
+    expect(Declarations).toHaveBeenCalledWith(
       {
         isEditing: props.isEditing,
         declarations: getIdentityDeclarations(props.data, 'individual')

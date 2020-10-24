@@ -3,12 +3,12 @@ import { UploadDocumentInfo, useUploadFile } from 'v2/hooks/useUploadFile'
 import { DataroomFile } from 'v2/types/dataroomFile'
 import { Maybe } from 'v2/types/util'
 import { useDeleteFile } from 'v2/hooks/useDeleteFile'
-import { getDocumentId } from 'v2/components/form/DataroomDocument'
 import { useFormContext } from 'react-hook-form'
+import { getIdFromObj } from 'v2/helpers/strings'
 
 export interface NewDataroomUploaderRenderProps {
   name: string
-  value: DataroomFile
+  value: Maybe<DataroomFile>
   handleUpload: () => void
   handleDelete: () => Promise<void>
 }
@@ -16,7 +16,7 @@ export interface NewDataroomUploaderRenderProps {
 export interface NewDataroomUploaderProps {
   name: string
   label: string
-  value: DataroomFile
+  value: Maybe<DataroomFile>
   onChange: (files: DataroomFile) => any
   documentInfo: UploadDocumentInfo
   render: (props: NewDataroomUploaderRenderProps) => Maybe<JSX.Element>
@@ -39,7 +39,7 @@ export const NewDataroomUploader = (props: NewDataroomUploaderProps) => {
   const { watch } = useFormContext()
   const value = watch(name, defaultValue) as NewDataroomUploaderProps['value']
   const document = value === undefined ? defaultValue : value
-  const [deleteFile] = useDeleteFile(getDocumentId(value))
+  const [deleteFile] = useDeleteFile(getIdFromObj(value))
   const [uploadFile] = useUploadFile<DataroomFile[]>({
     onSuccess: response => onChange(response.data[0])
   })

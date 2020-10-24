@@ -2,7 +2,7 @@ import React from 'react'
 import { Grid } from '@material-ui/core'
 import { Section } from 'v2/app/pages/identity/components/Section'
 import { individualIdentityFormValidationSchema } from 'v2/app/pages/identity/components/validation'
-import UserInfoComponent from 'v2/app/pages/identity/components/UserInfo'
+import { PersonalInfoFields } from 'v2/app/pages/identity/components/PersonalInfoFields'
 import { ViewButton } from 'v2/app/pages/identity/components/ViewButton'
 import { useIndividualIdentity } from 'v2/hooks/identity/useIndividualIdentity'
 import { useIdentitiesRouter } from 'v2/app/pages/identity/router'
@@ -41,7 +41,7 @@ export const IndividualIdPreview: React.FC = () => {
           onSubmit={alert}
         >
           <Grid container>
-            <UserInfoComponent isEditing={false} useOwnEmail />
+            <PersonalInfoFields />
           </Grid>
         </Form>
       </Section>

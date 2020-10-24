@@ -2,16 +2,16 @@
 import React from 'react'
 import { render, cleanup } from 'test-utils'
 import {
-  Address,
+  AddressFields,
   AddressFieldsProps
-} from 'v2/app/pages/identity/components/Address'
+} from 'v2/app/pages/identity/components/AddressFields'
 import * as typedForm from 'v2/components/form/useTypedForm'
 import { generateCreateTypedFormResult } from '__fixtures__/createTypedForm'
 
 describe('Address', () => {
   const props: AddressFieldsProps<any> = {
     isEditing: false,
-    rootPath: 'companyAddress'
+    rootName: 'companyAddress'
   }
   const EditableField = jest.fn(() => null) as any
 
@@ -26,11 +26,11 @@ describe('Address', () => {
   })
 
   it('renders without error', () => {
-    render(<Address {...props} />)
+    render(<AddressFields {...props} />)
   })
 
   it('defaults rootPath to "address"', () => {
-    render(<Address {...props} rootPath={undefined} />)
+    render(<AddressFields {...props} rootName={undefined} />)
 
     expect(EditableField).toHaveBeenCalledTimes(6)
     expect(EditableField).toHaveBeenNthCalledWith(
@@ -47,7 +47,7 @@ describe('Address', () => {
   })
 
   it('renders EditableField correctly', () => {
-    render(<Address {...props} />)
+    render(<AddressFields {...props} />)
 
     expect(EditableField).toHaveBeenCalledTimes(6)
     expect(EditableField).toHaveBeenNthCalledWith(
@@ -57,7 +57,7 @@ describe('Address', () => {
         isEditing: false,
         label: 'Line 1',
         name: 'line1',
-        root: props.rootPath
+        root: props.rootName
       },
       {}
     )
@@ -68,7 +68,7 @@ describe('Address', () => {
         isEditing: false,
         label: 'Line 2',
         name: 'line2',
-        root: props.rootPath
+        root: props.rootName
       },
       {}
     )
@@ -79,7 +79,7 @@ describe('Address', () => {
         isEditing: false,
         label: 'City',
         name: 'city',
-        root: props.rootPath
+        root: props.rootName
       },
       {}
     )
@@ -90,7 +90,7 @@ describe('Address', () => {
         isEditing: false,
         label: 'Postal Code',
         name: 'postalCode',
-        root: props.rootPath
+        root: props.rootName
       },
       {}
     )
@@ -101,7 +101,7 @@ describe('Address', () => {
         isEditing: false,
         label: 'State',
         name: 'state',
-        root: props.rootPath
+        root: props.rootName
       },
       {}
     )
@@ -112,7 +112,7 @@ describe('Address', () => {
         isEditing: false,
         label: 'Country',
         name: 'country',
-        root: props.rootPath
+        root: props.rootName
       },
       {}
     )

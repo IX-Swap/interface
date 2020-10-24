@@ -27,21 +27,21 @@ export interface IdentityAddress {
   line2?: string
   city: string
   postalCode?: string
-  state: string
+  state?: string
   countryOfResidence?: string // for individual
   country?: string // for corporate
 }
 
 export interface IdentityProfile {
   firstName: string
-  middleName: string
+  middleName?: string
   lastName: string
   photo: string
   dob: string
-  gender: 'M' | 'F' | undefined
+  gender: 'M' | 'F'
   nationality: string
   countryOfResidence: string
-  maritalStatus: 'Single' | 'Married' | undefined
+  maritalStatus: 'Single' | 'Married'
   contactNumber: string
   address: Omit<IdentityAddress, 'countryOfResidence'>
   email?: string
@@ -87,7 +87,7 @@ export interface BaseIdentity {
   user: string
   createdAt: string
   updatedAt: string
-  documents?: DataroomFile[]
+  documents: DataroomFile[]
   declarations: Declaration[]
   walletAddress: string
 }
@@ -118,25 +118,28 @@ export interface GetAllCorporateIdentities extends PaginationArgs {
   userId: string
 }
 
-export type CreateOrUpdateIndividualIdentityArgs = (
-  | Omit<IndividualIdentityFormValues, 'documents'>
-  | Omit<CorporateIdentityFormValues, 'documents'>
-) & {
-  documents?: string[]
+export type CreateOrUpdateIndividualIdentityArgs = Omit<
+  IndividualIdentityFormValues,
+  'documents' | 'declarations'
+> & {
+  declarations: Declaration[]
+  documents: string[]
   userId: string
 }
 
 export type CreateCorporateIdentityArgs = Omit<
   CorporateIdentityFormValues,
-  'documents'
+  'documents' | 'declarations'
 > & {
-  documents?: string[]
+  documents: string[]
+  declarations: Declaration[]
   userId: string
 }
 
 export type UpdateCorporateIdentityArgs = Omit<
   CorporateIdentityFormValues,
-  'documents'
+  'documents' | 'declarations'
 > & {
-  documents?: string[]
+  documents: string[]
+  declarations: Declaration[]
 }

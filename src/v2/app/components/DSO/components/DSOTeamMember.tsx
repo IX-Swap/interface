@@ -1,5 +1,5 @@
 import React, { memo } from 'react'
-import { Grid, TextField } from '@material-ui/core'
+import { Grid, Input } from '@material-ui/core'
 import { documentValueExtractor } from 'v2/app/components/DSO/utils'
 import { DSOTeamRemoveButton } from 'v2/app/components/DSO/components/DSOTeamRemoveButton'
 import { EditableField } from 'v2/components/form/EditableField'
@@ -46,7 +46,7 @@ export const DSOTeamMember = memo(
             <Grid item>
               <EditableField
                 key={fieldId}
-                component={TextField}
+                component={Input}
                 control={control}
                 defaultValue={defaultValue?.name ?? ''}
                 label='Name'
@@ -57,7 +57,7 @@ export const DSOTeamMember = memo(
               <EditableField
                 key={fieldId}
                 control={control}
-                component={TextField}
+                component={Input}
                 defaultValue={defaultValue?.position ?? ''}
                 label='Position'
                 name={`team[${index}].position` as any}

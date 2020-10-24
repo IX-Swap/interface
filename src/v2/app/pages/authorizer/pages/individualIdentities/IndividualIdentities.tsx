@@ -24,6 +24,6 @@ export const renderIndividualIdentityForm = (
     data={i}
     feature={DataroomFeature.individuals}
   >
-    <IndividualIdentityForm data={i} isEditing={false} useOwnEmail={false} />
+    <IndividualIdentityForm data={i} />
   </AuthorizerView>
 )

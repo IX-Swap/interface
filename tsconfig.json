@@ -22,7 +22,8 @@
     "jsx": "react",
     "sourceMap": true,
     "inlineSources": true,
-    "sourceRoot": "/"
+    "sourceRoot": "/",
+    "noErrorTruncation": true
   },
   "apiUrl": "https://api.mozork.com",
   "include": [

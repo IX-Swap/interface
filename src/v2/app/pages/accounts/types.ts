@@ -1,6 +1,6 @@
 import { Bank, Address } from 'v2/types/bank'
 import { Asset } from 'v2/types/asset'
-import { DataroomFile } from 'v2/types/dataroomFile'
+import { DataroomFile, FormArray } from 'v2/types/dataroomFile'
 import { PaginationArgs } from 'v2/services/api/types'
 
 export type BankFormValues = Pick<
@@ -9,7 +9,7 @@ export type BankFormValues = Pick<
 > & {
   asset: Asset['_id']
   address: Bank['address']
-  supportingDocuments: Array<{ document: DataroomFile }>
+  supportingDocuments: FormArray<DataroomFile>
 }
 
 export type AddressValues = Address

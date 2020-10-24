@@ -1,3 +1,5 @@
+import { Maybe } from 'v2/types/util'
+
 export interface DataroomFile {
   _id: string
   title: string
@@ -16,5 +18,11 @@ export interface FileGuide {
 }
 
 export interface DataroomFileWithGuide extends FileGuide {
-  document: DataroomFile | null
+  document: DataroomFile
 }
+
+export interface FormArrayElement<T> {
+  value: T
+}
+
+export type FormArray<T> = Array<FormArrayElement<T>>

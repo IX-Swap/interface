@@ -1,109 +1,112 @@
 import React from 'react'
-import { useIndividualIdentityForm } from 'v2/app/pages/identity/components/IndividualIdentityForm'
-import { Grid } from '@material-ui/core'
+import { Grid, Input } from '@material-ui/core'
+import { EditableField } from 'v2/components/form/EditableField'
+import { NumericInput } from 'v2/components/form/NumericField'
+import { moneyNumberFormat } from 'v2/app/components/DSO/utils'
+import { Checkbox } from 'v2/components/form/Checkbox'
+import { booleanValueExtractor } from 'v2/components/form/createTypedForm'
+import { useFormContext } from 'react-hook-form'
 
-export interface FinancialsProps {
-  isEditing: boolean
-}
-
-export const Financials = (props: FinancialsProps): JSX.Element => {
-  const { isEditing } = props
-  const { EditableField } = useIndividualIdentityForm()
+export const FinancialFields = (): JSX.Element => {
+  const { control } = useFormContext() // TODO: add types
 
   return (
     <Grid container spacing={3}>
       <Grid item xs={4}>
         <EditableField
-          fieldType='TextField'
-          isEditing={isEditing}
+          component={Input}
+          control={control}
           name='occupation'
           label='Occupation'
         />
       </Grid>
       <Grid item xs={4}>
         <EditableField
-          fieldType='TextField'
-          isEditing={isEditing}
+          component={Input}
+          control={control}
           name='employer'
           label='Employer'
         />
       </Grid>
       <Grid item xs={4}>
         <EditableField
-          fieldType='TextField'
-          isEditing={isEditing}
+          component={Input}
+          control={control}
           name='employmentStatus'
           label='Employment Status'
         />
       </Grid>
       <Grid item xs={4}>
         <EditableField
-          fieldType='TextField'
-          isEditing={isEditing}
+          component={Input}
+          control={control}
           name='industryOfEmployment'
           label='Industry'
         />
       </Grid>
       <Grid item xs={4}>
         <EditableField
-          fieldType='TextField'
-          isEditing={isEditing}
+          component={Input}
+          control={control}
           name='walletAddress'
           label='Digital Security Wallet Address'
         />
       </Grid>
       <Grid item xs={4}>
         <EditableField
-          fieldType='TextField'
-          isEditing={isEditing}
+          control={control}
           name='annualIncome'
           label='Annual Income'
+          component={NumericInput}
+          numberFormat={moneyNumberFormat}
         />
       </Grid>
       <Grid item xs={4}>
         <EditableField
-          fieldType='TextField'
-          isEditing={isEditing}
+          control={control}
           name='houseHoldIncome'
           label='Household Income'
+          component={NumericInput}
+          numberFormat={moneyNumberFormat}
         />
       </Grid>
       <Grid item xs={4}>
         <EditableField
-          fieldType='TextField'
-          isEditing={isEditing}
+          component={Input}
+          control={control}
           name='sourceOfWealth'
           label='Source of Income'
         />
       </Grid>
       <Grid item xs={4}>
         <EditableField
-          fieldType='TextField'
-          isEditing={isEditing}
+          component={Input}
+          control={control}
           name='bankName'
           label='Bank Name'
         />
       </Grid>
       <Grid item xs={4}>
         <EditableField
-          fieldType='TextField'
-          isEditing={isEditing}
+          component={Input}
+          control={control}
           name='bankAccountName'
           label='Name of Bank Account'
         />
       </Grid>
       <Grid item xs={4}>
         <EditableField
-          fieldType='TextField'
-          isEditing={isEditing}
+          component={Input}
+          control={control}
           name='bankAccountNumber'
           label='Bank Account Number'
         />
       </Grid>
       <Grid item xs={5}>
         <EditableField
-          fieldType='Checkbox'
-          isEditing={isEditing}
+          customRenderer={Checkbox}
+          valueExtractor={booleanValueExtractor}
+          control={control}
           name='toArrangeCustody'
           label='I would like InvestaX to arrange digital security custody'
         />

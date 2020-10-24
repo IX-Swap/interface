@@ -4,16 +4,36 @@ import { Button, ButtonGroup } from '@material-ui/core'
 import { DownloadDocument } from 'v2/app/pages/identity/components/dataroom/DownloadDocument'
 import { DataroomEditRow } from 'v2/app/pages/identity/components/dataroom/DataroomEditRow'
 
-export interface DataroomFileRowProps extends NewDataroomUploaderRenderProps {}
+export interface DataroomFileRowProps extends NewDataroomUploaderRenderProps {
+  disableBorder?: boolean
+}
 
 export const DataroomFileRow = (props: DataroomFileRowProps) => {
-  const { handleUpload, handleDelete, value: document } = props
+  const {
+    disableBorder = false,
+    handleUpload,
+    handleDelete,
+    value: document
+  } = props
 
-  if (document === undefined || document === null) {
+  if (document?._id === undefined || document?._id === '') {
     return (
-      <Button onClick={handleUpload} variant='contained' color='primary'>
-        Upload
-      </Button>
+      <DataroomEditRow
+        input={
+          <Button
+            size='small'
+            variant='contained'
+            color='primary'
+            disableElevation
+            onClick={handleUpload}
+          >
+            Upload
+          </Button>
+        }
+        title={document?.title ?? ''}
+        document={document}
+        disableBorder={disableBorder}
+      />
     )
   }
 
@@ -27,9 +47,9 @@ export const DataroomFileRow = (props: DataroomFileRowProps) => {
               <Button onClick={handleDelete}>Delete</Button>
             </ButtonGroup>
           }
-          title={document.type}
+          title={document.title}
           document={document}
-          disableBorder
+          disableBorder={disableBorder}
         />
       )}
     </DownloadDocument>

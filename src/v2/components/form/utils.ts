@@ -4,9 +4,8 @@ export const pathToString = (path: any, rootPath?: string): string => {
         .map(value =>
           Number.isInteger(value) ? `[${value as string}]` : value
         )
-        .join()
-        .replace(/,\[/, '[')
-        .replace(/,/, '.')
+        .join('.')
+        .replace(/.\[/, '[')
     : path
 
   return rootPath === undefined

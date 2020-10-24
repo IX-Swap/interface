@@ -8,10 +8,10 @@ import {
 } from 'v2/app/pages/identity/components/CorporateIdentityForm'
 import { corporate } from '__fixtures__/identity'
 import { CorporateProfiles } from 'v2/app/pages/identity/components/CorporateIdProfiles'
-import { CompanyInformation } from 'v2/app/pages/identity/components/CompanyInfo'
-import { Address } from 'v2/app/pages/identity/components/Address'
+import { CompanyInfo } from 'v2/app/pages/identity/components/CompanyInfo'
+import { AddressFields } from 'v2/app/pages/identity/components/AddressFields'
 import { Section } from 'v2/app/pages/identity/components/Section'
-import { Declaration } from 'v2/app/pages/identity/components/Declaration'
+import { Declarations } from 'v2/app/pages/identity/components/Declarations'
 import { Dataroom } from 'v2/app/pages/identity/components/dataroom/Dataroom'
 // import { fireEvent, waitFor } from '@testing-library/react'
 
@@ -75,8 +75,8 @@ describe('CorporateIdentityForm', () => {
   it('renders CompanyInformation with correct props', () => {
     render(<CorporateIdentityForm {...props} />)
 
-    expect(CompanyInformation).toHaveBeenCalledTimes(1)
-    expect(CompanyInformation).toHaveBeenNthCalledWith(
+    expect(CompanyInfo).toHaveBeenCalledTimes(1)
+    expect(CompanyInfo).toHaveBeenNthCalledWith(
       1,
       {
         corporate: props.data,
@@ -123,8 +123,8 @@ describe('CorporateIdentityForm', () => {
   it('renders Address with correct props', () => {
     render(<CorporateIdentityForm {...props} />)
 
-    expect(Address).toHaveBeenCalledTimes(1)
-    expect(Address).toHaveBeenCalledWith(
+    expect(AddressFields).toHaveBeenCalledTimes(1)
+    expect(AddressFields).toHaveBeenCalledWith(
       { isEditing: props.isEditing, rootPath: 'companyAddress' },
       {}
     )
@@ -163,8 +163,8 @@ describe('CorporateIdentityForm', () => {
   it('renders Declaration with correct props', () => {
     render(<CorporateIdentityForm {...props} />)
 
-    expect(Declaration).toHaveBeenCalledTimes(1)
-    expect(Declaration).toHaveBeenCalledWith(
+    expect(Declarations).toHaveBeenCalledTimes(1)
+    expect(Declarations).toHaveBeenCalledWith(
       {
         isEditing: props.isEditing,
         declarations: utils.getIdentityDeclarations(props.data, 'corporate')

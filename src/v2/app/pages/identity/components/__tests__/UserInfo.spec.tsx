@@ -1,13 +1,13 @@
 /**  * @jest-environment jsdom-sixteen  */
 import React from 'react'
 import { render, cleanup } from 'test-utils'
-import UserInfo, {
+import PersonalInformation, {
   IdentityForm
-} from 'v2/app/pages/identity/components/UserInfo'
+} from 'v2/app/pages/identity/components/PersonalInfoFields'
 import * as typedForm from 'v2/components/form/useTypedForm'
 import { generateCreateTypedFormResult } from '__fixtures__/createTypedForm'
 
-describe('UserInfo', () => {
+describe('PersonalInformation', () => {
   const props: IdentityForm = {
     useOwnEmail: false,
     isEditing: false,
@@ -28,11 +28,11 @@ describe('UserInfo', () => {
   })
 
   it('renders without error', () => {
-    render(<UserInfo {...props} />)
+    render(<PersonalInformation {...props} />)
   })
 
   it('renders EditableField correctly', () => {
-    render(<UserInfo {...props} />)
+    render(<PersonalInformation {...props} />)
 
     expect(EditableField).toHaveBeenCalledTimes(11)
     expect(EditableField).toHaveBeenNthCalledWith(

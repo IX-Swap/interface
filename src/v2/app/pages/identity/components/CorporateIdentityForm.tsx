@@ -1,11 +1,11 @@
 import React from 'react'
 import { CorporateIdentity } from 'v2/types/identity'
 import { Box, Grid } from '@material-ui/core'
-import { Address } from 'v2/app/pages/identity/components/Address'
+import { AddressFields } from 'v2/app/pages/identity/components/AddressFields'
 import { Section } from 'v2/app/pages/identity/components/Section'
-import { Declaration } from 'v2/app/pages/identity/components/Declaration'
+import { Declarations } from 'v2/app/pages/identity/components/Declarations'
 import { Dataroom } from 'v2/app/pages/identity/components/dataroom/Dataroom'
-import { CompanyInformation } from 'v2/app/pages/identity/components/CompanyInfo'
+import { CompanyInfo } from 'v2/app/pages/identity/components/CompanyInfo'
 import { createTypedForm } from 'v2/components/form/createTypedForm'
 import { CorporateIdentityFormValues } from 'v2/app/pages/identity/components/types'
 import { corporateIdentityFormValidationSchema } from 'v2/app/pages/identity/components/validation'
@@ -14,10 +14,10 @@ import {
   getIdentityDeclarations,
   getIdentityFormDefaultValue
 } from 'v2/app/pages/identity/utils'
-
-export const useCorporateIdentityForm = createTypedForm<
-  CorporateIdentityFormValues
->()
+import { Form } from 'v2/components/form/Form'
+import { Submit } from 'v2/components/form/Submit'
+import { IdentityDataroom } from 'v2/app/pages/identity/components/IdentityDataroom'
+import { declarations } from 'v2/app/pages/identity/const/declarations'
 
 export interface CorporateIdentityFormProps {
   data: CorporateIdentity | undefined
@@ -39,7 +39,6 @@ export const CorporateIdentityForm = (
     cancelButton,
     onSubmit
   } = props
-  const { Form, Submit } = useCorporateIdentityForm()
   const handleSubmit = (values: CorporateIdentityFormValues) => {
     if (onSubmit !== undefined) {
       onSubmit(values)
@@ -55,16 +54,12 @@ export const CorporateIdentityForm = (
       <Grid container spacing={2}>
         <Grid item xs={12}>
           <Section title='Company Information'>
-            <CompanyInformation
-              corporate={data}
-              useOwnEmail={useOwnEmail}
-              isEditing={isEditing}
-            />
+            <CompanyInfo />
           </Section>
         </Grid>
         <Grid item xs={12}>
           <Section title='Company Address'>
-            <Address isEditing={isEditing} rootPath='companyAddress' />
+            <AddressFields rootName='companyAddress' />
           </Section>
         </Grid>
         <CorporateProfiles
@@ -84,7 +79,7 @@ export const CorporateIdentityForm = (
         />
         <Grid item xs={12}>
           <Section title='Documents'>
-            <Dataroom isEditing={isEditing} />
+            <IdentityDataroom />
           </Section>
         </Grid>
         <Grid item xs={12}>
@@ -92,10 +87,7 @@ export const CorporateIdentityForm = (
             title='Declaration & Acknowledgement'
             subtitle='Confirmation'
           >
-            <Declaration
-              isEditing={isEditing}
-              declarations={getIdentityDeclarations(data, 'corporate')}
-            />
+            <Declarations declarations={declarations.corporate} />
           </Section>
         </Grid>
         {isEditing && (

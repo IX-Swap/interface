@@ -2,9 +2,9 @@
 import React from 'react'
 import { render, cleanup } from 'test-utils'
 import {
-  Financials,
+  FinancialFields,
   FinancialsProps
-} from 'v2/app/pages/identity/components/Financials'
+} from 'v2/app/pages/identity/components/FinancialFields'
 import * as typedForm from 'v2/app/pages/identity/components/IndividualIdentityForm'
 import { generateCreateTypedFormResult } from '__fixtures__/createTypedForm'
 
@@ -24,11 +24,11 @@ describe('Financials', () => {
   })
 
   it('renders without error', () => {
-    render(<Financials {...props} />)
+    render(<FinancialFields {...props} />)
   })
 
   it('renders EditableField correctly', () => {
-    render(<Financials {...props} />)
+    render(<FinancialFields {...props} />)
 
     expect(EditableField).toHaveBeenCalledTimes(12)
     expect(EditableField).toHaveBeenNthCalledWith(

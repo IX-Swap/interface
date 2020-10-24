@@ -1,20 +1,20 @@
 import React from 'react'
+import { useFormContext } from 'react-hook-form'
+import { DSOFormValues } from 'v2/types/dso'
 import { FieldsArray } from 'v2/components/form/FieldsArray'
-import { Grid } from '@material-ui/core'
+import { Button, Grid } from '@material-ui/core'
 import { DataroomHeader } from 'v2/app/pages/identity/components/dataroom/DataroomHeader'
 import { EditableField } from 'v2/components/form/EditableField'
 import { NewDataroomUploader } from 'v2/components/form/NewDataroomUploader'
 import { DataroomFileRow } from 'v2/components/form/DataroomFileRow'
 import { plainValueExtractor } from 'v2/components/form/createTypedForm'
-import { DataroomUploaderWithFileTypeSelector } from 'v2/components/form/DataroomUploaderWithFileTypeSelector'
-import { useFormContext } from 'react-hook-form'
-import { DSOFormValues } from 'v2/types/dso'
+import { BankFormValues } from 'v2/app/pages/accounts/types'
 
-export const DSODataroom = () => {
-  const { control } = useFormContext<DSOFormValues>()
+export const BankDocuments = () => {
+  const { control } = useFormContext<BankFormValues>()
 
   return (
-    <FieldsArray name='documents' control={control}>
+    <FieldsArray name='supportingDocuments' control={control}>
       {({ fields, append, remove }) => (
         <Grid container direction='column' spacing={2}>
           <Grid item>
@@ -29,7 +29,7 @@ export const DSODataroom = () => {
                   control={control}
                   component={NewDataroomUploader}
                   label='Document'
-                  name={['documents', index, 'document']}
+                  name={['supportingDocuments', index, 'value']}
                   render={DataroomFileRow}
                   defaultValue={fields[index].document}
                   valueExtractor={plainValueExtractor}
@@ -38,8 +38,23 @@ export const DSODataroom = () => {
               </Grid>
             ))}
           </Grid>
-          <Grid item>
-            <DataroomUploaderWithFileTypeSelector append={append} />
+          <Grid item container justify='flex-end'>
+            <NewDataroomUploader
+              name=''
+              label=''
+              value={{} as any}
+              documentInfo={{ type: 'Supporting Document' }}
+              onChange={file => append({ document: file })}
+              render={({ handleUpload }) => (
+                <Button
+                  variant='contained'
+                  color='primary'
+                  onClick={handleUpload}
+                >
+                  Upload
+                </Button>
+              )}
+            />
           </Grid>
         </Grid>
       )}

@@ -1,21 +1,27 @@
 import React from 'react'
+import { IdentityProfile } from 'v2/types/identity'
 import { Grid, Input } from '@material-ui/core'
 import { useFormContext } from 'react-hook-form'
-import { CorporateIdentity } from 'v2/types/identity'
 import { EditableField } from 'v2/components/form/EditableField'
 import { NewDataroomUploader } from 'v2/components/form/NewDataroomUploader'
 import { DataroomAvatar } from 'v2/components/form/DataroomAvatar'
 import { documentValueExtractor } from 'v2/app/components/DSO/utils'
-import { Checkbox } from 'v2/components/form/Checkbox'
 import { DatePicker } from 'v2/components/form/DatePicker'
+import { dateTimeValueExtractor } from 'v2/components/form/createTypedForm'
+import { NationalitySelect } from 'v2/components/form/NationalitySelect'
 import { CountrySelect } from 'v2/components/form/CountrySelect'
-import {
-  booleanValueExtractor,
-  dateTimeValueExtractor
-} from 'v2/components/form/createTypedForm'
+import { GenderSelect } from 'v2/components/form/GenderSelect'
+import { MartialStatusSelect } from 'v2/components/form/MartialStatusSelect'
 
-export const CompanyInfo = (): JSX.Element => {
-  const { control } = useFormContext<CorporateIdentity>() // TODO: update type
+export interface PersonalInfoFieldsProps {
+  rootName?: string
+}
+
+export const PersonalInfoFields = (
+  props: PersonalInfoFieldsProps
+): JSX.Element => {
+  const { rootName } = props
+  const { control } = useFormContext<IdentityProfile>()
 
   return (
     <Grid container spacing={3}>
@@ -24,82 +30,107 @@ export const CompanyInfo = (): JSX.Element => {
         <EditableField
           component={NewDataroomUploader}
           control={control}
-          name='logo'
-          label='Company Logo'
+          rootName={rootName}
+          name='photo'
+          label='Photo'
           render={DataroomAvatar}
           valueExtractor={documentValueExtractor}
           documentInfo={{
-            type: 'Company Logo',
-            title: 'Company Logo'
+            type: 'User Photo',
+            title: 'User Photo'
           }}
         />
       </Grid>
       <Grid item xs={4}>
         <EditableField
+          rootName={rootName}
           component={Input}
           control={control}
-          name='companyLegalName'
-          label='Company Name'
+          name='firstName'
+          label='First Name'
         />
       </Grid>
       <Grid item xs={4}>
         <EditableField
+          rootName={rootName}
           component={Input}
           control={control}
-          name='registrationNumber'
-          label='Company Registration Number'
+          name='middleName'
+          label='Middle Name'
         />
       </Grid>
       <Grid item xs={4}>
         <EditableField
-          component={CountrySelect}
+          rootName={rootName}
+          component={Input}
           control={control}
-          name='countryOfFormation'
-          label='Country of Formation'
+          name='lastName'
+          label='Last Name'
         />
       </Grid>
       <Grid item xs={4}>
         {/* @ts-ignore */}
         <EditableField
+          rootName={rootName}
+          control={control}
+          name='dob'
+          label='Date of Birth'
           component={DatePicker}
           valueExtractor={dateTimeValueExtractor}
-          control={control}
-          name='dateOfIncorporation'
-          label='Date of Incorporation'
         />
       </Grid>
       <Grid item xs={4}>
         <EditableField
-          component={Input}
+          rootName={rootName}
+          component={NationalitySelect}
           control={control}
-          name='walletAddress'
-          label='Digital Security Wallet Address'
+          name='nationality'
+          label='Nationality'
         />
       </Grid>
-      <Grid item xs={4} />
       <Grid item xs={4}>
         <EditableField
+          rootName={rootName}
+          component={CountrySelect}
+          control={control}
+          name='countryOfResidence'
+          label='Country of Residence'
+        />
+      </Grid>
+      <Grid item xs={4}>
+        <EditableField
+          rootName={rootName}
           component={Input}
           control={control}
           name='email'
-          label='Email Address'
+          label='Email'
         />
       </Grid>
       <Grid item xs={4}>
         <EditableField
+          rootName={rootName}
           component={Input}
           control={control}
           name='contactNumber'
           label='Contact Number'
         />
       </Grid>
-      <Grid item xs={5}>
+      <Grid item xs={4}>
         <EditableField
-          customRenderer={Checkbox}
-          valueExtractor={booleanValueExtractor}
+          rootName={rootName}
+          component={GenderSelect}
           control={control}
-          name='toArrangeCustody'
-          label='I would like InvestaX to arrange digital security custody'
+          name='gender'
+          label='Gender'
+        />
+      </Grid>
+      <Grid item xs={4}>
+        <EditableField
+          rootName={rootName}
+          component={MartialStatusSelect}
+          control={control}
+          name='maritalStatus'
+          label='Marital Status'
         />
       </Grid>
     </Grid>

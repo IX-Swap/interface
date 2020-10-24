@@ -1,17 +1,13 @@
 import React from 'react'
 import { Grid, Typography } from '@material-ui/core'
-import { CompanyInformation } from 'v2/app/pages/identity/components/CompanyInfo'
+import { CompanyInfo } from 'v2/app/pages/identity/components/CompanyInfo'
 import { useAllCorporateIdentities } from 'v2/hooks/identity/useAllCorporateIdentities'
 import { Section } from 'v2/app/pages/identity/components/Section'
-import { useCorporateIdentityForm } from 'v2/app/pages/identity/components/CorporateIdentityForm'
-import { corporateIdentityFormValidationSchema } from 'v2/app/pages/identity/components/validation'
 import { useIdentitiesRouter } from 'v2/app/pages/identity/router'
 import { NoIdentity } from 'v2/app/pages/identity/components/NoIdentity'
 import { ViewButton } from 'v2/app/pages/identity/components/ViewButton'
-import { getIdentityFormDefaultValue } from 'v2/app/pages/identity/utils'
 
 export const CorporateIdPreview: React.FC = () => {
-  const { Form } = useCorporateIdentityForm()
   const { data, status } = useAllCorporateIdentities()
   const { paths } = useIdentitiesRouter()
 
@@ -46,22 +42,9 @@ export const CorporateIdPreview: React.FC = () => {
                 />
               }
             >
-              <Form
-                validationSchema={corporateIdentityFormValidationSchema}
-                onSubmit={console.log}
-                defaultValues={getIdentityFormDefaultValue(
-                  identity,
-                  'corporate'
-                )}
-              >
-                <Grid container>
-                  <CompanyInformation
-                    corporate={identity}
-                    useOwnEmail={false}
-                    isEditing={false}
-                  />
-                </Grid>
-              </Form>
+              <Grid container>
+                <CompanyInfo />
+              </Grid>
             </Section>
           </Grid>
         )

@@ -63,7 +63,9 @@ export const DSOForm = (props: DSOFormProps) => {
             </DSOContainer>
           )}
           <DSOUseOfProceeds />
-          <DSODataroom />
+          <DSOContainer title='Dataroom' item xs={12}>
+            <DSODataroom />
+          </DSOContainer>
           <DSOFundRaisingMilestone />
           <DSOTeam />
           <Grid item>

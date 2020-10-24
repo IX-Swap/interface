@@ -37,7 +37,7 @@ describe('prepareDocumentsForUpload', () => {
   it('returns empty array if documents does not exist', () => {
     expect(
       prepareDocumentsForUpload([
-        { title: '', label: '', type: '', document: null }
+        { title: '', label: '', type: '', value: null }
       ])
     ).toEqual([])
   })

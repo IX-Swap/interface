@@ -5,7 +5,11 @@ import {
   UnpackNestedValue
 } from '@hookform/strictly-typed/dist/types'
 import { Control } from 'react-hook-form'
-import { FormControlProps, InputProps } from '@material-ui/core'
+import {
+  FormControlLabelProps,
+  FormControlProps,
+  InputProps
+} from '@material-ui/core'
 import React from 'react'
 
 export interface ControllerRenderProps {
@@ -52,4 +56,15 @@ export interface TypedFieldProps<
   valueExtractor?: (...args: any[]) => any
   valueProvider?: (...args: any[]) => any
   variant?: 'filled' | 'outlined' | 'standard'
+}
+
+export interface TypedFieldRenderComponentProps<TValue = any> {
+  name: string
+  error: boolean
+  label: string
+  value: TValue
+  onChange: (...event: any[]) => void
+  onFocus: () => void
+  onBlur: () => void
+  controllerProps: Control
 }

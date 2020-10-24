@@ -1,21 +1,19 @@
 import React from 'react'
-import { FieldsArray } from 'v2/components/form/FieldsArray'
 import { Grid } from '@material-ui/core'
 import { DataroomHeader } from 'v2/app/pages/identity/components/dataroom/DataroomHeader'
 import { EditableField } from 'v2/components/form/EditableField'
-import { NewDataroomUploader } from 'v2/components/form/NewDataroomUploader'
-import { DataroomFileRow } from 'v2/components/form/DataroomFileRow'
 import { plainValueExtractor } from 'v2/components/form/createTypedForm'
-import { DataroomUploaderWithFileTypeSelector } from 'v2/components/form/DataroomUploaderWithFileTypeSelector'
+import { FieldsArray } from 'v2/components/form/FieldsArray'
 import { useFormContext } from 'react-hook-form'
-import { DSOFormValues } from 'v2/types/dso'
+import { DataroomFile, FormArray } from 'v2/types/dataroomFile'
+import { IdentityDataroomUploader } from 'v2/components/form/IdentityDataroomUploader'
 
-export const DSODataroom = () => {
-  const { control } = useFormContext<DSOFormValues>()
+export const IdentityDataroom = () => {
+  const { control } = useFormContext<{ documents: FormArray<DataroomFile> }>()
 
   return (
     <FieldsArray name='documents' control={control}>
-      {({ fields, append, remove }) => (
+      {({ fields }) => (
         <Grid container direction='column' spacing={2}>
           <Grid item>
             <DataroomHeader />
@@ -23,23 +21,18 @@ export const DSODataroom = () => {
           <Grid item container direction='column'>
             {fields.map((field, index) => (
               <Grid item key={field.id}>
-                {/* @ts-ignore */}
                 <EditableField
                   key={field.id}
                   control={control}
-                  component={NewDataroomUploader}
                   label='Document'
-                  name={['documents', index, 'document']}
-                  render={DataroomFileRow}
-                  defaultValue={fields[index].document}
+                  name={['documents', index, 'value']}
                   valueExtractor={plainValueExtractor}
-                  onDelete={() => remove(index)}
+                  defaultValue={fields[index].value}
+                  customRenderer={IdentityDataroomUploader}
+                  customRendererProps={}
                 />
               </Grid>
             ))}
-          </Grid>
-          <Grid item>
-            <DataroomUploaderWithFileTypeSelector append={append} />
           </Grid>
         </Grid>
       )}

@@ -1,71 +1,72 @@
 import React from 'react'
-import { Grid } from '@material-ui/core'
-import { useTypedForm } from 'v2/components/form/useTypedForm'
+import { Grid, Input } from '@material-ui/core'
 import { IdentityAddress } from 'v2/types/identity'
+import { EditableField } from 'v2/components/form/EditableField'
+import { CountrySelect } from 'v2/components/form/CountrySelect'
+import { useFormContext } from 'react-hook-form'
 
 export interface AddressFieldsProps<FormType> {
-  isEditing: boolean
-  rootPath?: 'address' | 'companyAddress'
+  rootName?: 'address' | 'companyAddress'
 }
 
-export const Address = <FormType,>(
+export const AddressFields = <FormType,>(
   props: AddressFieldsProps<FormType>
 ): JSX.Element => {
-  const { isEditing, rootPath = 'address' } = props
-  const { EditableField } = useTypedForm<IdentityAddress>()
+  const { rootName = 'address' } = props
+  const { control } = useFormContext<IdentityAddress>()
 
   return (
     <Grid container spacing={3}>
       <Grid item xs={4}>
         <EditableField
-          fieldType='TextField'
-          isEditing={isEditing}
-          root={rootPath}
+          component={Input}
+          control={control}
+          rootName={rootName}
           name='line1'
           label='Line 1'
         />
       </Grid>
       <Grid item xs={4}>
         <EditableField
-          fieldType='TextField'
-          isEditing={isEditing}
-          root={rootPath}
+          component={Input}
+          control={control}
+          rootName={rootName}
           name='line2'
           label='Line 2'
         />
       </Grid>
       <Grid item xs={4}>
         <EditableField
-          fieldType='TextField'
-          isEditing={isEditing}
-          root={rootPath}
+          component={Input}
+          control={control}
+          rootName={rootName}
           name='city'
           label='City'
         />
       </Grid>
       <Grid item xs={4}>
         <EditableField
-          fieldType='TextField'
-          isEditing={isEditing}
-          root={rootPath}
+          component={Input}
+          control={control}
+          rootName={rootName}
           name='postalCode'
           label='Postal Code'
         />
       </Grid>
       <Grid item xs={4}>
         <EditableField
-          fieldType='TextField'
-          isEditing={isEditing}
-          root={rootPath}
+          component={Input}
+          control={control}
+          rootName={rootName}
           name='state'
           label='State'
         />
       </Grid>
       <Grid item xs={4}>
         <EditableField
-          fieldType='CountrySelect'
-          isEditing={isEditing}
-          root={rootPath}
+          component={CountrySelect}
+          control={control}
+          rootName={rootName}
           name='country'
           label='Country'
         />

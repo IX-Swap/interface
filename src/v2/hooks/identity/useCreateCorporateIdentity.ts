@@ -29,6 +29,7 @@ export const useCreateCorporateIdentity = () => {
     const args: CreateCorporateIdentityArgs = {
       ...values,
       userId: user._id,
+      declarations: values.declarations.map(d => d.value),
       documents: prepareDocumentsForUpload(values.documents)
     }
     const { userId, ...identity } = args

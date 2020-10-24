@@ -20,9 +20,7 @@ export const formErrorsToMessagesArray = (errors: FormErrorsMap) => {
     .filter(e => e !== undefined) as string[]
 }
 
-export const Form = <T,>(
-  props: PropsWithChildren<FormProps<T>>
-): JSX.Element => {
+export const Form = <T,>(props: PropsWithChildren<FormProps<T>>) => {
   const {
     defaultValues,
     onSubmit = console.log,
@@ -31,10 +29,9 @@ export const Form = <T,>(
     ...rest
   } = props
   const form = useForm({
-    mode: 'onSubmit',
+    mode: 'onBlur',
     defaultValues: defaultValues as any,
-    resolver: yupResolver(validationSchema),
-    shouldFocusError: true
+    resolver: yupResolver(validationSchema)
   })
   const { handleSubmit } = form
 
@@ -45,7 +42,7 @@ export const Form = <T,>(
       <form
         {...rest}
         style={{ width: '100%' }}
-        onSubmit={handleSubmit(onSubmit, noop)}
+        onSubmit={handleSubmit(onSubmit, console.error)}
       >
         {children}
       </form>

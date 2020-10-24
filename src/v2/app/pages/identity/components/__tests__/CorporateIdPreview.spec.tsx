@@ -7,7 +7,7 @@ import { CorporateIdPreview } from 'v2/app/pages/identity/components/CorporateId
 import { generateInfiniteQueryResult } from '__fixtures__/useQuery'
 import { QueryStatus } from 'react-query'
 import { corporate } from '__fixtures__/identity'
-import { CompanyInformation } from 'v2/app/pages/identity/components/CompanyInfo'
+import { CompanyInfo } from 'v2/app/pages/identity/components/CompanyInfo'
 import { NoIdentity } from 'v2/app/pages/identity/components/NoIdentity'
 import { useTypedForm } from '__fixtures__/createTypedForm'
 import { Section } from 'v2/app/pages/identity/components/Section'
@@ -69,7 +69,7 @@ describe('CorporateIdPreview', () => {
       .mockReturnValue(generateInfiniteQueryResult({ list: [corporate] }))
     render(<CorporateIdPreview />)
 
-    expect(CompanyInformation).toHaveBeenCalledWith(
+    expect(CompanyInfo).toHaveBeenCalledWith(
       {
         corporate,
         useOwnEmail: false,

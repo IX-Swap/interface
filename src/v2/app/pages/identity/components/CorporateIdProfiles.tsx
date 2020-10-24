@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react'
 import { Grid } from '@material-ui/core'
 import { Section } from 'v2/app/pages/identity/components/Section'
-import UserInfoComponent from 'v2/app/pages/identity/components/UserInfo'
+import { PersonalInfoFields } from 'v2/app/pages/identity/components/PersonalInfoFields'
 import { useFieldArray } from 'react-hook-form'
 
 export interface CorporateProfilesProps {
@@ -28,11 +28,7 @@ export const CorporateProfiles: React.FC<CorporateProfilesProps> = props => {
         return (
           <Grid item xs={12} key={index}>
             <Section title={title}>
-              <UserInfoComponent
-                rootPath={`${type}[${index}]`}
-                useOwnEmail={false}
-                isEditing={isEditing}
-              />
+              <PersonalInfoFields rootName={`${type}[${index}]`} />
             </Section>
           </Grid>
         )

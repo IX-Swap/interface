@@ -2,9 +2,9 @@
 import React from 'react'
 import { render, cleanup } from 'test-utils'
 import {
-  Declaration,
-  DeclarationProps
-} from 'v2/app/pages/identity/components/Declaration'
+  Declarations,
+  DeclarationsProps
+} from 'v2/app/pages/identity/components/Declarations'
 import { Form } from 'v2/components/form/Form'
 import { DeclarationHeader } from 'v2/app/pages/identity/components/DeclarationHeader'
 import { DeclarationFooter } from 'v2/app/pages/identity/components/DeclarationFooter'
@@ -20,7 +20,7 @@ describe('Declaration', () => {
   const defaultValues = {
     declarations: [{ id: 'default' }, { id: 'default1' }]
   }
-  const props: DeclarationProps = {
+  const props: DeclarationsProps = {
     declarations: [
       { content: 'declaration 1', key: '1', footer: 'foot 1', header: 'h1' },
       { content: 'declaration 2', key: '2', lastLine: true }
@@ -35,7 +35,7 @@ describe('Declaration', () => {
   it('renders without error', () => {
     render(
       <Form defaultValues={defaultValues}>
-        <Declaration {...props} />
+        <Declarations {...props} />
       </Form>
     )
   })
@@ -43,7 +43,7 @@ describe('Declaration', () => {
   it('renders DeclarationHeader with correct props if header exists for every declaration', () => {
     render(
       <Form defaultValues={defaultValues}>
-        <Declaration {...props} />
+        <Declarations {...props} />
       </Form>
     )
 
@@ -54,7 +54,7 @@ describe('Declaration', () => {
   it('renders DeclarationFooter with correct props if footer exists for every declaration', () => {
     render(
       <Form defaultValues={defaultValues}>
-        <Declaration {...props} />
+        <Declarations {...props} />
       </Form>
     )
 

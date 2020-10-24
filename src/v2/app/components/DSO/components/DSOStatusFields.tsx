@@ -1,7 +1,7 @@
 import React from 'react'
 import { moneyNumberFormat } from 'v2/app/components/DSO/utils'
 import { numericValueExtractor } from 'v2/components/form/createTypedForm'
-import { Grid, TextField } from '@material-ui/core'
+import { Grid, Input } from '@material-ui/core'
 import { EditableField } from 'v2/components/form/EditableField'
 import { CorporateSelect } from 'v2/components/form/CorporateSelect'
 import { NumericInput } from 'v2/components/form/NumericField'
@@ -35,7 +35,7 @@ export const DSOStatusFields = (props: DSOStatusFieldsProps) => {
           <Grid item>
             <EditableField
               control={control}
-              component={TextField}
+              component={Input}
               label='Status'
               name='status'
               inputProps={{
@@ -48,7 +48,7 @@ export const DSOStatusFields = (props: DSOStatusFieldsProps) => {
         <Grid item>
           <EditableField
             control={control}
-            component={TextField}
+            component={Input}
             label='Capital Structure'
             name='capitalStructure'
           />

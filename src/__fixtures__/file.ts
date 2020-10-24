@@ -5,6 +5,6 @@ export const emptyFile = {
   createdAt: '',
   user: '',
   originalFileName: '',
-  _id: '1',
+  _id: '',
   url: ''
 }

@@ -1,14 +1,14 @@
 /**  * @jest-environment jsdom-sixteen  */
 import React from 'react'
 import { render, cleanup } from 'test-utils'
-import UserInfoComponent from 'v2/app/pages/identity/components/UserInfo'
+import UserInfoComponent from 'v2/app/pages/identity/components/PersonalInfoFields'
 import {
   CorporateProfiles,
   CorporateProfilesProps
 } from 'v2/app/pages/identity/components/CorporateIdProfiles'
 import { Form } from 'v2/components/form/Form'
 
-jest.mock('v2/app/pages/identity/components/UserInfo', () =>
+jest.mock('v2/app/pages/identity/components/PersonalInformation', () =>
   jest.fn(() => null)
 )
 

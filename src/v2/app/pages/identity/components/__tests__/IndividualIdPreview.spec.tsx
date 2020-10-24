@@ -9,12 +9,12 @@ import { individual } from '__fixtures__/identity'
 import { QueryStatus } from 'react-query'
 import { Section } from 'v2/app/pages/identity/components/Section'
 import { NoIdentity } from 'v2/app/pages/identity/components/NoIdentity'
-import UserInfoComponent from 'v2/app/pages/identity/components/UserInfo'
+import UserInfoComponent from 'v2/app/pages/identity/components/PersonalInfoFields'
 import { useTypedForm } from '__fixtures__/createTypedForm'
 import { individualIdentityFormValidationSchema } from 'v2/app/pages/identity/components/validation'
 import { getIdentityFormDefaultValue } from 'v2/app/pages/identity/utils'
 
-jest.mock('v2/app/pages/identity/components/UserInfo', () =>
+jest.mock('v2/app/pages/identity/components/PersonalInformation', () =>
   jest.fn(() => null)
 )
 jest.mock('v2/app/pages/identity/components/Section', () => ({

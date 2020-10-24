@@ -7,7 +7,7 @@ import {
   AddressValues,
   BankFormValues
 } from 'v2/app/pages/accounts/types'
-import { DataroomFile } from 'v2/types/dataroomFile'
+import { DataroomFile, FormArrayElement } from 'v2/types/dataroomFile'
 
 export const depositCashFormValidationSchema = yup
   .object()
@@ -58,6 +58,6 @@ export const bankFormValidationSchema = yup.object().shape<BankFormValues>({
   swiftCode: yup.string().required('Required'),
   address: addressValidationSchema.required('Required'),
   supportingDocuments: yup
-    .array<{ document: DataroomFile }>()
+    .array<FormArrayElement<DataroomFile>>()
     .required('Required')
 })

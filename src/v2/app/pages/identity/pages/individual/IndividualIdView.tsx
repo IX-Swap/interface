@@ -26,8 +26,6 @@ export const IndividualIdView: React.FC = () => {
       <Grid item>
         <IndividualIdentityForm
           data={data}
-          isEditing={false}
-          useOwnEmail={false}
           cancelButton={<CancelButton link={paths.individual} replace />}
         />
       </Grid>

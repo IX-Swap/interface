@@ -33,7 +33,7 @@ export const transformDSOToFormValues = (
         label: '',
         type: '',
         document
-      })) ?? null
+      })) ?? []
   }
 }
 

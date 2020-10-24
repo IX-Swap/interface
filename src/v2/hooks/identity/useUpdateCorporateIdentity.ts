@@ -27,6 +27,7 @@ export const useUpdateCorporateIdentity = (id: string) => {
     }
     const identity: UpdateCorporateIdentityArgs = {
       ...values,
+      declarations: values.declarations.map(d => d.value),
       documents: prepareDocumentsForUpload(values.documents)
     }
     const uri = `/identity/corporates/${user._id}/${id}`
@@ -37,7 +38,6 @@ export const useUpdateCorporateIdentity = (id: string) => {
   return useMutation(updateCorporate, {
     onSuccess: data => {
       void snackbarService.showSnackbar(data.message, 'success')
-      push('list')
     },
     onError: (error: any) => {
       void snackbarService.showSnackbar(error.message, 'error')

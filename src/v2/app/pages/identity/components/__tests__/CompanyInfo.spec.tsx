@@ -2,15 +2,15 @@
 import React from 'react'
 import { render, cleanup } from 'test-utils'
 import {
-  CompanyInformation,
-  CompanyInformationProps
+  CompanyInfo,
+  CompanyInfoProps
 } from 'v2/app/pages/identity/components/CompanyInfo'
 import * as typedForm from 'v2/app/pages/identity/components/CorporateIdentityForm'
 import { useTypedForm } from '__fixtures__/createTypedForm'
 import { Form } from 'v2/components/form/Form'
 
 describe('CompanyInformation', () => {
-  const props: CompanyInformationProps = {
+  const props: CompanyInfoProps = {
     isEditing: false,
     useOwnEmail: false
   }
@@ -31,7 +31,7 @@ describe('CompanyInformation', () => {
   it('renders without error', () => {
     render(
       <Form>
-        <CompanyInformation {...props} />
+        <CompanyInfo {...props} />
       </Form>
     )
   })
@@ -39,7 +39,7 @@ describe('CompanyInformation', () => {
   it('renders EditableField correctly', () => {
     render(
       <Form>
-        <CompanyInformation {...props} />
+        <CompanyInfo {...props} />
       </Form>
     )
 
