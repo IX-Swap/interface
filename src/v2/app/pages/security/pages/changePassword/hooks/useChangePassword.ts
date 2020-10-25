@@ -1,4 +1,4 @@
-import { useServices } from 'v2/services/useServices'
+import { useServices } from 'v2/hooks/useServices'
 import { useMutation } from 'react-query'
 import { useSecurityRouter } from 'v2/app/pages/security/router'
 import { ChangePasswordFormValues } from '../types'

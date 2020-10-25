@@ -1,5 +1,5 @@
 import { useQuery } from 'react-query'
-import { useServices } from 'v2/services/useServices'
+import { useServices } from 'v2/hooks/useServices'
 import { DownloadDocument } from 'v2/hooks/useDownloadRawDocument'
 import { useAuth } from 'v2/hooks/auth/useAuth'
 import { useIsAuthorizer } from 'v2/helpers/acl'

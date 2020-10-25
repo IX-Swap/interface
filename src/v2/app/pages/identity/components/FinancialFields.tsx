@@ -1,10 +1,10 @@
 import React from 'react'
 import { Grid, Input } from '@material-ui/core'
-import { EditableField } from 'v2/components/form/EditableField'
-import { NumericInput } from 'v2/components/form/NumericField'
+import { TypedField } from 'v2/components/form/TypedField'
+import { NumericInput } from 'v2/components/form/NumericInput'
 import { moneyNumberFormat } from 'v2/app/components/DSO/utils'
 import { Checkbox } from 'v2/components/form/Checkbox'
-import { booleanValueExtractor } from 'v2/components/form/createTypedForm'
+import { booleanValueExtractor } from 'v2/helpers/forms'
 import { useFormContext } from 'react-hook-form'
 
 export const FinancialFields = (): JSX.Element => {
@@ -13,7 +13,7 @@ export const FinancialFields = (): JSX.Element => {
   return (
     <Grid container spacing={3}>
       <Grid item xs={4}>
-        <EditableField
+        <TypedField
           component={Input}
           control={control}
           name='occupation'
@@ -21,7 +21,7 @@ export const FinancialFields = (): JSX.Element => {
         />
       </Grid>
       <Grid item xs={4}>
-        <EditableField
+        <TypedField
           component={Input}
           control={control}
           name='employer'
@@ -29,7 +29,7 @@ export const FinancialFields = (): JSX.Element => {
         />
       </Grid>
       <Grid item xs={4}>
-        <EditableField
+        <TypedField
           component={Input}
           control={control}
           name='employmentStatus'
@@ -37,7 +37,7 @@ export const FinancialFields = (): JSX.Element => {
         />
       </Grid>
       <Grid item xs={4}>
-        <EditableField
+        <TypedField
           component={Input}
           control={control}
           name='industryOfEmployment'
@@ -45,7 +45,7 @@ export const FinancialFields = (): JSX.Element => {
         />
       </Grid>
       <Grid item xs={4}>
-        <EditableField
+        <TypedField
           component={Input}
           control={control}
           name='walletAddress'
@@ -53,7 +53,7 @@ export const FinancialFields = (): JSX.Element => {
         />
       </Grid>
       <Grid item xs={4}>
-        <EditableField
+        <TypedField
           control={control}
           name='annualIncome'
           label='Annual Income'
@@ -62,7 +62,7 @@ export const FinancialFields = (): JSX.Element => {
         />
       </Grid>
       <Grid item xs={4}>
-        <EditableField
+        <TypedField
           control={control}
           name='houseHoldIncome'
           label='Household Income'
@@ -71,7 +71,7 @@ export const FinancialFields = (): JSX.Element => {
         />
       </Grid>
       <Grid item xs={4}>
-        <EditableField
+        <TypedField
           component={Input}
           control={control}
           name='sourceOfWealth'
@@ -79,7 +79,7 @@ export const FinancialFields = (): JSX.Element => {
         />
       </Grid>
       <Grid item xs={4}>
-        <EditableField
+        <TypedField
           component={Input}
           control={control}
           name='bankName'
@@ -87,7 +87,7 @@ export const FinancialFields = (): JSX.Element => {
         />
       </Grid>
       <Grid item xs={4}>
-        <EditableField
+        <TypedField
           component={Input}
           control={control}
           name='bankAccountName'
@@ -95,7 +95,7 @@ export const FinancialFields = (): JSX.Element => {
         />
       </Grid>
       <Grid item xs={4}>
-        <EditableField
+        <TypedField
           component={Input}
           control={control}
           name='bankAccountNumber'
@@ -103,8 +103,10 @@ export const FinancialFields = (): JSX.Element => {
         />
       </Grid>
       <Grid item xs={5}>
-        <EditableField
-          customRenderer={Checkbox}
+        {/* @ts-ignore  */}
+        <TypedField
+          customRenderer
+          component={Checkbox}
           valueExtractor={booleanValueExtractor}
           control={control}
           name='toArrangeCustody'

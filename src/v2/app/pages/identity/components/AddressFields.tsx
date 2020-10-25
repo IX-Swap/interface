@@ -1,7 +1,7 @@
 import React from 'react'
 import { Grid, Input } from '@material-ui/core'
 import { IdentityAddress } from 'v2/types/identity'
-import { EditableField } from 'v2/components/form/EditableField'
+import { TypedField } from 'v2/components/form/TypedField'
 import { CountrySelect } from 'v2/components/form/CountrySelect'
 import { useFormContext } from 'react-hook-form'
 
@@ -18,7 +18,7 @@ export const AddressFields = <FormType,>(
   return (
     <Grid container spacing={3}>
       <Grid item xs={4}>
-        <EditableField
+        <TypedField
           component={Input}
           control={control}
           rootName={rootName}
@@ -27,7 +27,7 @@ export const AddressFields = <FormType,>(
         />
       </Grid>
       <Grid item xs={4}>
-        <EditableField
+        <TypedField
           component={Input}
           control={control}
           rootName={rootName}
@@ -36,7 +36,7 @@ export const AddressFields = <FormType,>(
         />
       </Grid>
       <Grid item xs={4}>
-        <EditableField
+        <TypedField
           component={Input}
           control={control}
           rootName={rootName}
@@ -45,7 +45,7 @@ export const AddressFields = <FormType,>(
         />
       </Grid>
       <Grid item xs={4}>
-        <EditableField
+        <TypedField
           component={Input}
           control={control}
           rootName={rootName}
@@ -54,7 +54,7 @@ export const AddressFields = <FormType,>(
         />
       </Grid>
       <Grid item xs={4}>
-        <EditableField
+        <TypedField
           component={Input}
           control={control}
           rootName={rootName}
@@ -63,7 +63,7 @@ export const AddressFields = <FormType,>(
         />
       </Grid>
       <Grid item xs={4}>
-        <EditableField
+        <TypedField
           component={CountrySelect}
           control={control}
           rootName={rootName}

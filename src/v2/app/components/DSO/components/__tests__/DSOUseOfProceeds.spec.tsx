@@ -1,13 +1,13 @@
 /**  * @jest-environment jsdom-sixteen  */
 import React from 'react'
 import { cleanup, render } from 'test-utils'
-import { EditableField } from 'v2/components/form/EditableField'
-import { plainValueExtractor } from 'v2/components/form/createTypedForm'
+import { TypedField } from 'v2/components/form/TypedField'
+import { plainValueExtractor } from 'v2/helpers/forms'
 import { DSOUseOfProceeds } from 'v2/app/components/DSO/components/DSOUseOfProceeds'
 import { Form } from 'v2/components/form/Form'
 
-jest.mock('v2/components/form/EditableField', () => ({
-  EditableField: jest.fn(() => <input />)
+jest.mock('v2/components/form/TypedField', () => ({
+  TypedField: jest.fn(() => <input />)
 }))
 
 describe('DSOUseOfProceeds', () => {
@@ -31,7 +31,7 @@ describe('DSOUseOfProceeds', () => {
       </Form>
     )
 
-    expect(EditableField).toBeCalledWith(
+    expect(TypedField).toBeCalledWith(
       expect.objectContaining({
         label: 'Use of Proceeds',
         name: 'useOfProceeds',

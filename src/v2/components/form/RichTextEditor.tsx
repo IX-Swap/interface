@@ -2,10 +2,10 @@ import React, { useRef } from 'react'
 import MUIRichTextEditor from 'mui-rte'
 import { TMUIRichTextEditorRef } from 'mui-rte/src/MUIRichTextEditor'
 import { convertToRaw, convertFromHTML, ContentState } from 'draft-js'
-import { ControllerRenderProps } from './types'
+import { TypedFieldRenderComponentProps } from './types'
 import { Box } from '@material-ui/core'
 
-export interface RichTextEditorProps extends ControllerRenderProps {}
+export interface RichTextEditorProps extends TypedFieldRenderComponentProps {}
 
 export const RichTextEditor = React.memo(
   (props: RichTextEditorProps) => {

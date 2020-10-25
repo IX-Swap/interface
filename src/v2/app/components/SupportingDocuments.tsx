@@ -17,11 +17,7 @@ export const SupportingDocuments = (props: SupportingDocumentsProps) => {
       </Grid>
       <Grid item container wrap='wrap'>
         {data.map(file => (
-          <AuthorizationDocument
-            document={file}
-            title={file.originalFileName}
-            input={<div />}
-          />
+          <AuthorizationDocument value={file} />
         ))}
       </Grid>
     </Grid>

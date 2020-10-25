@@ -1,4 +1,4 @@
-import { useServices } from 'v2/services/useServices'
+import { useServices } from 'v2/hooks/useServices'
 import { useEffect, useMemo, useState } from 'react'
 import { queryCache } from 'react-query'
 import { queryKeys } from 'v2/config/queryKeys'

@@ -1,6 +1,6 @@
 import { useMutation } from 'react-query'
 import { SignupArgs } from 'v2/types/auth'
-import { useServices } from 'v2/services/useServices'
+import { useServices } from 'v2/hooks/useServices'
 
 export const useSignup = () => {
   const { apiService, snackbarService } = useServices()

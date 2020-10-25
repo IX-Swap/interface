@@ -6,7 +6,7 @@ import {
   UnpackNestedValue
 } from '@hookform/strictly-typed/dist/types'
 import { Control, useFieldArray, UseFieldArrayMethods } from 'react-hook-form'
-import { pathToString } from 'v2/components/form/utils'
+import { pathToString } from 'v2/helpers/forms'
 import { Maybe } from 'v2/types/util'
 
 export interface FieldsArrayProps<

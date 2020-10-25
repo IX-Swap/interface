@@ -1,20 +1,17 @@
 import React from 'react'
 import { Container, Typography, Box, Grid } from '@material-ui/core'
-import { createTypedForm } from 'v2/components/form/createTypedForm'
-import useStyles from './Step4Enable.styles'
 import { useEnable2fa } from '../hooks/useEnable2fa'
 import { Enable2faFormValues } from '../types'
 import { enable2faFormValuesSchema } from '../validation'
-
-const useEnable2faForm = createTypedForm<Enable2faFormValues>()
+import { Form } from 'v2/components/form/Form'
+import { Submit } from 'v2/components/form/Submit'
+import { OTPField } from 'v2/app/pages/security/pages/setup2fa/components/OTPField'
 
 const defaultValues = {
   otp: ''
 }
 
 export const Step4Enable = () => {
-  const classes = useStyles()
-  const { Form, TextField, Submit } = useEnable2faForm()
   const [enable2fa] = useEnable2fa()
   const onSubmit = async (values: Enable2faFormValues) => {
     await enable2fa(values)
@@ -31,14 +28,7 @@ export const Step4Enable = () => {
             onSubmit={onSubmit}
             data-testid='form'
           >
-            <TextField
-              label='OTP'
-              name='otp'
-              inputProps={{
-                autoComplete: 'off',
-                className: classes.textField
-              }}
-            />
+            <OTPField />
             <Box my={4} width='100%' textAlign='center'>
               <Submit>Submit</Submit>
             </Box>

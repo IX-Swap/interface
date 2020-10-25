@@ -1,18 +1,18 @@
 /**  * @jest-environment jsdom-sixteen  */
 import React from 'react'
 import { render, cleanup } from 'test-utils'
-import { IndividualIdPreview } from 'v2/app/pages/identity/components/IndividualIdPreview'
-import { CorporateIdPreview } from 'v2/app/pages/identity/components/CorporateIdPreview'
+import { IndividualPreview } from 'v2/app/pages/identity/components/IndividualPreview'
+import { CorporatePreview } from 'v2/app/pages/identity/components/CorporatePreview'
 import { IdentityRoot } from 'v2/app/pages/identity/pages/IdentitiesList'
 
-jest.mock('v2/app/pages/identity/components/IndividualIdPreview', () => ({
-  IndividualIdPreview: jest.fn(() => null)
+jest.mock('v2/app/pages/identity/components/IndividualPreview', () => ({
+  IndividualPreview: jest.fn(() => null)
 }))
-jest.mock('v2/app/pages/identity/components/CorporateIdPreview', () => ({
-  CorporateIdPreview: jest.fn(() => null)
+jest.mock('v2/app/pages/identity/components/CorporatePreview', () => ({
+  CorporatePreview: jest.fn(() => null)
 }))
 
-describe('IdentitiesList', () => {
+describe('IdentitiesRoot', () => {
   afterEach(async () => {
     await cleanup()
     jest.clearAllMocks()
@@ -22,10 +22,10 @@ describe('IdentitiesList', () => {
     render(<IdentityRoot />)
   })
 
-  it('renders IndividualIdPreview & CorporateIdPreview', () => {
+  it('renders IndividualIdPreview & CorporatePreview', () => {
     render(<IdentityRoot />)
 
-    expect(IndividualIdPreview).toHaveBeenCalledTimes(1)
-    expect(CorporateIdPreview).toHaveBeenCalledTimes(1)
+    expect(IndividualPreview).toHaveBeenCalledTimes(1)
+    expect(CorporatePreview).toHaveBeenCalledTimes(1)
   })
 })

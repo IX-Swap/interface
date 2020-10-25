@@ -12,7 +12,7 @@ export interface CheckboxProps extends Omit<FormControlLabelProps, 'control'> {}
 export const Checkbox = (
   props: CheckboxProps & TypedFieldRenderComponentProps<boolean>
 ) => {
-  const { name, value, label, error = true, controllerProps, ...rest } = props
+  const { name, value, label, error = true, control, ...rest } = props
 
   return (
     <FormControlLabel

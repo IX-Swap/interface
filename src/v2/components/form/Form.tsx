@@ -4,7 +4,6 @@ import { ObjectSchema, Shape, object } from 'yup'
 import { yupResolver } from '@hookform/resolvers'
 import { DeepMap, FieldError } from '@hookform/error-message/dist/types'
 import { useUnmountCallback } from 'v2/hooks/useUnmountCallback'
-import { noop } from 'v2/app/pages/identity/components/dataroom/Dataroom'
 
 export interface FormProps<T extends {}> {
   defaultValues?: Partial<T>
@@ -47,7 +46,7 @@ export const Form = <T,>(props: PropsWithChildren<FormProps<T>>) => {
         {children}
       </form>
       <pre style={{ fontSize: 13, maxWidth: 1000, overflow: 'auto' }}>
-        {JSON.stringify(form.getValues(), null, 2)}
+        {JSON.stringify(form.errors, null, 2)}
       </pre>
     </FormProvider>
   )

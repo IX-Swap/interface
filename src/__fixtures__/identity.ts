@@ -32,7 +32,7 @@ export const corporate: CorporateIdentity = {
   toArrangeCustody: true,
   email: '',
   contactNumber: '',
-  user: '',
+  user,
   authorizationDocuments: [],
   authorization: authorizationInfo,
   authorizations: []
@@ -75,7 +75,7 @@ export const individual: IndividualIdentity = {
   })),
   documents: [],
   address,
-  user: ''
+  user
 }
 
 export const document: DataroomFile = {

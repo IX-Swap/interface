@@ -1,5 +1,3 @@
-import { Maybe } from 'v2/types/util'
-
 export interface DataroomFile {
   _id: string
   title: string

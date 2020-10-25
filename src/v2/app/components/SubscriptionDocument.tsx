@@ -15,11 +15,7 @@ export const SubscriptionDocument = (props: SubscriptionDocumentProps) => {
       </Grid>
 
       <Grid item>
-        <AuthorizationDocument
-          document={props.document}
-          title={props.document.originalFileName}
-          input={null}
-        />
+        <AuthorizationDocument value={props.document} />
       </Grid>
     </Grid>
   )

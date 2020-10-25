@@ -2,11 +2,11 @@
 import React from 'react'
 import { cleanup, render } from 'test-utils'
 import { DSOBaseFields } from 'v2/app/components/DSO/components/DSOBaseFields'
-import { EditableField } from 'v2/components/form/EditableField'
+import { TypedField } from 'v2/components/form/TypedField'
 import { Form } from 'v2/components/form/Form'
 
-jest.mock('v2/components/form/EditableField', () => ({
-  EditableField: jest.fn(() => <input />)
+jest.mock('v2/components/form/TypedField', () => ({
+  TypedField: jest.fn(() => <input />)
 }))
 
 describe('DSOBaseFields', () => {
@@ -30,7 +30,7 @@ describe('DSOBaseFields', () => {
       </Form>
     )
 
-    expect(EditableField).toHaveBeenNthCalledWith(
+    expect(TypedField).toHaveBeenNthCalledWith(
       1,
       expect.objectContaining({
         label: 'Logo',
@@ -39,7 +39,7 @@ describe('DSOBaseFields', () => {
       {}
     )
 
-    expect(EditableField).toHaveBeenNthCalledWith(
+    expect(TypedField).toHaveBeenNthCalledWith(
       2,
       expect.objectContaining({
         label: 'Token Name',
@@ -48,7 +48,7 @@ describe('DSOBaseFields', () => {
       {}
     )
 
-    expect(EditableField).toHaveBeenNthCalledWith(
+    expect(TypedField).toHaveBeenNthCalledWith(
       3,
       expect.objectContaining({
         label: 'Symbol',
@@ -57,7 +57,7 @@ describe('DSOBaseFields', () => {
       {}
     )
 
-    expect(EditableField).toHaveBeenNthCalledWith(
+    expect(TypedField).toHaveBeenNthCalledWith(
       4,
       expect.objectContaining({
         label: 'Launch Date',
@@ -66,7 +66,7 @@ describe('DSOBaseFields', () => {
       {}
     )
 
-    expect(EditableField).toHaveBeenNthCalledWith(
+    expect(TypedField).toHaveBeenNthCalledWith(
       5,
       expect.objectContaining({
         label: 'Corporate',
@@ -75,7 +75,7 @@ describe('DSOBaseFields', () => {
       {}
     )
 
-    expect(EditableField).toHaveBeenNthCalledWith(
+    expect(TypedField).toHaveBeenNthCalledWith(
       6,
       expect.objectContaining({
         label: 'Issuer Name',
@@ -84,7 +84,7 @@ describe('DSOBaseFields', () => {
       {}
     )
 
-    expect(EditableField).toHaveBeenNthCalledWith(
+    expect(TypedField).toHaveBeenNthCalledWith(
       7,
       expect.objectContaining({
         label: 'Currency',

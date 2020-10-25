@@ -5,21 +5,18 @@ import { RequestPasswordResetArgs } from 'v2/types/auth'
 import { requestPasswordResetValidationSchema } from 'v2/auth/validation'
 import { useAuthRouter } from 'v2/auth/router'
 import { useRequestPasswordReset } from 'v2/auth/hooks/useRequestPasswordReset'
-import { createTypedForm } from 'v2/components/form/createTypedForm'
 import { AppRouterLink } from 'v2/components/AppRouterLink'
 import { usePasswordResetStore } from 'v2/auth/context/password-reset'
+import { Form } from 'v2/components/form/Form'
+import { RequestFields } from 'v2/auth/pages/password-reset/components/RequestFields'
+import { Submit } from 'v2/components/form/Submit'
 
 export const requestPasswordResetInitialValues = {
   email: ''
 }
 
-export const useRequestPasswordResetForm = createTypedForm<
-  RequestPasswordResetArgs
->()
-
 export const RequestStep: React.FC = () => {
   const classes = useStyles()
-  const { Form, TextField, Submit } = useRequestPasswordResetForm()
   const [requestReset] = useRequestPasswordReset()
   const { setEmail } = usePasswordResetStore()
   const { paths } = useAuthRouter()
@@ -38,7 +35,7 @@ export const RequestStep: React.FC = () => {
       validationSchema={requestPasswordResetValidationSchema}
       onSubmit={handleSubmit}
     >
-      <TextField name='email' label='Email Address' />
+      <RequestFields />
       <div className={classes.formButtons}>
         <Button color='primary' size='large' className={classes.forgetButton}>
           <AppRouterLink to={paths.login}>Back to Login</AppRouterLink>

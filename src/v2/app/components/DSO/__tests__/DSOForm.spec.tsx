@@ -11,8 +11,8 @@ jest.mock('v2/app/components/DSO/components/DSOContainer', () => ({
   DSOContainer: jest.fn(() => <input />)
 }))
 
-jest.mock('v2/components/form/EditableField', () => ({
-  EditableField: jest.fn(() => <input />)
+jest.mock('v2/components/form/TypedField', () => ({
+  TypedField: jest.fn(() => <input />)
 }))
 
 describe('DSOForm', () => {

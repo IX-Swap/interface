@@ -1,5 +1,5 @@
 import { useInfiniteQuery } from 'react-query'
-import { useServices } from 'v2/services/useServices'
+import { useServices } from 'v2/hooks/useServices'
 import { useAuth } from 'v2/hooks/auth/useAuth'
 import { PaginatedData } from 'v2/services/api/types'
 import { paginationArgs } from 'v2/config/defaults'

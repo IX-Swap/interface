@@ -1,7 +1,7 @@
 import React from 'react'
-import { Grid, Input, Typography } from '@material-ui/core'
+import { Grid, Input } from '@material-ui/core'
 import { useFormContext } from 'react-hook-form'
-import { EditableField } from 'v2/components/form/EditableField'
+import { TypedField } from 'v2/components/form/TypedField'
 import { AssetSelect } from 'v2/components/form/AssetSelect'
 import { BankFormValues } from 'v2/app/pages/accounts/types'
 
@@ -12,7 +12,7 @@ export const BankFields = () => {
     <>
       <Grid item container spacing={3}>
         <Grid item xs={6}>
-          <EditableField
+          <TypedField
             control={control}
             component={Input}
             name='bankName'
@@ -20,7 +20,7 @@ export const BankFields = () => {
           />
         </Grid>
         <Grid item xs={6}>
-          <EditableField
+          <TypedField
             control={control}
             component={Input}
             name='accountHolderName'
@@ -31,7 +31,7 @@ export const BankFields = () => {
 
       <Grid item container spacing={3}>
         <Grid item xs={4}>
-          <EditableField
+          <TypedField
             control={control}
             component={AssetSelect}
             name='asset'
@@ -40,7 +40,7 @@ export const BankFields = () => {
           />
         </Grid>
         <Grid item xs={4}>
-          <EditableField
+          <TypedField
             control={control}
             component={Input}
             name='bankAccountNumber'
@@ -48,7 +48,7 @@ export const BankFields = () => {
           />
         </Grid>
         <Grid item xs={4}>
-          <EditableField
+          <TypedField
             control={control}
             component={Input}
             name='swiftCode'

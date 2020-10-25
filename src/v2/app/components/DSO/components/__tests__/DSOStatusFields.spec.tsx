@@ -7,10 +7,10 @@ import {
 } from 'v2/app/components/DSO/components/DSOStatusFields'
 import { Form } from 'v2/components/form/Form'
 import { moneyNumberFormat } from 'v2/app/components/DSO/utils'
-import { EditableField } from 'v2/components/form/EditableField'
+import { TypedField } from 'v2/components/form/TypedField'
 
-jest.mock('v2/components/form/EditableField', () => ({
-  EditableField: jest.fn(() => <input />)
+jest.mock('v2/components/form/TypedField', () => ({
+  TypedField: jest.fn(() => <input />)
 }))
 
 describe('DSOStatusFields', () => {
@@ -38,7 +38,7 @@ describe('DSOStatusFields', () => {
       </Form>
     )
 
-    expect(EditableField).toHaveBeenNthCalledWith(
+    expect(TypedField).toHaveBeenNthCalledWith(
       1,
       expect.objectContaining({
         label: 'Corporate',
@@ -46,7 +46,7 @@ describe('DSOStatusFields', () => {
       }),
       {}
     )
-    expect(EditableField).toHaveBeenNthCalledWith(
+    expect(TypedField).toHaveBeenNthCalledWith(
       2,
       expect.objectContaining({
         label: 'Status',
@@ -55,7 +55,7 @@ describe('DSOStatusFields', () => {
       }),
       {}
     )
-    expect(EditableField).toHaveBeenNthCalledWith(
+    expect(TypedField).toHaveBeenNthCalledWith(
       3,
       expect.objectContaining({
         label: 'Capital Structure',
@@ -63,7 +63,7 @@ describe('DSOStatusFields', () => {
       }),
       {}
     )
-    expect(EditableField).toHaveBeenNthCalledWith(
+    expect(TypedField).toHaveBeenNthCalledWith(
       4,
       expect.objectContaining({
         label: 'Unit Price',
@@ -72,7 +72,7 @@ describe('DSOStatusFields', () => {
       }),
       {}
     )
-    expect(EditableField).toHaveBeenNthCalledWith(
+    expect(TypedField).toHaveBeenNthCalledWith(
       5,
       expect.objectContaining({
         label: 'Total Fundraising Amount',
@@ -81,7 +81,7 @@ describe('DSOStatusFields', () => {
       }),
       {}
     )
-    expect(EditableField).toHaveBeenNthCalledWith(
+    expect(TypedField).toHaveBeenNthCalledWith(
       6,
       expect.objectContaining({
         label: 'Minimum Investment',
@@ -99,8 +99,8 @@ describe('DSOStatusFields', () => {
       </Form>
     )
 
-    expect(EditableField).toHaveBeenCalledTimes(4)
-    expect(EditableField).toHaveBeenNthCalledWith(
+    expect(TypedField).toHaveBeenCalledTimes(4)
+    expect(TypedField).toHaveBeenNthCalledWith(
       1,
       expect.objectContaining({
         label: 'Capital Structure',
@@ -108,7 +108,7 @@ describe('DSOStatusFields', () => {
       }),
       {}
     )
-    expect(EditableField).toHaveBeenNthCalledWith(
+    expect(TypedField).toHaveBeenNthCalledWith(
       2,
       expect.objectContaining({
         label: 'Unit Price',
@@ -117,7 +117,7 @@ describe('DSOStatusFields', () => {
       }),
       {}
     )
-    expect(EditableField).toHaveBeenNthCalledWith(
+    expect(TypedField).toHaveBeenNthCalledWith(
       3,
       expect.objectContaining({
         label: 'Total Fundraising Amount',
@@ -126,7 +126,7 @@ describe('DSOStatusFields', () => {
       }),
       {}
     )
-    expect(EditableField).toHaveBeenNthCalledWith(
+    expect(TypedField).toHaveBeenNthCalledWith(
       4,
       expect.objectContaining({
         label: 'Minimum Investment',

@@ -19,7 +19,7 @@ export const DSO: React.FC<DSOProps> = ({ dsoId, isEditing = false }) => {
   }
 
   if (isLoading || data === undefined) {
-    return <div>loading...</div>
+    return null
   }
 
   if (!isEditing) {

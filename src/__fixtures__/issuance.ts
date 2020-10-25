@@ -133,7 +133,7 @@ export const requestargs: DSORequestArgs = {
   logo: '5f898b69aa141c6d0d358ce6',
   useOfProceeds: '<p>As usual</p>\n',
   totalFundraisingAmount: 100000,
-  subscriptionDocument: formvalues.subscriptionDocument._id,
+  subscriptionDocument: formvalues.subscriptionDocument?._id ?? '',
   pricePerUnit: 10,
   minimumInvestment: 200,
   leverage: numberToPercentage(formvalues.leverage),

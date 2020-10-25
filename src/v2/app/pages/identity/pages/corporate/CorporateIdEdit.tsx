@@ -29,8 +29,6 @@ export const CorporateIdEdit: React.FC = () => {
       <Grid item>
         <CorporateIdentityForm
           data={identity}
-          isEditing={true}
-          useOwnEmail={false}
           submitButtonText='Save'
           onSubmit={updateCorporateId}
           cancelButton={

@@ -2,12 +2,12 @@
 import React from 'react'
 import { cleanup, render } from 'test-utils'
 import { DSOIntroduction } from 'v2/app/components/DSO/components/DSOIntroduction'
-import { EditableField } from 'v2/components/form/EditableField'
-import { plainValueExtractor } from 'v2/components/form/createTypedForm'
+import { TypedField } from 'v2/components/form/TypedField'
+import { plainValueExtractor } from 'v2/helpers/forms'
 import { Form } from 'v2/components/form/Form'
 
-jest.mock('v2/components/form/EditableField', () => ({
-  EditableField: jest.fn(() => <input />)
+jest.mock('v2/components/form/TypedField', () => ({
+  TypedField: jest.fn(() => <input />)
 }))
 
 describe('DSOIntroduction', () => {
@@ -31,7 +31,7 @@ describe('DSOIntroduction', () => {
       </Form>
     )
 
-    expect(EditableField).toBeCalledWith(
+    expect(TypedField).toBeCalledWith(
       expect.objectContaining({
         label: 'Introduction',
         name: 'introduction',

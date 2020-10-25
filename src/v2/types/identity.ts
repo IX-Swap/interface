@@ -6,6 +6,7 @@ import {
   CorporateIdentityFormValues,
   IndividualIdentityFormValues
 } from 'v2/app/pages/identity/components/types'
+import User from 'v2/types/user'
 
 export interface IdentityState {
   dataroom: Array<DataroomFile | FileGuide>
@@ -29,7 +30,7 @@ export interface IdentityAddress {
   postalCode?: string
   state?: string
   countryOfResidence?: string // for individual
-  country?: string // for corporate
+  country: string // for corporate
 }
 
 export interface IdentityProfile {
@@ -45,6 +46,10 @@ export interface IdentityProfile {
   contactNumber: string
   address: Omit<IdentityAddress, 'countryOfResidence'>
   email?: string
+}
+
+export interface ExtendedIdentityProfile extends IdentityProfile {
+  user: User
 }
 
 export interface IdentityFinancials {
@@ -84,7 +89,7 @@ export interface Declaration {
 export interface BaseIdentity {
   _id: string
   status: 'Rejected' | 'Authorized' | 'Submitted' | undefined
-  user: string
+  user: User
   createdAt: string
   updatedAt: string
   documents: DataroomFile[]

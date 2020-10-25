@@ -2,16 +2,16 @@ import React from 'react'
 import { TableColumn } from 'v2/types/util'
 import { formatMoney } from 'v2/helpers/numbers'
 import { Commitment } from 'v2/types/commitment'
-import { DSOAvatar } from 'v2/app/components/DSO/components/DSOAvatar'
+import { Avatar } from 'v2/components/Avatar'
 
 export const columns: Array<TableColumn<Commitment>> = [
   {
     key: '_id',
     label: '',
     render: (a: string, row: Commitment) => (
-      <DSOAvatar
-        imageId={row.dso.logo}
-        dsoOwnerId={row.dso.user}
+      <Avatar
+        documentId={row.dso.logo}
+        ownerId={row.dso.user}
         size={40}
         variant='circle'
       />

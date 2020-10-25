@@ -14,7 +14,7 @@ export const depositCashFormValidationSchema = yup
   .shape<DepositCashFormValues>({
     amount: yup.number().required('Required'),
     asset: yup.string().required('Required'),
-    otp: yup.string().min(6).max(6).required('Required')
+    otp: yup.string().required('Required')
   })
 
 export const withdrawCashFormValidationSchema = yup

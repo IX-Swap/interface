@@ -1,4 +1,4 @@
-import { useServices } from 'v2/services/useServices'
+import { useServices } from 'v2/hooks/useServices'
 import { useEffect, useState } from 'react'
 import { NotificationFilter } from 'v2/types/app'
 import { queryCache } from 'react-query'

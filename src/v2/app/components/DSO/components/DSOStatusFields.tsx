@@ -1,10 +1,10 @@
 import React from 'react'
 import { moneyNumberFormat } from 'v2/app/components/DSO/utils'
-import { numericValueExtractor } from 'v2/components/form/createTypedForm'
+import { numericValueExtractor } from 'v2/helpers/forms'
 import { Grid, Input } from '@material-ui/core'
-import { EditableField } from 'v2/components/form/EditableField'
+import { TypedField } from 'v2/components/form/TypedField'
 import { CorporateSelect } from 'v2/components/form/CorporateSelect'
-import { NumericInput } from 'v2/components/form/NumericField'
+import { NumericInput } from 'v2/components/form/NumericInput'
 import { DSOContainer } from 'v2/app/components/DSO/components/DSOContainer'
 import { useFormContext } from 'react-hook-form'
 import { DSOFormValues } from 'v2/types/dso'
@@ -22,7 +22,7 @@ export const DSOStatusFields = (props: DSOStatusFieldsProps) => {
       <Grid container direction='column' spacing={2}>
         {!isNew && (
           <Grid item>
-            <EditableField
+            <TypedField
               control={control}
               component={CorporateSelect}
               label='Corporate'
@@ -33,7 +33,7 @@ export const DSOStatusFields = (props: DSOStatusFieldsProps) => {
 
         {!isNew && (
           <Grid item>
-            <EditableField
+            <TypedField
               control={control}
               component={Input}
               label='Status'
@@ -46,7 +46,7 @@ export const DSOStatusFields = (props: DSOStatusFieldsProps) => {
         )}
 
         <Grid item>
-          <EditableField
+          <TypedField
             control={control}
             component={Input}
             label='Capital Structure'
@@ -55,7 +55,7 @@ export const DSOStatusFields = (props: DSOStatusFieldsProps) => {
         </Grid>
 
         <Grid item>
-          <EditableField
+          <TypedField
             control={control}
             component={NumericInput}
             label='Unit Price'
@@ -66,7 +66,7 @@ export const DSOStatusFields = (props: DSOStatusFieldsProps) => {
         </Grid>
 
         <Grid item>
-          <EditableField
+          <TypedField
             control={control}
             component={NumericInput}
             label='Total Fundraising Amount'
@@ -77,7 +77,7 @@ export const DSOStatusFields = (props: DSOStatusFieldsProps) => {
         </Grid>
 
         <Grid item>
-          <EditableField
+          <TypedField
             control={control}
             component={NumericInput}
             label='Minimum Investment'

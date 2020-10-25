@@ -5,13 +5,19 @@ import { DSO, DSOProps } from 'v2/app/pages/issuance/components/DSO'
 import { dso } from '__fixtures__/authorizer'
 import * as useDSOByIdHook from 'v2/app/pages/invest/hooks/useDSOById'
 import { DSOForm } from 'v2/app/components/DSO/DSOForm'
+import { DSOView } from 'v2/app/components/DSO/DSOView'
 
 jest.mock('v2/app/components/DSO/DSOForm', () => ({
   DSOForm: jest.fn(() => null)
 }))
 
+jest.mock('v2/app/components/DSO/DSOView', () => ({
+  DSOView: jest.fn(() => null)
+}))
+
 describe('DSO', () => {
-  const props: DSOProps = { dsoId: dso._id }
+  const props: DSOProps = { dsoId: dso._id, isEditing: true }
+
   afterEach(async () => {
     await cleanup()
     jest.clearAllMocks()
@@ -25,6 +31,7 @@ describe('DSO', () => {
     jest
       .spyOn(useDSOByIdHook, 'useDSOById')
       .mockReturnValue({ isLoading: true, data: dso } as any)
+
     const { container } = render(<DSO {...props} />)
 
     expect(container).toBeEmptyDOMElement()
@@ -39,7 +46,7 @@ describe('DSO', () => {
     expect(container).toBeEmptyDOMElement()
   })
 
-  it('renders DSOForm with correct props', () => {
+  it('renders DSOForm with correct props in edit mode', () => {
     jest
       .spyOn(useDSOByIdHook, 'useDSOById')
       .mockReturnValue({ isLoading: false, data: dso } as any)
@@ -48,10 +55,24 @@ describe('DSO', () => {
 
     expect(DSOForm).toHaveBeenCalledWith(
       {
-        isEditing: false,
         data: dso,
         onSubmit: expect.any(Function),
         submitButtonLabel: 'Save'
+      },
+      {}
+    )
+  })
+
+  it('renders DSOView with correct props in view mode', () => {
+    jest
+      .spyOn(useDSOByIdHook, 'useDSOById')
+      .mockReturnValue({ isLoading: false, data: dso } as any)
+
+    render(<DSO {...props} isEditing={false} />)
+
+    expect(DSOView).toHaveBeenCalledWith(
+      {
+        data: dso
       },
       {}
     )

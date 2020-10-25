@@ -13,7 +13,7 @@ export const useTypedForm = (): any =>
     YesOrNo: jest.fn(() => null),
     DataroomDocument: jest.fn(() => null),
     Form: jest.fn(() => null),
-    EditableField: jest.fn(() => null),
+    TypedField: jest.fn(() => null),
     FormValue: jest.fn(() => null),
     Submit: jest.fn(() => null)
   } as any)

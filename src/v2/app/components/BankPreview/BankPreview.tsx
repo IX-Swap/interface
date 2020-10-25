@@ -15,8 +15,9 @@ export const BankPreview: React.FC<BankViewProps> = ({ data }) => {
   }
 
   return (
-    <Grid container spacing={4}>
-      <Grid item container spacing={4}>
+    <Grid container spacing={3}>
+      <Grid item />
+      <Grid item container spacing={3}>
         <Grid item xs={4}>
           <LabelledValue label='Bank Name' value={data.bankName} />
         </Grid>
@@ -30,7 +31,7 @@ export const BankPreview: React.FC<BankViewProps> = ({ data }) => {
           <LabelledValue label='Currency' value={data.currency.symbol} />
         </Grid>
       </Grid>
-      <Grid item container spacing={4}>
+      <Grid item container spacing={3}>
         <Grid item xs={4}>
           <LabelledValue
             label='Bank Account Number'
@@ -41,7 +42,7 @@ export const BankPreview: React.FC<BankViewProps> = ({ data }) => {
           <LabelledValue label='Swift Code' value={data.swiftCode} />
         </Grid>
       </Grid>
-      <Grid item container spacing={4}>
+      <Grid item container spacing={3}>
         <Grid item xs={5}>
           <LabelledValue
             label='Bank Address'

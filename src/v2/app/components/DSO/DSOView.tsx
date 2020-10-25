@@ -1,14 +1,14 @@
 import React from 'react'
 import { DigitalSecurityOffering } from 'v2/types/dso'
 import { DSOContainer } from 'v2/app/components/DSO/components/DSOContainer'
-import { Avatar, Grid, Typography } from '@material-ui/core'
+import { Avatar, Grid, List, ListItem, Typography } from '@material-ui/core'
 import { renderStringToHTML } from 'v2/app/components/DSO/utils'
 import { DSOToken } from 'v2/app/components/DSO/components/DSOToken'
-import { DataroomHeader } from 'v2/app/pages/identity/components/dataroom/DataroomHeader'
+import { DataroomHeader } from 'v2/components/dataroom/DataroomHeader'
 import { ViewDocument } from 'v2/app/components/DSO/components/ViewDocument'
 import { LabelledValue } from 'v2/components/LabelledValue'
 import { formatDateToMMDDYY } from 'v2/helpers/dates'
-import { DataroomViewRow } from 'v2/app/pages/identity/components/dataroom/DataroomViewRow'
+import { DataroomViewRow } from 'v2/components/dataroom/DataroomViewRow'
 import { VSpacer } from 'v2/components/VSpacer'
 
 export interface _DSOView_Props {
@@ -111,7 +111,6 @@ export const DSOView = (props: _DSOView_Props) => {
           <DataroomViewRow
             title='Subscription Document'
             document={data.subscriptionDocument}
-            disableBorder
           />
         </DSOContainer>
       </Grid>
@@ -187,13 +186,17 @@ export const DSOView = (props: _DSOView_Props) => {
 
       <DSOContainer title='Dataroom' item xs={12}>
         <DataroomHeader />
-        {data.documents?.map(document => (
-          <DataroomViewRow
-            key={document._id}
-            title={document.type}
-            document={document}
-          />
-        ))}
+        <List disablePadding>
+          {data.documents?.map((document, index) => (
+            <ListItem
+              key={document._id}
+              divider={index !== (data?.documents?.length ?? 0) - 1}
+              style={{ minHeight: 50 }}
+            >
+              <DataroomViewRow title={document.type} document={document} />
+            </ListItem>
+          ))}
+        </List>
       </DSOContainer>
 
       <DSOContainer title='Fund Raising Milestone' item xs={12}>

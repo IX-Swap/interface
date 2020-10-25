@@ -1,7 +1,7 @@
 import { useAuthRouter } from 'v2/auth/router'
 import { PaginatedData } from 'v2/services/api/types'
 import { useInfiniteQuery } from 'react-query'
-import { useServices } from 'v2/services/useServices'
+import { useServices } from 'v2/hooks/useServices'
 import { useParsedData } from 'v2/hooks/useParsedData'
 import { paginationArgs } from 'v2/config/defaults'
 import { stripColonFromURLParam } from 'v2/hooks/location/utils'

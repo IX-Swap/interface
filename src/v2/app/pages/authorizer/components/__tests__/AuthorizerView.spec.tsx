@@ -63,7 +63,6 @@ describe('AuthorizerView', () => {
     expect(AuthorizationDocuments).toHaveBeenCalledTimes(1)
     expect(AuthorizationDocuments).toHaveBeenCalledWith(
       {
-        documents: props.data.authorizationDocuments,
         feature: DataroomFeature['bank-accounts'],
         resourceId: props.data._id
       },

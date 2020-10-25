@@ -1,5 +1,5 @@
 import { useMutation } from 'react-query'
-import { useServices } from 'v2/services/useServices'
+import { useServices } from 'v2/hooks/useServices'
 import { DataroomFile } from 'v2/types/dataroomFile'
 import { QueryOrMutationCallbacks } from 'v2/hooks/types'
 

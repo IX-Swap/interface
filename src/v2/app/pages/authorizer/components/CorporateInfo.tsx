@@ -26,7 +26,7 @@ export const CorporateInfo = (props: CorporateInfoProps) => {
       </Grid>
 
       <Grid item>
-        <ViewDocument documentId={data.logo} ownerId={data.user}>
+        <ViewDocument documentId={data.logo} ownerId={data.user._id}>
           {image => (
             <Avatar
               src={image}

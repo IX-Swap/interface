@@ -85,7 +85,6 @@ export const corporateIdentityFormValidationSchema = yup
         line2: yup.string().required('Required'),
         postalCode: yup.string().required('Postal Code is required'),
         state: yup.string().required('State is required')
-        // countryOfResidence: yup.string().required('Country is required')
       })
       .required('Required'),
     registrationNumber: yup.string().required('Required'),

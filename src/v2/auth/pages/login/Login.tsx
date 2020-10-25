@@ -5,8 +5,10 @@ import { LoginArgs } from 'v2/types/auth'
 import { loginFormValidationSchema } from 'v2/auth/validation'
 import { useAuthRouter } from 'v2/auth/router'
 import { useLogin } from 'v2/auth/hooks/useLogin'
-import { createTypedForm } from 'v2/components/form/createTypedForm'
 import { AppRouterLinkComponent } from 'v2/components/AppRouterLink'
+import { Submit } from 'v2/components/form/Submit'
+import { LoginFields } from 'v2/auth/pages/login/components/LoginFields'
+import { Form } from 'v2/components/form/Form'
 
 export const loginFormInitialValues = {
   email: '',
@@ -14,13 +16,10 @@ export const loginFormInitialValues = {
   otp: ''
 }
 
-const useLoginForm = createTypedForm<LoginArgs>()
-
 export const Login: React.FC = () => {
   const classes = useStyles()
   const { paths } = useAuthRouter()
   const [login] = useLogin()
-  const { Form, TextField, Submit } = useLoginForm()
   const handleSubmit = async (values: LoginArgs) => {
     await login(values)
   }
@@ -33,31 +32,7 @@ export const Login: React.FC = () => {
       onSubmit={handleSubmit}
     >
       <Grid container direction='column' spacing={1}>
-        <Grid item>
-          <TextField name='email' label='Email Address' />
-        </Grid>
-
-        <Grid item>
-          <TextField
-            name='password'
-            label='Password'
-            inputProps={{
-              type: 'password'
-            }}
-          />
-        </Grid>
-
-        <Grid item className={classes.otp}>
-          <TextField
-            name='otp'
-            label='OTP Code (optional)'
-            variant='outlined'
-            inputProps={{
-              autoComplete: 'off'
-            }}
-          />
-        </Grid>
-
+        <LoginFields />
         <Grid item>
           <div className={classes.formButtons}>
             <Submit size='large'>Login</Submit>

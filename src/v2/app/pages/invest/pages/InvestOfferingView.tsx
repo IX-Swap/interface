@@ -1,10 +1,10 @@
 import React from 'react'
 import { Grid } from '@material-ui/core'
 import { VSpacer } from 'v2/components/VSpacer'
-import { DSOForm } from 'v2/app/components/DSO/DSOForm'
 import { useDSOById } from 'v2/app/pages/invest/hooks/useDSOById'
 import { InvestLink } from 'v2/app/pages/invest/components/InvestLink'
 import { useOfferingsRouter } from 'v2/app/pages/invest/routers/offeringsRouter'
+import { DSOView } from 'v2/app/components/DSO/DSOView'
 
 export const InvestOfferingView = () => {
   const {
@@ -12,7 +12,7 @@ export const InvestOfferingView = () => {
   } = useOfferingsRouter()
   const { isLoading, data } = useDSOById(dsoId, issuerId)
 
-  if (isLoading) {
+  if (isLoading || data === undefined) {
     return null
   }
 
@@ -25,7 +25,7 @@ export const InvestOfferingView = () => {
         <VSpacer size='small' />
       </Grid>
       <Grid item>
-        <DSOForm data={data} />
+        <DSOView data={data} />
       </Grid>
     </Grid>
   )

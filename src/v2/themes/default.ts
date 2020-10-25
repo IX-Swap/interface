@@ -1,12 +1,13 @@
 import tinycolor from 'tinycolor2'
 
-export const primary = '#0c469c'
-// const secondary = '#DD0F0F'
-export const secondary = '#1C4F79'
-export const warning = '#a31037'
-export const success = '#348633'
-export const info = '#9013FE'
-export const error = '#D20000'
+export const themeColors = {
+  primary: '#0c469c',
+  secondary: '#1C4F79',
+  warning: '#a31037',
+  success: '#348633',
+  info: '#9013FE',
+  error: '#D20000'
+}
 
 const lightenRate = 7.5
 const darkenRate = 15
@@ -14,33 +15,35 @@ const darkenRate = 15
 export default {
   palette: {
     primary: {
-      main: primary,
-      light: tinycolor(primary).lighten(lightenRate).toHexString(),
-      dark: tinycolor(primary).darken(darkenRate).toHexString()
+      main: themeColors.primary,
+      light: tinycolor(themeColors.primary).lighten(lightenRate).toHexString(),
+      dark: tinycolor(themeColors.primary).darken(darkenRate).toHexString()
     },
     secondary: {
-      main: secondary,
-      light: tinycolor(secondary).lighten(lightenRate).toHexString(),
-      dark: tinycolor(secondary).darken(darkenRate).toHexString(),
+      main: themeColors.secondary,
+      light: tinycolor(themeColors.secondary)
+        .lighten(lightenRate)
+        .toHexString(),
+      dark: tinycolor(themeColors.secondary).darken(darkenRate).toHexString(),
       contrastText: '#FFFFFF'
     },
     warning: {
-      main: warning,
-      light: tinycolor(warning).lighten(lightenRate).toHexString(),
-      dark: tinycolor(warning).darken(darkenRate).toHexString()
+      main: themeColors.warning,
+      light: tinycolor(themeColors.warning).lighten(lightenRate).toHexString(),
+      dark: tinycolor(themeColors.warning).darken(darkenRate).toHexString()
     },
     error: {
-      main: error
+      main: themeColors.error
     },
     success: {
-      main: success,
-      light: tinycolor(success).lighten(lightenRate).toHexString(),
-      dark: tinycolor(success).darken(darkenRate).toHexString()
+      main: themeColors.success,
+      light: tinycolor(themeColors.success).lighten(lightenRate).toHexString(),
+      dark: tinycolor(themeColors.success).darken(darkenRate).toHexString()
     },
     info: {
-      main: info,
-      light: tinycolor(info).lighten(lightenRate).toHexString(),
-      dark: tinycolor(info).darken(darkenRate).toHexString()
+      main: themeColors.info,
+      light: tinycolor(themeColors.info).lighten(lightenRate).toHexString(),
+      dark: tinycolor(themeColors.info).darken(darkenRate).toHexString()
     },
     text: {
       primary: '#4A4A4A',
@@ -80,7 +83,7 @@ export default {
     MuiListItem: {
       root: {
         '&$selected': {
-          color: primary,
+          color: themeColors.primary,
           backgroundColor: '#e7ecf5 !important',
           '&:focus': {
             backgroundColor: '#F3F5FF'
@@ -114,7 +117,7 @@ export default {
       root: {
         fontWeight: 400,
         '&.MuiLink-underlineHover:active, &.MuiLink-underlineHover:visited, &.MuiLink-underlineAlways:active, &.MuiLink-underlineAlways:visited': {
-          color: primary,
+          color: themeColors.primary,
           textDecoration: 'none'
         }
       }

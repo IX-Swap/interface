@@ -1,7 +1,7 @@
 import { Bank } from 'v2/types/bank'
 import { useMutation } from 'react-query'
 import { useAuth } from 'v2/hooks/auth/useAuth'
-import { useServices } from 'v2/services/useServices'
+import { useServices } from 'v2/hooks/useServices'
 import { useBanksRouter } from 'v2/app/pages/accounts/pages/banks/router'
 import { UpdateBankArgs } from 'v2/app/pages/accounts/types'
 import { getIdFromObj } from 'v2/helpers/strings'

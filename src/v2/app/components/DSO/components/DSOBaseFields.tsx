@@ -1,13 +1,10 @@
 import React from 'react'
-import { Grid, TextField, Input } from '@material-ui/core'
-import { EditableField } from 'v2/components/form/EditableField'
-import { NewDataroomUploader } from 'v2/components/form/NewDataroomUploader'
-import { DataroomAvatar } from 'v2/components/form/DataroomAvatar'
+import { Grid, Input } from '@material-ui/core'
+import { TypedField } from 'v2/components/form/TypedField'
+import { DataroomUploader } from 'v2/components/dataroom/DataroomUploader'
+import { DataroomAvatarUploader } from 'v2/components/dataroom/DataroomAvatarUploader'
 import { DatePicker } from 'v2/components/form/DatePicker'
-import {
-  dateTimeValueExtractor,
-  plainValueExtractor
-} from 'v2/components/form/createTypedForm'
+import { dateTimeValueExtractor } from 'v2/helpers/forms'
 import { CorporateSelect } from 'v2/components/form/CorporateSelect'
 import { AssetSelect } from 'v2/components/form/AssetSelect'
 import { useFormContext } from 'react-hook-form'
@@ -30,12 +27,13 @@ export const DSOBaseFields = () => {
       <Grid item container spacing={3}>
         <Grid item>
           {/* @ts-ignore */}
-          <EditableField
-            component={NewDataroomUploader}
+          <TypedField
+            customRenderer
+            component={DataroomUploader}
             name='logo'
             label='Logo'
             control={control}
-            render={DataroomAvatar}
+            render={DataroomAvatarUploader}
             valueExtractor={documentValueExtractor}
             documentInfo={{
               type: 'Logo'
@@ -44,7 +42,7 @@ export const DSOBaseFields = () => {
         </Grid>
 
         <Grid item>
-          <EditableField
+          <TypedField
             component={Input}
             label='Token Name'
             name='tokenName'
@@ -53,7 +51,7 @@ export const DSOBaseFields = () => {
         </Grid>
 
         <Grid item>
-          <EditableField
+          <TypedField
             component={Input}
             label='Symbol'
             name='tokenSymbol'
@@ -63,8 +61,9 @@ export const DSOBaseFields = () => {
 
         <Grid item>
           {/* @ts-ignore */}
-          <EditableField
+          <TypedField
             component={DatePicker}
+            customRenderer
             label='Launch Date'
             name='launchDate'
             control={control}
@@ -73,7 +72,7 @@ export const DSOBaseFields = () => {
         </Grid>
 
         <Grid item>
-          <EditableField
+          <TypedField
             component={CorporateSelect}
             label='Corporate'
             name='corporate'
@@ -82,7 +81,7 @@ export const DSOBaseFields = () => {
         </Grid>
 
         <Grid item>
-          <EditableField
+          <TypedField
             component={Input}
             label='Issuer Name'
             name='issuerName'
@@ -91,7 +90,7 @@ export const DSOBaseFields = () => {
         </Grid>
 
         <Grid item>
-          <EditableField
+          <TypedField
             assetType='Currency'
             component={AssetSelect}
             label='Currency'

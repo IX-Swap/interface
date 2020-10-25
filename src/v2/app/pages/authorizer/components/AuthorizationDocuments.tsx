@@ -1,100 +1,56 @@
 import React from 'react'
-import { Box, Grid, IconButton } from '@material-ui/core'
-import { useTypedForm } from 'v2/components/form/useTypedForm'
-import { DataroomFileWithGuide, DataroomFile } from 'v2/types/dataroomFile'
-import { AuthorizationDocument } from './AuthorizationDocument'
-import { Delete } from '@material-ui/icons'
-import {
-  Dataroom,
-  Noop
-} from 'v2/app/pages/identity/components/dataroom/Dataroom'
-import { DataroomFileType } from 'v2/components/form/DataroomFileTypeSelect'
+import { Grid } from '@material-ui/core'
+import { DataroomFile, FormArray } from 'v2/types/dataroomFile'
 import { DataroomFeature } from 'v2/types/authorizer'
+import { useFormContext } from 'react-hook-form'
+import { FieldsArray } from 'v2/components/form/FieldsArray'
+import { TypedField } from 'v2/components/form/TypedField'
+import { DataroomUploader } from 'v2/components/dataroom/DataroomUploader'
+import { plainValueExtractor } from 'v2/helpers/forms'
+import { DataroomUploaderWithFileTypeSelector } from 'v2/components/dataroom/DataroomUploaderWithFileTypeSelector'
+import { AuthorizationDocument } from 'v2/app/pages/authorizer/components/AuthorizationDocument'
 
 export interface AuthorizationDocumentsProps {
   resourceId: string
-  documents: DataroomFile[]
   feature: typeof DataroomFeature[keyof typeof DataroomFeature]
 }
 
 export const AuthorizationDocuments = (props: AuthorizationDocumentsProps) => {
-  const { resourceId, documents, feature } = props
-  const { Form, FormValue, DataroomFileTypeSelect } = useTypedForm<{
-    documents: DataroomFileWithGuide[]
-    documentType: string
-  }>()
-  const deleteComponent = (
-    <IconButton component='span' size='small'>
-      <Delete />
-    </IconButton>
-  )
+  const { resourceId, feature } = props
+  const { control } = useFormContext<{ documents: FormArray<DataroomFile> }>()
 
   return (
-    <Grid container>
-      <Form
-        defaultValues={{
-          documentType: DataroomFileType.SupportingDocument,
-          documents: documents.map(document => ({
-            title: '',
-            label: '',
-            type: '',
-            document
-          }))
-        }}
-      >
-        <Grid item container>
-          <FormValue name='documentType'>
-            {documentType => (
-              <Dataroom
-                editable
-                multiple
-                isEditing={true}
-                direction='row'
-                HeaderComponent={Noop}
-                EditComponent={AuthorizationDocument}
-                dataroomDocumentProps={{
-                  deleteComponent,
-                  setValueToNullOnDelete: false
-                }}
-                dataroomAddDocumentProps={{
-                  documentInfo: {
-                    type: documentType,
-                    feature,
-                    resourceId
-                  }
-                }}
-              >
-                {({ items, addButton }) => (
-                  <Grid container direction='column'>
-                    <Grid item container alignItems='center'>
-                      <Box py={5}>
-                        <DataroomFileTypeSelect
-                          label='Document Type'
-                          name='documentType'
-                          variant='outlined'
-                          formControlProps={{
-                            style: {
-                              minWidth: 200
-                            }
-                          }}
-                        />
-                      </Box>
-                      <Box py={5} px={1}>
-                        {addButton}
-                      </Box>
-                    </Grid>
-                    {items.length > 0 && <Box py={2} />}
-                    <Grid item container>
-                      {items}
-                    </Grid>
-                    {items.length > 0 && <Box py={2} />}
-                  </Grid>
-                )}
-              </Dataroom>
-            )}
-          </FormValue>
+    <FieldsArray name='documents' control={control}>
+      {({ fields, append, remove }) => (
+        <Grid container direction='column' spacing={4}>
+          <Grid item>
+            <DataroomUploaderWithFileTypeSelector
+              append={append}
+              documentInfo={{ feature, resourceId }}
+              justify='flex-start'
+            />
+          </Grid>
+          <Grid item container wrap='wrap'>
+            {fields.map((field, index) => (
+              <Grid item key={field.id}>
+                {/* @ts-ignore */}
+                <TypedField
+                  customRenderer
+                  key={field.id}
+                  control={control}
+                  component={DataroomUploader}
+                  label='Document'
+                  name={['documents', index, 'value']}
+                  render={AuthorizationDocument}
+                  defaultValue={fields[index].document}
+                  valueExtractor={plainValueExtractor}
+                  onDelete={() => remove(index)}
+                />
+              </Grid>
+            ))}
+          </Grid>
         </Grid>
-      </Form>
-    </Grid>
+      )}
+    </FieldsArray>
   )
 }

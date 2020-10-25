@@ -3,11 +3,14 @@ import React from 'react'
 import { render, cleanup } from 'test-utils'
 import { DSOOfferingTerms } from 'v2/app/components/DSO/components/DSOOfferingTerms'
 import { Form } from 'v2/components/form/Form'
-import { monthsFormat, percentageFormat } from 'v2/config/monthsFormat'
+import { monthsFormat, percentageFormat } from 'v2/config/numberFormat'
+import { TypedField } from 'v2/components/form/TypedField'
+
+jest.mock('v2/components/form/TypedField', () => ({
+  TypedField: jest.fn(() => <input />)
+}))
 
 describe('DSOOfferingTerms', () => {
-  const EditableField = jest.fn(() => <div />)
-
   afterEach(async () => {
     await cleanup()
     jest.clearAllMocks()
@@ -28,8 +31,8 @@ describe('DSOOfferingTerms', () => {
       </Form>
     )
 
-    expect(EditableField).toHaveBeenCalledTimes(8)
-    expect(EditableField).toHaveBeenNthCalledWith(
+    expect(TypedField).toHaveBeenCalledTimes(8)
+    expect(TypedField).toHaveBeenNthCalledWith(
       1,
       expect.objectContaining({
         numberFormat: monthsFormat,
@@ -38,7 +41,7 @@ describe('DSOOfferingTerms', () => {
       }),
       {}
     )
-    expect(EditableField).toHaveBeenNthCalledWith(
+    expect(TypedField).toHaveBeenNthCalledWith(
       2,
       expect.objectContaining({
         label: 'Investment Structure',
@@ -46,7 +49,7 @@ describe('DSOOfferingTerms', () => {
       }),
       {}
     )
-    expect(EditableField).toHaveBeenNthCalledWith(
+    expect(TypedField).toHaveBeenNthCalledWith(
       3,
       expect.objectContaining({
         numberFormat: percentageFormat,
@@ -55,7 +58,7 @@ describe('DSOOfferingTerms', () => {
       }),
       {}
     )
-    expect(EditableField).toHaveBeenNthCalledWith(
+    expect(TypedField).toHaveBeenNthCalledWith(
       4,
       expect.objectContaining({
         numberFormat: percentageFormat,
@@ -64,7 +67,7 @@ describe('DSOOfferingTerms', () => {
       }),
       {}
     )
-    expect(EditableField).toHaveBeenNthCalledWith(
+    expect(TypedField).toHaveBeenNthCalledWith(
       5,
       expect.objectContaining({
         numberFormat: percentageFormat,
@@ -73,7 +76,7 @@ describe('DSOOfferingTerms', () => {
       }),
       {}
     )
-    expect(EditableField).toHaveBeenNthCalledWith(
+    expect(TypedField).toHaveBeenNthCalledWith(
       6,
       expect.objectContaining({
         numberFormat: percentageFormat,
@@ -82,7 +85,7 @@ describe('DSOOfferingTerms', () => {
       }),
       {}
     )
-    expect(EditableField).toHaveBeenNthCalledWith(
+    expect(TypedField).toHaveBeenNthCalledWith(
       7,
       expect.objectContaining({
         numberFormat: percentageFormat,
@@ -91,7 +94,7 @@ describe('DSOOfferingTerms', () => {
       }),
       {}
     )
-    expect(EditableField).toHaveBeenNthCalledWith(
+    expect(TypedField).toHaveBeenNthCalledWith(
       8,
       expect.objectContaining({
         label: 'Distribution Frequency',

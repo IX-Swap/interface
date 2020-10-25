@@ -21,7 +21,7 @@ export const IndividualInfo = (props: IndividualInfoProps) => {
       </Grid>
 
       <Grid item>
-        <ViewDocument documentId={data.photo} ownerId={data.user}>
+        <ViewDocument documentId={data.photo} ownerId={data.user._id}>
           {image => (
             <Avatar
               src={image}

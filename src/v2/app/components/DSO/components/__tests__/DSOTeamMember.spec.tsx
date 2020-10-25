@@ -3,20 +3,20 @@ import React from 'react'
 import { render, cleanup } from 'test-utils'
 import { Form } from 'v2/components/form/Form'
 import { DSOTeamRemoveButton } from 'v2/app/components/DSO/components/DSOTeamRemoveButton'
-import { EditableField } from 'v2/components/form/EditableField'
+import { TypedField } from 'v2/components/form/TypedField'
 import {
   DSOTeamMember,
   DSOTeamMemberProps
 } from 'v2/app/components/DSO/components/DSOTeamMember'
 import { teamMember } from '__fixtures__/issuance'
-import { plainValueExtractor } from 'v2/components/form/createTypedForm'
+import { plainValueExtractor } from 'v2/helpers/forms'
 
 jest.mock('v2/app/components/DSO/components/DSOTeamRemoveButton', () => ({
   DSOTeamRemoveButton: jest.fn(() => <button />)
 }))
 
-jest.mock('v2/components/form/EditableField', () => ({
-  EditableField: jest.fn(() => <input />)
+jest.mock('v2/components/form/TypedField', () => ({
+  TypedField: jest.fn(() => <input />)
 }))
 
 describe('DSOTeamMember', () => {
@@ -63,7 +63,7 @@ describe('DSOTeamMember', () => {
       </Form>
     )
 
-    expect(EditableField).toHaveBeenNthCalledWith(
+    expect(TypedField).toHaveBeenNthCalledWith(
       1,
       expect.objectContaining({
         label: 'Photo',
@@ -72,7 +72,7 @@ describe('DSOTeamMember', () => {
       {}
     )
 
-    expect(EditableField).toHaveBeenNthCalledWith(
+    expect(TypedField).toHaveBeenNthCalledWith(
       2,
       expect.objectContaining({
         label: 'Name',
@@ -81,7 +81,7 @@ describe('DSOTeamMember', () => {
       {}
     )
 
-    expect(EditableField).toHaveBeenNthCalledWith(
+    expect(TypedField).toHaveBeenNthCalledWith(
       3,
       expect.objectContaining({
         label: 'Position',
@@ -90,7 +90,7 @@ describe('DSOTeamMember', () => {
       {}
     )
 
-    expect(EditableField).toHaveBeenNthCalledWith(
+    expect(TypedField).toHaveBeenNthCalledWith(
       4,
       expect.objectContaining({
         label: 'About',

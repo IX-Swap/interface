@@ -20,8 +20,8 @@ import { Form } from 'v2/components/form/Form'
 import { Submit } from 'v2/components/form/Submit'
 import { AddressFields } from 'v2/app/pages/identity/components/AddressFields'
 import { BankFields } from 'v2/app/pages/accounts/pages/banks/components/BankFields'
-import { VSpacer } from 'v2/components/VSpacer'
 import { BankDocuments } from 'v2/app/pages/accounts/pages/banks/components/BankDocuments'
+import { VSpacer } from 'v2/components/VSpacer'
 
 export interface BankFormProps {
   submitButtonLabel: string
@@ -42,23 +42,27 @@ export const BankForm: React.FC<BankFormProps> = props => {
       validationSchema={bankFormValidationSchema}
       onSubmit={handleSubmit}
     >
-      <Card variant='outlined'>
-        <CardContent>
-          <Grid container direction='column'>
-            <Grid item container direction='column'>
+      <Grid container direction='column'>
+        <Card variant='outlined'>
+          <CardContent>
+            <Grid item container direction='column' spacing={3}>
               <Grid item xs={12}>
                 <Typography variant='h5'>Account Info</Typography>
               </Grid>
-              <Grid container item direction='column'>
+              <Grid container item direction='column' spacing={3}>
                 <BankFields />
               </Grid>
             </Grid>
+          </CardContent>
+        </Card>
 
-            <Grid item>
-              <VSpacer size='medium' />
-            </Grid>
+        <Grid item>
+          <VSpacer size='small' />
+        </Grid>
 
-            <Grid item container direction='column'>
+        <Card variant='outlined'>
+          <CardContent>
+            <Grid item container direction='column' spacing={3}>
               <Grid item xs={12}>
                 <Typography variant='h5'>Bank Address</Typography>
               </Grid>
@@ -66,12 +70,16 @@ export const BankForm: React.FC<BankFormProps> = props => {
                 <AddressFields />
               </Grid>
             </Grid>
+          </CardContent>
+        </Card>
 
-            <Grid item>
-              <VSpacer size='medium' />
-            </Grid>
+        <Grid item>
+          <VSpacer size='small' />
+        </Grid>
 
-            <Grid item container>
+        <Card variant='outlined'>
+          <CardContent>
+            <Grid item container direction='column' spacing={3}>
               <Grid item xs={12}>
                 <Typography variant='h5'>Supporting Documents</Typography>
               </Grid>
@@ -79,22 +87,23 @@ export const BankForm: React.FC<BankFormProps> = props => {
                 <BankDocuments />
               </Grid>
             </Grid>
-          </Grid>
-        </CardContent>
-      </Card>
-      <Grid container>
-        <Grid item sm={12} md={12} lg={12}>
-          <Box m={3} display='flex' justifyContent='center'>
-            <Button
-              component={AppRouterLinkComponent}
-              to={paths.list}
-              color='default'
-            >
-              Cancel
-            </Button>
-            <Box marginX={1} />
-            <Submit>{submitButtonLabel}</Submit>
-          </Box>
+          </CardContent>
+        </Card>
+
+        <Grid item>
+          <VSpacer size='small' />
+        </Grid>
+
+        <Grid container item xs={12} justify='center'>
+          <Button
+            component={AppRouterLinkComponent}
+            to={paths.list}
+            color='default'
+          >
+            Cancel
+          </Button>
+          <Box marginX={1} />
+          <Submit>{submitButtonLabel}</Submit>
         </Grid>
       </Grid>
     </Form>

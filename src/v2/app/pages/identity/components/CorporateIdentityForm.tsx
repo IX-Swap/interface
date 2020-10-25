@@ -3,17 +3,12 @@ import { CorporateIdentity } from 'v2/types/identity'
 import { Box, Grid } from '@material-ui/core'
 import { AddressFields } from 'v2/app/pages/identity/components/AddressFields'
 import { Section } from 'v2/app/pages/identity/components/Section'
-import { Declarations } from 'v2/app/pages/identity/components/Declarations'
-import { Dataroom } from 'v2/app/pages/identity/components/dataroom/Dataroom'
-import { CompanyInfo } from 'v2/app/pages/identity/components/CompanyInfo'
-import { createTypedForm } from 'v2/components/form/createTypedForm'
+import { DeclarationFields } from 'v2/app/pages/identity/components/DeclarationFields'
+import { CompanyInfoFields } from 'v2/app/pages/identity/components/CompanyInfoFields'
 import { CorporateIdentityFormValues } from 'v2/app/pages/identity/components/types'
 import { corporateIdentityFormValidationSchema } from 'v2/app/pages/identity/components/validation'
-import { CorporateProfiles } from 'v2/app/pages/identity/components/CorporateIdProfiles'
-import {
-  getIdentityDeclarations,
-  getIdentityFormDefaultValue
-} from 'v2/app/pages/identity/utils'
+import { CorporateProfilesFields } from 'v2/app/pages/identity/components/CorporateProfilesFields'
+import { getIdentityFormDefaultValue } from 'v2/app/pages/identity/utils'
 import { Form } from 'v2/components/form/Form'
 import { Submit } from 'v2/components/form/Submit'
 import { IdentityDataroom } from 'v2/app/pages/identity/components/IdentityDataroom'
@@ -21,8 +16,6 @@ import { declarations } from 'v2/app/pages/identity/const/declarations'
 
 export interface CorporateIdentityFormProps {
   data: CorporateIdentity | undefined
-  isEditing: boolean
-  useOwnEmail: boolean
   onSubmit?: (values: CorporateIdentityFormValues) => void
   submitButtonText?: string
   cancelButton?: JSX.Element
@@ -31,14 +24,7 @@ export interface CorporateIdentityFormProps {
 export const CorporateIdentityForm = (
   props: CorporateIdentityFormProps
 ): JSX.Element => {
-  const {
-    data,
-    isEditing,
-    useOwnEmail,
-    submitButtonText,
-    cancelButton,
-    onSubmit
-  } = props
+  const { data, submitButtonText, cancelButton, onSubmit } = props
   const handleSubmit = (values: CorporateIdentityFormValues) => {
     if (onSubmit !== undefined) {
       onSubmit(values)
@@ -54,7 +40,7 @@ export const CorporateIdentityForm = (
       <Grid container spacing={2}>
         <Grid item xs={12}>
           <Section title='Company Information'>
-            <CompanyInfo />
+            <CompanyInfoFields />
           </Section>
         </Grid>
         <Grid item xs={12}>
@@ -62,20 +48,14 @@ export const CorporateIdentityForm = (
             <AddressFields rootName='companyAddress' />
           </Section>
         </Grid>
-        <CorporateProfiles
+        <CorporateProfilesFields
           title='Company Representative'
           type='representatives'
-          isEditing={isEditing}
         />
-        <CorporateProfiles
-          title='Company Director'
-          type='directors'
-          isEditing={isEditing}
-        />
-        <CorporateProfiles
+        <CorporateProfilesFields title='Company Director' type='directors' />
+        <CorporateProfilesFields
           title='Beneficial Owner'
           type='beneficialOwners'
-          isEditing={isEditing}
         />
         <Grid item xs={12}>
           <Section title='Documents'>
@@ -87,16 +67,15 @@ export const CorporateIdentityForm = (
             title='Declaration & Acknowledgement'
             subtitle='Confirmation'
           >
-            <Declarations declarations={declarations.corporate} />
+            <DeclarationFields declarations={declarations.corporate} />
           </Section>
         </Grid>
-        {isEditing && (
-          <Grid container justify='center' item xs={12}>
-            {cancelButton}
-            <Box px={1} />
-            <Submit>{submitButtonText}</Submit>
-          </Grid>
-        )}
+
+        <Grid container justify='center' item xs={12}>
+          {cancelButton}
+          <Box px={1} />
+          <Submit>{submitButtonText}</Submit>
+        </Grid>
       </Grid>
     </Form>
   )

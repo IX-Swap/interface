@@ -24,8 +24,6 @@ describe('CorporateIdCreate', () => {
     expect(CorporateIdentityForm).toHaveBeenCalledWith(
       {
         identity: undefined,
-        isEditing: true,
-        useOwnEmail: false,
         submitButtonText: 'Create',
         onSubmit: expect.any(Function),
         cancelButton: expect.anything()

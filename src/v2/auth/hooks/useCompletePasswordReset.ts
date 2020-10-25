@@ -1,7 +1,7 @@
 import { useMutation } from 'react-query'
 import { useAuthRouter } from 'v2/auth/router'
 import { CompletePasswordResetArgs } from 'v2/types/auth'
-import { useServices } from 'v2/services/useServices'
+import { useServices } from 'v2/hooks/useServices'
 
 export const useCompletePasswordReset = () => {
   const { apiService, snackbarService } = useServices()

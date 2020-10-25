@@ -1,9 +1,9 @@
 import React from 'react'
 import { Grid, Input } from '@material-ui/core'
-import { monthsFormat, percentageFormat } from 'v2/config/monthsFormat'
-import { EditableField } from 'v2/components/form/EditableField'
-import { NumericInput } from 'v2/components/form/NumericField'
-import { numericValueExtractor } from 'v2/components/form/createTypedForm'
+import { monthsFormat, percentageFormat } from 'v2/config/numberFormat'
+import { TypedField } from 'v2/components/form/TypedField'
+import { NumericInput } from 'v2/components/form/NumericInput'
+import { numericValueExtractor } from 'v2/helpers/forms'
 import { DistributionFrequencySelect } from 'v2/components/form/DistributionFrequencySelect'
 import { DSOContainer } from 'v2/app/components/DSO/components/DSOContainer'
 import { useFormContext } from 'react-hook-form'
@@ -17,7 +17,7 @@ export const DSOOfferingTerms = () => {
       <Grid item container spacing={2}>
         <Grid item xs={4} container direction='column' spacing={2}>
           <Grid item>
-            <EditableField
+            <TypedField
               control={control}
               component={NumericInput}
               label='Investment Period'
@@ -28,7 +28,7 @@ export const DSOOfferingTerms = () => {
           </Grid>
 
           <Grid item>
-            <EditableField
+            <TypedField
               control={control}
               component={Input}
               label='Investment Structure'
@@ -37,7 +37,7 @@ export const DSOOfferingTerms = () => {
           </Grid>
 
           <Grid item>
-            <EditableField
+            <TypedField
               control={control}
               component={NumericInput}
               label='Interest Rate'
@@ -50,7 +50,7 @@ export const DSOOfferingTerms = () => {
 
         <Grid item xs={4} container direction='column' spacing={2}>
           <Grid item>
-            <EditableField
+            <TypedField
               control={control}
               component={NumericInput}
               name='dividendYield'
@@ -61,7 +61,7 @@ export const DSOOfferingTerms = () => {
           </Grid>
 
           <Grid item>
-            <EditableField
+            <TypedField
               control={control}
               component={NumericInput}
               name='equityMultiple'
@@ -72,7 +72,7 @@ export const DSOOfferingTerms = () => {
           </Grid>
 
           <Grid item>
-            <EditableField
+            <TypedField
               control={control}
               component={NumericInput}
               name='leverage'
@@ -85,7 +85,7 @@ export const DSOOfferingTerms = () => {
 
         <Grid item xs={4} container direction='column' spacing={2}>
           <Grid item>
-            <EditableField
+            <TypedField
               control={control}
               component={NumericInput}
               name='grossIRR'
@@ -96,7 +96,7 @@ export const DSOOfferingTerms = () => {
           </Grid>
 
           <Grid item>
-            <EditableField
+            <TypedField
               control={control}
               component={DistributionFrequencySelect}
               name='distributionFrequency'

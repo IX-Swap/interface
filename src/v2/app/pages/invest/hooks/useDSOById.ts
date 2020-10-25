@@ -1,6 +1,6 @@
 import { useQuery } from 'react-query'
 import { useAuth } from 'v2/hooks/auth/useAuth'
-import { useServices } from 'v2/services/useServices'
+import { useServices } from 'v2/hooks/useServices'
 import { DigitalSecurityOffering } from 'v2/types/dso'
 import { getIdFromObj } from 'v2/helpers/strings'
 

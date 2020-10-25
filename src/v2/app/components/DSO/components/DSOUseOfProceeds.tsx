@@ -1,7 +1,7 @@
 import React from 'react'
-import { EditableField } from 'v2/components/form/EditableField'
+import { TypedField } from 'v2/components/form/TypedField'
 import { RichTextEditor } from 'v2/components/form/RichTextEditor'
-import { plainValueExtractor } from 'v2/components/form/createTypedForm'
+import { plainValueExtractor } from 'v2/helpers/forms'
 import { DSOContainer } from 'v2/app/components/DSO/components/DSOContainer'
 import { useFormContext } from 'react-hook-form'
 import { DSOFormValues } from 'v2/types/dso'
@@ -12,9 +12,10 @@ export const DSOUseOfProceeds = () => {
   return (
     <DSOContainer title='Use of Proceeds' item xs={12}>
       {/* @ts-ignore */}
-      <EditableField
+      <TypedField
         control={control}
         component={RichTextEditor}
+        customRenderer
         label='Use of Proceeds'
         name='useOfProceeds'
         valueExtractor={plainValueExtractor}

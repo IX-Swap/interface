@@ -1,6 +1,6 @@
 import { Bank } from 'v2/types/bank'
 import { useMutation } from 'react-query'
-import { useServices } from 'v2/services/useServices'
+import { useServices } from 'v2/hooks/useServices'
 import { useBanksRouter } from 'v2/app/pages/accounts/pages/banks/router'
 import { useAuth } from 'v2/hooks/auth/useAuth'
 import { CreateBankArgs } from 'v2/app/pages/accounts/types'

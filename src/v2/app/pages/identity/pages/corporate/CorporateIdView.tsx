@@ -1,10 +1,10 @@
 import React from 'react'
 import { Grid } from '@material-ui/core'
-import { CorporateIdentityForm } from 'v2/app/pages/identity/components/CorporateIdentityForm'
 import { useAllCorporateIdentities } from 'v2/hooks/identity/useAllCorporateIdentities'
 import { useIdentitiesRouter } from 'v2/app/pages/identity/router'
 import { EditButton } from 'v2/app/pages/identity/components/EditButton'
 import { VSpacer } from 'v2/components/VSpacer'
+import { CorporateView } from 'v2/app/pages/identity/components/CorporateView'
 
 export const CorporateIdView: React.FC = () => {
   const { data, status } = useAllCorporateIdentities()
@@ -28,11 +28,7 @@ export const CorporateIdView: React.FC = () => {
         <VSpacer size='small' />
       </Grid>
       <Grid item>
-        <CorporateIdentityForm
-          data={identity}
-          isEditing={false}
-          useOwnEmail={false}
-        />
+        <CorporateView data={identity} />
       </Grid>
     </Grid>
   )

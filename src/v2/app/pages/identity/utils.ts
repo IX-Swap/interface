@@ -79,5 +79,5 @@ export const prepareDocumentsForUpload = (
 ) => {
   return documents
     .map(d => d.value?._id ?? null)
-    .filter(d => d !== null) as string[]
+    .filter(id => id !== null && id !== '') as string[]
 }

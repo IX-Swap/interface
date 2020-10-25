@@ -1,4 +1,4 @@
-import { useServices } from 'v2/services/useServices'
+import { useServices } from 'v2/hooks/useServices'
 import { useBeforeUnload } from 'v2/hooks/useBeforeUnload'
 import { useEffect } from 'react'
 import { useUser } from 'v2/auth/hooks/useUser'

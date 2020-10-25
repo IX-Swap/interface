@@ -1,4 +1,4 @@
-import { useServices } from 'v2/services/useServices'
+import { useServices } from 'v2/hooks/useServices'
 import { useAuth } from 'v2/hooks/auth/useAuth'
 import { useMutation } from 'react-query'
 import { getIdFromObj } from 'v2/helpers/strings'
@@ -8,7 +8,6 @@ export const useDeleteFile = (fileId: string) => {
   const { user } = useAuth()
   const url = `/dataroom/${getIdFromObj(user)}/${fileId}`
   const deleteFile = async () => {
-    debugger
     return await apiService.delete(url, {})
   }
 

@@ -1,7 +1,6 @@
 import { DataroomFile, FileGuide, FormArray } from 'v2/types/dataroomFile'
 import { IdentityType } from 'v2/app/pages/identity/utils'
 import { emptyFile } from '__fixtures__/file'
-import { Maybe } from 'v2/types/util'
 
 const documents: {
   individual: FileGuide[]
@@ -105,7 +104,7 @@ const documents: {
 export const formatDocuments = (
   items: DataroomFile[],
   type: IdentityType
-): FormArray<Maybe<DataroomFile>> => {
+): FormArray<DataroomFile> => {
   return documents[type].map(document => {
     const item = items.find(item => item.title === document.title)
 

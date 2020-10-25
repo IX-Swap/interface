@@ -23,10 +23,4 @@ describe('convertAddressToString', () => {
       'Address line 1 Address line 2 Omsk  Siberia Russian Federation'
     )
   })
-
-  it('returns address string if address is defined and country is undefined', () => {
-    expect(convertAddressToString({ ...address, country: undefined })).toBe(
-      'Address line 1 Address line 2 Omsk 123456 Siberia '
-    )
-  })
 })

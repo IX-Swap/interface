@@ -7,45 +7,50 @@ import {
   CorporateIdentityFormProps
 } from 'v2/app/pages/identity/components/CorporateIdentityForm'
 import { corporate } from '__fixtures__/identity'
-import { CorporateProfiles } from 'v2/app/pages/identity/components/CorporateIdProfiles'
-import { CompanyInfo } from 'v2/app/pages/identity/components/CompanyInfo'
+import { CorporateProfilesFields } from 'v2/app/pages/identity/components/CorporateProfilesFields'
+import { CompanyInfoFields } from 'v2/app/pages/identity/components/CompanyInfoFields'
 import { AddressFields } from 'v2/app/pages/identity/components/AddressFields'
 import { Section } from 'v2/app/pages/identity/components/Section'
-import { Declarations } from 'v2/app/pages/identity/components/Declarations'
-import { Dataroom } from 'v2/app/pages/identity/components/dataroom/Dataroom'
-// import { fireEvent, waitFor } from '@testing-library/react'
+import { DeclarationFields } from 'v2/app/pages/identity/components/DeclarationFields'
+import { IdentityDataroom } from 'v2/app/pages/identity/components/IdentityDataroom'
+import { declarations } from 'v2/app/pages/identity/const/declarations'
 
-jest.mock('v2/app/pages/identity/components/Address', () => ({
-  Address: jest.fn(() => null)
+jest.mock('v2/app/pages/identity/components/AddressFields', () => ({
+  AddressFields: jest.fn(() => null)
 }))
+
 jest.mock('v2/app/pages/identity/components/Section', () => ({
   Section: jest.fn(({ children }) => children)
 }))
-jest.mock('v2/app/pages/identity/components/Declaration', () => ({
-  Declaration: jest.fn(() => null)
+
+jest.mock('v2/app/pages/identity/components/DeclarationFields', () => ({
+  DeclarationFields: jest.fn(() => null)
 }))
-jest.mock('v2/app/pages/identity/components/dataroom/Dataroom', () => ({
-  Dataroom: jest.fn(() => null)
+
+jest.mock('v2/app/pages/identity/components/IdentityDataroom', () => ({
+  IdentityDataroom: jest.fn(() => null)
 }))
-jest.mock('v2/app/pages/identity/components/CorporateIdProfiles', () => ({
-  CorporateProfiles: jest.fn(() => null)
+
+jest.mock('v2/app/pages/identity/components/CorporateProfilesFields', () => ({
+  CorporateProfilesFields: jest.fn(() => null)
 }))
-jest.mock('v2/app/pages/identity/components/CompanyInfo', () => ({
-  CompanyInformation: jest.fn(() => null)
+
+jest.mock('v2/app/pages/identity/components/CompanyInfoFields', () => ({
+  CompanyInfoFields: jest.fn(() => null)
 }))
 
 describe('CorporateIdentityForm', () => {
   const props: CorporateIdentityFormProps = {
     data: corporate,
-    isEditing: false,
-    useOwnEmail: false,
     cancelButton: <div data-testid='cancelButton' />,
     onSubmit: jest.fn(),
     submitButtonText: 'Submit'
   }
+
   beforeEach(() => {
     jest.spyOn(utils, 'getIdentityFormDefaultValue').mockReturnValue({} as any)
   })
+
   afterEach(async () => {
     await cleanup()
     jest.clearAllMocks()
@@ -57,64 +62,44 @@ describe('CorporateIdentityForm', () => {
 
   it('renders cancelButton & submitButton when isEditing is true', () => {
     const { queryByTestId, getByText } = render(
-      <CorporateIdentityForm {...props} isEditing />
+      <CorporateIdentityForm {...props} />
     )
 
     expect(queryByTestId('cancelButton')).not.toBeNull()
     expect(getByText(props.submitButtonText as string)).toBeTruthy()
   })
 
-  it('handles form submission', async () => {
-    //     const { getByText } = render(<CorporateIdentityForm {...props} isEditing />)
-    //     fireEvent.click(getByText(props.submitButtonText as string))
-    //     await waitFor(() => {
-    //       expect(props.onSubmit).toHaveBeenCalledTimes(1)
-    //     })
-  })
-
   it('renders CompanyInformation with correct props', () => {
     render(<CorporateIdentityForm {...props} />)
 
-    expect(CompanyInfo).toHaveBeenCalledTimes(1)
-    expect(CompanyInfo).toHaveBeenNthCalledWith(
-      1,
-      {
-        corporate: props.data,
-        isEditing: props.isEditing,
-        useOwnEmail: props.useOwnEmail
-      },
-      {}
-    )
+    expect(CompanyInfoFields).toHaveBeenCalled()
   })
 
-  it('renders CorporateProfiles', () => {
+  it('renders CorporateProfilesFields', () => {
     render(<CorporateIdentityForm {...props} />)
 
-    expect(CorporateProfiles).toHaveBeenCalledTimes(3)
-    expect(CorporateProfiles).toHaveBeenNthCalledWith(
+    expect(CorporateProfilesFields).toHaveBeenCalledTimes(3)
+    expect(CorporateProfilesFields).toHaveBeenNthCalledWith(
       1,
       {
         title: 'Company Representative',
-        type: 'representatives',
-        isEditing: props.isEditing
+        type: 'representatives'
       },
       {}
     )
-    expect(CorporateProfiles).toHaveBeenNthCalledWith(
+    expect(CorporateProfilesFields).toHaveBeenNthCalledWith(
       2,
       {
         title: 'Company Director',
-        type: 'directors',
-        isEditing: props.isEditing
+        type: 'directors'
       },
       {}
     )
-    expect(CorporateProfiles).toHaveBeenNthCalledWith(
+    expect(CorporateProfilesFields).toHaveBeenNthCalledWith(
       3,
       {
         title: 'Beneficial Owner',
-        type: 'beneficialOwners',
-        isEditing: props.isEditing
+        type: 'beneficialOwners'
       },
       {}
     )
@@ -123,9 +108,8 @@ describe('CorporateIdentityForm', () => {
   it('renders Address with correct props', () => {
     render(<CorporateIdentityForm {...props} />)
 
-    expect(AddressFields).toHaveBeenCalledTimes(1)
     expect(AddressFields).toHaveBeenCalledWith(
-      { isEditing: props.isEditing, rootPath: 'companyAddress' },
+      { rootName: 'companyAddress' },
       {}
     )
   })
@@ -163,11 +147,9 @@ describe('CorporateIdentityForm', () => {
   it('renders Declaration with correct props', () => {
     render(<CorporateIdentityForm {...props} />)
 
-    expect(Declarations).toHaveBeenCalledTimes(1)
-    expect(Declarations).toHaveBeenCalledWith(
+    expect(DeclarationFields).toHaveBeenCalledWith(
       {
-        isEditing: props.isEditing,
-        declarations: utils.getIdentityDeclarations(props.data, 'corporate')
+        declarations: declarations.corporate
       },
       {}
     )
@@ -176,7 +158,6 @@ describe('CorporateIdentityForm', () => {
   it('renders Dataroom with correct props', () => {
     render(<CorporateIdentityForm {...props} />)
 
-    expect(Dataroom).toHaveBeenCalledTimes(1)
-    expect(Dataroom).toHaveBeenCalledWith({ isEditing: props.isEditing }, {})
+    expect(IdentityDataroom).toHaveBeenCalled()
   })
 })
