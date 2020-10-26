@@ -1,5 +1,5 @@
-import moment from 'moment'
 import { formatAmount } from 'v2/helpers/numbers'
+import { formatDateToMMDDYY } from 'v2/helpers/dates'
 
 export const columns = [
   {
@@ -18,7 +18,7 @@ export const columns = [
   {
     label: 'Date',
     key: 'date',
-    render: (value: any) => moment(value).format('MM/DD/YYYY')
+    render: formatDateToMMDDYY
   },
   {
     label: 'Information',

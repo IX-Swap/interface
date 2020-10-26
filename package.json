@@ -147,6 +147,7 @@
       "!node_modules/**",
       "!src/v1/**",
       "!src/__fixtures__/**",
+      "!src/**/*.d.ts",
       "!src/**/*.styles.ts",
       "!src/**/styles.ts"
     ],
@@ -160,7 +161,7 @@
     }
   },
   "jestSonar": {
-    "reportPath": "reports",
+    "reportPath": "coverage",
     "reportFile": "test-report.xml"
   },
   "husky": {

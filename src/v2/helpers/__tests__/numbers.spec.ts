@@ -1,7 +1,22 @@
-import { formatMoney, toPercentage, generateRandom } from 'v2/helpers/numbers'
+import {
+  formatMoney,
+  toPercentage,
+  generateRandom,
+  formatAmount
+} from 'v2/helpers/numbers'
+
+describe('formatAmount', () => {
+  it('returns formatted amount', () => {
+    expect(formatAmount(123)).toEqual('123.00')
+  })
+  it('defaults amount to 0', () => {
+    expect(formatAmount(undefined as any)).toEqual('0.00')
+    expect(formatAmount(null as any)).toEqual('0.00')
+  })
+})
 
 describe('formatMoney', () => {
-  it('returns formated money with symbol', () => {
+  it('returns formatted money with symbol', () => {
     expect(formatMoney(123, '$')).toEqual('$ 123.00')
   })
 
@@ -31,7 +46,7 @@ describe('toPercentage', () => {
 describe('generateRandom', () => {
   it('returns random string with given length', () => {
     expect(generateRandom(1, 'aA#!')).toEqual(expect.any(String))
-    expect(generateRandom(2, 'aA#!').length).toEqual(2)
-    expect(generateRandom(5, 'aA#!').length).toEqual(5)
+    expect(generateRandom(2, 'a#').length).toEqual(2)
+    expect(generateRandom(5, 'A!').length).toEqual(5)
   })
 })
