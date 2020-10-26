@@ -1,6 +1,7 @@
+/**  * @jest-environment jsdom-sixteen  */
 import { act, renderHook } from '@testing-library/react-hooks'
 import { waitFor, cleanup } from 'test-utils'
-import * as useAuthHook from 'v2/hooks/auth/useAuth'
+import * as useCachedUserHook from 'v2/hooks/auth/useCachedUser'
 import {
   getUserRoles,
   AppRole,
@@ -58,10 +59,10 @@ describe('useIsAdmin', () => {
   })
 
   it('returns true if user is admin', async () => {
-    jest.spyOn(useAuthHook, 'useAuth').mockReturnValueOnce({
-      isAuthenticated: true,
-      user: { ...user, roles: 'admin,authorizer' }
-    })
+    jest
+      .spyOn(useCachedUserHook, 'useCachedUser')
+      .mockReturnValue({ ...user, roles: 'admin,authorizer' })
+
     await act(async () => {
       const { result } = renderHook(() => useIsAdmin())
 
@@ -69,21 +70,10 @@ describe('useIsAdmin', () => {
     })
   })
   it('returns false if user is not admin', async () => {
-    jest.spyOn(useAuthHook, 'useAuth').mockReturnValueOnce({
-      isAuthenticated: true,
-      user: { ...user, roles: 'authorizer,issuer' }
-    })
-    await act(async () => {
-      const { result } = renderHook(() => useIsAdmin())
+    jest
+      .spyOn(useCachedUserHook, 'useCachedUser')
+      .mockReturnValue({ ...user, roles: 'authorizer,issuer' })
 
-      await waitFor(() => expect(result.current).toBe(false))
-    })
-  })
-  it('returns false if user does not exist', async () => {
-    jest.spyOn(useAuthHook, 'useAuth').mockReturnValueOnce({
-      isAuthenticated: true,
-      user: undefined
-    })
     await act(async () => {
       const { result } = renderHook(() => useIsAdmin())
 
@@ -99,10 +89,10 @@ describe('useIsAuthorizer', () => {
   })
 
   it('returns true if user is authorizer', async () => {
-    jest.spyOn(useAuthHook, 'useAuth').mockReturnValueOnce({
-      isAuthenticated: true,
-      user: { ...user, roles: 'admin,authorizer' }
-    })
+    jest
+      .spyOn(useCachedUserHook, 'useCachedUser')
+      .mockReturnValue({ ...user, roles: 'admin,authorizer' })
+
     await act(async () => {
       const { result } = renderHook(() => useIsAuthorizer())
 
@@ -110,21 +100,10 @@ describe('useIsAuthorizer', () => {
     })
   })
   it('returns false if user is not authorizer', async () => {
-    jest.spyOn(useAuthHook, 'useAuth').mockReturnValueOnce({
-      isAuthenticated: true,
-      user: { ...user, roles: 'admin,issuer' }
-    })
-    await act(async () => {
-      const { result } = renderHook(() => useIsAuthorizer())
+    jest
+      .spyOn(useCachedUserHook, 'useCachedUser')
+      .mockReturnValue({ ...user, roles: 'admin,issuer' })
 
-      await waitFor(() => expect(result.current).toBe(false))
-    })
-  })
-  it('returns false if user does not exist', async () => {
-    jest.spyOn(useAuthHook, 'useAuth').mockReturnValueOnce({
-      isAuthenticated: true,
-      user: undefined
-    })
     await act(async () => {
       const { result } = renderHook(() => useIsAuthorizer())
 
@@ -140,10 +119,10 @@ describe('useIsIssuer', () => {
   })
 
   it('returns true if user is issuer', async () => {
-    jest.spyOn(useAuthHook, 'useAuth').mockReturnValueOnce({
-      isAuthenticated: true,
-      user: { ...user, roles: 'admin,issuer' }
-    })
+    jest
+      .spyOn(useCachedUserHook, 'useCachedUser')
+      .mockReturnValue({ ...user, roles: 'admin,issuer' })
+
     await act(async () => {
       const { result } = renderHook(() => useIsIssuer())
 
@@ -151,21 +130,10 @@ describe('useIsIssuer', () => {
     })
   })
   it('returns false if user is not issuer', async () => {
-    jest.spyOn(useAuthHook, 'useAuth').mockReturnValueOnce({
-      isAuthenticated: true,
-      user: { ...user, roles: 'admin,authorizer' }
-    })
-    await act(async () => {
-      const { result } = renderHook(() => useIsIssuer())
+    jest
+      .spyOn(useCachedUserHook, 'useCachedUser')
+      .mockReturnValue({ ...user, roles: 'admin,authorizer' })
 
-      await waitFor(() => expect(result.current).toBe(false))
-    })
-  })
-  it('returns false if user does not exist', async () => {
-    jest.spyOn(useAuthHook, 'useAuth').mockReturnValueOnce({
-      isAuthenticated: true,
-      user: undefined
-    })
     await act(async () => {
       const { result } = renderHook(() => useIsIssuer())
 
@@ -181,10 +149,10 @@ describe('useIsAccredited', () => {
   })
 
   it('returns true if user is accredited', async () => {
-    jest.spyOn(useAuthHook, 'useAuth').mockReturnValueOnce({
-      isAuthenticated: true,
-      user: { ...user, roles: 'admin,accredited' }
-    })
+    jest
+      .spyOn(useCachedUserHook, 'useCachedUser')
+      .mockReturnValue({ ...user, roles: 'admin,accredited' })
+
     await act(async () => {
       const { result } = renderHook(() => useIsAccredited())
 
@@ -192,21 +160,10 @@ describe('useIsAccredited', () => {
     })
   })
   it('returns false if user is not accredited', async () => {
-    jest.spyOn(useAuthHook, 'useAuth').mockReturnValueOnce({
-      isAuthenticated: true,
-      user: { ...user, roles: 'admin,authorizer' }
-    })
-    await act(async () => {
-      const { result } = renderHook(() => useIsAccredited())
+    jest
+      .spyOn(useCachedUserHook, 'useCachedUser')
+      .mockReturnValue({ ...user, roles: 'admin,authorizer' })
 
-      await waitFor(() => expect(result.current).toBe(false))
-    })
-  })
-  it('returns false if user does not exist', async () => {
-    jest.spyOn(useAuthHook, 'useAuth').mockReturnValueOnce({
-      isAuthenticated: true,
-      user: undefined
-    })
     await act(async () => {
       const { result } = renderHook(() => useIsAccredited())
 
@@ -222,36 +179,14 @@ describe('useHasSpecialRole', () => {
   })
 
   it('returns true if user is admin', async () => {
-    jest.spyOn(useAuthHook, 'useAuth').mockReturnValueOnce({
-      isAuthenticated: true,
-      user: { ...user, roles: 'admin,accredited' }
-    })
+    jest
+      .spyOn(useCachedUserHook, 'useCachedUser')
+      .mockReturnValue({ ...user, roles: 'admin,accredited' })
+
     await act(async () => {
       const { result } = renderHook(() => useHasSpecialRole())
 
       await waitFor(() => expect(result.current).toBe(true))
-    })
-  })
-  it('returns true if user is admin', async () => {
-    jest.spyOn(useAuthHook, 'useAuth').mockReturnValueOnce({
-      isAuthenticated: true,
-      user: { ...user, roles: 'admin,accredited' }
-    })
-    await act(async () => {
-      const { result } = renderHook(() => useHasSpecialRole())
-
-      await waitFor(() => expect(result.current).toBe(true))
-    })
-  })
-  it('returns false if user does not exist', async () => {
-    jest.spyOn(useAuthHook, 'useAuth').mockReturnValueOnce({
-      isAuthenticated: true,
-      user: undefined
-    })
-    await act(async () => {
-      const { result } = renderHook(() => useHasSpecialRole())
-
-      await waitFor(() => expect(result.current).toBe(false))
     })
   })
 })

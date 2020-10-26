@@ -104,38 +104,6 @@ describe('useUpdateCorporateIdentity', () => {
     })
   })
 
-  it('it calls snackbarService.showSnackbar with error message if user is not defined', async () => {
-    jest
-      .spyOn(useAuthHook, 'useAuth')
-      .mockImplementation(() => ({ user: undefined, isAuthenticated: false }))
-
-    await act(async () => {
-      const put = jest.fn().mockReturnValueOnce(successfulResponse)
-      const showSnackbar = jest.fn()
-
-      const apiObj = { put }
-      const snackbarObj = { showSnackbar }
-      const { result } = renderHookWithServiceProvider(
-        () => useUpdateCorporateIdentity(corporate._id),
-        { apiService: apiObj, snackbarService: snackbarObj }
-      )
-
-      await waitFor(
-        () => {
-          const [mutate] = result.current
-          void mutate(updateCorporateArgs)
-
-          expect(showSnackbar).toHaveBeenNthCalledWith(
-            1,
-            'No user found',
-            'error'
-          )
-        },
-        { timeout: 1000 }
-      )
-    })
-  })
-
   it('it calls snackbarService.showSnackbar with error message', async () => {
     jest
       .spyOn(useAuthHook, 'useAuth')

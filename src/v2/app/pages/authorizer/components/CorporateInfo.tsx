@@ -1,9 +1,9 @@
 import React from 'react'
 import { CorporateIdentity } from 'v2/types/identity'
-import { Avatar, Grid, Typography } from '@material-ui/core'
+import { Grid, Typography } from '@material-ui/core'
 import { convertAddressToString } from './utils'
 import { LabelledValue } from 'v2/components/LabelledValue'
-import { ViewDocument } from 'v2/app/components/DSO/components/ViewDocument'
+import { Avatar } from 'v2/components/Avatar'
 import { AuthorizerIdentityLink } from 'v2/app/components/AuthorizerIdentityLink'
 
 export interface CorporateInfoProps {
@@ -26,15 +26,7 @@ export const CorporateInfo = (props: CorporateInfoProps) => {
       </Grid>
 
       <Grid item>
-        <ViewDocument documentId={data.logo} ownerId={data.user._id}>
-          {image => (
-            <Avatar
-              src={image}
-              variant='rounded'
-              style={{ width: 200, height: 'auto' }}
-            />
-          )}
-        </ViewDocument>
+        <Avatar documentId={data.logo} ownerId={data.user._id} />
       </Grid>
 
       <Grid item>

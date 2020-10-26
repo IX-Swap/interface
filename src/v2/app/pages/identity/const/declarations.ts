@@ -14,7 +14,8 @@ export const declarations: {
     {
       key: 'IndividualAccreditedInvestor',
       content:
-        'The Applicant qualifies as an "Individual Accredited Investor" (as defined in Section 4A (1)(a)(i) of the Securities and Futures Act (“SFA”), Chapter 289):'
+        'The Applicant qualifies as an "Individual Accredited Investor" (as defined in Section 4A (1)(a)(i) of the Securities and Futures Act (“SFA”), Chapter 289):',
+      value: null
     },
     {
       key: 'NetPersonalAssets',
@@ -53,16 +54,14 @@ export const declarations: {
     },
     {
       key: 'InvestaXPrivacyPolicy',
-      content:
-        'The Applicant has read and agrees to InvestaX\'s <a href="#">Privacy Policy</a>.',
+      content: "The Applicant has read and agrees to InvestaX's [LINK].",
       value: null,
       answerable: true,
       lastLine: true
     },
     {
       key: 'InvestaXTermsOfUse',
-      content:
-        'The Applicant has read and agrees to InvestaX\'s <a href="#">Terms of Use</a>.',
+      content: "The Applicant has read and agrees to InvestaX's [LINK].",
       value: null,
       answerable: true,
       lastLine: true
@@ -70,7 +69,7 @@ export const declarations: {
     {
       key: 'USPerson',
       content:
-        'The Applicant declares that it is not a "U.S. Person" for U.S. federal income tax purposes. <br /> (Please submit <a href="#">W-8BEN/W-8BEN-E</a> (whichever is applicable) and satisfactory documentary evidence.)',
+        'The Applicant declares that it is not a "U.S. Person" for U.S. federal income tax purposes. <br /> (Please submit [LINK] (whichever is applicable) and satisfactory documentary evidence.)',
       value: null,
       answerable: true,
       lastLine: true
@@ -167,16 +166,14 @@ export const declarations: {
     },
     {
       key: 'InvestaXPrivacyPolicy',
-      content:
-        'The Applicant has read and agrees to InvestaX\'s <a href="#">Privacy Policy</a>.',
+      content: "The Applicant has read and agrees to InvestaX's [LINK].",
       value: null,
       answerable: true,
       lastLine: true
     },
     {
       key: 'InvestaXTermsOfUse',
-      content:
-        'The Applicant has read and agrees to InvestaX\'s <a href="#">Terms of Use</a>.',
+      content: "The Applicant has read and agrees to InvestaX's [LINK].",
       value: null,
       answerable: true,
       lastLine: true
@@ -184,7 +181,7 @@ export const declarations: {
     {
       key: 'USPerson',
       content:
-        'The Applicant declares that it is not a "U.S. Person" for U.S. federal income tax purposes. <br /> (Please submit <a href="#">W-8BEN/W-8BEN-E</a> (whichever is applicable) and satisfactory documentary evidence.)',
+        'The Applicant declares that it is not a "U.S. Person" for U.S. federal income tax purposes. <br /> (Please submit [LINK] (whichever is applicable) and satisfactory documentary evidence.)',
       value: null,
       answerable: true,
       lastLine: true

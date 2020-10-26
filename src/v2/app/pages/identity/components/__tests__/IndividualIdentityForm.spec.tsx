@@ -12,6 +12,9 @@ import { FinancialFields } from 'v2/app/pages/identity/components/FinancialField
 import { DeclarationFields } from 'v2/app/pages/identity/components/DeclarationFields'
 import { declarations } from 'v2/app/pages/identity/const/declarations'
 import { IdentityDataroom } from 'v2/app/pages/identity/components/IdentityDataroom'
+import * as useIndividualInfoDefaultEmailHook from 'v2/hooks/auth/useIndividualInfoDefaultEmail'
+import * as useCachedUserHook from 'v2/hooks/auth/useCachedUser'
+import { user } from '__fixtures__/user'
 
 jest.mock('v2/app/pages/identity/components/Section', () => ({
   Section: jest.fn(({ children }) => children)
@@ -39,6 +42,17 @@ describe('IndividualIdentityForm', () => {
 
   beforeAll(() => {
     window.URL.revokeObjectURL = jest.fn()
+  })
+
+  beforeEach(() => {
+    jest
+      .spyOn(useIndividualInfoDefaultEmailHook, 'useIndividualInfoDefaultEmail')
+      .mockImplementation(() => ({
+        isDisabled: true,
+        email: ''
+      }))
+
+    jest.spyOn(useCachedUserHook, 'useCachedUser').mockReturnValue(user)
   })
 
   afterEach(async () => {

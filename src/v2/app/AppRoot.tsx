@@ -5,7 +5,6 @@ import { Sidebar } from 'v2/app/components/Sidebar/Sidebar'
 import useStyles from './AppRoot.styles'
 import { useAppRouter } from 'v2/app/router'
 import { Grid } from '@material-ui/core'
-import { ReactQueryDevtools } from 'react-query-devtools'
 import { AppError } from 'v2/app/components/AppError'
 import { useDataFromURL } from 'v2/hooks/location/useDataFromURL'
 
@@ -17,7 +16,6 @@ export const AppRoot: React.FC = () => {
 
   return (
     <ErrorBoundary fallback={AppError}>
-      <ReactQueryDevtools initialIsOpen={false} />
       <Grid container direction='column' className={classes.container}>
         <Grid item>
           <Header />

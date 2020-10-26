@@ -5,6 +5,7 @@ import { LoadingFullScreen } from 'v2/auth/components/LoadingFullScreen'
 import { BreadcrumbsProvider } from 'v2/hooks/useBreadcrumbs'
 import { SentryRoute } from 'v2/components/SentryRoute'
 import { useAppInit } from 'v2/hooks/useAppInit'
+import { ReactQueryDevtools } from 'react-query-devtools'
 
 const AuthRoot = React.lazy(
   async () =>
@@ -35,6 +36,7 @@ export const EntryPoint = () => {
   return (
     <Suspense fallback={<LoadingFullScreen />}>
       <BreadcrumbsProvider>
+        <ReactQueryDevtools initialIsOpen={false} />
         <Router history={history}>
           <Switch>
             {isSuccess ? (

@@ -16,6 +16,10 @@ export const DeclarationView = (props: DeclarationViewProps) => {
       {data.map((item, index) => {
         const template = declarations[index]
 
+        if (template.key === 'IndividualAccreditedInvestor') {
+          return null
+        }
+
         return (
           <DeclarationItem
             key={index}

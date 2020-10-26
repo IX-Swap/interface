@@ -1,11 +1,11 @@
 import React from 'react'
 import { IndividualIdentity } from 'v2/types/identity'
-import { Avatar, Grid, Typography } from '@material-ui/core'
+import { Grid, Typography } from '@material-ui/core'
 import { convertAddressToString } from './utils'
-import { ViewDocument } from 'v2/app/components/DSO/components/ViewDocument'
 import { LabelledValue } from 'v2/components/LabelledValue'
 import { renderName } from 'v2/helpers/tables'
 import { AuthorizerIdentityLink } from 'v2/app/components/AuthorizerIdentityLink'
+import { Avatar } from 'v2/components/Avatar'
 
 export interface IndividualInfoProps {
   data: IndividualIdentity
@@ -21,15 +21,7 @@ export const IndividualInfo = (props: IndividualInfoProps) => {
       </Grid>
 
       <Grid item>
-        <ViewDocument documentId={data.photo} ownerId={data.user._id}>
-          {image => (
-            <Avatar
-              src={image}
-              variant='rounded'
-              style={{ width: 200, height: 200 }}
-            />
-          )}
-        </ViewDocument>
+        <Avatar documentId={data.photo} ownerId={data.user._id} />
       </Grid>
 
       <Grid item>

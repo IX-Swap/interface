@@ -24,6 +24,10 @@ export const DeclarationFields: React.FC<DeclarationFieldsProps> = props => {
             {fields.map((field, index) => {
               const template = declarations[index]
 
+              if (template.key === 'IndividualAccreditedInvestor') {
+                return null
+              }
+
               return (
                 <DeclarationItem
                   template={template}

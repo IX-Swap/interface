@@ -1,6 +1,7 @@
 import {
   CorporateIdentity,
   Declaration,
+  DeclarationTemplate,
   IndividualIdentity
 } from 'v2/types/identity'
 import {
@@ -80,4 +81,13 @@ export const prepareDocumentsForUpload = (
   return documents
     .map(d => d.value?._id ?? null)
     .filter(id => id !== null && id !== '') as string[]
+}
+
+export const getDeclarationTemplate = (
+  declarations: DeclarationTemplate[],
+  declaration?: Declaration
+) => {
+  return declarations.find(
+    ({ key }) => key === Object.keys(declaration ?? {})[0]
+  )
 }

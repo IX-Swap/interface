@@ -10,18 +10,19 @@ import {
 } from 'v2/types/identity'
 import { DataroomFile, FormArrayElement } from 'v2/types/dataroomFile'
 import { Maybe } from 'v2/types/util'
+import { MARITAL_STATUSES } from 'v2/app/pages/identity/const'
 
 export const individualIdentityFormValidationSchema = yup
   .object()
   .shape<IndividualIdentityFormValues>({
-    photo: yup.string().required('Required'),
+    photo: yup.string(),
     firstName: yup.string().required('Required'),
     middleName: yup.string(),
     lastName: yup.string().required('Required'),
     nationality: yup.string().required('Required'),
     maritalStatus: yup
       .mixed()
-      .oneOf<IdentityProfile['maritalStatus']>(['Single', 'Married'])
+      .oneOf<IdentityProfile['maritalStatus']>(MARITAL_STATUSES)
       .required('Required'),
     gender: yup
       .mixed()
@@ -42,7 +43,7 @@ export const individualIdentityFormValidationSchema = yup
     houseHoldIncome: yup.string().required('Required'),
     employer: yup.string().required('Required'),
     annualIncome: yup.string().required('Required'),
-    toArrangeCustody: yup.boolean().required('Required'),
+    toArrangeCustody: yup.boolean(),
     walletAddress: yup.string().required('Required'),
     documents: yup
       .array<FormArrayElement<Maybe<DataroomFile>>>()
@@ -66,7 +67,7 @@ export const individualIdentityFormValidationSchema = yup
 export const corporateIdentityFormValidationSchema = yup
   .object()
   .shape<CorporateIdentityFormValues>({
-    logo: yup.string().required('Required'),
+    logo: yup.string(),
     representatives: yup.array<IdentityProfile>().required('Required'),
     directors: yup.array<IdentityProfile>().required('Required'),
     beneficialOwners: yup.array<IdentityProfile>().required('Required'),
@@ -79,20 +80,20 @@ export const corporateIdentityFormValidationSchema = yup
     companyAddress: yup
       .object()
       .shape<IdentityAddress>({
-        city: yup.string().required('City is required'),
-        country: yup.string().required('Country is required'),
-        line1: yup.string().required('Address line 1 is required'),
-        line2: yup.string().required('Required'),
-        postalCode: yup.string().required('Postal Code is required'),
-        state: yup.string().required('State is required')
+        city: yup.string().required('Required'),
+        country: yup.string().required('Required'),
+        line1: yup.string().required('Required'),
+        line2: yup.string(),
+        postalCode: yup.string().required('Required'),
+        state: yup.string()
       })
       .required('Required'),
     registrationNumber: yup.string().required('Required'),
     dateOfIncorporation: yup.string().required('Required'),
     countryOfFormation: yup.string().required('Required'),
     companyLegalName: yup.string().required('Required'),
-    walletAddress: yup.string().required('Required'),
-    toArrangeCustody: yup.boolean().required('Required'),
+    walletAddress: yup.string(),
+    toArrangeCustody: yup.boolean(),
     email: yup.string().email().required('Required'),
     contactNumber: yup.string().required('Required')
   })

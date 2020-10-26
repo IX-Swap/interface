@@ -11,7 +11,8 @@ import { dateTimeValueExtractor } from 'v2/helpers/forms'
 import { NationalitySelect } from 'v2/components/form/NationalitySelect'
 import { CountrySelect } from 'v2/components/form/CountrySelect'
 import { GenderSelect } from 'v2/components/form/GenderSelect'
-import { MartialStatusSelect } from 'v2/components/form/MartialStatusSelect'
+import { MaritalStatusSelect } from 'v2/components/form/MaritalStatusSelect'
+import { useIndividualInfoDefaultEmail } from 'v2/hooks/auth/useIndividualInfoDefaultEmail'
 
 export interface IndividualInfoFieldsProps {
   rootName?: string
@@ -22,6 +23,10 @@ export const IndividualInfoFields = (
 ): JSX.Element => {
   const { rootName } = props
   const { control } = useFormContext<IdentityProfile>()
+  const {
+    email: defaultEmail,
+    isDisabled: isEmailDisabled
+  } = useIndividualInfoDefaultEmail(rootName)
 
   return (
     <Grid container spacing={3}>
@@ -106,6 +111,8 @@ export const IndividualInfoFields = (
           control={control}
           name='email'
           label='Email'
+          disabled={isEmailDisabled}
+          defaultValue={defaultEmail}
         />
       </Grid>
       <Grid item xs={4}>
@@ -129,7 +136,7 @@ export const IndividualInfoFields = (
       <Grid item xs={4}>
         <TypedField
           rootName={rootName}
-          component={MartialStatusSelect}
+          component={MaritalStatusSelect}
           control={control}
           name='maritalStatus'
           label='Marital Status'

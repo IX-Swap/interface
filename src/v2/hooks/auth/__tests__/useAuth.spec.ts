@@ -29,24 +29,4 @@ describe('useAuth', () => {
       )
     })
   })
-
-  it('returns isAuthenticated as false if user is not defined', async () => {
-    await act(async () => {
-      const getFn = jest.fn()
-      const storageObj = { get: getFn }
-
-      const { result } = renderHookWithServiceProvider(() => useAuth(), {
-        storageService: storageObj
-      })
-
-      await waitFor(
-        () => {
-          expect(getFn).toHaveBeenCalledWith('user')
-          expect(result.current.isAuthenticated).toBe(false)
-          expect(result.current.user).toBe(undefined)
-        },
-        { timeout: 1000 }
-      )
-    })
-  })
 })

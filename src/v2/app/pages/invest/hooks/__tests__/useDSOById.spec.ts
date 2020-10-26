@@ -64,28 +64,4 @@ describe('useDSOById', () => {
       )
     })
   })
-
-  it('returns response from api correctly if user and issuerId are not defined', async () => {
-    jest
-      .spyOn(useAuthHook, 'useAuth')
-      .mockReturnValue({ user: undefined, isAuthenticated: false })
-    await act(async () => {
-      const getFn = jest.fn().mockResolvedValueOnce(successfulResponse)
-      const apiObj = { get: getFn }
-
-      const { result } = renderHookWithServiceProvider(
-        () => useDSOById(dso._id, undefined),
-        { apiService: apiObj }
-      )
-
-      await waitFor(
-        () => {
-          expect(result.current.data).toEqual(successfulResponse.data)
-          expect(getFn).toHaveBeenCalledTimes(1)
-          expect(getFn).toHaveBeenCalledWith(`/issuance/dso/${''}/${dso._id}`)
-        },
-        { timeout: 1000 }
-      )
-    })
-  })
 })
