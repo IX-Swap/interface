@@ -2,23 +2,39 @@ import {
   IdentityProfile,
   IdentityFinancials,
   BaseIdentity,
-  CorporateFields
+  CorporateFields,
+  Declaration
 } from 'v2/types/identity'
-import { DataroomFileWithGuide } from 'v2/types/dataroomFile'
+import { DataroomFile, FormArray } from 'v2/types/dataroomFile'
+import { Maybe } from 'v2/types/util'
 
 export type IndividualIdentityFormValues = IdentityProfile &
   IdentityFinancials &
   Omit<
     BaseIdentity,
-    '_id' | 'status' | 'user' | 'createdAt' | 'updatedAt' | 'documents'
+    | '_id'
+    | 'status'
+    | 'user'
+    | 'createdAt'
+    | 'updatedAt'
+    | 'documents'
+    | 'declarations'
   > & {
-    documents: DataroomFileWithGuide[]
+    documents: FormArray<Maybe<DataroomFile>>
+    declarations: FormArray<Declaration>
   }
 
 export type CorporateIdentityFormValues = CorporateFields &
   Omit<
     BaseIdentity,
-    '_id' | 'status' | 'user' | 'createdAt' | 'updatedAt' | 'documents'
+    | '_id'
+    | 'status'
+    | 'user'
+    | 'createdAt'
+    | 'updatedAt'
+    | 'documents'
+    | 'declarations'
   > & {
-    documents: DataroomFileWithGuide[]
+    documents: FormArray<Maybe<DataroomFile>>
+    declarations: FormArray<Declaration>
   }

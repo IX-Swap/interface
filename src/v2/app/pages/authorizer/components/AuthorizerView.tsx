@@ -9,6 +9,7 @@ import { AuthorizableLevel } from 'v2/app/pages/authorizer/components/Authorizab
 import { AuthorizableStatus } from 'v2/app/pages/authorizer/components/AuthorizableStatus'
 import { AuthorizerIdentities } from 'v2/app/pages/authorizer/components/AuthorizerIdentities'
 import { PageHeader } from 'v2/app/components/PageHeader/PageHeader'
+import { Form } from 'v2/components/form/Form'
 
 export interface AuthorizerViewProps<T> {
   title: string
@@ -21,6 +22,7 @@ export const AuthorizerView = <T,>(
 ) => {
   const { title, data, feature, children } = props
   const hasIdentity = data.identity !== undefined
+  const documents = data.authorizationDocuments ?? []
 
   return (
     <Container>
@@ -66,11 +68,17 @@ export const AuthorizerView = <T,>(
 
                 <Grid item>
                   <Typography variant='h3'>Authorization Documents</Typography>
-                  <AuthorizationDocuments
-                    documents={data.authorizationDocuments ?? []}
-                    resourceId={data._id}
-                    feature={feature}
-                  />
+                  <VSpacer size='small' />
+                  <Form
+                    defaultValues={{
+                      documents: documents.map(value => ({ value }))
+                    }}
+                  >
+                    <AuthorizationDocuments
+                      resourceId={data._id}
+                      feature={feature}
+                    />
+                  </Form>
                 </Grid>
 
                 <Grid item>

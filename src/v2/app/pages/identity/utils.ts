@@ -11,7 +11,8 @@ import {
 import documents, {
   formatDocuments
 } from 'v2/app/pages/identity/const/documents'
-import { DataroomFileWithGuide } from 'v2/types/dataroomFile'
+import { DataroomFile, FormArray } from 'v2/types/dataroomFile'
+import { Maybe } from 'v2/types/util'
 
 export type IdentityType = 'corporate' | 'individual'
 
@@ -41,10 +42,12 @@ export const getIdentityDeclarations = (
   return declarations[type]
 }
 
-export const allDeclarationsAreChecked = (declarations: Declaration[]) => {
-  return declarations.every(d => {
-    const key = Object.keys(d)[0]
-    return d[key] === DeclarationValue.Yes
+export const allDeclarationsAreChecked = (
+  declarations: FormArray<Declaration>
+) => {
+  return declarations.every(({ value }) => {
+    const key = Object.keys(value)[0]
+    return value[key] === DeclarationValue.Yes
   })
 }
 
@@ -53,22 +56,28 @@ export const getIdentityFormDefaultValue = <
 >(
   identity: T,
   type: IdentityType
-): T & { documents: DataroomFileWithGuide[] } => {
+): T & {
+  documents: FormArray<Maybe<DataroomFile>>
+  declarations: FormArray<Declaration>
+} => {
   return identity !== undefined
     ? {
         ...identity,
+        declarations: declarations[type].map((value, index) => ({
+          value: identity.declarations[index]
+        })),
         documents: formatDocuments(identity.documents ?? [], type)
       }
     : ({
-        declarations: declarations[type],
+        declarations: declarations[type].map(value => ({ value })),
         documents: formatDocuments([], type)
       } as any) // TODO: fix any
 }
 
 export const prepareDocumentsForUpload = (
-  documents: DataroomFileWithGuide[]
+  documents: FormArray<Maybe<DataroomFile>>
 ) => {
   return documents
-    .map(d => d.document?._id ?? null)
-    .filter(d => d !== null) as string[]
+    .map(d => d.value?._id ?? null)
+    .filter(id => id !== null && id !== '') as string[]
 }

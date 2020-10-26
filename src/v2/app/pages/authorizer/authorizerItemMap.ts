@@ -1,13 +1,13 @@
 import { AppFeature, AuthorizerCategory } from 'v2/types/app'
 import { BankPreview } from 'v2/app/components/BankPreview/BankPreview'
 import { urlParams } from 'v2/config/urls'
-import { DSOForm } from 'v2/app/components/DSO/DSOForm'
 import { DSWithdrawalPreview } from 'v2/app/components/DSWithdrawalPreview/DSWithdrawalPreview'
 import { WithdrawalPreview } from 'v2/app/components/WithdrawalPreview/WithdrawalPreview'
-import { CorporateIdentityForm } from 'v2/app/pages/identity/components/CorporateIdentityForm'
-import { IndividualIdentityForm } from 'v2/app/pages/identity/components/IndividualIdentityForm'
 import { DepositView } from 'v2/app/components/DepositView/DepositView'
 import { CommitmentPreview } from 'v2/app/components/CommitmentPreview/CommitmentPreview'
+import { DSOView } from 'v2/app/components/DSO/DSOView'
+import { CorporateView } from 'v2/app/pages/identity/components/CorporateView'
+import { IndividualView } from 'v2/app/pages/identity/components/IndividualView'
 
 export const authorizerItemMap: Record<
   AuthorizerCategory,
@@ -20,7 +20,7 @@ export const authorizerItemMap: Record<
   },
   [AppFeature.Offerings]: {
     uri: '/issuance/dso/list',
-    component: DSOForm,
+    component: DSOView,
     paramKey: urlParams.dsoId
   },
   [AppFeature['Digital Security Withdrawals']]: {
@@ -35,12 +35,12 @@ export const authorizerItemMap: Record<
   },
   [AppFeature.Corporates]: {
     uri: '/identity/corporates/list',
-    component: CorporateIdentityForm,
+    component: CorporateView,
     paramKey: urlParams.identityId
   },
   [AppFeature.Individuals]: {
     uri: '/identity/individuals/list',
-    component: IndividualIdentityForm,
+    component: IndividualView,
     paramKey: urlParams.identityId
   },
   [AppFeature['Cash Deposits']]: {

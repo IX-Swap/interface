@@ -1,40 +1,37 @@
 import React from 'react'
 import { Grid } from '@material-ui/core'
-import { useDSOForm } from 'v2/app/components/DSO/DSOForm'
-import { DSOTeamAddButton } from './DSOTeamAddButton'
+import { FieldsArray } from 'v2/components/form/FieldsArray'
+import { DSOContainer } from 'v2/app/components/DSO/components/DSOContainer'
+import { useFormContext } from 'react-hook-form'
+import { DSOFormValues } from 'v2/types/dso'
 import { DSOTeamMember } from 'v2/app/components/DSO/components/DSOTeamMember'
+import { DSOTeamAddButton } from 'v2/app/components/DSO/components/DSOTeamAddButton'
 
-export interface DSOTeamProps {
-  isEditing: boolean
-  dsoOwnerId: string
-}
-
-export const DSOTeam = (props: DSOTeamProps) => {
-  const { isEditing, dsoOwnerId } = props
-  const { FieldsArray } = useDSOForm()
+export const DSOTeam = () => {
+  const { control } = useFormContext<DSOFormValues>()
 
   return (
-    <FieldsArray name='team'>
-      {({ fields, append, remove }) => (
-        <Grid container direction='column' spacing={4}>
-          {fields.map((_field, index) => (
-            <DSOTeamMember
-              key={_field.id}
-              defaultValue={fields[index]}
-              dsoOwnerId={dsoOwnerId}
-              fieldId={_field.id}
-              remove={remove}
-              isEditing={isEditing}
-              index={index}
-            />
-          ))}
-          {isEditing && (
-            <Grid item container justify='flex-end'>
+    <DSOContainer title='Team' item xs={12}>
+      <FieldsArray name='team' control={control}>
+        {({ fields, append, remove }) => (
+          <Grid container direction='column'>
+            <Grid item>
+              {fields.map((value, index) => (
+                <DSOTeamMember
+                  key={value.id}
+                  defaultValue={fields[index] as any}
+                  fieldId={value.id}
+                  index={index}
+                  remove={remove}
+                />
+              ))}
+            </Grid>
+            <Grid item>
               <DSOTeamAddButton append={append} />
             </Grid>
-          )}
-        </Grid>
-      )}
-    </FieldsArray>
+          </Grid>
+        )}
+      </FieldsArray>
+    </DSOContainer>
   )
 }

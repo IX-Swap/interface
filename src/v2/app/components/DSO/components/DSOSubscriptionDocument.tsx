@@ -1,49 +1,32 @@
 import React from 'react'
-import { useDSOForm } from 'v2/app/components/DSO/DSOForm'
-import { DataroomEditRow } from 'v2/app/pages/identity/components/dataroom/DataroomEditRow'
-import { DataroomViewRow } from 'v2/app/pages/identity/components/dataroom/DataroomViewRow'
+import { TypedField } from 'v2/components/form/TypedField'
+import { plainValueExtractor } from 'v2/helpers/forms'
+import { DSOContainer } from 'v2/app/components/DSO/components/DSOContainer'
+import { useFormContext } from 'react-hook-form'
+import { DSOFormValues } from 'v2/types/dso'
+import { DefaultDataroomUploader } from 'v2/components/dataroom/DefaultDataroomUploader'
 
-export interface DSOSubscriptionAndDocumentsProps {
-  isEditing: boolean
-  dsoOwnerId: string
-  dsoId: string
-}
-
-export const DSOSubscriptionDocument = (
-  props: DSOSubscriptionAndDocumentsProps
-) => {
-  const { isEditing } = props
-  const { EditableField, FormValue } = useDSOForm()
+export const DSOSubscriptionDocument = () => {
+  const { control } = useFormContext<DSOFormValues>()
 
   return (
-    <EditableField
-      fieldType='DataroomDocument'
-      isEditing={isEditing}
-      label='Subscription Document'
-      name='subscriptionDocument'
-      documentInfo={{
-        title: 'Subscription Document',
-        type: 'Subscription Document'
-      }}
-      canDelete={false}
-      editRenderer={input => (
-        <FormValue name='subscriptionDocument'>
-          {value => (
-            <DataroomEditRow
-              input={input}
-              title='Subscription Document'
-              document={value}
-            />
-          )}
-        </FormValue>
-      )}
-      viewRenderer={
-        <FormValue name='subscriptionDocument'>
-          {value => (
-            <DataroomViewRow title='Subscription Document' document={value} />
-          )}
-        </FormValue>
-      }
-    />
+    <DSOContainer title='Subscription Document' item xs={12}>
+      {/* @ts-ignore */}
+      <TypedField
+        customRenderer
+        control={control}
+        component={DefaultDataroomUploader}
+        label='Subscription Document'
+        name='subscriptionDocument'
+        valueExtractor={plainValueExtractor}
+        documentInfo={{
+          type: 'Subscription Document',
+          title: 'Subscription Document'
+        }}
+        onDelete={() => {
+          control.setValue('subscriptionDocument', null as any)
+        }}
+      />
+    </DSOContainer>
   )
 }

@@ -14,6 +14,7 @@ import { convertAddressToString } from '../utils'
 jest.mock('v2/components/LabelledValue', () => ({
   LabelledValue: jest.fn(() => null)
 }))
+
 jest.mock('v2/app/components/DSO/components/ViewDocument', () => ({
   ViewDocument: jest.fn(({ children }) => children())
 }))
@@ -32,11 +33,10 @@ describe('IndividualInfo', () => {
   it('renders ViewDocument with correct props', () => {
     render(<IndividualInfo {...props} />)
 
-    expect(ViewDocument).toHaveBeenCalledTimes(1)
     expect(ViewDocument).toHaveBeenCalledWith(
       {
         documentId: props.data.photo,
-        ownerId: props.data.user,
+        ownerId: props.data.user._id,
         children: expect.any(Function)
       },
       {}

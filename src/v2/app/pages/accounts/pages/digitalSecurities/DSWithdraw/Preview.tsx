@@ -1,25 +1,25 @@
 import React from 'react'
 import { Summary } from 'v2/app/pages/accounts/pages/digitalSecurities/DSWithdraw/Summary'
-import { useDSWithdrawForm } from 'v2/app/pages/accounts/pages/digitalSecurities/DSWithdraw/WithdrawForm'
-import { Grid } from '@material-ui/core'
+import { Grid, Input } from '@material-ui/core'
 import { VSpacer } from 'v2/components/VSpacer'
+import { useFormContext } from 'react-hook-form'
+import { WithdrawDSFormValues } from 'v2/app/pages/accounts/types'
+import { TypedField } from 'v2/components/form/TypedField'
+import { Submit } from 'v2/components/form/Submit'
 
 export const Preview: React.FC = () => {
-  const { TextField, Submit } = useDSWithdrawForm()
+  const { control } = useFormContext<WithdrawDSFormValues>()
 
   return (
     <Grid container direction='column'>
       <Summary />
       <Grid item container direction='column'>
-        <TextField
+        <TypedField
+          control={control}
+          component={Input}
           name='otp'
           label='2-Factor Auth Code'
-          formControlProps={{
-            fullWidth: true
-          }}
-          inputProps={{
-            autoComplete: 'off'
-          }}
+          autoComplete='off'
         />
       </Grid>
       <Grid item>

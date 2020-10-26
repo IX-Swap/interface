@@ -1,5 +1,5 @@
 import { UseQueryData } from 'v2/hooks/useParsedData'
-import { useServices } from 'v2/services/useServices'
+import { useServices } from 'v2/hooks/useServices'
 import { useQuery } from 'react-query'
 import { useAuth } from 'v2/hooks/auth/useAuth'
 import { Bank } from 'v2/types/bank'

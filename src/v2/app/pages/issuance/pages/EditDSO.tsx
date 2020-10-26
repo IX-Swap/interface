@@ -10,7 +10,7 @@ export const EditDSO = () => {
   } = useIssuanceRouter()
 
   return (
-    <Grid container>
+    <Grid container direction='column'>
       <Grid item>
         <VSpacer size='medium' />
       </Grid>

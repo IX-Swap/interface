@@ -1,5 +1,5 @@
 import { useMutation } from 'react-query'
-import { useServices } from 'v2/services/useServices'
+import { useServices } from 'v2/hooks/useServices'
 import { DataroomFile } from 'v2/types/dataroomFile'
 import { QueryOrMutationCallbacks } from 'v2/hooks/types'
 
@@ -19,8 +19,8 @@ export const defaultUploadDocumentInfo: UploadDocumentInfo = {
   type: ''
 }
 
-export const useUploadFile = (
-  callbacks?: QueryOrMutationCallbacks<DataroomFile[]>
+export const useUploadFile = <R = DataroomFile[]>(
+  callbacks?: QueryOrMutationCallbacks<R>
 ) => {
   const { snackbarService, apiService } = useServices()
   const uploadFile = async (args: UploadDocumentArgs) => {
@@ -36,7 +36,7 @@ export const useUploadFile = (
       }
     })
 
-    return await apiService.post<DataroomFile[]>('/dataroom', formData)
+    return await apiService.post<R>('/dataroom', formData)
   }
 
   return useMutation(uploadFile, {

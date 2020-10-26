@@ -6,24 +6,18 @@ import {
   DSOStatusFieldsProps
 } from 'v2/app/components/DSO/components/DSOStatusFields'
 import { Form } from 'v2/components/form/Form'
-import { useTypedForm } from '__fixtures__/createTypedForm'
-import * as dsoForm from 'v2/app/components/DSO/DSOForm'
 import { moneyNumberFormat } from 'v2/app/components/DSO/utils'
-import { plainValueExtractor } from 'v2/components/form/createTypedForm'
+import { TypedField } from 'v2/components/form/TypedField'
+
+jest.mock('v2/components/form/TypedField', () => ({
+  TypedField: jest.fn(() => <input />)
+}))
 
 describe('DSOStatusFields', () => {
   const props: DSOStatusFieldsProps = {
-    isEditing: false,
-    dsoOwnerId: '',
     isNew: false
   }
-  const EditableField = jest.fn(() => <div />)
 
-  beforeEach(() => {
-    jest
-      .spyOn(dsoForm, 'useDSOForm')
-      .mockReturnValue({ ...useTypedForm(), EditableField })
-  })
   afterEach(async () => {
     await cleanup()
     jest.clearAllMocks()
@@ -44,66 +38,52 @@ describe('DSOStatusFields', () => {
       </Form>
     )
 
-    expect(EditableField).toHaveBeenCalledTimes(6)
-    expect(EditableField).toHaveBeenNthCalledWith(
+    expect(TypedField).toHaveBeenNthCalledWith(
       1,
       expect.objectContaining({
-        fieldType: 'CorporateSelect',
-        isEditing: props.isEditing,
         label: 'Corporate',
-        name: 'corporate',
-        valueExtractor: plainValueExtractor
+        name: 'corporate'
       }),
       {}
     )
-    expect(EditableField).toHaveBeenNthCalledWith(
+    expect(TypedField).toHaveBeenNthCalledWith(
       2,
       expect.objectContaining({
-        fieldType: 'TextField',
-        isEditing: props.isEditing,
         label: 'Status',
         name: 'status',
         inputProps: expect.anything()
       }),
       {}
     )
-    expect(EditableField).toHaveBeenNthCalledWith(
+    expect(TypedField).toHaveBeenNthCalledWith(
       3,
       expect.objectContaining({
-        fieldType: 'TextField',
-        isEditing: props.isEditing,
         label: 'Capital Structure',
         name: 'capitalStructure'
       }),
       {}
     )
-    expect(EditableField).toHaveBeenNthCalledWith(
+    expect(TypedField).toHaveBeenNthCalledWith(
       4,
       expect.objectContaining({
-        fieldType: 'NumericField',
-        isEditing: props.isEditing,
         label: 'Unit Price',
         name: 'pricePerUnit',
         numberFormat: moneyNumberFormat
       }),
       {}
     )
-    expect(EditableField).toHaveBeenNthCalledWith(
+    expect(TypedField).toHaveBeenNthCalledWith(
       5,
       expect.objectContaining({
-        fieldType: 'NumericField',
-        isEditing: props.isEditing,
         label: 'Total Fundraising Amount',
         name: 'totalFundraisingAmount',
         numberFormat: moneyNumberFormat
       }),
       {}
     )
-    expect(EditableField).toHaveBeenNthCalledWith(
+    expect(TypedField).toHaveBeenNthCalledWith(
       6,
       expect.objectContaining({
-        fieldType: 'NumericField',
-        isEditing: props.isEditing,
         label: 'Minimum Investment',
         name: 'minimumInvestment',
         numberFormat: moneyNumberFormat
@@ -119,44 +99,36 @@ describe('DSOStatusFields', () => {
       </Form>
     )
 
-    expect(EditableField).toHaveBeenCalledTimes(4)
-    expect(EditableField).toHaveBeenNthCalledWith(
+    expect(TypedField).toHaveBeenCalledTimes(4)
+    expect(TypedField).toHaveBeenNthCalledWith(
       1,
       expect.objectContaining({
-        fieldType: 'TextField',
-        isEditing: props.isEditing,
         label: 'Capital Structure',
         name: 'capitalStructure'
       }),
       {}
     )
-    expect(EditableField).toHaveBeenNthCalledWith(
+    expect(TypedField).toHaveBeenNthCalledWith(
       2,
       expect.objectContaining({
-        fieldType: 'NumericField',
-        isEditing: props.isEditing,
         label: 'Unit Price',
         name: 'pricePerUnit',
         numberFormat: moneyNumberFormat
       }),
       {}
     )
-    expect(EditableField).toHaveBeenNthCalledWith(
+    expect(TypedField).toHaveBeenNthCalledWith(
       3,
       expect.objectContaining({
-        fieldType: 'NumericField',
-        isEditing: props.isEditing,
         label: 'Total Fundraising Amount',
         name: 'totalFundraisingAmount',
         numberFormat: moneyNumberFormat
       }),
       {}
     )
-    expect(EditableField).toHaveBeenNthCalledWith(
+    expect(TypedField).toHaveBeenNthCalledWith(
       4,
       expect.objectContaining({
-        fieldType: 'NumericField',
-        isEditing: props.isEditing,
         label: 'Minimum Investment',
         name: 'minimumInvestment',
         numberFormat: moneyNumberFormat

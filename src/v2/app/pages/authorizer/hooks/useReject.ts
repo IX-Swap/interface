@@ -1,5 +1,5 @@
 import { useMutation } from 'react-query'
-import { useServices } from 'v2/services/useServices'
+import { useServices } from 'v2/hooks/useServices'
 import { AuthorizerActionArgs } from './types'
 
 export const useReject = (args: AuthorizerActionArgs) => {

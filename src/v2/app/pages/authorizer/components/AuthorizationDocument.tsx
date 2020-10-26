@@ -1,17 +1,13 @@
 import { Grid, Typography, Tooltip } from '@material-ui/core'
 import React from 'react'
 import { ViewDocument } from 'v2/app/components/DSO/components/ViewDocument'
-import { DataroomFile } from 'v2/types/dataroomFile'
-import { Maybe } from 'v2/types/util'
 import { useStyles } from './AuthorizationDocument.styles'
 import { documentIcons } from 'v2/helpers/rendering'
-import { DownloadDocument } from 'v2/app/pages/identity/components/dataroom/DownloadDocument'
+import { DownloadDocument } from 'v2/components/dataroom/DownloadDocument'
+import { DataroomUploaderRenderProps } from 'v2/components/dataroom/DataroomUploader'
 
-export interface AuthorizationDocumentProps {
-  document: Maybe<DataroomFile>
-  title: string
-  input: Maybe<JSX.Element>
-}
+export interface AuthorizationDocumentProps
+  extends Pick<DataroomUploaderRenderProps, 'value'> {}
 
 export const isImage = (filename: string) => {
   return (
@@ -37,7 +33,7 @@ export const getDocumentType = (
 }
 
 export const AuthorizationDocument = (props: AuthorizationDocumentProps) => {
-  const { document } = props
+  const { value: document } = props
   const classes = useStyles()
 
   if (document === null) {

@@ -41,7 +41,9 @@ export const dsoFormValidationSchema = object()
     leverage: number().required('Required'),
     minimumInvestment: number().nullable().required('Required'),
     pricePerUnit: number().nullable().required('Required'),
-    subscriptionDocument: object<DataroomFile>().required('Required'),
+    subscriptionDocument: object<DataroomFile>()
+      .nullable()
+      .required('Required'),
     tokenName: string().required('Required'),
     tokenSymbol: string().required('Required'),
     totalFundraisingAmount: number().nullable().required('Required'),

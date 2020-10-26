@@ -17,7 +17,7 @@ export const WithdrawView: React.FC = observer(() => {
 
   return (
     <Grid container justify='center'>
-      <Grid item xs={5} container direction='column' spacing={4}>
+      <Grid item xs={5} container direction='column' spacing={2}>
         <Grid item>{(isSetup || isPreview) && <AssetInfo />}</Grid>
         <Grid item>
           {(isSetup || isPreview) && (

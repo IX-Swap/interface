@@ -4,12 +4,13 @@ import {
   prepareDocumentsForUpload,
   getIdentityDocuments
 } from '../utils'
-import { DataroomFileWithGuide } from 'v2/types/dataroomFile'
+import { DataroomFile, FormArray } from 'v2/types/dataroomFile'
 import {
   documents,
   checkedDeclarations,
   unCheckedDeclarations
 } from '__fixtures__/identity'
+import { Maybe } from 'v2/types/util'
 
 describe('allDeclarationsAreChecked', () => {
   it('returns true if all declarations have first property value "Yes"', () => {
@@ -21,9 +22,9 @@ describe('allDeclarationsAreChecked', () => {
   })
 })
 
-const documentsWithGuide: DataroomFileWithGuide[] = [
-  { title: '', label: '', type: '', document: documents[0] },
-  { title: '', label: '', type: '', document: documents[1] }
+const documentsWithGuide: FormArray<Maybe<DataroomFile>> = [
+  { value: documents[0] },
+  { value: documents[1] }
 ]
 
 describe('prepareDocumentsForUpload', () => {
@@ -35,11 +36,7 @@ describe('prepareDocumentsForUpload', () => {
   })
 
   it('returns empty array if documents does not exist', () => {
-    expect(
-      prepareDocumentsForUpload([
-        { title: '', label: '', type: '', document: null }
-      ])
-    ).toEqual([])
+    expect(prepareDocumentsForUpload([{ value: null }])).toEqual([])
   })
 })
 

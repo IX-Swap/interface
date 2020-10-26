@@ -1,7 +1,7 @@
 import { queryCache } from 'react-query'
 import User from 'v2/types/user'
 import { USER_QUERY_KEY } from 'v2/auth/hooks/useUser'
-import { useServices } from 'v2/services/useServices'
+import { useServices } from 'v2/hooks/useServices'
 
 export const useAuth = () => {
   const { storageService } = useServices()

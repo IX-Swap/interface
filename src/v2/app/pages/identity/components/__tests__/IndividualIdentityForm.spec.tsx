@@ -7,33 +7,32 @@ import {
 } from 'v2/app/pages/identity/components/IndividualIdentityForm'
 import { individual } from '__fixtures__/identity'
 import { Section } from 'v2/app/pages/identity/components/Section'
-import { Address } from 'v2/app/pages/identity/components/Address'
-import { Financials } from 'v2/app/pages/identity/components/Financials'
-import { Dataroom } from 'v2/app/pages/identity/components/dataroom/Dataroom'
-import { Declaration } from 'v2/app/pages/identity/components/Declaration'
-import { getIdentityDeclarations } from '../../utils'
+import { AddressFields } from 'v2/app/pages/identity/components/AddressFields'
+import { FinancialFields } from 'v2/app/pages/identity/components/FinancialFields'
+import { DeclarationFields } from 'v2/app/pages/identity/components/DeclarationFields'
+import { declarations } from 'v2/app/pages/identity/const/declarations'
+import { IdentityDataroom } from 'v2/app/pages/identity/components/IdentityDataroom'
 
 jest.mock('v2/app/pages/identity/components/Section', () => ({
   Section: jest.fn(({ children }) => children)
 }))
-jest.mock('v2/app/pages/identity/components/Address', () => ({
-  Address: jest.fn(() => null)
+jest.mock('v2/app/pages/identity/components/AddressFields', () => ({
+  AddressFields: jest.fn(() => null)
 }))
-jest.mock('v2/app/pages/identity/components/Financials', () => ({
-  Financials: jest.fn(() => null)
+jest.mock('v2/app/pages/identity/components/FinancialFields', () => ({
+  FinancialFields: jest.fn(() => null)
 }))
-jest.mock('v2/app/pages/identity/components/dataroom/Dataroom', () => ({
-  Dataroom: jest.fn(() => null)
+jest.mock('v2/app/pages/identity/components/IdentityDataroom', () => ({
+  IdentityDataroom: jest.fn(() => null)
 }))
-jest.mock('v2/app/pages/identity/components/Declaration', () => ({
-  Declaration: jest.fn(() => null)
+jest.mock('v2/app/pages/identity/components/DeclarationFields', () => ({
+  DeclarationFields: jest.fn(() => null)
 }))
 
 describe('IndividualIdentityForm', () => {
   const props: IndividualIdentityFormProps = {
     data: individual,
-    isEditing: false,
-    useOwnEmail: false,
+    isNew: false,
     submitButtonText: 'Submit',
     cancelButton: <div data-testid='cancelButton' />
   }
@@ -81,31 +80,30 @@ describe('IndividualIdentityForm', () => {
     )
   })
 
-  it('renders Address with correct props', () => {
+  it('renders AddressFields', () => {
     render(<IndividualIdentityForm {...props} />)
 
-    expect(Address).toHaveBeenCalledWith({ isEditing: props.isEditing }, {})
+    expect(AddressFields).toHaveBeenCalled()
   })
 
-  it('renders Financials with correct props', () => {
+  it('renders FinancialFields', () => {
     render(<IndividualIdentityForm {...props} />)
 
-    expect(Financials).toHaveBeenCalledWith({ isEditing: props.isEditing }, {})
+    expect(FinancialFields).toHaveBeenCalled()
   })
 
-  it('renders Dataroom with correct props', () => {
+  it('renders IdentityDataroom', () => {
     render(<IndividualIdentityForm {...props} />)
 
-    expect(Dataroom).toHaveBeenCalledWith({ isEditing: props.isEditing }, {})
+    expect(IdentityDataroom).toHaveBeenCalled()
   })
 
-  it('renders Declaration with correct props', () => {
+  it('renders DeclarationFields with correct props', () => {
     render(<IndividualIdentityForm {...props} />)
 
-    expect(Declaration).toHaveBeenCalledWith(
+    expect(DeclarationFields).toHaveBeenCalledWith(
       {
-        isEditing: props.isEditing,
-        declarations: getIdentityDeclarations(props.data, 'individual')
+        declarations: declarations.individual
       },
       {}
     )

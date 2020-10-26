@@ -5,11 +5,13 @@ import { completePasswordResetValidationSchema } from 'v2/auth/validation'
 import { usePasswordResetStore } from 'v2/auth/context/password-reset'
 import { PasswordResetStep } from 'v2/auth/context/password-reset/types'
 import { useCompletePasswordReset } from 'v2/auth/hooks/useCompletePasswordReset'
-import { createTypedForm } from 'v2/components/form/createTypedForm'
 import { Button, Grid } from '@material-ui/core'
 import { useUnmountCallback } from 'v2/hooks/useUnmountCallback'
+import { ResetFields } from 'v2/auth/pages/password-reset/components/ResetFields'
+import { Form } from 'v2/components/form/Form'
+import { Submit } from 'v2/components/form/Submit'
 
-type CompletePasswordResetFormValues = Omit<
+export type CompletePasswordResetFormValues = Omit<
   CompletePasswordResetArgs,
   'resetToken'
 >
@@ -19,15 +21,10 @@ export const completePasswordResetInitialValues = {
   newPassword: ''
 }
 
-export const useCompleteResetPasswordForm = createTypedForm<
-  CompletePasswordResetFormValues
->()
-
 export const ResetStep: React.FC = () => {
   const classes = useStyles()
   const [completeReset] = useCompletePasswordReset()
   const { setCurrentStep, email, token, reset } = usePasswordResetStore()
-  const { Form, Submit, TextField } = useCompleteResetPasswordForm()
 
   const handleSubmit = async (
     values: CompletePasswordResetFormValues
@@ -52,12 +49,7 @@ export const ResetStep: React.FC = () => {
       onSubmit={handleSubmit}
     >
       <Grid container direction='column' spacing={2}>
-        <Grid item>
-          <TextField name='email' label='Email' />
-        </Grid>
-        <Grid item>
-          <TextField name='newPassword' label='New Password' />
-        </Grid>
+        <ResetFields />
         <Grid item>
           <div className={classes.formButtons}>
             <Button

@@ -1,4 +1,9 @@
-import { DSORequestArgs, DSOFormValues, DeploymentInfo } from 'v2/types/dso'
+import {
+  DSORequestArgs,
+  DSOFormValues,
+  DsoTeamMember,
+  DeploymentInfo
+} from 'v2/types/dso'
 import { corporate, asset } from './authorizer'
 import { emptyFile } from '__fixtures__/file'
 import { numberToPercentage } from 'v2/app/pages/issuance/utils'
@@ -50,6 +55,14 @@ export const createDSOArgs: DSORequestArgs = {
   useOfProceeds: 'use of proceeds',
   policyBuilder: undefined,
   status: 'Approved'
+}
+
+export const teamMember: DsoTeamMember = {
+  _id: '0',
+  about: 'about',
+  name: 'name',
+  photo: '1',
+  position: 'position'
 }
 
 export const formvalues: DSOFormValues = {
@@ -120,7 +133,7 @@ export const requestargs: DSORequestArgs = {
   logo: '5f898b69aa141c6d0d358ce6',
   useOfProceeds: '<p>As usual</p>\n',
   totalFundraisingAmount: 100000,
-  subscriptionDocument: formvalues.subscriptionDocument._id,
+  subscriptionDocument: formvalues.subscriptionDocument?._id ?? '',
   pricePerUnit: 10,
   minimumInvestment: 200,
   leverage: numberToPercentage(formvalues.leverage),

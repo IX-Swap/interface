@@ -1,10 +1,10 @@
 import { Box, Grid, Typography } from '@material-ui/core'
-import { VSpacer } from '../../../components/VSpacer'
+import { VSpacer } from 'v2/components/VSpacer'
 import React from 'react'
-import { useStyles } from './LandingPageItem.styles'
-import { AppRouterLink } from '../../../components/AppRouterLink'
-import { InternalRouteProps } from '../../../types/util'
-import { Noop } from '../../pages/identity/components/dataroom/Dataroom'
+import { useStyles } from 'v2/app/components/LandingPage/LandingPageItem.styles'
+import { AppRouterLink } from 'v2/components/AppRouterLink'
+import { InternalRouteProps } from 'v2/types/util'
+import { Noop } from 'v2/components/Noop'
 
 export interface LandingPageItemProps {
   link: InternalRouteProps

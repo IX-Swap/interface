@@ -8,20 +8,18 @@ import {
 } from 'v2/app/pages/authorizer/components/AuthorizationDocument'
 import { document } from '__fixtures__/identity'
 import { ViewDocument } from 'v2/app/components/DSO/components/ViewDocument'
-import { DownloadDocument } from 'v2/app/pages/identity/components/dataroom/DownloadDocument'
+import { DownloadDocument } from 'v2/components/dataroom/DownloadDocument'
 
 jest.mock('v2/app/components/DSO/components/ViewDocument', () => ({
   ViewDocument: jest.fn(({ children }) => children())
 }))
-jest.mock('v2/app/pages/identity/components/dataroom/DownloadDocument', () => ({
+jest.mock('v2/components/dataroom/DownloadDocument', () => ({
   DownloadDocument: jest.fn(({ children }) => children())
 }))
 
 describe('AuthorizationDocument', () => {
   const props: AuthorizationDocumentProps = {
-    document: document,
-    input: <div data-testid='input' />,
-    title: 'Test title'
+    value: document
   }
 
   afterEach(async () => {
@@ -35,7 +33,7 @@ describe('AuthorizationDocument', () => {
 
   it('renders nothing if document is null', () => {
     const { container } = render(
-      <AuthorizationDocument {...props} document={null} />
+      <AuthorizationDocument {...props} value={null} />
     )
 
     expect(container).toBeEmptyDOMElement()

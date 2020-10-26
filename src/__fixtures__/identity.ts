@@ -5,10 +5,11 @@ import {
   IndividualIdentity,
   Declaration
 } from 'v2/types/identity'
-import declarations, {
+import {
+  declarations,
   DeclarationValue
 } from 'v2/app/pages/identity/const/declarations'
-import { DataroomFile } from 'v2/types/dataroomFile'
+import { DataroomFile, FormArray } from 'v2/types/dataroomFile'
 import { CorporateIdentityFormValues } from 'v2/app/pages/identity/components/types'
 
 export const corporate: CorporateIdentity = {
@@ -31,7 +32,7 @@ export const corporate: CorporateIdentity = {
   toArrangeCustody: true,
   email: '',
   contactNumber: '',
-  user: '',
+  user,
   authorizationDocuments: [],
   authorization: authorizationInfo,
   authorizations: []
@@ -74,7 +75,7 @@ export const individual: IndividualIdentity = {
   })),
   documents: [],
   address,
-  user: ''
+  user
 }
 
 export const document: DataroomFile = {
@@ -93,30 +94,24 @@ export const documents: DataroomFile[] = [
   { ...document, _id: '2' }
 ]
 
-export const checkedDeclarations: Declaration[] = [
-  { a: DeclarationValue.Yes },
-  { a: DeclarationValue.Yes }
+export const checkedDeclarations: FormArray<Declaration> = [
+  { value: { a: DeclarationValue.Yes } },
+  { value: { a: DeclarationValue.Yes } }
 ]
 
-export const unCheckedDeclarations: Declaration[] = [
-  { a: DeclarationValue.Yes },
-  { a: DeclarationValue.No }
+export const unCheckedDeclarations: FormArray<Declaration> = [
+  { value: { a: DeclarationValue.Yes } },
+  { value: { a: DeclarationValue.No } }
 ]
 
 export const createCorporateArgs: CorporateIdentityFormValues = {
   ...corporate,
-  documents: [
-    { title: '', label: '', type: '', document: documents[0] },
-    { title: '', label: '', type: '', document: documents[1] }
-  ],
+  documents: [{ value: documents[0] }, { value: documents[1] }],
   declarations: checkedDeclarations
 }
 
 export const updateCorporateArgs: CorporateIdentityFormValues = {
   ...corporate,
-  documents: [
-    { title: '', label: '', type: '', document: documents[0] },
-    { title: '', label: '', type: '', document: documents[1] }
-  ],
+  documents: [{ value: documents[0] }, { value: documents[1] }],
   declarations: checkedDeclarations
 }

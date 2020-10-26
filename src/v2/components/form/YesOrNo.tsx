@@ -1,9 +1,10 @@
 import React from 'react'
 import { Grid, Radio } from '@material-ui/core'
+import { DeclarationValue } from 'v2/app/pages/identity/const/declarations'
 
 export interface YesOrNoProps {
   name: string
-  value: 'Yes' | 'No' | null
+  value: DeclarationValue | undefined
   disabled?: boolean
   onChange: (
     event: React.ChangeEvent<HTMLInputElement>,

@@ -4,6 +4,7 @@ import { DSOFormValues } from 'v2/types/dso'
 import { transformDSOFormValuesToRequestArgs } from 'v2/app/pages/issuance/utils'
 import { useDSOById } from 'v2/app/pages/invest/hooks/useDSOById'
 import { DSOForm } from 'v2/app/components/DSO/DSOForm'
+import { DSOView } from 'v2/app/components/DSO/DSOView'
 
 export interface DSOProps {
   dsoId: string
@@ -21,12 +22,11 @@ export const DSO: React.FC<DSOProps> = ({ dsoId, isEditing = false }) => {
     return null
   }
 
+  if (!isEditing) {
+    return <DSOView data={data} />
+  }
+
   return (
-    <DSOForm
-      data={data}
-      onSubmit={handleSubmit}
-      submitButtonLabel='Save'
-      isEditing={isEditing}
-    />
+    <DSOForm data={data} onSubmit={handleSubmit} submitButtonLabel='Save' />
   )
 }

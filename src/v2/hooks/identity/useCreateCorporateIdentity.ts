@@ -1,4 +1,4 @@
-import { useServices } from 'v2/services/useServices'
+import { useServices } from 'v2/hooks/useServices'
 import { useAuth } from 'v2/hooks/auth/useAuth'
 import { useIdentitiesRouter } from 'v2/app/pages/identity/router'
 import { CorporateIdentityFormValues } from 'v2/app/pages/identity/components/types'
@@ -29,6 +29,7 @@ export const useCreateCorporateIdentity = () => {
     const args: CreateCorporateIdentityArgs = {
       ...values,
       userId: user._id,
+      declarations: values.declarations.map(d => d.value),
       documents: prepareDocumentsForUpload(values.documents)
     }
     const { userId, ...identity } = args

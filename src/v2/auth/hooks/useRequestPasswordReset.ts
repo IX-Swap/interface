@@ -1,6 +1,6 @@
 import { useMutation } from 'react-query'
 import { RequestPasswordResetArgs } from 'v2/types/auth'
-import { useServices } from 'v2/services/useServices'
+import { useServices } from 'v2/hooks/useServices'
 import { useAuthRouter } from 'v2/auth/router'
 
 export const useRequestPasswordReset = () => {

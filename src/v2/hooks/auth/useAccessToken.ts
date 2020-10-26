@@ -1,4 +1,4 @@
-import { useServices } from 'v2/services/useServices'
+import { useServices } from 'v2/hooks/useServices'
 import User from 'v2/types/user'
 
 export const useAccessToken = () => {

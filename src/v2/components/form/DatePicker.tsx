@@ -5,10 +5,15 @@ import {
   MuiPickersUtilsProvider
 } from '@material-ui/pickers'
 import DateFnsUtils from '@date-io/date-fns'
+import { useFormError } from 'v2/hooks/useFormError'
+import { FormHelperText } from '@material-ui/core'
 
 export interface DatePickerProps extends KeyboardDatePickerProps {}
 
 export const DatePicker = (props: DatePickerProps) => {
+  const { name } = props
+  const { hasError, error } = useFormError(name ?? '')
+
   return (
     <MuiPickersUtilsProvider utils={DateFnsUtils}>
       <KeyboardDatePicker
@@ -18,10 +23,12 @@ export const DatePicker = (props: DatePickerProps) => {
         format='MM/dd/yyyy'
         placeholder='mm/dd/yy'
         margin='none'
+        fullWidth
         KeyboardButtonProps={{
           'aria-label': 'change date'
         }}
       />
+      {hasError && <FormHelperText error>{error.message}</FormHelperText>}
     </MuiPickersUtilsProvider>
   )
 }

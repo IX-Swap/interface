@@ -22,12 +22,14 @@
     "jsx": "react",
     "sourceMap": true,
     "inlineSources": true,
-    "sourceRoot": "/"
+    "sourceRoot": "/",
+    "noErrorTruncation": true
   },
   "apiUrl": "https://api.mozork.com",
   "include": [
     "src/v2/**/*",
     "src/index.tsx",
+    "src/wdyr.ts",
     "src/react-app-env.d.ts",
     "src/setupTests.ts",
     "src/test-utils.tsx",

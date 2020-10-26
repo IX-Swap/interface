@@ -1,4 +1,4 @@
-import { useServices } from 'v2/services/useServices'
+import { useServices } from 'v2/hooks/useServices'
 import { useAuth } from 'v2/hooks/auth/useAuth'
 import { useIdentitiesRouter } from 'v2/app/pages/identity/router'
 import { CorporateIdentityFormValues } from 'v2/app/pages/identity/components/types'
@@ -16,7 +16,7 @@ import apiService from 'v2/services/api'
 export const useUpdateCorporateIdentity = (id: string) => {
   const { snackbarService } = useServices()
   const { user } = useAuth()
-  const { push } = useIdentitiesRouter()
+  const { push, params } = useIdentitiesRouter()
   const updateCorporate = async (values: CorporateIdentityFormValues) => {
     if (user === undefined) {
       throw new Error('No user found')
@@ -27,6 +27,7 @@ export const useUpdateCorporateIdentity = (id: string) => {
     }
     const identity: UpdateCorporateIdentityArgs = {
       ...values,
+      declarations: values.declarations.map(d => d.value),
       documents: prepareDocumentsForUpload(values.documents)
     }
     const uri = `/identity/corporates/${user._id}/${id}`
@@ -37,7 +38,7 @@ export const useUpdateCorporateIdentity = (id: string) => {
   return useMutation(updateCorporate, {
     onSuccess: data => {
       void snackbarService.showSnackbar(data.message, 'success')
-      push('list')
+      push('corporate', params)
     },
     onError: (error: any) => {
       void snackbarService.showSnackbar(error.message, 'error')

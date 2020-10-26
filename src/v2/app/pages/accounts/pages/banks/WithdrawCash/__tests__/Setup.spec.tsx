@@ -19,6 +19,7 @@ describe('Setup', () => {
       generateInfiniteQueryResult({ map: { [bank._id]: bank } })
     )
   })
+
   afterEach(async () => {
     jest.clearAllMocks()
     await cleanup()

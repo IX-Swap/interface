@@ -1,14 +1,17 @@
 import React from 'react'
-import { Grid } from '@material-ui/core'
+import { Grid, Input } from '@material-ui/core'
 import { useAllBalances } from 'v2/hooks/balance/useAllBalances'
 import { useDSRouter } from 'v2/app/pages/accounts/pages/digitalSecurities/router'
 import { Alert } from '@material-ui/lab'
 import { ContinueButton } from 'v2/app/pages/accounts/pages/digitalSecurities/DSWithdraw/ContinueButton'
-import { useDSWithdrawForm } from 'v2/app/pages/accounts/pages/digitalSecurities/DSWithdraw/WithdrawForm'
-import { VSpacer } from 'v2/components/VSpacer'
+import { TypedField } from 'v2/components/form/TypedField'
+import { useFormContext } from 'react-hook-form'
+import { WithdrawDSFormValues } from 'v2/app/pages/accounts/types'
+import { NumericInput } from 'v2/components/form/NumericInput'
+import { numericValueExtractor } from 'v2/helpers/forms'
 
 export const Setup: React.FC = () => {
-  const { NumericField, TextField } = useDSWithdrawForm()
+  const { control } = useFormContext<WithdrawDSFormValues>()
   const {
     params: { balanceId }
   } = useDSRouter()
@@ -20,7 +23,7 @@ export const Setup: React.FC = () => {
   }
 
   return (
-    <Grid container direction='column'>
+    <Grid container direction='column' spacing={2}>
       <Grid item>
         <Alert severity='warning'>
           Please double check the address because we are unable to recover{' '}
@@ -28,16 +31,18 @@ export const Setup: React.FC = () => {
         </Alert>
       </Grid>
       <Grid item>
-        <VSpacer size='small' />
-      </Grid>
-      <Grid item>
-        <TextField
+        <TypedField
+          control={control}
+          component={Input}
           name='recipientWallet'
           label={`Recipients ${balance.symbol} Address`}
         />
       </Grid>
       <Grid item>
-        <NumericField
+        <TypedField
+          control={control}
+          component={NumericInput}
+          valueExtractor={numericValueExtractor}
           label='Amount'
           name='amount'
           numberFormat={{
@@ -50,10 +55,12 @@ export const Setup: React.FC = () => {
         />
       </Grid>
       <Grid item>
-        <TextField label='Memo' name='memo' />
-      </Grid>
-      <Grid item>
-        <VSpacer size='small' />
+        <TypedField
+          control={control}
+          component={Input}
+          label='Memo'
+          name='memo'
+        />
       </Grid>
       <Grid item container justify='flex-end'>
         <ContinueButton />

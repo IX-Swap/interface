@@ -36,8 +36,9 @@ export const transformDSOFormValuesToRequestArgs = (
         ...rest,
         about: wysiwygToHtml(about)
       })) ?? [],
-    documents: (dso.documents
-      ?.map(d => d.document?._id ?? null)
-      .filter(d => d !== null) ?? []) as string[]
+    documents:
+      dso.documents
+        ?.map(d => d.document?._id ?? null)
+        .filter(d => d !== null) ?? []
   }
 }

@@ -7,7 +7,7 @@ import { user } from '__fixtures__/user'
 import { CashWithdrawal } from 'v2/types/cashWithdrawal'
 import { DSWithdrawal } from 'v2/types/dsWithdrawal'
 import { DigitalSecurityOffering } from 'v2/types/dso'
-import declarations from 'v2/app/pages/identity/const/declarations'
+import { declarations } from 'v2/app/pages/identity/const/declarations'
 import { AuthorizationInfo } from 'v2/types/authorizer'
 import { Commitment } from 'v2/types/commitment'
 import { emptyFile } from '__fixtures__/file'
@@ -64,7 +64,7 @@ export const corporate: CorporateIdentity = {
   toArrangeCustody: true,
   email: '',
   contactNumber: '',
-  user: '',
+  user,
   authorizationDocuments: [],
   authorization: authorizationInfo,
   authorizations: []
@@ -107,7 +107,7 @@ export const individual: IndividualIdentity = {
   })),
   documents: [],
   address,
-  user: ''
+  user
 }
 
 export const dsWithdrawal: DSWithdrawal = {

@@ -1,4 +1,4 @@
-import { useServices } from 'v2/services/useServices'
+import { useServices } from 'v2/hooks/useServices'
 import { useMutation } from 'react-query'
 import { useIdentitiesRouter } from 'v2/app/pages/identity/router'
 import {
@@ -6,10 +6,7 @@ import {
   prepareDocumentsForUpload
 } from 'v2/app/pages/identity/utils'
 import { useAuth } from 'v2/hooks/auth/useAuth'
-import {
-  CorporateIdentityFormValues,
-  IndividualIdentityFormValues
-} from 'v2/app/pages/identity/components/types'
+import { IndividualIdentityFormValues } from 'v2/app/pages/identity/components/types'
 import apiService from 'v2/services/api'
 import {
   CreateOrUpdateIndividualIdentityArgs,
@@ -21,7 +18,7 @@ export const useCreateOrUpdateIndividual = () => {
   const { user } = useAuth()
   const { push } = useIdentitiesRouter()
   const createOrUpdateIndividual = async (
-    values: IndividualIdentityFormValues | CorporateIdentityFormValues
+    values: IndividualIdentityFormValues
   ) => {
     if (user === undefined) {
       throw new Error('No user found')
@@ -34,6 +31,7 @@ export const useCreateOrUpdateIndividual = () => {
     const args: CreateOrUpdateIndividualIdentityArgs = {
       ...values,
       userId: user._id,
+      declarations: values.declarations.map(d => d.value),
       documents: prepareDocumentsForUpload(values.documents)
     }
     const { userId, ...identity } = args
@@ -45,7 +43,7 @@ export const useCreateOrUpdateIndividual = () => {
   return useMutation(createOrUpdateIndividual, {
     onSuccess: data => {
       void snackbarService.showSnackbar(data.message, 'success')
-      push('list')
+      push('individual')
     },
     onError: (error: any) => {
       void snackbarService.showSnackbar(error.message, 'error')

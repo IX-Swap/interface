@@ -98,8 +98,8 @@ export type DSOFormValues = Omit<
   status?: string
   currency: string
   corporate: string
-  documents: Maybe<DataroomFileWithGuide[]>
-  team: Maybe<DsoTeamMember[]>
+  documents: DataroomFileWithGuide[]
+  team: DsoTeamMember[]
 }
 
 export type DSORequestArgs = Omit<

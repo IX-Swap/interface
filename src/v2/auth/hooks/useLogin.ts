@@ -1,4 +1,4 @@
-import { useServices } from 'v2/services/useServices'
+import { useServices } from 'v2/hooks/useServices'
 import { useMutation } from 'react-query'
 import User from 'v2/types/user'
 import { LoginArgs } from 'v2/types/auth'

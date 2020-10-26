@@ -1,4 +1,4 @@
-import { useServices } from 'v2/services/useServices'
+import { useServices } from 'v2/hooks/useServices'
 import { useQuery } from 'react-query'
 import { useSetup2faStore } from '../context'
 import { TwoFaData } from 'v2/app/pages/security/pages/setup2fa/types'

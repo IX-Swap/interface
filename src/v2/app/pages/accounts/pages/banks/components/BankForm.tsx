@@ -12,12 +12,16 @@ import { BankFormValues, BankArgs } from 'v2/app/pages/accounts/types'
 import { bankFormValidationSchema } from 'v2/app/pages/accounts/validation'
 import { useBanksRouter } from 'v2/app/pages/accounts/pages/banks/router'
 import { AppRouterLinkComponent } from 'v2/components/AppRouterLink'
-import { createTypedForm } from 'v2/components/form/createTypedForm'
-import { Dataroom } from 'v2/app/pages/identity/components/dataroom/Dataroom'
 import {
   getBankFormDefaultValues,
   transformBankFormValuesToArgs
 } from 'v2/app/pages/accounts/pages/banks/utils'
+import { Form } from 'v2/components/form/Form'
+import { Submit } from 'v2/components/form/Submit'
+import { AddressFields } from 'v2/app/pages/identity/components/AddressFields'
+import { BankFields } from 'v2/app/pages/accounts/pages/banks/components/BankFields'
+import { BankDocuments } from 'v2/app/pages/accounts/pages/banks/components/BankDocuments'
+import { VSpacer } from 'v2/components/VSpacer'
 
 export interface BankFormProps {
   submitButtonLabel: string
@@ -25,11 +29,8 @@ export interface BankFormProps {
   bank?: Bank
 }
 
-const useBankForm = createTypedForm<BankFormValues>()
-
 export const BankForm: React.FC<BankFormProps> = props => {
   const { submitButtonLabel, onSubmit, bank } = props
-  const { Form, TextField, AssetSelect, CountrySelect, Submit } = useBankForm()
   const { paths } = useBanksRouter()
   const handleSubmit = async (values: BankFormValues) => {
     await onSubmit(transformBankFormValuesToArgs(values))
@@ -41,107 +42,68 @@ export const BankForm: React.FC<BankFormProps> = props => {
       validationSchema={bankFormValidationSchema}
       onSubmit={handleSubmit}
     >
-      <Card variant='outlined'>
-        <CardContent>
-          <Grid container spacing={3}>
-            <Grid item container spacing={3}>
-              <Grid item sm={12} md={12} lg={12}>
+      <Grid container direction='column'>
+        <Card variant='outlined'>
+          <CardContent>
+            <Grid item container direction='column' spacing={3}>
+              <Grid item xs={12}>
                 <Typography variant='h5'>Account Info</Typography>
               </Grid>
-              <Grid item sm={12} md={12} lg={6}>
-                <TextField name='bankName' label='Bank Name' />
-              </Grid>
-              <Grid item sm={12} md={12} lg={6}>
-                <TextField
-                  name='accountHolderName'
-                  label='Account Holder Name'
-                />
+              <Grid container item direction='column' spacing={3}>
+                <BankFields />
               </Grid>
             </Grid>
+          </CardContent>
+        </Card>
 
-            <Grid item container spacing={3}>
-              <Grid item sm={12} md={12} lg={3}>
-                <AssetSelect
-                  name='asset'
-                  label='Currency'
-                  assetType='Currency'
-                />
-              </Grid>
-              <Grid item sm={12} md={12} lg={6}>
-                <TextField
-                  name='bankAccountNumber'
-                  label='Bank Account Number'
-                />
-              </Grid>
-              <Grid item sm={12} md={12} lg={3}>
-                <TextField name='swiftCode' label='Swift Code' />
-              </Grid>
-            </Grid>
+        <Grid item>
+          <VSpacer size='small' />
+        </Grid>
 
-            <Grid item container spacing={3}>
-              <Grid item sm={12} md={12} lg={12}>
+        <Card variant='outlined'>
+          <CardContent>
+            <Grid item container direction='column' spacing={3}>
+              <Grid item xs={12}>
                 <Typography variant='h5'>Bank Address</Typography>
               </Grid>
-              <Grid item sm={12} md={12} lg={6}>
-                <TextField name={['address', 'line1']} label='Line 1' />
-              </Grid>
-              <Grid item sm={12} md={12} lg={6}>
-                <TextField name={['address', 'line2']} label='Line 2' />
+              <Grid container item direction='column'>
+                <AddressFields />
               </Grid>
             </Grid>
+          </CardContent>
+        </Card>
 
-            <Grid item container spacing={3}>
-              <Grid item sm={12} md={12} lg={6}>
-                <TextField name={['address', 'city']} label='City' />
-              </Grid>
+        <Grid item>
+          <VSpacer size='small' />
+        </Grid>
 
-              <Grid item sm={12} md={12} lg={6}>
-                <TextField name={['address', 'state']} label='State' />
-              </Grid>
-
-              <Grid item sm={12} md={12} lg={6}>
-                <CountrySelect name={['address', 'country']} label='Country' />
-              </Grid>
-              <Grid item sm={12} md={12} lg={6}>
-                <TextField
-                  name={['address', 'postalCode']}
-                  label='Postal Code'
-                />
-              </Grid>
-            </Grid>
-
-            <Grid item container spacing={3}>
-              <Grid item sm={12} md={12} lg={12}>
+        <Card variant='outlined'>
+          <CardContent>
+            <Grid item container direction='column' spacing={3}>
+              <Grid item xs={12}>
                 <Typography variant='h5'>Supporting Documents</Typography>
               </Grid>
-              <Grid item sm={12} md={12} lg={12}>
-                <Dataroom
-                  editable
-                  name='supportingDocuments'
-                  isEditing={true}
-                  dataroomDocumentProps={{ setValueToNullOnDelete: false }}
-                  dataroomAddDocumentProps={{
-                    documentInfo: { type: 'Supporting Document' }
-                  }}
-                />
+              <Grid item xs={12}>
+                <BankDocuments />
               </Grid>
             </Grid>
-          </Grid>
-        </CardContent>
-      </Card>
-      <Grid container>
-        <Grid item sm={12} md={12} lg={12}>
-          <Box m={3} display='flex' justifyContent='center'>
-            <Button
-              component={AppRouterLinkComponent}
-              to={paths.list}
-              color='default'
-            >
-              Cancel
-            </Button>
-            <Box marginX={1} />
-            <Submit>{submitButtonLabel}</Submit>
-          </Box>
+          </CardContent>
+        </Card>
+
+        <Grid item>
+          <VSpacer size='small' />
+        </Grid>
+
+        <Grid container item xs={12} justify='center'>
+          <Button
+            component={AppRouterLinkComponent}
+            to={paths.list}
+            color='default'
+          >
+            Cancel
+          </Button>
+          <Box marginX={1} />
+          <Submit>{submitButtonLabel}</Submit>
         </Grid>
       </Grid>
     </Form>

@@ -1,0 +1,47 @@
+import React from 'react'
+import { DeclarationHeader } from 'v2/app/pages/identity/components/DeclarationHeader'
+import { Divider, Grid, ListItem, Typography } from '@material-ui/core'
+import { DeclarationFooter } from 'v2/app/pages/identity/components/DeclarationFooter'
+import { DeclarationTemplate } from 'v2/types/identity'
+import useStyles from 'v2/app/pages/identity/components/DeclarationItem.styles'
+
+export interface DeclarationItemProps {
+  template: DeclarationTemplate
+  value: JSX.Element
+}
+
+export const DeclarationItem = (props: DeclarationItemProps) => {
+  const { template, value } = props
+  const { header, content, subLevel, footer, lastLine } = template
+  const classes = useStyles()
+
+  return (
+    <React.Fragment>
+      {header !== undefined ? <DeclarationHeader header={header} /> : null}
+      <ListItem>
+        <Grid container alignItems='flex-start' spacing={1}>
+          <Grid item xs={10}>
+            <Typography className={subLevel === true ? classes.subLevel : ''}>
+              <span
+                dangerouslySetInnerHTML={{
+                  __html: content
+                }}
+              />
+            </Typography>
+          </Grid>
+          <Grid item xs={2}>
+            <Typography variant='subtitle1' align='right'>
+              {value}
+            </Typography>
+          </Grid>
+        </Grid>
+      </ListItem>
+      {footer !== undefined ? (
+        <DeclarationFooter footer={footer} classes={classes} />
+      ) : null}
+      {lastLine === true ? (
+        <Divider light style={{ marginTop: 15, marginBottom: 15 }} />
+      ) : null}
+    </React.Fragment>
+  )
+}

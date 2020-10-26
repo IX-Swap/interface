@@ -1,4 +1,4 @@
-import { useServices } from 'v2/services/useServices'
+import { useServices } from 'v2/hooks/useServices'
 
 export const useLogout = () => {
   const { storageService, socketService } = useServices()

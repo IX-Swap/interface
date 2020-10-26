@@ -4,12 +4,16 @@ import { render, cleanup } from 'test-utils'
 import { Setup } from 'v2/app/pages/accounts/pages/digitalSecurities/DSWithdraw/Setup'
 import { balance } from '__fixtures__/balance'
 import * as balancesData from 'v2/hooks/balance/useAllBalances'
-import * as withdrawForm from 'v2/app/pages/accounts/pages/digitalSecurities/DSWithdraw/WithdrawForm'
 import { ContinueButton } from 'v2/app/pages/accounts/pages/digitalSecurities/DSWithdraw/ContinueButton'
 import { generateInfiniteQueryResult } from '__fixtures__/useQuery'
 import { history } from 'v2/history'
 import { DSRoute } from 'v2/app/pages/accounts/pages/digitalSecurities/router'
-import { useTypedForm } from '__fixtures__/createTypedForm'
+import { Form } from 'v2/components/form/Form'
+import { TypedField } from 'v2/components/form/TypedField'
+
+jest.mock('v2/components/form/TypedField', () => ({
+  TypedField: jest.fn(() => null)
+}))
 
 jest.mock(
   'v2/app/pages/accounts/pages/digitalSecurities/DSWithdraw/ContinueButton',
@@ -18,8 +22,6 @@ jest.mock(
 
 describe('Setup', () => {
   const balanceId = 'testId'
-  const TextField = jest.fn(() => <div />)
-  const NumericField = jest.fn(() => <div />)
 
   beforeEach(() => {
     history.push(DSRoute.withdraw, { balanceId })
@@ -28,28 +30,43 @@ describe('Setup', () => {
       .mockReturnValue(
         generateInfiniteQueryResult({ map: { testId: balance } })
       )
-
-    jest
-      .spyOn(withdrawForm, 'useDSWithdrawForm')
-      .mockReturnValue({ ...useTypedForm(), TextField, NumericField })
   })
+
   afterEach(async () => {
     await cleanup()
     jest.clearAllMocks()
   })
+
   afterAll(() => history.push('/'))
 
   it('renders ContinueButton', () => {
-    render(<Setup />)
+    render(
+      <Form>
+        <Setup />
+      </Form>
+    )
 
     expect(ContinueButton).toHaveBeenCalled()
   })
 
-  it('renders NumericField with correct props', () => {
-    render(<Setup />)
+  it('renders EditableField with correct props', () => {
+    render(
+      <Form>
+        <Setup />
+      </Form>
+    )
 
-    expect(NumericField).toHaveBeenCalledWith(
-      {
+    expect(TypedField).toHaveBeenNthCalledWith(
+      1,
+      expect.objectContaining({
+        name: 'recipientWallet',
+        label: `Recipients ${balance.symbol} Address`
+      }),
+      {}
+    )
+    expect(TypedField).toHaveBeenNthCalledWith(
+      2,
+      expect.objectContaining({
         label: 'Amount',
         name: 'amount',
         numberFormat: {
@@ -59,28 +76,15 @@ describe('Setup', () => {
           allowEmptyFormatting: true,
           isNumericString: true
         }
-      },
+      }),
       {}
     )
-  })
-
-  it('renders TextField with correct props', () => {
-    render(<Setup />)
-
-    expect(TextField).toHaveBeenNthCalledWith(
-      1,
-      {
-        name: 'recipientWallet',
-        label: `Recipients ${balance.symbol} Address`
-      },
-      {}
-    )
-    expect(TextField).toHaveBeenNthCalledWith(
-      2,
-      {
+    expect(TypedField).toHaveBeenNthCalledWith(
+      3,
+      expect.objectContaining({
         name: 'memo',
         label: 'Memo'
-      },
+      }),
       {}
     )
   })

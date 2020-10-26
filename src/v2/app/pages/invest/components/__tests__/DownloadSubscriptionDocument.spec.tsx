@@ -6,14 +6,14 @@ import {
   DownloadSubscriptionDocumentProps
 } from 'v2/app/pages/invest/components/DownloadSubscriptionDocument'
 import { dso } from '__fixtures__/authorizer'
-import { DownloadDocument } from 'v2/app/pages/identity/components/dataroom/DownloadDocument'
+import { DownloadDocument } from 'v2/components/dataroom/DownloadDocument'
 import { DownloadSubscriptionDocumentButton } from 'v2/app/pages/invest/components/DownloadSubscriptionDocumentButton'
 
 jest.mock(
   'v2/app/pages/invest/components/DownloadSubscriptionDocumentButton',
   () => ({ DownloadSubscriptionDocumentButton: jest.fn(() => null) })
 )
-jest.mock('v2/app/pages/identity/components/dataroom/DownloadDocument', () => ({
+jest.mock('v2/components/dataroom/DownloadDocument', () => ({
   DownloadDocument: jest.fn(({ children }) => children(console.log))
 }))
 

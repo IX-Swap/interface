@@ -51,8 +51,6 @@ describe('IndividualIdEdit', () => {
     expect(IndividualIdentityForm).toHaveBeenCalledWith(
       {
         data: individual,
-        isEditing: true,
-        useOwnEmail: false,
         submitButtonText: 'Save',
         cancelButton: expect.anything()
       },

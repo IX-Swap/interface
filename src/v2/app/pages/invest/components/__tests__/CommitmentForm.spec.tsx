@@ -19,6 +19,7 @@ describe('CommitmentForm', () => {
       .spyOn(useMakeCommitmentHook, 'useMakeCommitment')
       .mockImplementation(() => [makeInvestment] as any)
   })
+
   afterEach(async () => {
     await cleanup()
     jest.clearAllMocks()

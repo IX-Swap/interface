@@ -1,24 +1,24 @@
 import React from 'react'
 import { DigitalSecurityOffering, DSOFormValues } from 'v2/types/dso'
+import { noop } from 'v2/helpers/noop'
+import { transformDSOToFormValues } from 'v2/app/components/DSO/utils'
 import { Box, Grid } from '@material-ui/core'
-import { dsoFormValidationSchema } from 'v2/app/components/DSO/validation'
 import { DSOContainer } from 'v2/app/components/DSO/components/DSOContainer'
-import {
-  Dataroom,
-  noop
-} from 'v2/app/pages/identity/components/dataroom/Dataroom'
-import { DSOTeam } from 'v2/app/components/DSO/components/DSOTeam'
+import { DSOToken } from 'v2/app/components/DSO/components/DSOToken'
 import { DSOBaseFields } from 'v2/app/components/DSO/components/DSOBaseFields'
+import { DSOIntroduction } from 'v2/app/components/DSO/components/DSOIntroduction'
 import { DSOStatusFields } from 'v2/app/components/DSO/components/DSOStatusFields'
-import { DSOOfferingTerms } from 'v2/app/components/DSO/components/DSOOfferingTerms'
-import {
-  renderStringToHTML,
-  transformDSOToFormValues
-} from 'v2/app/components/DSO/utils'
 import { DSOSubscriptionDocument } from 'v2/app/components/DSO/components/DSOSubscriptionDocument'
-import { createTypedForm } from 'v2/components/form/createTypedForm'
-import { DSOToken } from './components/DSOToken'
-import { DSOFormBackButton } from 'v2/app/components/DSO/components/DSOFormBackButton'
+import { DSOOfferingTerms } from 'v2/app/components/DSO/components/DSOOfferingTerms'
+import { DSOBusinessModel } from 'v2/app/components/DSO/components/DSOBusinessModel'
+import { DSOUseOfProceeds } from 'v2/app/components/DSO/components/DSOUseOfProceeds'
+import { DSODataroom } from 'v2/app/components/DSO/components/DSODataroom'
+import { DSOFundRaisingMilestone } from 'v2/app/components/DSO/components/DSOFundRaisingMilestone'
+import { DSOTeam } from 'v2/app/components/DSO/components/DSOTeam'
+import { Form } from 'v2/components/form/Form'
+import { dsoFormValidationSchema } from 'v2/app/components/DSO/validation'
+import { Submit } from 'v2/components/form/Submit'
+import { DSOBackButton } from 'v2/app/components/DSO/components/DSOBackButton'
 
 export interface DSOFormProps {
   submitButtonLabel?: string
@@ -28,124 +28,48 @@ export interface DSOFormProps {
   isNew?: boolean
 }
 
-export const userExtractor = (data: DigitalSecurityOffering | undefined) =>
-  data?.user ?? ''
-
-export const useDSOForm = createTypedForm<DSOFormValues>()
-
 export const DSOForm = (props: DSOFormProps) => {
   const {
     submitButtonLabel = 'Submit',
     data,
     onSubmit = noop,
-    isEditing = false,
     isNew = false
   } = props
-  const { Form, EditableField, FormValue, Submit } = useDSOForm()
 
   return (
     <Form
-      onSubmit={onSubmit}
       validationSchema={dsoFormValidationSchema}
       defaultValues={transformDSOToFormValues(data)}
+      onSubmit={onSubmit}
+      data-testid='dso-form'
     >
-      <DSOBaseFields isEditing={isEditing} dsoOwnerId={userExtractor(data)} />
-
-      <Grid container direction='row' spacing={2}>
-        <DSOContainer title='Introduction' item xs={8}>
-          <EditableField
-            fieldType='RichTextEditor'
-            isEditing={isEditing}
-            label='Introduction'
-            name='introduction'
-            viewRenderer={
-              <FormValue name='introduction'>{renderStringToHTML}</FormValue>
-            }
-          />
-        </DSOContainer>
-
-        <DSOContainer title='Status' item xs={4}>
-          <DSOStatusFields
-            isEditing={isEditing}
-            isNew={isNew}
-            dsoOwnerId={userExtractor(data)}
-          />
-        </DSOContainer>
-
-        <DSOContainer title='Subscription Document' item xs={12}>
-          <DSOSubscriptionDocument
-            isEditing={isEditing}
-            dsoOwnerId={userExtractor(data)}
-            dsoId={userExtractor(data)}
-          />
-        </DSOContainer>
-
-        <DSOContainer title='Offering Terms' item xs={12}>
-          <DSOOfferingTerms
-            isEditing={isEditing}
-            dsoOwnerId={userExtractor(data)}
-          />
-        </DSOContainer>
-
-        <DSOContainer title='Business Model' item xs={12}>
-          <EditableField
-            fieldType='RichTextEditor'
-            isEditing={isEditing}
-            label='Business Model'
-            name='businessModel'
-            viewRenderer={
-              <FormValue name='businessModel'>{renderStringToHTML}</FormValue>
-            }
-          />
-        </DSOContainer>
-
+      <Grid container direction='column' spacing={3}>
+        <DSOBaseFields />
+        <Grid item container direction='row' spacing={2}>
+          <DSOIntroduction />
+          <DSOStatusFields isNew={isNew} />
+        </Grid>
+        <Grid item>
+          <DSOSubscriptionDocument />
+        </Grid>
+        <DSOOfferingTerms />
+        <DSOBusinessModel />
         {!isNew && (
           <DSOContainer title='Token' item xs={12}>
             <DSOToken />
           </DSOContainer>
         )}
-
-        <DSOContainer title='Use of Proceeds' item xs={12}>
-          <EditableField
-            fieldType='RichTextEditor'
-            isEditing={isEditing}
-            label='Use of Proceeds'
-            name='useOfProceeds'
-            viewRenderer={
-              <FormValue name='useOfProceeds'>{renderStringToHTML}</FormValue>
-            }
-          />
-        </DSOContainer>
-
+        <DSOUseOfProceeds />
         <DSOContainer title='Dataroom' item xs={12}>
-          <Dataroom editable isEditing={isEditing} />
+          <DSODataroom />
         </DSOContainer>
-
-        <DSOContainer title='Fund Raising Milestone' item xs={12}>
-          <EditableField
-            fieldType='RichTextEditor'
-            isEditing={isEditing}
-            label='Fund Raising Milestone'
-            name='fundraisingMilestone'
-            viewRenderer={
-              <FormValue name='fundraisingMilestone'>
-                {renderStringToHTML}
-              </FormValue>
-            }
-          />
-        </DSOContainer>
-
-        <DSOContainer title='Team' item xs={12}>
-          <DSOTeam isEditing={isEditing} dsoOwnerId={userExtractor(data)} />
-        </DSOContainer>
-
-        {isEditing && (
-          <Grid container item xs={12} justify='center'>
-            <DSOFormBackButton />
-            <Box px={1} />
-            <Submit>{submitButtonLabel}</Submit>
-          </Grid>
-        )}
+        <DSOFundRaisingMilestone />
+        <DSOTeam />
+        <Grid item container justify='center'>
+          <DSOBackButton />
+          <Box px={1} />
+          <Submit>{submitButtonLabel}</Submit>
+        </Grid>
       </Grid>
     </Form>
   )

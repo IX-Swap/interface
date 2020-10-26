@@ -5,7 +5,7 @@ import {
 } from 'v2/app/pages/notifications/hooks/utils'
 import { Notification } from 'v2/types/notification'
 import { AppFeature } from 'v2/types/app'
-import { useServices } from 'v2/services/useServices'
+import { useServices } from 'v2/hooks/useServices'
 import { queryKeys } from 'v2/config/queryKeys'
 
 export const useNotifications = (filterByFeature = false) => {

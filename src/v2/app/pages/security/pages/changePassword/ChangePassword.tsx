@@ -1,9 +1,11 @@
 import React from 'react'
 import { Container, Paper, Grid, Box } from '@material-ui/core'
-import { createTypedForm } from 'v2/components/form/createTypedForm'
 import { ChangePasswordFormValues } from './types'
 import { changePasswordFormValuesSchema } from './validation'
 import { useChangePassword } from './hooks/useChangePassword'
+import { Form } from 'v2/components/form/Form'
+import { Submit } from 'v2/components/form/Submit'
+import { ChangePasswordFields } from 'v2/app/pages/security/pages/changePassword/components/ChangePasswordFields'
 
 const defaultValues = {
   oldPassword: '',
@@ -12,9 +14,6 @@ const defaultValues = {
 }
 
 export const ChangePassword = () => {
-  const useChangePasswordForm = createTypedForm<ChangePasswordFormValues>()
-
-  const { Form, TextField, Submit } = useChangePasswordForm()
   const [changePassword] = useChangePassword()
   const onSubmit = async (values: ChangePasswordFormValues) => {
     await changePassword(values)
@@ -32,39 +31,7 @@ export const ChangePassword = () => {
             <Paper elevation={1}>
               <Box p={3}>
                 <Grid container>
-                  <Grid item xs={12} md={12} lg={12}>
-                    <Box mr={3} m={1}>
-                      <TextField
-                        name='oldPassword'
-                        label='Old Password'
-                        inputProps={{
-                          type: 'password'
-                        }}
-                      />
-                    </Box>
-                  </Grid>
-                  <Grid item xs={12} md={12} lg={12}>
-                    <Box mr={3} m={1}>
-                      <TextField
-                        name='newPassword'
-                        label='New Password'
-                        inputProps={{
-                          type: 'password'
-                        }}
-                      />
-                    </Box>
-                  </Grid>
-                  <Grid item xs={12} md={12} lg={12}>
-                    <Box mr={3} m={1}>
-                      <TextField
-                        name='confirmPassword'
-                        label='Confirm New Password'
-                        inputProps={{
-                          type: 'password'
-                        }}
-                      />
-                    </Box>
-                  </Grid>
+                  <ChangePasswordFields />
                   <Grid item xs={12} md={12} lg={12}>
                     <Submit>Change</Submit>
                   </Grid>

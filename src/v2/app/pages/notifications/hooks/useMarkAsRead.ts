@@ -1,4 +1,4 @@
-import { useServices } from 'v2/services/useServices'
+import { useServices } from 'v2/hooks/useServices'
 import { useAuth } from 'v2/hooks/auth/useAuth'
 import { queryCache, useMutation } from 'react-query'
 import { Notification } from 'v2/types/notification'

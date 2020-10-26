@@ -2,9 +2,16 @@
 import React from 'react'
 import { render, cleanup } from 'test-utils'
 import { Preview } from 'v2/app/pages/accounts/pages/digitalSecurities/DSWithdraw/Preview'
-import { useTypedForm } from '__fixtures__/createTypedForm'
 import { Summary } from 'v2/app/pages/accounts/pages/digitalSecurities/DSWithdraw/Summary'
-import * as withdrawForm from 'v2/app/pages/accounts/pages/digitalSecurities/DSWithdraw/WithdrawForm'
+import { Form } from 'v2/components/form/Form'
+import { TypedField } from 'v2/components/form/TypedField'
+import { Submit } from 'v2/components/form/Submit'
+
+jest.mock('v2/components/form/TypedField', () => ({
+  TypedField: jest.fn(() => null)
+}))
+
+jest.mock('v2/components/form/Submit', () => ({ Submit: jest.fn(() => null) }))
 
 jest.mock(
   'v2/app/pages/accounts/pages/digitalSecurities/DSWithdraw/Summary',
@@ -12,35 +19,42 @@ jest.mock(
 )
 
 describe('Preview', () => {
-  const TextField = jest.fn(() => null) as any
-  const Submit = jest.fn(() => null)
-
-  beforeEach(() => {
-    jest.spyOn(withdrawForm, 'useDSWithdrawForm').mockReturnValue({
-      ...useTypedForm(),
-      TextField,
-      Submit
-    })
-  })
-
   afterEach(async () => {
     await cleanup()
     jest.clearAllMocks()
   })
 
   it('renders without error', () => {
-    render(<Preview />)
+    render(
+      <Form>
+        <Preview />
+      </Form>
+    )
   })
 
   it('renders TextField & Submit', () => {
-    render(<Preview />)
+    render(
+      <Form>
+        <Preview />
+      </Form>
+    )
 
-    expect(TextField).toHaveBeenCalledTimes(1)
+    expect(TypedField).toHaveBeenCalledWith(
+      expect.objectContaining({
+        name: 'otp',
+        label: '2-Factor Auth Code'
+      }),
+      {}
+    )
     expect(Submit).toHaveBeenCalledTimes(1)
   })
 
   it('renders Summary', () => {
-    render(<Preview />)
+    render(
+      <Form>
+        <Preview />
+      </Form>
+    )
 
     expect(Summary).toHaveBeenCalledTimes(1)
   })

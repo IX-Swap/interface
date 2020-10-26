@@ -28,7 +28,7 @@ export const Section = (
   }
 
   return (
-    <Accordion expanded={expanded} onChange={toggleExpanded}>
+    <Accordion expanded={expanded} onChange={toggleExpanded} variant='outlined'>
       <AccordionSummary expandIcon={<ExpandMoreIcon />}>
         <Grid container justify='space-between'>
           <Grid item>

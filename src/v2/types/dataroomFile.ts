@@ -16,5 +16,11 @@ export interface FileGuide {
 }
 
 export interface DataroomFileWithGuide extends FileGuide {
-  document: DataroomFile | null
+  document: DataroomFile
 }
+
+export interface FormArrayElement<T> {
+  value: T
+}
+
+export type FormArray<T> = Array<FormArrayElement<T>>

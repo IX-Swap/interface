@@ -1,11 +1,10 @@
 import React, { PropsWithChildren } from 'react'
-import { useTypedForm } from 'v2/components/form/useTypedForm'
 import { useAssetsData } from 'v2/hooks/asset/useAssetsData'
+import { Form } from 'v2/components/form/Form'
 
 export interface TransactionFilterFormProps extends PropsWithChildren<any> {}
 
 export const TransactionFilterForm = (props: TransactionFilterFormProps) => {
-  const { Form } = useTypedForm()
   const { data, isLoading } = useAssetsData()
 
   if (isLoading) {

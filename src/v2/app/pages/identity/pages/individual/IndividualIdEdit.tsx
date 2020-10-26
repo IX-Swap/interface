@@ -22,8 +22,6 @@ export const IndividualIdEdit: React.FC = () => {
       <Grid item>
         <IndividualIdentityForm
           data={data}
-          isEditing={true}
-          useOwnEmail={false}
           submitButtonText='Save'
           cancelButton={<CancelButton link={paths.individual} />}
         />

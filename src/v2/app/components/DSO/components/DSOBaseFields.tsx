@@ -1,91 +1,103 @@
 import React from 'react'
-import { Grid } from '@material-ui/core'
-import { useDSOForm } from 'v2/app/components/DSO/DSOForm'
-import { UserAvatar } from 'v2/app/components/UserAvatar'
-import { DSOCorporateName } from 'v2/app/components/DSO/components/DSOCorporateName'
-import { DSOCurrencyName } from 'v2/app/components/DSO/components/DSOCurrencyName'
+import { Grid, Input } from '@material-ui/core'
+import { TypedField } from 'v2/components/form/TypedField'
+import { DataroomUploader } from 'v2/components/dataroom/DataroomUploader'
+import { DataroomAvatarUploader } from 'v2/components/dataroom/DataroomAvatarUploader'
+import { DatePicker } from 'v2/components/form/DatePicker'
+import { dateTimeValueExtractor } from 'v2/helpers/forms'
+import { CorporateSelect } from 'v2/components/form/CorporateSelect'
+import { AssetSelect } from 'v2/components/form/AssetSelect'
+import { useFormContext } from 'react-hook-form'
+import { DSOFormValues } from 'v2/types/dso'
+import { documentValueExtractor } from 'v2/app/components/DSO/utils'
 
-export interface DSOBaseFieldsProps {
-  isEditing: boolean
-  dsoOwnerId: string
-}
-
-export const DSOBaseFields = (props: DSOBaseFieldsProps) => {
-  const { isEditing, dsoOwnerId } = props
-  const { EditableField } = useDSOForm()
+export const DSOBaseFields = () => {
+  const { control } = useFormContext<DSOFormValues>()
 
   return (
     <Grid
+      title='Base Fields'
+      xs={12}
       container
+      item
       direction='row'
       alignItems='flex-start'
-      spacing={2}
-      style={{ marginBottom: 20, marginTop: 20 }}
+      spacing={3}
     >
-      <Grid item>
-        <UserAvatar
-          name='logo'
-          isEditing={isEditing}
-          ownerId={dsoOwnerId}
-          size={80}
-        />
-      </Grid>
+      <Grid item container spacing={3}>
+        <Grid item>
+          {/* @ts-ignore */}
+          <TypedField
+            customRenderer
+            component={DataroomUploader}
+            name='logo'
+            label='Logo'
+            control={control}
+            render={DataroomAvatarUploader}
+            valueExtractor={documentValueExtractor}
+            documentInfo={{
+              type: 'Logo'
+            }}
+          />
+        </Grid>
 
-      <Grid item>
-        <EditableField
-          fieldType='TextField'
-          isEditing={isEditing}
-          label='Token Name'
-          name='tokenName'
-        />
-      </Grid>
+        <Grid item>
+          <TypedField
+            component={Input}
+            label='Token Name'
+            name='tokenName'
+            control={control}
+          />
+        </Grid>
 
-      <Grid item>
-        <EditableField
-          fieldType='TextField'
-          isEditing={isEditing}
-          label='Symbol'
-          name='tokenSymbol'
-        />
-      </Grid>
+        <Grid item>
+          <TypedField
+            component={Input}
+            label='Symbol'
+            name='tokenSymbol'
+            control={control}
+          />
+        </Grid>
 
-      <Grid item>
-        <EditableField
-          fieldType='DatePicker'
-          isEditing={isEditing}
-          label='Launch Date'
-          name='launchDate'
-        />
-      </Grid>
+        <Grid item>
+          {/* @ts-ignore */}
+          <TypedField
+            component={DatePicker}
+            customRenderer
+            label='Launch Date'
+            name='launchDate'
+            control={control}
+            valueExtractor={dateTimeValueExtractor}
+          />
+        </Grid>
 
-      <Grid item>
-        <EditableField
-          fieldType='CorporateSelect'
-          isEditing={isEditing}
-          label='Corporate'
-          name='corporate'
-          viewRenderer={<DSOCorporateName />}
-        />
-      </Grid>
+        <Grid item>
+          <TypedField
+            component={CorporateSelect}
+            label='Corporate'
+            name='corporate'
+            control={control}
+          />
+        </Grid>
 
-      <Grid item>
-        <EditableField
-          fieldType='TextField'
-          isEditing={isEditing}
-          label='Issuer Name'
-          name='issuerName'
-        />
-      </Grid>
+        <Grid item>
+          <TypedField
+            component={Input}
+            label='Issuer Name'
+            name='issuerName'
+            control={control}
+          />
+        </Grid>
 
-      <Grid item>
-        <EditableField
-          fieldType='AssetSelect'
-          assetType='Currency'
-          isEditing={isEditing}
-          label='Currency'
-          name='currency'
-          viewRenderer={<DSOCurrencyName />}
-        />
+        <Grid item>
+          <TypedField
+            assetType='Currency'
+            component={AssetSelect}
+            label='Currency'
+            name='currency'
+            control={control}
+          />
+        </Grid>
       </Grid>
     </Grid>
   )

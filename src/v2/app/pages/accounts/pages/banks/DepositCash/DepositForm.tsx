@@ -2,9 +2,7 @@ import React from 'react'
 import { DepositCashFormValues } from 'v2/app/pages/accounts/types'
 import { depositCashFormValidationSchema } from 'v2/app/pages/accounts/validation'
 import { useDepositCash } from 'v2/app/pages/accounts/pages/banks/hooks/useDepositCash'
-import { createTypedForm } from 'v2/components/form/createTypedForm'
-
-export const useDepositCashForm = createTypedForm<DepositCashFormValues>()
+import { Form } from 'v2/components/form/Form'
 
 export interface DepositFormProps {
   depositCode: string
@@ -12,7 +10,6 @@ export interface DepositFormProps {
 
 export const DepositForm: React.FC<DepositFormProps> = props => {
   const { depositCode, children } = props
-  const { Form } = useDepositCashForm()
   const [depositCash] = useDepositCash()
   const handleSubmit = async (values: DepositCashFormValues) => {
     await depositCash({ ...values, depositCode })

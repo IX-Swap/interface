@@ -24,8 +24,7 @@ describe('IndividualIdCreate', () => {
     expect(IndividualIdentityForm).toHaveBeenCalledWith(
       {
         identity: undefined,
-        isEditing: true,
-        useOwnEmail: false,
+        isNew: true,
         submitButtonText: 'Create',
         cancelButton: expect.anything()
       },

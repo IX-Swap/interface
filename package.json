@@ -4,7 +4,7 @@
   "private": true,
   "dependencies": {
     "@date-io/date-fns": "^1.3.13",
-    "@hookform/error-message": "0.0.4",
+    "@hookform/error-message": "^0.0.4",
     "@hookform/resolvers": "^0.1.0",
     "@hookform/strictly-typed": "0.0.3",
     "@material-ui/core": "^4.10.2",

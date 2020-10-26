@@ -1,27 +1,16 @@
 /**  * @jest-environment jsdom-sixteen  */
 import React from 'react'
 import { render, cleanup } from 'test-utils'
-import {
-  DSOOfferingTerms,
-  DSOOfferingTermsProps
-} from 'v2/app/components/DSO/components/DSOOfferingTerms'
+import { DSOOfferingTerms } from 'v2/app/components/DSO/components/DSOOfferingTerms'
 import { Form } from 'v2/components/form/Form'
-import { useTypedForm } from '__fixtures__/createTypedForm'
-import * as dsoForm from 'v2/app/components/DSO/DSOForm'
-import { monthsFormat, percentageFormat } from 'v2/config/monthsFormat'
+import { monthsFormat, percentageFormat } from 'v2/config/numberFormat'
+import { TypedField } from 'v2/components/form/TypedField'
+
+jest.mock('v2/components/form/TypedField', () => ({
+  TypedField: jest.fn(() => <input />)
+}))
 
 describe('DSOOfferingTerms', () => {
-  const props: DSOOfferingTermsProps = {
-    dsoOwnerId: '',
-    isEditing: false
-  }
-  const EditableField = jest.fn(() => <div />)
-
-  beforeEach(() => {
-    jest
-      .spyOn(dsoForm, 'useDSOForm')
-      .mockReturnValue({ ...useTypedForm(), EditableField })
-  })
   afterEach(async () => {
     await cleanup()
     jest.clearAllMocks()
@@ -30,7 +19,7 @@ describe('DSOOfferingTerms', () => {
   it('renders without error', () => {
     render(
       <Form>
-        <DSOOfferingTerms {...props} />
+        <DSOOfferingTerms />
       </Form>
     )
   })
@@ -38,92 +27,76 @@ describe('DSOOfferingTerms', () => {
   it('renders EditableField with correct props', () => {
     render(
       <Form>
-        <DSOOfferingTerms {...props} />
+        <DSOOfferingTerms />
       </Form>
     )
 
-    expect(EditableField).toHaveBeenCalledTimes(8)
-    expect(EditableField).toHaveBeenNthCalledWith(
+    expect(TypedField).toHaveBeenCalledTimes(8)
+    expect(TypedField).toHaveBeenNthCalledWith(
       1,
       expect.objectContaining({
-        fieldType: 'NumericField',
         numberFormat: monthsFormat,
-        isEditing: props.isEditing,
         label: 'Investment Period',
         name: 'investmentPeriod'
       }),
       {}
     )
-    expect(EditableField).toHaveBeenNthCalledWith(
+    expect(TypedField).toHaveBeenNthCalledWith(
       2,
       expect.objectContaining({
-        fieldType: 'TextField',
-        isEditing: props.isEditing,
         label: 'Investment Structure',
         name: 'investmentStructure'
       }),
       {}
     )
-    expect(EditableField).toHaveBeenNthCalledWith(
+    expect(TypedField).toHaveBeenNthCalledWith(
       3,
       expect.objectContaining({
-        fieldType: 'NumericField',
         numberFormat: percentageFormat,
-        isEditing: props.isEditing,
         label: 'Interest Rate',
         name: 'interestRate'
       }),
       {}
     )
-    expect(EditableField).toHaveBeenNthCalledWith(
+    expect(TypedField).toHaveBeenNthCalledWith(
       4,
       expect.objectContaining({
-        fieldType: 'NumericField',
         numberFormat: percentageFormat,
-        isEditing: props.isEditing,
         label: 'Dividend Yield',
         name: 'dividendYield'
       }),
       {}
     )
-    expect(EditableField).toHaveBeenNthCalledWith(
+    expect(TypedField).toHaveBeenNthCalledWith(
       5,
       expect.objectContaining({
-        fieldType: 'NumericField',
         numberFormat: percentageFormat,
-        isEditing: props.isEditing,
         label: 'Equity Multiple',
         name: 'equityMultiple'
       }),
       {}
     )
-    expect(EditableField).toHaveBeenNthCalledWith(
+    expect(TypedField).toHaveBeenNthCalledWith(
       6,
       expect.objectContaining({
-        fieldType: 'NumericField',
         numberFormat: percentageFormat,
-        isEditing: props.isEditing,
         label: 'Leverage',
         name: 'leverage'
       }),
       {}
     )
-    expect(EditableField).toHaveBeenNthCalledWith(
+    expect(TypedField).toHaveBeenNthCalledWith(
       7,
       expect.objectContaining({
-        fieldType: 'NumericField',
         numberFormat: percentageFormat,
-        isEditing: props.isEditing,
         label: 'Gross IRR',
         name: 'grossIRR'
       }),
       {}
     )
-    expect(EditableField).toHaveBeenNthCalledWith(
+    expect(TypedField).toHaveBeenNthCalledWith(
       8,
       expect.objectContaining({
-        fieldType: 'DistributionFrequency',
-        isEditing: props.isEditing,
         label: 'Distribution Frequency',
         name: 'distributionFrequency'
       }),

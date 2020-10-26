@@ -55,8 +55,6 @@ describe('CorporateIdEdit', () => {
     expect(CorporateIdentityForm).toHaveBeenCalledWith(
       {
         data: corporate,
-        isEditing: true,
-        useOwnEmail: false,
         submitButtonText: 'Save',
         onSubmit: expect.any(Function),
         cancelButton: expect.anything()

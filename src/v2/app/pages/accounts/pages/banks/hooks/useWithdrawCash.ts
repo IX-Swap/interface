@@ -1,5 +1,5 @@
 import { useMutation } from 'react-query'
-import { useServices } from 'v2/services/useServices'
+import { useServices } from 'v2/hooks/useServices'
 import { DepositStoreStep } from 'v2/app/pages/accounts/pages/banks/context/store'
 import { useDepositStore } from 'v2/app/pages/accounts/pages/banks/context'
 import { useAuth } from 'v2/hooks/auth/useAuth'

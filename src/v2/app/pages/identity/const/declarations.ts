@@ -257,5 +257,3 @@ export const formatDeclarations = (
 
   return mDeclarations
 }
-
-export default declarations
