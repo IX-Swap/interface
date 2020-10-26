@@ -1,5 +1,5 @@
 import { includes } from 'lodash'
-import { useAuth } from 'v2/hooks/auth/useAuth'
+import { useCachedUser } from 'v2/hooks/auth/useCachedUser'
 
 export enum AppRole {
   ADMIN = 'admin',
@@ -24,7 +24,7 @@ export const hasRole = (roles: string, roleToCheck: AppRole) => {
 }
 
 export const useIsAdmin = () => {
-  const { user } = useAuth()
+  const user = useCachedUser()
 
   if (user === undefined) return false
 
@@ -32,7 +32,7 @@ export const useIsAdmin = () => {
 }
 
 export const useIsAuthorizer = () => {
-  const { user } = useAuth()
+  const user = useCachedUser()
 
   if (user === undefined) return false
 
@@ -40,7 +40,7 @@ export const useIsAuthorizer = () => {
 }
 
 export const useIsIssuer = () => {
-  const { user } = useAuth()
+  const user = useCachedUser()
 
   if (user === undefined) return false
 
@@ -48,7 +48,7 @@ export const useIsIssuer = () => {
 }
 
 export const useIsAccredited = () => {
-  const { user } = useAuth()
+  const user = useCachedUser()
 
   if (user === undefined) return false
 
@@ -56,7 +56,7 @@ export const useIsAccredited = () => {
 }
 
 export const useIsEnabled2FA = () => {
-  const { user } = useAuth()
+  const user = useCachedUser()
 
   return user?.totpConfirmed ?? false
 }

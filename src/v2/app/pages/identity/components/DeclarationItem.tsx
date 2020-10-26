@@ -4,6 +4,9 @@ import { Divider, Grid, ListItem, Typography } from '@material-ui/core'
 import { DeclarationFooter } from 'v2/app/pages/identity/components/DeclarationFooter'
 import { DeclarationTemplate } from 'v2/types/identity'
 import useStyles from 'v2/app/pages/identity/components/DeclarationItem.styles'
+import { PrivacyPolicy } from 'v2/app/pages/identity/components/PrivacyPolicy'
+import { TermsOfUse } from 'v2/app/pages/identity/components/TermsOfUse'
+import { W8BEN } from 'v2/app/pages/identity/components/W8BEN'
 
 export interface DeclarationItemProps {
   template: DeclarationTemplate
@@ -14,6 +17,7 @@ export const DeclarationItem = (props: DeclarationItemProps) => {
   const { template, value } = props
   const { header, content, subLevel, footer, lastLine } = template
   const classes = useStyles()
+  const [left, right] = content.split('[LINK]')
 
   return (
     <React.Fragment>
@@ -24,7 +28,15 @@ export const DeclarationItem = (props: DeclarationItemProps) => {
             <Typography className={subLevel === true ? classes.subLevel : ''}>
               <span
                 dangerouslySetInnerHTML={{
-                  __html: content
+                  __html: left
+                }}
+              />
+              {template.key === 'InvestaXPrivacyPolicy' && <PrivacyPolicy />}
+              {template.key === 'InvestaXTermsOfUse' && <TermsOfUse />}
+              {template.key === 'USPerson' && <W8BEN />}
+              <span
+                dangerouslySetInnerHTML={{
+                  __html: right
                 }}
               />
             </Typography>

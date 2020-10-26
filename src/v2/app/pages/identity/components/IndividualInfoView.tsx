@@ -1,7 +1,7 @@
 import React from 'react'
 import { ExtendedIdentityProfile } from 'v2/types/identity'
-import { Avatar, Grid } from '@material-ui/core'
-import { ViewDocument } from 'v2/app/components/DSO/components/ViewDocument'
+import { Grid } from '@material-ui/core'
+import { Avatar } from 'v2/components/Avatar'
 import { LabelledValue } from 'v2/components/LabelledValue'
 
 export interface IndividualInfoViewProps {
@@ -14,9 +14,7 @@ export const IndividualInfoView = (props: IndividualInfoViewProps) => {
   return (
     <Grid container spacing={3}>
       <Grid item xs={12}>
-        <ViewDocument documentId={data.photo} ownerId={data.user._id}>
-          {url => <Avatar src={url} style={{ width: 80, height: 80 }} />}
-        </ViewDocument>
+        <Avatar documentId={data.photo} ownerId={data.user._id} />
       </Grid>
       <Grid item xs={4}>
         <LabelledValue value={data.firstName} label='First Name' />

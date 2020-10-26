@@ -2,9 +2,9 @@ import React, { createElement } from 'react'
 import { InternalRouteBase, InternalRouteProps } from 'v2/types/util'
 import { Redirect, RouteComponentProps } from 'react-router-dom'
 import { safeGeneratePath } from 'v2/helpers/router'
-import { useAuth } from 'v2/hooks/auth/useAuth'
 import { AppRole, getUserRoles, useIsEnabled2FA } from 'v2/helpers/acl'
 import { AppRoute as AppPath } from 'v2/app/router'
+import { useCachedUser } from 'v2/hooks/auth/useCachedUser'
 
 export interface AppRouteProps extends RouteComponentProps {
   route: InternalRouteProps
@@ -15,7 +15,7 @@ export interface AppRouteProps extends RouteComponentProps {
 export const AppRoute = (props: AppRouteProps) => {
   const { params, route, pushCrumb } = props
   const { path, component } = route
-  const { user } = useAuth()
+  const user = useCachedUser()
   const is2FAEnabled = useIsEnabled2FA()
   const roles = getUserRoles(user?.roles)
   const isAccredited = roles.includes(AppRole.ACCREDITED)

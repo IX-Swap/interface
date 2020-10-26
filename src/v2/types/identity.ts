@@ -37,12 +37,12 @@ export interface IdentityProfile {
   firstName: string
   middleName?: string
   lastName: string
-  photo: string
+  photo?: string
   dob: string
   gender: 'M' | 'F'
   nationality: string
   countryOfResidence: string
-  maritalStatus: 'Single' | 'Married'
+  maritalStatus: string
   contactNumber: string
   address: Omit<IdentityAddress, 'countryOfResidence'>
   email?: string
@@ -64,11 +64,11 @@ export interface IdentityFinancials {
   occupation: string
   // politicallyExposed: boolean
   sourceOfWealth: string
-  toArrangeCustody: boolean
+  toArrangeCustody?: boolean
 }
 
 export interface CorporateFields {
-  logo: string
+  logo?: string
   email: string
   contactNumber: string
   companyLegalName: string
@@ -79,7 +79,7 @@ export interface CorporateFields {
   representatives: IdentityProfile[]
   directors: IdentityProfile[]
   beneficialOwners: IdentityProfile[]
-  toArrangeCustody: boolean
+  toArrangeCustody?: boolean
 }
 
 export interface Declaration {
@@ -94,7 +94,7 @@ export interface BaseIdentity {
   updatedAt: string
   documents: DataroomFile[]
   declarations: Declaration[]
-  walletAddress: string
+  walletAddress?: string
 }
 
 export interface DeclarationTemplate {

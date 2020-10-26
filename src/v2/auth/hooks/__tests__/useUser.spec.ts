@@ -3,16 +3,14 @@ import { act } from '@testing-library/react-hooks'
 import { waitFor, cleanup, renderHookWithServiceProvider } from 'test-utils'
 import { successfulResponse } from '__fixtures__/api'
 import { useUser } from 'v2/auth/hooks/useUser'
-import * as useAuthHook from 'v2/hooks/auth/useAuth'
+import * as useCachedUserHook from 'v2/hooks/auth/useCachedUser'
 import { user } from '__fixtures__/user'
 
 describe('useUser', () => {
   beforeEach(() => {
-    jest.spyOn(useAuthHook, 'useAuth').mockReturnValue({
-      isAuthenticated: true,
-      user: user
-    })
+    jest.spyOn(useCachedUserHook, 'useCachedUser').mockReturnValue(user)
   })
+
   afterEach(async () => {
     await cleanup()
     jest.clearAllMocks()
