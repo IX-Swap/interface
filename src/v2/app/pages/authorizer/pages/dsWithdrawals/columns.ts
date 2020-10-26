@@ -14,7 +14,7 @@ export const columns: Array<TableColumn<DSWithdrawal>> = [
     render: formatDateToMMDDYY
   },
   {
-    key: 'individual.firstName',
+    key: 'identity.individual.firstName',
     label: 'Name',
     render: renderLastName
   },

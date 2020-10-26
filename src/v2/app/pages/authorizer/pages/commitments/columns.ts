@@ -1,7 +1,7 @@
 import { TableColumn } from 'v2/types/util'
 import { Commitment } from 'v2/types/commitment'
 import { formatDateToMMDDYY } from 'v2/helpers/dates'
-import { renderAmount, renderFirstName } from 'v2/helpers/tables'
+import { renderAmount } from 'v2/helpers/tables'
 
 export const columns: Array<TableColumn<Commitment>> = [
   {
@@ -10,9 +10,9 @@ export const columns: Array<TableColumn<Commitment>> = [
     render: formatDateToMMDDYY
   },
   {
-    key: 'individual.firstname',
-    label: 'Name',
-    render: renderFirstName
+    key: 'identity.individual.firstName',
+    label: 'Name'
+    // render: renderFirstName
   },
   {
     key: 'level',

@@ -1,7 +1,7 @@
 import { TableColumn } from 'v2/types/util'
 import { CashDeposit } from 'v2/types/cashDeposit'
 import { formatDateToMMDDYY } from 'v2/helpers/dates'
-import { renderAmount, renderFirstName } from 'v2/helpers/tables'
+import { renderAmount } from 'v2/helpers/tables'
 
 export const columns: Array<TableColumn<CashDeposit>> = [
   {
@@ -10,9 +10,9 @@ export const columns: Array<TableColumn<CashDeposit>> = [
     render: formatDateToMMDDYY
   },
   {
-    key: 'individual.firstName',
-    label: 'User',
-    render: renderFirstName
+    key: 'identity.individual.firstName',
+    label: 'User'
+    // render: renderFirstName
   },
   {
     key: 'level',

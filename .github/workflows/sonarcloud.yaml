@@ -27,6 +27,12 @@ jobs:
         env:
           REACT_APP_API_URL: https://devapi.mozork.com
 
+      - name: Fix code coverage paths for Sonar
+        working-directory: ./coverage
+        run: |
+          sed -i 's/\/home\/runner\/work\/IXWebApp\/IXWebApp\//\/github\/workspace\//g' lcov.info
+          sed -i 's/\/home\/runner\/work\/IXWebApp\/IXWebApp\//\/github\/workspace\//g' test-report.xml
+
       - name: Sonar Scan
         uses: sonarsource/sonarcloud-github-action@master
         env:
