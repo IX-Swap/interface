@@ -4,7 +4,7 @@ import { TypedField } from 'v2/components/form/TypedField'
 import { NumericInput } from 'v2/components/form/NumericInput'
 import { moneyNumberFormat } from 'v2/app/components/DSO/utils'
 import { Checkbox } from 'v2/components/form/Checkbox'
-import { booleanValueExtractor } from 'v2/helpers/forms'
+import { booleanValueExtractor, numericValueExtractor } from 'v2/helpers/forms'
 import { useFormContext } from 'react-hook-form'
 
 export const FinancialFields = (): JSX.Element => {
@@ -58,6 +58,7 @@ export const FinancialFields = (): JSX.Element => {
           name='annualIncome'
           label='Annual Income'
           component={NumericInput}
+          valueExtractor={numericValueExtractor}
           numberFormat={moneyNumberFormat}
         />
       </Grid>
@@ -67,6 +68,7 @@ export const FinancialFields = (): JSX.Element => {
           name='houseHoldIncome'
           label='Household Income'
           component={NumericInput}
+          valueExtractor={numericValueExtractor}
           numberFormat={moneyNumberFormat}
         />
       </Grid>
