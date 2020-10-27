@@ -4,16 +4,21 @@ import {
   DeclarationTemplate,
   IndividualIdentity
 } from 'v2/types/identity'
-import {
-  declarations,
-  DeclarationValue,
-  formatDeclarations
-} from 'v2/app/pages/identity/const/declarations'
 import documents, {
   formatDocuments
 } from 'v2/app/pages/identity/const/documents'
 import { DataroomFile, FormArray } from 'v2/types/dataroomFile'
 import { Maybe } from 'v2/types/util'
+import {
+  CorporateDeclarations,
+  corporateDeclarationsTemplate,
+  IndividualDeclarations,
+  individualDeclarationsTemplate
+} from 'v2/app/pages/identity/const/declarations'
+import {
+  CorporateIdentityFormValues,
+  IndividualIdentityFormValues
+} from 'v2/app/pages/identity/components/types'
 
 export type IdentityType = 'corporate' | 'individual'
 
@@ -30,49 +35,27 @@ export const getIdentityDocuments = (
   return documents[type]
 }
 
-export const getIdentityDeclarations = (
-  identity: IndividualIdentity | CorporateIdentity | undefined,
-  type: IdentityType
-) => {
-  if (identity !== undefined) {
-    return identity.declarations !== undefined
-      ? formatDeclarations(identity.declarations, type)
-      : declarations[type]
-  }
-
-  return declarations[type]
-}
-
-export const allDeclarationsAreChecked = (
-  declarations: FormArray<Declaration>
-) => {
-  return declarations.every(({ value }) => {
-    const key = Object.keys(value)[0]
-    return value[key] === DeclarationValue.Yes
-  })
-}
+type IdentityFormValues<T extends any> = T extends undefined
+  ? never
+  : (T extends CorporateIdentity
+      ? CorporateIdentityFormValues & { declarations: CorporateDeclarations }
+      : IndividualIdentityFormValues & {
+          declarations: IndividualDeclarations
+        }) & {
+      documents: FormArray<DataroomFile>
+    }
 
 export const getIdentityFormDefaultValue = <
-  T extends IndividualIdentity | CorporateIdentity | undefined
+  T extends CorporateIdentity | IndividualIdentity | undefined
 >(
   identity: T,
   type: IdentityType
-): T & {
-  documents: FormArray<Maybe<DataroomFile>>
-  declarations: FormArray<Declaration>
-} => {
-  return identity !== undefined
-    ? {
-        ...identity,
-        declarations: declarations[type].map((value, index) => ({
-          value: identity.declarations[index]
-        })),
-        documents: formatDocuments(identity.documents ?? [], type)
-      }
-    : ({
-        declarations: declarations[type].map(value => ({ value })),
-        documents: formatDocuments([], type)
-      } as any) // TODO: fix any
+): IdentityFormValues<T> => {
+  return ({
+    ...(identity ?? {}),
+    declarations: formatDeclarations(type, identity?.declarations),
+    documents: formatDocuments(identity?.documents ?? [], type)
+  } as unknown) as IdentityFormValues<T>
 }
 
 export const prepareDocumentsForUpload = (
@@ -90,4 +73,37 @@ export const getDeclarationTemplate = (
   return declarations.find(
     ({ key }) => key === Object.keys(declaration ?? {})[0]
   )
+}
+
+export const formatDeclarations = (
+  type: IdentityType,
+  declarations: Declaration[] = []
+) => {
+  const isCorporate = type === 'corporate'
+  const templates = isCorporate
+    ? corporateDeclarationsTemplate
+    : individualDeclarationsTemplate
+
+  const result = Object.keys(templates).reduce((acc, key) => {
+    const declaration = declarations.find(
+      declaration => Object.keys(declaration)[0] === key
+    )
+
+    return {
+      ...acc,
+      [key]: declaration?.[key] ?? undefined
+    }
+  }, {})
+
+  return isCorporate
+    ? ((result as unknown) as CorporateDeclarations)
+    : ((result as unknown) as IndividualDeclarations)
+}
+
+export const prepareDeclarationsForUpload = (
+  declarations: IndividualDeclarations | CorporateDeclarations
+) => {
+  return Object.entries(declarations).map(([key, value]) => ({
+    [key]: value
+  }))
 }

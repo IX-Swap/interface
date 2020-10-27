@@ -1,19 +1,18 @@
-import React, { Suspense } from 'react'
+import React from 'react'
 import { IndividualIdentity } from 'v2/types/identity'
 import { Box, Grid } from '@material-ui/core'
 import { Section } from 'v2/app/pages/identity/components/Section'
 import { IndividualIdentityFormValues } from 'v2/app/pages/identity/components/types'
-import { individualIdentityFormValidationSchema } from 'v2/app/pages/identity/components/validation'
 import { useCreateOrUpdateIndividual } from 'v2/hooks/identity/useCreateOrUpdateIndividual'
 import { getIdentityFormDefaultValue } from 'v2/app/pages/identity/utils'
 import { Submit } from 'v2/components/form/Submit'
-import { declarations } from 'v2/app/pages/identity/const/declarations'
 import { IndividualInfoFields } from 'v2/app/pages/identity/components/IndividualInfoFields'
 import { AddressFields } from 'v2/app/pages/identity/components/AddressFields'
 import { FinancialFields } from 'v2/app/pages/identity/components/FinancialFields'
 import { IdentityDataroom } from 'v2/app/pages/identity/components/IdentityDataroom'
 import { DeclarationFields } from 'v2/app/pages/identity/components/DeclarationFields'
 import { Form } from 'v2/components/form/Form'
+import { individualIdentityFormValidationSchema } from 'v2/validation/identities'
 
 export interface IndividualIdentityFormProps {
   data: IndividualIdentity | undefined
@@ -44,35 +43,27 @@ export const IndividualIdentityForm = (
           </Section>
         </Grid>
 
-        <Suspense fallback={'loading...'}>
-          <Grid item xs={12}>
-            <Section title='Address'>
-              <AddressFields />
-            </Section>
-          </Grid>
-        </Suspense>
+        <Grid item xs={12}>
+          <Section title='Address'>
+            <AddressFields />
+          </Section>
+        </Grid>
 
-        <Suspense fallback={'loading...'}>
-          <Grid item xs={12}>
-            <Section title='Financials'>
-              <FinancialFields />
-            </Section>
-          </Grid>
-        </Suspense>
+        <Grid item xs={12}>
+          <Section title='Financials'>
+            <FinancialFields />
+          </Section>
+        </Grid>
 
-        <Suspense fallback={'loading...'}>
-          <Grid item xs={12}>
-            <Section title='Documents'>
-              <IdentityDataroom />
-            </Section>
-          </Grid>
-        </Suspense>
+        <Grid item xs={12}>
+          <Section title='Documents'>
+            <IdentityDataroom />
+          </Section>
+        </Grid>
 
         <Grid item xs={12}>
           <Section title='Declaration & Acknowledgement'>
-            <Suspense fallback={'loading...'}>
-              <DeclarationFields declarations={declarations.individual} />
-            </Suspense>
+            <DeclarationFields type='individual' />
           </Section>
         </Grid>
 

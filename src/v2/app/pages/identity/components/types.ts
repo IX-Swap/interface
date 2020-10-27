@@ -1,14 +1,17 @@
 import {
-  IdentityProfile,
+  PersonalProfileWithAddress,
   IdentityFinancials,
   BaseIdentity,
-  CorporateFields,
-  Declaration
+  CorporateFields
 } from 'v2/types/identity'
 import { DataroomFile, FormArray } from 'v2/types/dataroomFile'
 import { Maybe } from 'v2/types/util'
+import {
+  CorporateDeclarations,
+  IndividualDeclarations
+} from 'v2/app/pages/identity/const/declarations'
 
-export type IndividualIdentityFormValues = IdentityProfile &
+export type IndividualIdentityFormValues = PersonalProfileWithAddress &
   IdentityFinancials &
   Omit<
     BaseIdentity,
@@ -21,7 +24,7 @@ export type IndividualIdentityFormValues = IdentityProfile &
     | 'declarations'
   > & {
     documents: FormArray<Maybe<DataroomFile>>
-    declarations: FormArray<Declaration>
+    declarations: IndividualDeclarations
   }
 
 export type CorporateIdentityFormValues = CorporateFields &
@@ -36,5 +39,5 @@ export type CorporateIdentityFormValues = CorporateFields &
     | 'declarations'
   > & {
     documents: FormArray<Maybe<DataroomFile>>
-    declarations: FormArray<Declaration>
+    declarations: CorporateDeclarations
   }

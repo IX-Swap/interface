@@ -2,7 +2,6 @@ import React from 'react'
 import { CorporateIdentity } from 'v2/types/identity'
 import { Grid } from '@material-ui/core'
 import { Section } from 'v2/app/pages/identity/components/Section'
-import { declarations } from 'v2/app/pages/identity/const/declarations'
 import { CompanyInfoView } from 'v2/app/pages/identity/components/CompanyInfoView'
 import { AddressView } from 'v2/app/pages/identity/components/AddressView'
 import { IdentityDocumentsView } from 'v2/app/pages/identity/components/IdentityDocumentsView'
@@ -59,10 +58,7 @@ export const CorporateView = (props: CorporateViewProps) => {
 
       <Grid item xs={12}>
         <Section title='Declaration & Acknowledgement' subtitle='Confirmation'>
-          <DeclarationView
-            declarations={declarations.corporate}
-            data={data.declarations}
-          />
+          <DeclarationView data={data.declarations} type='corporate' />
         </Section>
       </Grid>
     </Grid>

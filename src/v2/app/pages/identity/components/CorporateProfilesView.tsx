@@ -1,10 +1,10 @@
 import React from 'react'
-import { IdentityProfile } from 'v2/types/identity'
+import { PersonalProfile } from 'v2/types/identity'
 import { IndividualInfoView } from 'v2/app/pages/identity/components/IndividualInfoView'
 import User from 'v2/types/user'
 
 export interface CorporateProfilesViewProps {
-  data: IdentityProfile[]
+  data: PersonalProfile[]
   user: User
 }
 

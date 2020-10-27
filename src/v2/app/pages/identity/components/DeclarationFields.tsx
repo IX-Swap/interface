@@ -1,53 +1,52 @@
 import React from 'react'
 import { List } from '@material-ui/core'
 import { useFormContext } from 'react-hook-form'
-import { Declaration, DeclarationTemplate } from 'v2/types/identity'
 import { TypedField } from 'v2/components/form/TypedField'
 import { YesOrNo } from 'v2/components/form/YesOrNo'
-import { FieldsArray } from 'v2/components/form/FieldsArray'
-import { FormArray } from 'v2/types/dataroomFile'
 import { DeclarationItem } from 'v2/app/pages/identity/components/DeclarationItem'
+import { IdentityType } from 'v2/app/pages/identity/utils'
+import {
+  AllDeclarations,
+  corporateDeclarationsTemplate,
+  individualDeclarationsTemplate
+} from 'v2/app/pages/identity/const/declarations'
 
 export interface DeclarationFieldsProps {
-  declarations: DeclarationTemplate[]
+  type: IdentityType
 }
 
-export const DeclarationFields: React.FC<DeclarationFieldsProps> = props => {
-  const { declarations } = props
-  const { control } = useFormContext<{ declarations: FormArray<Declaration> }>()
+export interface DeclarationFieldsValues {
+  declarations: AllDeclarations
+}
+
+export const DeclarationFields = (props: DeclarationFieldsProps) => {
+  const { type } = props
+  const { control } = useFormContext<DeclarationFieldsValues>()
+  const declarations =
+    type === 'individual'
+      ? individualDeclarationsTemplate
+      : corporateDeclarationsTemplate
 
   return (
-    <FieldsArray name='declarations' control={control}>
-      {({ fields }) => {
+    <List>
+      {Object.entries(declarations).map(([key, template]) => {
         return (
-          <List>
-            {fields.map((field, index) => {
-              const template = declarations[index]
-
-              if (template.key === 'IndividualAccreditedInvestor') {
-                return null
-              }
-
-              return (
-                <DeclarationItem
-                  template={template}
-                  value={
-                    /* @ts-ignore */
-                    <TypedField
-                      customRenderer
-                      component={YesOrNo}
-                      key={field.id}
-                      control={control}
-                      label={`Declaration ${index}`}
-                      name={['declarations', index, 'value', template.key]}
-                    />
-                  }
-                />
-              )
-            })}
-          </List>
+          <DeclarationItem
+            template={template}
+            value={
+              /* @ts-ignore */
+              <TypedField
+                customRenderer
+                component={YesOrNo}
+                key={key}
+                control={control}
+                label={key}
+                name={['declarations', template.key]}
+              />
+            }
+          />
         )
-      }}
-    </FieldsArray>
+      })}
+    </List>
   )
 }

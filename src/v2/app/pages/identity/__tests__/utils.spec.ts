@@ -1,26 +1,8 @@
 import docs from 'v2/app/pages/identity/const/documents'
-import {
-  allDeclarationsAreChecked,
-  prepareDocumentsForUpload,
-  getIdentityDocuments
-} from '../utils'
+import { prepareDocumentsForUpload, getIdentityDocuments } from '../utils'
 import { DataroomFile, FormArray } from 'v2/types/dataroomFile'
-import {
-  documents,
-  checkedDeclarations,
-  unCheckedDeclarations
-} from '__fixtures__/identity'
+import { documents } from '__fixtures__/identity'
 import { Maybe } from 'v2/types/util'
-
-describe('allDeclarationsAreChecked', () => {
-  it('returns true if all declarations have first property value "Yes"', () => {
-    expect(allDeclarationsAreChecked(checkedDeclarations)).toEqual(true)
-  })
-
-  it('returns false if all declarations does not have first property value "Yes"', () => {
-    expect(allDeclarationsAreChecked(unCheckedDeclarations)).toEqual(false)
-  })
-})
 
 const documentsWithGuide: FormArray<Maybe<DataroomFile>> = [
   { value: documents[0] },

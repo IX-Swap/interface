@@ -1,6 +1,6 @@
 import React from 'react'
 import useStyles from 'v2/auth/styles'
-import { registerFormValidationSchema } from 'v2/auth/validation'
+import { registerFormValidationSchema } from 'v2/validation/auth'
 import { SignupArgs } from 'v2/types/auth'
 import { observer } from 'mobx-react'
 import { useSignup } from 'v2/auth/hooks/useSignup'

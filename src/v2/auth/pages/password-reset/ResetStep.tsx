@@ -1,7 +1,7 @@
 import useStyles from 'v2/auth/styles'
 import React from 'react'
 import { CompletePasswordResetArgs } from 'v2/types/auth'
-import { completePasswordResetValidationSchema } from 'v2/auth/validation'
+import { completePasswordResetValidationSchema } from 'v2/validation/auth'
 import { usePasswordResetStore } from 'v2/auth/context/password-reset'
 import { PasswordResetStep } from 'v2/auth/context/password-reset/types'
 import { useCompletePasswordReset } from 'v2/auth/hooks/useCompletePasswordReset'

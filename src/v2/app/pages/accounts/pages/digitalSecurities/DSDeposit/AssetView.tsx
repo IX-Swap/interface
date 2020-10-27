@@ -17,7 +17,7 @@ export const AssetView: React.FC = () => {
   const address = '12nfq3r45678900awn2noag3459an'
   const handleCopy = async (): Promise<void> => {
     await navigator.clipboard.writeText(address)
-    await snackbar.showSnackbar('Copied to clipboard', 'info')
+    snackbar.showSnackbar('Copied to clipboard', 'info')
   }
 
   if (isLoading) {

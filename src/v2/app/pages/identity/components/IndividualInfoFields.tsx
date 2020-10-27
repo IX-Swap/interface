@@ -1,5 +1,5 @@
 import React from 'react'
-import { IdentityProfile } from 'v2/types/identity'
+import { PersonalProfileWithAddress } from 'v2/types/identity'
 import { Grid, Input } from '@material-ui/core'
 import { useFormContext } from 'react-hook-form'
 import { TypedField } from 'v2/components/form/TypedField'
@@ -22,7 +22,7 @@ export const IndividualInfoFields = (
   props: IndividualInfoFieldsProps
 ): JSX.Element => {
   const { rootName } = props
-  const { control } = useFormContext<IdentityProfile>()
+  const { control } = useFormContext<PersonalProfileWithAddress>()
   const {
     email: defaultEmail,
     isDisabled: isEmailDisabled

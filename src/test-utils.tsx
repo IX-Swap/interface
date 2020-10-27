@@ -1,4 +1,4 @@
-import React, { cloneElement, PropsWithChildren } from 'react'
+import React from 'react'
 import { Router } from 'react-router-dom'
 import { render, RenderOptions, RenderResult } from '@testing-library/react'
 import {
@@ -18,7 +18,7 @@ import { DepositStoreProvider } from 'v2/app/pages/accounts/pages/banks/context'
 import { ServicesProvider } from 'v2/hooks/useServices'
 import { renderHook, RenderHookResult } from '@testing-library/react-hooks'
 import { BreadcrumbsProvider } from 'v2/hooks/useBreadcrumbs'
-import { FormProvider, useForm } from 'react-hook-form'
+import { SnackbarProvider } from 'notistack'
 
 const generateClassName = createGenerateClassName({
   productionPrefix: 'ix'
@@ -28,27 +28,18 @@ const BaseProviders: React.FC = ({ children }) => {
   return (
     <StylesProvider generateClassName={generateClassName}>
       <ThemeProvider theme={Themes.default}>
-        <BreadcrumbsProvider>
-          <Router history={history}>{children}</Router>
-        </BreadcrumbsProvider>
+        <SnackbarProvider>
+          <BreadcrumbsProvider>
+            <ServicesProvider
+              value={{ snackbarService: { showSnackbar: jest.fn() } }}
+            >
+              <Router history={history}>{children}</Router>
+            </ServicesProvider>
+          </BreadcrumbsProvider>
+        </SnackbarProvider>
       </ThemeProvider>
     </StylesProvider>
   )
-}
-
-export const renderWithFormControl = (ui: any): RenderResult => {
-  const WithUserProvider: React.FC = ({ children }: PropsWithChildren<any>) => {
-    const form = useForm()
-    return (
-      <BaseProviders>
-        <FormProvider {...form}>
-          {cloneElement(children, { control: form.control })}
-        </FormProvider>
-      </BaseProviders>
-    )
-  }
-
-  return render(ui, { wrapper: WithUserProvider })
 }
 
 const customRenderer = (

@@ -1,16 +1,12 @@
 import { user } from './user'
 import { address, authorizationInfo } from './authorizer'
+import { CorporateIdentity, IndividualIdentity } from 'v2/types/identity'
 import {
-  CorporateIdentity,
-  IndividualIdentity,
-  Declaration
-} from 'v2/types/identity'
-import {
-  declarations,
-  DeclarationValue
+  DeclarationValue,
+  IndividualDeclarations
 } from 'v2/app/pages/identity/const/declarations'
-import { DataroomFile, FormArray } from 'v2/types/dataroomFile'
-import { CorporateIdentityFormValues } from 'v2/app/pages/identity/components/types'
+import { DataroomFile } from 'v2/types/dataroomFile'
+import { IndividualIdentityFormValues } from 'v2/app/pages/identity/components/types'
 
 export const corporate: CorporateIdentity = {
   _id: '1',
@@ -70,9 +66,7 @@ export const individual: IndividualIdentity = {
   authorizations: [],
   toArrangeCustody: true,
   walletAddress: '1234567890_',
-  declarations: declarations.individual.map(({ key }) => ({
-    [key]: undefined
-  })),
+  declarations: [],
   documents: [],
   address,
   user
@@ -94,24 +88,43 @@ export const documents: DataroomFile[] = [
   { ...document, _id: '2' }
 ]
 
-export const checkedDeclarations: FormArray<Declaration> = [
-  { value: { a: DeclarationValue.Yes } },
-  { value: { a: DeclarationValue.Yes } }
-]
+export const checkedDeclarations: IndividualDeclarations = {
+  USPerson: DeclarationValue.Yes,
+  TrueAndCorrectInformation: DeclarationValue.Yes,
+  TreatAsAccreditedInvestor: DeclarationValue.Yes,
+  SecondaryTradingPlatform: DeclarationValue.Yes,
+  PrimaryIssuancePlatform: DeclarationValue.Yes,
+  NetPersonalAssets: DeclarationValue.Yes,
+  JointlyHeldAccount: DeclarationValue.Yes,
+  InvestaXTermsOfUse: DeclarationValue.Yes,
+  InvestaXPrivacyPolicy: DeclarationValue.Yes,
+  InformAnyChanges: DeclarationValue.Yes,
+  IndividualIncome: DeclarationValue.Yes,
+  IndividualFinancialAsset: DeclarationValue.Yes
+}
+export const unCheckedDeclarations: IndividualDeclarations = {
+  USPerson: DeclarationValue.No,
+  TrueAndCorrectInformation: DeclarationValue.No,
+  TreatAsAccreditedInvestor: DeclarationValue.No,
+  SecondaryTradingPlatform: DeclarationValue.No,
+  PrimaryIssuancePlatform: DeclarationValue.No,
+  NetPersonalAssets: DeclarationValue.No,
+  JointlyHeldAccount: DeclarationValue.No,
+  InvestaXTermsOfUse: DeclarationValue.No,
+  InvestaXPrivacyPolicy: DeclarationValue.No,
+  InformAnyChanges: DeclarationValue.No,
+  IndividualIncome: DeclarationValue.No,
+  IndividualFinancialAsset: DeclarationValue.No
+}
 
-export const unCheckedDeclarations: FormArray<Declaration> = [
-  { value: { a: DeclarationValue.Yes } },
-  { value: { a: DeclarationValue.No } }
-]
-
-export const createCorporateArgs: CorporateIdentityFormValues = {
-  ...corporate,
+export const createIndividualArgs: IndividualIdentityFormValues = {
+  ...individual,
   documents: [{ value: documents[0] }, { value: documents[1] }],
   declarations: checkedDeclarations
 }
 
-export const updateCorporateArgs: CorporateIdentityFormValues = {
-  ...corporate,
+export const updateIndividualArgs: IndividualIdentityFormValues = {
+  ...individual,
   documents: [{ value: documents[0] }, { value: documents[1] }],
   declarations: checkedDeclarations
 }

@@ -33,7 +33,7 @@ export interface IdentityAddress {
   country: string // for corporate
 }
 
-export interface IdentityProfile {
+export interface PersonalProfile {
   firstName: string
   middleName?: string
   lastName: string
@@ -44,11 +44,14 @@ export interface IdentityProfile {
   countryOfResidence: string
   maritalStatus: string
   contactNumber: string
-  address: Omit<IdentityAddress, 'countryOfResidence'>
   email?: string
 }
 
-export interface ExtendedIdentityProfile extends IdentityProfile {
+export interface PersonalProfileWithAddress extends PersonalProfile {
+  address: Omit<IdentityAddress, 'countryOfResidence'>
+}
+
+export interface ExtendedIdentityProfile extends PersonalProfile {
   user: User
 }
 
@@ -76,14 +79,14 @@ export interface CorporateFields {
   countryOfFormation: string
   dateOfIncorporation: string
   companyAddress: IdentityAddress
-  representatives: IdentityProfile[]
-  directors: IdentityProfile[]
-  beneficialOwners: IdentityProfile[]
+  representatives: PersonalProfile[]
+  directors: PersonalProfile[]
+  beneficialOwners: PersonalProfile[]
   toArrangeCustody?: boolean
 }
 
 export interface Declaration {
-  [key: string]: DeclarationValue | undefined
+  [key: string]: DeclarationValue
 }
 
 export interface BaseIdentity {
@@ -100,7 +103,7 @@ export interface BaseIdentity {
 export interface DeclarationTemplate {
   key: string
   content: string
-  value?: boolean | null
+  value: DeclarationValue | null
   header?: string
   footer?: string | string[]
   answerable?: boolean
@@ -109,7 +112,7 @@ export interface DeclarationTemplate {
 }
 
 export type IndividualIdentity = BaseIdentity &
-  IdentityProfile &
+  PersonalProfileWithAddress &
   IdentityFinancials &
   Authorizable
 
