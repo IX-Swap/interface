@@ -64,12 +64,7 @@ describe('CorporateIdPreview', () => {
 
     render(<CorporatePreview />)
 
-    expect(CompanyInfoView).toHaveBeenCalledWith(
-      {
-        data: corporate
-      },
-      {}
-    )
+    expect(CompanyInfoView).toHaveBeenCalledWith({ data: corporate }, {})
   })
 
   it('renders Section with correct props', () => {

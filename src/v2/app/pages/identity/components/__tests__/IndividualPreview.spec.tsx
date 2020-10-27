@@ -55,19 +55,14 @@ describe('IndividualIdPreview', () => {
     )
   })
 
-  it('renders UserInfoComponent & viewIndividualIdentity link', () => {
+  it('renders IndividualInfoView with correct props', () => {
     jest
       .spyOn(individualIdentityHook, 'useIndividualIdentity')
       .mockReturnValue(generateQueryResult({ data: individual }))
 
     render(<IndividualPreview />)
 
-    expect(IndividualInfoView).toHaveBeenCalledWith(
-      {
-        data: individual
-      },
-      {}
-    )
+    expect(IndividualInfoView).toHaveBeenCalledWith({ data: individual }, {})
   })
 
   it('renders Section with correct props', () => {

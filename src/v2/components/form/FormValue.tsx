@@ -10,7 +10,6 @@ export const FormValue = (props: {
   const { name, label } = props
   const { watch } = useFormContext()
   const value = watch(name)
-  console.log(label, value)
 
   return <LabelledValue label={label} value={value} />
 }
