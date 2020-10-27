@@ -16,9 +16,11 @@ export const IdentityRoot: React.FC = () => {
       individualData.status !== 'loading' &&
       individualData.data === undefined &&
       corporatesData.status !== 'loading' &&
-      corporatesData.data === undefined
+      corporatesData.data.list.length === 0
     ) {
       setHasIdentities(false)
+    } else {
+      setHasIdentities(true)
     }
   }, [
     corporatesData.data,
@@ -34,8 +36,8 @@ export const IdentityRoot: React.FC = () => {
         <CorporatePreview />
       </Grid>
       <IdentityDialog
-        isOpen={hasIdentities}
-        closeFn={() => setHasIdentities(false)}
+        isOpen={!hasIdentities}
+        closeFn={() => setHasIdentities(true)}
       />
     </>
   )
