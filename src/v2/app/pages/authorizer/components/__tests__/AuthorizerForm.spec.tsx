@@ -13,6 +13,7 @@ jest.mock('v2/app/pages/authorizer/components/AuthorizerFormFields', () => ({
 
 describe('AuthorizerForm', () => {
   const props: AuthorizerFormProps = {
+    status: 'Approved',
     itemId: 'test-itemId',
     defaultValues: { comment: 'test comment', sharedWithUser: false }
   }
@@ -31,7 +32,8 @@ describe('AuthorizerForm', () => {
 
     expect(AuthorizerFormFields).toHaveBeenCalledWith(
       {
-        itemId: props.itemId
+        itemId: props.itemId,
+        status: props.status
       },
       {}
     )

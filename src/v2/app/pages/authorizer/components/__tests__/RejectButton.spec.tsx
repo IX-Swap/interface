@@ -13,7 +13,7 @@ import { bank } from '__fixtures__/authorizer'
 import { AuthorizerCategory } from 'v2/types/app'
 
 describe('RejectButton', () => {
-  const props: RejectButtonProps = { itemId: bank._id }
+  const props: RejectButtonProps = { itemId: bank._id, disabled: false }
 
   beforeEach(() => {
     history.push({

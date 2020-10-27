@@ -9,6 +9,8 @@ import {
 } from 'v2/app/pages/authorizer/components/AuthorizerFormFields'
 import { TypedField } from 'v2/components/form/TypedField'
 import { Form } from 'v2/components/form/Form'
+import * as useAuthorizerCategoryHook from 'v2/hooks/location/useAuthorizerCategory'
+import { AuthorizerCategory } from 'v2/types/app'
 
 jest.mock('v2/components/form/TypedField', () => ({
   TypedField: jest.fn(() => null)
@@ -24,7 +26,8 @@ jest.mock('v2/app/pages/authorizer/components/RejectButton', () => ({
 
 describe('AuthorizerForm', () => {
   const props: AuthorizerFormFieldsProps = {
-    itemId: 'test-itemId'
+    itemId: 'test-itemId',
+    status: 'Submitted'
   }
 
   afterEach(async () => {
@@ -74,7 +77,72 @@ describe('AuthorizerForm', () => {
     )
 
     expect(ApproveButton).toHaveBeenCalledTimes(1)
-    expect(ApproveButton).toHaveBeenCalledWith({ itemId: props.itemId }, {})
+    expect(ApproveButton).toHaveBeenCalledWith(
+      { itemId: props.itemId, disabled: false },
+      {}
+    )
+  })
+
+  it('renders ApproveButton with correct props if approved', () => {
+    render(
+      <Form>
+        <AuthorizerFormFields {...props} status='Approved' />
+      </Form>
+    )
+
+    expect(ApproveButton).toHaveBeenCalledTimes(1)
+    expect(ApproveButton).toHaveBeenCalledWith(
+      { itemId: props.itemId, disabled: false },
+      {}
+    )
+  })
+
+  it('renders RejectButton with correct props if rejected', () => {
+    render(
+      <Form>
+        <AuthorizerFormFields {...props} status='Rejected' />
+      </Form>
+    )
+
+    expect(RejectButton).toHaveBeenCalledTimes(1)
+    expect(RejectButton).toHaveBeenCalledWith(
+      { itemId: props.itemId, disabled: false },
+      {}
+    )
+  })
+
+  it('renders ApproveButton with correct props if approved and category is transactional', () => {
+    jest
+      .spyOn(useAuthorizerCategoryHook, 'useAuthorizerCategory')
+      .mockReturnValue(AuthorizerCategory['Cash Withdrawals'])
+    render(
+      <Form>
+        <AuthorizerFormFields {...props} status='Approved' />
+      </Form>
+    )
+
+    expect(ApproveButton).toHaveBeenCalledTimes(1)
+    expect(ApproveButton).toHaveBeenCalledWith(
+      { itemId: props.itemId, disabled: true },
+      {}
+    )
+  })
+
+  it('renders RejectButton with correct props if rejected and category is transactional', () => {
+    jest
+      .spyOn(useAuthorizerCategoryHook, 'useAuthorizerCategory')
+      .mockReturnValue(AuthorizerCategory['Cash Withdrawals'])
+    render(
+      <Form>
+        <AuthorizerFormFields {...props} status='Rejected' />
+      </Form>
+    )
+
+    expect(RejectButton).toHaveBeenCalledTimes(1)
+    expect(RejectButton).toHaveBeenCalledWith(
+      { itemId: props.itemId, disabled: true },
+      {}
+    )
   })
 
   it('renders RejectButton with correct props', () => {
@@ -85,6 +153,9 @@ describe('AuthorizerForm', () => {
     )
 
     expect(RejectButton).toHaveBeenCalledTimes(1)
-    expect(RejectButton).toHaveBeenCalledWith({ itemId: props.itemId }, {})
+    expect(RejectButton).toHaveBeenCalledWith(
+      { itemId: props.itemId, disabled: false },
+      {}
+    )
   })
 })

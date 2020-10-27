@@ -83,6 +83,7 @@ export const AuthorizerView = <T,>(
 
                 <Grid item>
                   <AuthorizerForm
+                    status={data.status}
                     itemId={data._id}
                     defaultValues={{
                       sharedWithUser:

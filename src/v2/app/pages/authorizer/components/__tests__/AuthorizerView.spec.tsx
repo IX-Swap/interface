@@ -80,7 +80,8 @@ describe('AuthorizerView', () => {
           comment: props.data.authorization?.comment,
           sharedWithUser: props.data.authorization?.sharedWithUser
         },
-        itemId: props.data._id
+        itemId: props.data._id,
+        status: props.data.status
       },
       {}
     )

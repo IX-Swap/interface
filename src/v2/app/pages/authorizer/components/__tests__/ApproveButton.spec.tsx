@@ -15,7 +15,7 @@ import { bank } from '__fixtures__/authorizer'
 import { AuthorizerCategory } from 'v2/types/app'
 
 describe('ApproveButton', () => {
-  const props: ApproveButtonProps = { itemId: bank._id }
+  const props: ApproveButtonProps = { itemId: bank._id, disabled: false }
 
   beforeEach(() => {
     history.push({

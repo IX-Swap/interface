@@ -11,6 +11,7 @@ import { useAuthorizerCategory } from 'v2/hooks/location/useAuthorizerCategory'
 
 export interface ApproveButtonProps {
   itemId: string
+  disabled: boolean
 }
 
 export const ApproveButton = (props: ApproveButtonProps) => {
@@ -24,7 +25,8 @@ export const ApproveButton = (props: ApproveButtonProps) => {
   const disabled =
     isLoading ||
     values.comment === undefined ||
-    values.sharedWithUser === undefined
+    values.sharedWithUser === undefined ||
+    props.disabled
 
   return (
     <Button
