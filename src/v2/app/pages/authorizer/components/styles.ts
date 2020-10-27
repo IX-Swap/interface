@@ -1,3 +1,4 @@
+import { themeColors } from 'v2/themes/default'
 import { makeStyles } from '@material-ui/styles'
 
 export const useStyles = makeStyles((theme: any) => ({
@@ -24,6 +25,9 @@ export const useStyles = makeStyles((theme: any) => ({
   rejected: {
     color: '#D20000',
     borderColor: '#D20000'
+  },
+  rejectedButton: {
+    backgroundColor: themeColors.error
   },
   unauthorized: {
     color: '#666666',
