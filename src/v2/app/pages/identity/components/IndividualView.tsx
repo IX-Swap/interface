@@ -7,7 +7,6 @@ import { AddressView } from 'v2/app/pages/identity/components/AddressView'
 import { FinancialView } from 'v2/app/pages/identity/FinancialView'
 import { IdentityDocumentsView } from 'v2/app/pages/identity/components/IdentityDocumentsView'
 import { DeclarationView } from 'v2/app/pages/identity/components/DeclarationView'
-import { declarations } from 'v2/app/pages/identity/const/declarations'
 
 export interface IndividualViewProps {
   data: IndividualIdentity
@@ -44,10 +43,7 @@ export const IndividualView = (props: IndividualViewProps) => {
 
       <Grid item xs={12}>
         <Section title='Declarations'>
-          <DeclarationView
-            declarations={declarations.individual}
-            data={data.declarations}
-          />
+          <DeclarationView type='individual' data={data.declarations} />
         </Section>
       </Grid>
     </Grid>

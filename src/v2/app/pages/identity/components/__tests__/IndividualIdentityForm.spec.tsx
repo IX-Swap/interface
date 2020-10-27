@@ -10,7 +10,6 @@ import { Section } from 'v2/app/pages/identity/components/Section'
 import { AddressFields } from 'v2/app/pages/identity/components/AddressFields'
 import { FinancialFields } from 'v2/app/pages/identity/components/FinancialFields'
 import { DeclarationFields } from 'v2/app/pages/identity/components/DeclarationFields'
-import { declarations } from 'v2/app/pages/identity/const/declarations'
 import { IdentityDataroom } from 'v2/app/pages/identity/components/IdentityDataroom'
 import * as useIndividualInfoDefaultEmailHook from 'v2/hooks/auth/useIndividualInfoDefaultEmail'
 import * as useCachedUserHook from 'v2/hooks/auth/useCachedUser'
@@ -117,7 +116,7 @@ describe('IndividualIdentityForm', () => {
 
     expect(DeclarationFields).toHaveBeenCalledWith(
       {
-        declarations: declarations.individual
+        type: 'individual'
       },
       {}
     )

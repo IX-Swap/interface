@@ -6,13 +6,12 @@ import { Section } from 'v2/app/pages/identity/components/Section'
 import { DeclarationFields } from 'v2/app/pages/identity/components/DeclarationFields'
 import { CompanyInfoFields } from 'v2/app/pages/identity/components/CompanyInfoFields'
 import { CorporateIdentityFormValues } from 'v2/app/pages/identity/components/types'
-import { corporateIdentityFormValidationSchema } from 'v2/app/pages/identity/components/validation'
 import { CorporateProfilesFields } from 'v2/app/pages/identity/components/CorporateProfilesFields'
 import { getIdentityFormDefaultValue } from 'v2/app/pages/identity/utils'
 import { Form } from 'v2/components/form/Form'
 import { Submit } from 'v2/components/form/Submit'
 import { IdentityDataroom } from 'v2/app/pages/identity/components/IdentityDataroom'
-import { declarations } from 'v2/app/pages/identity/const/declarations'
+import { corporateIdentityFormValidationSchema } from 'v2/validation/identities'
 
 export interface CorporateIdentityFormProps {
   data: CorporateIdentity | undefined
@@ -67,7 +66,7 @@ export const CorporateIdentityForm = (
             title='Declaration & Acknowledgement'
             subtitle='Confirmation'
           >
-            <DeclarationFields declarations={declarations.corporate} />
+            <DeclarationFields type='corporate' />
           </Section>
         </Grid>
 

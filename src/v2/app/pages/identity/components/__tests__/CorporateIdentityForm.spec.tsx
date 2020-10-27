@@ -13,7 +13,6 @@ import { AddressFields } from 'v2/app/pages/identity/components/AddressFields'
 import { Section } from 'v2/app/pages/identity/components/Section'
 import { DeclarationFields } from 'v2/app/pages/identity/components/DeclarationFields'
 import { IdentityDataroom } from 'v2/app/pages/identity/components/IdentityDataroom'
-import { declarations } from 'v2/app/pages/identity/const/declarations'
 
 jest.mock('v2/app/pages/identity/components/AddressFields', () => ({
   AddressFields: jest.fn(() => null)
@@ -149,7 +148,7 @@ describe('CorporateIdentityForm', () => {
 
     expect(DeclarationFields).toHaveBeenCalledWith(
       {
-        declarations: declarations.corporate
+        type: 'corporate'
       },
       {}
     )

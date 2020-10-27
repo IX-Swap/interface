@@ -1,6 +1,8 @@
 import React from 'react'
-import { Grid, Radio } from '@material-ui/core'
+import { Grid, Radio, Typography } from '@material-ui/core'
 import { DeclarationValue } from 'v2/app/pages/identity/const/declarations'
+import { useFormError } from 'v2/hooks/useFormError'
+import { themeColors } from 'v2/themes/default'
 
 export interface YesOrNoProps {
   name: string
@@ -12,8 +14,11 @@ export interface YesOrNoProps {
   ) => void
 }
 
-export const YesOrNo = (props: YesOrNoProps): JSX.Element => {
+export const YesOrNo = (props: Partial<YesOrNoProps>): JSX.Element => {
   const { name, value, disabled = false, onChange } = props
+  const { hasError } = useFormError(name as string)
+  const textColor = hasError ? 'error' : 'initial'
+  const radioStyle = hasError ? { color: themeColors.error } : {}
 
   return (
     <Grid container>
@@ -25,13 +30,16 @@ export const YesOrNo = (props: YesOrNoProps): JSX.Element => {
         direction='column'
         alignItems='center'
       >
-        Yes
+        <Typography variant='inherit' color={textColor}>
+          Yes
+        </Typography>
         <Radio
           value='Yes'
           checked={value === 'Yes'}
           name={name}
           onChange={onChange}
           disabled={disabled}
+          style={radioStyle}
         />
       </Grid>
       <Grid
@@ -42,13 +50,16 @@ export const YesOrNo = (props: YesOrNoProps): JSX.Element => {
         direction='column'
         alignItems='center'
       >
-        No
+        <Typography variant='inherit' color={textColor}>
+          No
+        </Typography>
         <Radio
           value='No'
           name={name}
           checked={value === 'No'}
           onChange={onChange}
           disabled={disabled}
+          style={radioStyle}
         />
       </Grid>
     </Grid>

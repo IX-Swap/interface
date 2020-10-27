@@ -1,0 +1,33 @@
+import * as yup from 'yup'
+import {
+  CompletePasswordResetArgs,
+  LoginArgs,
+  RequestPasswordResetArgs,
+  SignupArgs
+} from 'v2/types/auth'
+import { emailSchema, passwordSchema } from 'v2/validation/shared'
+
+export const loginFormValidationSchema = yup.object<LoginArgs>({
+  email: emailSchema.required('Required'),
+  password: passwordSchema.required('Required'),
+  otp: yup.string()
+})
+
+export const registerFormValidationSchema = yup.object<SignupArgs>({
+  name: yup.string().required('Required'),
+  email: emailSchema.required('Required'),
+  password: passwordSchema.required('Required')
+})
+
+export const requestPasswordResetValidationSchema = yup.object<
+  RequestPasswordResetArgs
+>({
+  email: emailSchema.required('Required')
+})
+
+export const completePasswordResetValidationSchema = yup.object<
+  Omit<CompletePasswordResetArgs, 'resetToken'>
+>({
+  email: emailSchema.required('Required'),
+  newPassword: passwordSchema.required('Required')
+})

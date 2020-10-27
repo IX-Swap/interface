@@ -73,7 +73,7 @@ describe('useMarkAsRead', () => {
           const mutate = result.current.mutation
           void mutate()
 
-          expect(showSnackbar).toHaveBeenNthCalledWith(1, 'error', 'error')
+          expect(showSnackbar).toHaveBeenCalledWith('error', 'error')
         },
         { timeout: 1000 }
       )

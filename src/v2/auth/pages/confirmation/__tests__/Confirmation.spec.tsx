@@ -1,6 +1,6 @@
 /**  * @jest-environment jsdom-sixteen  */
 import React from 'react'
-import { render, cleanup, renderWithUserStore } from 'test-utils'
+import { cleanup, renderWithUserStore } from 'test-utils'
 import { Confirmation } from 'v2/auth/pages/confirmation/Confirmation'
 import { AuthRoute } from 'v2/auth/router'
 import { history } from 'v2/history'
@@ -23,7 +23,7 @@ describe('VerifyRegistration', () => {
   })
 
   it('renders without error', async () => {
-    render(<Confirmation />)
+    renderWithUserStore(<Confirmation />)
   })
 
   it('renders loading indicator if isLoading=true', async () => {
@@ -57,6 +57,7 @@ describe('VerifyRegistration', () => {
   it('does not calls api for token verification if token is present', async () => {
     history.push(AuthRoute.confirm)
     const verifySignup = jest.fn()
+
     jest
       .spyOn(useVerifySignupHook, 'useVerifySignup')
       .mockReturnValue([verifySignup, generateMutationResult({})])
