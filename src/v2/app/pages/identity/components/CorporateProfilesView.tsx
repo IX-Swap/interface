@@ -13,8 +13,8 @@ export const CorporateProfilesView = (props: CorporateProfilesViewProps) => {
 
   return (
     <>
-      {data.map(profile => (
-        <IndividualInfoView data={{ ...profile, user }} />
+      {data.map((profile, index) => (
+        <IndividualInfoView key={index} data={{ ...profile, user }} />
       ))}
     </>
   )
