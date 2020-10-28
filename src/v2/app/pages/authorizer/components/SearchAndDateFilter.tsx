@@ -1,6 +1,6 @@
 import React from 'react'
 import { useForm, Controller } from 'react-hook-form'
-import { Grid, InputAdornment, TextField, Button } from '@material-ui/core'
+import { Grid, InputAdornment, TextField, Button, Box } from '@material-ui/core'
 import { DateRange as DateIcon, Search as SearchIcon } from '@material-ui/icons'
 import DateFnsUtils from '@date-io/date-fns'
 import {
@@ -31,9 +31,19 @@ export const initialValues: SearchAndDateFilterFormValues = {
 export const SearchAndDateFilter: React.FC<SearchAndDateFilterProps> = props => {
   const { onApplyFilter } = props
   const classes = useStyles()
-  const { control, handleSubmit } = useForm<SearchAndDateFilterFormValues>({
-    defaultValues: initialValues
-  })
+  const { control, handleSubmit, reset } = useForm<
+    SearchAndDateFilterFormValues
+  >({ defaultValues: initialValues })
+
+  const handleReset = (): void => {
+    onApplyFilter({
+      from: convertDateToISO(initialValues.from),
+      to: convertDateToISO(initialValues.to),
+      search: initialValues.search
+    })
+    reset()
+  }
+
   const onSubmit = (values: SearchAndDateFilterFormValues): void => {
     const { search, from, to } = values
 
@@ -107,6 +117,15 @@ export const SearchAndDateFilter: React.FC<SearchAndDateFilterProps> = props => 
         justify='flex-end'
         className={classes.spaced}
       >
+        <Button
+          variant='contained'
+          size='small'
+          color='default'
+          onClick={handleReset}
+        >
+          Reset
+        </Button>
+        <Box mx={1} />
         <Button
           variant='contained'
           size='small'
