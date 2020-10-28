@@ -6,6 +6,7 @@ import {
   SearchAndDateFilter,
   SearchAndDateFilterProps
 } from 'v2/app/pages/authorizer/components/SearchAndDateFilter'
+import { convertDateToISO } from 'v2/helpers/dates'
 
 describe('SearchAndDateFilter', () => {
   const props: SearchAndDateFilterProps = { onApplyFilter: jest.fn() }
@@ -34,6 +35,22 @@ describe('SearchAndDateFilter', () => {
     await waitFor(() => {
       expect(props.onApplyFilter).toHaveBeenCalledTimes(1)
       expect(props.onApplyFilter).toHaveBeenCalledWith(initialValues)
+    })
+  })
+
+  it('invokes callback with initial values on reset button click', async () => {
+    const { getByText } = render(<SearchAndDateFilter {...props} />)
+    const resettButton = getByText(/reset/i)
+
+    fireEvent.click(resettButton)
+
+    await waitFor(() => {
+      expect(props.onApplyFilter).toHaveBeenCalled()
+      expect(props.onApplyFilter).toHaveBeenCalledWith({
+        from: convertDateToISO(initialValues.from),
+        to: convertDateToISO(initialValues.to),
+        search: initialValues.search
+      })
     })
   })
 
