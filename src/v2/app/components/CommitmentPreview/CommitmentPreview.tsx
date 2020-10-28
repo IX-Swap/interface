@@ -7,6 +7,7 @@ import { DSOLink } from 'v2/app/components/DSOLink'
 import { formatMoney } from 'v2/helpers/numbers'
 import { SubscriptionDocument } from 'v2/app/components/SubscriptionDocument'
 import { Maybe } from 'v2/types/util'
+import { useSetPageTitle } from 'v2/app/hooks/useSetPageTitle'
 
 export interface CommitmentPreviewProps {
   data: Maybe<Commitment>
@@ -16,6 +17,8 @@ export const CommitmentPreview: React.FC<CommitmentPreviewProps> = (
   props: CommitmentPreviewProps
 ) => {
   const { data } = props
+
+  useSetPageTitle(`${data?.dso.tokenName} (${data?.dso.tokenSymbol})`)
 
   if (data === null) {
     return null

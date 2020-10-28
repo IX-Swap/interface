@@ -28,9 +28,10 @@ export const AuthorizerFormFields = (props: AuthorizerFormFieldsProps) => {
   const { itemId, status } = props
   const { control } = useFormContext<AuthorizerFormValues>()
   const category = useAuthorizerCategory()
-  const disabled =
-    transactionalCategories.includes(category) &&
-    (status === 'Approved' || status === 'Rejected')
+  const isTransaction = transactionalCategories.includes(category)
+  const rejectedOrApproved = status === 'Rejected' || status === 'Approved'
+  const canApprove = status === 'Submitted' || status === 'Rejected'
+  const canReject = status === 'Submitted' || status === 'Approved'
 
   return (
     <>
@@ -56,9 +57,15 @@ export const AuthorizerFormFields = (props: AuthorizerFormFieldsProps) => {
       />
       <VSpacer size='medium' />
       <Grid container>
-        <ApproveButton itemId={itemId} disabled={disabled} />
+        <ApproveButton
+          itemId={itemId}
+          disabled={isTransaction ? rejectedOrApproved : !canApprove}
+        />
         <Box mx={1} />
-        <RejectButton itemId={itemId} disabled={disabled} />
+        <RejectButton
+          itemId={itemId}
+          disabled={isTransaction ? rejectedOrApproved : !canReject}
+        />
       </Grid>
     </>
   )

@@ -27,13 +27,7 @@ export const transformDSOToFormValues = (
     equityMultiple: percentageToNumber(dso.equityMultiple),
     interestRate: percentageToNumber(dso.interestRate),
     leverage: percentageToNumber(dso.leverage),
-    documents:
-      dso.documents?.map(document => ({
-        title: '',
-        label: '',
-        type: '',
-        document
-      })) ?? []
+    documents: dso.documents?.map(document => ({ value: document })) ?? []
   }
 }
 

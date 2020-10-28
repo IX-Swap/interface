@@ -3,7 +3,7 @@ import { Box } from '@material-ui/core'
 
 export const sizeMap = {
   small: 1,
-  medium: 3,
+  medium: 2.5,
   large: 5
 }
 

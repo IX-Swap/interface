@@ -5,9 +5,7 @@ import { DownloadDocument } from 'v2/components/dataroom/DownloadDocument'
 import { DataroomEditRow } from 'v2/components/dataroom/DataroomEditRow'
 import { isDocument } from 'v2/helpers/dataroom'
 
-export interface DataroomFileRowProps extends DataroomUploaderRenderProps {
-  disableBorder?: boolean
-}
+export interface DataroomFileRowProps extends DataroomUploaderRenderProps {}
 
 export const DataroomFileRow = (props: DataroomFileRowProps) => {
   const { handleUpload, handleDelete, documentInfo, value: document } = props

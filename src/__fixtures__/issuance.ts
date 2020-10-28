@@ -76,7 +76,7 @@ export const formvalues: DSOFormValues = {
   ],
   documents: [
     {
-      document: {
+      value: {
         _id: '5f898b52aa141c6d0d358ce5',
         user: '5f7c1398fbc4b5491a1634ce',
         title: '',
@@ -84,10 +84,7 @@ export const formvalues: DSOFormValues = {
         originalFileName: 'a.jpg',
         createdAt: '2020-10-16T12:00:18.823Z',
         updatedAt: '2020-10-16T12:00:18.823Z'
-      },
-      label: '',
-      title: '',
-      type: ''
+      }
     }
   ],
   status: 'Submitted',

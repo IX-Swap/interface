@@ -1,9 +1,9 @@
 import React from 'react'
-import { MenuItem, Select } from '@material-ui/core'
+import { MenuItem, Select, SelectProps } from '@material-ui/core'
 import { renderMenu } from 'v2/helpers/rendering'
 import { DataroomDocumentType } from 'v2/config/dataroom'
 
-export const DataroomFileTypeSelect = (props: any) => {
+export const DataroomFileTypeSelect = (props: SelectProps) => {
   return (
     <Select {...props}>
       <MenuItem disabled value={undefined}>

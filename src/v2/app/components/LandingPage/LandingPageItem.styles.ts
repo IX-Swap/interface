@@ -7,8 +7,10 @@ export const useStyles = makeStyles(theme => ({
     marginLeft: 25,
     marginRight: 25,
     marginBottom: 25,
+    paddingTop: 25,
     borderRadius: 14,
     borderWidth: 1,
+    borderStyle: 'solid',
     borderColor: 'transparent',
     '&:hover': {
       backgroundColor: '#fafafa',

@@ -1,5 +1,5 @@
 import { Asset } from './asset'
-import { DataroomFile, DataroomFileWithGuide } from './dataroomFile'
+import { DataroomFile, FormArray } from './dataroomFile'
 import { Maybe } from './util'
 import { CorporateIdentity } from './identity'
 import { AuthorizableWithIdentity } from './authorizer'
@@ -98,7 +98,7 @@ export type DSOFormValues = Omit<
   status?: string
   currency: string
   corporate: string
-  documents: DataroomFileWithGuide[]
+  documents: FormArray<DataroomFile>
   team: DsoTeamMember[]
 }
 

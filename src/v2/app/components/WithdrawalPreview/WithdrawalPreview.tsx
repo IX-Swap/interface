@@ -4,6 +4,7 @@ import { formatMoney } from 'v2/helpers/numbers'
 import { CashWithdrawal } from 'v2/types/cashWithdrawal'
 import { LabelledValue } from 'v2/components/LabelledValue'
 import { convertAddressToString } from 'v2/app/pages/authorizer/components/utils'
+import { useSetPageTitle } from 'v2/app/hooks/useSetPageTitle'
 
 export interface WithdrawalViewProps {
   data: CashWithdrawal
@@ -11,6 +12,8 @@ export interface WithdrawalViewProps {
 
 export const WithdrawalPreview = (props: WithdrawalViewProps) => {
   const { data } = props
+
+  useSetPageTitle(data.bank.bankName)
 
   return (
     <Grid container justify='center' direction='column' spacing={4}>

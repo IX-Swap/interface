@@ -2,14 +2,14 @@
 import React from 'react'
 import { render, cleanup } from 'test-utils'
 import {
-  UploadButton,
-  UploadButtonProps
-} from 'v2/components/dataroom/UploadButton'
+  UploadSignedSubscriptionDocument,
+  UploadSignedSubscriptionDocumentProps
+} from 'v2/components/dataroom/UploadSignedSubscriptionDocument'
 import { document } from '__fixtures__/identity'
 import { Form } from 'v2/components/form/Form'
 
-describe('UploadButton', () => {
-  const props: UploadButtonProps = {
+describe('UploadSignedSubscriptionDocument', () => {
+  const props: UploadSignedSubscriptionDocumentProps = {
     documentInfo: {},
     value: document,
     handleDelete: jest.fn(),
@@ -24,7 +24,7 @@ describe('UploadButton', () => {
   it('renders without error', () => {
     render(
       <Form>
-        <UploadButton {...props} />
+        <UploadSignedSubscriptionDocument {...props} />
       </Form>
     )
   })

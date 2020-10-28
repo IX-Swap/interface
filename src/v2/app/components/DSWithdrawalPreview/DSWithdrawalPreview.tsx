@@ -4,6 +4,7 @@ import { DSWithdrawal } from 'v2/types/dsWithdrawal'
 import { formatMoney } from 'v2/helpers/numbers'
 import { LabelledValue } from 'v2/components/LabelledValue'
 import { renderName } from 'v2/helpers/tables'
+import { useSetPageTitle } from 'v2/app/hooks/useSetPageTitle'
 
 export interface DSWithdrawalPreviewProps {
   data: DSWithdrawal
@@ -11,6 +12,8 @@ export interface DSWithdrawalPreviewProps {
 
 export const DSWithdrawalPreview = (props: DSWithdrawalPreviewProps) => {
   const { data } = props
+
+  useSetPageTitle(`${data.asset.name} (${data.asset.symbol})`)
 
   return (
     <Grid container justify='center' direction='column'>

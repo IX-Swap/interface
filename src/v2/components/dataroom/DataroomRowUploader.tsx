@@ -5,15 +5,13 @@ import { TypedFieldRenderComponentProps } from 'v2/components/form/types'
 import { DataroomFile } from 'v2/types/dataroomFile'
 import { UploadDocumentInfo } from 'v2/hooks/useUploadFile'
 
-export interface DefaultDataroomUploaderProps
+export interface DataroomRowUploaderProps
   extends TypedFieldRenderComponentProps<DataroomFile> {
-  documentInfo: UploadDocumentInfo
+  documentInfo?: UploadDocumentInfo
   onDelete?: () => any
 }
 
-export const DefaultDataroomUploader = (
-  props: DefaultDataroomUploaderProps
-) => {
+export const DataroomRowUploader = (props: DataroomRowUploaderProps) => {
   const { value, onDelete, documentInfo } = props
   const handleDelete = () => {
     onDelete?.()

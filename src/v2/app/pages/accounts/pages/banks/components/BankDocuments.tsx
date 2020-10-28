@@ -2,72 +2,72 @@ import React from 'react'
 import { useFormContext } from 'react-hook-form'
 import { FieldsArray } from 'v2/components/form/FieldsArray'
 import { Button, Grid, List, ListItem } from '@material-ui/core'
-import { DataroomHeader } from 'v2/components/dataroom/DataroomHeader'
 import { TypedField } from 'v2/components/form/TypedField'
-import { DataroomUploader } from 'v2/components/dataroom/DataroomUploader'
 import { plainValueExtractor } from 'v2/helpers/forms'
 import { BankFormValues } from 'v2/app/pages/accounts/types'
-import { DefaultDataroomUploader } from 'v2/components/dataroom/DefaultDataroomUploader'
+import { SelectionHelper } from 'v2/components/SelectionHelper'
+import { DataroomUploadAndAppend } from 'v2/components/dataroom/DataroomUploadAndAppend'
+import { DataroomDeleteSelected } from 'v2/components/dataroom/DataroomDeleteSelected'
+import { SelectableDataroomUploader } from 'v2/components/dataroom/SelectableDataroomUploader'
+import { SelectableDataroomHeader } from 'v2/components/dataroom/SelectableDataroomHeader'
+
+export interface SelectedDocument {
+  id: string
+  index: number
+}
+
+export const itemComparator = (a: SelectedDocument, b: SelectedDocument) => {
+  return a.id === b.id
+}
 
 export const BankDocuments = () => {
   const { control } = useFormContext<BankFormValues>()
 
   return (
-    <Grid container direction='column' spacing={2}>
-      <Grid item>
-        <DataroomHeader />
-      </Grid>
-      <FieldsArray name='supportingDocuments' control={control}>
-        {({ fields, append, remove }) => (
-          <Grid item container direction='column'>
-            <Grid item>
-              <List disablePadding>
-                {fields.map((field, index) => (
-                  <ListItem
-                    key={field.id}
-                    divider={index !== fields.length - 1}
-                    style={{ minHeight: 50 }}
-                  >
-                    {/* @ts-ignore */}
+    <SelectionHelper<SelectedDocument> itemComparator={itemComparator}>
+      <Grid container direction='column' spacing={2}>
+        <Grid item>
+          <SelectableDataroomHeader />
+        </Grid>
+        <FieldsArray name='supportingDocuments' control={control}>
+          {({ fields, append, remove }) => (
+            <Grid item container direction='column'>
+              <Grid item>
+                <List disablePadding component='div'>
+                  {fields.map((field, index) => (
+                    // @ts-ignore
                     <TypedField
                       customRenderer
                       key={field.id}
                       control={control}
-                      component={DefaultDataroomUploader}
+                      component={SelectableDataroomUploader}
+                      index={index}
                       label='Document'
                       name={['supportingDocuments', index, 'value']}
-                      defaultValue={fields[index].document}
+                      defaultValue={fields[index].value}
                       valueExtractor={plainValueExtractor}
                       onDelete={() => remove(index)}
                     />
-                  </ListItem>
-                ))}
-              </List>
+                  ))}
+                </List>
+              </Grid>
+              <Grid item container justify='space-between'>
+                <DataroomDeleteSelected name='supportingDocuments' />
+                <DataroomUploadAndAppend
+                  multiple
+                  label='Uploader'
+                  append={file => append({ value: file })}
+                  render={props => <Button {...props}>Upload</Button>}
+                  documentInfo={{
+                    type: 'Supporting Document',
+                    title: 'Supporting Document'
+                  }}
+                />
+              </Grid>
             </Grid>
-            <Grid item container justify='flex-end'>
-              <DataroomUploader
-                name=''
-                label=''
-                value={{} as any}
-                documentInfo={{
-                  type: 'Supporting Document',
-                  title: 'Supporting Document'
-                }}
-                onChange={file => append({ document: file })}
-                render={({ handleUpload }) => (
-                  <Button
-                    variant='contained'
-                    color='primary'
-                    onClick={handleUpload}
-                  >
-                    Upload
-                  </Button>
-                )}
-              />
-            </Grid>
-          </Grid>
-        )}
-      </FieldsArray>
-    </Grid>
+          )}
+        </FieldsArray>
+      </Grid>
+    </SelectionHelper>
   )
 }

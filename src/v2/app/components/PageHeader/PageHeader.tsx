@@ -1,9 +1,12 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { Grid, Typography } from '@material-ui/core'
 import { Breadcrumbs } from 'v2/app/components/Breadcrumbs/Breadcrumbs'
 import { GridJustification } from '@material-ui/core/Grid/Grid'
 import { VSpacer } from 'v2/components/VSpacer'
 import { useBreadcrumbs } from 'v2/hooks/useBreadcrumbs'
+import { useParams } from 'react-router-dom'
+import { useAppRouter } from 'v2/app/router'
+import { useAppState } from 'v2/app/hooks/useAppState'
 
 export interface PageHeaderProps {
   label?: string
@@ -16,11 +19,14 @@ export const PageHeader = (props: PageHeaderProps) => {
   const { crumbs } = useBreadcrumbs()
   const current = crumbs[crumbs.length - 1]
   const justify = alignment ?? (crumbs.length === 1 ? 'center' : 'flex-start')
+  const { pageTitle } = useAppState()
 
   return (
     <>
       <Grid container justify={justify}>
-        <Typography variant='h2'>{current?.label ?? label ?? ''}</Typography>
+        <Typography variant='h2'>
+          {pageTitle ?? current?.label ?? label ?? ''}
+        </Typography>
       </Grid>
       <VSpacer size='small' />
       {showBreadcrumbs && (
@@ -28,7 +34,7 @@ export const PageHeader = (props: PageHeaderProps) => {
           <Breadcrumbs items={crumbs} />
         </Grid>
       )}
-      <VSpacer size='small' />
+      <VSpacer size='medium' />
     </>
   )
 }

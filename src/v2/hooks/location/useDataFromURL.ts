@@ -15,6 +15,7 @@ export const useDataFromURL = () => {
   if (params.length > 0) {
     if (service === 'authorizer') {
       const [itemId, action] = params
+      // debugger
       state[stripColonFromURLParam(urlParams.itemId)] = itemId
     }
 
@@ -53,6 +54,7 @@ export const useDataFromURL = () => {
       case 'cash-withdrawals':
       case 'digital-security-withdrawals': {
         const [balanceId, action] = params
+        // debugger
         state[stripColonFromURLParam(urlParams.balanceId)] = balanceId
         break
       }

@@ -17,7 +17,13 @@ export const DataroomEditRow = (props: DataroomEditRowProps) => {
     <Grid container alignItems='center'>
       <DataroomColumns title={title} document={document} />
       {actions !== null && (
-        <Grid container item xs={2} justify='flex-end'>
+        <Grid
+          container
+          item
+          xs={2}
+          justify='flex-end'
+          onClick={e => e.stopPropagation()}
+        >
           {actions}
         </Grid>
       )}

@@ -10,7 +10,7 @@ import { Form } from 'v2/components/form/Form'
 import { moneyNumberFormat } from 'v2/app/components/DSO/utils'
 import { TypedField } from 'v2/components/form/TypedField'
 import { plainValueExtractor } from 'v2/helpers/forms'
-import { UploadButton } from 'v2/components/dataroom/UploadButton'
+import { UploadSignedSubscriptionDocument } from 'v2/components/dataroom/UploadSignedSubscriptionDocument'
 import { DataroomUploader } from 'v2/components/dataroom/DataroomUploader'
 
 jest.mock('v2/components/form/TypedField', () => ({
@@ -46,7 +46,7 @@ describe('CommitmentFormFields', () => {
         label: 'Subscription Document',
         name: 'signedSubscriptionDocument',
         valueExtractor: plainValueExtractor,
-        render: UploadButton,
+        render: UploadSignedSubscriptionDocument,
         component: DataroomUploader,
         documentInfo: {
           title: 'Signed Subscription Document',

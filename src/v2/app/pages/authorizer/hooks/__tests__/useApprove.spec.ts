@@ -1,12 +1,12 @@
 /**  * @jest-environment jsdom-sixteen  */
 import { act } from '@testing-library/react-hooks'
 import { waitFor, cleanup, renderHookWithServiceProvider } from 'test-utils'
-import { useApprove, ApproveArgs } from '../useApprove'
+import { useApprove, ApproveOrRejectArgs } from '../useApprove'
 import { unsuccessfulResponse, successfulResponse } from '__fixtures__/api'
 import { AuthorizerActionArgs } from '../types'
 
 describe('useApprove', () => {
-  const approveArgs: ApproveArgs = {
+  const approveArgs: ApproveOrRejectArgs = {
     sharedWithUser: false,
     comment: '{}'
   }

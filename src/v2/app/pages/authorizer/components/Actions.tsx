@@ -4,6 +4,8 @@ import { Launch as LaunchIcon } from '@material-ui/icons'
 import { Grid, IconButton } from '@material-ui/core'
 import { useAuthorizerRouter } from '../router'
 import User from 'v2/types/user'
+import { AppRouterLinkComponent } from 'v2/components/AppRouterLink'
+import { AuthorizerBanksRoute } from 'v2/app/pages/authorizer/pages/banks/router'
 
 export interface ActionsProps<T> {
   item: T
@@ -20,22 +22,22 @@ export const Actions = <T,>(props: ActionsProps<T>): JSX.Element => {
   const { item, cacheQueryKey } = props
   const { push, current } = useAuthorizerRouter()
   const classes = useStyles()
-
-  const viewItem = (): void => {
-    const id = (item as any)._id
-    const splitted = current.path.split('/')
-    const category = splitted[splitted.length - 1]
-
-    push('viewItem', {
-      itemId: id,
-      category,
-      cacheQueryKey
-    })
-  }
+  const id = (item as any)._id
+  const splitted = current.path.split('/')
+  const category = splitted[splitted.length - 1]
 
   return (
     <Grid container>
-      <IconButton onClick={viewItem} size='small' data-testid='view-button'>
+      <IconButton
+        component={AppRouterLinkComponent}
+        size='small'
+        data-testid='view-button'
+        to={`/app/authorizer/${category}/${id as string}/view`}
+        params={{
+          itemId: id,
+          cacheQueryKey
+        }}
+      >
         <LaunchIcon className={classes.viewColor} />
       </IconButton>
     </Grid>

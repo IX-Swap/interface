@@ -27,7 +27,6 @@ export const AuthorizationDocuments = (props: AuthorizationDocumentsProps) => {
             <DataroomUploaderWithFileTypeSelector
               append={append}
               documentInfo={{ feature, resourceId }}
-              justify='flex-start'
             />
           </Grid>
           <Grid item container wrap='wrap'>

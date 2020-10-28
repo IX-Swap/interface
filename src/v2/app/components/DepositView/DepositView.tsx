@@ -5,6 +5,7 @@ import { CashDeposit } from 'v2/types/cashDeposit'
 import { BankDetails } from 'v2/app/components/BankDetails'
 import { formatMoney } from 'v2/helpers/numbers'
 import { LabelledValue } from 'v2/components/LabelledValue'
+import { useSetPageTitle } from 'v2/app/hooks/useSetPageTitle'
 
 export interface DepositViewProps {
   data: CashDeposit
@@ -13,6 +14,8 @@ export interface DepositViewProps {
 export const DepositView = (props: DepositViewProps) => {
   const { data } = props
   const bankAccount = { ...INVESTAX_BANK }
+
+  useSetPageTitle(data.depositCode)
 
   return (
     <Grid container justify='center' direction='column'>

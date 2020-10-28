@@ -1,53 +1,51 @@
 import React, { useState } from 'react'
-import { Button, Grid, GridProps } from '@material-ui/core'
+import { Box, Button } from '@material-ui/core'
 import { DataroomFileTypeSelect } from 'v2/components/dataroom/DataroomFileTypeSelect'
-import { DataroomUploader } from 'v2/components/dataroom/DataroomUploader'
 import { DataroomFile } from 'v2/types/dataroomFile'
 import { UploadDocumentInfo } from 'v2/hooks/useUploadFile'
 import { DataroomDocumentType } from 'v2/config/dataroom'
+import { DataroomUploadAndAppend } from 'v2/components/dataroom/DataroomUploadAndAppend'
 
 export interface DataroomUploaderWithFileTypeSelectorProps {
-  append: (value: { document: DataroomFile }) => any
+  append: (value: { value: DataroomFile }) => any
   documentInfo?: UploadDocumentInfo
 }
 
 export const DataroomUploaderWithFileTypeSelector = (
-  props: DataroomUploaderWithFileTypeSelectorProps & GridProps
+  props: DataroomUploaderWithFileTypeSelectorProps
 ) => {
-  const { append, documentInfo = {}, ...gridProps } = props
+  const { append, documentInfo = {} } = props
   const [fileType, setFileType] = useState<DataroomDocumentType>(
     DataroomDocumentType.Other
   )
-  const handleChange = (event: any) => setFileType(event.target.value)
 
   return (
-    <Grid container spacing={1} justify='flex-end' {...gridProps}>
-      <Grid item>
-        <DataroomFileTypeSelect
-          value={fileType}
-          onChange={handleChange}
-          variant='outlined'
-        />
-      </Grid>
-      <Grid item>
-        <DataroomUploader
-          name=''
-          label=''
-          value={{} as any}
-          documentInfo={{ type: fileType, title: fileType, ...documentInfo }}
-          onChange={file => append({ document: file })}
-          render={({ handleUpload }) => (
-            <Button
-              size='large'
-              variant='contained'
-              color='primary'
-              onClick={handleUpload}
-            >
-              Upload
-            </Button>
-          )}
-        />
-      </Grid>
-    </Grid>
+    <Box display='flex'>
+      <DataroomFileTypeSelect
+        variant='outlined'
+        value={fileType}
+        onChange={event =>
+          setFileType(event.target.value as DataroomDocumentType)
+        }
+      />
+      <Box mx={0.5} />
+      <DataroomUploadAndAppend
+        multiple
+        label='Uploader'
+        append={file => append({ value: file })}
+        documentInfo={{ type: fileType, title: fileType, ...documentInfo }}
+        render={props => (
+          <Button
+            {...props}
+            size='large'
+            variant='contained'
+            color='primary'
+            disableElevation
+          >
+            Upload
+          </Button>
+        )}
+      />
+    </Box>
   )
 }

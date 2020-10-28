@@ -7,6 +7,8 @@ import { AddressView } from 'v2/app/pages/identity/components/AddressView'
 import { FinancialView } from 'v2/app/pages/identity/FinancialView'
 import { IdentityDocumentsView } from 'v2/app/pages/identity/components/IdentityDocumentsView'
 import { DeclarationView } from 'v2/app/pages/identity/components/DeclarationView'
+import { useSetPageTitle } from 'v2/app/hooks/useSetPageTitle'
+import { renderName } from 'v2/helpers/tables'
 
 export interface IndividualViewProps {
   data: IndividualIdentity
@@ -14,6 +16,8 @@ export interface IndividualViewProps {
 
 export const IndividualView = (props: IndividualViewProps) => {
   const { data } = props
+
+  useSetPageTitle(`${data.firstName} ${data.middleName} ${data.lastName}`)
 
   return (
     <Grid container spacing={2}>

@@ -7,3 +7,5 @@ export const getIdFromObj = (value?: GetIdFromObjProps | null): string =>
 
 export const isEmptyString = (value: string | null | undefined) =>
   value?.length === 0
+
+export const compareStrings = (a: string, b: string) => a === b

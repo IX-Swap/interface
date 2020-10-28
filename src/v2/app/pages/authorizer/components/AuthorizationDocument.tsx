@@ -1,5 +1,5 @@
-import { Grid, Typography, Tooltip } from '@material-ui/core'
 import React from 'react'
+import { Grid, Typography, Tooltip } from '@material-ui/core'
 import { ViewDocument } from 'v2/app/components/DSO/components/ViewDocument'
 import { useStyles } from './AuthorizationDocument.styles'
 import { documentIcons } from 'v2/helpers/rendering'
@@ -46,7 +46,6 @@ export const AuthorizationDocument = (props: AuthorizationDocumentProps) => {
         {download => (
           <Grid
             className={classes.inner}
-            onClick={download}
             container
             direction='column'
             alignItems='center'
@@ -63,6 +62,7 @@ export const AuthorizationDocument = (props: AuthorizationDocumentProps) => {
                 {url => (
                   <img
                     className={classes.image}
+                    alt={document.originalFileName}
                     src={
                       isImage(document.originalFileName)
                         ? url
@@ -70,7 +70,6 @@ export const AuthorizationDocument = (props: AuthorizationDocumentProps) => {
                             getDocumentType(document.originalFileName)
                           ]
                     }
-                    alt={document.originalFileName}
                   />
                 )}
               </ViewDocument>
@@ -78,7 +77,12 @@ export const AuthorizationDocument = (props: AuthorizationDocumentProps) => {
 
             <Grid item xs zeroMinWidth className={classes.type}>
               <Tooltip title={document.type}>
-                <Typography variant='body2' color='textSecondary' noWrap>
+                <Typography
+                  variant='body2'
+                  color='textSecondary'
+                  noWrap
+                  onClick={download}
+                >
                   {document.type}
                 </Typography>
               </Tooltip>
@@ -86,7 +90,9 @@ export const AuthorizationDocument = (props: AuthorizationDocumentProps) => {
 
             <Grid item xs zeroMinWidth>
               <Tooltip title={document.originalFileName}>
-                <Typography noWrap>{document.originalFileName}</Typography>
+                <Typography noWrap data-text-popup={document?.originalFileName}>
+                  {document.originalFileName}
+                </Typography>
               </Tooltip>
             </Grid>
           </Grid>

@@ -6,10 +6,12 @@ import { DataroomFile } from 'v2/types/dataroomFile'
 import { themeColors } from 'v2/themes/default'
 import { useFormError } from 'v2/hooks/useFormError'
 
-export interface UploadButtonProps
+export interface UploadSignedSubscriptionDocumentProps
   extends DataroomUploaderRenderProps<Maybe<DataroomFile> | undefined> {}
 
-export const UploadButton = (props: UploadButtonProps) => {
+export const UploadSignedSubscriptionDocument = (
+  props: UploadSignedSubscriptionDocumentProps
+) => {
   const { handleUpload, value: document, name } = props
   const hasValue = document !== null && document !== undefined
   const { error, hasError } = useFormError(name)

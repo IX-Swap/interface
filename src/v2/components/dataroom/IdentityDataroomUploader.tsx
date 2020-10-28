@@ -1,7 +1,7 @@
 import React from 'react'
 import { TypedFieldRenderComponentProps } from 'v2/components/form/types'
 import { DataroomFile } from 'v2/types/dataroomFile'
-import { DefaultDataroomUploader } from 'v2/components/dataroom/DefaultDataroomUploader'
+import { DataroomRowUploader } from 'v2/components/dataroom/DataroomRowUploader'
 
 export interface IdentityDataroomUploaderProps
   extends TypedFieldRenderComponentProps<DataroomFile> {}
@@ -18,7 +18,7 @@ export const IdentityDataroomUploader = (
   }
 
   return (
-    <DefaultDataroomUploader
+    <DataroomRowUploader
       {...props}
       value={value}
       onDelete={handleDelete}

@@ -29,14 +29,17 @@ export const useStyles = makeStyles(theme => ({
     visibility: 'hidden'
   },
   image: {
-    width: 100,
-    height: 'auto'
+    // height: 124,
+    // width: 'auto'
   },
   type: {
     marginTop: theme.spacing(1),
     marginBottom: theme.spacing(1)
   },
   imageWrapper: {
-    height: 128
+    width: 100,
+    height: 124,
+    borderRadius: 6,
+    overflow: 'hidden'
   }
 }))
