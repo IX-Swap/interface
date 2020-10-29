@@ -7,6 +7,7 @@ import { AddressView } from 'v2/app/pages/identity/components/AddressView'
 import { IdentityDocumentsView } from 'v2/app/pages/identity/components/IdentityDocumentsView'
 import { DeclarationView } from 'v2/app/pages/identity/components/DeclarationView'
 import { CorporateProfilesView } from 'v2/app/pages/identity/components/CorporateProfilesView'
+import { useSetPageTitle } from 'v2/app/hooks/useSetPageTitle'
 
 export interface CorporateViewProps {
   data: CorporateIdentity
@@ -14,6 +15,8 @@ export interface CorporateViewProps {
 
 export const CorporateView = (props: CorporateViewProps) => {
   const { data } = props
+
+  useSetPageTitle(data.companyLegalName)
 
   return (
     <Grid container spacing={2}>

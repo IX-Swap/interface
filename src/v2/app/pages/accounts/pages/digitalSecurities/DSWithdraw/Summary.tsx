@@ -25,7 +25,6 @@ export const Summary: React.FC = () => {
   }
 
   const asset = assets.map[balances.map[balanceId].assetId]
-
   const items = [
     {
       label: 'Name of Token',

@@ -6,6 +6,7 @@ import { useSnackbar } from 'v2/hooks/useSnackbar'
 import { useDSRouter } from 'v2/app/pages/accounts/pages/digitalSecurities/router'
 import { VSpacer } from 'v2/components/VSpacer'
 import { Alert } from '@material-ui/lab'
+import { useSetPageTitle } from 'v2/app/hooks/useSetPageTitle'
 
 export const AssetView: React.FC = () => {
   const {
@@ -19,6 +20,10 @@ export const AssetView: React.FC = () => {
     await navigator.clipboard.writeText(address)
     snackbar.showSnackbar('Copied to clipboard', 'info')
   }
+
+  useSetPageTitle(
+    asset === undefined ? undefined : `${asset.name} (${asset.symbol})`
+  )
 
   if (isLoading) {
     return null

@@ -18,6 +18,8 @@ export const useUpdateBank = () => {
   }
 
   return useMutation(updateBank, {
-    onSuccess: () => push('list')
+    onSuccess: () => {
+      push('list')
+    }
   })
 }

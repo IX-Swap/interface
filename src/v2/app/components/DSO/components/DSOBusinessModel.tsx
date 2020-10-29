@@ -1,7 +1,7 @@
 import React from 'react'
 import { TypedField } from 'v2/components/form/TypedField'
 import { RichTextEditor } from 'v2/components/form/RichTextEditor'
-import { plainValueExtractor } from 'v2/helpers/forms'
+import { wysiwygValueExtractor } from 'v2/helpers/forms'
 import { DSOContainer } from 'v2/app/components/DSO/components/DSOContainer'
 import { useFormContext } from 'react-hook-form'
 import { DSOFormValues } from 'v2/types/dso'
@@ -18,7 +18,7 @@ export const DSOBusinessModel = () => {
         customRenderer
         label='Business Model'
         name='businessModel'
-        valueExtractor={plainValueExtractor}
+        valueExtractor={wysiwygValueExtractor}
       />
     </DSOContainer>
   )

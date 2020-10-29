@@ -1,53 +1,57 @@
 import React from 'react'
 import { FieldsArray } from 'v2/components/form/FieldsArray'
-import { Grid, List, ListItem } from '@material-ui/core'
-import { DataroomHeader } from 'v2/components/dataroom/DataroomHeader'
+import { Grid, List } from '@material-ui/core'
 import { TypedField } from 'v2/components/form/TypedField'
 import { plainValueExtractor } from 'v2/helpers/forms'
 import { DataroomUploaderWithFileTypeSelector } from 'v2/components/dataroom/DataroomUploaderWithFileTypeSelector'
 import { useFormContext } from 'react-hook-form'
 import { DSOFormValues } from 'v2/types/dso'
-import { DefaultDataroomUploader } from 'v2/components/dataroom/DefaultDataroomUploader'
+import { SelectionHelper } from 'v2/components/SelectionHelper'
+import { SelectableDataroomUploader } from 'v2/components/dataroom/SelectableDataroomUploader'
+import { SelectableDataroomHeader } from 'v2/components/dataroom/SelectableDataroomHeader'
+import { DataroomDeleteSelected } from 'v2/components/dataroom/DataroomDeleteSelected'
+import {
+  itemComparator,
+  SelectedDocument
+} from 'v2/app/pages/accounts/pages/banks/components/BankDocuments'
 
 export const DSODataroom = () => {
   const { control } = useFormContext<DSOFormValues>()
 
   return (
-    <FieldsArray name='documents' control={control}>
-      {({ fields, append, remove }) => (
-        <Grid container direction='column' spacing={2}>
-          <Grid item>
-            <DataroomHeader />
-          </Grid>
-          <Grid item container direction='column'>
-            <List disablePadding>
-              {fields.map((field, index) => (
-                <ListItem
-                  key={field.id}
-                  divider={index !== fields.length - 1}
-                  style={{ minHeight: 50 }}
-                >
-                  {/* @ts-ignore */}
+    <SelectionHelper<SelectedDocument> itemComparator={itemComparator}>
+      <FieldsArray name='documents' control={control}>
+        {({ fields, append, remove }) => (
+          <Grid container direction='column' spacing={2}>
+            <Grid item>
+              <SelectableDataroomHeader />
+            </Grid>
+            <Grid item container direction='column'>
+              <List disablePadding component='div'>
+                {fields.map((field, index) => (
+                  // @ts-expect-error
                   <TypedField
                     customRenderer
+                    variant='row'
                     key={field.id}
                     control={control}
-                    component={DefaultDataroomUploader}
+                    component={SelectableDataroomUploader}
                     label='Document'
-                    name={['documents', index, 'document']}
-                    defaultValue={fields[index].document}
+                    name={['documents', index, 'value']}
+                    defaultValue={fields[index].value}
                     valueExtractor={plainValueExtractor}
                     onDelete={() => remove(index)}
                   />
-                </ListItem>
-              ))}
-            </List>
+                ))}
+              </List>
+            </Grid>
+            <Grid item container justify='space-between' alignItems='center'>
+              <DataroomDeleteSelected name='documents' />
+              <DataroomUploaderWithFileTypeSelector append={append} />
+            </Grid>
           </Grid>
-          <Grid item>
-            <DataroomUploaderWithFileTypeSelector append={append} />
-          </Grid>
-        </Grid>
-      )}
-    </FieldsArray>
+        )}
+      </FieldsArray>
+    </SelectionHelper>
   )
 }

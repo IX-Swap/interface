@@ -23,7 +23,7 @@ export const LandingPageItem = (props: LandingPageItemProps) => {
         item
         direction='column'
         alignItems='center'
-        justify='center'
+        justify='flex-start'
         className={classes.container}
       >
         <Grid item>

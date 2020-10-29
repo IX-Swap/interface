@@ -10,6 +10,7 @@ import { LabelledValue } from 'v2/components/LabelledValue'
 import { formatDateToMMDDYY } from 'v2/helpers/dates'
 import { DataroomViewRow } from 'v2/components/dataroom/DataroomViewRow'
 import { VSpacer } from 'v2/components/VSpacer'
+import { useSetPageTitle } from 'v2/app/hooks/useSetPageTitle'
 
 export interface _DSOView_Props {
   data: DigitalSecurityOffering
@@ -17,6 +18,8 @@ export interface _DSOView_Props {
 
 export const DSOView = (props: _DSOView_Props) => {
   const { data } = props
+
+  useSetPageTitle(data.tokenName)
 
   return (
     <Grid container direction='column' spacing={3}>

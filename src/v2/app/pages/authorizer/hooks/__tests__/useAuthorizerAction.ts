@@ -1,16 +1,21 @@
 /**  * @jest-environment jsdom-sixteen  */
 import { act } from '@testing-library/react-hooks'
-import { waitFor, cleanup, renderHookWithServiceProvider } from 'test-utils'
-import { useApprove, ApproveArgs } from '../useApprove'
-import { unsuccessfulResponse, successfulResponse } from '__fixtures__/api'
-import { AuthorizerActionArgs } from '../types'
+import { cleanup, renderHookWithServiceProvider, waitFor } from 'test-utils'
+import { useAuthorizerAction } from 'v2/app/pages/authorizer/hooks/useAuthorizerAction'
+import { successfulResponse, unsuccessfulResponse } from '__fixtures__/api'
+import { bank } from '__fixtures__/authorizer'
+import * as useAuthorizerCategoryHook from 'v2/hooks/location/useAuthorizerCategory'
+import { AuthorizerCategory } from 'v2/types/app'
 
-describe('useApprove', () => {
-  const approveArgs: ApproveArgs = {
-    sharedWithUser: false,
-    comment: '{}'
-  }
-  const props: AuthorizerActionArgs = { uri: '/', id: 'testId' }
+describe('useAuthorizerAction', () => {
+  const id = bank._id
+
+  beforeEach(() => {
+    jest
+      .spyOn(useAuthorizerCategoryHook, 'useAuthorizerCategory')
+      .mockReturnValue(AuthorizerCategory['Bank Accounts'])
+  })
+
   afterEach(async () => {
     await cleanup()
     jest.clearAllMocks()
@@ -24,17 +29,16 @@ describe('useApprove', () => {
       const apiObj = { put: putFn }
       const snackbarObj = { showSnackbar }
       const { result } = renderHookWithServiceProvider(
-        () => useApprove(props),
+        () => useAuthorizerAction(id, 'approve'),
         { apiService: apiObj, snackbarService: snackbarObj }
       )
 
       await waitFor(
         () => {
           const [mutate] = result.current
-          void mutate(approveArgs)
+          void mutate()
 
-          expect(showSnackbar).toHaveBeenCalledTimes(1)
-          expect(showSnackbar).toHaveBeenNthCalledWith(1, 'success', 'success')
+          expect(showSnackbar).toHaveBeenCalledWith('success', 'success')
         },
         { timeout: 1000 }
       )
@@ -49,17 +53,16 @@ describe('useApprove', () => {
       const apiObj = { put: putFn }
       const snackbarObj = { showSnackbar }
       const { result } = renderHookWithServiceProvider(
-        () => useApprove(props),
+        () => useAuthorizerAction(id, 'approve'),
         { apiService: apiObj, snackbarService: snackbarObj }
       )
 
       await waitFor(
         () => {
           const [mutate] = result.current
-          void mutate({ ...approveArgs, comment: undefined })
+          void mutate()
 
-          expect(showSnackbar).toHaveBeenCalledTimes(1)
-          expect(showSnackbar).toHaveBeenNthCalledWith(1, 'success', 'success')
+          expect(showSnackbar).toHaveBeenCalledWith('success', 'success')
         },
         { timeout: 1000 }
       )
@@ -74,17 +77,16 @@ describe('useApprove', () => {
       const apiObj = { put: putFn }
       const snackbarObj = { showSnackbar }
       const { result } = renderHookWithServiceProvider(
-        () => useApprove(props),
+        () => useAuthorizerAction(id, 'approve'),
         { apiService: apiObj, snackbarService: snackbarObj }
       )
 
       await waitFor(
         () => {
           const [mutate] = result.current
-          void mutate(approveArgs)
+          void mutate()
 
-          expect(showSnackbar).toHaveBeenCalledTimes(1)
-          expect(showSnackbar).toHaveBeenNthCalledWith(1, 'error', 'error')
+          expect(showSnackbar).toHaveBeenCalledWith('error', 'error')
         },
         { timeout: 1000 }
       )

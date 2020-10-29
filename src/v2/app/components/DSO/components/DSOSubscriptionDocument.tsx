@@ -4,7 +4,7 @@ import { plainValueExtractor } from 'v2/helpers/forms'
 import { DSOContainer } from 'v2/app/components/DSO/components/DSOContainer'
 import { useFormContext } from 'react-hook-form'
 import { DSOFormValues } from 'v2/types/dso'
-import { DefaultDataroomUploader } from 'v2/components/dataroom/DefaultDataroomUploader'
+import { DataroomRowUploader } from 'v2/components/dataroom/DataroomRowUploader'
 
 export const DSOSubscriptionDocument = () => {
   const { control } = useFormContext<DSOFormValues>()
@@ -15,7 +15,7 @@ export const DSOSubscriptionDocument = () => {
       <TypedField
         customRenderer
         control={control}
-        component={DefaultDataroomUploader}
+        component={DataroomRowUploader}
         label='Subscription Document'
         name='subscriptionDocument'
         valueExtractor={plainValueExtractor}

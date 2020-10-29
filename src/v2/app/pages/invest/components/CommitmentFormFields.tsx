@@ -7,7 +7,7 @@ import { TypedField } from 'v2/components/form/TypedField'
 import { DataroomUploader } from 'v2/components/dataroom/DataroomUploader'
 import { NumericInput } from 'v2/components/form/NumericInput'
 import { numericValueExtractor, plainValueExtractor } from 'v2/helpers/forms'
-import { UploadButton } from 'v2/components/dataroom/UploadButton'
+import { UploadSignedSubscriptionDocument } from 'v2/components/dataroom/UploadSignedSubscriptionDocument'
 
 export interface CommitmentFormFieldsProps {
   symbol: string
@@ -33,7 +33,7 @@ export const CommitmentFormFields = (props: CommitmentFormFieldsProps) => {
           component={DataroomUploader}
           name='signedSubscriptionDocument'
           label='Subscription Document'
-          render={UploadButton}
+          render={UploadSignedSubscriptionDocument}
           valueExtractor={plainValueExtractor}
           documentInfo={{
             title: 'Signed Subscription Document',

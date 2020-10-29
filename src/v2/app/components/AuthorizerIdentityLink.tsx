@@ -1,6 +1,5 @@
 import React, { ReactNode } from 'react'
 import { AppRouterLink } from 'v2/components/AppRouterLink'
-import { AuthorizerRoute } from 'v2/app/pages/authorizer/router'
 
 export interface IdentityLinkProps {
   type: 'individual' | 'corporate'
@@ -13,7 +12,7 @@ export const AuthorizerIdentityLink = (props: IdentityLinkProps) => {
 
   return (
     <AppRouterLink
-      to={AuthorizerRoute.viewItem}
+      to={`/app/authorizer/${type}s/${identityId}/view`}
       params={{
         itemId: identityId,
         category: `${type}s`

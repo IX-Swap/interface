@@ -6,6 +6,7 @@ import { LabelledValue } from 'v2/components/LabelledValue'
 import { renderName } from 'v2/helpers/tables'
 import { AuthorizerIdentityLink } from 'v2/app/components/AuthorizerIdentityLink'
 import { Avatar } from 'v2/components/Avatar'
+import { getDataroomFileId } from 'v2/helpers/dataroom'
 
 export interface IndividualInfoProps {
   data: IndividualIdentity
@@ -21,7 +22,12 @@ export const IndividualInfo = (props: IndividualInfoProps) => {
       </Grid>
 
       <Grid item>
-        <Avatar documentId={data.photo} ownerId={data.user._id} />
+        <Avatar
+          documentId={data.photo}
+          ownerId={getDataroomFileId(data.user)}
+          variant='rounded'
+          size={200}
+        />
       </Grid>
 
       <Grid item>

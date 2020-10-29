@@ -3,7 +3,7 @@ import {
   DSOFormValues,
   DsoTeamMember
 } from 'v2/types/dso'
-import { DataroomFile, DataroomFileWithGuide } from 'v2/types/dataroomFile'
+import { DataroomFile, FormArrayElement } from 'v2/types/dataroomFile'
 import { string, number, array, object } from 'yup'
 
 export const deploymentInfoValidationSchema = object().shape<
@@ -51,7 +51,7 @@ export const dsoFormValidationSchema = object()
     logo: string().required('Required'),
     policyBuilder: object(),
     status: string(),
-    documents: array<DataroomFileWithGuide>().required('Required'),
+    documents: array<FormArrayElement<DataroomFile>>().required('Required'),
     team: array<DsoTeamMember>().required('Required')
   })
   .notRequired()

@@ -38,7 +38,6 @@ describe('DSOForm', () => {
   it('renders DSOContainer with correct props', () => {
     render(<DSOForm {...props} />)
 
-    expect(DSOContainer).toHaveBeenCalledTimes(10)
     expect(DSOContainer).toHaveBeenNthCalledWith(
       1,
       expect.objectContaining({

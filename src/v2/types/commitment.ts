@@ -17,12 +17,12 @@ export interface Commitment extends Authorizable {
   hold: string
   createdAt: string
   updatedAt: string
-  signedSubscriptionDocument: string
+  signedSubscriptionDocument: DataroomFile
+  user: User
   identity: {
     individual: IndividualIdentity
     corporates: CorporateIdentity[]
   }
-  user: User
 }
 
 export interface CommitmentFormValues {

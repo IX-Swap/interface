@@ -7,6 +7,8 @@ import { DSOLink } from 'v2/app/components/DSOLink'
 import { formatMoney } from 'v2/helpers/numbers'
 import { SubscriptionDocument } from 'v2/app/components/SubscriptionDocument'
 import { Maybe } from 'v2/types/util'
+import { useSetPageTitle } from 'v2/app/hooks/useSetPageTitle'
+import { getOfferingName } from 'v2/helpers/strings'
 
 export interface CommitmentPreviewProps {
   data: Maybe<Commitment>
@@ -16,6 +18,8 @@ export const CommitmentPreview: React.FC<CommitmentPreviewProps> = (
   props: CommitmentPreviewProps
 ) => {
   const { data } = props
+
+  useSetPageTitle(getOfferingName(data))
 
   if (data === null) {
     return null
@@ -76,18 +80,7 @@ export const CommitmentPreview: React.FC<CommitmentPreviewProps> = (
 
       <Grid item container spacing={4}>
         <Grid item xs={12}>
-          <SubscriptionDocument
-            document={{
-              _id: data.signedSubscriptionDocument,
-              originalFileName: 'unknown',
-              user: data.user._id,
-              createdAt: '',
-              title: '',
-              type: 'Signed Subscription Document',
-              updatedAt: '',
-              url: ''
-            }}
-          />
+          <SubscriptionDocument document={data.signedSubscriptionDocument} />
         </Grid>
       </Grid>
     </Grid>

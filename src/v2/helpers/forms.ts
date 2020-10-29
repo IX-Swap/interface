@@ -1,6 +1,7 @@
 import { NumberFormatValues } from 'react-number-format'
 import { Control, FieldError } from 'react-hook-form'
 import get from 'lodash/get'
+import { wysiwygToHtml } from 'v2/helpers/rendering'
 
 export const booleanValueExtractor = (
   _: React.ChangeEvent<{}>,
@@ -12,6 +13,10 @@ export const numericValueExtractor = (
 ): number | undefined => values.floatValue
 
 export const plainValueExtractor = (value: any) => value
+
+export const wysiwygValueExtractor = (value: string) => {
+  return wysiwygToHtml(value)
+}
 
 export const dateTimeValueExtractor = (value: Date, _stringValue: string) => {
   return value

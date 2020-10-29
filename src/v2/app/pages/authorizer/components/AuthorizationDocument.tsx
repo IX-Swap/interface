@@ -1,10 +1,11 @@
-import { Grid, Typography, Tooltip } from '@material-ui/core'
 import React from 'react'
+import { Grid, Typography, Tooltip } from '@material-ui/core'
 import { ViewDocument } from 'v2/app/components/DSO/components/ViewDocument'
 import { useStyles } from './AuthorizationDocument.styles'
 import { documentIcons } from 'v2/helpers/rendering'
 import { DownloadDocument } from 'v2/components/dataroom/DownloadDocument'
 import { DataroomUploaderRenderProps } from 'v2/components/dataroom/DataroomUploader'
+import { LoadingIndicator } from 'v2/app/components/LoadingIndicator/LoadingIndicator'
 
 export interface AuthorizationDocumentProps
   extends Pick<DataroomUploaderRenderProps, 'value'> {}
@@ -43,10 +44,9 @@ export const AuthorizationDocument = (props: AuthorizationDocumentProps) => {
   return (
     <Grid item className={classes.container}>
       <DownloadDocument documentId={document._id} ownerId={document.user}>
-        {download => (
+        {({ download, isLoading }) => (
           <Grid
             className={classes.inner}
-            onClick={download}
             container
             direction='column'
             alignItems='center'
@@ -60,19 +60,24 @@ export const AuthorizationDocument = (props: AuthorizationDocumentProps) => {
               className={classes.imageWrapper}
             >
               <ViewDocument documentId={document._id} ownerId=''>
-                {url => (
-                  <img
-                    className={classes.image}
-                    src={
-                      isImage(document.originalFileName)
-                        ? url
-                        : documentIcons[
-                            getDocumentType(document.originalFileName)
-                          ]
-                    }
-                    alt={document.originalFileName}
-                  />
-                )}
+                {url => {
+                  return isImage(document.originalFileName) ? (
+                    <div
+                      className={classes.image}
+                      style={{ backgroundImage: `url("${url}")` }}
+                    />
+                  ) : (
+                    <img
+                      className={classes.image}
+                      alt={document.originalFileName}
+                      src={
+                        documentIcons[
+                          getDocumentType(document.originalFileName)
+                        ]
+                      }
+                    />
+                  )
+                }}
               </ViewDocument>
             </Grid>
 
@@ -84,11 +89,23 @@ export const AuthorizationDocument = (props: AuthorizationDocumentProps) => {
               </Tooltip>
             </Grid>
 
-            <Grid item xs zeroMinWidth>
-              <Tooltip title={document.originalFileName}>
-                <Typography noWrap>{document.originalFileName}</Typography>
+            <Grid item xs>
+              <Tooltip title='Click To View'>
+                <Typography
+                  className={classes.name}
+                  onClick={e => {
+                    e.stopPropagation()
+                    download()
+                  }}
+                >
+                  {document.originalFileName}
+                </Typography>
               </Tooltip>
             </Grid>
+
+            {isLoading && (
+              <LoadingIndicator size={24} message='Downloading...' />
+            )}
           </Grid>
         )}
       </DownloadDocument>

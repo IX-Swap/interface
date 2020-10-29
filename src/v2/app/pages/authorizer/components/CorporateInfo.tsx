@@ -5,6 +5,7 @@ import { convertAddressToString } from './utils'
 import { LabelledValue } from 'v2/components/LabelledValue'
 import { Avatar } from 'v2/components/Avatar'
 import { AuthorizerIdentityLink } from 'v2/app/components/AuthorizerIdentityLink'
+import { getDataroomFileId } from 'v2/helpers/dataroom'
 
 export interface CorporateInfoProps {
   data: CorporateIdentity
@@ -26,7 +27,12 @@ export const CorporateInfo = (props: CorporateInfoProps) => {
       </Grid>
 
       <Grid item>
-        <Avatar documentId={data.logo} ownerId={data.user._id} />
+        <Avatar
+          documentId={data.logo}
+          ownerId={getDataroomFileId(data.user)}
+          size={[200, 130]}
+          variant='rounded'
+        />
       </Grid>
 
       <Grid item>

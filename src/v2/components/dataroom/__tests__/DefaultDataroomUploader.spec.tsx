@@ -2,14 +2,14 @@
 import React from 'react'
 import { render, cleanup } from 'test-utils'
 import {
-  DefaultDataroomUploader,
-  DefaultDataroomUploaderProps
-} from 'v2/components/dataroom/DefaultDataroomUploader'
+  DataroomRowUploader,
+  DataroomRowUploaderProps
+} from 'v2/components/dataroom/DataroomRowUploader'
 import { document } from '__fixtures__/identity'
 import { Form } from 'v2/components/form/Form'
 
 describe('DefaultDataroomUploader', () => {
-  const props: DefaultDataroomUploaderProps = {
+  const props: DataroomRowUploaderProps = {
     onChange: jest.fn(),
     value: document,
     onBlur: jest.fn(),
@@ -20,6 +20,7 @@ describe('DefaultDataroomUploader', () => {
     documentInfo: {},
     control: {} as any
   }
+
   afterEach(async () => {
     await cleanup()
     jest.clearAllMocks()
@@ -28,7 +29,7 @@ describe('DefaultDataroomUploader', () => {
   it('renders without error', () => {
     render(
       <Form>
-        <DefaultDataroomUploader {...props} />
+        <DataroomRowUploader {...props} />
       </Form>
     )
   })

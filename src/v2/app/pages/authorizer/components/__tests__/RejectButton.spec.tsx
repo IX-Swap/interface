@@ -1,7 +1,6 @@
 /**  * @jest-environment jsdom-sixteen  */
 import React from 'react'
 import { render, cleanup, waitFor, fireEvent } from 'test-utils'
-import * as useRejectHook from '../../hooks/useReject'
 import {
   RejectButton,
   RejectButtonProps
@@ -11,6 +10,8 @@ import { history } from 'v2/history'
 import { AuthorizerRoute } from 'v2/app/pages/authorizer/router'
 import { bank } from '__fixtures__/authorizer'
 import { AuthorizerCategory } from 'v2/types/app'
+import * as useAuthorizerAction from 'v2/app/pages/authorizer/hooks/useAuthorizerAction'
+import { Form } from 'v2/components/form/Form'
 
 describe('RejectButton', () => {
   const props: RejectButtonProps = { itemId: bank._id, disabled: false }
@@ -31,16 +32,24 @@ describe('RejectButton', () => {
   })
 
   it('renders without error', () => {
-    render(<RejectButton {...props} />)
+    render(
+      <Form>
+        <RejectButton {...props} />
+      </Form>
+    )
   })
 
   it('invokes reject when button is clicked', async () => {
     const reject = jest.fn()
     jest
-      .spyOn(useRejectHook, 'useReject')
+      .spyOn(useAuthorizerAction, 'useAuthorizerAction')
       .mockReturnValue([reject, generateMutationResult({})])
 
-    const { getByText } = render(<RejectButton {...props} />)
+    const { getByText } = render(
+      <Form>
+        <RejectButton {...props} />
+      </Form>
+    )
     const buttonElement = getByText(/Reject/i)
     fireEvent.click(buttonElement)
 

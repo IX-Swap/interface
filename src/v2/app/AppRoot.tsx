@@ -7,6 +7,7 @@ import { useAppRouter } from 'v2/app/router'
 import { Grid } from '@material-ui/core'
 import { AppError } from 'v2/app/components/AppError'
 import { useDataFromURL } from 'v2/hooks/location/useDataFromURL'
+import { AppStateProvider } from 'v2/app/hooks/useAppState'
 
 export const AppRoot: React.FC = () => {
   const classes = useStyles()
@@ -16,15 +17,17 @@ export const AppRoot: React.FC = () => {
 
   return (
     <ErrorBoundary fallback={AppError}>
-      <Grid container direction='column' className={classes.container}>
-        <Grid item>
-          <Header />
+      <AppStateProvider>
+        <Grid container direction='column' className={classes.container}>
+          <Grid item>
+            <Header />
+          </Grid>
+          <Sidebar />
+          <Grid item container className={classes.content}>
+            {renderRoutes()}
+          </Grid>
         </Grid>
-        <Sidebar />
-        <Grid item container className={classes.content}>
-          {renderRoutes()}
-        </Grid>
-      </Grid>
+      </AppStateProvider>
     </ErrorBoundary>
   )
 }

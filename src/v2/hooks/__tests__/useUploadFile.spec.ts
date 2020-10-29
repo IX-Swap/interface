@@ -2,7 +2,7 @@
 import { act } from '@testing-library/react-hooks'
 import { waitFor, cleanup, renderHookWithServiceProvider } from 'test-utils'
 import { useUploadFile, UploadDocumentArgs } from 'v2/hooks/useUploadFile'
-import { unsuccessfulResponse, successfulResponse } from '__fixtures__/api'
+import { unsuccessfulResponse } from '__fixtures__/api'
 import * as useAuthHook from 'v2/hooks/auth/useAuth'
 import { user } from '__fixtures__/user'
 import { DataroomFile } from 'v2/types/dataroomFile'
@@ -13,9 +13,11 @@ describe('useUploadFile', () => {
     onSuccess: jest.fn(),
     onError: jest.fn()
   }
+  const file = new File([''], 'filename.txt', { type: 'text/plain' })
   const uploadDocumentArgs: UploadDocumentArgs = {
-    documents: new File([''], 'filename.txt', { type: 'text/plain' })
+    documents: [file, file]
   }
+
   afterEach(async () => {
     await cleanup()
     jest.clearAllMocks()
@@ -27,7 +29,8 @@ describe('useUploadFile', () => {
       .mockImplementation(() => ({ user, isAuthenticated: true }))
 
     await act(async () => {
-      const postFn = jest.fn().mockResolvedValueOnce(successfulResponse)
+      const response = { data: [file, file] }
+      const postFn = jest.fn().mockResolvedValue(response)
       const showSnackbar = jest.fn()
 
       const apiObj = { post: postFn }
@@ -42,13 +45,9 @@ describe('useUploadFile', () => {
           const [mutate] = result.current
           void mutate(uploadDocumentArgs)
 
-          expect(callbacks.onSuccess).toHaveBeenNthCalledWith(
-            1,
-            successfulResponse
-          )
-          expect(showSnackbar).toHaveBeenNthCalledWith(
-            1,
-            'File uploaded',
+          expect(callbacks.onSuccess).toHaveBeenCalledWith(response)
+          expect(showSnackbar).toHaveBeenCalledWith(
+            `Successfully uploaded ${response.data.length} files`,
             'success'
           )
         },

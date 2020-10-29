@@ -21,6 +21,7 @@ export const AuthorizerView = <T,>(
   props: PropsWithChildren<AuthorizerViewProps<T>>
 ) => {
   const { title, data, feature, children } = props
+  // debugger
   const hasIdentity = data.identity !== undefined
   const documents = data.authorizationDocuments ?? []
 
@@ -40,7 +41,7 @@ export const AuthorizerView = <T,>(
             )}
             <Grid item xs={hasIdentity ? 9 : 12}>
               <Grid container direction='column'>
-                <Grid item>
+                <Grid item style={{ marginBottom: 5 }}>
                   <Typography color='textSecondary'>
                     {formatDateAndTime(data.createdAt)}
                   </Typography>
@@ -49,10 +50,11 @@ export const AuthorizerView = <T,>(
                 <Grid
                   item
                   container
+                  alignItems='center'
                   justify='space-between'
                   style={{ marginBottom: 24 }}
                 >
-                  <Typography variant='h2'>{title}</Typography>
+                  <Typography variant='h3'>{title}</Typography>
                   <Box display='flex'>
                     <AuthorizableLevel level={data.level} compact={false} />
                     <Box px={0.5} />
@@ -82,15 +84,7 @@ export const AuthorizerView = <T,>(
                 </Grid>
 
                 <Grid item>
-                  <AuthorizerForm
-                    status={data.status}
-                    itemId={data._id}
-                    defaultValues={{
-                      sharedWithUser:
-                        data.authorization?.sharedWithUser ?? false,
-                      comment: data.authorization?.comment ?? ''
-                    }}
-                  />
+                  <AuthorizerForm status={data.status} itemId={data._id} />
                 </Grid>
               </Grid>
             </Grid>

@@ -7,7 +7,6 @@ import {
 } from 'v2/app/pages/authorizer/components/AuthorizerView'
 import { DataroomFeature } from 'v2/types/authorizer'
 import { AuthorizationDocuments } from 'v2/app/pages/authorizer/components/AuthorizationDocuments'
-import { AuthorizerForm } from 'v2/app/pages/authorizer/components/AuthorizerForm'
 import { AuthorizableLevel } from 'v2/app/pages/authorizer/components/AuthorizableLevel'
 import { AuthorizableStatus } from 'v2/app/pages/authorizer/components/AuthorizableStatus'
 import { AuthorizerIdentities } from 'v2/app/pages/authorizer/components/AuthorizerIdentities'
@@ -65,23 +64,6 @@ describe('AuthorizerView', () => {
       {
         feature: DataroomFeature['bank-accounts'],
         resourceId: props.data._id
-      },
-      {}
-    )
-  })
-
-  it('renders AuthorizerForm with correct props', () => {
-    render(<AuthorizerView {...props} />)
-
-    expect(AuthorizerForm).toHaveBeenCalledTimes(1)
-    expect(AuthorizerForm).toHaveBeenCalledWith(
-      {
-        defaultValues: {
-          comment: props.data.authorization?.comment,
-          sharedWithUser: props.data.authorization?.sharedWithUser
-        },
-        itemId: props.data._id,
-        status: props.data.status
       },
       {}
     )

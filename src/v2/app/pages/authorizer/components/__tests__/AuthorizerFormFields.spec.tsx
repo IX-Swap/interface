@@ -9,8 +9,8 @@ import {
 } from 'v2/app/pages/authorizer/components/AuthorizerFormFields'
 import { TypedField } from 'v2/components/form/TypedField'
 import { Form } from 'v2/components/form/Form'
-import * as useAuthorizerCategoryHook from 'v2/hooks/location/useAuthorizerCategory'
 import { AuthorizerCategory } from 'v2/types/app'
+import * as useAuthorizerCategoryHook from 'v2/hooks/location/useAuthorizerCategory'
 
 jest.mock('v2/components/form/TypedField', () => ({
   TypedField: jest.fn(() => null)
@@ -84,29 +84,35 @@ describe('AuthorizerForm', () => {
   })
 
   it('renders ApproveButton with correct props if approved', () => {
+    jest
+      .spyOn(useAuthorizerCategoryHook, 'useAuthorizerCategory')
+      .mockReturnValue(AuthorizerCategory['Bank Accounts'])
+
     render(
       <Form>
         <AuthorizerFormFields {...props} status='Approved' />
       </Form>
     )
 
-    expect(ApproveButton).toHaveBeenCalledTimes(1)
     expect(ApproveButton).toHaveBeenCalledWith(
-      { itemId: props.itemId, disabled: false },
+      { itemId: props.itemId, disabled: true },
       {}
     )
   })
 
   it('renders RejectButton with correct props if rejected', () => {
+    jest
+      .spyOn(useAuthorizerCategoryHook, 'useAuthorizerCategory')
+      .mockReturnValue(AuthorizerCategory['Bank Accounts'])
+
     render(
       <Form>
         <AuthorizerFormFields {...props} status='Rejected' />
       </Form>
     )
 
-    expect(RejectButton).toHaveBeenCalledTimes(1)
     expect(RejectButton).toHaveBeenCalledWith(
-      { itemId: props.itemId, disabled: false },
+      { itemId: props.itemId, disabled: true },
       {}
     )
   })
@@ -115,6 +121,7 @@ describe('AuthorizerForm', () => {
     jest
       .spyOn(useAuthorizerCategoryHook, 'useAuthorizerCategory')
       .mockReturnValue(AuthorizerCategory['Cash Withdrawals'])
+
     render(
       <Form>
         <AuthorizerFormFields {...props} status='Approved' />
@@ -132,6 +139,7 @@ describe('AuthorizerForm', () => {
     jest
       .spyOn(useAuthorizerCategoryHook, 'useAuthorizerCategory')
       .mockReturnValue(AuthorizerCategory['Cash Withdrawals'])
+
     render(
       <Form>
         <AuthorizerFormFields {...props} status='Rejected' />

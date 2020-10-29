@@ -6,8 +6,7 @@ import { authorizerItemMap } from 'v2/app/pages/authorizer/authorizerItemMap'
 
 export const ViewAuthorizableItem = () => {
   const { data: item, category, isLoading } = useAuthorizerData()
-  const Component: React.ComponentType<any> =
-    authorizerItemMap[category].component
+  const { component: Component, title } = authorizerItemMap[category]
 
   if (isLoading) {
     return null
@@ -15,7 +14,7 @@ export const ViewAuthorizableItem = () => {
 
   return (
     <AuthorizerView
-      title='View Item'
+      title={title}
       data={item}
       feature={DataroomFeature[category]}
     >

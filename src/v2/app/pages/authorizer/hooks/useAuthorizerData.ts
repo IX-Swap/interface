@@ -13,7 +13,6 @@ export const useAuthorizerData = () => {
   const { params } = useAuthRouter()
   const category = useAuthorizerCategory()
   const { uri, paramKey } = authorizerItemMap[category]
-
   const fetcher = async () => {
     return await apiService.post<PaginatedData<any>>(uri, paginationArgs)
   }

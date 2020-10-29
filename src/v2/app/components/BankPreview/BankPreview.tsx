@@ -4,12 +4,15 @@ import { Bank } from 'v2/types/bank'
 import { convertAddressToString } from 'v2/app/pages/authorizer/components/utils'
 import { LabelledValue } from 'v2/components/LabelledValue'
 import { SupportingDocuments } from 'v2/app/components/SupportingDocuments'
+import { useSetPageTitle } from 'v2/app/hooks/useSetPageTitle'
 
 export interface BankViewProps {
   data: Bank
 }
 
 export const BankPreview: React.FC<BankViewProps> = ({ data }) => {
+  useSetPageTitle(data?.bankName)
+
   if (data === null) {
     return null
   }
