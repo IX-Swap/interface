@@ -8,11 +8,15 @@ import {
   BankFormValues
 } from 'v2/app/pages/accounts/types'
 import { DataroomFile, FormArrayElement } from 'v2/types/dataroomFile'
+import { MIN_INVESTMENT_AMOUNT } from 'v2/config/defaults'
 
 export const depositCashFormValidationSchema = yup
   .object()
   .shape<DepositCashFormValues>({
-    amount: yup.number().required('Required'),
+    amount: yup
+      .number()
+      .required('Required')
+      .min(MIN_INVESTMENT_AMOUNT, `Minimum amount is ${MIN_INVESTMENT_AMOUNT}`),
     asset: yup.string().required('Required'),
     otp: yup.string().required('Required')
   })
@@ -20,7 +24,10 @@ export const depositCashFormValidationSchema = yup
 export const withdrawCashFormValidationSchema = yup
   .object()
   .shape<WithdrawCashFormValues>({
-    amount: yup.number().required('Required'),
+    amount: yup
+      .number()
+      .required('Required')
+      .min(MIN_INVESTMENT_AMOUNT, `Minimum amount is ${MIN_INVESTMENT_AMOUNT}`),
     bank: yup.string().required('Required'),
     otp: yup.string().required('Required'),
     memo: yup.string()

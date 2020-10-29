@@ -1,7 +1,8 @@
 import React from 'react'
-import { Checkbox, FormControlLabel, Grid, Typography } from '@material-ui/core'
+import { FormControlLabel, Grid, Typography } from '@material-ui/core'
 import { useNotificationsFilter } from 'v2/app/pages/notifications/hooks/useNotificationsFilter'
 import { NotificationFilter } from 'v2/types/app'
+import { BigCheckbox } from 'v2/app/components/BigCheckbox'
 
 export const NotificationsFilter = () => {
   const { filter, handleClick } = useNotificationsFilter()
@@ -11,15 +12,15 @@ export const NotificationsFilter = () => {
       <Grid item xs={12} style={{ padding: '0 32px' }}>
         <Typography variant='h6'>FILTERS</Typography>
       </Grid>
-      <Grid item xs={12} style={{ padding: '2px 32px' }}>
+      <Grid item xs={12} style={{ padding: '4px 36px' }}>
         {Object.entries(NotificationFilter).map(([key, value]) => (
           <Grid item key={key}>
             <FormControlLabel
               label={key}
               labelPlacement='end'
               checked={filter.includes(value)}
-              onClick={() => handleClick(value)}
-              control={<Checkbox size='medium' />}
+              onChange={() => handleClick(value)}
+              control={<BigCheckbox />}
             />
           </Grid>
         ))}
