@@ -37,14 +37,6 @@ export const documentValueExtractor = (
   return Array.isArray(value) ? value?.[0]._id : value?._id
 }
 
-export const moneyNumberFormat = {
-  decimalScale: 2,
-  inputMode: 'numeric' as const,
-  thousandSeparator: true,
-  allowEmptyFormatting: true,
-  isNumericString: true
-}
-
 export const renderStringToHTML = (value: string) => (
   <div dangerouslySetInnerHTML={{ __html: value }} />
 )

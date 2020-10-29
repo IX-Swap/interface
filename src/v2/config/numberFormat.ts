@@ -15,3 +15,12 @@ export const monthsFormat: NumberFormatProps = {
   decimalScale: 0,
   suffix: ' months'
 }
+
+export const moneyNumberFormat: NumberFormatProps = {
+  decimalScale: 2,
+  inputMode: 'numeric',
+  thousandSeparator: true,
+  allowEmptyFormatting: true,
+  isNumericString: true,
+  allowNegative: false
+}

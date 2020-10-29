@@ -7,7 +7,7 @@ import {
 } from 'v2/app/pages/invest/components/CommitmentFormFields'
 import { asset } from '__fixtures__/authorizer'
 import { Form } from 'v2/components/form/Form'
-import { moneyNumberFormat } from 'v2/app/components/DSO/utils'
+import { moneyNumberFormat } from 'v2/config/numberFormat'
 import { TypedField } from 'v2/components/form/TypedField'
 import { plainValueExtractor } from 'v2/helpers/forms'
 import { UploadSignedSubscriptionDocument } from 'v2/components/dataroom/UploadSignedSubscriptionDocument'

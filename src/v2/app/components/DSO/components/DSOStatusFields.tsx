@@ -1,5 +1,5 @@
 import React from 'react'
-import { moneyNumberFormat } from 'v2/app/components/DSO/utils'
+import { moneyNumberFormat } from 'v2/config/numberFormat'
 import { numericValueExtractor } from 'v2/helpers/forms'
 import { Grid, Input } from '@material-ui/core'
 import { TypedField } from 'v2/components/form/TypedField'

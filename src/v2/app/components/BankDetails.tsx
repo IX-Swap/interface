@@ -19,7 +19,7 @@ export const BankDetails = (props: BankDetailsProps) => {
           <Grid item>
             <Typography variant='subtitle2'>{bank.bankName}</Typography>
           </Grid>
-          <LabelledValue label='Swift' value={bank.swiftCode} row />
+          <LabelledValue label='SWIFT Code' value={bank.swiftCode} row />
           <LabelledValue
             label='Bank Address'
             value={convertAddressToString(bank.address)}

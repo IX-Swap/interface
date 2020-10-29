@@ -6,6 +6,7 @@ import { TypedField } from 'v2/components/form/TypedField'
 import { AssetSelect } from 'v2/components/form/AssetSelect'
 import { NumericInput } from 'v2/components/form/NumericInput'
 import { numericValueExtractor } from 'v2/helpers/forms'
+import { moneyNumberFormat } from 'v2/config/numberFormat'
 
 export const Setup: React.FC = () => {
   const { watch, control } = useFormContext<DepositCashFormValues>()
@@ -31,13 +32,7 @@ export const Setup: React.FC = () => {
           helperText='Transaction fees may apply'
           disabled={asset === undefined}
           valueExtractor={numericValueExtractor}
-          numberFormat={{
-            decimalScale: 2,
-            inputMode: 'numeric',
-            thousandSeparator: true,
-            allowEmptyFormatting: true,
-            isNumericString: true
-          }}
+          numberFormat={moneyNumberFormat}
         />
       </Grid>
     </Grid>

@@ -6,7 +6,7 @@ import {
   DSOStatusFieldsProps
 } from 'v2/app/components/DSO/components/DSOStatusFields'
 import { Form } from 'v2/components/form/Form'
-import { moneyNumberFormat } from 'v2/app/components/DSO/utils'
+import { moneyNumberFormat } from 'v2/config/numberFormat'
 import { TypedField } from 'v2/components/form/TypedField'
 
 jest.mock('v2/components/form/TypedField', () => ({

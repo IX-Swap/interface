@@ -11,4 +11,6 @@ export const queryStatusRenderer = (
   if (status === 'error') {
     return <div>error...</div>
   }
+
+  return undefined
 }

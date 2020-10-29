@@ -1,16 +1,13 @@
-import { BaseFilter, Viewable } from 'v2/types/util'
-import React, { useEffect } from 'react'
+import { Viewable } from 'v2/types/util'
+import React from 'react'
 import { Paper } from '@material-ui/core'
-import {
-  initialFilterValue,
-  statusColumn
-} from 'v2/app/pages/authorizer/hooks/useAuthorizerView'
+import { statusColumn } from 'v2/app/pages/authorizer/hooks/useAuthorizerView'
 import { withExtraActions } from 'v2/app/pages/authorizer/components/withExtraActions'
 import {
   TableView,
   TableViewProps
 } from 'v2/components/TableWithPagination/TableView'
-import { queryCache } from 'react-query'
+import { useAuthorizerFilter } from '../hooks/useAuthorizerFilter'
 
 interface AuthorizerViewProps<T>
   extends Omit<TableViewProps<T>, 'actions'>,
@@ -23,17 +20,7 @@ export const AuthorizerTable = <T,>(
   props: AuthorizerViewProps<T>
 ): JSX.Element => {
   const { columns, name, uri } = props
-  const filter = queryCache.getQueryData<BaseFilter>('authorizerFilter')
-  const isAll = filter?.status === ''
-
-  useEffect(
-    () =>
-      queryCache.setQueryData<BaseFilter>(
-        'authorizerFilter',
-        initialFilterValue
-      ),
-    []
-  )
+  const { isAll } = useAuthorizerFilter()
 
   return (
     <Paper>
