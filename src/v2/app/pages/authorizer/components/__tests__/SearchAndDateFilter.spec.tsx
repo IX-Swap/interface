@@ -1,6 +1,6 @@
 /**  * @jest-environment jsdom-sixteen  */
 import React from 'react'
-import { render, cleanup, fireEvent, waitFor } from 'test-utils'
+import { render, cleanup, fireEvent, waitFor, screen } from 'test-utils'
 import {
   initialValues,
   SearchAndDateFilter,
@@ -38,11 +38,24 @@ describe('SearchAndDateFilter', () => {
     })
   })
 
+  it('hides reset button initially', () => {
+    const { queryByText } = render(<SearchAndDateFilter {...props} />)
+    const resetButton = queryByText(/reset/i)
+
+    expect(resetButton).toBeNull()
+  })
+
   it('invokes callback with initial values on reset button click', async () => {
     const { getByText } = render(<SearchAndDateFilter {...props} />)
-    const resettButton = getByText(/reset/i)
+    fireEvent.input(screen.getByRole('textbox', { name: /search/i }), {
+      target: {
+        value: 'test'
+      }
+    })
 
-    fireEvent.click(resettButton)
+    const resetButton = getByText(/reset/i)
+
+    fireEvent.click(resetButton)
 
     await waitFor(() => {
       expect(props.onApplyFilter).toHaveBeenCalled()

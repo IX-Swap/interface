@@ -31,7 +31,7 @@ export const initialValues: SearchAndDateFilterFormValues = {
 export const SearchAndDateFilter: React.FC<SearchAndDateFilterProps> = props => {
   const { onApplyFilter } = props
   const classes = useStyles()
-  const { control, handleSubmit, reset } = useForm<
+  const { control, handleSubmit, reset, formState } = useForm<
     SearchAndDateFilterFormValues
   >({ defaultValues: initialValues })
 
@@ -117,14 +117,16 @@ export const SearchAndDateFilter: React.FC<SearchAndDateFilterProps> = props => 
         justify='flex-end'
         className={classes.spaced}
       >
-        <Button
-          variant='contained'
-          size='small'
-          color='default'
-          onClick={handleReset}
-        >
-          Reset
-        </Button>
+        {formState.isDirty && (
+          <Button
+            variant='contained'
+            size='small'
+            color='default'
+            onClick={handleReset}
+          >
+            Reset
+          </Button>
+        )}
         <Box mx={1} />
         <Button
           variant='contained'
