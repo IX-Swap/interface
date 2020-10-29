@@ -3,6 +3,7 @@ import { TableColumn } from 'v2/types/util'
 import { formatMoney, formatAmount } from 'v2/helpers/numbers'
 import { Commitment } from 'v2/types/commitment'
 import { Avatar } from 'v2/components/Avatar'
+import { renderStatusColumn } from 'v2/app/pages/authorizer/hooks/useAuthorizerView'
 
 export const renderCommitmentMoney = (a: number, row: Commitment) =>
   formatMoney(a, row.currency.numberFormat.currency)
@@ -52,7 +53,8 @@ export const columns: Array<TableColumn<Commitment>> = [
   },
   {
     key: 'status',
-    label: 'Status'
+    label: 'Status',
+    render: renderStatusColumn
   }
 ]
 
