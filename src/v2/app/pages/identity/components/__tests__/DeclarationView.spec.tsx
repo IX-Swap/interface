@@ -5,14 +5,18 @@ import {
   DeclarationView,
   DeclarationViewProps
 } from 'v2/app/pages/identity/components/DeclarationView'
-import { declarations } from '../../const/declarations'
+import { DeclarationItem } from 'v2/app/pages/identity/components/DeclarationItem'
+import { individual } from '__fixtures__/identity'
+import { formatDeclarations } from 'v2/app/pages/identity/utils'
+
+jest.mock('v2/app/pages/identity/components/DeclarationItem', () => ({
+  DeclarationItem: jest.fn(() => null)
+}))
 
 describe('DeclarationView', () => {
   const props: DeclarationViewProps = {
-    data: declarations.individual.map(({ key }) => ({
-      [key]: undefined
-    })),
-    declarations: declarations.individual
+    data: individual.declarations,
+    type: 'individual'
   }
   afterEach(async () => {
     await cleanup()
@@ -21,5 +25,13 @@ describe('DeclarationView', () => {
 
   it('renders without error', () => {
     render(<DeclarationView {...props} />)
+  })
+
+  it('renders DeclarationItem with correct props', () => {
+    render(<DeclarationView {...props} />)
+
+    expect(DeclarationItem).toHaveBeenCalledTimes(
+      Object.entries(formatDeclarations(props.type, props.data)).length
+    )
   })
 })

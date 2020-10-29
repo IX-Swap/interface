@@ -26,7 +26,6 @@ export const useTableWithPagination = <TData>(
   const [prevPage, setPrevPage] = useState(0)
   const [page, setPage] = useState(0)
   const [rowsPerPage, setRowsPerPage] = useState(25)
-  console.log(filter)
   // eslint-disable-next-line @typescript-eslint/explicit-function-return-type
   const fetcher = async (key: string, p: number, r: number, f?: BaseFilter) => {
     const payload: KeyValueMap<any> = {
