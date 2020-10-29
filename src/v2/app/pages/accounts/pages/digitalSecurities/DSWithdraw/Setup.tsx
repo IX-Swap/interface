@@ -9,6 +9,7 @@ import { useFormContext } from 'react-hook-form'
 import { WithdrawDSFormValues } from 'v2/app/pages/accounts/types'
 import { NumericInput } from 'v2/components/form/NumericInput'
 import { numericValueExtractor } from 'v2/helpers/forms'
+import { moneyNumberFormat } from 'v2/config/numberFormat'
 
 export const Setup: React.FC = () => {
   const { control } = useFormContext<WithdrawDSFormValues>()
@@ -45,13 +46,7 @@ export const Setup: React.FC = () => {
           valueExtractor={numericValueExtractor}
           label='Amount'
           name='amount'
-          numberFormat={{
-            decimalScale: 2,
-            inputMode: 'numeric',
-            thousandSeparator: true,
-            allowEmptyFormatting: true,
-            isNumericString: true
-          }}
+          numberFormat={moneyNumberFormat}
         />
       </Grid>
       <Grid item>

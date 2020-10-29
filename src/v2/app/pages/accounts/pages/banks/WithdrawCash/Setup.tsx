@@ -7,6 +7,7 @@ import { TypedField } from 'v2/components/form/TypedField'
 import { BankSelect } from 'v2/components/form/BankSelect'
 import { NumericInput } from 'v2/components/form/NumericInput'
 import { numericValueExtractor } from 'v2/helpers/forms'
+import { moneyNumberFormat } from 'v2/config/numberFormat'
 
 export const Setup: React.FC = () => {
   const { watch, control } = useFormContext<WithdrawCashFormValues>()
@@ -34,19 +35,13 @@ export const Setup: React.FC = () => {
                 name='amount'
                 label='Amount'
                 helperText='Transaction fees may apply'
+                valueExtractor={numericValueExtractor}
+                numberFormat={moneyNumberFormat}
                 startAdornment={
                   <InputAdornment position='start'>
                     {bank.currency.numberFormat.currency}
                   </InputAdornment>
                 }
-                valueExtractor={numericValueExtractor}
-                numberFormat={{
-                  decimalScale: 2,
-                  inputMode: 'numeric',
-                  thousandSeparator: true,
-                  allowEmptyFormatting: true,
-                  isNumericString: true
-                }}
               />
             </Grid>
             <Grid item>

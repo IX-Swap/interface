@@ -77,6 +77,7 @@ export const TypedField = <
   const hasError = getErrorFromControl(path, control) !== undefined
   const hasHelperText = helperText !== undefined
   const [isFocused, setIsFocused] = useState(false)
+  const hasStartAdornment = props.startAdornment !== undefined
 
   return (
     <TypedController
@@ -117,8 +118,12 @@ export const TypedField = <
             <InputLabel
               htmlFor={path}
               variant={rest?.variant}
-              shrink={isFocused || hasValue(controllerProps.value)}
               error={hasError}
+              shrink={
+                hasStartAdornment ||
+                isFocused ||
+                hasValue(controllerProps.value)
+              }
             >
               {label}
             </InputLabel>
