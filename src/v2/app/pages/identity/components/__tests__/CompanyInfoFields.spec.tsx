@@ -73,32 +73,16 @@ describe('CompanyInformation', () => {
     expect(TypedField).toHaveBeenNthCalledWith(
       6,
       expect.objectContaining({
-        label: 'Digital Security Wallet Address',
-        name: 'walletAddress'
-      }),
-      {}
-    )
-    expect(TypedField).toHaveBeenNthCalledWith(
-      7,
-      expect.objectContaining({
         label: 'Email Address',
         name: 'email'
       }),
       {}
     )
     expect(TypedField).toHaveBeenNthCalledWith(
-      8,
+      7,
       expect.objectContaining({
         label: 'Contact Number',
         name: 'contactNumber'
-      }),
-      {}
-    )
-    expect(TypedField).toHaveBeenNthCalledWith(
-      9,
-      expect.objectContaining({
-        label: 'I would like InvestaX to arrange digital security custody',
-        name: 'toArrangeCustody'
       }),
       {}
     )

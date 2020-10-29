@@ -38,24 +38,12 @@ export const CompanyInfoView = (props: CompanyInfoViewProps) => {
           label='Date of Incorporation'
         />
       </Grid>
-      <Grid item xs={4}>
-        <LabelledValue
-          value={data.walletAddress}
-          label='Digital Security Wallet Address'
-        />
-      </Grid>
       <Grid item xs={4} />
       <Grid item xs={4}>
         <LabelledValue value={data.email} label='Email Address' />
       </Grid>
       <Grid item xs={4}>
         <LabelledValue value={data.contactNumber} label='Contact Number' />
-      </Grid>
-      <Grid item xs={5}>
-        <LabelledValue
-          value={data.toArrangeCustody}
-          label='I would like InvestaX to arrange digital security custody'
-        />
       </Grid>
     </Grid>
   )

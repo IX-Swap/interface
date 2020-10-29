@@ -30,7 +30,6 @@ describe('Financials', () => {
       </Form>
     )
 
-    expect(TypedField).toHaveBeenCalledTimes(12)
     expect(TypedField).toHaveBeenNthCalledWith(
       1,
       expect.objectContaining({
@@ -66,21 +65,13 @@ describe('Financials', () => {
     expect(TypedField).toHaveBeenNthCalledWith(
       5,
       expect.objectContaining({
-        label: 'Digital Security Wallet Address',
-        name: 'walletAddress'
-      }),
-      {}
-    )
-    expect(TypedField).toHaveBeenNthCalledWith(
-      6,
-      expect.objectContaining({
         label: 'Annual Income',
         name: 'annualIncome'
       }),
       {}
     )
     expect(TypedField).toHaveBeenNthCalledWith(
-      7,
+      6,
       expect.objectContaining({
         label: 'Household Income',
         name: 'houseHoldIncome'
@@ -88,7 +79,7 @@ describe('Financials', () => {
       {}
     )
     expect(TypedField).toHaveBeenNthCalledWith(
-      8,
+      7,
       expect.objectContaining({
         label: 'Source of Income',
         name: 'sourceOfWealth'
@@ -96,7 +87,7 @@ describe('Financials', () => {
       {}
     )
     expect(TypedField).toHaveBeenNthCalledWith(
-      9,
+      8,
       expect.objectContaining({
         label: 'Bank Name',
         name: 'bankName'
@@ -104,7 +95,7 @@ describe('Financials', () => {
       {}
     )
     expect(TypedField).toHaveBeenNthCalledWith(
-      10,
+      9,
       expect.objectContaining({
         label: 'Name of Bank Account',
         name: 'bankAccountName'
@@ -112,18 +103,10 @@ describe('Financials', () => {
       {}
     )
     expect(TypedField).toHaveBeenNthCalledWith(
-      11,
+      10,
       expect.objectContaining({
         label: 'Bank Account Number',
         name: 'bankAccountNumber'
-      }),
-      {}
-    )
-    expect(TypedField).toHaveBeenNthCalledWith(
-      12,
-      expect.objectContaining({
-        label: 'I would like InvestaX to arrange digital security custody',
-        name: 'toArrangeCustody'
       }),
       {}
     )

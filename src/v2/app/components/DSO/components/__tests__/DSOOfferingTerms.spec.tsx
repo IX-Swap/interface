@@ -3,7 +3,10 @@ import React from 'react'
 import { render, cleanup } from 'test-utils'
 import { DSOOfferingTerms } from 'v2/app/components/DSO/components/DSOOfferingTerms'
 import { Form } from 'v2/components/form/Form'
-import { monthsFormat, percentageFormat } from 'v2/config/numberFormat'
+import {
+  monthsNumberFormat,
+  percentageNumberFormat
+} from 'v2/config/numberFormat'
 import { TypedField } from 'v2/components/form/TypedField'
 
 jest.mock('v2/components/form/TypedField', () => ({
@@ -35,7 +38,7 @@ describe('DSOOfferingTerms', () => {
     expect(TypedField).toHaveBeenNthCalledWith(
       1,
       expect.objectContaining({
-        numberFormat: monthsFormat,
+        numberFormat: monthsNumberFormat,
         label: 'Investment Period',
         name: 'investmentPeriod'
       }),
@@ -52,7 +55,7 @@ describe('DSOOfferingTerms', () => {
     expect(TypedField).toHaveBeenNthCalledWith(
       3,
       expect.objectContaining({
-        numberFormat: percentageFormat,
+        numberFormat: percentageNumberFormat,
         label: 'Interest Rate',
         name: 'interestRate'
       }),
@@ -61,7 +64,7 @@ describe('DSOOfferingTerms', () => {
     expect(TypedField).toHaveBeenNthCalledWith(
       4,
       expect.objectContaining({
-        numberFormat: percentageFormat,
+        numberFormat: percentageNumberFormat,
         label: 'Dividend Yield',
         name: 'dividendYield'
       }),
@@ -70,7 +73,7 @@ describe('DSOOfferingTerms', () => {
     expect(TypedField).toHaveBeenNthCalledWith(
       5,
       expect.objectContaining({
-        numberFormat: percentageFormat,
+        numberFormat: percentageNumberFormat,
         label: 'Equity Multiple',
         name: 'equityMultiple'
       }),
@@ -79,7 +82,7 @@ describe('DSOOfferingTerms', () => {
     expect(TypedField).toHaveBeenNthCalledWith(
       6,
       expect.objectContaining({
-        numberFormat: percentageFormat,
+        numberFormat: percentageNumberFormat,
         label: 'Leverage',
         name: 'leverage'
       }),
@@ -88,7 +91,7 @@ describe('DSOOfferingTerms', () => {
     expect(TypedField).toHaveBeenNthCalledWith(
       7,
       expect.objectContaining({
-        numberFormat: percentageFormat,
+        numberFormat: percentageNumberFormat,
         label: 'Gross IRR',
         name: 'grossIRR'
       }),

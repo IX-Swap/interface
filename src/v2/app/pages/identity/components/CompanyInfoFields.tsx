@@ -6,13 +6,12 @@ import { TypedField } from 'v2/components/form/TypedField'
 import { DataroomUploader } from 'v2/components/dataroom/DataroomUploader'
 import { DataroomAvatarUploader } from 'v2/components/dataroom/DataroomAvatarUploader'
 import { documentValueExtractor } from 'v2/app/components/DSO/utils'
-import { Checkbox } from 'v2/components/form/Checkbox'
 import { DatePicker } from 'v2/components/form/DatePicker'
 import { CountrySelect } from 'v2/components/form/CountrySelect'
-import { booleanValueExtractor, dateTimeValueExtractor } from 'v2/helpers/forms'
+import { dateTimeValueExtractor } from 'v2/helpers/forms'
 
 export const CompanyInfoFields = () => {
-  const { control } = useFormContext<CorporateIdentity>() // TODO: update type
+  const { control } = useFormContext<CorporateIdentity>()
 
   return (
     <Grid container spacing={3}>
@@ -67,14 +66,6 @@ export const CompanyInfoFields = () => {
           label='Date of Incorporation'
         />
       </Grid>
-      <Grid item xs={4}>
-        <TypedField
-          component={Input}
-          control={control}
-          name='walletAddress'
-          label='Digital Security Wallet Address'
-        />
-      </Grid>
       <Grid item xs={4} />
       <Grid item xs={4}>
         <TypedField
@@ -90,17 +81,6 @@ export const CompanyInfoFields = () => {
           control={control}
           name='contactNumber'
           label='Contact Number'
-        />
-      </Grid>
-      <Grid item xs={5}>
-        {/* @ts-ignore  */}
-        <TypedField
-          customRenderer
-          component={Checkbox}
-          valueExtractor={booleanValueExtractor}
-          control={control}
-          name='toArrangeCustody'
-          label='I would like InvestaX to arrange digital security custody'
         />
       </Grid>
     </Grid>
