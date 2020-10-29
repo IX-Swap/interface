@@ -20,11 +20,19 @@ export const convertDateToISO = (
   return formatISO(date)
 }
 
-export const formatDateToMMDDYY = (s: string): string => {
+export const formatDateToMMDDYY = (s?: string): string => {
+  if (s === undefined) {
+    return ''
+  }
+
   return s.length > 0 ? format(new Date(s), 'MM/dd/yyyy') : s
 }
 
-export const formatDateAndTime = (s: string, seconds = false): string => {
+export const formatDateAndTime = (s?: string, seconds = false): string => {
+  if (s === undefined) {
+    return ''
+  }
+
   return s.length > 0
     ? format(new Date(s), `LLL d, yyyy hh:mm${seconds ? ':ss' : ''} a`)
     : s

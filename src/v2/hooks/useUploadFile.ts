@@ -19,8 +19,8 @@ export const defaultUploadDocumentInfo: UploadDocumentInfo = {
   type: ''
 }
 
-export const useUploadFile = <R = DataroomFile[]>(
-  callbacks?: QueryOrMutationCallbacks<R>
+export const useUploadFile = (
+  callbacks?: QueryOrMutationCallbacks<DataroomFile[]>
 ) => {
   const { snackbarService, apiService } = useServices()
   const uploadFile = async (args: UploadDocumentArgs) => {
@@ -36,12 +36,14 @@ export const useUploadFile = <R = DataroomFile[]>(
       }
     })
 
-    return await apiService.post<R>('/dataroom', formData)
+    return await apiService.post<DataroomFile[]>('/dataroom', formData)
   }
 
   return useMutation(uploadFile, {
     onSuccess: data => {
-      void snackbarService.showSnackbar('File uploaded', 'success')
+      const message = `Successfully uploaded ${data.data.length} files`
+
+      void snackbarService.showSnackbar(message, 'success')
       callbacks?.onSuccess?.(data)
     },
     onError: error => {

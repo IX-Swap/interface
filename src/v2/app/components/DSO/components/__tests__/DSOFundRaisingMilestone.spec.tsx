@@ -3,7 +3,7 @@ import React from 'react'
 import { cleanup, render } from 'test-utils'
 import { DSOFundRaisingMilestone } from 'v2/app/components/DSO/components/DSOFundRaisingMilestone'
 import { TypedField } from 'v2/components/form/TypedField'
-import { plainValueExtractor } from 'v2/helpers/forms'
+import { wysiwygValueExtractor } from 'v2/helpers/forms'
 import { Form } from 'v2/components/form/Form'
 
 jest.mock('v2/components/form/TypedField', () => ({
@@ -35,7 +35,7 @@ describe('DSOFundRaisingMilestone', () => {
       expect.objectContaining({
         label: 'Fund Raising Milestone',
         name: 'fundraisingMilestone',
-        valueExtractor: plainValueExtractor
+        valueExtractor: wysiwygValueExtractor
       }),
       {}
     )

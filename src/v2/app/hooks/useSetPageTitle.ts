@@ -1,7 +1,7 @@
 import { useAppActions } from 'v2/app/hooks/useAppState'
 import { useEffect } from 'react'
 
-export const useSetPageTitle = (title: string) => {
+export const useSetPageTitle = (title?: string) => {
   const { setPageTitle } = useAppActions()
 
   useEffect(() => {
@@ -10,5 +10,5 @@ export const useSetPageTitle = (title: string) => {
     return () => {
       setPageTitle(undefined)
     }
-  }, [title])
+  }, [title]) // eslint-disable-line
 }

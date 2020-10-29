@@ -7,7 +7,8 @@ export const useDataroomFileURL = (documentId: string, _ownerId?: string) => {
   const isAuthorizer = useIsAuthorizer()
   const isAdmin = useIsAdmin()
   const isSuperUser = isAuthorizer || isAdmin
-  const ownerId = _ownerId === '' ? getIdFromObj(user) : _ownerId
+  const ownerId =
+    _ownerId === '' || _ownerId === undefined ? getIdFromObj(user) : _ownerId
 
   return isSuperUser
     ? `/dataroom/raw/${documentId}`

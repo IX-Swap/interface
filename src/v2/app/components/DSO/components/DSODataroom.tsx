@@ -29,9 +29,10 @@ export const DSODataroom = () => {
             <Grid item container direction='column'>
               <List disablePadding component='div'>
                 {fields.map((field, index) => (
-                  // @ts-ignore
+                  // @ts-expect-error
                   <TypedField
                     customRenderer
+                    variant='row'
                     key={field.id}
                     control={control}
                     component={SelectableDataroomUploader}

@@ -70,8 +70,7 @@ export const formvalues: DSOFormValues = {
     {
       name: 'Team Ultimate',
       position: 'Maintainer',
-      about:
-        '{"blocks":[{"key":"e12jc","text":"Foo","type":"unstyled","depth":0,"inlineStyleRanges":[],"entityRanges":[],"data":{}}],"entityMap":{}}'
+      about: '<p>Hello world</p>'
     }
   ],
   documents: [
@@ -89,8 +88,7 @@ export const formvalues: DSOFormValues = {
   ],
   status: 'Submitted',
   logo: '5f898b69aa141c6d0d358ce6',
-  useOfProceeds:
-    '{"blocks":[{"key":"5mjvv","text":"As usual","type":"unstyled","depth":0,"inlineStyleRanges":[],"entityRanges":[],"data":{}}],"entityMap":{}}',
+  useOfProceeds: '<p>Hello world</p>',
   totalFundraisingAmount: 100000,
   tokenSymbol: '$#',
   tokenName: 'IXWTKN',
@@ -102,20 +100,17 @@ export const formvalues: DSOFormValues = {
   issuerName: 'IXIssuer',
   investmentStructure: '1',
   investmentPeriod: 2,
-  introduction:
-    '{"blocks":[{"key":"3r09q","text":"Introducing IXW token","type":"unstyled","depth":0,"inlineStyleRanges":[],"entityRanges":[],"data":{}}],"entityMap":{}}',
+  introduction: '<p>Hello world</p>',
   interestRate: 1,
   grossIRR: 1,
-  fundraisingMilestone:
-    '{"blocks":[{"key":"2ofbo","text":"next month","type":"unstyled","depth":0,"inlineStyleRanges":[],"entityRanges":[],"data":{}}],"entityMap":{}}',
+  fundraisingMilestone: '<p>Hello world</p>',
   equityMultiple: 1,
   dividendYield: 1,
   distributionFrequency: 'Monthly',
   currency: '5f732c5b8a568b50914d8373',
   corporate: '5f898a64aa141c6d0d358ce1',
   capitalStructure: 'Good',
-  businessModel:
-    '{"blocks":[{"key":"fjodt","text":"lorem ipsum","type":"unstyled","depth":0,"inlineStyleRanges":[],"entityRanges":[],"data":{}}],"entityMap":{}}'
+  businessModel: '<p>Hello world</p>'
 }
 
 export const requestargs: DSORequestArgs = {
@@ -123,12 +118,12 @@ export const requestargs: DSORequestArgs = {
     {
       name: 'Team Ultimate',
       position: 'Maintainer',
-      about: '<p>Foo</p>\n'
+      about: '<p>Hello world</p>'
     }
   ],
   documents: ['5f898b52aa141c6d0d358ce5'],
   logo: '5f898b69aa141c6d0d358ce6',
-  useOfProceeds: '<p>As usual</p>\n',
+  useOfProceeds: '<p>Hello world</p>',
   totalFundraisingAmount: 100000,
   subscriptionDocument: formvalues.subscriptionDocument?._id ?? '',
   pricePerUnit: 10,
@@ -137,17 +132,17 @@ export const requestargs: DSORequestArgs = {
   launchDate: '2020-10-16T18:30:00.000Z',
   investmentStructure: '1',
   investmentPeriod: 2,
-  introduction: '<p>Introducing IXW token</p>\n',
+  introduction: '<p>Hello world</p>',
   interestRate: numberToPercentage(formvalues.interestRate),
   grossIRR: numberToPercentage(formvalues.grossIRR),
-  fundraisingMilestone: '<p>next month</p>\n',
+  fundraisingMilestone: '<p>Hello world</p>',
   equityMultiple: numberToPercentage(formvalues.equityMultiple),
   dividendYield: numberToPercentage(formvalues.dividendYield),
   distributionFrequency: 'Monthly',
   currency: '5f732c5b8a568b50914d8373',
   corporate: '5f898a64aa141c6d0d358ce1',
   capitalStructure: 'Good',
-  businessModel: '<p>lorem ipsum</p>\n',
+  businessModel: '<p>Hello world</p>',
   issuerName: 'IXIssuer',
   tokenName: 'IXWTKN',
   tokenSymbol: '$#'

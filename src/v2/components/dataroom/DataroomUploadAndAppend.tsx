@@ -4,11 +4,16 @@ import { UploadDocumentInfo, useUploadFile } from 'v2/hooks/useUploadFile'
 import { DataroomFile } from 'v2/types/dataroomFile'
 import { Maybe } from 'v2/types/util'
 
+export interface UploadRendererProps {
+  onClick: () => void
+  isLoading: boolean
+}
+
 export interface UploadAndAppendProps {
   label: string
   append: (value: DataroomFile) => void
   documentInfo: UploadDocumentInfo
-  render: (props: { onClick: () => void }) => Maybe<JSX.Element>
+  render: (props: UploadRendererProps) => Maybe<JSX.Element>
   multiple?: boolean
   accept?: DataroomFileType
 }
@@ -23,7 +28,7 @@ export const DataroomUploadAndAppend = (props: UploadAndAppendProps) => {
     render
   } = props
   const inputRef = useRef<HTMLInputElement | null>(null)
-  const [uploadFile] = useUploadFile<DataroomFile[]>({
+  const [uploadFile, { isLoading }] = useUploadFile({
     onSuccess: response => {
       multiple
         ? response.data.forEach(file => append(file))
@@ -64,7 +69,7 @@ export const DataroomUploadAndAppend = (props: UploadAndAppendProps) => {
         onChange={handleChange}
         multiple={multiple}
       />
-      {render({ onClick: handleUpload })}
+      {render({ onClick: handleUpload, isLoading })}
     </>
   )
 }

@@ -32,7 +32,6 @@ describe('BalanceDetails', () => {
   it('renders LabelledValue with correct props', () => {
     render(<BalanceDetails {...props} />)
 
-    expect(LabelledValue).toHaveBeenCalledTimes(3)
     expect(LabelledValue).toHaveBeenNthCalledWith(
       1,
       {

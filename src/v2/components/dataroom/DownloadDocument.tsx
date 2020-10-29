@@ -3,15 +3,20 @@ import { Button, Typography } from '@material-ui/core'
 import { useDownloadRawDocument } from 'v2/hooks/useDownloadRawDocument'
 import { convertBlobToFile, openFileInNewTab } from 'v2/hooks/utils'
 
+export interface DownloadDocumentRendererProps {
+  download: () => any
+  isLoading: boolean
+}
+
 export interface DownloadDocumentProps {
   documentId: string
   ownerId: string
-  children?: (download: () => any) => JSX.Element
+  children?: (props: DownloadDocumentRendererProps) => JSX.Element
 }
 
 export const DownloadDocument: React.FC<DownloadDocumentProps> = props => {
   const { documentId, ownerId, children } = props
-  const [downloadDocument] = useDownloadRawDocument(
+  const [downloadDocument, { isLoading }] = useDownloadRawDocument(
     { documentId, ownerId },
     {
       onSuccess: ({ data }) => {
@@ -27,12 +32,17 @@ export const DownloadDocument: React.FC<DownloadDocumentProps> = props => {
   }
 
   if (children !== undefined) {
-    return children(downloadDocument)
+    return children({ download: downloadDocument, isLoading })
   }
 
   return (
-    <Button size='small' variant='outlined' onClick={handleClick}>
-      Download
+    <Button
+      size='small'
+      variant='outlined'
+      onClick={handleClick}
+      disabled={isLoading}
+    >
+      {isLoading ? 'Downloading...' : 'Download'}
     </Button>
   )
 }

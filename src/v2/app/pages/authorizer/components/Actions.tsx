@@ -5,7 +5,6 @@ import { Grid, IconButton } from '@material-ui/core'
 import { useAuthorizerRouter } from '../router'
 import User from 'v2/types/user'
 import { AppRouterLinkComponent } from 'v2/components/AppRouterLink'
-import { AuthorizerBanksRoute } from 'v2/app/pages/authorizer/pages/banks/router'
 
 export interface ActionsProps<T> {
   item: T
@@ -20,7 +19,7 @@ export type Actions<T> = (props: ActionsProps<T>) => ReactElement
 
 export const Actions = <T,>(props: ActionsProps<T>): JSX.Element => {
   const { item, cacheQueryKey } = props
-  const { push, current } = useAuthorizerRouter()
+  const { current } = useAuthorizerRouter()
   const classes = useStyles()
   const id = (item as any)._id
   const splitted = current.path.split('/')

@@ -6,6 +6,7 @@ import { CorporateIdentityForm } from 'v2/app/pages/identity/components/Corporat
 import { useUpdateCorporateIdentity } from 'v2/hooks/identity/useUpdateCorporateIdentity'
 import { CancelButton } from 'v2/app/pages/identity/components/CancelButton'
 import { VSpacer } from 'v2/components/VSpacer'
+import { useSetPageTitle } from 'v2/app/hooks/useSetPageTitle'
 
 export const CorporateIdEdit: React.FC = () => {
   const { data, status } = useAllCorporateIdentities()
@@ -14,12 +15,13 @@ export const CorporateIdEdit: React.FC = () => {
     params: { identityId }
   } = useIdentitiesRouter()
   const [updateCorporateId] = useUpdateCorporateIdentity(identityId)
+  const identity = data.map[identityId]
+
+  useSetPageTitle(identity?.companyLegalName)
 
   if (status === 'loading') {
     return null
   }
-  console.log('id', identityId)
-  const identity = data.map[identityId]
 
   return (
     <Grid container>

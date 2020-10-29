@@ -4,10 +4,11 @@ import { Button } from '@material-ui/core'
 import { useIssuanceRouter } from 'v2/app/pages/issuance/router'
 
 export const DSOBackButton = () => {
-  const { paths, params } = useIssuanceRouter()
+  const { paths, params, current } = useIssuanceRouter()
+  const to = current.path === paths.create ? paths.list : paths.view
 
   return (
-    <Button component={AppRouterLinkComponent} to={paths.view} params={params}>
+    <Button component={AppRouterLinkComponent} to={to} params={params}>
       Cancel
     </Button>
   )

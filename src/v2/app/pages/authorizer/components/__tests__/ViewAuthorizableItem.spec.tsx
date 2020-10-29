@@ -41,7 +41,7 @@ describe('ViewAuthorizableItem', () => {
 
     expect(AuthorizerView).toHaveBeenCalledWith(
       {
-        title: 'View Item',
+        title: 'Bank Account',
         feature: DataroomFeature['bank-accounts'],
         data: bank,
         children: expect.any(Object)

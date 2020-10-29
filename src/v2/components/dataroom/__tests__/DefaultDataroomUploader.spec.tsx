@@ -20,6 +20,7 @@ describe('DefaultDataroomUploader', () => {
     documentInfo: {},
     control: {} as any
   }
+
   afterEach(async () => {
     await cleanup()
     jest.clearAllMocks()

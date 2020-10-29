@@ -26,7 +26,7 @@ export const DSOTeam = () => {
                 />
               ))}
             </Grid>
-            <Grid item>
+            <Grid item style={{ marginTop: 20 }} container justify='flex-end'>
               <DSOTeamAddButton append={append} />
             </Grid>
           </Grid>

@@ -36,7 +36,6 @@ describe('BankPreview', () => {
   it('renders LabelledValue with correct props', () => {
     render(<BankPreview {...props} />)
 
-    expect(LabelledValue).toHaveBeenCalledTimes(6)
     expect(LabelledValue).toHaveBeenNthCalledWith(
       1,
       { label: 'Bank Name', value: props.data.bankName },

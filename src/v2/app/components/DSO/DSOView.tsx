@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import React from 'react'
 import { DigitalSecurityOffering } from 'v2/types/dso'
 import { DSOContainer } from 'v2/app/components/DSO/components/DSOContainer'
 import { Avatar, Grid, List, ListItem, Typography } from '@material-ui/core'

@@ -21,7 +21,7 @@ export const DataroomDeleteSelected = (props: DataroomDeleteSelectedProps) => {
 
   return (
     <Button
-      color='primary'
+      color='secondary'
       variant='contained'
       size='large'
       disableElevation
@@ -29,7 +29,7 @@ export const DataroomDeleteSelected = (props: DataroomDeleteSelectedProps) => {
       disabled={isLoading}
       style={{ backgroundColor: themeColors.error }}
     >
-      Delete {selectedCount} documents
+      {isLoading ? 'Deleting...' : `Delete ${selectedCount} documents`}
     </Button>
   )
 }

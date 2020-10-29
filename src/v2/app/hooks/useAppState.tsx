@@ -10,7 +10,10 @@ interface AppState {
   pageTitle?: string
 }
 
-type AppActionTypes = { type: 'setPageTitle'; payload: AppState['pageTitle'] }
+interface AppActionTypes {
+  type: 'setPageTitle'
+  payload: AppState['pageTitle']
+}
 
 const AppStateContext = createContext<AppState | null>(null)
 

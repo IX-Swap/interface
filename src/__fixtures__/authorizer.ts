@@ -195,7 +195,7 @@ export const commitment: Commitment = {
   level: undefined,
   numberOfUnits: 0,
   pricePerUnit: 0,
-  signedSubscriptionDocument: '',
+  signedSubscriptionDocument: emptyFile,
   user,
   walletAddress: ''
 }

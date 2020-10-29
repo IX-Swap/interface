@@ -1,19 +1,13 @@
 import React from 'react'
 import { useSelectionHelperContext } from 'v2/components/SelectionHelper'
-import {
-  Checkbox,
-  ListItem,
-  ListItemIcon,
-  ListItemText
-} from '@material-ui/core'
-import {
-  DataroomRowUploader,
-  DataroomRowUploaderProps
-} from 'v2/components/dataroom/DataroomRowUploader'
+import { DataroomRowUploaderProps } from 'v2/components/dataroom/DataroomRowUploader'
+import { SelectableDataroomEditRow } from 'v2/components/dataroom/SelectableDataroomEditRow'
+import { SelectableAuthorizationDocument } from 'v2/app/pages/authorizer/SelectableAuthorizationDocument'
 
 export interface SelectableDataroomUploaderProps
   extends DataroomRowUploaderProps {
   index: number
+  variant?: 'row' | 'grid'
 }
 
 export const SelectableDataroomUploader = (
@@ -26,16 +20,19 @@ export const SelectableDataroomUploader = (
     index: props.index
   })
 
-  return (
-    <ListItem component='div' button onClick={toggleItem}>
-      {hasSelected && (
-        <ListItemIcon>
-          <Checkbox checked={isSelected} onClick={toggleItem} />
-        </ListItemIcon>
-      )}
-      <ListItemText>
-        <DataroomRowUploader {...props} />
-      </ListItemText>
-    </ListItem>
+  return props.variant === 'row' ? (
+    <SelectableDataroomEditRow
+      {...props}
+      isSelected={isSelected}
+      toggleItem={toggleItem}
+      hasSelected={hasSelected}
+    />
+  ) : (
+    <SelectableAuthorizationDocument
+      {...props}
+      isSelected={isSelected}
+      toggleItem={toggleItem}
+      hasSelected={hasSelected}
+    />
   )
 }

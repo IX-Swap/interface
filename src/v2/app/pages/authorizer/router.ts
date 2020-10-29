@@ -1,8 +1,3 @@
-import { DSWithdrawals } from 'v2/app/pages/authorizer/pages/dsWithdrawals/DSWithdrawals'
-import { IndividualIdentities } from 'v2/app/pages/authorizer/pages/individualIdentities/IndividualIdentities'
-import { CorporateIdentities } from 'v2/app/pages/authorizer/pages/corporateIdentities/CorporateIdentities'
-import { Offerings } from 'v2/app/pages/authorizer/pages/offerings/Offerings'
-import { Commitments } from 'v2/app/pages/authorizer/pages/commitments/Commitments'
 import { InternalRouteProps } from 'v2/types/util'
 import { generateAppRouterHook } from 'v2/helpers/generateAppRouterHook'
 import { ReactComponent as AccountIcon } from 'assets/icons/navigation/account.svg'

@@ -6,6 +6,8 @@ import { useDeleteFile } from 'v2/hooks/useDeleteFile'
 import { useFormContext } from 'react-hook-form'
 import { getIdFromObj } from 'v2/helpers/strings'
 import { DataroomFileType } from 'v2/config/dataroom'
+import { MutationResult } from 'react-query'
+import { AxiosResponse } from 'axios'
 
 export interface DataroomUploaderRenderProps<TValue = Maybe<DataroomFile>> {
   name: string
@@ -13,6 +15,8 @@ export interface DataroomUploaderRenderProps<TValue = Maybe<DataroomFile>> {
   handleUpload: () => void
   handleDelete: () => Promise<void>
   documentInfo: UploadDocumentInfo
+  deleteState: MutationResult<AxiosResponse<DataroomFile>>
+  uploadState: MutationResult<AxiosResponse<DataroomFile[]>>
 }
 
 export interface DataroomUploaderProps {
@@ -43,8 +47,8 @@ export const DataroomUploader = (props: DataroomUploaderProps) => {
   const { watch } = useFormContext()
   const value = watch(name, defaultValue) as DataroomUploaderProps['value']
   const document = value === undefined ? defaultValue : value
-  const [deleteFile] = useDeleteFile(getIdFromObj(value))
-  const [uploadFile] = useUploadFile<DataroomFile[]>({
+  const [deleteFile, deleteState] = useDeleteFile(getIdFromObj(value))
+  const [uploadFile, uploadState] = useUploadFile({
     onSuccess: response => onChange(response.data[0])
   })
 
@@ -91,7 +95,9 @@ export const DataroomUploader = (props: DataroomUploaderProps) => {
         name,
         handleDelete,
         handleUpload,
-        documentInfo
+        documentInfo,
+        deleteState,
+        uploadState
       })}
     </>
   )

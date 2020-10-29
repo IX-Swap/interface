@@ -43,7 +43,6 @@ describe('CommitmentHeader', () => {
       </Form>
     )
 
-    expect(DSOTitle).toHaveBeenCalledTimes(1)
     expect(DSOTitle).toHaveBeenCalledWith({ dso: dso }, {})
   })
 
@@ -54,7 +53,6 @@ describe('CommitmentHeader', () => {
       </Form>
     )
 
-    expect(EstimatedValue).toHaveBeenCalledTimes(1)
     expect(EstimatedValue).toHaveBeenCalledWith(
       { symbol: dso.currency.symbol },
       {}
@@ -68,7 +66,6 @@ describe('CommitmentHeader', () => {
       </Form>
     )
 
-    expect(AssetBalance).toHaveBeenCalledTimes(1)
     expect(AssetBalance).toHaveBeenCalledWith({ assetId: dso.currency._id }, {})
   })
 })

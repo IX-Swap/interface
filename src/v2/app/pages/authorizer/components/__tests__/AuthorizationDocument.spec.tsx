@@ -14,7 +14,9 @@ jest.mock('v2/app/components/DSO/components/ViewDocument', () => ({
   ViewDocument: jest.fn(({ children }) => children())
 }))
 jest.mock('v2/components/dataroom/DownloadDocument', () => ({
-  DownloadDocument: jest.fn(({ children }) => children())
+  DownloadDocument: jest.fn(({ children }) =>
+    children({ download: jest.fn(), isLoading: false })
+  )
 }))
 
 describe('AuthorizationDocument', () => {

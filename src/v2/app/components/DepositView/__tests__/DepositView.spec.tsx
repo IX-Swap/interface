@@ -32,7 +32,6 @@ describe('DepositView', () => {
   it('renders LabelledValue with correct props', () => {
     render(<DepositView {...props} />)
 
-    expect(LabelledValue).toHaveBeenCalledTimes(2)
     expect(LabelledValue).toHaveBeenNthCalledWith(
       1,
       {
@@ -51,7 +50,6 @@ describe('DepositView', () => {
   it('renders BankDetails with correct props', () => {
     render(<DepositView {...props} />)
 
-    expect(BankDetails).toHaveBeenCalledTimes(1)
     expect(BankDetails).toHaveBeenCalledWith({ bank: { ...INVESTAX_BANK } }, {})
   })
 })

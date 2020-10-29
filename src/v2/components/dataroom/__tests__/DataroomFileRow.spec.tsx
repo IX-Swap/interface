@@ -6,6 +6,7 @@ import {
   DataroomFileRowProps
 } from 'v2/components/dataroom/DataroomFileRow'
 import { document } from '__fixtures__/identity'
+import { generateMutationResult } from '__fixtures__/useQuery'
 
 describe('DataroomFileRow', () => {
   const props: DataroomFileRowProps = {
@@ -13,7 +14,9 @@ describe('DataroomFileRow', () => {
     handleDelete: jest.fn(),
     documentInfo: {},
     value: document,
-    name: 'test-name'
+    name: 'test-name',
+    uploadState: generateMutationResult({}),
+    deleteState: generateMutationResult({})
   }
   afterEach(async () => {
     await cleanup()

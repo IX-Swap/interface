@@ -22,6 +22,7 @@ import { AddressFields } from 'v2/app/pages/identity/components/AddressFields'
 import { BankFields } from 'v2/app/pages/accounts/pages/banks/components/BankFields'
 import { BankDocuments } from 'v2/app/pages/accounts/pages/banks/components/BankDocuments'
 import { VSpacer } from 'v2/components/VSpacer'
+import { useSetPageTitle } from 'v2/app/hooks/useSetPageTitle'
 
 export interface BankFormProps {
   submitButtonLabel: string
@@ -35,6 +36,8 @@ export const BankForm: React.FC<BankFormProps> = props => {
   const handleSubmit = async (values: BankFormValues) => {
     await onSubmit(transformBankFormValuesToArgs(values))
   }
+
+  useSetPageTitle(bank?.bankName)
 
   return (
     <Form

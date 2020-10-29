@@ -1,10 +1,11 @@
 import React, { useState } from 'react'
-import { Box, Button } from '@material-ui/core'
+import { Box } from '@material-ui/core'
 import { DataroomFileTypeSelect } from 'v2/components/dataroom/DataroomFileTypeSelect'
 import { DataroomFile } from 'v2/types/dataroomFile'
 import { UploadDocumentInfo } from 'v2/hooks/useUploadFile'
 import { DataroomDocumentType } from 'v2/config/dataroom'
 import { DataroomUploadAndAppend } from 'v2/components/dataroom/DataroomUploadAndAppend'
+import { UploadButton } from 'v2/components/dataroom/UploadButton'
 
 export interface DataroomUploaderWithFileTypeSelectorProps {
   append: (value: { value: DataroomFile }) => any
@@ -34,17 +35,7 @@ export const DataroomUploaderWithFileTypeSelector = (
         label='Uploader'
         append={file => append({ value: file })}
         documentInfo={{ type: fileType, title: fileType, ...documentInfo }}
-        render={props => (
-          <Button
-            {...props}
-            size='large'
-            variant='contained'
-            color='primary'
-            disableElevation
-          >
-            Upload
-          </Button>
-        )}
+        render={UploadButton}
       />
     </Box>
   )

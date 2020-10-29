@@ -2,13 +2,17 @@ import React from 'react'
 import { Box, Grid, Paper, Typography } from '@material-ui/core'
 import { LabelledValue } from 'v2/components/LabelledValue'
 import { AssetBalance } from 'v2/types/balance'
+import { useSetPageTitle } from 'v2/app/hooks/useSetPageTitle'
+import { getOfferingName } from 'v2/helpers/strings'
 
 export interface BalanceDetailsProps {
-  data: Partial<AssetBalance>
+  data: AssetBalance
 }
 
 export const BalanceDetails = (props: BalanceDetailsProps) => {
   const { data } = props
+
+  useSetPageTitle(getOfferingName(data))
 
   return (
     <Paper>

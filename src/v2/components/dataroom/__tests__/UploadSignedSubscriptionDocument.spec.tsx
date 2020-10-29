@@ -7,6 +7,7 @@ import {
 } from 'v2/components/dataroom/UploadSignedSubscriptionDocument'
 import { document } from '__fixtures__/identity'
 import { Form } from 'v2/components/form/Form'
+import { generateMutationResult } from '__fixtures__/useQuery'
 
 describe('UploadSignedSubscriptionDocument', () => {
   const props: UploadSignedSubscriptionDocumentProps = {
@@ -14,7 +15,9 @@ describe('UploadSignedSubscriptionDocument', () => {
     value: document,
     handleDelete: jest.fn(),
     handleUpload: jest.fn(),
-    name: 'test-name'
+    name: 'test-name',
+    deleteState: generateMutationResult({}),
+    uploadState: generateMutationResult({})
   }
   afterEach(async () => {
     await cleanup()

@@ -2,7 +2,7 @@
 import React from 'react'
 import { cleanup, render } from 'test-utils'
 import { TypedField } from 'v2/components/form/TypedField'
-import { plainValueExtractor } from 'v2/helpers/forms'
+import { wysiwygValueExtractor } from 'v2/helpers/forms'
 import { DSOUseOfProceeds } from 'v2/app/components/DSO/components/DSOUseOfProceeds'
 import { Form } from 'v2/components/form/Form'
 
@@ -35,7 +35,7 @@ describe('DSOUseOfProceeds', () => {
       expect.objectContaining({
         label: 'Use of Proceeds',
         name: 'useOfProceeds',
-        valueExtractor: plainValueExtractor
+        valueExtractor: wysiwygValueExtractor
       }),
       {}
     )

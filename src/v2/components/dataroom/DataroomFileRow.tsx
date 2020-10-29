@@ -1,14 +1,22 @@
 import React from 'react'
 import { DataroomUploaderRenderProps } from 'v2/components/dataroom/DataroomUploader'
-import { Button, ButtonGroup } from '@material-ui/core'
 import { DownloadDocument } from 'v2/components/dataroom/DownloadDocument'
 import { DataroomEditRow } from 'v2/components/dataroom/DataroomEditRow'
 import { isDocument } from 'v2/helpers/dataroom'
+import { DataroomEditRowActions } from 'v2/components/dataroom/DataroomEditRowActions'
+import { UploadButton } from 'v2/components/dataroom/UploadButton'
 
 export interface DataroomFileRowProps extends DataroomUploaderRenderProps {}
 
 export const DataroomFileRow = (props: DataroomFileRowProps) => {
-  const { handleUpload, handleDelete, documentInfo, value: document } = props
+  const {
+    handleUpload,
+    handleDelete,
+    documentInfo,
+    value: document,
+    uploadState: { isLoading: isUploading },
+    deleteState: { isLoading: isDeleting }
+  } = props
 
   if (!isDocument(document)) {
     return (
@@ -16,15 +24,7 @@ export const DataroomFileRow = (props: DataroomFileRowProps) => {
         title={documentInfo?.title ?? ''}
         document={document}
         actions={
-          <Button
-            size='small'
-            variant='contained'
-            color='primary'
-            disableElevation
-            onClick={handleUpload}
-          >
-            Upload
-          </Button>
+          <UploadButton onClick={handleUpload} isLoading={isUploading} />
         }
       />
     )
@@ -32,16 +32,18 @@ export const DataroomFileRow = (props: DataroomFileRowProps) => {
 
   return (
     <DownloadDocument documentId={document._id} ownerId={document.user}>
-      {download => (
+      {({ download, isLoading: isDownloading }) => (
         <DataroomEditRow
-          actions={
-            <ButtonGroup size='small' variant='outlined'>
-              <Button onClick={download}>Download</Button>
-              <Button onClick={handleDelete}>Delete</Button>
-            </ButtonGroup>
-          }
           title={document.title}
           document={document}
+          actions={
+            <DataroomEditRowActions
+              onDownload={download}
+              onDelete={handleDelete}
+              isDownloading={isDownloading}
+              isDeleting={isDeleting}
+            />
+          }
         />
       )}
     </DownloadDocument>

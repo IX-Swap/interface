@@ -18,7 +18,7 @@ const useOfferingsRouterMock = useOfferingsRouter as jest.Mock<
 describe('useMakeCommitment', () => {
   const makeInvestmentArgs: MakeInvestmentArgs = {
     dso: dso._id,
-    signedSubscriptionDocument: commitment.signedSubscriptionDocument,
+    signedSubscriptionDocument: commitment.signedSubscriptionDocument._id,
     currency: '1000',
     walletAddress: commitment.walletAddress,
     numberOfUnits: 1,

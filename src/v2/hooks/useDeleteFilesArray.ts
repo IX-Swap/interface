@@ -19,9 +19,9 @@ export const useDeleteFilesArray = (name: string) => {
   const deleteMultiple = () => {
     setIsLoading(true)
 
-    const pending = selected.map(({ id }) => {
+    const pending = selected.map(async ({ id }) => {
       const url = `/dataroom/${getIdFromObj(user)}/${id}`
-      return apiService.delete<DataroomFile>(url, {})
+      return await apiService.delete<DataroomFile>(url, {})
     })
 
     Promise.all(pending)

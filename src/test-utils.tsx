@@ -19,6 +19,8 @@ import { ServicesProvider } from 'v2/hooks/useServices'
 import { renderHook, RenderHookResult } from '@testing-library/react-hooks'
 import { BreadcrumbsProvider } from 'v2/hooks/useBreadcrumbs'
 import { SnackbarProvider } from 'notistack'
+import { AppStateProvider } from 'v2/app/hooks/useAppState'
+import { Form } from 'v2/components/form/Form'
 
 const generateClassName = createGenerateClassName({
   productionPrefix: 'ix'
@@ -30,11 +32,13 @@ const BaseProviders: React.FC = ({ children }) => {
       <ThemeProvider theme={Themes.default}>
         <SnackbarProvider>
           <BreadcrumbsProvider>
-            <ServicesProvider
-              value={{ snackbarService: { showSnackbar: jest.fn() } }}
-            >
-              <Router history={history}>{children}</Router>
-            </ServicesProvider>
+            <AppStateProvider>
+              <ServicesProvider
+                value={{ snackbarService: { showSnackbar: jest.fn() } }}
+              >
+                <Router history={history}>{children}</Router>
+              </ServicesProvider>
+            </AppStateProvider>
           </BreadcrumbsProvider>
         </SnackbarProvider>
       </ThemeProvider>
@@ -114,7 +118,9 @@ export const renderHookWithServiceProvider = (
 ): RenderHookResult<any, any> => {
   const WithServiceProvider: React.FC = ({ children }) => (
     <BaseProviders>
-      <ServicesProvider value={store}>{children}</ServicesProvider>
+      <ServicesProvider value={store}>
+        <Form>{children}</Form>
+      </ServicesProvider>
     </BaseProviders>
   )
 

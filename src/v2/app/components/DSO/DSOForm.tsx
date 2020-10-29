@@ -19,6 +19,8 @@ import { Form } from 'v2/components/form/Form'
 import { dsoFormValidationSchema } from 'v2/app/components/DSO/validation'
 import { Submit } from 'v2/components/form/Submit'
 import { DSOBackButton } from 'v2/app/components/DSO/components/DSOBackButton'
+import { useSetPageTitle } from 'v2/app/hooks/useSetPageTitle'
+import { getOfferingName } from 'v2/helpers/strings'
 
 export interface DSOFormProps {
   submitButtonLabel?: string
@@ -35,6 +37,8 @@ export const DSOForm = (props: DSOFormProps) => {
     onSubmit = noop,
     isNew = false
   } = props
+
+  useSetPageTitle(getOfferingName(data))
 
   return (
     <Form

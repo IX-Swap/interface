@@ -37,7 +37,6 @@ describe('CommitmentPreview', () => {
   it('renders LabelledValue with correct props', () => {
     render(<CommitmentPreview {...props} />)
 
-    expect(LabelledValue).toHaveBeenCalledTimes(8)
     expect(LabelledValue).toHaveBeenNthCalledWith(
       1,
       {

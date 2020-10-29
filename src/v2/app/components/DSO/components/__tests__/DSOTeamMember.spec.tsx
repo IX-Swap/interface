@@ -9,7 +9,7 @@ import {
   DSOTeamMemberProps
 } from 'v2/app/components/DSO/components/DSOTeamMember'
 import { teamMember } from '__fixtures__/issuance'
-import { plainValueExtractor } from 'v2/helpers/forms'
+import { wysiwygValueExtractor } from 'v2/helpers/forms'
 
 jest.mock('v2/app/components/DSO/components/DSOTeamRemoveButton', () => ({
   DSOTeamRemoveButton: jest.fn(() => <button />)
@@ -67,7 +67,7 @@ describe('DSOTeamMember', () => {
       1,
       expect.objectContaining({
         label: 'Photo',
-        name: `team[${props.index}].photo`
+        name: ['team', props.index, 'photo']
       }),
       {}
     )
@@ -76,7 +76,7 @@ describe('DSOTeamMember', () => {
       2,
       expect.objectContaining({
         label: 'Name',
-        name: `team[${props.index}].name`
+        name: ['team', props.index, 'name']
       }),
       {}
     )
@@ -85,7 +85,7 @@ describe('DSOTeamMember', () => {
       3,
       expect.objectContaining({
         label: 'Position',
-        name: `team[${props.index}].position`
+        name: ['team', props.index, 'position']
       }),
       {}
     )
@@ -94,8 +94,8 @@ describe('DSOTeamMember', () => {
       4,
       expect.objectContaining({
         label: 'About',
-        name: `team[${props.index}].about`,
-        valueExtractor: plainValueExtractor
+        name: ['team', props.index, 'about'],
+        valueExtractor: wysiwygValueExtractor
       }),
       {}
     )

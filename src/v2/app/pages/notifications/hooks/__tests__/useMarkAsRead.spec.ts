@@ -45,8 +45,7 @@ describe('useMarkAsRead', () => {
             `/core/notifications/mark-read/${user._id}/${notification._id}`,
             {}
           )
-          expect(markNotificationAsRead).toHaveBeenNthCalledWith(
-            1,
+          expect(markNotificationAsRead).toHaveBeenCalledWith(
             notification._id,
             undefined
           )
