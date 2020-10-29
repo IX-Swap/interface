@@ -1,5 +1,5 @@
 import { BaseFilter, Viewable } from 'v2/types/util'
-import React from 'react'
+import React, { useEffect } from 'react'
 import { Paper } from '@material-ui/core'
 import {
   initialFilterValue,
@@ -19,14 +19,21 @@ interface AuthorizerViewProps<T>
   title: string
 }
 
-queryCache.setQueryData<BaseFilter>('authorizerFilter', initialFilterValue)
-
 export const AuthorizerTable = <T,>(
   props: AuthorizerViewProps<T>
 ): JSX.Element => {
   const { columns, name, uri } = props
   const filter = queryCache.getQueryData<BaseFilter>('authorizerFilter')
   const isAll = filter?.status === ''
+
+  useEffect(
+    () =>
+      queryCache.setQueryData<BaseFilter>(
+        'authorizerFilter',
+        initialFilterValue
+      ),
+    []
+  )
 
   return (
     <Paper>

@@ -66,7 +66,21 @@ export const individual: IndividualIdentity = {
   authorizations: [],
   toArrangeCustody: true,
   walletAddress: '1234567890_',
-  declarations: [],
+  declarations: [
+    { IndividualAccreditedInvestor: DeclarationValue.Yes },
+    { NetPersonalAssets: DeclarationValue.Yes },
+    { IndividualIncome: DeclarationValue.Yes },
+    { IndividualFinancialAsset: DeclarationValue.Yes },
+    { JointlyHeldAccount: DeclarationValue.Yes },
+    { InvestaXPrivacyPolicy: DeclarationValue.Yes },
+    { InvestaXTermsOfUse: DeclarationValue.Yes },
+    { USPerson: DeclarationValue.Yes },
+    { TreatAsAccreditedInvestor: DeclarationValue.Yes },
+    { PrimaryIssuancePlatform: DeclarationValue.Yes },
+    { SecondaryTradingPlatform: DeclarationValue.Yes },
+    { TrueAndCorrectInformation: DeclarationValue.Yes },
+    { InformAnyChanges: DeclarationValue.Yes }
+  ],
   documents: [],
   address,
   user
