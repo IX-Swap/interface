@@ -1,5 +1,6 @@
 import { formatAmount } from 'v2/helpers/numbers'
 import { formatDateToMMDDYY } from 'v2/helpers/dates'
+import { renderStatusColumn } from 'v2/app/pages/authorizer/hooks/useAuthorizerView'
 
 export const columns = [
   {
@@ -8,7 +9,8 @@ export const columns = [
   },
   {
     label: 'Status',
-    key: 'status'
+    key: 'status',
+    render: renderStatusColumn
   },
   {
     label: 'Amount',
