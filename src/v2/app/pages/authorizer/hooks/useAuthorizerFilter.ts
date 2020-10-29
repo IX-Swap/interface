@@ -9,6 +9,7 @@ export const useAuthorizerFilter = () => {
 
   useEffect(() => {
     queryCache.setQueryData<BaseFilter>('authorizerFilter', initialFilterValue)
+
     return () => {
       queryCache.setQueryData<BaseFilter>(
         'authorizerFilter',

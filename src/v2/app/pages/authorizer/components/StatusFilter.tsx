@@ -22,7 +22,7 @@ interface StatusFilterProps {
 export const StatusFilter: React.FC<StatusFilterProps> = props => {
   const { onChange } = props
   const [selectedStatus, setSelectedStatus] = useState<StatusFilterItemType>(
-    statusFilters[3]
+    statusFilters[0]
   )
   const renderItem = (status: StatusFilterItemType, i: number): JSX.Element => {
     const { value, icon, title } = status
