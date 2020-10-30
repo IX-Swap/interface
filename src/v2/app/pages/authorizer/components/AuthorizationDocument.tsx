@@ -37,7 +37,7 @@ export const AuthorizationDocument = (props: AuthorizationDocumentProps) => {
   const { value: document } = props
   const classes = useStyles()
 
-  if (document === null) {
+  if (document === null || document === undefined) {
     return null
   }
 

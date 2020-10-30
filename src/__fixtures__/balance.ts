@@ -5,7 +5,7 @@ export const balance: AssetBalance = {
   debitTotal: 123,
   creditTotal: 123,
   balance: 123,
-  lastTransaction: 'some-string',
+  lastTransaction: '01-01-2000',
   assetId: asset._id,
   name: 'XXX',
   symbol: 'ø',
