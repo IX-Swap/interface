@@ -8,7 +8,7 @@ import { ReactComponent as IndividualIcon } from 'assets/icons/navigation/indivi
 import { ReactComponent as CorporateIcon } from 'assets/icons/navigation/corporate.svg'
 import { ReactComponent as OfferingIcon } from 'assets/icons/navigation/offering.svg'
 import { ReactComponent as CommitmentIcon } from 'assets/icons/navigation/commitment.svg'
-import { makeURL } from 'v2/config/urls'
+import { makeURL } from 'v2/config/appURL'
 import { AuthorizerBanksRouterRoot } from 'v2/app/pages/authorizer/pages/banks/router'
 import { AuthorizerCashDepositsRouterRoot } from 'v2/app/pages/authorizer/pages/cashDeposits/router'
 import { AuthorizerCashWithdrawalsRouterRoot } from 'v2/app/pages/authorizer/pages/cashWithdrawals/router'

@@ -34,10 +34,10 @@ export interface AuthorizableWithIdentity extends Authorizable {
 }
 
 export const DataroomFeature = {
-  [AppFeature['Bank Accounts']]: 'authorization/accounts/bank-accounts',
-  [AppFeature['Cash Deposits']]: 'authorization/accounts/deposits',
-  [AppFeature['Cash Withdrawals']]: 'authorization/accounts/withdrawals',
-  [AppFeature['Digital Security Withdrawals']]:
+  [AppFeature.BankAccounts]: 'authorization/accounts/bank-accounts',
+  [AppFeature.CashDeposits]: 'authorization/accounts/deposits',
+  [AppFeature.CashWithdrawals]: 'authorization/accounts/withdrawals',
+  [AppFeature.DigitalSecurityWithdrawals]:
     'authorization/accounts/security-withdrawals',
   [AppFeature.Individuals]: 'authorization/identity/individuals',
   [AppFeature.Corporates]: 'authorization/identity/corporates',

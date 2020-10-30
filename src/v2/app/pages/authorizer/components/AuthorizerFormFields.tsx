@@ -18,9 +18,9 @@ export interface AuthorizerFormFieldsProps {
 }
 
 const transactionalCategories = [
-  AuthorizerCategory['Cash Deposits'],
-  AuthorizerCategory['Cash Withdrawals'],
-  AuthorizerCategory['Digital Security Withdrawals'],
+  AuthorizerCategory.CashDeposits,
+  AuthorizerCategory.CashWithdrawals,
+  AuthorizerCategory.DigitalSecurityWithdrawals,
   AuthorizerCategory.Commitments
 ]
 

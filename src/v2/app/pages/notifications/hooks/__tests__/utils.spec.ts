@@ -49,13 +49,13 @@ describe('filterNotifications', () => {
   it('returns filtered notifications based on filters passed', () => {
     const n1: Notification = {
       ...notification,
-      feature: AppFeature['Cash Deposits']
+      feature: AppFeature.CashDeposits
     }
     const n2: Notification = { ...notification, feature: AppFeature.Offerings }
     const n3: Notification = { ...notification, feature: AppFeature.Corporates }
 
     const filteredNotifications = filterNotifications(
-      [AppFeature['Cash Deposits'], AppFeature.Offerings],
+      [AppFeature.CashDeposits, AppFeature.Offerings],
       [n1, n2, n3]
     )
     expect(filteredNotifications).toEqual([n1, n2])
@@ -64,7 +64,7 @@ describe('filterNotifications', () => {
   it('returns all notifications if filter is undefined', () => {
     const n1: Notification = {
       ...notification,
-      feature: AppFeature['Cash Deposits']
+      feature: AppFeature.CashDeposits
     }
     const n2: Notification = { ...notification, feature: AppFeature.Offerings }
     const n3: Notification = { ...notification, feature: AppFeature.Corporates }
@@ -76,7 +76,7 @@ describe('filterNotifications', () => {
   it('returns empty array if filter is empty', () => {
     const n1: Notification = {
       ...notification,
-      feature: AppFeature['Cash Deposits']
+      feature: AppFeature.CashDeposits
     }
     const n2: Notification = { ...notification, feature: AppFeature.Offerings }
     const n3: Notification = { ...notification, feature: AppFeature.Corporates }
@@ -86,9 +86,7 @@ describe('filterNotifications', () => {
   })
 
   it('returns empty array if notifications does not exist', () => {
-    const filteredNotifications = filterNotifications([
-      AppFeature['Cash Deposits']
-    ])
+    const filteredNotifications = filterNotifications([AppFeature.CashDeposits])
     expect(filteredNotifications).toEqual([])
   })
 })

@@ -2,7 +2,7 @@ import React from 'react'
 import { useSelectionHelperContext } from 'v2/components/SelectionHelper'
 import { DataroomRowUploaderProps } from 'v2/components/dataroom/DataroomRowUploader'
 import { SelectableDataroomEditRow } from 'v2/components/dataroom/SelectableDataroomEditRow'
-import { SelectableAuthorizationDocument } from 'v2/app/pages/authorizer/SelectableAuthorizationDocument'
+import { SelectableAuthorizationDocument } from 'v2/app/pages/authorizer/components/SelectableAuthorizationDocument'
 
 export interface SelectableDataroomUploaderProps
   extends DataroomRowUploaderProps {

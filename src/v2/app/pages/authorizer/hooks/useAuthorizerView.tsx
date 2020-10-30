@@ -23,5 +23,5 @@ export const statusColumn = {
 }
 
 export const initialFilterValue: BaseFilter = {
-  status: 'Submitted'
+  status: ''
 }

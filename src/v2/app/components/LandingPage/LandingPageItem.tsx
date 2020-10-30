@@ -11,10 +11,10 @@ export interface LandingPageItemProps {
 }
 
 export const LandingPageItem = (props: LandingPageItemProps) => {
+  const classes = useStyles()
   const {
     link: { path, color = 'black', icon = Noop, label }
   } = props
-  const classes = useStyles()
 
   return (
     <AppRouterLink to={path}>

@@ -66,7 +66,6 @@ export const CompanyInfoFields = () => {
           label='Date of Incorporation'
         />
       </Grid>
-      <Grid item xs={4} />
       <Grid item xs={4}>
         <TypedField
           component={Input}

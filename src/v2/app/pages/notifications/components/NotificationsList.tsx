@@ -17,7 +17,6 @@ export const ITEM_SIZE = 75
 export const NotificationsList = forwardRef(
   (props: NotificationsListProps, ref: React.Ref<any>) => {
     const { filter = false, height = 300, width = '100%' } = props
-    const extraSpace = height % ITEM_SIZE
     const { data, isLoading } = useNotifications(filter)
     const hasData = data.length > 0
 
@@ -35,7 +34,7 @@ export const NotificationsList = forwardRef(
           <FixedSizeList
             itemData={data}
             itemSize={ITEM_SIZE}
-            height={height - extraSpace}
+            height={height}
             itemCount={data.length}
             width={width}
           >

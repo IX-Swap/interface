@@ -2,7 +2,9 @@ import { makeStyles } from '@material-ui/styles'
 
 export const useStyles = makeStyles({
   container: {
-    position: 'relative'
+    position: 'relative',
+    marginTop: -64,
+    paddingTop: 64
   },
   sidebar: {
     zIndex: 10,
@@ -12,7 +14,7 @@ export const useStyles = makeStyles({
     left: 90,
     bottom: 0,
     backgroundColor: '#fafafa',
-    overflow: 'auto'
+    overflow: 'hidden'
   },
   content: {
     paddingLeft: 300,

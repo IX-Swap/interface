@@ -3,7 +3,7 @@ import { generateAppRouterHook } from 'v2/helpers/generateAppRouterHook'
 import { ChangePassword } from './pages/changePassword/ChangePassword'
 import { Landing } from './pages/landing/Landing'
 import { Setup2fa } from './pages/setup2fa/Setup2fa'
-import { makeURL } from 'v2/config/urls'
+import { makeURL } from 'v2/config/appURL'
 
 export const SecurityRoute = {
   landing: makeURL(['app', 'settings']),

@@ -1,10 +1,10 @@
-import { makeURL, urls } from 'v2/config/urls'
+import { makeURL, appURL } from 'v2/config/appURL'
 import { InternalRouteProps } from 'v2/types/util'
 import { ViewAuthorizableItem } from 'v2/app/pages/authorizer/components/ViewAuthorizableItem'
 import { generateAppRouterHook } from 'v2/helpers/generateAppRouterHook'
 
 export const generateAuthorizerCategoryRouter = (
-  category: keyof typeof urls,
+  category: keyof typeof appURL,
   listComponent: InternalRouteProps['component'],
   viewLabel: string,
   listLabel: string

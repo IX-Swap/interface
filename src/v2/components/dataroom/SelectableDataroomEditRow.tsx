@@ -26,7 +26,7 @@ export const SelectableDataroomEditRow = (
     <ListItem component='div' button onClick={toggleItem}>
       {hasSelected && (
         <ListItemIcon>
-          <Checkbox checked={isSelected} onClick={toggleItem} />
+          <Checkbox checked={isSelected} />
         </ListItemIcon>
       )}
       <ListItemText>

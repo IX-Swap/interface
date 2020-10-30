@@ -49,3 +49,7 @@ export const getPersonName = (data: IndividualIdentity | null | undefined) => {
 
   return `${data.firstName} ${data.middleName ?? ''} ${data.lastName}`
 }
+
+export const formatCamelCasedWithSpaces = (value: string) => {
+  return value.replace(/([A-Z])/g, ' $1')
+}

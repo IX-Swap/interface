@@ -1,4 +1,4 @@
-import { makeURL } from 'v2/config/urls'
+import { makeURL } from 'v2/config/appURL'
 import { InternalRouteProps } from 'v2/types/util'
 import { generateAppRouterHook } from 'v2/helpers/generateAppRouterHook'
 import { OfferingsList } from 'v2/app/pages/invest/pages/OfferingsList'

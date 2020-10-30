@@ -7,7 +7,7 @@ import { IndividualIdEdit } from 'v2/app/pages/identity/pages/individual/Individ
 import { IndividualIdCreate } from 'v2/app/pages/identity/pages/individual/IndividualIdCreate'
 import { CorporateIdCreate } from 'v2/app/pages/identity/pages/corporate/CorporateIdCreate'
 import { CorporateIdEdit } from 'v2/app/pages/identity/pages/corporate/CorporateIdEdit'
-import { makeURL } from 'v2/config/urls'
+import { makeURL } from 'v2/config/appURL'
 
 export const IdentityRoute = {
   list: makeURL(['app', 'identity']),

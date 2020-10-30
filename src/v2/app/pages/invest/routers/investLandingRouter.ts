@@ -1,5 +1,5 @@
 import { generateAppRouterHook } from 'v2/helpers/generateAppRouterHook'
-import { makeURL } from 'v2/config/urls'
+import { makeURL } from 'v2/config/appURL'
 import { CommitmentsRoot } from 'v2/app/pages/invest/pages/CommitmentsRoot'
 import { OfferingsRoot } from 'v2/app/pages/invest/pages/OfferingsRoot'
 

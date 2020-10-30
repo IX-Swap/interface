@@ -30,7 +30,7 @@ export const SelectableAuthorizationDocument = (
     <Grid item className={classes.container} onClick={toggleItem}>
       {hasSelected && (
         <Box position='absolute' zIndex={1}>
-          <Checkbox checked={isSelected} onClick={toggleItem} />
+          <Checkbox checked={isSelected} />
         </Box>
       )}
 

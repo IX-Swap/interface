@@ -6,7 +6,7 @@ export interface FullHeightProps {
   children: (height: number, ref: Ref<any>) => Maybe<JSX.Element>
 }
 
-export const CONTAINER_VERTICAL_PADDING = 80
+export const CONTAINER_VERTICAL_PADDING = 40
 
 export const FullHeight = ({ children }: FullHeightProps) => {
   const [height, setHeight] = useState(0)
