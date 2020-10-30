@@ -28,12 +28,6 @@ export const FinancialView = (props: FinancialViewProps) => {
         <LabelledValue value={data.industryOfEmployment} label='Industry' />
       </Grid>
       <Grid item xs={4}>
-        <LabelledValue
-          value={data.walletAddress}
-          label='Digital Security Wallet Address'
-        />
-      </Grid>
-      <Grid item xs={4}>
         <LabelledValue value={data.annualIncome} label='Annual Income' />
       </Grid>
       <Grid item xs={4}>
@@ -55,12 +49,6 @@ export const FinancialView = (props: FinancialViewProps) => {
         <LabelledValue
           value={data.bankAccountNumber}
           label='Bank Account Number'
-        />
-      </Grid>
-      <Grid item xs={5}>
-        <LabelledValue
-          value={data.toArrangeCustody}
-          label='I would like InvestaX to arrange digital security custody'
         />
       </Grid>
     </Grid>

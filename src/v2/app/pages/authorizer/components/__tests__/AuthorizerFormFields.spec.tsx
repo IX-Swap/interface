@@ -86,7 +86,7 @@ describe('AuthorizerForm', () => {
   it('renders ApproveButton with correct props if approved', () => {
     jest
       .spyOn(useAuthorizerCategoryHook, 'useAuthorizerCategory')
-      .mockReturnValue(AuthorizerCategory['Bank Accounts'])
+      .mockReturnValue(AuthorizerCategory.BankAccounts)
 
     render(
       <Form>
@@ -103,7 +103,7 @@ describe('AuthorizerForm', () => {
   it('renders RejectButton with correct props if rejected', () => {
     jest
       .spyOn(useAuthorizerCategoryHook, 'useAuthorizerCategory')
-      .mockReturnValue(AuthorizerCategory['Bank Accounts'])
+      .mockReturnValue(AuthorizerCategory.BankAccounts)
 
     render(
       <Form>
@@ -120,7 +120,7 @@ describe('AuthorizerForm', () => {
   it('renders ApproveButton with correct props if approved and category is transactional', () => {
     jest
       .spyOn(useAuthorizerCategoryHook, 'useAuthorizerCategory')
-      .mockReturnValue(AuthorizerCategory['Cash Withdrawals'])
+      .mockReturnValue(AuthorizerCategory.CashWithdrawals)
 
     render(
       <Form>
@@ -138,7 +138,7 @@ describe('AuthorizerForm', () => {
   it('renders RejectButton with correct props if rejected and category is transactional', () => {
     jest
       .spyOn(useAuthorizerCategoryHook, 'useAuthorizerCategory')
-      .mockReturnValue(AuthorizerCategory['Cash Withdrawals'])
+      .mockReturnValue(AuthorizerCategory.CashWithdrawals)
 
     render(
       <Form>

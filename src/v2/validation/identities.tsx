@@ -40,8 +40,6 @@ export const individualIdentityFormValidationSchema = yup
     houseHoldIncome: yup.string().required('Required'),
     employer: yup.string().required('Required'),
     annualIncome: yup.string().required('Required'),
-    toArrangeCustody: yup.boolean(),
-    walletAddress: yup.string().required('Required'),
     documents: documentsArraySchema.required('Required'),
     declarations: individualDeclarationsSchema.required(),
     address: addressSchema.required('Required')
@@ -51,8 +49,6 @@ export const corporateIdentityFormValidationSchema = yup
   .object()
   .shape<CorporateIdentityFormValues>({
     logo: yup.string(),
-    walletAddress: yup.string(),
-    toArrangeCustody: yup.boolean(),
     contactNumber: yup.string().required('Required'),
     registrationNumber: yup.string().required('Required'),
     dateOfIncorporation: yup.string().required('Required'),

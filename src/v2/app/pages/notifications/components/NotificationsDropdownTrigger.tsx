@@ -9,7 +9,10 @@ export const NotificationsDropdownTrigger = (props: DropdownTriggerProps) => {
 
   return (
     <IconButton color='inherit' {...props.triggerProps}>
-      <Badge badgeContent={unreadCount} color='error'>
+      <Badge
+        badgeContent={unreadCount >= 100 ? '99+' : unreadCount}
+        color='error'
+      >
         <Notifications />
       </Badge>
     </IconButton>

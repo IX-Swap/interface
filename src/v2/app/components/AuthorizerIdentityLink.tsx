@@ -12,14 +12,15 @@ export const AuthorizerIdentityLink = (props: IdentityLinkProps) => {
 
   return (
     <AppRouterLink
+      target='_blank'
+      color='primary'
+      underline='always'
+      style={{ fontWeight: 700 }}
       to={`/app/authorizer/${type}s/${identityId}/view`}
       params={{
         itemId: identityId,
         category: `${type}s`
       }}
-      color='primary'
-      underline='always'
-      style={{ fontWeight: 700 }}
     >
       {children}
     </AppRouterLink>

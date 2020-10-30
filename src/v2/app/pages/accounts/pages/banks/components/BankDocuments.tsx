@@ -27,46 +27,50 @@ export const BankDocuments = () => {
   return (
     <SelectionHelper<SelectedDocument> itemComparator={itemComparator}>
       <Grid container direction='column' spacing={2}>
-        <Grid item>
-          <SelectableDataroomHeader />
-        </Grid>
         <FieldsArray name='supportingDocuments' control={control}>
           {({ fields, append, remove }) => (
-            <Grid item container direction='column'>
-              <Grid item>
-                <List disablePadding component='div'>
-                  {fields.map((field, index) => (
-                    // @ts-expect-error
-                    <TypedField
-                      customRenderer
-                      key={field.id}
-                      control={control}
-                      component={SelectableDataroomUploader}
-                      variant='row'
-                      index={index}
-                      label='Document'
-                      name={['supportingDocuments', index, 'value']}
-                      defaultValue={fields[index].value}
-                      valueExtractor={plainValueExtractor}
-                      onDelete={() => remove(index)}
-                    />
-                  ))}
-                </List>
+            <>
+              {fields.length > 0 && (
+                <Grid item>
+                  <SelectableDataroomHeader />
+                </Grid>
+              )}
+              <Grid item container direction='column'>
+                <Grid item>
+                  <List disablePadding component='div'>
+                    {fields.map((field, index) => (
+                      // @ts-expect-error
+                      <TypedField
+                        customRenderer
+                        key={field.id}
+                        control={control}
+                        component={SelectableDataroomUploader}
+                        variant='row'
+                        index={index}
+                        label='Document'
+                        name={['supportingDocuments', index, 'value']}
+                        defaultValue={fields[index].value}
+                        valueExtractor={plainValueExtractor}
+                        onDelete={() => remove(index)}
+                      />
+                    ))}
+                  </List>
+                </Grid>
+                <Grid item container justify='space-between'>
+                  <DataroomDeleteSelected name='supportingDocuments' />
+                  <DataroomUploadAndAppend
+                    multiple
+                    label='Uploader'
+                    append={file => append({ value: file })}
+                    render={UploadButton}
+                    documentInfo={{
+                      type: 'Supporting Document',
+                      title: 'Supporting Document'
+                    }}
+                  />
+                </Grid>
               </Grid>
-              <Grid item container justify='space-between'>
-                <DataroomDeleteSelected name='supportingDocuments' />
-                <DataroomUploadAndAppend
-                  multiple
-                  label='Uploader'
-                  append={file => append({ value: file })}
-                  render={UploadButton}
-                  documentInfo={{
-                    type: 'Supporting Document',
-                    title: 'Supporting Document'
-                  }}
-                />
-              </Grid>
-            </Grid>
+            </>
           )}
         </FieldsArray>
       </Grid>

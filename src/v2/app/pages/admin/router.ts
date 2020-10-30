@@ -1,6 +1,6 @@
 import { InternalRouteProps } from 'v2/types/util'
 import { generateAppRouterHook } from 'v2/helpers/generateAppRouterHook'
-import { makeURL } from 'v2/config/urls'
+import { makeURL } from 'v2/config/appURL'
 import { Users } from 'v2/app/pages/admin/pages/Users'
 
 export const AdminRoute = {

@@ -10,6 +10,7 @@ import { history } from 'v2/history'
 import { DSRoute } from 'v2/app/pages/accounts/pages/digitalSecurities/router'
 import { Form } from 'v2/components/form/Form'
 import { TypedField } from 'v2/components/form/TypedField'
+import { moneyNumberFormat } from 'v2/config/numberFormat'
 
 jest.mock('v2/components/form/TypedField', () => ({
   TypedField: jest.fn(() => null)
@@ -69,13 +70,7 @@ describe('Setup', () => {
       expect.objectContaining({
         label: 'Amount',
         name: 'amount',
-        numberFormat: {
-          decimalScale: 2,
-          inputMode: 'numeric',
-          thousandSeparator: true,
-          allowEmptyFormatting: true,
-          isNumericString: true
-        }
+        numberFormat: moneyNumberFormat
       }),
       {}
     )

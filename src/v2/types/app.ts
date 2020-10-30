@@ -9,12 +9,12 @@ export enum AppService {
 
 export enum AppFeature {
   Authentication = 'logins',
-  'Bank Accounts' = 'bank-accounts',
-  'Cash Deposits' = 'cash-deposits',
-  'Cash Withdrawals' = 'cash-withdrawals',
-  'Digital Security' = 'digital-security',
-  'Digital Security Deposits' = 'digital-security-deposits',
-  'Digital Security Withdrawals' = 'digital-security-withdrawals',
+  BankAccounts = 'bank-accounts',
+  CashDeposits = 'cash-deposits',
+  CashWithdrawals = 'cash-withdrawals',
+  DigitalSecurity = 'digital-security',
+  DigitalSecurityDeposits = 'digital-security-deposits',
+  DigitalSecurityWithdrawals = 'digital-security-withdrawals',
   Corporates = 'corporates',
   Individuals = 'individuals',
   Commitments = 'commitments',
@@ -25,10 +25,10 @@ export enum AppFeature {
 
 export enum NotificationFilter {
   Authentication = 'logins',
-  'Bank Accounts' = 'bank-accounts',
-  'Deposits' = 'deposits',
-  'Withdrawals' = 'withdrawals',
-  'Digital Security Withdrawals' = 'digital-security-withdrawals',
+  BankAccounts = 'bank-accounts',
+  Deposits = 'deposits',
+  Withdrawals = 'withdrawals',
+  DigitalSecurityWithdrawals = 'digital-security-withdrawals',
   Corporates = 'corporates',
   Individuals = 'individuals',
   Commitments = 'commitments',
@@ -37,10 +37,10 @@ export enum NotificationFilter {
 }
 
 export enum AuthorizerCategory {
-  'Bank Accounts' = 'bank-accounts',
-  'Cash Deposits' = 'cash-deposits',
-  'Cash Withdrawals' = 'cash-withdrawals',
-  'Digital Security Withdrawals' = 'digital-security-withdrawals',
+  BankAccounts = 'bank-accounts',
+  CashDeposits = 'cash-deposits',
+  CashWithdrawals = 'cash-withdrawals',
+  DigitalSecurityWithdrawals = 'digital-security-withdrawals',
   Corporates = 'corporates',
   Individuals = 'individuals',
   Commitments = 'commitments',

@@ -1,6 +1,6 @@
 import { NumberFormatProps } from 'react-number-format'
 
-export const percentageFormat: NumberFormatProps = {
+export const percentageNumberFormat: NumberFormatProps = {
   allowNegative: false,
   decimalScale: 2,
   inputMode: 'numeric',
@@ -8,7 +8,7 @@ export const percentageFormat: NumberFormatProps = {
   isNumericString: true
 }
 
-export const monthsFormat: NumberFormatProps = {
+export const monthsNumberFormat: NumberFormatProps = {
   allowNegative: false,
   isNumericString: true,
   inputMode: 'numeric',

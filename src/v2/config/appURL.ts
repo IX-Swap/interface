@@ -38,7 +38,7 @@ export const urlService = {
 }
 
 export const urlFeature = {
-  bankAccount: `${AppFeature['Bank Accounts']}`,
+  bankAccount: `${AppFeature.BankAccounts}`,
   balances: 'balances',
   transactions: 'transactions',
   digitalSecurity: 'digital-security',
@@ -51,19 +51,19 @@ export const urlFeature = {
   deployments: 'deployments'
 }
 
-export const urls = {
+export const appURL = {
   ...urlAction,
   ...urlParams,
   ...urlModule,
   ...urlService,
   ...urlFeature,
 
-  cashDeposit: `${AppFeature['Cash Deposits']}`,
-  cashWithdrawal: `${AppFeature['Cash Withdrawals']}`,
-  dsDeposit: `${AppFeature['Digital Security Deposits']}`,
-  dsWithdrawal: `${AppFeature['Digital Security Withdrawals']}`
+  cashDeposit: `${AppFeature.CashDeposits}`,
+  cashWithdrawal: `${AppFeature.CashWithdrawals}`,
+  dsDeposit: `${AppFeature.DigitalSecurityDeposits}`,
+  dsWithdrawal: `${AppFeature.DigitalSecurityWithdrawals}`
 }
 
-export const makeURL = (paths: Array<keyof typeof urls>) => {
-  return `/${paths.map(path => urls[path]).join('/')}`
+export const makeURL = (paths: Array<keyof typeof appURL>) => {
+  return `/${paths.map(path => appURL[path]).join('/')}`
 }

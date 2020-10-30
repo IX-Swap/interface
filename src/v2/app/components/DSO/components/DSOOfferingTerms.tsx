@@ -1,6 +1,9 @@
 import React from 'react'
 import { Grid, Input } from '@material-ui/core'
-import { monthsFormat, percentageFormat } from 'v2/config/numberFormat'
+import {
+  monthsNumberFormat,
+  percentageNumberFormat
+} from 'v2/config/numberFormat'
 import { TypedField } from 'v2/components/form/TypedField'
 import { NumericInput } from 'v2/components/form/NumericInput'
 import { numericValueExtractor } from 'v2/helpers/forms'
@@ -22,7 +25,7 @@ export const DSOOfferingTerms = () => {
               component={NumericInput}
               label='Investment Period'
               name='investmentPeriod'
-              numberFormat={monthsFormat}
+              numberFormat={monthsNumberFormat}
               valueExtractor={numericValueExtractor}
             />
           </Grid>
@@ -42,7 +45,7 @@ export const DSOOfferingTerms = () => {
               component={NumericInput}
               label='Interest Rate'
               name='interestRate'
-              numberFormat={percentageFormat}
+              numberFormat={percentageNumberFormat}
               valueExtractor={numericValueExtractor}
             />
           </Grid>
@@ -55,7 +58,7 @@ export const DSOOfferingTerms = () => {
               component={NumericInput}
               name='dividendYield'
               label='Dividend Yield'
-              numberFormat={percentageFormat}
+              numberFormat={percentageNumberFormat}
               valueExtractor={numericValueExtractor}
             />
           </Grid>
@@ -66,7 +69,7 @@ export const DSOOfferingTerms = () => {
               component={NumericInput}
               name='equityMultiple'
               label='Equity Multiple'
-              numberFormat={percentageFormat}
+              numberFormat={percentageNumberFormat}
               valueExtractor={numericValueExtractor}
             />
           </Grid>
@@ -77,7 +80,7 @@ export const DSOOfferingTerms = () => {
               component={NumericInput}
               name='leverage'
               label='Leverage'
-              numberFormat={percentageFormat}
+              numberFormat={percentageNumberFormat}
               valueExtractor={numericValueExtractor}
             />
           </Grid>
@@ -90,7 +93,7 @@ export const DSOOfferingTerms = () => {
               component={NumericInput}
               name='grossIRR'
               label='Gross IRR'
-              numberFormat={percentageFormat}
+              numberFormat={percentageNumberFormat}
               valueExtractor={numericValueExtractor}
             />
           </Grid>

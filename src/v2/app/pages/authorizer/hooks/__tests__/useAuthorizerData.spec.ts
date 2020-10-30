@@ -17,7 +17,7 @@ describe('useAuthorizerData', () => {
     history.push(AuthorizerRoute.viewItem, { bankId: bank._id })
     jest
       .spyOn(useAuthorizerCategoryHook, 'useAuthorizerCategory')
-      .mockReturnValue(AuthorizerCategory['Bank Accounts'])
+      .mockReturnValue(AuthorizerCategory.BankAccounts)
     jest
       .spyOn(useParsedDataHook, 'useParsedData')
       .mockImplementation(parsedDataFn)
@@ -50,7 +50,7 @@ describe('useAuthorizerData', () => {
             '_id'
           )
           expect(postFn).toHaveBeenCalledWith(
-            authorizerItemMap[AuthorizerCategory['Bank Accounts']].uri,
+            authorizerItemMap[AuthorizerCategory.BankAccounts].uri,
             paginationArgs
           )
         },

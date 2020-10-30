@@ -12,7 +12,7 @@ import { ReactComponent as DSWithdrawalIcon } from 'assets/icons/navigation/ds-w
 import { ReactComponent as TransactionIcon } from 'assets/icons/navigation/transaction.svg'
 import { DepositCash } from './pages/banks/DepositCash/DepositCash'
 import { WithdrawCash } from './pages/banks/WithdrawCash/WithdrawCash'
-import { makeURL } from 'v2/config/urls'
+import { makeURL } from 'v2/config/appURL'
 
 export const AccountsRoute = {
   landing: makeURL(['app', 'account']),

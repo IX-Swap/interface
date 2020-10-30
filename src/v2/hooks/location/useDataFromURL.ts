@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import { useLocation } from 'react-router-dom'
 import { AppFeature } from 'v2/types/app'
-import { urlParams } from 'v2/config/urls'
+import { urlParams } from 'v2/config/appURL'
 import {
   getCurrentLocationData,
   stripColonFromURLParam

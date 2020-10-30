@@ -13,7 +13,7 @@ describe('useAuthorizerAction', () => {
   beforeEach(() => {
     jest
       .spyOn(useAuthorizerCategoryHook, 'useAuthorizerCategory')
-      .mockReturnValue(AuthorizerCategory['Bank Accounts'])
+      .mockReturnValue(AuthorizerCategory.BankAccounts)
   })
 
   afterEach(async () => {

@@ -21,7 +21,7 @@ describe('RejectButton', () => {
       pathname: AuthorizerRoute.viewItem,
       state: {
         bankId: bank._id,
-        category: AuthorizerCategory['Bank Accounts']
+        category: AuthorizerCategory.BankAccounts
       }
     })
   })

@@ -3,7 +3,7 @@ import { DSList } from 'v2/app/pages/accounts/pages/digitalSecurities/DSList/DSL
 import { generateAppRouterHook } from 'v2/helpers/generateAppRouterHook'
 import { DSDeposit } from 'v2/app/pages/accounts/pages/digitalSecurities/DSDeposit/DSDeposit'
 import { DSWithdraw } from 'v2/app/pages/accounts/pages/digitalSecurities/DSWithdraw/DSWithdraw'
-import { makeURL } from 'v2/config/urls'
+import { makeURL } from 'v2/config/appURL'
 import { DSPreview } from 'v2/app/components/DSPreview/DSPreview'
 
 export const DSRoute = {

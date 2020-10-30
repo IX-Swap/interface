@@ -7,7 +7,7 @@ import { InvestRoot } from 'v2/app/pages/invest/InvestRoot'
 import { generateAppRouterHook } from 'v2/helpers/generateAppRouterHook'
 import { SecurityRoot } from 'v2/app/pages/security/SecurityRoot'
 import { NotificationsRoot } from 'v2/app/pages/notifications/NotificationsRoot'
-import { makeURL } from 'v2/config/urls'
+import { makeURL } from 'v2/config/appURL'
 import { AdminRoot } from 'v2/app/pages/admin/AdminRoot'
 import { AppRole } from 'v2/helpers/acl'
 

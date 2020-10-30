@@ -1,4 +1,4 @@
-import { DataroomFile, FileGuide } from './dataroomFile'
+import { DataroomFile } from './dataroomFile'
 import { DeclarationValue } from 'v2/app/pages/identity/const/declarations'
 import { Authorizable } from './authorizer'
 import { PaginationArgs } from 'v2/services/api/types'
@@ -7,21 +7,6 @@ import {
   IndividualIdentityFormValues
 } from 'v2/app/pages/identity/components/types'
 import User from 'v2/types/user'
-
-export interface IdentityState {
-  dataroom: Array<DataroomFile | FileGuide>
-  corporateDataroom: Array<DataroomFile | FileGuide>
-  identity: IndividualIdentity | {}
-  corporate: CorporateIdentity | {}
-  status: string
-  shouldCreateNew: boolean
-  editMode: boolean
-  error: {
-    save: string | null
-    get: string | null
-  }
-  type?: 'individual' | 'corporate'
-}
 
 export interface IdentityAddress {
   line1: string
@@ -65,9 +50,7 @@ export interface IdentityFinancials {
   houseHoldIncome: string
   industryOfEmployment: string
   occupation: string
-  // politicallyExposed: boolean
   sourceOfWealth: string
-  toArrangeCustody?: boolean
 }
 
 export interface CorporateFields {
@@ -82,7 +65,6 @@ export interface CorporateFields {
   representatives: PersonalProfile[]
   directors: PersonalProfile[]
   beneficialOwners: PersonalProfile[]
-  toArrangeCustody?: boolean
 }
 
 export interface Declaration {
@@ -97,7 +79,6 @@ export interface BaseIdentity {
   updatedAt: string
   documents: DataroomFile[]
   declarations: Declaration[]
-  walletAddress?: string
 }
 
 export interface DeclarationTemplate {

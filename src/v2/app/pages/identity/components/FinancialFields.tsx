@@ -3,12 +3,12 @@ import { Grid, Input } from '@material-ui/core'
 import { TypedField } from 'v2/components/form/TypedField'
 import { NumericInput } from 'v2/components/form/NumericInput'
 import { moneyNumberFormat } from 'v2/config/numberFormat'
-import { Checkbox } from 'v2/components/form/Checkbox'
-import { booleanValueExtractor, numericValueExtractor } from 'v2/helpers/forms'
+import { numericValueExtractor } from 'v2/helpers/forms'
 import { useFormContext } from 'react-hook-form'
+import { IndividualIdentityFormValues } from 'v2/app/pages/identity/components/types'
 
 export const FinancialFields = (): JSX.Element => {
-  const { control } = useFormContext() // TODO: add types
+  const { control } = useFormContext<IndividualIdentityFormValues>()
 
   return (
     <Grid container spacing={3}>
@@ -42,14 +42,6 @@ export const FinancialFields = (): JSX.Element => {
           control={control}
           name='industryOfEmployment'
           label='Industry'
-        />
-      </Grid>
-      <Grid item xs={4}>
-        <TypedField
-          component={Input}
-          control={control}
-          name='walletAddress'
-          label='Digital Security Wallet Address'
         />
       </Grid>
       <Grid item xs={4}>
@@ -102,17 +94,6 @@ export const FinancialFields = (): JSX.Element => {
           control={control}
           name='bankAccountNumber'
           label='Bank Account Number'
-        />
-      </Grid>
-      <Grid item xs={5}>
-        {/* @ts-ignore  */}
-        <TypedField
-          customRenderer
-          component={Checkbox}
-          valueExtractor={booleanValueExtractor}
-          control={control}
-          name='toArrangeCustody'
-          label='I would like InvestaX to arrange digital security custody'
         />
       </Grid>
     </Grid>

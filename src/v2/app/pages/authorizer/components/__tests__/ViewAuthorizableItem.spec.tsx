@@ -21,7 +21,7 @@ describe('ViewAuthorizableItem', () => {
       .mockImplementation(() => ({
         ...generateInfiniteQueryResult({}),
         data: bank,
-        category: AuthorizerCategory['Bank Accounts']
+        category: AuthorizerCategory.BankAccounts
       }))
   })
 
