@@ -19,7 +19,7 @@ export const columns = [
   },
   {
     label: 'Date',
-    key: 'date',
+    key: 'createdAt',
     render: formatDateToMMDDYY
   },
   {

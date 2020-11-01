@@ -14,10 +14,10 @@ export const columns: Array<TableColumn<Commitment>> = [
     label: 'Name',
     render: renderIndividualOrCompanyName
   },
-  // {
-  //   key: 'level',
-  //   label: 'Level'
-  // },
+  {
+    key: 'level',
+    label: 'Level'
+  },
   {
     key: 'dso.tokenName',
     label: 'Digital Security'

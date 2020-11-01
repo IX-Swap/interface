@@ -8,6 +8,7 @@ import { Asset } from 'v2/types/asset'
 import { DigitalSecurityOffering } from 'v2/types/dso'
 import { AssetBalance } from 'v2/types/balance'
 import { PersonName } from './types'
+import { formatDateToMMDDYY } from 'v2/helpers/dates'
 
 export const renderMinimumInvestment = (
   amount: number,
@@ -141,4 +142,10 @@ export const renderAmount = (
   }
 
   return formatMoney(amount, symbol)
+}
+
+export const renderLatestDate = (val: string, row: any): string => {
+  const latest = row.lastTransaction ?? row.updatedAt ?? row.createdAt ?? val
+
+  return typeof latest === 'string' ? formatDateToMMDDYY(latest) : ''
 }
