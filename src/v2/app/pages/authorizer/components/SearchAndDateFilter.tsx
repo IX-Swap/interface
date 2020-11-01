@@ -10,7 +10,7 @@ import {
 } from '@material-ui/pickers'
 import useStyles from './SearchAndDateFilter.styles'
 import { BaseFilter } from 'v2/types/util'
-import { convertDateToISO } from 'v2/helpers/dates'
+import { formatStartDate, formatEndDate } from 'v2/helpers/dates'
 
 interface SearchAndDateFilterFormValues {
   search: string
@@ -37,8 +37,8 @@ export const SearchAndDateFilter: React.FC<SearchAndDateFilterProps> = props => 
 
   const handleReset = (): void => {
     onApplyFilter({
-      from: convertDateToISO(initialValues.from),
-      to: convertDateToISO(initialValues.to),
+      from: formatStartDate(initialValues.from),
+      to: formatEndDate(initialValues.to),
       search: initialValues.search
     })
     reset()
@@ -48,8 +48,8 @@ export const SearchAndDateFilter: React.FC<SearchAndDateFilterProps> = props => 
     const { search, from, to } = values
 
     onApplyFilter({
-      from: convertDateToISO(from),
-      to: convertDateToISO(to),
+      from: formatStartDate(from),
+      to: formatEndDate(to),
       search
     })
   }

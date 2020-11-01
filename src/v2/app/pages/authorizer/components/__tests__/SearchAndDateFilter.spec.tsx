@@ -6,7 +6,7 @@ import {
   SearchAndDateFilter,
   SearchAndDateFilterProps
 } from 'v2/app/pages/authorizer/components/SearchAndDateFilter'
-import { convertDateToISO } from 'v2/helpers/dates'
+import { formatStartDate, formatEndDate } from 'v2/helpers/dates'
 
 describe('SearchAndDateFilter', () => {
   const props: SearchAndDateFilterProps = { onApplyFilter: jest.fn() }
@@ -60,8 +60,8 @@ describe('SearchAndDateFilter', () => {
     await waitFor(() => {
       expect(props.onApplyFilter).toHaveBeenCalled()
       expect(props.onApplyFilter).toHaveBeenCalledWith({
-        from: convertDateToISO(initialValues.from),
-        to: convertDateToISO(initialValues.to),
+        from: formatStartDate(initialValues.from),
+        to: formatEndDate(initialValues.to),
         search: initialValues.search
       })
     })

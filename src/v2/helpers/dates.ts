@@ -1,9 +1,9 @@
 import {
-  formatISO,
   format,
   differenceInMinutes,
   differenceInHours,
-  differenceInDays
+  differenceInDays,
+  toDate
 } from 'date-fns'
 
 export const convertDateToISO = (
@@ -14,10 +14,42 @@ export const convertDateToISO = (
   }
 
   if (typeof date === 'string') {
-    return date.length > 0 ? formatISO(Number(date)) : undefined
+    return date.length > 0 ? toDate(Number(date)).toISOString() : undefined
   }
 
-  return formatISO(date)
+  return date.toISOString()
+}
+
+export const formatStartDate = (
+  date: Date | string | null | undefined
+): string | undefined => {
+  const iso = convertDateToISO(date)
+
+  if (iso === undefined) return undefined
+
+  const dateObj = new Date(iso)
+  dateObj.setHours(0)
+  dateObj.setMinutes(0)
+  dateObj.setMilliseconds(0)
+  dateObj.setSeconds(0)
+
+  return dateObj.toISOString()
+}
+
+export const formatEndDate = (
+  date: Date | string | null | undefined
+): string | undefined => {
+  const iso = convertDateToISO(date)
+
+  if (iso === undefined) return undefined
+
+  const dateObj = new Date(iso)
+  dateObj.setHours(23)
+  dateObj.setMinutes(59)
+  dateObj.setMilliseconds(999)
+  dateObj.setSeconds(59)
+
+  return dateObj.toISOString()
 }
 
 export const formatDateToMMDDYY = (s?: string): string => {

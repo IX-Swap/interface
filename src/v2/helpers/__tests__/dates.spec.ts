@@ -4,7 +4,7 @@ import {
   formatDateToMMDDYY,
   formatDateAndTime
 } from 'v2/helpers/dates'
-import { formatISO, subMinutes, subHours, subDays } from 'date-fns'
+import { subMinutes, subHours, subDays } from 'date-fns'
 
 describe('getTimeAgo', () => {
   it('returns "Just now" if current time is passed', () => {
@@ -52,13 +52,15 @@ describe('formatDateAndTime', () => {
 })
 
 describe('convertDateToISO', () => {
+  const current = new Date()
   it('returns ISO string of given date', () => {
-    expect(convertDateToISO(new Date())).toEqual(formatISO(new Date()))
+    expect(convertDateToISO(current)).toEqual(current.toISOString())
   })
 
   it('returns correct formatted date string', () => {
-    const d = new Date()
-    expect(convertDateToISO(d.getTime().toString())).toEqual(formatISO(d))
+    expect(convertDateToISO(current.getTime().toString())).toEqual(
+      current.toISOString()
+    )
   })
 
   it('returns undefined if date does not exist', () => {

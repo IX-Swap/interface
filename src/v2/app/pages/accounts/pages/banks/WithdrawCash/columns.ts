@@ -10,7 +10,7 @@ const columns: Array<TableColumn<CashWithdrawal>> = [
     label: 'Level'
   },
   {
-    key: 'lastTransaction',
+    key: 'createdAt',
     label: 'Date',
     render: formatDateToMMDDYY
   },

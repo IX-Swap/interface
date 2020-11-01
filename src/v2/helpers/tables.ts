@@ -8,6 +8,7 @@ import { Asset } from 'v2/types/asset'
 import { DigitalSecurityOffering } from 'v2/types/dso'
 import { AssetBalance } from 'v2/types/balance'
 import { PersonName } from './types'
+import { formatDateToMMDDYY } from 'v2/helpers/dates'
 
 export const renderMinimumInvestment = (
   amount: number,
@@ -47,7 +48,7 @@ export const renderRepresentativeName = (
 
 export const renderLastName = (
   val: string,
-  row: CorporateIdentity | DSWithdrawal | IndividualIdentity
+  row: CorporateIdentity | DSWithdrawal | IndividualIdentity | Commitment
 ): string => {
   let lastName: string
 
@@ -60,6 +61,56 @@ export const renderLastName = (
     lastName = representative?.lastName ?? ''
   }
 
+  return `${val} ${lastName}`
+}
+
+const getLastAndCompanyName = ({
+  individual,
+  corporates
+}: {
+  individual: IndividualIdentity
+  corporates: CorporateIdentity[]
+}) => {
+  let lastName: string = ''
+  let companyName: string = ''
+  if (individual !== undefined) {
+    lastName = individual.lastName
+  } else if (corporates.length > 0) {
+    companyName = corporates[0].companyLegalName
+  }
+  return {
+    lastName: lastName,
+    companyName: companyName
+  }
+}
+
+export const renderIndividualOrCompanyName = (
+  val: string | undefined,
+  row:
+    | CorporateIdentity
+    | DSWithdrawal
+    | IndividualIdentity
+    | Commitment
+    | CashDeposit
+    | CashWithdrawal
+): string => {
+  let lastName: string = ''
+  let companyName: string = ''
+
+  if ('lastName' in row) {
+    lastName = row.lastName
+  } else if ('representatives' in row) {
+    const representative = row.representatives[0]
+    lastName = representative?.lastName ?? ''
+  } else if ('individual' in row || 'corporates' in row) {
+    ;({ lastName, companyName } = getLastAndCompanyName(row))
+  } else if ('identity' in row) {
+    ;({ lastName, companyName } = getLastAndCompanyName(row.identity))
+  }
+
+  if (val === undefined) {
+    return companyName
+  }
   return `${val} ${lastName}`
 }
 
@@ -91,4 +142,10 @@ export const renderAmount = (
   }
 
   return formatMoney(amount, symbol)
+}
+
+export const renderLatestDate = (val: string, row: any): string => {
+  const latest = row.lastTransaction ?? row.updatedAt ?? row.createdAt ?? val
+
+  return typeof latest === 'string' ? formatDateToMMDDYY(latest) : ''
 }
