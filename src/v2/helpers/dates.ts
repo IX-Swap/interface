@@ -28,10 +28,10 @@ export const formatStartDate = (
   if (iso === undefined) return undefined
 
   const dateObj = new Date(iso)
-  dateObj.setUTCHours(0)
-  dateObj.setUTCMinutes(0)
-  dateObj.setUTCMilliseconds(0)
-  dateObj.setUTCSeconds(0)
+  dateObj.setHours(0)
+  dateObj.setMinutes(0)
+  dateObj.setMilliseconds(0)
+  dateObj.setSeconds(0)
 
   return dateObj.toISOString()
 }
@@ -44,10 +44,10 @@ export const formatEndDate = (
   if (iso === undefined) return undefined
 
   const dateObj = new Date(iso)
-  dateObj.setUTCHours(23)
-  dateObj.setUTCMinutes(59)
-  dateObj.setUTCMilliseconds(999)
-  dateObj.setUTCSeconds(59)
+  dateObj.setHours(23)
+  dateObj.setMinutes(59)
+  dateObj.setMilliseconds(999)
+  dateObj.setSeconds(59)
 
   return dateObj.toISOString()
 }
