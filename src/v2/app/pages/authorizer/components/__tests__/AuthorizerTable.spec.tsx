@@ -22,7 +22,8 @@ describe('AuthorizerTable', () => {
     name: 'Bank Account(s)',
     uri: '/some/uri',
     columns: [],
-    renderView: jest.fn()
+    renderView: jest.fn(),
+    isAll: true
   }
 
   afterEach(async () => {
@@ -34,7 +35,7 @@ describe('AuthorizerTable', () => {
     render(<AuthorizerTable {...props} />)
   })
 
-  it('renders table with correct props', async () => {
+  it('renders table with correct props if isAll is true', async () => {
     render(<AuthorizerTable {...props} />)
 
     expect(withExtraActions).toHaveBeenCalled()
