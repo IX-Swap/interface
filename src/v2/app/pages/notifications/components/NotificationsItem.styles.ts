@@ -1,21 +1,23 @@
 import { makeStyles } from '@material-ui/styles'
 
 export const useStyles = makeStyles(theme => ({
-  container: {
-    marginBottom: 10,
-    paddingRight: 90,
+  container: {},
+  inner: {
+    padding: '10px 14px',
     minHeight: 65,
-    borderWidth: 1,
-    borderStyle: 'solid',
-    borderColor: 'transparent'
+    flexWrap: 'nowrap'
+  },
+  content: {
+    paddingLeft: 14,
+    paddingRight: 14,
+    overflow: 'hidden',
+    flex: '1 1 0'
   },
   unread: {
     backgroundColor: '#fafafa',
     borderColor: '#eeeeee'
   },
   icon: {
-    minWidth: 60,
-
     '& svg': {
       width: 40,
       height: 40

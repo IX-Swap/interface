@@ -1,15 +1,37 @@
-import { useSnackbar as useNotistack, VariantType } from 'notistack'
+import React from 'react'
+import { ReactNode } from 'react'
+import { AppearanceTypes, useToasts } from 'react-toast-notifications'
+import { NotificationToast } from 'v2/app/pages/notifications/components/NotificationToast'
+import { Notification as TNotification } from 'v2/types/notification'
+import { Snackbar } from './Snackbar'
 
 export interface SnackbarService {
-  showSnackbar: (message: string, variant?: VariantType) => any
+  showSnackbar: (message: ReactNode, variant?: AppearanceTypes) => any
+  showNotification: (notification: TNotification) => any
 }
 
-export const useSnackbar = () => {
-  const { enqueueSnackbar } = useNotistack()
+export const useSnackbar = (): SnackbarService => {
+  const { addToast, toastStack } = useToasts()
 
   return {
-    showSnackbar: (message: string, variant: VariantType = 'success') => {
-      return enqueueSnackbar(message, { variant })
+    showSnackbar: (
+      message: ReactNode,
+      variant: AppearanceTypes = 'success'
+    ) => {
+      if (
+        toastStack.length > 0 &&
+        (toastStack[toastStack.length - 1].content as any).props.message ===
+          message
+      ) {
+        return
+      }
+      return addToast(<Snackbar message={message} variant={variant} />, {
+        appearance: variant,
+        autoDismiss: true
+      })
+    },
+    showNotification: (notification: TNotification) => {
+      return addToast(<NotificationToast data={notification} />)
     }
   }
 }

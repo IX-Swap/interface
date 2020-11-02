@@ -22,7 +22,10 @@ const socketService = {
     }
   },
 
-  subscribeToSocket(token: string) {
+  subscribeToSocket(
+    token: string,
+    onNotification: (notification: Notification) => any
+  ) {
     try {
       if (_socket?.connected ?? false) {
         return
@@ -41,6 +44,7 @@ const socketService = {
       })
 
       _socket.addEventListener('notification', (notification: Notification) => {
+        onNotification(notification)
         queryCache.setQueryData<Notification[]>(
           queryKeys.notifications,
           data => [notification, ...(data ?? [])]

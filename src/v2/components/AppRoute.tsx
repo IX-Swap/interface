@@ -5,6 +5,7 @@ import { safeGeneratePath } from 'v2/helpers/router'
 import { AppRole, getUserRoles, useIsEnabled2FA } from 'v2/helpers/acl'
 import { AppRoute as AppPath } from 'v2/app/router'
 import { useCachedUser } from 'v2/hooks/auth/useCachedUser'
+import { ScrollToTop } from './ScrollToTop'
 
 export interface AppRouteProps extends RouteComponentProps {
   route: InternalRouteProps
@@ -50,5 +51,10 @@ export const AppRoute = (props: AppRouteProps) => {
     }
   }
 
-  return createElement(component)
+  return (
+    <>
+      <ScrollToTop />
+      {createElement(component)}
+    </>
+  )
 }

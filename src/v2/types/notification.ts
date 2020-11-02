@@ -1,5 +1,7 @@
 import { AppFeature } from './app'
 
+export type NotificationType = 'success' | 'error' | 'info' | 'warning'
+
 export interface Notification {
   _id: string
   createdBy: string
@@ -9,8 +11,9 @@ export interface Notification {
   feature: AppFeature
   resourceId: string
   subject: string
-  type: 'success' | 'failure'
+  type: NotificationType
   message: string
   read: boolean
   readAt: string
+  comment?: string
 }

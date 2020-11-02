@@ -1,10 +1,10 @@
 /**  * @jest-environment jsdom-sixteen  */
 import React from 'react'
 import { render, cleanup } from 'test-utils'
-import { Notification, NotificationProps } from 'v2/components/Notification'
+import { Toast, ToastProps } from 'v2/components/Toast'
 
 describe('Notification', () => {
-  const props: NotificationProps = { key: 'test-key', message: 'Hellow World!' }
+  const props: ToastProps = { key: 'test-key', message: 'Hellow World!' }
   afterEach(async () => {
     await cleanup()
     jest.clearAllMocks()
@@ -12,6 +12,6 @@ describe('Notification', () => {
 
   it('renders without error', () => {
     const ref = React.createRef()
-    render(<Notification ref={ref} {...props} />)
+    render(<Toast ref={ref} {...props} />)
   })
 })

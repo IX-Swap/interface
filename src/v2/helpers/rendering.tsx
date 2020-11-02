@@ -27,7 +27,9 @@ export const wysiwygToHtml = (draft: string): string => {
   return draftToHtml(JSON.parse(draft))
 }
 
-export const renderPercentage = (value: Maybe<Number>) => <span>{value} %</span>
+export const renderPercentage = (value: Maybe<Number> = 0) => (
+  <span>{Number.parseFloat(`${value ?? 0}`) * 100} %</span>
+)
 
 export const documentIcons = {
   pdf: pdfIcon,

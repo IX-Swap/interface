@@ -18,9 +18,10 @@ import { DepositStoreProvider } from 'v2/app/pages/accounts/pages/banks/context'
 import { ServicesProvider } from 'v2/hooks/useServices'
 import { renderHook, RenderHookResult } from '@testing-library/react-hooks'
 import { BreadcrumbsProvider } from 'v2/hooks/useBreadcrumbs'
-import { SnackbarProvider } from 'notistack'
+import { ToastProvider } from 'react-toast-notifications'
 import { AppStateProvider } from 'v2/app/hooks/useAppState'
 import { Form } from 'v2/components/form/Form'
+import { Toast } from 'v2/components/Toast'
 
 const generateClassName = createGenerateClassName({
   productionPrefix: 'ix'
@@ -30,17 +31,22 @@ const BaseProviders: React.FC = ({ children }) => {
   return (
     <StylesProvider generateClassName={generateClassName}>
       <ThemeProvider theme={Themes.default}>
-        <SnackbarProvider>
+        <ToastProvider components={{ Toast: Toast }}>
           <BreadcrumbsProvider>
             <AppStateProvider>
               <ServicesProvider
-                value={{ snackbarService: { showSnackbar: jest.fn() } }}
+                value={{
+                  snackbarService: {
+                    showSnackbar: jest.fn(),
+                    showNotification: jest.fn()
+                  }
+                }}
               >
                 <Router history={history}>{children}</Router>
               </ServicesProvider>
             </AppStateProvider>
           </BreadcrumbsProvider>
-        </SnackbarProvider>
+        </ToastProvider>
       </ThemeProvider>
     </StylesProvider>
   )

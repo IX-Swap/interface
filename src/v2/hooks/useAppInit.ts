@@ -6,7 +6,7 @@ import { useIsAccredited } from 'v2/helpers/acl'
 import { useAccessToken } from 'v2/hooks/auth/useAccessToken'
 
 export const useAppInit = () => {
-  const { socketService } = useServices()
+  const { socketService , snackbarService } = useServices()
   const accessToken = useAccessToken()
   const isAccredited = useIsAccredited()
   const [getUser, { data, isLoading, isIdle, isError, isSuccess }] = useUser()
@@ -18,7 +18,7 @@ export const useAppInit = () => {
     } else {
       if (isSuccess) {
         if (isAccredited && accessToken !== undefined) {
-          socketService.subscribeToSocket(accessToken)
+          socketService.subscribeToSocket(accessToken, snackbarService.showNotification)
         }
       }
     }
