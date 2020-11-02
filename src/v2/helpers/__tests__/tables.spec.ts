@@ -1,6 +1,12 @@
-import { renderIndividualOrCompanyName } from '../tables'
+import {
+  getIndividualLastName,
+  getCorporateLegalName,
+  getCorporateRepresentativeName,
+  renderIndividualOrCompanyName
+} from '../tables'
 import { individual, corporate } from '__fixtures__/identity'
 import { commitment, cashDeposit } from '__fixtures__/authorizer'
+import { IndividualIdentity, CorporateIdentity } from 'v2/types/identity'
 
 describe('renderIndividualOrCompanyName', () => {
   it('returns individual name for IndividualIdentity', () => {
@@ -53,5 +59,45 @@ describe('renderIndividualOrCompanyName', () => {
         corporates: cashDeposit.corporates
       })
     ).toBe(`${cashDeposit.corporates[0].companyLegalName}`)
+  })
+})
+
+describe('getIndividualLastName', () => {
+  it('returns empty string if individual is undefined', () => {
+    expect(
+      getIndividualLastName((undefined as unknown) as IndividualIdentity)
+    ).toBe('')
+  })
+
+  it('returns lastName of individual', () => {
+    expect(getIndividualLastName(individual)).toBe(individual.lastName)
+  })
+})
+
+describe('getCorporateLegalName', () => {
+  it('returns empty string if corporate is undefined', () => {
+    expect(
+      getCorporateLegalName((undefined as unknown) as CorporateIdentity)
+    ).toBe('')
+  })
+
+  it('returns legalName of corporate', () => {
+    expect(getCorporateLegalName(corporate)).toBe(corporate.companyLegalName)
+  })
+})
+
+describe('getCorporateRepresentativeName', () => {
+  it('returns empty string if corporate is undefined', () => {
+    expect(
+      getCorporateRepresentativeName(
+        (undefined as unknown) as CorporateIdentity
+      )
+    ).toBe('')
+  })
+
+  it("returns first representative's lastName", () => {
+    expect(getCorporateRepresentativeName(corporate)).toBe(
+      corporate.representatives[0].lastName
+    )
   })
 })

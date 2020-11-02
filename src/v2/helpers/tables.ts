@@ -64,21 +64,23 @@ export const renderLastName = (
   return `${val} ${lastName}`
 }
 
-const getIndividualLastName = (individual: IndividualIdentity): string => {
+export const getIndividualLastName = (
+  individual: IndividualIdentity
+): string => {
   if (individual !== undefined) {
     return individual.lastName
   }
   return ''
 }
 
-const getCorporateLegalName = (corporate: CorporateIdentity): string => {
+export const getCorporateLegalName = (corporate: CorporateIdentity): string => {
   if (corporate !== undefined) {
     return corporate.companyLegalName
   }
   return ''
 }
 
-const getCorporateRepresentativeName = (
+export const getCorporateRepresentativeName = (
   corporate: CorporateIdentity
 ): string => {
   if (corporate !== undefined) {
