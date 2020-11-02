@@ -29,11 +29,13 @@ describe('useMakeCommitment', () => {
     jest
       .spyOn(useAuthHook, 'useAuth')
       .mockReturnValue({ user: user, isAuthenticated: false })
+
     useOfferingsRouterMock.mockReturnValue({
       replace: jest.fn(),
       params: { dsoId: dso._id }
     })
   })
+
   afterEach(async () => {
     await cleanup()
     jest.clearAllMocks()

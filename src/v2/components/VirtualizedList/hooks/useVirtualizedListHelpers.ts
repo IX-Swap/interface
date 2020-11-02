@@ -1,4 +1,4 @@
-import { useContext, useRef, useEffect, useLayoutEffect } from 'react'
+import { useContext, useRef, useLayoutEffect } from 'react'
 import { VirtualizedListContext } from 'v2/components/VirtualizedList/VirtualizedList'
 
 export const useVirtualizedListItemHelpers = (index: number, gap: number) => {
@@ -6,8 +6,11 @@ export const useVirtualizedListItemHelpers = (index: number, gap: number) => {
   const itemRef = useRef<HTMLDivElement>(null)
 
   useLayoutEffect(() => {
-    listContext?.setItemSize(index, (itemRef?.current?.offsetHeight ?? 65) + gap)
-  }, [index])
+    listContext?.setItemSize(
+      index,
+      (itemRef?.current?.offsetHeight ?? 65) + gap
+    )
+  }, [index]) // eslint-disable-line
 
   return {
     ref: itemRef

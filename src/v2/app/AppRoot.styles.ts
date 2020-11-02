@@ -6,6 +6,6 @@ export default makeStyles(theme => ({
   },
   content: {
     paddingLeft: 90,
-    marginTop: 64,
+    marginTop: 64
   }
 }))

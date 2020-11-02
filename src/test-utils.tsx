@@ -31,7 +31,9 @@ const BaseProviders: React.FC = ({ children }) => {
   return (
     <StylesProvider generateClassName={generateClassName}>
       <ThemeProvider theme={Themes.default}>
-        <ToastProvider components={{ Toast: Toast }}>
+        <ToastProvider
+          components={{ Toast: Toast, ToastContainer: () => null }}
+        >
           <BreadcrumbsProvider>
             <AppStateProvider>
               <ServicesProvider

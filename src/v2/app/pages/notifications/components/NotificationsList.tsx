@@ -22,11 +22,10 @@ export const NotificationsList = () => {
     <Grid>
       <List disablePadding component='div'>
         {data.map((item, index) => (
-          <div style={{ marginBottom: 10 }}>
+          <div key={index} style={{ marginBottom: 10 }}>
             <NotificationView
               data={item}
               action={<MarkAsRead data={item} />}
-              key={index}
               trimComment={false}
             />
           </div>

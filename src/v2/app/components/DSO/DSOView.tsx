@@ -11,8 +11,7 @@ import { formatDateToMMDDYY } from 'v2/helpers/dates'
 import { DataroomViewRow } from 'v2/components/dataroom/DataroomViewRow'
 import { VSpacer } from 'v2/components/VSpacer'
 import { useSetPageTitle } from 'v2/app/hooks/useSetPageTitle'
-import { useAuth } from 'v2/hooks/auth/useAuth'
-import { renderPercentage } from 'v2/helpers/rendering'
+import { renderMonths, renderPercentage } from 'v2/helpers/rendering'
 import { formatMoney } from 'v2/helpers/numbers'
 
 export interface _DSOView_Props {
@@ -92,20 +91,26 @@ export const DSOView = (props: _DSOView_Props) => {
             </Grid>
 
             <Grid item>
-              <LabelledValue label='Unit Price' value={`${data.currency.symbol} ${data.pricePerUnit}`} />
+              <LabelledValue
+                label='Unit Price'
+                value={formatMoney(data.pricePerUnit, data.currency.symbol)}
+              />
             </Grid>
 
             <Grid item>
               <LabelledValue
                 label='Total Fundraising Amount'
-                value={formatMoney(data.totalFundraisingAmount, data.currency.symbol)}
+                value={formatMoney(
+                  data.totalFundraisingAmount,
+                  data.currency.symbol
+                )}
               />
             </Grid>
 
             <Grid item>
               <LabelledValue
                 label='Minimum Investment'
-                value={`${data.tokenSymbol} ${data.minimumInvestment}`}
+                value={formatMoney(data.minimumInvestment, data.asset)}
               />
             </Grid>
           </Grid>
@@ -127,7 +132,7 @@ export const DSOView = (props: _DSOView_Props) => {
             <Grid item>
               <LabelledValue
                 label='Investment Period'
-                value={`${data.investmentPeriod} months`}
+                value={renderMonths(data.investmentPeriod)}
               />
             </Grid>
 
@@ -139,7 +144,10 @@ export const DSOView = (props: _DSOView_Props) => {
             </Grid>
 
             <Grid item>
-              <LabelledValue label='Interest Rate' value={renderPercentage(data.interestRate)} />
+              <LabelledValue
+                label='Interest Rate'
+                value={renderPercentage(data.interestRate)}
+              />
             </Grid>
           </Grid>
 
@@ -159,13 +167,19 @@ export const DSOView = (props: _DSOView_Props) => {
             </Grid>
 
             <Grid item>
-              <LabelledValue value={renderPercentage(data.leverage)} label='Leverage' />
+              <LabelledValue
+                value={renderPercentage(data.leverage)}
+                label='Leverage'
+              />
             </Grid>
           </Grid>
 
           <Grid item xs={4} container direction='column' spacing={2}>
             <Grid item>
-              <LabelledValue value={renderPercentage(data.grossIRR)} label='Gross IRR' />
+              <LabelledValue
+                value={renderPercentage(data.grossIRR)}
+                label='Gross IRR'
+              />
             </Grid>
 
             <Grid item>

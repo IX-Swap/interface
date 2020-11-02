@@ -4,7 +4,7 @@ import { useNotifications } from '../hooks/useNotifications'
 import { NotificationsVirtualizedItem } from './NotificationsVirtualizedItem'
 
 export const NotificationsVirtualizedList = () => {
-  const { data, isLoading } = useNotifications()
+  const { data } = useNotifications()
 
   return (
     <VirtualizedList

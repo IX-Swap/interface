@@ -23,10 +23,7 @@ export const NotificationsVirtualizedItem = (
           borderTop: index === 0 ? '1px solid #eeeeee' : 'none'
         }}
       >
-        <NotificationView
-          data={item}
-          action={<MarkAsRead data={item} />}
-        />
+        <NotificationView data={item} action={<MarkAsRead data={item} />} />
       </div>
     </div>
   )

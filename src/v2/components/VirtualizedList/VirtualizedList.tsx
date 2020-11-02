@@ -25,7 +25,7 @@ export const VirtualizedList = (props: VirtualizedListProps) => {
     sizeMap.current = { ...sizeMap.current, [index]: size }
   }, [])
   const getItemSize = useCallback((index: number) => {
-    return sizeMap.current[index] || 65
+    return sizeMap.current[index] ?? 65
   }, [])
   const listRef = useRef<VariableSizeList>(null)
   const updateList = () => {

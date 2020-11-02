@@ -1,5 +1,4 @@
 import React, { Suspense, useEffect } from 'react'
-import { Redirect } from 'react-router-dom'
 import { history } from 'v2/history'
 import { LoadingFullScreen } from 'v2/auth/components/LoadingFullScreen'
 import { BreadcrumbsProvider } from 'v2/hooks/useBreadcrumbs'

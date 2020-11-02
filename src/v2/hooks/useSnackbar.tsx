@@ -1,5 +1,5 @@
-import React from 'react'
-import { ReactNode } from 'react'
+import React, { ReactNode } from 'react'
+
 import { AppearanceTypes, useToasts } from 'react-toast-notifications'
 import { NotificationToast } from 'v2/app/pages/notifications/components/NotificationToast'
 import { Notification as TNotification } from 'v2/types/notification'

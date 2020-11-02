@@ -16,14 +16,7 @@ export interface NotificationViewProps extends GridProps {
 }
 
 export const NotificationView = (props: NotificationViewProps) => {
-  const {
-    data,
-    action,
-    showTime = true,
-    index = 0,
-    trimComment = true,
-    ...rest
-  } = props
+  const { data, action, showTime = true, trimComment = true, ...rest } = props
   const { message, subject, createdAt, read, comment } = data
   const classes = useStyles()
 
@@ -31,6 +24,7 @@ export const NotificationView = (props: NotificationViewProps) => {
     <Grid {...rest} component='div' className={classNames(classes.container)}>
       <Grid
         container
+        data-testid='notification-inner'
         className={classNames(classes.inner, { [classes.unread]: !read })}
       >
         <Grid item className={classes.icon}>
