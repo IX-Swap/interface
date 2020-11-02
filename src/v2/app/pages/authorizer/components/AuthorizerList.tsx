@@ -1,13 +1,12 @@
-import { BaseFilter, Viewable } from 'v2/types/util'
+import { Viewable } from 'v2/types/util'
 import React from 'react'
 import { Grid } from '@material-ui/core'
-import { initialFilterValue } from 'v2/app/pages/authorizer/hooks/useAuthorizerView'
 import { TableViewProps } from 'v2/components/TableWithPagination/TableView'
 import { LayoutWithSidebar } from 'v2/app/components/LayoutWithSidebar'
 import { PageHeader } from 'v2/app/components/PageHeader/PageHeader'
 import { Filters } from 'v2/app/pages/authorizer/components/Filters'
-import { queryCache } from 'react-query'
 import { AuthorizerTable } from './AuthorizerTable'
+import { useAuthorizerFilter } from '../hooks/useAuthorizerFilter'
 
 export interface AuthorizerListProps<T>
   extends Omit<TableViewProps<T>, 'actions'>,
@@ -16,11 +15,11 @@ export interface AuthorizerListProps<T>
   title: string
 }
 
-queryCache.setQueryData<BaseFilter>('authorizerFilter', initialFilterValue)
-
 export const AuthorizerList = <T,>(
   props: AuthorizerListProps<T>
 ): JSX.Element => {
+  const { isAll } = useAuthorizerFilter()
+
   return (
     <LayoutWithSidebar
       sidebar={() => <Filters />}
@@ -30,7 +29,7 @@ export const AuthorizerList = <T,>(
             <PageHeader />
           </Grid>
           <Grid item>
-            <AuthorizerTable {...props} />
+            <AuthorizerTable {...props} isAll={isAll} />
           </Grid>
         </Grid>
       )}
