@@ -1,11 +1,11 @@
 import axios, { AxiosRequestConfig } from 'axios'
 import { API_URL } from 'v2/config'
-import storageHelper from '../../helpers/storageHelper'
 import { APIServiceRequestConfig, KeyValueMap } from './types'
 import {
   responseErrorInterceptor,
   responseSuccessInterceptor
 } from 'v2/services/api/interceptors'
+import storageService from 'v2/services/storage'
 
 const _axios = axios.create()
 _axios.defaults.baseURL = API_URL
@@ -129,8 +129,9 @@ const apiService = {
 
   _prepareHeaders(data: any) {
     const headers: KeyValueMap = {}
+    const token = storageService.get<string>('access-token') ?? ''
 
-    headers.Authorization = `Bearer ${storageHelper.getAccessToken()}`
+    headers.Authorization = `Bearer ${token}`
 
     if (data !== undefined && !this._isFormData(data)) {
       headers['Content-Type'] = 'application/json'

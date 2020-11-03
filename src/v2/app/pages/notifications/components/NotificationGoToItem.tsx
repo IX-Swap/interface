@@ -22,7 +22,8 @@ export const NotificationGoToItem = (props: NotificationGoToItemProps) => {
   if (
     data.feature === AppFeature.Deposits ||
     data.feature === AppFeature.Withdrawals ||
-    data.feature === AppFeature.DigitalSecurityWithdrawals
+    data.feature === AppFeature.DigitalSecurityWithdrawals ||
+    data.feature === AppFeature.Authentication
   ) {
     return null
   }

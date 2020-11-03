@@ -12,7 +12,7 @@ describe('useAccessToken', () => {
 
   it('returns access token correctly', async () => {
     await act(async () => {
-      const getFn = jest.fn().mockReturnValue(user)
+      const getFn = jest.fn().mockReturnValue(user.accessToken)
       const storageObj = { get: getFn }
 
       const { result } = renderHookWithServiceProvider(() => useAccessToken(), {
@@ -21,7 +21,7 @@ describe('useAccessToken', () => {
 
       await waitFor(
         () => {
-          expect(getFn).toHaveBeenCalledWith('user')
+          expect(getFn).toHaveBeenCalledWith('access-token')
           expect(result.current).toBe(user.accessToken)
         },
         { timeout: 1000 }

@@ -13,7 +13,7 @@ export const unsuccessfulResponse: APIResponse = {
 }
 
 export const headers = {
-  Authorization: 'Bearer undefined'
+  Authorization: 'Bearer '
 }
 
 export const customConfig = {
