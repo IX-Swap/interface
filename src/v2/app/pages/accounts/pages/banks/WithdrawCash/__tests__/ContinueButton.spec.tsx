@@ -6,7 +6,6 @@ import { bank, cashDeposit } from '__fixtures__/authorizer'
 import { DepositStoreProvider } from 'v2/app/pages/accounts/pages/banks/context'
 import { Form } from 'v2/components/form/Form'
 import * as validateWithdrawHook from 'v2/app/pages/accounts/pages/banks/hooks/useValidateWithdrawCash'
-import { balance } from '__fixtures__/balance'
 
 describe('ContinueButton', () => {
   afterEach(async () => {
@@ -17,7 +16,7 @@ describe('ContinueButton', () => {
   it('renders Button without error', () => {
     jest
       .spyOn(validateWithdrawHook, 'useValidateWithdrawCash')
-      .mockReturnValue({ isLoading: true })
+      .mockReturnValue({ canSubmit: true })
     const { queryByRole } = render(
       <DepositStoreProvider>
         <Form defaultValues={{ bank, amount: cashDeposit.amount }}>
@@ -29,10 +28,10 @@ describe('ContinueButton', () => {
     expect(queryByRole('button')).not.toBeNull()
   })
 
-  it('will disable Button if loading', () => {
+  it('will disable Button if canSubmit is false', () => {
     jest
       .spyOn(validateWithdrawHook, 'useValidateWithdrawCash')
-      .mockReturnValue({ isLoading: true })
+      .mockReturnValue({ canSubmit: false, error: '' })
     const { getByText } = render(
       <DepositStoreProvider>
         <Form defaultValues={{ amount: cashDeposit.amount }}>
@@ -45,30 +44,10 @@ describe('ContinueButton', () => {
     expect(continueButton.parentElement).toBeDisabled()
   })
 
-  it('will disable Button if data is undefined', () => {
-    jest
-      .spyOn(validateWithdrawHook, 'useValidateWithdrawCash')
-      .mockReturnValue({ isLoading: false, data: undefined })
-    const { getByText } = render(
-      <DepositStoreProvider>
-        <Form defaultValues={{ bank }}>
-          <ContinueButton />
-        </Form>
-      </DepositStoreProvider>
-    )
-    const continueButton = getByText(/continue/i)
-
-    expect(continueButton.parentElement).toBeDisabled()
-  })
-
   it('will enable Button if error is undefined', () => {
     jest
       .spyOn(validateWithdrawHook, 'useValidateWithdrawCash')
-      .mockReturnValue({
-        isLoading: false,
-        data: { bank: bank, balance: balance },
-        error: undefined
-      })
+      .mockReturnValue({ canSubmit: true })
     const { getByText } = render(
       <DepositStoreProvider>
         <Form defaultValues={{ bank }}>
