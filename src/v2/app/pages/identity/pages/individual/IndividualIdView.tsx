@@ -5,6 +5,7 @@ import { EditButton } from 'v2/app/pages/identity/components/EditButton'
 import { useIdentitiesRouter } from 'v2/app/pages/identity/router'
 import { VSpacer } from 'v2/components/VSpacer'
 import { IndividualView } from 'v2/app/pages/identity/components/IndividualView'
+import { RejectionMessage } from 'v2/app/pages/authorizer/components/RejectionMessage'
 
 export const IndividualIdView: React.FC = () => {
   const { data, status } = useIndividualIdentity()
@@ -16,6 +17,9 @@ export const IndividualIdView: React.FC = () => {
 
   return (
     <Grid container>
+      <Grid item>
+        <RejectionMessage data={data.authorizations} />
+      </Grid>
       <Grid container item justify='flex-end' alignItems='center'>
         <EditButton link={paths.editIndividual} />
       </Grid>

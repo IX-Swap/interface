@@ -13,18 +13,26 @@ import { VSpacer } from 'v2/components/VSpacer'
 import { useSetPageTitle } from 'v2/app/hooks/useSetPageTitle'
 import { renderMonths, renderPercentage } from 'v2/helpers/rendering'
 import { formatMoney } from 'v2/helpers/numbers'
+import { RejectionMessage } from 'v2/app/pages/authorizer/components/RejectionMessage'
 
-export interface _DSOView_Props {
+export interface DSOViewProps {
   data: DigitalSecurityOffering
+  showAuthorizations?: boolean
 }
 
-export const DSOView = (props: _DSOView_Props) => {
-  const { data } = props
+export const DSOView = (props: DSOViewProps) => {
+  const { data, showAuthorizations = false } = props
 
   useSetPageTitle(data.tokenName)
 
   return (
     <Grid container direction='column' spacing={3}>
+      {showAuthorizations && (
+        <Grid item>
+          <RejectionMessage data={data.authorizations} />
+        </Grid>
+      )}
+
       <Grid item container spacing={3}>
         <Grid item>
           <ViewDocument documentId={data.logo} ownerId={data.user}>

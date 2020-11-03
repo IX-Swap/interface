@@ -28,7 +28,7 @@ export const ViewDSO = () => {
         <VSpacer size='small' />
       </Grid>
       <Grid item>
-        <DSO dsoId={dsoId} />
+        <DSO dsoId={dsoId} showAuthorizations />
       </Grid>
     </Grid>
   )

@@ -26,7 +26,7 @@ export const useLogin = () => {
         )
       }
 
-      window.location.reload()
+      window.location.replace('/')
     },
     onError: (error: any) => {
       void snackbarService.showSnackbar(error.message, 'error')

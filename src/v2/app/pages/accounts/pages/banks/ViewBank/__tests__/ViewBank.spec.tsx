@@ -21,7 +21,7 @@ const useBanksDataMock = useBanksData as jest.Mock<
 
 describe('ViewBank', () => {
   beforeEach(() => {
-    history.push('/')
+    history.push('/', { bankId: bank._id })
   })
 
   afterEach(async () => {
@@ -33,6 +33,7 @@ describe('ViewBank', () => {
     useBanksDataMock.mockReturnValue(
       generateInfiniteQueryResult({ queryStatus: QueryStatus.Loading })
     )
+
     const { container } = render(<ViewBank />)
 
     expect(container).toBeEmptyDOMElement()
@@ -46,6 +47,7 @@ describe('ViewBank', () => {
         map: { testBankId: bank }
       })
     )
+
     render(<ViewBank />)
 
     expect(BankPreview).toHaveBeenCalledWith({ data: bank }, {})
