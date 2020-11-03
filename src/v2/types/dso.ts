@@ -44,14 +44,14 @@ export interface BaseDigitalSecurityOffering extends AuthorizableWithIdentity {
   totalFundraisingAmount: number | null
   tokenName: string
   tokenSymbol: string
-  investmentPeriod: number | null
-  dividendYield: number | null
-  grossIRR: number | null
-  investmentStructure: string
-  equityMultiple: number | null
-  distributionFrequency: string
-  interestRate: number | null
-  leverage: number | null
+  investmentPeriod?: number
+  dividendYield?: number
+  grossIRR?: number
+  investmentStructure?: string
+  equityMultiple?: number
+  distributionFrequency?: string
+  interestRate?: number
+  leverage?: number
   subscriptionDocument: DataroomFile
   introduction: string
   businessModel: string

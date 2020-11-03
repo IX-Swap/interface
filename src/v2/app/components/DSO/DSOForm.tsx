@@ -16,11 +16,11 @@ import { DSODataroom } from 'v2/app/components/DSO/components/DSODataroom'
 import { DSOFundRaisingMilestone } from 'v2/app/components/DSO/components/DSOFundRaisingMilestone'
 import { DSOTeam } from 'v2/app/components/DSO/components/DSOTeam'
 import { Form } from 'v2/components/form/Form'
-import { dsoFormValidationSchema } from 'v2/app/components/DSO/validation'
 import { Submit } from 'v2/components/form/Submit'
 import { DSOBackButton } from 'v2/app/components/DSO/components/DSOBackButton'
 import { useSetPageTitle } from 'v2/app/hooks/useSetPageTitle'
 import { getOfferingName } from 'v2/helpers/strings'
+import { dsoFormValidationSchema } from 'v2/validation/dso'
 
 export interface DSOFormProps {
   submitButtonLabel?: string

@@ -32,7 +32,8 @@ export const renderPercentage = (value: Maybe<Number> = 0) => (
   <span>{Number.parseFloat(`${value ?? 0}`) * 100} %</span>
 )
 
-export const renderMonths = (value: string | number | null) => `${value} months`
+export const renderMonths = (value: string | number | undefined | null) =>
+  value !== undefined ? `${value} months` : undefined
 
 export const documentIcons = {
   pdf: pdfIcon,
