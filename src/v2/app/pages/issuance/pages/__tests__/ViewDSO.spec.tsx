@@ -15,10 +15,12 @@ describe('ViewDSO', () => {
   beforeEach(() => {
     history.push(IssuanceRoute.view, { dsoId: dso._id })
   })
+
   afterEach(async () => {
     await cleanup()
     jest.clearAllMocks()
   })
+
   afterAll(() => history.push('/'))
 
   it('renders without error', () => {
@@ -28,6 +30,9 @@ describe('ViewDSO', () => {
   it('renders DSO with correct props', () => {
     render(<ViewDSO />)
 
-    expect(DSO).toHaveBeenCalledWith({ dsoId: dso._id }, {})
+    expect(DSO).toHaveBeenCalledWith(
+      { dsoId: dso._id, showAuthorizations: true },
+      {}
+    )
   })
 })

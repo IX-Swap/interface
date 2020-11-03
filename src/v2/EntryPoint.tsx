@@ -5,6 +5,8 @@ import { BreadcrumbsProvider } from 'v2/hooks/useBreadcrumbs'
 import { SentryRoute } from 'v2/components/SentryRoute'
 import { useAppInit } from 'v2/hooks/useAppInit'
 import { ReactQueryDevtools } from 'react-query-devtools'
+import { Redirect, Switch } from 'react-router-dom'
+import { Page404 } from 'v2/components/Page404'
 
 const AuthRoot = React.lazy(
   async () =>
@@ -36,16 +38,19 @@ export const EntryPoint = () => {
     <Suspense fallback={<LoadingFullScreen />}>
       <BreadcrumbsProvider>
         <ReactQueryDevtools initialIsOpen={false} />
-        {isSuccess ? (
-          <SentryRoute path='/app' exact={false} component={AppRoot} />
-        ) : (
-          <SentryRoute path='/auth' exact={false} component={AuthRoot} />
-        )}
-        {/* <SentryRoute
-          exact
-          path='*'
-          render={() => <Redirect to={isSuccess ? '/app' : '/auth'} />}
-        /> */}
+        <Switch>
+          {isSuccess ? (
+            <SentryRoute path='/app' exact={false} component={AppRoot} />
+          ) : (
+            <SentryRoute path='/auth' exact={false} component={AuthRoot} />
+          )}
+          <SentryRoute
+            exact
+            path='/'
+            render={() => <Redirect to={isSuccess ? '/app' : '/auth'} />}
+          />
+          <SentryRoute path='*' component={Page404} />
+        </Switch>
       </BreadcrumbsProvider>
     </Suspense>
   )

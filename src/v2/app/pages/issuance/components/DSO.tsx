@@ -9,9 +9,11 @@ import { DSOView } from 'v2/app/components/DSO/DSOView'
 export interface DSOProps {
   dsoId: string
   isEditing?: boolean
+  showAuthorizations?: boolean
 }
 
-export const DSO: React.FC<DSOProps> = ({ dsoId, isEditing = false }) => {
+export const DSO: React.FC<DSOProps> = (props: DSOProps) => {
+  const { dsoId, showAuthorizations = false, isEditing = false } = props
   const { isLoading, data } = useDSOById(dsoId)
   const [updateDSO] = useUpdateDSO(dsoId)
   const handleSubmit = async (values: DSOFormValues) => {
@@ -23,7 +25,7 @@ export const DSO: React.FC<DSOProps> = ({ dsoId, isEditing = false }) => {
   }
 
   if (!isEditing) {
-    return <DSOView data={data} />
+    return <DSOView data={data} showAuthorizations={showAuthorizations} />
   }
 
   return (

@@ -16,7 +16,11 @@ jest.mock('v2/app/components/DSO/DSOView', () => ({
 }))
 
 describe('DSO', () => {
-  const props: DSOProps = { dsoId: dso._id, isEditing: true }
+  const props: DSOProps = {
+    dsoId: dso._id,
+    isEditing: true,
+    showAuthorizations: false
+  }
 
   afterEach(async () => {
     await cleanup()
@@ -72,7 +76,8 @@ describe('DSO', () => {
 
     expect(DSOView).toHaveBeenCalledWith(
       {
-        data: dso
+        data: dso,
+        showAuthorizations: props.showAuthorizations
       },
       {}
     )

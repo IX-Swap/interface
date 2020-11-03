@@ -9,6 +9,6 @@ export const useLogout = () => {
     storageService.remove('notificationFilter')
     socketService.disconnect()
 
-    window.location.reload()
+    window.location.replace('/')
   }
 }
