@@ -5,7 +5,7 @@ import { MenuItem, Select } from '@material-ui/core'
 import { queryStatusRenderer } from 'v2/components/form/renderUtils'
 
 export interface AssetSelectProps {
-  assetType: AssetType
+  assetType?: AssetType
 }
 
 export const AssetSelect = (props: AssetSelectProps): JSX.Element => {

@@ -138,31 +138,5 @@ describe('apiService', () => {
       expect(axios.request).toHaveBeenCalledTimes(1)
       expect(response).toEqual(unsuccessfulResponse)
     })
-
-    // it("should set response message to the server's response error if request failed", async () => {
-    //   jest.spyOn(axios, 'request').mockImplementationOnce(() => {
-    //     return Promise.reject({
-    //       response: {
-    //         data: unsuccessfulResponse
-    //       }
-    //     })
-    //   })
-    //
-    //   const response = await apiService.post(url, {})
-    //
-    //   expect(response.message).toBe(unsuccessfulResponse.message)
-    //   expect(response.success).toBeFalsy()
-    // })
-
-    // it('should set response message to the catched error if one were thrown', async () => {
-    //   const errorMessage = 'Spooky error'
-    //   jest.spyOn(axios, 'request').mockImplementation(() => {
-    //     throw new Error(errorMessage)
-    //   })
-    //
-    //   expect(async () => {
-    //     const response = await apiService.post(url, {})
-    //   }).toThrow(errorMessage)
-    // })
   })
 })
