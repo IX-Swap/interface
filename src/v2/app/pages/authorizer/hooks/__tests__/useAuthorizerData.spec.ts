@@ -13,8 +13,10 @@ import { authorizerItemMap } from 'v2/app/pages/authorizer/authorizerItemMap'
 
 describe('useAuthorizerData', () => {
   const parsedDataFn = jest.fn().mockReturnValue({ map: {} })
+
   beforeEach(() => {
     history.push(AuthorizerRoute.viewItem, { bankId: bank._id })
+
     jest
       .spyOn(useAuthorizerCategoryHook, 'useAuthorizerCategory')
       .mockReturnValue(AuthorizerCategory.BankAccounts)
@@ -22,10 +24,12 @@ describe('useAuthorizerData', () => {
       .spyOn(useParsedDataHook, 'useParsedData')
       .mockImplementation(parsedDataFn)
   })
+
   afterEach(async () => {
     await cleanup()
     jest.clearAllMocks()
   })
+
   afterAll(() => history.push('/'))
 
   it('invokes useParsedData with correct response from api', async () => {

@@ -20,7 +20,10 @@ export const useLogin = () => {
       storageService.set('visitedUrl', [])
 
       if (hasRole(user.roles, AppRole.ACCREDITED)) {
-        socketService.subscribeToSocket(user.accessToken)
+        socketService.subscribeToSocket(
+          user.accessToken,
+          snackbarService.showNotification
+        )
       }
 
       window.location.reload()

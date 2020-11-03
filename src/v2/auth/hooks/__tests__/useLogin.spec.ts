@@ -56,7 +56,10 @@ describe('useLogin', () => {
       })
 
       const apiService = { post: postFn }
-      const snackbarService = { showSnackbar: jest.fn() }
+      const snackbarService = {
+        showSnackbar: jest.fn(),
+        showNotification: jest.fn()
+      }
       const storageService = { set: jest.fn() }
       const socketService = { subscribeToSocket: jest.fn() }
       const { result } = renderHookWithServiceProvider(() => useLogin(), {
@@ -74,7 +77,8 @@ describe('useLogin', () => {
           expect(postFn).toHaveBeenNthCalledWith(1, '/auth/sign-in', loginArgs)
           expect(socketService.subscribeToSocket).toHaveBeenNthCalledWith(
             1,
-            user.accessToken
+            user.accessToken,
+            snackbarService.showNotification
           )
         },
         { timeout: 1000 }

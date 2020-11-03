@@ -6,12 +6,23 @@ import {
   MarkAsReadProps
 } from 'v2/app/pages/notifications/components/MarkAsRead'
 import { fireEvent, waitFor } from '@testing-library/react'
+import { notification } from '__fixtures__/notification'
+import * as useMarkAsReadHook from 'v2/app/pages/notifications/hooks/useMarkAsRead'
+import { generateMutationResult } from '__fixtures__/useQuery'
 
 describe('MarkAsRead', () => {
   const props: MarkAsReadProps = {
-    disabled: false,
-    onClick: jest.fn()
+    data: notification
   }
+  const mutation = jest.fn()
+
+  beforeAll(() => {
+    jest.spyOn(useMarkAsReadHook, 'useMarkAsRead').mockReturnValue({
+      ...generateMutationResult({}),
+      mutation
+    })
+  })
+
   afterEach(async () => {
     await cleanup()
     jest.clearAllMocks()
@@ -21,13 +32,13 @@ describe('MarkAsRead', () => {
     render(<MarkAsRead {...props} />)
   })
 
-  it('invokes onClick when button is clicked', async () => {
+  it('invokes useMarkAsRead mutation fn when button is clicked', async () => {
     const { getByRole } = render(<MarkAsRead {...props} />)
 
     fireEvent.click(getByRole('button'))
 
     await waitFor(() => {
-      expect(props.onClick).toHaveBeenCalledTimes(1)
+      expect(mutation).toHaveBeenCalledTimes(1)
     })
   })
 })

@@ -22,11 +22,12 @@ describe('OfferingsList', () => {
   it('renders DSOList with correct props', () => {
     render(<OfferingsList />)
 
-    expect(DSOList).toHaveBeenCalledTimes(1)
     expect(DSOList).toHaveBeenCalledWith(
       {
         user: null,
-        filter: {},
+        filter: {
+          status: 'Approved'
+        },
         viewURL: OfferingRoute.view
       },
       {}

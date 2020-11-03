@@ -20,7 +20,10 @@ export enum AppFeature {
   Commitments = 'commitments',
   Offerings = 'offerings',
   Deployments = 'deployments',
-  Issuance = 'issuance'
+  Issuance = 'issuance',
+  // backend
+  Deposits = 'deposits',
+  Withdrawals = 'withdrawals'
 }
 
 export enum NotificationFilter {

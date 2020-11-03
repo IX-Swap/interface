@@ -1,10 +1,7 @@
 /**  * @jest-environment jsdom-sixteen  */
 import React from 'react'
 import { render, cleanup } from 'test-utils'
-import {
-  NotificationsList,
-  NotificationsListProps
-} from 'v2/app/pages/notifications/components/NotificationsList'
+import { NotificationsList } from 'v2/app/pages/notifications/components/NotificationsList'
 import { NoData } from 'v2/app/components/NoData/NoData'
 import { LoadingIndicator } from 'v2/app/components/LoadingIndicator/LoadingIndicator'
 import * as notificationsHook from 'v2/app/pages/notifications/hooks/useNotifications'
@@ -18,7 +15,6 @@ jest.mock('v2/app/components/LoadingIndicator/LoadingIndicator', () => ({
 }))
 
 describe('NotificationsList', () => {
-  const props: NotificationsListProps = {}
   afterEach(async () => {
     await cleanup()
     jest.clearAllMocks()
@@ -28,26 +24,27 @@ describe('NotificationsList', () => {
     jest
       .spyOn(notificationsHook, 'useNotifications')
       .mockReturnValue({ data: [notification], isLoading: false } as any)
-    render(<NotificationsList {...props} />)
+
+    render(<NotificationsList />)
   })
 
   it('renders NoData if data is empty', () => {
     jest
       .spyOn(notificationsHook, 'useNotifications')
       .mockReturnValue({ data: [], isLoading: false } as any)
-    render(<NotificationsList {...props} />)
 
-    expect(NoData).toHaveBeenCalledTimes(1)
-    expect(NoData).toHaveBeenCalledWith({ style: expect.any(Object) }, {})
+    render(<NotificationsList />)
+
+    expect(NoData).toHaveBeenCalled()
   })
 
   it('renders LoadingIndicator if isLoading is true', () => {
     jest
       .spyOn(notificationsHook, 'useNotifications')
       .mockReturnValue({ data: [], isLoading: true } as any)
-    render(<NotificationsList {...props} />)
 
-    expect(LoadingIndicator).toHaveBeenCalledTimes(1)
-    expect(LoadingIndicator).toHaveBeenCalledWith({}, {})
+    render(<NotificationsList />)
+
+    expect(LoadingIndicator).toHaveBeenCalled()
   })
 })

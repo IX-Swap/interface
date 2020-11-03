@@ -22,7 +22,13 @@ export const CorporatePreview: React.FC = () => {
   }
 
   return (
-    <Grid container item direction='column' spacing={2}>
+    <Grid
+      data-testid='corporate-preview'
+      container
+      item
+      direction='column'
+      spacing={2}
+    >
       <Grid item xs={12}>
         <Typography variant='h4'>Corporate Identities</Typography>
       </Grid>

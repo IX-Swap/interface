@@ -4,8 +4,8 @@ export const themeColors = {
   primary: '#0c469c',
   secondary: '#1C4F79',
   warning: '#a31037',
-  success: '#348633',
-  info: '#9013FE',
+  success: '#34A87B',
+  info: '#4A62D9',
   error: '#D20000'
 }
 

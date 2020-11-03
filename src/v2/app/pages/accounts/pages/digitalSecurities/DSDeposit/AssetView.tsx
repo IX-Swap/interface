@@ -1,7 +1,7 @@
 import React from 'react'
 import { useAllBalances } from 'v2/hooks/balance/useAllBalances'
 import { Box, Button, Grid, Typography } from '@material-ui/core'
-import { ReactComponent as QRCode } from 'v1/assets/qr.svg'
+import { ReactComponent as QRCode } from 'assets/qr.svg'
 import { useSnackbar } from 'v2/hooks/useSnackbar'
 import { useDSRouter } from 'v2/app/pages/accounts/pages/digitalSecurities/router'
 import { VSpacer } from 'v2/components/VSpacer'

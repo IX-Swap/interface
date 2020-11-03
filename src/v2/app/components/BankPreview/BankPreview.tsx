@@ -5,6 +5,7 @@ import { convertAddressToString } from 'v2/app/pages/authorizer/components/utils
 import { LabelledValue } from 'v2/components/LabelledValue'
 import { SupportingDocuments } from 'v2/app/components/SupportingDocuments'
 import { useSetPageTitle } from 'v2/app/hooks/useSetPageTitle'
+import { Alert, AlertTitle } from '@material-ui/lab'
 
 export interface BankViewProps {
   data: Bank
@@ -19,6 +20,10 @@ export const BankPreview: React.FC<BankViewProps> = ({ data }) => {
 
   return (
     <Grid container spacing={3}>
+      <Alert severity='error'>
+        <AlertTitle>Bank Account Reject</AlertTitle>
+        This is an error alert — <strong>check it out!</strong>
+      </Alert>
       <Grid item />
       <Grid item container spacing={3}>
         <Grid item xs={4}>

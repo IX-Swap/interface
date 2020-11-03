@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/restrict-template-expressions */
 import React from 'react'
 import { MenuItem } from '@material-ui/core'
 import draftToHtml from 'draftjs-to-html'
@@ -27,7 +28,11 @@ export const wysiwygToHtml = (draft: string): string => {
   return draftToHtml(JSON.parse(draft))
 }
 
-export const renderPercentage = (value: Maybe<Number>) => <span>{value} %</span>
+export const renderPercentage = (value: Maybe<Number> = 0) => (
+  <span>{Number.parseFloat(`${value ?? 0}`) * 100} %</span>
+)
+
+export const renderMonths = (value: string | number | null) => `${value} months`
 
 export const documentIcons = {
   pdf: pdfIcon,

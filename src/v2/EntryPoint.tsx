@@ -1,5 +1,4 @@
 import React, { Suspense, useEffect } from 'react'
-import { Router, Redirect, Switch } from 'react-router-dom'
 import { history } from 'v2/history'
 import { LoadingFullScreen } from 'v2/auth/components/LoadingFullScreen'
 import { BreadcrumbsProvider } from 'v2/hooks/useBreadcrumbs'
@@ -37,20 +36,16 @@ export const EntryPoint = () => {
     <Suspense fallback={<LoadingFullScreen />}>
       <BreadcrumbsProvider>
         <ReactQueryDevtools initialIsOpen={false} />
-        <Router history={history}>
-          <Switch>
-            {isSuccess ? (
-              <SentryRoute path='/app' exact={false} component={AppRoot} />
-            ) : (
-              <SentryRoute path='/auth' exact={false} component={AuthRoot} />
-            )}
-            <SentryRoute
-              exact
-              path='*'
-              render={() => <Redirect to={isSuccess ? '/app' : '/auth'} />}
-            />
-          </Switch>
-        </Router>
+        {isSuccess ? (
+          <SentryRoute path='/app' exact={false} component={AppRoot} />
+        ) : (
+          <SentryRoute path='/auth' exact={false} component={AuthRoot} />
+        )}
+        {/* <SentryRoute
+          exact
+          path='*'
+          render={() => <Redirect to={isSuccess ? '/app' : '/auth'} />}
+        /> */}
       </BreadcrumbsProvider>
     </Suspense>
   )
