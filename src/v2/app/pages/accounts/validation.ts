@@ -10,6 +10,27 @@ import {
 import { DataroomFile, FormArrayElement } from 'v2/types/dataroomFile'
 import { MIN_INVESTMENT_AMOUNT } from 'v2/config/defaults'
 
+export const withdrawValidator = (
+  amount: number | undefined,
+  available: number
+) => {
+  let message: string | undefined
+  if (amount === undefined) {
+    message = `Required`
+  } else if (amount === 0) {
+    message = `Can't be zero`
+  } else if (amount > available) {
+    message = `Inssuficient balance`
+  } else if (
+    available >= MIN_INVESTMENT_AMOUNT &&
+    amount < MIN_INVESTMENT_AMOUNT
+  ) {
+    message = `Minimum amount is ${MIN_INVESTMENT_AMOUNT}`
+  }
+
+  return { message }
+}
+
 export const depositCashFormValidationSchema = yup
   .object()
   .shape<DepositCashFormValues>({
@@ -24,10 +45,7 @@ export const depositCashFormValidationSchema = yup
 export const withdrawCashFormValidationSchema = yup
   .object()
   .shape<WithdrawCashFormValues>({
-    amount: yup
-      .number()
-      .required('Required')
-      .min(MIN_INVESTMENT_AMOUNT, `Minimum amount is ${MIN_INVESTMENT_AMOUNT}`),
+    amount: yup.number().required('Required'),
     bank: yup.string().required('Required'),
     otp: yup.string().required('Required'),
     memo: yup.string()

@@ -5,4 +5,4 @@ export const paginationArgs: PaginationArgs = {
   limit: 50
 }
 
-export const MIN_INVESTMENT_AMOUNT = 1
+export const MIN_INVESTMENT_AMOUNT = 1000
