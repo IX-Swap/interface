@@ -1,11 +1,10 @@
 import { DSOFormValues, DSORequestArgs } from 'v2/types/dso'
 import omit from 'lodash/omit'
-import { Maybe } from 'v2/types/util'
 
-export const numberToPercentage = (number: Maybe<Number>) =>
+export const numberToPercentage = (number: number | null | undefined) =>
   Number(number ?? 0) / 100
 
-export const percentageToNumber = (number: Maybe<Number>) =>
+export const percentageToNumber = (number: number | null | undefined) =>
   Number(number ?? 0) * 100
 
 export const transformDSOFormValuesToRequestArgs = (
