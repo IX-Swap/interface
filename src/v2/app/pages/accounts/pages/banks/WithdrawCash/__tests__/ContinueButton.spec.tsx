@@ -31,7 +31,7 @@ describe('ContinueButton', () => {
   it('will disable Button if canSubmit is false', () => {
     jest
       .spyOn(validateWithdrawHook, 'useValidateWithdrawCash')
-      .mockReturnValue({ canSubmit: false, error: '' })
+      .mockReturnValue({ canSubmit: false })
     const { getByText } = render(
       <DepositStoreProvider>
         <Form defaultValues={{ amount: cashDeposit.amount }}>
