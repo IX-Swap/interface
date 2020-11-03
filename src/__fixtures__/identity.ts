@@ -23,7 +23,18 @@ export const corporate: CorporateIdentity = {
   dateOfIncorporation: '01-01-2000',
   directors: [],
   registrationNumber: '123456',
-  representatives: [],
+  representatives: [
+    {
+      contactNumber: '1234',
+      countryOfResidence: 'Singapore',
+      dob: '2020-12-12',
+      firstName: 'John',
+      gender: 'M',
+      lastName: 'Doe',
+      maritalStatus: 'single',
+      nationality: 'S'
+    }
+  ],
   email: '',
   contactNumber: '',
   user,

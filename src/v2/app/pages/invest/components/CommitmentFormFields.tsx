@@ -96,6 +96,7 @@ export const CommitmentFormFields = (props: CommitmentFormFieldsProps) => {
           control={control}
           name='otp'
           label='OTP'
+          autoComplete='off'
         />
       </Grid>
     </Grid>

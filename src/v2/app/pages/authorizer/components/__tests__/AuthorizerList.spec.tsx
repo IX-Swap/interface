@@ -33,7 +33,7 @@ describe('AuthorizerList', () => {
   it('renders as expected in normal mode', async () => {
     render(<AuthorizerList {...props} />)
 
-    expect(AuthorizerTable).toHaveBeenCalledWith(props, {})
+    expect(AuthorizerTable).toHaveBeenCalledWith({ ...props, isAll: false }, {})
     expect(Filters).toHaveBeenCalled()
   })
 })

@@ -181,7 +181,7 @@ export const commitment: Commitment = {
   dso,
   identity: {
     individual,
-    corporates: []
+    corporates: [corporate]
   },
   totalAmount: 0,
   authorizationDocuments: [],
@@ -230,11 +230,11 @@ export const cashDeposit: CashDeposit = {
   user: '???',
   bankAccount: bank,
   individual,
-  corporates: [],
+  corporates: [corporate],
   asset,
   identity: {
     individual,
-    corporates: []
+    corporates: [corporate]
   },
   authorizations: [],
   authorizationDocuments: [],

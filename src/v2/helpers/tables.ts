@@ -64,24 +64,29 @@ export const renderLastName = (
   return `${val} ${lastName}`
 }
 
-const getLastAndCompanyName = ({
-  individual,
-  corporates
-}: {
+export const getIndividualLastName = (
   individual: IndividualIdentity
-  corporates: CorporateIdentity[]
-}) => {
-  let lastName: string = ''
-  let companyName: string = ''
+): string => {
   if (individual !== undefined) {
-    lastName = individual.lastName
-  } else if (corporates.length > 0) {
-    companyName = corporates[0].companyLegalName
+    return individual.lastName
   }
-  return {
-    lastName: lastName,
-    companyName: companyName
+  return ''
+}
+
+export const getCorporateLegalName = (corporate: CorporateIdentity): string => {
+  if (corporate !== undefined) {
+    return corporate.companyLegalName
   }
+  return ''
+}
+
+export const getCorporateRepresentativeName = (
+  corporate: CorporateIdentity
+): string => {
+  if (corporate !== undefined) {
+    return corporate.representatives?.[0]?.lastName ?? ''
+  }
+  return ''
 }
 
 export const renderIndividualOrCompanyName = (
@@ -94,21 +99,23 @@ export const renderIndividualOrCompanyName = (
     | CashDeposit
     | CashWithdrawal
 ): string => {
-  let lastName: string = ''
-  let companyName: string = ''
+  let lastName = ''
+  let companyName = ''
 
   if ('lastName' in row) {
-    lastName = row.lastName
+    lastName = getIndividualLastName(row)
   } else if ('representatives' in row) {
-    const representative = row.representatives[0]
-    lastName = representative?.lastName ?? ''
+    lastName = getCorporateRepresentativeName(row)
+    companyName = getCorporateLegalName(row)
   } else if ('individual' in row || 'corporates' in row) {
-    ;({ lastName, companyName } = getLastAndCompanyName(row))
+    lastName = getIndividualLastName(row.individual)
+    companyName = getCorporateLegalName(row.corporates[0])
   } else if ('identity' in row) {
-    ;({ lastName, companyName } = getLastAndCompanyName(row.identity))
+    lastName = getIndividualLastName(row.identity.individual)
+    companyName = getCorporateLegalName(row.identity.corporates[0])
   }
 
-  if (val === undefined) {
+  if (val === undefined || lastName === '') {
     return companyName
   }
   return `${val} ${lastName}`

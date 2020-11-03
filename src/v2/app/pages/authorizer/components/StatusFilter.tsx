@@ -1,5 +1,5 @@
 import { StatusFilterItem } from 'v2/app/pages/authorizer/components/StatusFilterItem'
-import React, { useState } from 'react'
+import React, { useState, useMemo } from 'react'
 import {
   Assignment as AllIcon,
   AssignmentTurnedIn as ApprovedIcon,
@@ -8,6 +8,7 @@ import {
   SvgIconComponent
 } from '@material-ui/icons'
 import { AuthorizableStatus, BaseFilter } from 'v2/types/util'
+import { initialFilterValue } from 'v2/app/pages/authorizer/hooks/useAuthorizerView'
 
 interface StatusFilterItemType {
   icon: SvgIconComponent
@@ -21,8 +22,15 @@ interface StatusFilterProps {
 
 export const StatusFilter: React.FC<StatusFilterProps> = props => {
   const { onChange } = props
+  const initialStatus = useMemo(
+    () =>
+      statusFilters.find(f => initialFilterValue.status === f.value) ??
+      statusFilters[0],
+    []
+  )
+
   const [selectedStatus, setSelectedStatus] = useState<StatusFilterItemType>(
-    statusFilters[0]
+    initialStatus
   )
   const renderItem = (status: StatusFilterItemType, i: number): JSX.Element => {
     const { value, icon, title } = status

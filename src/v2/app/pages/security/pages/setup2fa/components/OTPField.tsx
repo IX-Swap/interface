@@ -14,6 +14,7 @@ export const OTPField = () => {
       component={Input}
       label='OTP'
       name='otp'
+      autoComplete='off'
     />
   )
 }
