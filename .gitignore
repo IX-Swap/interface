@@ -9,6 +9,7 @@ bfg.jar
 .pnp.js
 .idea/
 .vscode/
+.log
 
 # testing
 .scannerwork
