@@ -12,7 +12,9 @@ import { MIN_INVESTMENT_AMOUNT } from 'v2/config/defaults'
 
 export const withdrawValidator = (
   amount: number | undefined,
-  available: number
+  available: number,
+  minWithdraw: number = 0,
+  maxWithdraw: number = Infinity
 ) => {
   let message: string | undefined
   if (amount === undefined) {
@@ -21,11 +23,10 @@ export const withdrawValidator = (
     message = `Can't be zero`
   } else if (amount > available) {
     message = `Inssuficient balance`
-  } else if (
-    available >= MIN_INVESTMENT_AMOUNT &&
-    amount < MIN_INVESTMENT_AMOUNT
-  ) {
-    message = `Minimum amount is ${MIN_INVESTMENT_AMOUNT}`
+  } else if (amount < minWithdraw) {
+    message = `Minimum amount is ${minWithdraw}`
+  } else if (amount > maxWithdraw) {
+    message = `Maximum amount is ${maxWithdraw}`
   }
 
   return { message }

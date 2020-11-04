@@ -1,8 +1,10 @@
-import { useBanksData } from 'v2/app/pages/accounts/pages/banks/hooks/useBanksData'
-import { useAllBalances } from 'v2/hooks/balance/useAllBalances'
 import { withdrawValidator } from 'v2/app/pages/accounts/validation'
 import { useFormContext } from 'react-hook-form'
 import { WithdrawCashFormValues } from 'v2/app/pages/accounts/types'
+import { useAssetById } from 'v2/hooks/asset/useAssetById'
+import { useBankById } from './useBankById'
+import { useBalancesByAssetId } from 'v2/hooks/balance/useBalancesByAssetId'
+import { getIdFromObj } from 'v2/helpers/strings'
 
 interface BalancesByBankIdReturnObj {
   canSubmit: boolean
@@ -15,32 +17,46 @@ export const useValidateWithdrawCash = (): BalancesByBankIdReturnObj => {
   const bankId = watch('bank')
   const amount = watch('amount')
 
-  const { data: banks, status: banksStatus } = useBanksData()
-  const { data: balances, status: balancesStatus } = useAllBalances()
+  const { data: bank, isSuccess: bankSuccess } = useBankById({ bankId })
 
-  if (balancesStatus === 'loading' || banksStatus === 'loading') {
-    if (errors.amount !== undefined) {
-      clearErrors('amount')
-    }
+  const assetId = getIdFromObj(bank?.currency)
+  const { data: asset, isSuccess: assetSuccess } = useAssetById(assetId)
+  const { data: balances, isSuccess: balancesSuccess } = useBalancesByAssetId(
+    assetId
+  )
+
+  if (!bankSuccess || !assetSuccess || !balancesSuccess) {
     return { canSubmit: false }
   }
 
-  const bank = banks.map[bankId]
-
-  if (bank !== undefined) {
+  if (bank !== undefined && asset !== undefined) {
     const assetId = bank.currency._id
     const balance = balances.map[assetId]
-    const { message } = withdrawValidator(amount, balance.available)
+    const minWithdraw = asset.amounts?.minimumWithdrawal
+    const maxWithdraw = asset.amounts?.maximumWithdrawal
 
+    const { message } = withdrawValidator(
+      amount,
+      balance.available,
+      minWithdraw,
+      maxWithdraw
+    )
+    const canSubmit = message === undefined
+
+    console.log(balance.available, bank, asset)
     if (
-      message !== undefined &&
+      !canSubmit &&
       errors.amount === undefined &&
-      formState.touched.amount === true
+      (formState.dirtyFields.amount === true ||
+        formState.touched.amount === true)
     ) {
       setError('amount', { message })
     }
-
-    return { canSubmit: message === undefined }
+    if (canSubmit && errors.amount !== undefined) {
+      clearErrors('amount')
+    }
+    return { canSubmit }
   }
+
   return { canSubmit: false }
 }

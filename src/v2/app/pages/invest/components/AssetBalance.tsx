@@ -9,9 +9,9 @@ export interface AssetBalanceProps {
 
 export const AssetBalance = (props: AssetBalanceProps) => {
   const { assetId } = props
-  const { data, isLoading } = useBalancesByAssetId(assetId)
+  const { data, isLoading, isIdle } = useBalancesByAssetId(assetId)
 
-  if (isLoading) {
+  if (isLoading || isIdle) {
     return null
   }
 
