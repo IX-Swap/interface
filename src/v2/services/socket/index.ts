@@ -31,8 +31,13 @@ const socketService = {
         return
       }
 
+      _socket?.removeAllListeners()
+
       _socket = io(
-        process.env.NODE_ENV === 'test' ? '' : `${API_URL}?token=${token}`
+        process.env.NODE_ENV === 'test' ? '' : `${API_URL}?token=${token}`,
+        {
+          transports: ['polling', 'websocket']
+        }
       )
 
       _socket.addEventListener('default', (data: any) => {

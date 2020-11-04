@@ -58,11 +58,9 @@ describe('useLogin', () => {
       const apiService = { post: postFn }
       const snackbarService = { showSnackbar: jest.fn() }
       const storageService = { set: jest.fn() }
-      const socketService = { subscribeToSocket: jest.fn() }
       const { result } = renderHookWithServiceProvider(() => useLogin(), {
         apiService,
         storageService,
-        socketService,
         snackbarService
       })
 
