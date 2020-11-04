@@ -20,6 +20,7 @@ export const AppRoute = (props: AppRouteProps) => {
   const is2FAEnabled = useIsEnabled2FA()
   const roles = getUserRoles(user?.roles)
   const isAccredited = roles.includes(AppRole.ACCREDITED)
+  const isAuthorizer = roles.includes(AppRole.AUTHORIZER)
 
   pushCrumb({
     label: route.label,
@@ -45,7 +46,8 @@ export const AppRoute = (props: AppRouteProps) => {
         path.startsWith(AppPath.identity) ||
         path.startsWith(AppPath.security) ||
         path.startsWith(AppPath.notifications)
-      )
+      ) &&
+      !(isAuthorizer && path.startsWith(AppPath.admin))
     ) {
       return <Redirect to={AppPath.identity} />
     }
