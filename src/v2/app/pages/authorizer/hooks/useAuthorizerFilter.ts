@@ -11,10 +11,7 @@ export const useAuthorizerFilter = () => {
     queryCache.setQueryData<BaseFilter>('authorizerFilter', initialFilterValue)
 
     return () => {
-      queryCache.setQueryData<BaseFilter>(
-        'authorizerFilter',
-        initialFilterValue
-      )
+      queryCache.setQueryData<BaseFilter>('authorizerFilter', { status: '' })
     }
   }, [])
 
