@@ -13,13 +13,9 @@ describe('renderCommitmentMoney', () => {
       `${commitment.currency.numberFormat.currency} 123.00`
     )
   })
-  it('defaults amount to 0', () => {
-    expect(renderCommitmentMoney(undefined as any, commitment)).toEqual(
-      `${commitment.currency.numberFormat.currency} 0.00`
-    )
-    expect(renderCommitmentMoney(null as any, commitment)).toEqual(
-      `${commitment.currency.numberFormat.currency} 0.00`
-    )
+  it('defaults amount to empty string', () => {
+    expect(renderCommitmentMoney(undefined as any, commitment)).toEqual('')
+    expect(renderCommitmentMoney(null as any, commitment)).toEqual('')
   })
 })
 
