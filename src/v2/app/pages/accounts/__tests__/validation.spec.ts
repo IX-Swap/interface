@@ -19,8 +19,14 @@ describe('withdrawValidator', () => {
   })
 
   it('returns `Minimum amount is X` if amount is less than X', () => {
-    expect(withdrawValidator(200, MIN_INVESTMENT_AMOUNT + 200)).toEqual({
-      message: `Minimum amount is ${MIN_INVESTMENT_AMOUNT}`
+    expect(withdrawValidator(200, 2000, 1000)).toEqual({
+      message: `Minimum amount is 1000`
+    })
+  })
+
+  it('returns `Maximum amount is X` if amount is greater than X', () => {
+    expect(withdrawValidator(1500, 2000, 500, 1000)).toEqual({
+      message: `Maximum amount is 1000`
     })
   })
 
