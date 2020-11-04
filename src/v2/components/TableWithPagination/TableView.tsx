@@ -13,6 +13,8 @@ import { TableColumn, BaseFilter } from 'v2/types/util'
 import { Actions } from 'v2/app/pages/authorizer/components/Actions'
 import { useTableWithPagination } from 'v2/components/TableWithPagination/hooks/useTableWithPagination'
 import { TableRows } from 'v2/components/TableWithPagination/TableRows'
+import { statusColumn } from 'v2/app/pages/authorizer/hooks/useAuthorizerView'
+import { useAuthorizerFilter } from 'v2/app/pages/authorizer/hooks/useAuthorizerFilter'
 
 export interface TableViewRendererProps<T> {
   items: T[]
@@ -29,6 +31,7 @@ export interface TableViewProps<T> {
   bordered?: boolean
   filter?: BaseFilter
   hasActions?: boolean
+  hasStatus?: boolean
   actions?: Actions<T>
   children?: (props: TableViewRendererProps<T>) => JSX.Element
   fakeItems?: T[]
@@ -41,6 +44,7 @@ export const TableView = <T,>({
   filter,
   columns = [],
   hasActions = false,
+  hasStatus = false,
   bordered = true,
   actions,
   children,
@@ -61,6 +65,9 @@ export const TableView = <T,>({
   if (innerRef !== undefined) {
     innerRef.current = { refresh: () => setPage(page) }
   }
+
+  const { isAll } = useAuthorizerFilter()
+  columns = hasStatus && isAll ? [...columns, statusColumn] : columns
 
   return (
     <>
