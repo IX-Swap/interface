@@ -28,6 +28,8 @@ export const AuthorizerFormFields = (props: AuthorizerFormFieldsProps) => {
   const { itemId, status } = props
   const { control } = useFormContext<AuthorizerFormValues>()
   const category = useAuthorizerCategory()
+  const comment = control.watchInternal('comment') as string
+  const hasComment = comment !== undefined && comment.trim().length > 0
   const isTransaction = transactionalCategories.includes(category)
   const rejectedOrApproved = status === 'Rejected' || status === 'Approved'
   const canApprove = status === 'Submitted' || status === 'Rejected'
@@ -52,6 +54,7 @@ export const AuthorizerFormFields = (props: AuthorizerFormFieldsProps) => {
         valueExtractor={booleanValueExtractor}
         component={Checkbox}
         control={control}
+        disabled={!hasComment}
         label='Share this comment with the user'
         name='sharedWithUser'
       />
