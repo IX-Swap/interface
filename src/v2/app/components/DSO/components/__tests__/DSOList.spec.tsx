@@ -9,16 +9,19 @@ import {
 import { TableView } from 'v2/components/TableWithPagination/TableView'
 import { user } from '__fixtures__/user'
 import { DSOListTableBody } from 'v2/app/components/DSO/components/DSOListTableBody'
+import * as useAuthHook from 'v2/hooks/auth/useAuth'
 
 jest.mock('v2/app/components/DSO/components/DSOListTableBody', () => ({
   DSOListTableBody: jest.fn(() => null)
 }))
+
 jest.mock('v2/components/TableWithPagination/TableView', () => ({
   TableView: jest.fn(({ children }) => children({ items: [] }))
 }))
 
 describe('DSOList', () => {
-  const props: DSOfferingsListProps = { filter: {}, user: user, viewURL: '/' }
+  const props: DSOfferingsListProps = { viewURL: '/', all: true }
+
   afterEach(async () => {
     await cleanup()
     jest.clearAllMocks()
@@ -31,39 +34,42 @@ describe('DSOList', () => {
   it('renders TableView with correct props', () => {
     render(<DSOList {...props} />)
 
-    expect(TableView).toHaveBeenCalledTimes(1)
     expect(TableView).toHaveBeenCalledWith(
       {
-        filter: { search: '' },
+        filter: {},
         children: expect.anything(),
         columns: [],
         bordered: false,
         name: DSO_LIST_QUERY_KEY,
-        uri: `/issuance/dso/list/${user?._id}`
+        uri: `/issuance/dso/list/approved`
       },
       {}
     )
   })
 
-  it('renders TableView with correct props if user is null', () => {
-    render(<DSOList {...props} user={null} />)
+  it('renders TableView with correct props if all is false', () => {
+    jest.spyOn(useAuthHook, 'useAuth').mockReturnValue({
+      isAuthenticated: true,
+      user
+    })
 
-    expect(TableView).toHaveBeenCalledTimes(1)
+    render(<DSOList {...props} all={false} />)
+
     expect(TableView).toHaveBeenCalledWith(
       {
-        filter: { search: '' },
+        filter: {},
         children: expect.anything(),
         columns: [],
         bordered: false,
         name: DSO_LIST_QUERY_KEY,
-        uri: `/issuance/dso/list/`
+        uri: `/issuance/dso/list/${user._id}`
       },
       {}
     )
   })
 
   it('renders DSOListTableBody with correct props', () => {
-    render(<DSOList {...props} user={null} />)
+    render(<DSOList {...props} />)
 
     expect(DSOListTableBody).toHaveBeenCalledTimes(1)
     expect(DSOListTableBody).toHaveBeenCalledWith(

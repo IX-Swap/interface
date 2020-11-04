@@ -27,7 +27,7 @@ export const UserDropdownItem = (props: UserDropdownItemProps) => {
     onClick?.()
     onClose()
   }
-  const iconElement = createElement(icon)
+  const iconElement = createElement(icon, { className: classes.icon })
   const LinkElement = (linkProps: any) => (
     <AppRouterLink {...linkProps} role='menuitem' />
   )

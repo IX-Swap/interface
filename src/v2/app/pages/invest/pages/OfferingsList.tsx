@@ -3,11 +3,5 @@ import { DSOList } from 'v2/app/components/DSO/components/DSOList'
 import { OfferingRoute } from 'v2/app/pages/invest/routers/offeringsRouter'
 
 export const OfferingsList = () => {
-  return (
-    <DSOList
-      user={null}
-      filter={{ status: 'Approved' }}
-      viewURL={OfferingRoute.view}
-    />
-  )
+  return <DSOList viewURL={OfferingRoute.view} />
 }

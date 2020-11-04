@@ -24,10 +24,6 @@ describe('OfferingsList', () => {
 
     expect(DSOList).toHaveBeenCalledWith(
       {
-        user: null,
-        filter: {
-          status: 'Approved'
-        },
         viewURL: OfferingRoute.view
       },
       {}
