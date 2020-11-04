@@ -45,6 +45,7 @@ const socketService = {
 
       _socket.addEventListener('notification', (notification: Notification) => {
         onNotification(notification)
+
         queryCache.setQueryData<Notification[]>(
           queryKeys.notifications,
           data => [notification, ...(data ?? [])]

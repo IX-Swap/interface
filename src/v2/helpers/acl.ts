@@ -17,7 +17,11 @@ export const getUserRoles = (roles?: string) => {
   return roles.split(',') as AppRole[]
 }
 
-export const hasRole = (roles: string, roleToCheck: AppRole) => {
+export const hasRole = (roles: string | undefined, roleToCheck: AppRole) => {
+  if (roles === undefined) {
+    return false
+  }
+
   const rolesList = getUserRoles(roles)
 
   return includes(rolesList, roleToCheck)

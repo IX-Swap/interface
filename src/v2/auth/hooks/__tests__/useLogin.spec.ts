@@ -22,11 +22,9 @@ describe('useLogin', () => {
       const apiService = { post: postFn }
       const snackbarService = { showSnackbar: jest.fn() }
       const storageService = { set: jest.fn() }
-      const socketService = { subscribeToSocket: jest.fn() }
       const { result } = renderHookWithServiceProvider(() => useLogin(), {
         apiService,
         storageService,
-        socketService,
         snackbarService
       })
 
@@ -46,44 +44,6 @@ describe('useLogin', () => {
             3,
             'visitedUrl',
             []
-          )
-        },
-        { timeout: 1000 }
-      )
-    })
-  })
-
-  it('it calls socketService.subscribeToSocket with correct data if user is accredited', async () => {
-    await act(async () => {
-      const postFn = jest.fn().mockResolvedValueOnce({
-        data: { ...user, roles: 'accredited' },
-        message: 'success'
-      })
-
-      const apiService = { post: postFn }
-      const snackbarService = {
-        showSnackbar: jest.fn(),
-        showNotification: jest.fn()
-      }
-      const storageService = { set: jest.fn() }
-      const socketService = { subscribeToSocket: jest.fn() }
-      const { result } = renderHookWithServiceProvider(() => useLogin(), {
-        apiService,
-        storageService,
-        socketService,
-        snackbarService
-      })
-
-      await waitFor(
-        () => {
-          const [mutate] = result.current
-          void mutate(loginArgs)
-
-          expect(postFn).toHaveBeenNthCalledWith(1, '/auth/sign-in', loginArgs)
-          expect(socketService.subscribeToSocket).toHaveBeenNthCalledWith(
-            1,
-            user.accessToken,
-            snackbarService.showNotification
           )
         },
         { timeout: 1000 }
