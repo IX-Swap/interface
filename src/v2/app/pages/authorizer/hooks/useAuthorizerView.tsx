@@ -16,7 +16,7 @@ export const renderStatusColumn = (s: string): JSX.Element => (
   <AuthorizableStatus status={s} />
 )
 
-export const statusColumn = {
+export const statusColumn: TableColumn<any> = {
   key: 'status',
   label: 'Status',
   render: renderStatusColumn

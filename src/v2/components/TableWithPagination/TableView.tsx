@@ -42,7 +42,7 @@ export const TableView = <T,>({
   name,
   uri,
   filter,
-  columns = [],
+  columns: columnsProp = [],
   hasActions = false,
   hasStatus = false,
   bordered = true,
@@ -67,7 +67,8 @@ export const TableView = <T,>({
   }
 
   const { isAll } = useAuthorizerFilter()
-  columns = hasStatus && isAll ? [...columns, statusColumn] : columns
+  const columns =
+    hasStatus && isAll ? [...columnsProp, statusColumn] : columnsProp
 
   return (
     <>
