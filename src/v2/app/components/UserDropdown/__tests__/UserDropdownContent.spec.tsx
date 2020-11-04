@@ -6,21 +6,14 @@ import { DropdownContentProps } from 'v2/app/components/Dropdown/Dropdown'
 import { UserDropdownItem } from 'v2/app/components/UserDropdown/UserDropdownItem'
 import { IdentityRoute } from 'v2/app/pages/identity/router'
 import { SecurityRoute } from 'v2/app/pages/security/router'
-import { ReactComponent as IdentityIcon } from 'assets/icons/navigation/identity.svg'
-import { ReactComponent as SecurityIcon } from 'assets/icons/navigation/security.svg'
-import { ReactComponent as SignoutIcon } from 'assets/icons/navigation/logout.svg'
+import {
+  AccountCircleOutlined,
+  PowerSettingsNewOutlined,
+  SettingsOutlined
+} from '@material-ui/icons'
 
 jest.mock('v2/app/components/UserDropdown/UserDropdownItem', () => ({
   UserDropdownItem: jest.fn(() => null)
-}))
-jest.mock('assets/icons/navigation/identity.svg', () => ({
-  ReactComponent: jest.fn(() => null)
-}))
-jest.mock('assets/icons/navigation/security.svg', () => ({
-  ReactComponent: jest.fn(() => null)
-}))
-jest.mock('assets/icons/navigation/logout.svg', () => ({
-  ReactComponent: jest.fn(() => null)
 }))
 
 describe('UserDropdownContent', () => {
@@ -44,7 +37,7 @@ describe('UserDropdownContent', () => {
     expect(UserDropdownItem).toHaveBeenNthCalledWith(
       1,
       {
-        icon: IdentityIcon,
+        icon: AccountCircleOutlined,
         label: 'Identity',
         link: IdentityRoute.list,
         onClose: props.injectedProps.close
@@ -54,7 +47,7 @@ describe('UserDropdownContent', () => {
     expect(UserDropdownItem).toHaveBeenNthCalledWith(
       2,
       {
-        icon: SecurityIcon,
+        icon: SettingsOutlined,
         label: 'Settings',
         link: SecurityRoute.landing,
         onClose: props.injectedProps.close
@@ -64,7 +57,7 @@ describe('UserDropdownContent', () => {
     expect(UserDropdownItem).toHaveBeenNthCalledWith(
       3,
       {
-        icon: SignoutIcon,
+        icon: PowerSettingsNewOutlined,
         label: 'Sign Out',
         onClick: expect.any(Function),
         onClose: props.injectedProps.close
