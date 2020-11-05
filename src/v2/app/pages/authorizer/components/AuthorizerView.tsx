@@ -10,6 +10,8 @@ import { AuthorizableStatus } from 'v2/app/pages/authorizer/components/Authoriza
 import { AuthorizerIdentities } from 'v2/app/pages/authorizer/components/AuthorizerIdentities'
 import { PageHeader } from 'v2/app/components/PageHeader/PageHeader'
 import { Form } from 'v2/components/form/Form'
+import { useAuthorizerCategory } from 'v2/hooks/location/useAuthorizerCategory'
+import { AuthorizerCategory } from 'v2/types/app'
 
 export interface AuthorizerViewProps<T> {
   title: string
@@ -17,13 +19,25 @@ export interface AuthorizerViewProps<T> {
   feature: typeof DataroomFeature[keyof typeof DataroomFeature]
 }
 
+const transactionalCategories = [
+  AuthorizerCategory.CashDeposits,
+  AuthorizerCategory.CashWithdrawals,
+  AuthorizerCategory.DigitalSecurityWithdrawals,
+  AuthorizerCategory.Commitments,
+  AuthorizerCategory.Offerings
+]
+
 export const AuthorizerView = <T,>(
   props: PropsWithChildren<AuthorizerViewProps<T>>
 ) => {
+  const category = useAuthorizerCategory()
+  const isTransaction = transactionalCategories.includes(category)
   const { title, data, feature, children } = props
   // debugger
   const hasIdentity = data.identity !== undefined
   const documents = data.authorizationDocuments ?? []
+  const approvedOrRejected = ['Approved', 'Rejected'].includes(data.status)
+  const showForm = !(isTransaction && approvedOrRejected)
 
   return (
     <Container>
@@ -83,9 +97,11 @@ export const AuthorizerView = <T,>(
                   </Form>
                 </Grid>
 
-                <Grid item>
-                  <AuthorizerForm status={data.status} itemId={data._id} />
-                </Grid>
+                {showForm && (
+                  <Grid item>
+                    <AuthorizerForm status={data.status} itemId={data._id} />
+                  </Grid>
+                )}
               </Grid>
             </Grid>
           </Grid>
