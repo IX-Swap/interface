@@ -14,6 +14,7 @@ import { Action } from 'v2/app/pages/authorizer/components/Action'
 import { DropdownMenu } from 'v2/app/pages/authorizer/components/DropdownMenu'
 import { useApproveOrReject } from 'v2/app/pages/authorizer/hooks/useApproveOrReject'
 import { getIdFromObj } from 'v2/helpers/strings'
+import { history } from 'v2/history'
 
 export interface ActionsProps<T> {
   item: T
@@ -42,6 +43,9 @@ export const Actions = <T,>(props: ActionsProps<T>): JSX.Element => {
     getIdFromObj(item),
     'reject'
   )
+  const view = () =>
+    history.push(`/app/authorizer/${category}/${id as string}/view`)
+
   const isUnauthorized = (item as any).status === 'Submitted'
   const showActionDropdown =
     !isApproveLoading && !isRejectLoading && isUnauthorized
@@ -81,6 +85,7 @@ export const Actions = <T,>(props: ActionsProps<T>): JSX.Element => {
                     onClick={approve}
                   />
                   <Action label='Reject' icon={RejectIcon} onClick={reject} />
+                  <Action label='View' icon={LaunchIcon} onClick={view} />
                 </Paper>
               }
             />

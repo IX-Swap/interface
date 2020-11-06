@@ -14,7 +14,12 @@ export const Action: React.FC<ActionProps> = props => {
   const classes = useStyles()
 
   return (
-    <ListItem button key={label} onClick={onClick}>
+    <ListItem
+      className={classes.popoverListItem}
+      button
+      key={label}
+      onClick={onClick}
+    >
       <ListItemIcon
         className={classes.popoverDark}
         style={{ minWidth: '40px' }}
