@@ -10,15 +10,12 @@ export const useCommitmentActivity = (dsoId: string | undefined) => {
 
   useEffect(() => {
     if (dsoId !== undefined) {
-      void apiService.post(
-        `/issuance/dso/${userId}/${dsoId}/activities`,
-        {
-          action: 'Click',
-          type: 'Invest',
-          invariant: 'Invest button was clicked',
-          value: null
-        }
-      )
+      void apiService.post(`/issuance/dso/${userId}/${dsoId}/activities`, {
+        action: 'Click',
+        type: 'Invest',
+        invariant: 'Invest button was clicked',
+        value: null
+      })
     }
   }, [dsoId, apiService, userId])
 }
