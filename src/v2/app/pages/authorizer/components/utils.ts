@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/restrict-template-expressions */
 import { IdentityAddress } from 'v2/types/identity'
 
 export const convertAddressToString = (

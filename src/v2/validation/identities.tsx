@@ -5,6 +5,7 @@ import {
 } from 'v2/app/pages/identity/components/types'
 import {
   addressSchema,
+  dateSchema,
   documentsArraySchema,
   emailSchema,
   genderSchema,
@@ -26,7 +27,7 @@ export const individualIdentityFormValidationSchema = yup
     nationality: yup.string().required('Required'),
     maritalStatus: maritalStatusSchema.required('Required'),
     gender: genderSchema.required('Required'),
-    dob: yup.string().required('Required'),
+    dob: dateSchema.required('Required'),
     countryOfResidence: yup.string().required('Required'),
     contactNumber: yup.string().required('Required'),
     email: emailSchema.required('Required'),
@@ -51,7 +52,7 @@ export const corporateIdentityFormValidationSchema = yup
     logo: yup.string(),
     contactNumber: yup.string().required('Required'),
     registrationNumber: yup.string().required('Required'),
-    dateOfIncorporation: yup.string().required('Required'),
+    dateOfIncorporation: dateSchema.required('Required'),
     countryOfFormation: yup.string().required('Required'),
     companyLegalName: yup.string().required('Required'),
     representatives: personalProfileArraySchema.required('Required'),

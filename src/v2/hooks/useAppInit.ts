@@ -17,7 +17,7 @@ export const useAppInit = () => {
       void getUser()
     } else {
       if (isSuccess) {
-        if (isAccredited && accessToken !== undefined) {
+        if (accessToken !== undefined) {
           socketService.subscribeToSocket(
             accessToken,
             snackbarService.showNotification
