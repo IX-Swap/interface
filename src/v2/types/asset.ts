@@ -4,7 +4,7 @@ import { PaginationArgs } from 'v2/services/api/types'
 export type AssetType = 'Currency' | 'Security'
 
 export interface GetAssetsArgs extends PaginationArgs {
-  type: AssetType
+  type?: AssetType
 }
 
 export interface Asset {
@@ -18,4 +18,10 @@ export interface Asset {
   createdAt: string
   updatedAt: string
   description: any
+  amounts?: {
+    minimumDeposit?: number
+    maximumDeposit?: number
+    minimumWithdrawal?: number
+    maximumWithdrawal?: number
+  }
 }

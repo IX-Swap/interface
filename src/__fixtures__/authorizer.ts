@@ -12,18 +12,18 @@ import { Commitment } from 'v2/types/commitment'
 import { emptyFile } from '__fixtures__/file'
 
 export const asset: Asset = {
-  _id: '2',
-  createdAt: '01-01-2000',
-  updatedAt: '01-01-2000',
-  createdBy: 'Me',
+  _id: '5f732c538a568b50914d8372',
   deleted: false,
-  name: 'XXX',
-  symbol: 'ø',
-  description: 'test asset description',
-  type: 'Security',
+  createdBy: '5f73240373d4ab4b15fc1b2e',
+  symbol: 'SGD',
+  name: 'Singapore Dollars',
+  type: 'Currency',
   numberFormat: {
-    currency: 'xXx'
-  }
+    currency: 'SGD'
+  },
+  createdAt: '2020-09-29T12:45:07.411Z',
+  updatedAt: '2020-10-05T03:14:17.244Z',
+  description: 'test asset description'
 }
 
 export const address = {

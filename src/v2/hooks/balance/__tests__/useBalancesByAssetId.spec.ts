@@ -53,4 +53,26 @@ describe('useBalancesByAssetId', () => {
       )
     })
   })
+
+  it('will not make request if asset id is undefined', async () => {
+    await act(async () => {
+      const post = jest.fn().mockResolvedValueOnce({ data: balance })
+      const apiObj = { post }
+
+      const { result } = renderHookWithServiceProvider(
+        () => useBalancesByAssetId((undefined as unknown) as string),
+        { apiService: apiObj }
+      )
+
+      await waitFor(
+        () => {
+          expect(result.current.status).toBe('idle')
+          expect(parsedDataFn).toHaveBeenCalledTimes(1)
+          expect(parsedDataFn).toHaveBeenNthCalledWith(1, undefined, 'assetId')
+          expect(post).not.toHaveBeenCalled()
+        },
+        { timeout: 1000 }
+      )
+    })
+  })
 })

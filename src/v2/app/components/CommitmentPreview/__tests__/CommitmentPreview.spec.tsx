@@ -68,7 +68,7 @@ describe('CommitmentPreview', () => {
       {
         label: 'Price Per Unit',
         value: formatMoney(
-          props.data?.dso.pricePerUnit,
+          props.data?.dso.pricePerUnit as number,
           props.data?.currency.symbol
         )
       },
@@ -91,7 +91,10 @@ describe('CommitmentPreview', () => {
       8,
       {
         label: 'Total Amount',
-        value: formatMoney(props.data?.totalAmount, props.data?.currency.symbol)
+        value: formatMoney(
+          props.data?.totalAmount as number,
+          props.data?.currency.symbol
+        )
       },
       {}
     )

@@ -4,13 +4,13 @@ import { Grid, InputAdornment, TextField, Button, Box } from '@material-ui/core'
 import { DateRange as DateIcon, Search as SearchIcon } from '@material-ui/icons'
 import DateFnsUtils from '@date-io/date-fns'
 import {
-  DatePicker,
-  DatePickerProps,
+  DateTimePicker,
+  DateTimePickerProps,
   MuiPickersUtilsProvider
 } from '@material-ui/pickers'
 import useStyles from './SearchAndDateFilter.styles'
 import { BaseFilter } from 'v2/types/util'
-import { formatStartDate, formatEndDate } from 'v2/helpers/dates'
+import { convertDateToISO } from 'v2/helpers/dates'
 
 interface SearchAndDateFilterFormValues {
   search: string
@@ -37,8 +37,8 @@ export const SearchAndDateFilter: React.FC<SearchAndDateFilterProps> = props => 
 
   const handleReset = (): void => {
     onApplyFilter({
-      from: formatStartDate(initialValues.from),
-      to: formatEndDate(initialValues.to),
+      from: convertDateToISO(initialValues.from),
+      to: convertDateToISO(initialValues.to),
       search: initialValues.search
     })
     reset()
@@ -48,8 +48,8 @@ export const SearchAndDateFilter: React.FC<SearchAndDateFilterProps> = props => 
     const { search, from, to } = values
 
     onApplyFilter({
-      from: formatStartDate(from),
-      to: formatEndDate(to),
+      from: convertDateToISO(from),
+      to: convertDateToISO(to),
       search
     })
   }
@@ -91,10 +91,10 @@ export const SearchAndDateFilter: React.FC<SearchAndDateFilterProps> = props => 
             control={control}
             defaultValue={null}
             render={props => (
-              <DatePickerComponent
+              <DateTimePickerComponent
                 {...props}
                 label='From'
-                format='MM/dd/yyyy'
+                format='MM/dd/yyyy HH:mm'
               />
             )}
           />
@@ -105,7 +105,11 @@ export const SearchAndDateFilter: React.FC<SearchAndDateFilterProps> = props => 
             control={control}
             defaultValue={null}
             render={props => (
-              <DatePickerComponent {...props} label='To' format='MM/dd/yyyy' />
+              <DateTimePickerComponent
+                {...props}
+                label='To'
+                format='MM/dd/yyyy HH:mm'
+              />
             )}
           />
         </Grid>
@@ -141,9 +145,9 @@ export const SearchAndDateFilter: React.FC<SearchAndDateFilterProps> = props => 
   )
 }
 
-const DatePickerComponent: React.FC<DatePickerProps> = props => {
+const DateTimePickerComponent: React.FC<DateTimePickerProps> = props => {
   return (
-    <DatePicker
+    <DateTimePicker
       {...props}
       autoOk
       variant='inline'

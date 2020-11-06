@@ -1,7 +1,6 @@
 import { Viewable } from 'v2/types/util'
 import React from 'react'
 import { Paper } from '@material-ui/core'
-import { statusColumn } from 'v2/app/pages/authorizer/hooks/useAuthorizerView'
 import { withExtraActions } from 'v2/app/pages/authorizer/components/withExtraActions'
 import {
   TableView,
@@ -13,22 +12,22 @@ interface AuthorizerViewProps<T>
     Viewable<T> {
   idKey?: string
   title: string
-  isAll: boolean
 }
 
 export const AuthorizerTable = <T,>(
   props: AuthorizerViewProps<T>
 ): JSX.Element => {
-  const { columns, name, uri, isAll } = props
+  const { columns, name, uri } = props
 
   return (
     <Paper>
       <TableView<T>
         name={name}
         uri={uri}
-        columns={isAll ? [...columns, statusColumn] : columns}
+        columns={columns}
         actions={withExtraActions<T>()}
         hasActions
+        hasStatus
       />
     </Paper>
   )

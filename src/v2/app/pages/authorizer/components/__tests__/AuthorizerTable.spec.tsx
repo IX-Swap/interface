@@ -4,7 +4,6 @@ import { render, cleanup } from 'test-utils'
 import { TableView } from 'v2/components/TableWithPagination/TableView'
 import { withExtraActions } from 'v2/app/pages/authorizer/components/withExtraActions'
 import { AuthorizerTable } from 'v2/app/pages/authorizer/components/AuthorizerTable'
-import { statusColumn } from 'v2/app/pages/authorizer/hooks/useAuthorizerView'
 
 jest.mock('v2/components/TableWithPagination/TableView', () => ({
   TableView: jest.fn(() => null)
@@ -43,8 +42,9 @@ describe('AuthorizerTable', () => {
       {
         name: props.name,
         uri: props.uri,
-        columns: [...props.columns, statusColumn],
+        columns: [...props.columns],
         actions: null,
+        hasStatus: true,
         hasActions: true
       },
       {}

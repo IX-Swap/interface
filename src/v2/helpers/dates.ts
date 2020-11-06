@@ -20,38 +20,6 @@ export const convertDateToISO = (
   return date.toISOString()
 }
 
-export const formatStartDate = (
-  date: Date | string | null | undefined
-): string | undefined => {
-  const iso = convertDateToISO(date)
-
-  if (iso === undefined) return undefined
-
-  const dateObj = new Date(iso)
-  dateObj.setHours(0)
-  dateObj.setMinutes(0)
-  dateObj.setMilliseconds(0)
-  dateObj.setSeconds(0)
-
-  return dateObj.toISOString()
-}
-
-export const formatEndDate = (
-  date: Date | string | null | undefined
-): string | undefined => {
-  const iso = convertDateToISO(date)
-
-  if (iso === undefined) return undefined
-
-  const dateObj = new Date(iso)
-  dateObj.setHours(23)
-  dateObj.setMinutes(59)
-  dateObj.setMilliseconds(999)
-  dateObj.setSeconds(59)
-
-  return dateObj.toISOString()
-}
-
 export const formatDateToMMDDYY = (s?: string): string => {
   if (s === undefined) {
     return ''

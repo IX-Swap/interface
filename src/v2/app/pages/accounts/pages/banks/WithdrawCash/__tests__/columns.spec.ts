@@ -9,7 +9,9 @@ describe('columns', () => {
       const match = columns.find(el => el.key === 'amount')!
       const formatter = match.render!
 
-      expect(formatter(123.5678, cashWithdrawal)).toEqual('ø 123.57')
+      expect(formatter(123.5678, cashWithdrawal)).toEqual(
+        cashWithdrawal.asset.symbol + ' 123.57'
+      )
     })
   })
 })

@@ -69,4 +69,26 @@ describe('useBankById', () => {
       )
     })
   })
+
+  it('will not invoke api of id is undefined', async () => {
+    await act(async () => {
+      const getFn = jest.fn().mockResolvedValueOnce({ data: bank })
+      const apiObj = { get: getFn }
+      const args: UseBankByIdArgs = { bankId: (undefined as unknown) as string }
+
+      const { result } = renderHookWithServiceProvider(
+        () => useBankById(args),
+        { apiService: apiObj }
+      )
+
+      await waitFor(
+        () => {
+          expect(result.current.status).toBe('idle')
+          expect(getFn).not.toHaveBeenCalled()
+          expect(result.current.data).toEqual(undefined)
+        },
+        { timeout: 1000 }
+      )
+    })
+  })
 })

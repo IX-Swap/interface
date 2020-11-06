@@ -9,29 +9,17 @@ import { RejectButton } from 'v2/app/pages/authorizer/components/RejectButton'
 import { useFormContext } from 'react-hook-form'
 import { AuthorizerFormValues } from 'v2/app/pages/authorizer/components/AuthorizerForm'
 import { AuthorizableStatus } from 'v2/types/util'
-import { useAuthorizerCategory } from 'v2/hooks/location/useAuthorizerCategory'
-import { AuthorizerCategory } from 'v2/types/app'
 
 export interface AuthorizerFormFieldsProps {
   status: AuthorizableStatus
   itemId: string
 }
 
-const transactionalCategories = [
-  AuthorizerCategory.CashDeposits,
-  AuthorizerCategory.CashWithdrawals,
-  AuthorizerCategory.DigitalSecurityWithdrawals,
-  AuthorizerCategory.Commitments
-]
-
 export const AuthorizerFormFields = (props: AuthorizerFormFieldsProps) => {
   const { itemId, status } = props
   const { control } = useFormContext<AuthorizerFormValues>()
-  const category = useAuthorizerCategory()
   const comment = control.watchInternal('comment') as string
   const hasComment = comment !== undefined && comment.trim().length > 0
-  const isTransaction = transactionalCategories.includes(category)
-  const rejectedOrApproved = status === 'Rejected' || status === 'Approved'
   const canApprove = status === 'Submitted' || status === 'Rejected'
   const canReject = status === 'Submitted' || status === 'Approved'
 
@@ -60,15 +48,9 @@ export const AuthorizerFormFields = (props: AuthorizerFormFieldsProps) => {
       />
       <VSpacer size='medium' />
       <Grid container>
-        <ApproveButton
-          itemId={itemId}
-          disabled={isTransaction ? rejectedOrApproved : !canApprove}
-        />
+        <ApproveButton itemId={itemId} disabled={!canApprove} />
         <Box mx={1} />
-        <RejectButton
-          itemId={itemId}
-          disabled={isTransaction ? rejectedOrApproved : !canReject}
-        />
+        <RejectButton itemId={itemId} disabled={!canReject} />
       </Grid>
     </>
   )

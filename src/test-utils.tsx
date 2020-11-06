@@ -135,5 +135,18 @@ export const renderHookWithServiceProvider = (
   return renderHook(hookFn, { wrapper: WithServiceProvider })
 }
 
+export const renderHookWithForm = (
+  hookFn: any,
+  defaultValues: object = {}
+): RenderHookResult<any, any> => {
+  const WithForm: React.FC = ({ children }) => (
+    <BaseProviders>
+      <Form defaultValues={defaultValues}>{children}</Form>
+    </BaseProviders>
+  )
+
+  return renderHook(hookFn, { wrapper: WithForm })
+}
+
 export * from '@testing-library/react'
 export { customRenderer as render }

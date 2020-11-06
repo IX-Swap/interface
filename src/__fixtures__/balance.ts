@@ -11,6 +11,6 @@ export const balance: AssetBalance = {
   symbol: 'ø',
   type: 'Security',
   onHold: 1,
-  available: 1,
+  available: 99999,
   numberFormat: asset.numberFormat
 }

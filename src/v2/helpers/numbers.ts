@@ -1,11 +1,16 @@
-export const formatAmount = (value: number) =>
-  (value ?? 0).toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,')
+export const formatAmount = (value: number) => {
+  if (value === undefined || value === null) return ''
+
+  return value.toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,')
+}
 
 export const formatMoney = (
-  value: number | null = 0,
+  value: number | null,
   symbol: string = 'SGD',
   right = false
 ): string => {
+  if (value === undefined || value === null) return ''
+
   const money = formatAmount(value ?? 0)
   const val = [symbol, money]
 

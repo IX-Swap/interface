@@ -19,10 +19,6 @@ export const columns: Array<TableColumn<CashDeposit>> = [
     label: 'Level'
   },
   {
-    key: 'identity.individual.bankName',
-    label: 'Bank Name'
-  },
-  {
     key: 'depositCode',
     label: 'Deposit Code'
   },

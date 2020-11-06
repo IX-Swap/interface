@@ -26,7 +26,8 @@ export const useBalancesByAssetId = (
 
   const { data, ...rest } = useInfiniteQuery(
     [BALANCES_BY_ASSET_ID_QUERY_KEY, payload],
-    getBalancesByAssetId
+    getBalancesByAssetId,
+    { enabled: (assetId ?? '') !== '' }
   )
 
   return {
