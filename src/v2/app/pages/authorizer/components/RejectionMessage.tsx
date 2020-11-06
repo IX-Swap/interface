@@ -9,7 +9,15 @@ export interface RejectionMessageProps {
 
 export const RejectionMessage = (props: RejectionMessageProps) => {
   const { data } = props
-  const lastItem = data?.[data.length - 1]
+
+  if (data === undefined) {
+    return null
+  }
+
+  const sorted = data.sort((a, b) =>
+    a.timestamp < b.timestamp ? -1 : a.timestamp > b.timestamp ? 1 : 0
+  )
+  const lastItem = sorted[sorted.length - 1]
 
   if (lastItem === undefined || lastItem.status === 'Approved') {
     return null
