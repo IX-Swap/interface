@@ -86,7 +86,7 @@ export const formatDeclarations = (
 
   const result = Object.keys(templates).reduce((acc, key) => {
     const declaration = declarations.find(
-      declaration => Object.keys(declaration)[0] === key
+      declaration => Object.keys(declaration ?? {})[0] === key // declaration ?? {} hack is needed here because server data and new declarations had mismatching, TODO: remove in the next release
     )
 
     return {

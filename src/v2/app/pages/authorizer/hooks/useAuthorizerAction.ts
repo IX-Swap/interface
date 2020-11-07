@@ -1,14 +1,16 @@
 import { useWatch } from 'react-hook-form'
 import { AuthorizerFormValues } from 'v2/app/pages/authorizer/components/AuthorizerForm'
-import { useApproveOrReject } from './useApproveOrReject'
+import {
+  useApproveOrReject,
+  UseApproveOrRejectArgs
+} from './useApproveOrReject'
 
 export const useAuthorizerAction = (
-  id: string,
-  action: 'approve' | 'reject'
+  args: Omit<UseApproveOrRejectArgs, 'payload'>
 ) => {
   const payload = useWatch<AuthorizerFormValues>({
     name: ['comment', 'sharedWithUser']
   })
 
-  return useApproveOrReject(id, action, payload)
+  return useApproveOrReject({ ...args, payload })
 }
