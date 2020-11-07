@@ -24,7 +24,11 @@ export const DataroomFileRow = (props: DataroomFileRowProps) => {
         title={documentInfo?.title ?? ''}
         document={document}
         actions={
-          <UploadButton onClick={handleUpload} isLoading={isUploading} />
+          <UploadButton
+            onClick={handleUpload}
+            isLoading={isUploading}
+            size='small'
+          />
         }
       />
     )

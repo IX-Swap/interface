@@ -1,6 +1,6 @@
 import React from 'react'
 import { FieldsArray } from 'v2/components/form/FieldsArray'
-import { Grid, List } from '@material-ui/core'
+import { Box, Grid, List, Typography } from '@material-ui/core'
 import { TypedField } from 'v2/components/form/TypedField'
 import { plainValueExtractor } from 'v2/helpers/forms'
 import { DataroomUploaderWithFileTypeSelector } from 'v2/components/dataroom/DataroomUploaderWithFileTypeSelector'
@@ -14,20 +14,22 @@ import {
   itemComparator,
   SelectedDocument
 } from 'v2/app/pages/accounts/pages/banks/components/BankDocuments'
+import { useFormError } from 'v2/hooks/useFormError'
 
 export const DSODataroom = () => {
   const { control } = useFormContext<DSOFormValues>()
+  const { hasError, error } = useFormError('documents')
 
   return (
     <SelectionHelper<SelectedDocument> itemComparator={itemComparator}>
       <FieldsArray name='documents' control={control}>
         {({ fields, append, remove }) => (
-          <Grid container direction='column' spacing={2}>
-            <Grid item>
+          <Grid container spacing={2}>
+            <Grid item xs={12}>
               <SelectableDataroomHeader />
             </Grid>
-            <Grid item container direction='column'>
-              <List disablePadding component='div'>
+            <Grid item container xs={12}>
+              <List disablePadding component='div' style={{ width: '100%' }}>
                 {fields.map((field, index) => (
                   // @ts-expect-error
                   <TypedField
@@ -45,9 +47,21 @@ export const DSODataroom = () => {
                 ))}
               </List>
             </Grid>
-            <Grid item container justify='space-between' alignItems='center'>
+            <Grid
+              item
+              xs={12}
+              container
+              justify='space-between'
+              alignItems='center'
+            >
               <DataroomDeleteSelected name='documents' />
-              <DataroomUploaderWithFileTypeSelector append={append} />
+              <Box display='flex' alignItems='center'>
+                {hasError && (
+                  <Typography color='error'>{error.message}</Typography>
+                )}
+                <Box px={1} />
+                <DataroomUploaderWithFileTypeSelector append={append} />
+              </Box>
             </Grid>
           </Grid>
         )}

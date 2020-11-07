@@ -36,18 +36,18 @@ export const accountRoutes: InternalRouteProps[] = [
     color: '#43b526',
     icon: CashDepositIcon,
     path: AccountsRoute.depositCash,
-    label: 'Cash Deposit',
+    label: 'Cash Deposits',
     component: DepositCash
   },
   {
     color: '#e6d200',
     icon: CashWithdrawalIcon,
     path: AccountsRoute.withdrawCash,
-    label: 'Cash Withdrawal',
+    label: 'Cash Withdrawals',
     component: WithdrawCash
   },
   {
-    label: 'Asset Balance',
+    label: 'Asset Balances',
     path: AccountsRoute.balances,
     exact: true,
     component: Balances,

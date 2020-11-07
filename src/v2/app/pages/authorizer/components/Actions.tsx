@@ -40,8 +40,7 @@ export const Actions = <T,>(props: ActionsProps<T>): JSX.Element => {
   })
   const view = () =>
     history.push(`/app/authorizer/${category}/${id as string}/view`)
-  // const isUnauthorized = (item as any).status === 'Submitted'
-  const isUnauthorized = true
+  const isUnauthorized = (item as any).status === 'Submitted'
   const isLoading = isApproving || isRejecting
 
   return (

@@ -77,11 +77,6 @@ describe('DSOForm', () => {
     )
     expect(DSOContainer).toHaveBeenNthCalledWith(
       6,
-      expect.objectContaining({ title: 'Token', children: expect.anything() }),
-      {}
-    )
-    expect(DSOContainer).toHaveBeenNthCalledWith(
-      7,
       expect.objectContaining({
         title: 'Use of Proceeds',
         children: expect.anything()
@@ -89,7 +84,7 @@ describe('DSOForm', () => {
       {}
     )
     expect(DSOContainer).toHaveBeenNthCalledWith(
-      8,
+      7,
       expect.objectContaining({
         title: 'Dataroom',
         children: expect.anything()
@@ -97,7 +92,7 @@ describe('DSOForm', () => {
       {}
     )
     expect(DSOContainer).toHaveBeenNthCalledWith(
-      9,
+      8,
       expect.objectContaining({
         title: 'Fund Raising Milestone',
         children: expect.anything()
@@ -105,7 +100,7 @@ describe('DSOForm', () => {
       {}
     )
     expect(DSOContainer).toHaveBeenNthCalledWith(
-      10,
+      9,
       expect.objectContaining({ title: 'Team', children: expect.anything() }),
       {}
     )

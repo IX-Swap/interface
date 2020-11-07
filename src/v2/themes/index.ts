@@ -9,11 +9,11 @@ interface Themes {
 }
 
 const base = {
-    typography,
-    overrides: {
-      ...overrides,
-      ...rte
-    },
+  typography,
+  overrides: {
+    ...overrides,
+    ...rte
+  }
 }
 
 const themes: Themes = {

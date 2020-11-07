@@ -4,7 +4,6 @@ import { noop } from 'v2/helpers/noop'
 import { transformDSOToFormValues } from 'v2/app/components/DSO/utils'
 import { Box, Grid } from '@material-ui/core'
 import { DSOContainer } from 'v2/app/components/DSO/components/DSOContainer'
-import { DSOToken } from 'v2/app/components/DSO/components/DSOToken'
 import { DSOBaseFields } from 'v2/app/components/DSO/components/DSOBaseFields'
 import { DSOIntroduction } from 'v2/app/components/DSO/components/DSOIntroduction'
 import { DSOStatusFields } from 'v2/app/components/DSO/components/DSOStatusFields'
@@ -31,12 +30,7 @@ export interface DSOFormProps {
 }
 
 export const DSOForm = (props: DSOFormProps) => {
-  const {
-    submitButtonLabel = 'Submit',
-    data,
-    onSubmit = noop,
-    isNew = false
-  } = props
+  const { submitButtonLabel = 'Submit', data, onSubmit = noop } = props
 
   useSetPageTitle(getOfferingName(data))
 
@@ -51,18 +45,13 @@ export const DSOForm = (props: DSOFormProps) => {
         <DSOBaseFields />
         <Grid item container direction='row' spacing={2}>
           <DSOIntroduction />
-          <DSOStatusFields isNew={isNew} />
+          <DSOStatusFields />
         </Grid>
         <Grid item>
           <DSOSubscriptionDocument />
         </Grid>
         <DSOOfferingTerms />
         <DSOBusinessModel />
-        {!isNew && (
-          <DSOContainer title='Token' item xs={12}>
-            <DSOToken />
-          </DSOContainer>
-        )}
         <DSOUseOfProceeds />
         <DSOContainer title='Dataroom' item xs={12}>
           <DSODataroom />
