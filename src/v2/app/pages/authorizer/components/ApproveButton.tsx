@@ -8,7 +8,10 @@ export interface ApproveButtonProps {
 }
 
 export const ApproveButton = (props: ApproveButtonProps) => {
-  const [approve, { isLoading }] = useAuthorizerAction(props.itemId, 'approve')
+  const [approve, { isLoading }] = useAuthorizerAction({
+    id: props.itemId,
+    action: 'approve'
+  })
   const handleClick = async () => await approve()
   const disabled = isLoading || props.disabled
 
