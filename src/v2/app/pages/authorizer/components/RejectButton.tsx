@@ -11,7 +11,10 @@ export interface RejectButtonProps {
 
 export const RejectButton = (props: RejectButtonProps) => {
   const classes = useStyles()
-  const [reject, { isLoading }] = useAuthorizerAction(props.itemId, 'reject')
+  const [reject, { isLoading }] = useAuthorizerAction({
+    id: props.itemId,
+    action: 'reject'
+  })
   const handleClick = async () => await reject()
   const disabled = isLoading || props.disabled
 

@@ -29,7 +29,7 @@ describe('useAuthorizerAction', () => {
       const apiObj = { put: putFn }
       const snackbarObj = { showSnackbar }
       const { result } = renderHookWithServiceProvider(
-        () => useAuthorizerAction(id, 'approve'),
+        () => useAuthorizerAction({ id, action: 'approve' }),
         { apiService: apiObj, snackbarService: snackbarObj }
       )
 
@@ -53,7 +53,7 @@ describe('useAuthorizerAction', () => {
       const apiObj = { put: putFn }
       const snackbarObj = { showSnackbar }
       const { result } = renderHookWithServiceProvider(
-        () => useAuthorizerAction(id, 'approve'),
+        () => useAuthorizerAction({ id, action: 'approve' }),
         { apiService: apiObj, snackbarService: snackbarObj }
       )
 
@@ -77,7 +77,7 @@ describe('useAuthorizerAction', () => {
       const apiObj = { put: putFn }
       const snackbarObj = { showSnackbar }
       const { result } = renderHookWithServiceProvider(
-        () => useAuthorizerAction(id, 'approve'),
+        () => useAuthorizerAction({ id, action: 'approve' }),
         { apiService: apiObj, snackbarService: snackbarObj }
       )
 

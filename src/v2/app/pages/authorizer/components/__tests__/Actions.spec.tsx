@@ -4,6 +4,7 @@ import { render, cleanup } from 'test-utils'
 import { Actions } from 'v2/app/pages/authorizer/components/Actions'
 import { bank } from '__fixtures__/authorizer'
 import { history } from 'v2/history'
+import { AuthorizerRoute } from 'v2/app/pages/authorizer/router'
 
 describe('Actions', () => {
   const props = {
@@ -13,7 +14,7 @@ describe('Actions', () => {
   }
 
   beforeEach(() => {
-    history.push('/')
+    history.push(AuthorizerRoute.banks)
   })
 
   afterEach(async () => {
