@@ -1,9 +1,11 @@
 import { Bank } from '../types/bank'
+import { getAPIUrl, getEnvironment, getSocketTransports } from './utils'
 
-export const API_URL = process.env.REACT_APP_API_URL ?? ''
-export const SOCKET_TRANSPORTS = (
-  process.env.REACT_APP_SOCKET_TRANSPORTS ?? 'websocket'
-).split(',')
+export const API_URL = getAPIUrl(process.env.REACT_APP_API_URL)
+export const SOCKET_TRANSPORTS = getSocketTransports(
+  process.env.REACT_APP_SOCKET_TRANSPORTS
+)
+export const ENVIRONMENT = getEnvironment(API_URL)
 
 export const DATE_FORMAT = 'MM/DD/YYYY'
 export const TIME_FORMAT = 'HH:MM:SS'
