@@ -12,6 +12,7 @@ import {
   PowerSettingsNewOutlined,
   SettingsOutlined
 } from '@material-ui/icons'
+import { List } from '@material-ui/core'
 
 export const UserDropdownContent = (props: DropdownContentProps) => {
   const logout = useLogout()
@@ -19,7 +20,7 @@ export const UserDropdownContent = (props: DropdownContentProps) => {
   const handleClose = props.injectedProps.close
 
   return (
-    <>
+    <List>
       <UserDropdownItem
         icon={AccountCircleOutlined}
         label='Identity'
@@ -46,6 +47,6 @@ export const UserDropdownContent = (props: DropdownContentProps) => {
         onClick={logout}
         onClose={handleClose}
       />
-    </>
+    </List>
   )
 }

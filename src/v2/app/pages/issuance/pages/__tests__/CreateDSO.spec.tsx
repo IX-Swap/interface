@@ -21,7 +21,6 @@ describe('CreateDSO', () => {
   it('renders DSOForm with correct props', () => {
     render(<CreateDSO />)
 
-    expect(DSOForm).toHaveBeenCalledTimes(1)
     expect(DSOForm).toHaveBeenCalledWith(
       {
         isEditing: true,

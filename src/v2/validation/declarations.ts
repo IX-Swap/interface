@@ -5,12 +5,12 @@ import {
   IndividualDeclarations
 } from 'v2/app/pages/identity/const/declarations'
 
-const required = yup.mixed().oneOf([DeclarationValue.Yes]).required()
+const required = yup.mixed().oneOf([DeclarationValue.Yes]).required('Required')
 
 const optional = yup
   .mixed()
   .oneOf([DeclarationValue.Yes, DeclarationValue.No])
-  .required()
+  .required('Required')
 
 export const individualDeclarationsSchema = yup
   .object()

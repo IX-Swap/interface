@@ -77,5 +77,10 @@ export const useStyles = makeStyles((theme: any) => ({
   },
   popoverText: {
     minWidth: '100px'
+  },
+  popoverListItem: {
+    '&:hover': {
+      backgroundColor: '#555555'
+    }
   }
 }))

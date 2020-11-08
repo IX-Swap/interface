@@ -1,30 +1,19 @@
-import {
-  DeploymentInfoFormValues,
-  DSOFormValues,
-  DsoTeamMember
-} from 'v2/types/dso'
+import { DSOFormValues, DsoTeamMember } from 'v2/types/dso'
 import { DataroomFile, FormArrayElement } from 'v2/types/dataroomFile'
 import { string, number, array, object } from 'yup'
+import { dateSchema } from './shared'
 
-export const deploymentInfoValidationSchema = object().shape<
-  DeploymentInfoFormValues
->({
-  controller: string().required('Required'),
-  decimals: number().required('Required'),
-  documentController: string().required('Required'),
-  name: string().required('Required'),
-  owner: string().required('Required'),
-  storageEngine: string().required('Required'),
-  policyBuilder: string().required('Required'),
-  symbol: string().required('Required'),
-  token: string().required('Required'),
-  transactionHash: string().required('Required')
+export const dsoTeamMemberSchema = object().shape<DsoTeamMember>({
+  about: string(),
+  name: string(),
+  position: string(),
+  photo: string()
 })
 
 export const dsoFormValidationSchema = object()
   .shape<DSOFormValues>({
     businessModel: string().required('Required'),
-    capitalStructure: string().required(),
+    capitalStructure: string().required('Required'),
     corporate: string().required('Required'),
     currency: string().required('Required'),
     distributionFrequency: string(),
@@ -37,7 +26,7 @@ export const dsoFormValidationSchema = object()
     investmentPeriod: number(),
     investmentStructure: string(),
     issuerName: string().required('Required'),
-    launchDate: string().required('Required'),
+    launchDate: dateSchema.required('Required'),
     leverage: number(),
     minimumInvestment: number().nullable().required('Required'),
     pricePerUnit: number().nullable().required('Required'),
@@ -52,6 +41,8 @@ export const dsoFormValidationSchema = object()
     policyBuilder: object(),
     status: string(),
     documents: array<FormArrayElement<DataroomFile>>().required('Required'),
-    team: array<DsoTeamMember>().required('Required')
+    team: array<DsoTeamMember>()
+      .of(dsoTeamMemberSchema.required('Required'))
+      .required('Required')
   })
   .notRequired()

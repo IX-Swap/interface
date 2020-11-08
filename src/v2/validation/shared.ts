@@ -57,4 +57,4 @@ export const personalProfileSchema = yup.object().shape<PersonalProfile>({
 
 export const personalProfileArraySchema = yup
   .array<PersonalProfile>()
-  .of(personalProfileSchema.required())
+  .of(personalProfileSchema.required('Required'))

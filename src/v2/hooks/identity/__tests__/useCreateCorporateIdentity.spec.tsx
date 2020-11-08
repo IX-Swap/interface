@@ -86,8 +86,7 @@ describe('useCreateCorporateIdentity', () => {
           const [mutate] = result.current
           void mutate(createIndividualArgs)
 
-          expect(showSnackbar).toHaveBeenNthCalledWith(
-            1,
+          expect(showSnackbar).toHaveBeenCalledWith(
             unsuccessfulResponse.message,
             'error'
           )

@@ -1,10 +1,13 @@
 import React, { createElement, FunctionComponent } from 'react'
-import { Menu } from '@material-ui/core'
 import PopupState, {
-  bindMenu,
+  bindPopper,
   bindTrigger,
   InjectedProps
 } from 'material-ui-popup-state'
+import { DropdownContent } from 'v2/app/components/Dropdown/DropdownContent'
+import { ThemeProvider } from '@material-ui/styles'
+import themes from 'v2/themes'
+import { PopperPlacementType } from '@material-ui/core'
 
 export interface DropdownTriggerProps {
   triggerProps: ReturnType<typeof bindTrigger>
@@ -12,50 +15,47 @@ export interface DropdownTriggerProps {
 }
 
 export interface DropdownContentProps {
-  menuProps: ReturnType<typeof bindMenu>
+  popperProps: ReturnType<typeof bindPopper>
   injectedProps: InjectedProps
 }
 
 export interface DropdownProps {
   trigger: FunctionComponent<DropdownTriggerProps>
   content: FunctionComponent<DropdownContentProps>
+  arrow?: boolean
+  placement?: PopperPlacementType
+  contentTheme?: keyof typeof themes
 }
 
 export const Dropdown = (props: DropdownProps) => {
-  const { content, trigger } = props
+  const {
+    content,
+    trigger,
+    arrow = false,
+    placement = 'bottom-end',
+    contentTheme = 'default'
+  } = props
 
   return (
     <PopupState variant='popper'>
-      {popupState => {
-        const menuProps = bindMenu(popupState)
+      {popupState => (
+        <>
+          {createElement(trigger, {
+            triggerProps: bindTrigger(popupState),
+            injectedProps: popupState
+          })}
 
-        return (
-          <>
-            {createElement(trigger, {
-              triggerProps: bindTrigger(popupState),
-              injectedProps: popupState
-            })}
-
-            <Menu
-              {...menuProps}
-              id='notifications-dropdown'
-              anchorOrigin={{
-                vertical: 'bottom',
-                horizontal: 'right'
-              }}
-              transformOrigin={{
-                horizontal: 'right',
-                vertical: 'top'
-              }}
+          <ThemeProvider theme={themes[contentTheme]}>
+            <DropdownContent
+              popupState={popupState}
+              placement={placement}
+              arrow={arrow}
             >
-              {createElement(content, {
-                injectedProps: popupState,
-                menuProps
-              })}
-            </Menu>
-          </>
-        )
-      }}
+              {content}
+            </DropdownContent>
+          </ThemeProvider>
+        </>
+      )}
     </PopupState>
   )
 }

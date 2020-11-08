@@ -42,7 +42,7 @@ export const individualIdentityFormValidationSchema = yup
     employer: yup.string().required('Required'),
     annualIncome: yup.string().required('Required'),
     documents: documentsArraySchema.required('Required'),
-    declarations: individualDeclarationsSchema.required(),
+    declarations: individualDeclarationsSchema.required('Required'),
     address: addressSchema.required('Required')
   })
 
