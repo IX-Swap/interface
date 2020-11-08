@@ -9,10 +9,13 @@ import { VSpacer } from 'v2/components/VSpacer'
 import { CommitmentFormSubmitButton } from 'v2/app/pages/invest/components/CommitmentFormSubmitButton'
 import { CommitmentFormCancelButton } from 'v2/app/pages/invest/components/CommitmentFormCancelButton'
 import { useOfferingsRouter } from 'v2/app/pages/invest/routers/offeringsRouter'
+import { useCommitmentActivity } from '../hooks/useCommitmentActivity'
 
 export const CommitmentFormWrapper = () => {
   const { params } = useOfferingsRouter()
   const { data, isLoading } = useDSOById(params.dsoId, params.issuerId)
+
+  useCommitmentActivity(data?._id)
 
   if (isLoading || data === undefined) {
     return null

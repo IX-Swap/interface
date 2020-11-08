@@ -1,28 +1,41 @@
-const { override, fixBabelImports, addWebpackResolve } = require('customize-cra')
+const {
+  override,
+  fixBabelImports,
+  addWebpackResolve,
+  addWebpackPlugin
+} = require('customize-cra')
 const path = require('path')
+const webpack = require('webpack')
+const fs = require('fs')
+const version = JSON.parse(fs.readFileSync('./package.json')).version
+
+if (version === undefined) {
+  throw new Error('Failded to get the version')
+}
+
+console.log(version)
 
 module.exports = override(
   fixBabelImports('core', {
     libraryName: '@material-ui/core',
-    // Use "'libraryDirectory': ''," if your bundler does not support ES modules
     libraryDirectory: 'esm',
     camel2DashComponentName: false
   }),
   fixBabelImports('icons', {
     libraryName: '@material-ui/icons',
-    // Use "'libraryDirectory': ''," if your bundler does not support ES modules
     libraryDirectory: 'esm',
     camel2DashComponentName: false
   }),
-  // addWebpackModuleRule({
-  //   test: /\.(ts|tsx)$/,
-  //   loader: 'babel-loader'
-  // }),
   addWebpackResolve({
     modules: [
       path.join(__dirname, 'src'),
       path.join(__dirname, 'node_modules'),
       'node_modules'
     ]
-  })
+  }),
+  addWebpackPlugin(
+    new webpack.DefinePlugin({
+      APP_VERSION: JSON.stringify(version)
+    })
+  )
 )

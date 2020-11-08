@@ -2,7 +2,7 @@ const storageService = {
   get<T>(key: string): T | undefined {
     const data = localStorage.getItem(key)
 
-    if (data !== null) {
+    if (data !== null && data !== undefined) {
       return JSON.parse(data)
     }
   },

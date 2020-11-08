@@ -12,7 +12,6 @@ export const UploadButton = (props: UploadButtonProps) => {
   return (
     <Button
       {...rest}
-      size='large'
       variant='contained'
       color='primary'
       disabled={isLoading}

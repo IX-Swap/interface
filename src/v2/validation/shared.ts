@@ -6,7 +6,7 @@ import { DataroomFile, FormArrayElement } from 'v2/types/dataroomFile'
 import { Maybe } from 'v2/types/util'
 import { AddressValues } from 'v2/app/pages/accounts/types'
 
-export const emailSchema = yup.string().email()
+export const emailSchema = yup.string().email('Invalid email')
 
 export const passwordSchema = yup
   .string()
@@ -21,6 +21,8 @@ export const passwordSchema = yup
 export const maritalStatusSchema = yup
   .mixed()
   .oneOf<PersonalProfileWithAddress['maritalStatus']>(MARITAL_STATUSES)
+
+export const dateSchema = yup.string().nullable()
 
 export const genderSchema = yup
   .mixed()
@@ -47,7 +49,7 @@ export const personalProfileSchema = yup.object().shape<PersonalProfile>({
   nationality: yup.string().required('Required'),
   maritalStatus: maritalStatusSchema.required('Required'),
   gender: genderSchema.required('Required'),
-  dob: yup.string().required('Required'),
+  dob: dateSchema.required('Required'),
   countryOfResidence: yup.string().required('Required'),
   contactNumber: yup.string().required('Required'),
   email: emailSchema.required('Required')
@@ -55,4 +57,4 @@ export const personalProfileSchema = yup.object().shape<PersonalProfile>({
 
 export const personalProfileArraySchema = yup
   .array<PersonalProfile>()
-  .of(personalProfileSchema.required())
+  .of(personalProfileSchema.required('Required'))

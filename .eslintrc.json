@@ -3,6 +3,10 @@
         "jest": true,
         "browser": true,
         "es6": true
+
+    },
+    "globals": {
+        "APP_VERSION": "readonly"
     },
     "ignorePatterns": ["node_modules", "coverage", "reports", "public", ".github", ".scannerwork"],
     "plugins": ["prettier"],

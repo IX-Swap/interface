@@ -1,5 +1,5 @@
 import io from 'socket.io-client'
-import { API_URL } from 'v2/config'
+import { API_URL, SOCKET_TRANSPORTS } from 'v2/config'
 import { Notification } from 'v2/types/notification'
 import { queryCache } from 'react-query'
 import { queryKeys } from 'v2/config/queryKeys'
@@ -36,7 +36,7 @@ const socketService = {
       _socket = io(
         process.env.NODE_ENV === 'test' ? '' : `${API_URL}?token=${token}`,
         {
-          transports: ['polling', 'websocket']
+          transports: SOCKET_TRANSPORTS
         }
       )
 

@@ -38,8 +38,7 @@ describe('useCreateDSO', () => {
           void mutate(createDSOArgs)
 
           expect(callbacks.onSuccess).toHaveBeenCalledTimes(1)
-          expect(showSnackbar).toHaveBeenCalledTimes(1)
-          expect(showSnackbar).toHaveBeenNthCalledWith(1, 'Success', 'success')
+          expect(showSnackbar).toHaveBeenCalledWith('Success', 'success')
         },
         { timeout: 1000 }
       )
@@ -63,10 +62,9 @@ describe('useCreateDSO', () => {
           const [mutate] = result.current
           void mutate(createDSOArgs)
 
-          expect(callbacks.onError).toHaveBeenCalledTimes(1)
-          expect(showSnackbar).toHaveBeenCalledTimes(1)
-          expect(showSnackbar).toHaveBeenNthCalledWith(
-            1,
+          expect(callbacks.onError).toHaveBeenCalled()
+          expect(showSnackbar).toHaveBeenCalled()
+          expect(showSnackbar).toHaveBeenCalledWith(
             unsuccessfulResponse.message,
             'error'
           )

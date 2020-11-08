@@ -21,6 +21,13 @@ export const SelectableDataroomEditRow = (
   props: SelectableDataroomEditRowProps
 ) => {
   const { isSelected, toggleItem, hasSelected, ...rest } = props
+  const handleDelete = () => {
+    if (hasSelected) {
+      toggleItem()
+    }
+
+    rest.onDelete?.()
+  }
 
   return (
     <ListItem component='div' button onClick={toggleItem}>
@@ -30,7 +37,7 @@ export const SelectableDataroomEditRow = (
         </ListItemIcon>
       )}
       <ListItemText>
-        <DataroomRowUploader {...rest} />
+        <DataroomRowUploader {...rest} onDelete={handleDelete} />
       </ListItemText>
     </ListItem>
   )

@@ -19,6 +19,10 @@ export const NotificationGoToItem = (props: NotificationGoToItemProps) => {
     url = `/app/invest/${data.feature}/${data.resourceId}/view`
   }
 
+  if (data.feature === AppFeature.Individuals) {
+    url = `/app/identity/${data.feature}/view`
+  }
+
   if (
     data.feature === AppFeature.Deposits ||
     data.feature === AppFeature.Withdrawals ||
