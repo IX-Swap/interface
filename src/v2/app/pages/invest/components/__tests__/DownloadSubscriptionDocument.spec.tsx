@@ -62,7 +62,7 @@ describe('DownloadSubscriptionDocument', () => {
 
     expect(DownloadSubscriptionDocumentButton).toHaveBeenCalledTimes(1)
     expect(DownloadSubscriptionDocumentButton).toHaveBeenCalledWith(
-      { download: console.log },
+      { download: console.log, isLoading: false },
       {}
     )
   })
