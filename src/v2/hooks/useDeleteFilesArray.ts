@@ -6,6 +6,7 @@ import { SelectedDocument } from 'v2/app/pages/accounts/pages/banks/components/B
 import { useSelectionHelperContext } from 'v2/components/SelectionHelper'
 import { useFormContext } from 'react-hook-form'
 import { DataroomFile, FormArray } from 'v2/types/dataroomFile'
+import { isSuperUser } from 'v2/helpers/acl'
 
 export const useDeleteFilesArray = (name: string) => {
   const { selected, resetSelection } = useSelectionHelperContext<
@@ -20,8 +21,12 @@ export const useDeleteFilesArray = (name: string) => {
     setIsLoading(true)
 
     const pending = selected.map(async ({ id }) => {
-      const url = `/dataroom/${getIdFromObj(user)}/${id}`
-      return await apiService.delete<DataroomFile>(url, {})
+      const userId = getIdFromObj(user)
+      const uri = isSuperUser(user?.roles)
+        ? `/dataroom/${id}`
+        : `/dataroom/${userId}/${id}`
+
+      return await apiService.delete<DataroomFile>(uri, {})
     })
 
     Promise.all(pending)

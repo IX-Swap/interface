@@ -1,9 +1,9 @@
 import React from 'react'
 import { Button } from '@material-ui/core'
+import { DownloadDocumentRendererProps } from 'v2/components/dataroom/DownloadDocument'
 
-export interface DownloadSubscriptionDocumentButtonProps {
-  download: any
-}
+export interface DownloadSubscriptionDocumentButtonProps
+  extends DownloadDocumentRendererProps {}
 
 export const DownloadSubscriptionDocumentButton: React.FC<DownloadSubscriptionDocumentButtonProps> = ({
   download

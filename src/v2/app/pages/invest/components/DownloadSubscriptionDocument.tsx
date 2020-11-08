@@ -17,7 +17,9 @@ export const DownloadSubscriptionDocument = (
       documentId={dso.subscriptionDocument._id}
       ownerId={dso.user}
     >
-      {download => <DownloadSubscriptionDocumentButton download={download} />}
+      {downloadProps => (
+        <DownloadSubscriptionDocumentButton {...downloadProps} />
+      )}
     </DownloadDocument>
   )
 }

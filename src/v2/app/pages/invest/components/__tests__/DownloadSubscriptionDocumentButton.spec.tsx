@@ -8,7 +8,11 @@ import {
 import { fireEvent, waitFor } from '@testing-library/react'
 
 describe('DownloadSubscriptionDocumentButton', () => {
-  const props: DownloadSubscriptionDocumentButtonProps = { download: jest.fn() }
+  const props: DownloadSubscriptionDocumentButtonProps = {
+    download: jest.fn(),
+    isLoading: false
+  }
+
   afterEach(async () => {
     await cleanup()
     jest.clearAllMocks()
