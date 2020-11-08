@@ -7,7 +7,6 @@ import {
 } from 'v2/app/pages/invest/components/DownloadSubscriptionDocument'
 import { dso } from '__fixtures__/authorizer'
 import { DownloadDocument } from 'v2/components/dataroom/DownloadDocument'
-import { DownloadSubscriptionDocumentButton } from 'v2/app/pages/invest/components/DownloadSubscriptionDocumentButton'
 
 jest.mock(
   'v2/app/pages/invest/components/DownloadSubscriptionDocumentButton',
@@ -53,16 +52,6 @@ describe('DownloadSubscriptionDocument', () => {
         ownerId: dso.user,
         children: expect.anything()
       },
-      {}
-    )
-  })
-
-  it('renders DownloadSubscriptionDocumentButton with correct callback', () => {
-    render(<DownloadSubscriptionDocument {...props} />)
-
-    expect(DownloadSubscriptionDocumentButton).toHaveBeenCalledTimes(1)
-    expect(DownloadSubscriptionDocumentButton).toHaveBeenCalledWith(
-      { download: console.log, isLoading: false },
       {}
     )
   })

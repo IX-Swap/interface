@@ -43,6 +43,14 @@ export const useIsAuthorizer = () => {
   return hasRole(user.roles, AppRole.AUTHORIZER)
 }
 
+export const isSuperUser = (roles?: string) => {
+  if (roles === undefined) {
+    return false
+  }
+
+  return hasRole(roles, AppRole.AUTHORIZER) || hasRole(roles, AppRole.ADMIN)
+}
+
 export const useIsIssuer = () => {
   const user = useCachedUser()
 
