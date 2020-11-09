@@ -6,7 +6,6 @@ import { LayoutWithSidebar } from 'v2/app/components/LayoutWithSidebar'
 import { PageHeader } from 'v2/app/components/PageHeader/PageHeader'
 import { Filters } from 'v2/app/pages/authorizer/components/Filters'
 import { AuthorizerTable } from './AuthorizerTable'
-import { useAuthorizerFilter } from 'v2/app/pages/authorizer/hooks/useAuthorizerFilter'
 
 export interface AuthorizerListProps<T>
   extends Omit<TableViewProps<T>, 'actions'>,
@@ -18,8 +17,6 @@ export interface AuthorizerListProps<T>
 export const AuthorizerList = <T,>(
   props: AuthorizerListProps<T>
 ): JSX.Element => {
-  useAuthorizerFilter()
-
   return (
     <LayoutWithSidebar
       sidebar={() => <Filters />}

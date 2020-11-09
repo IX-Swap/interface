@@ -6,6 +6,7 @@ import {
   TableView,
   TableViewProps
 } from 'v2/components/TableWithPagination/TableView'
+import { useAuthorizerFilter } from '../hooks/useAuthorizerFilter'
 
 interface AuthorizerViewProps<T>
   extends Omit<TableViewProps<T>, 'actions'>,
@@ -18,6 +19,7 @@ export const AuthorizerTable = <T,>(
   props: AuthorizerViewProps<T>
 ): JSX.Element => {
   const { columns, name, uri } = props
+  const { data: filter } = useAuthorizerFilter()
 
   return (
     <Paper>
@@ -26,6 +28,7 @@ export const AuthorizerTable = <T,>(
         uri={uri}
         columns={columns}
         actions={withExtraActions<T>()}
+        filter={filter}
         hasActions
         hasStatus
       />
