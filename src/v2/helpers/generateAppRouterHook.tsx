@@ -54,17 +54,22 @@ export function generateAppRouterHook<T>(
         }),
       [location]
     )
-    const params = isTestENV ? location.state : window.history.state ?? {}
+    const params = isTestENV
+      ? location.state
+      : window.history.state?.state ?? window.history.state ?? {}
     const { reset, push } = useBreadcrumbs()
     const roles = useUserRoles()
     const { landing, nested, generic } = getRoutesByType(
       filterRoutes(routes, roles)
     )
-    // console.log([...nested, ...generic])
 
     useEffect(() => {
       reset()
     }, [location.pathname]) // eslint-disable-line
+
+    // console.log(params)
+    // console.log(location.state)
+    console.log(window.history.state)
 
     return {
       current,

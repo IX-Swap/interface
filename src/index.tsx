@@ -20,8 +20,7 @@ import { ReactQueryCacheProvider, QueryCache } from 'react-query'
 const queryCache = new QueryCache({
   defaultConfig: {
     queries: {
-      refetchOnWindowFocus: false,
-      cacheTime: 60000 // cache data for one minute
+      refetchOnWindowFocus: false
     }
   }
 })

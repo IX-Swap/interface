@@ -4,9 +4,11 @@ import { useEffect } from 'react'
 import { useUser } from 'v2/auth/hooks/useUser'
 import { useAccessToken } from 'v2/hooks/auth/useAccessToken'
 import { AppRole, hasRole } from 'v2/helpers/acl'
+import { useQueryCache } from 'react-query'
 
 export const useAppInit = () => {
   const { socketService, snackbarService } = useServices()
+  const queryCache = useQueryCache()
   const accessToken = useAccessToken()
   const [getUser, { data, isLoading, isIdle, isError, isSuccess }] = useUser()
   const user = data?.data
@@ -20,7 +22,8 @@ export const useAppInit = () => {
         if (accessToken !== undefined) {
           socketService.subscribeToSocket(
             accessToken,
-            snackbarService.showNotification
+            snackbarService.showNotification,
+            queryCache
           )
         }
       }
@@ -35,7 +38,8 @@ export const useAppInit = () => {
     isIdle,
     accessToken,
     getUser,
-    isAccredited
+    isAccredited,
+    queryCache
   ])
 
   useBeforeUnload(() => {

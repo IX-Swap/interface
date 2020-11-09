@@ -1,5 +1,4 @@
-import React, { Suspense, useEffect } from 'react'
-import { history } from 'v2/history'
+import React, { Suspense } from 'react'
 import { LoadingFullScreen } from 'v2/auth/components/LoadingFullScreen'
 import { BreadcrumbsProvider } from 'v2/hooks/useBreadcrumbs'
 import { SentryRoute } from 'v2/components/SentryRoute'
@@ -24,14 +23,6 @@ export const EntryPoint = () => {
   const { isSuccess, isFinished } = useAppInit()
 
   useGoogleAnalytics()
-
-  useEffect(() => {
-    history.listen((location, action) => {
-      if (action === 'PUSH') {
-        window.history.replaceState(location.state, 'history')
-      }
-    })
-  }, [])
 
   if (!isFinished) {
     return <LoadingFullScreen />

@@ -1,5 +1,5 @@
-import { useState } from 'react'
-import { queryCache, QueryStatus, useInfiniteQuery } from 'react-query'
+import { useEffect, useState } from 'react'
+import { QueryStatus, useInfiniteQuery, useQueryCache } from 'react-query'
 import { useAPIService } from 'v2/hooks/useAPIService'
 import { KeyValueMap, PaginatedData } from 'v2/services/api/types'
 import { BaseFilter } from 'v2/types/util'
@@ -18,14 +18,20 @@ export interface UseTableWithPaginationReturnType<TData> {
 export const useTableWithPagination = <TData>(
   queryKey: string,
   uri: string,
-  filter: BaseFilter | undefined = queryCache.getQueryData<BaseFilter>(
-    'authorizerFilter'
-  )
+  defaultFilter: BaseFilter | undefined
 ): UseTableWithPaginationReturnType<TData> => {
+  const queryCache = useQueryCache()
   const apiService = useAPIService()
   const [prevPage, setPrevPage] = useState(0)
   const [page, setPage] = useState(0)
   const [rowsPerPage, setRowsPerPage] = useState(25)
+  const filter = defaultFilter
+
+  useEffect(() => {
+    setPage(0)
+    setPrevPage(0)
+  }, [filter])
+
   // eslint-disable-next-line @typescript-eslint/explicit-function-return-type
   const fetcher = async (key: string, p: number, r: number, f?: BaseFilter) => {
     const payload: KeyValueMap<any> = {

@@ -2,12 +2,7 @@
 import React from 'react'
 import { render, cleanup } from 'test-utils'
 import { DSOView, DSOViewProps } from 'v2/app/components/DSO/DSOView'
-import { DSOToken } from 'v2/app/components/DSO/components/DSOToken'
 import { dso } from '__fixtures__/authorizer'
-
-jest.mock('v2/app/components/DSO/components/DSOToken', () => ({
-  DSOToken: jest.fn(() => null)
-}))
 
 describe('DSOView', () => {
   const props: DSOViewProps = { data: dso }
@@ -19,11 +14,5 @@ describe('DSOView', () => {
   window.URL.revokeObjectURL = jest.fn()
   it('renders without error', () => {
     render(<DSOView {...props} />)
-  })
-
-  it('renders DSOToken with correct props', () => {
-    render(<DSOView {...props} />)
-
-    expect(DSOToken).toHaveBeenCalled()
   })
 })
