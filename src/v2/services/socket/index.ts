@@ -1,8 +1,8 @@
 import io from 'socket.io-client'
 import { API_URL, SOCKET_TRANSPORTS } from 'v2/config'
 import { Notification } from 'v2/types/notification'
-import { queryCache } from 'react-query'
 import { queryKeys } from 'v2/config/queryKeys'
+import { QueryCache } from 'react-query'
 
 let _socket: SocketIOClient.Socket | undefined
 
@@ -24,7 +24,8 @@ const socketService = {
 
   subscribeToSocket(
     token: string,
-    onNotification: (notification: Notification) => any
+    onNotification: (notification: Notification) => any,
+    queryCache: QueryCache
   ) {
     try {
       if (_socket?.connected ?? false) {

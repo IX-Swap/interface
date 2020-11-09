@@ -39,7 +39,5 @@ export const FieldsArray = <
     name: pathToString(name)
   })
 
-  console.log(fieldArray.fields)
-
   return children(fieldArray)
 }
