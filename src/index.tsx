@@ -15,6 +15,16 @@ import { ToastProvider } from 'react-toast-notifications'
 import { Toast } from 'v2/components/Toast'
 import { Router, Switch } from 'react-router-dom'
 import { history } from 'v2/history'
+import { ReactQueryCacheProvider, QueryCache } from 'react-query'
+
+const queryCache = new QueryCache({
+  defaultConfig: {
+    queries: {
+      refetchOnWindowFocus: false,
+      cacheTime: 60000 // cache data for one minute
+    }
+  }
+})
 
 const generateClassName = createGenerateClassName({
   productionPrefix: 'ix'
@@ -25,20 +35,22 @@ setupSentry()
 ReactDOM.render(
   <StylesProvider generateClassName={generateClassName}>
     <ThemeProvider theme={Themes.default}>
-      <CssBaseline />
-      <UserProvider>
-        <Router history={history}>
-          <Switch>
-            <ToastProvider
-              components={{ Toast }}
-              autoDismiss={false}
-              placement='bottom-right'
-            >
-              <EntryPoint />
-            </ToastProvider>
-          </Switch>
-        </Router>
-      </UserProvider>
+      <ReactQueryCacheProvider queryCache={queryCache}>
+        <CssBaseline />
+        <UserProvider>
+          <Router history={history}>
+            <Switch>
+              <ToastProvider
+                components={{ Toast }}
+                autoDismiss={false}
+                placement='bottom-right'
+              >
+                <EntryPoint />
+              </ToastProvider>
+            </Switch>
+          </Router>
+        </UserProvider>
+      </ReactQueryCacheProvider>
     </ThemeProvider>
   </StylesProvider>,
   document.getElementById('root')
