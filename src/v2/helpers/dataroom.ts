@@ -23,6 +23,5 @@ export const getDataroomFileId = (file: any) => {
 export const isDocument = (
   value: DataroomFile | null | undefined
 ): value is DataroomFile => {
-  console.log(value)
   return value !== null && value !== undefined && value?._id?.length > 0
 }

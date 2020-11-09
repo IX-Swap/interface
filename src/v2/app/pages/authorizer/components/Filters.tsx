@@ -3,9 +3,10 @@ import { Typography, Grid } from '@material-ui/core'
 import { BaseFilter } from 'v2/types/util'
 import { StatusFilter } from 'v2/app/pages/authorizer/components/StatusFilter'
 import { SearchAndDateFilter } from 'v2/app/pages/authorizer/components/SearchAndDateFilter'
-import { queryCache } from 'react-query'
+import { useQueryCache } from 'react-query'
 
 export const Filters = () => {
+  const queryCache = useQueryCache()
   const onApplyFilter = (filterPart: Partial<BaseFilter>) => {
     queryCache.setQueryData<BaseFilter>('authorizerFilter', filter => ({
       ...filter,
@@ -13,6 +14,7 @@ export const Filters = () => {
     }))
     // TODO: invalidate only current table
     void queryCache.invalidateQueries()
+    void queryCache.refetchQueries()
   }
 
   return (

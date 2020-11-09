@@ -76,6 +76,6 @@ export const useDataFromURL = () => {
       }
     }
 
-    window.history.replaceState(state, 'state')
+    window.history.replaceState(state, 'app-state')
   }, [pathname])
 }

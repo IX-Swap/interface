@@ -14,7 +14,6 @@ import { Actions } from 'v2/app/pages/authorizer/components/Actions'
 import { useTableWithPagination } from 'v2/components/TableWithPagination/hooks/useTableWithPagination'
 import { TableRows } from 'v2/components/TableWithPagination/TableRows'
 import { statusColumn } from 'v2/app/pages/authorizer/hooks/useAuthorizerView'
-import { isFilterAll } from 'v2/app/pages/authorizer/hooks/useAuthorizerFilter'
 
 export interface TableViewRendererProps<T> {
   items: T[]
@@ -67,7 +66,9 @@ export const TableView = <T,>({
   }
 
   const columns =
-    hasStatus && isFilterAll() ? [...columnsProp, statusColumn] : columnsProp
+    hasStatus && filter?.status === ''
+      ? [...columnsProp, statusColumn]
+      : columnsProp
 
   return (
     <>

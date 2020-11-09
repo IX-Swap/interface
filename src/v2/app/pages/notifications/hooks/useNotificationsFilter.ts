@@ -1,12 +1,13 @@
 import { useServices } from 'v2/hooks/useServices'
 import { useEffect, useState } from 'react'
 import { NotificationFilter } from 'v2/types/app'
-import { queryCache } from 'react-query'
+import { useQueryCache } from 'react-query'
 
 export const defaultNotificationFilter = Object.values(NotificationFilter)
 
 export const useNotificationsFilter = () => {
   const { storageService } = useServices()
+  const queryCache = useQueryCache()
   const [filter, setFilter] = useState<NotificationFilter[]>(
     defaultNotificationFilter
   )

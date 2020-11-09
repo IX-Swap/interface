@@ -1,4 +1,4 @@
-import { queryCache, useQuery } from 'react-query'
+import { useQuery, useQueryCache } from 'react-query'
 import {
   filterNotifications,
   getUnreadNotificationsCount
@@ -10,6 +10,7 @@ import { queryKeys } from 'v2/config/queryKeys'
 
 export const useNotifications = (filterByFeature = false) => {
   const { storageService } = useServices()
+  const queryCache = useQueryCache()
   const filter = storageService.get<AppFeature[]>('notificationFilter')
   const { data = [], ...rest } = useQuery(queryKeys.notifications, () => {
     return queryCache.getQueryData<Notification[]>(queryKeys.notifications)

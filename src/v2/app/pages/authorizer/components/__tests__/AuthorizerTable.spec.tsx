@@ -45,7 +45,8 @@ describe('AuthorizerTable', () => {
         columns: [...props.columns],
         actions: null,
         hasStatus: true,
-        hasActions: true
+        hasActions: true,
+        filter: { status: '' }
       },
       {}
     )
