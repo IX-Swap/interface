@@ -7,6 +7,7 @@ import { useAppInit } from 'v2/hooks/useAppInit'
 import { ReactQueryDevtools } from 'react-query-devtools'
 import { Redirect, Switch } from 'react-router-dom'
 import { Page404 } from 'v2/components/Page404'
+import { useGoogleAnalytics } from './hooks/useGoogleAnalytics'
 
 const AuthRoot = React.lazy(
   async () =>
@@ -21,6 +22,8 @@ const AppRoot = React.lazy(
 
 export const EntryPoint = () => {
   const { isSuccess, isFinished } = useAppInit()
+
+  useGoogleAnalytics()
 
   useEffect(() => {
     history.listen((location, action) => {
