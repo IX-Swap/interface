@@ -10,7 +10,7 @@ import { useIsAdmin, useIsAuthorizer } from 'v2/helpers/acl'
 
 export const ALL_CORPORATE_IDENTITIES_QUERY_KEY = 'allCorporateIdentities'
 
-export const useAllCorporateIdentities = (): UsePaginatedQueryData<
+export const useAllCorporateIdentities = (all = false): UsePaginatedQueryData<
   CorporateIdentity
 > => {
   const { user } = useAuth()
@@ -19,7 +19,7 @@ export const useAllCorporateIdentities = (): UsePaginatedQueryData<
   const isSuperUser = isAdmin || isAuthorizer
   const userId = getIdFromObj(user)
   const payload = { ...paginationArgs, userId }
-  const uri = isSuperUser
+  const uri = all && isSuperUser
     ? '/identity/corporates/list'
     : `/identity/corporates/${userId}/list`
   const getAllCorporates = async () => {

@@ -4,7 +4,7 @@ import { MenuItem, Select } from '@material-ui/core'
 import { queryStatusRenderer } from './renderUtils'
 
 export const CorporateSelect = (props: any) => {
-  const { data, status } = useAllCorporateIdentities()
+  const { data, status } = useAllCorporateIdentities(true)
 
   queryStatusRenderer(status)
 
