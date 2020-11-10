@@ -14,8 +14,6 @@ export const NotificationIcon = (props: NotificationIconProps) => {
     color: 'white'
   }
 
-  console.log(type)
-
   return (
     <span
       style={{

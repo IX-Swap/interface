@@ -1328,6 +1328,16 @@
   resolved "https://registry.yarnpkg.com/@emotion/weak-memoize/-/weak-memoize-0.2.5.tgz#8eed982e2ee6f7f4e44c253e12962980791efd46"
   integrity sha512-6U71C2Wp7r5XtFtQzYrW5iKFT67OixrSxjI4MptCHzdSVlgabczzqLe0ZSgnub/5Kp4hSbpDB1tMytZY9pwxxA==
 
+"@fullstory/babel-plugin-annotate-react@^2.0.1":
+  version "2.0.1"
+  resolved "https://registry.yarnpkg.com/@fullstory/babel-plugin-annotate-react/-/babel-plugin-annotate-react-2.0.1.tgz#d279c31dfbf47cd3c9b9ff2491d02b01c1d93964"
+  integrity sha512-F5xsq4nixTJFKIdrrQUW5jKEv7WhzPxjbHVtvJPqqWQkgAqhUe+4MzumSJ9x1zUJaw5JzDOEYqURG6lzfmcIhw==
+
+"@fullstory/browser@^1.4.5":
+  version "1.4.5"
+  resolved "https://registry.yarnpkg.com/@fullstory/browser/-/browser-1.4.5.tgz#a8f48c65bdd0a0d53cc5b3b678b02c715156fd96"
+  integrity sha512-a1EnuwRMa9p8aNauM8rrjH+lqhX2RCo1bHOG3DGcEHXtzV+r8TDeiO8HB8kU1IjE/EXpzAGtQ2F0JMWZhvoaYg==
+
 "@glimmer/env@0.1.7":
   version "0.1.7"
   resolved "https://registry.yarnpkg.com/@glimmer/env/-/env-0.1.7.tgz#fd2d2b55a9029c6b37a6c935e8c8871ae70dfa07"

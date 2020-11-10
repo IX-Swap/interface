@@ -67,10 +67,6 @@ export function generateAppRouterHook<T>(
       reset()
     }, [location.pathname]) // eslint-disable-line
 
-    // console.log(params)
-    // console.log(location.state)
-    console.log(window.history.state)
-
     return {
       current,
       params,
