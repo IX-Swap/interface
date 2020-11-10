@@ -13,8 +13,6 @@ if (version === undefined) {
   throw new Error('Failded to get the version')
 }
 
-console.log(version)
-
 module.exports = override(
   fixBabelImports('core', {
     libraryName: '@material-ui/core',

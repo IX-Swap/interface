@@ -21,7 +21,6 @@ export const UserDropdownItem = (props: UserDropdownItemProps) => {
   const { icon, label, link, onClick, onClose } = props
   const { pathname } = useLocation()
   const isActive = typeof link === 'string' && pathname.startsWith(link)
-  console.log(link, isActive, pathname)
   const classes = useStyles()
   const handleClick = () => {
     onClick?.()

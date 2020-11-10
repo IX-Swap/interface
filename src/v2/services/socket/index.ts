@@ -41,13 +41,9 @@ const socketService = {
         }
       )
 
-      _socket.addEventListener('default', (data: any) => {
-        console.log('default', data)
-      })
+      _socket.addEventListener('default', () => {})
 
-      _socket.addEventListener('main', (data: any) => {
-        console.log('main', data)
-      })
+      _socket.addEventListener('main', () => {})
 
       _socket.addEventListener('notification', (notification: Notification) => {
         onNotification(notification)
