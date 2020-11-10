@@ -16,6 +16,7 @@ import { Toast } from 'v2/components/Toast'
 import { Router, Switch } from 'react-router-dom'
 import { history } from 'v2/history'
 import { ReactQueryCacheProvider, QueryCache } from 'react-query'
+import { setupFullStory } from './setupFullStory'
 
 const queryCache = new QueryCache({
   defaultConfig: {
@@ -30,6 +31,7 @@ const generateClassName = createGenerateClassName({
 })
 
 setupSentry()
+setupFullStory()
 
 ReactDOM.render(
   <StylesProvider generateClassName={generateClassName}>
