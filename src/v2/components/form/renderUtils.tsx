@@ -1,15 +1,18 @@
 import React from 'react'
 import { QueryStatus } from 'react-query'
 
+export const LOADING_TEXT = 'loading...'
+export const ERROR_TEXT = 'error...'
+
 export const queryStatusRenderer = (
   status: QueryStatus
 ): JSX.Element | undefined => {
   if (status === 'loading') {
-    return <div>loading...</div>
+    return <div>{LOADING_TEXT}</div>
   }
 
   if (status === 'error') {
-    return <div>error...</div>
+    return <div>{ERROR_TEXT}</div>
   }
 
   return undefined

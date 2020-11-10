@@ -5,6 +5,7 @@ import { useAssetById } from 'v2/hooks/asset/useAssetById'
 import { useBankById } from 'v2/app/pages/accounts/pages/banks/hooks/useBankById'
 import { useBalancesByAssetId } from 'v2/hooks/balance/useBalancesByAssetId'
 import { getIdFromObj } from 'v2/helpers/strings'
+import { AssetBalance } from 'v2/types/balance'
 
 interface BalancesByBankIdReturnObj {
   canSubmit: boolean
@@ -25,37 +26,32 @@ export const useValidateWithdrawCash = (): BalancesByBankIdReturnObj => {
     assetId
   )
 
-  if (!bankSuccess || !assetSuccess || !balancesSuccess) {
-    return { canSubmit: false }
-  }
+  if (bankSuccess && assetSuccess && balancesSuccess) {
+    if (bank !== undefined && asset !== undefined) {
+      const assetId = bank.currency._id
+      const balance: AssetBalance | undefined = balances.map[assetId]
+      const minWithdraw = asset.amounts?.minimumWithdrawal
+      const maxWithdraw = asset.amounts?.maximumWithdrawal
 
-  if (bank !== undefined && asset !== undefined) {
-    const assetId = bank.currency._id
-    const balance = balances.map[assetId]
-    const minWithdraw = asset.amounts?.minimumWithdrawal
-    const maxWithdraw = asset.amounts?.maximumWithdrawal
+      const { message } = withdrawValidator(
+        amount,
+        balance?.available,
+        minWithdraw,
+        maxWithdraw
+      )
+      const isValid = message === undefined
+      const amountModified =
+        formState.dirtyFields.amount === true ||
+        formState.touched.amount === true
 
-    const { message } = withdrawValidator(
-      amount,
-      balance.available,
-      minWithdraw,
-      maxWithdraw
-    )
-    const canSubmit = message === undefined
-
-    if (
-      !canSubmit &&
-      errors.amount === undefined &&
-      (formState.dirtyFields.amount === true ||
-        formState.touched.amount === true)
-    ) {
-      setError('amount', { message })
+      if (!isValid && errors.amount === undefined && amountModified) {
+        setError('amount', { message })
+      }
+      if (isValid && errors.amount !== undefined) {
+        clearErrors('amount')
+      }
+      return { canSubmit: isValid }
     }
-    if (canSubmit && errors.amount !== undefined) {
-      clearErrors('amount')
-    }
-    return { canSubmit }
   }
-
   return { canSubmit: false }
 }
