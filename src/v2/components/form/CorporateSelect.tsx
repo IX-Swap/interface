@@ -6,7 +6,8 @@ import { queryStatusRenderer } from './renderUtils'
 export const CorporateSelect = (props: any) => {
   const { data, status } = useAllCorporateIdentities(true)
 
-  queryStatusRenderer(status)
+  const queryStatus = queryStatusRenderer(status)
+  if (queryStatus !== undefined) return queryStatus
 
   return (
     <Select {...props} style={{ minWidth: 100 }} label='SELECT ME'>

@@ -71,7 +71,7 @@ export const generateInfiniteQueryResult = ({
   status: queryStatus,
   isError: false,
   isIdle: false,
-  isLoading,
+  isLoading: queryStatus === QueryStatus.Loading || isLoading,
   isSuccess: queryStatus === QueryStatus.Success,
   isFetched: false,
   isFetching: false,

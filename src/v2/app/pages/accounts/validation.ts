@@ -12,7 +12,7 @@ import { MIN_INVESTMENT_AMOUNT } from 'v2/config/defaults'
 
 export const withdrawValidator = (
   amount: number | undefined,
-  available: number,
+  available: number = 0,
   minWithdraw: number = 0,
   maxWithdraw: number = Infinity
 ) => {
