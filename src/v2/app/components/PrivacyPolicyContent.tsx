@@ -1,3 +1,4 @@
+/* eslint-disable */
 import React from 'react'
 
 export const PrivacyPolicyContent = () => {
@@ -21,7 +22,9 @@ export const PrivacyPolicyContent = () => {
         ) collects, uses, shares, discloses and protects information about you,
         including personally identifiable information, in connection with your
         access to our website{' '}
-        <a href='https://investax.io/'>https://investax.io/</a>
+        <a target='_blank' href='https://investax.io/'>
+          https://investax.io/
+        </a>
         <strong>(&ldquo;Site&rdquo;) </strong>including but not limited to
         access to our primary issuance platform (
         <strong>&ldquo;Platform&rdquo;)</strong>
@@ -188,14 +191,17 @@ export const PrivacyPolicyContent = () => {
       </p>
       <p>
         Please refer to{' '}
-        <a href='http://www.google.com/policies/privacy/partners'>
+        <a
+          target='_blank'
+          href='http://www.google.com/policies/privacy/partners'
+        >
           http://www.google.com/policies/privacy/partners
         </a>{' '}
         to find out more about how Google uses data when you use our Site and
         how to control the information sent to Google. You may prevent
         Google&rsquo; s collection and processing of data by using the Google
         Ads Settings page or downloading and installing their browser plug-in (
-        <a href='https://tools.google.com/dlpage/gaoptout'>
+        <a target='_blank' href='https://tools.google.com/dlpage/gaoptout'>
           https://tools.google.com/dlpage/gaoptout
         </a>
         ).
@@ -527,8 +533,10 @@ export const PrivacyPolicyContent = () => {
         time if it is inaccurate. If it is incomplete, you have the right to
         have such personal data rectified. You also have the right to require us
         to delete your personal data as soon as possible by emailing us at{' '}
-        <a href='mailto:privacy@investax.io'>privacy@investax.io</a> where one
-        of the following applies:
+        <a target='_blank' href='mailto:privacy@investax.io'>
+          privacy@investax.io
+        </a>{' '}
+        where one of the following applies:
       </p>
       <ul>
         <li>

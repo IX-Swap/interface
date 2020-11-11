@@ -28,9 +28,14 @@ export const wysiwygToHtml = (draft: string): string => {
   return draftToHtml(JSON.parse(draft))
 }
 
-export const renderPercentage = (value: Maybe<Number> = 0) => (
-  <span>{Number.parseFloat(`${value ?? 0}`) * 100} %</span>
-)
+export const renderPercentage = (value?: Maybe<Number>) => {
+  // TODO: remove when backend is fixed
+  if (value === null || value === undefined || value === 0) {
+    return undefined
+  }
+
+  return <span>{Number.parseFloat(`${value}`) * 100} %</span>
+}
 
 export const renderMonths = (value: string | number | undefined | null) =>
   value !== undefined ? `${value} months` : undefined

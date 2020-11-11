@@ -38,7 +38,6 @@ export const CompanyInfoView = (props: CompanyInfoViewProps) => {
           label='Date of Incorporation'
         />
       </Grid>
-      <Grid item xs={4} />
       <Grid item xs={4}>
         <LabelledValue value={data.email} label='Email Address' />
       </Grid>

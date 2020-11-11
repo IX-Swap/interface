@@ -122,7 +122,7 @@ export const DSOView = (props: DSOViewProps) => {
             <Grid item>
               <LabelledValue
                 label='Minimum Investment'
-                value={formatMoney(data.minimumInvestment, data.asset)}
+                value={formatMoney(data.minimumInvestment, data.tokenSymbol)}
               />
             </Grid>
           </Grid>
