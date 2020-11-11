@@ -88,7 +88,7 @@ describe('IndividualIdentityForm', () => {
     )
     expect(Section).toHaveBeenNthCalledWith(
       5,
-      { title: 'Declaration & Acknowledgement', children: expect.anything() },
+      { title: 'Declaration', children: expect.anything() },
       {}
     )
   })

@@ -62,7 +62,7 @@ export const IndividualIdentityForm = (
         </Grid>
 
         <Grid item xs={12}>
-          <Section title='Declaration & Acknowledgement'>
+          <Section title='Declaration'>
             <DeclarationFields type='individual' />
           </Section>
         </Grid>

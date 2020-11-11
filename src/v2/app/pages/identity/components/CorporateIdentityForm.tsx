@@ -62,10 +62,7 @@ export const CorporateIdentityForm = (
           </Section>
         </Grid>
         <Grid item xs={12}>
-          <Section
-            title='Declaration & Acknowledgement'
-            subtitle='Confirmation'
-          >
+          <Section title='Declaration'>
             <DeclarationFields type='corporate' />
           </Section>
         </Grid>

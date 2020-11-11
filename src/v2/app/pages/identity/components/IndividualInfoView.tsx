@@ -3,6 +3,7 @@ import { ExtendedIdentityProfile } from 'v2/types/identity'
 import { Grid } from '@material-ui/core'
 import { Avatar } from 'v2/components/Avatar'
 import { LabelledValue } from 'v2/components/LabelledValue'
+import { formatDateToMMDDYY } from 'v2/helpers/dates'
 
 export interface IndividualInfoViewProps {
   data: ExtendedIdentityProfile
@@ -26,7 +27,10 @@ export const IndividualInfoView = (props: IndividualInfoViewProps) => {
         <LabelledValue value={data.lastName} label='Last Name' />
       </Grid>
       <Grid item xs={4}>
-        <LabelledValue label='Date of Birth' value={data.dob} />
+        <LabelledValue
+          label='Date of Birth'
+          value={formatDateToMMDDYY(data.dob)}
+        />
       </Grid>
       <Grid item xs={4}>
         <LabelledValue value={data.nationality} label='Nationality' />

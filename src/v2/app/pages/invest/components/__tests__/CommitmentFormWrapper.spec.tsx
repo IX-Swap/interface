@@ -8,7 +8,7 @@ import { dso } from '__fixtures__/authorizer'
 import { OfferingRoute } from 'v2/app/pages/invest/routers/offeringsRouter'
 import { CommitmentHeader } from 'v2/app/pages/invest/components/CommitmentHeader'
 import { CommitmentFormFields } from 'v2/app/pages/invest/components/CommitmentFormFields'
-import { DownloadSubscriptionDocument } from 'v2/app/pages/invest/components/DownloadSubscriptionDocument'
+import { DownloadDSOSubscriptionDocument } from 'v2/app/components/DSO/components/DownloadDSOSubscriptionDocument'
 import { CommitmentFormSubmitButton } from 'v2/app/pages/invest/components/CommitmentFormSubmitButton'
 import { CommitmentFormCancelButton } from 'v2/app/pages/invest/components/CommitmentFormCancelButton'
 
@@ -19,8 +19,8 @@ jest.mock('v2/app/pages/invest/components/CommitmentFormFields', () => ({
   CommitmentFormFields: jest.fn(() => null)
 }))
 jest.mock(
-  'v2/app/pages/invest/components/DownloadSubscriptionDocument',
-  () => ({ DownloadSubscriptionDocument: jest.fn(() => null) })
+  'v2/app/components/DSO/components/DownloadDSOSubscriptionDocument',
+  () => ({ DownloadDSOSubscriptionDocument: jest.fn(() => null) })
 )
 jest.mock('v2/app/pages/invest/components/CommitmentFormSubmitButton', () => ({
   CommitmentFormSubmitButton: jest.fn(() => null)
@@ -82,13 +82,17 @@ describe('CommitmentFormWrapper', () => {
     )
   })
 
-  it('renders DownloadSubscriptionDocument with correct props', () => {
+  it('renders DownloadDSOSubscriptionDocument with correct props', () => {
     jest
       .spyOn(useDSOByIdHook, 'useDSOById')
       .mockReturnValue({ isLoading: false, data: dso } as any)
+
     render(<CommitmentFormWrapper />)
 
-    expect(DownloadSubscriptionDocument).toHaveBeenCalledWith({ dso: dso }, {})
+    expect(DownloadDSOSubscriptionDocument).toHaveBeenCalledWith(
+      expect.objectContaining({ dsoId: dso._id }),
+      {}
+    )
   })
 
   it('renders CommitmentFormSubmitButton correctly', () => {

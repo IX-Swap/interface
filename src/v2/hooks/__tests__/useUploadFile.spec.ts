@@ -83,7 +83,7 @@ describe('useUploadFile', () => {
           )
           expect(showSnackbar).toHaveBeenNthCalledWith(
             1,
-            'Failed to upload the file',
+            unsuccessfulResponse.message,
             'error'
           )
         },
