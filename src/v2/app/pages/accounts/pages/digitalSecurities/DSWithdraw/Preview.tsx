@@ -6,6 +6,7 @@ import { useFormContext } from 'react-hook-form'
 import { WithdrawDSFormValues } from 'v2/app/pages/accounts/types'
 import { TypedField } from 'v2/components/form/TypedField'
 import { Submit } from 'v2/components/form/Submit'
+import { privateClassNames } from 'v2/helpers/classnames'
 
 export const Preview: React.FC = () => {
   const { control } = useFormContext<WithdrawDSFormValues>()
@@ -15,6 +16,7 @@ export const Preview: React.FC = () => {
       <Summary />
       <Grid item container direction='column'>
         <TypedField
+          className={privateClassNames()}
           control={control}
           component={Input}
           name='otp'

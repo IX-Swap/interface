@@ -4,6 +4,7 @@ import { TypedField } from 'v2/components/form/TypedField'
 import { useFormContext } from 'react-hook-form'
 import { LoginArgs } from 'v2/types/auth'
 import useStyles from 'v2/auth/styles'
+import { privateClassNames } from 'v2/helpers/classnames'
 
 export const LoginFields = () => {
   const { control } = useFormContext<LoginArgs>()
@@ -41,6 +42,7 @@ export const LoginFields = () => {
           label='OTP Code (optional)'
           variant='outlined'
           autoComplete='off'
+          className={privateClassNames()}
         />
       </Grid>
     </>

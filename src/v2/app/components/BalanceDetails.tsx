@@ -4,6 +4,7 @@ import { LabelledValue } from 'v2/components/LabelledValue'
 import { AssetBalance } from 'v2/types/balance'
 import { useSetPageTitle } from 'v2/app/hooks/useSetPageTitle'
 import { getOfferingName } from 'v2/helpers/strings'
+import { privateClassNames } from 'v2/helpers/classnames'
 
 export interface BalanceDetailsProps {
   data: AssetBalance
@@ -15,7 +16,7 @@ export const BalanceDetails = (props: BalanceDetailsProps) => {
   useSetPageTitle(getOfferingName(data))
 
   return (
-    <Paper>
+    <Paper className={privateClassNames()}>
       <Box px={4} py={2}>
         <Grid container direction='column' spacing={1}>
           <Grid item>

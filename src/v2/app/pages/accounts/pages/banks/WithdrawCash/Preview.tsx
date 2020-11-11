@@ -23,26 +23,31 @@ export const Preview: React.FC = () => {
   const items = [
     {
       label: 'Bank',
-      value: bank.bankName
+      value: bank.bankName,
+      secret: true
     },
     {
       label: 'Account No',
-      value: bank.bankAccountNumber
+      value: bank.bankAccountNumber,
+      secret: true
     },
     {
       label: 'Account Number',
-      value: INVESTAX_BANK.bankAccountNumber ?? ''
+      value: INVESTAX_BANK.bankAccountNumber ?? '',
+      secret: true
     },
     {
       label: 'Withdraw Amount',
-      value: formatMoney(amountFormatted, bank.currency.numberFormat.currency)
+      value: formatMoney(amountFormatted, bank.currency.numberFormat.currency),
+      secret: true
     }
   ]
 
   if (memo !== undefined) {
     items.push({
       label: 'Memo',
-      value: memo
+      value: memo,
+      secret: true
     })
   }
 

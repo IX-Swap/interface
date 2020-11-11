@@ -28,22 +28,26 @@ export const Summary: React.FC = () => {
   const items = [
     {
       label: 'Name of Token',
-      value: asset.name
+      value: asset.name,
+      secret: true
     },
     {
       label: 'Withdrawal Amount',
-      value: formatMoney(amount, asset.numberFormat.currency)
+      value: formatMoney(amount, asset.numberFormat.currency),
+      secret: true
     },
     {
       label: 'Account Number',
-      value: INVESTAX_BANK.bankAccountNumber ?? ''
+      value: INVESTAX_BANK.bankAccountNumber ?? '',
+      secret: true
     }
   ]
 
   if (memo !== undefined) {
     items.push({
       label: 'Memo',
-      value: memo
+      value: memo,
+      secret: true
     })
   }
 

@@ -5,6 +5,7 @@ import { convertAddressToString } from 'v2/app/pages/authorizer/components/utils
 import { LabelledValue } from 'v2/components/LabelledValue'
 import { SupportingDocuments } from 'v2/app/components/SupportingDocuments'
 import { useSetPageTitle } from 'v2/app/hooks/useSetPageTitle'
+import { privateClassNames } from 'v2/helpers/classnames'
 
 export interface BankViewProps {
   data: Bank
@@ -37,12 +38,17 @@ export const BankPreview: React.FC<BankViewProps> = ({ data }) => {
       <Grid item container spacing={3}>
         <Grid item xs={4}>
           <LabelledValue
+            className={privateClassNames()}
             label='Bank Account Number'
             value={data.bankAccountNumber}
           />
         </Grid>
         <Grid item xs={4}>
-          <LabelledValue label='Swift Code' value={data.swiftCode} />
+          <LabelledValue
+            className={privateClassNames()}
+            label='Swift Code'
+            value={data.swiftCode}
+          />
         </Grid>
       </Grid>
       <Grid item container spacing={3}>
