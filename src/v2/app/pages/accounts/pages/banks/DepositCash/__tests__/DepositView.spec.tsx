@@ -6,7 +6,7 @@ import { Setup } from 'v2/app/pages/accounts/pages/banks/DepositCash/Setup'
 import { Preview } from 'v2/app/pages/accounts/pages/banks/DepositCash/Preview'
 import { BackButton } from 'v2/app/pages/accounts/pages/banks/components/BackButton'
 import { ContinueButton } from 'v2/app/pages/accounts/pages/banks/DepositCash/ContinueButton'
-import { BankDetails } from 'v2/app/components/BankDetails'
+// import { BankDetails } from 'v2/app/components/BankDetails'
 import { SuccessView } from 'v2/app/pages/accounts/pages/banks/components/SuccessView'
 import { ResetButton } from 'v2/app/pages/accounts/pages/banks/components/ResetButton'
 import { AlertAndOTP } from 'v2/app/pages/accounts/pages/banks/components/AlertAndOTP'
@@ -69,7 +69,7 @@ describe('DepositView', () => {
     })
 
     expect(Setup).toBeCalled()
-    expect(BankDetails).toBeCalled()
+    // expect(BankDetails).toBeCalled()
     expect(ContinueButton).toBeCalled()
     expect(Preview).not.toBeCalled()
     expect(SuccessView).not.toBeCalled()
@@ -85,7 +85,7 @@ describe('DepositView', () => {
     })
 
     expect(Setup).toBeCalled()
-    expect(BankDetails).toBeCalled()
+    // expect(BankDetails).toBeCalled()
     expect(ContinueButton).not.toBeCalled()
     expect(Preview).toBeCalled()
     expect(SuccessView).not.toBeCalled()
@@ -101,7 +101,7 @@ describe('DepositView', () => {
     })
 
     expect(Setup).not.toBeCalled()
-    expect(BankDetails).not.toBeCalled()
+    // expect(BankDetails).not.toBeCalled()
     expect(ContinueButton).not.toBeCalled()
     expect(Preview).not.toBeCalled()
     expect(SuccessView).toBeCalled()

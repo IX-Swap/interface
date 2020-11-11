@@ -10,6 +10,7 @@ import { AssetSelect } from 'v2/components/form/AssetSelect'
 import { useFormContext } from 'react-hook-form'
 import { DSOFormValues } from 'v2/types/dso'
 import { documentValueExtractor } from 'v2/app/components/DSO/utils'
+import { DataroomFileType } from 'v2/config/dataroom'
 
 export const DSOBaseFields = () => {
   const { control } = useFormContext<DSOFormValues>()
@@ -35,8 +36,9 @@ export const DSOBaseFields = () => {
             control={control}
             render={DataroomAvatarUploader}
             valueExtractor={documentValueExtractor}
+            accept={DataroomFileType.image}
             documentInfo={{
-              type: 'Logo'
+              type: 'DSO Logo'
             }}
           />
         </Grid>

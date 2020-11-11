@@ -16,7 +16,6 @@ export interface IndividualDeclarations<TValue = Maybe<DeclarationValue>> {
   USPerson: TValue
   TreatAsAccreditedInvestor: TValue
   PrimaryIssuancePlatform: TValue
-  SecondaryTradingPlatform: TValue
   TrueAndCorrectInformation: TValue
   InformAnyChanges: TValue
 }
@@ -32,7 +31,6 @@ export interface CorporateDeclarations<TValue = Maybe<DeclarationValue>> {
   USPerson: TValue
   TreatAsAccreditedInvestor: TValue
   PrimaryIssuancePlatform: TValue
-  SecondaryTradingPlatform: TValue
   TrueAndCorrectInformation: TValue
   InformAnyChanges: TValue
 }
@@ -115,14 +113,6 @@ export const individualDeclarationsTemplate: IndividualDeclarations<DeclarationT
     header: 'The Applicant acknowledges and understands:',
     content:
       'InvestaX operates its primary issuance platform as a capital markets services licensee under the SFA (Cap. 289) of Singapore for dealing in capital markets products that are securities and units in a collective investment schemes, and an exempt financial advisor for the provision of advice on units in collective investment schemes, under license number CMS100635-1.',
-    value: null,
-    answerable: true,
-    subLevel: true
-  },
-  SecondaryTradingPlatform: {
-    key: 'SecondaryTradingPlatform',
-    content:
-      'InvestaX operates its secondary trading platform (“Exchange”) in a regulatory sandbox under a Recognized Market Operator (“RMO”) approval issued by the Monetary Authority of Singapore (“MAS”) during the period [DDMMYYYY to DDMMYYYY], subject to extension. While in the sandbox, the Exchange will operate under pre-determined parameters and is not required to meet some of the standard requirements imposed on RMOs under the SFA. It may be possible that InvestaX may not continue to conduct regulated activities as an RMO under the SFA during or after the sandbox period as determined by the MAS.',
     value: null,
     answerable: true,
     subLevel: true,
@@ -228,14 +218,6 @@ export const corporateDeclarationsTemplate: CorporateDeclarations<DeclarationTem
     header: 'The Applicant acknowledges and understands:',
     content:
       'InvestaX operates its primary issuance platform as a capital markets services licensee under the SFA (Cap. 289) of Singapore for dealing in capital markets products that are securities and units in a collective investment schemes, and an exempt financial advisor for the provision of advice on units in collective investment schemes, under license number CMS100635-1.',
-    value: null,
-    answerable: true,
-    subLevel: true
-  },
-  SecondaryTradingPlatform: {
-    key: 'SecondaryTradingPlatform',
-    content:
-      'InvestaX operates its secondary trading platform (“Exchange”) in a regulatory sandbox under a Recognized Market Operator (“RMO”) approval issued by the Monetary Authority of Singapore (“MAS”) during the period [DDMMYYYY to DDMMYYYY], subject to extension. While in the sandbox, the Exchange will operate under pre-determined parameters and is not required to meet some of the standard requirements imposed on RMOs under the SFA. It may be possible that InvestaX may not continue to conduct regulated activities as an RMO under the SFA during or after the sandbox period as determined by the MAS.',
     value: null,
     answerable: true,
     subLevel: true,

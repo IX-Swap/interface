@@ -9,6 +9,7 @@ import { documentValueExtractor } from 'v2/app/components/DSO/utils'
 import { DatePicker } from 'v2/components/form/DatePicker'
 import { CountrySelect } from 'v2/components/form/CountrySelect'
 import { dateTimeValueExtractor } from 'v2/helpers/forms'
+import { DataroomFileType } from 'v2/config/dataroom'
 
 export const CompanyInfoFields = () => {
   const { control } = useFormContext<CorporateIdentity>()
@@ -25,9 +26,9 @@ export const CompanyInfoFields = () => {
           name='logo'
           label='Company Logo'
           valueExtractor={documentValueExtractor}
+          accept={DataroomFileType.image}
           documentInfo={{
-            type: 'Company Logo',
-            title: 'Company Logo'
+            type: 'Company Logo'
           }}
         />
       </Grid>

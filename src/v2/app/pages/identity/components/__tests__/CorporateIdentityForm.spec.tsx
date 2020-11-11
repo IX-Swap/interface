@@ -136,8 +136,7 @@ describe('CorporateIdentityForm', () => {
       4,
       {
         children: expect.anything(),
-        subtitle: 'Confirmation',
-        title: 'Declaration & Acknowledgement'
+        title: 'Declaration'
       },
       {}
     )

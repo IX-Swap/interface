@@ -2,18 +2,14 @@ import React from 'react'
 import { TableColumn } from 'v2/types/util'
 import { formatMoney, formatAmount } from 'v2/helpers/numbers'
 import { Commitment } from 'v2/types/commitment'
-import { Avatar } from 'v2/components/Avatar'
 import { renderStatusColumn } from 'v2/app/pages/authorizer/hooks/useAuthorizerView'
+import { DSOLogo } from 'v2/app/components/DSO/components/DSOLogo'
 
 export const renderCommitmentMoney = (a: number, row: Commitment) =>
   formatMoney(a, row.currency.numberFormat.currency)
+
 export const renderCommitmentAvatar = (a: string, row: Commitment) => (
-  <Avatar
-    documentId={row.dso.logo}
-    ownerId={row.dso.user}
-    size={40}
-    variant='circle'
-  />
+  <DSOLogo dsoId={row.dso._id} size={40} />
 )
 
 export const columns: Array<TableColumn<Commitment>> = [

@@ -46,8 +46,8 @@ export const useUploadFile = (
       void snackbarService.showSnackbar(message, 'success')
       callbacks?.onSuccess?.(data)
     },
-    onError: error => {
-      void snackbarService.showSnackbar('Failed to upload the file', 'error')
+    onError: (error: any) => {
+      void snackbarService.showSnackbar(error.message, 'error')
       callbacks?.onError?.(error)
     }
   })

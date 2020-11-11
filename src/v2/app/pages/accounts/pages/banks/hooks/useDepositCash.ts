@@ -1,4 +1,4 @@
-import { queryCache, useMutation } from 'react-query'
+import { useMutation, useQueryCache } from 'react-query'
 import { useAuth } from 'v2/hooks/auth/useAuth'
 import { useServices } from 'v2/hooks/useServices'
 import { useDepositStore } from 'v2/app/pages/accounts/pages/banks/context'
@@ -8,6 +8,7 @@ import { getIdFromObj } from 'v2/helpers/strings'
 
 export const useDepositCash = () => {
   const { user } = useAuth()
+  const queryCache = useQueryCache()
   const { setCurrentStep } = useDepositStore()
   const { apiService, snackbarService } = useServices()
   const userId = getIdFromObj(user)

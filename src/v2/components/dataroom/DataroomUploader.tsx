@@ -40,7 +40,7 @@ export const DataroomUploader = (props: DataroomUploaderProps) => {
     onChange,
     onDelete,
     render,
-    accept = DataroomFileType.all,
+    accept = DataroomFileType.document,
     multiple = false
   } = props
   const inputRef = useRef<HTMLInputElement | null>(null)

@@ -1,5 +1,6 @@
 export enum DataroomFileType {
-  image = 'image/png,image/jpg,image/jpeg',
+  image = 'image/jpg,image/jpeg,image/png,image/gif,image/tiff,image/webp,image/svg,image/apng,image/avif,image/jfif,image/pjpeg,image/pjp',
+  document = 'image/jpg,image/jpeg,image/png,image/gif,image/tiff,image/webp,image/svg,image/apng,image/avif,image/jfif,image/pjpeg,image/pjp,.docx,.xlsx,.pdf,.odt,.txt,.csv',
   all = '*'
 }
 
