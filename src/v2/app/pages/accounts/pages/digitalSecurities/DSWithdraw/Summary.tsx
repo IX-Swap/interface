@@ -38,8 +38,7 @@ export const Summary: React.FC = () => {
     },
     {
       label: 'Account Number',
-      value: INVESTAX_BANK.bankAccountNumber ?? '',
-      secret: true
+      value: INVESTAX_BANK.bankAccountNumber ?? ''
     }
   ]
 

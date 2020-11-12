@@ -23,8 +23,7 @@ export const Preview: React.FC = () => {
   const items = [
     {
       label: 'Bank',
-      value: bank.bankName,
-      secret: true
+      value: bank.bankName
     },
     {
       label: 'Account No',
@@ -33,8 +32,7 @@ export const Preview: React.FC = () => {
     },
     {
       label: 'Account Number',
-      value: INVESTAX_BANK.bankAccountNumber ?? '',
-      secret: true
+      value: INVESTAX_BANK.bankAccountNumber ?? ''
     },
     {
       label: 'Withdraw Amount',
