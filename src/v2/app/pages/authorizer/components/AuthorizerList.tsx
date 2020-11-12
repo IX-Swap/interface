@@ -19,7 +19,8 @@ export const AuthorizerList = <T,>(
 ): JSX.Element => {
   return (
     <LayoutWithSidebar
-      sidebar={() => <Filters />}
+      secret
+      sidebar={Filters}
       content={() => (
         <Grid container direction='column'>
           <Grid item>

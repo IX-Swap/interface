@@ -1,8 +1,8 @@
 import React from 'react'
-import { INVESTAX_BANK } from 'v2/config'
+// import { INVESTAX_BANK } from 'v2/config'
 import { Grid } from '@material-ui/core'
 import { DepositForm } from 'v2/app/pages/accounts/pages/banks/DepositCash/DepositForm'
-import { BankDetails } from 'v2/app/components/BankDetails'
+// import { BankDetails } from 'v2/app/components/BankDetails'
 import { observer } from 'mobx-react'
 import { generateRandom } from 'v2/helpers/numbers'
 import { useDepositStore } from 'v2/app/pages/accounts/pages/banks/context'
@@ -37,11 +37,11 @@ export const DepositView: React.FC = observer(() => {
             {isPreview && <Preview depositCode={depositCode} />}
             {isSuccess && <SuccessView title='Deposit Successful' />}
           </Grid>
-          {(isSetup || isPreview) && (
-            <Grid item>
-              <BankDetails bank={INVESTAX_BANK} code={depositCode} />
-            </Grid>
-          )}
+          {/* {(isSetup || isPreview) && ( */}
+          {/*  <Grid item> */}
+          {/*    <BankDetails bank={INVESTAX_BANK} code={depositCode} /> */}
+          {/*  </Grid> */}
+          {/* )} */}
           {isPreview && <AlertAndOTP alert={DepositCashAlert} />}
           <Grid item>
             <Grid container direction='column' spacing={1}>

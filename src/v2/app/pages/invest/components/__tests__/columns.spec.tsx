@@ -3,9 +3,11 @@ import React from 'react'
 import { render, cleanup } from 'test-utils'
 import { renderCommitmentMoney, renderCommitmentAvatar } from '../columns'
 import { commitment } from '__fixtures__/authorizer'
-import { Avatar } from 'v2/components/Avatar'
+import { DSOLogo } from 'v2/app/components/DSO/components/DSOLogo'
 
-jest.mock('v2/components/Avatar', () => ({ Avatar: jest.fn(() => null) }))
+jest.mock('v2/app/components/DSO/components/DSOLogo', () => ({
+  DSOLogo: jest.fn(() => null)
+}))
 
 describe('renderCommitmentMoney', () => {
   it('returns formatted amount', () => {
@@ -29,16 +31,13 @@ describe('renderCommitmentAvatar', () => {
     render(<>{renderCommitmentAvatar('', commitment)}</>)
   })
 
-  it('renders Avatar with correct props', () => {
+  it('renders DSOLogo with correct props', () => {
     render(<>{renderCommitmentAvatar('', commitment)}</>)
 
-    expect(Avatar).toHaveBeenCalledTimes(1)
-    expect(Avatar).toHaveBeenCalledWith(
+    expect(DSOLogo).toHaveBeenCalledWith(
       {
-        documentId: commitment.dso.logo,
-        ownerId: commitment.dso.user,
-        size: 40,
-        variant: 'circle'
+        dsoId: commitment.dso._id,
+        size: 40
       },
       {}
     )

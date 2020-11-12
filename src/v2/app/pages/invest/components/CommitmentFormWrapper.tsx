@@ -4,12 +4,12 @@ import { Card, CardContent, Grid } from '@material-ui/core'
 import { CommitmentFormFields } from 'v2/app/pages/invest/components/CommitmentFormFields'
 import { CommitmentHeader } from 'v2/app/pages/invest/components/CommitmentHeader'
 import { CommitmentForm } from 'v2/app/pages/invest/components/CommitmentForm'
-import { DownloadSubscriptionDocument } from 'v2/app/pages/invest/components/DownloadSubscriptionDocument'
 import { VSpacer } from 'v2/components/VSpacer'
 import { CommitmentFormSubmitButton } from 'v2/app/pages/invest/components/CommitmentFormSubmitButton'
 import { CommitmentFormCancelButton } from 'v2/app/pages/invest/components/CommitmentFormCancelButton'
 import { useOfferingsRouter } from 'v2/app/pages/invest/routers/offeringsRouter'
 import { useCommitmentActivity } from '../hooks/useCommitmentActivity'
+import { DownloadDSOSubscriptionDocument } from 'v2/app/components/DSO/components/DownloadDSOSubscriptionDocument'
 
 export const CommitmentFormWrapper = () => {
   const { params } = useOfferingsRouter()
@@ -34,7 +34,15 @@ export const CommitmentFormWrapper = () => {
         <Grid item container justify='center'>
           <Card style={{ width: 450 }} elevation={0}>
             <CardContent>
-              <DownloadSubscriptionDocument dso={data} />
+              <DownloadDSOSubscriptionDocument
+                dsoId={data._id}
+                variant='contained'
+                color='primary'
+                size='medium'
+                fullWidth
+              >
+                Download Subscription Document
+              </DownloadDSOSubscriptionDocument>
               <VSpacer size='small' />
               <CommitmentFormFields symbol={data.currency.symbol} />
               <VSpacer size='small' />

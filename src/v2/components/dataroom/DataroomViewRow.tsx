@@ -7,16 +7,24 @@ import { DataroomFile } from 'v2/types/dataroomFile'
 export interface DataroomViewRowProps {
   title: string
   document: DataroomFile
+  downloader?: JSX.Element
 }
 
 export const DataroomViewRow = (props: DataroomViewRowProps) => {
-  const { document, title } = props
+  const { document, title, downloader } = props
 
   return (
     <Grid container alignItems='center'>
       <DataroomColumns title={title} document={document} />
       <Grid container item xs={2} justify='flex-end'>
-        <DownloadDocument documentId={document?._id} ownerId={document?.user} />
+        {downloader !== undefined ? (
+          downloader
+        ) : (
+          <DownloadDocument
+            documentId={document?._id}
+            ownerId={document?.user}
+          />
+        )}
       </Grid>
     </Grid>
   )

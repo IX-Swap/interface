@@ -1,11 +1,10 @@
 import React from 'react'
 import { DigitalSecurityOffering } from 'v2/types/dso'
 import { DSOContainer } from 'v2/app/components/DSO/components/DSOContainer'
-import { Avatar, Grid, List, ListItem, Typography } from '@material-ui/core'
+import { Grid, List, ListItem, Typography } from '@material-ui/core'
 import { renderStringToHTML } from 'v2/app/components/DSO/utils'
 import { DSOToken } from 'v2/app/components/DSO/components/DSOToken'
 import { DataroomHeader } from 'v2/components/dataroom/DataroomHeader'
-import { ViewDocument } from 'v2/app/components/DSO/components/ViewDocument'
 import { LabelledValue } from 'v2/components/LabelledValue'
 import { formatDateToMMDDYY } from 'v2/helpers/dates'
 import { DataroomViewRow } from 'v2/components/dataroom/DataroomViewRow'
@@ -16,6 +15,10 @@ import { formatMoney } from 'v2/helpers/numbers'
 import { RejectionMessage } from 'v2/app/pages/authorizer/components/RejectionMessage'
 import { getIdFromObj } from 'v2/helpers/strings'
 import { useAuth } from 'v2/hooks/auth/useAuth'
+import { DSOLogo } from './components/DSOLogo'
+import { DownloadDSOSubscriptionDocument } from 'v2/app/components/DSO/components/DownloadDSOSubscriptionDocument'
+import { DownloadDSODocument } from 'v2/app/components/DSO/components/DownloadDSODocument'
+import { DSOTeamMemberPhoto } from 'v2/app/components/DSO/components/DSOTeamMemberPhoto'
 
 export interface DSOViewProps {
   data: DigitalSecurityOffering
@@ -40,11 +43,7 @@ export const DSOView = (props: DSOViewProps) => {
 
       <Grid item container spacing={3}>
         <Grid item>
-          <ViewDocument documentId={data.logo} ownerId={data.user}>
-            {url => (
-              <Avatar src={url ?? ''} style={{ width: 80, height: 80 }} />
-            )}
-          </ViewDocument>
+          <DSOLogo dsoId={data._id} size={80} />
         </Grid>
 
         <Grid item>
@@ -123,7 +122,7 @@ export const DSOView = (props: DSOViewProps) => {
             <Grid item>
               <LabelledValue
                 label='Minimum Investment'
-                value={formatMoney(data.minimumInvestment, data.asset)}
+                value={formatMoney(data.minimumInvestment, data.tokenSymbol)}
               />
             </Grid>
           </Grid>
@@ -135,6 +134,13 @@ export const DSOView = (props: DSOViewProps) => {
           <DataroomViewRow
             title='Subscription Document'
             document={data.subscriptionDocument}
+            downloader={
+              <DownloadDSOSubscriptionDocument
+                size='small'
+                variant='outlined'
+                dsoId={data._id}
+              />
+            }
           />
         </DSOContainer>
       </Grid>
@@ -228,7 +234,16 @@ export const DSOView = (props: DSOViewProps) => {
               divider={index !== (data?.documents?.length ?? 0) - 1}
               style={{ minHeight: 50 }}
             >
-              <DataroomViewRow title={document.type} document={document} />
+              <DataroomViewRow
+                title={document.type}
+                document={document}
+                downloader={
+                  <DownloadDSODocument
+                    dsoId={data._id}
+                    documentId={document._id}
+                  />
+                }
+              />
             </ListItem>
           ))}
         </List>
@@ -250,15 +265,12 @@ export const DSOView = (props: DSOViewProps) => {
             style={{ marginBottom: 24 }}
           >
             <Grid item>
-              <ViewDocument documentId={member.photo ?? ''} ownerId={data.user}>
-                {url => (
-                  <Avatar
-                    src={url ?? ''}
-                    variant='rounded'
-                    style={{ width: 250, height: 250 }}
-                  />
-                )}
-              </ViewDocument>
+              <DSOTeamMemberPhoto
+                dsoId={data._id}
+                photoId={member.photo}
+                variant='rounded'
+                size={250}
+              />
             </Grid>
 
             <Grid item container direction='column' spacing={1}>

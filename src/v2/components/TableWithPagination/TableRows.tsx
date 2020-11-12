@@ -2,6 +2,7 @@ import React from 'react'
 import { TableViewProps } from 'v2/components/TableWithPagination/TableView'
 import { TableBody, TableCell, TableRow } from '@material-ui/core'
 import { get } from 'lodash'
+import { privateClassNames } from 'v2/helpers/classnames'
 
 interface TableRowsProps<T> extends TableViewProps<T> {
   items: T[]
@@ -20,6 +21,7 @@ export const TableRows = <T,>(props: TableRowsProps<T>): JSX.Element => {
               <TableCell
                 align={column.align ?? 'left'}
                 key={`row-${column.key}`}
+                className={column.secret === true ? privateClassNames() : ''}
               >
                 {column.key.length > 0 &&
                   (typeof column.render === 'function'

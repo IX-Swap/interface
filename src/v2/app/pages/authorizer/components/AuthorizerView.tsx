@@ -12,6 +12,7 @@ import { PageHeader } from 'v2/app/components/PageHeader/PageHeader'
 import { Form } from 'v2/components/form/Form'
 import { useAuthorizerCategory } from 'v2/hooks/location/useAuthorizerCategory'
 import { AuthorizerCategory } from 'v2/types/app'
+import { privateClassNames } from 'v2/helpers/classnames'
 
 export interface AuthorizerViewProps<T> {
   title: string
@@ -40,7 +41,7 @@ export const AuthorizerView = <T,>(
   const showForm = !(isTransaction && approvedOrRejected)
 
   return (
-    <Container>
+    <Container className={privateClassNames()}>
       <Grid container direction='column'>
         <Grid item>
           <PageHeader />

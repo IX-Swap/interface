@@ -13,6 +13,8 @@ import { CountrySelect } from 'v2/components/form/CountrySelect'
 import { GenderSelect } from 'v2/components/form/GenderSelect'
 import { MaritalStatusSelect } from 'v2/components/form/MaritalStatusSelect'
 import { useIndividualInfoDefaultEmail } from 'v2/hooks/auth/useIndividualInfoDefaultEmail'
+import { DataroomFileType } from 'v2/config/dataroom'
+import { privateClassNames } from 'v2/helpers/classnames'
 
 export interface IndividualInfoFieldsProps {
   rootName?: string
@@ -41,9 +43,9 @@ export const IndividualInfoFields = (
           label='Photo'
           render={DataroomAvatarUploader}
           valueExtractor={documentValueExtractor}
+          accept={DataroomFileType.image}
           documentInfo={{
-            type: 'User Photo',
-            title: 'User Photo'
+            type: 'User Photo'
           }}
         />
       </Grid>
@@ -77,6 +79,7 @@ export const IndividualInfoFields = (
       <Grid item xs={4}>
         {/* @ts-ignore */}
         <TypedField
+          className={privateClassNames()}
           rootName={rootName}
           control={control}
           name='dob'
@@ -117,6 +120,7 @@ export const IndividualInfoFields = (
       </Grid>
       <Grid item xs={4}>
         <TypedField
+          className={privateClassNames()}
           rootName={rootName}
           component={Input}
           control={control}

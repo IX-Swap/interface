@@ -4,6 +4,7 @@ import { useFormContext } from 'react-hook-form'
 import { useBanksData } from 'v2/app/pages/accounts/pages/banks/hooks/useBanksData'
 import { Grid } from '@material-ui/core'
 import { WithdrawCashFormValues } from 'v2/app/pages/accounts/types'
+import { privateClassNames } from 'v2/helpers/classnames'
 
 export const BankPreview: React.FC = () => {
   const { watch } = useFormContext<WithdrawCashFormValues>()
@@ -16,7 +17,7 @@ export const BankPreview: React.FC = () => {
   }
 
   return (
-    <Grid item data-testid='BankPreview'>
+    <Grid item data-testid='BankPreview' className={privateClassNames()}>
       <BankDetails bank={bank} />
     </Grid>
   )

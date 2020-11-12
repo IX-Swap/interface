@@ -6,13 +6,14 @@ import { Actions } from 'v2/app/pages/invest/components/Actions'
 import { Paper } from '@material-ui/core'
 import { useAuth } from 'v2/hooks/auth/useAuth'
 import { getIdFromObj } from 'v2/helpers/strings'
+import { privateClassNames } from 'v2/helpers/classnames'
 
 export const MyCommitments = () => {
   const { user } = useAuth()
   const userId = getIdFromObj(user)
 
   return (
-    <Paper variant='outlined'>
+    <Paper variant='outlined' className={privateClassNames()}>
       <TableView<Commitment>
         uri={`/issuance/commitments/list/${userId}`}
         name={`commitments-${userId}`}
