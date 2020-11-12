@@ -55,7 +55,8 @@ describe('Preview', () => {
         items: [
           {
             label: 'Deposit Code',
-            value: depositCode
+            value: depositCode,
+            secret: true
           },
           {
             label: 'Account Number',

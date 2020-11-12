@@ -15,6 +15,7 @@ export const columns = [
   {
     label: 'Amount',
     key: 'amount',
+    secret: true,
     render: formatAmount
   },
   {
@@ -24,6 +25,7 @@ export const columns = [
   },
   {
     label: 'Information',
-    key: 'hash'
+    key: 'hash',
+    secret: true
   }
 ]

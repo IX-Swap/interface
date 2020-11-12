@@ -4,6 +4,7 @@ import { IdentityAddress } from 'v2/types/identity'
 import { TypedField } from 'v2/components/form/TypedField'
 import { CountrySelect } from 'v2/components/form/CountrySelect'
 import { useFormContext } from 'react-hook-form'
+import { privateClassNames } from 'v2/helpers/classnames'
 
 export interface AddressFieldsProps<FormType> {
   rootName?: 'address' | 'companyAddress'
@@ -16,7 +17,7 @@ export const AddressFields = <FormType,>(
   const { control } = useFormContext<IdentityAddress>()
 
   return (
-    <Grid container spacing={3}>
+    <Grid container spacing={3} className={privateClassNames()}>
       <Grid item xs={4}>
         <TypedField
           component={Input}

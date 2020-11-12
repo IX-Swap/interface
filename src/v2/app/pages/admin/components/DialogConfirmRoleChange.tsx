@@ -5,6 +5,7 @@ import DialogContent from '@material-ui/core/DialogContent'
 import DialogTitle from '@material-ui/core/DialogTitle'
 import Button from '@material-ui/core/Button'
 import User from 'v2/types/user'
+import { privateClassNames } from 'v2/helpers/classnames'
 
 export interface DialogConfirmRoleChangeProps {
   user: User
@@ -23,6 +24,7 @@ export default function DialogConfirmRoleChange({
 }: DialogConfirmRoleChangeProps) {
   return (
     <Dialog
+      className={privateClassNames()}
       disableBackdropClick
       disableEscapeKeyDown
       open={open}

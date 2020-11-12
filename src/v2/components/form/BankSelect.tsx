@@ -3,6 +3,7 @@ import { MenuItem, Select, SelectProps } from '@material-ui/core'
 import { useBanksData } from 'v2/app/pages/accounts/pages/banks/hooks/useBanksData'
 import { queryStatusRenderer } from 'v2/components/form/renderUtils'
 import { AuthorizableStatus } from 'v2/types/util'
+import { privateClassNames } from 'v2/helpers/classnames'
 
 export const BankSelect = (
   props: Partial<SelectProps> & { status?: AuthorizableStatus }
@@ -15,12 +16,12 @@ export const BankSelect = (
 
   const filteredBanks = data.list.filter(({ status }) => status === bankStatus)
   return (
-    <Select {...props}>
+    <Select {...props} className={privateClassNames()}>
       <MenuItem disabled value={undefined}>
         Bank
       </MenuItem>
       {filteredBanks.map(({ _id, bankName, bankAccountNumber }) => (
-        <MenuItem key={_id} value={_id}>
+        <MenuItem key={_id} value={_id} className={privateClassNames()}>
           {bankName} – {bankAccountNumber}
         </MenuItem>
       ))}

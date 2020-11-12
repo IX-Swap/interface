@@ -13,6 +13,7 @@ export const columns: Array<TableColumn<AssetBalance>> = [
     label: 'Balance',
     headAlign: 'right',
     align: 'right',
+    secret: true,
     render: renderAmount
   },
   {
@@ -20,6 +21,7 @@ export const columns: Array<TableColumn<AssetBalance>> = [
     label: 'On Hold',
     headAlign: 'right',
     align: 'right',
+    secret: true,
     render: renderAmount
   },
   {
@@ -27,6 +29,7 @@ export const columns: Array<TableColumn<AssetBalance>> = [
     label: 'Available',
     headAlign: 'right',
     align: 'right',
+    secret: true,
     render: renderAmount
   }
 ]

@@ -102,11 +102,13 @@ describe('Summary', () => {
     const items = [
       {
         label: 'Name of Token',
-        value: asset.name
+        value: asset.name,
+        secret: true
       },
       {
         label: 'Withdrawal Amount',
-        value: formatMoney(dsWithdrawal.amount, asset.numberFormat.currency)
+        value: formatMoney(dsWithdrawal.amount, asset.numberFormat.currency),
+        secret: true
       },
       {
         label: 'Account Number',
@@ -114,7 +116,8 @@ describe('Summary', () => {
       },
       {
         label: 'Memo',
-        value: 'hello'
+        value: 'hello',
+        secret: true
       }
     ]
     jest
@@ -141,11 +144,13 @@ describe('Summary', () => {
     const items = [
       {
         label: 'Name of Token',
-        value: asset.name
+        value: asset.name,
+        secret: true
       },
       {
         label: 'Withdrawal Amount',
-        value: formatMoney(dsWithdrawal.amount, asset.numberFormat.currency)
+        value: formatMoney(dsWithdrawal.amount, asset.numberFormat.currency),
+        secret: true
       },
       {
         label: 'Account Number',

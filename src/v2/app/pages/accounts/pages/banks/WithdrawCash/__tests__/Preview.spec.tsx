@@ -85,6 +85,7 @@ describe('Preview', () => {
           },
           {
             label: 'Account No',
+            secret: true,
             value: bank.bankAccountNumber
           },
           {
@@ -93,6 +94,7 @@ describe('Preview', () => {
           },
           {
             label: 'Withdraw Amount',
+            secret: true,
             value: formatMoney(
               cashDeposit.amount,
               bank.currency.numberFormat.currency
@@ -100,6 +102,7 @@ describe('Preview', () => {
           },
           {
             label: 'Memo',
+            secret: true,
             value: formValues.memo
           }
         ]

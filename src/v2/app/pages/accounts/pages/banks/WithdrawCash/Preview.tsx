@@ -27,7 +27,8 @@ export const Preview: React.FC = () => {
     },
     {
       label: 'Account No',
-      value: bank.bankAccountNumber
+      value: bank.bankAccountNumber,
+      secret: true
     },
     {
       label: 'Account Number',
@@ -35,14 +36,16 @@ export const Preview: React.FC = () => {
     },
     {
       label: 'Withdraw Amount',
-      value: formatMoney(amountFormatted, bank.currency.numberFormat.currency)
+      value: formatMoney(amountFormatted, bank.currency.numberFormat.currency),
+      secret: true
     }
   ]
 
   if (memo !== undefined) {
     items.push({
       label: 'Memo',
-      value: memo
+      value: memo,
+      secret: true
     })
   }
 

@@ -8,6 +8,7 @@ import { DataroomUploader } from 'v2/components/dataroom/DataroomUploader'
 import { NumericInput } from 'v2/components/form/NumericInput'
 import { numericValueExtractor, plainValueExtractor } from 'v2/helpers/forms'
 import { UploadSignedSubscriptionDocument } from 'v2/components/dataroom/UploadSignedSubscriptionDocument'
+import { privateClassNames } from 'v2/helpers/classnames'
 
 export interface CommitmentFormFieldsProps {
   symbol: string
@@ -83,6 +84,7 @@ export const CommitmentFormFields = (props: CommitmentFormFieldsProps) => {
 
       <Grid item>
         <TypedField
+          className={privateClassNames()}
           component={Input}
           control={control}
           name='walletAddress'
@@ -92,6 +94,7 @@ export const CommitmentFormFields = (props: CommitmentFormFieldsProps) => {
 
       <Grid item>
         <TypedField
+          className={privateClassNames()}
           component={Input}
           control={control}
           name='otp'

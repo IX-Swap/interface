@@ -9,6 +9,7 @@ import { SubscriptionDocument } from 'v2/app/components/SubscriptionDocument'
 import { Maybe } from 'v2/types/util'
 import { useSetPageTitle } from 'v2/app/hooks/useSetPageTitle'
 import { getOfferingName } from 'v2/helpers/strings'
+import { privateClassNames } from 'v2/helpers/classnames'
 
 export interface CommitmentPreviewProps {
   data: Maybe<Commitment>
@@ -26,7 +27,7 @@ export const CommitmentPreview: React.FC<CommitmentPreviewProps> = (
   }
 
   return (
-    <Grid container spacing={4}>
+    <Grid container spacing={4} className={privateClassNames()}>
       <Grid item container spacing={4}>
         <Grid item xs={4}>
           <LabelledValue

@@ -5,10 +5,11 @@ import storageHelper from 'v2/helpers/storageHelper'
 import columns from 'v2/app/pages/invest/components/columns'
 import { Actions } from 'v2/app/pages/invest/components/Actions'
 import { Paper } from '@material-ui/core'
+import { privateClassNames } from 'v2/helpers/classnames'
 
 export const MyCommitments = () => {
   return (
-    <Paper variant='outlined'>
+    <Paper variant='outlined' className={privateClassNames()}>
       <TableView<Commitment>
         uri={`/issuance/commitments/list/${storageHelper.getUserId()}`}
         name={`commitments-${storageHelper.getUserId()}`}
