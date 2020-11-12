@@ -20,13 +20,15 @@ const columns: Array<TableColumn<CashWithdrawal>> = [
   },
   {
     key: 'bank.bankAccountNumber',
-    label: 'Bank Account Number'
+    label: 'Bank Account Number',
+    secret: true
   },
   {
     key: 'amount',
     align: 'right',
     headAlign: 'right',
     label: 'Amount',
+    secret: true,
     render: (val: number, row: CashWithdrawal) =>
       formatMoney(val, row.asset.symbol)
   },
