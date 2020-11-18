@@ -23,6 +23,7 @@
     "draft-js": "^0.11.5",
     "draftjs-to-html": "^0.9.1",
     "eslint-config-react-app": "^5.2.1",
+    "ethers": "^5.0.19",
     "flat": "^5.0.0",
     "kaktana-react-lightweight-charts": "^1.1.2",
     "lodash": "^4.17.15",
@@ -127,8 +128,8 @@
   "scripts": {
     "start": "react-app-rewired start",
     "build": "react-app-rewired build",
-    "test": "CI=true react-scripts test --env=jest-environment-jsdom-sixteen --silent --runInBand",
-    "test:ci": "CI=true react-scripts test --env=jest-environment-jsdom-sixteen --silent --coverage --testResultsProcessor jest-sonar-reporter --maxWorkers=4",
+    "test": "react-scripts test --env=jest-environment-jsdom-sixteen --runInBand",
+    "test:ci": "CI=true react-scripts test --env=jest-environment-jsdom-sixteen --silent --coverage --testResultsProcessor jest-sonar-reporter --maxWorkers=75%",
     "eject": "react-scripts eject",
     "deploy": "gulp deploy",
     "lint": "eslint --cache --fix \"src/**/*.{ts,tsx}\"",
