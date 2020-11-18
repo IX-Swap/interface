@@ -1,4 +1,3 @@
-/**  * @jest-environment jsdom-sixteen  */
 import { act, renderHook } from '@testing-library/react-hooks'
 import { waitFor, cleanup } from 'test-utils'
 import * as useCachedUserHook from 'v2/hooks/auth/useCachedUser'

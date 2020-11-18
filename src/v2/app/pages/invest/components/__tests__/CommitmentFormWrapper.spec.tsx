@@ -1,4 +1,3 @@
-/**  * @jest-environment jsdom-sixteen  */
 import React from 'react'
 import { render, cleanup } from 'test-utils'
 import { CommitmentFormWrapper } from 'v2/app/pages/invest/components/CommitmentFormWrapper'

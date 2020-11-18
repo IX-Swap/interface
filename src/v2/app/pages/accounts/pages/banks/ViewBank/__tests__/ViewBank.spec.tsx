@@ -1,4 +1,3 @@
-/**  * @jest-environment jsdom-sixteen  */
 import React from 'react'
 import { cleanup, render } from 'test-utils'
 import ViewBank from 'v2/app/pages/accounts/pages/banks/ViewBank/ViewBank'

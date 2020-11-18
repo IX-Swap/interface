@@ -1,4 +1,3 @@
-/**  * @jest-environment jsdom-sixteen  */
 import React from 'react'
 import { renderWithUserStore, cleanup } from 'test-utils'
 import { Balances } from 'v2/app/pages/accounts/pages/balances/Balances'

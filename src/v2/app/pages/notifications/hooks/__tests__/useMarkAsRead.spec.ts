@@ -1,4 +1,3 @@
-/**  * @jest-environment jsdom-sixteen  */
 import { act } from '@testing-library/react-hooks'
 import { waitFor, cleanup, renderHookWithServiceProvider } from 'test-utils'
 import { useMarkAsRead } from 'v2/app/pages/notifications/hooks/useMarkAsRead'

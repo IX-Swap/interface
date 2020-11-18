@@ -1,4 +1,3 @@
-/**  * @jest-environment jsdom-sixteen  */
 import React, { PropsWithChildren } from 'react'
 import { render, cleanup } from 'test-utils'
 import {

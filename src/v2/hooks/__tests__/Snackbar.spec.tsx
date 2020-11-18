@@ -1,4 +1,3 @@
-/**  * @jest-environment jsdom-sixteen  */
 import React from 'react'
 import { render, cleanup } from 'test-utils'
 import { Snackbar, SnackbarProps } from 'v2/hooks/Snackbar'

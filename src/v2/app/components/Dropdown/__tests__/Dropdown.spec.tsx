@@ -1,4 +1,3 @@
-/**  * @jest-environment jsdom-sixteen  */
 import React from 'react'
 import { render, cleanup } from 'test-utils'
 import { Dropdown, DropdownProps } from 'v2/app/components/Dropdown/Dropdown'

@@ -1,4 +1,3 @@
-/**  * @jest-environment jsdom-sixteen  */
 import React from 'react'
 import { render, cleanup, waitFor, fireEvent } from 'test-utils'
 import {

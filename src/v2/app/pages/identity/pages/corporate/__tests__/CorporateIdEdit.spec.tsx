@@ -1,4 +1,3 @@
-/**  * @jest-environment jsdom-sixteen  */
 import React from 'react'
 import { render, cleanup } from 'test-utils'
 import { CorporateIdEdit } from 'v2/app/pages/identity/pages/corporate/CorporateIdEdit'
