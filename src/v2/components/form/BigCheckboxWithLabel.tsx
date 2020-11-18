@@ -1,25 +1,25 @@
 import {
-  Checkbox as MUICheckbox,
   FormControlLabel,
   FormControlLabelProps,
   Typography
 } from '@material-ui/core'
 import React from 'react'
 import { TypedFieldRenderComponentProps } from 'v2/components/form/types'
+import { BigCheckbox } from 'v2/app/components/BigCheckbox'
 
-export interface CheckboxProps extends Omit<FormControlLabelProps, 'control'> {}
+export interface BigCheckboxWithLabelProps
+  extends Omit<FormControlLabelProps, 'control'> {}
 
-export const Checkbox = (
-  props: CheckboxProps & TypedFieldRenderComponentProps<boolean>
+export const BigCheckboxWithLabel = (
+  props: BigCheckboxWithLabelProps & TypedFieldRenderComponentProps<boolean>
 ) => {
   const { name, value, label, error = true, control, ...rest } = props
-  console.log(error)
 
   return (
     <FormControlLabel
       {...rest}
       checked={value}
-      control={<MUICheckbox name={name} />}
+      control={<BigCheckbox name={name} />}
       label={
         <Typography variant='body1' color={error ? 'error' : 'inherit'}>
           {label}

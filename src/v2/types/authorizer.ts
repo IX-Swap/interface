@@ -39,6 +39,8 @@ export const DataroomFeature = {
   [AppFeature.CashWithdrawals]: 'authorization/accounts/withdrawals',
   [AppFeature.DigitalSecurityWithdrawals]:
     'authorization/accounts/security-withdrawals',
+  [AppFeature.WithdrawalAddresses]:
+    'authorization/accounts/withdrawal-addresses',
   [AppFeature.Individuals]: 'authorization/identity/individuals',
   [AppFeature.Corporates]: 'authorization/identity/corporates',
   [AppFeature.Offerings]: 'authorization/issuance/dsos',

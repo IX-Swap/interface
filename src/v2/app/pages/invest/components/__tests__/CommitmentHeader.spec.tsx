@@ -30,7 +30,7 @@ describe('CommitmentHeader', () => {
 
   it('renders without error', () => {
     render(
-      <Form defaultValues={{}}>
+      <Form>
         <CommitmentHeader {...props} />
       </Form>
     )
@@ -38,7 +38,7 @@ describe('CommitmentHeader', () => {
 
   it('renders DSOTitle with correct props', () => {
     render(
-      <Form defaultValues={{}}>
+      <Form>
         <CommitmentHeader {...props} />
       </Form>
     )
@@ -48,7 +48,7 @@ describe('CommitmentHeader', () => {
 
   it('renders EstimatedValue with correct props', () => {
     render(
-      <Form defaultValues={{}}>
+      <Form>
         <CommitmentHeader {...props} />
       </Form>
     )
@@ -61,7 +61,7 @@ describe('CommitmentHeader', () => {
 
   it('renders AssetBalance with correct props', () => {
     render(
-      <Form defaultValues={{}}>
+      <Form>
         <CommitmentHeader {...props} />
       </Form>
     )

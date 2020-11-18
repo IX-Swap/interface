@@ -7,6 +7,7 @@ import docxIcon from 'assets/icons/documents/docx.svg'
 import txtIcon from 'assets/icons/documents/txt.svg'
 import unknownIcon from 'assets/icons/documents/unknown.svg'
 import { Maybe } from 'v2/types/util'
+import { AddressField } from 'v2/app/components/AddressField'
 
 export const renderMenu = (arr: any[]): JSX.Element[] => {
   return arr.map(
@@ -23,6 +24,10 @@ export const renderMenu = (arr: any[]): JSX.Element[] => {
     )
   )
 }
+
+export const renderAddressColumn = (val: string): JSX.Element => (
+  <AddressField val={val} />
+)
 
 export const wysiwygToHtml = (draft: string): string => {
   return draftToHtml(JSON.parse(draft))

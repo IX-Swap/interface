@@ -4,6 +4,7 @@ import { urlParams } from 'v2/config/appURL'
 import { DSWithdrawalPreview } from 'v2/app/components/DSWithdrawalPreview/DSWithdrawalPreview'
 import { WithdrawalPreview } from 'v2/app/components/WithdrawalPreview/WithdrawalPreview'
 import { DepositView } from 'v2/app/components/DepositView/DepositView'
+import { WithdrawalAddressView } from 'v2/app/components/WithdrawalAddressView/WithdrawalAddressView'
 import { CommitmentPreview } from 'v2/app/components/CommitmentPreview/CommitmentPreview'
 import { DSOView } from 'v2/app/components/DSO/DSOView'
 import { CorporateView } from 'v2/app/pages/identity/components/CorporateView'
@@ -77,5 +78,12 @@ export const authorizerItemMap: Record<
     paramKey: urlParams.itemId,
     title: 'Commitment',
     listRoute: 'commitments' as const
+  },
+  [AppFeature.WithdrawalAddresses]: {
+    uri: '/accounts/withdrawal-addresses/list',
+    component: WithdrawalAddressView,
+    paramKey: urlParams.itemId,
+    title: 'Withdrawal Addresses',
+    listRoute: 'withdrawalAddresses' as const
   }
 }
