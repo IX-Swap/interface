@@ -10,7 +10,7 @@ jest.mock('v2/helpers/clipboard', () => ({ copyToClipboard: jest.fn() }))
 
 describe('WalletAddress', () => {
   const props: WalletAddressProps = {
-    val: '1234567890'
+    address: '1234567890'
   }
 
   afterEach(async () => {
@@ -35,7 +35,7 @@ describe('WalletAddress', () => {
 
     await waitFor(() => {
       expect(copyToClipboard).toHaveBeenCalledTimes(1)
-      expect(copyToClipboard).toHaveBeenCalledWith(props.val)
+      expect(copyToClipboard).toHaveBeenCalledWith(props.address)
     })
   })
 })
