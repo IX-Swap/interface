@@ -1,12 +1,12 @@
 import { act } from '@testing-library/react-hooks'
 import { waitFor, cleanup, renderHookWithServiceProvider } from 'test-utils'
-import { useDSOById } from 'v2/app/pages/invest/hooks/useDSOById'
-import { successfulResponse } from '__fixtures__/api'
-import { dso } from '__fixtures__/authorizer'
-import * as useAuthHook from 'v2/hooks/auth/useAuth'
+import { useWithdrawalAddressById } from 'v2/app/pages/accounts/pages/withdrawalAddresses/hooks/useWithdrawalAddressById'
+import { withdrawalAddress } from '__fixtures__/withdrawalAddress'
 import { user } from '__fixtures__/user'
+import { successfulResponse } from '__fixtures__/api'
+import * as useAuthHook from 'v2/hooks/auth/useAuth'
 
-describe('useDSOById', () => {
+describe('useWithdrawalAddressById', () => {
   afterEach(async () => {
     await cleanup()
     jest.clearAllMocks()
@@ -18,11 +18,11 @@ describe('useDSOById', () => {
       .mockReturnValue({ user: user, isAuthenticated: true })
     await act(async () => {
       const getFn = jest.fn().mockResolvedValueOnce(successfulResponse)
-      const apiObj = { get: getFn }
+      const apiService = { get: getFn }
 
       const { result } = renderHookWithServiceProvider(
-        () => useDSOById(dso._id, dso.user),
-        { apiService: apiObj }
+        () => useWithdrawalAddressById(withdrawalAddress._id),
+        { apiService }
       )
 
       await waitFor(
@@ -30,7 +30,7 @@ describe('useDSOById', () => {
           expect(result.current.data).toEqual(successfulResponse.data)
           expect(getFn).toHaveBeenCalledTimes(1)
           expect(getFn).toHaveBeenCalledWith(
-            `/issuance/dso/${user._id}/${dso._id}`
+            `accounts/withdrawal-addresses/${user._id}/${withdrawalAddress._id}`
           )
         },
         { timeout: 1000 }
@@ -38,26 +38,24 @@ describe('useDSOById', () => {
     })
   })
 
-  it('returns response from api correctly if issuerId is not defined', async () => {
+  it('will not invoke api if id is undefined', async () => {
     jest
       .spyOn(useAuthHook, 'useAuth')
       .mockReturnValue({ user: user, isAuthenticated: true })
     await act(async () => {
       const getFn = jest.fn().mockResolvedValueOnce(successfulResponse)
-      const apiObj = { get: getFn }
+      const apiService = { get: getFn }
 
       const { result } = renderHookWithServiceProvider(
-        () => useDSOById(dso._id, undefined),
-        { apiService: apiObj }
+        () => useWithdrawalAddressById((undefined as unknown) as string),
+        { apiService }
       )
 
       await waitFor(
         () => {
-          expect(result.current.data).toEqual(successfulResponse.data)
-          expect(getFn).toHaveBeenCalledTimes(1)
-          expect(getFn).toHaveBeenCalledWith(
-            `/issuance/dso/${user._id}/${dso._id}`
-          )
+          expect(result.current.status).toBe('idle')
+          expect(getFn).not.toHaveBeenCalled()
+          expect(result.current.data).toEqual(undefined)
         },
         { timeout: 1000 }
       )

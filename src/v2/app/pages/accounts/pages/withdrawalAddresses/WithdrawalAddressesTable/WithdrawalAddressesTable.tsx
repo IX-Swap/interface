@@ -2,10 +2,10 @@ import React from 'react'
 import { TableView } from 'v2/components/TableWithPagination/TableView'
 import { columns } from 'v2/app/pages/accounts/pages/withdrawalAddresses/WithdrawalAddressesTable/columns'
 import { Actions } from 'v2/app/pages/accounts/pages/withdrawalAddresses/WithdrawalAddressesTable/Actions'
-import { Bank } from 'v2/types/bank'
 import { useAuth } from 'v2/hooks/auth/useAuth'
 import { Paper } from '@material-ui/core'
 import { getIdFromObj } from 'v2/helpers/strings'
+import { WithdrawalAddress } from 'v2/types/withdrawalAddress'
 
 export const WithdrawalAddressesTable: React.FC = () => {
   const { user } = useAuth()
@@ -13,12 +13,12 @@ export const WithdrawalAddressesTable: React.FC = () => {
 
   return (
     <Paper variant='elevation'>
-      <TableView<Bank>
+      <TableView<WithdrawalAddress>
         uri={`/accounts/withdrawal-addresses/list/${userId}`}
-        name={`banks-${userId}`}
+        name={`withdrawalAddresses-${userId}`}
         columns={columns}
         hasActions
-        actions={({ item }) => <Actions item={item} />}
+        actions={Actions}
       />
     </Paper>
   )

@@ -1,15 +1,14 @@
-import { Bank } from 'v2/types/bank'
-import { Button } from '@material-ui/core'
 import React from 'react'
+import { Button } from '@material-ui/core'
 import { useWithdrawalAddressesRouter } from 'v2/app/pages/accounts/pages/withdrawalAddresses/router'
 import { AppRouterLinkComponent } from 'v2/components/AppRouterLink'
+import { WithdrawalAddress } from 'v2/types/withdrawalAddress'
 
 export interface ActionsProps {
-  item: Bank
+  item: WithdrawalAddress
 }
 
-export const Actions: React.FC<ActionsProps> = props => {
-  const { item } = props
+export const Actions = ({ item }: ActionsProps) => {
   const { paths } = useWithdrawalAddressesRouter()
 
   return (

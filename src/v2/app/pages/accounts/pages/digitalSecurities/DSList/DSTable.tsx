@@ -18,7 +18,7 @@ export const DSTable: React.FC = () => {
         columns={columns}
         hasActions
         filter={{ type: 'Security' }}
-        actions={({ item }) => <DSTableActions item={item} />}
+        actions={DSTableActions}
       />
     </Paper>
   )

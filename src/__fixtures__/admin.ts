@@ -1,4 +1,4 @@
-import { user } from './user'
+import { user } from '__fixtures__/user'
 import { UpdateUserRoleArgs } from 'v2/app/pages/admin/service/types'
 import { AppRole } from 'v2/helpers/acl'
 

@@ -1,27 +1,19 @@
 import { act } from '@testing-library/react-hooks'
 import { waitFor, cleanup, renderHookWithServiceProvider } from 'test-utils'
-import { useMakeCommitment } from 'v2/app/pages/invest/hooks/useMakeCommitment'
-import { unsuccessfulResponse, successfulResponse } from '__fixtures__/api'
-import { MakeInvestmentArgs } from 'v2/types/commitment'
-import { commitment, dso } from '__fixtures__/authorizer'
-import { useOfferingsRouter } from 'v2/app/pages/invest/routers/offeringsRouter'
-import * as useAuthHook from 'v2/hooks/auth/useAuth'
+import { MakeWithdrawalAddressArgs } from 'v2/types/withdrawalAddress'
 import { user } from '__fixtures__/user'
+import { network } from '__fixtures__/network'
+import { unsuccessfulResponse, successfulResponse } from '__fixtures__/api'
+import { useWithdrawalAddress } from 'v2/app/pages/accounts/pages/withdrawalAddresses/hooks/useWithdrawalAddress'
+import * as useWithdrawalAddressesRouterHook from 'v2/app/pages/accounts/pages/withdrawalAddresses/router'
+import * as useAuthHook from 'v2/hooks/auth/useAuth'
 
-jest.mock('v2/app/pages/invest/routers/offeringsRouter')
-
-const useOfferingsRouterMock = useOfferingsRouter as jest.Mock<
-  Partial<ReturnType<typeof useOfferingsRouter>>
->
-
-describe('useMakeCommitment', () => {
-  const makeInvestmentArgs: MakeInvestmentArgs = {
-    dso: dso._id,
-    signedSubscriptionDocument: commitment.signedSubscriptionDocument._id,
-    currency: '1000',
-    walletAddress: commitment.walletAddress,
-    numberOfUnits: 1,
-    otp: '123456'
+describe('useWithdrawalAddress', () => {
+  const makeWithdrawalAddressArgs: MakeWithdrawalAddressArgs = {
+    address: '123',
+    label: 'test label',
+    network: network._id,
+    memo: 'test memo'
   }
 
   beforeEach(() => {
@@ -29,10 +21,9 @@ describe('useMakeCommitment', () => {
       .spyOn(useAuthHook, 'useAuth')
       .mockReturnValue({ user: user, isAuthenticated: true })
 
-    useOfferingsRouterMock.mockReturnValue({
-      replace: jest.fn(),
-      params: { dsoId: dso._id }
-    })
+    jest
+      .spyOn(useWithdrawalAddressesRouterHook, 'useWithdrawalAddressesRouter')
+      .mockReturnValue({ replace: jest.fn() } as any)
   })
 
   afterEach(async () => {
@@ -45,17 +36,17 @@ describe('useMakeCommitment', () => {
       const postFn = jest.fn().mockResolvedValueOnce(successfulResponse)
       const showSnackbar = jest.fn()
 
-      const apiObj = { post: postFn }
-      const snackbarObj = { showSnackbar }
+      const apiService = { post: postFn }
+      const snackbarService = { showSnackbar }
       const { result } = renderHookWithServiceProvider(
-        () => useMakeCommitment(),
-        { apiService: apiObj, snackbarService: snackbarObj }
+        () => useWithdrawalAddress(),
+        { apiService, snackbarService }
       )
 
       await waitFor(
         () => {
           const [mutate] = result.current
-          void mutate(makeInvestmentArgs)
+          void mutate(makeWithdrawalAddressArgs)
 
           expect(showSnackbar).toHaveBeenCalledTimes(1)
           expect(showSnackbar).toHaveBeenNthCalledWith(1, 'Success', 'success')
@@ -70,17 +61,17 @@ describe('useMakeCommitment', () => {
       const postFn = jest.fn().mockRejectedValueOnce(unsuccessfulResponse)
       const showSnackbar = jest.fn()
 
-      const apiObj = { post: postFn }
-      const snackbarObj = { showSnackbar }
+      const apiService = { post: postFn }
+      const snackbarService = { showSnackbar }
       const { result } = renderHookWithServiceProvider(
-        () => useMakeCommitment(),
-        { apiService: apiObj, snackbarService: snackbarObj }
+        () => useWithdrawalAddress(),
+        { apiService, snackbarService }
       )
 
       await waitFor(
         () => {
           const [mutate] = result.current
-          void mutate(makeInvestmentArgs)
+          void mutate(makeWithdrawalAddressArgs)
 
           expect(showSnackbar).toHaveBeenCalledTimes(1)
           expect(showSnackbar).toHaveBeenNthCalledWith(

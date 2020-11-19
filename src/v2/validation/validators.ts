@@ -1,4 +1,4 @@
-import ethers from 'ethers'
+import { isAddress } from '@ethersproject/address'
 
 const passwordPatterns = [/[A-Z]/, /[a-z]/, /[0-9]/, /[^A-Za-z0-9]/]
 
@@ -11,12 +11,7 @@ export const passwordValidator = (value: string | null | undefined) => {
 
 export const addressValidator = (value: string | null | undefined) => {
   if (value !== null && value !== undefined) {
-    try {
-      ethers.utils.getAddress(value)
-      return true
-    } catch {
-      // swallow this error
-    }
+    return isAddress(value)
   }
 
   return false

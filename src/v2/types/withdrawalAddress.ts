@@ -2,6 +2,7 @@ import { Network } from './networks'
 import { IndividualIdentity, CorporateIdentity } from './identity'
 
 export interface WithdrawalAddress {
+  _id: string
   label: string
   address: string
   network: Network

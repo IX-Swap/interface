@@ -13,7 +13,6 @@ export const Checkbox = (
   props: CheckboxProps & TypedFieldRenderComponentProps<boolean>
 ) => {
   const { name, value, label, error = true, control, ...rest } = props
-  console.log(error)
 
   return (
     <FormControlLabel

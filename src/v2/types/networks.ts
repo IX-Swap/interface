@@ -57,9 +57,9 @@ export interface Network {
   _id: string
   name: string
   chainId: number
-  createdAt: Date
+  createdAt: string // Date
   isSandbox: boolean
   networkId: number
   nodes: Node[]
-  updatedAt: Date
+  updatedAt: string // Date
 }

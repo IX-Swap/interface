@@ -19,7 +19,7 @@ export const WADialog: React.FC<DialogProps> = ({
       fullWidth
       open={open}
       fullScreen={fullScreen}
-      onClose={() => history.goBack()}
+      onClose={history.goBack}
       aria-labelledby='simple-modal-title'
       aria-describedby='simple-modal-description'
       className={classes.root}

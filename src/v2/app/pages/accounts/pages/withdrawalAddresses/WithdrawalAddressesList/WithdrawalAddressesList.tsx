@@ -2,10 +2,10 @@ import React from 'react'
 import { Grid, Button } from '@material-ui/core'
 import { VSpacer } from 'v2/components/VSpacer'
 import { AppRouterLinkComponent } from 'v2/components/AppRouterLink'
-import { WithdrawalAddressesTable } from '../WithdrawalAddressesTable/WithdrawalAddressesTable'
-import { useWithdrawalAddressesRouter } from '../router'
-import { WithdrawalAddressesCreate } from '../WithdrawalAddressesCreate/WithdrawalAddressesCreate'
-import { WithdrawalAddressesView } from '../WithdrawalAddressesView/WithdrawalAddressesView'
+import { WithdrawalAddressesTable } from 'v2/app/pages/accounts/pages/withdrawalAddresses/WithdrawalAddressesTable/WithdrawalAddressesTable'
+import { useWithdrawalAddressesRouter } from 'v2/app/pages/accounts/pages/withdrawalAddresses/router'
+import { WithdrawalAddressCreate } from 'v2/app/pages/accounts/pages/withdrawalAddresses/WithdrawalAddressCreate/WithdrawalAddressCreate'
+import { WithdrawalAddressView } from 'v2/app/pages/accounts/pages/withdrawalAddresses/WithdrawalAddressView/WithdrawalAddressView'
 
 export const WithdrawalAddressesList: React.FC = () => {
   const {
@@ -15,6 +15,7 @@ export const WithdrawalAddressesList: React.FC = () => {
 
   const isViewOpen = current.path === withdrawalAddressesPaths.view
   const isCreateOpen = current.path === withdrawalAddressesPaths.create
+
   return (
     <>
       <Grid container direction='column'>
@@ -36,8 +37,8 @@ export const WithdrawalAddressesList: React.FC = () => {
           <WithdrawalAddressesTable />
         </Grid>
       </Grid>
-      <WithdrawalAddressesView isOpen={isViewOpen} />
-      <WithdrawalAddressesCreate isOpen={isCreateOpen} />
+      <WithdrawalAddressView isOpen={isViewOpen} />
+      <WithdrawalAddressCreate isOpen={isCreateOpen} />
     </>
   )
 }

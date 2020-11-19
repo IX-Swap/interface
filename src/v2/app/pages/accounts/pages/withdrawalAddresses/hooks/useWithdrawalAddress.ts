@@ -3,7 +3,7 @@ import { useAuth } from 'v2/hooks/auth/useAuth'
 import { MakeWithdrawalAddressArgs } from 'v2/types/withdrawalAddress'
 import { useMutation } from 'react-query'
 import { getIdFromObj } from 'v2/helpers/strings'
-import { useWithdrawalAddressesRouter } from '../router'
+import { useWithdrawalAddressesRouter } from 'v2/app/pages/accounts/pages/withdrawalAddresses/router'
 
 export const useWithdrawalAddress = () => {
   const { apiService, snackbarService } = useServices()
@@ -17,7 +17,6 @@ export const useWithdrawalAddress = () => {
   return useMutation(mutateFn, {
     onSuccess: data => {
       void snackbarService.showSnackbar('Success', 'success')
-      console.log(data)
       replace('view', { withdrawalAddressId: data?.data?.id })
     },
     onError: (error: any) => {

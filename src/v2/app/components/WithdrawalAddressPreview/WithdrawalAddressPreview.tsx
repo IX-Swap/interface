@@ -9,7 +9,7 @@ export interface WithdrawalAddressViewProps {
   data: WithdrawalAddress
 }
 
-export const WithdrawalAddressView = (props: WithdrawalAddressViewProps) => {
+export const WithdrawalAddressPreview = (props: WithdrawalAddressViewProps) => {
   const { data } = props
 
   useSetPageTitle(data.network.name)

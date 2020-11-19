@@ -1,10 +1,10 @@
 import React from 'react'
 import { Grid, LinearProgress } from '@material-ui/core'
-import { useWithdrawalAddressesRouter } from '../router'
+import { useWithdrawalAddressesRouter } from 'v2/app/pages/accounts/pages/withdrawalAddresses/router'
 import { LabelledValue } from 'v2/components/LabelledValue'
-import { useWithdrawalAddressById } from '../hooks/useWithdrawalAddressById'
+import { useWithdrawalAddressById } from 'v2/app/pages/accounts/pages/withdrawalAddresses/hooks/useWithdrawalAddressById'
 
-export const WithdrawalAddressesViewContent = () => {
+export const WAViewContent = () => {
   const {
     params: { withdrawalAddressId }
   } = useWithdrawalAddressesRouter()

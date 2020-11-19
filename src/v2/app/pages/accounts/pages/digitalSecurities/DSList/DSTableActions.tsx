@@ -8,9 +8,8 @@ interface DSTableActionsProps {
   item: AssetBalance
 }
 
-export const DSTableActions: React.FC<DSTableActionsProps> = props => {
+export const DSTableActions = ({ item }: DSTableActionsProps) => {
   const { paths } = useDSRouter()
-  const { item } = props
 
   return (
     <ButtonGroup size='small'>

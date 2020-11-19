@@ -15,7 +15,7 @@ describe('useUpdateDSO', () => {
     history.push('/', { dsoId: dso._id })
     jest
       .spyOn(useAuthHook, 'useAuth')
-      .mockReturnValue({ user: user, isAuthenticated: false })
+      .mockReturnValue({ user: user, isAuthenticated: true })
   })
 
   afterEach(async () => {

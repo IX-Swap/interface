@@ -18,7 +18,7 @@ export const Table: React.FC = () => {
         name={`banks-${userId}`}
         columns={columns}
         hasActions
-        actions={({ item }) => <Actions item={item} />}
+        actions={Actions}
       />
     </Paper>
   )

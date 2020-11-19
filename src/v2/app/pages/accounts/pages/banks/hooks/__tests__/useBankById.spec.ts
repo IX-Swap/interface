@@ -69,7 +69,7 @@ describe('useBankById', () => {
     })
   })
 
-  it('will not invoke api of id is undefined', async () => {
+  it('will not invoke api if id is undefined', async () => {
     await act(async () => {
       const getFn = jest.fn().mockResolvedValueOnce({ data: bank })
       const apiObj = { get: getFn }
