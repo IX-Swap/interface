@@ -17,6 +17,7 @@ describe('useMarkAsRead', () => {
       .spyOn(utilsHook, 'markNotificationAsRead')
       .mockImplementation(markNotificationAsRead)
   })
+
   afterEach(async () => {
     await cleanup()
     jest.clearAllMocks()

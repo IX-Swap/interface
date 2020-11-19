@@ -10,6 +10,7 @@ describe('DSOToken', () => {
   beforeEach(() => {
     history.push(IssuanceRoute.create, { dsoId: dso._id })
   })
+
   afterEach(async () => {
     await cleanup()
     jest.clearAllMocks()

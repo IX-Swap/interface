@@ -11,6 +11,7 @@ jest.mock('v2/components/AppRouterLink', () => ({
 
 describe('DSOLink', () => {
   const props: DSOLinkProps = { dso: dso }
+
   afterEach(async () => {
     await cleanup()
     jest.clearAllMocks()

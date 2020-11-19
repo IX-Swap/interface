@@ -9,6 +9,7 @@ import { user } from '__fixtures__/user'
 describe('useDownloadRawDocument', () => {
   const downloadDocument = { documentId: document._id, ownerId: '' }
   const callbacks = { onSuccess: jest.fn(), onError: jest.fn() }
+
   afterEach(async () => {
     await cleanup()
     jest.clearAllMocks()

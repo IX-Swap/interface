@@ -15,6 +15,7 @@ describe('NotificationsFilter', () => {
       .spyOn(notificationsFilterHook, 'useNotificationsFilter')
       .mockReturnValue(hookReturnValues)
   })
+
   afterEach(async () => {
     await cleanup()
     jest.clearAllMocks()

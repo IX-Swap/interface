@@ -68,6 +68,7 @@ describe('useIsAdmin', () => {
       await waitFor(() => expect(result.current).toBe(true))
     })
   })
+
   it('returns false if user is not admin', async () => {
     jest
       .spyOn(useCachedUserHook, 'useCachedUser')
@@ -98,6 +99,7 @@ describe('useIsAuthorizer', () => {
       await waitFor(() => expect(result.current).toBe(true))
     })
   })
+
   it('returns false if user is not authorizer', async () => {
     jest
       .spyOn(useCachedUserHook, 'useCachedUser')
@@ -128,6 +130,7 @@ describe('useIsIssuer', () => {
       await waitFor(() => expect(result.current).toBe(true))
     })
   })
+
   it('returns false if user is not issuer', async () => {
     jest
       .spyOn(useCachedUserHook, 'useCachedUser')
@@ -158,6 +161,7 @@ describe('useIsAccredited', () => {
       await waitFor(() => expect(result.current).toBe(true))
     })
   })
+
   it('returns false if user is not accredited', async () => {
     jest
       .spyOn(useCachedUserHook, 'useCachedUser')

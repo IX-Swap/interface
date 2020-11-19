@@ -14,6 +14,7 @@ describe('AdminRoot', () => {
   beforeEach(() => {
     useAdminRouterMock.mockReturnValueOnce({ renderRoutes })
   })
+
   afterEach(async () => {
     await cleanup()
     jest.clearAllMocks()

@@ -16,6 +16,7 @@ describe('DSOListTableBody', () => {
     items: [dso],
     viewURL: '/'
   }
+
   afterEach(async () => {
     await cleanup()
     jest.clearAllMocks()

@@ -25,8 +25,8 @@ export const renderMenu = (arr: any[]): JSX.Element[] => {
   )
 }
 
-export const renderAddressColumn = (val: string): JSX.Element => (
-  <WalletAddress val={val} />
+export const renderAddressColumn = (address: string): JSX.Element => (
+  <WalletAddress address={address} />
 )
 
 export const wysiwygToHtml = (draft: string): string => {

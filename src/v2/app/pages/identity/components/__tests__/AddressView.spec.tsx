@@ -8,6 +8,7 @@ import { individual } from '__fixtures__/identity'
 
 describe('AddressView', () => {
   const props: AddressViewProps = { data: individual.address }
+
   afterEach(async () => {
     await cleanup()
     jest.clearAllMocks()

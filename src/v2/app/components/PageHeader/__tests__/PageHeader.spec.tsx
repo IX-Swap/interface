@@ -25,6 +25,7 @@ describe('PageHeader', () => {
       .spyOn(useBreadcrumbsHook, 'useBreadcrumbs')
       .mockReturnValue({ crumbs } as any)
   })
+
   afterEach(async () => {
     await cleanup()
     jest.clearAllMocks()

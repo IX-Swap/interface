@@ -9,6 +9,7 @@ describe('LandingPageItem', () => {
   const props: LandingPageItemProps = {
     link: { label: 'Account', path: '/account', icon: jest.fn(() => null) }
   }
+
   afterEach(async () => {
     await cleanup()
     jest.clearAllMocks()

@@ -14,6 +14,7 @@ describe('AccountsRoot', () => {
   beforeEach(() => {
     useAccountsRouterMock.mockReturnValueOnce({ renderRoutes })
   })
+
   afterEach(async () => {
     await cleanup()
     jest.clearAllMocks()

@@ -1,7 +1,7 @@
 import React from 'react'
 import { Grid } from '@material-ui/core'
+import { Submit } from 'v2/components/form/Submit'
 import { WithdrawalAddressForm } from 'v2/app/pages/accounts/pages/withdrawalAddresses/WithdrawalAddressCreate/WAForm'
-import { WAFormSubmitButton } from 'v2/app/pages/accounts/pages/withdrawalAddresses/WithdrawalAddressCreate/WAFormSubmitButton'
 import { WAFormFields } from 'v2/app/pages/accounts/pages/withdrawalAddresses/WithdrawalAddressCreate/WAFormFields'
 import { WADialogActions } from 'v2/app/pages/accounts/pages/withdrawalAddresses/WADialog/WADialogActions'
 
@@ -12,7 +12,9 @@ export const WAFormWrapper = () => {
         <WAFormFields />
         <WADialogActions>
           <Grid item container justify='center'>
-            <WAFormSubmitButton />
+            <Submit color='primary' variant='contained'>
+              Submit
+            </Submit>
           </Grid>
         </WADialogActions>
       </Grid>

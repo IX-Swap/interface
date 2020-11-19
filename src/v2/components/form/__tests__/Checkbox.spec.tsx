@@ -14,6 +14,7 @@ describe('Checkbox', () => {
     name: 'test-name',
     control: {} as any
   }
+
   afterEach(async () => {
     await cleanup()
     jest.clearAllMocks()

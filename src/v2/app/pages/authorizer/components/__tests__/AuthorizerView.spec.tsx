@@ -40,6 +40,7 @@ describe('AuthorizerView', () => {
     },
     feature: DataroomFeature['bank-accounts']
   }
+
   afterEach(async () => {
     await cleanup()
     jest.clearAllMocks()

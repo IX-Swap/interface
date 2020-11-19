@@ -18,6 +18,7 @@ describe('useAllBalances', () => {
       .spyOn(useParsedDataHook, 'useParsedData')
       .mockImplementation(parsedDataFn)
   })
+
   afterEach(async () => {
     await cleanup()
     jest.clearAllMocks()

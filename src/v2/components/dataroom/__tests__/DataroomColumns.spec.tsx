@@ -12,6 +12,7 @@ describe('DataroomColumns', () => {
     title: 'Test title',
     document
   }
+
   afterEach(async () => {
     await cleanup()
     jest.clearAllMocks()

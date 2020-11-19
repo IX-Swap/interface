@@ -17,6 +17,7 @@ jest.mock('v2/components/LabelledValue', () => ({
 
 describe('AssetBalance', () => {
   const props: AssetBalanceProps = { assetId: asset._id }
+
   afterEach(async () => {
     await cleanup()
     jest.clearAllMocks()

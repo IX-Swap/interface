@@ -4,11 +4,11 @@ import { MakeWithdrawalAddressArgs } from 'v2/types/withdrawalAddress'
 import { user } from '__fixtures__/user'
 import { network } from '__fixtures__/network'
 import { unsuccessfulResponse, successfulResponse } from '__fixtures__/api'
-import { useWithdrawalAddress } from 'v2/app/pages/accounts/pages/withdrawalAddresses/hooks/useWithdrawalAddress'
+import { useMakeWithdrawalAddress } from 'v2/app/pages/accounts/pages/withdrawalAddresses/hooks/useMakeWithdrawalAddress'
 import * as useWithdrawalAddressesRouterHook from 'v2/app/pages/accounts/pages/withdrawalAddresses/router'
 import * as useAuthHook from 'v2/hooks/auth/useAuth'
 
-describe('useWithdrawalAddress', () => {
+describe('useMakeWithdrawalAddress', () => {
   const makeWithdrawalAddressArgs: MakeWithdrawalAddressArgs = {
     address: '123',
     label: 'test label',
@@ -39,7 +39,7 @@ describe('useWithdrawalAddress', () => {
       const apiService = { post: postFn }
       const snackbarService = { showSnackbar }
       const { result } = renderHookWithServiceProvider(
-        () => useWithdrawalAddress(),
+        () => useMakeWithdrawalAddress(),
         { apiService, snackbarService }
       )
 
@@ -64,7 +64,7 @@ describe('useWithdrawalAddress', () => {
       const apiService = { post: postFn }
       const snackbarService = { showSnackbar }
       const { result } = renderHookWithServiceProvider(
-        () => useWithdrawalAddress(),
+        () => useMakeWithdrawalAddress(),
         { apiService, snackbarService }
       )
 

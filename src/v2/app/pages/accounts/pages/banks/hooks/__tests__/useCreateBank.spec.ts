@@ -15,6 +15,7 @@ describe('useCreateBank', () => {
       .mockImplementation(() => ({ user, isAuthenticated: true }))
     jest.spyOn(banksRouter, 'useBanksRouter').mockReturnValue({ push } as any)
   })
+
   afterEach(async () => {
     await cleanup()
     jest.clearAllMocks()

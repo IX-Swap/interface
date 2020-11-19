@@ -6,19 +6,24 @@ import { useSnackbar } from 'v2/hooks/useSnackbar'
 import { AppRouterLink } from 'v2/components/AppRouterLink'
 
 export interface WalletAddressProps {
-  val: string
+  address: string
   link?: boolean
 }
 
-export const WalletAddress = ({ val, link = false }: WalletAddressProps) => {
+export const WalletAddress = ({
+  address,
+  link = false
+}: WalletAddressProps) => {
   const { showSnackbar } = useSnackbar()
 
-  const copy = () => {
-    copyToClipboard(val)
+  const handleCopy = () => {
+    copyToClipboard(address)
     showSnackbar('Copied!!')
   }
-  const url = `https://etherscan.io/address/${val}`
-  const textContent = val.slice(0, 4) + '...' + val.slice(val.length - 4)
+  const url = `https://etherscan.io/address/${address}`
+  const textContent = `${address.slice(0, 4)}...${address.slice(
+    address.length - 4
+  )}`
 
   return (
     <span style={{ display: 'inline-flex', alignItems: 'center' }}>
@@ -35,7 +40,11 @@ export const WalletAddress = ({ val, link = false }: WalletAddressProps) => {
         textContent
       )}
       <Box px={0.5} />
-      <IconButton size='small' onClick={copy} style={{ fontSize: '18px' }}>
+      <IconButton
+        size='small'
+        onClick={handleCopy}
+        style={{ fontSize: '18px' }}
+      >
         <FileCopyOutlinedIcon fontSize='inherit' color='disabled' />
       </IconButton>
     </span>

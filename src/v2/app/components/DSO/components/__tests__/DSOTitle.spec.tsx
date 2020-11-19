@@ -8,6 +8,7 @@ import { dso } from '__fixtures__/authorizer'
 
 describe('DSOTitle', () => {
   const props: DsoTitleProps = { dso: dso }
+
   afterEach(async () => {
     await cleanup()
     jest.clearAllMocks()

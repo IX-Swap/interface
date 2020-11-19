@@ -19,6 +19,7 @@ jest.mock('v2/app/components/BankDetails', () => ({
 
 describe('DepositView', () => {
   const props: DepositViewProps = { data: cashDeposit }
+
   afterEach(async () => {
     await cleanup()
     jest.clearAllMocks()

@@ -5,6 +5,7 @@ import { AppError } from 'v2/app/components/AppError'
 
 describe('AppError', () => {
   const props: FallbackProps = { resetErrorBoundary: jest.fn() }
+
   afterEach(async () => {
     await cleanup()
     jest.clearAllMocks()

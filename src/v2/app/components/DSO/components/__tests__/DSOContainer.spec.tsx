@@ -4,6 +4,7 @@ import { DSOContainer } from 'v2/app/components/DSO/components/DSOContainer'
 
 describe('DSOContainer', () => {
   const children = <div data-testid='children' />
+
   afterEach(async () => {
     await cleanup()
     jest.clearAllMocks()

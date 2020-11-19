@@ -27,6 +27,7 @@ jest.mock(
   'v2/app/pages/accounts/pages/withdrawalAddresses/WithdrawalAddressView/WAViewContent',
   () => ({ WAViewContent: jest.fn(() => null) })
 )
+
 describe('WithdrawalAddressView', () => {
   afterEach(async () => {
     await cleanup()
@@ -36,6 +37,7 @@ describe('WithdrawalAddressView', () => {
   it('renders without error', () => {
     render(<WithdrawalAddressView isOpen />)
   })
+
   it('renders WADialog with correct props', () => {
     render(<WithdrawalAddressView isOpen />)
 
@@ -45,6 +47,7 @@ describe('WithdrawalAddressView', () => {
       {}
     )
   })
+
   it('renders WADialogTitle with correct props', () => {
     render(<WithdrawalAddressView isOpen />)
 
@@ -54,6 +57,7 @@ describe('WithdrawalAddressView', () => {
       {}
     )
   })
+
   it('renders WADialogContent with correct props', () => {
     render(<WithdrawalAddressView isOpen />)
 
@@ -63,6 +67,7 @@ describe('WithdrawalAddressView', () => {
       {}
     )
   })
+
   it('renders WADialogActions with correct props', () => {
     render(<WithdrawalAddressView isOpen />)
 
@@ -72,6 +77,7 @@ describe('WithdrawalAddressView', () => {
       {}
     )
   })
+
   it('renders WAViewContent with correct props', () => {
     render(<WithdrawalAddressView isOpen />)
 

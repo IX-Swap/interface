@@ -20,6 +20,7 @@ describe('WithdrawalPreview', () => {
   const props: WithdrawalViewProps = {
     data: cashWithdrawal
   }
+
   afterEach(async () => {
     await cleanup()
     jest.clearAllMocks()

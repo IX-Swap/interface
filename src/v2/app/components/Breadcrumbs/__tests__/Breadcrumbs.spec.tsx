@@ -18,6 +18,7 @@ describe('Breadcrumbs', () => {
       { label: 'Banks', path: '/banks' }
     ]
   }
+
   afterEach(async () => {
     await cleanup()
     jest.clearAllMocks()

@@ -5,9 +5,15 @@ import {
   WithdrawalAddressPreview,
   WithdrawalAddressViewProps
 } from 'v2/app/components/WithdrawalAddressPreview/WithdrawalAddressPreview'
+import { LabelledValue } from 'v2/components/LabelledValue'
+
+jest.mock('v2/components/LabelledValue', () => ({
+  LabelledValue: jest.fn(() => null)
+}))
 
 describe('WithdrawalAddressPreview', () => {
   const props: WithdrawalAddressViewProps = { data: withdrawalAddress }
+
   afterEach(async () => {
     await cleanup()
     jest.clearAllMocks()
@@ -15,5 +21,20 @@ describe('WithdrawalAddressPreview', () => {
 
   it('renders without error', () => {
     render(<WithdrawalAddressPreview {...props} />)
+  })
+
+  it('renders LabelledValue with correct props', () => {
+    render(<WithdrawalAddressPreview {...props} />)
+
+    expect(LabelledValue).toHaveBeenNthCalledWith(
+      1,
+      { label: 'Network Type', value: withdrawalAddress.network.name },
+      {}
+    )
+    expect(LabelledValue).toHaveBeenNthCalledWith(
+      2,
+      { label: 'Withdrawal Address', value: withdrawalAddress.address },
+      {}
+    )
   })
 })

@@ -27,6 +27,7 @@ describe('DeployToken', () => {
       issuerId: user._id
     })
   })
+
   afterEach(async () => {
     await cleanup()
     jest.clearAllMocks()

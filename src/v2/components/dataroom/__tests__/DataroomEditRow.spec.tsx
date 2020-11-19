@@ -17,6 +17,7 @@ describe('DataroomEditRow', () => {
     document: document,
     title: 'Test title'
   }
+
   afterEach(async () => {
     await cleanup()
     jest.clearAllMocks()

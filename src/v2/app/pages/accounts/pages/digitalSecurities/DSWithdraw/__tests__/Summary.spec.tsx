@@ -23,6 +23,7 @@ describe('Summary', () => {
   beforeEach(() => {
     history.push(DSRoute.withdraw, { balanceId: 'testId' })
   })
+
   afterEach(async () => {
     await cleanup()
     jest.clearAllMocks()

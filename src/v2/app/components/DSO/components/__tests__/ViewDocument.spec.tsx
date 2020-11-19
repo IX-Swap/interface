@@ -24,6 +24,7 @@ describe('ViewDocument', () => {
       .mockImplementation(createObjectURLFromFile)
     jest.spyOn(utils, 'revokeObjectURL').mockImplementation(revokeObjectURL)
   })
+
   afterEach(async () => {
     await cleanup()
     jest.clearAllMocks()

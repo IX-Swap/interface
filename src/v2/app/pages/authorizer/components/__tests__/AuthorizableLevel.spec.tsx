@@ -7,6 +7,7 @@ import {
 
 describe('AuthorizableLevel', () => {
   const props: AuthorizableLevelProps = { level: 'Level 2', compact: false }
+
   afterEach(async () => {
     await cleanup()
     jest.clearAllMocks()

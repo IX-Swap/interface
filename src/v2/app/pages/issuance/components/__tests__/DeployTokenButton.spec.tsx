@@ -13,6 +13,7 @@ describe('DeployTokenButton', () => {
     isInitializing: false,
     onClick: jest.fn()
   }
+
   afterEach(async () => {
     await cleanup()
     jest.clearAllMocks()

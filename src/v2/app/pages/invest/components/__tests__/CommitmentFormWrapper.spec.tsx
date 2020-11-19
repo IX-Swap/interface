@@ -32,6 +32,7 @@ describe('CommitmentFormWrapper', () => {
   beforeEach(() => {
     history.push(OfferingRoute.view, { dsoId: dso._id, issuerId: dso.user })
   })
+
   afterEach(async () => {
     await cleanup()
     jest.clearAllMocks()

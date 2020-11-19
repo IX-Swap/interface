@@ -14,9 +14,10 @@ export const useWithdrawalAddressById = (
   const { user } = useAuth()
   const userId = getIdFromObj(user)
   const uri = `accounts/withdrawal-addresses/${userId}/${withdrawalAddressId}`
+  const getWithdrawalAddress = async () => {
+    return await apiService.get<WithdrawalAddress>(uri)
+  }
 
-  const getWithdrawalAddress = async () =>
-    await apiService.get<WithdrawalAddress>(uri)
   const { data, ...rest } = useQuery(
     [USER_WITHDRAWAL_ADDRESS_BY_ID_KEY, userId, withdrawalAddressId],
     getWithdrawalAddress,

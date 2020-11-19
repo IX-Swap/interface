@@ -22,6 +22,7 @@ describe('EditBank', () => {
   beforeEach(() => {
     history.push(BanksRoute.edit, { bankId: 'testBankId' })
   })
+
   afterEach(async () => {
     await cleanup()
     jest.clearAllMocks()

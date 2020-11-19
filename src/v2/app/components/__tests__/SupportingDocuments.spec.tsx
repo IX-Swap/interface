@@ -13,6 +13,7 @@ jest.mock('v2/app/pages/authorizer/components/AuthorizationDocument', () => ({
 
 describe('SupportingDocuments', () => {
   const props: SupportingDocumentsProps = { data: documents }
+
   afterEach(async () => {
     await cleanup()
     jest.clearAllMocks()

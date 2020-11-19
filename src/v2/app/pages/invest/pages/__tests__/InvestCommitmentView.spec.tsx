@@ -17,6 +17,7 @@ describe('InvestCommitmentView', () => {
       commitmentId: 'testCommitmentId'
     })
   })
+
   afterEach(async () => {
     await cleanup()
     jest.clearAllMocks()

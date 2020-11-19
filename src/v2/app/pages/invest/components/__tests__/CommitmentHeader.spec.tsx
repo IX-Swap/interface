@@ -22,6 +22,7 @@ jest.mock('v2/app/pages/invest/components/AssetBalance', () => ({
 
 describe('CommitmentHeader', () => {
   const props: CommitmentHeaderProps = { dso: dso }
+
   afterEach(async () => {
     await cleanup()
     jest.clearAllMocks()

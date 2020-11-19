@@ -43,6 +43,7 @@ describe('Sidebar', () => {
       .spyOn(useIssuanceRouterHook, 'useIssuanceRouter')
       .mockReturnValue({ paths: useIssuanceRouterHook.IssuanceRoute } as any)
   })
+
   afterEach(async () => {
     await cleanup()
     jest.clearAllMocks()

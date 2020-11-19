@@ -14,6 +14,7 @@ describe('OfferingsRoot', () => {
   beforeEach(() => {
     useOfferingsRouterMock.mockReturnValueOnce({ renderRoutes })
   })
+
   afterEach(async () => {
     await cleanup()
     jest.clearAllMocks()

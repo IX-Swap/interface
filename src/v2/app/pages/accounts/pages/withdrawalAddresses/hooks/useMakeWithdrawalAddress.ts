@@ -8,7 +8,7 @@ import { useMutation } from 'react-query'
 import { getIdFromObj } from 'v2/helpers/strings'
 import { useWithdrawalAddressesRouter } from 'v2/app/pages/accounts/pages/withdrawalAddresses/router'
 
-export const useWithdrawalAddress = () => {
+export const useMakeWithdrawalAddress = () => {
   const { apiService, snackbarService } = useServices()
   const { replace } = useWithdrawalAddressesRouter()
   const { user } = useAuth()

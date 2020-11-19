@@ -16,6 +16,7 @@ jest.mock('v2/components/LabelledValue', () => ({
 
 describe('BankPreview', () => {
   const props: BankViewProps = { data: bank }
+
   afterEach(async () => {
     await cleanup()
     jest.clearAllMocks()

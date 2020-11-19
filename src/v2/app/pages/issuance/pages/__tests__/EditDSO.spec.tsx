@@ -14,6 +14,7 @@ describe('EditDSO', () => {
   beforeEach(() => {
     history.push(IssuanceRoute.edit, { dsoId: dso._id })
   })
+
   afterEach(async () => {
     await cleanup()
     jest.clearAllMocks()

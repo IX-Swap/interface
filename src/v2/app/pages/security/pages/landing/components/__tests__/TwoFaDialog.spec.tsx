@@ -12,6 +12,7 @@ describe('TwoFaDialog', () => {
     nextFn: jest.fn(),
     isOpen: true
   }
+
   afterEach(async () => {
     await cleanup()
     jest.clearAllMocks()

@@ -14,6 +14,7 @@ jest.mock('v2/app/pages/identity/components/IndividualInfoView', () => ({
 
 describe('CorporateProfilesView', () => {
   const props: CorporateProfilesViewProps = { data: [individual], user: user }
+
   afterEach(async () => {
     await cleanup()
     jest.clearAllMocks()

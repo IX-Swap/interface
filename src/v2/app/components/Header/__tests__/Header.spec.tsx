@@ -27,6 +27,7 @@ describe('Header', () => {
 
     expect(UserDropdown).toHaveBeenCalledTimes(1)
   })
+
   it('renders NotificationsDropdown with correct props', () => {
     render(<Header />)
 

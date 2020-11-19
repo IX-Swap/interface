@@ -20,6 +20,7 @@ describe('WithdrawalAddressViewContent', () => {
         params: { withdrawalAddress: withdrawalAddress._id }
       } as any)
   })
+
   afterEach(async () => {
     await cleanup()
     jest.clearAllMocks()

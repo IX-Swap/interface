@@ -10,6 +10,7 @@ describe('DSOTeamAddButton', () => {
   const props: DSOTeamAddButtonProps = {
     append: jest.fn()
   }
+
   afterEach(async () => {
     await cleanup()
     jest.clearAllMocks()

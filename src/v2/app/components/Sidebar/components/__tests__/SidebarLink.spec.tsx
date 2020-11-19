@@ -11,6 +11,7 @@ describe('SidebarLink', () => {
     label: 'Test Label',
     icon: jest.fn(() => null)
   }
+
   afterEach(async () => {
     await cleanup()
     jest.clearAllMocks()

@@ -10,6 +10,7 @@ describe('LayoutWithSidebar', () => {
     sidebar: jest.fn(() => null),
     content: jest.fn(() => null)
   }
+
   afterEach(async () => {
     await cleanup()
     jest.clearAllMocks()

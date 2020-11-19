@@ -11,6 +11,7 @@ describe('DeployTokenMessageItem', () => {
     index: 0,
     style: {}
   }
+
   afterEach(async () => {
     await cleanup()
     jest.clearAllMocks()

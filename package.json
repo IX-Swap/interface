@@ -128,7 +128,8 @@
   "scripts": {
     "start": "react-app-rewired start",
     "build": "react-app-rewired build",
-    "test": "react-scripts test --env=jest-environment-jsdom-sixteen --runInBand",
+    "test:watch": "react-scripts test --env=jest-environment-jsdom-sixteen --runInBand",
+    "test": "CI=true react-scripts test --env=jest-environment-jsdom-sixteen --silent --runInBand",
     "test:ci": "CI=true react-scripts test --env=jest-environment-jsdom-sixteen --silent --coverage --testResultsProcessor jest-sonar-reporter --maxWorkers=75%",
     "eject": "react-scripts eject",
     "deploy": "gulp deploy",

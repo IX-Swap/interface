@@ -13,6 +13,7 @@ describe('DeclarationFooter', () => {
       subLevel: 'subLevelClass'
     }
   }
+
   afterEach(async () => {
     await cleanup()
     jest.clearAllMocks()

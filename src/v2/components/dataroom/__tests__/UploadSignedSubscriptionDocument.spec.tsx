@@ -18,6 +18,7 @@ describe('UploadSignedSubscriptionDocument', () => {
     deleteState: generateMutationResult({}),
     uploadState: generateMutationResult({})
   }
+
   afterEach(async () => {
     await cleanup()
     jest.clearAllMocks()

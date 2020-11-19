@@ -14,6 +14,7 @@ describe('InvestRoot', () => {
   beforeEach(() => {
     useInvestRouterMock.mockReturnValueOnce({ renderRoutes })
   })
+
   afterEach(async () => {
     await cleanup()
     jest.clearAllMocks()

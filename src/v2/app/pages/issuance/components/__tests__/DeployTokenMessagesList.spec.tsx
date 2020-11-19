@@ -17,6 +17,7 @@ describe('DeployTokenMessagesList', () => {
       issuerId: user._id
     })
   })
+
   afterEach(async () => {
     await cleanup()
     jest.clearAllMocks()

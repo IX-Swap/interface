@@ -11,6 +11,7 @@ describe('DSOTeamRemoveButton', () => {
     index: 1,
     remove: jest.fn()
   }
+
   afterEach(async () => {
     await cleanup()
     jest.clearAllMocks()

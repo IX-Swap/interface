@@ -16,6 +16,7 @@ describe('AuthorizerIdentities', () => {
     corporates: [corporate],
     individual: individual
   }
+
   afterEach(async () => {
     await cleanup()
     jest.clearAllMocks()

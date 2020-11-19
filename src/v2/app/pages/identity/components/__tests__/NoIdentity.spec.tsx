@@ -16,6 +16,7 @@ describe('NoIdentity', () => {
     link: Object.keys(IdentityRoute)[0] as keyof typeof IdentityRoute,
     text: 'Test text'
   }
+
   afterEach(async () => {
     await cleanup()
     jest.clearAllMocks()

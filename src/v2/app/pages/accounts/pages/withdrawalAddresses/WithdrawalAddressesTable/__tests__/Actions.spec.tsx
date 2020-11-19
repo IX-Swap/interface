@@ -8,6 +8,7 @@ import { withdrawalAddress } from '__fixtures__/withdrawalAddress'
 
 describe('Actions', () => {
   const props: ActionsProps = { item: withdrawalAddress }
+
   afterEach(async () => {
     await cleanup()
     jest.clearAllMocks()

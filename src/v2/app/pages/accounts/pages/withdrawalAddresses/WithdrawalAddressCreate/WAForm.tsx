@@ -1,14 +1,14 @@
 import React, { PropsWithChildren } from 'react'
 import { FormProps, Form } from 'v2/components/form/Form'
 import { WithdrawalAddressFormValues } from 'v2/types/withdrawalAddress'
-import { waFormValidationSchema } from '../validation'
-import { useWithdrawalAddress } from '../hooks/useWithdrawalAddress'
+import { waFormValidationSchema } from 'v2/app/pages/accounts/pages/withdrawalAddresses/validation'
+import { useMakeWithdrawalAddress } from 'v2/app/pages/accounts/pages/withdrawalAddresses/hooks/useMakeWithdrawalAddress'
 
 export const WithdrawalAddressForm = (
   props: PropsWithChildren<FormProps<WithdrawalAddressFormValues>>
 ) => {
   const { children, ...rest } = props
-  const [makeWithdrawalAddress] = useWithdrawalAddress()
+  const [makeWithdrawalAddress] = useMakeWithdrawalAddress()
   const handleSubmit = async ({
     agree,
     ...values

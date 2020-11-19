@@ -16,6 +16,7 @@ describe('InvestInner', () => {
       renderRoutes
     })
   })
+
   afterEach(async () => {
     await cleanup()
     jest.clearAllMocks()

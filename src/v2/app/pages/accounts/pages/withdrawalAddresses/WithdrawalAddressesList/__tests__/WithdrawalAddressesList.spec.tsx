@@ -22,6 +22,7 @@ jest.mock(
 describe('WithdrawalAddressesList', () => {
   const paths = useWithdrawalAddressesRouterHook.WithdrawalAddressesRoute
   const current = { path: paths.list }
+
   afterEach(async () => {
     await cleanup()
     jest.clearAllMocks()

@@ -27,6 +27,7 @@ describe('WithdrawForm', () => {
       .spyOn(useWithdrawDSHook, 'useWithdrawDS')
       .mockReturnValue([withdrawDS, generateMutationResult({})])
   })
+
   afterEach(async () => {
     await cleanup()
     jest.clearAllMocks()

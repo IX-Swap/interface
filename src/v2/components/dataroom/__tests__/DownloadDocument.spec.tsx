@@ -7,6 +7,7 @@ import {
 
 describe('DownloadDocument', () => {
   const props: DownloadDocumentProps = { documentId: '', ownerId: '' }
+
   afterEach(async () => {
     await cleanup()
     jest.clearAllMocks()

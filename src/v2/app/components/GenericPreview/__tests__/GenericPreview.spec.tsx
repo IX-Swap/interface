@@ -18,6 +18,7 @@ describe('GenericPreview', () => {
       { label: 'Asset Balance', value: 'balance' }
     ]
   }
+
   afterEach(async () => {
     await cleanup()
     jest.clearAllMocks()

@@ -53,6 +53,7 @@ describe('formatDateAndTime', () => {
 
 describe('convertDateToISO', () => {
   const current = new Date()
+
   it('returns ISO string of given date', () => {
     expect(convertDateToISO(current)).toEqual(current.toISOString())
   })

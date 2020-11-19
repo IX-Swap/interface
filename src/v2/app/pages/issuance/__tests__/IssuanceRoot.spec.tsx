@@ -18,6 +18,7 @@ describe('IssuanceRoot', () => {
   beforeEach(() => {
     useIssuanceRouterMock.mockReturnValueOnce({ renderRoutes })
   })
+
   afterEach(async () => {
     await cleanup()
     jest.clearAllMocks()

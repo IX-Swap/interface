@@ -14,6 +14,7 @@ const useInvestListRouterMock = useInvestListRouter as jest.Mock<
 
 describe('InvestLanding', () => {
   const renderRoutes = jest.fn(() => <div />)
+
   afterEach(async () => {
     await cleanup()
     jest.clearAllMocks()

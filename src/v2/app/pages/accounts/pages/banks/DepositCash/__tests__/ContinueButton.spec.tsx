@@ -6,6 +6,7 @@ import { ContinueButton } from 'v2/app/pages/accounts/pages/banks/DepositCash/Co
 
 describe('ContinueButton', () => {
   // const fakeDepositStore = { setCurrentStep: jest.fn() }
+
   afterEach(async () => {
     await cleanup()
     jest.clearAllMocks()

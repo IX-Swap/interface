@@ -9,6 +9,7 @@ jest.mock('v2/app/pages/notifications/components/NotificationIcon', () => ({
 
 describe('Snackbar', () => {
   const props: SnackbarProps = { message: 'Cool!', variant: 'success' }
+
   afterEach(async () => {
     await cleanup()
     jest.clearAllMocks()

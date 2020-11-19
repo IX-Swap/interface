@@ -1,5 +1,4 @@
 import React from 'react'
-import useStyles from './WADialog.styles'
 import Dialog, { DialogProps } from '@material-ui/core/Dialog'
 import useMediaQuery from '@material-ui/core/useMediaQuery'
 import { useTheme } from '@material-ui/core/styles'
@@ -11,7 +10,6 @@ export const WADialog: React.FC<DialogProps> = ({
   ...rest
 }) => {
   const theme = useTheme()
-  const classes = useStyles()
   const fullScreen = useMediaQuery(theme.breakpoints.down('sm'))
 
   return (
@@ -20,9 +18,6 @@ export const WADialog: React.FC<DialogProps> = ({
       open={open}
       fullScreen={fullScreen}
       onClose={history.goBack}
-      aria-labelledby='simple-modal-title'
-      aria-describedby='simple-modal-description'
-      className={classes.root}
       {...rest}
     >
       {children}

@@ -17,6 +17,7 @@ describe('DataroomFileRow', () => {
     uploadState: generateMutationResult({}),
     deleteState: generateMutationResult({})
   }
+
   afterEach(async () => {
     await cleanup()
     jest.clearAllMocks()

@@ -32,6 +32,7 @@ describe('WithdrawalAddressCreate', () => {
   it('renders without error', () => {
     render(<WithdrawalAddressCreate isOpen />)
   })
+
   it('renders WADialog with correct props', () => {
     render(<WithdrawalAddressCreate isOpen />)
 
@@ -41,6 +42,7 @@ describe('WithdrawalAddressCreate', () => {
       {}
     )
   })
+
   it('renders WADialogTitle with correct props', () => {
     render(<WithdrawalAddressCreate isOpen />)
 
@@ -50,6 +52,7 @@ describe('WithdrawalAddressCreate', () => {
       {}
     )
   })
+
   it('renders WADialogContent with correct props', () => {
     render(<WithdrawalAddressCreate isOpen />)
 
@@ -59,6 +62,7 @@ describe('WithdrawalAddressCreate', () => {
       {}
     )
   })
+
   it('renders WAFormWrapper with correct props', () => {
     render(<WithdrawalAddressCreate isOpen />)
 

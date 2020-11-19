@@ -13,6 +13,7 @@ jest.mock('v2/components/LabelledValue', () => ({
 
 describe('BalanceDetails', () => {
   const props: BalanceDetailsProps = { data: balance }
+
   afterEach(async () => {
     await cleanup()
     jest.clearAllMocks()

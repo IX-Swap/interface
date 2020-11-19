@@ -14,6 +14,7 @@ describe('useCreateDSO', () => {
       .spyOn(useAuthHook, 'useAuth')
       .mockReturnValue({ user: user, isAuthenticated: true })
   })
+
   afterEach(async () => {
     await cleanup()
     jest.clearAllMocks()

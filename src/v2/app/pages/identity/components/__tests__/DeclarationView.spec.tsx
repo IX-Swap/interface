@@ -17,6 +17,7 @@ describe('DeclarationView', () => {
     data: individual.declarations,
     type: 'individual'
   }
+
   afterEach(async () => {
     await cleanup()
     jest.clearAllMocks()

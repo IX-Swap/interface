@@ -28,6 +28,7 @@ describe('CommitmentFormCancelButton', () => {
       params: { dsoId: dso._id }
     })
   })
+
   afterEach(async () => {
     await cleanup()
     jest.clearAllMocks()

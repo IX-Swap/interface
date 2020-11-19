@@ -10,6 +10,7 @@ describe('WithdrawalAddresses', () => {
       .spyOn(useWithdrawalAddressesRouterHook, 'useWithdrawalAddressesRouter')
       .mockReturnValue({ renderRoutes, replace: jest.fn() } as any)
   })
+
   afterEach(async () => {
     await cleanup()
     jest.clearAllMocks()

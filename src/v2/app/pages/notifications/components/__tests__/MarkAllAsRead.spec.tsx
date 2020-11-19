@@ -13,6 +13,7 @@ describe('MarkAllAsRead', () => {
       .spyOn(useMarkAllAsReadHook, 'useMarkAllAsRead')
       .mockReturnValue([mutate, generateMutationResult({})])
   })
+
   afterEach(async () => {
     await cleanup()
     jest.clearAllMocks()

@@ -18,6 +18,7 @@ describe('IdentityDataroomUploader', () => {
     label: 'test label',
     control: {} as any
   }
+
   afterEach(async () => {
     await cleanup()
     jest.clearAllMocks()

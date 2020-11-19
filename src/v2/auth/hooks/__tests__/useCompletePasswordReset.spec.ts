@@ -10,6 +10,7 @@ describe('useCompletePasswordReset', () => {
   beforeEach(() => {
     jest.spyOn(authRouter, 'useAuthRouter').mockReturnValue({ push } as any)
   })
+
   afterEach(async () => {
     await cleanup()
     jest.clearAllMocks()

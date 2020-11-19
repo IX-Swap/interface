@@ -19,6 +19,7 @@ describe('LandingPage', () => {
     label: 'Account',
     path: '/account'
   }
+
   afterEach(async () => {
     await cleanup()
     jest.clearAllMocks()

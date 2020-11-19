@@ -16,6 +16,7 @@ describe('DSPreview', () => {
   beforeEach(() => {
     history.push(DSRoute.view, { balanceId: 'testBalanceId' })
   })
+
   afterEach(async () => {
     await cleanup()
     jest.clearAllMocks()

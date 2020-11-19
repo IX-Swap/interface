@@ -13,6 +13,7 @@ describe('Section', () => {
     footer: <div data-testid='footer' />,
     children: <div data-testid='children' />
   }
+
   afterEach(async () => {
     await cleanup()
     jest.clearAllMocks()

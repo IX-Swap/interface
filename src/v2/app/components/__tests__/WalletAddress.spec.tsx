@@ -12,6 +12,7 @@ describe('WalletAddress', () => {
   const props: WalletAddressProps = {
     val: '1234567890'
   }
+
   afterEach(async () => {
     await cleanup()
     jest.clearAllMocks()

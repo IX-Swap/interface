@@ -7,6 +7,7 @@ describe('Dropdown', () => {
     content: () => <div data-testid='content' />,
     trigger: () => <div data-testid='trigger' />
   }
+
   afterEach(async () => {
     await cleanup()
     jest.clearAllMocks()

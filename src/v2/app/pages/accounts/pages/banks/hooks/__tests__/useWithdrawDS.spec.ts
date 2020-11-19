@@ -12,6 +12,7 @@ describe('useWithdrawDS', () => {
       .spyOn(useAuthHook, 'useAuth')
       .mockImplementation(() => ({ user, isAuthenticated: true }))
   })
+
   afterEach(async () => {
     await cleanup()
     jest.clearAllMocks()

@@ -16,6 +16,7 @@ describe('RichTextEditor', () => {
     name: 'test-name',
     control: {} as any
   }
+
   afterEach(async () => {
     await cleanup()
     jest.clearAllMocks()

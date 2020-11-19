@@ -15,6 +15,7 @@ jest.mock('v2/components/LabelledValue', () => ({
 
 describe('DSWithdrawalPreview', () => {
   const props: DSWithdrawalPreviewProps = { data: dsWithdrawal }
+
   afterEach(async () => {
     await cleanup()
     jest.clearAllMocks()
