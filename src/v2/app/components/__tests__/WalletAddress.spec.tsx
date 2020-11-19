@@ -1,12 +1,15 @@
 import React from 'react'
 import { render, cleanup, fireEvent, waitFor } from 'test-utils'
-import { AddressField, AddressFieldProps } from 'v2/app/components/AddressField'
+import {
+  WalletAddress,
+  WalletAddressProps
+} from 'v2/app/components/WalletAddress'
 import { copyToClipboard } from 'v2/helpers/clipboard'
 
 jest.mock('v2/helpers/clipboard', () => ({ copyToClipboard: jest.fn() }))
 
-describe('AddressField', () => {
-  const props: AddressFieldProps = {
+describe('WalletAddress', () => {
+  const props: WalletAddressProps = {
     val: '1234567890'
   }
   afterEach(async () => {
@@ -15,17 +18,17 @@ describe('AddressField', () => {
   })
 
   it('renders without error', () => {
-    render(<AddressField {...props} />)
+    render(<WalletAddress {...props} />)
   })
 
   it('renders truncated value', () => {
-    const { container } = render(<AddressField {...props} />)
+    const { container } = render(<WalletAddress {...props} />)
 
     expect(container).toHaveTextContent('1234...7890')
   })
 
   it('copies input value to clipboard', async () => {
-    const { getByRole } = render(<AddressField {...props} />)
+    const { getByRole } = render(<WalletAddress {...props} />)
 
     fireEvent.click(getByRole('button'))
 

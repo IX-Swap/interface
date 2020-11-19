@@ -1,16 +1,12 @@
 import { Network } from './networks'
-import { IndividualIdentity, CorporateIdentity } from './identity'
+import { AuthorizableWithIdentity } from './authorizer'
 
-export interface WithdrawalAddress {
+export interface WithdrawalAddress extends AuthorizableWithIdentity {
   _id: string
   label: string
   address: string
   network: Network
   memo?: string
-  identity: {
-    individual: IndividualIdentity
-    corporates: CorporateIdentity[]
-  }
 }
 
 export interface WithdrawalAddressFormValues {
