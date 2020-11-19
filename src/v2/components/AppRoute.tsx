@@ -34,7 +34,6 @@ export const AppRoute = (props: AppRouteProps) => {
     if (!path.startsWith('/auth')) {
       return <Redirect to='/auth' />
     }
-  } else if (isAdmin) {
   } else {
     if (!is2FAEnabled && !path.startsWith(AppPath.security)) {
       return <Redirect to={AppPath.security} />

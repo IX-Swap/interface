@@ -80,11 +80,12 @@ export const useDataFromURL = () => {
           break
         }
 
-        default: {
-        }
+        default:
+          return state // throws error
       }
     }
 
+    // window.history.replaceState(state, 'app-state')
     history.replace({ state })
   }, [pathname])
 }
