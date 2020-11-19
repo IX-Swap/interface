@@ -20,7 +20,7 @@ export const WithdrawalAddressView = ({ isOpen }: { isOpen: boolean }) => {
             variant='contained'
             color='primary'
             disableElevation
-            onClick={() => history.goBack()}
+            onClick={history.goBack}
           >
             Ok
           </Button>

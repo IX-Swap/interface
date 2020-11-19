@@ -6,6 +6,7 @@ import * as useWithdrawalAddressesRouterHook from 'v2/app/pages/accounts/pages/w
 import * as useWithdrawalAddressByIdHook from 'v2/app/pages/accounts/pages/withdrawalAddresses/hooks/useWithdrawalAddressById'
 import { generateQueryResult } from '__fixtures__/useQuery'
 import { withdrawalAddress } from '__fixtures__/withdrawalAddress'
+import { QueryStatus } from 'react-query'
 
 jest.mock('v2/components/LabelledValue', () => ({
   LabelledValue: jest.fn(() => null)
@@ -29,6 +30,29 @@ describe('WithdrawalAddressViewContent', () => {
       .spyOn(useWithdrawalAddressByIdHook, 'useWithdrawalAddressById')
       .mockReturnValue(generateQueryResult({ data: withdrawalAddress }))
     render(<WAViewContent />)
+  })
+
+  it('does not render LabelledValue if data not loaded', () => {
+    jest
+      .spyOn(useWithdrawalAddressByIdHook, 'useWithdrawalAddressById')
+      .mockReturnValue(
+        generateQueryResult({
+          data: withdrawalAddress,
+          queryStatus: QueryStatus.Loading
+        })
+      )
+    render(<WAViewContent />)
+
+    expect(LabelledValue).not.toHaveBeenCalled()
+  })
+
+  it('does not render LabelledValue if data is undefined', () => {
+    jest
+      .spyOn(useWithdrawalAddressByIdHook, 'useWithdrawalAddressById')
+      .mockReturnValue(generateQueryResult({ data: undefined }))
+    render(<WAViewContent />)
+
+    expect(LabelledValue).not.toHaveBeenCalled()
   })
 
   it('renders LabelledValue with correct props', () => {
