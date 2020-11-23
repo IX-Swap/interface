@@ -7,12 +7,19 @@ import { PaginatedData } from 'v2/services/api/types'
 import { WithdrawalAddress } from 'v2/types/withdrawalAddress'
 import { GetWithdrawalAddressesArgs } from 'v2/app/pages/accounts/types'
 import { useParsedData, UsePaginatedQueryData } from 'v2/hooks/useParsedData'
+import { AuthorizableStatus } from 'v2/types/util'
 
 export const WITHDRAWAL_ADDRESSES_QUERY_KEY = 'withdrawalAddresses'
 
-export const useWithdrawalAddresses = (): UsePaginatedQueryData<
-  WithdrawalAddress
-> => {
+interface Props {
+  network?: string
+  status?: AuthorizableStatus
+}
+
+export const useWithdrawalAddresses = ({
+  network,
+  status = 'Approved'
+}: Props): UsePaginatedQueryData<WithdrawalAddress> => {
   const { apiService } = useServices()
   const { user } = useAuth()
   const uri = `/accounts/withdrawal-addresses/list/${getIdFromObj(user)}`
@@ -23,7 +30,7 @@ export const useWithdrawalAddresses = (): UsePaginatedQueryData<
   ) => await apiService.post<PaginatedData<WithdrawalAddress>>(uri, args)
 
   const { data, ...queryResult } = useInfiniteQuery(
-    [WITHDRAWAL_ADDRESSES_QUERY_KEY, paginationArgs],
+    [WITHDRAWAL_ADDRESSES_QUERY_KEY, { ...paginationArgs, network, status }],
     getAllWithdrawalAddresses
   )
 

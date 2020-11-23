@@ -23,13 +23,13 @@ export const withdrawalAddressesRoutes: InternalRouteProps[] = [
     exact: true
   },
   {
-    label: 'View Withdrawal Address',
+    label: 'Withdrawal Addresses',
     path: WithdrawalAddressesRoute.view,
     component: WithdrawalAddressesList,
     exact: true
   },
   {
-    label: 'Add Withdrawal Addresses',
+    label: 'Withdrawal Addresses',
     path: WithdrawalAddressesRoute.create,
     component: WithdrawalAddressesList,
     exact: true

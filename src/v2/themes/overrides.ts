@@ -7,6 +7,11 @@ export const overrides: Overrides = {
       backgroundColor: '#4A4A4A1A'
     }
   },
+  MuiDialog: {
+    paper: {
+      borderRadius: 0
+    }
+  },
   MuiMenu: {
     paper: {
       boxShadow:

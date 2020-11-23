@@ -18,9 +18,9 @@ export const useMakeWithdrawalAddress = () => {
   }
 
   return useMutation(mutateFn, {
-    onSuccess: ({ data }) => {
+    onSuccess: () => {
       void snackbarService.showSnackbar('Success', 'success')
-      replace('view', { withdrawalAddressId: data?._id })
+      replace('list')
     },
     onError: (error: any) => {
       void snackbarService.showSnackbar(error.message, 'error')

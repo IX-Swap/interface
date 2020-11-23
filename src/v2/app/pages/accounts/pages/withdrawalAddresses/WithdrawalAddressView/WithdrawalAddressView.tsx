@@ -1,13 +1,15 @@
 import React from 'react'
 import { Grid, Button } from '@material-ui/core'
-import { history } from 'v2/history'
 import { WADialog } from 'v2/app/pages/accounts/pages/withdrawalAddresses/WADialog/WADialog'
 import { WADialogTitle } from 'v2/app/pages/accounts/pages/withdrawalAddresses/WADialog/WADialogTitle'
 import { WADialogContent } from 'v2/app/pages/accounts/pages/withdrawalAddresses/WADialog/WADialogContent'
 import { WADialogActions } from 'v2/app/pages/accounts/pages/withdrawalAddresses/WADialog/WADialogActions'
 import { WAViewContent } from 'v2/app/pages/accounts/pages/withdrawalAddresses/WithdrawalAddressView/WAViewContent'
+import { useWithdrawalAddressesRouter } from '../router'
 
 export const WithdrawalAddressView = ({ isOpen }: { isOpen: boolean }) => {
+  const { replace } = useWithdrawalAddressesRouter()
+
   return (
     <WADialog open={isOpen}>
       <WADialogTitle label='View Withdrawal Address' />
@@ -20,7 +22,7 @@ export const WithdrawalAddressView = ({ isOpen }: { isOpen: boolean }) => {
             variant='contained'
             color='primary'
             disableElevation
-            onClick={history.goBack}
+            onClick={() => replace('list')}
           >
             Ok
           </Button>

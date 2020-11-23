@@ -6,7 +6,7 @@ export const waFormValidationSchema = yup
   .object()
   .shape<WithdrawalAddressFormValues>({
     network: yup.string().required('Required'),
-    memo: yup.string().required('Required'),
+    memo: yup.string(),
     label: yup.string().required('Required'),
     address: yup
       .string()

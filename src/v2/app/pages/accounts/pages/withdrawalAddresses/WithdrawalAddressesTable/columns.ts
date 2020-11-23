@@ -1,4 +1,3 @@
-import { renderStatusColumn } from 'v2/app/pages/authorizer/hooks/useAuthorizerView'
 import { formatDateToMMDDYY } from 'v2/helpers/dates'
 import { renderAddressColumn } from 'v2/helpers/rendering'
 
@@ -27,7 +26,6 @@ export const columns = [
   },
   {
     key: 'status',
-    label: 'Status',
-    render: renderStatusColumn
+    label: 'Status'
   }
 ]
