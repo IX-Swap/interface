@@ -41,7 +41,7 @@ describe('WithdrawalAddressView', () => {
   it('renders WADialog with correct props', () => {
     render(<WithdrawalAddressView isOpen />)
 
-    expect(WADialog).toHaveBeenCalledTimes(1)
+    expect(WADialog).toHaveBeenCalled()
     expect(WADialog).toHaveBeenCalledWith(
       { open: true, children: expect.anything() },
       {}
@@ -51,7 +51,7 @@ describe('WithdrawalAddressView', () => {
   it('renders WADialogTitle with correct props', () => {
     render(<WithdrawalAddressView isOpen />)
 
-    expect(WADialogTitle).toHaveBeenCalledTimes(1)
+    expect(WADialogTitle).toHaveBeenCalled()
     expect(WADialogTitle).toHaveBeenCalledWith(
       { label: 'View Withdrawal Address' },
       {}
@@ -61,7 +61,7 @@ describe('WithdrawalAddressView', () => {
   it('renders WADialogContent with correct props', () => {
     render(<WithdrawalAddressView isOpen />)
 
-    expect(WADialogContent).toHaveBeenCalledTimes(1)
+    expect(WADialogContent).toHaveBeenCalled()
     expect(WADialogContent).toHaveBeenCalledWith(
       { children: expect.anything() },
       {}
@@ -71,7 +71,7 @@ describe('WithdrawalAddressView', () => {
   it('renders WADialogActions with correct props', () => {
     render(<WithdrawalAddressView isOpen />)
 
-    expect(WADialogActions).toHaveBeenCalledTimes(1)
+    expect(WADialogActions).toHaveBeenCalled()
     expect(WADialogActions).toHaveBeenCalledWith(
       { children: expect.anything() },
       {}
@@ -81,6 +81,6 @@ describe('WithdrawalAddressView', () => {
   it('renders WAViewContent with correct props', () => {
     render(<WithdrawalAddressView isOpen />)
 
-    expect(WAViewContent).toHaveBeenCalledTimes(1)
+    expect(WAViewContent).toHaveBeenCalled()
   })
 })
