@@ -24,7 +24,9 @@ describe('CommitmentPreview', () => {
   })
 
   it('renders without error', () => {
-    render(<CommitmentPreview {...props} />)
+    render(
+      <CommitmentPreview data={{ ...props.data, walletAddress: undefined }} />
+    )
   })
 
   it('renders nothing if data is null', () => {

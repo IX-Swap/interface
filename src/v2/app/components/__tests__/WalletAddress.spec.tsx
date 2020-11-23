@@ -5,8 +5,12 @@ import {
   WalletAddressProps
 } from 'v2/app/components/WalletAddress'
 import { copyToClipboard } from 'v2/helpers/clipboard'
+import { AppRouterLink } from 'v2/components/AppRouterLink'
 
 jest.mock('v2/helpers/clipboard', () => ({ copyToClipboard: jest.fn() }))
+jest.mock('v2/components/AppRouterLink', () => ({
+  AppRouterLink: jest.fn(() => null)
+}))
 
 describe('WalletAddress', () => {
   const props: WalletAddressProps = {
@@ -26,6 +30,12 @@ describe('WalletAddress', () => {
     const { container } = render(<WalletAddress {...props} />)
 
     expect(container).toHaveTextContent('1234...7890')
+  })
+
+  it('renders AppRouterLink if link is true', () => {
+    render(<WalletAddress {...props} link />)
+
+    expect(AppRouterLink).toHaveBeenCalledTimes(1)
   })
 
   it('copies input value to clipboard', async () => {

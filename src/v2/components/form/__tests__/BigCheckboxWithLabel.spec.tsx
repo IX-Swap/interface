@@ -27,4 +27,8 @@ describe('BigCheckboxWithLabel', () => {
   it('renders without error', () => {
     render(<BigCheckboxWithLabel {...props} />)
   })
+
+  it('renders without error if error is undefined', () => {
+    render(<BigCheckboxWithLabel {...props} error={undefined as any} />)
+  })
 })

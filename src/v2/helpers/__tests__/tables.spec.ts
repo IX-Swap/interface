@@ -7,6 +7,7 @@ import {
 import { individual, corporate } from '__fixtures__/identity'
 import { commitment, cashDeposit } from '__fixtures__/authorizer'
 import { IndividualIdentity, CorporateIdentity } from 'v2/types/identity'
+import { withdrawalAddress } from '__fixtures__/withdrawalAddress'
 
 describe('renderIndividualOrCompanyName', () => {
   it('returns individual name for IndividualIdentity', () => {
@@ -30,6 +31,12 @@ describe('renderIndividualOrCompanyName', () => {
   it('returns individual name for Commitment', () => {
     expect(renderIndividualOrCompanyName('Jane', commitment)).toBe(
       `Jane ${commitment.identity.individual.lastName}`
+    )
+  })
+
+  it('returns individual name for Commitment', () => {
+    expect(renderIndividualOrCompanyName('Jane', withdrawalAddress)).toBe(
+      `Jane ${withdrawalAddress.identity?.individual.lastName ?? ''}`
     )
   })
 
