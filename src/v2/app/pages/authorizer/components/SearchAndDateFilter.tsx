@@ -1,16 +1,13 @@
 import React from 'react'
 import { useForm, Controller } from 'react-hook-form'
 import { Grid, InputAdornment, TextField, Button, Box } from '@material-ui/core'
-import { DateRange as DateIcon, Search as SearchIcon } from '@material-ui/icons'
+import { Search as SearchIcon } from '@material-ui/icons'
 import DateFnsUtils from '@date-io/date-fns'
-import {
-  DateTimePicker,
-  DateTimePickerProps,
-  MuiPickersUtilsProvider
-} from '@material-ui/pickers'
+import { MuiPickersUtilsProvider } from '@material-ui/pickers'
 import useStyles from './SearchAndDateFilter.styles'
 import { BaseFilter } from 'v2/types/util'
 import { convertDateToISO } from 'v2/helpers/dates'
+import { DateTimePickerComponent } from 'v2/components/form/DateTimePicker'
 
 interface SearchAndDateFilterFormValues {
   search: string
@@ -91,11 +88,7 @@ export const SearchAndDateFilter: React.FC<SearchAndDateFilterProps> = props => 
             control={control}
             defaultValue={null}
             render={props => (
-              <DateTimePickerComponent
-                {...props}
-                label='From'
-                format='MM/dd/yyyy HH:mm'
-              />
+              <DateTimePickerComponent {...props} label='From' />
             )}
           />
         </Grid>
@@ -104,13 +97,7 @@ export const SearchAndDateFilter: React.FC<SearchAndDateFilterProps> = props => 
             name='to'
             control={control}
             defaultValue={null}
-            render={props => (
-              <DateTimePickerComponent
-                {...props}
-                label='To'
-                format='MM/dd/yyyy HH:mm'
-              />
-            )}
+            render={props => <DateTimePickerComponent {...props} label='To' />}
           />
         </Grid>
       </MuiPickersUtilsProvider>
@@ -144,31 +131,3 @@ export const SearchAndDateFilter: React.FC<SearchAndDateFilterProps> = props => 
     </form>
   )
 }
-
-const DateTimePickerComponent: React.FC<DateTimePickerProps> = props => {
-  return (
-    <DateTimePicker
-      {...props}
-      autoOk
-      variant='inline'
-      inputVariant='outlined'
-      margin='normal'
-      TextFieldComponent={TextFieldComponent}
-    />
-  )
-}
-
-const TextFieldComponent: React.FC = (props: any) => (
-  <TextField
-    {...props}
-    fullWidth
-    size='small'
-    InputProps={{
-      endAdornment: (
-        <InputAdornment position='end' style={{ color: '#AAAAAA' }}>
-          <DateIcon />
-        </InputAdornment>
-      )
-    }}
-  />
-)

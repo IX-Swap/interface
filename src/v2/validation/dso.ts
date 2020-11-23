@@ -12,6 +12,7 @@ export const dsoTeamMemberSchema = object().shape<DsoTeamMember>({
 
 export const dsoFormValidationSchema = object()
   .shape<DSOFormValues>({
+    network: string().required('Required'),
     businessModel: string().required('Required'),
     capitalStructure: string().required('Required'),
     corporate: string().required('Required'),

@@ -97,5 +97,13 @@ describe('CommitmentPreview', () => {
       },
       {}
     )
+    expect(LabelledValue).toHaveBeenNthCalledWith(
+      9,
+      {
+        label: 'Withdrawal Address',
+        value: expect.anything()
+      },
+      {}
+    )
   })
 })

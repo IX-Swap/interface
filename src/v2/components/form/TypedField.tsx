@@ -122,7 +122,8 @@ export const TypedField = <
               shrink={
                 hasStartAdornment ||
                 isFocused ||
-                hasValue(controllerProps.value)
+                hasValue(controllerProps.value) ||
+                (props.displayEmpty === true && controllerProps.value === '')
               }
             >
               {label}

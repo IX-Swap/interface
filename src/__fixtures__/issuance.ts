@@ -7,6 +7,7 @@ import {
 import { corporate, asset } from './authorizer'
 import { emptyFile } from '__fixtures__/file'
 import { numberToPercentage } from 'v2/app/pages/issuance/utils'
+import { network } from './network'
 
 export const deploymentInfo: DeploymentInfo = {
   _id: '12',
@@ -34,6 +35,7 @@ export const createDSOArgs: DSORequestArgs = {
   distributionFrequency: 'distribution frequency',
   dividendYield: 1,
   documents: [],
+  network: network._id,
   equityMultiple: 1,
   fundraisingMilestone: 'fundraising milestone',
   grossIRR: 0,
@@ -103,6 +105,7 @@ export const formvalues: DSOFormValues = {
   introduction: '<p>Hello world</p>',
   interestRate: 1,
   grossIRR: 1,
+  network: network._id,
   fundraisingMilestone: '<p>Hello world</p>',
   equityMultiple: 1,
   dividendYield: 1,
@@ -121,6 +124,7 @@ export const requestargs: DSORequestArgs = {
       about: '<p>Hello world</p>'
     }
   ],
+  network: network._id,
   documents: ['5f898b52aa141c6d0d358ce5'],
   logo: '5f898b69aa141c6d0d358ce6',
   useOfProceeds: '<p>Hello world</p>',
