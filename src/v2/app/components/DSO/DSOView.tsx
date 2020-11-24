@@ -37,7 +37,7 @@ export const DSOView = (props: DSOViewProps) => {
     <Grid container direction='column' spacing={3}>
       {showAuthorizations && (
         <Grid item>
-          <RejectionMessage data={data.authorizations} />
+          <RejectionMessage data={data} />
         </Grid>
       )}
 

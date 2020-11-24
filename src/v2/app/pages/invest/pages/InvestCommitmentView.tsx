@@ -17,7 +17,7 @@ export const InvestCommitmentView = () => {
 
   return (
     <>
-      <RejectionMessage data={data.authorizations} />
+      <RejectionMessage data={data} />
       <CommitmentPreview data={data} />
     </>
   )

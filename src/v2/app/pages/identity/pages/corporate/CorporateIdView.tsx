@@ -23,7 +23,7 @@ export const CorporateIdView: React.FC = () => {
   return (
     <Grid container>
       <Grid item>
-        <RejectionMessage data={identity.authorizations} />
+        <RejectionMessage data={identity} />
       </Grid>
       <Grid container item justify='flex-end' alignItems='center'>
         <EditButton link={paths.editCorporate} params={{ identityId }} />
