@@ -16,7 +16,7 @@ export const DSOTitle = (props: DsoTitleProps) => {
         <DSOLogo size={60} dsoId={dso._id} />
       </Grid>
       <Grid item>
-        <Typography variant='h4'>{dso.tokenSymbol}</Typography>
+        <Typography variant='h4'>{dso.tokenName}</Typography>
         <Typography>{dso.issuerName}</Typography>
       </Grid>
     </Grid>
