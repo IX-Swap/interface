@@ -1,5 +1,5 @@
 import React from 'react'
-import { Grid, Typography } from '@material-ui/core'
+import { Grid } from '@material-ui/core'
 import { LabelledValue } from 'v2/components/LabelledValue'
 import { Commitment } from 'v2/types/commitment'
 import { formatDateAndTime } from 'v2/helpers/dates'
@@ -10,8 +10,8 @@ import { Maybe } from 'v2/types/util'
 import { useSetPageTitle } from 'v2/app/hooks/useSetPageTitle'
 import { getOfferingName } from 'v2/helpers/strings'
 import { privateClassNames } from 'v2/helpers/classnames'
-import { WalletAddress } from 'v2/app/components/WalletAddress'
 import { CommitmentIssuance } from 'v2/app/components/CommitmentIssuance/CommitmentIssuance'
+import { CommitmentWalletAddress } from 'v2/app/components/CommitmentWalletAddress'
 
 export interface CommitmentPreviewProps {
   data: Maybe<Commitment>
@@ -82,19 +82,7 @@ export const CommitmentPreview: React.FC<CommitmentPreviewProps> = (
         <Grid item xs={4}>
           <LabelledValue
             label='Withdrawal Address'
-            value={
-              typeof data.walletAddress === 'string' ? (
-                <WalletAddress address={data.walletAddress} link />
-              ) : (
-                <Typography
-                  variant='body1'
-                  color='error'
-                  style={{ textDecoration: 'underline' }}
-                >
-                  Not provided by a Investor
-                </Typography>
-              )
-            }
+            value={<CommitmentWalletAddress address={data.walletAddress} />}
           />
         </Grid>
       </Grid>

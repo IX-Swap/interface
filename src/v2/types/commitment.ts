@@ -39,6 +39,11 @@ export interface CommitmentIssuanceFormValues {
   withdrawalAddress: string
 }
 
+export interface CommitmentIssuanceArgs {
+  releaseDate?: string
+  withdrawalAddress: string
+}
+
 export interface MakeInvestmentArgs {
   dso: string
   signedSubscriptionDocument: string
