@@ -1,4 +1,3 @@
-/**  * @jest-environment jsdom-sixteen  */
 import React from 'react'
 import { render, cleanup } from 'test-utils'
 import { FullHeight } from 'v2/app/components/FullHeight'

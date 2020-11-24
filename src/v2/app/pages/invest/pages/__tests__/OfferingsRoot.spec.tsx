@@ -1,4 +1,3 @@
-/**  * @jest-environment jsdom-sixteen  */
 import React from 'react'
 import { render, cleanup } from 'test-utils'
 import { OfferingsRoot } from 'v2/app/pages/invest/pages/OfferingsRoot'
@@ -15,6 +14,7 @@ describe('OfferingsRoot', () => {
   beforeEach(() => {
     useOfferingsRouterMock.mockReturnValueOnce({ renderRoutes })
   })
+
   afterEach(async () => {
     await cleanup()
     jest.clearAllMocks()

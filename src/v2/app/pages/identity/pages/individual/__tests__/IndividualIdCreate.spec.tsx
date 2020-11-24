@@ -1,4 +1,3 @@
-/**  * @jest-environment jsdom-sixteen  */
 import React from 'react'
 import { render, cleanup } from 'test-utils'
 import { IndividualIdCreate } from 'v2/app/pages/identity/pages/individual/IndividualIdCreate'

@@ -1,4 +1,3 @@
-/**  * @jest-environment jsdom-sixteen  */
 import { act } from '@testing-library/react-hooks'
 import { waitFor, cleanup, renderHookWithServiceProvider } from 'test-utils'
 import { useDownloadRawDocument } from 'v2/hooks/useDownloadRawDocument'
@@ -10,6 +9,7 @@ import { user } from '__fixtures__/user'
 describe('useDownloadRawDocument', () => {
   const downloadDocument = { documentId: document._id, ownerId: '' }
   const callbacks = { onSuccess: jest.fn(), onError: jest.fn() }
+
   afterEach(async () => {
     await cleanup()
     jest.clearAllMocks()

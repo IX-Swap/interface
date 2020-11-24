@@ -1,4 +1,3 @@
-/**  * @jest-environment jsdom-sixteen  */
 import React from 'react'
 import { render, cleanup } from 'test-utils'
 import {
@@ -23,6 +22,7 @@ jest.mock('v2/app/pages/invest/components/AssetBalance', () => ({
 
 describe('CommitmentHeader', () => {
   const props: CommitmentHeaderProps = { dso: dso }
+
   afterEach(async () => {
     await cleanup()
     jest.clearAllMocks()
@@ -30,7 +30,7 @@ describe('CommitmentHeader', () => {
 
   it('renders without error', () => {
     render(
-      <Form defaultValues={{}}>
+      <Form>
         <CommitmentHeader {...props} />
       </Form>
     )
@@ -38,7 +38,7 @@ describe('CommitmentHeader', () => {
 
   it('renders DSOTitle with correct props', () => {
     render(
-      <Form defaultValues={{}}>
+      <Form>
         <CommitmentHeader {...props} />
       </Form>
     )
@@ -48,7 +48,7 @@ describe('CommitmentHeader', () => {
 
   it('renders EstimatedValue with correct props', () => {
     render(
-      <Form defaultValues={{}}>
+      <Form>
         <CommitmentHeader {...props} />
       </Form>
     )
@@ -61,7 +61,7 @@ describe('CommitmentHeader', () => {
 
   it('renders AssetBalance with correct props', () => {
     render(
-      <Form defaultValues={{}}>
+      <Form>
         <CommitmentHeader {...props} />
       </Form>
     )

@@ -1,4 +1,3 @@
-/**  * @jest-environment jsdom-sixteen  */
 import React from 'react'
 import { render, cleanup } from 'test-utils'
 import {
@@ -13,6 +12,9 @@ import { formatMoney } from 'v2/helpers/numbers'
 jest.mock('v2/components/LabelledValue', () => ({
   LabelledValue: jest.fn(() => null)
 }))
+jest.mock('v2/app/components/CommitmentIssuance/CommitmentIssuance', () => ({
+  CommitmentIssuance: jest.fn(() => null)
+}))
 
 describe('CommitmentPreview', () => {
   const props: CommitmentPreviewProps = {
@@ -25,7 +27,14 @@ describe('CommitmentPreview', () => {
   })
 
   it('renders without error', () => {
-    render(<CommitmentPreview {...props} />)
+    render(
+      <CommitmentPreview
+        data={{
+          ...props.data,
+          walletAddress: (undefined as unknown) as string
+        }}
+      />
+    )
   })
 
   it('renders nothing if data is null', () => {
@@ -95,6 +104,14 @@ describe('CommitmentPreview', () => {
           props.data?.totalAmount as number,
           props.data?.currency.symbol
         )
+      },
+      {}
+    )
+    expect(LabelledValue).toHaveBeenNthCalledWith(
+      9,
+      {
+        label: 'Withdrawal Address',
+        value: expect.anything()
       },
       {}
     )

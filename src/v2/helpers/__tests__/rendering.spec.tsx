@@ -1,4 +1,12 @@
-import { wysiwygToHtml } from 'v2/helpers/rendering'
+import React from 'react'
+import { render, cleanup } from 'test-utils'
+import { wysiwygToHtml, renderAddressColumn } from 'v2/helpers/rendering'
+import { WalletAddress } from 'v2/app/components/WalletAddress'
+import { withdrawalAddress } from '__fixtures__/withdrawalAddress'
+
+jest.mock('v2/app/components/WalletAddress', () => ({
+  WalletAddress: jest.fn(() => null)
+}))
 
 describe('wysiwygToHtml', () => {
   const draftString = JSON.stringify({
@@ -8,5 +16,17 @@ describe('wysiwygToHtml', () => {
 
   it('returns html string', () => {
     expect(wysiwygToHtml(draftString)).toEqual(`<p>Foo</p>\n`)
+  })
+})
+
+describe('renderAddressColumn', () => {
+  afterEach(async () => {
+    await cleanup()
+    jest.clearAllMocks()
+  })
+
+  it('returns wallet address', () => {
+    render(<>{renderAddressColumn(withdrawalAddress.address)}</>)
+    expect(WalletAddress).toHaveBeenCalled()
   })
 })

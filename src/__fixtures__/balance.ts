@@ -1,5 +1,5 @@
 import { AssetBalance } from 'v2/types/balance'
-import { asset } from './authorizer'
+import { asset } from '__fixtures__/authorizer'
 
 export const balance: AssetBalance = {
   debitTotal: 123,

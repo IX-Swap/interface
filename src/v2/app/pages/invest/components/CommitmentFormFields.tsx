@@ -9,6 +9,7 @@ import { NumericInput } from 'v2/components/form/NumericInput'
 import { numericValueExtractor, plainValueExtractor } from 'v2/helpers/forms'
 import { UploadSignedSubscriptionDocument } from 'v2/components/dataroom/UploadSignedSubscriptionDocument'
 import { privateClassNames } from 'v2/helpers/classnames'
+import { WithdrawalAddressSelect } from 'v2/components/form/WithdrawalAddressSelect'
 
 export interface CommitmentFormFieldsProps {
   symbol: string
@@ -85,10 +86,11 @@ export const CommitmentFormFields = (props: CommitmentFormFieldsProps) => {
       <Grid item>
         <TypedField
           className={privateClassNames()}
-          component={Input}
+          component={WithdrawalAddressSelect}
           control={control}
           name='walletAddress'
           label='Destination Wallet Address'
+          displayEmpty
         />
       </Grid>
 

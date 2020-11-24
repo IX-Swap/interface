@@ -6,6 +6,7 @@ import { DataroomAvatarUploader } from 'v2/components/dataroom/DataroomAvatarUpl
 import { DatePicker } from 'v2/components/form/DatePicker'
 import { dateTimeValueExtractor } from 'v2/helpers/forms'
 import { CorporateSelect } from 'v2/components/form/CorporateSelect'
+import { NetworkSelect } from 'v2/components/form/NetworkSelect'
 import { AssetSelect } from 'v2/components/form/AssetSelect'
 import { useFormContext } from 'react-hook-form'
 import { DSOFormValues } from 'v2/types/dso'
@@ -98,6 +99,15 @@ export const DSOBaseFields = () => {
             label='Currency'
             name='currency'
             control={control}
+          />
+        </Grid>
+
+        <Grid item>
+          <TypedField
+            control={control}
+            component={NetworkSelect}
+            name='network'
+            label='Network'
           />
         </Grid>
       </Grid>

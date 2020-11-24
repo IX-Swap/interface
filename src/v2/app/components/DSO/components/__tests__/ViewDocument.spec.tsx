@@ -1,4 +1,3 @@
-/**  * @jest-environment jsdom-sixteen  */
 import React from 'react'
 import { render, cleanup } from 'test-utils'
 import {
@@ -25,6 +24,7 @@ describe('ViewDocument', () => {
       .mockImplementation(createObjectURLFromFile)
     jest.spyOn(utils, 'revokeObjectURL').mockImplementation(revokeObjectURL)
   })
+
   afterEach(async () => {
     await cleanup()
     jest.clearAllMocks()

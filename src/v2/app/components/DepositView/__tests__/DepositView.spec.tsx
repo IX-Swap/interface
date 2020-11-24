@@ -1,4 +1,3 @@
-/**  * @jest-environment jsdom-sixteen  */
 import React from 'react'
 import { render, cleanup } from 'test-utils'
 import {
@@ -20,6 +19,7 @@ jest.mock('v2/app/components/BankDetails', () => ({
 
 describe('DepositView', () => {
   const props: DepositViewProps = { data: cashDeposit }
+
   afterEach(async () => {
     await cleanup()
     jest.clearAllMocks()

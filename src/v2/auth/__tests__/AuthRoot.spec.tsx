@@ -1,4 +1,3 @@
-/**  * @jest-environment jsdom-sixteen  */
 import React from 'react'
 import { fakeUserStore, renderWithUserStore } from 'test-utils'
 import { AuthRoot } from 'v2/auth/AuthRoot'

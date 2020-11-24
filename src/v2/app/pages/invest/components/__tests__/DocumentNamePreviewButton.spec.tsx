@@ -1,4 +1,3 @@
-/**  * @jest-environment jsdom-sixteen  */
 import React from 'react'
 import { render, cleanup } from 'test-utils'
 import {
@@ -9,6 +8,7 @@ import { document } from '__fixtures__/identity'
 
 describe('DocumentNamePreviewButton', () => {
   const props: DocumentNamePreviewButtonProps = { value: document }
+
   afterEach(async () => {
     await cleanup()
     jest.clearAllMocks()

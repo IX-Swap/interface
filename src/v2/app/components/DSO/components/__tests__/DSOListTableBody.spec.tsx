@@ -1,4 +1,3 @@
-/**  * @jest-environment jsdom-sixteen  */
 import React from 'react'
 import { render, cleanup } from 'test-utils'
 import { DSOCard } from 'v2/app/components/DSO/components/DSOCard'
@@ -17,6 +16,7 @@ describe('DSOListTableBody', () => {
     items: [dso],
     viewURL: '/'
   }
+
   afterEach(async () => {
     await cleanup()
     jest.clearAllMocks()

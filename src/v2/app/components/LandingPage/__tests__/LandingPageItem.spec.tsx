@@ -1,4 +1,3 @@
-/**  * @jest-environment jsdom-sixteen  */
 import React from 'react'
 import { render, cleanup } from 'test-utils'
 import {
@@ -10,6 +9,7 @@ describe('LandingPageItem', () => {
   const props: LandingPageItemProps = {
     link: { label: 'Account', path: '/account', icon: jest.fn(() => null) }
   }
+
   afterEach(async () => {
     await cleanup()
     jest.clearAllMocks()

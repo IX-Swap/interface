@@ -1,4 +1,3 @@
-/**  * @jest-environment jsdom-sixteen  */
 import { act } from '@testing-library/react-hooks'
 import { waitFor, cleanup, renderHookWithServiceProvider } from 'test-utils'
 import { useMakeCommitment } from 'v2/app/pages/invest/hooks/useMakeCommitment'
@@ -28,7 +27,7 @@ describe('useMakeCommitment', () => {
   beforeEach(() => {
     jest
       .spyOn(useAuthHook, 'useAuth')
-      .mockReturnValue({ user: user, isAuthenticated: false })
+      .mockReturnValue({ user: user, isAuthenticated: true })
 
     useOfferingsRouterMock.mockReturnValue({
       replace: jest.fn(),

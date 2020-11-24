@@ -31,8 +31,8 @@ export const ResetStep: React.FC = () => {
   ): Promise<void> => {
     await completeReset({
       ...values,
-      resetToken: token
-    } as CompletePasswordResetArgs)
+      resetToken: token as string
+    })
   }
 
   const goBack = (): void => {

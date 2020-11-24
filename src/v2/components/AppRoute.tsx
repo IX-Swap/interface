@@ -2,7 +2,7 @@ import React, { createElement } from 'react'
 import { InternalRouteBase, InternalRouteProps } from 'v2/types/util'
 import { Redirect, RouteComponentProps } from 'react-router-dom'
 import { safeGeneratePath } from 'v2/helpers/router'
-import { AppRole, getUserRoles, useIsEnabled2FA } from 'v2/helpers/acl'
+import { useIsAdmin, useIsAccredited, useIsEnabled2FA } from 'v2/helpers/acl'
 import { AppRoute as AppPath } from 'v2/app/router'
 import { useCachedUser } from 'v2/hooks/auth/useCachedUser'
 import { ScrollToTop } from './ScrollToTop'
@@ -18,9 +18,8 @@ export const AppRoute = (props: AppRouteProps) => {
   const { path, component } = route
   const user = useCachedUser()
   const is2FAEnabled = useIsEnabled2FA()
-  const roles = getUserRoles(user?.roles)
-  const isAccredited = roles.includes(AppRole.ACCREDITED)
-  const isAuthorizer = roles.includes(AppRole.AUTHORIZER)
+  const isAccredited = useIsAccredited()
+  const isAdmin = useIsAdmin()
 
   pushCrumb({
     label: route.label,
@@ -47,7 +46,7 @@ export const AppRoute = (props: AppRouteProps) => {
         path.startsWith(AppPath.security) ||
         path.startsWith(AppPath.notifications)
       ) &&
-      !(isAuthorizer && path.startsWith(AppPath.admin))
+      !(isAdmin && path.startsWith(AppPath.admin))
     ) {
       return <Redirect to={AppPath.identity} />
     }

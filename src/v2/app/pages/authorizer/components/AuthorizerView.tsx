@@ -25,7 +25,8 @@ const transactionalCategories = [
   AuthorizerCategory.CashWithdrawals,
   AuthorizerCategory.DigitalSecurityWithdrawals,
   AuthorizerCategory.Commitments,
-  AuthorizerCategory.Offerings
+  AuthorizerCategory.Offerings,
+  AuthorizerCategory.WithdrawalAddresses
 ]
 
 export const AuthorizerView = <T,>(
@@ -34,7 +35,6 @@ export const AuthorizerView = <T,>(
   const category = useAuthorizerCategory()
   const isTransaction = transactionalCategories.includes(category)
   const { title, data, feature, children } = props
-  // debugger
   const hasIdentity = data.identity !== undefined
   const documents = data.authorizationDocuments ?? []
   const approvedOrRejected = ['Approved', 'Rejected'].includes(data.status)

@@ -1,4 +1,3 @@
-/**  * @jest-environment jsdom-sixteen  */
 import React from 'react'
 import { render, cleanup } from 'test-utils'
 import { fireEvent, waitFor } from '@testing-library/react'
@@ -16,6 +15,7 @@ describe('NotificationsFilter', () => {
       .spyOn(notificationsFilterHook, 'useNotificationsFilter')
       .mockReturnValue(hookReturnValues)
   })
+
   afterEach(async () => {
     await cleanup()
     jest.clearAllMocks()

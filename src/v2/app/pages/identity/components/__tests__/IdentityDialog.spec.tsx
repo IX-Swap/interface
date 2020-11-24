@@ -1,4 +1,3 @@
-/**  * @jest-environment jsdom-sixteen  */
 import React from 'react'
 import { render, cleanup } from 'test-utils'
 import { fireEvent, waitFor } from '@testing-library/react'
@@ -12,6 +11,7 @@ describe('IdentityDialog', () => {
     closeFn: jest.fn(),
     isOpen: true
   }
+
   afterEach(async () => {
     await cleanup()
     jest.clearAllMocks()

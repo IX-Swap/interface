@@ -1,4 +1,3 @@
-/** * @jest-environment jsdom-sixteen */
 import { act } from '@testing-library/react-hooks'
 import { waitFor, cleanup, renderHookWithServiceProvider } from 'test-utils'
 import { useSetup2fa } from 'v2/app/pages/security/pages/setup2fa/hooks/useSetup2fa'

@@ -1,4 +1,3 @@
-/**  * @jest-environment jsdom-sixteen  */
 import React from 'react'
 import { render, cleanup } from 'test-utils'
 import { MarkAllAsRead } from 'v2/app/pages/notifications/components/MarkAllAsRead'
@@ -14,6 +13,7 @@ describe('MarkAllAsRead', () => {
       .spyOn(useMarkAllAsReadHook, 'useMarkAllAsRead')
       .mockReturnValue([mutate, generateMutationResult({})])
   })
+
   afterEach(async () => {
     await cleanup()
     jest.clearAllMocks()

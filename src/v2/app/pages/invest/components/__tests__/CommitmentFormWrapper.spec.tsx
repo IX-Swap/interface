@@ -1,4 +1,3 @@
-/**  * @jest-environment jsdom-sixteen  */
 import React from 'react'
 import { render, cleanup } from 'test-utils'
 import { CommitmentFormWrapper } from 'v2/app/pages/invest/components/CommitmentFormWrapper'
@@ -33,6 +32,7 @@ describe('CommitmentFormWrapper', () => {
   beforeEach(() => {
     history.push(OfferingRoute.view, { dsoId: dso._id, issuerId: dso.user })
   })
+
   afterEach(async () => {
     await cleanup()
     jest.clearAllMocks()

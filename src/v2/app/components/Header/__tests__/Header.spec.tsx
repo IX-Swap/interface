@@ -1,4 +1,3 @@
-/**  * @jest-environment jsdom-sixteen  */
 import React from 'react'
 import { render, cleanup } from 'test-utils'
 import { Header } from 'v2/app/components/Header/Header'
@@ -28,6 +27,7 @@ describe('Header', () => {
 
     expect(UserDropdown).toHaveBeenCalledTimes(1)
   })
+
   it('renders NotificationsDropdown with correct props', () => {
     render(<Header />)
 

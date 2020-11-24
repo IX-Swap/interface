@@ -68,6 +68,7 @@ export interface BaseDigitalSecurityOffering extends AuthorizableWithIdentity {
 export interface DigitalSecurityOffering extends BaseDigitalSecurityOffering {
   documents: Maybe<DataroomFile[]>
   currency: Asset
+  network: string
 }
 
 export type DeploymentInfoFormValues = Omit<

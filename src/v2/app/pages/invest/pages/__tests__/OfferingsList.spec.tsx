@@ -1,4 +1,3 @@
-/**  * @jest-environment jsdom-sixteen  */
 import React from 'react'
 import { render, cleanup } from 'test-utils'
 import { OfferingsList } from 'v2/app/pages/invest/pages/OfferingsList'

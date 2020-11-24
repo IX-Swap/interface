@@ -10,6 +10,7 @@ import { DigitalSecurityOffering } from 'v2/types/dso'
 import { AuthorizationInfo } from 'v2/types/authorizer'
 import { Commitment } from 'v2/types/commitment'
 import { emptyFile } from '__fixtures__/file'
+import { network } from './network'
 
 export const asset: Asset = {
   _id: '5f732c538a568b50914d8372',
@@ -130,6 +131,7 @@ export const dso: DigitalSecurityOffering = {
   asset: 'asset',
   businessModel: 'business model',
   capitalStructure: 'capital structure',
+  network: network._id,
   corporate,
   createdAt: '01-01-2000',
   updatedAt: '01-01-2000',

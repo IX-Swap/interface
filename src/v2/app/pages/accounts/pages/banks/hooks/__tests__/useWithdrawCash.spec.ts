@@ -1,4 +1,3 @@
-/**  * @jest-environment jsdom-sixteen  */
 import { act } from '@testing-library/react-hooks'
 import { waitFor, cleanup, renderHookWithServiceProvider } from 'test-utils'
 import { useWithdrawCash } from 'v2/app/pages/accounts/pages/banks/hooks/useWithdrawCash'
@@ -13,6 +12,7 @@ describe('useWithdrawCash', () => {
       .spyOn(useAuthHook, 'useAuth')
       .mockImplementation(() => ({ user, isAuthenticated: true }))
   })
+
   afterEach(async () => {
     await cleanup()
     jest.clearAllMocks()

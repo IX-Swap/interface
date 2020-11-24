@@ -1,4 +1,3 @@
-/**  * @jest-environment jsdom-sixteen  */
 import React from 'react'
 import { render, cleanup } from 'test-utils'
 import {
@@ -21,6 +20,7 @@ jest.mock('v2/app/components/DSO/components/ViewDocument', () => ({
 
 describe('IndividualInfo', () => {
   const props: IndividualInfoProps = { data: individual }
+
   afterEach(async () => {
     await cleanup()
     jest.clearAllMocks()

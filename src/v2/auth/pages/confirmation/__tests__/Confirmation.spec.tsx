@@ -1,4 +1,3 @@
-/**  * @jest-environment jsdom-sixteen  */
 import React from 'react'
 import { cleanup, renderWithUserStore } from 'test-utils'
 import { Confirmation } from 'v2/auth/pages/confirmation/Confirmation'

@@ -1,4 +1,3 @@
-/**  * @jest-environment jsdom-sixteen  */
 import React from 'react'
 import { render, cleanup } from 'test-utils'
 import {
@@ -18,6 +17,7 @@ describe('DeclarationView', () => {
     data: individual.declarations,
     type: 'individual'
   }
+
   afterEach(async () => {
     await cleanup()
     jest.clearAllMocks()
