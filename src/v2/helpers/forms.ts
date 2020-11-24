@@ -46,5 +46,7 @@ export const pathToString = (path: any, rootPath?: string): string => {
 }
 
 export const getErrorFromControl = (path: string, control: Control) => {
-  return get(control?.formStateRef.current.errors, path) as FieldError
+  return get(control?.formStateRef.current.errors, path) as
+    | FieldError
+    | undefined
 }

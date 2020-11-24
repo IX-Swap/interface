@@ -1,6 +1,6 @@
 import React from 'react'
 import { FieldsArray } from 'v2/components/form/FieldsArray'
-import { Box, Grid, List, Typography } from '@material-ui/core'
+import { Box, Grid, List } from '@material-ui/core'
 import { TypedField } from 'v2/components/form/TypedField'
 import { plainValueExtractor } from 'v2/helpers/forms'
 import { DataroomUploaderWithFileTypeSelector } from 'v2/components/dataroom/DataroomUploaderWithFileTypeSelector'
@@ -14,11 +14,11 @@ import {
   itemComparator,
   SelectedDocument
 } from 'v2/app/pages/accounts/pages/banks/components/BankDocuments'
-import { useFormError } from 'v2/hooks/useFormError'
+import { FormError } from 'v2/components/form/FormError'
+import { TextError } from 'v2/components/TextError'
 
 export const DSODataroom = () => {
   const { control } = useFormContext<DSOFormValues>()
-  const { hasError, error } = useFormError('documents')
 
   return (
     <SelectionHelper<SelectedDocument> itemComparator={itemComparator}>
@@ -56,10 +56,7 @@ export const DSODataroom = () => {
             >
               <DataroomDeleteSelected name='documents' />
               <Box display='flex' alignItems='center'>
-                {hasError && (
-                  <Typography color='error'>{error.message}</Typography>
-                )}
-                <Box px={1} />
+                <FormError name='documents' render={TextError} />
                 <DataroomUploaderWithFileTypeSelector append={append} />
               </Box>
             </Grid>

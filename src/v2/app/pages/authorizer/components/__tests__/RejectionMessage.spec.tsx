@@ -1,23 +1,30 @@
 import React from 'react'
 import { render, cleanup } from 'test-utils'
 import { RejectionMessage, RejectionMessageProps } from '../RejectionMessage'
-import { AuthorizationInfoWithStatus } from 'v2/types/authorizer'
+import { Authorizable, AuthorizationInfoWithStatus } from 'v2/types/authorizer'
 
 describe('RejectionMessage', () => {
+  const authorizable: Authorizable = {
+    _id: 'id',
+    status: 'Approved',
+    updatedAt: '10/10/2020',
+    createdAt: '10/10/2020',
+    level: 'Level 1'
+  }
   const approval: AuthorizationInfoWithStatus = {
     _id: 'id',
     authorizer: 'authorizer',
     comment: 'comment',
     sharedWithUser: false,
     status: 'Approved',
-    timestamp: '10/10/2020'
+    timestamp: 'timestamp'
   }
   const rejection: AuthorizationInfoWithStatus = {
     ...approval,
     status: 'Rejected'
   }
   const props: RejectionMessageProps = {
-    data: [approval]
+    data: { ...authorizable, authorizations: [approval] }
   }
 
   afterEach(async () => {
@@ -38,7 +45,15 @@ describe('RejectionMessage', () => {
   })
 
   it('renders nothing if data is an empty array', () => {
-    const { container } = render(<RejectionMessage {...props} data={[]} />)
+    const { container } = render(
+      <RejectionMessage
+        {...props}
+        data={{
+          ...authorizable,
+          authorizations: []
+        }}
+      />
+    )
 
     expect(container).toBeEmptyDOMElement()
   })
@@ -51,7 +66,13 @@ describe('RejectionMessage', () => {
 
   it('renders only status if last item is rejection and comment is not shared', () => {
     const { getByText, queryByText } = render(
-      <RejectionMessage {...props} data={[rejection]} />
+      <RejectionMessage
+        {...props}
+        data={{
+          ...authorizable,
+          authorizations: [rejection]
+        }}
+      />
     )
 
     expect(getByText(rejection.status)).toBeTruthy()
@@ -62,11 +83,29 @@ describe('RejectionMessage', () => {
     const { getByText, queryByText } = render(
       <RejectionMessage
         {...props}
-        data={[{ ...rejection, sharedWithUser: true }]}
+        data={{
+          ...authorizable,
+          authorizations: [{ ...rejection, sharedWithUser: true }]
+        }}
       />
     )
 
     expect(getByText(rejection.status)).toBeTruthy()
     expect(queryByText(rejection.comment)).toBeTruthy()
+  })
+
+  it('renders nothing if status is submitted', () => {
+    const { container } = render(
+      <RejectionMessage
+        {...props}
+        data={{
+          ...authorizable,
+          status: 'Submitted',
+          authorizations: [rejection]
+        }}
+      />
+    )
+
+    expect(container).toBeEmptyDOMElement()
   })
 })

@@ -5,7 +5,7 @@ import { Authorizable } from 'v2/types/authorizer'
 import { privateClassNames } from 'v2/helpers/classnames'
 
 export interface RejectionMessageProps {
-  data: Authorizable['authorizations']
+  data: Authorizable | undefined
 }
 
 export const RejectionMessage = (props: RejectionMessageProps) => {
@@ -15,12 +15,17 @@ export const RejectionMessage = (props: RejectionMessageProps) => {
     return null
   }
 
-  const sorted = data.sort((a, b) =>
-    a.timestamp < b.timestamp ? -1 : a.timestamp > b.timestamp ? 1 : 0
-  )
+  const sorted =
+    data.authorizations?.sort((a, b) =>
+      a.timestamp < b.timestamp ? -1 : a.timestamp > b.timestamp ? 1 : 0
+    ) ?? []
   const lastItem = sorted[sorted.length - 1]
 
-  if (lastItem === undefined || lastItem.status === 'Approved') {
+  if (
+    lastItem === undefined ||
+    data.status === 'Submitted' ||
+    lastItem.status === 'Approved'
+  ) {
     return null
   }
 

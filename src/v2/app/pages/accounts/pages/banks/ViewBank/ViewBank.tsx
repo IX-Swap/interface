@@ -15,7 +15,7 @@ const ViewBank: React.FC = () => {
 
   return (
     <>
-      <RejectionMessage data={bank.authorizations} />
+      <RejectionMessage data={bank} />
       <BankPreview data={bank} />
     </>
   )

@@ -1,16 +1,16 @@
 import React from 'react'
-import { Box, Grid, Typography } from '@material-ui/core'
+import { Grid } from '@material-ui/core'
 import { FieldsArray } from 'v2/components/form/FieldsArray'
 import { DSOContainer } from 'v2/app/components/DSO/components/DSOContainer'
 import { useFormContext } from 'react-hook-form'
 import { DSOFormValues } from 'v2/types/dso'
 import { DSOTeamMember } from 'v2/app/components/DSO/components/DSOTeamMember'
 import { DSOTeamAddButton } from 'v2/app/components/DSO/components/DSOTeamAddButton'
-import { useFormError } from 'v2/hooks/useFormError'
+import { FormError } from 'v2/components/form/FormError'
+import { TextError } from 'v2/components/TextError'
 
 export const DSOTeam = () => {
   const { control } = useFormContext<DSOFormValues>()
-  const { error, hasError } = useFormError('team')
 
   return (
     <DSOContainer title='Team' item xs={12}>
@@ -35,10 +35,7 @@ export const DSOTeam = () => {
               justify='flex-end'
               alignItems='center'
             >
-              {hasError && (
-                <Typography color='error'>{error.message}</Typography>
-              )}
-              <Box px={1} />
+              <FormError name='team' render={TextError} />
               <DSOTeamAddButton append={append} />
             </Grid>
           </Grid>

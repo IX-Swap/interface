@@ -18,7 +18,7 @@ export const IndividualIdView: React.FC = () => {
   return (
     <Grid container>
       <Grid item>
-        <RejectionMessage data={data.authorizations} />
+        <RejectionMessage data={data} />
       </Grid>
       <Grid container item justify='flex-end' alignItems='center'>
         <EditButton link={paths.editIndividual} />

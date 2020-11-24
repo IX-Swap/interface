@@ -4,6 +4,10 @@ import {
   DeclarationValue,
   IndividualDeclarations
 } from 'v2/app/pages/identity/const/declarations'
+import {
+  corporateAccreditedInvestorValidator,
+  individualAccreditedInvestorValidator
+} from 'v2/validation/validators'
 
 const required = yup.mixed().oneOf([DeclarationValue.Yes]).required('Required')
 
@@ -27,6 +31,11 @@ export const individualDeclarationsSchema = yup
     NetPersonalAssets: optional,
     USPerson: optional
   })
+  .test(
+    'individualAccreditedInvestor',
+    'At least one must be checked',
+    individualAccreditedInvestorValidator
+  )
 
 export const corporateDeclarationsSchema = yup
   .object()
@@ -44,3 +53,8 @@ export const corporateDeclarationsSchema = yup
     AllPartnersAreAccreditedInvestors: optional,
     USPerson: optional
   })
+  .test(
+    'corporateAccreditedInvestor',
+    'At least one must be checked',
+    corporateAccreditedInvestorValidator
+  )

@@ -8,6 +8,7 @@ import { commitment } from '__fixtures__/authorizer'
 import { LabelledValue } from 'v2/components/LabelledValue'
 import { formatDateAndTime } from 'v2/helpers/dates'
 import { formatMoney } from 'v2/helpers/numbers'
+import { Commitment } from 'v2/types/commitment'
 
 jest.mock('v2/components/LabelledValue', () => ({
   LabelledValue: jest.fn(() => null)
@@ -30,7 +31,7 @@ describe('CommitmentPreview', () => {
     render(
       <CommitmentPreview
         data={{
-          ...props.data,
+          ...(props.data as Commitment),
           walletAddress: (undefined as unknown) as string
         }}
       />
