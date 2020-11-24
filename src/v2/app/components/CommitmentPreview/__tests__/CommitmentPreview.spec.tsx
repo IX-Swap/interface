@@ -12,6 +12,9 @@ import { formatMoney } from 'v2/helpers/numbers'
 jest.mock('v2/components/LabelledValue', () => ({
   LabelledValue: jest.fn(() => null)
 }))
+jest.mock('v2/app/components/CommitmentIssuance/CommitmentIssuance', () => ({
+  CommitmentIssuance: jest.fn(() => null)
+}))
 
 describe('CommitmentPreview', () => {
   const props: CommitmentPreviewProps = {
@@ -25,7 +28,12 @@ describe('CommitmentPreview', () => {
 
   it('renders without error', () => {
     render(
-      <CommitmentPreview data={{ ...props.data, walletAddress: undefined }} />
+      <CommitmentPreview
+        data={{
+          ...props.data,
+          walletAddress: (undefined as unknown) as string
+        }}
+      />
     )
   })
 
