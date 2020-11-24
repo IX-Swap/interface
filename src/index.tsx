@@ -17,6 +17,7 @@ import { history } from 'v2/history'
 import { ReactQueryCacheProvider, QueryCache } from 'react-query'
 import { setupSentry } from 'setupSentry'
 import { setupFullStory } from 'setupFullStory'
+import { initGoogleAnalytics } from 'initGoogleAnalytics'
 
 const queryCache = new QueryCache({
   defaultConfig: {
@@ -32,6 +33,7 @@ const generateClassName = createGenerateClassName({
 
 setupSentry()
 setupFullStory()
+initGoogleAnalytics()
 
 ReactDOM.render(
   <StylesProvider generateClassName={generateClassName}>
