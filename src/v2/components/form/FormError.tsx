@@ -3,7 +3,7 @@ import { FieldError } from 'react-hook-form'
 import { Maybe } from 'v2/types/util'
 
 export interface FormErrorRendererProps {
-  error: FieldError
+  error: FieldError | undefined
 }
 
 export interface FormErrorProps {

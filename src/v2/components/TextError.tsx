@@ -9,9 +9,12 @@ export const TextError = (props: TextErrorProps) => {
   const { error } = props
   const theme = useTheme()
 
+  if (error === undefined) {
+    return null
+  }
+
   return (
     <Typography
-      variant='body1'
       color='error'
       style={{ marginLeft: theme.spacing(1), marginRight: theme.spacing(1) }}
     >

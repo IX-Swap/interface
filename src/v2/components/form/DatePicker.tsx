@@ -28,7 +28,7 @@ export const DatePicker = (props: DatePickerProps) => {
           'aria-label': 'change date'
         }}
       />
-      {hasError && <FormHelperText error>{error.message}</FormHelperText>}
+      {hasError && <FormHelperText error>{error?.message}</FormHelperText>}
     </MuiPickersUtilsProvider>
   )
 }
