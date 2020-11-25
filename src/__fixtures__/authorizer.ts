@@ -187,6 +187,8 @@ export const commitment: Commitment = {
   },
   totalAmount: 0,
   authorizationDocuments: [],
+  authorizationOverrides: [],
+  authorizationOverride: undefined,
   authorization: undefined,
   authorizations: [],
   hold: 'dsadas',
@@ -195,7 +197,7 @@ export const commitment: Commitment = {
   pricePerUnit: 0,
   signedSubscriptionDocument: emptyFile,
   user,
-  walletAddress: ''
+  withdrawalAddress: ''
 }
 
 export const bank: Bank = {

@@ -10,8 +10,6 @@ export const useCommitmentIssuance = () => {
   } = useAuthorizerRouter()
   const uri = `/issuance/commitments/${commitmentId}/override`
   const updateCommitment = async (args: CommitmentIssuanceArgs) => {
-    console.log(uri)
-    console.log(args)
     return await apiService.patch(uri, args)
   }
 

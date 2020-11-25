@@ -19,7 +19,10 @@ import { Submit } from 'v2/components/form/Submit'
 import { DSOBackButton } from 'v2/app/components/DSO/components/DSOBackButton'
 import { useSetPageTitle } from 'v2/app/hooks/useSetPageTitle'
 import { getOfferingName } from 'v2/helpers/strings'
-import { dsoFormValidationSchema } from 'v2/validation/dso'
+import {
+  createDSOValidationSchema,
+  editDSOValidationSchema
+} from 'v2/validation/dso'
 
 export interface DSOFormProps {
   submitButtonLabel?: string
@@ -30,19 +33,26 @@ export interface DSOFormProps {
 }
 
 export const DSOForm = (props: DSOFormProps) => {
-  const { submitButtonLabel = 'Submit', data, onSubmit = noop } = props
+  const {
+    submitButtonLabel = 'Submit',
+    data,
+    isNew = false,
+    onSubmit = noop
+  } = props
 
   useSetPageTitle(getOfferingName(data))
 
   return (
     <Form
-      validationSchema={dsoFormValidationSchema}
+      validationSchema={
+        isNew ? createDSOValidationSchema : editDSOValidationSchema
+      }
       defaultValues={transformDSOToFormValues(data)}
       onSubmit={onSubmit}
       data-testid='dso-form'
     >
       <Grid container direction='column' spacing={3}>
-        <DSOBaseFields />
+        <DSOBaseFields isNew={isNew} />
         <Grid item container direction='row' spacing={2}>
           <DSOIntroduction />
           <DSOStatusFields />

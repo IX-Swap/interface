@@ -13,7 +13,8 @@ import { DSOFormValues } from 'v2/types/dso'
 import { documentValueExtractor } from 'v2/app/components/DSO/utils'
 import { DataroomFileType } from 'v2/config/dataroom'
 
-export const DSOBaseFields = () => {
+export const DSOBaseFields = (props: { isNew: boolean }) => {
+  const { isNew } = props
   const { control } = useFormContext<DSOFormValues>()
 
   return (
@@ -102,14 +103,16 @@ export const DSOBaseFields = () => {
           />
         </Grid>
 
-        <Grid item>
-          <TypedField
-            control={control}
-            component={NetworkSelect}
-            name='network'
-            label='Network'
-          />
-        </Grid>
+        {isNew && (
+          <Grid item>
+            <TypedField
+              control={control}
+              component={NetworkSelect}
+              name='network'
+              label='Network'
+            />
+          </Grid>
+        )}
       </Grid>
     </Grid>
   )

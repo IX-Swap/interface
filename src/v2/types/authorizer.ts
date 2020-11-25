@@ -15,6 +15,14 @@ export interface AuthorizationInfoWithStatus extends AuthorizationInfo {
   status: AuthorizableStatus
 }
 
+export interface AuthorizationOverride {
+  _id: string
+  authorizer: string
+  withdrawalAddress?: string
+  releaseDate?: string
+  timestamp: string
+}
+
 export interface Authorizable {
   _id: string
   createdAt: string

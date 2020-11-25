@@ -32,7 +32,7 @@ describe('CommitmentPreview', () => {
       <CommitmentPreview
         data={{
           ...(props.data as Commitment),
-          walletAddress: (undefined as unknown) as string
+          withdrawalAddress: (undefined as unknown) as string
         }}
       />
     )

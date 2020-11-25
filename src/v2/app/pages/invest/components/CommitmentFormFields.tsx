@@ -13,6 +13,7 @@ import { WithdrawalAddressSelect } from 'v2/components/form/WithdrawalAddressSel
 
 export interface CommitmentFormFieldsProps {
   symbol: string
+  network?: string
 }
 
 export const CommitmentFormFields = (props: CommitmentFormFieldsProps) => {
@@ -88,9 +89,10 @@ export const CommitmentFormFields = (props: CommitmentFormFieldsProps) => {
           className={privateClassNames()}
           component={WithdrawalAddressSelect}
           control={control}
-          name='walletAddress'
+          name='withdrawalAddress'
           label='Destination Wallet Address'
           displayEmpty
+          network={props.network}
         />
       </Grid>
 

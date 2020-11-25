@@ -83,7 +83,7 @@ export const authorizerItemMap: Record<
     uri: '/accounts/withdrawal-addresses/list',
     component: WithdrawalAddressPreview,
     paramKey: urlParams.itemId,
-    title: 'Withdrawal Addresses',
+    title: 'Withdrawal Address',
     listRoute: 'withdrawalAddresses' as const
   }
 }

@@ -54,7 +54,8 @@ describe('InvestCommitmentView', () => {
 
     expect(CommitmentPreview).toHaveBeenCalledWith(
       {
-        data: commitment
+        data: commitment,
+        isUserView: true
       },
       {}
     )

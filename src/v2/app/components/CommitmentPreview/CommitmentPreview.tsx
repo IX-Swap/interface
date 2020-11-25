@@ -11,16 +11,17 @@ import { useSetPageTitle } from 'v2/app/hooks/useSetPageTitle'
 import { getOfferingName } from 'v2/helpers/strings'
 import { privateClassNames } from 'v2/helpers/classnames'
 import { CommitmentIssuance } from 'v2/app/components/CommitmentIssuance/CommitmentIssuance'
-import { CommitmentWalletAddress } from 'v2/app/components/CommitmentWalletAddress'
+import { CommitmentWithdrawalAddress } from 'v2/app/components/CommitmentWithdrawalAddress'
 
 export interface CommitmentPreviewProps {
   data: Maybe<Commitment>
+  isUserView?: boolean
 }
 
 export const CommitmentPreview: React.FC<CommitmentPreviewProps> = (
   props: CommitmentPreviewProps
 ) => {
-  const { data } = props
+  const { data, isUserView = false } = props
 
   useSetPageTitle(getOfferingName(data))
 
@@ -82,18 +83,19 @@ export const CommitmentPreview: React.FC<CommitmentPreviewProps> = (
         <Grid item xs={4}>
           <LabelledValue
             label='Withdrawal Address'
-            value={<CommitmentWalletAddress address={data.walletAddress} />}
+            value={
+              <CommitmentWithdrawalAddress address={data.withdrawalAddress} />
+            }
           />
         </Grid>
       </Grid>
-      <Grid item container spacing={4}>
-        <Grid item xs={12}>
-          <CommitmentIssuance
-            withdrawalAddress={data.walletAddress}
-            amount={`${data.numberOfUnits} ${data.dso.tokenSymbol}`}
-          />
+      {!isUserView && (
+        <Grid item container spacing={4}>
+          <Grid item xs={12}>
+            <CommitmentIssuance data={data} />
+          </Grid>
         </Grid>
-      </Grid>
+      )}
       <Grid item container spacing={4}>
         <Grid item xs={12}>
           <SubscriptionDocument document={data.signedSubscriptionDocument} />

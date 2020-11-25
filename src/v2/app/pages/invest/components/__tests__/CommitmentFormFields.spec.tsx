@@ -89,7 +89,7 @@ describe('CommitmentFormFields', () => {
     expect(TypedField).toHaveBeenNthCalledWith(
       5,
       expect.objectContaining({
-        name: 'walletAddress',
+        name: 'withdrawalAddress',
         label: 'Destination Wallet Address'
       }),
       {}

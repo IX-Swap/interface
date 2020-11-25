@@ -1,9 +1,9 @@
 import React from 'react'
 import { render, cleanup } from 'test-utils'
 import {
-  CommitmentWalletAddress,
-  CommitmentWalletAddressProps
-} from 'v2/app/components/CommitmentWalletAddress'
+  CommitmentWithdrawalAddress,
+  CommitmentWithdrawalAddressProps
+} from 'v2/app/components/CommitmentWithdrawalAddress'
 import { WalletAddress } from 'v2/app/components/WalletAddress'
 import { withdrawalAddress } from '__fixtures__/withdrawalAddress'
 
@@ -12,7 +12,7 @@ jest.mock('v2/app/components/WalletAddress', () => ({
 }))
 
 describe('CommitmentWalletAddress', () => {
-  const props: CommitmentWalletAddressProps = {
+  const props: CommitmentWithdrawalAddressProps = {
     address: withdrawalAddress.address
   }
   afterEach(async () => {
@@ -21,11 +21,11 @@ describe('CommitmentWalletAddress', () => {
   })
 
   it('renders without error', () => {
-    render(<CommitmentWalletAddress {...props} />)
+    render(<CommitmentWithdrawalAddress {...props} />)
   })
 
   it('renders WalletAddress with correct props', () => {
-    render(<CommitmentWalletAddress {...props} />)
+    render(<CommitmentWithdrawalAddress {...props} />)
 
     expect(WalletAddress).toHaveBeenCalledTimes(1)
     expect(WalletAddress).toHaveBeenCalledWith(
@@ -38,9 +38,9 @@ describe('CommitmentWalletAddress', () => {
   })
 
   it('renders error message if wallet address is undefined', () => {
-    const { container } = render(<CommitmentWalletAddress />)
+    const { container } = render(<CommitmentWithdrawalAddress />)
 
     expect(WalletAddress).not.toHaveBeenCalled()
-    expect(container).toHaveTextContent('Not provided by a Investor')
+    expect(container).toHaveTextContent('Not provided by the Investor')
   })
 })

@@ -44,7 +44,10 @@ export const CommitmentFormWrapper = () => {
                 Download Subscription Document
               </DownloadDSOSubscriptionDocument>
               <VSpacer size='small' />
-              <CommitmentFormFields symbol={data.currency.symbol} />
+              <CommitmentFormFields
+                symbol={data.currency.symbol}
+                network={data.network}
+              />
               <VSpacer size='small' />
               <Grid container spacing={1}>
                 <Grid item xs={6}>
