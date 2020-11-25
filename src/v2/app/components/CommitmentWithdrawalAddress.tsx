@@ -19,7 +19,7 @@ export const CommitmentWithdrawalAddress = (
       color='error'
       style={{ textDecoration: 'underline' }}
     >
-      Not provided by a Investor
+      Not provided by the Investor
     </Typography>
   )
 }

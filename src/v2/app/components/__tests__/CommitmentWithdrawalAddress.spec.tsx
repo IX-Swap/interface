@@ -41,6 +41,6 @@ describe('CommitmentWalletAddress', () => {
     const { container } = render(<CommitmentWithdrawalAddress />)
 
     expect(WalletAddress).not.toHaveBeenCalled()
-    expect(container).toHaveTextContent('Not provided by a Investor')
+    expect(container).toHaveTextContent('Not provided by the Investor')
   })
 })
