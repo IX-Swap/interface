@@ -15,12 +15,13 @@ import { CommitmentWithdrawalAddress } from 'v2/app/components/CommitmentWithdra
 
 export interface CommitmentPreviewProps {
   data: Maybe<Commitment>
+  isUserView?: boolean
 }
 
 export const CommitmentPreview: React.FC<CommitmentPreviewProps> = (
   props: CommitmentPreviewProps
 ) => {
-  const { data } = props
+  const { data, isUserView = false } = props
 
   useSetPageTitle(getOfferingName(data))
 
@@ -88,11 +89,13 @@ export const CommitmentPreview: React.FC<CommitmentPreviewProps> = (
           />
         </Grid>
       </Grid>
-      <Grid item container spacing={4}>
-        <Grid item xs={12}>
-          <CommitmentIssuance data={data} />
+      {!isUserView && (
+        <Grid item container spacing={4}>
+          <Grid item xs={12}>
+            <CommitmentIssuance data={data} />
+          </Grid>
         </Grid>
-      </Grid>
+      )}
       <Grid item container spacing={4}>
         <Grid item xs={12}>
           <SubscriptionDocument document={data.signedSubscriptionDocument} />
