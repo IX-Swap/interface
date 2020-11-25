@@ -4,13 +4,14 @@ import { CorporateIdentity, IndividualIdentity } from './identity'
 import { Authorizable, AuthorizationOverride } from 'v2/types/authorizer'
 import User from 'v2/types/user'
 import { DataroomFile } from 'v2/types/dataroomFile'
+import { WithdrawalAddress } from './withdrawalAddress'
 
 export interface Commitment extends Authorizable {
   _id: string
   createdBy: string
   dso: DigitalSecurityOffering
   currency: Asset
-  withdrawalAddress: string
+  withdrawalAddress?: WithdrawalAddress
   numberOfUnits: number
   pricePerUnit: number
   totalAmount: number
@@ -31,7 +32,7 @@ export interface CommitmentFormValues {
   totalAmount: Commitment['totalAmount']
   pricePerUnit: Commitment['pricePerUnit']
   numberOfUnits: Commitment['numberOfUnits']
-  withdrawalAddress?: Commitment['withdrawalAddress']
+  withdrawalAddress?: string
   signedSubscriptionDocument: DataroomFile
   otp: string
 }

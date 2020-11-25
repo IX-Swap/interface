@@ -19,7 +19,7 @@ export const WalletAddress = ({
     copyToClipboard(address)
     showSnackbar('Copied!!')
   }
-  const url = `https://etherscan.io/address/${address}`
+  const url = `https://ropsten.etherscan.io/address/${address}`
   const textContent = `${address.slice(0, 4)}...${address.slice(
     address.length - 4
   )}`
