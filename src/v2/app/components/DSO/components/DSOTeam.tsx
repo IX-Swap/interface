@@ -9,12 +9,14 @@ import { DSOTeamAddButton } from 'v2/app/components/DSO/components/DSOTeamAddBut
 import { FormError } from 'v2/components/form/FormError'
 import { TextError } from 'v2/components/TextError'
 
+const fieldName = 'team'
+
 export const DSOTeam = () => {
   const { control } = useFormContext<DSOFormValues>()
 
   return (
     <DSOContainer title='Team' item xs={12}>
-      <FieldsArray name='team' control={control}>
+      <FieldsArray name={fieldName} control={control}>
         {({ fields, append, remove }) => (
           <Grid container direction='column'>
             <Grid item>
@@ -35,7 +37,7 @@ export const DSOTeam = () => {
               justify='flex-end'
               alignItems='center'
             >
-              <FormError name='team' render={TextError} />
+              <FormError name={fieldName} render={TextError} />
               <DSOTeamAddButton append={append} />
             </Grid>
           </Grid>

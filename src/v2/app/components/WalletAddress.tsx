@@ -15,7 +15,6 @@ export const WalletAddress = ({
   link = false
 }: WalletAddressProps) => {
   const { showSnackbar } = useSnackbar()
-
   const handleCopy = () => {
     copyToClipboard(address)
     showSnackbar('Copied!!')

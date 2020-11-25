@@ -9,7 +9,7 @@ export interface DsoTeamMember {
   name: string
   position: string
   about: string
-  photo?: string
+  photo: string
 }
 
 export interface DeploymentInfo {

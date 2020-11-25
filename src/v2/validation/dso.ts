@@ -5,9 +5,9 @@ import { dateSchema } from './shared'
 
 export const dsoTeamMemberSchema = object().shape<DsoTeamMember>({
   about: string(),
-  name: string(),
-  position: string(),
-  photo: string()
+  name: string().required('Required'),
+  position: string().required('Required'),
+  photo: string().required('Required')
 })
 
 export const dsoFormBaseValidationSchema = {

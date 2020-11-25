@@ -72,7 +72,8 @@ export const formvalues: DSOFormValues = {
     {
       name: 'Team Ultimate',
       position: 'Maintainer',
-      about: '<p>Hello world</p>'
+      about: '<p>Hello world</p>',
+      photo: 'id'
     }
   ],
   documents: [
@@ -121,7 +122,8 @@ export const requestargs: DSORequestArgs = {
     {
       name: 'Team Ultimate',
       position: 'Maintainer',
-      about: '<p>Hello world</p>'
+      about: '<p>Hello world</p>',
+      photo: 'id'
     }
   ],
   network: network._id,

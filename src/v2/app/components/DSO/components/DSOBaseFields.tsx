@@ -13,13 +13,16 @@ import { DSOFormValues } from 'v2/types/dso'
 import { documentValueExtractor } from 'v2/app/components/DSO/utils'
 import { DataroomFileType } from 'v2/config/dataroom'
 
-export const DSOBaseFields = (props: { isNew: boolean }) => {
+export interface DSOBaseFieldsProps {
+  isNew: boolean
+}
+
+export const DSOBaseFields = (props: DSOBaseFieldsProps) => {
   const { isNew } = props
   const { control } = useFormContext<DSOFormValues>()
 
   return (
     <Grid
-      title='Base Fields'
       xs={12}
       container
       item
@@ -36,7 +39,9 @@ export const DSOBaseFields = (props: { isNew: boolean }) => {
             name='logo'
             label='Logo'
             control={control}
-            render={DataroomAvatarUploader}
+            render={renderProps => (
+              <DataroomAvatarUploader {...renderProps} type='image' />
+            )}
             valueExtractor={documentValueExtractor}
             accept={DataroomFileType.image}
             documentInfo={{
@@ -72,6 +77,8 @@ export const DSOBaseFields = (props: { isNew: boolean }) => {
             name='launchDate'
             control={control}
             valueExtractor={dateTimeValueExtractor}
+            // @ts-expect-error
+            defaultValue={null}
           />
         </Grid>
 

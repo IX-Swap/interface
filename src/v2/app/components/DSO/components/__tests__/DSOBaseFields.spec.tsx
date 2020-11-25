@@ -1,6 +1,9 @@
 import React from 'react'
 import { cleanup, render } from 'test-utils'
-import { DSOBaseFields } from 'v2/app/components/DSO/components/DSOBaseFields'
+import {
+  DSOBaseFields,
+  DSOBaseFieldsProps
+} from 'v2/app/components/DSO/components/DSOBaseFields'
 import { TypedField } from 'v2/components/form/TypedField'
 import { Form } from 'v2/components/form/Form'
 
@@ -9,6 +12,10 @@ jest.mock('v2/components/form/TypedField', () => ({
 }))
 
 describe('DSOBaseFields', () => {
+  const props: DSOBaseFieldsProps = {
+    isNew: false
+  }
+
   afterEach(async () => {
     await cleanup()
     jest.clearAllMocks()
@@ -17,7 +24,7 @@ describe('DSOBaseFields', () => {
   it('renders without error', () => {
     render(
       <Form>
-        <DSOBaseFields />
+        <DSOBaseFields {...props} />
       </Form>
     )
   })
@@ -25,7 +32,7 @@ describe('DSOBaseFields', () => {
   it('renders EditableField with correct props', () => {
     render(
       <Form>
-        <DSOBaseFields />
+        <DSOBaseFields {...props} />
       </Form>
     )
 

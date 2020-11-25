@@ -7,38 +7,35 @@ import { Box } from '@material-ui/core'
 
 export interface RichTextEditorProps extends TypedFieldRenderComponentProps {}
 
-export const RichTextEditor = React.memo(
-  (props: RichTextEditorProps) => {
-    const { onChange, value = '' } = props
-    const ref = useRef<TMUIRichTextEditorRef>(null)
-    const contentHTML = convertFromHTML(value)
-    const state = ContentState.createFromBlockArray(
-      contentHTML.contentBlocks,
-      contentHTML.entityMap
-    )
-    const content = JSON.stringify(convertToRaw(state))
+export const RichTextEditor = (props: RichTextEditorProps) => {
+  const { onChange, value = '' } = props
+  const ref = useRef<TMUIRichTextEditorRef>(null)
+  const contentHTML = convertFromHTML(value)
+  const state = ContentState.createFromBlockArray(
+    contentHTML.contentBlocks,
+    contentHTML.entityMap
+  )
+  const content = JSON.stringify(convertToRaw(state))
 
-    return (
-      <Box>
-        <MUIRichTextEditor
-          ref={ref}
-          label='Start typing...'
-          defaultValue={content}
-          inlineToolbar
-          onChange={data => {
-            onChange(JSON.stringify(convertToRaw(data.getCurrentContent())))
-          }}
-          onSave={data => {
-            onChange(data)
-          }}
-          onBlur={() => {
-            if (ref.current !== null) {
-              ref.current.save()
-            }
-          }}
-        />
-      </Box>
-    )
-  },
-  () => true
-)
+  return (
+    <Box>
+      <MUIRichTextEditor
+        ref={ref}
+        label='Start typing...'
+        defaultValue={content}
+        inlineToolbar
+        onChange={data => {
+          onChange(JSON.stringify(convertToRaw(data.getCurrentContent())))
+        }}
+        onSave={data => {
+          onChange(data)
+        }}
+        onBlur={() => {
+          if (ref.current !== null) {
+            ref.current.save()
+          }
+        }}
+      />
+    </Box>
+  )
+}
