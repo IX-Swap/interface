@@ -19,7 +19,7 @@ describe('useMakeCommitment', () => {
     dso: dso._id,
     signedSubscriptionDocument: commitment.signedSubscriptionDocument._id,
     currency: '1000',
-    withdrawalAddress: commitment.withdrawalAddress,
+    withdrawalAddress: commitment.withdrawalAddress?.address,
     numberOfUnits: 1,
     otp: '123456'
   }

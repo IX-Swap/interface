@@ -11,6 +11,7 @@ import { AuthorizationInfo } from 'v2/types/authorizer'
 import { Commitment } from 'v2/types/commitment'
 import { emptyFile } from '__fixtures__/file'
 import { network } from './network'
+import { withdrawalAddress } from './withdrawalAddress'
 
 export const asset: Asset = {
   _id: '5f732c538a568b50914d8372',
@@ -197,7 +198,7 @@ export const commitment: Commitment = {
   pricePerUnit: 0,
   signedSubscriptionDocument: emptyFile,
   user,
-  withdrawalAddress: ''
+  withdrawalAddress: withdrawalAddress
 }
 
 export const bank: Bank = {

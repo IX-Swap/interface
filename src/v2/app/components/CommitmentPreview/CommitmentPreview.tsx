@@ -84,7 +84,9 @@ export const CommitmentPreview: React.FC<CommitmentPreviewProps> = (
           <LabelledValue
             label='Withdrawal Address'
             value={
-              <CommitmentWithdrawalAddress address={data.withdrawalAddress} />
+              <CommitmentWithdrawalAddress
+                address={data.withdrawalAddress?.address}
+              />
             }
           />
         </Grid>

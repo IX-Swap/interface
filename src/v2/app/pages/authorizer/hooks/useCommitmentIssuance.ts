@@ -15,7 +15,7 @@ export const useCommitmentIssuance = () => {
 
   return useMutation(updateCommitment, {
     onSuccess: data => {
-      console.log(data)
+      void snackbarService.showSnackbar(data.message, 'success')
     },
     onError: (error: any) => {
       void snackbarService.showSnackbar(error.message, 'error')

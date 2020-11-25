@@ -15,7 +15,8 @@ export const CommitmentIssuance = (props: CommitmentIssuanceProps) => {
 
   const amount = `${data.numberOfUnits} ${data.dso.tokenSymbol}`
   const withdrawalAddress =
-    data.authorizationOverride?.withdrawalAddress ?? data.withdrawalAddress
+    data.authorizationOverride?.withdrawalAddress ??
+    data.withdrawalAddress?.address
   const releaseDate = convertISOToDate(data.authorizationOverride?.releaseDate)
 
   const initialValues = {
@@ -29,7 +30,7 @@ export const CommitmentIssuance = (props: CommitmentIssuanceProps) => {
         <CommitmentIssuanceFields amount={amount} />
 
         <Grid item>
-          <Submit color='primary' variant='outlined'>
+          <Submit color='primary' variant='outlined' size='large'>
             Update
           </Submit>
         </Grid>

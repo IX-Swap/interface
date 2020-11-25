@@ -38,6 +38,7 @@ export const CommitmentIssuanceFields = (
           margin='dense'
           name='withdrawalAddress'
           label=''
+          style={{ maxWidth: 500 }}
         />
       </Grid>
 
@@ -69,6 +70,7 @@ export const CommitmentIssuanceFields = (
             // @ts-expect-error
             defaultValue={null}
             margin='none'
+            style={{ maxWidth: 200 }}
           />
         </Grid>
       </MuiPickersUtilsProvider>
