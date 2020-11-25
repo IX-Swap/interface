@@ -14,7 +14,7 @@ export const commitmentFormValidationSchema = yup
     numberOfUnits: yup.number().required('Required'),
     otp: yup.string().required('Required'),
     signedSubscriptionDocument: yup.object<DataroomFile>().required('Required'),
-    walletAddress: yup.string()
+    withdrawalAddress: yup.string()
   })
 
 export const commitmentIssuanceValidationSchema = yup

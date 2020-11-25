@@ -2,12 +2,12 @@ import React from 'react'
 import { Typography } from '@material-ui/core'
 import { WalletAddress } from 'v2/app/components/WalletAddress'
 
-export interface CommitmentWalletAddressProps {
+export interface CommitmentWithdrawalAddressProps {
   address?: string
 }
 
-export const CommitmentWalletAddress = (
-  props: CommitmentWalletAddressProps
+export const CommitmentWithdrawalAddress = (
+  props: CommitmentWithdrawalAddressProps
 ): JSX.Element => {
   const { address } = props
 
