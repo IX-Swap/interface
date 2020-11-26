@@ -135,11 +135,15 @@ export const DSOView = (props: DSOViewProps) => {
             title='Subscription Document'
             document={data.subscriptionDocument}
             downloader={
-              <DownloadDSOSubscriptionDocument
-                size='small'
-                variant='outlined'
-                dsoId={data._id}
-              />
+              data.subscriptionDocument !== undefined ? (
+                <DownloadDSOSubscriptionDocument
+                  size='small'
+                  variant='outlined'
+                  dsoId={data._id}
+                />
+              ) : (
+                <Typography color='error'>Not provided</Typography>
+              )
             }
           />
         </DSOContainer>
