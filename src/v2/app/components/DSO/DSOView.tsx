@@ -131,17 +131,23 @@ export const DSOView = (props: DSOViewProps) => {
 
       <Grid item>
         <DSOContainer title='Subscription Document' item xs={12}>
-          <DataroomViewRow
-            title='Subscription Document'
-            document={data.subscriptionDocument}
-            downloader={
-              <DownloadDSOSubscriptionDocument
-                size='small'
-                variant='outlined'
-                dsoId={data._id}
-              />
-            }
-          />
+          {data.subscriptionDocument === undefined ? (
+            <Grid container justify='flex-end'>
+              <Typography color='error'>Not provided</Typography>
+            </Grid>
+          ) : (
+            <DataroomViewRow
+              title='Subscription Document'
+              document={data.subscriptionDocument}
+              downloader={
+                <DownloadDSOSubscriptionDocument
+                  size='small'
+                  variant='outlined'
+                  dsoId={data._id}
+                />
+              }
+            />
+          )}
         </DSOContainer>
       </Grid>
 

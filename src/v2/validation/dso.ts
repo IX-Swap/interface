@@ -2,6 +2,7 @@ import { DSOFormValues, DsoTeamMember } from 'v2/types/dso'
 import { DataroomFile, FormArrayElement } from 'v2/types/dataroomFile'
 import { string, number, array, object } from 'yup'
 import { dateSchema } from './shared'
+import { pastDateValidator } from './validators'
 
 export const dsoTeamMemberSchema = object().shape<DsoTeamMember>({
   about: string(),
@@ -25,11 +26,13 @@ export const dsoFormBaseValidationSchema = {
   investmentPeriod: number(),
   investmentStructure: string(),
   issuerName: string().required('Required'),
-  launchDate: dateSchema.required('Required'),
+  launchDate: dateSchema
+    .required('Required')
+    .test('pastDate', 'Launch Date must be future date', pastDateValidator),
   leverage: number(),
   minimumInvestment: number().nullable().required('Required'),
   pricePerUnit: number().nullable().required('Required'),
-  subscriptionDocument: object<DataroomFile>().nullable().required('Required'),
+  subscriptionDocument: object<DataroomFile>(),
   tokenName: string().required('Required'),
   tokenSymbol: string().required('Required'),
   totalFundraisingAmount: number().nullable().required('Required'),

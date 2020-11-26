@@ -1,7 +1,10 @@
 import React from 'react'
 import { DigitalSecurityOffering, DSOFormValues } from 'v2/types/dso'
 import { noop } from 'v2/helpers/noop'
-import { transformDSOToFormValues } from 'v2/app/components/DSO/utils'
+import {
+  isDSOLive,
+  transformDSOToFormValues
+} from 'v2/app/components/DSO/utils'
 import { Box, Grid } from '@material-ui/core'
 import { DSOContainer } from 'v2/app/components/DSO/components/DSOContainer'
 import { DSOBaseFields } from 'v2/app/components/DSO/components/DSOBaseFields'
@@ -39,20 +42,22 @@ export const DSOForm = (props: DSOFormProps) => {
     isNew = false,
     onSubmit = noop
   } = props
+  const validationSchema = isNew
+    ? createDSOValidationSchema
+    : editDSOValidationSchema
+  const isLive = isDSOLive(data)
 
   useSetPageTitle(getOfferingName(data))
 
   return (
     <Form
-      validationSchema={
-        isNew ? createDSOValidationSchema : editDSOValidationSchema
-      }
+      validationSchema={validationSchema}
       defaultValues={transformDSOToFormValues(data)}
       onSubmit={onSubmit}
       data-testid='dso-form'
     >
       <Grid container direction='column' spacing={3}>
-        <DSOBaseFields isNew={isNew} />
+        <DSOBaseFields isNew={isNew} isLive={isLive} />
         <Grid item container direction='row' spacing={2}>
           <DSOIntroduction />
           <DSOStatusFields />

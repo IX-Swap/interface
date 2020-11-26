@@ -52,7 +52,7 @@ export interface BaseDigitalSecurityOffering extends AuthorizableWithIdentity {
   distributionFrequency?: string
   interestRate?: number
   leverage?: number
-  subscriptionDocument: DataroomFile
+  subscriptionDocument?: DataroomFile
   introduction: string
   businessModel: string
   useOfProceeds: string
@@ -95,7 +95,9 @@ export type DSOFormValues = Omit<
   | 'authorizations'
   | 'authorization'
   | 'authorizationDocuments'
+  | 'subscriptionDocument'
 > & {
+  subscriptionDocument?: DataroomFile
   status?: string
   currency: string
   corporate: string
@@ -107,6 +109,6 @@ export type DSORequestArgs = Omit<
   DSOFormValues,
   'documents' | 'subscriptionDocument'
 > & {
-  subscriptionDocument: string
+  subscriptionDocument?: string
   documents: string[]
 }

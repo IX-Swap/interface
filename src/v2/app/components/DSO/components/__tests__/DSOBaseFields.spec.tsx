@@ -13,7 +13,8 @@ jest.mock('v2/components/form/TypedField', () => ({
 
 describe('DSOBaseFields', () => {
   const props: DSOBaseFieldsProps = {
-    isNew: false
+    isNew: false,
+    isLive: false
   }
 
   afterEach(async () => {
