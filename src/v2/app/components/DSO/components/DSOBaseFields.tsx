@@ -3,7 +3,6 @@ import { Grid, Input } from '@material-ui/core'
 import { TypedField } from 'v2/components/form/TypedField'
 import { DataroomUploader } from 'v2/components/dataroom/DataroomUploader'
 import { DataroomAvatarUploader } from 'v2/components/dataroom/DataroomAvatarUploader'
-import { DatePicker } from 'v2/components/form/DatePicker'
 import { dateTimeValueExtractor } from 'v2/helpers/forms'
 import { CorporateSelect } from 'v2/components/form/CorporateSelect'
 import { NetworkSelect } from 'v2/components/form/NetworkSelect'
@@ -12,13 +11,16 @@ import { useFormContext } from 'react-hook-form'
 import { DSOFormValues } from 'v2/types/dso'
 import { documentValueExtractor } from 'v2/app/components/DSO/utils'
 import { DataroomFileType } from 'v2/config/dataroom'
+import { DateTimePicker } from 'v2/components/form/_DateTimePicker'
+import getTime from 'date-fns/getTime'
 
 export interface DSOBaseFieldsProps {
   isNew: boolean
+  isLive: boolean
 }
 
 export const DSOBaseFields = (props: DSOBaseFieldsProps) => {
-  const { isNew } = props
+  const { isNew, isLive } = props
   const { control } = useFormContext<DSOFormValues>()
 
   return (
@@ -55,6 +57,7 @@ export const DSOBaseFields = (props: DSOBaseFieldsProps) => {
             component={Input}
             label='Token Name'
             name='tokenName'
+            disabled={isLive}
             control={control}
           />
         </Grid>
@@ -64,6 +67,7 @@ export const DSOBaseFields = (props: DSOBaseFieldsProps) => {
             component={Input}
             label='Symbol'
             name='tokenSymbol'
+            disabled={isLive}
             control={control}
           />
         </Grid>
@@ -71,12 +75,14 @@ export const DSOBaseFields = (props: DSOBaseFieldsProps) => {
         <Grid item>
           {/* @ts-ignore */}
           <TypedField
-            component={DatePicker}
+            component={DateTimePicker}
             customRenderer
             label='Launch Date'
             name='launchDate'
             control={control}
+            disabled={isLive}
             valueExtractor={dateTimeValueExtractor}
+            minDate={getTime(Date.now())}
             // @ts-expect-error
             defaultValue={null}
           />

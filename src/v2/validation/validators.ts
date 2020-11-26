@@ -1,4 +1,6 @@
 import { isAddress } from '@ethersproject/address'
+import isPast from 'date-fns/isPast'
+import getTime from 'date-fns/getTime'
 import {
   CorporateDeclarations,
   DeclarationValue,
@@ -11,6 +13,7 @@ export const passwordValidator = (value: string | null | undefined) => {
   if (value !== null && value !== undefined) {
     return passwordPatterns.every(pattern => pattern.test(value))
   }
+
   return false
 }
 
@@ -64,4 +67,14 @@ export const corporateAccreditedInvestorValidator = (
     AllPartnersAreAccreditedInvestors === DeclarationValue.Yes ||
     AllBeneficiariesAreAccreditedInvestors === DeclarationValue.Yes
   )
+}
+
+export const pastDateValidator = (value: string | null | undefined) => {
+  if (value === undefined || value === null) {
+    return false
+  }
+
+  const date = getTime(new Date(value))
+
+  return !isPast(date)
 }

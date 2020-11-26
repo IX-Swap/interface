@@ -6,7 +6,7 @@ export const withdrawalAddress: WithdrawalAddress = {
   _id: 'id123',
   status: 'Approved',
   address: '0x67ed490d810c41263758e7355cef720ffed68cbc',
-  identity: { individual: individual, corporates: [corporate] },
+  identity: { individual, corporates: [corporate] },
   label: 'test label',
   network: network,
   memo: 'test memo',

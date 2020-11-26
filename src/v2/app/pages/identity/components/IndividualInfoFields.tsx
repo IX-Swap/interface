@@ -87,6 +87,8 @@ export const IndividualInfoFields = (
           component={DatePicker}
           customRenderer
           valueExtractor={dateTimeValueExtractor}
+          // @ts-expect-error
+          defaultValue={null}
         />
       </Grid>
       <Grid item xs={4}>

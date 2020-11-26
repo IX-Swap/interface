@@ -2,7 +2,8 @@ import { withdrawalAddress } from '__fixtures__/withdrawalAddress'
 import {
   addressValidator,
   corporateAccreditedInvestorValidator,
-  individualAccreditedInvestorValidator
+  individualAccreditedInvestorValidator,
+  pastDateValidator
 } from 'v2/validation/validators'
 import { DeclarationValue } from 'v2/app/pages/identity/const/declarations'
 
@@ -127,5 +128,20 @@ describe('corporateAccreditedInvestorValidator', () => {
         NetAssets: DeclarationValue.Yes
       })
     ).toBe(true)
+  })
+})
+
+describe('pastDateValidator', () => {
+  it('returns false if date is null or undefined', () => {
+    expect(pastDateValidator(null)).toBe(false)
+    expect(pastDateValidator(undefined)).toBe(false)
+  })
+
+  it('returns false if date is past date', () => {
+    expect(pastDateValidator('2020-11-10T15:59:00.000Z')).toBe(false)
+  })
+
+  it('returns true if date is future date', () => {
+    expect(pastDateValidator('2100-11-10T15:59:00.000Z')).toBe(true)
   })
 })

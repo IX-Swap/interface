@@ -7,7 +7,8 @@ import {
 import { individual, corporate } from '__fixtures__/identity'
 import { commitment, cashDeposit } from '__fixtures__/authorizer'
 import { IndividualIdentity, CorporateIdentity } from 'v2/types/identity'
-import { withdrawalAddress } from '__fixtures__/withdrawalAddress'
+import { WithdrawalAddress } from 'v2/types/withdrawalAddress'
+import { network } from '__fixtures__/network'
 
 describe('renderIndividualOrCompanyName', () => {
   it('returns individual name for IndividualIdentity', () => {
@@ -35,6 +36,18 @@ describe('renderIndividualOrCompanyName', () => {
   })
 
   it('returns individual name for Commitment', () => {
+    const withdrawalAddress: WithdrawalAddress = {
+      _id: 'id123',
+      status: 'Approved',
+      address: '0x67ed490d810c41263758e7355cef720ffed68cbc',
+      identity: { individual, corporates: [corporate] },
+      label: 'test label',
+      network: network,
+      memo: 'test memo',
+      createdAt: '01-01-2000',
+      updatedAt: '01-01-2000'
+    }
+
     expect(renderIndividualOrCompanyName('Jane', withdrawalAddress)).toBe(
       `Jane ${withdrawalAddress.identity?.individual.lastName ?? ''}`
     )
