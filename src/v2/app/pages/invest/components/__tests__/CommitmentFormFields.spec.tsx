@@ -1,4 +1,3 @@
-/**  * @jest-environment jsdom-sixteen  */
 import React from 'react'
 import { render, cleanup } from 'test-utils'
 import {
@@ -90,7 +89,7 @@ describe('CommitmentFormFields', () => {
     expect(TypedField).toHaveBeenNthCalledWith(
       5,
       expect.objectContaining({
-        name: 'walletAddress',
+        name: 'withdrawalAddress',
         label: 'Destination Wallet Address'
       }),
       {}

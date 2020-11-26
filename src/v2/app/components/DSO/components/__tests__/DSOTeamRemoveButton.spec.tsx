@@ -1,4 +1,3 @@
-/**  * @jest-environment jsdom-sixteen  */
 import { fireEvent, waitFor } from '@testing-library/react'
 import React from 'react'
 import { render, cleanup } from 'test-utils'
@@ -12,6 +11,7 @@ describe('DSOTeamRemoveButton', () => {
     index: 1,
     remove: jest.fn()
   }
+
   afterEach(async () => {
     await cleanup()
     jest.clearAllMocks()

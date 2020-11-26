@@ -3,12 +3,14 @@ import { Balances } from 'v2/app/pages/accounts/pages/balances/Balances'
 import { Banks } from 'v2/app/pages/accounts/pages/banks/Banks'
 import { DigitalSecurities } from 'v2/app/pages/accounts/pages/digitalSecurities/DigitalSecurities'
 import { Transactions } from 'v2/app/pages/accounts/pages/transactions/Transactions'
+import { WithdrawalAddresses } from 'v2/app/pages/accounts/pages/withdrawalAddresses/WithdrawalAddresses'
 import { generateAppRouterHook } from 'v2/helpers/generateAppRouterHook'
 import { ReactComponent as AccountIcon } from 'assets/icons/navigation/account.svg'
 import { ReactComponent as CashDepositIcon } from 'assets/icons/navigation/cash-deposit.svg'
 import { ReactComponent as CashWithdrawalIcon } from 'assets/icons/navigation/cash-withdrawal.svg'
 import { ReactComponent as AssetBalanceIcon } from 'assets/icons/navigation/asset-balance.svg'
 import { ReactComponent as DSWithdrawalIcon } from 'assets/icons/navigation/ds-withdrawal.svg'
+import { ReactComponent as WithdrawalAddressIcon } from 'assets/icons/navigation/withdrawal-address.svg'
 import { ReactComponent as TransactionIcon } from 'assets/icons/navigation/transaction.svg'
 import { DepositCash } from './pages/banks/DepositCash/DepositCash'
 import { WithdrawCash } from './pages/banks/WithdrawCash/WithdrawCash'
@@ -21,7 +23,8 @@ export const AccountsRoute = {
   digitalSecurities: makeURL(['app', 'account', 'digitalSecurity']),
   transactions: makeURL(['app', 'account', 'transactions']),
   depositCash: makeURL(['app', 'account', 'cashDeposit']),
-  withdrawCash: makeURL(['app', 'account', 'cashWithdrawal'])
+  withdrawCash: makeURL(['app', 'account', 'cashWithdrawal']),
+  withdrawalAddresses: makeURL(['app', 'account', 'withdrawalAddresses'])
 }
 
 export const accountRoutes: InternalRouteProps[] = [
@@ -67,6 +70,13 @@ export const accountRoutes: InternalRouteProps[] = [
     component: Transactions,
     color: '#90a30f',
     icon: TransactionIcon
+  },
+  {
+    label: 'Withdrawal Addresses',
+    path: AccountsRoute.withdrawalAddresses,
+    component: WithdrawalAddresses,
+    color: '#e6d200',
+    icon: WithdrawalAddressIcon
   },
   {
     label: 'Account',

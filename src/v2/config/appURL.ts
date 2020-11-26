@@ -7,6 +7,7 @@ export const urlParams = {
   issuerId: ':issuerId',
   dsoId: ':dsoId',
   commitmentId: ':commitmentId',
+  withdrawalAddressId: ':withdrawalAddressId',
   itemId: ':itemId',
   tokenId: ':tokenId',
   category: ':category'
@@ -46,6 +47,7 @@ export const urlFeature = {
   corporateIdentity: `${AppFeature.Corporates}`,
   offerings: `${AppFeature.Offerings}`,
   commitments: `${AppFeature.Commitments}`,
+  withdrawalAddresses: `${AppFeature.WithdrawalAddresses}`,
   changePassword: 'change-password',
   setup2fa: 'setup-2fa',
   deployments: 'deployments'

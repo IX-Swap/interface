@@ -10,6 +10,7 @@ import { DatePicker } from 'v2/components/form/DatePicker'
 import { CountrySelect } from 'v2/components/form/CountrySelect'
 import { dateTimeValueExtractor } from 'v2/helpers/forms'
 import { DataroomFileType } from 'v2/config/dataroom'
+import { privateClassNames } from 'v2/helpers/classnames'
 
 export const CompanyInfoFields = () => {
   const { control } = useFormContext<CorporateIdentity>()
@@ -42,6 +43,7 @@ export const CompanyInfoFields = () => {
       </Grid>
       <Grid item xs={4}>
         <TypedField
+          className={privateClassNames()}
           component={Input}
           control={control}
           name='registrationNumber'
@@ -59,6 +61,7 @@ export const CompanyInfoFields = () => {
       <Grid item xs={4}>
         {/* @ts-ignore */}
         <TypedField
+          className={privateClassNames()}
           component={DatePicker}
           customRenderer
           valueExtractor={dateTimeValueExtractor}
@@ -77,6 +80,7 @@ export const CompanyInfoFields = () => {
       </Grid>
       <Grid item xs={4}>
         <TypedField
+          className={privateClassNames()}
           component={Input}
           control={control}
           name='contactNumber'

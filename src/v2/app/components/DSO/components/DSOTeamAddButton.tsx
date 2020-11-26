@@ -5,11 +5,14 @@ export interface DSOTeamAddButtonProps {
   append: Function
 }
 
-export const DSOTeamAddButton: React.FC<DSOTeamAddButtonProps> = ({
-  append
-}) => {
+export const DSOTeamAddButton: React.FC<DSOTeamAddButtonProps> = props => {
+  const { append } = props
+  const handleClick = () => {
+    append()
+  }
+
   return (
-    <Button color='primary' variant={'contained'} onClick={() => append({})}>
+    <Button color='primary' variant='contained' onClick={handleClick}>
       Add Team Member
     </Button>
   )

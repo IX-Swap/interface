@@ -1,4 +1,3 @@
-/**  * @jest-environment jsdom-sixteen  */
 import React from 'react'
 import { render, cleanup } from 'test-utils'
 import {
@@ -9,6 +8,7 @@ import { dso } from '__fixtures__/authorizer'
 
 describe('DSOTitle', () => {
   const props: DsoTitleProps = { dso: dso }
+
   afterEach(async () => {
     await cleanup()
     jest.clearAllMocks()

@@ -15,6 +15,7 @@ export enum AppFeature {
   DigitalSecurity = 'digital-security',
   DigitalSecurityDeposits = 'digital-security-deposits',
   DigitalSecurityWithdrawals = 'digital-security-withdrawals',
+  WithdrawalAddresses = 'withdrawal-addresses',
   Corporates = 'corporates',
   Individuals = 'individuals',
   Commitments = 'commitments',
@@ -47,5 +48,6 @@ export enum AuthorizerCategory {
   Corporates = 'corporates',
   Individuals = 'individuals',
   Commitments = 'commitments',
-  Offerings = 'offerings'
+  Offerings = 'offerings',
+  WithdrawalAddresses = 'withdrawal-addresses'
 }

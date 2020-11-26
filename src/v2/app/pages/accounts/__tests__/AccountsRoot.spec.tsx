@@ -1,4 +1,3 @@
-/**  * @jest-environment jsdom-sixteen  */
 import React from 'react'
 import { render, cleanup } from 'test-utils'
 import { useAccountsRouter } from 'v2/app/pages/accounts/router'
@@ -15,6 +14,7 @@ describe('AccountsRoot', () => {
   beforeEach(() => {
     useAccountsRouterMock.mockReturnValueOnce({ renderRoutes })
   })
+
   afterEach(async () => {
     await cleanup()
     jest.clearAllMocks()

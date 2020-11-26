@@ -1,4 +1,3 @@
-/**  * @jest-environment jsdom-sixteen  */
 import React from 'react'
 import { render, cleanup } from 'test-utils'
 import { TypedFieldRenderComponentProps } from 'v2/components/form/types'
@@ -15,6 +14,7 @@ describe('Checkbox', () => {
     name: 'test-name',
     control: {} as any
   }
+
   afterEach(async () => {
     await cleanup()
     jest.clearAllMocks()

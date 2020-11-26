@@ -18,7 +18,7 @@ export const Filters = () => {
   }
 
   return (
-    <Grid container spacing={2} style={{ paddingTop: 70 }}>
+    <Grid container spacing={3} style={{ paddingTop: 70 }}>
       <Grid item xs={12} style={{ padding: '0 32px' }}>
         <Typography variant='h6'>FILTERS</Typography>
       </Grid>

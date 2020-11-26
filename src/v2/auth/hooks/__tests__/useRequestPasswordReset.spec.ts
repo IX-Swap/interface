@@ -1,4 +1,3 @@
-/**  * @jest-environment jsdom-sixteen  */
 import { act } from '@testing-library/react-hooks'
 import { waitFor, cleanup, renderHookWithServiceProvider } from 'test-utils'
 import { useRequestPasswordReset } from 'v2/auth/hooks/useRequestPasswordReset'
@@ -11,6 +10,7 @@ describe('useRequestPasswordReset', () => {
   beforeEach(() => {
     jest.spyOn(authRouter, 'useAuthRouter').mockReturnValue({ replace } as any)
   })
+
   afterEach(async () => {
     await cleanup()
     jest.clearAllMocks()

@@ -3,7 +3,7 @@ import { Button, ButtonProps } from '@material-ui/core'
 import { useFormContext } from 'react-hook-form'
 
 export const Submit: React.FC<ButtonProps> = props => {
-  const { children, ...rest } = props
+  const { children, variant = 'contained', color = 'primary', ...rest } = props
   const { formState } = useFormContext()
   const { isSubmitting, isDirty } = formState
 
@@ -11,8 +11,8 @@ export const Submit: React.FC<ButtonProps> = props => {
     <Button
       {...rest}
       disableElevation
-      variant='contained'
-      color='primary'
+      variant={variant}
+      color={color}
       disabled={!isDirty || isSubmitting}
       type='submit'
     >

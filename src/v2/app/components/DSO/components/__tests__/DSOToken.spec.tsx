@@ -1,4 +1,3 @@
-/**  * @jest-environment jsdom-sixteen  */
 import React from 'react'
 import { render, cleanup } from 'test-utils'
 import { DSOToken } from 'v2/app/components/DSO/components/DSOToken'
@@ -11,6 +10,7 @@ describe('DSOToken', () => {
   beforeEach(() => {
     history.push(IssuanceRoute.create, { dsoId: dso._id })
   })
+
   afterEach(async () => {
     await cleanup()
     jest.clearAllMocks()

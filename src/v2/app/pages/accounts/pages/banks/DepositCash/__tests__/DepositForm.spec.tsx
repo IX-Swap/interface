@@ -1,4 +1,3 @@
-/**  * @jest-environment jsdom-sixteen  */
 import { fireEvent } from '@testing-library/react'
 import React from 'react'
 import { render, cleanup } from 'test-utils'

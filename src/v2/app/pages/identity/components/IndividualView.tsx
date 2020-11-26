@@ -9,6 +9,7 @@ import { IdentityDocumentsView } from 'v2/app/pages/identity/components/Identity
 import { DeclarationView } from 'v2/app/pages/identity/components/DeclarationView'
 import { useSetPageTitle } from 'v2/app/hooks/useSetPageTitle'
 import { getPersonName } from 'v2/helpers/strings'
+import { privateClassNames } from 'v2/helpers/classnames'
 
 export interface IndividualViewProps {
   data: IndividualIdentity
@@ -27,13 +28,13 @@ export const IndividualView = (props: IndividualViewProps) => {
         </Section>
       </Grid>
 
-      <Grid item xs={12}>
+      <Grid item xs={12} className={privateClassNames()}>
         <Section title='Address'>
           <AddressView data={data.address} />
         </Section>
       </Grid>
 
-      <Grid item xs={12}>
+      <Grid item xs={12} className={privateClassNames()}>
         <Section title='Financials'>
           <FinancialView data={data} />
         </Section>

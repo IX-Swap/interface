@@ -19,10 +19,13 @@ export const CommitmentForm = (
   const handleSubmit = async ({
     totalAmount,
     pricePerUnit,
+    withdrawalAddress,
     ...values
   }: CommitmentFormValues) => {
     await makeInvestment({
       ...values,
+      withdrawalAddress:
+        withdrawalAddress === '' ? undefined : withdrawalAddress,
       signedSubscriptionDocument: values.signedSubscriptionDocument._id,
       dso,
       currency

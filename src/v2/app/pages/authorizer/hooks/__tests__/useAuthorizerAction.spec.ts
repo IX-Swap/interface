@@ -1,4 +1,3 @@
-/**  * @jest-environment jsdom-sixteen  */
 import { act } from '@testing-library/react-hooks'
 import { cleanup, renderHookWithServiceProvider, waitFor } from 'test-utils'
 import { useAuthorizerAction } from 'v2/app/pages/authorizer/hooks/useAuthorizerAction'

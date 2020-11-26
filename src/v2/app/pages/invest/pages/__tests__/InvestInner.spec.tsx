@@ -1,4 +1,3 @@
-/**  * @jest-environment jsdom-sixteen  */
 import React from 'react'
 import { render, cleanup } from 'test-utils'
 import { InvestInner } from 'v2/app/pages/invest/pages/InvestInner'
@@ -17,6 +16,7 @@ describe('InvestInner', () => {
       renderRoutes
     })
   })
+
   afterEach(async () => {
     await cleanup()
     jest.clearAllMocks()

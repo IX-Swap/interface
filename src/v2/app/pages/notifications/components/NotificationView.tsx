@@ -6,6 +6,7 @@ import { useStyles } from 'v2/app/pages/notifications/components/NotificationsIt
 import { NotificationIcon } from './NotificationIcon'
 import { NotificationTimeAgo } from './NotificationTimeAgo'
 import { notificationColorMap } from './config'
+import { privateClassNames } from 'v2/helpers/classnames'
 
 export interface NotificationViewProps extends GridProps {
   data: Notification
@@ -36,6 +37,7 @@ export const NotificationView = (props: NotificationViewProps) => {
           <Typography
             style={{ color: notificationColorMap[data.type] }}
             noWrap={trimComment}
+            className={privateClassNames()}
           >
             {comment}
           </Typography>

@@ -1,4 +1,3 @@
-/** * @jest-environment jsdom-sixteen */
 import { act } from '@testing-library/react-hooks'
 import { waitFor, cleanup, renderHookWithServiceProvider } from 'test-utils'
 import * as useParsedDataHook from 'v2/hooks/useParsedData'
@@ -14,6 +13,7 @@ describe('useAllDocuments', () => {
       .spyOn(useParsedDataHook, 'useParsedData')
       .mockImplementation(parsedDataFn)
   })
+
   afterEach(async () => {
     await cleanup()
     jest.clearAllMocks()

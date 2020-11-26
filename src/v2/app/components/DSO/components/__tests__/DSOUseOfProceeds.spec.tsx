@@ -1,4 +1,3 @@
-/**  * @jest-environment jsdom-sixteen  */
 import React from 'react'
 import { cleanup, render } from 'test-utils'
 import { TypedField } from 'v2/components/form/TypedField'

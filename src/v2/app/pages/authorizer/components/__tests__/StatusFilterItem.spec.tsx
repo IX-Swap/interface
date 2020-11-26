@@ -1,4 +1,3 @@
-/**  * @jest-environment jsdom-sixteen  */
 import React from 'react'
 import { render, fireEvent, waitFor, cleanup } from 'test-utils'
 import { StatusFilterItem } from 'v2/app/pages/authorizer/components/StatusFilterItem'

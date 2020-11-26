@@ -1,4 +1,3 @@
-/**  * @jest-environment jsdom-sixteen  */
 import React from 'react'
 import { render, cleanup } from 'test-utils'
 import {
@@ -17,6 +16,7 @@ describe('AuthorizerIdentities', () => {
     corporates: [corporate],
     individual: individual
   }
+
   afterEach(async () => {
     await cleanup()
     jest.clearAllMocks()

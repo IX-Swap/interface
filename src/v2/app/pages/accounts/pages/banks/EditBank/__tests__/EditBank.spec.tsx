@@ -1,4 +1,3 @@
-/**  * @jest-environment jsdom-sixteen  */
 import React from 'react'
 import { render, cleanup } from 'test-utils'
 import { bank } from '__fixtures__/authorizer'
@@ -23,6 +22,7 @@ describe('EditBank', () => {
   beforeEach(() => {
     history.push(BanksRoute.edit, { bankId: 'testBankId' })
   })
+
   afterEach(async () => {
     await cleanup()
     jest.clearAllMocks()

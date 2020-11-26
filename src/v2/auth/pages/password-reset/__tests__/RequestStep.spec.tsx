@@ -1,4 +1,3 @@
-/**  * @jest-environment jsdom-sixteen  */
 import React from 'react'
 import { fireEvent, renderWithPasswordResetStore, waitFor } from 'test-utils'
 import {

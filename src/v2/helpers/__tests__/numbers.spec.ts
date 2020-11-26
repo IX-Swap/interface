@@ -9,6 +9,7 @@ describe('formatAmount', () => {
   it('returns formatted amount', () => {
     expect(formatAmount(123)).toEqual('123.00')
   })
+
   it('defaults amount to empty string', () => {
     expect(formatAmount(undefined as any)).toEqual('')
     expect(formatAmount(null as any)).toEqual('')

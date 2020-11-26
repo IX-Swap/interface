@@ -1,4 +1,3 @@
-/**  * @jest-environment jsdom-sixteen  */
 import React from 'react'
 import { render } from 'test-utils'
 import { LoadingFullScreen } from 'v2/auth/components/LoadingFullScreen'

@@ -1,4 +1,3 @@
-/**  * @jest-environment jsdom-sixteen  */
 import React from 'react'
 import { render, cleanup } from 'test-utils'
 import { Preview } from 'v2/app/pages/accounts/pages/banks/DepositCash/Preview'
@@ -55,7 +54,8 @@ describe('Preview', () => {
         items: [
           {
             label: 'Deposit Code',
-            value: depositCode
+            value: depositCode,
+            secret: true
           },
           {
             label: 'Account Number',

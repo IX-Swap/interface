@@ -1,4 +1,3 @@
-/**  * @jest-environment jsdom-sixteen  */
 import React from 'react'
 import { render, cleanup } from 'test-utils'
 import {
@@ -13,6 +12,7 @@ describe('TwoFaDialog', () => {
     nextFn: jest.fn(),
     isOpen: true
   }
+
   afterEach(async () => {
     await cleanup()
     jest.clearAllMocks()

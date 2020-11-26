@@ -15,6 +15,7 @@ export interface LabelValue {
 export interface TableColumn<T> {
   key: string
   label: string
+  secret?: boolean
   align?: 'inherit' | 'left' | 'center' | 'right' | 'justify'
   headAlign?: 'inherit' | 'left' | 'center' | 'right' | 'justify'
   render?: (val: any, row: T) => ReactNode | JSX.Element | string

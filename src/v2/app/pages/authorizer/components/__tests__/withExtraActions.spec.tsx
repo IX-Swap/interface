@@ -1,4 +1,3 @@
-/**  * @jest-environment jsdom-sixteen  */
 import React from 'react'
 import { render } from 'test-utils'
 import { withExtraActions } from 'v2/app/pages/authorizer/components/withExtraActions'

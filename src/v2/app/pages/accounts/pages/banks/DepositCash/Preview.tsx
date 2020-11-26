@@ -23,7 +23,8 @@ export const Preview: React.FC<DepositTransactionPreviewProps> = props => {
   const items = [
     {
       label: 'Deposit Code',
-      value: depositCode
+      value: depositCode,
+      secret: true
     },
     {
       label: 'Account Number',

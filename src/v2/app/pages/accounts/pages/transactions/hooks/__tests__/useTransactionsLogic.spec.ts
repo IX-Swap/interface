@@ -1,4 +1,3 @@
-/**  * @jest-environment jsdom-sixteen  */
 import { renderHook } from '@testing-library/react-hooks'
 import { act, waitFor, cleanup } from 'test-utils'
 import {

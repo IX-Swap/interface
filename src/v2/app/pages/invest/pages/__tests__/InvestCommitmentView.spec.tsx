@@ -1,4 +1,3 @@
-/**  * @jest-environment jsdom-sixteen  */
 import React from 'react'
 import { render, cleanup } from 'test-utils'
 import { InvestCommitmentView } from 'v2/app/pages/invest/pages/InvestCommitmentView'
@@ -18,6 +17,7 @@ describe('InvestCommitmentView', () => {
       commitmentId: 'testCommitmentId'
     })
   })
+
   afterEach(async () => {
     await cleanup()
     jest.clearAllMocks()
@@ -54,7 +54,8 @@ describe('InvestCommitmentView', () => {
 
     expect(CommitmentPreview).toHaveBeenCalledWith(
       {
-        data: commitment
+        data: commitment,
+        isUserView: true
       },
       {}
     )

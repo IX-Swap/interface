@@ -7,16 +7,17 @@ import {
 } from '@material-ui/core/styles'
 import { ThemeProvider } from '@material-ui/styles'
 import { CssBaseline } from '@material-ui/core'
-import Themes from './v2/themes'
+import Themes from 'v2/themes'
 import { UserProvider } from 'v2/auth/context'
 import { EntryPoint } from 'v2/EntryPoint'
-import { setupSentry } from 'setupSentry'
 import { ToastProvider } from 'react-toast-notifications'
 import { Toast } from 'v2/components/Toast'
 import { Router, Switch } from 'react-router-dom'
 import { history } from 'v2/history'
 import { ReactQueryCacheProvider, QueryCache } from 'react-query'
-import { setupFullStory } from './setupFullStory'
+import { setupSentry } from 'setupSentry'
+import { setupFullStory } from 'setupFullStory'
+import { initGoogleAnalytics } from 'initGoogleAnalytics'
 
 const queryCache = new QueryCache({
   defaultConfig: {
@@ -32,6 +33,7 @@ const generateClassName = createGenerateClassName({
 
 setupSentry()
 setupFullStory()
+initGoogleAnalytics()
 
 ReactDOM.render(
   <StylesProvider generateClassName={generateClassName}>

@@ -1,4 +1,3 @@
-/**  * @jest-environment jsdom-sixteen  */
 import { act } from '@testing-library/react-hooks'
 import { waitFor, cleanup, renderHookWithServiceProvider } from 'test-utils'
 import { useMakeCommitment } from 'v2/app/pages/invest/hooks/useMakeCommitment'
@@ -20,7 +19,7 @@ describe('useMakeCommitment', () => {
     dso: dso._id,
     signedSubscriptionDocument: commitment.signedSubscriptionDocument._id,
     currency: '1000',
-    walletAddress: commitment.walletAddress,
+    withdrawalAddress: commitment.withdrawalAddress?.address,
     numberOfUnits: 1,
     otp: '123456'
   }
@@ -28,7 +27,7 @@ describe('useMakeCommitment', () => {
   beforeEach(() => {
     jest
       .spyOn(useAuthHook, 'useAuth')
-      .mockReturnValue({ user: user, isAuthenticated: false })
+      .mockReturnValue({ user: user, isAuthenticated: true })
 
     useOfferingsRouterMock.mockReturnValue({
       replace: jest.fn(),

@@ -1,4 +1,3 @@
-/**  * @jest-environment jsdom-sixteen  */
 import React from 'react'
 import { render, cleanup } from 'test-utils'
 import { DSPreview } from 'v2/app/components/DSPreview/DSPreview'
@@ -17,6 +16,7 @@ describe('DSPreview', () => {
   beforeEach(() => {
     history.push(DSRoute.view, { balanceId: 'testBalanceId' })
   })
+
   afterEach(async () => {
     await cleanup()
     jest.clearAllMocks()

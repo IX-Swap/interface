@@ -1,4 +1,3 @@
-/**  * @jest-environment jsdom-sixteen  */
 import { act } from '@testing-library/react-hooks'
 import { waitFor, cleanup, renderHookWithServiceProvider } from 'test-utils'
 import { useDSOById } from 'v2/app/pages/invest/hooks/useDSOById'
@@ -16,7 +15,7 @@ describe('useDSOById', () => {
   it('returns response from api correctly', async () => {
     jest
       .spyOn(useAuthHook, 'useAuth')
-      .mockReturnValue({ user: user, isAuthenticated: false })
+      .mockReturnValue({ user: user, isAuthenticated: true })
     await act(async () => {
       const getFn = jest.fn().mockResolvedValueOnce(successfulResponse)
       const apiObj = { get: getFn }
@@ -42,7 +41,7 @@ describe('useDSOById', () => {
   it('returns response from api correctly if issuerId is not defined', async () => {
     jest
       .spyOn(useAuthHook, 'useAuth')
-      .mockReturnValue({ user: user, isAuthenticated: false })
+      .mockReturnValue({ user: user, isAuthenticated: true })
     await act(async () => {
       const getFn = jest.fn().mockResolvedValueOnce(successfulResponse)
       const apiObj = { get: getFn }

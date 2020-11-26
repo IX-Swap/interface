@@ -1,4 +1,3 @@
-/**  * @jest-environment jsdom-sixteen  */
 import React from 'react'
 import { render, cleanup } from 'test-utils'
 import { renderCommitmentMoney, renderCommitmentAvatar } from '../columns'
@@ -15,6 +14,7 @@ describe('renderCommitmentMoney', () => {
       `${commitment.currency.numberFormat.currency} 123.00`
     )
   })
+
   it('defaults amount to empty string', () => {
     expect(renderCommitmentMoney(undefined as any, commitment)).toEqual('')
     expect(renderCommitmentMoney(null as any, commitment)).toEqual('')

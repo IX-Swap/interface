@@ -1,4 +1,3 @@
-/**  * @jest-environment jsdom-sixteen  */
 import React from 'react'
 import { cleanup, render } from 'test-utils'
 import { Preview } from 'v2/app/pages/accounts/pages/banks/WithdrawCash/Preview'
@@ -85,6 +84,7 @@ describe('Preview', () => {
           },
           {
             label: 'Account No',
+            secret: true,
             value: bank.bankAccountNumber
           },
           {
@@ -93,6 +93,7 @@ describe('Preview', () => {
           },
           {
             label: 'Withdraw Amount',
+            secret: true,
             value: formatMoney(
               cashDeposit.amount,
               bank.currency.numberFormat.currency
@@ -100,6 +101,7 @@ describe('Preview', () => {
           },
           {
             label: 'Memo',
+            secret: true,
             value: formValues.memo
           }
         ]

@@ -58,7 +58,7 @@ export const DSOCard = (props: DSOfferingCardProps) => {
             </Button>
           </Grid>
           <Grid item xs={3}>
-            <DSODetails dso={dso} currency={undefined} />
+            <DSODetails dso={dso} />
           </Grid>
         </Grid>
       </CardContent>

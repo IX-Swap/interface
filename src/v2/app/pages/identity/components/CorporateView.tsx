@@ -8,6 +8,7 @@ import { IdentityDocumentsView } from 'v2/app/pages/identity/components/Identity
 import { DeclarationView } from 'v2/app/pages/identity/components/DeclarationView'
 import { CorporateProfilesView } from 'v2/app/pages/identity/components/CorporateProfilesView'
 import { useSetPageTitle } from 'v2/app/hooks/useSetPageTitle'
+import { privateClassNames } from 'v2/helpers/classnames'
 
 export interface CorporateViewProps {
   data: CorporateIdentity
@@ -32,19 +33,19 @@ export const CorporateView = (props: CorporateViewProps) => {
         </Section>
       </Grid>
 
-      <Grid item xs={12}>
+      <Grid item xs={12} className={privateClassNames()}>
         <Section title='Company Representative'>
           <CorporateProfilesView data={data.representatives} user={data.user} />
         </Section>
       </Grid>
 
-      <Grid item xs={12}>
+      <Grid item xs={12} className={privateClassNames()}>
         <Section title='Company Director'>
           <CorporateProfilesView data={data.directors} user={data.user} />
         </Section>
       </Grid>
 
-      <Grid item xs={12}>
+      <Grid item xs={12} className={privateClassNames()}>
         <Section title='Beneficial Owner'>
           <CorporateProfilesView
             data={data.beneficialOwners}

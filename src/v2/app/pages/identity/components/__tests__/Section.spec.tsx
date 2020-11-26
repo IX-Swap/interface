@@ -1,4 +1,3 @@
-/**  * @jest-environment jsdom-sixteen  */
 import React, { PropsWithChildren } from 'react'
 import { render, cleanup } from 'test-utils'
 import {
@@ -14,6 +13,7 @@ describe('Section', () => {
     footer: <div data-testid='footer' />,
     children: <div data-testid='children' />
   }
+
   afterEach(async () => {
     await cleanup()
     jest.clearAllMocks()
