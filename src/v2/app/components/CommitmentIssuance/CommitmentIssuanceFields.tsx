@@ -67,7 +67,6 @@ export const CommitmentIssuanceFields = (
             component={DateTimePickerComponent}
             disablePast
             valueExtractor={convertDateToISO}
-            // @ts-expect-error
             defaultValue={null}
             margin='none'
             style={{ maxWidth: 200 }}

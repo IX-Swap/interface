@@ -35,7 +35,7 @@ describe('renderIndividualOrCompanyName', () => {
     )
   })
 
-  it('returns individual name for Commitment', () => {
+  it('returns individual name for WithdrawalAddress', () => {
     const withdrawalAddress: WithdrawalAddress = {
       _id: 'id123',
       status: 'Approved',
