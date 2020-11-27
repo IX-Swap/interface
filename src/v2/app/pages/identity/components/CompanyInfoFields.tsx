@@ -68,8 +68,6 @@ export const CompanyInfoFields = () => {
           control={control}
           name='dateOfIncorporation'
           label='Date of Incorporation'
-          // @ts-expect-error
-          defaultValue={null}
         />
       </Grid>
       <Grid item xs={4}>
