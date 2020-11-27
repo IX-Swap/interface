@@ -24,5 +24,5 @@ export const commitmentIssuanceValidationSchema = yup
       .string()
       .test('address validity', 'Enter Valid Address', addressValidator)
       .required('Required'),
-    releaseDate: yup.date().nullable().required('Required')
+    releaseDate: yup.date().nullable()
   })

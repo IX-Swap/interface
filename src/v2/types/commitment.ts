@@ -38,7 +38,7 @@ export interface CommitmentFormValues {
 }
 
 export interface CommitmentIssuanceFormValues {
-  releaseDate: Date
+  releaseDate?: Date | null
   withdrawalAddress: string
 }
 
