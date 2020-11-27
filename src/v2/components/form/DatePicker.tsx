@@ -13,7 +13,8 @@ export interface DatePickerProps extends KeyboardDatePickerProps {}
 export const DatePicker = (props: DatePickerProps) => {
   const { name } = props
   const { hasError, error } = useFormError(name ?? '')
-  const value = props.value === null || props.value === undefined ? null : props.value
+  const value =
+    props.value === null || props.value === undefined ? null : props.value
 
   return (
     <MuiPickersUtilsProvider utils={DateFnsUtils}>
