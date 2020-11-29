@@ -6,7 +6,7 @@ import { renderStringToHTML } from 'v2/app/components/DSO/utils'
 import { DSOToken } from 'v2/app/components/DSO/components/DSOToken'
 import { DataroomHeader } from 'v2/components/dataroom/DataroomHeader'
 import { LabelledValue } from 'v2/components/LabelledValue'
-import { formatDateToMMDDYY } from 'v2/helpers/dates'
+import { formatDateAndTime } from 'v2/helpers/dates'
 import { DataroomViewRow } from 'v2/components/dataroom/DataroomViewRow'
 import { VSpacer } from 'v2/components/VSpacer'
 import { useSetPageTitle } from 'v2/app/hooks/useSetPageTitle'
@@ -58,7 +58,7 @@ export const DSOView = (props: DSOViewProps) => {
         <Grid item>
           <LabelledValue
             label='Launch Date'
-            value={formatDateToMMDDYY(data.launchDate)}
+            value={formatDateAndTime(data.launchDate)}
           />
         </Grid>
 
