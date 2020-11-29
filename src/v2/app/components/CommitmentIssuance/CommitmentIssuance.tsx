@@ -12,13 +12,13 @@ export interface CommitmentIssuanceProps {
 
 export const CommitmentIssuance = (props: CommitmentIssuanceProps) => {
   const { data } = props
-
   const amount = `${data.numberOfUnits} ${data.dso.tokenSymbol}`
   const withdrawalAddress =
     data.authorizationOverride?.withdrawalAddress ??
     data.withdrawalAddress?.address
-  const releaseDate = convertISOToDate(data.authorizationOverride?.releaseDate)
-
+  const releaseDate = convertISOToDate(
+    data.authorizationOverride?.releaseDate ?? data.dso.launchDate
+  )
   const initialValues = {
     withdrawalAddress,
     releaseDate
