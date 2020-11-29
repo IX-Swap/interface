@@ -29,6 +29,8 @@ export const CommitmentPreview: React.FC<CommitmentPreviewProps> = (
     return null
   }
 
+  const showTokenIssuance = !isUserView && data.status !== 'Rejected'
+
   return (
     <Grid container spacing={4} className={privateClassNames()}>
       <Grid item container spacing={4}>
@@ -91,13 +93,7 @@ export const CommitmentPreview: React.FC<CommitmentPreviewProps> = (
           />
         </Grid>
       </Grid>
-      {!isUserView && (
-        <Grid item container spacing={4}>
-          <Grid item xs={12}>
-            <CommitmentIssuance data={data} />
-          </Grid>
-        </Grid>
-      )}
+      {showTokenIssuance && <CommitmentIssuance data={data} />}
       <Grid item container spacing={4}>
         <Grid item xs={12}>
           <SubscriptionDocument document={data.signedSubscriptionDocument} />

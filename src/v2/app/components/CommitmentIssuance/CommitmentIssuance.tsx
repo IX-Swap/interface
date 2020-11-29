@@ -25,16 +25,20 @@ export const CommitmentIssuance = (props: CommitmentIssuanceProps) => {
   }
 
   return (
-    <CommitmentIssuanceForm defaultValues={initialValues}>
-      <Grid container direction='column'>
-        <CommitmentIssuanceFields amount={amount} />
+    <Grid item container spacing={4}>
+      <Grid item xs={12}>
+        <CommitmentIssuanceForm defaultValues={initialValues}>
+          <Grid container direction='column'>
+            <CommitmentIssuanceFields amount={amount} />
 
-        <Grid item>
-          <Submit color='primary' variant='outlined' size='large'>
-            Update
-          </Submit>
-        </Grid>
+            <Grid item>
+              <Submit color='primary' variant='outlined' size='large'>
+                Update
+              </Submit>
+            </Grid>
+          </Grid>
+        </CommitmentIssuanceForm>
       </Grid>
-    </CommitmentIssuanceForm>
+    </Grid>
   )
 }
