@@ -22,10 +22,7 @@ import { Submit } from 'v2/components/form/Submit'
 import { DSOBackButton } from 'v2/app/components/DSO/components/DSOBackButton'
 import { useSetPageTitle } from 'v2/app/hooks/useSetPageTitle'
 import { getOfferingName } from 'v2/helpers/strings'
-import {
-  createDSOValidationSchema,
-  editDSOValidationSchema
-} from 'v2/validation/dso'
+import { getDSOValidationSchema } from 'v2/validation/dso'
 
 export interface DSOFormProps {
   submitButtonLabel?: string
@@ -42,16 +39,13 @@ export const DSOForm = (props: DSOFormProps) => {
     isNew = false,
     onSubmit = noop
   } = props
-  const validationSchema = isNew
-    ? createDSOValidationSchema
-    : editDSOValidationSchema
   const isLive = isDSOLive(data)
 
   useSetPageTitle(getOfferingName(data))
 
   return (
     <Form
-      validationSchema={validationSchema}
+      validationSchema={getDSOValidationSchema(isNew, isLive)}
       defaultValues={transformDSOToFormValues(data)}
       onSubmit={onSubmit}
       data-testid='dso-form'

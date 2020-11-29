@@ -12,7 +12,6 @@ import { DSOFormValues } from 'v2/types/dso'
 import { documentValueExtractor } from 'v2/app/components/DSO/utils'
 import { DataroomFileType } from 'v2/config/dataroom'
 import { DateTimePicker } from 'v2/components/form/_DateTimePicker'
-import getTime from 'date-fns/getTime'
 
 export interface DSOBaseFieldsProps {
   isNew: boolean
@@ -82,7 +81,6 @@ export const DSOBaseFields = (props: DSOBaseFieldsProps) => {
             control={control}
             disabled={isLive}
             valueExtractor={dateTimeValueExtractor}
-            minDate={getTime(Date.now())}
             // @ts-expect-error
             defaultValue={null}
           />
