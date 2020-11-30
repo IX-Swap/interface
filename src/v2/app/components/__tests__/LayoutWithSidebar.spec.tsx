@@ -1,4 +1,3 @@
-/**  * @jest-environment jsdom-sixteen  */
 import React from 'react'
 import { render, cleanup } from 'test-utils'
 import {
@@ -11,6 +10,7 @@ describe('LayoutWithSidebar', () => {
     sidebar: jest.fn(() => null),
     content: jest.fn(() => null)
   }
+
   afterEach(async () => {
     await cleanup()
     jest.clearAllMocks()

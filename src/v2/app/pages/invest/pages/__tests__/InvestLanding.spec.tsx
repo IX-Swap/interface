@@ -1,4 +1,3 @@
-/**  * @jest-environment jsdom-sixteen  */
 import React from 'react'
 import { render, cleanup } from 'test-utils'
 import { InvestLanding } from 'v2/app/pages/invest/pages/InvestLanding'
@@ -15,6 +14,7 @@ const useInvestListRouterMock = useInvestListRouter as jest.Mock<
 
 describe('InvestLanding', () => {
   const renderRoutes = jest.fn(() => <div />)
+
   afterEach(async () => {
     await cleanup()
     jest.clearAllMocks()

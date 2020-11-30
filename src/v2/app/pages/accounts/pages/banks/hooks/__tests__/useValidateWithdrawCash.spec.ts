@@ -1,4 +1,3 @@
-/**  * @jest-environment jsdom-sixteen  */
 import { act, waitFor, cleanup, renderHookWithForm } from 'test-utils'
 import { useValidateWithdrawCash } from 'v2/app/pages/accounts/pages/banks/hooks/useValidateWithdrawCash'
 import { balance } from '__fixtures__/balance'

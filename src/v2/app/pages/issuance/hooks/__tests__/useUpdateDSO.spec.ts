@@ -1,4 +1,3 @@
-/**  * @jest-environment jsdom-sixteen  */
 import { act } from '@testing-library/react-hooks'
 import { waitFor, cleanup, renderHookWithServiceProvider } from 'test-utils'
 import { useUpdateDSO } from 'v2/app/pages/issuance/hooks/useUpdateDSO'
@@ -16,7 +15,7 @@ describe('useUpdateDSO', () => {
     history.push('/', { dsoId: dso._id })
     jest
       .spyOn(useAuthHook, 'useAuth')
-      .mockReturnValue({ user: user, isAuthenticated: false })
+      .mockReturnValue({ user: user, isAuthenticated: true })
   })
 
   afterEach(async () => {

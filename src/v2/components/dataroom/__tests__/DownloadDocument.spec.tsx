@@ -1,4 +1,3 @@
-/**  * @jest-environment jsdom-sixteen  */
 import React from 'react'
 import { render, cleanup } from 'test-utils'
 import {
@@ -8,6 +7,7 @@ import {
 
 describe('DownloadDocument', () => {
   const props: DownloadDocumentProps = { documentId: '', ownerId: '' }
+
   afterEach(async () => {
     await cleanup()
     jest.clearAllMocks()

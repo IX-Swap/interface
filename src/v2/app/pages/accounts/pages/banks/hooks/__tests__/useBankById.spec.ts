@@ -1,4 +1,3 @@
-/** * @jest-environment jsdom-sixteen */
 import { act } from '@testing-library/react-hooks'
 import { waitFor, cleanup, renderHookWithServiceProvider } from 'test-utils'
 import * as useAuthHook from 'v2/hooks/auth/useAuth'
@@ -15,6 +14,7 @@ describe('useBankById', () => {
       .spyOn(useAuthHook, 'useAuth')
       .mockImplementation(() => ({ user, isAuthenticated: true }))
   })
+
   afterEach(async () => {
     await cleanup()
     jest.clearAllMocks()
@@ -70,7 +70,7 @@ describe('useBankById', () => {
     })
   })
 
-  it('will not invoke api of id is undefined', async () => {
+  it('will not invoke api if id is undefined', async () => {
     await act(async () => {
       const getFn = jest.fn().mockResolvedValueOnce({ data: bank })
       const apiObj = { get: getFn }

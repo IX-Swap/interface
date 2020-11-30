@@ -1,11 +1,10 @@
-/**  * @jest-environment jsdom-sixteen  */
 import React from 'react'
 import { render, cleanup } from 'test-utils'
 import { MyCommitments } from 'v2/app/pages/invest/components/MyCommitments'
 import { TableView } from 'v2/components/TableWithPagination/TableView'
-import storageHelper from 'v2/helpers/storageHelper'
 import { user } from '__fixtures__/user'
 import columns from 'v2/app/pages/invest/components/columns'
+import * as useAuthHook from 'v2/hooks/auth/useAuth'
 
 jest.mock('v2/components/TableWithPagination/TableView', () => ({
   TableView: jest.fn(() => null)
@@ -13,8 +12,12 @@ jest.mock('v2/components/TableWithPagination/TableView', () => ({
 
 describe('MyCommitments', () => {
   beforeEach(() => {
-    jest.spyOn(storageHelper, 'getUserId').mockReturnValue(user._id)
+    jest.spyOn(useAuthHook, 'useAuth').mockImplementation(() => ({
+      user,
+      isAuthenticated: true
+    }))
   })
+
   afterEach(async () => {
     await cleanup()
     jest.clearAllMocks()

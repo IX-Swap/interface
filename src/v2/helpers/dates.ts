@@ -6,6 +6,18 @@ import {
   toDate
 } from 'date-fns'
 
+export const convertISOToDate = (
+  date: string | null | undefined
+): Date | undefined => {
+  if (date === undefined || date === null) {
+    return undefined
+  }
+
+  if (typeof date === 'string') {
+    return date.length > 0 ? new Date(date) : undefined
+  }
+}
+
 export const convertDateToISO = (
   date: Date | string | null | undefined
 ): string | undefined => {

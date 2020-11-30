@@ -6,6 +6,7 @@ import { moneyNumberFormat } from 'v2/config/numberFormat'
 import { numericValueExtractor } from 'v2/helpers/forms'
 import { useFormContext } from 'react-hook-form'
 import { IndividualIdentityFormValues } from 'v2/app/pages/identity/components/types'
+import { privateClassNames } from 'v2/helpers/classnames'
 
 export const FinancialFields = (): JSX.Element => {
   const { control } = useFormContext<IndividualIdentityFormValues>()
@@ -22,6 +23,7 @@ export const FinancialFields = (): JSX.Element => {
       </Grid>
       <Grid item xs={4}>
         <TypedField
+          className={privateClassNames()}
           component={Input}
           control={control}
           name='employer'
@@ -30,6 +32,7 @@ export const FinancialFields = (): JSX.Element => {
       </Grid>
       <Grid item xs={4}>
         <TypedField
+          className={privateClassNames()}
           component={Input}
           control={control}
           name='employmentStatus'
@@ -46,6 +49,7 @@ export const FinancialFields = (): JSX.Element => {
       </Grid>
       <Grid item xs={4}>
         <TypedField
+          className={privateClassNames()}
           control={control}
           name='annualIncome'
           label='Annual Income'
@@ -56,6 +60,7 @@ export const FinancialFields = (): JSX.Element => {
       </Grid>
       <Grid item xs={4}>
         <TypedField
+          className={privateClassNames()}
           control={control}
           name='houseHoldIncome'
           label='Household Income'
@@ -66,6 +71,7 @@ export const FinancialFields = (): JSX.Element => {
       </Grid>
       <Grid item xs={4}>
         <TypedField
+          className={privateClassNames()}
           component={Input}
           control={control}
           name='sourceOfWealth'
@@ -74,6 +80,7 @@ export const FinancialFields = (): JSX.Element => {
       </Grid>
       <Grid item xs={4}>
         <TypedField
+          className={privateClassNames()}
           component={Input}
           control={control}
           name='bankName'
@@ -82,6 +89,7 @@ export const FinancialFields = (): JSX.Element => {
       </Grid>
       <Grid item xs={4}>
         <TypedField
+          className={privateClassNames()}
           component={Input}
           control={control}
           name='bankAccountName'
@@ -90,6 +98,7 @@ export const FinancialFields = (): JSX.Element => {
       </Grid>
       <Grid item xs={4}>
         <TypedField
+          className={privateClassNames()}
           component={Input}
           control={control}
           name='bankAccountNumber'

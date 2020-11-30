@@ -1,4 +1,3 @@
-/**  * @jest-environment jsdom-sixteen  */
 import React from 'react'
 import { render, cleanup } from 'test-utils'
 import { DeployToken } from 'v2/app/pages/issuance/pages/DeployToken'
@@ -28,6 +27,7 @@ describe('DeployToken', () => {
       issuerId: user._id
     })
   })
+
   afterEach(async () => {
     await cleanup()
     jest.clearAllMocks()

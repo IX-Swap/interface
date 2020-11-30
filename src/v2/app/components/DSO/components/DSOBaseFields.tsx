@@ -3,21 +3,27 @@ import { Grid, Input } from '@material-ui/core'
 import { TypedField } from 'v2/components/form/TypedField'
 import { DataroomUploader } from 'v2/components/dataroom/DataroomUploader'
 import { DataroomAvatarUploader } from 'v2/components/dataroom/DataroomAvatarUploader'
-import { DatePicker } from 'v2/components/form/DatePicker'
 import { dateTimeValueExtractor } from 'v2/helpers/forms'
 import { CorporateSelect } from 'v2/components/form/CorporateSelect'
+import { NetworkSelect } from 'v2/components/form/NetworkSelect'
 import { AssetSelect } from 'v2/components/form/AssetSelect'
 import { useFormContext } from 'react-hook-form'
 import { DSOFormValues } from 'v2/types/dso'
 import { documentValueExtractor } from 'v2/app/components/DSO/utils'
 import { DataroomFileType } from 'v2/config/dataroom'
+import { DateTimePicker } from 'v2/components/form/_DateTimePicker'
 
-export const DSOBaseFields = () => {
+export interface DSOBaseFieldsProps {
+  isNew: boolean
+  isLive: boolean
+}
+
+export const DSOBaseFields = (props: DSOBaseFieldsProps) => {
+  const { isNew, isLive } = props
   const { control } = useFormContext<DSOFormValues>()
 
   return (
     <Grid
-      title='Base Fields'
       xs={12}
       container
       item
@@ -34,7 +40,9 @@ export const DSOBaseFields = () => {
             name='logo'
             label='Logo'
             control={control}
-            render={DataroomAvatarUploader}
+            render={renderProps => (
+              <DataroomAvatarUploader {...renderProps} type='image' />
+            )}
             valueExtractor={documentValueExtractor}
             accept={DataroomFileType.image}
             documentInfo={{
@@ -48,6 +56,7 @@ export const DSOBaseFields = () => {
             component={Input}
             label='Token Name'
             name='tokenName'
+            disabled={isLive}
             control={control}
           />
         </Grid>
@@ -57,6 +66,7 @@ export const DSOBaseFields = () => {
             component={Input}
             label='Symbol'
             name='tokenSymbol'
+            disabled={isLive}
             control={control}
           />
         </Grid>
@@ -64,12 +74,15 @@ export const DSOBaseFields = () => {
         <Grid item>
           {/* @ts-ignore */}
           <TypedField
-            component={DatePicker}
+            component={DateTimePicker}
             customRenderer
             label='Launch Date'
             name='launchDate'
             control={control}
+            disabled={isLive}
             valueExtractor={dateTimeValueExtractor}
+            // @ts-expect-error
+            defaultValue={null}
           />
         </Grid>
 
@@ -100,6 +113,17 @@ export const DSOBaseFields = () => {
             control={control}
           />
         </Grid>
+
+        {isNew && (
+          <Grid item>
+            <TypedField
+              control={control}
+              component={NetworkSelect}
+              name='network'
+              label='Network'
+            />
+          </Grid>
+        )}
       </Grid>
     </Grid>
   )

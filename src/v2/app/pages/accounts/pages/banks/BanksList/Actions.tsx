@@ -8,8 +8,7 @@ export interface ActionsProps {
   item: Bank
 }
 
-export const Actions: React.FC<ActionsProps> = props => {
-  const { item } = props
+export const Actions = ({ item }: ActionsProps) => {
   const { paths } = useBanksRouter()
 
   return (

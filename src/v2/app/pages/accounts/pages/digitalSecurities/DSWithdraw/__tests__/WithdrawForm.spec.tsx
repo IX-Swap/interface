@@ -1,4 +1,3 @@
-/**  * @jest-environment jsdom-sixteen  */
 import React from 'react'
 import { render, cleanup } from 'test-utils'
 import * as balances from 'v2/hooks/balance/useAllBalances'
@@ -28,6 +27,7 @@ describe('WithdrawForm', () => {
       .spyOn(useWithdrawDSHook, 'useWithdrawDS')
       .mockReturnValue([withdrawDS, generateMutationResult({})])
   })
+
   afterEach(async () => {
     await cleanup()
     jest.clearAllMocks()

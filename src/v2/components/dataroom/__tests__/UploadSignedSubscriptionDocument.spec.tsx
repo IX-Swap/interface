@@ -1,4 +1,3 @@
-/**  * @jest-environment jsdom-sixteen  */
 import React from 'react'
 import { render, cleanup } from 'test-utils'
 import {
@@ -19,6 +18,7 @@ describe('UploadSignedSubscriptionDocument', () => {
     deleteState: generateMutationResult({}),
     uploadState: generateMutationResult({})
   }
+
   afterEach(async () => {
     await cleanup()
     jest.clearAllMocks()

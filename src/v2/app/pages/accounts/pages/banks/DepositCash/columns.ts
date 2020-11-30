@@ -19,6 +19,7 @@ export const columns: Array<TableColumn<CashDeposit>> = [
     label: 'Amount',
     align: 'right',
     headAlign: 'right',
+    secret: true,
     render: renderAmount
   },
   {

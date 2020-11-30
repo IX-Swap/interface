@@ -1,4 +1,3 @@
-/**  * @jest-environment jsdom-sixteen  */
 import React from 'react'
 import { render, cleanup } from 'test-utils'
 import { CommitmentFormWrapper } from 'v2/app/pages/invest/components/CommitmentFormWrapper'
@@ -33,6 +32,7 @@ describe('CommitmentFormWrapper', () => {
   beforeEach(() => {
     history.push(OfferingRoute.view, { dsoId: dso._id, issuerId: dso.user })
   })
+
   afterEach(async () => {
     await cleanup()
     jest.clearAllMocks()
@@ -77,7 +77,7 @@ describe('CommitmentFormWrapper', () => {
     render(<CommitmentFormWrapper />)
 
     expect(CommitmentFormFields).toHaveBeenCalledWith(
-      { symbol: dso.currency.symbol },
+      { symbol: dso.currency.symbol, network: dso.network },
       {}
     )
   })

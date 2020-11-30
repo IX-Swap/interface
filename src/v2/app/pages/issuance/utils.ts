@@ -19,7 +19,7 @@ export const transformDSOFormValuesToRequestArgs = (
 
   return {
     ...dso,
-    subscriptionDocument: dso.subscriptionDocument._id,
+    subscriptionDocument: dso.subscriptionDocument?._id,
     dividendYield: numberToPercentage(dso.dividendYield),
     grossIRR: numberToPercentage(dso.grossIRR),
     equityMultiple: numberToPercentage(dso.equityMultiple),

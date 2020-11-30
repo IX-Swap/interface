@@ -1,4 +1,3 @@
-/**  * @jest-environment jsdom-sixteen  */
 import React from 'react'
 import { render, cleanup } from 'test-utils'
 import {
@@ -9,6 +8,7 @@ import { Bank } from 'v2/types/bank'
 import { bank } from '__fixtures__/authorizer'
 import { convertAddressToString } from 'v2/app/pages/authorizer/components/utils'
 import { LabelledValue } from 'v2/components/LabelledValue'
+import { privateClassNames } from 'v2/helpers/classnames'
 
 jest.mock('v2/components/LabelledValue', () => ({
   LabelledValue: jest.fn(() => null)
@@ -16,6 +16,7 @@ jest.mock('v2/components/LabelledValue', () => ({
 
 describe('BankPreview', () => {
   const props: BankViewProps = { data: bank }
+
   afterEach(async () => {
     await cleanup()
     jest.clearAllMocks()
@@ -53,12 +54,20 @@ describe('BankPreview', () => {
     )
     expect(LabelledValue).toHaveBeenNthCalledWith(
       4,
-      { label: 'Bank Account Number', value: props.data.bankAccountNumber },
+      {
+        label: 'Bank Account Number',
+        value: props.data.bankAccountNumber,
+        className: privateClassNames()
+      },
       {}
     )
     expect(LabelledValue).toHaveBeenNthCalledWith(
       5,
-      { label: 'Swift Code', value: props.data.swiftCode },
+      {
+        label: 'Swift Code',
+        value: props.data.swiftCode,
+        className: privateClassNames()
+      },
       {}
     )
     expect(LabelledValue).toHaveBeenNthCalledWith(

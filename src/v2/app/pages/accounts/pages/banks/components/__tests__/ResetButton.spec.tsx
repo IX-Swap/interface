@@ -1,4 +1,3 @@
-/**  * @jest-environment jsdom-sixteen  */
 import React from 'react'
 import { renderWithDepositStore, cleanup } from 'test-utils'
 import { ResetButton } from 'v2/app/pages/accounts/pages/banks/components/ResetButton'

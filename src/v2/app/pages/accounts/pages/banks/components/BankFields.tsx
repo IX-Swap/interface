@@ -4,6 +4,7 @@ import { useFormContext } from 'react-hook-form'
 import { TypedField } from 'v2/components/form/TypedField'
 import { AssetSelect } from 'v2/components/form/AssetSelect'
 import { BankFormValues } from 'v2/app/pages/accounts/types'
+import { privateClassNames } from 'v2/helpers/classnames'
 
 export const BankFields = () => {
   const { control } = useFormContext<BankFormValues>()
@@ -41,6 +42,7 @@ export const BankFields = () => {
         </Grid>
         <Grid item xs={4}>
           <TypedField
+            className={privateClassNames()}
             control={control}
             component={Input}
             name='bankAccountNumber'
@@ -49,6 +51,7 @@ export const BankFields = () => {
         </Grid>
         <Grid item xs={4}>
           <TypedField
+            className={privateClassNames()}
             control={control}
             component={Input}
             name='swiftCode'

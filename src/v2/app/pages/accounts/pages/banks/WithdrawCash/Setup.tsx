@@ -8,6 +8,7 @@ import { BankSelect } from 'v2/components/form/BankSelect'
 import { NumericInput } from 'v2/components/form/NumericInput'
 import { numericValueExtractor } from 'v2/helpers/forms'
 import { moneyNumberFormat } from 'v2/config/numberFormat'
+import { privateClassNames } from 'v2/helpers/classnames'
 
 export const Setup: React.FC = () => {
   const { watch, control } = useFormContext<WithdrawCashFormValues>()
@@ -46,6 +47,7 @@ export const Setup: React.FC = () => {
             </Grid>
             <Grid item>
               <TypedField
+                className={privateClassNames()}
                 control={control}
                 component={Input}
                 name='memo'

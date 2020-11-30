@@ -1,7 +1,10 @@
 import React from 'react'
 import { DigitalSecurityOffering, DSOFormValues } from 'v2/types/dso'
 import { noop } from 'v2/helpers/noop'
-import { transformDSOToFormValues } from 'v2/app/components/DSO/utils'
+import {
+  isDSOLive,
+  transformDSOToFormValues
+} from 'v2/app/components/DSO/utils'
 import { Box, Grid } from '@material-ui/core'
 import { DSOContainer } from 'v2/app/components/DSO/components/DSOContainer'
 import { DSOBaseFields } from 'v2/app/components/DSO/components/DSOBaseFields'
@@ -19,7 +22,7 @@ import { Submit } from 'v2/components/form/Submit'
 import { DSOBackButton } from 'v2/app/components/DSO/components/DSOBackButton'
 import { useSetPageTitle } from 'v2/app/hooks/useSetPageTitle'
 import { getOfferingName } from 'v2/helpers/strings'
-import { dsoFormValidationSchema } from 'v2/validation/dso'
+import { getDSOValidationSchema } from 'v2/validation/dso'
 
 export interface DSOFormProps {
   submitButtonLabel?: string
@@ -30,19 +33,25 @@ export interface DSOFormProps {
 }
 
 export const DSOForm = (props: DSOFormProps) => {
-  const { submitButtonLabel = 'Submit', data, onSubmit = noop } = props
+  const {
+    submitButtonLabel = 'Submit',
+    data,
+    isNew = false,
+    onSubmit = noop
+  } = props
+  const isLive = isDSOLive(data)
 
   useSetPageTitle(getOfferingName(data))
 
   return (
     <Form
-      validationSchema={dsoFormValidationSchema}
+      validationSchema={getDSOValidationSchema(isNew, isLive)}
       defaultValues={transformDSOToFormValues(data)}
       onSubmit={onSubmit}
       data-testid='dso-form'
     >
       <Grid container direction='column' spacing={3}>
-        <DSOBaseFields />
+        <DSOBaseFields isNew={isNew} isLive={isLive} />
         <Grid item container direction='row' spacing={2}>
           <DSOIntroduction />
           <DSOStatusFields />

@@ -1,4 +1,3 @@
-/**  * @jest-environment jsdom-sixteen  */
 import React from 'react'
 import { render, cleanup } from 'test-utils'
 import { IssuanceRoot } from 'v2/app/pages/issuance/IssuanceRoot'
@@ -19,6 +18,7 @@ describe('IssuanceRoot', () => {
   beforeEach(() => {
     useIssuanceRouterMock.mockReturnValueOnce({ renderRoutes })
   })
+
   afterEach(async () => {
     await cleanup()
     jest.clearAllMocks()

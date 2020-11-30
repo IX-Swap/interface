@@ -1,4 +1,3 @@
-/**  * @jest-environment jsdom-sixteen  */
 import React from 'react'
 import { render, cleanup } from 'test-utils'
 import {
@@ -9,6 +8,7 @@ import { individual } from '__fixtures__/identity'
 
 describe('FinancialView', () => {
   const props: FinancialViewProps = { data: individual }
+
   afterEach(async () => {
     await cleanup()
     jest.clearAllMocks()

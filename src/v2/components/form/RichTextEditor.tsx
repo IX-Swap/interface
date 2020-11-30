@@ -1,4 +1,4 @@
-import React, { useRef } from 'react'
+import React, { memo, useRef } from 'react'
 import MUIRichTextEditor from 'mui-rte'
 import { TMUIRichTextEditorRef } from 'mui-rte/src/MUIRichTextEditor'
 import { convertToRaw, convertFromHTML, ContentState } from 'draft-js'
@@ -7,11 +7,12 @@ import { Box } from '@material-ui/core'
 
 export interface RichTextEditorProps extends TypedFieldRenderComponentProps {}
 
-export const RichTextEditor = React.memo(
+export const RichTextEditor = memo(
   (props: RichTextEditorProps) => {
     const { onChange, value = '' } = props
     const ref = useRef<TMUIRichTextEditorRef>(null)
     const contentHTML = convertFromHTML(value)
+
     const state = ContentState.createFromBlockArray(
       contentHTML.contentBlocks,
       contentHTML.entityMap

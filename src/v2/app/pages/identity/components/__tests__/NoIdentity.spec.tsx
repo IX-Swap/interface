@@ -1,4 +1,3 @@
-/**  * @jest-environment jsdom-sixteen  */
 import React from 'react'
 import { render, cleanup } from 'test-utils'
 import { AppRouterLinkComponent } from 'v2/components/AppRouterLink'
@@ -17,6 +16,7 @@ describe('NoIdentity', () => {
     link: Object.keys(IdentityRoute)[0] as keyof typeof IdentityRoute,
     text: 'Test text'
   }
+
   afterEach(async () => {
     await cleanup()
     jest.clearAllMocks()

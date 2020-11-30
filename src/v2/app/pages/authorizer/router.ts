@@ -4,6 +4,7 @@ import { ReactComponent as AccountIcon } from 'assets/icons/navigation/account.s
 import { ReactComponent as CashDepositIcon } from 'assets/icons/navigation/cash-deposit.svg'
 import { ReactComponent as CashWithdrawalIcon } from 'assets/icons/navigation/cash-withdrawal.svg'
 import { ReactComponent as DSWithdrawalIcon } from 'assets/icons/navigation/ds-withdrawal.svg'
+import { ReactComponent as WithdrawalAddressIcon } from 'assets/icons/navigation/withdrawal-address.svg'
 import { ReactComponent as IndividualIcon } from 'assets/icons/navigation/individual.svg'
 import { ReactComponent as CorporateIcon } from 'assets/icons/navigation/corporate.svg'
 import { ReactComponent as OfferingIcon } from 'assets/icons/navigation/offering.svg'
@@ -16,6 +17,7 @@ import { AuthorizerCommitmentsRouterRoot } from 'v2/app/pages/authorizer/pages/c
 import { AuthorizerCorporateIdentitiesRouterRoot } from 'v2/app/pages/authorizer/pages/corporateIdentities/router'
 import { AuthorizerDSWithdrawalsRouterRoot } from 'v2/app/pages/authorizer/pages/dsWithdrawals/router'
 import { AuthorizerIndividualIdentitiesRouterRoot } from 'v2/app/pages/authorizer/pages/individualIdentities/router'
+import { AuthorizerWithdrawalAddressesRouterRoot } from 'v2/app/pages/authorizer/pages/withdrawalAddresses/router'
 import { AuthorizerOfferingsRouterRoot } from 'v2/app/pages/authorizer/pages/offerings/router'
 
 export const AuthorizerRoute = {
@@ -28,6 +30,7 @@ export const AuthorizerRoute = {
   corporateIdentities: makeURL(['app', 'authorizer', 'corporateIdentity']),
   offerings: makeURL(['app', 'authorizer', 'offerings']),
   commitments: makeURL(['app', 'authorizer', 'commitments']),
+  withdrawalAddresses: makeURL(['app', 'authorizer', 'withdrawalAddresses']),
   viewItem: makeURL(['app', 'authorizer', 'category', 'itemId'])
 }
 
@@ -87,6 +90,13 @@ export const authorizerRoutes: InternalRouteProps[] = [
     component: AuthorizerCommitmentsRouterRoot,
     color: '#C17F53',
     icon: CommitmentIcon
+  },
+  {
+    label: 'Withdrawal Addresses',
+    path: AuthorizerRoute.withdrawalAddresses,
+    component: AuthorizerWithdrawalAddressesRouterRoot,
+    color: '#e6d200',
+    icon: WithdrawalAddressIcon
   },
   {
     label: 'Authorization',

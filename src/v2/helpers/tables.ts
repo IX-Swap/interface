@@ -9,6 +9,7 @@ import { DigitalSecurityOffering } from 'v2/types/dso'
 import { AssetBalance } from 'v2/types/balance'
 import { PersonName } from './types'
 import { formatDateToMMDDYY } from 'v2/helpers/dates'
+import { WithdrawalAddress } from 'v2/types/withdrawalAddress'
 
 export const renderMinimumInvestment = (
   amount: number,
@@ -98,6 +99,7 @@ export const renderIndividualOrCompanyName = (
     | Commitment
     | CashDeposit
     | CashWithdrawal
+    | WithdrawalAddress
 ): string => {
   let lastName = ''
   let companyName = ''
@@ -110,7 +112,7 @@ export const renderIndividualOrCompanyName = (
   } else if ('individual' in row || 'corporates' in row) {
     lastName = getIndividualLastName(row.individual)
     companyName = getCorporateLegalName(row.corporates[0])
-  } else if ('identity' in row) {
+  } else if (row.identity !== undefined && 'identity' in row) {
     lastName = getIndividualLastName(row.identity.individual)
     companyName = getCorporateLegalName(row.identity.corporates[0])
   }

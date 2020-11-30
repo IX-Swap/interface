@@ -15,6 +15,14 @@ export interface AuthorizationInfoWithStatus extends AuthorizationInfo {
   status: AuthorizableStatus
 }
 
+export interface AuthorizationOverride {
+  _id: string
+  authorizer: string
+  withdrawalAddress?: string
+  releaseDate?: string
+  timestamp: string
+}
+
 export interface Authorizable {
   _id: string
   createdAt: string
@@ -39,6 +47,8 @@ export const DataroomFeature = {
   [AppFeature.CashWithdrawals]: 'authorization/accounts/withdrawals',
   [AppFeature.DigitalSecurityWithdrawals]:
     'authorization/accounts/security-withdrawals',
+  [AppFeature.WithdrawalAddresses]:
+    'authorization/accounts/withdrawal-addresses',
   [AppFeature.Individuals]: 'authorization/identity/individuals',
   [AppFeature.Corporates]: 'authorization/identity/corporates',
   [AppFeature.Offerings]: 'authorization/issuance/dsos',

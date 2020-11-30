@@ -1,11 +1,10 @@
-/**  * @jest-environment jsdom-sixteen  */
 import React from 'react'
 import { render, cleanup } from 'test-utils'
 import {
   DSODetails,
   DSODetailsProps
 } from 'v2/app/components/DSO/components/DSODetails'
-import { asset, dso } from '__fixtures__/authorizer'
+import { dso } from '__fixtures__/authorizer'
 import { LabelledValue } from 'v2/components/LabelledValue'
 import { formatMoney } from 'v2/helpers/numbers'
 
@@ -14,7 +13,7 @@ jest.mock('v2/components/LabelledValue', () => ({
 }))
 
 describe('DSODetails', () => {
-  const props: DSODetailsProps = { dso: dso, currency: asset }
+  const props: DSODetailsProps = { dso: dso }
 
   afterEach(async () => {
     await cleanup()
@@ -56,7 +55,7 @@ describe('DSODetails', () => {
       3,
       {
         label: 'Unit Price',
-        value: formatMoney(dso.pricePerUnit, props.currency?.symbol)
+        value: formatMoney(dso.pricePerUnit, dso.currency.symbol)
       },
       {}
     )
@@ -64,7 +63,7 @@ describe('DSODetails', () => {
       4,
       {
         label: 'Total Fundraising Amount',
-        value: formatMoney(dso.totalFundraisingAmount, props.currency?.symbol)
+        value: formatMoney(dso.totalFundraisingAmount, dso.currency.symbol)
       },
       {}
     )

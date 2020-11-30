@@ -3,6 +3,7 @@ import { DigitalSecurityOffering, DSOFormValues } from 'v2/types/dso'
 import { DataroomFile } from 'v2/types/dataroomFile'
 import { percentageToNumber } from 'v2/app/pages/issuance/utils'
 import { getIdFromObj } from 'v2/helpers/strings'
+import isPast from 'date-fns/isPast'
 
 export const transformDSOToFormValues = (
   dso: DigitalSecurityOffering | undefined
@@ -40,3 +41,20 @@ export const documentValueExtractor = (
 export const renderStringToHTML = (value: string) => (
   <div dangerouslySetInnerHTML={{ __html: value }} />
 )
+
+export const isDSOLive = (dso: DigitalSecurityOffering | undefined) => {
+  if (dso === undefined) {
+    return false
+  }
+
+  const { authorizations } = dso
+
+  if (authorizations === undefined) {
+    return false
+  }
+
+  const wasApproved = authorizations.some(({ status }) => status === 'Approved')
+  const pastLaunchDate = isPast(new Date(dso.launchDate))
+
+  return wasApproved && pastLaunchDate
+}

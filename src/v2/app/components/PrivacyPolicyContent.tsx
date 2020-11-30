@@ -507,7 +507,7 @@ export const PrivacyPolicyContent = () => {
         you will have certain rights, including the following-:
       </p>
       <p>
-        <strong>14. Access to information </strong>
+        <strong>(a) Access to information </strong>
       </p>
       <p>
         The GDPR gives you the right to find out whether we are processing your
@@ -601,8 +601,8 @@ export const PrivacyPolicyContent = () => {
         We have appointed a data protection officer in compliance with the PDPA
         and if you wish to withdraw your consent to any or all use of your
         personal data, or request amendment, restriction or erasure of such
-        personal data, or exercise any other of your rights, please contact
-        privacy@investax.com
+        personal data, or exercise any other of your rights, please contact{' '}
+        <a href='mailto:privacy@investax.io'>privacy@investax.io</a>
       </p>
       <p>
         Do note that if you withdraw your consent to any or all use of your
@@ -628,7 +628,10 @@ export const PrivacyPolicyContent = () => {
         This Privacy Policy shall be construed in accordance with the laws of
         Singapore.
       </p>
-      <p>Questions?Please email us at privacy@investax.com</p>
+      <p>
+        Questions? Please email us at{' '}
+        <a href='mailto:privacy@investax.io'>privacy@investax.io</a>
+      </p>
       <small>Last updated: 28.10.2020</small>
     </div>
   )

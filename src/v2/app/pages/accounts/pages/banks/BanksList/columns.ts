@@ -11,15 +11,18 @@ export const columns = [
   },
   {
     key: 'bankAccountNumber',
-    label: 'Account Number'
+    label: 'Account Number',
+    secret: true
   },
   {
     key: 'accountHolderName',
-    label: 'Account Name'
+    label: 'Account Name',
+    secret: true
   },
   {
     key: 'swiftCode',
-    label: 'Swift Code'
+    label: 'Swift Code',
+    secret: true
   },
   {
     key: 'status',

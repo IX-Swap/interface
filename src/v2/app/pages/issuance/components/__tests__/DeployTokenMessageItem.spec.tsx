@@ -1,4 +1,3 @@
-/**  * @jest-environment jsdom-sixteen  */
 import React from 'react'
 import { render, cleanup } from 'test-utils'
 import {
@@ -12,6 +11,7 @@ describe('DeployTokenMessageItem', () => {
     index: 0,
     style: {}
   }
+
   afterEach(async () => {
     await cleanup()
     jest.clearAllMocks()

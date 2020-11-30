@@ -10,6 +10,8 @@ import { DigitalSecurityOffering } from 'v2/types/dso'
 import { AuthorizationInfo } from 'v2/types/authorizer'
 import { Commitment } from 'v2/types/commitment'
 import { emptyFile } from '__fixtures__/file'
+import { network } from './network'
+import { withdrawalAddress } from './withdrawalAddress'
 
 export const asset: Asset = {
   _id: '5f732c538a568b50914d8372',
@@ -130,6 +132,7 @@ export const dso: DigitalSecurityOffering = {
   asset: 'asset',
   businessModel: 'business model',
   capitalStructure: 'capital structure',
+  network: network._id,
   corporate,
   createdAt: '01-01-2000',
   updatedAt: '01-01-2000',
@@ -185,6 +188,8 @@ export const commitment: Commitment = {
   },
   totalAmount: 0,
   authorizationDocuments: [],
+  authorizationOverrides: [],
+  authorizationOverride: undefined,
   authorization: undefined,
   authorizations: [],
   hold: 'dsadas',
@@ -193,7 +198,7 @@ export const commitment: Commitment = {
   pricePerUnit: 0,
   signedSubscriptionDocument: emptyFile,
   user,
-  walletAddress: ''
+  withdrawalAddress: withdrawalAddress
 }
 
 export const bank: Bank = {

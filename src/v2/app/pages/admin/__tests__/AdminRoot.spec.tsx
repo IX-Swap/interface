@@ -1,4 +1,3 @@
-/**  * @jest-environment jsdom-sixteen  */
 import React from 'react'
 import { render, cleanup } from 'test-utils'
 import { useAdminRouter } from 'v2/app/pages/admin/router'
@@ -15,6 +14,7 @@ describe('AdminRoot', () => {
   beforeEach(() => {
     useAdminRouterMock.mockReturnValueOnce({ renderRoutes })
   })
+
   afterEach(async () => {
     await cleanup()
     jest.clearAllMocks()

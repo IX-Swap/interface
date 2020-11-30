@@ -1,4 +1,3 @@
-/**  * @jest-environment jsdom-sixteen  */
 import React from 'react'
 import { render, cleanup } from 'test-utils'
 import { Step4Enable } from 'v2/app/pages/security/pages/setup2fa/components/Step4Enable'

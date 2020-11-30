@@ -1,4 +1,3 @@
-/**  * @jest-environment jsdom-sixteen  */
 import React from 'react'
 import { renderWithDepositStore, cleanup } from 'test-utils'
 import { Form } from 'v2/components/form/Form'
@@ -7,6 +6,7 @@ import { ContinueButton } from 'v2/app/pages/accounts/pages/banks/DepositCash/Co
 
 describe('ContinueButton', () => {
   // const fakeDepositStore = { setCurrentStep: jest.fn() }
+
   afterEach(async () => {
     await cleanup()
     jest.clearAllMocks()

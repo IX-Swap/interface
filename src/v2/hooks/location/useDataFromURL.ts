@@ -6,6 +6,7 @@ import {
   stripColonFromURLParam
 } from 'v2/hooks/location/utils'
 import { useEffect } from 'react'
+import { history } from 'v2/history'
 
 export const useDataFromURL = () => {
   const { pathname } = useLocation()
@@ -71,11 +72,20 @@ export const useDataFromURL = () => {
           break
         }
 
+        case 'withdrawal-addresses': {
+          const [withdrawalAddressId, action] = params
+          state[
+            stripColonFromURLParam(urlParams.withdrawalAddressId)
+          ] = withdrawalAddressId
+          break
+        }
+
         default:
-          return state
+          return state // throws error
       }
     }
 
-    window.history.replaceState(state, 'app-state')
+    // window.history.replaceState(state, 'app-state')
+    history.replace({ state })
   }, [pathname])
 }

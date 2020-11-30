@@ -9,7 +9,7 @@ export interface DsoTeamMember {
   name: string
   position: string
   about: string
-  photo?: string
+  photo: string
 }
 
 export interface DeploymentInfo {
@@ -52,7 +52,7 @@ export interface BaseDigitalSecurityOffering extends AuthorizableWithIdentity {
   distributionFrequency?: string
   interestRate?: number
   leverage?: number
-  subscriptionDocument: DataroomFile
+  subscriptionDocument?: DataroomFile
   introduction: string
   businessModel: string
   useOfProceeds: string
@@ -68,6 +68,7 @@ export interface BaseDigitalSecurityOffering extends AuthorizableWithIdentity {
 export interface DigitalSecurityOffering extends BaseDigitalSecurityOffering {
   documents: Maybe<DataroomFile[]>
   currency: Asset
+  network: string
 }
 
 export type DeploymentInfoFormValues = Omit<
@@ -94,7 +95,9 @@ export type DSOFormValues = Omit<
   | 'authorizations'
   | 'authorization'
   | 'authorizationDocuments'
+  | 'subscriptionDocument'
 > & {
+  subscriptionDocument?: DataroomFile
   status?: string
   currency: string
   corporate: string
@@ -106,6 +109,6 @@ export type DSORequestArgs = Omit<
   DSOFormValues,
   'documents' | 'subscriptionDocument'
 > & {
-  subscriptionDocument: string
+  subscriptionDocument?: string
   documents: string[]
 }

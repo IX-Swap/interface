@@ -7,6 +7,7 @@ import { useDSRouter } from 'v2/app/pages/accounts/pages/digitalSecurities/route
 import { VSpacer } from 'v2/components/VSpacer'
 import { Alert } from '@material-ui/lab'
 import { useSetPageTitle } from 'v2/app/hooks/useSetPageTitle'
+import { privateClassNames } from 'v2/helpers/classnames'
 
 export const AssetView: React.FC = () => {
   const {
@@ -38,7 +39,15 @@ export const AssetView: React.FC = () => {
             to recover if you transfer to the wrong address.
           </Alert>
         </Grid>
-        <Grid container item xs={12} sm={8} direction='column' justify='center'>
+        <Grid
+          container
+          item
+          xs={12}
+          sm={8}
+          direction='column'
+          justify='center'
+          className={privateClassNames()}
+        >
           <Typography variant='h4'>
             <b>{asset.symbol} Address</b>
           </Typography>
@@ -50,7 +59,7 @@ export const AssetView: React.FC = () => {
             Copy Address
           </Button>
         </Grid>
-        <Grid item xs={12} sm={4}>
+        <Grid item xs={12} sm={4} className={privateClassNames()}>
           <QRCode />
         </Grid>
       </Grid>

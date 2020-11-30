@@ -1,4 +1,3 @@
-/** * @jest-environment jsdom-sixteen */
 import { act } from '@testing-library/react-hooks'
 import { waitFor, cleanup, renderHookWithServiceProvider } from 'test-utils'
 import { useAssetById } from 'v2/hooks/asset/useAssetById'

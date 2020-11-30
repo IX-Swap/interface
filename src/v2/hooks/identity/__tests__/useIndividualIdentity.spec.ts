@@ -1,4 +1,3 @@
-/** * @jest-environment jsdom-sixteen */
 import { act } from '@testing-library/react-hooks'
 import { waitFor, cleanup, renderHookWithServiceProvider } from 'test-utils'
 import * as useAuthHook from 'v2/hooks/auth/useAuth'
@@ -12,6 +11,7 @@ describe('useIndividualIdentity', () => {
       .spyOn(useAuthHook, 'useAuth')
       .mockImplementation(() => ({ user, isAuthenticated: true }))
   })
+
   afterEach(async () => {
     await cleanup()
     jest.clearAllMocks()

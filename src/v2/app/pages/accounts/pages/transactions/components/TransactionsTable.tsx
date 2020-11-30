@@ -6,6 +6,7 @@ import columns from 'v2/app/pages/accounts/pages/transactions/columns'
 import { useFormContext } from 'react-hook-form'
 import { BaseFilter } from 'v2/types/util'
 import { useAuth } from 'v2/hooks/auth/useAuth'
+import { privateClassNames } from 'v2/helpers/classnames'
 
 export const TransactionsTable = () => {
   const { watch } = useFormContext()
@@ -22,7 +23,7 @@ export const TransactionsTable = () => {
   }
 
   return (
-    <Paper>
+    <Paper className={privateClassNames()}>
       <TableView<Transaction>
         uri={`/accounts/statement/${user?._id ?? ''}`}
         name={`transactions-${user?._id ?? ''}`}

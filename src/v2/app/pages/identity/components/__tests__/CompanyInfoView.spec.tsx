@@ -1,4 +1,3 @@
-/**  * @jest-environment jsdom-sixteen  */
 import React from 'react'
 import { render, cleanup } from 'test-utils'
 import {
@@ -12,6 +11,7 @@ jest.mock('v2/components/Avatar', () => ({ Avatar: jest.fn(() => null) }))
 
 describe('CompanyInfoView', () => {
   const props: CompanyInfoViewProps = { data: corporate }
+
   afterEach(async () => {
     await cleanup()
     jest.clearAllMocks()

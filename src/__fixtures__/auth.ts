@@ -1,4 +1,4 @@
-import { user } from './user'
+import { user } from '__fixtures__/user'
 import { APIServiceResponse } from 'v2/services/api/types'
 import User from 'v2/types/user'
 import {

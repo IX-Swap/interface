@@ -1,4 +1,3 @@
-/**  * @jest-environment jsdom-sixteen  */
 import React from 'react'
 import { render, cleanup } from 'test-utils'
 import {
@@ -16,6 +15,7 @@ jest.mock('v2/components/LabelledValue', () => ({
 
 describe('EstimatedValue', () => {
   const props: EstimatedValueProps = { symbol: asset.symbol }
+
   afterEach(async () => {
     await cleanup()
     jest.clearAllMocks()

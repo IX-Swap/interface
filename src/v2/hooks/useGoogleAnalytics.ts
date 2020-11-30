@@ -10,8 +10,6 @@ export const useGoogleAnalytics = () => {
 
   useEffect(() => {
     if (GOOGLE_ANALYTICS === 'true') {
-      ReactGA.initialize('G-F7RSTN1MVC')
-
       if (user !== undefined) {
         ReactGA.set({
           userId: user._id,

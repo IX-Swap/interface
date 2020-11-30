@@ -1,4 +1,3 @@
-/**  * @jest-environment jsdom-sixteen  */
 import React from 'react'
 import { render, cleanup } from 'test-utils'
 import {
@@ -14,6 +13,7 @@ describe('DeclarationFooter', () => {
       subLevel: 'subLevelClass'
     }
   }
+
   afterEach(async () => {
     await cleanup()
     jest.clearAllMocks()

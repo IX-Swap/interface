@@ -69,3 +69,5 @@ export type WithdrawCashArgs = WithdrawCashFormValues
 export type WithdrawDSArgs = WithdrawDSFormValues & { asset: string }
 
 export interface GetBanksArgs extends PaginationArgs {}
+
+export interface GetWithdrawalAddressesArgs extends PaginationArgs {}

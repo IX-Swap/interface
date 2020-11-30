@@ -6,7 +6,7 @@ import { renderStringToHTML } from 'v2/app/components/DSO/utils'
 import { DSOToken } from 'v2/app/components/DSO/components/DSOToken'
 import { DataroomHeader } from 'v2/components/dataroom/DataroomHeader'
 import { LabelledValue } from 'v2/components/LabelledValue'
-import { formatDateToMMDDYY } from 'v2/helpers/dates'
+import { formatDateAndTime } from 'v2/helpers/dates'
 import { DataroomViewRow } from 'v2/components/dataroom/DataroomViewRow'
 import { VSpacer } from 'v2/components/VSpacer'
 import { useSetPageTitle } from 'v2/app/hooks/useSetPageTitle'
@@ -19,6 +19,7 @@ import { DSOLogo } from './components/DSOLogo'
 import { DownloadDSOSubscriptionDocument } from 'v2/app/components/DSO/components/DownloadDSOSubscriptionDocument'
 import { DownloadDSODocument } from 'v2/app/components/DSO/components/DownloadDSODocument'
 import { DSOTeamMemberPhoto } from 'v2/app/components/DSO/components/DSOTeamMemberPhoto'
+import { NetworkView } from './components/NetworkView'
 
 export interface DSOViewProps {
   data: DigitalSecurityOffering
@@ -37,7 +38,7 @@ export const DSOView = (props: DSOViewProps) => {
     <Grid container direction='column' spacing={3}>
       {showAuthorizations && (
         <Grid item>
-          <RejectionMessage data={data.authorizations} />
+          <RejectionMessage data={data} />
         </Grid>
       )}
 
@@ -57,7 +58,7 @@ export const DSOView = (props: DSOViewProps) => {
         <Grid item>
           <LabelledValue
             label='Launch Date'
-            value={formatDateToMMDDYY(data.launchDate)}
+            value={formatDateAndTime(data.launchDate)}
           />
         </Grid>
 
@@ -74,6 +75,13 @@ export const DSOView = (props: DSOViewProps) => {
 
         <Grid item>
           <LabelledValue label='Currency' value={data.currency.symbol} />
+        </Grid>
+
+        <Grid item>
+          <LabelledValue
+            label='Blockchain Network'
+            value={<NetworkView networkId={data.network} />}
+          />
         </Grid>
       </Grid>
 
@@ -131,17 +139,23 @@ export const DSOView = (props: DSOViewProps) => {
 
       <Grid item>
         <DSOContainer title='Subscription Document' item xs={12}>
-          <DataroomViewRow
-            title='Subscription Document'
-            document={data.subscriptionDocument}
-            downloader={
-              <DownloadDSOSubscriptionDocument
-                size='small'
-                variant='outlined'
-                dsoId={data._id}
-              />
-            }
-          />
+          {data.subscriptionDocument === undefined ? (
+            <Grid container justify='flex-end'>
+              <Typography color='error'>Not provided</Typography>
+            </Grid>
+          ) : (
+            <DataroomViewRow
+              title='Subscription Document'
+              document={data.subscriptionDocument}
+              downloader={
+                <DownloadDSOSubscriptionDocument
+                  size='small'
+                  variant='outlined'
+                  dsoId={data._id}
+                />
+              }
+            />
+          )}
         </DSOContainer>
       </Grid>
 

@@ -12,6 +12,8 @@ import { PageHeader } from 'v2/app/components/PageHeader/PageHeader'
 import { Form } from 'v2/components/form/Form'
 import { useAuthorizerCategory } from 'v2/hooks/location/useAuthorizerCategory'
 import { AuthorizerCategory } from 'v2/types/app'
+import { privateClassNames } from 'v2/helpers/classnames'
+import { DigitalSecurityOffering } from 'v2/types/dso'
 
 export interface AuthorizerViewProps<T> {
   title: string
@@ -24,8 +26,17 @@ const transactionalCategories = [
   AuthorizerCategory.CashWithdrawals,
   AuthorizerCategory.DigitalSecurityWithdrawals,
   AuthorizerCategory.Commitments,
-  AuthorizerCategory.Offerings
+  AuthorizerCategory.Offerings,
+  AuthorizerCategory.WithdrawalAddresses
 ]
+
+const getCorporates = (data: AuthorizableWithIdentity) => {
+  if (typeof (data as DigitalSecurityOffering).launchDate === 'string') {
+    return [(data as DigitalSecurityOffering).corporate]
+  }
+
+  return data.identity?.corporates
+}
 
 export const AuthorizerView = <T,>(
   props: PropsWithChildren<AuthorizerViewProps<T>>
@@ -33,14 +44,13 @@ export const AuthorizerView = <T,>(
   const category = useAuthorizerCategory()
   const isTransaction = transactionalCategories.includes(category)
   const { title, data, feature, children } = props
-  // debugger
   const hasIdentity = data.identity !== undefined
   const documents = data.authorizationDocuments ?? []
   const approvedOrRejected = ['Approved', 'Rejected'].includes(data.status)
   const showForm = !(isTransaction && approvedOrRejected)
 
   return (
-    <Container>
+    <Container className={privateClassNames()}>
       <Grid container direction='column'>
         <Grid item>
           <PageHeader />
@@ -49,7 +59,7 @@ export const AuthorizerView = <T,>(
           <Grid container spacing={6}>
             {hasIdentity && (
               <AuthorizerIdentities
-                corporates={data.identity?.corporates}
+                corporates={getCorporates(data)}
                 individual={data.identity?.individual}
               />
             )}

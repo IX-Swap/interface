@@ -33,7 +33,7 @@ export const UploadSignedSubscriptionDocument = (
       </Button>
       {hasError && (
         <Typography variant='caption' color='error'>
-          {error.message}
+          {error?.message}
         </Typography>
       )}
     </>

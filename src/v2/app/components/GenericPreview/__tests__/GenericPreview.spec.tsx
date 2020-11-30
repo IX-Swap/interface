@@ -1,4 +1,3 @@
-/**  * @jest-environment jsdom-sixteen  */
 import React from 'react'
 import { render, cleanup } from 'test-utils'
 import {
@@ -6,6 +5,7 @@ import {
   GenericPreviewProps
 } from 'v2/app/components/GenericPreview/GenericPreview'
 import { LabelledValue } from 'v2/components/LabelledValue'
+import { privateClassNames } from 'v2/helpers/classnames'
 
 jest.mock('v2/components/LabelledValue', () => ({
   LabelledValue: jest.fn(() => null)
@@ -14,10 +14,11 @@ jest.mock('v2/components/LabelledValue', () => ({
 describe('GenericPreview', () => {
   const props: GenericPreviewProps = {
     items: [
-      { label: 'Account', value: 'account' },
+      { label: 'Account', value: 'account', secret: true },
       { label: 'Asset Balance', value: 'balance' }
     ]
   }
+
   afterEach(async () => {
     await cleanup()
     jest.clearAllMocks()
@@ -38,7 +39,8 @@ describe('GenericPreview', () => {
           label: item.label,
           value: item.value,
           row: true,
-          justify: 'space-between'
+          justify: 'space-between',
+          className: item.secret === true ? privateClassNames() : ''
         },
         {}
       )

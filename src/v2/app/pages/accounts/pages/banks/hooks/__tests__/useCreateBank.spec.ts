@@ -1,4 +1,3 @@
-/**  * @jest-environment jsdom-sixteen  */
 import { act } from '@testing-library/react-hooks'
 import { waitFor, cleanup, renderHookWithServiceProvider } from 'test-utils'
 import { useCreateBank } from 'v2/app/pages/accounts/pages/banks/hooks/useCreateBank'
@@ -16,6 +15,7 @@ describe('useCreateBank', () => {
       .mockImplementation(() => ({ user, isAuthenticated: true }))
     jest.spyOn(banksRouter, 'useBanksRouter').mockReturnValue({ push } as any)
   })
+
   afterEach(async () => {
     await cleanup()
     jest.clearAllMocks()
