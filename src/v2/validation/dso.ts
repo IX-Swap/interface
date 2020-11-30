@@ -59,3 +59,19 @@ export const editDSOValidationSchema = object()
     ...dsoFormBaseValidationSchema
   })
   .notRequired()
+
+export const editLiveDSOValidationSchema = object()
+  .shape<DSOFormValues>({
+    ...dsoFormBaseValidationSchema,
+    network: string(),
+    launchDate: string().required()
+  })
+  .notRequired()
+
+export const getDSOValidationSchema = (isNew: boolean, isLive: boolean) => {
+  if (isNew) {
+    return createDSOValidationSchema
+  }
+
+  return isLive ? editLiveDSOValidationSchema : editDSOValidationSchema
+}
