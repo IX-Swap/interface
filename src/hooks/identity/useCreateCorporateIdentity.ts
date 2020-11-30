@@ -7,10 +7,7 @@ import {
   prepareDocumentsForUpload
 } from 'app/pages/identity/utils'
 import { useMutation } from 'react-query'
-import {
-  CreateCorporateIdentityArgs,
-  CorporateIdentity
-} from 'types/identity'
+import { CreateCorporateIdentityArgs, CorporateIdentity } from 'types/identity'
 import apiService from 'services/api'
 import { getIdFromObj } from 'helpers/strings'
 

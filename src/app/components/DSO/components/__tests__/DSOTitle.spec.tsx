@@ -1,9 +1,6 @@
 import React from 'react'
 import { render, cleanup } from 'test-utils'
-import {
-  DSOTitle,
-  DsoTitleProps
-} from 'app/components/DSO/components/DSOTitle'
+import { DSOTitle, DsoTitleProps } from 'app/components/DSO/components/DSOTitle'
 import { dso } from '__fixtures__/authorizer'
 
 describe('DSOTitle', () => {

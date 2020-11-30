@@ -1,11 +1,7 @@
 import { TableColumn } from 'types/util'
 import { DSWithdrawal } from 'types/dsWithdrawal'
 import { formatDateToMMDDYY } from 'helpers/dates'
-import {
-  renderAmount,
-  renderAssetName,
-  renderLastName
-} from 'helpers/tables'
+import { renderAmount, renderAssetName, renderLastName } from 'helpers/tables'
 
 export const columns: Array<TableColumn<DSWithdrawal>> = [
   {

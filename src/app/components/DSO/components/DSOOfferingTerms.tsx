@@ -1,9 +1,6 @@
 import React from 'react'
 import { Grid, Input } from '@material-ui/core'
-import {
-  monthsNumberFormat,
-  percentageNumberFormat
-} from 'config/numberFormat'
+import { monthsNumberFormat, percentageNumberFormat } from 'config/numberFormat'
 import { TypedField } from 'components/form/TypedField'
 import { NumericInput } from 'components/form/NumericInput'
 import { numericValueExtractor } from 'helpers/forms'

@@ -2,10 +2,7 @@ import React from 'react'
 import { render, cleanup } from 'test-utils'
 import { DSOOfferingTerms } from 'app/components/DSO/components/DSOOfferingTerms'
 import { Form } from 'components/form/Form'
-import {
-  monthsNumberFormat,
-  percentageNumberFormat
-} from 'config/numberFormat'
+import { monthsNumberFormat, percentageNumberFormat } from 'config/numberFormat'
 import { TypedField } from 'components/form/TypedField'
 
 jest.mock('components/form/TypedField', () => ({

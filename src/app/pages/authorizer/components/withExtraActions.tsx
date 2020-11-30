@@ -1,8 +1,5 @@
 import React from 'react'
-import {
-  Actions,
-  ActionsProps
-} from 'app/pages/authorizer/components/Actions'
+import { Actions, ActionsProps } from 'app/pages/authorizer/components/Actions'
 
 export type WithExtraActionsProps<T> = ActionsProps<T>
 

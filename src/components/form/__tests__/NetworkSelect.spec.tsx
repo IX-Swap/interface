@@ -7,9 +7,7 @@ import { QueryStatus } from 'react-query'
 import { networks } from '__fixtures__/network'
 import { LOADING_TEXT } from '../renderUtils'
 
-jest.mock(
-  'app/pages/accounts/pages/withdrawalAddresses/hooks/useAllNetworks'
-)
+jest.mock('app/pages/accounts/pages/withdrawalAddresses/hooks/useAllNetworks')
 
 const useAllNetworksMock = useAllNetworks as jest.Mock<
   Partial<ReturnType<typeof useAllNetworks>>

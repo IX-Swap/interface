@@ -14,12 +14,9 @@ jest.mock('app/pages/accounts/pages/banks/DepositCash/Setup', () => ({
   Setup: jest.fn(() => null)
 }))
 
-jest.mock(
-  'app/pages/accounts/pages/banks/components/DepositCashAlert',
-  () => ({
-    DepositCashAlert: jest.fn(() => null)
-  })
-)
+jest.mock('app/pages/accounts/pages/banks/components/DepositCashAlert', () => ({
+  DepositCashAlert: jest.fn(() => null)
+}))
 
 jest.mock('app/components/BankDetails', () => ({
   BankDetails: jest.fn(() => null)
@@ -49,12 +46,9 @@ jest.mock('app/pages/accounts/pages/banks/components/BackButton', () => ({
   BackButton: jest.fn(() => null)
 }))
 
-jest.mock(
-  'app/pages/accounts/pages/banks/DepositCash/ContinueButton',
-  () => ({
-    ContinueButton: jest.fn(() => null)
-  })
-)
+jest.mock('app/pages/accounts/pages/banks/DepositCash/ContinueButton', () => ({
+  ContinueButton: jest.fn(() => null)
+}))
 
 describe('DepositView', () => {
   afterEach(async () => {

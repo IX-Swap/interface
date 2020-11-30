@@ -1,10 +1,7 @@
 import React from 'react'
 import { DigitalSecurityOffering, DSOFormValues } from 'types/dso'
 import { noop } from 'helpers/noop'
-import {
-  isDSOLive,
-  transformDSOToFormValues
-} from 'app/components/DSO/utils'
+import { isDSOLive, transformDSOToFormValues } from 'app/components/DSO/utils'
 import { Box, Grid } from '@material-ui/core'
 import { DSOContainer } from 'app/components/DSO/components/DSOContainer'
 import { DSOBaseFields } from 'app/components/DSO/components/DSOBaseFields'

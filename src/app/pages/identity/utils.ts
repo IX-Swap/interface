@@ -4,9 +4,7 @@ import {
   DeclarationTemplate,
   IndividualIdentity
 } from 'types/identity'
-import documents, {
-  formatDocuments
-} from 'app/pages/identity/const/documents'
+import documents, { formatDocuments } from 'app/pages/identity/const/documents'
 import { DataroomFile, FormArray } from 'types/dataroomFile'
 import { Maybe } from 'types/util'
 import {

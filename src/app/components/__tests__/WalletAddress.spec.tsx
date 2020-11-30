@@ -1,9 +1,6 @@
 import React from 'react'
 import { render, cleanup, fireEvent, waitFor } from 'test-utils'
-import {
-  WalletAddress,
-  WalletAddressProps
-} from 'app/components/WalletAddress'
+import { WalletAddress, WalletAddressProps } from 'app/components/WalletAddress'
 import { copyToClipboard } from 'helpers/clipboard'
 import { AppRouterLink } from 'components/AppRouterLink'
 

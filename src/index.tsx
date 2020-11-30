@@ -35,7 +35,7 @@ setupSentry()
 setupFullStory()
 initGoogleAnalytics()
 
-console.log(APP_VERSION) // eslint-disable-line
+console.log(`App version: ${APP_VERSION}`) // eslint-disable-line
 
 ReactDOM.render(
   <StylesProvider generateClassName={generateClassName}>

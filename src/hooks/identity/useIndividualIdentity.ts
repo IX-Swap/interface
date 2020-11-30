@@ -1,9 +1,6 @@
 import { useQuery } from 'react-query'
 import { UseQueryData } from 'hooks/useParsedData'
-import {
-  IndividualIdentity,
-  GetIndividualIdentityArgs
-} from 'types/identity'
+import { IndividualIdentity, GetIndividualIdentityArgs } from 'types/identity'
 import { useAuth } from 'hooks/auth/useAuth'
 import apiService from 'services/api'
 

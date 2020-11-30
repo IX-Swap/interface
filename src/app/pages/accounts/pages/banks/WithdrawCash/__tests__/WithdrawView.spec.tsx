@@ -14,12 +14,9 @@ jest.mock('app/pages/accounts/pages/banks/components/BackButton', () => ({
   BackButton: jest.fn(() => null)
 }))
 
-jest.mock(
-  'app/pages/accounts/pages/banks/WithdrawCash/ContinueButton',
-  () => ({
-    ContinueButton: jest.fn(() => null)
-  })
-)
+jest.mock('app/pages/accounts/pages/banks/WithdrawCash/ContinueButton', () => ({
+  ContinueButton: jest.fn(() => null)
+}))
 
 jest.mock('app/pages/accounts/pages/banks/WithdrawCash/BankPreview', () => ({
   BankPreview: jest.fn(() => null)

@@ -7,10 +7,9 @@ import { NotificationsDropdown } from 'app/pages/notifications/components/Notifi
 jest.mock('app/components/UserDropdown/UserDropdown', () => ({
   UserDropdown: jest.fn(() => null)
 }))
-jest.mock(
-  'app/pages/notifications/components/NotificationsDropdown',
-  () => ({ NotificationsDropdown: jest.fn(() => null) })
-)
+jest.mock('app/pages/notifications/components/NotificationsDropdown', () => ({
+  NotificationsDropdown: jest.fn(() => null)
+}))
 
 describe('Header', () => {
   afterEach(async () => {

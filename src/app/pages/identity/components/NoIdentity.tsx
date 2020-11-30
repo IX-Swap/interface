@@ -1,9 +1,6 @@
 import React from 'react'
 import { Box, Button, Grid } from '@material-ui/core'
-import {
-  IdentityRoute,
-  useIdentitiesRouter
-} from 'app/pages/identity/router'
+import { IdentityRoute, useIdentitiesRouter } from 'app/pages/identity/router'
 import { AppRouterLinkComponent } from 'components/AppRouterLink'
 
 export interface NoIdentityProps {

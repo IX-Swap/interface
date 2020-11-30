@@ -13,12 +13,9 @@ jest.mock(
   })
 )
 
-jest.mock(
-  'app/pages/accounts/pages/banks/WithdrawCash/WithdrawView',
-  () => ({
-    WithdrawView: jest.fn(() => <div data-testid='WithdrawView'></div>)
-  })
-)
+jest.mock('app/pages/accounts/pages/banks/WithdrawCash/WithdrawView', () => ({
+  WithdrawView: jest.fn(() => <div data-testid='WithdrawView'></div>)
+}))
 
 describe('WithdrawCash', () => {
   afterEach(async () => {
