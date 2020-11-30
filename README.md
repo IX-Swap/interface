@@ -22,3 +22,9 @@ yarn std // or npm run std
 **Hosted Instance**
 
 [https://www.mozork.com/](https://www.mozork.com/)
+
+
+**Webhooks**
+Amplify Hooks
+- Production (https://github.com/InvestaX/IXWebApp/settings/hooks/265590521)
+- Development, MVP, and Staging (https://github.com/InvestaX/IXWebApp/settings/hooks/265590816)
