@@ -3,10 +3,10 @@ import {
   DSOFormValues,
   DsoTeamMember,
   DeploymentInfo
-} from 'v2/types/dso'
+} from 'types/dso'
 import { corporate, asset } from './authorizer'
 import { emptyFile } from '__fixtures__/file'
-import { numberToPercentage } from 'v2/app/pages/issuance/utils'
+import { numberToPercentage } from 'app/pages/issuance/utils'
 import { network } from './network'
 
 export const deploymentInfo: DeploymentInfo = {

@@ -1,4 +1,4 @@
-import { Network } from 'v2/types/networks'
+import { Network } from 'types/networks'
 
 export const network: Network = {
   nativeCurrency: {

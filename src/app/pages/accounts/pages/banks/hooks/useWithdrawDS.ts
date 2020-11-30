@@ -1,0 +1,28 @@
+import { useMutation } from 'react-query'
+import { useAuth } from 'hooks/auth/useAuth'
+import { useServices } from 'hooks/useServices'
+import { WithdrawDSArgs } from 'app/pages/accounts/types'
+import { useDepositStore } from 'app/pages/accounts/pages/banks/context'
+import { DepositStoreStep } from 'app/pages/accounts/pages/banks/context/store'
+import { getIdFromObj } from 'helpers/strings'
+
+export const useWithdrawDS = () => {
+  const { apiService, snackbarService } = useServices()
+  const { user } = useAuth()
+  const { setCurrentStep } = useDepositStore()
+  const uri = `/accounts/security/withdrawals/${getIdFromObj(user)}`
+
+  const withdrawDS = async (args: WithdrawDSArgs) => {
+    return await apiService.post(uri, args)
+  }
+
+  return useMutation(withdrawDS, {
+    onSuccess: data => {
+      void snackbarService.showSnackbar(data.message, 'success')
+      setCurrentStep(DepositStoreStep.SUCCESS)
+    },
+    onError: (error: any) => {
+      void snackbarService.showSnackbar(error.message, 'error')
+    }
+  })
+}

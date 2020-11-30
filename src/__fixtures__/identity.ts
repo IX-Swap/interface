@@ -1,12 +1,12 @@
 import { user } from './user'
 import { address, authorizationInfo } from './authorizer'
-import { CorporateIdentity, IndividualIdentity } from 'v2/types/identity'
+import { CorporateIdentity, IndividualIdentity } from 'types/identity'
 import {
   DeclarationValue,
   IndividualDeclarations
-} from 'v2/app/pages/identity/const/declarations'
-import { DataroomFile } from 'v2/types/dataroomFile'
-import { IndividualIdentityFormValues } from 'v2/app/pages/identity/components/types'
+} from 'app/pages/identity/const/declarations'
+import { DataroomFile } from 'types/dataroomFile'
+import { IndividualIdentityFormValues } from 'app/pages/identity/components/types'
 
 export const corporate: CorporateIdentity = {
   _id: '1',

@@ -4,7 +4,7 @@ import {
   UpdateBankArgs,
   WithdrawCashArgs,
   WithdrawDSArgs
-} from 'v2/app/pages/accounts/types'
+} from 'app/pages/accounts/types'
 import { address, asset, bank } from './authorizer'
 
 export const createBankArgs: CreateBankArgs = {

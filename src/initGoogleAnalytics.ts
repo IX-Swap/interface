@@ -1,5 +1,5 @@
 import ReactGA from 'react-ga'
-import { GOOGLE_ANALYTICS } from 'v2/config'
+import { GOOGLE_ANALYTICS } from 'config'
 
 export const initGoogleAnalytics = () => {
   if (GOOGLE_ANALYTICS === 'true') {

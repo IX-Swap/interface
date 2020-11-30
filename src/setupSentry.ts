@@ -1,7 +1,7 @@
 import * as Sentry from '@sentry/react'
 import { Integrations } from '@sentry/tracing'
-import { ENVIRONMENT } from 'v2/config'
-import { history } from 'v2/history'
+import { ENVIRONMENT } from 'config'
+import { history } from 'config/history'
 
 export const setupSentry = () => {
   if (process.env.NODE_ENV === 'production') {

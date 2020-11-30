@@ -1,4 +1,4 @@
-import User from 'v2/types/user'
+import User from 'types/user'
 
 export const user: User = {
   verified: true,

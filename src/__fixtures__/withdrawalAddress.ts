@@ -1,4 +1,4 @@
-import { WithdrawalAddress } from 'v2/types/withdrawalAddress'
+import { WithdrawalAddress } from 'types/withdrawalAddress'
 import { individual, corporate } from './identity'
 import { network } from './network'
 

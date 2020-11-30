@@ -1,4 +1,4 @@
-import { APIResponse } from 'v2/services/api/types'
+import { APIResponse } from 'services/api/types'
 
 export const url = 'http://example.com'
 
