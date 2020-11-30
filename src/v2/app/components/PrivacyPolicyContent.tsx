@@ -507,7 +507,7 @@ export const PrivacyPolicyContent = () => {
         you will have certain rights, including the following-:
       </p>
       <p>
-        <strong>14. Access to information </strong>
+        <strong>(a) Access to information </strong>
       </p>
       <p>
         The GDPR gives you the right to find out whether we are processing your
