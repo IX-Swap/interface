@@ -38,6 +38,18 @@ export const documentValueExtractor = (
   return Array.isArray(value) ? value?.[0]._id : value?._id
 }
 
+export const truncateString = (str: string, len: number, words: boolean) => {
+  var tooLong = str.length > len
+  var truncated = tooLong ? str.substr(0, len) : str
+  if (words && tooLong) {
+    var index = truncated.lastIndexOf(' ')
+    if (index !== -1) {
+      truncated = truncated.substr(0, index)
+    }
+  }
+  return tooLong ? truncated + ' …' : truncated
+}
+
 export const renderStringToHTML = (value: string) => (
   <div dangerouslySetInnerHTML={{ __html: value }} />
 )

@@ -50,6 +50,7 @@ export const formatDateAndTime = (s?: string, seconds = false): string => {
     : s
 }
 
+// Inspired from https://momentjs.com/docs/#/customization/relative-time/
 export const getTimeAgo = (datetime: string) => {
   const now = Date.now()
   const from = new Date(datetime)

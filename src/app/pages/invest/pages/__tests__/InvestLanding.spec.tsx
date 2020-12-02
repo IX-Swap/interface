@@ -28,40 +28,4 @@ describe('InvestLanding', () => {
     } as any)
     render(<InvestLanding />)
   })
-
-  it('renders routes correctly with Listings tab active if current path match offerings', () => {
-    useInvestListRouterMock.mockReturnValueOnce({
-      renderRoutes,
-      current: { path: InvestListRoute.offerings },
-      paths: InvestListRoute
-    } as any)
-    const { getByTestId } = render(<InvestLanding />)
-
-    const tabs = getByTestId('invest-tabs')
-    const listingsTab = getByTestId('listings')
-    const commitmentsTab = getByTestId('commitments')
-
-    expect(tabs).toBeTruthy()
-    expect(listingsTab).toBeTruthy()
-    expect(commitmentsTab).toBeTruthy()
-    expect(listingsTab).toHaveClass('Mui-selected')
-  })
-
-  it('renders routes correctly with Listings tab active if current path does not match offerings', () => {
-    useInvestListRouterMock.mockReturnValueOnce({
-      renderRoutes,
-      current: { path: InvestListRoute.commitments },
-      paths: InvestListRoute
-    } as any)
-    const { getByTestId } = render(<InvestLanding />)
-
-    const tabs = getByTestId('invest-tabs')
-    const listingsTab = getByTestId('listings')
-    const commitmentsTab = getByTestId('commitments')
-
-    expect(tabs).toBeTruthy()
-    expect(listingsTab).toBeTruthy()
-    expect(commitmentsTab).toBeTruthy()
-    expect(commitmentsTab).toHaveClass('Mui-selected')
-  })
 })

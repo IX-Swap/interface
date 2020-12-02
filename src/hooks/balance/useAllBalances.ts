@@ -1,6 +1,5 @@
 import { useInfiniteQuery } from 'react-query'
 import { AssetBalance, GetAllBalancesArgs } from 'types/balance'
-// import { useUser } from 'auth/hooks/useUser'
 import { UsePaginatedQueryData, useParsedData } from 'hooks/useParsedData'
 import { paginationArgs } from 'config/defaults'
 import apiService from 'services/api'

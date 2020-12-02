@@ -1,11 +1,10 @@
 import React from 'react'
 import { render, cleanup } from 'test-utils'
 import { OfferingsList } from 'app/pages/invest/pages/OfferingsList'
-import { DSOList } from 'app/components/DSO/components/DSOList'
-import { OfferingRoute } from 'app/pages/invest/routers/offeringsRouter'
+import { DSOTopOffers } from 'app/components/DSO/components/DSOTopOffers'
 
-jest.mock('app/components/DSO/components/DSOList', () => ({
-  DSOList: jest.fn(() => null)
+jest.mock('app/components/DSO/components/DSOTopOffers', () => ({
+  DSOTopOffers: jest.fn(() => null)
 }))
 
 describe('OfferingsList', () => {
@@ -18,14 +17,9 @@ describe('OfferingsList', () => {
     render(<OfferingsList />)
   })
 
-  it('renders DSOList with correct props', () => {
+  it('renders DSOTopOffers correctly', () => {
     render(<OfferingsList />)
 
-    expect(DSOList).toHaveBeenCalledWith(
-      {
-        viewURL: OfferingRoute.view
-      },
-      {}
-    )
+    expect(DSOTopOffers).toHaveBeenCalled()
   })
 })
