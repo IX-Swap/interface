@@ -3,8 +3,7 @@ import { useAuth } from 'hooks/auth/useAuth'
 import { useServices } from 'hooks/useServices'
 import { Commitment } from 'types/commitment'
 import { getIdFromObj } from 'helpers/strings'
-
-export const USE_COMMITMENT_BY_ID_QUERY_KEY = 'commitmentById'
+import { invest } from 'config/queryKeys'
 
 export const useCommitmentById = (commitmentId: string) => {
   const { user } = useAuth()
@@ -13,7 +12,7 @@ export const useCommitmentById = (commitmentId: string) => {
 
   const fetchCommitment = async () => await apiService.get<Commitment>(url)
   const { data, ...rest } = useQuery(
-    [USE_COMMITMENT_BY_ID_QUERY_KEY, commitmentId],
+    [invest.getCommitmentById, commitmentId],
     fetchCommitment
   )
 

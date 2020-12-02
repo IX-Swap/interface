@@ -4,6 +4,7 @@ import { RecentWithdrawals } from 'app/pages/accounts/pages/banks/WithdrawCash/R
 import { TableView } from 'components/TableWithPagination/TableView'
 import { user } from '__fixtures__/user'
 import * as useAuthHook from 'hooks/auth/useAuth'
+import { cashWithdrawals } from 'config/queryKeys'
 
 jest.mock('components/TableWithPagination/TableView', () => ({
   TableView: jest.fn(() => <div data-testid='TableView' />)
@@ -20,7 +21,8 @@ describe('RecentWithdrawals', () => {
       .spyOn(useAuthHook, 'useAuth')
       .mockImplementation(() => ({ user: user, isAuthenticated: true }))
     const uri = `/accounts/cash/withdrawals/list/${user._id}`
-    const name = `cash-withdrawals-${user._id}`
+    const name = cashWithdrawals.getByUserId(user._id)
+    
 
     render(<RecentWithdrawals />)
 

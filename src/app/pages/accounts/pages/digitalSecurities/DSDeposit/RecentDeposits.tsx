@@ -5,6 +5,7 @@ import { useDSRouter } from 'app/pages/accounts/pages/digitalSecurities/router'
 import { useAuth } from 'hooks/auth/useAuth'
 import { getIdFromObj } from 'helpers/strings'
 import { Paper } from '@material-ui/core'
+import { digitalSecurities } from 'config/queryKeys'
 
 export const RecentDeposits: React.FC = () => {
   const { params } = useDSRouter()
@@ -15,7 +16,7 @@ export const RecentDeposits: React.FC = () => {
     <Paper variant='elevation'>
       <TableView
         uri={`/accounts/security/deposits/list/${userId}`}
-        name={`ds-deposits-${userId}`}
+        name={digitalSecurities.getDepositByUserId(userId)}
         columns={columns}
         filter={{
           asset: params.balanceId

@@ -1,14 +1,13 @@
 import { useQuery } from 'react-query'
 import apiService from 'services/api'
 import { Network } from 'types/networks'
-
-export const ALL_NETWORKS_QUERY_KEY = 'allNetworks'
+import { withdrawalAddress } from 'config/queryKeys'
 
 export const useAllNetworks = () => {
   const getAllNetworks = async () =>
     await apiService.get<Network[]>(`/blockchain/networks`)
 
-  const { data, ...rest } = useQuery([ALL_NETWORKS_QUERY_KEY], getAllNetworks)
+  const { data, ...rest } = useQuery([withdrawalAddress.getAllNetworks], getAllNetworks)
 
   return { ...rest, data: data?.data }
 }

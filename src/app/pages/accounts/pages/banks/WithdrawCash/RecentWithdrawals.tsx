@@ -5,6 +5,7 @@ import columns from 'app/pages/accounts/pages/banks/WithdrawCash/columns'
 import { Paper } from '@material-ui/core'
 import { useAuth } from 'hooks/auth/useAuth'
 import { getIdFromObj } from 'helpers/strings'
+import { cashWithdrawals } from 'config/queryKeys'
 
 export const RecentWithdrawals: React.FC = () => {
   const { user } = useAuth()
@@ -14,7 +15,7 @@ export const RecentWithdrawals: React.FC = () => {
     <Paper variant='elevation'>
       <TableView<CashWithdrawal>
         uri={`/accounts/cash/withdrawals/list/${userId}`}
-        name={`cash-withdrawals-${userId}`}
+        name={cashWithdrawals.getByUserId(userId)}
         columns={columns}
       />
     </Paper>

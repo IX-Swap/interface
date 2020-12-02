@@ -6,14 +6,12 @@ import { BaseFilter } from 'types/util'
 import { DSOListTableBody } from 'app/components/DSO/components/DSOListTableBody'
 import { getIdFromObj } from 'helpers/strings'
 import { useAuth } from 'hooks/auth/useAuth'
-
+import { dso } from 'config/queryKeys'
 export interface DSOfferingsListProps {
   viewURL: string
   all?: boolean
   filter?: BaseFilter
 }
-
-export const DSO_LIST_QUERY_KEY = 'dsoList'
 
 export const DSOList = (props: DSOfferingsListProps) => {
   const { all = true, filter = {}, viewURL } = props
@@ -28,7 +26,7 @@ export const DSOList = (props: DSOfferingsListProps) => {
         filter={filter}
         columns={[]}
         bordered={false}
-        name={DSO_LIST_QUERY_KEY}
+        name={dso.getList}
         uri={uri}
       >
         {({ items }) => <DSOListTableBody viewURL={viewURL} items={items} />}

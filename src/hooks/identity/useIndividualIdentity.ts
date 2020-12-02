@@ -3,8 +3,7 @@ import { UseQueryData } from 'hooks/useParsedData'
 import { IndividualIdentity, GetIndividualIdentityArgs } from 'types/identity'
 import { useAuth } from 'hooks/auth/useAuth'
 import apiService from 'services/api'
-
-export const INDIVIDUAL_IDENTITY_QUERY_KEY = 'individualIdentity'
+import { identity } from 'config/queryKeys'
 
 export const useIndividualIdentity = (): UseQueryData<IndividualIdentity> => {
   const { user } = useAuth()
@@ -20,7 +19,7 @@ export const useIndividualIdentity = (): UseQueryData<IndividualIdentity> => {
   }
 
   const { data, ...rest } = useQuery(
-    [INDIVIDUAL_IDENTITY_QUERY_KEY, payload],
+    [identity.getIndividual, payload],
     getIndividual
   )
 

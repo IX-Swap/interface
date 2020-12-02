@@ -7,8 +7,7 @@ import { PaginatedData } from 'services/api/types'
 import { useAuth } from 'hooks/auth/useAuth'
 import { GetBanksArgs } from 'app/pages/accounts/types'
 import { getIdFromObj } from 'helpers/strings'
-
-export const BANKS_QUERY_KEY = 'banks'
+import { banks } from 'config/queryKeys'
 
 export const useBanksData = (): UsePaginatedQueryData<Bank> => {
   const { apiService } = useServices()
@@ -19,7 +18,7 @@ export const useBanksData = (): UsePaginatedQueryData<Bank> => {
     return await apiService.post<PaginatedData<Bank>>(uri, args)
   }
   const { data, ...queryResult } = useInfiniteQuery(
-    [BANKS_QUERY_KEY, paginationArgs],
+    [banks.getData, paginationArgs],
     getBanks
   )
 

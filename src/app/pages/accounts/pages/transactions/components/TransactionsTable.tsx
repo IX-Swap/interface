@@ -7,6 +7,7 @@ import { useFormContext } from 'react-hook-form'
 import { BaseFilter } from 'types/util'
 import { useAuth } from 'hooks/auth/useAuth'
 import { privateClassNames } from 'helpers/classnames'
+import { transactions } from 'config/queryKeys'
 
 export const TransactionsTable = () => {
   const { watch } = useFormContext()
@@ -26,7 +27,7 @@ export const TransactionsTable = () => {
     <Paper className={privateClassNames()}>
       <TableView<Transaction>
         uri={`/accounts/statement/${user?._id ?? ''}`}
-        name={`transactions-${user?._id ?? ''}`}
+        name={transactions.getByUserId(user?._id ?? '')}
         columns={columns}
         filter={filter}
       />
