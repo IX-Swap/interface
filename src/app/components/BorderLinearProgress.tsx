@@ -1,44 +1,25 @@
 import React from 'react'
-import { withStyles, Theme } from '@material-ui/core/styles'
 import { LinearProgress, LinearProgressProps } from '@material-ui/core'
+import useStyles from './BorderLinearProgress.styles'
 
 export interface ColoredLinearProgressProps extends LinearProgressProps {
-  classes: {
-    [T in keyof ReturnType<typeof styles>]: string
-  }
   barColorPrimary?: string
+  colorPrimary?: string
 }
 
-const ColoredLinearProgress = (props: ColoredLinearProgressProps) => {
-  const { classes, barColorPrimary } = props
+export const BorderLinearProgress = (props: ColoredLinearProgressProps) => {
+  const classes = useStyles()
+  const barColorPrimary = props.barColorPrimary ?? classes.barColorPrimary
+  const colorPrimary = props.colorPrimary ?? classes.colorPrimary
+
   return (
     <LinearProgress
       {...props}
       classes={{
         ...classes,
-        barColorPrimary: barColorPrimary ?? classes.barColorPrimary
+        barColorPrimary,
+        colorPrimary
       }}
     />
   )
 }
-
-const styles = (theme: Theme) => ({
-  root: {
-    height: 10,
-    borderRadius: 5,
-    marginTop: theme.spacing(1),
-    marginBottom: theme.spacing(1)
-  },
-  colorPrimary: {
-    backgroundColor:
-      theme.palette.grey[theme.palette.type === 'light' ? 200 : 700]
-  },
-  bar: {
-    borderRadius: 5
-  },
-  barColorPrimary: {
-    backgroundColor: theme.palette.primary.main
-  }
-})
-
-export const BorderLinearProgress = withStyles(styles)(ColoredLinearProgress)

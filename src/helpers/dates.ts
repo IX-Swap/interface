@@ -5,6 +5,7 @@ import {
   differenceInDays,
   toDate
 } from 'date-fns'
+import formatDistance from 'date-fns/formatDistance'
 
 export const convertISOToDate = (
   date: string | null | undefined
@@ -50,21 +51,28 @@ export const formatDateAndTime = (s?: string, seconds = false): string => {
     : s
 }
 
-// Inspired from https://momentjs.com/docs/#/customization/relative-time/
 export const getTimeAgo = (datetime: string) => {
-  const now = Date.now()
-  const from = new Date(datetime)
-  const minutes = differenceInMinutes(now, from)
-  const hours = differenceInHours(now, from)
-  const days = differenceInDays(now, from)
+  try {
+    const now = Date.now()
+    const from = new Date(datetime)
+    const minutes = differenceInMinutes(now, from)
+    const hours = differenceInHours(now, from)
+    const days = differenceInDays(now, from)
 
-  if (minutes === 0) {
-    return 'Just now'
-  } else if (hours === 0) {
-    return `${minutes} m`
-  } else if (days === 0) {
-    return `${hours} h`
-  } else {
-    return `${days} d`
-  }
+    if (minutes === 0) {
+      return 'Just now'
+    } else if (hours === 0) {
+      return `${minutes} m`
+    } else if (days === 0) {
+      return `${hours} h`
+    } else {
+      return `${days} d`
+    }
+  } catch (error) {}
+
+  return 'Invalid Date'
+}
+
+export const getTimeFromNow = (date: Date) => {
+  return formatDistance(date, new Date(), { addSuffix: true })
 }

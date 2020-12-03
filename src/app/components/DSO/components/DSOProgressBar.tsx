@@ -3,7 +3,7 @@ import { Grid, Tooltip } from '@material-ui/core'
 import { calculatePercent } from 'helpers/numbers'
 import { DigitalSecurityOffering } from 'types/dso'
 import { BorderLinearProgress } from 'app/components/BorderLinearProgress'
-import { getTimeAgo } from 'helpers/dates'
+import { getTimeFromNow } from 'helpers/dates'
 import useStyles from './DSOProgressBar.styles'
 
 export interface DSOProgressBarProps {
@@ -38,17 +38,32 @@ export const DSOProgressBar = (props: DSOProgressBarProps) => {
 
   const isLive = !isCompleted && isLaunched
 
+  const completedBarClasses = {
+    barColorPrimary: classes.barColorPrimaryCompleted,
+    colorPrimary: classes.colorPrimaryCompleted
+  }
+
+  const liveBarClasses = {
+    barColorPrimary: classes.barColorPrimaryLive,
+    colorPrimary: classes.colorPrimaryLive
+  }
+
+  const upcomingBarClasses = {
+    barColorPrimary: classes.barColorPrimaryUpcoming,
+    colorPrimary: classes.colorPrimaryUpcoming
+  }
+
   const textColor = isLive
     ? classes.liveText
     : isCompleted
     ? classes.completedText
-    : classes.errorText
+    : classes.upcomingText
 
-  const bgColor = isLive
-    ? classes.liveBg
+  const barClasses = isLive
+    ? liveBarClasses
     : isCompleted
-    ? classes.completedBg
-    : classes.errorBg
+    ? completedBarClasses
+    : upcomingBarClasses
 
   return (
     <Tooltip title={raisedText} aria-label={`${raisedText} raised`}>
@@ -56,17 +71,17 @@ export const DSOProgressBar = (props: DSOProgressBarProps) => {
         {(showPercentRaised || showDSOStatus) && (
           <Grid container justify='space-between'>
             <Grid item>{showPercentRaised && raisedText}</Grid>
-            <Grid item>{showDSOStatus && isLive && 'Live'}</Grid>
+            <Grid item>{showDSOStatus && isLive ? 'Live' : <>&nbsp;</>}</Grid>
           </Grid>
         )}
         <BorderLinearProgress
           variant='determinate'
           value={percentRaised}
-          barColorPrimary={bgColor}
+          {...barClasses}
         />
-        {showRemainingTime && (
+        {showRemainingTime && isLive && (
           <Grid container justify='flex-start'>
-            <Grid item>{getTimeAgo(dso.launchDate)}</Grid>
+            <Grid item>{getTimeFromNow(new Date(dso.launchDate))}</Grid>{' '}
           </Grid>
         )}
       </div>

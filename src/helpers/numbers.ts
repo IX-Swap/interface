@@ -1,3 +1,13 @@
+export const addSymbol = (
+  value: string,
+  symbol: string = 'SGD',
+  right = false
+): string => {
+  const arr = [symbol, value]
+
+  return right ? arr.reverse().join(' ') : arr.join(' ')
+}
+
 export const formatAmount = (value: number) => {
   if (value === undefined || value === null) return ''
 
@@ -6,49 +16,33 @@ export const formatAmount = (value: number) => {
 
 export const abbreviateNumber = (
   value: number | null,
-  symbol: string = 'SGD',
-  right = false
+  symbol?: string,
+  right?: boolean
 ) => {
-  let newValue = `${value ?? ''}`
-  if (typeof value === 'number' && value >= 1000) {
-    const suffixes = ['', 'K', 'M', 'B', 'T']
-    const suffixNum = Math.floor(`${value}`.length / 3)
-    let shortValue: string | number = ''
-    for (var precision = 2; precision >= 1; precision--) {
-      shortValue = parseFloat(
-        (suffixNum !== 0
-          ? value / Math.pow(1000, suffixNum)
-          : value
-        ).toPrecision(precision)
-      )
-      var dotLessShortValue = `${shortValue}`.replace(/[^a-zA-Z 0-9]+/g, '')
-      if (dotLessShortValue.length <= 2) {
-        break
-      }
-    }
-    if (typeof shortValue === 'number' && shortValue % 1 !== 0) {
-      shortValue = shortValue.toFixed(1)
-    }
-    // eslint-disable-next-line @typescript-eslint/restrict-plus-operands
-    newValue = shortValue + suffixes[suffixNum]
-  }
+  // https://stackoverflow.com/a/60980688
 
-  const val = [symbol, newValue]
+  const formatter = new Intl.NumberFormat('en-US', {
+    maximumFractionDigits: 1,
+    // @ts-expect-error
+    notation: 'compact',
+    compactDisplay: 'short'
+  })
 
-  return right ? val.reverse().join(' ') : val.join(' ')
+  const num = formatter.format(value ?? 0)
+
+  return addSymbol(num, symbol, right)
 }
 
 export const formatMoney = (
   value: number | null,
-  symbol: string = 'SGD',
-  right = false
+  symbol?: string,
+  right?: boolean
 ): string => {
   if (value === undefined || value === null) return ''
 
   const money = formatAmount(value ?? 0)
-  const val = [symbol, money]
 
-  return right ? val.reverse().join(' ') : val.join(' ')
+  return addSymbol(money, symbol, right)
 }
 
 export const calculatePercent = (value: number, total: number): number =>

@@ -8,6 +8,8 @@ import txtIcon from 'assets/icons/documents/txt.svg'
 import unknownIcon from 'assets/icons/documents/unknown.svg'
 import { Maybe } from 'types/util'
 import { WalletAddress } from 'app/components/WalletAddress'
+import { DSOFavorite } from 'app/components/DSOFavorite'
+import { DigitalSecurityOffering } from 'types/dso'
 
 export const renderMenu = (arr: any[]): JSX.Element[] => {
   return arr.map(
@@ -24,6 +26,11 @@ export const renderMenu = (arr: any[]): JSX.Element[] => {
     )
   )
 }
+
+export const renderDSOFavorite = (
+  _: any,
+  dso: DigitalSecurityOffering
+): JSX.Element => <DSOFavorite dso={dso} />
 
 export const renderAddressColumn = (address: string): JSX.Element => (
   <WalletAddress address={address} />

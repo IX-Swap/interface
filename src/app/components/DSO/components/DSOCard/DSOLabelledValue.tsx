@@ -7,16 +7,14 @@ export const valueWeightMap = {
   bold: 900
 }
 
-export interface DSOOfferLabelledValueProps {
+export interface DSOLabelledValueProps {
   label: string
   value: any
   row?: boolean
   valueWeight?: keyof typeof valueWeightMap
 }
 
-export const DSOOfferLabelledValue = (
-  props: DSOOfferLabelledValueProps & GridProps
-) => {
+export const DSOLabelledValue = (props: DSOLabelledValueProps & GridProps) => {
   const { label, value, row = false, valueWeight = 'thin', ...rest } = props
   const direction = row ? 'row' : 'column'
 

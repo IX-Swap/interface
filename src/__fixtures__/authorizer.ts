@@ -167,6 +167,7 @@ export const dso: DigitalSecurityOffering = {
   authorizationDocuments: [],
   authorization: authorizationInfo,
   authorizations: [],
+  favorite: true,
   promoted: true,
   insight: {
     activityCount: 14,

@@ -1,6 +1,6 @@
 import React from 'react'
 import { TableBody, TableRow, TableCell } from '@material-ui/core'
-import { DSOCard } from 'app/components/DSO/components/DSOCard'
+import { DSOCard } from 'app/components/DSO/components/_DSOCard'
 import { DigitalSecurityOffering } from 'types/dso'
 
 export interface DSOListTableBodyProps {
