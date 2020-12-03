@@ -3,10 +3,11 @@ import { useServices } from 'hooks/useServices'
 import { useQuery } from 'react-query'
 import { Asset } from 'types/asset'
 import { assetsQueryKeys } from 'config/queryKeys'
+import { accountsURL } from 'config/apiURL'
 
 export const useAssetById = (assetId: string): UseQueryData<Asset> => {
   const { apiService } = useServices()
-  const uri = `accounts/assets/${assetId}`
+  const uri = accountsURL.assets.getById(assetId)
 
   const getAsset = async () => await apiService.get<Asset>(uri)
   const { data, ...rest } = useQuery(

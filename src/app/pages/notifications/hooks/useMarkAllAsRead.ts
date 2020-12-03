@@ -4,13 +4,14 @@ import { useServices } from 'hooks/useServices'
 import { Notification } from 'types/notification'
 import { markAllNotificationsAsRead } from 'app/pages/notifications/hooks/utils'
 import { getIdFromObj } from 'helpers/strings'
+import { notificationsURL } from 'config/apiURL'
 
 export const useMarkAllAsRead = () => {
   const { apiService, snackbarService } = useServices()
   const queryCache = useQueryCache()
   const { user } = useAuth()
   const userId = getIdFromObj(user)
-  const uri = `/core/notifications/mark-read/all/${userId}`
+  const uri = notificationsURL.markAllAsRead(userId)
   const readNotification = async () => {
     return await apiService.patch(uri, {})
   }

@@ -1,10 +1,11 @@
 import { useMutation } from 'react-query'
 import { VerifySignupArgs } from 'types/auth'
 import { useServices } from 'hooks/useServices'
+import { authURL } from 'config/apiURL'
 
 export const useVerifySignup = () => {
   const { apiService, snackbarService } = useServices()
-  const url = '/auth/registrations/confirm'
+  const url = authURL.registerConfirm
   const mutateFn = async (args: VerifySignupArgs) => {
     return await apiService.post(url, args)
   }

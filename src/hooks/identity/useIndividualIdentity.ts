@@ -4,6 +4,7 @@ import { IndividualIdentity, GetIndividualIdentityArgs } from 'types/identity'
 import { useAuth } from 'hooks/auth/useAuth'
 import apiService from 'services/api'
 import { identityQueryKeys } from 'config/queryKeys'
+import { identityURL } from 'config/apiURL'
 
 export const useIndividualIdentity = (): UseQueryData<IndividualIdentity> => {
   const { user } = useAuth()
@@ -13,7 +14,7 @@ export const useIndividualIdentity = (): UseQueryData<IndividualIdentity> => {
     args: GetIndividualIdentityArgs
   ) => {
     const { userId } = args
-    const uri = `/identity/individuals/${userId}`
+    const uri = identityURL.individuals.get(userId)
 
     return await apiService.get<IndividualIdentity>(uri)
   }

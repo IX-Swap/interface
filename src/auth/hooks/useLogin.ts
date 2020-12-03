@@ -3,10 +3,11 @@ import { useMutation } from 'react-query'
 import User from 'types/user'
 import { LoginArgs } from 'types/auth'
 import apiService from 'services/api'
+import { authURL } from 'config/apiURL'
 
 export const useLogin = () => {
   const { storageService, snackbarService } = useServices()
-  const url = '/auth/sign-in'
+  const url = authURL.login
   const mutateFn = async (args: LoginArgs) => {
     return await apiService.post<User>(url, args)
   }

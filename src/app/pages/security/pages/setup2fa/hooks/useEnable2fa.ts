@@ -4,6 +4,7 @@ import { useLogout } from 'auth/hooks/useLogout'
 import { useAuth } from 'hooks/auth/useAuth'
 import { Enable2faFormValues } from '../types'
 import { getIdFromObj } from 'helpers/strings'
+import { authURL } from 'config/apiURL'
 
 export const useEnable2fa = () => {
   const { snackbarService, apiService } = useServices()
@@ -11,7 +12,7 @@ export const useEnable2fa = () => {
   const { user } = useAuth()
 
   const enable2fa = async ({ otp }: Enable2faFormValues) => {
-    const uri = `/auth/2fa/setup/${getIdFromObj(user)}/confirm/${otp}`
+    const uri = authURL.enable2fa(getIdFromObj(user), otp)
     return await apiService.post(uri, {})
   }
 

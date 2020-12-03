@@ -10,6 +10,7 @@ import { useMutation } from 'react-query'
 import { CorporateIdentity, UpdateCorporateIdentityArgs } from 'types/identity'
 import apiService from 'services/api'
 import { getIdFromObj } from 'helpers/strings'
+import { identityURL } from 'config/apiURL'
 
 export const useUpdateCorporateIdentity = (id: string) => {
   const { snackbarService } = useServices()
@@ -21,7 +22,7 @@ export const useUpdateCorporateIdentity = (id: string) => {
       declarations: prepareDeclarationsForUpload(values.declarations),
       documents: prepareDocumentsForUpload(values.documents)
     }
-    const uri = `/identity/corporates/${getIdFromObj(user)}/${id}`
+    const uri = identityURL.corporates.update(getIdFromObj(user), id)
 
     return await apiService.put<CorporateIdentity>(uri, identity)
   }

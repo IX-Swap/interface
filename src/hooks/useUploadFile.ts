@@ -2,6 +2,7 @@ import { useMutation } from 'react-query'
 import { useServices } from 'hooks/useServices'
 import { DataroomFile } from 'types/dataroomFile'
 import { QueryOrMutationCallbacks } from 'hooks/types'
+import { documentsURL } from 'config/apiURL'
 
 export interface UploadDocumentInfo {
   title?: string
@@ -36,7 +37,7 @@ export const useUploadFile = (
       }
     })
 
-    return await apiService.post<DataroomFile[]>('/dataroom', formData)
+    return await apiService.post<DataroomFile[]>(documentsURL.create, formData)
   }
 
   return useMutation(uploadFile, {
