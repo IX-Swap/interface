@@ -3,8 +3,7 @@ import { useAuth } from 'hooks/auth/useAuth'
 import { useServices } from 'hooks/useServices'
 import { DigitalSecurityOffering } from 'types/dso'
 import { getIdFromObj } from 'helpers/strings'
-
-export const USE_DSO_BY_ID_QUERY_KEY = 'dsoById'
+import { investQueryKeys } from 'config/queryKeys'
 
 export const useDSOById = (dsoId: string, issuerId?: string) => {
   const { user } = useAuth()
@@ -12,7 +11,10 @@ export const useDSOById = (dsoId: string, issuerId?: string) => {
   const url = `/issuance/dso/${issuerId ?? getIdFromObj(user)}/${dsoId}`
   const fetchDSO = async () =>
     await apiService.get<DigitalSecurityOffering>(url)
-  const { data, ...rest } = useQuery([USE_DSO_BY_ID_QUERY_KEY, dsoId], fetchDSO)
+  const { data, ...rest } = useQuery(
+    [investQueryKeys.getDSOById, dsoId],
+    fetchDSO
+  )
 
   return {
     ...rest,

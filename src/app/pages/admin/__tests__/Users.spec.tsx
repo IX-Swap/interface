@@ -5,6 +5,7 @@ import { TableView } from 'components/TableWithPagination/TableView'
 import columns from 'app/pages/admin/columns'
 import { user } from '__fixtures__/user'
 import { Actions } from '../components/Actions'
+import { usersQueryKeys } from 'config/queryKeys'
 
 jest.mock('components/TableWithPagination/TableView', () => ({
   TableView: jest.fn(() => null)
@@ -26,7 +27,7 @@ describe('Users', () => {
     expect(TableView).toHaveBeenCalledTimes(1)
     expect(TableView).toHaveBeenCalledWith(
       expect.objectContaining({
-        name: 'usersList',
+        name: usersQueryKeys.getList,
         uri: '/auth/users/list',
         hasActions: true,
         columns

@@ -5,8 +5,7 @@ import { AssetType } from 'types/asset'
 import { UsePaginatedQueryData, useParsedData } from 'hooks/useParsedData'
 import { paginationArgs } from 'config/defaults'
 import apiService from 'services/api'
-
-export const BALANCES_BY_TYPE_QUERY_KEY = 'balancesByAssetId'
+import { balanceQueryKeys } from 'config/queryKeys'
 
 export const useBalancesByType = (
   type: AssetType
@@ -23,7 +22,7 @@ export const useBalancesByType = (
   }
 
   const { data, ...rest } = useInfiniteQuery(
-    [BALANCES_BY_TYPE_QUERY_KEY, payload],
+    [balanceQueryKeys.getByType, payload],
     getBalancesByType
   )
 

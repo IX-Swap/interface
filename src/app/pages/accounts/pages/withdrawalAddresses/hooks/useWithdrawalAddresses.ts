@@ -8,8 +8,7 @@ import { WithdrawalAddress } from 'types/withdrawalAddress'
 import { GetWithdrawalAddressesArgs } from 'app/pages/accounts/types'
 import { useParsedData, UsePaginatedQueryData } from 'hooks/useParsedData'
 import { AuthorizableStatus } from 'types/util'
-
-export const WITHDRAWAL_ADDRESSES_QUERY_KEY = 'withdrawalAddresses'
+import { withdrawalAddressQueryKeys } from 'config/queryKeys'
 
 interface Props {
   network?: string
@@ -30,7 +29,10 @@ export const useWithdrawalAddresses = ({
   ) => await apiService.post<PaginatedData<WithdrawalAddress>>(uri, args)
 
   const { data, ...queryResult } = useInfiniteQuery(
-    [WITHDRAWAL_ADDRESSES_QUERY_KEY, { ...paginationArgs, network, status }],
+    [
+      withdrawalAddressQueryKeys.getAddresses,
+      { ...paginationArgs, network, status }
+    ],
     getAllWithdrawalAddresses
   )
 
