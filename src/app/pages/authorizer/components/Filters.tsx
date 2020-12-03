@@ -9,10 +9,13 @@ import { authorizerQueryKeys } from 'config/queryKeys'
 export const Filters = () => {
   const queryCache = useQueryCache()
   const onApplyFilter = (filterPart: Partial<BaseFilter>) => {
-    queryCache.setQueryData<BaseFilter>(authorizerQueryKeys.authorizerFilter, filter => ({
-      ...filter,
-      ...filterPart
-    }))
+    queryCache.setQueryData<BaseFilter>(
+      authorizerQueryKeys.authorizerFilter,
+      filter => ({
+        ...filter,
+        ...filterPart
+      })
+    )
     // TODO: invalidate only current table
     void queryCache.invalidateQueries()
     void queryCache.refetchQueries()

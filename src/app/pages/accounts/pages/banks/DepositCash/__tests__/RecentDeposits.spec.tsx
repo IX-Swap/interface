@@ -5,7 +5,7 @@ import { TableView } from 'components/TableWithPagination/TableView'
 import { user } from '__fixtures__/user'
 import { columns } from '../columns'
 import * as useAuthHook from 'hooks/auth/useAuth'
-import { cashDeposits } from 'config/queryKeys'
+import { cashDepositsQueryKeys } from 'config/queryKeys'
 
 jest.mock('components/TableWithPagination/TableView', () => ({
   TableView: jest.fn(() => <div data-testid='TableView' />)
@@ -23,7 +23,7 @@ describe('RecentDeposits', () => {
       user
     })
     const uri = `/accounts/cash/deposits/list/${user._id}`
-    const name = cashDeposits.getByUserId(user._id)
+    const name = cashDepositsQueryKeys.getByUserId(user._id)
 
     render(<RecentDeposits />)
     expect(TableView).toHaveBeenCalledTimes(1)

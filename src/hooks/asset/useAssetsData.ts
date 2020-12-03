@@ -4,7 +4,7 @@ import { UsePaginatedQueryData, useParsedData } from 'hooks/useParsedData'
 import { paginationArgs } from 'config/defaults'
 import apiService from 'services/api'
 import { PaginatedData } from 'services/api/types'
-import { assets } from 'config/queryKeys'
+import { assetsQueryKeys } from 'config/queryKeys'
 
 export const useAssetsData = (
   type?: AssetType
@@ -20,7 +20,7 @@ export const useAssetsData = (
   }
 
   const { data, ...rest } = useInfiniteQuery(
-    [assets.getData, payload],
+    [assetsQueryKeys.getData, payload],
     getAssets
   )
 

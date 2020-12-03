@@ -4,7 +4,7 @@ import { TableView } from 'components/TableWithPagination/TableView'
 import columns from 'app/pages/admin/columns'
 import User from 'types/user'
 import { Actions } from 'app/pages/admin/components/Actions'
-import { users } from 'config/queryKeys'
+import { usersQueryKeys } from 'config/queryKeys'
 
 export const Users = () => {
   const ref = useRef(null)
@@ -14,7 +14,7 @@ export const Users = () => {
       <TableView<User>
         innerRef={ref}
         uri='/auth/users/list'
-        name={users.getList}
+        name={usersQueryKeys.getList}
         columns={columns}
         hasActions
         actions={({ item }) => renderActions(item, ref)}

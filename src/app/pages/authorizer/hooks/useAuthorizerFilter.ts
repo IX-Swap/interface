@@ -13,10 +13,16 @@ export const useAuthorizerFilter = () => {
   }
 
   useEffect(() => {
-    queryCache.setQueryData<BaseFilter>(authorizerQueryKeys.authorizerFilter, initialFilterValue)
+    queryCache.setQueryData<BaseFilter>(
+      authorizerQueryKeys.authorizerFilter,
+      initialFilterValue
+    )
 
     return () => {
-      queryCache.setQueryData<BaseFilter>(authorizerQueryKeys.authorizerFilter, { status: '' })
+      queryCache.setQueryData<BaseFilter>(
+        authorizerQueryKeys.authorizerFilter,
+        { status: '' }
+      )
     }
   }, []) // eslint-disable-line
 

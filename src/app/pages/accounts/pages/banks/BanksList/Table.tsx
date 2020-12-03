@@ -6,7 +6,7 @@ import { Actions } from 'app/pages/accounts/pages/banks/BanksList/Actions'
 import { useAuth } from 'hooks/auth/useAuth'
 import { Paper } from '@material-ui/core'
 import { getIdFromObj } from 'helpers/strings'
-import { banks } from 'config/queryKeys'
+import { banksQueryKeys } from 'config/queryKeys'
 
 export const Table: React.FC = () => {
   const { user } = useAuth()
@@ -16,7 +16,7 @@ export const Table: React.FC = () => {
     <Paper variant='elevation'>
       <TableView<Bank>
         uri={`/accounts/banks/list/${userId}`}
-        name={banks.getListByUserId(userId)}
+        name={banksQueryKeys.getListByUserId(userId)}
         columns={columns}
         hasActions
         actions={Actions}

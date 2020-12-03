@@ -7,7 +7,7 @@ import { Paper } from '@material-ui/core'
 import { useAuth } from 'hooks/auth/useAuth'
 import { getIdFromObj } from 'helpers/strings'
 import { privateClassNames } from 'helpers/classnames'
-import { invest } from 'config/queryKeys'
+import { investQueryKeys } from 'config/queryKeys'
 
 export const MyCommitments = () => {
   const { user } = useAuth()
@@ -17,7 +17,7 @@ export const MyCommitments = () => {
     <Paper variant='outlined' className={privateClassNames()}>
       <TableView<Commitment>
         uri={`/issuance/commitments/list/${userId}`}
-        name={invest.getCommitmentsByUserId(userId)}
+        name={investQueryKeys.getCommitmentsByUserId(userId)}
         columns={columns}
         hasActions
         actions={Actions}

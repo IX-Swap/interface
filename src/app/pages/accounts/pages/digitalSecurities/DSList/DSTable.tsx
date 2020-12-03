@@ -5,7 +5,7 @@ import { DSTableActions } from 'app/pages/accounts/pages/digitalSecurities/DSLis
 import { Paper } from '@material-ui/core'
 import { useAuth } from 'hooks/auth/useAuth'
 import { getIdFromObj } from 'helpers/strings'
-import { digitalSecurities } from 'config/queryKeys'
+import { digitalSecuritiesQueryKeys } from 'config/queryKeys'
 
 export const DSTable: React.FC = () => {
   const { user } = useAuth()
@@ -15,7 +15,7 @@ export const DSTable: React.FC = () => {
     <Paper variant='elevation'>
       <TableView
         uri={`/accounts/balance/${userId}`}
-        name={digitalSecurities.getByUserId(userId)}
+        name={digitalSecuritiesQueryKeys.getByUserId(userId)}
         columns={columns}
         hasActions
         filter={{ type: 'Security' }}

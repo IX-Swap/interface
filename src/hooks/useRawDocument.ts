@@ -2,7 +2,7 @@ import { useQuery } from 'react-query'
 import { useServices } from 'hooks/useServices'
 import { DownloadDocument } from 'hooks/useDownloadRawDocument'
 import { useDataroomFileURL } from 'hooks/useDataroomFileURL'
-import { documents } from 'config/queryKeys'
+import { documentsQueryKeys } from 'config/queryKeys'
 
 export const useRawDocument = (document: DownloadDocument) => {
   const { apiService } = useServices()
@@ -12,7 +12,7 @@ export const useRawDocument = (document: DownloadDocument) => {
   }
 
   return useQuery(
-    [documents.getById, document.documentId, document.ownerId],
+    [documentsQueryKeys.getById, document.documentId, document.ownerId],
     downloadFile
   )
 }

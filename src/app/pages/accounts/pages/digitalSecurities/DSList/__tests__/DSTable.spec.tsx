@@ -5,7 +5,7 @@ import { columns } from 'app/pages/accounts/pages/digitalSecurities/DSList/colum
 import { TableView } from 'components/TableWithPagination/TableView'
 import * as useAuthHook from 'hooks/auth/useAuth'
 import { user } from '__fixtures__/user'
-import { digitalSecurities } from 'config/queryKeys'
+import { digitalSecuritiesQueryKeys } from 'config/queryKeys'
 
 jest.mock('components/TableWithPagination/TableView', () => ({
   TableView: jest.fn(() => null)
@@ -30,7 +30,7 @@ describe('DSTable', () => {
 
   it('renders TableView with correct props', () => {
     const uri = `/accounts/balance/${user._id}`
-    const name = digitalSecurities.getByUserId(user._id)
+    const name = digitalSecuritiesQueryKeys.getByUserId(user._id)
 
     render(<DSTable />)
     expect(TableView).toHaveBeenCalledTimes(1)

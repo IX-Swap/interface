@@ -4,7 +4,7 @@ import { useAuth } from 'hooks/auth/useAuth'
 import { UsePaginatedQueryData, useParsedData } from 'hooks/useParsedData'
 import { paginationArgs } from 'config/defaults'
 import apiService from 'services/api'
-import { balance } from 'config/queryKeys'
+import { balanceQueryKeys } from 'config/queryKeys'
 
 export const useBalancesByAssetId = (
   assetId: string
@@ -24,7 +24,7 @@ export const useBalancesByAssetId = (
   }
 
   const { data, ...rest } = useInfiniteQuery(
-    [balance.getByAssetId, payload],
+    [balanceQueryKeys.getByAssetId, payload],
     getBalancesByAssetId,
     { enabled: (assetId ?? '') !== '' }
   )

@@ -6,7 +6,7 @@ import { paginationArgs } from 'config/defaults'
 import { useParsedData } from 'hooks/useParsedData'
 import { DataroomFile } from 'types/dataroomFile'
 import { getIdFromObj } from 'helpers/strings'
-import { documents } from 'config/queryKeys'
+import { documentsQueryKeys } from 'config/queryKeys'
 
 export const useAllDocuments = () => {
   const { apiService } = useServices()
@@ -19,7 +19,7 @@ export const useAllDocuments = () => {
     })
   }
   const { data, ...rest } = useInfiniteQuery(
-    [documents.getAll],
+    [documentsQueryKeys.getAll],
     downloadFile
   )
 

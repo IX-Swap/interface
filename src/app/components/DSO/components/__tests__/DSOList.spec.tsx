@@ -8,7 +8,7 @@ import { TableView } from 'components/TableWithPagination/TableView'
 import { user } from '__fixtures__/user'
 import { DSOListTableBody } from 'app/components/DSO/components/DSOListTableBody'
 import * as useAuthHook from 'hooks/auth/useAuth'
-import { dso } from 'config/queryKeys'
+import { dsoQueryKeys } from 'config/queryKeys'
 
 jest.mock('app/components/DSO/components/DSOListTableBody', () => ({
   DSOListTableBody: jest.fn(() => null)
@@ -39,7 +39,7 @@ describe('DSOList', () => {
         children: expect.anything(),
         columns: [],
         bordered: false,
-        name: dso.getList,
+        name: dsoQueryKeys.getList,
         uri: `/issuance/dso/list/approved`
       },
       {}
@@ -60,7 +60,7 @@ describe('DSOList', () => {
         children: expect.anything(),
         columns: [],
         bordered: false,
-        name: dso.getList,
+        name: dsoQueryKeys.getList,
         uri: `/issuance/dso/list/${user._id}`
       },
       {}

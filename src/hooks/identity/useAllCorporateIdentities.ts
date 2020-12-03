@@ -7,7 +7,7 @@ import apiService from 'services/api'
 import { PaginatedData } from 'services/api/types'
 import { getIdFromObj } from 'helpers/strings'
 import { useIsAdmin, useIsAuthorizer } from 'helpers/acl'
-import { identity } from 'config/queryKeys'
+import { identityQueryKeys } from 'config/queryKeys'
 
 export const useAllCorporateIdentities = (
   all = false
@@ -30,7 +30,7 @@ export const useAllCorporateIdentities = (
   }
 
   const { data, ...rest } = useInfiniteQuery(
-    [identity.getAllCorporate, payload],
+    [identityQueryKeys.getAllCorporate, payload],
     getAllCorporates
   )
 

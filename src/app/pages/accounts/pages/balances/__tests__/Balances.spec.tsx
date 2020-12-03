@@ -5,7 +5,7 @@ import { TableView } from 'components/TableWithPagination/TableView'
 import { user } from '__fixtures__/user'
 import { columns } from 'app/pages/accounts/pages/balances/columns'
 import * as useAuthHook from 'hooks/auth/useAuth'
-import { balance } from 'config/queryKeys'
+import { balanceQueryKeys } from 'config/queryKeys'
 
 jest.mock('components/TableWithPagination/TableView', () => ({
   TableView: jest.fn(() => null)
@@ -30,7 +30,7 @@ describe('Balances', () => {
 
     expect(TableView).toHaveBeenCalledWith(
       {
-        name: balance.getByUserId(user._id),
+        name: balanceQueryKeys.getByUserId(user._id),
         uri: `/accounts/balance/${user._id}`,
         columns,
         filter: {

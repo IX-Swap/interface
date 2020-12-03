@@ -5,7 +5,7 @@ import { UsePaginatedQueryData, useParsedData } from 'hooks/useParsedData'
 import { paginationArgs } from 'config/defaults'
 import apiService from 'services/api'
 import { useAuth } from 'hooks/auth/useAuth'
-import { balance } from 'config/queryKeys'
+import { balanceQueryKeys } from 'config/queryKeys'
 
 export const useAllBalances = (): UsePaginatedQueryData<AssetBalance> => {
   const { user } = useAuth()
@@ -17,7 +17,7 @@ export const useAllBalances = (): UsePaginatedQueryData<AssetBalance> => {
   }
 
   const { data, ...rest } = useInfiniteQuery(
-    [balance.getAll, payload],
+    [balanceQueryKeys.getAll, payload],
     getAllBalances
   )
 

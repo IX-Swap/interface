@@ -4,7 +4,7 @@ import { useQuery } from 'react-query'
 import { useAuth } from 'hooks/auth/useAuth'
 import { Bank } from 'types/bank'
 import { getIdFromObj } from 'helpers/strings'
-import { banks } from 'config/queryKeys'
+import { banksQueryKeys } from 'config/queryKeys'
 export interface UseBankByIdArgs {
   bankId: string
   ownerId?: string
@@ -19,7 +19,7 @@ export const useBankById = (args: UseBankByIdArgs): UseQueryData<Bank> => {
 
   const getBank = async () => await apiService.get<Bank>(uri)
   const { data, ...rest } = useQuery(
-    [banks.getById, userId, bankId],
+    [banksQueryKeys.getById, userId, bankId],
     getBank,
     { enabled: (bankId ?? '') !== '' }
   )

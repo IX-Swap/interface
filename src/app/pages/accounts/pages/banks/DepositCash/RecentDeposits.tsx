@@ -5,7 +5,7 @@ import { columns } from 'app/pages/accounts/pages/banks/DepositCash/columns'
 import { useAuth } from 'hooks/auth/useAuth'
 import { Paper } from '@material-ui/core'
 import { getIdFromObj } from 'helpers/strings'
-import { cashDeposits } from 'config/queryKeys'
+import { cashDepositsQueryKeys } from 'config/queryKeys'
 
 export const RecentDeposits: React.FC = () => {
   const { user } = useAuth()
@@ -15,7 +15,7 @@ export const RecentDeposits: React.FC = () => {
     <Paper variant='elevation'>
       <TableView<CashDeposit>
         uri={`/accounts/cash/deposits/list/${userId}`}
-        name={cashDeposits.getByUserId(userId)}
+        name={cashDepositsQueryKeys.getByUserId(userId)}
         columns={columns}
       />
     </Paper>
