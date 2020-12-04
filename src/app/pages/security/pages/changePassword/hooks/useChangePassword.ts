@@ -4,6 +4,7 @@ import { useSecurityRouter } from 'app/pages/security/router'
 import { ChangePasswordFormValues } from '../types'
 import { useAuth } from 'hooks/auth/useAuth'
 import { getIdFromObj } from 'helpers/strings'
+import { authURL } from 'config/apiURL'
 
 export const useChangePassword = () => {
   const { apiService, snackbarService } = useServices()
@@ -12,7 +13,7 @@ export const useChangePassword = () => {
 
   const changePassword = async (args: ChangePasswordFormValues) => {
     const { confirmPassword, ...payload } = args
-    const uri = `/auth/password/change/${getIdFromObj(user)}`
+    const uri = authURL.changePassword(getIdFromObj(user))
 
     return await apiService.post<any>(uri, payload)
   }

@@ -6,6 +6,7 @@ import { UsePaginatedQueryData, useParsedData } from 'hooks/useParsedData'
 import { paginationArgs } from 'config/defaults'
 import apiService from 'services/api'
 import { balanceQueryKeys } from 'config/queryKeys'
+import { accountsURL } from 'config/apiURL'
 
 export const useBalancesByType = (
   type: AssetType
@@ -18,7 +19,10 @@ export const useBalancesByType = (
   ) => {
     const { userId, ...payload } = args
 
-    return await apiService.post<any>(`/accounts/balance/${userId}`, payload)
+    return await apiService.post<any>(
+      accountsURL.balance.getByUserId(userId),
+      payload
+    )
   }
 
   const { data, ...rest } = useInfiniteQuery(

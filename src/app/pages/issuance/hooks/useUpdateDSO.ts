@@ -6,6 +6,7 @@ import { QueryOrMutationCallbacks } from 'hooks/types'
 import { useIssuanceRouter } from 'app/pages/issuance/router'
 import { investQueryKeys } from 'config/queryKeys'
 import { getIdFromObj } from 'helpers/strings'
+import { issuanceURL } from 'config/apiURL'
 
 export const useUpdateDSO = (
   dsoId: string,
@@ -14,7 +15,7 @@ export const useUpdateDSO = (
   const { apiService, snackbarService } = useServices()
   const { params, replace } = useIssuanceRouter()
   const { user } = useAuth()
-  const url = `/issuance/dso/${getIdFromObj(user)}/${dsoId}`
+  const url = issuanceURL.dso.update(getIdFromObj(user), dsoId)
   const updateDSO = async (args: DSORequestArgs) => {
     const { network, ...rest } = args
     return await apiService.put<DigitalSecurityOffering>(url, rest)

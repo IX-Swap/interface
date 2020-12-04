@@ -5,6 +5,7 @@ import { useDepositStore } from 'app/pages/accounts/pages/banks/context'
 import { DepositStoreStep } from 'app/pages/accounts/pages/banks/context/store'
 import { DepositCashArgs } from 'app/pages/accounts/types'
 import { getIdFromObj } from 'helpers/strings'
+import { accountsURL } from 'config/apiURL'
 
 export const useDepositCash = () => {
   const { user } = useAuth()
@@ -12,7 +13,7 @@ export const useDepositCash = () => {
   const { setCurrentStep } = useDepositStore()
   const { apiService, snackbarService } = useServices()
   const userId = getIdFromObj(user)
-  const uri = `/accounts/cash/deposits/${getIdFromObj(user)}`
+  const uri = accountsURL.cashDeposits.getAll(getIdFromObj(user))
 
   const depositCash = async (args: DepositCashArgs) => {
     return await apiService.post(uri, args)

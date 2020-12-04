@@ -9,6 +9,7 @@ import { GetWithdrawalAddressesArgs } from 'app/pages/accounts/types'
 import { useParsedData, UsePaginatedQueryData } from 'hooks/useParsedData'
 import { AuthorizableStatus } from 'types/util'
 import { withdrawalAddressQueryKeys } from 'config/queryKeys'
+import { accountsURL } from 'config/apiURL'
 
 interface Props {
   network?: string
@@ -21,7 +22,7 @@ export const useWithdrawalAddresses = ({
 }: Props): UsePaginatedQueryData<WithdrawalAddress> => {
   const { apiService } = useServices()
   const { user } = useAuth()
-  const uri = `/accounts/withdrawal-addresses/list/${getIdFromObj(user)}`
+  const uri = accountsURL.withdrawalAddresses.getAll(getIdFromObj(user))
 
   const getAllWithdrawalAddresses = async (
     queryKey: string,
