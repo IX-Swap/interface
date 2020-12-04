@@ -7,7 +7,7 @@ import {
 } from '@material-ui/core/styles'
 import { ThemeProvider } from '@material-ui/styles'
 import { CssBaseline } from '@material-ui/core'
-import Themes from 'themes'
+import themes from 'themes'
 import { UserProvider } from 'auth/context'
 import { EntryPoint } from 'EntryPoint'
 import { ToastProvider } from 'react-toast-notifications'
@@ -39,7 +39,7 @@ console.log(`App version: ${APP_VERSION}`) // eslint-disable-line
 
 ReactDOM.render(
   <StylesProvider generateClassName={generateClassName}>
-    <ThemeProvider theme={Themes.default}>
+    <ThemeProvider theme={themes.default}>
       <ReactQueryCacheProvider queryCache={queryCache}>
         <CssBaseline />
         <UserProvider>
