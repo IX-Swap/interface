@@ -11,7 +11,7 @@ export const useWithdrawCash = () => {
   const { user } = useAuth()
   const { setCurrentStep } = useDepositStore()
   const { apiService, snackbarService } = useServices()
-  const uri = accountsURL.cashWithdrawals.create(getIdFromObj(user)) // `/accounts/cash/withdrawals/${getIdFromObj(user)}`
+  const uri = accountsURL.cashWithdrawals.create(getIdFromObj(user))
 
   const withdrawCash = async (args: WithdrawCashArgs) => {
     return await apiService.post(uri, args)

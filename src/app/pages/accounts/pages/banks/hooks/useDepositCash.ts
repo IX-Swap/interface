@@ -13,7 +13,7 @@ export const useDepositCash = () => {
   const { setCurrentStep } = useDepositStore()
   const { apiService, snackbarService } = useServices()
   const userId = getIdFromObj(user)
-  const uri = accountsURL.cashDeposits.getAll(getIdFromObj(user)) // `/accounts/cash/deposits/${getIdFromObj(user)}`
+  const uri = accountsURL.cashDeposits.getAll(getIdFromObj(user))
 
   const depositCash = async (args: DepositCashArgs) => {
     return await apiService.post(uri, args)

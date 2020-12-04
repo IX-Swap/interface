@@ -14,7 +14,7 @@ export const useUpdateBank = () => {
 
   const updateBank = async (args: UpdateBankArgs) => {
     const { bankId, ...bank } = args
-    const uri = accountsURL.banks.update(getIdFromObj(user), bankId) // `/accounts/banks/${getIdFromObj(user)}/${bankId}`
+    const uri = accountsURL.banks.update(getIdFromObj(user), bankId)
     return await apiService.put<Bank>(uri, bank)
   }
 

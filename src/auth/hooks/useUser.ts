@@ -3,14 +3,14 @@ import { useMutation } from 'react-query'
 import { getIdFromObj } from 'helpers/strings'
 import { useCachedUser } from 'hooks/auth/useCachedUser'
 import { useServices } from 'hooks/useServices'
-import { authURL } from 'config/apiURL'
+import { userURL } from 'config/apiURL'
 
 export const USER_QUERY_KEY = 'user'
 
 export const useUser = () => {
   const savedUser = useCachedUser()
   const { apiService, storageService } = useServices()
-  const url = authURL.getUserProfile(getIdFromObj(savedUser))
+  const url = userURL.getUserProfile(getIdFromObj(savedUser))
   const mutateFn = async () => await apiService.get<User>(url)
 
   return useMutation(mutateFn, {
