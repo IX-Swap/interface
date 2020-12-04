@@ -81,7 +81,7 @@ export const DSOProgressBar = (props: DSOProgressBarProps) => {
         />
         {showRemainingTime && isLive && (
           <Grid container justify='flex-start'>
-            <Grid item>{getTimeFromNow(new Date(dso.launchDate))}</Grid>{' '}
+            <Grid item>{getTimeFromNow(new Date(dso.launchDate))}</Grid>
           </Grid>
         )}
       </div>
