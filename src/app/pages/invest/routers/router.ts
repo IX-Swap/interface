@@ -1,12 +1,12 @@
 import { generateAppRouterHook } from 'helpers/generateAppRouterHook'
 import { makeURL } from 'config/appURL'
 import { CommitmentsRoot } from 'app/pages/invest/pages/CommitmentsRoot'
-import { OfferingsRoot } from 'app/pages/invest/pages/OfferingsRoot'
+import { DSORoot } from 'app/pages/invest/pages/DSORoot'
 import { InvestLanding } from 'app/pages/invest/pages/InvestLanding'
 
 export const InvestRoute = {
   landing: makeURL(['app', 'invest']),
-  offerings: makeURL(['app', 'invest', 'offerings']),
+  dso: makeURL(['app', 'invest', 'offerings']),
   commitments: makeURL(['app', 'invest', 'commitments'])
 }
 
@@ -18,9 +18,9 @@ export const investRoutes = [
     exact: true
   },
   {
-    label: 'Offerings',
-    path: InvestRoute.offerings,
-    component: OfferingsRoot
+    label: 'DSOs',
+    path: InvestRoute.dso,
+    component: DSORoot
   },
   {
     label: 'My Commitments',

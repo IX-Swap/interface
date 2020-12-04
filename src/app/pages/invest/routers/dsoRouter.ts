@@ -2,9 +2,9 @@ import { makeURL } from 'config/appURL'
 import { InternalRouteProps } from 'types/util'
 import { generateAppRouterHook } from 'helpers/generateAppRouterHook'
 import { CommitmentFormWrapper } from 'app/pages/invest/components/CommitmentFormWrapper'
-import { InvestOfferingView } from 'app/pages/invest/pages/InvestOfferingView'
+import { ViewDSO } from 'app/pages/invest/pages/ViewDSO'
 
-export const OfferingRoute = {
+export const DSORoute = {
   view: makeURL(['app', 'invest', 'offerings', 'issuerId', 'dsoId', 'view']),
   makeInvestment: makeURL([
     'app',
@@ -16,23 +16,23 @@ export const OfferingRoute = {
   ])
 }
 
-export const offeringsRoutes: InternalRouteProps[] = [
+export const dsoRoutes: InternalRouteProps[] = [
   {
-    label: 'View Offering',
-    path: OfferingRoute.view,
+    label: 'View DSO',
+    path: DSORoute.view,
     exact: true,
-    component: InvestOfferingView
+    component: ViewDSO
   },
   {
     label: 'Invest',
-    path: OfferingRoute.makeInvestment,
+    path: DSORoute.makeInvestment,
     exact: true,
     component: CommitmentFormWrapper
   }
 ]
 
-export const useOfferingsRouter = generateAppRouterHook(
-  OfferingRoute,
-  OfferingRoute.view,
-  offeringsRoutes
+export const useDSORouter = generateAppRouterHook(
+  DSORoute,
+  DSORoute.view,
+  dsoRoutes
 )

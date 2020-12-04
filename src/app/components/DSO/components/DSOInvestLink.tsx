@@ -1,7 +1,7 @@
 import React from 'react'
 import { Button } from '@material-ui/core'
 import { AppRouterLinkComponent } from 'components/AppRouterLink'
-import { useOfferingsRouter } from 'app/pages/invest/routers/offeringsRouter'
+import { useDSORouter } from 'app/pages/invest/routers/dsoRouter'
 import { useAuth } from 'hooks/auth/useAuth'
 import { DigitalSecurityOffering } from 'types/dso'
 
@@ -10,7 +10,7 @@ export interface DSOInvestLinkProps {
 }
 
 export const DSOInvestLink = ({ dso }: DSOInvestLinkProps) => {
-  const { paths } = useOfferingsRouter()
+  const { paths } = useDSORouter()
   const { user } = useAuth()
 
   const isDisabled =

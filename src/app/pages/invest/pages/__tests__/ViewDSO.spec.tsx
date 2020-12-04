@@ -1,8 +1,8 @@
 import React from 'react'
 import { render, cleanup } from 'test-utils'
-import { InvestOfferingView } from 'app/pages/invest/pages/InvestOfferingView'
+import { ViewDSO } from 'app/pages/invest/pages/ViewDSO'
 import { history } from 'config/history'
-import { OfferingRoute } from 'app/pages/invest/routers/offeringsRouter'
+import { DSORoute } from 'app/pages/invest/routers/dsoRouter'
 import { InvestLink } from 'app/pages/invest/components/InvestLink'
 import { dso } from '__fixtures__/authorizer'
 import * as useDSOByIdHook from 'app/pages/invest/hooks/useDSOById'
@@ -16,9 +16,9 @@ jest.mock('app/pages/invest/components/InvestLink', () => ({
   InvestLink: jest.fn(() => null)
 }))
 
-describe('InvestOfferingView', () => {
+describe('ViewDSO', () => {
   beforeEach(() => {
-    history.push(OfferingRoute.view, { dsoId: dso._id, issuerId: dso.user })
+    history.push(DSORoute.view, { dsoId: dso._id, issuerId: dso.user })
   })
 
   afterEach(async () => {
@@ -32,14 +32,14 @@ describe('InvestOfferingView', () => {
     jest
       .spyOn(useDSOByIdHook, 'useDSOById')
       .mockReturnValue({ isLoading: false, data: dso } as any)
-    render(<InvestOfferingView />)
+    render(<ViewDSO />)
   })
 
   it('renders nothing if loading', () => {
     jest
       .spyOn(useDSOByIdHook, 'useDSOById')
       .mockReturnValue({ isLoading: true, data: dso } as any)
-    const { container } = render(<InvestOfferingView />)
+    const { container } = render(<ViewDSO />)
 
     expect(container).toBeEmptyDOMElement()
   })
@@ -48,7 +48,7 @@ describe('InvestOfferingView', () => {
     jest
       .spyOn(useDSOByIdHook, 'useDSOById')
       .mockReturnValue({ isLoading: false, data: dso } as any)
-    render(<InvestOfferingView />)
+    render(<ViewDSO />)
 
     expect(DSOView).toHaveBeenCalledWith({ data: dso }, {})
   })
@@ -57,7 +57,7 @@ describe('InvestOfferingView', () => {
     jest
       .spyOn(useDSOByIdHook, 'useDSOById')
       .mockReturnValue({ isLoading: false, data: dso } as any)
-    render(<InvestOfferingView />)
+    render(<ViewDSO />)
 
     expect(InvestLink).toHaveBeenCalled()
   })
