@@ -86,17 +86,20 @@ export const issuanceURL = {
 }
 
 export const authURL = {
-  updateRoles: (userId: string) => `/auth/users/${userId}/roles`,
   login: '/auth/sign-in',
   changePassword: (userId: string) => `/auth/password/change/${userId}`,
   resetPassword: '/auth/password/reset/start',
   resetPasswordConfirm: '/auth/password/reset/confirm',
-  register: '/auth/registrations',
-  registerConfirm: '/auth/registrations/confirm',
   enable2fa: (userId: string, otp: string) =>
     `/auth/2fa/setup/${userId}/confirm/${otp}`,
   setup2fa: (userId: string) => `/auth/2fa/setup/${userId}`,
-  getUserProfile: (userId: string) => `/auth/profiles/${userId}`
+  register: '/auth/registrations',
+  registerConfirm: '/auth/registrations/confirm'
+}
+
+export const userURL = {
+  getUserProfile: (userId: string) => `/auth/profiles/${userId}`,
+  updateRoles: (userId: string) => `/auth/users/${userId}/roles`
 }
 
 export const notificationsURL = {

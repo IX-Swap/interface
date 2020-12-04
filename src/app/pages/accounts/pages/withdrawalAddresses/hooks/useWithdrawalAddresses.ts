@@ -22,7 +22,7 @@ export const useWithdrawalAddresses = ({
 }: Props): UsePaginatedQueryData<WithdrawalAddress> => {
   const { apiService } = useServices()
   const { user } = useAuth()
-  const uri = accountsURL.withdrawalAddresses.getAll(getIdFromObj(user)) // `/accounts/withdrawal-addresses/list/${getIdFromObj(user)}`
+  const uri = accountsURL.withdrawalAddresses.getAll(getIdFromObj(user))
 
   const getAllWithdrawalAddresses = async (
     queryKey: string,
