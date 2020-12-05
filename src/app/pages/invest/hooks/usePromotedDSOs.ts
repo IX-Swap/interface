@@ -4,23 +4,22 @@ import { PaginatedData, PaginationArgs } from 'services/api/types'
 import { paginationArgs } from 'config/defaults'
 import { DigitalSecurityOffering } from 'types/dso'
 import { useParsedData, UsePaginatedQueryData } from 'hooks/useParsedData'
-
-export const USE_PROMOTED_DSOS_QUERY_KEY = 'promotedDSOs'
+import { dsoQueryKeys } from 'config/queryKeys'
+import { issuanceURL } from 'config/apiURL'
 
 export const usePromotedDSOs = (): UsePaginatedQueryData<
   DigitalSecurityOffering
 > => {
   const { apiService } = useServices()
-  const uri = '/issuance/dso/list/approved'
 
   const getPromotedDSOs = async (queryKey: string, args: PaginationArgs) => {
     return await apiService.post<PaginatedData<DigitalSecurityOffering>>(
-      uri,
+      issuanceURL.dso.getPromoted,
       args
     )
   }
   const { data, ...queryResult } = useInfiniteQuery(
-    [USE_PROMOTED_DSOS_QUERY_KEY, paginationArgs],
+    [dsoQueryKeys.getPromoted, paginationArgs],
     getPromotedDSOs
   )
 

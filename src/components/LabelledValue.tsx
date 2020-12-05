@@ -67,25 +67,24 @@ export const LabelledValue = (props: LabelledValueProps & GridProps) => {
   } = props
   const direction = row ? 'row' : 'column'
 
-  const items = {
-    label: {
+  const items = [
+    {
       text: label,
       styles: {
         fontWeight: labelWeightMap[labelWeight],
         fontSize: reverse ? '16px' : undefined
       }
     },
-    value: {
+    {
       text: formatValue(val),
       styles: {
         fontWeight: valueWeightMap[valueWeight],
         fontSize: reverse ? '24px' : undefined
       }
     }
-  }
+  ]
 
-  const first = reverse ? items.value : items.label
-  const last = reverse ? items.label : items.value
+  const [first, last] = reverse ? items.reverse() : items
 
   return (
     <Grid {...rest} item container direction={direction}>

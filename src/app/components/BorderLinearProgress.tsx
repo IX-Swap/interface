@@ -3,22 +3,20 @@ import { LinearProgress, LinearProgressProps } from '@material-ui/core'
 import useStyles from './BorderLinearProgress.styles'
 
 export interface ColoredLinearProgressProps extends LinearProgressProps {
-  barColorPrimary?: string
-  colorPrimary?: string
+  classes: any
 }
 
 export const BorderLinearProgress = (props: ColoredLinearProgressProps) => {
-  const classes = useStyles()
-  const barColorPrimary = props.barColorPrimary ?? classes.barColorPrimary
-  const colorPrimary = props.colorPrimary ?? classes.colorPrimary
+  const { classes, ...rest } = props
+  const styles = useStyles()
 
   return (
     <LinearProgress
-      {...props}
+      {...rest}
+      variant='determinate'
       classes={{
-        ...classes,
-        barColorPrimary,
-        colorPrimary
+        ...styles,
+        ...classes
       }}
     />
   )

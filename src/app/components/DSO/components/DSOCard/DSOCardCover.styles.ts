@@ -2,6 +2,10 @@ import { Theme, makeStyles } from '@material-ui/core/styles'
 
 export default makeStyles((theme: Theme) => ({
   introduction: {
+    overflow: 'hidden',
+    display: '-webkit-box',
+    '-webkit-line-clamp': '3',
+    '-webkit-box-orient': 'vertical',
     '& p': { margin: 0 }
   },
   logo: {

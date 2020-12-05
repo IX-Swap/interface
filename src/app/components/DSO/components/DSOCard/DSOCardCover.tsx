@@ -5,7 +5,7 @@ import Grid from '@material-ui/core/Grid'
 import Typography from '@material-ui/core/Typography'
 import { AppRouterLink } from 'components/AppRouterLink'
 import { DSOLogo } from 'app/components/DSO/components/DSOLogo'
-import { renderStringToHTML, truncateString } from 'app/components/DSO/utils'
+import { renderStringToHTML } from 'app/components/DSO/utils'
 import useStyles from './DSOCardCover.styles'
 
 export interface DSOCardCoverProps {
@@ -15,8 +15,6 @@ export interface DSOCardCoverProps {
 export const DSOCardCover = (props: DSOCardCoverProps) => {
   const { dso, viewURL } = props
   const classes = useStyles()
-
-  const introduction = truncateString(dso.introduction, 100, true)
 
   return (
     <Box p={1.5} display='flex' alignSelf='strech'>
@@ -33,8 +31,10 @@ export const DSOCardCover = (props: DSOCardCoverProps) => {
           <Typography className={classes.title}>{dso.tokenName}</Typography>
         </Grid>
         <Grid item>
-          <Typography className={classes.introduction}>
-            {renderStringToHTML(introduction)}
+          <Typography>
+            <span className={classes.introduction}>
+              {renderStringToHTML(dso.introduction)}
+            </span>
             <AppRouterLink
               to={viewURL}
               params={{ dsoId: dso._id, issuerId: dso.createdBy }}

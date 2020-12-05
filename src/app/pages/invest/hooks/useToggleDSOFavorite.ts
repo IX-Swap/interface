@@ -2,10 +2,11 @@ import { useServices } from 'hooks/useServices'
 import { useMutation } from 'react-query'
 import { getIdFromObj } from 'helpers/strings'
 import { DigitalSecurityOffering } from 'types/dso'
+import { issuanceURL } from 'config/apiURL'
 
 export const useToggleDSOFavorite = (dso: DigitalSecurityOffering) => {
   const { apiService, snackbarService } = useServices()
-  const uri = `/issuance/dso/favorites/${getIdFromObj(dso)}`
+  const uri = issuanceURL.dso.favorite(getIdFromObj(dso))
 
   const mutateFn = async (isFav: boolean) => {
     if (isFav) {

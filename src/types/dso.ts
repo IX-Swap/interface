@@ -128,3 +128,5 @@ export type DSORequestArgs = Omit<
   subscriptionDocument?: string
   documents: string[]
 }
+
+export type DSOLaunchStatus = 'live' | 'completed' | 'upcoming'

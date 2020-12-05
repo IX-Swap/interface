@@ -11,6 +11,7 @@ export default makeStyles((theme: Theme) => ({
     display: 'inline-flex',
     justifyContent: 'center',
     alignItems: 'center',
+    overflow: 'hidden',
     width: 132,
     height: 40,
     top: 0,
