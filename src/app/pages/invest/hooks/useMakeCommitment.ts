@@ -4,12 +4,13 @@ import { MakeInvestmentArgs } from 'types/commitment'
 import { useMutation } from 'react-query'
 import { useDSORouter } from 'app/pages/invest/routers/dsoRouter'
 import { getIdFromObj } from 'helpers/strings'
+import { issuanceURL } from 'config/apiURL'
 
 export const useMakeCommitment = () => {
   const { apiService, snackbarService } = useServices()
   const { replace, params } = useDSORouter()
   const { user } = useAuth()
-  const uri = `/issuance/commitments/${getIdFromObj(user)}`
+  const uri = issuanceURL.commitments.getAll(getIdFromObj(user))
   const mutateFn = async (args: MakeInvestmentArgs) => {
     return await apiService.post(uri, args)
   }

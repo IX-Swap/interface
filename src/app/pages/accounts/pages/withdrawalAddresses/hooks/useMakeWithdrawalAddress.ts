@@ -7,12 +7,13 @@ import {
 import { useMutation } from 'react-query'
 import { getIdFromObj } from 'helpers/strings'
 import { useWithdrawalAddressesRouter } from 'app/pages/accounts/pages/withdrawalAddresses/router'
+import { accountsURL } from 'config/apiURL'
 
 export const useMakeWithdrawalAddress = () => {
   const { apiService, snackbarService } = useServices()
   const { replace } = useWithdrawalAddressesRouter()
   const { user } = useAuth()
-  const uri = `/accounts/withdrawal-addresses/${getIdFromObj(user)}`
+  const uri = accountsURL.withdrawalAddresses.create(getIdFromObj(user))
   const mutateFn = async (args: MakeWithdrawalAddressArgs) => {
     return await apiService.post<WithdrawalAddress>(uri, args)
   }

@@ -1,16 +1,11 @@
 import apiService from 'services/api'
 import { UpdateUserRoleArgs } from './types'
+import { userURL } from 'config/apiURL'
 
 export const adminService = {
-  _baseURL: '/auth',
-
-  _buildURL(path: string) {
-    return `${this._baseURL}${path}`
-  },
-
   async setUserRole(args: UpdateUserRoleArgs) {
     const { userId, ...payload } = args
-    const url = this._buildURL(`/users/${userId}/roles`)
+    const url = userURL.updateRoles(userId)
     return await apiService.patch(url, payload)
   }
 }

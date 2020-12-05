@@ -4,13 +4,14 @@ import { useMutation, useQueryCache } from 'react-query'
 import { Notification } from 'types/notification'
 import { markNotificationAsRead } from 'app/pages/notifications/hooks/utils'
 import { getIdFromObj } from 'helpers/strings'
+import { notificationsURL } from 'config/apiURL'
 
 export const useMarkAsRead = (notification: Notification) => {
   const { apiService, snackbarService } = useServices()
   const queryCache = useQueryCache()
   const { user } = useAuth()
   const userId = getIdFromObj(user)
-  const uri = `/core/notifications/mark-read/${userId}/${notification._id}`
+  const uri = notificationsURL.markReadById(userId, notification._id)
   const readNotification = async () => {
     return await apiService.patch(uri, {})
   }

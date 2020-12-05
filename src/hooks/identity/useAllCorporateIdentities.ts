@@ -7,8 +7,8 @@ import apiService from 'services/api'
 import { PaginatedData } from 'services/api/types'
 import { getIdFromObj } from 'helpers/strings'
 import { useIsAdmin, useIsAuthorizer } from 'helpers/acl'
-
-export const ALL_CORPORATE_IDENTITIES_QUERY_KEY = 'allCorporateIdentities'
+import { identityQueryKeys } from 'config/queryKeys'
+import { identityURL } from 'config/apiURL'
 
 export const useAllCorporateIdentities = (
   all = false
@@ -21,8 +21,8 @@ export const useAllCorporateIdentities = (
   const payload = { ...paginationArgs, userId }
   const uri =
     all && isSuperUser
-      ? '/identity/corporates/list'
-      : `/identity/corporates/${userId}/list`
+      ? identityURL.corporates.getAllBySuperUser
+      : identityURL.corporates.getAllByUserId(userId)
   const getAllCorporates = async () => {
     return await apiService.post<PaginatedData<CorporateIdentity>>(
       uri,
@@ -31,7 +31,7 @@ export const useAllCorporateIdentities = (
   }
 
   const { data, ...rest } = useInfiniteQuery(
-    [ALL_CORPORATE_IDENTITIES_QUERY_KEY, payload],
+    [identityQueryKeys.getAllCorporate, payload],
     getAllCorporates
   )
 

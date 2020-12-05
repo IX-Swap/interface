@@ -5,6 +5,7 @@ import { TableView } from 'components/TableWithPagination/TableView'
 import { user } from '__fixtures__/user'
 import columns from 'app/pages/invest/components/columns'
 import * as useAuthHook from 'hooks/auth/useAuth'
+import { investQueryKeys } from 'config/queryKeys'
 
 jest.mock('components/TableWithPagination/TableView', () => ({
   TableView: jest.fn(() => null)
@@ -34,7 +35,7 @@ describe('MyCommitments', () => {
     expect(TableView).toHaveBeenCalledWith(
       {
         uri: `/issuance/commitments/list/${user._id}`,
-        name: `commitments-${user._id}`,
+        name: investQueryKeys.getCommitmentsByUserId(user._id),
         columns,
         hasActions: true,
         actions: expect.anything()

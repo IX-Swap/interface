@@ -6,13 +6,13 @@ import { paginationArgs } from 'config/defaults'
 import { useParsedData } from 'hooks/useParsedData'
 import { DataroomFile } from 'types/dataroomFile'
 import { getIdFromObj } from 'helpers/strings'
-
-export const USE_DOCUMENT_QUERY_KEY = 'useDocument'
+import { documentsQueryKeys } from 'config/queryKeys'
+import { documentsURL } from 'config/apiURL'
 
 export const useAllDocuments = () => {
   const { apiService } = useServices()
   const { user } = useAuth()
-  const url = `/dataroom/list/${getIdFromObj(user)}`
+  const url = documentsURL.getAll(getIdFromObj(user))
   const downloadFile = async () => {
     return await apiService.post<PaginatedData<DataroomFile>>(url, {
       ...paginationArgs,
@@ -20,7 +20,7 @@ export const useAllDocuments = () => {
     })
   }
   const { data, ...rest } = useInfiniteQuery(
-    [USE_DOCUMENT_QUERY_KEY],
+    [documentsQueryKeys.getAll],
     downloadFile
   )
 

@@ -13,6 +13,7 @@ import {
   IndividualIdentity
 } from 'types/identity'
 import { getIdFromObj } from 'helpers/strings'
+import { identityURL } from 'config/apiURL'
 
 export const useCreateOrUpdateIndividual = () => {
   const { snackbarService } = useServices()
@@ -28,7 +29,7 @@ export const useCreateOrUpdateIndividual = () => {
       documents: prepareDocumentsForUpload(values.documents)
     }
     const { userId, ...identity } = args
-    const uri = `/identity/individuals/${userId}`
+    const uri = identityURL.individuals.update(userId)
 
     return await apiService.put<IndividualIdentity>(uri, identity)
   }

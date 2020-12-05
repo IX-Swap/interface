@@ -7,6 +7,7 @@ import { history } from 'config/history'
 import { balance } from '__fixtures__/balance'
 import { user } from '__fixtures__/user'
 import { columns } from 'app/pages/accounts/pages/digitalSecurities/DSDeposit/columns'
+import { digitalSecuritiesQueryKeys } from 'config/queryKeys'
 
 jest.mock('components/TableWithPagination/TableView', () => ({
   TableView: jest.fn(() => null)
@@ -33,7 +34,7 @@ describe('RecentDeposits', () => {
       isAuthenticated: true
     }))
     const uri = `/accounts/security/deposits/list/${userId}`
-    const name = `ds-deposits-${userId}`
+    const name = digitalSecuritiesQueryKeys.getDepositByUserId(userId)
 
     render(<RecentDeposits />)
 

@@ -4,8 +4,9 @@ import { DigitalSecurityOffering, DSORequestArgs } from 'types/dso'
 import { queryCache, useMutation } from 'react-query'
 import { QueryOrMutationCallbacks } from 'hooks/types'
 import { useIssuanceRouter } from 'app/pages/issuance/router'
-import { USE_DSO_BY_ID_QUERY_KEY } from 'app/pages/invest/hooks/useDSOById'
+import { investQueryKeys } from 'config/queryKeys'
 import { getIdFromObj } from 'helpers/strings'
+import { issuanceURL } from 'config/apiURL'
 
 export const useUpdateDSO = (
   dsoId: string,
@@ -14,7 +15,7 @@ export const useUpdateDSO = (
   const { apiService, snackbarService } = useServices()
   const { params, replace } = useIssuanceRouter()
   const { user } = useAuth()
-  const url = `/issuance/dso/${getIdFromObj(user)}/${dsoId}`
+  const url = issuanceURL.dso.update(getIdFromObj(user), dsoId)
   const updateDSO = async (args: DSORequestArgs) => {
     const { network, ...rest } = args
     return await apiService.put<DigitalSecurityOffering>(url, rest)
@@ -26,8 +27,11 @@ export const useUpdateDSO = (
       replace('view', params)
 
       void snackbarService.showSnackbar('Success', 'success')
-      void queryCache.invalidateQueries([USE_DSO_BY_ID_QUERY_KEY, params.dsoId])
-      void queryCache.refetchQueries([USE_DSO_BY_ID_QUERY_KEY, params.dsoId])
+      void queryCache.invalidateQueries([
+        investQueryKeys.getDSOById,
+        params.dsoId
+      ])
+      void queryCache.refetchQueries([investQueryKeys.getDSOById, params.dsoId])
     },
     onError: (error: any) => {
       void snackbarService.showSnackbar(error.message, 'error')

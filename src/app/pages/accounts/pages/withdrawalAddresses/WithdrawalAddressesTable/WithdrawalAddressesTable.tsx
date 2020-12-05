@@ -6,6 +6,7 @@ import { useAuth } from 'hooks/auth/useAuth'
 import { Paper } from '@material-ui/core'
 import { getIdFromObj } from 'helpers/strings'
 import { WithdrawalAddress } from 'types/withdrawalAddress'
+import { withdrawalAddressQueryKeys } from 'config/queryKeys'
 
 export const WithdrawalAddressesTable: React.FC = () => {
   const { user } = useAuth()
@@ -15,7 +16,7 @@ export const WithdrawalAddressesTable: React.FC = () => {
     <Paper variant='elevation'>
       <TableView<WithdrawalAddress>
         uri={`/accounts/withdrawal-addresses/list/${userId}`}
-        name={`withdrawalAddresses-${userId}`}
+        name={withdrawalAddressQueryKeys.getByUserId(userId)}
         columns={columns}
         hasActions
         actions={Actions}

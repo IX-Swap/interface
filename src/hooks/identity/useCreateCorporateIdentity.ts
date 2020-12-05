@@ -10,6 +10,7 @@ import { useMutation } from 'react-query'
 import { CreateCorporateIdentityArgs, CorporateIdentity } from 'types/identity'
 import apiService from 'services/api'
 import { getIdFromObj } from 'helpers/strings'
+import { identityURL } from 'config/apiURL'
 
 export const useCreateCorporateIdentity = () => {
   const { snackbarService } = useServices()
@@ -23,7 +24,7 @@ export const useCreateCorporateIdentity = () => {
       documents: prepareDocumentsForUpload(values.documents)
     }
     const { userId, ...identity } = args
-    const uri = `/identity/corporates/${userId}`
+    const uri = identityURL.corporates.create(userId)
     return await apiService.post<CorporateIdentity>(uri, identity)
   }
 
