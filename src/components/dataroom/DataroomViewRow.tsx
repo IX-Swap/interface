@@ -1,5 +1,5 @@
 import React from 'react'
-import { Grid } from '@material-ui/core'
+import { TableCell } from '@material-ui/core'
 import { DataroomColumns } from 'components/dataroom/DataroomColumns'
 import { DownloadDocument } from 'components/dataroom/DownloadDocument'
 import { DataroomFile } from 'types/dataroomFile'
@@ -14,9 +14,9 @@ export const DataroomViewRow = (props: DataroomViewRowProps) => {
   const { document, title, downloader } = props
 
   return (
-    <Grid container alignItems='center'>
+    <>
       <DataroomColumns title={title} document={document} />
-      <Grid container item xs={2} justify='flex-end'>
+      <TableCell align='right'>
         {downloader !== undefined ? (
           downloader
         ) : (
@@ -25,7 +25,7 @@ export const DataroomViewRow = (props: DataroomViewRowProps) => {
             ownerId={document?.user}
           />
         )}
-      </Grid>
-    </Grid>
+      </TableCell>
+    </>
   )
 }

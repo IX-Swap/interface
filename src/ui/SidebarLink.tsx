@@ -15,7 +15,9 @@ export const SidebarLink = styled(Component)(({ theme, selected }: any) => ({
   display: 'flex',
   alignItems: 'center',
   padding: theme.spacing(2),
-  color: (selected as boolean) ? theme.palette.primary : theme.palette.text.disabled,
+  color: (selected as boolean)
+    ? theme.palette.primary
+    : theme.palette.text.disabled,
   marginTop: theme.spacing(1),
   textDecoration: 'none',
   '&:hover, &:focus': {

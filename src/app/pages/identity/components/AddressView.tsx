@@ -12,22 +12,22 @@ export const AddressView = (props: AddressViewProps) => {
 
   return (
     <Grid container spacing={3}>
-      <Grid item xs={4}>
+      <Grid item xs={12} sm={6} md={4}>
         <LabelledValue value={data.line1} label='Line 1' />
       </Grid>
-      <Grid item xs={4}>
+      <Grid item xs={12} sm={6} md={4}>
         <LabelledValue value={data.line2} label='Line 2' />
       </Grid>
-      <Grid item xs={4}>
+      <Grid item xs={12} sm={6} md={4}>
         <LabelledValue value={data.city} label='City' />
       </Grid>
-      <Grid item xs={4}>
+      <Grid item xs={12} sm={6} md={4}>
         <LabelledValue value={data.postalCode} label='Postal Code' />
       </Grid>
-      <Grid item xs={4}>
+      <Grid item xs={12} sm={6} md={4}>
         <LabelledValue value={data.state} label='State' />
       </Grid>
-      <Grid item xs={4}>
+      <Grid item xs={12} sm={6} md={4}>
         <LabelledValue value={data.country} label='Country' />
       </Grid>
     </Grid>
