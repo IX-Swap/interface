@@ -32,7 +32,7 @@ export const DSOCarousel = (props: any) => {
   const backButton = classNames(classes.navButton, classes.backButton)
 
   return (
-    <div className={classes.root} {...rest}>
+    <div {...rest} className={classes.root}>
       <CarouselProvider
         naturalSlideWidth={100}
         naturalSlideHeight={125}

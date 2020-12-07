@@ -1,6 +1,6 @@
-import { Theme, makeStyles } from '@material-ui/core/styles'
+import { makeStyles } from '@material-ui/core/styles'
 
-export default makeStyles((theme: Theme) => ({
+export default makeStyles(theme => ({
   root: {
     display: 'flex',
     position: 'relative',
@@ -11,6 +11,8 @@ export default makeStyles((theme: Theme) => ({
     display: 'inline-flex',
     justifyContent: 'center',
     alignItems: 'center',
+    textOverflow: 'ellipsis',
+    whiteSpace: 'nowrap',
     overflow: 'hidden',
     width: 132,
     height: 40,

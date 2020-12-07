@@ -12,6 +12,7 @@ export interface DSOCardCoverProps {
   dso: DigitalSecurityOffering
   viewURL: string
 }
+
 export const DSOCardCover = (props: DSOCardCoverProps) => {
   const { dso, viewURL } = props
   const classes = useStyles()
@@ -32,9 +33,9 @@ export const DSOCardCover = (props: DSOCardCoverProps) => {
         </Grid>
         <Grid item>
           <Typography>
-            <span className={classes.introduction}>
+            <div className={classes.introduction}>
               {renderStringToHTML(dso.introduction)}
-            </span>
+            </div>
             <AppRouterLink
               to={viewURL}
               params={{ dsoId: dso._id, issuerId: dso.createdBy }}

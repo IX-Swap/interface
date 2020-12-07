@@ -43,19 +43,7 @@ export const documentValueExtractor = (
   return Array.isArray(value) ? value?.[0]._id : value?._id
 }
 
-export const truncateString = (str: string, len: number, words = false) => {
-  var tooLong = str.length > len
-  var truncated = tooLong ? str.substr(0, len) : str
-  if (words && tooLong) {
-    var index = truncated.lastIndexOf(' ')
-    if (index !== -1) {
-      truncated = truncated.substr(0, index)
-    }
-  }
-  return tooLong ? truncated + ' …' : truncated
-}
-
-const colors = {
+const dsoStatusColors = {
   live: '#8995FC',
   completed: '#5cc72a',
   upcoming: '#eb9a05'
@@ -78,7 +66,7 @@ export const getDSOStats = (dso: DigitalSecurityOffering) => {
     status = 'live'
   }
 
-  return { status, percentRaised, color: colors[status] }
+  return { status, percentRaised, color: dsoStatusColors[status] }
 }
 
 export const renderStringToHTML = (value: string) => (

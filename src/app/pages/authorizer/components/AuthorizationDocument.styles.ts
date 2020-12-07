@@ -15,7 +15,7 @@ export const useStyles = makeStyles(theme => ({
         left: 0,
         top: 0,
         right: 0,
-        borderColor: '#eeeeee'
+        borderColor: theme.palette.grey[200]
       },
       '& $name': {
         whiteSpace: 'initial',
