@@ -65,10 +65,23 @@ export interface BaseDigitalSecurityOffering extends AuthorizableWithIdentity {
   user: string
 }
 
+export interface DSOInsightType {
+  activityCount: number
+  approvedcommitmentCount: number
+  collectedOn: string
+  commitmentCount: number
+  commitmentTotal: number
+  investorCount: number
+  raisedMax: number
+  raisedMin: number
+  raisedTotal: number
+}
+
 export interface DigitalSecurityOffering extends BaseDigitalSecurityOffering {
   documents: Maybe<DataroomFile[]>
   currency: Asset
   network: string
+  insight: DSOInsightType
 }
 
 export type DeploymentInfoFormValues = Omit<
@@ -96,6 +109,7 @@ export type DSOFormValues = Omit<
   | 'authorization'
   | 'authorizationDocuments'
   | 'subscriptionDocument'
+  | 'insight'
 > & {
   subscriptionDocument?: DataroomFile
   status?: string

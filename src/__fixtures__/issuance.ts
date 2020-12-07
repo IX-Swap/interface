@@ -2,7 +2,8 @@ import {
   DSORequestArgs,
   DSOFormValues,
   DsoTeamMember,
-  DeploymentInfo
+  DeploymentInfo,
+  DSOInsightType
 } from 'types/dso'
 import { corporate, asset } from './authorizer'
 import { emptyFile } from '__fixtures__/file'
@@ -25,6 +26,18 @@ export const deploymentInfo: DeploymentInfo = {
   createdAt: '2020-10-16T12:00:18.823Z',
   updatedAt: '2020-10-16T12:00:18.823Z',
   __v: 123
+}
+
+export const dsoInsight: DSOInsightType = {
+  activityCount: 65,
+  approvedcommitmentCount: 1,
+  collectedOn: '2020-11-24T17:06:23.555Z',
+  commitmentCount: 0,
+  commitmentTotal: 0,
+  investorCount: 1,
+  raisedMax: 400,
+  raisedMin: 400,
+  raisedTotal: 400
 }
 
 export const createDSOArgs: DSORequestArgs = {
