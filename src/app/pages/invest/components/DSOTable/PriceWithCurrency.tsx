@@ -18,7 +18,8 @@ export const PriceWithCurrency: React.FC<PriceWithCurrencyProps> = ({
   currency
 }: PriceWithCurrencyProps) => {
   return (
-    <Box component='span'
+    <Box
+      component='span'
       style={{
         whiteSpace: 'nowrap',
         textAlign: 'right',

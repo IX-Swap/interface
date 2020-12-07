@@ -1,9 +1,9 @@
 import React from 'react'
 import { render } from 'test-utils'
 import { dso, dsoInsight } from '__fixtures__/authorizer'
-import { DSORaised, DSOInsightProps } from '../DSORaised'
+import { DSORaised, DSORaisedProps } from '../DSORaised'
 
-const sampleProps: DSOInsightProps = {
+const sampleProps: DSORaisedProps = {
   insight: dsoInsight,
   dso: dso
 }

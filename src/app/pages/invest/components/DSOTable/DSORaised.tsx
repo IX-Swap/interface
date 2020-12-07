@@ -11,23 +11,23 @@ const useStyle = makeStyles(theme => ({
     flexDirection: 'column',
     justifyContent: 'center',
     alignItems: 'flex-start',
-    gap: `${theme.spacing(.5)}px`
+    gap: `${theme.spacing(0.5)}px`
   },
-  date: { 
-    fontSize: `${theme.typography.fontSize}px`, 
-    color: theme.palette.text.hint 
+  date: {
+    fontSize: `${theme.typography.fontSize}px`,
+    color: theme.palette.text.hint
   }
 }))
 
-export interface DSOInsightProps {
+export interface DSORaisedProps {
   insight: DSOInsight
   dso: DigitalSecurityOffering
 }
 
-export const DSORaised: React.FC<DSOInsightProps> = ({
+export const DSORaised: React.FC<DSORaisedProps> = ({
   insight,
   dso
-}: DSOInsightProps) => {
+}: DSORaisedProps) => {
   const { container, date } = useStyle()
 
   if (typeof insight === 'undefined' || typeof dso === 'undefined') {
@@ -42,7 +42,9 @@ export const DSORaised: React.FC<DSOInsightProps> = ({
   return (
     <Box className={container}>
       {compare < 0 ? (
-        <RaisedProgressBar progress={percent} /> /* TODO: Replace with Varun's Progress Bar */
+        <RaisedProgressBar
+          progress={percent}
+        /> /* TODO: Replace with Varun's Progress Bar */
       ) : (
         <Box>Upcomming</Box>
       )}

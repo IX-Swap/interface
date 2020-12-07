@@ -6,7 +6,7 @@ export interface RaisedProgressBarProps {
   progress: number
 }
 
-const useStyles = makeStyles((theme) => ({
+const useStyles = makeStyles(theme => ({
   progressBar: {
     width: '107px',
     borderRadius: '5px',
@@ -14,15 +14,19 @@ const useStyles = makeStyles((theme) => ({
     backgroundColor: theme.palette.secondary.main,
     '& > div': {
       backgroundColor: ({ progress }: RaisedProgressBarProps) => {
-        return progress >= 100 ? theme.palette.success.main : theme.palette.info.main
+        return progress >= 100
+          ? theme.palette.success.main
+          : theme.palette.info.main
       }
     }
   },
   percent: {
     color: ({ progress }: RaisedProgressBarProps) => {
-      return progress >= 100 ? theme.palette.success.main : theme.palette.info.main
+      return progress >= 100
+        ? theme.palette.success.main
+        : theme.palette.info.main
     },
-    marginBottom: `${theme.spacing(.5)}px`
+    marginBottom: `${theme.spacing(0.5)}px`
   }
 }))
 

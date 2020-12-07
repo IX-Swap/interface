@@ -1,7 +1,10 @@
 import React from 'react'
 import { render } from 'test-utils'
 import { corporate, dso } from '__fixtures__/authorizer'
-import { DSONameAndStructure, DSONameAndStructureProps } from '../DSONameAndStructure'
+import {
+  DSONameAndStructure,
+  DSONameAndStructureProps
+} from '../DSONameAndStructure'
 
 const sampleProps: DSONameAndStructureProps = {
   corporate: corporate,
