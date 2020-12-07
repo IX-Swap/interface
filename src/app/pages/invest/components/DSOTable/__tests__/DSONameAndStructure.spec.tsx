@@ -1,9 +1,9 @@
 import React from 'react'
 import { render } from 'test-utils'
 import { corporate, dso } from '__fixtures__/authorizer'
-import { DSOName, DSONameProps } from '../DSOName'
+import { DSONameAndStructure, DSONameAndStructureProps } from '../DSONameAndStructure'
 
-const sampleProps: DSONameProps = {
+const sampleProps: DSONameAndStructureProps = {
   corporate: corporate,
   dso: dso
 }
@@ -12,13 +12,13 @@ describe('DSO Name', () => {
   URL.revokeObjectURL = () => {}
 
   it('renders without any errors', () => {
-    render(<DSOName {...sampleProps} />)
+    render(<DSONameAndStructure {...sampleProps} />)
   })
 
   it('renders received props correctly', () => {
     sampleProps.dso.capitalStructure = 'structure-test'
     sampleProps.corporate.companyLegalName = 'name-test'
-    const { getByText } = render(<DSOName {...sampleProps} />)
+    const { getByText } = render(<DSONameAndStructure {...sampleProps} />)
     expect(getByText('structure-test')).toBeTruthy()
     expect(getByText('name-test')).toBeTruthy()
   })

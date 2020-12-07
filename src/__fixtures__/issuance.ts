@@ -3,7 +3,7 @@ import {
   DSOFormValues,
   DsoTeamMember,
   DeploymentInfo,
-  DSOInsightType
+  DSOInsight
 } from 'types/dso'
 import { corporate, asset } from './authorizer'
 import { emptyFile } from '__fixtures__/file'
@@ -28,7 +28,7 @@ export const deploymentInfo: DeploymentInfo = {
   __v: 123
 }
 
-export const dsoInsight: DSOInsightType = {
+export const dsoInsight: DSOInsight = {
   activityCount: 65,
   approvedcommitmentCount: 1,
   collectedOn: '2020-11-24T17:06:23.555Z',

@@ -65,7 +65,7 @@ export interface BaseDigitalSecurityOffering extends AuthorizableWithIdentity {
   user: string
 }
 
-export interface DSOInsightType {
+export interface DSOInsight {
   activityCount: number
   approvedcommitmentCount: number
   collectedOn: string
@@ -81,7 +81,7 @@ export interface DigitalSecurityOffering extends BaseDigitalSecurityOffering {
   documents: Maybe<DataroomFile[]>
   currency: Asset
   network: string
-  insight: DSOInsightType
+  insight: DSOInsight
 }
 
 export type DeploymentInfoFormValues = Omit<

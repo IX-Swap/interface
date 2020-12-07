@@ -1,29 +1,34 @@
 import React from 'react'
-import { DigitalSecurityOffering, DSOInsightType } from 'types/dso'
+import { DigitalSecurityOffering, DSOInsight } from 'types/dso'
 import { RaisedProgressBar } from './RaisedProgressBar'
 import { formatDistanceToNow, compareAsc } from 'date-fns'
 import { makeStyles } from '@material-ui/core/styles'
+import { Box } from '@material-ui/core'
 
-const useStyle = makeStyles({
+const useStyle = makeStyles(theme => ({
   container: {
     display: 'flex',
     flexDirection: 'column',
-    gap: '8px',
     justifyContent: 'center',
-    alignItems: 'flex-start'
+    alignItems: 'flex-start',
+    gap: `${theme.spacing(.5)}px`
+  },
+  date: { 
+    fontSize: `${theme.typography.fontSize}px`, 
+    color: theme.palette.text.hint 
   }
-})
+}))
 
 export interface DSOInsightProps {
-  insight: DSOInsightType
+  insight: DSOInsight
   dso: DigitalSecurityOffering
 }
 
-export const DSOInsight: React.FC<DSOInsightProps> = ({
+export const DSORaised: React.FC<DSOInsightProps> = ({
   insight,
   dso
 }: DSOInsightProps) => {
-  const { container } = useStyle()
+  const { container, date } = useStyle()
 
   if (typeof insight === 'undefined' || typeof dso === 'undefined') {
     return null
@@ -35,15 +40,15 @@ export const DSOInsight: React.FC<DSOInsightProps> = ({
   const compare = compareAsc(launchDate, Date.now())
 
   return (
-    <div className={container}>
+    <Box className={container}>
       {compare < 0 ? (
-        <RaisedProgressBar progress={percent} />
+        <RaisedProgressBar progress={percent} /> /* TODO: Replace with Varun's Progress Bar */
       ) : (
-        <div>Upcomming</div>
+        <Box>Upcomming</Box>
       )}
-      <div style={{ fontSize: '12px', color: '#AAA' }}>
+      <Box className={date}>
         {formatDistanceToNow(launchDate, { addSuffix: true })}
-      </div>
-    </div>
+      </Box>
+    </Box>
   )
 }

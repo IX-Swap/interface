@@ -1,10 +1,22 @@
 import React from 'react'
 import { TableColumn } from 'types/util'
 import { CorporateIdentity } from 'types/identity'
-import { DSOName } from './DSOName'
-import { DigitalSecurityOffering, DSOInsightType } from 'types/dso'
+import { DSONameAndStructure } from './DSONameAndStructure'
+import { DigitalSecurityOffering, DSOInsight } from 'types/dso'
 import { PriceWithCurrency } from './PriceWithCurrency'
-import { DSOInsight } from './DSOInsight'
+import { DSORaised } from './DSORaised'
+
+export const renderDSONameAndStructure = (c: CorporateIdentity, dso: DigitalSecurityOffering) => (
+  <DSONameAndStructure corporate={c} dso={dso} />
+)
+
+export const renderPriceWithCurrency = (price: string, dso: DigitalSecurityOffering) => (
+  <PriceWithCurrency price={price} currency={dso.currency.symbol} />
+)
+
+export const renderDSORaised = (i: DSOInsight, dso: DigitalSecurityOffering) => (
+  <DSORaised insight={i} dso={dso} />
+)
 
 export const columns: Array<TableColumn<DigitalSecurityOffering>> = [
   {
@@ -14,39 +26,29 @@ export const columns: Array<TableColumn<DigitalSecurityOffering>> = [
   {
     key: 'corporate',
     label: 'Offer Name',
-    render: (c: CorporateIdentity, dso: DigitalSecurityOffering) => (
-      <DSOName corporate={c} dso={dso} />
-    )
+    render: renderDSONameAndStructure
   },
   {
     key: 'insight',
     label: 'Status',
-    render: (i: DSOInsightType, dso: DigitalSecurityOffering) => (
-      <DSOInsight insight={i} dso={dso} />
-    )
+    render: renderDSORaised
   },
   {
     key: 'pricePerUnit',
     label: 'Price',
-    render: (price: string, dso: DigitalSecurityOffering) => (
-      <PriceWithCurrency price={price} currency={dso.currency.symbol} />
-    ),
+    render: renderPriceWithCurrency,
     align: 'right'
   },
   {
     key: 'totalFundraisingAmount',
     label: 'Raising',
-    render: (price: string, dso: DigitalSecurityOffering) => (
-      <PriceWithCurrency price={price} currency={dso.currency.symbol} />
-    ),
+    render: renderPriceWithCurrency,
     align: 'right'
   },
   {
     key: 'minimumInvestment',
     label: 'Minimum',
-    render: (price: string, dso: DigitalSecurityOffering) => (
-      <PriceWithCurrency price={price} currency={dso.currency.symbol} />
-    ),
+    render: renderPriceWithCurrency,
     align: 'right'
   },
   {

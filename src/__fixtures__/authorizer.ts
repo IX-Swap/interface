@@ -6,7 +6,7 @@ import { CorporateIdentity, IndividualIdentity } from 'types/identity'
 import { user } from '__fixtures__/user'
 import { CashWithdrawal } from 'types/cashWithdrawal'
 import { DSWithdrawal } from 'types/dsWithdrawal'
-import { DigitalSecurityOffering, DSOInsightType } from 'types/dso'
+import { DigitalSecurityOffering, DSOInsight } from 'types/dso'
 import { AuthorizationInfo } from 'types/authorizer'
 import { Commitment } from 'types/commitment'
 import { emptyFile } from '__fixtures__/file'
@@ -127,7 +127,7 @@ export const dsWithdrawal: DSWithdrawal = {
   }
 }
 
-export const dsoInsight: DSOInsightType = {
+export const dsoInsight: DSOInsight = {
   activityCount: 65,
   approvedcommitmentCount: 1,
   collectedOn: '2020-11-24T17:06:23.555Z',
