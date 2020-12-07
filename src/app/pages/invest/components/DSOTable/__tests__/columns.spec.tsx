@@ -13,7 +13,7 @@ import { corporate } from '__fixtures__/identity'
 import { dsoInsight } from '__fixtures__/issuance'
 
 jest.mock('../DSONameAndStructure', () => ({
-  DSOName: jest.fn(() => null)
+  DSONameAndStructure: jest.fn(() => null)
 }))
 
 jest.mock('../PriceWithCurrency', () => ({
