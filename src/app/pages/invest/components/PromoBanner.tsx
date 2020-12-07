@@ -1,20 +1,21 @@
 import React from 'react'
-import { Paper } from '@material-ui/core'
+import { Grid, Paper, Typography } from '@material-ui/core'
 import { makeStyles } from '@material-ui/core/styles'
 import { usePromo } from '../hooks/usePromo'
 
 const useStyles = makeStyles(theme => ({
   promoBanner: {
     width: '100%',
-    margin: '20px 0 40px'
+    padding: `${theme.spacing(3)}px 0 ${theme.spacing(4)}px`
   },
   message: {
     fontFamily: theme.typography.fontFamily,
     fontWeight: 'normal',
-    fontSize: '30px'
+    fontSize: `${theme.typography.fontSize * 2}px`,
+    marginBottom: `${theme.spacing(3)}px`
   },
   bannerImage: {
-    maxWidth: '100%',
+    width: '100%',
     display: 'block'
   }
 }))
@@ -24,15 +25,37 @@ export const PromoBanner = () => {
   const { promoData, isLoading, isError } = usePromo()
 
   if (typeof promoData === 'undefined' || isError || isLoading) return null
+  const { image, title } = promoData
 
-  const { message, image } = promoData
+  if (typeof image === 'undefined') return null
+
+  function generateSrc(src: string) {
+    const url = new RegExp('^(?:[a-z]+:)?//', 'i')
+    if (url.test(src)) return src
+
+    const relativePath = new RegExp('^/', 'i')
+    if (relativePath.test(src))
+      return `${process.env.REACT_APP_API_URL ?? ''}${src}`
+
+    return src
+  }
 
   return (
-    <div className={styles.promoBanner}>
-      <h1 className={styles.message}>{message}</h1>
+    <Grid className={styles.promoBanner}>
+      {title !== '' ? (
+        <Typography variant='h1' className={styles.message}>
+          {title}
+        </Typography>
+      ) : null}
       <Paper variant='outlined'>
-        <img className={styles.bannerImage} src={image} alt={message} />
+        <img
+          data-testid='promo-image'
+          className={styles.bannerImage}
+          src={generateSrc(image.src)}
+          alt={image.alt ?? image.title ?? ''}
+          title={image.title}
+        />
       </Paper>
-    </div>
+    </Grid>
   )
 }

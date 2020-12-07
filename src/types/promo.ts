@@ -1,4 +1,9 @@
-export interface PromoType {
-  message: string
-  image: string
+export interface PromoData {
+  title: string
+  image: {
+    src: string
+    alt?: string
+    title?: string
+    longdesc?: string
+  }
 }

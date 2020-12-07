@@ -1,7 +1,7 @@
 import { act } from '@testing-library/react-hooks'
 import { waitFor, cleanup, renderHookWithServiceProvider } from 'test-utils'
 import { usePromo } from 'app/pages/invest/hooks/usePromo'
-import { successfulResponse } from '__fixtures__/api'
+import { promoResponse, mockPromoData } from '__fixtures__/promo'
 
 describe('usePromo', () => {
   afterEach(async () => {
@@ -9,9 +9,9 @@ describe('usePromo', () => {
     jest.clearAllMocks()
   })
 
-  it('returns response from api correctly', async () => {
+  it('returns data with correct response from api', async () => {
     await act(async () => {
-      const getFn = jest.fn().mockResolvedValueOnce(successfulResponse)
+      const getFn = jest.fn().mockResolvedValueOnce(promoResponse)
       const apiObj = { get: getFn }
 
       const { result } = renderHookWithServiceProvider(() => usePromo(), {
@@ -20,11 +20,8 @@ describe('usePromo', () => {
 
       await waitFor(
         () => {
-          expect(getFn).toHaveBeenCalledTimes(1)
           expect(getFn).toHaveBeenCalledWith('/issuance/promo')
-          expect(result.current).toHaveProperty('isError')
-          expect(result.current).toHaveProperty('isLoading')
-          expect(result.current).toHaveProperty('promoData')
+          expect(result.current).toEqual(mockPromoData)
         },
         { timeout: 1000 }
       )

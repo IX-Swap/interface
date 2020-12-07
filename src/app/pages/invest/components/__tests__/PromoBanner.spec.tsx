@@ -1,23 +1,8 @@
 import React from 'react'
 import { render, cleanup } from 'test-utils'
+import { mockPromoData } from '__fixtures__/promo'
 import { PromoBanner } from '../PromoBanner'
-
-let mockPromoData: { message: string; image: string } | undefined = {
-  message: 'social message',
-  image: 'path-to-image'
-}
-
-let mockIsError = false
-let mockIsLoading = false
-
-jest.mock('../../hooks/usePromo', () => ({
-  __esModule: true,
-  usePromo: jest.fn(() => ({
-    promoData: mockPromoData,
-    isError: mockIsError,
-    isLoading: mockIsLoading
-  }))
-}))
+import * as usePromo from '../../hooks/usePromo'
 
 describe('Promo Banner', () => {
   afterEach(async () => {
@@ -26,30 +11,43 @@ describe('Promo Banner', () => {
   })
 
   it('renders without error', () => {
+    jest.spyOn(usePromo, 'usePromo').mockReturnValue(mockPromoData)
+
     render(<PromoBanner />)
   })
 
   it('renders with the fetched data correctly', () => {
-    const { getByText, container } = render(<PromoBanner />)
-    expect(getByText('social message')).toBeTruthy()
-    expect(container.querySelector("img[src='path-to-image']")).toBeTruthy()
+    jest.spyOn(usePromo, 'usePromo').mockReturnValue(mockPromoData)
+
+    const { getByText, getByTestId } = render(<PromoBanner />)
+    expect(getByText('Stay Home, Stay Safe')).toBeTruthy()
+    expect(getByTestId('promo-image')).not.toBeNull()
   })
 
   it('renders nothing if data is undefined', () => {
-    mockPromoData = undefined
+    jest
+      .spyOn(usePromo, 'usePromo')
+      .mockReturnValue({ ...mockPromoData, promoData: undefined })
+
     const { container } = render(<PromoBanner />)
-    expect(container.childElementCount).toEqual(0)
+    expect(container).toBeEmptyDOMElement()
   })
 
   it('renders nothing if fetch receives an error', () => {
-    mockIsError = true
+    jest
+      .spyOn(usePromo, 'usePromo')
+      .mockReturnValue({ ...mockPromoData, isError: true })
+
     const { container } = render(<PromoBanner />)
-    expect(container.childElementCount).toEqual(0)
+    expect(container).toBeEmptyDOMElement()
   })
 
   it('renders nothing while fetching data', () => {
-    mockIsLoading = true
+    jest
+      .spyOn(usePromo, 'usePromo')
+      .mockReturnValue({ ...mockPromoData, isLoading: true })
+
     const { container } = render(<PromoBanner />)
-    expect(container.childElementCount).toEqual(0)
+    expect(container).toBeEmptyDOMElement()
   })
 })
