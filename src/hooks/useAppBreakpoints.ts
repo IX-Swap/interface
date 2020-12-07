@@ -6,6 +6,7 @@ export const useAppBreakpoints = () => {
   const isTablet = useMediaQuery(theme.breakpoints.down('sm'))
 
   return {
-    isTablet
+    isTablet,
+    theme
   }
 }

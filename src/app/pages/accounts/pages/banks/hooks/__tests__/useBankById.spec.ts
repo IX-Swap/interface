@@ -30,6 +30,7 @@ describe('useBankById', () => {
         () => useBankById(args),
         { apiService: apiObj }
       )
+      // https://www.getpostman.com/collections/837167a4a030a4ce3172
 
       await waitFor(
         () => {

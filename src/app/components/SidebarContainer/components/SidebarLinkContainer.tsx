@@ -1,9 +1,10 @@
 import React from 'react'
 import { Box } from '@material-ui/core'
-import { Link, useLocation } from 'react-router-dom'
+import { useLocation } from 'react-router-dom'
 import { SidebarLink } from 'ui/SidebarLink'
 import { useAppActions } from 'app/hooks/useAppState'
 import { useAppBreakpoints } from 'hooks/useAppBreakpoints'
+import { SidebarItem } from 'ui/SidebarItem'
 
 export interface SidebarLinkProps {
   link: string
@@ -16,7 +17,8 @@ export const SidebarLinkContainer = (props: SidebarLinkProps) => {
   const { pathname } = useLocation()
   const isActive = pathname.startsWith(link)
   const { setNavDrawerOpened } = useAppActions()
-  const { isTablet } = useAppBreakpoints()
+  const { isTablet, theme } = useAppBreakpoints()
+  const color = isActive ? theme.palette.primary.main : theme.palette.grey[400]
 
   const closeDrawer = () => {
     if (isTablet) {
@@ -25,16 +27,11 @@ export const SidebarLinkContainer = (props: SidebarLinkProps) => {
   }
 
   return (
-    <SidebarLink
-      onClick={closeDrawer}
-      selected={isActive}
-      component={Link}
-      disableRipple
-      to={link}
-      button
-    >
-      <Box>{React.createElement(icon)}</Box>
-      <span>{label}</span>
-    </SidebarLink>
+    <SidebarItem button selected={isActive}>
+      <SidebarLink onClick={closeDrawer} to={link} style={{ color }}>
+        <Box>{React.createElement(icon)}</Box>
+        <span>{label}</span>
+      </SidebarLink>
+    </SidebarItem>
   )
 }

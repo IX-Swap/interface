@@ -24,9 +24,12 @@ jest.mock('assets/icons/navigation/issuance.svg', () => ({
 jest.mock('assets/icons/navigation/authorizer.svg', () => ({
   ReactComponent: jest.fn(() => null)
 }))
-jest.mock('app/components/Sidebar/components/SidebarLink', () => ({
-  SidebarLink: jest.fn(() => null)
-}))
+jest.mock(
+  'app/components/SidebarContainer/components/SidebarLinkContainer',
+  () => ({
+    SidebarLinkContainer: jest.fn(() => null)
+  })
+)
 
 describe('Sidebar', () => {
   beforeEach(() => {
