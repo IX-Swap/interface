@@ -1,9 +1,10 @@
 import React from 'react'
 import { Button, Grid } from '@material-ui/core'
-import { AppRouterLinkComponent } from 'components/AppRouterLink'
+import { AppRouterLinkComponent, AppRouterLink } from 'components/AppRouterLink'
 import { useIssuanceRouter } from 'app/pages/issuance/router'
 import { useDSOById } from 'app/pages/invest/hooks/useDSOById'
 import { useAuth } from 'hooks/auth/useAuth'
+import { getBlockchainUrl } from '../utils'
 
 export const DSOToken = () => {
   const { paths, params } = useIssuanceRouter()
@@ -18,9 +19,25 @@ export const DSOToken = () => {
   const isDisabled = data.status !== 'Approved'
   const showButton = data.user === user?._id
 
+  const token = data.deploymentInfo?.token
+  const tokenUrl = getBlockchainUrl(token, data.network, 'token')
+
   return (
     <Grid container alignItems='center' justify='space-between'>
-      <Grid item>{data.deploymentInfo?.token ?? '-'}</Grid>
+      <Grid item>
+        {token !== undefined ? (
+          <AppRouterLink
+            target='_blank'
+            to={tokenUrl}
+            underline='always'
+            color='primary'
+          >
+            {token}
+          </AppRouterLink>
+        ) : (
+          '-'
+        )}
+      </Grid>
       {showButton && (
         <Grid item>
           <Button

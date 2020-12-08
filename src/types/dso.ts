@@ -3,6 +3,7 @@ import { DataroomFile, FormArray } from './dataroomFile'
 import { Maybe } from './util'
 import { CorporateIdentity } from './identity'
 import { AuthorizableWithIdentity } from './authorizer'
+import { Network } from './networks'
 
 export interface DsoTeamMember {
   _id?: string
@@ -68,7 +69,7 @@ export interface BaseDigitalSecurityOffering extends AuthorizableWithIdentity {
 export interface DigitalSecurityOffering extends BaseDigitalSecurityOffering {
   documents: Maybe<DataroomFile[]>
   currency: Asset
-  network: string
+  network: Network
 }
 
 export type DeploymentInfoFormValues = Omit<
@@ -89,6 +90,7 @@ export type DSOFormValues = Omit<
   | 'status'
   | 'team'
   | 'currency'
+  | 'network'
   | 'corporate'
   | 'updatedAt'
   | 'identity'
@@ -100,6 +102,7 @@ export type DSOFormValues = Omit<
   subscriptionDocument?: DataroomFile
   status?: string
   currency: string
+  network?: string
   corporate: string
   documents: FormArray<DataroomFile>
   team: DsoTeamMember[]

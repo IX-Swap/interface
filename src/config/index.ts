@@ -12,6 +12,8 @@ export const FULLSTORY = process.env.REACT_APP_FULLSTORY
 export const DATE_FORMAT = 'MM/DD/YYYY'
 export const TIME_FORMAT = 'HH:MM:SS'
 
+export const ETHEREUM_DECIMAL_PLACES = 18
+
 export const INVESTAX_BANK: Partial<Bank> = {
   bankName: 'OVERSEA-CHINESE BANKING CORPORATION LIMITED',
   swiftCode: 'OCBCSGSG',
