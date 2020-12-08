@@ -17,7 +17,7 @@ export const CompanyInfoFields = () => {
 
   return (
     <Grid container spacing={3}>
-      <Grid item xs={12}>
+      <Grid item xs={12} sm={6} md={4}>
         {/* @ts-ignore */}
         <TypedField
           customRenderer
@@ -33,7 +33,7 @@ export const CompanyInfoFields = () => {
           }}
         />
       </Grid>
-      <Grid item xs={4}>
+      <Grid item xs={12} sm={6} md={4}>
         <TypedField
           component={Input}
           control={control}
@@ -41,7 +41,7 @@ export const CompanyInfoFields = () => {
           label='Company Name'
         />
       </Grid>
-      <Grid item xs={4}>
+      <Grid item xs={12} sm={6} md={4}>
         <TypedField
           className={privateClassNames()}
           component={Input}
@@ -50,7 +50,7 @@ export const CompanyInfoFields = () => {
           label='Company Registration Number'
         />
       </Grid>
-      <Grid item xs={4}>
+      <Grid item xs={12} sm={6} md={4}>
         <TypedField
           component={CountrySelect}
           control={control}
@@ -58,7 +58,7 @@ export const CompanyInfoFields = () => {
           label='Country of Formation'
         />
       </Grid>
-      <Grid item xs={4}>
+      <Grid item xs={12} sm={6} md={4}>
         {/* @ts-ignore */}
         <TypedField
           className={privateClassNames()}
@@ -70,7 +70,7 @@ export const CompanyInfoFields = () => {
           label='Date of Incorporation'
         />
       </Grid>
-      <Grid item xs={4}>
+      <Grid item xs={12} sm={6} md={4}>
         <TypedField
           component={Input}
           control={control}
@@ -78,7 +78,7 @@ export const CompanyInfoFields = () => {
           label='Email Address'
         />
       </Grid>
-      <Grid item xs={4}>
+      <Grid item xs={12} sm={6} md={4}>
         <TypedField
           className={privateClassNames()}
           component={Input}

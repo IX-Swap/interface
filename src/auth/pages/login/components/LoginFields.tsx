@@ -3,12 +3,10 @@ import { Grid, Input, TextField } from '@material-ui/core'
 import { TypedField } from 'components/form/TypedField'
 import { useFormContext } from 'react-hook-form'
 import { LoginArgs } from 'types/auth'
-import useStyles from 'auth/styles'
 import { privateClassNames } from 'helpers/classnames'
 
 export const LoginFields = () => {
   const { control } = useFormContext<LoginArgs>()
-  const classes = useStyles()
 
   return (
     <>
@@ -32,7 +30,7 @@ export const LoginFields = () => {
         />
       </Grid>
 
-      <Grid item className={classes.otp}>
+      <Grid item>
         <TypedField
           customRenderer
           fullWidth

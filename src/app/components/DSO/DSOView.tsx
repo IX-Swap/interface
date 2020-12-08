@@ -1,7 +1,14 @@
 import React from 'react'
 import { DigitalSecurityOffering } from 'types/dso'
 import { DSOContainer } from 'app/components/DSO/components/DSOContainer'
-import { Grid, List, ListItem, Typography } from '@material-ui/core'
+import {
+  Grid,
+  Table,
+  TableBody,
+  TableContainer,
+  TableRow,
+  Typography
+} from '@material-ui/core'
 import { renderStringToHTML } from 'app/components/DSO/utils'
 import { DSOToken } from 'app/components/DSO/components/DSOToken'
 import { DataroomHeader } from 'components/dataroom/DataroomHeader'
@@ -144,17 +151,13 @@ export const DSOView = (props: DSOViewProps) => {
               <Typography color='error'>Not provided</Typography>
             </Grid>
           ) : (
-            <DataroomViewRow
-              title='Subscription Document'
-              document={data.subscriptionDocument}
-              downloader={
-                <DownloadDSOSubscriptionDocument
-                  size='small'
-                  variant='outlined'
-                  dsoId={data._id}
-                />
-              }
-            />
+            <Grid container item justify='flex-end'>
+              <DownloadDSOSubscriptionDocument
+                size='small'
+                variant='outlined'
+                dsoId={data._id}
+              />
+            </Grid>
           )}
         </DSOContainer>
       </Grid>
@@ -240,27 +243,27 @@ export const DSOView = (props: DSOViewProps) => {
       </DSOContainer>
 
       <DSOContainer title='Dataroom' item xs={12}>
-        <DataroomHeader />
-        <List disablePadding>
-          {data.documents?.map((document, index) => (
-            <ListItem
-              key={document._id}
-              divider={index !== (data?.documents?.length ?? 0) - 1}
-              style={{ minHeight: 50 }}
-            >
-              <DataroomViewRow
-                title={document.type}
-                document={document}
-                downloader={
-                  <DownloadDSODocument
-                    dsoId={data._id}
-                    documentId={document._id}
+        <TableContainer>
+          <Table>
+            <DataroomHeader />
+            <TableBody>
+              {data.documents?.map(document => (
+                <TableRow key={document._id}>
+                  <DataroomViewRow
+                    title={document.type}
+                    document={document}
+                    downloader={
+                      <DownloadDSODocument
+                        dsoId={data._id}
+                        documentId={document._id}
+                      />
+                    }
                   />
-                }
-              />
-            </ListItem>
-          ))}
-        </List>
+                </TableRow>
+              ))}
+            </TableBody>
+          </Table>
+        </TableContainer>
       </DSOContainer>
 
       <DSOContainer title='Fund Raising Milestone' item xs={12}>

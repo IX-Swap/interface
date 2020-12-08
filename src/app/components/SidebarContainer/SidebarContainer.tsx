@@ -1,27 +1,33 @@
 import React from 'react'
-import { List } from '@material-ui/core'
+import { Sidebar } from 'ui/Sidebar'
 import { useIsAdmin, useIsAuthorizer, useIsIssuer } from 'helpers/acl'
-import { SidebarLink } from 'app/components/Sidebar/components/SidebarLink'
+import { SidebarLinkContainer } from 'app/components/SidebarContainer/components/SidebarLinkContainer'
 import { useAuthorizerRouter } from 'app/pages/authorizer/router'
 import { useAccountsRouter } from 'app/pages/accounts/router'
 import { useInvestRouter } from 'app/pages/invest/routers/router'
 import { useIssuanceRouter } from 'app/pages/issuance/router'
-import { useStyles } from './Sidebar.styles'
 import { ReactComponent as InvestIcon } from 'assets/icons/navigation/invest.svg'
 import { ReactComponent as AccountsIcon } from 'assets/icons/navigation/account.svg'
 import { ReactComponent as IssuanceIcon } from 'assets/icons/navigation/issuance.svg'
 import { ReactComponent as AuthorizerIcon } from 'assets/icons/navigation/authorizer.svg'
+import { SwipeableDrawer } from '@material-ui/core'
+import { useAppActions, useAppState } from 'app/hooks/useAppState'
+import { useAppBreakpoints } from 'hooks/useAppBreakpoints'
 
-export const Sidebar = () => {
+export const SidebarContainer = () => {
+  const { isNavDrawerOpened } = useAppState()
+  const { setNavDrawerOpened } = useAppActions()
+
   const isAuthorizer = useIsAuthorizer()
   const isIssuer = useIsIssuer()
   const isAdmin = useIsAdmin()
+
   const { paths: authorizerRoutes } = useAuthorizerRouter()
   const { paths: accountRoutes } = useAccountsRouter()
   const { paths: investRoutes } = useInvestRouter()
   const { paths: issuanceRoutes } = useIssuanceRouter()
-  const styles = useStyles()
 
+  const isSuperUser = isAuthorizer || isAdmin
   const links = [
     {
       label: 'Accounts',
@@ -32,32 +38,44 @@ export const Sidebar = () => {
       label: 'Invest',
       link: investRoutes.list,
       icon: InvestIcon
-    },
-    ...(isIssuer
-      ? [
-          {
-            label: 'Issuance',
-            link: issuanceRoutes.list,
-            icon: IssuanceIcon
-          }
-        ]
-      : []),
-    ...(isAuthorizer || isAdmin
-      ? [
-          {
-            label: 'Authorizer',
-            link: authorizerRoutes.landing,
-            icon: AuthorizerIcon
-          }
-        ]
-      : [])
+    }
   ]
 
-  return (
-    <List className={styles.container}>
+  if (isIssuer) {
+    links.push({
+      label: 'Issuance',
+      link: issuanceRoutes.list,
+      icon: IssuanceIcon
+    })
+  }
+
+  if (isSuperUser) {
+    links.push({
+      label: 'Authorizer',
+      link: authorizerRoutes.landing,
+      icon: AuthorizerIcon
+    })
+  }
+
+  const { isTablet } = useAppBreakpoints()
+
+  const sidebar = (
+    <Sidebar>
       {links.map(link => (
-        <SidebarLink {...link} key={link.label} />
+        <SidebarLinkContainer {...link} key={link.label} />
       ))}
-    </List>
+    </Sidebar>
+  )
+
+  return isTablet ? (
+    <SwipeableDrawer
+      onClose={() => setNavDrawerOpened(false)}
+      onOpen={() => setNavDrawerOpened(true)}
+      open={isNavDrawerOpened}
+    >
+      {sidebar}
+    </SwipeableDrawer>
+  ) : (
+    sidebar
   )
 }

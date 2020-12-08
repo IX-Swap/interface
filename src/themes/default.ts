@@ -51,8 +51,8 @@ export default {
       hint: '#B9B9B9'
     },
     background: {
-      default: '#F6F7FF',
-      light: '#F3F5FF'
+      default: '#FFF',
+      light: '#FFF'
     }
   },
   customShadows: {

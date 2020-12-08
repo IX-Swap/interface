@@ -23,6 +23,7 @@ export const ResetFields = () => {
           component={Input}
           name='newPassword'
           label='New Password'
+          type='password'
         />
       </Grid>
     </>

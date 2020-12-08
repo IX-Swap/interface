@@ -18,7 +18,7 @@ export const AddressFields = <FormType,>(
 
   return (
     <Grid container spacing={3} className={privateClassNames()}>
-      <Grid item xs={4}>
+      <Grid item xs={12} sm={6} md={4}>
         <TypedField
           component={Input}
           control={control}
@@ -27,7 +27,7 @@ export const AddressFields = <FormType,>(
           label='Line 1'
         />
       </Grid>
-      <Grid item xs={4}>
+      <Grid item xs={12} sm={6} md={4}>
         <TypedField
           component={Input}
           control={control}
@@ -36,7 +36,7 @@ export const AddressFields = <FormType,>(
           label='Line 2'
         />
       </Grid>
-      <Grid item xs={4}>
+      <Grid item xs={12} sm={6} md={4}>
         <TypedField
           component={Input}
           control={control}
@@ -45,7 +45,7 @@ export const AddressFields = <FormType,>(
           label='City'
         />
       </Grid>
-      <Grid item xs={4}>
+      <Grid item xs={12} sm={6} md={4}>
         <TypedField
           component={Input}
           control={control}
@@ -54,7 +54,7 @@ export const AddressFields = <FormType,>(
           label='Postal Code'
         />
       </Grid>
-      <Grid item xs={4}>
+      <Grid item xs={12} sm={6} md={4}>
         <TypedField
           component={Input}
           control={control}
@@ -63,7 +63,7 @@ export const AddressFields = <FormType,>(
           label='State'
         />
       </Grid>
-      <Grid item xs={4}>
+      <Grid item xs={12} sm={6} md={4}>
         <TypedField
           component={CountrySelect}
           control={control}

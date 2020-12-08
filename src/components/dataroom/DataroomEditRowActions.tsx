@@ -1,5 +1,6 @@
 import React from 'react'
-import { Button, ButtonGroup } from '@material-ui/core'
+import { IconButton, Tooltip } from '@material-ui/core'
+import { CloudDownload, Delete } from '@material-ui/icons'
 
 export interface DataroomEditRowActionsProps {
   onDownload: () => any
@@ -12,13 +13,17 @@ export const DataroomEditRowActions = (props: DataroomEditRowActionsProps) => {
   const { onDelete, onDownload, isDownloading, isDeleting } = props
 
   return (
-    <ButtonGroup size='small' variant='outlined'>
-      <Button onClick={onDownload} disabled={isDownloading}>
-        {isDownloading ? 'Downloading...' : 'Download'}
-      </Button>
-      <Button onClick={onDelete} disabled={isDeleting}>
-        {isDeleting ? 'Deleting...' : 'Delete'}
-      </Button>
-    </ButtonGroup>
+    <>
+      <Tooltip title='Download File'>
+        <IconButton onClick={onDownload} disabled={isDownloading}>
+          <CloudDownload />
+        </IconButton>
+      </Tooltip>
+      <Tooltip title='Delete File'>
+        <IconButton onClick={onDelete} disabled={isDeleting}>
+          <Delete />
+        </IconButton>
+      </Tooltip>
+    </>
   )
 }

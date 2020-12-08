@@ -1,6 +1,5 @@
 import React from 'react'
 import { Button, Grid } from '@material-ui/core'
-import useStyles from 'auth/styles'
 import { LoginArgs } from 'types/auth'
 import { loginFormValidationSchema } from 'validation/auth'
 import { useAuthRouter } from 'auth/router'
@@ -17,7 +16,6 @@ export const loginFormInitialValues = {
 }
 
 export const Login: React.FC = () => {
-  const classes = useStyles()
   const { paths } = useAuthRouter()
   const [login] = useLogin()
   const handleSubmit = async (values: LoginArgs) => {
@@ -31,21 +29,18 @@ export const Login: React.FC = () => {
       validationSchema={loginFormValidationSchema}
       onSubmit={handleSubmit}
     >
-      <Grid container direction='column' spacing={1}>
+      <Grid container direction='column' spacing={2}>
         <LoginFields />
-        <Grid item>
-          <div className={classes.formButtons}>
-            <Submit size='large'>Login</Submit>
-            <Button
-              component={AppRouterLinkComponent}
-              color='primary'
-              size='large'
-              className={classes.forgetButton}
-              to={paths.passwordReset}
-            >
-              Forgot Password?
-            </Button>
-          </div>
+        <Grid item container justify='space-between'>
+          <Submit size='large'>Login</Submit>
+          <Button
+            component={AppRouterLinkComponent}
+            color='primary'
+            size='large'
+            to={paths.passwordReset}
+          >
+            Forgot Password?
+          </Button>
         </Grid>
       </Grid>
     </Form>

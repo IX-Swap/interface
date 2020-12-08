@@ -1,7 +1,7 @@
 import React from 'react'
 import { render, cleanup } from 'test-utils'
-import { Sidebar } from 'app/components/Sidebar/Sidebar'
-import { SidebarLink } from 'app/components/Sidebar/components/SidebarLink'
+import { SidebarContainer } from 'app/components/SidebarContainer/SidebarContainer'
+import { SidebarLinkContainer } from 'app/components/SidebarContainer/components/SidebarLinkContainer'
 import { ReactComponent as InvestIcon } from 'assets/icons/navigation/invest.svg'
 import { ReactComponent as AccountsIcon } from 'assets/icons/navigation/account.svg'
 import { ReactComponent as IssuanceIcon } from 'assets/icons/navigation/issuance.svg'
@@ -24,9 +24,12 @@ jest.mock('assets/icons/navigation/issuance.svg', () => ({
 jest.mock('assets/icons/navigation/authorizer.svg', () => ({
   ReactComponent: jest.fn(() => null)
 }))
-jest.mock('app/components/Sidebar/components/SidebarLink', () => ({
-  SidebarLink: jest.fn(() => null)
-}))
+jest.mock(
+  'app/components/SidebarContainer/components/SidebarLinkContainer',
+  () => ({
+    SidebarLinkContainer: jest.fn(() => null)
+  })
+)
 
 describe('Sidebar', () => {
   beforeEach(() => {
@@ -52,16 +55,16 @@ describe('Sidebar', () => {
   it('renders without error', () => {
     jest.spyOn(acl, 'useIsAuthorizer').mockReturnValue(false)
     jest.spyOn(acl, 'useIsIssuer').mockReturnValue(false)
-    render(<Sidebar />)
+    render(<SidebarContainer />)
   })
 
   it('renders SidebarLink correctly', () => {
     jest.spyOn(acl, 'useIsAuthorizer').mockReturnValue(false)
     jest.spyOn(acl, 'useIsIssuer').mockReturnValue(false)
-    render(<Sidebar />)
+    render(<SidebarContainer />)
 
-    expect(SidebarLink).toHaveBeenCalledTimes(2)
-    expect(SidebarLink).toHaveBeenNthCalledWith(
+    expect(SidebarLinkContainer).toHaveBeenCalledTimes(2)
+    expect(SidebarLinkContainer).toHaveBeenNthCalledWith(
       1,
       {
         label: 'Accounts',
@@ -70,7 +73,7 @@ describe('Sidebar', () => {
       },
       {}
     )
-    expect(SidebarLink).toHaveBeenNthCalledWith(
+    expect(SidebarLinkContainer).toHaveBeenNthCalledWith(
       2,
       {
         label: 'Invest',
@@ -84,10 +87,10 @@ describe('Sidebar', () => {
   it('renders SidebarLink correctly if user is issuer', () => {
     jest.spyOn(acl, 'useIsAuthorizer').mockReturnValue(false)
     jest.spyOn(acl, 'useIsIssuer').mockReturnValue(true)
-    render(<Sidebar />)
+    render(<SidebarContainer />)
 
-    expect(SidebarLink).toHaveBeenCalledTimes(3)
-    expect(SidebarLink).toHaveBeenNthCalledWith(
+    expect(SidebarLinkContainer).toHaveBeenCalledTimes(3)
+    expect(SidebarLinkContainer).toHaveBeenNthCalledWith(
       1,
       {
         label: 'Accounts',
@@ -96,7 +99,7 @@ describe('Sidebar', () => {
       },
       {}
     )
-    expect(SidebarLink).toHaveBeenNthCalledWith(
+    expect(SidebarLinkContainer).toHaveBeenNthCalledWith(
       2,
       {
         label: 'Invest',
@@ -105,7 +108,7 @@ describe('Sidebar', () => {
       },
       {}
     )
-    expect(SidebarLink).toHaveBeenNthCalledWith(
+    expect(SidebarLinkContainer).toHaveBeenNthCalledWith(
       3,
       {
         label: 'Issuance',
@@ -120,10 +123,10 @@ describe('Sidebar', () => {
     jest.spyOn(acl, 'useIsAuthorizer').mockReturnValue(true)
     jest.spyOn(acl, 'useIsIssuer').mockReturnValue(false)
 
-    render(<Sidebar />)
+    render(<SidebarContainer />)
 
-    expect(SidebarLink).toHaveBeenCalledTimes(3)
-    expect(SidebarLink).toHaveBeenNthCalledWith(
+    expect(SidebarLinkContainer).toHaveBeenCalledTimes(3)
+    expect(SidebarLinkContainer).toHaveBeenNthCalledWith(
       1,
       {
         label: 'Accounts',
@@ -132,7 +135,7 @@ describe('Sidebar', () => {
       },
       {}
     )
-    expect(SidebarLink).toHaveBeenNthCalledWith(
+    expect(SidebarLinkContainer).toHaveBeenNthCalledWith(
       2,
       {
         label: 'Invest',
@@ -141,7 +144,7 @@ describe('Sidebar', () => {
       },
       {}
     )
-    expect(SidebarLink).toHaveBeenNthCalledWith(
+    expect(SidebarLinkContainer).toHaveBeenNthCalledWith(
       3,
       {
         label: 'Authorizer',

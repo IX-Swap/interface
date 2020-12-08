@@ -17,23 +17,23 @@ export const CompanyInfoView = (props: CompanyInfoViewProps) => {
       <Grid item xs={12}>
         <Avatar documentId={data.logo} ownerId={data.user._id} />
       </Grid>
-      <Grid item xs={4}>
+      <Grid item xs={12} sm={6} md={4}>
         <LabelledValue value={data.companyLegalName} label='Company Name' />
       </Grid>
-      <Grid item xs={4}>
+      <Grid item xs={12} sm={6} md={4}>
         <LabelledValue
           className={privateClassNames()}
           value={data.registrationNumber}
           label='Company Registration Number'
         />
       </Grid>
-      <Grid item xs={4}>
+      <Grid item xs={12} sm={6} md={4}>
         <LabelledValue
           value={data.countryOfFormation}
           label='Country of Formation'
         />
       </Grid>
-      <Grid item xs={4}>
+      <Grid item xs={12} sm={6} md={4}>
         {/* @ts-ignore */}
         <LabelledValue
           className={privateClassNames()}
@@ -41,10 +41,10 @@ export const CompanyInfoView = (props: CompanyInfoViewProps) => {
           label='Date of Incorporation'
         />
       </Grid>
-      <Grid item xs={4}>
+      <Grid item xs={12} sm={6} md={4}>
         <LabelledValue value={data.email} label='Email Address' />
       </Grid>
-      <Grid item xs={4}>
+      <Grid item xs={12} sm={6} md={4}>
         <LabelledValue
           className={privateClassNames()}
           value={data.contactNumber}

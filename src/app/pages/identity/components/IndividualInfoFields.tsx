@@ -49,7 +49,7 @@ export const IndividualInfoFields = (
           }}
         />
       </Grid>
-      <Grid item xs={4}>
+      <Grid item xs={12} sm={6} md={4}>
         <TypedField
           rootName={rootName}
           component={Input}
@@ -58,7 +58,7 @@ export const IndividualInfoFields = (
           label='First Name'
         />
       </Grid>
-      <Grid item xs={4}>
+      <Grid item xs={12} sm={6} md={4}>
         <TypedField
           rootName={rootName}
           component={Input}
@@ -67,7 +67,7 @@ export const IndividualInfoFields = (
           label='Middle Name'
         />
       </Grid>
-      <Grid item xs={4}>
+      <Grid item xs={12} sm={6} md={4}>
         <TypedField
           rootName={rootName}
           component={Input}
@@ -76,7 +76,7 @@ export const IndividualInfoFields = (
           label='Last Name'
         />
       </Grid>
-      <Grid item xs={4}>
+      <Grid item xs={12} sm={6} md={4}>
         {/* @ts-ignore */}
         <TypedField
           className={privateClassNames()}
@@ -89,7 +89,7 @@ export const IndividualInfoFields = (
           valueExtractor={dateTimeValueExtractor}
         />
       </Grid>
-      <Grid item xs={4}>
+      <Grid item xs={12} sm={6} md={4}>
         <TypedField
           rootName={rootName}
           component={NationalitySelect}
@@ -98,7 +98,7 @@ export const IndividualInfoFields = (
           label='Nationality'
         />
       </Grid>
-      <Grid item xs={4}>
+      <Grid item xs={12} sm={6} md={4}>
         <TypedField
           rootName={rootName}
           component={CountrySelect}
@@ -107,7 +107,7 @@ export const IndividualInfoFields = (
           label='Country of Residence'
         />
       </Grid>
-      <Grid item xs={4}>
+      <Grid item xs={12} sm={6} md={4}>
         <TypedField
           rootName={rootName}
           component={Input}
@@ -118,7 +118,7 @@ export const IndividualInfoFields = (
           defaultValue={defaultEmail}
         />
       </Grid>
-      <Grid item xs={4}>
+      <Grid item xs={12} sm={6} md={4}>
         <TypedField
           className={privateClassNames()}
           rootName={rootName}
@@ -128,7 +128,7 @@ export const IndividualInfoFields = (
           label='Contact Number'
         />
       </Grid>
-      <Grid item xs={4}>
+      <Grid item xs={12} sm={6} md={4}>
         <TypedField
           rootName={rootName}
           component={GenderSelect}
@@ -137,7 +137,7 @@ export const IndividualInfoFields = (
           label='Gender'
         />
       </Grid>
-      <Grid item xs={4}>
+      <Grid item xs={12} sm={6} md={4}>
         <TypedField
           rootName={rootName}
           component={MaritalStatusSelect}
