@@ -1,22 +1,36 @@
-import { InternalRouteProps } from 'types/util'
 import { generateAppRouterHook } from 'helpers/generateAppRouterHook'
-import { InvestLanding } from 'app/pages/invest/pages/InvestLanding'
 import { makeURL } from 'config/appURL'
+import { CommitmentsRoot } from 'app/pages/invest/pages/CommitmentsRoot'
+import { DSORoot } from 'app/pages/invest/pages/DSORoot'
+import { InvestLanding } from 'app/pages/invest/pages/InvestLanding'
 
 export const InvestRoute = {
-  list: makeURL(['app', 'invest'])
+  landing: makeURL(['app', 'invest']),
+  dso: makeURL(['app', 'invest', 'offerings']),
+  commitments: makeURL(['app', 'invest', 'commitments'])
 }
 
-export const investRoutes: InternalRouteProps[] = [
+export const investRoutes = [
   {
     label: 'Invest',
-    path: InvestRoute.list,
-    component: InvestLanding
+    path: InvestRoute.landing,
+    component: InvestLanding,
+    exact: true
+  },
+  {
+    label: 'DSOs',
+    path: InvestRoute.dso,
+    component: DSORoot
+  },
+  {
+    label: 'My Commitments',
+    path: InvestRoute.commitments,
+    component: CommitmentsRoot
   }
 ]
 
 export const useInvestRouter = generateAppRouterHook(
   InvestRoute,
-  InvestRoute.list,
+  InvestRoute.landing,
   investRoutes
 )

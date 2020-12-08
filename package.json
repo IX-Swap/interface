@@ -35,6 +35,7 @@
     "notistack": "^1.0.1",
     "prettier": "^2.1.2",
     "prop-types": "^15.7.2",
+    "pure-react-carousel": "^1.27.6",
     "react": "^16.13.1",
     "react-dom": "^16.13.1",
     "react-error-boundary": "^3.0.2",
@@ -166,6 +167,18 @@
   "babel": {
     "plugins": [
       "@fullstory/babel-plugin-annotate-react"
+    ]
+  },
+  "browserslist": {
+    "production": [
+      ">0.2%",
+      "not dead",
+      "not op_mini all"
+    ],
+    "development": [
+      "last 1 chrome version",
+      "last 1 firefox version",
+      "last 1 safari version"
     ]
   }
 }

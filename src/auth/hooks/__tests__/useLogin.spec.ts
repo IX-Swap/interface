@@ -4,6 +4,7 @@ import { useLogin } from 'auth/hooks/useLogin'
 import { unsuccessfulResponse } from '__fixtures__/api'
 import { loginArgs } from '__fixtures__/auth'
 import { user } from '__fixtures__/user'
+import { authURL } from 'config/apiURL'
 
 describe('useLogin', () => {
   afterEach(async () => {
@@ -32,7 +33,7 @@ describe('useLogin', () => {
           const [mutate] = result.current
           void mutate(loginArgs)
 
-          expect(postFn).toHaveBeenNthCalledWith(1, '/auth/sign-in', loginArgs)
+          expect(postFn).toHaveBeenNthCalledWith(1, authURL.login, loginArgs)
           expect(storageService.set).toHaveBeenNthCalledWith(1, 'user', user)
           expect(storageService.set).toHaveBeenNthCalledWith(
             2,

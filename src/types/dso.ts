@@ -66,6 +66,19 @@ export interface BaseDigitalSecurityOffering extends AuthorizableWithIdentity {
 }
 
 export interface DigitalSecurityOffering extends BaseDigitalSecurityOffering {
+  promoted: boolean
+  favorite: boolean
+  insight: {
+    activityCount: number
+    approvedcommitmentCount: number
+    collectedOn: string
+    commitmentCount: number
+    commitmentTotal: number
+    investorCount: number
+    raisedMax: number
+    raisedMin?: number
+    raisedTotal: number
+  }
   documents: Maybe<DataroomFile[]>
   currency: Asset
   network: string
@@ -92,6 +105,9 @@ export type DSOFormValues = Omit<
   | 'corporate'
   | 'updatedAt'
   | 'identity'
+  | 'insight'
+  | 'favorite'
+  | 'promoted'
   | 'authorizations'
   | 'authorization'
   | 'authorizationDocuments'
@@ -112,3 +128,5 @@ export type DSORequestArgs = Omit<
   subscriptionDocument?: string
   documents: string[]
 }
+
+export type DSOLaunchStatus = 'live' | 'completed' | 'upcoming'

@@ -5,6 +5,7 @@ import { useAuth } from 'hooks/auth/useAuth'
 import { WithdrawalAddress } from 'types/withdrawalAddress'
 import { getIdFromObj } from 'helpers/strings'
 import { withdrawalAddressQueryKeys } from 'config/queryKeys'
+import { accountsURL } from 'config/apiURL'
 
 export const useWithdrawalAddressById = (
   withdrawalAddressId: string
@@ -12,7 +13,10 @@ export const useWithdrawalAddressById = (
   const { apiService } = useServices()
   const { user } = useAuth()
   const userId = getIdFromObj(user)
-  const uri = `accounts/withdrawal-addresses/${userId}/${withdrawalAddressId}`
+  const uri = accountsURL.withdrawalAddresses.getById(
+    userId,
+    withdrawalAddressId
+  )
   const getWithdrawalAddress = async () => {
     return await apiService.get<WithdrawalAddress>(uri)
   }

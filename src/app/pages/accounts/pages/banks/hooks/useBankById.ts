@@ -5,6 +5,7 @@ import { useAuth } from 'hooks/auth/useAuth'
 import { Bank } from 'types/bank'
 import { getIdFromObj } from 'helpers/strings'
 import { banksQueryKeys } from 'config/queryKeys'
+import { accountsURL } from 'config/apiURL'
 export interface UseBankByIdArgs {
   bankId: string
   ownerId?: string
@@ -15,7 +16,7 @@ export const useBankById = (args: UseBankByIdArgs): UseQueryData<Bank> => {
   const { apiService } = useServices()
   const { user } = useAuth()
   const userId = ownerId ?? getIdFromObj(user)
-  const uri = `accounts/banks/${userId}/${bankId}`
+  const uri = accountsURL.banks.getById(userId, bankId)
 
   const getBank = async () => await apiService.get<Bank>(uri)
   const { data, ...rest } = useQuery(

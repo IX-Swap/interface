@@ -1,6 +1,6 @@
 import React from 'react'
 import { render, cleanup } from 'test-utils'
-import { DSOOfferingTerms } from 'app/components/DSO/components/DSOOfferingTerms'
+import { DSOTerms } from 'app/components/DSO/components/DSOTerms'
 import { Form } from 'components/form/Form'
 import { monthsNumberFormat, percentageNumberFormat } from 'config/numberFormat'
 import { TypedField } from 'components/form/TypedField'
@@ -9,7 +9,7 @@ jest.mock('components/form/TypedField', () => ({
   TypedField: jest.fn(() => <input />)
 }))
 
-describe('DSOOfferingTerms', () => {
+describe('DSOTerms', () => {
   afterEach(async () => {
     await cleanup()
     jest.clearAllMocks()
@@ -18,7 +18,7 @@ describe('DSOOfferingTerms', () => {
   it('renders without error', () => {
     render(
       <Form>
-        <DSOOfferingTerms />
+        <DSOTerms />
       </Form>
     )
   })
@@ -26,7 +26,7 @@ describe('DSOOfferingTerms', () => {
   it('renders EditableField with correct props', () => {
     render(
       <Form>
-        <DSOOfferingTerms />
+        <DSOTerms />
       </Form>
     )
 

@@ -1,41 +1,35 @@
 import React from 'react'
-import { Container, Paper, Tabs, Tab, Divider } from '@material-ui/core'
-import { Link } from 'react-router-dom'
-import { useInvestListRouter } from 'app/pages/invest/routers/investLandingRouter'
+import { useAuth } from 'hooks/auth/useAuth'
+import { Grid, Button, Typography } from '@material-ui/core'
+import { useSetPageTitle } from 'app/hooks/useSetPageTitle'
+import { PromotedDSOs } from 'app/components/DSO/components/PromotedDSOs'
+import { AppRouterLinkComponent } from 'components/AppRouterLink'
+import { useInvestRouter } from 'app/pages/invest/routers/router'
+import { VSpacer } from 'components/VSpacer'
 
 export const InvestLanding = () => {
-  const { current, paths, renderRoutes } = useInvestListRouter()
-  const currentTabIdx = current.path.startsWith(paths.offerings) ? 0 : 1
+  const { user } = useAuth()
+  const { paths } = useInvestRouter()
+
+  useSetPageTitle(`Welcome, ${user?.name ?? ''}`)
 
   return (
-    <Paper square>
-      <Tabs
-        variant='fullWidth'
-        value={currentTabIdx}
-        indicatorColor='primary'
-        textColor='primary'
-        aria-label='disabled tabs example'
-        data-testid='invest-tabs'
-      >
-        <Tab
-          value={0}
-          label='Listings'
-          component={Link}
-          to={paths.offerings}
-          replace
-          data-testid='listings'
-        />
-        <Tab
-          value={1}
-          label='My Commitments'
-          component={Link}
+    <>
+      <Grid container justify='space-between'>
+        <Typography variant='h4'>Top Offers</Typography>
+        <Button
+          component={AppRouterLinkComponent}
           to={paths.commitments}
-          replace
-          data-testid='commitments'
-        />
-      </Tabs>
-      <Divider />
-      <Container>{renderRoutes()}</Container>
-    </Paper>
+          color='primary'
+          variant='outlined'
+          size='large'
+          disableElevation
+        >
+          View my commitments
+        </Button>
+      </Grid>
+      <VSpacer size='small' />
+      <PromotedDSOs />
+    </>
   )
 }

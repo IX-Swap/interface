@@ -167,6 +167,19 @@ export const dso: DigitalSecurityOffering = {
   authorizationDocuments: [],
   authorization: authorizationInfo,
   authorizations: [],
+  favorite: true,
+  promoted: true,
+  insight: {
+    activityCount: 14,
+    approvedcommitmentCount: 0,
+    collectedOn: '2020-10-19T10:32:44.716Z',
+    commitmentCount: 0,
+    commitmentTotal: 0,
+    investorCount: 0,
+    raisedMax: 0,
+    raisedMin: 0,
+    raisedTotal: 0
+  },
   identity: {
     individual,
     corporates: []

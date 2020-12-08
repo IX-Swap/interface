@@ -14,3 +14,110 @@ export const authorizerURL = {
   [AppFeature.DigitalSecurityWithdrawals]: '/accounts/security/withdrawals',
   [AppFeature.Offerings]: '/issuance/dso/list'
 }
+
+export const identityURL = {
+  corporates: {
+    getAllBySuperUser: '/identity/corporates/list',
+    getAllByUserId: (userId: string) => `/identity/corporates/${userId}/list`,
+    create: (userId: string) => `/identity/corporates/${userId}`,
+    update: (userId: string, corporateId: string) =>
+      `/identity/corporates/${userId}/${corporateId}`
+  },
+  individuals: {
+    update: (userId: string) => `/identity/individuals/${userId}`,
+    get: (userId: string) => `/identity/individuals/${userId}`
+  }
+}
+
+export const accountsURL = {
+  banks: {
+    getAll: (userId: string) => `/accounts/banks/list/${userId}`,
+    getById: (userId: string, bankId: string) =>
+      `accounts/banks/${userId}/${bankId}`,
+    create: (userId: string) => `/accounts/banks/${userId}`,
+    update: (userId: string, bankId: string) =>
+      `/accounts/banks/${userId}/${bankId}`
+  },
+  cashDeposits: {
+    getAll: (userId: string) => `/accounts/cash/deposits/${userId}`
+  },
+  cashWithdrawals: {
+    create: (userId: string) => `/accounts/cash/withdrawals/${userId}`
+  },
+  dsWithdrawals: {
+    create: (userId: string) => `/accounts/security/withdrawals/${userId}`
+  },
+  withdrawalAddresses: {
+    getById: (userId: string, withdrawalAddressId: string) =>
+      `accounts/withdrawal-addresses/${userId}/${withdrawalAddressId}`,
+    create: (userId: string) => `/accounts/withdrawal-addresses/${userId}`,
+    getAll: (userId: string) => `/accounts/withdrawal-addresses/list/${userId}`,
+    getAllNetworks: '/blockchain/networks'
+  },
+  assets: {
+    getById: (assetId: string) => `accounts/assets/${assetId}`,
+    getAll: '/accounts/assets/list'
+  },
+  balance: {
+    getAll: (userId: string) => `/accounts/balance/${userId}`,
+    getByUserId: (userId: string) => `/accounts/balance/${userId}`,
+    getByAssetId: (userId: string, assetId: string) =>
+      `/accounts/balance/${userId}/${assetId}`
+  }
+}
+
+export const issuanceURL = {
+  commitments: {
+    overrideById: (commitmentId: string) =>
+      `/issuance/commitments/${commitmentId}/override`,
+    createDSOActivity: (userId: string, dsoId: string) =>
+      `/issuance/dso/${userId}/${dsoId}/activities`,
+    getById: (userId: string, commitmentId: string) =>
+      `/issuance/commitments/${userId}/${commitmentId}`,
+    getAll: (userId: string) => `/issuance/commitments/${userId}`
+  },
+  dso: {
+    getPromoted: '/issuance/dso/list/promoted',
+    favorite: (dsoId: string) => `/issuance/dso/favorites/${dsoId}`,
+    getById: (userId: string, dsoId: string) =>
+      `/issuance/dso/${userId}/${dsoId}`,
+    create: (userId: string) => `/issuance/dso/${userId}`,
+    update: (userId: string, dsoId: string) =>
+      `/issuance/dso/${userId}/${dsoId}`
+  }
+}
+
+export const authURL = {
+  login: '/auth/sign-in',
+  changePassword: (userId: string) => `/auth/password/change/${userId}`,
+  resetPassword: '/auth/password/reset/start',
+  resetPasswordConfirm: '/auth/password/reset/confirm',
+  enable2fa: (userId: string, otp: string) =>
+    `/auth/2fa/setup/${userId}/confirm/${otp}`,
+  setup2fa: (userId: string) => `/auth/2fa/setup/${userId}`,
+  register: '/auth/registrations',
+  registerConfirm: '/auth/registrations/confirm'
+}
+
+export const userURL = {
+  getUserProfile: (userId: string) => `/auth/profiles/${userId}`,
+  updateRoles: (userId: string) => `/auth/users/${userId}/roles`
+}
+
+export const notificationsURL = {
+  markReadById: (userId: string, notificationId: string) =>
+    `/core/notifications/mark-read/${userId}/${notificationId}`,
+  markAllAsRead: (userId: string) =>
+    `/core/notifications/mark-read/all/${userId}`
+}
+
+export const documentsURL = {
+  getAll: (userId: string) => `/dataroom/list/${userId}`,
+  getById: (userId: string, fileId: string) =>
+    `/dataroom/raw/${userId}/${fileId}`,
+  getBySuperUser: (fileId: string) => `/dataroom/raw/${fileId}`,
+  create: '/dataroom',
+  deleteById: (userId: string, fileId: string) =>
+    `/dataroom/${userId}/${fileId}`,
+  deleteBySuperUser: (fileId: string) => `/dataroom/${fileId}`
+}

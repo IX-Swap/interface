@@ -7,11 +7,12 @@ import { useParsedData } from 'hooks/useParsedData'
 import { DataroomFile } from 'types/dataroomFile'
 import { getIdFromObj } from 'helpers/strings'
 import { documentsQueryKeys } from 'config/queryKeys'
+import { documentsURL } from 'config/apiURL'
 
 export const useAllDocuments = () => {
   const { apiService } = useServices()
   const { user } = useAuth()
-  const url = `/dataroom/list/${getIdFromObj(user)}`
+  const url = documentsURL.getAll(getIdFromObj(user))
   const downloadFile = async () => {
     return await apiService.post<PaginatedData<DataroomFile>>(url, {
       ...paginationArgs,

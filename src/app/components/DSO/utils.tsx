@@ -1,8 +1,13 @@
 import React from 'react'
-import { DigitalSecurityOffering, DSOFormValues } from 'types/dso'
+import {
+  DigitalSecurityOffering,
+  DSOFormValues,
+  DSOLaunchStatus
+} from 'types/dso'
 import { DataroomFile } from 'types/dataroomFile'
 import { percentageToNumber } from 'app/pages/issuance/utils'
 import { getIdFromObj } from 'helpers/strings'
+import { calculatePercent } from 'helpers/numbers'
 import isPast from 'date-fns/isPast'
 
 export const transformDSOToFormValues = (
@@ -36,6 +41,32 @@ export const documentValueExtractor = (
   value?: DataroomFile | DataroomFile[]
 ) => {
   return Array.isArray(value) ? value?.[0]._id : value?._id
+}
+
+const dsoStatusColors = {
+  live: '#8995FC',
+  completed: '#5cc72a',
+  upcoming: '#eb9a05'
+}
+
+export const getDSOStats = (dso: DigitalSecurityOffering) => {
+  const percentRaised = calculatePercent(
+    dso.insight.raisedTotal,
+    dso.totalFundraisingAmount ?? 0
+  )
+
+  const now = new Date().getTime()
+  const launchDate = new Date(dso.launchDate).getTime()
+  const completionDate = now + 1
+
+  let status: DSOLaunchStatus = 'upcoming'
+  if (completionDate <= now || percentRaised === 100) {
+    status = 'completed'
+  } else if (launchDate <= now) {
+    status = 'live'
+  }
+
+  return { status, percentRaised, color: dsoStatusColors[status] }
 }
 
 export const renderStringToHTML = (value: string) => (

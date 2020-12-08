@@ -9,7 +9,7 @@ import { DSOContainer } from 'app/components/DSO/components/DSOContainer'
 import { useFormContext } from 'react-hook-form'
 import { DSOFormValues } from 'types/dso'
 
-export const DSOOfferingTerms = () => {
+export const DSOTerms = () => {
   const { control } = useFormContext<DSOFormValues>()
 
   return (

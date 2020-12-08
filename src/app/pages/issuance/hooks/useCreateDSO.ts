@@ -5,6 +5,7 @@ import { useMutation } from 'react-query'
 import { QueryOrMutationCallbacks } from 'hooks/types'
 import { getIdFromObj } from 'helpers/strings'
 import { useIssuanceRouter } from '../router'
+import { issuanceURL } from 'config/apiURL'
 
 export const useCreateDSO = (
   callbacks?: QueryOrMutationCallbacks<DigitalSecurityOffering>
@@ -12,7 +13,7 @@ export const useCreateDSO = (
   const { apiService, snackbarService } = useServices()
   const { replace } = useIssuanceRouter()
   const { user } = useAuth()
-  const url = `/issuance/dso/${getIdFromObj(user)}`
+  const url = issuanceURL.dso.create(getIdFromObj(user))
   const createDSO = async (args: DSORequestArgs) => {
     return await apiService.post<DigitalSecurityOffering>(url, args)
   }
