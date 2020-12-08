@@ -6,7 +6,8 @@ const generateQueryKey = (prefix: string, key: string) => {
 
 export const queryKeys = {
   notifications: 'notifications',
-  deployments: 'deployments'
+  deployments: 'deployments',
+  promo: 'promo'
 }
 
 export const documentsQueryKeys = {
