@@ -13,8 +13,6 @@ import { useSetPageTitle } from 'app/hooks/useSetPageTitle'
 import { renderMonths, renderPercentage } from 'helpers/rendering'
 import { formatMoney } from 'helpers/numbers'
 import { RejectionMessage } from 'app/pages/authorizer/components/RejectionMessage'
-import { getIdFromObj } from 'helpers/strings'
-import { useAuth } from 'hooks/auth/useAuth'
 import { DSOLogo } from './components/DSOLogo'
 import { DownloadDSOSubscriptionDocument } from 'app/components/DSO/components/DownloadDSOSubscriptionDocument'
 import { DownloadDSODocument } from 'app/components/DSO/components/DownloadDSODocument'
@@ -28,9 +26,6 @@ export interface DSOViewProps {
 
 export const DSOView = (props: DSOViewProps) => {
   const { data, showAuthorizations = false } = props
-  const { user } = useAuth()
-  const userId = getIdFromObj(user)
-  const isMyDSO = data.user === userId
 
   useSetPageTitle(data.tokenName)
 
@@ -229,11 +224,9 @@ export const DSOView = (props: DSOViewProps) => {
         <Typography>{renderStringToHTML(data.businessModel)}</Typography>
       </DSOContainer>
 
-      {isMyDSO && (
-        <DSOContainer title='Token' item xs={12}>
-          <DSOToken />
-        </DSOContainer>
-      )}
+      <DSOContainer title='Token' item xs={12}>
+        <DSOToken />
+      </DSOContainer>
 
       <DSOContainer title='Use of Proceeds' item xs={12}>
         <Typography>{renderStringToHTML(data.useOfProceeds)}</Typography>
