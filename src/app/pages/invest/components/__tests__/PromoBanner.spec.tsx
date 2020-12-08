@@ -3,6 +3,7 @@ import { render, cleanup } from 'test-utils'
 import { mockPromoData } from '__fixtures__/promo'
 import { PromoBanner } from '../PromoBanner'
 import * as usePromo from '../../hooks/usePromo'
+import { generateQueryResult } from '__fixtures__/useQuery'
 
 describe('Promo Banner', () => {
   afterEach(async () => {
@@ -11,13 +12,16 @@ describe('Promo Banner', () => {
   })
 
   it('renders without error', () => {
-    jest.spyOn(usePromo, 'usePromo').mockReturnValue(mockPromoData)
-
+    jest
+      .spyOn(usePromo, 'usePromo')
+      .mockReturnValue(generateQueryResult({ data: mockPromoData }))
     render(<PromoBanner />)
   })
 
   it('renders with the fetched data correctly', () => {
-    jest.spyOn(usePromo, 'usePromo').mockReturnValue(mockPromoData)
+    jest
+      .spyOn(usePromo, 'usePromo')
+      .mockReturnValue(generateQueryResult({ data: mockPromoData }))
 
     const { getByText, getByTestId } = render(<PromoBanner />)
     expect(getByText('Stay Home, Stay Safe')).toBeTruthy()
@@ -27,7 +31,7 @@ describe('Promo Banner', () => {
   it('renders nothing if data is undefined', () => {
     jest
       .spyOn(usePromo, 'usePromo')
-      .mockReturnValue({ ...mockPromoData, promoData: undefined })
+      .mockReturnValue(generateQueryResult({ data: undefined }))
 
     const { container } = render(<PromoBanner />)
     expect(container).toBeEmptyDOMElement()
@@ -36,7 +40,9 @@ describe('Promo Banner', () => {
   it('renders nothing if fetch receives an error', () => {
     jest
       .spyOn(usePromo, 'usePromo')
-      .mockReturnValue({ ...mockPromoData, isError: true })
+      .mockReturnValue(
+        generateQueryResult({ data: mockPromoData, error: 'error' })
+      )
 
     const { container } = render(<PromoBanner />)
     expect(container).toBeEmptyDOMElement()
@@ -45,7 +51,9 @@ describe('Promo Banner', () => {
   it('renders nothing while fetching data', () => {
     jest
       .spyOn(usePromo, 'usePromo')
-      .mockReturnValue({ ...mockPromoData, isLoading: true })
+      .mockReturnValue(
+        generateQueryResult({ data: mockPromoData, isLoading: true })
+      )
 
     const { container } = render(<PromoBanner />)
     expect(container).toBeEmptyDOMElement()

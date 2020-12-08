@@ -1,4 +1,4 @@
-export const promoData = {
+export const mockPromoData = {
   title: 'Stay Home, Stay Safe',
   image: {
     src:
@@ -7,14 +7,4 @@ export const promoData = {
     title: 'Foo Bar',
     longdesc: 'Text alternatives are also important when images do not load.'
   }
-}
-
-export const mockPromoData = {
-  isError: false,
-  isLoading: false,
-  promoData: promoData
-}
-
-export const promoResponse = {
-  data: promoData
 }

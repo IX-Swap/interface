@@ -2,6 +2,7 @@ import React from 'react'
 import { Grid, Paper, Typography } from '@material-ui/core'
 import { makeStyles } from '@material-ui/core/styles'
 import { usePromo } from '../hooks/usePromo'
+import { generateImgSrc } from 'helpers/generateImgSrc'
 
 const useStyles = makeStyles(theme => ({
   promoBanner: {
@@ -22,22 +23,19 @@ const useStyles = makeStyles(theme => ({
 
 export const PromoBanner = () => {
   const styles = useStyles()
-  const { promoData, isLoading, isError } = usePromo()
+  const { data, isLoading, error } = usePromo()
 
-  if (typeof promoData === 'undefined' || isError || isLoading) return null
-  const { image, title } = promoData
+  if (typeof error !== 'undefined' && error !== null) {
+    return null
+  }
+  if (typeof data === 'undefined' || isLoading) {
+    return null
+  }
 
-  if (typeof image === 'undefined') return null
+  const { image, title } = data
 
-  function generateSrc(src: string) {
-    const url = new RegExp('^(?:[a-z]+:)?//', 'i')
-    if (url.test(src)) return src
-
-    const relativePath = new RegExp('^/', 'i')
-    if (relativePath.test(src))
-      return `${process.env.REACT_APP_API_URL ?? ''}${src}`
-
-    return src
+  if (typeof image === 'undefined') {
+    return null
   }
 
   return (
@@ -51,7 +49,7 @@ export const PromoBanner = () => {
         <img
           data-testid='promo-image'
           className={styles.bannerImage}
-          src={generateSrc(image.src)}
+          src={generateImgSrc(image.src)}
           alt={image.alt ?? image.title ?? ''}
           title={image.title}
         />
