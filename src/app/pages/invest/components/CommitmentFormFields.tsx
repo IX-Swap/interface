@@ -14,6 +14,7 @@ import { WithdrawalAddressSelect } from 'components/form/WithdrawalAddressSelect
 export interface CommitmentFormFieldsProps {
   symbol: string
   network?: string
+  decimalScale?: number
 }
 
 export const CommitmentFormFields = (props: CommitmentFormFieldsProps) => {
@@ -25,6 +26,8 @@ export const CommitmentFormFields = (props: CommitmentFormFieldsProps) => {
     control.setValue(path, value, { shouldValidate: true })
     control.setValue('totalAmount', nextValue)
   }
+
+  const decimalScale = props.decimalScale ?? 18
 
   return (
     <Grid container direction='column' spacing={2}>
@@ -51,7 +54,7 @@ export const CommitmentFormFields = (props: CommitmentFormFieldsProps) => {
           control={control}
           name='numberOfUnits'
           label='Number of Units'
-          numberFormat={{ ...moneyNumberFormat, decimalScale: 0 }}
+          numberFormat={{ ...moneyNumberFormat, decimalScale }}
           valueExtractor={numericValueExtractor}
           onChange={handleNumOfUnitsChange}
         />

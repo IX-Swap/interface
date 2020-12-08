@@ -60,7 +60,10 @@ describe('CommitmentFormFields', () => {
       expect.objectContaining({
         name: 'numberOfUnits',
         label: 'Number of Units',
-        numberFormat: { ...moneyNumberFormat, decimalScale: 0 }
+        numberFormat: {
+          ...moneyNumberFormat,
+          decimalScale: props.decimalScale ?? 18
+        }
       }),
       {}
     )

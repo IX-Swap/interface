@@ -29,11 +29,11 @@ describe('AuthorizerForm', () => {
     itemId: 'test-itemId',
     status: 'Submitted'
   }
-  const authorization = jest.fn()
+  const authorizationAction = jest.fn()
   beforeEach(() => {
     jest
       .spyOn(useAuthorizerAction, 'useAuthorizerAction')
-      .mockReturnValue([authorization, { isLoading: false } as any])
+      .mockReturnValue([authorizationAction, { isLoading: false } as any])
   })
   afterEach(async () => {
     await cleanup()
@@ -83,7 +83,7 @@ describe('AuthorizerForm', () => {
 
     expect(ApproveButton).toHaveBeenCalledTimes(1)
     expect(ApproveButton).toHaveBeenCalledWith(
-      { approve: authorization, disabled: false },
+      { approve: authorizationAction, disabled: false },
       {}
     )
   })
@@ -100,7 +100,7 @@ describe('AuthorizerForm', () => {
     )
 
     expect(ApproveButton).toHaveBeenCalledWith(
-      { approve: authorization, disabled: true },
+      { approve: authorizationAction, disabled: true },
       {}
     )
   })
@@ -117,7 +117,7 @@ describe('AuthorizerForm', () => {
     )
 
     expect(RejectButton).toHaveBeenCalledWith(
-      { reject: authorization, disabled: true },
+      { reject: authorizationAction, disabled: true },
       {}
     )
   })
@@ -135,7 +135,7 @@ describe('AuthorizerForm', () => {
 
     expect(ApproveButton).toHaveBeenCalledTimes(1)
     expect(ApproveButton).toHaveBeenCalledWith(
-      { approve: authorization, disabled: true },
+      { approve: authorizationAction, disabled: true },
       {}
     )
   })
@@ -153,7 +153,7 @@ describe('AuthorizerForm', () => {
 
     expect(RejectButton).toHaveBeenCalledTimes(1)
     expect(RejectButton).toHaveBeenCalledWith(
-      { reject: authorization, disabled: true },
+      { reject: authorizationAction, disabled: true },
       {}
     )
   })
@@ -167,7 +167,7 @@ describe('AuthorizerForm', () => {
 
     expect(RejectButton).toHaveBeenCalledTimes(1)
     expect(RejectButton).toHaveBeenCalledWith(
-      { reject: authorization, disabled: false },
+      { reject: authorizationAction, disabled: false },
       {}
     )
   })

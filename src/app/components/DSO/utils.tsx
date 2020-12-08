@@ -23,6 +23,7 @@ export const transformDSOToFormValues = (
     ...dso,
     corporate: dso.corporate._id,
     currency: getIdFromObj(dso.currency),
+    network: getIdFromObj(dso.network),
     dividendYield: percentageToNumber(dso.dividendYield),
     grossIRR: percentageToNumber(dso.grossIRR),
     equityMultiple: percentageToNumber(dso.equityMultiple),

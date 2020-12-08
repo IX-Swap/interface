@@ -17,7 +17,6 @@ import { DSOLogo } from './components/DSOLogo'
 import { DownloadDSOSubscriptionDocument } from 'app/components/DSO/components/DownloadDSOSubscriptionDocument'
 import { DownloadDSODocument } from 'app/components/DSO/components/DownloadDSODocument'
 import { DSOTeamMemberPhoto } from 'app/components/DSO/components/DSOTeamMemberPhoto'
-import { NetworkView } from './components/NetworkView'
 
 export interface DSOViewProps {
   data: DigitalSecurityOffering
@@ -73,10 +72,7 @@ export const DSOView = (props: DSOViewProps) => {
         </Grid>
 
         <Grid item>
-          <LabelledValue
-            label='Blockchain Network'
-            value={<NetworkView networkId={data.network} />}
-          />
+          <LabelledValue label='Blockchain Network' value={data.network.name} />
         </Grid>
       </Grid>
 

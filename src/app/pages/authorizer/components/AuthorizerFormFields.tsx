@@ -30,6 +30,8 @@ export const AuthorizerFormFields = (props: AuthorizerFormFieldsProps) => {
   const comment = control.watchInternal('comment') as string
   const hasComment = comment !== undefined && comment.trim().length > 0
   const isProcessing = isApproving || isRejecting
+
+  const canShareComment = !isProcessing && hasComment
   const canApprove = !isProcessing && ['Submitted', 'Rejected'].includes(status)
   const canReject = !isProcessing && ['Submitted', 'Approved'].includes(status)
 
@@ -41,6 +43,7 @@ export const AuthorizerFormFields = (props: AuthorizerFormFieldsProps) => {
         component={TextField}
         fullWidth
         variant='outlined'
+        disabled={isProcessing}
         label='Comment / Remarks'
         name='comment'
         multiline
@@ -52,7 +55,7 @@ export const AuthorizerFormFields = (props: AuthorizerFormFieldsProps) => {
         valueExtractor={booleanValueExtractor}
         component={Checkbox}
         control={control}
-        disabled={!hasComment}
+        disabled={!canShareComment}
         label='Share this comment with the user'
         name='sharedWithUser'
       />
