@@ -5,6 +5,7 @@ import { copyToClipboard } from 'helpers/clipboard'
 import { useSnackbar } from 'hooks/useSnackbar'
 import { AppRouterLink } from 'components/AppRouterLink'
 import { Network } from 'types/networks'
+import { getBlockchainUrl } from 'app/components/DSO/utils'
 
 export interface WalletAddressProps {
   address: string
@@ -23,8 +24,7 @@ export const WalletAddress = ({
     showSnackbar('Copied!!')
   }
 
-  const url =
-    network?.explorer.urls.address ?? 'https://ropsten.etherscan.io/address/%s'
+  const addressUrl = getBlockchainUrl(address, network, 'address')
 
   const textContent = `${address.slice(0, 4)}...${address.slice(
     address.length - 4
@@ -35,7 +35,7 @@ export const WalletAddress = ({
       {link ? (
         <AppRouterLink
           target='_blank'
-          to={url.replace(/%s/g, address)}
+          to={addressUrl}
           underline='always'
           color='primary'
         >

@@ -4,6 +4,7 @@ import { AppRouterLinkComponent, AppRouterLink } from 'components/AppRouterLink'
 import { useIssuanceRouter } from 'app/pages/issuance/router'
 import { useDSOById } from 'app/pages/invest/hooks/useDSOById'
 import { useAuth } from 'hooks/auth/useAuth'
+import { getBlockchainUrl } from '../utils'
 
 export const DSOToken = () => {
   const { paths, params } = useIssuanceRouter()
@@ -19,8 +20,7 @@ export const DSOToken = () => {
   const showButton = data.user === user?._id
 
   const token = data.deploymentInfo?.token
-  const url =
-    data.network?.explorer.urls.token ?? 'https://ropsten.etherscan.io/token/%s'
+  const tokenUrl = getBlockchainUrl(token, data.network, 'token')
 
   return (
     <Grid container alignItems='center' justify='space-between'>
@@ -28,7 +28,7 @@ export const DSOToken = () => {
         {token !== undefined ? (
           <AppRouterLink
             target='_blank'
-            to={url.replace(/%s/g, token)}
+            to={tokenUrl}
             underline='always'
             color='primary'
           >

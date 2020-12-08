@@ -10,6 +10,7 @@ import { numericValueExtractor, plainValueExtractor } from 'helpers/forms'
 import { UploadSignedSubscriptionDocument } from 'components/dataroom/UploadSignedSubscriptionDocument'
 import { privateClassNames } from 'helpers/classnames'
 import { WithdrawalAddressSelect } from 'components/form/WithdrawalAddressSelect'
+import { ETHEREUM_DECIMAL_PLACES } from 'config'
 
 export interface CommitmentFormFieldsProps {
   symbol: string
@@ -27,7 +28,7 @@ export const CommitmentFormFields = (props: CommitmentFormFieldsProps) => {
     control.setValue('totalAmount', nextValue)
   }
 
-  const decimalScale = props.decimalScale ?? 18
+  const decimalScale = props.decimalScale ?? ETHEREUM_DECIMAL_PLACES
 
   return (
     <Grid container direction='column' spacing={2}>
