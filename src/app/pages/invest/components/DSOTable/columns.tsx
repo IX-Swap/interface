@@ -5,6 +5,7 @@ import { DSONameAndStructure } from './DSONameAndStructure'
 import { DigitalSecurityOffering, DSOInsight, DSOTableColumn } from 'types/dso'
 import { PriceWithCurrency } from './PriceWithCurrency'
 import { DSORaised } from './DSORaised'
+import { renderDSOFavorite } from 'helpers/rendering'
 
 export const renderDSONameAndStructure = (
   c: CorporateIdentity,
@@ -12,11 +13,11 @@ export const renderDSONameAndStructure = (
 ) => <DSONameAndStructure corporate={c} dso={dso} />
 
 export const renderPriceWithCurrency = (
-  price: string,
+  price: number,
   dso: DigitalSecurityOffering
 ) => <PriceWithCurrency price={price} currency={dso.currency.symbol} />
 
-export const renderDSORaised = (
+export const renderDSOStatus = (
   i: DSOInsight,
   dso: DigitalSecurityOffering
 ) => <DSORaised insight={i} dso={dso} />
@@ -27,7 +28,8 @@ export const columns: Array<TableColumn<
 >> = [
   {
     key: 'favorite',
-    label: ''
+    label: '',
+    render: renderDSOFavorite
   },
   {
     key: 'corporate',
@@ -37,24 +39,27 @@ export const columns: Array<TableColumn<
   {
     key: 'insight',
     label: 'Status',
-    render: renderDSORaised
+    render: renderDSOStatus
   },
   {
     key: 'pricePerUnit',
     label: 'Price',
     render: renderPriceWithCurrency,
+    headAlign: 'right',
     align: 'right'
   },
   {
     key: 'totalFundraisingAmount',
     label: 'Raising',
     render: renderPriceWithCurrency,
+    headAlign: 'right',
     align: 'right'
   },
   {
     key: 'minimumInvestment',
     label: 'Minimum',
     render: renderPriceWithCurrency,
+    headAlign: 'right',
     align: 'right'
   },
   {

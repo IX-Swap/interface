@@ -50,23 +50,26 @@ const dsoStatusColors = {
 }
 
 export const getDSOStats = (dso: DigitalSecurityOffering) => {
+  const { insight, totalFundraisingAmount } = dso
+
   const percentRaised = calculatePercent(
-    dso.insight.raisedTotal,
-    dso.totalFundraisingAmount ?? 0
+    insight.raisedTotal,
+    totalFundraisingAmount ?? 0
   )
 
-  const now = new Date().getTime()
-  const launchDate = new Date(dso.launchDate).getTime()
-  const completionDate = now + 1
-
   let status: DSOLaunchStatus = 'upcoming'
-  if (completionDate <= now || percentRaised === 100) {
+
+  if (isDSOCompleted(dso)) {
+    // completionDate < today
     status = 'completed'
-  } else if (launchDate <= now) {
+  } else if (isDSOLive(dso)) {
+    // launchDate  < today
     status = 'live'
   }
 
-  return { status, percentRaised, color: dsoStatusColors[status] }
+  const color = dsoStatusColors[status]
+
+  return { status, percentRaised, color }
 }
 
 export const renderStringToHTML = (value: string) => (
@@ -88,4 +91,26 @@ export const isDSOLive = (dso: DigitalSecurityOffering | undefined) => {
   const pastLaunchDate = isPast(new Date(dso.launchDate))
 
   return wasApproved && pastLaunchDate
+}
+
+export const isDSOCompleted = (dso: DigitalSecurityOffering | undefined) => {
+  if (dso === undefined) {
+    return false
+  }
+
+  const { authorizations, completionDate } = dso
+
+  if (
+    authorizations === undefined ||
+    completionDate === undefined ||
+    completionDate === null
+  ) {
+    return false
+  }
+
+  const wasApproved = authorizations.some(({ status }) => status === 'Approved')
+
+  const pastCompletionDate = isPast(new Date(completionDate))
+
+  return wasApproved && pastCompletionDate
 }

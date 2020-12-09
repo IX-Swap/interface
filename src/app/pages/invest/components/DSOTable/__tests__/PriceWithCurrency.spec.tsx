@@ -3,7 +3,7 @@ import { render, cleanup } from 'test-utils'
 import { PriceWithCurrency, PriceWithCurrencyProps } from '../PriceWithCurrency'
 
 const sampleProps: PriceWithCurrencyProps = {
-  price: '100000000',
+  price: 100000000,
   currency: 'SGD'
 }
 

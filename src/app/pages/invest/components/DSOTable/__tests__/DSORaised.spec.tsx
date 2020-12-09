@@ -1,27 +1,42 @@
 import React from 'react'
 import { render } from 'test-utils'
 import { dso, dsoInsight } from '__fixtures__/authorizer'
-import { DSORaised, DSORaisedProps } from '../DSORaised'
+import {
+  DSORaised,
+  DSORaisedProps
+} from 'app/pages/invest/components/DSOTable/DSORaised'
+import { DSOProgressBar } from 'app/components/DSO/components/DSOProgressBar'
 
-const sampleProps: DSORaisedProps = {
+jest.mock('app/components/DSO/components/DSOProgressBar', () => ({
+  DSOProgressBar: jest.fn(() => null)
+}))
+
+const props: DSORaisedProps = {
   insight: dsoInsight,
   dso: dso
 }
 
 describe('DSO Insight', () => {
   it('renders without any errors', () => {
-    render(<DSORaised {...sampleProps} />)
+    render(<DSORaised {...props} />)
   })
 
-  it('renders progress bar if launch date has passed', () => {
-    sampleProps.dso.launchDate = '11-01-2020'
-    const { getByTestId } = render(<DSORaised {...sampleProps} />)
-    expect(getByTestId('progress-bar')).toBeTruthy()
+  it('renders DSOProgressBar correctly if launch date has passed', () => {
+    props.dso.launchDate = '11-01-2020'
+    render(<DSORaised {...props} />)
+
+    expect(DSOProgressBar).toHaveBeenCalled()
+    expect(DSOProgressBar).toHaveBeenCalledWith(
+      {
+        dso: props.dso
+      },
+      {}
+    )
   })
 
-  it('renders progress bar if launch date has not yet passed', () => {
-    sampleProps.dso.launchDate = '11-01-2300'
-    const { getByText } = render(<DSORaised {...sampleProps} />)
+  it('renders "upcoming" if launch date has not yet passed', () => {
+    props.dso.launchDate = '11-01-2300'
+    const { getByText } = render(<DSORaised {...props} />)
     expect(getByText('Upcomming')).toBeTruthy()
   })
 })

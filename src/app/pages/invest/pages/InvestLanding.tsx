@@ -6,7 +6,7 @@ import { PromotedDSOs } from 'app/components/DSO/components/PromotedDSOs'
 import { AppRouterLinkComponent } from 'components/AppRouterLink'
 import { useInvestRouter } from 'app/pages/invest/routers/router'
 import { VSpacer } from 'components/VSpacer'
-import { DSOTable } from '../components/DSOTable/DSOTable'
+import { DSOTable } from 'app/pages/invest/components/DSOTable/DSOTable'
 
 export const InvestLanding = () => {
   const { user } = useAuth()
@@ -17,21 +17,33 @@ export const InvestLanding = () => {
   return (
     <>
       <Grid container justify='space-between'>
-        <Typography variant='h4'>Top Offers</Typography>
-        <Button
-          component={AppRouterLinkComponent}
-          to={paths.commitments}
-          color='primary'
-          variant='outlined'
-          size='large'
-          disableElevation
-        >
-          View my commitments
-        </Button>
+        <Grid item>
+          <Typography variant='h4'>Top Offers</Typography>
+        </Grid>
+        <Grid item>
+          <Button
+            component={AppRouterLinkComponent}
+            to={paths.commitments}
+            color='primary'
+            variant='outlined'
+            size='large'
+            disableElevation
+          >
+            View my commitments
+          </Button>
+        </Grid>
       </Grid>
       <VSpacer size='small' />
       <PromotedDSOs />
-      <DSOTable />
+      <VSpacer size='small' />
+      <Grid container direction='column' spacing={4}>
+        <Grid item>
+          <Typography variant='h4'>More Offers for You</Typography>
+        </Grid>
+        <Grid item>
+          <DSOTable />
+        </Grid>
+      </Grid>
     </>
   )
 }

@@ -1,12 +1,13 @@
 import React from 'react'
 import { moneyNumberFormat } from 'config/numberFormat'
 import { numericValueExtractor } from 'helpers/forms'
-import { Grid, Input } from '@material-ui/core'
+import { Grid } from '@material-ui/core'
 import { TypedField } from 'components/form/TypedField'
 import { NumericInput } from 'components/form/NumericInput'
 import { DSOContainer } from 'app/components/DSO/components/DSOContainer'
 import { useFormContext } from 'react-hook-form'
 import { DSOFormValues } from 'types/dso'
+import { CapitalStructureSelect } from 'components/form/CapitalStructureSelect'
 
 export const DSOStatusFields = () => {
   const { control } = useFormContext<DSOFormValues>()
@@ -17,7 +18,7 @@ export const DSOStatusFields = () => {
         <Grid item>
           <TypedField
             control={control}
-            component={Input}
+            component={CapitalStructureSelect}
             label='Capital Structure'
             name='capitalStructure'
           />
