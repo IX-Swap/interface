@@ -7,6 +7,7 @@ import { AppRouterLinkComponent } from 'components/AppRouterLink'
 import { useInvestRouter } from 'app/pages/invest/routers/router'
 import { VSpacer } from 'components/VSpacer'
 import { DSOTable } from 'app/pages/invest/components/DSOTable/DSOTable'
+import { PromoBanner } from '../components/PromoBanner'
 
 export const InvestLanding = () => {
   const { user } = useAuth()
@@ -35,7 +36,9 @@ export const InvestLanding = () => {
       </Grid>
       <VSpacer size='small' />
       <PromotedDSOs />
-      <VSpacer size='small' />
+      <VSpacer size='medium' />
+      <PromoBanner />
+      <VSpacer size='medium' />
       <Grid container direction='column' spacing={4}>
         <Grid item>
           <Typography variant='h4'>More Offers for You</Typography>
