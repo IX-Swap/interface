@@ -10,6 +10,9 @@ import { Maybe } from 'types/util'
 import { WalletAddress } from 'app/components/WalletAddress'
 import { DSOFavorite } from 'app/components/DSOFavorite'
 import { DigitalSecurityOffering } from 'types/dso'
+import { formatMoney } from './numbers'
+import { DSOLogo } from 'app/components/DSO/components/DSOLogo'
+import { Commitment } from 'types/commitment'
 
 export const renderMenu = (arr: any[]): JSX.Element[] => {
   return arr.map(
@@ -26,6 +29,13 @@ export const renderMenu = (arr: any[]): JSX.Element[] => {
     )
   )
 }
+
+export const renderCommitmentMoney = (a: number, row: Commitment) =>
+  formatMoney(a, row.currency.numberFormat.currency)
+
+export const renderCommitmentAvatar = (_: any, row: Commitment) => (
+  <DSOLogo dsoId={row.dso._id} size={40} />
+)
 
 export const renderDSOFavorite = (
   _: any,

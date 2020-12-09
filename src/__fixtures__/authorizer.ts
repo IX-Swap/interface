@@ -164,6 +164,7 @@ export const dso: DigitalSecurityOffering = {
   investmentStructure: 'investment structure',
   issuerName: 'issuer name',
   launchDate: '01-01-2000',
+  completionDate: '12-12-2220',
   leverage: 0,
   logo: '5f4f7d87f3e2c40bbab8a3f1',
   minimumInvestment: 100,
@@ -179,19 +180,8 @@ export const dso: DigitalSecurityOffering = {
   authorizationDocuments: [],
   authorization: authorizationInfo,
   authorizations: [],
-  favorite: true,
+  isStarred: true,
   promoted: true,
-  insight: {
-    activityCount: 14,
-    approvedcommitmentCount: 0,
-    collectedOn: '2020-10-19T10:32:44.716Z',
-    commitmentCount: 0,
-    commitmentTotal: 0,
-    investorCount: 0,
-    raisedMax: 0,
-    raisedMin: 0,
-    raisedTotal: 0
-  },
   identity: {
     individual,
     corporates: []

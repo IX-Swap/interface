@@ -1,9 +1,10 @@
 import React from 'react'
-import { DigitalSecurityOffering, DSOInsight } from 'types/dso'
-import { RaisedProgressBar } from './RaisedProgressBar'
-import { formatDistanceToNow, compareAsc } from 'date-fns'
+import { Box, Grid } from '@material-ui/core'
 import { makeStyles } from '@material-ui/core/styles'
-import { Box } from '@material-ui/core'
+import { getTimeFromNow } from 'helpers/dates'
+import { getDSOStats } from 'app/components/DSO/utils'
+import { DigitalSecurityOffering, DSOInsight } from 'types/dso'
+import { DSOProgressBar } from 'app/components/DSO/components/DSOProgressBar'
 
 const useStyle = makeStyles(theme => ({
   container: {
@@ -29,28 +30,26 @@ export const DSORaised: React.FC<DSORaisedProps> = ({
   dso
 }: DSORaisedProps) => {
   const { container, date } = useStyle()
+  const launchDate = new Date(dso.launchDate)
+  const { status, color, percentRaised } = getDSOStats(dso)
 
   if (typeof insight === 'undefined' || typeof dso === 'undefined') {
     return null
   }
 
-  const percent =
-    (insight.raisedTotal / (dso.totalFundraisingAmount ?? 1)) * 100
-  const launchDate = new Date(dso.launchDate)
-  const compare = compareAsc(launchDate, Date.now())
-
   return (
     <Box className={container}>
-      {compare < 0 ? (
-        <RaisedProgressBar
-          progress={percent}
-        /> /* TODO: Replace with Varun's Progress Bar */
+      {status !== 'upcoming' ? (
+        <Grid container data-testid='progress-bar' direction='column'>
+          <Box style={{ color }}>{percentRaised.toFixed(0)}%</Box>
+          <DSOProgressBar dso={dso} />
+        </Grid>
       ) : (
-        <Box>Upcomming</Box>
+        <Grid container direction='column'>
+          <Box>Upcomming</Box>
+        </Grid>
       )}
-      <Box className={date}>
-        {formatDistanceToNow(launchDate, { addSuffix: true })}
-      </Box>
+      <Box className={date}>{getTimeFromNow(launchDate)}</Box>
     </Box>
   )
 }

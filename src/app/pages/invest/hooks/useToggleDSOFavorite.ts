@@ -1,8 +1,9 @@
 import { useServices } from 'hooks/useServices'
-import { useMutation } from 'react-query'
+import { useMutation, queryCache } from 'react-query'
 import { getIdFromObj } from 'helpers/strings'
 import { DigitalSecurityOffering } from 'types/dso'
 import { issuanceURL } from 'config/apiURL'
+import { dsoQueryKeys } from 'config/queryKeys'
 
 export const useToggleDSOFavorite = (dso: DigitalSecurityOffering) => {
   const { apiService, snackbarService } = useServices()
@@ -12,12 +13,13 @@ export const useToggleDSOFavorite = (dso: DigitalSecurityOffering) => {
     if (isFav) {
       return await apiService.delete(uri, {})
     } else {
-      return await apiService.post(uri, {})
+      return await apiService.put(uri, {})
     }
   }
 
   return useMutation(mutateFn, {
     onSuccess: () => {
+      void queryCache.invalidateQueries(dsoQueryKeys.getList)
       void snackbarService.showSnackbar('Success', 'success')
     },
     onError: (error: any) => {

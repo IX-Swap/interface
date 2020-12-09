@@ -1,17 +1,20 @@
 import React from 'react'
 import { DigitalSecurityOffering } from 'types/dso'
-import { Grid } from '@material-ui/core'
+import { Grid, Tooltip } from '@material-ui/core'
 import { LabelledValue } from 'components/LabelledValue'
 import { DSOInvestLink } from 'app/components/DSO/components/DSOInvestLink'
 import { DSOProgressBar } from 'app/components/DSO/components/DSOProgressBar'
 import { formatMoney, abbreviateNumber } from 'helpers/numbers'
 import { VSpacer } from 'components/VSpacer'
+import { getDSOStats } from 'app/components/DSO/utils'
 
 export interface DSOCardContentProps {
   dso: DigitalSecurityOffering
 }
 
 export const DSOCardContent = ({ dso }: DSOCardContentProps) => {
+  const { color, status, percentRaised } = getDSOStats(dso)
+
   return (
     <Grid container spacing={4} direction='column'>
       <VSpacer size='medium' />
@@ -68,7 +71,17 @@ export const DSOCardContent = ({ dso }: DSOCardContentProps) => {
       </Grid>
 
       <Grid item style={{ paddingTop: 0, paddingBottom: 0 }}>
-        <DSOProgressBar dso={dso} showDSOStatus />
+        <Tooltip
+          title={`${percentRaised}%`}
+          aria-label={`${percentRaised}% raised`}
+        >
+          <div style={{ color: color }}>
+            <Grid container justify='flex-end'>
+              <Grid item>{status === 'live' ? 'Live' : <>&nbsp;</>}</Grid>
+            </Grid>
+            <DSOProgressBar dso={dso} />
+          </div>
+        </Tooltip>
       </Grid>
 
       <Grid container item justify='flex-end'>
