@@ -25,11 +25,8 @@ export const defaultDSOColumns: Record<DSOTableColumn, boolean> = {
 }
 
 export const customField: CustomField = {
-  _id: '2321312312312312',
   columns: defaultDSOColumns,
   feature: 'offerings',
   service: 'invest',
-  user: '2321321312312',
-  createdAt: '10-10-2020',
-  updatedAt: '10-10-2020'
+  customFields: {}
 }

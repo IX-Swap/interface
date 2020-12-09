@@ -3,7 +3,7 @@ import { usersQueryKeys } from 'config/queryKeys'
 import { getIdFromObj } from 'helpers/strings'
 import { useAuth } from 'hooks/auth/useAuth'
 import { useServices } from 'hooks/useServices'
-import { useQuery } from 'react-query'
+import { useQuery, useQueryCache } from 'react-query'
 import { CustomField } from 'types/user'
 
 export interface UseCustomFieldArgs {
@@ -14,7 +14,9 @@ export interface UseCustomFieldArgs {
 export const useCustomField = (args: UseCustomFieldArgs) => {
   const { service, feature } = args
   const { apiService } = useServices()
+  const queryCache = useQueryCache()
   const { user } = useAuth()
+  const queryKey = usersQueryKeys.getCustomFields(service, feature)
 
   const fetchCustomFields = async () => {
     return await apiService.get<CustomField>(
@@ -22,13 +24,12 @@ export const useCustomField = (args: UseCustomFieldArgs) => {
     )
   }
 
-  const { data, ...rest } = useQuery(
-    usersQueryKeys.getCustomFields(service, feature),
-    fetchCustomFields
-  )
+  const { data, ...rest } = useQuery(queryKey, fetchCustomFields)
+
+  const cachedData = queryCache.getQueryData<CustomField>(queryKey)
 
   return {
     ...rest,
-    data: data?.data
+    data: data?.data ?? cachedData
   }
 }

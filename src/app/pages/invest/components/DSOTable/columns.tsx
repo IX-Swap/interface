@@ -62,3 +62,13 @@ export const columns: Array<TableColumn<
     label: 'Distribution Frequency'
   }
 ]
+
+export const defaultSelectedColumns: Record<DSOTableColumn, boolean> = {
+  corporate: true,
+  distributionFrequency: true,
+  favorite: true,
+  insight: true,
+  minimumInvestment: true,
+  pricePerUnit: true,
+  totalFundraisingAmount: true
+}

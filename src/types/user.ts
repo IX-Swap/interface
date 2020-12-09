@@ -12,14 +12,11 @@ export default interface User {
 }
 
 export interface CustomField {
-  _id: string
-  createdAt: string
-  updatedAt: string
   feature: string
   service: string
-  user: string
-  columns: {
-    [key: string]: boolean
+  columns: Record<DSOTableColumn, boolean>
+  customFields: {
+    [key: string]: string | number | boolean
   }
 }
 

@@ -5,9 +5,7 @@ import { DigitalSecurityOffering, DSOTableColumn } from 'types/dso'
 import { TableColumn } from 'types/util'
 import { columns } from 'app/pages/invest/components/DSOTable/columns'
 
-export const getDefaultColumnsObject = (
-  columns: Array<TableColumn<DigitalSecurityOffering, DSOTableColumn>>
-) => {
+export const getDefaultColumnsObject = () => {
   return columns.reduce(
     (acc, cur) => ({ ...acc, [cur.key]: true }),
     {}
@@ -15,29 +13,27 @@ export const getDefaultColumnsObject = (
 }
 
 export const useDSOTableColumns = () => {
-  const { data, isLoading } = useCustomField({
+  const args = {
     service: AppService.Invest,
     feature: AppFeature.Offerings
-  })
-  const [updateCustomField] = useUpdateCustomField({
-    service: AppService.Invest,
-    feature: AppFeature.Offerings
-  })
+  }
+  const { data } = useCustomField(args)
+  const [updateCustomField] = useUpdateCustomField(args)
 
   const getIsColumnSelected = (
     column: TableColumn<DigitalSecurityOffering, DSOTableColumn>
   ) => {
-    if (isLoading || data === undefined) {
+    if (data === undefined) {
       return true
     }
 
     return data.columns[column.key]
   }
 
-  const columnsArray = isLoading ? columns : columns.filter(getIsColumnSelected)
+  const columnsArray = columns.filter(getIsColumnSelected)
 
   const getUpdateColumnPayload = (column: DSOTableColumn, value: boolean) => {
-    const columnsObject = getDefaultColumnsObject(columnsArray)
+    const columnsObject = data?.columns ?? getDefaultColumnsObject()
 
     return {
       customFields: {}, // TODO: remove once backend validation is fixed
