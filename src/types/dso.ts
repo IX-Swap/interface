@@ -80,17 +80,6 @@ export interface DSOInsight {
 export interface DigitalSecurityOffering extends BaseDigitalSecurityOffering {
   promoted: boolean
   favorite: boolean
-  insight: {
-    activityCount: number
-    approvedcommitmentCount: number
-    collectedOn: string
-    commitmentCount: number
-    commitmentTotal: number
-    investorCount: number
-    raisedMax: number
-    raisedMin?: number
-    raisedTotal: number
-  }
   documents: Maybe<DataroomFile[]>
   currency: Asset
   network: string
