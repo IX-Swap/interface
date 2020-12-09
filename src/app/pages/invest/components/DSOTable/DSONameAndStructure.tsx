@@ -20,7 +20,11 @@ const useStyles = makeStyles(theme => ({
     fontSize: `${theme.typography.fontSize}px`
   },
   capital: {
-    color: theme.palette.text.hint
+    color: theme.palette.text.hint,
+    maxWidth: 100,
+    textOverflow: 'ellipsis',
+    whiteSpace: 'nowrap',
+    overflow: 'hidden'
   }
 }))
 
@@ -36,7 +40,7 @@ export const DSONameAndStructure: React.FC<DSONameAndStructureProps> = (
   const { corporate, dso } = props
   return (
     <Box className={classes.container}>
-      <DSOLogo dsoId={dso?._id} size={70} variant='square' />
+      <DSOLogo dsoId={dso._id} size={70} variant='rounded' />
       <Box className={classes.meta}>
         <Box component='span'>{corporate?.companyLegalName}</Box>
         <Box component='span' className={classes.capital}>

@@ -87,6 +87,20 @@ export const DSOBaseFields = (props: DSOBaseFieldsProps) => {
         </Grid>
 
         <Grid item>
+          {/* @ts-ignore */}
+          <TypedField
+            component={DateTimePicker}
+            customRenderer
+            label='Completion Date'
+            name='completionDate'
+            control={control}
+            valueExtractor={dateTimeValueExtractor}
+            // @ts-expect-error
+            defaultValue={null}
+          />
+        </Grid>
+
+        <Grid item>
           <TypedField
             component={CorporateSelect}
             label='Corporate'

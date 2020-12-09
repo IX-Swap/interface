@@ -1,26 +1,26 @@
 import React from 'react'
 import { render, cleanup } from 'test-utils'
-import { DSONameAndStructure } from '../DSONameAndStructure'
-import { PriceWithCurrency } from '../PriceWithCurrency'
-import { DSORaised } from '../DSORaised'
+import { DSONameAndStructure } from 'app/pages/invest/components/DSOTable/DSONameAndStructure'
+import { PriceWithCurrency } from 'app/pages/invest/components/DSOTable/PriceWithCurrency'
+import { DSORaised } from 'app/pages/invest/components/DSOTable/DSORaised'
 import {
   renderDSONameAndStructure,
   renderPriceWithCurrency,
-  renderDSORaised
-} from '../columns'
+  renderDSOStatus
+} from 'app/pages/invest/components/DSOTable/columns'
 import { dso } from '__fixtures__/authorizer'
 import { corporate } from '__fixtures__/identity'
 import { dsoInsight } from '__fixtures__/issuance'
 
-jest.mock('../DSONameAndStructure', () => ({
+jest.mock('app/pages/invest/components/DSOTable/DSONameAndStructure', () => ({
   DSONameAndStructure: jest.fn(() => null)
 }))
 
-jest.mock('../PriceWithCurrency', () => ({
+jest.mock('app/pages/invest/components/DSOTable/PriceWithCurrency', () => ({
   PriceWithCurrency: jest.fn(() => null)
 }))
 
-jest.mock('../DSORaised', () => ({
+jest.mock('app/pages/invest/components/DSOTable/DSORaised', () => ({
   DSORaised: jest.fn(() => null)
 }))
 
@@ -53,7 +53,7 @@ describe('render Price With Currency', () => {
     jest.clearAllMocks()
   })
 
-  const price = '890000'
+  const price = 890000
 
   it('renders without error', () => {
     render(<>{renderPriceWithCurrency(price, dso)}</>)
@@ -79,11 +79,11 @@ describe('render DSO Raised', () => {
   })
 
   it('renders without error', () => {
-    render(<>{renderDSORaised(dsoInsight, dso)}</>)
+    render(<>{renderDSOStatus(dsoInsight, dso)}</>)
   })
 
   it('renders DSORaised with correct props', () => {
-    render(<>{renderDSORaised(dsoInsight, dso)}</>)
+    render(<>{renderDSOStatus(dsoInsight, dso)}</>)
 
     expect(DSORaised).toHaveBeenCalledWith(
       {

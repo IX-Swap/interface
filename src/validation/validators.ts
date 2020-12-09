@@ -1,6 +1,5 @@
 import { isAddress } from '@ethersproject/address'
 import isPast from 'date-fns/isPast'
-import getTime from 'date-fns/getTime'
 import {
   CorporateDeclarations,
   DeclarationValue,
@@ -74,7 +73,5 @@ export const pastDateValidator = (value: string | null | undefined) => {
     return false
   }
 
-  const date = getTime(new Date(value))
-
-  return !isPast(date)
+  return !isPast(new Date(value))
 }

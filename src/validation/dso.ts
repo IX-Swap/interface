@@ -29,6 +29,9 @@ export const dsoFormBaseValidationSchema = {
   launchDate: dateSchema
     .required('Required')
     .test('pastDate', 'Launch Date must be future date', pastDateValidator),
+  completionDate: dateSchema
+    .required('Required')
+    .test('futureDate', 'Launch Date must be future date', pastDateValidator),
   leverage: number(),
   minimumInvestment: number().nullable().required('Required'),
   pricePerUnit: number().nullable().required('Required'),
@@ -64,7 +67,8 @@ export const editLiveDSOValidationSchema = object()
   .shape<DSOFormValues>({
     ...dsoFormBaseValidationSchema,
     network: string(),
-    launchDate: string().required()
+    launchDate: string().required(),
+    completionDate: string().required()
   })
   .notRequired()
 
