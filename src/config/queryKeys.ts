@@ -1,7 +1,7 @@
 import { AppFeature } from 'types/app'
 
-const generateQueryKey = (prefix: string, key: string) => {
-  return `${prefix}-${key}`
+const generateQueryKey = (prefix: string, ...params: any[]) => {
+  return [prefix, ...params].join('-')
 }
 
 export const queryKeys = {
@@ -86,7 +86,9 @@ export const withdrawalAddressQueryKeys = {
 }
 
 export const usersQueryKeys = {
-  getList: 'user-list'
+  getList: 'user-list',
+  getCustomFields: (service: string, feature: string) =>
+    generateQueryKey('customf-fields', service, feature)
 }
 
 export const investQueryKeys = {

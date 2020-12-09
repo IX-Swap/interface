@@ -2,7 +2,7 @@ import React from 'react'
 import { TableColumn } from 'types/util'
 import { CorporateIdentity } from 'types/identity'
 import { DSONameAndStructure } from './DSONameAndStructure'
-import { DigitalSecurityOffering, DSOInsight } from 'types/dso'
+import { DigitalSecurityOffering, DSOInsight, DSOTableColumn } from 'types/dso'
 import { PriceWithCurrency } from './PriceWithCurrency'
 import { DSORaised } from './DSORaised'
 
@@ -21,7 +21,10 @@ export const renderDSORaised = (
   dso: DigitalSecurityOffering
 ) => <DSORaised insight={i} dso={dso} />
 
-export const columns: Array<TableColumn<DigitalSecurityOffering>> = [
+export const columns: Array<TableColumn<
+  DigitalSecurityOffering,
+  DSOTableColumn
+>> = [
   {
     key: 'favorite',
     label: ''

@@ -6,6 +6,7 @@ import { PromotedDSOs } from 'app/components/DSO/components/PromotedDSOs'
 import { AppRouterLinkComponent } from 'components/AppRouterLink'
 import { useInvestRouter } from 'app/pages/invest/routers/router'
 import { VSpacer } from 'components/VSpacer'
+import { DSOTable } from '../components/DSOTable/DSOTable'
 
 export const InvestLanding = () => {
   const { user } = useAuth()
@@ -30,6 +31,7 @@ export const InvestLanding = () => {
       </Grid>
       <VSpacer size='small' />
       <PromotedDSOs />
+      <DSOTable />
     </>
   )
 }

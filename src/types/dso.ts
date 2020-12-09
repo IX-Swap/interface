@@ -133,3 +133,12 @@ export type DSORequestArgs = Omit<
 }
 
 export type DSOLaunchStatus = 'live' | 'completed' | 'upcoming'
+
+export type DSOTableColumn =
+  | 'favorite'
+  | 'corporate'
+  | 'insight'
+  | 'pricePerUnit'
+  | 'totalFundraisingAmount'
+  | 'minimumInvestment'
+  | 'distributionFrequency'
