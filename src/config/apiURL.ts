@@ -101,7 +101,10 @@ export const authURL = {
 
 export const userURL = {
   getUserProfile: (userId: string) => `/auth/profiles/${userId}`,
-  updateRoles: (userId: string) => `/auth/users/${userId}/roles`
+  updateRoles: (userId: string) => `/auth/users/${userId}/roles`,
+  getCustomFields: (userId: string, service: string, feature: string) =>
+    `/core/custom-fields/${service}/${feature}/${userId}`,
+  updateCustomFields: (userId: string) => `/core/custom-fields/${userId}`
 }
 
 export const notificationsURL = {

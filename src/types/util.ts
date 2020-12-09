@@ -12,8 +12,8 @@ export interface LabelValue {
   value: string
 }
 
-export interface TableColumn<T> {
-  key: string
+export interface TableColumn<T, K = string> {
+  key: K
   label: string
   secret?: boolean
   align?: 'inherit' | 'left' | 'center' | 'right' | 'justify'

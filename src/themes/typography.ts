@@ -33,6 +33,8 @@ export const typography: TypographyOptions = {
     fontWeight: 700
   },
   subtitle2: {
-    fontWeight: 700
+    fontSize: '0.88rem',
+    fontWeight: 500,
+    color: '#444'
   }
 }
