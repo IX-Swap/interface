@@ -1,11 +1,12 @@
 import { useServices } from 'hooks/useServices'
-import { useMutation, queryCache } from 'react-query'
+import { useMutation, useQueryCache } from 'react-query'
 import { getIdFromObj } from 'helpers/strings'
 import { DigitalSecurityOffering } from 'types/dso'
 import { issuanceURL } from 'config/apiURL'
 import { dsoQueryKeys } from 'config/queryKeys'
 
 export const useToggleDSOFavorite = (dso: DigitalSecurityOffering) => {
+  const queryCache = useQueryCache()
   const { apiService, snackbarService } = useServices()
   const uri = issuanceURL.dso.favorite(getIdFromObj(dso))
 
@@ -18,8 +19,8 @@ export const useToggleDSOFavorite = (dso: DigitalSecurityOffering) => {
   }
 
   return useMutation(mutateFn, {
-    onSuccess: () => {
-      void queryCache.invalidateQueries(dsoQueryKeys.getList)
+    onSuccess: async () => {
+      await queryCache.invalidateQueries(dsoQueryKeys.getList)
       void snackbarService.showSnackbar('Success', 'success')
     },
     onError: (error: any) => {

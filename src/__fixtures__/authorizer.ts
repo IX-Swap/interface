@@ -179,7 +179,16 @@ export const dso: DigitalSecurityOffering = {
   user: user._id,
   authorizationDocuments: [],
   authorization: authorizationInfo,
-  authorizations: [],
+  authorizations: [
+    {
+      status: 'Approved',
+      _id: '123',
+      authorizer: '1234',
+      comment: '',
+      sharedWithUser: true,
+      timestamp: ''
+    }
+  ],
   isStarred: true,
   promoted: true,
   identity: {

@@ -40,7 +40,7 @@ export const DSORaised: React.FC<DSORaisedProps> = ({
   return (
     <Box className={container}>
       {status !== 'upcoming' ? (
-        <Grid container data-testid='progress-bar' direction='column'>
+        <Grid container direction='column'>
           <Box style={{ color }}>{percentRaised.toFixed(0)}%</Box>
           <DSOProgressBar dso={dso} />
         </Grid>
