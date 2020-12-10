@@ -86,7 +86,6 @@ export const useDataFromURL = () => {
       }
     }
 
-    // window.history.replaceState(state, 'app-state')
     replace({ ...location, state })
   }, [pathname]) // eslint-disable-line
 }

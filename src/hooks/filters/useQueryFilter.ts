@@ -20,10 +20,6 @@ export const useQueryFilter = () => {
     return searchQuery.get(key)
   }
 
-  const getAllFilterValues = (key: QueryFilter) => {
-    return searchQuery.getAll(key)
-  }
-
   const removeFilter = (key: QueryFilter) => {
     searchQuery.delete(key)
 
@@ -34,13 +30,14 @@ export const useQueryFilter = () => {
   }
 
   const getHasValue = (key: QueryFilter) => {
-    return searchQuery.has(key)
+    const value = getFilterValue(key)
+
+    return value === null ? false : value.trim().length > 0
   }
 
   return {
     updateFilter,
     getFilterValue,
-    getAllFilterValues,
     removeFilter,
     getHasValue,
     filter: searchQuery

@@ -27,7 +27,7 @@ const generateClassName = createGenerateClassName({
   productionPrefix: 'ix'
 })
 
-const BaseProviders: React.FC = ({ children }) => {
+export const BaseProviders: React.FC = ({ children }) => {
   return (
     <StylesProvider generateClassName={generateClassName}>
       <ThemeProvider theme={Themes.default}>
