@@ -1,7 +1,5 @@
 import React from 'react'
-import { Box } from '@material-ui/core'
-import { useTheme } from '@material-ui/core/styles'
-
+import { Typography } from '@material-ui/core'
 export interface ChartHeaderProps {
   title: string
 }
@@ -9,16 +7,10 @@ export interface ChartHeaderProps {
 export const ChartHeader: React.FC<ChartHeaderProps> = (
   props: ChartHeaderProps
 ) => {
-  const theme = useTheme()
   const { title } = props
   return (
-    <Box
-      fontSize={`${theme.typography.fontSize * 1.4}px`}
-      fontWeight='fontWeightMedium'
-      color={theme.palette.text.primary}
-      mb={3}
-    >
+    <Typography color='textPrimary' variant='h5'>
       {title}
-    </Box>
+    </Typography>
   )
 }

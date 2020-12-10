@@ -14,14 +14,18 @@ export const IssuanceLanding = () => {
           container
           xs={8}
           direction='column'
-          style={{ padding: `${theme.spacing(4)}px 0` }}
+          spacing={0}
+          style={{
+            paddingBottom: theme.spacing(4),
+            paddingTop: theme.spacing(4)
+          }}
         >
           <Grid
             container
             direction='row'
             justify='space-between'
             spacing={4}
-            style={{ paddingBottom: `${theme.spacing(4)}px` }}
+            style={{ paddingBottom: theme.spacing(4) }}
           >
             <Grid item xs={4}>
               <Card variant='outlined' style={{ height: '100%' }}></Card>
@@ -38,7 +42,7 @@ export const IssuanceLanding = () => {
             direction='row'
             justify='space-between'
             spacing={4}
-            style={{ paddingBottom: `${theme.spacing(4)}px` }}
+            style={{ paddingBottom: theme.spacing(4) }}
           >
             <Grid item xs={8}>
               <Card variant='outlined' style={{ height: '100%' }}>

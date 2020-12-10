@@ -1,6 +1,5 @@
 import React from 'react'
-import { Box } from '@material-ui/core'
-import { useTheme } from '@material-ui/core/styles'
+import { Grid, Typography } from '@material-ui/core'
 export interface NoChartDataProps {
   text: string
 }
@@ -8,24 +7,22 @@ export interface NoChartDataProps {
 export const NoChartData: React.FC<NoChartDataProps> = ({
   text
 }: NoChartDataProps) => {
-  const theme = useTheme()
   return (
-    <Box
-      display='flex'
-      justifyContent='center'
+    <Grid
+      container
+      justify='center'
       alignItems='center'
-      minHeight='200px'
-      width='100%'
+      style={{
+        minHeight: '200px',
+        width: '90%',
+        margin: '0 auto',
+        paddingRight: '20px'
+      }}
       data-testid='no-chart-data'
     >
-      <Box
-        textAlign='center'
-        fontSize={`${theme.typography.fontSize + 2}px`}
-        width='80%'
-        color={theme.palette.text.hint}
-      >
+      <Typography align='center' color='textSecondary'>
         {text}
-      </Box>
-    </Box>
+      </Typography>
+    </Grid>
   )
 }
