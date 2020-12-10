@@ -6,13 +6,13 @@ import { DigitalSecurityOffering, DSOTableColumn } from 'types/dso'
 import { EditableColumnsWrapper } from 'ui/EditableColumnsWrapper'
 import { formatCamelCasedWithSpaces } from 'helpers/strings'
 
-export interface EditableColumnsProps {
+export interface ColumnsEditorProps {
   selected: Array<TableColumn<DigitalSecurityOffering, DSOTableColumn>>
   onDeselect: (key: DSOTableColumn) => any
   onSelect: (key: DSOTableColumn) => any
 }
 
-export const EditableColumns = (props: EditableColumnsProps) => {
+export const ColumnsEditor = (props: ColumnsEditorProps) => {
   const { selected, onSelect, onDeselect } = props
 
   return (

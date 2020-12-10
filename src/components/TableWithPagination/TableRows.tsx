@@ -1,7 +1,7 @@
 import React from 'react'
 import { TableViewProps } from 'components/TableWithPagination/TableView'
 import { TableBody, TableCell, TableRow } from '@material-ui/core'
-import { get } from 'lodash'
+import get from 'lodash/get'
 import { privateClassNames } from 'helpers/classnames'
 
 interface TableRowsProps<T> extends TableViewProps<T> {
