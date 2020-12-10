@@ -6,6 +6,8 @@ import { AppRouterLinkComponent } from 'components/AppRouterLink'
 import { useInvestRouter } from 'app/pages/invest/routers/router'
 import { VSpacer } from 'components/VSpacer'
 import { DSOTable } from 'app/pages/invest/components/DSOTable/DSOTable'
+import { PromotedDSOs } from 'app/components/DSO/components/PromotedDSOs'
+import { PromoBanner } from 'app/pages/invest/components/PromoBanner'
 
 export const InvestLanding = () => {
   const { user } = useAuth()
@@ -32,10 +34,10 @@ export const InvestLanding = () => {
           </Button>
         </Grid>
       </Grid>
-      {/* <VSpacer size='small' />
-      <PromotedDSOs /> */}
-      {/* <VSpacer size='medium' />
-      <PromoBanner /> */}
+      <VSpacer size='small' />
+      <PromotedDSOs />
+      <VSpacer size='medium' />
+      <PromoBanner />
       <VSpacer size='medium' />
       <Grid container direction='column' spacing={4}>
         <Grid item>

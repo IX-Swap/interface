@@ -1,10 +1,10 @@
 import React from 'react'
-import { Box, Chip, Typography } from '@material-ui/core'
+import { Box, Typography } from '@material-ui/core'
 import { TableColumn } from 'types/util'
 import { columns } from 'app/pages/invest/components/DSOTable/columns'
 import { DigitalSecurityOffering, DSOTableColumn } from 'types/dso'
 import { EditableColumnsWrapper } from 'ui/EditableColumnsWrapper'
-import { formatCamelCasedWithSpaces } from 'helpers/strings'
+import { ColumnsEditorItem } from './ColumnsEditorItem'
 
 export interface ColumnsEditorProps {
   selected: Array<TableColumn<DigitalSecurityOffering, DSOTableColumn>>
@@ -14,27 +14,24 @@ export interface ColumnsEditorProps {
 
 export const ColumnsEditor = (props: ColumnsEditorProps) => {
   const { selected, onSelect, onDeselect } = props
+  const getIsColumnSelected = (column: DSOTableColumn) => {
+    return selected.findIndex(({ key }) => key === column) !== -1
+  }
 
   return (
     <EditableColumnsWrapper px={3.5} py={1}>
       <Typography variant='subtitle2'>Add more columns</Typography>
 
       <Box display='flex' py={2}>
-        {columns.map(({ key }) => {
-          const isSelected =
-            selected.findIndex(column => column.key === key) !== -1
-
-          return (
-            <Box mr={2.5}>
-              <Chip
-                label={formatCamelCasedWithSpaces(key)}
-                variant={isSelected ? 'default' : 'outlined'}
-                onClick={isSelected ? undefined : () => onSelect(key)}
-                onDelete={isSelected ? () => onDeselect(key) : undefined}
-              />
-            </Box>
-          )
-        })}
+        {columns.map(({ key }) => (
+          <ColumnsEditorItem
+            key={key}
+            value={key}
+            isSelected={getIsColumnSelected(key)}
+            onSelect={onSelect}
+            onDeselect={onDeselect}
+          />
+        ))}
       </Box>
     </EditableColumnsWrapper>
   )

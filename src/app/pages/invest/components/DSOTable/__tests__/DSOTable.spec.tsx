@@ -24,7 +24,10 @@ describe('DSO Table', () => {
         columns: columns,
         name: dsoQueryKeys.getList,
         hasActions: true,
-        uri: `/issuance/dso/list`
+        uri: `/issuance/dso/list`,
+        filter: {
+          search: undefined
+        }
       },
       {}
     )

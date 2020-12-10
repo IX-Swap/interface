@@ -10,7 +10,8 @@ import { useQueryFilter } from 'hooks/filters/useQueryFilter'
 
 export const DSOTable = () => {
   const { columns } = useDSOTableColumns()
-  const { filter } = useQueryFilter()
+  const { getFilterValue } = useQueryFilter()
+  const search = getFilterValue('search') ?? undefined
 
   return (
     <Grid container direction='column' spacing={3}>
@@ -24,7 +25,7 @@ export const DSOTable = () => {
           columns={columns}
           hasActions
           actions={Actions}
-          filter={{ search: filter.get('search') ?? undefined }}
+          filter={{ search }}
         />
       </Grid>
     </Grid>
