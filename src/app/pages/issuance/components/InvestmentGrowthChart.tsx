@@ -2,7 +2,7 @@ import React from 'react'
 import { Chart } from 'react-google-charts'
 import { useTheme } from '@material-ui/core/styles'
 import { Box } from '@material-ui/core'
-import { ChartHeader } from './ChartHeader'
+import { ChartWrapper } from 'app/pages/issuance/components/IssuanceLanding/ChartWrapper'
 import { NoChartData } from './NoChartData'
 import { ChartProps } from 'types/charts'
 import { getWeekDays } from 'helpers/getWeekDays'
@@ -43,8 +43,7 @@ export const InvestmentGrowthChart: React.FC<ChartProps> = ({
   }
 
   return (
-    <Box pt={4} pb={4} pl={3} pr={0} minHeight='300px'>
-      <ChartHeader title={'Investment Growth Chart'} />
+    <ChartWrapper title='Investment Growth Chart'>
       {isLoading ? (
         <Box height='200px' />
       ) : hasData ? (
@@ -52,6 +51,6 @@ export const InvestmentGrowthChart: React.FC<ChartProps> = ({
       ) : (
         <NoChartData text='There is no investment at the moment. Once you receive investments in your deal you will be able to see all the charts.' />
       )}
-    </Box>
+    </ChartWrapper>
   )
 }

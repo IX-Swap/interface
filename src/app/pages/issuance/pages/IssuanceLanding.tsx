@@ -3,71 +3,92 @@ import { Grid, Card, Box } from '@material-ui/core'
 import { useTheme } from '@material-ui/core/styles'
 import { InvestmentGrowthChart } from '../components/InvestmentGrowthChart'
 import { CommitmentStatsChart } from '../components/CommitmentStatsChart'
+import { RegionalMap } from '../components/IssuanceLanding/RegionalMap'
+import { TopInvestors } from '../components/IssuanceLanding/TopInvestors'
+import { TotalInvestors } from '../components/IssuanceLanding/TotalInvestors'
+import { DSOFilterForm } from '../components/IssuanceLanding/DSOFilterForm'
+import { DSOFilter } from '../components/IssuanceLanding/DSOFilter'
+import { AmountRaised } from '../components/IssuanceLanding/AmountRaised'
+import { TargetFundraise } from '../components/IssuanceLanding/TargetFundraise'
 
 export const IssuanceLanding = () => {
   const theme = useTheme()
 
   return (
-    <Box ml={theme.spacing(0.5)}>
-      <Grid container justify='space-between' spacing={8}>
-        <Grid
-          container
-          xs={8}
-          direction='column'
-          spacing={0}
-          style={{
-            paddingBottom: theme.spacing(4),
-            paddingTop: theme.spacing(4)
-          }}
-        >
+    <DSOFilterForm>
+      <Box ml={theme.spacing(0.5)}>
+        <Grid container justify='space-between' spacing={8}>
           <Grid
             container
-            direction='row'
-            justify='space-between'
-            spacing={4}
-            style={{ paddingBottom: theme.spacing(4) }}
+            xs={8}
+            direction='column'
+            spacing={0}
+            style={{
+              paddingBottom: theme.spacing(4),
+              paddingTop: theme.spacing(4)
+            }}
           >
-            <Grid item xs={4}>
-              <Card variant='outlined' style={{ height: '100%' }}></Card>
+            <Grid
+              container
+              direction='row'
+              justify='space-between'
+              spacing={4}
+              style={{ paddingBottom: theme.spacing(4) }}
+            >
+              <Grid item xs={4}>
+                <Card variant='outlined' style={{ height: '100%' }}>
+                  <TotalInvestors />
+                </Card>
+              </Grid>
+              <Grid item xs={4}>
+                <Card variant='outlined' style={{ height: '100%' }}>
+                  <AmountRaised />
+                </Card>
+              </Grid>
+              <Grid item xs={4}>
+                <Card variant='outlined' style={{ height: '100%' }}>
+                  <TargetFundraise />
+                </Card>
+              </Grid>
             </Grid>
-            <Grid item xs={4}>
-              <Card variant='outlined' style={{ height: '100%' }}></Card>
+            <Grid
+              container
+              direction='row'
+              justify='space-between'
+              spacing={4}
+              style={{ paddingBottom: theme.spacing(4) }}
+            >
+              <Grid item xs={8}>
+                <Card variant='outlined' style={{ height: '100%' }}>
+                  <InvestmentGrowthChart data={undefined} isLoading={false} />
+                </Card>
+              </Grid>
+              <Grid item xs={4}>
+                <Card variant='outlined' style={{ height: '100%' }}>
+                  <TopInvestors />
+                </Card>
+              </Grid>
             </Grid>
-            <Grid item xs={4}>
-              <Card variant='outlined' style={{ height: '100%' }}></Card>
+            <Grid container direction='row' justify='space-between' spacing={4}>
+              <Grid item xs={6}>
+                <Card variant='outlined' style={{ height: '100%' }}>
+                  <CommitmentStatsChart data={undefined} isLoading={false} />
+                </Card>
+              </Grid>
+              <Grid item xs={6}>
+                <Card variant='outlined' style={{ height: '100%' }}>
+                  <RegionalMap />
+                </Card>
+              </Grid>
             </Grid>
           </Grid>
-          <Grid
-            container
-            direction='row'
-            justify='space-between'
-            spacing={4}
-            style={{ paddingBottom: theme.spacing(4) }}
-          >
-            <Grid item xs={8}>
-              <Card variant='outlined' style={{ height: '100%' }}>
-                <InvestmentGrowthChart data={undefined} isLoading={false} />
-              </Card>
-            </Grid>
-            <Grid item xs={4}>
-              <Card variant='outlined' style={{ height: '100%' }}></Card>
-            </Grid>
-          </Grid>
-          <Grid container direction='row' justify='space-between' spacing={4}>
-            <Grid item xs={6}>
-              <Card variant='outlined' style={{ height: '100%' }}>
-                <CommitmentStatsChart data={undefined} isLoading={false} />
-              </Card>
-            </Grid>
-            <Grid item xs={6}>
-              <Card variant='outlined' style={{ height: '100%' }}></Card>
-            </Grid>
+          <Grid item xs={4}>
+            <Card variant='outlined' style={{ height: '100%' }}>
+              <DSOFilter />
+            </Card>
           </Grid>
         </Grid>
-        <Grid item xs={4}>
-          <Card variant='outlined' style={{ height: '100%' }}></Card>
-        </Grid>
-      </Grid>
-    </Box>
+      </Box>
+    </DSOFilterForm>
   )
 }

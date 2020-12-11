@@ -38,6 +38,7 @@ export interface BaseDigitalSecurityOffering extends AuthorizableWithIdentity {
   createdBy: string
   issuerName: string
   launchDate: string
+  completionDate: string
   corporate: CorporateIdentity
   logo: string
   capitalStructure: string
@@ -66,10 +67,25 @@ export interface BaseDigitalSecurityOffering extends AuthorizableWithIdentity {
   user: string
 }
 
+export interface DSOInsight {
+  activityCount: number
+  approvedcommitmentCount: number
+  collectedOn: string
+  commitmentCount: number
+  commitmentTotal: number
+  investorCount: number
+  raisedMax: number
+  raisedMin?: number
+  raisedTotal: number
+}
+
 export interface DigitalSecurityOffering extends BaseDigitalSecurityOffering {
+  promoted: boolean
+  isStarred: boolean
   documents: Maybe<DataroomFile[]>
   currency: Asset
   network: Network
+  insight: DSOInsight
 }
 
 export type DeploymentInfoFormValues = Omit<
@@ -94,10 +110,14 @@ export type DSOFormValues = Omit<
   | 'corporate'
   | 'updatedAt'
   | 'identity'
+  | 'insight'
+  | 'isStarred'
+  | 'promoted'
   | 'authorizations'
   | 'authorization'
   | 'authorizationDocuments'
   | 'subscriptionDocument'
+  | 'insight'
 > & {
   subscriptionDocument?: DataroomFile
   status?: string
@@ -115,3 +135,14 @@ export type DSORequestArgs = Omit<
   subscriptionDocument?: string
   documents: string[]
 }
+
+export type DSOLaunchStatus = 'live' | 'completed' | 'upcoming'
+
+export type DSOTableColumn =
+  | 'favorite'
+  | 'corporate'
+  | 'insight'
+  | 'pricePerUnit'
+  | 'totalFundraisingAmount'
+  | 'minimumInvestment'
+  | 'distributionFrequency'

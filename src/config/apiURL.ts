@@ -80,6 +80,7 @@ export const issuanceURL = {
     getById: (userId: string, dsoId: string) =>
       `/issuance/dso/${userId}/${dsoId}`,
     create: (userId: string) => `/issuance/dso/${userId}`,
+    getByUserId: (userId: string) => `/issuance/dso/list/${userId}`,
     update: (userId: string, dsoId: string) =>
       `/issuance/dso/${userId}/${dsoId}`
   }

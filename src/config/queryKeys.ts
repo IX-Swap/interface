@@ -99,5 +99,7 @@ export const securityQueryKeys = {
 }
 
 export const dsoQueryKeys = {
-  getList: 'dso-list'
+  getList: 'dso-list',
+  getDSOsById: (id: string) => generateQueryKey('dso-list', id),
+  getPromoted: 'promoted-dsos'
 }
