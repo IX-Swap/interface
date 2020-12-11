@@ -1,5 +1,5 @@
 import { InternalRouteProps } from 'types/util'
-import { DSOList } from 'app/pages/issuance/pages/DSOList'
+import { IssuanceLanding } from 'app/pages/issuance/pages/IssuanceLanding'
 import { ViewDSO } from 'app/pages/issuance/pages/ViewDSO'
 import { CreateDSO } from 'app/pages/issuance/pages/CreateDSO'
 import { EditDSO } from 'app/pages/issuance/pages/EditDSO'
@@ -50,7 +50,7 @@ export const issuanceRoutes: InternalRouteProps[] = [
     label: 'Issuance',
     path: IssuanceRoute.list,
     exact: true,
-    component: DSOList
+    component: IssuanceLanding
   }
 ]
 
