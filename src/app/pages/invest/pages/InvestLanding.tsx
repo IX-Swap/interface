@@ -2,12 +2,12 @@ import React from 'react'
 import { useAuth } from 'hooks/auth/useAuth'
 import { Grid, Button, Typography } from '@material-ui/core'
 import { useSetPageTitle } from 'app/hooks/useSetPageTitle'
-import { PromotedDSOs } from 'app/components/DSO/components/PromotedDSOs'
 import { AppRouterLinkComponent } from 'components/AppRouterLink'
 import { useInvestRouter } from 'app/pages/invest/routers/router'
 import { VSpacer } from 'components/VSpacer'
 import { DSOTable } from 'app/pages/invest/components/DSOTable/DSOTable'
-import { PromoBanner } from '../components/PromoBanner'
+import { PromotedDSOs } from 'app/components/DSO/components/PromotedDSOs'
+import { PromoBanner } from 'app/pages/invest/components/PromoBanner'
 
 export const InvestLanding = () => {
   const { user } = useAuth()

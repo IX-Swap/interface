@@ -195,7 +195,18 @@ export const dso: DigitalSecurityOffering = {
     individual,
     corporates: []
   },
-  status: 'Approved'
+  status: 'Approved',
+  insight: {
+    activityCount: 0,
+    approvedcommitmentCount: 0,
+    collectedOn: '01-01-2020',
+    commitmentCount: 0,
+    commitmentTotal: 0,
+    investorCount: 0,
+    raisedMax: 0,
+    raisedTotal: 0,
+    raisedMin: 0
+  }
 }
 
 export const commitment: Commitment = {

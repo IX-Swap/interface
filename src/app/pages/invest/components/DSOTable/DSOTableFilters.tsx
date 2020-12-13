@@ -1,24 +1,36 @@
+import React, { useState } from 'react'
 import { Grid } from '@material-ui/core'
-import { ToggleButton } from '@material-ui/lab'
-import React from 'react'
+import { SearchFilter } from './SearchFilter'
+import { useDSOTableColumns } from '../../hooks/useDSOTableColumns'
+import { ColumnsEditor } from './ColumnsEditor'
+import { ColumnsEditorToggle } from './ColumnsEditorToggle'
 
-export interface DSOTableFiltersProps {
-  showColumns: boolean
-  toggleColumns: () => void
-}
-
-export const DSOTableFilters = (props: DSOTableFiltersProps) => {
-  const { showColumns, toggleColumns } = props
+export const DSOTableFilters = () => {
+  const { deselectColumn, selectColumn, columns } = useDSOTableColumns()
+  const [showColumns, setShowColumns] = useState(false)
+  const toggleColumns = () => setShowColumns(value => !value)
 
   return (
-    <Grid container>
-      <ToggleButton
-        value='show-table-columns'
-        onClick={toggleColumns}
-        selected={showColumns}
-      >
-        Columns
-      </ToggleButton>
+    <Grid container direction='column' spacing={3}>
+      <Grid item container spacing={2}>
+        <Grid item md={7}>
+          <SearchFilter fullWidth placeholder='Search Offers' />
+        </Grid>
+
+        <Grid item md={2}>
+          <ColumnsEditorToggle onClick={toggleColumns} selected={showColumns} />
+        </Grid>
+      </Grid>
+
+      {showColumns && (
+        <Grid item>
+          <ColumnsEditor
+            selected={columns}
+            onSelect={selectColumn}
+            onDeselect={deselectColumn}
+          />
+        </Grid>
+      )}
     </Grid>
   )
 }
