@@ -45,8 +45,9 @@ export const CommitmentFormWrapper = () => {
               </DownloadDSOSubscriptionDocument>
               <VSpacer size='small' />
               <CommitmentFormFields
+                decimalScale={data.deploymentInfo?.decimals}
                 symbol={data.currency.symbol}
-                network={data.network}
+                network={data.network._id}
               />
               <VSpacer size='small' />
               <Grid container spacing={1}>

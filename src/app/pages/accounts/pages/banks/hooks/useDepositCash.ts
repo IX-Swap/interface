@@ -6,6 +6,7 @@ import { DepositStoreStep } from 'app/pages/accounts/pages/banks/context/store'
 import { DepositCashArgs } from 'app/pages/accounts/types'
 import { getIdFromObj } from 'helpers/strings'
 import { accountsURL } from 'config/apiURL'
+import { cashDepositsQueryKeys } from 'config/queryKeys'
 
 export const useDepositCash = () => {
   const { user } = useAuth()
@@ -21,7 +22,9 @@ export const useDepositCash = () => {
 
   return useMutation(depositCash, {
     onSuccess: data => {
-      void queryCache.invalidateQueries(`cash-deposits-${userId}`)
+      void queryCache.invalidateQueries(
+        cashDepositsQueryKeys.getByUserId(userId)
+      )
       void snackbarService.showSnackbar(data.message, 'success')
       setCurrentStep(DepositStoreStep.SUCCESS)
     },

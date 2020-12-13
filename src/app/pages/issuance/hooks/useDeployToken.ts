@@ -37,25 +37,25 @@ export const useDeployToken = (tokenId: string) => {
     setIsDeploying(true)
 
     // eslint-disable-next-line @typescript-eslint/strict-boolean-expressions
-    if (socket?.hasListeners(`x-token/${tokenId}`)) {
-      socket?.removeEventListener(`x-token/${tokenId}`)
+    if (socket?.hasListeners(`x-token-lite/${tokenId}`)) {
+      socket?.removeEventListener(`x-token-lite/${tokenId}`)
     }
 
-    socket?.on(`x-token/${tokenId}`, onMessageReceived)
-    socket?.emit('x-token/deploy/initialize', tokenId)
-    socket?.emit('x-token/deploy/begin', tokenId)
+    socket?.on(`x-token-lite/${tokenId}`, onMessageReceived)
+    socket?.emit('x-token-lite/deploy/initialize', tokenId)
+    socket?.emit('x-token-lite/deploy/begin', tokenId)
   }
 
   useEffect(() => {
-    socket?.on(`x-token/${tokenId}`, onMessageReceived)
-    socket?.emit('x-token/deploy/initialize', tokenId)
+    socket?.on(`x-token-lite/${tokenId}`, onMessageReceived)
+    socket?.emit('x-token-lite/deploy/initialize', tokenId)
 
     return () => {
       queryCache.setQueryData<DeployTokenMessage[]>(
         [queryKeys.deployments, tokenId],
         []
       )
-      socket?.off(`x-token/${tokenId}`)
+      socket?.off(`x-token-lite/${tokenId}`)
     }
   }, [tokenId, socket]) // eslint-disable-line
 

@@ -9,6 +9,7 @@ import { percentageToNumber } from 'app/pages/issuance/utils'
 import { getIdFromObj } from 'helpers/strings'
 import { calculatePercent } from 'helpers/numbers'
 import isPast from 'date-fns/isPast'
+import { Network, Urls } from 'types/networks'
 
 export const transformDSOToFormValues = (
   dso: DigitalSecurityOffering | undefined
@@ -28,6 +29,7 @@ export const transformDSOToFormValues = (
     ...dso,
     corporate: dso.corporate._id,
     currency: getIdFromObj(dso.currency),
+    network: getIdFromObj(dso.network),
     dividendYield: percentageToNumber(dso.dividendYield),
     grossIRR: percentageToNumber(dso.grossIRR),
     equityMultiple: percentageToNumber(dso.equityMultiple),
@@ -113,4 +115,15 @@ export const isDSOCompleted = (dso: DigitalSecurityOffering | undefined) => {
   const pastCompletionDate = isPast(new Date(completionDate))
 
   return wasApproved && pastCompletionDate
+}
+
+export const getBlockchainUrl = (
+  value?: string,
+  network?: Network,
+  type: keyof Urls = 'address'
+) => {
+  const url =
+    network?.explorer.urls[type] ?? `https://ropsten.etherscan.io/${type}/%s`
+
+  return url.replace(/%s/g, value ?? '')
 }
