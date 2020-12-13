@@ -36,7 +36,7 @@ export const SearchFilter = (props: SearchFilterProps) => {
       margin='dense'
       startAdornment={
         <InputAdornment position='start'>
-          <Search />
+          <Search color='disabled' />
         </InputAdornment>
       }
     />

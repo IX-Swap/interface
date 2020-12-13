@@ -75,6 +75,10 @@ export const overrides: Overrides = {
     root: {
       padding: 0,
       minHeight: 38
+    },
+    inputMarginDense: {
+      paddingTop: 12,
+      paddingBottom: 12
     }
   },
   MuiSelect: {
@@ -87,6 +91,21 @@ export const overrides: Overrides = {
     selectMenu: {
       paddingTop: 11,
       paddingBottom: 11
+    }
+  },
+  MuiToggleButton: {
+    root: {
+      height: 40,
+      color: 'inherit',
+      borderColor: 'rgba(0, 0, 0, 0.23)',
+
+      '&.Mui-selected': {
+        boxShadow: 'inset 0 2px 5px 0 rgba(54, 54, 54, 0.2)',
+        backgroundColor: 'transparent'
+      }
+    },
+    label: {
+      textTransform: 'none'
     }
   }
 }

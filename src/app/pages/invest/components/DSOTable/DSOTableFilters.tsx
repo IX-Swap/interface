@@ -18,11 +18,7 @@ export const DSOTableFilters = () => {
         </Grid>
 
         <Grid item md={2}>
-          <ColumnsEditorToggle
-            size='small'
-            onClick={toggleColumns}
-            selected={showColumns}
-          />
+          <ColumnsEditorToggle onClick={toggleColumns} selected={showColumns} />
         </Grid>
       </Grid>
 
