@@ -4,15 +4,21 @@ import { AppRouterLink } from 'components/AppRouterLink'
 import { useIssuanceRouter } from 'app/pages/issuance/router'
 import { VSpacer } from 'components/VSpacer'
 import { useStyles } from './MoreOptions.styles'
-export interface MoreOptionsProps {
-  dsoId: string | undefined
-}
+import { useDSOById } from 'app/pages/invest/hooks/useDSOById'
 
-export const MoreOptions: React.FC<MoreOptionsProps> = ({
-  dsoId
-}: MoreOptionsProps) => {
+export const MoreOptions = () => {
   const { link, buttonLink } = useStyles()
   const { paths } = useIssuanceRouter()
+
+  const {
+    params: { dsoId }
+  } = useIssuanceRouter()
+
+  const { data } = useDSOById(dsoId)
+
+  if (data === undefined) {
+    return null
+  }
 
   const handleDuplicate = () => {}
 
@@ -24,6 +30,7 @@ export const MoreOptions: React.FC<MoreOptionsProps> = ({
 
   return (
     <Grid>
+      <VSpacer size='medium' />
       <Typography variant='h5'>More Options</Typography>
       <VSpacer size='small' />
       <Grid container spacing={0} direction='column'>

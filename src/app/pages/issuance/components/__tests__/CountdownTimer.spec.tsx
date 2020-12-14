@@ -1,26 +1,34 @@
 import React from 'react'
-import { render } from 'test-utils'
+import { render, cleanup } from 'test-utils'
 import { CountdownTimer } from '../CountdownTimer'
+import * as useIssuanceRouterHook from 'app/pages/issuance/router'
+import * as useDSOByIdHook from 'app/pages/invest/hooks/useDSOById'
+import { dso } from '__fixtures__/authorizer'
 
 describe('CountdownTimer', () => {
   const dateNowSpy = jest
     .spyOn(Date, 'now')
     .mockImplementation(() => 1607672045419)
-  const launchDate = new Date(Date.now() + 2 * 24 * 60 * 60 * 1000)
+
+  afterEach(async () => {
+    await cleanup()
+    jest.clearAllMocks()
+  })
 
   afterAll(() => {
     dateNowSpy.mockRestore()
   })
 
   it('renders without errors', () => {
-    render(<CountdownTimer launchDate={launchDate} />)
-  })
+    jest
+      .spyOn(useDSOByIdHook, 'useDSOById')
+      .mockReturnValue({ isLoading: false, data: dso } as any)
 
-  it('renders correct start time', () => {
-    const { getByText, findAllByText } = render(
-      <CountdownTimer launchDate={launchDate} />
-    )
-    expect(getByText('02')).toBeTruthy()
-    expect(findAllByText('00')).toBeTruthy()
+    jest.spyOn(useIssuanceRouterHook, 'useIssuanceRouter').mockReturnValue({
+      params: { dsoId: dso._id },
+      paths: useIssuanceRouterHook.IssuanceRoute
+    } as any)
+
+    render(<CountdownTimer />)
   })
 })
