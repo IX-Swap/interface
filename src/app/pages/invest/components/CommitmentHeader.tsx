@@ -21,7 +21,7 @@ export const CommitmentHeader = (props: CommitmentHeaderProps) => {
         <DSOTitle dso={dso} />
       </Grid>
       <Grid item xs={3}>
-        <AssetBalance assetId={dso.currency._id} />
+        <AssetBalance assetId={dso.currency._id} symbol={dso.currency.symbol} />
       </Grid>
       <Grid item xs={3}>
         <EstimatedValue symbol={dso.currency.symbol} />

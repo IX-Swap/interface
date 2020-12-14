@@ -16,7 +16,7 @@ jest.mock('components/LabelledValue', () => ({
 }))
 
 describe('AssetBalance', () => {
-  const props: AssetBalanceProps = { assetId: asset._id }
+  const props: AssetBalanceProps = { assetId: asset._id, symbol: 'SGD' }
 
   afterEach(async () => {
     await cleanup()
