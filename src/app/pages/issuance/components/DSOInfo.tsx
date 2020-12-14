@@ -15,9 +15,10 @@ export const DSOInfo: React.FC<DSOInfoProps> = ({
   corporate
 }: DSOInfoProps) => {
   const theme = useTheme()
-  if (typeof dso === 'undefined' || typeof corporate === 'undefined') {
+  if (dso === undefined || corporate === undefined) {
     return null
   }
+
   return (
     <Grid container justify='center' direction='column' alignItems='center'>
       <Box

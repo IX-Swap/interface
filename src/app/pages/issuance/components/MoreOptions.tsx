@@ -1,24 +1,9 @@
 import React from 'react'
 import { Grid, Link, Typography } from '@material-ui/core'
-import { makeStyles } from '@material-ui/core/styles'
 import { AppRouterLink } from 'components/AppRouterLink'
 import { useIssuanceRouter } from 'app/pages/issuance/router'
 import { VSpacer } from 'components/VSpacer'
-
-const useTheme = makeStyles(theme => ({
-  link: {
-    marginBottom: theme.spacing(1),
-    marginLeft: theme.spacing(2)
-  },
-  buttonLink: {
-    color: theme.palette.primary.main,
-    fontSize: '0.75rem',
-    cursor: 'pointer',
-    marginBottom: theme.spacing(1),
-    marginLeft: theme.spacing(2)
-  }
-}))
-
+import { useStyles } from './MoreOptions.styles'
 export interface MoreOptionsProps {
   dsoId: string | undefined
 }
@@ -26,7 +11,7 @@ export interface MoreOptionsProps {
 export const MoreOptions: React.FC<MoreOptionsProps> = ({
   dsoId
 }: MoreOptionsProps) => {
-  const { link, buttonLink } = useTheme()
+  const { link, buttonLink } = useStyles()
   const { paths } = useIssuanceRouter()
 
   const handleDuplicate = () => {}
@@ -36,6 +21,7 @@ export const MoreOptions: React.FC<MoreOptionsProps> = ({
   if (typeof dsoId === 'undefined') {
     return null
   }
+
   return (
     <Grid>
       <Typography variant='h5'>More Options</Typography>

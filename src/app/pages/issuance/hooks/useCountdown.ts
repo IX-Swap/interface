@@ -12,9 +12,10 @@ export const useCountdown = (endDate: Date | undefined): TimerResults => {
   const [result, setResult] = useState({})
 
   useEffect(() => {
-    if (typeof endDate === 'undefined') {
+    if (endDate === undefined) {
       return
     }
+
     const getCountdown = (interval?: NodeJS.Timeout) => {
       const diff = new Date(endDate).getTime() - Date.now()
 
