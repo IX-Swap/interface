@@ -6,16 +6,18 @@ import { ChartHeader } from './ChartHeader'
 import { NoChartData } from './NoChartData'
 import { ChartProps } from 'types/charts'
 import { getWeekDays } from 'helpers/getWeekDays'
+import { useInvestmentGrowth } from '../hooks/useInvestmentGrowth'
+import { prepareChartData } from 'helpers/prepareChartData'
 
-export const InvestmentGrowthChart: React.FC<ChartProps> = ({
-  data,
-  isLoading
-}: ChartProps) => {
+export const InvestmentGrowthChart: React.FC<ChartProps> = (
+  props: ChartProps
+) => {
   const theme = useTheme()
+  const { data, isLoading } = useInvestmentGrowth()
 
   const hasData = typeof data !== 'undefined' && data.length > 0
 
-  const dateTicks = getWeekDays(data)
+  const dateTicks = hasData ? getWeekDays(data.slice(1)) : undefined
 
   const options = {
     chart: {
@@ -48,7 +50,11 @@ export const InvestmentGrowthChart: React.FC<ChartProps> = ({
       {isLoading ? (
         <Box height='200px' />
       ) : hasData ? (
-        <Chart chartType={'LineChart'} data={data} options={options} />
+        <Chart
+          chartType={'LineChart'}
+          data={prepareChartData(data)}
+          options={options}
+        />
       ) : (
         <NoChartData text='There is no investment at the moment. Once you receive investments in your deal you will be able to see all the charts.' />
       )}

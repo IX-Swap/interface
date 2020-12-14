@@ -6,12 +6,9 @@ export const getWeekDays = (data: investmentGrowthData) => {
     return []
   }
   const weekDays = data.reduce<Date[]>((a, d, i) => {
-    if (i === 0 || !(d[0] instanceof Date)) {
-      return a
-    }
-    const noHours = format(new Date(d[0]), 'yyyy MM dd')
+    const noHours = removeHours(d[0])
     const found = a.find(
-      a => new Date(a).getTime() === new Date(noHours).getTime()
+      el => new Date(el).getTime() === new Date(noHours).getTime()
     )
     if (typeof found === 'undefined') {
       a.push(new Date(noHours))
@@ -20,3 +17,5 @@ export const getWeekDays = (data: investmentGrowthData) => {
   }, [])
   return weekDays
 }
+
+export const removeHours = (date: Date) => format(new Date(date), 'yyyy MM dd')
