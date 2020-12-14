@@ -21,7 +21,7 @@ jest.mock('app/pages/invest/components/AssetBalance', () => ({
 }))
 
 describe('CommitmentHeader', () => {
-  const props: CommitmentHeaderProps = { dso: dso }
+  const props: CommitmentHeaderProps = { dso }
 
   afterEach(async () => {
     await cleanup()
@@ -66,6 +66,9 @@ describe('CommitmentHeader', () => {
       </Form>
     )
 
-    expect(AssetBalance).toHaveBeenCalledWith({ assetId: dso.currency._id }, {})
+    expect(AssetBalance).toHaveBeenCalledWith(
+      { assetId: dso.currency._id, symbol: dso.currency.symbol },
+      {}
+    )
   })
 })
