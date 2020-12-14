@@ -1,21 +1,36 @@
 import React from 'react'
-import { MenuItem, Select } from '@material-ui/core'
+import { MenuItem, TextField, TextFieldProps } from '@material-ui/core'
 import { useDSOsByUserId } from 'app/pages/issuance/hooks/useDSOsByUserId'
+import { useIssuanceRouter } from 'app/pages/issuance/router'
 
-export const DSOSelect = (props: any): JSX.Element | null => {
-  const { data, isIdle, isLoading } = useDSOsByUserId()
+export const DSOSelect = (
+  props: Partial<TextFieldProps>
+): JSX.Element | null => {
+  const {
+    params: { dsoId }
+  } = useIssuanceRouter()
+  const { data, isSuccess } = useDSOsByUserId()
 
-  if (isIdle || isLoading || data.list.length === 0) {
+  if (!isSuccess || data.list.length === 0) {
     return null
   }
 
   return (
-    <Select {...props} style={{ minWidth: 80 }}>
+    <TextField
+      select
+      InputLabelProps={{ shrink: false }}
+      margin='normal'
+      variant='outlined'
+      fullWidth
+      value={dsoId}
+      {...props}
+      style={{ minWidth: 80 }}
+    >
       {data.list.map(({ _id, tokenName }) => (
         <MenuItem key={_id} value={_id}>
           {tokenName}
         </MenuItem>
       ))}
-    </Select>
+    </TextField>
   )
 }

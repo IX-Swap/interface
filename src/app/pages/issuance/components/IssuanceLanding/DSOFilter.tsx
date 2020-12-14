@@ -1,22 +1,35 @@
 import React from 'react'
-import { Grid } from '@material-ui/core'
-import { useFormContext } from 'react-hook-form'
-import { TypedField } from 'components/form/TypedField'
 import { DSOSelect } from './DSOSelect'
+import { useDSOsByUserId } from 'app/pages/issuance/hooks/useDSOsByUserId'
+import { useIssuanceRouter } from 'app/pages/issuance/router'
+import { Box, Typography } from '@material-ui/core'
+import { hasValue } from 'helpers/forms'
 
 export const DSOFilter = () => {
-  const { control } = useFormContext()
+  const {
+    replace,
+    params: { dsoId }
+  } = useIssuanceRouter()
+  const { data, isSuccess } = useDSOsByUserId()
+
+  if (!isSuccess || data.list.length === 0) {
+    return null
+  }
+
+  const handleChange = (e: any) => {
+    replace('insight', { dsoId: e.target.value })
+  }
+
+  if (!hasValue(dsoId)) {
+    handleChange({ target: { value: data.list[0]._id } })
+  }
 
   return (
-    <Grid container justify='center' style={{ marginBottom: 20 }}>
-      <Grid item xs={3} justify='center' container>
-        <TypedField
-          control={control}
-          component={DSOSelect}
-          name='dso'
-          label='My DSO(s)'
-        />
-      </Grid>
-    </Grid>
+    <Box p={3}>
+      <Typography variant='h5' style={{ fontSize: '1rem' }}>
+        My DSO(s)
+      </Typography>
+      <DSOSelect onChange={handleChange} />
+    </Box>
   )
 }

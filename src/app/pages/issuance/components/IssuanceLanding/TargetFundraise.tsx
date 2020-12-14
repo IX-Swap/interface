@@ -1,27 +1,25 @@
 import React from 'react'
-import { useFormContext } from 'react-hook-form'
 import { useDSOById } from 'app/pages/invest/hooks/useDSOById'
 import { abbreviateNumber } from 'helpers/numbers'
 import { ChartWrapper } from './ChartWrapper'
 import { InsightValue } from './InsightValue'
+import { useIssuanceRouter } from 'app/pages/issuance/router'
+import { LOADING_TEXT } from 'components/form/renderUtils'
 
 export const TargetFundraise = () => {
-  const { watch } = useFormContext()
-  const { dso } = watch(['dso'])
-  const { data, isLoading, isIdle } = useDSOById(dso)
+  const {
+    params: { dsoId }
+  } = useIssuanceRouter()
+  const { data, isSuccess } = useDSOById(dsoId)
 
-  if (isLoading || isIdle || data === undefined) {
-    return null
+  let value = LOADING_TEXT
+  if (isSuccess && data !== undefined) {
+    value = abbreviateNumber(data.totalFundraisingAmount, data.currency.symbol)
   }
 
   return (
     <ChartWrapper title='Target Fundraise' small>
-      <InsightValue
-        value={abbreviateNumber(
-          data.totalFundraisingAmount,
-          data.currency.symbol
-        )}
-      />
+      <InsightValue value={value} />
     </ChartWrapper>
   )
 }
