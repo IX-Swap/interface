@@ -7,7 +7,7 @@ import { useStyles } from './MoreOptions.styles'
 import { useDSOById } from 'app/pages/invest/hooks/useDSOById'
 
 export const MoreOptions = () => {
-  const { link, buttonLink } = useStyles()
+  const { link } = useStyles()
   const { paths } = useIssuanceRouter()
 
   const {
@@ -42,6 +42,7 @@ export const MoreOptions = () => {
           color='primary'
           underline='hover'
           className={link}
+          variant='body1'
         >
           View this DSO
         </AppRouterLink>
@@ -51,8 +52,9 @@ export const MoreOptions = () => {
           color='primary'
           underline='hover'
           className={link}
+          variant='body1'
         >
-          View My DSO
+          View My DSOs
         </AppRouterLink>
 
         <AppRouterLink
@@ -63,6 +65,7 @@ export const MoreOptions = () => {
           color='primary'
           underline='hover'
           className={link}
+          variant='body1'
         >
           Create New DSO
         </AppRouterLink>
@@ -74,6 +77,7 @@ export const MoreOptions = () => {
           }}
           color='primary'
           underline='hover'
+          variant='body1'
           className={link}
         >
           Edit DSO
@@ -83,7 +87,8 @@ export const MoreOptions = () => {
           align='left'
           component='div'
           onClick={handleDuplicate}
-          className={buttonLink}
+          className={link}
+          variant='body1'
         >
           Duplicate This DSO
         </Link>
@@ -91,8 +96,9 @@ export const MoreOptions = () => {
         <Link
           align='left'
           component='div'
-          className={buttonLink}
+          className={link}
           onClick={handleDisable}
+          variant='body1'
         >
           Disable This DSO
         </Link>

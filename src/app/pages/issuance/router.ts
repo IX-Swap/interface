@@ -6,6 +6,7 @@ import { EditDSO } from 'app/pages/issuance/pages/EditDSO'
 import { generateAppRouterHook } from 'helpers/generateAppRouterHook'
 import { makeURL } from 'config/appURL'
 import { DeployToken } from 'app/pages/issuance/pages/DeployToken'
+import { DSOList } from './pages/DSOList'
 
 export const IssuanceRoute = {
   list: makeURL(['app', 'issuance', 'offerings']),
@@ -38,7 +39,6 @@ export const issuanceRoutes: InternalRouteProps[] = [
   {
     label: 'Insight',
     path: IssuanceRoute.insight,
-    exact: true,
     component: IssuanceLanding
   },
   {
@@ -54,15 +54,15 @@ export const issuanceRoutes: InternalRouteProps[] = [
     component: DeployToken
   },
   {
-    label: 'Issuance',
+    label: 'My DSOs',
     path: IssuanceRoute.list,
     exact: true,
-    component: IssuanceLanding
+    component: DSOList
   }
 ]
 
 export const useIssuanceRouter = generateAppRouterHook(
   IssuanceRoute,
-  IssuanceRoute.list,
+  IssuanceRoute.insight,
   issuanceRoutes
 )

@@ -25,11 +25,9 @@ export const DSOFilter = () => {
   }
 
   return (
-    <Box p={3}>
-      <Typography variant='h5' style={{ fontSize: '1rem' }}>
-        My DSO(s)
-      </Typography>
-      <DSOSelect onChange={handleChange} />
+    <Box py={3}>
+      <Typography variant='h5'>My DSO(s)</Typography>
+      <DSOSelect fullWidth onChange={handleChange} />
     </Box>
   )
 }
