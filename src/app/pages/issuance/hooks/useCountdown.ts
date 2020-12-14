@@ -8,7 +8,7 @@ export interface TimerResults {
   seconds?: number
 }
 
-export const useCountdown = (endDate: Date | undefined): TimerResults => {
+export const useCountdown = (endDate: string | undefined): TimerResults => {
   const [result, setResult] = useState({})
 
   useEffect(() => {

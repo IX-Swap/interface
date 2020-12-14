@@ -5,7 +5,7 @@ import { useCountdown } from '../useCountdown'
 
 describe('useCountdown', () => {
   let dateSpy = jest.spyOn(Date, 'now').mockImplementation(() => 1607672045419)
-  let mockLaunchDate = new Date(Date.now() + 2 * 24 * 60 * 60 * 1000)
+  let mockLaunchDate = new Date(Date.now() + 2 * 24 * 60 * 60 * 1000).toString()
 
   afterAll(() => {
     dateSpy.mockRestore()
@@ -21,9 +21,9 @@ describe('useCountdown', () => {
     )
 
     expect(result.current).toEqual({
-      days: addLeadingZeros(2, 2),
-      hours: addLeadingZeros(0, 2),
-      minutes: addLeadingZeros(0, 2)
+      days: addLeadingZeros(1, 2),
+      hours: addLeadingZeros(23, 2),
+      minutes: addLeadingZeros(59, 2)
     })
 
     dateSpy = jest
@@ -36,7 +36,7 @@ describe('useCountdown', () => {
     expect(result.current).toEqual({
       days: addLeadingZeros(1, 2),
       hours: addLeadingZeros(23, 2),
-      minutes: addLeadingZeros(59, 2)
+      minutes: addLeadingZeros(58, 2)
     })
 
     dateSpy = jest
@@ -49,12 +49,12 @@ describe('useCountdown', () => {
     expect(result.current).toEqual({
       days: addLeadingZeros(1, 2),
       hours: addLeadingZeros(23, 2),
-      minutes: addLeadingZeros(58, 2)
+      minutes: addLeadingZeros(57, 2)
     })
   })
 
-  it('returns correct time data when there is time left', () => {
-    mockLaunchDate = new Date(Date.now() - 2 * 24 * 60 * 60 * 1000)
+  it('returns correct time data when there is no time left', () => {
+    mockLaunchDate = new Date(Date.now() - 2 * 24 * 60 * 60 * 1000).toString()
     const { result } = renderHookWithServiceProvider(
       () => useCountdown(mockLaunchDate),
       {}
