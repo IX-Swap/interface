@@ -2,7 +2,7 @@ import React from 'react'
 import { Box } from '@material-ui/core'
 import { useTheme } from '@material-ui/core/styles'
 import { Chart } from 'react-google-charts'
-import { ChartHeader } from './ChartHeader'
+import { ChartWrapper } from 'app/pages/issuance/components/IssuanceLanding/ChartWrapper'
 import { ChartProps } from 'types/charts'
 
 export const CommitmentStatsChart: React.FC<ChartProps> = ({
@@ -46,8 +46,7 @@ export const CommitmentStatsChart: React.FC<ChartProps> = ({
   }
 
   return (
-    <Box pt={4} pb={4} pl={3} pr={3}>
-      <ChartHeader title='Commitment Stats' />
+    <ChartWrapper title='Commitment Stats'>
       {isLoading ? (
         <Box height='200px' />
       ) : (
@@ -57,6 +56,6 @@ export const CommitmentStatsChart: React.FC<ChartProps> = ({
           options={options}
         />
       )}
-    </Box>
+    </ChartWrapper>
   )
 }

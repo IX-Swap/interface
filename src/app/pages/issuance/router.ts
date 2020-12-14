@@ -10,6 +10,7 @@ import { DeployToken } from 'app/pages/issuance/pages/DeployToken'
 export const IssuanceRoute = {
   list: makeURL(['app', 'issuance', 'offerings']),
   view: makeURL(['app', 'issuance', 'offerings', 'dsoId', 'view']),
+  insight: makeURL(['app', 'issuance', 'offerings', 'dsoId']),
   deployToken: makeURL([
     'app',
     'issuance',
@@ -33,6 +34,12 @@ export const issuanceRoutes: InternalRouteProps[] = [
     path: IssuanceRoute.view,
     exact: true,
     component: ViewDSO
+  },
+  {
+    label: 'Insight',
+    path: IssuanceRoute.insight,
+    exact: true,
+    component: IssuanceLanding
   },
   {
     label: 'Edit',
