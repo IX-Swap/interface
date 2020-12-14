@@ -3,15 +3,15 @@ import { useServices } from 'hooks/useServices'
 import { issuanceQueryKeys } from 'config/queryKeys'
 import { useIssuanceRouter } from '../router'
 
-export const useCommitmentStats = () => {
+export const useInvestorsByContry = () => {
   const { apiService } = useServices()
   const { params } = useIssuanceRouter()
-  const url = `/issuance/dso/${params.dsoId}/charts/commitment-stats`
+  const url = `/issuance/dso/${params.dsoId}/charts/top-countries`
 
-  const fetchCommitmentStats = async () => await apiService.get(url)
+  const fetchInvestmentGrowth = async () => await apiService.get(url)
   const { data, ...rest } = useQuery(
-    [issuanceQueryKeys.commitmentsStats],
-    fetchCommitmentStats
+    [issuanceQueryKeys.investorsByCountry],
+    fetchInvestmentGrowth
   )
 
   return {

@@ -1,17 +1,14 @@
 import React from 'react'
 import { Chart } from 'react-google-charts'
 import { ChartWrapper } from 'app/pages/issuance/components/IssuanceLanding/ChartWrapper'
-
-const topInvestorsData = [
-  ['James Roy', 3000],
-  ['Aurthur Doe', 2500],
-  ['Raul Garcia', 2000],
-  ['Mike Johnson', 1500],
-  ['Robert Moreno', 1000]
-]
+import { useTopInvestors } from '../../hooks/useTopInvestors'
 
 export const TopInvestors = () => {
-  const data: any[] = topInvestorsData
+  const { data, isLoading } = useTopInvestors()
+
+  if (isLoading || data === undefined) {
+    return null
+  }
 
   if (data.length === 0) {
     return (
@@ -40,14 +37,14 @@ export const TopInvestors = () => {
       <Chart
         chartType='PieChart'
         loader={<div>Loading Chart</div>}
-        data={[['Investor', 'Amount'], ...data]}
+        data={data}
+        height={220}
+        width={220}
         options={{
           pieHole: 0.5,
           pieStartAngle: -45,
           legend: {
-            position: 'bottom',
-            textStyle: { fontSize: 14 },
-            maxLines: 4
+            position: 'none'
           }
         }}
       />

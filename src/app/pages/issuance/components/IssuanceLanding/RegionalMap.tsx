@@ -2,18 +2,14 @@ import React from 'react'
 import { Chart } from 'react-google-charts'
 import { VSpacer } from 'components/VSpacer'
 import { ChartWrapper } from 'app/pages/issuance/components/IssuanceLanding/ChartWrapper'
-
-const regionalMapData = [
-  ['Germany', 200],
-  ['United States', 300],
-  ['Brazil', 400],
-  ['Canada', 500],
-  ['France', 600],
-  ['RU', 700]
-]
+import { useInvestorsByContry } from '../../hooks/useInvestorsByCountry'
 
 export const RegionalMap = () => {
-  const data = regionalMapData
+  const { data, isLoading } = useInvestorsByContry()
+
+  if (isLoading || data === undefined) {
+    return null
+  }
 
   return (
     <ChartWrapper title='Regional Map'>

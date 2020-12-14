@@ -106,5 +106,7 @@ export const dsoQueryKeys = {
 
 export const issuanceQueryKeys = {
   commitmentsStats: 'commitment-stats',
-  investmentGrowth: 'investment-growth'
+  investmentGrowth: 'investment-growth',
+  investorsByCountry: 'investors-by-country',
+  topInvestors: 'top-investors'
 }
