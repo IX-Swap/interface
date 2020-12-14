@@ -4,6 +4,7 @@ import { useTheme } from '@material-ui/core/styles'
 import { InvestmentGrowthChart } from '../components/InvestmentGrowthChart'
 import { CommitmentStatsChart } from '../components/CommitmentStatsChart'
 import { RegionalMap } from '../components/IssuanceLanding/RegionalMap'
+import { Activities } from '../components/IssuanceLanding/Activities'
 import { TopInvestors } from '../components/IssuanceLanding/TopInvestors'
 import { TotalInvestors } from '../components/IssuanceLanding/TotalInvestors'
 import { DSOFilter } from '../components/IssuanceLanding/DSOFilter'
@@ -83,6 +84,11 @@ export const IssuanceLanding = () => {
         <Grid item xs={4}>
           <Card variant='outlined' style={{ height: '100%' }}>
             <DSOFilter />
+          </Card>
+        </Grid>
+        <Grid item xs={12} style={{ paddingTop: 0, paddingLeft: 0 }}>
+          <Card variant='outlined'>
+            <Activities />
           </Card>
         </Grid>
       </Grid>
