@@ -1,5 +1,6 @@
 import { useQuery } from 'react-query'
 import { useServices } from 'hooks/useServices'
+import { issuanceQueryKeys } from 'config/queryKeys'
 
 export const useInvestmentGrowth = () => {
   const { apiService } = useServices()
@@ -7,7 +8,7 @@ export const useInvestmentGrowth = () => {
 
   const fetchInvestmentGrowth = async () => await apiService.get(url)
   const { data, ...rest } = useQuery(
-    ['investment-growth'],
+    [issuanceQueryKeys.investmentGrowth],
     fetchInvestmentGrowth
   )
 

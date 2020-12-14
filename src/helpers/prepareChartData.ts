@@ -1,4 +1,5 @@
 import { removeHours } from 'helpers/getWeekDays'
+
 export const prepareChartData = (data: any[]) => {
   const preparedData = data.map((el: any, i: number) => {
     if (i === 0) {

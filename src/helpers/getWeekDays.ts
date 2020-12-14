@@ -1,7 +1,7 @@
 import { format } from 'date-fns'
-import { investmentGrowthData } from 'types/charts'
+import { InvestmentGrowthData } from 'types/charts'
 
-export const getWeekDays = (data: investmentGrowthData) => {
+export const getWeekDays = (data: InvestmentGrowthData) => {
   if (typeof data === 'undefined') {
     return []
   }

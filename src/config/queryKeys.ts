@@ -101,3 +101,8 @@ export const securityQueryKeys = {
 export const dsoQueryKeys = {
   getList: 'dso-list'
 }
+
+export const issuanceQueryKeys = {
+  commitmentsStats: 'commitment-stats',
+  investmentGrowth: 'investment-growth'
+}

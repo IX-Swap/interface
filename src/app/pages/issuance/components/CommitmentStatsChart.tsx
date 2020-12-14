@@ -26,7 +26,7 @@ export const CommitmentStatsChart: React.FC<ChartProps> = () => {
     [new Date(2020, 11, 19), 25]
   ]
 
-  const hasData = typeof data !== 'undefined' && data.length > 0
+  const hasData = data !== undefined && data.length > 0
   const dateTicks = hasData ? getWeekDays(data.slice(1).reverse()) : undefined
 
   const gridColor = hasData ? theme.palette.text.secondary : 'transparent'

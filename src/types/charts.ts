@@ -3,4 +3,4 @@ export interface ChartProps {
   isLoading: boolean
 }
 
-export type investmentGrowthData = Array<[Date, number]> | undefined
+export type InvestmentGrowthData = Array<[Date, number]> | undefined

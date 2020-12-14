@@ -15,7 +15,7 @@ export const InvestmentGrowthChart: React.FC<ChartProps> = (
   const theme = useTheme()
   const { data, isLoading } = useInvestmentGrowth()
 
-  const hasData = typeof data !== 'undefined' && data.length > 0
+  const hasData = data !== undefined && data.length > 0
 
   const dateTicks = hasData ? getWeekDays(data.slice(1)) : undefined
 
