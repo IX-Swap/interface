@@ -10,7 +10,7 @@ export const useInvestmentGrowth = () => {
 
   const fetchInvestmentGrowth = async () => await apiService.get(url)
   const { data, ...rest } = useQuery(
-    [issuanceQueryKeys.investmentGrowth],
+    [issuanceQueryKeys.investmentGrowth(params.dsoId)],
     fetchInvestmentGrowth
   )
 

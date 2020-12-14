@@ -10,7 +10,7 @@ export const useTopInvestors = () => {
 
   const fetchCommitmentStats = async () => await apiService.get(url)
   const { data, ...rest } = useQuery(
-    [issuanceQueryKeys.topInvestors],
+    [issuanceQueryKeys.topInvestors(params.dsoId)],
     fetchCommitmentStats
   )
 

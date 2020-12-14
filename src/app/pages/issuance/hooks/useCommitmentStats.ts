@@ -10,7 +10,7 @@ export const useCommitmentStats = () => {
 
   const fetchCommitmentStats = async () => await apiService.get(url)
   const { data, ...rest } = useQuery(
-    [issuanceQueryKeys.commitmentsStats],
+    [issuanceQueryKeys.commitmentsStats(params.dsoId)],
     fetchCommitmentStats
   )
 

@@ -105,8 +105,8 @@ export const dsoQueryKeys = {
 }
 
 export const issuanceQueryKeys = {
-  commitmentsStats: 'commitment-stats',
-  investmentGrowth: 'investment-growth',
-  investorsByCountry: 'investors-by-country',
-  topInvestors: 'top-investors'
+  commitmentsStats: (dsoId: string) => generateQueryKey('commitment-stats', dsoId),
+  investmentGrowth: (dsoId: string) => generateQueryKey('investment-growth', dsoId),
+  investorsByCountry: (dsoId: string) => generateQueryKey('investors-by-country', dsoId),
+  topInvestors: (dsoId: string) => generateQueryKey('top-investors', dsoId)
 }

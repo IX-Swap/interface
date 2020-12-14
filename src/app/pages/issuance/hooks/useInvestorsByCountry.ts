@@ -10,7 +10,7 @@ export const useInvestorsByContry = () => {
 
   const fetchInvestmentGrowth = async () => await apiService.get(url)
   const { data, ...rest } = useQuery(
-    [issuanceQueryKeys.investorsByCountry],
+    [issuanceQueryKeys.investorsByCountry(params.dsoId)],
     fetchInvestmentGrowth
   )
 
