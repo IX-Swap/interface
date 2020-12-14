@@ -19,14 +19,14 @@ export const DSOFavorite = (props: DSOFavoriteProps) => {
 
   if (isLoading) {
     return (
-      <Box pl={3} style={{ width: 25, height: 25 }}>
+      <Box style={{ width: 25, height: 25 }}>
         <CircularProgress thickness={5.5} size={16} />
       </Box>
     )
   }
 
   return (
-    <Box pl={3}>
+    <Box>
       <IconButton
         size='small'
         onClick={handleFav}

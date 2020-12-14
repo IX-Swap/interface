@@ -128,16 +128,15 @@ export const DSOBaseFields = (props: DSOBaseFieldsProps) => {
           />
         </Grid>
 
-        {isNew && (
-          <Grid item>
-            <TypedField
-              control={control}
-              component={NetworkSelect}
-              name='network'
-              label='Network'
-            />
-          </Grid>
-        )}
+        <Grid item>
+          <TypedField
+            component={NetworkSelect}
+            label='Network'
+            name='network'
+            disabled={!isNew}
+            control={control}
+          />
+        </Grid>
       </Grid>
     </Grid>
   )

@@ -23,7 +23,7 @@ export const useDSOTableColumns = () => {
   const getIsColumnSelected = (
     column: TableColumn<DigitalSecurityOffering, DSOTableColumn>
   ) => {
-    if (data === undefined) {
+    if (data === undefined || data.columns === undefined) {
       return true
     }
 

@@ -6,7 +6,7 @@ import { InvestLanding } from 'app/pages/invest/pages/InvestLanding'
 
 export const InvestRoute = {
   landing: makeURL(['app', 'invest']),
-  dso: makeURL(['app', 'invest', 'offerings']),
+  dso: makeURL(['app', 'invest', 'offerings', 'issuerId', 'dsoId']),
   commitments: makeURL(['app', 'invest', 'commitments'])
 }
 
@@ -18,7 +18,7 @@ export const investRoutes = [
     exact: true
   },
   {
-    label: 'DSOs',
+    label: 'View DSO',
     path: InvestRoute.dso,
     component: DSORoot
   },
