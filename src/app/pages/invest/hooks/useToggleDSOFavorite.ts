@@ -8,7 +8,8 @@ import { dsoQueryKeys } from 'config/queryKeys'
 export const useToggleDSOFavorite = (dso: DigitalSecurityOffering) => {
   const queryCache = useQueryCache()
   const { apiService, snackbarService } = useServices()
-  const uri = issuanceURL.dso.favorite(getIdFromObj(dso))
+  const dsoId = getIdFromObj(dso)
+  const uri = issuanceURL.dso.favorite(dsoId)
 
   const mutateFn = async (isFav: boolean) => {
     if (isFav) {
@@ -19,6 +20,31 @@ export const useToggleDSOFavorite = (dso: DigitalSecurityOffering) => {
   }
 
   return useMutation(mutateFn, {
+    onMutate: async () => {
+      // TODO: logic needs to be revisited
+      const queryKey = queryCache.getQueries(dsoQueryKeys.getList)[0].queryKey
+      queryCache.setQueryData(queryKey, (old: any) => {
+        const list = old[0].data[0].documents
+
+        return [
+          {
+            data: [
+              {
+                documents: list.map((dso: DigitalSecurityOffering) => {
+                  if (getIdFromObj(dso) === dsoId) {
+                    return {
+                      ...dso,
+                      isStarred: !dso.isStarred
+                    }
+                  }
+                  return dso
+                })
+              }
+            ]
+          }
+        ]
+      })
+    },
     onSuccess: async () => {
       await queryCache.invalidateQueries(dsoQueryKeys.getList)
       void snackbarService.showSnackbar('Success', 'success')
