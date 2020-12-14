@@ -64,3 +64,8 @@ export const generateRandom = (length: number, chars: string): string => {
 
   return result
 }
+
+export const addLeadingZeros = (num: number | string, length: number) => {
+  const zeroes = new Array(length + 1 - num.toString().length).join('0')
+  return `${zeroes}${num}`
+}
