@@ -7,18 +7,20 @@ import { VSpacer } from 'components/VSpacer'
 
 const useTheme = makeStyles(theme => ({
   link: {
-    marginBottom: theme.spacing(1)
+    marginBottom: theme.spacing(1),
+    marginLeft: theme.spacing(2)
   },
   buttonLink: {
     color: theme.palette.primary.main,
     fontSize: '0.75rem',
     cursor: 'pointer',
-    marginBottom: theme.spacing(1)
+    marginBottom: theme.spacing(1),
+    marginLeft: theme.spacing(2)
   }
 }))
 
 export interface MoreOptionsProps {
-  dsoId: string
+  dsoId: string | undefined
 }
 
 export const MoreOptions: React.FC<MoreOptionsProps> = ({
@@ -31,10 +33,13 @@ export const MoreOptions: React.FC<MoreOptionsProps> = ({
 
   const handleDisable = () => {}
 
+  if (typeof dsoId === 'undefined') {
+    return null
+  }
   return (
     <Grid>
-      <Typography variant='h4'>More Options</Typography>
-      <VSpacer size='medium' />
+      <Typography variant='h5'>More Options</Typography>
+      <VSpacer size='small' />
       <Grid container spacing={0} direction='column'>
         <AppRouterLink
           to={paths.view}

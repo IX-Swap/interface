@@ -5,12 +5,16 @@ export interface TimerResults {
   days?: number
   hours?: number
   minutes?: number
+  seconds?: number
 }
 
-export const useCountdown = (endDate: Date): TimerResults => {
+export const useCountdown = (endDate: Date | undefined): TimerResults => {
   const [result, setResult] = useState({})
 
   useEffect(() => {
+    if (typeof endDate === 'undefined') {
+      return
+    }
     const getCountdown = (interval?: NodeJS.Timeout) => {
       const diff = new Date(endDate).getTime() - Date.now()
 
@@ -41,11 +45,12 @@ export const useCountdown = (endDate: Date): TimerResults => {
 
     getCountdown()
 
-    const time = setInterval(() => {
-      getCountdown(time)
-    }, 60 * 1000)
+    const cd = 60 * 1000
+    const interval = setInterval(() => {
+      getCountdown(interval)
+    }, cd)
 
-    return () => clearInterval(time)
+    return () => clearInterval(interval)
   }, [endDate])
 
   return result

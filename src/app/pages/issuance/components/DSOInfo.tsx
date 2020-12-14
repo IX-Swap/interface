@@ -6,8 +6,8 @@ import { CorporateIdentity } from 'types/identity'
 import { useTheme } from '@material-ui/core/styles'
 
 export interface DSOInfoProps {
-  dso: DigitalSecurityOffering
-  corporate: CorporateIdentity
+  dso: DigitalSecurityOffering | undefined
+  corporate: CorporateIdentity | undefined
 }
 
 export const DSOInfo: React.FC<DSOInfoProps> = ({
@@ -15,6 +15,9 @@ export const DSOInfo: React.FC<DSOInfoProps> = ({
   corporate
 }: DSOInfoProps) => {
   const theme = useTheme()
+  if (typeof dso === 'undefined' || typeof corporate === 'undefined') {
+    return null
+  }
   return (
     <Grid container justify='center' direction='column' alignItems='center'>
       <Box

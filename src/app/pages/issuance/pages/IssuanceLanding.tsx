@@ -3,6 +3,9 @@ import { Grid, Card, Box } from '@material-ui/core'
 import { useTheme } from '@material-ui/core/styles'
 import { InvestmentGrowthChart } from '../components/InvestmentGrowthChart'
 import { CommitmentStatsChart } from '../components/CommitmentStatsChart'
+import { DSOInfo } from '../components/DSOInfo'
+import { CountdownTimer } from '../components/CountdownTimer'
+import { MoreOptions } from '../components/MoreOptions'
 
 export const IssuanceLanding = () => {
   const theme = useTheme()
@@ -65,7 +68,21 @@ export const IssuanceLanding = () => {
           </Grid>
         </Grid>
         <Grid item xs={4}>
-          <Card variant='outlined' style={{ height: '100%' }}></Card>
+          <Grid
+            container
+            component={Card}
+            variant='outlined'
+            style={{ height: '100%', padding: theme.spacing(4) }}
+            justify='center'
+            alignItems='flex-start'
+            spacing={1}
+          >
+            <DSOInfo dso={undefined} corporate={undefined} />
+            <CountdownTimer launchDate={undefined} />
+            <Box width='100%'>
+              <MoreOptions dsoId={undefined} />
+            </Box>
+          </Grid>
         </Grid>
       </Grid>
     </Box>

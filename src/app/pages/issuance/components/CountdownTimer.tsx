@@ -4,21 +4,23 @@ import { VSpacer } from 'components/VSpacer'
 import { useCountdown } from '../hooks/useCountdown'
 
 export interface CountdownTimerProps {
-  launchDate: Date
+  launchDate: Date | undefined
 }
 
 export const CountdownTimer: React.FC<CountdownTimerProps> = ({
   launchDate
 }: CountdownTimerProps) => {
   const result = useCountdown(launchDate)
-
+  if (typeof launchDate === 'undefined') {
+    return null
+  }
   return (
     <Grid
       container
       alignItems='center'
       justify='center'
       direction='column'
-      style={{ maxWidth: '230px' }}
+      style={{ maxWidth: '150px' }}
     >
       <Typography>Time Remaining</Typography>
       <VSpacer size='small' />
