@@ -89,15 +89,16 @@ export const IssuanceLanding = () => {
             component={Card}
             variant='outlined'
             style={{ height: '100%', padding: theme.spacing(4) }}
-            justify='center'
-            alignItems='flex-start'
-            spacing={1}
+            justify='flex-start'
+            alignItems='center'
+            spacing={4}
+            direction='column'
           >
-            <DSOInfo dso={undefined} corporate={undefined} />
-            <CountdownTimer launchDate={undefined} />
+            <DSOInfo />
+            <CountdownTimer />
             <DSOFilter />
             <Box width='100%'>
-              <MoreOptions dsoId={undefined} />
+              <MoreOptions />
             </Box>
           </Grid>
         </Grid>
