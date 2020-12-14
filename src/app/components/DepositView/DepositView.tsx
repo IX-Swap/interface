@@ -13,7 +13,7 @@ export interface DepositViewProps {
 
 export const DepositView = (props: DepositViewProps) => {
   const { data } = props
-  const bankAccount = { ...INVESTAX_BANK }
+  const bankAccount = INVESTAX_BANK
 
   useSetPageTitle(data.depositCode)
 
