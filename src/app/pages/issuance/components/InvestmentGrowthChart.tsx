@@ -2,20 +2,22 @@ import React from 'react'
 import { Chart } from 'react-google-charts'
 import { useTheme } from '@material-ui/core/styles'
 import { Box } from '@material-ui/core'
-import { ChartHeader } from './ChartHeader'
+import { ChartWrapper } from 'app/pages/issuance/components/IssuanceLanding/ChartWrapper'
 import { NoChartData } from './NoChartData'
 import { ChartProps } from 'types/charts'
 import { getWeekDays } from 'helpers/getWeekDays'
+import { useInvestmentGrowth } from '../hooks/useInvestmentGrowth'
+import { prepareChartData } from 'helpers/prepareChartData'
 
-export const InvestmentGrowthChart: React.FC<ChartProps> = ({
-  data,
-  isLoading
-}: ChartProps) => {
+export const InvestmentGrowthChart: React.FC<ChartProps> = (
+  props: ChartProps
+) => {
   const theme = useTheme()
+  const { data, isLoading } = useInvestmentGrowth()
 
-  const hasData = typeof data !== 'undefined' && data.length > 0
+  const hasData = data !== undefined && data.length > 0
 
-  const dateTicks = getWeekDays(data)
+  const dateTicks = hasData ? getWeekDays(data.slice(1)) : undefined
 
   const options = {
     chart: {
@@ -43,15 +45,18 @@ export const InvestmentGrowthChart: React.FC<ChartProps> = ({
   }
 
   return (
-    <Box pt={4} pb={4} pl={3} pr={0} minHeight='300px'>
-      <ChartHeader title={'Investment Growth Chart'} />
+    <ChartWrapper title='Investment Growth Chart'>
       {isLoading ? (
         <Box height='200px' />
       ) : hasData ? (
-        <Chart chartType={'LineChart'} data={data} options={options} />
+        <Chart
+          chartType={'LineChart'}
+          data={prepareChartData(data)}
+          options={options}
+        />
       ) : (
         <NoChartData text='There is no investment at the moment. Once you receive investments in your deal you will be able to see all the charts.' />
       )}
-    </Box>
+    </ChartWrapper>
   )
 }

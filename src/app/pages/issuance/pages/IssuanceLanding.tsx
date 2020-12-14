@@ -6,6 +6,12 @@ import { CommitmentStatsChart } from '../components/CommitmentStatsChart'
 import { DSOInfo } from '../components/DSOInfo'
 import { CountdownTimer } from '../components/CountdownTimer'
 import { MoreOptions } from '../components/MoreOptions'
+import { RegionalMap } from '../components/IssuanceLanding/RegionalMap'
+import { TopInvestors } from '../components/IssuanceLanding/TopInvestors'
+import { TotalInvestors } from '../components/IssuanceLanding/TotalInvestors'
+import { DSOFilter } from '../components/IssuanceLanding/DSOFilter'
+import { AmountRaised } from '../components/IssuanceLanding/AmountRaised'
+import { TargetFundraise } from '../components/IssuanceLanding/TargetFundraise'
 
 export const IssuanceLanding = () => {
   const theme = useTheme()
@@ -31,13 +37,19 @@ export const IssuanceLanding = () => {
             style={{ paddingBottom: theme.spacing(4) }}
           >
             <Grid item xs={4}>
-              <Card variant='outlined' style={{ height: '100%' }}></Card>
+              <Card variant='outlined' style={{ height: '100%' }}>
+                <TotalInvestors />
+              </Card>
             </Grid>
             <Grid item xs={4}>
-              <Card variant='outlined' style={{ height: '100%' }}></Card>
+              <Card variant='outlined' style={{ height: '100%' }}>
+                <AmountRaised />
+              </Card>
             </Grid>
             <Grid item xs={4}>
-              <Card variant='outlined' style={{ height: '100%' }}></Card>
+              <Card variant='outlined' style={{ height: '100%' }}>
+                <TargetFundraise />
+              </Card>
             </Grid>
           </Grid>
           <Grid
@@ -53,7 +65,9 @@ export const IssuanceLanding = () => {
               </Card>
             </Grid>
             <Grid item xs={4}>
-              <Card variant='outlined' style={{ height: '100%' }}></Card>
+              <Card variant='outlined' style={{ height: '100%' }}>
+                <TopInvestors />
+              </Card>
             </Grid>
           </Grid>
           <Grid container direction='row' justify='space-between' spacing={4}>
@@ -63,7 +77,9 @@ export const IssuanceLanding = () => {
               </Card>
             </Grid>
             <Grid item xs={6}>
-              <Card variant='outlined' style={{ height: '100%' }}></Card>
+              <Card variant='outlined' style={{ height: '100%' }}>
+                <RegionalMap />
+              </Card>
             </Grid>
           </Grid>
         </Grid>
@@ -79,6 +95,7 @@ export const IssuanceLanding = () => {
           >
             <DSOInfo dso={undefined} corporate={undefined} />
             <CountdownTimer launchDate={undefined} />
+            <DSOFilter />
             <Box width='100%'>
               <MoreOptions dsoId={undefined} />
             </Box>

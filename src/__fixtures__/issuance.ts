@@ -2,7 +2,8 @@ import {
   DSORequestArgs,
   DSOFormValues,
   DsoTeamMember,
-  DeploymentInfo
+  DeploymentInfo,
+  DSOInsight
 } from 'types/dso'
 import { corporate, asset } from './authorizer'
 import { emptyFile } from '__fixtures__/file'
@@ -27,6 +28,18 @@ export const deploymentInfo: DeploymentInfo = {
   __v: 123
 }
 
+export const dsoInsight: DSOInsight = {
+  activityCount: 65,
+  approvedcommitmentCount: 1,
+  collectedOn: '2020-11-24T17:06:23.555Z',
+  commitmentCount: 0,
+  commitmentTotal: 0,
+  investorCount: 1,
+  raisedMax: 400,
+  raisedMin: 400,
+  raisedTotal: 400
+}
+
 export const createDSOArgs: DSORequestArgs = {
   businessModel: 'business model',
   capitalStructure: 'capital structure',
@@ -45,6 +58,7 @@ export const createDSOArgs: DSORequestArgs = {
   investmentStructure: 'investment structure',
   issuerName: 'issuer name',
   launchDate: '01-01-2000',
+  completionDate: '12-12-2220',
   leverage: 1,
   logo: '5f4f7d87f3e2c40bbab8a3f1',
   minimumInvestment: 100,
@@ -100,6 +114,7 @@ export const formvalues: DSOFormValues = {
   minimumInvestment: 200,
   leverage: 1,
   launchDate: '2020-10-16T18:30:00.000Z',
+  completionDate: '2220-10-16T18:30:00.000Z',
   issuerName: 'IXIssuer',
   investmentStructure: '1',
   investmentPeriod: 2,
@@ -136,6 +151,7 @@ export const requestargs: DSORequestArgs = {
   minimumInvestment: 200,
   leverage: numberToPercentage(formvalues.leverage),
   launchDate: '2020-10-16T18:30:00.000Z',
+  completionDate: '2220-10-16T18:30:00.000Z',
   investmentStructure: '1',
   investmentPeriod: 2,
   introduction: '<p>Hello world</p>',
@@ -154,13 +170,7 @@ export const requestargs: DSORequestArgs = {
   tokenSymbol: '$#'
 }
 
-export const investmentGrowthData: Array<
-  [Date, number] | Array<{ type: string; label: string }>
-> = [
-  [
-    { type: 'date', label: 'date' },
-    { type: 'number', label: 'investment' }
-  ],
+export const investmentGrowthData: Array<[Date, number]> = [
   [new Date(2020, 11, 1, 1), 1000],
   [new Date(2020, 11, 1, 3), 1500],
   [new Date(2020, 11, 1, 6), 2500],
