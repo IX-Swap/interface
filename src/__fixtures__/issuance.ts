@@ -170,13 +170,7 @@ export const requestargs: DSORequestArgs = {
   tokenSymbol: '$#'
 }
 
-export const investmentGrowthData: Array<
-  [Date, number] | Array<{ type: string; label: string }>
-> = [
-  [
-    { type: 'date', label: 'date' },
-    { type: 'number', label: 'investment' }
-  ],
+export const investmentGrowthData: Array<[Date, number]> = [
   [new Date(2020, 11, 1, 1), 1000],
   [new Date(2020, 11, 1, 3), 1500],
   [new Date(2020, 11, 1, 6), 2500],

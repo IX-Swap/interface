@@ -103,3 +103,8 @@ export const dsoQueryKeys = {
   getDSOsById: (id: string) => generateQueryKey('dso-list', id),
   getPromoted: 'promoted-dsos'
 }
+
+export const issuanceQueryKeys = {
+  commitmentsStats: 'commitment-stats',
+  investmentGrowth: 'investment-growth'
+}
