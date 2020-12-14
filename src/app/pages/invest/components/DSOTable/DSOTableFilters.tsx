@@ -13,7 +13,7 @@ export const DSOTableFilters = () => {
   return (
     <Grid container direction='column' spacing={3}>
       <Grid item container spacing={2}>
-        <Grid item md={7}>
+        <Grid item md={10}>
           <SearchFilter fullWidth placeholder='Search Offers' />
         </Grid>
 

@@ -1,5 +1,4 @@
 import React, { useRef } from 'react'
-import { Paper } from '@material-ui/core'
 import { TableView } from 'components/TableWithPagination/TableView'
 import columns from 'app/pages/admin/columns'
 import User from 'types/user'
@@ -10,16 +9,14 @@ export const Users = () => {
   const ref = useRef(null)
 
   return (
-    <Paper variant='elevation'>
-      <TableView<User>
-        innerRef={ref}
-        uri='/auth/users/list'
-        name={usersQueryKeys.getList}
-        columns={columns}
-        hasActions
-        actions={({ item }) => renderActions(item, ref)}
-      />
-    </Paper>
+    <TableView<User>
+      innerRef={ref}
+      uri='/auth/users/list'
+      name={usersQueryKeys.getList}
+      columns={columns}
+      hasActions
+      actions={({ item }) => renderActions(item, ref)}
+    />
   )
 }
 
