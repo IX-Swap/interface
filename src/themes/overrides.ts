@@ -46,9 +46,14 @@ export const overrides: Overrides = {
   MuiLink: {
     root: {
       fontWeight: 400,
+
       '&.MuiLink-underlineHover:active, &.MuiLink-underlineHover:visited, &.MuiLink-underlineAlways:active, &.MuiLink-underlineAlways:visited': {
         color: themeColors.primary,
         textDecoration: 'none'
+      },
+
+      '&:hover': {
+        cursor: 'pointer'
       }
     }
   },

@@ -37,7 +37,7 @@ export const Sidebar = () => {
       ? [
           {
             label: 'Issuance',
-            link: issuanceRoutes.list,
+            link: issuanceRoutes.insight,
             icon: IssuanceIcon
           }
         ]

@@ -91,16 +91,12 @@ export const IssuanceLanding = () => {
             variant='outlined'
             style={{ height: '100%', padding: theme.spacing(4) }}
             justify='flex-start'
-            alignItems='center'
-            spacing={4}
             direction='column'
           >
             <DSOInfo />
             <CountdownTimer />
             <DSOFilter />
-            <Box width='100%'>
-              <MoreOptions />
-            </Box>
+            <MoreOptions />
           </Grid>
         </Grid>
         <Grid item xs={12} style={{ paddingTop: 0, paddingLeft: 0 }}>
