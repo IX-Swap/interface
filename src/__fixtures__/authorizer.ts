@@ -132,7 +132,7 @@ export const dso: DigitalSecurityOffering = {
   asset: 'asset',
   businessModel: 'business model',
   capitalStructure: 'capital structure',
-  network: network._id,
+  network: network,
   corporate,
   createdAt: '01-01-2000',
   updatedAt: '01-01-2000',
