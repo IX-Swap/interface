@@ -1,4 +1,4 @@
-# InvestaX Platform WebApp
+# InvestaX Platform Web App
 
 ![Standard Js](https://cdn.rawgit.com/feross/standard/master/badge.svg)
 
