@@ -47,7 +47,7 @@ export const CommitmentFormWrapper = () => {
               <CommitmentFormFields
                 decimalScale={data.deploymentInfo?.decimals}
                 symbol={data.currency.symbol}
-                network={data.network._id}
+                network={data.network?._id}
               />
               <VSpacer size='small' />
               <Grid container spacing={1}>

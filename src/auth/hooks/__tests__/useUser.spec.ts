@@ -4,7 +4,6 @@ import { successfulResponse, unsuccessfulResponse } from '__fixtures__/api'
 import { useUser } from 'auth/hooks/useUser'
 import * as useCachedUserHook from 'hooks/auth/useCachedUser'
 import { user } from '__fixtures__/user'
-import { history } from 'config/history'
 
 describe('useUser', () => {
   beforeEach(() => {
@@ -66,7 +65,6 @@ describe('useUser', () => {
             3,
             'access-token'
           )
-          expect(history.location.pathname).toBe('/')
         },
         { timeout: 1000 }
       )
