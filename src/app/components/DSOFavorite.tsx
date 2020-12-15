@@ -1,6 +1,6 @@
 import React from 'react'
 import { DigitalSecurityOffering } from 'types/dso'
-import { IconButton, Box, CircularProgress } from '@material-ui/core'
+import { IconButton, CircularProgress, Grid, Box } from '@material-ui/core'
 import StarIcon from '@material-ui/icons/Star'
 import StarBorderOutlinedIcon from '@material-ui/icons/StarBorderOutlined'
 import { useToggleDSOFavorite } from 'app/pages/invest/hooks/useToggleDSOFavorite'
@@ -17,27 +17,25 @@ export const DSOFavorite = (props: DSOFavoriteProps) => {
     await toggleDSOFavorite(isFav)
   }
 
-  if (isLoading) {
-    return (
-      <Box style={{ width: 25, height: 25 }}>
-        <CircularProgress thickness={5.5} size={16} />
-      </Box>
-    )
-  }
-
   return (
-    <Box>
-      <IconButton
-        size='small'
-        onClick={handleFav}
-        style={{ color: isFav ? '#F0D400' : '#000000' }}
-      >
-        {isFav ? (
-          <StarIcon color='inherit' />
+    <Box pl={1} mr={-1}>
+      <Grid container justify='center' alignItems='center'>
+        {isLoading ? (
+          <CircularProgress thickness={5.5} size={16} />
         ) : (
-          <StarBorderOutlinedIcon color='action' />
+          <IconButton
+            size='small'
+            onClick={handleFav}
+            style={{ color: isFav ? '#F0D400' : '#000000' }}
+          >
+            {isFav ? (
+              <StarIcon color='inherit' />
+            ) : (
+              <StarBorderOutlinedIcon color='action' />
+            )}
+          </IconButton>
         )}
-      </IconButton>
+      </Grid>
     </Box>
   )
 }
