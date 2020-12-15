@@ -16,6 +16,7 @@ describe('useEnable2fa', () => {
 
   beforeEach(() => {
     useLogoutMock.mockReturnValue(logout)
+    jest.useFakeTimers()
   })
 
   afterEach(async () => {
