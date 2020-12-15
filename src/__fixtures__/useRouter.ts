@@ -1,4 +1,4 @@
-import { InternalRouteBase } from 'v2/types/util'
+import { InternalRouteBase } from 'types/util'
 
 interface AppRouter<T> {
   current: InternalRouteBase

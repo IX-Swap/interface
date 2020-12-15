@@ -1,5 +1,5 @@
 import { MutationResult, QueryStatus } from 'react-query'
-import { UsePaginatedQueryData, UseQueryData } from 'v2/hooks/useParsedData'
+import { UsePaginatedQueryData, UseQueryData } from 'hooks/useParsedData'
 
 export interface GenerateMutationResultArgs {
   data?: any

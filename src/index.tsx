@@ -7,13 +7,13 @@ import {
 } from '@material-ui/core/styles'
 import { ThemeProvider } from '@material-ui/styles'
 import { CssBaseline } from '@material-ui/core'
-import Themes from 'v2/themes'
-import { UserProvider } from 'v2/auth/context'
-import { EntryPoint } from 'v2/EntryPoint'
+import Themes from 'themes'
+import { UserProvider } from 'auth/context'
+import { EntryPoint } from 'EntryPoint'
 import { ToastProvider } from 'react-toast-notifications'
-import { Toast } from 'v2/components/Toast'
+import { Toast } from 'components/Toast'
 import { Router, Switch } from 'react-router-dom'
-import { history } from 'v2/history'
+import { history } from 'config/history'
 import { ReactQueryCacheProvider, QueryCache } from 'react-query'
 import { setupSentry } from 'setupSentry'
 import { setupFullStory } from 'setupFullStory'
@@ -35,7 +35,7 @@ setupSentry()
 setupFullStory()
 initGoogleAnalytics()
 
-console.log(APP_VERSION) // eslint-disable-line
+console.log(`App version: ${APP_VERSION}`) // eslint-disable-line
 
 ReactDOM.render(
   <StylesProvider generateClassName={generateClassName}>

@@ -1,6 +1,6 @@
 {
   "name": "ixwebapp",
-  "version": "0.3.0",
+  "version": "0.3.1",
   "private": true,
   "dependencies": {
     "@date-io/date-fns": "^1.3.13",
@@ -132,28 +132,13 @@
     "test": "CI=true react-scripts test --env=jest-environment-jsdom-sixteen --silent --runInBand",
     "test:ci": "CI=true react-scripts test --env=jest-environment-jsdom-sixteen --silent --coverage --testResultsProcessor jest-sonar-reporter --maxWorkers=75%",
     "eject": "react-scripts eject",
-    "deploy": "gulp deploy",
     "lint": "eslint --cache --fix \"src/**/*.{ts,tsx}\"",
-    "format": "prettier --write \"src/**/*.tsx\"",
-    "sonar": "export $(grep -v '^#' .env.dev | xargs -0) && yarn test:ci && sonar-scanner -Dsonar.login=$SONAR_TOKEN"
-  },
-  "browserslist": {
-    "production": [
-      ">0.2%",
-      "not dead",
-      "not op_mini all"
-    ],
-    "development": [
-      "last 1 chrome version",
-      "last 1 firefox version",
-      "last 1 safari version"
-    ]
+    "format": "prettier --write \"src/**/*.tsx\""
   },
   "jest": {
     "collectCoverageFrom": [
       "src/**/*.{ts,tsx}",
       "!node_modules/**",
-      "!src/v1/**",
       "!src/__fixtures__/**",
       "!src/**/*.d.ts",
       "!src/**/*.styles.ts",

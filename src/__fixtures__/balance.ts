@@ -1,4 +1,4 @@
-import { AssetBalance } from 'v2/types/balance'
+import { AssetBalance } from 'types/balance'
 import { asset } from '__fixtures__/authorizer'
 
 export const balance: AssetBalance = {

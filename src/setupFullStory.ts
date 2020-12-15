@@ -1,5 +1,5 @@
 import * as FullStory from '@fullstory/browser'
-import { FULLSTORY } from 'v2/config'
+import { FULLSTORY } from 'config'
 
 export const setupFullStory = () => {
   if (FULLSTORY === 'true') {

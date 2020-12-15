@@ -1,13 +1,13 @@
 import { user } from '__fixtures__/user'
-import { APIServiceResponse } from 'v2/services/api/types'
-import User from 'v2/types/user'
+import { APIServiceResponse } from 'services/api/types'
+import User from 'types/user'
 import {
   CompletePasswordResetArgs,
   LoginArgs,
   RequestPasswordResetArgs,
   SignupArgs,
   VerifySignupArgs
-} from 'v2/types/auth'
+} from 'types/auth'
 
 const email = 'alex@investax.io'
 const password = 'Qwerty12345_'

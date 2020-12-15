@@ -1,0 +1,114 @@
+import React from 'react'
+import { Grid, Typography, Tooltip } from '@material-ui/core'
+import { ViewDocument } from 'app/components/DSO/components/ViewDocument'
+import { useStyles } from './AuthorizationDocument.styles'
+import { documentIcons } from 'helpers/rendering'
+import { DownloadDocument } from 'components/dataroom/DownloadDocument'
+import { DataroomUploaderRenderProps } from 'components/dataroom/DataroomUploader'
+import { LoadingIndicator } from 'app/components/LoadingIndicator/LoadingIndicator'
+
+export interface AuthorizationDocumentProps
+  extends Pick<DataroomUploaderRenderProps, 'value'> {}
+
+export const isImage = (filename: string) => {
+  return (
+    filename.endsWith('.png') ||
+    filename.endsWith('.jpg') ||
+    filename.endsWith('.jpeg')
+  )
+}
+
+export const getDocumentType = (
+  filename: string
+): keyof typeof documentIcons => {
+  const splitted = filename.split('.')
+  const extension = splitted[splitted.length - 1]
+  const types = {
+    pdf: 'pdf' as const,
+    txt: 'txt' as const,
+    docx: 'docx' as const,
+    unknown: 'unknown' as const
+  }
+
+  return types[extension as keyof typeof types] ?? types.unknown
+}
+
+export const AuthorizationDocument = (props: AuthorizationDocumentProps) => {
+  const { value: document } = props
+  const classes = useStyles()
+
+  if (document === null || document === undefined) {
+    return null
+  }
+
+  return (
+    <Grid item className={classes.container}>
+      <DownloadDocument documentId={document._id} ownerId={document.user}>
+        {({ download, isLoading }) => (
+          <Grid
+            className={classes.inner}
+            container
+            direction='column'
+            alignItems='center'
+          >
+            <Grid
+              item
+              container
+              direction='column'
+              alignItems='center'
+              justify='center'
+              className={classes.imageWrapper}
+            >
+              <ViewDocument documentId={document._id} ownerId=''>
+                {url => {
+                  return isImage(document.originalFileName) ? (
+                    <div
+                      className={classes.image}
+                      style={{ backgroundImage: `url("${url}")` }}
+                    />
+                  ) : (
+                    <img
+                      className={classes.image}
+                      alt={document.originalFileName}
+                      src={
+                        documentIcons[
+                          getDocumentType(document.originalFileName)
+                        ]
+                      }
+                    />
+                  )
+                }}
+              </ViewDocument>
+            </Grid>
+
+            <Grid item xs zeroMinWidth className={classes.type}>
+              <Tooltip title={document.type}>
+                <Typography variant='body2' color='textSecondary' noWrap>
+                  {document.type}
+                </Typography>
+              </Tooltip>
+            </Grid>
+
+            <Grid item xs>
+              <Tooltip title='Click To View'>
+                <Typography
+                  className={classes.name}
+                  onClick={e => {
+                    e.stopPropagation()
+                    download()
+                  }}
+                >
+                  {document.originalFileName}
+                </Typography>
+              </Tooltip>
+            </Grid>
+
+            {isLoading && (
+              <LoadingIndicator size={24} message='Downloading...' />
+            )}
+          </Grid>
+        )}
+      </DownloadDocument>
+    </Grid>
+  )
+}

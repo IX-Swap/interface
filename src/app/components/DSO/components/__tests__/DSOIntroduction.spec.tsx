@@ -1,0 +1,42 @@
+import React from 'react'
+import { cleanup, render } from 'test-utils'
+import { DSOIntroduction } from 'app/components/DSO/components/DSOIntroduction'
+import { TypedField } from 'components/form/TypedField'
+import { wysiwygValueExtractor } from 'helpers/forms'
+import { Form } from 'components/form/Form'
+
+jest.mock('components/form/TypedField', () => ({
+  TypedField: jest.fn(() => <input />)
+}))
+
+describe('DSOIntroduction', () => {
+  afterEach(async () => {
+    await cleanup()
+    jest.clearAllMocks()
+  })
+
+  it('renders without error', () => {
+    render(
+      <Form>
+        <DSOIntroduction />
+      </Form>
+    )
+  })
+
+  it('renders EditableField with correct props', () => {
+    render(
+      <Form>
+        <DSOIntroduction />
+      </Form>
+    )
+
+    expect(TypedField).toBeCalledWith(
+      expect.objectContaining({
+        label: 'Introduction',
+        name: 'introduction',
+        valueExtractor: wysiwygValueExtractor
+      }),
+      {}
+    )
+  })
+})

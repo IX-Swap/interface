@@ -1,0 +1,59 @@
+import React from 'react'
+import { cleanup, render } from 'test-utils'
+import { RegisterFields } from 'auth/pages/register/components/RegisterFields'
+import { TypedField } from 'components/form/TypedField'
+import { Form } from 'components/form/Form'
+
+jest.mock('components/form/TypedField', () => ({
+  TypedField: jest.fn(() => null)
+}))
+
+describe('RegistetFields', () => {
+  afterEach(async () => {
+    jest.clearAllMocks()
+    await cleanup()
+  })
+
+  it('renders without error', () => {
+    render(
+      <Form>
+        <RegisterFields />
+      </Form>
+    )
+  })
+
+  it('renders name, email and password fields', () => {
+    render(
+      <Form>
+        <RegisterFields />
+      </Form>
+    )
+
+    expect(TypedField).toHaveBeenNthCalledWith(
+      1,
+      expect.objectContaining({
+        name: 'name',
+        label: 'Name'
+      }),
+      {}
+    )
+
+    expect(TypedField).toHaveBeenNthCalledWith(
+      2,
+      expect.objectContaining({
+        name: 'email',
+        label: 'Email Address'
+      }),
+      {}
+    )
+
+    expect(TypedField).toHaveBeenNthCalledWith(
+      3,
+      expect.objectContaining({
+        name: 'password',
+        label: 'Password'
+      }),
+      {}
+    )
+  })
+})

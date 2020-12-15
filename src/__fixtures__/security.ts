@@ -1,6 +1,6 @@
-import { ChangePasswordFormValues } from 'v2/app/pages/security/pages/changePassword/types'
+import { ChangePasswordFormValues } from 'app/pages/security/pages/changePassword/types'
 import { user } from './user'
-import { Enable2faFormValues } from 'v2/app/pages/security/pages/setup2fa/types'
+import { Enable2faFormValues } from 'app/pages/security/pages/setup2fa/types'
 
 export const changePasswordArgs: ChangePasswordFormValues = {
   oldPassword: 'abc',

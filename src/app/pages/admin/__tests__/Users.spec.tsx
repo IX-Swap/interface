@@ -1,0 +1,46 @@
+import React from 'react'
+import { render, cleanup } from 'test-utils'
+import { Users, renderActions } from 'app/pages/admin/pages/Users'
+import { TableView } from 'components/TableWithPagination/TableView'
+import columns from 'app/pages/admin/columns'
+import { user } from '__fixtures__/user'
+import { Actions } from '../components/Actions'
+import { usersQueryKeys } from 'config/queryKeys'
+
+jest.mock('components/TableWithPagination/TableView', () => ({
+  TableView: jest.fn(() => null)
+}))
+
+describe('Users', () => {
+  afterEach(async () => {
+    await cleanup()
+    jest.clearAllMocks()
+  })
+
+  it('renders without error', () => {
+    render(<Users />)
+  })
+
+  it('renders TableView with correct props', () => {
+    render(<Users />)
+
+    expect(TableView).toHaveBeenCalledTimes(1)
+    expect(TableView).toHaveBeenCalledWith(
+      expect.objectContaining({
+        name: usersQueryKeys.getList,
+        uri: '/auth/users/list',
+        hasActions: true,
+        columns
+      }),
+      {}
+    )
+  })
+
+  describe('renderActions', () => {
+    it('renders Actions component with correct data', () => {
+      const ref = {} as any
+      const actionsView = renderActions(user, ref)
+      expect(actionsView).toEqual(<Actions user={user} ref={ref} />)
+    })
+  })
+})
