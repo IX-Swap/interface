@@ -16,6 +16,7 @@ describe('useEnable2fa', () => {
 
   beforeEach(() => {
     useLogoutMock.mockReturnValue(logout)
+    jest.useFakeTimers()
   })
 
   afterEach(async () => {
@@ -39,6 +40,8 @@ describe('useEnable2fa', () => {
         () => {
           const [mutate] = result.current
           void mutate(enable2faArgs)
+
+          jest.runAllTimers()
 
           expect(logout).toHaveBeenCalledTimes(1)
           expect(showSnackbar).toHaveBeenNthCalledWith(
