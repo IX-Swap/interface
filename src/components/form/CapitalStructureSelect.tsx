@@ -1,18 +1,29 @@
 import React from 'react'
-import { MenuItem, Select } from '@material-ui/core'
-import { capitalStructures } from 'config/defaults'
+import { MenuItem, Select, SelectProps } from '@material-ui/core'
+import { renderMenuItems } from 'helpers/rendering'
+import { useDSOCapitalStructures } from 'hooks/useDSOCapitalStructures'
+import { TypedSelectProps } from 'types/util'
 
-export const CapitalStructureSelect = (props: any) => {
+export interface CapitalStructureSelectProps extends TypedSelectProps {
+  includeAll?: boolean
+}
+
+export const CapitalStructureSelect = (props: CapitalStructureSelectProps) => {
+  const { includeAll = false, ...rest } = props
+  const { data, isLoading } = useDSOCapitalStructures()
+
+  if (isLoading || data === undefined) {
+    return null
+  }
+
   return (
-    <Select {...props} style={{ minWidth: 100 }}>
-      <MenuItem disabled value={undefined}>
-        Capital Structure
-      </MenuItem>
-      {capitalStructures.map(c => (
-        <MenuItem value={c} key={c}>
-          {c}
+    <Select {...(rest as SelectProps)}>
+      {includeAll && (
+        <MenuItem value='All'>
+          All
         </MenuItem>
-      ))}
+      )}
+      {renderMenuItems(data.map(option => ({ label: option, value: option })))}
     </Select>
   )
 }

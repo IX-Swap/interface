@@ -1,6 +1,6 @@
 import React from 'react'
 import { MenuItem, Select } from '@material-ui/core'
-import { renderMenu } from 'helpers/rendering'
+import { renderMenuItems } from 'helpers/rendering'
 import { COUNTRIES_OPTS } from 'app/pages/identity/const'
 
 export const CountrySelect = (props: any): JSX.Element => {
@@ -9,7 +9,7 @@ export const CountrySelect = (props: any): JSX.Element => {
       <MenuItem disabled value={undefined}>
         Country
       </MenuItem>
-      {renderMenu(COUNTRIES_OPTS)}
+      {renderMenuItems(COUNTRIES_OPTS)}
     </Select>
   )
 }

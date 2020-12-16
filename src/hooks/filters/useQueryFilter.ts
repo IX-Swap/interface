@@ -1,7 +1,7 @@
 import { useSearchQuery } from 'hooks/useSearchQuery'
 import { useHistory } from 'react-router-dom'
 
-export type QueryFilter = 'search'
+export type QueryFilter = 'search' | 'capitalStructure'
 
 export const useQueryFilter = () => {
   const { replace, location } = useHistory()

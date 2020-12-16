@@ -1,7 +1,8 @@
 import { TypeBackground } from '@material-ui/core/styles/createPalette'
-import { ReactNode, ComponentType } from 'react'
+import { ReactNode, ComponentType, ChangeEvent } from 'react'
 import { RouteComponentProps } from 'react-router-dom'
 import { AppRole } from 'helpers/acl'
+import { SelectProps } from '@material-ui/core'
 
 export interface LightTypeBackground extends TypeBackground {
   light: string
@@ -81,4 +82,11 @@ export type DeepPartial<T> = {
     : T[K] extends Record<string, unknown>
     ? DeepPartial<T[K]>
     : T[K]
+}
+
+export type TypedSelectProps<TValue = string> = Omit<
+  SelectProps,
+  'onChange'
+> & {
+  onChange?: (event: ChangeEvent<{ name?: string; value: TValue }>) => void
 }

@@ -1,9 +1,10 @@
 import React, { useState } from 'react'
 import { Grid } from '@material-ui/core'
-import { SearchFilter } from './SearchFilter'
-import { useDSOTableColumns } from '../../hooks/useDSOTableColumns'
-import { ColumnsEditor } from './ColumnsEditor'
-import { ColumnsEditorToggle } from './ColumnsEditorToggle'
+import { CapitalStructureFilter } from 'app/pages/invest/components/DSOTable/CapitalStructureFilter'
+import { useDSOTableColumns } from 'app/pages/invest/hooks/useDSOTableColumns'
+import { SearchFilter } from 'app/pages/invest/components/DSOTable/SearchFilter'
+import { ColumnsEditorToggle } from 'app/pages/invest/components/DSOTable/ColumnsEditorToggle'
+import { ColumnsEditor } from 'app/pages/invest/components/DSOTable/ColumnsEditor'
 
 export const DSOTableFilters = () => {
   const { deselectColumn, selectColumn, columns } = useDSOTableColumns()
@@ -13,8 +14,12 @@ export const DSOTableFilters = () => {
   return (
     <Grid container direction='column' spacing={3}>
       <Grid item container spacing={2}>
-        <Grid item md={10}>
+        <Grid item md={8}>
           <SearchFilter fullWidth placeholder='Search Offers' />
+        </Grid>
+
+        <Grid item md={2}>
+          <CapitalStructureFilter />
         </Grid>
 
         <Grid item md={2}>
