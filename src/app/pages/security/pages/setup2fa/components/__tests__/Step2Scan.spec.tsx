@@ -1,10 +1,10 @@
 import React from 'react'
 import { render, cleanup } from 'test-utils'
 import { Step2Scan } from 'app/pages/security/pages/setup2fa/components/Step2Scan'
-import * as setupContext from '../../context'
-import * as setupHook from '../../hooks/useSetup2fa'
-import { generateQueryResult } from '../../../../../../../__fixtures__/useQuery'
-import { Setup2faStore } from '../../context/store'
+import * as setupContext from 'app/pages/security/pages/setup2fa/context'
+import * as setupHook from 'app/pages/security/pages/setup2fa/hooks/useSetup2fa'
+import { generateQueryResult } from '__fixtures__/useQuery'
+import { Setup2faStore } from 'app/pages/security/pages/setup2fa/context/store'
 
 describe('Step2Scan', () => {
   const store: Setup2faStore = {
