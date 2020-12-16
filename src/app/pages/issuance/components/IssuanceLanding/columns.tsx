@@ -15,9 +15,7 @@ export const renderCommitmentAvatar = (a: string, row: DSOActivity) => (
     </Grid>
     <Grid item>
       <Typography variant='h5' style={{ fontSize: '0.875rem' }}>
-        {row.identity.individual.firstName +
-          ' ' +
-          row.identity.individual.lastName}
+        {row.identity.individual.firstName} {row.identity.individual.lastName}
       </Typography>
     </Grid>
   </Grid>

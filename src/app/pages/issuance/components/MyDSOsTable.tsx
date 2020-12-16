@@ -12,7 +12,7 @@ export const MyDSOsTable = () => {
 
   return (
     <TableView
-      name={dsoQueryKeys.getList}
+      name={dsoQueryKeys.getDSOsByUserId(userId)}
       uri={issuanceURL.dso.getByUserId(userId)}
       columns={columns}
     />

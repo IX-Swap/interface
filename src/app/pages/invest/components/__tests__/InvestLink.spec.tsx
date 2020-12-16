@@ -15,22 +15,13 @@ jest.mock('components/AppRouterLink', () => ({
 
 jest.mock('app/pages/invest/routers/offeringsRouter')
 
-jest.spyOn(useDSOByIdHook, 'useDSOById').mockImplementation(() => ({
-  ...generateQueryResult({
-    data: dso
-  })
-}))
-
-jest.spyOn(offeringRouter, 'useOfferingsRouter').mockImplementation(
-  () =>
-    ({
-      params: {
-        dsoId: dso._id,
-        issuerId: dso.user
-      },
-      paths: offeringRouter.OfferingRoute
-    } as any)
-)
+jest.spyOn(offeringRouter, 'useOfferingsRouter').mockReturnValue({
+  params: {
+    dsoId: dso._id,
+    issuerId: dso.user
+  },
+  paths: offeringRouter.OfferingRoute
+} as any)
 
 describe('InvestLink', () => {
   afterEach(async () => {
@@ -39,10 +30,38 @@ describe('InvestLink', () => {
   })
 
   it('renders without error', () => {
+    jest
+      .spyOn(useDSOByIdHook, 'useDSOById')
+      .mockReturnValue(generateQueryResult({ data: dso }))
+
     render(<InvestLink />)
   })
 
+  it('renders nothing if loading', () => {
+    jest
+      .spyOn(useDSOByIdHook, 'useDSOById')
+      .mockReturnValue(generateQueryResult({ data: dso, isLoading: true }))
+
+    const { container } = render(<InvestLink />)
+
+    expect(container).toBeEmptyDOMElement()
+  })
+
+  it('renders nothing if data is undefined', () => {
+    jest
+      .spyOn(useDSOByIdHook, 'useDSOById')
+      .mockReturnValue(generateQueryResult({ data: undefined }))
+
+    const { container } = render(<InvestLink />)
+
+    expect(container).toBeEmptyDOMElement()
+  })
+
   it('renders AppRouterLink with correct props', () => {
+    jest
+      .spyOn(useDSOByIdHook, 'useDSOById')
+      .mockReturnValue(generateQueryResult({ data: dso }))
+
     render(<InvestLink />)
 
     expect(AppRouterLinkComponent).toHaveBeenCalledWith(
@@ -55,10 +74,14 @@ describe('InvestLink', () => {
   })
 
   it('renders AppRouterLink disabled if issuer is user', () => {
-    jest.spyOn(useAuthHook, 'useAuth').mockImplementation(() => ({
+    jest.spyOn(useAuthHook, 'useAuth').mockReturnValue({
       user: { ...user, _id: dso.user },
       isAuthenticated: true
-    }))
+    })
+
+    jest
+      .spyOn(useDSOByIdHook, 'useDSOById')
+      .mockReturnValue(generateQueryResult({ data: dso }))
 
     const { getByText } = render(<InvestLink />)
 
@@ -66,11 +89,15 @@ describe('InvestLink', () => {
   })
 
   it('renders AppRouterLink disabled if dso does not have subscriptionDocument', () => {
-    jest.spyOn(useDSOByIdHook, 'useDSOById').mockImplementation(() => ({
+    jest.spyOn(useDSOByIdHook, 'useDSOById').mockReturnValue({
       ...generateQueryResult({
         data: { ...dso, subscriptionDocument: undefined }
       })
-    }))
+    })
+
+    jest
+      .spyOn(useDSOByIdHook, 'useDSOById')
+      .mockReturnValue(generateQueryResult({ data: dso }))
 
     const { getByText } = render(<InvestLink />)
 
