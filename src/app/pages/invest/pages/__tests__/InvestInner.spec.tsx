@@ -11,6 +11,7 @@ const useInvestListRouterMock = useInvestListRouter as jest.Mock<
 
 describe('InvestInner', () => {
   const renderRoutes = jest.fn(() => <div />)
+
   beforeEach(() => {
     useInvestListRouterMock.mockReturnValueOnce({
       renderRoutes

@@ -11,6 +11,7 @@ const useOfferingsRouterMock = useOfferingsRouter as jest.Mock<
 
 describe('OfferingsRoot', () => {
   const renderRoutes = jest.fn(() => <div />)
+
   beforeEach(() => {
     useOfferingsRouterMock.mockReturnValueOnce({ renderRoutes })
   })

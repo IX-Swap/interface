@@ -22,6 +22,7 @@ jest.mock('components/AppRouterLink', () => ({
 
 describe('CommitmentFormCancelButton', () => {
   const props: CommitmentFormCancelButtonProps = {}
+
   beforeEach(() => {
     useOfferingsRouterMock.mockReturnValue({
       paths: OfferingRoute,

@@ -7,6 +7,7 @@ export interface AmountRaisedChartProps {
 }
 
 export const AmountRaisedChart = ({ dso }: AmountRaisedChartProps) => {
+  // TODO: Replace with `getDSOStats` helper
   const percentRaised =
     (dso.insight.raisedTotal * 100) / (dso.totalFundraisingAmount ?? 0)
 
