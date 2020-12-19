@@ -1,8 +1,8 @@
 import React from 'react'
 import { Grid } from '@material-ui/core'
 import { Submit } from 'components/form/Submit'
-import { CommitmentIssuanceForm } from './CommitmentIssuanceForm'
-import { CommitmentIssuanceFields } from './CommitmentIssuanceFields'
+import { CommitmentIssuanceForm } from 'app/components/CommitmentIssuance/CommitmentIssuanceForm'
+import { CommitmentIssuanceFields } from 'app/components/CommitmentIssuance/CommitmentIssuanceFields'
 import { Commitment } from 'types/commitment'
 import { convertISOToDate } from 'helpers/dates'
 

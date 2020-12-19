@@ -7,7 +7,7 @@ import { MuiPickersUtilsProvider } from '@material-ui/pickers'
 import { TypedField } from 'components/form/TypedField'
 import { DateTimePickerComponent } from 'components/form/DateTimePicker'
 import { CommitmentIssuanceFormValues } from 'types/commitment'
-import useStyles from './CommitmentIssuanceFields.styles'
+import useStyles from 'app/components/CommitmentIssuance/CommitmentIssuanceFields.styles'
 import { convertDateToISO } from 'helpers/dates'
 
 export interface CommitmentIssuanceFieldsProps {

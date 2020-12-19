@@ -6,7 +6,7 @@ import CardContent from '@material-ui/core/CardContent'
 import Typography from '@material-ui/core/Typography'
 import { DSOCardContent } from 'app/components/DSO/components/DSOCard/DSOCardContent'
 import { DSOCardCover } from 'app/components/DSO/components/DSOCard/DSOCardCover'
-import useStyles from './DSOCard.styles'
+import useStyles from 'app/components/DSO/components/DSOCard/DSOCard.styles'
 
 export interface DSOCardProps {
   dso: DigitalSecurityOffering
