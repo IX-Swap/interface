@@ -5,6 +5,7 @@ import * as useCommitmentIssuanceHook from 'app/pages/authorizer/hooks/useCommit
 
 describe('CommitmentIssuanceForm', () => {
   const updateIssuance = jest.fn()
+
   beforeEach(() => {
     jest
       .spyOn(useCommitmentIssuanceHook, 'useCommitmentIssuance')

@@ -11,6 +11,7 @@ const useAdminRouterMock = useAdminRouter as jest.Mock<
 
 describe('AdminRoot', () => {
   const renderRoutes = jest.fn(() => <div />)
+
   beforeEach(() => {
     useAdminRouterMock.mockReturnValueOnce({ renderRoutes })
   })

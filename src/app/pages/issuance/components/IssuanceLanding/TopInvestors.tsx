@@ -1,7 +1,7 @@
 import React from 'react'
 import { Chart } from 'react-google-charts'
 import { ChartWrapper } from 'app/pages/issuance/components/IssuanceLanding/ChartWrapper'
-import { useTopInvestors } from '../../hooks/useTopInvestors'
+import { useTopInvestors } from 'app/pages/issuance/hooks/useTopInvestors'
 
 export const TopInvestors = () => {
   const { data, isLoading } = useTopInvestors()

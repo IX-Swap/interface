@@ -1,8 +1,8 @@
 import React from 'react'
 import { useSetPageTitle } from 'app/hooks/useSetPageTitle'
 import { useDSOById } from 'app/pages/invest/hooks/useDSOById'
-import { ChartWrapper } from './ChartWrapper'
-import { InsightValue } from './InsightValue'
+import { ChartWrapper } from 'app/pages/issuance/components/IssuanceLanding/ChartWrapper'
+import { InsightValue } from 'app/pages/issuance/components/IssuanceLanding/InsightValue'
 import { useIssuanceRouter } from 'app/pages/issuance/router'
 import { LOADING_TEXT } from 'components/form/renderUtils'
 

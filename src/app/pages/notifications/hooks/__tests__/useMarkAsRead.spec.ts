@@ -9,6 +9,7 @@ import { notification } from '__fixtures__/notification'
 
 describe('useMarkAsRead', () => {
   const markNotificationAsRead = jest.fn()
+
   beforeEach(() => {
     jest
       .spyOn(useAuthHook, 'useAuth')

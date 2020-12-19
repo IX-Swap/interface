@@ -3,7 +3,7 @@ import { useServices } from 'hooks/useServices'
 import { issuanceQueryKeys } from 'config/queryKeys'
 import { useIssuanceRouter } from '../router'
 
-export const useInvestorsByContry = () => {
+export const useInvestorsByCountry = () => {
   const { apiService } = useServices()
   const { params } = useIssuanceRouter()
   const url = `/issuance/dso/${params.dsoId}/charts/top-countries`

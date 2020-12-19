@@ -7,6 +7,7 @@ import { completePasswordResetArgs } from '__fixtures__/auth'
 
 describe('useCompletePasswordReset', () => {
   const push = jest.fn()
+
   beforeEach(() => {
     jest.spyOn(authRouter, 'useAuthRouter').mockReturnValue({ push } as any)
   })

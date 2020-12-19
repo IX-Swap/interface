@@ -1,5 +1,5 @@
-import React from 'react'
-import { DSOSelect } from './DSOSelect'
+import React, { useEffect } from 'react'
+import { DSOSelect } from 'app/pages/issuance/components/IssuanceLanding/DSOSelect'
 import { useDSOsByUserId } from 'app/pages/issuance/hooks/useDSOsByUserId'
 import { useIssuanceRouter } from 'app/pages/issuance/router'
 import { Box, Typography } from '@material-ui/core'
@@ -12,16 +12,20 @@ export const DSOFilter = () => {
   } = useIssuanceRouter()
   const { data, isSuccess } = useDSOsByUserId()
 
-  if (!isSuccess || data.list.length === 0) {
-    return null
-  }
+  useEffect(() => {
+    if ((!hasValue(dsoId) || dsoId === ':dsoId') && data.list.length > 0) {
+      replace('insight', { dsoId: data.list[0]._id })
+    }
+  }, [dsoId, data.list, replace])
 
   const handleChange = (e: any) => {
-    replace('insight', { dsoId: e.target.value })
+    if (hasValue(e.target.value)) {
+      replace('insight', { dsoId: e.target.value })
+    }
   }
 
-  if (!hasValue(dsoId)) {
-    handleChange({ target: { value: data.list[0]._id } })
+  if (!isSuccess || data.list.length === 0) {
+    return null
   }
 
   return (

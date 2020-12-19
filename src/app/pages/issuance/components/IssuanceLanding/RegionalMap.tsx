@@ -2,10 +2,10 @@ import React from 'react'
 import { Chart } from 'react-google-charts'
 import { VSpacer } from 'components/VSpacer'
 import { ChartWrapper } from 'app/pages/issuance/components/IssuanceLanding/ChartWrapper'
-import { useInvestorsByContry } from '../../hooks/useInvestorsByCountry'
+import { useInvestorsByCountry } from 'app/pages/issuance/hooks/useInvestorsByCountry'
 
 export const RegionalMap = () => {
-  const { data, isLoading } = useInvestorsByContry()
+  const { data, isLoading } = useInvestorsByCountry()
 
   if (isLoading || data === undefined) {
     return null
