@@ -63,7 +63,7 @@ describe('useQueryFilter', () => {
       })
     })
 
-    it('returns null if there is no item with provided key in search params', async () => {
+    it('returns undefined if there is no item with provided key in search params', async () => {
       await act(async () => {
         history.push('/?foo=bar')
 
@@ -74,7 +74,7 @@ describe('useQueryFilter', () => {
         await waitFor(() => {
           const value = result.current.getFilterValue('search')
 
-          expect(value).toBeNull()
+          expect(value).toBeUndefined()
         })
       })
     })

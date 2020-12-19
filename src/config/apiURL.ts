@@ -83,7 +83,8 @@ export const issuanceURL = {
       `/issuance/dso/${userId}/${dsoId}`,
     create: (userId: string) => `/issuance/dso/${userId}`,
     update: (userId: string, dsoId: string) =>
-      `/issuance/dso/${userId}/${dsoId}`
+      `/issuance/dso/${userId}/${dsoId}`,
+    getCapitalStructureList: '/issuance/capital-structures'
   }
 }
 

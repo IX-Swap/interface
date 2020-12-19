@@ -1,7 +1,8 @@
 import { TypeBackground } from '@material-ui/core/styles/createPalette'
-import { ReactNode, ComponentType } from 'react'
+import { ReactNode, ComponentType, ChangeEvent } from 'react'
 import { RouteComponentProps } from 'react-router-dom'
 import { AppRole } from 'helpers/acl'
+import { SelectProps } from '@material-ui/core'
 
 export interface LightTypeBackground extends TypeBackground {
   light: string
@@ -21,12 +22,7 @@ export interface TableColumn<T, K = string> {
   render?: (val: any, row: T) => ReactNode | JSX.Element | string
 }
 
-export type AuthorizableStatus =
-  | 'Unauthorized'
-  | 'Approved'
-  | 'Rejected'
-  | 'Submitted'
-  | ''
+export type AuthorizableStatus = 'Approved' | 'Rejected' | 'Submitted' | ''
 
 export interface NumberFormat {
   currency: string
@@ -43,6 +39,7 @@ export interface BaseFilter {
   search?: string
   from?: string
   to?: string
+  capitalStructure?: string
 }
 
 export interface InternalRouteBase {
@@ -81,4 +78,11 @@ export type DeepPartial<T> = {
     : T[K] extends Record<string, unknown>
     ? DeepPartial<T[K]>
     : T[K]
+}
+
+export type TypedSelectProps<TValue = string> = Omit<
+  SelectProps,
+  'onChange'
+> & {
+  onChange?: (event: ChangeEvent<{ name?: string; value: TValue }>) => void
 }

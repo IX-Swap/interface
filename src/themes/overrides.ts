@@ -74,7 +74,7 @@ export const overrides: Overrides = {
   MuiOutlinedInput: {
     root: {
       padding: 0,
-      minHeight: 38
+      minHeight: 40
     },
     inputMarginDense: {
       paddingTop: 12,

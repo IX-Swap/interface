@@ -1,44 +1,42 @@
+import React from 'react'
 import {
   InputAdornment,
   OutlinedInput,
   OutlinedInputProps
 } from '@material-ui/core'
 import { Search } from '@material-ui/icons'
-import { useQueryFilter } from 'hooks/filters/useQueryFilter'
+import { SearchQueryFilter } from 'components/SearchQueryFilter/SearchQueryFilter'
 import debounce from 'lodash/debounce'
-import React, { ChangeEvent } from 'react'
 
 interface SearchFilterProps extends OutlinedInputProps {}
 
 export const SearchFilter = (props: SearchFilterProps) => {
-  const { updateFilter, removeFilter, getFilterValue } = useQueryFilter()
-  const defaultValue = getFilterValue('search')
-
-  const handleSearchChange = (event: ChangeEvent<HTMLInputElement>) => {
-    event.persist()
-
-    debounce(() => {
-      const value = event.target.value.trim()
-
-      if (value !== '') {
-        updateFilter('search', value)
-      } else {
-        removeFilter('search')
-      }
-    }, 750)()
-  }
-
   return (
-    <OutlinedInput
-      {...props}
-      defaultValue={defaultValue}
-      onChange={handleSearchChange}
-      margin='dense'
-      startAdornment={
-        <InputAdornment position='start'>
-          <Search color='disabled' />
-        </InputAdornment>
-      }
-    />
+    <SearchQueryFilter<'search'> name='search'>
+      {({ value, onChange, onClear }) => (
+        <OutlinedInput
+          {...props}
+          margin='dense'
+          defaultValue={value}
+          startAdornment={
+            <InputAdornment position='start'>
+              <Search color='disabled' />
+            </InputAdornment>
+          }
+          onChange={event => {
+            event.persist()
+            debounce(() => {
+              const value = event.target.value.trim()
+
+              if (value !== '') {
+                onChange(value)
+              } else {
+                onClear()
+              }
+            }, 750)()
+          }}
+        />
+      )}
+    </SearchQueryFilter>
   )
 }

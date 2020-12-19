@@ -14,20 +14,14 @@ import { formatMoney } from './numbers'
 import { DSOLogo } from 'app/components/DSO/components/DSOLogo'
 import { Commitment } from 'types/commitment'
 
-export const renderMenu = (arr: any[]): JSX.Element[] => {
-  return arr.map(
-    ({
-      value,
-      label
-    }: {
-      value: string | number
-      label: string
-    }): JSX.Element => (
-      <MenuItem key={value} value={value}>
-        {label}
-      </MenuItem>
-    )
-  )
+export const renderMenuItems = (
+  items: Array<{ label: string; value: string | number }>
+): JSX.Element[] => {
+  return items.map(({ value, label }) => (
+    <MenuItem key={value} value={value}>
+      {label}
+    </MenuItem>
+  ))
 }
 
 export const renderCommitmentMoney = (a: number, row: Commitment) =>

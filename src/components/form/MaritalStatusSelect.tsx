@@ -1,6 +1,6 @@
 import React from 'react'
 import { MenuItem, Select } from '@material-ui/core'
-import { renderMenu } from 'helpers/rendering'
+import { renderMenuItems } from 'helpers/rendering'
 import { MARITAL_STATUSES_OPTS } from 'app/pages/identity/const'
 
 export const MaritalStatusSelect = (props: any): JSX.Element => {
@@ -9,7 +9,7 @@ export const MaritalStatusSelect = (props: any): JSX.Element => {
       <MenuItem disabled value={undefined}>
         Martial Status
       </MenuItem>
-      {renderMenu(MARITAL_STATUSES_OPTS)}
+      {renderMenuItems(MARITAL_STATUSES_OPTS)}
     </Select>
   )
 }
