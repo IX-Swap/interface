@@ -1,6 +1,6 @@
 import React from 'react'
 import { MenuItem, Select } from '@material-ui/core'
-import { renderMenu } from 'helpers/rendering'
+import { renderMenuItems } from 'helpers/rendering'
 import { GENDERS_OPTS } from 'app/pages/identity/const'
 
 export const GenderSelect = (props: any): JSX.Element => {
@@ -9,7 +9,7 @@ export const GenderSelect = (props: any): JSX.Element => {
       <MenuItem disabled value={undefined}>
         Gender
       </MenuItem>
-      {renderMenu(GENDERS_OPTS)}
+      {renderMenuItems(GENDERS_OPTS)}
     </Select>
   )
 }

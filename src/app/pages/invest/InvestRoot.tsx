@@ -8,7 +8,7 @@ export const InvestRoot = () => {
 
   return (
     <Container>
-      <PageHeader />
+      <PageHeader alignment='flex-start' />
       {renderRoutes()}
     </Container>
   )

@@ -3,7 +3,7 @@ import { render, cleanup } from 'test-utils'
 import {
   DSOCard,
   DSOfferingCardProps
-} from 'app/components/DSO/components/DSOCard'
+} from 'app/components/DSO/components/_DSOCard'
 import { dso } from '__fixtures__/authorizer'
 
 describe('DSOCard', () => {

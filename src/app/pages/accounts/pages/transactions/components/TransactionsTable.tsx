@@ -1,5 +1,4 @@
 import React from 'react'
-import { Paper } from '@material-ui/core'
 import { TableView } from 'components/TableWithPagination/TableView'
 import { Transaction } from 'types/transaction'
 import columns from 'app/pages/accounts/pages/transactions/columns'
@@ -24,13 +23,13 @@ export const TransactionsTable = () => {
   }
 
   return (
-    <Paper className={privateClassNames()}>
+    <div className={privateClassNames()}>
       <TableView<Transaction>
         uri={`/accounts/statement/${user?._id ?? ''}`}
         name={transactionsQueryKeys.getByUserId(user?._id ?? '')}
         columns={columns}
         filter={filter}
       />
-    </Paper>
+    </div>
   )
 }

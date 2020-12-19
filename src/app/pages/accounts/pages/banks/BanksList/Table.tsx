@@ -4,7 +4,6 @@ import { columns } from 'app/pages/accounts/pages/banks/BanksList/columns'
 import { Bank } from 'types/bank'
 import { Actions } from 'app/pages/accounts/pages/banks/BanksList/Actions'
 import { useAuth } from 'hooks/auth/useAuth'
-import { Paper } from '@material-ui/core'
 import { getIdFromObj } from 'helpers/strings'
 import { banksQueryKeys } from 'config/queryKeys'
 
@@ -13,14 +12,12 @@ export const Table: React.FC = () => {
   const userId = getIdFromObj(user)
 
   return (
-    <Paper variant='elevation'>
-      <TableView<Bank>
-        uri={`/accounts/banks/list/${userId}`}
-        name={banksQueryKeys.getListByUserId(userId)}
-        columns={columns}
-        hasActions
-        actions={Actions}
-      />
-    </Paper>
+    <TableView<Bank>
+      uri={`/accounts/banks/list/${userId}`}
+      name={banksQueryKeys.getListByUserId(userId)}
+      columns={columns}
+      hasActions
+      actions={Actions}
+    />
   )
 }

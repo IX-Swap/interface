@@ -4,7 +4,9 @@ import {
   formatDateToMMDDYY,
   formatDateAndTime
 } from 'helpers/dates'
-import { subMinutes, subHours, subDays } from 'date-fns'
+import subDays from 'date-fns/subDays'
+import subHours from 'date-fns/subHours'
+import subMinutes from 'date-fns/subMinutes'
 
 describe('getTimeAgo', () => {
   it('returns "Just now" if current time is passed', () => {

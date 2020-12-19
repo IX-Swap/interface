@@ -1,5 +1,5 @@
+import React from 'react'
 import { StatusFilterItem } from 'app/pages/authorizer/components/StatusFilterItem'
-import React, { useState, useMemo } from 'react'
 import {
   Assignment as AllIcon,
   AssignmentTurnedIn as ApprovedIcon,
@@ -7,51 +7,37 @@ import {
   Subject as UnauthorizedIcon,
   SvgIconComponent
 } from '@material-ui/icons'
-import { AuthorizableStatus, BaseFilter } from 'types/util'
-import { initialFilterValue } from 'app/pages/authorizer/hooks/useAuthorizerView'
+import { AuthorizableStatus } from 'types/util'
+import { Box } from '@material-ui/core'
+import { SearchQueryFilter } from 'components/SearchQueryFilter/SearchQueryFilter'
 
+export const StatusFilter = () => {
+  return (
+    <SearchQueryFilter<'authorizationStatus'>
+      name='authorizationStatus'
+      defaultValue='Submitted'
+    >
+      {({ value, onChange }) => (
+        <Box>
+          {statusFilters.map((status, i) => (
+            <StatusFilterItem
+              key={i}
+              title={status.title}
+              isSelected={status.value === value}
+              onClick={() => onChange(status.value)}
+            >
+              {React.createElement(status.icon)}
+            </StatusFilterItem>
+          ))}
+        </Box>
+      )}
+    </SearchQueryFilter>
+  )
+}
 interface StatusFilterItemType {
   icon: SvgIconComponent
   title: string
   value: AuthorizableStatus
-}
-
-interface StatusFilterProps {
-  onChange: (filter: BaseFilter) => void
-}
-
-export const StatusFilter: React.FC<StatusFilterProps> = props => {
-  const { onChange } = props
-  const initialStatus = useMemo(
-    () =>
-      statusFilters.find(f => initialFilterValue.status === f.value) ??
-      statusFilters[0],
-    []
-  )
-
-  const [selectedStatus, setSelectedStatus] = useState<StatusFilterItemType>(
-    initialStatus
-  )
-  const renderItem = (status: StatusFilterItemType, i: number): JSX.Element => {
-    const { value, icon, title } = status
-    const handleClick = (): void => {
-      setSelectedStatus(status)
-      onChange({ status: status.value })
-    }
-
-    return (
-      <StatusFilterItem
-        key={i}
-        title={title}
-        isSelected={selectedStatus.value === value}
-        onClick={handleClick}
-      >
-        {React.createElement(icon)}
-      </StatusFilterItem>
-    )
-  }
-
-  return <>{statusFilters.map(renderItem)}</>
 }
 
 export const statusFilters: StatusFilterItemType[] = [

@@ -33,6 +33,14 @@ const formatValue = (value: any): string => {
 }
 
 export const labelWeightMap = {
+  default: 400,
+  thin: 500,
+  normal: 700,
+  bold: 900
+}
+
+export const valueWeightMap = {
+  default: 400,
   thin: 500,
   normal: 700,
   bold: 900
@@ -42,21 +50,51 @@ export interface LabelledValueProps {
   label: string
   value: any
   row?: boolean
+  reverse?: boolean
+  valueWeight?: keyof typeof valueWeightMap
   labelWeight?: keyof typeof labelWeightMap
 }
 
 export const LabelledValue = (props: LabelledValueProps & GridProps) => {
-  const { label, value, row = false, labelWeight = 'normal', ...rest } = props
+  const {
+    label,
+    value: val,
+    row = false,
+    reverse = false,
+    valueWeight = 'default',
+    labelWeight = 'normal',
+    ...rest
+  } = props
   const direction = row ? 'row' : 'column'
+
+  const items = [
+    {
+      text: label,
+      styles: {
+        fontWeight: labelWeightMap[labelWeight],
+        fontSize: reverse ? '16px' : undefined
+      }
+    },
+    {
+      text: formatValue(val),
+      styles: {
+        fontWeight: valueWeightMap[valueWeight],
+        fontSize: reverse ? '24px' : undefined
+      }
+    }
+  ]
+
+  const [first, last] = reverse ? items.reverse() : items
 
   return (
     <Grid {...rest} item container direction={direction}>
-      <Typography style={{ fontWeight: labelWeightMap[labelWeight] }}>
-        {label}
-        {row && ':'}
+      <Typography style={first.styles}>
+        {first.text}
+        {row && !reverse && ':'}
       </Typography>
-      {row ? <Box px={0.5} /> : <Box py={0.4} />}
-      <Typography>{formatValue(value)}</Typography>
+      {row ? <Box px={0.5} /> : null}
+      {!row && !reverse ? <Box py={0.4} /> : null}
+      <Typography style={last.styles}>{last.text}</Typography>
     </Grid>
   )
 }
