@@ -3,6 +3,7 @@ import { render, cleanup } from 'test-utils'
 import { TableView } from 'components/TableWithPagination/TableView'
 import { withExtraActions } from 'app/pages/authorizer/components/withExtraActions'
 import { AuthorizerTable } from 'app/pages/authorizer/components/AuthorizerTable'
+import * as useAuthorizerFilterHook from 'app/pages/authorizer/hooks/useAuthorizerFilter'
 
 jest.mock('components/TableWithPagination/TableView', () => ({
   TableView: jest.fn(() => null)
@@ -34,6 +35,15 @@ describe('AuthorizerTable', () => {
   })
 
   it('renders table with correct props if isAll is true', async () => {
+    jest.spyOn(useAuthorizerFilterHook, 'useAuthorizerFilter').mockReturnValue({
+      filter: {
+        from: undefined,
+        to: undefined,
+        status: '',
+        search: undefined
+      }
+    })
+
     render(<AuthorizerTable {...props} />)
 
     expect(withExtraActions).toHaveBeenCalled()

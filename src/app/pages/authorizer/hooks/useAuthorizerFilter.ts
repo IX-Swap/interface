@@ -1,33 +1,18 @@
-import { useEffect } from 'react'
-import { BaseFilter } from 'types/util'
-import { initialFilterValue } from 'app/pages/authorizer/hooks/useAuthorizerView'
-import { useQuery, useQueryCache } from 'react-query'
-import { authorizerQueryKeys } from 'config/queryKeys'
+import { useQueryFilter } from 'hooks/filters/useQueryFilter'
 
 export const useAuthorizerFilter = () => {
-  const queryCache = useQueryCache()
-  const queryFn = async () => {
-    return queryCache.getQueryData<BaseFilter | undefined>(
-      authorizerQueryKeys.authorizerFilter
-    )
-  }
+  const { getFilterValue } = useQueryFilter()
+  const statusQueryValue = getFilterValue('authorizationStatus', 'Submitted')
+  const fromDateQueryValue = getFilterValue('fromDate', undefined)
+  const toDateQueryValue = getFilterValue('toDate', undefined)
+  const searchQueryValue = getFilterValue('search', undefined)
 
-  useEffect(() => {
-    queryCache.setQueryData<BaseFilter>(
-      authorizerQueryKeys.authorizerFilter,
-      initialFilterValue
-    )
-
-    return () => {
-      queryCache.setQueryData<BaseFilter>(
-        authorizerQueryKeys.authorizerFilter,
-        { status: '' }
-      )
+  return {
+    filter: {
+      search: searchQueryValue,
+      status: statusQueryValue,
+      to: toDateQueryValue,
+      from: fromDateQueryValue
     }
-  }, []) // eslint-disable-line
-
-  return useQuery<BaseFilter | undefined>(
-    [authorizerQueryKeys.authorizerFilter],
-    queryFn
-  )
+  }
 }

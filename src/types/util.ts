@@ -22,12 +22,7 @@ export interface TableColumn<T, K = string> {
   render?: (val: any, row: T) => ReactNode | JSX.Element | string
 }
 
-export type AuthorizableStatus =
-  | 'Unauthorized'
-  | 'Approved'
-  | 'Rejected'
-  | 'Submitted'
-  | ''
+export type AuthorizableStatus = 'Approved' | 'Rejected' | 'Submitted' | ''
 
 export interface NumberFormat {
   currency: string
@@ -44,6 +39,7 @@ export interface BaseFilter {
   search?: string
   from?: string
   to?: string
+  capitalStructure?: string
 }
 
 export interface InternalRouteBase {

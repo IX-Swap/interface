@@ -18,11 +18,7 @@ export const CapitalStructureSelect = (props: CapitalStructureSelectProps) => {
 
   return (
     <Select {...(rest as SelectProps)}>
-      {includeAll && (
-        <MenuItem value='All'>
-          All
-        </MenuItem>
-      )}
+      {includeAll && <MenuItem value='All'>All</MenuItem>}
       {renderMenuItems(data.map(option => ({ label: option, value: option })))}
     </Select>
   )

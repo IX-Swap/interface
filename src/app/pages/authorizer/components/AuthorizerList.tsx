@@ -14,9 +14,7 @@ export interface AuthorizerListProps<T>
   title: string
 }
 
-export const AuthorizerList = <T,>(
-  props: AuthorizerListProps<T>
-): JSX.Element => {
+export const AuthorizerList = <T,>(props: AuthorizerListProps<T>) => {
   return (
     <LayoutWithSidebar
       secret

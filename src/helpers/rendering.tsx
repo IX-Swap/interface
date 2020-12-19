@@ -15,7 +15,7 @@ import { DSOLogo } from 'app/components/DSO/components/DSOLogo'
 import { Commitment } from 'types/commitment'
 
 export const renderMenuItems = (
-  items: { label: string; value: string | number }[]
+  items: Array<{ label: string; value: string | number }>
 ): JSX.Element[] => {
   return items.map(({ value, label }) => (
     <MenuItem key={value} value={value}>

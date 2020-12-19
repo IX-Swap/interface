@@ -18,7 +18,7 @@ export const AuthorizerTable = <T,>(
   props: AuthorizerViewProps<T>
 ): JSX.Element => {
   const { columns, name, uri } = props
-  const { data: filter } = useAuthorizerFilter()
+  const { filter } = useAuthorizerFilter()
 
   return (
     <TableView<T>
@@ -26,7 +26,7 @@ export const AuthorizerTable = <T,>(
       uri={uri}
       columns={columns}
       actions={withExtraActions<T>()}
-      filter={filter}
+      filter={filter as any}
       hasActions
       hasStatus
     />
