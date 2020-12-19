@@ -26,7 +26,7 @@ export const AuthorizerTable = <T,>(
       uri={uri}
       columns={columns}
       actions={withExtraActions<T>()}
-      filter={filter as any}
+      filter={filter}
       hasActions
       hasStatus
     />
