@@ -3,6 +3,7 @@ import { Grid, Paper, Typography } from '@material-ui/core'
 import { makeStyles } from '@material-ui/core/styles'
 import { usePromo } from '../hooks/usePromo'
 import { generateImgSrc } from 'helpers/generateImgSrc'
+import { escape } from 'lodash'
 
 const useStyles = makeStyles(theme => ({
   promoBanner: {
@@ -38,6 +39,8 @@ export const PromoBanner = () => {
     return null
   }
 
+
+
   return (
     <Grid className={styles.promoBanner}>
       {title !== '' ? (
@@ -50,8 +53,8 @@ export const PromoBanner = () => {
           data-testid='promo-image'
           className={styles.bannerImage}
           src={generateImgSrc(image.src)}
-          alt={image.alt ?? image.title ?? ''}
-          title={image.title}
+          alt={escape(image.alt ?? image.title ?? '')}
+          title={escape(image.title)}
         />
       </Paper>
     </Grid>
