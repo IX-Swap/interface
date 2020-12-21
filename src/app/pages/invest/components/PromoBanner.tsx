@@ -39,8 +39,6 @@ export const PromoBanner = () => {
     return null
   }
 
-
-
   return (
     <Grid className={styles.promoBanner}>
       {title !== '' ? (
