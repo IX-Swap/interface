@@ -43,7 +43,7 @@ describe('usePromotedDSOs', () => {
             '_id'
           )
           expect(post).toHaveBeenCalledWith(
-            issuanceURL.dso.getPromoted,
+            issuanceURL.dso.getAllPromoted,
             paginationArgs
           )
         },
