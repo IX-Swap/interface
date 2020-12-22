@@ -1,5 +1,5 @@
 import React from 'react'
-import { Grid, Link, Typography } from '@material-ui/core'
+import { Grid, Typography } from '@material-ui/core'
 import { AppRouterLink } from 'components/AppRouterLink'
 import { useIssuanceRouter } from 'app/pages/issuance/router'
 import { VSpacer } from 'components/VSpacer'
@@ -19,10 +19,6 @@ export const MoreOptions = () => {
   if (data === undefined) {
     return null
   }
-
-  const handleDuplicate = () => {}
-
-  const handleDisable = () => {}
 
   if (typeof dsoId === 'undefined') {
     return null
@@ -82,26 +78,6 @@ export const MoreOptions = () => {
         >
           Edit DSO
         </AppRouterLink>
-
-        <Link
-          align='left'
-          component='div'
-          onClick={handleDuplicate}
-          className={link}
-          variant='body1'
-        >
-          Duplicate This DSO
-        </Link>
-
-        <Link
-          align='left'
-          component='div'
-          className={link}
-          onClick={handleDisable}
-          variant='body1'
-        >
-          Disable This DSO
-        </Link>
       </Grid>
     </Grid>
   )
