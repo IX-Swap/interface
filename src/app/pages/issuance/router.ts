@@ -37,15 +37,15 @@ export const issuanceRoutes: InternalRouteProps[] = [
     component: ViewDSO
   },
   {
-    label: 'Insight',
-    path: IssuanceRoute.insight,
-    component: IssuanceLanding
-  },
-  {
     label: 'Edit',
     path: IssuanceRoute.edit,
     exact: true,
     component: EditDSO
+  },
+  {
+    label: 'Insight',
+    path: IssuanceRoute.insight,
+    component: IssuanceLanding
   },
   {
     label: 'Deploy Token',
