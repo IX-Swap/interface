@@ -10,8 +10,8 @@ export const mockColumns: Array<TableColumn<
     label: 'favorite'
   },
   {
-    key: 'corporate',
-    label: 'corporate'
+    key: 'tokenName',
+    label: 'Offer Name'
   },
   {
     key: 'insight',
@@ -37,7 +37,7 @@ export const mockColumns: Array<TableColumn<
 
 export const mockDefaultColumns: Record<DSOTableColumn, boolean> = {
   favorite: true,
-  corporate: true,
+  tokenName: true,
   insight: true,
   pricePerUnit: true,
   totalFundraisingAmount: true,

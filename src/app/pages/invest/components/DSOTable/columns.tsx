@@ -1,6 +1,5 @@
 import React from 'react'
 import { TableColumn } from 'types/util'
-import { CorporateIdentity } from 'types/identity'
 import { DSONameAndStructure } from './DSONameAndStructure'
 import { DigitalSecurityOffering, DSOInsight, DSOTableColumn } from 'types/dso'
 import { PriceWithCurrency } from './PriceWithCurrency'
@@ -8,9 +7,9 @@ import { DSORaised } from './DSORaised'
 import { renderDSOFavorite } from 'helpers/rendering'
 
 export const renderDSONameAndStructure = (
-  c: CorporateIdentity,
+  tokenName: string,
   dso: DigitalSecurityOffering
-) => <DSONameAndStructure corporate={c} dso={dso} />
+) => <DSONameAndStructure tokenName={tokenName} dso={dso} />
 
 export const renderPriceWithCurrency = (
   price: number,
@@ -32,7 +31,7 @@ export const columns: Array<TableColumn<
     render: renderDSOFavorite
   },
   {
-    key: 'corporate',
+    key: 'tokenName',
     label: 'Offer Name',
     render: renderDSONameAndStructure
   },
@@ -69,7 +68,7 @@ export const columns: Array<TableColumn<
 ]
 
 export const defaultSelectedColumns: Record<DSOTableColumn, boolean> = {
-  corporate: true,
+  tokenName: true,
   distributionFrequency: true,
   favorite: true,
   insight: true,

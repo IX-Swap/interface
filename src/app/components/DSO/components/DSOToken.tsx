@@ -1,5 +1,6 @@
 import React from 'react'
 import { Button, Grid } from '@material-ui/core'
+import { useIsAuthorizer } from 'helpers/acl'
 import { AppRouterLinkComponent, AppRouterLink } from 'components/AppRouterLink'
 import { useIssuanceRouter } from 'app/pages/issuance/router'
 import { useDSOById } from 'app/pages/invest/hooks/useDSOById'
@@ -7,6 +8,7 @@ import { useAuth } from 'hooks/auth/useAuth'
 import { getBlockchainUrl } from '../utils'
 
 export const DSOToken = () => {
+  const isAuthorizer = useIsAuthorizer()
   const { paths, params } = useIssuanceRouter()
   const { data, isLoading } = useDSOById(params.dsoId, params.issuerId)
   const { user } = useAuth()
@@ -17,7 +19,7 @@ export const DSOToken = () => {
 
   const isDeployed = data.deploymentInfo !== undefined
   const isDisabled = data.status !== 'Approved'
-  const showButton = data.user === user?._id
+  const showButton = data.user === user?._id || isAuthorizer
 
   const token = data.deploymentInfo?.token
   const tokenUrl = getBlockchainUrl(token, data.network, 'token')

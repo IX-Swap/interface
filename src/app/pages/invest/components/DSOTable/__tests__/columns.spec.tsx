@@ -9,7 +9,6 @@ import {
   renderDSOStatus
 } from 'app/pages/invest/components/DSOTable/columns'
 import { dso } from '__fixtures__/authorizer'
-import { corporate } from '__fixtures__/identity'
 import { dsoInsight } from '__fixtures__/issuance'
 
 jest.mock('app/pages/invest/components/DSOTable/DSONameAndStructure', () => ({
@@ -25,21 +24,23 @@ jest.mock('app/pages/invest/components/DSOTable/DSORaised', () => ({
 }))
 
 describe('render DSO Name', () => {
+  const tokenName = 'CoinX'
+
   afterEach(async () => {
     await cleanup()
     jest.clearAllMocks()
   })
 
   it('renders without error', () => {
-    render(<>{renderDSONameAndStructure(corporate, dso)}</>)
+    render(<>{renderDSONameAndStructure(tokenName, dso)}</>)
   })
 
   it('renders DSOName with correct props', () => {
-    render(<>{renderDSONameAndStructure(corporate, dso)}</>)
+    render(<>{renderDSONameAndStructure(tokenName, dso)}</>)
 
     expect(DSONameAndStructure).toHaveBeenCalledWith(
       {
-        corporate: corporate,
+        tokenName: tokenName,
         dso: dso
       },
       {}
