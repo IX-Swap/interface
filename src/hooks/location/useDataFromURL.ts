@@ -86,6 +86,6 @@ export const useDataFromURL = () => {
       }
     }
 
-    replace({ ...location, state })
+    replace({ state })
   }, [pathname]) // eslint-disable-line
 }
