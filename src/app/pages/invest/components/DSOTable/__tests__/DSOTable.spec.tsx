@@ -5,6 +5,7 @@ import { DSOTable } from '../DSOTable'
 import { dsoQueryKeys } from 'config/queryKeys'
 import { columns } from '../columns'
 import { Actions } from '../Actions'
+import { issuanceURL } from 'config/apiURL'
 
 jest.mock('components/TableWithPagination/TableView', () => ({
   TableView: jest.fn(() => 'TableView')
@@ -22,9 +23,9 @@ describe('DSO Table', () => {
       {
         actions: Actions,
         columns: columns,
-        name: dsoQueryKeys.getList,
+        name: dsoQueryKeys.getApprovedList,
         hasActions: true,
-        uri: `/issuance/dso/list`,
+        uri: issuanceURL.dso.getAllApproved,
         filter: {
           search: undefined
         }

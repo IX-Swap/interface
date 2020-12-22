@@ -22,7 +22,8 @@ export const useToggleDSOFavorite = (dso: DigitalSecurityOffering) => {
   return useMutation(mutateFn, {
     onMutate: async () => {
       // TODO: logic needs to be revisited
-      const queryKey = queryCache.getQueries(dsoQueryKeys.getList)[0].queryKey
+      const queryKey = queryCache.getQueries(dsoQueryKeys.getApprovedList)[0]
+        .queryKey
       queryCache.setQueryData(queryKey, (old: any) => {
         const list = old[0].data[0].documents
 
@@ -46,7 +47,7 @@ export const useToggleDSOFavorite = (dso: DigitalSecurityOffering) => {
       })
     },
     onSuccess: async () => {
-      await queryCache.invalidateQueries(dsoQueryKeys.getList)
+      await queryCache.invalidateQueries(dsoQueryKeys.getApprovedList)
       void snackbarService.showSnackbar('Success', 'success')
     },
     onError: (error: any) => {
