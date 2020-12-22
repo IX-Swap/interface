@@ -1,17 +1,16 @@
 import React from 'react'
-import { CorporateIdentity } from 'types/identity'
 import { DigitalSecurityOffering } from 'types/dso'
 import { DSOLogo } from 'app/components/DSO/components/DSOLogo'
 import { Grid, Typography } from '@material-ui/core'
 import { useStyles } from './DSONameAndStucture.styles'
 
 export interface DSONameAndStructureProps {
-  corporate: CorporateIdentity
+  tokenName: string
   dso: DigitalSecurityOffering
 }
 
 export const DSONameAndStructure: React.FC<DSONameAndStructureProps> = ({
-  corporate,
+  tokenName,
   dso
 }: DSONameAndStructureProps) => {
   const classes = useStyles()
@@ -28,7 +27,7 @@ export const DSONameAndStructure: React.FC<DSONameAndStructureProps> = ({
         <DSOLogo dsoId={dso._id} size={70} variant='rounded' />
       </Grid>
       <Grid item container direction='column'>
-        <Typography>{corporate?.companyLegalName}</Typography>
+        <Typography>{tokenName}</Typography>
         <Typography className={classes.capital}>
           {dso?.capitalStructure}
         </Typography>

@@ -18,7 +18,7 @@ export const TableRows = <T,>(props: TableRowsProps<T>): JSX.Element => {
         items.map((row, i) => (
           <TableRow hover key={i}>
             {columns.map(column => (
-              <TableCellWrapper column={column} row={row} />
+              <TableCellWrapper key={column.key} column={column} row={row} />
             ))}
             {hasActions && (
               <ActionTableCell

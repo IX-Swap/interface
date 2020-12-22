@@ -3,7 +3,7 @@ import { UpdateCustomFieldArgs, CustomField } from 'types/user'
 
 export const updateDSOTableColumnsArgs: UpdateCustomFieldArgs = {
   columns: {
-    corporate: true,
+    tokenName: true,
     distributionFrequency: false,
     favorite: true,
     insight: false,
@@ -15,7 +15,7 @@ export const updateDSOTableColumnsArgs: UpdateCustomFieldArgs = {
 }
 
 export const defaultDSOColumns: Record<DSOTableColumn, boolean> = {
-  corporate: true,
+  tokenName: true,
   distributionFrequency: true,
   favorite: true,
   insight: true,

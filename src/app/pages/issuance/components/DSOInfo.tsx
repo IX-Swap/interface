@@ -1,6 +1,6 @@
 import React from 'react'
 import { Box, Grid } from '@material-ui/core'
-import { DSONameAndStructure } from 'app/pages/invest/components/DSONameAndStructure'
+import { DSONameAndStructure } from 'app/pages/invest/components/DSOTable/DSONameAndStructure'
 import { useIssuanceRouter } from 'app/pages/issuance/router'
 import { useDSOById } from 'app/pages/invest/hooks/useDSOById'
 import { AuthorizableStatus } from 'app/pages/authorizer/components/AuthorizableStatus'
@@ -20,7 +20,7 @@ export const DSOInfo = () => {
     <Grid container justify='center' direction='column' alignItems='center'>
       <AuthorizableStatus status={data.status} compact={false} />
       <Box py={2.25} />
-      <DSONameAndStructure dso={data} corporate={data.corporate} />
+      <DSONameAndStructure dso={data} tokenName={data.tokenName} />
     </Grid>
   )
 }

@@ -140,7 +140,7 @@ export type DSOLaunchStatus = 'live' | 'completed' | 'upcoming'
 
 export type DSOTableColumn =
   | 'favorite'
-  | 'corporate'
+  | 'tokenName'
   | 'insight'
   | 'pricePerUnit'
   | 'totalFundraisingAmount'
