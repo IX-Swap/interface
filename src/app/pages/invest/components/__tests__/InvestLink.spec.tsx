@@ -1,7 +1,7 @@
 import React from 'react'
 import { render, cleanup } from 'test-utils'
 import { InvestLink } from 'app/pages/invest/components/InvestLink'
-import * as offeringRouter from 'app/pages/invest/routers/offeringsRouter'
+import * as dsoRouter from 'app/pages/invest/routers/dsoRouter'
 import { dso } from '__fixtures__/authorizer'
 import { AppRouterLinkComponent } from 'components/AppRouterLink'
 import * as useDSOByIdHook from 'app/pages/invest/hooks/useDSOById'
@@ -13,15 +13,24 @@ jest.mock('components/AppRouterLink', () => ({
   AppRouterLinkComponent: jest.fn(({ children }) => children)
 }))
 
-jest.mock('app/pages/invest/routers/offeringsRouter')
+jest.mock('app/pages/invest/routers/dsoRouter')
 
-jest.spyOn(offeringRouter, 'useOfferingsRouter').mockReturnValue({
-  params: {
-    dsoId: dso._id,
-    issuerId: dso.user
-  },
-  paths: offeringRouter.OfferingRoute
-} as any)
+jest.spyOn(useDSOByIdHook, 'useDSOById').mockImplementation(() => ({
+  ...generateQueryResult({
+    data: dso
+  })
+}))
+
+jest.spyOn(dsoRouter, 'useDSORouter').mockImplementation(
+  () =>
+    ({
+      params: {
+        dsoId: dso._id,
+        issuerId: dso.user
+      },
+      paths: dsoRouter.DSORoute
+    } as any)
+)
 
 describe('InvestLink', () => {
   afterEach(async () => {
@@ -66,7 +75,7 @@ describe('InvestLink', () => {
 
     expect(AppRouterLinkComponent).toHaveBeenCalledWith(
       expect.objectContaining({
-        to: offeringRouter.OfferingRoute.makeInvestment,
+        to: dsoRouter.DSORoute.makeInvestment,
         params: { dsoId: dso._id, issuerId: dso.user }
       }),
       {}

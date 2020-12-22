@@ -1,6 +1,6 @@
 import { act } from '@testing-library/react-hooks'
 import { waitFor, cleanup, renderHookWithServiceProvider } from 'test-utils'
-import { successfulResponse } from '__fixtures__/api'
+import { successfulResponse, unsuccessfulResponse } from '__fixtures__/api'
 import { useUser } from 'auth/hooks/useUser'
 import * as useCachedUserHook from 'hooks/auth/useCachedUser'
 import { user } from '__fixtures__/user'
@@ -31,6 +31,40 @@ describe('useUser', () => {
 
           expect(getFn).toHaveBeenCalled()
           expect(getFn).toHaveBeenNthCalledWith(1, `/auth/profiles/${user._id}`)
+        },
+        { timeout: 1000 }
+      )
+    })
+  })
+
+  it('removes all user related data from localStorage and redirects to the /', async () => {
+    await act(async () => {
+      const getFn = jest.fn().mockRejectedValueOnce(unsuccessfulResponse)
+      const removeFn = jest.fn()
+
+      const apiObj = { get: getFn }
+      const storageServiceMock = {
+        remove: removeFn
+      }
+      const { result } = renderHookWithServiceProvider(() => useUser(), {
+        apiService: apiObj,
+        storageService: storageServiceMock
+      })
+
+      await waitFor(
+        () => {
+          const [mutate] = result.current
+          void mutate()
+
+          expect(storageServiceMock.remove).toHaveBeenNthCalledWith(1, 'user')
+          expect(storageServiceMock.remove).toHaveBeenNthCalledWith(
+            2,
+            'visitedUrl'
+          )
+          expect(storageServiceMock.remove).toHaveBeenNthCalledWith(
+            3,
+            'access-token'
+          )
         },
         { timeout: 1000 }
       )

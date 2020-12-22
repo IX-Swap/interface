@@ -50,6 +50,21 @@ export const getPersonName = (data: IndividualIdentity | null | undefined) => {
   return `${data.firstName} ${data.middleName ?? ''} ${data.lastName}`
 }
 
+export const isLowerCaseLetter = (value: string) => {
+  const charCode = value.charCodeAt(0)
+
+  return charCode >= 97 && charCode <= 122
+}
+
+export const capitalizeFirstLetter = (value: string) =>
+  `${value[0].toUpperCase()}${value.slice(1)}`
+
 export const formatCamelCasedWithSpaces = (value: string) => {
-  return value.replace(/([A-Z])/g, ' $1')
+  let str = value
+
+  if (isLowerCaseLetter(value[0])) {
+    str = capitalizeFirstLetter(value)
+  }
+
+  return str.replace(/([A-Z])/g, ' $1')
 }

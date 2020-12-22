@@ -17,6 +17,11 @@ export const useUser = () => {
     onSuccess: data => {
       storageService.set('user', data.data)
       storageService.set('visitedUrl', [])
+    },
+    onError: () => {
+      storageService.remove('user')
+      storageService.remove('visitedUrl')
+      storageService.remove('access-token')
     }
   })
 }

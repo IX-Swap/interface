@@ -8,22 +8,33 @@ import txtIcon from 'assets/icons/documents/txt.svg'
 import unknownIcon from 'assets/icons/documents/unknown.svg'
 import { Maybe } from 'types/util'
 import { WalletAddress } from 'app/components/WalletAddress'
+import { DSOFavorite } from 'app/components/DSOFavorite'
+import { DigitalSecurityOffering } from 'types/dso'
+import { formatMoney } from './numbers'
+import { DSOLogo } from 'app/components/DSO/components/DSOLogo'
+import { Commitment } from 'types/commitment'
 
-export const renderMenu = (arr: any[]): JSX.Element[] => {
-  return arr.map(
-    ({
-      value,
-      label
-    }: {
-      value: string | number
-      label: string
-    }): JSX.Element => (
-      <MenuItem key={value} value={value}>
-        {label}
-      </MenuItem>
-    )
-  )
+export const renderMenuItems = (
+  items: Array<{ label: string; value: string | number }>
+): JSX.Element[] => {
+  return items.map(({ value, label }) => (
+    <MenuItem key={value} value={value}>
+      {label}
+    </MenuItem>
+  ))
 }
+
+export const renderCommitmentMoney = (a: number, row: Commitment) =>
+  formatMoney(a, row.currency.numberFormat.currency)
+
+export const renderCommitmentAvatar = (_: any, row: Commitment) => (
+  <DSOLogo dsoId={row.dso._id} size={40} />
+)
+
+export const renderDSOFavorite = (
+  _: any,
+  dso: DigitalSecurityOffering
+): JSX.Element => <DSOFavorite dso={dso} />
 
 export const renderAddressColumn = (address: string): JSX.Element => (
   <WalletAddress address={address} />
