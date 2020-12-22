@@ -9,6 +9,7 @@ import { user } from '__fixtures__/user'
 import { DSOListTableBody } from 'app/components/DSO/components/DSOListTableBody'
 import * as useAuthHook from 'hooks/auth/useAuth'
 import { dsoQueryKeys } from 'config/queryKeys'
+import { issuanceURL } from 'config/apiURL'
 
 jest.mock('app/components/DSO/components/DSOListTableBody', () => ({
   DSOListTableBody: jest.fn(() => null)
@@ -40,7 +41,7 @@ describe('DSOList', () => {
         columns: [],
         bordered: false,
         name: dsoQueryKeys.getList,
-        uri: `/issuance/dso/list/approved`
+        uri: issuanceURL.dso.getAllApproved
       },
       {}
     )

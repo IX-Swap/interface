@@ -14,7 +14,7 @@ export const usePromotedDSOs = (): UsePaginatedQueryData<
 
   const getPromotedDSOs = async (queryKey: string, args: PaginationArgs) => {
     return await apiService.post<PaginatedData<DigitalSecurityOffering>>(
-      issuanceURL.dso.getPromoted,
+      issuanceURL.dso.getAllPromoted,
       args
     )
   }
