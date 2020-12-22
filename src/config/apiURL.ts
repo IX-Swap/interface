@@ -77,14 +77,16 @@ export const issuanceURL = {
     getAll: (userId: string) => `/issuance/commitments/${userId}`
   },
   dso: {
-    getPromoted: '/issuance/dso/list/promoted',
+    getAllPromoted: '/issuance/dso/promoted/list',
+    getAllApproved: '/issuance/dso/approved/list',
+    getAllByUserId: (userId: string) => `/issuance/dso/list/${userId}`,
     favorite: (dsoId: string) => `/issuance/dso/favorites/${dsoId}`,
     getById: (userId: string, dsoId: string) =>
       `/issuance/dso/${userId}/${dsoId}`,
     create: (userId: string) => `/issuance/dso/${userId}`,
     update: (userId: string, dsoId: string) =>
       `/issuance/dso/${userId}/${dsoId}`,
-    getCapitalStructureList: '/issuance/capital-structures'
+    getCapitalStructureList: '/issuance/capital-structures',
   }
 }
 
