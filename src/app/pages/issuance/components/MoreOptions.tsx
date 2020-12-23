@@ -55,9 +55,6 @@ export const MoreOptions = () => {
 
         <AppRouterLink
           to={paths.create}
-          params={{
-            dsoId: dsoId
-          }}
           color='primary'
           underline='hover'
           className={link}

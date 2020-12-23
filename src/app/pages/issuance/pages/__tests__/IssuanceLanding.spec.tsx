@@ -5,10 +5,6 @@ import * as useIssuanceRouterHook from 'app/pages/issuance/router'
 import * as useDSOByIdHook from 'app/pages/invest/hooks/useDSOById'
 import { dso } from '__fixtures__/authorizer'
 
-jest.mock('app/components/DSO/components/DSOList', () => ({
-  DSOList: jest.fn(() => null)
-}))
-
 jest.mock('components/AppRouterLink', () => ({
   AppRouterLinkComponent: jest.fn(() => null)
 }))

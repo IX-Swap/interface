@@ -1,22 +1,15 @@
 import React from 'react'
 import { render, cleanup } from 'test-utils'
 import { TotalInvestors } from 'app/pages/issuance/components/IssuanceLanding/TotalInvestors'
-import * as useIssuanceRouterHook from 'app/pages/issuance/router'
-import * as useDSOByIdHook from 'app/pages/invest/hooks/useDSOById'
-import { dso } from '__fixtures__/authorizer'
-import { LOADING_TEXT } from 'components/form/renderUtils'
+import * as useTotalInvestorsHook from 'app/pages/issuance/hooks/useTotalInvestors'
 import { InsightValue } from 'app/pages/issuance/components/IssuanceLanding/InsightValue'
+import { generateQueryResult } from '__fixtures__/useQuery'
 
 jest.mock('app/pages/issuance/components/IssuanceLanding/InsightValue', () => ({
   InsightValue: jest.fn(() => null)
 }))
 
 describe('TotalInvestors', () => {
-  beforeEach(() => {
-    jest
-      .spyOn(useIssuanceRouterHook, 'useIssuanceRouter')
-      .mockReturnValue({ params: { dsoId: dso._id } } as any)
-  })
   afterEach(async () => {
     await cleanup()
     jest.clearAllMocks()
@@ -24,42 +17,32 @@ describe('TotalInvestors', () => {
 
   it('renders without error', () => {
     jest
-      .spyOn(useDSOByIdHook, 'useDSOById')
-      .mockReturnValue({ data: dso, isSuccess: true } as any)
+      .spyOn(useTotalInvestorsHook, 'useTotalInvestors')
+      .mockReturnValue(generateQueryResult({ data: {} }))
 
     render(<TotalInvestors />)
   })
 
-  it('renders InsightValue correctly if not loaded', () => {
+  it('renders nothing if loading', () => {
     jest
-      .spyOn(useDSOByIdHook, 'useDSOById')
-      .mockReturnValue({ isSuccess: false } as any)
+      .spyOn(useTotalInvestorsHook, 'useTotalInvestors')
+      .mockReturnValue(generateQueryResult({ isLoading: true }))
 
-    render(<TotalInvestors />)
+    const { container } = render(<TotalInvestors />)
 
-    expect(InsightValue).toHaveBeenCalled()
-    expect(InsightValue).toHaveBeenCalledWith(
-      {
-        value: LOADING_TEXT
-      },
-      {}
-    )
+    expect(container).toBeEmptyDOMElement()
   })
 
   it('renders InsightValue correctly', () => {
-    jest.spyOn(useDSOByIdHook, 'useDSOById').mockReturnValue({
-      data: dso,
-      isSuccess: true
-    } as any)
+    jest
+      .spyOn(useTotalInvestorsHook, 'useTotalInvestors')
+      .mockReturnValue(
+        generateQueryResult({ data: { weekTotal: 1, total: 4 } })
+      )
 
     render(<TotalInvestors />)
 
     expect(InsightValue).toHaveBeenCalled()
-    expect(InsightValue).toHaveBeenCalledWith(
-      {
-        value: `${dso.insight.investorCount}`
-      },
-      {}
-    )
+    expect(InsightValue).toHaveBeenCalledWith({ value: 4 }, {})
   })
 })

@@ -6,7 +6,11 @@ import * as useDSOsByUserIdHook from 'app/pages/issuance/hooks/useDSOsByUserId'
 import { dso } from '__fixtures__/authorizer'
 import { generateInfiniteQueryResult } from '__fixtures__/useQuery'
 import { DSOSelect } from 'app/pages/issuance/components/IssuanceLanding/DSOSelect'
+import { NoDeals } from 'app/pages/issuance/components/IssuanceLanding/NoDeals'
 
+jest.mock('app/pages/issuance/components/IssuanceLanding/NoDeals', () => ({
+  NoDeals: jest.fn(() => null)
+}))
 jest.mock('app/pages/issuance/components/IssuanceLanding/DSOSelect', () => ({
   DSOSelect: jest.fn(() => null)
 }))
@@ -61,6 +65,19 @@ describe('DSOFilter', () => {
 
     expect(replace).toHaveBeenCalledTimes(1)
     expect(replace).toHaveBeenCalledWith('insight', { dsoId: dso._id })
+  })
+
+  it('renders NoDeals if no dsos exist', () => {
+    jest
+      .spyOn(useIssuanceRouterHook, 'useIssuanceRouter')
+      .mockReturnValue({ replace, params: { dsoId: undefined } } as any)
+    jest
+      .spyOn(useDSOsByUserIdHook, 'useDSOsByUserId')
+      .mockReturnValue(generateInfiniteQueryResult({ list: [] }))
+
+    render(<DSOFilter />)
+
+    expect(NoDeals).toHaveBeenCalledTimes(1)
   })
 
   it('renders null if loading', () => {

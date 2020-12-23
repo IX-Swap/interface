@@ -1,27 +1,36 @@
 import React from 'react'
-import { useSetPageTitle } from 'app/hooks/useSetPageTitle'
-import { useDSOById } from 'app/pages/invest/hooks/useDSOById'
+import { Grid } from '@material-ui/core'
+import { ChartTitle } from 'app/pages/issuance/components/IssuanceLanding/ChartTitle'
 import { ChartWrapper } from 'app/pages/issuance/components/IssuanceLanding/ChartWrapper'
 import { InsightValue } from 'app/pages/issuance/components/IssuanceLanding/InsightValue'
-import { useIssuanceRouter } from 'app/pages/issuance/router'
-import { LOADING_TEXT } from 'components/form/renderUtils'
+import { useTotalInvestors } from 'app/pages/issuance/hooks/useTotalInvestors'
+import { DonutChart } from 'app/pages/issuance/components/IssuanceLanding/DonutChart'
+import { calculatePercent } from 'helpers/numbers'
 
 export const TotalInvestors = () => {
-  const {
-    params: { dsoId }
-  } = useIssuanceRouter()
-  const { data, isSuccess } = useDSOById(dsoId)
+  const { data, isLoading } = useTotalInvestors()
 
-  useSetPageTitle(data?.tokenName)
-
-  let value = LOADING_TEXT
-  if (isSuccess && data !== undefined) {
-    value = `${data.insight.investorCount}`
+  if (isLoading) {
+    return null
   }
 
+  const total = data?.total ?? 0
+  const weekTotal = data?.weekTotal ?? 0
+
   return (
-    <ChartWrapper title='Total Investors' small>
-      <InsightValue value={value} />
+    <ChartWrapper>
+      <Grid container justify='space-between' alignItems='center'>
+        <Grid item>
+          <ChartTitle title='Total Investors' small />
+          <InsightValue value={total} />
+        </Grid>
+        <Grid item>
+          <DonutChart
+            percent={calculatePercent(weekTotal, total)}
+            text={`+${weekTotal}`}
+          />
+        </Grid>
+      </Grid>
     </ChartWrapper>
   )
 }

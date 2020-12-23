@@ -4,6 +4,7 @@ import { useDSOsByUserId } from 'app/pages/issuance/hooks/useDSOsByUserId'
 import { useIssuanceRouter } from 'app/pages/issuance/router'
 import { Box, Typography } from '@material-ui/core'
 import { hasValue } from 'helpers/forms'
+import { NoDeals } from 'app/pages/issuance/components/IssuanceLanding/NoDeals'
 
 export const DSOFilter = () => {
   const {
@@ -24,8 +25,12 @@ export const DSOFilter = () => {
     }
   }
 
-  if (!isSuccess || data.list.length === 0) {
+  if (!isSuccess) {
     return null
+  }
+
+  if (data.list.length === 0) {
+    return <NoDeals />
   }
 
   return (
