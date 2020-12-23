@@ -1,9 +1,9 @@
 import React from 'react'
+import escape from 'lodash/escape'
 import { Grid, Paper, Typography } from '@material-ui/core'
 import { makeStyles } from '@material-ui/core/styles'
 import { usePromo } from '../hooks/usePromo'
 import { generateImgSrc } from 'helpers/generateImgSrc'
-import { escape } from 'lodash'
 
 const useStyles = makeStyles(theme => ({
   promoBanner: {
