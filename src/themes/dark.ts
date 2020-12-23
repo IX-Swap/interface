@@ -1,3 +1,4 @@
+import { ThemeOptions } from '@material-ui/core'
 import tinycolor from 'tinycolor2'
 
 export const themeColors = {
@@ -11,8 +12,7 @@ export const themeColors = {
 
 const lightenRate = 7.5
 const darkenRate = 15
-
-export default {
+export const darkTheme: ThemeOptions = {
   palette: {
     primary: {
       main: themeColors.primary,
@@ -51,16 +51,14 @@ export default {
       hint: '#B9B9B9'
     },
     background: {
-      default: '#FFF',
-      light: '#FFF'
+      default: '#222',
+      paper: '#333'
+    },
+    backgrounds: {
+      main: '#333',
+      secondary: '#555'
     }
-  },
-  customShadows: {
-    widget:
-      '0px 3px 11px 0px #E8EAFC, 0 3px 3px -2px #B2B2B21A, 0 1px 8px 0 #9A9A9A1A',
-    widgetDark:
-      '0px 3px 18px 0px #4558A3B3, 0 3px 3px -2px #B2B2B21A, 0 1px 8px 0 #9A9A9A1A',
-    widgetWide:
-      '0px 12px 33px 0px #E8EAFC, 0 3px 3px -2px #B2B2B21A, 0 1px 8px 0 #9A9A9A1A'
   }
 }
+
+export default darkTheme

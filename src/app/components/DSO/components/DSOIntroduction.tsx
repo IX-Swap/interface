@@ -10,7 +10,7 @@ export const DSOIntroduction = () => {
   const { control } = useFormContext<DSOFormValues>()
 
   return (
-    <DSOContainer title='Introduction' item xs={8}>
+    <DSOContainer title='Introduction' item xs={12} md={8}>
       {/* @ts-ignore */}
       <TypedField
         component={RichTextEditor}

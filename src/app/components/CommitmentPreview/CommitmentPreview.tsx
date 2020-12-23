@@ -34,16 +34,16 @@ export const CommitmentPreview: React.FC<CommitmentPreviewProps> = (
   return (
     <Grid container spacing={4} className={privateClassNames()}>
       <Grid item container spacing={4}>
-        <Grid item xs={4}>
+        <Grid item xs={12} sm={6} md={4}>
           <LabelledValue
             label='Company Name'
             value={data.dso.corporate.companyLegalName}
           />
         </Grid>
-        <Grid item xs={4}>
+        <Grid item xs={12} sm={6} md={4}>
           <LabelledValue label='Issued By' value={data.dso.issuerName} />
         </Grid>
-        <Grid item xs={4}>
+        <Grid item xs={12} sm={6} md={4}>
           <LabelledValue
             label='Issued Date'
             value={formatDateAndTime(data.dso.createdAt)}
@@ -52,37 +52,37 @@ export const CommitmentPreview: React.FC<CommitmentPreviewProps> = (
       </Grid>
 
       <Grid item container spacing={4}>
-        <Grid item xs={4}>
+        <Grid item xs={12} sm={6} md={4}>
           <LabelledValue
             label='Digital Security'
             value={<DSOLink dso={data.dso} />}
           />
         </Grid>
-        <Grid item xs={4}>
+        <Grid item xs={12} sm={6} md={4}>
           <LabelledValue
             label='Price Per Unit'
             value={formatMoney(data.dso.pricePerUnit, data.currency.symbol)}
           />
         </Grid>
-        <Grid item xs={4}>
+        <Grid item xs={12} sm={6} md={4}>
           <LabelledValue label='Number Of Units' value={data.numberOfUnits} />
         </Grid>
       </Grid>
 
       <Grid item container spacing={4}>
-        <Grid item xs={4}>
+        <Grid item xs={12} sm={6} md={4}>
           <LabelledValue
             label='Investment Structure'
             value={data.dso.investmentStructure}
           />
         </Grid>
-        <Grid item xs={4}>
+        <Grid item xs={12} sm={6} md={4}>
           <LabelledValue
             label='Total Amount'
             value={formatMoney(data.totalAmount, data.currency.symbol)}
           />
         </Grid>
-        <Grid item xs={4}>
+        <Grid item xs={12} sm={6} md={4}>
           <LabelledValue
             label='Withdrawal Address'
             value={

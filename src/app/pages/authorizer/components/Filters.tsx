@@ -1,10 +1,11 @@
 import React from 'react'
-import { Typography, Grid } from '@material-ui/core'
 import { BaseFilter } from 'types/util'
 import { StatusFilter } from 'app/pages/authorizer/components/StatusFilter'
 import { SearchAndDateFilter } from 'app/pages/authorizer/components/SearchAndDateFilter'
 import { useQueryCache } from 'react-query'
 import { authorizerQueryKeys } from 'config/queryKeys'
+import { SidebarTitle } from 'ui/Sidebar/SidebarTitle'
+import { SidebarSection } from 'ui/Sidebar/SidebarSection'
 
 export const Filters = () => {
   const queryCache = useQueryCache()
@@ -22,14 +23,16 @@ export const Filters = () => {
   }
 
   return (
-    <Grid container spacing={3} style={{ paddingTop: 70 }}>
-      <Grid item xs={12} style={{ padding: '0 32px' }}>
-        <Typography variant='h6'>FILTERS</Typography>
-      </Grid>
-      <Grid item xs={12}>
+    <>
+      <SidebarTitle>FILTERS</SidebarTitle>
+
+      <SidebarSection>
         <StatusFilter onChange={onApplyFilter} />
-      </Grid>
-      <SearchAndDateFilter onApplyFilter={onApplyFilter} />
-    </Grid>
+      </SidebarSection>
+
+      <SidebarSection padded>
+        <SearchAndDateFilter onApplyFilter={onApplyFilter} />
+      </SidebarSection>
+    </>
   )
 }

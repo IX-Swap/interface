@@ -2,7 +2,7 @@ import React from 'react'
 import { Grid, Radio, Typography } from '@material-ui/core'
 import { DeclarationValue } from 'app/pages/identity/const/declarations'
 import { useFormError } from 'hooks/useFormError'
-import { themeColors } from 'themes/default'
+import { themeColors } from 'themes/light'
 
 export interface YesOrNoProps {
   name: string

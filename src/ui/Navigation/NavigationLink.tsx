@@ -5,7 +5,7 @@ export interface SidebarLinkProps {
   isActive: boolean
 }
 
-export const SidebarLink = styled(Link)(({ theme }) => ({
+export const NavigationLink = styled(Link)(({ theme }) => ({
   display: 'flex',
   alignItems: 'center',
   width: '100%',

@@ -1,10 +1,11 @@
 import { styled } from '@material-ui/core/styles'
 import { List } from '@material-ui/core'
 
-export const Sidebar = styled(List)(({ theme }) => {
+export const NavigationWrapper = styled(List)(({ theme }) => {
   return {
     marginTop: 0,
     width: 250,
+    backgroundColor: theme.palette.backgrounds.main,
 
     [theme.breakpoints.up('md')]: {
       border: `1px solid ${theme.palette.divider}`,

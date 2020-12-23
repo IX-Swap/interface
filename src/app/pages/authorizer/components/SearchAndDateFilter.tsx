@@ -2,7 +2,6 @@ import React from 'react'
 import { useForm, Controller } from 'react-hook-form'
 import { Grid, InputAdornment, TextField, Button, Box } from '@material-ui/core'
 import { Search as SearchIcon } from '@material-ui/icons'
-import useStyles from './SearchAndDateFilter.styles'
 import { BaseFilter } from 'types/util'
 import { convertDateToISO } from 'helpers/dates'
 import { DateTimePickerComponent } from 'components/form/_DateTimePicker'
@@ -25,7 +24,6 @@ export const initialValues: SearchAndDateFilterFormValues = {
 
 export const SearchAndDateFilter: React.FC<SearchAndDateFilterProps> = props => {
   const { onApplyFilter } = props
-  const classes = useStyles()
   const { control, handleSubmit, reset, formState } = useForm<
     SearchAndDateFilterFormValues
   >({ defaultValues: initialValues })
@@ -50,100 +48,82 @@ export const SearchAndDateFilter: React.FC<SearchAndDateFilterProps> = props => 
   }
 
   return (
-    <form style={{ width: '100%' }} data-testid='form'>
-      <Grid
-        container
-        direction='column'
-        spacing={1}
-        style={{ padding: '0 10px' }}
-      >
-        <Grid
-          item
-          xs={12}
-          className={classes.spaced}
-          style={{ paddingTop: '24px' }}
-        >
-          <Controller
-            name='search'
-            control={control}
-            as={
-              <TextField
-                id='search'
-                fullWidth
-                label='Search'
-                variant='outlined'
-                size='small'
-                InputProps={{
-                  endAdornment: (
-                    <InputAdornment position='end' style={{ color: '#AAAAAA' }}>
-                      <SearchIcon />
-                    </InputAdornment>
-                  )
-                }}
-              />
-            }
-          />
-        </Grid>
-        <Grid item xs={12} className={classes.spaced}>
-          <Controller
-            name='from'
-            control={control}
-            defaultValue={null}
-            render={props => (
-              <DateTimePickerComponent
-                {...props}
-                className='denseAdornments'
-                size='small'
-                inputVariant='outlined'
-                label='From'
-              />
-            )}
-          />
-        </Grid>
-        <Grid item xs={12} className={classes.spaced}>
-          <Controller
-            name='to'
-            control={control}
-            defaultValue={null}
-            render={props => (
-              <DateTimePickerComponent
-                {...props}
-                className='denseAdornments'
-                size='small'
-                inputVariant='outlined'
-                label='To'
-              />
-            )}
-          />
-        </Grid>
-        <Grid
-          container
-          item
-          xs={12}
-          justify='flex-end'
-          className={classes.spaced}
-        >
-          {formState.isDirty && (
-            <Button
-              variant='contained'
+    <Grid container direction='column' spacing={2} data-testid='form'>
+      <Grid item xs={12}>
+        <Controller
+          name='search'
+          control={control}
+          as={
+            <TextField
+              id='search'
+              fullWidth
+              label='Search'
+              variant='outlined'
               size='small'
-              color='default'
-              onClick={handleReset}
-            >
-              Reset
-            </Button>
+              InputProps={{
+                endAdornment: (
+                  <InputAdornment position='end' style={{ color: '#AAAAAA' }}>
+                    <SearchIcon />
+                  </InputAdornment>
+                )
+              }}
+            />
+          }
+        />
+      </Grid>
+      <Grid item xs={12}>
+        <Controller
+          name='from'
+          control={control}
+          defaultValue={null}
+          render={props => (
+            <DateTimePickerComponent
+              {...props}
+              className='denseAdornments'
+              size='small'
+              inputVariant='outlined'
+              label='From'
+            />
           )}
-          <Box mx={1} />
+        />
+      </Grid>
+      <Grid item xs={12}>
+        <Controller
+          name='to'
+          control={control}
+          defaultValue={null}
+          render={props => (
+            <DateTimePickerComponent
+              {...props}
+              className='denseAdornments'
+              size='small'
+              inputVariant='outlined'
+              label='To'
+            />
+          )}
+        />
+      </Grid>
+      <Grid container item xs={12} justify='flex-end'>
+        {formState.isDirty && (
           <Button
             variant='contained'
             size='small'
-            color='primary'
-            onClick={handleSubmit(onSubmit)}
+            color='default'
+            onClick={handleReset}
           >
-            Submit
+            Reset
           </Button>
-        </Grid>
+        )}
+        <Box mx={1} />
+        <Button
+          variant='contained'
+          size='small'
+          color='primary'
+          onClick={handleSubmit(onSubmit)}
+        >
+          Submit
+        </Button>
       </Grid>
-    </form>
+    </Grid>
   )
 }

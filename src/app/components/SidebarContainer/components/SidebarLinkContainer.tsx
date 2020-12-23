@@ -1,10 +1,10 @@
 import React from 'react'
 import { Box } from '@material-ui/core'
 import { useLocation } from 'react-router-dom'
-import { SidebarLink } from 'ui/SidebarLink'
+import { NavigationLink } from 'ui/Navigation/NavigationLink'
 import { useAppActions } from 'app/hooks/useAppState'
 import { useAppBreakpoints } from 'hooks/useAppBreakpoints'
-import { SidebarItem } from 'ui/SidebarItem'
+import { NavigationItem } from 'ui/Navigation/NavigationItem'
 
 export interface SidebarLinkProps {
   link: string
@@ -27,11 +27,11 @@ export const SidebarLinkContainer = (props: SidebarLinkProps) => {
   }
 
   return (
-    <SidebarItem button selected={isActive}>
-      <SidebarLink onClick={closeDrawer} to={link} style={{ color }}>
+    <NavigationItem button selected={isActive}>
+      <NavigationLink onClick={closeDrawer} to={link} style={{ color }}>
         <Box>{React.createElement(icon)}</Box>
         <span>{label}</span>
-      </SidebarLink>
-    </SidebarItem>
+      </NavigationLink>
+    </NavigationItem>
   )
 }

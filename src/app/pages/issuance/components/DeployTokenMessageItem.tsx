@@ -11,7 +11,7 @@ export const DeployTokenMessageItem = (props: DeployTokenMessageProps) => {
   const { at, message } = data[index] as DeployTokenMessage
 
   return (
-    <ListItem component='div' style={style}>
+    <ListItem component='div' style={style} alignItems='flex-start'>
       <Typography
         variant='body1'
         color='textSecondary'

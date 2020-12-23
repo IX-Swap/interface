@@ -12,9 +12,9 @@ export const DSOStatusFields = () => {
   const { control } = useFormContext<DSOFormValues>()
 
   return (
-    <DSOContainer title='Status' item xs={4}>
-      <Grid container direction='column' spacing={2}>
-        <Grid item>
+    <DSOContainer title='Status' item xs={12} md={4}>
+      <Grid container spacing={2}>
+        <Grid item xs={12} sm={6} md={12}>
           <TypedField
             control={control}
             component={Input}
@@ -23,7 +23,7 @@ export const DSOStatusFields = () => {
           />
         </Grid>
 
-        <Grid item>
+        <Grid item xs={12} sm={6} md={12}>
           <TypedField
             control={control}
             component={NumericInput}
@@ -34,7 +34,7 @@ export const DSOStatusFields = () => {
           />
         </Grid>
 
-        <Grid item>
+        <Grid item xs={12} sm={6} md={12}>
           <TypedField
             control={control}
             component={NumericInput}
@@ -45,7 +45,7 @@ export const DSOStatusFields = () => {
           />
         </Grid>
 
-        <Grid item>
+        <Grid item xs={12} sm={6} md={12}>
           <TypedField
             control={control}
             component={NumericInput}

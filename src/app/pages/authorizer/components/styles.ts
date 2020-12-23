@@ -1,4 +1,4 @@
-import { themeColors } from 'themes/default'
+import { themeColors } from 'themes/light'
 import { makeStyles } from '@material-ui/styles'
 
 export const useStyles = makeStyles((theme: any) => ({

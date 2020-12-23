@@ -6,8 +6,8 @@ import PopupState, {
 } from 'material-ui-popup-state'
 import { DropdownContent } from 'app/components/Dropdown/DropdownContent'
 import { ThemeProvider } from '@material-ui/styles'
-import themes from 'themes'
 import { PopperPlacementType } from '@material-ui/core'
+import darkTheme from 'themes/dark'
 
 export interface DropdownTriggerProps {
   triggerProps: ReturnType<typeof bindTrigger>
@@ -24,17 +24,11 @@ export interface DropdownProps {
   content: FunctionComponent<DropdownContentProps>
   arrow?: boolean
   placement?: PopperPlacementType
-  contentTheme?: keyof typeof themes
+  contentTheme?: 'light' | 'dark'
 }
 
 export const Dropdown = (props: DropdownProps) => {
-  const {
-    content,
-    trigger,
-    arrow = false,
-    placement = 'bottom-end',
-    contentTheme = 'default'
-  } = props
+  const { content, trigger, arrow = false, placement = 'bottom-end' } = props
 
   return (
     <PopupState variant='popper'>
@@ -45,7 +39,7 @@ export const Dropdown = (props: DropdownProps) => {
             injectedProps: popupState
           })}
 
-          <ThemeProvider theme={themes[contentTheme]}>
+          <ThemeProvider theme={darkTheme}>
             <DropdownContent
               popupState={popupState}
               placement={placement}

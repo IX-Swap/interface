@@ -1,7 +1,13 @@
+import { ThemeOptions } from '@material-ui/core'
 import { Overrides } from '@material-ui/core/styles/overrides'
-import { themeColors } from 'themes/default'
+import { themeColors } from 'themes/light'
 
-export const overrides: Overrides = {
+export const getThemeOverrides = (theme: ThemeOptions): Overrides => ({
+  MuiPaper: {
+    root: {
+      backgroundColor: theme.palette?.backgrounds.main
+    }
+  },
   MuiBackdrop: {
     root: {
       backgroundColor: '#4A4A4A1A'
@@ -52,10 +58,14 @@ export const overrides: Overrides = {
       }
     }
   },
+  MuiGrid: {
+    item: {
+      maxWidth: '100%'
+    }
+  },
   MuiContainer: {
     root: {
-      paddingTop: 40,
-      paddingBottom: 40
+      background: theme.palette?.backgrounds.main
     }
   },
   MuiInput: {
@@ -89,4 +99,4 @@ export const overrides: Overrides = {
       paddingBottom: 11
     }
   }
-}
+})

@@ -1,6 +1,6 @@
 import { Check, Close, PriorityHigh } from '@material-ui/icons'
 import { ElementType } from 'react'
-import { themeColors } from 'themes/default'
+import { themeColors } from 'themes/light'
 import { NotificationType } from 'types/notification'
 
 export const notificationIconMap: Record<NotificationType, ElementType> = {

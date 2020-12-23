@@ -1,7 +1,7 @@
 import { ListItem } from '@material-ui/core'
 import { styled } from '@material-ui/core/styles'
 
-export const SidebarItem = styled(ListItem)(({ theme }) => ({
+export const NavigationItem = styled(ListItem)(({ theme }) => ({
   paddingTop: 0,
   paddingBottom: 0,
 

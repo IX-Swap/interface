@@ -9,6 +9,7 @@ import React, {
 interface AppState {
   pageTitle?: string
   isNavDrawerOpened: boolean
+  isSidebarOpened: boolean
 }
 
 type AppActionTypes =
@@ -20,17 +21,26 @@ type AppActionTypes =
       type: 'setNavDrawerOpened'
       payload: AppState['isNavDrawerOpened']
     }
+  | {
+      type: 'setSidebarOpened'
+      payload: AppState['isSidebarOpened']
+    }
 
 const AppStateContext = createContext<AppState | null>(null)
 
 interface AppActions {
   setPageTitle: (title: AppState['pageTitle']) => void
   setNavDrawerOpened: (status: boolean) => void
+  setSidebarOpened: (status: boolean) => void
 }
 
 const AppActionsContext = createContext<AppActions | null>(null)
 
-const initialAppState = { pageTitle: undefined, isNavDrawerOpened: false }
+const initialAppState: AppState = {
+  pageTitle: undefined,
+  isNavDrawerOpened: false,
+  isSidebarOpened: false
+}
 
 const appReducer = (state: AppState, action: AppActionTypes) => {
   switch (action.type) {
@@ -44,6 +54,12 @@ const appReducer = (state: AppState, action: AppActionTypes) => {
       return {
         ...state,
         isNavDrawerOpened: action.payload
+      }
+
+    case 'setSidebarOpened':
+      return {
+        ...state,
+        isSidebarOpened: action.payload
       }
 
     default:
@@ -60,7 +76,9 @@ export const AppStateProvider = (props: PropsWithChildren<any>) => {
     setPageTitle: (title: AppState['pageTitle']) =>
       dispatch({ type: 'setPageTitle', payload: title }),
     setNavDrawerOpened: (opened: boolean) =>
-      dispatch({ type: 'setNavDrawerOpened', payload: opened })
+      dispatch({ type: 'setNavDrawerOpened', payload: opened }),
+    setSidebarOpened: (opened: boolean) =>
+      dispatch({ type: 'setSidebarOpened', payload: opened })
   }
 
   return (

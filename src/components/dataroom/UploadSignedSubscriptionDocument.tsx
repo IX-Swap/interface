@@ -3,7 +3,7 @@ import { DataroomUploaderRenderProps } from 'components/dataroom/DataroomUploade
 import { Button, Typography } from '@material-ui/core'
 import { Maybe } from 'types/util'
 import { DataroomFile } from 'types/dataroomFile'
-import { themeColors } from 'themes/default'
+import { themeColors } from 'themes/light'
 import { useFormError } from 'hooks/useFormError'
 
 export interface UploadSignedSubscriptionDocumentProps

@@ -1,32 +1,15 @@
-import { createMuiTheme, Theme } from '@material-ui/core/styles'
-import defaultTheme from 'themes/default'
+import { createMuiTheme, ThemeOptions } from '@material-ui/core/styles'
 import { typography } from 'themes/typography'
-import { overrides } from 'themes/overrides'
+import { getThemeOverrides } from 'themes/overrides'
 import { rte } from 'themes/rte'
 
-interface Themes {
-  [key: string]: Theme
-}
-
-const base = {
-  typography,
-  overrides: {
-    ...overrides,
-    ...rte
-  }
-}
-
-const themes: Themes = {
-  default: createMuiTheme({
-    ...defaultTheme,
-    ...base
-  }),
-  dark: createMuiTheme({
-    ...base,
-    palette: {
-      type: 'dark'
+export const createAppTheme = (options: ThemeOptions) => {
+  return createMuiTheme({
+    ...options,
+    typography,
+    overrides: {
+      ...rte,
+      ...getThemeOverrides(options)
     }
   })
 }
-
-export default themes
