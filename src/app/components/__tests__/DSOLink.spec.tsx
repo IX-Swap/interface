@@ -3,7 +3,7 @@ import { render, cleanup } from 'test-utils'
 import { DSOLink, DSOLinkProps } from 'app/components/DSOLink'
 import { AppRouterLink } from 'components/AppRouterLink'
 import { dso } from '__fixtures__/authorizer'
-import { OfferingRoute } from 'app/pages/invest/routers/offeringsRouter'
+import { DSORoute } from 'app/pages/invest/routers/dsoRouter'
 
 jest.mock('components/AppRouterLink', () => ({
   AppRouterLink: jest.fn(({ children }) => children)
@@ -33,7 +33,7 @@ describe('DSOLink', () => {
     expect(AppRouterLink).toHaveBeenCalledTimes(1)
     expect(AppRouterLink).toHaveBeenCalledWith(
       {
-        to: OfferingRoute.view,
+        to: DSORoute.view,
         children: expect.anything(),
         params: {
           dsoId: dso._id,

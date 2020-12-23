@@ -1,13 +1,13 @@
 import React from 'react'
 import { render, cleanup } from 'test-utils'
-import { DSOCard } from 'app/components/DSO/components/DSOCard'
+import { DSOCard } from 'app/components/DSO/components/_DSOCard'
 import {
   DSOListTableBody,
   DSOListTableBodyProps
 } from 'app/components/DSO/components/DSOListTableBody'
 import { dso } from '__fixtures__/authorizer'
 
-jest.mock('app/components/DSO/components/DSOCard', () => ({
+jest.mock('app/components/DSO/components/_DSOCard', () => ({
   DSOCard: jest.fn(() => null)
 }))
 

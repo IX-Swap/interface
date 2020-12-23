@@ -2,6 +2,7 @@ import { useServices } from 'hooks/useServices'
 import { useEffect, useState } from 'react'
 import { NotificationFilter } from 'types/app'
 import { useQueryCache } from 'react-query'
+import { queryKeys } from 'config/queryKeys'
 
 export const defaultNotificationFilter = Object.values(NotificationFilter)
 
@@ -18,7 +19,7 @@ export const useNotificationsFilter = () => {
         : [...f, value]
 
       storageService.set('notificationFilter', nextFilter)
-      void queryCache.invalidateQueries('notifications')
+      void queryCache.invalidateQueries(queryKeys.notifications)
 
       return nextFilter
     })

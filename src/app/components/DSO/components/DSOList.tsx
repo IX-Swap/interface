@@ -7,6 +7,8 @@ import { DSOListTableBody } from 'app/components/DSO/components/DSOListTableBody
 import { getIdFromObj } from 'helpers/strings'
 import { useAuth } from 'hooks/auth/useAuth'
 import { dsoQueryKeys } from 'config/queryKeys'
+import { issuanceURL } from 'config/apiURL'
+
 export interface DSOfferingsListProps {
   viewURL: string
   all?: boolean
@@ -17,8 +19,8 @@ export const DSOList = (props: DSOfferingsListProps) => {
   const { all = true, filter = {}, viewURL } = props
   const { user } = useAuth()
   const uri = all
-    ? '/issuance/dso/list/approved'
-    : `/issuance/dso/list/${getIdFromObj(user)}`
+    ? issuanceURL.dso.getAllApproved
+    : issuanceURL.dso.getAllByUserId(getIdFromObj(user))
 
   return (
     <Grid item style={{ marginLeft: -16, marginRight: -16 }}>

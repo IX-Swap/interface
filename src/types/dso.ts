@@ -3,6 +3,7 @@ import { DataroomFile, FormArray } from './dataroomFile'
 import { Maybe } from './util'
 import { CorporateIdentity } from './identity'
 import { AuthorizableWithIdentity } from './authorizer'
+import { Network } from './networks'
 
 export interface DsoTeamMember {
   _id?: string
@@ -37,6 +38,7 @@ export interface BaseDigitalSecurityOffering extends AuthorizableWithIdentity {
   createdBy: string
   issuerName: string
   launchDate: string
+  completionDate: string
   corporate: CorporateIdentity
   logo: string
   capitalStructure: string
@@ -65,10 +67,25 @@ export interface BaseDigitalSecurityOffering extends AuthorizableWithIdentity {
   user: string
 }
 
+export interface DSOInsight {
+  activityCount: number
+  approvedcommitmentCount: number
+  collectedOn: string
+  commitmentCount: number
+  commitmentTotal: number
+  investorCount: number
+  raisedMax: number
+  raisedMin?: number
+  raisedTotal: number
+}
+
 export interface DigitalSecurityOffering extends BaseDigitalSecurityOffering {
+  promoted: boolean
+  isStarred: boolean
   documents: Maybe<DataroomFile[]>
   currency: Asset
-  network: string
+  insight: DSOInsight
+  network: Network
 }
 
 export type DeploymentInfoFormValues = Omit<
@@ -89,17 +106,23 @@ export type DSOFormValues = Omit<
   | 'status'
   | 'team'
   | 'currency'
+  | 'network'
   | 'corporate'
   | 'updatedAt'
   | 'identity'
+  | 'insight'
+  | 'isStarred'
+  | 'promoted'
   | 'authorizations'
   | 'authorization'
   | 'authorizationDocuments'
   | 'subscriptionDocument'
+  | 'insight'
 > & {
   subscriptionDocument?: DataroomFile
   status?: string
   currency: string
+  network?: string
   corporate: string
   documents: FormArray<DataroomFile>
   team: DsoTeamMember[]
@@ -112,3 +135,14 @@ export type DSORequestArgs = Omit<
   subscriptionDocument?: string
   documents: string[]
 }
+
+export type DSOLaunchStatus = 'live' | 'completed' | 'upcoming'
+
+export type DSOTableColumn =
+  | 'favorite'
+  | 'tokenName'
+  | 'insight'
+  | 'pricePerUnit'
+  | 'totalFundraisingAmount'
+  | 'minimumInvestment'
+  | 'distributionFrequency'

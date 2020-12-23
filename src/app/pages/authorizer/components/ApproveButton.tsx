@@ -1,19 +1,15 @@
 import React from 'react'
 import { Button } from '@material-ui/core'
-import { useAuthorizerAction } from 'app/pages/authorizer/hooks/useAuthorizerAction'
 
 export interface ApproveButtonProps {
-  itemId: string
   disabled: boolean
+  approve: Function
 }
 
 export const ApproveButton = (props: ApproveButtonProps) => {
-  const [approve, { isLoading }] = useAuthorizerAction({
-    id: props.itemId,
-    action: 'approve'
-  })
-  const handleClick = async () => await approve()
-  const disabled = isLoading || props.disabled
+  const { disabled, approve } = props
+
+  const handleClick = async () => approve()
 
   return (
     <Button

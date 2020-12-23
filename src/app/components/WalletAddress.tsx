@@ -4,14 +4,18 @@ import FileCopyOutlinedIcon from '@material-ui/icons/FileCopyOutlined'
 import { copyToClipboard } from 'helpers/clipboard'
 import { useSnackbar } from 'hooks/useSnackbar'
 import { AppRouterLink } from 'components/AppRouterLink'
+import { Network } from 'types/networks'
+import { getBlockchainUrl } from 'app/components/DSO/utils'
 
 export interface WalletAddressProps {
   address: string
   link?: boolean
+  network?: Network
 }
 
 export const WalletAddress = ({
   address,
+  network,
   link = false
 }: WalletAddressProps) => {
   const { showSnackbar } = useSnackbar()
@@ -19,7 +23,9 @@ export const WalletAddress = ({
     copyToClipboard(address)
     showSnackbar('Copied!!')
   }
-  const url = `https://ropsten.etherscan.io/address/${address}`
+
+  const addressUrl = getBlockchainUrl(address, network, 'address')
+
   const textContent = `${address.slice(0, 4)}...${address.slice(
     address.length - 4
   )}`
@@ -29,7 +35,7 @@ export const WalletAddress = ({
       {link ? (
         <AppRouterLink
           target='_blank'
-          to={url}
+          to={addressUrl}
           underline='always'
           color='primary'
         >

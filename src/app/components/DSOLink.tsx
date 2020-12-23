@@ -1,7 +1,7 @@
 import { AppRouterLink } from 'components/AppRouterLink'
 import React from 'react'
 import { DigitalSecurityOffering } from 'types/dso'
-import { OfferingRoute } from 'app/pages/invest/routers/offeringsRouter'
+import { DSORoute } from 'app/pages/invest/routers/dsoRouter'
 
 export interface DSOLinkProps {
   dso: DigitalSecurityOffering
@@ -13,7 +13,7 @@ export const DSOLink = (props: DSOLinkProps) => {
 
   return (
     <AppRouterLink
-      to={OfferingRoute.view}
+      to={DSORoute.view}
       params={{
         dsoId: _id,
         issuerId: createdBy

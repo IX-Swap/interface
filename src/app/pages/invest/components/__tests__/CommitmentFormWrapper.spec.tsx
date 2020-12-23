@@ -4,7 +4,7 @@ import { CommitmentFormWrapper } from 'app/pages/invest/components/CommitmentFor
 import * as useDSOByIdHook from 'app/pages/invest/hooks/useDSOById'
 import { history } from 'config/history'
 import { dso } from '__fixtures__/authorizer'
-import { OfferingRoute } from 'app/pages/invest/routers/offeringsRouter'
+import { DSORoute } from 'app/pages/invest/routers/dsoRouter'
 import { CommitmentHeader } from 'app/pages/invest/components/CommitmentHeader'
 import { CommitmentFormFields } from 'app/pages/invest/components/CommitmentFormFields'
 import { DownloadDSOSubscriptionDocument } from 'app/components/DSO/components/DownloadDSOSubscriptionDocument'
@@ -30,7 +30,7 @@ jest.mock('app/pages/invest/components/CommitmentFormCancelButton', () => ({
 
 describe('CommitmentFormWrapper', () => {
   beforeEach(() => {
-    history.push(OfferingRoute.view, { dsoId: dso._id, issuerId: dso.user })
+    history.push(DSORoute.view, { dsoId: dso._id, issuerId: dso.user })
   })
 
   afterEach(async () => {
@@ -77,7 +77,7 @@ describe('CommitmentFormWrapper', () => {
     render(<CommitmentFormWrapper />)
 
     expect(CommitmentFormFields).toHaveBeenCalledWith(
-      { symbol: dso.currency.symbol, network: dso.network },
+      { symbol: dso.currency.symbol, network: dso.network._id },
       {}
     )
   })

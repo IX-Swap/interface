@@ -22,7 +22,8 @@ export const useEnable2fa = () => {
         'Google Authenticator Setup Success! You will be redirected to Login page.',
         'success'
       )
-      logout()
+
+      setTimeout(() => logout(), 2500)
     },
     onError: (error: string) => {
       void snackbarService.showSnackbar(error.toString(), 'error')

@@ -10,21 +10,25 @@ import { numericValueExtractor, plainValueExtractor } from 'helpers/forms'
 import { UploadSignedSubscriptionDocument } from 'components/dataroom/UploadSignedSubscriptionDocument'
 import { privateClassNames } from 'helpers/classnames'
 import { WithdrawalAddressSelect } from 'components/form/WithdrawalAddressSelect'
+import { ETHEREUM_DECIMAL_PLACES } from 'config'
 
 export interface CommitmentFormFieldsProps {
   symbol: string
   network?: string
+  decimalScale?: number
 }
 
 export const CommitmentFormFields = (props: CommitmentFormFieldsProps) => {
   const { control } = useFormContext<CommitmentFormValues>()
-  const handleTotalAmountChange = (value: number, path: string) => {
+  const handleNumOfUnitsChange = (value: number, path: string) => {
     const { pricePerUnit } = control.getValues()
-    const nextValue = (value * 100) / pricePerUnit
+    const nextValue = value * pricePerUnit
 
     control.setValue(path, value, { shouldValidate: true })
-    control.setValue('numberOfUnits', nextValue / 100)
+    control.setValue('totalAmount', nextValue)
   }
+
+  const decimalScale = props.decimalScale ?? ETHEREUM_DECIMAL_PLACES
 
   return (
     <Grid container direction='column' spacing={2}>
@@ -49,11 +53,11 @@ export const CommitmentFormFields = (props: CommitmentFormFieldsProps) => {
         <TypedField
           component={NumericInput}
           control={control}
-          name='totalAmount'
-          label='Investment Amount'
-          numberFormat={moneyNumberFormat}
+          name='numberOfUnits'
+          label='Number of Units'
+          numberFormat={{ ...moneyNumberFormat, decimalScale }}
           valueExtractor={numericValueExtractor}
-          onChange={handleTotalAmountChange}
+          onChange={handleNumOfUnitsChange}
         />
       </Grid>
 
@@ -77,9 +81,9 @@ export const CommitmentFormFields = (props: CommitmentFormFieldsProps) => {
           disabled
           component={NumericInput}
           control={control}
-          name='numberOfUnits'
-          label='Number of Units'
-          numberFormat={{ ...moneyNumberFormat, decimalScale: 10 }}
+          name='totalAmount'
+          label='Investment Amount'
+          numberFormat={moneyNumberFormat}
           valueExtractor={numericValueExtractor}
         />
       </Grid>

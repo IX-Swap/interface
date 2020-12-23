@@ -36,7 +36,7 @@ export const SidebarContainer = () => {
     },
     {
       label: 'Invest',
-      link: investRoutes.list,
+      link: investRoutes.landing,
       icon: InvestIcon
     }
   ]

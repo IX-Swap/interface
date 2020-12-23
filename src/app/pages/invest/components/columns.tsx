@@ -1,16 +1,11 @@
-import React from 'react'
 import { TableColumn } from 'types/util'
-import { formatMoney, formatAmount } from 'helpers/numbers'
+import { formatAmount } from 'helpers/numbers'
 import { Commitment } from 'types/commitment'
 import { renderStatusColumn } from 'app/pages/authorizer/hooks/useAuthorizerView'
-import { DSOLogo } from 'app/components/DSO/components/DSOLogo'
-
-export const renderCommitmentMoney = (a: number, row: Commitment) =>
-  formatMoney(a, row.currency.numberFormat.currency)
-
-export const renderCommitmentAvatar = (a: string, row: Commitment) => (
-  <DSOLogo dsoId={row.dso._id} size={40} />
-)
+import {
+  renderCommitmentAvatar,
+  renderCommitmentMoney
+} from 'helpers/rendering'
 
 export const columns: Array<TableColumn<Commitment>> = [
   {

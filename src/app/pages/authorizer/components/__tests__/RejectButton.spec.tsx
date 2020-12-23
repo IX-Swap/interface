@@ -4,16 +4,14 @@ import {
   RejectButton,
   RejectButtonProps
 } from 'app/pages/authorizer/components/RejectButton'
-import { generateMutationResult } from '__fixtures__/useQuery'
 import { history } from 'config/history'
 import { AuthorizerRoute } from 'app/pages/authorizer/router'
 import { bank } from '__fixtures__/authorizer'
 import { AuthorizerCategory } from 'types/app'
-import * as useAuthorizerAction from 'app/pages/authorizer/hooks/useAuthorizerAction'
 import { Form } from 'components/form/Form'
 
 describe('RejectButton', () => {
-  const props: RejectButtonProps = { itemId: bank._id, disabled: false }
+  const props: RejectButtonProps = { reject: jest.fn(), disabled: false }
 
   beforeEach(() => {
     history.push({
@@ -39,11 +37,6 @@ describe('RejectButton', () => {
   })
 
   it('invokes reject when button is clicked', async () => {
-    const reject = jest.fn()
-    jest
-      .spyOn(useAuthorizerAction, 'useAuthorizerAction')
-      .mockReturnValue([reject, generateMutationResult({})])
-
     const { getByText } = render(
       <Form>
         <RejectButton {...props} />
@@ -52,6 +45,6 @@ describe('RejectButton', () => {
     const buttonElement = getByText(/Reject/i)
     fireEvent.click(buttonElement)
 
-    await waitFor(() => expect(reject).toHaveBeenCalledTimes(1))
+    await waitFor(() => expect(props.reject).toHaveBeenCalledTimes(1))
   })
 })

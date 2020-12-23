@@ -77,11 +77,16 @@ export const issuanceURL = {
     getAll: (userId: string) => `/issuance/commitments/${userId}`
   },
   dso: {
+    getAllPromoted: '/issuance/dso/promoted/list',
+    getAllApproved: '/issuance/dso/approved/list',
+    getAllByUserId: (userId: string) => `/issuance/dso/list/${userId}`,
+    favorite: (dsoId: string) => `/issuance/dso/favorites/${dsoId}`,
     getById: (userId: string, dsoId: string) =>
       `/issuance/dso/${userId}/${dsoId}`,
     create: (userId: string) => `/issuance/dso/${userId}`,
     update: (userId: string, dsoId: string) =>
-      `/issuance/dso/${userId}/${dsoId}`
+      `/issuance/dso/${userId}/${dsoId}`,
+    getCapitalStructureList: '/issuance/capital-structures',
   }
 }
 
@@ -99,7 +104,10 @@ export const authURL = {
 
 export const userURL = {
   getUserProfile: (userId: string) => `/auth/profiles/${userId}`,
-  updateRoles: (userId: string) => `/auth/users/${userId}/roles`
+  updateRoles: (userId: string) => `/auth/users/${userId}/roles`,
+  getCustomFields: (userId: string, service: string, feature: string) =>
+    `/core/custom-fields/${service}/${feature}/${userId}`,
+  updateCustomFields: (userId: string) => `/core/custom-fields/${userId}`
 }
 
 export const notificationsURL = {

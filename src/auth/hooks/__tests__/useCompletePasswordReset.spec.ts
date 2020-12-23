@@ -4,6 +4,7 @@ import { useCompletePasswordReset } from 'auth/hooks/useCompletePasswordReset'
 import { unsuccessfulResponse, successfulResponse } from '__fixtures__/api'
 import * as authRouter from 'auth/router'
 import { completePasswordResetArgs } from '__fixtures__/auth'
+import { authURL } from 'config/apiURL'
 
 describe('useCompletePasswordReset', () => {
   const push = jest.fn()
@@ -37,7 +38,7 @@ describe('useCompletePasswordReset', () => {
           expect(push).toHaveBeenCalledWith('login')
           expect(postFn).toHaveBeenNthCalledWith(
             1,
-            '/auth/password/reset/confirm',
+            authURL.resetPasswordConfirm,
             completePasswordResetArgs
           )
           expect(showSnackbar).toHaveBeenNthCalledWith(
