@@ -12,10 +12,20 @@ import { TopInvestors } from '../components/IssuanceLanding/TopInvestors'
 import { TotalInvestors } from '../components/IssuanceLanding/TotalInvestors'
 import { DSOFilter } from '../components/IssuanceLanding/DSOFilter'
 import { AmountRaised } from '../components/IssuanceLanding/AmountRaised'
+import { useSetPageTitle } from 'app/hooks/useSetPageTitle'
+import { useDSOById } from 'app/pages/invest/hooks/useDSOById'
+import { useIssuanceRouter } from 'app/pages/issuance/router'
 import { TargetFundraise } from '../components/IssuanceLanding/TargetFundraise'
 
 export const IssuanceLanding = () => {
   const theme = useTheme()
+
+  const {
+    params: { dsoId }
+  } = useIssuanceRouter()
+  const { data } = useDSOById(dsoId)
+
+  useSetPageTitle(data?.tokenName)
 
   return (
     <Box ml={theme.spacing(0.5)}>
