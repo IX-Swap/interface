@@ -22,7 +22,7 @@ export const DSOSelect = (
       margin='normal'
       variant='outlined'
       fullWidth
-      value={dsoId}
+      value={dsoId !== undefined && dsoId !== ':dsoId' ? dsoId : null}
       {...props}
       style={{ minWidth: 80 }}
     >
