@@ -37,6 +37,6 @@ describe('DSO Insight', () => {
   it('renders "upcoming" if launch date has not yet passed', () => {
     props.dso.launchDate = '11-01-2300'
     const { getByText } = render(<DSORaised {...props} />)
-    expect(getByText('Upcomming')).toBeTruthy()
+    expect(getByText('Upcoming')).toBeTruthy()
   })
 })

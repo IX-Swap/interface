@@ -46,7 +46,7 @@ export const DSORaised: React.FC<DSORaisedProps> = ({
         </Grid>
       ) : (
         <Grid container direction='column'>
-          <Box>Upcomming</Box>
+          <Box>Upcoming</Box>
         </Grid>
       )}
       <Box className={date}>{getTimeFromNow(launchDate)}</Box>
