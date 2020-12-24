@@ -1,31 +1,14 @@
-import React, { useEffect } from 'react'
+import React from 'react'
 import { DSOSelect } from 'app/pages/issuance/components/IssuanceLanding/DSOSelect'
-import { useDSOsByUserId } from 'app/pages/issuance/hooks/useDSOsByUserId'
-import { useIssuanceRouter } from 'app/pages/issuance/router'
 import { Box, Typography } from '@material-ui/core'
-import { hasValue } from 'helpers/forms'
 import { NoDeals } from 'app/pages/issuance/components/IssuanceLanding/NoDeals'
+import { VSpacer } from 'components/VSpacer'
+import { useDSOFilter } from 'app/pages/issuance/hooks/useDSOFilter'
 
 export const DSOFilter = () => {
-  const {
-    replace,
-    params: { dsoId }
-  } = useIssuanceRouter()
-  const { data, isSuccess } = useDSOsByUserId()
+  const { data, isLoading, selected, handleChange } = useDSOFilter()
 
-  useEffect(() => {
-    if ((!hasValue(dsoId) || dsoId === ':dsoId') && data.list.length > 0) {
-      replace('insight', { dsoId: data.list[0]._id })
-    }
-  }, [dsoId, data.list, replace])
-
-  const handleChange = (e: any) => {
-    if (hasValue(e.target.value)) {
-      replace('insight', { dsoId: e.target.value })
-    }
-  }
-
-  if (!isSuccess) {
+  if (isLoading) {
     return null
   }
 
@@ -36,7 +19,13 @@ export const DSOFilter = () => {
   return (
     <Box py={3}>
       <Typography variant='h5'>My DSO(s)</Typography>
-      <DSOSelect fullWidth onChange={handleChange} />
+      <VSpacer size='small' />
+      <DSOSelect
+        fullWidth
+        value={selected}
+        options={data.list}
+        onChange={handleChange}
+      />
     </Box>
   )
 }
