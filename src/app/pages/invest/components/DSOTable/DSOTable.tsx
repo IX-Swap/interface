@@ -7,6 +7,7 @@ import { useQueryFilter } from 'hooks/filters/useQueryFilter'
 import { useDSOTableColumns } from 'app/pages/invest/hooks/useDSOTableColumns'
 import { Actions } from 'app/pages/invest/components/DSOTable/Actions'
 import { DSOTableFilters } from 'app/pages/invest/components/DSOTable/DSOTableFilters'
+import { issuanceURL } from 'config/apiURL'
 
 export const DSOTable = () => {
   const { columns } = useDSOTableColumns()
@@ -21,8 +22,8 @@ export const DSOTable = () => {
       </Grid>
       <Grid item>
         <TableView<DigitalSecurityOffering>
-          uri={`/issuance/dso/list`}
-          name={dsoQueryKeys.getList}
+          uri={issuanceURL.dso.getAllApproved}
+          name={dsoQueryKeys.getApprovedList}
           columns={columns}
           hasActions
           actions={Actions}

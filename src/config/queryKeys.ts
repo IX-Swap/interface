@@ -104,5 +104,6 @@ export const securityQueryKeys = {
 export const dsoQueryKeys = {
   getList: 'dso-list',
   getPromoted: 'promoted-dsos',
+  getApprovedList: 'approved-list',
   getCapitalStructureList: 'capital-structures-list'
 }
