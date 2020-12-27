@@ -3,6 +3,7 @@ import { MenuItem, Select, SelectProps } from '@material-ui/core'
 import { renderMenuItems } from 'helpers/rendering'
 import { useDSOCapitalStructures } from 'hooks/useDSOCapitalStructures'
 import { TypedSelectProps } from 'types/util'
+import { capitalStructures } from 'config/defaults'
 
 export interface CapitalStructureSelectProps extends TypedSelectProps {
   includeAll?: boolean
@@ -16,10 +17,14 @@ export const CapitalStructureSelect = (props: CapitalStructureSelectProps) => {
     return null
   }
 
+  const options = data.length > 0 ? data : capitalStructures
+
   return (
     <Select {...(rest as SelectProps)}>
       {includeAll && <MenuItem value='All'>All</MenuItem>}
-      {renderMenuItems(data.map(option => ({ label: option, value: option })))}
+      {renderMenuItems(
+        options.map(option => ({ label: option, value: option }))
+      )}
     </Select>
   )
 }
