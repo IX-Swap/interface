@@ -1,4 +1,3 @@
-import { addLeadingZeros } from 'helpers/numbers'
 import { act } from 'react-test-renderer'
 import { renderHookWithServiceProvider } from 'test-utils'
 import { useCountdown } from '../useCountdown'
@@ -21,9 +20,15 @@ describe('useCountdown', () => {
     )
 
     expect(result.current).toEqual({
-      days: addLeadingZeros(1, 2),
-      hours: addLeadingZeros(23, 2),
-      minutes: addLeadingZeros(59, 2)
+      units: {
+        years: 0,
+        months: 0,
+        days: 1,
+        hours: 23,
+        minutes: 59,
+        seconds: 59
+      },
+      diff: new Date(mockLaunchDate).getTime() - Date.now()
     })
 
     dateSpy = jest
@@ -34,9 +39,15 @@ describe('useCountdown', () => {
     })
 
     expect(result.current).toEqual({
-      days: addLeadingZeros(1, 2),
-      hours: addLeadingZeros(23, 2),
-      minutes: addLeadingZeros(58, 2)
+      units: {
+        years: 0,
+        months: 0,
+        days: 1,
+        hours: 23,
+        minutes: 58,
+        seconds: 59
+      },
+      diff: new Date(mockLaunchDate).getTime() - Date.now()
     })
 
     dateSpy = jest
@@ -47,9 +58,15 @@ describe('useCountdown', () => {
     })
 
     expect(result.current).toEqual({
-      days: addLeadingZeros(1, 2),
-      hours: addLeadingZeros(23, 2),
-      minutes: addLeadingZeros(57, 2)
+      units: {
+        years: 0,
+        months: 0,
+        days: 1,
+        hours: 23,
+        minutes: 57,
+        seconds: 59
+      },
+      diff: new Date(mockLaunchDate).getTime() - Date.now()
     })
   })
 
@@ -60,9 +77,15 @@ describe('useCountdown', () => {
       {}
     )
     expect(result.current).toEqual({
-      days: addLeadingZeros(0, 2),
-      hours: addLeadingZeros(0, 2),
-      minutes: addLeadingZeros(0, 2)
+      units: {
+        years: 0,
+        months: 0,
+        days: 0,
+        hours: 0,
+        minutes: 0,
+        seconds: 0
+      },
+      diff: new Date(mockLaunchDate).getTime() - Date.now()
     })
   })
 })
