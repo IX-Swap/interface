@@ -112,7 +112,7 @@ describe('Sidebar', () => {
       3,
       {
         label: 'Issuance',
-        link: useIssuanceRouterHook.IssuanceRoute.list,
+        link: useIssuanceRouterHook.IssuanceRoute.insight,
         icon: IssuanceIcon
       },
       {}

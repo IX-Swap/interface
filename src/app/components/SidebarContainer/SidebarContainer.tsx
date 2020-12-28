@@ -44,7 +44,7 @@ export const SidebarContainer = () => {
   if (isIssuer) {
     links.push({
       label: 'Issuance',
-      link: issuanceRoutes.list,
+      link: issuanceRoutes.insight,
       icon: IssuanceIcon
     })
   }

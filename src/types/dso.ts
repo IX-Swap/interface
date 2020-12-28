@@ -1,7 +1,7 @@
 import { Asset } from './asset'
 import { DataroomFile, FormArray } from './dataroomFile'
 import { Maybe } from './util'
-import { CorporateIdentity } from './identity'
+import { CorporateIdentity, IndividualIdentity } from './identity'
 import { AuthorizableWithIdentity } from './authorizer'
 import { Network } from './networks'
 
@@ -84,8 +84,8 @@ export interface DigitalSecurityOffering extends BaseDigitalSecurityOffering {
   isStarred: boolean
   documents: Maybe<DataroomFile[]>
   currency: Asset
-  insight: DSOInsight
   network: Network
+  insight: DSOInsight
 }
 
 export type DeploymentInfoFormValues = Omit<
@@ -146,3 +146,13 @@ export type DSOTableColumn =
   | 'totalFundraisingAmount'
   | 'minimumInvestment'
   | 'distributionFrequency'
+
+export interface DSOActivity {
+  _id: string
+  invariant: string
+  createdAt: string
+  identity: {
+    individual: IndividualIdentity
+    corporates: CorporateIdentity[]
+  }
+}

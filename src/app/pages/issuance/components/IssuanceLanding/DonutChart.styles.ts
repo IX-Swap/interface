@@ -1,0 +1,12 @@
+import makeStyles from '@material-ui/styles/makeStyles'
+
+export default makeStyles(_theme => ({
+  percent: {
+    position: 'absolute',
+    display: 'block',
+    top: '50%',
+    left: '50%',
+    transform: 'translate(-50%, -50%)',
+    fontSize: 9
+  }
+}))

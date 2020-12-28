@@ -5,10 +5,11 @@ import { formatMoney } from 'helpers/numbers'
 
 export interface AssetBalanceProps {
   assetId: string
+  symbol: string
 }
 
 export const AssetBalance = (props: AssetBalanceProps) => {
-  const { assetId } = props
+  const { assetId, symbol } = props
   const { data, isLoading, isIdle } = useBalancesByAssetId(assetId)
 
   if (isLoading || isIdle) {
@@ -20,7 +21,7 @@ export const AssetBalance = (props: AssetBalanceProps) => {
       label='Account Balance'
       value={formatMoney(
         data.map[assetId]?.available ?? 0,
-        data.map[assetId]?.numberFormat.currency
+        data.map[assetId]?.symbol ?? symbol
       )}
     />
   )

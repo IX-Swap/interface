@@ -12,7 +12,7 @@ describe('CommitmentFormSubmitButton', () => {
   it('renders without error', () => {
     render(
       <Form>
-        <CommitmentFormSubmitButton />
+        <CommitmentFormSubmitButton assetId='123' minInvestment={100} />
       </Form>
     )
   })

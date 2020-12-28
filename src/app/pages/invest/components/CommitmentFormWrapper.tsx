@@ -55,7 +55,10 @@ export const CommitmentFormWrapper = () => {
                   <CommitmentFormCancelButton />
                 </Grid>
                 <Grid item xs={6}>
-                  <CommitmentFormSubmitButton />
+                  <CommitmentFormSubmitButton
+                    assetId={data.currency._id}
+                    minInvestment={data.minimumInvestment}
+                  />
                 </Grid>
               </Grid>
             </CardContent>

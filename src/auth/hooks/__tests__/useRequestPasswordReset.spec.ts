@@ -8,6 +8,7 @@ import { authURL } from 'config/apiURL'
 
 describe('useRequestPasswordReset', () => {
   const replace = jest.fn()
+
   beforeEach(() => {
     jest.spyOn(authRouter, 'useAuthRouter').mockReturnValue({ replace } as any)
   })

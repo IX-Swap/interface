@@ -1,0 +1,32 @@
+import { useInfiniteQuery } from 'react-query'
+import { useAuth } from 'hooks/auth/useAuth'
+import { UsePaginatedQueryData, useParsedData } from 'hooks/useParsedData'
+import { paginationArgs } from 'config/defaults'
+import apiService from 'services/api'
+import { dsoQueryKeys } from 'config/queryKeys'
+import { getIdFromObj } from 'helpers/strings'
+import { issuanceURL } from 'config/apiURL'
+import { DigitalSecurityOffering } from 'types/dso'
+
+export const useDSOsByUserId = (): UsePaginatedQueryData<
+  DigitalSecurityOffering
+> => {
+  const { user } = useAuth()
+  const userId = getIdFromObj(user)
+  const uri = issuanceURL.dso.getByUserId(userId)
+
+  const getDSOsByUserId = async (queryKey: string, args: any) => {
+    return await apiService.post(uri, args)
+  }
+
+  const { data, ...rest } = useInfiniteQuery(
+    [dsoQueryKeys.getDSOsById(userId), paginationArgs],
+    getDSOsByUserId,
+    { enabled: (userId ?? '') !== '' }
+  )
+
+  return {
+    ...rest,
+    data: useParsedData<DigitalSecurityOffering>(data, '_id')
+  }
+}
