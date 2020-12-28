@@ -1,7 +1,7 @@
 import React from 'react'
 import { useFormContext } from 'react-hook-form'
 import { FieldsArray } from 'components/form/FieldsArray'
-import { Box, Grid, List } from '@material-ui/core'
+import { Box, Grid, Table, TableBody, TableContainer } from '@material-ui/core'
 import { TypedField } from 'components/form/TypedField'
 import { plainValueExtractor } from 'helpers/forms'
 import { BankFormValues } from 'app/pages/accounts/types'
@@ -34,14 +34,10 @@ export const BankDocuments = () => {
         <FieldsArray name={fieldName} control={control}>
           {({ fields, append, remove }) => (
             <>
-              {fields.length > 0 && (
-                <Grid item>
-                  <SelectableDataroomHeader />
-                </Grid>
-              )}
-              <Grid item container direction='column'>
-                <Grid item>
-                  <List disablePadding component='div'>
+              <TableContainer>
+                <Table>
+                  {fields.length > 0 && <SelectableDataroomHeader />}
+                  <TableBody>
                     {fields.map((field, index) => (
                       // @ts-expect-error
                       <TypedField
@@ -58,27 +54,27 @@ export const BankDocuments = () => {
                         onDelete={() => remove(index)}
                       />
                     ))}
-                  </List>
-                </Grid>
-                <Grid item container justify='space-between'>
-                  <DataroomDeleteSelected name={fieldName} />
-                  <Box display='flex' alignItems='center'>
-                    <FormError name={fieldName} render={TextError} />
-                    <DataroomUploadAndAppend
-                      multiple
-                      label='Uploader'
-                      append={file => {
-                        append({ value: file })
-                        void control.trigger(fieldName)
-                      }}
-                      render={UploadButton}
-                      documentInfo={{
-                        type: 'Supporting Document',
-                        title: 'Supporting Document'
-                      }}
-                    />
-                  </Box>
-                </Grid>
+                  </TableBody>
+                </Table>
+              </TableContainer>
+              <Grid item container justify='space-between'>
+                <DataroomDeleteSelected name={fieldName} />
+                <Box display='flex' alignItems='center'>
+                  <FormError name={fieldName} render={TextError} />
+                  <DataroomUploadAndAppend
+                    multiple
+                    label='Uploader'
+                    append={file => {
+                      append({ value: file })
+                      void control.trigger(fieldName)
+                    }}
+                    render={UploadButton}
+                    documentInfo={{
+                      type: 'Supporting Document',
+                      title: 'Supporting Document'
+                    }}
+                  />
+                </Box>
               </Grid>
             </>
           )}

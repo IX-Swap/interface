@@ -21,7 +21,7 @@ export default makeStyles(theme => ({
     fontSize: '18px',
     fontWeight: 500,
     letterSpacing: 0,
-    backgroundColor: theme.palette.grey[100]
+    backgroundColor: theme.palette.backgrounds.secondary
   },
   content: {
     display: 'flex',

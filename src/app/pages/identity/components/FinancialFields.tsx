@@ -13,7 +13,7 @@ export const FinancialFields = (): JSX.Element => {
 
   return (
     <Grid container spacing={3}>
-      <Grid item xs={4}>
+      <Grid item xs={12} sm={6} md={4}>
         <TypedField
           component={Input}
           control={control}
@@ -21,7 +21,7 @@ export const FinancialFields = (): JSX.Element => {
           label='Occupation'
         />
       </Grid>
-      <Grid item xs={4}>
+      <Grid item xs={12} sm={6} md={4}>
         <TypedField
           className={privateClassNames()}
           component={Input}
@@ -30,7 +30,7 @@ export const FinancialFields = (): JSX.Element => {
           label='Employer'
         />
       </Grid>
-      <Grid item xs={4}>
+      <Grid item xs={12} sm={6} md={4}>
         <TypedField
           className={privateClassNames()}
           component={Input}
@@ -39,7 +39,7 @@ export const FinancialFields = (): JSX.Element => {
           label='Employment Status'
         />
       </Grid>
-      <Grid item xs={4}>
+      <Grid item xs={12} sm={6} md={4}>
         <TypedField
           component={Input}
           control={control}
@@ -47,7 +47,7 @@ export const FinancialFields = (): JSX.Element => {
           label='Industry'
         />
       </Grid>
-      <Grid item xs={4}>
+      <Grid item xs={12} sm={6} md={4}>
         <TypedField
           className={privateClassNames()}
           control={control}
@@ -58,7 +58,7 @@ export const FinancialFields = (): JSX.Element => {
           numberFormat={moneyNumberFormat}
         />
       </Grid>
-      <Grid item xs={4}>
+      <Grid item xs={12} sm={6} md={4}>
         <TypedField
           className={privateClassNames()}
           control={control}
@@ -69,7 +69,7 @@ export const FinancialFields = (): JSX.Element => {
           numberFormat={moneyNumberFormat}
         />
       </Grid>
-      <Grid item xs={4}>
+      <Grid item xs={12} sm={6} md={4}>
         <TypedField
           className={privateClassNames()}
           component={Input}
@@ -78,7 +78,7 @@ export const FinancialFields = (): JSX.Element => {
           label='Source of Income'
         />
       </Grid>
-      <Grid item xs={4}>
+      <Grid item xs={12} sm={6} md={4}>
         <TypedField
           className={privateClassNames()}
           component={Input}
@@ -87,7 +87,7 @@ export const FinancialFields = (): JSX.Element => {
           label='Bank Name'
         />
       </Grid>
-      <Grid item xs={4}>
+      <Grid item xs={12} sm={6} md={4}>
         <TypedField
           className={privateClassNames()}
           component={Input}
@@ -96,7 +96,7 @@ export const FinancialFields = (): JSX.Element => {
           label='Name of Bank Account'
         />
       </Grid>
-      <Grid item xs={4}>
+      <Grid item xs={12} sm={6} md={4}>
         <TypedField
           className={privateClassNames()}
           component={Input}

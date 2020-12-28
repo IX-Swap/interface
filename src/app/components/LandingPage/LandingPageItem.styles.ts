@@ -1,4 +1,4 @@
-import { makeStyles } from '@material-ui/styles'
+import { makeStyles } from '@material-ui/core/styles'
 
 export const useStyles = makeStyles(theme => ({
   container: {
@@ -13,8 +13,8 @@ export const useStyles = makeStyles(theme => ({
     borderStyle: 'solid',
     borderColor: 'transparent',
     '&:hover': {
-      backgroundColor: '#fafafa',
-      borderColor: '#eeeeee',
+      backgroundColor: theme.palette.action.hover,
+      borderColor: theme.palette.divider,
       cursor: 'pointer'
     }
   },
@@ -22,7 +22,7 @@ export const useStyles = makeStyles(theme => ({
     display: 'flex',
     alignItems: 'center',
     justifyContent: 'center',
-    color: '#fff',
+    color: theme.palette.common.white,
     width: 56,
     height: 56,
     borderRadius: 9

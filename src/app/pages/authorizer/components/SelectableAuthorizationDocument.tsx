@@ -4,7 +4,7 @@ import {
   AuthorizationDocumentProps
 } from 'app/pages/authorizer/components/AuthorizationDocument'
 import { Box, Checkbox, Grid } from '@material-ui/core'
-import { makeStyles } from '@material-ui/styles'
+import { makeStyles } from '@material-ui/core/styles'
 
 export interface SelectableAuthorizationDocumentProps
   extends AuthorizationDocumentProps {

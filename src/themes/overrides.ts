@@ -1,10 +1,12 @@
+import { Theme } from '@material-ui/core'
 import { Overrides } from '@material-ui/core/styles/overrides'
-import { themeColors } from 'themes/default'
 
-export const overrides: Overrides = {
-  MuiBackdrop: {
-    root: {
-      backgroundColor: '#4A4A4A1A'
+export const getThemeOverrides = (theme: Theme): Overrides => ({
+  MuiCssBaseline: {
+    '@global': {
+      html: {
+        background: theme.palette?.backgrounds.main
+      }
     }
   },
   MuiDialog: {
@@ -12,23 +14,12 @@ export const overrides: Overrides = {
       borderRadius: 0
     }
   },
-  MuiMenu: {
-    paper: {
-      boxShadow:
-        '0px 3px 11px 0px #E8EAFC, 0 3px 3px -2px #B2B2B21A, 0 1px 8px 0 #9A9A9A1A'
-    }
-  },
   MuiListItem: {
     root: {
       '&$selected': {
-        color: themeColors.primary,
-        backgroundColor: '#e7ecf5 !important'
+        color: theme.palette?.sidebar.activeColor,
+        backgroundColor: theme.palette?.sidebar.activeBackground
       }
-    }
-  },
-  MuiTouchRipple: {
-    child: {
-      backgroundColor: 'white'
     }
   },
   MuiTableCell: {
@@ -46,9 +37,9 @@ export const overrides: Overrides = {
   MuiLink: {
     root: {
       fontWeight: 400,
-
+      color: theme.palette.primary.light,
       '&.MuiLink-underlineHover:active, &.MuiLink-underlineHover:visited, &.MuiLink-underlineAlways:active, &.MuiLink-underlineAlways:visited': {
-        color: themeColors.primary,
+        color: theme.palette.primary.light,
         textDecoration: 'none'
       },
 
@@ -57,10 +48,14 @@ export const overrides: Overrides = {
       }
     }
   },
+  MuiGrid: {
+    item: {
+      maxWidth: '100%'
+    }
+  },
   MuiContainer: {
     root: {
-      paddingTop: 40,
-      paddingBottom: 40
+      // background: theme.palette?.backgrounds.main
     }
   },
   MuiInput: {
@@ -88,7 +83,7 @@ export const overrides: Overrides = {
   },
   MuiSelect: {
     icon: {
-      color: '#B9B9B9'
+      color: 'white'
     },
     root: {
       height: 38
@@ -113,4 +108,4 @@ export const overrides: Overrides = {
       textTransform: 'none'
     }
   }
-}
+})

@@ -27,7 +27,15 @@ export const DepositView: React.FC = observer(() => {
   return (
     <DepositForm depositCode={depositCode}>
       <Grid container justify='center'>
-        <Grid item xs={5} container direction='column' spacing={4}>
+        <Grid
+          item
+          xs={12}
+          sm={6}
+          md={5}
+          container
+          direction='column'
+          spacing={4}
+        >
           <Grid item>
             {(isSetup || isPreview) && (
               <DisplayNone when={isPreview}>

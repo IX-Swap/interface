@@ -1,6 +1,5 @@
 import React from 'react'
-import useStyles from 'auth/styles'
-import { Button } from '@material-ui/core'
+import { Button, Grid } from '@material-ui/core'
 import { RequestPasswordResetArgs } from 'types/auth'
 import { requestPasswordResetValidationSchema } from 'validation/auth'
 import { useAuthRouter } from 'auth/router'
@@ -16,7 +15,6 @@ export const requestPasswordResetInitialValues = {
 }
 
 export const RequestStep: React.FC = () => {
-  const classes = useStyles()
   const [requestReset] = useRequestPasswordReset()
   const { setEmail } = usePasswordResetStore()
   const { paths } = useAuthRouter()
@@ -35,16 +33,18 @@ export const RequestStep: React.FC = () => {
       validationSchema={requestPasswordResetValidationSchema}
       onSubmit={handleSubmit}
     >
-      <RequestFields />
-      <div className={classes.formButtons}>
-        <Button color='primary' size='large' className={classes.forgetButton}>
-          <AppRouterLink to={paths.login}>Back to Login</AppRouterLink>
-        </Button>
+      <Grid container direction='column' spacing={2}>
+        <RequestFields />
+        <Grid item container justify='space-between' alignItems='center'>
+          <Button color='primary' size='large'>
+            <AppRouterLink to={paths.login}>Back to Login</AppRouterLink>
+          </Button>
 
-        <Submit variant='contained' color='primary'>
-          Reset
-        </Submit>
-      </div>
+          <Submit variant='contained' color='primary' size='large'>
+            Reset
+          </Submit>
+        </Grid>
+      </Grid>
     </Form>
   )
 }

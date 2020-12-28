@@ -43,8 +43,9 @@ describe('DSOTerms', () => {
     expect(TypedField).toHaveBeenNthCalledWith(
       2,
       expect.objectContaining({
-        label: 'Investment Structure',
-        name: 'investmentStructure'
+        numberFormat: percentageNumberFormat,
+        label: 'Dividend Yield',
+        name: 'dividendYield'
       }),
       {}
     )
@@ -52,17 +53,16 @@ describe('DSOTerms', () => {
       3,
       expect.objectContaining({
         numberFormat: percentageNumberFormat,
-        label: 'Interest Rate',
-        name: 'interestRate'
+        label: 'Gross IRR',
+        name: 'grossIRR'
       }),
       {}
     )
     expect(TypedField).toHaveBeenNthCalledWith(
       4,
       expect.objectContaining({
-        numberFormat: percentageNumberFormat,
-        label: 'Dividend Yield',
-        name: 'dividendYield'
+        label: 'Investment Structure',
+        name: 'investmentStructure'
       }),
       {}
     )
@@ -78,9 +78,8 @@ describe('DSOTerms', () => {
     expect(TypedField).toHaveBeenNthCalledWith(
       6,
       expect.objectContaining({
-        numberFormat: percentageNumberFormat,
-        label: 'Leverage',
-        name: 'leverage'
+        label: 'Distribution Frequency',
+        name: 'distributionFrequency'
       }),
       {}
     )
@@ -88,16 +87,17 @@ describe('DSOTerms', () => {
       7,
       expect.objectContaining({
         numberFormat: percentageNumberFormat,
-        label: 'Gross IRR',
-        name: 'grossIRR'
+        label: 'Interest Rate',
+        name: 'interestRate'
       }),
       {}
     )
     expect(TypedField).toHaveBeenNthCalledWith(
       8,
       expect.objectContaining({
-        label: 'Distribution Frequency',
-        name: 'distributionFrequency'
+        numberFormat: percentageNumberFormat,
+        label: 'Leverage',
+        name: 'leverage'
       }),
       {}
     )

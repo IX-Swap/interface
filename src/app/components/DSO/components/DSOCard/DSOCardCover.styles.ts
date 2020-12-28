@@ -12,7 +12,7 @@ export default makeStyles(theme => ({
   logo: {
     borderWidth: 1,
     borderStyle: 'solid',
-    borderColor: theme.palette.grey[200]
+    borderColor: theme.palette.divider
   },
   title: {
     fontSize: theme.typography.h5.fontSize,
@@ -25,6 +25,6 @@ export default makeStyles(theme => ({
     padding: theme.spacing(3),
     paddingLeft: theme.spacing(2),
     paddingRight: theme.spacing(2),
-    backgroundColor: theme.palette.grey[100]
+    backgroundColor: theme.palette.backgrounds.secondary
   }
 }))
