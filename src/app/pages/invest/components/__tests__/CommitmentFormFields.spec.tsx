@@ -58,9 +58,12 @@ describe('CommitmentFormFields', () => {
     expect(TypedField).toHaveBeenNthCalledWith(
       2,
       expect.objectContaining({
-        label: 'Investment Amount',
-        name: 'totalAmount',
-        numberFormat: moneyNumberFormat
+        name: 'numberOfUnits',
+        label: 'Number of Units',
+        numberFormat: {
+          ...moneyNumberFormat,
+          decimalScale: props.decimalScale ?? 18
+        }
       }),
       {}
     )
@@ -78,9 +81,9 @@ describe('CommitmentFormFields', () => {
     expect(TypedField).toHaveBeenNthCalledWith(
       4,
       expect.objectContaining({
-        name: 'numberOfUnits',
-        label: 'Number of Units',
-        numberFormat: { ...moneyNumberFormat, decimalScale: 10 },
+        name: 'totalAmount',
+        label: 'Investment Amount',
+        numberFormat: moneyNumberFormat,
         disabled: true
       }),
       {}

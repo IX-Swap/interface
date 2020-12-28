@@ -15,7 +15,7 @@ export const DSOSubscriptionDocument = () => {
   return (
     <DSOContainer title='Subscription Document' item xs={12}>
       <Grid container direction='column'>
-        <Grid item>
+        <Grid item xs={12}>
           {/* @ts-ignore */}
           <TypedField
             customRenderer

@@ -1,13 +1,13 @@
 import React from 'react'
 import { useCommitmentById } from 'app/pages/invest/hooks/useCommitmentById'
-import { useOfferingsRouter } from 'app/pages/invest/routers/offeringsRouter'
+import { useDSORouter } from 'app/pages/invest/routers/dsoRouter'
 import { CommitmentPreview } from 'app/components/CommitmentPreview/CommitmentPreview'
 import { RejectionMessage } from 'app/pages/authorizer/components/RejectionMessage'
 
 export const InvestCommitmentView = () => {
   const {
     params: { commitmentId }
-  } = useOfferingsRouter()
+  } = useDSORouter()
 
   const { data, isLoading } = useCommitmentById(commitmentId)
 

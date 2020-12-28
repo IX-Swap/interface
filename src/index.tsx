@@ -1,13 +1,12 @@
-// import 'wdyr'
 import React from 'react'
 import ReactDOM from 'react-dom'
 import {
   createGenerateClassName,
-  StylesProvider
+  StylesProvider,
+  Theme
 } from '@material-ui/core/styles'
 import { ThemeProvider } from '@material-ui/styles'
 import { CssBaseline } from '@material-ui/core'
-import themes from 'themes'
 import { UserProvider } from 'auth/context'
 import { EntryPoint } from 'EntryPoint'
 import { ToastProvider } from 'react-toast-notifications'
@@ -18,6 +17,7 @@ import { ReactQueryCacheProvider, QueryCache } from 'react-query'
 import { setupSentry } from 'setupSentry'
 import { setupFullStory } from 'setupFullStory'
 import { initGoogleAnalytics } from 'initGoogleAnalytics'
+import { useAppTheme } from 'hooks/useAppTheme'
 
 const queryCache = new QueryCache({
   defaultConfig: {
@@ -37,26 +37,31 @@ initGoogleAnalytics()
 
 console.log(`App version: ${APP_VERSION}`) // eslint-disable-line
 
-ReactDOM.render(
-  <StylesProvider generateClassName={generateClassName}>
-    <ThemeProvider theme={themes.default}>
-      <ReactQueryCacheProvider queryCache={queryCache}>
-        <CssBaseline />
-        <UserProvider>
-          <Router history={history}>
-            <Switch>
-              <ToastProvider
-                components={{ Toast }}
-                autoDismiss={false}
-                placement='bottom-right'
-              >
-                <EntryPoint />
-              </ToastProvider>
-            </Switch>
-          </Router>
-        </UserProvider>
-      </ReactQueryCacheProvider>
-    </ThemeProvider>
-  </StylesProvider>,
-  document.getElementById('root')
-)
+const IXApp = () => {
+  const theme = useAppTheme()
+
+  return (
+    <StylesProvider generateClassName={generateClassName}>
+      <ThemeProvider theme={theme as Theme}>
+        <ReactQueryCacheProvider queryCache={queryCache}>
+          <CssBaseline />
+          <UserProvider>
+            <Router history={history}>
+              <Switch>
+                <ToastProvider
+                  components={{ Toast }}
+                  autoDismiss={false}
+                  placement='bottom-right'
+                >
+                  <EntryPoint />
+                </ToastProvider>
+              </Switch>
+            </Router>
+          </UserProvider>
+        </ReactQueryCacheProvider>
+      </ThemeProvider>
+    </StylesProvider>
+  )
+}
+
+ReactDOM.render(<IXApp />, document.getElementById('root'))

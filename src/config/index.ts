@@ -9,8 +9,12 @@ export const ENVIRONMENT = getEnvironment(API_URL)
 export const GOOGLE_ANALYTICS = process.env.REACT_APP_GOOGLE_ANALYTICS
 export const FULLSTORY = process.env.REACT_APP_FULLSTORY
 
+export const isDevEnv = ENVIRONMENT === 'dev'
+
 export const DATE_FORMAT = 'MM/DD/YYYY'
 export const TIME_FORMAT = 'HH:MM:SS'
+
+export const ETHEREUM_DECIMAL_PLACES = 18
 
 export const INVESTAX_BANK: Partial<Bank> = {
   bankName: 'OVERSEA-CHINESE BANKING CORPORATION LIMITED',

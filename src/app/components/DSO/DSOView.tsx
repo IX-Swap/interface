@@ -15,18 +15,14 @@ import { DataroomHeader } from 'components/dataroom/DataroomHeader'
 import { LabelledValue } from 'components/LabelledValue'
 import { formatDateAndTime } from 'helpers/dates'
 import { DataroomViewRow } from 'components/dataroom/DataroomViewRow'
-import { VSpacer } from 'components/VSpacer'
 import { useSetPageTitle } from 'app/hooks/useSetPageTitle'
 import { renderMonths, renderPercentage } from 'helpers/rendering'
 import { formatMoney } from 'helpers/numbers'
 import { RejectionMessage } from 'app/pages/authorizer/components/RejectionMessage'
-import { getIdFromObj } from 'helpers/strings'
-import { useAuth } from 'hooks/auth/useAuth'
 import { DSOLogo } from './components/DSOLogo'
 import { DownloadDSOSubscriptionDocument } from 'app/components/DSO/components/DownloadDSOSubscriptionDocument'
 import { DownloadDSODocument } from 'app/components/DSO/components/DownloadDSODocument'
-import { DSOTeamMemberPhoto } from 'app/components/DSO/components/DSOTeamMemberPhoto'
-import { NetworkView } from './components/NetworkView'
+import { DSOTeamMemberView } from 'app/components/DSO/components/DSOTeamMemberView'
 
 export interface DSOViewProps {
   data: DigitalSecurityOffering
@@ -35,9 +31,6 @@ export interface DSOViewProps {
 
 export const DSOView = (props: DSOViewProps) => {
   const { data, showAuthorizations = false } = props
-  const { user } = useAuth()
-  const userId = getIdFromObj(user)
-  const isMyDSO = data.user === userId
 
   useSetPageTitle(data.tokenName)
 
@@ -85,46 +78,43 @@ export const DSOView = (props: DSOViewProps) => {
         </Grid>
 
         <Grid item>
-          <LabelledValue
-            label='Blockchain Network'
-            value={<NetworkView networkId={data.network} />}
-          />
+          <LabelledValue label='Blockchain Network' value={data.network.name} />
         </Grid>
       </Grid>
 
       <Grid item container direction='row' spacing={3}>
-        <DSOContainer title='Introduction' item xs={8}>
+        <DSOContainer title='Introduction' item xs={12} md={8}>
           <Typography>{renderStringToHTML(data.introduction)}</Typography>
         </DSOContainer>
 
-        <DSOContainer title='Introduction' item xs={4}>
-          <Grid container direction='column' spacing={2}>
-            <Grid item>
+        <DSOContainer title='Introduction' item xs={12} md={4}>
+          <Grid container spacing={2}>
+            <Grid item xs={6} md={12}>
               <LabelledValue
                 label='Corporate'
                 value={data.corporate.companyLegalName}
               />
             </Grid>
 
-            <Grid item>
+            <Grid item xs={6} md={12}>
               <LabelledValue label='Status' value={data.status} />
             </Grid>
 
-            <Grid item>
+            <Grid item xs={6} md={12}>
               <LabelledValue
                 label='Capital Structure'
                 value={data.capitalStructure}
               />
             </Grid>
 
-            <Grid item>
+            <Grid item xs={6} md={12}>
               <LabelledValue
                 label='Unit Price'
                 value={formatMoney(data.pricePerUnit, data.currency.symbol)}
               />
             </Grid>
 
-            <Grid item>
+            <Grid item xs={6} md={12}>
               <LabelledValue
                 label='Total Fundraising Amount'
                 value={formatMoney(
@@ -134,7 +124,7 @@ export const DSOView = (props: DSOViewProps) => {
               />
             </Grid>
 
-            <Grid item>
+            <Grid item xs={6} md={12}>
               <LabelledValue
                 label='Minimum Investment'
                 value={formatMoney(data.minimumInvestment, data.tokenSymbol)}
@@ -164,66 +154,60 @@ export const DSOView = (props: DSOViewProps) => {
 
       <DSOContainer title='Offering Terms' item xs={12}>
         <Grid item container spacing={2}>
-          <Grid item xs={4} container direction='column' spacing={2}>
-            <Grid item>
-              <LabelledValue
-                label='Investment Period'
-                value={renderMonths(data.investmentPeriod)}
-              />
-            </Grid>
-
-            <Grid item>
-              <LabelledValue
-                label='Investment Structure'
-                value={data.investmentStructure}
-              />
-            </Grid>
-
-            <Grid item>
-              <LabelledValue
-                label='Interest Rate'
-                value={renderPercentage(data.interestRate)}
-              />
-            </Grid>
+          <Grid item xs={12} sm={6} md={4}>
+            <LabelledValue
+              label='Investment Period'
+              value={renderMonths(data.investmentPeriod)}
+            />
           </Grid>
 
-          <Grid item xs={4} container direction='column' spacing={2}>
-            <Grid item>
-              <LabelledValue
-                value={renderPercentage(data.dividendYield)}
-                label='Dividend Yield'
-              />
-            </Grid>
-
-            <Grid item>
-              <LabelledValue
-                value={renderPercentage(data.equityMultiple)}
-                label='Equity Multiple'
-              />
-            </Grid>
-
-            <Grid item>
-              <LabelledValue
-                value={renderPercentage(data.leverage)}
-                label='Leverage'
-              />
-            </Grid>
+          <Grid item xs={12} sm={6} md={4}>
+            <LabelledValue
+              value={renderPercentage(data.dividendYield)}
+              label='Dividend Yield'
+            />
           </Grid>
 
-          <Grid item xs={4} container direction='column' spacing={2}>
-            <Grid item>
-              <LabelledValue
-                value={renderPercentage(data.grossIRR)}
-                label='Gross IRR'
-              />
-            </Grid>
+          <Grid item xs={12} sm={6} md={4}>
+            <LabelledValue
+              value={renderPercentage(data.grossIRR)}
+              label='Gross IRR'
+            />
+          </Grid>
 
-            <Grid item>
-              <LabelledValue
-                value={data.distributionFrequency}
-                label='Distribution Frequency'
-              />
-            </Grid>
+          <Grid item xs={12} sm={6} md={4}>
+            <LabelledValue
+              label='Investment Structure'
+              value={data.investmentStructure}
+            />
+          </Grid>
+
+          <Grid item xs={12} sm={6} md={4}>
+            <LabelledValue
+              value={renderPercentage(data.equityMultiple)}
+              label='Equity Multiple'
+            />
+          </Grid>
+
+          <Grid item xs={12} sm={6} md={4}>
+            <LabelledValue
+              value={data.distributionFrequency}
+              label='Distribution Frequency'
+            />
+          </Grid>
+
+          <Grid item xs={12} sm={6} md={4}>
+            <LabelledValue
+              label='Interest Rate'
+              value={renderPercentage(data.interestRate)}
+            />
+          </Grid>
+
+          <Grid item xs={12} sm={6} md={4}>
+            <LabelledValue
+              value={renderPercentage(data.leverage)}
+              label='Leverage'
+            />
           </Grid>
         </Grid>
       </DSOContainer>
@@ -232,11 +216,9 @@ export const DSOView = (props: DSOViewProps) => {
         <Typography>{renderStringToHTML(data.businessModel)}</Typography>
       </DSOContainer>
 
-      {isMyDSO && (
-        <DSOContainer title='Token' item xs={12}>
-          <DSOToken />
-        </DSOContainer>
-      )}
+      <DSOContainer title='Token' item xs={12}>
+        <DSOToken />
+      </DSOContainer>
 
       <DSOContainer title='Use of Proceeds' item xs={12}>
         <Typography>{renderStringToHTML(data.useOfProceeds)}</Typography>
@@ -272,44 +254,7 @@ export const DSOView = (props: DSOViewProps) => {
 
       <DSOContainer title='Team' item xs={12}>
         {data.team.map(member => (
-          <Grid
-            key={member._id}
-            item
-            container
-            alignItems='flex-start'
-            wrap='nowrap'
-            spacing={3}
-            style={{ marginBottom: 24 }}
-          >
-            <Grid item>
-              <DSOTeamMemberPhoto
-                dsoId={data._id}
-                photoId={member.photo}
-                variant='rounded'
-                size={250}
-              />
-            </Grid>
-
-            <Grid item container direction='column' spacing={1}>
-              <Grid item container spacing={2}>
-                <Grid item xs={2}>
-                  <LabelledValue label='Name' value={member.name} />
-                </Grid>
-                <Grid item xs={2}>
-                  <LabelledValue label='Position' value={member.position} />
-                </Grid>
-              </Grid>
-              <Grid item>
-                <VSpacer size='small' />
-              </Grid>
-              <Grid item>
-                <LabelledValue
-                  label='About'
-                  value={renderStringToHTML(member.about)}
-                />
-              </Grid>
-            </Grid>
-          </Grid>
+          <DSOTeamMemberView dsoId={data._id} member={member} />
         ))}
       </DSOContainer>
     </Grid>

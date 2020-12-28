@@ -10,6 +10,7 @@ import { TypedField } from 'components/form/TypedField'
 import { Form } from 'components/form/Form'
 import { AuthorizerCategory } from 'types/app'
 import * as useAuthorizerCategoryHook from 'hooks/location/useAuthorizerCategory'
+import * as useAuthorizerAction from 'app/pages/authorizer/hooks/useAuthorizerAction'
 
 jest.mock('components/form/TypedField', () => ({
   TypedField: jest.fn(() => null)
@@ -28,7 +29,12 @@ describe('AuthorizerForm', () => {
     itemId: 'test-itemId',
     status: 'Submitted'
   }
-
+  const authorizationAction = jest.fn()
+  beforeEach(() => {
+    jest
+      .spyOn(useAuthorizerAction, 'useAuthorizerAction')
+      .mockReturnValue([authorizationAction, { isLoading: false } as any])
+  })
   afterEach(async () => {
     await cleanup()
     jest.clearAllMocks()
@@ -77,7 +83,7 @@ describe('AuthorizerForm', () => {
 
     expect(ApproveButton).toHaveBeenCalledTimes(1)
     expect(ApproveButton).toHaveBeenCalledWith(
-      { itemId: props.itemId, disabled: false },
+      { approve: authorizationAction, disabled: false },
       {}
     )
   })
@@ -94,7 +100,7 @@ describe('AuthorizerForm', () => {
     )
 
     expect(ApproveButton).toHaveBeenCalledWith(
-      { itemId: props.itemId, disabled: true },
+      { approve: authorizationAction, disabled: true },
       {}
     )
   })
@@ -111,7 +117,7 @@ describe('AuthorizerForm', () => {
     )
 
     expect(RejectButton).toHaveBeenCalledWith(
-      { itemId: props.itemId, disabled: true },
+      { reject: authorizationAction, disabled: true },
       {}
     )
   })
@@ -129,7 +135,7 @@ describe('AuthorizerForm', () => {
 
     expect(ApproveButton).toHaveBeenCalledTimes(1)
     expect(ApproveButton).toHaveBeenCalledWith(
-      { itemId: props.itemId, disabled: true },
+      { approve: authorizationAction, disabled: true },
       {}
     )
   })
@@ -147,7 +153,7 @@ describe('AuthorizerForm', () => {
 
     expect(RejectButton).toHaveBeenCalledTimes(1)
     expect(RejectButton).toHaveBeenCalledWith(
-      { itemId: props.itemId, disabled: true },
+      { reject: authorizationAction, disabled: true },
       {}
     )
   })
@@ -161,7 +167,7 @@ describe('AuthorizerForm', () => {
 
     expect(RejectButton).toHaveBeenCalledTimes(1)
     expect(RejectButton).toHaveBeenCalledWith(
-      { itemId: props.itemId, disabled: false },
+      { reject: authorizationAction, disabled: false },
       {}
     )
   })

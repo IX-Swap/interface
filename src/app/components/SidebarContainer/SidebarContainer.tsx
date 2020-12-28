@@ -1,5 +1,5 @@
 import React from 'react'
-import { Sidebar } from 'ui/Sidebar'
+import { NavigationWrapper } from 'ui/Navigation/NavigationWrapper'
 import { useIsAdmin, useIsAuthorizer, useIsIssuer } from 'helpers/acl'
 import { SidebarLinkContainer } from 'app/components/SidebarContainer/components/SidebarLinkContainer'
 import { useAuthorizerRouter } from 'app/pages/authorizer/router'
@@ -36,7 +36,7 @@ export const SidebarContainer = () => {
     },
     {
       label: 'Invest',
-      link: investRoutes.list,
+      link: investRoutes.landing,
       icon: InvestIcon
     }
   ]
@@ -60,11 +60,11 @@ export const SidebarContainer = () => {
   const { isTablet } = useAppBreakpoints()
 
   const sidebar = (
-    <Sidebar>
+    <NavigationWrapper>
       {links.map(link => (
         <SidebarLinkContainer {...link} key={link.label} />
       ))}
-    </Sidebar>
+    </NavigationWrapper>
   )
 
   return isTablet ? (

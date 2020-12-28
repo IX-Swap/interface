@@ -6,6 +6,7 @@ import { useIndividualIdentity } from 'hooks/identity/useIndividualIdentity'
 import { useIdentitiesRouter } from 'app/pages/identity/router'
 import { NoIdentity } from 'app/pages/identity/components/NoIdentity'
 import { IndividualInfoView } from 'app/pages/identity/components/IndividualInfoView'
+import { VSpacer } from 'components/VSpacer'
 
 export const IndividualPreview: React.FC = () => {
   const { data, status } = useIndividualIdentity()
@@ -24,9 +25,12 @@ export const IndividualPreview: React.FC = () => {
   const name = `${data.firstName} ${data.lastName}`
 
   return (
-    <Grid container item direction='column' spacing={2}>
+    <Grid container item>
       <Grid item>
         <Typography variant='h4'>Individual</Typography>
+      </Grid>
+      <Grid item>
+        <VSpacer size='medium' />
       </Grid>
       <Grid item>
         <Section

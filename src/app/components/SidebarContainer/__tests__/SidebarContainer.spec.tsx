@@ -77,7 +77,7 @@ describe('Sidebar', () => {
       2,
       {
         label: 'Invest',
-        link: useInvestRouterHook.InvestRoute.list,
+        link: useInvestRouterHook.InvestRoute.landing,
         icon: InvestIcon
       },
       {}
@@ -103,7 +103,7 @@ describe('Sidebar', () => {
       2,
       {
         label: 'Invest',
-        link: useInvestRouterHook.InvestRoute.list,
+        link: useInvestRouterHook.InvestRoute.landing,
         icon: InvestIcon
       },
       {}
@@ -139,7 +139,7 @@ describe('Sidebar', () => {
       2,
       {
         label: 'Invest',
-        link: useInvestRouterHook.InvestRoute.list,
+        link: useInvestRouterHook.InvestRoute.landing,
         icon: InvestIcon
       },
       {}

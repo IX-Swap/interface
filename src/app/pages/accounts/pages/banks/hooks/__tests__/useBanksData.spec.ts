@@ -3,7 +3,7 @@ import { waitFor, cleanup, renderHookWithServiceProvider } from 'test-utils'
 import * as useAuthHook from 'hooks/auth/useAuth'
 import * as useParsedDataHook from 'hooks/useParsedData'
 import { paginationArgs } from 'config/defaults'
-import { useBanksData } from '../useBanksData'
+import { useBanksData } from 'app/pages/accounts/pages/banks/hooks/useBanksData'
 import { user } from '__fixtures__/user'
 import { bank } from '__fixtures__/authorizer'
 

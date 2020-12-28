@@ -56,14 +56,16 @@ export const AuthorizerView = <T,>(
           <PageHeader />
         </Grid>
         <Grid item>
-          <Grid container spacing={6}>
+          <Grid container spacing={6} wrap='wrap-reverse'>
             {hasIdentity && (
-              <AuthorizerIdentities
-                corporates={getCorporates(data)}
-                individual={data.identity?.individual}
-              />
+              <Grid item xs={12} md={3}>
+                <AuthorizerIdentities
+                  corporates={getCorporates(data)}
+                  individual={data.identity?.individual}
+                />
+              </Grid>
             )}
-            <Grid item xs={hasIdentity ? 9 : 12}>
+            <Grid item xs={12} md={hasIdentity ? 9 : 12}>
               <Grid container direction='column'>
                 <Grid item style={{ marginBottom: 5 }}>
                   <Typography color='textSecondary'>
