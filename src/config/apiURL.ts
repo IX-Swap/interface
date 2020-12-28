@@ -77,7 +77,9 @@ export const issuanceURL = {
     getAll: (userId: string) => `/issuance/commitments/${userId}`
   },
   dso: {
-    getPromoted: '/issuance/dso/list/promoted',
+    getAllPromoted: '/issuance/dso/promoted/list',
+    getAllApproved: '/issuance/dso/approved/list',
+    getAllByUserId: (userId: string) => `/issuance/dso/list/${userId}`,
     favorite: (dsoId: string) => `/issuance/dso/favorites/${dsoId}`,
     topCountries: (dsoId: string) =>
       `/issuance/dso/${dsoId}/charts/top-countries`,

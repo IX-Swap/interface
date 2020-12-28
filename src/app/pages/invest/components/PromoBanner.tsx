@@ -1,4 +1,5 @@
 import React from 'react'
+import _escape from 'lodash/escape'
 import { Grid, Paper, Typography } from '@material-ui/core'
 import { makeStyles } from '@material-ui/core/styles'
 import { usePromo } from '../hooks/usePromo'
@@ -50,8 +51,8 @@ export const PromoBanner = () => {
           data-testid='promo-image'
           className={styles.bannerImage}
           src={generateImgSrc(image.src)}
-          alt={image.alt ?? image.title ?? ''}
-          title={image.title}
+          alt={_escape(image.alt ?? image.title ?? '')}
+          title={_escape(image.title)}
         />
       </Paper>
     </Grid>
