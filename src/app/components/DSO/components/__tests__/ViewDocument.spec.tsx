@@ -17,6 +17,7 @@ describe('ViewDocument', () => {
   const convertBlobToFile = jest.fn()
   const createObjectURLFromFile = jest.fn()
   const revokeObjectURL = jest.fn()
+
   beforeEach(() => {
     jest.spyOn(utils, 'convertBlobToFile').mockImplementation(convertBlobToFile)
     jest

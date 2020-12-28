@@ -103,6 +103,22 @@ export const securityQueryKeys = {
 
 export const dsoQueryKeys = {
   getList: 'dso-list',
+  getDSOsByUserId: (userId: string) => generateQueryKey('dso-list', userId),
+  getDSOsById: (id: string) => generateQueryKey('dso-list', id),
+  getCapitalStructureList: 'capital-structures-list',
+  getPromoted: 'promoted-dsos',
+  getApprovedList: 'dso-approved-list'
+}
+
+export const issuanceQueryKeys = {
+  commitmentsStats: (dsoId: string) =>
+    generateQueryKey('commitment-stats', dsoId),
+  investmentGrowth: (dsoId: string) =>
+    generateQueryKey('investment-growth', dsoId),
+  investorsByCountry: (dsoId: string) =>
+    generateQueryKey('investors-by-country', dsoId),
+  totalInvestors: (dsoId: string) => generateQueryKey('total-investors', dsoId),
+  topInvestors: (dsoId: string) => generateQueryKey('top-investors', dsoId),
   getPromoted: 'promoted-dsos',
   getApprovedList: 'approved-list',
   getCapitalStructureList: 'capital-structures-list'

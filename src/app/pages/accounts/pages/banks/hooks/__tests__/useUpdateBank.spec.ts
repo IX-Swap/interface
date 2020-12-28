@@ -9,6 +9,7 @@ import { updateBankArgs } from '__fixtures__/bank'
 
 describe('useUpdateBank', () => {
   const push = jest.fn()
+
   beforeEach(() => {
     jest
       .spyOn(useAuthHook, 'useAuth')

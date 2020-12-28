@@ -16,7 +16,7 @@ jest.mock('components/LabelledValue', () => ({
 }))
 
 describe('AssetBalance', () => {
-  const props: AssetBalanceProps = { assetId: asset._id }
+  const props: AssetBalanceProps = { assetId: asset._id, symbol: 'SGD' }
 
   afterEach(async () => {
     await cleanup()
@@ -56,7 +56,7 @@ describe('AssetBalance', () => {
     expect(LabelledValue).toHaveBeenCalledWith(
       {
         label: 'Account Balance',
-        value: formatMoney(balance.available, asset.numberFormat.currency)
+        value: formatMoney(balance.available, balance.symbol)
       },
       {}
     )
@@ -76,7 +76,7 @@ describe('AssetBalance', () => {
     expect(LabelledValue).toHaveBeenCalledWith(
       {
         label: 'Account Balance',
-        value: formatMoney(0, asset.numberFormat.currency)
+        value: formatMoney(0, balance.symbol)
       },
       {}
     )
