@@ -41,11 +41,11 @@ export const useCountdown = (endDate: string | undefined): TimerResults => {
 
     const endDatetime = new Date(endDate)
     let diff = endDatetime.getTime() - Date.now()
-    let cd = getInterval(diff)
+    let interval = getInterval(diff)
 
-    const getCountdown = (interval?: NodeJS.Timeout) => {
+    const getCountdown = (countdownInterval?: NodeJS.Timeout) => {
       diff = endDatetime.getTime() - Date.now()
-      cd = getInterval(diff)
+      interval = getInterval(diff)
 
       if (diff < 0) {
         setResult({
@@ -59,25 +59,25 @@ export const useCountdown = (endDate: string | undefined): TimerResults => {
           },
           diff: diff
         })
-        if (typeof interval !== 'undefined') {
-          clearInterval(interval)
+        if (typeof countdownInterval !== 'undefined') {
+          clearInterval(countdownInterval)
         }
         return
       }
 
-      let vDate = endDatetime
-      const dNow = Date.now()
-      const years = differenceInYears(vDate, dNow)
-      if (years > 0) vDate = subYears(vDate, years)
-      const months = differenceInMonths(vDate, dNow)
-      if (months > 0) vDate = subMonths(vDate, months)
-      const days = differenceInDays(vDate, dNow)
-      if (days > 0) vDate = subDays(vDate, days)
-      const hours = differenceInHours(vDate, dNow)
-      if (hours > 0) vDate = subHours(vDate, hours)
-      const minutes = differenceInMinutes(vDate, dNow)
-      if (minutes > 0) vDate = subMinutes(vDate, minutes)
-      const seconds = differenceInSeconds(vDate, dNow)
+      let currentEndDate = endDatetime
+      const dateNow = Date.now()
+      const years = differenceInYears(currentEndDate, dateNow)
+      if (years > 0) currentEndDate = subYears(currentEndDate, years)
+      const months = differenceInMonths(currentEndDate, dateNow)
+      if (months > 0) currentEndDate = subMonths(currentEndDate, months)
+      const days = differenceInDays(currentEndDate, dateNow)
+      if (days > 0) currentEndDate = subDays(currentEndDate, days)
+      const hours = differenceInHours(currentEndDate, dateNow)
+      if (hours > 0) currentEndDate = subHours(currentEndDate, hours)
+      const minutes = differenceInMinutes(currentEndDate, dateNow)
+      if (minutes > 0) currentEndDate = subMinutes(currentEndDate, minutes)
+      const seconds = differenceInSeconds(currentEndDate, dateNow)
 
       setResult({
         units: {
@@ -94,11 +94,11 @@ export const useCountdown = (endDate: string | undefined): TimerResults => {
 
     getCountdown()
 
-    const interval = setInterval(() => {
-      getCountdown(interval)
-    }, cd)
+    const countdownInterval = setInterval(() => {
+      getCountdown(countdownInterval)
+    }, interval)
 
-    return () => clearInterval(interval)
+    return () => clearInterval(countdownInterval)
   }, [endDate])
 
   return result
