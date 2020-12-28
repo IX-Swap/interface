@@ -13,8 +13,9 @@ import ChevronRightIcon from '@material-ui/icons/ChevronRight'
 import useMediaQuery from '@material-ui/core/useMediaQuery'
 import classNames from 'classnames'
 import useStyles from './DSOCarousel.styles'
+import { CurrentSlideWatcher } from 'app/components/DSO/components/DSOCarousel/CurrentSlideWatcher'
+import { useQueryFilter } from 'hooks/filters/useQueryFilter'
 import 'pure-react-carousel/dist/react-carousel.es.css'
-
 export interface DSOCarouselProps {
   totalSlides: number
 }
@@ -22,6 +23,7 @@ export interface DSOCarouselProps {
 export const DSOCarousel = (props: any) => {
   const classes = useStyles()
   const theme = useTheme()
+  const { getFilterValue } = useQueryFilter()
 
   const isMobile = useMediaQuery(theme.breakpoints.down('md'))
   const slidesCount = isMobile ? 1 : 2
@@ -40,6 +42,7 @@ export const DSOCarousel = (props: any) => {
         totalSlides={totalSlides}
         step={slidesCount}
         isIntrinsicHeight
+        currentSlide={parseInt(getFilterValue('currentSlide') ?? '0')}
       >
         <Box className={classes.sliderWrapper}>
           <Slider>{children}</Slider>
@@ -52,6 +55,7 @@ export const DSOCarousel = (props: any) => {
           </ButtonNext>
         </Box>
         <DotGroup className={classes.dotGroup} />
+        <CurrentSlideWatcher />
       </CarouselProvider>
     </div>
   )
