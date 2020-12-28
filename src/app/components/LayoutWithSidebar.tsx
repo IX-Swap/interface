@@ -1,5 +1,5 @@
 import React, { ComponentType, createElement, memo } from 'react'
-import { Container, Grid } from '@material-ui/core'
+import { Grid } from '@material-ui/core'
 import { useStyles } from 'app/components/LayoutWithSidebar.styles'
 import { privateClassNames } from 'helpers/classnames'
 import { PageHeader } from 'app/components/PageHeader/PageHeader'
@@ -31,28 +31,26 @@ export const LayoutWithSidebar = memo(
       : classes.container
 
     return (
-      <Grid container direction='column' className={containerClass}>
-        <Grid item className={classes.header}>
-          <Container>
+      <RootContainer className={containerClass}>
+        <Grid container direction='column'>
+          <Grid item className={classes.header}>
             <PageHeader />
-          </Container>
-        </Grid>
-        <Grid item container className={classes.wrapper}>
-          {isTablet && (
-            <Grid item>
-              <SidebarToggle render={sidebarToggle} />
-            </Grid>
-          )}
-          {showSidebar && (
-            <Grid item>
-              <SidebarWrapper>{createElement(sidebar)}</SidebarWrapper>
-            </Grid>
-          )}
-          <Grid className={classes.content}>
-            <RootContainer>{createElement(content)}</RootContainer>
+          </Grid>
+          <Grid item container className={classes.wrapper}>
+            {isTablet && (
+              <Grid item>
+                <SidebarToggle render={sidebarToggle} />
+              </Grid>
+            )}
+            {showSidebar && (
+              <Grid item>
+                <SidebarWrapper>{createElement(sidebar)}</SidebarWrapper>
+              </Grid>
+            )}
+            <Grid className={classes.content}>{createElement(content)}</Grid>
           </Grid>
         </Grid>
-      </Grid>
+      </RootContainer>
     )
   },
   () => true

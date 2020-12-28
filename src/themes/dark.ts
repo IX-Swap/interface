@@ -1,64 +1,29 @@
 import { ThemeOptions } from '@material-ui/core'
+import { themeColors } from 'themes/colors'
 import tinycolor from 'tinycolor2'
 
-export const themeColors = {
-  primary: '#0c469c',
-  secondary: '#1C4F79',
-  warning: '#a31037',
-  success: '#34A87B',
-  info: '#4A62D9',
-  error: '#D20000'
-}
-
-const lightenRate = 7.5
-const darkenRate = 15
 export const darkTheme: ThemeOptions = {
   palette: {
+    type: 'dark',
     primary: {
       main: themeColors.primary,
-      light: tinycolor(themeColors.primary).lighten(lightenRate).toHexString(),
-      dark: tinycolor(themeColors.primary).darken(darkenRate).toHexString()
+      light: tinycolor(themeColors.primary).lighten(25).toHexString(),
+      dark: tinycolor(themeColors.primary).darken(10).toHexString()
     },
     secondary: {
-      main: themeColors.secondary,
-      light: tinycolor(themeColors.secondary)
-        .lighten(lightenRate)
-        .toHexString(),
-      dark: tinycolor(themeColors.secondary).darken(darkenRate).toHexString(),
-      contrastText: '#FFFFFF'
-    },
-    warning: {
-      main: themeColors.warning,
-      light: tinycolor(themeColors.warning).lighten(lightenRate).toHexString(),
-      dark: tinycolor(themeColors.warning).darken(darkenRate).toHexString()
-    },
-    error: {
-      main: themeColors.error
-    },
-    success: {
-      main: themeColors.success,
-      light: tinycolor(themeColors.success).lighten(lightenRate).toHexString(),
-      dark: tinycolor(themeColors.success).darken(darkenRate).toHexString()
-    },
-    info: {
-      main: themeColors.info,
-      light: tinycolor(themeColors.info).lighten(lightenRate).toHexString(),
-      dark: tinycolor(themeColors.info).darken(darkenRate).toHexString()
-    },
-    text: {
-      primary: '#4A4A4A',
-      secondary: '#6E6E6E',
-      hint: '#B9B9B9'
+      main: themeColors.secondary
     },
     background: {
-      default: '#222',
-      paper: '#333'
+      default: tinycolor(themeColors.primary).darken(15).toHexString(),
+      paper: tinycolor(themeColors.primary).darken(15).toHexString()
     },
     backgrounds: {
-      main: '#333',
-      secondary: '#555'
+      main: tinycolor(themeColors.primary).darken(15).toHexString(),
+      secondary: tinycolor(themeColors.primary).darken(17).toHexString()
+    },
+    sidebar: {
+      activeBackground: tinycolor(themeColors.primary).darken(20).toHexString(),
+      activeColor: '#ffffff'
     }
   }
 }
-
-export default darkTheme

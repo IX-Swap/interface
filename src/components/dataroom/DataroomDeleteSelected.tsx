@@ -1,7 +1,7 @@
 import React from 'react'
 import { useSelectionHelperContext } from 'components/SelectionHelper'
 import { Button } from '@material-ui/core'
-import { themeColors } from 'themes/light'
+import { themeColors } from 'themes/colors'
 import { useDeleteFilesArray } from 'hooks/useDeleteFilesArray'
 import { SelectedDocument } from 'app/pages/accounts/pages/banks/components/BankDocuments'
 

@@ -4,50 +4,38 @@ import { StatusFilterItem } from 'app/pages/authorizer/components/StatusFilterIt
 
 describe('StatusFilterItem', () => {
   const selectedClass = 'Mui-selected'
-  const children = <span data-testid='child' />
   const props = {
     isSelected: false,
     title: 'Approve',
+    icon: () => <div />,
     onClick: jest.fn()
   }
 
   afterEach(cleanup)
 
   it('renders with correct props', async () => {
-    const { getByText, getByTestId } = render(
-      <StatusFilterItem {...props}>{children}</StatusFilterItem>
-    )
-    const child = getByTestId('child')
+    const { getByText } = render(<StatusFilterItem {...props} />)
     const title = getByText(props.title)
 
-    expect(child).toBeTruthy()
     expect(title).toBeTruthy()
   })
 
   it('renders without selected class if item is not selected', async () => {
-    const { getByRole } = render(
-      <StatusFilterItem {...props}>{children}</StatusFilterItem>
-    )
+    const { getByRole } = render(<StatusFilterItem {...props} />)
     const item = getByRole('button')
 
     expect(item).not.toHaveClass(selectedClass)
   })
 
   it('renders with selected class if item is selected', async () => {
-    const { getByRole } = render(
-      <StatusFilterItem {...props} isSelected={true}>
-        {children}
-      </StatusFilterItem>
-    )
+    const { getByRole } = render(<StatusFilterItem {...props} isSelected />)
     const item = getByRole('button')
 
     expect(item).toHaveClass(selectedClass)
   })
 
   it('fires onClick callback when clicked', async () => {
-    const { getByRole } = render(
-      <StatusFilterItem {...props}>{children}</StatusFilterItem>
-    )
+    const { getByRole } = render(<StatusFilterItem {...props} />)
     const item = getByRole('button')
 
     fireEvent.click(item)

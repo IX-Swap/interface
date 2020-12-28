@@ -1,5 +1,5 @@
-import { themeColors } from 'themes/light'
-import { makeStyles } from '@material-ui/styles'
+import { themeColors } from 'themes/colors'
+import { makeStyles } from '@material-ui/core/styles'
 
 export const useStyles = makeStyles((theme: any) => ({
   authStatus: {

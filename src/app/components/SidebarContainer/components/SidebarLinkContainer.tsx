@@ -18,7 +18,9 @@ export const SidebarLinkContainer = (props: SidebarLinkProps) => {
   const isActive = pathname.startsWith(link)
   const { setNavDrawerOpened } = useAppActions()
   const { isTablet, theme } = useAppBreakpoints()
-  const color = isActive ? theme.palette.primary.main : theme.palette.grey[400]
+  const color = isActive
+    ? theme.palette.sidebar.activeColor
+    : theme.palette.grey[400]
 
   const closeDrawer = () => {
     if (isTablet) {

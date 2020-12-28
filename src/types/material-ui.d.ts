@@ -1,3 +1,4 @@
+import * as createPalette from '@material-ui/core/styles/createPalette' // eslint-disable-line
 import { CSSProperties } from '@material-ui/styles'
 
 declare module '@material-ui/core/styles/createPalette' {
@@ -6,12 +7,20 @@ declare module '@material-ui/core/styles/createPalette' {
       main: CSSProperties['color']
       secondary: CSSProperties['color']
     }
+    sidebar: {
+      activeColor: CSSProperties['color']
+      activeBackground: CSSProperties['color']
+    }
   }
 
   export interface Palette {
     backgrounds: {
       main: CSSProperties['color']
       secondary: CSSProperties['color']
+    }
+    sidebar: {
+      activeColor: CSSProperties['color']
+      activeBackground: CSSProperties['color']
     }
   }
 
