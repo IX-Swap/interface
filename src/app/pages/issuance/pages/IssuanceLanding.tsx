@@ -84,7 +84,7 @@ export const IssuanceLanding = () => {
           <Grid container direction='row' justify='space-between' spacing={4}>
             <Grid item xs={6}>
               <Card variant='outlined' style={{ height: '100%' }}>
-                <CommitmentStatsChart data={undefined} isLoading={false} />
+                <CommitmentStatsChart />
               </Card>
             </Grid>
             <Grid item xs={6}>
