@@ -1,6 +1,6 @@
 import { useServices } from 'hooks/useServices'
 import { useEffect, useMemo, useState } from 'react'
-import { queryCache } from 'react-query'
+import { useQueryCache } from 'react-query'
 import { queryKeys } from 'config/queryKeys'
 
 export interface DeployTokenMessage {
@@ -13,6 +13,7 @@ export const useDeployToken = (tokenId: string) => {
   const socket = useMemo(() => socketService.socket, [socketService.socket])
   const [isInitializing, setIsInitializing] = useState(true)
   const [isDeploying, setIsDeploying] = useState(false)
+  const queryCache = useQueryCache()
 
   const onMessageReceived = (message: DeployTokenMessage) => {
     if (isInitializing) {

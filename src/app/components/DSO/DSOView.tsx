@@ -2,7 +2,6 @@ import React from 'react'
 import { DigitalSecurityOffering } from 'types/dso'
 import { DSOContainer } from 'app/components/DSO/components/DSOContainer'
 import {
-  Box,
   Grid,
   Table,
   TableBody,
