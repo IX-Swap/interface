@@ -23,6 +23,7 @@ export const Activities = () => {
         uri={url}
         name={investQueryKeys.getCommitmentsByUserId(userId)}
         columns={columns}
+        paperProps={{ variant: 'outlined', elevation: 0 }}
       />
     </ChartWrapper>
   )

@@ -5,6 +5,7 @@ import { useMemo } from 'react'
 import { darkTheme } from 'themes/dark'
 import { lightTheme } from 'themes/light'
 import { getThemeOverrides } from 'themes/overrides'
+import { rte } from 'themes/rte'
 import { typography } from 'themes/typography'
 
 export const useAppTheme = () => {
