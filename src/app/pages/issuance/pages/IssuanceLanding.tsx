@@ -72,7 +72,7 @@ export const IssuanceLanding = () => {
           >
             <Grid item xs={8}>
               <Card variant='outlined' style={{ height: '100%' }}>
-                <InvestmentGrowthChart data={undefined} isLoading={false} />
+                <InvestmentGrowthChart />
               </Card>
             </Grid>
             <Grid item xs={4}>

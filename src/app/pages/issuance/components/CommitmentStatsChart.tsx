@@ -40,7 +40,10 @@ export const CommitmentStatsChart = () => {
     hAxis: {
       format: 'E',
       ticks: dateTicks,
-      baselineColor: 'transparent'
+      baselineColor: 'transparent',
+      gridlines: {
+        color: gridColor
+      }
     },
     vAxis: {
       textPosition: 'none',
@@ -50,7 +53,9 @@ export const CommitmentStatsChart = () => {
         count: 3
       },
       baselineColor: gridColor
-    }
+    },
+    backgroundColor: 'transparent',
+    enableInteractivity: hasData
   }
 
   return (
@@ -62,6 +67,7 @@ export const CommitmentStatsChart = () => {
           chartType={'ColumnChart'}
           data={prepareChartData(hasData ? data : noData)}
           options={options}
+          height={250}
         />
       )}
     </ChartWrapper>
