@@ -11,7 +11,7 @@ export const ChartTitle = (props: ChartTitleProps) => {
   return (
     <Typography
       color={small ? 'textSecondary' : 'textPrimary'}
-      variant={small ? 'body1' : 'h5'}
+      variant={small ? 'subtitle2' : 'subtitle1'}
     >
       {title}
     </Typography>

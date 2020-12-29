@@ -11,7 +11,7 @@ import { DSOList } from './pages/DSOList'
 export const IssuanceRoute = {
   list: makeURL(['app', 'issuance', 'offerings']),
   view: makeURL(['app', 'issuance', 'offerings', 'dsoId', 'view']),
-  insight: makeURL(['app', 'issuance', 'offerings', 'dsoId']),
+  insight: makeURL(['app', 'issuance', 'offerings', 'dsoId', 'overview']),
   deployToken: makeURL([
     'app',
     'issuance',
@@ -51,7 +51,8 @@ export const issuanceRoutes: InternalRouteProps[] = [
   {
     label: 'Insight',
     path: IssuanceRoute.insight,
-    component: IssuanceLanding
+    component: IssuanceLanding,
+    exact: true
   },
   {
     label: 'My DSOs',

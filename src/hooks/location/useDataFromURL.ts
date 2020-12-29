@@ -81,8 +81,8 @@ export const useDataFromURL = () => {
           break
         }
 
-        default:
-          return state // throws error
+        default: {
+        }
       }
     }
 

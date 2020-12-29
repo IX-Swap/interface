@@ -78,7 +78,7 @@ export const TableView = <T,>({
     <Grid container direction='column'>
       <Grid item>
         {status === 'loading' && <LinearProgress />}
-        <Paper {...paperProps}>
+        <Paper variant='outlined' {...paperProps}>
           <TableContainer>
             <Table aria-label='table' data-testid='table'>
               {columns.length > 0 ? (

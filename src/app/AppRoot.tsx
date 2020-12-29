@@ -8,9 +8,13 @@ import { useDataFromURL } from 'hooks/location/useDataFromURL'
 import { AppStateProvider } from 'app/hooks/useAppState'
 import { SidebarContainer } from 'app/components/SidebarContainer/SidebarContainer'
 import { AppContentWrapper } from 'ui/AppContentWrapper'
+import { useLocation } from 'react-router-dom'
 
 export const AppRoot: React.FC = () => {
   const { renderRoutes } = useAppRouter()
+  const location = useLocation()
+  const isDSOOverview = location.pathname.includes('overview') // this is very bad solution to the problem, I'll do some refactoring so we can avoid this kind of hacking
+  const backgroundColor = isDSOOverview ? '#fafafa' : '#ffffff'
 
   useDataFromURL()
 
@@ -22,7 +26,7 @@ export const AppRoot: React.FC = () => {
             <Header />
           </Grid>
           <SidebarContainer />
-          <AppContentWrapper item container>
+          <AppContentWrapper item container style={{ backgroundColor }}>
             {renderRoutes()}
           </AppContentWrapper>
         </Grid>

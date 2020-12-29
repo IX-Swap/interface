@@ -27,10 +27,11 @@ export const typography = {
     textTransform: 'uppercase' as const
   },
   subtitle1: {
-    fontWeight: 700
+    fontSize: '1rem',
+    fontWeight: 500
   },
   subtitle2: {
-    fontSize: '0.88rem',
-    fontWeight: 500
+    fontSize: '0.875rem',
+    fontWeight: 400
   }
 }

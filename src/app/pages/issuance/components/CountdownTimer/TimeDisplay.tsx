@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { Fragment } from 'react'
 import { Box, Typography, Grid } from '@material-ui/core'
 import { TimeUnit } from 'app/pages/issuance/components/CountdownTimer/TimeUnit'
 import { UnitMap } from 'app/pages/issuance/hooks/useCountdown'
@@ -13,16 +13,16 @@ export const TimeDisplay: React.FC<TimeDisplayProps> = ({
   units
 }: TimeDisplayProps) => {
   return (
-    <Grid container alignItems='flex-start' justify='space-between'>
+    <Grid container alignItems='flex-start' justify='center'>
       {unitsToDisplay.map((unit, i) => (
-        <>
+        <Fragment key={i}>
           <TimeUnit time={units[unit]} label={unit} />
           {i < unitsToDisplay.length - 1 ? (
             <Box>
               <Typography variant='h3'>:</Typography>
             </Box>
           ) : null}
-        </>
+        </Fragment>
       ))}
     </Grid>
   )
