@@ -15,7 +15,8 @@ export interface SidebarLinkProps {
 export const SidebarLinkContainer = (props: SidebarLinkProps) => {
   const { link, icon, label } = props
   const { pathname } = useLocation()
-  const isActive = pathname.startsWith(link)
+  const baseLink = link.split('/').slice(0, 3).join('/')
+  const isActive = pathname.startsWith(baseLink)
   const { setNavDrawerOpened } = useAppActions()
   const { isTablet, theme } = useAppBreakpoints()
   const color = isActive
