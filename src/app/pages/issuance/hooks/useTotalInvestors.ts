@@ -1,9 +1,8 @@
 import { useQuery } from 'react-query'
-import { useServices } from 'hooks/useServices'
 import { issuanceQueryKeys } from 'config/queryKeys'
-import { useIssuanceRouter } from 'app/pages/issuance/router'
 import { UseQueryData } from 'hooks/useParsedData'
 import { issuanceURL } from 'config/apiURL'
+import { useIssuanceQuery } from 'app/pages/issuance/hooks/useIssuanceQuery'
 
 export interface TotalInvestors {
   total: number
@@ -11,15 +10,15 @@ export interface TotalInvestors {
 }
 
 export const useTotalInvestors = (): UseQueryData<TotalInvestors> => {
-  const { apiService } = useServices()
-  const { params } = useIssuanceRouter()
-  const url = issuanceURL.dso.totalInvestors(params.dsoId)
+  const { apiService, dsoId, queryEnabled } = useIssuanceQuery()
+  const url = issuanceURL.dso.totalInvestors(dsoId)
 
   const fetchTotalInvestors = async () =>
     await apiService.get<TotalInvestors>(url)
   const { data, ...rest } = useQuery(
-    [issuanceQueryKeys.totalInvestors(params.dsoId)],
-    fetchTotalInvestors
+    [issuanceQueryKeys.totalInvestors(dsoId)],
+    fetchTotalInvestors,
+    { enabled: queryEnabled }
   )
 
   return {

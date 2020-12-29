@@ -27,6 +27,7 @@ export interface TableViewRendererProps<T> {
 export interface TableViewProps<T> {
   name: string
   uri: string
+  queryEnabled?: boolean
   columns: Array<TableColumn<T>>
   bordered?: boolean
   filter?: BaseFilter
@@ -42,6 +43,7 @@ export const TableView = <T,>({
   name,
   uri,
   filter,
+  queryEnabled = true,
   columns: columnsProp = [],
   hasActions = false,
   hasStatus = false,
@@ -59,7 +61,7 @@ export const TableView = <T,>({
     setRowsPerPage,
     rowsPerPage,
     total
-  } = useTableWithPagination<T>(name, uri, filter)
+  } = useTableWithPagination<T>(name, uri, filter, queryEnabled)
   const cacheQueryKey = [name, page, rowsPerPage, filter]
 
   if (innerRef !== undefined) {

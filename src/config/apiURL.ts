@@ -97,7 +97,9 @@ export const issuanceURL = {
     getByUserId: (userId: string) => `/issuance/dso/list/${userId}`,
     update: (userId: string, dsoId: string) =>
       `/issuance/dso/${userId}/${dsoId}`,
-    getCapitalStructureList: '/issuance/capital-structures'
+    getCapitalStructureList: '/issuance/capital-structures',
+    getAllActivities: (userId: string, dsoId: string) =>
+      `/issuance/dso/${userId}/${dsoId}/activities/list`
   }
 }
 

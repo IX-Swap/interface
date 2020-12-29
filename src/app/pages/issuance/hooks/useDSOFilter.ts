@@ -2,8 +2,7 @@ import { useEffect } from 'react'
 import { useDSOsByUserId } from 'app/pages/issuance/hooks/useDSOsByUserId'
 import { useIssuanceRouter } from 'app/pages/issuance/router'
 import { hasValue } from 'helpers/forms'
-
-const isValidId = (dsoId: any) => hasValue(dsoId) && dsoId !== ':dsoId'
+import { isValidDSOId } from 'helpers/isValidDSOId'
 
 export const useDSOFilter = () => {
   const {
@@ -13,7 +12,7 @@ export const useDSOFilter = () => {
   const { data, ...rest } = useDSOsByUserId()
 
   useEffect(() => {
-    if (!isValidId(dsoId) && data.list.length > 0) {
+    if (!isValidDSOId(dsoId) && data.list.length > 0) {
       replace('insight', { dsoId: data.list[0]._id })
     }
   }, [dsoId, data.list, replace])
@@ -24,7 +23,7 @@ export const useDSOFilter = () => {
     }
   }
 
-  const selected = isValidId(dsoId) ? dsoId : null
+  const selected = isValidDSOId(dsoId) ? dsoId : null
 
   return {
     data,

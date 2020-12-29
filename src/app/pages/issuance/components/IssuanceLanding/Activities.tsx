@@ -8,13 +8,15 @@ import { getIdFromObj } from 'helpers/strings'
 import { investQueryKeys } from 'config/queryKeys'
 import { useIssuanceRouter } from '../../router'
 import { DSOActivity } from 'types/dso'
+import { issuanceURL } from 'config/apiURL'
+import { isValidDSOId } from 'helpers/isValidDSOId'
 
 export const Activities = () => {
   // TODO: fix switching dso bug
   const { user } = useAuth()
   const userId = getIdFromObj(user)
   const { params } = useIssuanceRouter()
-  const url = `/issuance/dso/${userId}/${params.dsoId}/activities/list`
+  const url = issuanceURL.dso.getAllActivities(userId, params.dsoId)
 
   return (
     <ChartWrapper title='Activities'>
@@ -23,6 +25,7 @@ export const Activities = () => {
         uri={url}
         name={investQueryKeys.getCommitmentsByUserId(userId)}
         columns={columns}
+        queryEnabled={isValidDSOId(params.dsoId)}
       />
     </ChartWrapper>
   )
