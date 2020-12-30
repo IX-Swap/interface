@@ -6,9 +6,7 @@ import { TypedField } from 'components/form/TypedField'
 import { DataroomUploader } from 'components/dataroom/DataroomUploader'
 import { DataroomAvatarUploader } from 'components/dataroom/DataroomAvatarUploader'
 import { documentValueExtractor } from 'app/components/DSO/utils'
-import { DatePicker } from 'components/form/DatePicker'
 import { CountrySelect } from 'components/form/CountrySelect'
-import { dateTimeValueExtractor } from 'helpers/forms'
 import { DataroomFileType } from 'config/dataroom'
 import { privateClassNames } from 'helpers/classnames'
 
@@ -17,7 +15,7 @@ export const CompanyInfoFields = () => {
 
   return (
     <Grid container spacing={3}>
-      <Grid item xs={12} sm={6} md={4}>
+      <Grid item xs={12}>
         {/* @ts-ignore */}
         <TypedField
           customRenderer
@@ -56,18 +54,6 @@ export const CompanyInfoFields = () => {
           control={control}
           name='countryOfFormation'
           label='Country of Formation'
-        />
-      </Grid>
-      <Grid item xs={12} sm={6} md={4}>
-        {/* @ts-ignore */}
-        <TypedField
-          className={privateClassNames()}
-          component={DatePicker}
-          customRenderer
-          valueExtractor={dateTimeValueExtractor}
-          control={control}
-          name='dateOfIncorporation'
-          label='Date of Incorporation'
         />
       </Grid>
       <Grid item xs={12} sm={6} md={4}>

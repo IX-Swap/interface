@@ -10,8 +10,6 @@ import { DatePicker } from 'components/form/DatePicker'
 import { dateTimeValueExtractor } from 'helpers/forms'
 import { NationalitySelect } from 'components/form/NationalitySelect'
 import { CountrySelect } from 'components/form/CountrySelect'
-import { GenderSelect } from 'components/form/GenderSelect'
-import { MaritalStatusSelect } from 'components/form/MaritalStatusSelect'
 import { useIndividualInfoDefaultEmail } from 'hooks/auth/useIndividualInfoDefaultEmail'
 import { DataroomFileType } from 'config/dataroom'
 import { privateClassNames } from 'helpers/classnames'
@@ -95,7 +93,7 @@ export const IndividualInfoFields = (
           component={NationalitySelect}
           control={control}
           name='nationality'
-          label='Nationality'
+          label='Citizenship'
         />
       </Grid>
       <Grid item xs={12} sm={6} md={4}>
@@ -126,24 +124,6 @@ export const IndividualInfoFields = (
           control={control}
           name='contactNumber'
           label='Contact Number'
-        />
-      </Grid>
-      <Grid item xs={12} sm={6} md={4}>
-        <TypedField
-          rootName={rootName}
-          component={GenderSelect}
-          control={control}
-          name='gender'
-          label='Gender'
-        />
-      </Grid>
-      <Grid item xs={12} sm={6} md={4}>
-        <TypedField
-          rootName={rootName}
-          component={MaritalStatusSelect}
-          control={control}
-          name='maritalStatus'
-          label='Marital Status'
         />
       </Grid>
     </Grid>

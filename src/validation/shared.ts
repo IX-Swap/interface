@@ -1,7 +1,6 @@
 import * as yup from 'yup'
 import { passwordValidator } from 'validation/validators'
-import { PersonalProfile, PersonalProfileWithAddress } from 'types/identity'
-import { MARITAL_STATUSES } from 'app/pages/identity/const'
+import { PersonalProfile } from 'types/identity'
 import { DataroomFile, FormArrayElement } from 'types/dataroomFile'
 import { Maybe } from 'types/util'
 import { AddressValues } from 'app/pages/accounts/types'
@@ -18,15 +17,7 @@ export const passwordSchema = yup
     passwordValidator
   )
 
-export const maritalStatusSchema = yup
-  .mixed()
-  .oneOf<PersonalProfileWithAddress['maritalStatus']>(MARITAL_STATUSES)
-
 export const dateSchema = yup.string().nullable()
-
-export const genderSchema = yup
-  .mixed()
-  .oneOf<PersonalProfileWithAddress['gender']>(['M', 'F'])
 
 export const documentsArraySchema = yup.array<
   FormArrayElement<Maybe<DataroomFile>>
@@ -47,8 +38,6 @@ export const personalProfileSchema = yup.object().shape<PersonalProfile>({
   middleName: yup.string(),
   lastName: yup.string().required('Required'),
   nationality: yup.string().required('Required'),
-  maritalStatus: maritalStatusSchema.required('Required'),
-  gender: genderSchema.required('Required'),
   dob: dateSchema.required('Required'),
   countryOfResidence: yup.string().required('Required'),
   contactNumber: yup.string().required('Required'),

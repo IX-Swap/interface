@@ -53,12 +53,6 @@ export const IndividualInfoView = (props: IndividualInfoViewProps) => {
           label='Contact Number'
         />
       </Grid>
-      <Grid item xs={12} sm={6} md={4}>
-        <LabelledValue value={data.gender} label='Gender' />
-      </Grid>
-      <Grid item xs={12} sm={6} md={4}>
-        <LabelledValue value={data.maritalStatus} label='Marital Status' />
-      </Grid>
     </Grid>
   )
 }

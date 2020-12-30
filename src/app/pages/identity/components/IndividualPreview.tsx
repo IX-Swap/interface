@@ -25,7 +25,7 @@ export const IndividualPreview: React.FC = () => {
   const name = `${data.firstName} ${data.lastName}`
 
   return (
-    <Grid container item>
+    <Grid container item direction='column'>
       <Grid item>
         <Typography variant='h4'>Individual</Typography>
       </Grid>
