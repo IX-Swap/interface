@@ -16,6 +16,7 @@ import { useSetPageTitle } from 'app/hooks/useSetPageTitle'
 import { useDSOById } from 'app/pages/invest/hooks/useDSOById'
 import { useIssuanceRouter } from 'app/pages/issuance/router'
 import { TargetFundraise } from '../components/IssuanceLanding/TargetFundraise'
+import { isValidDSOId } from 'helpers/isValidDSOId'
 
 export const IssuanceLanding = () => {
   const theme = useTheme()
@@ -25,17 +26,20 @@ export const IssuanceLanding = () => {
   } = useIssuanceRouter()
   const { data } = useDSOById(dsoId)
 
-  useSetPageTitle(data?.tokenName)
+  useSetPageTitle(data?.tokenName ?? 'Issuance')
 
   return (
     <Box ml={theme.spacing(0.5)}>
       <Grid container justify='space-between' spacing={8}>
         <Grid
           container
+          item
           xs={8}
           direction='column'
           spacing={0}
           style={{
+            paddingLeft: theme.spacing(0),
+            paddingRight: theme.spacing(0),
             paddingBottom: theme.spacing(4),
             paddingTop: theme.spacing(4)
           }}
@@ -100,7 +104,7 @@ export const IssuanceLanding = () => {
             component={Card}
             variant='outlined'
             style={{ height: '100%', padding: theme.spacing(4) }}
-            justify='flex-start'
+            justify={isValidDSOId(dsoId) ? 'flex-start' : 'center'}
             direction='column'
           >
             <DSOInfo />

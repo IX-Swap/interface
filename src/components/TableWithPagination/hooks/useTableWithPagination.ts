@@ -18,7 +18,8 @@ export interface UseTableWithPaginationReturnType<TData> {
 export const useTableWithPagination = <TData>(
   queryKey: string,
   uri: string,
-  defaultFilter: BaseFilter | undefined
+  defaultFilter: BaseFilter | undefined,
+  queryEnabled: boolean
 ): UseTableWithPaginationReturnType<TData> => {
   const queryCache = useQueryCache()
   const apiService = useAPIService()
@@ -45,7 +46,8 @@ export const useTableWithPagination = <TData>(
 
   const { data, status, fetchMore, isFetching } = useInfiniteQuery(
     [queryKey, page, rowsPerPage, filter],
-    fetcher
+    fetcher,
+    { enabled: queryEnabled }
   )
 
   const cached = queryCache.getQueryData<typeof data>([
