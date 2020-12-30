@@ -11,6 +11,7 @@ const useAccountsRouterMock = useAccountsRouter as jest.Mock<
 
 describe('AccountsRoot', () => {
   const renderRoutes = jest.fn(() => <div />)
+
   beforeEach(() => {
     useAccountsRouterMock.mockReturnValueOnce({ renderRoutes })
   })

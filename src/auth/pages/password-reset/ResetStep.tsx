@@ -1,4 +1,3 @@
-import useStyles from 'auth/styles'
 import React from 'react'
 import { CompletePasswordResetArgs } from 'types/auth'
 import { completePasswordResetValidationSchema } from 'validation/auth'
@@ -22,7 +21,6 @@ export const completePasswordResetInitialValues = {
 }
 
 export const ResetStep: React.FC = () => {
-  const classes = useStyles()
   const [completeReset] = useCompletePasswordReset()
   const { setCurrentStep, email, token, reset } = usePasswordResetStore()
 
@@ -50,21 +48,14 @@ export const ResetStep: React.FC = () => {
     >
       <Grid container direction='column' spacing={2}>
         <ResetFields />
-        <Grid item>
-          <div className={classes.formButtons}>
-            <Button
-              color='primary'
-              size='large'
-              className={classes.forgetButton}
-              onClick={goBack}
-            >
-              Back
-            </Button>
+        <Grid item container justify='space-between' alignItems='center'>
+          <Button color='primary' size='large' onClick={goBack}>
+            Back
+          </Button>
 
-            <Submit variant='contained' color='primary'>
-              Complete
-            </Submit>
-          </div>
+          <Submit variant='contained' color='primary' size='large'>
+            Complete
+          </Submit>
         </Grid>
       </Grid>
     </Form>

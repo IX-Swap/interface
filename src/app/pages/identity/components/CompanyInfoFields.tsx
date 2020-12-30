@@ -6,9 +6,7 @@ import { TypedField } from 'components/form/TypedField'
 import { DataroomUploader } from 'components/dataroom/DataroomUploader'
 import { DataroomAvatarUploader } from 'components/dataroom/DataroomAvatarUploader'
 import { documentValueExtractor } from 'app/components/DSO/utils'
-import { DatePicker } from 'components/form/DatePicker'
 import { CountrySelect } from 'components/form/CountrySelect'
-import { dateTimeValueExtractor } from 'helpers/forms'
 import { DataroomFileType } from 'config/dataroom'
 import { privateClassNames } from 'helpers/classnames'
 
@@ -33,7 +31,7 @@ export const CompanyInfoFields = () => {
           }}
         />
       </Grid>
-      <Grid item xs={4}>
+      <Grid item xs={12} sm={6} md={4}>
         <TypedField
           component={Input}
           control={control}
@@ -41,7 +39,7 @@ export const CompanyInfoFields = () => {
           label='Company Name'
         />
       </Grid>
-      <Grid item xs={4}>
+      <Grid item xs={12} sm={6} md={4}>
         <TypedField
           className={privateClassNames()}
           component={Input}
@@ -50,7 +48,7 @@ export const CompanyInfoFields = () => {
           label='Company Registration Number'
         />
       </Grid>
-      <Grid item xs={4}>
+      <Grid item xs={12} sm={6} md={4}>
         <TypedField
           component={CountrySelect}
           control={control}
@@ -58,19 +56,7 @@ export const CompanyInfoFields = () => {
           label='Country of Formation'
         />
       </Grid>
-      <Grid item xs={4}>
-        {/* @ts-ignore */}
-        <TypedField
-          className={privateClassNames()}
-          component={DatePicker}
-          customRenderer
-          valueExtractor={dateTimeValueExtractor}
-          control={control}
-          name='dateOfIncorporation'
-          label='Date of Incorporation'
-        />
-      </Grid>
-      <Grid item xs={4}>
+      <Grid item xs={12} sm={6} md={4}>
         <TypedField
           component={Input}
           control={control}
@@ -78,7 +64,7 @@ export const CompanyInfoFields = () => {
           label='Email Address'
         />
       </Grid>
-      <Grid item xs={4}>
+      <Grid item xs={12} sm={6} md={4}>
         <TypedField
           className={privateClassNames()}
           component={Input}

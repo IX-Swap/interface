@@ -31,7 +31,10 @@ export const useCreateOrUpdateIndividual = () => {
     const { userId, ...identity } = args
     const uri = identityURL.individuals.update(userId)
 
-    return await apiService.put<IndividualIdentity>(uri, identity)
+    return await apiService.put<IndividualIdentity>(uri, {
+      ...identity,
+      gender: 'O' // TODO: remove once backend is updated
+    })
   }
 
   return useMutation(createOrUpdateIndividual, {

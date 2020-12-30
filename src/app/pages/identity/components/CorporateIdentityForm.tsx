@@ -48,7 +48,7 @@ export const CorporateIdentityForm = (
           </Section>
         </Grid>
         <CorporateProfilesFields
-          title='Company Representative'
+          title='Company Authorized Personnel'
           type='representatives'
         />
         <CorporateProfilesFields title='Company Director' type='directors' />

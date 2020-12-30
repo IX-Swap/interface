@@ -1,15 +1,17 @@
 import { InternalRouteProps } from 'types/util'
-import { DSOList } from 'app/pages/issuance/pages/DSOList'
+import { IssuanceLanding } from 'app/pages/issuance/pages/IssuanceLanding'
 import { ViewDSO } from 'app/pages/issuance/pages/ViewDSO'
 import { CreateDSO } from 'app/pages/issuance/pages/CreateDSO'
 import { EditDSO } from 'app/pages/issuance/pages/EditDSO'
 import { generateAppRouterHook } from 'helpers/generateAppRouterHook'
 import { makeURL } from 'config/appURL'
 import { DeployToken } from 'app/pages/issuance/pages/DeployToken'
+import { DSOList } from './pages/DSOList'
 
 export const IssuanceRoute = {
   list: makeURL(['app', 'issuance', 'offerings']),
   view: makeURL(['app', 'issuance', 'offerings', 'dsoId', 'view']),
+  insight: makeURL(['app', 'issuance', 'offerings', 'dsoId', 'overview']),
   deployToken: makeURL([
     'app',
     'issuance',
@@ -47,7 +49,13 @@ export const issuanceRoutes: InternalRouteProps[] = [
     component: DeployToken
   },
   {
-    label: 'Issuance',
+    label: 'Insight',
+    path: IssuanceRoute.insight,
+    component: IssuanceLanding,
+    exact: true
+  },
+  {
+    label: 'My DSOs',
     path: IssuanceRoute.list,
     exact: true,
     component: DSOList
@@ -56,6 +64,6 @@ export const issuanceRoutes: InternalRouteProps[] = [
 
 export const useIssuanceRouter = generateAppRouterHook(
   IssuanceRoute,
-  IssuanceRoute.list,
+  IssuanceRoute.insight,
   issuanceRoutes
 )

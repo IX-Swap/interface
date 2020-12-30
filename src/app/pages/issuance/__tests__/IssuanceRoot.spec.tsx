@@ -15,6 +15,7 @@ const useIssuanceRouterMock = useIssuanceRouter as jest.Mock<
 
 describe('IssuanceRoot', () => {
   const renderRoutes = jest.fn(() => <div />)
+
   beforeEach(() => {
     useIssuanceRouterMock.mockReturnValueOnce({ renderRoutes })
   })

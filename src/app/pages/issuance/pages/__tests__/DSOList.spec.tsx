@@ -3,10 +3,10 @@ import { render, cleanup } from 'test-utils'
 import { DSOList } from 'app/pages/issuance/pages/DSOList'
 import { AppRouterLinkComponent } from 'components/AppRouterLink'
 import { IssuanceRoute } from 'app/pages/issuance/router'
-import { DSOList as DSOListComponent } from 'app/components/DSO/components/DSOList'
+import { MyDSOsTable } from '../../components/MyDSOsTable'
 
-jest.mock('app/components/DSO/components/DSOList', () => ({
-  DSOList: jest.fn(() => null)
+jest.mock('app/pages/issuance/components/MyDSOsTable', () => ({
+  MyDSOsTable: jest.fn(() => null)
 }))
 
 jest.mock('components/AppRouterLink', () => ({
@@ -35,13 +35,9 @@ describe('DSOList', () => {
     )
   })
 
-  it('renders DSOListComponent with correct props', () => {
+  it('renders MyDSOsTable', () => {
     render(<DSOList />)
 
-    expect(DSOListComponent).toHaveBeenCalled()
-    expect(DSOListComponent).toHaveBeenCalledWith(
-      { all: false, viewURL: IssuanceRoute.view },
-      {}
-    )
+    expect(MyDSOsTable).toHaveBeenCalled()
   })
 })

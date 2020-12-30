@@ -1,7 +1,8 @@
 import React from 'react'
-import { Button, Typography } from '@material-ui/core'
+import { IconButton, Tooltip, Typography } from '@material-ui/core'
 import { useDownloadRawDocument } from 'hooks/useDownloadRawDocument'
 import { convertBlobToFile, openFileInNewTab } from 'hooks/utils'
+import { CloudDownload } from '@material-ui/icons'
 
 export interface DownloadDocumentRendererProps {
   download: () => any
@@ -36,13 +37,10 @@ export const DownloadDocument: React.FC<DownloadDocumentProps> = props => {
   }
 
   return (
-    <Button
-      size='small'
-      variant='outlined'
-      onClick={handleClick}
-      disabled={isLoading}
-    >
-      {isLoading ? 'Downloading...' : 'Download'}
-    </Button>
+    <Tooltip title='Download File'>
+      <IconButton onClick={handleClick} disabled={isLoading}>
+        <CloudDownload />
+      </IconButton>
+    </Tooltip>
   )
 }

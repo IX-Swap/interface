@@ -1,6 +1,9 @@
 import React from 'react'
 import { render, cleanup } from 'test-utils'
-import { renderCommitmentMoney, renderCommitmentAvatar } from '../columns'
+import {
+  renderCommitmentMoney,
+  renderCommitmentAvatar
+} from 'helpers/rendering'
 import { commitment } from '__fixtures__/authorizer'
 import { DSOLogo } from 'app/components/DSO/components/DSOLogo'
 

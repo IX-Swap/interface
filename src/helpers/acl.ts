@@ -1,4 +1,4 @@
-import { includes } from 'lodash'
+import includes from 'lodash/includes'
 import { useCachedUser } from 'hooks/auth/useCachedUser'
 
 export enum AppRole {

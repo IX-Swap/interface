@@ -38,14 +38,9 @@ export const UserDropdownItem = (props: UserDropdownItemProps) => {
       onClick={handleClick}
       to={link}
     >
-      <ListItemIcon
-        className={classes.iconWrapper}
-        style={{ color: 'inherit' }}
-      >
-        {iconElement}
-      </ListItemIcon>
+      <ListItemIcon className={classes.iconWrapper}>{iconElement}</ListItemIcon>
       <ListItemText>
-        <Typography>{label}</Typography>
+        <Typography color='textSecondary'>{label}</Typography>
       </ListItemText>
     </MenuItem>
   )

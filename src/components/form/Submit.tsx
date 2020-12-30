@@ -9,12 +9,12 @@ export const Submit: React.FC<ButtonProps> = props => {
 
   return (
     <Button
-      {...rest}
       disableElevation
       variant={variant}
       color={color}
       disabled={!isDirty || isSubmitting}
       type='submit'
+      {...rest}
     >
       {children}
     </Button>

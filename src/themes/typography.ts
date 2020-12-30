@@ -1,6 +1,4 @@
-import { TypographyOptions } from '@material-ui/core/styles/createTypography'
-
-export const typography: TypographyOptions = {
+export const typography = {
   fontFamily: '"Bai Jamjuree", "Helvetica Neue", sans-serif !important',
   fontSize: 12,
   h1: {
@@ -26,13 +24,14 @@ export const typography: TypographyOptions = {
   h6: {
     fontSize: '1rem',
     fontWeight: 600,
-    color: '#999999',
     textTransform: 'uppercase' as const
   },
   subtitle1: {
-    fontWeight: 700
+    fontSize: '1rem',
+    fontWeight: 500
   },
   subtitle2: {
-    fontWeight: 700
+    fontSize: '0.875rem',
+    fontWeight: 400
   }
 }

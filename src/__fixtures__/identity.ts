@@ -19,9 +19,8 @@ export const corporate: CorporateIdentity = {
   beneficialOwners: [],
   companyAddress: address,
   companyLegalName: 'InvestaX',
-  countryOfFormation: 'Singapore',
-  dateOfIncorporation: '01-01-2000',
   directors: [],
+  countryOfFormation: 'Russian Federation',
   registrationNumber: '123456',
   representatives: [
     {
@@ -29,9 +28,7 @@ export const corporate: CorporateIdentity = {
       countryOfResidence: 'Singapore',
       dob: '2020-12-12',
       firstName: 'John',
-      gender: 'M',
       lastName: 'Doe',
-      maritalStatus: 'single',
       nationality: 'S'
     }
   ],
@@ -48,9 +45,6 @@ export const individual: IndividualIdentity = {
   _id: '1',
   email: 'email@example.com',
   annualIncome: '100000',
-  bankAccountName: '',
-  bankAccountNumber: '',
-  bankName: '',
   contactNumber: '1234567890',
   createdAt: '01-01-2000',
   updatedAt: '01-01-2000',
@@ -60,10 +54,6 @@ export const individual: IndividualIdentity = {
   employmentStatus: 'Employed',
   firstName: 'John',
   lastName: 'Doe',
-  gender: 'M',
-  houseHoldIncome: '100000',
-  industryOfEmployment: 'IT',
-  maritalStatus: 'Married',
   middleName: '',
   nationality: 'Russian',
   occupation: 'Occupied',

@@ -4,7 +4,6 @@ import { columns } from 'app/pages/accounts/pages/digitalSecurities/DSDeposit/co
 import { useDSRouter } from 'app/pages/accounts/pages/digitalSecurities/router'
 import { useAuth } from 'hooks/auth/useAuth'
 import { getIdFromObj } from 'helpers/strings'
-import { Paper } from '@material-ui/core'
 import { digitalSecuritiesQueryKeys } from 'config/queryKeys'
 
 export const RecentDeposits: React.FC = () => {
@@ -13,15 +12,13 @@ export const RecentDeposits: React.FC = () => {
   const userId = getIdFromObj(user)
 
   return (
-    <Paper variant='elevation'>
-      <TableView
-        uri={`/accounts/security/deposits/list/${userId}`}
-        name={digitalSecuritiesQueryKeys.getDepositByUserId(userId)}
-        columns={columns}
-        filter={{
-          asset: params.balanceId
-        }}
-      />
-    </Paper>
+    <TableView
+      uri={`/accounts/security/deposits/list/${userId}`}
+      name={digitalSecuritiesQueryKeys.getDepositByUserId(userId)}
+      columns={columns}
+      filter={{
+        asset: params.balanceId
+      }}
+    />
   )
 }

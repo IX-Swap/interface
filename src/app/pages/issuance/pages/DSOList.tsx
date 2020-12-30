@@ -1,6 +1,6 @@
 import React from 'react'
-import { DSOList as DSOListComponent } from 'app/components/DSO/components/DSOList'
-import { IssuanceRoute, useIssuanceRouter } from 'app/pages/issuance/router'
+import { useIssuanceRouter } from 'app/pages/issuance/router'
+import { MyDSOsTable } from 'app/pages/issuance/components/MyDSOsTable'
 import { Button, Grid } from '@material-ui/core'
 import { AppRouterLinkComponent } from 'components/AppRouterLink'
 
@@ -21,7 +21,7 @@ export const DSOList = () => {
         </Button>
       </Grid>
       <Grid item>
-        <DSOListComponent all={false} viewURL={IssuanceRoute.view} />
+        <MyDSOsTable />
       </Grid>
     </Grid>
   )

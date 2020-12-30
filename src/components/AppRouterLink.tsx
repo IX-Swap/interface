@@ -33,7 +33,6 @@ export const AppRouterLink: React.FC<
   return (
     <MUILink
       {...rest}
-      color='initial'
       underline={underline}
       component={Link}
       to={{

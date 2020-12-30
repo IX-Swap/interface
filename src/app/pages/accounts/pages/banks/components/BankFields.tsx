@@ -12,7 +12,7 @@ export const BankFields = () => {
   return (
     <>
       <Grid item container spacing={3}>
-        <Grid item xs={6}>
+        <Grid item xs={12} sm={6}>
           <TypedField
             control={control}
             component={Input}
@@ -20,7 +20,7 @@ export const BankFields = () => {
             label='Bank Name'
           />
         </Grid>
-        <Grid item xs={6}>
+        <Grid item xs={12} sm={6}>
           <TypedField
             control={control}
             component={Input}
@@ -31,7 +31,7 @@ export const BankFields = () => {
       </Grid>
 
       <Grid item container spacing={3}>
-        <Grid item xs={4}>
+        <Grid item xs={12} sm={6} md={4}>
           <TypedField
             control={control}
             component={AssetSelect}
@@ -40,7 +40,7 @@ export const BankFields = () => {
             assetType='Currency'
           />
         </Grid>
-        <Grid item xs={4}>
+        <Grid item xs={12} sm={6} md={4}>
           <TypedField
             className={privateClassNames()}
             control={control}
@@ -49,7 +49,7 @@ export const BankFields = () => {
             label='Bank Account Number'
           />
         </Grid>
-        <Grid item xs={4}>
+        <Grid item xs={12} sm={6} md={4}>
           <TypedField
             className={privateClassNames()}
             control={control}

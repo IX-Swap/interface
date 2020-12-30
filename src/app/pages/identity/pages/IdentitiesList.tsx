@@ -5,6 +5,7 @@ import { CorporatePreview } from 'app/pages/identity/components/CorporatePreview
 import { useIndividualIdentity } from 'hooks/identity/useIndividualIdentity'
 import { useAllCorporateIdentities } from 'hooks/identity/useAllCorporateIdentities'
 import { IdentityDialog } from 'app/pages/identity/components/IdentityDialog'
+import { VSpacer } from 'components/VSpacer'
 
 export const IdentityRoot: React.FC = () => {
   const [hasIdentities, setHasIdentities] = useState(true)
@@ -33,6 +34,7 @@ export const IdentityRoot: React.FC = () => {
     <>
       <Grid container direction='column' alignItems='flex-start' spacing={2}>
         <IndividualPreview />
+        <VSpacer size='medium' />
         <CorporatePreview />
       </Grid>
       <IdentityDialog

@@ -5,6 +5,7 @@ import * as useWithdrawalAddressesRouterHook from 'app/pages/accounts/pages/with
 
 describe('WithdrawalAddresses', () => {
   const renderRoutes = jest.fn(() => <div />)
+
   beforeEach(() => {
     jest
       .spyOn(useWithdrawalAddressesRouterHook, 'useWithdrawalAddressesRouter')

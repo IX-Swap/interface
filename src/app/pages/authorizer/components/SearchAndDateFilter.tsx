@@ -1,149 +1,56 @@
 import React from 'react'
-import { useForm, Controller } from 'react-hook-form'
-import { Grid, InputAdornment, TextField, Button, Box } from '@material-ui/core'
-import { Search as SearchIcon } from '@material-ui/icons'
-import useStyles from './SearchAndDateFilter.styles'
-import { BaseFilter } from 'types/util'
-import { convertDateToISO } from 'helpers/dates'
-import { DateTimePickerComponent } from 'components/form/_DateTimePicker'
+import { Grid, Box } from '@material-ui/core'
+import { SearchQueryFilterGroup } from 'components/SearchQueryFilter/SearchQueryFilterGroup/SearchQueryFilterGroup'
+import { GroupedSearchFilter } from 'app/pages/authorizer/components/GroupedSearchFilter'
+import { GroupedDateTimeFilter } from 'app/pages/authorizer/components/GroupedFromDateFilter'
+import { SearchQueryFilterGroupApply } from 'components/SearchQueryFilter/SearchQueryFilterGroupApply'
+import { SearchQueryFilterGroupReset } from 'components/SearchQueryFilter/SearchQueryFilterGroupReset'
 
-interface SearchAndDateFilterFormValues {
-  search: string
-  from: Date | undefined
-  to: Date | undefined
-}
-
-export interface SearchAndDateFilterProps {
-  onApplyFilter: (filters: Partial<BaseFilter>) => void
-}
-
-export const initialValues: SearchAndDateFilterFormValues = {
-  search: '',
-  from: undefined,
-  to: undefined
-}
-
-export const SearchAndDateFilter: React.FC<SearchAndDateFilterProps> = props => {
-  const { onApplyFilter } = props
-  const classes = useStyles()
-  const { control, handleSubmit, reset, formState } = useForm<
-    SearchAndDateFilterFormValues
-  >({ defaultValues: initialValues })
-
-  const handleReset = (): void => {
-    onApplyFilter({
-      from: convertDateToISO(initialValues.from),
-      to: convertDateToISO(initialValues.to),
-      search: initialValues.search
-    })
-    reset()
-  }
-
-  const onSubmit = (values: SearchAndDateFilterFormValues): void => {
-    const { search, from, to } = values
-
-    onApplyFilter({
-      from: convertDateToISO(from),
-      to: convertDateToISO(to),
-      search
-    })
-  }
-
+export const SearchAndDateFilter = () => {
   return (
-    <form style={{ width: '100%' }} data-testid='form'>
-      <Grid
-        container
-        direction='column'
-        spacing={1}
-        style={{ padding: '0 10px' }}
-      >
-        <Grid
-          item
-          xs={12}
-          className={classes.spaced}
-          style={{ paddingTop: '24px' }}
-        >
-          <Controller
-            name='search'
-            control={control}
-            as={
-              <TextField
-                id='search'
-                fullWidth
-                label='Search'
-                variant='outlined'
-                size='small'
-                InputProps={{
-                  endAdornment: (
-                    <InputAdornment position='end' style={{ color: '#AAAAAA' }}>
-                      <SearchIcon />
-                    </InputAdornment>
-                  )
-                }}
-              />
-            }
+    <SearchQueryFilterGroup>
+      <Grid container direction='column' spacing={1}>
+        <Grid item xs={12} style={{ paddingTop: 24 }}>
+          <GroupedSearchFilter />
+        </Grid>
+        <Grid item xs={12}>
+          <GroupedDateTimeFilter
+            name='fromDate'
+            groupFilter
+            dateTimePickerProps={{
+              label: 'From'
+            }}
           />
         </Grid>
-        <Grid item xs={12} className={classes.spaced}>
-          <Controller
-            name='from'
-            control={control}
-            defaultValue={null}
-            render={props => (
-              <DateTimePickerComponent
-                {...props}
-                className='denseAdornments'
-                size='small'
-                inputVariant='outlined'
-                label='From'
-              />
-            )}
+        <Grid item xs={12}>
+          <GroupedDateTimeFilter
+            name='toDate'
+            groupFilter
+            dateTimePickerProps={{
+              label: 'To'
+            }}
           />
         </Grid>
-        <Grid item xs={12} className={classes.spaced}>
-          <Controller
-            name='to'
-            control={control}
-            defaultValue={null}
-            render={props => (
-              <DateTimePickerComponent
-                {...props}
-                className='denseAdornments'
-                size='small'
-                inputVariant='outlined'
-                label='To'
-              />
-            )}
-          />
-        </Grid>
-        <Grid
-          container
-          item
-          xs={12}
-          justify='flex-end'
-          className={classes.spaced}
-        >
-          {formState.isDirty && (
-            <Button
-              variant='contained'
-              size='small'
-              color='default'
-              onClick={handleReset}
-            >
-              Reset
-            </Button>
-          )}
-          <Box mx={1} />
-          <Button
+        <Grid container item xs={12} justify='flex-end'>
+          <SearchQueryFilterGroupReset
+            filters={['search', 'toDate', 'fromDate']}
             variant='contained'
             size='small'
+            color='default'
+            disableElevation
+          >
+            Reset
+          </SearchQueryFilterGroupReset>
+          <Box mx={0.5} />
+          <SearchQueryFilterGroupApply
             color='primary'
-            onClick={handleSubmit(onSubmit)}
+            variant='contained'
+            disableElevation
           >
             Submit
-          </Button>
+          </SearchQueryFilterGroupApply>
         </Grid>
       </Grid>
-    </form>
+    </SearchQueryFilterGroup>
   )
 }

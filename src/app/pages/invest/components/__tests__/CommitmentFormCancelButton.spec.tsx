@@ -5,16 +5,13 @@ import {
   CommitmentFormCancelButtonProps
 } from 'app/pages/invest/components/CommitmentFormCancelButton'
 import { AppRouterLinkComponent } from 'components/AppRouterLink'
-import {
-  useOfferingsRouter,
-  OfferingRoute
-} from 'app/pages/invest/routers/offeringsRouter'
+import { useDSORouter, DSORoute } from 'app/pages/invest/routers/dsoRouter'
 import { dso } from '__fixtures__/authorizer'
 
-jest.mock('app/pages/invest/routers/offeringsRouter')
+jest.mock('app/pages/invest/routers/dsoRouter')
 
-const useOfferingsRouterMock = useOfferingsRouter as jest.Mock<
-  Partial<ReturnType<typeof useOfferingsRouter>>
+const useDSORouterMock = useDSORouter as jest.Mock<
+  Partial<ReturnType<typeof useDSORouter>>
 >
 jest.mock('components/AppRouterLink', () => ({
   AppRouterLinkComponent: jest.fn(() => null)
@@ -22,9 +19,10 @@ jest.mock('components/AppRouterLink', () => ({
 
 describe('CommitmentFormCancelButton', () => {
   const props: CommitmentFormCancelButtonProps = {}
+
   beforeEach(() => {
-    useOfferingsRouterMock.mockReturnValue({
-      paths: OfferingRoute,
+    useDSORouterMock.mockReturnValue({
+      paths: DSORoute,
       params: { dsoId: dso._id }
     })
   })
@@ -44,7 +42,7 @@ describe('CommitmentFormCancelButton', () => {
     expect(AppRouterLinkComponent).toHaveBeenCalledWith(
       expect.objectContaining({
         children: expect.anything(),
-        to: OfferingRoute.view,
+        to: DSORoute.view,
         params: { dsoId: dso._id }
       }),
       {}

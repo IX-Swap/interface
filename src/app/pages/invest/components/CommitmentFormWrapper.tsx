@@ -7,12 +7,12 @@ import { CommitmentForm } from 'app/pages/invest/components/CommitmentForm'
 import { VSpacer } from 'components/VSpacer'
 import { CommitmentFormSubmitButton } from 'app/pages/invest/components/CommitmentFormSubmitButton'
 import { CommitmentFormCancelButton } from 'app/pages/invest/components/CommitmentFormCancelButton'
-import { useOfferingsRouter } from 'app/pages/invest/routers/offeringsRouter'
+import { useDSORouter } from 'app/pages/invest/routers/dsoRouter'
 import { useCommitmentActivity } from '../hooks/useCommitmentActivity'
 import { DownloadDSOSubscriptionDocument } from 'app/components/DSO/components/DownloadDSOSubscriptionDocument'
 
 export const CommitmentFormWrapper = () => {
-  const { params } = useOfferingsRouter()
+  const { params } = useDSORouter()
   const { data, isLoading } = useDSOById(params.dsoId, params.issuerId)
 
   useCommitmentActivity(data?._id)
@@ -55,7 +55,10 @@ export const CommitmentFormWrapper = () => {
                   <CommitmentFormCancelButton />
                 </Grid>
                 <Grid item xs={6}>
-                  <CommitmentFormSubmitButton />
+                  <CommitmentFormSubmitButton
+                    assetId={data.currency._id}
+                    minInvestment={data.minimumInvestment}
+                  />
                 </Grid>
               </Grid>
             </CardContent>
