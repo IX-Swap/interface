@@ -11,6 +11,9 @@ export const WithdrawCash: React.FC = () => {
         <WithdrawView />
       </Grid>
       <Grid item>
+        <VSpacer size='small' />
+      </Grid>
+      <Grid item>
         <Typography variant='h5'>Recent Withdrawals</Typography>
         <VSpacer size='small' />
         <RecentWithdrawals />

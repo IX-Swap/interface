@@ -16,6 +16,8 @@ export const ViewButton: React.FC<ViewButtonProps> = ({
   <Button
     component={AppRouterLinkComponent}
     color='primary'
+    variant='contained'
+    disableElevation
     to={link}
     params={params}
     replace={replace}

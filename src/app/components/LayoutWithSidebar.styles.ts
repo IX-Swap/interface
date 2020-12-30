@@ -1,23 +1,29 @@
-import { makeStyles } from '@material-ui/styles'
+import { makeStyles } from '@material-ui/core/styles'
 
-export const useStyles = makeStyles({
+export const useStyles = makeStyles(theme => ({
   container: {
     position: 'relative',
-    marginTop: -64,
-    paddingTop: 64
+    padding: 0
   },
-  sidebar: {
-    zIndex: 10,
-    width: 300,
-    position: 'fixed',
-    top: 64,
-    left: 90,
-    bottom: 0,
-    backgroundColor: '#fafafa',
-    overflow: 'hidden'
+  header: {
+    padding: theme.spacing(0, 2),
+
+    [theme.breakpoints.up('md')]: {
+      paddingLeft: 300
+    }
   },
+  sidebar: {},
   content: {
-    paddingLeft: 300,
-    width: '100%'
+    width: '100%',
+    padding: theme.spacing(2, 2)
+  },
+  wrapper: {
+    flexDirection: 'column',
+
+    [theme.breakpoints.up('md')]: {
+      paddingLeft: 300,
+      flexDirection: 'row',
+      flexWrap: 'nowrap'
+    }
   }
-})
+}))

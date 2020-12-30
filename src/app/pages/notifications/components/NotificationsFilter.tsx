@@ -4,16 +4,19 @@ import { useNotificationsFilter } from 'app/pages/notifications/hooks/useNotific
 import { NotificationFilter } from 'types/app'
 import { BigCheckbox } from 'app/components/BigCheckbox'
 import { formatCamelCasedWithSpaces } from 'helpers/strings'
+import { SidebarTitle } from 'ui/Sidebar/SidebarTitle'
+import { SidebarSection } from 'ui/Sidebar/SidebarSection'
 
 export const NotificationsFilter = () => {
   const { filter, handleClick } = useNotificationsFilter()
 
   return (
-    <Grid container spacing={2} style={{ paddingTop: 70 }}>
-      <Grid item xs={12} style={{ padding: '0 32px' }}>
+    <>
+      <SidebarTitle>
         <Typography variant='h6'>FILTERS</Typography>
-      </Grid>
-      <Grid item xs={12} style={{ padding: '4px 36px' }}>
+      </SidebarTitle>
+
+      <SidebarSection padded>
         {Object.entries(NotificationFilter).map(([key, value]) => (
           <Grid item key={key}>
             <FormControlLabel
@@ -25,7 +28,7 @@ export const NotificationsFilter = () => {
             />
           </Grid>
         ))}
-      </Grid>
-    </Grid>
+      </SidebarSection>
+    </>
   )
 }

@@ -1,21 +1,52 @@
+export const addSymbol = (
+  value: string,
+  symbol: string = 'SGD',
+  right = false
+): string => {
+  const arr = [symbol, value]
+
+  return right ? arr.reverse().join(' ') : arr.join(' ')
+}
+
 export const formatAmount = (value: number) => {
   if (value === undefined || value === null) return ''
 
   return value.toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,')
 }
 
+export const abbreviateNumber = (
+  value: number | null,
+  symbol?: string,
+  right?: boolean
+) => {
+  // https://stackoverflow.com/a/60980688
+
+  const formatter = new Intl.NumberFormat('en-US', {
+    maximumFractionDigits: 1,
+    // @ts-expect-error
+    notation: 'compact',
+    compactDisplay: 'short'
+  })
+
+  const num = formatter.format(value ?? 0)
+
+  return addSymbol(num, symbol, right)
+}
+
 export const formatMoney = (
   value: number | null,
-  symbol: string = 'SGD',
-  right = false
+  symbol?: string,
+  right?: boolean
 ): string => {
   if (value === undefined || value === null) return ''
 
   const money = formatAmount(value ?? 0)
-  const val = [symbol, money]
 
-  return right ? val.reverse().join(' ') : val.join(' ')
+  return addSymbol(money, symbol, right)
 }
+
+export const calculatePercent = (value: number, total: number): number =>
+  Math.min(100, (100 * value) / total)
 
 export const toPercentage = (value: number): string =>
   `${(value * 100).toFixed(2)}%`
@@ -32,4 +63,12 @@ export const generateRandom = (length: number, chars: string): string => {
   }
 
   return result
+}
+
+export const addLeadingZeros = (num: number | string, length: number) => {
+  const zeroes =
+    length > num.toString().length
+      ? new Array(length + 1 - num.toString().length).join('0')
+      : ''
+  return `${zeroes}${num}`
 }

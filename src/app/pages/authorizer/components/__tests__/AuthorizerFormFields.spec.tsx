@@ -30,11 +30,13 @@ describe('AuthorizerForm', () => {
     status: 'Submitted'
   }
   const authorizationAction = jest.fn()
+
   beforeEach(() => {
     jest
       .spyOn(useAuthorizerAction, 'useAuthorizerAction')
       .mockReturnValue([authorizationAction, { isLoading: false } as any])
   })
+
   afterEach(async () => {
     await cleanup()
     jest.clearAllMocks()

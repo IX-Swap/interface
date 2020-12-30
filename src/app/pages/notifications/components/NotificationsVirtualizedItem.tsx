@@ -16,13 +16,7 @@ export const NotificationsVirtualizedItem = (
 
   return (
     <div {...rest}>
-      <div
-        ref={ref}
-        style={{
-          border: '1px solid #eeeeee',
-          borderTop: index === 0 ? '1px solid #eeeeee' : 'none'
-        }}
-      >
+      <div ref={ref} style={{ marginBottom: -1 }}>
         <NotificationView data={item} action={<MarkAsRead data={item} />} />
       </div>
     </div>

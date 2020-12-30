@@ -1,6 +1,5 @@
 import { Viewable } from 'types/util'
 import React from 'react'
-import { Paper } from '@material-ui/core'
 import { withExtraActions } from 'app/pages/authorizer/components/withExtraActions'
 import {
   TableView,
@@ -19,19 +18,17 @@ export const AuthorizerTable = <T,>(
   props: AuthorizerViewProps<T>
 ): JSX.Element => {
   const { columns, name, uri } = props
-  const { data: filter } = useAuthorizerFilter()
+  const { filter } = useAuthorizerFilter()
 
   return (
-    <Paper>
-      <TableView<T>
-        name={name}
-        uri={uri}
-        columns={columns}
-        actions={withExtraActions<T>()}
-        filter={filter}
-        hasActions
-        hasStatus
-      />
-    </Paper>
+    <TableView<T>
+      name={name}
+      uri={uri}
+      columns={columns}
+      actions={withExtraActions<T>()}
+      filter={filter}
+      hasActions
+      hasStatus
+    />
   )
 }

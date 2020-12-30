@@ -19,10 +19,17 @@ export const DeployToken = () => {
   return (
     <Grid container direction='column' spacing={4}>
       <Grid item container>
-        <Grid item xs={9}>
+        <Grid item xs={12} sm={9}>
           <DSOTitle dso={data} />
         </Grid>
-        <Grid item container justify='flex-end' alignItems='flex-start' xs={3}>
+        <Grid
+          item
+          container
+          justify='flex-end'
+          alignItems='flex-start'
+          xs={12}
+          sm={3}
+        >
           <DeployTokenButton
             isInitializing={isInitializing}
             isDeploying={isDeploying}

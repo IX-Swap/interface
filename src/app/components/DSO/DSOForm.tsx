@@ -8,7 +8,7 @@ import { DSOBaseFields } from 'app/components/DSO/components/DSOBaseFields'
 import { DSOIntroduction } from 'app/components/DSO/components/DSOIntroduction'
 import { DSOStatusFields } from 'app/components/DSO/components/DSOStatusFields'
 import { DSOSubscriptionDocument } from 'app/components/DSO/components/DSOSubscriptionDocument'
-import { DSOOfferingTerms } from 'app/components/DSO/components/DSOOfferingTerms'
+import { DSOTerms } from 'app/components/DSO/components/DSOTerms'
 import { DSOBusinessModel } from 'app/components/DSO/components/DSOBusinessModel'
 import { DSOUseOfProceeds } from 'app/components/DSO/components/DSOUseOfProceeds'
 import { DSODataroom } from 'app/components/DSO/components/DSODataroom'
@@ -49,14 +49,14 @@ export const DSOForm = (props: DSOFormProps) => {
     >
       <Grid container direction='column' spacing={3}>
         <DSOBaseFields isNew={isNew} isLive={isLive} />
-        <Grid item container direction='row' spacing={2}>
+        <Grid item container direction='row' alignItems='stretch'>
           <DSOIntroduction />
           <DSOStatusFields />
         </Grid>
         <Grid item>
           <DSOSubscriptionDocument />
         </Grid>
-        <DSOOfferingTerms />
+        <DSOTerms />
         <DSOBusinessModel />
         <DSOUseOfProceeds />
         <DSOContainer title='Dataroom' item xs={12}>

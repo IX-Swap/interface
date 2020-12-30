@@ -2,7 +2,8 @@ import {
   DSORequestArgs,
   DSOFormValues,
   DsoTeamMember,
-  DeploymentInfo
+  DeploymentInfo,
+  DSOInsight
 } from 'types/dso'
 import { corporate, asset } from './authorizer'
 import { emptyFile } from '__fixtures__/file'
@@ -27,6 +28,18 @@ export const deploymentInfo: DeploymentInfo = {
   __v: 123
 }
 
+export const dsoInsight: DSOInsight = {
+  activityCount: 65,
+  approvedcommitmentCount: 1,
+  collectedOn: '2020-11-24T17:06:23.555Z',
+  commitmentCount: 0,
+  commitmentTotal: 0,
+  investorCount: 1,
+  raisedMax: 400,
+  raisedMin: 400,
+  raisedTotal: 400
+}
+
 export const createDSOArgs: DSORequestArgs = {
   businessModel: 'business model',
   capitalStructure: 'capital structure',
@@ -45,6 +58,7 @@ export const createDSOArgs: DSORequestArgs = {
   investmentStructure: 'investment structure',
   issuerName: 'issuer name',
   launchDate: '01-01-2000',
+  completionDate: '12-12-2220',
   leverage: 1,
   logo: '5f4f7d87f3e2c40bbab8a3f1',
   minimumInvestment: 100,
@@ -100,6 +114,7 @@ export const formvalues: DSOFormValues = {
   minimumInvestment: 200,
   leverage: 1,
   launchDate: '2020-10-16T18:30:00.000Z',
+  completionDate: '2220-10-16T18:30:00.000Z',
   issuerName: 'IXIssuer',
   investmentStructure: '1',
   investmentPeriod: 2,
@@ -136,6 +151,7 @@ export const requestargs: DSORequestArgs = {
   minimumInvestment: 200,
   leverage: numberToPercentage(formvalues.leverage),
   launchDate: '2020-10-16T18:30:00.000Z',
+  completionDate: '2220-10-16T18:30:00.000Z',
   investmentStructure: '1',
   investmentPeriod: 2,
   introduction: '<p>Hello world</p>',
@@ -153,3 +169,73 @@ export const requestargs: DSORequestArgs = {
   tokenName: 'IXWTKN',
   tokenSymbol: '$#'
 }
+
+export const investmentGrowthData: Array<[Date, number]> = [
+  [new Date(2020, 11, 1, 1), 1000],
+  [new Date(2020, 11, 1, 3), 1500],
+  [new Date(2020, 11, 1, 6), 2500],
+  [new Date(2020, 11, 1, 9), 3000],
+  [new Date(2020, 11, 1, 12), 4500],
+  [new Date(2020, 11, 1, 15), 5500],
+  [new Date(2020, 11, 1, 18), 6000],
+  [new Date(2020, 11, 1, 21), 7500],
+  [new Date(2020, 11, 1, 24), 6500],
+  [new Date(2020, 11, 2, 1), 8000],
+  [new Date(2020, 11, 2, 3), 9500],
+  [new Date(2020, 11, 2, 6), 10000],
+  [new Date(2020, 11, 2, 9), 12000],
+  [new Date(2020, 11, 2, 12), 11500],
+  [new Date(2020, 11, 2, 15), 13500],
+  [new Date(2020, 11, 2, 18), 14000],
+  [new Date(2020, 11, 2, 21), 11500],
+  [new Date(2020, 11, 2, 24), 13500],
+  [new Date(2020, 11, 3, 1), 11000],
+  [new Date(2020, 11, 3, 3), 11200],
+  [new Date(2020, 11, 3, 6), 11500],
+  [new Date(2020, 11, 3, 9), 16000],
+  [new Date(2020, 11, 3, 12), 17500],
+  [new Date(2020, 11, 3, 15), 18500],
+  [new Date(2020, 11, 3, 18), 19000],
+  [new Date(2020, 11, 3, 21), 21500],
+  [new Date(2020, 11, 3, 24), 19500],
+  [new Date(2020, 11, 4, 1), 19000],
+  [new Date(2020, 11, 4, 3), 22500],
+  [new Date(2020, 11, 4, 6), 23500],
+  [new Date(2020, 11, 4, 9), 14000],
+  [new Date(2020, 11, 4, 12), 22500],
+  [new Date(2020, 11, 4, 15), 25000],
+  [new Date(2020, 11, 4, 18), 26000],
+  [new Date(2020, 11, 4, 21), 25000],
+  [new Date(2020, 11, 4, 24), 27500],
+  [new Date(2020, 11, 5, 1), 28000],
+  [new Date(2020, 11, 5, 3), 19500],
+  [new Date(2020, 11, 5, 6), 30500],
+  [new Date(2020, 11, 5, 9), 31000],
+  [new Date(2020, 11, 5, 12), 32500],
+  [new Date(2020, 11, 5, 15), 33410],
+  [new Date(2020, 11, 5, 21), 35500],
+  [new Date(2020, 11, 5, 24), 23650],
+  [new Date(2020, 11, 6, 1), 37000],
+  [new Date(2020, 11, 6, 3), 38500],
+  [new Date(2020, 11, 6, 6), 39500],
+  [new Date(2020, 11, 6, 9), 40000],
+  [new Date(2020, 11, 6, 12), 41500],
+  [new Date(2020, 11, 6, 15), 42500],
+  [new Date(2020, 11, 6, 18), 43000],
+  [new Date(2020, 11, 6, 21), 44500],
+  [new Date(2020, 11, 6, 24), 45500]
+]
+
+export const commitmentStatsData = [
+  [
+    { type: 'string', label: '' },
+    { type: 'number', label: '' }
+  ],
+  ['MON', 2500],
+  ['TUE', 1500],
+  ['WED', 500],
+  ['THU', 1800],
+  ['FRI', 2000],
+  ['SAT', 2500],
+  ['SUN', 3000]
+]

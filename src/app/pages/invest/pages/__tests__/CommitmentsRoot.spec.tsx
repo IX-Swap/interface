@@ -11,6 +11,7 @@ const useCommitmentRouterMock = useCommitmentRouter as jest.Mock<
 
 describe('CommitmentsRoot', () => {
   const renderRoutes = jest.fn(() => <div />)
+
   beforeEach(() => {
     useCommitmentRouterMock.mockReturnValueOnce({ renderRoutes })
   })

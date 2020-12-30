@@ -6,6 +6,7 @@ import { useIdentitiesRouter } from 'app/pages/identity/router'
 import { NoIdentity } from 'app/pages/identity/components/NoIdentity'
 import { ViewButton } from 'app/pages/identity/components/ViewButton'
 import { CompanyInfoView } from 'app/pages/identity/components/CompanyInfoView'
+import { VSpacer } from 'components/VSpacer'
 
 export const CorporatePreview: React.FC = () => {
   const { data, status } = useAllCorporateIdentities()
@@ -22,39 +23,33 @@ export const CorporatePreview: React.FC = () => {
   }
 
   return (
-    <Grid
-      data-testid='corporate-preview'
-      container
-      item
-      direction='column'
-      spacing={2}
-    >
+    <Grid data-testid='corporate-preview' container item>
       <Grid item xs={12}>
         <Typography variant='h4'>Corporate Identities</Typography>
       </Grid>
 
-      {data.list.map(identity => {
-        return (
-          <Grid item xs={12} key={identity._id}>
-            <Section
-              title={identity.companyLegalName}
-              actions={
-                <ViewButton
-                  link={paths.corporate}
-                  params={{
-                    identityId: identity._id,
-                    label: identity.companyLegalName
-                  }}
-                />
-              }
-            >
-              <Grid container>
-                <CompanyInfoView data={identity} />
-              </Grid>
-            </Section>
-          </Grid>
-        )
-      })}
+      <Grid item>
+        <VSpacer size='medium' />
+      </Grid>
+
+      {data.list.map(identity => (
+        <Grid item xs={12} key={identity._id} style={{ marginBottom: 20 }}>
+          <Section
+            title={identity.companyLegalName}
+            actions={
+              <ViewButton
+                link={paths.corporate}
+                params={{
+                  identityId: identity._id,
+                  label: identity.companyLegalName
+                }}
+              />
+            }
+          >
+            <CompanyInfoView data={identity} />
+          </Section>
+        </Grid>
+      ))}
     </Grid>
   )
 }

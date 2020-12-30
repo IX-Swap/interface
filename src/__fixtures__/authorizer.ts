@@ -6,7 +6,7 @@ import { CorporateIdentity, IndividualIdentity } from 'types/identity'
 import { user } from '__fixtures__/user'
 import { CashWithdrawal } from 'types/cashWithdrawal'
 import { DSWithdrawal } from 'types/dsWithdrawal'
-import { DigitalSecurityOffering } from 'types/dso'
+import { DigitalSecurityOffering, DSOInsight } from 'types/dso'
 import { AuthorizationInfo } from 'types/authorizer'
 import { Commitment } from 'types/commitment'
 import { emptyFile } from '__fixtures__/file'
@@ -56,8 +56,7 @@ export const corporate: CorporateIdentity = {
   beneficialOwners: [],
   companyAddress: address,
   companyLegalName: 'InvestaX',
-  countryOfFormation: 'Singapore',
-  dateOfIncorporation: '01-01-2000',
+  countryOfFormation: 'Russian Federation',
   directors: [],
   registrationNumber: '123456',
   representatives: [],
@@ -74,9 +73,6 @@ export const individual: IndividualIdentity = {
   _id: '1',
   email: 'email@example.com',
   annualIncome: '100000',
-  bankAccountName: '',
-  bankAccountNumber: '',
-  bankName: '',
   contactNumber: '1234567890',
   createdAt: '01-01-2000',
   updatedAt: '01-01-2000',
@@ -86,10 +82,6 @@ export const individual: IndividualIdentity = {
   employmentStatus: 'Employed',
   firstName: 'John',
   lastName: 'Doe',
-  gender: 'M',
-  houseHoldIncome: '100000',
-  industryOfEmployment: 'IT',
-  maritalStatus: 'Married',
   middleName: '',
   nationality: 'Russian',
   occupation: 'Occupied',
@@ -127,9 +119,22 @@ export const dsWithdrawal: DSWithdrawal = {
   }
 }
 
+export const dsoInsight: DSOInsight = {
+  activityCount: 65,
+  approvedcommitmentCount: 1,
+  collectedOn: '2020-11-24T17:06:23.555Z',
+  commitmentCount: 0,
+  commitmentTotal: 0,
+  investorCount: 1,
+  raisedMax: 400,
+  raisedMin: 400,
+  raisedTotal: 400
+}
+
 export const dso: DigitalSecurityOffering = {
   _id: '1',
   asset: 'asset',
+  disabled: false,
   businessModel: 'business model',
   capitalStructure: 'capital structure',
   network: network,
@@ -152,6 +157,7 @@ export const dso: DigitalSecurityOffering = {
   investmentStructure: 'investment structure',
   issuerName: 'issuer name',
   launchDate: '01-01-2000',
+  completionDate: '12-12-2220',
   leverage: 0,
   logo: '5f4f7d87f3e2c40bbab8a3f1',
   minimumInvestment: 100,
@@ -166,12 +172,24 @@ export const dso: DigitalSecurityOffering = {
   user: user._id,
   authorizationDocuments: [],
   authorization: authorizationInfo,
-  authorizations: [],
+  authorizations: [
+    {
+      status: 'Approved',
+      _id: '123',
+      authorizer: '1234',
+      comment: '',
+      sharedWithUser: true,
+      timestamp: ''
+    }
+  ],
+  isStarred: true,
+  promoted: true,
   identity: {
     individual,
     corporates: []
   },
-  status: 'Approved'
+  status: 'Approved',
+  insight: dsoInsight
 }
 
 export const commitment: Commitment = {

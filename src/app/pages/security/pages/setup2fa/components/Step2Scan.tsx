@@ -17,13 +17,16 @@ export const Step2Scan = () => {
       </Typography>
       {!isLoading && (
         <Grid container justify='center'>
-          <Box width='60%' pt={3}>
+          <Box pt={3}>
             <Grid container justify='center' alignItems='center'>
               <Grid item>
                 <div
                   data-testid='store-image'
                   className={classes.image}
-                  style={{ backgroundImage: `url('${store.image}')` }}
+                  style={{
+                    backgroundImage: `url('${store.image}')`,
+                    marginBottom: 10
+                  }}
                 />
               </Grid>
               <Grid item>

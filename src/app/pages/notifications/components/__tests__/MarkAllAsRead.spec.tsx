@@ -8,6 +8,7 @@ import { fireEvent, waitFor } from '@testing-library/react'
 
 describe('MarkAllAsRead', () => {
   const mutate = jest.fn()
+
   beforeEach(() => {
     jest
       .spyOn(useMarkAllAsReadHook, 'useMarkAllAsRead')

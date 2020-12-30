@@ -4,9 +4,11 @@ import { useRequestPasswordReset } from 'auth/hooks/useRequestPasswordReset'
 import { successfulResponse } from '__fixtures__/api'
 import * as authRouter from 'auth/router'
 import { requestPasswordResetArgs } from '__fixtures__/auth'
+import { authURL } from 'config/apiURL'
 
 describe('useRequestPasswordReset', () => {
   const replace = jest.fn()
+
   beforeEach(() => {
     jest.spyOn(authRouter, 'useAuthRouter').mockReturnValue({ replace } as any)
   })
@@ -40,7 +42,7 @@ describe('useRequestPasswordReset', () => {
           expect(replace).toHaveBeenCalledWith('login')
           expect(postFn).toHaveBeenNthCalledWith(
             1,
-            '/auth/password/reset/start',
+            authURL.resetPassword,
             requestPasswordResetArgs
           )
           expect(showSnackbar).toHaveBeenNthCalledWith(

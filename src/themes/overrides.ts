@@ -1,10 +1,14 @@
+import { Theme } from '@material-ui/core'
 import { Overrides } from '@material-ui/core/styles/overrides'
-import { themeColors } from 'themes/default'
+import { rte } from 'themes/rte'
 
-export const overrides: Overrides = {
-  MuiBackdrop: {
-    root: {
-      backgroundColor: '#4A4A4A1A'
+export const getThemeOverrides = (theme: Theme): Overrides => ({
+  ...rte,
+  MuiCssBaseline: {
+    '@global': {
+      html: {
+        background: theme.palette?.backgrounds.main
+      }
     }
   },
   MuiDialog: {
@@ -12,23 +16,17 @@ export const overrides: Overrides = {
       borderRadius: 0
     }
   },
-  MuiMenu: {
-    paper: {
-      boxShadow:
-        '0px 3px 11px 0px #E8EAFC, 0 3px 3px -2px #B2B2B21A, 0 1px 8px 0 #9A9A9A1A'
-    }
-  },
   MuiListItem: {
     root: {
       '&$selected': {
-        color: themeColors.primary,
-        backgroundColor: '#e7ecf5 !important'
+        color: theme.palette?.sidebar.activeColor,
+        backgroundColor: theme.palette?.sidebar.activeBackground
       }
     }
   },
-  MuiTouchRipple: {
-    child: {
-      backgroundColor: 'white'
+  MuiCard: {
+    root: {
+      borderRadius: 8
     }
   },
   MuiTableCell: {
@@ -46,16 +44,25 @@ export const overrides: Overrides = {
   MuiLink: {
     root: {
       fontWeight: 400,
+      color: theme.palette.primary.light,
       '&.MuiLink-underlineHover:active, &.MuiLink-underlineHover:visited, &.MuiLink-underlineAlways:active, &.MuiLink-underlineAlways:visited': {
-        color: themeColors.primary,
+        color: theme.palette.primary.light,
         textDecoration: 'none'
+      },
+
+      '&:hover': {
+        cursor: 'pointer'
       }
+    }
+  },
+  MuiGrid: {
+    item: {
+      maxWidth: '100%'
     }
   },
   MuiContainer: {
     root: {
-      paddingTop: 40,
-      paddingBottom: 40
+      // background: theme.palette?.backgrounds.main
     }
   },
   MuiInput: {
@@ -74,13 +81,14 @@ export const overrides: Overrides = {
   MuiOutlinedInput: {
     root: {
       padding: 0,
-      minHeight: 38
+      minHeight: 40
+    },
+    inputMarginDense: {
+      paddingTop: 12,
+      paddingBottom: 12
     }
   },
   MuiSelect: {
-    icon: {
-      color: '#B9B9B9'
-    },
     root: {
       height: 38
     },
@@ -88,5 +96,26 @@ export const overrides: Overrides = {
       paddingTop: 11,
       paddingBottom: 11
     }
+  },
+  MuiStepper: {
+    root: {
+      paddingLeft: 0,
+      paddingRight: 0
+    }
+  },
+  MuiToggleButton: {
+    root: {
+      height: 40,
+      color: 'inherit',
+      borderColor: 'rgba(0, 0, 0, 0.23)',
+
+      '&.Mui-selected': {
+        boxShadow: 'inset 0 2px 5px 0 rgba(54, 54, 54, 0.2)',
+        backgroundColor: 'transparent'
+      }
+    },
+    label: {
+      textTransform: 'none'
+    }
   }
-}
+})

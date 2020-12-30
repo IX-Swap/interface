@@ -77,11 +77,31 @@ export const issuanceURL = {
     getAll: (userId: string) => `/issuance/commitments/${userId}`
   },
   dso: {
+    getAllPromoted: '/issuance/dso/promoted/list',
+    getAllApproved: '/issuance/dso/approved/list',
+    getAllByUserId: (userId: string) => `/issuance/dso/list/${userId}`,
+    favorite: (dsoId: string) => `/issuance/dso/favorites/${dsoId}`,
+    topCountries: (dsoId: string) =>
+      `/issuance/dso/${dsoId}/charts/top-countries`,
+    totalInvestors: (dsoId: string) =>
+      `/issuance/dso/${dsoId}/charts/total-investors`,
+    topInvestors: (dsoId: string) =>
+      `/issuance/dso/${dsoId}/charts/top-investors`,
+    commitmentsStats: (dsoId: string) =>
+      `/issuance/dso/${dsoId}/charts/commitment-stats`,
+    investmentGrowth: (dsoId: string) =>
+      `/issuance/dso/${dsoId}/charts/investment-growth`,
     getById: (userId: string, dsoId: string) =>
       `/issuance/dso/${userId}/${dsoId}`,
     create: (userId: string) => `/issuance/dso/${userId}`,
+    getByUserId: (userId: string) => `/issuance/dso/list/${userId}`,
     update: (userId: string, dsoId: string) =>
-      `/issuance/dso/${userId}/${dsoId}`
+      `/issuance/dso/${userId}/${dsoId}`,
+    getCapitalStructureList: '/issuance/capital-structures',
+    getActivitiesList: (userId: string, dsoId: string) =>
+      `/issuance/dso/${userId}/${dsoId}/activities/list`,
+    promote: (dsoId: string) => `/issuance/dso/${dsoId}/promote`,
+    disable: (dsoId: string) => `/issuance/dso/${dsoId}/disable`
   }
 }
 
@@ -99,7 +119,10 @@ export const authURL = {
 
 export const userURL = {
   getUserProfile: (userId: string) => `/auth/profiles/${userId}`,
-  updateRoles: (userId: string) => `/auth/users/${userId}/roles`
+  updateRoles: (userId: string) => `/auth/users/${userId}/roles`,
+  getCustomFields: (userId: string, service: string, feature: string) =>
+    `/core/custom-fields/${service}/${feature}/${userId}`,
+  updateCustomFields: (userId: string) => `/core/custom-fields/${userId}`
 }
 
 export const notificationsURL = {

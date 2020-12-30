@@ -1,12 +1,13 @@
 import { AppFeature } from 'types/app'
 
-const generateQueryKey = (prefix: string, key: string) => {
-  return `${prefix}-${key}`
+const generateQueryKey = (prefix: string, ...params: any[]) => {
+  return [prefix, ...params].join('-')
 }
 
 export const queryKeys = {
   notifications: 'notifications',
-  deployments: 'deployments'
+  deployments: 'deployments',
+  promo: 'promo'
 }
 
 export const documentsQueryKeys = {
@@ -85,7 +86,9 @@ export const withdrawalAddressQueryKeys = {
 }
 
 export const usersQueryKeys = {
-  getList: 'user-list'
+  getList: 'user-list',
+  getCustomFields: (service: string, feature: string) =>
+    generateQueryKey('customf-fields', service, feature)
 }
 
 export const investQueryKeys = {
@@ -99,5 +102,26 @@ export const securityQueryKeys = {
 }
 
 export const dsoQueryKeys = {
-  getList: 'dso-list'
+  getList: 'dso-list',
+  getDSOsByUserId: (userId: string) => generateQueryKey('dso-list', userId),
+  getDSOsById: (id: string) => generateQueryKey('dso-list', id),
+  getCapitalStructureList: 'capital-structures-list',
+  getPromoted: 'promoted-dsos',
+  getApprovedList: 'dso-approved-list'
+}
+
+export const issuanceQueryKeys = {
+  commitmentsStats: (dsoId: string) =>
+    generateQueryKey('commitment-stats', dsoId),
+  investmentGrowth: (dsoId: string) =>
+    generateQueryKey('investment-growth', dsoId),
+  investorsByCountry: (dsoId: string) =>
+    generateQueryKey('investors-by-country', dsoId),
+  totalInvestors: (dsoId: string) => generateQueryKey('total-investors', dsoId),
+  topInvestors: (dsoId: string) => generateQueryKey('top-investors', dsoId),
+  getPromoted: 'promoted-dsos',
+  getApprovedList: 'approved-list',
+  getCapitalStructureList: 'capital-structures-list',
+  getActivitiesList: (dsoId: string) =>
+    generateQueryKey('activities-list', dsoId)
 }

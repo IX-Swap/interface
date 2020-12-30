@@ -23,7 +23,7 @@
     "sourceMap": true,
     "inlineSources": true,
     "sourceRoot": "/",
-    "noErrorTruncation": true
+    "noErrorTruncation": false
   },
   "apiUrl": "https://api.mozork.com",
   "include": [

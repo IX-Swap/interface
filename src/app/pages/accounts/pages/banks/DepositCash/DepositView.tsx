@@ -1,8 +1,8 @@
 import React from 'react'
-// import { INVESTAX_BANK } from 'config'
+import { INVESTAX_BANK, isDevEnv } from 'config'
 import { Grid } from '@material-ui/core'
 import { DepositForm } from 'app/pages/accounts/pages/banks/DepositCash/DepositForm'
-// import { BankDetails } from 'app/components/BankDetails'
+import { BankDetails } from 'app/components/BankDetails'
 import { observer } from 'mobx-react'
 import { generateRandom } from 'helpers/numbers'
 import { useDepositStore } from 'app/pages/accounts/pages/banks/context'
@@ -27,7 +27,15 @@ export const DepositView: React.FC = observer(() => {
   return (
     <DepositForm depositCode={depositCode}>
       <Grid container justify='center'>
-        <Grid item xs={5} container direction='column' spacing={4}>
+        <Grid
+          item
+          xs={12}
+          sm={6}
+          md={5}
+          container
+          direction='column'
+          spacing={4}
+        >
           <Grid item>
             {(isSetup || isPreview) && (
               <DisplayNone when={isPreview}>
@@ -37,11 +45,11 @@ export const DepositView: React.FC = observer(() => {
             {isPreview && <Preview depositCode={depositCode} />}
             {isSuccess && <SuccessView title='Deposit Successful' />}
           </Grid>
-          {/* {(isSetup || isPreview) && ( */}
-          {/*  <Grid item> */}
-          {/*    <BankDetails bank={INVESTAX_BANK} code={depositCode} /> */}
-          {/*  </Grid> */}
-          {/* )} */}
+          {isDevEnv && (isSetup || isPreview) && (
+            <Grid item>
+              <BankDetails bank={INVESTAX_BANK} code={depositCode} />
+            </Grid>
+          )}
           {isPreview && <AlertAndOTP alert={DepositCashAlert} />}
           <Grid item>
             <Grid container direction='column' spacing={1}>

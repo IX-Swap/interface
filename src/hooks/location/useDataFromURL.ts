@@ -1,19 +1,20 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
-import { useLocation } from 'react-router-dom'
+import { useHistory } from 'react-router-dom'
 import { urlParams } from 'config/appURL'
 import {
   getCurrentLocationData,
   stripColonFromURLParam
 } from 'hooks/location/utils'
 import { useEffect } from 'react'
-import { history } from 'config/history'
 
 export const useDataFromURL = () => {
-  const { pathname } = useLocation()
+  const { replace, location } = useHistory()
+  const { pathname } = location
 
   useEffect(() => {
     const { service, feature, params } = getCurrentLocationData(pathname)
     const state: any = {}
+
     if (params.length > 0) {
       if (service === 'authorizer') {
         const [itemId, action] = params
@@ -80,12 +81,11 @@ export const useDataFromURL = () => {
           break
         }
 
-        default:
-          return state // throws error
+        default: {
+        }
       }
     }
 
-    // window.history.replaceState(state, 'app-state')
-    history.replace({ state })
-  }, [pathname])
+    replace({ state, search: location.search })
+  }, [pathname]) // eslint-disable-line
 }

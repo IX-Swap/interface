@@ -6,3 +6,5 @@ export const paginationArgs: PaginationArgs = {
 }
 
 export const MIN_INVESTMENT_AMOUNT = 1000
+
+export const capitalStructures = ['Equity', 'Debt']

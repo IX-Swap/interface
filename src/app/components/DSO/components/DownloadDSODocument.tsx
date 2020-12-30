@@ -1,7 +1,8 @@
 import React from 'react'
 import { useDownloadRawFile } from 'hooks/useDownloadRawFile'
-import { Button } from '@material-ui/core'
+import { IconButton, Tooltip } from '@material-ui/core'
 import { convertBlobToFile, openFileInNewTab } from 'hooks/utils'
+import { CloudDownload } from '@material-ui/icons'
 
 export interface DownloadDSODocumentProps {
   dsoId: string
@@ -20,8 +21,10 @@ export const DownloadDSODocument = (props: DownloadDSODocumentProps) => {
   const handleDownload = async () => await download()
 
   return (
-    <Button size='small' variant='outlined' onClick={handleDownload}>
-      {isLoading ? 'Downloading...' : 'Download'}
-    </Button>
+    <Tooltip title='Download File'>
+      <IconButton disabled={isLoading} onClick={handleDownload}>
+        <CloudDownload />
+      </IconButton>
+    </Tooltip>
   )
 }
