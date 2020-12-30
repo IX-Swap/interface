@@ -14,15 +14,15 @@ export const DSOTableFilters = () => {
   return (
     <Grid container direction='column' spacing={3}>
       <Grid item container spacing={2}>
-        <Grid item md={8}>
+        <Grid item xs={12} md={8}>
           <SearchFilter fullWidth placeholder='Search Offers' />
         </Grid>
 
-        <Grid item md={2}>
+        <Grid item xs={6} md={2}>
           <CapitalStructureFilter />
         </Grid>
 
-        <Grid item md={2}>
+        <Grid item xs={6} md={2}>
           <ColumnsEditorToggle onClick={toggleColumns} selected={showColumns} />
         </Grid>
       </Grid>

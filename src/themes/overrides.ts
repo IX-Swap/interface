@@ -89,9 +89,6 @@ export const getThemeOverrides = (theme: Theme): Overrides => ({
     }
   },
   MuiSelect: {
-    icon: {
-      color: 'white'
-    },
     root: {
       height: 38
     },

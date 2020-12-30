@@ -15,7 +15,7 @@ export const ColumnsEditorItem = (props: ColumnsEditorItemProps) => {
   const label = formatCamelCasedWithSpaces(value)
 
   return (
-    <Box mr={2.5}>
+    <Box mr={2.5} mb={1.5}>
       <Chip
         label={label}
         variant={isSelected ? 'default' : 'outlined'}
