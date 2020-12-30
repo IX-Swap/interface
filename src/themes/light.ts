@@ -13,6 +13,10 @@ export const lightTheme: ThemeOptions = {
     action: {
       selected: tinycolor(themeColors.primary).lighten(64).toHexString()
     },
+    background: {
+      default: '#ffffff',
+      paper: '#fafafa'
+    },
     backgrounds: {
       main: '#ffffff',
       secondary: '#fafafa'
