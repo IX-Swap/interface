@@ -1,5 +1,5 @@
 import * as createPalette from '@material-ui/core/styles/createPalette' // eslint-disable-line
-import { CSSProperties } from '@material-ui/styles'
+import { CSSProperties } from '@material-ui/core/styles'
 
 declare module '@material-ui/core/styles/createPalette' {
   export interface PaletteOptions {

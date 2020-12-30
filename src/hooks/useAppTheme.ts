@@ -20,5 +20,11 @@ export const useAppTheme = () => {
     [prefersDarkMode] // eslint-disable-line
   )
 
-  return isDevEnv ? theme : lightTheme
+  return isDevEnv
+    ? theme
+    : createMuiTheme({
+        ...lightTheme,
+        typography,
+        overrides: getThemeOverrides(lightTheme as Theme)
+      })
 }
