@@ -15,7 +15,7 @@ export const lightTheme: ThemeOptions = {
     },
     background: {
       default: '#ffffff',
-      paper: '#fafafa'
+      paper: '#ffffff'
     },
     backgrounds: {
       main: '#ffffff',
