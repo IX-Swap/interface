@@ -5,14 +5,14 @@ import {
   DSOCardCoverProps
 } from 'app/components/DSO/components/DSOCard/DSOCardCover'
 import { DSOLogo } from 'app/components/DSO/components/DSOLogo'
-import { AppRouterLink } from 'components/AppRouterLink'
+import { AppRouterLinkComponent } from 'components/AppRouterLink'
 import { dso } from '__fixtures__/authorizer'
 
 jest.mock('app/components/DSO/components/DSOLogo', () => ({
   DSOLogo: jest.fn(() => null)
 }))
 jest.mock('components/AppRouterLink', () => ({
-  AppRouterLink: jest.fn(() => null)
+  AppRouterLinkComponent: jest.fn(() => null)
 }))
 
 describe('DSOCardCover', () => {
@@ -41,8 +41,7 @@ describe('DSOCardCover', () => {
   it('renders AppRouterLink with correct props', () => {
     render(<DSOCardCover {...props} />)
 
-    expect(AppRouterLink).toHaveBeenCalledTimes(1)
-    expect(AppRouterLink).toHaveBeenCalledWith(
+    expect(AppRouterLinkComponent).toHaveBeenCalledWith(
       expect.objectContaining({
         to: props.viewURL,
         params: { dsoId: dso._id, issuerId: dso.createdBy }
