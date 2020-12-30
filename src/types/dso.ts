@@ -85,8 +85,8 @@ export interface DigitalSecurityOffering extends BaseDigitalSecurityOffering {
   isStarred: boolean
   documents: Maybe<DataroomFile[]>
   currency: Asset
-  network: Network
   insight: DSOInsight
+  network?: Network
 }
 
 export type DeploymentInfoFormValues = Omit<

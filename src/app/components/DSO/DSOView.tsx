@@ -80,7 +80,10 @@ export const DSOView = (props: DSOViewProps) => {
         </Grid>
 
         <Grid item>
-          <LabelledValue label='Blockchain Network' value={data.network.name} />
+          <LabelledValue
+            label='Blockchain Network'
+            value={data.network?.name}
+          />
         </Grid>
       </Grid>
 
