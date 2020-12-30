@@ -25,31 +25,10 @@ export const FinancialView = (props: FinancialViewProps) => {
         />
       </Grid>
       <Grid item xs={12} sm={6} md={4}>
-        <LabelledValue value={data.industryOfEmployment} label='Industry' />
-      </Grid>
-      <Grid item xs={12} sm={6} md={4}>
         <LabelledValue value={data.annualIncome} label='Annual Income' />
       </Grid>
       <Grid item xs={12} sm={6} md={4}>
-        <LabelledValue value={data.houseHoldIncome} label='Household Income' />
-      </Grid>
-      <Grid item xs={12} sm={6} md={4}>
         <LabelledValue value={data.sourceOfWealth} label='Source of Income' />
-      </Grid>
-      <Grid item xs={12} sm={6} md={4}>
-        <LabelledValue value={data.bankName} label='Bank Name' />
-      </Grid>
-      <Grid item xs={12} sm={6} md={4}>
-        <LabelledValue
-          value={data.bankAccountName}
-          label='Name of Bank Account'
-        />
-      </Grid>
-      <Grid item xs={12} sm={6} md={4}>
-        <LabelledValue
-          value={data.bankAccountNumber}
-          label='Bank Account Number'
-        />
       </Grid>
     </Grid>
   )

@@ -41,14 +41,6 @@ export const FinancialFields = (): JSX.Element => {
       </Grid>
       <Grid item xs={12} sm={6} md={4}>
         <TypedField
-          component={Input}
-          control={control}
-          name='industryOfEmployment'
-          label='Industry'
-        />
-      </Grid>
-      <Grid item xs={12} sm={6} md={4}>
-        <TypedField
           className={privateClassNames()}
           control={control}
           name='annualIncome'
@@ -61,48 +53,10 @@ export const FinancialFields = (): JSX.Element => {
       <Grid item xs={12} sm={6} md={4}>
         <TypedField
           className={privateClassNames()}
-          control={control}
-          name='houseHoldIncome'
-          label='Household Income'
-          component={NumericInput}
-          valueExtractor={numericValueExtractor}
-          numberFormat={moneyNumberFormat}
-        />
-      </Grid>
-      <Grid item xs={12} sm={6} md={4}>
-        <TypedField
-          className={privateClassNames()}
           component={Input}
           control={control}
           name='sourceOfWealth'
           label='Source of Income'
-        />
-      </Grid>
-      <Grid item xs={12} sm={6} md={4}>
-        <TypedField
-          className={privateClassNames()}
-          component={Input}
-          control={control}
-          name='bankName'
-          label='Bank Name'
-        />
-      </Grid>
-      <Grid item xs={12} sm={6} md={4}>
-        <TypedField
-          className={privateClassNames()}
-          component={Input}
-          control={control}
-          name='bankAccountName'
-          label='Name of Bank Account'
-        />
-      </Grid>
-      <Grid item xs={12} sm={6} md={4}>
-        <TypedField
-          className={privateClassNames()}
-          component={Input}
-          control={control}
-          name='bankAccountNumber'
-          label='Bank Account Number'
         />
       </Grid>
     </Grid>

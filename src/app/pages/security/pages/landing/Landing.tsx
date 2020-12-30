@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { Box, Grid, Button } from '@material-ui/core'
+import { Grid } from '@material-ui/core'
 import { useAuth } from 'hooks/auth/useAuth'
 import { SettingsRow } from './components/SettingsRow'
 import { TwoFaDialog } from './components/TwoFaDialog'
@@ -14,9 +14,9 @@ export const Landing = () => {
 
   return (
     <>
-      <Grid container direction='column'>
-        <Grid container alignItems='center' justify='center'>
-          <Box width='50%'>
+      <Grid container direction='column' alignItems='center' wrap='wrap'>
+        <Grid container direction='column' item xs={10} sm={8} md={6} lg={4}>
+          <Grid item>
             <SettingsRow
               image={gAuthImg}
               name='Google Authenticator'
@@ -24,6 +24,9 @@ export const Landing = () => {
               buttonMessage={user.totpConfirmed ? 'Done' : 'Setup'}
               buttonClick={() => setOpen(true)}
             />
+          </Grid>
+
+          <Grid item>
             <SettingsRow
               image={keyImg}
               name='Password'
@@ -31,20 +34,7 @@ export const Landing = () => {
               buttonMessage='Change'
               buttonClick={() => securityRouter.push('changePassword')}
             />
-          </Box>
-        </Grid>
-
-        <Grid container alignItems='center' justify='center'>
-          <Box width='50%' mt={0} mb={5}>
-            <Grid container alignItems='center' justify='space-between'>
-              <Grid item>
-                <b>Currency</b>
-              </Grid>
-              <Grid item>
-                <Button disabled>SGD</Button>
-              </Grid>
-            </Grid>
-          </Box>
+          </Grid>
         </Grid>
       </Grid>
       <TwoFaDialog

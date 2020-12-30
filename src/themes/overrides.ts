@@ -1,7 +1,9 @@
 import { Theme } from '@material-ui/core'
 import { Overrides } from '@material-ui/core/styles/overrides'
+import { rte } from 'themes/rte'
 
 export const getThemeOverrides = (theme: Theme): Overrides => ({
+  ...rte,
   MuiCssBaseline: {
     '@global': {
       html: {
@@ -20,6 +22,11 @@ export const getThemeOverrides = (theme: Theme): Overrides => ({
         color: theme.palette?.sidebar.activeColor,
         backgroundColor: theme.palette?.sidebar.activeBackground
       }
+    }
+  },
+  MuiCard: {
+    root: {
+      borderRadius: 8
     }
   },
   MuiTableCell: {
@@ -82,15 +89,18 @@ export const getThemeOverrides = (theme: Theme): Overrides => ({
     }
   },
   MuiSelect: {
-    icon: {
-      color: 'white'
-    },
     root: {
       height: 38
     },
     selectMenu: {
       paddingTop: 11,
       paddingBottom: 11
+    }
+  },
+  MuiStepper: {
+    root: {
+      paddingLeft: 0,
+      paddingRight: 0
     }
   },
   MuiToggleButton: {

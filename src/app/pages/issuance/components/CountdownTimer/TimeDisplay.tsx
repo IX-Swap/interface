@@ -8,12 +8,9 @@ export interface TimeDisplayProps {
   units: UnitMap
 }
 
-export const TimeDisplay: React.FC<TimeDisplayProps> = ({
-  unitsToDisplay,
-  units
-}: TimeDisplayProps) => {
+export const TimeDisplay = ({ unitsToDisplay, units }: TimeDisplayProps) => {
   return (
-    <Grid container alignItems='flex-start' justify='space-between'>
+    <Grid container alignItems='flex-start' justify='center'>
       {unitsToDisplay.map((unit, i) => (
         <React.Fragment key={unit}>
           <TimeUnit time={units[unit]} label={unit} />

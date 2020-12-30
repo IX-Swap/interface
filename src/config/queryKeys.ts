@@ -121,5 +121,7 @@ export const issuanceQueryKeys = {
   topInvestors: (dsoId: string) => generateQueryKey('top-investors', dsoId),
   getPromoted: 'promoted-dsos',
   getApprovedList: 'approved-list',
-  getCapitalStructureList: 'capital-structures-list'
+  getCapitalStructureList: 'capital-structures-list',
+  getActivitiesList: (dsoId: string) =>
+    generateQueryKey('activities-list', dsoId)
 }

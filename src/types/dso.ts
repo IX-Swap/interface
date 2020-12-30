@@ -81,6 +81,7 @@ export interface DSOInsight {
 
 export interface DigitalSecurityOffering extends BaseDigitalSecurityOffering {
   promoted: boolean
+  disabled: boolean
   isStarred: boolean
   documents: Maybe<DataroomFile[]>
   currency: Asset
@@ -118,6 +119,7 @@ export type DSOFormValues = Omit<
   | 'authorizationDocuments'
   | 'subscriptionDocument'
   | 'insight'
+  | 'disabled'
 > & {
   subscriptionDocument?: DataroomFile
   status?: string

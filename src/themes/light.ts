@@ -7,6 +7,9 @@ export const lightTheme: ThemeOptions = {
     primary: {
       main: themeColors.primary
     },
+    secondary: {
+      main: tinycolor(themeColors.primary).lighten(5).toHexString()
+    },
     action: {
       selected: tinycolor(themeColors.primary).lighten(64).toHexString()
     },

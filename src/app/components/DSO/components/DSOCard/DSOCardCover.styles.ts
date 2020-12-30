@@ -21,10 +21,13 @@ export default makeStyles(theme => ({
   },
   cover: {
     overflow: 'hidden',
-    maxWidth: 205,
     padding: theme.spacing(3),
     paddingLeft: theme.spacing(2),
     paddingRight: theme.spacing(2),
-    backgroundColor: theme.palette.backgrounds.secondary
+    backgroundColor: theme.palette.backgrounds.secondary,
+
+    [theme.breakpoints.up('md')]: {
+      maxWidth: 205
+    }
   }
 }))

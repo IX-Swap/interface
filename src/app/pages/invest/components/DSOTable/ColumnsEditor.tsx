@@ -22,7 +22,7 @@ export const ColumnsEditor = (props: ColumnsEditorProps) => {
     <EditableColumnsWrapper px={3.5} py={1}>
       <Typography variant='subtitle2'>Add more columns</Typography>
 
-      <Box display='flex' py={2}>
+      <Box display='flex' flexDirection='row' flexWrap='wrap' pt={2} pb={0.5}>
         {columns.map(({ key }) => (
           <ColumnsEditorItem
             key={key}

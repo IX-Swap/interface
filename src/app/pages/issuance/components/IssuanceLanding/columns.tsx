@@ -8,13 +8,13 @@ import { Avatar } from 'components/Avatar'
 export const renderActivityDate = (date: string, row: DSOActivity) =>
   format(new Date(date), 'MM/dd/yyyy p')
 
-export const renderCommitmentAvatar = (a: string, row: DSOActivity) => (
+export const renderActivityAvatar = (a: string, row: DSOActivity) => (
   <Grid container alignItems='center' spacing={2}>
     <Grid item>
       <Avatar
         documentId={row.identity.individual.photo}
-        ownerId={row.identity.individual.photo}
-        size={40}
+        ownerId={row.identity.individual._id}
+        size={36}
       />
     </Grid>
     <Grid item>
@@ -38,7 +38,7 @@ export const columns: Array<TableColumn<DSOActivity>> = [
   {
     key: '_id',
     label: 'Name',
-    render: renderCommitmentAvatar
+    render: renderActivityAvatar
   },
   {
     key: 'dso.tokenSymbol',

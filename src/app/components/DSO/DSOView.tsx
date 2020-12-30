@@ -23,6 +23,7 @@ import { DSOLogo } from './components/DSOLogo'
 import { DownloadDSOSubscriptionDocument } from 'app/components/DSO/components/DownloadDSOSubscriptionDocument'
 import { DownloadDSODocument } from 'app/components/DSO/components/DownloadDSODocument'
 import { DSOTeamMemberView } from 'app/components/DSO/components/DSOTeamMemberView'
+import { useAppBreakpoints } from 'hooks/useAppBreakpoints'
 
 export interface DSOViewProps {
   data: DigitalSecurityOffering
@@ -31,6 +32,7 @@ export interface DSOViewProps {
 
 export const DSOView = (props: DSOViewProps) => {
   const { data, showAuthorizations = false } = props
+  const { isTablet, theme } = useAppBreakpoints()
 
   useSetPageTitle(data.tokenName)
 
@@ -82,56 +84,65 @@ export const DSOView = (props: DSOViewProps) => {
         </Grid>
       </Grid>
 
-      <Grid item container direction='row' spacing={3}>
+      <Grid item container direction='row' alignItems='stretch'>
         <DSOContainer title='Introduction' item xs={12} md={8}>
           <Typography>{renderStringToHTML(data.introduction)}</Typography>
         </DSOContainer>
 
-        <DSOContainer title='Introduction' item xs={12} md={4}>
-          <Grid container spacing={2}>
-            <Grid item xs={6} md={12}>
-              <LabelledValue
-                label='Corporate'
-                value={data.corporate.companyLegalName}
-              />
-            </Grid>
+        <Grid item xs={12} md={4}>
+          <DSOContainer
+            title='Introduction'
+            style={{
+              paddingLeft: isTablet ? 0 : theme.spacing(2),
+              paddingTop: isTablet ? theme.spacing(2) : 0,
+              height: '100%'
+            }}
+          >
+            <Grid container spacing={2}>
+              <Grid item xs={6} md={12}>
+                <LabelledValue
+                  label='Corporate'
+                  value={data.corporate.companyLegalName}
+                />
+              </Grid>
 
-            <Grid item xs={6} md={12}>
-              <LabelledValue label='Status' value={data.status} />
-            </Grid>
+              <Grid item xs={6} md={12}>
+                <LabelledValue label='Status' value={data.status} />
+              </Grid>
 
-            <Grid item xs={6} md={12}>
-              <LabelledValue
-                label='Capital Structure'
-                value={data.capitalStructure}
-              />
-            </Grid>
+              <Grid item xs={6} md={12}>
+                <LabelledValue
+                  label='Capital Structure'
+                  value={data.capitalStructure}
+                />
+              </Grid>
 
-            <Grid item xs={6} md={12}>
-              <LabelledValue
-                label='Unit Price'
-                value={formatMoney(data.pricePerUnit, data.currency.symbol)}
-              />
-            </Grid>
+              <Grid item xs={6} md={12}>
+                <LabelledValue
+                  label='Unit Price'
+                  value={formatMoney(data.pricePerUnit, data.currency.symbol)}
+                />
+              </Grid>
 
-            <Grid item xs={6} md={12}>
-              <LabelledValue
-                label='Total Fundraising Amount'
-                value={formatMoney(
-                  data.totalFundraisingAmount,
-                  data.currency.symbol
-                )}
-              />
-            </Grid>
+              <Grid item xs={6} md={12}>
+                <LabelledValue
+                  label='Total Fundraising Amount'
+                  value={formatMoney(
+                    data.totalFundraisingAmount,
+                    data.currency.symbol
+                  )}
+                />
+              </Grid>
 
-            <Grid item xs={6} md={12}>
-              <LabelledValue
-                label='Minimum Investment'
-                value={formatMoney(data.minimumInvestment, data.tokenSymbol)}
-              />
+              <Grid item xs={6} md={12}>
+                <LabelledValue
+                  label='Minimum Investment'
+                  value={formatMoney(data.minimumInvestment, data.tokenSymbol)}
+                />
+              </Grid>
             </Grid>
-          </Grid>
-        </DSOContainer>
+          </DSOContainer>
+        </Grid>
       </Grid>
 
       <Grid item>

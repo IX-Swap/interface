@@ -80,7 +80,7 @@ describe('CorporateIdentityForm', () => {
     expect(CorporateProfilesFields).toHaveBeenNthCalledWith(
       1,
       {
-        title: 'Company Representative',
+        title: 'Company Authorized Personnel',
         type: 'representatives'
       },
       {}

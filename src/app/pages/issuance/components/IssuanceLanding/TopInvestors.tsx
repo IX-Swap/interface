@@ -29,7 +29,7 @@ export const TopInvestors = () => {
           pieStartAngle: -45,
           colors: hasData ? undefined : ['lightgrey'],
           legend: {
-            position: 'none'
+            position: 'bottom'
           },
           enableInteractivity: hasData
         }}

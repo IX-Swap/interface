@@ -5,25 +5,23 @@ import { TableView } from 'components/TableWithPagination/TableView'
 import columns from 'app/pages/issuance/components/IssuanceLanding/columns'
 import { useAuth } from 'hooks/auth/useAuth'
 import { getIdFromObj } from 'helpers/strings'
-import { investQueryKeys } from 'config/queryKeys'
-import { useIssuanceRouter } from '../../router'
+import { issuanceQueryKeys } from 'config/queryKeys'
 import { DSOActivity } from 'types/dso'
 import { issuanceURL } from 'config/apiURL'
+import { useIssuanceRouter } from 'app/pages/issuance/router'
 import { isValidDSOId } from 'helpers/isValidDSOId'
 
 export const Activities = () => {
-  // TODO: fix switching dso bug
   const { user } = useAuth()
   const userId = getIdFromObj(user)
   const { params } = useIssuanceRouter()
-  const url = issuanceURL.dso.getAllActivities(userId, params.dsoId)
 
   return (
     <ChartWrapper title='Activities'>
       <VSpacer size='small' />
       <TableView<DSOActivity>
-        uri={url}
-        name={investQueryKeys.getCommitmentsByUserId(userId)}
+        uri={issuanceURL.dso.getActivitiesList(userId, params.dsoId)}
+        name={issuanceQueryKeys.getActivitiesList(params.dsoId)}
         columns={columns}
         queryEnabled={isValidDSOId(params.dsoId)}
       />

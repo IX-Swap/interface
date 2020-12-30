@@ -28,20 +28,6 @@ export const CompanyInfoView = (props: CompanyInfoViewProps) => {
         />
       </Grid>
       <Grid item xs={12} sm={6} md={4}>
-        <LabelledValue
-          value={data.countryOfFormation}
-          label='Country of Formation'
-        />
-      </Grid>
-      <Grid item xs={12} sm={6} md={4}>
-        {/* @ts-ignore */}
-        <LabelledValue
-          className={privateClassNames()}
-          value={data.dateOfIncorporation}
-          label='Date of Incorporation'
-        />
-      </Grid>
-      <Grid item xs={12} sm={6} md={4}>
         <LabelledValue value={data.email} label='Email Address' />
       </Grid>
       <Grid item xs={12} sm={6} md={4}>
