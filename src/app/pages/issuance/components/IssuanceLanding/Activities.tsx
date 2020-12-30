@@ -9,6 +9,7 @@ import { issuanceQueryKeys } from 'config/queryKeys'
 import { DSOActivity } from 'types/dso'
 import { issuanceURL } from 'config/apiURL'
 import { useIssuanceRouter } from 'app/pages/issuance/router'
+import { isValidDSOId } from 'helpers/isValidDSOId'
 
 export const Activities = () => {
   const { user } = useAuth()
@@ -22,6 +23,7 @@ export const Activities = () => {
         uri={issuanceURL.dso.getActivitiesList(userId, params.dsoId)}
         name={issuanceQueryKeys.getActivitiesList(params.dsoId)}
         columns={columns}
+        queryEnabled={isValidDSOId(params.dsoId)}
       />
     </ChartWrapper>
   )

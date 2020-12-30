@@ -4,14 +4,11 @@ import { useTheme } from '@material-ui/core/styles'
 import { Box } from '@material-ui/core'
 import { ChartWrapper } from 'app/pages/issuance/components/IssuanceLanding/ChartWrapper'
 import { NoChartData } from './NoChartData'
-import { ChartProps } from 'types/charts'
 import { getWeekDays } from 'helpers/getWeekDays'
 import { useInvestmentGrowth } from '../hooks/useInvestmentGrowth'
 import { prepareChartData } from 'helpers/prepareChartData'
 
-export const InvestmentGrowthChart: React.FC<ChartProps> = (
-  props: ChartProps
-) => {
+export const InvestmentGrowthChart = () => {
   const theme = useTheme()
   const { data, isLoading } = useInvestmentGrowth()
 

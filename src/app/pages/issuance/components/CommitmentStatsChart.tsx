@@ -3,12 +3,12 @@ import { Box } from '@material-ui/core'
 import { useTheme } from '@material-ui/core/styles'
 import { Chart } from 'react-google-charts'
 import { ChartWrapper } from 'app/pages/issuance/components/IssuanceLanding/ChartWrapper'
-import { ChartProps } from 'types/charts'
 import { useCommitmentStats } from '../hooks/useCommitmentStats'
 import { getWeekDays } from 'helpers/getWeekDays'
 import { prepareChartData } from 'helpers/prepareChartData'
+import { subDays } from 'date-fns'
 
-export const CommitmentStatsChart: React.FC<ChartProps> = () => {
+export const CommitmentStatsChart = () => {
   const theme = useTheme()
   const { data, isLoading } = useCommitmentStats()
 
@@ -17,17 +17,17 @@ export const CommitmentStatsChart: React.FC<ChartProps> = () => {
       { type: 'date', label: 'Date' },
       { type: 'number', label: 'Count' }
     ],
-    [new Date(2020, 11, 13), 25],
-    [new Date(2020, 11, 13), 25],
-    [new Date(2020, 11, 15), 25],
-    [new Date(2020, 11, 16), 25],
-    [new Date(2020, 11, 17), 25],
-    [new Date(2020, 11, 18), 25],
-    [new Date(2020, 11, 19), 25]
+    [new Date(subDays(Date.now(), 6)), 25],
+    [new Date(subDays(Date.now(), 5)), 25],
+    [new Date(subDays(Date.now(), 4)), 25],
+    [new Date(subDays(Date.now(), 3)), 25],
+    [new Date(subDays(Date.now(), 2)), 25],
+    [new Date(subDays(Date.now(), 1)), 25],
+    [new Date(Date.now()), 25]
   ]
 
   const hasData = data !== undefined && data.length > 0
-  const dateTicks = hasData ? getWeekDays(data.slice(1).reverse()) : undefined
+  const dateTicks = getWeekDays(data?.slice(1).reverse() ?? noData.slice(1))
 
   const gridColor = hasData ? theme.palette.text.secondary : 'transparent'
   const options = {
@@ -39,8 +39,11 @@ export const CommitmentStatsChart: React.FC<ChartProps> = () => {
     },
     hAxis: {
       format: 'E',
-      ticks: dateTicks ?? undefined,
-      baselineColor: 'transparent'
+      ticks: dateTicks,
+      baselineColor: 'transparent',
+      gridlines: {
+        color: gridColor
+      }
     },
     vAxis: {
       textPosition: 'none',
@@ -50,7 +53,9 @@ export const CommitmentStatsChart: React.FC<ChartProps> = () => {
         count: 3
       },
       baselineColor: gridColor
-    }
+    },
+    backgroundColor: 'transparent',
+    enableInteractivity: hasData
   }
 
   return (
@@ -60,8 +65,9 @@ export const CommitmentStatsChart: React.FC<ChartProps> = () => {
       ) : (
         <Chart
           chartType={'ColumnChart'}
-          data={hasData ? prepareChartData(data) : noData}
+          data={prepareChartData(hasData ? data : noData)}
           options={options}
+          height={250}
         />
       )}
     </ChartWrapper>

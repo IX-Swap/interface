@@ -5,6 +5,7 @@ import { DigitalSecurityOffering } from 'types/dso'
 import { getIdFromObj } from 'helpers/strings'
 import { investQueryKeys } from 'config/queryKeys'
 import { issuanceURL } from 'config/apiURL'
+import { isValidDSOId } from 'helpers/isValidDSOId'
 
 export const useDSOById = (dsoId: string, issuerId?: string) => {
   const { user } = useAuth()
@@ -14,7 +15,8 @@ export const useDSOById = (dsoId: string, issuerId?: string) => {
     await apiService.get<DigitalSecurityOffering>(url)
   const { data, ...rest } = useQuery(
     [investQueryKeys.getDSOById, dsoId],
-    fetchDSO
+    fetchDSO,
+    { enabled: isValidDSOId(dsoId) }
   )
 
   return {

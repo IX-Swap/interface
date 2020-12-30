@@ -17,6 +17,7 @@ import { useIssuanceRouter } from 'app/pages/issuance/router'
 import { TargetFundraise } from '../components/IssuanceLanding/TargetFundraise'
 import { useAppBreakpoints } from 'hooks/useAppBreakpoints'
 import { VSpacer } from 'components/VSpacer'
+import { isValidDSOId } from 'helpers/isValidDSOId'
 
 export const IssuanceLanding = () => {
   const {
@@ -25,7 +26,7 @@ export const IssuanceLanding = () => {
   const { data } = useDSOById(dsoId)
   const { theme, isTablet } = useAppBreakpoints()
 
-  useSetPageTitle(data?.tokenName)
+  useSetPageTitle(data?.tokenName ?? 'Issuance')
 
   const divider = (
     <Hidden mdUp>
@@ -77,7 +78,7 @@ export const IssuanceLanding = () => {
 
           <Grid item xs={12} lg={8}>
             <Card variant='outlined' style={{ height: '100%' }}>
-              <InvestmentGrowthChart data={undefined} isLoading={false} />
+              <InvestmentGrowthChart />
             </Card>
           </Grid>
 
@@ -93,7 +94,7 @@ export const IssuanceLanding = () => {
 
           <Grid item xs={12} lg={6}>
             <Card variant='outlined' style={{ height: '100%' }}>
-              <CommitmentStatsChart data={undefined} isLoading={false} />
+              <CommitmentStatsChart />
             </Card>
           </Grid>
 
@@ -117,10 +118,13 @@ export const IssuanceLanding = () => {
         >
           <Grid
             component={Card}
+            container
             item
             xs={12}
+            direction='column'
+            justify={isValidDSOId(dsoId) ? 'flex-start' : 'center'}
             variant='outlined'
-            style={{ height: '100%', padding: theme.spacing(4) }}
+            style={{ padding: theme.spacing(4) }}
           >
             <DSOInfo />
             <CountdownTimer />
