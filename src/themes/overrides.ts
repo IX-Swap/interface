@@ -97,6 +97,12 @@ export const getThemeOverrides = (theme: Theme): Overrides => ({
       paddingBottom: 11
     }
   },
+  MuiStepper: {
+    root: {
+      paddingLeft: 0,
+      paddingRight: 0
+    }
+  },
   MuiToggleButton: {
     root: {
       height: 40,
