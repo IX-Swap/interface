@@ -28,3 +28,5 @@ yarn std // or npm run std
 Amplify Hooks
 - Production (https://github.com/InvestaX/IXWebApp/settings/hooks/265590521)
 - Development, MVP, and Staging (https://github.com/InvestaX/IXWebApp/settings/hooks/265590816)
+
+v0.4.0
