@@ -4,9 +4,10 @@ import { render, RenderOptions, RenderResult } from '@testing-library/react'
 import {
   createGenerateClassName,
   createMuiTheme,
-  StylesProvider
+  StylesProvider,
+  ThemeProvider
 } from '@material-ui/core/styles'
-import { ThemeProvider } from '@material-ui/styles'
+
 import { history } from 'config/history'
 import { UserProvider } from 'auth/context'
 import { UserStore } from 'auth/context/store'
