@@ -8,12 +8,14 @@ import { AuthorizerForm } from 'app/pages/authorizer/components/AuthorizerForm'
 import { AuthorizableLevel } from 'app/pages/authorizer/components/AuthorizableLevel'
 import { AuthorizableStatus } from 'app/pages/authorizer/components/AuthorizableStatus'
 import { AuthorizerIdentities } from 'app/pages/authorizer/components/AuthorizerIdentities'
+import { PromotionSwitch } from 'app/pages/authorizer/components/PromotionSwitch'
 import { PageHeader } from 'app/components/PageHeader/PageHeader'
 import { Form } from 'components/form/Form'
 import { useAuthorizerCategory } from 'hooks/location/useAuthorizerCategory'
 import { AuthorizerCategory } from 'types/app'
 import { privateClassNames } from 'helpers/classnames'
 import { DigitalSecurityOffering } from 'types/dso'
+import { VisibilitySwitch } from 'app/pages/authorizer/components/VisibilitySwitch'
 
 export interface AuthorizerViewProps<T> {
   title: string
@@ -50,7 +52,7 @@ export const AuthorizerView = <T,>(
   const showForm = !(isTransaction && approvedOrRejected)
 
   return (
-    <Container className={privateClassNames()}>
+    <Container className={privateClassNames()} style={{ paddingTop: 40 }}>
       <Grid container direction='column'>
         <Grid item>
           <PageHeader />
@@ -112,6 +114,23 @@ export const AuthorizerView = <T,>(
                 {showForm && (
                   <Grid item>
                     <AuthorizerForm status={data.status} itemId={data._id} />
+                  </Grid>
+                )}
+
+                {category === AuthorizerCategory.Offerings && (
+                  <Grid
+                    container
+                    item
+                    justify='flex-end'
+                    style={{ marginBottom: 20 }}
+                  >
+                    <PromotionSwitch
+                      dso={(data as unknown) as DigitalSecurityOffering}
+                    />
+
+                    <VisibilitySwitch
+                      dso={(data as unknown) as DigitalSecurityOffering}
+                    />
                   </Grid>
                 )}
               </Grid>

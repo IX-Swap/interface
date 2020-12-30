@@ -134,6 +134,7 @@ export const dsoInsight: DSOInsight = {
 export const dso: DigitalSecurityOffering = {
   _id: '1',
   asset: 'asset',
+  disabled: false,
   businessModel: 'business model',
   capitalStructure: 'capital structure',
   network: network,
