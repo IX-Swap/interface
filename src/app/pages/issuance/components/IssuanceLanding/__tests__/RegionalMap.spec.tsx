@@ -26,14 +26,4 @@ describe('RegionalMap', () => {
 
     expect(container).toBeEmptyDOMElement()
   })
-
-  it('renders nothing if data is undefined', () => {
-    jest
-      .spyOn(useInvestorsByCountryHook, 'useInvestorsByCountry')
-      .mockReturnValue({ data: undefined, isLoading: false } as any)
-
-    const { container } = render(<RegionalMap />)
-
-    expect(container).toBeEmptyDOMElement()
-  })
 })

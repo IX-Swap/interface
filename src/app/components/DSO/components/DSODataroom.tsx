@@ -1,6 +1,6 @@
 import React from 'react'
 import { FieldsArray } from 'components/form/FieldsArray'
-import { Box, Grid, List } from '@material-ui/core'
+import { Box, Grid, Table, TableBody, TableContainer } from '@material-ui/core'
 import { TypedField } from 'components/form/TypedField'
 import { plainValueExtractor } from 'helpers/forms'
 import { DataroomUploaderWithFileTypeSelector } from 'components/dataroom/DataroomUploaderWithFileTypeSelector'
@@ -24,12 +24,10 @@ export const DSODataroom = () => {
     <SelectionHelper<SelectedDocument> itemComparator={itemComparator}>
       <FieldsArray name='documents' control={control}>
         {({ fields, append, remove }) => (
-          <Grid container spacing={2}>
-            <Grid item xs={12}>
+          <TableContainer>
+            <Table style={{ tableLayout: 'fixed', marginBottom: 20 }}>
               <SelectableDataroomHeader />
-            </Grid>
-            <Grid item container xs={12}>
-              <List disablePadding component='div' style={{ width: '100%' }}>
+              <TableBody>
                 {fields.map((field, index) => (
                   // @ts-expect-error
                   <TypedField
@@ -45,8 +43,8 @@ export const DSODataroom = () => {
                     onDelete={() => remove(index)}
                   />
                 ))}
-              </List>
-            </Grid>
+              </TableBody>
+            </Table>
             <Grid
               item
               xs={12}
@@ -60,7 +58,7 @@ export const DSODataroom = () => {
                 <DataroomUploaderWithFileTypeSelector append={append} />
               </Box>
             </Grid>
-          </Grid>
+          </TableContainer>
         )}
       </FieldsArray>
     </SelectionHelper>

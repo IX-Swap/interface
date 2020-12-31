@@ -46,6 +46,7 @@ export const urlFeature = {
   individualIdentity: `${AppFeature.Individuals}`,
   corporateIdentity: `${AppFeature.Corporates}`,
   offerings: `${AppFeature.Offerings}`,
+  overview: 'overview',
   commitments: `${AppFeature.Commitments}`,
   withdrawalAddresses: `${AppFeature.WithdrawalAddresses}`,
   changePassword: 'change-password',

@@ -85,7 +85,7 @@ describe('IndividualInfoFields', () => {
       expect.objectContaining({
         rootName: props.rootName,
         name: 'nationality',
-        label: 'Nationality'
+        label: 'Citizenship'
       }),
       {}
     )
@@ -113,25 +113,6 @@ describe('IndividualInfoFields', () => {
         rootName: props.rootName,
         name: 'contactNumber',
         label: 'Contact Number'
-      }),
-      {}
-    )
-    expect(TypedField).toHaveBeenNthCalledWith(
-      10,
-      expect.objectContaining({
-        rootName: props.rootName,
-        name: 'gender',
-        label: 'Gender'
-      }),
-
-      {}
-    )
-    expect(TypedField).toHaveBeenNthCalledWith(
-      11,
-      expect.objectContaining({
-        rootName: props.rootName,
-        name: 'maritalStatus',
-        label: 'Marital Status'
       }),
       {}
     )

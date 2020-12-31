@@ -7,16 +7,18 @@ import { useInvestorsByCountry } from 'app/pages/issuance/hooks/useInvestorsByCo
 export const RegionalMap = () => {
   const { data, isLoading } = useInvestorsByCountry()
 
-  if (isLoading || data === undefined) {
+  if (isLoading) {
     return null
   }
+
+  const chartData = data ?? []
 
   return (
     <ChartWrapper title='Regional Map'>
       <VSpacer size='small' />
       <Chart
         chartType='GeoChart'
-        data={[['Country', 'Popularity'], ...data]}
+        data={[['Country', 'Popularity'], ...chartData]}
         // Note: you will need to get a mapsApiKey for your project.
         // See: https://developers.google.com/chart/interactive/docs/basic_load_libs#load-settings
         mapsApiKey='YOUR_KEY_HERE'

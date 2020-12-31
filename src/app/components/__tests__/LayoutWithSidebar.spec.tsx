@@ -8,6 +8,7 @@ import {
 describe('LayoutWithSidebar', () => {
   const props: LayoutWithSidebarProps = {
     sidebar: jest.fn(() => null),
+    sidebarToggle: jest.fn(() => null),
     content: jest.fn(() => null)
   }
 

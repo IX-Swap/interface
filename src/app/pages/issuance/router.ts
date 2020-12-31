@@ -11,7 +11,7 @@ import { DSOList } from './pages/DSOList'
 export const IssuanceRoute = {
   list: makeURL(['app', 'issuance', 'offerings']),
   view: makeURL(['app', 'issuance', 'offerings', 'dsoId', 'view']),
-  insight: makeURL(['app', 'issuance', 'offerings', 'dsoId']),
+  insight: makeURL(['app', 'issuance', 'offerings', 'dsoId', 'overview']),
   deployToken: makeURL([
     'app',
     'issuance',
@@ -43,15 +43,16 @@ export const issuanceRoutes: InternalRouteProps[] = [
     component: EditDSO
   },
   {
-    label: 'Insight',
-    path: IssuanceRoute.insight,
-    component: IssuanceLanding
-  },
-  {
     label: 'Deploy Token',
     path: IssuanceRoute.deployToken,
     exact: true,
     component: DeployToken
+  },
+  {
+    label: 'Insight',
+    path: IssuanceRoute.insight,
+    component: IssuanceLanding,
+    exact: true
   },
   {
     label: 'My DSOs',

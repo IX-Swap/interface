@@ -1,6 +1,5 @@
 import React from 'react'
-import { Grid, Card, Box } from '@material-ui/core'
-import { useTheme } from '@material-ui/core/styles'
+import { Grid, Card, Hidden } from '@material-ui/core'
 import { InvestmentGrowthChart } from '../components/InvestmentGrowthChart'
 import { CommitmentStatsChart } from '../components/CommitmentStatsChart'
 import { DSOInfo } from '../components/DSOInfo'
@@ -16,92 +15,116 @@ import { useSetPageTitle } from 'app/hooks/useSetPageTitle'
 import { useDSOById } from 'app/pages/invest/hooks/useDSOById'
 import { useIssuanceRouter } from 'app/pages/issuance/router'
 import { TargetFundraise } from '../components/IssuanceLanding/TargetFundraise'
+import { useAppBreakpoints } from 'hooks/useAppBreakpoints'
+import { VSpacer } from 'components/VSpacer'
+import { isValidDSOId } from 'helpers/isValidDSOId'
 
 export const IssuanceLanding = () => {
-  const theme = useTheme()
-
   const {
     params: { dsoId }
   } = useIssuanceRouter()
   const { data } = useDSOById(dsoId)
+  const { theme, isTablet } = useAppBreakpoints()
 
-  useSetPageTitle(data?.tokenName)
+  useSetPageTitle(data?.tokenName ?? 'Issuance')
+
+  const divider = (
+    <Hidden mdUp>
+      <Grid item xs={12}>
+        <VSpacer size='small' />
+      </Grid>
+    </Hidden>
+  )
 
   return (
-    <Box ml={theme.spacing(0.5)}>
-      <Grid container justify='space-between' spacing={8}>
+    <>
+      <Grid
+        container
+        justify='space-between'
+        wrap={!isTablet ? 'wrap' : 'wrap-reverse'}
+      >
         <Grid
+          item
           container
-          xs={8}
-          direction='column'
-          spacing={0}
-          style={{
-            paddingBottom: theme.spacing(4),
-            paddingTop: theme.spacing(4)
-          }}
+          direction='row'
+          spacing={isTablet ? 0 : 3}
+          style={{ marginBottom: theme.spacing(1.5) }}
+          xs={12}
+          md={8}
         >
-          <Grid
-            container
-            direction='row'
-            justify='space-between'
-            spacing={4}
-            style={{ paddingBottom: theme.spacing(4) }}
-          >
-            <Grid item xs={4}>
-              <Card variant='outlined' style={{ height: '100%' }}>
-                <TotalInvestors />
-              </Card>
-            </Grid>
-            <Grid item xs={4}>
-              <Card variant='outlined' style={{ height: '100%' }}>
-                <AmountRaised />
-              </Card>
-            </Grid>
-            <Grid item xs={4}>
-              <Card variant='outlined' style={{ height: '100%' }}>
-                <TargetFundraise />
-              </Card>
-            </Grid>
+          <Grid item xs={12} md={4} lg={4}>
+            <Card variant='outlined' style={{ height: '100%' }}>
+              <TotalInvestors />
+            </Card>
           </Grid>
-          <Grid
-            container
-            direction='row'
-            justify='space-between'
-            spacing={4}
-            style={{ paddingBottom: theme.spacing(4) }}
-          >
-            <Grid item xs={8}>
-              <Card variant='outlined' style={{ height: '100%' }}>
-                <InvestmentGrowthChart data={undefined} isLoading={false} />
-              </Card>
-            </Grid>
-            <Grid item xs={4}>
-              <Card variant='outlined' style={{ height: '100%' }}>
-                <TopInvestors />
-              </Card>
-            </Grid>
+
+          {divider}
+
+          <Grid item xs={12} md={4} lg={4}>
+            <Card variant='outlined' style={{ height: '100%' }}>
+              <AmountRaised />
+            </Card>
           </Grid>
-          <Grid container direction='row' justify='space-between' spacing={4}>
-            <Grid item xs={6}>
-              <Card variant='outlined' style={{ height: '100%' }}>
-                <CommitmentStatsChart data={undefined} isLoading={false} />
-              </Card>
-            </Grid>
-            <Grid item xs={6}>
-              <Card variant='outlined' style={{ height: '100%' }}>
-                <RegionalMap />
-              </Card>
-            </Grid>
+
+          {divider}
+
+          <Grid item xs={12} md={4} lg={4}>
+            <Card variant='outlined' style={{ height: '100%' }}>
+              <TargetFundraise />
+            </Card>
+          </Grid>
+
+          {divider}
+
+          <Grid item xs={12} lg={8}>
+            <Card variant='outlined' style={{ height: '100%' }}>
+              <InvestmentGrowthChart />
+            </Card>
+          </Grid>
+
+          {divider}
+
+          <Grid item xs={12} lg={4}>
+            <Card variant='outlined' style={{ height: '100%' }}>
+              <TopInvestors />
+            </Card>
+          </Grid>
+
+          {divider}
+
+          <Grid item xs={12} lg={6}>
+            <Card variant='outlined' style={{ height: '100%' }}>
+              <CommitmentStatsChart />
+            </Card>
+          </Grid>
+
+          {divider}
+
+          <Grid item xs={12} lg={6}>
+            <Card variant='outlined' style={{ height: '100%' }}>
+              <RegionalMap />
+            </Card>
           </Grid>
         </Grid>
-        <Grid item xs={4}>
+
+        {divider}
+
+        <Grid
+          container
+          item
+          xs={12}
+          md={4}
+          style={{ marginBottom: isTablet ? 0 : theme.spacing(3) }}
+        >
           <Grid
-            container
             component={Card}
-            variant='outlined'
-            style={{ height: '100%', padding: theme.spacing(4) }}
-            justify='flex-start'
+            container
+            item
+            xs={12}
             direction='column'
+            justify={isValidDSOId(dsoId) ? 'flex-start' : 'center'}
+            variant='outlined'
+            style={{ padding: theme.spacing(4) }}
           >
             <DSOInfo />
             <CountdownTimer />
@@ -109,12 +132,15 @@ export const IssuanceLanding = () => {
             <MoreOptions />
           </Grid>
         </Grid>
+      </Grid>
+
+      <Grid container>
         <Grid item xs={12} style={{ paddingTop: 0, paddingLeft: 0 }}>
           <Card variant='outlined'>
             <Activities />
           </Card>
         </Grid>
       </Grid>
-    </Box>
+    </>
   )
 }

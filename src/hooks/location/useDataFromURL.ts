@@ -81,11 +81,11 @@ export const useDataFromURL = () => {
           break
         }
 
-        default:
-          return state // throws error
+        default: {
+        }
       }
     }
 
-    replace({ state })
+    replace({ state, search: location.search })
   }, [pathname]) // eslint-disable-line
 }

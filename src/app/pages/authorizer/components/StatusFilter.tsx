@@ -25,9 +25,8 @@ export const StatusFilter = () => {
               title={status.title}
               isSelected={status.value === value}
               onClick={() => onChange(status.value)}
-            >
-              {React.createElement(status.icon)}
-            </StatusFilterItem>
+              icon={status.icon}
+            />
           ))}
         </Box>
       )}
@@ -56,5 +55,5 @@ export const statusFilters: StatusFilterItemType[] = [
     value: 'Rejected',
     title: 'Rejected'
   },
-  { icon: () => <AllIcon />, value: '', title: 'All' }
+  { icon: AllIcon, value: '', title: 'All' }
 ]

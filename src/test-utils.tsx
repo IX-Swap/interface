@@ -3,10 +3,10 @@ import { Router } from 'react-router-dom'
 import { render, RenderOptions, RenderResult } from '@testing-library/react'
 import {
   createGenerateClassName,
+  createMuiTheme,
   StylesProvider
 } from '@material-ui/core/styles'
 import { ThemeProvider } from '@material-ui/styles'
-import Themes from 'themes'
 import { history } from 'config/history'
 import { UserProvider } from 'auth/context'
 import { UserStore } from 'auth/context/store'
@@ -22,6 +22,7 @@ import { ToastProvider } from 'react-toast-notifications'
 import { AppStateProvider } from 'app/hooks/useAppState'
 import { Form } from 'components/form/Form'
 import { Toast } from 'components/Toast'
+import { lightTheme } from 'themes/light'
 
 const generateClassName = createGenerateClassName({
   productionPrefix: 'ix'
@@ -30,7 +31,7 @@ const generateClassName = createGenerateClassName({
 export const BaseProviders: React.FC = ({ children }) => {
   return (
     <StylesProvider generateClassName={generateClassName}>
-      <ThemeProvider theme={Themes.default}>
+      <ThemeProvider theme={createMuiTheme(lightTheme)}>
         <ToastProvider
           components={{ Toast: Toast, ToastContainer: () => null }}
         >

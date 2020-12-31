@@ -4,11 +4,13 @@ import { ReactComponent as Notifications } from 'assets/icons/navigation/notific
 import { DropdownTriggerProps } from 'app/components/Dropdown/Dropdown'
 import { useNotifications } from 'app/pages/notifications/hooks/useNotifications'
 
-export const NotificationsDropdownTrigger = (props: DropdownTriggerProps) => {
+export const NotificationsDropdownTrigger = (
+  props: Partial<DropdownTriggerProps>
+) => {
   const { unreadCount } = useNotifications()
 
   return (
-    <IconButton color='inherit' {...props.triggerProps}>
+    <IconButton {...props.triggerProps} style={{ color: 'white' }}>
       <Badge
         badgeContent={unreadCount >= 100 ? '99+' : unreadCount}
         color='error'

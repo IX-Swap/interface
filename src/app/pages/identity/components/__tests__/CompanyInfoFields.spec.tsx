@@ -64,21 +64,13 @@ describe('CompanyInformation', () => {
     expect(TypedField).toHaveBeenNthCalledWith(
       5,
       expect.objectContaining({
-        label: 'Date of Incorporation',
-        name: 'dateOfIncorporation'
-      }),
-      {}
-    )
-    expect(TypedField).toHaveBeenNthCalledWith(
-      6,
-      expect.objectContaining({
         label: 'Email Address',
         name: 'email'
       }),
       {}
     )
     expect(TypedField).toHaveBeenNthCalledWith(
-      7,
+      6,
       expect.objectContaining({
         label: 'Contact Number',
         name: 'contactNumber'

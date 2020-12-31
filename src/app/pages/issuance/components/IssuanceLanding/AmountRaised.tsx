@@ -17,6 +17,11 @@ export const AmountRaised = () => {
   const { data, isSuccess } = useDSOById(dsoId)
 
   let value = LOADING_TEXT
+
+  if (data === undefined) {
+    value = abbreviateNumber(0)
+  }
+
   if (isSuccess && data !== undefined) {
     value = abbreviateNumber(data.insight.raisedTotal, data.currency.symbol)
   }

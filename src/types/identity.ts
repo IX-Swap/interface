@@ -24,10 +24,8 @@ export interface PersonalProfile {
   lastName: string
   photo?: string
   dob: string
-  gender: 'M' | 'F'
   nationality: string
   countryOfResidence: string
-  maritalStatus: string
   contactNumber: string
   email?: string
 }
@@ -42,13 +40,8 @@ export interface ExtendedIdentityProfile extends PersonalProfile {
 
 export interface IdentityFinancials {
   annualIncome: string
-  bankAccountName: string
-  bankAccountNumber: string
-  bankName: string
   employer: string
   employmentStatus: string
-  houseHoldIncome: string
-  industryOfEmployment: string
   occupation: string
   sourceOfWealth: string
 }
@@ -60,7 +53,6 @@ export interface CorporateFields {
   companyLegalName: string
   registrationNumber: string
   countryOfFormation: string
-  dateOfIncorporation: string
   companyAddress: IdentityAddress
   representatives: PersonalProfile[]
   directors: PersonalProfile[]

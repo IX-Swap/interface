@@ -1,4 +1,4 @@
-import { TypeBackground } from '@material-ui/core/styles/createPalette'
+import { Theme, TypeBackground } from '@material-ui/core/styles/createPalette'
 import { ReactNode, ComponentType, ChangeEvent } from 'react'
 import { RouteComponentProps } from 'react-router-dom'
 import { AppRole } from 'helpers/acl'
@@ -54,6 +54,7 @@ export interface InternalRouteProps extends InternalRouteBase {
   root?: boolean
   generic?: boolean
   authorizations?: AppRole[]
+  backgroundColor?: keyof Theme['palette']['backgrounds']
 }
 
 export interface RouteMeta {

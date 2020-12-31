@@ -49,7 +49,7 @@ export const DSOForm = (props: DSOFormProps) => {
     >
       <Grid container direction='column' spacing={3}>
         <DSOBaseFields isNew={isNew} isLive={isLive} />
-        <Grid item container direction='row' spacing={2}>
+        <Grid item container direction='row' alignItems='stretch'>
           <DSOIntroduction />
           <DSOStatusFields />
         </Grid>

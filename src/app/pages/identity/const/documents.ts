@@ -24,26 +24,26 @@ const documents: {
       type: 'Identity/Individual'
     },
     {
-      title: 'Marriage Certificate',
-      label: 'Marriage Certificate',
-      type: 'Identity/Individual'
-    },
-    {
-      title: 'Other Supporting Documents',
-      label: 'Other Supporting Documents',
+      title: 'W-8BEN/W-8BEN-E',
+      label: 'W-8BEN/W-8BEN-E',
       type: 'Identity/Individual'
     }
   ],
   corporate: [
     {
-      title: 'Company Registration Document',
+      title: 'Company Incorporation Document',
       label:
-        'Company Registration Document (e.g. ACRA Bizfile, Certificate of Incorporation) ',
+        'Company Incorporation Document (e.g. ACRA Bizfile, Certificate of Incorporation) ',
       type: 'Identity/Corporate'
     },
     {
       title: 'Articles of Association',
       label: 'Articles of Association',
+      type: 'Identity/Corporate'
+    },
+    {
+      title: 'Memorandum of association',
+      label: 'Memorandum of association',
       type: 'Identity/Corporate'
     },
     {
@@ -91,11 +91,6 @@ const documents: {
     {
       title: 'Ownership of Control Structure',
       label: 'Ownership of Control Structure',
-      type: 'Identity/Corporate'
-    },
-    {
-      title: 'Other Supporting Documents',
-      label: 'Other Supporting Documents',
       type: 'Identity/Corporate'
     }
   ]

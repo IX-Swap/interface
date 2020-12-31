@@ -18,20 +18,20 @@ export const CommitmentHeader = (props: CommitmentHeaderProps) => {
   useSetPageTitle(`${dso.tokenName} (${dso.tokenSymbol})`)
 
   return (
-    <Grid container justify='space-between'>
-      <Grid item xs={6}>
+    <Grid container spacing={2}>
+      <Grid item xs={12} md={6}>
         <DSOTitle dso={dso} />
       </Grid>
-      <Grid item xs={2}>
+      <Grid item xs={4} md={2}>
         <LabelledValue
           label='Minimum Investment'
           value={formatMoney(dso.minimumInvestment, dso.tokenSymbol)}
         />
       </Grid>
-      <Grid item xs={2}>
+      <Grid item xs={4} md={2}>
         <AssetBalance assetId={dso.currency._id} symbol={dso.currency.symbol} />
       </Grid>
-      <Grid item xs={2}>
+      <Grid item xs={4} md={2}>
         <EstimatedValue symbol={dso.currency.symbol} />
       </Grid>
     </Grid>

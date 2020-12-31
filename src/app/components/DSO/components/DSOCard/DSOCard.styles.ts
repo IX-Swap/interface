@@ -3,8 +3,13 @@ import { makeStyles } from '@material-ui/core/styles'
 export default makeStyles(theme => ({
   root: {
     display: 'flex',
+    flexDirection: 'column',
     position: 'relative',
-    minHeight: 200
+    minHeight: 200,
+
+    [theme.breakpoints.up('md')]: {
+      flexDirection: 'row'
+    }
   },
   capitalStructure: {
     position: 'absolute',
@@ -21,7 +26,11 @@ export default makeStyles(theme => ({
     fontSize: '18px',
     fontWeight: 500,
     letterSpacing: 0,
-    backgroundColor: theme.palette.grey[100]
+    backgroundColor: theme.palette.backgrounds.main,
+
+    [theme.breakpoints.up('md')]: {
+      backgroundColor: theme.palette.backgrounds.secondary
+    }
   },
   content: {
     display: 'flex',

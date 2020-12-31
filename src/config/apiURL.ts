@@ -97,7 +97,11 @@ export const issuanceURL = {
     getByUserId: (userId: string) => `/issuance/dso/list/${userId}`,
     update: (userId: string, dsoId: string) =>
       `/issuance/dso/${userId}/${dsoId}`,
-    getCapitalStructureList: '/issuance/capital-structures'
+    getCapitalStructureList: '/issuance/capital-structures',
+    getActivitiesList: (userId: string, dsoId: string) =>
+      `/issuance/dso/${userId}/${dsoId}/activities/list`,
+    promote: (dsoId: string) => `/issuance/dso/${dsoId}/promote`,
+    disable: (dsoId: string) => `/issuance/dso/${dsoId}/disable`
   }
 }
 

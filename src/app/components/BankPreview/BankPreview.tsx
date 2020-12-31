@@ -20,30 +20,29 @@ export const BankPreview: React.FC<BankViewProps> = ({ data }) => {
 
   return (
     <Grid container spacing={3}>
-      <Grid item />
       <Grid item container spacing={3}>
-        <Grid item xs={4}>
+        <Grid item xs={12} sm={6} md={4}>
           <LabelledValue label='Bank Name' value={data.bankName} />
         </Grid>
-        <Grid item xs={4}>
+        <Grid item xs={12} sm={6} md={4}>
           <LabelledValue
             label='Account Holder Name'
             value={data.accountHolderName}
           />
         </Grid>
-        <Grid item xs={4}>
+        <Grid item xs={12} sm={6} md={4}>
           <LabelledValue label='Currency' value={data.currency.symbol} />
         </Grid>
       </Grid>
       <Grid item container spacing={3}>
-        <Grid item xs={4}>
+        <Grid item xs={12} sm={6} md={4}>
           <LabelledValue
             className={privateClassNames()}
             label='Bank Account Number'
             value={data.bankAccountNumber}
           />
         </Grid>
-        <Grid item xs={4}>
+        <Grid item xs={12} sm={6} md={4}>
           <LabelledValue
             className={privateClassNames()}
             label='Swift Code'
@@ -52,7 +51,7 @@ export const BankPreview: React.FC<BankViewProps> = ({ data }) => {
         </Grid>
       </Grid>
       <Grid item container spacing={3}>
-        <Grid item xs={5}>
+        <Grid item xs={12} sm={6} md={4}>
           <LabelledValue
             label='Bank Address'
             value={convertAddressToString(data.address)}

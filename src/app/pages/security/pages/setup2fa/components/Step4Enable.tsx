@@ -20,8 +20,8 @@ export const Step4Enable = () => {
   return (
     <Container>
       <Typography align='center'>Enable your Google Authenticator</Typography>
-      <Grid container justify='center'>
-        <Box mt={4} width='30%'>
+      <Grid container>
+        <Box width='100%' mt={4}>
           <Form
             defaultValues={defaultValues}
             validationSchema={enable2faFormValuesSchema}

@@ -56,56 +56,16 @@ describe('Financials', () => {
     expect(TypedField).toHaveBeenNthCalledWith(
       4,
       expect.objectContaining({
-        label: 'Industry',
-        name: 'industryOfEmployment'
-      }),
-      {}
-    )
-    expect(TypedField).toHaveBeenNthCalledWith(
-      5,
-      expect.objectContaining({
         label: 'Annual Income',
         name: 'annualIncome'
       }),
       {}
     )
     expect(TypedField).toHaveBeenNthCalledWith(
-      6,
-      expect.objectContaining({
-        label: 'Household Income',
-        name: 'houseHoldIncome'
-      }),
-      {}
-    )
-    expect(TypedField).toHaveBeenNthCalledWith(
-      7,
+      5,
       expect.objectContaining({
         label: 'Source of Income',
         name: 'sourceOfWealth'
-      }),
-      {}
-    )
-    expect(TypedField).toHaveBeenNthCalledWith(
-      8,
-      expect.objectContaining({
-        label: 'Bank Name',
-        name: 'bankName'
-      }),
-      {}
-    )
-    expect(TypedField).toHaveBeenNthCalledWith(
-      9,
-      expect.objectContaining({
-        label: 'Name of Bank Account',
-        name: 'bankAccountName'
-      }),
-      {}
-    )
-    expect(TypedField).toHaveBeenNthCalledWith(
-      10,
-      expect.objectContaining({
-        label: 'Bank Account Number',
-        name: 'bankAccountNumber'
       }),
       {}
     )

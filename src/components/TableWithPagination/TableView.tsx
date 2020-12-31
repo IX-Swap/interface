@@ -8,7 +8,8 @@ import {
   LinearProgress,
   TablePagination,
   Paper,
-  Grid
+  Grid,
+  PaperProps
 } from '@material-ui/core'
 import { TableColumn, BaseFilter } from 'types/util'
 import { Actions } from 'app/pages/authorizer/components/Actions'
@@ -27,6 +28,7 @@ export interface TableViewRendererProps<T> {
 export interface TableViewProps<T> {
   name: string
   uri: string
+  queryEnabled?: boolean
   columns: Array<TableColumn<T>>
   bordered?: boolean
   filter?: BaseFilter
@@ -36,12 +38,14 @@ export interface TableViewProps<T> {
   children?: (props: TableViewRendererProps<T>) => JSX.Element
   fakeItems?: T[]
   innerRef?: any
+  paperProps?: PaperProps
 }
 
 export const TableView = <T,>({
   name,
   uri,
   filter,
+  queryEnabled = true,
   columns: columnsProp = [],
   hasActions = false,
   hasStatus = false,
@@ -49,7 +53,8 @@ export const TableView = <T,>({
   actions,
   children,
   fakeItems,
-  innerRef
+  innerRef,
+  paperProps = {}
 }: TableViewProps<T>): JSX.Element => {
   const {
     items,
@@ -59,7 +64,7 @@ export const TableView = <T,>({
     setRowsPerPage,
     rowsPerPage,
     total
-  } = useTableWithPagination<T>(name, uri, filter)
+  } = useTableWithPagination<T>(name, uri, filter, queryEnabled)
   const cacheQueryKey = [name, page, rowsPerPage, filter]
 
   if (innerRef !== undefined) {
@@ -75,7 +80,7 @@ export const TableView = <T,>({
     <Grid container direction='column'>
       <Grid item>
         {status === 'loading' && <LinearProgress />}
-        <Paper>
+        <Paper variant='outlined' {...paperProps}>
           <TableContainer>
             <Table aria-label='table' data-testid='table'>
               {columns.length > 0 ? (
