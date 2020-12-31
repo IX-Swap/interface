@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import {
   CarouselProvider,
   Slider,
@@ -24,6 +24,9 @@ export const DSOCarousel = (props: any) => {
   const classes = useStyles()
   const theme = useTheme()
   const { getFilterValue } = useQueryFilter()
+  const [currentSlide] = useState(
+    parseInt(getFilterValue('currentSlide') ?? '0')
+  )
 
   const isMobile = useMediaQuery(theme.breakpoints.down('md'))
   const slidesCount = isMobile ? 1 : 2
@@ -42,7 +45,7 @@ export const DSOCarousel = (props: any) => {
         totalSlides={totalSlides}
         step={slidesCount}
         isIntrinsicHeight
-        currentSlide={parseInt(getFilterValue('currentSlide') ?? '0')}
+        currentSlide={currentSlide}
       >
         <Box className={classes.sliderWrapper}>
           <Slider>{children}</Slider>
@@ -55,7 +58,7 @@ export const DSOCarousel = (props: any) => {
           </ButtonNext>
         </Box>
         <DotGroup className={classes.dotGroup} />
-        <CurrentSlideWatcher />
+        <CurrentSlideWatcher currentSlide={currentSlide} />
       </CarouselProvider>
     </div>
   )
