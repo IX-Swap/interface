@@ -25,6 +25,9 @@ export const usePromotedDSOs = (): UsePaginatedQueryData<
 
   return {
     ...queryResult,
-    data: useParsedData<DigitalSecurityOffering>(data, '_id')
+    data: {
+      ...useParsedData<DigitalSecurityOffering>(data, '_id'),
+      list: []
+    }
   }
 }
