@@ -4,11 +4,10 @@ import { useToggleDSOFavorite } from 'app/pages/invest/hooks/useToggleDSOFavorit
 import { successfulResponse } from '__fixtures__/api'
 import { dso } from '__fixtures__/authorizer'
 import { issuanceURL } from 'config/apiURL'
-import * as useQueryCacheHook from 'react-query'
-import { QueryCache, queryCache } from 'react-query'
+import * as ReactQuery from 'react-query'
 
 describe('useToggleDSOFavorite', () => {
-  const qc: QueryCache = queryCache
+  const qc = ReactQuery.queryCache
   const getQueriesMock = jest.fn().mockReturnValue(['dso-list'])
 
   qc.getQueries = getQueriesMock
@@ -23,7 +22,7 @@ describe('useToggleDSOFavorite', () => {
   const snackbarObj = { showSnackbar }
 
   beforeEach(() => {
-    jest.spyOn(useQueryCacheHook, 'useQueryCache').mockReturnValue(qc)
+    jest.spyOn(ReactQuery, 'useQueryCache').mockReturnValue(qc)
   })
 
   afterEach(async () => {

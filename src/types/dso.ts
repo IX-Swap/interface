@@ -153,6 +153,7 @@ export interface DSOActivity {
   _id: string
   invariant: string
   createdAt: string
+  user: string
   identity: {
     individual: IndividualIdentity
     corporates: CorporateIdentity[]
