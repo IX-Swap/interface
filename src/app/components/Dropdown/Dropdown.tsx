@@ -6,7 +6,7 @@ import PopupState, {
 } from 'material-ui-popup-state'
 import { DropdownContent } from 'app/components/Dropdown/DropdownContent'
 import { ThemeProvider } from '@material-ui/styles'
-import { PopperPlacementType, Theme } from '@material-ui/core'
+import { PopperPlacementType } from '@material-ui/core'
 import { darkTheme } from 'themes/dark'
 import { createAppTheme } from 'themes'
 import { lightTheme } from 'themes/light'
@@ -38,7 +38,7 @@ export const Dropdown = (props: DropdownProps) => {
     placement = 'bottom-end',
     contentTheme
   } = props
-  const defaultTheme = useAppTheme()
+  const { theme: defaultTheme } = useAppTheme()
   const theme =
     contentTheme === undefined
       ? defaultTheme
@@ -53,7 +53,7 @@ export const Dropdown = (props: DropdownProps) => {
             injectedProps: popupState
           })}
 
-          <ThemeProvider theme={theme as Theme}>
+          <ThemeProvider theme={theme}>
             <DropdownContent
               popupState={popupState}
               placement={placement}

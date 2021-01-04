@@ -6,6 +6,7 @@ import { TwoFaDialog } from './components/TwoFaDialog'
 import keyImg from './assets/key.png'
 import gAuthImg from './assets/googleauth.png'
 import { useSecurityRouter } from '../../router'
+import { ThemeSelector } from 'app/pages/security/pages/landing/components/ThemeSelector'
 
 export const Landing = () => {
   const { user = { totpConfirmed: false } } = useAuth()
@@ -34,6 +35,10 @@ export const Landing = () => {
               buttonMessage='Change'
               buttonClick={() => securityRouter.push('changePassword')}
             />
+          </Grid>
+
+          <Grid item>
+            <ThemeSelector />
           </Grid>
         </Grid>
       </Grid>
