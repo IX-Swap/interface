@@ -16,7 +16,7 @@
     "@material-ui/styles": "^4.10.0",
     "@sentry/react": "^5.26.0",
     "@sentry/tracing": "^5.26.0",
-    "axios": "^0.19.2",
+    "axios": "^0.21.1",
     "babel-loader": "^8.1.0",
     "classnames": "^2.2.6",
     "country-json": "^1.1.0",
