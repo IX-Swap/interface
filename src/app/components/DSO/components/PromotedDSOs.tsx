@@ -8,7 +8,7 @@ import { DSORoute } from 'app/pages/invest/routers/dsoRouter'
 export const PromotedDSOs = () => {
   const { data, status } = usePromotedDSOs()
 
-  if (status === 'loading') {
+  if (status === 'loading' || data.list.length === undefined) {
     return null
   }
 

@@ -1,7 +1,6 @@
 import React from 'react'
 import { render, cleanup } from 'test-utils'
 import { Summary } from 'app/pages/accounts/pages/digitalSecurities/DSWithdraw/Summary'
-
 import { QueryStatus } from 'react-query'
 import * as assetsData from 'hooks/asset/useAssetsData'
 import * as balancesData from 'hooks/balance/useAllBalances'
