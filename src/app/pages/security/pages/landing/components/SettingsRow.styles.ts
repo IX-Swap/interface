@@ -1,12 +1,8 @@
 import { makeStyles } from '@material-ui/core/styles'
 
 export default makeStyles(() => ({
-  button: {
-    fontWeight: 'bold',
-    width: '100px'
-  },
   logoImg: {
-    height: '2.5em',
+    height: '4em',
     marginRight: '1em'
   },
   btnImg: {

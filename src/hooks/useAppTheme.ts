@@ -1,6 +1,5 @@
 import { useMediaQuery } from '@material-ui/core'
 import { createMuiTheme, Theme } from '@material-ui/core/styles'
-import { isDevEnv } from 'config'
 import { useMemo, useState } from 'react'
 import storageService from 'services/storage'
 import { darkTheme } from 'themes/dark'
@@ -44,13 +43,7 @@ export const useAppTheme = () => {
 
   return {
     themeType,
-    theme: isDevEnv
-      ? themeMemo
-      : createMuiTheme({
-          ...lightTheme,
-          typography,
-          overrides: getThemeOverrides(baseTheme as Theme)
-        }),
+    theme: themeMemo,
     onChange: handelThemeChange
   }
 }

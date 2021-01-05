@@ -1,23 +1,23 @@
 import { MenuItem, Select } from '@material-ui/core'
 import { AppThemeContext } from 'AppThemeProvider'
 import { AppTheme } from 'hooks/useAppTheme'
-import React, { useContext } from 'react'
+import React, { ChangeEvent, useContext } from 'react'
 
 export const ThemeSelector = () => {
-  const appTheme = useContext(AppThemeContext)
+  const appThemeContext = useContext(AppThemeContext)
 
-  if (appTheme === null || appTheme === undefined) {
+  if (appThemeContext === null || appThemeContext === undefined) {
     throw new Error('AppThemeContext must be used inside AppThemeProvider')
   }
 
-  const { theme, onChange } = appTheme
+  const { onChange, themeType } = appThemeContext
 
-  const handleChange = (event: any) => {
+  const handleChange = (event: ChangeEvent<{ value: unknown }>) => {
     onChange(event.target.value as AppTheme)
   }
 
   return (
-    <Select value={theme} onChange={handleChange}>
+    <Select value={themeType} onChange={handleChange} variant='outlined'>
       {Object.values(AppTheme).map(value => (
         <MenuItem key={value} value={value}>
           {value}
