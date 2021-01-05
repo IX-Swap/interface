@@ -8,6 +8,7 @@ export interface QueryFilters {
   authorizationStatus: AuthorizableStatus | undefined
   fromDate: string | undefined
   toDate: string | undefined
+  currentSlide: string | undefined
 }
 
 export type QueryFilter = keyof QueryFilters
