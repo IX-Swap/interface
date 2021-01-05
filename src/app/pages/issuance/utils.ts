@@ -1,5 +1,6 @@
-import { DSOFormValues, DSORequestArgs } from 'types/dso'
+import { DSOActivity, DSOFormValues, DSORequestArgs } from 'types/dso'
 import omit from 'lodash/omit'
+import { getPersonName } from 'helpers/strings'
 
 export const numberToPercentage = (number: number | null | undefined) =>
   Number(number ?? 0) / 100
@@ -28,5 +29,32 @@ export const transformDSOFormValuesToRequestArgs = (
     documents:
       dso.documents?.map(d => d.value?._id ?? null).filter(d => d !== null) ??
       []
+  }
+}
+
+export const getActivityUserInfo = (activity: DSOActivity) => {
+  const {
+    identity: { individual, corporates }
+  } = activity
+  const hasIndividual = individual !== undefined
+  const hasCorporate = corporates.length > 0
+
+  if (hasIndividual) {
+    return {
+      imageId: individual.photo,
+      name: getPersonName(individual)
+    }
+  }
+
+  if (hasCorporate) {
+    return {
+      imageId: corporates[0].logo,
+      name: corporates[0].companyLegalName
+    }
+  }
+
+  return {
+    imageId: '',
+    name: ''
   }
 }

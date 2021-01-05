@@ -3,12 +3,14 @@ import {
   DSOFormValues,
   DsoTeamMember,
   DeploymentInfo,
-  DSOInsight
+  DSOInsight,
+  DSOActivity
 } from 'types/dso'
 import { corporate, asset } from './authorizer'
 import { emptyFile } from '__fixtures__/file'
 import { numberToPercentage } from 'app/pages/issuance/utils'
 import { network } from './network'
+import { individual } from '__fixtures__/identity'
 
 export const deploymentInfo: DeploymentInfo = {
   _id: '12',
@@ -239,3 +241,14 @@ export const commitmentStatsData = [
   ['SAT', 2500],
   ['SUN', 3000]
 ]
+
+export const activity: DSOActivity = {
+  _id: 'activity-id',
+  invariant: 'Some activity',
+  createdAt: '10-10-2020',
+  user: 'user-id',
+  identity: {
+    individual,
+    corporates: [corporate]
+  }
+}
