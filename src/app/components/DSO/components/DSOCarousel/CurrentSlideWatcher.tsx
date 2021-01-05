@@ -2,11 +2,13 @@ import { useContext, useEffect, useState } from 'react'
 import { CarouselContext } from 'pure-react-carousel'
 import { useQueryFilter } from 'hooks/filters/useQueryFilter'
 
+export interface CurrentSlideWatcherProps {
+  currentSlide: number
+}
+
 export const CurrentSlideWatcher = ({
   currentSlide
-}: {
-  currentSlide: number
-}) => {
+}: CurrentSlideWatcherProps) => {
   const carouselContext = useContext(CarouselContext)
   const { updateFilter } = useQueryFilter()
   const [currentFilterSlide, setCurrentFilterSlide] = useState(currentSlide)
