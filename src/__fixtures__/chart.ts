@@ -2,41 +2,57 @@ import { subDays } from 'date-fns'
 import { prepareChartData } from 'helpers/prepareChartData'
 import { removeHours } from 'helpers/getWeekDays'
 
+const data = [
+  [new Date(Date.now()), 100],
+  [new Date(subDays(Date.now(), 1)), 125],
+  [new Date(subDays(Date.now(), 2)), 150],
+  [new Date(subDays(Date.now(), 3)), 175],
+  [new Date(subDays(Date.now(), 4)), 200],
+  [new Date(subDays(Date.now(), 5)), 255],
+  [new Date(subDays(Date.now(), 6)), 250]
+]
+
+const noData = [
+  [new Date(subDays(Date.now(), 6)), 25],
+  [new Date(subDays(Date.now(), 5)), 25],
+  [new Date(subDays(Date.now(), 4)), 25],
+  [new Date(subDays(Date.now(), 3)), 25],
+  [new Date(subDays(Date.now(), 2)), 25],
+  [new Date(subDays(Date.now(), 1)), 25],
+  [new Date(Date.now()), 25]
+]
+
+const commitmentTicks = [
+  new Date(removeHours(subDays(Date.now(), 6))),
+  new Date(removeHours(subDays(Date.now(), 5))),
+  new Date(removeHours(subDays(Date.now(), 4))),
+  new Date(removeHours(subDays(Date.now(), 3))),
+  new Date(removeHours(subDays(Date.now(), 2))),
+  new Date(removeHours(subDays(Date.now(), 1))),
+  new Date(removeHours(subDays(Date.now(), 0)))
+]
+
+const investmentTicks = [
+  new Date(removeHours(subDays(Date.now(), 0))),
+  new Date(removeHours(subDays(Date.now(), 1))),
+  new Date(removeHours(subDays(Date.now(), 2))),
+  new Date(removeHours(subDays(Date.now(), 3))),
+  new Date(removeHours(subDays(Date.now(), 4))),
+  new Date(removeHours(subDays(Date.now(), 5))),
+  new Date(removeHours(subDays(Date.now(), 6)))
+]
+
 export const commitmentChartData = [
   [
     { type: 'date', label: 'date' },
     { type: 'number', label: 'commitments' }
   ],
-  [new Date('2021-01-03T00:00:00.000+08:00'), 100],
-  [new Date('2021-01-02T00:00:00.000+08:00'), 125],
-  [new Date('2021-01-01T00:00:00.000+08:00'), 150],
-  [new Date('2020-12-31T00:00:00.000+08:00'), 175],
-  [new Date('2020-12-30T00:00:00.000+08:00'), 200],
-  [new Date('2020-12-29T00:00:00.000+08:00'), 225],
-  [new Date('2020-12-28T00:00:00.000+08:00'), 250]
+  ...data
 ]
 
 export const commitmentChartOption = {
   chartType: 'ColumnChart',
-  data: [
-    [
-      {
-        label: 'date',
-        type: 'date'
-      },
-      {
-        label: 'commitments',
-        type: 'number'
-      }
-    ],
-    [new Date('2021-01-03T00:00:00.000+08:00'), 100],
-    [new Date('2021-01-02T00:00:00.000+08:00'), 125],
-    [new Date('2021-01-01T00:00:00.000+08:00'), 150],
-    [new Date('2020-12-31T00:00:00.000+08:00'), 175],
-    [new Date('2020-12-30T00:00:00.000+08:00'), 200],
-    [new Date('2020-12-29T00:00:00.000+08:00'), 225],
-    [new Date('2020-12-28T00:00:00.000+08:00'), 250]
-  ],
+  data: prepareChartData(commitmentChartData),
   height: 250,
   options: {
     backgroundColor: 'transparent',
@@ -52,15 +68,7 @@ export const commitmentChartOption = {
       gridlines: {
         color: 'rgba(0, 0, 0, 0.54)'
       },
-      ticks: [
-        new Date('2020-12-28T00:00:00.000+08:00'),
-        new Date('2020-12-29T00:00:00.000+08:00'),
-        new Date('2020-12-30T00:00:00.000+08:00'),
-        new Date('2020-12-31T00:00:00.000+08:00'),
-        new Date('2021-01-01T00:00:00.000+08:00'),
-        new Date('2021-01-02T00:00:00.000+08:00'),
-        new Date('2021-01-03T00:00:00.000+08:00')
-      ]
+      ticks: commitmentTicks
     },
     legend: {
       position: 'none'
@@ -82,13 +90,7 @@ export const commitmentNoData = [
     { type: 'date', label: 'Date' },
     { type: 'number', label: 'Count' }
   ],
-  [new Date(subDays(Date.now(), 6)), 25],
-  [new Date(subDays(Date.now(), 5)), 25],
-  [new Date(subDays(Date.now(), 4)), 25],
-  [new Date(subDays(Date.now(), 3)), 25],
-  [new Date(subDays(Date.now(), 2)), 25],
-  [new Date(subDays(Date.now(), 1)), 25],
-  [new Date(Date.now()), 25]
+  ...noData
 ]
 
 export const commitmentChartNoDataOption = {
@@ -109,15 +111,7 @@ export const commitmentChartNoDataOption = {
       gridlines: {
         color: 'transparent'
       },
-      ticks: [
-        new Date(removeHours(subDays(Date.now(), 6))),
-        new Date(removeHours(subDays(Date.now(), 5))),
-        new Date(removeHours(subDays(Date.now(), 4))),
-        new Date(removeHours(subDays(Date.now(), 3))),
-        new Date(removeHours(subDays(Date.now(), 2))),
-        new Date(removeHours(subDays(Date.now(), 1))),
-        new Date(removeHours(subDays(Date.now(), 0)))
-      ]
+      ticks: commitmentTicks
     },
     legend: {
       position: 'none'
@@ -139,13 +133,7 @@ export const investmentGrowthChartData = [
     { type: 'date', label: 'date' },
     { type: 'number', label: 'investment' }
   ],
-  [new Date('2021-01-03T00:00:00.000+08:00'), 100],
-  [new Date('2021-01-02T00:00:00.000+08:00'), 125],
-  [new Date('2021-01-01T00:00:00.000+08:00'), 150],
-  [new Date('2020-12-31T00:00:00.000+08:00'), 175],
-  [new Date('2020-12-30T00:00:00.000+08:00'), 200],
-  [new Date('2020-12-29T00:00:00.000+08:00'), 225],
-  [new Date('2020-12-28T00:00:00.000+08:00'), 250]
+  ...data
 ]
 
 export const investmentGrowthChartOptions = {
@@ -157,15 +145,7 @@ export const investmentGrowthChartOptions = {
     },
     hAxis: {
       format: 'E',
-      ticks: [
-        new Date('2021-01-03T00:00:00.000+08:00'),
-        new Date('2021-01-02T00:00:00.000+08:00'),
-        new Date('2021-01-01T00:00:00.000+08:00'),
-        new Date('2020-12-31T00:00:00.000+08:00'),
-        new Date('2020-12-30T00:00:00.000+08:00'),
-        new Date('2020-12-29T00:00:00.000+08:00'),
-        new Date('2020-12-28T00:00:00.000+08:00')
-      ],
+      ticks: investmentTicks,
       baselineColor: 'transparent'
     },
     vAxis: {
