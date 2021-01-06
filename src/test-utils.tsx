@@ -3,7 +3,6 @@ import { Router } from 'react-router-dom'
 import { render, RenderOptions, RenderResult } from '@testing-library/react'
 import {
   createGenerateClassName,
-  createMuiTheme,
   StylesProvider
 } from '@material-ui/core/styles'
 import { ThemeProvider } from '@material-ui/styles'
@@ -22,7 +21,7 @@ import { ToastProvider } from 'react-toast-notifications'
 import { AppStateProvider } from 'app/hooks/useAppState'
 import { Form } from 'components/form/Form'
 import { Toast } from 'components/Toast'
-import { lightTheme } from 'themes/light'
+import { AppThemeProvider } from 'AppThemeProvider'
 
 const generateClassName = createGenerateClassName({
   productionPrefix: 'ix'
@@ -31,26 +30,30 @@ const generateClassName = createGenerateClassName({
 export const BaseProviders: React.FC = ({ children }) => {
   return (
     <StylesProvider generateClassName={generateClassName}>
-      <ThemeProvider theme={createMuiTheme(lightTheme)}>
-        <ToastProvider
-          components={{ Toast: Toast, ToastContainer: () => null }}
-        >
-          <BreadcrumbsProvider>
-            <AppStateProvider>
-              <ServicesProvider
-                value={{
-                  snackbarService: {
-                    showSnackbar: jest.fn(),
-                    showNotification: jest.fn()
-                  }
-                }}
-              >
-                <Router history={history}>{children}</Router>
-              </ServicesProvider>
-            </AppStateProvider>
-          </BreadcrumbsProvider>
-        </ToastProvider>
-      </ThemeProvider>
+      <AppThemeProvider>
+        {theme => (
+          <ThemeProvider theme={theme}>
+            <ToastProvider
+              components={{ Toast: Toast, ToastContainer: () => null }}
+            >
+              <BreadcrumbsProvider>
+                <AppStateProvider>
+                  <ServicesProvider
+                    value={{
+                      snackbarService: {
+                        showSnackbar: jest.fn(),
+                        showNotification: jest.fn()
+                      }
+                    }}
+                  >
+                    <Router history={history}>{children}</Router>
+                  </ServicesProvider>
+                </AppStateProvider>
+              </BreadcrumbsProvider>
+            </ToastProvider>
+          </ThemeProvider>
+        )}
+      </AppThemeProvider>
     </StylesProvider>
   )
 }

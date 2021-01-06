@@ -1,24 +1,26 @@
 import { useMediaQuery } from '@material-ui/core'
-import { createMuiTheme, Theme } from '@material-ui/core/styles'
-import { isDevEnv } from 'config'
-import { useMemo } from 'react'
-import { darkTheme } from 'themes/dark'
-import { lightTheme } from 'themes/light'
-import { getThemeOverrides } from 'themes/overrides'
-import { typography } from 'themes/typography'
+import { useMemo, useState } from 'react'
+import storageService from 'services/storage'
+import { AppTheme, getAppTheme } from 'themes'
 
 export const useAppTheme = () => {
+  const savedTheme = storageService.get('app-theme', AppTheme.Light) as AppTheme
+  const [themeType, setThemeType] = useState(savedTheme)
+
+  const handelThemeChange = (themeType: AppTheme) => {
+    setThemeType(themeType)
+    storageService.set('app-theme', themeType)
+  }
+
   const prefersDarkMode = useMediaQuery('(prefers-color-scheme: dark)')
-  const baseTheme = prefersDarkMode ? darkTheme : lightTheme
-  const theme = useMemo(
-    () =>
-      createMuiTheme({
-        ...baseTheme,
-        typography,
-        overrides: getThemeOverrides(baseTheme as Theme)
-      }),
-    [prefersDarkMode] // eslint-disable-line
+  const themeMemo = useMemo(
+    () => getAppTheme(themeType, prefersDarkMode),
+    [themeType, prefersDarkMode] // eslint-disable-line
   )
 
-  return isDevEnv ? theme : lightTheme
+  return {
+    themeType,
+    theme: themeMemo,
+    onChange: handelThemeChange
+  }
 }
