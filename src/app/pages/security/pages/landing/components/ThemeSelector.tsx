@@ -1,7 +1,7 @@
 import { MenuItem, Select } from '@material-ui/core'
 import { AppThemeContext } from 'AppThemeProvider'
-import { AppTheme } from 'hooks/useAppTheme'
 import React, { ChangeEvent, useContext } from 'react'
+import { AppTheme } from 'themes'
 
 export const ThemeSelector = () => {
   const appThemeContext = useContext(AppThemeContext)
