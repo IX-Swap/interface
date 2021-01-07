@@ -1,8 +1,6 @@
 import React from 'react'
 import { Grid, Input } from '@material-ui/core'
 import { TypedField } from 'components/form/TypedField'
-import { DataroomUploader } from 'components/dataroom/DataroomUploader'
-import { DataroomAvatarUploader } from 'components/dataroom/DataroomAvatarUploader'
 import { dateTimeValueExtractor } from 'helpers/forms'
 import { CorporateSelect } from 'components/form/CorporateSelect'
 import { NetworkSelect } from 'components/form/NetworkSelect'
@@ -12,6 +10,7 @@ import { DSOFormValues } from 'types/dso'
 import { documentValueExtractor } from 'app/components/DSO/utils'
 import { DataroomFileType } from 'config/dataroom'
 import { DateTimePicker } from 'components/form/_DateTimePicker'
+import { Dropzone } from 'components/dataroom/Dropzone'
 
 export interface DSOBaseFieldsProps {
   isNew: boolean
@@ -36,13 +35,10 @@ export const DSOBaseFields = (props: DSOBaseFieldsProps) => {
           {/* @ts-ignore */}
           <TypedField
             customRenderer
-            component={DataroomUploader}
+            component={Dropzone}
             name='logo'
             label='Logo'
             control={control}
-            render={renderProps => (
-              <DataroomAvatarUploader {...renderProps} type='image' />
-            )}
             valueExtractor={documentValueExtractor}
             accept={DataroomFileType.image}
             documentInfo={{
