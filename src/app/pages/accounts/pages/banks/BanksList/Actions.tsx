@@ -1,7 +1,7 @@
 import { Bank } from 'types/bank'
 import { Button, ButtonGroup } from '@material-ui/core'
 import React from 'react'
-import { useBanksRouter } from 'app/pages/accounts/pages/banks/router'
+import { BanksRoute } from 'app/pages/accounts/pages/banks/router/config'
 import { AppRouterLinkComponent } from 'components/AppRouterLink'
 
 export interface ActionsProps {
@@ -9,20 +9,18 @@ export interface ActionsProps {
 }
 
 export const Actions = ({ item }: ActionsProps) => {
-  const { paths } = useBanksRouter()
-
   return (
     <ButtonGroup size='small'>
       <Button
         component={AppRouterLinkComponent}
-        to={paths.edit}
+        to={BanksRoute.edit}
         params={{ bankId: item._id }}
       >
         Edit
       </Button>
       <Button
         component={AppRouterLinkComponent}
-        to={paths.view}
+        to={BanksRoute.view}
         params={{ bankId: item._id }}
       >
         View

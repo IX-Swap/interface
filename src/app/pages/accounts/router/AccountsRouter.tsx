@@ -7,43 +7,46 @@ import { WithdrawCash } from 'app/pages/accounts/pages/banks/WithdrawCash/Withdr
 import { DigitalSecurities } from 'app/pages/accounts/pages/digitalSecurities/DigitalSecurities'
 import { Transactions } from 'app/pages/accounts/pages/transactions/Transactions'
 import { WithdrawalAddresses } from 'app/pages/accounts/pages/withdrawalAddresses/WithdrawalAddresses'
-import { accountsLandingLinks } from 'app/pages/accounts/router/config'
-import { Switch, Route, useRouteMatch } from 'react-router-dom'
+import {
+  accountsLandingLinks,
+  AccountsRoute
+} from 'app/pages/accounts/router/config'
+import { Switch, Route } from 'react-router-dom'
 
 export const AccountsRouter = () => {
-  const { path } = useRouteMatch()
-
   return (
     <Switch>
-      <Route exact path={`${path}/bank-accounts`} component={Banks} />
+      <Route path={AccountsRoute.banks}>
+        <Banks />
+      </Route>
 
-      <Route exact path={`${path}/cash-deposits`} component={DepositCash} />
+      <Route path={AccountsRoute.depositCash}>
+        <DepositCash />
+      </Route>
 
-      <Route exact path={`${path}/cash-withdrawals`} component={WithdrawCash} />
+      <Route path={AccountsRoute.withdrawCash}>
+        <WithdrawCash />
+      </Route>
 
-      <Route exact path='/app/accounts/balances' component={Balances} />
+      <Route path={AccountsRoute.balances}>
+        <Balances />
+      </Route>
 
-      <Route
-        exact
-        path={`${path}/digital-security`}
-        component={DigitalSecurities}
-      />
+      <Route path={AccountsRoute.digitalSecurities}>
+        <DigitalSecurities />
+      </Route>
 
-      <Route exact path='/app/accounts/transactions' component={Transactions} />
+      <Route path={AccountsRoute.transactions}>
+        <Transactions />
+      </Route>
 
-      <Route
-        exact
-        path={`${path}/withdrawal-addresses`}
-        component={WithdrawalAddresses}
-      />
+      <Route path={AccountsRoute.withdrawalAddresses}>
+        <WithdrawalAddresses />
+      </Route>
 
-      <Route
-        exact
-        path={`${path}`}
-        component={() => (
-          <LandingPage label='' path='' links={accountsLandingLinks} />
-        )}
-      />
+      <Route path={AccountsRoute.landing}>
+        <LandingPage label='' path='' links={accountsLandingLinks} />
+      </Route>
     </Switch>
   )
 }

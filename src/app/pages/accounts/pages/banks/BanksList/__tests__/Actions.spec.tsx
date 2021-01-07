@@ -6,7 +6,7 @@ import {
 } from 'app/pages/accounts/pages/banks/BanksList/Actions'
 import { bank } from '__fixtures__/authorizer'
 import { AppRouterLinkComponent } from 'components/AppRouterLink'
-import { BanksRoute } from 'app/pages/accounts/pages/banks/router'
+import { BanksRoute } from 'app/pages/accounts/pages/banks/router/config'
 
 jest.mock('components/AppRouterLink', () => ({
   AppRouterLinkComponent: jest.fn(() => null)

@@ -1,8 +1,6 @@
 import React from 'react'
-import { useBanksRouter } from 'app/pages/accounts/pages/banks/router'
+import { BanksRouter } from 'app/pages/accounts/pages/banks/router/BanksRouter'
 
-export const Banks: React.FC = () => {
-  const { renderRoutes } = useBanksRouter()
-
-  return renderRoutes()
+export const Banks = () => {
+  return <BanksRouter />
 }

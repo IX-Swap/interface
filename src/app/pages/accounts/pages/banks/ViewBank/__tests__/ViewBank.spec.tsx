@@ -6,8 +6,9 @@ import { BankPreview } from 'app/components/BankPreview/BankPreview'
 import { useBanksData } from 'app/pages/accounts/pages/banks/hooks/useBanksData'
 import { QueryStatus } from 'react-query'
 import { history } from 'config/history'
-import { BanksRoute } from 'app/pages/accounts/pages/banks/router'
+import { BanksRoute } from 'app/pages/accounts/pages/banks/router/config'
 import { generateInfiniteQueryResult } from '__fixtures__/useQuery'
+import { Route } from 'react-router-dom'
 
 jest.mock('app/components/BankPreview/BankPreview', () => ({
   BankPreview: jest.fn(() => <div data-testid='bank-preview' />)
@@ -20,7 +21,9 @@ const useBanksDataMock = useBanksData as jest.Mock<
 
 describe('ViewBank', () => {
   beforeEach(() => {
-    history.push('/', { bankId: bank._id })
+    history.push(`/app/accounts/bank-accounts/${bank._id}/view`, {
+      bankId: bank._id
+    })
   })
 
   afterEach(async () => {
@@ -40,14 +43,17 @@ describe('ViewBank', () => {
   })
 
   it('renders BankPreview without error', () => {
-    history.push(BanksRoute.view, { bankId: 'testBankId' })
     useBanksDataMock.mockReturnValue(
       generateInfiniteQueryResult({
-        map: { testBankId: bank }
+        map: { [bank._id]: bank }
       })
     )
 
-    render(<ViewBank />)
+    render(
+      <Route path={BanksRoute.view}>
+        <ViewBank />
+      </Route>
+    )
 
     expect(BankPreview).toHaveBeenCalledWith({ data: bank }, {})
   })

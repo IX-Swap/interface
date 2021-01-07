@@ -1,11 +1,9 @@
 import React from 'react'
 import { Grid, Button } from '@material-ui/core'
 import { AppRouterLinkComponent } from 'components/AppRouterLink'
-import { useBanksRouter } from '../router'
+import { BanksRoute } from '../router/config'
 
-export const Header: React.FC = () => {
-  const { paths: banksPaths } = useBanksRouter()
-
+export const Header = () => {
   return (
     <Grid item container xs={12} justify='flex-end'>
       <Button
@@ -13,7 +11,7 @@ export const Header: React.FC = () => {
         variant='contained'
         color='primary'
         disableElevation
-        to={banksPaths.create}
+        to={BanksRoute.create}
       >
         Add Bank Account
       </Button>

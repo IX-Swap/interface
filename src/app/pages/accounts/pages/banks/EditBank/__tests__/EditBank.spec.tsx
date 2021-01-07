@@ -2,11 +2,12 @@ import React from 'react'
 import { render, cleanup } from 'test-utils'
 import { bank } from '__fixtures__/authorizer'
 import { useBanksData } from 'app/pages/accounts/pages/banks/hooks/useBanksData'
-import { BanksRoute } from 'app/pages/accounts/pages/banks/router'
 import { BankForm } from 'app/pages/accounts/pages/banks/components/BankForm'
 import { EditBank } from 'app/pages/accounts/pages/banks/EditBank/EditBank'
 import { generateInfiniteQueryResult } from '__fixtures__/useQuery'
 import { QueryStatus } from 'react-query'
+import { Route } from 'react-router-dom'
+import { BanksRoute } from 'app/pages/accounts/pages/banks/router/config'
 import { history } from 'config/history'
 
 jest.mock('app/pages/accounts/pages/banks/hooks/useBanksData')
@@ -20,19 +21,20 @@ const useBanksDataMock = useBanksData as jest.Mock<
 
 describe('EditBank', () => {
   beforeEach(() => {
-    history.push(BanksRoute.edit, { bankId: 'testBankId' })
+    history.push(`/app/accounts/bank-accounts/${bank._id}/edit`, {
+      bankId: bank._id
+    })
   })
 
   afterEach(async () => {
     await cleanup()
     jest.clearAllMocks()
   })
-  afterAll(() => history.push('/'))
 
-  it('renders nothing if loading', () => {
+  it('renders without error', () => {
     useBanksDataMock.mockReturnValue(
       generateInfiniteQueryResult({
-        map: { testBankId: bank },
+        map: { [bank._id]: bank },
         queryStatus: QueryStatus.Loading
       })
     )
@@ -40,12 +42,37 @@ describe('EditBank', () => {
     render(<EditBank />)
   })
 
+  it('renders nothing if loading', () => {
+    useBanksDataMock.mockReturnValue(
+      generateInfiniteQueryResult({
+        map: { [bank._id]: bank },
+        queryStatus: QueryStatus.Loading
+      })
+    )
+
+    const { container } = render(<EditBank />)
+
+    expect(container).toBeEmptyDOMElement()
+  })
+
   it('renders BankForm without error', () => {
     useBanksDataMock.mockReturnValue(
-      generateInfiniteQueryResult({ map: { testBankId: bank } })
+      generateInfiniteQueryResult({ map: { [bank._id]: bank } })
     )
-    render(<EditBank />)
 
-    expect(BankForm).toHaveBeenCalled()
+    render(
+      <Route path={BanksRoute.edit}>
+        <EditBank />
+      </Route>
+    )
+
+    expect(BankForm).toHaveBeenCalledWith(
+      {
+        submitButtonLabel: 'Save',
+        onSubmit: expect.any(Function),
+        bank
+      },
+      {}
+    )
   })
 })

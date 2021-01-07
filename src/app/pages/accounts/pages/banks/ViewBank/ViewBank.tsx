@@ -1,11 +1,11 @@
 import React from 'react'
 import { BankPreview } from 'app/components/BankPreview/BankPreview'
 import { useBanksData } from 'app/pages/accounts/pages/banks/hooks/useBanksData'
-import { useBanksRouter } from 'app/pages/accounts/pages/banks/router'
 import { RejectionMessage } from 'app/pages/authorizer/components/RejectionMessage'
+import { useParams } from 'react-router-dom'
 
-const ViewBank: React.FC = () => {
-  const { params } = useBanksRouter()
+const ViewBank = () => {
+  const params = useParams<{ bankId: string }>()
   const { data, status } = useBanksData()
   const bank = data.map[params.bankId]
 
