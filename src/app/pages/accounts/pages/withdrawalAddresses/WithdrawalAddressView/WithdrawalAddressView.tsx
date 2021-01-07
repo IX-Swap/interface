@@ -5,13 +5,14 @@ import { WADialogTitle } from 'app/pages/accounts/pages/withdrawalAddresses/WADi
 import { WADialogContent } from 'app/pages/accounts/pages/withdrawalAddresses/WADialog/WADialogContent'
 import { WADialogActions } from 'app/pages/accounts/pages/withdrawalAddresses/WADialog/WADialogActions'
 import { WAViewContent } from 'app/pages/accounts/pages/withdrawalAddresses/WithdrawalAddressView/WAViewContent'
-import { useWithdrawalAddressesRouter } from '../router'
+import { WithdrawalAddressesRoute } from '../router/config'
+import { useHistory } from 'react-router-dom'
 
-export const WithdrawalAddressView = ({ isOpen }: { isOpen: boolean }) => {
-  const { replace } = useWithdrawalAddressesRouter()
+export const WithdrawalAddressView = () => {
+  const { replace } = useHistory()
 
   return (
-    <WADialog open={isOpen}>
+    <WADialog open>
       <WADialogTitle label='View Withdrawal Address' />
       <WADialogContent>
         <WAViewContent />
@@ -22,7 +23,7 @@ export const WithdrawalAddressView = ({ isOpen }: { isOpen: boolean }) => {
             variant='contained'
             color='primary'
             disableElevation
-            onClick={() => replace('list')}
+            onClick={() => replace(WithdrawalAddressesRoute.list)}
           >
             Ok
           </Button>

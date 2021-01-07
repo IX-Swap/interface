@@ -6,12 +6,13 @@ import {
 } from 'types/withdrawalAddress'
 import { useMutation } from 'react-query'
 import { getIdFromObj } from 'helpers/strings'
-import { useWithdrawalAddressesRouter } from 'app/pages/accounts/pages/withdrawalAddresses/router'
 import { accountsURL } from 'config/apiURL'
+import { useHistory } from 'react-router-dom'
+import { WithdrawalAddressesRoute } from 'app/pages/accounts/pages/withdrawalAddresses/router/config'
 
 export const useMakeWithdrawalAddress = () => {
   const { apiService, snackbarService } = useServices()
-  const { replace } = useWithdrawalAddressesRouter()
+  const { replace } = useHistory()
   const { user } = useAuth()
   const uri = accountsURL.withdrawalAddresses.create(getIdFromObj(user))
   const mutateFn = async (args: MakeWithdrawalAddressArgs) => {
@@ -21,7 +22,7 @@ export const useMakeWithdrawalAddress = () => {
   return useMutation(mutateFn, {
     onSuccess: () => {
       void snackbarService.showSnackbar('Success', 'success')
-      replace('list')
+      replace(WithdrawalAddressesRoute.list)
     },
     onError: (error: any) => {
       void snackbarService.showSnackbar(error.message, 'error')
