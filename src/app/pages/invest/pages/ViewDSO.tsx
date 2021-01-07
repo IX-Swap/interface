@@ -3,13 +3,11 @@ import { Grid } from '@material-ui/core'
 import { VSpacer } from 'components/VSpacer'
 import { useDSOById } from 'app/pages/invest/hooks/useDSOById'
 import { InvestLink } from 'app/pages/invest/components/InvestLink'
-import { useDSORouter } from 'app/pages/invest/routers/dsoRouter'
 import { DSOView } from 'app/components/DSO/DSOView'
+import { useParams } from 'react-router-dom'
 
 export const ViewDSO = () => {
-  const {
-    params: { dsoId, issuerId }
-  } = useDSORouter()
+  const { dsoId, issuerId } = useParams<{ dsoId: string; issuerId: string }>()
   const { isLoading, data } = useDSOById(dsoId, issuerId)
 
   if (isLoading || data === undefined) {

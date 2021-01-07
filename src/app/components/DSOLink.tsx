@@ -1,7 +1,7 @@
 import { AppRouterLink } from 'components/AppRouterLink'
 import React from 'react'
 import { DigitalSecurityOffering } from 'types/dso'
-import { DSORoute } from 'app/pages/invest/routers/dsoRouter'
+import { DSORoute } from 'app/pages/invest/router/config'
 
 export interface DSOLinkProps {
   dso: DigitalSecurityOffering

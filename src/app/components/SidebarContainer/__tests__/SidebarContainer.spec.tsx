@@ -8,9 +8,9 @@ import { ReactComponent as IssuanceIcon } from 'assets/icons/navigation/issuance
 import { ReactComponent as AuthorizerIcon } from 'assets/icons/navigation/authorizer.svg'
 import * as acl from 'helpers/acl'
 import * as useAuthorizerRouterHook from 'app/pages/authorizer/router'
-import * as useInvestRouterHook from 'app/pages/invest/routers/router'
 import * as useIssuanceRouterHook from 'app/pages/issuance/router'
 import { AccountsRoute } from 'app/pages/accounts/router/config'
+import { InvestRoute } from 'app/pages/invest/router/config'
 
 jest.mock('assets/icons/navigation/invest.svg', () => ({
   ReactComponent: jest.fn(() => null)
@@ -36,9 +36,6 @@ describe('Sidebar', () => {
     jest.spyOn(useAuthorizerRouterHook, 'useAuthorizerRouter').mockReturnValue({
       paths: useAuthorizerRouterHook.AuthorizerRoute
     } as any)
-    jest
-      .spyOn(useInvestRouterHook, 'useInvestRouter')
-      .mockReturnValue({ paths: useInvestRouterHook.InvestRoute } as any)
     jest
       .spyOn(useIssuanceRouterHook, 'useIssuanceRouter')
       .mockReturnValue({ paths: useIssuanceRouterHook.IssuanceRoute } as any)
@@ -74,7 +71,7 @@ describe('Sidebar', () => {
       2,
       {
         label: 'Invest',
-        link: useInvestRouterHook.InvestRoute.landing,
+        link: InvestRoute.landing,
         icon: InvestIcon
       },
       {}
@@ -100,7 +97,7 @@ describe('Sidebar', () => {
       2,
       {
         label: 'Invest',
-        link: useInvestRouterHook.InvestRoute.landing,
+        link: InvestRoute.landing,
         icon: InvestIcon
       },
       {}
@@ -136,7 +133,7 @@ describe('Sidebar', () => {
       2,
       {
         label: 'Invest',
-        link: useInvestRouterHook.InvestRoute.landing,
+        link: InvestRoute.landing,
         icon: InvestIcon
       },
       {}

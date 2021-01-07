@@ -4,15 +4,8 @@ import { useMakeCommitment } from 'app/pages/invest/hooks/useMakeCommitment'
 import { unsuccessfulResponse, successfulResponse } from '__fixtures__/api'
 import { MakeInvestmentArgs } from 'types/commitment'
 import { commitment, dso } from '__fixtures__/authorizer'
-import { useDSORouter } from 'app/pages/invest/routers/dsoRouter'
 import * as useAuthHook from 'hooks/auth/useAuth'
 import { user } from '__fixtures__/user'
-
-jest.mock('app/pages/invest/routers/dsoRouter')
-
-const useDSORouterMock = useDSORouter as jest.Mock<
-  Partial<ReturnType<typeof useDSORouter>>
->
 
 describe('useMakeCommitment', () => {
   const makeInvestmentArgs: MakeInvestmentArgs = {
@@ -28,11 +21,6 @@ describe('useMakeCommitment', () => {
     jest
       .spyOn(useAuthHook, 'useAuth')
       .mockReturnValue({ user: user, isAuthenticated: true })
-
-    useDSORouterMock.mockReturnValue({
-      replace: jest.fn(),
-      params: { dsoId: dso._id }
-    })
   })
 
   afterEach(async () => {

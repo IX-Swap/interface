@@ -3,7 +3,7 @@ import { render, cleanup } from 'test-utils'
 import { DSOLink, DSOLinkProps } from 'app/components/DSOLink'
 import { AppRouterLink } from 'components/AppRouterLink'
 import { dso } from '__fixtures__/authorizer'
-import { DSORoute } from 'app/pages/invest/routers/dsoRouter'
+import { DSORoute } from 'app/pages/invest/router/config'
 
 jest.mock('components/AppRouterLink', () => ({
   AppRouterLink: jest.fn(({ children }) => children)

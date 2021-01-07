@@ -7,12 +7,12 @@ import { CommitmentForm } from 'app/pages/invest/components/CommitmentForm'
 import { VSpacer } from 'components/VSpacer'
 import { CommitmentFormSubmitButton } from 'app/pages/invest/components/CommitmentFormSubmitButton'
 import { CommitmentFormCancelButton } from 'app/pages/invest/components/CommitmentFormCancelButton'
-import { useDSORouter } from 'app/pages/invest/routers/dsoRouter'
 import { useCommitmentActivity } from '../hooks/useCommitmentActivity'
 import { DownloadDSOSubscriptionDocument } from 'app/components/DSO/components/DownloadDSOSubscriptionDocument'
+import { useParams } from 'react-router-dom'
 
 export const CommitmentFormWrapper = () => {
-  const { params } = useDSORouter()
+  const params = useParams<{ dsoId: string; issuerId: string }>()
   const { data, isLoading } = useDSOById(params.dsoId, params.issuerId)
 
   useCommitmentActivity(data?._id)

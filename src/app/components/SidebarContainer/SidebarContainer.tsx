@@ -4,7 +4,6 @@ import { useIsAdmin, useIsAuthorizer, useIsIssuer } from 'helpers/acl'
 import { SidebarLinkContainer } from 'app/components/SidebarContainer/components/SidebarLinkContainer'
 import { useAuthorizerRouter } from 'app/pages/authorizer/router'
 import { AccountsRoute } from 'app/pages/accounts/router/config'
-import { useInvestRouter } from 'app/pages/invest/routers/router'
 import { useIssuanceRouter } from 'app/pages/issuance/router'
 import { ReactComponent as InvestIcon } from 'assets/icons/navigation/invest.svg'
 import { ReactComponent as AccountsIcon } from 'assets/icons/navigation/account.svg'
@@ -13,6 +12,7 @@ import { ReactComponent as AuthorizerIcon } from 'assets/icons/navigation/author
 import { SwipeableDrawer } from '@material-ui/core'
 import { useAppActions, useAppState } from 'app/hooks/useAppState'
 import { useAppBreakpoints } from 'hooks/useAppBreakpoints'
+import { InvestRoute } from 'app/pages/invest/router/config'
 
 export const SidebarContainer = () => {
   const { isNavDrawerOpened } = useAppState()
@@ -23,7 +23,6 @@ export const SidebarContainer = () => {
   const isAdmin = useIsAdmin()
 
   const { paths: authorizerRoutes } = useAuthorizerRouter()
-  const { paths: investRoutes } = useInvestRouter()
   const { paths: issuanceRoutes } = useIssuanceRouter()
 
   const isSuperUser = isAuthorizer || isAdmin
@@ -35,7 +34,7 @@ export const SidebarContainer = () => {
     },
     {
       label: 'Invest',
-      link: investRoutes.landing,
+      link: InvestRoute.landing,
       icon: InvestIcon
     }
   ]

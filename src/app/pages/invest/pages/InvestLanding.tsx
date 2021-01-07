@@ -3,7 +3,7 @@ import { useAuth } from 'hooks/auth/useAuth'
 import { Grid, Button, Typography } from '@material-ui/core'
 import { useSetPageTitle } from 'app/hooks/useSetPageTitle'
 import { AppRouterLinkComponent } from 'components/AppRouterLink'
-import { useInvestRouter } from 'app/pages/invest/routers/router'
+import { InvestRoute } from 'app/pages/invest/router/config'
 import { VSpacer } from 'components/VSpacer'
 import { DSOTable } from 'app/pages/invest/components/DSOTable/DSOTable'
 import { PromotedDSOs } from 'app/components/DSO/components/PromotedDSOs'
@@ -11,7 +11,6 @@ import { PromoBanner } from 'app/pages/invest/components/PromoBanner'
 
 export const InvestLanding = () => {
   const { user } = useAuth()
-  const { paths } = useInvestRouter()
 
   useSetPageTitle(`Welcome, ${user?.name ?? ''}`)
 
@@ -24,7 +23,7 @@ export const InvestLanding = () => {
         <Grid item>
           <Button
             component={AppRouterLinkComponent}
-            to={paths.commitments}
+            to={InvestRoute.commitments}
             color='primary'
             variant='outlined'
             size='large'
