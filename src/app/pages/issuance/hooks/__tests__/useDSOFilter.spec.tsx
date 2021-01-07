@@ -1,13 +1,18 @@
 import { act, renderHook } from '@testing-library/react-hooks'
-import { waitFor, cleanup } from 'test-utils'
+import { waitFor, cleanup, BaseProviders } from 'test-utils'
 import * as useDSOsByUserIdHook from 'app/pages/issuance/hooks/useDSOsByUserId'
-import * as useIssuanceRouterHook from 'app/pages/issuance/router'
 import { generateInfiniteQueryResult } from '__fixtures__/useQuery'
 import { dso } from '__fixtures__/authorizer'
 import { useDSOFilter } from 'app/pages/issuance/hooks/useDSOFilter'
+import { history } from 'config/history'
+import { generatePath, Route } from 'react-router-dom'
+import { IssuanceRoute } from 'app/pages/issuance/router/config'
+import React, { PropsWithChildren } from 'react'
 
 describe('useDSOFilter', () => {
-  const replace = jest.fn()
+  beforeEach(() => {
+    history.push(generatePath(IssuanceRoute.insight, { dsoId: dso._id }))
+  })
 
   afterEach(async () => {
     await cleanup()
@@ -18,13 +23,15 @@ describe('useDSOFilter', () => {
     jest
       .spyOn(useDSOsByUserIdHook, 'useDSOsByUserId')
       .mockReturnValue(generateInfiniteQueryResult({ isLoading: true }))
-    jest.spyOn(useIssuanceRouterHook, 'useIssuanceRouter').mockReturnValue({
-      params: { dsoId: dso._id },
-      replace
-    } as any)
 
     await act(async () => {
-      const { result } = renderHook(() => useDSOFilter())
+      const { result } = renderHook(() => useDSOFilter(), {
+        wrapper: ({ children }: PropsWithChildren<any>) => (
+          <BaseProviders>
+            <Route path={IssuanceRoute.insight}>{children}</Route>
+          </BaseProviders>
+        )
+      })
 
       await waitFor(
         () => {
@@ -40,13 +47,15 @@ describe('useDSOFilter', () => {
     jest
       .spyOn(useDSOsByUserIdHook, 'useDSOsByUserId')
       .mockReturnValue(generateInfiniteQueryResult({ list: [dso] }))
-    jest.spyOn(useIssuanceRouterHook, 'useIssuanceRouter').mockReturnValue({
-      params: { dsoId: dso._id },
-      replace
-    } as any)
 
     await act(async () => {
-      const { result } = renderHook(() => useDSOFilter())
+      const { result } = renderHook(() => useDSOFilter(), {
+        wrapper: ({ children }: PropsWithChildren<any>) => (
+          <BaseProviders>
+            <Route path={IssuanceRoute.insight}>{children}</Route>
+          </BaseProviders>
+        )
+      })
 
       await waitFor(
         () => {
@@ -61,14 +70,18 @@ describe('useDSOFilter', () => {
   it('returns selected dso as null if dsoId is invalid', async () => {
     jest
       .spyOn(useDSOsByUserIdHook, 'useDSOsByUserId')
-      .mockReturnValue(generateInfiniteQueryResult({ list: [dso] }))
-    jest.spyOn(useIssuanceRouterHook, 'useIssuanceRouter').mockReturnValue({
-      params: { dsoId: null },
-      replace
-    } as any)
+      .mockReturnValue(generateInfiniteQueryResult({ list: [] }))
 
     await act(async () => {
-      const { result } = renderHook(() => useDSOFilter())
+      history.push(generatePath(IssuanceRoute.insight, { dsoId: ':dsoId' }))
+
+      const { result } = renderHook(() => useDSOFilter(), {
+        wrapper: ({ children }: PropsWithChildren<any>) => (
+          <BaseProviders>
+            <Route path={IssuanceRoute.insight}>{children}</Route>
+          </BaseProviders>
+        )
+      })
 
       await waitFor(
         () => {

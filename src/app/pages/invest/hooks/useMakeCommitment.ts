@@ -5,14 +5,12 @@ import { useMutation } from 'react-query'
 import { DSORoute } from 'app/pages/invest/router/config'
 import { getIdFromObj } from 'helpers/strings'
 import { issuanceURL } from 'config/apiURL'
-import { useHistory } from 'react-router-dom'
+import { generatePath, useHistory, useParams } from 'react-router-dom'
 
 export const useMakeCommitment = () => {
   const { apiService, snackbarService } = useServices()
-  const {
-    replace,
-    location: { state }
-  } = useHistory()
+  const params = useParams<{ dsoId: string; issuerId: string }>()
+  const { replace } = useHistory()
   const { user } = useAuth()
   const uri = issuanceURL.commitments.getAll(getIdFromObj(user))
   const mutateFn = async (args: MakeInvestmentArgs) => {
@@ -22,7 +20,7 @@ export const useMakeCommitment = () => {
   return useMutation(mutateFn, {
     onSuccess: () => {
       void snackbarService.showSnackbar('Success', 'success')
-      replace(DSORoute.view, state)
+      replace(generatePath(DSORoute.view, params))
     },
     onError: (error: any) => {
       void snackbarService.showSnackbar(error.message, 'error')

@@ -1,15 +1,13 @@
 import React from 'react'
 import { Button, Grid } from '@material-ui/core'
 import { DSO } from 'app/pages/issuance/components/DSO'
-import { useIssuanceRouter } from 'app/pages/issuance/router'
+import { useParams } from 'react-router-dom'
 import { AppRouterLinkComponent } from 'components/AppRouterLink'
 import { VSpacer } from 'components/VSpacer'
+import { IssuanceRoute } from 'app/pages/issuance/router/config'
 
 export const ViewDSO = () => {
-  const {
-    params: { dsoId }
-  } = useIssuanceRouter()
-  const { paths } = useIssuanceRouter()
+  const params = useParams<{ dsoId: string }>()
 
   return (
     <Grid container direction='column'>
@@ -18,8 +16,8 @@ export const ViewDSO = () => {
           component={AppRouterLinkComponent}
           color='primary'
           variant='contained'
-          to={paths.edit}
-          params={{ dsoId }}
+          to={IssuanceRoute.edit}
+          params={params}
         >
           Edit
         </Button>
@@ -28,7 +26,7 @@ export const ViewDSO = () => {
         <VSpacer size='small' />
       </Grid>
       <Grid item>
-        <DSO dsoId={dsoId} showAuthorizations />
+        <DSO dsoId={params.dsoId} showAuthorizations />
       </Grid>
     </Grid>
   )

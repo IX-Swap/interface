@@ -1,13 +1,11 @@
 import React from 'react'
 import { Grid } from '@material-ui/core'
 import { VSpacer } from 'components/VSpacer'
-import { useIssuanceRouter } from 'app/pages/issuance/router'
+import { useParams } from 'react-router-dom'
 import { DSO } from 'app/pages/issuance/components/DSO'
 
 export const EditDSO = () => {
-  const {
-    params: { dsoId }
-  } = useIssuanceRouter()
+  const params = useParams<{ dsoId: string }>()
 
   return (
     <Grid container direction='column'>
@@ -15,7 +13,7 @@ export const EditDSO = () => {
         <VSpacer size='medium' />
       </Grid>
       <Grid item>
-        <DSO dsoId={dsoId} isEditing />
+        <DSO dsoId={params.dsoId} isEditing />
       </Grid>
     </Grid>
   )

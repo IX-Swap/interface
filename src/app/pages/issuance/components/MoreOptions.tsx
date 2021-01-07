@@ -1,26 +1,23 @@
 import React from 'react'
 import { Grid, Typography } from '@material-ui/core'
 import { AppRouterLink } from 'components/AppRouterLink'
-import { useIssuanceRouter } from 'app/pages/issuance/router'
+import { IssuanceRoute } from 'app/pages/issuance/router/config'
 import { VSpacer } from 'components/VSpacer'
 import { useStyles } from './MoreOptions.styles'
 import { useDSOById } from 'app/pages/invest/hooks/useDSOById'
+import { useParams } from 'react-router-dom'
 
 export const MoreOptions = () => {
   const { link } = useStyles()
-  const { paths } = useIssuanceRouter()
+  const params = useParams<{ dsoId: string }>()
 
-  const {
-    params: { dsoId }
-  } = useIssuanceRouter()
-
-  const { data } = useDSOById(dsoId)
+  const { data } = useDSOById(params.dsoId)
 
   if (data === undefined) {
     return null
   }
 
-  if (typeof dsoId === 'undefined') {
+  if (params.dsoId === undefined) {
     return null
   }
 
@@ -31,9 +28,9 @@ export const MoreOptions = () => {
       <VSpacer size='small' />
       <Grid container spacing={0} direction='column'>
         <AppRouterLink
-          to={paths.view}
+          to={IssuanceRoute.view}
           params={{
-            dsoId: dsoId
+            dsoId: params.dsoId
           }}
           color='primary'
           underline='hover'
@@ -44,7 +41,7 @@ export const MoreOptions = () => {
         </AppRouterLink>
 
         <AppRouterLink
-          to={paths.list}
+          to={IssuanceRoute.list}
           color='primary'
           underline='hover'
           className={link}
@@ -54,7 +51,7 @@ export const MoreOptions = () => {
         </AppRouterLink>
 
         <AppRouterLink
-          to={paths.create}
+          to={IssuanceRoute.create}
           color='primary'
           underline='hover'
           className={link}
@@ -64,9 +61,9 @@ export const MoreOptions = () => {
         </AppRouterLink>
 
         <AppRouterLink
-          to={paths.edit}
+          to={IssuanceRoute.edit}
           params={{
-            dsoId: dsoId
+            dsoId: params.dsoId
           }}
           color='primary'
           underline='hover'

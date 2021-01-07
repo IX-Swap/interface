@@ -13,17 +13,15 @@ import { DSOFilter } from '../components/IssuanceLanding/DSOFilter'
 import { AmountRaised } from '../components/IssuanceLanding/AmountRaised'
 import { useSetPageTitle } from 'app/hooks/useSetPageTitle'
 import { useDSOById } from 'app/pages/invest/hooks/useDSOById'
-import { useIssuanceRouter } from 'app/pages/issuance/router'
-import { TargetFundraise } from '../components/IssuanceLanding/TargetFundraise'
 import { useAppBreakpoints } from 'hooks/useAppBreakpoints'
 import { VSpacer } from 'components/VSpacer'
 import { isValidDSOId } from 'helpers/isValidDSOId'
+import { useParams } from 'react-router-dom'
+import { TargetFundraise } from 'app/pages/issuance/components/IssuanceLanding/TargetFundraise'
 
 export const IssuanceLanding = () => {
-  const {
-    params: { dsoId }
-  } = useIssuanceRouter()
-  const { data } = useDSOById(dsoId)
+  const params = useParams<{ dsoId: string }>()
+  const { data } = useDSOById(params.dsoId)
   const { theme, isTablet } = useAppBreakpoints()
 
   useSetPageTitle(data?.tokenName ?? 'Issuance')
@@ -122,7 +120,7 @@ export const IssuanceLanding = () => {
             item
             xs={12}
             direction='column'
-            justify={isValidDSOId(dsoId) ? 'flex-start' : 'center'}
+            justify={isValidDSOId(params.dsoId) ? 'flex-start' : 'center'}
             variant='outlined'
             style={{ padding: theme.spacing(4) }}
           >

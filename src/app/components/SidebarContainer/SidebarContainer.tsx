@@ -4,7 +4,7 @@ import { useIsAdmin, useIsAuthorizer, useIsIssuer } from 'helpers/acl'
 import { SidebarLinkContainer } from 'app/components/SidebarContainer/components/SidebarLinkContainer'
 import { useAuthorizerRouter } from 'app/pages/authorizer/router'
 import { AccountsRoute } from 'app/pages/accounts/router/config'
-import { useIssuanceRouter } from 'app/pages/issuance/router'
+import { IssuanceRoute } from 'app/pages/issuance/router/config'
 import { ReactComponent as InvestIcon } from 'assets/icons/navigation/invest.svg'
 import { ReactComponent as AccountsIcon } from 'assets/icons/navigation/account.svg'
 import { ReactComponent as IssuanceIcon } from 'assets/icons/navigation/issuance.svg'
@@ -23,7 +23,6 @@ export const SidebarContainer = () => {
   const isAdmin = useIsAdmin()
 
   const { paths: authorizerRoutes } = useAuthorizerRouter()
-  const { paths: issuanceRoutes } = useIssuanceRouter()
 
   const isSuperUser = isAuthorizer || isAdmin
   const links = [
@@ -42,7 +41,7 @@ export const SidebarContainer = () => {
   if (isIssuer) {
     links.push({
       label: 'Issuance',
-      link: issuanceRoutes.insight,
+      link: IssuanceRoute.insight,
       icon: IssuanceIcon
     })
   }

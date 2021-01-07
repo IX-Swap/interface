@@ -4,7 +4,7 @@ import { DSOForm, DSOFormProps } from 'app/components/DSO/DSOForm'
 import { DSOContainer } from 'app/components/DSO/components/DSOContainer'
 import { dso } from '__fixtures__/authorizer'
 import { history } from 'config/history'
-import { IssuanceRoute } from 'app/pages/issuance/router'
+import { IssuanceRoute } from 'app/pages/issuance/router/config'
 
 jest.mock('app/components/DSO/components/DSOContainer', () => ({
   DSOContainer: jest.fn(() => <input />)

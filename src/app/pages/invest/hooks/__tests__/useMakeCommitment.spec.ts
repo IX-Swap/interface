@@ -45,8 +45,7 @@ describe('useMakeCommitment', () => {
           const [mutate] = result.current
           void mutate(makeInvestmentArgs)
 
-          expect(showSnackbar).toHaveBeenCalledTimes(1)
-          expect(showSnackbar).toHaveBeenNthCalledWith(1, 'Success', 'success')
+          expect(showSnackbar).toHaveBeenCalledWith('Success', 'success')
         },
         { timeout: 1000 }
       )
@@ -70,9 +69,7 @@ describe('useMakeCommitment', () => {
           const [mutate] = result.current
           void mutate(makeInvestmentArgs)
 
-          expect(showSnackbar).toHaveBeenCalledTimes(1)
-          expect(showSnackbar).toHaveBeenNthCalledWith(
-            1,
+          expect(showSnackbar).toHaveBeenCalledWith(
             unsuccessfulResponse.message,
             'error'
           )
