@@ -3,7 +3,7 @@ import { NavigationWrapper } from 'ui/Navigation/NavigationWrapper'
 import { useIsAdmin, useIsAuthorizer, useIsIssuer } from 'helpers/acl'
 import { SidebarLinkContainer } from 'app/components/SidebarContainer/components/SidebarLinkContainer'
 import { useAuthorizerRouter } from 'app/pages/authorizer/router'
-import { useAccountsRouter } from 'app/pages/accounts/router'
+import { AccountsRoute } from 'app/pages/accounts/router/config'
 import { useInvestRouter } from 'app/pages/invest/routers/router'
 import { useIssuanceRouter } from 'app/pages/issuance/router'
 import { ReactComponent as InvestIcon } from 'assets/icons/navigation/invest.svg'
@@ -23,7 +23,6 @@ export const SidebarContainer = () => {
   const isAdmin = useIsAdmin()
 
   const { paths: authorizerRoutes } = useAuthorizerRouter()
-  const { paths: accountRoutes } = useAccountsRouter()
   const { paths: investRoutes } = useInvestRouter()
   const { paths: issuanceRoutes } = useIssuanceRouter()
 
@@ -31,7 +30,7 @@ export const SidebarContainer = () => {
   const links = [
     {
       label: 'Accounts',
-      link: accountRoutes.landing,
+      link: AccountsRoute.landing,
       icon: AccountsIcon
     },
     {

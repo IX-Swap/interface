@@ -1,10 +1,4 @@
 import { InternalRouteProps } from 'types/util'
-import { Balances } from 'app/pages/accounts/pages/balances/Balances'
-import { Banks } from 'app/pages/accounts/pages/banks/Banks'
-import { DigitalSecurities } from 'app/pages/accounts/pages/digitalSecurities/DigitalSecurities'
-import { Transactions } from 'app/pages/accounts/pages/transactions/Transactions'
-import { WithdrawalAddresses } from 'app/pages/accounts/pages/withdrawalAddresses/WithdrawalAddresses'
-import { generateAppRouterHook } from 'helpers/generateAppRouterHook'
 import { ReactComponent as AccountIcon } from 'assets/icons/navigation/account.svg'
 import { ReactComponent as CashDepositIcon } from 'assets/icons/navigation/cash-deposit.svg'
 import { ReactComponent as CashWithdrawalIcon } from 'assets/icons/navigation/cash-withdrawal.svg'
@@ -12,8 +6,6 @@ import { ReactComponent as AssetBalanceIcon } from 'assets/icons/navigation/asse
 import { ReactComponent as DSWithdrawalIcon } from 'assets/icons/navigation/ds-withdrawal.svg'
 import { ReactComponent as WithdrawalAddressIcon } from 'assets/icons/navigation/withdrawal-address.svg'
 import { ReactComponent as TransactionIcon } from 'assets/icons/navigation/transaction.svg'
-import { DepositCash } from './pages/banks/DepositCash/DepositCash'
-import { WithdrawCash } from './pages/banks/WithdrawCash/WithdrawCash'
 import { makeURL } from 'config/appURL'
 
 export const AccountsRoute = {
@@ -27,11 +19,10 @@ export const AccountsRoute = {
   withdrawalAddresses: makeURL(['app', 'account', 'withdrawalAddresses'])
 }
 
-export const accountRoutes: InternalRouteProps[] = [
+export const accountsLandingLinks: InternalRouteProps[] = [
   {
     label: 'Bank Accounts',
     path: AccountsRoute.banks,
-    component: Banks,
     color: '#2b78fd',
     icon: AccountIcon
   },
@@ -39,55 +30,36 @@ export const accountRoutes: InternalRouteProps[] = [
     color: '#43b526',
     icon: CashDepositIcon,
     path: AccountsRoute.depositCash,
-    label: 'Cash Deposits',
-    component: DepositCash
+    label: 'Cash Deposits'
   },
   {
     color: '#e6d200',
     icon: CashWithdrawalIcon,
     path: AccountsRoute.withdrawCash,
-    label: 'Cash Withdrawals',
-    component: WithdrawCash
+    label: 'Cash Withdrawals'
   },
   {
     label: 'Asset Balances',
     path: AccountsRoute.balances,
-    exact: true,
-    component: Balances,
     color: '#e65133',
     icon: AssetBalanceIcon
   },
   {
     label: 'Digital Securities',
     path: AccountsRoute.digitalSecurities,
-    component: DigitalSecurities,
     color: '#8b3dff',
     icon: DSWithdrawalIcon
   },
   {
     label: 'Transactions',
     path: AccountsRoute.transactions,
-    component: Transactions,
     color: '#90a30f',
     icon: TransactionIcon
   },
   {
     label: 'Withdrawal Addresses',
     path: AccountsRoute.withdrawalAddresses,
-    component: WithdrawalAddresses,
     color: '#e6d200',
     icon: WithdrawalAddressIcon
-  },
-  {
-    label: 'Account',
-    path: AccountsRoute.landing,
-    exact: true,
-    root: true
   }
 ]
-
-export const useAccountsRouter = generateAppRouterHook(
-  AccountsRoute,
-  AccountsRoute.landing,
-  accountRoutes
-)

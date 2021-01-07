@@ -8,7 +8,7 @@ import { ReactComponent as IssuanceIcon } from 'assets/icons/navigation/issuance
 import { ReactComponent as AuthorizerIcon } from 'assets/icons/navigation/authorizer.svg'
 import * as acl from 'helpers/acl'
 import * as useAuthorizerRouterHook from 'app/pages/authorizer/router'
-import * as useAccountsRouterHook from 'app/pages/accounts/router'
+import * as useAccountsRouterHook from 'app/pages/accounts/router/config'
 import * as useInvestRouterHook from 'app/pages/invest/routers/router'
 import * as useIssuanceRouterHook from 'app/pages/issuance/router'
 
