@@ -68,14 +68,16 @@ export const Dropzone = (props: DropzoneProps) => {
 
   return (
     <>
-      <Box mb={1}>
-        <Typography variant='subtitle2' color='textSecondary'>
-          {label}
-        </Typography>
-      </Box>
+      {label !== '' && label !== undefined ? (
+        <Box mb={1}>
+          <Typography variant='subtitle2' color='textSecondary'>
+            {label}
+          </Typography>
+        </Box>
+      ) : null}
       <Box width={128} height={128} className={container} {...getRootProps()}>
         <input id={name} name={name} {...getInputProps()} />
-        {value !== undefined && user !== undefined ? (
+        {value !== null && value !== undefined && user !== undefined ? (
           <ViewDocument documentId={photoId} ownerId={user._id}>
             {url =>
               url !== '' ? (

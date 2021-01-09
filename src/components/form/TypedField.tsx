@@ -96,21 +96,28 @@ export const TypedField = <
         }
 
         if (customRenderer) {
-          return createElement(component, {
-            ...rest,
-            control,
-            label,
-            value: controllerProps.value as any,
-            id: path,
-            name: path,
-            error: hasError,
-            onChange: handleChange,
-            onFocus: () => setIsFocused(true),
-            onBlur: () => {
-              setIsFocused(false)
-              controllerProps.onBlur()
-            }
-          })
+          return (
+            <FormControl fullWidth>
+              {createElement(component, {
+                ...rest,
+                control,
+                label,
+                value: controllerProps.value as any,
+                id: path,
+                name: path,
+                error: hasError,
+                onChange: handleChange,
+                onFocus: () => setIsFocused(true),
+                onBlur: () => {
+                  setIsFocused(false)
+                  controllerProps.onBlur()
+                }
+              })}
+              {!hasError && hasHelperText && (
+                <FormHelperText>{helperText}</FormHelperText>
+              )}
+            </FormControl>
+          )
         }
 
         return (
@@ -134,6 +141,7 @@ export const TypedField = <
               ...controllerProps,
               ...elementProps,
               id: path,
+              label,
               onChange: handleChange
             })}
 
