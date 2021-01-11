@@ -7,10 +7,10 @@ export const useInvestorsByCountry = () => {
   const { apiService, dsoId, queryEnabled } = useIssuanceQuery()
   const url = issuanceURL.dso.topCountries(dsoId)
 
-  const fetchInvestmentGrowth = async () => await apiService.get(url)
+  const fetchInvestorsByCountry = async () => await apiService.get(url)
   const { data, ...rest } = useQuery(
     [issuanceQueryKeys.investorsByCountry(dsoId)],
-    fetchInvestmentGrowth,
+    fetchInvestorsByCountry,
     { enabled: queryEnabled }
   )
 
