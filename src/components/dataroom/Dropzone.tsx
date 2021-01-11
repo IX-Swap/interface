@@ -13,14 +13,12 @@ import { getDataroomFileId } from 'helpers/dataroom'
 import { ViewDocument } from 'app/components/DSO/components/ViewDocument'
 import BackupOutlinedIcon from '@material-ui/icons/BackupOutlined'
 import { useStyles } from './Dropzone.styles'
-import { DataroomUploaderRenderProps } from 'components/dataroom/DataroomUploader'
 
 export interface DropzoneProps {
   name: string
   label: string
   value: Maybe<DataroomFile>
   onChange: (files: DataroomFile) => any
-  render: (props: DataroomUploaderRenderProps) => Maybe<JSX.Element>
   documentInfo: UploadDocumentInfo
   onDelete?: () => any
   multiple?: boolean
@@ -75,7 +73,13 @@ export const Dropzone = (props: DropzoneProps) => {
           </Typography>
         </Box>
       ) : null}
-      <Box width={128} height={128} className={container} {...getRootProps()}>
+      <Box
+        component='div'
+        width={128}
+        height={128}
+        className={container}
+        {...getRootProps()}
+      >
         <input id={name} name={name} {...getInputProps()} />
         {value !== null && value !== undefined && user !== undefined ? (
           <ViewDocument documentId={photoId} ownerId={user._id}>

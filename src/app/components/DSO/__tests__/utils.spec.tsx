@@ -30,7 +30,26 @@ describe('transformDSOToFormValues', () => {
       useOfProceeds: '',
       fundraisingMilestone: '',
       team: [],
-      documents: []
+      documents: [],
+      capitalStructure: '',
+      minimumInvestment: null,
+      totalFundraisingAmount: null,
+      pricePerUnit: null,
+      currency: '',
+      decimalPlaces: 0,
+      tokenSymbol: '',
+      tokenName: '',
+      network: '',
+      corporate: '',
+      logo: null,
+      equityMultiple: '',
+      leverage: '',
+      distributionFrequency: '',
+      investmentStructure: '',
+      grossIRR: '',
+      interestRate: '',
+      dividendYield: '',
+      investmentPeriod: ''
     })
   })
 })

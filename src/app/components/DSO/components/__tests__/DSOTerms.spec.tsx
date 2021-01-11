@@ -53,25 +53,25 @@ describe('DSOTerms', () => {
       3,
       expect.objectContaining({
         numberFormat: percentageNumberFormat,
-        label: 'Gross IRR',
-        name: 'grossIRR'
+        label: 'Interest Rate',
+        name: 'interestRate'
       }),
       {}
     )
     expect(TypedField).toHaveBeenNthCalledWith(
       4,
       expect.objectContaining({
-        label: 'Investment Structure',
-        name: 'investmentStructure'
+        numberFormat: percentageNumberFormat,
+        label: 'Gross IRR',
+        name: 'grossIRR'
       }),
       {}
     )
     expect(TypedField).toHaveBeenNthCalledWith(
       5,
       expect.objectContaining({
-        numberFormat: percentageNumberFormat,
-        label: 'Equity Multiple',
-        name: 'equityMultiple'
+        label: 'Investment Structure',
+        name: 'investmentStructure'
       }),
       {}
     )
@@ -87,8 +87,8 @@ describe('DSOTerms', () => {
       7,
       expect.objectContaining({
         numberFormat: percentageNumberFormat,
-        label: 'Interest Rate',
-        name: 'interestRate'
+        label: 'Leverage',
+        name: 'leverage'
       }),
       {}
     )
@@ -96,8 +96,8 @@ describe('DSOTerms', () => {
       8,
       expect.objectContaining({
         numberFormat: percentageNumberFormat,
-        label: 'Leverage',
-        name: 'leverage'
+        label: 'Equity Multiple',
+        name: 'equityMultiple'
       }),
       {}
     )

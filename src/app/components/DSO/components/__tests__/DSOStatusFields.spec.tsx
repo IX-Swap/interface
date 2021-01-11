@@ -1,15 +1,34 @@
 import React from 'react'
 import { render, cleanup } from 'test-utils'
 import { DSOStatusFields } from 'app/components/DSO/components/DSOStatusFields'
+import { MinimumInvestment } from 'app/components/DSO/components/DSOMinimumInvestment'
+import { TotalUnits } from 'app/components/DSO/components/TotalUnits'
 import { Form } from 'components/form/Form'
 import { moneyNumberFormat } from 'config/numberFormat'
 import { TypedField } from 'components/form/TypedField'
+import * as useParsedDataHook from 'hooks/useParsedData'
 
 jest.mock('components/form/TypedField', () => ({
   TypedField: jest.fn(() => <input />)
 }))
 
+jest.mock('app/components/DSO/components/DSOMinimumInvestment', () => ({
+  MinimumInvestment: jest.fn(() => <div />)
+}))
+
+jest.mock('app/components/DSO/components/TotalUnits', () => ({
+  TotalUnits: jest.fn(() => <div />)
+}))
+
 describe('DSOStatusFields', () => {
+  const parsedDataFn = jest.fn()
+
+  beforeEach(() => {
+    jest
+      .spyOn(useParsedDataHook, 'useParsedData')
+      .mockImplementation(parsedDataFn)
+  })
+
   afterEach(async () => {
     await cleanup()
     jest.clearAllMocks()
@@ -33,14 +52,6 @@ describe('DSOStatusFields', () => {
     expect(TypedField).toHaveBeenNthCalledWith(
       1,
       expect.objectContaining({
-        label: 'Capital Structure',
-        name: 'capitalStructure'
-      }),
-      {}
-    )
-    expect(TypedField).toHaveBeenNthCalledWith(
-      2,
-      expect.objectContaining({
         label: 'Unit Price',
         name: 'pricePerUnit',
         numberFormat: moneyNumberFormat
@@ -48,7 +59,7 @@ describe('DSOStatusFields', () => {
       {}
     )
     expect(TypedField).toHaveBeenNthCalledWith(
-      3,
+      2,
       expect.objectContaining({
         label: 'Total Fundraising Amount',
         name: 'totalFundraisingAmount',
@@ -57,7 +68,7 @@ describe('DSOStatusFields', () => {
       {}
     )
     expect(TypedField).toHaveBeenNthCalledWith(
-      4,
+      3,
       expect.objectContaining({
         label: 'Minimum Investment',
         name: 'minimumInvestment',
@@ -65,5 +76,7 @@ describe('DSOStatusFields', () => {
       }),
       {}
     )
+    expect(MinimumInvestment).toHaveBeenCalled()
+    expect(TotalUnits).toHaveBeenCalled()
   })
 })
