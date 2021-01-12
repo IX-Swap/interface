@@ -4,15 +4,14 @@ import { DataroomFile } from 'types/dataroomFile'
 import { Maybe } from 'types/util'
 import { useFormContext } from 'react-hook-form'
 import { DataroomFileType } from 'config/dataroom'
-import { Box, Typography } from '@material-ui/core'
+import { Box, FormHelperText, Typography } from '@material-ui/core'
 import { useDropzone } from 'react-dropzone'
-import { useTheme } from '@material-ui/core/styles'
 import { useAuth } from 'hooks/auth/useAuth'
 import { useFormError } from 'hooks/useFormError'
 import { getDataroomFileId } from 'helpers/dataroom'
-import { ViewDocument } from 'app/components/DSO/components/ViewDocument'
-import BackupOutlinedIcon from '@material-ui/icons/BackupOutlined'
 import { useStyles } from './Dropzone.styles'
+import { Avatar } from 'components/Avatar'
+import { DropzoneFallback } from 'components/dataroom/DropzoneFallback'
 
 export interface DropzoneProps {
   name: string
@@ -42,9 +41,8 @@ export const Dropzone = (props: DropzoneProps) => {
   })
   const { user } = useAuth()
   const photoId = getDataroomFileId(value)
-  const { hasError } = useFormError(name)
-  const theme = useTheme()
-  const { acceptedImage, container, icon } = useStyles()
+  const { hasError, error } = useFormError(name)
+  const { container } = useStyles()
 
   const onDrop = useCallback(
     async acceptedFiles => {
@@ -81,38 +79,19 @@ export const Dropzone = (props: DropzoneProps) => {
         {...getRootProps()}
       >
         <input id={name} name={name} {...getInputProps()} />
-        {value !== null && value !== undefined && user !== undefined ? (
-          <ViewDocument documentId={photoId} ownerId={user._id}>
-            {url =>
-              url !== '' ? (
-                <img src={url ?? ''} className={acceptedImage} alt={name} />
-              ) : (
-                <></>
-              )
-            }
-          </ViewDocument>
-        ) : (
-          <Box
-            paddingX={6}
-            display='flex'
-            flexDirection='column'
-            justifyContent='center'
-            alignItems='center'
-            width='100%'
-            height='100%'
-            border={`1px ${
-              hasError
-                ? `solid ${theme.palette.error.main}`
-                : `dashed ${theme.palette.text.secondary}`
-            }`}
-          >
-            <BackupOutlinedIcon className={icon} />
-            <Typography align='center' variant='caption' color='textSecondary'>
-              Drop or Upload
-            </Typography>
-          </Box>
-        )}
+        <Avatar
+          size={128}
+          documentId={
+            value !== null && value !== undefined ? photoId : undefined
+          }
+          ownerId={
+            value !== null && value !== undefined ? user?._id : undefined
+          }
+          variant='square'
+          fallback={<DropzoneFallback hasError={hasError} />}
+        />
       </Box>
+      {hasError ? <FormHelperText error>{error}</FormHelperText> : null}
     </>
   )
 }

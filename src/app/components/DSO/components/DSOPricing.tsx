@@ -11,7 +11,7 @@ import { MinimumInvestment } from 'app/components/DSO/components/DSOMinimumInves
 import { TotalUnits } from 'app/components/DSO/components/TotalUnits'
 import { FormSectionHeader } from 'app/components/DSO/components/FormSectionHeader'
 
-export const DSOStatusFields = () => {
+export const DSOPricing = () => {
   const { control } = useFormContext<DSOFormValues>()
 
   return (

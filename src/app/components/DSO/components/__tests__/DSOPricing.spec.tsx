@@ -1,6 +1,6 @@
 import React from 'react'
 import { render, cleanup } from 'test-utils'
-import { DSOStatusFields } from 'app/components/DSO/components/DSOStatusFields'
+import { DSOPricing } from 'app/components/DSO/components/DSOPricing'
 import { MinimumInvestment } from 'app/components/DSO/components/DSOMinimumInvestment'
 import { TotalUnits } from 'app/components/DSO/components/TotalUnits'
 import { Form } from 'components/form/Form'
@@ -20,7 +20,7 @@ jest.mock('app/components/DSO/components/TotalUnits', () => ({
   TotalUnits: jest.fn(() => <div />)
 }))
 
-describe('DSOStatusFields', () => {
+describe('DSOPricing', () => {
   const parsedDataFn = jest.fn()
 
   beforeEach(() => {
@@ -37,7 +37,7 @@ describe('DSOStatusFields', () => {
   it('renders without error', () => {
     render(
       <Form>
-        <DSOStatusFields />
+        <DSOPricing />
       </Form>
     )
   })
@@ -45,7 +45,7 @@ describe('DSOStatusFields', () => {
   it('renders EditableField with correct props', () => {
     render(
       <Form>
-        <DSOStatusFields />
+        <DSOPricing />
       </Form>
     )
 

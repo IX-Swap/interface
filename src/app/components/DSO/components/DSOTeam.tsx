@@ -1,5 +1,5 @@
 import React from 'react'
-import { Grid, Box, Typography } from '@material-ui/core'
+import { Grid } from '@material-ui/core'
 import { FieldsArray } from 'components/form/FieldsArray'
 import { useFormContext } from 'react-hook-form'
 import { DSOFormValues } from 'types/dso'
@@ -7,6 +7,7 @@ import { DSOTeamMember } from 'app/components/DSO/components/DSOTeamMember'
 import { DSOTeamAddButton } from 'app/components/DSO/components/DSOTeamAddButton'
 import { FormError } from 'components/form/FormError'
 import { TextError } from 'components/TextError'
+import { FormSectionHeader } from 'app/components/DSO/components/FormSectionHeader'
 
 const fieldName = 'team'
 
@@ -16,9 +17,7 @@ export const DSOTeam = () => {
   return (
     <Grid item container spacing={3} direction='column'>
       <Grid item>
-        <Box pb={0.5} borderBottom={`1px solid #EDEDED`}>
-          <Typography variant='h2'>Team Members</Typography>
-        </Box>
+        <FormSectionHeader title='Team Members' />
       </Grid>
       <Grid item container>
         <FieldsArray name={fieldName} control={control}>

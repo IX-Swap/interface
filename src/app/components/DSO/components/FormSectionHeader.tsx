@@ -1,13 +1,16 @@
 import React from 'react'
 import { Box, Typography } from '@material-ui/core'
+import { useStyles } from 'app/components/DSO/components/FormSectionHeader.styles'
 
 export interface FormSectionHeaderProps {
   title: string
 }
 
 export const FormSectionHeader = ({ title }: FormSectionHeaderProps) => {
+  const { formHeader } = useStyles()
+
   return (
-    <Box pb={0.5} borderBottom={`1px solid #EDEDED`} mb={3}>
+    <Box className={formHeader} pb={0.5} mb={3}>
       <Typography variant='h2'>{title}</Typography>
     </Box>
   )

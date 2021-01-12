@@ -3,7 +3,7 @@ import { makeStyles } from '@material-ui/core/styles'
 export const useStyles = makeStyles(theme => ({
   container: {
     outline: 'none',
-    backgroundColor: '#EDEDED',
+    backgroundColor: theme.palette.backgrounds.secondary,
     label: {
       display: 'none'
     }

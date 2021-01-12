@@ -2,7 +2,7 @@ import React from 'react'
 import { render, cleanup } from 'test-utils'
 import { DSOForm, DSOFormProps } from 'app/components/DSO/DSOForm'
 import { DSOBaseFields } from 'app/components/DSO/components/DSOBaseFields'
-import { DSOStatusFields } from 'app/components/DSO/components/DSOStatusFields'
+import { DSOPricing } from 'app/components/DSO/components/DSOPricing'
 import { DSOTerms } from 'app/components/DSO/components/DSOTerms'
 import { DSOTeam } from 'app/components/DSO/components/DSOTeam'
 import { dso } from '__fixtures__/authorizer'
@@ -18,8 +18,8 @@ jest.mock('app/components/DSO/components/DSOBaseFields', () => ({
   DSOBaseFields: jest.fn(() => <div />)
 }))
 
-jest.mock('app/components/DSO/components/DSOStatusFields', () => ({
-  DSOStatusFields: jest.fn(() => <div />)
+jest.mock('app/components/DSO/components/DSOPricing', () => ({
+  DSOPricing: jest.fn(() => <div />)
 }))
 
 jest.mock('app/components/DSO/components/DSOTerms', () => ({
@@ -59,7 +59,7 @@ describe('DSOForm', () => {
   it('renders form field components', () => {
     render(<DSOForm {...props} />)
     expect(DSOBaseFields).toHaveBeenCalled()
-    expect(DSOStatusFields).toHaveBeenCalled()
+    expect(DSOPricing).toHaveBeenCalled()
     expect(DSOTerms).toHaveBeenCalled()
     expect(DSOTeam).toHaveBeenCalled()
   })

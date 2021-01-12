@@ -4,7 +4,7 @@ import { noop } from 'helpers/noop'
 import { isDSOLive, transformDSOToFormValues } from 'app/components/DSO/utils'
 import { Grid } from '@material-ui/core'
 import { DSOBaseFields } from 'app/components/DSO/components/DSOBaseFields'
-import { DSOStatusFields } from 'app/components/DSO/components/DSOStatusFields'
+import { DSOPricing } from 'app/components/DSO/components/DSOPricing'
 import { DSOTerms } from 'app/components/DSO/components/DSOTerms'
 import { DSOTeam } from 'app/components/DSO/components/DSOTeam'
 import { Form } from 'components/form/Form'
@@ -38,7 +38,7 @@ export const DSOForm = (props: DSOFormProps) => {
       <Grid container direction='column' spacing={3}>
         <DSOBaseFields isNew={isNew} isLive={isLive} />
         <VSpacer size='large' />
-        <DSOStatusFields />
+        <DSOPricing />
         <VSpacer size='large' />
         <DSOTerms />
         <VSpacer size='large' />
