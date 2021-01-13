@@ -13,6 +13,8 @@ import { getOfferingName } from 'helpers/strings'
 import { getDSOValidationSchema } from 'validation/dso'
 import { DSOInformationProfile } from 'app/components/DSO/components/DSOInformationProfile'
 import { VSpacer } from 'components/VSpacer'
+import { DSOFormGuide, DSOFormSection } from 'app/components/DSO/DSOFormGuide'
+import { Element } from 'react-scroll'
 
 export interface DSOFormProps {
   submitButtonLabel?: string
@@ -35,16 +37,36 @@ export const DSOForm = (props: DSOFormProps) => {
       onSubmit={onSubmit}
       data-testid='dso-form'
     >
-      <Grid container direction='column' spacing={3}>
-        <DSOBaseFields isNew={isNew} isLive={isLive} />
-        <VSpacer size='large' />
-        <DSOPricing />
-        <VSpacer size='large' />
-        <DSOTerms />
-        <VSpacer size='large' />
-        <DSOInformationProfile />
-        <VSpacer size='large' />
-        <DSOTeam />
+      <Grid container>
+        <Grid item lg={9} container direction='column'>
+          <Element name={DSOFormSection['DSO Information']}>
+            <DSOBaseFields isNew={isNew} isLive={isLive} />
+          </Element>
+
+          <Element name={DSOFormSection.Pricing}>
+            <VSpacer size='large' />
+            <DSOPricing />
+          </Element>
+
+          <Element name={DSOFormSection['Offering Terms']}>
+            <VSpacer size='large' />
+            <DSOTerms />
+          </Element>
+
+          <Element name={DSOFormSection.Information}>
+            <VSpacer size='large' />
+            <DSOInformationProfile />
+          </Element>
+
+          <Element name={DSOFormSection['Team Members']}>
+            <VSpacer size='large' />
+            <DSOTeam />
+          </Element>
+        </Grid>
+
+        <Grid item lg={3}>
+          <DSOFormGuide title='Progress' />
+        </Grid>
       </Grid>
     </Form>
   )
