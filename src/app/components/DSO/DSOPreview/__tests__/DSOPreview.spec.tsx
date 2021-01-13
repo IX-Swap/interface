@@ -33,8 +33,8 @@ jest.mock('app/components/DSO/DSOPreview/DSOTeamView', () => ({
   DSOTeamView: jest.fn(() => null)
 }))
 
-describe('DSOView', () => {
-  const props: DSOPreviewProps = { data: dso }
+describe('DSOPreview', () => {
+  const props: DSOPreviewProps = { data: dso, showAuthorizations: false }
 
   afterEach(async () => {
     await cleanup()

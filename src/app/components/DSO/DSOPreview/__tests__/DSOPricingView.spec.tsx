@@ -18,7 +18,7 @@ describe('DSOPricingView', () => {
     render(<DSOPricingView dso={dso} />)
   })
 
-  it('render data correctly', () => {
+  it('renders data correctly', () => {
     const editedDSO = {
       ...dso,
       totalFundraisingAmount: 100000,
@@ -63,6 +63,39 @@ describe('DSOPricingView', () => {
       {
         label: 'Minimum Investment',
         value: '25,000 SGD'
+      },
+      {}
+    )
+  })
+
+  it('render null values correctly', () => {
+    const editedDSO = {
+      ...dso,
+      totalFundraisingAmount: null,
+      minimumInvestment: null
+    }
+    render(<DSOPricingView dso={editedDSO} />)
+
+    expect(LabelledValue).toHaveBeenCalledWith(
+      {
+        label: 'Total Fundraising Amount',
+        value: ''
+      },
+      {}
+    )
+
+    expect(LabelledValue).toHaveBeenCalledWith(
+      {
+        label: 'Minimum Investment',
+        value: ''
+      },
+      {}
+    )
+
+    expect(LabelledValue).toHaveBeenCalledWith(
+      {
+        label: 'Total Units',
+        value: 0
       },
       {}
     )

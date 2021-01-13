@@ -22,7 +22,7 @@ export const DSOPricing = () => {
         </Grid>
         <Grid item>
           <Grid container spacing={3}>
-            <Grid item xs={12} sm={6} md={6}>
+            <Grid item xs={12} sm={6}>
               <TypedField
                 control={control}
                 component={NumericInput}
@@ -34,7 +34,7 @@ export const DSOPricing = () => {
                 variant='outlined'
               />
             </Grid>
-            <Grid item xs={12} sm={6} md={6}>
+            <Grid item xs={12} sm={6}>
               <TypedField
                 control={control}
                 component={NumericInput}
@@ -50,7 +50,7 @@ export const DSOPricing = () => {
         </Grid>
         <Grid item>
           <Grid container spacing={3}>
-            <Grid item xs={12} sm={6} md={6}>
+            <Grid item xs={12} sm={6}>
               <TypedField
                 control={control}
                 component={MinimumInvesmentField}
@@ -62,14 +62,14 @@ export const DSOPricing = () => {
                 variant='outlined'
               />
             </Grid>
-            <Grid item xs={12} sm={6} md={6}>
+            <Grid item xs={12} sm={6}>
               <MinimumInvestment />
             </Grid>
           </Grid>
         </Grid>
         <Grid item>
           <Grid container spacing={3}>
-            <Grid item xs={12} sm={6} md={6}>
+            <Grid item xs={12} sm={6}>
               <TotalUnits />
             </Grid>
           </Grid>

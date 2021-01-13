@@ -25,7 +25,7 @@ describe('DSOTeamView', () => {
     expect(DSOTeamMemberView).toBeCalledTimes(0)
   })
 
-  it('renders data correctly when there is no team data', () => {
+  it('renders data correctly when there is team data', () => {
     const editedDSO = {
       ...dso,
       team: [

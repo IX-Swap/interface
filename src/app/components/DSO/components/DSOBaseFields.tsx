@@ -51,7 +51,7 @@ export const DSOBaseFields = (props: DSOBaseFieldsProps) => {
         </Grid>
         <Grid item>
           <Grid container spacing={3}>
-            <Grid item xs={12} md={6} lg={6}>
+            <Grid item xs={12} md={6}>
               <TypedField
                 control={control}
                 component={CapitalStructureSelect}
@@ -61,7 +61,7 @@ export const DSOBaseFields = (props: DSOBaseFieldsProps) => {
                 variant='outlined'
               />
             </Grid>
-            <Grid item xs={12} md={6} lg={6}>
+            <Grid item xs={12} md={6}>
               <TypedField
                 component={NetworkSelect}
                 label='Network'
@@ -76,7 +76,7 @@ export const DSOBaseFields = (props: DSOBaseFieldsProps) => {
         </Grid>
         <Grid item>
           <Grid container spacing={3}>
-            <Grid item xs={12} md={6} lg={6}>
+            <Grid item xs={12} md={6}>
               <TypedField
                 component={TextField}
                 label='Token Name'
@@ -87,7 +87,7 @@ export const DSOBaseFields = (props: DSOBaseFieldsProps) => {
                 variant='outlined'
               />
             </Grid>
-            <Grid item xs={12} md={2} lg={2}>
+            <Grid item xs={12} md={2}>
               <TypedField
                 component={TextField}
                 label='Symbol'
@@ -98,7 +98,7 @@ export const DSOBaseFields = (props: DSOBaseFieldsProps) => {
                 variant='outlined'
               />
             </Grid>
-            <Grid item xs={12} md={4} lg={4}>
+            <Grid item xs={12} md={4}>
               <TypedField
                 component={NumericInput}
                 numberFormat={positiveNumberFormat}
@@ -115,7 +115,7 @@ export const DSOBaseFields = (props: DSOBaseFieldsProps) => {
         </Grid>
         <Grid item>
           <Grid container spacing={3}>
-            <Grid item xs={12} md={8} lg={8}>
+            <Grid item xs={12} md={8}>
               <TypedField
                 component={CorporateSelect}
                 label='Corporate Structure'
@@ -125,7 +125,7 @@ export const DSOBaseFields = (props: DSOBaseFieldsProps) => {
                 variant='outlined'
               />
             </Grid>
-            <Grid item xs={12} md={4} lg={4}>
+            <Grid item xs={12} md={4}>
               <TypedField
                 assetType='Currency'
                 component={AssetSelect}
@@ -140,7 +140,7 @@ export const DSOBaseFields = (props: DSOBaseFieldsProps) => {
         </Grid>
         <Grid item>
           <Grid container spacing={3}>
-            <Grid item xs={12} md={6} lg={6}>
+            <Grid item xs={12} md={6}>
               {/* @ts-ignore */}
               <TypedField
                 component={DateTimePicker}
@@ -156,7 +156,7 @@ export const DSOBaseFields = (props: DSOBaseFieldsProps) => {
                 inputVariant='outlined'
               />
             </Grid>
-            <Grid item xs={12} md={6} lg={6}>
+            <Grid item xs={12} md={6}>
               {/* @ts-ignore */}
               <TypedField
                 component={DateTimePicker}
