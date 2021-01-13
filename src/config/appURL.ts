@@ -16,6 +16,7 @@ export const urlParams = {
 export const urlAction = {
   create: 'create',
   view: 'view',
+  preview: 'preview',
   edit: 'edit',
   deposit: 'deposit',
   withdraw: 'withdraw',

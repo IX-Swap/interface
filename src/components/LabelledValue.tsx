@@ -53,6 +53,7 @@ export interface LabelledValueProps {
   reverse?: boolean
   valueWeight?: keyof typeof valueWeightMap
   labelWeight?: keyof typeof labelWeightMap
+  align?: 'left' | 'right' | 'center' | 'justify'
 }
 
 export const LabelledValue = (props: LabelledValueProps & GridProps) => {
@@ -63,6 +64,7 @@ export const LabelledValue = (props: LabelledValueProps & GridProps) => {
     reverse = false,
     valueWeight = 'default',
     labelWeight = 'normal',
+    align = 'left',
     ...rest
   } = props
   const direction = row ? 'row' : 'column'
@@ -94,7 +96,13 @@ export const LabelledValue = (props: LabelledValueProps & GridProps) => {
       </Typography>
       {row ? <Box px={0.5} /> : null}
       {!row && !reverse ? <Box py={0.4} /> : null}
-      <Typography style={last.styles}>{last.text}</Typography>
+      {React.isValidElement(last.text) ? (
+        <Box style={{ ...last.styles, textAlign: align }}>{last.text}</Box>
+      ) : (
+        <Typography style={last.styles} align={align}>
+          {last.text}
+        </Typography>
+      )}
     </Grid>
   )
 }

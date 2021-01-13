@@ -65,6 +65,7 @@ export interface BaseDigitalSecurityOffering extends AuthorizableWithIdentity {
   deploymentInfo?: DeploymentInfo
   policyBuilder?: {}
   user: string
+  decimalPlaces?: number
 }
 
 export interface DSOInsight {
