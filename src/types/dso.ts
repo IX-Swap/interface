@@ -128,6 +128,7 @@ export type DSOFormValues = Omit<
   corporate: string
   documents: FormArray<DataroomFile>
   team: DsoTeamMember[]
+  decimalPlaces?: number
 }
 
 export type DSORequestArgs = Omit<

@@ -11,7 +11,7 @@ export const NetworkSelect = (props: SelectProps): JSX.Element => {
   if (queryStatus !== undefined) return queryStatus
 
   return (
-    <Select {...props} style={{ minWidth: 70 }}>
+    <Select {...props} style={{ minWidth: 70 }} label={props.label}>
       <MenuItem disabled value={undefined}>
         Blockchain Network
       </MenuItem>

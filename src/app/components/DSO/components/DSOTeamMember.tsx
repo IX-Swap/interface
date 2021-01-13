@@ -1,15 +1,16 @@
 import React from 'react'
-import { Grid, Input } from '@material-ui/core'
+import { Box, Grid, TextField } from '@material-ui/core'
 import { documentValueExtractor } from 'app/components/DSO/utils'
 import { DSOTeamRemoveButton } from 'app/components/DSO/components/DSOTeamRemoveButton'
 import { TypedField } from 'components/form/TypedField'
-import { DataroomUploader } from 'components/dataroom/DataroomUploader'
-import { DataroomAvatarUploader } from 'components/dataroom/DataroomAvatarUploader'
 import { RichTextEditor } from 'components/form/RichTextEditor'
 import { wysiwygValueExtractor } from 'helpers/forms'
 import { useFormContext } from 'react-hook-form'
 import { DSOFormValues, DsoTeamMember } from 'types/dso'
 import { useAppBreakpoints } from 'hooks/useAppBreakpoints'
+import { Dropzone } from 'components/dataroom/Dropzone'
+import { DSOContainer } from 'app/components/DSO/components/DSOContainer'
+import { VSpacer } from 'components/VSpacer'
 
 export interface DSOTeamMemberProps {
   fieldId: string
@@ -21,7 +22,7 @@ export interface DSOTeamMemberProps {
 export const DSOTeamMember = (props: DSOTeamMemberProps) => {
   const { defaultValue, fieldId, index, remove } = props
   const { control } = useFormContext<{ team: DSOFormValues['team'] }>()
-  const { isTablet, theme } = useAppBreakpoints()
+  const { isTablet } = useAppBreakpoints()
 
   return (
     <Grid
@@ -29,71 +30,90 @@ export const DSOTeamMember = (props: DSOTeamMemberProps) => {
       container
       alignItems='flex-start'
       wrap={isTablet ? 'wrap' : 'nowrap'}
-      spacing={3}
+      direction='column'
     >
-      <Grid
-        item
-        xs={12}
-        style={{ maxWidth: 60, marginRight: theme.spacing(2) }}
-      >
-        {/* @ts-ignore */}
-        <TypedField
-          customRenderer
-          key={fieldId}
-          control={control}
-          component={DataroomUploader}
-          label='Photo'
-          name={['team', index, 'photo']}
-          render={DataroomAvatarUploader}
-          defaultValue={defaultValue?.photo ?? ''}
-          valueExtractor={documentValueExtractor}
-          documentInfo={{
-            title: 'Photo',
-            type: 'photo'
-          }}
-        />
-      </Grid>
-      <Grid item container direction='column' spacing={1}>
-        <Grid item container spacing={2}>
-          <Grid item xs={12} sm={4} md={3}>
+      <Grid item container xs={12}>
+        <Grid item xs={12} md={2}>
+          {/* @ts-ignore */}
+          <TypedField
+            customRenderer
+            key={fieldId}
+            control={control}
+            component={Dropzone}
+            label=''
+            defaultValue={defaultValue?.photo ?? null}
+            valueExtractor={documentValueExtractor}
+            documentInfo={{
+              title: 'Photo',
+              type: 'photo'
+            }}
+            name={['team', index, 'photo']}
+          />
+        </Grid>
+        <Grid container item direction='column' xs={12} md={10}>
+          <Grid item>
             <TypedField
               fullWidth
               key={fieldId}
-              component={Input}
+              component={TextField}
               control={control}
               defaultValue={defaultValue?.name ?? ''}
               label='Name'
               name={['team', index, 'name']}
+              variant='outlined'
             />
           </Grid>
-          <Grid item xs={12} sm={4} md={3}>
+          <Grid item>
+            <Box pt={3} />
+          </Grid>
+          <Grid item>
             <TypedField
               fullWidth
               key={fieldId}
               control={control}
-              component={Input}
+              component={TextField}
               defaultValue={defaultValue?.position ?? ''}
               label='Position'
               name={['team', index, 'position']}
+              variant='outlined'
             />
           </Grid>
         </Grid>
-        <Grid item>
-          {/* @ts-ignore */}
-          <TypedField
-            key={fieldId}
-            control={control}
-            component={RichTextEditor}
-            customRenderer
-            defaultValue={defaultValue?.about ?? ''}
-            label='About'
-            name={['team', index, 'about']}
-            valueExtractor={wysiwygValueExtractor}
-          />
-        </Grid>
       </Grid>
       <Grid item>
-        <DSOTeamRemoveButton remove={remove} index={index} />
+        <VSpacer size='medium' />
+      </Grid>
+      <Grid item container xs={12} direction='column'>
+        <Grid item>
+          <DSOContainer
+            title='About'
+            subtitle='Short Introduction about your team member'
+          >
+            {/* @ts-ignore */}
+            <TypedField
+              key={fieldId}
+              control={control}
+              component={RichTextEditor}
+              customRenderer
+              defaultValue={defaultValue?.about ?? ''}
+              label='About'
+              name={['team', index, 'about']}
+              valueExtractor={wysiwygValueExtractor}
+            />
+          </DSOContainer>
+        </Grid>
+        <Grid
+          item
+          container
+          justify='flex-end'
+          alignItems='flex-end'
+          direction='column'
+        >
+          <Grid item>
+            <VSpacer size='small' />
+            <DSOTeamRemoveButton remove={remove} index={index} />
+          </Grid>
+        </Grid>
       </Grid>
     </Grid>
   )
