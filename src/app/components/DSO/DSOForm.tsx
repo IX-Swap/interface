@@ -2,24 +2,17 @@ import React from 'react'
 import { DigitalSecurityOffering, DSOFormValues } from 'types/dso'
 import { noop } from 'helpers/noop'
 import { isDSOLive, transformDSOToFormValues } from 'app/components/DSO/utils'
-import { Box, Grid } from '@material-ui/core'
-import { DSOContainer } from 'app/components/DSO/components/DSOContainer'
+import { Grid } from '@material-ui/core'
 import { DSOBaseFields } from 'app/components/DSO/components/DSOBaseFields'
-import { DSOIntroduction } from 'app/components/DSO/components/DSOIntroduction'
-import { DSOStatusFields } from 'app/components/DSO/components/DSOStatusFields'
-import { DSOSubscriptionDocument } from 'app/components/DSO/components/DSOSubscriptionDocument'
+import { DSOPricing } from 'app/components/DSO/components/DSOPricing'
 import { DSOTerms } from 'app/components/DSO/components/DSOTerms'
-import { DSOBusinessModel } from 'app/components/DSO/components/DSOBusinessModel'
-import { DSOUseOfProceeds } from 'app/components/DSO/components/DSOUseOfProceeds'
-import { DSODataroom } from 'app/components/DSO/components/DSODataroom'
-import { DSOFundRaisingMilestone } from 'app/components/DSO/components/DSOFundRaisingMilestone'
 import { DSOTeam } from 'app/components/DSO/components/DSOTeam'
 import { Form } from 'components/form/Form'
-import { Submit } from 'components/form/Submit'
-import { DSOBackButton } from 'app/components/DSO/components/DSOBackButton'
 import { useSetPageTitle } from 'app/hooks/useSetPageTitle'
 import { getOfferingName } from 'helpers/strings'
 import { getDSOValidationSchema } from 'validation/dso'
+import { DSOInformationProfile } from 'app/components/DSO/components/DSOInformationProfile'
+import { VSpacer } from 'components/VSpacer'
 
 export interface DSOFormProps {
   submitButtonLabel?: string
@@ -30,12 +23,7 @@ export interface DSOFormProps {
 }
 
 export const DSOForm = (props: DSOFormProps) => {
-  const {
-    submitButtonLabel = 'Submit',
-    data,
-    isNew = false,
-    onSubmit = noop
-  } = props
+  const { data, isNew = false, onSubmit = noop } = props
   const isLive = isDSOLive(data)
 
   useSetPageTitle(getOfferingName(data))
@@ -49,26 +37,14 @@ export const DSOForm = (props: DSOFormProps) => {
     >
       <Grid container direction='column' spacing={3}>
         <DSOBaseFields isNew={isNew} isLive={isLive} />
-        <Grid item container direction='row' alignItems='stretch'>
-          <DSOIntroduction />
-          <DSOStatusFields />
-        </Grid>
-        <Grid item>
-          <DSOSubscriptionDocument />
-        </Grid>
+        <VSpacer size='large' />
+        <DSOPricing />
+        <VSpacer size='large' />
         <DSOTerms />
-        <DSOBusinessModel />
-        <DSOUseOfProceeds />
-        <DSOContainer title='Dataroom' item xs={12}>
-          <DSODataroom />
-        </DSOContainer>
-        <DSOFundRaisingMilestone />
+        <VSpacer size='large' />
+        <DSOInformationProfile />
+        <VSpacer size='large' />
         <DSOTeam />
-        <Grid item container justify='center'>
-          <DSOBackButton />
-          <Box px={1} />
-          <Submit>{submitButtonLabel}</Submit>
-        </Grid>
       </Grid>
     </Form>
   )

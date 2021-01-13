@@ -1,104 +1,128 @@
 import React from 'react'
-import { Grid, Input } from '@material-ui/core'
+import { Grid, TextField } from '@material-ui/core'
 import { monthsNumberFormat, percentageNumberFormat } from 'config/numberFormat'
 import { TypedField } from 'components/form/TypedField'
 import { NumericInput } from 'components/form/NumericInput'
 import { numericValueExtractor } from 'helpers/forms'
 import { DistributionFrequencySelect } from 'components/form/DistributionFrequencySelect'
-import { DSOContainer } from 'app/components/DSO/components/DSOContainer'
 import { useFormContext } from 'react-hook-form'
 import { DSOFormValues } from 'types/dso'
+import { FormSectionHeader } from 'app/components/DSO/components/FormSectionHeader'
 
 export const DSOTerms = () => {
   const { control } = useFormContext<DSOFormValues>()
 
   return (
-    <DSOContainer title='Offering Terms' item xs={12}>
-      <Grid item container spacing={2}>
-        <Grid item xs={12} sm={6} md={4}>
-          <TypedField
-            control={control}
-            component={NumericInput}
-            label='Investment Period'
-            name='investmentPeriod'
-            numberFormat={monthsNumberFormat}
-            valueExtractor={numericValueExtractor}
-          />
+    <Grid item>
+      <Grid container spacing={2} direction='column'>
+        <Grid item>
+          <FormSectionHeader title='Offering Terms' />
         </Grid>
-
-        <Grid item xs={12} sm={6} md={4}>
-          <TypedField
-            control={control}
-            component={NumericInput}
-            name='dividendYield'
-            label='Dividend Yield'
-            numberFormat={percentageNumberFormat}
-            valueExtractor={numericValueExtractor}
-          />
+        <Grid item>
+          <Grid container spacing={3}>
+            <Grid item xs={12} sm={6} md={3}>
+              <TypedField
+                control={control}
+                component={NumericInput}
+                label='Investment Period'
+                name='investmentPeriod'
+                numberFormat={monthsNumberFormat}
+                valueExtractor={numericValueExtractor}
+                helperText='In months'
+                variant='outlined'
+              />
+            </Grid>
+            <Grid item xs={12} sm={6} md={3}>
+              <TypedField
+                control={control}
+                component={NumericInput}
+                name='dividendYield'
+                label='Dividend Yield'
+                numberFormat={percentageNumberFormat}
+                valueExtractor={numericValueExtractor}
+                helperText='in percent'
+                variant='outlined'
+              />
+            </Grid>
+            <Grid item xs={12} sm={6} md={3}>
+              <TypedField
+                control={control}
+                component={NumericInput}
+                label='Interest Rate'
+                name='interestRate'
+                numberFormat={percentageNumberFormat}
+                valueExtractor={numericValueExtractor}
+                helperText='in percent'
+                variant='outlined'
+              />
+            </Grid>
+            <Grid item xs={12} sm={6} md={3}>
+              <TypedField
+                control={control}
+                component={NumericInput}
+                name='grossIRR'
+                label='Gross IRR'
+                numberFormat={percentageNumberFormat}
+                valueExtractor={numericValueExtractor}
+                helperText='in percent'
+                variant='outlined'
+              />
+            </Grid>
+          </Grid>
         </Grid>
-
-        <Grid item xs={12} sm={6} md={4}>
-          <TypedField
-            control={control}
-            component={NumericInput}
-            name='grossIRR'
-            label='Gross IRR'
-            numberFormat={percentageNumberFormat}
-            valueExtractor={numericValueExtractor}
-          />
+        <Grid item>
+          <Grid container spacing={3}>
+            <Grid item xs={12} sm={6} md={6}>
+              <TypedField
+                control={control}
+                component={TextField}
+                label='Investment Structure'
+                name='investmentStructure'
+                variant='outlined'
+                helperText='Holding structure of the investment'
+              />
+            </Grid>
+            <Grid item xs={12} sm={6} md={6}>
+              <TypedField
+                control={control}
+                component={DistributionFrequencySelect}
+                name='distributionFrequency'
+                label='Distribution Frequency'
+                variant='outlined'
+                helperText='Frequency on return distribution'
+              />
+            </Grid>
+          </Grid>
         </Grid>
-
-        <Grid item xs={12} sm={6} md={4}>
-          <TypedField
-            control={control}
-            component={Input}
-            label='Investment Structure'
-            name='investmentStructure'
-          />
-        </Grid>
-
-        <Grid item xs={12} sm={6} md={4}>
-          <TypedField
-            control={control}
-            component={NumericInput}
-            name='equityMultiple'
-            label='Equity Multiple'
-            numberFormat={percentageNumberFormat}
-            valueExtractor={numericValueExtractor}
-          />
-        </Grid>
-
-        <Grid item xs={12} sm={6} md={4}>
-          <TypedField
-            control={control}
-            component={DistributionFrequencySelect}
-            name='distributionFrequency'
-            label='Distribution Frequency'
-          />
-        </Grid>
-
-        <Grid item xs={12} sm={6} md={4}>
-          <TypedField
-            control={control}
-            component={NumericInput}
-            label='Interest Rate'
-            name='interestRate'
-            numberFormat={percentageNumberFormat}
-            valueExtractor={numericValueExtractor}
-          />
-        </Grid>
-
-        <Grid item xs={12} sm={6} md={4}>
-          <TypedField
-            control={control}
-            component={NumericInput}
-            name='leverage'
-            label='Leverage'
-            numberFormat={percentageNumberFormat}
-            valueExtractor={numericValueExtractor}
-          />
+        <Grid item>
+          <Grid container spacing={3}>
+            <Grid item xs={12} sm={6} md={3}>
+              <TypedField
+                control={control}
+                component={NumericInput}
+                name='leverage'
+                label='Leverage'
+                numberFormat={percentageNumberFormat}
+                valueExtractor={numericValueExtractor}
+                variant='outlined'
+                helperText='In percent'
+              />
+            </Grid>
+            <Grid item xs={12} sm={6} md={3}>
+              <TypedField
+                control={control}
+                component={NumericInput}
+                name='equityMultiple'
+                label='Equity Multiple'
+                numberFormat={percentageNumberFormat}
+                valueExtractor={numericValueExtractor}
+                variant='outlined'
+                helperText='In percent'
+              />
+            </Grid>
+          </Grid>
         </Grid>
       </Grid>
-    </DSOContainer>
+    </Grid>
   )
 }

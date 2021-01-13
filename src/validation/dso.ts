@@ -36,7 +36,12 @@ export const dsoFormBaseValidationSchema = {
   minimumInvestment: number().nullable().required('Required'),
   pricePerUnit: number().nullable().required('Required'),
   subscriptionDocument: object<DataroomFile>(),
-  tokenName: string().required('Required'),
+  tokenName: string()
+    .matches(
+      /(?<=\s+|^)[a-zA-Z]+(?=\s+|$)/g,
+      'Token name must not have special characters'
+    )
+    .required('Required'),
   tokenSymbol: string().required('Required'),
   totalFundraisingAmount: number().nullable().required('Required'),
   useOfProceeds: string().required('Required'),

@@ -65,7 +65,7 @@ describe('DSOTeamMember', () => {
     expect(TypedField).toHaveBeenNthCalledWith(
       1,
       expect.objectContaining({
-        label: 'Photo',
+        label: '',
         name: ['team', props.index, 'photo']
       }),
       {}
