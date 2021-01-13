@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { Box, Typography } from '@material-ui/core'
+import { Typography } from '@material-ui/core'
 import { ScrollGuideLink } from 'ui/ScrollGuide/ScrollGuideLink'
 import { ScrollGuide } from 'ui/ScrollGuide/ScrollGuide'
 import { VSpacer } from 'components/VSpacer'
@@ -23,7 +23,7 @@ export const DSOFormGuide = (props: DSOFormGuideProps) => {
   const firstLinkKey = Object.values(DSOFormSection)[0]
 
   return (
-    <Box position='sticky' top={90}>
+    <>
       <Typography variant='subtitle1'>{title}</Typography>
       <VSpacer size='small' />
       <ScrollGuide>
@@ -55,6 +55,6 @@ export const DSOFormGuide = (props: DSOFormGuideProps) => {
           </ScrollGuideLink>
         ))}
       </ScrollGuide>
-    </Box>
+    </>
   )
 }

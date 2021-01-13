@@ -1,4 +1,5 @@
 import React from 'react'
+import { Element } from 'react-scroll'
 import { DigitalSecurityOffering, DSOFormValues } from 'types/dso'
 import { noop } from 'helpers/noop'
 import { isDSOLive, transformDSOToFormValues } from 'app/components/DSO/utils'
@@ -13,8 +14,8 @@ import { getOfferingName } from 'helpers/strings'
 import { getDSOValidationSchema } from 'validation/dso'
 import { DSOInformationProfile } from 'app/components/DSO/components/DSOInformationProfile'
 import { VSpacer } from 'components/VSpacer'
-import { DSOFormGuide, DSOFormSection } from 'app/components/DSO/DSOFormGuide'
-import { Element } from 'react-scroll'
+import { DSOFormSection } from 'app/components/DSO/DSOFormGuide'
+import { DSOFormSidebar } from 'app/components/DSO/components/DSOFormSidebar'
 
 export interface DSOFormProps {
   submitButtonLabel?: string
@@ -65,7 +66,7 @@ export const DSOForm = (props: DSOFormProps) => {
         </Grid>
 
         <Grid item lg={3}>
-          <DSOFormGuide title='Progress' />
+          <DSOFormSidebar dso={data} isNew={isNew} />
         </Grid>
       </Grid>
     </Form>
