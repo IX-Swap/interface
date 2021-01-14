@@ -34,7 +34,9 @@ describe('DSOForm', () => {
   const props: DSOFormProps = {
     isEditing: false,
     isNew: false,
-    data: dso
+    data: dso,
+    submitButtonLabel: 'submit',
+    onSubmit: () => {}
   }
 
   const parsedDataFn = jest.fn()

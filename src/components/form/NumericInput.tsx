@@ -10,7 +10,7 @@ const InputComponent: React.FC = (props: NumberFormatProps) => {
 export interface NumericInputProps {
   numberFormat: NumberFormatProps
   onChange?: any
-  variant?: 'outlined' | 'standard' | undefined
+  variant?: 'outlined' | 'standard'
 }
 
 export const NumericInput = (

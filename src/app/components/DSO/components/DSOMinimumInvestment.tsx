@@ -3,7 +3,7 @@ import { Grid, Typography } from '@material-ui/core'
 import { useFormContext } from 'react-hook-form'
 import { useAssetsData } from 'hooks/asset/useAssetsData'
 
-export const MinimumInvestment = () => {
+export const DSOMinimumInvestment = () => {
   const { watch } = useFormContext()
   const minimumUnitInvestment = watch('minimumInvestment', 0)
   const unitPrice = watch('pricePerUnit', 0)

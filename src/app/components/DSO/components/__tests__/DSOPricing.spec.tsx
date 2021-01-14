@@ -1,8 +1,8 @@
 import React from 'react'
 import { render, cleanup } from 'test-utils'
 import { DSOPricing } from 'app/components/DSO/components/DSOPricing'
-import { MinimumInvestment } from 'app/components/DSO/components/DSOMinimumInvestment'
-import { TotalUnits } from 'app/components/DSO/components/TotalUnits'
+import { DSOMinimumInvestment } from 'app/components/DSO/components/DSOMinimumInvestment'
+import { DSOTotalUnits } from 'app/components/DSO/components/DSOTotalUnits'
 import { Form } from 'components/form/Form'
 import { moneyNumberFormat } from 'config/numberFormat'
 import { TypedField } from 'components/form/TypedField'
@@ -13,11 +13,11 @@ jest.mock('components/form/TypedField', () => ({
 }))
 
 jest.mock('app/components/DSO/components/DSOMinimumInvestment', () => ({
-  MinimumInvestment: jest.fn(() => <div />)
+  DSOMinimumInvestment: jest.fn(() => <div />)
 }))
 
-jest.mock('app/components/DSO/components/TotalUnits', () => ({
-  TotalUnits: jest.fn(() => <div />)
+jest.mock('app/components/DSO/components/DSOTotalUnits', () => ({
+  DSOTotalUnits: jest.fn(() => <div />)
 }))
 
 describe('DSOPricing', () => {
@@ -76,7 +76,7 @@ describe('DSOPricing', () => {
       }),
       {}
     )
-    expect(MinimumInvestment).toHaveBeenCalled()
-    expect(TotalUnits).toHaveBeenCalled()
+    expect(DSOMinimumInvestment).toHaveBeenCalled()
+    expect(DSOTotalUnits).toHaveBeenCalled()
   })
 })

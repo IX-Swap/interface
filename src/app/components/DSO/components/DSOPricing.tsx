@@ -7,8 +7,8 @@ import { NumericInput } from 'components/form/NumericInput'
 import { useFormContext } from 'react-hook-form'
 import { DSOFormValues } from 'types/dso'
 import { MinimumInvesmentField } from 'components/form/MinimumInvestmentField'
-import { MinimumInvestment } from 'app/components/DSO/components/DSOMinimumInvestment'
-import { TotalUnits } from 'app/components/DSO/components/TotalUnits'
+import { DSOMinimumInvestment } from 'app/components/DSO/components/DSOMinimumInvestment'
+import { DSOTotalUnits } from 'app/components/DSO/components/DSOTotalUnits'
 import { FormSectionHeader } from 'app/components/DSO/components/FormSectionHeader'
 
 export const DSOPricing = () => {
@@ -63,14 +63,14 @@ export const DSOPricing = () => {
               />
             </Grid>
             <Grid item xs={12} sm={6}>
-              <MinimumInvestment />
+              <DSOMinimumInvestment />
             </Grid>
           </Grid>
         </Grid>
         <Grid item>
           <Grid container spacing={3}>
             <Grid item xs={12} sm={6}>
-              <TotalUnits />
+              <DSOTotalUnits />
             </Grid>
           </Grid>
         </Grid>
