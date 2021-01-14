@@ -47,7 +47,7 @@ export const valueWeightMap = {
   bold: 900
 }
 
-export type textAlignment = 'left' | 'right' | 'center' | 'justify'
+export type TextAlignment = 'left' | 'right' | 'center' | 'justify'
 export interface LabelledValueProps {
   label: string
   value: any
@@ -55,7 +55,7 @@ export interface LabelledValueProps {
   reverse?: boolean
   valueWeight?: keyof typeof valueWeightMap
   labelWeight?: keyof typeof labelWeightMap
-  align?: textAlignment
+  align?: TextAlignment
 }
 
 export const LabelledValue = (props: LabelledValueProps & GridProps) => {
