@@ -1,5 +1,6 @@
 import React from 'react'
 import { Box, Grid, GridProps, Typography } from '@material-ui/core'
+import { useTheme } from '@material-ui/core/styles'
 import { formatDateToMMDDYY } from 'helpers/dates'
 
 const isDateTime = (value: string) => {
@@ -46,6 +47,7 @@ export const valueWeightMap = {
   bold: 900
 }
 
+export type TextAlignment = 'left' | 'right' | 'center' | 'justify'
 export interface LabelledValueProps {
   label: string
   value: any
@@ -53,6 +55,7 @@ export interface LabelledValueProps {
   reverse?: boolean
   valueWeight?: keyof typeof valueWeightMap
   labelWeight?: keyof typeof labelWeightMap
+  align?: TextAlignment
 }
 
 export const LabelledValue = (props: LabelledValueProps & GridProps) => {
@@ -63,9 +66,12 @@ export const LabelledValue = (props: LabelledValueProps & GridProps) => {
     reverse = false,
     valueWeight = 'default',
     labelWeight = 'normal',
+    align = 'left',
     ...rest
   } = props
   const direction = row ? 'row' : 'column'
+
+  const theme = useTheme()
 
   const items = [
     {
@@ -94,7 +100,21 @@ export const LabelledValue = (props: LabelledValueProps & GridProps) => {
       </Typography>
       {row ? <Box px={0.5} /> : null}
       {!row && !reverse ? <Box py={0.4} /> : null}
-      <Typography style={last.styles}>{last.text}</Typography>
+      {React.isValidElement(last.text) ? (
+        <Box
+          style={{
+            ...last.styles,
+            textAlign: align,
+            ...theme.typography.body1
+          }}
+        >
+          {last.text}
+        </Box>
+      ) : (
+        <Typography style={last.styles} align={align}>
+          {last.text}
+        </Typography>
+      )}
     </Grid>
   )
 }
