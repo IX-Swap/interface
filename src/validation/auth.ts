@@ -9,7 +9,7 @@ import { emailSchema, passwordSchema } from 'validation/shared'
 
 export const loginFormValidationSchema = yup.object<LoginArgs>({
   email: emailSchema.required('Required'),
-  password: passwordSchema.required('Required'),
+  password: yup.string().required('Required'),
   otp: yup.string()
 })
 

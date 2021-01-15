@@ -22,7 +22,7 @@ export const dateTimeValueExtractor = (value: Date, _stringValue: string) => {
   return value
 }
 
-export const hasValue = (value: any) => {
+export const hasValue = <T = any>(value: any): value is T => {
   if (typeof value === 'string') {
     return value.trim() !== ''
   }
