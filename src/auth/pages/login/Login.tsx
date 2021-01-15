@@ -32,7 +32,9 @@ export const Login: React.FC = () => {
       <Grid container direction='column' spacing={2}>
         <LoginFields />
         <Grid item container justify='space-between'>
-          <Submit size='large'>Login</Submit>
+          <Submit size='large' watchIsDirty={false}>
+            Login
+          </Submit>
           <Button
             component={AppRouterLinkComponent}
             color='primary'
