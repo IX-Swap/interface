@@ -3,7 +3,7 @@ import { GOOGLE_ANALYTICS } from 'config'
 
 export const initGoogleAnalytics = () => {
   // if (GOOGLE_ANALYTICS === 'true') {
-    console.log('testing ga')
-    ReactGA.initialize('G-2ED0ZMJH1Y')
+  console.log('testing ga')
+  ReactGA.initialize('UA-187443583-1')
   // }
 }
