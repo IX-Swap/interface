@@ -2,7 +2,8 @@ import ReactGA from 'react-ga'
 import { GOOGLE_ANALYTICS } from 'config'
 
 export const initGoogleAnalytics = () => {
-  if (GOOGLE_ANALYTICS === 'true') {
-    ReactGA.initialize('G-F7RSTN1MVC')
-  }
+  // if (GOOGLE_ANALYTICS === 'true') {
+    console.log('testing ga')
+    ReactGA.initialize('G-2ED0ZMJH1Y')
+  // }
 }
