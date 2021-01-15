@@ -15,8 +15,8 @@ import { history } from 'config/history'
 import { ReactQueryCacheProvider, QueryCache } from 'react-query'
 import { setupSentry } from 'setupSentry'
 import { setupFullStory } from 'setupFullStory'
-import { initGoogleAnalytics } from 'initGoogleAnalytics'
 import { AppThemeProvider } from 'AppThemeProvider'
+import { setupGoogleAnalytics } from 'setupGoogleAnalytics'
 
 const queryCache = new QueryCache({
   defaultConfig: {
@@ -32,7 +32,7 @@ const generateClassName = createGenerateClassName({
 
 setupSentry()
 setupFullStory()
-initGoogleAnalytics()
+setupGoogleAnalytics()
 
 console.log(`App version: ${APP_VERSION}`) // eslint-disable-line
 
