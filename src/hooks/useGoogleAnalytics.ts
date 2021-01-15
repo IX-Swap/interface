@@ -9,7 +9,7 @@ export const useGoogleAnalytics = () => {
   const { user } = useAuth()
 
   useEffect(() => {
-    if (GOOGLE_ANALYTICS === 'true') {
+    // if (GOOGLE_ANALYTICS === 'true') {
       if (user !== undefined) {
         ReactGA.set({
           userId: user._id,
@@ -21,6 +21,6 @@ export const useGoogleAnalytics = () => {
       history.listen(location => {
         ReactGA.pageview(location.pathname)
       })
-    }
+    // }
   }, []) // eslint-disable-line
 }
