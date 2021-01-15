@@ -10,17 +10,17 @@ export const useGoogleAnalytics = () => {
 
   useEffect(() => {
     // if (GOOGLE_ANALYTICS === 'true') {
-      if (user !== undefined) {
-        ReactGA.set({
-          userId: user._id,
-          email: user.email,
-          userName: user.name
-        })
-      }
-
-      history.listen(location => {
-        ReactGA.pageview(location.pathname)
+    if (user !== undefined) {
+      ReactGA.set({
+        userId: user._id,
+        email: user.email,
+        userName: user.name
       })
+    }
+
+    history.listen(location => {
+      ReactGA.pageview(location.pathname)
+    })
     // }
   }, []) // eslint-disable-line
 }
