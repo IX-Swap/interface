@@ -22,8 +22,12 @@ export interface TableColumn<T, K = string> {
   render?: (val: any, row: T) => ReactNode | JSX.Element | string
 }
 
-export type AuthorizableStatus = 'Approved' | 'Rejected' | 'Submitted' | ''
-
+export type AuthorizableStatus =
+  | 'Approved'
+  | 'Rejected'
+  | 'Submitted'
+  | 'Draft'
+  | ''
 export interface NumberFormat {
   currency: string
 }

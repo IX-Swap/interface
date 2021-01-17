@@ -9,7 +9,7 @@ export enum DSOFormSection {
   Pricing = 'dso-pricing',
   'Offering Terms' = 'dso-terms',
   'Information' = 'dso-profile',
-  // 'Upload Documents' = 'dso-documents',
+  'Upload Documents' = 'dso-documents',
   'Team Members' = 'dso-team'
 }
 
@@ -33,7 +33,7 @@ export const DSOFormGuide = (props: DSOFormGuideProps) => {
             spy
             smooth
             duration={300}
-            offset={-40}
+            offset={-20}
             onSetActive={() => {
               setHasActive(true)
             }}

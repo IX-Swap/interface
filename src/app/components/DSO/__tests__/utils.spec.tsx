@@ -36,7 +36,7 @@ describe('transformDSOToFormValues', () => {
       totalFundraisingAmount: null,
       pricePerUnit: null,
       currency: '',
-      decimalPlaces: 0,
+      decimalPlaces: null,
       tokenSymbol: '',
       tokenName: '',
       network: '',

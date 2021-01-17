@@ -16,12 +16,14 @@ import {
 } from 'app/pages/accounts/pages/banks/components/BankDocuments'
 import { FormError } from 'components/form/FormError'
 import { TextError } from 'components/TextError'
+import { FormSectionHeader } from 'app/components/DSO/components/FormSectionHeader'
 
 export const DSODataroom = () => {
   const { control } = useFormContext<DSOFormValues>()
 
   return (
     <SelectionHelper<SelectedDocument> itemComparator={itemComparator}>
+      <FormSectionHeader title='Dataroom' />
       <FieldsArray name='documents' control={control}>
         {({ fields, append, remove }) => (
           <TableContainer>
