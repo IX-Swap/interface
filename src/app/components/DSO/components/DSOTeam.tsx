@@ -25,15 +25,17 @@ export const DSOTeam = () => {
             {({ fields, append, remove }) => (
               <Grid container direction='column' spacing={3}>
                 <Grid item>
-                  {fields.map((value, index) => (
-                    <DSOTeamMember
-                      key={value.id}
-                      defaultValue={fields[index] as any}
-                      fieldId={value.id}
-                      index={index}
-                      remove={remove}
-                    />
-                  ))}
+                  <Grid container direction='column' spacing={3}>
+                    {fields.map((value, index) => (
+                      <DSOTeamMember
+                        key={value.id}
+                        defaultValue={fields[index] as any}
+                        fieldId={value.id}
+                        index={index}
+                        remove={remove}
+                      />
+                    ))}
+                  </Grid>
                 </Grid>
                 <Grid item container justify='flex-end' alignItems='center'>
                   <FormError name={fieldName} render={TextError} />
