@@ -10,10 +10,6 @@ import { history } from 'config/history'
 import { IssuanceRoute } from 'app/pages/issuance/router'
 import * as useParsedDataHook from 'hooks/useParsedData'
 
-jest.mock('components/form/TypedField', () => ({
-  TypedField: jest.fn(() => <input />)
-}))
-
 jest.mock('app/components/DSO/components/DSOBaseFields', () => ({
   DSOBaseFields: jest.fn(() => <div />)
 }))
@@ -34,7 +30,9 @@ describe('DSOForm', () => {
   const props: DSOFormProps = {
     isEditing: false,
     isNew: false,
-    data: dso
+    data: dso,
+    submitButtonLabel: 'submit',
+    onSubmit: () => {}
   }
 
   const parsedDataFn = jest.fn()
@@ -62,5 +60,16 @@ describe('DSOForm', () => {
     expect(DSOPricing).toHaveBeenCalled()
     expect(DSOTerms).toHaveBeenCalled()
     expect(DSOTeam).toHaveBeenCalled()
+  })
+
+  it('renders default isNew prop when it is not defined', () => {
+    render(<DSOForm {...props} isNew={undefined} />)
+    expect(DSOBaseFields).toHaveBeenCalledWith(
+      {
+        isNew: false,
+        isLive: true
+      },
+      {}
+    )
   })
 })

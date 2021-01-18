@@ -8,21 +8,23 @@ import { FormSectionHeader } from 'app/components/DSO/components/FormSectionHead
 
 export const DSOInformationProfile = () => {
   return (
-    <Grid container item direction='column' spacing={3}>
-      <Grid item>
-        <FormSectionHeader title='Information Profile' />
-      </Grid>
-      <Grid item>
-        <DSOIntroduction />
-      </Grid>
-      <Grid item>
-        <DSOBusinessModel />
-      </Grid>
-      <Grid item>
-        <DSOUseOfProceeds />
-      </Grid>
-      <Grid item>
-        <DSOFundRaisingMilestone />
+    <Grid item>
+      <Grid container direction='column' spacing={3}>
+        <Grid item>
+          <FormSectionHeader title='Information Profile' />
+        </Grid>
+        <Grid item>
+          <DSOIntroduction />
+        </Grid>
+        <Grid item>
+          <DSOBusinessModel />
+        </Grid>
+        <Grid item>
+          <DSOUseOfProceeds />
+        </Grid>
+        <Grid item>
+          <DSOFundRaisingMilestone />
+        </Grid>
       </Grid>
     </Grid>
   )

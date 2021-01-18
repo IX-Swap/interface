@@ -5,10 +5,10 @@ import ErrorOutlineRoundedIcon from '@material-ui/icons/ErrorOutlineRounded'
 import NumberFormat from 'react-number-format'
 import { moneyNumberFormat } from 'config/numberFormat'
 
-export const TotalUnits = () => {
+export const DSOTotalUnits = () => {
   const { watch } = useFormContext()
-  const totalAmount = watch('totalFundraisingAmount', 0)
-  const unitPrice = watch('pricePerUnit', 0)
+  const totalAmount = watch('totalFundraisingAmount')
+  const unitPrice = watch('pricePerUnit')
   const totalUnits = parseFloat(totalAmount) / parseFloat(unitPrice)
 
   return !isNaN(totalUnits) && totalUnits !== 0 ? (

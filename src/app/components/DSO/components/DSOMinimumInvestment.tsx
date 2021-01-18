@@ -2,12 +2,13 @@ import React from 'react'
 import { Grid, Typography } from '@material-ui/core'
 import { useFormContext } from 'react-hook-form'
 import { useAssetsData } from 'hooks/asset/useAssetsData'
+import { addSymbol } from 'helpers/numbers'
 
-export const MinimumInvestment = () => {
+export const DSOMinimumInvestment = () => {
   const { watch } = useFormContext()
-  const minimumUnitInvestment = watch('minimumInvestment', 0)
-  const unitPrice = watch('pricePerUnit', 0)
-  const assetId = watch('currency', '')
+  const minimumUnitInvestment = watch('minimumInvestment')
+  const unitPrice = watch('pricePerUnit')
+  const assetId = watch('currency')
   const { data } = useAssetsData('Currency')
   const currency = data?.map[assetId]?.symbol
 
@@ -26,7 +27,7 @@ export const MinimumInvestment = () => {
         Minimum Invesment
       </Typography>
       <Typography variant='subtitle1' color='textSecondary'>
-        {minimumnInvestment} {currency}
+        {addSymbol(minimumnInvestment, currency, true)}
       </Typography>
     </Grid>
   ) : null
