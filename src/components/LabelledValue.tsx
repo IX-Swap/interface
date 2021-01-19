@@ -56,6 +56,7 @@ export interface LabelledValueProps {
   valueWeight?: keyof typeof valueWeightMap
   labelWeight?: keyof typeof labelWeightMap
   align?: TextAlignment
+  labelColor?: 'default' | 'light'
 }
 
 export const LabelledValue = (props: LabelledValueProps & GridProps) => {
@@ -67,6 +68,7 @@ export const LabelledValue = (props: LabelledValueProps & GridProps) => {
     valueWeight = 'default',
     labelWeight = 'normal',
     align = 'left',
+    labelColor = 'default',
     ...rest
   } = props
   const direction = row ? 'row' : 'column'
@@ -78,7 +80,11 @@ export const LabelledValue = (props: LabelledValueProps & GridProps) => {
       text: label,
       styles: {
         fontWeight: labelWeightMap[labelWeight],
-        fontSize: reverse ? '16px' : undefined
+        fontSize: reverse ? '16px' : undefined,
+        color:
+          labelColor === 'default'
+            ? theme.palette.text.primary
+            : theme.palette.text.hint
       }
     },
     {

@@ -40,7 +40,10 @@ export const useDSOAutosave = (
     }
   })
 
-  const [createDSODraft, { isLoading: isCreating }] = useMutation(
+  const [
+    createDSODraft,
+    { isLoading: isCreating, isError: isCreatingError }
+  ] = useMutation(
     async (payload: DSORequestArgs) => {
       return await apiService.post<DigitalSecurityOffering>(
         issuanceURL.dso.create(userId),
@@ -57,7 +60,10 @@ export const useDSOAutosave = (
     }
   )
 
-  const [updateDSODraft, { isLoading: isUpdating }] = useMutation(
+  const [
+    updateDSODraft,
+    { isLoading: isUpdating, isError: isUpdatingError }
+  ] = useMutation(
     async (payload: DSORequestArgs) => {
       return await apiService.put(
         issuanceURL.dso.update(userId, dsoId),
@@ -81,6 +87,7 @@ export const useDSOAutosave = (
   const isDirty = Object.keys(touched).length > 0
   const isSaving = isFetching || isCreating || isUpdating
   const isTouched = wasSaved ? isDirty && !isFormValuesEqualToSaved : isDirty
+  const isError = isUpdatingError || isCreatingError
 
   const [isSaved, setIsSaved] = useState(wasSaved)
 
@@ -99,7 +106,6 @@ export const useDSOAutosave = (
     const areEqual = isEqual(formValuesHacked, savedDSOFormValues)
     // TODO: fix the problem with document uploading (form doesn't get updated upon successful document upload)
 
-    // debugger
     setIsSaved(areEqual)
   }, [formValues, savedDSOFormValues])
 
@@ -129,6 +135,7 @@ export const useDSOAutosave = (
 
   return {
     isSaving,
-    isSaved
+    isSaved,
+    isError
   }
 }

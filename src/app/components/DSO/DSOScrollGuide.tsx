@@ -13,22 +13,18 @@ export enum DSOFormSection {
   'Team Members' = 'dso-team'
 }
 
-export interface DSOFormGuideProps {
-  title: string
-}
-
-export const DSOFormGuide = (props: DSOFormGuideProps) => {
-  const { title } = props
+export const DSOScrollGuide = () => {
   const [hasActive, setHasActive] = useState(false)
   const firstLinkKey = Object.values(DSOFormSection)[0]
 
   return (
     <>
-      <Typography variant='subtitle1'>{title}</Typography>
+      <Typography variant='subtitle1'>Progress</Typography>
       <VSpacer size='small' />
       <ScrollGuide>
         {Object.entries(DSOFormSection).map(([name, key]) => (
           <ScrollGuideLink
+            key={key}
             to={key}
             spy
             smooth

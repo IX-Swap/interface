@@ -8,7 +8,7 @@ import { DSOTermsView } from 'app/components/DSO/DSOPreview/DSOTermsView'
 import { DSOInformationView } from 'app/components/DSO/DSOPreview/DSOInformationView'
 import { DSOTeamView } from 'app/components/DSO/DSOPreview/DSOTeamView'
 import { Element } from 'react-scroll'
-import { DSOFormSection } from 'app/components/DSO/DSOFormGuide'
+import { DSOFormSection } from 'app/components/DSO/DSOScrollGuide'
 import { DSODataroomView } from 'app/components/DSO/components/DSODataroomView'
 
 export interface DSOPreviewProps {

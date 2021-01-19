@@ -32,7 +32,6 @@ jest.mock('app/components/DSO/components/DSOTeam', () => ({
 
 describe('DSOForm', () => {
   const props: DSOFormProps = {
-    isEditing: false,
     isNew: false,
     data: dso
   }

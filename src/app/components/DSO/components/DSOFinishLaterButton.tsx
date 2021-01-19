@@ -21,16 +21,13 @@ export const DSOFinishLaterButton = (props: DSOFinishLaterButtonProps) => {
     ...transformDSOFormValuesToRequestArgs({
       ...getValues(),
       status: 'Draft'
-    }),
-    subscriptionDocument: '5fd8e3b60e45290e2171b82d' // TODO: delete before push
+    })
   }
 
-  // @ts-ignore
-  delete formValues.tokenName
-  // @ts-ignore
-  delete formValues.tokenSymbol
-  // @ts-ignore
-  delete formValues.issuerName
+  // TODO: fix payload
+  // delete formValues.tokenName
+  // delete formValues.tokenSymbol
+  // delete formValues.issuerName
 
   const handleClick =
     dso === undefined

@@ -23,9 +23,9 @@ export const transformDSOToFormValues = (
       team: [],
       documents: [],
       capitalStructure: '',
-      minimumInvestment: null,
-      totalFundraisingAmount: null,
-      pricePerUnit: null,
+      minimumInvestment: '',
+      totalFundraisingAmount: '',
+      pricePerUnit: '',
       currency: '',
       decimalPlaces: null,
       tokenSymbol: '',
@@ -40,7 +40,8 @@ export const transformDSOToFormValues = (
       grossIRR: '',
       interestRate: '',
       dividendYield: '',
-      investmentPeriod: ''
+      investmentPeriod: '',
+      issuerName: ''
     } as any
   }
 

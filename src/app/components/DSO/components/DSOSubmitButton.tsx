@@ -18,12 +18,10 @@ export const DSOSubmitButton = (props: DSOSubmitButtonProps) => {
     ...transformDSOToFormValues(dso)
   })
 
-  // @ts-ignore
-  delete formValues.tokenName
-  // @ts-ignore
-  delete formValues.tokenSymbol
-  // @ts-ignore
-  delete formValues.issuerName
+  // TODO: fix payload
+  // delete formValues.tokenName
+  // delete formValues.tokenSymbol
+  // delete formValues.issuerName
 
   const handleClick = async () => await submitDSO(formValues)
 
