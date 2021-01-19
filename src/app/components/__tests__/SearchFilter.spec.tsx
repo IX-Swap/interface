@@ -1,6 +1,6 @@
 import React from 'react'
 import { render, fireEvent, waitFor } from 'test-utils'
-import { SearchFilter } from 'app/pages/invest/components/DSOTable/SearchFilter'
+import { SearchFilter } from 'app/components/SearchFilter'
 import { history } from 'config/history'
 
 describe('SearchFilter', () => {
