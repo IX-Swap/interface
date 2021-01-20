@@ -1,7 +1,9 @@
-export const rte = {
+import { Theme } from '@material-ui/core'
+
+export const rte = (theme: Theme) => ({
   MUIRichTextEditor: {
     root: {
-      backgroundColor: '#fff',
+      backgroundColor: theme.palette.background.default,
       height: '100%',
       minHeight: '40px',
       borderRadius: 4,
@@ -13,7 +15,7 @@ export const rte = {
       flexDirection: 'column'
     },
     editor: {
-      backgroundColor: '#fff',
+      backgroundColor: theme.palette.background.default,
       padding: '20px',
       height: '100%',
       overflow: 'auto'
@@ -29,4 +31,4 @@ export const rte = {
       position: 'static'
     }
   }
-}
+})
