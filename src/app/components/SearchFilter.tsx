@@ -7,7 +7,6 @@ import {
 import { Search } from '@material-ui/icons'
 import { SearchQueryFilter } from 'components/SearchQueryFilter/SearchQueryFilter'
 import debounce from 'lodash/debounce'
-import { isNull } from 'lodash'
 
 interface SearchFilterProps extends OutlinedInputProps {
   inputAdormentPosition?: 'start' | 'end'
@@ -27,9 +26,7 @@ export const SearchFilter = (props: SearchFilterProps) => {
               <InputAdornment position={inputAdormentPosition}>
                 <Search color='disabled' />
               </InputAdornment>
-            ) : (
-              isNull
-            )
+            ) : null
           }
           endAdornment={
             inputAdormentPosition === 'end' ? (
