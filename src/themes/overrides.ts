@@ -3,7 +3,7 @@ import { Overrides } from '@material-ui/core/styles/overrides'
 import { rte } from 'themes/rte'
 
 export const getThemeOverrides = (theme: Theme): Overrides => ({
-  ...rte,
+  ...rte(theme),
   MuiCssBaseline: {
     '@global': {
       html: {
