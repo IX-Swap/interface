@@ -9,7 +9,7 @@ export const AdminRoot = () => {
 
   return (
     <RootContainer className={privateClassNames()}>
-      <PageHeader label='Admin' />
+      <PageHeader />
       {renderRoutes()}
     </RootContainer>
   )

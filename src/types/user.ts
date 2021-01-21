@@ -26,3 +26,18 @@ export interface UpdateCustomFieldArgs {
     [key: string]: string | number | boolean
   }
 }
+
+export interface ManagedUser {
+  _id: string
+  enabled: boolean
+  verified: boolean
+  totpConfirmed: boolean
+  email: string
+  name: string
+  roles: string
+  createdAt: string
+  updatedAt: string
+  resetExpiresOn: string
+  twoFactorAuth: boolean
+  isResetActive: boolean
+}
