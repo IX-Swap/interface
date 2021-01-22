@@ -2,7 +2,7 @@ import React from 'react'
 import { ButtonError } from 'app/components/ButtonError'
 import { DialogEnabledToggle } from 'app/pages/admin/components/DialogEnabledToggle'
 import { useUserActionsDialog } from 'app/pages/admin/hooks/useUserActionsDialog'
-import { Button } from '@material-ui/core'
+import { ButtonTransparent } from 'app/components/ButtonTransparent'
 
 export interface ActionEnableToggleProps {
   enabled: boolean
@@ -23,17 +23,17 @@ export const ActionEnableToggle = ({ enabled }: ActionEnableToggleProps) => {
           variant='contained'
           disableElevation
         >
-          DISABLE
+          DISABLE THIS USER
         </ButtonError>
       ) : (
-        <Button
+        <ButtonTransparent
           onClick={openEnabledToggle}
           variant='contained'
           disableElevation
           color='primary'
         >
-          ENABLE
-        </Button>
+          ENABLE THIS USER
+        </ButtonTransparent>
       )}
       <DialogEnabledToggle
         enabled={enabled}

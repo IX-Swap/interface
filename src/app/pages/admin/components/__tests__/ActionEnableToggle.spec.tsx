@@ -39,7 +39,7 @@ describe('ActionEnableToggle', () => {
   it('renders components with correct props when enabled is true', () => {
     const { getByText } = render(<ActionEnableToggle enabled={true} />)
 
-    expect(getByText('DISABLE')).toBeTruthy()
+    expect(getByText('DISABLE THIS USER')).toBeTruthy()
     expect(ButtonError).toHaveBeenCalledWith(
       expect.objectContaining({
         onClick: openEnabledToggleMock,
@@ -61,7 +61,7 @@ describe('ActionEnableToggle', () => {
   it('renders components with correct props when enabled is false', () => {
     const { getByText } = render(<ActionEnableToggle enabled={false} />)
 
-    expect(getByText('ENABLE')).toBeTruthy()
+    expect(getByText('ENABLE THIS USER')).toBeTruthy()
     expect(DialogEnabledToggle).toHaveBeenCalledWith(
       {
         enabled: false,

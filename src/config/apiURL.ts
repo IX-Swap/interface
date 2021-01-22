@@ -120,6 +120,7 @@ export const authURL = {
 
 export const userURL = {
   getUserById: (userId: string) => `/auth/user/${userId}`,
+  getAll: '/auth/users/list',
   getUserProfile: (userId: string) => `/auth/profiles/${userId}`,
   updateRoles: (userId: string) => `/auth/users/${userId}/roles`,
   getCustomFields: (userId: string, service: string, feature: string) =>
