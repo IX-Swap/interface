@@ -41,3 +41,53 @@ export interface ManagedUser {
   twoFactorAuth: boolean
   isResetActive: boolean
 }
+
+export interface Browser {
+  name: string
+  version: string
+}
+export interface UserAgent {
+  name: string
+  browser: Browser
+  browserName: string
+}
+
+export interface GeoLocation {
+  status: string
+  continent: string
+  continentCode: string
+  country: string
+  countryCode: string
+  region: string
+  regionName: string
+  city: string
+  district: string
+  zip: string
+  lat: number
+  lon: number
+  timezone: string
+  offset: number
+  currency: string
+  isp: string
+  org: string
+  as: string
+  asname: string
+  mobile: boolean
+  proxy: boolean
+  hosting: boolean
+  query: string
+  address: string
+  whois: string
+  map: string
+}
+
+export interface LoginHistory {
+  _id: string
+  user: User
+  ip: string
+  userAgent: UserAgent
+  createdAt: string
+  updatedAt: string
+  __v: number
+  geolocation: GeoLocation
+}

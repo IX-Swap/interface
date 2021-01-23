@@ -115,7 +115,8 @@ export const authURL = {
   setup2fa: (userId: string) => `/auth/2fa/setup/${userId}`,
   register: '/auth/registrations',
   registerConfirm: '/auth/registrations/confirm',
-  reset2fa: (userId: string) => `/auth/2fa/reset/${userId}`
+  reset2fa: (userId: string) => `/auth/2fa/reset/${userId}`,
+  getLoginHistory: (userId: string) => `auth/users/${userId}/logins`
 }
 
 export const userURL = {

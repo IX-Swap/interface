@@ -8,6 +8,7 @@ import { generateQueryResult } from '__fixtures__/useQuery'
 import { QueryStatus } from 'react-query'
 import { UserDetails } from 'app/pages/admin/components/UserDetails'
 import { UserStatus } from 'app/pages/admin/components/UserStatus'
+import { IndividualAccountSettings } from 'app/pages/admin/components/IndividualAccountSettings'
 
 jest.mock('app/pages/admin/components/UserDetails', () => ({
   UserDetails: jest.fn(() => null)
@@ -15,6 +16,10 @@ jest.mock('app/pages/admin/components/UserDetails', () => ({
 
 jest.mock('app/pages/admin/components/UserStatus', () => ({
   UserStatus: jest.fn(() => null)
+}))
+
+jest.mock('app/pages/admin/components/IndividualAccountSettings', () => ({
+  IndividualAccountSettings: jest.fn(() => null)
 }))
 
 describe('ViewUser', () => {
@@ -48,6 +53,7 @@ describe('ViewUser', () => {
 
     expect(UserDetails).toHaveBeenCalledWith({ data: managedUser }, {})
     expect(UserStatus).toHaveBeenCalledWith({ data: managedUser }, {})
+    expect(IndividualAccountSettings).toHaveBeenCalled()
   })
 
   it('renders null if data is undefined', () => {

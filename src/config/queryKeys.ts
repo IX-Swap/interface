@@ -98,8 +98,9 @@ export const investQueryKeys = {
   getCommitmentsByUserId: (id: string) => generateQueryKey('commitments', id)
 }
 
-export const securityQueryKeys = {
-  get2fa: 'get-2fa'
+export const authQueryKeys = {
+  get2fa: 'get-2fa',
+  getLoginHistory: (userId: string) => generateQueryKey('login-history', userId)
 }
 
 export const dsoQueryKeys = {

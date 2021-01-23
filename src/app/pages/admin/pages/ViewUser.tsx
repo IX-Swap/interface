@@ -5,6 +5,7 @@ import { useUserById } from 'app/pages/admin/hooks/useUserById'
 import { useAdminRouter } from 'app/pages/admin/router'
 import { UserDetails } from 'app/pages/admin/components/UserDetails'
 import { UserStatus } from 'app/pages/admin/components/UserStatus'
+import { IndividualAccountSettings } from 'app/pages/admin/components/IndividualAccountSettings'
 
 export const ViewUser: React.FC = () => {
   const {
@@ -20,12 +21,19 @@ export const ViewUser: React.FC = () => {
   }
 
   return (
-    <Grid container spacing={3}>
-      <Grid item xs={12} md={8}>
-        <UserDetails data={data} />
+    <Grid container item direction='column'>
+      <Grid item>
+        <Grid container spacing={3}>
+          <Grid item xs={12} md={8}>
+            <UserDetails data={data} />
+          </Grid>
+          <Grid item xs={12} md={4}>
+            <UserStatus data={data} />
+          </Grid>
+        </Grid>
       </Grid>
-      <Grid item xs={12} md={4}>
-        <UserStatus data={data} />
+      <Grid item>
+        <IndividualAccountSettings />
       </Grid>
     </Grid>
   )
