@@ -1,11 +1,5 @@
 import React from 'react'
-import {
-  TableContainer,
-  Table,
-  TableBody,
-  TableRow,
-  Grid
-} from '@material-ui/core'
+import { Grid } from '@material-ui/core'
 import { DownloadDSODocument } from 'app/components/DSO/components/DownloadDSODocument'
 import { DataroomHeader } from 'components/dataroom/DataroomHeader'
 import { DataroomViewRow } from 'components/dataroom/DataroomViewRow'
@@ -22,30 +16,20 @@ export const DSODataroomView = (props: DSODataroomViewProps) => {
   return (
     <Grid container direction='column' spacing={3}>
       <Grid item>
-        <FormSectionHeader title='Dataroom' />
+        <FormSectionHeader title='Documents' />
       </Grid>
       <Grid item>
-        <TableContainer>
-          <Table>
-            <DataroomHeader />
-            <TableBody>
-              {dso.documents?.map(document => (
-                <TableRow key={document._id}>
-                  <DataroomViewRow
-                    title={document.type}
-                    document={document}
-                    downloader={
-                      <DownloadDSODocument
-                        dsoId={dso._id}
-                        documentId={document._id}
-                      />
-                    }
-                  />
-                </TableRow>
-              ))}
-            </TableBody>
-          </Table>
-        </TableContainer>
+        <DataroomHeader />
+        {dso.documents?.map(document => (
+          <DataroomViewRow
+            key={document._id}
+            title={document.type}
+            document={document}
+            downloader={
+              <DownloadDSODocument dsoId={dso._id} documentId={document._id} />
+            }
+          />
+        ))}
       </Grid>
     </Grid>
   )

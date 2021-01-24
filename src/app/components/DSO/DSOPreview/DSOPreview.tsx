@@ -42,7 +42,7 @@ export const DSOPreview = (props: DSOPreviewProps) => {
         <DSOInformationView dso={data} />
       </Element>
 
-      <Element name={DSOFormSection['Upload Documents']}>
+      <Element name={DSOFormSection.Documents}>
         <VSpacer size='large' />
         <DSODataroomView dso={data} />
       </Element>

@@ -9,7 +9,7 @@ export enum DSOFormSection {
   Pricing = 'dso-pricing',
   'Offering Terms' = 'dso-terms',
   'Information' = 'dso-profile',
-  'Upload Documents' = 'dso-documents',
+  'Documents' = 'dso-documents',
   'Team Members' = 'dso-team'
 }
 

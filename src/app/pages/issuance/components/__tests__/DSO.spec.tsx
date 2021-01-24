@@ -58,9 +58,7 @@ describe('DSO', () => {
 
     expect(DSOForm).toHaveBeenCalledWith(
       {
-        data: dso,
-        onSubmit: expect.any(Function),
-        submitButtonLabel: 'Save'
+        data: dso
       },
       {}
     )

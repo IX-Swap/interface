@@ -38,7 +38,7 @@ export const DSOFormFields = (props: DSOFormFieldsProps) => {
         <DSOInformationProfile />
       </Element>
 
-      <Element name={DSOFormSection['Upload Documents']}>
+      <Element name={DSOFormSection.Documents}>
         <VSpacer size='large' />
         <DSODataroom />
       </Element>

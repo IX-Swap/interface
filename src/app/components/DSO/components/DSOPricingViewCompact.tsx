@@ -5,11 +5,11 @@ import { DigitalSecurityOffering } from 'types/dso'
 import { addSymbol, formatMoney } from 'helpers/numbers'
 import { LabelledValue } from 'components/LabelledValue'
 
-export interface DSOPricingViewProps {
+export interface DSOPricingViewCompactProps {
   dso: DigitalSecurityOffering
 }
 
-export const DSOPricingView = ({ dso }: DSOPricingViewProps) => {
+export const DSOPricingViewCompact = ({ dso }: DSOPricingViewCompactProps) => {
   const currency = dso.currency.symbol
   const totalFundraisingAmount =
     dso.totalFundraisingAmount !== null
@@ -29,45 +29,42 @@ export const DSOPricingView = ({ dso }: DSOPricingViewProps) => {
       : 0
 
   return (
-    <Grid container spacing={3} direction='column'>
+    <Grid container direction='column' spacing={3}>
       <Grid item>
         <FormSectionHeader title='Pricing' />
       </Grid>
 
-      <Grid item>
-        <Grid container spacing={3}>
-          <Grid item xs={12} md={4}>
-            <LabelledValue
-              label='Unit Price'
-              value={formatMoney(dso.pricePerUnit, currency, true)}
-            />
-          </Grid>
-          <Grid item xs={12} md={4}>
-            <LabelledValue
-              label='Total Fundraising Amount'
-              value={totalFundraisingAmount}
-            />
-          </Grid>
-          <Grid item xs={12} md={4}>
-            <LabelledValue
-              label='Minimum Investment'
-              value={minimumInvestment}
-            />
-          </Grid>
+      <Grid container item>
+        <Grid item xs={12} md={4}>
+          <LabelledValue
+            label='Unit Price'
+            value={formatMoney(dso.pricePerUnit, currency, true)}
+          />
+        </Grid>
+        <Grid item xs={12} md={4}>
+          <LabelledValue
+            label='Total Fundraising Amount'
+            value={totalFundraisingAmount}
+          />
         </Grid>
       </Grid>
 
-      <Grid item>
-        <Grid container spacing={3}>
-          <Grid item xs={12} md={4}>
-            <LabelledValue label='Total Units' value={totalUnits} />
-          </Grid>
-          <Grid item xs={12} md={4}>
-            <LabelledValue
-              label='Minimum Investment'
-              value={minimumInvestmentPrice}
-            />
-          </Grid>
+      <Grid container item>
+        <Grid item xs={12} md={4}>
+          <LabelledValue label='Total Units' value={totalUnits} />
+        </Grid>
+
+        <Grid item xs={12} md={4}>
+          <LabelledValue label='Minimum Investment' value={minimumInvestment} />
+        </Grid>
+      </Grid>
+
+      <Grid container item>
+        <Grid item xs={12} md={4}>
+          <LabelledValue
+            label='Minimum Investment'
+            value={minimumInvestmentPrice}
+          />
         </Grid>
       </Grid>
     </Grid>

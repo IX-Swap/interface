@@ -112,7 +112,7 @@ export const AuthorizerView = <T,>(
                 </Grid>
 
                 {showForm && (
-                  <Grid item>
+                  <Grid item style={{ marginTop: 20 }}>
                     <AuthorizerForm status={data.status} itemId={data._id} />
                   </Grid>
                 )}

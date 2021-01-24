@@ -1,4 +1,4 @@
-import React, { useRef } from 'react'
+import React, { Fragment, useRef } from 'react'
 import { UploadDocumentInfo, useUploadFile } from 'hooks/useUploadFile'
 import { DataroomFile } from 'types/dataroomFile'
 import { Maybe } from 'types/util'
@@ -76,7 +76,7 @@ export const DataroomUploader = (props: DataroomUploaderProps) => {
   }
 
   return (
-    <>
+    <Fragment>
       <label style={{ display: 'none' }} htmlFor={name}>
         {label}
       </label>
@@ -99,6 +99,6 @@ export const DataroomUploader = (props: DataroomUploaderProps) => {
         deleteState,
         uploadState
       })}
-    </>
+    </Fragment>
   )
 }
