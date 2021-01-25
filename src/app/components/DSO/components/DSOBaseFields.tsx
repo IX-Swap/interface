@@ -46,7 +46,6 @@ export const DSOBaseFields = (props: DSOBaseFieldsProps) => {
               type: 'DSO Logo'
             }}
           />
-          <VSpacer size='small' />
         </Grid>
         <Grid item>
           <Grid container spacing={3}>

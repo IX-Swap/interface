@@ -12,7 +12,8 @@ jest.mock('app/pages/accounts/pages/banks/hooks/useBanksData')
 
 jest.mock('@material-ui/core', () => ({
   Select: jest.fn(({ children }) => <select>{children}</select>),
-  MenuItem: jest.fn(({ value }) => <option value={value}>{value}</option>)
+  MenuItem: jest.fn(({ value }) => <option value={value}>{value}</option>),
+  useMediaQuery: jest.fn()
 }))
 
 jest.mock('helpers/rendering', () => ({

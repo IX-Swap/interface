@@ -29,9 +29,7 @@ jest.mock('app/components/DSO/components/DSOTeam', () => ({
 describe('DSOForm', () => {
   const props: DSOFormProps = {
     isNew: false,
-    data: dso,
-    submitButtonLabel: 'submit',
-    onSubmit: () => {}
+    data: dso
   }
 
   const parsedDataFn = jest.fn()
