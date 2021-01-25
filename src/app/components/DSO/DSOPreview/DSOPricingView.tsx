@@ -27,6 +27,7 @@ export const DSOPricingView = ({ dso }: DSOPricingViewProps) => {
     dso.minimumInvestment !== null
       ? addSymbol(dso.minimumInvestment * dso.pricePerUnit, currency, true)
       : 0
+
   return (
     <Grid container spacing={3} direction='column'>
       <Grid item>

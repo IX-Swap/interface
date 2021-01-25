@@ -2,8 +2,7 @@ import React from 'react'
 import ReactDOM from 'react-dom'
 import {
   createGenerateClassName,
-  StylesProvider,
-  Theme
+  StylesProvider
 } from '@material-ui/core/styles'
 import { ThemeProvider } from '@material-ui/styles'
 import { CssBaseline } from '@material-ui/core'
@@ -16,8 +15,8 @@ import { history } from 'config/history'
 import { ReactQueryCacheProvider, QueryCache } from 'react-query'
 import { setupSentry } from 'setupSentry'
 import { setupFullStory } from 'setupFullStory'
-import { initGoogleAnalytics } from 'initGoogleAnalytics'
-import { useAppTheme } from 'hooks/useAppTheme'
+import { AppThemeProvider } from 'AppThemeProvider'
+import { setupGoogleAnalytics } from 'setupGoogleAnalytics'
 
 const queryCache = new QueryCache({
   defaultConfig: {
@@ -33,33 +32,35 @@ const generateClassName = createGenerateClassName({
 
 setupSentry()
 setupFullStory()
-initGoogleAnalytics()
+setupGoogleAnalytics()
 
 console.log(`App version: ${APP_VERSION}`) // eslint-disable-line
 
 const IXApp = () => {
-  const theme = useAppTheme()
-
   return (
     <StylesProvider generateClassName={generateClassName}>
-      <ThemeProvider theme={theme as Theme}>
-        <ReactQueryCacheProvider queryCache={queryCache}>
-          <CssBaseline />
-          <UserProvider>
-            <Router history={history}>
-              <Switch>
-                <ToastProvider
-                  components={{ Toast }}
-                  autoDismiss={false}
-                  placement='bottom-right'
-                >
-                  <EntryPoint />
-                </ToastProvider>
-              </Switch>
-            </Router>
-          </UserProvider>
-        </ReactQueryCacheProvider>
-      </ThemeProvider>
+      <AppThemeProvider>
+        {theme => (
+          <ThemeProvider theme={theme}>
+            <ReactQueryCacheProvider queryCache={queryCache}>
+              <CssBaseline />
+              <UserProvider>
+                <Router history={history}>
+                  <Switch>
+                    <ToastProvider
+                      components={{ Toast }}
+                      autoDismiss={false}
+                      placement='bottom-right'
+                    >
+                      <EntryPoint />
+                    </ToastProvider>
+                  </Switch>
+                </Router>
+              </UserProvider>
+            </ReactQueryCacheProvider>
+          </ThemeProvider>
+        )}
+      </AppThemeProvider>
     </StylesProvider>
   )
 }

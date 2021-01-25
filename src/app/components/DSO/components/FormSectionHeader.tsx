@@ -11,7 +11,7 @@ export const FormSectionHeader = ({ title }: FormSectionHeaderProps) => {
 
   return (
     <Box className={formHeader} pb={0.5} mb={3}>
-      <Typography variant='h2'>{title}</Typography>
+      <Typography variant='h3'>{title}</Typography>
     </Box>
   )
 }

@@ -11,7 +11,7 @@ import { SidebarContainer } from 'app/components/SidebarContainer/SidebarContain
 import { AppContentWrapper } from 'ui/AppContentWrapper'
 import { useLocation } from 'react-router-dom'
 
-export const AppRoot: React.FC = () => {
+export const AppRoot = () => {
   const { renderRoutes } = useAppRouter()
   const location = useLocation()
   const theme = useTheme()

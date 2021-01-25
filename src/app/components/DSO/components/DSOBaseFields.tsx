@@ -10,7 +10,6 @@ import { DSOFormValues } from 'types/dso'
 import { documentValueExtractor } from 'app/components/DSO/utils'
 import { DataroomFileType } from 'config/dataroom'
 import { DateTimePicker } from 'components/form/_DateTimePicker'
-import { VSpacer } from 'components/VSpacer'
 import { Dropzone } from 'components/dataroom/Dropzone'
 import { CapitalStructureSelect } from 'components/form/CapitalStructureSelect'
 import { NumericInput } from 'components/form/NumericInput'
@@ -29,7 +28,6 @@ export const DSOBaseFields = (props: DSOBaseFieldsProps) => {
 
   return (
     <Grid item>
-      <VSpacer size='medium' />
       <Grid container direction='column' spacing={2}>
         <Grid item>
           <FormSectionHeader title='DSO Information' />
@@ -116,13 +114,23 @@ export const DSOBaseFields = (props: DSOBaseFieldsProps) => {
         </Grid>
         <Grid item>
           <Grid container spacing={3}>
-            <Grid item xs={12} md={8}>
+            <Grid item xs={12} md={4}>
               <TypedField
                 component={CorporateSelect}
                 label='Corporate Structure'
                 name='corporate'
                 control={control}
                 helperText='Select your corporate from the list'
+                variant='outlined'
+              />
+            </Grid>
+            <Grid item xs={12} md={4}>
+              <TypedField
+                component={TextField}
+                label='Issuer Name'
+                name='issuerName'
+                control={control}
+                helperText='Issuer name'
                 variant='outlined'
               />
             </Grid>

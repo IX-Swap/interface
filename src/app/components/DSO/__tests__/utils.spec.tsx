@@ -32,11 +32,11 @@ describe('transformDSOToFormValues', () => {
       team: [],
       documents: [],
       capitalStructure: '',
-      minimumInvestment: null,
-      totalFundraisingAmount: null,
-      pricePerUnit: null,
+      minimumInvestment: '',
+      totalFundraisingAmount: '',
+      pricePerUnit: '',
       currency: '',
-      decimalPlaces: 0,
+      decimalPlaces: null,
       tokenSymbol: '',
       tokenName: '',
       network: '',
@@ -49,7 +49,8 @@ describe('transformDSOToFormValues', () => {
       grossIRR: '',
       interestRate: '',
       dividendYield: '',
-      investmentPeriod: ''
+      investmentPeriod: '',
+      issuerName: ''
     })
   })
 })

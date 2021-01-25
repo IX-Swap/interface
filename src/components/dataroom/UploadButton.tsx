@@ -13,6 +13,7 @@ export const UploadButton = (props: UploadButtonProps) => {
     <Button
       {...rest}
       variant='contained'
+      size='large'
       color='primary'
       disabled={isLoading}
       disableElevation

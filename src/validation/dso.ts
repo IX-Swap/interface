@@ -48,9 +48,12 @@ export const dsoFormBaseValidationSchema = {
   logo: string().required('Required'),
   policyBuilder: object(),
   status: string(),
-  documents: array<FormArrayElement<DataroomFile>>().required('Required'),
+  documents: array<FormArrayElement<DataroomFile>>()
+    .ensure()
+    .required('Required'),
   team: array<DsoTeamMember>()
     .of(dsoTeamMemberSchema.required('Required'))
+    .ensure()
     .required('Required')
 }
 
