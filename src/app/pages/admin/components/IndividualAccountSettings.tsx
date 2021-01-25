@@ -4,9 +4,20 @@ import { TabPanel } from 'app/pages/admin/components/TabPanel'
 import { AccountLoginHistory } from 'app/pages/admin/components/AccountLoginHistory'
 import { VSpacer } from 'components/VSpacer'
 import { useIndividualAccountSettings } from 'app/pages/admin/hooks/useIndividualAccountSettings'
+import { RoleManagement } from 'app/pages/admin/components/RoleManagement'
+import { useStyles } from 'app/pages/admin/components/IndividualAccountSettings.style'
+import { RevokeAccess } from 'app/pages/admin/components/RevokeAccess'
 
-export const IndividualAccountSettings = () => {
+export interface IndividualAccountSettingsProps {
+  activeRoles: string[]
+}
+
+export const IndividualAccountSettings = ({
+  activeRoles
+}: IndividualAccountSettingsProps) => {
   const { value, handleChange } = useIndividualAccountSettings(0)
+
+  const { tab } = useStyles()
 
   return (
     <Box paddingY={10}>
@@ -16,6 +27,7 @@ export const IndividualAccountSettings = () => {
         indicatorColor='primary'
         textColor='primary'
         variant='fullWidth'
+        className={tab}
       >
         <Tab label='Login History' />
         <Tab label='Revoke Access' />
@@ -26,10 +38,10 @@ export const IndividualAccountSettings = () => {
         <AccountLoginHistory />
       </TabPanel>
       <TabPanel value={value} index={1}>
-        <></>
+        <RevokeAccess />
       </TabPanel>
       <TabPanel value={value} index={2}>
-        <></>
+        <RoleManagement activeRoles={activeRoles} />
       </TabPanel>
     </Box>
   )

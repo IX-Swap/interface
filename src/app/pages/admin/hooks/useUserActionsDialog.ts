@@ -1,6 +1,8 @@
 import { useState } from 'react'
+import { useServices } from 'hooks/useServices'
 
 export const useUserActionsDialog = () => {
+  const { snackbarService } = useServices()
   const [reset2FAOpen, setOpen2FA] = useState(false)
   const [enabledToggleOpen, setEnabledToggleOpen] = useState(false)
   const [resetPasswordOpen, setResetPasswordOpen] = useState(false)
@@ -21,8 +23,15 @@ export const useUserActionsDialog = () => {
     setEnabledToggleOpen(false)
   }
 
-  const openResetPassword = () => {
-    setResetPasswordOpen(true)
+  const openResetPassword = (isActive: boolean) => {
+    if (isActive) {
+      void snackbarService.showSnackbar(
+        'Account Reset has already started',
+        'error'
+      )
+    } else {
+      setResetPasswordOpen(true)
+    }
   }
 
   const closeResetPassword = () => {

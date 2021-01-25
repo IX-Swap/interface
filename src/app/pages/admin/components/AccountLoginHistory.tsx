@@ -24,7 +24,11 @@ export const AccountLoginHistory = () => {
   return (
     <Grid container spacing={3} direction='column'>
       <Grid item xs={12} md={4}>
-        <SearchFilter fullWidth inputAdormentPosition='end' />
+        <SearchFilter
+          fullWidth
+          inputAdormentPosition='end'
+          placeholder='Search'
+        />
       </Grid>
       <Grid item>
         <TableView<LoginHistory>

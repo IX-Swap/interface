@@ -33,7 +33,7 @@ export const ViewUser: React.FC = () => {
         </Grid>
       </Grid>
       <Grid item>
-        <IndividualAccountSettings />
+        <IndividualAccountSettings activeRoles={data.roles.split(',')} />
       </Grid>
     </Grid>
   )

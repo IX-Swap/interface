@@ -1,20 +1,26 @@
 import React from 'react'
 import { TableColumn } from 'types/util'
 import { LoginHistory } from 'types/user'
-import { Typography } from '@material-ui/core'
+import { Grid, Link, Typography } from '@material-ui/core'
 import { getTimeFromNow } from 'helpers/dates'
+import { Launch } from '@material-ui/icons'
 
 const renderTime = (time: string) => (
   <Typography noWrap>{getTimeFromNow(new Date(time))}</Typography>
 )
 
 const renderIp = (ip: string, loginHistory: LoginHistory) => (
-  <Typography noWrap>
-    {`${ip} ( ${[
-      loginHistory.geolocation.city,
-      loginHistory.geolocation.country
-    ].join(', ')} )`}
-  </Typography>
+  <Link href={loginHistory.geolocation.whois}>
+    <Grid container justify='space-between'>
+      <Typography noWrap>
+        {`${ip} ( ${[
+          loginHistory.geolocation.city,
+          loginHistory.geolocation.country
+        ].join(', ')} )`}
+      </Typography>
+      <Launch color='primary' />
+    </Grid>
+  </Link>
 )
 
 const renderUserAgent = (userAgent: string) => (

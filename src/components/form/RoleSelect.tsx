@@ -1,3 +1,4 @@
+import React from 'react'
 import {
   Checkbox,
   ListItemText,
@@ -5,9 +6,7 @@ import {
   Select,
   SelectProps
 } from '@material-ui/core'
-import React from 'react'
-
-const ROLES = ['user', 'accredited', 'authorizer', 'admin', 'issuer']
+import { ROLES } from 'config/roles'
 
 export interface RoleSelectProps extends SelectProps {
   value: string[]

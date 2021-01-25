@@ -3,12 +3,8 @@ import { render, cleanup } from 'test-utils'
 import { ActionResetPassword } from 'app/pages/admin/components/ActionResetPassword'
 import { managedUser } from '__fixtures__/user'
 import * as useUserActionsDialog from 'app/pages/admin/hooks/useUserActionsDialog'
-import { ButtonTransparent } from 'app/components/ButtonTransparent'
 import { DialogResetPassword } from 'app/pages/admin/components/DialogResetPassword'
-
-jest.mock('app/components/ButtonTransparent', () => ({
-  ButtonTransparent: jest.fn(({ children }) => <>{children}</>)
-}))
+import { fireEvent } from '@testing-library/react'
 
 jest.mock('app/pages/admin/components/DialogResetPassword', () => ({
   DialogResetPassword: jest.fn(() => null)
@@ -34,23 +30,27 @@ describe('ActionResetPassword', () => {
   })
 
   it('renders without errors', () => {
-    render(<ActionResetPassword email={managedUser.email} />)
+    render(<ActionResetPassword data={managedUser} />)
   })
 
   it('renders components with correct props', () => {
-    const { getByText } = render(
-      <ActionResetPassword email={managedUser.email} />
-    )
+    const date = new Date()
 
-    expect(getByText('START ACCOUNT RESET')).toBeTruthy()
-    expect(ButtonTransparent).toHaveBeenCalledWith(
-      expect.objectContaining({
-        onClick: openResetPasswordMock,
-        variant: 'contained',
-        disableElevation: true
-      }),
-      {}
+    const { getByText } = render(
+      <ActionResetPassword
+        data={{
+          ...managedUser,
+          resetExpiresOn: date.setDate(date.getDate() - 30).toLocaleString()
+        }}
+      />
     )
+    expect(getByText('START ACCOUNT RESET')).toBeTruthy()
+
+    fireEvent(
+      getByText('START ACCOUNT RESET'),
+      new MouseEvent('click', { bubbles: true, cancelable: true })
+    )
+    expect(openResetPasswordMock).toHaveBeenCalled()
     expect(DialogResetPassword).toHaveBeenCalledWith(
       {
         email: managedUser.email,

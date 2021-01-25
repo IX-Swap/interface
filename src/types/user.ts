@@ -37,7 +37,7 @@ export interface ManagedUser {
   roles: string
   createdAt: string
   updatedAt: string
-  resetExpiresOn: string
+  resetExpiresOn?: string | null
   twoFactorAuth: boolean
   isResetActive: boolean
 }

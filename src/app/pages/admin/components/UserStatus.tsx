@@ -1,10 +1,10 @@
 import React from 'react'
 import { Grid } from '@material-ui/core'
-import { User } from 'app/pages/admin/hooks/useUserById'
 import { Status } from 'app/pages/admin/components/Status'
+import { ManagedUser } from 'types/user'
 
 export interface UserStatusProps {
-  data: User
+  data: ManagedUser
 }
 
 export const UserStatus = ({ data }: UserStatusProps) => {

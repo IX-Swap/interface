@@ -2,11 +2,11 @@ import React from 'react'
 import { Grid } from '@material-ui/core'
 import { ActionReset2FA } from 'app/pages/admin/components/ActionReset2FA'
 import { ActionEnableToggle } from 'app/pages/admin/components/ActionEnableToggle'
-import { User } from 'app/pages/admin/hooks/useUserById'
 import { ActionResetPassword } from 'app/pages/admin/components/ActionResetPassword'
+import { ManagedUser } from 'types/user'
 
 export interface UserActionsProps {
-  data: User
+  data: ManagedUser
 }
 export const UserActions = ({ data }: UserActionsProps) => {
   return (
@@ -18,7 +18,7 @@ export const UserActions = ({ data }: UserActionsProps) => {
           </Grid>
         ) : null}
         <Grid item>
-          <ActionResetPassword email={data.email} />
+          <ActionResetPassword data={data} />
         </Grid>
         <Grid item>
           <ActionEnableToggle enabled={data.enabled} />

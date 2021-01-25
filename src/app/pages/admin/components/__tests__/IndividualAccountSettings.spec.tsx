@@ -3,9 +3,21 @@ import { render, cleanup } from 'test-utils'
 import { IndividualAccountSettings } from 'app/pages/admin/components/IndividualAccountSettings'
 import * as useIndividualAccountSettings from 'app/pages/admin/hooks/useIndividualAccountSettings'
 import { TabPanel } from 'app/pages/admin/components/TabPanel'
+import { managedUser } from '__fixtures__/user'
+import { AccountLoginHistory } from 'app/pages/admin/components/AccountLoginHistory'
+import { RoleManagement } from 'app/pages/admin/components/RoleManagement'
+import { RevokeAccess } from 'app/pages/admin/components/RevokeAccess'
 
 jest.mock('app/pages/admin/components/AccountLoginHistory', () => ({
   AccountLoginHistory: jest.fn(() => <></>)
+}))
+
+jest.mock('app/pages/admin/components/RevokeAccess', () => ({
+  RevokeAccess: jest.fn(() => null)
+}))
+
+jest.mock('app/pages/admin/components/RoleManagement', () => ({
+  RoleManagement: jest.fn(() => null)
 }))
 
 jest.mock('app/pages/admin/components/TabPanel', () => ({
@@ -15,6 +27,8 @@ jest.mock('app/pages/admin/components/TabPanel', () => ({
 describe('IndividualAccountSettings', () => {
   const handleChange = jest.fn()
   const value = 0
+  const roles = managedUser.roles.split(',')
+
   beforeEach(() => {
     jest
       .spyOn(useIndividualAccountSettings, 'useIndividualAccountSettings')
@@ -27,11 +41,13 @@ describe('IndividualAccountSettings', () => {
   })
 
   it('renders without errors', () => {
-    render(<IndividualAccountSettings />)
+    render(<IndividualAccountSettings activeRoles={roles} />)
   })
 
   it('renders components with correct props', () => {
-    const { getByText } = render(<IndividualAccountSettings />)
+    const { getByText } = render(
+      <IndividualAccountSettings activeRoles={roles} />
+    )
 
     expect(getByText(/login history/i)).toBeInTheDocument()
     expect(getByText(/revoke access/i)).toBeInTheDocument()
@@ -52,5 +68,9 @@ describe('IndividualAccountSettings', () => {
       expect.objectContaining({ value: 0, index: 2 }),
       {}
     )
+
+    expect(AccountLoginHistory).toHaveBeenCalled()
+    expect(RevokeAccess).toHaveBeenCalled()
+    expect(RoleManagement).toHaveBeenCalledWith({ activeRoles: roles }, {})
   })
 })

@@ -1,18 +1,21 @@
 import React from 'react'
 import { Grid, Typography } from '@material-ui/core'
 import { LabelledValue } from 'components/LabelledValue'
-import { formatDateAndTime, getTimeFromNow } from 'helpers/dates'
-import { User } from 'app/pages/admin/hooks/useUserById'
+import { getTimeFromNow } from 'helpers/dates'
 import { UserActions } from 'app/pages/admin/components/UserActions'
 import { hasValue } from 'helpers/forms'
+import { ManagedUser } from 'types/user'
+import { isResetActive } from 'helpers/isResetActive'
 
 export interface UserDetails {
-  data: User
+  data: ManagedUser
 }
 
 export const UserDetails = ({ data }: UserDetails) => {
-  const isActive =
-    data.isResetActive && new Date(data.resetExpiresOn ?? '') > new Date()
+  const isActive = isResetActive(
+    data.isResetActive,
+    new Date(data.resetExpiresOn ?? '')
+  )
   const hasResetDate = hasValue(data.resetExpiresOn)
 
   return (
@@ -51,14 +54,28 @@ export const UserDetails = ({ data }: UserDetails) => {
             <Grid item xs={12} lg={4}>
               <LabelledValue
                 label='Reset Status'
-                value={hasResetDate ? (isActive ? 'Active' : 'Inactive') : '-'}
+                value={
+                  hasResetDate ? (
+                    isActive ? (
+                      <Typography component='span' color='error'>
+                        Active
+                      </Typography>
+                    ) : (
+                      'Inactive'
+                    )
+                  ) : (
+                    '-'
+                  )
+                }
               />
             </Grid>
             <Grid item xs={12} lg={4}>
               <LabelledValue
                 label='Reset Expires on'
                 value={
-                  hasResetDate ? formatDateAndTime(data.resetExpiresOn) : '-'
+                  hasResetDate
+                    ? getTimeFromNow(new Date(data.resetExpiresOn ?? ''))
+                    : '-'
                 }
               />
             </Grid>
