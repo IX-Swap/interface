@@ -1,3 +1,3 @@
-export const isResetActive = (isResetActive: boolean, resetExpiresOn: Date) => {
-  return isResetActive && resetExpiresOn > new Date()
+export const isResetActive = (isActive: boolean, resetExpiresOn: Date) => {
+  return isActive && resetExpiresOn > new Date()
 }

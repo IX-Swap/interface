@@ -17,17 +17,17 @@ export const useResetPassword = (email: string, succesHandler: () => void) => {
 
   return useMutation(mutateFn, {
     onSuccess: async () => {
-      void snackbarService.showSnackbar(
+      snackbarService.showSnackbar(
         'Password reset start has been successful',
         'success'
       )
-      void queryCache.invalidateQueries(
+      await queryCache.invalidateQueries(
         usersQueryKeys.getUserById(params.userId)
       )
       succesHandler()
     },
     onError: (error: any) => {
-      void snackbarService.showSnackbar(error.message, 'error')
+      snackbarService.showSnackbar(error.message, 'error')
     }
   })
 }

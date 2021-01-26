@@ -23,17 +23,17 @@ export const useEnabledToggle = (
 
   return useMutation(mutateFn, {
     onSuccess: async () => {
-      void snackbarService.showSnackbar(
+      snackbarService.showSnackbar(
         `User ${enabled ? 'Disabled' : 'Enabled'}`,
         'success'
       )
-      void queryCache.invalidateQueries(
+      await queryCache.invalidateQueries(
         usersQueryKeys.getUserById(params.userId)
       )
       succesHandler()
     },
     onError: (error: any) => {
-      void snackbarService.showSnackbar(error.message, 'error')
+      snackbarService.showSnackbar(error.message, 'error')
     }
   })
 }

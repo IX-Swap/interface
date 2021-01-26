@@ -22,11 +22,8 @@ export const useReset2FA = (succesHandler: () => void) => {
   return {
     mutation: useMutation(mutateFn, {
       onSuccess: async () => {
-        void snackbarService.showSnackbar(
-          '2FA reset has been successful',
-          'success'
-        )
-        void queryCache.invalidateQueries(
+        snackbarService.showSnackbar('2FA reset has been successful', 'success')
+        await queryCache.invalidateQueries(
           usersQueryKeys.getUserById(params.userId)
         )
         succesHandler()

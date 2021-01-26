@@ -1,7 +1,7 @@
 import React from 'react'
 import { Typography } from '@material-ui/core'
 import { VSpacer } from 'components/VSpacer'
-import { OTPField } from 'app/pages/admin/components/OTPField'
+import { Reset2FAOTPField } from 'app/pages/admin/components/Reset2FAOTPField'
 import { useReset2FA } from 'app/pages/admin/hooks/useReset2FA'
 import { UserActionsDialog } from 'app/pages/admin/components/UserActionsDialog'
 
@@ -40,7 +40,7 @@ export const DialogConfirmReset2FA = ({
         the user to set up 2-FA again.
       </Typography>
       <VSpacer size='medium' />
-      <OTPField otp={otp} setOtp={setOtp} errorMessage={errorMessage} />
+      <Reset2FAOTPField otp={otp} setOtp={setOtp} errorMessage={errorMessage} />
     </UserActionsDialog>
   )
 }

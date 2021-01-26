@@ -18,6 +18,14 @@ export const UserDetails = ({ data }: UserDetails) => {
   )
   const hasResetDate = hasValue(data.resetExpiresOn)
 
+  const resetStatus = isActive ? (
+    <Typography component='span' color='error'>
+      Active
+    </Typography>
+  ) : (
+    'Inactive'
+  )
+
   return (
     <>
       <Grid container direction='column' spacing={3}>
@@ -54,19 +62,7 @@ export const UserDetails = ({ data }: UserDetails) => {
             <Grid item xs={12} lg={4}>
               <LabelledValue
                 label='Reset Status'
-                value={
-                  hasResetDate ? (
-                    isActive ? (
-                      <Typography component='span' color='error'>
-                        Active
-                      </Typography>
-                    ) : (
-                      'Inactive'
-                    )
-                  ) : (
-                    '-'
-                  )
-                }
+                value={hasResetDate ? resetStatus : '-'}
               />
             </Grid>
             <Grid item xs={12} lg={4}>

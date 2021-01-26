@@ -20,15 +20,15 @@ export const useRevokeAccess = () => {
   }
 
   return useMutation(mutateFn, {
-    onSuccess: () => {
-      void snackbarService.showSnackbar(
+    onSuccess: async () => {
+      snackbarService.showSnackbar(
         'Revoke access had been successful',
         'success'
       )
-      void queryCache.invalidateQueries(usersQueryKeys.getUserById(userId))
+      await queryCache.invalidateQueries(usersQueryKeys.getUserById(userId))
     },
     onError: (error: any) => {
-      void snackbarService.showSnackbar(error.message, 'error')
+      snackbarService.showSnackbar(error.message, 'error')
     }
   })
 }

@@ -9,7 +9,6 @@ export const useIndividualAccountSettings = (init: number) => {
 
   return {
     value,
-    setValue,
     handleChange
   }
 }

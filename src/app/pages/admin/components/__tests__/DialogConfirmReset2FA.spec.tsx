@@ -6,14 +6,14 @@ import {
 } from 'app/pages/admin/components/DialogConfirmReset2FA'
 import { UserActionsDialog } from 'app/pages/admin/components/UserActionsDialog'
 import * as useReset2FA from 'app/pages/admin/hooks/useReset2FA'
-import { OTPField } from 'app/pages/admin/components/OTPField'
+import { Reset2FAOTPField } from 'app/pages/admin/components/Reset2FAOTPField'
 
 jest.mock('app/pages/admin/components/UserActionsDialog', () => ({
   UserActionsDialog: jest.fn(({ children }) => <>{children}</>)
 }))
 
-jest.mock('app/pages/admin/components/OTPField', () => ({
-  OTPField: jest.fn(() => null)
+jest.mock('app/pages/admin/components/Reset2FAOTPField', () => ({
+  Reset2FAOTPField: jest.fn(() => null)
 }))
 
 describe('DialogConfirmReset2FA', () => {
@@ -73,7 +73,7 @@ describe('DialogConfirmReset2FA', () => {
         'Resetting the 2-FA will clear the 2-FA data. The application will ask the user to set up 2-FA again.'
       )
     ).toBeTruthy()
-    expect(OTPField).toHaveBeenCalledWith(
+    expect(Reset2FAOTPField).toHaveBeenCalledWith(
       {
         otp: otpMock,
         setOtp: setOtpMock,

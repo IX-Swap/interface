@@ -25,10 +25,7 @@ export const useUserActionsDialog = () => {
 
   const openResetPassword = (isActive: boolean) => {
     if (isActive) {
-      void snackbarService.showSnackbar(
-        'Account Reset has already started',
-        'error'
-      )
+      snackbarService.showSnackbar('Account Reset has already started', 'error')
     } else {
       setResetPasswordOpen(true)
     }

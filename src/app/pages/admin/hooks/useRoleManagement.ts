@@ -15,15 +15,15 @@ export const useRoleManagement = (initialRoles: string[]) => {
   const queryCache = useQueryCache()
 
   const onSuccess = async () => {
-    void snackbarService.showSnackbar(
+    snackbarService.showSnackbar(
       'User roles update has been successful',
       'success'
     )
-    void queryCache.invalidateQueries(usersQueryKeys.getUserById(userId))
+    await queryCache.invalidateQueries(usersQueryKeys.getUserById(userId))
   }
 
   const onError = (error: any) => [
-    void snackbarService.showSnackbar(error.message, 'error')
+    snackbarService.showSnackbar(error.message, 'error')
   ]
 
   const [requestUpdateRoles] = useSetRoles({ onSuccess, onError })
