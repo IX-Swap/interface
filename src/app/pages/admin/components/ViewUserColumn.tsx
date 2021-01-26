@@ -15,7 +15,8 @@ export const ViewUserColumn = ({ userId }: ViewUserColumnProps) => {
     <IconButton
       component={AppRouterLinkComponent}
       size='small'
-      to={paths.users} // TODO: replace when component is ready
+      to={paths.view}
+      params={{ userId: userId }}
     >
       <Launch color='disabled' />
     </IconButton>

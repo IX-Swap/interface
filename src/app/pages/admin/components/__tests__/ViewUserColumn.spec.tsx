@@ -14,7 +14,7 @@ jest.mock('components/AppRouterLink', () => ({
 describe('ViewUserColumn', () => {
   jest
     .spyOn(useAdminRouterHook, 'useAdminRouter')
-    .mockImplementation(() => ({ paths: { users: 'path/to/user/' } } as any))
+    .mockImplementation(() => ({ paths: { view: 'path/to/user/' } } as any))
 
   afterEach(async () => {
     await cleanup()

@@ -114,16 +114,21 @@ export const authURL = {
     `/auth/2fa/setup/${userId}/confirm/${otp}`,
   setup2fa: (userId: string) => `/auth/2fa/setup/${userId}`,
   register: '/auth/registrations',
-  registerConfirm: '/auth/registrations/confirm'
+  registerConfirm: '/auth/registrations/confirm',
+  reset2fa: (userId: string) => `/auth/2fa/reset/${userId}`,
+  getLoginHistory: (userId: string) => `auth/users/${userId}/logins`,
+  revokeAccess: '/auth/users/revoke'
 }
 
 export const userURL = {
+  getUserById: (userId: string) => `/auth/user/${userId}`,
   getAll: '/auth/users/list',
   getUserProfile: (userId: string) => `/auth/profiles/${userId}`,
   updateRoles: (userId: string) => `/auth/users/${userId}/roles`,
   getCustomFields: (userId: string, service: string, feature: string) =>
     `/core/custom-fields/${service}/${feature}/${userId}`,
-  updateCustomFields: (userId: string) => `/core/custom-fields/${userId}`
+  updateCustomFields: (userId: string) => `/core/custom-fields/${userId}`,
+  enableUser: '/auth/users/status'
 }
 
 export const notificationsURL = {

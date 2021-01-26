@@ -2,16 +2,24 @@ import { InternalRouteProps } from 'types/util'
 import { generateAppRouterHook } from 'helpers/generateAppRouterHook'
 import { makeURL } from 'config/appURL'
 import { Users } from 'app/pages/admin/pages/Users'
+import { ViewUser } from 'app/pages/admin/pages/ViewUser'
 
 export const AdminRoute = {
-  users: makeURL(['app', 'admin'])
+  users: makeURL(['app', 'admin']),
+  view: makeURL(['app', 'admin', 'users', 'userId', 'view'])
 }
 
 export const adminRoutes: InternalRouteProps[] = [
   {
-    label: 'Users',
+    label: 'Users Roles',
     path: AdminRoute.users,
-    component: Users
+    component: Users,
+    exact: true
+  },
+  {
+    label: 'View User',
+    path: AdminRoute.view,
+    component: ViewUser
   }
 ]
 
