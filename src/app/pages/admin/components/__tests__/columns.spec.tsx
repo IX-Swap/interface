@@ -43,7 +43,7 @@ describe('columns', () => {
       )
 
       expect(container).toHaveTextContent(
-        '124.104.206.110 ( Olongapo City, Philippines )'
+        'ip.add.res.s ( Olongapo City, Philippines )'
       )
     })
   })

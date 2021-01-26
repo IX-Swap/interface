@@ -29,7 +29,7 @@ export const managedUser: ManagedUser = {
 export const loginHistory: LoginHistory = {
   _id: '6006752c7130c0754e78e925',
   user: user,
-  ip: '124.104.206.110',
+  ip: 'ip.add.res.s',
   userAgent: {
     name: 'PostmanRuntime/7.26.8',
     browser: {
@@ -64,9 +64,9 @@ export const loginHistory: LoginHistory = {
     mobile: false,
     proxy: false,
     hosting: false,
-    query: '124.104.206.110',
+    query: 'ip.add.res.s',
     address: '2200, Olongapo City, 03, Philippines',
-    whois: 'https://extreme-ip-lookup.com/124.104.206.110',
-    map: 'https://www.google.com/maps/@14.8257,120.2815,10z'
+    whois: 'https://extreme-ip-lookup.com/ip.add.res.s',
+    map: 'https://www.google.com/maps/@la.t,lo.ng,10z'
   }
 }
