@@ -3,7 +3,7 @@ import { Overrides } from '@material-ui/core/styles/overrides'
 import { rte } from 'themes/rte'
 
 export const getThemeOverrides = (theme: Theme): Overrides => ({
-  ...rte,
+  ...rte(theme),
   MuiCssBaseline: {
     '@global': {
       html: {
@@ -76,12 +76,27 @@ export const getThemeOverrides = (theme: Theme): Overrides => ({
   MuiInputLabel: {
     formControl: {
       transform: 'translate(0, 29px) scale(1)'
+    },
+    outlined: {
+      transform: 'translate(14px, 13px) scale(1)',
+      color: '#AAA'
+    },
+    shrink: {
+      paddingRight: 5,
+      paddingLeft: 5,
+      backgroundColor: theme.palette?.backgrounds.main
     }
   },
   MuiOutlinedInput: {
     root: {
       padding: 0,
-      minHeight: 40
+      minHeight: 40,
+      height: 40
+    },
+    input: {
+      paddingTop: 0,
+      paddingBottom: 0,
+      height: '100%'
     },
     inputMarginDense: {
       paddingTop: 12,
@@ -116,6 +131,36 @@ export const getThemeOverrides = (theme: Theme): Overrides => ({
     },
     label: {
       textTransform: 'none'
+    }
+  },
+  MuiTextField: {
+    root: {
+      height: 38
+    }
+  },
+  MuiFormHelperText: {
+    root: {
+      padding: '0 14px'
+    }
+  },
+  MuiTab: {
+    root: {
+      paddingTop: 18,
+      paddingBottom: 18
+    },
+    wrapper: {
+      textTransform: 'none',
+      fontSize: 16,
+      fontWeight: 500
+    }
+  },
+  MuiTabs: {
+    flexContainer: {
+      display: 'inline-flex',
+      borderBottom: `1px solid ${theme.palette.divider}`
+    },
+    indicator: {
+      height: 5
     }
   }
 })

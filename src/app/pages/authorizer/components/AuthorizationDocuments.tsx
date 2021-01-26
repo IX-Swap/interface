@@ -14,6 +14,7 @@ import {
 } from 'app/pages/accounts/pages/banks/components/BankDocuments'
 import { SelectableDataroomUploader } from 'components/dataroom/SelectableDataroomUploader'
 import { DataroomDeleteSelected } from 'components/dataroom/DataroomDeleteSelected'
+import { SelectableDataroomHeader } from 'components/dataroom/SelectableDataroomHeader'
 
 export interface AuthorizationDocumentsProps {
   resourceId: string
@@ -28,32 +29,35 @@ export const AuthorizationDocuments = (props: AuthorizationDocumentsProps) => {
     <SelectionHelper<SelectedDocument> itemComparator={itemComparator}>
       <FieldsArray name='documents' control={control}>
         {({ fields, append, remove }) => (
-          <Grid container direction='column' spacing={4}>
+          <Grid container direction='column' spacing={3}>
+            <Grid item container wrap='wrap'>
+              <SelectableDataroomHeader />
+              {fields.map((field, index) => (
+                /* @ts-ignore */
+                <TypedField
+                  customRenderer
+                  key={field.id}
+                  control={control}
+                  component={SelectableDataroomUploader}
+                  label='Document'
+                  name={['documents', index, 'value']}
+                  index={index}
+                  defaultValue={fields[index].value}
+                  valueExtractor={plainValueExtractor}
+                  onDelete={() => remove(index)}
+                />
+              ))}
+            </Grid>
+
             <Grid item container justify='space-between'>
               <DataroomUploaderWithFileTypeSelector
                 append={append}
                 documentInfo={{ feature, resourceId }}
               />
-              <DataroomDeleteSelected name='documents' />
             </Grid>
-            <Grid item container wrap='wrap'>
-              {fields.map((field, index) => (
-                <Grid item key={field.id}>
-                  {/* @ts-ignore */}
-                  <TypedField
-                    customRenderer
-                    key={field.id}
-                    control={control}
-                    component={SelectableDataroomUploader}
-                    label='Document'
-                    name={['documents', index, 'value']}
-                    index={index}
-                    defaultValue={fields[index].value}
-                    valueExtractor={plainValueExtractor}
-                    onDelete={() => remove(index)}
-                  />
-                </Grid>
-              ))}
+
+            <Grid item>
+              <DataroomDeleteSelected name='documents' />
             </Grid>
           </Grid>
         )}

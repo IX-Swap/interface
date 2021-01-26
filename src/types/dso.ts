@@ -1,6 +1,5 @@
 import { Asset } from './asset'
 import { DataroomFile, FormArray } from './dataroomFile'
-import { Maybe } from './util'
 import { CorporateIdentity, IndividualIdentity } from './identity'
 import { AuthorizableWithIdentity } from './authorizer'
 import { Network } from './networks'
@@ -65,6 +64,7 @@ export interface BaseDigitalSecurityOffering extends AuthorizableWithIdentity {
   deploymentInfo?: DeploymentInfo
   policyBuilder?: {}
   user: string
+  decimalPlaces?: number
 }
 
 export interface DSOInsight {
@@ -83,7 +83,7 @@ export interface DigitalSecurityOffering extends BaseDigitalSecurityOffering {
   promoted: boolean
   disabled: boolean
   isStarred: boolean
-  documents: Maybe<DataroomFile[]>
+  documents: DataroomFile[]
   currency: Asset
   insight: DSOInsight
   network?: Network
@@ -128,6 +128,7 @@ export type DSOFormValues = Omit<
   corporate: string
   documents: FormArray<DataroomFile>
   team: DsoTeamMember[]
+  decimalPlaces?: number
 }
 
 export type DSORequestArgs = Omit<

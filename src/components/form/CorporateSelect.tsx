@@ -10,7 +10,7 @@ export const CorporateSelect = (props: any) => {
   if (queryStatus !== undefined) return queryStatus
 
   return (
-    <Select {...props} style={{ minWidth: 100 }} label='SELECT ME'>
+    <Select {...props} style={{ minWidth: 100 }} label={props.label}>
       <MenuItem disabled value={undefined}>
         Corporate
       </MenuItem>
