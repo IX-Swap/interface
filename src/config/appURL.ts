@@ -10,7 +10,8 @@ export const urlParams = {
   withdrawalAddressId: ':withdrawalAddressId',
   itemId: ':itemId',
   tokenId: ':tokenId',
-  category: ':category'
+  category: ':category',
+  userId: ':userId'
 }
 
 export const urlAction = {
@@ -52,7 +53,8 @@ export const urlFeature = {
   withdrawalAddresses: `${AppFeature.WithdrawalAddresses}`,
   changePassword: 'change-password',
   setup2fa: 'setup-2fa',
-  deployments: 'deployments'
+  deployments: 'deployments',
+  users: AppFeature.Users
 }
 
 export const appURL = {

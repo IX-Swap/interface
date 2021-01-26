@@ -1,8 +1,20 @@
 import { useServices } from 'hooks/useServices'
 import { useMutation } from 'react-query'
 
-export const useSetRoles = () => {
+export interface SetRolesArgs {
+  onSuccess?: Function
+  onError?: Function
+}
+export const useSetRoles = (args: SetRolesArgs) => {
+  const { onSuccess, onError } = args
   const { adminService } = useServices()
 
-  return useMutation(adminService.setUserRole.bind(adminService))
+  return useMutation(adminService.setUserRole.bind(adminService), {
+    onSuccess: () => {
+      onSuccess?.()
+    },
+    onError: (error: any) => {
+      onError?.(error)
+    }
+  })
 }

@@ -87,6 +87,7 @@ export const withdrawalAddressQueryKeys = {
 
 export const usersQueryKeys = {
   getList: 'user-list',
+  getUserById: (id: string) => generateQueryKey('user', id),
   getCustomFields: (service: string, feature: string) =>
     generateQueryKey('customf-fields', service, feature)
 }
@@ -97,8 +98,9 @@ export const investQueryKeys = {
   getCommitmentsByUserId: (id: string) => generateQueryKey('commitments', id)
 }
 
-export const securityQueryKeys = {
-  get2fa: 'get-2fa'
+export const authQueryKeys = {
+  get2fa: 'get-2fa',
+  getLoginHistory: (userId: string) => generateQueryKey('login-history', userId)
 }
 
 export const dsoQueryKeys = {

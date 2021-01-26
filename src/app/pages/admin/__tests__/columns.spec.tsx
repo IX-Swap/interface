@@ -10,20 +10,20 @@ describe('columns', () => {
       jest.clearAllMocks()
     })
 
-    it('renders twoFactorAuth enabled as Yes if true', () => {
+    it('renders twoFactorAuth enabled as Enabled if true', () => {
       const match = columns.find(el => el.key === 'twoFactorAuth')!
       const renderer = match.render! as any
       const { container } = render(<>{renderer(true)}</>)
 
-      expect(container).toHaveTextContent('Yes')
+      expect(container).toHaveTextContent('Enabled')
     })
 
-    it('renders twoFactorAuth enabled as No if false', () => {
+    it('renders twoFactorAuth enabled as Pending if false', () => {
       const match = columns.find(el => el.key === 'twoFactorAuth')!
       const renderer = match.render! as any
       const { container } = render(<>{renderer(false)}</>)
 
-      expect(container).toHaveTextContent('No')
+      expect(container).toHaveTextContent('Pending')
     })
   })
 })
