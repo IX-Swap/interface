@@ -3,7 +3,7 @@ import { Overrides } from '@material-ui/core/styles/overrides'
 import { rte } from 'themes/rte'
 
 export const getThemeOverrides = (theme: Theme): Overrides => ({
-  ...rte,
+  ...rte(theme),
   MuiCssBaseline: {
     '@global': {
       html: {
@@ -141,6 +141,26 @@ export const getThemeOverrides = (theme: Theme): Overrides => ({
   MuiFormHelperText: {
     root: {
       padding: '0 14px'
+    }
+  },
+  MuiTab: {
+    root: {
+      paddingTop: 18,
+      paddingBottom: 18
+    },
+    wrapper: {
+      textTransform: 'none',
+      fontSize: 16,
+      fontWeight: 500
+    }
+  },
+  MuiTabs: {
+    flexContainer: {
+      display: 'inline-flex',
+      borderBottom: `1px solid ${theme.palette.divider}`
+    },
+    indicator: {
+      height: 5
     }
   }
 })

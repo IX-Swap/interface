@@ -1,5 +1,5 @@
-import React from 'react'
-import { TableCell, Typography } from '@material-ui/core'
+import React, { Fragment } from 'react'
+import { Box, Typography } from '@material-ui/core'
 import { formatDateAndTime } from 'helpers/dates'
 import { DataroomFile } from 'types/dataroomFile'
 import { Maybe } from 'types/util'
@@ -14,23 +14,23 @@ export const DataroomColumns: React.FC<DataroomColumnsProps> = props => {
 
   if (document?._id === undefined || document?._id === '') {
     return (
-      <TableCell colSpan={3}>
-        <Typography>{title}</Typography>
-      </TableCell>
+      <Box flex='1 1 auto'>
+        <Typography variant='subtitle1'>{title}</Typography>
+      </Box>
     )
   }
 
   return (
-    <>
-      <TableCell>
+    <Fragment>
+      <Box flex='1 0 40%'>
         <Typography>{document.originalFileName}</Typography>
-      </TableCell>
-      <TableCell>
+      </Box>
+      <Box flex='1 0 20%'>
         <Typography>{document.title === '' ? '–' : document.title}</Typography>
-      </TableCell>
-      <TableCell>
+      </Box>
+      <Box flex='1 0 20%'>
         <Typography>{formatDateAndTime(document.createdAt, true)}</Typography>
-      </TableCell>
-    </>
+      </Box>
+    </Fragment>
   )
 }

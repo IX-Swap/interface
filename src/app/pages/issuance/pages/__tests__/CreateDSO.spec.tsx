@@ -22,10 +22,7 @@ describe('CreateDSO', () => {
 
     expect(DSOForm).toHaveBeenCalledWith(
       {
-        isEditing: true,
-        isNew: true,
-        submitButtonLabel: 'Create DSO',
-        onSubmit: expect.any(Function)
+        isNew: true
       },
       {}
     )

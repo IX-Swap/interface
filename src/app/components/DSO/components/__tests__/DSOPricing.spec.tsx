@@ -1,15 +1,34 @@
 import React from 'react'
 import { render, cleanup } from 'test-utils'
-import { DSOStatusFields } from 'app/components/DSO/components/DSOStatusFields'
+import { DSOPricing } from 'app/components/DSO/components/DSOPricing'
+import { DSOMinimumInvestment } from 'app/components/DSO/components/DSOMinimumInvestment'
+import { DSOTotalUnits } from 'app/components/DSO/components/DSOTotalUnits'
 import { Form } from 'components/form/Form'
 import { moneyNumberFormat } from 'config/numberFormat'
 import { TypedField } from 'components/form/TypedField'
+import * as useParsedDataHook from 'hooks/useParsedData'
 
 jest.mock('components/form/TypedField', () => ({
   TypedField: jest.fn(() => <input />)
 }))
 
-describe('DSOStatusFields', () => {
+jest.mock('app/components/DSO/components/DSOMinimumInvestment', () => ({
+  DSOMinimumInvestment: jest.fn(() => <div />)
+}))
+
+jest.mock('app/components/DSO/components/DSOTotalUnits', () => ({
+  DSOTotalUnits: jest.fn(() => <div />)
+}))
+
+describe('DSOPricing', () => {
+  const parsedDataFn = jest.fn()
+
+  beforeEach(() => {
+    jest
+      .spyOn(useParsedDataHook, 'useParsedData')
+      .mockImplementation(parsedDataFn)
+  })
+
   afterEach(async () => {
     await cleanup()
     jest.clearAllMocks()
@@ -18,7 +37,7 @@ describe('DSOStatusFields', () => {
   it('renders without error', () => {
     render(
       <Form>
-        <DSOStatusFields />
+        <DSOPricing />
       </Form>
     )
   })
@@ -26,20 +45,12 @@ describe('DSOStatusFields', () => {
   it('renders EditableField with correct props', () => {
     render(
       <Form>
-        <DSOStatusFields />
+        <DSOPricing />
       </Form>
     )
 
     expect(TypedField).toHaveBeenNthCalledWith(
       1,
-      expect.objectContaining({
-        label: 'Capital Structure',
-        name: 'capitalStructure'
-      }),
-      {}
-    )
-    expect(TypedField).toHaveBeenNthCalledWith(
-      2,
       expect.objectContaining({
         label: 'Unit Price',
         name: 'pricePerUnit',
@@ -48,7 +59,7 @@ describe('DSOStatusFields', () => {
       {}
     )
     expect(TypedField).toHaveBeenNthCalledWith(
-      3,
+      2,
       expect.objectContaining({
         label: 'Total Fundraising Amount',
         name: 'totalFundraisingAmount',
@@ -57,7 +68,7 @@ describe('DSOStatusFields', () => {
       {}
     )
     expect(TypedField).toHaveBeenNthCalledWith(
-      4,
+      3,
       expect.objectContaining({
         label: 'Minimum Investment',
         name: 'minimumInvestment',
@@ -65,5 +76,7 @@ describe('DSOStatusFields', () => {
       }),
       {}
     )
+    expect(DSOMinimumInvestment).toHaveBeenCalled()
+    expect(DSOTotalUnits).toHaveBeenCalled()
   })
 })
