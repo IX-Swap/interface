@@ -26,7 +26,7 @@ export const DataroomColumns: React.FC<DataroomColumnsProps> = props => {
         <Typography>{document.originalFileName}</Typography>
       </Box>
       <Box flex='1 0 20%'>
-        <Typography>{document.title === '' ? '–' : document.title}</Typography>
+        <Typography>{document.type === '' ? '–' : document.type}</Typography>
       </Box>
       <Box flex='1 0 20%'>
         <Typography>{formatDateAndTime(document.createdAt, true)}</Typography>

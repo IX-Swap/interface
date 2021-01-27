@@ -33,7 +33,6 @@ describe('DataroomColumns', () => {
     expect(container).toHaveTextContent(
       formatDateAndTime(document.createdAt, true)
     )
-    expect(container).toHaveTextContent(document.title)
-    expect(container).toHaveTextContent(document.title)
+    expect(container).toHaveTextContent(document.type)
   })
 })
