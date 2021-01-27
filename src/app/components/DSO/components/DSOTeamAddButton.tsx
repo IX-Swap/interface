@@ -8,7 +8,7 @@ export interface DSOTeamAddButtonProps {
 export const DSOTeamAddButton: React.FC<DSOTeamAddButtonProps> = props => {
   const { append } = props
   const handleClick = () => {
-    append()
+    append({})
   }
 
   return (

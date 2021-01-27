@@ -58,7 +58,6 @@ describe('RequestStep', () => {
     })
 
     fireEvent.click(submitButton)
-    expect(submitButton.parentElement).toBeDisabled()
 
     await waitFor(() => {
       expect(setEmail).toHaveBeenCalledWith(requestPasswordResetArgs.email)

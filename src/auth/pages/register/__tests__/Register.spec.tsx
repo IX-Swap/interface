@@ -68,7 +68,6 @@ describe('Register', () => {
     fireEvent.change(password, { target: { value: signupArgs.password } })
 
     fireEvent.click(signupButton)
-    expect(signupButton.parentElement).toBeDisabled()
 
     await waitFor(() => {
       expect(signup).toHaveBeenCalledTimes(1)
