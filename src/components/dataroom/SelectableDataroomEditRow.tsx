@@ -1,5 +1,5 @@
 import React from 'react'
-import { Checkbox, TableCell, TableRow } from '@material-ui/core'
+import { Box, Checkbox, Grid } from '@material-ui/core'
 import {
   DataroomRowUploader,
   DataroomRowUploaderProps
@@ -25,11 +25,13 @@ export const SelectableDataroomEditRow = (
   }
 
   return (
-    <TableRow onClick={toggleItem}>
-      <TableCell width={50}>
-        <Checkbox checked={isSelected} />
-      </TableCell>
+    <Grid container alignItems='center' wrap='nowrap' onClick={toggleItem}>
+      {hasSelected && (
+        <Box flex='1 0 50px'>
+          <Checkbox checked={isSelected} />
+        </Box>
+      )}
       <DataroomRowUploader {...rest} onDelete={handleDelete} />
-    </TableRow>
+    </Grid>
   )
 }

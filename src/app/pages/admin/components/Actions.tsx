@@ -42,6 +42,7 @@ export const Actions = forwardRef(({ user }: ActionsProps, ref: any) => {
           onChange={(ev: React.ChangeEvent<{ value: unknown }>) =>
             handleRoleChange(ev.target.value as string[])
           }
+          variant='outlined'
         />
       </FormControl>
     </>

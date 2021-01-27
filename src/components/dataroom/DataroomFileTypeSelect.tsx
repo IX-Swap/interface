@@ -5,7 +5,7 @@ import { DataroomDocumentType } from 'config/dataroom'
 
 export const DataroomFileTypeSelect = (props: SelectProps) => {
   return (
-    <Select {...props}>
+    <Select {...props} style={{ minWidth: 200 }}>
       <MenuItem disabled value={undefined}>
         Document Type
       </MenuItem>

@@ -7,10 +7,12 @@ import { generateAppRouterHook } from 'helpers/generateAppRouterHook'
 import { makeURL } from 'config/appURL'
 import { DeployToken } from 'app/pages/issuance/pages/DeployToken'
 import { DSOList } from './pages/DSOList'
+import { PreviewDSO } from 'app/pages/issuance/pages/PreviewDSO'
 
 export const IssuanceRoute = {
   list: makeURL(['app', 'issuance', 'offerings']),
   view: makeURL(['app', 'issuance', 'offerings', 'dsoId', 'view']),
+  preview: makeURL(['app', 'issuance', 'offerings', 'dsoId', 'preview']),
   insight: makeURL(['app', 'issuance', 'offerings', 'dsoId', 'overview']),
   deployToken: makeURL([
     'app',
@@ -35,6 +37,12 @@ export const issuanceRoutes: InternalRouteProps[] = [
     path: IssuanceRoute.view,
     exact: true,
     component: ViewDSO
+  },
+  {
+    label: 'Preview',
+    path: IssuanceRoute.preview,
+    exact: true,
+    component: PreviewDSO
   },
   {
     label: 'Edit',

@@ -21,13 +21,50 @@ export const transformDSOToFormValues = (
       useOfProceeds: '',
       fundraisingMilestone: '',
       team: [],
-      documents: []
+      documents: [],
+      capitalStructure: '',
+      minimumInvestment: '',
+      totalFundraisingAmount: '',
+      pricePerUnit: '',
+      currency: '',
+      decimalPlaces: null,
+      tokenSymbol: '',
+      tokenName: '',
+      network: '',
+      corporate: '',
+      logo: null,
+      equityMultiple: '',
+      leverage: '',
+      distributionFrequency: '',
+      investmentStructure: '',
+      grossIRR: '',
+      interestRate: '',
+      dividendYield: '',
+      investmentPeriod: '',
+      issuerName: ''
     } as any
   }
 
   return {
-    ...dso,
+    capitalStructure: dso.capitalStructure,
+    totalFundraisingAmount: dso.totalFundraisingAmount,
+    pricePerUnit: dso.pricePerUnit,
+    decimalPlaces: dso.decimalPlaces,
+    distributionFrequency: dso.distributionFrequency,
+    logo: dso.logo,
+    investmentPeriod: dso.investmentPeriod,
+    launchDate: dso.launchDate,
+    completionDate: dso.completionDate,
+    introduction: dso.introduction,
+    businessModel: dso.businessModel,
+    useOfProceeds: dso.useOfProceeds,
+    fundraisingMilestone: dso.fundraisingMilestone,
+    tokenName: dso.tokenName,
+    tokenSymbol: dso.tokenSymbol,
+    minimumInvestment: dso.minimumInvestment,
+    issuerName: dso.issuerName,
     corporate: dso.corporate._id,
+    investmentStructure: dso.investmentStructure,
     currency: getIdFromObj(dso.currency),
     network: getIdFromObj(dso.network),
     dividendYield: percentageToNumber(dso.dividendYield),
@@ -35,7 +72,8 @@ export const transformDSOToFormValues = (
     equityMultiple: percentageToNumber(dso.equityMultiple),
     interestRate: percentageToNumber(dso.interestRate),
     leverage: percentageToNumber(dso.leverage),
-    documents: dso.documents?.map(document => ({ value: document })) ?? []
+    documents: dso.documents.map(document => ({ value: document })),
+    team: dso.team.map(({ _id, ...person }) => person)
   }
 }
 

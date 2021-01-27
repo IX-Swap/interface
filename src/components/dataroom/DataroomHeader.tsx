@@ -1,27 +1,23 @@
 import React from 'react'
-import {
-  TableCell,
-  TableHead,
-  TableHeadProps,
-  TableRow
-} from '@material-ui/core'
+import { Box, Grid, Typography } from '@material-ui/core'
 
-export interface DataroomHeaderProps extends TableHeadProps {
+export interface DataroomHeaderProps {
   hasSelected?: boolean
 }
 
 export const DataroomHeader = (props: DataroomHeaderProps) => {
-  const { hasSelected = false, ...rest } = props
-
   return (
-    <TableHead {...rest}>
-      <TableRow>
-        {hasSelected && <TableCell width={50} />}
-        <TableCell>File Name</TableCell>
-        <TableCell>Type</TableCell>
-        <TableCell>Uploaded At</TableCell>
-        <TableCell> </TableCell>
-      </TableRow>
-    </TableHead>
+    <Grid container alignItems='flex-start' wrap='nowrap'>
+      <Box flex='1 0 40%'>
+        <Typography style={{ fontWeight: 500 }}>File</Typography>
+      </Box>
+      <Box flex='1 0 20%'>
+        <Typography style={{ fontWeight: 500 }}>Type</Typography>
+      </Box>
+      <Box flex='1 0 20%'>
+        <Typography style={{ fontWeight: 500 }}>Uploaded At</Typography>
+      </Box>
+      <Box flex='1 0 20%' />
+    </Grid>
   )
 }

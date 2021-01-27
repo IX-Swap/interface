@@ -134,6 +134,7 @@ export const TypedField = <
               ...controllerProps,
               ...elementProps,
               id: path,
+              label,
               onChange: handleChange
             })}
 

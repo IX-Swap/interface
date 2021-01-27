@@ -10,7 +10,7 @@ export interface CapitalStructureSelectProps extends TypedSelectProps {
 }
 
 export const CapitalStructureSelect = (props: CapitalStructureSelectProps) => {
-  const { includeAll = false, ...rest } = props
+  const { includeAll = false, label, ...rest } = props
   const { data, isLoading } = useDSOCapitalStructures()
 
   if (isLoading || data === undefined) {
@@ -20,7 +20,7 @@ export const CapitalStructureSelect = (props: CapitalStructureSelectProps) => {
   const options = data.length > 0 ? data : capitalStructures
 
   return (
-    <Select {...(rest as SelectProps)}>
+    <Select {...(rest as SelectProps)} label={label}>
       {includeAll && <MenuItem value='All'>All</MenuItem>}
       {renderMenuItems(
         options.map(option => ({ label: option, value: option }))
