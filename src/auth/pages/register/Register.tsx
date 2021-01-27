@@ -3,15 +3,18 @@ import { registerFormValidationSchema } from 'validation/auth'
 import { SignupArgs } from 'types/auth'
 import { observer } from 'mobx-react'
 import { useSignup } from 'auth/hooks/useSignup'
-import { Grid } from '@material-ui/core'
+import { Grid, Typography } from '@material-ui/core'
 import { Form } from 'components/form/Form'
 import { RegisterFields } from 'auth/pages/register/components/RegisterFields'
 import { Submit } from 'components/form/Submit'
+import { AppRouterLink } from 'components/AppRouterLink'
+import { AuthRoute } from 'auth/router'
 
 export const registerFormInitialValues = {
   name: '',
   email: '',
-  password: ''
+  password: '',
+  agree: false
 }
 
 export const Register: React.FC = observer(() => {
@@ -26,13 +29,33 @@ export const Register: React.FC = observer(() => {
       defaultValues={registerFormInitialValues}
       validationSchema={registerFormValidationSchema}
       onSubmit={handleSubmit}
+      criteriaMode='all'
     >
       <Grid container direction='column' spacing={2}>
-        <RegisterFields />
         <Grid item>
-          <Submit size='large' variant='contained' color='primary' fullWidth>
+          <Typography align='center'>
+            Please fill in all the details to create a new account.
+          </Typography>
+        </Grid>
+        <Grid item xs={12}>
+          <RegisterFields />
+        </Grid>
+        <Grid item container justify='center'>
+          <Submit
+            data-testid='submit'
+            style={{ width: 150 }}
+            size='large'
+            variant='contained'
+            color='primary'
+          >
             Create
           </Submit>
+        </Grid>
+        <Grid item>
+          <Typography align='center'>
+            Already have an account?{' '}
+            <AppRouterLink to={AuthRoute.login}>Log In.</AppRouterLink>
+          </Typography>
         </Grid>
       </Grid>
     </Form>

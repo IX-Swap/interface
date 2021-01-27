@@ -33,7 +33,7 @@ describe('RegistetFields', () => {
       1,
       expect.objectContaining({
         name: 'name',
-        label: 'Name'
+        label: 'Full Name'
       }),
       {}
     )
@@ -52,6 +52,14 @@ describe('RegistetFields', () => {
       expect.objectContaining({
         name: 'password',
         label: 'Password'
+      }),
+      {}
+    )
+
+    expect(TypedField).toHaveBeenNthCalledWith(
+      4,
+      expect.objectContaining({
+        name: 'agree'
       }),
       {}
     )

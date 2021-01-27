@@ -12,22 +12,22 @@ export const passwordSchema = yup
   .min(12, 'Password must be at least 12 characters long')
   .max(48, 'Password cannot be longer than 48 characters')
   .test(
-    'Contains lowercase letters',
+    'lowercase',
     'Password must contain at least one lowercase letter',
     passwordValidator.lowercaseLettersTest
   )
   .test(
-    'Contains uppercase letters',
+    'uppercase',
     'Password must contain at least one uppercase letter',
     passwordValidator.uppercaseLettersTest
   )
   .test(
-    'Contains numerical characters',
+    'numerical',
     'Password must contain at least one numerical character',
     passwordValidator.numbersTest
   )
   .test(
-    'Contains special characters',
+    'special-characters',
     'Password must contain at least one special character',
     passwordValidator.specialCharactersTest
   )

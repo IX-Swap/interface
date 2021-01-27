@@ -14,6 +14,7 @@ import { signupArgs } from '__fixtures__/auth'
 import { history } from 'config/history'
 import * as useSignupHook from 'auth/hooks/useSignup'
 import { generateMutationResult } from '__fixtures__/useQuery'
+import { Form } from 'components/form/Form'
 
 describe('Register', () => {
   beforeEach(() => {
@@ -26,11 +27,13 @@ describe('Register', () => {
   })
 
   it('renders with empty initial values', () => {
-    const { container, getByTestId, getByText } = renderWithUserStore(
-      <Register />
+    const { container, getByTestId } = renderWithUserStore(
+      <Form defaultValues={registerFormInitialValues}>
+        <Register />
+      </Form>
     )
     const form = getByTestId('register-form')
-    const signupButton = getByText(/create/i)
+    const signupButton = getByTestId('submit')
 
     expect(container).toBeTruthy()
     expect(signupButton).toBeTruthy()
@@ -42,11 +45,13 @@ describe('Register', () => {
     const form = getByTestId('register-form')
     const name = getByLabelText(/name/i)
     const email = getByLabelText(/email address/i)
+    const agree = getByTestId('agree-to-terms')
     const password = getByLabelText(/password/i)
 
     fireEvent.change(name, { target: { value: signupArgs.name } })
     fireEvent.change(email, { target: { value: signupArgs.email } })
     fireEvent.change(password, { target: { value: signupArgs.password } })
+    fireEvent.click(agree, { cancellable: true, bubbles: true })
 
     expect(form).toHaveFormValues(signupArgs)
   })
@@ -57,18 +62,20 @@ describe('Register', () => {
       .spyOn(useSignupHook, 'useSignup')
       .mockReturnValueOnce([signup, generateMutationResult({})])
 
-    const { getByText, getByLabelText } = renderWithUserStore(<Register />)
+    const { getByLabelText, getByTestId } = renderWithUserStore(<Register />)
     const name = getByLabelText(/name/i)
     const email = getByLabelText(/email address/i)
     const password = getByLabelText(/password/i)
-    const signupButton = getByText(/create/i)
+    const agree = getByTestId('agree-to-terms')
+    const signupButton = getByTestId('submit')
 
     fireEvent.change(name, { target: { value: signupArgs.name } })
     fireEvent.change(email, { target: { value: signupArgs.email } })
     fireEvent.change(password, { target: { value: signupArgs.password } })
+    fireEvent.click(agree, { cancellable: true, bubbles: true })
 
     fireEvent.click(signupButton)
-    expect(signupButton.parentElement).toBeDisabled()
+    expect(signupButton).toBeDisabled()
 
     await waitFor(() => {
       expect(signup).toHaveBeenCalledTimes(1)

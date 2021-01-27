@@ -2,9 +2,8 @@ import { Grid } from '@material-ui/core'
 import { styled } from '@material-ui/core/styles'
 
 export const AuthWrapper = styled(Grid)(({ theme }) => ({
-  maxWidth: 340,
-  minHeight: '100vh',
+  maxWidth: 730,
   margin: 'auto',
   position: 'relative',
-  paddingBottom: theme.spacing(4)
+  backgroundColor: theme.palette.backgrounds.main
 }))

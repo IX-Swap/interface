@@ -1,9 +1,9 @@
-import { Login } from 'auth/pages/login/Login'
 import { Register } from 'auth/pages/register/Register'
 import { PasswordReset } from 'auth/pages/password-reset/PasswordReset'
 import { InternalRouteProps } from 'types/util'
 import { generateAppRouterHook } from 'helpers/generateAppRouterHook'
 import { Confirmation } from 'auth/pages/confirmation/Confirmation'
+import { LoginContainer } from 'auth/pages/login/LoginContainer'
 
 export const AuthRoute = {
   login: '/auth/sign-in',
@@ -16,7 +16,7 @@ const authRoutes: InternalRouteProps[] = [
   {
     label: 'Login',
     path: AuthRoute.login,
-    component: Login,
+    component: LoginContainer,
     exact: true
   },
   {
