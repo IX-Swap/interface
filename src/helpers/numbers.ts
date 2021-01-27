@@ -1,8 +1,12 @@
 export const addSymbol = (
-  value: string | number,
+  value: string | number | undefined,
   symbol: string = 'SGD',
   right = false
 ): string => {
+  if (value === undefined) {
+    return ''
+  }
+
   const arr = [symbol, value.toLocaleString()]
 
   return right ? arr.reverse().join(' ') : arr.join(' ')

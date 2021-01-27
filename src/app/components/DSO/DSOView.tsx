@@ -9,36 +9,39 @@ import { AppRouterLinkComponent } from 'components/AppRouterLink'
 export interface DSOViewProps {
   data: DigitalSecurityOffering
   showAuthorizations?: boolean
+  showSidebar?: boolean
 }
 
 export const DSOView = (props: DSOViewProps) => {
-  const { data, showAuthorizations = false } = props
+  const { data, showAuthorizations = false, showSidebar = false } = props
 
   useSetPageTitle(data.tokenName)
 
   return (
     <Grid container>
-      <Grid item lg={9} container direction='column'>
+      <Grid item lg={showSidebar ? 9 : 12} container direction='column'>
         <DSOPreview data={data} showAuthorizations={showAuthorizations} />
       </Grid>
 
-      <Grid item lg={3}>
-        <DSOSidebar
-          dso={data}
-          footer={
-            <Button
-              component={AppRouterLinkComponent}
-              color='primary'
-              variant='contained'
-              disableElevation
-              to={IssuanceRoute.edit}
-              params={{ dsoId: data._id }}
-            >
-              Edit
-            </Button>
-          }
-        />
-      </Grid>
+      {showSidebar && (
+        <Grid item lg={3}>
+          <DSOSidebar
+            dso={data}
+            footer={
+              <Button
+                component={AppRouterLinkComponent}
+                color='primary'
+                variant='contained'
+                disableElevation
+                to={IssuanceRoute.edit}
+                params={{ dsoId: data._id }}
+              >
+                Edit
+              </Button>
+            }
+          />
+        </Grid>
+      )}
     </Grid>
   )
 }

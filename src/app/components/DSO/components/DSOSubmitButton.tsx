@@ -2,7 +2,7 @@ import React from 'react'
 import { Button } from '@material-ui/core'
 import { transformDSOToFormValues } from 'app/components/DSO/utils'
 import { useSubmitDSO } from 'app/pages/issuance/hooks/useSubmitDSO'
-import { transformDSOFormValuesToRequestArgs } from 'app/pages/issuance/utils'
+import { getCreateDSOPayload } from 'app/pages/issuance/utils'
 import { getIdFromObj } from 'helpers/strings'
 import { DigitalSecurityOffering } from 'types/dso'
 
@@ -14,7 +14,7 @@ export const DSOSubmitButton = (props: DSOSubmitButtonProps) => {
   const { dso } = props
   const dsoId = getIdFromObj(dso)
   const [submitDSO, { isLoading }] = useSubmitDSO(dsoId)
-  const formValues = transformDSOFormValuesToRequestArgs({
+  const formValues = getCreateDSOPayload({
     ...transformDSOToFormValues(dso)
   })
 

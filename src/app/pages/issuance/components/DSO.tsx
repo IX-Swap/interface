@@ -7,10 +7,16 @@ export interface DSOProps {
   dsoId: string
   isEditing?: boolean
   showAuthorizations?: boolean
+  showSidebar?: boolean
 }
 
 export const DSO: React.FC<DSOProps> = (props: DSOProps) => {
-  const { dsoId, showAuthorizations = false, isEditing = false } = props
+  const {
+    dsoId,
+    showSidebar = false,
+    showAuthorizations = false,
+    isEditing = false
+  } = props
   const { isLoading, data } = useDSOById(dsoId)
 
   if (isLoading || data === undefined) {
@@ -18,7 +24,13 @@ export const DSO: React.FC<DSOProps> = (props: DSOProps) => {
   }
 
   if (!isEditing) {
-    return <DSOView data={data} showAuthorizations={showAuthorizations} />
+    return (
+      <DSOView
+        data={data}
+        showAuthorizations={showAuthorizations}
+        showSidebar={showSidebar}
+      />
+    )
   }
 
   return <DSOForm data={data} />

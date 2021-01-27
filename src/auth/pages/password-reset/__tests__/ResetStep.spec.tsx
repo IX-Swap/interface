@@ -77,7 +77,6 @@ describe('ResetStep', () => {
     })
 
     fireEvent.click(submitButton)
-    expect(submitButton.parentElement).toBeDisabled()
 
     await waitFor(() => {
       expect(completeReset).toHaveBeenCalledTimes(1)

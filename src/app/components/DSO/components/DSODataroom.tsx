@@ -40,7 +40,7 @@ export const DSODataroom = () => {
           <FieldsArray name='documents' control={control}>
             {({ fields, append, remove }) => (
               <Fragment>
-                <SelectableDataroomHeader />
+                {fields.length > 0 && <SelectableDataroomHeader />}
                 {fields.map((field, index) => (
                   // @ts-expect-error
                   <TypedField
@@ -56,27 +56,14 @@ export const DSODataroom = () => {
                     onDelete={() => remove(index)}
                   />
                 ))}
+                <DataroomUploaderWithFileTypeSelector append={append} />
 
-                <Grid
-                  item
-                  container
-                  direction='column'
-                  spacing={2}
-                  xs={12}
+                <DataroomDeleteSelected
+                  name='documents'
                   style={{ marginTop: 20 }}
-                >
-                  <Grid item>
-                    <DataroomUploaderWithFileTypeSelector append={append} />
-                  </Grid>
+                />
 
-                  <Grid item>
-                    <DataroomDeleteSelected name='documents' />
-                  </Grid>
-
-                  <Grid item>
-                    <FormError name='documents' render={TextError} />
-                  </Grid>
-                </Grid>
+                <FormError name='documents' render={TextError} />
               </Fragment>
             )}
           </FieldsArray>
