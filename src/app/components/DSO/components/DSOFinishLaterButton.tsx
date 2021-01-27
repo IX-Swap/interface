@@ -1,7 +1,7 @@
 import { Button } from '@material-ui/core'
 import { useCreateDSO } from 'app/pages/issuance/hooks/useCreateDSO'
 import { useUpdateDSO } from 'app/pages/issuance/hooks/useUpdateDSO'
-import { transformDSOFormValuesToRequestArgs } from 'app/pages/issuance/utils'
+import { getUpdateDSOPayload } from 'app/pages/issuance/utils'
 import { getIdFromObj } from 'helpers/strings'
 import React from 'react'
 import { useFormContext } from 'react-hook-form'
@@ -17,17 +17,10 @@ export const DSOFinishLaterButton = (props: DSOFinishLaterButtonProps) => {
   const { getValues } = useFormContext<DSOFormValues>()
   const [createDSO, { isLoading: isCreating }] = useCreateDSO()
   const [updateDSO, { isLoading: isUpdating }] = useUpdateDSO(dsoId)
-  const formValues = {
-    ...transformDSOFormValuesToRequestArgs({
-      ...getValues(),
-      status: 'Draft'
-    })
-  }
-
-  // TODO: fix payload
-  // delete formValues.tokenName
-  // delete formValues.tokenSymbol
-  // delete formValues.issuerName
+  const formValues = getUpdateDSOPayload({
+    ...getValues(),
+    status: 'Draft'
+  })
 
   const handleClick =
     dso === undefined

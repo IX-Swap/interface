@@ -7,7 +7,13 @@ export interface SubmitProps extends ButtonProps {
 }
 
 export const Submit: React.FC<SubmitProps> = props => {
-  const { watchIsDirty = true, children, variant = 'contained', color = 'primary', ...rest } = props
+  const {
+    watchIsDirty = true,
+    children,
+    variant = 'contained',
+    color = 'primary',
+    ...rest
+  } = props
   const { formState } = useFormContext()
   const { isSubmitting, isDirty } = formState
 
