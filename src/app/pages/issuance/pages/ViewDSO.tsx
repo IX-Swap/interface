@@ -11,7 +11,7 @@ export const ViewDSO = () => {
   return (
     <Grid container direction='column'>
       <Grid item>
-        <DSO dsoId={dsoId} showAuthorizations />
+        <DSO dsoId={dsoId} showAuthorizations showSidebar />
       </Grid>
     </Grid>
   )

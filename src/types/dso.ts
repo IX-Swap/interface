@@ -131,13 +131,12 @@ export type DSOFormValues = Omit<
   decimalPlaces?: number
 }
 
-export type DSORequestArgs = Omit<
-  DSOFormValues,
-  'documents' | 'subscriptionDocument'
-> & {
-  subscriptionDocument?: string
-  documents: string[]
-}
+export type DSORequestArgs = Partial<
+  Omit<DSOFormValues, 'documents' | 'subscriptionDocument'> & {
+    subscriptionDocument?: string
+    documents: string[]
+  }
+>
 
 export type DSOLaunchStatus = 'live' | 'completed' | 'upcoming'
 

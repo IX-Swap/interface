@@ -1,4 +1,7 @@
-import { transformDSOFormValuesToRequestArgs } from 'app/pages/issuance/utils'
+import {
+  getCreateDSOPayload,
+  getUpdateDSOPayload
+} from 'app/pages/issuance/utils'
 import { useEffect, useState } from 'react'
 import { useFormContext } from 'react-hook-form'
 import {
@@ -105,7 +108,6 @@ export const useDSOAutosave = (
     }
     const areEqual = isEqual(formValuesHacked, savedDSOFormValues)
     // TODO: fix the problem with document uploading (form doesn't get updated upon successful document upload)
-
     setIsSaved(areEqual)
   }, [formValues, savedDSOFormValues])
 
@@ -113,23 +115,9 @@ export const useDSOAutosave = (
     if (!isTouched) return
 
     if (wasSaved) {
-      const {
-        network,
-        issuerName,
-        tokenName,
-        tokenSymbol,
-        ...values
-      } = debouncedFormValues
-
-      void updateDSODraft({
-        ...transformDSOFormValuesToRequestArgs(values as any) // TODO: update transform function to avoid this kind of hacks
-      })
+      void updateDSODraft(getUpdateDSOPayload(debouncedFormValues))
     } else {
-      void createDSODraft({
-        ...transformDSOFormValuesToRequestArgs({
-          ...debouncedFormValues
-        })
-      })
+      void createDSODraft(getCreateDSOPayload(debouncedFormValues))
     }
   }, [debouncedFormValues]) // eslint-disable-line
 

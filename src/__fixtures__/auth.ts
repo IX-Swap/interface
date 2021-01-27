@@ -30,7 +30,7 @@ export const loginArgs: LoginArgs = {
 export const signupArgs: SignupArgs = {
   name: 'Alex Solovev',
   email: 'alex@investax.io',
-  password: 'P@ssw0rdP@ssw0rd',
+  password: '',
   agree: true
 }
 

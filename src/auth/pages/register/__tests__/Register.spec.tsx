@@ -71,15 +71,17 @@ describe('Register', () => {
 
     fireEvent.change(name, { target: { value: signupArgs.name } })
     fireEvent.change(email, { target: { value: signupArgs.email } })
-    fireEvent.change(password, { target: { value: signupArgs.password } })
+    fireEvent.change(password, { target: { value: 'Dr0wss@pDr0wss@p' } })
     fireEvent.click(agree, { cancellable: true, bubbles: true })
 
     fireEvent.click(signupButton)
-    expect(signupButton).toBeDisabled()
 
     await waitFor(() => {
       expect(signup).toHaveBeenCalledTimes(1)
-      expect(signup).toHaveBeenCalledWith(signupArgs)
+      expect(signup).toHaveBeenCalledWith({
+        ...signupArgs,
+        password: 'Dr0wss@pDr0wss@p'
+      })
     })
   })
 })

@@ -24,6 +24,7 @@ export const Login = ({ hidden }: LoginProps) => {
             size='large'
             variant='contained'
             color='primary'
+            watchIsDirty={false}
           >
             Login
           </Submit>

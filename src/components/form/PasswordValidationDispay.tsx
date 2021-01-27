@@ -27,38 +27,39 @@ export const PasswordValidationDisplay = () => {
     return null
   }
 
+  const paswordErrorMap = [
+    {
+      type: 'min',
+      label: 'At least 12 characters'
+    },
+    {
+      type: 'lowercase',
+      label: 'At least 1 lowercase'
+    },
+    {
+      type: 'uppercase',
+      label: 'At least 1 uppercase'
+    },
+    {
+      type: 'special-characters',
+      label: 'At least 1 symbol'
+    },
+    {
+      type: 'numerical',
+      label: 'At least 1 number'
+    }
+  ]
+
   return (
     <Grid container direction='column' spacing={1}>
-      <Grid item>
-        <PasswordValidation
-          label='At least 12 characters'
-          inValid={passwordErrors?.types?.hasOwnProperty('min')}
-        />
-      </Grid>
-      <Grid item>
-        <PasswordValidation
-          label='At least 1 lowercase'
-          inValid={passwordErrors?.types?.hasOwnProperty('lowercase')}
-        />
-      </Grid>
-      <Grid item>
-        <PasswordValidation
-          label='At least 1 uppercase'
-          inValid={passwordErrors?.types?.hasOwnProperty('uppercase')}
-        />
-      </Grid>
-      <Grid item>
-        <PasswordValidation
-          label='At least 1 symbol'
-          inValid={passwordErrors?.types?.hasOwnProperty('special-characters')}
-        />
-      </Grid>
-      <Grid item>
-        <PasswordValidation
-          label='At least 1 number'
-          inValid={passwordErrors?.types?.hasOwnProperty('numerical')}
-        />
-      </Grid>
+      {paswordErrorMap.map(error => (
+        <Grid item>
+          <PasswordValidation
+            label={error.label}
+            inValid={passwordErrors?.types?.hasOwnProperty(error.type)}
+          />
+        </Grid>
+      ))}
     </Grid>
   )
 }
