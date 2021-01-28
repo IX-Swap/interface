@@ -10,6 +10,7 @@ import { NotificationsRoot } from 'app/pages/notifications/NotificationsRoot'
 import { makeURL } from 'config/appURL'
 import { AdminRoot } from 'app/pages/admin/AdminRoot'
 import { AppRole } from 'helpers/acl'
+import { HomeRoot } from 'app/pages/home/HomeRoot'
 
 export const AppRoute = {
   authorizer: makeURL(['app', 'authorizer']),
@@ -19,7 +20,8 @@ export const AppRoute = {
   invest: makeURL(['app', 'invest']),
   admin: makeURL(['app', 'admin']),
   security: makeURL(['app', 'settings']),
-  notifications: makeURL(['app', 'notifications'])
+  notifications: makeURL(['app', 'notifications']),
+  home: makeURL(['app', 'home'])
 }
 
 export const appRoutes: InternalRouteProps[] = [
@@ -67,6 +69,11 @@ export const appRoutes: InternalRouteProps[] = [
     label: 'Notifications',
     path: AppRoute.notifications,
     component: NotificationsRoot
+  },
+  {
+    label: 'Home',
+    path: AppRoute.home,
+    component: HomeRoot
   }
 ]
 

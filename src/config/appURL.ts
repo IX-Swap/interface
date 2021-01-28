@@ -37,6 +37,7 @@ export const urlService = {
   authorizer: `${AppService.Authorizer}`,
   settings: 'settings',
   admin: 'admin',
+  home: 'home',
   notifications: 'notifications'
 }
 
