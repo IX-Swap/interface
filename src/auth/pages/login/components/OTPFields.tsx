@@ -3,8 +3,8 @@ import { Grid, Typography, Box } from '@material-ui/core'
 import { TypedField } from 'components/form/TypedField'
 import { OTPField } from 'components/form/OTPField'
 import { useFormContext } from 'react-hook-form'
-import { otpValueExtractor } from 'helpers/otp'
 import { Submit } from 'components/form/Submit'
+import { plainValueExtractor } from 'helpers/forms'
 
 export interface OTPFieldsProps {
   hidden: boolean
@@ -33,7 +33,7 @@ export const OTPFields = ({ hidden }: OTPFieldsProps) => {
             name='otp'
             label='Enter the 6-digit code from your authenticator app:'
             variant='standard'
-            valueExtractor={otpValueExtractor}
+            valueExtractor={plainValueExtractor}
           />
         </Grid>
         <Grid item container justify='center'>

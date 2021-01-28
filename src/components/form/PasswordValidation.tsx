@@ -1,49 +1,65 @@
-import React from 'react'
 import { Grid, Typography } from '@material-ui/core'
-import CheckIcon from '@material-ui/icons/Check'
-import CloseIcon from '@material-ui/icons/Close'
-import { green } from '@material-ui/core/colors'
+import { hasValue } from 'helpers/forms'
+import React from 'react'
+import { useFormContext } from 'react-hook-form'
+import { PasswordValidationItem } from 'components/form/PasswordValidationItem'
 
-export interface PasswordValidationProps {
-  label: string
-  inValid: boolean
-}
+export const PasswordValidation = () => {
+  const { watch, errors } = useFormContext()
 
-export const PasswordValidation = ({
-  label,
-  inValid
-}: PasswordValidationProps) => {
-  const colorProps = {
-    style: inValid ? undefined : { color: green[500] },
-    color: inValid ? 'error' : undefined
+  const password = watch('password', '')
+  const passwordErrors = errors.password
+
+  if (!hasValue(password)) {
+    return (
+      <Grid container direction='column' spacing={1}>
+        <Grid item xs={12}>
+          <Typography variant='body2' color='textSecondary' align='center'>
+            Must have 12 characters, an uppercase, a special character, and a
+            number.
+          </Typography>
+        </Grid>
+      </Grid>
+    )
   }
 
+  if (passwordErrors === undefined) {
+    return null
+  }
+
+  const paswordErrorsList = [
+    {
+      type: 'min',
+      label: 'At least 12 characters'
+    },
+    {
+      type: 'lowercase',
+      label: 'At least 1 lowercase'
+    },
+    {
+      type: 'uppercase',
+      label: 'At least 1 uppercase'
+    },
+    {
+      type: 'special-characters',
+      label: 'At least 1 symbol'
+    },
+    {
+      type: 'numerical',
+      label: 'At least 1 number'
+    }
+  ]
+
   return (
-    <Grid container spacing={1}>
-      <Grid item>
-        {inValid ? (
-          <CloseIcon
-            fontSize='small'
-            style={colorProps.style}
-            color={colorProps.color as any}
+    <Grid container direction='column' spacing={1}>
+      {paswordErrorsList.map(error => (
+        <Grid item>
+          <PasswordValidationItem
+            label={error.label}
+            invalid={passwordErrors?.types?.hasOwnProperty(error.type)}
           />
-        ) : (
-          <CheckIcon
-            fontSize='small'
-            style={colorProps.style}
-            color={colorProps.color as any}
-          />
-        )}
-      </Grid>
-      <Grid item>
-        <Typography
-          variant='body2'
-          style={colorProps.style}
-          color={colorProps.color as any}
-        >
-          {label}
-        </Typography>
-      </Grid>
+        </Grid>
+      ))}
     </Grid>
   )
 }

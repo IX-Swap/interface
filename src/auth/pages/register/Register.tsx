@@ -20,7 +20,11 @@ export const registerFormInitialValues = {
 export const Register: React.FC = observer(() => {
   const [signup] = useSignup()
   const handleSubmit = async (values: SignupArgs) => {
-    await signup(values)
+    await signup({
+      name: values.name,
+      email: values.email,
+      password: values.password
+    })
   }
 
   return (

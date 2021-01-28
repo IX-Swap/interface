@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 import { TypedField } from 'components/form/TypedField'
 import { Visibility, VisibilityOff } from '@material-ui/icons'
 import { Grid, TextField, InputAdornment, IconButton } from '@material-ui/core'
-import { PasswordValidationDisplay } from 'components/form/PasswordValidationDispay'
+import { PasswordValidation } from 'components/form/PasswordValidation'
 import { useFormContext } from 'react-hook-form'
 
 export interface PasswordFieldProps {
@@ -42,7 +42,7 @@ export const PasswordField = ({ showErrors = false }: PasswordFieldProps) => {
       </Grid>
       {showErrors ? (
         <Grid item>
-          <PasswordValidationDisplay />
+          <PasswordValidation />
         </Grid>
       ) : null}
     </Grid>

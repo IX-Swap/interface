@@ -79,7 +79,8 @@ describe('Register', () => {
     await waitFor(() => {
       expect(signup).toHaveBeenCalledTimes(1)
       expect(signup).toHaveBeenCalledWith({
-        ...signupArgs,
+        name: signupArgs.name,
+        email: signupArgs.email,
         password: 'Dr0wss@pDr0wss@p'
       })
     })

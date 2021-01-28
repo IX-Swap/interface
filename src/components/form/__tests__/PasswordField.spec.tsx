@@ -2,10 +2,10 @@ import React from 'react'
 import { render, cleanup } from 'test-utils'
 import { PasswordField } from 'components/form/PasswordField'
 import { Form } from 'components/form/Form'
-import { PasswordValidationDisplay } from 'components/form/PasswordValidationDispay'
+import { PasswordValidation } from 'components/form/PasswordValidation'
 
-jest.mock('components/form/PasswordValidationDispay', () => ({
-  PasswordValidationDisplay: jest.fn(() => null)
+jest.mock('components/form/PasswordValidation', () => ({
+  PasswordValidation: jest.fn(() => null)
 }))
 
 describe('PasswordField', () => {
@@ -29,13 +29,13 @@ describe('PasswordField', () => {
       </Form>
     )
 
-    expect(PasswordValidationDisplay).not.toHaveBeenCalled()
+    expect(PasswordValidation).not.toHaveBeenCalled()
 
     rerender(
       <Form>
         <PasswordField showErrors />
       </Form>
     )
-    expect(PasswordValidationDisplay).toHaveBeenCalled()
+    expect(PasswordValidation).toHaveBeenCalled()
   })
 })
