@@ -54,7 +54,9 @@ export const authorizerQueryKeys = {
 }
 
 export const homeQueryKeys = {
-  getAccessReports: 'access-reports'
+  getAccessReports: 'access-reports',
+  getTopIssuers: 'top-issuers',
+  getTopCoporates: 'top-corporate'
 }
 
 export const banksQueryKeys = {
