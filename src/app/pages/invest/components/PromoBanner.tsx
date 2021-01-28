@@ -41,7 +41,11 @@ export const PromoBanner = () => {
 
   return (
     <Grid className={styles.promoBanner}>
-      {title !== '' ? <Typography variant='h4' style={{ marginBottom: 20 }}>{title}</Typography> : null}
+      {title !== '' ? (
+        <Typography variant='h4' style={{ marginBottom: 20 }}>
+          {title}
+        </Typography>
+      ) : null}
       <Paper variant='outlined'>
         <img
           data-testid='promo-image'

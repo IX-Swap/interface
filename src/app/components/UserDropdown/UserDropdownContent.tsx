@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { Fragment } from 'react'
 import { UserDropdownItem } from 'app/components/UserDropdown/UserDropdownItem'
 import { IdentityRoute } from 'app/pages/identity/router'
 import { SecurityRoute } from 'app/pages/security/router'
@@ -13,6 +13,7 @@ import {
   SettingsOutlined
 } from '@material-ui/icons'
 import { List } from '@material-ui/core'
+import { UserDropdownInfo } from 'app/components/UserDropdown/UserDropdownInfo'
 
 export const UserDropdownContent = (props: DropdownContentProps) => {
   const logout = useLogout()
@@ -20,33 +21,36 @@ export const UserDropdownContent = (props: DropdownContentProps) => {
   const handleClose = props.injectedProps.close
 
   return (
-    <List>
-      <UserDropdownItem
-        icon={AccountCircleOutlined}
-        label='Identity'
-        link={IdentityRoute.list}
-        onClose={handleClose}
-      />
-      {isAdmin && (
+    <Fragment>
+      <UserDropdownInfo />
+      <List style={{ minWidth: 260 }}>
         <UserDropdownItem
-          icon={GroupOutlined}
-          label='Users'
-          link={AdminRoute.users}
+          icon={AccountCircleOutlined}
+          label='Identity'
+          link={IdentityRoute.list}
           onClose={handleClose}
         />
-      )}
-      <UserDropdownItem
-        icon={SettingsOutlined}
-        label='Settings'
-        link={SecurityRoute.landing}
-        onClose={handleClose}
-      />
-      <UserDropdownItem
-        icon={PowerSettingsNewOutlined}
-        label='Sign Out'
-        onClick={logout}
-        onClose={handleClose}
-      />
-    </List>
+        {isAdmin && (
+          <UserDropdownItem
+            icon={GroupOutlined}
+            label='Admin'
+            link={AdminRoute.users}
+            onClose={handleClose}
+          />
+        )}
+        <UserDropdownItem
+          icon={SettingsOutlined}
+          label='Settings'
+          link={SecurityRoute.landing}
+          onClose={handleClose}
+        />
+        <UserDropdownItem
+          icon={PowerSettingsNewOutlined}
+          label='Sign Out'
+          onClick={logout}
+          onClose={handleClose}
+        />
+      </List>
+    </Fragment>
   )
 }

@@ -1,0 +1,39 @@
+import { Box, Typography } from '@material-ui/core'
+import { useTheme } from '@material-ui/core/styles'
+import { Avatar } from 'components/Avatar'
+import { useAuth } from 'hooks/auth/useAuth'
+import { useIndividualIdentity } from 'hooks/identity/useIndividualIdentity'
+import React from 'react'
+
+export interface UserDropdownInfoProps {}
+
+export const UserDropdownInfo = (props: UserDropdownInfoProps) => {
+  const { user } = useAuth()
+  const theme = useTheme()
+  const { data } = useIndividualIdentity()
+
+  if (user === undefined) {
+    return null
+  }
+
+  const { email, name } = user
+
+  return (
+    <Box
+      display='flex'
+      alignItems='center'
+      bgcolor={theme.palette.backgrounds.secondary}
+      px={2}
+      py={1.5}
+      borderRadius='4px 4px 0 0'
+    >
+      <Avatar size={42} documentId={data?.photo} ownerId={user._id}>
+        {name[0]}
+      </Avatar>
+      <Box px={1.4}>
+        <Typography variant='subtitle1'>{name}</Typography>
+        <Typography color='textSecondary'>{email}</Typography>
+      </Box>
+    </Box>
+  )
+}
