@@ -4,6 +4,10 @@ export const apiURL = {
   authorizerBanks: '/accounts/banks/list'
 }
 
+export const homeURL = {
+  getAccessReports: '/access/reports/url' // TODO: replace with real endpoint
+}
+
 export const authorizerURL = {
   [AppFeature.BankAccounts]: '/accounts/banks/list',
   [AppFeature.CashDeposits]: '/accounts/cash/deposits',
