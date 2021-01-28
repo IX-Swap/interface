@@ -14,7 +14,7 @@ export const OnboardingLinks = () => {
   return (
     <Box display='flex'>
       <Box>
-        <Typography variant='h3'>Invest</Typography>
+        <Typography variant='h4'>Invest</Typography>
         <Box my={2.5} />
         <Box display='flex'>
           <OnboardingLink
@@ -36,7 +36,7 @@ export const OnboardingLinks = () => {
       <Box mx={4} />
 
       <Box>
-        <Typography variant='h3'>Raise Capital</Typography>
+        <Typography variant='h4'>Raise Capital</Typography>
         <Box my={2.5} />
         <OnboardingLink
           label='Fundraise'

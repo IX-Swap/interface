@@ -7,6 +7,7 @@ import { OnboardingLinks } from 'app/pages/home/components/OnboardingLinks'
 import { TopIssuers } from 'app/pages/home/components/TopIssuers'
 import { TopCorporates } from 'app/pages/home/components/TopCorporates'
 import { PromoBanner } from 'app/pages/invest/components/PromoBanner'
+import { Divider } from 'ui/Divider'
 
 export const Onboarding = () => {
   const { user } = useAuth()
@@ -25,23 +26,28 @@ export const Onboarding = () => {
         </Grid>
 
         <Grid item xs={12}>
-          <Typography variant='h3'>Access Reports</Typography>
+          <Typography variant='h4'>Access Reports</Typography>
           <Box my={2.5} />
           <AccessReports />
         </Grid>
 
         <Grid container item xs={12}>
-          <Grid item xs={6}>
-            <Typography variant='h3'>Top Issuers</Typography>
-            <Box my={2.5} />
-            <TopIssuers />
-          </Grid>
+          <Divider mb={7} />
+          <Box display='flex' width='100%'>
+            <Box flex='1 1 auto'>
+              <Typography variant='h4'>Top Issuers</Typography>
+              <Box my={2.5} />
+              <TopIssuers />
+            </Box>
 
-          <Grid item xs={6}>
-            <Typography variant='h3'>Top Corporates</Typography>
-            <Box my={2.5} />
-            <TopCorporates />
-          </Grid>
+            <Divider vertical mr={6} />
+
+            <Box flex='1 1 auto'>
+              <Typography variant='h4'>Top Corporates</Typography>
+              <Box my={2.5} />
+              <TopCorporates />
+            </Box>
+          </Box>
         </Grid>
 
         <Grid item xs={12}>
