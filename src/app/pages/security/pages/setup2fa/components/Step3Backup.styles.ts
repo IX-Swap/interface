@@ -1,7 +1,7 @@
 import { makeStyles } from '@material-ui/core/styles'
 import { grey } from '@material-ui/core/colors'
 
-export default makeStyles(() => ({
+export default makeStyles(theme => ({
   label: {
     color: grey[500],
     fontSize: '.95em',
@@ -9,6 +9,8 @@ export default makeStyles(() => ({
   },
   key: {
     color: grey[700],
-    paddingTop: '2.5em'
+    padding: '1.5em 2.5em',
+    margin: '1.5em auto',
+    border: `1px solid ${theme.palette.divider}`
   }
 }))

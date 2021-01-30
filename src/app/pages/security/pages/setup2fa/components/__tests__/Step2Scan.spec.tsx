@@ -42,8 +42,8 @@ describe('Step2Scan', () => {
   })
 
   it('renders store.key', () => {
-    const { container } = render(<Step2Scan />)
-    expect(container.querySelector('h5')).toHaveTextContent(store.key)
+    const { getByText } = render(<Step2Scan />)
+    expect(getByText(store.key)).toBeTruthy()
   })
 
   it('renders store.image', () => {
