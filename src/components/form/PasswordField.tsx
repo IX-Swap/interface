@@ -4,6 +4,7 @@ import { Visibility, VisibilityOff } from '@material-ui/icons'
 import { Grid, TextField, InputAdornment, IconButton } from '@material-ui/core'
 import { PasswordValidation } from 'components/form/PasswordValidation'
 import { useFormContext } from 'react-hook-form'
+import { useStyles } from 'components/form/PasswordField.styles'
 
 export interface PasswordFieldProps {
   showErrors?: boolean
@@ -13,6 +14,7 @@ export const PasswordField = ({ showErrors = false }: PasswordFieldProps) => {
   const { control } = useFormContext()
   const [showPassword, setShowPassword] = useState(false)
   const handleClickShowPassword = () => setShowPassword(!showPassword)
+  const { showPasswordButton } = useStyles()
 
   return (
     <Grid container direction='column' spacing={2}>
@@ -32,6 +34,7 @@ export const PasswordField = ({ showErrors = false }: PasswordFieldProps) => {
                 <IconButton
                   aria-label='toggle visibility'
                   onClick={handleClickShowPassword}
+                  className={showPasswordButton}
                 >
                   {showPassword ? <VisibilityOff /> : <Visibility />}
                 </IconButton>

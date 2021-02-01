@@ -1,14 +1,12 @@
-import { Box, Grid, Typography, Hidden } from '@material-ui/core'
 import React from 'react'
 import screenshot2fa from 'assets/screenshots/twofa-screenshot.svg'
+import { Box, Grid, Typography } from '@material-ui/core'
 import gauthScreenshot from 'assets/screenshots/gauth-screenshot.svg'
 import authyScreenshot from 'assets/screenshots/authy-screenshot.svg'
 import gauthCodeScreenshot from 'assets/screenshots/gauth-screenshot-2.svg'
 import authyCodeScreenshot from 'assets/screenshots/authy-screenshot-2.svg'
 import scanScreenshot from 'assets/screenshots/scan-screenshot.svg'
-import gauth from 'assets/icons/gauth.svg'
-import authy from 'assets/icons/authy.svg'
-import { grey } from '@material-ui/core/colors'
+import { SetupScreenshot } from 'app/pages/security/pages/setup2faguide/components/SetupScreenshot'
 
 export const Setup2FA = () => {
   return (
@@ -44,60 +42,12 @@ export const Setup2FA = () => {
         4. In your authenticator app, add a new account.
       </Grid>
       <Grid item>
-        <Grid container spacing={2}>
-          <Grid item>
-            <Grid container spacing={1} alignItems='center'>
-              <Grid item>
-                <img
-                  alt='google authenticator icon'
-                  width={40}
-                  height={40}
-                  src={gauth}
-                />
-              </Grid>
-              <Grid item>
-                <Typography>
-                  For Google Authenticator, click the plus icon
-                </Typography>
-              </Grid>
-            </Grid>
-            <Box height={200} pl={3} marginY={1}>
-              <img
-                height='100%'
-                width='auto'
-                src={gauthScreenshot}
-                alt='Google Authenticator screenshot'
-              />
-            </Box>
-          </Grid>
-          <Hidden mdDown>
-            <Grid item>
-              <Box
-                width={1}
-                height='100%'
-                borderRight={`1px solid ${grey[300]}`}
-              />
-            </Grid>
-          </Hidden>
-          <Grid item>
-            <Grid container spacing={1} alignItems='center'>
-              <Grid item>
-                <img alt='authy icon' width={40} height={40} src={authy} />
-              </Grid>
-              <Grid item>
-                <Typography>For Authy click Add Account</Typography>
-              </Grid>
-            </Grid>
-            <Box height={200} pl={3} marginY={1}>
-              <img
-                height='100%'
-                width='auto'
-                src={authyScreenshot}
-                alt='Authy screenshot'
-              />
-            </Box>
-          </Grid>
-        </Grid>
+        <SetupScreenshot
+          gauthLabel='For Google Authenticator, click the plus icon'
+          gauthScreenshot={gauthScreenshot}
+          authyLabel='For Authy click Add Account'
+          authyScreenshot={authyScreenshot}
+        />
       </Grid>
       <Grid component={Typography} item>
         5. Scan the QR showing in InvestaX into your authenticator app.
@@ -124,60 +74,12 @@ export const Setup2FA = () => {
         InvestaX, then click Continue.
       </Grid>
       <Grid item>
-        <Grid container spacing={3}>
-          <Grid item>
-            <Grid container spacing={1} alignItems='center'>
-              <Grid item>
-                <img
-                  alt='google authenticator icon'
-                  width={40}
-                  height={40}
-                  src={gauth}
-                />
-              </Grid>
-              <Grid item>
-                <Typography>
-                  For Google Authenticator, enter the 6 digit code
-                </Typography>
-              </Grid>
-            </Grid>
-            <Box height={200} pl={3} marginY={1}>
-              <img
-                height='100%'
-                width='auto'
-                src={gauthCodeScreenshot}
-                alt='Google Authenticator screenshot'
-              />
-            </Box>
-          </Grid>
-          <Hidden mdDown>
-            <Grid item>
-              <Box
-                width={1}
-                height='100%'
-                borderRight={`1px solid ${grey[300]}`}
-              />
-            </Grid>
-          </Hidden>
-          <Grid item>
-            <Grid container spacing={1} alignItems='center'>
-              <Grid item>
-                <img alt='authy icon' width={40} height={40} src={authy} />
-              </Grid>
-              <Grid item>
-                <Typography>For Authy enter the code</Typography>
-              </Grid>
-            </Grid>
-            <Box height={200} pl={3} marginY={1}>
-              <img
-                height='100%'
-                width='auto'
-                src={authyCodeScreenshot}
-                alt='Authy screenshot'
-              />
-            </Box>
-          </Grid>
-        </Grid>
+        <SetupScreenshot
+          gauthLabel='For Google Authenticator, enter the 6 digit code'
+          gauthScreenshot={gauthCodeScreenshot}
+          authyLabel='For Authy enter the code'
+          authyScreenshot={authyCodeScreenshot}
+        />
       </Grid>
       <Grid component={Typography} item>
         8. Click Finish.
