@@ -1,6 +1,7 @@
 import {
   getCreateDSOPayload,
-  getUpdateDSOPayload
+  getUpdateDSOPayload,
+  validateTeamField
 } from 'app/pages/issuance/utils'
 import { useEffect, useState } from 'react'
 import { useFormContext } from 'react-hook-form'
@@ -23,7 +24,7 @@ import { useIssuanceRouter } from 'app/pages/issuance/router'
 export const useDSOAutosave = (
   initialDSO: DigitalSecurityOffering | undefined
 ) => {
-  const { apiService, snackbarService } = useServices()
+  const { apiService } = useServices()
   const { replace } = useIssuanceRouter()
   const { user } = useAuth()
   const userId = getIdFromObj(user)
@@ -37,11 +38,15 @@ export const useDSOAutosave = (
   } = useFormContext<DSOFormValues>()
 
   const formValues = watch()
-  const [debouncedFormValues] = useDebounce(formValues, 3000, {
-    equalityFn: (left, right) => {
-      return isEqual(left, right)
+  const [debouncedFormValues] = useDebounce(
+    validateTeamField(formValues),
+    3000,
+    {
+      equalityFn: (left, right) => {
+        return isEqual(left, right)
+      }
     }
-  })
+  )
 
   const [
     createDSODraft,
@@ -56,9 +61,6 @@ export const useDSOAutosave = (
     {
       onSuccess: data => {
         replace('edit', { dsoId: data.data._id })
-      },
-      onError: (e: any) => {
-        void snackbarService.showSnackbar(e.message, 'error')
       }
     }
   )
@@ -76,9 +78,6 @@ export const useDSOAutosave = (
     {
       onSuccess: () => {
         void refetch()
-      },
-      onError: (e: any) => {
-        void snackbarService.showSnackbar(e.message, 'error')
       }
     }
   )
