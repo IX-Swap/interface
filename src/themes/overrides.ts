@@ -101,6 +101,9 @@ export const getThemeOverrides = (theme: Theme): Overrides => ({
     inputMarginDense: {
       paddingTop: 12,
       paddingBottom: 12
+    },
+    adornedEnd: {
+      paddingRight: 0
     }
   },
   MuiSelect: {

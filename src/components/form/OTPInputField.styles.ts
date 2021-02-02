@@ -13,7 +13,7 @@ export const useStyles = makeStyles(theme => ({
     display: 'block',
     outline: 'none',
     boxSizing: 'border-box',
-    fontSize: 16,
+    fontSize: 22,
     fontWeight: 500,
     marginTop: 0,
     marginBottom: 0,

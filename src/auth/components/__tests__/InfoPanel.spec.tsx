@@ -1,19 +1,14 @@
+import { InfoPanel } from 'auth/components/InfoPanel'
 import React from 'react'
 import { render, cleanup } from 'test-utils'
-import { Login } from 'auth/pages/login/Login'
-import { Form } from 'components/form/Form'
 
-describe('Login', () => {
+describe('InfoPanel', () => {
   afterEach(async () => {
     await cleanup()
     jest.clearAllMocks()
   })
 
   it('renders without errors', () => {
-    render(
-      <Form>
-        <Login hidden={false} />
-      </Form>
-    )
+    render(<InfoPanel />)
   })
 })
