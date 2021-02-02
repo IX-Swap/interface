@@ -104,7 +104,7 @@ export const getThemeOverrides = (theme: Theme): Overrides => ({
       paddingBottom: 12
     },
     adornedEnd: {
-      paddingRight: 0
+      paddingRight: 8
     }
   },
   MuiSelect: {
@@ -119,7 +119,8 @@ export const getThemeOverrides = (theme: Theme): Overrides => ({
   MuiStepper: {
     root: {
       paddingLeft: 0,
-      paddingRight: 0
+      paddingRight: 0,
+      backgroundColor: 'transparent'
     }
   },
   MuiStepConnector: {
@@ -130,7 +131,13 @@ export const getThemeOverrides = (theme: Theme): Overrides => ({
       borderTopStyle: 'dashed'
     },
     lineVertical: {
-      borderTopStyle: 'dashed'
+      borderTop: 'none',
+      borderLeftStyle: 'dashed'
+    }
+  },
+  MuiStepContent: {
+    root: {
+      borderLeftStyle: 'dashed'
     }
   },
   MuiStepIcon: {

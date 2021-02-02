@@ -5,11 +5,13 @@ import { Enable2faFormValues } from '../types'
 import { getIdFromObj } from 'helpers/strings'
 import { authURL } from 'config/apiURL'
 import { useSetup2faStore } from 'app/pages/security/pages/setup2fa/context'
+import { useHistory } from 'react-router-dom'
 
 export const useEnable2fa = () => {
   const { snackbarService, apiService } = useServices()
   const { user } = useAuth()
   const { nextPage } = useSetup2faStore()
+  const history = useHistory()
 
   const enable2fa = async ({ otp }: Enable2faFormValues) => {
     const uri = authURL.enable2fa(getIdFromObj(user), otp)
@@ -23,6 +25,7 @@ export const useEnable2fa = () => {
         'success'
       )
       nextPage()
+      setTimeout(() => history.push('/'), 2500)
     },
     onError: (error: string) => {
       void snackbarService.showSnackbar(error.toString(), 'error')
