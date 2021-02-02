@@ -54,6 +54,7 @@ export const urlFeature = {
   changePassword: 'change-password',
   setup2fa: 'setup-2fa',
   deployments: 'deployments',
+  guide2fa: 'guide-2fa',
   users: AppFeature.Users
 }
 
