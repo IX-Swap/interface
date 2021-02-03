@@ -10,7 +10,7 @@ import {
 import { Avatar } from 'components/Avatar'
 
 export interface TopListProps {
-  items: Array<{ imageURL: string; label: string }>
+  items: Array<{ imageURL: string | undefined; label: string; _id: string }>
 }
 
 export const TopList = (props: TopListProps) => {
@@ -18,10 +18,10 @@ export const TopList = (props: TopListProps) => {
 
   return (
     <List>
-      {items.map(({ imageURL, label }) => (
+      {items.map(({ imageURL, label, _id }) => (
         <ListItem>
           <ListItemAvatar>
-            <Avatar size={46} documentId={imageURL} />
+            <Avatar size={46} documentId={imageURL} ownerId={_id} />
           </ListItemAvatar>
           <Box mx={1.5} />
           <ListItemText>

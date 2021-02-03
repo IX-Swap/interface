@@ -5,9 +5,7 @@ import { useAuth } from 'hooks/auth/useAuth'
 import { useIndividualIdentity } from 'hooks/identity/useIndividualIdentity'
 import React from 'react'
 
-export interface UserDropdownInfoProps {}
-
-export const UserDropdownInfo = (props: UserDropdownInfoProps) => {
+export const UserDropdownInfo = () => {
   const { user } = useAuth()
   const theme = useTheme()
   const { data } = useIndividualIdentity()

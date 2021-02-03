@@ -5,10 +5,9 @@ export const apiURL = {
 }
 
 export const homeURL = {
-  // TODO: replace with real endpoint
-  getAccessReports: '/access/reports/url',
-  getTopIssuers: '/top/issuers/url',
-  getTopCorporates: '/top/corporates/url'
+  getAccessReports: '/dataroom/reports-and-newsletters/list',
+  getTopIssuers: '/issuance/top-issuers',
+  getTopCorporates: '/issuance/top-corporates'
 }
 
 export const authorizerURL = {
