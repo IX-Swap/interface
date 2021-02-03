@@ -1,5 +1,5 @@
 import React from 'react'
-import { Box, Typography } from '@material-ui/core'
+import { Box, Hidden, Typography } from '@material-ui/core'
 import { OnboardingLink } from 'app/pages/home/components/OnboardingLink'
 import { ReactComponent as IndividualIcon } from 'assets/icons/navigation/individual.svg'
 import { ReactComponent as CorporateIcon } from 'assets/icons/navigation/corporate.svg'
@@ -33,7 +33,11 @@ export const OnboardingLinks = () => {
         </Box>
       </Box>
 
-      <Box mx={4} />
+      <Box mx={1.5} />
+
+      <Hidden mdDown>
+        <Box mx={16} />
+      </Hidden>
 
       <Box>
         <Typography variant='h4'>Raise Capital</Typography>

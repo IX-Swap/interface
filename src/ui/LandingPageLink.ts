@@ -9,6 +9,11 @@ export const LandingPageLink = styled(Box)(({ theme }) => ({
   border: `1px solid ${theme.palette.divider}`,
   '&:hover': {
     backgroundColor: theme.palette.action.hover
+  },
+
+  [theme.breakpoints.down('sm')]: {
+    maxWidth: 120,
+    maxHeight: 120
   }
 }))
 

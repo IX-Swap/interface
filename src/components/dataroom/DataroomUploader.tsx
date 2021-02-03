@@ -8,6 +8,7 @@ import { getIdFromObj } from 'helpers/strings'
 import { DataroomFileType } from 'config/dataroom'
 import { MutationResult } from 'react-query'
 import { AxiosResponse } from 'axios'
+import { documentsURL } from 'config/apiURL'
 
 export interface DataroomUploaderRenderProps<TValue = Maybe<DataroomFile>> {
   name: string
@@ -29,6 +30,7 @@ export interface DataroomUploaderProps {
   onDelete?: () => any
   multiple?: boolean
   accept?: DataroomFileType
+  uri?: string
 }
 
 export const DataroomUploader = (props: DataroomUploaderProps) => {
@@ -41,16 +43,20 @@ export const DataroomUploader = (props: DataroomUploaderProps) => {
     onDelete,
     render,
     accept = DataroomFileType.document,
-    multiple = false
+    multiple = false,
+    uri = documentsURL.create
   } = props
   const inputRef = useRef<HTMLInputElement | null>(null)
   const { watch } = useFormContext()
   const value = watch(name, defaultValue) as DataroomUploaderProps['value']
   const document = value === undefined ? defaultValue : value
   const [deleteFile, deleteState] = useDeleteFile(getIdFromObj(value))
-  const [uploadFile, uploadState] = useUploadFile({
-    onSuccess: response => onChange(response.data[0])
-  })
+  const [uploadFile, uploadState] = useUploadFile(
+    {
+      onSuccess: response => onChange(response.data[0])
+    },
+    uri
+  )
 
   const handleUpload = () => {
     inputRef?.current?.click()

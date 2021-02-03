@@ -3,6 +3,7 @@ import { generateAppRouterHook } from 'helpers/generateAppRouterHook'
 import { makeURL } from 'config/appURL'
 import { Users } from 'app/pages/admin/pages/Users'
 import { ViewUser } from 'app/pages/admin/pages/ViewUser'
+import { AccessReports } from 'app/pages/admin/pages/AccessReports'
 
 export const AdminRoute = {
   users: makeURL(['app', 'admin']),
@@ -14,7 +15,7 @@ export const adminRoutes: InternalRouteProps[] = [
   {
     label: 'Access Reports',
     path: AdminRoute.accessReports,
-    component: () => null
+    component: AccessReports
   },
   {
     label: 'Users Roles',

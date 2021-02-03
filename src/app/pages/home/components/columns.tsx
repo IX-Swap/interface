@@ -3,8 +3,12 @@ import { Card } from '@material-ui/core'
 import { DataroomViewRow } from 'components/dataroom/DataroomViewRow'
 import { DataroomFile } from 'types/dataroomFile'
 import { TableColumn } from 'types/util'
+import { DataroomEditRow } from 'components/dataroom/DataroomEditRow'
+import { AccessReportActions } from 'app/pages/home/components/AccessReportActions'
 
-export const columns: Array<TableColumn<DataroomFile>> = [
+export const getAccessReportsColumns = (
+  editable = false
+): Array<TableColumn<DataroomFile>> => [
   {
     label: '',
     key: 'label',
@@ -19,11 +23,19 @@ export const columns: Array<TableColumn<DataroomFile>> = [
           padding: '0 30px'
         }}
       >
-        <DataroomViewRow
-          title='Access Report'
-          document={row}
-          showDivider={false}
-        />
+        {editable ? (
+          <DataroomEditRow
+            title='Access Report'
+            document={row}
+            actions={<AccessReportActions document={row} />}
+          />
+        ) : (
+          <DataroomViewRow
+            title='Access Report'
+            document={row}
+            showDivider={false}
+          />
+        )}
       </Card>
     )
   }

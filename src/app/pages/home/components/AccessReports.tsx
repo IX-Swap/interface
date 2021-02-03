@@ -2,9 +2,15 @@ import React from 'react'
 import { TableView } from 'components/TableWithPagination/TableView'
 import { homeURL } from 'config/apiURL'
 import { homeQueryKeys } from 'config/queryKeys'
-import { columns } from './columns'
+import { getAccessReportsColumns } from './columns'
 
-export const AccessReports = () => {
+export interface AccessReportsProps {
+  editable?: boolean
+}
+
+export const AccessReports = (props: AccessReportsProps) => {
+  const { editable = false } = props
+
   return (
     <TableView
       name={homeQueryKeys.getAccessReports}
@@ -14,7 +20,7 @@ export const AccessReports = () => {
         elevation: 0
       }}
       bordered={false}
-      columns={columns}
+      columns={getAccessReportsColumns(editable)}
     />
   )
 }

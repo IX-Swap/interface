@@ -21,7 +21,8 @@ export const defaultUploadDocumentInfo: UploadDocumentInfo = {
 }
 
 export const useUploadFile = (
-  callbacks?: QueryOrMutationCallbacks<DataroomFile[]>
+  callbacks?: QueryOrMutationCallbacks<DataroomFile[]>,
+  uri = documentsURL.create
 ) => {
   const { snackbarService, apiService } = useServices()
   const uploadFile = async (args: UploadDocumentArgs) => {
@@ -37,7 +38,7 @@ export const useUploadFile = (
       }
     })
 
-    return await apiService.post<DataroomFile[]>(documentsURL.create, formData)
+    return await apiService.post<DataroomFile[]>(uri, formData)
   }
 
   return useMutation(uploadFile, {
