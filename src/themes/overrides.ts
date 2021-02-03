@@ -1,4 +1,5 @@
 import { Theme } from '@material-ui/core'
+import { grey, green } from '@material-ui/core/colors'
 import { Overrides } from '@material-ui/core/styles/overrides'
 import { rte } from 'themes/rte'
 
@@ -101,6 +102,9 @@ export const getThemeOverrides = (theme: Theme): Overrides => ({
     inputMarginDense: {
       paddingTop: 12,
       paddingBottom: 12
+    },
+    adornedEnd: {
+      paddingRight: 8
     }
   },
   MuiSelect: {
@@ -115,7 +119,36 @@ export const getThemeOverrides = (theme: Theme): Overrides => ({
   MuiStepper: {
     root: {
       paddingLeft: 0,
-      paddingRight: 0
+      paddingRight: 0,
+      backgroundColor: 'transparent'
+    }
+  },
+  MuiStepConnector: {
+    line: {
+      borderTopStyle: 'dashed'
+    },
+    lineHorizontal: {
+      borderTopStyle: 'dashed'
+    },
+    lineVertical: {
+      borderTop: 'none',
+      borderLeftStyle: 'dashed'
+    }
+  },
+  MuiStepContent: {
+    root: {
+      borderLeftStyle: 'dashed'
+    }
+  },
+  MuiStepIcon: {
+    root: {
+      color: grey[300],
+      '&$completed': {
+        color: green[400]
+      },
+      '&$active': {
+        color: grey[500]
+      }
     }
   },
   MuiToggleButton: {

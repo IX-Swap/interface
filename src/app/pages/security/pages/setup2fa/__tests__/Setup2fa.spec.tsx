@@ -8,6 +8,7 @@ import * as setupContext from '../context'
 import { Setup2fa } from 'app/pages/security/pages/setup2fa/Setup2fa'
 import { waitFor, fireEvent } from '@testing-library/react'
 import { Setup2faStore } from '../context/store'
+import { Enabled } from 'app/pages/security/pages/setup2fa/components/Enabled'
 
 jest.mock('../components/Step1Download', () => ({
   Step1Download: jest.fn(() => null)
@@ -20,6 +21,9 @@ jest.mock('../components/Step3Backup', () => ({
 }))
 jest.mock('../components/Step4Enable', () => ({
   Step4Enable: jest.fn(() => null)
+}))
+jest.mock('app/pages/security/pages/setup2fa/components/Enabled', () => ({
+  Enabled: jest.fn(() => null)
 }))
 
 describe('Setup2fa', () => {
@@ -93,7 +97,7 @@ describe('Setup2fa', () => {
     expect(Step4Enable).toHaveBeenCalledTimes(1)
   })
 
-  it("renders Step1Download if activeStep doesn't match", () => {
+  it("renders Enabled if activeStep doesn't match", () => {
     jest.spyOn(setupContext, 'useSetup2faStore').mockReturnValue({
       ...baseContext,
       activeStep: 8
@@ -101,7 +105,7 @@ describe('Setup2fa', () => {
 
     render(<Setup2fa />)
 
-    expect(Step1Download).toHaveBeenCalledTimes(1)
+    expect(Enabled).toHaveBeenCalledTimes(1)
   })
 
   it('renders Next button if step is not last', () => {

@@ -22,7 +22,7 @@ describe('LoginFields', () => {
     )
   })
 
-  it('renders email, password and otp fields', () => {
+  it('renders email and password', () => {
     render(
       <Form>
         <LoginFields />
@@ -43,15 +43,6 @@ describe('LoginFields', () => {
       expect.objectContaining({
         name: 'password',
         label: 'Password'
-      }),
-      {}
-    )
-
-    expect(TypedField).toHaveBeenNthCalledWith(
-      3,
-      expect.objectContaining({
-        name: 'otp',
-        label: 'OTP Code (optional)'
       }),
       {}
     )

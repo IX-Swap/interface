@@ -94,7 +94,7 @@ describe('DSOBaseFields', () => {
     expect(TypedField).toHaveBeenNthCalledWith(
       7,
       expect.objectContaining({
-        label: 'Corporate Structure',
+        label: 'Corporate',
         name: 'corporate'
       }),
       {}
