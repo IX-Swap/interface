@@ -26,6 +26,11 @@ export const AppRoute = {
 
 export const appRoutes: InternalRouteProps[] = [
   {
+    label: 'Home',
+    path: AppRoute.home,
+    component: HomeRoot
+  },
+  {
     label: 'Authorization',
     path: AppRoute.authorizer,
     component: AuthorizerRoot,
@@ -69,11 +74,6 @@ export const appRoutes: InternalRouteProps[] = [
     label: 'Notifications',
     path: AppRoute.notifications,
     component: NotificationsRoot
-  },
-  {
-    label: 'Home',
-    path: AppRoute.home,
-    component: HomeRoot
   }
 ]
 

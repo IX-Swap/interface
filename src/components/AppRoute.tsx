@@ -2,7 +2,7 @@ import React, { createElement } from 'react'
 import { InternalRouteBase, InternalRouteProps } from 'types/util'
 import { Redirect, RouteComponentProps } from 'react-router-dom'
 import { safeGeneratePath } from 'helpers/router'
-import { useIsAdmin, useIsAccredited, useIsEnabled2FA } from 'helpers/acl'
+import { useIsEnabled2FA } from 'helpers/acl'
 import { AppRoute as AppPath } from 'app/router'
 import { useCachedUser } from 'hooks/auth/useCachedUser'
 import { ScrollToTop } from './ScrollToTop'
@@ -18,8 +18,6 @@ export const AppRoute = (props: AppRouteProps) => {
   const { path, component } = route
   const user = useCachedUser()
   const is2FAEnabled = useIsEnabled2FA()
-  const isAccredited = useIsAccredited()
-  const isAdmin = useIsAdmin()
 
   pushCrumb({
     label: route.label,
@@ -35,20 +33,14 @@ export const AppRoute = (props: AppRouteProps) => {
       return <Redirect to='/auth' />
     }
   } else {
-    if (!is2FAEnabled && !path.startsWith(AppPath.security)) {
-      return <Redirect to={AppPath.security} />
-    }
-
     if (
-      !isAccredited &&
-      !(
-        path.startsWith(AppPath.identity) ||
-        path.startsWith(AppPath.security) ||
-        path.startsWith(AppPath.notifications)
-      ) &&
-      !(isAdmin && path.startsWith(AppPath.admin))
+      !is2FAEnabled &&
+      !path.startsWith(AppPath.security) &&
+      !path.startsWith(AppPath.home) &&
+      !path.startsWith(AppPath.notifications) &&
+      !path.startsWith(AppPath.identity)
     ) {
-      return <Redirect to={AppPath.identity} />
+      return <Redirect to={AppPath.home} />
     }
   }
 
