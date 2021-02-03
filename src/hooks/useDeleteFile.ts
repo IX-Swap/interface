@@ -4,8 +4,12 @@ import { useMutation } from 'react-query'
 import { getIdFromObj } from 'helpers/strings'
 import { DataroomFile } from 'types/dataroomFile'
 import { documentsURL } from 'config/apiURL'
+import { QueryOrMutationCallbacks } from 'hooks/types'
 
-export const useDeleteFile = (fileId: string) => {
+export const useDeleteFile = (
+  fileId: string,
+  callbacks?: QueryOrMutationCallbacks<DataroomFile>
+) => {
   const { snackbarService, apiService } = useServices()
   const { user } = useAuth()
   const url = documentsURL.deleteById(getIdFromObj(user), fileId)
@@ -14,11 +18,13 @@ export const useDeleteFile = (fileId: string) => {
   }
 
   return useMutation(deleteFile, {
-    onSuccess: () => {
+    onSuccess: data => {
       void snackbarService.showSnackbar('Success', 'success')
+      void callbacks?.onSuccess?.(data)
     },
-    onError: () => {
+    onError: error => {
       void snackbarService.showSnackbar('Error', 'error')
+      void callbacks?.onError?.(error)
     }
   })
 }

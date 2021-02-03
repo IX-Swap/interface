@@ -53,6 +53,12 @@ export const authorizerQueryKeys = {
   getWithdrawalAddresses: 'authorizer-withdrawal-addresses-list'
 }
 
+export const homeQueryKeys = {
+  getAccessReports: 'access-reports',
+  getTopIssuers: 'top-issuers',
+  getTopCoporates: 'top-corporate'
+}
+
 export const banksQueryKeys = {
   getById: 'bank-by-id',
   getData: 'banks',

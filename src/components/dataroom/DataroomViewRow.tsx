@@ -9,10 +9,11 @@ export interface DataroomViewRowProps {
   title: string
   document: DataroomFile
   downloader?: JSX.Element
+  showDivider?: boolean
 }
 
 export const DataroomViewRow = (props: DataroomViewRowProps) => {
-  const { document, title, downloader } = props
+  const { document, title, downloader, showDivider = true } = props
 
   return (
     <Fragment>
@@ -36,7 +37,7 @@ export const DataroomViewRow = (props: DataroomViewRowProps) => {
           </Box>
         </Grid>
       </Box>
-      <Divider />
+      {showDivider && <Divider />}
     </Fragment>
   )
 }

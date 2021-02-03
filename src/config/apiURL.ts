@@ -4,6 +4,12 @@ export const apiURL = {
   authorizerBanks: '/accounts/banks/list'
 }
 
+export const homeURL = {
+  getAccessReports: '/dataroom/reports-and-newsletters/list',
+  getTopIssuers: '/issuance/top-issuers',
+  getTopCorporates: '/issuance/top-corporates'
+}
+
 export const authorizerURL = {
   [AppFeature.BankAccounts]: '/accounts/banks/list',
   [AppFeature.CashDeposits]: '/accounts/cash/deposits',
@@ -148,5 +154,6 @@ export const documentsURL = {
   create: '/dataroom',
   deleteById: (userId: string, fileId: string) =>
     `/dataroom/${userId}/${fileId}`,
-  deleteBySuperUser: (fileId: string) => `/dataroom/${fileId}`
+  deleteBySuperUser: (fileId: string) => `/dataroom/${fileId}`,
+  uploadAccessReport: '/dataroom/reports-and-newsletters'
 }

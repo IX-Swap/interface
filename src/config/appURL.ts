@@ -37,6 +37,7 @@ export const urlService = {
   authorizer: `${AppService.Authorizer}`,
   settings: 'settings',
   admin: 'admin',
+  home: 'home',
   notifications: 'notifications'
 }
 
@@ -54,8 +55,9 @@ export const urlFeature = {
   changePassword: 'change-password',
   setup2fa: 'setup-2fa',
   deployments: 'deployments',
+  users: AppFeature.Users,
+  accessReports: 'access-reports',
   guide2fa: 'guide-2fa',
-  users: AppFeature.Users
 }
 
 export const appURL = {
