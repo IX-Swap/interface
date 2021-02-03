@@ -8,6 +8,7 @@ import { AuthRoute } from 'auth/router'
 export interface LoginProps {
   hidden: boolean
 }
+
 export const Login = ({ hidden }: LoginProps) => {
   return (
     <Box display={hidden ? 'none' : 'block'}>

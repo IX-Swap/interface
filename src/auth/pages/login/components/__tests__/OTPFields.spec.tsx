@@ -7,6 +7,7 @@ import { Form } from 'components/form/Form'
 jest.mock('components/form/TypedField', () => ({
   TypedField: jest.fn(() => null)
 }))
+
 describe('OTPFields', () => {
   afterEach(async () => {
     await cleanup()
@@ -16,7 +17,7 @@ describe('OTPFields', () => {
   it('renders without errors', () => {
     render(
       <Form>
-        <OTPFields hidden={false} />
+        <OTPFields />
       </Form>
     )
   })
@@ -24,7 +25,7 @@ describe('OTPFields', () => {
   it('renders OTP', () => {
     render(
       <Form>
-        <OTPFields hidden={false} />
+        <OTPFields />
       </Form>
     )
 

@@ -10,6 +10,7 @@ export interface OTPInputFieldArgs extends OtpInputProps {
 export const OTPInputField = ({
   variant = 'standard',
   fullwidth = false,
+  shouldAutoFocus = false,
   ...rest
 }: OTPInputFieldArgs) => {
   const classes = useStyles()
@@ -21,6 +22,7 @@ export const OTPInputField = ({
         fullwidth ? classes.fullwidth : ''
       }`}
       inputStyle={`${classes.base} ${classes[variant]}`}
+      shouldAutoFocus={shouldAutoFocus}
       {...rest}
     />
   )

@@ -15,6 +15,7 @@ export interface OTPFieldProps {
   path?: any
   variant?: 'standard' | 'outlined'
   numInputs?: number
+  shouldAutoFocus?: boolean
 }
 
 export const OTPField = ({
@@ -27,7 +28,8 @@ export const OTPField = ({
   control,
   path,
   variant = 'standard',
-  numInputs = 6
+  numInputs = 6,
+  shouldAutoFocus = false
 }: OTPFieldProps) => {
   return (
     <Grid container direction='column' spacing={1}>
@@ -46,6 +48,7 @@ export const OTPField = ({
           onChange={onChange}
           numInputs={numInputs}
           variant={variant}
+          shouldAutoFocus={shouldAutoFocus}
         />
       </Grid>
       {!error && hasHelperText && (

@@ -21,6 +21,8 @@ export const LoginContainer = () => {
     await login(values)
   }
 
+  const isOtpStep = step === 'otp'
+
   return (
     <Form
       data-testid='login-form'
@@ -28,8 +30,8 @@ export const LoginContainer = () => {
       validationSchema={loginFormValidationSchema}
       onSubmit={handleSubmit}
     >
-      <Login hidden={step === 'otp'} />
-      <OTPFields hidden={step === 'login'} />
+      <Login hidden={isOtpStep} />
+      {isOtpStep ? <OTPFields /> : null}
     </Form>
   )
 }
