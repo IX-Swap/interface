@@ -55,7 +55,8 @@ export const urlFeature = {
   changePassword: 'change-password',
   setup2fa: 'setup-2fa',
   deployments: 'deployments',
-  users: AppFeature.Users
+  users: AppFeature.Users,
+  accessReports: 'access-reports'
 }
 
 export const appURL = {

@@ -10,10 +10,15 @@ import {
   AccountCircleOutlined,
   GroupOutlined,
   PowerSettingsNewOutlined,
-  SettingsOutlined
+  SettingsOutlined,
+  Security,
+  PostAdd
 } from '@material-ui/icons'
 import { List } from '@material-ui/core'
 import { UserDropdownInfo } from 'app/components/UserDropdown/UserDropdownInfo'
+import { UserDropdownGroup } from 'app/components/UserDropdown/UserDropdownGroup'
+
+export const LIST_HORIZONTAL_PADDING = 32
 
 export const UserDropdownContent = (props: DropdownContentProps) => {
   const logout = useLogout()
@@ -23,7 +28,13 @@ export const UserDropdownContent = (props: DropdownContentProps) => {
   return (
     <Fragment>
       <UserDropdownInfo />
-      <List style={{ minWidth: 260 }}>
+      <List
+        style={{
+          minWidth: 260,
+          paddingLeft: LIST_HORIZONTAL_PADDING,
+          paddingRight: LIST_HORIZONTAL_PADDING
+        }}
+      >
         <UserDropdownItem
           icon={AccountCircleOutlined}
           label='Identity'
@@ -31,12 +42,22 @@ export const UserDropdownContent = (props: DropdownContentProps) => {
           onClose={handleClose}
         />
         {isAdmin && (
-          <UserDropdownItem
-            icon={GroupOutlined}
-            label='Admin'
-            link={AdminRoute.users}
-            onClose={handleClose}
-          />
+          <UserDropdownGroup label='Admin' icon={Security}>
+            <UserDropdownItem
+              icon={GroupOutlined}
+              label='Users'
+              link={AdminRoute.users}
+              onClose={handleClose}
+              level={1}
+            />
+            <UserDropdownItem
+              icon={PostAdd}
+              label='Access Reports'
+              link={AdminRoute.accessReports}
+              onClose={handleClose}
+              level={1}
+            />
+          </UserDropdownGroup>
         )}
         <UserDropdownItem
           icon={SettingsOutlined}

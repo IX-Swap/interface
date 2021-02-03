@@ -6,10 +6,16 @@ import { ViewUser } from 'app/pages/admin/pages/ViewUser'
 
 export const AdminRoute = {
   users: makeURL(['app', 'admin']),
-  view: makeURL(['app', 'admin', 'users', 'userId', 'view'])
+  view: makeURL(['app', 'admin', 'users', 'userId', 'view']),
+  accessReports: makeURL(['app', 'admin', 'accessReports'])
 }
 
 export const adminRoutes: InternalRouteProps[] = [
+  {
+    label: 'Access Reports',
+    path: AdminRoute.accessReports,
+    component: () => null
+  },
   {
     label: 'Users Roles',
     path: AdminRoute.users,
