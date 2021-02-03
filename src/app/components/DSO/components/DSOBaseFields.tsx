@@ -116,7 +116,7 @@ export const DSOBaseFields = (props: DSOBaseFieldsProps) => {
             <Grid item xs={12} md={4}>
               <TypedField
                 component={CorporateSelect}
-                label='Corporate Structure'
+                label='Corporate'
                 name='corporate'
                 control={control}
                 helperText='Select your corporate from the list'

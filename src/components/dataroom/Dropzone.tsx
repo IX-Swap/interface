@@ -12,6 +12,7 @@ import { getDataroomFileId } from 'helpers/dataroom'
 import { useStyles } from './Dropzone.styles'
 import { Avatar } from 'components/Avatar'
 import { DropzoneFallback } from 'components/dataroom/DropzoneFallback'
+import { hasValue } from 'helpers/forms'
 
 export interface DropzoneProps {
   name: string
@@ -81,12 +82,8 @@ export const Dropzone = (props: DropzoneProps) => {
         <input id={name} name={name} {...getInputProps()} />
         <Avatar
           size={128}
-          documentId={
-            value !== null && value !== undefined ? photoId : undefined
-          }
-          ownerId={
-            value !== null && value !== undefined ? user?._id : undefined
-          }
+          documentId={hasValue(value) ? photoId : undefined}
+          ownerId={hasValue(value) ? user?._id : undefined}
           variant='square'
           fallback={<DropzoneFallback hasError={hasError} />}
         />

@@ -1,4 +1,9 @@
-import { DSOActivity, DSOFormValues, DSORequestArgs } from 'types/dso'
+import {
+  DSOActivity,
+  DSOFormValues,
+  DSORequestArgs,
+  DsoTeamMember
+} from 'types/dso'
 import { getPersonName } from 'helpers/strings'
 import { hasValue } from 'helpers/forms'
 import { DataroomFile, FormArray } from 'types/dataroomFile'
@@ -81,4 +86,22 @@ export const getActivityUserInfo = (activity: DSOActivity) => {
     imageId: '',
     name: ''
   }
+}
+
+export const validateTeamField = (formData: DSOFormValues) => {
+  const { team } = formData
+  if (team !== undefined && team.length > 0) {
+    const filteredTeam: DsoTeamMember[] = team.reduce(
+      (ac: DsoTeamMember[], t) => {
+        if (hasValue(t.name) && hasValue(t.photo) && hasValue(t.position))
+          ac.push(t)
+        return ac
+      },
+      []
+    )
+
+    return { ...formData, team: filteredTeam }
+  }
+
+  return formData
 }
