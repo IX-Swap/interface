@@ -1,5 +1,5 @@
 import React from 'react'
-import { Button, Grid } from '@material-ui/core'
+import { Typography, Grid } from '@material-ui/core'
 import { RequestPasswordResetArgs } from 'types/auth'
 import { requestPasswordResetValidationSchema } from 'validation/auth'
 import { useAuthRouter } from 'auth/router'
@@ -35,14 +35,15 @@ export const RequestStep: React.FC = () => {
     >
       <Grid container direction='column' spacing={2}>
         <RequestFields />
-        <Grid item container justify='space-between' alignItems='center'>
-          <Button color='primary' size='large'>
-            <AppRouterLink to={paths.login}>Back to Login</AppRouterLink>
-          </Button>
-
+        <Grid item container justify='center'>
           <Submit variant='contained' color='primary' size='large'>
             Reset
           </Submit>
+        </Grid>
+        <Grid item>
+          <Typography align='center'>
+            <AppRouterLink to={paths.login}>Back to Login</AppRouterLink>
+          </Typography>
         </Grid>
       </Grid>
     </Form>

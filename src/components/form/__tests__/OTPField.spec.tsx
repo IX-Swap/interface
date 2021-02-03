@@ -47,7 +47,8 @@ describe('OTPField', () => {
         value: '123456',
         onChange: onChangeMock,
         numInputs: 6,
-        variant: 'standard'
+        variant: 'standard',
+        shouldAutoFocus: false
       },
       {}
     )

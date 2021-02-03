@@ -18,7 +18,7 @@ export const registerFormInitialValues = {
 }
 
 export const Register: React.FC = observer(() => {
-  const [signup] = useSignup()
+  const [signup, { isLoading }] = useSignup()
   const handleSubmit = async (values: SignupArgs) => {
     await signup({
       name: values.name,
@@ -51,6 +51,7 @@ export const Register: React.FC = observer(() => {
             size='large'
             variant='contained'
             color='primary'
+            disabled={isLoading}
           >
             Create
           </Submit>

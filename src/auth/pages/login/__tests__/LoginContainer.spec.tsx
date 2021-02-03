@@ -67,8 +67,7 @@ describe('LoginContainer', () => {
       expect(login).toHaveBeenCalledTimes(1)
       expect(login).toHaveBeenCalledWith({
         password: loginArgs.password,
-        email: loginArgs.email,
-        otp: ''
+        email: loginArgs.email
       })
     })
   })

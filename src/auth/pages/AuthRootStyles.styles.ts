@@ -9,7 +9,6 @@ export const useStyles = makeStyles(theme => ({
   },
   formContainer: {
     display: 'grid',
-    justifyContent: 'center',
     alignItems: 'center',
     backgroundColor: theme.palette.backgrounds.main,
     border: `1px solid ${theme.palette.divider}`,
