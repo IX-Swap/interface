@@ -56,7 +56,7 @@ export const urlFeature = {
   setup2fa: 'setup-2fa',
   deployments: 'deployments',
   users: AppFeature.Users,
-  accessReports: 'access-reports'
+  accessReports: 'access-reports',
   guide2fa: 'guide-2fa',
 }
 
