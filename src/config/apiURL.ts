@@ -155,5 +155,7 @@ export const documentsURL = {
   deleteById: (userId: string, fileId: string) =>
     `/dataroom/${userId}/${fileId}`,
   deleteBySuperUser: (fileId: string) => `/dataroom/${fileId}`,
-  uploadAccessReport: '/dataroom/reports-and-newsletters'
+  uploadAccessReport: '/dataroom/reports-and-newsletters',
+  getAccessReport: (fileId: string) =>
+    `/dataroom/reports-and-newsletters/${fileId}`
 }
