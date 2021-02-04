@@ -7,9 +7,10 @@ import { AuthRoute } from 'auth/router'
 
 export interface LoginProps {
   hidden: boolean
+  isLoading: boolean
 }
 
-export const Login = ({ hidden }: LoginProps) => {
+export const Login = ({ hidden, isLoading }: LoginProps) => {
   return (
     <Box display={hidden ? 'none' : 'block'}>
       <Grid container direction='column' spacing={2}>
@@ -26,6 +27,7 @@ export const Login = ({ hidden }: LoginProps) => {
             variant='contained'
             color='primary'
             watchIsDirty={false}
+            disabled={isLoading}
           >
             Login
           </Submit>

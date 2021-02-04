@@ -12,7 +12,7 @@ describe('Login', () => {
   it('renders without errors', () => {
     render(
       <Form>
-        <Login hidden={false} />
+        <Login hidden={false} isLoading={false} />
       </Form>
     )
   })

@@ -17,7 +17,7 @@ describe('OTPFields', () => {
   it('renders without errors', () => {
     render(
       <Form>
-        <OTPFields />
+        <OTPFields isLoading={false} />
       </Form>
     )
   })
@@ -25,7 +25,7 @@ describe('OTPFields', () => {
   it('renders OTP', () => {
     render(
       <Form>
-        <OTPFields />
+        <OTPFields isLoading={false} />
       </Form>
     )
 

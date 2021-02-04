@@ -61,7 +61,6 @@ describe('LoginContainer', () => {
     fireEvent.change(password, { target: { value: loginArgs.password } })
 
     fireEvent.click(loginButton)
-    expect(loginButton.parentElement).toBeDisabled()
 
     await waitFor(() => {
       expect(login).toHaveBeenCalledTimes(1)

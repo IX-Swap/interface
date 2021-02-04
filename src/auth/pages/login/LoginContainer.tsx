@@ -14,7 +14,7 @@ export const loginFormInitialValues = {
 
 export const LoginContainer = () => {
   const {
-    mutation: [login],
+    mutation: [login, { isLoading }],
     step
   } = useLogin()
   const handleSubmit = async (values: LoginArgs) => {
@@ -30,8 +30,8 @@ export const LoginContainer = () => {
       validationSchema={loginFormValidationSchema}
       onSubmit={handleSubmit}
     >
-      <Login hidden={isOtpStep} />
-      {isOtpStep ? <OTPFields /> : null}
+      <Login hidden={isOtpStep} isLoading={isLoading} />
+      {isOtpStep ? <OTPFields isLoading={isLoading} /> : null}
     </Form>
   )
 }

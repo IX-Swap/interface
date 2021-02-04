@@ -14,8 +14,9 @@ export const Aside = () => {
       <Typography variant='h5'>What is 2FA?</Typography>
       <VSpacer size='medium' />
       <Typography variant='body1'>
-        (2FA) Two-Factor Authentication Increase your account security by
-        requiring multiple forms of verification when signining into InvestaX.
+        (2FA) Two-Factor Authentication increases your account security by
+        requiring multiple forms of verification when signing into InvestaX
+        Prime.
       </Typography>
       <VSpacer size='medium' />
       <AppRouterLink variant='body1' to={paths.guide}>

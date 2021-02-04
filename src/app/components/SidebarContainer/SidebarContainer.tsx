@@ -10,7 +10,7 @@ import { ReactComponent as InvestIcon } from 'assets/icons/navigation/invest.svg
 import { ReactComponent as AccountsIcon } from 'assets/icons/navigation/account.svg'
 import { ReactComponent as IssuanceIcon } from 'assets/icons/navigation/issuance.svg'
 import { ReactComponent as AuthorizerIcon } from 'assets/icons/navigation/authorizer.svg'
-import { Home as HomeIcon } from '@material-ui/icons'
+import { HomeOutlined as HomeIcon } from '@material-ui/icons'
 import { SwipeableDrawer } from '@material-ui/core'
 import { useAppActions, useAppState } from 'app/hooks/useAppState'
 import { useAppBreakpoints } from 'hooks/useAppBreakpoints'

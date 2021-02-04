@@ -126,10 +126,9 @@ describe('Setup2fa', () => {
       activeStep: baseContext.steps.length - 1
     })
 
-    const { queryByRole } = render(<Setup2fa />)
+    const { queryByText } = render(<Setup2fa />)
 
-    const nextButton = queryByRole('button')
-    expect(nextButton).toBeNull()
+    expect(queryByText('Next')).not.toBeTruthy()
   })
 
   it('invokes nextPage when Next button is clicked', async () => {
