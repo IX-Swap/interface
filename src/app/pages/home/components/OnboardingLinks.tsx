@@ -5,11 +5,9 @@ import { ReactComponent as IndividualIcon } from 'assets/icons/navigation/indivi
 import { ReactComponent as CorporateIcon } from 'assets/icons/navigation/corporate.svg'
 import { ReactComponent as FundraiseIcon } from 'assets/icons/navigation/asset-balance.svg'
 import { useIdentitiesRouter } from 'app/pages/identity/router'
-import { useIssuanceRouter } from 'app/pages/issuance/router'
 
 export const OnboardingLinks = () => {
   const { paths: identityPaths } = useIdentitiesRouter()
-  const { paths: issuancePaths } = useIssuanceRouter()
 
   return (
     <Box display='flex'>
@@ -44,7 +42,7 @@ export const OnboardingLinks = () => {
         <Box my={2.5} />
         <OnboardingLink
           label='Fundraise'
-          link={issuancePaths.create}
+          link={identityPaths.createCorporate}
           icon={FundraiseIcon}
           color='#2b78fd'
         />
