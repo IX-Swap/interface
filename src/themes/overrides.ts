@@ -2,6 +2,7 @@ import { Theme } from '@material-ui/core'
 import { grey, green } from '@material-ui/core/colors'
 import { Overrides } from '@material-ui/core/styles/overrides'
 import { rte } from 'themes/rte'
+import tinycolor from 'tinycolor2'
 
 export const getThemeOverrides = (theme: Theme): Overrides => ({
   ...rte(theme),
@@ -194,6 +195,13 @@ export const getThemeOverrides = (theme: Theme): Overrides => ({
     },
     indicator: {
       height: 5
+    }
+  },
+  MuiChip: {
+    root: {
+      backgroundColor: tinycolor(theme.palette.backgrounds.secondary)
+        .darken(4)
+        .toHex8String()
     }
   }
 })
