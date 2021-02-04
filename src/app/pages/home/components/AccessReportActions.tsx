@@ -1,6 +1,6 @@
 import { Tooltip, IconButton } from '@material-ui/core'
 import { DeleteOutline } from '@material-ui/icons'
-import { DownloadDocument } from 'components/dataroom/DownloadDocument'
+import { DownloadAccessDocument } from 'app/pages/home/components/DownloadAccessDocument'
 import { homeQueryKeys } from 'config/queryKeys'
 import { useDeleteFile } from 'hooks/useDeleteFile'
 import React, { Fragment } from 'react'
@@ -28,7 +28,7 @@ export const AccessReportActions = (props: AccessReportActionsProps) => {
         </IconButton>
       </Tooltip>
 
-      <DownloadDocument documentId={document._id} ownerId={document?.user} />
+      <DownloadAccessDocument documentId={document._id} />
     </Fragment>
   )
 }

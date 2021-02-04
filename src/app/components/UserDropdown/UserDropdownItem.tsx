@@ -74,7 +74,7 @@ export const UserDropdownItem = (props: UserDropdownItemProps) => {
       <ListItemIcon className={classes.iconWrapper}>{iconElement}</ListItemIcon>
       <ListItemText>
         <Typography
-          variant='subtitle1'
+          variant='body1'
           color='textPrimary'
           style={{ fontWeight: 400 }}
         >

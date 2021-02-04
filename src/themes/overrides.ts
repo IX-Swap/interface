@@ -1,7 +1,8 @@
 import { Theme } from '@material-ui/core'
-import { grey, green } from '@material-ui/core/colors'
+import { green } from '@material-ui/core/colors'
 import { Overrides } from '@material-ui/core/styles/overrides'
 import { rte } from 'themes/rte'
+import tinycolor from 'tinycolor2'
 
 export const getThemeOverrides = (theme: Theme): Overrides => ({
   ...rte(theme),
@@ -142,12 +143,14 @@ export const getThemeOverrides = (theme: Theme): Overrides => ({
   },
   MuiStepIcon: {
     root: {
-      color: grey[300],
+      color: tinycolor(theme.palette.backgrounds.main)
+        .darken(12)
+        .toHex8String(),
       '&$completed': {
         color: green[400]
       },
       '&$active': {
-        color: grey[500]
+        color: tinycolor(theme.palette.primary.main).toHex8String()
       }
     }
   },
@@ -194,6 +197,20 @@ export const getThemeOverrides = (theme: Theme): Overrides => ({
     },
     indicator: {
       height: 5
+    }
+  },
+  MuiChip: {
+    root: {
+      backgroundColor: tinycolor(theme.palette.backgrounds.secondary)
+        .darken(4)
+        .toHex8String()
+    }
+  },
+  MuiAvatar: {
+    colorDefault: {
+      backgroundColor: tinycolor(theme.palette.backgrounds.secondary)
+        .darken(3)
+        .toHex8String()
     }
   }
 })

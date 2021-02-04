@@ -69,7 +69,7 @@ describe('useDownloadRawDocument', () => {
 
           expect(showSnackbar).toHaveBeenNthCalledWith(
             1,
-            'Failed to download the file',
+            'error',
             'error'
           )
         },

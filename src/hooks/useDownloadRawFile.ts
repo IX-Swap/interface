@@ -17,7 +17,7 @@ export const useDownloadRawFile = (
     },
     onError: (error: any) => {
       callbacks?.onError?.(error)
-      void snackbarService.showSnackbar(error.message, 'error')
+      void snackbarService.showSnackbar(error.toString(), 'error')
     }
   })
 }
