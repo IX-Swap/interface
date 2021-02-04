@@ -24,9 +24,9 @@ export const useDownloadRawDocument = (
     onSuccess: data => {
       callbacks?.onSuccess?.(data)
     },
-    onError: error => {
+    onError: (error: any) => {
       callbacks?.onError?.(error)
-      void snackbarService.showSnackbar('Failed to download the file', 'error')
+      void snackbarService.showSnackbar(error.message, 'error')
     }
   })
 }
