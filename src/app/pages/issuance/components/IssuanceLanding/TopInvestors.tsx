@@ -34,7 +34,9 @@ export const TopInvestors = () => {
           legend: {
             position: 'bottom',
             textStyle: {
-              color: theme.palette.getContrastText(theme.palette.backgrounds.main as any)
+              color: theme.palette.getContrastText(
+                theme.palette.backgrounds.main as any
+              )
             }
           },
           enableInteractivity: hasData

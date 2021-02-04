@@ -1,3 +1,4 @@
+import { useTheme } from '@material-ui/core/styles'
 import React, { cloneElement } from 'react'
 import { ToastProps as ReactToastProps } from 'react-toast-notifications'
 
@@ -11,12 +12,14 @@ const toastStates = {
 }
 
 export const Toast = (props: ToastProps) => {
+  const theme = useTheme()
+
   return (
     <div
       {...props}
       style={{
         transition: `transform ${props.transitionDuration}ms cubic-bezier(0.2, 0, 0, 1), opacity ${props.transitionDuration}ms`,
-        border: '1px solid #eeeeee',
+        border: `1px solid ${theme.palette.divider}`,
         width: 400,
         marginBottom: 10,
         ...toastStates[props.transitionState]

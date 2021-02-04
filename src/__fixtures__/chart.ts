@@ -68,7 +68,10 @@ export const commitmentChartOption = {
       gridlines: {
         color: 'rgba(0, 0, 0, 0.54)'
       },
-      ticks: commitmentTicks
+      ticks: commitmentTicks,
+      textStyle: {
+        color: 'rgba(0, 0, 0, 0.87)'
+      }
     },
     legend: {
       position: 'none'
@@ -111,7 +114,10 @@ export const commitmentChartNoDataOption = {
       gridlines: {
         color: 'transparent'
       },
-      ticks: commitmentTicks
+      ticks: commitmentTicks,
+      textStyle: {
+        color: 'rgba(0, 0, 0, 0.87)'
+      }
     },
     legend: {
       position: 'none'
@@ -140,18 +146,25 @@ export const investmentGrowthChartOptions = {
   chartType: 'LineChart',
   data: prepareChartData(investmentGrowthChartData),
   options: {
+    backgroundColor: 'transparent',
     chart: {
       title: 'Investment Growth Chart'
     },
     hAxis: {
       format: 'E',
       ticks: investmentTicks,
-      baselineColor: 'transparent'
+      baselineColor: 'transparent',
+      textStyle: {
+        color: 'rgba(0, 0, 0, 0.87)'
+      }
     },
     vAxis: {
       baselineColor: 'transparent',
       gridlines: {
         count: 5
+      },
+      textStyle: {
+        color: 'rgba(0, 0, 0, 0.87)'
       }
     },
     colors: ['#0c469c'],
