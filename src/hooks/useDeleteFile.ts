@@ -5,6 +5,7 @@ import { getIdFromObj } from 'helpers/strings'
 import { DataroomFile } from 'types/dataroomFile'
 import { documentsURL } from 'config/apiURL'
 import { QueryOrMutationCallbacks } from 'hooks/types'
+import { useIsAdmin } from 'helpers/acl'
 
 export const useDeleteFile = (
   fileId: string,
@@ -12,7 +13,11 @@ export const useDeleteFile = (
 ) => {
   const { snackbarService, apiService } = useServices()
   const { user } = useAuth()
-  const url = documentsURL.deleteById(getIdFromObj(user), fileId)
+  const isAdmin = useIsAdmin()
+  const url = documentsURL.deleteById(
+    isAdmin ? undefined : getIdFromObj(user),
+    fileId
+  )
   const deleteFile = async () => {
     return await apiService.delete<DataroomFile>(url, {})
   }
