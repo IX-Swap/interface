@@ -2,18 +2,7 @@ import { useAuth } from 'hooks/auth/useAuth'
 
 const onboardingSteps = [
   { title: 'Get Started', content: ['Access platform and reports'] },
-  { title: 'Select Your Desired Option', content: ['Create your account.'] },
-  { title: 'Create Identity', content: ['For verification.'] },
-  {
-    title: 'Create DSO',
-    content: [
-      'Brows Live Deals',
-      'Invest Deal',
-      'Cash Deposit',
-      'View History Transaction'
-    ]
-  },
-  { title: 'Complete Onboarding', content: [] }
+  { title: 'Select Your Desired Option', content: ['Create your account.'] }
 ]
 
 export const useOnboardingSteps = () => {

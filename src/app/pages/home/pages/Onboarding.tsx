@@ -9,6 +9,7 @@ import { TopCorporates } from 'app/pages/home/components/TopCorporates'
 import { PromoBanner } from 'app/pages/invest/components/PromoBanner'
 import { Divider } from 'ui/Divider'
 import { Onboarding2FADialog } from 'app/pages/home/components/Onboarding2FADialog'
+import { OnboardingIdentityDialog } from 'app/pages/home/components/OnboardingIdentityDialog'
 
 export const Onboarding = () => {
   const { user } = useAuth()
@@ -58,6 +59,7 @@ export const Onboarding = () => {
         </Grid>
       </Grid>
       <Onboarding2FADialog initOpened={show2FADialog} />
+      <OnboardingIdentityDialog />
     </Fragment>
   )
 }
