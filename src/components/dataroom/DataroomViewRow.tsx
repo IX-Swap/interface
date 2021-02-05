@@ -1,9 +1,9 @@
 import React, { Fragment } from 'react'
 import { Box, Grid } from '@material-ui/core'
 import { DataroomColumns } from 'components/dataroom/DataroomColumns'
-import { DownloadDocument } from 'components/dataroom/DownloadDocument'
 import { DataroomFile } from 'types/dataroomFile'
 import { Divider } from 'ui/Divider'
+import { DownloadAccessDocument } from 'app/pages/home/components/DownloadAccessDocument'
 
 export interface DataroomViewRowProps {
   title: string
@@ -29,10 +29,7 @@ export const DataroomViewRow = (props: DataroomViewRowProps) => {
             {downloader !== undefined ? (
               downloader
             ) : (
-              <DownloadDocument
-                documentId={document?._id}
-                ownerId={document?.user}
-              />
+              <DownloadAccessDocument documentId={document?._id} />
             )}
           </Box>
         </Grid>
