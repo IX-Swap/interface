@@ -16,6 +16,7 @@ export const EnableFormFields = () => {
       label=''
       variant='standard'
       valueExtractor={plainValueExtractor}
+      shouldAutoFocus
     />
   )
 }

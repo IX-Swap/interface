@@ -33,6 +33,7 @@ export const Reset2FAOTPField = ({
           onChange={handleChange}
           numInputs={6}
           variant='outlined'
+          shouldAutoFocus
         />
       </Grid>
       {hasError ? (

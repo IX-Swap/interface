@@ -16,6 +16,7 @@ import { Step3Backup } from './components/Step3Backup'
 import { Step4Enable } from './components/Step4Enable'
 import { Aside } from 'app/pages/security/pages/setup2fa/components/Aside'
 import { Enabled } from 'app/pages/security/pages/setup2fa/components/Enabled'
+import { ButtonTransparent } from 'app/components/ButtonTransparent'
 
 const getComponent = (index: number) => {
   switch (index) {
@@ -50,22 +51,52 @@ export const Setup2fa = () => {
                 </Step>
               ))}
             </Stepper>
-            <Grid container justify='center' alignItems='center'>
-              <Grid item container>
+            <Grid
+              container
+              justify='center'
+              alignItems='center'
+              direction='column'
+            >
+              <Grid item>
                 <Box mt={4} mb={6} width='100%'>
                   {getComponent(store.activeStep)}
                 </Box>
               </Grid>
-              {store.activeStep < store.steps.length - 1 && (
-                <Button
-                  variant='contained'
-                  color='primary'
-                  disableElevation
-                  onClick={() => store.nextPage()}
+              <Grid item>
+                <Grid
+                  container
+                  spacing={3}
+                  justify='center'
+                  alignItems='center'
                 >
-                  Next
-                </Button>
-              )}
+                  {store.activeStep > 0 &&
+                    store.activeStep < store.steps.length && (
+                      <Grid item>
+                        <ButtonTransparent
+                          variant='contained'
+                          color='primary'
+                          disableElevation
+                          onClick={() => store.prevPage()}
+                        >
+                          Back
+                        </ButtonTransparent>
+                      </Grid>
+                    )}
+
+                  {store.activeStep < store.steps.length - 1 && (
+                    <Grid item>
+                      <Button
+                        variant='contained'
+                        color='primary'
+                        disableElevation
+                        onClick={() => store.nextPage()}
+                      >
+                        Next
+                      </Button>
+                    </Grid>
+                  )}
+                </Grid>
+              </Grid>
             </Grid>
           </Box>
         </Container>

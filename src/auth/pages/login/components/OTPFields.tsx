@@ -6,7 +6,11 @@ import { useFormContext } from 'react-hook-form'
 import { Submit } from 'components/form/Submit'
 import { plainValueExtractor } from 'helpers/forms'
 
-export const OTPFields = () => {
+export interface OTPFieldsProps {
+  isLoading: boolean
+}
+
+export const OTPFields = ({ isLoading }: OTPFieldsProps) => {
   const { control } = useFormContext()
 
   return (
@@ -38,6 +42,7 @@ export const OTPFields = () => {
           size='large'
           variant='contained'
           color='primary'
+          disabled={isLoading}
         >
           Continue
         </Submit>

@@ -6,9 +6,10 @@ import { getIdFromObj } from 'helpers/strings'
 import { authURL } from 'config/apiURL'
 import { useSetup2faStore } from 'app/pages/security/pages/setup2fa/context'
 import { useHistory } from 'react-router-dom'
+import User from 'types/user'
 
 export const useEnable2fa = () => {
-  const { snackbarService, apiService } = useServices()
+  const { snackbarService, apiService, storageService } = useServices()
   const { user } = useAuth()
   const { nextPage } = useSetup2faStore()
   const history = useHistory()
@@ -24,6 +25,15 @@ export const useEnable2fa = () => {
         'Google Authenticator Setup Success!',
         'success'
       )
+
+      const userData = storageService.get<User>('user')
+      if (userData !== undefined) {
+        storageService.set<User>('user', {
+          ...userData,
+          totpConfirmed: true
+        })
+      }
+
       nextPage()
       setTimeout(() => history.push('/'), 2500)
     },
