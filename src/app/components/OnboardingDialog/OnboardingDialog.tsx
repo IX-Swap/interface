@@ -20,6 +20,7 @@ export interface Onboarding2FADialog {
   closeLabel: string
   actionLabel: string
   action: string
+  actionArrow?: boolean
 }
 
 export const EmptyBackDrop = () => <></>
@@ -30,7 +31,8 @@ export const OnboardingDialog = ({
   title,
   closeLabel,
   actionLabel,
-  action
+  action,
+  actionArrow = true
 }: Onboarding2FADialog) => {
   const [opened, setOpened] = useState(initOpened)
   const { open: panelOpened } = useOnboardingPanel()
@@ -55,16 +57,15 @@ export const OnboardingDialog = ({
       >
         <DialogTitle>{title}</DialogTitle>
         <DialogContent>{children}</DialogContent>
-        <DialogActions>
-          <Button onClick={handleClose} color='primary'>
-            {closeLabel}
-          </Button>
+        <DialogActions onClick={handleClose}>
+          <Button color='primary'>{closeLabel}</Button>
           <Button
             component={AppRouterLinkComponent}
             to={action}
             color='primary'
           >
-            {actionLabel} <ArrowRightAltIcon />
+            {actionLabel}{' '}
+            {actionArrow && <ArrowRightAltIcon style={{ marginLeft: 7 }} />}
           </Button>
         </DialogActions>
       </Dialog>

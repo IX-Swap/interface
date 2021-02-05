@@ -2,17 +2,20 @@ import React from 'react'
 import { Typography } from '@material-ui/core'
 import { OnboardingDialog } from 'app/components/OnboardingDialog/OnboardingDialog'
 import { useIdentitiesRouter } from 'app/pages/identity/router'
-import { useIsEnabled2FA, useIsAccredited } from 'helpers/acl'
+import { useIsEnabled2FA } from 'helpers/acl'
+import { useHasIdentity } from 'app/pages/home/hooks/useHasIdentity'
 
 export const OnboardingIdentityDialog = () => {
   const { paths: indentityPaths } = useIdentitiesRouter()
-  const isAccredited = useIsAccredited()
   const isEnabled2FA = useIsEnabled2FA()
+  const { isLoaded, hasIdentity } = useHasIdentity()
+
+  if (!isLoaded) return null
 
   return (
     <OnboardingDialog
-      initOpened={isEnabled2FA && !isAccredited}
-      title='Create Your Account'
+      initOpened={isEnabled2FA && !hasIdentity}
+      title='Create an Identity'
       closeLabel='Close'
       actionLabel='Create Account'
       action={indentityPaths.createIndividual}
