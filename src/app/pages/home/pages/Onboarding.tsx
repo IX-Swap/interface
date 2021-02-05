@@ -8,10 +8,13 @@ import { TopIssuers } from 'app/pages/home/components/TopIssuers'
 import { TopCorporates } from 'app/pages/home/components/TopCorporates'
 import { PromoBanner } from 'app/pages/invest/components/PromoBanner'
 import { Divider } from 'ui/Divider'
+import { Onboarding2FADialog } from 'app/pages/home/components/Onboarding2FADialog'
 
 export const Onboarding = () => {
   const { user } = useAuth()
   const label = `Welcome, ${user?.name ?? 'Unknown'}`
+
+  const show2FADialog = user !== undefined && !user.totpConfirmed
 
   useSetPageTitle(label)
 
@@ -54,6 +57,7 @@ export const Onboarding = () => {
           <PromoBanner />
         </Grid>
       </Grid>
+      <Onboarding2FADialog initOpened={show2FADialog} />
     </Fragment>
   )
 }

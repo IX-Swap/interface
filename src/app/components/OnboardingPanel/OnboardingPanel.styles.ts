@@ -1,6 +1,6 @@
 import { makeStyles } from '@material-ui/core/styles'
 
-const drawerWidth = 250
+export const drawerWidth = 250
 const closedWidth = 30
 const headerHeight = 64
 
