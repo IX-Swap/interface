@@ -13,6 +13,7 @@ export const useStyles = makeStyles(theme => ({
     width: drawerWidth,
     paddingTop: headerHeight,
     overflow: 'visible',
+    overflowY: 'visible !important' as 'visible',
     zIndex: 900
   },
   drawerOpen: {
