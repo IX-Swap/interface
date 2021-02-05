@@ -4,7 +4,7 @@ import {
   createGenerateClassName,
   StylesProvider
 } from '@material-ui/core/styles'
-import { ThemeProvider } from '@material-ui/styles'
+
 import { CssBaseline } from '@material-ui/core'
 import { UserProvider } from 'auth/context'
 import { EntryPoint } from 'EntryPoint'

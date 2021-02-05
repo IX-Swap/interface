@@ -5,7 +5,7 @@ import {
   createGenerateClassName,
   StylesProvider
 } from '@material-ui/core/styles'
-import { ThemeProvider } from '@material-ui/styles'
+
 import { history } from 'config/history'
 import { UserProvider } from 'auth/context'
 import { UserStore } from 'auth/context/store'
