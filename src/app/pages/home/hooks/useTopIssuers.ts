@@ -7,7 +7,7 @@ import { IndividualIdentity } from 'types/identity'
 export type TopIssuers = Array<
   Pick<
     IndividualIdentity,
-    '_id' | 'firstName' | 'middleName' | 'lastName' | 'photo'
+    '_id' | 'firstName' | 'middleName' | 'lastName' | 'photo' | 'user'
   >
 >
 

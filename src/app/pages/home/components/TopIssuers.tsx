@@ -12,8 +12,8 @@ export const TopIssuers = () => {
 
   return (
     <TopList
-      items={data.map(({ _id, firstName, middleName, lastName, photo }) => ({
-        imageURL: photo,
+      items={data.map(({ _id, firstName, middleName, lastName, user }) => ({
+        user: (user as unknown) as string,
         label: getPersonName({
           firstName,
           middleName,

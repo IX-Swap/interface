@@ -5,6 +5,7 @@ import { DataroomFile } from 'types/dataroomFile'
 import { TableColumn } from 'types/util'
 import { DataroomEditRow } from 'components/dataroom/DataroomEditRow'
 import { AccessReportActions } from 'app/pages/home/components/AccessReportActions'
+import { DownloadAccessDocument } from 'app/pages/home/components/DownloadAccessDocument'
 
 export const getAccessReportsColumns = (
   editable = false
@@ -34,6 +35,7 @@ export const getAccessReportsColumns = (
             title='Access Report'
             document={row}
             showDivider={false}
+            downloader={<DownloadAccessDocument documentId={row._id} />}
           />
         )}
       </Card>
