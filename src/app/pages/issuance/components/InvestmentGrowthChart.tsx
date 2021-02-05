@@ -16,6 +16,11 @@ export const InvestmentGrowthChart = () => {
 
   const dateTicks = hasData ? getWeekDays(data.slice(1)) : undefined
 
+  const textStyle = {
+    color: theme.palette.getContrastText(
+      theme.palette.backgrounds.main as string
+    )
+  }
   const options = {
     chart: {
       title: 'Investment Growth Chart'
@@ -23,13 +28,15 @@ export const InvestmentGrowthChart = () => {
     hAxis: {
       format: 'E',
       ticks: dateTicks ?? undefined,
-      baselineColor: 'transparent'
+      baselineColor: 'transparent',
+      textStyle
     },
     vAxis: {
       baselineColor: 'transparent',
       gridlines: {
         count: 5
-      }
+      },
+      textStyle
     },
     colors: [theme.palette.primary.main],
     height: 220,
@@ -38,7 +45,8 @@ export const InvestmentGrowthChart = () => {
       height: '80%',
       left: '20px'
     },
-    legend: 'none'
+    legend: 'none',
+    backgroundColor: 'transparent'
   }
 
   return (

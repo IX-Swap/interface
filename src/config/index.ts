@@ -16,6 +16,8 @@ export const TIME_FORMAT = 'HH:MM:SS'
 
 export const ETHEREUM_DECIMAL_PLACES = 18
 
+export const GA_ID = 'G-F7RSTN1MVC'
+
 export const INVESTAX_BANK: Partial<Bank> = {
   bankName: 'OVERSEA-CHINESE BANKING CORPORATION LIMITED',
   swiftCode: 'OCBCSGSG',

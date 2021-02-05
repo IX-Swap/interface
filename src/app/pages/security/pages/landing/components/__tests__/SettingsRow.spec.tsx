@@ -4,14 +4,11 @@ import {
   SettingsRow,
   SettingsRowProps
 } from 'app/pages/security/pages/landing/components/SettingsRow'
-import { fireEvent, waitFor } from '@testing-library/react'
 
 describe('SettingsRow', () => {
   const props: SettingsRowProps = {
     name: 'setting-row',
-    buttonDisabled: false,
-    buttonMessage: 'Set',
-    buttonClick: jest.fn(),
+    action: <div data-testid='action' />,
     image:
       'data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7'
   }
@@ -25,33 +22,31 @@ describe('SettingsRow', () => {
     render(<SettingsRow {...props} />)
   })
 
+  it('does not renders image if image prop is undefined', () => {
+    const { queryByAltText } = render(
+      <SettingsRow {...props} image={undefined} />
+    )
+
+    expect(queryByAltText(props.name)).toBeNull()
+  })
+
+  it('renders image as expected if the image prop was provided', () => {
+    const { getByAltText } = render(<SettingsRow {...props} />)
+    const image = getByAltText(props.name)
+
+    expect(image).toBeInstanceOf(HTMLImageElement)
+    expect(image).toHaveAttribute('src', props.image)
+  })
+
   it('renders name correctly', () => {
     const { container } = render(<SettingsRow {...props} />)
 
-    expect(container).toHaveTextContent(props.name as string)
+    expect(container).toHaveTextContent(props.name)
   })
 
-  it('renders name as row-image by default', () => {
-    const { container } = render(<SettingsRow {...props} name={undefined} />)
+  it('renders action element as expected', () => {
+    const { getByTestId } = render(<SettingsRow {...props} />)
 
-    expect(container).toHaveTextContent('row-image')
-  })
-
-  it('does not invoke buttonClick when button is disabled & clicked', async () => {
-    const { getByRole } = render(<SettingsRow {...props} buttonDisabled />)
-
-    fireEvent.click(getByRole('button'))
-    await waitFor(() => {
-      expect(props.buttonClick).toHaveBeenCalledTimes(0)
-    })
-  })
-
-  it('invokes buttonClick when button is enabled & clicked', async () => {
-    const { getByRole } = render(<SettingsRow {...props} />)
-
-    fireEvent.click(getByRole('button'))
-    await waitFor(() => {
-      expect(props.buttonClick).toHaveBeenCalledTimes(1)
-    })
+    expect(getByTestId('action')).toBeInTheDocument()
   })
 })

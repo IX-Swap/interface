@@ -10,7 +10,12 @@ export const DSOUseOfProceeds = () => {
   const { control } = useFormContext<DSOFormValues>()
 
   return (
-    <DSOContainer title='Use of Proceeds' item xs={12}>
+    <DSOContainer
+      title='Use of Proceeds'
+      subtitle='A short description that summarizes how a company that aims to secure additional capital is going to spend the funds.'
+      item
+      xs={12}
+    >
       {/* @ts-ignore */}
       <TypedField
         control={control}

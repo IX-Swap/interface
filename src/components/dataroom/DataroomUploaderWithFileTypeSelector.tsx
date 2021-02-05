@@ -21,7 +21,7 @@ export const DataroomUploaderWithFileTypeSelector = (
   )
 
   return (
-    <Box display='flex'>
+    <Box display='flex' justifyContent='space-between'>
       <DataroomFileTypeSelect
         variant='outlined'
         value={fileType}
@@ -29,7 +29,7 @@ export const DataroomUploaderWithFileTypeSelector = (
           setFileType(event.target.value as DataroomDocumentType)
         }
       />
-      <Box mx={0.5} />
+
       <DataroomUploadAndAppend
         multiple
         label='Uploader'

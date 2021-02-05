@@ -36,7 +36,8 @@ export const DonutChart = ({ percent, text }: DonutChartProps) => {
           width: 48,
           height: 48,
           tooltip: { trigger: 'none' },
-          enableInteractivity: false
+          enableInteractivity: false,
+          backgroundColor: 'transparent'
         }}
       />
       <Typography className={classes.percent}>

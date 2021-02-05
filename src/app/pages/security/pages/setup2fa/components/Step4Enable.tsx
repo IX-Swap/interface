@@ -1,11 +1,12 @@
 import React from 'react'
-import { Container, Typography, Box, Grid } from '@material-ui/core'
+import { Typography, Box, Grid } from '@material-ui/core'
 import { useEnable2fa } from '../hooks/useEnable2fa'
 import { Enable2faFormValues } from '../types'
 import { enable2faFormValuesSchema } from '../validation'
 import { Form } from 'components/form/Form'
 import { Submit } from 'components/form/Submit'
-import { OTPField } from 'app/pages/security/pages/setup2fa/components/OTPField'
+import { StepWrapper } from 'app/pages/security/pages/setup2fa/components/StepWrapper'
+import { EnableFormFields } from 'app/pages/security/pages/setup2fa/components/EnableFormFields'
 
 const defaultValues = {
   otp: ''
@@ -18,23 +19,33 @@ export const Step4Enable = () => {
   }
 
   return (
-    <Container>
-      <Typography align='center'>Enable your Google Authenticator</Typography>
-      <Grid container>
-        <Box width='100%' mt={4}>
+    <StepWrapper title='Enable Authenticator App'>
+      <Grid container direction='column' spacing={3} alignItems='center'>
+        <Grid item xs={12} md={8} lg={6}>
+          <Typography align='center' variant='body1'>
+            Please enter the 6 digit code from your authenticator app
+          </Typography>
+        </Grid>
+        <Grid item>
           <Form
             defaultValues={defaultValues}
             validationSchema={enable2faFormValuesSchema}
             onSubmit={onSubmit}
             data-testid='form'
           >
-            <OTPField />
+            <EnableFormFields />
             <Box my={4} width='100%' textAlign='center'>
-              <Submit>Submit</Submit>
+              <Submit>Enable</Submit>
             </Box>
           </Form>
-        </Box>
+        </Grid>
+        <Grid item xs={12} md={8} lg={6}>
+          <Typography align='center' variant='body1'>
+            Once enabled your authenticator you will be logged out and re-enter
+            the OTP in order to access the platform
+          </Typography>
+        </Grid>
       </Grid>
-    </Container>
+    </StepWrapper>
   )
 }

@@ -40,7 +40,7 @@ describe('useDSOsByUserId', () => {
           expect(result.current.status).toBe('success')
           expect(postFn).toHaveBeenCalledWith(
             issuanceURL.dso.getByUserId(user._id),
-            paginationArgs
+            { ...paginationArgs, status: 'Draft,Approved,Submitted,Rejected' }
           )
           expect(parsedDataFn).toHaveBeenNthCalledWith(
             2,

@@ -1,5 +1,5 @@
-import React from 'react'
-import { TableCell } from '@material-ui/core'
+import React, { Fragment } from 'react'
+import { Box } from '@material-ui/core'
 import { DataroomColumns } from 'components/dataroom/DataroomColumns'
 import { Maybe } from 'types/util'
 import { DataroomFile } from 'types/dataroomFile'
@@ -14,13 +14,19 @@ export const DataroomEditRow = (props: DataroomEditRowProps) => {
   const { title, document, actions } = props
 
   return (
-    <>
+    <Fragment>
       <DataroomColumns title={title} document={document} />
       {actions !== null && (
-        <TableCell align='right' onClick={e => e.stopPropagation()}>
+        <Box
+          display='flex'
+          flex='1 1 20%'
+          flexWrap='nowrap'
+          justifyContent='flex-end'
+          onClick={e => e.stopPropagation()}
+        >
           {actions}
-        </TableCell>
+        </Box>
       )}
-    </>
+    </Fragment>
   )
 }

@@ -1,13 +1,17 @@
 import React from 'react'
 import { Grid, Typography } from '@material-ui/core'
-import { AuthorizationDocument } from 'app/pages/authorizer/components/AuthorizationDocument'
 import { DataroomFile } from 'types/dataroomFile'
+import { DataroomHeader } from 'components/dataroom/DataroomHeader'
+import { DataroomViewRow } from 'components/dataroom/DataroomViewRow'
+import { DownloadDocument } from 'components/dataroom/DownloadDocument'
 
 export interface SubscriptionDocumentProps {
   document: DataroomFile
 }
 
 export const SubscriptionDocument = (props: SubscriptionDocumentProps) => {
+  const { document } = props
+
   return (
     <Grid container direction='column' spacing={4}>
       <Grid item>
@@ -15,7 +19,17 @@ export const SubscriptionDocument = (props: SubscriptionDocumentProps) => {
       </Grid>
 
       <Grid item>
-        <AuthorizationDocument value={props.document} />
+        <DataroomHeader />
+        <DataroomViewRow
+          title='Subscription Document'
+          document={document}
+          downloader={
+            <DownloadDocument
+              documentId={document._id}
+              ownerId={document.user}
+            />
+          }
+        />
       </Grid>
     </Grid>
   )

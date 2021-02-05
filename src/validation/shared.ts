@@ -12,9 +12,24 @@ export const passwordSchema = yup
   .min(12, 'Password must be at least 12 characters long')
   .max(48, 'Password cannot be longer than 48 characters')
   .test(
-    'Password strength',
-    'Password does not meet complexity requirement',
-    passwordValidator
+    'lowercase',
+    'Password must contain at least one lowercase letter',
+    passwordValidator.lowercaseLettersTest
+  )
+  .test(
+    'uppercase',
+    'Password must contain at least one uppercase letter',
+    passwordValidator.uppercaseLettersTest
+  )
+  .test(
+    'numerical',
+    'Password must contain at least one numerical character',
+    passwordValidator.numbersTest
+  )
+  .test(
+    'special-characters',
+    'Password must contain at least one special character',
+    passwordValidator.specialCharactersTest
   )
 
 export const dateSchema = yup.string().nullable()

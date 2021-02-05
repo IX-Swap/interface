@@ -10,8 +10,9 @@ import { AppStateProvider } from 'app/hooks/useAppState'
 import { SidebarContainer } from 'app/components/SidebarContainer/SidebarContainer'
 import { AppContentWrapper } from 'ui/AppContentWrapper'
 import { useLocation } from 'react-router-dom'
+import { OnboardingContentWrapper } from 'app/components/OnboardingPanel/OnboardingContentWrapper'
 
-export const AppRoot: React.FC = () => {
+export const AppRoot = () => {
   const { renderRoutes } = useAppRouter()
   const location = useLocation()
   const theme = useTheme()
@@ -31,7 +32,9 @@ export const AppRoot: React.FC = () => {
           </Grid>
           <SidebarContainer />
           <AppContentWrapper item container style={{ backgroundColor }}>
-            {renderRoutes()}
+            <OnboardingContentWrapper>
+              {renderRoutes()}
+            </OnboardingContentWrapper>
           </AppContentWrapper>
         </Grid>
       </AppStateProvider>

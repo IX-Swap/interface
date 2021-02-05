@@ -26,6 +26,7 @@ export const lightTheme: ThemeOptions = {
         .lighten(64)
         .toHexString(),
       activeColor: themeColors.primary
-    }
+    },
+    divider: '#dddddd'
   }
 }

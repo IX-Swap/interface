@@ -81,6 +81,12 @@ export const useDataFromURL = () => {
           break
         }
 
+        case 'users': {
+          const [userId] = params
+          state[stripColonFromURLParam(urlParams.userId)] = userId
+          break
+        }
+
         default: {
         }
       }

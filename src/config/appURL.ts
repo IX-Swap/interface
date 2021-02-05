@@ -10,12 +10,14 @@ export const urlParams = {
   withdrawalAddressId: ':withdrawalAddressId',
   itemId: ':itemId',
   tokenId: ':tokenId',
-  category: ':category'
+  category: ':category',
+  userId: ':userId'
 }
 
 export const urlAction = {
   create: 'create',
   view: 'view',
+  preview: 'preview',
   edit: 'edit',
   deposit: 'deposit',
   withdraw: 'withdraw',
@@ -35,6 +37,7 @@ export const urlService = {
   authorizer: `${AppService.Authorizer}`,
   settings: 'settings',
   admin: 'admin',
+  home: 'home',
   notifications: 'notifications'
 }
 
@@ -51,7 +54,10 @@ export const urlFeature = {
   withdrawalAddresses: `${AppFeature.WithdrawalAddresses}`,
   changePassword: 'change-password',
   setup2fa: 'setup-2fa',
-  deployments: 'deployments'
+  deployments: 'deployments',
+  users: AppFeature.Users,
+  accessReports: 'access-reports',
+  guide2fa: 'guide-2fa'
 }
 
 export const appURL = {

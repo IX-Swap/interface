@@ -1,13 +1,7 @@
 import React from 'react'
 import { render, cleanup } from 'test-utils'
 import { SecurityRoot } from 'app/pages/security/SecurityRoot'
-import { useSecurityRouter } from 'app/pages/security/router'
-
-jest.mock('app/pages/security/router')
-
-const useSecurityRouterMock = useSecurityRouter as jest.Mock<
-  Partial<ReturnType<typeof useSecurityRouter>>
->
+import * as useSecurityRouter from 'app/pages/security/router'
 
 describe('SecurityRoot', () => {
   afterEach(async () => {
@@ -17,7 +11,11 @@ describe('SecurityRoot', () => {
 
   it('renders routes from hook', () => {
     const renderRoutes = jest.fn(() => <div />)
-    useSecurityRouterMock.mockReturnValueOnce({ renderRoutes })
+    const paths = jest.fn(() => ({}))
+
+    jest
+      .spyOn(useSecurityRouter, 'useSecurityRouter')
+      .mockImplementation(() => ({ renderRoutes, paths } as any))
 
     render(<SecurityRoot />)
 

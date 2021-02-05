@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 import { Grid } from '@material-ui/core'
 import { CapitalStructureFilter } from 'app/pages/invest/components/DSOTable/CapitalStructureFilter'
 import { useDSOTableColumns } from 'app/pages/invest/hooks/useDSOTableColumns'
-import { SearchFilter } from 'app/pages/invest/components/DSOTable/SearchFilter'
+import { SearchFilter } from 'app/components/SearchFilter'
 import { ColumnsEditorToggle } from 'app/pages/invest/components/DSOTable/ColumnsEditorToggle'
 import { ColumnsEditor } from 'app/pages/invest/components/DSOTable/ColumnsEditor'
 
