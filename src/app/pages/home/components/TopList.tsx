@@ -7,10 +7,11 @@ import {
   ListItemText,
   Typography
 } from '@material-ui/core'
-import { Avatar } from 'components/Avatar'
+import { IndividualAvatar } from 'components/IndividualAvatar'
+import { CorporateAvatar } from 'components/CorporateAvatar'
 
 export interface TopListProps {
-  items: Array<{ imageURL: string | undefined; label: string; _id: string }>
+  items: Array<{ imageURL?: string; user?: string; label: string; _id: string }>
 }
 
 export const TopList = (props: TopListProps) => {
@@ -18,17 +19,23 @@ export const TopList = (props: TopListProps) => {
 
   return (
     <List>
-      {items.map(({ imageURL, label, _id }) => (
-        <ListItem>
-          <ListItemAvatar>
-            <Avatar size={46} documentId={imageURL} ownerId={_id} />
-          </ListItemAvatar>
-          <Box mx={1.5} />
-          <ListItemText>
-            <Typography>{label}</Typography>
-          </ListItemText>
-        </ListItem>
-      ))}
+      {items.map(({ imageURL, label, _id, user }) => {
+        return (
+          <ListItem key={_id}>
+            <ListItemAvatar>
+              {user !== undefined ? (
+                <IndividualAvatar userId={user} />
+              ) : (
+                <CorporateAvatar _id={_id} />
+              )}
+            </ListItemAvatar>
+            <Box mx={1.5} />
+            <ListItemText>
+              <Typography>{label}</Typography>
+            </ListItemText>
+          </ListItem>
+        )
+      })}
     </List>
   )
 }
