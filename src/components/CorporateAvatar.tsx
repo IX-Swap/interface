@@ -2,6 +2,7 @@ import React from 'react'
 import { Avatar } from '@material-ui/core'
 import { useRawDataroomFile } from 'hooks/useRawFile'
 
+// TODO: refactor
 export interface Props {
   _id?: string
   size?: number
