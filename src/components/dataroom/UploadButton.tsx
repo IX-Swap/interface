@@ -7,15 +7,23 @@ export interface UploadButtonProps
     Omit<ButtonProps, 'onClick'> {}
 
 export const UploadButton = (props: UploadButtonProps) => {
-  const { isLoading, ...rest } = props
+  const {
+    isLoading,
+    variant = 'contained',
+    size = 'large',
+    color = 'primary',
+    disableElevation = true,
+    ...rest
+  } = props
 
   return (
     <Button
       {...rest}
-      variant='contained'
-      color='primary'
+      variant={variant}
+      size={size}
+      color={color}
       disabled={isLoading}
-      disableElevation
+      disableElevation={disableElevation}
     >
       {isLoading ? 'Uploading...' : 'Upload'}
     </Button>

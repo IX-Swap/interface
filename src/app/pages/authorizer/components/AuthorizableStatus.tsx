@@ -4,7 +4,7 @@ import { Typography } from '@material-ui/core'
 import classNames from 'classnames'
 
 interface AuthorizableStatusProps {
-  status: string
+  status?: string
   compact?: boolean
 }
 
@@ -33,7 +33,7 @@ export const AuthorizableStatus: React.FC<AuthorizableStatusProps> = props => {
           {compact ? 'R' : 'Rejected'}
         </Typography>
       )
-    default:
+    case 'Submitted':
       return (
         <Typography
           className={classNames(classes.authStatus, classes.unauthorized, {
@@ -41,6 +41,16 @@ export const AuthorizableStatus: React.FC<AuthorizableStatusProps> = props => {
           })}
         >
           {compact ? 'S' : 'Submitted'}
+        </Typography>
+      )
+    default:
+      return (
+        <Typography
+          className={classNames(classes.authStatus, classes.unauthorized, {
+            [classes.compact]: compact
+          })}
+        >
+          {compact ? 'D' : 'Draft'}
         </Typography>
       )
   }

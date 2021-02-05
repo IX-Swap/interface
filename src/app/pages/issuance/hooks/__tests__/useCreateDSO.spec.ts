@@ -7,8 +7,6 @@ import { user } from '__fixtures__/user'
 import { createDSOArgs } from '__fixtures__/issuance'
 
 describe('useCreateDSO', () => {
-  const callbacks = { onSuccess: jest.fn(), onError: jest.fn() }
-
   beforeEach(() => {
     jest
       .spyOn(useAuthHook, 'useAuth')
@@ -27,17 +25,16 @@ describe('useCreateDSO', () => {
 
       const apiObj = { post: postFn }
       const snackbarObj = { showSnackbar }
-      const { result } = renderHookWithServiceProvider(
-        () => useCreateDSO(callbacks),
-        { apiService: apiObj, snackbarService: snackbarObj }
-      )
+      const { result } = renderHookWithServiceProvider(() => useCreateDSO(), {
+        apiService: apiObj,
+        snackbarService: snackbarObj
+      })
 
       await waitFor(
         () => {
           const [mutate] = result.current
           void mutate(createDSOArgs)
 
-          expect(callbacks.onSuccess).toHaveBeenCalledTimes(1)
           expect(showSnackbar).toHaveBeenCalledWith('Success', 'success')
         },
         { timeout: 1000 }
@@ -52,17 +49,16 @@ describe('useCreateDSO', () => {
 
       const apiObj = { post: postFn }
       const snackbarObj = { showSnackbar }
-      const { result } = renderHookWithServiceProvider(
-        () => useCreateDSO(callbacks),
-        { apiService: apiObj, snackbarService: snackbarObj }
-      )
+      const { result } = renderHookWithServiceProvider(() => useCreateDSO(), {
+        apiService: apiObj,
+        snackbarService: snackbarObj
+      })
 
       await waitFor(
         () => {
           const [mutate] = result.current
           void mutate(createDSOArgs)
 
-          expect(callbacks.onError).toHaveBeenCalled()
           expect(showSnackbar).toHaveBeenCalled()
           expect(showSnackbar).toHaveBeenCalledWith(
             unsuccessfulResponse.message,

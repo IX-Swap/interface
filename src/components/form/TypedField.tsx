@@ -104,6 +104,7 @@ export const TypedField = <
             id: path,
             name: path,
             error: hasError,
+            path: path,
             onChange: handleChange,
             onFocus: () => setIsFocused(true),
             onBlur: () => {
@@ -134,6 +135,7 @@ export const TypedField = <
               ...controllerProps,
               ...elementProps,
               id: path,
+              label,
               onChange: handleChange
             })}
 

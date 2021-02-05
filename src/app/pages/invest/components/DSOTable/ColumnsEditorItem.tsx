@@ -13,6 +13,8 @@ export interface ColumnsEditorItemProps {
 export const ColumnsEditorItem = (props: ColumnsEditorItemProps) => {
   const { value, isSelected, onSelect, onDeselect } = props
   const label = formatCamelCasedWithSpaces(value)
+  const disabled =
+    value === 'favorite' || value === 'tokenName' || value === 'insight'
 
   return (
     <Box mr={2.5} mb={1.5}>
@@ -20,6 +22,7 @@ export const ColumnsEditorItem = (props: ColumnsEditorItemProps) => {
         label={label}
         variant={isSelected ? 'default' : 'outlined'}
         onClick={isSelected ? undefined : () => onSelect(value)}
+        disabled={disabled}
         onDelete={isSelected ? () => onDeselect(value) : undefined}
       />
     </Box>

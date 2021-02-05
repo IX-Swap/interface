@@ -1,6 +1,5 @@
 import { DataroomFile, FileGuide, FormArray } from 'types/dataroomFile'
 import { IdentityType } from 'app/pages/identity/utils'
-import { emptyFile } from '__fixtures__/file'
 
 const documents: {
   individual: FileGuide[]
@@ -105,7 +104,7 @@ export const formatDocuments = (
 
     return {
       value: {
-        ...(item ?? emptyFile),
+        ...(item ?? ({} as any)),
         ...document
       }
     }

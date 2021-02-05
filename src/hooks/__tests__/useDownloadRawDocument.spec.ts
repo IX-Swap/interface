@@ -67,11 +67,7 @@ describe('useDownloadRawDocument', () => {
           const [mutate] = result.current
           void mutate()
 
-          expect(showSnackbar).toHaveBeenNthCalledWith(
-            1,
-            'Failed to download the file',
-            'error'
-          )
+          expect(showSnackbar).toHaveBeenNthCalledWith(1, 'error', 'error')
         },
         { timeout: 1000 }
       )

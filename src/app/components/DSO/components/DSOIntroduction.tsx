@@ -10,12 +10,18 @@ export const DSOIntroduction = () => {
   const { control } = useFormContext<DSOFormValues>()
 
   return (
-    <DSOContainer title='Introduction' item xs={12} md={8}>
+    <DSOContainer
+      title='Company Information'
+      subtitle='A short description of the company helps investors know more about your company.'
+      item
+      xs={12}
+      md={12}
+    >
       {/* @ts-ignore */}
       <TypedField
         component={RichTextEditor}
         customRenderer
-        label='Introduction'
+        label='Company Information'
         name='introduction'
         control={control}
         valueExtractor={wysiwygValueExtractor}

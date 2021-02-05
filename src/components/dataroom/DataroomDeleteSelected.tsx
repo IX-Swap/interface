@@ -1,16 +1,17 @@
 import React from 'react'
 import { useSelectionHelperContext } from 'components/SelectionHelper'
-import { Button } from '@material-ui/core'
+import { Button, ButtonProps } from '@material-ui/core'
 import { themeColors } from 'themes/colors'
 import { useDeleteFilesArray } from 'hooks/useDeleteFilesArray'
 import { SelectedDocument } from 'app/pages/accounts/pages/banks/components/BankDocuments'
 
-export interface DataroomDeleteSelectedProps {
+export interface DataroomDeleteSelectedProps extends ButtonProps {
   name: string
 }
 
 export const DataroomDeleteSelected = (props: DataroomDeleteSelectedProps) => {
-  const { isLoading, deleteMultiple } = useDeleteFilesArray(props.name)
+  const { name, ...rest } = props
+  const { isLoading, deleteMultiple } = useDeleteFilesArray(name)
   const { hasSelected, selectedCount } = useSelectionHelperContext<
     SelectedDocument
   >()
@@ -21,13 +22,14 @@ export const DataroomDeleteSelected = (props: DataroomDeleteSelectedProps) => {
 
   return (
     <Button
+      {...rest}
       color='secondary'
       variant='contained'
       size='large'
       disableElevation
       onClick={deleteMultiple}
       disabled={isLoading}
-      style={{ backgroundColor: themeColors.error }}
+      style={{ ...(rest.style ?? {}), backgroundColor: themeColors.error }}
     >
       {isLoading ? 'Deleting...' : `Delete ${selectedCount} documents`}
     </Button>

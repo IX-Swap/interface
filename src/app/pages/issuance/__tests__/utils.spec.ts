@@ -1,16 +1,7 @@
-import {
-  getActivityUserInfo,
-  transformDSOFormValuesToRequestArgs
-} from '../utils'
-import { activity, formvalues, requestargs } from '__fixtures__/issuance'
+import { getActivityUserInfo } from '../utils'
+import { activity } from '__fixtures__/issuance'
 import { getPersonName } from 'helpers/strings'
 import { getCorporateLegalName } from 'helpers/tables'
-
-describe('transformDSOFormValuesToRequestArgs', () => {
-  it('returns DSORequestArgs from form values', () => {
-    expect(transformDSOFormValuesToRequestArgs(formvalues)).toEqual(requestargs)
-  })
-})
 
 describe('getActivityUserInfo', () => {
   it('returns photo and name of the person if individual identity is present', () => {

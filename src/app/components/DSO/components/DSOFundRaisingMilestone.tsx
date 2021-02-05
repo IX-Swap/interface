@@ -10,7 +10,12 @@ export const DSOFundRaisingMilestone = () => {
   const { control } = useFormContext<DSOFormValues>()
 
   return (
-    <DSOContainer title='Fund Raising Milestone' item xs={12}>
+    <DSOContainer
+      title='Fund Raising Milestone'
+      subtitle='A short description of fundraising milestones.'
+      item
+      xs={12}
+    >
       {/* @ts-ignore */}
       <TypedField
         control={control}

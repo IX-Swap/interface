@@ -4,6 +4,7 @@ import { DataroomFileRow } from 'components/dataroom/DataroomFileRow'
 import { TypedFieldRenderComponentProps } from 'components/form/types'
 import { DataroomFile } from 'types/dataroomFile'
 import { UploadDocumentInfo } from 'hooks/useUploadFile'
+import { Box, Grid } from '@material-ui/core'
 
 export interface DataroomRowUploaderProps
   extends TypedFieldRenderComponentProps<DataroomFile> {
@@ -18,16 +19,20 @@ export const DataroomRowUploader = (props: DataroomRowUploaderProps) => {
   }
 
   return (
-    <DataroomUploader
-      {...props}
-      value={value}
-      render={DataroomFileRow}
-      onDelete={handleDelete}
-      documentInfo={{
-        type: value?.title,
-        title: value?.title,
-        ...documentInfo
-      }}
-    />
+    <Box py={1} width='100%'>
+      <Grid container alignItems='center' wrap='nowrap'>
+        <DataroomUploader
+          {...props}
+          value={value}
+          render={DataroomFileRow}
+          onDelete={handleDelete}
+          documentInfo={{
+            type: value?.title,
+            title: value?.title,
+            ...documentInfo
+          }}
+        />
+      </Grid>
+    </Box>
   )
 }

@@ -1,5 +1,5 @@
 import React from 'react'
-import { Grid, Input } from '@material-ui/core'
+import { Grid, TextField } from '@material-ui/core'
 import { useFormContext } from 'react-hook-form'
 import { CompletePasswordResetFormValues } from 'auth/pages/password-reset/ResetStep'
 import { TypedField } from 'components/form/TypedField'
@@ -12,7 +12,10 @@ export const ResetFields = () => {
       <Grid item>
         <TypedField
           control={control}
-          component={Input}
+          customRenderer
+          component={TextField}
+          variant='outlined'
+          fullWidth
           name='email'
           label='Email'
         />
@@ -20,7 +23,10 @@ export const ResetFields = () => {
       <Grid item>
         <TypedField
           control={control}
-          component={Input}
+          customRenderer
+          component={TextField}
+          variant='outlined'
+          fullWidth
           name='newPassword'
           label='New Password'
           type='password'

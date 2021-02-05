@@ -4,6 +4,12 @@ export const apiURL = {
   authorizerBanks: '/accounts/banks/list'
 }
 
+export const homeURL = {
+  getAccessReports: '/dataroom/reports-and-newsletters/list',
+  getTopIssuers: '/issuance/top-issuers',
+  getTopCorporates: '/issuance/top-corporates'
+}
+
 export const authorizerURL = {
   [AppFeature.BankAccounts]: '/accounts/banks/list',
   [AppFeature.CashDeposits]: '/accounts/cash/deposits',
@@ -97,6 +103,8 @@ export const issuanceURL = {
     getByUserId: (userId: string) => `/issuance/dso/list/${userId}`,
     update: (userId: string, dsoId: string) =>
       `/issuance/dso/${userId}/${dsoId}`,
+    submit: (userId: string, dsoId: string) =>
+      `/issuance/dso/${userId}/${dsoId}/submit`,
     getCapitalStructureList: '/issuance/capital-structures',
     getActivitiesList: (userId: string, dsoId: string) =>
       `/issuance/dso/${userId}/${dsoId}/activities/list`,
@@ -114,15 +122,21 @@ export const authURL = {
     `/auth/2fa/setup/${userId}/confirm/${otp}`,
   setup2fa: (userId: string) => `/auth/2fa/setup/${userId}`,
   register: '/auth/registrations',
-  registerConfirm: '/auth/registrations/confirm'
+  registerConfirm: '/auth/registrations/confirm',
+  reset2fa: (userId: string) => `/auth/2fa/reset/${userId}`,
+  getLoginHistory: (userId: string) => `auth/users/${userId}/logins`,
+  revokeAccess: '/auth/users/revoke'
 }
 
 export const userURL = {
+  getUserById: (userId: string) => `/auth/user/${userId}`,
+  getAll: '/auth/users/list',
   getUserProfile: (userId: string) => `/auth/profiles/${userId}`,
   updateRoles: (userId: string) => `/auth/users/${userId}/roles`,
   getCustomFields: (userId: string, service: string, feature: string) =>
     `/core/custom-fields/${service}/${feature}/${userId}`,
-  updateCustomFields: (userId: string) => `/core/custom-fields/${userId}`
+  updateCustomFields: (userId: string) => `/core/custom-fields/${userId}`,
+  enableUser: '/auth/users/status'
 }
 
 export const notificationsURL = {
@@ -138,7 +152,12 @@ export const documentsURL = {
     `/dataroom/raw/${userId}/${fileId}`,
   getBySuperUser: (fileId: string) => `/dataroom/raw/${fileId}`,
   create: '/dataroom',
-  deleteById: (userId: string, fileId: string) =>
-    `/dataroom/${userId}/${fileId}`,
-  deleteBySuperUser: (fileId: string) => `/dataroom/${fileId}`
+  deleteById: (userId: string | undefined, fileId: string) =>
+    userId === undefined
+      ? `/dataroom/${fileId}`
+      : `/dataroom/${userId}/${fileId}`,
+  deleteBySuperUser: (fileId: string) => `/dataroom/${fileId}`,
+  uploadAccessReport: '/dataroom/reports-and-newsletters',
+  getAccessReport: (fileId: string) =>
+    `/dataroom/reports-and-newsletters/${fileId}`
 }

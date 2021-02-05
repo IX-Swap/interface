@@ -20,7 +20,10 @@ export const useDSOsByUserId = (): UsePaginatedQueryData<
   }
 
   const { data, ...rest } = useInfiniteQuery(
-    [dsoQueryKeys.getDSOsById(userId), paginationArgs],
+    [
+      dsoQueryKeys.getDSOsById(userId),
+      { ...paginationArgs, status: 'Draft,Approved,Submitted,Rejected' }
+    ],
     getDSOsByUserId,
     { enabled: (userId ?? '') !== '' }
   )

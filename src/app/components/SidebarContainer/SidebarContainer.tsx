@@ -10,9 +10,11 @@ import { ReactComponent as InvestIcon } from 'assets/icons/navigation/invest.svg
 import { ReactComponent as AccountsIcon } from 'assets/icons/navigation/account.svg'
 import { ReactComponent as IssuanceIcon } from 'assets/icons/navigation/issuance.svg'
 import { ReactComponent as AuthorizerIcon } from 'assets/icons/navigation/authorizer.svg'
+import { HomeOutlined as HomeIcon } from '@material-ui/icons'
 import { SwipeableDrawer } from '@material-ui/core'
 import { useAppActions, useAppState } from 'app/hooks/useAppState'
 import { useAppBreakpoints } from 'hooks/useAppBreakpoints'
+import { useHomeRouter } from 'app/pages/home/router'
 
 export const SidebarContainer = () => {
   const { isNavDrawerOpened } = useAppState()
@@ -26,9 +28,15 @@ export const SidebarContainer = () => {
   const { paths: accountRoutes } = useAccountsRouter()
   const { paths: investRoutes } = useInvestRouter()
   const { paths: issuanceRoutes } = useIssuanceRouter()
+  const { paths: homeRoutes } = useHomeRouter()
 
   const isSuperUser = isAuthorizer || isAdmin
   const links = [
+    {
+      label: 'Home',
+      link: homeRoutes.landing,
+      icon: HomeIcon
+    },
     {
       label: 'Accounts',
       link: accountRoutes.landing,

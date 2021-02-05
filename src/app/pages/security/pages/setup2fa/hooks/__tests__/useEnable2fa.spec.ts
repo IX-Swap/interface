@@ -2,21 +2,18 @@ import { act } from '@testing-library/react-hooks'
 import { waitFor, cleanup, renderHookWithServiceProvider } from 'test-utils'
 import { useEnable2fa } from 'app/pages/security/pages/setup2fa/hooks/useEnable2fa'
 import { unsuccessfulResponse, successfulResponse } from '__fixtures__/api'
-import { useLogout } from 'auth/hooks/useLogout'
 import { enable2faArgs } from '__fixtures__/security'
-
-jest.mock('auth/hooks/useLogout')
-
-const useLogoutMock = (useLogout as Function) as jest.Mock<
-  Partial<ReturnType<typeof useLogout>>
->
+import * as useSetup2faStore from 'app/pages/security/pages/setup2fa/context'
 
 describe('useEnable2fa', () => {
-  const logout = jest.fn()
+  const nextPage = jest.fn()
 
   beforeEach(() => {
-    useLogoutMock.mockReturnValue(logout)
-    jest.useFakeTimers()
+    const objResponse = { nextPage }
+
+    jest
+      .spyOn(useSetup2faStore, 'useSetup2faStore')
+      .mockImplementation(() => objResponse as any)
   })
 
   afterEach(async () => {
@@ -24,7 +21,7 @@ describe('useEnable2fa', () => {
     jest.clearAllMocks()
   })
 
-  it('it calls snackbarService.showSnackbar with success message', async () => {
+  it('it calls nextPage when enable 2FA is successful', async () => {
     await act(async () => {
       const post = jest.fn().mockResolvedValueOnce(successfulResponse)
       const showSnackbar = jest.fn()
@@ -41,14 +38,7 @@ describe('useEnable2fa', () => {
           const [mutate] = result.current
           void mutate(enable2faArgs)
 
-          jest.runAllTimers()
-
-          expect(logout).toHaveBeenCalledTimes(1)
-          expect(showSnackbar).toHaveBeenNthCalledWith(
-            1,
-            'Google Authenticator Setup Success! You will be redirected to Login page.',
-            'success'
-          )
+          expect(nextPage).toHaveBeenCalled()
         },
         { timeout: 1000 }
       )

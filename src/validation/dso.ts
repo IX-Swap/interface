@@ -4,6 +4,10 @@ import { string, number, array, object } from 'yup'
 import { dateSchema } from './shared'
 import { pastDateValidator } from './validators'
 
+const numberTransformer = (cv: number, ov: any) => {
+  return ov === '' ? undefined : cv
+}
+
 export const dsoTeamMemberSchema = object().shape<DsoTeamMember>({
   about: string(),
   name: string().required('Required'),
@@ -16,15 +20,49 @@ export const dsoFormBaseValidationSchema = {
   capitalStructure: string().required('Required'),
   corporate: string().required('Required'),
   currency: string().required('Required'),
-  distributionFrequency: string(),
-  dividendYield: number(),
-  equityMultiple: number(),
+  distributionFrequency: string().when('capitalStructure', {
+    is: capitalStructure =>
+      capitalStructure === 'Equity' || capitalStructure === 'Debt',
+    then: string().required('Required')
+  }),
+  dividendYield: number()
+    .transform(numberTransformer)
+    .when('capitalStructure', {
+      is: 'Equity',
+      then: number().transform(numberTransformer).required('Required')
+    }),
+  equityMultiple: number()
+    .transform(numberTransformer)
+    .when('capitalStructure', {
+      is: 'Equity',
+      then: number().transform(numberTransformer).required('Required')
+    }),
   fundraisingMilestone: string().required('Required'),
-  grossIRR: number(),
-  interestRate: number(),
+  grossIRR: number()
+    .transform(numberTransformer)
+    .when('capitalStructure', {
+      is: 'Equity',
+      then: number().transform(numberTransformer).required('Required')
+    }),
+  interestRate: number()
+    .transform(numberTransformer)
+    .when('capitalStructure', {
+      is: 'Debt',
+      then: number().transform(numberTransformer).required('Required')
+    }),
   introduction: string().required('Required'),
-  investmentPeriod: number(),
-  investmentStructure: string(),
+  investmentPeriod: number()
+    .transform(numberTransformer)
+    .when('capitalStructure', {
+      is: capitalStructure =>
+        capitalStructure === 'Equity' || capitalStructure === 'Debt',
+      then: number().transform(numberTransformer).required('Required')
+    }),
+  investmentStructure: string().when('capitalStructure', {
+    is: capitalStructure =>
+      capitalStructure === 'Equity' || capitalStructure === 'Debt',
+    then: string().required('Required')
+  }),
   issuerName: string().required('Required'),
   launchDate: dateSchema
     .required('Required')
@@ -32,20 +70,33 @@ export const dsoFormBaseValidationSchema = {
   completionDate: dateSchema
     .required('Required')
     .test('futureDate', 'Launch Date must be future date', pastDateValidator),
-  leverage: number(),
+  leverage: number()
+    .transform(numberTransformer)
+    .when('capitalStructure', {
+      is: 'Debt',
+      then: number().transform(numberTransformer).required('Required')
+    }),
   minimumInvestment: number().nullable().required('Required'),
   pricePerUnit: number().nullable().required('Required'),
   subscriptionDocument: object<DataroomFile>(),
-  tokenName: string().required('Required'),
+  tokenName: string()
+    .required('Required')
+    .matches(
+      /(?<=\s+|^)[a-zA-Z]+(?=\s+|$)/g,
+      'Token name must not have special characters'
+    ),
   tokenSymbol: string().required('Required'),
   totalFundraisingAmount: number().nullable().required('Required'),
   useOfProceeds: string().required('Required'),
   logo: string().required('Required'),
   policyBuilder: object(),
   status: string(),
-  documents: array<FormArrayElement<DataroomFile>>().required('Required'),
+  documents: array<FormArrayElement<DataroomFile>>()
+    .ensure()
+    .required('Required'),
   team: array<DsoTeamMember>()
     .of(dsoTeamMemberSchema.required('Required'))
+    .ensure()
     .required('Required')
 }
 

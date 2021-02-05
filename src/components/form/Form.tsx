@@ -9,6 +9,7 @@ export interface FormProps<T extends {}> {
   defaultValues?: Partial<T>
   onSubmit?: SubmitHandler<T>
   validationSchema?: ObjectSchema<Shape<object | undefined, T>>
+  criteriaMode?: 'all' | 'firstError'
 }
 
 export const Form = <T,>(props: PropsWithChildren<FormProps<T>>) => {
@@ -16,13 +17,15 @@ export const Form = <T,>(props: PropsWithChildren<FormProps<T>>) => {
     defaultValues,
     onSubmit = console.log,
     validationSchema = object({}),
+    criteriaMode = 'firstError',
     children,
     ...rest
   } = props
   const form = useForm({
     mode: 'onBlur',
     defaultValues: defaultValues as any,
-    resolver: yupResolver(validationSchema)
+    resolver: yupResolver(validationSchema),
+    criteriaMode: criteriaMode
   })
   const { snackbarService } = useServices()
   const onError = () => {

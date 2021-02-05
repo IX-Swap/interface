@@ -11,6 +11,7 @@ import * as useAuthorizerRouterHook from 'app/pages/authorizer/router'
 import * as useAccountsRouterHook from 'app/pages/accounts/router'
 import * as useInvestRouterHook from 'app/pages/invest/routers/router'
 import * as useIssuanceRouterHook from 'app/pages/issuance/router'
+import * as useHomeRouterHook from 'app/pages/home/router'
 
 jest.mock('assets/icons/navigation/invest.svg', () => ({
   ReactComponent: jest.fn(() => null)
@@ -45,6 +46,9 @@ describe('Sidebar', () => {
     jest
       .spyOn(useIssuanceRouterHook, 'useIssuanceRouter')
       .mockReturnValue({ paths: useIssuanceRouterHook.IssuanceRoute } as any)
+    jest
+      .spyOn(useHomeRouterHook, 'useHomeRouter')
+      .mockReturnValue({ paths: useHomeRouterHook.HomeRoute } as any)
   })
 
   afterEach(async () => {
@@ -63,9 +67,17 @@ describe('Sidebar', () => {
     jest.spyOn(acl, 'useIsIssuer').mockReturnValue(false)
     render(<SidebarContainer />)
 
-    expect(SidebarLinkContainer).toHaveBeenCalledTimes(2)
     expect(SidebarLinkContainer).toHaveBeenNthCalledWith(
       1,
+      {
+        label: 'Home',
+        link: useHomeRouterHook.HomeRoute.landing,
+        icon: expect.anything()
+      },
+      {}
+    )
+    expect(SidebarLinkContainer).toHaveBeenNthCalledWith(
+      2,
       {
         label: 'Accounts',
         link: useAccountsRouterHook.AccountsRoute.landing,
@@ -74,7 +86,7 @@ describe('Sidebar', () => {
       {}
     )
     expect(SidebarLinkContainer).toHaveBeenNthCalledWith(
-      2,
+      3,
       {
         label: 'Invest',
         link: useInvestRouterHook.InvestRoute.landing,
@@ -89,9 +101,17 @@ describe('Sidebar', () => {
     jest.spyOn(acl, 'useIsIssuer').mockReturnValue(true)
     render(<SidebarContainer />)
 
-    expect(SidebarLinkContainer).toHaveBeenCalledTimes(3)
     expect(SidebarLinkContainer).toHaveBeenNthCalledWith(
       1,
+      {
+        label: 'Home',
+        link: useHomeRouterHook.HomeRoute.landing,
+        icon: expect.anything()
+      },
+      {}
+    )
+    expect(SidebarLinkContainer).toHaveBeenNthCalledWith(
+      2,
       {
         label: 'Accounts',
         link: useAccountsRouterHook.AccountsRoute.landing,
@@ -100,7 +120,7 @@ describe('Sidebar', () => {
       {}
     )
     expect(SidebarLinkContainer).toHaveBeenNthCalledWith(
-      2,
+      3,
       {
         label: 'Invest',
         link: useInvestRouterHook.InvestRoute.landing,
@@ -109,7 +129,7 @@ describe('Sidebar', () => {
       {}
     )
     expect(SidebarLinkContainer).toHaveBeenNthCalledWith(
-      3,
+      4,
       {
         label: 'Issuance',
         link: useIssuanceRouterHook.IssuanceRoute.insight,
@@ -125,9 +145,17 @@ describe('Sidebar', () => {
 
     render(<SidebarContainer />)
 
-    expect(SidebarLinkContainer).toHaveBeenCalledTimes(3)
     expect(SidebarLinkContainer).toHaveBeenNthCalledWith(
       1,
+      {
+        label: 'Home',
+        link: useHomeRouterHook.HomeRoute.landing,
+        icon: expect.anything()
+      },
+      {}
+    )
+    expect(SidebarLinkContainer).toHaveBeenNthCalledWith(
+      2,
       {
         label: 'Accounts',
         link: useAccountsRouterHook.AccountsRoute.landing,
@@ -136,7 +164,7 @@ describe('Sidebar', () => {
       {}
     )
     expect(SidebarLinkContainer).toHaveBeenNthCalledWith(
-      2,
+      3,
       {
         label: 'Invest',
         link: useInvestRouterHook.InvestRoute.landing,
@@ -145,7 +173,7 @@ describe('Sidebar', () => {
       {}
     )
     expect(SidebarLinkContainer).toHaveBeenNthCalledWith(
-      3,
+      4,
       {
         label: 'Authorizer',
         link: useAuthorizerRouterHook.AuthorizerRoute.landing,

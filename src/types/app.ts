@@ -24,7 +24,8 @@ export enum AppFeature {
   Issuance = 'issuance',
   // backend
   Deposits = 'deposits',
-  Withdrawals = 'withdrawals'
+  Withdrawals = 'withdrawals',
+  Users = 'users'
 }
 
 export enum NotificationFilter {

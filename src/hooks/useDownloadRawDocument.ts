@@ -5,7 +5,8 @@ import { useDataroomFileURL } from 'hooks/useDataroomFileURL'
 
 export interface DownloadDocument {
   documentId: string
-  ownerId: string
+  ownerId?: string
+  uri?: string
 }
 
 export const useDownloadRawDocument = (
@@ -13,18 +14,19 @@ export const useDownloadRawDocument = (
   callbacks?: QueryOrMutationCallbacks<Blob>
 ) => {
   const { snackbarService, apiService } = useServices()
-  const url = useDataroomFileURL(document.documentId, document.ownerId)
+  const { documentId, ownerId, uri } = document
+  const url = useDataroomFileURL(documentId, ownerId)
   const downloadFile = async () => {
-    return await apiService.get<Blob>(url, { responseType: 'blob' })
+    return await apiService.get<Blob>(uri ?? url, { responseType: 'blob' })
   }
 
   return useMutation(downloadFile, {
     onSuccess: data => {
       callbacks?.onSuccess?.(data)
     },
-    onError: error => {
+    onError: (error: any) => {
       callbacks?.onError?.(error)
-      void snackbarService.showSnackbar('Failed to download the file', 'error')
+      void snackbarService.showSnackbar(error.message, 'error')
     }
   })
 }

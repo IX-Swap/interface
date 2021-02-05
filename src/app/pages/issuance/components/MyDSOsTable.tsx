@@ -21,6 +21,9 @@ export const MyDSOsTable = () => {
         columns={columns}
         hasActions
         actions={Actions}
+        filter={{
+          status: 'Draft,Approved,Submitted,Rejected' as any // TODO: fix typings
+        }}
       />
     </>
   )

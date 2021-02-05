@@ -32,7 +32,7 @@ describe('DSOIntroduction', () => {
 
     expect(TypedField).toBeCalledWith(
       expect.objectContaining({
-        label: 'Introduction',
+        label: 'Company Information',
         name: 'introduction',
         valueExtractor: wysiwygValueExtractor
       }),

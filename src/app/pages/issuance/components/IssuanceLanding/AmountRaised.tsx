@@ -18,11 +18,11 @@ export const AmountRaised = () => {
 
   let value = LOADING_TEXT
 
-  if (data === undefined) {
+  if (data === undefined || data.status === 'Draft') {
     value = abbreviateNumber(0)
   }
 
-  if (isSuccess && data !== undefined) {
+  if (isSuccess && data !== undefined && data.status !== 'Draft') {
     value = abbreviateNumber(data.insight.raisedTotal, data.currency.symbol)
   }
 
