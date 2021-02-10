@@ -38,12 +38,19 @@ export interface ExtendedIdentityProfile extends PersonalProfile {
   user: User
 }
 
+export interface FundSource {
+  name: string
+  checked: boolean
+  value: number
+}
+
 export interface IdentityFinancials {
   annualIncome: string
   employer: string
   employmentStatus: string
   occupation: string
   sourceOfWealth: string
+  fundSource?: FundSource[]
 }
 
 export interface CorporateFields {

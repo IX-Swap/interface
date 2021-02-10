@@ -52,7 +52,8 @@ export const getIdentityFormDefaultValue = <
   return ({
     ...(identity ?? {}),
     declarations: formatDeclarations(type, identity?.declarations),
-    documents: formatDocuments(identity?.documents ?? [], type)
+    documents: formatDocuments(identity?.documents ?? [], type),
+    fundSource: getFundSource(identity as IndividualIdentity, type)
   } as unknown) as IdentityFormValues<T>
 }
 
@@ -104,4 +105,45 @@ export const prepareDeclarationsForUpload = (
   return Object.entries(declarations).map(([key, value]) => ({
     [key]: value
   }))
+}
+
+const fundSourceList = [
+  'Inheritance/Gift',
+  'Interest/Dividend',
+  'Property',
+  'Allowance/Spousal Income',
+  'Employment',
+  'Pension',
+  'Retirement Benifits',
+  'Others'
+]
+
+export const getFundSourceDefaults = () => {
+  return fundSourceList.reduce((a: any, el) => {
+    const fundSourceObj = {
+      name: el,
+      checked: false,
+      value: 0
+    }
+    a.push(fundSourceObj)
+    return a
+  }, [])
+}
+
+export const getFundSource = (
+  identity: IndividualIdentity,
+  type: IdentityType
+) => {
+  if (type === 'corporate') {
+    return undefined
+  }
+  if (
+    identity === undefined ||
+    identity.fundSource === undefined ||
+    identity.fundSource.length < 1
+  ) {
+    return getFundSourceDefaults()
+  }
+
+  return identity.fundSource
 }
