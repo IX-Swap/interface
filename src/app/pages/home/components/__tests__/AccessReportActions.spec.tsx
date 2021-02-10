@@ -27,7 +27,7 @@ describe('AccessReportActions', () => {
     render(<AccessReportActions document={emptyFile} />)
   })
 
-  it('renders without correct document data', () => {
+  it('renders with correct document data', () => {
     const deleteFn = jest.fn()
     const deleteFileResponse = [deleteFn, { isLoading: false }]
 
