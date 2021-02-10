@@ -193,6 +193,7 @@ export const getThemeOverrides = (theme: Theme): Overrides => ({
   MuiTabs: {
     flexContainer: {
       display: 'inline-flex',
+      width: '100%',
       borderBottom: `1px solid ${theme.palette.divider}`
     },
     indicator: {
