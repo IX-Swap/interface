@@ -77,7 +77,7 @@ export const Dropzone = (props: DropzoneProps) => {
         width={128}
         height={128}
         className={container}
-        {...getRootProps()}
+        {...(getRootProps() as any)}
       >
         <input id={name} name={name} {...getInputProps()} />
         <Avatar
