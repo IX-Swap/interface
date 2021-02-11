@@ -39,7 +39,7 @@ export const AddressFields = <FormType,>(
         />
       </Grid>
       <Hidden smDown>
-        <Grid item xs={12} sm={6} md={4}/>
+        <Grid item xs={12} sm={6} md={4} />
       </Hidden>
       <Grid item xs={12} sm={6} md={4}>
         <TypedField
@@ -62,7 +62,7 @@ export const AddressFields = <FormType,>(
         />
       </Grid>
       <Hidden smDown>
-        <Grid item xs={12} sm={6} md={4}/>
+        <Grid item xs={12} sm={6} md={4} />
       </Hidden>
       <Grid item xs={12} sm={6} md={4}>
         <TypedField

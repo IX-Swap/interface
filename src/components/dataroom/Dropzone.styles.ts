@@ -10,7 +10,9 @@ export const useStyles = makeStyles(theme => ({
     },
     cursor: 'pointer',
     '&:hover': {
-      backgroundColor: tinycolor(theme.palette.backgrounds.secondary).darken(4).toHexString(),
+      backgroundColor: tinycolor(theme.palette.backgrounds.secondary)
+        .darken(4)
+        .toHexString()
     }
   },
   acceptedImage: {

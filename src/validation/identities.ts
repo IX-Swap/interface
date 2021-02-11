@@ -27,7 +27,10 @@ export const individualIdentityFormValidationSchema = yup
     dob: dateSchema.required('Required'),
     // TODO Remove this after complete all phase2 in PersonalIdentity page
     countryOfResidence: yup.string().required('Required'),
-    contactNumber: yup.string().test('phone validator', 'phone is invalid', phoneNumberValidator).required('Required'),
+    contactNumber: yup
+      .string()
+      .test('phone validator', 'phone is invalid', phoneNumberValidator)
+      .required('Required'),
     email: emailSchema.required('Required'),
     employmentStatus: yup.string().required('Required'),
     occupation: yup.string().required('Required'),

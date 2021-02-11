@@ -31,12 +31,9 @@ export const IndividualInfoFields = (
 
   return (
     <Grid container>
-      <Box
-        display={'flex'}
-        flexDirection={isMobile ? 'column' : 'row'}
-      >
+      <Box display={'flex'} flexDirection={isMobile ? 'column' : 'row'}>
         <Box marginRight={2}>
-        {/* @ts-ignore */}
+          {/* @ts-ignore */}
           <TypedField
             customRenderer
             component={Dropzone}
@@ -51,7 +48,7 @@ export const IndividualInfoFields = (
             }}
           />
         </Box>
-        <Grid container spacing={2} style={{marginTop: isMobile ? 8 : 20}}>
+        <Grid container spacing={2} style={{ marginTop: isMobile ? 8 : 20 }}>
           <Grid item xs={12} sm={6}>
             <TypedField
               rootName={rootName}
@@ -98,7 +95,7 @@ export const IndividualInfoFields = (
           </Grid>
           <Grid item xs={12} sm={6}>
             <TypedField
-              style={{width: '100%'}}
+              style={{ width: '100%' }}
               className={privateClassNames()}
               rootName={rootName}
               component={PhoneInput}

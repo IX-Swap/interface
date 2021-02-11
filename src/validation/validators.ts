@@ -9,12 +9,9 @@ import {
 } from 'app/pages/identity/const/declarations'
 import { hasValue } from 'helpers/forms'
 
-
 // TODO: Fix it when have free time
 // TODO: When I put this schema into 'shared' file, we are getting an issue with circular references
-const phoneSchema = (yup as any).string()
-  .required('Required')
-  .phone()
+const phoneSchema = (yup as any).string().required('Required').phone()
 
 const passwordPatterns = [/[A-Z]/, /[a-z]/, /[0-9]/, /[^A-Za-z0-9]/]
 
@@ -112,10 +109,12 @@ export const pastDateValidator = (value: string | null | undefined) => {
   return !isPast(new Date(value))
 }
 
-export const phoneNumberValidator = async (value: string | null | undefined) => {
+export const phoneNumberValidator = async (
+  value: string | null | undefined
+) => {
   if (value === undefined || value === null) {
     return false
   }
 
-  return await phoneSchema.isValid(value)
+  return phoneSchema.isValid(value)
 }
