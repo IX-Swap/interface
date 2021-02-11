@@ -2,7 +2,7 @@ import React from 'react'
 import { Grid, Input } from '@material-ui/core'
 import { useFormContext } from 'react-hook-form'
 import { TypedField } from 'components/form/TypedField'
-import { AssetSelect } from 'components/form/AssetSelect'
+import { AssetSelect } from 'components/form/AssetSelect/AssetSelect'
 import { BankFormValues } from 'app/pages/accounts/types'
 import { privateClassNames } from 'helpers/classnames'
 

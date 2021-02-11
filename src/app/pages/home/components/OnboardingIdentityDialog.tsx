@@ -10,7 +10,9 @@ export const OnboardingIdentityDialog = () => {
   const isEnabled2FA = useIsEnabled2FA()
   const { isLoaded, hasIdentity } = useHasIdentity()
 
-  if (!isLoaded) return null
+  if (!isLoaded) {
+    return null
+  }
 
   return (
     <OnboardingDialog

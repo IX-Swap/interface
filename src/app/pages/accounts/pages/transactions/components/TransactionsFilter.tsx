@@ -2,7 +2,7 @@ import React from 'react'
 import { Grid } from '@material-ui/core'
 import { useFormContext } from 'react-hook-form'
 import { TypedField } from 'components/form/TypedField'
-import { AssetSelect } from 'components/form/AssetSelect'
+import { AssetSelect } from 'components/form/AssetSelect/AssetSelect'
 
 export const TransactionsFilter = () => {
   const { control } = useFormContext()
