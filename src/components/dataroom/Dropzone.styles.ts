@@ -1,4 +1,5 @@
 import { makeStyles } from '@material-ui/core/styles'
+import tinycolor from 'tinycolor2'
 
 export const useStyles = makeStyles(theme => ({
   container: {
@@ -6,6 +7,10 @@ export const useStyles = makeStyles(theme => ({
     backgroundColor: theme.palette.backgrounds.secondary,
     label: {
       display: 'none'
+    },
+    cursor: 'pointer',
+    '&:hover': {
+      backgroundColor: tinycolor(theme.palette.backgrounds.secondary).darken(4).toHexString(),
     }
   },
   acceptedImage: {
