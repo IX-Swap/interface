@@ -1,4 +1,5 @@
 import * as yup from 'yup'
+import 'yup-phone'
 import {
   CorporateIdentityFormValues,
   IndividualIdentityFormValues
@@ -14,7 +15,6 @@ import {
   corporateDeclarationsSchema,
   individualDeclarationsSchema
 } from 'validation/declarations'
-import { phoneNumberValidator } from 'validation/validators'
 
 export const individualIdentityFormValidationSchema = yup
   .object()
@@ -27,10 +27,7 @@ export const individualIdentityFormValidationSchema = yup
     dob: dateSchema.required('Required'),
     // TODO Remove this after complete all phase2 in PersonalIdentity page
     countryOfResidence: yup.string().required('Required'),
-    contactNumber: yup
-      .string()
-      .test('phone validator', 'phone is invalid', phoneNumberValidator)
-      .required('Required'),
+    contactNumber: yup.string().phone().required('Required'),
     email: emailSchema.required('Required'),
     employmentStatus: yup.string().required('Required'),
     occupation: yup.string().required('Required'),
