@@ -67,26 +67,16 @@ describe('IndividualIdentityForm', () => {
 
     expect(Section).toHaveBeenNthCalledWith(
       1,
-      { title: 'Identity', children: expect.anything() },
-      {}
-    )
-    expect(Section).toHaveBeenNthCalledWith(
-      2,
-      { title: 'Address', children: expect.anything() },
-      {}
-    )
-    expect(Section).toHaveBeenNthCalledWith(
-      3,
       { title: 'Financials', children: expect.anything() },
       {}
     )
     expect(Section).toHaveBeenNthCalledWith(
-      4,
+      2,
       { title: 'Documents', children: expect.anything() },
       {}
     )
     expect(Section).toHaveBeenNthCalledWith(
-      5,
+      3,
       { title: 'Declaration', children: expect.anything() },
       {}
     )

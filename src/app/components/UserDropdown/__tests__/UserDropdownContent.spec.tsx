@@ -1,4 +1,6 @@
 import React from 'react'
+// /* eslint-disable */
+// import * as yup from 'yup'
 import { render, cleanup } from 'test-utils'
 import { UserDropdownContent } from 'app/components/UserDropdown/UserDropdownContent'
 import { DropdownContentProps } from 'app/components/Dropdown/Dropdown'
@@ -10,6 +12,12 @@ import {
   PowerSettingsNewOutlined,
   SettingsOutlined
 } from '@material-ui/icons'
+
+// yup.addMethod(yup.string, 'phone', jest.fn())
+
+// jest.spyOn(yup.string, ('phone' as never)).mockImplementation(() => jest.fn() as never)
+
+// jest.mock('yup', () => jest.genMockFromModule('yup'))
 
 jest.mock('app/components/UserDropdown/UserDropdownItem', () => ({
   UserDropdownItem: jest.fn(() => null)

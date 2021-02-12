@@ -85,15 +85,6 @@ describe('AddressFields', () => {
     expect(TypedField).toHaveBeenNthCalledWith(
       4,
       expect.objectContaining({
-        label: 'Postal Code',
-        name: 'postalCode',
-        rootName: props.rootName
-      }),
-      {}
-    )
-    expect(TypedField).toHaveBeenNthCalledWith(
-      5,
-      expect.objectContaining({
         label: 'State',
         name: 'state',
         rootName: props.rootName
@@ -101,10 +92,19 @@ describe('AddressFields', () => {
       {}
     )
     expect(TypedField).toHaveBeenNthCalledWith(
-      6,
+      5,
       expect.objectContaining({
         label: 'Country',
         name: 'country',
+        rootName: props.rootName
+      }),
+      {}
+    )
+    expect(TypedField).toHaveBeenNthCalledWith(
+      6,
+      expect.objectContaining({
+        label: 'Postal Code',
+        name: 'postalCode',
         rootName: props.rootName
       }),
       {}
