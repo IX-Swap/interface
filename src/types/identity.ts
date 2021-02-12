@@ -18,6 +18,27 @@ export interface IdentityAddress {
   country: string // for corporate
 }
 
+export interface TaxResidency {
+  residentOfSingapore: boolean
+  countryOfResidence: string
+  taxIdentificationNumber: string
+  taxIdAvailable: boolean
+  reason: 'A' | 'B' | 'C'
+}
+
+export type TaxResidencies = Array<Partial<TaxResidency>>
+
+export interface TaxDeclaration {
+  taxResidencies?: TaxResidencies
+}
+export interface TaxDeclarationFormData {
+  taxResidencies?: TaxResidencies
+  singaporeOnly?: 'yes' | 'no'
+  taxIdAvailable?: boolean
+  taxId?: string
+  reasonUnavailable?: 'A' | 'B' | 'C'
+}
+
 export interface PersonalProfile {
   firstName: string
   middleName?: string
@@ -87,7 +108,8 @@ export interface DeclarationTemplate {
 export type IndividualIdentity = BaseIdentity &
   PersonalProfileWithAddress &
   IdentityFinancials &
-  Authorizable
+  Authorizable &
+  TaxDeclaration
 
 export type CorporateIdentity = BaseIdentity & CorporateFields & Authorizable
 

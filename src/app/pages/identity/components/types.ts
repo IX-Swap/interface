@@ -2,7 +2,8 @@ import {
   PersonalProfileWithAddress,
   IdentityFinancials,
   BaseIdentity,
-  CorporateFields
+  CorporateFields,
+  TaxDeclarationFormData
 } from 'types/identity'
 import { DataroomFile, FormArray } from 'types/dataroomFile'
 import { Maybe } from 'types/util'
@@ -13,6 +14,7 @@ import {
 
 export type IndividualIdentityFormValues = PersonalProfileWithAddress &
   IdentityFinancials &
+  TaxDeclarationFormData &
   Omit<
     BaseIdentity,
     | '_id'
