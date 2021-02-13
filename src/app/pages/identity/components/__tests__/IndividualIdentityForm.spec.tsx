@@ -6,7 +6,7 @@ import {
 } from 'app/pages/identity/components/IndividualIdentityForm'
 import { individual } from '__fixtures__/identity'
 import { Section } from 'app/pages/identity/components/Section'
-import { AddressFields } from 'app/pages/identity/components/AddressFields'
+import { AddressFields } from 'app/pages/identity/components/AddressFields/AddressFields'
 import { FinancialFields } from 'app/pages/identity/components/FinancialFields'
 import { DeclarationFields } from 'app/pages/identity/components/DeclarationFields'
 import { IdentityDataroom } from 'app/pages/identity/components/IdentityDataroom'

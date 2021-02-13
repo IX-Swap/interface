@@ -3,7 +3,7 @@ import { render, cleanup } from 'test-utils'
 import {
   AddressFields,
   AddressFieldsProps
-} from 'app/pages/identity/components/AddressFields'
+} from 'app/pages/identity/components/AddressFields/AddressFields'
 import { TypedField } from 'components/form/TypedField'
 import { Form } from 'components/form/Form'
 

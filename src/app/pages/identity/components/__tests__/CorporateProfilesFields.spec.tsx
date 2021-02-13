@@ -1,6 +1,6 @@
 import React from 'react'
 import { render, cleanup } from 'test-utils'
-import { IndividualInfoFields } from 'app/pages/identity/components/IndividualInfoFields'
+import { IndividualInfoFields } from 'app/pages/identity/components/IndividualInfoFields/IndividualInfoFields'
 import {
   CorporateProfilesFields,
   CorporateProfilesFieldsProps

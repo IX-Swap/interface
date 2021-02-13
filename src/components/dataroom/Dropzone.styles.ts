@@ -13,6 +13,9 @@ export const useStyles = makeStyles(theme => ({
       backgroundColor: tinycolor(theme.palette.backgrounds.secondary)
         .darken(4)
         .toHexString()
+    },
+    '& > div': {
+      padding: 0
     }
   },
   acceptedImage: {
