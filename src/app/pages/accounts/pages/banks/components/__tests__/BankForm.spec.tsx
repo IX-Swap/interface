@@ -13,7 +13,7 @@ jest.mock('components/form/Submit', () => ({
   Submit: jest.fn(() => <div />)
 }))
 
-jest.mock('app/pages/identity/components/AddressFields', () => ({
+jest.mock('app/pages/identity/components/AddressFields/AddressFields', () => ({
   AddressFields: jest.fn(() => <div />)
 }))
 

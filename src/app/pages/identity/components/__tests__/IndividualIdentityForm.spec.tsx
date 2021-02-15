@@ -17,7 +17,7 @@ import { user } from '__fixtures__/user'
 jest.mock('app/pages/identity/components/Section', () => ({
   Section: jest.fn(({ children }) => children)
 }))
-jest.mock('app/pages/identity/components/AddressFields', () => ({
+jest.mock('app/pages/identity/components/AddressFields/AddressFields', () => ({
   AddressFields: jest.fn(() => null)
 }))
 jest.mock('app/pages/identity/components/FinancialFields', () => ({
