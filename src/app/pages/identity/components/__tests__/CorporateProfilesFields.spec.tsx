@@ -7,9 +7,12 @@ import {
 } from 'app/pages/identity/components/CorporateProfilesFields'
 import { Form } from 'components/form/Form'
 
-jest.mock('app/pages/identity/components/IndividualInfoFields', () => ({
-  IndividualInfoFields: jest.fn(() => null)
-}))
+jest.mock(
+  'app/pages/identity/components/IndividualInfoFields/IndividualInfoFields',
+  () => ({
+    IndividualInfoFields: jest.fn(() => null)
+  })
+)
 
 describe('CorporateProfiles', () => {
   const props: CorporateProfilesFieldsProps = {

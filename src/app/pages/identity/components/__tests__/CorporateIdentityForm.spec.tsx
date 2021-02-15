@@ -13,7 +13,7 @@ import { Section } from 'app/pages/identity/components/Section'
 import { DeclarationFields } from 'app/pages/identity/components/DeclarationFields'
 import { IdentityDataroom } from 'app/pages/identity/components/IdentityDataroom'
 
-jest.mock('app/pages/identity/components/AddressFields', () => ({
+jest.mock('app/pages/identity/components/AddressFields/AddressFields', () => ({
   AddressFields: jest.fn(() => null)
 }))
 
