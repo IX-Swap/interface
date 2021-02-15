@@ -119,15 +119,7 @@ const fundSourceList = [
 ]
 
 export const getFundSourceDefaults = () => {
-  return fundSourceList.reduce((a: any, el) => {
-    const fundSourceObj = {
-      name: el,
-      checked: false,
-      value: 0
-    }
-    a.push(fundSourceObj)
-    return a
-  }, [])
+  return fundSourceList.map(name => ({ name, checked: false, value: 0 }))
 }
 
 export const getFundSource = (
