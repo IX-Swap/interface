@@ -15,6 +15,7 @@ import {
   individualDeclarationsSchema
 } from 'validation/declarations'
 
+//@ts-ignore
 export const individualIdentityFormValidationSchema = yup
   .object()
   .shape<IndividualIdentityFormValues>({
@@ -34,7 +35,10 @@ export const individualIdentityFormValidationSchema = yup
     annualIncome: yup.string().required('Required'),
     documents: documentsArraySchema.required('Required'),
     declarations: individualDeclarationsSchema.required('Required'),
-    address: addressSchema.required('Required')
+    address: addressSchema.required('Required'),
+    investorAgreement: yup.boolean().required('Required'),
+    custodyAgreement: yup.boolean().required('Required'),
+    disclosures: yup.boolean().required('Required')
   })
 
 export const corporateIdentityFormValidationSchema = yup
