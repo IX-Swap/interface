@@ -20,6 +20,6 @@ export type IndividualIdentityFormValues = PersonalProfileWithAddress &
   }
 
 export type CorporateIdentityFormValues = CorporateFields & {
-    documents: FormArray<Maybe<DataroomFile>>
-    declarations: CorporateDeclarations
-  }
+  documents: FormArray<Maybe<DataroomFile>>
+  declarations: CorporateDeclarations
+}

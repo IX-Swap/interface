@@ -4,7 +4,6 @@ import { Form } from 'components/form/Form'
 import { TypedField } from 'components/form/TypedField'
 import { AgreementsAndDisclosuresFields } from './AgreementsAndDisclosuresFields'
 
-
 jest.mock('components/form/TypedField', () => ({
   TypedField: jest.fn(() => null)
 }))
@@ -31,19 +30,22 @@ describe('AgreementsAndDisclosuresFields', () => {
     )
 
     expect(TypedField).toHaveBeenCalledTimes(3)
-    expect(TypedField).toHaveBeenNthCalledWith(1,
+    expect(TypedField).toHaveBeenNthCalledWith(
+      1,
       expect.objectContaining({
         name: 'investorAgreement'
       }),
       {}
     )
-    expect(TypedField).toHaveBeenNthCalledWith(2,
+    expect(TypedField).toHaveBeenNthCalledWith(
+      2,
       expect.objectContaining({
         name: 'custodyAgreement'
       }),
       {}
     )
-    expect(TypedField).toHaveBeenNthCalledWith(3,
+    expect(TypedField).toHaveBeenNthCalledWith(
+      3,
       expect.objectContaining({
         name: 'disclosures'
       }),

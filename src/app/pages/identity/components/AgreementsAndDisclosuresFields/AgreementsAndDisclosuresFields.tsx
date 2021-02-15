@@ -13,7 +13,7 @@ export const AgreementsAndDisclosuresFields = (): JSX.Element => {
   return (
     <Grid container direction={'column'}>
       <FormSectionHeader title='Agreements and Disclosures' />
-      <Typography variant='body1' style={{marginBottom: 44}}>
+      <Typography variant='body1' style={{ marginBottom: 44 }}>
         Review accept the following
       </Typography>
       <Grid item xs={12} sm={6} md={4}>
