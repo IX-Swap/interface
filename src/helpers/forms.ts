@@ -19,6 +19,8 @@ export const numericValueExtractor = (
 
 export const plainValueExtractor = (value: any) => value
 
+export const sliderValueExtractor = (_: any, value: any) => value
+
 export const wysiwygValueExtractor = (value: string) => {
   return wysiwygToHtml(value)
 }
