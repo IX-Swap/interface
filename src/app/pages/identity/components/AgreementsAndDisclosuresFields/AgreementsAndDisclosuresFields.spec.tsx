@@ -22,7 +22,7 @@ describe('AgreementsAndDisclosuresFields', () => {
     )
   })
 
-  it('renders AgreementsAndDisclosuresFields is correct', () => {
+  it('renders fields correctly', () => {
     render(
       <Form>
         <AgreementsAndDisclosuresFields />
