@@ -75,6 +75,12 @@ export interface Declaration {
   [key: string]: DeclarationValue
 }
 
+export interface AgreementsAndDisclosures {
+  investorAgreement: boolean
+  custodyAgreement: boolean
+  disclosures: boolean
+}
+
 export interface BaseIdentity {
   _id: string
   status: 'Rejected' | 'Authorized' | 'Submitted' | undefined
