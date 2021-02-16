@@ -3,7 +3,7 @@ import { render, cleanup } from 'test-utils'
 import {
   IndividualInfoFields,
   IndividualInfoFieldsProps
-} from 'app/pages/identity/components/IndividualInfoFields'
+} from 'app/pages/identity/components/IndividualInfoFields/IndividualInfoFields'
 import { TypedField } from 'components/form/TypedField'
 import { Form } from 'components/form/Form'
 
@@ -84,22 +84,13 @@ describe('IndividualInfoFields', () => {
       6,
       expect.objectContaining({
         rootName: props.rootName,
-        name: 'nationality',
-        label: 'Citizenship'
+        name: 'contactNumber',
+        label: 'Contact Number'
       }),
       {}
     )
     expect(TypedField).toHaveBeenNthCalledWith(
       7,
-      expect.objectContaining({
-        rootName: props.rootName,
-        name: 'countryOfResidence',
-        label: 'Country of Residence'
-      }),
-      {}
-    )
-    expect(TypedField).toHaveBeenNthCalledWith(
-      8,
       expect.objectContaining({
         rootName: props.rootName,
         name: 'email',
@@ -108,11 +99,11 @@ describe('IndividualInfoFields', () => {
       {}
     )
     expect(TypedField).toHaveBeenNthCalledWith(
-      9,
+      8,
       expect.objectContaining({
         rootName: props.rootName,
-        name: 'contactNumber',
-        label: 'Contact Number'
+        name: 'nationality',
+        label: 'Citizenship'
       }),
       {}
     )

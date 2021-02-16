@@ -1,4 +1,5 @@
 import * as yup from 'yup'
+import 'yup-phone'
 import {
   CorporateIdentityFormValues,
   IndividualIdentityFormValues
@@ -24,8 +25,9 @@ export const individualIdentityFormValidationSchema = yup
     lastName: yup.string().required('Required'),
     nationality: yup.string().required('Required'),
     dob: dateSchema.required('Required'),
+    // TODO Remove this after complete all phase2 in PersonalIdentity page
     countryOfResidence: yup.string().required('Required'),
-    contactNumber: yup.string().required('Required'),
+    contactNumber: yup.string().phone().required('Required'),
     email: emailSchema.required('Required'),
     employmentStatus: yup.string().required('Required'),
     occupation: yup.string().required('Required'),

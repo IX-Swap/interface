@@ -30,6 +30,11 @@ export interface PersonalProfile {
   email?: string
 }
 
+export type IndividualPersonalInformation = Omit<
+  PersonalProfile,
+  'countryOfResidence'
+>
+
 export interface PersonalProfileWithAddress extends PersonalProfile {
   address: Omit<IdentityAddress, 'countryOfResidence'>
 }
