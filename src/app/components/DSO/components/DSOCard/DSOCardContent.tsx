@@ -1,6 +1,6 @@
 import React from 'react'
 import { DigitalSecurityOffering } from 'types/dso'
-import { Grid, Tooltip } from '@material-ui/core'
+import { Grid, Hidden, Tooltip } from '@material-ui/core'
 import { LabelledValue } from 'components/LabelledValue'
 import { DSOInvestLink } from 'app/components/DSO/components/DSOInvestLink'
 import { DSOProgressBar } from 'app/components/DSO/components/DSOProgressBar'
@@ -48,41 +48,48 @@ export const DSOCardContent = ({ dso }: DSOCardContentProps) => {
         value={formatMoney(dso.pricePerUnit, dso.currency.symbol)}
       />
 
-      <Grid item style={{ paddingBottom: 0 }}>
-        <LabelledValue
-          row
-          reverse
-          labelWeight='default'
-          valueWeight='bold'
-          alignItems='baseline'
-          label='Raised'
-          value={abbreviateNumber(dso.insight.raisedTotal, dso.currency.symbol)}
-        />
+      <Hidden xsUp>
+        <Grid item style={{ paddingBottom: 0 }}>
+          <LabelledValue
+            row
+            reverse
+            labelWeight='default'
+            valueWeight='bold'
+            alignItems='baseline'
+            label='Raised'
+            value={abbreviateNumber(
+              dso.insight.raisedTotal,
+              dso.currency.symbol
+            )}
+          />
 
-        <LabelledValue
-          row
-          reverse
-          labelWeight='default'
-          valueWeight='bold'
-          alignItems='baseline'
-          label='Investors'
-          value={dso.insight.investorCount}
-        />
-      </Grid>
+          <LabelledValue
+            row
+            reverse
+            labelWeight='default'
+            valueWeight='bold'
+            alignItems='baseline'
+            label='Investors'
+            value={dso.insight.investorCount}
+          />
+        </Grid>
+      </Hidden>
 
-      <Grid item style={{ paddingTop: 0, paddingBottom: 0 }}>
-        <Tooltip
-          title={`${percentRaised}%`}
-          aria-label={`${percentRaised}% raised`}
-        >
-          <div style={{ color: color }}>
-            <Grid container justify='flex-end'>
-              <Grid item>{status === 'live' ? 'Live' : <>&nbsp;</>}</Grid>
-            </Grid>
-            <DSOProgressBar dso={dso} />
-          </div>
-        </Tooltip>
-      </Grid>
+      <Hidden xsUp>
+        <Grid item style={{ paddingTop: 0, paddingBottom: 0 }}>
+          <Tooltip
+            title={`${percentRaised}%`}
+            aria-label={`${percentRaised}% raised`}
+          >
+            <div style={{ color: color }}>
+              <Grid container justify='flex-end'>
+                <Grid item>{status === 'live' ? 'Live' : <>&nbsp;</>}</Grid>
+              </Grid>
+              <DSOProgressBar dso={dso} />
+            </div>
+          </Tooltip>
+        </Grid>
+      </Hidden>
 
       <Grid container item justify='flex-end'>
         <DSOInvestLink dso={dso} />

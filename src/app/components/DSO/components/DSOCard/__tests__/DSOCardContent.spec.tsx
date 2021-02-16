@@ -6,7 +6,7 @@ import {
 } from 'app/components/DSO/components/DSOCard/DSOCardContent'
 import { dso } from '__fixtures__/authorizer'
 import { DSOInvestLink } from 'app/components/DSO/components/DSOInvestLink'
-import { DSOProgressBar } from 'app/components/DSO/components/DSOProgressBar'
+// import { DSOProgressBar } from 'app/components/DSO/components/DSOProgressBar'
 
 jest.mock('app/components/DSO/components/DSOInvestLink', () => ({
   DSOInvestLink: jest.fn(() => null)
@@ -33,10 +33,10 @@ describe('DSOCardContent', () => {
     expect(DSOInvestLink).toHaveBeenCalledWith({ dso: props.dso }, {})
   })
 
-  it('renders DSOProgressBar with correct props', () => {
-    render(<DSOCardContent {...props} />)
+  // it('renders DSOProgressBar with correct props', () => {
+  //   render(<DSOCardContent {...props} />)
 
-    expect(DSOProgressBar).toHaveBeenCalledTimes(1)
-    expect(DSOProgressBar).toHaveBeenCalledWith({ dso: props.dso }, {})
-  })
+  //   expect(DSOProgressBar).toHaveBeenCalledTimes(1)
+  //   expect(DSOProgressBar).toHaveBeenCalledWith({ dso: props.dso }, {})
+  // })
 })
