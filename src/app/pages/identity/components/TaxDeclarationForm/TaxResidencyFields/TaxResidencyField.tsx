@@ -38,7 +38,14 @@ export const TaxResidencyField = ({
     if (residencyList === undefined || residencyList.length < 1) {
       return []
     }
-    return residencyList.filter((_: any, i: number) => i === index)
+
+    const filteredList = residencyList.filter(
+      (_: any, i: number) => i !== index
+    )
+
+    return filteredList.map(
+      (residencyItem: TaxResidency) => residencyItem.countryOfResidence
+    )
   }
 
   const handleRemove = () => {
