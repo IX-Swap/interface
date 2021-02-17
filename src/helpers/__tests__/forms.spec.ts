@@ -1,4 +1,8 @@
-import { hasValue, plainValueExtractor } from '../forms'
+import {
+  hasValue,
+  plainValueExtractor,
+  reverseBooleanValueExtractor
+} from '../forms'
 
 describe('plainValueExtractor', () => {
   it('returns input value', () => {
@@ -24,5 +28,13 @@ describe('hasValue', () => {
 
   it('returns true if value has some text', () => {
     expect(hasValue(' Cool!  ')).toBe(true)
+  })
+})
+
+describe('reverseBooleanValueExtractor', () => {
+  it('returns the correct value', () => {
+    const event = undefined as any
+    expect(reverseBooleanValueExtractor(event, true)).toEqual(false)
+    expect(reverseBooleanValueExtractor(event, false)).toEqual(true)
   })
 })

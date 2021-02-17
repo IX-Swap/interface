@@ -136,12 +136,14 @@ export const createIndividualArgs: IndividualIdentityFormValues = {
   ...individual,
   ...agreementsAndDisclosures,
   documents: [{ value: documents[0] }, { value: documents[1] }],
-  declarations: checkedDeclarations
+  declarations: checkedDeclarations,
+  taxResidencies: []
 }
 
 export const updateIndividualArgs: IndividualIdentityFormValues = {
   ...individual,
   ...agreementsAndDisclosures,
   documents: [{ value: documents[0] }, { value: documents[1] }],
-  declarations: checkedDeclarations
+  declarations: checkedDeclarations,
+  taxResidencies: []
 }

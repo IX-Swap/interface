@@ -16,8 +16,8 @@ const styles: (theme: Theme) => any = theme => {
       },
       '&:disabled': {
         backgroundColor: 'transparent',
-        boxShadow: `inset 0px 0px 0px 1px ${theme.palette.primary.light}`,
-        color: theme.palette.primary.light
+        boxShadow: `inset 0px 0px 0px 1px ${theme.palette.grey[500]}`,
+        color: theme.palette.grey[500]
       }
     }
   }
