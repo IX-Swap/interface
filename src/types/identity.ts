@@ -51,6 +51,11 @@ export interface PersonalProfile {
   email?: string
 }
 
+export type IndividualPersonalInformation = Omit<
+  PersonalProfile,
+  'countryOfResidence'
+>
+
 export interface PersonalProfileWithAddress extends PersonalProfile {
   address: Omit<IdentityAddress, 'countryOfResidence'>
 }
@@ -89,6 +94,12 @@ export interface CorporateFields {
 
 export interface Declaration {
   [key: string]: DeclarationValue
+}
+
+export interface AgreementsAndDisclosures {
+  investorAgreement: boolean
+  custodyAgreement: boolean
+  disclosures: boolean
 }
 
 export interface BaseIdentity {

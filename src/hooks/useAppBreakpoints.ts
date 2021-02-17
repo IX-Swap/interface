@@ -4,9 +4,11 @@ import { useMediaQuery } from '@material-ui/core'
 export const useAppBreakpoints = () => {
   const theme = useTheme()
   const isTablet = useMediaQuery(theme.breakpoints.down('sm'))
+  const isMobile = useMediaQuery(theme.breakpoints.down('xs'))
 
   return {
     isTablet,
+    isMobile,
     theme
   }
 }

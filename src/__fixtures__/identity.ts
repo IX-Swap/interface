@@ -40,6 +40,12 @@ export const corporate: CorporateIdentity = {
   authorizations: []
 }
 
+export const agreementsAndDisclosures = {
+  investorAgreement: false,
+  custodyAgreement: false,
+  disclosures: false
+}
+
 export const individual: IndividualIdentity = {
   photo: '',
   _id: '1',
@@ -128,6 +134,7 @@ export const unCheckedDeclarations: IndividualDeclarations = {
 
 export const createIndividualArgs: IndividualIdentityFormValues = {
   ...individual,
+  ...agreementsAndDisclosures,
   documents: [{ value: documents[0] }, { value: documents[1] }],
   declarations: checkedDeclarations,
   taxResidencies: []
@@ -135,6 +142,7 @@ export const createIndividualArgs: IndividualIdentityFormValues = {
 
 export const updateIndividualArgs: IndividualIdentityFormValues = {
   ...individual,
+  ...agreementsAndDisclosures,
   documents: [{ value: documents[0] }, { value: documents[1] }],
   declarations: checkedDeclarations,
   taxResidencies: []
