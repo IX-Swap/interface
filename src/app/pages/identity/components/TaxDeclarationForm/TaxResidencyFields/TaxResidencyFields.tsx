@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { Grid } from '@material-ui/core'
 import { TypedField } from 'components/form/TypedField'
 import { RadioGroup } from 'components/form/RadioGroup'
@@ -8,7 +8,19 @@ import { InternationalFields } from 'app/pages/identity/components/TaxDeclaratio
 import { TinUnavailableFields } from 'app/pages/identity/components/TaxDeclarationForm/TinUnavailableFields/TinUnavailableFields'
 
 export const TaxResidencyFields = () => {
-  const { control } = useFormContext()
+  const { control, watch, reset, getValues } = useFormContext()
+  const singaporeOnly = watch('singaporeOnly', 'yes')
+
+  useEffect(() => {
+    reset({
+      ...getValues(),
+      taxIdentificationNumber: '',
+      taxResidencies: [{}],
+      taxIdAvailable: true,
+      reasonUnavailable: ''
+    })
+  }, [singaporeOnly, reset, getValues])
+
   return (
     <>
       {/* @ts-ignore */}

@@ -38,15 +38,7 @@ export const TaxResidencyField = ({
     if (residencyList === undefined || residencyList.length < 1) {
       return []
     }
-    return residencyList.reduce(
-      (selectedList: string[], el: TaxResidency, elIndex: number) => {
-        if (elIndex !== index) {
-          selectedList.push(el.countryOfResidence ?? '')
-        }
-        return selectedList
-      },
-      []
-    )
+    return residencyList.filter((_: any, i: number) => i === index)
   }
 
   const handleRemove = () => {
