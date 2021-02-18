@@ -17,33 +17,49 @@ import { hasValue } from 'helpers/forms'
 export interface DropzoneProps {
   name: string
   label: string
-  value: Maybe<DataroomFile>
-  onChange: (files: DataroomFile) => any
+  value?: Maybe<DataroomFile | DataroomFile[]>
+  onChange: (files: DataroomFile | DataroomFile[]) => any
   documentInfo: UploadDocumentInfo
   onDelete?: () => any
   multiple?: boolean
   accept?: DataroomFileType
+  fullWidth?: boolean
 }
 
 export const Dropzone = (props: DropzoneProps) => {
   const {
     label,
     documentInfo,
-    value: defaultValue,
+    value: defaultValue = undefined,
     name,
     onChange,
     accept = DataroomFileType.document,
-    multiple = false
+    multiple = false,
+    fullWidth = false
   } = props
   const { watch } = useFormContext()
   const value = watch(name, defaultValue) as DropzoneProps['value']
-  const [uploadFile] = useUploadFile({
-    onSuccess: response => onChange(response.data[0])
-  })
   const { user } = useAuth()
-  const photoId = getDataroomFileId(value)
   const { hasError, error } = useFormError(name)
   const { container } = useStyles()
+
+  const [uploadFile] = useUploadFile({
+    onSuccess: response => {
+      if (multiple) {
+        onChangeMultiple(response.data)
+      } else {
+        onChange(response.data[0])
+      }
+    }
+  })
+
+  const onChangeMultiple = (data: DataroomFile[]) => {
+    if (value === undefined) {
+      onChange(data)
+    } else {
+      onChange([...(value as DataroomFile[]), ...data])
+    }
+  }
 
   const onDrop = useCallback(
     async acceptedFiles => {
@@ -74,19 +90,23 @@ export const Dropzone = (props: DropzoneProps) => {
       ) : null}
       <Box
         component='div'
-        width={128}
+        width={fullWidth ? '100%' : 128}
         height={128}
         className={container}
         {...(getRootProps() as any)}
       >
         <input id={name} name={name} {...getInputProps()} />
-        <Avatar
-          size={128}
-          documentId={hasValue(value) ? photoId : undefined}
-          ownerId={hasValue(value) ? user?._id : undefined}
-          variant='square'
-          fallback={<DropzoneFallback hasError={hasError} />}
-        />
+        {multiple ? (
+          <DropzoneFallback hasError={hasError} multiple />
+        ) : (
+          <Avatar
+            size={128}
+            documentId={hasValue(value) ? getDataroomFileId(value) : undefined}
+            ownerId={hasValue(value) ? user?._id : undefined}
+            variant='square'
+            fallback={<DropzoneFallback hasError={hasError} />}
+          />
+        )}
       </Box>
       {hasError ? <FormHelperText error>{error}</FormHelperText> : null}
     </>

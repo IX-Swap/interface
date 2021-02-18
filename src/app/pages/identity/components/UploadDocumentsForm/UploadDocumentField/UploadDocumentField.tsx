@@ -1,0 +1,56 @@
+import { Grid, Typography, Box } from '@material-ui/core'
+import { Dropzone } from 'components/dataroom/Dropzone'
+import { TypedField } from 'components/form/TypedField'
+import { documentValueExtractor } from 'app/components/DSO/utils'
+import React from 'react'
+import { useFormContext } from 'react-hook-form'
+import { DataroomFileType } from 'config/dataroom'
+import { DocumentList } from 'app/pages/identity/components/UploadDocumentsForm/UploadDocumentField/DocumentList'
+import { Tooltip } from 'app/pages/identity/components/UploadDocumentsForm/Tooltip/Tooltip'
+
+export interface UploadDocumentFieldProps {
+  name: any
+  label: string
+  helperElement?: React.ReactNode
+  tooltipContent?: any
+}
+
+export const UploadDocumentField = ({
+  name,
+  label,
+  helperElement,
+  tooltipContent
+}: UploadDocumentFieldProps) => {
+  const { control } = useFormContext()
+  return (
+    <Grid container spacing={3} direction='column'>
+      <Grid item container alignItems='center'>
+        <Typography variant='subtitle1'>{label}</Typography>
+        <Box pr={1}></Box>
+        {tooltipContent !== undefined ? (
+          <Tooltip title={tooltipContent} />
+        ) : null}
+      </Grid>
+      {helperElement !== undefined ? <Grid item>{helperElement}</Grid> : null}
+      <DocumentList name={name} />
+      <Grid item>
+        {/* @ts-ignore */}
+        <TypedField
+          control={control}
+          customRenderer
+          component={Dropzone}
+          name={name}
+          label=''
+          valueExtractor={documentValueExtractor}
+          multiple
+          fullWidth
+          accept={DataroomFileType.document}
+          documentInfo={{
+            title: label,
+            type: label
+          }}
+        />
+      </Grid>
+    </Grid>
+  )
+}
