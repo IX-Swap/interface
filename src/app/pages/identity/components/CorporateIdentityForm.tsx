@@ -1,7 +1,7 @@
 import React from 'react'
 import { CorporateIdentity } from 'types/identity'
 import { Box, Grid } from '@material-ui/core'
-import { AddressFields } from 'app/pages/identity/components/AddressFields'
+import { AddressFields } from 'app/pages/identity/components/AddressFields/AddressFields'
 import { Section } from 'app/pages/identity/components/Section'
 import { DeclarationFields } from 'app/pages/identity/components/DeclarationFields'
 import { CompanyInfoFields } from 'app/pages/identity/components/CompanyInfoFields'

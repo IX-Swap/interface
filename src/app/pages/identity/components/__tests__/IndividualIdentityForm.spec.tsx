@@ -6,7 +6,7 @@ import {
 } from 'app/pages/identity/components/IndividualIdentityForm'
 import { individual } from '__fixtures__/identity'
 import { Section } from 'app/pages/identity/components/Section'
-import { AddressFields } from 'app/pages/identity/components/AddressFields'
+import { AddressFields } from 'app/pages/identity/components/AddressFields/AddressFields'
 import { FinancialFields } from 'app/pages/identity/components/FinancialFields'
 import { DeclarationFields } from 'app/pages/identity/components/DeclarationFields'
 import { IdentityDataroom } from 'app/pages/identity/components/IdentityDataroom'
@@ -17,7 +17,7 @@ import { user } from '__fixtures__/user'
 jest.mock('app/pages/identity/components/Section', () => ({
   Section: jest.fn(({ children }) => children)
 }))
-jest.mock('app/pages/identity/components/AddressFields', () => ({
+jest.mock('app/pages/identity/components/AddressFields/AddressFields', () => ({
   AddressFields: jest.fn(() => null)
 }))
 jest.mock('app/pages/identity/components/FinancialFields', () => ({
@@ -67,26 +67,16 @@ describe('IndividualIdentityForm', () => {
 
     expect(Section).toHaveBeenNthCalledWith(
       1,
-      { title: 'Identity', children: expect.anything() },
-      {}
-    )
-    expect(Section).toHaveBeenNthCalledWith(
-      2,
-      { title: 'Address', children: expect.anything() },
-      {}
-    )
-    expect(Section).toHaveBeenNthCalledWith(
-      3,
       { title: 'Financials', children: expect.anything() },
       {}
     )
     expect(Section).toHaveBeenNthCalledWith(
-      4,
+      2,
       { title: 'Documents', children: expect.anything() },
       {}
     )
     expect(Section).toHaveBeenNthCalledWith(
-      5,
+      3,
       { title: 'Declaration', children: expect.anything() },
       {}
     )

@@ -1,4 +1,5 @@
 import * as yup from 'yup'
+import 'yup-phone'
 import {
   CorporateIdentityFormValues,
   IndividualIdentityFormValues
@@ -15,6 +16,7 @@ import {
   individualDeclarationsSchema
 } from 'validation/declarations'
 
+// @ts-expect-error
 export const individualIdentityFormValidationSchema = yup
   .object()
   .shape<IndividualIdentityFormValues>({
@@ -24,8 +26,9 @@ export const individualIdentityFormValidationSchema = yup
     lastName: yup.string().required('Required'),
     nationality: yup.string().required('Required'),
     dob: dateSchema.required('Required'),
+    // TODO Remove this after complete all phase2 in PersonalIdentity page
     countryOfResidence: yup.string().required('Required'),
-    contactNumber: yup.string().required('Required'),
+    contactNumber: yup.string().phone().required('Required'),
     email: emailSchema.required('Required'),
     employmentStatus: yup.string().required('Required'),
     occupation: yup.string().required('Required'),
@@ -34,7 +37,10 @@ export const individualIdentityFormValidationSchema = yup
     annualIncome: yup.string().required('Required'),
     documents: documentsArraySchema.required('Required'),
     declarations: individualDeclarationsSchema.required('Required'),
-    address: addressSchema.required('Required')
+    address: addressSchema.required('Required'),
+    investorAgreement: yup.boolean().required('Required'),
+    custodyAgreement: yup.boolean().required('Required'),
+    disclosures: yup.boolean().required('Required')
   })
 
 export const corporateIdentityFormValidationSchema = yup

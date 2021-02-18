@@ -6,13 +6,14 @@ import { IndividualIdentityFormValues } from 'app/pages/identity/components/type
 import { useCreateOrUpdateIndividual } from 'hooks/identity/useCreateOrUpdateIndividual'
 import { getIdentityFormDefaultValue } from 'app/pages/identity/utils'
 import { Submit } from 'components/form/Submit'
-import { IndividualInfoFields } from 'app/pages/identity/components/IndividualInfoFields'
-import { AddressFields } from 'app/pages/identity/components/AddressFields'
+import { IndividualInfoFields } from 'app/pages/identity/components/IndividualInfoFields/IndividualInfoFields'
+import { AddressFields } from 'app/pages/identity/components/AddressFields/AddressFields'
 import { FinancialFields } from 'app/pages/identity/components/FinancialFields'
 import { IdentityDataroom } from 'app/pages/identity/components/IdentityDataroom'
 import { DeclarationFields } from 'app/pages/identity/components/DeclarationFields'
 import { Form } from 'components/form/Form'
 import { individualIdentityFormValidationSchema } from 'validation/identities'
+import { FormSectionHeader } from 'app/components/DSO/components/FormSectionHeader'
 
 export interface IndividualIdentityFormProps {
   data: IndividualIdentity | undefined
@@ -36,17 +37,15 @@ export const IndividualIdentityForm = (
       validationSchema={individualIdentityFormValidationSchema}
       onSubmit={handleSubmit}
     >
-      <Grid container spacing={2}>
+      <Grid container spacing={6}>
         <Grid item xs={12}>
-          <Section title='Identity'>
-            <IndividualInfoFields />
-          </Section>
+          <FormSectionHeader title='Personal Information' />
+          <IndividualInfoFields />
         </Grid>
 
         <Grid item xs={12}>
-          <Section title='Address'>
-            <AddressFields />
-          </Section>
+          <FormSectionHeader title='Address' />
+          <AddressFields />
         </Grid>
 
         <Grid item xs={12}>

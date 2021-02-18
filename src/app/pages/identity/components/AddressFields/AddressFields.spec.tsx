@@ -3,7 +3,7 @@ import { render, cleanup } from 'test-utils'
 import {
   AddressFields,
   AddressFieldsProps
-} from 'app/pages/identity/components/AddressFields'
+} from 'app/pages/identity/components/AddressFields/AddressFields'
 import { TypedField } from 'components/form/TypedField'
 import { Form } from 'components/form/Form'
 
@@ -85,15 +85,6 @@ describe('AddressFields', () => {
     expect(TypedField).toHaveBeenNthCalledWith(
       4,
       expect.objectContaining({
-        label: 'Postal Code',
-        name: 'postalCode',
-        rootName: props.rootName
-      }),
-      {}
-    )
-    expect(TypedField).toHaveBeenNthCalledWith(
-      5,
-      expect.objectContaining({
         label: 'State',
         name: 'state',
         rootName: props.rootName
@@ -101,10 +92,19 @@ describe('AddressFields', () => {
       {}
     )
     expect(TypedField).toHaveBeenNthCalledWith(
-      6,
+      5,
       expect.objectContaining({
         label: 'Country',
         name: 'country',
+        rootName: props.rootName
+      }),
+      {}
+    )
+    expect(TypedField).toHaveBeenNthCalledWith(
+      6,
+      expect.objectContaining({
+        label: 'Postal Code',
+        name: 'postalCode',
         rootName: props.rootName
       }),
       {}

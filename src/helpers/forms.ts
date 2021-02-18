@@ -8,6 +8,11 @@ export const booleanValueExtractor = (
   value: boolean
 ): boolean => value
 
+export const reverseBooleanValueExtractor = (
+  _: React.ChangeEvent<{}>,
+  value: boolean
+): boolean => !value
+
 export const numericValueExtractor = (
   values: NumberFormatValues
 ): number | undefined => values.floatValue
