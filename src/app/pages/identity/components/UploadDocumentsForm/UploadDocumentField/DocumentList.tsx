@@ -19,12 +19,12 @@ export const DocumentList = ({ title, name }: DocumentListProps) => {
   return (
     <Grid item>
       <Grid container direction='column' spacing={3}>
-        <Grid item>
-          <Typography variant='subtitle1'>
-            {title !== undefined ? title : 'Documents'}
-          </Typography>
-          <Divider />
-        </Grid>
+        {title !== undefined ? (
+          <Grid item>
+            <Typography variant='subtitle1'>{title}</Typography>
+            <Divider />
+          </Grid>
+        ) : null}
         <Grid item>
           <DocumentTable name={name} documents={documents} />
         </Grid>

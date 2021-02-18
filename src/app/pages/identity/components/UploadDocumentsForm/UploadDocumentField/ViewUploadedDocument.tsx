@@ -15,6 +15,7 @@ export const ViewUploadedDocument = ({
   documentId
 }: ViewUploadedDocumentProps) => {
   const { user } = useAuth()
+
   const [downloadDocument, { isLoading }] = useDownloadRawDocument(
     { documentId, uri: documentsURL.getById(getIdFromObj(user), documentId) },
     {
@@ -24,6 +25,7 @@ export const ViewUploadedDocument = ({
       }
     }
   )
+
   const handleClick = async () => await downloadDocument()
 
   return (

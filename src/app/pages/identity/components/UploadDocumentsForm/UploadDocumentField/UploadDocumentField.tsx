@@ -32,7 +32,6 @@ export const UploadDocumentField = ({
         ) : null}
       </Grid>
       {helperElement !== undefined ? <Grid item>{helperElement}</Grid> : null}
-      <DocumentList name={name} />
       <Grid item>
         {/* @ts-ignore */}
         <TypedField
@@ -51,6 +50,7 @@ export const UploadDocumentField = ({
           }}
         />
       </Grid>
+      <DocumentList name={name} />
     </Grid>
   )
 }
