@@ -2,6 +2,7 @@ import React from 'react'
 import { Divider, Grid, Typography } from '@material-ui/core'
 import { useFormContext } from 'react-hook-form'
 import { DocumentTable } from 'app/pages/identity/components/UploadDocumentsForm/UploadDocumentField/DocumentTable'
+import { pathToString } from 'helpers/forms'
 
 export interface DocumentListProps {
   name: any
@@ -10,7 +11,7 @@ export interface DocumentListProps {
 
 export const DocumentList = ({ title, name }: DocumentListProps) => {
   const { watch } = useFormContext()
-  const documents = watch(name)
+  const documents = watch(pathToString(name))
 
   if (documents === undefined || documents.length < 1) {
     return null
