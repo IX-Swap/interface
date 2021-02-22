@@ -1,13 +1,18 @@
 import { Grid } from '@material-ui/core'
+import { BeneficialOwnersInformationFields } from 'app/pages/identity/components/DirectorAndBeneficialOwnerDetails/BeneficialOwnersInformationFields'
 import { DirectorsInformationFields } from 'app/pages/identity/components/DirectorAndBeneficialOwnerDetails/DirectorsInformationFields'
 import { Fields } from 'app/pages/identity/components/DirectorAndBeneficialOwnerDetails/Fields'
 import { FieldsArray } from 'components/form/FieldsArray'
 import React from 'react'
 import { useFormContext } from 'react-hook-form'
 
-const name = 'directors'
+export interface DirectorsAndBeneficialOwnerFieldsProps {
+  name: string
+}
 
-export const Directors = () => {
+export const DirectorsAndBeneficialOwnerFields = ({
+  name
+}: DirectorsAndBeneficialOwnerFieldsProps) => {
   const { control } = useFormContext()
   return (
     <FieldsArray name={name} control={control}>
@@ -26,11 +31,19 @@ export const Directors = () => {
                 max={5}
                 sectionTitle='Directors/Partners/People with Executive Authority'
                 informationFields={
-                  <DirectorsInformationFields
-                    rootName={name}
-                    index={index}
-                    fieldId={field.id}
-                  />
+                  name === 'directors' ? (
+                    <DirectorsInformationFields
+                      rootName={name}
+                      index={index}
+                      fieldId={field.id}
+                    />
+                  ) : (
+                    <BeneficialOwnersInformationFields
+                      rootName={name}
+                      index={index}
+                      fieldId={field.id}
+                    />
+                  )
                 }
               />
             </Grid>

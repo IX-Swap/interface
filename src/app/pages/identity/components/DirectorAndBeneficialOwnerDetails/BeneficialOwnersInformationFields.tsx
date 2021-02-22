@@ -35,12 +35,13 @@ export const BeneficialOwnersInformationFields = ({
         <TypedField
           control={control}
           component={NumericInput}
-          name='percentageShareholding'
+          name={[rootName, index, 'percentageShareholding']}
           label='Percentage Shareholding'
           numberFormat={percentageNumberFormat}
           valueExtractor={numericValueExtractor}
           helperText='in percent'
           variant='outlined'
+          fullWidth
         />
       </Grid>
     </Grid>

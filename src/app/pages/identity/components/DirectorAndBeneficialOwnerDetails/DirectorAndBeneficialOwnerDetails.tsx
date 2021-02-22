@@ -1,8 +1,7 @@
 import { Grid } from '@material-ui/core'
-import { Directors } from 'app/pages/identity/components/DirectorAndBeneficialOwnerDetails/Directors'
 import { Form } from 'components/form/Form'
 import React from 'react'
-import { BeneficialOwners } from 'app/pages/identity/components/DirectorAndBeneficialOwnerDetails/BeneficialOwners'
+import { DirectorsAndBeneficialOwnerFields } from 'app/pages/identity/components/DirectorAndBeneficialOwnerDetails/DirectorsAndBeneficialOwnerFields'
 
 export const DirectorAndBeneficialOwnerDetails = () => {
   return (
@@ -35,10 +34,10 @@ export const DirectorAndBeneficialOwnerDetails = () => {
     >
       <Grid container direction='column' spacing={6}>
         <Grid item>
-          <Directors />
+          <DirectorsAndBeneficialOwnerFields name='directors' />
         </Grid>
         <Grid item>
-          <BeneficialOwners />
+          <DirectorsAndBeneficialOwnerFields name='beneficialOwners' />
         </Grid>
       </Grid>
     </Form>

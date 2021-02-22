@@ -1,4 +1,4 @@
-import { Directors } from 'app/pages/identity/components/DirectorAndBeneficialOwnerDetails/Directors'
+import { DirectorsAndBeneficialOwnerFields } from 'app/pages/identity/components/DirectorAndBeneficialOwnerDetails/DirectorsAndBeneficialOwnerFields'
 import { Fields } from 'app/pages/identity/components/DirectorAndBeneficialOwnerDetails/Fields'
 import { Form } from 'components/form/Form'
 import React from 'react'
@@ -11,7 +11,7 @@ jest.mock(
   })
 )
 
-describe('Directors', () => {
+describe('DirectorsAndBeneficialOwnerFields', () => {
   const defaultValues = {
     directors: [
       {
@@ -31,7 +31,7 @@ describe('Directors', () => {
   it('renders without errors', () => {
     render(
       <Form>
-        <Directors />
+        <DirectorsAndBeneficialOwnerFields name='directors' />
       </Form>
     )
   })
@@ -39,7 +39,7 @@ describe('Directors', () => {
   it('renders components correctly', () => {
     render(
       <Form defaultValues={defaultValues}>
-        <Directors />
+        <DirectorsAndBeneficialOwnerFields name='directors' />
       </Form>
     )
 
