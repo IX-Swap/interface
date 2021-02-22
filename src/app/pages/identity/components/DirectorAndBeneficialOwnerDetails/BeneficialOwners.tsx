@@ -1,5 +1,6 @@
 import { Grid } from '@material-ui/core'
-import { BeneficialOwnerFields } from 'app/pages/identity/components/DirectorAndBeneficialOwnerDetails/BeneficialOwnerFields'
+import { BeneficialOwnersInformationFields } from 'app/pages/identity/components/DirectorAndBeneficialOwnerDetails/BeneficialOwnersInformationFields'
+import { Fields } from 'app/pages/identity/components/DirectorAndBeneficialOwnerDetails/Fields'
 import { FormSectionHeader } from 'app/pages/identity/components/FormSectionHeader'
 import { FieldsArray } from 'components/form/FieldsArray'
 import React from 'react'
@@ -20,7 +21,7 @@ export const BeneficialOwners = () => {
             <Grid container direction='column' spacing={3}>
               {fields.map((field, index) => (
                 <Grid item key={field.id}>
-                  <BeneficialOwnerFields
+                  <Fields
                     rootName={name}
                     fieldId={field.id}
                     index={index}
@@ -29,6 +30,14 @@ export const BeneficialOwners = () => {
                     isLast={fields.length - 1 === index}
                     total={fields.length}
                     max={5}
+                    sectionTitle='Beneficial Owners Information'
+                    informationFields={
+                      <BeneficialOwnersInformationFields
+                        rootName={name}
+                        index={index}
+                        fieldId={field.id}
+                      />
+                    }
                   />
                 </Grid>
               ))}

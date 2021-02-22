@@ -1,12 +1,12 @@
 import React from 'react'
 import { render, cleanup } from 'test-utils'
-import {
-  DirectorsFields,
-  DirectorsFieldsProps
-} from 'app/pages/identity/components/DirectorAndBeneficialOwnerDetails/DirectorsFields'
 import { Form } from 'components/form/Form'
 import { FormSectionHeader } from 'app/pages/identity/components/FormSectionHeader'
 import { fireEvent } from '@testing-library/react'
+import {
+  Fields,
+  FieldsProps
+} from 'app/pages/identity/components/DirectorAndBeneficialOwnerDetails/Fields'
 
 jest.mock(
   'app/pages/identity/components/DirectorAndBeneficialOwnerDetails/DocumentsFields',
@@ -26,11 +26,11 @@ jest.mock('app/pages/identity/components/FormSectionHeader', () => ({
   FormSectionHeader: jest.fn(() => null)
 }))
 
-describe('DirectorsFields', () => {
+describe('Fields', () => {
   const mockAppend = jest.fn()
   const mockRemove = jest.fn()
 
-  const props: DirectorsFieldsProps = {
+  const props: FieldsProps = {
     rootName: 'directors',
     index: 0,
     fieldId: '123',
@@ -38,7 +38,9 @@ describe('DirectorsFields', () => {
     remove: mockRemove,
     isLast: true,
     total: 1,
-    max: 5
+    max: 5,
+    sectionTitle: 'Directors',
+    informationFields: <></>
   }
 
   afterEach(async () => {
@@ -49,7 +51,7 @@ describe('DirectorsFields', () => {
   it('renders without errors', () => {
     render(
       <Form>
-        <DirectorsFields {...props} />
+        <Fields {...props} />
       </Form>
     )
   })
@@ -57,7 +59,7 @@ describe('DirectorsFields', () => {
   it('does not render FormSectionHeader when index = 0', () => {
     render(
       <Form>
-        <DirectorsFields {...props} />
+        <Fields {...props} />
       </Form>
     )
 
@@ -67,13 +69,13 @@ describe('DirectorsFields', () => {
   it('render FormSectionHeader when index > 0', () => {
     render(
       <Form>
-        <DirectorsFields {...props} index={1} />
+        <Fields {...props} index={1} />
       </Form>
     )
 
     expect(FormSectionHeader).toHaveBeenCalledWith(
       {
-        title: '(2) Directors/Partners/People with Executive Authority',
+        title: '(2) Directors',
         variant: 'subsection'
       },
       {}
@@ -83,7 +85,7 @@ describe('DirectorsFields', () => {
   it('handle Add more button correctly', () => {
     const { getByText } = render(
       <Form>
-        <DirectorsFields {...props} />
+        <Fields {...props} />
       </Form>
     )
 
@@ -96,7 +98,7 @@ describe('DirectorsFields', () => {
   it('handles Delete button correctly', () => {
     const { getByText } = render(
       <Form>
-        <DirectorsFields {...props} index={1} isLast={false} total={5} />
+        <Fields {...props} index={1} isLast={false} total={5} />
       </Form>
     )
 

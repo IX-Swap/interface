@@ -1,13 +1,13 @@
 import { Directors } from 'app/pages/identity/components/DirectorAndBeneficialOwnerDetails/Directors'
-import { DirectorsFields } from 'app/pages/identity/components/DirectorAndBeneficialOwnerDetails/DirectorsFields'
+import { Fields } from 'app/pages/identity/components/DirectorAndBeneficialOwnerDetails/Fields'
 import { Form } from 'components/form/Form'
 import React from 'react'
 import { render, cleanup } from 'test-utils'
 
 jest.mock(
-  'app/pages/identity/components/DirectorAndBeneficialOwnerDetails/DirectorsFields',
+  'app/pages/identity/components/DirectorAndBeneficialOwnerDetails/Fields',
   () => ({
-    DirectorsFields: jest.fn(() => null)
+    Fields: jest.fn(() => null)
   })
 )
 
@@ -43,7 +43,7 @@ describe('Directors', () => {
       </Form>
     )
 
-    expect(DirectorsFields).toHaveBeenNthCalledWith(
+    expect(Fields).toHaveBeenNthCalledWith(
       1,
       expect.objectContaining({
         rootName: 'directors',
@@ -52,7 +52,7 @@ describe('Directors', () => {
       }),
       {}
     )
-    expect(DirectorsFields).toHaveBeenNthCalledWith(
+    expect(Fields).toHaveBeenNthCalledWith(
       2,
       expect.objectContaining({
         rootName: 'directors',

@@ -1,13 +1,13 @@
 import { BeneficialOwners } from 'app/pages/identity/components/DirectorAndBeneficialOwnerDetails/BeneficialOwners'
-import { BeneficialOwnerFields } from 'app/pages/identity/components/DirectorAndBeneficialOwnerDetails/BeneficialOwnerFields'
+import { Fields } from 'app/pages/identity/components/DirectorAndBeneficialOwnerDetails/Fields'
 import { Form } from 'components/form/Form'
 import React from 'react'
 import { render, cleanup } from 'test-utils'
 
 jest.mock(
-  'app/pages/identity/components/DirectorAndBeneficialOwnerDetails/BeneficialOwnerFields',
+  'app/pages/identity/components/DirectorAndBeneficialOwnerDetails/Fields',
   () => ({
-    BeneficialOwnerFields: jest.fn(() => null)
+    Fields: jest.fn(() => null)
   })
 )
 
@@ -43,7 +43,7 @@ describe('BeneficialOwners', () => {
       </Form>
     )
 
-    expect(BeneficialOwnerFields).toHaveBeenNthCalledWith(
+    expect(Fields).toHaveBeenNthCalledWith(
       1,
       expect.objectContaining({
         rootName: 'beneficialOwners',
@@ -52,7 +52,7 @@ describe('BeneficialOwners', () => {
       }),
       {}
     )
-    expect(BeneficialOwnerFields).toHaveBeenNthCalledWith(
+    expect(Fields).toHaveBeenNthCalledWith(
       2,
       expect.objectContaining({
         rootName: 'beneficialOwners',

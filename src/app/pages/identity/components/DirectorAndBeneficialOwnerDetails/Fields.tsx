@@ -1,12 +1,11 @@
 import { Grid } from '@material-ui/core'
 import { ButtonTransparent } from 'app/components/ButtonTransparent'
 import { DocumentFields } from 'app/pages/identity/components/DirectorAndBeneficialOwnerDetails/DocumentsFields'
-import { DirectorsInformationFields } from 'app/pages/identity/components/DirectorAndBeneficialOwnerDetails/DirectorsInformationFields'
 import { FormSectionHeader } from 'app/pages/identity/components/FormSectionHeader'
 
 import React from 'react'
 
-export interface DirectorsFieldsProps {
+export interface FieldsProps {
   rootName: string
   index: number
   fieldId: string
@@ -15,9 +14,11 @@ export interface DirectorsFieldsProps {
   isLast: boolean
   total: number
   max: number
+  sectionTitle: string
+  informationFields: React.ReactElement
 }
 
-export const DirectorsFields = ({
+export const Fields = ({
   rootName,
   index,
   fieldId,
@@ -25,8 +26,10 @@ export const DirectorsFields = ({
   remove,
   isLast,
   total,
-  max
-}: DirectorsFieldsProps) => {
+  max,
+  sectionTitle,
+  informationFields
+}: FieldsProps) => {
   const handleAppend = () => {
     append({})
   }
@@ -40,20 +43,12 @@ export const DirectorsFields = ({
       {index > 0 ? (
         <Grid item>
           <FormSectionHeader
-            title={`(${
-              index + 1
-            }) Directors/Partners/People with Executive Authority`}
+            title={`(${index + 1}) ${sectionTitle}`}
             variant='subsection'
           />
         </Grid>
       ) : null}
-      <Grid item>
-        <DirectorsInformationFields
-          rootName={rootName}
-          index={index}
-          fieldId={fieldId}
-        />
-      </Grid>
+      <Grid item>{informationFields}</Grid>
       <Grid item>
         <DocumentFields rootName={rootName} index={index} fieldId={fieldId} />
       </Grid>
