@@ -18,7 +18,7 @@ export const DSOCard = (props: DSOCardProps) => {
   const classes = useStyles()
 
   return (
-    <Box px={2}>
+    <Box px={2} height='100%'>
       <Card className={classes.root} variant='outlined' elevation={0}>
         <DSOCardCover dso={dso} viewURL={viewURL} />
         <CardContent className={classes.content}>

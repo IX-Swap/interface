@@ -6,6 +6,7 @@ export default makeStyles(theme => ({
     flexDirection: 'column',
     position: 'relative',
     minHeight: 200,
+    height: '100%',
 
     [theme.breakpoints.up('md')]: {
       flexDirection: 'row'
