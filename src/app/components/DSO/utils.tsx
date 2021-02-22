@@ -81,7 +81,7 @@ export const transformDSOToFormValues = (
 export const documentValueExtractor = (
   value?: DataroomFile | DataroomFile[]
 ) => {
-  return Array.isArray(value) ? value?.[0]._id : value?._id
+  return Array.isArray(value) ? value : value?._id
 }
 
 const dsoStatusColors = {

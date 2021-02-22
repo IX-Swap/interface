@@ -6,23 +6,21 @@ import { useFormContext } from 'react-hook-form'
 import { DataroomFileType } from 'config/dataroom'
 import { Box, FormHelperText, Typography } from '@material-ui/core'
 import { useDropzone } from 'react-dropzone'
-import { useAuth } from 'hooks/auth/useAuth'
 import { useFormError } from 'hooks/useFormError'
-import { getDataroomFileId } from 'helpers/dataroom'
 import { useStyles } from './Dropzone.styles'
-import { Avatar } from 'components/Avatar'
-import { DropzoneFallback } from 'components/dataroom/DropzoneFallback'
 import { hasValue } from 'helpers/forms'
+import { DropzoneDisplay } from 'components/dataroom/DropzoneDisplay'
 
 export interface DropzoneProps {
   name: string
   label: string
-  value: Maybe<DataroomFile>
-  onChange: (files: DataroomFile) => any
+  value?: Maybe<DataroomFile | DataroomFile[]>
+  onChange: (files: DataroomFile | DataroomFile[]) => any
   documentInfo: UploadDocumentInfo
   onDelete?: () => any
   multiple?: boolean
   accept?: DataroomFileType
+  fullWidth?: boolean
 }
 
 export const Dropzone = (props: DropzoneProps) => {
@@ -33,17 +31,23 @@ export const Dropzone = (props: DropzoneProps) => {
     name,
     onChange,
     accept = DataroomFileType.document,
-    multiple = false
+    multiple = false,
+    fullWidth = false
   } = props
   const { watch } = useFormContext()
   const value = watch(name, defaultValue) as DropzoneProps['value']
-  const [uploadFile] = useUploadFile({
-    onSuccess: response => onChange(response.data[0])
-  })
-  const { user } = useAuth()
-  const photoId = getDataroomFileId(value)
   const { hasError, error } = useFormError(name)
   const { container } = useStyles()
+
+  const [uploadFile] = useUploadFile({
+    onSuccess: response => {
+      onChange(
+        multiple
+          ? [...(Array.isArray(value) ? value : []), ...response.data]
+          : response.data[0]
+      )
+    }
+  })
 
   const onDrop = useCallback(
     async acceptedFiles => {
@@ -56,16 +60,16 @@ export const Dropzone = (props: DropzoneProps) => {
     },
     [documentInfo, uploadFile]
   )
+
   const { getRootProps, getInputProps } = useDropzone({
     onDrop,
-    maxFiles: multiple ? 0 : 1,
     multiple,
     accept
   })
 
   return (
     <>
-      {label !== '' && label !== undefined ? (
+      {hasValue(label) ? (
         <Box mb={1}>
           <Typography variant='subtitle2' color='textSecondary'>
             {label}
@@ -74,18 +78,16 @@ export const Dropzone = (props: DropzoneProps) => {
       ) : null}
       <Box
         component='div'
-        width={128}
+        width={fullWidth ? '100%' : 128}
         height={128}
         className={container}
         {...(getRootProps() as any)}
       >
         <input id={name} name={name} {...getInputProps()} />
-        <Avatar
-          size={128}
-          documentId={hasValue(value) ? photoId : undefined}
-          ownerId={hasValue(value) ? user?._id : undefined}
-          variant='square'
-          fallback={<DropzoneFallback hasError={hasError} />}
+        <DropzoneDisplay
+          multiple={multiple}
+          hasError={hasError}
+          value={value}
         />
       </Box>
       {hasError ? <FormHelperText error>{error}</FormHelperText> : null}
