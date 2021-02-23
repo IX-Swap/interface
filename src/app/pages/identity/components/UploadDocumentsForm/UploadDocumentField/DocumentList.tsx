@@ -11,7 +11,8 @@ export interface DocumentListProps {
 
 export const DocumentList = ({ title, name }: DocumentListProps) => {
   const { watch } = useFormContext()
-  const documents = watch(pathToString(name))
+  const stringName = pathToString(name)
+  const documents = watch(stringName)
 
   if (documents === undefined || documents.length < 1) {
     return null
@@ -27,7 +28,7 @@ export const DocumentList = ({ title, name }: DocumentListProps) => {
           </Grid>
         ) : null}
         <Grid item>
-          <DocumentTable name={name} documents={documents} />
+          <DocumentTable name={stringName} documents={documents} />
         </Grid>
       </Grid>
     </Grid>
