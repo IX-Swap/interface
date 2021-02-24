@@ -1,0 +1,25 @@
+import React from 'react'
+import { Meta, Story } from '@storybook/react/types-6-0'
+import { InvestorDeclarationForm } from 'app/pages/_identity/components/InvestorDeclarationForm/InvestorDeclarationForm'
+import { Grid } from '@material-ui/core'
+import { Form } from 'components/form/Form'
+
+const meta: Meta = {
+  title: 'Pages/Identity/InvestorDeclarationForm',
+  component: InvestorDeclarationForm
+}
+
+export default meta
+
+const Template: Story = () => {
+  return (
+    <Form>
+      <Grid container spacing={6}>
+        <Grid item xs={12}>
+          <InvestorDeclarationForm type={'individual'} />
+        </Grid>
+      </Grid>
+    </Form>
+  )
+}
+export const Default = Template.bind({})
