@@ -3,6 +3,7 @@ import { RadioGroup } from 'components/form/RadioGroup'
 import { TypedField } from 'components/form/TypedField'
 import { useFormContext } from 'react-hook-form'
 import { FormControlLabel, Radio } from '@material-ui/core'
+import { booleanValueExtractor } from 'helpers/forms'
 
 export const UsCitizenshipConfirmationFields = () => {
   const { control } = useFormContext()
@@ -13,7 +14,7 @@ export const UsCitizenshipConfirmationFields = () => {
       <TypedField
         customRenderer
         component={RadioGroup}
-        name='declarations.tax.isUsCitizen'
+        name='declarations.tax.fatca'
         label=''
         control={control}
       >

@@ -30,6 +30,7 @@ export const identityURL = {
       `/identity/corporates/${userId}/${corporateId}`
   },
   individuals: {
+    create: (userId: string) => `/identity/individuals/${userId}`,
     update: (userId: string) => `/identity/individuals/${userId}`,
     get: (userId: string) => `/identity/individuals/${userId}`
   }

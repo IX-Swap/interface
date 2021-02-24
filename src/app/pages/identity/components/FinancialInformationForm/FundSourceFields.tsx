@@ -13,7 +13,7 @@ export const FundSourceFields = () => {
     <Grid container direction='column' spacing={3}>
       <Grid item>
         <Grid container direction='column' spacing={2}>
-          <FieldsArray name='fundSource' control={control}>
+          <FieldsArray name='sourceOfFund' control={control}>
             {({ fields }) => (
               <>
                 {fields.map((field, index) => (

@@ -14,7 +14,7 @@ export interface FundSourceSliderProps {
 export const FundSourceSlider = ({ field, index }: FundSourceSliderProps) => {
   const { control, watch } = useFormContext()
   const isChecked: boolean = watch<string, boolean>(
-    `fundSource[${index}].checked`,
+    `sourceOfFund[${index}].checked`,
     false
   )
 
@@ -24,7 +24,7 @@ export const FundSourceSlider = ({ field, index }: FundSourceSliderProps) => {
         valueExtractor={sliderValueExtractor}
         customRenderer
         component={Slider}
-        name={['fundSource', index, 'value']}
+        name={['sourceOfFund', index, 'value']}
         label={field.name ?? ''}
         defaultValue={field.value}
         control={control}

@@ -59,7 +59,7 @@ export const getIdentityFormDefaultValue = <
       ?.taxIdentificationNumber,
     taxIdAvailable: getTaxResidencyData(type, identity)?.taxIdAvailable,
     reasonUnavailable: getTaxResidencyData(type, identity)?.reasonUnavailable,
-    fundSource: getFundSource(identity as IndividualIdentity, type)
+    fundSource: getFundSource(identity as IndividualIdentity)
   } as unknown) as IdentityFormValues<T>
 }
 
@@ -173,20 +173,17 @@ export const getFundSourceDefaults = () => {
   return fundSourceList.map(name => ({ name, checked: false, value: 0 }))
 }
 
-export const getFundSource = (
-  identity: IndividualIdentity,
-  type: IdentityType
-) => {
-  if (type === 'corporate') {
-    return undefined
-  }
+export const getFundSource = (identity: IndividualIdentity) => {
   if (
     identity === undefined ||
-    identity.fundSource === undefined ||
-    identity.fundSource.length < 1
+    identity.sourceOfFund === undefined ||
+    identity.sourceOfFund.length < 1
   ) {
     return getFundSourceDefaults()
   }
 
-  return identity.fundSource
+  return identity.sourceOfFund.map((value, index) => ({
+    ...value,
+    name: fundSourceList[index]
+  }))
 }

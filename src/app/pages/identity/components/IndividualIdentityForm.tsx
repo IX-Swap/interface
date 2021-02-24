@@ -14,6 +14,7 @@ import { DeclarationFields } from 'app/pages/identity/components/DeclarationFiel
 import { Form } from 'components/form/Form'
 import { individualIdentityFormValidationSchema } from 'validation/identities'
 import { FormSectionHeader } from 'app/components/DSO/components/FormSectionHeader'
+import { FormStepper } from 'app/components/FormStepper/FormStepper'
 
 export interface IndividualIdentityFormProps {
   data: IndividualIdentity | undefined
@@ -26,7 +27,8 @@ export const IndividualIdentityForm = (
   props: IndividualIdentityFormProps
 ): JSX.Element => {
   const { data, submitButtonText, cancelButton } = props
-  const [createOrUpdateIndividual] = useCreateOrUpdateIndividual()
+  const createOrUpdateMutation = useCreateOrUpdateIndividual()
+  const [createOrUpdateIndividual] = createOrUpdateMutation
   const handleSubmit = async (values: IndividualIdentityFormValues) => {
     await createOrUpdateIndividual(values)
   }
@@ -37,7 +39,28 @@ export const IndividualIdentityForm = (
       validationSchema={individualIdentityFormValidationSchema}
       onSubmit={handleSubmit}
     >
-      <Grid container spacing={6}>
+      {/* <FormStepper
+        defaultActiveStep={0}
+        data={data}
+        createMutation={createOrUpdateMutation}
+        editMutation={createOrUpdateMutation}
+        submitMutation={createOrUpdateMutation}
+        steps={[
+          {
+            label: 'Personal Information',
+            component: () => <IndividualInfoFields />
+          },
+          {
+            label: 'Financial Information',
+            component: () => <FinancialFields />
+          },
+          {
+            label: 'Tax Declaration',
+            component: () => <IndividualInfoFields />
+          }
+        ]}
+      /> */}
+      {/* <Grid container spacing={6}>
         <Grid item xs={12}>
           <FormSectionHeader title='Personal Information' />
           <IndividualInfoFields />
@@ -70,8 +93,8 @@ export const IndividualIdentityForm = (
           {cancelButton}
           <Box px={1} />
           <Submit>{submitButtonText}</Submit>
-        </Grid>
-      </Grid>
+        </Grid> */}
+      {/* </Grid> */}
     </Form>
   )
 }

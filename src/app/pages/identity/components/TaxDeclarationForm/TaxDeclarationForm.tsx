@@ -8,24 +8,21 @@ import { UsCitizenshipConfirmation } from 'app/pages/identity/components/TaxDecl
 
 export const TaxDeclarationForm = () => {
   return (
-    <Form defaultValues={getIdentityFormDefaultValue(undefined, 'individual')}>
-      <Grid container direction='column' spacing={6}>
-        <Grid item>
-          <Typography>
-            <TaxDeclarationInfoDialog /> to know why we need your tax
-            information.
-          </Typography>
-        </Grid>
-        <Grid item>
-          <TaxResidencyFields />
-        </Grid>
-        <Grid item>
-          <Divider />
-        </Grid>
-        <Grid item>
-          <UsCitizenshipConfirmation />
-        </Grid>
+    <Grid container direction='column' spacing={6}>
+      <Grid item>
+        <Typography>
+          <TaxDeclarationInfoDialog /> to know why we need your tax information.
+        </Typography>
       </Grid>
-    </Form>
+      <Grid item>
+        <TaxResidencyFields />
+      </Grid>
+      <Grid item>
+        <Divider />
+      </Grid>
+      <Grid item>
+        <UsCitizenshipConfirmation />
+      </Grid>
+    </Grid>
   )
 }

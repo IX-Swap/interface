@@ -24,6 +24,7 @@ export interface TaxResidency {
   taxIdentificationNumber: string
   taxIdAvailable: boolean
   reason: 'A' | 'B' | 'C'
+  customReason: string
 }
 
 export type TaxResidencies = Array<Partial<TaxResidency>>
@@ -76,7 +77,7 @@ export interface IdentityFinancials {
   employmentStatus: string
   occupation: string
   sourceOfWealth: string
-  fundSource?: FundSource[]
+  sourceOfFund?: FundSource[]
 }
 
 export interface CorporateFields {

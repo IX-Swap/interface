@@ -16,7 +16,7 @@ import {
   individualDeclarationsSchema
 } from 'validation/declarations'
 
-// @ts-expect-error
+// @ts-ignore
 export const individualIdentityFormValidationSchema = yup
   .object()
   .shape<IndividualIdentityFormValues>({

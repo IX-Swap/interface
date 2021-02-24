@@ -26,25 +26,27 @@ export const SingaporeOnlyFields = () => {
         <FormControlLabel
           label='YES, I’m currently only tax resident in Singapore and do not have a foreign tax residency.'
           value='yes'
-          control={<Radio checked={singaporeOnly} />}
+          control={<Radio />}
         />
       </Grid>
-      <Grid item xs={12} md={4}>
-        <Typography>
-          <Box fontWeight='bold' component='span'>
-            My Singapore NRIC/FIN is:
-          </Box>
-        </Typography>
-        <VSpacer size='small' />
-        <TypedField
-          component={TextField}
-          variant='outlined'
-          control={control}
-          name='taxIdentificationNumber'
-          label='NRIC/FIN'
-          disabled={!singaporeOnly}
-        />
-      </Grid>
+      {singaporeOnly && (
+        <Grid item xs={12} md={4}>
+          <Typography>
+            <Box fontWeight='bold' component='span'>
+              My Singapore NRIC/FIN is:
+            </Box>
+          </Typography>
+
+          <VSpacer size='small' />
+          <TypedField
+            component={TextField}
+            variant='outlined'
+            control={control}
+            name={['taxResidencies', 0, 'taxIdentificationNumber']}
+            label='NRIC/FIN'
+          />
+        </Grid>
+      )}
     </Grid>
   )
 }

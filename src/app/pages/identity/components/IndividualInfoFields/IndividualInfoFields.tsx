@@ -113,7 +113,7 @@ export const IndividualInfoFields = (
               control={control}
               name='email'
               label='Email'
-              disabled={isEmailDisabled}
+              // disabled={isEmailDisabled}
               defaultValue={defaultEmail}
               variant='outlined'
             />

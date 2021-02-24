@@ -1,22 +1,15 @@
-import {
-  RadioGroup as MUIRadioGroup,
-  FormControlLabelProps
-} from '@material-ui/core'
+import { RadioGroup as MUIRadioGroup, RadioGroupProps } from '@material-ui/core'
 import React from 'react'
 import { TypedFieldRenderComponentProps } from 'components/form/types'
 
-export interface RadioProps extends Omit<FormControlLabelProps, 'control'> {
+export interface RadioProps extends RadioGroupProps {
   children: React.ReactNode
 }
 
 export const RadioGroup = (
   props: RadioProps & TypedFieldRenderComponentProps<string>
 ) => {
-  const { name, value, children, onChange } = props
+  const { children, ...rest } = props
 
-  return (
-    <MUIRadioGroup name={name} onChange={onChange} value={value}>
-      {children}
-    </MUIRadioGroup>
-  )
+  return <MUIRadioGroup {...rest}>{children}</MUIRadioGroup>
 }

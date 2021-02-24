@@ -4,6 +4,7 @@ import { IndividualIdentityForm } from 'app/pages/identity/components/Individual
 import { CancelButton } from 'app/pages/identity/components/CancelButton'
 import { useIdentitiesRouter } from 'app/pages/identity/router'
 import { VSpacer } from 'components/VSpacer'
+import { CreateIndividual } from 'app/pages/_identity/pages/CreateIndividual'
 
 export const IndividualIdCreate: React.FC = () => {
   const { paths } = useIdentitiesRouter()
@@ -14,12 +15,7 @@ export const IndividualIdCreate: React.FC = () => {
         <VSpacer size='medium' />
       </Grid>
       <Grid item>
-        <IndividualIdentityForm
-          data={undefined}
-          isNew={true}
-          submitButtonText='Create'
-          cancelButton={<CancelButton link={paths.individual} />}
-        />
+        <CreateIndividual />
       </Grid>
     </Grid>
   )

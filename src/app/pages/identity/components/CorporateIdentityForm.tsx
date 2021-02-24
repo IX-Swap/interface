@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { Fragment } from 'react'
 import { CorporateIdentity } from 'types/identity'
 import { Box, Grid } from '@material-ui/core'
 import { AddressFields } from 'app/pages/identity/components/AddressFields/AddressFields'
@@ -12,6 +12,9 @@ import { Form } from 'components/form/Form'
 import { Submit } from 'components/form/Submit'
 import { IdentityDataroom } from 'app/pages/identity/components/IdentityDataroom'
 import { corporateIdentityFormValidationSchema } from 'validation/identities'
+import { useCreateCorporateIdentity } from 'hooks/identity/useCreateCorporateIdentity'
+import { useUpdateCorporateIdentity } from 'hooks/identity/useUpdateCorporateIdentity'
+import { FormStepper } from 'app/components/FormStepper/FormStepper'
 
 export interface CorporateIdentityFormProps {
   data: CorporateIdentity | undefined
@@ -24,55 +27,63 @@ export const CorporateIdentityForm = (
   props: CorporateIdentityFormProps
 ): JSX.Element => {
   const { data, submitButtonText, cancelButton, onSubmit } = props
-  const handleSubmit = (values: CorporateIdentityFormValues) => {
-    if (onSubmit !== undefined) {
-      onSubmit(values)
-    }
-  }
+
+  const createMutation = useCreateCorporateIdentity()
+  const updateMutation = useUpdateCorporateIdentity(data?._id as string)
+  const submitMutation = useUpdateCorporateIdentity(data?._id as string)
 
   return (
-    <Form
-      defaultValues={getIdentityFormDefaultValue(data, 'corporate')}
-      validationSchema={corporateIdentityFormValidationSchema}
-      onSubmit={handleSubmit}
-    >
-      <Grid container spacing={2}>
-        <Grid item xs={12}>
-          <Section title='Company Information'>
-            <CompanyInfoFields />
-          </Section>
-        </Grid>
-        <Grid item xs={12}>
-          <Section title='Company Address'>
-            <AddressFields rootName='companyAddress' />
-          </Section>
-        </Grid>
-        <CorporateProfilesFields
-          title='Company Authorized Personnel'
-          type='representatives'
-        />
-        <CorporateProfilesFields title='Company Director' type='directors' />
-        <CorporateProfilesFields
-          title='Beneficial Owner'
-          type='beneficialOwners'
-        />
-        <Grid item xs={12}>
-          <Section title='Documents'>
-            <IdentityDataroom />
-          </Section>
-        </Grid>
-        <Grid item xs={12}>
-          <Section title='Declaration'>
-            <DeclarationFields type='corporate' />
-          </Section>
-        </Grid>
-
-        <Grid container justify='center' item xs={12}>
-          {cancelButton}
-          <Box px={1} />
-          <Submit>{submitButtonText}</Submit>
-        </Grid>
-      </Grid>
-    </Form>
+    <FormStepper
+      data={data}
+      createMutation={createMutation}
+      editMutation={updateMutation}
+      submitMutation={submitMutation}
+      steps={[
+        // {
+        //   component: () => (
+        //     <Fragment>
+        //       <CompanyInfoFields />
+        //       <AddressFields />
+        //     </Fragment>
+        //   ),
+        //   label: 'Company Information',
+        //   validationSchema: corporateIdentityFormValidationSchema,
+        //   getFormValues: getIdentityFormDefaultValue
+        // },
+        // {
+        //   component: () => (
+        //     <Fragment>
+        //       <CorporateProfilesFields
+        //         title='Company Authorized Personnel'
+        //         type='representatives'
+        //       />
+        //       <CorporateProfilesFields
+        //         title='Company Director'
+        //         type='directors'
+        //       />
+        //       <CorporateProfilesFields
+        //         title='Beneficial Owner'
+        //         type='beneficialOwners'
+        //       />
+        //     </Fragment>
+        //   ),
+        //   label: 'Authorized Personnel',
+        //   validationSchema: corporateIdentityFormValidationSchema,
+        //   getFormValues: getIdentityFormDefaultValue
+        // },
+        // {
+        //   component: () => <IdentityDataroom />,
+        //   label: 'Documents Upload',
+        //   validationSchema: corporateIdentityFormValidationSchema,
+        //   getFormValues: getIdentityFormDefaultValue
+        // },
+        // {
+        //   component: () => <DeclarationFields type='corporate' />,
+        //   label: 'Declaration Fields',
+        //   validationSchema: corporateIdentityFormValidationSchema,
+        //   getFormValues: getIdentityFormDefaultValue
+        // }
+      ]}
+    />
   )
 }
