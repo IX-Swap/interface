@@ -18,7 +18,10 @@ export interface ModalProps extends Partial<DialogProps> {
 export const Dialog = (props: ModalProps) => {
   const { button, title, content, actions, maxWidth, ...rest } = props
   const [isOpened, setIsOpened] = useState(false)
-  const handleOpen = () => setIsOpened(true)
+  const handleOpen = (e: Event) => {
+    e.preventDefault()
+    setIsOpened(true)
+  }
   const handleClose = () => setIsOpened(false)
 
   const renderActions = () => {

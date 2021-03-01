@@ -18,7 +18,7 @@ export interface TypedFieldProps<
   TControl extends Control
 > {
   name: TFieldName
-  label: string
+  label: string | JSX.Element
   control: TControl
   rootName?: string
   defaultValue?: DeepPathValue<TFieldValues, TFieldName>
