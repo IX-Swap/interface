@@ -13,28 +13,35 @@ export interface UploadDocumentFieldProps {
   label: string
   helperElement?: React.ReactNode
   tooltipContent?: any
+  fieldId?: any
 }
 
 export const UploadDocumentField = ({
   name,
   label,
   helperElement,
-  tooltipContent
+  tooltipContent,
+  fieldId
 }: UploadDocumentFieldProps) => {
   const { control } = useFormContext()
   return (
     <Grid container spacing={3} direction='column'>
-      <Grid item container alignItems='center'>
-        <Typography variant='subtitle1'>{label}</Typography>
-        <Box pr={1}></Box>
-        {tooltipContent !== undefined ? (
-          <Tooltip title={tooltipContent} />
-        ) : null}
+      <Grid item>
+        <Box>
+          <Grid item container alignItems='center'>
+            <Typography variant='subtitle1'>{label}</Typography>
+            <Box pr={1}></Box>
+            {tooltipContent !== undefined ? (
+              <Tooltip title={tooltipContent} />
+            ) : null}
+          </Grid>
+        </Box>
+        {helperElement !== undefined ? <Box>{helperElement}</Box> : null}
       </Grid>
-      {helperElement !== undefined ? <Grid item>{helperElement}</Grid> : null}
       <Grid item>
         {/* @ts-ignore */}
         <TypedField
+          key={fieldId}
           control={control}
           customRenderer
           component={Dropzone}
@@ -48,6 +55,7 @@ export const UploadDocumentField = ({
             title: label,
             type: label
           }}
+          showAcceptable
         />
       </Grid>
       <DocumentList name={name} />

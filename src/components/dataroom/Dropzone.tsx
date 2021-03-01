@@ -10,6 +10,7 @@ import { useFormError } from 'hooks/useFormError'
 import { useStyles } from './Dropzone.styles'
 import { hasValue } from 'helpers/forms'
 import { DropzoneDisplay } from 'components/dataroom/DropzoneDisplay'
+import { DropzoneAcceptableFiles } from 'components/dataroom/DropzoneAcceptableFiles'
 
 export interface DropzoneProps {
   name: string
@@ -21,6 +22,7 @@ export interface DropzoneProps {
   multiple?: boolean
   accept?: DataroomFileType
   fullWidth?: boolean
+  showAcceptable?: boolean
 }
 
 export const Dropzone = (props: DropzoneProps) => {
@@ -32,7 +34,8 @@ export const Dropzone = (props: DropzoneProps) => {
     onChange,
     accept = DataroomFileType.document,
     multiple = false,
-    fullWidth = false
+    fullWidth = false,
+    showAcceptable = false
   } = props
   const { watch } = useFormContext()
   const value = watch(name, defaultValue) as DropzoneProps['value']
@@ -70,9 +73,11 @@ export const Dropzone = (props: DropzoneProps) => {
   return (
     <>
       {hasValue(label) ? (
-        <Box mb={1}>
+        <Box mb={1} width={fullWidth ? '100%' : 128}>
           <Typography variant='subtitle2' color='textSecondary'>
-            {label}
+            <Box fontWeight='500' component='span'>
+              {label}
+            </Box>
           </Typography>
         </Box>
       ) : null}
@@ -90,7 +95,14 @@ export const Dropzone = (props: DropzoneProps) => {
           value={value}
         />
       </Box>
-      {hasError ? <FormHelperText error>{error}</FormHelperText> : null}
+      {hasError ? (
+        <FormHelperText error>{error}</FormHelperText>
+      ) : (
+        <DropzoneAcceptableFiles
+          showAcceptable={showAcceptable}
+          accept={accept}
+        />
+      )}
     </>
   )
 }
