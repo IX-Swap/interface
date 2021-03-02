@@ -4,7 +4,15 @@ import { UploadDocumentField } from 'app/pages/identity/components/UploadDocumen
 import { EvidenceOfAccreditationHelper } from 'app/pages/identity/components/UploadDocumentsForm/EvidenceOfAccreditationHelper'
 import { EvindenceOfAccreditationTooltipContent } from 'app/pages/identity/components/UploadDocumentsForm/EvindenceOfAccreditationTooltipContent'
 
-export const UploadDocumentsForm = () => {
+export interface UploadDocumentsFormProps {
+  identityType: 'individual' | 'corporate'
+  children: React.ReactNode
+}
+
+export const UploadDocumentsForm = ({
+  children,
+  identityType
+}: UploadDocumentsFormProps) => {
   return (
     <Grid container spacing={6} direction='column'>
       <Grid item>
@@ -12,11 +20,7 @@ export const UploadDocumentsForm = () => {
           Please upload the following documents. All account statements and
           documents should be date within 3 months.
         </Typography>
-        <Typography variant='caption'>
-          Notes: Type of document formats is supported listed as jpg, jpeg, png,
-          gif, tiff, webp, svg, apng, avif, jfif, pjpeg, pjp, docx, xlsx, pdf,
-          and odt.
-        </Typography>
+        <Grid item>{children}</Grid>
       </Grid>
       <Grid item>
         <UploadDocumentField
