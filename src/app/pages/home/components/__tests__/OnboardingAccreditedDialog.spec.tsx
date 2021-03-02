@@ -1,6 +1,6 @@
 import React from 'react'
 import { render, cleanup } from 'test-utils'
-import { OnboardingAccreditedDialog } from 'app/pages/home/components/OnboardingAccreditedDialog'
+import { OnboardingAccreditedDialog } from 'app/components/OnboardingPanel/Dialogs/OnboardingAccreditedDialog'
 import * as useHasIdentity from 'app/pages/home/hooks/useHasIdentity'
 import * as useIsEnabled2FA from 'helpers/acl'
 import * as useHomeRouter from 'app/pages/home/router'

@@ -1,6 +1,6 @@
 import React from 'react'
 import { render, cleanup } from 'test-utils'
-import { OnboardingIdentityDialog } from 'app/pages/home/components/OnboardingIdentityDialog'
+import { OnboardingIdentityDialog } from 'app/components/OnboardingPanel/Dialogs/OnboardingIdentityDialog'
 import * as useHasIdentity from 'app/pages/home/hooks/useHasIdentity'
 import * as useIdentitiesRouter from 'app/pages/identity/router'
 import * as useIsEnabled2FA from 'helpers/acl'

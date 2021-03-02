@@ -13,14 +13,17 @@ import { AppRouterLinkComponent } from 'components/AppRouterLink'
 import classnames from 'classnames'
 import { useOnboardingPanel } from 'app/components/OnboardingPanel/hooks/useOnboardingPanel'
 
-export interface Onboarding2FADialog {
+export interface OnboardingDialogProps {
   title: string
   initOpened: boolean
   children: React.ReactNode
-  closeLabel: string
-  actionLabel: string
-  action: string
+  closeLabel?: string
+  closeArrow?: boolean
+  actionLabel?: string
+  action?: string
   actionArrow?: boolean
+  openDialog?: boolean
+  closeAction?: () => void
 }
 
 export const EmptyBackDrop = () => <></>
@@ -30,26 +33,30 @@ export const OnboardingDialog = ({
   children,
   title,
   closeLabel,
+  closeArrow = false,
   actionLabel,
   action,
-  actionArrow = true
-}: Onboarding2FADialog) => {
+  actionArrow = true,
+  openDialog,
+  closeAction
+}: OnboardingDialogProps) => {
   const [opened, setOpened] = useState(initOpened)
   const { open: panelOpened } = useOnboardingPanel()
 
-  const { scrollPaper, paper, paperShift } = useStyles()
+  const { scrollPaper, paper, paperShift, root } = useStyles()
 
   const handleClose = () => {
-    setOpened(false)
+    closeAction !== undefined ? closeAction() : setOpened(false)
   }
 
   return (
     <>
       <Dialog
         disableBackdropClick
-        open={opened}
+        open={openDialog !== undefined ? openDialog : opened}
         onClose={handleClose}
         classes={{
+          root: root,
           scrollPaper: scrollPaper,
           paper: classnames(paper, { [paperShift]: !panelOpened })
         }}
@@ -58,18 +65,26 @@ export const OnboardingDialog = ({
         <DialogTitle>{title}</DialogTitle>
         <DialogContent>{children}</DialogContent>
         <DialogActions onClick={handleClose}>
-          <Button color='primary'>{closeLabel}</Button>
-          <Button
-            component={AppRouterLinkComponent}
-            to={action}
-            color='primary'
-          >
-            {actionLabel}{' '}
-            {actionArrow && <ArrowRightAltIcon style={{ marginLeft: 7 }} />}
-          </Button>
+          {closeLabel !== undefined ? (
+            <Button color='primary'>
+              {closeLabel}{' '}
+              {closeArrow && <ArrowRightAltIcon style={{ marginLeft: 7 }} />}
+            </Button>
+          ) : null}
+
+          {action !== undefined ? (
+            <Button
+              component={AppRouterLinkComponent}
+              to={action}
+              color='primary'
+            >
+              {actionLabel}{' '}
+              {actionArrow && <ArrowRightAltIcon style={{ marginLeft: 7 }} />}
+            </Button>
+          ) : null}
         </DialogActions>
       </Dialog>
-      <BackDrop opened={opened} />
+      <BackDrop opened={openDialog !== undefined ? openDialog : opened} />
     </>
   )
 }
