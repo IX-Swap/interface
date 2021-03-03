@@ -6,7 +6,7 @@ import { ChevronRight, ChevronLeft } from '@material-ui/icons'
 import { useOnboardingPanel } from 'app/components/OnboardingPanel/hooks/useOnboardingPanel'
 import { BottomPanel } from 'app/components/OnboardingPanel/BottomPanel'
 import { TopPanel } from 'app/components/OnboardingPanel/TopPanel'
-import { Dialogs } from 'app/components/OnboardingPanel/Dialogs/Dialogs'
+import { OnboardingDialog } from 'app/components/OnboardingDialog/OnboardingDialog'
 
 export const OnboardingPanel = () => {
   const {
@@ -58,7 +58,7 @@ export const OnboardingPanel = () => {
           </Grid>
         </Grid>
       </Box>
-      <Dialogs />
+      <OnboardingDialog />
     </Drawer>
   )
 }
