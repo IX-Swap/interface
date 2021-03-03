@@ -1,10 +1,19 @@
 import { OnboardingDialog } from 'app/components/OnboardingDialog/OnboardingDialog'
-import { OnboardingDialogStateProvider } from 'app/components/OnboardingDialog/useOnboardingDialogState'
 import * as useOnboardingPanel from 'app/components/OnboardingPanel/hooks/useOnboardingPanel'
 import React from 'react'
 import { render, cleanup } from 'test-utils'
 
 describe('OnboardingDialog', () => {
+  const props = {
+    title: 'Secure Your Account!',
+    message: [
+      'Increase your account security by enabling two factor authentication when signing into platform'
+    ],
+    action: '/app/home',
+    actionLabel: 'Enable 2FA',
+    closeLabel: 'Skip',
+    closeArrow: false
+  }
   afterEach(async () => {
     await cleanup()
     jest.clearAllMocks()
@@ -17,10 +26,6 @@ describe('OnboardingDialog', () => {
       .spyOn(useOnboardingPanel, 'useOnboardingPanel')
       .mockImplementation(() => objResponse as any)
 
-    render(
-      <OnboardingDialogStateProvider>
-        <OnboardingDialog />
-      </OnboardingDialogStateProvider>
-    )
+    render(<OnboardingDialog {...props} />)
   })
 })

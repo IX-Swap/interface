@@ -22,7 +22,6 @@ import { AppStateProvider } from 'app/hooks/useAppState'
 import { Form } from 'components/form/Form'
 import { Toast } from 'components/Toast'
 import { AppThemeProvider } from 'AppThemeProvider'
-import { OnboardingDialogStateProvider } from 'app/components/OnboardingDialog/useOnboardingDialogState'
 
 const generateClassName = createGenerateClassName({
   productionPrefix: 'ix'
@@ -34,26 +33,25 @@ export const BaseProviders: React.FC = ({ children }) => {
       <AppThemeProvider>
         {theme => (
           <ThemeProvider theme={theme}>
-            <ToastProvider
-              components={{ Toast: Toast, ToastContainer: () => null }}
-            >
-              <OnboardingDialogStateProvider>
+            <AppStateProvider>
+              <ToastProvider
+                components={{ Toast: Toast, ToastContainer: () => null }}
+              >
                 <BreadcrumbsProvider>
-                  <AppStateProvider>
-                    <ServicesProvider
-                      value={{
-                        snackbarService: {
-                          showSnackbar: jest.fn(),
-                          showNotification: jest.fn()
-                        }
-                      }}
-                    >
-                      <Router history={history}>{children}</Router>
-                    </ServicesProvider>
-                  </AppStateProvider>
+                  <ServicesProvider
+                    value={{
+                      snackbarService: {
+                        showSnackbar: jest.fn(),
+                        showNotification: jest.fn(),
+                        showOnboardingDialog: jest.fn()
+                      }
+                    }}
+                  >
+                    <Router history={history}>{children}</Router>
+                  </ServicesProvider>
                 </BreadcrumbsProvider>
-              </OnboardingDialogStateProvider>
-            </ToastProvider>
+              </ToastProvider>
+            </AppStateProvider>
           </ThemeProvider>
         )}
       </AppThemeProvider>

@@ -7,7 +7,6 @@ import { ReactQueryDevtools } from 'react-query-devtools'
 import { Redirect, Switch } from 'react-router-dom'
 import { Page404 } from 'components/Page404'
 import { useGoogleAnalytics } from './hooks/useGoogleAnalytics'
-import { OnboardingDialogStateProvider } from 'app/components/OnboardingDialog/useOnboardingDialogState'
 
 const AuthRoot = React.lazy(
   async () =>
@@ -33,21 +32,19 @@ export const EntryPoint = () => {
     <Suspense fallback={<LoadingFullScreen />}>
       <BreadcrumbsProvider>
         <ReactQueryDevtools initialIsOpen={false} />
-        <OnboardingDialogStateProvider>
-          <Switch>
-            {isSuccess ? (
-              <SentryRoute path='/app' exact={false} component={AppRoot} />
-            ) : (
-              <SentryRoute path='/auth' exact={false} component={AuthRoot} />
-            )}
-            <SentryRoute
-              exact
-              path='/'
-              render={() => <Redirect to={isSuccess ? '/app' : '/auth'} />}
-            />
-            <SentryRoute path='*' component={Page404} />
-          </Switch>
-        </OnboardingDialogStateProvider>
+        <Switch>
+          {isSuccess ? (
+            <SentryRoute path='/app' exact={false} component={AppRoot} />
+          ) : (
+            <SentryRoute path='/auth' exact={false} component={AuthRoot} />
+          )}
+          <SentryRoute
+            exact
+            path='/'
+            render={() => <Redirect to={isSuccess ? '/app' : '/auth'} />}
+          />
+          <SentryRoute path='*' component={Page404} />
+        </Switch>
       </BreadcrumbsProvider>
     </Suspense>
   )

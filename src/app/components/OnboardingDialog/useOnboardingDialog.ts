@@ -1,17 +1,17 @@
-import { useOnboardingDialogActions } from 'app/components/OnboardingDialog/useOnboardingDialogState'
 import { useIdentitiesRouter } from 'app/pages/identity/router'
 import { IdentityType } from 'app/pages/identity/utils'
 import { useInvestRouter } from 'app/pages/invest/routers/router'
 import { useSecurityRouter } from 'app/pages/security/router'
+import { useSnackbar } from 'hooks/useSnackbar'
 
 export const useOnboardingDialog = () => {
-  const { setOnboardingNotification } = useOnboardingDialogActions()
+  const { showOnboardingDialog } = useSnackbar()
   const { paths: indentityPaths } = useIdentitiesRouter()
   const { paths: securityPaths } = useSecurityRouter()
   const { paths: investPaths } = useInvestRouter()
 
   const showEnable2FADialog = () => {
-    setOnboardingNotification({
+    showOnboardingDialog({
       title: 'Secure Your Account!',
       message: [
         'Increase your account security by enabling two factor authentication when signing into platform'
@@ -24,7 +24,7 @@ export const useOnboardingDialog = () => {
   }
 
   const showCreateAccountDialog = () => {
-    setOnboardingNotification({
+    showOnboardingDialog({
       title: 'Create an Identity',
       message: [
         'Please create your identity first before you can manage your Accounts.'
@@ -37,7 +37,7 @@ export const useOnboardingDialog = () => {
   }
 
   const showPreIdentityCreateDialog = (identityType: IdentityType) => {
-    setOnboardingNotification({
+    showOnboardingDialog({
       title: `Create ${identityType} Identity`,
       message: [
         `In compliance with our KYC/AML process. Please create your ${identityType} identity.`
@@ -48,7 +48,7 @@ export const useOnboardingDialog = () => {
   }
 
   const showPostIdentityCreateDialog = (identityType: IdentityType) => {
-    setOnboardingNotification({
+    showOnboardingDialog({
       title: 'Identity Created!',
       message: [
         `Thank you for creating your ${identityType} identity. We will review your documents and notify your identity status.`
@@ -59,7 +59,7 @@ export const useOnboardingDialog = () => {
   }
 
   const showOnboardingCompleteDialog = () => {
-    setOnboardingNotification({
+    showOnboardingDialog({
       title: 'Onboarding Complete!',
       message: [
         'You have complete the Onboarding journey. Our authorizer will review your identity and notify your status. You can start looking our deals in the “Invest” panel. Happy Investing!'

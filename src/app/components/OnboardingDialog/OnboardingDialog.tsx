@@ -9,32 +9,35 @@ import {
 import ArrowRightAltIcon from '@material-ui/icons/ArrowRightAlt'
 import { useStyles } from 'app/components/OnboardingDialog/OnboardingDialog.styles'
 import { BackDrop } from 'app/components/OnboardingDialog/BackDrop'
-import React from 'react'
+import React, { useState } from 'react'
 import { AppRouterLinkComponent } from 'components/AppRouterLink'
 import classnames from 'classnames'
 import { useOnboardingPanel } from 'app/components/OnboardingPanel/hooks/useOnboardingPanel'
-import {
-  useOnboardingDialogState,
-  useOnboardingDialogActions
-} from 'app/components/OnboardingDialog/useOnboardingDialogState'
 
+export interface OnboardingDialogProps {
+  message: string[]
+  title: string
+  action?: string
+  actionLabel?: string
+  closeLabel?: string
+  closeArrow?: boolean
+}
 export const EmptyBackDrop = () => <></>
 
-export const OnboardingDialog = () => {
+export const OnboardingDialog = (onboardingDialog: OnboardingDialogProps) => {
   const { open: panelOpened } = useOnboardingPanel()
+  const [opened, setOpened] = useState(true)
   const { scrollPaper, paper, paperShift, root } = useStyles()
 
-  const { setOnboardingNotification } = useOnboardingDialogActions()
-  const { onboardingNotification } = useOnboardingDialogState()
-  const unsetOnboardingNotification = () => {
-    setOnboardingNotification()
+  const handleClose = () => {
+    setOpened(false)
   }
 
   return (
     <>
       <Dialog
-        open={onboardingNotification !== undefined}
-        onClose={unsetOnboardingNotification}
+        open={opened}
+        onClose={handleClose}
         classes={{
           root: root,
           scrollPaper: scrollPaper,
@@ -42,43 +45,36 @@ export const OnboardingDialog = () => {
         }}
         BackdropComponent={EmptyBackDrop}
       >
-        {onboardingNotification !== undefined ? (
-          <>
-            <DialogTitle>{onboardingNotification.title}</DialogTitle>
-            <DialogContent>
-              {onboardingNotification.message.map(message => (
-                <Typography>{message}</Typography>
-              ))}
-            </DialogContent>
-            <DialogActions onClick={unsetOnboardingNotification}>
-              {onboardingNotification.closeLabel !== undefined ? (
-                <Button color='primary'>
-                  {onboardingNotification.closeLabel}{' '}
-                  {onboardingNotification.closeArrow !== undefined &&
-                    onboardingNotification.closeArrow && (
-                      <ArrowRightAltIcon style={{ marginLeft: 7 }} />
-                    )}
-                </Button>
-              ) : null}
-
-              {onboardingNotification.action !== undefined ? (
-                <Button
-                  component={AppRouterLinkComponent}
-                  to={onboardingNotification.action}
-                  color='primary'
-                >
-                  {onboardingNotification.actionLabel}{' '}
+        <DialogTitle>{onboardingDialog.title}</DialogTitle>
+        <DialogContent>
+          {onboardingDialog.message.map(message => (
+            <Typography>{message}</Typography>
+          ))}
+        </DialogContent>
+        <DialogActions onClick={handleClose}>
+          {onboardingDialog.closeLabel !== undefined ? (
+            <Button color='primary'>
+              {onboardingDialog.closeLabel}{' '}
+              {onboardingDialog.closeArrow !== undefined &&
+                onboardingDialog.closeArrow && (
                   <ArrowRightAltIcon style={{ marginLeft: 7 }} />
-                </Button>
-              ) : null}
-            </DialogActions>
-          </>
-        ) : null}
+                )}
+            </Button>
+          ) : null}
+
+          {onboardingDialog.action !== undefined ? (
+            <Button
+              component={AppRouterLinkComponent}
+              to={onboardingDialog.action}
+              color='primary'
+            >
+              {onboardingDialog.actionLabel}{' '}
+              <ArrowRightAltIcon style={{ marginLeft: 7 }} />
+            </Button>
+          ) : null}
+        </DialogActions>
       </Dialog>
-      <BackDrop
-        onClick={unsetOnboardingNotification}
-        opened={onboardingNotification !== undefined}
-      />
+      <BackDrop onClick={handleClose} opened={opened} />
     </>
   )
 }

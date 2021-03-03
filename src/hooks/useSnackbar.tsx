@@ -4,10 +4,15 @@ import { AppearanceTypes, useToasts } from 'react-toast-notifications'
 import { NotificationToast } from 'app/pages/notifications/components/NotificationToast'
 import { Notification as TNotification } from 'types/notification'
 import { Snackbar } from './Snackbar'
+import {
+  OnboardingDialog,
+  OnboardingDialogProps
+} from 'app/components/OnboardingDialog/OnboardingDialog'
 
 export interface SnackbarService {
   showSnackbar: (message: ReactNode, variant?: AppearanceTypes) => any
   showNotification: (notification: TNotification) => any
+  showOnboardingDialog: (onboardingDialog: OnboardingDialogProps) => any
 }
 
 export const useSnackbar = (): SnackbarService => {
@@ -32,6 +37,12 @@ export const useSnackbar = (): SnackbarService => {
     },
     showNotification: (notification: TNotification) => {
       return addToast(<NotificationToast data={notification} />)
+    },
+    showOnboardingDialog: (onboardingDialog: OnboardingDialogProps) => {
+      return addToast(<OnboardingDialog {...onboardingDialog} />, {
+        appearance: 'info',
+        autoDismiss: false
+      })
     }
   }
 }
