@@ -6,7 +6,7 @@ import { useIsEnabled2FA, useIsAccredited } from 'helpers/acl'
 import { AppRoute as AppPath } from 'app/router'
 import { useCachedUser } from 'hooks/auth/useCachedUser'
 import { ScrollToTop } from './ScrollToTop'
-import { useOnboardingDialog } from 'app/components/OnboardingDialog/useOnboardingDialog'
+import { useOnboardingDialog } from 'app/components/OnboardingDialog/hooks/useOnboardingDialog'
 
 export interface AppRouteProps extends RouteComponentProps {
   route: InternalRouteProps

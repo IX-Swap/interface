@@ -3,7 +3,7 @@ import { IdentityType } from 'app/pages/identity/utils'
 
 export type IdentityStatus = 'Rejected' | 'Authorized' | 'Submitted' | 'Draft'
 
-const getIdentityStatus = (status?: IdentityStatus) => {
+export const getIdentityStatus = (status?: IdentityStatus) => {
   switch (status) {
     case 'Rejected':
       return ['Rejected']
@@ -16,12 +16,12 @@ const getIdentityStatus = (status?: IdentityStatus) => {
   }
 }
 
-const defaultOnboardingSteps = [
+export const defaultOnboardingSteps = [
   { title: 'Get Started', content: ['Access platform and reports'] },
   { title: 'Select Your Desired Option', content: ['Create your account.'] }
 ]
 
-const getIdentityOnboardingSteps = (
+export const getIdentityOnboardingSteps = (
   indentityType: IdentityType,
   status?: IdentityStatus
 ) => [
@@ -71,13 +71,13 @@ export const useOnboardingSteps = (identityType?: IdentityType) => {
     }
   }
 
-  const status =
+  const identityStatus =
     identityType === 'individual'
       ? individualIdentity?.status
       : corporateIdentities.list[0]?.status
 
   return {
-    steps: getIdentityOnboardingSteps(identityType, status),
-    activeStep: getIdentityActiveStep(status)
+    steps: getIdentityOnboardingSteps(identityType, identityStatus),
+    activeStep: getIdentityActiveStep(identityStatus)
   }
 }

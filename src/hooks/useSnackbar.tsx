@@ -18,6 +18,15 @@ export interface SnackbarService {
 export const useSnackbar = (): SnackbarService => {
   const { addToast, toastStack } = useToasts()
 
+  const completeDialog = {
+    title: 'Onboarding Complete!',
+    message: [
+      'You have complete the Onboarding journey. Our authorizer will review your identity and notify your status. You can start looking our deals in the “Invest” panel. Happy Investing!'
+    ],
+    actionLabel: 'Start Investing',
+    action: '/app/invest'
+  }
+
   return {
     showSnackbar: (
       message: ReactNode,
@@ -36,9 +45,25 @@ export const useSnackbar = (): SnackbarService => {
       })
     },
     showNotification: (notification: TNotification) => {
-      return addToast(<NotificationToast data={notification} />)
+      const showAllNotifications = () => {
+        addToast(<NotificationToast data={notification} />)
+        // To do: determine if user is still in onboarding process
+        if (
+          (notification.feature === 'individuals' &&
+            notification.subject === 'Identity Approved') ||
+          (notification.feature === 'corporates' &&
+            notification.subject === 'Corporate Identity Approved')
+        ) {
+          addToast(<OnboardingDialog {...completeDialog} />, {
+            appearance: 'info',
+            autoDismiss: false
+          })
+        }
+      }
+      return showAllNotifications()
     },
     showOnboardingDialog: (onboardingDialog: OnboardingDialogProps) => {
+      // To do: determine if user is still in onboarding process
       return addToast(<OnboardingDialog {...onboardingDialog} />, {
         appearance: 'info',
         autoDismiss: false

@@ -5,7 +5,7 @@ import { CorporateIdentityForm } from 'app/pages/identity/components/CorporateId
 import { useCreateCorporateIdentity } from 'hooks/identity/useCreateCorporateIdentity'
 import { CancelButton } from 'app/pages/identity/components/CancelButton'
 import { VSpacer } from 'components/VSpacer'
-import { useOnboardingDialog } from 'app/components/OnboardingDialog/useOnboardingDialog'
+import { useOnboardingDialog } from 'app/components/OnboardingDialog/hooks/useOnboardingDialog'
 
 export const CorporateIdCreate: React.FC = () => {
   const { paths } = useIdentitiesRouter()

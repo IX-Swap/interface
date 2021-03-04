@@ -4,7 +4,7 @@ import { IndividualIdentityForm } from 'app/pages/identity/components/Individual
 import { CancelButton } from 'app/pages/identity/components/CancelButton'
 import { useIdentitiesRouter } from 'app/pages/identity/router'
 import { VSpacer } from 'components/VSpacer'
-import { useOnboardingDialog } from 'app/components/OnboardingDialog/useOnboardingDialog'
+import { useOnboardingDialog } from 'app/components/OnboardingDialog/hooks/useOnboardingDialog'
 
 export const IndividualIdCreate: React.FC = () => {
   const { paths } = useIdentitiesRouter()
