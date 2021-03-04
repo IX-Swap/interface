@@ -26,7 +26,7 @@ export const SingaporeOnlyFields = () => {
         <FormControlLabel
           label='YES, I’m currently only tax resident in Singapore and do not have a foreign tax residency.'
           value='yes'
-          control={<Radio />}
+          control={<Radio checked={singaporeOnly} />}
         />
       </Grid>
       {singaporeOnly && (

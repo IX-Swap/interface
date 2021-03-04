@@ -3,7 +3,6 @@ import React from 'react'
 import { render, cleanup } from 'test-utils'
 import { SingaporeOnlyFields } from 'app/pages/identity/components/TaxDeclarationForm/TaxResidencyFields/SingaporeOnlyFields'
 import { InternationalFields } from 'app/pages/identity/components/TaxDeclarationForm/TaxResidencyFields/InternationalFields'
-import { TinUnavailableFields } from 'app/pages/identity/components/TaxDeclarationForm/TinUnavailableFields/TinUnavailableFields'
 import { Form } from 'components/form/Form'
 
 jest.mock(
@@ -17,13 +16,6 @@ jest.mock(
   'app/pages/identity/components/TaxDeclarationForm/TaxResidencyFields/InternationalFields',
   () => ({
     InternationalFields: jest.fn(() => null)
-  })
-)
-
-jest.mock(
-  'app/pages/identity/components/TaxDeclarationForm/TinUnavailableFields/TinUnavailableFields',
-  () => ({
-    TinUnavailableFields: jest.fn(() => null)
   })
 )
 
@@ -50,6 +42,5 @@ describe('TaxResidencyFields', () => {
 
     expect(SingaporeOnlyFields).toHaveBeenCalled()
     expect(InternationalFields).toHaveBeenCalled()
-    expect(TinUnavailableFields).toHaveBeenCalled()
   })
 })

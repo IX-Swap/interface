@@ -11,18 +11,27 @@ describe('TaxResidencyField', () => {
   const mockAppend = jest.fn()
   const mockRemove = jest.fn()
 
+  const defaultValues = {
+    taxResidencies: [
+      {
+        countryOfResidence: 'Singapore',
+        taxIdentificationNumber: '1234567890'
+      }
+    ]
+  }
+
   const props: TaxResidencyFieldProps = {
     field: {
       countryOfResidence: 'Singapore',
-      taxIdentificationNumber: '123789456',
+      taxIdentificationNumber: '1234567890',
       id: '123'
     },
     append: mockAppend,
     remove: mockRemove,
     isLast: true,
-    index: 1,
+    index: 0,
     max: 5,
-    total: 2
+    total: 1
   }
 
   afterEach(async () => {
@@ -32,7 +41,7 @@ describe('TaxResidencyField', () => {
 
   it('renders without errors', () => {
     render(
-      <Form>
+      <Form defaultValues={defaultValues}>
         <TaxResidencyField {...props} />
       </Form>
     )
@@ -40,36 +49,32 @@ describe('TaxResidencyField', () => {
 
   it('renders field default values correctly', () => {
     const { container } = render(
-      <Form>
+      <Form defaultValues={defaultValues}>
         <TaxResidencyField {...props} />
       </Form>
     )
     const countryInput = container.querySelector(
-      'input[name="taxResidencies[1].countryOfResidence"]'
+      'input[name="taxResidencies[0].countryOfResidence"]'
     ) as HTMLInputElement
 
     const taxIdInput = container.querySelector(
-      'input[name="taxResidencies[1].taxIdentificationNumber"]'
+      'input[name="taxResidencies[0].taxIdentificationNumber"]'
     ) as HTMLInputElement
 
     expect(countryInput.value).toBe('Singapore')
-    expect(taxIdInput.value).toBe('123789456')
+    expect(taxIdInput.value).toBe('1234567890')
   })
 
   it('handles remove and append buttons correctly', () => {
-    const { getByText, getByTestId } = render(
-      <Form>
+    const { getByText } = render(
+      <Form defaultValues={defaultValues}>
         <TaxResidencyField {...props} />
       </Form>
     )
 
     const addMoreButton = getByText('Add more')
-    const removeButton = getByTestId('remove-button')
 
     fireEvent.click(addMoreButton, { cancellable: true, bubbles: true })
     expect(mockAppend).toHaveBeenCalled()
-
-    fireEvent.click(removeButton, { cancellable: true, bubbles: true })
-    expect(mockRemove).toHaveBeenCalled()
   })
 })

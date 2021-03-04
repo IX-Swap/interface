@@ -1,7 +1,7 @@
+import React from 'react'
 import * as useTaxResidencies from 'app/pages/identity/components/TaxDeclarationForm/hooks/useTaxResidencies'
 import { SingaporeOnlyFields } from 'app/pages/identity/components/TaxDeclarationForm/TaxResidencyFields/SingaporeOnlyFields'
 import { Form } from 'components/form/Form'
-import React from 'react'
 import { render, cleanup } from 'test-utils'
 
 describe('SingaporeOnlyFields', () => {

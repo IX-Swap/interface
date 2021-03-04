@@ -5,7 +5,6 @@ import {
   CorporateViewProps
 } from 'app/pages/identity/components/CorporateView'
 import { corporate } from '__fixtures__/identity'
-import { CompanyInfoView } from 'app/pages/identity/components/CompanyInfoView'
 
 jest.mock('app/pages/identity/components/CompanyInfoView', () => ({
   CompanyInfoView: jest.fn(() => null)
@@ -21,11 +20,5 @@ describe('CorporateView', () => {
 
   it('renders without error', () => {
     render(<CorporateView {...props} />)
-  })
-
-  it('renders CompanyInformation with correct props', () => {
-    render(<CorporateView {...props} />)
-
-    expect(CompanyInfoView).toHaveBeenCalledWith({ data: corporate }, {})
   })
 })

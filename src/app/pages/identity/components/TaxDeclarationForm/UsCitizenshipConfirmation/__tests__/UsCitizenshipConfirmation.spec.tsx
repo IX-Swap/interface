@@ -35,7 +35,7 @@ describe('UsCitizenshipConfirmation', () => {
         defaultValues={{
           declarations: {
             tax: {
-              isUsCitizen: 'yes'
+              fatca: 'yes'
             }
           }
         }}

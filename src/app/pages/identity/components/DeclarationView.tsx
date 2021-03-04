@@ -7,7 +7,7 @@ import {
   IndividualDeclarations,
   individualDeclarationsTemplate
 } from 'app/pages/identity/const/declarations'
-import { IdentityType, formatDeclarations } from 'app/pages/identity/utils'
+import { IdentityType } from 'app/pages/identity/utils'
 
 export interface DeclarationViewProps {
   data: any
@@ -17,12 +17,12 @@ export interface DeclarationViewProps {
 type DeclarationKey = keyof (IndividualDeclarations | CorporateDeclarations)
 
 export const DeclarationView = (props: DeclarationViewProps) => {
-  const { type, data } = props
+  const { type } = props
   const templates =
     type === 'individual'
       ? individualDeclarationsTemplate
       : corporateDeclarationsTemplate
-  const declarations = Object.entries(formatDeclarations(type, data))
+  const declarations = [] as Array<[string, string]>
 
   return (
     <List>

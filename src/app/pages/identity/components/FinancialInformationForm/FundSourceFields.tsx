@@ -26,6 +26,7 @@ export const FundSourceFields = () => {
           </FieldsArray>
         </Grid>
       </Grid>
+
       <Grid item>
         <Typography variant='subtitle1'>
           Will these source(s) be used to fund majority of your account?
