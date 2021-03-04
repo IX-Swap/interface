@@ -1,13 +1,12 @@
 /* eslint-disable */
+import { isTestENV } from 'config/history'
 import * as Yup from 'yup'
 
 const mockYup: any = jest.requireActual('yup')
 
-Yup.addMethod(
-  Yup.string,
-  'phone',
-  () => ({ required: jest.fn() }) as any
-)
+if (isTestENV) {
+  Yup.addMethod(Yup.string, 'phone', () => ({ required: jest.fn() } as any))
+}
 
 export const object = mockYup.object
 export const addMethod = mockYup.addMethod

@@ -1,4 +1,5 @@
 import * as yup from 'yup'
+import 'yup-phone'
 import { addressSchema, dateSchema, emailSchema } from 'validation/shared'
 import { IndividualPersonalInfoFormValues } from 'app/pages/_identity/types/forms'
 
