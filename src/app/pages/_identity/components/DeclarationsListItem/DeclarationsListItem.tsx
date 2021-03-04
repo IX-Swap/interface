@@ -1,10 +1,10 @@
-import React from 'react'
+import React, { ReactNode } from 'react'
 import DoneIcon from '@material-ui/icons/Done'
 import CloseIcon from '@material-ui/icons/Close'
 import { Box, Grid, Typography } from '@material-ui/core'
 
 export interface DeclarationsListItemProps {
-  label: string
+  label: ReactNode
   value: boolean
 }
 

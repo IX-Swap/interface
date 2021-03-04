@@ -11,16 +11,20 @@ import { AddressView } from './AddressView/AddressView'
 import { FinancialView } from './FinancialView/FinancialView'
 import { TaxDeclarationView } from './TaxDeclarationView/TaxDeclarationView'
 import { InvestorDeclarationView } from './InvestorDeclarationView/InvestorDeclarationView'
+import { IndividualIdentity } from 'types/identity'
 
 export interface IndividualIdentityViewProps {
-  // TODO Delete any after added new interfaces for IndividualIdentity
-  data: any
+  data: IndividualIdentity | undefined
 }
 
 export const IndividualIdentityView = (props: IndividualIdentityViewProps) => {
   const { data } = props
 
   useSetPageTitle(getPersonName(data))
+
+  if (data === undefined) {
+    return null
+  }
 
   return (
     <Grid container spacing={6}>
@@ -41,22 +45,23 @@ export const IndividualIdentityView = (props: IndividualIdentityViewProps) => {
 
       <Grid item xs={12} className={privateClassNames()}>
         <FormSectionHeader title='Tax Declaration' />
-        <TaxDeclarationView data={data.taxDeclaration} />
+        <TaxDeclarationView data={data} />
       </Grid>
 
       <Grid item xs={12}>
         <FormSectionHeader title='Documents' />
-        <IdentityDocumentsView data={data.documents} type='individual' />
+        <IdentityDocumentsView data={data} type='individual' />
       </Grid>
 
       <Grid item xs={12}>
         <FormSectionHeader title='Investors Status Declaration' />
-        <InvestorDeclarationView data={data.investorDeclaration} />
+        <InvestorDeclarationView data={data} />
       </Grid>
 
       <Grid item xs={12}>
         <FormSectionHeader title='Agreements and Disclosures' />
-        <AgreementsAndDisclosuresView data={data.agreementsAndDisclosures} />
+
+        <AgreementsAndDisclosuresView data={data} />
       </Grid>
     </Grid>
   )

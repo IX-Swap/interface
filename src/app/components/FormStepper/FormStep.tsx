@@ -6,6 +6,7 @@ import { Form } from 'components/form/Form'
 import { Submit } from 'components/form/Submit'
 import React, { createElement, Fragment } from 'react'
 import { MutationResultPair } from 'react-query'
+import { SubmitButton } from './SubmitButton'
 
 export interface FormStepProps {
   step: FormStepperStep
@@ -39,6 +40,7 @@ export const FormStep = (props: FormStepProps) => {
   const hasNextStep = activeStep < totalSteps - 1
   const hasPrevStep = activeStep !== 0
   const isEditing = data !== undefined
+  const isLastStep = activeStep === totalSteps - 1
   const saveMutation = isEditing ? editMutation : createMutation
 
   const goToNextStep = () => {
@@ -64,30 +66,43 @@ export const FormStep = (props: FormStepProps) => {
         <Box display='flex'>
           {hasPrevStep && (
             <Fragment>
-              <MoveButton mutation={saveMutation} onClick={goToPrevStep}>
+              <MoveButton
+                transformData={step.getRequestPayload}
+                mutation={saveMutation}
+                onClick={goToPrevStep}
+              >
                 Back
               </MoveButton>
               <Box mx={1} />
             </Fragment>
           )}
 
-          <SaveButton
-            transformData={step.getRequestPayload}
-            mutation={saveMutation}
-          />
-
-          <Box mx={1} />
+          {!isLastStep && (
+            <Fragment>
+              <SaveButton
+                transformData={step.getRequestPayload}
+                mutation={saveMutation}
+              />
+              <Box mx={1} />
+            </Fragment>
+          )}
 
           {hasNextStep && (
-            <MoveButton mutation={saveMutation} onClick={goToNextStep}>
+            <MoveButton
+              variant={'contained'}
+              transformData={step.getRequestPayload}
+              mutation={saveMutation}
+              onClick={goToNextStep}
+              nextStepIndex={index + 1}
+            >
               Next
             </MoveButton>
           )}
 
-          {activeStep === totalSteps - 1 && (
-            <Submit color='primary' variant='contained'>
+          {isLastStep && (
+            <SubmitButton mutation={submitMutation} data={data}>
               Submit
-            </Submit>
+            </SubmitButton>
           )}
         </Box>
       </Grid>

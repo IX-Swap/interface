@@ -13,6 +13,7 @@ export interface FormProps<T extends {}> {
 }
 
 export const Form = <T,>(props: PropsWithChildren<FormProps<T>>) => {
+  // console.log('re-rendered', Date.now())
   const {
     defaultValues,
     onSubmit = console.log,
@@ -50,7 +51,9 @@ export const Form = <T,>(props: PropsWithChildren<FormProps<T>>) => {
       >
         {children}
       </form>
-      <pre style={{ fontSize: 14 }}>{JSON.stringify(form.getValues(), null, 4)}</pre>
+      <pre style={{ fontSize: 14 }}>
+        {JSON.stringify(form.getValues(), null, 4)}
+      </pre>
     </FormProvider>
   )
 }

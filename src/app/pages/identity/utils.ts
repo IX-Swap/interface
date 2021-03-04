@@ -51,7 +51,7 @@ export const getIdentityFormDefaultValue = <
 ): IdentityFormValues<T> => {
   return ({
     ...(identity ?? {}),
-    declarations: formatDeclarations(type, identity?.declarations),
+    declarations: formatDeclarations(type, identity as any),
     documents: formatDocuments(identity?.documents ?? [], type),
     taxResidencies: getTaxResidencyData(type, identity)?.taxResidencies,
     singaporeOnly: getTaxResidencyData(type, identity)?.singaporeOnly,

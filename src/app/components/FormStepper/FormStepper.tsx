@@ -1,20 +1,6 @@
-import React, { ComponentType, createElement, Fragment, useState } from 'react'
-import {
-  Box,
-  Button,
-  Grid,
-  Hidden,
-  Step,
-  StepLabel,
-  Stepper
-} from '@material-ui/core'
-import { Form } from 'components/form/Form'
-import { Submit } from 'components/form/Submit'
-import { SaveButton } from 'app/components/FormStepper/SaveButton'
+import React, { ComponentType, useState } from 'react'
+import { Grid, Step, StepLabel, Stepper } from '@material-ui/core'
 import { MutationResultPair } from 'react-query'
-import { getIdentityFormDefaultValue } from 'app/pages/identity/utils'
-import { individualIdentityFormValidationSchema } from 'validation/identities'
-import { MoveButton } from 'app/components/FormStepper/MoveButton'
 import { FormStep } from 'app/components/FormStepper/FormStep'
 
 export interface FormStepperStep {
@@ -27,7 +13,6 @@ export interface FormStepperStep {
 
 export interface FormStepperProps {
   steps: FormStepperStep[]
-  defaultActiveStep?: number
   data: any
   createMutation: MutationResultPair<any, any, any, any>
   editMutation: MutationResultPair<any, any, any, any>
@@ -35,15 +20,8 @@ export interface FormStepperProps {
 }
 
 export const FormStepper = (props: FormStepperProps) => {
-  const {
-    defaultActiveStep = 0,
-    steps,
-    data,
-    createMutation,
-    editMutation,
-    submitMutation
-  } = props
-  const [activeStep, setActiveStep] = useState(defaultActiveStep)
+  const { steps, data, createMutation, editMutation, submitMutation } = props
+  const [activeStep, setActiveStep] = useState(data.step ?? 0)
 
   return (
     <Grid container direction='column' spacing={2}>
@@ -58,18 +36,20 @@ export const FormStepper = (props: FormStepperProps) => {
       </Grid>
 
       {steps.map((step, index) => (
-        <FormStep
-          key={`step-content-${index}`}
-          step={step}
-          index={index}
-          totalSteps={steps.length}
-          activeStep={activeStep}
-          setActiveStep={setActiveStep}
-          data={data}
-          createMutation={createMutation}
-          editMutation={editMutation}
-          submitMutation={submitMutation}
-        />
+        <Grid item>
+          <FormStep
+            key={`step-content-${index}`}
+            step={step}
+            index={index}
+            totalSteps={steps.length}
+            activeStep={activeStep}
+            setActiveStep={setActiveStep}
+            data={data}
+            createMutation={createMutation}
+            editMutation={editMutation}
+            submitMutation={submitMutation}
+          />
+        </Grid>
       ))}
     </Grid>
   )

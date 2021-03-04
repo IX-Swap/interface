@@ -51,7 +51,23 @@ export const corporate: CorporateIdentity = {
   createdAt: '01-01-2000',
   updatedAt: '01-01-2000',
   documents: [],
-  declarations: [],
+  declarations: {
+    agreements: {
+      investor: false,
+      custody: false,
+      disclosures: false
+    },
+    tax: { fatca: false },
+    investorsStatus: {
+      jointlyHeldAccount: false,
+      consequencesOfQualification: false,
+      financialAsset: false,
+      personalAssets: false,
+      consent: false,
+      income: false,
+      rightToOptOut: false
+    }
+  },
   status: 'Submitted',
   beneficialOwners: [],
   companyAddress: address,
@@ -91,7 +107,23 @@ export const individual: IndividualIdentity = {
   authorization: authorizationInfo,
   authorizationDocuments: [],
   authorizations: [],
-  declarations: [],
+  declarations: {
+    agreements: {
+      investor: false,
+      custody: false,
+      disclosures: false
+    },
+    tax: { fatca: false },
+    investorsStatus: {
+      jointlyHeldAccount: false,
+      consequencesOfQualification: false,
+      financialAsset: false,
+      personalAssets: false,
+      consent: false,
+      income: false,
+      rightToOptOut: false
+    }
+  },
   documents: [],
   address,
   user

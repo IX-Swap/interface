@@ -2,6 +2,11 @@ import React from 'react'
 import { Box, Grid } from '@material-ui/core'
 import { FormSectionHeader } from 'app/components/DSO/components/FormSectionHeader'
 import { DeclarationsList } from 'app/pages/_identity/components/DeclarationsList/DeclarationsList'
+import { IndividualIdentity } from '../../../../../../types/identity'
+import {
+  investorDeclarationLabelMap,
+  optInDeclarationLabelMap
+} from '../../InvestorDeclarationForm/InvestorDeclarationForm'
 
 // TODO Remove after added new interfaces
 export interface StatusDeclaration {
@@ -11,23 +16,44 @@ export interface StatusDeclaration {
 }
 
 export interface InvestorDeclarationViewProps {
-  data: StatusDeclaration
+  data: IndividualIdentity
 }
 
 export const InvestorDeclarationView: React.FC<InvestorDeclarationViewProps> = ({
   data
 }) => {
   const {
-    accreditedInvestorDeclaration,
-    optInRequirement,
-    accreditedInvestorOptOut
-  } = data
+    consent,
+    consequencesOfQualification,
+    financialAsset,
+    income,
+    jointlyHeldAccount,
+    personalAssets,
+    rightToOptOut
+  } = data.declarations.investorsStatus
+  
+
+  const accreditedInvestorDeclaration = {
+    personalAssets,
+    income,
+    financialAsset,
+    jointlyHeldAccount
+  }
+
+  const optInRequirement = {
+    consent,
+    consequencesOfQualification,
+    rightToOptOut
+  }
+
+  const accreditedInvestorOptOut = {}
 
   return (
     <Grid container>
       <DeclarationsList
         title='I declare that I am an individual "Accredited Investor"'
         data={accreditedInvestorDeclaration}
+        labelMap={investorDeclarationLabelMap}
       />
       <Grid item xs={12}>
         <Box marginTop={8}>
@@ -37,6 +63,7 @@ export const InvestorDeclarationView: React.FC<InvestorDeclarationViewProps> = (
       <DeclarationsList
         title='I confirm to be treated as an “Accredited Investor” by InvestaX'
         data={optInRequirement}
+        labelMap={optInDeclarationLabelMap}
       />
       <Grid item xs={12}>
         <Box marginTop={8}>
@@ -46,10 +73,10 @@ export const InvestorDeclarationView: React.FC<InvestorDeclarationViewProps> = (
           />
         </Box>
       </Grid>
-      <DeclarationsList
-        title='My/Our withdrawal of consent to be treated as an Accredited Investor by InvestaX is in respect of the following services.'
-        data={accreditedInvestorOptOut}
-      />
+      {/* <DeclarationsList */}
+      {/*  title='My/Our withdrawal of consent to be treated as an Accredited Investor by InvestaX is in respect of the following services.' */}
+      {/*  data={accreditedInvestorOptOut} */}
+      {/* /> */}
     </Grid>
   )
 }

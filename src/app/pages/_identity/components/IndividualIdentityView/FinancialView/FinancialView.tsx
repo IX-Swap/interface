@@ -1,25 +1,15 @@
 import React from 'react'
 import { Grid } from '@material-ui/core'
 import { LabelledValue } from 'components/LabelledValue'
-import { FundSource } from 'types/identity'
-
-// TODO Remove after added new interfaces
-export interface IdentityFinancials {
-  annualIncome: string
-  employer: string
-  employmentStatus: string
-  occupation: string
-  willSourcesBeUsedToFundMajority: boolean
-  fundSource?: FundSource[]
-}
-
+import { IndividualIdentity } from 'types/identity'
+import { getFundSource } from 'app/pages/identity/utils'
 export interface FinancialViewProps {
-  data: IdentityFinancials
+  data: IndividualIdentity
 }
 
 export const FinancialView = (props: FinancialViewProps) => {
   const { data } = props
-  const fundSource = data.fundSource ?? []
+  const fundSource = getFundSource(data)
 
   return (
     <Grid container spacing={6}>
@@ -64,7 +54,7 @@ export const FinancialView = (props: FinancialViewProps) => {
       <Grid item container spacing={6}>
         <Grid item xs={12} sm={6} md={8}>
           <LabelledValue
-            value={data.willSourcesBeUsedToFundMajority ? 'Yes' : 'No'}
+            value={false ? 'Yes' : 'No'}
             label='Will this source(s) be used to fund majority of your account?'
           />
         </Grid>

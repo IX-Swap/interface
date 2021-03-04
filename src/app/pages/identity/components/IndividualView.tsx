@@ -42,13 +42,13 @@ export const IndividualView = (props: IndividualViewProps) => {
 
       <Grid item xs={12}>
         <Section title='Documents'>
-          <IdentityDocumentsView data={data.documents} type='individual' />
+          <IdentityDocumentsView data={data} type='individual' />
         </Section>
       </Grid>
 
       <Grid item xs={12}>
         <Section title='Declarations'>
-          <DeclarationView type='individual' data={data.declarations} />
+          <DeclarationView type='individual' data={data} />
         </Section>
       </Grid>
     </Grid>

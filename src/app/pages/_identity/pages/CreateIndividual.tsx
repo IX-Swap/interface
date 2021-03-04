@@ -5,29 +5,36 @@ import { IndividualInfoFields } from 'app/pages/identity/components/IndividualIn
 import { AddressFields } from 'app/pages/identity/components/AddressFields/AddressFields'
 import { useCreateIndividual } from 'app/pages/_identity/hooks/useCreateIndividual'
 import {
+  getAgreementsAndDisclosuresFormValues,
+  getDocumentsFormValues,
   getFinancialInfoFormValues,
+  getInvestorDeclarationFormValues,
   getPersonalInfoFormValues,
   getTaxDeclarationFormValues
 } from 'app/pages/_identity/utils/individual/forms'
 import {
+  getAgreementsRequestPayload,
+  getDocumentsRequestPayload,
   getFinancialInfoRequestPayload,
+  getInvestorDeclarationRequestPayload,
   getPersonalInfoRequestPayload,
   getTaxDeclarationRequestPayload
 } from 'app/pages/_identity/utils/individual/requests'
 import { personalInfoSchema } from 'app/pages/_identity/validation/individual'
-import { FundSource } from 'app/pages/identity/components/FinancialInformationForm/FundSource'
 import { FinancialInformationForm } from 'app/pages/identity/components/FinancialInformationForm/FinancialInformationForm'
 import { TaxDeclarationForm } from 'app/pages/identity/components/TaxDeclarationForm/TaxDeclarationForm'
 import { UploadDocumentsForm } from 'app/pages/identity/components/UploadDocumentsForm/UploadDocumentsForm'
 import { AgreementsAndDisclosuresFields } from 'app/pages/_identity/components/AgreementsAndDisclosuresFields/AgreementsAndDisclosuresFields'
 import { IndividualIdentityView } from 'app/pages/_identity/components/IndividualIdentityView/IndividualIdentityView'
-import { individual } from '__fixtures__/identity'
+import { InvestorDeclarationForm } from '../components/InvestorDeclarationForm/InvestorDeclarationForm'
+import { useSubmitIndividual } from '../hooks/useSubmitIndividual'
 
-export interface CreateIndividualProps {}
+// TODO: add validation schemas
 
-export const CreateIndividual = (props: CreateIndividualProps) => {
-  const { data, isLoading, isFetching } = useIndividualIdentity()
+export const CreateIndividual = () => {
+  const { data, isLoading } = useIndividualIdentity()
   const mutation = useCreateIndividual()
+  const submitMutation = useSubmitIndividual()
 
   if (isLoading) {
     return <div>Loading...</div>
@@ -35,11 +42,10 @@ export const CreateIndividual = (props: CreateIndividualProps) => {
 
   return (
     <FormStepper
-      defaultActiveStep={0}
       data={data}
       createMutation={mutation}
       editMutation={mutation}
-      submitMutation={mutation}
+      submitMutation={submitMutation}
       steps={[
         {
           label: 'Personal Information',
@@ -76,20 +82,33 @@ export const CreateIndividual = (props: CreateIndividualProps) => {
           )
         },
         {
-          label: 'Documents Upload',
-          getFormValues: () => {},
-          getRequestPayload: () => {},
+          label: 'Investor Status Declaration',
+          getFormValues: getInvestorDeclarationFormValues,
+          getRequestPayload: getInvestorDeclarationRequestPayload,
           validationSchema: null,
           component: () => (
             <Fragment>
-              <UploadDocumentsForm />
+              <InvestorDeclarationForm />
+            </Fragment>
+          )
+        },
+        {
+          label: 'Documents Upload',
+          getFormValues: getDocumentsFormValues,
+          getRequestPayload: getDocumentsRequestPayload,
+          validationSchema: null,
+          component: () => (
+            <Fragment>
+              <UploadDocumentsForm identityType='individual'>
+                <div />
+              </UploadDocumentsForm>
             </Fragment>
           )
         },
         {
           label: 'Agreements and Disclosures',
-          getFormValues: () => {},
-          getRequestPayload: () => {},
+          getFormValues: getAgreementsAndDisclosuresFormValues,
+          getRequestPayload: getAgreementsRequestPayload,
           validationSchema: null,
           component: () => (
             <Fragment>
@@ -98,7 +117,7 @@ export const CreateIndividual = (props: CreateIndividualProps) => {
           )
         },
         {
-          label: 'Agreements and Disclosures',
+          label: 'Review & Submit',
           getFormValues: () => {},
           getRequestPayload: () => {},
           validationSchema: null,

@@ -4,6 +4,7 @@ import { LabelledValue } from 'components/LabelledValue'
 import { DeclarationsListItem } from '../../DeclarationsListItem/DeclarationsListItem'
 import { VSpacer } from 'components/VSpacer'
 import { FormSectionHeader } from 'app/components/DSO/components/FormSectionHeader'
+import { IndividualIdentity } from '../../../../../../types/identity'
 
 // TODO Remove after added new interfaces
 export type Reason = 'A' | 'B' | 'C'
@@ -29,11 +30,12 @@ export interface TaxDeclaration {
 }
 
 export interface TaxDeclarationViewProps {
-  data: TaxDeclaration
+  data: IndividualIdentity
 }
 
 export const TaxDeclarationView = ({ data }: TaxDeclarationViewProps) => {
-  const { taxResidencies, singaporeOnly } = data
+  const { taxResidencies, declarations } = data
+  const singaporeOnly = taxResidencies?.[0].residentOfSingapore ?? false
 
   const renderReasonBlock = (reason: Reason, customReason?: string) => {
     let reasonDescription: string = ''
@@ -71,7 +73,7 @@ export const TaxDeclarationView = ({ data }: TaxDeclarationViewProps) => {
   }
 
   const renderFatcaBlock = () => {
-    const fatcaLabel = data.declarations.tax.fatca
+    const fatcaLabel = (declarations.tax.fatca as boolean)
       ? 'I confirm that I am a US citizen* and/or resident in the US for tax purposes and my U.S. federal Taxpayer Identifying Number (US TIN) is as follows:'
       : 'I confirm that I am not a US citizen or resident in the US for tax purposes.'
 
@@ -99,7 +101,7 @@ export const TaxDeclarationView = ({ data }: TaxDeclarationViewProps) => {
     return (
       <LabelledValue
         label={'My Singapore NRIC/FIN is:'}
-        value={taxResidencies[0].taxIdentificationNumber}
+        value={taxResidencies?.[0].taxIdentificationNumber}
       />
     )
   }
@@ -107,7 +109,7 @@ export const TaxDeclarationView = ({ data }: TaxDeclarationViewProps) => {
   const renderContentForAnotherCountriesResident = () => {
     return (
       <Grid item xs={12}>
-        {taxResidencies.map(it => {
+        {taxResidencies?.map(it => {
           return (
             <>
               <Box display={'flex'}>

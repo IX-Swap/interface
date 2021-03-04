@@ -1,21 +1,19 @@
 import { Button } from '@material-ui/core'
-import { IndividualIdentityFormValues } from 'app/pages/identity/components/types'
 import React from 'react'
-import { useFormContext } from 'react-hook-form'
-import { MutationResultPair, useMutation } from 'react-query'
+import { MutationResultPair } from 'react-query'
+import { ButtonProps } from '@material-ui/core/Button'
 
-export interface SubmitButtonProps {
+export interface SubmitButtonProps extends ButtonProps {
   mutation: MutationResultPair<any, any, any, any>
+  data: any
 }
 
 export const SubmitButton = (props: SubmitButtonProps) => {
-  const { mutation } = props
+  const { mutation, data } = props
   const [save, { isLoading }] = mutation
-  const { watch } = useFormContext<IndividualIdentityFormValues>()
-  const values = watch()
 
   const handleSave = async () => {
-    return save(values)
+    return await save(data._id)
   }
 
   return (
@@ -24,8 +22,9 @@ export const SubmitButton = (props: SubmitButtonProps) => {
       color='primary'
       onClick={() => handleSave()}
       disabled={isLoading}
+      disableElevation
     >
-      Save & Finish Later
+      Submit
     </Button>
   )
 }

@@ -16,7 +16,7 @@ export const SaveButton = (props: SaveButtonProps) => {
   const [save] = mutation
 
   const handleSave = async () => {
-    return save(transformData(values))
+    return await save(transformData(values))
   }
 
   const [handleClick, { isLoading }] = useMutation(handleSave)
@@ -25,7 +25,7 @@ export const SaveButton = (props: SaveButtonProps) => {
     <Button
       variant='outlined'
       color='primary'
-      onClick={() => handleClick(undefined)}
+      onClick={async () => void handleClick()}
       disabled={isLoading}
     >
       Save & Finish Later

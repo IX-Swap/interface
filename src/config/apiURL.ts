@@ -32,7 +32,8 @@ export const identityURL = {
   individuals: {
     create: (userId: string) => `/identity/individuals/${userId}`,
     update: (userId: string) => `/identity/individuals/${userId}`,
-    get: (userId: string) => `/identity/individuals/${userId}`
+    get: (userId: string) => `/identity/individuals/${userId}`,
+    submit: (id: string) => `/identity/individuals/${id}/submit`
   }
 }
 

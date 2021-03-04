@@ -24,7 +24,7 @@ export const AgreementsAndDisclosuresFields = (): JSX.Element => {
           component={Checkbox}
           control={control}
           label={(<Link href={'#'}>Investor Agreement</Link>) as any}
-          name={'investorAgreement'}
+          name={['declarations', 'agreements', 'investor']}
           data-testid='investor-agreement'
         />
       </Grid>
@@ -36,7 +36,7 @@ export const AgreementsAndDisclosuresFields = (): JSX.Element => {
           component={Checkbox}
           control={control}
           label={(<Link href={'#'}>Custody Agreement</Link>) as any}
-          name={'custodyAgreement'}
+          name={['declarations', 'agreements', 'custody']}
           data-testid='custody-agreement'
         />
       </Grid>
@@ -48,7 +48,7 @@ export const AgreementsAndDisclosuresFields = (): JSX.Element => {
           component={Checkbox}
           control={control}
           label={(<Link href={'#'}>Disclosures</Link>) as any}
-          name={'disclosures'}
+          name={['declarations', 'agreements', 'disclosures']}
           data-testid='disclosures'
         />
       </Grid>

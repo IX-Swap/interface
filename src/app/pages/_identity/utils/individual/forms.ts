@@ -1,6 +1,8 @@
-import { getFundSource, getFundSourceDefaults } from 'app/pages/identity/utils'
+import { getFundSource } from 'app/pages/identity/utils'
 import {
+  IndividualDocumentsFormValues,
   IndividualFinancialInfoFormValues,
+  IndividualInvestorDeclarationFormValues,
   IndividualPersonalInfoFormValues,
   IndividualTaxDeclarationFormValues
 } from 'app/pages/_identity/types/forms'
@@ -38,6 +40,7 @@ export const getFinancialInfoFormValues = (
     employmentStatus: data?.employmentStatus,
     annualIncome: data?.annualIncome,
     sourceOfWealth: data?.sourceOfWealth,
+    fundMajority: data?.fundMajority === true ? 'yes' : 'no',
     sourceOfFund: getFundSource(data)
   }
 }
@@ -46,20 +49,71 @@ export const getTaxDeclarationFormValues = (
   data: IndividualIdentity
 ): IndividualTaxDeclarationFormValues => {
   return {
-    taxResidencies: data?.taxResidencies ?? [],
+    taxResidencies:
+      data?.taxResidencies?.map(({ _id, ...rest }: any) => rest) ?? [],
     singaporeOnly:
-      data.taxResidencies?.length === 1 &&
-      data.taxResidencies[0].residentOfSingapore
+      data.taxResidencies !== undefined &&
+      data.taxResidencies.length === 1 &&
+      Boolean(data.taxResidencies[0].residentOfSingapore)
         ? 'yes'
         : 'no',
-    declarations: { fatca: 'no' }
+    declarations: data?.declarations as any
   }
 }
 
-export const getInvestorDeclarationFormValues = (data: IndividualIdentity) => {}
+export const getInvestorDeclarationFormValues = (
+  data: IndividualIdentity
+): IndividualInvestorDeclarationFormValues => {
+  return data.declarations.investorsStatus
+}
 
-export const getDocumentsFormValues = (data: IndividualIdentity) => {}
+export const getDocumentsFormValues = (
+  data: IndividualIdentity
+): IndividualDocumentsFormValues => {
+  return {
+    documents: data.documents.reduce((result: any, document) => {
+      const {
+        evidenceOfAccreditation,
+        proofOfAddress,
+        proofOfIdentity
+      } = result
+
+      if (document.type === 'Evidence of Accreditation') {
+        return {
+          ...result,
+          evidenceOfAccreditation: Array.isArray(evidenceOfAccreditation)
+            ? [...evidenceOfAccreditation, document]
+            : [document]
+        }
+      }
+
+      if (document.type === 'Proof of Address') {
+        return {
+          ...result,
+          proofOfAddress: Array.isArray(proofOfAddress)
+            ? [...proofOfAddress, document]
+            : [document]
+        }
+      }
+
+      if (document.type === 'Proof of Identity') {
+        return {
+          ...result,
+          proofOfIdentity: Array.isArray(proofOfIdentity)
+            ? [...proofOfIdentity, document]
+            : [document]
+        }
+      }
+
+      return result
+    }, {})
+  }
+}
 
 export const getAgreementsAndDisclosuresFormValues = (
   data: IndividualIdentity
-) => {}
+) => {
+  return {
+    declarations: data.declarations
+  }
+}

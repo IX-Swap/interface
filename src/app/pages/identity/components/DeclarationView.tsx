@@ -11,7 +11,7 @@ import {
 import { IdentityType, formatDeclarations } from 'app/pages/identity/utils'
 
 export interface DeclarationViewProps {
-  data: Declaration[]
+  data: any
   type: IdentityType
 }
 

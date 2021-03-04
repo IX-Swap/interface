@@ -78,6 +78,7 @@ export interface IdentityFinancials {
   occupation: string
   sourceOfWealth: string
   sourceOfFund?: FundSource[]
+  fundMajority?: boolean
 }
 
 export interface CorporateFields {
@@ -98,9 +99,13 @@ export interface Declaration {
 }
 
 export interface AgreementsAndDisclosures {
-  investorAgreement: boolean
-  custodyAgreement: boolean
-  disclosures: boolean
+  declarations: {
+    agreements: {
+      investor: boolean
+      custody: boolean
+      disclosures: boolean
+    }
+  }
 }
 
 export interface BaseIdentity {
@@ -110,7 +115,24 @@ export interface BaseIdentity {
   createdAt: string
   updatedAt: string
   documents: DataroomFile[]
-  declarations: Declaration[]
+  declarations: {
+    tax: { fatca: boolean }
+    investorsStatus: {
+      consent: boolean
+      consequencesOfQualification: boolean
+      financialAsset: boolean
+      income: boolean
+      jointlyHeldAccount: boolean
+      personalAssets: boolean
+      rightToOptOut: boolean
+    }
+    agreements: {
+      investor: boolean
+      custody: boolean
+      disclosures: boolean
+    }
+  }
+  step?: number
 }
 
 export interface DeclarationTemplate {
