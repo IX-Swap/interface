@@ -20,7 +20,7 @@ describe('TinUnavailableFields', () => {
   it('renders without errors', () => {
     render(
       <Form>
-        <TinUnavailableFields />
+        <TinUnavailableFields index={0} />
       </Form>
     )
   })
@@ -28,7 +28,7 @@ describe('TinUnavailableFields', () => {
   it('renders component with default props', () => {
     render(
       <Form>
-        <TinUnavailableFields />
+        <TinUnavailableFields index={0} />
       </Form>
     )
 

@@ -20,7 +20,7 @@ export const SubmitButton = (props: SubmitButtonProps) => {
     <Button
       variant='contained'
       color='primary'
-      onClick={() => handleSave()}
+      onClick={async () => void handleSave()}
       disabled={isLoading}
       disableElevation
     >

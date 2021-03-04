@@ -1,5 +1,5 @@
 import { FundSource, TaxResidencies } from 'types/identity'
-import { DataroomFile, FormArray } from '../../../../types/dataroomFile'
+import { DataroomFile } from '../../../../types/dataroomFile'
 
 export interface IndividualAddress {
   line1: string

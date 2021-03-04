@@ -23,10 +23,7 @@ export const IndividualInfoFields = (
 ): JSX.Element => {
   const { rootName } = props
   const { control } = useFormContext<IndividualPersonalInformation>()
-  const {
-    email: defaultEmail,
-    isDisabled: isEmailDisabled
-  } = useIndividualInfoDefaultEmail(rootName)
+  const { email: defaultEmail } = useIndividualInfoDefaultEmail(rootName)
   const { isMobile } = useAppBreakpoints()
 
   return (

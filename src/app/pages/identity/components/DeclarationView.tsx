@@ -1,5 +1,4 @@
 import React from 'react'
-import { Declaration } from 'types/identity'
 import { List, Typography } from '@material-ui/core'
 import { DeclarationItem } from 'app/pages/identity/components/DeclarationItem'
 import {

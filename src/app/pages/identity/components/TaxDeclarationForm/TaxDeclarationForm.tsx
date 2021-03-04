@@ -1,7 +1,5 @@
 import React from 'react'
 import { Divider, Grid, Typography } from '@material-ui/core'
-import { Form } from 'components/form/Form'
-import { getIdentityFormDefaultValue } from 'app/pages/identity/utils'
 import { TaxDeclarationInfoDialog } from 'app/pages/identity/components/TaxDeclarationForm/TaxDeclarationInfoDialog/TaxDeclarationInfoDialog'
 import { TaxResidencyFields } from 'app/pages/identity/components/TaxDeclarationForm/TaxResidencyFields/TaxResidencyFields'
 import { UsCitizenshipConfirmation } from 'app/pages/identity/components/TaxDeclarationForm/UsCitizenshipConfirmation/UsCitizenshipConfirmation'

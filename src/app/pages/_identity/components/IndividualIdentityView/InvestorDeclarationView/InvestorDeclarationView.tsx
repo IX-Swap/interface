@@ -7,8 +7,6 @@ import {
   investorDeclarationLabelMap,
   optInDeclarationLabelMap
 } from '../../InvestorDeclarationForm/InvestorDeclarationForm'
-
-// TODO Remove after added new interfaces
 export interface StatusDeclaration {
   accreditedInvestorDeclaration: Record<string, boolean>
   optInRequirement: Record<string, boolean>
@@ -31,7 +29,6 @@ export const InvestorDeclarationView: React.FC<InvestorDeclarationViewProps> = (
     personalAssets,
     rightToOptOut
   } = data.declarations.investorsStatus
-  
 
   const accreditedInvestorDeclaration = {
     personalAssets,
@@ -46,7 +43,7 @@ export const InvestorDeclarationView: React.FC<InvestorDeclarationViewProps> = (
     rightToOptOut
   }
 
-  const accreditedInvestorOptOut = {}
+  // const accreditedInvestorOptOut = {}
 
   return (
     <Grid container>

@@ -38,7 +38,7 @@ export const getTaxDeclarationRequestPayload = (
 
       for (const [key, value] of Object.entries(payload)) {
         if (typeof value === 'string' && value.trim() === '') {
-          delete payload[key as keyof typeof payload]
+          delete payload[key as keyof typeof payload] // eslint-disable-line
         }
       }
 

@@ -7,7 +7,7 @@ import { SingaporeOnlyFields } from 'app/pages/identity/components/TaxDeclaratio
 import { InternationalFields } from 'app/pages/identity/components/TaxDeclarationForm/TaxResidencyFields/InternationalFields'
 
 export const TaxResidencyFields = () => {
-  const { control, watch } = useFormContext()
+  const { control } = useFormContext()
 
   return (
     <>

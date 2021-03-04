@@ -54,7 +54,7 @@ export const FinancialView = (props: FinancialViewProps) => {
       <Grid item container spacing={6}>
         <Grid item xs={12} sm={6} md={8}>
           <LabelledValue
-            value={false ? 'Yes' : 'No'}
+            value={(data.fundMajority as boolean) ? 'Yes' : 'No'}
             label='Will this source(s) be used to fund majority of your account?'
           />
         </Grid>

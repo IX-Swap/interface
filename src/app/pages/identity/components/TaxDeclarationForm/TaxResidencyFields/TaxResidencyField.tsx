@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import React from 'react'
 import { useFormContext } from 'react-hook-form'
 import { Grid, IconButton, TextField } from '@material-ui/core'
 import { ButtonTransparent } from 'app/components/ButtonTransparent'
@@ -32,7 +32,7 @@ export const TaxResidencyField = ({
 }: TaxResidencyFieldProps) => {
   const { control, watch } = useFormContext()
   const residencyList = watch('taxResidencies')
-  const { taxIdAvailable } = residencyList[index]
+  const { taxIdAvailable } = residencyList[index] as TaxResidency
 
   const getSelectedCountries = () => {
     if (residencyList === undefined || residencyList.length < 1) {

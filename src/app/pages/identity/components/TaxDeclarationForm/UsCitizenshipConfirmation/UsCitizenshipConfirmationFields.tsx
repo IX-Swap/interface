@@ -8,8 +8,6 @@ export const UsCitizenshipConfirmationFields = () => {
   const { control, watch } = useFormContext()
   const value = watch('declarations.tax.fatca')
 
-  debugger
-
   return (
     <>
       {/* @ts-ignore */}

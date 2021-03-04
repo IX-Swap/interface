@@ -1,21 +1,4 @@
-import React from 'react'
 import { IndividualIdentity } from 'types/identity'
-import { Box, Grid } from '@material-ui/core'
-import { Section } from 'app/pages/identity/components/Section'
-import { IndividualIdentityFormValues } from 'app/pages/identity/components/types'
-import { useCreateOrUpdateIndividual } from 'hooks/identity/useCreateOrUpdateIndividual'
-import { getIdentityFormDefaultValue } from 'app/pages/identity/utils'
-import { Submit } from 'components/form/Submit'
-import { IndividualInfoFields } from 'app/pages/identity/components/IndividualInfoFields/IndividualInfoFields'
-import { AddressFields } from 'app/pages/identity/components/AddressFields/AddressFields'
-import { FinancialFields } from 'app/pages/identity/components/FinancialFields'
-import { IdentityDataroom } from 'app/pages/identity/components/IdentityDataroom'
-import { DeclarationFields } from 'app/pages/identity/components/DeclarationFields'
-import { Form } from 'components/form/Form'
-import { individualIdentityFormValidationSchema } from 'validation/identities'
-import { FormSectionHeader } from 'app/components/DSO/components/FormSectionHeader'
-import { FormStepper } from 'app/components/FormStepper/FormStepper'
-
 export interface IndividualIdentityFormProps {
   data: IndividualIdentity | undefined
   isNew?: boolean
@@ -23,78 +6,8 @@ export interface IndividualIdentityFormProps {
   cancelButton?: JSX.Element
 }
 
-export const IndividualIdentityForm = (
-  props: IndividualIdentityFormProps
-): JSX.Element => {
-  const { data, submitButtonText, cancelButton } = props
-  const createOrUpdateMutation = useCreateOrUpdateIndividual()
-  const [createOrUpdateIndividual] = createOrUpdateMutation
-  const handleSubmit = async (values: IndividualIdentityFormValues) => {
-    await createOrUpdateIndividual(values)
-  }
+export const IndividualIdentityForm = (props: IndividualIdentityFormProps) => {
+  console.log(props)
 
-  return (
-    <Form
-      defaultValues={getIdentityFormDefaultValue(data, 'individual')}
-      validationSchema={individualIdentityFormValidationSchema}
-      onSubmit={handleSubmit}
-    >
-      {/* <FormStepper
-        defaultActiveStep={0}
-        data={data}
-        createMutation={createOrUpdateMutation}
-        editMutation={createOrUpdateMutation}
-        submitMutation={createOrUpdateMutation}
-        steps={[
-          {
-            label: 'Personal Information',
-            component: () => <IndividualInfoFields />
-          },
-          {
-            label: 'Financial Information',
-            component: () => <FinancialFields />
-          },
-          {
-            label: 'Tax Declaration',
-            component: () => <IndividualInfoFields />
-          }
-        ]}
-      /> */}
-      {/* <Grid container spacing={6}>
-        <Grid item xs={12}>
-          <FormSectionHeader title='Personal Information' />
-          <IndividualInfoFields />
-        </Grid>
-
-        <Grid item xs={12}>
-          <FormSectionHeader title='Address' />
-          <AddressFields />
-        </Grid>
-
-        <Grid item xs={12}>
-          <Section title='Financials'>
-            <FinancialFields />
-          </Section>
-        </Grid>
-
-        <Grid item xs={12}>
-          <Section title='Documents'>
-            <IdentityDataroom />
-          </Section>
-        </Grid>
-
-        <Grid item xs={12}>
-          <Section title='Declaration'>
-            <DeclarationFields type='individual' />
-          </Section>
-        </Grid>
-
-        <Grid container justify='center' item xs={12}>
-          {cancelButton}
-          <Box px={1} />
-          <Submit>{submitButtonText}</Submit>
-        </Grid> */}
-      {/* </Grid> */}
-    </Form>
-  )
+  return null
 }

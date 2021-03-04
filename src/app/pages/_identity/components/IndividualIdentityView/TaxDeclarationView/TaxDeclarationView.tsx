@@ -73,7 +73,7 @@ export const TaxDeclarationView = ({ data }: TaxDeclarationViewProps) => {
   }
 
   const renderFatcaBlock = () => {
-    const fatcaLabel = (declarations.tax.fatca as boolean)
+    const fatcaLabel = declarations.tax.fatca
       ? 'I confirm that I am a US citizen* and/or resident in the US for tax purposes and my U.S. federal Taxpayer Identifying Number (US TIN) is as follows:'
       : 'I confirm that I am not a US citizen or resident in the US for tax purposes.'
 

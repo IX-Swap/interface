@@ -16,8 +16,7 @@ export const MoveButton = (props: MoveButtonProps) => {
     onClick,
     transformData,
     nextStepIndex,
-    variant = 'outlined',
-    ...rest
+    variant = 'outlined'
   } = props
   const [save, { isLoading }] = mutation
   const { watch, trigger } = useFormContext()

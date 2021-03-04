@@ -21,7 +21,6 @@ describe('TaxResidencyField', () => {
     remove: mockRemove,
     isLast: true,
     index: 1,
-    disabled: false,
     max: 5,
     total: 2
   }
