@@ -58,6 +58,28 @@ export const useOnboardingDialog = () => {
     })
   }
 
+  const showCreateDetailsOfIssuanceDialog = () => {
+    showOnboardingDialog({
+      title: 'Raise Capital Evaluation',
+      message: [
+        'Details of Issuance is collected so as to do a preliminary feasibility study about your deal'
+      ],
+      closeLabel: 'Let’s Proceed',
+      closeArrow: true
+    })
+  }
+
+  const showSubmitDetailsOfIssuanceDialog = () => {
+    showOnboardingDialog({
+      title: 'Thank You for the Interest! ',
+      message: [
+        'We will get back to you soon. Until then please explore our platform. We have exciting features waiting for you'
+      ],
+      closeLabel: 'OK Got It!',
+      closeArrow: true
+    })
+  }
+
   const showOnboardingCompleteDialog = () => {
     showOnboardingDialog({
       title: 'Onboarding Complete!',
@@ -74,6 +96,8 @@ export const useOnboardingDialog = () => {
     showCreateAccountDialog,
     showPreIdentityCreateDialog,
     showPostIdentityCreateDialog,
+    showCreateDetailsOfIssuanceDialog,
+    showSubmitDetailsOfIssuanceDialog,
     showOnboardingCompleteDialog
   }
 }

@@ -23,18 +23,27 @@ export const defaultOnboardingSteps = [
 
 export const getIdentityOnboardingSteps = (
   indentityType: IdentityType,
-  status?: IdentityStatus
+  status?: IdentityStatus,
+  asIssuer?: boolean
 ) => [
   defaultOnboardingSteps[0],
-  {
-    title: 'To Invest',
-    content: [`As ${indentityType}`]
-  },
+  asIssuer === true
+    ? {
+        title: 'To Raise Capital',
+        content: ['Issuance Detail ']
+      }
+    : {
+        title: 'To Invest',
+        content: [`As ${indentityType}`]
+      },
   { title: 'Create Identity', content: getIdentityStatus(status) },
   { title: 'Complete Onboarding', content: [''] }
 ]
 
-export const useOnboardingSteps = (identityType?: IdentityType) => {
+export const useOnboardingSteps = (
+  identityType?: IdentityType,
+  asIssuer = false
+) => {
   const {
     hasIdentity,
     identityLoaded,
@@ -44,23 +53,42 @@ export const useOnboardingSteps = (identityType?: IdentityType) => {
   } = useGetIdentities()
 
   const getIdentityActiveStep = (status?: IdentityStatus) => {
-    let initStep = 2
+    let indetityActiveStep = 2
     if (status === 'Submitted') {
-      initStep = 3
+      indetityActiveStep = 3
     }
     if ((status as IdentityStatus) === 'Authorized') {
-      initStep = 4
+      indetityActiveStep = 4
     }
-    return initStep
+    return indetityActiveStep
+  }
+
+  const getIssuerActiveStep = (status?: IdentityStatus) => {
+    let issuerActiveStep = 1
+    // To do: get issuer details status
+    const issueDetailsStatus = false
+    if (issueDetailsStatus) {
+      issuerActiveStep = getIdentityActiveStep(status)
+    }
+
+    return issuerActiveStep
+  }
+
+  const getActiveStep = (status?: IdentityStatus) => {
+    if (asIssuer) {
+      return getIssuerActiveStep(status)
+    }
+    return getIdentityActiveStep(status)
   }
 
   if (identityType === undefined && hasIdentity) {
     return {
       steps: getIdentityOnboardingSteps(
         identityTypeLoaded,
-        identityLoaded?.status
+        identityLoaded?.status,
+        asIssuer
       ),
-      activeStep: getIdentityActiveStep(identityLoaded?.status)
+      activeStep: getActiveStep(identityLoaded?.status)
     }
   }
 
@@ -77,7 +105,7 @@ export const useOnboardingSteps = (identityType?: IdentityType) => {
       : corporateIdentities.list[0]?.status
 
   return {
-    steps: getIdentityOnboardingSteps(identityType, identityStatus),
-    activeStep: getIdentityActiveStep(identityStatus)
+    steps: getIdentityOnboardingSteps(identityType, identityStatus, asIssuer),
+    activeStep: getActiveStep(identityStatus)
   }
 }
