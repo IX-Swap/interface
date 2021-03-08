@@ -6,31 +6,37 @@ import { TypedField } from 'components/form/TypedField'
 import { reverseBooleanValueExtractor } from 'helpers/forms'
 import React from 'react'
 import { useFormContext } from 'react-hook-form'
+export interface TinUnavailableFieldsProps {
+  index: number
+}
 
-export const TinUnavailableFields = () => {
+export const TinUnavailableFields = (props: TinUnavailableFieldsProps) => {
+  const { index } = props
   const { control } = useFormContext()
-  const { singaporeOnly, taxAvailable } = useTaxResidencies()
+  const { singaporeOnly, taxAvailable } = useTaxResidencies(index)
 
   return (
-    <Grid container direction='column' spacing={3}>
+    <Grid container direction='column' spacing={2}>
       <Grid item>
         {/* @ts-ignore */}
         <TypedField
           customRenderer
           component={Checkbox}
           reverse
-          defaultValue={true}
-          defaultChecked={false}
           valueExtractor={reverseBooleanValueExtractor}
           control={control}
-          name='taxIdAvailable'
+          name={['taxResidencies', index, 'taxIdAvailable']}
           label='if TIN is not available please indicate reason:'
-          disabled={singaporeOnly}
         />
       </Grid>
-      <Grid item>
-        <ReasonFields disabled={singaporeOnly || taxAvailable} />
-      </Grid>
+      {!taxAvailable && (
+        <Grid item>
+          <ReasonFields
+            index={index}
+            disabled={singaporeOnly || taxAvailable}
+          />
+        </Grid>
+      )}
     </Grid>
   )
 }

@@ -12,7 +12,11 @@ describe('Hook', () => {
     await act(async () => {
       const { result } = renderHookWithForm(() => useTaxResidencies(), {
         singaporeOnly: 'yes',
-        taxAvailable: true
+        taxResidencies: [
+          {
+            taxIdAvailable: true
+          }
+        ]
       })
 
       await waitFor(

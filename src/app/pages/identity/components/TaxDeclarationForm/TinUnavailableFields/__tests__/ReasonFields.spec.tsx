@@ -12,7 +12,7 @@ describe('ReasonFields', () => {
   it('renders without errors', () => {
     render(
       <Form>
-        <ReasonFields disabled={false} />
+        <ReasonFields disabled={false} index={0} />
       </Form>
     )
   })
@@ -20,7 +20,7 @@ describe('ReasonFields', () => {
   it('renders with correct props', () => {
     const { getByLabelText } = render(
       <Form>
-        <ReasonFields disabled={true} />
+        <ReasonFields disabled={true} index={0} />
       </Form>
     )
 

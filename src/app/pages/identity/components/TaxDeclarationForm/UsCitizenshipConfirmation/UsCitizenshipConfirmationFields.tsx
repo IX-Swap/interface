@@ -5,7 +5,8 @@ import { useFormContext } from 'react-hook-form'
 import { FormControlLabel, Radio } from '@material-ui/core'
 
 export const UsCitizenshipConfirmationFields = () => {
-  const { control } = useFormContext()
+  const { control, watch } = useFormContext()
+  const value = watch('declarations.tax.fatca')
 
   return (
     <>
@@ -13,19 +14,19 @@ export const UsCitizenshipConfirmationFields = () => {
       <TypedField
         customRenderer
         component={RadioGroup}
-        name='declarations.tax.isUsCitizen'
+        name={['declarations', 'tax', 'fatca']}
         label=''
         control={control}
       >
         <FormControlLabel
           label='I confirm that I am a US citizen* and/or resident in the US for tax purposes and my U.S. federal Taxpayer Identifying Number (US TIN) is as follows:'
           value='yes'
-          control={<Radio />}
+          control={<Radio checked={value === 'yes'} />}
         />
         <FormControlLabel
           label='I confirm that I am not a US citizen or resident in the US for tax purposes.'
           value='no'
-          control={<Radio />}
+          control={<Radio checked={value === 'no'} />}
         />
       </TypedField>
     </>

@@ -16,7 +16,7 @@ const Template: Story = () => {
     <Form>
       <Grid container spacing={6}>
         <Grid item xs={12}>
-          <InvestorDeclarationForm type={'individual'} />
+          <InvestorDeclarationForm />
         </Grid>
       </Grid>
     </Form>

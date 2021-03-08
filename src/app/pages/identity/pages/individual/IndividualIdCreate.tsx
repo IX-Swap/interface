@@ -1,8 +1,5 @@
 import React, { useEffect } from 'react'
 import { Grid } from '@material-ui/core'
-import { IndividualIdentityForm } from 'app/pages/identity/components/IndividualIdentityForm'
-import { CancelButton } from 'app/pages/identity/components/CancelButton'
-import { useIdentitiesRouter } from 'app/pages/identity/router'
 import { VSpacer } from 'components/VSpacer'
 import { useOnboardingDialog } from 'app/components/OnboardingDialog/hooks/useOnboardingDialog'
 
@@ -17,16 +14,11 @@ export const IndividualIdCreate: React.FC = () => {
 
   return (
     <Grid container>
-      <Grid container item>
+      <Grid container item xs={12}>
         <VSpacer size='medium' />
       </Grid>
-      <Grid item>
-        <IndividualIdentityForm
-          data={undefined}
-          isNew={true}
-          submitButtonText='Create'
-          cancelButton={<CancelButton link={paths.individual} />}
-        />
+      <Grid item xs={12}>
+        <CreateIndividual />
       </Grid>
     </Grid>
   )

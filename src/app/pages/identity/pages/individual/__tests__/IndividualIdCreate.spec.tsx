@@ -1,7 +1,6 @@
 import React from 'react'
 import { render, cleanup } from 'test-utils'
 import { IndividualIdCreate } from 'app/pages/identity/pages/individual/IndividualIdCreate'
-import { IndividualIdentityForm } from 'app/pages/identity/components/IndividualIdentityForm'
 
 jest.mock('app/pages/identity/components/IndividualIdentityForm', () => ({
   IndividualIdentityForm: jest.fn(() => null)
@@ -15,19 +14,5 @@ describe('IndividualIdCreate', () => {
 
   it('renders without error', () => {
     render(<IndividualIdCreate />)
-  })
-
-  it('renders IndividualIdentityForm with correct props', () => {
-    render(<IndividualIdCreate />)
-
-    expect(IndividualIdentityForm).toHaveBeenCalledWith(
-      {
-        identity: undefined,
-        isNew: true,
-        submitButtonText: 'Create',
-        cancelButton: expect.anything()
-      },
-      {}
-    )
   })
 })

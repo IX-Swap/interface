@@ -56,13 +56,13 @@ export const CorporateView = (props: CorporateViewProps) => {
 
       <Grid item xs={12}>
         <Section title='Documents'>
-          <IdentityDocumentsView data={data.documents} type='corporate' />
+          <IdentityDocumentsView data={data} type='corporate' />
         </Section>
       </Grid>
 
       <Grid item xs={12}>
         <Section title='Declaration & Acknowledgement' subtitle='Confirmation'>
-          <DeclarationView data={data.declarations} type='corporate' />
+          <DeclarationView data={data} type='corporate' />
         </Section>
       </Grid>
     </Grid>

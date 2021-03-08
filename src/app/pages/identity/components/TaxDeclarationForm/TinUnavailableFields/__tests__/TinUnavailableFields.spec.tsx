@@ -1,7 +1,6 @@
 import { TinUnavailableFields } from 'app/pages/identity/components/TaxDeclarationForm/TinUnavailableFields/TinUnavailableFields'
 import React from 'react'
 import { render, cleanup } from 'test-utils'
-import { ReasonFields } from 'app/pages/identity/components/TaxDeclarationForm/TinUnavailableFields/ReasonFields'
 import { Form } from 'components/form/Form'
 
 jest.mock(
@@ -20,23 +19,8 @@ describe('TinUnavailableFields', () => {
   it('renders without errors', () => {
     render(
       <Form>
-        <TinUnavailableFields />
+        <TinUnavailableFields index={0} />
       </Form>
-    )
-  })
-
-  it('renders component with default props', () => {
-    render(
-      <Form>
-        <TinUnavailableFields />
-      </Form>
-    )
-
-    expect(ReasonFields).toHaveBeenCalledWith(
-      {
-        disabled: true
-      },
-      {}
     )
   })
 })

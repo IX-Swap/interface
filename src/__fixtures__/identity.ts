@@ -14,7 +14,23 @@ export const corporate: CorporateIdentity = {
   createdAt: '01-01-2000',
   updatedAt: '01-01-2000',
   documents: [],
-  declarations: [],
+  declarations: {
+    agreements: {
+      investor: false,
+      custody: false,
+      disclosures: false
+    },
+    tax: { fatca: false },
+    investorsStatus: {
+      jointlyHeldAccount: false,
+      consequencesOfQualification: false,
+      financialAsset: false,
+      personalAssets: false,
+      consent: false,
+      income: false,
+      rightToOptOut: false
+    }
+  },
   status: 'Submitted',
   beneficialOwners: [],
   companyAddress: address,
@@ -69,21 +85,23 @@ export const individual: IndividualIdentity = {
   authorization: authorizationInfo,
   authorizationDocuments: [],
   authorizations: [],
-  declarations: [
-    { IndividualAccreditedInvestor: DeclarationValue.Yes },
-    { NetPersonalAssets: DeclarationValue.Yes },
-    { IndividualIncome: DeclarationValue.Yes },
-    { IndividualFinancialAsset: DeclarationValue.Yes },
-    { JointlyHeldAccount: DeclarationValue.Yes },
-    { InvestaXPrivacyPolicy: DeclarationValue.Yes },
-    { InvestaXTermsOfUse: DeclarationValue.Yes },
-    { USPerson: DeclarationValue.Yes },
-    { TreatAsAccreditedInvestor: DeclarationValue.Yes },
-    { PrimaryIssuancePlatform: DeclarationValue.Yes },
-    { SecondaryTradingPlatform: DeclarationValue.Yes },
-    { TrueAndCorrectInformation: DeclarationValue.Yes },
-    { InformAnyChanges: DeclarationValue.Yes }
-  ],
+  declarations: {
+    agreements: {
+      investor: false,
+      custody: false,
+      disclosures: false
+    },
+    tax: { fatca: false },
+    investorsStatus: {
+      jointlyHeldAccount: false,
+      consequencesOfQualification: false,
+      financialAsset: false,
+      personalAssets: false,
+      consent: false,
+      income: false,
+      rightToOptOut: false
+    }
+  },
   documents: [],
   address,
   user

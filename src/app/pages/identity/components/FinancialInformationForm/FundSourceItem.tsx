@@ -14,6 +14,7 @@ export interface FundSourceItemProps {
 
 export const FundSourceItem = ({ field, index }: FundSourceItemProps) => {
   const { control } = useFormContext()
+
   return (
     <Grid item key={field.name}>
       <Grid container>
@@ -23,7 +24,7 @@ export const FundSourceItem = ({ field, index }: FundSourceItemProps) => {
             customRenderer
             valueExtractor={booleanValueExtractor}
             component={Checkbox}
-            name={['fundSource', index, 'checked']}
+            name={['sourceOfFund', index, 'checked']}
             label={field.name ?? ''}
             defaultValue={field.checked}
             control={control}

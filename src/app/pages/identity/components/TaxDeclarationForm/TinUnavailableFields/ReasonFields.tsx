@@ -1,15 +1,27 @@
-import { Grid, FormControlLabel, Radio, Box } from '@material-ui/core'
+import {
+  Grid,
+  FormControlLabel,
+  Radio,
+  Box,
+  TextField
+} from '@material-ui/core'
+import { IndividualTaxDeclarationFormValues } from 'app/pages/_identity/types/forms'
 import { RadioGroup } from 'components/form/RadioGroup'
 import { TypedField } from 'components/form/TypedField'
 import React from 'react'
 import { useFormContext } from 'react-hook-form'
 
 export interface ReasonFieldsProps {
+  index: number
   disabled: boolean
 }
 
-export const ReasonFields = ({ disabled }: ReasonFieldsProps) => {
-  const { control } = useFormContext()
+export const ReasonFields = ({ disabled, index }: ReasonFieldsProps) => {
+  const { control, watch } = useFormContext<
+    IndividualTaxDeclarationFormValues
+  >()
+  const reason = watch(`taxResidencies[${index}].reason`)
+  const isBReason = reason === 'B'
 
   return (
     <Box ml={3}>
@@ -17,7 +29,7 @@ export const ReasonFields = ({ disabled }: ReasonFieldsProps) => {
       <TypedField
         customRenderer
         component={RadioGroup}
-        name='reasonUnavailable'
+        name={['taxResidencies', index, 'reason']}
         label=''
         control={control}
       >
@@ -55,6 +67,20 @@ export const ReasonFields = ({ disabled }: ReasonFieldsProps) => {
               control={<Radio />}
               disabled={disabled}
             />
+            <Box
+              ml={3}
+              mt={1.5}
+              maxWidth={535}
+              display={isBReason ? 'block' : 'none'}
+            >
+              <TypedField
+                component={TextField}
+                variant='outlined'
+                control={control}
+                name={['taxResidencies', index, 'customReason']}
+                label='Explain why the corporate does not have a TIN'
+              />
+            </Box>
           </Grid>
           <Grid item>
             <FormControlLabel

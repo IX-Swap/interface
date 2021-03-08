@@ -29,22 +29,24 @@ export const SingaporeOnlyFields = () => {
           control={<Radio checked={singaporeOnly} />}
         />
       </Grid>
-      <Grid item xs={12} md={4}>
-        <Typography>
-          <Box fontWeight='bold' component='span'>
-            My Singapore NRIC/FIN is:
-          </Box>
-        </Typography>
-        <VSpacer size='small' />
-        <TypedField
-          component={TextField}
-          variant='outlined'
-          control={control}
-          name='taxIdentificationNumber'
-          label='NRIC/FIN'
-          disabled={!singaporeOnly}
-        />
-      </Grid>
+      {singaporeOnly && (
+        <Grid item xs={12} md={4}>
+          <Typography>
+            <Box fontWeight='bold' component='span'>
+              My Singapore NRIC/FIN is:
+            </Box>
+          </Typography>
+
+          <VSpacer size='small' />
+          <TypedField
+            component={TextField}
+            variant='outlined'
+            control={control}
+            name={['taxResidencies', 0, 'taxIdentificationNumber']}
+            label='NRIC/FIN'
+          />
+        </Grid>
+      )}
     </Grid>
   )
 }

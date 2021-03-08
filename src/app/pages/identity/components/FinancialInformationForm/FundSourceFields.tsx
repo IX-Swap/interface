@@ -13,7 +13,7 @@ export const FundSourceFields = () => {
     <Grid container direction='column' spacing={3}>
       <Grid item>
         <Grid container direction='column' spacing={2}>
-          <FieldsArray name='fundSource' control={control}>
+          <FieldsArray name='sourceOfFund' control={control}>
             {({ fields }) => (
               <>
                 {fields.map((field, index) => (
@@ -26,6 +26,7 @@ export const FundSourceFields = () => {
           </FieldsArray>
         </Grid>
       </Grid>
+
       <Grid item>
         <Typography variant='subtitle1'>
           Will these source(s) be used to fund majority of your account?

@@ -64,8 +64,7 @@ describe('InternationalFields', () => {
         }),
         max: MAX_TAX_RESIDENCIES,
         index: 0,
-        total: 2,
-        disabled: false
+        total: 2
       }),
       {}
     )
@@ -79,8 +78,7 @@ describe('InternationalFields', () => {
         }),
         max: MAX_TAX_RESIDENCIES,
         index: 1,
-        total: 2,
-        disabled: false
+        total: 2
       }),
       {}
     )
