@@ -33,24 +33,25 @@ export const BaseProviders: React.FC = ({ children }) => {
       <AppThemeProvider>
         {theme => (
           <ThemeProvider theme={theme}>
-            <ToastProvider
-              components={{ Toast: Toast, ToastContainer: () => null }}
-            >
-              <BreadcrumbsProvider>
-                <AppStateProvider>
+            <AppStateProvider>
+              <ToastProvider
+                components={{ Toast: Toast, ToastContainer: () => null }}
+              >
+                <BreadcrumbsProvider>
                   <ServicesProvider
                     value={{
                       snackbarService: {
                         showSnackbar: jest.fn(),
-                        showNotification: jest.fn()
+                        showNotification: jest.fn(),
+                        showOnboardingDialog: jest.fn()
                       }
                     }}
                   >
                     <Router history={history}>{children}</Router>
                   </ServicesProvider>
-                </AppStateProvider>
-              </BreadcrumbsProvider>
-            </ToastProvider>
+                </BreadcrumbsProvider>
+              </ToastProvider>
+            </AppStateProvider>
           </ThemeProvider>
         )}
       </AppThemeProvider>

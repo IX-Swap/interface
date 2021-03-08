@@ -6,6 +6,7 @@ import { useIsEnabled2FA, useIsAccredited } from 'helpers/acl'
 import { AppRoute as AppPath } from 'app/router'
 import { useCachedUser } from 'hooks/auth/useCachedUser'
 import { ScrollToTop } from './ScrollToTop'
+import { useOnboardingDialog } from 'app/components/OnboardingDialog/hooks/useOnboardingDialog'
 
 export interface AppRouteProps extends RouteComponentProps {
   route: InternalRouteProps
@@ -25,6 +26,8 @@ export const AppRoute = (props: AppRouteProps) => {
     path: safeGeneratePath(route.path, params)
   })
 
+  const { showCreateAccountDialog, showEnable2FADialog } = useOnboardingDialog()
+
   if (component === undefined) {
     return null
   }
@@ -41,6 +44,7 @@ export const AppRoute = (props: AppRouteProps) => {
       !path.startsWith(AppPath.notifications) &&
       !path.startsWith(AppPath.identity)
     ) {
+      showEnable2FADialog()
       return <Redirect to={AppPath.home} />
     }
 
@@ -51,6 +55,7 @@ export const AppRoute = (props: AppRouteProps) => {
       !path.startsWith(AppPath.security) &&
       !path.startsWith(AppPath.notifications)
     ) {
+      showCreateAccountDialog()
       return <Redirect to={AppPath.home} />
     }
   }
