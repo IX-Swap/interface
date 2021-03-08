@@ -2,9 +2,9 @@ import React, { useEffect } from 'react'
 import { Grid } from '@material-ui/core'
 import { VSpacer } from 'components/VSpacer'
 import { useOnboardingDialog } from 'app/components/OnboardingDialog/hooks/useOnboardingDialog'
+import { CreateIndividual } from 'app/pages/_identity/pages/CreateIndividual'
 
 export const IndividualIdCreate: React.FC = () => {
-  const { paths } = useIdentitiesRouter()
   const { showPreIdentityCreateDialog } = useOnboardingDialog()
 
   useEffect(() => {
