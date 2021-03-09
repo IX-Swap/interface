@@ -1,7 +1,9 @@
 import { makeStyles } from '@material-ui/core/styles'
 
 export const useStyles = makeStyles(theme => ({
-  container: {},
+  container: {
+    border: `1px solid ${theme.palette.divider}`
+  },
   inner: {
     padding: '10px 14px',
     minHeight: 65,

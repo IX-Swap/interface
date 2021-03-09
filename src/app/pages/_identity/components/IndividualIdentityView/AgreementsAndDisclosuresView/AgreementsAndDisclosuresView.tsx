@@ -11,7 +11,8 @@ export interface AgreementsAndDisclosuresViewProps {
 export const AgreementsAndDisclosuresView = (
   props: AgreementsAndDisclosuresViewProps
 ) => {
-  const { investor, custody, disclosures } = props.data.declarations.agreements
+  const { investor, custody, disclosures } =
+    props.data.declarations.agreements ?? {}
 
   return (
     <Grid container direction={'column'} spacing={2}>

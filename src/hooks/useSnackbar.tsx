@@ -63,7 +63,6 @@ export const useSnackbar = (): SnackbarService => {
       return showAllNotifications()
     },
     showOnboardingDialog: (onboardingDialog: OnboardingDialogProps) => {
-      // To do: determine if user is still in onboarding process
       return addToast(<OnboardingDialog {...onboardingDialog} />, {
         appearance: 'info',
         autoDismiss: false

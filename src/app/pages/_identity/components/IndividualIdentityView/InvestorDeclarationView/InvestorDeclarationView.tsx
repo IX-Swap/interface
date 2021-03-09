@@ -28,7 +28,7 @@ export const InvestorDeclarationView: React.FC<InvestorDeclarationViewProps> = (
     jointlyHeldAccount,
     personalAssets,
     rightToOptOut
-  } = data.declarations.investorsStatus
+  } = data.declarations.investorsStatus ?? {}
 
   const accreditedInvestorDeclaration = {
     personalAssets,
