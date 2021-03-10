@@ -62,8 +62,6 @@ export const corporate: CorporateIdentity = {
   authorizationDocuments: [],
   authorization: authorizationInfo,
   authorizations: [],
-  legalEntityStatus: '',
-  taxResidencies: [],
   mailingAddress: address
 }
 

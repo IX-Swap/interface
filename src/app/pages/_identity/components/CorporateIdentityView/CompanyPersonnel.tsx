@@ -17,6 +17,7 @@ export const CompanyPersonnel = ({
   showDocumentHeader,
   documentsTitle
 }: PersonnelProps) => {
+  debugger
   return (
     <Grid container direction='column' spacing={3}>
       <Grid item>
@@ -52,7 +53,7 @@ export const CompanyPersonnel = ({
           ) : null}
         </Grid>
       </Grid>
-      {personnel.documents !== undefined ? (
+      {/* {personnel.documents !== undefined ? (
         <Grid item>
           <Typography variant='body1'>
             <Box component='span' fontWeight='bold'>
@@ -71,7 +72,7 @@ export const CompanyPersonnel = ({
             ))}
           </>
         </Grid>
-      ) : null}
+      ) : null} */}
     </Grid>
   )
 }

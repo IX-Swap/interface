@@ -59,7 +59,6 @@ export const corporateIdentityFormValidationSchema = yup
     declarations: corporateDeclarationsSchema.required('Required'),
     companyAddress: addressSchema.required('Required'),
     email: emailSchema.required('Required'),
-    legalEntityStatus: yup.string().required('Required'),
     taxResidencies: taxResidenciesArraySchema.required('Required'),
     mailingAddress: addressSchema.required('Required')
   })

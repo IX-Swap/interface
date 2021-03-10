@@ -4,8 +4,8 @@ import { useAllCorporateIdentities } from 'hooks/identity/useAllCorporateIdentit
 import { useIdentitiesRouter } from 'app/pages/_identity/router'
 import { EditButton } from 'app/pages/identity/components/EditButton'
 import { VSpacer } from 'components/VSpacer'
-import { CorporateView } from 'app/pages/identity/components/CorporateView'
 import { RejectionMessage } from 'app/pages/authorizer/components/RejectionMessage'
+import { CorporateIdentityView } from 'app/pages/_identity/components/CorporateIdentityView/CorporateIdentityView'
 
 export const ViewInvestor = () => {
   const { data, status } = useAllCorporateIdentities()
@@ -32,7 +32,7 @@ export const ViewInvestor = () => {
         <VSpacer size='small' />
       </Grid>
       <Grid item>
-        <CorporateView data={identity} />
+        <CorporateIdentityView data={identity} />
       </Grid>
     </Grid>
   )

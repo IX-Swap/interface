@@ -26,6 +26,7 @@ import { TaxDeclarationForm } from '../../../identity/components/TaxDeclarationF
 import { InvestorDeclarationForm } from '../InvestorDeclarationForm/InvestorDeclarationForm'
 import { CorporateUploadDocumentsForm } from '../../../identity/components/UploadDocumentsForm/CorporateUploadDocumentsForm'
 import { AgreementsAndDisclosuresFields } from '../AgreementsAndDisclosuresFields/AgreementsAndDisclosuresFields'
+import { CorporateIdentityView } from 'app/pages/_identity/components/CorporateIdentityView/CorporateIdentityView'
 
 export const CorporateInvestorForm = () => {
   const { data, isLoading } = useAllCorporateIdentities()
@@ -117,7 +118,9 @@ export const CorporateInvestorForm = () => {
           getFormValues: () => null,
           getRequestPayload: {},
           validationSchema: {},
-          component: () => null
+          component: () => <Fragment>
+            <CorporateIdentityView data={identity} />
+          </Fragment>
         }
       ]}
     />

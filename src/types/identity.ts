@@ -97,7 +97,6 @@ export interface CorporateFields {
   companyLegalName: string
   registrationNumber: string
   countryOfFormation: string
-  legalEntityStatus: string
   companyAddress: IdentityAddress
   representatives: Personnel[]
   directors: Personnel[]
