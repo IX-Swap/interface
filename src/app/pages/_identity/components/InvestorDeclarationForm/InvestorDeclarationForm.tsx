@@ -17,6 +17,21 @@ export const investorDeclarationLabelMap = {
     'My jointly held account with my spouse/any individual meets any of the above'
 }
 
+export const corporateInvestorDeclarationLabelMap = {
+  assets:
+    'An entity or corporation with net assets exceeding $10 million or its equivalent in foreign currency; or',
+  trustee:
+    'The trustee of a trust the subject matter of which exceeds $10 million or its equivalent in foreign currency; or',
+  accreditedShareholders:
+    'A corporation where all the shareholders are Accredited Investors; or',
+  partnership:
+    'A partnership (other than a limited liability partnership) where all the partners are Accredited Investors; or',
+  accreditedBeneficiaries:
+    'A trust where all the beneficiaries are Accredited Investors; or',
+  accreditedSettlors:
+    'A trust where all the settlors are Accredited Investors and have reserved to themselves all powers of investment and asset management functions under the trust, and have reserved to themselves the power to revoke the trust.'
+}
+
 export const optInDeclarationLabelMap = {
   consent:
     'I give my consent to IC SG Pte Ltd dba InvestaX to treat me as an “Accredited Investor”.',

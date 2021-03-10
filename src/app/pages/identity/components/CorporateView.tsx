@@ -1,5 +1,4 @@
 import React from 'react'
-import { CorporateIdentity } from 'types/identity'
 import { Grid } from '@material-ui/core'
 import { Section } from 'app/pages/identity/components/Section'
 import { CompanyInfoView } from 'app/pages/identity/components/CompanyInfoView'
@@ -11,7 +10,7 @@ import { useSetPageTitle } from 'app/hooks/useSetPageTitle'
 import { privateClassNames } from 'helpers/classnames'
 
 export interface CorporateViewProps {
-  data: CorporateIdentity
+  data: any
 }
 
 export const CorporateView = (props: CorporateViewProps) => {

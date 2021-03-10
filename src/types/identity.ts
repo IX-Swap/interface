@@ -65,6 +65,15 @@ export interface ExtendedIdentityProfile extends PersonalProfile {
   user: User
 }
 
+export interface Personnel {
+  fullName: string
+  designation: string
+  email: string
+  contactNumber: string
+  documents?: DataroomFile[]
+  address?: IdentityAddress
+}
+
 export interface FundSource {
   name: string
   checked: boolean
@@ -89,9 +98,12 @@ export interface CorporateFields {
   registrationNumber: string
   countryOfFormation: string
   companyAddress: IdentityAddress
-  representatives: PersonalProfile[]
-  directors: PersonalProfile[]
-  beneficialOwners: PersonalProfile[]
+  representatives: Personnel[]
+  directors: Personnel[]
+  beneficialOwners: Personnel[]
+  legalEntityStatus: string
+  taxResidencies: TaxResidencies
+  mailingAddress: IdentityAddress
 }
 
 export interface Declaration {
@@ -108,6 +120,25 @@ export interface AgreementsAndDisclosures {
   }
 }
 
+export interface IndividualInvestorStatus {
+  consent: boolean
+  consequencesOfQualification: boolean
+  financialAsset: boolean
+  income: boolean
+  jointlyHeldAccount: boolean
+  personalAssets: boolean
+  rightToOptOut: boolean
+}
+
+export interface CorporateInvestorStatus {
+  assets: boolean
+  trustee: boolean
+  accreditedShareholders: boolean
+  partnership: boolean
+  accreditedBeneficiaries: boolean
+  accreditedSettlors: boolean
+}
+
 export interface BaseIdentity {
   _id: string
   status: 'Rejected' | 'Authorized' | 'Submitted' | undefined
@@ -117,15 +148,7 @@ export interface BaseIdentity {
   documents: DataroomFile[]
   declarations: {
     tax: { fatca: boolean }
-    investorsStatus: {
-      consent: boolean
-      consequencesOfQualification: boolean
-      financialAsset: boolean
-      income: boolean
-      jointlyHeldAccount: boolean
-      personalAssets: boolean
-      rightToOptOut: boolean
-    }
+    investorsStatus: IndividualInvestorStatus & CorporateInvestorStatus
     agreements: {
       investor: boolean
       custody: boolean
