@@ -1,5 +1,5 @@
-import { DirectorsAndBeneficialOwnerFields } from 'app/pages/identity/components/DirectorAndBeneficialOwnerDetails/DirectorsAndBeneficialOwnerFields'
-import { Fields } from 'app/pages/identity/components/DirectorAndBeneficialOwnerDetails/Fields'
+import { DirectorsAndBeneficialOwnerFields } from 'app/pages/_identity/components/DirectorAndBeneficialOwnerDetails/DirectorsAndBeneficialOwnerFields'
+import { Fields } from 'app/pages/_identity/components/DirectorAndBeneficialOwnerDetails/Fields'
 import { Form } from 'components/form/Form'
 import React from 'react'
 import { render, cleanup } from 'test-utils'

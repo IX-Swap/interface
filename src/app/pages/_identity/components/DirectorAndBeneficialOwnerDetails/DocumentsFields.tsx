@@ -1,8 +1,8 @@
 import React from 'react'
-import { FormSectionHeader } from 'app/pages/identity/components/FormSectionHeader'
-import { UploadDocumentField } from 'app/pages/identity/components/UploadDocumentsForm/UploadDocumentField/UploadDocumentField'
-import { Divider, Grid, Typography } from '@material-ui/core'
-import { DirectorsInformationFieldsProps } from 'app/pages/identity/components/DirectorAndBeneficialOwnerDetails/DirectorsInformationFields'
+import { FormSectionHeader } from 'app/pages/_identity/components/FormSectionHeader'
+import { UploadDocumentField } from 'app/pages/_identity/components/UploadDocumentsForm/UploadDocumentField/UploadDocumentField'
+import { Box, Divider, Grid, Typography } from '@material-ui/core'
+import { DirectorsInformationFieldsProps } from 'app/pages/_identity/components/DirectorAndBeneficialOwnerDetails/DirectorsInformationFields'
 
 export const DocumentFields = ({
   fieldId,
@@ -25,7 +25,7 @@ export const DocumentFields = ({
           label='Proof of Identity'
           helperElement={
             <>
-              <Divider />
+              <Box m={1} />
               <Typography variant='body1'>
                 Passport, Driving License, NRIC and Government Issued ID card.
               </Typography>
@@ -40,7 +40,7 @@ export const DocumentFields = ({
           label='Proof of Address'
           helperElement={
             <>
-              <Divider />
+              <Box m={1} />
               <Typography variant='body1'>
                 Utility bills, Bank statement/Credit card statement, Tenancy
                 agreement, and Telecom bill.

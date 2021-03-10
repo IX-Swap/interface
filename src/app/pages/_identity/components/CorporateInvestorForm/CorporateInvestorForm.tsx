@@ -2,7 +2,7 @@ import React, { Fragment } from 'react'
 import { FormStepper } from 'app/components/FormStepper/FormStepper'
 import { useUpdateCorporateIdentity } from 'hooks/identity/useUpdateCorporateIdentity'
 import { useAllCorporateIdentities } from 'hooks/identity/useAllCorporateIdentities'
-import { CorporateInformationForm } from 'app/pages/identity/components/CorporateInformationForm/CorporateInformationForm'
+import { CorporateInformationForm } from 'app/pages/_identity/components/CorporateInformationForm/CorporateInformationForm'
 import { DirectorsAndBeneficialOwnerDetails } from 'app/pages/_identity/components/DirectorAndBeneficialOwnerDetails/DirectorsAndBeneficialOwnerDetails'
 import {
   getCorporateInfoFormValues,
@@ -22,9 +22,9 @@ import {
 import { useCreateCorporate } from 'app/pages/_identity/hooks/useCreateCorporate'
 import { useUpdateCorporate } from 'app/pages/_identity/hooks/useUpdateCorporate'
 import { getTaxDeclarationRequestPayload } from '../../utils/individual/requests'
-import { TaxDeclarationForm } from '../../../identity/components/TaxDeclarationForm/TaxDeclarationForm'
+import { TaxDeclarationForm } from '../TaxDeclarationForm/TaxDeclarationForm'
 import { InvestorDeclarationForm } from '../InvestorDeclarationForm/InvestorDeclarationForm'
-import { CorporateUploadDocumentsForm } from '../../../identity/components/UploadDocumentsForm/CorporateUploadDocumentsForm'
+import { CorporateUploadDocumentsForm } from '../UploadDocumentsForm/CorporateUploadDocumentsForm'
 import { AgreementsAndDisclosuresFields } from '../AgreementsAndDisclosuresFields/AgreementsAndDisclosuresFields'
 import { CorporateIdentityView } from 'app/pages/_identity/components/CorporateIdentityView/CorporateIdentityView'
 
@@ -76,7 +76,7 @@ export const CorporateInvestorForm = () => {
           validationSchema: {},
           component: () => (
             <Fragment>
-              <TaxDeclarationForm />
+              <TaxDeclarationForm identityType='corporate' />
             </Fragment>
           )
         },
@@ -87,7 +87,7 @@ export const CorporateInvestorForm = () => {
           validationSchema: {},
           component: () => (
             <Fragment>
-              <InvestorDeclarationForm />
+              <InvestorDeclarationForm identityType='corporate' />
             </Fragment>
           )
         },
@@ -118,9 +118,11 @@ export const CorporateInvestorForm = () => {
           getFormValues: () => null,
           getRequestPayload: {},
           validationSchema: {},
-          component: () => <Fragment>
-            <CorporateIdentityView data={identity} />
-          </Fragment>
+          component: () => (
+            <Fragment>
+              <CorporateIdentityView data={identity} />
+            </Fragment>
+          )
         }
       ]}
     />

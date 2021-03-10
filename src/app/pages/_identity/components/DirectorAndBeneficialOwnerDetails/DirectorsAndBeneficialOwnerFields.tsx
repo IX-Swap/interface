@@ -1,9 +1,9 @@
 import { Grid } from '@material-ui/core'
-import { BeneficialOwnersInformationFields } from 'app/pages/identity/components/DirectorAndBeneficialOwnerDetails/BeneficialOwnersInformationFields'
-import { DirectorsInformationFields } from 'app/pages/identity/components/DirectorAndBeneficialOwnerDetails/DirectorsInformationFields'
-import { Fields } from 'app/pages/identity/components/DirectorAndBeneficialOwnerDetails/Fields'
+import { BeneficialOwnersInformationFields } from 'app/pages/_identity/components/DirectorAndBeneficialOwnerDetails/BeneficialOwnersInformationFields'
+import { DirectorsInformationFields } from 'app/pages/_identity/components/DirectorAndBeneficialOwnerDetails/DirectorsInformationFields'
+import { Fields } from 'app/pages/_identity/components/DirectorAndBeneficialOwnerDetails/Fields'
 import { FieldsArray } from 'components/form/FieldsArray'
-import React from 'react'
+import React, { useEffect } from 'react'
 import { useFormContext } from 'react-hook-form'
 
 export interface DirectorsAndBeneficialOwnerFieldsProps {
@@ -14,6 +14,11 @@ export const DirectorsAndBeneficialOwnerFields = ({
   name
 }: DirectorsAndBeneficialOwnerFieldsProps) => {
   const { control } = useFormContext()
+
+  useEffect(() => {
+    control.setValue(name, [{}])
+  }, [])
+
   return (
     <FieldsArray name={name} control={control}>
       {({ fields, append, remove }) => (
@@ -29,7 +34,11 @@ export const DirectorsAndBeneficialOwnerFields = ({
                 isLast={fields.length - 1 === index}
                 total={fields.length}
                 max={5}
-                sectionTitle='Directors/Partners/People with Executive Authority'
+                sectionTitle={
+                  name === 'directors'
+                    ? 'Directors/Partners/People with Executive Authority'
+                    : 'Beneficial Owners Information'
+                }
                 informationFields={
                   name === 'directors' ? (
                     <DirectorsInformationFields

@@ -1,28 +1,28 @@
 import React from 'react'
 import { render, cleanup } from 'test-utils'
 import { Form } from 'components/form/Form'
-import { FormSectionHeader } from 'app/pages/identity/components/FormSectionHeader'
+import { FormSectionHeader } from 'app/pages/_identity/components/FormSectionHeader'
 import { fireEvent } from '@testing-library/react'
 import {
   Fields,
   FieldsProps
-} from 'app/pages/identity/components/DirectorAndBeneficialOwnerDetails/Fields'
+} from 'app/pages/_identity/components/DirectorAndBeneficialOwnerDetails/Fields'
 
 jest.mock(
-  'app/pages/identity/components/DirectorAndBeneficialOwnerDetails/DocumentsFields',
+  'app/pages/_identity/components/DirectorAndBeneficialOwnerDetails/DocumentsFields',
   () => ({
     DocumentFields: jest.fn(() => null)
   })
 )
 
 jest.mock(
-  'app/pages/identity/components/DirectorAndBeneficialOwnerDetails/DirectorsInformationFields',
+  'app/pages/_identity/components/DirectorAndBeneficialOwnerDetails/DirectorsInformationFields',
   () => ({
     DirectorsInformationFields: jest.fn(() => null)
   })
 )
 
-jest.mock('app/pages/identity/components/FormSectionHeader', () => ({
+jest.mock('app/pages/_identity/components/FormSectionHeader', () => ({
   FormSectionHeader: jest.fn(() => null)
 }))
 

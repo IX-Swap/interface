@@ -1,5 +1,5 @@
 import { Grid } from '@material-ui/core'
-import { FormSectionHeader } from 'app/pages/identity/components/FormSectionHeader'
+import { FormSectionHeader } from 'app/pages/_identity/components/FormSectionHeader'
 import { PersonnelList } from 'app/pages/_identity/components/CorporateIdentityView/PersonnelList'
 import { CorporateAddress } from 'app/pages/_identity/components/CorporateIdentityView/CorporateAddress'
 import { CorporateInfo } from 'app/pages/_identity/components/CorporateIdentityView/CorporateInfo'
