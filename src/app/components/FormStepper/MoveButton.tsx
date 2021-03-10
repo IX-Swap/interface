@@ -1,11 +1,11 @@
-import React from 'react'
+import React, { Fragment } from 'react'
 import { Button, ButtonProps } from '@material-ui/core'
 import { useFormContext } from 'react-hook-form'
 import { MutationResultPair } from 'react-query'
 
 export interface MoveButtonProps extends ButtonProps {
   mutation: MutationResultPair<any, any, any, any>
-  transformData: (data: any) => any
+  getRequestPayload: (data: any) => any
   nextStepIndex?: number
 }
 
@@ -14,40 +14,52 @@ export const MoveButton = (props: MoveButtonProps) => {
     mutation,
     children,
     onClick,
-    transformData,
+    getRequestPayload,
     nextStepIndex,
     variant = 'outlined'
   } = props
   const [save, { isLoading }] = mutation
-  const { watch, trigger } = useFormContext()
+  const {
+    watch,
+    trigger,
+    formState: { touched }
+  } = useFormContext()
   const values = watch()
 
   const handleSave = async (
     event: React.MouseEvent<HTMLButtonElement, MouseEvent>
   ) => {
-    const isValid = await trigger()
-    const payload = transformData(values)
+    const isDirty = Object.values(touched).length > 0
 
-    if (nextStepIndex !== undefined) {
-      payload.step = nextStepIndex
-    }
+    if (isDirty) {
+      const isValid = await trigger()
+      const payload = getRequestPayload(values)
 
-    if (isValid) {
-      await save(payload)
+      // if (nextStepIndex !== undefined) {
+      //   payload.step = nextStepIndex
+      // }
+
+      if (isValid) {
+        await save(payload)
+        onClick?.(event)
+      }
+    } else {
       onClick?.(event)
     }
   }
 
   return (
-    <Button
-      {...props}
-      variant={variant}
-      color='primary'
-      onClick={handleSave}
-      disabled={isLoading}
-      disableElevation
-    >
-      {children}
-    </Button>
+    <Fragment>
+      <Button
+        {...props}
+        variant={variant}
+        color='primary'
+        onClick={handleSave}
+        disabled={isLoading}
+        disableElevation
+      >
+        {children}
+      </Button>
+    </Fragment>
   )
 }

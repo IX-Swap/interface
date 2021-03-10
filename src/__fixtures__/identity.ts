@@ -11,9 +11,11 @@ import { IndividualIdentityFormValues } from 'app/pages/identity/components/type
 export const corporate: CorporateIdentity = {
   _id: '1',
   logo: '',
+  legalEntityStatus: 'others',
   createdAt: '01-01-2000',
   updatedAt: '01-01-2000',
   documents: [],
+  taxResidencies: [],
   declarations: {
     agreements: {
       investor: false,

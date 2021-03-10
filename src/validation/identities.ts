@@ -47,6 +47,7 @@ export const corporateIdentityFormValidationSchema = yup
   .object()
   .shape<CorporateIdentityFormValues>({
     logo: yup.string(),
+    legalEntityStatus: yup.string().required('Required'),
     contactNumber: yup.string().required('Required'),
     registrationNumber: yup.string().required('Required'),
     companyLegalName: yup.string().required('Required'),

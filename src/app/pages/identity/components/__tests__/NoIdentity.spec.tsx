@@ -5,7 +5,7 @@ import {
   NoIdentity,
   NoIdentityProps
 } from 'app/pages/identity/components/NoIdentity'
-import { IdentityRoute } from 'app/pages/identity/router'
+import { IdentityRoute } from 'app/pages/_identity/router'
 
 jest.mock('components/AppRouterLink', () => ({
   AppRouterLinkComponent: jest.fn(({ children }) => children)

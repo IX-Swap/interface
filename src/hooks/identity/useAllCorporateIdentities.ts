@@ -18,15 +18,16 @@ export const useAllCorporateIdentities = (
   const isAdmin = useIsAdmin()
   const isSuperUser = isAdmin || isAuthorizer
   const userId = getIdFromObj(user)
-  const payload = { ...paginationArgs, userId }
+  const payload = { ...paginationArgs, status: 'Draft'}
   const uri =
     all && isSuperUser
       ? identityURL.corporates.getAllBySuperUser
       : identityURL.corporates.getAllByUserId(userId)
+
   const getAllCorporates = async () => {
     return await apiService.post<PaginatedData<CorporateIdentity>>(
       uri,
-      paginationArgs
+      payload
     )
   }
 

@@ -7,7 +7,7 @@ import { OnboardingPanel } from 'app/components/OnboardingPanel/OnboardingPanel'
 import { useSecurityRouter } from 'app/pages/security/router'
 import { useLocation } from 'react-router-dom'
 import { useHomeRouter } from 'app/pages/home/router'
-import { useIdentitiesRouter } from 'app/pages/identity/router'
+import { useIdentitiesRouter } from 'app/pages/_identity/router'
 
 export interface OnboardingContentWrapperProps {
   children: React.ReactNode

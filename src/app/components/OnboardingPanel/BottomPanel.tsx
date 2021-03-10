@@ -1,7 +1,7 @@
 import { CorporateOnboardingSteps } from 'app/components/OnboardingPanel/CorporateOnboardingSteps'
 import { HomeOnboardingSteps } from 'app/components/OnboardingPanel/HomeOnboardingSteps'
 import { IndividualOnboardingSteps } from 'app/components/OnboardingPanel/IndividualOnboardingSteps'
-import { useIdentitiesRouter } from 'app/pages/identity/router'
+import { useIdentitiesRouter } from 'app/pages/_identity/router'
 import React from 'react'
 import { Switch, Route } from 'react-router-dom'
 

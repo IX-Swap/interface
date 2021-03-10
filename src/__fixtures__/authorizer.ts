@@ -46,11 +46,12 @@ export const authorizationInfo: AuthorizationInfo = {
 
 export const corporate: CorporateIdentity = {
   _id: '1',
-
   logo: '',
+  legalEntityStatus: 'other',
   createdAt: '01-01-2000',
   updatedAt: '01-01-2000',
   documents: [],
+  taxResidencies: [],
   declarations: {
     agreements: {
       investor: false,

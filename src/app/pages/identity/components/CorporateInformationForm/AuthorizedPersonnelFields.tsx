@@ -1,12 +1,17 @@
 import { FieldsArray } from 'components/form/FieldsArray'
 import { AuthorizedPersonnel } from 'app/pages/identity/components/CorporateInformationForm/AuthorizedPersonnel/AuthorizedPersonnel'
-import React from 'react'
+import React, { useEffect } from 'react'
 import { useFormContext } from 'react-hook-form'
 import { Grid } from '@material-ui/core'
 import { FormSectionHeader } from 'app/pages/identity/components/FormSectionHeader'
 
 export const AuthorizedPersonnelFields = () => {
   const { control } = useFormContext()
+
+  useEffect(() => {
+    control.setValue('representatives', [{}])
+  }, [])
+
   return (
     <Grid container direction='column'>
       <Grid item>

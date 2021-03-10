@@ -1,4 +1,4 @@
-import { useIdentitiesRouter } from 'app/pages/identity/router'
+import { useIdentitiesRouter } from 'app/pages/_identity/router'
 import { IdentityType } from 'app/pages/identity/utils'
 import { useInvestRouter } from 'app/pages/invest/routers/router'
 import { useSecurityRouter } from 'app/pages/security/router'

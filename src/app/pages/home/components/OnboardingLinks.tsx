@@ -4,7 +4,7 @@ import { OnboardingLink } from 'app/pages/home/components/OnboardingLink'
 import { ReactComponent as IndividualIcon } from 'assets/icons/navigation/individual.svg'
 import { ReactComponent as CorporateIcon } from 'assets/icons/navigation/corporate.svg'
 import { ReactComponent as FundraiseIcon } from 'assets/icons/navigation/asset-balance.svg'
-import { useIdentitiesRouter } from 'app/pages/identity/router'
+import { useIdentitiesRouter } from 'app/pages/_identity/router'
 
 export const OnboardingLinks = () => {
   const { paths: identityPaths } = useIdentitiesRouter()

@@ -21,7 +21,7 @@ export interface FormStepperProps {
 
 export const FormStepper = (props: FormStepperProps) => {
   const { steps, data, createMutation, editMutation, submitMutation } = props
-  const [activeStep, setActiveStep] = useState(data.step ?? 0)
+  const [activeStep, setActiveStep] = useState(data?.step ?? 0)
 
   return (
     <Grid container direction='column' spacing={2}>

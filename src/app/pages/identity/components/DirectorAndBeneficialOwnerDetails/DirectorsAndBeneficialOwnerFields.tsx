@@ -3,7 +3,7 @@ import { BeneficialOwnersInformationFields } from 'app/pages/identity/components
 import { DirectorsInformationFields } from 'app/pages/identity/components/DirectorAndBeneficialOwnerDetails/DirectorsInformationFields'
 import { Fields } from 'app/pages/identity/components/DirectorAndBeneficialOwnerDetails/Fields'
 import { FieldsArray } from 'components/form/FieldsArray'
-import React from 'react'
+import React, { useEffect } from 'react'
 import { useFormContext } from 'react-hook-form'
 
 export interface DirectorsAndBeneficialOwnerFieldsProps {
@@ -14,6 +14,11 @@ export const DirectorsAndBeneficialOwnerFields = ({
   name
 }: DirectorsAndBeneficialOwnerFieldsProps) => {
   const { control } = useFormContext()
+
+  useEffect(() => {
+    control.setValue(name, [{}])
+  }, [])
+
   return (
     <FieldsArray name={name} control={control}>
       {({ fields, append, remove }) => (

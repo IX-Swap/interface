@@ -88,6 +88,7 @@ export interface CorporateFields {
   companyLegalName: string
   registrationNumber: string
   countryOfFormation: string
+  legalEntityStatus: string
   companyAddress: IdentityAddress
   representatives: PersonalProfile[]
   directors: PersonalProfile[]
@@ -135,6 +136,26 @@ export interface BaseIdentity {
   step?: number
 }
 
+export interface IdentityDeclarations {
+  declarations: {
+    tax: { fatca: boolean }
+    investorsStatus: {
+      consent: boolean
+      consequencesOfQualification: boolean
+      financialAsset: boolean
+      income: boolean
+      jointlyHeldAccount: boolean
+      personalAssets: boolean
+      rightToOptOut: boolean
+    }
+    agreements: {
+      investor: boolean
+      custody: boolean
+      disclosures: boolean
+    }
+  }
+}
+
 export interface DeclarationTemplate {
   key: string
   content: string
@@ -152,7 +173,11 @@ export type IndividualIdentity = BaseIdentity &
   Authorizable &
   TaxDeclaration
 
-export type CorporateIdentity = BaseIdentity & CorporateFields & Authorizable
+export type CorporateIdentity = BaseIdentity &
+  CorporateFields &
+  Authorizable &
+  TaxDeclaration &
+  IdentityDeclarations
 
 export interface GetIndividualIdentityArgs {
   userId: string

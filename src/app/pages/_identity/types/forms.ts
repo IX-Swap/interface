@@ -1,7 +1,7 @@
 import { FundSource, TaxResidencies } from 'types/identity'
 import { DataroomFile } from '../../../../types/dataroomFile'
 
-export interface IndividualAddress {
+export interface Address {
   line1: string
   line2?: string
   city: string
@@ -19,7 +19,7 @@ export interface IndividualPersonalInfoFormValues {
   nationality: string
   email: string
   contactNumber: string
-  address: IndividualAddress
+  address: Address
 }
 
 export interface IndividualFinancialInfoFormValues {
@@ -55,5 +55,43 @@ export interface IndividualDocumentsFormValues {
     evidenceOfAccreditation: DataroomFile[]
     proofOfIdentity: DataroomFile[]
     proofOfAddress: DataroomFile[]
+  }
+}
+
+export interface InvestorCorporateInfoFormValues {
+  companyLegalName: string
+  registrationNumber: string
+  legalEntityStatus: string
+  countryOfFormation: string
+  address: Address
+  mailingAddress: Address
+  mailingAddressSameAsRegistered: boolean
+  representatives: any[]
+}
+
+export interface InvestorDirectorsAndBeneficialOwnersFormValues {
+  directors: any[]
+  beneficialOwners: any[]
+}
+
+export interface CorporateInvestorTaxDeclarationFormValues {
+  taxResidencies: TaxResidencies
+}
+
+export interface CorporateInvestorDeclarationFormValues {
+  consent: boolean
+  consequencesOfQualification: boolean
+  financialAsset: boolean
+  income: boolean
+  jointlyHeldAccount: boolean
+  personalAssets: boolean
+  rightToOptOut: boolean
+}
+
+export interface CorporateInvestorDocumentsFormValues {
+  documents: {
+    evidenceOfAccreditation: DataroomFile[]
+    corporateDocuments: DataroomFile[]
+    financialDocuments: DataroomFile[]
   }
 }

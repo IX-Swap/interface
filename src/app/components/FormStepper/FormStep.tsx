@@ -3,7 +3,7 @@ import { FormStepperStep } from 'app/components/FormStepper/FormStepper'
 import { MoveButton } from 'app/components/FormStepper/MoveButton'
 import { SaveButton } from 'app/components/FormStepper/SaveButton'
 import { Form } from 'components/form/Form'
-import React, { createElement, Fragment } from 'react'
+import React, { createElement, Fragment, useEffect } from 'react'
 import { MutationResultPair } from 'react-query'
 import { SubmitButton } from './SubmitButton'
 
@@ -31,8 +31,15 @@ export const FormStep = (props: FormStepProps) => {
     editMutation,
     submitMutation
   } = props
+  const isCurrentStep = activeStep === index
 
-  if (activeStep !== index) {
+  useEffect(() => {
+    if (isCurrentStep) {
+      saveMutation[0]({ step: activeStep })
+    }
+  }, [activeStep])
+
+  if (!isCurrentStep) {
     return null
   }
 
@@ -66,7 +73,7 @@ export const FormStep = (props: FormStepProps) => {
           {hasPrevStep && (
             <Fragment>
               <MoveButton
-                transformData={step.getRequestPayload}
+                getRequestPayload={step.getRequestPayload}
                 mutation={saveMutation}
                 onClick={goToPrevStep}
               >
@@ -79,6 +86,7 @@ export const FormStep = (props: FormStepProps) => {
           {!isLastStep && (
             <Fragment>
               <SaveButton
+                step={index}
                 transformData={step.getRequestPayload}
                 mutation={saveMutation}
               />
@@ -89,7 +97,7 @@ export const FormStep = (props: FormStepProps) => {
           {hasNextStep && (
             <MoveButton
               variant={'contained'}
-              transformData={step.getRequestPayload}
+              getRequestPayload={step.getRequestPayload}
               mutation={saveMutation}
               onClick={goToNextStep}
               nextStepIndex={index + 1}

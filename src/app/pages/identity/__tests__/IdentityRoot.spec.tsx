@@ -1,6 +1,6 @@
 import React from 'react'
 import { render, cleanup } from 'test-utils'
-import { useIdentitiesRouter } from 'app/pages/identity/router'
+import { useIdentitiesRouter } from 'app/pages/_identity/router'
 import { IdentityRoot } from 'app/pages/identity/IdentityRoot'
 
 jest.mock('app/pages/identity/router')
