@@ -66,7 +66,13 @@ export const corporate: CorporateIdentity = {
       personalAssets: false,
       consent: false,
       income: false,
-      rightToOptOut: false
+      rightToOptOut: false,
+      assets: false,
+      trustee: false,
+      accreditedShareholders: false,
+      partnership: false,
+      accreditedBeneficiaries: false,
+      accreditedSettlors: false
     }
   },
   status: 'Submitted',
@@ -82,7 +88,10 @@ export const corporate: CorporateIdentity = {
   user,
   authorizationDocuments: [],
   authorization: authorizationInfo,
-  authorizations: []
+  authorizations: [],
+  legalEntityStatus: '',
+  taxResidencies: [],
+  mailingAddress: address
 }
 
 export const individual: IndividualIdentity = {
@@ -122,7 +131,13 @@ export const individual: IndividualIdentity = {
       personalAssets: false,
       consent: false,
       income: false,
-      rightToOptOut: false
+      rightToOptOut: false,
+      assets: false,
+      trustee: false,
+      accreditedShareholders: false,
+      partnership: false,
+      accreditedBeneficiaries: false,
+      accreditedSettlors: false
     }
   },
   documents: [],

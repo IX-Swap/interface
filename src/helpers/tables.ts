@@ -36,20 +36,17 @@ export const renderName = (val: string, row: PersonName) => {
   return names.filter(s => s !== undefined).join(' ')
 }
 
-export const renderRepresentativeName = (
-  val: string,
-  row: CorporateIdentity
-) => {
+export const renderRepresentativeName = (val: string, row: any) => {
   if (row.representatives.length === 0) {
     return ''
   }
 
-  return row.representatives.map(r => renderName(val, r)).join(', ')
+  return row.representatives.map((r: any) => renderName(val, r)).join(', ')
 }
 
 export const renderLastName = (
   val: string,
-  row: CorporateIdentity | DSWithdrawal | IndividualIdentity | Commitment
+  row: CorporateIdentity | DSWithdrawal | IndividualIdentity | Commitment | any
 ): string => {
   let lastName: string
 
@@ -81,9 +78,7 @@ export const getCorporateLegalName = (corporate: CorporateIdentity): string => {
   return ''
 }
 
-export const getCorporateRepresentativeName = (
-  corporate: CorporateIdentity
-): string => {
+export const getCorporateRepresentativeName = (corporate: any): string => {
   if (corporate !== undefined) {
     return corporate.representatives?.[0]?.lastName ?? ''
   }

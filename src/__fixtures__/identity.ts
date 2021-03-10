@@ -30,7 +30,13 @@ export const corporate: CorporateIdentity = {
       personalAssets: false,
       consent: false,
       income: false,
-      rightToOptOut: false
+      rightToOptOut: false,
+      assets: false,
+      trustee: false,
+      accreditedShareholders: false,
+      partnership: false,
+      accreditedBeneficiaries: false,
+      accreditedSettlors: false
     }
   },
   status: 'Submitted',
@@ -42,12 +48,12 @@ export const corporate: CorporateIdentity = {
   registrationNumber: '123456',
   representatives: [
     {
-      contactNumber: '1234',
-      countryOfResidence: 'Singapore',
-      dob: '2020-12-12',
-      firstName: 'John',
-      lastName: 'Doe',
-      nationality: 'S'
+      fullName: 'John Doe',
+      designation: 'CEO',
+      email: 'johnsemail',
+      contactNumber: '+6512345678901',
+      documents: [],
+      address: address
     }
   ],
   email: '',
@@ -55,7 +61,10 @@ export const corporate: CorporateIdentity = {
   user,
   authorizationDocuments: [],
   authorization: authorizationInfo,
-  authorizations: []
+  authorizations: [],
+  legalEntityStatus: '',
+  taxResidencies: [],
+  mailingAddress: address
 }
 
 export const agreementsAndDisclosures = {
@@ -101,7 +110,13 @@ export const individual: IndividualIdentity = {
       personalAssets: false,
       consent: false,
       income: false,
-      rightToOptOut: false
+      rightToOptOut: false,
+      assets: false,
+      trustee: false,
+      accreditedShareholders: false,
+      partnership: false,
+      accreditedBeneficiaries: false,
+      accreditedSettlors: false
     }
   },
   documents: [],
