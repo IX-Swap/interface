@@ -49,44 +49,42 @@ export const getCorporateInvestorDeclarationFormValues = (
 export const getCorporateInvestorDocumentsFormValues = (
   data: CorporateIdentity | undefined
 ): IndividualDocumentsFormValues => {
-  return {
-    documents: data?.documents.reduce((result: any, document) => {
-      const {
-        evidenceOfAccreditation,
-        financialDocuments,
-        corporateDocuments
-      } = result
+  return data?.documents.reduce((result: any, document) => {
+    const {
+      evidenceOfAccreditation,
+      financialDocuments,
+      corporateDocuments
+    } = result
 
-      if (document.type === 'Evidence Of Accreditation') {
-        return {
-          ...result,
-          evidenceOfAccreditation: Array.isArray(evidenceOfAccreditation)
-            ? [...evidenceOfAccreditation, document]
-            : [document]
-        }
+    if (document.type === 'Evidence Of Accreditation') {
+      return {
+        ...result,
+        evidenceOfAccreditation: Array.isArray(evidenceOfAccreditation)
+          ? [...evidenceOfAccreditation, document]
+          : [document]
       }
+    }
 
-      if (document.type === 'Financial Documents') {
-        return {
-          ...result,
-          financialDocuments: Array.isArray(financialDocuments)
-            ? [...financialDocuments, document]
-            : [document]
-        }
+    if (document.type === 'Financial Documents') {
+      return {
+        ...result,
+        financialDocuments: Array.isArray(financialDocuments)
+          ? [...financialDocuments, document]
+          : [document]
       }
+    }
 
-      if (document.type === 'Corporate Documents') {
-        return {
-          ...result,
-          corporateDocuments: Array.isArray(corporateDocuments)
-            ? [...corporateDocuments, document]
-            : [document]
-        }
+    if (document.type === 'Corporate Documents') {
+      return {
+        ...result,
+        corporateDocuments: Array.isArray(corporateDocuments)
+          ? [...corporateDocuments, document]
+          : [document]
       }
+    }
 
-      return result
-    }, {})
-  }
+    return result
+  }, {})
 }
 
 export const getCorporateInvestorAgreementsAndDisclosuresFormValues = (

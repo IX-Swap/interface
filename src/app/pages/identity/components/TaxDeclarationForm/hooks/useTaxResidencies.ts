@@ -2,13 +2,14 @@ import { useFormContext } from 'react-hook-form'
 
 export const useTaxResidencies = (index?: number) => {
   const { watch } = useFormContext()
-  const singaporeOnly: boolean = watch('singaporeOnly', 'yes') === 'yes'
+  const singaporeOnly = watch('singaporeOnly')
   const taxAvailable: boolean = watch(
     `taxResidencies[${index ?? 0}].taxIdAvailable`
   )
 
   return {
-    singaporeOnly,
+    singaporeOnly:
+      singaporeOnly === undefined ? undefined : singaporeOnly === 'yes',
     taxAvailable
   }
 }

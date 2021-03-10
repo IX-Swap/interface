@@ -6,9 +6,10 @@ import { Grid, Link, Typography } from '@material-ui/core'
 import { Checkbox } from 'components/form/Checkbox'
 import { TypedField } from 'components/form/TypedField'
 import { FormSectionHeader } from 'app/components/DSO/components/FormSectionHeader'
+import { IndividualAgreementsFormValues } from 'app/pages/_identity/types/forms'
 
 export const AgreementsAndDisclosuresFields = (): JSX.Element => {
-  const { control } = useFormContext<AgreementsAndDisclosures>()
+  const { control } = useFormContext<IndividualAgreementsFormValues>()
 
   return (
     <Grid container direction={'column'}>
@@ -24,7 +25,7 @@ export const AgreementsAndDisclosuresFields = (): JSX.Element => {
           component={Checkbox}
           control={control}
           label={(<Link href={'#'}>Investor Agreement</Link>) as any}
-          name={['declarations', 'agreements', 'investor']}
+          name={'investor'}
           data-testid='investor-agreement'
         />
       </Grid>
@@ -36,7 +37,7 @@ export const AgreementsAndDisclosuresFields = (): JSX.Element => {
           component={Checkbox}
           control={control}
           label={(<Link href={'#'}>Custody Agreement</Link>) as any}
-          name={['declarations', 'agreements', 'custody']}
+          name={'custody'}
           data-testid='custody-agreement'
         />
       </Grid>
@@ -48,7 +49,7 @@ export const AgreementsAndDisclosuresFields = (): JSX.Element => {
           component={Checkbox}
           control={control}
           label={(<Link href={'#'}>Disclosures</Link>) as any}
-          name={['declarations', 'agreements', 'disclosures']}
+          name={'disclosure'}
           data-testid='disclosures'
         />
       </Grid>

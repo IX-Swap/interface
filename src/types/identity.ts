@@ -30,7 +30,7 @@ export interface TaxResidency {
 export type TaxResidencies = Array<Partial<TaxResidency>>
 
 export interface TaxDeclaration {
-  taxResidencies?: TaxResidencies
+  taxResidencies: TaxResidencies
 }
 export interface TaxDeclarationFormData {
   taxResidencies?: TaxResidencies
