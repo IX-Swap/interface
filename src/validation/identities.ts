@@ -9,14 +9,14 @@ import {
   dateSchema,
   documentsArraySchema,
   emailSchema,
-  personalProfileArraySchema
+  personnelArraySchema,
+  taxResidenciesArraySchema
 } from 'validation/shared'
 import {
   corporateDeclarationsSchema,
   individualDeclarationsSchema
 } from 'validation/declarations'
 
-// @ts-expect-error
 export const individualIdentityFormValidationSchema = yup
   .object()
   .shape<IndividualIdentityFormValues>({
@@ -51,11 +51,14 @@ export const corporateIdentityFormValidationSchema = yup
     registrationNumber: yup.string().required('Required'),
     companyLegalName: yup.string().required('Required'),
     countryOfFormation: yup.string().required(),
-    representatives: personalProfileArraySchema.required('Required'),
-    directors: personalProfileArraySchema.required('Required'),
-    beneficialOwners: personalProfileArraySchema.required('Required'),
+    representatives: personnelArraySchema.required('Required'),
+    directors: personnelArraySchema.required('Required'),
+    beneficialOwners: personnelArraySchema.required('Required'),
     documents: documentsArraySchema.required('Required'),
     declarations: corporateDeclarationsSchema.required('Required'),
     companyAddress: addressSchema.required('Required'),
-    email: emailSchema.required('Required')
+    email: emailSchema.required('Required'),
+    legalEntityStatus: yup.string().required('Required'),
+    taxResidencies: taxResidenciesArraySchema.required('Required'),
+    mailingAddress: addressSchema.required('Required')
   })

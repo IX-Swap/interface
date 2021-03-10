@@ -18,9 +18,7 @@ describe('renderIndividualOrCompanyName', () => {
   })
 
   it('returns representative name for CorporateIdentity', () => {
-    expect(renderIndividualOrCompanyName('Jane', corporate)).toBe(
-      `Jane ${corporate.representatives[0].lastName}`
-    )
+    expect(renderIndividualOrCompanyName('Jane', corporate)).toBe('InvestaX')
   })
 
   it('returns company name for CorporateIdentity if firstName is undefined', () => {
@@ -116,8 +114,6 @@ describe('getCorporateRepresentativeName', () => {
   })
 
   it("returns first representative's lastName", () => {
-    expect(getCorporateRepresentativeName(corporate)).toBe(
-      corporate.representatives[0].lastName
-    )
+    expect(getCorporateRepresentativeName(corporate)).toBe('')
   })
 })
