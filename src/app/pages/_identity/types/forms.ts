@@ -27,16 +27,13 @@ export interface IndividualFinancialInfoFormValues {
   occupation: string
   employer: string
   employmentStatus: string
-  sourceOfWealth: string
   annualIncome: string
   fundMajority: 'yes' | 'no'
 }
 
 export interface IndividualTaxDeclarationFormValues {
   singaporeOnly: 'yes' | 'no'
-  declarations: {
-    fatca: 'yes' | 'no'
-  }
+  fatca: 'yes' | 'no'
   taxResidencies: TaxResidencies
 }
 
@@ -51,11 +48,15 @@ export interface IndividualInvestorDeclarationFormValues {
 }
 
 export interface IndividualDocumentsFormValues {
-  documents: {
-    evidenceOfAccreditation: DataroomFile[]
-    proofOfIdentity: DataroomFile[]
-    proofOfAddress: DataroomFile[]
-  }
+  evidenceOfAccreditation: DataroomFile[]
+  proofOfIdentity: DataroomFile[]
+  proofOfAddress: DataroomFile[]
+}
+
+export interface IndividualAgreementsFormValues {
+  investor: boolean
+  custody: boolean
+  disclosure: boolean
 }
 
 export interface InvestorCorporateInfoFormValues {

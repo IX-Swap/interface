@@ -100,7 +100,6 @@ export const FormStep = (props: FormStepProps) => {
               getRequestPayload={step.getRequestPayload}
               mutation={saveMutation}
               onClick={goToNextStep}
-              nextStepIndex={index + 1}
             >
               Next
             </MoveButton>

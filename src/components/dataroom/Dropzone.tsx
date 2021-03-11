@@ -96,7 +96,7 @@ export const Dropzone = (props: DropzoneProps) => {
         />
       </Box>
       {hasError ? (
-        <FormHelperText error>{error}</FormHelperText>
+        <FormHelperText error>{error?.message}</FormHelperText>
       ) : (
         <DropzoneAcceptableFiles
           showAcceptable={showAcceptable}

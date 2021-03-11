@@ -20,16 +20,21 @@ import {
   getPersonalInfoRequestPayload,
   getTaxDeclarationRequestPayload
 } from 'app/pages/_identity/utils/individual/requests'
-import { personalInfoSchema } from 'app/pages/_identity/validation/individual'
+import {
+  financialInfoSchema,
+  individualInvestorAgreementsSchema,
+  individualInvestorDocumentsSchema,
+  individualInvestorStatusDeclarationSchema,
+  personalInfoSchema,
+  taxDeclarationSchema
+} from 'app/pages/_identity/validation/individual'
 import { FinancialInformationForm } from 'app/pages/_identity/components/FinancialInformationForm/FinancialInformationForm'
 import { TaxDeclarationForm } from 'app/pages/_identity/components/TaxDeclarationForm/TaxDeclarationForm'
-import { UploadDocumentsForm } from 'app/pages/_identity/components/UploadDocumentsForm/UploadDocumentsForm'
 import { AgreementsAndDisclosuresFields } from 'app/pages/_identity/components/AgreementsAndDisclosuresFields/AgreementsAndDisclosuresFields'
 import { IndividualIdentityView } from 'app/pages/_identity/components/IndividualIdentityView/IndividualIdentityView'
 import { InvestorDeclarationForm } from '../InvestorDeclarationForm/InvestorDeclarationForm'
 import { useSubmitIndividual } from '../../hooks/useSubmitIndividual'
-
-// TODO: add validation schemas
+import { IndividualUploadDocumentsForm } from 'app/pages/_identity/components/UploadDocumentsForm/IndividualUploadDocumentsForm'
 
 export const IndividualInvestorForm = memo(() => {
   const { data, isLoading } = useIndividualIdentity()
@@ -63,7 +68,7 @@ export const IndividualInvestorForm = memo(() => {
           label: 'Financial Information',
           getFormValues: getFinancialInfoFormValues,
           getRequestPayload: getFinancialInfoRequestPayload,
-          validationSchema: null,
+          validationSchema: financialInfoSchema,
           component: () => (
             <Fragment>
               <FinancialInformationForm />
@@ -74,7 +79,7 @@ export const IndividualInvestorForm = memo(() => {
           label: 'Tax Declaration',
           getFormValues: getTaxDeclarationFormValues,
           getRequestPayload: getTaxDeclarationRequestPayload,
-          validationSchema: null,
+          validationSchema: taxDeclarationSchema,
           component: () => (
             <Fragment>
               <TaxDeclarationForm />
@@ -85,7 +90,7 @@ export const IndividualInvestorForm = memo(() => {
           label: 'Investor Status Declaration',
           getFormValues: getInvestorDeclarationFormValues,
           getRequestPayload: getInvestorDeclarationRequestPayload,
-          validationSchema: null,
+          validationSchema: individualInvestorStatusDeclarationSchema,
           component: () => (
             <Fragment>
               <InvestorDeclarationForm />
@@ -96,12 +101,10 @@ export const IndividualInvestorForm = memo(() => {
           label: 'Documents Upload',
           getFormValues: getDocumentsFormValues,
           getRequestPayload: getDocumentsRequestPayload,
-          validationSchema: null,
+          validationSchema: individualInvestorDocumentsSchema,
           component: () => (
             <Fragment>
-              <UploadDocumentsForm identityType='individual'>
-                <div />
-              </UploadDocumentsForm>
+              <IndividualUploadDocumentsForm />
             </Fragment>
           )
         },
@@ -109,7 +112,7 @@ export const IndividualInvestorForm = memo(() => {
           label: 'Agreements and Disclosures',
           getFormValues: getAgreementsAndDisclosuresFormValues,
           getRequestPayload: getAgreementsRequestPayload,
-          validationSchema: null,
+          validationSchema: individualInvestorAgreementsSchema,
           component: () => (
             <Fragment>
               <AgreementsAndDisclosuresFields />
