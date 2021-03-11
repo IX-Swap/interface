@@ -5,8 +5,9 @@ import { useFormContext } from 'react-hook-form'
 import { TaxResidencyField } from 'app/pages/_identity/components/TaxDeclarationForm/TaxResidencyFields/TaxResidencyField'
 import { useTaxResidencies } from 'app/pages/_identity/components/TaxDeclarationForm/hooks/useTaxResidencies'
 import { MAX_TAX_RESIDENCIES } from 'app/pages/identity/utils'
+import { TaxResidency } from 'types/identity'
 
-export const CorporateTaxResidencyFields = () => {
+export const TaxResidencyFieldArray = () => {
   const { control } = useFormContext()
 
   useEffect(() => {
@@ -25,7 +26,7 @@ export const CorporateTaxResidencyFields = () => {
             <Fragment>
               <Grid item key={i}>
                 <TaxResidencyField
-                  key={i}
+                  key={field.id}
                   field={field}
                   append={append}
                   remove={remove}
@@ -33,6 +34,7 @@ export const CorporateTaxResidencyFields = () => {
                   isLast={fields.length - 1 === i}
                   max={MAX_TAX_RESIDENCIES}
                   total={fields.length}
+                  defaultValue={field as TaxResidency}
                 />
               </Grid>
             </Fragment>

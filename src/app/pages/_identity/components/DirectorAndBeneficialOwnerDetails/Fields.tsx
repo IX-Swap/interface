@@ -4,6 +4,7 @@ import { FormSectionHeader } from 'app/pages/_identity/components/FormSectionHea
 import { VSpacer } from 'components/VSpacer'
 
 import React from 'react'
+import { Personnel } from 'types/identity'
 
 export interface FieldsProps {
   rootName: string
@@ -16,6 +17,7 @@ export interface FieldsProps {
   max: number
   sectionTitle: string
   informationFields: React.ReactElement
+  defaultValue: Personnel
 }
 
 export const Fields = ({
@@ -28,7 +30,8 @@ export const Fields = ({
   total,
   max,
   sectionTitle,
-  informationFields
+  informationFields,
+  defaultValue
 }: FieldsProps) => {
   const handleAppend = () => {
     append({})
@@ -47,10 +50,27 @@ export const Fields = ({
       <Grid container direction='column' spacing={3}>
         <Grid item>{informationFields}</Grid>
         <Grid item>
-          <DocumentFields rootName={rootName} index={index} fieldId={fieldId} />
+          <DocumentFields
+            defaultValue={defaultValue}
+            rootName={rootName}
+            index={index}
+            fieldId={fieldId}
+          />
         </Grid>
         <Grid item>
-          <Grid container justify='flex-end'>
+          <Grid container justify='flex-end' spacing={2}>
+            {total > 1 ? (
+              <Grid item>
+                <Button
+                  variant='outlined'
+                  color='primary'
+                  onClick={handleRemove}
+                >
+                  Delete
+                </Button>
+              </Grid>
+            ) : null}
+
             {isLast && total < max ? (
               <Grid item>
                 <Button
@@ -62,17 +82,7 @@ export const Fields = ({
                 </Button>
                 <VSpacer size='medium' />
               </Grid>
-            ) : (
-              <Grid item>
-                <Button
-                  variant='outlined'
-                  color='primary'
-                  onClick={handleRemove}
-                >
-                  Delete
-                </Button>
-              </Grid>
-            )}
+            ) : null}
           </Grid>
         </Grid>
       </Grid>

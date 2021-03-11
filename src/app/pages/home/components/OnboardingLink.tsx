@@ -17,7 +17,7 @@ export const OnboardingLink = (props: OnboardingLinkProps) => {
   const { icon, label, link, color, done = false } = props
 
   return (
-    <AppRouterLink to={link}>
+    <AppRouterLink to={link} disabled={done}>
       <LandingPageLink>
         <RoundedIconWrapper component='span' color={color}>
           {createElement(icon, { color: 'currentColor' })}

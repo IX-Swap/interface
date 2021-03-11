@@ -5,6 +5,7 @@ import { Fields } from 'app/pages/_identity/components/DirectorAndBeneficialOwne
 import { FieldsArray } from 'components/form/FieldsArray'
 import React, { useEffect } from 'react'
 import { useFormContext } from 'react-hook-form'
+import { Personnel } from 'types/identity'
 
 export interface DirectorsAndBeneficialOwnerFieldsProps {
   name: string
@@ -49,15 +50,18 @@ export const DirectorsAndBeneficialOwnerFields = ({
                       rootName={name}
                       index={index}
                       fieldId={field.id}
+                      defaultValue={field as Personnel}
                     />
                   ) : (
                     <BeneficialOwnersInformationFields
                       rootName={name}
                       index={index}
                       fieldId={field.id}
+                      defaultValue={field as Personnel}
                     />
                   )
                 }
+                defaultValue={field as Personnel}
               />
             </Grid>
           ))}

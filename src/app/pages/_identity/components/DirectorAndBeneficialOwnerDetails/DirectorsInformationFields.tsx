@@ -6,17 +6,20 @@ import { TypedField } from 'components/form/TypedField'
 import { pathToString, plainValueExtractor } from 'helpers/forms'
 import React from 'react'
 import { useFormContext } from 'react-hook-form'
+import { Personnel } from 'types/identity'
 
 export interface DirectorsInformationFieldsProps {
   rootName: string
   index: number
   fieldId: string
+  defaultValue: Personnel
 }
 
 export const DirectorsInformationFields = ({
   rootName,
   index,
-  fieldId
+  fieldId,
+  defaultValue
 }: DirectorsInformationFieldsProps) => {
   const { control } = useFormContext()
 
@@ -32,6 +35,7 @@ export const DirectorsInformationFields = ({
               variant='outlined'
               name={[rootName, index, 'fullName']}
               label='Full Name'
+              defaultValue={defaultValue?.fullName ?? null}
             />
           </Grid>
           <Grid item>
@@ -44,6 +48,7 @@ export const DirectorsInformationFields = ({
               label='Contact Number'
               customRenderer
               fullWidth
+              defaultValue={defaultValue?.contactNumber ?? null}
             />
           </Grid>
         </Grid>
@@ -59,6 +64,7 @@ export const DirectorsInformationFields = ({
               name={[rootName, index, 'designation']}
               label='Designation'
               fullWidth
+              defaultValue={defaultValue?.designation ?? null}
             />
           </Grid>
           <Grid item>
@@ -70,13 +76,17 @@ export const DirectorsInformationFields = ({
               name={[rootName, index, 'email']}
               label='Email Address'
               fullWidth
+              defaultValue={defaultValue?.email ?? null}
             />
           </Grid>
         </Grid>
       </Grid>
       <Grid item>
         <FormSectionHeader variant='subsection' title='Residential Address' />
-        <AddressFields rootName={pathToString([rootName, index, 'address'])} />
+        <AddressFields
+          rootName={pathToString([rootName, index, 'address'])}
+          defaultValue={defaultValue?.address ?? null}
+        />
       </Grid>
     </Grid>
   )

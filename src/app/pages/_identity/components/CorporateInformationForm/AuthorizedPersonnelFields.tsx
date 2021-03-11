@@ -5,13 +5,14 @@ import { useFormContext } from 'react-hook-form'
 import { Grid } from '@material-ui/core'
 import { FormSectionHeader } from 'app/pages/_identity/components/FormSectionHeader'
 import { VSpacer } from 'components/VSpacer'
+import { Personnel } from 'types/identity'
 
 export const AuthorizedPersonnelFields = () => {
   const { control } = useFormContext()
 
   useEffect(() => {
     const { representatives } = control.getValues()
-    
+
     if (representatives === undefined) {
       control.setValue('representatives', [{}])
     }
@@ -38,6 +39,7 @@ export const AuthorizedPersonnelFields = () => {
                       isLast={index === fields.length - 1}
                       total={fields.length}
                       max={5}
+                      defaultValue={field as Personnel}
                     />
                   ))}
                 </Grid>

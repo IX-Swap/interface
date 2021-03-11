@@ -5,17 +5,20 @@ import { percentageNumberFormat } from 'config/numberFormat'
 import { numericValueExtractor } from 'helpers/forms'
 import React from 'react'
 import { useFormContext } from 'react-hook-form'
+import { Personnel } from 'types/identity'
 
 export interface BeneficialOwnersInformationFieldsProps {
   rootName: string
   index: number
   fieldId: string
+  defaultValue: Personnel
 }
 
 export const BeneficialOwnersInformationFields = ({
   rootName,
   index,
-  fieldId
+  fieldId,
+  defaultValue
 }: BeneficialOwnersInformationFieldsProps) => {
   const { control } = useFormContext()
 
@@ -29,6 +32,7 @@ export const BeneficialOwnersInformationFields = ({
           variant='outlined'
           name={[rootName, index, 'fullName']}
           label='Full Name'
+          defaultValue={defaultValue.fullName ?? null}
         />
       </Grid>
       <Grid item xs={12} md={4}>
@@ -42,6 +46,7 @@ export const BeneficialOwnersInformationFields = ({
           helperText='in percent'
           variant='outlined'
           fullWidth
+          defaultValue={defaultValue.percentageShareholding ?? null}
         />
       </Grid>
     </Grid>
