@@ -5,8 +5,7 @@ import { useFormContext } from 'react-hook-form'
 import { FormControlLabel, Radio } from '@material-ui/core'
 
 export const UsCitizenshipConfirmationFields = () => {
-  const { control, watch } = useFormContext()
-  const value = watch('declarations.tax.fatca')
+  const { control } = useFormContext()
 
   return (
     <>

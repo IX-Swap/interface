@@ -1,19 +1,31 @@
+import React, { useEffect } from 'react'
+import { useFormContext } from 'react-hook-form'
 import { Grid } from '@material-ui/core'
 import { useTaxResidencies } from 'app/pages/_identity/components/TaxDeclarationForm/hooks/useTaxResidencies'
 import { ReasonFields } from 'app/pages/_identity/components/TaxDeclarationForm/TinUnavailableFields/ReasonFields'
 import { Checkbox } from 'components/form/Checkbox'
 import { TypedField } from 'components/form/TypedField'
 import { reverseBooleanValueExtractor } from 'helpers/forms'
-import React from 'react'
-import { useFormContext } from 'react-hook-form'
+
 export interface TinUnavailableFieldsProps {
   index: number
 }
 
 export const TinUnavailableFields = (props: TinUnavailableFieldsProps) => {
   const { index } = props
-  const { control } = useFormContext()
+  const { control, watch, setValue, clearErrors } = useFormContext()
   const { singaporeOnly, taxAvailable } = useTaxResidencies(index)
+
+  const isTinAvailable: boolean = watch<string, boolean>(
+    `taxResidencies[${index}].taxIdAvailable`
+  )
+
+  useEffect(() => {
+    if (!isTinAvailable) {
+      setValue(`taxResidencies[${index}].taxIdentificationNumber`, '')
+      clearErrors(`taxResidencies[${index}].taxIdentificationNumber`)
+    }
+  }, [isTinAvailable])
 
   return (
     <Grid container direction='column' spacing={2}>

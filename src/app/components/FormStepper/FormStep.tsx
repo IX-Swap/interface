@@ -6,6 +6,7 @@ import { Form } from 'components/form/Form'
 import React, { createElement, Fragment, useEffect } from 'react'
 import { MutationResultPair } from 'react-query'
 import { SubmitButton } from './SubmitButton'
+import { VSpacer } from 'components/VSpacer'
 
 export interface FormStepProps {
   step: FormStepperStep
@@ -67,6 +68,7 @@ export const FormStep = (props: FormStepProps) => {
       validationSchema={step.validationSchema}
     >
       <Grid item>{createElement(step.component)}</Grid>
+      <VSpacer size='large' />
 
       <Grid item container justify='flex-end'>
         <Box display='flex'>

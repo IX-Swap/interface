@@ -28,7 +28,7 @@ export const IndividualInfoFields = (
 
   return (
     <Grid container>
-      <Box display={'flex'} flexDirection={isMobile ? 'column' : 'row'}>
+      <Box>
         <Box marginRight={2}>
           {/* @ts-ignore */}
           <TypedField
@@ -45,8 +45,8 @@ export const IndividualInfoFields = (
             }}
           />
         </Box>
-        <Grid container spacing={2} style={{ marginTop: isMobile ? 8 : 20 }}>
-          <Grid item xs={12} sm={6}>
+        <Grid container spacing={6} style={{ marginTop: isMobile ? 8 : 20 }}>
+          <Grid item xs={12} sm={6} md={4}>
             <TypedField
               rootName={rootName}
               component={TextField}
@@ -56,7 +56,7 @@ export const IndividualInfoFields = (
               variant='outlined'
             />
           </Grid>
-          <Grid item xs={12} sm={6}>
+          <Grid item xs={12} sm={6} md={4}>
             <TypedField
               rootName={rootName}
               component={TextField}
@@ -66,7 +66,7 @@ export const IndividualInfoFields = (
               variant='outlined'
             />
           </Grid>
-          <Grid item xs={12} sm={6}>
+          <Grid item xs={12} sm={6} md={4}>
             <TypedField
               rootName={rootName}
               component={TextField}
@@ -76,7 +76,7 @@ export const IndividualInfoFields = (
               variant='outlined'
             />
           </Grid>
-          <Grid item xs={12} sm={6}>
+          <Grid item xs={12} sm={6} md={4}>
             {/* @ts-ignore */}
             <TypedField
               className={privateClassNames()}
@@ -90,7 +90,7 @@ export const IndividualInfoFields = (
               inputVariant='outlined'
             />
           </Grid>
-          <Grid item xs={12} sm={6}>
+          <Grid item xs={12} sm={6} md={4}>
             <TypedField
               style={{ width: '100%' }}
               className={privateClassNames()}
@@ -103,7 +103,7 @@ export const IndividualInfoFields = (
               customRenderer
             />
           </Grid>
-          <Grid item xs={12} sm={6}>
+          <Grid item xs={12} sm={6} md={4}>
             <TypedField
               rootName={rootName}
               component={TextField}
@@ -115,7 +115,7 @@ export const IndividualInfoFields = (
               variant='outlined'
             />
           </Grid>
-          <Grid item xs={12} sm={6}>
+          <Grid item xs={12} sm={6} md={4}>
             <TypedField
               rootName={rootName}
               component={NationalitySelect}

@@ -23,7 +23,7 @@ export const InternationalFields = () => {
         <Grid item>
           <FieldsArray name='taxResidencies' control={control}>
             {({ fields, append, remove }) => (
-              <Grid container direction='column' spacing={3}>
+              <Grid container direction='column' spacing={6}>
                 {fields.map((field, i) => (
                   <Fragment>
                     <Grid item key={i}>

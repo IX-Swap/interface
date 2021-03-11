@@ -1,4 +1,6 @@
 import React, { Fragment, memo } from 'react'
+import { VSpacer } from 'components/VSpacer'
+import { Typography } from '@material-ui/core'
 import { FormStepper } from 'app/components/FormStepper/FormStepper'
 import { useIndividualIdentity } from 'hooks/identity/useIndividualIdentity'
 import { IndividualInfoFields } from 'app/pages/identity/components/IndividualInfoFields/IndividualInfoFields'
@@ -32,9 +34,10 @@ import { AgreementsAndDisclosuresFields } from 'app/pages/_identity/components/A
 import { IndividualIdentityView } from 'app/pages/_identity/components/IndividualIdentityView/IndividualIdentityView'
 import { InvestorDeclarationForm } from '../InvestorDeclarationForm/InvestorDeclarationForm'
 import { useSubmitIndividual } from '../../hooks/useSubmitIndividual'
-import { FinancialInformationForm } from 'app/pages/_identity/components/FinancialInformationForm/FinancialInformationForm'
-import { TaxDeclarationForm } from 'app/pages/_identity/components/TaxDeclarationForm/TaxDeclarationForm'
-import { IndividualUploadDocumentsForm } from 'app/pages/_identity/components/UploadDocumentsForm/IndividualUploadDocumentsForm'
+import { FormSectionHeader } from 'app/pages/_identity/components/FormSectionHeader'
+import { FinancialInformationForm } from '../FinancialInformationForm/FinancialInformationForm'
+import { TaxDeclarationForm } from '../TaxDeclarationForm/TaxDeclarationForm'
+import { IndividualUploadDocumentsForm } from '../UploadDocumentsForm/IndividualUploadDocumentsForm'
 
 export const IndividualInvestorForm = memo(() => {
   const { data, isLoading } = useIndividualIdentity()
@@ -59,7 +62,14 @@ export const IndividualInvestorForm = memo(() => {
           validationSchema: personalInfoSchema,
           component: () => (
             <Fragment>
+              <FormSectionHeader title={'Personal Information'} />
               <IndividualInfoFields />
+              <VSpacer size='large' />
+              <FormSectionHeader title={'Address'} />
+              <Typography variant='subtitle2' color='textSecondary'>
+                Please provide your current address
+              </Typography>
+              <VSpacer size='medium' />
               <AddressFields />
             </Fragment>
           )
@@ -108,6 +118,8 @@ export const IndividualInvestorForm = memo(() => {
             </Fragment>
           )
         },
+
+        // TODO Added content for documents when it is ready
         {
           label: 'Agreements and Disclosures',
           getFormValues: getAgreementsAndDisclosuresFormValues,
