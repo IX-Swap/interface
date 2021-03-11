@@ -4,17 +4,20 @@ import { Grid, TextField } from '@material-ui/core'
 import { useFormContext } from 'react-hook-form'
 import { PhoneInput } from 'components/form/PhoneInput'
 import { plainValueExtractor } from 'helpers/forms'
+import { Personnel } from 'types/identity'
 
 export interface PersonnelInformationProps {
   fieldId: string
   rootName: string
   index: number
+  defaultValue: Personnel
 }
 
 export const PersonnelInformation = ({
   fieldId,
   rootName,
-  index
+  index,
+  defaultValue
 }: PersonnelInformationProps) => {
   const { control } = useFormContext()
 
@@ -25,6 +28,7 @@ export const PersonnelInformation = ({
           <Grid item xs={12} md={4}>
             <TypedField
               key={fieldId}
+              defaultValue={defaultValue?.fullName ?? null}
               component={TextField}
               control={control}
               variant='outlined'
@@ -36,6 +40,7 @@ export const PersonnelInformation = ({
             <TypedField
               key={fieldId}
               component={TextField}
+              defaultValue={defaultValue?.designation ?? null}
               control={control}
               variant='outlined'
               name={[rootName, index, 'designation']}
@@ -50,6 +55,7 @@ export const PersonnelInformation = ({
             <TypedField
               key={fieldId}
               component={TextField}
+              defaultValue={defaultValue?.email ?? null}
               control={control}
               variant='outlined'
               name={[rootName, index, 'email']}
@@ -61,6 +67,7 @@ export const PersonnelInformation = ({
               key={fieldId}
               component={PhoneInput}
               valueExtractor={plainValueExtractor}
+              defaultValue={defaultValue?.contactNumber ?? null}
               control={control}
               name={[rootName, index, 'contactNumber']}
               label='Contact Number'

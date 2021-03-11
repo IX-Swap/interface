@@ -3,6 +3,7 @@ import { Grid, Button } from '@material-ui/core'
 import { PersonnelInformation } from 'app/pages/_identity/components/CorporateInformationForm/AuthorizedPersonnel/PersonnelInformation'
 import { AuthorizationDocuments } from 'app/pages/_identity/components/CorporateInformationForm/AuthorizedPersonnel/AuthorizationDocuments'
 import { FormSectionHeader } from 'app/pages/_identity/components/FormSectionHeader'
+import { Personnel } from 'types/identity'
 
 export interface AuthorizedPersonnelProps {
   fieldId: string
@@ -13,11 +14,13 @@ export interface AuthorizedPersonnelProps {
   isLast: boolean
   total: number
   max: number
+  defaultValue: Personnel
 }
 
 export const AuthorizedPersonnel = (props: AuthorizedPersonnelProps) => {
+  const { append, remove, index, isLast, total, max } = props
   const handleAppend = () => {
-    props.append({
+    append({
       fullName: '',
       designation: '',
       email: '',
@@ -27,12 +30,12 @@ export const AuthorizedPersonnel = (props: AuthorizedPersonnelProps) => {
   }
 
   const handleRemove = () => {
-    props.remove(props.index)
+    remove(index)
   }
 
   return (
     <Grid container direction='column' spacing={6}>
-      {props.index > 0 ? (
+      {index > 0 ? (
         <Grid item>
           <FormSectionHeader
             title={`(${props.index + 1}) Company Authorized Personnel`}
@@ -47,19 +50,21 @@ export const AuthorizedPersonnel = (props: AuthorizedPersonnelProps) => {
       <Grid item>
         <AuthorizationDocuments {...props} />
       </Grid>
-      {props.isLast && props.total < props.max ? (
-        <Grid item container justify='flex-end'>
-          <Button variant='outlined' color='primary' onClick={handleAppend}>
-            Add more
-          </Button>
-        </Grid>
-      ) : (
-        <Grid item container justify='flex-end'>
+      <Grid item container justify='flex-end' spacing={2}>
+        <Grid item>
           <Button variant='outlined' color='primary' onClick={handleRemove}>
             Delete
           </Button>
         </Grid>
-      )}
+
+        {isLast && total < max ? (
+          <Grid item>
+            <Button variant='outlined' color='primary' onClick={handleAppend}>
+              Add more
+            </Button>
+          </Grid>
+        ) : null}
+      </Grid>
     </Grid>
   )
 }

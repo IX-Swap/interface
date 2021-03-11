@@ -18,6 +18,7 @@ export interface TaxResidencyFieldProps {
   index: number
   max: number
   total: number
+  defaultValue: TaxResidency
 }
 
 export const TaxResidencyField = ({
@@ -27,7 +28,8 @@ export const TaxResidencyField = ({
   remove,
   isLast,
   max,
-  total
+  total,
+  defaultValue
 }: TaxResidencyFieldProps) => {
   const { control, watch } = useFormContext()
   const residencyList = watch('taxResidencies')
@@ -58,7 +60,7 @@ export const TaxResidencyField = ({
       append({
         countryOfResidence: '',
         taxIdentificationNumber: '',
-        taxIdAvailable: false
+        taxIdAvailable: true
       })
     }
   }
@@ -72,7 +74,7 @@ export const TaxResidencyField = ({
               component={CountrySelect}
               name={['taxResidencies', index, 'countryOfResidence']}
               label='Country of Tax Residency'
-              defaultValue={field.countryOfResidence}
+              defaultValue={defaultValue?.countryOfResidence ?? null}
               variant='outlined'
               control={control}
               key={field.id}
@@ -86,7 +88,7 @@ export const TaxResidencyField = ({
               control={control}
               component={TextField}
               label='Tax Identification Number'
-              defaultValue={field.taxIdentificationNumber}
+              defaultValue={defaultValue?.taxIdentificationNumber ?? null}
               name={['taxResidencies', index, 'taxIdentificationNumber']}
               variant='outlined'
               disabled={!taxIdAvailable}
@@ -121,7 +123,7 @@ export const TaxResidencyField = ({
         </Grid>
       </Grid>
       <Grid item>
-        <TinUnavailableFields index={index} />
+        <TinUnavailableFields index={index} defaultValue={defaultValue} />
       </Grid>
     </Grid>
   )

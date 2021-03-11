@@ -10,13 +10,19 @@ import { RadioGroup } from 'components/form/RadioGroup'
 import { TypedField } from 'components/form/TypedField'
 import React from 'react'
 import { useFormContext } from 'react-hook-form'
+import { TaxResidency } from 'types/identity'
 
 export interface ReasonFieldsProps {
   index: number
   disabled: boolean
+  defaultValue: TaxResidency
 }
 
-export const ReasonFields = ({ disabled, index }: ReasonFieldsProps) => {
+export const ReasonFields = ({
+  disabled,
+  index,
+  defaultValue
+}: ReasonFieldsProps) => {
   const { control, watch } = useFormContext<
     IndividualTaxDeclarationFormValues
   >()
@@ -32,6 +38,7 @@ export const ReasonFields = ({ disabled, index }: ReasonFieldsProps) => {
         name={['taxResidencies', index, 'reason']}
         label=''
         control={control}
+        defaultValue={defaultValue?.reason ?? null}
       >
         <Grid container direction='column' spacing={2}>
           <Grid item>
@@ -79,6 +86,7 @@ export const ReasonFields = ({ disabled, index }: ReasonFieldsProps) => {
                 control={control}
                 name={['taxResidencies', index, 'customReason']}
                 label='Explain why the corporate does not have a TIN'
+                defaultValue={defaultValue?.customReason ?? null}
               />
             </Box>
           </Grid>

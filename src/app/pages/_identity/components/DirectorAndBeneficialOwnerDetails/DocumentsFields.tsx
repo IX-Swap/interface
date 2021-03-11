@@ -1,13 +1,14 @@
 import React from 'react'
 import { FormSectionHeader } from 'app/pages/_identity/components/FormSectionHeader'
 import { UploadDocumentField } from 'app/pages/_identity/components/UploadDocumentsForm/UploadDocumentField/UploadDocumentField'
-import { Box, Divider, Grid, Typography } from '@material-ui/core'
+import { Box, Grid, Typography } from '@material-ui/core'
 import { DirectorsInformationFieldsProps } from 'app/pages/_identity/components/DirectorAndBeneficialOwnerDetails/DirectorsInformationFields'
 
 export const DocumentFields = ({
   fieldId,
   rootName,
-  index
+  index,
+  defaultValue
 }: DirectorsInformationFieldsProps) => {
   return (
     <Grid container direction='column' spacing={3}>
@@ -23,6 +24,7 @@ export const DocumentFields = ({
           fieldId={fieldId}
           name={[rootName, index, 'documents', 'proofOfIdentity']}
           label='Proof of Identity'
+          defaultValue={(defaultValue?.documents as any)?.proofOfIdentity ?? []}
           helperElement={
             <>
               <Box m={1} />
@@ -38,6 +40,7 @@ export const DocumentFields = ({
           fieldId={fieldId}
           name={[rootName, index, 'documents', 'proofOfAddress']}
           label='Proof of Address'
+          defaultValue={(defaultValue?.documents as any)?.proofOfAddress ?? []}
           helperElement={
             <>
               <Box m={1} />

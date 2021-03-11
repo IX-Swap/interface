@@ -14,6 +14,7 @@ export interface UploadDocumentFieldProps {
   helperElement?: React.ReactNode
   tooltipContent?: any
   fieldId?: any
+  defaultValue?: any
 }
 
 export const UploadDocumentField = ({
@@ -21,7 +22,8 @@ export const UploadDocumentField = ({
   label,
   helperElement,
   tooltipContent,
-  fieldId
+  fieldId,
+  defaultValue
 }: UploadDocumentFieldProps) => {
   const { control } = useFormContext()
   return (
@@ -56,6 +58,7 @@ export const UploadDocumentField = ({
             type: label
           }}
           showAcceptable
+          defaultValue={defaultValue}
         />
       </Grid>
       <DocumentList name={name} />
