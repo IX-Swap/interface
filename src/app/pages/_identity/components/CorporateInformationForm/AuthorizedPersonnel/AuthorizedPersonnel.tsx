@@ -47,19 +47,19 @@ export const AuthorizedPersonnel = (props: AuthorizedPersonnelProps) => {
       <Grid item>
         <AuthorizationDocuments {...props} />
       </Grid>
-      {props.isLast && props.total < props.max ? (
+      {props.isLast && props.total < props.max && (
         <Grid item container justify='flex-end'>
           <Button variant='outlined' color='primary' onClick={handleAppend}>
             Add more
           </Button>
         </Grid>
-      ) : (
-        <Grid item container justify='flex-end'>
-          <Button variant='outlined' color='primary' onClick={handleRemove}>
-            Delete
-          </Button>
-        </Grid>
       )}
+
+      <Grid item container justify='flex-end'>
+        <Button variant='outlined' color='primary' onClick={handleRemove}>
+          Delete
+        </Button>
+      </Grid>
     </Grid>
   )
 }

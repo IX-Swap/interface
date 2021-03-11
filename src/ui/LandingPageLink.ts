@@ -6,6 +6,7 @@ export const LandingPageLink = styled(Box)(({ theme }) => ({
   alignItems: 'center',
   justifyContent: 'center',
   flexDirection: 'column',
+  position: 'relative',
   border: `1px solid ${theme.palette.divider}`,
   '&:hover': {
     backgroundColor: theme.palette.action.hover

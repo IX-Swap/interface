@@ -1,4 +1,4 @@
-import React, { Fragment, memo } from 'react'
+import React, { useEffect, Fragment, memo } from 'react'
 import { VSpacer } from 'components/VSpacer'
 import { Typography } from '@material-ui/core'
 import { FormStepper } from 'app/components/FormStepper/FormStepper'
@@ -34,15 +34,24 @@ import { AgreementsAndDisclosuresFields } from 'app/pages/_identity/components/A
 import { IndividualIdentityView } from 'app/pages/_identity/components/IndividualIdentityView/IndividualIdentityView'
 import { InvestorDeclarationForm } from '../InvestorDeclarationForm/InvestorDeclarationForm'
 import { useSubmitIndividual } from '../../hooks/useSubmitIndividual'
+import { FinancialInformationForm } from 'app/pages/_identity/components/FinancialInformationForm/FinancialInformationForm'
+import { TaxDeclarationForm } from 'app/pages/_identity/components/TaxDeclarationForm/TaxDeclarationForm'
+import { IndividualUploadDocumentsForm } from 'app/pages/_identity/components/UploadDocumentsForm/IndividualUploadDocumentsForm'
+import { useOnboardingDialog } from 'app/components/OnboardingDialog/hooks/useOnboardingDialog'
 import { FormSectionHeader } from 'app/pages/_identity/components/FormSectionHeader'
-import { FinancialInformationForm } from '../FinancialInformationForm/FinancialInformationForm'
-import { TaxDeclarationForm } from '../TaxDeclarationForm/TaxDeclarationForm'
-import { IndividualUploadDocumentsForm } from '../UploadDocumentsForm/IndividualUploadDocumentsForm'
 
 export const IndividualInvestorForm = memo(() => {
   const { data, isLoading } = useIndividualIdentity()
   const mutation = useCreateIndividual()
   const submitMutation = useSubmitIndividual()
+  const { showPreIdentityCreateDialog } = useOnboardingDialog()
+
+  useEffect(() => {
+    if (!isLoading && data === undefined) {
+      showPreIdentityCreateDialog('individual')
+    }
+    // eslint-disable-next-line
+  }, [isLoading])
 
   if (isLoading) {
     return <div>Loading...</div>

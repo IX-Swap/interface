@@ -1,7 +1,7 @@
 import { useGetIdentities } from 'app/components/OnboardingPanel/hooks/useGetIdentities'
 import { IdentityType } from 'app/pages/identity/utils'
 
-export type IdentityStatus = 'Rejected' | 'Authorized' | 'Submitted' | 'Draft'
+export type IdentityStatus = 'Rejected' | 'Approved' | 'Submitted' | 'Draft'
 
 export const getIdentityStatus = (status?: IdentityStatus) => {
   switch (status) {
@@ -9,7 +9,7 @@ export const getIdentityStatus = (status?: IdentityStatus) => {
       return ['Rejected']
     case 'Submitted':
       return ['For Verification']
-    case 'Authorized':
+    case 'Approved':
       return ['Verified!']
     default:
       return ['In Progress']
@@ -57,7 +57,7 @@ export const useOnboardingSteps = (
     if (status === 'Submitted') {
       indetityActiveStep = 3
     }
-    if ((status as IdentityStatus) === 'Authorized') {
+    if ((status as IdentityStatus) === 'Approved') {
       indetityActiveStep = 4
     }
     return indetityActiveStep
