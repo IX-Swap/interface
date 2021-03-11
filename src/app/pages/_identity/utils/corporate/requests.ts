@@ -1,8 +1,6 @@
 import {
   CorporateInvestorDeclarationFormValues,
   CorporateInvestorDocumentsFormValues,
-  IndividualDocumentsFormValues,
-  IndividualInvestorDeclarationFormValues,
   InvestorCorporateInfoFormValues,
   InvestorDirectorsAndBeneficialOwnersFormValues
 } from '../../types/forms'
