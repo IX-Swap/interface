@@ -141,7 +141,7 @@ export interface CorporateInvestorStatus {
 
 export interface BaseIdentity {
   _id: string
-  status: 'Rejected' | 'Authorized' | 'Submitted' | undefined
+  status: 'Rejected' | 'Authorized' | 'Submitted' | 'Approved' | undefined
   user: User
   createdAt: string
   updatedAt: string

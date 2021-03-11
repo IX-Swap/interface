@@ -8,6 +8,8 @@ import {
   OnboardingDialog,
   OnboardingDialogProps
 } from 'app/components/OnboardingDialog/OnboardingDialog'
+import { useQueryCache } from 'react-query'
+import { identityQueryKeys } from 'config/queryKeys'
 
 export interface SnackbarService {
   showSnackbar: (message: ReactNode, variant?: AppearanceTypes) => any
@@ -17,6 +19,7 @@ export interface SnackbarService {
 
 export const useSnackbar = (): SnackbarService => {
   const { addToast, toastStack } = useToasts()
+  const queryCache = useQueryCache()
 
   const completeDialog = {
     title: 'Onboarding Complete!',
@@ -25,6 +28,38 @@ export const useSnackbar = (): SnackbarService => {
     ],
     actionLabel: 'Start Investing',
     action: '/app/invest'
+  }
+
+  const showOnboardingDialog = (onboardingDialog: OnboardingDialogProps) => {
+    return addToast(<OnboardingDialog {...onboardingDialog} />, {
+      appearance: 'info',
+      autoDismiss: false
+    })
+  }
+
+  const showOnboardingCompleteDialog = (notification: TNotification) => {
+    // To do: determine if user is still in onboarding process
+    const individualIdentityApproved =
+      notification.feature === 'individuals' &&
+      notification.subject === 'Identity Approved'
+    const corporateIdentityApproved =
+      notification.feature === 'corporates' &&
+      notification.subject === 'Corporate Identity Approved'
+
+    if (individualIdentityApproved) {
+      void queryCache.invalidateQueries(identityQueryKeys.getIndividual)
+    }
+
+    if (corporateIdentityApproved) {
+      void queryCache.invalidateQueries(identityQueryKeys.getAllCorporate)
+    }
+
+    if (individualIdentityApproved || corporateIdentityApproved) {
+      addToast(<OnboardingDialog {...completeDialog} />, {
+        appearance: 'info',
+        autoDismiss: false
+      })
+    }
   }
 
   return {
@@ -47,26 +82,10 @@ export const useSnackbar = (): SnackbarService => {
     showNotification: (notification: TNotification) => {
       const showAllNotifications = () => {
         addToast(<NotificationToast data={notification} />)
-        // To do: determine if user is still in onboarding process
-        if (
-          (notification.feature === 'individuals' &&
-            notification.subject === 'Identity Approved') ||
-          (notification.feature === 'corporates' &&
-            notification.subject === 'Corporate Identity Approved')
-        ) {
-          addToast(<OnboardingDialog {...completeDialog} />, {
-            appearance: 'info',
-            autoDismiss: false
-          })
-        }
+        showOnboardingCompleteDialog(notification)
       }
       return showAllNotifications()
     },
-    showOnboardingDialog: (onboardingDialog: OnboardingDialogProps) => {
-      return addToast(<OnboardingDialog {...onboardingDialog} />, {
-        appearance: 'info',
-        autoDismiss: false
-      })
-    }
+    showOnboardingDialog: showOnboardingDialog
   }
 }

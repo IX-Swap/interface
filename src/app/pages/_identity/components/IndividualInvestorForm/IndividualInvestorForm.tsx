@@ -1,4 +1,4 @@
-import React, { Fragment, memo } from 'react'
+import React, { useEffect, Fragment, memo } from 'react'
 import { FormStepper } from 'app/components/FormStepper/FormStepper'
 import { useIndividualIdentity } from 'hooks/identity/useIndividualIdentity'
 import { IndividualInfoFields } from 'app/pages/identity/components/IndividualInfoFields/IndividualInfoFields'
@@ -35,11 +35,20 @@ import { useSubmitIndividual } from '../../hooks/useSubmitIndividual'
 import { FinancialInformationForm } from 'app/pages/_identity/components/FinancialInformationForm/FinancialInformationForm'
 import { TaxDeclarationForm } from 'app/pages/_identity/components/TaxDeclarationForm/TaxDeclarationForm'
 import { IndividualUploadDocumentsForm } from 'app/pages/_identity/components/UploadDocumentsForm/IndividualUploadDocumentsForm'
+import { useOnboardingDialog } from 'app/components/OnboardingDialog/hooks/useOnboardingDialog'
 
 export const IndividualInvestorForm = memo(() => {
   const { data, isLoading } = useIndividualIdentity()
   const mutation = useCreateIndividual()
   const submitMutation = useSubmitIndividual()
+  const { showPreIdentityCreateDialog } = useOnboardingDialog()
+
+  useEffect(() => {
+    if (!isLoading && data === undefined) {
+      showPreIdentityCreateDialog('individual')
+    }
+    // eslint-disable-next-line
+  }, [isLoading])
 
   if (isLoading) {
     return <div>Loading...</div>
