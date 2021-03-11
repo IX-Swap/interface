@@ -15,7 +15,7 @@ export const FundSourceSlider = ({ field, index }: FundSourceSliderProps) => {
   const { control, watch, setValue } = useFormContext()
   const isChecked: boolean = watch<string, boolean>(
     `sourceOfFund[${index}].checked`,
-    true
+    false
   )
 
   useEffect(() => {
