@@ -59,11 +59,18 @@ export const Fields = ({
         </Grid>
         <Grid item>
           <Grid container justify='flex-end' spacing={2}>
-            <Grid item>
-              <Button variant='outlined' color='primary' onClick={handleRemove}>
-                Delete
-              </Button>
-            </Grid>
+            {total > 1 ? (
+              <Grid item>
+                <Button
+                  variant='outlined'
+                  color='primary'
+                  onClick={handleRemove}
+                >
+                  Delete
+                </Button>
+              </Grid>
+            ) : null}
+
             {isLast && total < max ? (
               <Grid item>
                 <Button

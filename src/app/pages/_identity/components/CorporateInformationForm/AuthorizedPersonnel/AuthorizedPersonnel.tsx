@@ -51,11 +51,13 @@ export const AuthorizedPersonnel = (props: AuthorizedPersonnelProps) => {
         <AuthorizationDocuments {...props} />
       </Grid>
       <Grid item container justify='flex-end' spacing={2}>
-        <Grid item>
-          <Button variant='outlined' color='primary' onClick={handleRemove}>
-            Delete
-          </Button>
-        </Grid>
+        {total > 1 ? (
+          <Grid item>
+            <Button variant='outlined' color='primary' onClick={handleRemove}>
+              Delete
+            </Button>
+          </Grid>
+        ) : null}
 
         {isLast && total < max ? (
           <Grid item>
