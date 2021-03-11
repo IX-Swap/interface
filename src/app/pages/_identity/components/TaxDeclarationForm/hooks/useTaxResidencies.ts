@@ -5,7 +5,7 @@ export const useTaxResidencies = (index?: number) => {
   const singaporeOnly = watch('singaporeOnly')
   const taxAvailable: boolean = watch(
     `taxResidencies[${index ?? 0}].taxIdAvailable`,
-    false
+    true
   )
 
   return {
