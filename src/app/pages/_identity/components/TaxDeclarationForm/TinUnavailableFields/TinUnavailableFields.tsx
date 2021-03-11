@@ -22,6 +22,7 @@ export const TinUnavailableFields = (props: TinUnavailableFieldsProps) => {
         <TypedField
           customRenderer
           component={Checkbox}
+          defaultValue={true}
           reverse
           valueExtractor={reverseBooleanValueExtractor}
           control={control}

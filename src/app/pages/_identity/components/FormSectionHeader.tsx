@@ -14,22 +14,27 @@ export const FormSectionHeader = ({
   variant = 'section'
 }: FormSectionHeaderProps) => {
   return (
-    <Box my={3}>
+    <Box my={variant === 'section' ? 3 : 2}>
       <Typography variant={variant === 'section' ? 'h5' : 'subtitle1'}>
         {title}
       </Typography>
-      <Box m={1} />
+
       {variant === 'section' ? (
         <>
+          <Box m={1} />
           <Divider />
           <Box m={1} />
         </>
       ) : null}
 
-      <Typography variant='subtitle2' color='textSecondary'>
-        {subtitle}
-      </Typography>
-      <VSpacer size='small' />
+      {subtitle !== undefined ? (
+        <>
+          <Typography variant='subtitle2' color='textSecondary'>
+            {subtitle}
+          </Typography>
+        </>
+      ) : null}
+      {variant === 'section' ? <VSpacer size='small' /> : null}
     </Box>
   )
 }

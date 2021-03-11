@@ -11,7 +11,7 @@ export const CorporateAddressFields = () => {
   const { control, watch, reset, getValues } = useFormContext()
   const mailingSameAsRegistered: boolean = watch(
     'mailingSameAsRegistered',
-    false
+    true
   )
 
   useEffect(() => {
@@ -36,6 +36,7 @@ export const CorporateAddressFields = () => {
           <TypedField
             customRenderer
             component={Checkbox}
+            defaultValue={true}
             control={control}
             valueExtractor={booleanValueExtractor}
             name='mailingSameAsRegistered'

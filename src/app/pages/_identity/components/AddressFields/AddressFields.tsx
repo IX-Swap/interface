@@ -7,7 +7,7 @@ import { useFormContext } from 'react-hook-form'
 import { privateClassNames } from 'helpers/classnames'
 
 export interface AddressFieldsProps<FormType> {
-  rootName?: 'address' | 'companyAddress' | 'mailingAddress'
+  rootName?: string
 }
 
 export const AddressFields = <FormType,>(

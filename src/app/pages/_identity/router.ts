@@ -80,7 +80,6 @@ export const identityRoutes: InternalRouteProps[] = [
     component: CreateInvestor
   },
   {
-    
     label: 'View Corporate',
     path: IdentityRoute.corporate,
     exact: true,
