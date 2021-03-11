@@ -123,6 +123,21 @@ export const IndividualInvestorForm = memo(() => {
           validationSchema: individualInvestorDocumentsSchema,
           component: () => (
             <Fragment>
+              <FormSectionHeader title={'Upload Documents'} />
+              <Typography
+                variant='subtitle2'
+                color='textSecondary'
+                style={{ marginTop: -30, fontSize: 16 }}
+              >
+                Please upload the following documents. All account statements
+                and documents should be date within 3 months.
+              </Typography>
+              <Typography variant='subtitle2' color='textSecondary'>
+                Notes: Type of document format supported is jpg, jpeg, png, gif,
+                tiff, webp, svg, apng, avif, jfif, pjpeg, pjp, docx, xlsx, pdf,
+                and odt.
+              </Typography>
+              <VSpacer size='medium' />
               <IndividualUploadDocumentsForm />
             </Fragment>
           )

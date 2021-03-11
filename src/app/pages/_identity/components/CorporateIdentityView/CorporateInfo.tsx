@@ -5,6 +5,7 @@ import { useAppBreakpoints } from 'hooks/useAppBreakpoints'
 import { privateClassNames } from 'helpers/classnames'
 import React from 'react'
 import { CorporateIdentity } from 'types/identity'
+import { LEGAL_ENTITY_STATUS_LIST } from 'components/form/LegalEntityStatusSelect'
 
 export interface CorporateInfoProps {
   data: CorporateIdentity
@@ -12,6 +13,9 @@ export interface CorporateInfoProps {
 
 export const CorporateInfo = ({ data }: CorporateInfoProps) => {
   const { isMobile } = useAppBreakpoints()
+  const getLegalEntityStatus = (value: string) => {
+    return LEGAL_ENTITY_STATUS_LIST.find(item => item.value === value)?.name
+  }
 
   return (
     <Box display={'flex'} flexDirection={isMobile ? 'column' : 'row'}>
@@ -56,7 +60,7 @@ export const CorporateInfo = ({ data }: CorporateInfoProps) => {
               <LabelledValue
                 label='Legal Entity Status'
                 className={privateClassNames()}
-                value={data.legalEntityStatus}
+                value={getLegalEntityStatus(data.legalEntityStatus)}
               />
             </Grid>
           </Grid>

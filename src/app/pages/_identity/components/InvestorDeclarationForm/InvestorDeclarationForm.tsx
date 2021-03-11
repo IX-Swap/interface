@@ -2,7 +2,6 @@ import React from 'react'
 import { Grid, Typography } from '@material-ui/core'
 import { FormSectionHeader } from 'app/pages/_identity/components/FormSectionHeader'
 import { DeclarationsList } from 'app/pages/_identity/components/InvestorDeclarationForm/DeclarationsList/DeclartionsList'
-import { OptOutInfoDialog } from 'app/pages/_identity/components/InvestorDeclarationForm/OptOutInfoDialog/OptOutDialog'
 import { SafeguardInfoDialog } from 'app/pages/_identity/components/InvestorDeclarationForm/SafeguardInfoDialog/SafeguardInfoDialog'
 import { IdentityType } from 'app/pages/identity/utils'
 
@@ -44,8 +43,8 @@ export const optInDeclarationLabelMap = {
   ),
   rightToOptOut: (
     <>
-      I have been informed of and understand my right to <OptOutInfoDialog /> of
-      the Accredited Investors status with InvestaX at any point in time.
+      I have been informed of and understand my right to opt out of the
+      Accredited Investors status with InvestaX at any point in time.
     </>
   )
 }

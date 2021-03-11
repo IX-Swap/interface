@@ -1,11 +1,11 @@
-import React from 'react'
+import React, { Fragment } from 'react'
 import { Grid, Typography, Link } from '@material-ui/core'
 import { LabelledValue } from 'components/LabelledValue'
 import { DeclarationsListItem } from '../../DeclarationsListItem/DeclarationsListItem'
 import { VSpacer } from 'components/VSpacer'
 import { FormSectionHeader } from 'app/components/DSO/components/FormSectionHeader'
 import { IndividualIdentity } from '../../../../../../types/identity'
-import { CountryTaxDeclaration } from 'app/pages/_identity/components/IndividualIdentityView/TaxDeclarationView/CountryTaxDeclaration'
+import { CountryTaxDeclaration } from 'app/pages/_identity/components/CountryTaxDeclarations/CountryTaxDeclaration'
 
 // TODO Remove after added new interfaces
 export type Reason = 'A' | 'B' | 'C'
@@ -75,10 +75,12 @@ export const TaxDeclarationView = ({ data }: TaxDeclarationViewProps) => {
 
   const renderContentForAnotherCountriesResident = () => {
     return (
-      <Grid item xs={12}>
+      <Fragment>
         <CountryTaxDeclaration taxResidencies={taxResidencies} />
-        {renderFatcaBlock()}
-      </Grid>
+        <Grid item xs={12}>
+          {renderFatcaBlock()}
+        </Grid>
+      </Fragment>
     )
   }
 
