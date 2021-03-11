@@ -1,7 +1,7 @@
-import { Grid } from '@material-ui/core'
-import { ButtonTransparent } from 'app/components/ButtonTransparent'
-import { DocumentFields } from 'app/pages/identity/components/DirectorAndBeneficialOwnerDetails/DocumentsFields'
-import { FormSectionHeader } from 'app/pages/identity/components/FormSectionHeader'
+import { Grid, Button } from '@material-ui/core'
+import { DocumentFields } from 'app/pages/_identity/components/DirectorAndBeneficialOwnerDetails/DocumentsFields'
+import { FormSectionHeader } from 'app/pages/_identity/components/FormSectionHeader'
+import { VSpacer } from 'components/VSpacer'
 
 import React from 'react'
 
@@ -39,32 +39,43 @@ export const Fields = ({
   }
 
   return (
-    <Grid container direction='column' spacing={3}>
-      {index > 0 ? (
+    <>
+      <FormSectionHeader
+        title={`${index > 0 ? `(${index + 1}) ` : ''}${sectionTitle}`}
+        variant={index > 0 ? 'subsection' : 'section'}
+      />
+      <Grid container direction='column' spacing={3}>
+        <Grid item>{informationFields}</Grid>
         <Grid item>
-          <FormSectionHeader
-            title={`(${index + 1}) ${sectionTitle}`}
-            variant='subsection'
-          />
+          <DocumentFields rootName={rootName} index={index} fieldId={fieldId} />
         </Grid>
-      ) : null}
-      <Grid item>{informationFields}</Grid>
-      <Grid item>
-        <DocumentFields rootName={rootName} index={index} fieldId={fieldId} />
-      </Grid>
-      <Grid item>
-        {isLast && total < max ? (
-          <Grid item container justify='flex-end'>
-            <ButtonTransparent onClick={handleAppend}>
-              Add more
-            </ButtonTransparent>
+        <Grid item>
+          <Grid container justify='flex-end'>
+            {isLast && total < max ? (
+              <Grid item>
+                <Button
+                  variant='outlined'
+                  color='primary'
+                  onClick={handleAppend}
+                >
+                  Add more
+                </Button>
+                <VSpacer size='medium' />
+              </Grid>
+            ) : (
+              <Grid item>
+                <Button
+                  variant='outlined'
+                  color='primary'
+                  onClick={handleRemove}
+                >
+                  Delete
+                </Button>
+              </Grid>
+            )}
           </Grid>
-        ) : (
-          <Grid item container justify='flex-end'>
-            <ButtonTransparent onClick={handleRemove}>Delete</ButtonTransparent>
-          </Grid>
-        )}
+        </Grid>
       </Grid>
-    </Grid>
+    </>
   )
 }

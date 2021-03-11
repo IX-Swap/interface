@@ -1,10 +1,10 @@
 import React from 'react'
 import { Grid, Typography } from '@material-ui/core'
-import { FormSectionHeader } from 'app/components/DSO/components/FormSectionHeader'
+import { FormSectionHeader } from 'app/pages/_identity/components/FormSectionHeader'
 import { DeclarationsList } from 'app/pages/_identity/components/InvestorDeclarationForm/DeclarationsList/DeclartionsList'
-import { VSpacer } from 'components/VSpacer'
 import { OptOutInfoDialog } from 'app/pages/_identity/components/InvestorDeclarationForm/OptOutInfoDialog/OptOutDialog'
 import { SafeguardInfoDialog } from 'app/pages/_identity/components/InvestorDeclarationForm/SafeguardInfoDialog/SafeguardInfoDialog'
+import { IdentityType } from 'app/pages/identity/utils'
 
 export const investorDeclarationLabelMap = {
   personalAssets:
@@ -50,40 +50,47 @@ export const optInDeclarationLabelMap = {
   )
 }
 
-export const InvestorDeclarationForm = () => {
+export interface InvestorDeclarationFormProps {
+  identityType?: IdentityType
+}
+
+export const InvestorDeclarationForm = ({
+  identityType = 'individual'
+}: InvestorDeclarationFormProps) => {
   return (
-    <Grid container>
-      <Grid item xs={12}>
-        <FormSectionHeader title='Investors Status Declaration' />
+    <>
+      <FormSectionHeader title='Investors Status Declaration' />
+      <Grid container spacing={3}>
+        <Grid item xs={12}>
+          <Typography>
+            Singapore rules require you to declare your investor status before
+            you see live deals on our platform
+          </Typography>
+        </Grid>
+        <Grid item xs={12}>
+          <DeclarationsList
+            title='I declare that I am an individual "Accredited Investor"'
+            data={Object.entries(
+              identityType === 'individual'
+                ? investorDeclarationLabelMap
+                : corporateInvestorDeclarationLabelMap
+            ).map(([name, label]) => ({ name, label }))}
+          />
+        </Grid>
+
+        <Grid item xs={12}>
+          <FormSectionHeader title={'Opt-In Requirement'} />
+          <DeclarationsList
+            title='I confirm to be treated as an “Accredited Investor” by InvestaX'
+            data={Object.entries(optInDeclarationLabelMap).map(
+              ([name, label]) => ({
+                name,
+                label
+              })
+            )}
+          />
+        </Grid>
       </Grid>
-      <Grid item xs={12}>
-        <Typography>
-          Singapore rules require you to declare your investor status before you
-          see live deals on our platform
-        </Typography>
-      </Grid>
-      <Grid item xs={12}>
-        <VSpacer size={'small'} />
-      </Grid>
-      <DeclarationsList
-        title='I declare that I am an individual "Accredited Investor"'
-        data={Object.entries(
-          investorDeclarationLabelMap
-        ).map(([name, label]) => ({ name, label }))}
-      />
-      <Grid item xs={12}>
-        <VSpacer size={'small'} />
-      </Grid>
-      <Grid item xs={12}>
-        <FormSectionHeader title={'Opt-In Requirement'} />
-      </Grid>
-      <DeclarationsList
-        title='I confirm to be treated as an “Accredited Investor” by InvestaX'
-        data={Object.entries(optInDeclarationLabelMap).map(([name, label]) => ({
-          name,
-          label
-        }))}
-      />
-    </Grid>
+    </>
   )
 }

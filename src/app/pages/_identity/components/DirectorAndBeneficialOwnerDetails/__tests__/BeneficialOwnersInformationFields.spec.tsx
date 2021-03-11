@@ -1,4 +1,4 @@
-import { BeneficialOwnersInformationFields } from 'app/pages/identity/components/DirectorAndBeneficialOwnerDetails/BeneficialOwnersInformationFields'
+import { BeneficialOwnersInformationFields } from 'app/pages/_identity/components/DirectorAndBeneficialOwnerDetails/BeneficialOwnersInformationFields'
 import { Form } from 'components/form/Form'
 import React from 'react'
 import { render, cleanup } from 'test-utils'

@@ -1,4 +1,4 @@
-import { DirectorAndBeneficialOwnerDetails } from 'app/pages/identity/components/DirectorAndBeneficialOwnerDetails/DirectorAndBeneficialOwnerDetails'
+import { DirectorsAndBeneficialOwnerDetails } from 'app/pages/_identity/components/DirectorAndBeneficialOwnerDetails/DirectorsAndBeneficialOwnerDetails'
 import React from 'react'
 import { render, cleanup } from 'test-utils'
 
@@ -9,6 +9,6 @@ describe('DirectorAndBeneficialOwnerDetails', () => {
   })
 
   it('renders without errors', () => {
-    render(<DirectorAndBeneficialOwnerDetails />)
+    render(<DirectorsAndBeneficialOwnerDetails />)
   })
 })

@@ -1,4 +1,4 @@
-import { DirectorsInformationFields } from 'app/pages/identity/components/DirectorAndBeneficialOwnerDetails/DirectorsInformationFields'
+import { DirectorsInformationFields } from 'app/pages/_identity/components/DirectorAndBeneficialOwnerDetails/DirectorsInformationFields'
 import { Form } from 'components/form/Form'
 import React from 'react'
 import { render, cleanup } from 'test-utils'

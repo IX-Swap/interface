@@ -1,13 +1,13 @@
 import { Meta, Story } from '@storybook/react/types-6-0'
-import { DirectorAndBeneficialOwnerDetails } from 'app/pages/identity/components/DirectorAndBeneficialOwnerDetails/DirectorAndBeneficialOwnerDetails'
+import { DirectorsAndBeneficialOwnerDetails } from 'app/pages/_identity/components/DirectorAndBeneficialOwnerDetails/DirectorsAndBeneficialOwnerDetails'
 import React from 'react'
 
 const meta: Meta = {
   title: 'Pages/Identity/DirectorAndBeneficialOwnerDetails',
-  component: DirectorAndBeneficialOwnerDetails
+  component: DirectorsAndBeneficialOwnerDetails
 }
 
 export default meta
 
-const Template: Story = () => <DirectorAndBeneficialOwnerDetails />
+const Template: Story = () => <DirectorsAndBeneficialOwnerDetails />
 export const Default = Template.bind({})
