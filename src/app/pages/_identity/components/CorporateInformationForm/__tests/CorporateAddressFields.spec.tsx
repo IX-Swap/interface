@@ -17,9 +17,9 @@ describe('CorporateAddressFields', () => {
     )
   })
 
-  it('renders Mailing Address fields when mailingSameAsRegistered is false', () => {
+  it('renders Mailing Address fields when isMailingAddressSame is false', () => {
     const { container } = render(
-      <Form defaultValues={{ mailingSameAsRegistered: false }}>
+      <Form defaultValues={{ isMailingAddressSame: false }}>
         <CorporateAddressFields />
       </Form>
     )

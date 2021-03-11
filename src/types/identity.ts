@@ -70,8 +70,9 @@ export interface Personnel {
   designation: string
   email: string
   contactNumber: string
-  documents?: DataroomFile[]
-  address?: IdentityAddress
+  documents: DataroomFile[]
+  address: IdentityAddress
+  percentageShareholding: number
 }
 
 export interface FundSource {
@@ -104,6 +105,7 @@ export interface CorporateFields {
   legalEntityStatus: string
   taxResidencies: TaxResidencies
   mailingAddress: IdentityAddress
+  isMailingAddressSame: boolean
 }
 
 export interface Declaration {

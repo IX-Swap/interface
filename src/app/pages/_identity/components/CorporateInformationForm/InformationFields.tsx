@@ -15,7 +15,11 @@ export const InformationFields = () => {
   const legalEntityStatus = watch('legalEntityStatus')
 
   useEffect(() => {
-    reset({ ...getValues(), otherLegalEntityStatus: '' })
+    const { legalEntityStatus } = getValues()
+
+    if (legalEntityStatus !== 'others') {
+      reset({ ...getValues(), otherLegalEntityStatus: undefined })
+    }
   }, [legalEntityStatus, reset, getValues])
 
   return (
@@ -34,7 +38,7 @@ export const InformationFields = () => {
               title: 'Logo',
               type: 'logo'
             }}
-            name='companyLogo'
+            name='logo'
           />
         </Grid>
         <Grid item xs={12} md='auto' style={{ flexGrow: 1 }}>
@@ -43,6 +47,8 @@ export const InformationFields = () => {
               <Grid container spacing={3} direction='column'>
                 <Grid item>
                   <TypedField
+                    customRenderer
+                    fullWidth
                     component={TextField}
                     control={control}
                     variant='outlined'
@@ -74,6 +80,8 @@ export const InformationFields = () => {
               <Grid container spacing={3} direction='column'>
                 <Grid item>
                   <TypedField
+                    customRenderer
+                    fullWidth
                     component={TextField}
                     control={control}
                     variant='outlined'

@@ -1,7 +1,9 @@
 import { Grid, TextField } from '@material-ui/core'
+import { AddressFields } from 'app/pages/_identity/components/AddressFields/AddressFields'
+import { FormSectionHeader } from 'app/pages/_identity/components/FormSectionHeader'
 import { PhoneInput } from 'components/form/PhoneInput'
 import { TypedField } from 'components/form/TypedField'
-import { plainValueExtractor } from 'helpers/forms'
+import { pathToString, plainValueExtractor } from 'helpers/forms'
 import React from 'react'
 import { useFormContext } from 'react-hook-form'
 
@@ -44,17 +46,6 @@ export const DirectorsInformationFields = ({
               fullWidth
             />
           </Grid>
-          <Grid item>
-            <TypedField
-              key={fieldId}
-              component={TextField}
-              control={control}
-              variant='outlined'
-              name={[rootName, index, 'residentialAddress']}
-              label='Residential Address'
-              fullWidth
-            />
-          </Grid>
         </Grid>
       </Grid>
       <Grid item xs={12} md={4}>
@@ -76,12 +67,16 @@ export const DirectorsInformationFields = ({
               component={TextField}
               control={control}
               variant='outlined'
-              name={[rootName, index, 'emailAddress']}
+              name={[rootName, index, 'email']}
               label='Email Address'
               fullWidth
             />
           </Grid>
         </Grid>
+      </Grid>
+      <Grid item>
+        <FormSectionHeader variant='subsection' title='Residential Address' />
+        <AddressFields rootName={pathToString([rootName, index, 'address'])} />
       </Grid>
     </Grid>
   )

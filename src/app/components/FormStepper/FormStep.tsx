@@ -33,11 +33,11 @@ export const FormStep = (props: FormStepProps) => {
   } = props
   const isCurrentStep = activeStep === index
 
-  useEffect(() => {
-    if (isCurrentStep) {
-      saveMutation[0]({ step: activeStep })
-    }
-  }, [activeStep])
+  // useEffect(() => {
+  //   if (isCurrentStep) {
+  //     saveMutation[0]({ step: activeStep })
+  //   }
+  // }, [activeStep])
 
   if (!isCurrentStep) {
     return null

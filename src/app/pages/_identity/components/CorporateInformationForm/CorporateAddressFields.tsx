@@ -9,16 +9,13 @@ import { TypedField } from 'components/form/TypedField'
 
 export const CorporateAddressFields = () => {
   const { control, watch, reset, getValues } = useFormContext()
-  const mailingSameAsRegistered: boolean = watch(
-    'mailingSameAsRegistered',
-    false
-  )
+  const isMailingAddressSame: boolean = watch('isMailingAddressSame', true)
 
   useEffect(() => {
-    if (mailingSameAsRegistered) {
+    if (isMailingAddressSame) {
       reset({ ...getValues(), mailingAddress: {} })
     }
-  }, [mailingSameAsRegistered, reset, getValues])
+  }, [isMailingAddressSame, reset, getValues])
 
   return (
     <>
@@ -36,13 +33,14 @@ export const CorporateAddressFields = () => {
           <TypedField
             customRenderer
             component={Checkbox}
+            defaultValue={isMailingAddressSame ?? true}
             control={control}
             valueExtractor={booleanValueExtractor}
-            name='mailingSameAsRegistered'
+            name='isMailingAddressSame'
             label='Is your mailing address same as registered address?'
           />
         </Grid>
-        {!mailingSameAsRegistered ? (
+        {!isMailingAddressSame ? (
           <Grid item>
             <FormSectionHeader variant='subsection' title='Mailing Address' />
             <AddressFields rootName='mailingAddress' />

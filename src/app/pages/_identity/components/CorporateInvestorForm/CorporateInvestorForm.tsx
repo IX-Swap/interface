@@ -1,6 +1,5 @@
 import React, { useEffect, Fragment } from 'react'
 import { FormStepper } from 'app/components/FormStepper/FormStepper'
-import { useUpdateCorporateIdentity } from 'hooks/identity/useUpdateCorporateIdentity'
 import { useAllCorporateIdentities } from 'hooks/identity/useAllCorporateIdentities'
 import { CorporateInformationForm } from 'app/pages/_identity/components/CorporateInformationForm/CorporateInformationForm'
 import { DirectorsAndBeneficialOwnerDetails } from 'app/pages/_identity/components/DirectorAndBeneficialOwnerDetails/DirectorsAndBeneficialOwnerDetails'
@@ -28,14 +27,25 @@ import { CorporateUploadDocumentsForm } from '../UploadDocumentsForm/CorporateUp
 import { AgreementsAndDisclosuresFields } from '../AgreementsAndDisclosuresFields/AgreementsAndDisclosuresFields'
 import { CorporateIdentityView } from 'app/pages/_identity/components/CorporateIdentityView/CorporateIdentityView'
 import { useOnboardingDialog } from 'app/components/OnboardingDialog/hooks/useOnboardingDialog'
+import { useIdentitiesRouter } from 'app/pages/_identity/router'
+import {
+  corporateInvestorAgreementsSchema,
+  corporateInvestorDocumentsSchema,
+  corporateInvestorInfoSchema,
+  corporateInvestorStatusDeclarationSchema,
+  corporateTaxDeclarationSchema,
+  directorsAndBeneficialOwnersSchema
+} from 'app/pages/_identity/validation/corporate'
 
 export const CorporateInvestorForm = () => {
   const { data, isLoading } = useAllCorporateIdentities()
-  const identity = data.list[0]
+  const { params, current, paths } = useIdentitiesRouter()
+  const isNew = current.path === paths.createCorporate
+  const identity = isNew ? undefined : data.map[params.identityId as string]
 
   const createMutation = useCreateCorporate()
   const updateMutation = useUpdateCorporate()
-  const submitMutation = useUpdateCorporateIdentity(identity?._id)
+  const submitMutation = useUpdateCorporate()
   const { showPreIdentityCreateDialog } = useOnboardingDialog()
 
   useEffect(() => {
@@ -60,7 +70,7 @@ export const CorporateInvestorForm = () => {
           label: 'Corporate Information',
           getFormValues: getCorporateInfoFormValues,
           getRequestPayload: getCorporateInfoRequestPayload,
-          validationSchema: {},
+          validationSchema: corporateInvestorInfoSchema,
           component: () => (
             <Fragment>
               <CorporateInformationForm />
@@ -71,7 +81,7 @@ export const CorporateInvestorForm = () => {
           label: 'Directors and Beneficial Owner Details',
           getFormValues: getDirectorsAndBeneficialOwnersFormValues,
           getRequestPayload: getDirectorsAndBeneficialOwnerRequestPayload,
-          validationSchema: {},
+          validationSchema: directorsAndBeneficialOwnersSchema,
           component: () => (
             <Fragment>
               <DirectorsAndBeneficialOwnerDetails />
@@ -82,7 +92,7 @@ export const CorporateInvestorForm = () => {
           label: 'Tax Declaration',
           getFormValues: getCorporateInvestorTaxDeclarationFormValues,
           getRequestPayload: getTaxDeclarationRequestPayload,
-          validationSchema: {},
+          validationSchema: corporateTaxDeclarationSchema,
           component: () => (
             <Fragment>
               <TaxDeclarationForm identityType='corporate' />
@@ -93,7 +103,7 @@ export const CorporateInvestorForm = () => {
           label: 'Investor Status Declaration',
           getFormValues: getCorporateInvestorDeclarationFormValues,
           getRequestPayload: getCorporateInvestorDeclarationRequestPayload,
-          validationSchema: {},
+          validationSchema: corporateInvestorStatusDeclarationSchema,
           component: () => (
             <Fragment>
               <InvestorDeclarationForm identityType='corporate' />
@@ -104,7 +114,7 @@ export const CorporateInvestorForm = () => {
           label: 'Upload Documents',
           getFormValues: getCorporateInvestorDocumentsFormValues,
           getRequestPayload: getCorporateInvestorDocumentsRequestPayload,
-          validationSchema: {},
+          validationSchema: corporateInvestorDocumentsSchema,
           component: () => (
             <Fragment>
               <CorporateUploadDocumentsForm />
@@ -115,7 +125,7 @@ export const CorporateInvestorForm = () => {
           label: 'Agreements and Declarations',
           getFormValues: getCorporateInvestorAgreementsAndDisclosuresFormValues,
           getRequestPayload: getCorporateInvestorAgreementsRequestPayload,
-          validationSchema: {},
+          validationSchema: corporateInvestorAgreementsSchema,
           component: () => (
             <Fragment>
               <AgreementsAndDisclosuresFields />
@@ -129,7 +139,7 @@ export const CorporateInvestorForm = () => {
           validationSchema: {},
           component: () => (
             <Fragment>
-              <CorporateIdentityView data={identity} />
+              <CorporateIdentityView data={identity as any} />
             </Fragment>
           )
         }

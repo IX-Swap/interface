@@ -1,7 +1,7 @@
 import React from 'react'
 import { MenuItem, Select } from '@material-ui/core'
 
-const STATUS_LIST = [
+export const LEGAL_ENTITY_STATUS_LIST = [
   { name: 'Public Company', value: 'publicCompany' },
   { name: 'Private Company', value: 'privateCompany' },
   { name: 'Limited Liability Company', value: 'limitedLiabilityCompany' },
@@ -21,7 +21,7 @@ export const LegalEntityStatusSelect = (props: any) => {
       <MenuItem disabled value={undefined}>
         Legal Entity Status
       </MenuItem>
-      {STATUS_LIST.map(({ value, name }) => {
+      {LEGAL_ENTITY_STATUS_LIST.map(({ value, name }) => {
         return (
           <MenuItem value={value} key={value}>
             {name}

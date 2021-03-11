@@ -1,3 +1,6 @@
+import { LEGAL_ENTITY_STATUS_LIST } from 'components/form/LegalEntityStatusSelect'
+import { dir } from 'console'
+import { last } from 'lodash'
 import { CorporateIdentity, IndividualIdentity } from 'types/identity'
 import {
   CorporateInvestorDeclarationFormValues,
@@ -10,15 +13,30 @@ import {
 export const getCorporateInfoFormValues = (
   data: CorporateIdentity | undefined
 ): Partial<InvestorCorporateInfoFormValues> => {
+  const isCustomLegalEntityStatus =
+    data?.legalEntityStatus !== undefined &&
+    LEGAL_ENTITY_STATUS_LIST.every(
+      ({ value }) => value !== data.legalEntityStatus
+    )
+  const otherLegalEntityStatus = isCustomLegalEntityStatus
+    ? data?.legalEntityStatus
+    : undefined
+
+  const legalEntityStatus = isCustomLegalEntityStatus
+    ? last(LEGAL_ENTITY_STATUS_LIST)?.value
+    : data?.legalEntityStatus
+
   return {
+    logo: data?.logo,
     companyLegalName: data?.companyLegalName,
     registrationNumber: data?.registrationNumber,
-    legalEntityStatus: data?.legalEntityStatus,
+    legalEntityStatus,
+    otherLegalEntityStatus,
     countryOfFormation: data?.countryOfFormation,
-    address: data?.companyAddress,
-    representatives: []
-    // mailingAddress: data.mailingAddress,
-    // mailingAddressSameAsRegistered: data.mailingAddressSameAsRegistered
+    companyAddress: data?.companyAddress,
+    representatives: data?.representatives,
+    mailingAddress: data?.mailingAddress,
+    isMailingAddressSame: data?.isMailingAddressSame
   }
 }
 
@@ -26,8 +44,32 @@ export const getDirectorsAndBeneficialOwnersFormValues = (
   data: CorporateIdentity | undefined
 ): Partial<InvestorDirectorsAndBeneficialOwnersFormValues> => {
   return {
-    directors: data?.directors ?? [],
-    beneficialOwners: data?.beneficialOwners ?? []
+    directors: data?.directors.map(director => {
+      return {
+        ...director,
+        documents: {
+          proofOfAddress: director.documents.filter(
+            document => document.type === 'Proof of Address'
+          ),
+          proofOfIdentity: director.documents.filter(
+            document => document.type === 'Proof of Identity'
+          )
+        }
+      }
+    }),
+    beneficialOwners: data?.beneficialOwners.map(director => {
+      return {
+        ...director,
+        documents: {
+          proofOfAddress: director.documents.filter(
+            document => document.type === 'Proof of Address'
+          ),
+          proofOfIdentity: director.documents.filter(
+            document => document.type === 'Proof of Identity'
+          )
+        }
+      }
+    })
   }
 }
 
@@ -56,7 +98,7 @@ export const getCorporateInvestorDocumentsFormValues = (
       corporateDocuments
     } = result
 
-    if (document.type === 'Evidence Of Accreditation') {
+    if (document.type === 'Evidence of Accreditation') {
       return {
         ...result,
         evidenceOfAccreditation: Array.isArray(evidenceOfAccreditation)
@@ -90,7 +132,5 @@ export const getCorporateInvestorDocumentsFormValues = (
 export const getCorporateInvestorAgreementsAndDisclosuresFormValues = (
   data: CorporateIdentity | undefined
 ) => {
-  return {
-    declarations: data?.declarations ?? {}
-  }
+  return data?.declarations?.agreements
 }

@@ -10,7 +10,11 @@ export const AuthorizedPersonnelFields = () => {
   const { control } = useFormContext()
 
   useEffect(() => {
-    control.setValue('representatives', [{}])
+    const { representatives } = control.getValues()
+    
+    if (representatives === undefined) {
+      control.setValue('representatives', [{}])
+    }
   }, [])
 
   return (
