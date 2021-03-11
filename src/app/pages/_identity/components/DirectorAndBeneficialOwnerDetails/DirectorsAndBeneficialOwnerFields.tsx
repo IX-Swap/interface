@@ -16,7 +16,11 @@ export const DirectorsAndBeneficialOwnerFields = ({
   const { control } = useFormContext()
 
   useEffect(() => {
-    control.setValue(name, [{}])
+    const formValues = control.getValues()
+
+    if (formValues[name] === undefined) {
+      control.setValue(name, [{}])
+    }
   }, [])
 
   return (

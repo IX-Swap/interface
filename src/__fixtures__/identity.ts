@@ -12,6 +12,7 @@ export const corporate: CorporateIdentity = {
   _id: '1',
   logo: '',
   legalEntityStatus: 'others',
+  isMailingAddressSame: false,
   createdAt: '01-01-2000',
   updatedAt: '01-01-2000',
   documents: [],
@@ -53,7 +54,8 @@ export const corporate: CorporateIdentity = {
       email: 'johnsemail',
       contactNumber: '+6512345678901',
       documents: [],
-      address: address
+      address: address,
+      percentageShareholding: 0
     }
   ],
   email: '',

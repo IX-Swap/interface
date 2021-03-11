@@ -60,5 +60,6 @@ export const corporateIdentityFormValidationSchema = yup
     companyAddress: addressSchema.required('Required'),
     email: emailSchema.required('Required'),
     taxResidencies: taxResidenciesArraySchema.required('Required'),
-    mailingAddress: addressSchema.required('Required')
+    mailingAddress: addressSchema.required('Required'),
+    isMailingAddressSame: yup.boolean()
   })

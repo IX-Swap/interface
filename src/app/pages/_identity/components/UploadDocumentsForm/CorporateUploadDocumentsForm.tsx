@@ -24,7 +24,7 @@ export const CorporateUploadDocumentsForm = () => {
     <Grid container direction='column' spacing={3}>
       <Grid item>
         <UploadDocumentField
-          name='documents.corporateDocuments'
+          name='corporateDocuments'
           label='Corporate Documents'
           helperElement={
             <Typography variant='body1'>
@@ -38,7 +38,7 @@ export const CorporateUploadDocumentsForm = () => {
       </Grid>
       <Grid item>
         <UploadDocumentField
-          name='documents.financialDocuments'
+          name='financialDocuments'
           label='Financial Documents'
           helperElement={
             <Typography variant='body1'>
@@ -50,7 +50,7 @@ export const CorporateUploadDocumentsForm = () => {
       </Grid>
       <Grid item>
         <UploadDocumentField
-          name='documents.evidenceOfAccreditation'
+          name='evidenceOfAccreditation'
           label='Evidence of Accreditation'
           helperElement={
             <Grid container direction='column' spacing={3}>

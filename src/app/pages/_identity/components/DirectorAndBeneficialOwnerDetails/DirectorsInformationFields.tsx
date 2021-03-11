@@ -67,7 +67,7 @@ export const DirectorsInformationFields = ({
               component={TextField}
               control={control}
               variant='outlined'
-              name={[rootName, index, 'emailAddress']}
+              name={[rootName, index, 'email']}
               label='Email Address'
               fullWidth
             />

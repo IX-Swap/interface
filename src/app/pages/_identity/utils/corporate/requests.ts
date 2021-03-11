@@ -3,23 +3,50 @@ import {
   CorporateInvestorDocumentsFormValues,
   IndividualDocumentsFormValues,
   IndividualInvestorDeclarationFormValues,
+  InvestorCorporateInfoFormValues,
   InvestorDirectorsAndBeneficialOwnersFormValues
 } from '../../types/forms'
 import { AgreementsAndDisclosures } from '../../../../../types/identity'
 
-export const getCorporateInfoRequestPayload = (data: any) => {
-  delete data.otherLegalEntityStatus
+export const getCorporateInfoRequestPayload = (
+  data: InvestorCorporateInfoFormValues
+) => {
+  const { otherLegalEntityStatus, legalEntityStatus, ...rest } = data
+  const customLegalEntityStatus =
+    otherLegalEntityStatus !== undefined && otherLegalEntityStatus.trim() !== ''
 
   return {
-    ...data
+    ...rest,
+    legalEntityStatus: customLegalEntityStatus
+      ? otherLegalEntityStatus
+      : legalEntityStatus
   }
 }
 
 export const getDirectorsAndBeneficialOwnerRequestPayload = (
   data: InvestorDirectorsAndBeneficialOwnersFormValues
 ) => {
+  const { directors, beneficialOwners } = data
+
   return {
-    ...data
+    directors: directors.map(director => {
+      return {
+        ...director,
+        documents: Object.values(director.documents).reduce(
+          (result, values) => [...result, ...values],
+          []
+        )
+      }
+    }),
+    beneficialOwners: beneficialOwners.map(beneficialOwner => {
+      return {
+        ...beneficialOwner,
+        documents: Object.values(beneficialOwner.documents).reduce(
+          (result, values) => [...result, ...values],
+          []
+        )
+      }
+    })
   }
 }
 
@@ -37,21 +64,22 @@ export const getCorporateInvestorDocumentsRequestPayload = (
   values: CorporateInvestorDocumentsFormValues
 ) => {
   return {
-    documents: Object.values(values.documents).reduce<string[]>(
-      (result, documents) => {
-        if (Array.isArray(documents)) {
-          return [...result, ...documents.map(document => document._id)]
-        }
+    documents: Object.values(values).reduce<string[]>((result, documents) => {
+      if (Array.isArray(documents)) {
+        return [...result, ...documents.map(document => document._id)]
+      }
 
-        return result
-      },
-      []
-    )
+      return result
+    }, [])
   }
 }
 
 export const getCorporateInvestorAgreementsRequestPayload = (
   values: AgreementsAndDisclosures
 ) => {
-  return values
+  return {
+    declarations: {
+      agreements: values
+    }
+  }
 }

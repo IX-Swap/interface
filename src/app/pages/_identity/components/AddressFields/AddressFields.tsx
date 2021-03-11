@@ -20,7 +20,9 @@ export const AddressFields = <FormType,>(
     <Grid container spacing={3} className={privateClassNames()}>
       <Grid item xs={12} sm={6} md={4}>
         <TypedField
+          customRenderer
           component={TextField}
+          fullWidth
           control={control}
           rootName={rootName}
           name='line1'
@@ -30,7 +32,9 @@ export const AddressFields = <FormType,>(
       </Grid>
       <Grid item xs={12} sm={6} md={4}>
         <TypedField
+          customRenderer
           component={TextField}
+          fullWidth
           control={control}
           rootName={rootName}
           name='line2'
@@ -43,6 +47,8 @@ export const AddressFields = <FormType,>(
       </Hidden>
       <Grid item xs={12} sm={6} md={4}>
         <TypedField
+          customRenderer
+          fullWidth
           component={TextField}
           control={control}
           rootName={rootName}
@@ -53,6 +59,8 @@ export const AddressFields = <FormType,>(
       </Grid>
       <Grid item xs={12} sm={6} md={4}>
         <TypedField
+          customRenderer
+          fullWidth
           component={TextField}
           control={control}
           rootName={rootName}
@@ -76,6 +84,8 @@ export const AddressFields = <FormType,>(
       </Grid>
       <Grid item xs={12} sm={6} md={4}>
         <TypedField
+          customRenderer
+          fullWidth
           component={TextField}
           control={control}
           rootName={rootName}

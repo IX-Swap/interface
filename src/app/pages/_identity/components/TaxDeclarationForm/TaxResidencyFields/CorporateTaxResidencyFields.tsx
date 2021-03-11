@@ -10,7 +10,11 @@ export const CorporateTaxResidencyFields = () => {
   const { control } = useFormContext()
 
   useEffect(() => {
-    control.setValue('taxResidencies', [{}])
+    const { taxResidencies } = control.getValues()
+
+    if (taxResidencies === undefined) {
+      control.setValue('taxResidencies', [{}])
+    }
   }, [])
 
   return (
