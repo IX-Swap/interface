@@ -6,6 +6,7 @@ import { CountrySelect } from 'components/form/CountrySelect'
 import { TypedField } from 'components/form/TypedField'
 import { TaxResidency } from 'types/identity'
 import { TinUnavailableFields } from 'app/pages/_identity/components/TaxDeclarationForm/TinUnavailableFields/TinUnavailableFields'
+import { VSpacer } from 'components/VSpacer'
 
 export interface TaxResidencyFieldProps {
   field: Partial<TaxResidency & { id: string }>
@@ -58,15 +59,23 @@ export const TaxResidencyField = ({
       append({
         countryOfResidence: '',
         taxIdentificationNumber: '',
-        taxIdAvailable: false
+        taxIdAvailable: true
       })
     }
   }
 
   return (
-    <Grid container direction='column' spacing={3}>
+    <Grid
+      container
+      direction='column'
+      spacing={3}
+      style={{
+        borderTop: index !== 0 ? '1px solid lightgray' : 'none',
+        paddingTop: index !== 0 ? 30 : 0
+      }}
+    >
       <Grid item>
-        <Grid container spacing={3} alignItems='center'>
+        <Grid container spacing={3} alignItems='flex-start'>
           <Grid item xs={12} md={4}>
             <TypedField
               component={CountrySelect}
@@ -119,9 +128,10 @@ export const TaxResidencyField = ({
             </Grid>
           </Grid>
         </Grid>
-      </Grid>
-      <Grid item>
-        <TinUnavailableFields index={index} />
+        <Grid item>
+          <VSpacer size={'small'} />
+          <TinUnavailableFields index={index} />
+        </Grid>
       </Grid>
     </Grid>
   )

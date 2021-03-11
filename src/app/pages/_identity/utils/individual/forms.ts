@@ -55,7 +55,7 @@ export const getTaxDeclarationFormValues = (
   const { taxResidencies, declarations } = data
   const result: Partial<IndividualTaxDeclarationFormValues> = {}
 
-  if (taxResidencies.length > 0) {
+  if (taxResidencies !== undefined && taxResidencies.length > 0) {
     result.taxResidencies = taxResidencies.map(({ _id, ...rest }: any) => rest)
     result.singaporeOnly =
       taxResidencies.length === 1 &&

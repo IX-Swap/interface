@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { Grid } from '@material-ui/core'
 import { TypedField } from 'components/form/TypedField'
 import { RadioGroup } from 'components/form/RadioGroup'
@@ -8,6 +8,13 @@ import { InternationalFields } from 'app/pages/_identity/components/TaxDeclarati
 
 export const TaxResidencyFields = () => {
   const { control } = useFormContext()
+  const { taxResidencies, singaporeOnly } = control.getValues()
+
+  useEffect(() => {
+    if (taxResidencies === undefined) {
+      control.setValue('taxResidencies', [{}])
+    }
+  }, [singaporeOnly, taxResidencies])
 
   return (
     <>
@@ -19,7 +26,7 @@ export const TaxResidencyFields = () => {
         label=''
         control={control}
       >
-        <Grid container direction='column' spacing={3}>
+        <Grid container direction='column' spacing={6}>
           <Grid item>
             <SingaporeOnlyFields />
           </Grid>

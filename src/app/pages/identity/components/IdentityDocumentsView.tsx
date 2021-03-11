@@ -29,6 +29,7 @@ export const IdentityDocumentsView = (props: DocumentsViewProps) => {
           {formattedDocuments.map(({ value: document }, index) => (
             <TableRow key={index}>
               <DataroomViewRow
+                showDivider={false}
                 title={document?.title ?? ''}
                 document={document}
               />

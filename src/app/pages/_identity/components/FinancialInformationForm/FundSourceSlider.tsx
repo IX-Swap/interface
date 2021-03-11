@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { TypedField } from 'components/form/TypedField'
 import { sliderValueExtractor } from 'helpers/forms'
 import { Box, Slider } from '@material-ui/core'
@@ -12,11 +12,17 @@ export interface FundSourceSliderProps {
 }
 
 export const FundSourceSlider = ({ field, index }: FundSourceSliderProps) => {
-  const { control, watch } = useFormContext()
+  const { control, watch, setValue } = useFormContext()
   const isChecked: boolean = watch<string, boolean>(
     `sourceOfFund[${index}].checked`,
     false
   )
+
+  useEffect(() => {
+    if (!isChecked) {
+      setValue(`sourceOfFund[${index}].value`, 0)
+    }
+  }, [isChecked])
 
   return (
     <Box width={210} height={38}>
