@@ -1,4 +1,4 @@
-import React, { Fragment } from 'react'
+import React, { useEffect, Fragment } from 'react'
 import { FormStepper } from 'app/components/FormStepper/FormStepper'
 import { useAllCorporateIdentities } from 'hooks/identity/useAllCorporateIdentities'
 import { CorporateInformationForm } from 'app/pages/_identity/components/CorporateInformationForm/CorporateInformationForm'
@@ -26,6 +26,7 @@ import { InvestorDeclarationForm } from '../InvestorDeclarationForm/InvestorDecl
 import { CorporateUploadDocumentsForm } from '../UploadDocumentsForm/CorporateUploadDocumentsForm'
 import { AgreementsAndDisclosuresFields } from '../AgreementsAndDisclosuresFields/AgreementsAndDisclosuresFields'
 import { CorporateIdentityView } from 'app/pages/_identity/components/CorporateIdentityView/CorporateIdentityView'
+import { useOnboardingDialog } from 'app/components/OnboardingDialog/hooks/useOnboardingDialog'
 import { useIdentitiesRouter } from 'app/pages/_identity/router'
 import {
   corporateInvestorAgreementsSchema,
@@ -45,6 +46,14 @@ export const CorporateInvestorForm = () => {
   const createMutation = useCreateCorporate()
   const updateMutation = useUpdateCorporate()
   const submitMutation = useUpdateCorporate()
+  const { showPreIdentityCreateDialog } = useOnboardingDialog()
+
+  useEffect(() => {
+    if (!isLoading && data === undefined) {
+      showPreIdentityCreateDialog('corporate')
+    }
+    // eslint-disable-next-line
+  }, [isLoading])
 
   if (isLoading) {
     return <div>Loading...</div>
