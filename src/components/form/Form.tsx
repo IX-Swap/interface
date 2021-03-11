@@ -51,9 +51,9 @@ export const Form = <T,>(props: PropsWithChildren<FormProps<T>>) => {
       >
         {children}
       </form>
-      <pre style={{ fontSize: 14 }}>
+      {/* <pre style={{ fontSize: 14 }}>
         {JSON.stringify(form.getValues(), null, 4)}
-      </pre>
+      </pre> */}
     </FormProvider>
   )
 }
