@@ -4,8 +4,8 @@ import { PersonnelList } from 'app/pages/_identity/components/CorporateIdentityV
 import { CorporateAddress } from 'app/pages/_identity/components/CorporateIdentityView/CorporateAddress'
 import { CorporateInfo } from 'app/pages/_identity/components/CorporateIdentityView/CorporateInfo'
 import React from 'react'
-import { IdentityDocumentsView } from 'app/pages/_identity/components/IndividualIdentityView/IdentityDocumentsView/IdentityDocumentsView'
-import { CountryTaxDeclaration } from 'app/pages/_identity/components/IndividualIdentityView/TaxDeclarationView/CountryTaxDeclaration'
+import { IdentityDocumentsView } from 'app/pages/_identity/components/IdentityDocumentsView/IdentityDocumentsView'
+import { CountryTaxDeclaration } from 'app/pages/_identity/components/CountryTaxDeclarations/CountryTaxDeclaration'
 import { InvestorDeclarationView } from 'app/pages/_identity/components/IndividualIdentityView/InvestorDeclarationView/InvestorDeclarationView'
 import { CorporateIdentity } from 'types/identity'
 

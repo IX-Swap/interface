@@ -38,7 +38,14 @@ export const FinancialView = (props: FinancialViewProps) => {
         {fundSource.map((it, i) => {
           if (it.checked) {
             return (
-              <Grid item xs={12} sm={6} md={4} key={it.name}>
+              <Grid
+                item
+                xs={12}
+                sm={6}
+                md={4}
+                key={it.name}
+                style={{ paddingTop: i !== 0 ? 0 : 24 }}
+              >
                 <LabelledValue
                   value={`${it.name} (${it.value}%)`}
                   label={i === 0 ? 'Source(s) of Fund' : ''}
