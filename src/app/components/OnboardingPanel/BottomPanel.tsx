@@ -9,10 +9,22 @@ export const BottomPanel = () => {
   const { paths: identityPaths } = useIdentitiesRouter()
   return (
     <Switch>
-      <Route path={identityPaths.createIndividual}>
+      <Route
+        path={[
+          identityPaths.individual,
+          identityPaths.createIndividual,
+          identityPaths.editIndividual
+        ]}
+      >
         <IndividualOnboardingSteps />
       </Route>
-      <Route path={identityPaths.createCorporate}>
+      <Route
+        path={[
+          identityPaths.corporate,
+          identityPaths.createCorporate,
+          identityPaths.editCorporate
+        ]}
+      >
         <CorporateOnboardingSteps />
       </Route>
       <Route>

@@ -42,7 +42,7 @@ export const InvestorDeclarationView: React.FC<InvestorDeclarationViewProps> = (
     partnership,
     accreditedBeneficiaries,
     accreditedSettlors
-  } = data.declarations.investorsStatus ?? {}
+  } = data.declarations?.investorsStatus ?? {}
 
   const accreditedInvestorDeclaration = {
     personalAssets,
