@@ -15,7 +15,6 @@ export const InformationFields = () => {
   const legalEntityStatus = watch('legalEntityStatus')
 
   useEffect(() => {
-    console.log(legalEntityStatus)
     if (legalEntityStatus !== 'others') {
       control.setValue('otherLegalEntityStatus', undefined)
     }
