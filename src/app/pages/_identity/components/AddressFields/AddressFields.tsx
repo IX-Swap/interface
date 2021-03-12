@@ -17,6 +17,8 @@ export const AddressFields = <FormType,>(
   const { rootName = 'address', defaultValue } = props
   const { control } = useFormContext<IdentityAddress>()
 
+  const controlDefaultValues = control.defaultValuesRef.current
+
   return (
     <Grid container spacing={3} className={privateClassNames()}>
       <Grid item xs={12} sm={6} md={4}>
@@ -29,7 +31,7 @@ export const AddressFields = <FormType,>(
           name='line1'
           label='Line 1'
           variant='outlined'
-          defaultValue={defaultValue?.line1 ?? ''}
+          defaultValue={defaultValue?.line1 ?? controlDefaultValues.line1}
         />
       </Grid>
       <Grid item xs={12} sm={6} md={4}>
@@ -42,7 +44,7 @@ export const AddressFields = <FormType,>(
           name='line2'
           label='Line 2'
           variant='outlined'
-          defaultValue={defaultValue?.line2 ?? ''}
+          defaultValue={defaultValue?.line2 ?? controlDefaultValues.line2}
         />
       </Grid>
       <Hidden smDown>
@@ -58,7 +60,7 @@ export const AddressFields = <FormType,>(
           name='city'
           label='City'
           variant='outlined'
-          defaultValue={defaultValue?.city ?? ''}
+          defaultValue={defaultValue?.city ?? controlDefaultValues.city}
         />
       </Grid>
       <Grid item xs={12} sm={6} md={4}>
@@ -71,7 +73,7 @@ export const AddressFields = <FormType,>(
           name='state'
           label='State'
           variant='outlined'
-          defaultValue={defaultValue?.state ?? ''}
+          defaultValue={defaultValue?.state ?? controlDefaultValues.state}
         />
       </Grid>
       <Hidden smDown>
@@ -85,7 +87,7 @@ export const AddressFields = <FormType,>(
           name='country'
           label='Country'
           variant='outlined'
-          defaultValue={defaultValue?.country ?? ''}
+          defaultValue={defaultValue?.country ?? controlDefaultValues.country}
         />
       </Grid>
       <Grid item xs={12} sm={6} md={4}>
@@ -98,7 +100,9 @@ export const AddressFields = <FormType,>(
           name='postalCode'
           label='Postal Code'
           variant='outlined'
-          defaultValue={defaultValue?.postalCode ?? ''}
+          defaultValue={
+            defaultValue?.postalCode ?? controlDefaultValues.postalCode
+          }
         />
       </Grid>
     </Grid>
