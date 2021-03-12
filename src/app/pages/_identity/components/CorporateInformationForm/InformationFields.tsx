@@ -14,6 +14,13 @@ export const InformationFields = () => {
   const { isTablet } = useAppBreakpoints()
   const legalEntityStatus = watch('legalEntityStatus')
 
+  useEffect(() => {
+    console.log(legalEntityStatus)
+    if (legalEntityStatus !== 'others') {
+      control.setValue('otherLegalEntityStatus', undefined)
+    }
+  }, [legalEntityStatus])
+
   return (
     <>
       <FormSectionHeader title='Corporate Information' />
