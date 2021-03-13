@@ -84,7 +84,7 @@ export const useOnboardingDialog = () => {
     showOnboardingDialog({
       title: 'Onboarding Complete!',
       message: [
-        'You have complete the Onboarding journey. Our authorizer will review your identity and notify your status. You can start looking our deals in the “Invest” panel. Happy Investing!'
+        'You have completed the Onboarding journey. Our authorizer will review your identity and notify your status. You can start looking our deals in the “Invest” panel. Happy Investing!'
       ],
       actionLabel: 'Start Investing',
       action: investPaths.landing

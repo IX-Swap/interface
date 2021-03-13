@@ -21,15 +21,6 @@ export const useSnackbar = (): SnackbarService => {
   const { addToast, toastStack } = useToasts()
   const queryCache = useQueryCache()
 
-  const completeDialog = {
-    title: 'Onboarding Complete!',
-    message: [
-      'You have complete the Onboarding journey. Our authorizer will review your identity and notify your status. You can start looking our deals in the “Invest” panel. Happy Investing!'
-    ],
-    actionLabel: 'Start Investing',
-    action: '/app/invest'
-  }
-
   const showOnboardingDialog = (onboardingDialog: OnboardingDialogProps) => {
     return addToast(<OnboardingDialog {...onboardingDialog} />, {
       appearance: 'info',
@@ -38,7 +29,6 @@ export const useSnackbar = (): SnackbarService => {
   }
 
   const showOnboardingCompleteDialog = (notification: TNotification) => {
-    // To do: determine if user is still in onboarding process
     const individualIdentityApproved =
       notification.feature === 'individuals' &&
       notification.subject === 'Identity Approved'
@@ -55,10 +45,32 @@ export const useSnackbar = (): SnackbarService => {
     }
 
     if (individualIdentityApproved || corporateIdentityApproved) {
-      addToast(<OnboardingDialog {...completeDialog} />, {
-        appearance: 'info',
-        autoDismiss: false
-      })
+      const item = JSON.parse(
+        localStorage.getItem(notification.resourceId) ?? ''
+      )
+      const waitingForIssuerApproval = item === 'issuer'
+      const waitingForInvestorApproval =
+        item === 'individual' || item === 'investor'
+
+      const completeDialog = {
+        title: 'Onboarding Complete!',
+        message: [
+          `You have completed the Onboarding journey. Our authorizer has approved your identity. ${
+            waitingForIssuerApproval ? '' : 'Happy investing!'
+          }`
+        ],
+        actionLabel: 'Okay',
+        action: waitingForIssuerApproval ? '/app/home' : '/app/invest'
+      }
+
+      if (waitingForInvestorApproval || waitingForIssuerApproval) {
+        addToast(<OnboardingDialog {...completeDialog} />, {
+          appearance: 'info',
+          autoDismiss: false
+        })
+
+        localStorage.removeItem(notification.resourceId)
+      }
     }
   }
 
