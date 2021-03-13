@@ -73,9 +73,7 @@ describe('useOnboardingDialog', () => {
             message: [
               'Please create your identity first before you can manage your Accounts.'
             ],
-            action: '/individual',
-            actionLabel: 'Create Account',
-            closeLabel: 'Close',
+            closeLabel: 'Okay',
             closeArrow: false
           })
 

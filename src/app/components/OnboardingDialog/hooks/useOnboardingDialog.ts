@@ -29,9 +29,7 @@ export const useOnboardingDialog = () => {
       message: [
         'Please create your identity first before you can manage your Accounts.'
       ],
-      action: indentityPaths.createIndividual,
-      actionLabel: 'Create Account',
-      closeLabel: 'Close',
+      closeLabel: 'Okay',
       closeArrow: false
     })
   }
