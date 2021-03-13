@@ -14,32 +14,34 @@ export const AgreementsAndDisclosuresView = (
   const { investor, custody, disclosures } =
     props.data.declarations.agreements ?? {}
 
+  const renderAgreementAndDisclosureLink = (label: string, href: string) => {
+    return (
+      <Link href={href} style={{ fontSize: 16, marginLeft: 16 }}>
+        {label}
+      </Link>
+    )
+  }
+
   return (
     <Grid container direction={'column'} spacing={2}>
       <Grid item xs={12}>
         <Box display={'flex'} alignItems={'center'} color={'#AAAAAA'}>
           {investor ? <DoneIcon /> : <CloseIcon />}
-          <Link href={'#'} style={{ marginLeft: 16 }}>
-            Investor Agreement
-          </Link>
+          {renderAgreementAndDisclosureLink('Investor Agreement', '#')}
         </Box>
       </Grid>
 
       <Grid item xs={12}>
         <Box display={'flex'} alignItems={'center'} color={'#AAAAAA'}>
           {custody ? <DoneIcon /> : <CloseIcon />}
-          <Link href={'#'} style={{ marginLeft: 16 }}>
-            Custody Agreement
-          </Link>
+          {renderAgreementAndDisclosureLink('Custody Agreement', '#')}
         </Box>
       </Grid>
 
       <Grid item xs={12}>
         <Box display={'flex'} alignItems={'center'} color={'#AAAAAA'}>
           {disclosures ? <DoneIcon /> : <CloseIcon />}
-          <Link href={'#'} style={{ marginLeft: 16 }}>
-            Disclosures
-          </Link>
+          {renderAgreementAndDisclosureLink('Disclosures', '#')}
         </Box>
       </Grid>
     </Grid>

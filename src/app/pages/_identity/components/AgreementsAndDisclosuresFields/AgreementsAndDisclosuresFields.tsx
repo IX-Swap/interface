@@ -1,7 +1,6 @@
 import React from 'react'
 import { useFormContext } from 'react-hook-form'
 import { booleanValueExtractor } from 'helpers/forms'
-import { AgreementsAndDisclosures } from 'types/identity'
 import { Grid, Link, Typography } from '@material-ui/core'
 import { Checkbox } from 'components/form/Checkbox'
 import { TypedField } from 'components/form/TypedField'
@@ -10,6 +9,14 @@ import { IndividualAgreementsFormValues } from 'app/pages/_identity/types/forms'
 
 export const AgreementsAndDisclosuresFields = (): JSX.Element => {
   const { control } = useFormContext<IndividualAgreementsFormValues>()
+
+  const renderAgreementAndDisclosureLink = (label: string, href: string) => {
+    return (
+      <Link href={href} style={{ fontSize: 16 }}>
+        {label}
+      </Link>
+    ) as any
+  }
 
   return (
     <Grid container direction={'column'}>
@@ -24,7 +31,7 @@ export const AgreementsAndDisclosuresFields = (): JSX.Element => {
           valueExtractor={booleanValueExtractor}
           component={Checkbox}
           control={control}
-          label={(<Link href={'#'}>Investor Agreement</Link>) as any}
+          label={renderAgreementAndDisclosureLink('Investor Agreement', '#')}
           name={'investor'}
           data-testid='investor-agreement'
         />
@@ -36,7 +43,7 @@ export const AgreementsAndDisclosuresFields = (): JSX.Element => {
           valueExtractor={booleanValueExtractor}
           component={Checkbox}
           control={control}
-          label={(<Link href={'#'}>Custody Agreement</Link>) as any}
+          label={renderAgreementAndDisclosureLink('Custody Agreement', '#')}
           name={'custody'}
           data-testid='custody-agreement'
         />
@@ -48,7 +55,7 @@ export const AgreementsAndDisclosuresFields = (): JSX.Element => {
           valueExtractor={booleanValueExtractor}
           component={Checkbox}
           control={control}
-          label={(<Link href={'#'}>Disclosures</Link>) as any}
+          label={renderAgreementAndDisclosureLink('Disclosures', '#')}
           name={'disclosure'}
           data-testid='disclosures'
         />

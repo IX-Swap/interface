@@ -10,9 +10,9 @@ import { useIndividualInfoDefaultEmail } from 'hooks/auth/useIndividualInfoDefau
 import { DataroomFileType } from 'config/dataroom'
 import { privateClassNames } from 'helpers/classnames'
 import { Dropzone } from 'components/dataroom/Dropzone'
-import { DateTimePicker } from 'components/form/_DateTimePicker'
 import { useAppBreakpoints } from 'hooks/useAppBreakpoints'
 import { PhoneInput } from 'components/form/PhoneInput'
+import { DatePicker } from 'components/form/DatePicker'
 
 export interface IndividualInfoFieldsProps {
   rootName?: string
@@ -84,8 +84,9 @@ export const IndividualInfoFields = (
               control={control}
               name='dob'
               label='Date of Birth'
-              component={DateTimePicker}
+              component={DatePicker}
               customRenderer
+              defaultValue={null as any}
               valueExtractor={dateTimeValueExtractor}
               inputVariant='outlined'
             />

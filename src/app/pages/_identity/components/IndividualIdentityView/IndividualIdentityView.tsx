@@ -60,7 +60,6 @@ export const IndividualIdentityView = (props: IndividualIdentityViewProps) => {
 
       <Grid item xs={12}>
         <FormSectionHeader title='Agreements and Disclosures' />
-
         <AgreementsAndDisclosuresView data={data} />
       </Grid>
     </Grid>
