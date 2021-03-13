@@ -1,6 +1,6 @@
 import React, { Fragment } from 'react'
 import { Box, Grid, Typography } from '@material-ui/core'
-import { useAllCorporateIdentities } from 'hooks/identity/useAllCorporateIdentities'
+import { useAllCorporates } from 'app/pages/_identity/hooks/useAllCorporates'
 import { Section } from 'app/pages/_identity/components/Section/Section'
 import { useIdentitiesRouter } from 'app/pages/_identity/router'
 import { ViewButton } from 'app/pages/_identity/components/ViewButton/ViewButton'
@@ -8,8 +8,13 @@ import { CompanyInfoView } from 'app/pages/_identity/components/CompanyInfoView/
 import { VSpacer } from 'components/VSpacer'
 import { EditButton } from 'app/pages/_identity/components/EditButton/EditButton'
 
-export const CorporatesPreview: React.FC = () => {
-  const { data, status } = useAllCorporateIdentities()
+export interface CorporatesPreviewProps {
+  type: 'investor' | 'issuer'
+}
+
+export const CorporatesPreview: React.FC<CorporatesPreviewProps> = props => {
+  const { type } = props
+  const { data, status } = useAllCorporates({ type })
   const { paths } = useIdentitiesRouter()
 
   if (status === 'loading') {
@@ -26,7 +31,9 @@ export const CorporatesPreview: React.FC = () => {
   return (
     <Grid data-testid='corporate-preview' container item>
       <Grid item xs={12}>
-        <Typography variant='h4'>Corporate Identities</Typography>
+        <Typography variant='h4'>
+          Corporate {type === 'investor' ? 'Investor' : 'Issuer'}
+        </Typography>
       </Grid>
 
       <Grid item>

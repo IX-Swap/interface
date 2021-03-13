@@ -5,9 +5,10 @@ import { useAllCorporates } from 'app/pages/_identity/hooks/useAllCorporates'
 import { VSpacer } from 'components/VSpacer'
 import { useSetPageTitle } from 'app/hooks/useSetPageTitle'
 import { CorporateInvestorForm } from 'app/pages/_identity/components/CorporateInvestorForm/CorporateInvestorForm'
+import { CorporateIssuerForm } from 'app/pages/_identity/components/CorporateIssuerForm/CorporateIssuerForm'
 
-export const EditInvestor: React.FC = () => {
-  const { data, status } = useAllCorporates({ type: 'investor' })
+export const EditIssuer: React.FC = () => {
+  const { data, status } = useAllCorporates({ type: 'issuer' })
   const {
     params: { identityId }
   } = useIdentitiesRouter()
@@ -25,7 +26,7 @@ export const EditInvestor: React.FC = () => {
         <VSpacer size='medium' />
       </Grid>
       <Grid item xs={12}>
-        <CorporateInvestorForm />
+        <CorporateIssuerForm />
       </Grid>
     </Grid>
   )

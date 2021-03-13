@@ -1,10 +1,12 @@
 import { IdentityType } from 'app/pages/identity/utils'
-import { useAllCorporateIdentities } from 'hooks/identity/useAllCorporateIdentities'
+import { useAllCorporates } from 'app/pages/_identity/hooks/useAllCorporates'
 import { useIndividualIdentity } from 'hooks/identity/useIndividualIdentity'
 
-export const useGetIdentities = () => {
+export const useGetIdentities = (corporateType?: 'issuer' | 'investor') => {
   const { data: individualIdentity } = useIndividualIdentity()
-  const { data: corporateIdentities } = useAllCorporateIdentities()
+  const { data: corporateIdentities } = useAllCorporates({
+    type: corporateType
+  })
   const hasIdentity =
     individualIdentity !== undefined || corporateIdentities.list.length > 0
 

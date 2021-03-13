@@ -106,6 +106,7 @@ export interface CorporateFields {
   taxResidencies: TaxResidencies
   mailingAddress: IdentityAddress
   isMailingAddressSame: boolean
+  type: 'investor' | 'issuer'
 }
 
 export interface Declaration {

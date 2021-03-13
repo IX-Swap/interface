@@ -6,16 +6,16 @@ import { CountrySelect } from 'components/form/CountrySelect'
 import { useFormContext } from 'react-hook-form'
 import { privateClassNames } from 'helpers/classnames'
 
-export interface AddressFieldsProps<FormType> {
+export interface AddressFieldsProps {
   rootName?: string
   defaultValue?: IdentityAddress
 }
 
-export const AddressFields = <FormType,>(
-  props: AddressFieldsProps<FormType>
-): JSX.Element => {
+export const AddressFields = (props: AddressFieldsProps): JSX.Element => {
   const { rootName = 'address', defaultValue } = props
   const { control } = useFormContext<IdentityAddress>()
+
+  const controlDefaultValues = control.defaultValuesRef.current
 
   return (
     <Grid container spacing={3} className={privateClassNames()}>

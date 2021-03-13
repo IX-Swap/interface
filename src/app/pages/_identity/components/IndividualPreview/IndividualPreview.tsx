@@ -28,7 +28,7 @@ export const IndividualPreview = () => {
   return (
     <Grid container item direction='column'>
       <Grid item>
-        <Typography variant='h4'>Individual</Typography>
+        <Typography variant='h4'>Individual Investor</Typography>
       </Grid>
       <Grid item>
         <VSpacer size='medium' />

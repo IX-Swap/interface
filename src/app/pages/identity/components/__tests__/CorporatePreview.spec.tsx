@@ -1,6 +1,6 @@
 import React from 'react'
 import { render, cleanup } from 'test-utils'
-import * as allCorporateIdentitiesHook from 'hooks/identity/useAllCorporateIdentities'
+import * as allCorporateIdentitiesHook from 'app/pages/_identity/hooks/useAllCorporates'
 import { CorporatePreview } from 'app/pages/identity/components/CorporatePreview'
 import { generateInfiniteQueryResult } from '__fixtures__/useQuery'
 import { QueryStatus } from 'react-query'

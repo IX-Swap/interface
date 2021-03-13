@@ -1,10 +1,11 @@
 import React from 'react'
 import { Grid, FormControlLabel, Radio } from '@material-ui/core'
-import { useTaxResidencies } from 'app/pages/_identity/components/TaxDeclarationForm/hooks/useTaxResidencies'
 import { TaxResidencyFieldArray } from 'app/pages/_identity/components/TaxDeclarationForm/TaxResidencyFields/TaxRecidencyFieldArray'
+import { useFormContext } from 'react-hook-form'
 
 export const InternationalFields = () => {
-  const { singaporeOnly } = useTaxResidencies()
+  const { control } = useFormContext()
+  const { singaporeOnly } = control.getValues()
 
   return (
     <Grid container direction='column' spacing={3}>
@@ -15,11 +16,11 @@ export const InternationalFields = () => {
           control={<Radio />}
         />
       </Grid>
-      {!singaporeOnly && (
+      {singaporeOnly === 'no' ? (
         <Grid item>
           <TaxResidencyFieldArray />
         </Grid>
-      )}
+      ) : null}
     </Grid>
   )
 }

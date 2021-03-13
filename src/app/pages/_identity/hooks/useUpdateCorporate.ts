@@ -6,7 +6,7 @@ import { getIdFromObj } from 'helpers/strings'
 import { identityURL } from 'config/apiURL'
 import { useIdentitiesRouter } from 'app/pages/_identity/router'
 
-export const useUpdateCorporate = () => {
+export const useUpdateCorporate = (corporateType: string) => {
   const { snackbarService, apiService } = useServices()
   const { user } = useAuth()
   const userId = getIdFromObj(user)
@@ -14,7 +14,10 @@ export const useUpdateCorporate = () => {
 
   const createCorporate = async (values: any) => {
     const uri = identityURL.corporates.update(userId, params.identityId)
-    return await apiService.put<CorporateIdentity>(uri, values)
+    return await apiService.put<CorporateIdentity>(uri, {
+      ...values,
+      type: corporateType
+    })
   }
 
   return useMutation(createCorporate, {

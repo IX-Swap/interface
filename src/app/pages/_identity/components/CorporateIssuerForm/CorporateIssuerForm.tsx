@@ -38,14 +38,14 @@ import {
 } from 'app/pages/_identity/validation/corporate'
 import { useSubmitCorporate } from 'app/pages/_identity/hooks/useSubmitCorporate'
 
-export const CorporateInvestorForm = () => {
-  const { data, isLoading } = useAllCorporates({ type: 'investor' })
+export const CorporateIssuerForm = () => {
+  const { data, isLoading } = useAllCorporates({ type: 'issuer' })
   const { params, current, paths } = useIdentitiesRouter()
   const isNew = current.path === paths.createCorporate
   const identity = isNew ? undefined : data.map[params.identityId as string]
 
-  const createMutation = useCreateCorporate('investor')
-  const updateMutation = useUpdateCorporate('investor')
+  const createMutation = useCreateCorporate('issuer')
+  const updateMutation = useUpdateCorporate('issuer')
   const submitMutation = useSubmitCorporate()
   const { showPreIdentityCreateDialog } = useOnboardingDialog()
 
@@ -97,17 +97,6 @@ export const CorporateInvestorForm = () => {
           component: () => (
             <Fragment>
               <TaxDeclarationForm identityType='corporate' />
-            </Fragment>
-          )
-        },
-        {
-          label: 'Investor Status Declaration',
-          getFormValues: getCorporateInvestorDeclarationFormValues,
-          getRequestPayload: getCorporateInvestorDeclarationRequestPayload,
-          validationSchema: corporateInvestorStatusDeclarationSchema,
-          component: () => (
-            <Fragment>
-              <InvestorDeclarationForm identityType='corporate' />
             </Fragment>
           )
         },

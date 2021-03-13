@@ -1,6 +1,6 @@
 import { act, renderHook } from '@testing-library/react-hooks'
 import { useHasIdentity } from 'app/pages/home/hooks/useHasIdentity'
-import * as useAllCorporateIdentities from 'hooks/identity/useAllCorporateIdentities'
+import * as useAllCorporateIdentities from 'app/pages/_identity/hooks/useAllCorporates'
 import * as useIndividualIdentity from 'hooks/identity/useIndividualIdentity'
 import { QueryStatus } from 'react-query'
 import { waitFor, cleanup } from 'test-utils'

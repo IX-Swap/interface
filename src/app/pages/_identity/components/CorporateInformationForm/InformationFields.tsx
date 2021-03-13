@@ -10,17 +10,15 @@ import { useAppBreakpoints } from 'hooks/useAppBreakpoints'
 import { FormSectionHeader } from 'app/pages/_identity/components/FormSectionHeader'
 
 export const InformationFields = () => {
-  const { control, watch, reset, getValues } = useFormContext()
+  const { control, watch } = useFormContext()
   const { isTablet } = useAppBreakpoints()
   const legalEntityStatus = watch('legalEntityStatus')
 
   useEffect(() => {
-    const { legalEntityStatus } = getValues()
-
     if (legalEntityStatus !== 'others') {
-      reset({ ...getValues(), otherLegalEntityStatus: undefined })
+      control.setValue('otherLegalEntityStatus', undefined)
     }
-  }, [legalEntityStatus, reset, getValues])
+  }, [legalEntityStatus])
 
   return (
     <>

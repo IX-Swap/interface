@@ -1,16 +1,16 @@
-import React from 'react'
 import { Grid } from '@material-ui/core'
+import { CorporateIssuerForm } from 'app/pages/_identity/components/CorporateIssuerForm/CorporateIssuerForm'
 import { VSpacer } from 'components/VSpacer'
-import { CorporateInvestorForm } from 'app/pages/_identity/components/CorporateInvestorForm/CorporateInvestorForm'
+import React from 'react'
 
-export const CreateInvestor = () => {
+export const CreateIssuer = () => {
   return (
     <Grid container>
       <Grid container item>
         <VSpacer size='medium' />
       </Grid>
       <Grid item>
-        <CorporateInvestorForm />
+        <CorporateIssuerForm />
       </Grid>
     </Grid>
   )

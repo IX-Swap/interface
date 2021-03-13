@@ -33,17 +33,13 @@ export const FormStep = (props: FormStepProps) => {
     submitMutation
   } = props
   const isCurrentStep = activeStep === index
-
-  // useEffect(() => {
-  //   if (isCurrentStep) {
-  //     saveMutation[0]({ step: activeStep })
-  //   }
-  // }, [activeStep])
-
   if (!isCurrentStep) {
     return null
   }
 
+  const wasApproved = data?.authorizations.some(
+    ({ status }: any) => status === 'Approved'
+  )
   const hasNextStep = activeStep < totalSteps - 1
   const hasPrevStep = activeStep !== 0
   const isEditing = data !== undefined
@@ -75,9 +71,12 @@ export const FormStep = (props: FormStepProps) => {
           {hasPrevStep && (
             <Fragment>
               <MoveButton
+                activeStep={activeStep}
+                shouldUpdateStep={!wasApproved}
                 getRequestPayload={step.getRequestPayload}
                 mutation={saveMutation}
                 onClick={goToPrevStep}
+                isBackButton
               >
                 Back
               </MoveButton>
@@ -98,7 +97,9 @@ export const FormStep = (props: FormStepProps) => {
 
           {hasNextStep && (
             <MoveButton
+              activeStep={activeStep}
               variant={'contained'}
+              shouldUpdateStep={!wasApproved}
               getRequestPayload={step.getRequestPayload}
               mutation={saveMutation}
               onClick={goToNextStep}

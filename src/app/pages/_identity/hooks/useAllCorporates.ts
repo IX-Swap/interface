@@ -9,16 +9,31 @@ import { getIdFromObj } from 'helpers/strings'
 import { useIsAdmin, useIsAuthorizer } from 'helpers/acl'
 import { identityQueryKeys } from 'config/queryKeys'
 import { identityURL } from 'config/apiURL'
+import { AuthorizableStatus } from 'types/util'
 
-export const useAllCorporateIdentities = (
-  all = false
+export interface UseAllCorporatesArgs {
+  all?: boolean
+  status?: AuthorizableStatus
+  type?: 'investor' | 'issuer'
+}
+
+export const useAllCorporates = (
+  args: UseAllCorporatesArgs
 ): UsePaginatedQueryData<CorporateIdentity> => {
+  const {
+    all = false,
+    status = 'Draft,Submitted,Approved,Rejected',
+    type
+  } = args
   const { user } = useAuth()
   const isAuthorizer = useIsAuthorizer()
   const isAdmin = useIsAdmin()
   const isSuperUser = isAdmin || isAuthorizer
   const userId = getIdFromObj(user)
-  const payload = { ...paginationArgs, status: 'Draft' }
+  const payload = {
+    ...paginationArgs,
+    status
+  }
   const uri =
     all && isSuperUser
       ? identityURL.corporates.getAllBySuperUser
@@ -33,8 +48,16 @@ export const useAllCorporateIdentities = (
     getAllCorporates
   )
 
+  const parsedData = useParsedData<CorporateIdentity>(data, '_id')
+
   return {
     ...rest,
-    data: useParsedData<CorporateIdentity>(data, '_id')
+    data: {
+      ...parsedData,
+      list:
+        type !== undefined
+          ? parsedData.list.filter(identity => identity.type === type)
+          : parsedData.list
+    }
   }
 }

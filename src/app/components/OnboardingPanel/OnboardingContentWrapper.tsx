@@ -23,11 +23,15 @@ export const OnboardingContentWrapper = ({
   const { paths: identityPaths } = useIdentitiesRouter()
   const { pathname } = useLocation()
 
-  const onboardingPages = [
-    ...Object.values({ ...securityPaths, ...homePaths, ...identityPaths })
+  const onboardingBasePaths = [
+    securityPaths.landing,
+    homePaths.landing,
+    identityPaths.list
   ]
 
-  return onboardingPages.includes(pathname) ? (
+  const pathnameBase = pathname.split('/').slice(0, 3).join('/')
+
+  return onboardingBasePaths.includes(pathnameBase) ? (
     <Box display='flex' width='100%'>
       <Box className={classnames(content, { [contentShift]: open })}>
         {children}

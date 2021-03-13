@@ -10,11 +10,10 @@ import {
 import { TypedField } from 'components/form/TypedField'
 import { useFormContext } from 'react-hook-form'
 import { VSpacer } from 'components/VSpacer'
-import { useTaxResidencies } from 'app/pages/_identity/components/TaxDeclarationForm/hooks/useTaxResidencies'
 
 export const SingaporeOnlyFields = () => {
   const { control } = useFormContext()
-  const { singaporeOnly } = useTaxResidencies()
+  const { singaporeOnly } = control.getValues()
 
   return (
     <Grid container direction='column' spacing={3}>
@@ -29,7 +28,7 @@ export const SingaporeOnlyFields = () => {
           control={<Radio />}
         />
       </Grid>
-      {singaporeOnly && (
+      {singaporeOnly === 'yes' && (
         <Grid item xs={12} md={4} style={{ paddingBottom: 50 }}>
           <Typography>
             <Box fontWeight='bold' component='span'>

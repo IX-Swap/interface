@@ -1,6 +1,6 @@
 import React from 'react'
 import { Grid } from '@material-ui/core'
-import { useAllCorporateIdentities } from 'hooks/identity/useAllCorporateIdentities'
+import { useAllCorporates } from 'app/pages/_identity/hooks/useAllCorporates'
 import { useIdentitiesRouter } from 'app/pages/_identity/router'
 import { EditButton } from 'app/pages/identity/components/EditButton'
 import { VSpacer } from 'components/VSpacer'
@@ -8,7 +8,7 @@ import { RejectionMessage } from 'app/pages/authorizer/components/RejectionMessa
 import { CorporateIdentityView } from 'app/pages/_identity/components/CorporateIdentityView/CorporateIdentityView'
 
 export const ViewInvestor = () => {
-  const { data, status } = useAllCorporateIdentities()
+  const { data, status } = useAllCorporates({})
   const {
     paths,
     params: { identityId }

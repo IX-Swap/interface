@@ -12,10 +12,10 @@ export const TaxResidencyFieldArray = () => {
 
   useEffect(() => {
     const { taxResidencies } = control.getValues()
-
-    if (taxResidencies === undefined) {
+    if (taxResidencies === undefined || taxResidencies.length < 1) {
       control.setValue('taxResidencies', [{}])
     }
+    //eslint-disable-next-line
   }, [])
 
   return (

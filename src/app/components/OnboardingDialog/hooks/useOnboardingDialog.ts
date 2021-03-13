@@ -29,10 +29,7 @@ export const useOnboardingDialog = () => {
       message: [
         'Please create your identity first before you can manage your Accounts.'
       ],
-      action: indentityPaths.createIndividual,
-      actionLabel: 'Create Account',
-      closeLabel: 'Close',
-      closeArrow: false
+      closeLabel: 'Okay'
     })
   }
 
@@ -42,7 +39,7 @@ export const useOnboardingDialog = () => {
       message: [
         `In compliance with our KYC/AML process. Please create your ${identityType} identity.`
       ],
-      closeLabel: 'Ok',
+      closeLabel: 'Okay',
       closeArrow: true
     })
   }
@@ -84,7 +81,7 @@ export const useOnboardingDialog = () => {
     showOnboardingDialog({
       title: 'Onboarding Complete!',
       message: [
-        'You have completed the Onboarding journey. Our authorizer will review your identity and notify your status. You can start looking our deals in the “Invest” panel. Happy Investing!'
+        'You have complete the Onboarding journey. Our authorizer has approved your identity. You can start looking our deals in the “Invest” panel. Happy Investing!'
       ],
       actionLabel: 'Start Investing',
       action: investPaths.landing
