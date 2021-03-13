@@ -26,7 +26,9 @@ export const useCreateCorporate = (corporateType: string) => {
     onSuccess: data => {
       void snackbarService.showSnackbar(data.message, 'success')
       void queryCache.invalidateQueries(identityQueryKeys.getAllCorporate)
-      replace('editCorporate', { identityId: data.data._id })
+      replace(corporateType === 'issuer' ? 'editIssuer' : 'editCorporate', {
+        identityId: data.data._id
+      })
     },
     onError: (error: any) => {
       void snackbarService.showSnackbar(error.message, 'error')
