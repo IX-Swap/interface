@@ -29,7 +29,7 @@ export const SingaporeOnlyFields = () => {
         />
       </Grid>
       {singaporeOnly === 'yes' && (
-        <Grid item xs={12} md={4}>
+        <Grid item xs={12} md={4} style={{ paddingBottom: 50 }}>
           <Typography>
             <Box fontWeight='bold' component='span'>
               My Singapore NRIC/FIN is:

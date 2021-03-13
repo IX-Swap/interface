@@ -20,10 +20,10 @@ export const TaxResidencyFields = () => {
         control={control}
       >
         <Grid container direction='column' spacing={6}>
-          <Grid item>
+          <Grid item style={{ paddingBottom: 0 }}>
             <SingaporeOnlyFields />
           </Grid>
-          <Grid item>
+          <Grid item style={{ paddingTop: 0 }}>
             <InternationalFields />
           </Grid>
         </Grid>

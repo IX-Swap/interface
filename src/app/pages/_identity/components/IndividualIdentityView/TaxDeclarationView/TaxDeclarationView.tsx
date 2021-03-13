@@ -1,11 +1,12 @@
 import React, { Fragment } from 'react'
-import { Grid, Typography, Link } from '@material-ui/core'
+import { Grid, Typography } from '@material-ui/core'
 import { LabelledValue } from 'components/LabelledValue'
 import { DeclarationsListItem } from '../../DeclarationsListItem/DeclarationsListItem'
 import { VSpacer } from 'components/VSpacer'
 import { FormSectionHeader } from 'app/components/DSO/components/FormSectionHeader'
-import { IndividualIdentity } from '../../../../../../types/identity'
+import { IndividualIdentity } from 'types/identity'
 import { CountryTaxDeclaration } from 'app/pages/_identity/components/CountryTaxDeclarations/CountryTaxDeclaration'
+import { FatcaDialog } from 'app/pages/_identity/components/TaxDeclarationForm/FatcaDialog/FatcaDialog'
 
 // TODO Remove after added new interfaces
 export type Reason = 'A' | 'B' | 'C'
@@ -52,8 +53,7 @@ export const TaxDeclarationView = ({ data }: TaxDeclarationViewProps) => {
         <Grid item container spacing={2}>
           <Grid item xs={12}>
             <Typography variant={'subtitle1'}>
-              Declaration of US Citizenship or US Residence for{' '}
-              <Link href={'#'}>FATCA</Link>
+              Declaration of US Citizenship or US Residence for <FatcaDialog />
             </Typography>
           </Grid>
           <Grid item container spacing={2}>

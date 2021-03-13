@@ -5,6 +5,7 @@ import { useFormContext } from 'react-hook-form'
 import { TaxResidencyField } from 'app/pages/_identity/components/TaxDeclarationForm/TaxResidencyFields/TaxResidencyField'
 import { MAX_TAX_RESIDENCIES } from 'app/pages/identity/utils'
 import { TaxResidency } from 'types/identity'
+import { VSpacer } from 'components/VSpacer'
 
 export const TaxResidencyFieldArray = () => {
   const { control } = useFormContext()
@@ -35,6 +36,7 @@ export const TaxResidencyFieldArray = () => {
                   total={fields.length}
                   defaultValue={field as TaxResidency}
                 />
+                {fields.length > 1 && <VSpacer size={'small'} />}
               </Grid>
             </Fragment>
           ))}

@@ -16,7 +16,8 @@ export const FatcaDialog = () => {
           style={{
             textDecoration: 'underline',
             cursor: 'pointer',
-            fontWeight: 'bold'
+            fontWeight: 'bold',
+            fontSize: 'inherit'
           }}
         >
           FATCA
