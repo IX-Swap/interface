@@ -3,7 +3,6 @@ import { Grid } from '@material-ui/core'
 import { FieldsArray } from 'components/form/FieldsArray'
 import { useFormContext } from 'react-hook-form'
 import { TaxResidencyField } from 'app/pages/_identity/components/TaxDeclarationForm/TaxResidencyFields/TaxResidencyField'
-import { useTaxResidencies } from 'app/pages/_identity/components/TaxDeclarationForm/hooks/useTaxResidencies'
 import { MAX_TAX_RESIDENCIES } from 'app/pages/identity/utils'
 import { TaxResidency } from 'types/identity'
 
@@ -12,10 +11,10 @@ export const TaxResidencyFieldArray = () => {
 
   useEffect(() => {
     const { taxResidencies } = control.getValues()
-
-    if (taxResidencies === undefined) {
+    if (taxResidencies === undefined || taxResidencies.length < 1) {
       control.setValue('taxResidencies', [{}])
     }
+    //eslint-disable-next-line
   }, [])
 
   return (

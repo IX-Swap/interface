@@ -1,7 +1,6 @@
 import React, { useEffect } from 'react'
 import { useFormContext } from 'react-hook-form'
 import { Grid } from '@material-ui/core'
-import { useTaxResidencies } from 'app/pages/_identity/components/TaxDeclarationForm/hooks/useTaxResidencies'
 import { ReasonFields } from 'app/pages/_identity/components/TaxDeclarationForm/TinUnavailableFields/ReasonFields'
 import { Checkbox } from 'components/form/Checkbox'
 import { TypedField } from 'components/form/TypedField'
@@ -15,8 +14,8 @@ export interface TinUnavailableFieldsProps {
 export const TinUnavailableFields = (props: TinUnavailableFieldsProps) => {
   const { index, defaultValue } = props
   const { control, watch, setValue, clearErrors } = useFormContext()
-  const { singaporeOnly, taxAvailable } = useTaxResidencies(index)
 
+  const { singaporeOnly } = control.getValues()
   const isTinAvailable: boolean = watch<string, boolean>(
     `taxResidencies[${index}].taxIdAvailable`
   )
@@ -43,11 +42,11 @@ export const TinUnavailableFields = (props: TinUnavailableFieldsProps) => {
           label='if TIN is not available please indicate reason:'
         />
       </Grid>
-      {!taxAvailable && (
+      {!isTinAvailable && (
         <Grid item>
           <ReasonFields
             index={index}
-            disabled={singaporeOnly || taxAvailable}
+            disabled={singaporeOnly === 'yes' || isTinAvailable}
             defaultValue={defaultValue}
           />
         </Grid>
