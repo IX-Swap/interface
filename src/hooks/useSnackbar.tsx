@@ -8,6 +8,8 @@ import {
   OnboardingDialog,
   OnboardingDialogProps
 } from 'app/components/OnboardingDialog/OnboardingDialog'
+import { useQueryCache } from 'react-query'
+import { identityQueryKeys } from 'config/queryKeys'
 
 export interface SnackbarService {
   showSnackbar: (message: ReactNode, variant?: AppearanceTypes) => any
@@ -17,14 +19,59 @@ export interface SnackbarService {
 
 export const useSnackbar = (): SnackbarService => {
   const { addToast, toastStack } = useToasts()
+  const queryCache = useQueryCache()
 
-  const completeDialog = {
-    title: 'Onboarding Complete!',
-    message: [
-      'You have complete the Onboarding journey. Our authorizer will review your identity and notify your status. You can start looking our deals in the “Invest” panel. Happy Investing!'
-    ],
-    actionLabel: 'Start Investing',
-    action: '/app/invest'
+  const showOnboardingDialog = (onboardingDialog: OnboardingDialogProps) => {
+    return addToast(<OnboardingDialog {...onboardingDialog} />, {
+      appearance: 'info',
+      autoDismiss: false
+    })
+  }
+
+  const showOnboardingCompleteDialog = (notification: TNotification) => {
+    const individualIdentityApproved =
+      notification.feature === 'individuals' &&
+      notification.subject === 'Identity Approved'
+    const corporateIdentityApproved =
+      notification.feature === 'corporates' &&
+      notification.subject === 'Corporate Identity Approved'
+
+    if (individualIdentityApproved) {
+      void queryCache.invalidateQueries(identityQueryKeys.getIndividual)
+    }
+
+    if (corporateIdentityApproved) {
+      void queryCache.invalidateQueries(identityQueryKeys.getAllCorporate)
+    }
+
+    if (individualIdentityApproved || corporateIdentityApproved) {
+      const item = JSON.parse(
+        localStorage.getItem(notification.resourceId) ?? ''
+      )
+      const waitingForIssuerApproval = item === 'issuer'
+      const waitingForInvestorApproval =
+        item === 'individual' || item === 'investor'
+
+      const completeDialog = {
+        title: 'Onboarding Complete!',
+        message: [
+          `You have completed the Onboarding journey. Our authorizer has approved your identity. ${
+            waitingForIssuerApproval ? '' : 'Happy investing!'
+          }`
+        ],
+        actionLabel: 'Okay',
+        action: waitingForIssuerApproval ? '/app/home' : '/app/invest'
+      }
+
+      if (waitingForInvestorApproval || waitingForIssuerApproval) {
+        addToast(<OnboardingDialog {...completeDialog} />, {
+          appearance: 'info',
+          autoDismiss: false
+        })
+
+        localStorage.removeItem(notification.resourceId)
+      }
+    }
   }
 
   return {
@@ -47,26 +94,10 @@ export const useSnackbar = (): SnackbarService => {
     showNotification: (notification: TNotification) => {
       const showAllNotifications = () => {
         addToast(<NotificationToast data={notification} />)
-        // To do: determine if user is still in onboarding process
-        if (
-          (notification.feature === 'individuals' &&
-            notification.subject === 'Identity Approved') ||
-          (notification.feature === 'corporates' &&
-            notification.subject === 'Corporate Identity Approved')
-        ) {
-          addToast(<OnboardingDialog {...completeDialog} />, {
-            appearance: 'info',
-            autoDismiss: false
-          })
-        }
+        showOnboardingCompleteDialog(notification)
       }
       return showAllNotifications()
     },
-    showOnboardingDialog: (onboardingDialog: OnboardingDialogProps) => {
-      return addToast(<OnboardingDialog {...onboardingDialog} />, {
-        appearance: 'info',
-        autoDismiss: false
-      })
-    }
+    showOnboardingDialog: showOnboardingDialog
   }
 }

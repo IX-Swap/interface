@@ -8,6 +8,8 @@ const styles: (theme: Theme) => any = theme => {
     root: {
       backgroundColor: 'transparent',
       color: theme.palette.primary.main,
+      paddingLeft: 20,
+      paddingRight: 20,
       boxShadow: `inset 0px 0px 0px 1px ${theme.palette.primary.main}`,
       '&:hover': {
         backgroundColor: 'transparent',

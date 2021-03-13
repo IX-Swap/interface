@@ -3,9 +3,10 @@ import { FormStepperStep } from 'app/components/FormStepper/FormStepper'
 import { MoveButton } from 'app/components/FormStepper/MoveButton'
 import { SaveButton } from 'app/components/FormStepper/SaveButton'
 import { Form } from 'components/form/Form'
-import React, { createElement, Fragment } from 'react'
+import React, { createElement, Fragment, useEffect } from 'react'
 import { MutationResultPair } from 'react-query'
 import { SubmitButton } from './SubmitButton'
+import { VSpacer } from 'components/VSpacer'
 
 export interface FormStepProps {
   step: FormStepperStep
@@ -31,11 +32,14 @@ export const FormStep = (props: FormStepProps) => {
     editMutation,
     submitMutation
   } = props
-
-  if (activeStep !== index) {
+  const isCurrentStep = activeStep === index
+  if (!isCurrentStep) {
     return null
   }
 
+  const wasApproved = data?.authorizations.some(
+    ({ status }: any) => status === 'Approved'
+  )
   const hasNextStep = activeStep < totalSteps - 1
   const hasPrevStep = activeStep !== 0
   const isEditing = data !== undefined
@@ -60,15 +64,19 @@ export const FormStep = (props: FormStepProps) => {
       validationSchema={step.validationSchema}
     >
       <Grid item>{createElement(step.component)}</Grid>
+      <VSpacer size='large' />
 
       <Grid item container justify='flex-end'>
         <Box display='flex'>
           {hasPrevStep && (
             <Fragment>
               <MoveButton
-                transformData={step.getRequestPayload}
+                activeStep={activeStep}
+                shouldUpdateStep={!wasApproved}
+                getRequestPayload={step.getRequestPayload}
                 mutation={saveMutation}
                 onClick={goToPrevStep}
+                isBackButton
               >
                 Back
               </MoveButton>
@@ -79,6 +87,7 @@ export const FormStep = (props: FormStepProps) => {
           {!isLastStep && (
             <Fragment>
               <SaveButton
+                step={index}
                 transformData={step.getRequestPayload}
                 mutation={saveMutation}
               />
@@ -88,11 +97,12 @@ export const FormStep = (props: FormStepProps) => {
 
           {hasNextStep && (
             <MoveButton
+              activeStep={activeStep}
               variant={'contained'}
-              transformData={step.getRequestPayload}
+              shouldUpdateStep={!wasApproved}
+              getRequestPayload={step.getRequestPayload}
               mutation={saveMutation}
               onClick={goToNextStep}
-              nextStepIndex={index + 1}
             >
               Next
             </MoveButton>

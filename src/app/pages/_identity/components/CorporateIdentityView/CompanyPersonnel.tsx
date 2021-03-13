@@ -32,26 +32,25 @@ export const CompanyPersonnel = ({
           </Grid>
         </Grid>
       </Grid>
-      <Grid item>
-        <Grid container>
+      <Grid item container>
+        <Grid item xs={12} md={4}>
+          <LabelledValue
+            value={personnel.contactNumber}
+            label='Contact Number'
+          />
+        </Grid>
+        {personnel.address !== undefined ? (
           <Grid item xs={12} md={4}>
             <LabelledValue
-              value={personnel.contactNumber}
-              label='Contact Number'
+              value={Object.values(personnel.address)
+                .filter(address => hasValue(address))
+                .join(', ')}
+              label='Residental Address'
             />
           </Grid>
-          {personnel.address !== undefined ? (
-            <Grid item xs={12} md={4}>
-              <LabelledValue
-                value={Object.values(personnel.address)
-                  .filter(address => hasValue(address))
-                  .join(', ')}
-                label='Residental Address'
-              />
-            </Grid>
-          ) : null}
-        </Grid>
+        ) : null}
       </Grid>
+      <Box mb={3} />
       {personnel.documents !== undefined ? (
         <Grid item>
           <Typography variant='body1'>
@@ -64,6 +63,7 @@ export const CompanyPersonnel = ({
             {showDocumentHeader ? <DataroomHeader /> : null}
             {personnel.documents.map(document => (
               <DataroomViewRow
+                showDivider={false}
                 title=''
                 document={document}
                 key={document._id}

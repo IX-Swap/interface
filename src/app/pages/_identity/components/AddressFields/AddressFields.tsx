@@ -6,36 +6,43 @@ import { CountrySelect } from 'components/form/CountrySelect'
 import { useFormContext } from 'react-hook-form'
 import { privateClassNames } from 'helpers/classnames'
 
-export interface AddressFieldsProps<FormType> {
-  rootName?: 'address' | 'companyAddress'
+export interface AddressFieldsProps {
+  rootName?: string
+  defaultValue?: IdentityAddress
 }
 
-export const AddressFields = <FormType,>(
-  props: AddressFieldsProps<FormType>
-): JSX.Element => {
-  const { rootName = 'address' } = props
+export const AddressFields = (props: AddressFieldsProps): JSX.Element => {
+  const { rootName = 'address', defaultValue } = props
   const { control } = useFormContext<IdentityAddress>()
+
+  const controlDefaultValues = control.defaultValuesRef.current
 
   return (
     <Grid container spacing={3} className={privateClassNames()}>
       <Grid item xs={12} sm={6} md={4}>
         <TypedField
+          customRenderer
           component={TextField}
+          fullWidth
           control={control}
           rootName={rootName}
           name='line1'
           label='Line 1'
           variant='outlined'
+          defaultValue={defaultValue?.line1 ?? ''}
         />
       </Grid>
       <Grid item xs={12} sm={6} md={4}>
         <TypedField
+          customRenderer
           component={TextField}
+          fullWidth
           control={control}
           rootName={rootName}
           name='line2'
           label='Line 2'
           variant='outlined'
+          defaultValue={defaultValue?.line2 ?? ''}
         />
       </Grid>
       <Hidden smDown>
@@ -43,22 +50,28 @@ export const AddressFields = <FormType,>(
       </Hidden>
       <Grid item xs={12} sm={6} md={4}>
         <TypedField
+          customRenderer
+          fullWidth
           component={TextField}
           control={control}
           rootName={rootName}
           name='city'
           label='City'
           variant='outlined'
+          defaultValue={defaultValue?.city ?? ''}
         />
       </Grid>
       <Grid item xs={12} sm={6} md={4}>
         <TypedField
+          customRenderer
+          fullWidth
           component={TextField}
           control={control}
           rootName={rootName}
           name='state'
           label='State'
           variant='outlined'
+          defaultValue={defaultValue?.state ?? ''}
         />
       </Grid>
       <Hidden smDown>
@@ -72,16 +85,20 @@ export const AddressFields = <FormType,>(
           name='country'
           label='Country'
           variant='outlined'
+          defaultValue={defaultValue?.country ?? ''}
         />
       </Grid>
       <Grid item xs={12} sm={6} md={4}>
         <TypedField
+          customRenderer
+          fullWidth
           component={TextField}
           control={control}
           rootName={rootName}
           name='postalCode'
           label='Postal Code'
           variant='outlined'
+          defaultValue={defaultValue?.postalCode ?? ''}
         />
       </Grid>
     </Grid>

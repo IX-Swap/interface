@@ -1,4 +1,4 @@
-import { useIdentitiesRouter } from 'app/pages/identity/router'
+import { useIdentitiesRouter } from 'app/pages/_identity/router'
 import { IdentityType } from 'app/pages/identity/utils'
 import { useInvestRouter } from 'app/pages/invest/routers/router'
 import { useSecurityRouter } from 'app/pages/security/router'
@@ -29,10 +29,7 @@ export const useOnboardingDialog = () => {
       message: [
         'Please create your identity first before you can manage your Accounts.'
       ],
-      action: indentityPaths.createIndividual,
-      actionLabel: 'Create Account',
-      closeLabel: 'Close',
-      closeArrow: false
+      closeLabel: 'Okay'
     })
   }
 
@@ -42,7 +39,7 @@ export const useOnboardingDialog = () => {
       message: [
         `In compliance with our KYC/AML process. Please create your ${identityType} identity.`
       ],
-      closeLabel: 'Ok',
+      closeLabel: 'Okay',
       closeArrow: true
     })
   }
@@ -84,7 +81,7 @@ export const useOnboardingDialog = () => {
     showOnboardingDialog({
       title: 'Onboarding Complete!',
       message: [
-        'You have complete the Onboarding journey. Our authorizer will review your identity and notify your status. You can start looking our deals in the “Invest” panel. Happy Investing!'
+        'You have complete the Onboarding journey. Our authorizer has approved your identity. You can start looking our deals in the “Invest” panel. Happy Investing!'
       ],
       actionLabel: 'Start Investing',
       action: investPaths.landing

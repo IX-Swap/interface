@@ -47,9 +47,13 @@ export const authorizationInfo: AuthorizationInfo = {
 export const corporate: CorporateIdentity = {
   _id: '1',
   logo: '',
+  type: 'investor',
+  legalEntityStatus: 'other',
+  isMailingAddressSame: false,
   createdAt: '01-01-2000',
   updatedAt: '01-01-2000',
   documents: [],
+  taxResidencies: [],
   declarations: {
     agreements: {
       investor: false,
@@ -87,14 +91,13 @@ export const corporate: CorporateIdentity = {
   authorizationDocuments: [],
   authorization: authorizationInfo,
   authorizations: [],
-  legalEntityStatus: '',
-  taxResidencies: [],
   mailingAddress: address
 }
 
 export const individual: IndividualIdentity = {
   photo: '',
   _id: '1',
+  taxResidencies: [],
   email: 'email@example.com',
   annualIncome: '100000',
   contactNumber: '1234567890',

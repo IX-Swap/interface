@@ -4,7 +4,7 @@ import { waitFor, cleanup, renderHookWithServiceProvider } from 'test-utils'
 import { useCreateOrUpdateIndividual } from 'hooks/identity/useCreateOrUpdateIndividual'
 import { unsuccessfulResponse, successfulResponse } from '__fixtures__/api'
 import { updateIndividualArgs } from '__fixtures__/identity'
-import * as identitiesRouter from 'app/pages/identity/router'
+import * as identitiesRouter from 'app/pages/_identity/router'
 import * as useAuthHook from 'hooks/auth/useAuth'
 import { user } from '__fixtures__/user'
 

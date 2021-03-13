@@ -1,4 +1,4 @@
-import React, { ComponentType, useState } from 'react'
+import React, { ComponentType, useMemo, useState } from 'react'
 import { Grid, Step, StepLabel, Stepper } from '@material-ui/core'
 import { MutationResultPair } from 'react-query'
 import { FormStep } from 'app/components/FormStepper/FormStep'
@@ -21,7 +21,8 @@ export interface FormStepperProps {
 
 export const FormStepper = (props: FormStepperProps) => {
   const { steps, data, createMutation, editMutation, submitMutation } = props
-  const [activeStep, setActiveStep] = useState(data.step ?? 0)
+  const [activeStep, setActiveStep] = useState(data?.step ?? 0)
+  const stepsMemo = useMemo(() => steps, [])
 
   return (
     <Grid container direction='column' spacing={2}>
@@ -35,10 +36,9 @@ export const FormStepper = (props: FormStepperProps) => {
         </Stepper>
       </Grid>
 
-      {steps.map((step, index) => (
-        <Grid item>
+      {stepsMemo.map((step, index) => (
+        <Grid item key={`step-content-${index}`}>
           <FormStep
-            key={`step-content-${index}`}
             step={step}
             index={index}
             totalSteps={steps.length}

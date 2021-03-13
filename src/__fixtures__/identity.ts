@@ -11,9 +11,13 @@ import { IndividualIdentityFormValues } from 'app/pages/identity/components/type
 export const corporate: CorporateIdentity = {
   _id: '1',
   logo: '',
+  type: 'investor',
+  legalEntityStatus: 'others',
+  isMailingAddressSame: false,
   createdAt: '01-01-2000',
   updatedAt: '01-01-2000',
   documents: [],
+  taxResidencies: [],
   declarations: {
     agreements: {
       investor: false,
@@ -51,7 +55,8 @@ export const corporate: CorporateIdentity = {
       email: 'johnsemail',
       contactNumber: '+6512345678901',
       documents: [],
-      address: address
+      address: address,
+      percentageShareholding: 0
     }
   ],
   email: '',
@@ -60,8 +65,6 @@ export const corporate: CorporateIdentity = {
   authorizationDocuments: [],
   authorization: authorizationInfo,
   authorizations: [],
-  legalEntityStatus: '',
-  taxResidencies: [],
   mailingAddress: address
 }
 
@@ -74,6 +77,7 @@ export const agreementsAndDisclosures = {
 export const individual: IndividualIdentity = {
   photo: '',
   _id: '1',
+  taxResidencies: [],
   email: 'email@example.com',
   annualIncome: '100000',
   contactNumber: '1234567890',

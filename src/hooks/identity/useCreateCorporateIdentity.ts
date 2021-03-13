@@ -1,6 +1,6 @@
 import { useServices } from 'hooks/useServices'
 import { useAuth } from 'hooks/auth/useAuth'
-import { useIdentitiesRouter } from 'app/pages/identity/router'
+import { useIdentitiesRouter } from 'app/pages/_identity/router'
 import { CorporateIdentityFormValues } from 'app/pages/identity/components/types'
 import {
   prepareDeclarationsForUpload,

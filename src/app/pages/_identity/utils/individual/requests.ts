@@ -1,11 +1,11 @@
 import {
+  IndividualAgreementsFormValues,
   IndividualDocumentsFormValues,
   IndividualFinancialInfoFormValues,
   IndividualInvestorDeclarationFormValues,
   IndividualPersonalInfoFormValues,
   IndividualTaxDeclarationFormValues
 } from 'app/pages/_identity/types/forms'
-import { AgreementsAndDisclosures } from '../../../../../types/identity'
 
 export const getPersonalInfoRequestPayload = (
   values: IndividualPersonalInfoFormValues
@@ -25,9 +25,13 @@ export const getFinancialInfoRequestPayload = (
 export const getTaxDeclarationRequestPayload = (
   values: IndividualTaxDeclarationFormValues
 ) => {
-  const { taxResidencies, singaporeOnly, declarations } = values
+  const { taxResidencies, singaporeOnly, fatca } = values
   const payload: any = {
-    declarations
+    declarations: {
+      tax: {
+        fatca: fatca === 'yes'
+      }
+    }
   }
 
   if (taxResidencies !== undefined) {
@@ -63,21 +67,22 @@ export const getDocumentsRequestPayload = (
   values: IndividualDocumentsFormValues
 ) => {
   return {
-    documents: Object.values(values.documents).reduce<string[]>(
-      (result, documents) => {
-        if (Array.isArray(documents)) {
-          return [...result, ...documents.map(document => document._id)]
-        }
+    documents: Object.values(values).reduce<string[]>((result, documents) => {
+      if (Array.isArray(documents)) {
+        return [...result, ...documents.map(document => document._id)]
+      }
 
-        return result
-      },
-      []
-    )
+      return result
+    }, [])
   }
 }
 
 export const getAgreementsRequestPayload = (
-  values: AgreementsAndDisclosures
+  values: IndividualAgreementsFormValues
 ) => {
-  return values
+  return {
+    declarations: {
+      agreements: values
+    }
+  }
 }

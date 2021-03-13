@@ -1,10 +1,7 @@
 import React from 'react'
 import { render, cleanup } from 'test-utils'
 import * as utils from 'app/pages/identity/utils'
-import {
-  CorporateIdentityForm,
-  CorporateIdentityFormProps
-} from 'app/pages/identity/components/CorporateIdentityForm'
+import { CorporateIdentityForm } from 'app/pages/identity/components/CorporateIdentityForm'
 import { corporate } from '__fixtures__/identity'
 
 jest.mock('app/pages/identity/components/AddressFields/AddressFields', () => ({
@@ -32,7 +29,7 @@ jest.mock('app/pages/identity/components/CompanyInfoFields', () => ({
 }))
 
 describe('CorporateIdentityForm', () => {
-  const props: CorporateIdentityFormProps = {
+  const props: any = {
     data: corporate,
     cancelButton: <div data-testid='cancelButton' />,
     onSubmit: jest.fn(),

@@ -15,8 +15,8 @@ export const DateTimePickerComponent = (props: KeyboardDateTimePickerProps) => {
         {...props}
         disableToolbar
         variant='dialog'
-        format='MM/dd/yyyy HH:mm'
-        placeholder='mm/dd/yy hh:mm'
+        format='MM/dd/yyyy'
+        placeholder='mm/dd/yy'
         margin='none'
         fullWidth
         KeyboardButtonProps={{

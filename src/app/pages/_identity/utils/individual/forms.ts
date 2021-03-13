@@ -33,32 +33,46 @@ export const getPersonalInfoFormValues = (
 
 export const getFinancialInfoFormValues = (
   data: IndividualIdentity
-): IndividualFinancialInfoFormValues => {
+): Partial<IndividualFinancialInfoFormValues> => {
   return {
     occupation: data?.occupation,
     employer: data?.employer,
     employmentStatus: data?.employmentStatus,
     annualIncome: data?.annualIncome,
-    sourceOfWealth: data?.sourceOfWealth,
-    fundMajority: data?.fundMajority === true ? 'yes' : 'no',
+    fundMajority:
+      data.fundMajority === undefined
+        ? undefined
+        : data.fundMajority
+        ? 'yes'
+        : 'no',
     sourceOfFund: getFundSource(data)
   }
 }
 
 export const getTaxDeclarationFormValues = (
   data: IndividualIdentity
-): IndividualTaxDeclarationFormValues => {
-  return {
-    taxResidencies:
-      data?.taxResidencies?.map(({ _id, ...rest }: any) => rest) ?? [],
-    singaporeOnly:
-      data.taxResidencies !== undefined &&
-      data.taxResidencies.length === 1 &&
-      Boolean(data.taxResidencies[0].residentOfSingapore)
+): Partial<IndividualTaxDeclarationFormValues> => {
+  const { taxResidencies, declarations } = data
+  const result: Partial<IndividualTaxDeclarationFormValues> = {}
+
+  if (taxResidencies !== undefined && taxResidencies.length > 0) {
+    result.taxResidencies = taxResidencies.map(({ _id, ...rest }: any) => rest)
+    result.singaporeOnly =
+      taxResidencies.length === 1 &&
+      Boolean(taxResidencies[0].residentOfSingapore)
         ? 'yes'
-        : 'no',
-    declarations: data?.declarations as any
+        : 'no'
   }
+
+  if (
+    declarations !== undefined &&
+    declarations.tax !== undefined &&
+    declarations.tax.fatca !== undefined
+  ) {
+    result.fatca = declarations.tax.fatca ? 'yes' : 'no'
+  }
+
+  return result
 }
 
 export const getInvestorDeclarationFormValues = (
@@ -70,50 +84,42 @@ export const getInvestorDeclarationFormValues = (
 export const getDocumentsFormValues = (
   data: IndividualIdentity
 ): IndividualDocumentsFormValues => {
-  return {
-    documents: data.documents.reduce((result: any, document) => {
-      const {
-        evidenceOfAccreditation,
-        proofOfAddress,
-        proofOfIdentity
-      } = result
+  return data.documents.reduce((result: any, document) => {
+    const { evidenceOfAccreditation, proofOfAddress, proofOfIdentity } = result
 
-      if (document.type === 'Evidence of Accreditation') {
-        return {
-          ...result,
-          evidenceOfAccreditation: Array.isArray(evidenceOfAccreditation)
-            ? [...evidenceOfAccreditation, document]
-            : [document]
-        }
+    if (document.type === 'Evidence of Accreditation') {
+      return {
+        ...result,
+        evidenceOfAccreditation: Array.isArray(evidenceOfAccreditation)
+          ? [...evidenceOfAccreditation, document]
+          : [document]
       }
+    }
 
-      if (document.type === 'Proof of Address') {
-        return {
-          ...result,
-          proofOfAddress: Array.isArray(proofOfAddress)
-            ? [...proofOfAddress, document]
-            : [document]
-        }
+    if (document.type === 'Proof of Address') {
+      return {
+        ...result,
+        proofOfAddress: Array.isArray(proofOfAddress)
+          ? [...proofOfAddress, document]
+          : [document]
       }
+    }
 
-      if (document.type === 'Proof of Identity') {
-        return {
-          ...result,
-          proofOfIdentity: Array.isArray(proofOfIdentity)
-            ? [...proofOfIdentity, document]
-            : [document]
-        }
+    if (document.type === 'Proof of Identity') {
+      return {
+        ...result,
+        proofOfIdentity: Array.isArray(proofOfIdentity)
+          ? [...proofOfIdentity, document]
+          : [document]
       }
+    }
 
-      return result
-    }, {})
-  }
+    return result
+  }, {})
 }
 
 export const getAgreementsAndDisclosuresFormValues = (
   data: IndividualIdentity
 ) => {
-  return {
-    declarations: data.declarations
-  }
+  return data.declarations.agreements
 }

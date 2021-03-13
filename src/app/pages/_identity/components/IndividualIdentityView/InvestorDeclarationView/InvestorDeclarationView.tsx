@@ -42,7 +42,7 @@ export const InvestorDeclarationView: React.FC<InvestorDeclarationViewProps> = (
     partnership,
     accreditedBeneficiaries,
     accreditedSettlors
-  } = data.declarations.investorsStatus ?? {}
+  } = data.declarations?.investorsStatus ?? {}
 
   const accreditedInvestorDeclaration = {
     personalAssets,
@@ -108,19 +108,24 @@ export const InvestorDeclarationView: React.FC<InvestorDeclarationViewProps> = (
         data={optInRequirement}
         labelMap={optInDeclarationLabelMap}
       />
-      <Grid item xs={12}>
-        <Box marginTop={8}>
-          <FormSectionHeader
-            title='Accredited Investor Opt-Out Form'
-            variant='h5'
+      {Object.values(accreditedInvestorOptOut).find(item => item) !==
+      undefined ? (
+        <>
+          <Grid item xs={12}>
+            <Box marginTop={8}>
+              <FormSectionHeader
+                title='Accredited Investor Opt-Out Form'
+                variant='h5'
+              />
+            </Box>
+          </Grid>
+          <DeclarationsList
+            title='My/Our withdrawal of consent to be treated as an Accredited Investor by InvestaX is in respect of the following services.'
+            data={accreditedInvestorOptOut}
+            labelMap={accreditedInvestorOptOutLabelMap}
           />
-        </Box>
-      </Grid>
-      <DeclarationsList
-        title='My/Our withdrawal of consent to be treated as an Accredited Investor by InvestaX is in respect of the following services.'
-        data={accreditedInvestorOptOut}
-        labelMap={accreditedInvestorOptOutLabelMap}
-      />
+        </>
+      ) : null}
     </Grid>
   )
 }

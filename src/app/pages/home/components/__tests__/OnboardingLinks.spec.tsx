@@ -2,7 +2,7 @@ import { OnboardingLinks } from 'app/pages/home/components/OnboardingLinks'
 import React from 'react'
 import { render, cleanup } from 'test-utils'
 import { OnboardingLink } from 'app/pages/home/components/OnboardingLink'
-import * as useIdentitiesRouter from 'app/pages/identity/router'
+import * as useIdentitiesRouter from 'app/pages/_identity/router'
 
 jest.mock('app/pages/home/components/OnboardingLink', () => ({
   OnboardingLink: jest.fn(() => null)

@@ -1,7 +1,7 @@
 import React from 'react'
 import { render, cleanup } from 'test-utils'
 import { OnboardingContentWrapper } from 'app/components/OnboardingPanel/OnboardingContentWrapper'
-import * as useIdentitiesRouter from 'app/pages/identity/router'
+import * as useIdentitiesRouter from 'app/pages/_identity/router'
 import * as useSecurityRouter from 'app/pages/security/router'
 import * as useHomeRouter from 'app/pages/home/router'
 import { MemoryRouter } from 'react-router-dom'

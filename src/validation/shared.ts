@@ -69,7 +69,8 @@ export const personnelProfileSchema = yup.object().shape<Personnel>({
   email: emailSchema.required('Required'),
   contactNumber: yup.string().required('Required'),
   documents: yup.mixed<DataroomFile[], object>().required('Required'),
-  address: addressSchema
+  address: addressSchema.required('Required'),
+  percentageShareholding: yup.number().required('Required')
 })
 
 export const personnelArraySchema = yup

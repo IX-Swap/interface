@@ -30,7 +30,7 @@ export interface TaxResidency {
 export type TaxResidencies = Array<Partial<TaxResidency>>
 
 export interface TaxDeclaration {
-  taxResidencies?: TaxResidencies
+  taxResidencies: TaxResidencies
 }
 export interface TaxDeclarationFormData {
   taxResidencies?: TaxResidencies
@@ -70,8 +70,9 @@ export interface Personnel {
   designation: string
   email: string
   contactNumber: string
-  documents?: DataroomFile[]
-  address?: IdentityAddress
+  documents: DataroomFile[]
+  address: IdentityAddress
+  percentageShareholding: number
 }
 
 export interface FundSource {
@@ -104,6 +105,8 @@ export interface CorporateFields {
   legalEntityStatus: string
   taxResidencies: TaxResidencies
   mailingAddress: IdentityAddress
+  isMailingAddressSame: boolean
+  type: 'investor' | 'issuer'
 }
 
 export interface Declaration {
@@ -141,7 +144,7 @@ export interface CorporateInvestorStatus {
 
 export interface BaseIdentity {
   _id: string
-  status: 'Rejected' | 'Authorized' | 'Submitted' | undefined
+  status: 'Rejected' | 'Authorized' | 'Submitted' | 'Approved' | undefined
   user: User
   createdAt: string
   updatedAt: string
@@ -156,6 +159,26 @@ export interface BaseIdentity {
     }
   }
   step?: number
+}
+
+export interface IdentityDeclarations {
+  declarations: {
+    tax: { fatca: boolean }
+    investorsStatus: {
+      consent: boolean
+      consequencesOfQualification: boolean
+      financialAsset: boolean
+      income: boolean
+      jointlyHeldAccount: boolean
+      personalAssets: boolean
+      rightToOptOut: boolean
+    }
+    agreements: {
+      investor: boolean
+      custody: boolean
+      disclosures: boolean
+    }
+  }
 }
 
 export interface DeclarationTemplate {
@@ -175,7 +198,11 @@ export type IndividualIdentity = BaseIdentity &
   Authorizable &
   TaxDeclaration
 
-export type CorporateIdentity = BaseIdentity & CorporateFields & Authorizable
+export type CorporateIdentity = BaseIdentity &
+  CorporateFields &
+  Authorizable &
+  TaxDeclaration &
+  IdentityDeclarations
 
 export interface GetIndividualIdentityArgs {
   userId: string

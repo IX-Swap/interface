@@ -1,6 +1,6 @@
 import { InternalRouteProps } from 'types/util'
 import { AuthorizerRoot } from 'app/pages/authorizer/AuthorizerRoot'
-import { IdentityRoot } from 'app/pages/identity/IdentityRoot'
+import { IdentityRoot } from 'app/pages/_identity/IdentityRoot'
 import { AccountsRoot } from 'app/pages/accounts/AccountsRoot'
 import { IssuanceRoot } from 'app/pages/issuance/IssuanceRoot'
 import { InvestRoot } from 'app/pages/invest/InvestRoot'

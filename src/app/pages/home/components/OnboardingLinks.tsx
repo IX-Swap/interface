@@ -4,10 +4,75 @@ import { OnboardingLink } from 'app/pages/home/components/OnboardingLink'
 import { ReactComponent as IndividualIcon } from 'assets/icons/navigation/individual.svg'
 import { ReactComponent as CorporateIcon } from 'assets/icons/navigation/corporate.svg'
 import { ReactComponent as FundraiseIcon } from 'assets/icons/navigation/asset-balance.svg'
-import { useIdentitiesRouter } from 'app/pages/identity/router'
+import { useIdentitiesRouter } from 'app/pages/_identity/router'
+import { useIndividualIdentity } from 'hooks/identity/useIndividualIdentity'
+import { useAllCorporates } from 'app/pages/_identity/hooks/useAllCorporates'
 
 export const OnboardingLinks = () => {
   const { paths: identityPaths } = useIdentitiesRouter()
+  const {
+    data: individualIdentity,
+    isLoading: individualIdentityIsLoading
+  } = useIndividualIdentity()
+
+  const {
+    data: corprateIdentities,
+    isLoading: corprateIdentitiesIsLoading
+  } = useAllCorporates({})
+
+  const individualLink =
+    !individualIdentityIsLoading && individualIdentity !== undefined
+      ? {
+          to: identityPaths.editIndividual,
+          params: {
+            identityId: individualIdentity._id
+          }
+        }
+      : { to: identityPaths.createIndividual }
+  const isIndividualDone =
+    !individualIdentityIsLoading &&
+    individualIdentity !== undefined &&
+    individualIdentity.authorizations?.some(
+      ({ status }) => status === 'Approved'
+    )
+
+  const investorIdentities = corprateIdentities.list.filter(
+    identity => identity.type === 'investor'
+  )
+  const investorLink =
+    !corprateIdentitiesIsLoading && investorIdentities.length > 0
+      ? {
+          to: identityPaths.editCorporate,
+          params: {
+            identityId: investorIdentities[0]._id
+          }
+        }
+      : { to: identityPaths.createCorporate }
+  const isInvestorDone =
+    !corprateIdentitiesIsLoading &&
+    investorIdentities.length > 0 &&
+    investorIdentities[0].authorizations?.some(
+      ({ status }) => status === 'Approved'
+    )
+
+  const issuerIdentities = corprateIdentities.list.filter(
+    identity => identity.type === 'issuer'
+  )
+  const issuerLink =
+    !corprateIdentitiesIsLoading && issuerIdentities.length > 0
+      ? {
+          to: identityPaths.editIssuer,
+          params: {
+            identityId: issuerIdentities[0]._id
+          }
+        }
+      : { to: identityPaths.createIssuer }
+  const isIssuerDone =
+    !corprateIdentitiesIsLoading &&
+    issuerIdentities.length > 0 &&
+    issuerIdentities[0].authorizations?.some(
+      ({ status }) => status === 'Approved'
+    )
 
   return (
     <Box display='flex'>
@@ -16,17 +81,19 @@ export const OnboardingLinks = () => {
         <Box my={2.5} />
         <Box display='flex'>
           <OnboardingLink
+            {...individualLink}
             label='Individual'
-            link={identityPaths.createIndividual}
             icon={IndividualIcon}
             color='#90A30F'
+            done={isIndividualDone}
           />
           <Box mx={1.5} />
           <OnboardingLink
+            {...investorLink}
             label='Corporate'
-            link={identityPaths.createCorporate}
             color='#E65133'
             icon={CorporateIcon}
+            done={isInvestorDone}
           />
         </Box>
       </Box>
@@ -41,10 +108,11 @@ export const OnboardingLinks = () => {
         <Typography variant='h4'>Raise Capital</Typography>
         <Box my={2.5} />
         <OnboardingLink
+          {...issuerLink}
           label='Fundraise'
-          link={identityPaths.createCorporate}
           icon={FundraiseIcon}
           color='#2b78fd'
+          done={isIssuerDone}
         />
       </Box>
     </Box>

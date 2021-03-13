@@ -47,7 +47,9 @@ export const Dialog = (props: ModalProps) => {
       >
         <Box p={maxWidth === undefined || maxWidth === 'xs' ? 2 : 8}>
           <DialogTitle>{title}</DialogTitle>
-          <DialogContent>{content}</DialogContent>
+          <DialogContent style={{ overflowY: 'initial' }}>
+            {content}
+          </DialogContent>
           <DialogActions>{renderActions()}</DialogActions>
         </Box>
       </MUIDialog>

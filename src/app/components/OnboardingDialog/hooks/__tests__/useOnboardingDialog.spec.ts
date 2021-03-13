@@ -1,6 +1,6 @@
 import { act, renderHook } from '@testing-library/react-hooks'
 import { useOnboardingDialog } from 'app/components/OnboardingDialog/hooks/useOnboardingDialog'
-import * as useIdentitiesRouter from 'app/pages/identity/router'
+import * as useIdentitiesRouter from 'app/pages/_identity/router'
 import * as useSecurityRouter from 'app/pages/security/router'
 import * as useInvestRouter from 'app/pages/invest/routers/router'
 import * as useSnackbar from 'hooks/useSnackbar'
@@ -73,10 +73,7 @@ describe('useOnboardingDialog', () => {
             message: [
               'Please create your identity first before you can manage your Accounts.'
             ],
-            action: '/individual',
-            actionLabel: 'Create Account',
-            closeLabel: 'Close',
-            closeArrow: false
+            closeLabel: 'Okay'
           })
 
           result.current.showPreIdentityCreateDialog('individual')
@@ -85,7 +82,7 @@ describe('useOnboardingDialog', () => {
             message: [
               `In compliance with our KYC/AML process. Please create your individual identity.`
             ],
-            closeLabel: 'Ok',
+            closeLabel: 'Okay',
             closeArrow: true
           })
 
@@ -93,7 +90,7 @@ describe('useOnboardingDialog', () => {
           expect(mockShowOnboardingDialog).toHaveBeenCalledWith({
             title: 'Onboarding Complete!',
             message: [
-              'You have complete the Onboarding journey. Our authorizer will review your identity and notify your status. You can start looking our deals in the “Invest” panel. Happy Investing!'
+              'You have completed the Onboarding journey. Our authorizer will review your identity and notify your status. You can start looking our deals in the “Invest” panel. Happy Investing!'
             ],
             actionLabel: 'Start Investing',
             action: '/invest'

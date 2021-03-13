@@ -1,44 +1,10 @@
 import { useGetIdentities } from 'app/components/OnboardingPanel/hooks/useGetIdentities'
+import {
+  defaultOnboardingSteps,
+  getIdentityOnboardingSteps
+} from 'app/components/OnboardingPanel/hooks/utils'
 import { IdentityType } from 'app/pages/identity/utils'
-
-export type IdentityStatus = 'Rejected' | 'Authorized' | 'Submitted' | 'Draft'
-
-export const getIdentityStatus = (status?: IdentityStatus) => {
-  switch (status) {
-    case 'Rejected':
-      return ['Rejected']
-    case 'Submitted':
-      return ['For Verification']
-    case 'Authorized':
-      return ['Verified!']
-    default:
-      return ['In Progress']
-  }
-}
-
-export const defaultOnboardingSteps = [
-  { title: 'Get Started', content: ['Access platform and reports'] },
-  { title: 'Select Your Desired Option', content: ['Create your account.'] }
-]
-
-export const getIdentityOnboardingSteps = (
-  indentityType: IdentityType,
-  status?: IdentityStatus,
-  asIssuer?: boolean
-) => [
-  defaultOnboardingSteps[0],
-  asIssuer === true
-    ? {
-        title: 'To Raise Capital',
-        content: ['Issuance Detail ']
-      }
-    : {
-        title: 'To Invest',
-        content: [`As ${indentityType}`]
-      },
-  { title: 'Create Identity', content: getIdentityStatus(status) },
-  { title: 'Complete Onboarding', content: [''] }
-]
+import { AuthorizableStatus } from 'types/util'
 
 export const useOnboardingSteps = (
   identityType?: IdentityType,
@@ -50,34 +16,20 @@ export const useOnboardingSteps = (
     identityTypeLoaded,
     individualIdentity,
     corporateIdentities
-  } = useGetIdentities()
+  } = useGetIdentities(asIssuer ? 'issuer' : 'investor')
 
-  const getIdentityActiveStep = (status?: IdentityStatus) => {
+  const getIdentityActiveStep = (status?: AuthorizableStatus) => {
     let indetityActiveStep = 2
     if (status === 'Submitted') {
       indetityActiveStep = 3
     }
-    if ((status as IdentityStatus) === 'Authorized') {
+    if ((status as AuthorizableStatus) === 'Approved') {
       indetityActiveStep = 4
     }
     return indetityActiveStep
   }
 
-  const getIssuerActiveStep = (status?: IdentityStatus) => {
-    let issuerActiveStep = 1
-    // To do: get issuer details status
-    const issueDetailsStatus = false
-    if (issueDetailsStatus) {
-      issuerActiveStep = getIdentityActiveStep(status)
-    }
-
-    return issuerActiveStep
-  }
-
-  const getActiveStep = (status?: IdentityStatus) => {
-    if (asIssuer) {
-      return getIssuerActiveStep(status)
-    }
+  const getActiveStep = (status?: AuthorizableStatus) => {
     return getIdentityActiveStep(status)
   }
 
