@@ -36,22 +36,41 @@ export const OnboardingLinks = () => {
       ({ status }) => status === 'Approved'
     )
 
+  const investorIdentities = corprateIdentities.list.filter(
+    identity => identity.type === 'investor'
+  )
   const investorLink =
-    !corprateIdentitiesIsLoading &&
-    corprateIdentities !== undefined &&
-    corprateIdentities.list.length > 0
+    !corprateIdentitiesIsLoading && investorIdentities.length > 0
       ? {
           to: identityPaths.editCorporate,
           params: {
-            identityId: corprateIdentities.list[0]._id
+            identityId: investorIdentities[0]._id
           }
         }
       : { to: identityPaths.createCorporate }
   const isInvestorDone =
     !corprateIdentitiesIsLoading &&
-    corprateIdentities !== undefined &&
-    corprateIdentities.list.length > 0 &&
-    corprateIdentities.list[0].authorizations?.some(
+    investorIdentities.length > 0 &&
+    investorIdentities[0].authorizations?.some(
+      ({ status }) => status === 'Approved'
+    )
+
+  const issuerIdentities = corprateIdentities.list.filter(
+    identity => identity.type === 'issuer'
+  )
+  const issuerLink =
+    !corprateIdentitiesIsLoading && issuerIdentities.length > 0
+      ? {
+          to: identityPaths.editIssuer,
+          params: {
+            identityId: issuerIdentities[0]._id
+          }
+        }
+      : { to: identityPaths.createIssuer }
+  const isIssuerDone =
+    !corprateIdentitiesIsLoading &&
+    issuerIdentities.length > 0 &&
+    issuerIdentities[0].authorizations?.some(
       ({ status }) => status === 'Approved'
     )
 
@@ -89,10 +108,11 @@ export const OnboardingLinks = () => {
         <Typography variant='h4'>Raise Capital</Typography>
         <Box my={2.5} />
         <OnboardingLink
-          {...investorLink}
+          {...issuerLink}
           label='Fundraise'
           icon={FundraiseIcon}
           color='#2b78fd'
+          done={isIssuerDone}
         />
       </Box>
     </Box>

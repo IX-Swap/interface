@@ -73,8 +73,7 @@ describe('useOnboardingDialog', () => {
             message: [
               'Please create your identity first before you can manage your Accounts.'
             ],
-            closeLabel: 'Okay',
-            closeArrow: false
+            closeLabel: 'Okay'
           })
 
           result.current.showPreIdentityCreateDialog('individual')
@@ -83,7 +82,7 @@ describe('useOnboardingDialog', () => {
             message: [
               `In compliance with our KYC/AML process. Please create your individual identity.`
             ],
-            closeLabel: 'Ok',
+            closeLabel: 'Okay',
             closeArrow: true
           })
 
