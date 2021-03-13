@@ -1,7 +1,6 @@
 import React from 'react'
+import { CorporateIssuerView } from 'app/pages/_identity/components/CorporateIssuerView/CorporateIssuerView'
 
-export interface ViewIssuerProps {}
-
-export const ViewIssuer = (props: ViewIssuerProps) => {
-    return null
+export const ViewIssuer = () => {
+  return <CorporateIssuerView />
 }

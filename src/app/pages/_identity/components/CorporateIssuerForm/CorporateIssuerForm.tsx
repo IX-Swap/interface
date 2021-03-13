@@ -6,7 +6,6 @@ import { DirectorsAndBeneficialOwnerDetails } from 'app/pages/_identity/componen
 import {
   getCorporateInfoFormValues,
   getCorporateInvestorAgreementsAndDisclosuresFormValues,
-  getCorporateInvestorDeclarationFormValues,
   getCorporateInvestorDocumentsFormValues,
   getCorporateInvestorTaxDeclarationFormValues,
   getDirectorsAndBeneficialOwnersFormValues
@@ -14,7 +13,6 @@ import {
 import {
   getCorporateInfoRequestPayload,
   getCorporateInvestorAgreementsRequestPayload,
-  getCorporateInvestorDeclarationRequestPayload,
   getCorporateInvestorDocumentsRequestPayload,
   getDirectorsAndBeneficialOwnerRequestPayload
 } from 'app/pages/_identity/utils/corporate/requests'
@@ -22,7 +20,6 @@ import { useCreateCorporate } from 'app/pages/_identity/hooks/useCreateCorporate
 import { useUpdateCorporate } from 'app/pages/_identity/hooks/useUpdateCorporate'
 import { getTaxDeclarationRequestPayload } from '../../utils/individual/requests'
 import { TaxDeclarationForm } from '../TaxDeclarationForm/TaxDeclarationForm'
-import { InvestorDeclarationForm } from '../InvestorDeclarationForm/InvestorDeclarationForm'
 import { CorporateUploadDocumentsForm } from '../UploadDocumentsForm/CorporateUploadDocumentsForm'
 import { AgreementsAndDisclosuresFields } from '../AgreementsAndDisclosuresFields/AgreementsAndDisclosuresFields'
 import { CorporateIdentityView } from 'app/pages/_identity/components/CorporateIdentityView/CorporateIdentityView'
@@ -32,7 +29,6 @@ import {
   corporateInvestorAgreementsSchema,
   corporateInvestorDocumentsSchema,
   corporateInvestorInfoSchema,
-  corporateInvestorStatusDeclarationSchema,
   corporateTaxDeclarationSchema,
   directorsAndBeneficialOwnersSchema
 } from 'app/pages/_identity/validation/corporate'
@@ -129,7 +125,7 @@ export const CorporateIssuerForm = () => {
           validationSchema: {},
           component: () => (
             <Fragment>
-              <CorporateIdentityView data={identity as any} />
+              <CorporateIdentityView />
             </Fragment>
           )
         }

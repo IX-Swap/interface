@@ -7,6 +7,7 @@ import { ViewButton } from 'app/pages/_identity/components/ViewButton/ViewButton
 import { CompanyInfoView } from 'app/pages/_identity/components/CompanyInfoView/CompanyInfoView'
 import { VSpacer } from 'components/VSpacer'
 import { EditButton } from 'app/pages/_identity/components/EditButton/EditButton'
+import { NoIdentity } from 'app/pages/identity/components/NoIdentity'
 
 export interface CorporatesPreviewProps {
   type: 'investor' | 'issuer'
@@ -14,6 +15,7 @@ export interface CorporatesPreviewProps {
 
 export const CorporatesPreview: React.FC<CorporatesPreviewProps> = props => {
   const { type } = props
+  const isIssuer = type === 'issuer'
   const { data, status } = useAllCorporates({ type })
   const { paths } = useIdentitiesRouter()
 
@@ -22,17 +24,20 @@ export const CorporatesPreview: React.FC<CorporatesPreviewProps> = props => {
   }
 
   if (data.list.length === 0) {
-    return <div>No corporate</div>
-    // return (
-    //   <NoIdentity text='Create Corporate Identity' link='createCorporate' />
-    // )
+    return (
+      <NoIdentity
+        text={`You have not created corporate ${
+          isIssuer ? 'issuer' : 'investor'
+        } identity yet`}
+      />
+    )
   }
 
   return (
     <Grid data-testid='corporate-preview' container item>
       <Grid item xs={12}>
         <Typography variant='h4'>
-          Corporate {type === 'investor' ? 'Investor' : 'Issuer'}
+          Corporate {isIssuer ? 'Issuer' : 'Investor'}
         </Typography>
       </Grid>
 
@@ -47,7 +52,7 @@ export const CorporatesPreview: React.FC<CorporatesPreviewProps> = props => {
             actions={
               <Fragment>
                 <ViewButton
-                  link={paths.corporate}
+                  link={isIssuer ? paths.viewIssuer : paths.corporate}
                   params={{
                     identityId: identity._id,
                     label: identity.companyLegalName
@@ -55,7 +60,7 @@ export const CorporatesPreview: React.FC<CorporatesPreviewProps> = props => {
                 />
                 <Box mx={1} component='span' />
                 <EditButton
-                  link={paths.editCorporate}
+                  link={isIssuer ? paths.editIssuer : paths.editCorporate}
                   params={{
                     identityId: identity._id,
                     label: identity.companyLegalName

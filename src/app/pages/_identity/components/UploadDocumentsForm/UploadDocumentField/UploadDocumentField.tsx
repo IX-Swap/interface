@@ -26,6 +26,7 @@ export const UploadDocumentField = ({
   defaultValue
 }: UploadDocumentFieldProps) => {
   const { control } = useFormContext()
+
   return (
     <Grid container spacing={3} direction='column'>
       <Grid item>

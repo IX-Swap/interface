@@ -21,13 +21,16 @@ export const ViewIndividual = () => {
         <RejectionMessage data={data} />
       </Grid>
       <Grid container item justify='flex-end' alignItems='center'>
-        <EditButton link={paths.editIndividual} />
+        <EditButton
+          link={paths.editIndividual}
+          params={{ identityId: data._id }}
+        />
       </Grid>
       <Grid item container>
         <VSpacer size='small' />
       </Grid>
       <Grid item>
-        <IndividualIdentityView data={data} />
+        <IndividualIdentityView />
       </Grid>
     </Grid>
   )

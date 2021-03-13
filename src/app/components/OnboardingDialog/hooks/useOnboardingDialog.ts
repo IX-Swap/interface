@@ -1,14 +1,14 @@
-import { useIdentitiesRouter } from 'app/pages/_identity/router'
 import { IdentityType } from 'app/pages/identity/utils'
 import { useInvestRouter } from 'app/pages/invest/routers/router'
 import { useSecurityRouter } from 'app/pages/security/router'
 import { useSnackbar } from 'hooks/useSnackbar'
+import { useOnboardingJourneys } from 'app/components/OnboardingPanel/hooks/useOnboardingJourneys'
 
 export const useOnboardingDialog = () => {
   const { showOnboardingDialog } = useSnackbar()
-  const { paths: indentityPaths } = useIdentitiesRouter()
   const { paths: securityPaths } = useSecurityRouter()
   const { paths: investPaths } = useInvestRouter()
+  const { getIsJourneyCompleted } = useOnboardingJourneys()
 
   const showEnable2FADialog = () => {
     showOnboardingDialog({
@@ -33,26 +33,36 @@ export const useOnboardingDialog = () => {
     })
   }
 
-  const showPreIdentityCreateDialog = (identityType: IdentityType) => {
-    showOnboardingDialog({
-      title: `Create ${identityType} Identity`,
-      message: [
-        `In compliance with our KYC/AML process. Please create your ${identityType} identity.`
-      ],
-      closeLabel: 'Okay',
-      closeArrow: true
-    })
+  const showPreIdentityCreateDialog = (
+    identityType: IdentityType,
+    corporateType?: 'issuer' | 'investor'
+  ) => {
+    if (!getIsJourneyCompleted(identityType, corporateType)) {
+      showOnboardingDialog({
+        title: `Create ${identityType} Identity`,
+        message: [
+          `In compliance with our KYC/AML process. Please create your ${identityType} identity.`
+        ],
+        closeLabel: 'Okay',
+        closeArrow: true
+      })
+    }
   }
 
-  const showPostIdentityCreateDialog = (identityType: IdentityType) => {
-    showOnboardingDialog({
-      title: 'Identity Created!',
-      message: [
-        `Thank you for creating your ${identityType} identity. We will review your documents and notify your identity status.`
-      ],
-      closeLabel: 'Ok',
-      closeArrow: true
-    })
+  const showPostIdentityCreateDialog = (
+    identityType: IdentityType,
+    corporateType?: 'issuer' | 'investor'
+  ) => {
+    if (!getIsJourneyCompleted(identityType, corporateType)) {
+      showOnboardingDialog({
+        title: 'Identity Created!',
+        message: [
+          `Thank you for creating your ${identityType} identity. We will review your documents and notify your identity status.`
+        ],
+        closeLabel: 'Ok',
+        closeArrow: true
+      })
+    }
   }
 
   const showCreateDetailsOfIssuanceDialog = () => {

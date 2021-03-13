@@ -26,7 +26,7 @@ export const MoveButton = (props: MoveButtonProps) => {
   const {
     watch,
     trigger,
-    formState: { touched }
+    formState: { dirtyFields }
   } = useFormContext()
   const values = watch()
 
@@ -43,7 +43,7 @@ export const MoveButton = (props: MoveButtonProps) => {
       return
     }
 
-    const isDirty = Object.values(touched).length > 0
+    const isDirty = Object.values(dirtyFields).length > 0
 
     if (isDirty) {
       const payload = getRequestPayload(values)

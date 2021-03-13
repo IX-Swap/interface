@@ -162,7 +162,7 @@ export const IndividualInvestorForm = memo(() => {
           validationSchema: null,
           component: () => (
             <Fragment>
-              <IndividualIdentityView data={data} />
+              <IndividualIdentityView />
             </Fragment>
           )
         }

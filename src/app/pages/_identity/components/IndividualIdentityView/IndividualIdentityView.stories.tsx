@@ -112,7 +112,7 @@ export default meta
 const Template: Story = () => (
   <Grid container>
     <Grid item>
-      <IndividualIdentityView data={individual as any} />
+      <IndividualIdentityView />
     </Grid>
   </Grid>
 )

@@ -10,9 +10,7 @@ import { InvestorDeclarationView } from 'app/pages/_identity/components/Individu
 import { useIdentitiesRouter } from 'app/pages/_identity/router'
 import { useAllCorporates } from 'app/pages/_identity/hooks/useAllCorporates'
 
-export interface CorporateIdentityViewProps {}
-
-export const CorporateIdentityView = () => {
+export const CorporateIssuerView = () => {
   const { params } = useIdentitiesRouter()
   const {
     data: { map },
@@ -58,10 +56,6 @@ export const CorporateIdentityView = () => {
       <Grid item>
         <FormSectionHeader title='Tax Declaration' />
         <CountryTaxDeclaration taxResidencies={data.taxResidencies} />
-      </Grid>
-      <Grid item>
-        <FormSectionHeader title='Investors Status Declaration' />
-        <InvestorDeclarationView data={data} identityType='corporate' />
       </Grid>
       <Grid item>
         <FormSectionHeader title='Company Documents' />

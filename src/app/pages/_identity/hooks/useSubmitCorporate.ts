@@ -20,7 +20,7 @@ export const useSubmitCorporate = () => {
   return useMutation(submitCorporate, {
     onSuccess: data => {
       void snackbarService.showSnackbar(data.message, 'success')
-      showPostIdentityCreateDialog('corporate')
+      showPostIdentityCreateDialog('corporate', data.data.type)
       void queryCache.invalidateQueries(identityQueryKeys.getAllCorporate)
 
       // TODO: remove this once we come up with a better solution to determine what kind of identity has been submitted and whether user is still in the onboarding proces

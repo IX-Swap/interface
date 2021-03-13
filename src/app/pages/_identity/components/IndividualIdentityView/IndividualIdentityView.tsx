@@ -11,18 +11,14 @@ import { AddressView } from './AddressView/AddressView'
 import { FinancialView } from './FinancialView/FinancialView'
 import { TaxDeclarationView } from './TaxDeclarationView/TaxDeclarationView'
 import { InvestorDeclarationView } from './InvestorDeclarationView/InvestorDeclarationView'
-import { IndividualIdentity } from 'types/identity'
+import { useIndividualIdentity } from 'hooks/identity/useIndividualIdentity'
 
-export interface IndividualIdentityViewProps {
-  data: IndividualIdentity | undefined
-}
-
-export const IndividualIdentityView = (props: IndividualIdentityViewProps) => {
-  const { data } = props
+export const IndividualIdentityView = () => {
+  const { data, isLoading } = useIndividualIdentity()
 
   useSetPageTitle(getPersonName(data))
 
-  if (data === undefined) {
+  if (isLoading || data === undefined) {
     return null
   }
 

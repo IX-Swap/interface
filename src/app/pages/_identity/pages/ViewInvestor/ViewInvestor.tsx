@@ -32,7 +32,7 @@ export const ViewInvestor = () => {
         <VSpacer size='small' />
       </Grid>
       <Grid item>
-        <CorporateIdentityView data={identity} />
+        <CorporateIdentityView />
       </Grid>
     </Grid>
   )

@@ -52,18 +52,6 @@ export const financialInfoSchema = yup
           })
           .required()
       )
-      .test(
-        'At least one fund source is selected',
-        'Please select at least one fund source',
-        function (value) {
-          if (value?.every(fundSource => fundSource.value === 0)) {
-            // TODO: figure out why validation error doesn't prevent moving to the next step
-            return false
-          }
-
-          return true
-        }
-      )
       .required('Required')
   })
 

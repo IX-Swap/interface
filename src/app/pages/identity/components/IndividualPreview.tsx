@@ -17,9 +17,7 @@ export const IndividualPreview: React.FC = () => {
   }
 
   if (data === undefined) {
-    return (
-      <NoIdentity text='Create Individual Identity' link='createIndividual' />
-    )
+    return null
   }
 
   const name = `${data.firstName} ${data.lastName}`
@@ -36,7 +34,10 @@ export const IndividualPreview: React.FC = () => {
         <Section
           title={name}
           actions={
-            <ViewButton link={paths.individual} params={{ label: name }} />
+            <ViewButton
+              link={paths.individual}
+              params={{ label: name, identityId: data._id }}
+            />
           }
         >
           <IndividualInfoView data={data} />

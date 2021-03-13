@@ -1,4 +1,4 @@
-import { useGetIdentities } from 'app/components/OnboardingPanel/hooks/useGetIdentities'
+import { useOnboardingJourneys } from 'app/components/OnboardingPanel/hooks/useOnboardingJourneys'
 import {
   defaultOnboardingSteps,
   getIdentityOnboardingSteps
@@ -6,36 +6,15 @@ import {
 import { AuthorizableStatus } from 'types/util'
 
 export const useHomeOnboardingSteps = () => {
-  const { individualIdentity, corporateIdentities } = useGetIdentities()
-
-  const investorIdentities = corporateIdentities.list.filter(
-    identity => identity.type === 'investor'
-  )
-  const issuerIdentities = corporateIdentities.list.filter(
-    identity => identity.type === 'issuer'
-  )
-
-  const isIndividualJourneyActive =
-    individualIdentity !== undefined &&
-    individualIdentity.authorizations?.length === 0
-  const isInvestorJourneyActive =
-    investorIdentities.length > 0 &&
-    investorIdentities[0].authorizations?.length === 0
-  const isIssuerJourneyActive =
-    issuerIdentities.length > 0 &&
-    issuerIdentities[0].authorizations?.length === 0
-
-  const journeys = {
-    isIndividualJourneyActive,
-    isInvestorJourneyActive,
-    isIssuerJourneyActive
-  }
-  const isMultipleJourneysActive =
-    Object.values(journeys).filter(journeStatus => journeStatus === true)
-      .length > 1
-  const hasActiveJourney = Object.values(journeys).some(
-    journey => journey === true
-  )
+  const {
+    isMultipleJourneysActive,
+    isIndividualJourneyStarted,
+    isIssuerJourneyStarted,
+    hasActiveIdentityJourney,
+    individualIdentity,
+    investorIdentities,
+    issuerIdentities
+  } = useOnboardingJourneys()
 
   const getIdentityActiveStep = (status?: AuthorizableStatus) => {
     let indetityActiveStep = 2
@@ -59,18 +38,19 @@ export const useHomeOnboardingSteps = () => {
     }
   }
 
-  if (hasActiveJourney) {
-    const activeJourneyIdentityStatus = journeys.isIndividualJourneyActive
+  if (hasActiveIdentityJourney) {
+    debugger
+    const activeJourneyIdentityStatus = isIndividualJourneyStarted
       ? individualIdentity?.status
-      : journeys.isIssuerJourneyActive
+      : isIssuerJourneyStarted
       ? issuerIdentities[0].status
       : investorIdentities[0].status
 
     return {
       steps: getIdentityOnboardingSteps(
-        journeys.isIndividualJourneyActive ? 'individual' : 'corporate',
+        isIndividualJourneyStarted ? 'individual' : 'corporate',
         activeJourneyIdentityStatus,
-        journeys.isIssuerJourneyActive
+        isIssuerJourneyStarted
       ),
       activeStep: getActiveStep(activeJourneyIdentityStatus)
     }

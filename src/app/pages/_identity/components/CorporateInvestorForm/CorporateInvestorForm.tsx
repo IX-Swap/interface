@@ -140,7 +140,7 @@ export const CorporateInvestorForm = () => {
           validationSchema: {},
           component: () => (
             <Fragment>
-              <CorporateIdentityView data={identity as any} />
+              <CorporateIdentityView />
             </Fragment>
           )
         }

@@ -3,7 +3,6 @@ import { Grid, Typography } from '@material-ui/core'
 import { UploadDocumentField } from 'app/pages/_identity/components/UploadDocumentsForm/UploadDocumentField/UploadDocumentField'
 import { EvidenceOfAccreditationHelper } from 'app/pages/_identity/components/UploadDocumentsForm/EvidenceOfAccreditationHelper'
 import { EvindenceOfAccreditationTooltipContent } from 'app/pages/_identity/components/UploadDocumentsForm/EvindenceOfAccreditationTooltipContent'
-import { UploadDocumentsForm } from 'app/pages/_identity/components/UploadDocumentsForm/UploadDocumentsForm'
 
 export const IndividualUploadDocumentsForm = () => {
   return (

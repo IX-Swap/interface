@@ -32,7 +32,9 @@ export const FormStep = (props: FormStepProps) => {
     editMutation,
     submitMutation
   } = props
+
   const isCurrentStep = activeStep === index
+
   if (!isCurrentStep) {
     return null
   }

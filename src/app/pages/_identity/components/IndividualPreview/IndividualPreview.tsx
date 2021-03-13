@@ -7,6 +7,7 @@ import { useIdentitiesRouter } from 'app/pages/_identity/router'
 import { IndividualInfoView } from 'app/pages/_identity/components/IndividualIdentityView/IndividualInfoView/IndividualInfoView'
 import { VSpacer } from 'components/VSpacer'
 import { EditButton } from 'app/pages/_identity/components/EditButton/EditButton'
+import { NoIdentity } from 'app/pages/identity/components/NoIdentity'
 
 export const IndividualPreview = () => {
   const { data, status } = useIndividualIdentity()
@@ -17,10 +18,7 @@ export const IndividualPreview = () => {
   }
 
   if (data === undefined) {
-    return <div>No individual</div>
-    // return (
-    //   <NoIdentity text='Create Individual Identity' link='createIndividual' />
-    // )
+    return <NoIdentity text='You have not created individual identity yet' />
   }
 
   const name = `[${data.status}] ${data.firstName} ${data.lastName}`
@@ -38,11 +36,14 @@ export const IndividualPreview = () => {
           title={name}
           actions={
             <Fragment>
-              <ViewButton link={paths.individual} params={{ label: name }} />
+              <ViewButton
+                link={paths.individual}
+                params={{ label: name, identityId: data._id }}
+              />
               <Box mx={1} component='span' />
               <EditButton
                 link={paths.editIndividual}
-                params={{ label: name }}
+                params={{ label: name, identityId: data._id }}
               />
             </Fragment>
           }

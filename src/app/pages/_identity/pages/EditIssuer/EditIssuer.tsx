@@ -4,11 +4,10 @@ import { useIdentitiesRouter } from 'app/pages/_identity/router'
 import { useAllCorporates } from 'app/pages/_identity/hooks/useAllCorporates'
 import { VSpacer } from 'components/VSpacer'
 import { useSetPageTitle } from 'app/hooks/useSetPageTitle'
-import { CorporateInvestorForm } from 'app/pages/_identity/components/CorporateInvestorForm/CorporateInvestorForm'
 import { CorporateIssuerForm } from 'app/pages/_identity/components/CorporateIssuerForm/CorporateIssuerForm'
 
 export const EditIssuer: React.FC = () => {
-  const { data, status } = useAllCorporates({ type: 'issuer' })
+  const { data, isLoading } = useAllCorporates({ type: 'issuer' })
   const {
     params: { identityId }
   } = useIdentitiesRouter()
@@ -16,7 +15,7 @@ export const EditIssuer: React.FC = () => {
 
   useSetPageTitle(identity?.companyLegalName)
 
-  if (status === 'loading') {
+  if (isLoading || data === undefined) {
     return null
   }
 

@@ -17,9 +17,7 @@ export const CorporatePreview: React.FC = () => {
   }
 
   if (data.list.length === 0) {
-    return (
-      <NoIdentity text='Create Corporate Identity' link='createCorporate' />
-    )
+    return null
   }
 
   return (

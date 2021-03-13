@@ -23,9 +23,10 @@ export const useCreateCorporate = (corporateType: string) => {
   }
 
   return useMutation(createCorporate, {
-    onSuccess: data => {
+    onSuccess: async data => {
       void snackbarService.showSnackbar(data.message, 'success')
-      void queryCache.invalidateQueries(identityQueryKeys.getAllCorporate)
+      await queryCache.invalidateQueries(identityQueryKeys.getAllCorporate)
+
       replace(corporateType === 'issuer' ? 'editIssuer' : 'editCorporate', {
         identityId: data.data._id
       })

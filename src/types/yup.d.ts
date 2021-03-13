@@ -7,6 +7,6 @@ declare module 'yup' {
       countryCode?: string,
       strict?: boolean,
       errorMessage?: string
-    ): StringSchema;
+    ): StringSchema
   }
 }
