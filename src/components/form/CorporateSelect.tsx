@@ -1,10 +1,10 @@
 import React from 'react'
-import { useAllCorporateIdentities } from 'hooks/identity/useAllCorporateIdentities'
+import { useAllCorporates } from 'app/pages/_identity/hooks/useAllCorporates'
 import { MenuItem, Select } from '@material-ui/core'
 import { queryStatusRenderer } from './renderUtils'
 
 export const CorporateSelect = (props: any) => {
-  const { data, status } = useAllCorporateIdentities(true)
+  const { data, status } = useAllCorporates({ all: true })
 
   const queryStatus = queryStatusRenderer(status)
   if (queryStatus !== undefined) return queryStatus

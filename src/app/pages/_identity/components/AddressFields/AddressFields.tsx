@@ -6,14 +6,12 @@ import { CountrySelect } from 'components/form/CountrySelect'
 import { useFormContext } from 'react-hook-form'
 import { privateClassNames } from 'helpers/classnames'
 
-export interface AddressFieldsProps<FormType> {
+export interface AddressFieldsProps {
   rootName?: string
   defaultValue?: IdentityAddress
 }
 
-export const AddressFields = <FormType,>(
-  props: AddressFieldsProps<FormType>
-): JSX.Element => {
+export const AddressFields = (props: AddressFieldsProps): JSX.Element => {
   const { rootName = 'address', defaultValue } = props
   const { control } = useFormContext<IdentityAddress>()
 
@@ -31,7 +29,7 @@ export const AddressFields = <FormType,>(
           name='line1'
           label='Line 1'
           variant='outlined'
-          defaultValue={defaultValue?.line1 ?? controlDefaultValues.line1}
+          defaultValue={defaultValue?.line1 ?? ''}
         />
       </Grid>
       <Grid item xs={12} sm={6} md={4}>
@@ -44,7 +42,7 @@ export const AddressFields = <FormType,>(
           name='line2'
           label='Line 2'
           variant='outlined'
-          defaultValue={defaultValue?.line2 ?? controlDefaultValues.line2}
+          defaultValue={defaultValue?.line2 ?? ''}
         />
       </Grid>
       <Hidden smDown>
@@ -60,7 +58,7 @@ export const AddressFields = <FormType,>(
           name='city'
           label='City'
           variant='outlined'
-          defaultValue={defaultValue?.city ?? controlDefaultValues.city}
+          defaultValue={defaultValue?.city ?? ''}
         />
       </Grid>
       <Grid item xs={12} sm={6} md={4}>
@@ -73,7 +71,7 @@ export const AddressFields = <FormType,>(
           name='state'
           label='State'
           variant='outlined'
-          defaultValue={defaultValue?.state ?? controlDefaultValues.state}
+          defaultValue={defaultValue?.state ?? ''}
         />
       </Grid>
       <Hidden smDown>
@@ -87,7 +85,7 @@ export const AddressFields = <FormType,>(
           name='country'
           label='Country'
           variant='outlined'
-          defaultValue={defaultValue?.country ?? controlDefaultValues.country}
+          defaultValue={defaultValue?.country ?? ''}
         />
       </Grid>
       <Grid item xs={12} sm={6} md={4}>
@@ -100,9 +98,7 @@ export const AddressFields = <FormType,>(
           name='postalCode'
           label='Postal Code'
           variant='outlined'
-          defaultValue={
-            defaultValue?.postalCode ?? controlDefaultValues.postalCode
-          }
+          defaultValue={defaultValue?.postalCode ?? ''}
         />
       </Grid>
     </Grid>

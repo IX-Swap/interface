@@ -6,7 +6,7 @@ import { ReactComponent as CorporateIcon } from 'assets/icons/navigation/corpora
 import { ReactComponent as FundraiseIcon } from 'assets/icons/navigation/asset-balance.svg'
 import { useIdentitiesRouter } from 'app/pages/_identity/router'
 import { useIndividualIdentity } from 'hooks/identity/useIndividualIdentity'
-import { useAllCorporateIdentities } from 'hooks/identity/useAllCorporateIdentities'
+import { useAllCorporates } from 'app/pages/_identity/hooks/useAllCorporates'
 
 export const OnboardingLinks = () => {
   const { paths: identityPaths } = useIdentitiesRouter()
@@ -18,7 +18,42 @@ export const OnboardingLinks = () => {
   const {
     data: corprateIdentities,
     isLoading: corprateIdentitiesIsLoading
-  } = useAllCorporateIdentities()
+  } = useAllCorporates({})
+
+  const individualLink =
+    !individualIdentityIsLoading && individualIdentity !== undefined
+      ? {
+          to: identityPaths.editIndividual,
+          params: {
+            identityId: individualIdentity._id
+          }
+        }
+      : { to: identityPaths.createIndividual }
+  const isIndividualDone =
+    !individualIdentityIsLoading &&
+    individualIdentity !== undefined &&
+    individualIdentity.authorizations?.some(
+      ({ status }) => status === 'Approved'
+    )
+
+  const investorLink =
+    !corprateIdentitiesIsLoading &&
+    corprateIdentities !== undefined &&
+    corprateIdentities.list.length > 0
+      ? {
+          to: identityPaths.editCorporate,
+          params: {
+            identityId: corprateIdentities.list[0]._id
+          }
+        }
+      : { to: identityPaths.createCorporate }
+  const isInvestorDone =
+    !corprateIdentitiesIsLoading &&
+    corprateIdentities !== undefined &&
+    corprateIdentities.list.length > 0 &&
+    corprateIdentities.list[0].authorizations?.some(
+      ({ status }) => status === 'Approved'
+    )
 
   return (
     <Box display='flex'>
@@ -27,28 +62,19 @@ export const OnboardingLinks = () => {
         <Box my={2.5} />
         <Box display='flex'>
           <OnboardingLink
+            {...individualLink}
             label='Individual'
-            link={identityPaths.createIndividual}
             icon={IndividualIcon}
             color='#90A30F'
-            done={
-              !individualIdentityIsLoading &&
-              individualIdentity !== undefined &&
-              individualIdentity.status === 'Approved'
-            }
+            done={isIndividualDone}
           />
           <Box mx={1.5} />
           <OnboardingLink
+            {...investorLink}
             label='Corporate'
-            link={identityPaths.createCorporate}
             color='#E65133'
             icon={CorporateIcon}
-            done={
-              !corprateIdentitiesIsLoading &&
-              corprateIdentities !== undefined &&
-              corprateIdentities.list.length > 0 &&
-              corprateIdentities.list[0].status === 'Approved'
-            }
+            done={isInvestorDone}
           />
         </Box>
       </Box>
@@ -63,8 +89,8 @@ export const OnboardingLinks = () => {
         <Typography variant='h4'>Raise Capital</Typography>
         <Box my={2.5} />
         <OnboardingLink
+          {...investorLink}
           label='Fundraise'
-          link={identityPaths.createCorporate}
           icon={FundraiseIcon}
           color='#2b78fd'
         />

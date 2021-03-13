@@ -7,7 +7,7 @@ import { identityURL } from 'config/apiURL'
 import { useIdentitiesRouter } from 'app/pages/_identity/router'
 import { identityQueryKeys } from 'config/queryKeys'
 
-export const useCreateCorporate = () => {
+export const useCreateCorporate = (corporateType: string) => {
   const { snackbarService, apiService } = useServices()
   const queryCache = useQueryCache()
   const { replace } = useIdentitiesRouter()
@@ -16,7 +16,10 @@ export const useCreateCorporate = () => {
 
   const createCorporate = async (values: any) => {
     const uri = identityURL.corporates.create(userId)
-    return await apiService.post<CorporateIdentity>(uri, values)
+    return await apiService.post<CorporateIdentity>(uri, {
+      ...values,
+      type: corporateType
+    })
   }
 
   return useMutation(createCorporate, {

@@ -1,13 +1,13 @@
 import React from 'react'
 import { Grid } from '@material-ui/core'
 import { useIdentitiesRouter } from 'app/pages/_identity/router'
-import { useAllCorporateIdentities } from 'hooks/identity/useAllCorporateIdentities'
+import { useAllCorporates } from 'app/pages/_identity/hooks/useAllCorporates'
 import { VSpacer } from 'components/VSpacer'
 import { useSetPageTitle } from 'app/hooks/useSetPageTitle'
 import { CorporateInvestorForm } from 'app/pages/_identity/components/CorporateInvestorForm/CorporateInvestorForm'
 
 export const EditInvestor: React.FC = () => {
-  const { data, status } = useAllCorporateIdentities()
+  const { data, status } = useAllCorporates({})
   const {
     params: { identityId }
   } = useIdentitiesRouter()

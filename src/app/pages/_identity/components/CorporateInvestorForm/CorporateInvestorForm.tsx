@@ -1,6 +1,6 @@
 import React, { useEffect, Fragment } from 'react'
 import { FormStepper } from 'app/components/FormStepper/FormStepper'
-import { useAllCorporateIdentities } from 'hooks/identity/useAllCorporateIdentities'
+import { useAllCorporates } from 'app/pages/_identity/hooks/useAllCorporates'
 import { CorporateInformationForm } from 'app/pages/_identity/components/CorporateInformationForm/CorporateInformationForm'
 import { DirectorsAndBeneficialOwnerDetails } from 'app/pages/_identity/components/DirectorAndBeneficialOwnerDetails/DirectorsAndBeneficialOwnerDetails'
 import {
@@ -36,16 +36,17 @@ import {
   corporateTaxDeclarationSchema,
   directorsAndBeneficialOwnersSchema
 } from 'app/pages/_identity/validation/corporate'
+import { useSubmitCorporate } from 'app/pages/_identity/hooks/useSubmitCorporate'
 
 export const CorporateInvestorForm = () => {
-  const { data, isLoading } = useAllCorporateIdentities()
+  const { data, isLoading } = useAllCorporates({ type: 'investor' })
   const { params, current, paths } = useIdentitiesRouter()
   const isNew = current.path === paths.createCorporate
   const identity = isNew ? undefined : data.map[params.identityId as string]
 
-  const createMutation = useCreateCorporate()
-  const updateMutation = useUpdateCorporate()
-  const submitMutation = useUpdateCorporate()
+  const createMutation = useCreateCorporate('investor')
+  const updateMutation = useUpdateCorporate('investor')
+  const submitMutation = useSubmitCorporate()
   const { showPreIdentityCreateDialog } = useOnboardingDialog()
 
   useEffect(() => {

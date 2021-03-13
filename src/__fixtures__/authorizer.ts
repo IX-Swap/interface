@@ -47,6 +47,7 @@ export const authorizationInfo: AuthorizationInfo = {
 export const corporate: CorporateIdentity = {
   _id: '1',
   logo: '',
+  type: 'investor',
   legalEntityStatus: 'other',
   isMailingAddressSame: false,
   createdAt: '01-01-2000',

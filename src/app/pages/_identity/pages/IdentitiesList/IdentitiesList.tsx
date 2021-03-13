@@ -10,7 +10,8 @@ export const IdentitiesList: React.FC = () => {
       <Grid container direction='column' alignItems='flex-start' spacing={2}>
         <IndividualPreview />
         <VSpacer size='medium' />
-        <CorporatesPreview />
+        <CorporatesPreview type='investor' />
+        <CorporatesPreview type='issuer' />
       </Grid>
     </>
   )

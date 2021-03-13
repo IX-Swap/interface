@@ -1,6 +1,6 @@
 import React from 'react'
 import { Grid, Typography } from '@material-ui/core'
-import { useAllCorporateIdentities } from 'hooks/identity/useAllCorporateIdentities'
+import { useAllCorporates } from 'app/pages/_identity/hooks/useAllCorporates'
 import { Section } from 'app/pages/identity/components/Section'
 import { useIdentitiesRouter } from 'app/pages/_identity/router'
 import { NoIdentity } from 'app/pages/identity/components/NoIdentity'
@@ -9,7 +9,7 @@ import { CompanyInfoView } from 'app/pages/identity/components/CompanyInfoView'
 import { VSpacer } from 'components/VSpacer'
 
 export const CorporatePreview: React.FC = () => {
-  const { data, status } = useAllCorporateIdentities()
+  const { data, status } = useAllCorporates({})
   const { paths } = useIdentitiesRouter()
 
   if (status === 'loading') {

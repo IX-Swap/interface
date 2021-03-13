@@ -6,6 +6,9 @@ import { MutationResultPair } from 'react-query'
 export interface MoveButtonProps extends ButtonProps {
   mutation: MutationResultPair<any, any, any, any>
   getRequestPayload: (data: any) => any
+  activeStep: number
+  shouldUpdateStep: boolean
+  isBackButton?: boolean
 }
 
 export const MoveButton = (props: MoveButtonProps) => {
@@ -14,7 +17,10 @@ export const MoveButton = (props: MoveButtonProps) => {
     children,
     onClick,
     getRequestPayload,
-    variant = 'outlined'
+    variant = 'outlined',
+    activeStep,
+    shouldUpdateStep,
+    isBackButton = false
   } = props
   const [save, { isLoading }] = mutation
   const {
@@ -27,7 +33,11 @@ export const MoveButton = (props: MoveButtonProps) => {
   const handleSave = async (
     event: React.MouseEvent<HTMLButtonElement, MouseEvent>
   ) => {
-    const isValid = await trigger()
+    let isValid = true
+
+    if (!isBackButton) {
+      isValid = await trigger()
+    }
 
     if (!isValid) {
       return
@@ -37,6 +47,10 @@ export const MoveButton = (props: MoveButtonProps) => {
 
     if (isDirty) {
       const payload = getRequestPayload(values)
+
+      if (shouldUpdateStep) {
+        payload.step = activeStep + 1
+      }
 
       if (isValid) {
         await save(payload)

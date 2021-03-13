@@ -2,7 +2,7 @@ import { act } from '@testing-library/react-hooks'
 import { waitFor, cleanup, renderHookWithServiceProvider } from 'test-utils'
 import * as useAuthHook from 'hooks/auth/useAuth'
 import * as useParsedDataHook from 'hooks/useParsedData'
-import { useAllCorporateIdentities } from 'hooks/identity/useAllCorporateIdentities'
+import { useAllCorporates } from 'app/pages/_identity/hooks/useAllCorporates'
 import { user } from '__fixtures__/user'
 import { paginationArgs } from 'config/defaults'
 import { corporate } from '__fixtures__/identity'
@@ -30,7 +30,7 @@ describe('useAllCorporateIdentities', () => {
       const apiObj = { post }
 
       const { result } = renderHookWithServiceProvider(
-        () => useAllCorporateIdentities(),
+        () => useAllCorporates({}),
         { apiService: apiObj }
       )
 
