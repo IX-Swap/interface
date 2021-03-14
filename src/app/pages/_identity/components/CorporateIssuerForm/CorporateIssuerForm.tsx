@@ -33,12 +33,13 @@ import {
   directorsAndBeneficialOwnersSchema
 } from 'app/pages/_identity/validation/corporate'
 import { useSubmitCorporate } from 'app/pages/_identity/hooks/useSubmitCorporate'
+import { CorporateIssuerView } from 'app/pages/_identity/components/CorporateIssuerView/CorporateIssuerView'
 
 export const CorporateIssuerForm = () => {
   const { data, isLoading } = useAllCorporates({ type: 'issuer' })
   const { params, current, paths } = useIdentitiesRouter()
   const isNew = current.path === paths.createCorporate
-  const identity = isNew ? undefined : data.map[params.identityId as string]
+  const identity = isNew ? undefined : data.map[params.identityId]
 
   const createMutation = useCreateCorporate('issuer')
   const updateMutation = useUpdateCorporate('issuer')
@@ -108,13 +109,13 @@ export const CorporateIssuerForm = () => {
           )
         },
         {
-          label: 'Agreements and Declarations',
+          label: 'Agreements and Disclosures',
           getFormValues: getCorporateInvestorAgreementsAndDisclosuresFormValues,
           getRequestPayload: getCorporateInvestorAgreementsRequestPayload,
           validationSchema: corporateInvestorAgreementsSchema,
           component: () => (
             <Fragment>
-              <AgreementsAndDisclosuresFields />
+              <AgreementsAndDisclosuresFields isCorporateIssuerForm />
             </Fragment>
           )
         },
@@ -125,7 +126,7 @@ export const CorporateIssuerForm = () => {
           validationSchema: {},
           component: () => (
             <Fragment>
-              <CorporateIdentityView />
+              <CorporateIssuerView />
             </Fragment>
           )
         }

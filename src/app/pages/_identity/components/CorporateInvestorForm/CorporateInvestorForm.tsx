@@ -42,7 +42,7 @@ export const CorporateInvestorForm = () => {
   const { data, isLoading } = useAllCorporates({ type: 'investor' })
   const { params, current, paths } = useIdentitiesRouter()
   const isNew = current.path === paths.createCorporate
-  const identity = isNew ? undefined : data.map[params.identityId as string]
+  const identity = isNew ? undefined : data.map[params.identityId]
 
   const createMutation = useCreateCorporate('investor')
   const updateMutation = useUpdateCorporate('investor')
@@ -123,7 +123,7 @@ export const CorporateInvestorForm = () => {
           )
         },
         {
-          label: 'Agreements and Declarations',
+          label: 'Agreements and Disclosures',
           getFormValues: getCorporateInvestorAgreementsAndDisclosuresFormValues,
           getRequestPayload: getCorporateInvestorAgreementsRequestPayload,
           validationSchema: corporateInvestorAgreementsSchema,

@@ -6,9 +6,10 @@ import { CorporateInfo } from 'app/pages/_identity/components/CorporateIdentityV
 import React from 'react'
 import { IdentityDocumentsView } from 'app/pages/_identity/components/IdentityDocumentsView/IdentityDocumentsView'
 import { CountryTaxDeclaration } from 'app/pages/_identity/components/CountryTaxDeclarations/CountryTaxDeclaration'
-import { InvestorDeclarationView } from 'app/pages/_identity/components/IndividualIdentityView/InvestorDeclarationView/InvestorDeclarationView'
 import { useIdentitiesRouter } from 'app/pages/_identity/router'
 import { useAllCorporates } from 'app/pages/_identity/hooks/useAllCorporates'
+import { AgreementsAndDisclosuresView } from 'app/pages/_identity/components/IndividualIdentityView/AgreementsAndDisclosuresView/AgreementsAndDisclosuresView'
+import { BeneficialOwnersList } from 'app/pages/_identity/components/CorporateIdentityView/BeneficialOwnersList'
 
 export const CorporateIssuerView = () => {
   const { params } = useIdentitiesRouter()
@@ -48,7 +49,7 @@ export const CorporateIssuerView = () => {
       </Grid>
       <Grid item>
         <FormSectionHeader title='Beneficial Owners Information' />
-        <PersonnelList
+        <BeneficialOwnersList
           personnel={data.beneficialOwners ?? []}
           showDocumentHeader
         />
@@ -60,6 +61,13 @@ export const CorporateIssuerView = () => {
       <Grid item>
         <FormSectionHeader title='Company Documents' />
         <IdentityDocumentsView data={data.documents} type='corporate' />
+      </Grid>
+      <Grid item xs>
+        <FormSectionHeader title='Agreements and Disclosures' />
+        <AgreementsAndDisclosuresView
+          data={data}
+          isCorporateIssuerForm={true}
+        />
       </Grid>
     </Grid>
   )

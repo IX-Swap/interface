@@ -18,7 +18,7 @@ export const AddressFields = (props: AddressFieldsProps): JSX.Element => {
   const controlDefaultValues = control.defaultValuesRef.current
 
   return (
-    <Grid container spacing={5} className={privateClassNames()}>
+    <Grid container spacing={3} className={privateClassNames()}>
       <Grid item xs={12} sm={6} md={4}>
         <TypedField
           customRenderer
