@@ -15,7 +15,7 @@ import * as yup from 'yup'
 export const corporateInvestorInfoSchema = yup
   .object()
   .shape<InvestorCorporateInfoFormValues>({
-    logo: yup.string().required('Required'),
+    logo: yup.string(),
     companyLegalName: yup.string().required('Required'),
     registrationNumber: yup.string().required('Required'),
     legalEntityStatus: yup.string().required('Required'),

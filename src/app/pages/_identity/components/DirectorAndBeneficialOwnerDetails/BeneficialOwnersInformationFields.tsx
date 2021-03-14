@@ -32,7 +32,7 @@ export const BeneficialOwnersInformationFields = ({
           variant='outlined'
           name={[rootName, index, 'fullName']}
           label='Full Name'
-          defaultValue={defaultValue.fullName ?? null}
+          defaultValue={defaultValue.fullName ?? ''}
         />
       </Grid>
       <Grid item xs={12} md={4}>
@@ -46,7 +46,7 @@ export const BeneficialOwnersInformationFields = ({
           helperText='in percent'
           variant='outlined'
           fullWidth
-          defaultValue={defaultValue.percentageShareholding ?? null}
+          defaultValue={defaultValue.percentageShareholding ?? ''}
         />
       </Grid>
     </Grid>

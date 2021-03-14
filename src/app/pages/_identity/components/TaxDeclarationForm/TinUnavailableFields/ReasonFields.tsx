@@ -38,7 +38,7 @@ export const ReasonFields = ({
         name={['taxResidencies', index, 'reason']}
         label=''
         control={control}
-        defaultValue={defaultValue?.reason ?? null}
+        defaultValue={defaultValue?.reason ?? ''}
       >
         <Grid container direction='column' spacing={2}>
           <Grid item>
@@ -86,7 +86,7 @@ export const ReasonFields = ({
                 control={control}
                 name={['taxResidencies', index, 'customReason']}
                 label='Explain why the corporate does not have a TIN'
-                defaultValue={defaultValue?.customReason ?? null}
+                defaultValue={defaultValue?.customReason ?? ''}
               />
             </Box>
           </Grid>

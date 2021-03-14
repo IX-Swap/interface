@@ -41,7 +41,7 @@ export const DSOTeamMember = (props: DSOTeamMemberProps) => {
             control={control}
             component={Dropzone}
             label=''
-            defaultValue={defaultValue?.photo ?? null}
+            defaultValue={defaultValue?.photo ?? ''}
             valueExtractor={documentValueExtractor}
             documentInfo={{
               title: 'Photo',
