@@ -4,6 +4,12 @@ import React from 'react'
 import { render, cleanup } from 'test-utils'
 
 describe('DirectorsInformationFields', () => {
+  const props = {
+    rootName: 'directors',
+    index: 0,
+    fieldId: '123',
+    defaultValue: {} as any
+  }
   const defaultValues = {
     directors: [
       {
@@ -24,11 +30,7 @@ describe('DirectorsInformationFields', () => {
   it('renders without errors', () => {
     render(
       <Form defaultValues={defaultValues}>
-        <DirectorsInformationFields
-          rootName='directors'
-          index={0}
-          fieldId='123'
-        />
+        <DirectorsInformationFields {...props} />
       </Form>
     )
   })
@@ -36,11 +38,7 @@ describe('DirectorsInformationFields', () => {
   it('renders labels and components correctly', () => {
     const { getByLabelText } = render(
       <Form defaultValues={defaultValues}>
-        <DirectorsInformationFields
-          rootName='directors'
-          index={0}
-          fieldId='123'
-        />
+        <DirectorsInformationFields {...props} />
       </Form>
     )
 

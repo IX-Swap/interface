@@ -15,7 +15,8 @@ export const useOnboardingJourneys = () => {
     individualIdentity !== undefined &&
     individualIdentity.authorizations.length === 0
   const isInvestorJourneyStarted =
-    investorIdentities.length > 0 && investorIdentities[0].authorizations.length === 0
+    investorIdentities.length > 0 &&
+    investorIdentities[0].authorizations.length === 0
   const isIssuerJourneyStarted =
     issuerIdentities.length > 0 &&
     issuerIdentities[0].authorizations.length === 0
@@ -27,10 +28,9 @@ export const useOnboardingJourneys = () => {
   }
 
   const isIndividualJourneyCompleted =
-    individualIdentity !== undefined &&
-    individualIdentity.authorizations.some(
+    individualIdentity?.authorizations.some(
       authorization => authorization.status === 'Approved'
-    )
+    ) ?? false
   const isInvestorJourneyCompleted =
     investorIdentities.length > 0 &&
     investorIdentities[0].authorizations.some(
@@ -48,10 +48,10 @@ export const useOnboardingJourneys = () => {
     isIssuerJourneyCompleted
   }
   const isMultipleJourneysActive =
-    Object.values(startedJourneys).filter(journeStatus => journeStatus === true)
-      .length > 1
+    Object.values(startedJourneys).filter(journeStatus => journeStatus).length >
+    1
   const hasActiveIdentityJourney = Object.values(startedJourneys).some(
-    journey => journey === true
+    journey => journey
   )
 
   const getIsJourneyCompleted = (

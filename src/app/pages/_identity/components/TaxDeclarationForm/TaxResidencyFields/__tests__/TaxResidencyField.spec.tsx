@@ -31,7 +31,8 @@ describe('TaxResidencyField', () => {
     isLast: true,
     index: 0,
     max: 5,
-    total: 1
+    total: 1,
+    defaultValue: {} as any
   }
 
   afterEach(async () => {

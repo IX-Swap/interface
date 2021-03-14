@@ -64,11 +64,7 @@ export const getTaxDeclarationFormValues = (
         : 'no'
   }
 
-  if (
-    declarations !== undefined &&
-    declarations.tax !== undefined &&
-    declarations.tax.fatca !== undefined
-  ) {
+  if (declarations?.tax?.fatca !== undefined) {
     result.fatca = declarations.tax.fatca ? 'yes' : 'no'
   }
 

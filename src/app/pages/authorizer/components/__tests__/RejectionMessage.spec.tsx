@@ -9,7 +9,8 @@ describe('RejectionMessage', () => {
     status: 'Approved',
     updatedAt: '10/10/2020',
     createdAt: '10/10/2020',
-    level: 'Level 1'
+    level: 'Level 1',
+    authorizations: []
   }
   const approval: AuthorizationInfoWithStatus = {
     _id: 'id',

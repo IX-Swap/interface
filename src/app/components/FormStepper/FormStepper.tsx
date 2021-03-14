@@ -34,7 +34,7 @@ export const FormStepper = (props: FormStepperProps) => {
   const [activeStep, setActiveStep] = useState(
     defaultActiveStep ?? data?.step ?? 0
   )
-  const stepsMemo = useMemo(() => steps, [])
+  const stepsMemo = useMemo(() => steps, []) // eslint-disable-line
 
   return (
     <Grid container direction='column' spacing={2}>

@@ -33,7 +33,7 @@ describe('CorporateIdPreview', () => {
 
   it('renders nothing if loading', () => {
     jest
-      .spyOn(allCorporateIdentitiesHook, 'useAllCorporateIdentities')
+      .spyOn(allCorporateIdentitiesHook, 'useAllCorporates')
       .mockReturnValue(
         generateInfiniteQueryResult({ queryStatus: QueryStatus.Loading })
       )
@@ -45,7 +45,7 @@ describe('CorporateIdPreview', () => {
 
   it('renders NoIdentity if data.list is empty', () => {
     jest
-      .spyOn(allCorporateIdentitiesHook, 'useAllCorporateIdentities')
+      .spyOn(allCorporateIdentitiesHook, 'useAllCorporates')
       .mockReturnValue(generateInfiniteQueryResult({ list: [] }))
 
     render(<CorporatePreview />)
@@ -58,7 +58,7 @@ describe('CorporateIdPreview', () => {
 
   it('renders CompanyInformation with correct props', () => {
     jest
-      .spyOn(allCorporateIdentitiesHook, 'useAllCorporateIdentities')
+      .spyOn(allCorporateIdentitiesHook, 'useAllCorporates')
       .mockReturnValue(generateInfiniteQueryResult({ list: [corporate] }))
 
     render(<CorporatePreview />)
@@ -68,7 +68,7 @@ describe('CorporateIdPreview', () => {
 
   it('renders Section with correct props', () => {
     jest
-      .spyOn(allCorporateIdentitiesHook, 'useAllCorporateIdentities')
+      .spyOn(allCorporateIdentitiesHook, 'useAllCorporates')
       .mockReturnValue(generateInfiniteQueryResult({ list: [corporate] }))
 
     render(<CorporatePreview />)

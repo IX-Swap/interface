@@ -6,7 +6,6 @@ import { CorporateInfo } from 'app/pages/_identity/components/CorporateIdentityV
 import React from 'react'
 import { IdentityDocumentsView } from 'app/pages/_identity/components/IdentityDocumentsView/IdentityDocumentsView'
 import { CountryTaxDeclaration } from 'app/pages/_identity/components/CountryTaxDeclarations/CountryTaxDeclaration'
-import { InvestorDeclarationView } from 'app/pages/_identity/components/IndividualIdentityView/InvestorDeclarationView/InvestorDeclarationView'
 import { useIdentitiesRouter } from 'app/pages/_identity/router'
 import { useAllCorporates } from 'app/pages/_identity/hooks/useAllCorporates'
 
@@ -16,7 +15,7 @@ export const CorporateIssuerView = () => {
     data: { map },
     isLoading
   } = useAllCorporates({})
-  const data = map[params.identityId as string]
+  const data = map[params.identityId]
 
   if (isLoading || data === undefined) {
     return null

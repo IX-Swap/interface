@@ -43,7 +43,8 @@ describe('renderIndividualOrCompanyName', () => {
       network: network,
       memo: 'test memo',
       createdAt: '01-01-2000',
-      updatedAt: '01-01-2000'
+      updatedAt: '01-01-2000',
+      authorizations: []
     }
 
     expect(renderIndividualOrCompanyName('Jane', withdrawalAddress)).toBe(

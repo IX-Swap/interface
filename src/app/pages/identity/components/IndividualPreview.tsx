@@ -4,7 +4,6 @@ import { Section } from 'app/pages/identity/components/Section'
 import { ViewButton } from 'app/pages/identity/components/ViewButton'
 import { useIndividualIdentity } from 'hooks/identity/useIndividualIdentity'
 import { useIdentitiesRouter } from 'app/pages/_identity/router'
-import { NoIdentity } from 'app/pages/identity/components/NoIdentity'
 import { IndividualInfoView } from 'app/pages/identity/components/IndividualInfoView'
 import { VSpacer } from 'components/VSpacer'
 

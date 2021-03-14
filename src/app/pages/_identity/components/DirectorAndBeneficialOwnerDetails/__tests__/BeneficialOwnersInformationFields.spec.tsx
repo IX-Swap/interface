@@ -12,6 +12,12 @@ describe('BeneficialOwnersFields', () => {
       }
     ]
   }
+  const props = {
+    rootName: 'beneficialOwners',
+    index: 0,
+    fieldId: '123',
+    defaultValue: {} as any
+  }
   afterEach(async () => {
     await cleanup()
     jest.clearAllMocks()
@@ -20,11 +26,7 @@ describe('BeneficialOwnersFields', () => {
   it('renders without errors', () => {
     render(
       <Form>
-        <BeneficialOwnersInformationFields
-          rootName='beneficialOwners'
-          index={0}
-          fieldId='123'
-        />
+        <BeneficialOwnersInformationFields {...props} />
       </Form>
     )
   })
@@ -32,11 +34,7 @@ describe('BeneficialOwnersFields', () => {
   it('renders labels and components correctly', () => {
     const { getByLabelText } = render(
       <Form defaultValues={defaultValues}>
-        <BeneficialOwnersInformationFields
-          rootName='beneficialOwners'
-          index={0}
-          fieldId='123'
-        />
+        <BeneficialOwnersInformationFields {...props} />
       </Form>
     )
 

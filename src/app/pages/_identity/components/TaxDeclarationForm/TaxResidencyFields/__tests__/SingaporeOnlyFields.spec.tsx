@@ -1,18 +1,9 @@
 import React from 'react'
-import * as useTaxResidencies from 'app/pages/_identity/components/TaxDeclarationForm/hooks/useTaxResidencies'
 import { SingaporeOnlyFields } from 'app/pages/_identity/components/TaxDeclarationForm/TaxResidencyFields/SingaporeOnlyFields'
 import { Form } from 'components/form/Form'
 import { render, cleanup } from 'test-utils'
 
 describe('SingaporeOnlyFields', () => {
-  beforeEach(() => {
-    const objResponse = { singaporeOnly: true }
-
-    jest
-      .spyOn(useTaxResidencies, 'useTaxResidencies')
-      .mockImplementation(() => objResponse as any)
-  })
-
   afterEach(async () => {
     await cleanup()
     jest.clearAllMocks()

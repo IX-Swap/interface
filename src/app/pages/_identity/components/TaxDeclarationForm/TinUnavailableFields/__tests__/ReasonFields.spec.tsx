@@ -4,6 +4,12 @@ import React from 'react'
 import { render, cleanup } from 'test-utils'
 
 describe('ReasonFields', () => {
+  const props = {
+    disabled: false,
+    index: 0,
+    defaultValue: {} as any
+  }
+
   afterEach(async () => {
     await cleanup()
     jest.clearAllMocks()
@@ -12,7 +18,7 @@ describe('ReasonFields', () => {
   it('renders without errors', () => {
     render(
       <Form>
-        <ReasonFields disabled={false} index={0} />
+        <ReasonFields {...props} />
       </Form>
     )
   })
@@ -20,7 +26,7 @@ describe('ReasonFields', () => {
   it('renders with correct props', () => {
     const { getByLabelText } = render(
       <Form>
-        <ReasonFields disabled={true} index={0} />
+        <ReasonFields {...props} />
       </Form>
     )
 

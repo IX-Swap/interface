@@ -10,15 +10,13 @@ import { InvestorDeclarationView } from 'app/pages/_identity/components/Individu
 import { useIdentitiesRouter } from 'app/pages/_identity/router'
 import { useAllCorporates } from 'app/pages/_identity/hooks/useAllCorporates'
 
-export interface CorporateIdentityViewProps {}
-
 export const CorporateIdentityView = () => {
   const { params } = useIdentitiesRouter()
   const {
     data: { map },
     isLoading
   } = useAllCorporates({})
-  const data = map[params.identityId as string]
+  const data = map[params.identityId]
 
   if (isLoading || data === undefined) {
     return null

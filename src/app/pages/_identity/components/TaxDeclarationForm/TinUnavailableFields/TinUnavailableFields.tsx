@@ -25,7 +25,7 @@ export const TinUnavailableFields = (props: TinUnavailableFieldsProps) => {
       setValue(`taxResidencies[${index}].taxIdentificationNumber`, '')
       clearErrors(`taxResidencies[${index}].taxIdentificationNumber`)
     }
-  }, [isTinAvailable])
+  }, [isTinAvailable]) // eslint-disable-line
 
   return (
     <Grid container direction='column' spacing={2}>

@@ -19,7 +19,7 @@ describe('TinUnavailableFields', () => {
   it('renders without errors', () => {
     render(
       <Form>
-        <TinUnavailableFields index={0} />
+        <TinUnavailableFields index={0} defaultValue={{} as any} />
       </Form>
     )
   })

@@ -15,8 +15,6 @@ export const AddressFields = (props: AddressFieldsProps): JSX.Element => {
   const { rootName = 'address', defaultValue } = props
   const { control } = useFormContext<IdentityAddress>()
 
-  const controlDefaultValues = control.defaultValuesRef.current
-
   return (
     <Grid container spacing={5} className={privateClassNames()}>
       <Grid item xs={12} sm={6} md={4}>

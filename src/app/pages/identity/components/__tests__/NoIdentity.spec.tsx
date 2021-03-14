@@ -5,7 +5,6 @@ import {
   NoIdentity,
   NoIdentityProps
 } from 'app/pages/identity/components/NoIdentity'
-import { IdentityRoute } from 'app/pages/_identity/router'
 
 jest.mock('components/AppRouterLink', () => ({
   AppRouterLinkComponent: jest.fn(({ children }) => children)
@@ -13,7 +12,6 @@ jest.mock('components/AppRouterLink', () => ({
 
 describe('NoIdentity', () => {
   const props: NoIdentityProps = {
-    link: Object.keys(IdentityRoute)[0] as keyof typeof IdentityRoute,
     text: 'Test text'
   }
 
@@ -37,7 +35,6 @@ describe('NoIdentity', () => {
 
     expect(AppRouterLinkComponent).toBeCalledWith(
       expect.objectContaining({
-        to: IdentityRoute[props.link],
         children: expect.anything()
       }),
       {}

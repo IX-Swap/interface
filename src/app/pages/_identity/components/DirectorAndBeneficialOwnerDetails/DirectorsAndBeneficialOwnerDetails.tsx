@@ -1,7 +1,6 @@
 import { Grid } from '@material-ui/core'
-import React, { useEffect } from 'react'
+import React from 'react'
 import { DirectorsAndBeneficialOwnerFields } from 'app/pages/_identity/components/DirectorAndBeneficialOwnerDetails/DirectorsAndBeneficialOwnerFields'
-import { useFormContext } from 'react-hook-form'
 
 export const DirectorsAndBeneficialOwnerDetails = () => {
   return (

@@ -1,5 +1,4 @@
 import { InternationalFields } from 'app/pages/_identity/components/TaxDeclarationForm/TaxResidencyFields/InternationalFields'
-import * as useTaxResidencies from 'app/pages/_identity/components/TaxDeclarationForm/hooks/useTaxResidencies'
 import React from 'react'
 import { render, cleanup } from 'test-utils'
 import { Form } from 'components/form/Form'
@@ -14,14 +13,6 @@ jest.mock(
 )
 
 describe('InternationalFields', () => {
-  beforeEach(() => {
-    const objResponse = { singaporeOnly: false }
-
-    jest
-      .spyOn(useTaxResidencies, 'useTaxResidencies')
-      .mockImplementation(() => objResponse as any)
-  })
-
   afterEach(async () => {
     await cleanup()
     jest.clearAllMocks()

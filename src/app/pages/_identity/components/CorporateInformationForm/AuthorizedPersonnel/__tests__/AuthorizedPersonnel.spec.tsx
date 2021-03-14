@@ -19,7 +19,8 @@ describe('AuthorizedPersonnel', () => {
     remove: removeMock,
     isLast: true,
     total: 1,
-    max: 5
+    max: 5,
+    defaultValue: {} as any
   }
 
   afterEach(async () => {

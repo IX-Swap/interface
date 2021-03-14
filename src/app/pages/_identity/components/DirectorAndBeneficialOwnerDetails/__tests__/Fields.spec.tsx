@@ -40,7 +40,8 @@ describe('Fields', () => {
     total: 1,
     max: 5,
     sectionTitle: 'Directors',
-    informationFields: <></>
+    informationFields: <></>,
+    defaultValue: {} as any
   }
 
   afterEach(async () => {
