@@ -1,19 +1,19 @@
 import { Grid } from '@material-ui/core'
-import { CompanyPersonnel } from 'app/pages/_identity/components/CorporateIdentityView/CompanyPersonnel'
+import { BeneficialOwner } from 'app/pages/_identity/components/CorporateIdentityView/BeneficialOwner'
 import React from 'react'
 import { Personnel } from 'types/identity'
 
-export interface PersonnelListProps {
+export interface BeneficialOwnersListProps {
   personnel: Personnel[]
   showDocumentHeader?: boolean
   documentsTitle?: string
 }
 
-export const PersonnelList = ({
+export const BeneficialOwnersList = ({
   personnel,
   showDocumentHeader = false,
   documentsTitle = 'Documents'
-}: PersonnelListProps) => {
+}: BeneficialOwnersListProps) => {
   if (personnel.length < 1) {
     return null
   }
@@ -22,7 +22,7 @@ export const PersonnelList = ({
     <Grid container direction='column' spacing={6}>
       {personnel.map((personnel, i) => (
         <Grid item key={i}>
-          <CompanyPersonnel
+          <BeneficialOwner
             personnel={personnel}
             showDocumentHeader={showDocumentHeader}
             documentsTitle={documentsTitle}

@@ -2,14 +2,11 @@ import React from 'react'
 import { Box, Grid } from '@material-ui/core'
 import { FormSectionHeader } from 'app/components/DSO/components/FormSectionHeader'
 import { DeclarationsList } from 'app/pages/_identity/components/DeclarationsList/DeclarationsList'
-import {
-  CorporateIdentity,
-  IndividualIdentity
-} from '../../../../../../types/identity'
+import { CorporateIdentity, IndividualIdentity } from 'types/identity'
 import {
   investorDeclarationLabelMap,
   corporateInvestorDeclarationLabelMap,
-  optInDeclarationLabelMap
+  optInDeclarationLabelMapView
 } from '../../InvestorDeclarationForm/InvestorDeclarationForm'
 import { IdentityType } from 'app/pages/identity/utils'
 
@@ -106,7 +103,7 @@ export const InvestorDeclarationView: React.FC<InvestorDeclarationViewProps> = (
       <DeclarationsList
         title='I confirm to be treated as an “Accredited Investor” by InvestaX'
         data={optInRequirement}
-        labelMap={optInDeclarationLabelMap}
+        labelMap={optInDeclarationLabelMapView}
       />
       {Object.values(accreditedInvestorOptOut).find(item => item) !==
       undefined ? (

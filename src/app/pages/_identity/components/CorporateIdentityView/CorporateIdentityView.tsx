@@ -1,6 +1,7 @@
 import { Grid } from '@material-ui/core'
 import { FormSectionHeader } from 'app/pages/_identity/components/FormSectionHeader'
 import { PersonnelList } from 'app/pages/_identity/components/CorporateIdentityView/PersonnelList'
+import { BeneficialOwnersList } from 'app/pages/_identity/components/CorporateIdentityView/BeneficialOwnersList'
 import { CorporateAddress } from 'app/pages/_identity/components/CorporateIdentityView/CorporateAddress'
 import { CorporateInfo } from 'app/pages/_identity/components/CorporateIdentityView/CorporateInfo'
 import React from 'react'
@@ -10,15 +11,13 @@ import { InvestorDeclarationView } from 'app/pages/_identity/components/Individu
 import { useIdentitiesRouter } from 'app/pages/_identity/router'
 import { useAllCorporates } from 'app/pages/_identity/hooks/useAllCorporates'
 
-export interface CorporateIdentityViewProps {}
-
 export const CorporateIdentityView = () => {
   const { params } = useIdentitiesRouter()
   const {
     data: { map },
     isLoading
   } = useAllCorporates({})
-  const data = map[params.identityId as string]
+  const data = map[params.identityId]
 
   if (isLoading || data === undefined) {
     return null
@@ -26,7 +25,7 @@ export const CorporateIdentityView = () => {
 
   return (
     <Grid container spacing={6} direction='column'>
-      <Grid item>
+      <Grid item style={{ paddingBottom: 0 }}>
         <FormSectionHeader title='Overview' />
         <CorporateInfo data={data} />
       </Grid>
@@ -40,18 +39,18 @@ export const CorporateIdentityView = () => {
       <Grid item>
         <FormSectionHeader title='Company Authorized Personnel' />
         <PersonnelList
-          personnels={data.representatives ?? []}
+          personnel={data.representatives ?? []}
           documentsTitle='Authorization Documents'
         />
       </Grid>
       <Grid item>
         <FormSectionHeader title='Directors/Partners/People with Executive Authority' />
-        <PersonnelList personnels={data.directors ?? []} showDocumentHeader />
+        <PersonnelList personnel={data.directors ?? []} showDocumentHeader />
       </Grid>
-      <Grid item>
+      <Grid item style={{ paddingBottom: 0, paddingTop: 0 }}>
         <FormSectionHeader title='Beneficial Owners Information' />
-        <PersonnelList
-          personnels={data.beneficialOwners ?? []}
+        <BeneficialOwnersList
+          personnel={data.beneficialOwners ?? []}
           showDocumentHeader
         />
       </Grid>

@@ -16,7 +16,7 @@ export const CorporateIssuerView = () => {
     data: { map },
     isLoading
   } = useAllCorporates({})
-  const data = map[params.identityId as string]
+  const data = map[params.identityId]
 
   if (isLoading || data === undefined) {
     return null
@@ -38,18 +38,18 @@ export const CorporateIssuerView = () => {
       <Grid item>
         <FormSectionHeader title='Company Authorized Personnel' />
         <PersonnelList
-          personnels={data.representatives ?? []}
+          personnel={data.representatives ?? []}
           documentsTitle='Authorization Documents'
         />
       </Grid>
       <Grid item>
         <FormSectionHeader title='Directors/Partners/People with Executive Authority' />
-        <PersonnelList personnels={data.directors ?? []} showDocumentHeader />
+        <PersonnelList personnel={data.directors ?? []} showDocumentHeader />
       </Grid>
       <Grid item>
         <FormSectionHeader title='Beneficial Owners Information' />
         <PersonnelList
-          personnels={data.beneficialOwners ?? []}
+          personnel={data.beneficialOwners ?? []}
           showDocumentHeader
         />
       </Grid>

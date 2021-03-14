@@ -1,7 +1,8 @@
-import { Box, Grid, Typography } from '@material-ui/core'
-import { AddressView } from 'app/pages/_identity/components/IndividualIdentityView/AddressView/AddressView'
+import { Grid } from '@material-ui/core'
 import React from 'react'
 import { CorporateIdentity } from 'types/identity'
+import { LabelledValue } from 'components/LabelledValue'
+import { hasValue } from 'helpers/forms'
 
 export interface CorporateAddressProps {
   registeredAddress: CorporateIdentity['companyAddress']
@@ -13,25 +14,24 @@ export const CorporateAddress = ({
   mailingAddress
 }: CorporateAddressProps) => {
   return (
-    <Grid container direction='column' spacing={3}>
+    <Grid container spacing={3}>
       {mailingAddress !== undefined ? (
-        <Grid item>
-          <Typography variant='subtitle1'>
-            Address for Correspondence
-          </Typography>
-          <Box mb={3} />
-          <AddressView data={mailingAddress} />
+        <Grid item xs={12} md={4}>
+          <LabelledValue
+            value={Object.values(mailingAddress)
+              .filter(address => hasValue(address))
+              .join(', ')}
+            label='Address for Correspondence'
+          />
         </Grid>
       ) : null}
-
-      <Grid item spacing={3} style={{ marginTop: 30 }}>
-        {mailingAddress !== undefined ? (
-          <>
-            <Typography variant='subtitle1'>Registered Address</Typography>
-            <Box mb={3} />
-          </>
-        ) : null}
-        <AddressView data={registeredAddress} />
+      <Grid item xs={12} md={4}>
+        <LabelledValue
+          value={Object.values(registeredAddress)
+            .filter(address => hasValue(address))
+            .join(', ')}
+          label='Registered Address'
+        />
       </Grid>
     </Grid>
   )
