@@ -15,7 +15,7 @@ export const TaxResidencyFieldArray = () => {
     if (taxResidencies === undefined || taxResidencies.length < 1) {
       control.setValue('taxResidencies', [{}])
     }
-    //eslint-disable-next-line
+    // eslint-disable-next-line
   }, [])
 
   return (

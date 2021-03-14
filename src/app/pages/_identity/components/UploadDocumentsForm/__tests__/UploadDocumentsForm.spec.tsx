@@ -3,7 +3,7 @@ import { render, cleanup } from 'test-utils'
 import { UploadDocumentsForm } from 'app/pages/_identity/components/UploadDocumentsForm/UploadDocumentsForm'
 
 jest.mock(
-  'app/pages/identity/components/UploadDocumentsForm/UploadDocumentField/UploadDocumentField',
+  'app/pages/_identity/components/UploadDocumentsForm/UploadDocumentField/UploadDocumentField',
   () => ({
     UploadDocumentField: jest.fn(() => null)
   })

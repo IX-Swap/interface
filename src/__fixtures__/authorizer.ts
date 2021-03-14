@@ -74,7 +74,11 @@ export const corporate: CorporateIdentity = {
       accreditedShareholders: false,
       partnership: false,
       accreditedBeneficiaries: false,
-      accreditedSettlors: false
+      accreditedSettlors: false,
+      digitalSecurities: false,
+      digitalSecuritiesIssuance: false,
+      allServices: false,
+      primaryOfferingServices: false
     }
   },
   status: 'Submitted',
@@ -138,7 +142,11 @@ export const individual: IndividualIdentity = {
       accreditedShareholders: false,
       partnership: false,
       accreditedBeneficiaries: false,
-      accreditedSettlors: false
+      accreditedSettlors: false,
+      digitalSecurities: false,
+      digitalSecuritiesIssuance: false,
+      allServices: false,
+      primaryOfferingServices: false
     }
   },
   documents: [],

@@ -1,7 +1,6 @@
 import { LEGAL_ENTITY_STATUS_LIST } from 'components/form/LegalEntityStatusSelect'
-import { dir } from 'console'
 import { last } from 'lodash'
-import { CorporateIdentity, IndividualIdentity } from 'types/identity'
+import { CorporateIdentity } from 'types/identity'
 import {
   CorporateInvestorDeclarationFormValues,
   CorporateInvestorTaxDeclarationFormValues,

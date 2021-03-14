@@ -3,7 +3,7 @@ import { render, cleanup } from 'test-utils'
 import { useIdentitiesRouter } from 'app/pages/_identity/router'
 import { IdentityRoot } from 'app/pages/_identity/IdentityRoot'
 
-jest.mock('app/pages/identity/router')
+jest.mock('app/pages/_identity/router')
 
 const useIdentitiesRouterMock = useIdentitiesRouter as jest.Mock<
   Partial<ReturnType<typeof useIdentitiesRouter>>

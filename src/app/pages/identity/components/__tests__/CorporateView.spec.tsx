@@ -6,9 +6,7 @@ import {
 } from 'app/pages/identity/components/CorporateView'
 import { corporate } from '__fixtures__/identity'
 
-jest.mock('app/pages/identity/components/CompanyInfoView', () => ({
-  CompanyInfoView: jest.fn(() => null)
-}))
+window.URL.revokeObjectURL = jest.fn()
 
 describe('CorporateView', () => {
   const props: CorporateViewProps = { data: corporate }

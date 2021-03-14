@@ -17,12 +17,24 @@ export interface FormStepperProps {
   createMutation: MutationResultPair<any, any, any, any>
   editMutation: MutationResultPair<any, any, any, any>
   submitMutation: MutationResultPair<any, any, any, any>
+  defaultActiveStep?: number
+  shouldSaveOnMove?: boolean
 }
 
 export const FormStepper = (props: FormStepperProps) => {
-  const { steps, data, createMutation, editMutation, submitMutation } = props
-  const [activeStep, setActiveStep] = useState(data?.step ?? 0)
-  const stepsMemo = useMemo(() => steps, [])
+  const {
+    steps,
+    data,
+    createMutation,
+    editMutation,
+    submitMutation,
+    shouldSaveOnMove = true,
+    defaultActiveStep
+  } = props
+  const [activeStep, setActiveStep] = useState(
+    defaultActiveStep ?? data?.step ?? 0
+  )
+  const stepsMemo = useMemo(() => steps, []) // eslint-disable-line
 
   return (
     <Grid container direction='column' spacing={2}>
@@ -48,6 +60,7 @@ export const FormStepper = (props: FormStepperProps) => {
             createMutation={createMutation}
             editMutation={editMutation}
             submitMutation={submitMutation}
+            shouldSaveOnMove={shouldSaveOnMove}
           />
         </Grid>
       ))}

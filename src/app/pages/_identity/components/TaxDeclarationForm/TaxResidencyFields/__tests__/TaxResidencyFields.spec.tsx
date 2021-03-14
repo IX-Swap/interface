@@ -6,14 +6,14 @@ import { InternationalFields } from 'app/pages/_identity/components/TaxDeclarati
 import { Form } from 'components/form/Form'
 
 jest.mock(
-  'app/pages/identity/components/TaxDeclarationForm/TaxResidencyFields/SingaporeOnlyFields',
+  'app/pages/_identity/components/TaxDeclarationForm/TaxResidencyFields/SingaporeOnlyFields',
   () => ({
     SingaporeOnlyFields: jest.fn(() => null)
   })
 )
 
 jest.mock(
-  'app/pages/identity/components/TaxDeclarationForm/TaxResidencyFields/InternationalFields',
+  'app/pages/_identity/components/TaxDeclarationForm/TaxResidencyFields/InternationalFields',
   () => ({
     InternationalFields: jest.fn(() => null)
   })

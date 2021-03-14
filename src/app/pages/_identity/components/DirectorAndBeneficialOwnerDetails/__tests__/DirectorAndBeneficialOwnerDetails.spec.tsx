@@ -1,4 +1,5 @@
 import { DirectorsAndBeneficialOwnerDetails } from 'app/pages/_identity/components/DirectorAndBeneficialOwnerDetails/DirectorsAndBeneficialOwnerDetails'
+import { Form } from 'components/form/Form'
 import React from 'react'
 import { render, cleanup } from 'test-utils'
 
@@ -9,6 +10,10 @@ describe('DirectorAndBeneficialOwnerDetails', () => {
   })
 
   it('renders without errors', () => {
-    render(<DirectorsAndBeneficialOwnerDetails />)
+    render(
+      <Form>
+        <DirectorsAndBeneficialOwnerDetails />
+      </Form>
+    )
   })
 })

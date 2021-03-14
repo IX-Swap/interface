@@ -19,7 +19,8 @@ describe('AuthorizedPersonnel', () => {
     remove: removeMock,
     isLast: true,
     total: 1,
-    max: 5
+    max: 5,
+    defaultValue: {} as any
   }
 
   afterEach(async () => {
@@ -48,7 +49,7 @@ describe('AuthorizedPersonnel', () => {
   })
 
   it('handles remove buttons correctly', () => {
-    props.isLast = false
+    props.total = 2
 
     const { getByText } = render(
       <Form>

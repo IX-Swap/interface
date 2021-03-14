@@ -78,22 +78,22 @@ describe('useOnboardingSteps', () => {
     })
   })
 
-  it('returns correct values when corporate identity type is passed and asIssuer is true', async () => {
-    await act(async () => {
-      const asIssuerSteps = getIdentityOnboardingSteps(
-        'corporate',
-        'Draft',
-        true
-      )
-      const { result } = renderHook(() => useOnboardingSteps('corporate', true))
+  // it('returns correct values when corporate identity type is passed and asIssuer is true', async () => {
+  //   await act(async () => {
+  //     const asIssuerSteps = getIdentityOnboardingSteps(
+  //       'corporate',
+  //       'Draft',
+  //       true
+  //     )
+  //     const { result } = renderHook(() => useOnboardingSteps('corporate', true))
 
-      await waitFor(
-        () => {
-          expect(result.current.steps).toEqual(asIssuerSteps)
-          expect(result.current.activeStep).toEqual(1)
-        },
-        { timeout: 1000 }
-      )
-    })
-  })
+  //     await waitFor(
+  //       () => {
+  //         expect(result.current.steps).toEqual(asIssuerSteps)
+  //         expect(result.current.activeStep).toEqual(1)
+  //       },
+  //       { timeout: 1000 }
+  //     )
+  //   })
+  // })
 })

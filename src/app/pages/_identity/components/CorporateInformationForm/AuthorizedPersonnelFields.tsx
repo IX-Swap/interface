@@ -16,7 +16,7 @@ export const AuthorizedPersonnelFields = () => {
     if (representatives === undefined) {
       control.setValue('representatives', [{}])
     }
-  }, [])
+  }, []) // eslint-disable-line
 
   return (
     <>

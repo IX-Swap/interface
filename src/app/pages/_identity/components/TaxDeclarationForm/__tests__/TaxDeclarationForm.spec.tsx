@@ -6,21 +6,21 @@ import { TaxResidencyFields } from 'app/pages/_identity/components/TaxDeclaratio
 import { UsCitizenshipConfirmation } from 'app/pages/_identity/components/TaxDeclarationForm/UsCitizenshipConfirmation/UsCitizenshipConfirmation'
 
 jest.mock(
-  'app/pages/identity/components/TaxDeclarationForm/TaxDeclarationInfoDialog/TaxDeclarationInfoDialog',
+  'app/pages/_identity/components/TaxDeclarationForm/TaxDeclarationInfoDialog/TaxDeclarationInfoDialog',
   () => ({
     TaxDeclarationInfoDialog: jest.fn(() => null)
   })
 )
 
 jest.mock(
-  'app/pages/identity/components/TaxDeclarationForm/TaxResidencyFields/TaxResidencyFields',
+  'app/pages/_identity/components/TaxDeclarationForm/TaxResidencyFields/TaxResidencyFields',
   () => ({
     TaxResidencyFields: jest.fn(() => null)
   })
 )
 
 jest.mock(
-  'app/pages/identity/components/TaxDeclarationForm/UsCitizenshipConfirmation/UsCitizenshipConfirmation',
+  'app/pages/_identity/components/TaxDeclarationForm/UsCitizenshipConfirmation/UsCitizenshipConfirmation',
   () => ({
     UsCitizenshipConfirmation: jest.fn(() => null)
   })

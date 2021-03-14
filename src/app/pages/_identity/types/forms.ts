@@ -60,7 +60,7 @@ export interface IndividualAgreementsFormValues {
 }
 
 export interface InvestorCorporateInfoFormValues {
-  logo: string
+  logo?: string
   companyLegalName: string
   registrationNumber: string
   legalEntityStatus: string

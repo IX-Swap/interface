@@ -18,7 +18,7 @@ export const InformationFields = () => {
     if (legalEntityStatus !== 'others') {
       control.setValue('otherLegalEntityStatus', undefined)
     }
-  }, [legalEntityStatus])
+  }, [legalEntityStatus]) // eslint-disable-line
 
   return (
     <>

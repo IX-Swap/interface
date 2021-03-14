@@ -97,7 +97,7 @@ export const identityRoutes: InternalRouteProps[] = [
     exact: true,
     component: EditInvestor
   },
-    {
+  {
     label: 'Create Issuer Identity',
     path: IdentityRoute.createIssuer,
     exact: true,

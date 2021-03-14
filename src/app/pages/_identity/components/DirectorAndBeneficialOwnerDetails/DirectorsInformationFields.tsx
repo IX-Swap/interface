@@ -35,7 +35,7 @@ export const DirectorsInformationFields = ({
               variant='outlined'
               name={[rootName, index, 'fullName']}
               label='Full Name'
-              defaultValue={defaultValue?.fullName ?? null}
+              defaultValue={defaultValue?.fullName ?? ''}
             />
           </Grid>
           <Grid item>
@@ -48,7 +48,7 @@ export const DirectorsInformationFields = ({
               label='Contact Number'
               customRenderer
               fullWidth
-              defaultValue={defaultValue?.contactNumber ?? null}
+              defaultValue={defaultValue?.contactNumber ?? ''}
             />
           </Grid>
         </Grid>
@@ -64,7 +64,7 @@ export const DirectorsInformationFields = ({
               name={[rootName, index, 'designation']}
               label='Designation'
               fullWidth
-              defaultValue={defaultValue?.designation ?? null}
+              defaultValue={defaultValue?.designation ?? ''}
             />
           </Grid>
           <Grid item>
@@ -76,7 +76,7 @@ export const DirectorsInformationFields = ({
               name={[rootName, index, 'email']}
               label='Email Address'
               fullWidth
-              defaultValue={defaultValue?.email ?? null}
+              defaultValue={defaultValue?.email ?? ''}
             />
           </Grid>
         </Grid>
@@ -85,7 +85,7 @@ export const DirectorsInformationFields = ({
         <FormSectionHeader variant='subsection' title='Residential Address' />
         <AddressFields
           rootName={pathToString([rootName, index, 'address'])}
-          defaultValue={defaultValue?.address ?? null}
+          defaultValue={defaultValue?.address ?? ''}
         />
       </Grid>
     </Grid>

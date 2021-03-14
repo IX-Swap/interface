@@ -38,7 +38,12 @@ export const InvestorDeclarationView: React.FC<InvestorDeclarationViewProps> = (
     accreditedShareholders,
     partnership,
     accreditedBeneficiaries,
-    accreditedSettlors
+    accreditedSettlors,
+
+    allServices,
+    digitalSecurities,
+    primaryOfferingServices,
+    digitalSecuritiesIssuance
   } = data.declarations?.investorsStatus ?? {}
 
   const accreditedInvestorDeclaration = {
@@ -64,19 +69,18 @@ export const InvestorDeclarationView: React.FC<InvestorDeclarationViewProps> = (
   }
 
   const accreditedInvestorOptOut = {
-    // To do: fetch from actual data
-    tradingDigitalSecurites: false,
-    fundRaising: false,
-    issuance: false,
-    allServices: false
+    allServices,
+    digitalSecurities,
+    primaryOfferingServices,
+    digitalSecuritiesIssuance
   }
 
   const accreditedInvestorOptOutLabelMap = {
-    tradingDigitalSecurites:
+    digitalSecurities:
       'Trading in digital securities on the InvestaX private exchange',
-    fundRaising:
+    primaryOfferingServices:
       'Use of Primary Offering Services for the purpose of fundraising',
-    issuance: 'Issuance of Digital Securities by the Issuers',
+    digitalSecuritiesIssuance: 'Issuance of Digital Securities by the Issuers',
     allServices: 'Any/all Services/Products offered by InvestaX'
   }
 

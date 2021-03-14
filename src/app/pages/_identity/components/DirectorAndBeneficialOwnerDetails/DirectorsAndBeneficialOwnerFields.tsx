@@ -22,7 +22,7 @@ export const DirectorsAndBeneficialOwnerFields = ({
     if (formValues[name] === undefined) {
       control.setValue(name, [{}])
     }
-  }, [])
+  }, []) // eslint-disable-line
 
   return (
     <FieldsArray name={name} control={control}>

@@ -40,7 +40,8 @@ describe('Fields', () => {
     total: 1,
     max: 5,
     sectionTitle: 'Directors',
-    informationFields: <></>
+    informationFields: <></>,
+    defaultValue: {} as any
   }
 
   afterEach(async () => {
@@ -54,16 +55,6 @@ describe('Fields', () => {
         <Fields {...props} />
       </Form>
     )
-  })
-
-  it('does not render FormSectionHeader when index = 0', () => {
-    render(
-      <Form>
-        <Fields {...props} />
-      </Form>
-    )
-
-    expect(FormSectionHeader).not.toHaveBeenCalled()
   })
 
   it('render FormSectionHeader when index > 0', () => {

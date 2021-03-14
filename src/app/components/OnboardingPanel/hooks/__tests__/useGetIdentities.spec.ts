@@ -18,7 +18,7 @@ describe('useGetIdentities', () => {
       .mockImplementation(() => individualIdentityResponse as any)
 
     jest
-      .spyOn(useAllCorporateIdentities, 'useAllCorporateIdentities')
+      .spyOn(useAllCorporateIdentities, 'useAllCorporates')
       .mockImplementation(() => allCorporateIdentities as any)
   })
 

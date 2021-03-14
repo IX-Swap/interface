@@ -7,7 +7,8 @@ describe('AuthorizationDocuments', () => {
   const props = {
     fieldId: '123',
     rootName: 'representatives',
-    index: 0
+    index: 0,
+    defaultValue: {} as any
   }
 
   afterEach(async () => {

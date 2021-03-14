@@ -7,6 +7,7 @@ import { OptOutInfoAction } from 'app/pages/_identity/components/InvestorDeclara
 export const OptOutInfoDialog = () => {
   return (
     <Dialog
+      keepMounted
       button={
         <Typography
           component='span'
@@ -18,7 +19,7 @@ export const OptOutInfoDialog = () => {
       }
       title='Accredited Investor Opt-Out Form'
       content={<OptOutInfoContent />}
-      actions={<OptOutInfoAction onOptOut={() => console.log('opt out')} />}
+      actions={<OptOutInfoAction />}
       fullWidth
       scroll='body'
       maxWidth='md'

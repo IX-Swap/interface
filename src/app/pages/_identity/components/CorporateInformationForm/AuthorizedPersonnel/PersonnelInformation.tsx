@@ -28,7 +28,7 @@ export const PersonnelInformation = ({
           <Grid item xs={12} sm={6} md={4}>
             <TypedField
               key={fieldId}
-              defaultValue={defaultValue?.fullName ?? null}
+              defaultValue={defaultValue?.fullName ?? ''}
               component={TextField}
               control={control}
               variant='outlined'
@@ -40,7 +40,7 @@ export const PersonnelInformation = ({
             <TypedField
               key={fieldId}
               component={TextField}
-              defaultValue={defaultValue?.designation ?? null}
+              defaultValue={defaultValue?.designation ?? ''}
               control={control}
               variant='outlined'
               name={[rootName, index, 'designation']}
@@ -55,7 +55,7 @@ export const PersonnelInformation = ({
             <TypedField
               key={fieldId}
               component={TextField}
-              defaultValue={defaultValue?.email ?? null}
+              defaultValue={defaultValue?.email ?? ''}
               control={control}
               variant='outlined'
               name={[rootName, index, 'email']}
@@ -67,7 +67,7 @@ export const PersonnelInformation = ({
               key={fieldId}
               component={PhoneInput}
               valueExtractor={plainValueExtractor}
-              defaultValue={defaultValue?.contactNumber ?? null}
+              defaultValue={defaultValue?.contactNumber ?? ''}
               control={control}
               name={[rootName, index, 'contactNumber']}
               label='Contact Number'

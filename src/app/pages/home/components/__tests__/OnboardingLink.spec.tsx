@@ -7,7 +7,7 @@ describe('OnboardingLink', () => {
   const props = {
     icon: icon,
     label: 'Link',
-    link: '/link',
+    to: '/link',
     color: 'primary'
   }
 

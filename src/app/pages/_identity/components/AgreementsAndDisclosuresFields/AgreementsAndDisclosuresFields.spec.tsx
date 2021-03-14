@@ -33,21 +33,21 @@ describe('AgreementsAndDisclosuresFields', () => {
     expect(TypedField).toHaveBeenNthCalledWith(
       1,
       expect.objectContaining({
-        name: ['declarations', 'agreements', 'investor']
+        name: 'investor'
       }),
       {}
     )
     expect(TypedField).toHaveBeenNthCalledWith(
       2,
       expect.objectContaining({
-        name: ['declarations', 'agreements', 'custody']
+        name: 'custody'
       }),
       {}
     )
     expect(TypedField).toHaveBeenNthCalledWith(
       3,
       expect.objectContaining({
-        name: ['declarations', 'agreements', 'disclosures']
+        name: 'disclosure'
       }),
       {}
     )

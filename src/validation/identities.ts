@@ -1,10 +1,6 @@
 import * as yup from 'yup'
 import 'yup-phone'
 import {
-  CorporateIdentityFormValues,
-  IndividualIdentityFormValues
-} from 'app/pages/identity/components/types'
-import {
   addressSchema,
   dateSchema,
   documentsArraySchema,

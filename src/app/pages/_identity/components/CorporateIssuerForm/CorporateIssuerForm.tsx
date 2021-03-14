@@ -1,45 +1,21 @@
-import React, { useEffect, Fragment } from 'react'
+import React, { useEffect } from 'react'
 import { FormStepper } from 'app/components/FormStepper/FormStepper'
 import { useAllCorporates } from 'app/pages/_identity/hooks/useAllCorporates'
-import { CorporateInformationForm } from 'app/pages/_identity/components/CorporateInformationForm/CorporateInformationForm'
-import { DirectorsAndBeneficialOwnerDetails } from 'app/pages/_identity/components/DirectorAndBeneficialOwnerDetails/DirectorsAndBeneficialOwnerDetails'
-import {
-  getCorporateInfoFormValues,
-  getCorporateInvestorAgreementsAndDisclosuresFormValues,
-  getCorporateInvestorDocumentsFormValues,
-  getCorporateInvestorTaxDeclarationFormValues,
-  getDirectorsAndBeneficialOwnersFormValues
-} from 'app/pages/_identity/utils/corporate/forms'
-import {
-  getCorporateInfoRequestPayload,
-  getCorporateInvestorAgreementsRequestPayload,
-  getCorporateInvestorDocumentsRequestPayload,
-  getDirectorsAndBeneficialOwnerRequestPayload
-} from 'app/pages/_identity/utils/corporate/requests'
 import { useCreateCorporate } from 'app/pages/_identity/hooks/useCreateCorporate'
 import { useUpdateCorporate } from 'app/pages/_identity/hooks/useUpdateCorporate'
-import { getTaxDeclarationRequestPayload } from '../../utils/individual/requests'
-import { TaxDeclarationForm } from '../TaxDeclarationForm/TaxDeclarationForm'
-import { CorporateUploadDocumentsForm } from '../UploadDocumentsForm/CorporateUploadDocumentsForm'
-import { AgreementsAndDisclosuresFields } from '../AgreementsAndDisclosuresFields/AgreementsAndDisclosuresFields'
-import { CorporateIdentityView } from 'app/pages/_identity/components/CorporateIdentityView/CorporateIdentityView'
 import { useOnboardingDialog } from 'app/components/OnboardingDialog/hooks/useOnboardingDialog'
 import { useIdentitiesRouter } from 'app/pages/_identity/router'
-import {
-  corporateInvestorAgreementsSchema,
-  corporateInvestorDocumentsSchema,
-  corporateInvestorInfoSchema,
-  corporateTaxDeclarationSchema,
-  directorsAndBeneficialOwnersSchema
-} from 'app/pages/_identity/validation/corporate'
 import { useSubmitCorporate } from 'app/pages/_identity/hooks/useSubmitCorporate'
-import { CorporateIssuerView } from 'app/pages/_identity/components/CorporateIssuerView/CorporateIssuerView'
+import { getIdentityDefaultActiveStep } from 'app/pages/_identity/utils/shared'
+import { useOnboardingJourneys } from 'app/components/OnboardingPanel/hooks/useOnboardingJourneys'
+import { corporateIssuerFormSteps } from './steps'
 
 export const CorporateIssuerForm = () => {
   const { data, isLoading } = useAllCorporates({ type: 'issuer' })
   const { params, current, paths } = useIdentitiesRouter()
   const isNew = current.path === paths.createCorporate
   const identity = isNew ? undefined : data.map[params.identityId]
+  const { isIssuerJourneyCompleted } = useOnboardingJourneys()
 
   const createMutation = useCreateCorporate('issuer')
   const updateMutation = useUpdateCorporate('issuer')
@@ -57,80 +33,21 @@ export const CorporateIssuerForm = () => {
     return <div>Loading...</div>
   }
 
+  const defaultActiveStep = getIdentityDefaultActiveStep({
+    isSubmitted: identity?.status === 'Submitted',
+    lastStepIndex: corporateIssuerFormSteps.length - 1,
+    isJourneyCompleted: isIssuerJourneyCompleted
+  })
+
   return (
     <FormStepper
       data={identity}
+      shouldSaveOnMove={!isIssuerJourneyCompleted}
       createMutation={createMutation}
       editMutation={updateMutation}
       submitMutation={submitMutation}
-      steps={[
-        {
-          label: 'Corporate Information',
-          getFormValues: getCorporateInfoFormValues,
-          getRequestPayload: getCorporateInfoRequestPayload,
-          validationSchema: corporateInvestorInfoSchema,
-          component: () => (
-            <Fragment>
-              <CorporateInformationForm />
-            </Fragment>
-          )
-        },
-        {
-          label: 'Directors and Beneficial Owner Details',
-          getFormValues: getDirectorsAndBeneficialOwnersFormValues,
-          getRequestPayload: getDirectorsAndBeneficialOwnerRequestPayload,
-          validationSchema: directorsAndBeneficialOwnersSchema,
-          component: () => (
-            <Fragment>
-              <DirectorsAndBeneficialOwnerDetails />
-            </Fragment>
-          )
-        },
-        {
-          label: 'Tax Declaration',
-          getFormValues: getCorporateInvestorTaxDeclarationFormValues,
-          getRequestPayload: getTaxDeclarationRequestPayload,
-          validationSchema: corporateTaxDeclarationSchema,
-          component: () => (
-            <Fragment>
-              <TaxDeclarationForm identityType='corporate' />
-            </Fragment>
-          )
-        },
-        {
-          label: 'Upload Documents',
-          getFormValues: getCorporateInvestorDocumentsFormValues,
-          getRequestPayload: getCorporateInvestorDocumentsRequestPayload,
-          validationSchema: corporateInvestorDocumentsSchema,
-          component: () => (
-            <Fragment>
-              <CorporateUploadDocumentsForm />
-            </Fragment>
-          )
-        },
-        {
-          label: 'Agreements and Disclosures',
-          getFormValues: getCorporateInvestorAgreementsAndDisclosuresFormValues,
-          getRequestPayload: getCorporateInvestorAgreementsRequestPayload,
-          validationSchema: corporateInvestorAgreementsSchema,
-          component: () => (
-            <Fragment>
-              <AgreementsAndDisclosuresFields isCorporateIssuerForm />
-            </Fragment>
-          )
-        },
-        {
-          label: 'Review & Submit',
-          getFormValues: () => null,
-          getRequestPayload: {},
-          validationSchema: {},
-          component: () => (
-            <Fragment>
-              <CorporateIssuerView />
-            </Fragment>
-          )
-        }
-      ]}
+      defaultActiveStep={defaultActiveStep}
+      steps={corporateIssuerFormSteps}
     />
   )
 }

@@ -52,15 +52,15 @@ describe('ContentWrapper', () => {
     )
   })
 
-  it('does not render wrapper when not in the onboardingPages path', () => {
-    const { container } = render(
-      <MemoryRouter initialEntries={['/accounts']}>
-        <OnboardingContentWrapper>
-          <div />
-        </OnboardingContentWrapper>
-      </MemoryRouter>
-    )
+  // it('does not render wrapper when not in the onboardingPages path', () => {
+  //   const { container } = render(
+  //     <MemoryRouter initialEntries={['/accounts']}>
+  //       <OnboardingContentWrapper>
+  //         <div />
+  //       </OnboardingContentWrapper>
+  //     </MemoryRouter>
+  //   )
 
-    expect(container.firstElementChild).toBeEmptyDOMElement()
-  })
+  //   expect(container.firstElementChild).toBeEmptyDOMElement()
+  // })
 })

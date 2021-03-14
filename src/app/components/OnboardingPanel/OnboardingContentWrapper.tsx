@@ -29,7 +29,7 @@ export const OnboardingContentWrapper = ({
     isIndividualJourneyCompleted
   } = useOnboardingJourneys()
 
-  let onboardingBasePaths = [
+  const onboardingBasePaths = [
     securityPaths.landing,
     homePaths.landing,
     identityPaths.list

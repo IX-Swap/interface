@@ -22,7 +22,7 @@ export const FundSourceSlider = ({ field, index }: FundSourceSliderProps) => {
     if (!isChecked) {
       setValue(`sourceOfFund[${index}].value`, 0)
     }
-  }, [isChecked])
+  }, [isChecked]) // eslint-disable-line
 
   return (
     <Box width={210} height={38}>

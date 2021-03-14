@@ -22,23 +22,23 @@ export const DeclarationsList = ({ title, data }: DeclarationsListProps) => {
 
   return (
     <Grid container>
-      {title != null && (
+      {title !== undefined && (
         <Grid item xs={12}>
           <Typography variant={'subtitle1'}>{title}</Typography>
         </Grid>
       )}
       {data.map(item => {
         return (
-          <Grid item xs={12}>
+          <Grid item xs={12} key={item.name}>
             {/* @ts-ignore */}
             <TypedField
-              key={item.name}
               customRenderer
               valueExtractor={booleanValueExtractor}
               component={Checkbox}
               control={control}
               label={item.label as any}
               name={item.name}
+              defaultValue={false}
             />
           </Grid>
         )

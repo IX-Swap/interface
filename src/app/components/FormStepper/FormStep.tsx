@@ -3,7 +3,7 @@ import { FormStepperStep } from 'app/components/FormStepper/FormStepper'
 import { MoveButton } from 'app/components/FormStepper/MoveButton'
 import { SaveButton } from 'app/components/FormStepper/SaveButton'
 import { Form } from 'components/form/Form'
-import React, { createElement, Fragment, useEffect } from 'react'
+import React, { createElement, Fragment } from 'react'
 import { MutationResultPair } from 'react-query'
 import { SubmitButton } from './SubmitButton'
 import { VSpacer } from 'components/VSpacer'
@@ -18,6 +18,7 @@ export interface FormStepProps {
   createMutation: MutationResultPair<any, any, any, any>
   editMutation: MutationResultPair<any, any, any, any>
   submitMutation: MutationResultPair<any, any, any, any>
+  shouldSaveOnMove: boolean
 }
 
 export const FormStep = (props: FormStepProps) => {
@@ -30,7 +31,8 @@ export const FormStep = (props: FormStepProps) => {
     data,
     createMutation,
     editMutation,
-    submitMutation
+    submitMutation,
+    shouldSaveOnMove
   } = props
 
   const isCurrentStep = activeStep === index
@@ -39,26 +41,11 @@ export const FormStep = (props: FormStepProps) => {
     return null
   }
 
-  const wasApproved = data?.authorizations.some(
-    ({ status }: any) => status === 'Approved'
-  )
   const hasNextStep = activeStep < totalSteps - 1
   const hasPrevStep = activeStep !== 0
   const isEditing = data !== undefined
   const isLastStep = activeStep === totalSteps - 1
   const saveMutation = isEditing ? editMutation : createMutation
-
-  const goToNextStep = () => {
-    if (hasNextStep) {
-      setActiveStep(activeStep + 1)
-    }
-  }
-
-  const goToPrevStep = () => {
-    if (hasPrevStep) {
-      setActiveStep(activeStep - 1)
-    }
-  }
 
   return (
     <Form
@@ -73,12 +60,14 @@ export const FormStep = (props: FormStepProps) => {
           {hasPrevStep && (
             <Fragment>
               <MoveButton
-                activeStep={activeStep}
-                shouldUpdateStep={!wasApproved}
+                nextStep={activeStep - 1}
+                onClick={setActiveStep}
+                shouldUpdateStep={
+                  hasPrevStep && !isLastStep && shouldSaveOnMove
+                }
                 getRequestPayload={step.getRequestPayload}
                 mutation={saveMutation}
-                onClick={goToPrevStep}
-                isBackButton
+                isBack
               >
                 Back
               </MoveButton>
@@ -99,12 +88,12 @@ export const FormStep = (props: FormStepProps) => {
 
           {hasNextStep && (
             <MoveButton
-              activeStep={activeStep}
               variant={'contained'}
-              shouldUpdateStep={!wasApproved}
+              nextStep={activeStep + 1}
+              onClick={setActiveStep}
+              shouldUpdateStep={hasNextStep && shouldSaveOnMove}
               getRequestPayload={step.getRequestPayload}
               mutation={saveMutation}
-              onClick={goToNextStep}
             >
               Next
             </MoveButton>

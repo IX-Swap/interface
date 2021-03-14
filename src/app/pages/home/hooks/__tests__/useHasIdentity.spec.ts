@@ -28,7 +28,7 @@ describe('useHasIdentity', () => {
     })
 
     jest
-      .spyOn(useAllCorporateIdentities, 'useAllCorporateIdentities')
+      .spyOn(useAllCorporateIdentities, 'useAllCorporates')
       .mockImplementation(() => objResponse as any)
 
     await act(async () => {
@@ -60,7 +60,7 @@ describe('useHasIdentity', () => {
     })
 
     jest
-      .spyOn(useAllCorporateIdentities, 'useAllCorporateIdentities')
+      .spyOn(useAllCorporateIdentities, 'useAllCorporates')
       .mockImplementation(() => objResponse as any)
 
     await act(async () => {
