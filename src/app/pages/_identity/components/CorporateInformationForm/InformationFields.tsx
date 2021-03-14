@@ -42,7 +42,7 @@ export const InformationFields = () => {
         <Grid item xs={12} md='auto' style={{ flexGrow: 1 }}>
           <Grid container spacing={3} style={{ marginTop: isTablet ? 0 : 37 }}>
             <Grid item xs={12} md={4}>
-              <Grid container spacing={3} direction='column'>
+              <Grid container spacing={5} direction='column'>
                 <Grid item>
                   <TypedField
                     customRenderer
@@ -75,7 +75,7 @@ export const InformationFields = () => {
               </Grid>
             </Grid>
             <Grid item xs={12} md={4}>
-              <Grid container spacing={3} direction='column'>
+              <Grid container spacing={5} direction='column'>
                 <Grid item>
                   <TypedField
                     customRenderer

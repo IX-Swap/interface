@@ -18,7 +18,7 @@ export const AuthorizationDocuments = ({
       helperElement={
         <>
           <Box m={1} />
-          <Typography variant='body1'>
+          <Typography variant='body1' style={{ fontSize: 16 }}>
             Board Resolution, Power of Attorney, Partnership Deed, Trust Deed,
             and Others.
           </Typography>

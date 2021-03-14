@@ -4,6 +4,7 @@ import { FormSectionHeader } from 'app/pages/_identity/components/FormSectionHea
 import { DeclarationsList } from 'app/pages/_identity/components/InvestorDeclarationForm/DeclarationsList/DeclartionsList'
 import { SafeguardInfoDialog } from 'app/pages/_identity/components/InvestorDeclarationForm/SafeguardInfoDialog/SafeguardInfoDialog'
 import { IdentityType } from 'app/pages/identity/utils'
+import { OptOutInfoDialog } from 'app/pages/_identity/components/InvestorDeclarationForm/OptOutInfoDialog/OptOutDialog'
 
 export const investorDeclarationLabelMap = {
   personalAssets:
@@ -41,6 +42,16 @@ export const optInDeclarationLabelMap = {
       regulatory investor <SafeguardInfoDialog /> for Accredited Investors.
     </>
   ),
+  rightToOptOut: (
+    <>
+      I have been informed of and understand my right to <OptOutInfoDialog /> of
+      the Accredited Investors status with InvestaX at any point in time.
+    </>
+  )
+}
+
+export const optInDeclarationLabelMapView = {
+  ...optInDeclarationLabelMap,
   rightToOptOut: (
     <>
       I have been informed of and understand my right to opt out of the

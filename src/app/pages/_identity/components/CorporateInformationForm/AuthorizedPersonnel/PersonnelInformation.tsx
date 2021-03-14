@@ -22,7 +22,7 @@ export const PersonnelInformation = ({
   const { control } = useFormContext()
 
   return (
-    <Grid container direction='column' spacing={3}>
+    <Grid container direction='column' spacing={5}>
       <Grid item>
         <Grid container spacing={3}>
           <Grid item xs={12} md={4}>

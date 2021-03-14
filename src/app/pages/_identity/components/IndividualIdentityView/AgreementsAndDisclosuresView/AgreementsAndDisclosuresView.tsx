@@ -11,7 +11,7 @@ export interface AgreementsAndDisclosuresViewProps {
 export const AgreementsAndDisclosuresView = (
   props: AgreementsAndDisclosuresViewProps
 ) => {
-  const { investor, custody, disclosures } =
+  const { investor, custody, disclosure } =
     props.data.declarations.agreements ?? {}
 
   const renderAgreementAndDisclosureLink = (label: string, href: string) => {
@@ -40,7 +40,7 @@ export const AgreementsAndDisclosuresView = (
 
       <Grid item xs={12}>
         <Box display={'flex'} alignItems={'center'} color={'#AAAAAA'}>
-          {disclosures ? <DoneIcon /> : <CloseIcon />}
+          {disclosure ? <DoneIcon /> : <CloseIcon />}
           {renderAgreementAndDisclosureLink('Disclosures', '#')}
         </Box>
       </Grid>

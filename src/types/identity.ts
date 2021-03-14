@@ -155,7 +155,7 @@ export interface BaseIdentity {
     agreements: {
       investor: boolean
       custody: boolean
-      disclosures: boolean
+      disclosure: boolean
     }
   }
   step?: number
@@ -176,7 +176,7 @@ export interface IdentityDeclarations {
     agreements: {
       investor: boolean
       custody: boolean
-      disclosures: boolean
+      disclosure: boolean
     }
   }
 }

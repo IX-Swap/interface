@@ -26,7 +26,11 @@ export const DropzoneAcceptableFiles = ({
   return (
     <>
       <Box pt={1} />
-      <Typography variant='caption' color='textSecondary'>
+      <Typography
+        variant='caption'
+        color='textSecondary'
+        style={{ fontSize: 14 }}
+      >
         Notes: Type of document format supported is {acceptedFilesString}.
       </Typography>
     </>

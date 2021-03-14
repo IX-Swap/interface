@@ -39,7 +39,6 @@ export const useHomeOnboardingSteps = () => {
   }
 
   if (hasActiveIdentityJourney) {
-    debugger
     const activeJourneyIdentityStatus = isIndividualJourneyStarted
       ? individualIdentity?.status
       : isIssuerJourneyStarted
