@@ -31,7 +31,7 @@ export const CorporateInfo = ({ data }: CorporateInfoProps) => {
         <Box width={62} />
       </Hidden>
       <Grid container spacing={3} direction='column'>
-        <Grid item>
+        <Grid item style={{ paddingBottom: 0 }}>
           <Grid container spacing={3}>
             <Grid item xs={12} sm={4}>
               <LabelledValue
@@ -47,7 +47,7 @@ export const CorporateInfo = ({ data }: CorporateInfoProps) => {
             </Grid>
           </Grid>
         </Grid>
-        <Grid item>
+        <Grid item style={{ paddingTop: 0 }}>
           <Grid container spacing={3}>
             <Grid item xs={12} sm={4}>
               <LabelledValue

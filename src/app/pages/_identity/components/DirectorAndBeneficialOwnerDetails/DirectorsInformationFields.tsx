@@ -24,9 +24,9 @@ export const DirectorsInformationFields = ({
   const { control } = useFormContext()
 
   return (
-    <Grid container spacing={5}>
+    <Grid container spacing={3}>
       <Grid item xs={12} md={4}>
-        <Grid container direction='column' spacing={5}>
+        <Grid container direction='column' spacing={3}>
           <Grid item>
             <TypedField
               key={fieldId}
@@ -54,7 +54,7 @@ export const DirectorsInformationFields = ({
         </Grid>
       </Grid>
       <Grid item xs={12} md={4}>
-        <Grid container direction='column' spacing={5}>
+        <Grid container direction='column' spacing={3}>
           <Grid item>
             <TypedField
               key={fieldId}

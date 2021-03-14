@@ -7,7 +7,13 @@ import { TypedField } from 'components/form/TypedField'
 import { FormSectionHeader } from 'app/components/DSO/components/FormSectionHeader'
 import { IndividualAgreementsFormValues } from 'app/pages/_identity/types/forms'
 
-export const AgreementsAndDisclosuresFields = (): JSX.Element => {
+export interface AgreementsAndDisclosuresFieldsProps {
+  isCorporateIssuerForm?: boolean
+}
+
+export const AgreementsAndDisclosuresFields = ({
+  isCorporateIssuerForm = false
+}: AgreementsAndDisclosuresFieldsProps): JSX.Element => {
   const { control } = useFormContext<IndividualAgreementsFormValues>()
 
   const renderAgreementAndDisclosureLink = (label: string, href: string) => {
@@ -31,7 +37,10 @@ export const AgreementsAndDisclosuresFields = (): JSX.Element => {
           valueExtractor={booleanValueExtractor}
           component={Checkbox}
           control={control}
-          label={renderAgreementAndDisclosureLink('Investor Agreement', '#')}
+          label={renderAgreementAndDisclosureLink(
+            isCorporateIssuerForm ? 'Issuer Agreement' : 'Investor Agreement',
+            '#'
+          )}
           name={'investor'}
           data-testid='investor-agreement'
         />

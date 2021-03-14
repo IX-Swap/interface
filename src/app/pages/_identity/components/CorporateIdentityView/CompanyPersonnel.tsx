@@ -18,7 +18,7 @@ export const CompanyPersonnel = ({
   documentsTitle
 }: PersonnelProps) => {
   return (
-    <Grid container direction='column' spacing={3}>
+    <Grid container direction='column' spacing={2}>
       <Grid item>
         <Grid container>
           <Grid item xs={12} md={4}>

@@ -19,17 +19,17 @@ describe('PersonnelList', () => {
   })
 
   it('renders without errors', () => {
-    render(<PersonnelList personnels={personnels} />)
+    render(<PersonnelList personnel={personnels} />)
   })
 
   it('returns null when personnels length < 1', () => {
-    const { container } = render(<PersonnelList personnels={[]} />)
+    const { container } = render(<PersonnelList personnel={[]} />)
 
     expect(container).toBeEmptyDOMElement()
   })
 
   it('renders components correctly', () => {
-    render(<PersonnelList personnels={personnels} />)
+    render(<PersonnelList personnel={personnels} />)
 
     expect(CompanyPersonnel).toHaveBeenNthCalledWith(
       1,

@@ -79,7 +79,7 @@ export const corporateIssuerFormSteps = [
     validationSchema: corporateInvestorAgreementsSchema,
     component: () => (
       <Fragment>
-        <AgreementsAndDisclosuresFields />
+        <AgreementsAndDisclosuresFields isCorporateIssuerForm />
       </Fragment>
     )
   },
@@ -90,7 +90,7 @@ export const corporateIssuerFormSteps = [
     validationSchema: {},
     component: () => (
       <Fragment>
-        <CorporateIdentityView />
+        <CorporateIdentityView isCorporateIssuerForm />
       </Fragment>
     )
   }
