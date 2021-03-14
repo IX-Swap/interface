@@ -58,7 +58,7 @@ export const corporate: CorporateIdentity = {
     agreements: {
       investor: false,
       custody: false,
-      disclosures: false
+      disclosure: false
     },
     tax: { fatca: false },
     investorsStatus: {
@@ -122,7 +122,7 @@ export const individual: IndividualIdentity = {
     agreements: {
       investor: false,
       custody: false,
-      disclosures: false
+      disclosure: false
     },
     tax: { fatca: false },
     investorsStatus: {
