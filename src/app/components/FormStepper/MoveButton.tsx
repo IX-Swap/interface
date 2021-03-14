@@ -3,12 +3,13 @@ import { Button, ButtonProps } from '@material-ui/core'
 import { useFormContext } from 'react-hook-form'
 import { MutationResultPair } from 'react-query'
 
-export interface MoveButtonProps extends ButtonProps {
+export interface MoveButtonProps extends Omit<ButtonProps, 'onClick'> {
   mutation: MutationResultPair<any, any, any, any>
   getRequestPayload: (data: any) => any
-  activeStep: number
   shouldUpdateStep: boolean
-  isBackButton?: boolean
+  nextStep: number
+  isBack?: boolean
+  onClick: (step: number) => any
 }
 
 export const MoveButton = (props: MoveButtonProps) => {
@@ -18,9 +19,9 @@ export const MoveButton = (props: MoveButtonProps) => {
     onClick,
     getRequestPayload,
     variant = 'outlined',
-    activeStep,
     shouldUpdateStep,
-    isBackButton = false
+    nextStep,
+    isBack = false
   } = props
   const [save, { isLoading }] = mutation
   const {
@@ -30,12 +31,10 @@ export const MoveButton = (props: MoveButtonProps) => {
   } = useFormContext()
   const values = watch()
 
-  const handleSave = async (
-    event: React.MouseEvent<HTMLButtonElement, MouseEvent>
-  ) => {
+  const handleSave = async () => {
     let isValid = true
 
-    if (!isBackButton) {
+    if (!isBack) {
       isValid = await trigger()
     }
 
@@ -44,20 +43,21 @@ export const MoveButton = (props: MoveButtonProps) => {
     }
 
     const isDirty = Object.values(dirtyFields).length > 0
-
-    if (isDirty) {
-      const payload = getRequestPayload(values)
-
-      if (shouldUpdateStep) {
-        payload.step = activeStep + 1
-      }
-
-      if (isValid) {
+    const updateStepAndData = async () => {
+      if (typeof getRequestPayload === 'function') {
+        const payload = getRequestPayload(values)
+        payload.step = nextStep
         await save(payload)
-        onClick?.(event)
       }
+      onClick(nextStep)
+    }
+
+    if (shouldUpdateStep) {
+      await updateStepAndData()
+    } else if (isDirty && isValid) {
+      await updateStepAndData()
     } else {
-      onClick?.(event)
+      onClick(nextStep)
     }
   }
 
