@@ -9,7 +9,7 @@ import {
 import {
   investorDeclarationLabelMap,
   corporateInvestorDeclarationLabelMap,
-  optInDeclarationLabelMap
+  optInDeclarationLabelMapView
 } from '../../InvestorDeclarationForm/InvestorDeclarationForm'
 import { IdentityType } from 'app/pages/identity/utils'
 
@@ -41,7 +41,12 @@ export const InvestorDeclarationView: React.FC<InvestorDeclarationViewProps> = (
     accreditedShareholders,
     partnership,
     accreditedBeneficiaries,
-    accreditedSettlors
+    accreditedSettlors,
+
+    allServices,
+    digitalSecurities,
+    primaryOfferingServices,
+    digitalSecuritiesIssuance
   } = data.declarations?.investorsStatus ?? {}
 
   const accreditedInvestorDeclaration = {
@@ -67,19 +72,18 @@ export const InvestorDeclarationView: React.FC<InvestorDeclarationViewProps> = (
   }
 
   const accreditedInvestorOptOut = {
-    // To do: fetch from actual data
-    tradingDigitalSecurites: false,
-    fundRaising: false,
-    issuance: false,
-    allServices: false
+    allServices,
+    digitalSecurities,
+    primaryOfferingServices,
+    digitalSecuritiesIssuance
   }
 
   const accreditedInvestorOptOutLabelMap = {
-    tradingDigitalSecurites:
+    digitalSecurities:
       'Trading in digital securities on the InvestaX private exchange',
-    fundRaising:
+    primaryOfferingServices:
       'Use of Primary Offering Services for the purpose of fundraising',
-    issuance: 'Issuance of Digital Securities by the Issuers',
+    digitalSecuritiesIssuance: 'Issuance of Digital Securities by the Issuers',
     allServices: 'Any/all Services/Products offered by InvestaX'
   }
 
@@ -106,7 +110,7 @@ export const InvestorDeclarationView: React.FC<InvestorDeclarationViewProps> = (
       <DeclarationsList
         title='I confirm to be treated as an “Accredited Investor” by InvestaX'
         data={optInRequirement}
-        labelMap={optInDeclarationLabelMap}
+        labelMap={optInDeclarationLabelMapView}
       />
       {Object.values(accreditedInvestorOptOut).find(item => item) !==
       undefined ? (

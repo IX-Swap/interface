@@ -2,7 +2,7 @@ import React from 'react'
 import { Grid, Typography } from '@material-ui/core'
 import { DeclarationsList } from 'app/pages/_identity/components/InvestorDeclarationForm/DeclarationsList/DeclartionsList'
 
-const optOutRequirements = [
+export const optOutRequirements = [
   {
     name: 'digitalSecurities',
     label: 'Trading in digital securities on the InvestaX private exchange'

@@ -4,11 +4,9 @@ import { withStyles } from '@material-ui/styles'
 
 export interface OptOutInfoActionProps {
   close?: () => void
-  onOptOut: () => void
 }
 export const OptOutInfoAction: React.FC<OptOutInfoActionProps> = ({
-  close,
-  onOptOut
+  close
 }) => {
   const StyledButton = withStyles({
     root: {
@@ -26,7 +24,7 @@ export const OptOutInfoAction: React.FC<OptOutInfoActionProps> = ({
           <StyledButton color='primary' onClick={close} variant='outlined'>
             Cancel
           </StyledButton>
-          <StyledButton color='primary' onClick={onOptOut} variant='contained'>
+          <StyledButton color='primary' onClick={close} variant='contained'>
             Opt Out
           </StyledButton>
         </Grid>

@@ -123,7 +123,14 @@ export interface AgreementsAndDisclosures {
   }
 }
 
-export interface IndividualInvestorStatus {
+export interface OptOutRequirements {
+  digitalSecurities: boolean
+  primaryOfferingServices: boolean
+  digitalSecuritiesIssuance: boolean
+  allServices: boolean
+}
+
+export interface IndividualInvestorStatus extends OptOutRequirements {
   consent: boolean
   consequencesOfQualification: boolean
   financialAsset: boolean
@@ -133,7 +140,7 @@ export interface IndividualInvestorStatus {
   rightToOptOut: boolean
 }
 
-export interface CorporateInvestorStatus {
+export interface CorporateInvestorStatus extends OptOutRequirements {
   assets: boolean
   trustee: boolean
   accreditedShareholders: boolean
