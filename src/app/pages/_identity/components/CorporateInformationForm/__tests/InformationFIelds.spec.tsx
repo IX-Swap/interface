@@ -27,7 +27,7 @@ describe('InformationFields', () => {
     )
 
     const companyLogoInput = container.querySelector(
-      'input[name="companyLogo"]'
+      'input[name="logo"]'
     ) as HTMLInputElement
     const companyLegalNameInput = container.querySelector(
       'input[name="companyLegalName"]'

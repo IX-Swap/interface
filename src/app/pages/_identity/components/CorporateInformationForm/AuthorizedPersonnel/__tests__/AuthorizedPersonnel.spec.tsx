@@ -49,7 +49,7 @@ describe('AuthorizedPersonnel', () => {
   })
 
   it('handles remove buttons correctly', () => {
-    props.isLast = false
+    props.total = 2
 
     const { getByText } = render(
       <Form>

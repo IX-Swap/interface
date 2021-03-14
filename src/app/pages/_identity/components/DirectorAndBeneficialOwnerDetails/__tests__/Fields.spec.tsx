@@ -57,16 +57,6 @@ describe('Fields', () => {
     )
   })
 
-  it('does not render FormSectionHeader when index = 0', () => {
-    render(
-      <Form>
-        <Fields {...props} />
-      </Form>
-    )
-
-    expect(FormSectionHeader).not.toHaveBeenCalled()
-  })
-
   it('render FormSectionHeader when index > 0', () => {
     render(
       <Form>

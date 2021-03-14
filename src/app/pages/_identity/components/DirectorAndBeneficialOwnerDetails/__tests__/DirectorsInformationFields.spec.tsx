@@ -15,9 +15,8 @@ describe('DirectorsInformationFields', () => {
       {
         fullName: 'Oranges Lemons',
         contactNumber: '1234563',
-        residentialAddress: 'Singapore, Singapore',
         designation: 'Director of Finance',
-        emailAddress: 'oranges@lemons.com'
+        email: 'oranges@lemons.com'
       }
     ]
   }
@@ -49,11 +48,6 @@ describe('DirectorsInformationFields', () => {
       'Contact Number'
     ) as HTMLInputElement
     expect(contactNumberInput.value).toEqual('+1 (234) 563')
-
-    const residentialAddressInput = getByLabelText(
-      'Residential Address'
-    ) as HTMLInputElement
-    expect(residentialAddressInput.value).toEqual('Singapore, Singapore')
 
     const designationInput = getByLabelText('Designation') as HTMLInputElement
     expect(designationInput.value).toEqual('Director of Finance')

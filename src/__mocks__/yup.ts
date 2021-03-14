@@ -16,4 +16,5 @@ export const date = mockYup.date
 export const array = mockYup.array
 export const boolean = mockYup.boolean
 export const mixed = mockYup.mixed
+export const bool = mockYup.bool
 export const ref = mockYup.ref

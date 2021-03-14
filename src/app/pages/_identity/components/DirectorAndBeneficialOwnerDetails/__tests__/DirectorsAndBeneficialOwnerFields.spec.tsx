@@ -5,7 +5,7 @@ import React from 'react'
 import { render, cleanup } from 'test-utils'
 
 jest.mock(
-  'app/pages/identity/components/DirectorAndBeneficialOwnerDetails/Fields',
+  'app/pages/_identity/components/DirectorAndBeneficialOwnerDetails/Fields',
   () => ({
     Fields: jest.fn(() => null)
   })

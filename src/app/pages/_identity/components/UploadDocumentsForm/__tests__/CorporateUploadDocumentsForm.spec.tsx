@@ -4,7 +4,7 @@ import { UploadDocumentField } from 'app/pages/_identity/components/UploadDocume
 import { CorporateUploadDocumentsForm } from 'app/pages/_identity/components/UploadDocumentsForm/CorporateUploadDocumentsForm'
 
 jest.mock(
-  'app/pages/identity/components/UploadDocumentsForm/UploadDocumentField/UploadDocumentField',
+  'app/pages/_identity/components/UploadDocumentsForm/UploadDocumentField/UploadDocumentField',
   () => ({
     UploadDocumentField: jest.fn(() => null)
   })
@@ -26,7 +26,7 @@ describe('IndividualUploadDocumentsForm', () => {
     expect(UploadDocumentField).toHaveBeenNthCalledWith(
       1,
       expect.objectContaining({
-        name: 'documents.corporateDocuments',
+        name: 'corporateDocuments',
         label: 'Corporate Documents'
       }),
       {}
@@ -35,7 +35,7 @@ describe('IndividualUploadDocumentsForm', () => {
     expect(UploadDocumentField).toHaveBeenNthCalledWith(
       2,
       expect.objectContaining({
-        name: 'documents.financialDocuments',
+        name: 'financialDocuments',
         label: 'Financial Documents'
       }),
       {}
@@ -44,7 +44,7 @@ describe('IndividualUploadDocumentsForm', () => {
     expect(UploadDocumentField).toHaveBeenNthCalledWith(
       3,
       expect.objectContaining({
-        name: 'documents.evidenceOfAccreditation',
+        name: 'evidenceOfAccreditation',
         label: 'Evidence of Accreditation'
       }),
       {}

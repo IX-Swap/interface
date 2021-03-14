@@ -7,7 +7,7 @@ import { QueryStatus } from 'react-query'
 import { corporate } from '__fixtures__/authorizer'
 import { LOADING_TEXT } from '../renderUtils'
 
-jest.mock('hooks/identity/useAllCorporateIdentities')
+jest.mock('app/pages/_identity/hooks/useAllCorporates')
 
 const useAllCorporateIdentitiesMock = useAllCorporates as jest.Mock<
   Partial<ReturnType<typeof useAllCorporates>>

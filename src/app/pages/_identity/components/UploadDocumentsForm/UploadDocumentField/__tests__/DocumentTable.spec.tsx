@@ -9,7 +9,7 @@ import { document } from '__fixtures__/identity'
 import { DocumentTableRow } from 'app/pages/_identity/components/UploadDocumentsForm/UploadDocumentField/DocumentTableRow'
 
 jest.mock(
-  'app/pages/identity/components/UploadDocumentsForm/UploadDocumentField/DocumentTableRow',
+  'app/pages/_identity/components/UploadDocumentsForm/UploadDocumentField/DocumentTableRow',
   () => ({
     DocumentTableRow: jest.fn(() => null)
   })

@@ -11,9 +11,10 @@ const employmentStatusList = [
 ]
 
 export const EmploymentStatusSelect = (props: any) => {
-  const { label, ...rest } = props
+  const { ...rest } = props
+
   return (
-    <Select {...rest} style={{ minWidth: 100 }} label={label}>
+    <Select {...rest} style={{ minWidth: 100 }}>
       {employmentStatusList.map(item => {
         return (
           <MenuItem value={item} key={item}>

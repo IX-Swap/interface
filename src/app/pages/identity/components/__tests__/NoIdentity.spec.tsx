@@ -1,14 +1,9 @@
 import React from 'react'
 import { render, cleanup } from 'test-utils'
-import { AppRouterLinkComponent } from 'components/AppRouterLink'
 import {
   NoIdentity,
   NoIdentityProps
 } from 'app/pages/identity/components/NoIdentity'
-
-jest.mock('components/AppRouterLink', () => ({
-  AppRouterLinkComponent: jest.fn(({ children }) => children)
-}))
 
 describe('NoIdentity', () => {
   const props: NoIdentityProps = {
@@ -28,16 +23,5 @@ describe('NoIdentity', () => {
     const { getByText } = render(<NoIdentity {...props} />)
 
     expect(getByText(props.text)).toBeTruthy()
-  })
-
-  it('renders AppRouterLink correctly', () => {
-    render(<NoIdentity {...props} />)
-
-    expect(AppRouterLinkComponent).toBeCalledWith(
-      expect.objectContaining({
-        children: expect.anything()
-      }),
-      {}
-    )
   })
 })

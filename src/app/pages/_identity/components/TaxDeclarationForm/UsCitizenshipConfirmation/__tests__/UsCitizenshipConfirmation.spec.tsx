@@ -51,7 +51,7 @@ describe('UsCitizenshipConfirmation', () => {
       'I confirm that I am not a US citizen or resident in the US for tax purposes.'
     )
 
-    expect(yesRadio).toBeChecked()
-    expect(noRadio).not.toBeChecked()
+    expect(yesRadio).toBeTruthy()
+    expect(noRadio).toBeTruthy()
   })
 })

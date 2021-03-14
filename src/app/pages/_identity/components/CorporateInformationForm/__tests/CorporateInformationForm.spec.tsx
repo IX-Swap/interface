@@ -1,4 +1,5 @@
 import { CorporateInformationForm } from 'app/pages/_identity/components/CorporateInformationForm/CorporateInformationForm'
+import { Form } from 'components/form/Form'
 import React from 'react'
 import { render, cleanup } from 'test-utils'
 
@@ -11,6 +12,10 @@ describe('Component', () => {
   })
 
   it('renders without errors', () => {
-    render(<CorporateInformationForm />)
+    render(
+      <Form>
+        <CorporateInformationForm />
+      </Form>
+    )
   })
 })
