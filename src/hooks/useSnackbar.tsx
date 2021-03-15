@@ -1,5 +1,4 @@
 import React, { ReactNode } from 'react'
-
 import { AppearanceTypes, useToasts } from 'react-toast-notifications'
 import { NotificationToast } from 'app/pages/notifications/components/NotificationToast'
 import { Notification as TNotification } from 'types/notification'
@@ -10,6 +9,11 @@ import {
 } from 'app/components/OnboardingDialog/OnboardingDialog'
 import { useQueryCache } from 'react-query'
 import { identityQueryKeys } from 'config/queryKeys'
+import apiService from 'services/api'
+import storageService from 'services/storage'
+import User from 'types/user'
+import { userURL } from 'config/apiURL'
+import { getIdFromObj } from 'helpers/strings'
 
 export interface SnackbarService {
   showSnackbar: (message: ReactNode, variant?: AppearanceTypes) => any
@@ -64,12 +68,21 @@ export const useSnackbar = (): SnackbarService => {
       }
 
       if (waitingForInvestorApproval || waitingForIssuerApproval) {
-        addToast(<OnboardingDialog {...completeDialog} />, {
-          appearance: 'info',
-          autoDismiss: false
-        })
+        const user = storageService.get<User>('user')
 
-        localStorage.removeItem(notification.resourceId)
+        void apiService
+          .get(userURL.getUserProfile(getIdFromObj(user)))
+          .then(data => {
+            storageService.set('user', data.data)
+            storageService.set('visitedUrl', [])
+
+            addToast(<OnboardingDialog {...completeDialog} />, {
+              appearance: 'info',
+              autoDismiss: false
+            })
+
+            localStorage.removeItem(notification.resourceId)
+          })
       }
     }
   }
