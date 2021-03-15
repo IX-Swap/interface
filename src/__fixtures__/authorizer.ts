@@ -46,12 +46,41 @@ export const authorizationInfo: AuthorizationInfo = {
 
 export const corporate: CorporateIdentity = {
   _id: '1',
-
   logo: '',
+  type: 'investor',
+  legalEntityStatus: 'other',
+  isMailingAddressSame: false,
   createdAt: '01-01-2000',
   updatedAt: '01-01-2000',
   documents: [],
-  declarations: [],
+  taxResidencies: [],
+  declarations: {
+    agreements: {
+      investor: false,
+      custody: false,
+      disclosure: false
+    },
+    tax: { fatca: false },
+    investorsStatus: {
+      jointlyHeldAccount: false,
+      consequencesOfQualification: false,
+      financialAsset: false,
+      personalAssets: false,
+      consent: false,
+      income: false,
+      rightToOptOut: false,
+      assets: false,
+      trustee: false,
+      accreditedShareholders: false,
+      partnership: false,
+      accreditedBeneficiaries: false,
+      accreditedSettlors: false,
+      digitalSecurities: false,
+      digitalSecuritiesIssuance: false,
+      allServices: false,
+      primaryOfferingServices: false
+    }
+  },
   status: 'Submitted',
   beneficialOwners: [],
   companyAddress: address,
@@ -65,12 +94,14 @@ export const corporate: CorporateIdentity = {
   user,
   authorizationDocuments: [],
   authorization: authorizationInfo,
-  authorizations: []
+  authorizations: [],
+  mailingAddress: address
 }
 
 export const individual: IndividualIdentity = {
   photo: '',
   _id: '1',
+  taxResidencies: [],
   email: 'email@example.com',
   annualIncome: '100000',
   contactNumber: '1234567890',
@@ -91,7 +122,33 @@ export const individual: IndividualIdentity = {
   authorization: authorizationInfo,
   authorizationDocuments: [],
   authorizations: [],
-  declarations: [],
+  declarations: {
+    agreements: {
+      investor: false,
+      custody: false,
+      disclosure: false
+    },
+    tax: { fatca: false },
+    investorsStatus: {
+      jointlyHeldAccount: false,
+      consequencesOfQualification: false,
+      financialAsset: false,
+      personalAssets: false,
+      consent: false,
+      income: false,
+      rightToOptOut: false,
+      assets: false,
+      trustee: false,
+      accreditedShareholders: false,
+      partnership: false,
+      accreditedBeneficiaries: false,
+      accreditedSettlors: false,
+      digitalSecurities: false,
+      digitalSecuritiesIssuance: false,
+      allServices: false,
+      primaryOfferingServices: false
+    }
+  },
   documents: [],
   address,
   user

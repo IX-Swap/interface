@@ -16,7 +16,6 @@ import { Step3Backup } from './components/Step3Backup'
 import { Step4Enable } from './components/Step4Enable'
 import { Aside } from 'app/pages/security/pages/setup2fa/components/Aside'
 import { Enabled } from 'app/pages/security/pages/setup2fa/components/Enabled'
-import { ButtonTransparent } from 'app/components/ButtonTransparent'
 
 const getComponent = (index: number) => {
   switch (index) {
@@ -72,14 +71,14 @@ export const Setup2fa = () => {
                   {store.activeStep > 0 &&
                     store.activeStep < store.steps.length && (
                       <Grid item>
-                        <ButtonTransparent
-                          variant='contained'
+                        <Button
+                          variant='outlined'
                           color='primary'
                           disableElevation
                           onClick={() => store.prevPage()}
                         >
                           Back
-                        </ButtonTransparent>
+                        </Button>
                       </Grid>
                     )}
 

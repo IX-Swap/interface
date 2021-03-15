@@ -14,6 +14,7 @@
     "@material-ui/lab": "^4.0.0-alpha.46",
     "@material-ui/pickers": "^3.2.10",
     "@material-ui/styles": "^4.10.0",
+    "material-ui-phone-number": "^2.2.6",
     "@sentry/react": "^5.26.0",
     "@sentry/tracing": "^5.26.0",
     "@types/react-otp-input": "^2.0.0",
@@ -53,7 +54,8 @@
     "typescript": "^3.9.7",
     "uno-material-ui": "^2.0.4",
     "use-debounce": "^5.2.0",
-    "yup": "^0.28.3"
+    "yup": "^0.28.3",
+    "yup-phone": "^1.2.19"
   },
   "devDependencies": {
     "@babel/cli": "^7.8.4",
@@ -118,7 +120,7 @@
     "start": "react-app-rewired start",
     "build": "react-app-rewired build",
     "test:watch": "react-scripts test --env=jest-environment-jsdom-sixteen --runInBand",
-    "test": "CI=true react-scripts test --env=jest-environment-jsdom-sixteen --silent --runInBand",
+    "test": "CI=true react-scripts test --env=jest-environment-jsdom-sixteen --colors --silent --runInBand",
     "test:ci": "CI=true react-scripts test --env=jest-environment-jsdom-sixteen --silent --coverage --testResultsProcessor jest-sonar-reporter --maxWorkers=75%",
     "eject": "react-scripts eject",
     "lint": "eslint --cache --fix \"src/**/*.{ts,tsx}\"",

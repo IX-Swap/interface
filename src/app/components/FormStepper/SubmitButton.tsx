@@ -1,0 +1,30 @@
+import { Button } from '@material-ui/core'
+import React from 'react'
+import { MutationResultPair } from 'react-query'
+import { ButtonProps } from '@material-ui/core/Button'
+
+export interface SubmitButtonProps extends ButtonProps {
+  mutation: MutationResultPair<any, any, any, any>
+  data: any
+}
+
+export const SubmitButton = (props: SubmitButtonProps) => {
+  const { mutation, data } = props
+  const [save, { isLoading }] = mutation
+
+  const handleSave = async () => {
+    return await save(data._id)
+  }
+
+  return (
+    <Button
+      variant='contained'
+      color='primary'
+      onClick={async () => void handleSave()}
+      disabled={isLoading}
+      disableElevation
+    >
+      Submit
+    </Button>
+  )
+}

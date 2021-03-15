@@ -3,6 +3,7 @@ import { makeStyles } from '@material-ui/core/styles'
 import { drawerWidth } from 'app/components/OnboardingPanel/OnboardingPanel.styles'
 
 export const useStyles = makeStyles(theme => ({
+  root: { pointerEvents: 'none' },
   backDrop: {
     position: 'fixed',
     top: 0,
@@ -15,22 +16,24 @@ export const useStyles = makeStyles(theme => ({
   },
   scrollPaper: {
     display: 'block',
-    position: 'relative'
+    position: 'relative',
+    pointerEvents: 'none'
   },
   paper: {
     position: 'absolute',
     top: 64,
-    right: drawerWidth,
+    right: drawerWidth + 20,
     margin: 0,
     zIndex: 1000,
     maxWidth: 450,
-    borderRadius: theme.shape.borderRadius
-  },
-  paperShift: {
+    borderRadius: theme.shape.borderRadius,
+    pointerEvents: 'auto',
     transition: theme.transitions.create('right', {
       easing: theme.transitions.easing.easeOut,
       duration: theme.transitions.duration.enteringScreen
-    }),
+    })
+  },
+  paperShift: {
     right: 30
   }
 }))

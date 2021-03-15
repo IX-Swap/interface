@@ -7,6 +7,8 @@ import { OnboardingPanel } from 'app/components/OnboardingPanel/OnboardingPanel'
 import { useSecurityRouter } from 'app/pages/security/router'
 import { useLocation } from 'react-router-dom'
 import { useHomeRouter } from 'app/pages/home/router'
+import { useIdentitiesRouter } from 'app/pages/_identity/router'
+import { useOnboardingJourneys } from 'app/components/OnboardingPanel/hooks/useOnboardingJourneys'
 
 export interface OnboardingContentWrapperProps {
   children: React.ReactNode
@@ -19,18 +21,45 @@ export const OnboardingContentWrapper = ({
   const { open } = useOnboardingPanel()
   const { paths: securityPaths } = useSecurityRouter()
   const { paths: homePaths } = useHomeRouter()
+  const { paths: identityPaths } = useIdentitiesRouter()
   const { pathname } = useLocation()
+  const {
+    isIssuerJourneyCompleted,
+    isInvestorJourneyCompleted,
+    isIndividualJourneyCompleted
+  } = useOnboardingJourneys()
 
-  const onboardingPages = [...Object.values({ ...securityPaths, ...homePaths })]
+  const onboardingBasePaths = [
+    securityPaths.landing,
+    homePaths.landing,
+    identityPaths.list
+  ]
 
-  return !onboardingPages.includes(pathname) ? (
-    <>{children}</>
-  ) : (
+  // TODO: refactor this (possibly after routing refactoring task will be done)
+  if (
+    (isIssuerJourneyCompleted && pathname.endsWith('issuer')) ||
+    (isInvestorJourneyCompleted &&
+      pathname.startsWith('/app/identity/corporates')) ||
+    (isIndividualJourneyCompleted &&
+      pathname.startsWith('/app/identity/individuals')) ||
+    (isIndividualJourneyCompleted &&
+      isInvestorJourneyCompleted &&
+      isIssuerJourneyCompleted &&
+      pathname.startsWith('/app/identity'))
+  ) {
+    return <>{children}</>
+  }
+
+  const pathnameBase = pathname.split('/').slice(0, 3).join('/')
+
+  return onboardingBasePaths.includes(pathnameBase) ? (
     <Box display='flex' width='100%'>
       <Box className={classnames(content, { [contentShift]: open })}>
         {children}
       </Box>
       <OnboardingPanel />
     </Box>
+  ) : (
+    <>{children}</>
   )
 }

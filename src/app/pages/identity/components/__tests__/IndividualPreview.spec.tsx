@@ -6,7 +6,6 @@ import { generateQueryResult } from '__fixtures__/useQuery'
 import { individual } from '__fixtures__/identity'
 import { QueryStatus } from 'react-query'
 import { Section } from 'app/pages/identity/components/Section'
-import { NoIdentity } from 'app/pages/identity/components/NoIdentity'
 import { IndividualInfoView } from 'app/pages/identity/components/IndividualInfoView'
 
 jest.mock('app/pages/identity/components/IndividualInfoView', () => ({
@@ -42,17 +41,17 @@ describe('IndividualIdPreview', () => {
     expect(container).toBeEmptyDOMElement()
   })
 
-  it('renders NoIdentity if data is undefined', () => {
-    jest
-      .spyOn(individualIdentityHook, 'useIndividualIdentity')
-      .mockReturnValue(generateQueryResult({ data: undefined }))
-    render(<IndividualPreview />)
+  // it('renders NoIdentity if data is undefined', () => {
+  //   jest
+  //     .spyOn(individualIdentityHook, 'useIndividualIdentity')
+  //     .mockReturnValue(generateQueryResult({ data: undefined }))
+  //   render(<IndividualPreview />)
 
-    expect(NoIdentity).toHaveBeenCalledWith(
-      { link: 'createIndividual', text: 'Create Individual Identity' },
-      {}
-    )
-  })
+  //   expect(NoIdentity).toHaveBeenCalledWith(
+  //     { link: 'createIndividual', text: 'Create Individual Identity' },
+  //     {}
+  //   )
+  // })
 
   it('renders IndividualInfoView with correct props', () => {
     jest

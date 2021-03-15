@@ -1,29 +1,63 @@
-import { useAuth } from 'hooks/auth/useAuth'
+import { useGetIdentities } from 'app/components/OnboardingPanel/hooks/useGetIdentities'
+import {
+  defaultOnboardingSteps,
+  getIdentityOnboardingSteps
+} from 'app/components/OnboardingPanel/hooks/utils'
+import { IdentityType } from 'app/pages/identity/utils'
+import { AuthorizableStatus } from 'types/util'
 
-const onboardingSteps = [
-  { title: 'Get Started', content: ['Access platform and reports'] },
-  { title: 'Select Your Desired Option', content: ['Create your account.'] }
-]
+export const useOnboardingSteps = (
+  identityType?: IdentityType,
+  asIssuer = false
+) => {
+  const {
+    hasIdentity,
+    identityLoaded,
+    identityTypeLoaded,
+    individualIdentity,
+    corporateIdentities
+  } = useGetIdentities(asIssuer ? 'issuer' : 'investor')
 
-export const useOnboardingSteps = () => {
-  const { user } = useAuth()
-
-  const getActiveSteps = () => {
-    let init = 0
-
-    if (user === undefined) {
-      return init
+  const getIdentityActiveStep = (status?: AuthorizableStatus) => {
+    let indetityActiveStep = 2
+    if (status === 'Submitted') {
+      indetityActiveStep = 3
     }
-
-    if (user?.totpConfirmed) {
-      init++
+    if ((status as AuthorizableStatus) === 'Approved') {
+      indetityActiveStep = 4
     }
-
-    return init
+    return indetityActiveStep
   }
 
+  const getActiveStep = (status?: AuthorizableStatus) => {
+    return getIdentityActiveStep(status)
+  }
+
+  if (identityType === undefined && hasIdentity) {
+    return {
+      steps: getIdentityOnboardingSteps(
+        identityTypeLoaded,
+        identityLoaded?.status,
+        asIssuer
+      ),
+      activeStep: getActiveStep(identityLoaded?.status)
+    }
+  }
+
+  if (identityType === undefined) {
+    return {
+      steps: defaultOnboardingSteps,
+      activeStep: 1
+    }
+  }
+
+  const identityStatus =
+    identityType === 'individual'
+      ? individualIdentity?.status
+      : corporateIdentities.list[0]?.status
+
   return {
-    activeStep: getActiveSteps(),
-    onboardingSteps: onboardingSteps
+    steps: getIdentityOnboardingSteps(identityType, identityStatus, asIssuer),
+    activeStep: getActiveStep(identityStatus)
   }
 }

@@ -17,6 +17,7 @@ import { setupSentry } from 'setupSentry'
 import { setupFullStory } from 'setupFullStory'
 import { AppThemeProvider } from 'AppThemeProvider'
 import { setupGoogleAnalytics } from 'setupGoogleAnalytics'
+import { AppStateProvider } from 'app/hooks/useAppState'
 
 const queryCache = new QueryCache({
   defaultConfig: {
@@ -46,15 +47,17 @@ const IXApp = () => {
               <CssBaseline />
               <UserProvider>
                 <Router history={history}>
-                  <Switch>
-                    <ToastProvider
-                      components={{ Toast }}
-                      autoDismiss={false}
-                      placement='bottom-right'
-                    >
-                      <EntryPoint />
-                    </ToastProvider>
-                  </Switch>
+                  <AppStateProvider>
+                    <Switch>
+                      <ToastProvider
+                        components={{ Toast }}
+                        autoDismiss={false}
+                        placement='bottom-right'
+                      >
+                        <EntryPoint />
+                      </ToastProvider>
+                    </Switch>
+                  </AppStateProvider>
                 </Router>
               </UserProvider>
             </ReactQueryCacheProvider>

@@ -6,6 +6,8 @@ import { render } from 'test-utils'
 import { Form } from 'components/form/Form'
 import * as useAuthHook from 'hooks/auth/useAuth'
 
+window.URL.revokeObjectURL = jest.fn()
+
 describe('Dropzone', () => {
   const props: DropzoneProps = {
     label: 'Photo',
@@ -18,6 +20,11 @@ describe('Dropzone', () => {
   }
 
   it('renders without error', () => {
+    jest.spyOn(useAuthHook, 'useAuth').mockReturnValue({
+      isAuthenticated: false,
+      user: undefined
+    })
+
     render(
       <Form>
         <Dropzone {...props} />
@@ -30,6 +37,7 @@ describe('Dropzone', () => {
       isAuthenticated: false,
       user: undefined
     })
+
     const { getByText } = render(
       <Form>
         <Dropzone {...props} />

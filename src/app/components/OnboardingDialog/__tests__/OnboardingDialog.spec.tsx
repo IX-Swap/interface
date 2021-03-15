@@ -4,17 +4,16 @@ import React from 'react'
 import { render, cleanup } from 'test-utils'
 
 describe('OnboardingDialog', () => {
-  const child = jest.fn(() => <span />)
   const props = {
-    initOpened: true,
-    children: child,
-    title: 'Title',
-    closeLabel: 'close',
-    actionLabel: 'Action',
-    action: 'path/to/action',
-    actionArrow: true
+    title: 'Secure Your Account!',
+    message: [
+      'Increase your account security by enabling two factor authentication when signing into platform'
+    ],
+    action: '/app/home',
+    actionLabel: 'Enable 2FA',
+    closeLabel: 'Skip',
+    closeArrow: false
   }
-
   afterEach(async () => {
     await cleanup()
     jest.clearAllMocks()
@@ -28,19 +27,5 @@ describe('OnboardingDialog', () => {
       .mockImplementation(() => objResponse as any)
 
     render(<OnboardingDialog {...props} />)
-  })
-
-  it('renders props correctly', () => {
-    const objResponse = { open: true }
-
-    jest
-      .spyOn(useOnboardingPanel, 'useOnboardingPanel')
-      .mockImplementation(() => objResponse as any)
-
-    const { getByText } = render(<OnboardingDialog {...props} />)
-
-    expect(getByText('Title')).toBeTruthy()
-    expect(getByText('close')).toBeTruthy()
-    expect(getByText('Action')).toBeTruthy()
   })
 })

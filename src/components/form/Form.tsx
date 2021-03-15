@@ -21,6 +21,7 @@ export const Form = <T,>(props: PropsWithChildren<FormProps<T>>) => {
     children,
     ...rest
   } = props
+
   const form = useForm({
     mode: 'onBlur',
     defaultValues: defaultValues as any,

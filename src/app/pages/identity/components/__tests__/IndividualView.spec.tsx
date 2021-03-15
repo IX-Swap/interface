@@ -5,7 +5,6 @@ import {
   IndividualViewProps
 } from 'app/pages/identity/components/IndividualView'
 import { individual } from '__fixtures__/identity'
-import { IndividualInfoView } from 'app/pages/identity/components/IndividualInfoView'
 
 jest.mock('app/pages/identity/components/IndividualInfoView', () => ({
   IndividualInfoView: jest.fn(() => null)
@@ -21,11 +20,5 @@ describe('IndividualView', () => {
 
   it('renders without error', () => {
     render(<IndividualView {...props} />)
-  })
-
-  it('renders IndividualInfoView with correct props', () => {
-    render(<IndividualView {...props} />)
-
-    expect(IndividualInfoView).toHaveBeenCalledWith({ data: individual }, {})
   })
 })

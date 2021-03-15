@@ -1,6 +1,6 @@
 import { useServices } from 'hooks/useServices'
 import { useMutation } from 'react-query'
-import { useIdentitiesRouter } from 'app/pages/identity/router'
+import { useIdentitiesRouter } from 'app/pages/_identity/router'
 import {
   prepareDocumentsForUpload,
   prepareDeclarationsForUpload

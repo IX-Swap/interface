@@ -6,7 +6,6 @@ import { Grid } from '@material-ui/core'
 import { useTheme } from '@material-ui/core/styles'
 import { AppError } from 'app/components/AppError'
 import { useDataFromURL } from 'hooks/location/useDataFromURL'
-import { AppStateProvider } from 'app/hooks/useAppState'
 import { SidebarContainer } from 'app/components/SidebarContainer/SidebarContainer'
 import { AppContentWrapper } from 'ui/AppContentWrapper'
 import { useLocation } from 'react-router-dom'
@@ -25,19 +24,15 @@ export const AppRoot = () => {
 
   return (
     <ErrorBoundary fallback={AppError}>
-      <AppStateProvider>
-        <Grid container direction='column'>
-          <Grid item>
-            <Header />
-          </Grid>
-          <SidebarContainer />
-          <AppContentWrapper item container style={{ backgroundColor }}>
-            <OnboardingContentWrapper>
-              {renderRoutes()}
-            </OnboardingContentWrapper>
-          </AppContentWrapper>
+      <Grid container direction='column'>
+        <Grid item>
+          <Header />
         </Grid>
-      </AppStateProvider>
+        <SidebarContainer />
+        <AppContentWrapper item container style={{ backgroundColor }}>
+          <OnboardingContentWrapper>{renderRoutes()}</OnboardingContentWrapper>
+        </AppContentWrapper>
+      </Grid>
     </ErrorBoundary>
   )
 }

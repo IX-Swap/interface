@@ -27,11 +27,14 @@ export const identityURL = {
     getAllByUserId: (userId: string) => `/identity/corporates/${userId}/list`,
     create: (userId: string) => `/identity/corporates/${userId}`,
     update: (userId: string, corporateId: string) =>
-      `/identity/corporates/${userId}/${corporateId}`
+      `/identity/corporates/${userId}/${corporateId}`,
+    submit: (id: string) => `/identity/corporates/${id}/submit`
   },
   individuals: {
+    create: (userId: string) => `/identity/individuals/${userId}`,
     update: (userId: string) => `/identity/individuals/${userId}`,
-    get: (userId: string) => `/identity/individuals/${userId}`
+    get: (userId: string) => `/identity/individuals/${userId}`,
+    submit: (id: string) => `/identity/individuals/${id}/submit`
   }
 }
 

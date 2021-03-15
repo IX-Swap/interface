@@ -1,4 +1,4 @@
-import { useAllCorporateIdentities } from 'hooks/identity/useAllCorporateIdentities'
+import { useAllCorporates } from 'app/pages/_identity/hooks/useAllCorporates'
 import { useIndividualIdentity } from 'hooks/identity/useIndividualIdentity'
 
 export const useHasIdentity = () => {
@@ -9,7 +9,7 @@ export const useHasIdentity = () => {
   const {
     data: corporateIdentities,
     isSuccess: isLoadedCorporates
-  } = useAllCorporateIdentities()
+  } = useAllCorporates({})
   const hasIdentity =
     individualIdentity !== undefined || corporateIdentities.list.length > 0
 

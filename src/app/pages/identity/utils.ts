@@ -51,8 +51,15 @@ export const getIdentityFormDefaultValue = <
 ): IdentityFormValues<T> => {
   return ({
     ...(identity ?? {}),
-    declarations: formatDeclarations(type, identity?.declarations),
-    documents: formatDocuments(identity?.documents ?? [], type)
+    declarations: formatDeclarations(type, identity as any),
+    documents: formatDocuments(identity?.documents ?? [], type),
+    taxResidencies: getTaxResidencyData(type, identity)?.taxResidencies,
+    singaporeOnly: getTaxResidencyData(type, identity)?.singaporeOnly,
+    taxIdentificationNumber: getTaxResidencyData(type, identity)
+      ?.taxIdentificationNumber,
+    taxIdAvailable: getTaxResidencyData(type, identity)?.taxIdAvailable,
+    reasonUnavailable: getTaxResidencyData(type, identity)?.reasonUnavailable,
+    fundSource: getFundSource(identity as IndividualIdentity)
   } as unknown) as IdentityFormValues<T>
 }
 
@@ -98,10 +105,85 @@ export const formatDeclarations = (
     : ((result as unknown) as IndividualDeclarations)
 }
 
+export const getTaxResidencyData = (
+  type: IdentityType,
+  identity?: IndividualIdentity | CorporateIdentity
+) => {
+  if (type === 'corporate') {
+    return undefined
+  }
+
+  const individualIdentity = identity as IndividualIdentity
+  const defaultTaxResidencyData = {
+    singaporeOnly: 'yes',
+    taxIdAvailable: true,
+    taxIdentificationNumber: '',
+    reasonUnavailable: '',
+    taxResidencies: [
+      {
+        countryOfResidence: '',
+        taxIdentificationNumber: ''
+      }
+    ]
+  }
+
+  if (
+    identity === undefined ||
+    individualIdentity.taxResidencies === undefined ||
+    individualIdentity.taxResidencies.length < 1
+  ) {
+    return defaultTaxResidencyData
+  }
+
+  const singaporeOnlyValue =
+    individualIdentity.taxResidencies[0].residentOfSingapore ?? true
+
+  return {
+    singaporeOnly: singaporeOnlyValue ? 'yes' : 'no',
+    taxIdAvailable: individualIdentity.taxResidencies[0].taxIdAvailable,
+    reasonUnavailable: individualIdentity.taxResidencies[0].reason,
+    taxIdentificationNumber:
+      individualIdentity.taxResidencies[0].taxIdentificationNumber,
+    taxResidencies: individualIdentity.taxResidencies.slice(1)
+  }
+}
+
+export const MAX_TAX_RESIDENCIES = 5
+
 export const prepareDeclarationsForUpload = (
   declarations: IndividualDeclarations | CorporateDeclarations
 ) => {
   return Object.entries(declarations).map(([key, value]) => ({
     [key]: value
+  }))
+}
+
+const fundSourceList = [
+  'Inheritance/Gift',
+  'Interest/Dividend',
+  'Property',
+  'Allowance/Spousal Income',
+  'Employment',
+  'Pension',
+  'Retirement Benifits',
+  'Others'
+]
+
+export const getFundSourceDefaults = () => {
+  return fundSourceList.map(name => ({ name, checked: false, value: 0 }))
+}
+
+export const getFundSource = (identity: IndividualIdentity) => {
+  if (
+    identity === undefined ||
+    identity.sourceOfFund === undefined ||
+    identity.sourceOfFund.length < 1
+  ) {
+    return getFundSourceDefaults()
+  }
+
+  return identity.sourceOfFund.map((value, index) => ({
+    ...value,
+    name: fundSourceList[index]
   }))
 }

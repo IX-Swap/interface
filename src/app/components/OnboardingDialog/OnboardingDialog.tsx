@@ -3,7 +3,8 @@ import {
   Dialog,
   DialogActions,
   DialogContent,
-  DialogTitle
+  DialogTitle,
+  Typography
 } from '@material-ui/core'
 import ArrowRightAltIcon from '@material-ui/icons/ArrowRightAlt'
 import { useStyles } from 'app/components/OnboardingDialog/OnboardingDialog.styles'
@@ -13,31 +14,20 @@ import { AppRouterLinkComponent } from 'components/AppRouterLink'
 import classnames from 'classnames'
 import { useOnboardingPanel } from 'app/components/OnboardingPanel/hooks/useOnboardingPanel'
 
-export interface Onboarding2FADialog {
+export interface OnboardingDialogProps {
+  message: string[]
   title: string
-  initOpened: boolean
-  children: React.ReactNode
-  closeLabel: string
-  actionLabel: string
-  action: string
-  actionArrow?: boolean
+  action?: string
+  actionLabel?: string
+  closeLabel?: string
+  closeArrow?: boolean
 }
-
 export const EmptyBackDrop = () => <></>
 
-export const OnboardingDialog = ({
-  initOpened,
-  children,
-  title,
-  closeLabel,
-  actionLabel,
-  action,
-  actionArrow = true
-}: Onboarding2FADialog) => {
-  const [opened, setOpened] = useState(initOpened)
+export const OnboardingDialog = (onboardingDialog: OnboardingDialogProps) => {
   const { open: panelOpened } = useOnboardingPanel()
-
-  const { scrollPaper, paper, paperShift } = useStyles()
+  const [opened, setOpened] = useState(true)
+  const { scrollPaper, paper, paperShift, root } = useStyles()
 
   const handleClose = () => {
     setOpened(false)
@@ -46,30 +36,45 @@ export const OnboardingDialog = ({
   return (
     <>
       <Dialog
-        disableBackdropClick
         open={opened}
         onClose={handleClose}
         classes={{
+          root: root,
           scrollPaper: scrollPaper,
           paper: classnames(paper, { [paperShift]: !panelOpened })
         }}
         BackdropComponent={EmptyBackDrop}
       >
-        <DialogTitle>{title}</DialogTitle>
-        <DialogContent>{children}</DialogContent>
+        <DialogTitle>{onboardingDialog.title}</DialogTitle>
+        <DialogContent>
+          {onboardingDialog.message.map(message => (
+            <Typography>{message}</Typography>
+          ))}
+        </DialogContent>
         <DialogActions onClick={handleClose}>
-          <Button color='primary'>{closeLabel}</Button>
-          <Button
-            component={AppRouterLinkComponent}
-            to={action}
-            color='primary'
-          >
-            {actionLabel}{' '}
-            {actionArrow && <ArrowRightAltIcon style={{ marginLeft: 7 }} />}
-          </Button>
+          {onboardingDialog.closeLabel !== undefined ? (
+            <Button color='primary'>
+              {onboardingDialog.closeLabel}{' '}
+              {onboardingDialog.closeArrow !== undefined &&
+                onboardingDialog.closeArrow && (
+                  <ArrowRightAltIcon style={{ marginLeft: 7 }} />
+                )}
+            </Button>
+          ) : null}
+
+          {onboardingDialog.action !== undefined ? (
+            <Button
+              component={AppRouterLinkComponent}
+              to={onboardingDialog.action}
+              color='primary'
+            >
+              {onboardingDialog.actionLabel}{' '}
+              <ArrowRightAltIcon style={{ marginLeft: 7 }} />
+            </Button>
+          ) : null}
         </DialogActions>
       </Dialog>
-      <BackDrop opened={opened} />
+      <BackDrop onClick={handleClose} opened={opened} />
     </>
   )
 }

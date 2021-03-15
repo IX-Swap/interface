@@ -1,21 +1,22 @@
 import { Box, Typography } from '@material-ui/core'
-import { AppRouterLink } from 'components/AppRouterLink'
+import { DoneLabel } from 'app/pages/home/components/DoneLabel'
+import { AppRouterLink, AppRouterLinkProps } from 'components/AppRouterLink'
 import React, { createElement } from 'react'
 import { LandingPageLink } from 'ui/LandingPageLink'
 import { RoundedIconWrapper } from 'ui/RoundedIconWrapper'
 
-export interface OnboardingLinkProps {
+export interface OnboardingLinkProps extends AppRouterLinkProps {
   icon: any
   label: string
-  link: string
   color: string
+  done?: boolean
 }
 
 export const OnboardingLink = (props: OnboardingLinkProps) => {
-  const { icon, label, link, color } = props
+  const { icon, label, to, params, color, done = false } = props
 
   return (
-    <AppRouterLink to={link}>
+    <AppRouterLink to={to} params={params} disabled={done}>
       <LandingPageLink>
         <RoundedIconWrapper component='span' color={color}>
           {createElement(icon, { color: 'currentColor' })}
@@ -26,6 +27,8 @@ export const OnboardingLink = (props: OnboardingLinkProps) => {
         <Typography variant='subtitle1' color='textPrimary'>
           {label}
         </Typography>
+
+        {done ? <DoneLabel /> : null}
       </LandingPageLink>
     </AppRouterLink>
   )
