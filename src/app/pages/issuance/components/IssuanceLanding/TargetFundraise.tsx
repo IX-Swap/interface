@@ -8,9 +8,9 @@ import { LOADING_TEXT } from 'components/form/renderUtils'
 
 export const TargetFundraise = () => {
   const {
-    params: { dsoId }
+    params: { dsoId, issuerId }
   } = useIssuanceRouter()
-  const { data, isSuccess } = useDSOById(dsoId)
+  const { data, isSuccess } = useDSOById(dsoId, issuerId)
 
   let value = LOADING_TEXT
 

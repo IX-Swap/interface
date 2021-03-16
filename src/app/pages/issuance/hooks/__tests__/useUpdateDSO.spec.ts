@@ -12,7 +12,7 @@ describe('useUpdateDSO', () => {
   const callbacks = { onSuccess: jest.fn(), onError: jest.fn() }
 
   beforeEach(() => {
-    history.push('/', { dsoId: dso._id })
+    history.push('/', { dsoId: dso._id, issuerId: dso.user })
     jest
       .spyOn(useAuthHook, 'useAuth')
       .mockReturnValue({ user: user, isAuthenticated: true })

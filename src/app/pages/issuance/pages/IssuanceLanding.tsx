@@ -21,9 +21,9 @@ import { isValidDSOId } from 'helpers/isValidDSOId'
 
 export const IssuanceLanding = () => {
   const {
-    params: { dsoId }
+    params: { dsoId, issuerId }
   } = useIssuanceRouter()
-  const { data } = useDSOById(dsoId)
+  const { data } = useDSOById(dsoId, issuerId)
   const { theme, isTablet } = useAppBreakpoints()
 
   useSetPageTitle(data?.tokenName ?? 'Issuance')

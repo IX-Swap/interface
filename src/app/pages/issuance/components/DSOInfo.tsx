@@ -8,10 +8,10 @@ import { DisabledStatus } from 'app/pages/issuance/components/DisabledStatus'
 
 export const DSOInfo = () => {
   const {
-    params: { dsoId }
+    params: { dsoId, issuerId }
   } = useIssuanceRouter()
 
-  const { data } = useDSOById(dsoId)
+  const { data } = useDSOById(dsoId, issuerId)
 
   if (data === undefined) {
     return null

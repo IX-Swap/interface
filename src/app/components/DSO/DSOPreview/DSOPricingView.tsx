@@ -10,7 +10,8 @@ export interface DSOPricingViewProps {
 }
 
 export const DSOPricingView = ({ dso }: DSOPricingViewProps) => {
-  const currency = dso.currency.symbol
+  const currency = dso?.currency?.symbol ?? ''
+
   const totalFundraisingAmount =
     dso.totalFundraisingAmount !== null
       ? addSymbol(dso.totalFundraisingAmount, currency, true)
@@ -39,19 +40,19 @@ export const DSOPricingView = ({ dso }: DSOPricingViewProps) => {
           <Grid item xs={12} md={4}>
             <LabelledValue
               label='Unit Price'
-              value={formatMoney(dso.pricePerUnit, currency, true)}
+              value={formatMoney(dso.pricePerUnit, currency, true) ?? ''}
             />
           </Grid>
           <Grid item xs={12} md={4}>
             <LabelledValue
               label='Total Fundraising Amount'
-              value={totalFundraisingAmount}
+              value={totalFundraisingAmount ?? ''}
             />
           </Grid>
           <Grid item xs={12} md={4}>
             <LabelledValue
               label='Minimum Investment'
-              value={minimumInvestment}
+              value={minimumInvestment ?? ''}
             />
           </Grid>
         </Grid>
@@ -60,12 +61,12 @@ export const DSOPricingView = ({ dso }: DSOPricingViewProps) => {
       <Grid item>
         <Grid container spacing={3}>
           <Grid item xs={12} md={4}>
-            <LabelledValue label='Total Units' value={totalUnits} />
+            <LabelledValue label='Total Units' value={totalUnits ?? ''} />
           </Grid>
           <Grid item xs={12} md={4}>
             <LabelledValue
               label='Minimum Investment'
-              value={minimumInvestmentPrice}
+              value={minimumInvestmentPrice ?? ''}
             />
           </Grid>
         </Grid>
