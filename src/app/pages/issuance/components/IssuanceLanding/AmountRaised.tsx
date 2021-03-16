@@ -12,9 +12,9 @@ import { getDSOStats } from 'app/components/DSO/utils'
 
 export const AmountRaised = () => {
   const {
-    params: { dsoId }
+    params: { dsoId, issuerId }
   } = useIssuanceRouter()
-  const { data, isSuccess } = useDSOById(dsoId)
+  const { data, isSuccess } = useDSOById(dsoId, issuerId)
 
   let value = LOADING_TEXT
 

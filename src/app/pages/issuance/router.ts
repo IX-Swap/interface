@@ -13,7 +13,14 @@ export const IssuanceRoute = {
   list: makeURL(['app', 'issuance', 'offerings']),
   view: makeURL(['app', 'issuance', 'offerings', 'dsoId', 'view']),
   preview: makeURL(['app', 'issuance', 'offerings', 'dsoId', 'preview']),
-  insight: makeURL(['app', 'issuance', 'offerings', 'dsoId', 'overview']),
+  insight: makeURL([
+    'app',
+    'issuance',
+    'offerings',
+    'issuerId',
+    'dsoId',
+    'overview'
+  ]),
   deployToken: makeURL([
     'app',
     'issuance',

@@ -7,19 +7,25 @@ import { isValidDSOId } from 'helpers/isValidDSOId'
 export const useDSOFilter = () => {
   const {
     replace,
-    params: { dsoId }
+    params: { dsoId, issuerId }
   } = useIssuanceRouter()
   const { data, ...rest } = useDSOsByUserId()
 
   useEffect(() => {
     if (!isValidDSOId(dsoId) && data.list.length > 0) {
-      replace('insight', { dsoId: data.list[0]._id })
+      const { _id: dso, user: issuer } = data.list[0]
+
+      console.log({ dsoId: dso, issuerId: issuer })
+      replace('insight', { dsoId: dso, issuerId: issuer })
     }
-  }, [dsoId, data.list, replace])
+  }, [dsoId, issuerId, data.list, replace])
 
   const handleChange = (e: any) => {
     if (hasValue(e.target.value)) {
-      replace('insight', { dsoId: e.target.value })
+      const [dso, issuer] = e.target.value?.split(':')
+
+      console.log({ dsoId: dso, issuerId: issuer })
+      replace('insight', { dsoId: dso, issuerId: issuer })
     }
   }
 

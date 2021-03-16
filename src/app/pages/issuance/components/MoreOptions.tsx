@@ -11,10 +11,10 @@ export const MoreOptions = () => {
   const { paths } = useIssuanceRouter()
 
   const {
-    params: { dsoId }
+    params: { dsoId, issuerId }
   } = useIssuanceRouter()
 
-  const { data } = useDSOById(dsoId)
+  const { data } = useDSOById(dsoId, issuerId)
 
   if (data === undefined) {
     return null

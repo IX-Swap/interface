@@ -6,6 +6,7 @@ import { Grid, Button } from '@material-ui/core'
 import { DSOSidebar } from 'app/components/DSO/components/DSOSidebar'
 import { IssuanceRoute } from 'app/pages/issuance/router'
 import { AppRouterLinkComponent } from 'components/AppRouterLink'
+import { DSOSubmitButton } from 'app/components/DSO/components/DSOSubmitButton'
 export interface DSOViewProps {
   data: DigitalSecurityOffering
   showAuthorizations?: boolean
@@ -28,16 +29,19 @@ export const DSOView = (props: DSOViewProps) => {
           <DSOSidebar
             dso={data}
             footer={
-              <Button
-                component={AppRouterLinkComponent}
-                color='primary'
-                variant='contained'
-                disableElevation
-                to={IssuanceRoute.edit}
-                params={{ dsoId: data._id }}
-              >
-                Edit
-              </Button>
+              <>
+                <Button
+                  component={AppRouterLinkComponent}
+                  color='primary'
+                  variant='contained'
+                  disableElevation
+                  to={IssuanceRoute.edit}
+                  params={{ dsoId: data._id }}
+                >
+                  Edit
+                </Button>
+                <DSOSubmitButton dso={data} />
+              </>
             }
           />
         </Grid>

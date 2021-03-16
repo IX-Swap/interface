@@ -5,17 +5,21 @@ import { paginationArgs } from 'config/defaults'
 import apiService from 'services/api'
 import { dsoQueryKeys } from 'config/queryKeys'
 import { getIdFromObj } from 'helpers/strings'
-import { issuanceURL } from 'config/apiURL'
+import { authorizerURL, issuanceURL } from 'config/apiURL'
 import { DigitalSecurityOffering } from 'types/dso'
+import { useIsAuthorizer } from 'helpers/acl'
 
 export const useDSOsByUserId = (): UsePaginatedQueryData<
   DigitalSecurityOffering
 > => {
   const { user } = useAuth()
+  const isAuthorizer = useIsAuthorizer()
   const userId = getIdFromObj(user)
-  const uri = issuanceURL.dso.getByUserId(userId)
+  const uri = isAuthorizer
+    ? authorizerURL.offerings
+    : issuanceURL.dso.getByUserId(userId)
 
-  const getDSOsByUserId = async (queryKey: string, args: any) => {
+  const getDSOsByUserId = async (_queryKey: string, args: any) => {
     return await apiService.post(uri, args)
   }
 

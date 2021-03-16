@@ -5,10 +5,10 @@ import { DSOPreview } from 'app/components/DSO/DSOPreview/DSOPreview'
 
 export const PreviewDSO = () => {
   const {
-    params: { dsoId }
+    params: { dsoId, issuerId }
   } = useIssuanceRouter()
 
-  const { isLoading, data } = useDSOById(dsoId)
+  const { isLoading, data } = useDSOById(dsoId, issuerId)
 
   if (isLoading || data === undefined) {
     return null
