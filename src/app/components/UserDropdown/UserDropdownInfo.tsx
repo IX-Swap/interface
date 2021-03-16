@@ -4,6 +4,7 @@ import { Avatar } from 'components/Avatar'
 import { useAuth } from 'hooks/auth/useAuth'
 import { useIndividualIdentity } from 'hooks/identity/useIndividualIdentity'
 import React from 'react'
+import { UserRoleStatus } from 'app/components/UserDropdown/UserRoleStatus'
 
 export const UserDropdownInfo = () => {
   const { user } = useAuth()
@@ -31,6 +32,7 @@ export const UserDropdownInfo = () => {
       <Box px={1.4}>
         <Typography variant='subtitle1'>{name}</Typography>
         <Typography color='textSecondary'>{email}</Typography>
+        <UserRoleStatus />
       </Box>
     </Box>
   )
