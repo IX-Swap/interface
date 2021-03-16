@@ -36,11 +36,6 @@ export const columns: Array<TableColumn<
     render: renderDSONameAndStructure
   },
   {
-    key: 'insight',
-    label: 'Status',
-    render: renderDSOStatus
-  },
-  {
     key: 'pricePerUnit',
     label: 'Price',
     render: renderPriceWithCurrency,
