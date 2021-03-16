@@ -30,3 +30,5 @@ Amplify Hooks
 - Development, MVP, and Staging (https://github.com/InvestaX/IXWebApp/settings/hooks/265590816)
 
 v0.5.0
+
+Testing the deployment trigger issue
