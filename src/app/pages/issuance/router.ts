@@ -11,8 +11,15 @@ import { PreviewDSO } from 'app/pages/issuance/pages/PreviewDSO'
 
 export const IssuanceRoute = {
   list: makeURL(['app', 'issuance', 'offerings']),
-  view: makeURL(['app', 'issuance', 'offerings', 'dsoId', 'view']),
-  preview: makeURL(['app', 'issuance', 'offerings', 'dsoId', 'preview']),
+  view: makeURL(['app', 'issuance', 'offerings', 'issuerId', 'dsoId', 'view']),
+  preview: makeURL([
+    'app',
+    'issuance',
+    'offerings',
+    'issuerId',
+    'dsoId',
+    'preview'
+  ]),
   insight: makeURL([
     'app',
     'issuance',
@@ -28,7 +35,7 @@ export const IssuanceRoute = {
     'dsoId',
     'deployments'
   ]),
-  edit: makeURL(['app', 'issuance', 'offerings', 'dsoId', 'edit']),
+  edit: makeURL(['app', 'issuance', 'offerings', 'issuerId', 'dsoId', 'edit']),
   create: makeURL(['app', 'issuance', 'offerings', 'create'])
 }
 

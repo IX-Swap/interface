@@ -17,6 +17,7 @@ jest.mock('app/components/DSO/DSOView', () => ({
 describe('DSO', () => {
   const props: DSOProps = {
     dsoId: dso._id,
+    issuerId: dso.user,
     isEditing: true,
     showAuthorizations: false,
     showSidebar: false
