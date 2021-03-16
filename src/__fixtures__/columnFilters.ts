@@ -14,10 +14,6 @@ export const mockColumns: Array<TableColumn<
     label: 'Offer Name'
   },
   {
-    key: 'insight',
-    label: 'insight'
-  },
-  {
     key: 'pricePerUnit',
     label: 'pricePerUnit'
   },

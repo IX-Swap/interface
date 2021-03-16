@@ -97,16 +97,36 @@ export const taxDeclarationSchema = yup
   })
 
 export const individualInvestorStatusDeclarationSchema = yup
-  .object()
+  .object<IndividualInvestorDeclarationFormValues>()
   .shape<IndividualInvestorDeclarationFormValues>({
-    financialAsset: yup.bool().oneOf([true]).required('Required'),
-    income: yup.bool().oneOf([true]).required('Required'),
-    personalAssets: yup.bool().oneOf([true]).required('Required'),
-    jointlyHeldAccount: yup.bool().oneOf([true]).required('Required'),
+    financialAsset: yup.bool().required('Required'),
+    income: yup.bool().required('Required'),
+    personalAssets: yup.bool().required('Required'),
+    jointlyHeldAccount: yup.bool().required('Required'),
 
     rightToOptOut: yup.bool().oneOf([true]).required('Required'),
     consent: yup.bool().oneOf([true]).required('Required'),
     consequencesOfQualification: yup.bool().oneOf([true]).required('Required')
+  })
+  .test('Investor Declaration Validation', 'Error!', function (values) {
+    if (values === undefined || values === null) {
+      return false
+    }
+
+    const financialDeclarations = Object.entries(values)
+      .filter(([key, value]) => {
+        return (
+          key === 'financialAsset' ||
+          key === 'income' ||
+          key === 'personalAssets' ||
+          key === 'jointlyHeldAccount'
+        )
+      })
+      .map(([_key, value]) => value)
+
+    const result = financialDeclarations.every(value => value === false)
+
+    return !result
   })
 
 export const individualInvestorDocumentsSchema = yup

@@ -115,16 +115,44 @@ export const corporateTaxDeclarationSchema = yup.object().shape({
 export const corporateInvestorStatusDeclarationSchema = yup
   .object()
   .shape<CorporateInvestorDeclarationFormValues>({
-    assets: yup.bool().oneOf([true]).required('Required'),
-    trustee: yup.bool().oneOf([true]).required('Required'),
-    accreditedBeneficiaries: yup.bool().oneOf([true]).required('Required'),
-    accreditedSettlors: yup.bool().oneOf([true]).required('Required'),
-    accreditedShareholders: yup.bool().oneOf([true]).required('Required'),
-    partnership: yup.bool().oneOf([true]).required('Required'),
+    assets: yup.bool().oneOf([true, false]).required('Required'),
+    trustee: yup.bool().oneOf([true, false]).required('Required'),
+    accreditedBeneficiaries: yup
+      .bool()
+      .oneOf([true, false])
+      .required('Required'),
+    accreditedSettlors: yup.bool().oneOf([true, false]).required('Required'),
+    accreditedShareholders: yup
+      .bool()
+      .oneOf([true, false])
+      .required('Required'),
+    partnership: yup.bool().oneOf([true, false]).required('Required'),
 
     rightToOptOut: yup.bool().oneOf([true]).required('Required'),
     consent: yup.bool().oneOf([true]).required('Required'),
     consequencesOfQualification: yup.bool().oneOf([true]).required('Required')
+  })
+  .test('Investor Declaration Validation', 'Error!', function (values) {
+    if (values === undefined || values === null) {
+      return false
+    }
+
+    const financialDeclarations = Object.entries(values)
+      .filter(([key, value]) => {
+        return (
+          key === 'assets' ||
+          key === 'trustee' ||
+          key === 'accreditedBeneficiaries' ||
+          key === 'accreditedSettlors' ||
+          key === 'accreditedShareholders' ||
+          key === 'partnership'
+        )
+      })
+      .map(([_key, value]) => value)
+
+    const result = financialDeclarations.every(value => value === false)
+
+    return !result
   })
 
 export const corporateInvestorDocumentsSchema = yup

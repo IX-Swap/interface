@@ -3,7 +3,6 @@ import { VSpacer } from 'components/VSpacer'
 import { Typography } from '@material-ui/core'
 import { IndividualInfoFields } from 'app/pages/identity/components/IndividualInfoFields/IndividualInfoFields'
 import {
-  getAgreementsAndDisclosuresFormValues,
   getDocumentsFormValues,
   getFinancialInfoFormValues,
   getInvestorDeclarationFormValues,
@@ -11,7 +10,6 @@ import {
   getTaxDeclarationFormValues
 } from 'app/pages/_identity/utils/individual/forms'
 import {
-  getAgreementsRequestPayload,
   getDocumentsRequestPayload,
   getFinancialInfoRequestPayload,
   getInvestorDeclarationRequestPayload,
@@ -20,13 +18,11 @@ import {
 } from 'app/pages/_identity/utils/individual/requests'
 import {
   financialInfoSchema,
-  individualInvestorAgreementsSchema,
   individualInvestorDocumentsSchema,
   individualInvestorStatusDeclarationSchema,
   personalInfoSchema,
   taxDeclarationSchema
 } from 'app/pages/_identity/validation/individual'
-import { AgreementsAndDisclosuresFields } from 'app/pages/_identity/components/AgreementsAndDisclosuresFields/AgreementsAndDisclosuresFields'
 import { IndividualIdentityView } from 'app/pages/_identity/components/IndividualIdentityView/IndividualIdentityView'
 import { InvestorDeclarationForm } from '../InvestorDeclarationForm/InvestorDeclarationForm'
 import { FinancialInformationForm } from 'app/pages/_identity/components/FinancialInformationForm/FinancialInformationForm'
@@ -102,7 +98,7 @@ export const individualInvestorFormSteps = [
           style={{ marginTop: -30, fontSize: 16 }}
         >
           Please upload the following documents. All account statements and
-          documents should be date within 3 months.
+          documents should be dated within 3 months.
         </Typography>
         <Typography variant='subtitle2' color='textSecondary'>
           Notes: Type of document format supported is jpg, jpeg, png, gif, tiff,
@@ -110,19 +106,6 @@ export const individualInvestorFormSteps = [
         </Typography>
         <VSpacer size='medium' />
         <IndividualUploadDocumentsForm />
-      </Fragment>
-    )
-  },
-
-  // TODO Added content for documents when it is ready
-  {
-    label: 'Agreements and Disclosures',
-    getFormValues: getAgreementsAndDisclosuresFormValues,
-    getRequestPayload: getAgreementsRequestPayload,
-    validationSchema: individualInvestorAgreementsSchema,
-    component: () => (
-      <Fragment>
-        <AgreementsAndDisclosuresFields />
       </Fragment>
     )
   },

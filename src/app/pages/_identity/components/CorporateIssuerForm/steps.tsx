@@ -3,24 +3,20 @@ import { CorporateInformationForm } from 'app/pages/_identity/components/Corpora
 import { DirectorsAndBeneficialOwnerDetails } from 'app/pages/_identity/components/DirectorAndBeneficialOwnerDetails/DirectorsAndBeneficialOwnerDetails'
 import {
   getCorporateInfoFormValues,
-  getCorporateInvestorAgreementsAndDisclosuresFormValues,
   getCorporateInvestorDocumentsFormValues,
   getCorporateInvestorTaxDeclarationFormValues,
   getDirectorsAndBeneficialOwnersFormValues
 } from 'app/pages/_identity/utils/corporate/forms'
 import {
   getCorporateInfoRequestPayload,
-  getCorporateInvestorAgreementsRequestPayload,
   getCorporateInvestorDocumentsRequestPayload,
   getDirectorsAndBeneficialOwnerRequestPayload
 } from 'app/pages/_identity/utils/corporate/requests'
 import { getTaxDeclarationRequestPayload } from '../../utils/individual/requests'
 import { TaxDeclarationForm } from '../TaxDeclarationForm/TaxDeclarationForm'
 import { CorporateUploadDocumentsForm } from '../UploadDocumentsForm/CorporateUploadDocumentsForm'
-import { AgreementsAndDisclosuresFields } from '../AgreementsAndDisclosuresFields/AgreementsAndDisclosuresFields'
 import { CorporateIdentityView } from 'app/pages/_identity/components/CorporateIdentityView/CorporateIdentityView'
 import {
-  corporateInvestorAgreementsSchema,
   corporateInvestorDocumentsSchema,
   corporateInvestorInfoSchema,
   corporateTaxDeclarationSchema,
@@ -69,17 +65,6 @@ export const corporateIssuerFormSteps = [
     component: () => (
       <Fragment>
         <CorporateUploadDocumentsForm />
-      </Fragment>
-    )
-  },
-  {
-    label: 'Agreements and Declarations',
-    getFormValues: getCorporateInvestorAgreementsAndDisclosuresFormValues,
-    getRequestPayload: getCorporateInvestorAgreementsRequestPayload,
-    validationSchema: corporateInvestorAgreementsSchema,
-    component: () => (
-      <Fragment>
-        <AgreementsAndDisclosuresFields isCorporateIssuerForm />
       </Fragment>
     )
   },

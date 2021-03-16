@@ -1,7 +1,6 @@
 import React from 'react'
 import { Grid } from '@material-ui/core'
 import { IdentityDocumentsView } from 'app/pages/_identity/components/IdentityDocumentsView/IdentityDocumentsView'
-import { AgreementsAndDisclosuresView } from './AgreementsAndDisclosuresView/AgreementsAndDisclosuresView'
 import { useSetPageTitle } from 'app/hooks/useSetPageTitle'
 import { getPersonName } from 'helpers/strings'
 import { privateClassNames } from 'helpers/classnames'
@@ -45,18 +44,13 @@ export const IndividualIdentityView = () => {
       </Grid>
 
       <Grid item xs={12}>
-        <FormSectionHeader title='Investors Status Declaration' />
+        <FormSectionHeader title='Investor Status Declaration' />
         <InvestorDeclarationView data={data} />
       </Grid>
 
       <Grid item xs={12}>
         <FormSectionHeader title='Documents' />
         <IdentityDocumentsView data={data.documents} type='individual' />
-      </Grid>
-
-      <Grid item xs={12}>
-        <FormSectionHeader title='Agreements and Disclosures' />
-        <AgreementsAndDisclosuresView data={data} />
       </Grid>
     </Grid>
   )
