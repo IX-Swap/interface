@@ -10,7 +10,6 @@ import { CountryTaxDeclaration } from 'app/pages/_identity/components/CountryTax
 import { InvestorDeclarationView } from 'app/pages/_identity/components/IndividualIdentityView/InvestorDeclarationView/InvestorDeclarationView'
 import { useIdentitiesRouter } from 'app/pages/_identity/router'
 import { useAllCorporates } from 'app/pages/_identity/hooks/useAllCorporates'
-import { AgreementsAndDisclosuresView } from 'app/pages/_identity/components/IndividualIdentityView/AgreementsAndDisclosuresView/AgreementsAndDisclosuresView'
 
 export interface CorporateIdentityViewProps {
   isCorporateIssuerForm?: boolean
@@ -67,20 +66,13 @@ export const CorporateIdentityView = ({
       </Grid>
       {!isCorporateIssuerForm ? (
         <Grid item>
-          <FormSectionHeader title='Investors Status Declaration' />
+          <FormSectionHeader title='Investor Status Declaration' />
           <InvestorDeclarationView data={data} identityType='corporate' />
         </Grid>
       ) : null}
       <Grid item>
         <FormSectionHeader title='Company Documents' />
         <IdentityDocumentsView data={data.documents} type='corporate' />
-      </Grid>
-      <Grid item xs>
-        <FormSectionHeader title='Agreements and Disclosures' />
-        <AgreementsAndDisclosuresView
-          data={data}
-          isCorporateIssuerForm={isCorporateIssuerForm}
-        />
       </Grid>
     </Grid>
   )

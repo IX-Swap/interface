@@ -8,11 +8,11 @@ import { OptOutInfoDialog } from 'app/pages/_identity/components/InvestorDeclara
 
 export const investorDeclarationLabelMap = {
   personalAssets:
-    'My total net personal assets (including up to SGD$1 million of your primary residence) exceed SGD$2 million or its equivalent in foreign currency; or ',
+    'My total net personal assets (including up to SGD1 million of your primary residence) exceed SGD2 million or its equivalent in foreign currency; or ',
   income:
-    'My income in the precedeng 12 months is not less than SGD 300,00 (or its equivalent in a foriegn currency); or',
+    'My income in the preceding 12 months is not less than SGD 300,000 (or its equivalent in a foriegn currency); or',
   financialAsset:
-    'My personal financial asset (e.g. deposits and investment product) exceed SGD$1 million or  its equivalent in foriegn currency; or',
+    'My personal financial asset (e.g. deposits and investment product) exceed SGD1 million or  its equivalent in foriegn currency; or',
   jointlyHeldAccount:
     'My jointly held account with my spouse/any individual meets any of the above'
 }
@@ -69,7 +69,7 @@ export const InvestorDeclarationForm = ({
 }: InvestorDeclarationFormProps) => {
   return (
     <>
-      <FormSectionHeader title='Investors Status Declaration' />
+      <FormSectionHeader title='Investor Status Declaration' />
       <Grid container spacing={3}>
         <Grid item xs={12}>
           <Typography>

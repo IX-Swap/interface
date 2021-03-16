@@ -18,7 +18,7 @@ export const UploadDocumentsForm = ({
       <Grid item>
         <Typography>
           Please upload the following documents. All account statements and
-          documents should be date within 3 months.
+          documents should be dated within 3 months.
         </Typography>
         <Grid item>{children}</Grid>
       </Grid>

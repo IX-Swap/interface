@@ -3,7 +3,6 @@ import { CorporateInformationForm } from 'app/pages/_identity/components/Corpora
 import { DirectorsAndBeneficialOwnerDetails } from 'app/pages/_identity/components/DirectorAndBeneficialOwnerDetails/DirectorsAndBeneficialOwnerDetails'
 import {
   getCorporateInfoFormValues,
-  getCorporateInvestorAgreementsAndDisclosuresFormValues,
   getCorporateInvestorDeclarationFormValues,
   getCorporateInvestorDocumentsFormValues,
   getCorporateInvestorTaxDeclarationFormValues,
@@ -11,7 +10,6 @@ import {
 } from 'app/pages/_identity/utils/corporate/forms'
 import {
   getCorporateInfoRequestPayload,
-  getCorporateInvestorAgreementsRequestPayload,
   getCorporateInvestorDeclarationRequestPayload,
   getCorporateInvestorDocumentsRequestPayload,
   getDirectorsAndBeneficialOwnerRequestPayload
@@ -20,16 +18,15 @@ import { getTaxDeclarationRequestPayload } from '../../utils/individual/requests
 import { TaxDeclarationForm } from '../TaxDeclarationForm/TaxDeclarationForm'
 import { InvestorDeclarationForm } from '../InvestorDeclarationForm/InvestorDeclarationForm'
 import { CorporateUploadDocumentsForm } from '../UploadDocumentsForm/CorporateUploadDocumentsForm'
-import { AgreementsAndDisclosuresFields } from '../AgreementsAndDisclosuresFields/AgreementsAndDisclosuresFields'
 import { CorporateIdentityView } from 'app/pages/_identity/components/CorporateIdentityView/CorporateIdentityView'
 import {
-  corporateInvestorAgreementsSchema,
   corporateInvestorDocumentsSchema,
   corporateInvestorInfoSchema,
   corporateInvestorStatusDeclarationSchema,
   corporateTaxDeclarationSchema,
   directorsAndBeneficialOwnersSchema
 } from 'app/pages/_identity/validation/corporate'
+
 export const corporateInvestorFormSteps = [
   {
     label: 'Corporate Information',
@@ -83,17 +80,6 @@ export const corporateInvestorFormSteps = [
     component: () => (
       <Fragment>
         <CorporateUploadDocumentsForm />
-      </Fragment>
-    )
-  },
-  {
-    label: 'Agreements and Declarations',
-    getFormValues: getCorporateInvestorAgreementsAndDisclosuresFormValues,
-    getRequestPayload: getCorporateInvestorAgreementsRequestPayload,
-    validationSchema: corporateInvestorAgreementsSchema,
-    component: () => (
-      <Fragment>
-        <AgreementsAndDisclosuresFields />
       </Fragment>
     )
   },
