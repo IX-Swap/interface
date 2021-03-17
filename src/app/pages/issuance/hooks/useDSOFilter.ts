@@ -15,7 +15,7 @@ export const useDSOFilter = () => {
       replace(
         generatePath(IssuanceRoute.insight, {
           dsoId: data.list[0]._id,
-          issuerId: data.list[0]._id
+          issuerId: data.list[0].user
         })
       )
     }
@@ -24,7 +24,6 @@ export const useDSOFilter = () => {
   const handleChange = (e: any) => {
     if (hasValue(e.target.value)) {
       const [dso, issuer] = e.target.value?.split(':')
-
       replace(
         generatePath(IssuanceRoute.insight, { dsoId: dso, issuerId: issuer })
       )

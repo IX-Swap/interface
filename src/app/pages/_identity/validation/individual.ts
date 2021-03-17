@@ -96,7 +96,6 @@ export const taxDeclarationSchema = yup
       .required()
   })
 
-// @ts-expect-error
 export const individualInvestorStatusDeclarationSchema = yup
   .object<IndividualInvestorDeclarationFormValues>()
   .shape<IndividualInvestorDeclarationFormValues>({

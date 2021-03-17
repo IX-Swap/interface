@@ -7,6 +7,7 @@ import { DSOFinishLaterButton } from 'app/components/DSO/components/DSOFinishLat
 import { Divider } from 'ui/Divider'
 import { useHistory } from 'react-router'
 import { IssuanceRoute } from 'app/pages/issuance/router/config'
+import { generatePath } from 'react-router-dom'
 
 export interface DSOFormActionsProps {
   dso: DigitalSecurityOffering | undefined
@@ -25,7 +26,12 @@ export const DSOFormActions = (props: DSOFormActionsProps) => {
         color='primary'
         disableElevation
         onClick={() =>
-          push(IssuanceRoute.preview, { dsoId: dso?._id, issuerId: dso?.user })
+          push(
+            generatePath(IssuanceRoute.preview, {
+              dsoId: dso?._id,
+              issuerId: dso?.user
+            })
+          )
         }
         disabled={dso === undefined}
       >
