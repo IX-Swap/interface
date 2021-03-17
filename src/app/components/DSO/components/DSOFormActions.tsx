@@ -5,7 +5,8 @@ import { useDSOAutosave } from 'app/pages/issuance/hooks/useDSOAutosave'
 import { Check } from '@material-ui/icons'
 import { DSOFinishLaterButton } from 'app/components/DSO/components/DSOFinishLaterButton'
 import { Divider } from 'ui/Divider'
-import { useIssuanceRouter } from 'app/pages/issuance/router'
+import { useHistory } from 'react-router'
+import { IssuanceRoute } from 'app/pages/issuance/router/config'
 
 export interface DSOFormActionsProps {
   dso: DigitalSecurityOffering | undefined
@@ -13,7 +14,7 @@ export interface DSOFormActionsProps {
 
 export const DSOFormActions = (props: DSOFormActionsProps) => {
   const { dso } = props
-  const { push } = useIssuanceRouter()
+  const { push } = useHistory()
 
   const { isSaved, isSaving, isError } = useDSOAutosave(dso)
 
@@ -24,7 +25,7 @@ export const DSOFormActions = (props: DSOFormActionsProps) => {
         color='primary'
         disableElevation
         onClick={() =>
-          push('preview', { dsoId: dso?._id, issuerId: dso?.user })
+          push(IssuanceRoute.preview, { dsoId: dso?._id, issuerId: dso?.user })
         }
         disabled={dso === undefined}
       >

@@ -7,6 +7,7 @@ import { EditDSO } from 'app/pages/issuance/pages/EditDSO'
 import { IssuanceLanding } from 'app/pages/issuance/pages/IssuanceLanding'
 import { ViewDSO } from 'app/pages/issuance/pages/ViewDSO'
 import { IssuanceRoute } from 'app/pages/issuance/router/config'
+import { PreviewDSO } from 'app/pages/issuance/pages/PreviewDSO'
 
 export const IssuanceRouter = () => {
   return (
@@ -21,6 +22,10 @@ export const IssuanceRouter = () => {
 
       <Route exact path={IssuanceRoute.edit}>
         <EditDSO />
+      </Route>
+
+      <Route exact path={IssuanceRoute.preview}>
+        <PreviewDSO />
       </Route>
 
       <Route exact path={IssuanceRoute.deployToken}>

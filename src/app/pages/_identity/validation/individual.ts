@@ -96,6 +96,7 @@ export const taxDeclarationSchema = yup
       .required()
   })
 
+// @ts-expect-error
 export const individualInvestorStatusDeclarationSchema = yup
   .object<IndividualInvestorDeclarationFormValues>()
   .shape<IndividualInvestorDeclarationFormValues>({
@@ -108,7 +109,9 @@ export const individualInvestorStatusDeclarationSchema = yup
     consent: yup.bool().oneOf([true]).required('Required'),
     consequencesOfQualification: yup.bool().oneOf([true]).required('Required')
   })
-  .test('Investor Declaration Validation', 'Error!', function (values) {
+  .test('Investor Declaration Validation', 'Error!', function (
+    values: IndividualInvestorDeclarationFormValues | null | undefined
+  ) {
     if (values === undefined || values === null) {
       return false
     }

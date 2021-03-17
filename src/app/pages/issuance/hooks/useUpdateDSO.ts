@@ -14,7 +14,7 @@ export const useUpdateDSO = (
   callbacks?: QueryOrMutationCallbacks<DigitalSecurityOffering>
 ) => {
   const { apiService, snackbarService } = useServices()
-  const params = useParams<{ dsoId: string }>()
+  const params = useParams<{ dsoId: string; issuerId: string }>()
   const { replace } = useHistory()
   const { user } = useAuth()
   const url = issuanceURL.dso.update(getIdFromObj(user), dsoId)
@@ -29,10 +29,7 @@ export const useUpdateDSO = (
       replace(IssuanceRoute.view, params)
 
       void snackbarService.showSnackbar('Success', 'success')
-      void queryCache.invalidateQueries([
-        investQueryKeys.getDSOById,
-        params.dsoId
-      ])
+      void queryCache.invalidateQueries([investQueryKeys.getDSOById, dsoId])
     },
     onError: (error: any) => {
       void snackbarService.showSnackbar(error.message, 'error')
