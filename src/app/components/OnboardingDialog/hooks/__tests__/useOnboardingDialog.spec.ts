@@ -1,6 +1,5 @@
 // import { act, renderHook } from '@testing-library/react-hooks'
 // import { useOnboardingDialog } from 'app/components/OnboardingDialog/hooks/useOnboardingDialog'
-import * as useIdentitiesRouter from 'app/pages/_identity/router'
 import * as useSecurityRouter from 'app/pages/security/router'
 import * as useSnackbar from 'hooks/useSnackbar'
 import { cleanup } from 'test-utils'
@@ -10,12 +9,12 @@ describe('useOnboardingDialog', () => {
   const snackbarResponse = {
     showOnboardingDialog: mockShowOnboardingDialog
   }
-  const identitiesRouter = {
-    paths: {
-      createIndividual: '/individual',
-      createCorporate: '/corporate'
-    }
-  }
+  // const identitiesRouter = {
+  //   paths: {
+  //     createIndividual: '/individual',
+  //     createCorporate: '/corporate'
+  //   }
+  // }
   const securityRouter = {
     paths: {
       setup2fa: '/setup2fa'
@@ -32,9 +31,6 @@ describe('useOnboardingDialog', () => {
     jest
       .spyOn(useSnackbar, 'useSnackbar')
       .mockImplementation(() => snackbarResponse as any)
-    jest
-      .spyOn(useIdentitiesRouter, 'useIdentitiesRouter')
-      .mockImplementation(() => identitiesRouter as any)
     jest
       .spyOn(useSecurityRouter, 'useSecurityRouter')
       .mockImplementation(() => securityRouter as any)

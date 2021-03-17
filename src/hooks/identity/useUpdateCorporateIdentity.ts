@@ -1,6 +1,5 @@
 import { useServices } from 'hooks/useServices'
 import { useAuth } from 'hooks/auth/useAuth'
-import { useIdentitiesRouter } from 'app/pages/_identity/router'
 import { CorporateIdentityFormValues } from 'app/pages/identity/components/types'
 import {
   prepareDeclarationsForUpload,
@@ -15,7 +14,6 @@ import { identityURL } from 'config/apiURL'
 export const useUpdateCorporateIdentity = (id: string) => {
   const { snackbarService } = useServices()
   const { user } = useAuth()
-  const { push, params } = useIdentitiesRouter()
   const updateCorporate = async (values: CorporateIdentityFormValues) => {
     const identity: UpdateCorporateIdentityArgs = {
       ...values,
@@ -30,7 +28,6 @@ export const useUpdateCorporateIdentity = (id: string) => {
   return useMutation(updateCorporate, {
     onSuccess: data => {
       void snackbarService.showSnackbar(data.message, 'success')
-      push('corporate', params)
     },
     onError: (error: any) => {
       void snackbarService.showSnackbar(error.message, 'error')

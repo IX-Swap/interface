@@ -3,13 +3,12 @@ import { Grid, Typography } from '@material-ui/core'
 import { Section } from 'app/pages/identity/components/Section'
 import { ViewButton } from 'app/pages/identity/components/ViewButton'
 import { useIndividualIdentity } from 'hooks/identity/useIndividualIdentity'
-import { useIdentitiesRouter } from 'app/pages/_identity/router'
 import { IndividualInfoView } from 'app/pages/identity/components/IndividualInfoView'
 import { VSpacer } from 'components/VSpacer'
+import { IdentityRoute } from 'app/pages/_identity/router/config'
 
 export const IndividualPreview: React.FC = () => {
   const { data, status } = useIndividualIdentity()
-  const { paths } = useIdentitiesRouter()
 
   if (status === 'loading') {
     return null
@@ -34,7 +33,7 @@ export const IndividualPreview: React.FC = () => {
           title={name}
           actions={
             <ViewButton
-              link={paths.individual}
+              link={IdentityRoute.viewIndividual}
               params={{ label: name, identityId: data._id }}
             />
           }

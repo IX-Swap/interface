@@ -1,7 +1,7 @@
 import { OnboardingLinks } from 'app/pages/home/components/OnboardingLinks'
 import React from 'react'
 import { render, cleanup } from 'test-utils'
-import * as useIdentitiesRouter from 'app/pages/_identity/router'
+// import * as useIdentitiesRouter from 'app/pages/_identity/router'
 
 jest.mock('app/pages/home/components/OnboardingLink', () => ({
   OnboardingLink: jest.fn(() => null)
@@ -14,16 +14,16 @@ describe('OnboardingLinks', () => {
   })
 
   it('renders without errors', () => {
-    const objResponse = {
-      paths: {
-        createIndividual: '/create/individuals',
-        createCorporate: '/create/corporate'
-      }
-    }
+    // const objResponse = {
+    //   paths: {
+    //     createIndividual: '/create/individuals',
+    //     createCorporate: '/create/corporate'
+    //   }
+    // }
 
-    jest
-      .spyOn(useIdentitiesRouter, 'useIdentitiesRouter')
-      .mockImplementation(() => objResponse as any)
+    // jest
+    //   .spyOn(useIdentitiesRouter, 'useIdentitiesRouter')
+    //   .mockImplementation(() => objResponse as any)
 
     render(<OnboardingLinks />)
   })

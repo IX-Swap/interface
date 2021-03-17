@@ -8,8 +8,8 @@ import React from 'react'
 import { IdentityDocumentsView } from 'app/pages/_identity/components/IdentityDocumentsView/IdentityDocumentsView'
 import { CountryTaxDeclaration } from 'app/pages/_identity/components/CountryTaxDeclarations/CountryTaxDeclaration'
 import { InvestorDeclarationView } from 'app/pages/_identity/components/IndividualIdentityView/InvestorDeclarationView/InvestorDeclarationView'
-import { useIdentitiesRouter } from 'app/pages/_identity/router'
 import { useAllCorporates } from 'app/pages/_identity/hooks/useAllCorporates'
+import { useParams } from 'react-router'
 
 export interface CorporateIdentityViewProps {
   isCorporateIssuerForm?: boolean
@@ -18,7 +18,7 @@ export interface CorporateIdentityViewProps {
 export const CorporateIdentityView = ({
   isCorporateIssuerForm = false
 }: CorporateIdentityViewProps) => {
-  const { params } = useIdentitiesRouter()
+  const params = useParams<{ identityId: string }>()
   const {
     data: { map },
     isLoading

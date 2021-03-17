@@ -1,16 +1,14 @@
 import React from 'react'
 import { Grid } from '@material-ui/core'
-import { useIdentitiesRouter } from 'app/pages/_identity/router'
 import { useAllCorporates } from 'app/pages/_identity/hooks/useAllCorporates'
 import { VSpacer } from 'components/VSpacer'
 import { useSetPageTitle } from 'app/hooks/useSetPageTitle'
 import { CorporateIssuerForm } from 'app/pages/_identity/components/CorporateIssuerForm/CorporateIssuerForm'
+import { useParams } from 'react-router-dom'
 
 export const EditIssuer: React.FC = () => {
   const { data, isLoading } = useAllCorporates({ type: 'issuer' })
-  const {
-    params: { identityId }
-  } = useIdentitiesRouter()
+  const { identityId } = useParams<{ identityId: string }>()
   const identity = data.map[identityId]
 
   useSetPageTitle(identity?.companyLegalName)

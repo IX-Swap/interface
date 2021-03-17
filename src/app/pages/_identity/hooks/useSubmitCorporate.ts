@@ -4,12 +4,12 @@ import { CorporateIdentity } from 'types/identity'
 import { identityURL } from 'config/apiURL'
 import { identityQueryKeys } from 'config/queryKeys'
 import { useOnboardingDialog } from 'app/components/OnboardingDialog/hooks/useOnboardingDialog'
-import { useIdentitiesRouter } from 'app/pages/_identity/router'
+import { useParams } from 'react-router'
 
 export const useSubmitCorporate = () => {
   const { snackbarService, apiService, storageService } = useServices()
   const { showPostIdentityCreateDialog } = useOnboardingDialog()
-  const { params } = useIdentitiesRouter()
+  const params = useParams<{ identityId: string }>()
   const queryCache = useQueryCache()
 
   const submitCorporate = async () => {

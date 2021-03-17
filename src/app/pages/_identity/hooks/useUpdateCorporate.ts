@@ -4,14 +4,14 @@ import { useMutation, useQueryCache } from 'react-query'
 import { CorporateIdentity } from 'types/identity'
 import { getIdFromObj } from 'helpers/strings'
 import { identityURL } from 'config/apiURL'
-import { useIdentitiesRouter } from 'app/pages/_identity/router'
 import { identityQueryKeys } from 'config/queryKeys'
+import { useParams } from 'react-router-dom'
 
 export const useUpdateCorporate = (corporateType: string) => {
   const { snackbarService, apiService } = useServices()
   const { user } = useAuth()
   const userId = getIdFromObj(user)
-  const { params } = useIdentitiesRouter()
+  const params = useParams<{ identityId: string }>()
   const queryCache = useQueryCache()
 
   const updateCorporate = async (values: any) => {

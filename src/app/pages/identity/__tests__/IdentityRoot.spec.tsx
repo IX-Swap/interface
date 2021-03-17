@@ -1,13 +1,6 @@
 import React from 'react'
 import { render, cleanup } from 'test-utils'
-import { useIdentitiesRouter } from 'app/pages/_identity/router'
 import { IdentityRoot } from 'app/pages/_identity/IdentityRoot'
-
-jest.mock('app/pages/_identity/router')
-
-const useIdentitiesRouterMock = useIdentitiesRouter as jest.Mock<
-  Partial<ReturnType<typeof useIdentitiesRouter>>
->
 
 describe('IdentityRoot', () => {
   afterEach(async () => {
@@ -15,14 +8,7 @@ describe('IdentityRoot', () => {
     jest.clearAllMocks()
   })
 
-  it('renders routes from hook', () => {
-    const renderRoutes = jest.fn(() => <div />)
-    useIdentitiesRouterMock.mockReturnValueOnce({
-      renderRoutes
-    })
-
+  it('renders without error', () => {
     render(<IdentityRoot />)
-
-    expect(renderRoutes).toHaveBeenCalledTimes(1)
   })
 })

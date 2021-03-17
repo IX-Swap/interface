@@ -2,38 +2,36 @@ import { CorporateOnboardingSteps } from 'app/components/OnboardingPanel/Corpora
 import { HomeOnboardingSteps } from 'app/components/OnboardingPanel/HomeOnboardingSteps'
 import { IndividualOnboardingSteps } from 'app/components/OnboardingPanel/IndividualOnboardingSteps'
 import { IssuerOnboardingSteps } from 'app/components/OnboardingPanel/IssuerOnboardingSteps'
-import { useIdentitiesRouter } from 'app/pages/_identity/router'
+import { IdentityRoute } from 'app/pages/_identity/router/config'
 import React from 'react'
 import { Switch, Route } from 'react-router-dom'
 
 export const BottomPanel = () => {
-  const { paths: identityPaths } = useIdentitiesRouter()
-
   return (
     <Switch>
       <Route
         path={[
-          identityPaths.individual,
-          identityPaths.createIndividual,
-          identityPaths.editIndividual
+          IdentityRoute.viewIndividual,
+          IdentityRoute.createIndividual,
+          IdentityRoute.editIndividual
         ]}
       >
         <IndividualOnboardingSteps />
       </Route>
       <Route
         path={[
-          identityPaths.corporate,
-          identityPaths.createCorporate,
-          identityPaths.editCorporate
+          IdentityRoute.corporate,
+          IdentityRoute.createCorporate,
+          IdentityRoute.editCorporate
         ]}
       >
         <CorporateOnboardingSteps />
       </Route>
       <Route
         path={[
-          identityPaths.viewIssuer,
-          identityPaths.createIssuer,
-          identityPaths.editIssuer
+          IdentityRoute.viewIssuer,
+          IdentityRoute.createIssuer,
+          IdentityRoute.editIssuer
         ]}
       >
         <IssuerOnboardingSteps />

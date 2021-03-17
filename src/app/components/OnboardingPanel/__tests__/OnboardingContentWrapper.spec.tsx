@@ -1,18 +1,17 @@
 import React from 'react'
 import { render, cleanup } from 'test-utils'
 import { OnboardingContentWrapper } from 'app/components/OnboardingPanel/OnboardingContentWrapper'
-import * as useIdentitiesRouter from 'app/pages/_identity/router'
 import * as useSecurityRouter from 'app/pages/security/router'
 import * as useHomeRouter from 'app/pages/home/router'
 import { MemoryRouter } from 'react-router-dom'
 
 describe('ContentWrapper', () => {
-  const identitiesRouter = {
-    paths: {
-      createIndividual: '/individual',
-      createCorporate: '/corporate'
-    }
-  }
+  // const identitiesRouter = {
+  //   paths: {
+  //     createIndividual: '/individual',
+  //     createCorporate: '/corporate'
+  //   }
+  // }
   const securityRouter = {
     paths: {
       setup2fa: '/setup2fa'
@@ -26,9 +25,9 @@ describe('ContentWrapper', () => {
   }
 
   beforeEach(() => {
-    jest
-      .spyOn(useIdentitiesRouter, 'useIdentitiesRouter')
-      .mockImplementation(() => identitiesRouter as any)
+    // jest
+    //   .spyOn(useIdentitiesRouter, 'useIdentitiesRouter')
+    //   .mockImplementation(() => identitiesRouter as any)
     jest
       .spyOn(useSecurityRouter, 'useSecurityRouter')
       .mockImplementation(() => securityRouter as any)

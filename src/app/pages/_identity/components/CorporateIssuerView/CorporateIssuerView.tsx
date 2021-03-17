@@ -6,13 +6,13 @@ import { CorporateInfo } from 'app/pages/_identity/components/CorporateIdentityV
 import React from 'react'
 import { IdentityDocumentsView } from 'app/pages/_identity/components/IdentityDocumentsView/IdentityDocumentsView'
 import { CountryTaxDeclaration } from 'app/pages/_identity/components/CountryTaxDeclarations/CountryTaxDeclaration'
-import { useIdentitiesRouter } from 'app/pages/_identity/router'
 import { useAllCorporates } from 'app/pages/_identity/hooks/useAllCorporates'
 import { AgreementsAndDisclosuresView } from 'app/pages/_identity/components/IndividualIdentityView/AgreementsAndDisclosuresView/AgreementsAndDisclosuresView'
 import { BeneficialOwnersList } from 'app/pages/_identity/components/CorporateIdentityView/BeneficialOwnersList'
+import { useParams } from 'react-router-dom'
 
 export const CorporateIssuerView = () => {
-  const { params } = useIdentitiesRouter()
+  const params = useParams<{ identityId: string }>()
   const {
     data: { map },
     isLoading

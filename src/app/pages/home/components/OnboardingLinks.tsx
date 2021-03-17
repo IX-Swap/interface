@@ -4,12 +4,11 @@ import { OnboardingLink } from 'app/pages/home/components/OnboardingLink'
 import { ReactComponent as IndividualIcon } from 'assets/icons/navigation/individual.svg'
 import { ReactComponent as CorporateIcon } from 'assets/icons/navigation/corporate.svg'
 import { ReactComponent as FundraiseIcon } from 'assets/icons/navigation/asset-balance.svg'
-import { useIdentitiesRouter } from 'app/pages/_identity/router'
 import { useIndividualIdentity } from 'hooks/identity/useIndividualIdentity'
 import { useAllCorporates } from 'app/pages/_identity/hooks/useAllCorporates'
+import { IdentityRoute } from 'app/pages/_identity/router/config'
 
 export const OnboardingLinks = () => {
-  const { paths: identityPaths } = useIdentitiesRouter()
   const {
     data: individualIdentity,
     isLoading: individualIdentityIsLoading
@@ -23,12 +22,12 @@ export const OnboardingLinks = () => {
   const individualLink =
     !individualIdentityIsLoading && individualIdentity !== undefined
       ? {
-          to: identityPaths.editIndividual,
+          to: IdentityRoute.editIndividual,
           params: {
             identityId: individualIdentity._id
           }
         }
-      : { to: identityPaths.createIndividual }
+      : { to: IdentityRoute.createIndividual }
   const isIndividualDone =
     !individualIdentityIsLoading &&
     individualIdentity !== undefined &&
@@ -42,12 +41,12 @@ export const OnboardingLinks = () => {
   const investorLink =
     !corprateIdentitiesIsLoading && investorIdentities.length > 0
       ? {
-          to: identityPaths.editCorporate,
+          to: IdentityRoute.editCorporate,
           params: {
             identityId: investorIdentities[0]._id
           }
         }
-      : { to: identityPaths.createCorporate }
+      : { to: IdentityRoute.createCorporate }
   const isInvestorDone =
     !corprateIdentitiesIsLoading &&
     investorIdentities.length > 0 &&
@@ -61,12 +60,12 @@ export const OnboardingLinks = () => {
   const issuerLink =
     !corprateIdentitiesIsLoading && issuerIdentities.length > 0
       ? {
-          to: identityPaths.editIssuer,
+          to: IdentityRoute.editIssuer,
           params: {
             identityId: issuerIdentities[0]._id
           }
         }
-      : { to: identityPaths.createIssuer }
+      : { to: IdentityRoute.createIssuer }
   const isIssuerDone =
     !corprateIdentitiesIsLoading &&
     issuerIdentities.length > 0 &&
