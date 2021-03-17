@@ -14,7 +14,7 @@ export const DeclarationsListItem = ({
 }: DeclarationsListItemProps) => {
   return (
     <Grid item xs={12}>
-      <Box display={'flex'} alignItems={'center'} color={'#AAAAAA'}>
+      <Box display={'flex'} alignItems={'flex-start'} color={'#AAAAAA'}>
         {value ? <DoneIcon /> : <CloseIcon />}
         <Typography>
           <Box marginLeft={2} color={'#444444'}>

@@ -27,10 +27,17 @@ export const Checkbox = (
   return (
     <FormControlLabel
       {...rest}
+      style={{
+        alignItems: 'flex-start'
+      }}
       checked={reverse ? !value : value}
       control={<MUICheckbox name={name} />}
       label={
-        <Typography variant='body1' color={error ? 'error' : 'inherit'}>
+        <Typography
+          variant='body1'
+          color={error ? 'error' : 'inherit'}
+          style={{ marginTop: 10 }}
+        >
           {label}
         </Typography>
       }

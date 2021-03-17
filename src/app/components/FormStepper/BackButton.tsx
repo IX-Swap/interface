@@ -3,61 +3,50 @@ import { Button, ButtonProps } from '@material-ui/core'
 import { useFormContext } from 'react-hook-form'
 import { MutationResultPair } from 'react-query'
 
-export interface MoveButtonProps extends Omit<ButtonProps, 'onClick'> {
+export interface BackButtonProps extends Omit<ButtonProps, 'onClick'> {
   mutation: MutationResultPair<any, any, any, any>
   getRequestPayload: (data: any) => any
-  shouldUpdateStep: boolean
+  shouldSaveStep: boolean
+  isLastStep: boolean
   nextStep: number
-  isBack?: boolean
-  onClick: (step: number) => any
+  setActiveStep: (step: number) => any
 }
 
-export const MoveButton = (props: MoveButtonProps) => {
+export const BackButton = (props: BackButtonProps) => {
   const {
     mutation,
     children,
-    onClick,
     getRequestPayload,
     variant = 'outlined',
-    shouldUpdateStep,
-    nextStep,
-    isBack = false
+    shouldSaveStep,
+    isLastStep,
+    setActiveStep,
+    nextStep
   } = props
   const [save, { isLoading }] = mutation
   const {
     watch,
-    trigger,
     formState: { dirtyFields }
   } = useFormContext()
   const values = watch()
 
   const handleSave = async () => {
-    let isValid = true
-
-    if (!isBack) {
-      isValid = await trigger()
-    }
-
-    if (!isValid) {
+    if (isLastStep) {
+      setActiveStep(nextStep)
       return
     }
 
     const isDirty = Object.values(dirtyFields).length > 0
-    const updateStepAndData = async () => {
-      if (typeof getRequestPayload === 'function') {
-        const payload = getRequestPayload(values)
-        payload.step = nextStep
-        await save(payload)
-      }
-      onClick(nextStep)
+    const payload = getRequestPayload(values)
+
+    if (shouldSaveStep) {
+      payload.step = nextStep
     }
 
-    if (shouldUpdateStep) {
-      await updateStepAndData()
-    } else if (isDirty && isValid) {
-      await updateStepAndData()
+    if (isDirty) {
+      await save(payload).then(() => setActiveStep(nextStep))
     } else {
-      onClick(nextStep)
+      setActiveStep(nextStep)
     }
   }
 

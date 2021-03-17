@@ -52,6 +52,9 @@ export const financialInfoSchema = yup
           })
           .required()
       )
+      .test('Fund Source Validation', 'Error!', function (value) {
+        return Boolean(value?.some(fundSource => fundSource.value !== 0))
+      })
       .required('Required')
   })
 
@@ -104,9 +107,12 @@ export const individualInvestorStatusDeclarationSchema = yup
     personalAssets: yup.bool().required('Required'),
     jointlyHeldAccount: yup.bool().required('Required'),
 
-    rightToOptOut: yup.bool().oneOf([true]).required('Required'),
-    consent: yup.bool().oneOf([true]).required('Required'),
-    consequencesOfQualification: yup.bool().oneOf([true]).required('Required')
+    optInAgreements: yup.bool().oneOf([true]).required('Required'),
+
+    primaryOfferingServices: yup.bool(),
+    digitalSecurities: yup.bool(),
+    digitalSecuritiesIssuance: yup.bool(),
+    allServices: yup.bool()
   })
   .test('Investor Declaration Validation', 'Error!', function (values) {
     if (values === undefined || values === null) {
@@ -114,7 +120,7 @@ export const individualInvestorStatusDeclarationSchema = yup
     }
 
     const financialDeclarations = Object.entries(values)
-      .filter(([key, value]) => {
+      .filter(([key]) => {
         return (
           key === 'financialAsset' ||
           key === 'income' ||

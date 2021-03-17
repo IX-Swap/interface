@@ -3,12 +3,12 @@ import { Box, Grid } from '@material-ui/core'
 import { FormSectionHeader } from 'app/components/DSO/components/FormSectionHeader'
 import { DeclarationsList } from 'app/pages/_identity/components/DeclarationsList/DeclarationsList'
 import { CorporateIdentity, IndividualIdentity } from 'types/identity'
-import {
-  investorDeclarationLabelMap,
-  corporateInvestorDeclarationLabelMap,
-  optInDeclarationLabelMapView
-} from '../../InvestorDeclarationForm/InvestorDeclarationForm'
 import { IdentityType } from 'app/pages/identity/utils'
+import {
+  corporateInvestorAgreementsMap,
+  individualInvestorAgreementsMap
+} from 'app/pages/_identity/components/InvestorDeclarationForm/InvestorAgreements/agreements'
+import { OptInAgreements } from 'app/pages/_identity/components/InvestorDeclarationForm/OptInAgreements/OptInAgreements'
 
 export interface StatusDeclaration {
   accreditedInvestorDeclaration: Record<string, boolean>
@@ -26,13 +26,10 @@ export const InvestorDeclarationView: React.FC<InvestorDeclarationViewProps> = (
   identityType = 'individual'
 }) => {
   const {
-    consent,
-    consequencesOfQualification,
     financialAsset,
     income,
     jointlyHeldAccount,
     personalAssets,
-    rightToOptOut,
     assets,
     trustee,
     accreditedShareholders,
@@ -43,7 +40,9 @@ export const InvestorDeclarationView: React.FC<InvestorDeclarationViewProps> = (
     allServices,
     digitalSecurities,
     primaryOfferingServices,
-    digitalSecuritiesIssuance
+    digitalSecuritiesIssuance,
+
+    optInAgreements
   } = data.declarations?.investorsStatus ?? {}
 
   const accreditedInvestorDeclaration = {
@@ -62,17 +61,15 @@ export const InvestorDeclarationView: React.FC<InvestorDeclarationViewProps> = (
     accreditedSettlors
   }
 
-  const optInRequirement = {
-    consent,
-    consequencesOfQualification,
-    rightToOptOut
-  }
-
   const accreditedInvestorOptOut = {
     allServices,
     digitalSecurities,
     primaryOfferingServices,
     digitalSecuritiesIssuance
+  }
+
+  const optInRequirement = {
+    optInAgreements
   }
 
   const accreditedInvestorOptOutLabelMap = {
@@ -84,10 +81,14 @@ export const InvestorDeclarationView: React.FC<InvestorDeclarationViewProps> = (
     allServices: 'Any/all Services/Products offered by InvestaX'
   }
 
+  const isCorporate = identityType === 'corporate'
+
   return (
     <Grid container>
       <DeclarationsList
-        title='I declare that I am an individual "Accredited Investor"'
+        title={`I declare that I am ${
+          isCorporate ? 'a corporate' : 'an individual'
+        } "Accredited Investor"`}
         data={
           identityType === 'individual'
             ? accreditedInvestorDeclaration
@@ -95,8 +96,8 @@ export const InvestorDeclarationView: React.FC<InvestorDeclarationViewProps> = (
         }
         labelMap={
           identityType === 'individual'
-            ? investorDeclarationLabelMap
-            : corporateInvestorDeclarationLabelMap
+            ? individualInvestorAgreementsMap
+            : corporateInvestorAgreementsMap
         }
       />
       <Grid item xs={12}>
@@ -107,7 +108,9 @@ export const InvestorDeclarationView: React.FC<InvestorDeclarationViewProps> = (
       <DeclarationsList
         title='I confirm to be treated as an “Accredited Investor” by InvestaX'
         data={optInRequirement}
-        labelMap={optInDeclarationLabelMapView}
+        labelMap={{
+          optInAgreements: <OptInAgreements />
+        }}
       />
       {Object.values(accreditedInvestorOptOut).find(item => item) !==
       undefined ? (

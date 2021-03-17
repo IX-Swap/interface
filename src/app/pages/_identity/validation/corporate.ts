@@ -9,6 +9,7 @@ import {
   RepresentativeFormValues
 } from 'app/pages/_identity/types/forms'
 import { DataroomFile } from 'types/dataroomFile'
+import { IdentityAddress } from 'types/identity'
 import { addressSchema } from 'validation/shared'
 import * as yup from 'yup'
 
@@ -26,8 +27,12 @@ export const corporateInvestorInfoSchema = yup
     }),
     countryOfFormation: yup.string().required('Required'),
     companyAddress: addressSchema.required('Required'),
-    mailingAddress: addressSchema.required('Required'),
     isMailingAddressSame: yup.bool().required('Required'),
+    mailingAddress: yup.object<IdentityAddress>().when('isMailingAddressSame', {
+      is: false,
+      then: addressSchema.required('Required'),
+      otherwise: yup.object().notRequired()
+    }),
     representatives: yup
       .array<RepresentativeFormValues>()
       .of(
@@ -128,9 +133,12 @@ export const corporateInvestorStatusDeclarationSchema = yup
       .required('Required'),
     partnership: yup.bool().oneOf([true, false]).required('Required'),
 
-    rightToOptOut: yup.bool().oneOf([true]).required('Required'),
-    consent: yup.bool().oneOf([true]).required('Required'),
-    consequencesOfQualification: yup.bool().oneOf([true]).required('Required')
+    optInAgreements: yup.bool().oneOf([true]).required('Required'),
+
+    primaryOfferingServices: yup.bool(),
+    digitalSecurities: yup.bool(),
+    digitalSecuritiesIssuance: yup.bool(),
+    allServices: yup.bool()
   })
   .test('Investor Declaration Validation', 'Error!', function (values) {
     if (values === undefined || values === null) {
@@ -138,7 +146,7 @@ export const corporateInvestorStatusDeclarationSchema = yup
     }
 
     const financialDeclarations = Object.entries(values)
-      .filter(([key, value]) => {
+      .filter(([key]) => {
         return (
           key === 'assets' ||
           key === 'trustee' ||
