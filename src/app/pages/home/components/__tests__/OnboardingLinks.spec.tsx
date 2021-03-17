@@ -70,7 +70,7 @@ describe('OnboardingLinks', () => {
     )
   })
 
-  it('renders links if user has completed Individual Indentity Journey', () => {
+  it('renders only individual investor link if user completed individual investor onboarding journey', () => {
     const objResponse = {
       isIssuerJourneyCompleted: false,
       isInvestorJourneyCompleted: false,
@@ -93,7 +93,7 @@ describe('OnboardingLinks', () => {
     )
   })
 
-  it('renders links if user has complete Corporate Identity Journey', () => {
+  it('renders only corporate and issuer links if user completed corporate investor journey', () => {
     const objResponse = {
       isIssuerJourneyCompleted: false,
       isInvestorJourneyCompleted: true,
@@ -125,7 +125,7 @@ describe('OnboardingLinks', () => {
     )
   })
 
-  it('renders links if user has complete Issuer Identity Journey', () => {
+  it('renders only corporate links if user completed issuer journey', () => {
     const objResponse = {
       isIssuerJourneyCompleted: true,
       isInvestorJourneyCompleted: false,
@@ -157,7 +157,7 @@ describe('OnboardingLinks', () => {
     )
   })
 
-  it('renders links if user has complete Corporate and Issuer Identity Journeys', () => {
+  it('renders only corporate links if user completed both corporate and issuer journeys', () => {
     const objResponse = {
       isIssuerJourneyCompleted: true,
       isInvestorJourneyCompleted: true,
