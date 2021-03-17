@@ -11,16 +11,16 @@ import { getDSOStats } from 'app/components/DSO/utils'
 import { useParams } from 'react-router-dom'
 
 export const AmountRaised = () => {
-  const params = useParams<{ dsoId: string }>()
-  const { data, isSuccess } = useDSOById(params.dsoId)
+  const { dsoId, issuerId } = useParams<{ dsoId: string; issuerId: string }>()
+  const { data, isSuccess } = useDSOById(dsoId, issuerId)
 
   let value = LOADING_TEXT
 
-  if (data === undefined) {
+  if (data === undefined || data.status === 'Draft') {
     value = abbreviateNumber(0)
   }
 
-  if (isSuccess && data !== undefined) {
+  if (isSuccess && data !== undefined && data.status !== 'Draft') {
     value = abbreviateNumber(data.insight.raisedTotal, data.currency.symbol)
   }
 

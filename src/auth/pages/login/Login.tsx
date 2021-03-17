@@ -1,48 +1,53 @@
 import React from 'react'
-import { Button, Grid } from '@material-ui/core'
-import { LoginArgs } from 'types/auth'
-import { loginFormValidationSchema } from 'validation/auth'
-import { useAuthRouter } from 'auth/router'
-import { useLogin } from 'auth/hooks/useLogin'
-import { AppRouterLinkComponent } from 'components/AppRouterLink'
+import { Grid, Typography, Box } from '@material-ui/core'
 import { Submit } from 'components/form/Submit'
 import { LoginFields } from 'auth/pages/login/components/LoginFields'
-import { Form } from 'components/form/Form'
+import { AppRouterLink } from 'components/AppRouterLink'
+import { AuthRoute } from 'auth/router'
 
-export const loginFormInitialValues = {
-  email: '',
-  password: '',
-  otp: ''
+export interface LoginProps {
+  hidden: boolean
+  isLoading: boolean
 }
 
-export const Login: React.FC = () => {
-  const { paths } = useAuthRouter()
-  const [login] = useLogin()
-  const handleSubmit = async (values: LoginArgs) => {
-    await login(values)
-  }
-
+export const Login = ({ hidden, isLoading }: LoginProps) => {
   return (
-    <Form
-      data-testid='login-form'
-      defaultValues={loginFormInitialValues}
-      validationSchema={loginFormValidationSchema}
-      onSubmit={handleSubmit}
-    >
+    <Box display={hidden ? 'none' : 'block'}>
       <Grid container direction='column' spacing={2}>
-        <LoginFields />
-        <Grid item container justify='space-between'>
-          <Submit size='large'>Login</Submit>
-          <Button
-            component={AppRouterLinkComponent}
-            color='primary'
+        <Grid item>
+          <Typography align='center'>Log In with your account</Typography>
+        </Grid>
+        <Grid item>
+          <LoginFields />
+        </Grid>
+        <Grid item container justify='center'>
+          <Submit
+            style={{ width: 150 }}
             size='large'
-            to={paths.passwordReset}
+            variant='contained'
+            color='primary'
+            watchIsDirty={false}
+            disabled={isLoading}
           >
-            Forgot Password?
-          </Button>
+            Login
+          </Submit>
+        </Grid>
+        <Grid item>
+          <Typography align='center'>
+            Don’t have any account?{' '}
+            <AppRouterLink to={AuthRoute.signup}>
+              Create an Account.
+            </AppRouterLink>
+          </Typography>
+        </Grid>
+        <Grid item>
+          <Typography align='center'>
+            <AppRouterLink to={AuthRoute.passwordReset}>
+              Forgot Password?
+            </AppRouterLink>
+          </Typography>
         </Grid>
       </Grid>
-    </Form>
+    </Box>
   )
 }

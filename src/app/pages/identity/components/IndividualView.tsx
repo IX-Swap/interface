@@ -5,7 +5,7 @@ import { Section } from 'app/pages/identity/components/Section'
 import { IndividualInfoView } from 'app/pages/identity/components/IndividualInfoView'
 import { AddressView } from 'app/pages/identity/components/AddressView'
 import { FinancialView } from 'app/pages/identity/FinancialView'
-import { IdentityDocumentsView } from 'app/pages/identity/components/IdentityDocumentsView'
+import { IdentityDocumentsView } from 'app/pages/_identity/components/IdentityDocumentsView/IdentityDocumentsView'
 import { DeclarationView } from 'app/pages/identity/components/DeclarationView'
 import { useSetPageTitle } from 'app/hooks/useSetPageTitle'
 import { getPersonName } from 'helpers/strings'
@@ -48,7 +48,7 @@ export const IndividualView = (props: IndividualViewProps) => {
 
       <Grid item xs={12}>
         <Section title='Declarations'>
-          <DeclarationView type='individual' data={data.declarations} />
+          <DeclarationView type='individual' data={data} />
         </Section>
       </Grid>
     </Grid>

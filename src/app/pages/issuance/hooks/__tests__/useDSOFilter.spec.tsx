@@ -11,7 +11,12 @@ import React, { PropsWithChildren } from 'react'
 
 describe('useDSOFilter', () => {
   beforeEach(() => {
-    history.push(generatePath(IssuanceRoute.insight, { dsoId: dso._id }))
+    history.push(
+      generatePath(IssuanceRoute.insight, {
+        dsoId: dso._id,
+        issuerId: dso.user
+      })
+    )
   })
 
   afterEach(async () => {
@@ -36,7 +41,7 @@ describe('useDSOFilter', () => {
       await waitFor(
         () => {
           expect(result.current.isLoading).toBe(true)
-          expect(result.current.selected).toBe(dso._id)
+          expect(result.current.selected).toBe(`${dso._id}:${dso.user}`)
         },
         { timeout: 1000 }
       )
@@ -60,7 +65,7 @@ describe('useDSOFilter', () => {
       await waitFor(
         () => {
           expect(result.current.status).toBe('success')
-          expect(result.current.selected).toBe(dso._id)
+          expect(result.current.selected).toBe(`${dso._id}:${dso.user}`)
         },
         { timeout: 1000 }
       )

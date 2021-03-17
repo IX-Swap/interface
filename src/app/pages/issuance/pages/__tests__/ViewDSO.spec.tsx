@@ -33,7 +33,7 @@ describe('ViewDSO', () => {
     )
 
     expect(DSO).toHaveBeenCalledWith(
-      { dsoId: dso._id, showAuthorizations: true },
+      { dsoId: dso._id, showAuthorizations: true, showSidebar: true },
       {}
     )
   })

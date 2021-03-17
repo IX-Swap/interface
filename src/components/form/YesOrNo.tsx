@@ -1,12 +1,11 @@
 import React from 'react'
 import { Grid, Radio, Typography } from '@material-ui/core'
-import { DeclarationValue } from 'app/pages/identity/const/declarations'
 import { useFormError } from 'hooks/useFormError'
 import { themeColors } from 'themes/colors'
 
 export interface YesOrNoProps {
   name: string
-  value: DeclarationValue | undefined
+  value: 'yes' | 'no' | undefined
   disabled?: boolean
   onChange: (
     event: React.ChangeEvent<HTMLInputElement>,
@@ -34,8 +33,8 @@ export const YesOrNo = (props: Partial<YesOrNoProps>): JSX.Element => {
           Yes
         </Typography>
         <Radio
-          value='Yes'
-          checked={value === 'Yes'}
+          value='yes'
+          checked={value === 'yes'}
           name={name}
           onChange={onChange}
           disabled={disabled}
@@ -54,9 +53,9 @@ export const YesOrNo = (props: Partial<YesOrNoProps>): JSX.Element => {
           No
         </Typography>
         <Radio
-          value='No'
+          value='no'
           name={name}
-          checked={value === 'No'}
+          checked={value === 'no'}
           onChange={onChange}
           disabled={disabled}
           style={radioStyle}

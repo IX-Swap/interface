@@ -8,11 +8,18 @@ export const booleanValueExtractor = (
   value: boolean
 ): boolean => value
 
+export const reverseBooleanValueExtractor = (
+  _: React.ChangeEvent<{}>,
+  value: boolean
+): boolean => !value
+
 export const numericValueExtractor = (
   values: NumberFormatValues
 ): number | undefined => values.floatValue
 
 export const plainValueExtractor = (value: any) => value
+
+export const sliderValueExtractor = (_: any, value: any) => value
 
 export const wysiwygValueExtractor = (value: string) => {
   return wysiwygToHtml(value)
@@ -22,7 +29,7 @@ export const dateTimeValueExtractor = (value: Date, _stringValue: string) => {
   return value
 }
 
-export const hasValue = (value: any) => {
+export const hasValue = <T = any>(value: any): value is T => {
   if (typeof value === 'string') {
     return value.trim() !== ''
   }

@@ -14,7 +14,7 @@ export const renderDSONameAndStructure = (
 export const renderPriceWithCurrency = (
   price: number,
   dso: DigitalSecurityOffering
-) => <PriceWithCurrency price={price} currency={dso.currency.symbol} />
+) => <PriceWithCurrency price={price} currency={dso.currency?.symbol} />
 
 export const renderDSOStatus = (
   i: DSOInsight,
@@ -34,11 +34,6 @@ export const columns: Array<TableColumn<
     key: 'tokenName',
     label: 'Offer Name',
     render: renderDSONameAndStructure
-  },
-  {
-    key: 'insight',
-    label: 'Status',
-    render: renderDSOStatus
   },
   {
     key: 'pricePerUnit',

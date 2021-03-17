@@ -1,6 +1,5 @@
 import { DataroomFile, FileGuide, FormArray } from 'types/dataroomFile'
 import { IdentityType } from 'app/pages/identity/utils'
-import { emptyFile } from '__fixtures__/file'
 
 const documents: {
   individual: FileGuide[]
@@ -21,11 +20,6 @@ const documents: {
     {
       title: 'Proof of Address',
       label: 'Proof of Address (e.g. utility bill or tenancy agreement)',
-      type: 'Identity/Individual'
-    },
-    {
-      title: 'W-8BEN/W-8BEN-E',
-      label: 'W-8BEN/W-8BEN-E',
       type: 'Identity/Individual'
     }
   ],
@@ -105,7 +99,7 @@ export const formatDocuments = (
 
     return {
       value: {
-        ...(item ?? emptyFile),
+        ...(item ?? ({} as any)),
         ...document
       }
     }

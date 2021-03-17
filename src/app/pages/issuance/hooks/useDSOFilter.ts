@@ -6,23 +6,32 @@ import { isValidDSOId } from 'helpers/isValidDSOId'
 import { generatePath, useHistory, useParams } from 'react-router-dom'
 
 export const useDSOFilter = () => {
-  const params = useParams<{ dsoId: string }>()
+  const { dsoId, issuerId } = useParams<{ dsoId: string; issuerId: string }>()
   const { replace } = useHistory()
   const { data, ...rest } = useDSOsByUserId()
 
   useEffect(() => {
-    if (!isValidDSOId(params.dsoId) && data.list.length > 0) {
-      replace(generatePath(IssuanceRoute.insight, { dsoId: data.list[0]._id }))
+    if (!isValidDSOId(dsoId) && data.list.length > 0) {
+      replace(
+        generatePath(IssuanceRoute.insight, {
+          dsoId: data.list[0]._id,
+          issuerId: data.list[0]._id
+        })
+      )
     }
-  }, [params.dsoId, data.list, replace])
+  }, [dsoId, issuerId, data.list, replace])
 
   const handleChange = (e: any) => {
     if (hasValue(e.target.value)) {
-      replace(generatePath(IssuanceRoute.insight, { dsoId: e.target.value }))
+      const [dso, issuer] = e.target.value?.split(':')
+
+      replace(
+        generatePath(IssuanceRoute.insight, { dsoId: dso, issuerId: issuer })
+      )
     }
   }
 
-  const selected = isValidDSOId(params.dsoId) ? params.dsoId : null
+  const selected = isValidDSOId(dsoId) ? [dsoId, issuerId].join(':') : null
 
   return {
     data,

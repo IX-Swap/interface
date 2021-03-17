@@ -30,7 +30,9 @@ describe('useLogin', () => {
 
       await waitFor(
         () => {
-          const [mutate] = result.current
+          const {
+            mutation: [mutate]
+          } = result.current
           void mutate(loginArgs)
 
           expect(postFn).toHaveBeenNthCalledWith(1, authURL.login, loginArgs)
@@ -66,7 +68,9 @@ describe('useLogin', () => {
 
       await waitFor(
         () => {
-          const [mutate] = result.current
+          const {
+            mutation: [mutate]
+          } = result.current
           void mutate(loginArgs)
 
           expect(snackbarService.showSnackbar).toHaveBeenNthCalledWith(

@@ -42,7 +42,7 @@ export const PromoBanner = () => {
   return (
     <Grid className={styles.promoBanner}>
       {title !== '' ? (
-        <Typography variant='h1' className={styles.message}>
+        <Typography variant='h4' style={{ marginBottom: 20 }}>
           {title}
         </Typography>
       ) : null}

@@ -1,9 +1,11 @@
 import { Theme } from '@material-ui/core'
+import { green } from '@material-ui/core/colors'
 import { Overrides } from '@material-ui/core/styles/overrides'
 import { rte } from 'themes/rte'
+import tinycolor from 'tinycolor2'
 
 export const getThemeOverrides = (theme: Theme): Overrides => ({
-  ...rte,
+  ...rte(theme),
   MuiCssBaseline: {
     '@global': {
       html: {
@@ -76,16 +78,34 @@ export const getThemeOverrides = (theme: Theme): Overrides => ({
   MuiInputLabel: {
     formControl: {
       transform: 'translate(0, 29px) scale(1)'
+    },
+    outlined: {
+      transform: 'translate(14px, 13px) scale(1)',
+      color: '#AAA'
+    },
+    shrink: {
+      paddingRight: 5,
+      paddingLeft: 5,
+      backgroundColor: theme.palette?.backgrounds.main
     }
   },
   MuiOutlinedInput: {
     root: {
       padding: 0,
-      minHeight: 40
+      minHeight: 40,
+      height: 40
+    },
+    input: {
+      paddingTop: 0,
+      paddingBottom: 0,
+      height: '100%'
     },
     inputMarginDense: {
       paddingTop: 12,
       paddingBottom: 12
+    },
+    adornedEnd: {
+      paddingRight: 8
     }
   },
   MuiSelect: {
@@ -100,7 +120,38 @@ export const getThemeOverrides = (theme: Theme): Overrides => ({
   MuiStepper: {
     root: {
       paddingLeft: 0,
-      paddingRight: 0
+      paddingRight: 0,
+      backgroundColor: 'transparent'
+    }
+  },
+  MuiStepConnector: {
+    line: {
+      borderTopStyle: 'dashed'
+    },
+    lineHorizontal: {
+      borderTopStyle: 'dashed'
+    },
+    lineVertical: {
+      borderTop: 'none',
+      borderLeftStyle: 'dashed'
+    }
+  },
+  MuiStepContent: {
+    root: {
+      borderLeftStyle: 'dashed'
+    }
+  },
+  MuiStepIcon: {
+    root: {
+      color: tinycolor(theme.palette.backgrounds.main)
+        .darken(12)
+        .toHex8String(),
+      '&$completed': {
+        color: green[400]
+      },
+      '&$active': {
+        color: tinycolor(theme.palette.primary.main).toHex8String()
+      }
     }
   },
   MuiToggleButton: {
@@ -116,6 +167,71 @@ export const getThemeOverrides = (theme: Theme): Overrides => ({
     },
     label: {
       textTransform: 'none'
+    }
+  },
+  MuiTextField: {
+    root: {
+      height: 38
+    }
+  },
+  MuiFormHelperText: {
+    root: {
+      padding: '0 14px'
+    }
+  },
+  MuiTab: {
+    root: {
+      paddingTop: 18,
+      paddingBottom: 18
+    },
+    wrapper: {
+      textTransform: 'none',
+      fontSize: 16,
+      fontWeight: 500
+    }
+  },
+  MuiTabs: {
+    flexContainer: {
+      display: 'inline-flex',
+      width: '100%',
+      borderBottom: `1px solid ${theme.palette.divider}`
+    },
+    indicator: {
+      height: 5
+    }
+  },
+  MuiChip: {
+    root: {
+      backgroundColor: tinycolor(theme.palette.backgrounds.secondary)
+        .darken(4)
+        .toHex8String()
+    }
+  },
+  MuiAvatar: {
+    colorDefault: {
+      backgroundColor: tinycolor(theme.palette.backgrounds.secondary)
+        .darken(3)
+        .toHex8String()
+    }
+  },
+  MuiSlider: {
+    root: {
+      padding: '18px 0'
+    },
+    rail: {
+      height: 5,
+      borderRadius: 5
+    },
+    track: {
+      height: 5,
+      borderRadius: 5
+    },
+    thumb: {
+      height: 14,
+      width: 14,
+      '&.Mui-disabled': {
+        marginTop: -2
+      }
     }
   }
 })

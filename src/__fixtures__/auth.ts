@@ -29,8 +29,9 @@ export const loginArgs: LoginArgs = {
 
 export const signupArgs: SignupArgs = {
   name: 'Alex Solovev',
-  email,
-  password
+  email: 'alex@investax.io',
+  password: '',
+  agree: true
 }
 
 export const verifySignupArgs: VerifySignupArgs = {

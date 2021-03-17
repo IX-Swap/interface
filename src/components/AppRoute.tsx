@@ -2,10 +2,11 @@ import React, { createElement } from 'react'
 import { InternalRouteBase, InternalRouteProps } from 'types/util'
 import { Redirect, RouteComponentProps } from 'react-router-dom'
 import { safeGeneratePath } from 'helpers/router'
-import { useIsAdmin, useIsAccredited, useIsEnabled2FA } from 'helpers/acl'
+import { useIsEnabled2FA, useIsAccredited } from 'helpers/acl'
 import { AppRoute as AppPath } from 'app/router'
 import { useCachedUser } from 'hooks/auth/useCachedUser'
 import { ScrollToTop } from './ScrollToTop'
+import { useOnboardingDialog } from 'app/components/OnboardingDialog/hooks/useOnboardingDialog'
 
 export interface AppRouteProps extends RouteComponentProps {
   route: InternalRouteProps
@@ -19,12 +20,13 @@ export const AppRoute = (props: AppRouteProps) => {
   const user = useCachedUser()
   const is2FAEnabled = useIsEnabled2FA()
   const isAccredited = useIsAccredited()
-  const isAdmin = useIsAdmin()
 
   pushCrumb({
     label: route.label,
     path: safeGeneratePath(route.path, params)
   })
+
+  const { showCreateAccountDialog, showEnable2FADialog } = useOnboardingDialog()
 
   if (component === undefined) {
     return null
@@ -35,20 +37,26 @@ export const AppRoute = (props: AppRouteProps) => {
       return <Redirect to='/auth' />
     }
   } else {
-    if (!is2FAEnabled && !path.startsWith(AppPath.security)) {
-      return <Redirect to={AppPath.security} />
+    if (
+      !is2FAEnabled &&
+      !path.startsWith(AppPath.security) &&
+      !path.startsWith(AppPath.home) &&
+      !path.startsWith(AppPath.notifications) &&
+      !path.startsWith(AppPath.identity)
+    ) {
+      showEnable2FADialog()
+      return <Redirect to={AppPath.home} />
     }
 
     if (
       !isAccredited &&
-      !(
-        path.startsWith(AppPath.identity) ||
-        path.startsWith(AppPath.security) ||
-        path.startsWith(AppPath.notifications)
-      ) &&
-      !(isAdmin && path.startsWith(AppPath.admin))
+      !path.startsWith(AppPath.home) &&
+      !path.startsWith(AppPath.identity) &&
+      !path.startsWith(AppPath.security) &&
+      !path.startsWith(AppPath.notifications)
     ) {
-      return <Redirect to={AppPath.identity} />
+      showCreateAccountDialog()
+      return <Redirect to={AppPath.home} />
     }
   }
 

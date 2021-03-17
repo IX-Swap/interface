@@ -10,7 +10,12 @@ export const DSOBusinessModel = () => {
   const { control } = useFormContext<DSOFormValues>()
 
   return (
-    <DSOContainer title='Business Model' item xs={12}>
+    <DSOContainer
+      title='Business Model'
+      subtitle='A short description on how your business functions.'
+      item
+      xs={12}
+    >
       {/* @ts-ignore */}
       <TypedField
         control={control}

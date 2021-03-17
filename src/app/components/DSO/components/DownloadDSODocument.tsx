@@ -2,7 +2,7 @@ import React from 'react'
 import { useDownloadRawFile } from 'hooks/useDownloadRawFile'
 import { IconButton, Tooltip } from '@material-ui/core'
 import { convertBlobToFile, openFileInNewTab } from 'hooks/utils'
-import { CloudDownload } from '@material-ui/icons'
+import { Launch } from '@material-ui/icons'
 
 export interface DownloadDSODocumentProps {
   dsoId: string
@@ -23,7 +23,7 @@ export const DownloadDSODocument = (props: DownloadDSODocumentProps) => {
   return (
     <Tooltip title='Download File'>
       <IconButton disabled={isLoading} onClick={handleDownload}>
-        <CloudDownload />
+        <Launch color='disabled' style={{ width: 23, height: 23 }} />
       </IconButton>
     </Tooltip>
   )

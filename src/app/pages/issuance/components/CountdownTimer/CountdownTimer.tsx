@@ -8,8 +8,8 @@ import { getTimeUnitsToDisplay, getEndDate } from 'helpers/countdownTimer'
 import { useParams } from 'react-router-dom'
 
 export const CountdownTimer = () => {
-  const params = useParams<{ dsoId: string }>()
-  const { data } = useDSOById(params.dsoId)
+  const { dsoId, issuerId } = useParams<{ dsoId: string; issuerId: string }>()
+  const { data } = useDSOById(dsoId, issuerId)
   const { units } = useCountdown(getEndDate(data))
 
   const unitsToDisplay = getTimeUnitsToDisplay(units)

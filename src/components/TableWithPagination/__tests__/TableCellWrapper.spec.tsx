@@ -5,6 +5,7 @@ import { TableCellsProps, TableCellWrapper } from '../TableCellWrapper'
 describe('TableCellWrapper', () => {
   const mock = jest.fn()
   const props: TableCellsProps<any> = {
+    bordered: false,
     column: {
       key: 'level',
       label: 'Level',

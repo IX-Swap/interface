@@ -27,7 +27,7 @@ export class Setup2faStore {
   }
 
   @action nextPage = (): void => {
-    this.activeStep = Math.min(this.activeStep + 1, this.steps.length - 1)
+    this.activeStep = this.activeStep + 1
   }
 
   @action prevPage = (): void => {

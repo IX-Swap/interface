@@ -20,8 +20,8 @@ import { useParams } from 'react-router-dom'
 import { TargetFundraise } from 'app/pages/issuance/components/IssuanceLanding/TargetFundraise'
 
 export const IssuanceLanding = () => {
-  const params = useParams<{ dsoId: string }>()
-  const { data } = useDSOById(params.dsoId)
+  const { dsoId, issuerId } = useParams<{ dsoId: string; issuerId: string }>()
+  const { data } = useDSOById(dsoId, issuerId)
   const { theme, isTablet } = useAppBreakpoints()
 
   useSetPageTitle(data?.tokenName ?? 'Issuance')
@@ -120,7 +120,7 @@ export const IssuanceLanding = () => {
             item
             xs={12}
             direction='column'
-            justify={isValidDSOId(params.dsoId) ? 'flex-start' : 'center'}
+            justify={isValidDSOId(dsoId) ? 'flex-start' : 'center'}
             variant='outlined'
             style={{ padding: theme.spacing(4) }}
           >

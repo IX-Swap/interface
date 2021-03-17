@@ -4,10 +4,11 @@ import { DSONameAndStructure } from 'app/pages/invest/components/DSOTable/DSONam
 import { useDSOById } from 'app/pages/invest/hooks/useDSOById'
 import { AuthorizableStatus } from 'app/pages/authorizer/components/AuthorizableStatus'
 import { useParams } from 'react-router-dom'
+import { DisabledStatus } from 'app/pages/issuance/components/DisabledStatus'
 
 export const DSOInfo = () => {
-  const params = useParams<{ dsoId: string }>()
-  const { data } = useDSOById(params.dsoId)
+  const { dsoId, issuerId } = useParams<{ dsoId: string; issuerId: string }>()
+  const { data } = useDSOById(dsoId, issuerId)
 
   if (data === undefined) {
     return null
@@ -15,7 +16,14 @@ export const DSOInfo = () => {
 
   return (
     <Grid container justify='center' direction='column' alignItems='center'>
-      <AuthorizableStatus status={data.status} compact={false} />
+      <Grid item container spacing={1} justify='center'>
+        <Grid item>
+          <AuthorizableStatus status={data.status} compact={false} />
+        </Grid>
+        <Grid item>
+          <DisabledStatus disabled={data.disabled} />
+        </Grid>
+      </Grid>
       <Box py={2.25} />
       <DSONameAndStructure dso={data} tokenName={data.tokenName} />
     </Grid>

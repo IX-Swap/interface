@@ -1,6 +1,9 @@
 import React from 'react'
 import { DataroomHeader } from 'components/dataroom/DataroomHeader'
+import { useSelectionHelperContext } from 'components/SelectionHelper'
 
 export const SelectableDataroomHeader = () => {
-  return <DataroomHeader hasSelected />
+  const { hasSelected } = useSelectionHelperContext()
+
+  return <DataroomHeader hasSelected={hasSelected} />
 }

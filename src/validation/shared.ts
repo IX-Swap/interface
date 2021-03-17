@@ -1,6 +1,6 @@
 import * as yup from 'yup'
 import { passwordValidator } from 'validation/validators'
-import { PersonalProfile } from 'types/identity'
+import { PersonalProfile, Personnel, TaxResidency } from 'types/identity'
 import { DataroomFile, FormArrayElement } from 'types/dataroomFile'
 import { Maybe } from 'types/util'
 import { AddressValues } from 'app/pages/accounts/types'
@@ -12,9 +12,24 @@ export const passwordSchema = yup
   .min(12, 'Password must be at least 12 characters long')
   .max(48, 'Password cannot be longer than 48 characters')
   .test(
-    'Password strength',
-    'Password does not meet complexity requirement',
-    passwordValidator
+    'lowercase',
+    'Password must contain at least one lowercase letter',
+    passwordValidator.lowercaseLettersTest
+  )
+  .test(
+    'uppercase',
+    'Password must contain at least one uppercase letter',
+    passwordValidator.uppercaseLettersTest
+  )
+  .test(
+    'numerical',
+    'Password must contain at least one numerical character',
+    passwordValidator.numbersTest
+  )
+  .test(
+    'special-characters',
+    'Password must contain at least one special character',
+    passwordValidator.specialCharactersTest
   )
 
 export const dateSchema = yup.string().nullable()
@@ -47,3 +62,30 @@ export const personalProfileSchema = yup.object().shape<PersonalProfile>({
 export const personalProfileArraySchema = yup
   .array<PersonalProfile>()
   .of(personalProfileSchema.required('Required'))
+
+export const personnelProfileSchema = yup.object().shape<Personnel>({
+  fullName: yup.string().required('Required'),
+  designation: yup.string().required('Required'),
+  email: emailSchema.required('Required'),
+  contactNumber: yup.string().required('Required'),
+  documents: yup.mixed<DataroomFile[], object>().required('Required'),
+  address: addressSchema.required('Required'),
+  percentageShareholding: yup.number().required('Required')
+})
+
+export const personnelArraySchema = yup
+  .array<Personnel>()
+  .of(personnelProfileSchema.required('Required'))
+
+export const taxResidenciesSchema = yup.object().shape<TaxResidency>({
+  residentOfSingapore: yup.boolean(),
+  countryOfResidence: yup.string().required('Required'),
+  taxIdentificationNumber: yup.string().required('Required'),
+  taxIdAvailable: yup.boolean(),
+  reason: yup.string().oneOf(['A', 'B', 'C']).required('Required'),
+  customReason: yup.string()
+})
+
+export const taxResidenciesArraySchema = yup
+  .array<TaxResidency>()
+  .of(taxResidenciesSchema.required('Required'))

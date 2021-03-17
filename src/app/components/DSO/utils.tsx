@@ -20,14 +20,52 @@ export const transformDSOToFormValues = (
       introduction: '',
       useOfProceeds: '',
       fundraisingMilestone: '',
-      team: [],
-      documents: []
+      team: [{}],
+      documents: [],
+      capitalStructure: '',
+      minimumInvestment: '',
+      totalFundraisingAmount: '',
+      pricePerUnit: '',
+      currency: '',
+      decimalPlaces: null,
+      tokenSymbol: '',
+      tokenName: '',
+      network: '',
+      corporate: '',
+      logo: null,
+      equityMultiple: '',
+      leverage: '',
+      distributionFrequency: '',
+      investmentStructure: '',
+      grossIRR: '',
+      interestRate: '',
+      dividendYield: '',
+      investmentPeriod: '',
+      issuerName: ''
     } as any
   }
 
   return {
-    ...dso,
-    corporate: dso.corporate._id,
+    capitalStructure: dso.capitalStructure,
+    totalFundraisingAmount: dso.totalFundraisingAmount,
+    pricePerUnit: dso.pricePerUnit,
+    decimalPlaces: dso.decimalPlaces,
+    distributionFrequency: dso.distributionFrequency,
+    logo: dso.logo,
+    investmentPeriod: dso.investmentPeriod,
+    launchDate: dso.launchDate ?? null,
+    completionDate: dso.completionDate ?? null,
+    introduction: dso.introduction,
+    businessModel: dso.businessModel,
+    useOfProceeds: dso.useOfProceeds,
+    fundraisingMilestone: dso.fundraisingMilestone,
+    subscriptionDocument: dso.subscriptionDocument,
+    tokenName: dso.tokenName,
+    tokenSymbol: dso.tokenSymbol,
+    minimumInvestment: dso.minimumInvestment,
+    issuerName: dso.issuerName,
+    corporate: dso.corporate?._id,
+    investmentStructure: dso.investmentStructure,
     currency: getIdFromObj(dso.currency),
     network: getIdFromObj(dso.network),
     dividendYield: percentageToNumber(dso.dividendYield),
@@ -35,14 +73,15 @@ export const transformDSOToFormValues = (
     equityMultiple: percentageToNumber(dso.equityMultiple),
     interestRate: percentageToNumber(dso.interestRate),
     leverage: percentageToNumber(dso.leverage),
-    documents: dso.documents?.map(document => ({ value: document })) ?? []
+    documents: dso.documents.map(document => ({ value: document })),
+    team: dso.team.map(({ _id, ...person }) => person)
   }
 }
 
 export const documentValueExtractor = (
   value?: DataroomFile | DataroomFile[]
 ) => {
-  return Array.isArray(value) ? value?.[0]._id : value?._id
+  return Array.isArray(value) ? value : value?._id
 }
 
 const dsoStatusColors = {

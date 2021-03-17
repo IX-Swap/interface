@@ -11,8 +11,8 @@ export const DSOSelect = (props: DSOSelectProps): JSX.Element => {
 
   return (
     <Select variant='outlined' fullWidth {...rest}>
-      {options.map(({ _id, tokenName }) => (
-        <MenuItem key={_id} value={_id}>
+      {options.map(({ _id, tokenName, user }) => (
+        <MenuItem key={_id} value={[_id, user].join(':')}>
           {tokenName}
         </MenuItem>
       ))}

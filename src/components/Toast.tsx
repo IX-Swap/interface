@@ -16,7 +16,6 @@ export const Toast = (props: ToastProps) => {
       {...props}
       style={{
         transition: `transform ${props.transitionDuration}ms cubic-bezier(0.2, 0, 0, 1), opacity ${props.transitionDuration}ms`,
-        border: '1px solid #eeeeee',
         width: 400,
         marginBottom: 10,
         ...toastStates[props.transitionState]

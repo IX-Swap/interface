@@ -19,7 +19,8 @@ export const darkTheme: ThemeOptions = {
     },
     backgrounds: {
       main: tinycolor(themeColors.primary).darken(15).toHexString(),
-      secondary: tinycolor(themeColors.primary).darken(17).toHexString()
+      secondary: tinycolor(themeColors.primary).darken(17).toHexString(),
+      tertiary: tinycolor(themeColors.primary).darken(5).toHexString()
     },
     sidebar: {
       activeBackground: tinycolor(themeColors.primary).darken(20).toHexString(),

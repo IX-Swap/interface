@@ -3,7 +3,6 @@ import { Grid } from '@material-ui/core'
 import { DSOTeamMemberPhoto } from 'app/components/DSO/components/DSOTeamMemberPhoto'
 import { renderStringToHTML } from 'app/components/DSO/utils'
 import { LabelledValue } from 'components/LabelledValue'
-import { VSpacer } from 'components/VSpacer'
 import { DsoTeamMember } from 'types/dso'
 import { useAppBreakpoints } from 'hooks/useAppBreakpoints'
 
@@ -18,43 +17,41 @@ export const DSOTeamMemberView = (props: DSOTeamMemberViewProps) => {
 
   return (
     <Grid
-      key={member._id}
-      item
       container
       alignItems='flex-start'
       wrap={isTablet ? 'wrap' : 'nowrap'}
       spacing={3}
-      style={{ marginBottom: 24 }}
+      direction='column'
     >
       <Grid item>
-        <DSOTeamMemberPhoto
-          dsoId={dsoId}
-          photoId={member.photo}
-          variant='rounded'
-          size={250}
-        />
+        <Grid container spacing={3}>
+          <Grid item>
+            <DSOTeamMemberPhoto
+              dsoId={dsoId}
+              photoId={member.photo}
+              variant='square'
+              size={128}
+            />
+          </Grid>
+          <Grid item>
+            <Grid container spacing={3} direction='column'>
+              <Grid item>
+                <LabelledValue label='Name' value={member.name} />
+              </Grid>
+              <Grid item>
+                <LabelledValue label='Position' value={member.position} />
+              </Grid>
+            </Grid>
+          </Grid>
+        </Grid>
       </Grid>
 
-      <Grid item container direction='column' spacing={1}>
-        <Grid item container spacing={2}>
-          <Grid item xs={6} md={3}>
-            <LabelledValue label='Name' value={member.name} />
-          </Grid>
-          <Grid item xs={6} md={3}>
-            <LabelledValue label='Position' value={member.position} />
-          </Grid>
-        </Grid>
-
-        <Grid item>
-          <VSpacer size='small' />
-        </Grid>
-
-        <Grid item>
-          <LabelledValue
-            label='About'
-            value={renderStringToHTML(member.about)}
-          />
-        </Grid>
+      <Grid item>
+        <LabelledValue
+          label='About'
+          value={renderStringToHTML(member.about)}
+          align='justify'
+        />
       </Grid>
     </Grid>
   )

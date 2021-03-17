@@ -2,9 +2,9 @@ import React from 'react'
 import ReactDOM from 'react-dom'
 import {
   createGenerateClassName,
-  StylesProvider
+  StylesProvider,
+  ThemeProvider
 } from '@material-ui/core/styles'
-import { ThemeProvider } from '@material-ui/styles'
 import { CssBaseline } from '@material-ui/core'
 import { UserProvider } from 'auth/context'
 import { EntryPoint } from 'EntryPoint'
@@ -15,8 +15,9 @@ import { history } from 'config/history'
 import { ReactQueryCacheProvider, QueryCache } from 'react-query'
 import { setupSentry } from 'setupSentry'
 import { setupFullStory } from 'setupFullStory'
-import { initGoogleAnalytics } from 'initGoogleAnalytics'
 import { AppThemeProvider } from 'AppThemeProvider'
+import { setupGoogleAnalytics } from 'setupGoogleAnalytics'
+import { AppStateProvider } from 'app/hooks/useAppState'
 
 const queryCache = new QueryCache({
   defaultConfig: {
@@ -32,7 +33,7 @@ const generateClassName = createGenerateClassName({
 
 setupSentry()
 setupFullStory()
-initGoogleAnalytics()
+setupGoogleAnalytics()
 
 console.log(`App version: ${APP_VERSION}`) // eslint-disable-line
 
@@ -46,15 +47,17 @@ const IXApp = () => {
               <CssBaseline />
               <UserProvider>
                 <Router history={history}>
-                  <Switch>
-                    <ToastProvider
-                      components={{ Toast }}
-                      autoDismiss={false}
-                      placement='bottom-right'
-                    >
-                      <EntryPoint />
-                    </ToastProvider>
-                  </Switch>
+                  <AppStateProvider>
+                    <Switch>
+                      <ToastProvider
+                        components={{ Toast }}
+                        autoDismiss={false}
+                        placement='bottom-right'
+                      >
+                        <EntryPoint />
+                      </ToastProvider>
+                    </Switch>
+                  </AppStateProvider>
                 </Router>
               </UserProvider>
             </ReactQueryCacheProvider>

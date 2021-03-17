@@ -1,7 +1,8 @@
 import React from 'react'
 import { Grid, Typography } from '@material-ui/core'
 import { DataroomFile } from 'types/dataroomFile'
-import { AuthorizationDocument } from 'app/pages/authorizer/components/AuthorizationDocument'
+import { DataroomViewRow } from 'components/dataroom/DataroomViewRow'
+import { DownloadDocument } from 'components/dataroom/DownloadDocument'
 
 export interface SupportingDocumentsProps {
   data: DataroomFile[]
@@ -16,8 +17,18 @@ export const SupportingDocuments = (props: SupportingDocumentsProps) => {
         <Typography variant='h3'>Supporting Documents</Typography>
       </Grid>
       <Grid item container wrap='wrap'>
-        {data.map(file => (
-          <AuthorizationDocument value={file} />
+        {data.map(document => (
+          <DataroomViewRow
+            key={document._id}
+            title={document.type}
+            document={document}
+            downloader={
+              <DownloadDocument
+                documentId={document._id}
+                ownerId={document.user}
+              />
+            }
+          />
         ))}
       </Grid>
     </Grid>

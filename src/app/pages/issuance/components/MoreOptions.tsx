@@ -9,15 +9,15 @@ import { useParams } from 'react-router-dom'
 
 export const MoreOptions = () => {
   const { link } = useStyles()
-  const params = useParams<{ dsoId: string }>()
+  const { dsoId, issuerId } = useParams<{ dsoId: string; issuerId: string }>()
 
-  const { data } = useDSOById(params.dsoId)
+  const { data } = useDSOById(dsoId, issuerId)
 
   if (data === undefined) {
     return null
   }
 
-  if (params.dsoId === undefined) {
+  if (dsoId === undefined || issuerId === undefined) {
     return null
   }
 
@@ -30,7 +30,8 @@ export const MoreOptions = () => {
         <AppRouterLink
           to={IssuanceRoute.view}
           params={{
-            dsoId: params.dsoId
+            dsoId,
+            issuerId
           }}
           color='primary'
           underline='hover'
@@ -63,7 +64,8 @@ export const MoreOptions = () => {
         <AppRouterLink
           to={IssuanceRoute.edit}
           params={{
-            dsoId: params.dsoId
+            dsoId,
+            issuerId
           }}
           color='primary'
           underline='hover'

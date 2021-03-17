@@ -5,16 +5,12 @@ import {
   AuthorizerViewProps
 } from 'app/pages/authorizer/components/AuthorizerView'
 import { DataroomFeature } from 'types/authorizer'
-import { AuthorizationDocuments } from 'app/pages/authorizer/components/AuthorizationDocuments'
 import { AuthorizableLevel } from 'app/pages/authorizer/components/AuthorizableLevel'
 import { AuthorizableStatus } from 'app/pages/authorizer/components/AuthorizableStatus'
 import { AuthorizerIdentities } from 'app/pages/authorizer/components/AuthorizerIdentities'
 import { individual, corporate, bank } from '__fixtures__/authorizer'
 import { Bank } from 'types/bank'
 
-jest.mock('app/pages/authorizer/components/AuthorizationDocuments', () => ({
-  AuthorizationDocuments: jest.fn(() => null)
-}))
 jest.mock('app/pages/authorizer/components/AuthorizerForm', () => ({
   AuthorizerForm: jest.fn(() => null)
 }))
@@ -53,19 +49,6 @@ describe('AuthorizerView', () => {
         {...props}
         data={{ _id, authorizations, createdAt, status, updatedAt }}
       />
-    )
-  })
-
-  it('renders AuthorizationDocuments with correct props', () => {
-    render(<AuthorizerView {...props} />)
-
-    expect(AuthorizationDocuments).toHaveBeenCalledTimes(1)
-    expect(AuthorizationDocuments).toHaveBeenCalledWith(
-      {
-        feature: DataroomFeature['bank-accounts'],
-        resourceId: props.data._id
-      },
-      {}
     )
   })
 

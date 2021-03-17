@@ -11,10 +11,40 @@ import { IndividualIdentityFormValues } from 'app/pages/identity/components/type
 export const corporate: CorporateIdentity = {
   _id: '1',
   logo: '',
+  type: 'investor',
+  legalEntityStatus: 'others',
+  isMailingAddressSame: false,
   createdAt: '01-01-2000',
   updatedAt: '01-01-2000',
   documents: [],
-  declarations: [],
+  taxResidencies: [],
+  declarations: {
+    agreements: {
+      investor: false,
+      custody: false,
+      disclosure: false
+    },
+    tax: { fatca: false },
+    investorsStatus: {
+      jointlyHeldAccount: false,
+      consequencesOfQualification: false,
+      financialAsset: false,
+      personalAssets: false,
+      consent: false,
+      income: false,
+      rightToOptOut: false,
+      assets: false,
+      trustee: false,
+      accreditedShareholders: false,
+      partnership: false,
+      accreditedBeneficiaries: false,
+      accreditedSettlors: false,
+      digitalSecurities: false,
+      digitalSecuritiesIssuance: false,
+      allServices: false,
+      primaryOfferingServices: false
+    }
+  },
   status: 'Submitted',
   beneficialOwners: [],
   companyAddress: address,
@@ -24,12 +54,13 @@ export const corporate: CorporateIdentity = {
   registrationNumber: '123456',
   representatives: [
     {
-      contactNumber: '1234',
-      countryOfResidence: 'Singapore',
-      dob: '2020-12-12',
-      firstName: 'John',
-      lastName: 'Doe',
-      nationality: 'S'
+      fullName: 'John Doe',
+      designation: 'CEO',
+      email: 'johnsemail',
+      contactNumber: '+6512345678901',
+      documents: [],
+      address: address,
+      percentageShareholding: 0
     }
   ],
   email: '',
@@ -37,12 +68,20 @@ export const corporate: CorporateIdentity = {
   user,
   authorizationDocuments: [],
   authorization: authorizationInfo,
-  authorizations: []
+  authorizations: [],
+  mailingAddress: address
+}
+
+export const agreementsAndDisclosures = {
+  investorAgreement: false,
+  custodyAgreement: false,
+  disclosures: false
 }
 
 export const individual: IndividualIdentity = {
   photo: '',
   _id: '1',
+  taxResidencies: [],
   email: 'email@example.com',
   annualIncome: '100000',
   contactNumber: '1234567890',
@@ -63,21 +102,33 @@ export const individual: IndividualIdentity = {
   authorization: authorizationInfo,
   authorizationDocuments: [],
   authorizations: [],
-  declarations: [
-    { IndividualAccreditedInvestor: DeclarationValue.Yes },
-    { NetPersonalAssets: DeclarationValue.Yes },
-    { IndividualIncome: DeclarationValue.Yes },
-    { IndividualFinancialAsset: DeclarationValue.Yes },
-    { JointlyHeldAccount: DeclarationValue.Yes },
-    { InvestaXPrivacyPolicy: DeclarationValue.Yes },
-    { InvestaXTermsOfUse: DeclarationValue.Yes },
-    { USPerson: DeclarationValue.Yes },
-    { TreatAsAccreditedInvestor: DeclarationValue.Yes },
-    { PrimaryIssuancePlatform: DeclarationValue.Yes },
-    { SecondaryTradingPlatform: DeclarationValue.Yes },
-    { TrueAndCorrectInformation: DeclarationValue.Yes },
-    { InformAnyChanges: DeclarationValue.Yes }
-  ],
+  declarations: {
+    agreements: {
+      investor: false,
+      custody: false,
+      disclosure: false
+    },
+    tax: { fatca: false },
+    investorsStatus: {
+      jointlyHeldAccount: false,
+      consequencesOfQualification: false,
+      financialAsset: false,
+      personalAssets: false,
+      consent: false,
+      income: false,
+      rightToOptOut: false,
+      assets: false,
+      trustee: false,
+      accreditedShareholders: false,
+      partnership: false,
+      accreditedBeneficiaries: false,
+      accreditedSettlors: false,
+      digitalSecurities: false,
+      digitalSecuritiesIssuance: false,
+      allServices: false,
+      primaryOfferingServices: false
+    }
+  },
   documents: [],
   address,
   user
@@ -128,12 +179,16 @@ export const unCheckedDeclarations: IndividualDeclarations = {
 
 export const createIndividualArgs: IndividualIdentityFormValues = {
   ...individual,
+  ...agreementsAndDisclosures,
   documents: [{ value: documents[0] }, { value: documents[1] }],
-  declarations: checkedDeclarations
+  declarations: checkedDeclarations,
+  taxResidencies: []
 }
 
 export const updateIndividualArgs: IndividualIdentityFormValues = {
   ...individual,
+  ...agreementsAndDisclosures,
   documents: [{ value: documents[0] }, { value: documents[1] }],
-  declarations: checkedDeclarations
+  declarations: checkedDeclarations,
+  taxResidencies: []
 }

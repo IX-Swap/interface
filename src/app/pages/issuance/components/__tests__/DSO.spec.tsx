@@ -17,8 +17,10 @@ jest.mock('app/components/DSO/DSOView', () => ({
 describe('DSO', () => {
   const props: DSOProps = {
     dsoId: dso._id,
+    issuerId: dso.user,
     isEditing: true,
-    showAuthorizations: false
+    showAuthorizations: false,
+    showSidebar: false
   }
 
   afterEach(async () => {
@@ -58,9 +60,7 @@ describe('DSO', () => {
 
     expect(DSOForm).toHaveBeenCalledWith(
       {
-        data: dso,
-        onSubmit: expect.any(Function),
-        submitButtonLabel: 'Save'
+        data: dso
       },
       {}
     )
@@ -76,7 +76,8 @@ describe('DSO', () => {
     expect(DSOView).toHaveBeenCalledWith(
       {
         data: dso,
-        showAuthorizations: props.showAuthorizations
+        showAuthorizations: props.showAuthorizations,
+        showSidebar: props.showSidebar
       },
       {}
     )

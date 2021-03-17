@@ -17,6 +17,8 @@ jest.mock('app/components/CommitmentIssuance/CommitmentIssuance', () => ({
   CommitmentIssuance: jest.fn(() => null)
 }))
 
+window.URL.revokeObjectURL = jest.fn()
+
 describe('CommitmentPreview', () => {
   const props: CommitmentPreviewProps = {
     data: commitment

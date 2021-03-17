@@ -43,6 +43,11 @@ export const CommitmentStatsChart = () => {
       baselineColor: 'transparent',
       gridlines: {
         color: gridColor
+      },
+      textStyle: {
+        color: theme.palette.getContrastText(
+          theme.palette.backgrounds.main as string
+        )
       }
     },
     vAxis: {

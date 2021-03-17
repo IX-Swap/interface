@@ -1,6 +1,6 @@
 import { InternalRouteProps } from 'types/util'
 import { AuthorizerRoot } from 'app/pages/authorizer/AuthorizerRoot'
-import { IdentityRoot } from 'app/pages/identity/IdentityRoot'
+import { IdentityRoot } from 'app/pages/_identity/IdentityRoot'
 import { AccountsRoot } from 'app/pages/accounts/AccountsRoot'
 import { IssuanceRoot } from 'app/pages/issuance/IssuanceRoot'
 import { InvestRoot } from 'app/pages/invest/InvestRoot'
@@ -10,6 +10,7 @@ import { NotificationsRoot } from 'app/pages/notifications/NotificationsRoot'
 import { makeURL } from 'config/appURL'
 import { AdminRoot } from 'app/pages/admin/AdminRoot'
 import { AppRole } from 'helpers/acl'
+import { HomeRoot } from 'app/pages/home/HomeRoot'
 
 export const AppRoute = {
   authorizer: makeURL(['app', 'authorizer']),
@@ -19,10 +20,16 @@ export const AppRoute = {
   invest: makeURL(['app', 'invest']),
   admin: makeURL(['app', 'admin']),
   security: makeURL(['app', 'settings']),
-  notifications: makeURL(['app', 'notifications'])
+  notifications: makeURL(['app', 'notifications']),
+  home: makeURL(['app', 'home'])
 }
 
 export const appRoutes: InternalRouteProps[] = [
+  {
+    label: 'Home',
+    path: AppRoute.home,
+    component: HomeRoot
+  },
   {
     label: 'Authorization',
     path: AppRoute.authorizer,

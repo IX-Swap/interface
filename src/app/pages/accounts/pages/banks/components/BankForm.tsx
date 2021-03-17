@@ -17,7 +17,7 @@ import {
 } from 'app/pages/accounts/pages/banks/utils'
 import { Form } from 'components/form/Form'
 import { Submit } from 'components/form/Submit'
-import { AddressFields } from 'app/pages/identity/components/AddressFields'
+import { AddressFields } from 'app/pages/identity/components/AddressFields/AddressFields'
 import { BankFields } from 'app/pages/accounts/pages/banks/components/BankFields'
 import { BankDocuments } from 'app/pages/accounts/pages/banks/components/BankDocuments'
 import { VSpacer } from 'components/VSpacer'

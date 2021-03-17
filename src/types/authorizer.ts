@@ -28,7 +28,7 @@ export interface Authorizable {
   createdAt: string
   updatedAt: string
   status: AuthorizableStatus
-  authorizations?: AuthorizationInfoWithStatus[]
+  authorizations: AuthorizationInfoWithStatus[]
   authorizationDocuments?: DataroomFile[]
   authorization?: AuthorizationInfo
   level?: string

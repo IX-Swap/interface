@@ -5,7 +5,7 @@ import { useSetRoles } from 'app/pages/admin/hooks/useSetRoles'
 export const useAdminView = (user: User, refresh: Function) => {
   const [open, setOpen] = useState(false)
   const [roles, setRoles] = useState<string[]>(user.roles.split(','))
-  const [requestUpdateRoles] = useSetRoles()
+  const [requestUpdateRoles] = useSetRoles({})
 
   const updateRoles = useCallback(() => {
     if (!open) {

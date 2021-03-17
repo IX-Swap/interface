@@ -19,13 +19,15 @@ export const lightTheme: ThemeOptions = {
     },
     backgrounds: {
       main: '#ffffff',
-      secondary: '#fafafa'
+      secondary: '#fafafa',
+      tertiary: '#e3e3e3'
     },
     sidebar: {
       activeBackground: tinycolor(themeColors.primary)
         .lighten(64)
         .toHexString(),
       activeColor: themeColors.primary
-    }
+    },
+    divider: '#dddddd'
   }
 }

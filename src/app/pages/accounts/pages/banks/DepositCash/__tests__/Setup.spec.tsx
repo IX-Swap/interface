@@ -3,9 +3,9 @@ import { render, cleanup } from 'test-utils'
 import { Setup } from 'app/pages/accounts/pages/banks/DepositCash/Setup'
 import { asset } from '__fixtures__/authorizer'
 import { Form } from 'components/form/Form'
-import { AssetSelect } from 'components/form/AssetSelect'
+import { AssetSelect } from 'components/form/AssetSelect/AssetSelect'
 
-jest.mock('components/form/AssetSelect', () => ({
+jest.mock('components/form/AssetSelect/AssetSelect', () => ({
   AssetSelect: jest.fn(() => null)
 }))
 

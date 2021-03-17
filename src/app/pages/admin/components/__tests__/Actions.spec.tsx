@@ -6,7 +6,6 @@ import * as adminViewHook from '../../hooks/useAdminView'
 import DialogConfirmRoleChange from 'app/pages/admin/components/DialogConfirmRoleChange'
 import { AppRole } from 'helpers/acl'
 import { waitFor, fireEvent } from '@testing-library/react'
-import { useAdminView } from '../../hooks/useAdminView'
 
 jest.mock('app/pages/admin/components/DialogConfirmRoleChange', () =>
   jest.fn(() => null)
@@ -14,7 +13,7 @@ jest.mock('app/pages/admin/components/DialogConfirmRoleChange', () =>
 
 describe('Actions', () => {
   const props: ActionsProps = { user }
-  const fakeAdminView: ReturnType<typeof useAdminView> = {
+  const fakeAdminView: ReturnType<typeof adminViewHook.useAdminView> = {
     open: true,
     handleClose: jest.fn(),
     roles: [AppRole.ACCREDITED, AppRole.AUTHORIZER],

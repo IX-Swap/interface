@@ -1,10 +1,10 @@
 export const emptyFile = {
   updatedAt: '',
-  type: '',
-  title: '',
+  type: 'File type',
+  title: 'File title',
   createdAt: '',
   user: '',
-  originalFileName: '',
-  _id: '',
+  originalFileName: 'File name',
+  _id: 'fileid',
   url: ''
 }

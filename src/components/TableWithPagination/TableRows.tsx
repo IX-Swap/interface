@@ -7,18 +7,31 @@ import { TableCellWrapper } from './TableCellWrapper'
 interface TableRowsProps<T> extends TableViewProps<T> {
   items: T[]
   cacheQueryKey: any
+  bordered: boolean
 }
 
 export const TableRows = <T,>(props: TableRowsProps<T>): JSX.Element => {
-  const { items, columns, hasActions = false, actions, cacheQueryKey } = props
+  const {
+    items,
+    bordered,
+    columns,
+    hasActions = false,
+    actions,
+    cacheQueryKey
+  } = props
 
   return (
     <TableBody>
       {items.length > 0 ? (
         items.map((row, i) => (
-          <TableRow hover key={i}>
+          <TableRow key={i}>
             {columns.map(column => (
-              <TableCellWrapper key={column.key} column={column} row={row} />
+              <TableCellWrapper
+                bordered={bordered}
+                key={column.key}
+                column={column}
+                row={row}
+              />
             ))}
             {hasActions && (
               <ActionTableCell

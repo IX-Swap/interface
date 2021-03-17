@@ -66,8 +66,9 @@ export const useDataFromURL = () => {
             state[stripColonFromURLParam(urlParams.issuerId)] = issuerId
             state[stripColonFromURLParam(urlParams.dsoId)] = dsoId
           } else {
-            const [dsoId, action] = params
+            const [issuerId, dsoId, action] = params
             state[stripColonFromURLParam(urlParams.dsoId)] = dsoId
+            state[stripColonFromURLParam(urlParams.issuerId)] = issuerId
           }
 
           break
@@ -78,6 +79,12 @@ export const useDataFromURL = () => {
           state[
             stripColonFromURLParam(urlParams.withdrawalAddressId)
           ] = withdrawalAddressId
+          break
+        }
+
+        case 'users': {
+          const [userId] = params
+          state[stripColonFromURLParam(urlParams.userId)] = userId
           break
         }
 

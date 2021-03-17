@@ -27,7 +27,7 @@ export const DataroomFileRow = (props: DataroomFileRowProps) => {
           <UploadButton
             onClick={handleUpload}
             isLoading={isUploading}
-            size='small'
+            size='large'
           />
         }
       />
