@@ -1,7 +1,9 @@
-import { OnboardingLinks } from 'app/pages/home/components/OnboardingLinks'
 import React from 'react'
 import { render, cleanup } from 'test-utils'
 import * as useIdentitiesRouter from 'app/pages/_identity/router'
+import { OnboardingLink } from 'app/pages/home/components/OnboardingLink'
+import { OnboardingLinks } from 'app/pages/home/components/OnboardingLinks'
+import * as useOnboardingJourneys from 'app/components/OnboardingPanel/hooks/useOnboardingJourneys'
 
 jest.mock('app/pages/home/components/OnboardingLink', () => ({
   OnboardingLink: jest.fn(() => null)
@@ -17,7 +19,8 @@ describe('OnboardingLinks', () => {
     const objResponse = {
       paths: {
         createIndividual: '/create/individuals',
-        createCorporate: '/create/corporate'
+        createCorporate: '/create/corporate',
+        createIssuer: '/create/corporate'
       }
     }
 
@@ -28,42 +31,161 @@ describe('OnboardingLinks', () => {
     render(<OnboardingLinks />)
   })
 
-  it('renders components correctly', () => {
-    // const objResponse = {
-    //   paths: {
-    //     createIndividual: '/create/individuals',
-    //     createCorporate: '/create/corporate'
-    //   }
-    // }
-    // jest
-    //   .spyOn(useIdentitiesRouter, 'useIdentitiesRouter')
-    //   .mockImplementation(() => objResponse as any)
-    // const { getByText } = render(<OnboardingLinks />)
-    // expect(getByText('Invest')).toBeTruthy()
-    // expect(getByText('Raise Capital')).toBeTruthy()
-    // expect(OnboardingLink).toHaveBeenNthCalledWith(
-    //   1,
-    //   expect.objectContaining({
-    //     label: 'Individual',
-    //     link: '/create/individuals'
-    //   }),
-    //   {}
-    // )
-    // expect(OnboardingLink).toHaveBeenNthCalledWith(
-    //   2,
-    //   expect.objectContaining({
-    //     label: 'Corporate',
-    //     link: '/create/corporate'
-    //   }),
-    //   {}
-    // )
-    // expect(OnboardingLink).toHaveBeenNthCalledWith(
-    //   3,
-    //   expect.objectContaining({
-    //     label: 'Fundraise',
-    //     link: '/create/corporate'
-    //   }),
-    //   {}
-    // )
+  it('renders all links if user has no completed Indentity Journey', () => {
+    const objResponse = {
+      isIssuerJourneyCompleted: false,
+      isInvestorJourneyCompleted: false,
+      isIndividualJourneyCompleted: false
+    }
+    jest
+      .spyOn(useOnboardingJourneys, 'useOnboardingJourneys')
+      .mockImplementation(() => objResponse as any)
+
+    const { getByText } = render(<OnboardingLinks />)
+    expect(getByText('Invest')).toBeTruthy()
+    expect(getByText('Raise Capital')).toBeTruthy()
+    expect(OnboardingLink).toHaveBeenNthCalledWith(
+      1,
+      expect.objectContaining({
+        label: 'Individual',
+        to: '/create/individuals'
+      }),
+      {}
+    )
+    expect(OnboardingLink).toHaveBeenNthCalledWith(
+      2,
+      expect.objectContaining({
+        label: 'Corporate',
+        to: '/create/corporate'
+      }),
+      {}
+    )
+    expect(OnboardingLink).toHaveBeenNthCalledWith(
+      3,
+      expect.objectContaining({
+        label: 'Fundraise',
+        to: '/create/corporate'
+      }),
+      {}
+    )
+  })
+
+  it('renders only individual investor link if user completed individual investor onboarding journey', () => {
+    const objResponse = {
+      isIssuerJourneyCompleted: false,
+      isInvestorJourneyCompleted: false,
+      isIndividualJourneyCompleted: true
+    }
+    jest
+      .spyOn(useOnboardingJourneys, 'useOnboardingJourneys')
+      .mockImplementation(() => objResponse as any)
+
+    const { getByText, queryByText } = render(<OnboardingLinks />)
+    expect(getByText('Invest')).toBeTruthy()
+    expect(queryByText('Raise Capital')).toBeNull()
+    expect(OnboardingLink).toHaveBeenNthCalledWith(
+      1,
+      expect.objectContaining({
+        label: 'Individual',
+        to: '/create/individuals'
+      }),
+      {}
+    )
+  })
+
+  it('renders only corporate and issuer links if user completed corporate investor journey', () => {
+    const objResponse = {
+      isIssuerJourneyCompleted: false,
+      isInvestorJourneyCompleted: true,
+      isIndividualJourneyCompleted: false
+    }
+    jest
+      .spyOn(useOnboardingJourneys, 'useOnboardingJourneys')
+      .mockImplementation(() => objResponse as any)
+
+    const { getByText } = render(<OnboardingLinks />)
+    expect(getByText('Invest')).toBeTruthy()
+    expect(getByText('Raise Capital')).toBeTruthy()
+
+    expect(OnboardingLink).toHaveBeenNthCalledWith(
+      1,
+      expect.objectContaining({
+        label: 'Corporate',
+        to: '/create/corporate'
+      }),
+      {}
+    )
+    expect(OnboardingLink).toHaveBeenNthCalledWith(
+      2,
+      expect.objectContaining({
+        label: 'Fundraise',
+        to: '/create/corporate'
+      }),
+      {}
+    )
+  })
+
+  it('renders only corporate links if user completed issuer journey', () => {
+    const objResponse = {
+      isIssuerJourneyCompleted: true,
+      isInvestorJourneyCompleted: false,
+      isIndividualJourneyCompleted: false
+    }
+    jest
+      .spyOn(useOnboardingJourneys, 'useOnboardingJourneys')
+      .mockImplementation(() => objResponse as any)
+
+    const { getByText } = render(<OnboardingLinks />)
+    expect(getByText('Invest')).toBeTruthy()
+    expect(getByText('Raise Capital')).toBeTruthy()
+
+    expect(OnboardingLink).toHaveBeenNthCalledWith(
+      1,
+      expect.objectContaining({
+        label: 'Corporate',
+        to: '/create/corporate'
+      }),
+      {}
+    )
+    expect(OnboardingLink).toHaveBeenNthCalledWith(
+      2,
+      expect.objectContaining({
+        label: 'Fundraise',
+        to: '/create/corporate'
+      }),
+      {}
+    )
+  })
+
+  it('renders only corporate links if user completed both corporate and issuer journeys', () => {
+    const objResponse = {
+      isIssuerJourneyCompleted: true,
+      isInvestorJourneyCompleted: true,
+      isIndividualJourneyCompleted: false
+    }
+    jest
+      .spyOn(useOnboardingJourneys, 'useOnboardingJourneys')
+      .mockImplementation(() => objResponse as any)
+
+    const { getByText } = render(<OnboardingLinks />)
+    expect(getByText('Invest')).toBeTruthy()
+    expect(getByText('Raise Capital')).toBeTruthy()
+
+    expect(OnboardingLink).toHaveBeenNthCalledWith(
+      1,
+      expect.objectContaining({
+        label: 'Corporate',
+        to: '/create/corporate'
+      }),
+      {}
+    )
+    expect(OnboardingLink).toHaveBeenNthCalledWith(
+      2,
+      expect.objectContaining({
+        label: 'Fundraise',
+        to: '/create/corporate'
+      }),
+      {}
+    )
   })
 })

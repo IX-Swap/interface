@@ -26,7 +26,9 @@ export const OnboardingContentWrapper = ({
   const {
     isIssuerJourneyCompleted,
     isInvestorJourneyCompleted,
-    isIndividualJourneyCompleted
+    isIndividualJourneyCompleted,
+    isInvestorJourneyStarted,
+    isIssuerJourneyStarted
   } = useOnboardingJourneys()
 
   const onboardingBasePaths = [
@@ -35,21 +37,13 @@ export const OnboardingContentWrapper = ({
     identityPaths.list
   ]
 
-  // TODO: refactor this (possibly after routing refactoring task will be done)
   if (
-    (isIssuerJourneyCompleted && pathname.endsWith('issuer')) ||
-    (isInvestorJourneyCompleted &&
-      pathname.startsWith('/app/identity/corporates')) ||
-    (isIndividualJourneyCompleted &&
-      pathname.startsWith('/app/identity/individuals')) ||
-    (isIndividualJourneyCompleted &&
-      isInvestorJourneyCompleted &&
-      isIssuerJourneyCompleted &&
-      pathname.startsWith('/app/identity'))
+    isIndividualJourneyCompleted ||
+    (isInvestorJourneyCompleted && !isIssuerJourneyStarted) ||
+    (isIssuerJourneyCompleted && !isInvestorJourneyStarted)
   ) {
     return <>{children}</>
   }
-
   const pathnameBase = pathname.split('/').slice(0, 3).join('/')
 
   return onboardingBasePaths.includes(pathnameBase) ? (
