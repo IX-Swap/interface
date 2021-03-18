@@ -1,6 +1,6 @@
 import { makeStyles } from '@material-ui/core/styles'
-import BackgroundTopImage from 'assets/icons/404-background-top.svg'
-import BackgroundBottomImage from 'assets/icons/404-background-bottom.svg'
+import BackgroundTopImage from 'assets/images/404-background-top.svg'
+import BackgroundBottomImage from 'assets/images/404-background-bottom.svg'
 import DotBlock from 'assets/icons/dot-block.svg'
 
 export default makeStyles(theme => ({
