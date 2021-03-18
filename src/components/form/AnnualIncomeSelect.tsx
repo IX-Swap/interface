@@ -1,7 +1,12 @@
 import React from 'react'
 import { MenuItem, Select } from '@material-ui/core'
 
-const IncomeList = ['10,000,000 and above']
+const IncomeList = [
+  '< 50,000',
+  '50,000-100,000',
+  '100,000-300,000',
+  '>  300,000'
+]
 
 export const AnnualIncomeSelect = (props: any) => {
   const { label, ...rest } = props

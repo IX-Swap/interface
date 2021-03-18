@@ -6,7 +6,6 @@ import {
   Stepper,
   Typography
 } from '@material-ui/core'
-import { grey } from '@material-ui/core/colors'
 
 export interface OnboardingStepsProps {
   steps: Array<{ title: string; content: string[] }>
@@ -23,9 +22,7 @@ export const OnboardingSteps = ({
         <Step key={step.title} expanded>
           <StepLabel>{step.title}</StepLabel>
           {step.content.length > 0 ? (
-            <StepContent
-              style={{ color: index > activeStep ? grey[600] : grey[900] }}
-            >
+            <StepContent style={{ opacity: index > activeStep ? 0.6 : 1 }}>
               {step.content.map((content, index) => (
                 <Typography
                   key={index}

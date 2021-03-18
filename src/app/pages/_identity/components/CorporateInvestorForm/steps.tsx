@@ -79,7 +79,7 @@ export const corporateInvestorFormSteps = [
     validationSchema: corporateInvestorDocumentsSchema,
     component: () => (
       <Fragment>
-        <CorporateUploadDocumentsForm />
+        <CorporateUploadDocumentsForm corporateType='investor' />
       </Fragment>
     )
   },
