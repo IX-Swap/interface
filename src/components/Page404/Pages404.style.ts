@@ -68,6 +68,6 @@ export default makeStyles(theme => ({
     alignItems: 'center'
   },
   linkText: {
-    marginLeft: 18
+    margin: theme.spacing(0, 0, 0, 2)
   }
 }))

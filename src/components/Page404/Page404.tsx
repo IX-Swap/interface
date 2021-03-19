@@ -1,10 +1,10 @@
 import React from 'react'
 import { Button, Box, Grid, Typography, Link } from '@material-ui/core'
+import MailOutlineIcon from '@material-ui/icons/MailOutline'
 import { useTheme } from '@material-ui/core/styles'
 import { useAppBreakpoints } from 'hooks/useAppBreakpoints'
 import { AppRouterLinkComponent } from 'components/AppRouterLink'
 import { AppLogo } from 'app/components/AppLogo/AppLogo'
-import { IconMail } from 'components/Page404/IconMail'
 import useStyles from './Pages404.style'
 
 export const Page404 = () => {
@@ -71,11 +71,7 @@ export const Page404 = () => {
 
           <Grid item>
             <Link href={'mailto:support@investax.io'} className={classes.link}>
-              <IconMail
-                fill={theme.palette.getContrastText(
-                  theme.palette.backgrounds.main
-                )}
-              />
+              <MailOutlineIcon />
               <Typography variant={'body1'} className={classes.linkText}>
                 support@investax.io
               </Typography>
