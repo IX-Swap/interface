@@ -9,20 +9,20 @@ import { Setup2FAGuide } from 'app/pages/security/pages/setup2faguide/Setup2FAGu
 export const SecurityRouter = () => {
   return (
     <Switch>
-      <Route path={SecurityRoute.landing}>
-        <Landing />
-      </Route>
-
-      <Route path={SecurityRoute.changePassword}>
-        <ChangePassword />
-      </Route>
-
-      <Route path={SecurityRoute.setup2fa}>
+      <Route exact path={SecurityRoute.setup2fa}>
         <Setup2fa />
       </Route>
 
-      <Route path={SecurityRoute.guide}>
+      <Route exact path={SecurityRoute.guide}>
         <Setup2FAGuide />
+      </Route>
+
+      <Route exact path={SecurityRoute.changePassword}>
+        <ChangePassword />
+      </Route>
+
+      <Route exact path={SecurityRoute.landing}>
+        <Landing />
       </Route>
     </Switch>
   )
