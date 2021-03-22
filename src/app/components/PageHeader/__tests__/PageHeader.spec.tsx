@@ -13,7 +13,7 @@ jest.mock('app/components/Breadcrumbs/Breadcrumbs', () => ({
 }))
 
 describe('PageHeader', () => {
-  const props: PageHeaderProps = { label: 'Test Label' }
+  const props: PageHeaderProps = { title: 'Test Label' }
   const crumbs: InternalRouteBase[] = [
     { label: 'Account', path: '/account' },
     { label: 'Asset Balance', path: '/balance' },

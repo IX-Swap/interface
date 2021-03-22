@@ -7,6 +7,7 @@ import { RejectionMessage } from 'app/pages/authorizer/components/RejectionMessa
 import { CorporateIdentityView } from 'app/pages/_identity/components/CorporateIdentityView/CorporateIdentityView'
 import { IdentityRoute } from 'app/pages/_identity/router/config'
 import { useParams } from 'react-router-dom'
+import { PageHeader } from 'app/components/PageHeader/PageHeader'
 
 export const ViewInvestor = () => {
   const { data, status } = useAllCorporates({})
@@ -23,19 +24,22 @@ export const ViewInvestor = () => {
 
   return (
     <Grid container>
-      <Grid item>
+      <Grid item xs={12}>
+        <PageHeader title={identity.companyLegalName} />
+      </Grid>
+      <Grid item xs={12}>
         <RejectionMessage data={identity} />
       </Grid>
-      <Grid container item justify='flex-end' alignItems='center'>
+      <Grid xs={12} container item justify='flex-end' alignItems='center'>
         <EditButton
           link={IdentityRoute.editCorporate}
           params={{ identityId, userId }}
         />
       </Grid>
-      <Grid item container>
+      <Grid item xs={12} container>
         <VSpacer size='small' />
       </Grid>
-      <Grid item>
+      <Grid item xs={12}>
         <CorporateIdentityView />
       </Grid>
     </Grid>

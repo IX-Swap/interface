@@ -1,8 +1,6 @@
 import React from 'react'
 import { Grid } from '@material-ui/core'
 import { IdentityDocumentsView } from 'app/pages/_identity/components/IdentityDocumentsView/IdentityDocumentsView'
-import { useSetPageTitle } from 'app/hooks/useSetPageTitle'
-import { getPersonName } from 'helpers/strings'
 import { privateClassNames } from 'helpers/classnames'
 import { FormSectionHeader } from 'app/components/DSO/components/FormSectionHeader'
 import { IndividualInfoView } from './IndividualInfoView/IndividualInfoView'
@@ -14,8 +12,6 @@ import { useIndividualIdentity } from 'hooks/identity/useIndividualIdentity'
 
 export const IndividualIdentityView = () => {
   const { data, isLoading } = useIndividualIdentity()
-
-  useSetPageTitle(getPersonName(data))
 
   if (isLoading || data === undefined) {
     return null
