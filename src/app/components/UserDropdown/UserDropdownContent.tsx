@@ -1,7 +1,7 @@
 import React, { Fragment } from 'react'
 import { UserDropdownItem } from 'app/components/UserDropdown/UserDropdownItem'
 import { IdentityRoute } from 'app/pages/_identity/router/config'
-import { SecurityRoute } from 'app/pages/security/router'
+import { SecurityRoute } from 'app/pages/security/router/config'
 import { AdminRoute } from 'app/pages/admin/router'
 import { DropdownContentProps } from 'app/components/Dropdown/Dropdown'
 import { useLogout } from 'auth/hooks/useLogout'

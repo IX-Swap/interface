@@ -14,7 +14,6 @@
     "@material-ui/lab": "^4.0.0-alpha.46",
     "@material-ui/pickers": "^3.2.10",
     "@material-ui/styles": "^4.10.0",
-    "material-ui-phone-number": "^2.2.6",
     "@sentry/react": "^5.26.0",
     "@sentry/tracing": "^5.26.0",
     "@types/react-otp-input": "^2.0.0",
@@ -27,6 +26,7 @@
     "draftjs-to-html": "^0.9.1",
     "eslint-config-react-app": "^5.2.1",
     "lodash": "^4.17.15",
+    "material-ui-phone-number": "^2.2.6",
     "material-ui-popup-state": "^1.6.1",
     "mobx": "^5.15.4",
     "mobx-react": "^6.2.2",
@@ -111,6 +111,7 @@
     "jest-environment-jsdom-sixteen": "^1.0.3",
     "jest-localstorage-mock": "^2.4.3",
     "jest-sonar-reporter": "^2.0.0",
+    "lint-staged": "^10.5.4",
     "react-app-rewired": "^2.1.6",
     "react-query-devtools": "^2.6.0",
     "react-test-renderer": "^16.13.1",
@@ -150,10 +151,15 @@
     "reportPath": "coverage",
     "reportFile": "test-report.xml"
   },
+  "lint-staged": {
+      "src/**/*.{ts,tsx}": [
+        "yarn lint",
+        "yarn format"
+      ]
+  },
   "husky": {
     "hooks": {
-      "pre-commit": "tsc --noEmit && yarn lint",
-      "pre-push": "yarn test"
+      "pre-commit": "lint-staged"
     }
   },
   "babel": {

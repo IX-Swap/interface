@@ -4,7 +4,7 @@ import { UserDropdownContent } from 'app/components/UserDropdown/UserDropdownCon
 import { DropdownContentProps } from 'app/components/Dropdown/Dropdown'
 import { UserDropdownItem } from 'app/components/UserDropdown/UserDropdownItem'
 import { IdentityRoute } from 'app/pages/_identity/router/config'
-import { SecurityRoute } from 'app/pages/security/router'
+import { SecurityRoute } from 'app/pages/security/router/config'
 import {
   AccountCircleOutlined,
   PowerSettingsNewOutlined,

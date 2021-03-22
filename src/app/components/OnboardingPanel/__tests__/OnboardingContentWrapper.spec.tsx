@@ -1,7 +1,6 @@
 import React from 'react'
 import { render, cleanup } from 'test-utils'
 import { OnboardingContentWrapper } from 'app/components/OnboardingPanel/OnboardingContentWrapper'
-import * as useSecurityRouter from 'app/pages/security/router'
 import * as useHomeRouter from 'app/pages/home/router'
 import { MemoryRouter } from 'react-router-dom'
 
@@ -12,11 +11,11 @@ describe('ContentWrapper', () => {
   //     createCorporate: '/corporate'
   //   }
   // }
-  const securityRouter = {
-    paths: {
-      setup2fa: '/setup2fa'
-    }
-  }
+  // const securityRouter = {
+  //   paths: {
+  //     setup2fa: '/setup2fa'
+  //   }
+  // }
 
   const homeRouter = {
     paths: {
@@ -28,9 +27,9 @@ describe('ContentWrapper', () => {
     // jest
     //   .spyOn(useIdentitiesRouter, 'useIdentitiesRouter')
     //   .mockImplementation(() => identitiesRouter as any)
-    jest
-      .spyOn(useSecurityRouter, 'useSecurityRouter')
-      .mockImplementation(() => securityRouter as any)
+    // jest
+    //   .spyOn(useSecurityRouter, 'useSecurityRouter')
+    //   .mockImplementation(() => securityRouter as any)
     jest
       .spyOn(useHomeRouter, 'useHomeRouter')
       .mockImplementation(() => homeRouter as any)

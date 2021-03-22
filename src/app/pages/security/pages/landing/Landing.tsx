@@ -5,13 +5,14 @@ import { SettingsRow } from './components/SettingsRow'
 import { TwoFaDialog } from './components/TwoFaDialog'
 import keyImg from './assets/key.png'
 import gAuthImg from './assets/googleauth.png'
-import { useSecurityRouter } from '../../router'
 import { ThemeSelector } from 'app/pages/security/pages/landing/components/ThemeSelector'
+import { useHistory } from 'react-router'
+import { SecurityRoute } from 'app/pages/security/router/config'
 
 export const Landing = () => {
   const { user = { totpConfirmed: false } } = useAuth()
-  const securityRouter = useSecurityRouter()
   const [open, setOpen] = useState(!user.totpConfirmed)
+  const { push } = useHistory()
 
   return (
     <>
@@ -43,7 +44,7 @@ export const Landing = () => {
                 <Button
                   variant='contained'
                   color='primary'
-                  onClick={() => securityRouter.push('changePassword')}
+                  onClick={() => push(SecurityRoute.changePassword)}
                   size='large'
                 >
                   Change
@@ -60,7 +61,7 @@ export const Landing = () => {
       <TwoFaDialog
         isOpen={open}
         closeFn={() => setOpen(false)}
-        nextFn={() => securityRouter.push('setup2fa')}
+        nextFn={() => push(SecurityRoute.setup2fa)}
       />
     </>
   )
