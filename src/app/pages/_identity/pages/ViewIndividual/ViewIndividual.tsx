@@ -22,7 +22,7 @@ export const ViewIndividual = () => {
       <Grid container item justify='flex-end' alignItems='center'>
         <EditButton
           link={IdentityRoute.editIndividual}
-          params={{ identityId: data._id }}
+          params={{ identityId: data._id, userId: data.user._id }} // TODO: ask backend to unify user field for all objects
         />
       </Grid>
       <Grid item container>

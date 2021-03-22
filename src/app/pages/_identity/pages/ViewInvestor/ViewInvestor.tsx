@@ -10,7 +10,10 @@ import { useParams } from 'react-router-dom'
 
 export const ViewInvestor = () => {
   const { data, status } = useAllCorporates({})
-  const { identityId } = useParams<{ identityId: string }>()
+  const { identityId, userId } = useParams<{
+    identityId: string
+    userId: string
+  }>()
 
   if (status === 'loading') {
     return null
@@ -26,7 +29,7 @@ export const ViewInvestor = () => {
       <Grid container item justify='flex-end' alignItems='center'>
         <EditButton
           link={IdentityRoute.editCorporate}
-          params={{ identityId }}
+          params={{ identityId, userId }}
         />
       </Grid>
       <Grid item container>

@@ -58,6 +58,7 @@ export const CorporatesPreview: React.FC<CorporatesPreviewProps> = props => {
                   }
                   params={{
                     identityId: identity._id,
+                    userId: identity.user._id,
                     label: identity.companyLegalName
                   }}
                 />
@@ -70,6 +71,7 @@ export const CorporatesPreview: React.FC<CorporatesPreviewProps> = props => {
                   }
                   params={{
                     identityId: identity._id,
+                    userId: identity.user._id,
                     label: identity.companyLegalName
                   }}
                 />

@@ -37,12 +37,20 @@ export const IndividualPreview = () => {
             <Fragment>
               <ViewButton
                 link={IdentityRoute.viewIndividual}
-                params={{ label: name, identityId: data._id }}
+                params={{
+                  label: name,
+                  identityId: data._id,
+                  userId: data.user._id
+                }}
               />
               <Box mx={1} component='span' />
               <EditButton
                 link={IdentityRoute.editIndividual}
-                params={{ label: name, identityId: data._id }}
+                params={{
+                  label: name,
+                  identityId: data._id,
+                  userId: data.user._id
+                }}
               />
             </Fragment>
           }

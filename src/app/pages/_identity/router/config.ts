@@ -12,6 +12,7 @@ export const IdentityRoute = {
     'app',
     'identity',
     'individualIdentity',
+    'userId',
     'identityId',
     'view'
   ]),
@@ -19,6 +20,7 @@ export const IdentityRoute = {
     'app',
     'identity',
     'individualIdentity',
+    'userId',
     'identityId',
     'edit'
   ]),
@@ -27,6 +29,7 @@ export const IdentityRoute = {
     'app',
     'identity',
     'corporateIdentity',
+    'userId',
     'identityId',
     'view'
   ]),
@@ -34,10 +37,11 @@ export const IdentityRoute = {
     'app',
     'identity',
     'corporateIdentity',
+    'userId',
     'identityId',
     'edit'
   ]),
   createIssuer: '/app/identity/corporates/create-issuer',
-  viewIssuer: '/app/identity/corporates/:identityId/view-issuer',
-  editIssuer: '/app/identity/corporates/:identityId/edit-issuer'
+  viewIssuer: '/app/identity/corporates/:userId/:identityId/view-issuer',
+  editIssuer: '/app/identity/corporates/:userId/:identityId/edit-issuer'
 }
