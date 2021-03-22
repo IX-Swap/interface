@@ -10,7 +10,7 @@ import React, { createElement } from 'react'
 import { useStyles } from 'app/components/UserDropdown/UserDropdownItem.styles'
 import { useLocation } from 'react-router-dom'
 import { LIST_HORIZONTAL_PADDING } from 'app/components/UserDropdown/UserDropdownContent'
-import { AdminRoute } from 'app/pages/admin/router'
+import { AdminRoute } from 'app/pages/admin/router/config'
 import { AppRoute } from 'app/router'
 
 export interface UserDropdownItemProps {

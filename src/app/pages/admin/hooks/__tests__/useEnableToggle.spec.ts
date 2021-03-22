@@ -5,7 +5,6 @@ import { managedUser } from '__fixtures__/user'
 import * as ReactQuery from 'react-query'
 import { userURL } from 'config/apiURL'
 import { generateMutationResult } from '__fixtures__/useQuery'
-import * as useAdminRouter from 'app/pages/admin/router'
 import { usersQueryKeys } from 'config/queryKeys'
 
 describe('useEnabledToggle', () => {
@@ -23,12 +22,6 @@ describe('useEnabledToggle', () => {
 
   it('renders without errors', async () => {
     await act(async () => {
-      jest
-        .spyOn(useAdminRouter, 'useAdminRouter')
-        .mockImplementation(
-          () => ({ params: { userId: managedUser._id } } as any)
-        )
-
       const patchFn = jest
         .fn()
         .mockResolvedValueOnce(generateMutationResult({}))

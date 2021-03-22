@@ -2,12 +2,12 @@ import { useState } from 'react'
 import { useMutation, useQueryCache } from 'react-query'
 import { useServices } from 'hooks/useServices'
 import { authURL } from 'config/apiURL'
-import { useAdminRouter } from 'app/pages/admin/router'
 import { usersQueryKeys } from 'config/queryKeys'
+import { useParams } from 'react-router-dom'
 
 export const useReset2FA = (succesHandler: () => void) => {
   const { apiService, snackbarService } = useServices()
-  const { params } = useAdminRouter()
+  const params = useParams<{ userId: string }>()
   const [otp, setOtp] = useState('')
   const [errorMessage, setErrorMessage] = useState<string | undefined>(
     undefined

@@ -3,7 +3,6 @@ import { useRoleManagement } from 'app/pages/admin/hooks/useRoleManagement'
 import { waitFor, cleanup, renderHookWithServiceProvider } from 'test-utils'
 import { successfulResponse } from '__fixtures__/api'
 import { managedUser } from '__fixtures__/user'
-import * as useAdminRouter from 'app/pages/admin/router'
 import * as useSetRoles from 'app/pages/admin/hooks/useSetRoles'
 
 describe('useRoleManagement', () => {
@@ -16,12 +15,6 @@ describe('useRoleManagement', () => {
 
   it('renders without errors', async () => {
     await act(async () => {
-      jest
-        .spyOn(useAdminRouter, 'useAdminRouter')
-        .mockImplementation(
-          () => ({ params: { userId: managedUser._id } } as any)
-        )
-
       const setRoleFn = jest.fn()
       jest
         .spyOn(useSetRoles, 'useSetRoles')

@@ -2,17 +2,14 @@ import React from 'react'
 import { Grid } from '@material-ui/core'
 import { useSetPageTitle } from 'app/hooks/useSetPageTitle'
 import { useUserById } from 'app/pages/admin/hooks/useUserById'
-import { useAdminRouter } from 'app/pages/admin/router'
 import { UserDetails } from 'app/pages/admin/components/UserDetails'
 import { UserStatus } from 'app/pages/admin/components/UserStatus'
 import { IndividualAccountSettings } from 'app/pages/admin/components/IndividualAccountSettings'
+import { useParams } from 'react-router'
 
 export const ViewUser: React.FC = () => {
-  const {
-    params: { userId }
-  } = useAdminRouter()
-
-  const { data, isLoading } = useUserById(userId)
+  const params = useParams<{ userId: string }>()
+  const { data, isLoading } = useUserById(params.userId)
 
   useSetPageTitle(data?.name)
 

@@ -5,7 +5,6 @@ import { managedUser } from '__fixtures__/user'
 import * as ReactQuery from 'react-query'
 import { authURL } from 'config/apiURL'
 import { generateMutationResult } from '__fixtures__/useQuery'
-import * as useAdminRouter from 'app/pages/admin/router'
 import { usersQueryKeys } from 'config/queryKeys'
 
 describe('useReset2FA', () => {
@@ -23,12 +22,6 @@ describe('useReset2FA', () => {
 
   it('renders without errors', async () => {
     await act(async () => {
-      jest
-        .spyOn(useAdminRouter, 'useAdminRouter')
-        .mockImplementation(
-          () => ({ params: { userId: managedUser._id } } as any)
-        )
-
       const postFn = jest.fn().mockResolvedValueOnce(generateMutationResult({}))
       const apiObj = { post: postFn }
       const successHandlerMock = jest.fn()

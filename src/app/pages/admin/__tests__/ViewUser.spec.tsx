@@ -1,7 +1,6 @@
 import React from 'react'
 import { render, cleanup } from 'test-utils'
 import { ViewUser } from 'app/pages/admin/pages/ViewUser'
-import * as useAdminRouterHook from 'app/pages/admin/router'
 import { managedUser } from '__fixtures__/user'
 import * as useUserByIdHook from 'app/pages/admin/hooks/useUserById'
 import { generateQueryResult } from '__fixtures__/useQuery'
