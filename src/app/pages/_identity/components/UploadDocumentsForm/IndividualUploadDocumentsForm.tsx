@@ -13,7 +13,8 @@ export const IndividualUploadDocumentsForm = () => {
           label='Proof of Identity'
           helperElement={
             <Typography variant='body1'>
-              Passport, Driving License, NRIC, Government Issued ID card
+              Passport, driving license, NRIC, government issued ID card and
+              others
             </Typography>
           }
         />
@@ -24,8 +25,8 @@ export const IndividualUploadDocumentsForm = () => {
           label='Proof of Address'
           helperElement={
             <Typography variant='body1'>
-              Utility bills, Bank statement/Credit card statement (not older
-              than 3 months), Tenancy/Lease agreement, Telecom bill
+              Utility bills, bank statement/credit card statement, tenancy/lease
+              and others agreement, telecom bill
             </Typography>
           }
         />

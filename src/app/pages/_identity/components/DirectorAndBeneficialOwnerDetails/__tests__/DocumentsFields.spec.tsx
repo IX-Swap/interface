@@ -45,13 +45,13 @@ describe('DocumentsFields', () => {
     expect(getByText('Proof of Identity')).toBeTruthy()
     expect(
       getByText(
-        'Passport, Driving License, NRIC and Government Issued ID card.'
+        'Passport, driving license, NRIC and government issued ID card.'
       )
     ).toBeTruthy()
     expect(getByText('Proof of Address')).toBeTruthy()
     expect(
       getByText(
-        'Utility bills, Bank statement/Credit card statement, Tenancy agreement, and Telecom bill.'
+        'Utility bills, bank statement/credit card statement, tenancy agreement, and telecom bill.'
       )
     ).toBeTruthy()
   })

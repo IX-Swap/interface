@@ -46,7 +46,7 @@ describe('AuthorizationDocuments', () => {
     expect(input).toBeInTheDocument()
     expect(
       getByText(
-        'Board Resolution, Power of Attorney, Partnership Deed, Trust Deed, and Others.'
+        'Board resolution, power of attorney, partnership deed, trust deed, and others.'
       )
     ).toBeTruthy()
   })

@@ -1,10 +1,12 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { Grid, Typography } from '@material-ui/core'
 import { FormSectionHeader } from 'app/pages/_identity/components/FormSectionHeader'
 import { DeclarationsListFields } from 'app/pages/_identity/components/InvestorDeclarationForm/DeclarationsList/DeclartionsListFields'
 import { IdentityType } from 'app/pages/identity/utils'
 import { OptInAgreements } from 'app/pages/_identity/components/InvestorDeclarationForm/OptInAgreements/OptInAgreements'
 import { InvestorAgreements } from 'app/pages/_identity/components/InvestorDeclarationForm/InvestorAgreements/InvestorAgreements'
+import { useFormContext } from 'react-hook-form'
+import { useServices } from 'hooks/useServices'
 
 export interface InvestorDeclarationFormProps {
   identityType?: IdentityType
@@ -13,6 +15,16 @@ export interface InvestorDeclarationFormProps {
 export const InvestorDeclarationForm = ({
   identityType = 'individual'
 }: InvestorDeclarationFormProps) => {
+  const { snackbarService } = useServices()
+  const { errors } = useFormContext()
+  const declarationsError = errors.investorDeclarations
+
+  useEffect(() => {
+    if (declarationsError !== undefined) {
+      void snackbarService.showSnackbar(declarationsError.message, 'error')
+    }
+  }, [declarationsError]) // eslint-disable-line
+
   return (
     <>
       <FormSectionHeader title='Investor Status Declaration' />
