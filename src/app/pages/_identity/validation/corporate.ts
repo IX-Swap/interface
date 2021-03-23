@@ -178,6 +178,11 @@ export const corporateInvestorDocumentsSchema = yup
     financialDocuments: yup.array<DataroomFile>().min(1).required('Required')
   })
 
+export const corporateIssuerDocumentsSchema = yup.object().shape({
+  corporateDocuments: yup.array<DataroomFile>().min(1).required('Required'),
+  financialDocuments: yup.array<DataroomFile>().min(1).required('Required')
+})
+
 export const corporateInvestorAgreementsSchema = yup
   .object()
   .shape<CorporateInvestorAgreementsFormValues>({
