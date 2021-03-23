@@ -29,7 +29,7 @@ export const DocumentFields = ({
             <>
               <Box m={1} />
               <Typography variant='body1'>
-                Passport, Driving License, NRIC and Government Issued ID card.
+                Passport, driving license, NRIC and government issued ID card.
               </Typography>
             </>
           }
@@ -45,8 +45,8 @@ export const DocumentFields = ({
             <>
               <Box m={1} />
               <Typography variant='body1'>
-                Utility bills, Bank statement/Credit card statement, Tenancy
-                agreement, and Telecom bill.
+                Utility bills, bank statement/credit card statement, tenancy
+                agreement, and telecom bill.
               </Typography>
             </>
           }

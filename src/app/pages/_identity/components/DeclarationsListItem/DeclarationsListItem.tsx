@@ -14,13 +14,13 @@ export const DeclarationsListItem = ({
 }: DeclarationsListItemProps) => {
   return (
     <Grid item xs={12}>
-      <Box display={'flex'} alignItems={'flex-start'} color={'#AAAAAA'}>
-        {value ? <DoneIcon /> : <CloseIcon />}
-        <Typography>
-          <Box marginLeft={2} color={'#444444'}>
-            {label}
-          </Box>
-        </Typography>
+      <Box display={'flex'} alignItems={'flex-start'}>
+        <Box style={{ opacity: 0.5 }}>
+          {value ? <DoneIcon /> : <CloseIcon />}
+        </Box>
+        <Box marginLeft={2}>
+          <Typography>{label}</Typography>
+        </Box>
       </Box>
     </Grid>
   )

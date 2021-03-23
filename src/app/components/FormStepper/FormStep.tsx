@@ -55,11 +55,20 @@ export const FormStep = (props: FormStepProps) => {
       return
     }
 
-    const mutation = isLastStep ? submitMutation[0] : editMutation[0]
+    const isNew = data === undefined
+    const mutation = isNew
+      ? createMutation[0]
+      : isLastStep
+      ? submitMutation[0]
+      : editMutation[0]
     const shouldSaveStep = shouldSaveOnMove && !isLastStep
     const payload = step.getRequestPayload(values)
 
-    const onSubmitSuccess = () => !isLastStep && setActiveStep(activeStep + 1)
+    const onSubmitSuccess = (data: any) => {
+      if (data?.message === 'OK' && !isLastStep) {
+        setActiveStep(activeStep + 1)
+      }
+    }
 
     if (shouldSaveStep) {
       payload.step = activeStep + 1
