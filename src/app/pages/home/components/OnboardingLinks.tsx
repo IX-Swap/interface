@@ -33,7 +33,7 @@ export const OnboardingLinks = () => {
   const investorLink =
     isIdentitiesLoaded &&
     investorIdentities !== undefined &&
-    investorIdentities.length > 1
+    investorIdentities.length > 0
       ? {
           to: identityPaths.editCorporate,
           params: {
@@ -45,7 +45,7 @@ export const OnboardingLinks = () => {
   const issuerLink =
     isIdentitiesLoaded &&
     issuerIdentities !== undefined &&
-    issuerIdentities.length > 1
+    issuerIdentities.length > 0
       ? {
           to: identityPaths.editIssuer,
           params: {
