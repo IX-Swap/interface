@@ -7,7 +7,7 @@ import { AdminRouter } from 'app/pages/admin/router/AdminRouter'
 export const AdminRoot = () => {
   return (
     <RootContainer className={privateClassNames()}>
-      <PageHeader label='Admin' alignment='flex-start' />
+      <PageHeader title='Admin' alignment='flex-start' />
       <AdminRouter />
     </RootContainer>
   )

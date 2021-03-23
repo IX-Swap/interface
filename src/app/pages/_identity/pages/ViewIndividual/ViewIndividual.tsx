@@ -6,6 +6,8 @@ import { VSpacer } from 'components/VSpacer'
 import { RejectionMessage } from 'app/pages/authorizer/components/RejectionMessage'
 import { IndividualIdentityView } from 'app/pages/_identity/components/IndividualIdentityView/IndividualIdentityView'
 import { IdentityRoute } from 'app/pages/_identity/router/config'
+import { PageHeader } from 'app/components/PageHeader/PageHeader'
+import { getPersonName } from 'helpers/strings'
 
 export const ViewIndividual = () => {
   const { data, status } = useIndividualIdentity()
@@ -16,19 +18,22 @@ export const ViewIndividual = () => {
 
   return (
     <Grid container>
-      <Grid item>
+      <Grid item xs={12}>
+        <PageHeader title={getPersonName(data)} />
+      </Grid>
+      <Grid item xs={12}>
         <RejectionMessage data={data} />
       </Grid>
-      <Grid container item justify='flex-end' alignItems='center'>
+      <Grid container item xs={12} justify='flex-end' alignItems='center'>
         <EditButton
           link={IdentityRoute.editIndividual}
           params={{ identityId: data._id, userId: data.user._id }} // TODO: ask backend to unify user field for all objects
         />
       </Grid>
-      <Grid item container>
+      <Grid item container xs={12}>
         <VSpacer size='small' />
       </Grid>
-      <Grid item>
+      <Grid item xs={12}>
         <IndividualIdentityView />
       </Grid>
     </Grid>
