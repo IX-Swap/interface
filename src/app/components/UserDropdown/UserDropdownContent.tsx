@@ -29,7 +29,13 @@ export const UserDropdownContent = (props: DropdownContentProps) => {
 
   return (
     <Fragment>
-      <Box bgcolor={theme.palette.backgrounds.light}>
+      <Box
+        bgcolor={
+          theme.palette.type === 'light'
+            ? theme.palette.backgrounds.default
+            : theme.palette.backgrounds.light
+        }
+      >
         <UserDropdownInfo />
         <List
           style={{

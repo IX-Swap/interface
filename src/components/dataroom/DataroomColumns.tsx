@@ -80,7 +80,7 @@ export const DataroomColumns: React.FC<DataroomColumnsProps> = props => {
         </Hidden>
         <Typography
           style={{
-            color: theme.palette.text.secondary,
+            color: theme.palette.type === 'light' ? '#444444' : '#ffffff',
             opacity: theme.palette.type === 'light' ? 1 : 0.6
           }}
         >

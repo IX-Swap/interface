@@ -26,8 +26,7 @@ export const darkTheme: ThemeOptions = {
       activeColor: '#8995FC'
     },
     text: {
-      primary: '#ffffff',
-      secondary: '#444444'
+      primary: '#ffffff'
     }
   }
 }

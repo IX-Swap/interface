@@ -30,8 +30,7 @@ export const lightTheme: ThemeOptions = {
     },
     divider: '#dddddd',
     text: {
-      primary: '#444444',
-      secondary: 'rgba(0, 0, 0, 0.54)'
+      primary: '#444444'
     }
   }
 }
