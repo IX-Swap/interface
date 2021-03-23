@@ -4,7 +4,7 @@ import { DigitalSecurityOffering, DSORequestArgs } from 'types/dso'
 import { useMutation } from 'react-query'
 import { getIdFromObj } from 'helpers/strings'
 import { issuanceURL } from 'config/apiURL'
-import { useHistory } from 'react-router-dom'
+import { generatePath, useHistory } from 'react-router-dom'
 import { IssuanceRoute } from 'app/pages/issuance/router/config'
 
 export const useCreateDSO = () => {
@@ -20,10 +20,12 @@ export const useCreateDSO = () => {
     onSuccess: data => {
       void snackbarService.showSnackbar('Success', 'success')
 
-      replace(IssuanceRoute.view, {
-        dsoId: data.data._id,
-        issuerId: data.data.user
-      })
+      replace(
+        generatePath(IssuanceRoute.view, {
+          dsoId: data.data._id,
+          issuerId: data.data.user
+        })
+      )
     },
     onError: (error: any) => {
       void snackbarService.showSnackbar(error.message, 'error')

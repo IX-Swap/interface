@@ -7,7 +7,7 @@ import { IssuanceRoute } from 'app/pages/issuance/router/config'
 import { investQueryKeys } from 'config/queryKeys'
 import { getIdFromObj } from 'helpers/strings'
 import { issuanceURL } from 'config/apiURL'
-import { useHistory, useParams } from 'react-router-dom'
+import { generatePath, useHistory, useParams } from 'react-router-dom'
 
 export const useUpdateDSO = (
   dsoId: string,
@@ -26,7 +26,7 @@ export const useUpdateDSO = (
   return useMutation(updateDSO, {
     onSuccess: data => {
       callbacks?.onSuccess?.(data)
-      replace(IssuanceRoute.view, params)
+      replace(generatePath(IssuanceRoute.view, params))
 
       void snackbarService.showSnackbar('Success', 'success')
       void queryCache.invalidateQueries([investQueryKeys.getDSOById, dsoId])

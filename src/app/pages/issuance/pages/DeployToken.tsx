@@ -9,7 +9,6 @@ import { DeployTokenButton } from 'app/pages/issuance/components/DeployTokenButt
 
 export const DeployToken = () => {
   const params = useParams<{ dsoId: string; issuerId: string }>()
-  // TODO: fix the logic for the authorizer
   const { data, isLoading } = useDSOById(params.dsoId, params.issuerId)
   const { deploy, isInitializing, isDeploying } = useDeployToken(params.dsoId)
 

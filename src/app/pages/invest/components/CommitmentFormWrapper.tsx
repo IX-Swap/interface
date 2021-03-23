@@ -10,6 +10,7 @@ import { CommitmentFormCancelButton } from 'app/pages/invest/components/Commitme
 import { useCommitmentActivity } from '../hooks/useCommitmentActivity'
 import { DownloadDSOSubscriptionDocument } from 'app/components/DSO/components/DownloadDSOSubscriptionDocument'
 import { useParams } from 'react-router-dom'
+import { PageHeader } from 'app/components/PageHeader/PageHeader'
 
 export const CommitmentFormWrapper = () => {
   const params = useParams<{ dsoId: string; issuerId: string }>()
@@ -28,6 +29,9 @@ export const CommitmentFormWrapper = () => {
       defaultValues={{ pricePerUnit: data.pricePerUnit }}
     >
       <Grid container direction='column' spacing={3}>
+        <Grid item>
+          <PageHeader title={data.tokenName} />
+        </Grid>
         <Grid item>
           <CommitmentHeader dso={data} />
         </Grid>

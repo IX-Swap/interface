@@ -3,11 +3,15 @@ import { TransactionsFilter } from 'app/pages/accounts/pages/transactions/compon
 import { TransactionFilterForm } from 'app/pages/accounts/pages/transactions/components/TransactionFilterForm'
 import { TransactionsTable } from 'app/pages/accounts/pages/transactions/components/TransactionsTable'
 import { Grid } from '@material-ui/core'
+import { PageHeader } from 'app/components/PageHeader/PageHeader'
 
 export const Transactions = () => {
   return (
     <TransactionFilterForm>
       <Grid container direction='column'>
+        <Grid item>
+          <PageHeader title='Transactions' />
+        </Grid>
         <Grid item>
           <TransactionsFilter />
         </Grid>

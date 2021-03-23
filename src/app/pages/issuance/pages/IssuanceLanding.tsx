@@ -11,20 +11,18 @@ import { TopInvestors } from '../components/IssuanceLanding/TopInvestors'
 import { TotalInvestors } from '../components/IssuanceLanding/TotalInvestors'
 import { DSOFilter } from '../components/IssuanceLanding/DSOFilter'
 import { AmountRaised } from '../components/IssuanceLanding/AmountRaised'
-import { useSetPageTitle } from 'app/hooks/useSetPageTitle'
 import { useDSOById } from 'app/pages/invest/hooks/useDSOById'
 import { useAppBreakpoints } from 'hooks/useAppBreakpoints'
 import { VSpacer } from 'components/VSpacer'
 import { isValidDSOId } from 'helpers/isValidDSOId'
 import { useParams } from 'react-router-dom'
 import { TargetFundraise } from 'app/pages/issuance/components/IssuanceLanding/TargetFundraise'
+import { PageHeader } from 'app/components/PageHeader/PageHeader'
 
 export const IssuanceLanding = () => {
   const { dsoId, issuerId } = useParams<{ dsoId: string; issuerId: string }>()
   const { data } = useDSOById(dsoId, issuerId)
   const { theme, isTablet } = useAppBreakpoints()
-
-  useSetPageTitle(data?.tokenName ?? 'Issuance')
 
   const divider = (
     <Hidden mdUp>
@@ -36,6 +34,7 @@ export const IssuanceLanding = () => {
 
   return (
     <>
+      <PageHeader title={data?.tokenName} />
       <Grid
         container
         justify='space-between'

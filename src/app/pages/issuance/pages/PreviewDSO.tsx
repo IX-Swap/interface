@@ -5,6 +5,7 @@ import { Grid } from '@material-ui/core'
 import { DSOSidebar } from 'app/components/DSO/components/DSOSidebar'
 import { DSOPreviewActions } from 'app/components/DSO/components/DSOPreviewActions'
 import { useParams } from 'react-router-dom'
+import { PageHeader } from 'app/components/PageHeader/PageHeader'
 
 export const PreviewDSO = () => {
   const { dsoId, issuerId } = useParams<{ dsoId: string; issuerId: string }>()
@@ -16,6 +17,10 @@ export const PreviewDSO = () => {
 
   return (
     <Grid container>
+      <Grid item xs={12}>
+        <PageHeader title={data.tokenName} />
+      </Grid>
+
       <Grid item lg={9} container direction='column'>
         <DSOPreview data={data} showAuthorizations />
       </Grid>

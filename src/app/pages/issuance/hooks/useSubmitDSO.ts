@@ -5,7 +5,7 @@ import { queryCache, useMutation } from 'react-query'
 import { investQueryKeys } from 'config/queryKeys'
 import { getIdFromObj } from 'helpers/strings'
 import { issuanceURL } from 'config/apiURL'
-import { useHistory } from 'react-router'
+import { generatePath, useHistory } from 'react-router'
 import { IssuanceRoute } from 'app/pages/issuance/router/config'
 import { useParams } from 'react-router-dom'
 
@@ -21,7 +21,7 @@ export const useSubmitDSO = (dsoId: string) => {
 
   return useMutation(submitDSO, {
     onSuccess: () => {
-      replace(IssuanceRoute.view, params)
+      replace(generatePath(IssuanceRoute.view, params))
 
       void snackbarService.showSnackbar('Success', 'success')
       void queryCache.invalidateQueries([
