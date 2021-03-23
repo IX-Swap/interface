@@ -8,12 +8,19 @@ import { TopIssuers } from 'app/pages/home/components/TopIssuers'
 import { TopCorporates } from 'app/pages/home/components/TopCorporates'
 import { PromoBanner } from 'app/pages/invest/components/PromoBanner'
 import { Divider } from 'ui/Divider'
+import { useOnboardingJourneys } from 'app/components/OnboardingPanel/hooks/useOnboardingJourneys'
+import { LoadingFullScreen } from 'auth/components/LoadingFullScreen'
 
 export const Onboarding = () => {
   const { user } = useAuth()
   const label = `Welcome, ${user?.name ?? 'Unknown'}`
+  const { isIdentitiesLoaded } = useOnboardingJourneys()
 
   useSetPageTitle(label)
+
+  if (!isIdentitiesLoaded) {
+    return <LoadingFullScreen />
+  }
 
   return (
     <Fragment>
