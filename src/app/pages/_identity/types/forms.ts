@@ -93,7 +93,6 @@ export interface CorporateInvestorDocumentsFormValues {
   corporateDocuments: DataroomFile[]
   financialDocuments: DataroomFile[]
 }
-
 export interface RepresentativeFormValues {
   fullName: string
   designation: string

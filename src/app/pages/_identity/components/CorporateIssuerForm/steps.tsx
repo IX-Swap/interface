@@ -17,8 +17,8 @@ import { TaxDeclarationForm } from '../TaxDeclarationForm/TaxDeclarationForm'
 import { CorporateUploadDocumentsForm } from '../UploadDocumentsForm/CorporateUploadDocumentsForm'
 import { CorporateIdentityView } from 'app/pages/_identity/components/CorporateIdentityView/CorporateIdentityView'
 import {
-  corporateInvestorDocumentsSchema,
   corporateInvestorInfoSchema,
+  corporateIssuerDocumentsSchema,
   corporateTaxDeclarationSchema,
   directorsAndBeneficialOwnersSchema
 } from 'app/pages/_identity/validation/corporate'
@@ -61,7 +61,7 @@ export const corporateIssuerFormSteps = [
     label: 'Upload Documents',
     getFormValues: getCorporateInvestorDocumentsFormValues,
     getRequestPayload: getCorporateInvestorDocumentsRequestPayload,
-    validationSchema: corporateInvestorDocumentsSchema,
+    validationSchema: corporateIssuerDocumentsSchema,
     component: () => (
       <Fragment>
         <CorporateUploadDocumentsForm />
