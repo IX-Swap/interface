@@ -22,7 +22,9 @@ export const useStyles = makeStyles(theme => ({
   },
   standard: {
     border: 'none',
-    borderBottom: `1px solid ${theme.palette.primary.main}`
+    borderBottom: `1px solid ${theme.palette.primary.main}`,
+    backgroundColor: theme.palette.backgrounds.light,
+    color: theme.palette.text.primary
   },
   outlined: {
     border: `1px solid ${theme.palette.divider}`,

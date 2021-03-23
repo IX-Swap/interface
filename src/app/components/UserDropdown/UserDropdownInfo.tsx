@@ -21,7 +21,7 @@ export const UserDropdownInfo = () => {
     <Box
       display='flex'
       alignItems='center'
-      bgcolor={theme.palette.backgrounds.secondary}
+      bgcolor={theme.palette.backgrounds.lighter}
       px={2}
       py={1.5}
       borderRadius='4px 4px 0 0'

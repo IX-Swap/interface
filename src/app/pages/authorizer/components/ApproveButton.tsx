@@ -14,7 +14,7 @@ export const ApproveButton = (props: ApproveButtonProps) => {
   return (
     <Button
       size='large'
-      color='primary'
+      color='secondary'
       variant='contained'
       onClick={handleClick}
       disabled={disabled}

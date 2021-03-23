@@ -18,9 +18,9 @@ export const lightTheme: ThemeOptions = {
       paper: '#ffffff'
     },
     backgrounds: {
-      main: '#ffffff',
-      secondary: '#fafafa',
-      tertiary: '#e3e3e3'
+      default: '#ffffff',
+      light: '#fafafa',
+      lighter: '#e3e3e3'
     },
     sidebar: {
       activeBackground: tinycolor(themeColors.primary)
@@ -28,6 +28,10 @@ export const lightTheme: ThemeOptions = {
         .toHexString(),
       activeColor: themeColors.primary
     },
-    divider: '#dddddd'
+    divider: '#dddddd',
+    text: {
+      primary: '#444444',
+      secondary: '#ffffff'
+    }
   }
 }

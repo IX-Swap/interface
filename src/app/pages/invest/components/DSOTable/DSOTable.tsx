@@ -1,5 +1,5 @@
 import React from 'react'
-import { Grid } from '@material-ui/core'
+import { Grid, Box } from '@material-ui/core'
 import { TableView } from 'components/TableWithPagination/TableView'
 import { DigitalSecurityOffering } from 'types/dso'
 import { dsoQueryKeys } from 'config/queryKeys'
@@ -8,8 +8,10 @@ import { useDSOTableColumns } from 'app/pages/invest/hooks/useDSOTableColumns'
 import { Actions } from 'app/pages/invest/components/DSOTable/Actions'
 import { DSOTableFilters } from 'app/pages/invest/components/DSOTable/DSOTableFilters'
 import { issuanceURL } from 'config/apiURL'
+import { useTheme } from '@material-ui/core/styles'
 
 export const DSOTable = () => {
+  const theme = useTheme()
   const { columns } = useDSOTableColumns()
   const { getFilterValue } = useQueryFilter()
   const search = getFilterValue('search', undefined)
@@ -21,14 +23,16 @@ export const DSOTable = () => {
         <DSOTableFilters />
       </Grid>
       <Grid item>
-        <TableView<DigitalSecurityOffering>
-          uri={issuanceURL.dso.getAllApproved}
-          name={dsoQueryKeys.getApprovedList}
-          columns={columns}
-          hasActions
-          actions={Actions}
-          filter={{ search, capitalStructure }}
-        />
+        <Box style={{ backgroundColor: theme.palette.backgrounds.light }}>
+          <TableView<DigitalSecurityOffering>
+            uri={issuanceURL.dso.getAllApproved}
+            name={dsoQueryKeys.getApprovedList}
+            columns={columns}
+            hasActions
+            actions={Actions}
+            filter={{ search, capitalStructure }}
+          />
+        </Box>
       </Grid>
     </Grid>
   )

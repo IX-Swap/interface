@@ -12,7 +12,7 @@ export const DSOTeamAddButton: React.FC<DSOTeamAddButtonProps> = props => {
   }
 
   return (
-    <Button color='primary' variant='contained' onClick={handleClick}>
+    <Button color='primary' variant='outlined' onClick={handleClick}>
       Add Team Member
     </Button>
   )

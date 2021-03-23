@@ -35,7 +35,7 @@ export const TopInvestors = () => {
             position: 'bottom',
             textStyle: {
               color: theme.palette.getContrastText(
-                theme.palette.backgrounds.main as any
+                theme.palette.backgrounds.default as any
               )
             }
           },

@@ -7,6 +7,7 @@ import {
   Typography
 } from '@material-ui/core'
 import { grey } from '@material-ui/core/colors'
+import { useTheme } from '@material-ui/core/styles'
 
 export interface OnboardingStepsProps {
   steps: Array<{ title: string; content: string[] }>
@@ -17,6 +18,8 @@ export const OnboardingSteps = ({
   steps,
   activeStep
 }: OnboardingStepsProps) => {
+  const theme = useTheme()
+
   return (
     <Stepper activeStep={activeStep} orientation='vertical'>
       {steps.map((step, index) => (
@@ -24,7 +27,12 @@ export const OnboardingSteps = ({
           <StepLabel>{step.title}</StepLabel>
           {step.content.length > 0 ? (
             <StepContent
-              style={{ color: index > activeStep ? grey[600] : grey[900] }}
+              style={{
+                color:
+                  theme.palette.type === 'light'
+                    ? grey[600]
+                    : 'rgba(255, 255, 255, 0.6)'
+              }}
             >
               {step.content.map((content, index) => (
                 <Typography

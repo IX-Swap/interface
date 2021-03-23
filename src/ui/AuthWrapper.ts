@@ -5,5 +5,5 @@ export const AuthWrapper = styled(Grid)(({ theme }) => ({
   maxWidth: 730,
   margin: 'auto',
   position: 'relative',
-  backgroundColor: theme.palette.backgrounds.main
+  backgroundColor: theme.palette.backgrounds.default
 }))

@@ -5,6 +5,7 @@ import { DataroomFile } from 'types/dataroomFile'
 import { Maybe } from 'types/util'
 import { documentIcons } from 'helpers/rendering'
 import { ViewDocument } from 'app/components/DSO/components/ViewDocument'
+import { useTheme } from '@material-ui/core/styles'
 
 export interface DataroomColumnsProps {
   title: string
@@ -45,6 +46,7 @@ export const DataroomColumns: React.FC<DataroomColumnsProps> = props => {
     borderRadius: 4,
     overflow: 'hidden'
   }
+  const theme = useTheme()
 
   if (document?._id === undefined || document?._id === '') {
     return (
@@ -76,7 +78,14 @@ export const DataroomColumns: React.FC<DataroomColumnsProps> = props => {
             }
           </ViewDocument>
         </Hidden>
-        <Typography>{document.originalFileName}</Typography>
+        <Typography
+          style={{
+            color: theme.palette.text.secondary,
+            opacity: theme.palette.type === 'light' ? 1 : 0.6
+          }}
+        >
+          {document.originalFileName}
+        </Typography>
       </Box>
       <Box flex='1 0 20%'>
         <Typography>{document.type === '' ? '–' : document.type}</Typography>

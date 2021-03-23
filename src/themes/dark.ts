@@ -1,30 +1,33 @@
 import { ThemeOptions } from '@material-ui/core'
-import { themeColors } from 'themes/colors'
 import tinycolor from 'tinycolor2'
 
 export const darkTheme: ThemeOptions = {
   palette: {
     type: 'dark',
     primary: {
-      main: themeColors.primary,
-      light: tinycolor(themeColors.primary).lighten(25).toHexString(),
-      dark: tinycolor(themeColors.primary).darken(10).toHexString()
+      main: '#7F89E5',
+      light: tinycolor('#7F89E5').lighten(25).toHexString(),
+      dark: tinycolor('#7F89E5').darken(10).toHexString()
     },
     secondary: {
-      main: themeColors.secondary
+      main: '#0c469c'
     },
     background: {
-      default: tinycolor(themeColors.primary).darken(15).toHexString(),
-      paper: tinycolor(themeColors.primary).darken(15).toHexString()
+      default: '#121212',
+      paper: '#121212'
     },
     backgrounds: {
-      main: tinycolor(themeColors.primary).darken(15).toHexString(),
-      secondary: tinycolor(themeColors.primary).darken(17).toHexString(),
-      tertiary: tinycolor(themeColors.primary).darken(5).toHexString()
+      default: '#121212',
+      light: '#2D2D2D',
+      lighter: 'rgba(255, 255, 255, 0.08)'
     },
     sidebar: {
-      activeBackground: tinycolor(themeColors.primary).darken(20).toHexString(),
-      activeColor: '#ffffff'
+      activeBackground: 'rgba(137, 149, 252, 0.11)',
+      activeColor: '#8995FC'
+    },
+    text: {
+      primary: '#ffffff',
+      secondary: '#444444'
     }
   }
 }

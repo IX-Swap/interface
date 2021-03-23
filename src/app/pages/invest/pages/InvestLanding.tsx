@@ -8,9 +8,11 @@ import { VSpacer } from 'components/VSpacer'
 import { DSOTable } from 'app/pages/invest/components/DSOTable/DSOTable'
 import { PromotedDSOs } from 'app/components/DSO/components/PromotedDSOs'
 import { PromoBanner } from 'app/pages/invest/components/PromoBanner'
+import { useTheme } from '@material-ui/core/styles'
 
 export const InvestLanding = () => {
   const { user } = useAuth()
+  const theme = useTheme()
   const { paths } = useInvestRouter()
 
   useSetPageTitle(`Welcome, ${user?.name ?? ''}`)
@@ -29,6 +31,7 @@ export const InvestLanding = () => {
             variant='outlined'
             size='large'
             disableElevation
+            style={{ color: theme.palette.primary.main }}
           >
             View my commitments
           </Button>
