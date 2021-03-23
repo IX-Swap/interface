@@ -8,6 +8,7 @@ import { OnboardingLinks } from 'app/pages/home/components/OnboardingLinks'
 import { TopIssuers } from 'app/pages/home/components/TopIssuers'
 import { TopCorporates } from 'app/pages/home/components/TopCorporates'
 import { PromoBanner } from 'app/pages/invest/components/PromoBanner'
+import * as useOnboardingJourneys from 'app/components/OnboardingPanel/hooks/useOnboardingJourneys'
 
 jest.mock('app/pages/home/components/AccessReports', () => ({
   AccessReports: jest.fn(() => null)
@@ -46,6 +47,14 @@ describe('Onboarding', () => {
   })
 
   it('renders components correctly', () => {
+    const objResponse = {
+      isIdentitiesLoaded: true
+    }
+
+    jest
+      .spyOn(useOnboardingJourneys, 'useOnboardingJourneys')
+      .mockImplementation(() => objResponse as any)
+
     render(<Onboarding />)
 
     expect(OnboardingLinks).toHaveBeenCalled()
