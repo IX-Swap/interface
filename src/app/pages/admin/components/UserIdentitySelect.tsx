@@ -8,7 +8,7 @@ import {
   Typography
 } from '@material-ui/core'
 import { useStyles } from 'app/pages/admin/components/UserIdentitySelect.styles'
-import { useIdentitiesRouter } from 'app/pages/_identity/router'
+import { useAdminRouter } from 'app/pages/admin/router'
 import { AppRouterLinkComponent } from 'components/AppRouterLink'
 import React, { useState } from 'react'
 import { UserIdentityCreatedStatus } from 'types/user'
@@ -26,7 +26,8 @@ export const UserIdentitySelect = ({
   const hasInvestor = userIdentities.investors
   const hasIssuer = userIdentities.issuers
   const hasIdentity = hasIndividual || hasInvestor || hasIssuer
-  const { paths: identityPaths } = useIdentitiesRouter()
+
+  const { paths: adminPaths } = useAdminRouter()
   const { active, root } = useStyles()
   const [identity, setIdentity] = useState(!hasIdentity ? 'no identity' : '')
 
@@ -36,19 +37,22 @@ export const UserIdentitySelect = ({
 
   const getPath = () => {
     if (identity === 'issuers') {
-      return identityPaths.createIssuer
+      return '/issuers'
     }
     if (identity === 'investors') {
-      return identityPaths.createCorporate
+      return '/investors'
     }
-    return identityPaths.createIndividual
+    if (identity === 'individual') {
+      return adminPaths.createIndividualIdentity
+    }
+    return adminPaths.users
   }
 
   const getDisabled = () => {
     if (
-      (identity === 'issuers' && !hasIssuer) ||
-      (identity === 'investors' && !hasInvestor) ||
-      (identity === 'individual' && !hasIndividual)
+      identity === 'issuers' ||
+      identity === 'investors' ||
+      identity === 'individual'
     ) {
       return false
     }

@@ -21,8 +21,7 @@ export const urlAction = {
   edit: 'edit',
   deposit: 'deposit',
   withdraw: 'withdraw',
-  makeInvestment: 'make-investment',
-  selectIdentity: 'selectIdentity'
+  makeInvestment: 'make-investment'
 }
 
 export const urlModule = {
