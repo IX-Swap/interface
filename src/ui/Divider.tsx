@@ -7,7 +7,9 @@ export interface DividerProps extends BoxProps {
   vertical?: boolean
 }
 
-const DividerComponent = styled((props: DividerProps) => <Box {...props} />)({
+const DividerComponent = styled(({ vertical, ...otherProps }: DividerProps) => (
+  <Box {...otherProps} />
+))({
   width: (props: DividerProps) =>
     props.vertical === true ? props.width ?? 1 : props.width ?? '100%',
   height: (props: DividerProps) =>
