@@ -23,6 +23,7 @@ export const IssuanceRoute = {
     'app',
     'issuance',
     'offerings',
+    'issuerId',
     'dsoId',
     'deployments'
   ]),

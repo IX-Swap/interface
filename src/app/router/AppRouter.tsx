@@ -6,16 +6,16 @@ import { HomeRoot } from 'app/pages/home/HomeRoot'
 import { IssuanceRoot } from 'app/pages/issuance/IssuanceRoot'
 import { SecurityRoot } from 'app/pages/security/SecurityRoot'
 import { NotificationsRoot } from 'app/pages/notifications/NotificationsRoot'
-import { AccountsRouter } from 'app/pages/accounts/router/AccountsRouter'
-import { IdentityRouter } from 'app/pages/_identity/router/IdentityRouter'
-import { InvestRouter } from 'app/pages/invest/router/InvestRouter'
-import { AdminRouter } from 'app/pages/admin/router/AdminRouter'
+import { AccountsRoot } from 'app/pages/accounts/AccountsRoot'
+import { IdentityRoot } from 'app/pages/_identity/IdentityRoot'
+import { InvestRoot } from 'app/pages/invest/InvestRoot'
+import { AdminRoot } from 'app/pages/admin/AdminRoot'
 
 export const AppRouter = () => {
   return (
     <Switch>
       <NewAppRoute breadcrumb='Accounts' path={AppRoute.accounts}>
-        <AccountsRouter />
+        <AccountsRoot />
       </NewAppRoute>
 
       <NewAppRoute path={AppRoute.home}>
@@ -23,19 +23,19 @@ export const AppRouter = () => {
       </NewAppRoute>
 
       <NewAppRoute breadcrumb='Identity' path={AppRoute.identity}>
-        <IdentityRouter />
+        <IdentityRoot />
       </NewAppRoute>
 
-      <NewAppRoute path={AppRoute.issuance}>
+      <NewAppRoute breadcrumb='Issuance' path={AppRoute.issuance}>
         <IssuanceRoot />
       </NewAppRoute>
 
       <NewAppRoute breadcrumb='Invest' path={AppRoute.invest}>
-        <InvestRouter />
+        <InvestRoot />
       </NewAppRoute>
 
       <NewAppRoute breadcrumb='Admin' path={AppRoute.admin}>
-        <AdminRouter />
+        <AdminRoot />
       </NewAppRoute>
 
       <NewAppRoute path={AppRoute.security}>

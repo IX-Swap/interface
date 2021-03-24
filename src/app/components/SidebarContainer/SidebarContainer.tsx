@@ -14,7 +14,7 @@ import { SwipeableDrawer } from '@material-ui/core'
 import { useAppActions, useAppState } from 'app/hooks/useAppState'
 import { useAppBreakpoints } from 'hooks/useAppBreakpoints'
 import { InvestRoute } from 'app/pages/invest/router/config'
-import { useHomeRouter } from 'app/pages/home/router'
+import { HomeRoute } from 'app/pages/home/router/config'
 
 export const SidebarContainer = () => {
   const { isNavDrawerOpened } = useAppState()
@@ -25,13 +25,12 @@ export const SidebarContainer = () => {
   const isAdmin = useIsAdmin()
 
   const { paths: authorizerRoutes } = useAuthorizerRouter()
-  const { paths: homeRoutes } = useHomeRouter()
 
   const isSuperUser = isAuthorizer || isAdmin
   const links = [
     {
       label: 'Home',
-      link: homeRoutes.landing,
+      link: HomeRoute.landing,
       icon: HomeIcon
     },
     {

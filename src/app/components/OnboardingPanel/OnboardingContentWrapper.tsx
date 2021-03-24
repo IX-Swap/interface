@@ -5,10 +5,10 @@ import { useStyles } from 'app/components/OnboardingPanel/OnboardingPanel.styles
 import { useOnboardingPanel } from 'app/components/OnboardingPanel/hooks/useOnboardingPanel'
 import { OnboardingPanel } from 'app/components/OnboardingPanel/OnboardingPanel'
 import { useLocation } from 'react-router-dom'
-import { useHomeRouter } from 'app/pages/home/router'
 import { useOnboardingJourneys } from 'app/components/OnboardingPanel/hooks/useOnboardingJourneys'
 import { IdentityRoute } from 'app/pages/_identity/router/config'
 import { SecurityRoute } from 'app/pages/security/router/config'
+import { HomeRoute } from 'app/pages/home/router/config'
 
 export interface OnboardingContentWrapperProps {
   children: React.ReactNode
@@ -19,7 +19,6 @@ export const OnboardingContentWrapper = ({
 }: OnboardingContentWrapperProps) => {
   const { content, contentShift } = useStyles()
   const { open } = useOnboardingPanel()
-  const { paths: homePaths } = useHomeRouter()
   const { pathname } = useLocation()
   const {
     isIssuerJourneyCompleted,
@@ -29,7 +28,7 @@ export const OnboardingContentWrapper = ({
 
   const onboardingBasePaths = [
     SecurityRoute.landing,
-    homePaths.landing,
+    HomeRoute.landing,
     IdentityRoute.list
   ]
 

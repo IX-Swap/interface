@@ -34,7 +34,7 @@ export const IssuanceLanding = () => {
 
   return (
     <>
-      <PageHeader title={data?.tokenName} />
+      <PageHeader title={data?.tokenName} showBreadcrumbs={false} />
       <Grid
         container
         justify='space-between'

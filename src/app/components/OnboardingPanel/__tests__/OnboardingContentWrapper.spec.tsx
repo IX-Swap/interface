@@ -1,7 +1,6 @@
 import React from 'react'
 import { render, cleanup } from 'test-utils'
 import { OnboardingContentWrapper } from 'app/components/OnboardingPanel/OnboardingContentWrapper'
-import * as useHomeRouter from 'app/pages/home/router'
 import { MemoryRouter } from 'react-router-dom'
 
 describe('ContentWrapper', () => {
@@ -17,11 +16,11 @@ describe('ContentWrapper', () => {
   //   }
   // }
 
-  const homeRouter = {
-    paths: {
-      landing: '/home'
-    }
-  }
+  // const homeRouter = {
+  //   paths: {
+  //     landing: '/home'
+  //   }
+  // }
 
   beforeEach(() => {
     // jest
@@ -30,9 +29,9 @@ describe('ContentWrapper', () => {
     // jest
     //   .spyOn(useSecurityRouter, 'useSecurityRouter')
     //   .mockImplementation(() => securityRouter as any)
-    jest
-      .spyOn(useHomeRouter, 'useHomeRouter')
-      .mockImplementation(() => homeRouter as any)
+    // jest
+    //   .spyOn(useHomeRouter, 'useHomeRouter')
+    //   .mockImplementation(() => homeRouter as any)
   })
 
   afterEach(async () => {

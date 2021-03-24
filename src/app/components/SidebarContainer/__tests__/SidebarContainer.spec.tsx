@@ -11,7 +11,7 @@ import * as useAuthorizerRouterHook from 'app/pages/authorizer/router'
 import { AccountsRoute } from 'app/pages/accounts/router/config'
 import { InvestRoute } from 'app/pages/invest/router/config'
 import { IssuanceRoute } from 'app/pages/issuance/router/config'
-import * as useHomeRouterHook from 'app/pages/home/router'
+import { HomeRoute } from 'app/pages/home/router/config'
 
 jest.mock('assets/icons/navigation/invest.svg', () => ({
   ReactComponent: jest.fn(() => null)
@@ -37,9 +37,6 @@ describe('Sidebar', () => {
     jest.spyOn(useAuthorizerRouterHook, 'useAuthorizerRouter').mockReturnValue({
       paths: useAuthorizerRouterHook.AuthorizerRoute
     } as any)
-    jest
-      .spyOn(useHomeRouterHook, 'useHomeRouter')
-      .mockReturnValue({ paths: useHomeRouterHook.HomeRoute } as any)
   })
 
   afterEach(async () => {
@@ -62,7 +59,7 @@ describe('Sidebar', () => {
       1,
       {
         label: 'Home',
-        link: useHomeRouterHook.HomeRoute.landing,
+        link: HomeRoute.landing,
         icon: expect.anything()
       },
       {}
@@ -96,7 +93,7 @@ describe('Sidebar', () => {
       1,
       {
         label: 'Home',
-        link: useHomeRouterHook.HomeRoute.landing,
+        link: HomeRoute.landing,
         icon: expect.anything()
       },
       {}
@@ -140,7 +137,7 @@ describe('Sidebar', () => {
       1,
       {
         label: 'Home',
-        link: useHomeRouterHook.HomeRoute.landing,
+        link: HomeRoute.landing,
         icon: expect.anything()
       },
       {}
