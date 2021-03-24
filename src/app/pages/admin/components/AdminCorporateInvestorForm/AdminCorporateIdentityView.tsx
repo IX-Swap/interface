@@ -21,6 +21,7 @@ export const AdminCorporateIdentityView = ({
   const {
     params: { userId }
   } = useAdminRouter()
+
   const { data, isLoading } = useAllCorporatesByUserId({
     userId,
     type: isCorporateIssuerForm ? 'issuer' : 'investor'
