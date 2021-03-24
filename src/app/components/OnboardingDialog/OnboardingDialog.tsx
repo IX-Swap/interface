@@ -27,7 +27,7 @@ export const EmptyBackDrop = () => <></>
 export const OnboardingDialog = (onboardingDialog: OnboardingDialogProps) => {
   const { open: panelOpened } = useOnboardingPanel()
   const [opened, setOpened] = useState(true)
-  const { scrollPaper, paper, paperShift, root } = useStyles()
+  const { scrollPaper, paper, paperShift, root, button } = useStyles()
 
   const handleClose = () => {
     setOpened(false)
@@ -53,7 +53,7 @@ export const OnboardingDialog = (onboardingDialog: OnboardingDialogProps) => {
         </DialogContent>
         <DialogActions onClick={handleClose}>
           {onboardingDialog.closeLabel !== undefined ? (
-            <Button color='primary'>
+            <Button className={button}>
               {onboardingDialog.closeLabel}{' '}
               {onboardingDialog.closeArrow !== undefined &&
                 onboardingDialog.closeArrow && (
@@ -66,7 +66,7 @@ export const OnboardingDialog = (onboardingDialog: OnboardingDialogProps) => {
             <Button
               component={AppRouterLinkComponent}
               to={onboardingDialog.action}
-              color='primary'
+              className={button}
             >
               {onboardingDialog.actionLabel}{' '}
               <ArrowRightAltIcon style={{ marginLeft: 7 }} />

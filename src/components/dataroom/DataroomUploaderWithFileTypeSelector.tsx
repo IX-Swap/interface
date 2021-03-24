@@ -29,7 +29,7 @@ export const DataroomUploaderWithFileTypeSelector = (
           setFileType(event.target.value as DataroomDocumentType)
         }
       />
-
+      <Box mx={1} />
       <DataroomUploadAndAppend
         multiple
         label='Uploader'
