@@ -8,10 +8,12 @@ import { LegalEntityStatusSelect } from 'components/form/LegalEntityStatusSelect
 import { CountrySelect } from 'components/form/CountrySelect'
 import { FormSectionHeader } from 'app/pages/_identity/components/FormSectionHeader'
 import { privateClassNames } from 'helpers/classnames'
+import { useAppBreakpoints } from 'hooks/useAppBreakpoints'
 
 export const InformationFields = () => {
   const { control, watch } = useFormContext()
   const legalEntityStatus = watch('legalEntityStatus')
+  const { isMobile, isTablet } = useAppBreakpoints()
 
   useEffect(() => {
     if (legalEntityStatus !== 'others') {
@@ -22,8 +24,8 @@ export const InformationFields = () => {
   return (
     <>
       <FormSectionHeader title='Corporate Information' />
-      <Grid container direction={'row'} alignItems={'flex-start'} spacing={6}>
-        <Grid item xs={12} md={'auto'}>
+      <Grid container direction={'row'} alignItems={'flex-start'}>
+        <Grid item style={{ paddingRight: 24 }}>
           {/* @ts-ignore */}
           <TypedField
             customRenderer
@@ -43,7 +45,9 @@ export const InformationFields = () => {
           spacing={3}
           className={privateClassNames()}
           md={8}
-          style={{ paddingTop: 74 }}
+          sm={12}
+          xs={12}
+          style={{ paddingTop: !isMobile && !isTablet ? 48 : 24 }}
         >
           <Grid item xs={12} sm={6} md={6}>
             <TypedField
