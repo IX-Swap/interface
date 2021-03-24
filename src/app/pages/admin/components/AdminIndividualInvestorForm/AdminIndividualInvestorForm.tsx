@@ -1,18 +1,18 @@
 import React, { memo } from 'react'
 import { FormStepper } from 'app/components/FormStepper/FormStepper'
-import { useCreateIndividualAsAdmin } from 'app/pages/admin/hooks/useCreateIndividualAsAdmin'
+import { useCreateIndividualByUserId } from 'app/pages/admin/hooks/useCreateIndividualByUserId'
 import { useSubmitIndividual } from 'app/pages/_identity/hooks/useSubmitIndividual'
-import { individualInvestorFormSteps } from 'app/pages/_identity/components/IndividualInvestorForm/steps'
 import { getIdentityDefaultActiveStep } from 'app/pages/_identity/utils/shared'
 import { useAdminRouter } from 'app/pages/admin/router'
 import { useIndividualIdentityById } from 'app/pages/admin/hooks/useIndividualIdentityById'
+import { adminIndividualInvestorFormSteps } from 'app/pages/admin/components/AdminIndividualInvestorForm/steps'
 
 export const AdminIndividualInvestorForm = memo(() => {
   const {
     params: { userId }
   } = useAdminRouter()
   const { data, isLoading, isError } = useIndividualIdentityById(userId)
-  const mutation = useCreateIndividualAsAdmin(userId)
+  const mutation = useCreateIndividualByUserId(userId)
   const submitMutation = useSubmitIndividual()
 
   if (isLoading) {
@@ -25,7 +25,7 @@ export const AdminIndividualInvestorForm = memo(() => {
 
   const defaultActiveStep = getIdentityDefaultActiveStep({
     isSubmitted: data?.status === 'Submitted',
-    lastStepIndex: individualInvestorFormSteps.length - 1,
+    lastStepIndex: adminIndividualInvestorFormSteps.length - 1,
     isJourneyCompleted: false
   })
 
@@ -36,7 +36,8 @@ export const AdminIndividualInvestorForm = memo(() => {
       editMutation={mutation}
       submitMutation={submitMutation}
       defaultActiveStep={defaultActiveStep}
-      steps={individualInvestorFormSteps}
+      steps={adminIndividualInvestorFormSteps}
+      shouldSaveOnMove
     />
   )
 })

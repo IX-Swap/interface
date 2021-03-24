@@ -3,7 +3,7 @@ import { useMutation } from 'react-query'
 import { IndividualIdentity } from 'types/identity'
 import { identityURL } from 'config/apiURL'
 
-export const useCreateIndividualAsAdmin = (userId: string) => {
+export const useCreateIndividualByUserId = (userId: string) => {
   const { snackbarService, apiService } = useServices()
   const uri = identityURL.individuals.create(userId)
 
