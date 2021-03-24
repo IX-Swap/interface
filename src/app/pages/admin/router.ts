@@ -6,13 +6,15 @@ import { ViewUser } from 'app/pages/admin/pages/ViewUser'
 import { AccessReports } from 'app/pages/admin/pages/AccessReports'
 import { CreateIndividualAsAdmin } from 'app/pages/admin/pages/CreateIndividualAsAdmin'
 import { CreateCorporateAsAdmin } from 'app/pages/admin/pages/CreateCorporateAsAdmin'
+import { CreateIssuerAsAdmin } from 'app/pages/admin/pages/CreateIssuerAsAdmin'
 
 export const AdminRoute = {
   users: makeURL(['app', 'admin']),
   view: makeURL(['app', 'admin', 'users', 'userId', 'view']),
   accessReports: makeURL(['app', 'admin', 'accessReports']),
   createIndividualIdentity: '/app/admin/users/:userId/createIndividual',
-  createCorporateIdentity: '/app/admin/users/:userId/createCorporate'
+  createCorporateIdentity: '/app/admin/users/:userId/createCorporate',
+  createIssuerIdentity: '/app/admin/users/:userId/createIssuer'
 }
 
 export const adminRoutes: InternalRouteProps[] = [
@@ -41,6 +43,11 @@ export const adminRoutes: InternalRouteProps[] = [
     label: 'Create Investor Identity',
     path: AdminRoute.createCorporateIdentity,
     component: CreateCorporateAsAdmin
+  },
+  {
+    label: 'Create Issuer Identity',
+    path: AdminRoute.createIssuerIdentity,
+    component: CreateIssuerAsAdmin
   }
 ]
 

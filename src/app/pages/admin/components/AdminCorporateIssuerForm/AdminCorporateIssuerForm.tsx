@@ -1,30 +1,28 @@
 import React from 'react'
 import { FormStepper } from 'app/components/FormStepper/FormStepper'
 import { getIdentityDefaultActiveStep } from 'app/pages/_identity/utils/shared'
-import { useAdminRouter } from 'app/pages/admin/router'
+import { adminCorporateIssuerFormSteps } from 'app/pages/admin/components/AdminCorporateIssuerForm/steps'
 import { useAllCorporatesByUserId } from 'app/pages/admin/hooks/useAllCorporatesByUserId'
+import { useAdminRouter } from 'app/pages/admin/router'
 import { useCreateCorporateByUserId } from 'app/pages/admin/hooks/useCreateCorporateByUserId'
 import { useUpdateCorporateByUserId } from 'app/pages/admin/hooks/useUpdateCorporateByUserId'
-import { adminCorporateInvestorFormSteps } from 'app/pages/admin/components/AdminCorporateInvestorForm/steps'
 import { useSubmitCorporateById } from 'app/pages/admin/hooks/useSubmitCorporateById'
 
-export const AdminCorporateInvestorForm = () => {
+export const AdminCorporateIssuerForm = () => {
   const {
     params: { userId }
   } = useAdminRouter()
-
   const { data, isLoading } = useAllCorporatesByUserId({
     userId,
-    type: 'investor'
+    type: 'issuer'
   })
+  const identity = data?.list[0]
 
-  const identity = data.list[0]
-
-  const createMutation = useCreateCorporateByUserId(userId, 'investor')
+  const createMutation = useCreateCorporateByUserId(userId, 'issuer')
   const updateMutation = useUpdateCorporateByUserId(
     userId,
     identity?._id,
-    'investor'
+    'issuer'
   )
   const submitMutation = useSubmitCorporateById(userId, identity?._id)
 
@@ -34,8 +32,8 @@ export const AdminCorporateInvestorForm = () => {
 
   const defaultActiveStep = getIdentityDefaultActiveStep({
     isSubmitted: identity?.status === 'Submitted',
-    lastStepIndex: adminCorporateInvestorFormSteps.length - 1,
-    isJourneyCompleted: true
+    lastStepIndex: adminCorporateIssuerFormSteps.length - 1,
+    isJourneyCompleted: false
   })
 
   return (
@@ -44,8 +42,8 @@ export const AdminCorporateInvestorForm = () => {
       createMutation={createMutation}
       editMutation={updateMutation}
       submitMutation={submitMutation}
-      steps={adminCorporateInvestorFormSteps}
       defaultActiveStep={defaultActiveStep}
+      steps={adminCorporateIssuerFormSteps}
     />
   )
 }

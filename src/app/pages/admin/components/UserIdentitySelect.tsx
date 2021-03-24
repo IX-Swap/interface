@@ -37,7 +37,7 @@ export const UserIdentitySelect = ({
 
   const getPath = () => {
     if (identity === 'issuers') {
-      return '/issuers'
+      return adminPaths.createIssuerIdentity
     }
     if (identity === 'investors') {
       return adminPaths.createCorporateIdentity
@@ -53,6 +53,10 @@ export const UserIdentitySelect = ({
   const individualActive = identity === 'individual'
 
   const getDisabled = () => {
+    if ((issuerActive && hasInvestor) || (investorActive && hasIssuer)) {
+      return true
+    }
+
     if (issuerActive || investorActive || individualActive) {
       return false
     }

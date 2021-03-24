@@ -1,16 +1,16 @@
-import React from 'react'
 import { Grid } from '@material-ui/core'
+import { AdminCorporateIssuerForm } from 'app/pages/admin/components/AdminCorporateIssuerForm/AdminCorporateIssuerForm'
 import { VSpacer } from 'components/VSpacer'
-import { AdminCorporateInvestorForm } from 'app/pages/admin/components/AdminCorporateInvestorForm/AdminCorporateInvestorForm'
+import React from 'react'
 
-export const CreateCorporateAsAdmin = () => {
+export const CreateIssuerAsAdmin = () => {
   return (
     <Grid container direction='column'>
       <Grid container item>
         <VSpacer size='medium' />
       </Grid>
       <Grid item>
-        <AdminCorporateInvestorForm />
+        <AdminCorporateIssuerForm />
       </Grid>
     </Grid>
   )

@@ -5,11 +5,11 @@ import { AdminIndividualInvestorForm } from 'app/pages/admin/components/AdminInd
 
 export const CreateIndividualAsAdmin: React.FC = () => {
   return (
-    <Grid container>
-      <Grid container item xs={12}>
+    <Grid container direction='column'>
+      <Grid container item>
         <VSpacer size='medium' />
       </Grid>
-      <Grid item xs={12}>
+      <Grid item>
         <AdminIndividualInvestorForm />
       </Grid>
     </Grid>
