@@ -9,10 +9,10 @@ import { getTimeUnitsToDisplay, getEndDate } from 'helpers/countdownTimer'
 
 export const CountdownTimer = () => {
   const {
-    params: { dsoId }
+    params: { dsoId, issuerId }
   } = useIssuanceRouter()
 
-  const { data } = useDSOById(dsoId)
+  const { data } = useDSOById(dsoId, issuerId)
   const { units } = useCountdown(getEndDate(data))
 
   const unitsToDisplay = getTimeUnitsToDisplay(units)

@@ -1,6 +1,6 @@
 import { useServices } from 'hooks/useServices'
 import { useAuth } from 'hooks/auth/useAuth'
-import { DigitalSecurityOffering, DSORequestArgs } from 'types/dso'
+import { DigitalSecurityOffering } from 'types/dso'
 import { queryCache, useMutation } from 'react-query'
 import { useIssuanceRouter } from 'app/pages/issuance/router'
 import { investQueryKeys } from 'config/queryKeys'
@@ -12,9 +12,8 @@ export const useSubmitDSO = (dsoId: string) => {
   const { params, replace } = useIssuanceRouter()
   const { user } = useAuth()
   const url = issuanceURL.dso.submit(getIdFromObj(user), dsoId)
-  const submitDSO = async (args: DSORequestArgs) => {
-    const { network, ...rest } = args
-    return await apiService.patch<DigitalSecurityOffering>(url, rest)
+  const submitDSO = async () => {
+    return await apiService.patch<DigitalSecurityOffering>(url, {})
   }
 
   return useMutation(submitDSO, {

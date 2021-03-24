@@ -6,7 +6,7 @@ import { useQueryFilter } from '../useQueryFilter'
 
 describe('useQueryFilter', () => {
   beforeEach(() => {
-    history.replace('/')
+    history.replace('/', { search: '' })
   })
 
   afterEach(async () => {

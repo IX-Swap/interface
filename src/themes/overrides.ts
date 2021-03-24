@@ -193,6 +193,7 @@ export const getThemeOverrides = (theme: Theme): Overrides => ({
   MuiTabs: {
     flexContainer: {
       display: 'inline-flex',
+      width: '100%',
       borderBottom: `1px solid ${theme.palette.divider}`
     },
     indicator: {
@@ -211,6 +212,26 @@ export const getThemeOverrides = (theme: Theme): Overrides => ({
       backgroundColor: tinycolor(theme.palette.backgrounds.secondary)
         .darken(3)
         .toHex8String()
+    }
+  },
+  MuiSlider: {
+    root: {
+      padding: '18px 0'
+    },
+    rail: {
+      height: 5,
+      borderRadius: 5
+    },
+    track: {
+      height: 5,
+      borderRadius: 5
+    },
+    thumb: {
+      height: 14,
+      width: 14,
+      '&.Mui-disabled': {
+        marginTop: -2
+      }
     }
   }
 })

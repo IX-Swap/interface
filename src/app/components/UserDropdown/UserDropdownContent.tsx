@@ -1,6 +1,6 @@
 import React, { Fragment } from 'react'
 import { UserDropdownItem } from 'app/components/UserDropdown/UserDropdownItem'
-import { IdentityRoute } from 'app/pages/identity/router'
+import { IdentityRoute } from 'app/pages/_identity/router'
 import { SecurityRoute } from 'app/pages/security/router'
 import { AdminRoute } from 'app/pages/admin/router'
 import { DropdownContentProps } from 'app/components/Dropdown/Dropdown'

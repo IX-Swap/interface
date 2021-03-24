@@ -3,8 +3,7 @@ import { Grid, Typography } from '@material-ui/core'
 import { Section } from 'app/pages/identity/components/Section'
 import { ViewButton } from 'app/pages/identity/components/ViewButton'
 import { useIndividualIdentity } from 'hooks/identity/useIndividualIdentity'
-import { useIdentitiesRouter } from 'app/pages/identity/router'
-import { NoIdentity } from 'app/pages/identity/components/NoIdentity'
+import { useIdentitiesRouter } from 'app/pages/_identity/router'
 import { IndividualInfoView } from 'app/pages/identity/components/IndividualInfoView'
 import { VSpacer } from 'components/VSpacer'
 
@@ -17,9 +16,7 @@ export const IndividualPreview: React.FC = () => {
   }
 
   if (data === undefined) {
-    return (
-      <NoIdentity text='Create Individual Identity' link='createIndividual' />
-    )
+    return null
   }
 
   const name = `${data.firstName} ${data.lastName}`
@@ -36,7 +33,10 @@ export const IndividualPreview: React.FC = () => {
         <Section
           title={name}
           actions={
-            <ViewButton link={paths.individual} params={{ label: name }} />
+            <ViewButton
+              link={paths.individual}
+              params={{ label: name, identityId: data._id }}
+            />
           }
         >
           <IndividualInfoView data={data} />

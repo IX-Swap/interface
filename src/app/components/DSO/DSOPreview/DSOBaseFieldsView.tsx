@@ -17,21 +17,21 @@ export const DSOBaseFieldsView = ({ dso }: DSOBaseFieldsViewProps) => {
       </Grid>
 
       <Grid item>
-        <DSOLogo dsoId={dso._id} size={128} variant='square' />
+        <DSOLogo dsoId={dso?._id} size={128} variant='square' />
       </Grid>
 
       <Grid item>
         <Grid container spacing={3}>
           <Grid item xs={12} md={4}>
-            <LabelledValue label='Token Name' value={dso.tokenName} />
+            <LabelledValue label='Token Name' value={dso?.tokenName} />
           </Grid>
           <Grid item xs={12} md={4}>
-            <LabelledValue label='Symbol' value={dso.tokenSymbol} />
+            <LabelledValue label='Symbol' value={dso?.tokenSymbol} />
           </Grid>
           <Grid item xs={12} md={4}>
             <LabelledValue
               label='Corporate'
-              value={dso.corporate.companyLegalName}
+              value={dso?.corporate?.companyLegalName}
             />
           </Grid>
         </Grid>
@@ -40,16 +40,16 @@ export const DSOBaseFieldsView = ({ dso }: DSOBaseFieldsViewProps) => {
       <Grid item>
         <Grid container spacing={3}>
           <Grid item xs={12} md={4}>
-            <LabelledValue label='Network' value={dso.network?.name} />
+            <LabelledValue label='Network' value={dso?.network?.name} />
           </Grid>
           <Grid item xs={12} md={4}>
             <LabelledValue
               label='Capital Structure'
-              value={dso.capitalStructure}
+              value={dso?.capitalStructure}
             />
           </Grid>
           <Grid item xs={12} md={4}>
-            <LabelledValue label='Decimal' value={dso.decimalPlaces} />
+            <LabelledValue label='Decimal' value={dso?.decimalPlaces} />
           </Grid>
         </Grid>
       </Grid>
@@ -57,13 +57,16 @@ export const DSOBaseFieldsView = ({ dso }: DSOBaseFieldsViewProps) => {
       <Grid item>
         <Grid container spacing={3}>
           <Grid item xs={12} md={4}>
-            <LabelledValue label='Currency' value={dso.currency.symbol} />
+            <LabelledValue label='Currency' value={dso?.currency?.symbol} />
           </Grid>
           <Grid item xs={12} md={4}>
-            <LabelledValue label='Launch Date' value={dso.launchDate} />
+            <LabelledValue label='Launch Date' value={dso?.launchDate} />
           </Grid>
           <Grid item xs={12} md={4}>
-            <LabelledValue label='Completion Date' value={dso.completionDate} />
+            <LabelledValue
+              label='Completion Date'
+              value={dso?.completionDate}
+            />
           </Grid>
         </Grid>
       </Grid>

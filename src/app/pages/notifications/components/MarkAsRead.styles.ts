@@ -4,7 +4,8 @@ export const useStyles = makeStyles(theme => ({
   container: {
     width: 10,
     height: 10,
-    background: '#e3e3e3',
+    background: (isUnread: boolean) =>
+      isUnread ? theme.palette.backgrounds.tertiary : 'transparent',
     minWidth: 0,
     padding: 0
   }

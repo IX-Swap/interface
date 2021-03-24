@@ -4,23 +4,16 @@ import { AppRouterLink } from 'components/AppRouterLink'
 import { useIssuanceRouter } from 'app/pages/issuance/router'
 import { VSpacer } from 'components/VSpacer'
 import { useStyles } from './MoreOptions.styles'
-import { useDSOById } from 'app/pages/invest/hooks/useDSOById'
 
 export const MoreOptions = () => {
   const { link } = useStyles()
   const { paths } = useIssuanceRouter()
 
   const {
-    params: { dsoId }
+    params: { dsoId, issuerId }
   } = useIssuanceRouter()
 
-  const { data } = useDSOById(dsoId)
-
-  if (data === undefined) {
-    return null
-  }
-
-  if (typeof dsoId === 'undefined') {
+  if (dsoId === undefined || issuerId === undefined) {
     return null
   }
 
@@ -33,7 +26,8 @@ export const MoreOptions = () => {
         <AppRouterLink
           to={paths.view}
           params={{
-            dsoId: dsoId
+            dsoId,
+            issuerId
           }}
           color='primary'
           underline='hover'
@@ -66,7 +60,8 @@ export const MoreOptions = () => {
         <AppRouterLink
           to={paths.edit}
           params={{
-            dsoId: dsoId
+            dsoId,
+            issuerId
           }}
           color='primary'
           underline='hover'

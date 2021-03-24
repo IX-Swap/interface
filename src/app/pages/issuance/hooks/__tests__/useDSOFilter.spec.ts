@@ -19,7 +19,7 @@ describe('useDSOFilter', () => {
       .spyOn(useDSOsByUserIdHook, 'useDSOsByUserId')
       .mockReturnValue(generateInfiniteQueryResult({ isLoading: true }))
     jest.spyOn(useIssuanceRouterHook, 'useIssuanceRouter').mockReturnValue({
-      params: { dsoId: dso._id },
+      params: { dsoId: dso._id, issuerId: dso.user },
       replace
     } as any)
 
@@ -29,7 +29,7 @@ describe('useDSOFilter', () => {
       await waitFor(
         () => {
           expect(result.current.isLoading).toBe(true)
-          expect(result.current.selected).toBe(dso._id)
+          expect(result.current.selected).toBe(`${dso._id}:${dso.user}`)
         },
         { timeout: 1000 }
       )
@@ -41,7 +41,7 @@ describe('useDSOFilter', () => {
       .spyOn(useDSOsByUserIdHook, 'useDSOsByUserId')
       .mockReturnValue(generateInfiniteQueryResult({ list: [dso] }))
     jest.spyOn(useIssuanceRouterHook, 'useIssuanceRouter').mockReturnValue({
-      params: { dsoId: dso._id },
+      params: { dsoId: dso._id, issuerId: dso.user },
       replace
     } as any)
 
@@ -51,7 +51,7 @@ describe('useDSOFilter', () => {
       await waitFor(
         () => {
           expect(result.current.status).toBe('success')
-          expect(result.current.selected).toBe(dso._id)
+          expect(result.current.selected).toBe(`${dso._id}:${dso.user}`)
         },
         { timeout: 1000 }
       )

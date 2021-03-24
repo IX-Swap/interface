@@ -4,9 +4,7 @@ import {
   DeclarationView,
   DeclarationViewProps
 } from 'app/pages/identity/components/DeclarationView'
-import { DeclarationItem } from 'app/pages/identity/components/DeclarationItem'
 import { individual } from '__fixtures__/identity'
-import { formatDeclarations } from 'app/pages/identity/utils'
 
 jest.mock('app/pages/identity/components/DeclarationItem', () => ({
   DeclarationItem: jest.fn(() => null)
@@ -25,13 +23,5 @@ describe('DeclarationView', () => {
 
   it('renders without error', () => {
     render(<DeclarationView {...props} />)
-  })
-
-  it('renders DeclarationItem with correct props', () => {
-    render(<DeclarationView {...props} />)
-
-    expect(DeclarationItem).toHaveBeenCalledTimes(
-      Object.entries(formatDeclarations(props.type, props.data)).length
-    )
   })
 })

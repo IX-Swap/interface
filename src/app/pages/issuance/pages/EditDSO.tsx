@@ -4,8 +4,8 @@ import { DSO } from 'app/pages/issuance/components/DSO'
 
 export const EditDSO = () => {
   const {
-    params: { dsoId }
+    params: { dsoId, issuerId }
   } = useIssuanceRouter()
 
-  return <DSO dsoId={dsoId} isEditing />
+  return <DSO dsoId={dsoId} issuerId={issuerId} isEditing />
 }

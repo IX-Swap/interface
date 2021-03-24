@@ -1,6 +1,6 @@
 import * as yup from 'yup'
 import { passwordValidator } from 'validation/validators'
-import { PersonalProfile } from 'types/identity'
+import { PersonalProfile, Personnel, TaxResidency } from 'types/identity'
 import { DataroomFile, FormArrayElement } from 'types/dataroomFile'
 import { Maybe } from 'types/util'
 import { AddressValues } from 'app/pages/accounts/types'
@@ -62,3 +62,30 @@ export const personalProfileSchema = yup.object().shape<PersonalProfile>({
 export const personalProfileArraySchema = yup
   .array<PersonalProfile>()
   .of(personalProfileSchema.required('Required'))
+
+export const personnelProfileSchema = yup.object().shape<Personnel>({
+  fullName: yup.string().required('Required'),
+  designation: yup.string().required('Required'),
+  email: emailSchema.required('Required'),
+  contactNumber: yup.string().required('Required'),
+  documents: yup.mixed<DataroomFile[], object>().required('Required'),
+  address: addressSchema.required('Required'),
+  percentageShareholding: yup.number().required('Required')
+})
+
+export const personnelArraySchema = yup
+  .array<Personnel>()
+  .of(personnelProfileSchema.required('Required'))
+
+export const taxResidenciesSchema = yup.object().shape<TaxResidency>({
+  residentOfSingapore: yup.boolean(),
+  countryOfResidence: yup.string().required('Required'),
+  taxIdentificationNumber: yup.string().required('Required'),
+  taxIdAvailable: yup.boolean(),
+  reason: yup.string().oneOf(['A', 'B', 'C']).required('Required'),
+  customReason: yup.string()
+})
+
+export const taxResidenciesArraySchema = yup
+  .array<TaxResidency>()
+  .of(taxResidenciesSchema.required('Required'))

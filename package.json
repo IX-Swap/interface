@@ -14,6 +14,7 @@
     "@material-ui/lab": "^4.0.0-alpha.46",
     "@material-ui/pickers": "^3.2.10",
     "@material-ui/styles": "^4.10.0",
+    "material-ui-phone-number": "^2.2.6",
     "@sentry/react": "^5.26.0",
     "@sentry/tracing": "^5.26.0",
     "@types/react-otp-input": "^2.0.0",
@@ -53,7 +54,8 @@
     "typescript": "^3.9.7",
     "uno-material-ui": "^2.0.4",
     "use-debounce": "^5.2.0",
-    "yup": "^0.28.3"
+    "yup": "^0.28.3",
+    "yup-phone": "^1.2.19"
   },
   "devDependencies": {
     "@babel/cli": "^7.8.4",
@@ -69,6 +71,12 @@
     "@babel/preset-react": "^7.9.4",
     "@babel/preset-typescript": "^7.10.1",
     "@fullstory/babel-plugin-annotate-react": "^2.0.1",
+    "@storybook/addon-actions": "^6.1.17",
+    "@storybook/addon-essentials": "^6.1.17",
+    "@storybook/addon-links": "^6.1.17",
+    "@storybook/node-logger": "^6.1.17",
+    "@storybook/preset-create-react-app": "^3.1.5",
+    "@storybook/react": "^6.1.17",
     "@testing-library/jest-dom": "^5.11.2",
     "@testing-library/react": "^10.4.8",
     "@testing-library/react-hooks": "^3.4.1",
@@ -112,11 +120,13 @@
     "start": "react-app-rewired start",
     "build": "react-app-rewired build",
     "test:watch": "react-scripts test --env=jest-environment-jsdom-sixteen --runInBand",
-    "test": "CI=true react-scripts test --env=jest-environment-jsdom-sixteen --silent --runInBand",
+    "test": "CI=true react-scripts test --env=jest-environment-jsdom-sixteen --colors --silent --runInBand",
     "test:ci": "CI=true react-scripts test --env=jest-environment-jsdom-sixteen --silent --coverage --testResultsProcessor jest-sonar-reporter --maxWorkers=75%",
     "eject": "react-scripts eject",
     "lint": "eslint --cache --fix \"src/**/*.{ts,tsx}\"",
-    "format": "prettier --write \"src/**/*.tsx\""
+    "format": "prettier --write \"src/**/*.tsx\"",
+    "storybook": "start-storybook -p 6006 -s public",
+    "build-storybook": "build-storybook -s public"
   },
   "jest": {
     "collectCoverageFrom": [
