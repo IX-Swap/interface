@@ -5,11 +5,16 @@ import { OnboardingPanel } from 'app/components/OnboardingPanel/OnboardingPanel'
 import * as useIdentitiesRouter from 'app/pages/_identity/router'
 import * as useSecurityRouter from 'app/pages/security/router'
 import * as useHomeRouter from 'app/pages/home/router'
+import { LoadingFullScreen } from 'auth/components/LoadingFullScreen'
 import { MemoryRouter } from 'react-router-dom'
 import * as useOnboardingJourneys from 'app/components/OnboardingPanel/hooks/useOnboardingJourneys'
 
 jest.mock('app/components/OnboardingPanel/OnboardingPanel', () => ({
   OnboardingPanel: jest.fn(() => null)
+}))
+
+jest.mock('auth/components/LoadingFullScreen', () => ({
+  LoadingFullScreen: jest.fn(() => null)
 }))
 
 describe('ContentWrapper', () => {
@@ -63,7 +68,8 @@ describe('ContentWrapper', () => {
     const objResponse = {
       isIssuerJourneyCompleted: false,
       isInvestorJourneyCompleted: false,
-      isIndividualJourneyCompleted: false
+      isIndividualJourneyCompleted: false,
+      isIdentitiesLoaded: true
     }
     jest
       .spyOn(useOnboardingJourneys, 'useOnboardingJourneys')
@@ -84,7 +90,8 @@ describe('ContentWrapper', () => {
     const objResponse = {
       isIssuerJourneyCompleted: false,
       isInvestorJourneyCompleted: false,
-      isIndividualJourneyCompleted: true
+      isIndividualJourneyCompleted: true,
+      isIdentitiesLoaded: true
     }
     jest
       .spyOn(useOnboardingJourneys, 'useOnboardingJourneys')
@@ -106,7 +113,8 @@ describe('ContentWrapper', () => {
       isIssuerJourneyCompleted: false,
       isInvestorJourneyCompleted: true,
       isIndividualJourneyCompleted: false,
-      isIssuerJourneyStarted: false
+      isIssuerJourneyStarted: false,
+      isIdentitiesLoaded: true
     }
     jest
       .spyOn(useOnboardingJourneys, 'useOnboardingJourneys')
@@ -128,7 +136,8 @@ describe('ContentWrapper', () => {
       isIssuerJourneyCompleted: true,
       isInvestorJourneyCompleted: false,
       isIndividualJourneyCompleted: false,
-      isInvestorJourneyStarted: false
+      isInvestorJourneyStarted: false,
+      isIdentitiesLoaded: true
     }
     jest
       .spyOn(useOnboardingJourneys, 'useOnboardingJourneys')
@@ -150,7 +159,8 @@ describe('ContentWrapper', () => {
       isIssuerJourneyCompleted: true,
       isInvestorJourneyCompleted: false,
       isIndividualJourneyCompleted: false,
-      isInvestorJourneyStarted: true
+      isInvestorJourneyStarted: true,
+      isIdentitiesLoaded: true
     }
     jest
       .spyOn(useOnboardingJourneys, 'useOnboardingJourneys')
@@ -172,7 +182,8 @@ describe('ContentWrapper', () => {
       isIssuerJourneyCompleted: false,
       isInvestorJourneyCompleted: true,
       isIndividualJourneyCompleted: false,
-      isIssuerJourneyStarted: true
+      isIssuerJourneyStarted: true,
+      isIdentitiesLoaded: true
     }
     jest
       .spyOn(useOnboardingJourneys, 'useOnboardingJourneys')
@@ -191,7 +202,8 @@ describe('ContentWrapper', () => {
 
   it('renders wrapper if user started individual investor onboarding journey', () => {
     const objResponse = {
-      isIndividualJourneyStarted: true
+      isIndividualJourneyStarted: true,
+      isIdentitiesLoaded: true
     }
     jest
       .spyOn(useOnboardingJourneys, 'useOnboardingJourneys')
@@ -212,7 +224,8 @@ describe('ContentWrapper', () => {
     const objResponse = {
       isIndividualJourneyStarted: true,
       isInvestorJourneyStarted: true,
-      isIssuerJourneyStarted: true
+      isIssuerJourneyStarted: true,
+      isIdentitiesLoaded: true
     }
     jest
       .spyOn(useOnboardingJourneys, 'useOnboardingJourneys')
@@ -232,7 +245,8 @@ describe('ContentWrapper', () => {
   it('renders wrapper if user started individual and corporate investor onboarding journeys', () => {
     const objResponse = {
       isIndividualJourneyStarted: true,
-      isInvestorJourneyStarted: true
+      isInvestorJourneyStarted: true,
+      isIdentitiesLoaded: true
     }
     jest
       .spyOn(useOnboardingJourneys, 'useOnboardingJourneys')
@@ -252,7 +266,8 @@ describe('ContentWrapper', () => {
   it('renders wrapper if user started individual investor and issuer onboarding journeys', () => {
     const objResponse = {
       isIndividualJourneyStarted: true,
-      isIssuerJourneyStarted: true
+      isIssuerJourneyStarted: true,
+      isIdentitiesLoaded: true
     }
     jest
       .spyOn(useOnboardingJourneys, 'useOnboardingJourneys')
@@ -272,7 +287,8 @@ describe('ContentWrapper', () => {
   it('renders wrapper if user started corporate investor and issuer onboarding journeys', () => {
     const objResponse = {
       isInvestorJourneyStarted: true,
-      isIssuerJourneyStarted: true
+      isIssuerJourneyStarted: true,
+      isIdentitiesLoaded: true
     }
     jest
       .spyOn(useOnboardingJourneys, 'useOnboardingJourneys')
@@ -287,5 +303,25 @@ describe('ContentWrapper', () => {
     )
 
     expect(OnboardingPanel).toHaveBeenCalled()
+  })
+
+  it('renders only progress bar if identities not loaded', () => {
+    const objResponse = {
+      isIdentitiesLoaded: false
+    }
+    jest
+      .spyOn(useOnboardingJourneys, 'useOnboardingJourneys')
+      .mockImplementation(() => objResponse as any)
+
+    render(
+      <MemoryRouter initialEntries={['/home']}>
+        <OnboardingContentWrapper>
+          <div />
+        </OnboardingContentWrapper>
+      </MemoryRouter>
+    )
+
+    expect(LoadingFullScreen).toHaveBeenCalled()
+    expect(OnboardingPanel).not.toHaveBeenCalled()
   })
 })
