@@ -10,7 +10,7 @@ export const darkTheme: ThemeOptions = {
       dark: tinycolor('#7F89E5').darken(10).toHexString()
     },
     secondary: {
-      main: '#0c469c'
+      main: '#ffffff'
     },
     background: {
       default: '#121212',
