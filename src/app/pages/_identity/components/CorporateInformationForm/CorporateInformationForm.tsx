@@ -6,7 +6,7 @@ import { AuthorizedPersonnelFields } from 'app/pages/_identity/components/Corpor
 
 export const CorporateInformationForm = () => {
   return (
-    <Grid container spacing={6} direction='column'>
+    <Grid container spacing={8} direction='column'>
       <Grid item>
         <InformationFields />
       </Grid>
