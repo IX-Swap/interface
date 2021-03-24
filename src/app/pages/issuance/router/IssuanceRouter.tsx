@@ -1,5 +1,5 @@
 import React from 'react'
-import { Route, Switch } from 'react-router-dom'
+import { Switch } from 'react-router-dom'
 import { CreateDSO } from 'app/pages/issuance/pages/CreateDSO'
 import { DeployToken } from 'app/pages/issuance/pages/DeployToken'
 import { DSOList } from 'app/pages/issuance/pages/DSOList'
@@ -8,37 +8,62 @@ import { IssuanceLanding } from 'app/pages/issuance/pages/IssuanceLanding'
 import { ViewDSO } from 'app/pages/issuance/pages/ViewDSO'
 import { IssuanceRoute } from 'app/pages/issuance/router/config'
 import { PreviewDSO } from 'app/pages/issuance/pages/PreviewDSO'
+import { NewAppRoute } from 'components/NewAppRoute'
 
 export const IssuanceRouter = () => {
   return (
     <Switch>
-      <Route exact path={IssuanceRoute.create}>
+      <NewAppRoute
+        breadcrumb='Create Digital Security Offering'
+        exact
+        path={IssuanceRoute.create}
+      >
         <CreateDSO />
-      </Route>
+      </NewAppRoute>
 
-      <Route exact path={IssuanceRoute.view}>
+      <NewAppRoute
+        breadcrumb='View Digital Security Offering'
+        exact
+        path={IssuanceRoute.view}
+      >
         <ViewDSO />
-      </Route>
+      </NewAppRoute>
 
-      <Route exact path={IssuanceRoute.edit}>
+      <NewAppRoute
+        breadcrumb='Edit Digital Security Offering'
+        exact
+        path={IssuanceRoute.edit}
+      >
         <EditDSO />
-      </Route>
+      </NewAppRoute>
 
-      <Route exact path={IssuanceRoute.preview}>
+      <NewAppRoute
+        breadcrumb='Preview Digital Security Offering'
+        exact
+        path={IssuanceRoute.preview}
+      >
         <PreviewDSO />
-      </Route>
+      </NewAppRoute>
 
-      <Route exact path={IssuanceRoute.deployToken}>
+      <NewAppRoute
+        breadcrumb='Deploy Token'
+        exact
+        path={IssuanceRoute.deployToken}
+      >
         <DeployToken />
-      </Route>
+      </NewAppRoute>
 
-      <Route exact path={IssuanceRoute.list}>
+      <NewAppRoute
+        breadcrumb='My Digital Security Offerings'
+        exact
+        path={IssuanceRoute.list}
+      >
         <DSOList />
-      </Route>
+      </NewAppRoute>
 
-      <Route path={IssuanceRoute.insight}>
+      <NewAppRoute breadcrumb='Issuance' path={IssuanceRoute.insight}>
         <IssuanceLanding />
-      </Route>
+      </NewAppRoute>
     </Switch>
   )
 }

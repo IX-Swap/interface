@@ -54,7 +54,7 @@ export const CorporatesPreview: React.FC<CorporatesPreviewProps> = props => {
                   link={
                     isIssuer
                       ? IdentityRoute.viewIssuer
-                      : IdentityRoute.corporate
+                      : IdentityRoute.viewCorporate
                   }
                   params={{
                     identityId: identity._id,

@@ -5,7 +5,6 @@ import { InternalRouteBase, InternalRouteProps } from 'types/util'
 import { getRoutesByType } from '../app/components/LandingPage/utils'
 import { LandingPage } from '../app/components/LandingPage/LandingPage'
 import { isTestENV } from 'config/history'
-import { useBreadcrumbs } from 'hooks/useBreadcrumbs'
 import {
   filterRoutes,
   getCurrentRouteFromLocation,
@@ -57,7 +56,9 @@ export function generateAppRouterHook<T>(
     const params = isTestENV
       ? location.state
       : window.history.state?.state ?? window.history.state ?? {}
-    const { reset, push } = useBreadcrumbs()
+    // const { reset, push } = useBreadcrumbs()
+    const reset = () => {}
+    const push = () => {}
     const roles = useUserRoles()
     const { landing, nested, generic } = getRoutesByType(
       filterRoutes(routes, roles)

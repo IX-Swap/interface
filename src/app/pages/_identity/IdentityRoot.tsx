@@ -5,7 +5,6 @@ import { RootContainer } from 'ui/RootContainer'
 export const IdentityRoot = () => {
   return (
     <RootContainer>
-      {/* <PageHeader alignment='flex-start' /> */}
       <IdentityRouter />
     </RootContainer>
   )

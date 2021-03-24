@@ -34,7 +34,7 @@ export const CorporatePreview: React.FC = () => {
             title={identity.companyLegalName}
             actions={
               <ViewButton
-                link={IdentityRoute.corporate}
+                link={IdentityRoute.viewCorporate}
                 params={{
                   identityId: identity._id,
                   label: identity.companyLegalName

@@ -1,52 +1,62 @@
 import React from 'react'
 import { LandingPage } from 'app/components/LandingPage/LandingPage'
 import { Balances } from 'app/pages/accounts/pages/balances/Balances'
-import { Banks } from 'app/pages/accounts/pages/banks/Banks'
 import { DepositCash } from 'app/pages/accounts/pages/banks/pages/DepositCash/DepositCash'
 import { WithdrawCash } from 'app/pages/accounts/pages/banks/pages/WithdrawCash/WithdrawCash'
-import { DigitalSecurities } from 'app/pages/accounts/pages/digitalSecurities/DigitalSecurities'
 import { Transactions } from 'app/pages/accounts/pages/transactions/Transactions'
-import { WithdrawalAddresses } from 'app/pages/accounts/pages/withdrawalAddresses/WithdrawalAddresses'
 import {
   accountsLandingLinks,
   AccountsRoute
 } from 'app/pages/accounts/router/config'
-import { Switch, Route } from 'react-router-dom'
+import { Switch } from 'react-router-dom'
+import { NewAppRoute } from 'components/NewAppRoute'
+import { BanksRouter } from 'app/pages/accounts/pages/banks/router/BanksRouter'
+import { DigitalSecuritiesRouter } from 'app/pages/accounts/pages/digitalSecurities/router/DigitalSecuritiesRouter'
+import { WithdrawalAddressesRouter } from 'app/pages/accounts/pages/withdrawalAddresses/router/WithdrawalAddressesRouter'
 
 export const AccountsRouter = () => {
   return (
     <Switch>
-      <Route path={AccountsRoute.banks}>
-        <Banks />
-      </Route>
+      <NewAppRoute breadcrumb='Bank Accounts' path={AccountsRoute.banks}>
+        <BanksRouter />
+      </NewAppRoute>
 
-      <Route path={AccountsRoute.depositCash}>
+      <NewAppRoute breadcrumb='Cash Deposits' path={AccountsRoute.depositCash}>
         <DepositCash />
-      </Route>
+      </NewAppRoute>
 
-      <Route path={AccountsRoute.withdrawCash}>
+      <NewAppRoute
+        breadcrumb='Cash Withdrawals'
+        path={AccountsRoute.withdrawCash}
+      >
         <WithdrawCash />
-      </Route>
+      </NewAppRoute>
 
-      <Route path={AccountsRoute.balances}>
+      <NewAppRoute breadcrumb='Asset Balances' path={AccountsRoute.balances}>
         <Balances />
-      </Route>
+      </NewAppRoute>
 
-      <Route path={AccountsRoute.digitalSecurities}>
-        <DigitalSecurities />
-      </Route>
+      <NewAppRoute
+        breadcrumb='Digital Securities'
+        path={AccountsRoute.digitalSecurities}
+      >
+        <DigitalSecuritiesRouter />
+      </NewAppRoute>
 
-      <Route path={AccountsRoute.transactions}>
+      <NewAppRoute breadcrumb='Transactions' path={AccountsRoute.transactions}>
         <Transactions />
-      </Route>
+      </NewAppRoute>
 
-      <Route path={AccountsRoute.withdrawalAddresses}>
-        <WithdrawalAddresses />
-      </Route>
+      <NewAppRoute
+        breadcrumb='Withdrawal Addresses'
+        path={AccountsRoute.withdrawalAddresses}
+      >
+        <WithdrawalAddressesRouter />
+      </NewAppRoute>
 
-      <Route path={AccountsRoute.landing}>
-        <LandingPage label='' path='' links={accountsLandingLinks} />
-      </Route>
+      <NewAppRoute path={AccountsRoute.landing}>
+        <LandingPage title='Accounts' links={accountsLandingLinks} />
+      </NewAppRoute>
     </Switch>
   )
 }

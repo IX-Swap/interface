@@ -24,7 +24,8 @@ export const OnboardingLinks = () => {
       ? {
           to: IdentityRoute.editIndividual,
           params: {
-            identityId: individualIdentity._id
+            identityId: individualIdentity._id,
+            userId: individualIdentity.user._id
           }
         }
       : { to: IdentityRoute.createIndividual }
@@ -43,7 +44,8 @@ export const OnboardingLinks = () => {
       ? {
           to: IdentityRoute.editCorporate,
           params: {
-            identityId: investorIdentities[0]._id
+            identityId: investorIdentities[0]._id,
+            userId: investorIdentities[0].user._id
           }
         }
       : { to: IdentityRoute.createCorporate }
@@ -62,7 +64,8 @@ export const OnboardingLinks = () => {
       ? {
           to: IdentityRoute.editIssuer,
           params: {
-            identityId: issuerIdentities[0]._id
+            identityId: issuerIdentities[0]._id,
+            userId: issuerIdentities[0].user._id
           }
         }
       : { to: IdentityRoute.createIssuer }

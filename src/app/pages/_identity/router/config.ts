@@ -2,6 +2,8 @@ import { makeURL } from 'config/appURL'
 
 export const IdentityRoute = {
   list: makeURL(['app', 'identity']),
+  individual: makeURL(['app', 'identity', 'individualIdentity']),
+  corporate: makeURL(['app', 'identity', 'corporateIdentity']),
   createIndividual: makeURL([
     'app',
     'identity',
@@ -25,7 +27,7 @@ export const IdentityRoute = {
     'edit'
   ]),
   createCorporate: makeURL(['app', 'identity', 'corporateIdentity', 'create']),
-  corporate: makeURL([
+  viewCorporate: makeURL([
     'app',
     'identity',
     'corporateIdentity',

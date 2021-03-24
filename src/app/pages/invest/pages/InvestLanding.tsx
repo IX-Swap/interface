@@ -16,7 +16,10 @@ export const InvestLanding = () => {
     <>
       <Grid container justify='space-between'>
         <Grid item xs={12}>
-          <PageHeader title={`Welcome, ${user?.name ?? 'Unknown'}`} />
+          <PageHeader
+            title={`Welcome, ${user?.name ?? 'Unknown'}`}
+            showBreadcrumbs={false}
+          />
         </Grid>
         <Grid item>
           <Typography variant='h4'>Top Offers</Typography>

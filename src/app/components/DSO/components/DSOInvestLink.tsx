@@ -3,7 +3,7 @@ import { Button } from '@material-ui/core'
 import { AppRouterLinkComponent } from 'components/AppRouterLink'
 import { useAuth } from 'hooks/auth/useAuth'
 import { DigitalSecurityOffering } from 'types/dso'
-import { DSORoute } from 'app/pages/invest/router/config'
+import { InvestRoute } from 'app/pages/invest/router/config'
 
 export interface DSOInvestLinkProps {
   dso: DigitalSecurityOffering
@@ -20,7 +20,7 @@ export const DSOInvestLink = ({ dso }: DSOInvestLinkProps) => {
       component={AppRouterLinkComponent}
       color='primary'
       variant='contained'
-      to={DSORoute.makeInvestment}
+      to={InvestRoute.makeInvestment}
       params={{
         issuerId: dso.createdBy,
         dsoId: dso._id

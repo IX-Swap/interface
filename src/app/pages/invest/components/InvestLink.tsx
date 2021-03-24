@@ -4,7 +4,7 @@ import { AppRouterLinkComponent } from 'components/AppRouterLink'
 import { useDSOById } from 'app/pages/invest/hooks/useDSOById'
 import { useAuth } from 'hooks/auth/useAuth'
 import { useParams } from 'react-router-dom'
-import { DSORoute } from 'app/pages/invest/router/config'
+import { InvestRoute } from 'app/pages/invest/router/config'
 
 export const InvestLink = () => {
   const params = useParams<{ dsoId: string; issuerId: string }>()
@@ -23,7 +23,7 @@ export const InvestLink = () => {
       component={AppRouterLinkComponent}
       color='primary'
       variant='contained'
-      to={DSORoute.makeInvestment}
+      to={InvestRoute.makeInvestment}
       params={params}
       data-testid='invest-link'
       disabled={isDisabled}

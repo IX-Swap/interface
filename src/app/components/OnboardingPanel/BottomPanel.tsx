@@ -20,7 +20,7 @@ export const BottomPanel = () => {
       </Route>
       <Route
         path={[
-          IdentityRoute.corporate,
+          IdentityRoute.viewCorporate,
           IdentityRoute.createCorporate,
           IdentityRoute.editCorporate
         ]}
