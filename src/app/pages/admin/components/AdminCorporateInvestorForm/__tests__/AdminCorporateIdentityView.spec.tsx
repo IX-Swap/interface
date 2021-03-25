@@ -47,18 +47,4 @@ describe('AdminCorporateIdentityView', () => {
 
     expect(container).toBeEmptyDOMElement()
   })
-
-  it('renders null when identity = undefined', () => {
-    const useAllCorporatesByUserIdResponse = generateInfiniteQueryResult({
-      list: [undefined],
-      isLoading: false
-    })
-
-    jest
-      .spyOn(useAllCorporatesByUserId, 'useAllCorporatesByUserId')
-      .mockImplementation(() => useAllCorporatesByUserIdResponse as any)
-    const { container } = render(<AdminCorporateIdentityView />)
-
-    expect(container).toBeEmptyDOMElement()
-  })
 })

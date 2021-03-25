@@ -9,7 +9,7 @@ export interface AppContentWrapperProps {
 export const AppContentWrapper = styled(Grid)(({ theme }) => ({
   marginTop: 56,
   minHeight: '100vh',
-  background: theme.palette.backgrounds.main,
+  background: theme.palette.backgrounds.default,
 
   [theme.breakpoints.up('md')]: {
     paddingLeft: 90,

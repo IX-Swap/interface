@@ -9,7 +9,7 @@ export default makeStyles(theme => ({
     backgroundImage: `url("${BackgroundTopImage}")`,
     backgroundRepeat: 'no-repeat',
     backgroundPosition: 'top right',
-    backgroundColor: theme.palette.backgrounds.main,
+    backgroundColor: theme.palette.backgrounds.default,
     height: '100vh'
   },
   wrapper: {
@@ -62,7 +62,7 @@ export default makeStyles(theme => ({
   },
   link: {
     fontSize: 18,
-    color: theme.palette.getContrastText(theme.palette.backgrounds.main),
+    color: theme.palette.getContrastText(theme.palette.backgrounds.default),
     textDecoration: 'none',
     display: 'flex',
     alignItems: 'center'

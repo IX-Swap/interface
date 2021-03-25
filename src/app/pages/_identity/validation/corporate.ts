@@ -140,28 +140,32 @@ export const corporateInvestorStatusDeclarationSchema = yup
     digitalSecuritiesIssuance: yup.bool(),
     allServices: yup.bool()
   })
-  .test('Investor Declaration Validation', 'Error!', function (values) {
-    if (values === undefined || values === null) {
-      return false
+  .test(
+    'investorDeclarations',
+    'Please choose at least one option under "Investor Status Declaration" section',
+    function (values) {
+      if (values === undefined || values === null) {
+        return false
+      }
+
+      const financialDeclarations = Object.entries(values)
+        .filter(([key]) => {
+          return (
+            key === 'assets' ||
+            key === 'trustee' ||
+            key === 'accreditedBeneficiaries' ||
+            key === 'accreditedSettlors' ||
+            key === 'accreditedShareholders' ||
+            key === 'partnership'
+          )
+        })
+        .map(([_key, value]) => value)
+
+      const result = financialDeclarations.every(value => value === false)
+
+      return !result
     }
-
-    const financialDeclarations = Object.entries(values)
-      .filter(([key]) => {
-        return (
-          key === 'assets' ||
-          key === 'trustee' ||
-          key === 'accreditedBeneficiaries' ||
-          key === 'accreditedSettlors' ||
-          key === 'accreditedShareholders' ||
-          key === 'partnership'
-        )
-      })
-      .map(([_key, value]) => value)
-
-    const result = financialDeclarations.every(value => value === false)
-
-    return !result
-  })
+  )
 
 export const corporateInvestorDocumentsSchema = yup
   .object()
@@ -173,6 +177,11 @@ export const corporateInvestorDocumentsSchema = yup
     corporateDocuments: yup.array<DataroomFile>().min(1).required('Required'),
     financialDocuments: yup.array<DataroomFile>().min(1).required('Required')
   })
+
+export const corporateIssuerDocumentsSchema = yup.object().shape({
+  corporateDocuments: yup.array<DataroomFile>().min(1).required('Required'),
+  financialDocuments: yup.array<DataroomFile>().min(1).required('Required')
+})
 
 export const corporateInvestorAgreementsSchema = yup
   .object()

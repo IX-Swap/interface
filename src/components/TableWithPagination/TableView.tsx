@@ -80,18 +80,28 @@ export const TableView = <T,>({
     <Grid container direction='column'>
       <Grid item>
         {status === 'loading' && <LinearProgress />}
-        <Paper variant='outlined' {...paperProps}>
+        <Paper
+          variant='outlined'
+          style={{ backgroundColor: 'inherit' }}
+          {...paperProps}
+        >
           <TableContainer>
             <Table aria-label='table' data-testid='table'>
               {columns.length > 0 ? (
                 <TableHead>
                   <TableRow>
                     {columns.map(e => (
-                      <TableCell key={e.key} align={e.headAlign ?? 'left'}>
+                      <TableCell
+                        key={e.key}
+                        align={e.headAlign ?? 'left'}
+                        style={{ borderBottom: 'none' }}
+                      >
                         <b>{e.label}</b>
                       </TableCell>
                     ))}
-                    {hasActions && <TableCell />}
+                    {hasActions && (
+                      <TableCell style={{ borderBottom: 'none' }} />
+                    )}
                   </TableRow>
                 </TableHead>
               ) : null}

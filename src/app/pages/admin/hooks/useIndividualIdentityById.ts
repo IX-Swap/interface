@@ -1,6 +1,6 @@
 import { useQuery } from 'react-query'
 import { UseQueryData } from 'hooks/useParsedData'
-import { IndividualIdentity, GetIndividualIdentityArgs } from 'types/identity'
+import { IndividualIdentity } from 'types/identity'
 import apiService from 'services/api'
 import { identityQueryKeys } from 'config/queryKeys'
 import { identityURL } from 'config/apiURL'
@@ -8,19 +8,13 @@ import { identityURL } from 'config/apiURL'
 export const useIndividualIdentityById = (
   userId: string
 ): UseQueryData<IndividualIdentity> => {
-  const payload = { userId }
-  const getIndividual = async (
-    queryKey: string,
-    args: GetIndividualIdentityArgs
-  ) => {
-    const { userId } = args
+  const getIndividual = async () => {
     const uri = identityURL.individuals.get(userId)
-
     return await apiService.get<IndividualIdentity>(uri)
   }
 
   const { data, ...rest } = useQuery(
-    [identityQueryKeys.getIndividual, payload],
+    [identityQueryKeys.getIndividual, { userId }],
     getIndividual
   )
 

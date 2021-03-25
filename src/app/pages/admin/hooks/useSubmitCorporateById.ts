@@ -14,14 +14,14 @@ export const useSubmitCorporateById = (userId: string, identityId: string) => {
   }
 
   return useMutation(submitCorporate, {
-    onSuccess: data => {
-      void snackbarService.showSnackbar(data.message, 'success')
-      void queryCache.invalidateQueries(
+    onSuccess: async data => {
+      snackbarService.showSnackbar(data.message, 'success')
+      await queryCache.invalidateQueries(
         identityQueryKeys.getAllCorporateByUserId(userId)
       )
     },
     onError: (error: any) => {
-      void snackbarService.showSnackbar(error.message, 'error')
+      snackbarService.showSnackbar(error.message, 'error')
     }
   })
 }

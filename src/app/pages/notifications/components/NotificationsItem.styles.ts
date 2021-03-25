@@ -16,7 +16,7 @@ export const useStyles = makeStyles(theme => ({
     flex: '1 1 0'
   },
   unread: {
-    backgroundColor: theme.palette.backgrounds.secondary
+    backgroundColor: theme.palette.backgrounds.light
   },
   icon: {
     '& svg': {

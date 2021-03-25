@@ -46,14 +46,14 @@ export const financialInfoSchema = yup
               .when('checked', {
                 is: true,
                 then: yup.number().min(1).max(100).required('Required'),
-                otherwise: yup.number().oneOf([0]).required('Required')
+                otherwise: yup.number()
               })
               .required('Required')
           })
           .required()
       )
-      .test('Fund Source Validation', 'Error!', function (value) {
-        return Boolean(value?.some(fundSource => fundSource.value !== 0))
+      .test('noFundSourceSelected', 'Error', function (value) {
+        return Boolean(value?.some(fundSource => fundSource.checked))
       })
       .required('Required')
   })
@@ -69,7 +69,19 @@ export const taxDeclarationSchema = yup
         is: 'yes',
         then: yup.array().of(
           yup.object({
-            taxIdentificationNumber: yup.string().required('Required')
+            taxIdentificationNumber: yup
+              .string()
+              .required('Required')
+              .test('nric', 'Invalid FIN/NRIC', function (
+                value: string | null | undefined
+              ) {
+                if (value === undefined || value === null) {
+                  return false
+                }
+
+                const isValid = /^[STFG]\d{7}[A-Z]$/.test(value)
+                return isValid
+              })
           })
         ),
         otherwise: yup.array().of(
@@ -114,26 +126,30 @@ export const individualInvestorStatusDeclarationSchema = yup
     digitalSecuritiesIssuance: yup.bool(),
     allServices: yup.bool()
   })
-  .test('Investor Declaration Validation', 'Error!', function (values) {
-    if (values === undefined || values === null) {
-      return false
+  .test(
+    'investorDeclarations',
+    'Please choose at least one option under "Investor Status Declaration" section',
+    function (values) {
+      if (values === undefined || values === null) {
+        return false
+      }
+
+      const financialDeclarations = Object.entries(values)
+        .filter(([key]) => {
+          return (
+            key === 'financialAsset' ||
+            key === 'income' ||
+            key === 'personalAssets' ||
+            key === 'jointlyHeldAccount'
+          )
+        })
+        .map(([_key, value]) => value)
+
+      const result = financialDeclarations.every(value => value === false)
+
+      return !result
     }
-
-    const financialDeclarations = Object.entries(values)
-      .filter(([key]) => {
-        return (
-          key === 'financialAsset' ||
-          key === 'income' ||
-          key === 'personalAssets' ||
-          key === 'jointlyHeldAccount'
-        )
-      })
-      .map(([_key, value]) => value)
-
-    const result = financialDeclarations.every(value => value === false)
-
-    return !result
-  })
+  )
 
 export const individualInvestorDocumentsSchema = yup
   .object()

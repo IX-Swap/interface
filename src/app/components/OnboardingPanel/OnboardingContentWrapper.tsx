@@ -9,6 +9,7 @@ import { useLocation } from 'react-router-dom'
 import { useHomeRouter } from 'app/pages/home/router'
 import { useIdentitiesRouter } from 'app/pages/_identity/router'
 import { useOnboardingJourneys } from 'app/components/OnboardingPanel/hooks/useOnboardingJourneys'
+import { LoadingFullScreen } from 'auth/components/LoadingFullScreen'
 
 export interface OnboardingContentWrapperProps {
   children: React.ReactNode
@@ -28,7 +29,8 @@ export const OnboardingContentWrapper = ({
     isInvestorJourneyCompleted,
     isIndividualJourneyCompleted,
     isInvestorJourneyStarted,
-    isIssuerJourneyStarted
+    isIssuerJourneyStarted,
+    isIdentitiesLoaded
   } = useOnboardingJourneys()
 
   const onboardingBasePaths = [
@@ -45,6 +47,10 @@ export const OnboardingContentWrapper = ({
     return <>{children}</>
   }
   const pathnameBase = pathname.split('/').slice(0, 3).join('/')
+
+  if (!isIdentitiesLoaded) {
+    return <LoadingFullScreen />
+  }
 
   return onboardingBasePaths.includes(pathnameBase) ? (
     <Box display='flex' width='100%'>

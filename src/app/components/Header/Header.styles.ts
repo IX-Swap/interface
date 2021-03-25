@@ -18,7 +18,8 @@ export default makeStyles(theme => ({
     transition: theme.transitions.create(['margin'], {
       easing: theme.transitions.easing.sharp,
       duration: theme.transitions.duration.leavingScreen
-    })
+    }),
+    backgroundColor: '#0c469c'
   },
   toolbar: {
     paddingLeft: theme.spacing(3.25),

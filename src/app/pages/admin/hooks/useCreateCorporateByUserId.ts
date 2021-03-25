@@ -21,13 +21,13 @@ export const useCreateCorporateByUserId = (
 
   return useMutation(createCorporate, {
     onSuccess: async data => {
-      void snackbarService.showSnackbar(data.message, 'success')
+      snackbarService.showSnackbar(data.message, 'success')
       await queryCache.invalidateQueries(
         identityQueryKeys.getAllCorporateByUserId(userId)
       )
     },
     onError: (error: any) => {
-      void snackbarService.showSnackbar(error.message, 'error')
+      snackbarService.showSnackbar(error.message, 'error')
     }
   })
 }

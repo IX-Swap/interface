@@ -28,7 +28,7 @@ export const AdminCorporateIdentityView = ({
   })
   const identity = data.list[0]
 
-  if (isLoading || identity === undefined) {
+  if (isLoading) {
     return null
   }
 

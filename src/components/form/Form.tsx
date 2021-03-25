@@ -3,7 +3,6 @@ import { SubmitHandler, useForm, FormProvider } from 'react-hook-form'
 import { ObjectSchema, Shape, object } from 'yup'
 import { yupResolver } from '@hookform/resolvers'
 import { useUnmountCallback } from 'hooks/useUnmountCallback'
-import { useServices } from 'hooks/useServices'
 
 export interface FormProps<T extends {}> {
   defaultValues?: Partial<T>
@@ -28,13 +27,6 @@ export const Form = <T,>(props: PropsWithChildren<FormProps<T>>) => {
     resolver: yupResolver(validationSchema),
     criteriaMode: criteriaMode
   })
-  const { snackbarService } = useServices()
-  const onError = () => {
-    void snackbarService.showSnackbar(
-      'Please fill all required fields',
-      'error'
-    )
-  }
 
   useUnmountCallback(() => {
     if (form.formState.isDirty) {
@@ -47,11 +39,10 @@ export const Form = <T,>(props: PropsWithChildren<FormProps<T>>) => {
       <form
         {...rest}
         style={{ width: '100%' }}
-        onSubmit={form.handleSubmit(onSubmit, onError)}
+        onSubmit={form.handleSubmit(onSubmit, console.error)}
       >
         {children}
       </form>
-      <pre>{JSON.stringify(form.errors, null, 2)}</pre>
     </FormProvider>
   )
 }

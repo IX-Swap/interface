@@ -1,4 +1,5 @@
 import { makeStyles } from '@material-ui/core/styles'
+import tinycolor from 'tinycolor2'
 
 export const drawerWidth = 250
 const closedWidth = 30
@@ -48,7 +49,7 @@ export const useStyles = makeStyles(
       marginRight: 0
     },
     panel: {
-      backgroundColor: theme.palette.backgrounds.secondary,
+      backgroundColor: theme.palette.backgrounds.light,
       padding: '20px 40px',
       width: drawerWidth,
       height: '100%',
@@ -66,9 +67,15 @@ export const useStyles = makeStyles(
       height: 40,
       border: `1px solid ${theme.palette.divider}`,
       borderRadius: 20,
-      backgroundColor: theme.palette.backgrounds.main,
+      backgroundColor:
+        theme.palette.type === 'light'
+          ? theme.palette.backgrounds.default
+          : theme.palette.sidebar.activeColor,
       '&:hover': {
-        backgroundColor: theme.palette.backgrounds.main
+        backgroundColor:
+          theme.palette.type === 'light'
+            ? tinycolor(theme.palette.backgrounds.default).darken(10)
+            : tinycolor(theme.palette.sidebar.activeColor).lighten(10)
       }
     }
   }),

@@ -35,8 +35,10 @@ export const AdminCorporateInvestorForm = () => {
   const defaultActiveStep = getIdentityDefaultActiveStep({
     isSubmitted: identity?.status === 'Submitted',
     lastStepIndex: adminCorporateInvestorFormSteps.length - 1,
-    isJourneyCompleted: true
+    isJourneyCompleted: false
   })
+
+  console.log('identity: ', identity)
 
   return (
     <FormStepper
@@ -46,6 +48,7 @@ export const AdminCorporateInvestorForm = () => {
       submitMutation={submitMutation}
       steps={adminCorporateInvestorFormSteps}
       defaultActiveStep={defaultActiveStep}
+      shouldSaveOnMove
     />
   )
 }
