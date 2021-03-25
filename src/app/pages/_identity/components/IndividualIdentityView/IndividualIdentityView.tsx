@@ -8,15 +8,15 @@ import { AddressView } from './AddressView/AddressView'
 import { FinancialView } from './FinancialView/FinancialView'
 import { TaxDeclarationView } from './TaxDeclarationView/TaxDeclarationView'
 import { InvestorDeclarationView } from './InvestorDeclarationView/InvestorDeclarationView'
-import { useIndividualIdentity } from 'hooks/identity/useIndividualIdentity'
+import { IndividualIdentity } from 'types/identity'
 
-export const IndividualIdentityView = () => {
-  const { data, isLoading } = useIndividualIdentity()
+export interface IndividualIdentityViewProps {
+  data: IndividualIdentity
+}
 
-  if (isLoading || data === undefined) {
-    return null
-  }
-
+export const IndividualIdentityView = ({
+  data
+}: IndividualIdentityViewProps) => {
   return (
     <Grid container spacing={6}>
       <Grid item xs={12}>

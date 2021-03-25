@@ -1,5 +1,5 @@
+import { makeURL } from 'config/appURL'
 import { InternalRouteProps } from 'types/util'
-import { generateAppRouterHook } from 'helpers/generateAppRouterHook'
 import { ReactComponent as AccountIcon } from 'assets/icons/navigation/account.svg'
 import { ReactComponent as CashDepositIcon } from 'assets/icons/navigation/cash-deposit.svg'
 import { ReactComponent as CashWithdrawalIcon } from 'assets/icons/navigation/cash-withdrawal.svg'
@@ -9,16 +9,6 @@ import { ReactComponent as IndividualIcon } from 'assets/icons/navigation/indivi
 import { ReactComponent as CorporateIcon } from 'assets/icons/navigation/corporate.svg'
 import { ReactComponent as OfferingIcon } from 'assets/icons/navigation/offering.svg'
 import { ReactComponent as CommitmentIcon } from 'assets/icons/navigation/commitment.svg'
-import { makeURL } from 'config/appURL'
-import { AuthorizerBanksRouterRoot } from 'app/pages/authorizer/pages/banks/router'
-import { AuthorizerCashDepositsRouterRoot } from 'app/pages/authorizer/pages/cashDeposits/router'
-import { AuthorizerCashWithdrawalsRouterRoot } from 'app/pages/authorizer/pages/cashWithdrawals/router'
-import { AuthorizerCommitmentsRouterRoot } from 'app/pages/authorizer/pages/commitments/router'
-import { AuthorizerCorporateIdentitiesRouterRoot } from 'app/pages/authorizer/pages/corporateIdentities/router'
-import { AuthorizerDSWithdrawalsRouterRoot } from 'app/pages/authorizer/pages/dsWithdrawals/router'
-import { AuthorizerIndividualIdentitiesRouterRoot } from 'app/pages/authorizer/pages/individualIdentities/router'
-import { AuthorizerWithdrawalAddressesRouterRoot } from 'app/pages/authorizer/pages/withdrawalAddresses/router'
-import { AuthorizerOfferingsRouterRoot } from 'app/pages/authorizer/pages/offerings/router'
 
 export const AuthorizerRoute = {
   banks: makeURL(['app', 'authorizer', 'bankAccount']),
@@ -34,80 +24,59 @@ export const AuthorizerRoute = {
   viewItem: makeURL(['app', 'authorizer', 'category', 'itemId'])
 }
 
-export const authorizerRoutes: InternalRouteProps[] = [
+export const authorizerLandingLinks: InternalRouteProps[] = [
   {
     label: 'Bank Accounts',
     path: AuthorizerRoute.banks,
-    component: AuthorizerBanksRouterRoot,
     color: '#2B78FD',
     icon: AccountIcon
   },
   {
     label: 'Cash Deposits',
     path: AuthorizerRoute.cashDeposits,
-    component: AuthorizerCashDepositsRouterRoot,
     color: '#43B526',
     icon: CashDepositIcon
   },
   {
     label: 'Cash Withdrawals',
     path: AuthorizerRoute.cashWithdrawals,
-    component: AuthorizerCashWithdrawalsRouterRoot,
     color: '#E6D200',
     icon: CashWithdrawalIcon
   },
   {
     label: 'Digital Security Withdrawals',
     path: AuthorizerRoute.dsWithdrawals,
-    component: AuthorizerDSWithdrawalsRouterRoot,
     color: '#8B3DFF',
     icon: DSWithdrawalIcon
   },
   {
     label: 'Individual Identities',
     path: AuthorizerRoute.individualIdentities,
-    component: AuthorizerIndividualIdentitiesRouterRoot,
     color: '#90A30F',
     icon: IndividualIcon
   },
   {
     label: 'Corporate Identities',
     path: AuthorizerRoute.corporateIdentities,
-    component: AuthorizerCorporateIdentitiesRouterRoot,
     color: '#E65133',
     icon: CorporateIcon
   },
   {
     label: 'Offerings',
     path: AuthorizerRoute.offerings,
-    component: AuthorizerOfferingsRouterRoot,
     color: '#11BB93',
     icon: OfferingIcon
   },
   {
     label: 'Commitments',
     path: AuthorizerRoute.commitments,
-    component: AuthorizerCommitmentsRouterRoot,
     color: '#C17F53',
     icon: CommitmentIcon
   },
   {
     label: 'Withdrawal Addresses',
     path: AuthorizerRoute.withdrawalAddresses,
-    component: AuthorizerWithdrawalAddressesRouterRoot,
     color: '#e6d200',
     icon: WithdrawalAddressIcon
-  },
-  {
-    label: 'Authorization',
-    path: AuthorizerRoute.landing,
-    exact: true,
-    root: true
   }
 ]
-
-export const useAuthorizerRouter = generateAppRouterHook(
-  AuthorizerRoute,
-  AuthorizerRoute.landing,
-  authorizerRoutes
-)

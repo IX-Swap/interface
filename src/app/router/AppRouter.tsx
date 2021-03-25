@@ -10,6 +10,7 @@ import { AccountsRoot } from 'app/pages/accounts/AccountsRoot'
 import { IdentityRoot } from 'app/pages/_identity/IdentityRoot'
 import { InvestRoot } from 'app/pages/invest/InvestRoot'
 import { AdminRoot } from 'app/pages/admin/AdminRoot'
+import { AuthorizerRoot } from 'app/pages/authorizer/AuthorizerRoot'
 
 export const AppRouter = () => {
   return (
@@ -44,6 +45,10 @@ export const AppRouter = () => {
 
       <NewAppRoute path={AppRoute.notifications}>
         <NotificationsRoot />
+      </NewAppRoute>
+
+      <NewAppRoute breadcrumb='Authorization' path={AppRoute.authorizer}>
+        <AuthorizerRoot />
       </NewAppRoute>
     </Switch>
   )

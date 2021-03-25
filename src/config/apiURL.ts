@@ -28,7 +28,9 @@ export const identityURL = {
     create: (userId: string) => `/identity/corporates/${userId}`,
     update: (userId: string, corporateId: string) =>
       `/identity/corporates/${userId}/${corporateId}`,
-    submit: (id: string) => `/identity/corporates/${id}/submit`
+    submit: (id: string) => `/identity/corporates/${id}/submit`,
+    get: (userId: string, identityId: string) =>
+      `/identity/corporates/${userId}/${identityId}`
   },
   individuals: {
     create: (userId: string) => `/identity/individuals/${userId}`,

@@ -7,11 +7,11 @@ import { ReactComponent as AccountsIcon } from 'assets/icons/navigation/account.
 import { ReactComponent as IssuanceIcon } from 'assets/icons/navigation/issuance.svg'
 import { ReactComponent as AuthorizerIcon } from 'assets/icons/navigation/authorizer.svg'
 import * as acl from 'helpers/acl'
-import * as useAuthorizerRouterHook from 'app/pages/authorizer/router'
 import { AccountsRoute } from 'app/pages/accounts/router/config'
 import { InvestRoute } from 'app/pages/invest/router/config'
 import { IssuanceRoute } from 'app/pages/issuance/router/config'
 import { HomeRoute } from 'app/pages/home/router/config'
+import { AuthorizerRoute } from 'app/pages/authorizer/router/config'
 
 jest.mock('assets/icons/navigation/invest.svg', () => ({
   ReactComponent: jest.fn(() => null)
@@ -33,12 +33,6 @@ jest.mock(
 )
 
 describe('Sidebar', () => {
-  beforeEach(() => {
-    jest.spyOn(useAuthorizerRouterHook, 'useAuthorizerRouter').mockReturnValue({
-      paths: useAuthorizerRouterHook.AuthorizerRoute
-    } as any)
-  })
-
   afterEach(async () => {
     await cleanup()
     jest.clearAllMocks()
@@ -164,7 +158,7 @@ describe('Sidebar', () => {
       4,
       {
         label: 'Authorizer',
-        link: useAuthorizerRouterHook.AuthorizerRoute.landing,
+        link: AuthorizerRoute.landing,
         icon: AuthorizerIcon
       },
       {}

@@ -15,7 +15,7 @@ export const useStyles = makeStyles(theme => ({
   sidebar: {},
   content: {
     width: '100%',
-    padding: theme.spacing(2, 2)
+    padding: theme.spacing(2, 0)
   },
   wrapper: {
     flexDirection: 'column',
