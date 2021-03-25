@@ -29,7 +29,9 @@ export const UserIdentitySelect = ({
 
   const { paths: adminPaths } = useAdminRouter()
   const { active, root } = useStyles()
-  const [identity, setIdentity] = useState(!hasIdentity ? 'no identity' : '')
+  const [identity, setIdentity] = useState(
+    !hasIdentity ? 'no identity' : 'individual'
+  )
 
   const handleChange = (event: React.ChangeEvent<{ value: unknown }>) => {
     setIdentity(event.target.value as string)

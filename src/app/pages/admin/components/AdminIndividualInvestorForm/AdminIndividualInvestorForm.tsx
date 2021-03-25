@@ -11,7 +11,7 @@ export const AdminIndividualInvestorForm = memo(() => {
   const {
     params: { userId }
   } = useAdminRouter()
-  const { data, isLoading, isError } = useIndividualIdentityById(userId)
+  const { data, isLoading } = useIndividualIdentityById(userId)
   const mutation = useCreateIndividualByUserId(userId)
   const submitMutation = useSubmitIndividual()
 
@@ -19,7 +19,7 @@ export const AdminIndividualInvestorForm = memo(() => {
     return <div>Loading...</div>
   }
 
-  if (userId === undefined || isError) {
+  if (userId === undefined) {
     return null
   }
 

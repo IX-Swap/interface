@@ -10,19 +10,11 @@ window.URL.revokeObjectURL = jest.fn()
 
 describe('AdminCorporateIdentityView', () => {
   const useAdminRouterResponse = { params: { userId: corporate._id } }
-  const useAllCorporatesByUserIdResponse = generateInfiniteQueryResult({
-    list: [corporate],
-    isLoading: false
-  })
 
   beforeEach(() => {
     jest
       .spyOn(useAdminRouter, 'useAdminRouter')
       .mockImplementation(() => useAdminRouterResponse as any)
-
-    jest
-      .spyOn(useAllCorporatesByUserId, 'useAllCorporatesByUserId')
-      .mockImplementation(() => useAllCorporatesByUserIdResponse as any)
   })
 
   afterEach(async () => {
@@ -31,6 +23,42 @@ describe('AdminCorporateIdentityView', () => {
   })
 
   it('renders without errors', () => {
+    const useAllCorporatesByUserIdResponse = generateInfiniteQueryResult({
+      list: [corporate],
+      isLoading: false
+    })
+
+    jest
+      .spyOn(useAllCorporatesByUserId, 'useAllCorporatesByUserId')
+      .mockImplementation(() => useAllCorporatesByUserIdResponse as any)
     render(<AdminCorporateIdentityView />)
+  })
+
+  it('renders null when isLoading = true', () => {
+    const useAllCorporatesByUserIdResponse = generateInfiniteQueryResult({
+      list: [corporate],
+      isLoading: true
+    })
+
+    jest
+      .spyOn(useAllCorporatesByUserId, 'useAllCorporatesByUserId')
+      .mockImplementation(() => useAllCorporatesByUserIdResponse as any)
+    const { container } = render(<AdminCorporateIdentityView />)
+
+    expect(container).toBeEmptyDOMElement()
+  })
+
+  it('renders null when identity = undefined', () => {
+    const useAllCorporatesByUserIdResponse = generateInfiniteQueryResult({
+      list: [undefined],
+      isLoading: false
+    })
+
+    jest
+      .spyOn(useAllCorporatesByUserId, 'useAllCorporatesByUserId')
+      .mockImplementation(() => useAllCorporatesByUserIdResponse as any)
+    const { container } = render(<AdminCorporateIdentityView />)
+
+    expect(container).toBeEmptyDOMElement()
   })
 })

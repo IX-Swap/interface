@@ -65,4 +65,19 @@ describe('AdminCorporateInvestorForm', () => {
   it('renders without errors', () => {
     render(<AdminCorporateInvestorForm />)
   })
+
+  it('renders loading text when isLoading', () => {
+    const useAllCorporatesByUserIdResponse = generateInfiniteQueryResult({
+      list: [corporate],
+      isLoading: true
+    })
+
+    jest
+      .spyOn(useAllCorporatesByUserId, 'useAllCorporatesByUserId')
+      .mockImplementation(() => useAllCorporatesByUserIdResponse as any)
+
+    const { getByText } = render(<AdminCorporateInvestorForm />)
+
+    expect(getByText('Loading...')).toBeTruthy()
+  })
 })

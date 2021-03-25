@@ -26,9 +26,9 @@ export const AdminCorporateIdentityView = ({
     userId,
     type: isCorporateIssuerForm ? 'issuer' : 'investor'
   })
-  const identity = data?.list[0]
+  const identity = data.list[0]
 
-  if (isLoading || data === undefined) {
+  if (isLoading || identity === undefined) {
     return null
   }
 

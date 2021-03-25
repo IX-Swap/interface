@@ -50,6 +50,7 @@ describe('AdminIndividualInvestorForm', () => {
         () => [mutationFn, useSubmitIndividualResponse] as any
       )
   })
+
   afterEach(async () => {
     await cleanup()
     jest.clearAllMocks()
@@ -57,5 +58,31 @@ describe('AdminIndividualInvestorForm', () => {
 
   it('renders without errors', () => {
     render(<AdminIndividualInvestorForm />)
+  })
+
+  it('renders loading text when isLoading', () => {
+    const useIndividualIdentityByIdResponse = generateQueryResult({
+      data: individual,
+      isLoading: true
+    })
+
+    jest
+      .spyOn(useIndividualIdentityById, 'useIndividualIdentityById')
+      .mockImplementation(() => useIndividualIdentityByIdResponse as any)
+
+    const { getByText } = render(<AdminIndividualInvestorForm />)
+
+    expect(getByText('Loading...')).toBeTruthy()
+  })
+
+  it('renders null when userId is undefined', () => {
+    const useAdminRouterResponse = { params: { userId: undefined } }
+    jest
+      .spyOn(useAdminRouter, 'useAdminRouter')
+      .mockImplementation(() => useAdminRouterResponse as any)
+
+    const { container } = render(<AdminIndividualInvestorForm />)
+
+    expect(container).toBeEmptyDOMElement()
   })
 })
