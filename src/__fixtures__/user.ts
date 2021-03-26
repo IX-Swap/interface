@@ -23,7 +23,12 @@ export const managedUser: ManagedUser = {
   updatedAt: '2021-01-20T16:29:59.285Z',
   resetExpiresOn: '2021-01-20T16:37:38.267Z',
   twoFactorAuth: true,
-  isResetActive: true
+  isResetActive: true,
+  identity: {
+    issuers: true,
+    investors: false,
+    individual: false
+  }
 }
 
 export const loginHistory: LoginHistory = {
