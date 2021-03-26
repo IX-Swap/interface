@@ -5,7 +5,7 @@ import { EditButton } from 'app/pages/identity/components/EditButton'
 import { useIdentitiesRouter } from 'app/pages/_identity/router'
 import { VSpacer } from 'components/VSpacer'
 import { RejectionMessage } from 'app/pages/authorizer/components/RejectionMessage'
-import { IndividualIdentityView } from 'app/pages/_identity/components/IndividualIdentityView/IndividualIdentityView'
+import { IndividualIdentityViewContainer } from 'app/pages/_identity/components/IndividualIdentityView/IndividualIdentityViewContainer'
 
 export const ViewIndividual = () => {
   const { data, status } = useIndividualIdentity()
@@ -30,7 +30,7 @@ export const ViewIndividual = () => {
         <VSpacer size='small' />
       </Grid>
       <Grid item>
-        <IndividualIdentityView />
+        <IndividualIdentityViewContainer />
       </Grid>
     </Grid>
   )

@@ -6,6 +6,7 @@ import { useAdminRouter } from 'app/pages/admin/router'
 import { UserDetails } from 'app/pages/admin/components/UserDetails'
 import { UserStatus } from 'app/pages/admin/components/UserStatus'
 import { IndividualAccountSettings } from 'app/pages/admin/components/IndividualAccountSettings'
+import { UserIdentitiesStatus } from 'app/pages/admin/components/UserIdentitiesStatus'
 
 export const ViewUser: React.FC = () => {
   const {
@@ -28,7 +29,14 @@ export const ViewUser: React.FC = () => {
             <UserDetails data={data} />
           </Grid>
           <Grid item xs={12} md={4}>
-            <UserStatus data={data} />
+            <Grid container spacing={3} direction='column'>
+              <Grid item>
+                <UserStatus data={data} />
+              </Grid>
+              <Grid item>
+                <UserIdentitiesStatus data={data} />
+              </Grid>
+            </Grid>
           </Grid>
         </Grid>
       </Grid>

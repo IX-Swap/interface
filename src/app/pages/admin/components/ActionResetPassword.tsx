@@ -1,9 +1,9 @@
 import React from 'react'
-import { ButtonTransparent } from 'app/components/ButtonTransparent'
 import { DialogResetPassword } from 'app/pages/admin/components/DialogResetPassword'
 import { useUserActionsDialog } from 'app/pages/admin/hooks/useUserActionsDialog'
 import { ManagedUser } from 'types/user'
 import { isResetActive } from 'helpers/isResetActive'
+import { Button } from '@material-ui/core'
 
 export interface ActionResetPasswordProps {
   data: ManagedUser
@@ -26,13 +26,14 @@ export const ActionResetPassword = ({ data }: ActionResetPasswordProps) => {
 
   return (
     <>
-      <ButtonTransparent
+      <Button
         onClick={handleOpenResetPassword}
-        variant='contained'
+        variant='outlined'
+        color='primary'
         disableElevation
       >
         START ACCOUNT RESET
-      </ButtonTransparent>
+      </Button>
       <DialogResetPassword
         email={data.email}
         closeDialog={closeResetPassword}
