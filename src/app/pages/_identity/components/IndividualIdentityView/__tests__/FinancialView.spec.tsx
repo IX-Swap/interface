@@ -1,0 +1,43 @@
+import { FinancialView } from 'app/pages/_identity/components/IndividualIdentityView/FinancialView/FinancialView'
+import React from 'react'
+import { render, cleanup } from 'test-utils'
+import { individual } from '__fixtures__/identity'
+
+describe('FinancialView', () => {
+  afterEach(async () => {
+    await cleanup()
+    jest.clearAllMocks()
+  })
+
+  it('renders without errors', () => {
+    render(<FinancialView data={individual} />)
+  })
+
+  it('renders fundsource correctly when it is checked', () => {
+    const fundSource = individual?.sourceOfFund?.[0]
+    const { getByText } = render(<FinancialView data={individual} />)
+
+    expect(
+      getByText(`${fundSource?.name ?? ''} (${fundSource?.value ?? ''}%)`)
+    ).toBeTruthy()
+  })
+
+  it('does not render fundsource not checked', () => {
+    const { queryByText } = render(
+      <FinancialView
+        data={{
+          ...individual,
+          sourceOfFund: [
+            {
+              name: 'Inheritance/Gift',
+              checked: false,
+              value: 20
+            }
+          ]
+        }}
+      />
+    )
+
+    expect(queryByText('Inheritance/Gift 20%')).toBeFalsy()
+  })
+})
