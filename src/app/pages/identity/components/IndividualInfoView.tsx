@@ -1,10 +1,10 @@
 import React from 'react'
-import { ExtendedIdentityProfile } from 'types/identity'
 import { Grid } from '@material-ui/core'
 import { Avatar } from 'components/Avatar'
 import { LabelledValue } from 'components/LabelledValue'
 import { formatDateToMMDDYY } from 'helpers/dates'
 import { privateClassNames } from 'helpers/classnames'
+import { ExtendedIdentityProfile } from 'app/pages/_identity/types/forms'
 
 export interface IndividualInfoViewProps {
   data: ExtendedIdentityProfile

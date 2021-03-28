@@ -5,12 +5,14 @@ import {
   Box,
   TextField
 } from '@material-ui/core'
-import { IndividualTaxDeclarationFormValues } from 'app/pages/_identity/types/forms'
+import {
+  IndividualTaxDeclarationFormValues,
+  TaxResidency
+} from 'app/pages/_identity/types/forms'
 import { RadioGroup } from 'components/form/RadioGroup'
 import { TypedField } from 'components/form/TypedField'
 import React from 'react'
 import { useFormContext } from 'react-hook-form'
-import { TaxResidency } from 'types/identity'
 
 export interface ReasonFieldsProps {
   index: number

@@ -2,14 +2,15 @@ import * as yup from 'yup'
 import 'yup-phone'
 import { addressSchema, dateSchema, emailSchema } from 'validation/shared'
 import {
+  FundSource,
   IndividualAgreementsFormValues,
   IndividualDocumentsFormValues,
   IndividualFinancialInfoFormValues,
   IndividualInvestorDeclarationFormValues,
   IndividualPersonalInfoFormValues,
-  IndividualTaxDeclarationFormValues
+  IndividualTaxDeclarationFormValues,
+  TaxResidency
 } from 'app/pages/_identity/types/forms'
-import { FundSource, TaxResidency } from 'types/identity'
 import { DataroomFile } from 'types/dataroomFile'
 
 export const personalInfoSchema = yup

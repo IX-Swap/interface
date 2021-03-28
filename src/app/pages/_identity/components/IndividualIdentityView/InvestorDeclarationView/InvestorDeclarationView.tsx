@@ -2,13 +2,16 @@ import React from 'react'
 import { Box, Grid } from '@material-ui/core'
 import { FormSectionHeader } from 'app/components/DSO/components/FormSectionHeader'
 import { DeclarationsList } from 'app/pages/_identity/components/DeclarationsList/DeclarationsList'
-import { CorporateIdentity, IndividualIdentity } from 'types/identity'
 import { IdentityType } from 'app/pages/identity/utils'
 import {
   corporateInvestorAgreementsMap,
   individualInvestorAgreementsMap
 } from 'app/pages/_identity/components/InvestorDeclarationForm/InvestorAgreements/agreements'
 import { OptInAgreements } from 'app/pages/_identity/components/InvestorDeclarationForm/OptInAgreements/OptInAgreements'
+import {
+  CorporateIdentity,
+  IndividualIdentity
+} from 'app/pages/_identity/types/forms'
 
 export interface StatusDeclaration {
   accreditedInvestorDeclaration: Record<string, boolean>

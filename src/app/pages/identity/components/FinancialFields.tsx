@@ -5,8 +5,8 @@ import { NumericInput } from 'components/form/NumericInput'
 import { moneyNumberFormat } from 'config/numberFormat'
 import { numericValueExtractor } from 'helpers/forms'
 import { useFormContext } from 'react-hook-form'
-import { IndividualIdentityFormValues } from 'app/pages/identity/components/types'
 import { privateClassNames } from 'helpers/classnames'
+import { IndividualIdentityFormValues } from 'app/pages/_identity/types/forms'
 
 export const FinancialFields = (): JSX.Element => {
   const { control } = useFormContext<IndividualIdentityFormValues>()

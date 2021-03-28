@@ -1,5 +1,4 @@
 import React from 'react'
-import { IndividualPersonalInformation } from 'types/identity'
 import { Grid, Box, TextField } from '@material-ui/core'
 import { useFormContext } from 'react-hook-form'
 import { TypedField } from 'components/form/TypedField'
@@ -13,6 +12,7 @@ import { Dropzone } from 'components/dataroom/Dropzone'
 import { useAppBreakpoints } from 'hooks/useAppBreakpoints'
 import { PhoneInput } from 'components/form/PhoneInput'
 import { DatePicker } from 'components/form/DatePicker'
+import { IndividualPersonalInformation } from 'app/pages/_identity/types/forms'
 
 export interface IndividualInfoFieldsProps {
   rootName?: string

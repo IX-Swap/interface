@@ -6,14 +6,14 @@ import {
   prepareDeclarationsForUpload
 } from 'app/pages/identity/utils'
 import { useAuth } from 'hooks/auth/useAuth'
-import { IndividualIdentityFormValues } from 'app/pages/identity/components/types'
 import apiService from 'services/api'
-import {
-  CreateOrUpdateIndividualIdentityArgs,
-  IndividualIdentity
-} from 'types/identity'
 import { getIdFromObj } from 'helpers/strings'
 import { identityURL } from 'config/apiURL'
+import {
+  CreateOrUpdateIndividualIdentityArgs,
+  IndividualIdentity,
+  IndividualIdentityFormValues
+} from 'app/pages/_identity/types/forms'
 
 export const useCreateOrUpdateIndividual = () => {
   const { snackbarService } = useServices()

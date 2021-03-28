@@ -1,10 +1,10 @@
 import {
+  AgreementsAndDisclosures,
   CorporateInvestorDeclarationFormValues,
   CorporateInvestorDocumentsFormValues,
   InvestorCorporateInfoFormValues,
   InvestorDirectorsAndBeneficialOwnersFormValues
 } from '../../types/forms'
-import { AgreementsAndDisclosures } from '../../../../../types/identity'
 
 export const getCorporateInfoRequestPayload = (
   data: InvestorCorporateInfoFormValues

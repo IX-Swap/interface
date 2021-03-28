@@ -1,7 +1,6 @@
 import React from 'react'
 import { Grid, Input } from '@material-ui/core'
 import { useFormContext } from 'react-hook-form'
-import { CorporateIdentity } from 'types/identity'
 import { TypedField } from 'components/form/TypedField'
 import { DataroomUploader } from 'components/dataroom/DataroomUploader'
 import { DataroomAvatarUploader } from 'components/dataroom/DataroomAvatarUploader'
@@ -9,6 +8,7 @@ import { documentValueExtractor } from 'app/components/DSO/utils'
 import { CountrySelect } from 'components/form/CountrySelect'
 import { DataroomFileType } from 'config/dataroom'
 import { privateClassNames } from 'helpers/classnames'
+import { CorporateIdentity } from 'app/pages/_identity/types/forms'
 
 export const CompanyInfoFields = () => {
   const { control } = useFormContext<CorporateIdentity>()

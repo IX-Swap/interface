@@ -5,7 +5,7 @@ import { Fields } from 'app/pages/_identity/components/DirectorAndBeneficialOwne
 import { FieldsArray } from 'components/form/FieldsArray'
 import React, { useEffect } from 'react'
 import { useFormContext } from 'react-hook-form'
-import { Personnel } from 'types/identity'
+import { Personnel } from 'app/pages/_identity/types/forms'
 
 export interface DirectorsAndBeneficialOwnerFieldsProps {
   name: string

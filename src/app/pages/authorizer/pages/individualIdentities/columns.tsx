@@ -1,7 +1,7 @@
 import { TableColumn } from 'types/util'
-import { IndividualIdentity } from 'types/identity'
 import { formatDateToMMDDYY } from 'helpers/dates'
 import { renderIncome, renderLastName } from 'helpers/tables'
+import { IndividualIdentity } from 'app/pages/_identity/types/forms'
 
 export const columns: Array<TableColumn<IndividualIdentity>> = [
   {

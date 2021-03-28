@@ -1,8 +1,8 @@
 import { Grid } from '@material-ui/core'
 import React from 'react'
-import { CorporateIdentity } from 'types/identity'
 import { LabelledValue } from 'components/LabelledValue'
 import { hasValue } from 'helpers/forms'
+import { CorporateIdentity } from 'app/pages/_identity/types/forms'
 
 export interface CorporateAddressProps {
   registeredAddress: CorporateIdentity['companyAddress']

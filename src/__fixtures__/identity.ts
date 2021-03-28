@@ -1,12 +1,15 @@
 import { user } from './user'
 import { address, authorizationInfo } from './authorizer'
-import { CorporateIdentity, IndividualIdentity } from 'types/identity'
 import {
   DeclarationValue,
   IndividualDeclarations
 } from 'app/pages/identity/const/declarations'
 import { DataroomFile } from 'types/dataroomFile'
-import { IndividualIdentityFormValues } from 'app/pages/identity/components/types'
+import {
+  CorporateIdentity,
+  IndividualIdentity,
+  IndividualIdentityFormValues
+} from 'app/pages/_identity/types/forms'
 
 export const corporate: CorporateIdentity = {
   _id: '1',

@@ -1,9 +1,3 @@
-import {
-  CorporateIdentity,
-  Declaration,
-  DeclarationTemplate,
-  IndividualIdentity
-} from 'types/identity'
 import documents, { formatDocuments } from 'app/pages/identity/const/documents'
 import { DataroomFile, FormArray } from 'types/dataroomFile'
 import { Maybe } from 'types/util'
@@ -14,9 +8,13 @@ import {
   individualDeclarationsTemplate
 } from 'app/pages/identity/const/declarations'
 import {
+  CorporateIdentity,
   CorporateIdentityFormValues,
+  Declaration,
+  DeclarationTemplate,
+  IndividualIdentity,
   IndividualIdentityFormValues
-} from 'app/pages/identity/components/types'
+} from 'app/pages/_identity/types/forms'
 
 export type IdentityType = 'corporate' | 'individual'
 

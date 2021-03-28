@@ -2,11 +2,11 @@ import React from 'react'
 import { DeclarationHeader } from 'app/pages/identity/components/DeclarationHeader'
 import { Divider, Grid, ListItem, Typography } from '@material-ui/core'
 import { DeclarationFooter } from 'app/pages/identity/components/DeclarationFooter'
-import { DeclarationTemplate } from 'types/identity'
 import useStyles from 'app/pages/identity/components/DeclarationItem.styles'
 import { PrivacyPolicy } from 'app/pages/identity/components/PrivacyPolicy'
 import { TermsOfUse } from 'app/pages/identity/components/TermsOfUse'
 import { W8BEN } from 'app/pages/identity/components/W8BEN'
+import { DeclarationTemplate } from 'app/pages/_identity/types/forms'
 
 export interface DeclarationItemProps {
   template: DeclarationTemplate

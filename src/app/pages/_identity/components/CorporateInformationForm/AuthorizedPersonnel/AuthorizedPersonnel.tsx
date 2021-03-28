@@ -3,7 +3,7 @@ import { Grid, Button } from '@material-ui/core'
 import { PersonnelInformation } from 'app/pages/_identity/components/CorporateInformationForm/AuthorizedPersonnel/PersonnelInformation'
 import { AuthorizationDocuments } from 'app/pages/_identity/components/CorporateInformationForm/AuthorizedPersonnel/AuthorizationDocuments'
 import { FormSectionHeader } from 'app/pages/_identity/components/FormSectionHeader'
-import { Personnel } from 'types/identity'
+import { Personnel } from 'app/pages/_identity/types/forms'
 
 export interface AuthorizedPersonnelProps {
   fieldId: string

@@ -1,5 +1,4 @@
 import React from 'react'
-import { IndividualIdentity } from 'types/identity'
 import { Grid } from '@material-ui/core'
 import { Section } from 'app/pages/identity/components/Section'
 import { IndividualInfoView } from 'app/pages/identity/components/IndividualInfoView'
@@ -10,6 +9,7 @@ import { DeclarationView } from 'app/pages/identity/components/DeclarationView'
 import { useSetPageTitle } from 'app/hooks/useSetPageTitle'
 import { getPersonName } from 'helpers/strings'
 import { privateClassNames } from 'helpers/classnames'
+import { IndividualIdentity } from 'app/pages/_identity/types/forms'
 
 export interface IndividualViewProps {
   data: IndividualIdentity

@@ -1,11 +1,11 @@
 import React from 'react'
 import { useFormContext } from 'react-hook-form'
 import { booleanValueExtractor } from 'helpers/forms'
-import { AgreementsAndDisclosures } from 'types/identity'
 import { Grid, Link, Typography } from '@material-ui/core'
 import { Checkbox } from 'components/form/Checkbox'
 import { TypedField } from 'components/form/TypedField'
 import { FormSectionHeader } from 'app/components/DSO/components/FormSectionHeader'
+import { AgreementsAndDisclosures } from 'app/pages/_identity/types/forms'
 
 export const AgreementsAndDisclosuresFields = (): JSX.Element => {
   const { control } = useFormContext<AgreementsAndDisclosures>()

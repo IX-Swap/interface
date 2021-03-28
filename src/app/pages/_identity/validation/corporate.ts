@@ -1,4 +1,5 @@
 import {
+  Address,
   BeneficialOwnerFormValues,
   CorporateInvestorAgreementsFormValues,
   CorporateInvestorDeclarationFormValues,
@@ -9,7 +10,6 @@ import {
   RepresentativeFormValues
 } from 'app/pages/_identity/types/forms'
 import { DataroomFile } from 'types/dataroomFile'
-import { IdentityAddress } from 'types/identity'
 import { addressSchema } from 'validation/shared'
 import * as yup from 'yup'
 
@@ -28,7 +28,7 @@ export const corporateInvestorInfoSchema = yup
     countryOfFormation: yup.string().required('Required'),
     companyAddress: addressSchema.required('Required'),
     isMailingAddressSame: yup.bool().required('Required'),
-    mailingAddress: yup.object<IdentityAddress>().when('isMailingAddressSame', {
+    mailingAddress: yup.object<Address>().when('isMailingAddressSame', {
       is: false,
       then: addressSchema.required('Required'),
       otherwise: yup.object().notRequired()
