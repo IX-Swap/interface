@@ -1,6 +1,6 @@
 import React from 'react'
 import { useAuth } from 'hooks/auth/useAuth'
-import { Grid, Button, Typography } from '@material-ui/core'
+import { Grid, Button, Typography, useTheme } from '@material-ui/core'
 import { AppRouterLinkComponent } from 'components/AppRouterLink'
 import { InvestRoute } from 'app/pages/invest/router/config'
 import { VSpacer } from 'components/VSpacer'
@@ -11,6 +11,7 @@ import { PageHeader } from 'app/components/PageHeader/PageHeader'
 
 export const InvestLanding = () => {
   const { user } = useAuth()
+  const theme = useTheme()
 
   return (
     <>
@@ -32,6 +33,7 @@ export const InvestLanding = () => {
             variant='outlined'
             size='large'
             disableElevation
+            style={{ color: theme.palette.primary.main }}
           >
             View my commitments
           </Button>

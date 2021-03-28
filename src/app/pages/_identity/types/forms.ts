@@ -1,4 +1,11 @@
-import { FundSource, TaxResidencies } from 'types/identity'
+import {
+  CorporateInvestorStatus,
+  FundSource,
+  IndividualInvestorStatus,
+  OptInAgreements,
+  OptOutRequirements,
+  TaxResidencies
+} from 'types/identity'
 import { DataroomFile } from '../../../../types/dataroomFile'
 
 export interface Address {
@@ -37,15 +44,10 @@ export interface IndividualTaxDeclarationFormValues {
   taxResidencies: TaxResidencies
 }
 
-export interface IndividualInvestorDeclarationFormValues {
-  consent: boolean
-  consequencesOfQualification: boolean
-  financialAsset: boolean
-  income: boolean
-  jointlyHeldAccount: boolean
-  personalAssets: boolean
-  rightToOptOut: boolean
-}
+export interface IndividualInvestorDeclarationFormValues
+  extends IndividualInvestorStatus,
+    OptOutRequirements,
+    OptInAgreements {}
 
 export interface IndividualDocumentsFormValues {
   evidenceOfAccreditation: DataroomFile[]
@@ -66,7 +68,7 @@ export interface InvestorCorporateInfoFormValues {
   legalEntityStatus: string
   countryOfFormation: string
   companyAddress: Address
-  mailingAddress: Address
+  mailingAddress?: Address
   isMailingAddressSame: boolean
   representatives: RepresentativeFormValues[]
   otherLegalEntityStatus?: string
@@ -81,25 +83,16 @@ export interface CorporateInvestorTaxDeclarationFormValues {
   taxResidencies: TaxResidencies
 }
 
-export interface CorporateInvestorDeclarationFormValues {
-  assets: boolean
-  trustee: boolean
-  accreditedShareholders: boolean
-  partnership: boolean
-  accreditedBeneficiaries: boolean
-  accreditedSettlors: boolean
-
-  consent: boolean
-  consequencesOfQualification: boolean
-  rightToOptOut: boolean
-}
+export interface CorporateInvestorDeclarationFormValues
+  extends CorporateInvestorStatus,
+    OptInAgreements,
+    OptOutRequirements {}
 
 export interface CorporateInvestorDocumentsFormValues {
   evidenceOfAccreditation: DataroomFile[]
   corporateDocuments: DataroomFile[]
   financialDocuments: DataroomFile[]
 }
-
 export interface RepresentativeFormValues {
   fullName: string
   designation: string

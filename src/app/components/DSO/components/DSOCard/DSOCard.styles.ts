@@ -27,16 +27,26 @@ export default makeStyles(theme => ({
     fontSize: '18px',
     fontWeight: 500,
     letterSpacing: 0,
-    backgroundColor: theme.palette.backgrounds.main,
+    backgroundColor:
+      theme.palette.type === 'light'
+        ? theme.palette.backgrounds.default
+        : 'initial',
 
     [theme.breakpoints.up('md')]: {
-      backgroundColor: theme.palette.backgrounds.secondary
+      backgroundColor:
+        theme.palette.type === 'light'
+          ? theme.palette.backgrounds.light
+          : 'initial'
     }
   },
   content: {
     display: 'flex',
     flexDirection: 'column',
     flex: '1 0 auto',
-    padding: theme.spacing(4)
+    padding: theme.spacing(4),
+    backgroundColor:
+      theme.palette.type === 'light'
+        ? 'initial'
+        : theme.palette.backgrounds.lighter
   }
 }))

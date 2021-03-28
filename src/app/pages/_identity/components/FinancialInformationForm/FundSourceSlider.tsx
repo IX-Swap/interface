@@ -1,10 +1,11 @@
 import React, { useEffect } from 'react'
 import { TypedField } from 'components/form/TypedField'
 import { sliderValueExtractor } from 'helpers/forms'
-import { Box, Slider } from '@material-ui/core'
+import { Box, Slider, useTheme } from '@material-ui/core'
 import { useFormContext } from 'react-hook-form'
 import { SliderTooltip } from 'app/pages/_identity/components/FinancialInformationForm/SliderTooltip'
 import { FundSource } from 'types/identity'
+import { useFormError } from 'hooks/useFormError'
 
 export interface FundSourceSliderProps {
   field: Partial<FundSource>
@@ -17,6 +18,8 @@ export const FundSourceSlider = ({ field, index }: FundSourceSliderProps) => {
     `sourceOfFund[${index}].checked`,
     false
   )
+  const theme = useTheme()
+  const { hasError } = useFormError(`sourceOfFund[${index}].value`)
 
   useEffect(() => {
     if (!isChecked) {
@@ -34,6 +37,13 @@ export const FundSourceSlider = ({ field, index }: FundSourceSliderProps) => {
         label={field.name ?? ''}
         defaultValue={field.value}
         control={control}
+        style={{
+          color: !isChecked
+            ? theme.palette.grey[400]
+            : hasError
+            ? theme.palette.error.main
+            : theme.palette.primary.main
+        }}
         min={0}
         max={100}
         valueLabelDisplay='auto'

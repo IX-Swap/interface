@@ -4,13 +4,13 @@ export const useStyles = makeStyles(theme => ({
   container: {
     width: '100vw',
     height: '100vh',
-    backgroundColor: theme.palette.backgrounds.secondary,
+    backgroundColor: theme.palette.backgrounds.light,
     position: 'relative'
   },
   formContainer: {
     display: 'grid',
     alignItems: 'center',
-    backgroundColor: theme.palette.backgrounds.main,
+    backgroundColor: theme.palette.backgrounds.default,
     border: `1px solid ${theme.palette.divider}`,
     borderRight: 'none',
     borderTopLeftRadius: theme.shape.borderRadius,

@@ -1,15 +1,15 @@
 import React from 'react'
 import { MutationResultPair, useMutation } from 'react-query'
-import { Button } from '@material-ui/core'
+import { Button, ButtonProps } from '@material-ui/core'
 import { useFormContext } from 'react-hook-form'
-export interface SaveButtonProps {
+export interface SaveButtonProps extends ButtonProps {
   step: number
   transformData: any
   mutation: MutationResultPair<any, any, any, any>
 }
 
 export const SaveButton = (props: SaveButtonProps) => {
-  const { step, mutation, transformData } = props
+  const { step, mutation, transformData, children, ...rest } = props
   const { watch } = useFormContext()
   const values = watch()
   const [save] = mutation
@@ -28,12 +28,13 @@ export const SaveButton = (props: SaveButtonProps) => {
 
   return (
     <Button
+      {...rest}
       variant='outlined'
       color='primary'
       onClick={async () => void handleClick()}
       disabled={isLoading}
     >
-      Save & Finish Later
+      {children}
     </Button>
   )
 }

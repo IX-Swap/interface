@@ -7,6 +7,7 @@ import {
   IndividualIdentityFormValues
 } from 'app/pages/identity/components/types'
 import User from 'types/user'
+import { AuthorizableStatus } from 'types/util'
 
 export interface IdentityAddress {
   line1: string
@@ -130,17 +131,17 @@ export interface OptOutRequirements {
   allServices: boolean
 }
 
-export interface IndividualInvestorStatus extends OptOutRequirements {
-  consent: boolean
-  consequencesOfQualification: boolean
+export interface OptInAgreements {
+  optInAgreements: boolean
+}
+
+export interface IndividualInvestorStatus {
   financialAsset: boolean
   income: boolean
   jointlyHeldAccount: boolean
   personalAssets: boolean
-  rightToOptOut: boolean
 }
-
-export interface CorporateInvestorStatus extends OptOutRequirements {
+export interface CorporateInvestorStatus {
   assets: boolean
   trustee: boolean
   accreditedShareholders: boolean
@@ -148,44 +149,28 @@ export interface CorporateInvestorStatus extends OptOutRequirements {
   accreditedBeneficiaries: boolean
   accreditedSettlors: boolean
 }
+export interface IdentityDeclarations {
+  tax: { fatca: boolean }
+  investorsStatus: IndividualInvestorStatus &
+    CorporateInvestorStatus &
+    OptInAgreements &
+    OptOutRequirements
+  agreements: {
+    investor: boolean
+    custody: boolean
+    disclosure: boolean
+  }
+}
 
 export interface BaseIdentity {
   _id: string
-  status: 'Rejected' | 'Authorized' | 'Submitted' | 'Approved' | undefined
+  status: AuthorizableStatus
   user: User
   createdAt: string
   updatedAt: string
   documents: DataroomFile[]
-  declarations: {
-    tax: { fatca: boolean }
-    investorsStatus: IndividualInvestorStatus & CorporateInvestorStatus
-    agreements: {
-      investor: boolean
-      custody: boolean
-      disclosure: boolean
-    }
-  }
+  declarations: IdentityDeclarations
   step?: number
-}
-
-export interface IdentityDeclarations {
-  declarations: {
-    tax: { fatca: boolean }
-    investorsStatus: {
-      consent: boolean
-      consequencesOfQualification: boolean
-      financialAsset: boolean
-      income: boolean
-      jointlyHeldAccount: boolean
-      personalAssets: boolean
-      rightToOptOut: boolean
-    }
-    agreements: {
-      investor: boolean
-      custody: boolean
-      disclosure: boolean
-    }
-  }
 }
 
 export interface DeclarationTemplate {
@@ -208,8 +193,7 @@ export type IndividualIdentity = BaseIdentity &
 export type CorporateIdentity = BaseIdentity &
   CorporateFields &
   Authorizable &
-  TaxDeclaration &
-  IdentityDeclarations
+  TaxDeclaration
 
 export interface GetIndividualIdentityArgs {
   userId: string

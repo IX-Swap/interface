@@ -5,7 +5,7 @@ import { SentryRoute } from 'components/SentryRoute'
 import { useAppInit } from 'hooks/useAppInit'
 import { ReactQueryDevtools } from 'react-query-devtools'
 import { Redirect, Switch } from 'react-router-dom'
-import { Page404 } from 'components/Page404'
+import { Page404 } from 'components/Page404/Page404'
 import { useGoogleAnalytics } from './hooks/useGoogleAnalytics'
 
 const AuthRoot = React.lazy(

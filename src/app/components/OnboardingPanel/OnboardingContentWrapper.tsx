@@ -9,6 +9,7 @@ import { useOnboardingJourneys } from 'app/components/OnboardingPanel/hooks/useO
 import { IdentityRoute } from 'app/pages/_identity/router/config'
 import { SecurityRoute } from 'app/pages/security/router/config'
 import { HomeRoute } from 'app/pages/home/router/config'
+import { LoadingFullScreen } from 'auth/components/LoadingFullScreen'
 
 export interface OnboardingContentWrapperProps {
   children: React.ReactNode
@@ -23,7 +24,10 @@ export const OnboardingContentWrapper = ({
   const {
     isIssuerJourneyCompleted,
     isInvestorJourneyCompleted,
-    isIndividualJourneyCompleted
+    isIndividualJourneyCompleted,
+    isInvestorJourneyStarted,
+    isIssuerJourneyStarted,
+    isIdentitiesLoaded
   } = useOnboardingJourneys()
 
   const onboardingBasePaths = [
@@ -32,22 +36,18 @@ export const OnboardingContentWrapper = ({
     IdentityRoute.list
   ]
 
-  // TODO: refactor this (possibly after routing refactoring task will be done)
   if (
-    (isIssuerJourneyCompleted && pathname.endsWith('issuer')) ||
-    (isInvestorJourneyCompleted &&
-      pathname.startsWith('/app/identity/corporates')) ||
-    (isIndividualJourneyCompleted &&
-      pathname.startsWith('/app/identity/individuals')) ||
-    (isIndividualJourneyCompleted &&
-      isInvestorJourneyCompleted &&
-      isIssuerJourneyCompleted &&
-      pathname.startsWith('/app/identity'))
+    isIndividualJourneyCompleted ||
+    (isInvestorJourneyCompleted && !isIssuerJourneyStarted) ||
+    (isIssuerJourneyCompleted && !isInvestorJourneyStarted)
   ) {
     return <>{children}</>
   }
-
   const pathnameBase = pathname.split('/').slice(0, 3).join('/')
+
+  if (!isIdentitiesLoaded) {
+    return <LoadingFullScreen />
+  }
 
   return onboardingBasePaths.includes(pathnameBase) ? (
     <Box display='flex' width='100%'>

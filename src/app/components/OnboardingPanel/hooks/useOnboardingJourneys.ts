@@ -2,7 +2,11 @@ import { useGetIdentities } from 'app/components/OnboardingPanel/hooks/useGetIde
 import { IdentityType } from 'app/pages/identity/utils'
 
 export const useOnboardingJourneys = () => {
-  const { individualIdentity, corporateIdentities } = useGetIdentities()
+  const {
+    individualIdentity,
+    corporateIdentities,
+    isIdentitiesLoaded
+  } = useGetIdentities()
 
   const investorIdentities = corporateIdentities.list.filter(
     identity => identity.type === 'investor'
@@ -73,6 +77,7 @@ export const useOnboardingJourneys = () => {
     investorIdentities,
     issuerIdentities,
     individualIdentity,
-    getIsJourneyCompleted
+    getIsJourneyCompleted,
+    isIdentitiesLoaded
   }
 }

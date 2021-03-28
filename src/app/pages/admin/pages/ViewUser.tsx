@@ -6,6 +6,7 @@ import { UserStatus } from 'app/pages/admin/components/UserStatus'
 import { IndividualAccountSettings } from 'app/pages/admin/components/IndividualAccountSettings'
 import { useParams } from 'react-router'
 import { PageHeader } from 'app/components/PageHeader/PageHeader'
+import { UserIdentitiesStatus } from 'app/pages/admin/components/UserIdentitiesStatus'
 
 export const ViewUser: React.FC = () => {
   const params = useParams<{ userId: string }>()
@@ -26,7 +27,14 @@ export const ViewUser: React.FC = () => {
             <UserDetails data={data} />
           </Grid>
           <Grid item xs={12} md={4}>
-            <UserStatus data={data} />
+            <Grid container spacing={3} direction='column'>
+              <Grid item>
+                <UserStatus data={data} />
+              </Grid>
+              <Grid item>
+                <UserIdentitiesStatus data={data} />
+              </Grid>
+            </Grid>
           </Grid>
         </Grid>
       </Grid>

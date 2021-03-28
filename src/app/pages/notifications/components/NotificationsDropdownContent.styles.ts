@@ -1,11 +1,12 @@
 import { makeStyles } from '@material-ui/core/styles'
 
-export const useStyles = makeStyles({
+export const useStyles = makeStyles(theme => ({
   container: {
     paddingLeft: 5,
     paddingRight: 5,
     paddingTop: 10,
-    paddingBottom: 5
+    paddingBottom: 5,
+    backgroundColor: theme.palette.backgrounds.light
   },
   list: {
     position: 'relative',
@@ -14,4 +15,4 @@ export const useStyles = makeStyles({
     marginTop: 10,
     marginBottom: 5
   }
-})
+}))

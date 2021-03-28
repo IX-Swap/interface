@@ -7,6 +7,7 @@ import {
   RepresentativeFormValues
 } from 'app/pages/_identity/types/forms'
 import { DataroomFile } from 'types/dataroomFile'
+import { IdentityAddress } from 'types/identity'
 import { addressSchema } from 'validation/shared'
 import * as yup from 'yup'
 
@@ -23,8 +24,12 @@ export const corporateInvestorInfoSchema = yup.object().shape<any>({
   }),
   countryOfFormation: yup.string().required('Required'),
   companyAddress: addressSchema.required('Required'),
-  mailingAddress: addressSchema.required('Required'),
   isMailingAddressSame: yup.bool().required('Required'),
+  mailingAddress: yup.object<IdentityAddress>().when('isMailingAddressSame', {
+    is: false,
+    then: addressSchema.required('Required'),
+    otherwise: yup.object().notRequired()
+  }),
   representatives: yup
     .array<RepresentativeFormValues>()
     .of(
@@ -125,32 +130,39 @@ export const corporateInvestorStatusDeclarationSchema = yup
       .required('Required'),
     partnership: yup.bool().oneOf([true, false]).required('Required'),
 
-    rightToOptOut: yup.bool().oneOf([true]).required('Required'),
-    consent: yup.bool().oneOf([true]).required('Required'),
-    consequencesOfQualification: yup.bool().oneOf([true]).required('Required')
+    optInAgreements: yup.bool().oneOf([true]).required('Required'),
+
+    primaryOfferingServices: yup.bool(),
+    digitalSecurities: yup.bool(),
+    digitalSecuritiesIssuance: yup.bool(),
+    allServices: yup.bool()
   })
-  .test('Investor Declaration Validation', 'Error!', function (values) {
-    if (values === undefined || values === null) {
-      return false
+  .test(
+    'investorDeclarations',
+    'Please choose at least one option under "Investor Status Declaration" section',
+    function (values) {
+      if (values === undefined || values === null) {
+        return false
+      }
+
+      const financialDeclarations = Object.entries(values)
+        .filter(([key]) => {
+          return (
+            key === 'assets' ||
+            key === 'trustee' ||
+            key === 'accreditedBeneficiaries' ||
+            key === 'accreditedSettlors' ||
+            key === 'accreditedShareholders' ||
+            key === 'partnership'
+          )
+        })
+        .map(([_key, value]) => value)
+
+      const result = financialDeclarations.every(value => value === false)
+
+      return !result
     }
-
-    const financialDeclarations = Object.entries(values)
-      .filter(([key, value]) => {
-        return (
-          key === 'assets' ||
-          key === 'trustee' ||
-          key === 'accreditedBeneficiaries' ||
-          key === 'accreditedSettlors' ||
-          key === 'accreditedShareholders' ||
-          key === 'partnership'
-        )
-      })
-      .map(([_key, value]) => value)
-
-    const result = financialDeclarations.every(value => value === false)
-
-    return !result
-  })
+  )
 
 export const corporateInvestorDocumentsSchema = yup
   .object()
@@ -162,6 +174,11 @@ export const corporateInvestorDocumentsSchema = yup
     corporateDocuments: yup.array<DataroomFile>().min(1).required('Required'),
     financialDocuments: yup.array<DataroomFile>().min(1).required('Required')
   })
+
+export const corporateIssuerDocumentsSchema = yup.object().shape({
+  corporateDocuments: yup.array<DataroomFile>().min(1).required('Required'),
+  financialDocuments: yup.array<DataroomFile>().min(1).required('Required')
+})
 
 export const corporateInvestorAgreementsSchema = yup
   .object()
