@@ -5,19 +5,20 @@ import { Checkbox } from 'components/form/Checkbox'
 import { TypedField } from 'components/form/TypedField'
 import { useFormContext } from 'react-hook-form'
 
-// TODO Change or delete after added new interfaces
 export interface DeclarationsListItem {
   label: string | JSX.Element
   name: string
 }
 
-// TODO Change after added new interfaces
-export interface DeclarationsListProps {
+export interface DeclarationsListFieldsProps {
   title?: string
   data: DeclarationsListItem[]
 }
 
-export const DeclarationsList = ({ title, data }: DeclarationsListProps) => {
+export const DeclarationsListFields = ({
+  title,
+  data
+}: DeclarationsListFieldsProps) => {
   const { control } = useFormContext()
 
   return (

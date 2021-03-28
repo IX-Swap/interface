@@ -20,8 +20,8 @@ describe('IndividualUploadDocumentsForm', () => {
     render(<CorporateUploadDocumentsForm />)
   })
 
-  it('renders Upload fields correctly', () => {
-    render(<CorporateUploadDocumentsForm />)
+  it('renders Upload fields correctly for the investor', () => {
+    render(<CorporateUploadDocumentsForm corporateType='investor' />)
 
     expect(UploadDocumentField).toHaveBeenNthCalledWith(
       1,
@@ -46,6 +46,28 @@ describe('IndividualUploadDocumentsForm', () => {
       expect.objectContaining({
         name: 'evidenceOfAccreditation',
         label: 'Evidence of Accreditation'
+      }),
+      {}
+    )
+  })
+
+  it('renders Upload fields correctly for the issuer', () => {
+    render(<CorporateUploadDocumentsForm corporateType='issuer' />)
+
+    expect(UploadDocumentField).toHaveBeenNthCalledWith(
+      1,
+      expect.objectContaining({
+        name: 'corporateDocuments',
+        label: 'Corporate Documents'
+      }),
+      {}
+    )
+
+    expect(UploadDocumentField).toHaveBeenNthCalledWith(
+      2,
+      expect.objectContaining({
+        name: 'financialDocuments',
+        label: 'Financial Documents'
       }),
       {}
     )

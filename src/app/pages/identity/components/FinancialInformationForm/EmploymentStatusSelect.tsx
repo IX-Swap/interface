@@ -4,10 +4,11 @@ import { MenuItem, Select } from '@material-ui/core'
 const employmentStatusList = [
   'Full-Time Employee',
   'Part-Time Employee',
-  'Business',
+  'Own Business',
   'Government Employee',
   'Freelancers',
-  'Consultants'
+  'Consultants',
+  'Self-Employed'
 ]
 
 export const EmploymentStatusSelect = (props: any) => {

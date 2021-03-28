@@ -24,10 +24,13 @@ export default makeStyles(theme => ({
     padding: theme.spacing(3),
     paddingLeft: theme.spacing(2),
     paddingRight: theme.spacing(2),
-    backgroundColor: theme.palette.backgrounds.secondary,
+    backgroundColor: theme.palette.backgrounds.light,
 
     [theme.breakpoints.up('md')]: {
       maxWidth: 205
     }
+  },
+  link: {
+    color: theme.palette.primary.main
   }
 }))

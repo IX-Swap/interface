@@ -31,9 +31,13 @@ export const useStyles = makeStyles(theme => ({
     transition: theme.transitions.create('right', {
       easing: theme.transitions.easing.easeOut,
       duration: theme.transitions.duration.enteringScreen
-    })
+    }),
+    backgroundColor: theme.palette.backgrounds.light
   },
   paperShift: {
     right: 30
+  },
+  button: {
+    color: theme.palette.sidebar.activeColor
   }
 }))

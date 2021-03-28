@@ -27,6 +27,11 @@ export interface UpdateCustomFieldArgs {
   }
 }
 
+export interface UserIdentityCreatedStatus {
+  issuers: boolean
+  investors: boolean
+  individual: boolean
+}
 export interface ManagedUser {
   _id: string
   enabled: boolean
@@ -40,6 +45,7 @@ export interface ManagedUser {
   resetExpiresOn?: string | null
   twoFactorAuth: boolean
   isResetActive: boolean
+  identity: UserIdentityCreatedStatus
 }
 
 export interface Browser {

@@ -5,7 +5,11 @@ export const useStyles = makeStyles(theme => ({
     width: 10,
     height: 10,
     background: (isUnread: boolean) =>
-      isUnread ? theme.palette.backgrounds.tertiary : 'transparent',
+      isUnread
+        ? 'transparent'
+        : theme.palette.type === 'light'
+        ? 'rgba(0, 0, 0, 0.26)'
+        : theme.palette.primary.main,
     minWidth: 0,
     padding: 0
   }

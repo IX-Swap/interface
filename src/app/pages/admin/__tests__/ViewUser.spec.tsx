@@ -21,6 +21,10 @@ jest.mock('app/pages/admin/components/IndividualAccountSettings', () => ({
   IndividualAccountSettings: jest.fn(() => null)
 }))
 
+jest.mock('app/pages/admin/components/UserIdentitiesStatus', () => ({
+  UserIdentitiesStatus: jest.fn(() => null)
+}))
+
 describe('ViewUser', () => {
   const params = { userId: managedUser._id }
   const objResponse = generateQueryResult({

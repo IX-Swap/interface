@@ -47,7 +47,9 @@ export const EmploymentField = () => {
         </Grid>
       </Grid>
       <Grid item>
-        <Typography variant='subtitle1'>Annual Net Income in SGD:</Typography>
+        <Typography variant='subtitle1'>
+          Income in SGD in preceding 12 months:
+        </Typography>
         <VSpacer size='small' />
         <Grid container spacing={6}>
           <Grid item xs={12} md={4}>
@@ -56,7 +58,7 @@ export const EmploymentField = () => {
               control={control}
               variant='outlined'
               name='annualIncome'
-              label='Annual Income'
+              label='Please select one'
               fullWidth
             />
           </Grid>

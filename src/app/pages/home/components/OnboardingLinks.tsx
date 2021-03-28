@@ -4,23 +4,22 @@ import { OnboardingLink } from 'app/pages/home/components/OnboardingLink'
 import { ReactComponent as IndividualIcon } from 'assets/icons/navigation/individual.svg'
 import { ReactComponent as CorporateIcon } from 'assets/icons/navigation/corporate.svg'
 import { ReactComponent as FundraiseIcon } from 'assets/icons/navigation/asset-balance.svg'
-import { useIndividualIdentity } from 'hooks/identity/useIndividualIdentity'
-import { useAllCorporates } from 'app/pages/_identity/hooks/useAllCorporates'
 import { IdentityRoute } from 'app/pages/_identity/router/config'
+import { useOnboardingJourneys } from 'app/components/OnboardingPanel/hooks/useOnboardingJourneys'
 
 export const OnboardingLinks = () => {
   const {
-    data: individualIdentity,
-    isLoading: individualIdentityIsLoading
-  } = useIndividualIdentity()
-
-  const {
-    data: corprateIdentities,
-    isLoading: corprateIdentitiesIsLoading
-  } = useAllCorporates({})
+    isIndividualJourneyCompleted,
+    isInvestorJourneyCompleted,
+    isIssuerJourneyCompleted,
+    individualIdentity,
+    investorIdentities,
+    isIdentitiesLoaded,
+    issuerIdentities
+  } = useOnboardingJourneys()
 
   const individualLink =
-    !individualIdentityIsLoading && individualIdentity !== undefined
+    isIdentitiesLoaded && individualIdentity !== undefined
       ? {
           to: IdentityRoute.editIndividual,
           params: {
@@ -29,18 +28,11 @@ export const OnboardingLinks = () => {
           }
         }
       : { to: IdentityRoute.createIndividual }
-  const isIndividualDone =
-    !individualIdentityIsLoading &&
-    individualIdentity !== undefined &&
-    individualIdentity.authorizations?.some(
-      ({ status }) => status === 'Approved'
-    )
 
-  const investorIdentities = corprateIdentities.list.filter(
-    identity => identity.type === 'investor'
-  )
   const investorLink =
-    !corprateIdentitiesIsLoading && investorIdentities.length > 0
+    isIdentitiesLoaded &&
+    investorIdentities !== undefined &&
+    investorIdentities.length > 0
       ? {
           to: IdentityRoute.editCorporate,
           params: {
@@ -49,18 +41,11 @@ export const OnboardingLinks = () => {
           }
         }
       : { to: IdentityRoute.createCorporate }
-  const isInvestorDone =
-    !corprateIdentitiesIsLoading &&
-    investorIdentities.length > 0 &&
-    investorIdentities[0].authorizations?.some(
-      ({ status }) => status === 'Approved'
-    )
 
-  const issuerIdentities = corprateIdentities.list.filter(
-    identity => identity.type === 'issuer'
-  )
   const issuerLink =
-    !corprateIdentitiesIsLoading && issuerIdentities.length > 0
+    isIdentitiesLoaded &&
+    issuerIdentities !== undefined &&
+    issuerIdentities.length > 0
       ? {
           to: IdentityRoute.editIssuer,
           params: {
@@ -69,43 +54,48 @@ export const OnboardingLinks = () => {
           }
         }
       : { to: IdentityRoute.createIssuer }
-  const isIssuerDone =
-    !corprateIdentitiesIsLoading &&
-    issuerIdentities.length > 0 &&
-    issuerIdentities[0].authorizations?.some(
-      ({ status }) => status === 'Approved'
+
+  const renderIndividualOnboardingLink = () => {
+    if (isInvestorJourneyCompleted || isIssuerJourneyCompleted) {
+      return null
+    }
+
+    return (
+      <>
+        <OnboardingLink
+          {...individualLink}
+          label='Individual'
+          icon={IndividualIcon}
+          color='#90A30F'
+          done={isIndividualJourneyCompleted}
+        />
+        <Box mx={1.5} />
+      </>
     )
+  }
 
-  return (
-    <Box display='flex'>
-      <Box>
-        <Typography variant='h4'>Invest</Typography>
-        <Box my={2.5} />
-        <Box display='flex'>
-          <OnboardingLink
-            {...individualLink}
-            label='Individual'
-            icon={IndividualIcon}
-            color='#90A30F'
-            done={isIndividualDone}
-          />
-          <Box mx={1.5} />
-          <OnboardingLink
-            {...investorLink}
-            label='Corporate'
-            color='#E65133'
-            icon={CorporateIcon}
-            done={isInvestorDone}
-          />
-        </Box>
-      </Box>
+  const renderInvestorOnboardingLink = () => {
+    if (isIndividualJourneyCompleted) {
+      return null
+    }
 
-      <Box mx={1.5} />
+    return (
+      <OnboardingLink
+        {...investorLink}
+        label='Corporate'
+        color='#E65133'
+        icon={CorporateIcon}
+        done={isInvestorJourneyCompleted}
+      />
+    )
+  }
 
-      <Hidden mdDown>
-        <Box mx={16} />
-      </Hidden>
+  const renderFundraisingOnboardingLinkBlock = () => {
+    if (isIndividualJourneyCompleted) {
+      return null
+    }
 
+    return (
       <Box>
         <Typography variant='h4'>Raise Capital</Typography>
         <Box my={2.5} />
@@ -114,9 +104,27 @@ export const OnboardingLinks = () => {
           label='Fundraise'
           icon={FundraiseIcon}
           color='#2b78fd'
-          done={isIssuerDone}
+          done={isIssuerJourneyCompleted}
         />
       </Box>
+    )
+  }
+
+  return (
+    <Box display='flex'>
+      <Box>
+        <Typography variant='h4'>Invest</Typography>
+        <Box my={2.5} />
+        <Box display='flex'>
+          {renderIndividualOnboardingLink()}
+          {renderInvestorOnboardingLink()}
+        </Box>
+      </Box>
+      <Box mx={1.5} />
+      <Hidden mdDown>
+        <Box mx={16} />
+      </Hidden>
+      {renderFundraisingOnboardingLinkBlock()}
     </Box>
   )
 }

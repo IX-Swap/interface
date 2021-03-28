@@ -1,8 +1,7 @@
 import { IdentityType } from 'app/pages/identity/utils'
+import { AuthorizableStatus } from 'types/util'
 
-export type IdentityStatus = 'Rejected' | 'Approved' | 'Submitted' | 'Draft'
-
-export const getIdentityStatus = (status?: IdentityStatus) => {
+export const getIdentityStatus = (status?: AuthorizableStatus) => {
   switch (status) {
     case 'Rejected':
       return ['Rejected']
@@ -22,7 +21,7 @@ export const defaultOnboardingSteps = [
 
 export const getIdentityOnboardingSteps = (
   indentityType: IdentityType,
-  status?: IdentityStatus,
+  status?: AuthorizableStatus,
   asIssuer?: boolean
 ) => [
   defaultOnboardingSteps[0],

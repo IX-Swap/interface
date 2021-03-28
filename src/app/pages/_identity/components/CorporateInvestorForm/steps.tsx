@@ -61,7 +61,7 @@ export const corporateInvestorFormSteps = [
     getFormValues: getCorporateInvestorDocumentsFormValues,
     getRequestPayload: getCorporateInvestorDocumentsRequestPayload,
     validationSchema: corporateInvestorDocumentsSchema,
-    component: () => <CorporateUploadDocumentsForm />
+    component: () => <CorporateUploadDocumentsForm corporateType='investor' />
   },
   {
     label: 'Review & Submit',

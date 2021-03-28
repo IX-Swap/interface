@@ -1,12 +1,14 @@
 import { Grid, Box } from '@material-ui/core'
 import { FormStepperStep } from 'app/components/FormStepper/FormStepper'
-import { MoveButton } from 'app/components/FormStepper/MoveButton'
+import { BackButton } from 'app/components/FormStepper/BackButton'
 import { SaveButton } from 'app/components/FormStepper/SaveButton'
 import { Form } from 'components/form/Form'
 import React, { createElement, Fragment } from 'react'
 import { MutationResultPair } from 'react-query'
 import { SubmitButton } from './SubmitButton'
 import { VSpacer } from 'components/VSpacer'
+import { NextButton } from 'app/components/FormStepper/NextButton'
+import { ScrollToTop } from 'components/ScrollToTop'
 
 export interface FormStepProps {
   step: FormStepperStep
@@ -47,10 +49,39 @@ export const FormStep = (props: FormStepProps) => {
   const isLastStep = activeStep === totalSteps - 1
   const saveMutation = isEditing ? editMutation : createMutation
 
+  const handleSubmit = async (values: any) => {
+    if (!shouldSaveOnMove) {
+      setActiveStep(activeStep + 1)
+      return
+    }
+
+    const isNew = data === undefined
+    const mutation = isNew
+      ? createMutation[0]
+      : isLastStep
+      ? submitMutation[0]
+      : editMutation[0]
+    const shouldSaveStep = shouldSaveOnMove && !isLastStep
+    const payload = step.getRequestPayload(values)
+
+    const onSubmitSuccess = (data: any) => {
+      if (data?.message === 'OK' && !isLastStep) {
+        setActiveStep(activeStep + 1)
+      }
+    }
+
+    if (shouldSaveStep) {
+      payload.step = activeStep + 1
+    }
+
+    return await mutation(payload).then(onSubmitSuccess)
+  }
+
   return (
     <Form
       defaultValues={step.getFormValues(data)}
       validationSchema={step.validationSchema}
+      onSubmit={handleSubmit}
     >
       <Grid item>{createElement(step.component)}</Grid>
       <VSpacer size='large' />
@@ -59,18 +90,16 @@ export const FormStep = (props: FormStepProps) => {
         <Box display='flex'>
           {hasPrevStep && (
             <Fragment>
-              <MoveButton
-                nextStep={activeStep - 1}
-                onClick={setActiveStep}
-                shouldUpdateStep={
-                  hasPrevStep && !isLastStep && shouldSaveOnMove
-                }
+              <BackButton
+                mutation={editMutation}
                 getRequestPayload={step.getRequestPayload}
-                mutation={saveMutation}
-                isBack
+                shouldSaveStep={shouldSaveOnMove}
+                nextStep={activeStep - 1}
+                setActiveStep={setActiveStep}
+                isLastStep={isLastStep}
               >
                 Back
-              </MoveButton>
+              </BackButton>
               <Box mx={1} />
             </Fragment>
           )}
@@ -81,31 +110,19 @@ export const FormStep = (props: FormStepProps) => {
                 step={index}
                 transformData={step.getRequestPayload}
                 mutation={saveMutation}
-              />
+              >
+                {shouldSaveOnMove ? 'Save & Finish Later' : 'Update'}
+              </SaveButton>
               <Box mx={1} />
             </Fragment>
           )}
 
-          {hasNextStep && (
-            <MoveButton
-              variant={'contained'}
-              nextStep={activeStep + 1}
-              onClick={setActiveStep}
-              shouldUpdateStep={hasNextStep && shouldSaveOnMove}
-              getRequestPayload={step.getRequestPayload}
-              mutation={saveMutation}
-            >
-              Next
-            </MoveButton>
-          )}
+          {hasNextStep && <NextButton />}
 
-          {isLastStep && (
-            <SubmitButton mutation={submitMutation} data={data}>
-              Submit
-            </SubmitButton>
-          )}
+          {isLastStep && <SubmitButton mutation={submitMutation} data={data} />}
         </Box>
       </Grid>
+      <ScrollToTop />
     </Form>
   )
 }

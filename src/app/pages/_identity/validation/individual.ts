@@ -5,7 +5,6 @@ import {
   IndividualAgreementsFormValues,
   IndividualDocumentsFormValues,
   IndividualFinancialInfoFormValues,
-  IndividualInvestorDeclarationFormValues,
   IndividualPersonalInfoFormValues,
   IndividualTaxDeclarationFormValues
 } from 'app/pages/_identity/types/forms'
@@ -46,12 +45,15 @@ export const financialInfoSchema = yup
               .when('checked', {
                 is: true,
                 then: yup.number().min(1).max(100).required('Required'),
-                otherwise: yup.number().oneOf([0]).required('Required')
+                otherwise: yup.number()
               })
               .required('Required')
           })
           .required()
       )
+      .test('noFundSourceSelected', 'Error', function (value) {
+        return Boolean(value?.some(fundSource => fundSource.checked))
+      })
       .required('Required')
   })
 
@@ -66,7 +68,19 @@ export const taxDeclarationSchema = yup
         is: 'yes',
         then: yup.array().of(
           yup.object({
-            taxIdentificationNumber: yup.string().required('Required')
+            taxIdentificationNumber: yup
+              .string()
+              .required('Required')
+              .test('nric', 'Invalid FIN/NRIC', function (
+                value: string | null | undefined
+              ) {
+                if (value === undefined || value === null) {
+                  return false
+                }
+
+                const isValid = /^[STFG]\d{7}[A-Z]$/.test(value)
+                return isValid
+              })
           })
         ),
         otherwise: yup.array().of(
@@ -104,32 +118,37 @@ export const individualInvestorStatusDeclarationSchema = yup
     personalAssets: yup.bool().required('Required'),
     jointlyHeldAccount: yup.bool().required('Required'),
 
-    rightToOptOut: yup.bool().oneOf([true]).required('Required'),
-    consent: yup.bool().oneOf([true]).required('Required'),
-    consequencesOfQualification: yup.bool().oneOf([true]).required('Required')
+    optInAgreements: yup.bool().oneOf([true]).required('Required'),
+
+    primaryOfferingServices: yup.bool(),
+    digitalSecurities: yup.bool(),
+    digitalSecuritiesIssuance: yup.bool(),
+    allServices: yup.bool()
   })
-  .test('Investor Declaration Validation', 'Error!', function (
-    values: IndividualInvestorDeclarationFormValues | null | undefined
-  ) {
-    if (values === undefined || values === null) {
-      return false
+  .test(
+    'investorDeclarations',
+    'Please choose at least one option under "Investor Status Declaration" section',
+    function (values) {
+      if (values === undefined || values === null) {
+        return false
+      }
+
+      const financialDeclarations = Object.entries(values)
+        .filter(([key]) => {
+          return (
+            key === 'financialAsset' ||
+            key === 'income' ||
+            key === 'personalAssets' ||
+            key === 'jointlyHeldAccount'
+          )
+        })
+        .map(([_key, value]) => value)
+
+      const result = financialDeclarations.every(value => value === false)
+
+      return !result
     }
-
-    const financialDeclarations = Object.entries(values)
-      .filter(([key, value]) => {
-        return (
-          key === 'financialAsset' ||
-          key === 'income' ||
-          key === 'personalAssets' ||
-          key === 'jointlyHeldAccount'
-        )
-      })
-      .map(([_key, value]) => value)
-
-    const result = financialDeclarations.every(value => value === false)
-
-    return !result
-  })
+  )
 
 export const individualInvestorDocumentsSchema = yup
   .object()

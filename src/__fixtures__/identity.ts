@@ -27,13 +27,11 @@ export const corporate: CorporateIdentity = {
     tax: { fatca: false },
     investorsStatus: {
       jointlyHeldAccount: false,
-      consequencesOfQualification: false,
       financialAsset: false,
       personalAssets: false,
-      consent: false,
       income: false,
-      rightToOptOut: false,
       assets: false,
+      optInAgreements: false,
       trustee: false,
       accreditedShareholders: false,
       partnership: false,
@@ -81,7 +79,11 @@ export const agreementsAndDisclosures = {
 export const individual: IndividualIdentity = {
   photo: '',
   _id: '1',
-  taxResidencies: [],
+  taxResidencies: [
+    {
+      residentOfSingapore: true
+    }
+  ],
   email: 'email@example.com',
   annualIncome: '100000',
   contactNumber: '1234567890',
@@ -111,12 +113,10 @@ export const individual: IndividualIdentity = {
     tax: { fatca: false },
     investorsStatus: {
       jointlyHeldAccount: false,
-      consequencesOfQualification: false,
       financialAsset: false,
       personalAssets: false,
-      consent: false,
       income: false,
-      rightToOptOut: false,
+      optInAgreements: false,
       assets: false,
       trustee: false,
       accreditedShareholders: false,

@@ -1,6 +1,6 @@
 import React from 'react'
 import { Grid, Typography } from '@material-ui/core'
-import { DeclarationsList } from 'app/pages/_identity/components/InvestorDeclarationForm/DeclarationsList/DeclartionsList'
+import { DeclarationsListFields } from 'app/pages/_identity/components/InvestorDeclarationForm/DeclarationsList/DeclartionsListFields'
 
 export const optOutRequirements = [
   {
@@ -41,7 +41,7 @@ export const OptOutInfoContent = () => {
           </Typography>
         </Grid>
         <Grid item container>
-          <DeclarationsList data={optOutRequirements} />
+          <DeclarationsListFields data={optOutRequirements} />
         </Grid>
         <Grid item>
           <Typography>
