@@ -2,24 +2,24 @@ import { IdentitiesList } from 'app/pages/_identity/pages/IdentitiesList/Identit
 import React from 'react'
 import { Switch } from 'react-router'
 import { IdentityRoute } from './config'
-import { NewAppRoute } from 'components/NewAppRoute'
+import { AppRoute } from 'components/AppRoute'
 import { IndividualRouter } from 'app/pages/_identity/router/IndividualRouter'
 import { CorporateRouter } from 'app/pages/_identity/router/CorporateRouter'
 
 export const IdentityRouter = () => {
   return (
     <Switch>
-      <NewAppRoute path={IdentityRoute.individual}>
+      <AppRoute path={IdentityRoute.individual}>
         <IndividualRouter />
-      </NewAppRoute>
+      </AppRoute>
 
-      <NewAppRoute path={IdentityRoute.corporate}>
+      <AppRoute path={IdentityRoute.corporate}>
         <CorporateRouter />
-      </NewAppRoute>
+      </AppRoute>
 
-      <NewAppRoute path={IdentityRoute.list}>
+      <AppRoute path={IdentityRoute.list}>
         <IdentitiesList />
-      </NewAppRoute>
+      </AppRoute>
     </Switch>
   )
 }

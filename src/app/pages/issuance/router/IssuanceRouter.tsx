@@ -8,62 +8,62 @@ import { IssuanceLanding } from 'app/pages/issuance/pages/IssuanceLanding'
 import { ViewDSO } from 'app/pages/issuance/pages/ViewDSO'
 import { IssuanceRoute } from 'app/pages/issuance/router/config'
 import { PreviewDSO } from 'app/pages/issuance/pages/PreviewDSO'
-import { NewAppRoute } from 'components/NewAppRoute'
+import { AppRoute } from 'components/AppRoute'
 
 export const IssuanceRouter = () => {
   return (
     <Switch>
-      <NewAppRoute
+      <AppRoute
         breadcrumb='Create Digital Security Offering'
         exact
         path={IssuanceRoute.create}
       >
         <CreateDSO />
-      </NewAppRoute>
+      </AppRoute>
 
-      <NewAppRoute
+      <AppRoute
         breadcrumb='View Digital Security Offering'
         exact
         path={IssuanceRoute.view}
       >
         <ViewDSO />
-      </NewAppRoute>
+      </AppRoute>
 
-      <NewAppRoute
+      <AppRoute
         breadcrumb='Edit Digital Security Offering'
         exact
         path={IssuanceRoute.edit}
       >
         <EditDSO />
-      </NewAppRoute>
+      </AppRoute>
 
-      <NewAppRoute
+      <AppRoute
         breadcrumb='Preview Digital Security Offering'
         exact
         path={IssuanceRoute.preview}
       >
         <PreviewDSO />
-      </NewAppRoute>
+      </AppRoute>
 
-      <NewAppRoute
+      <AppRoute
         breadcrumb='Deploy Token'
         exact
         path={IssuanceRoute.deployToken}
       >
         <DeployToken />
-      </NewAppRoute>
+      </AppRoute>
 
-      <NewAppRoute
+      <AppRoute
         breadcrumb='My Digital Security Offerings'
         exact
         path={IssuanceRoute.list}
       >
         <DSOList />
-      </NewAppRoute>
+      </AppRoute>
 
-      <NewAppRoute breadcrumb='Issuance' path={IssuanceRoute.insight}>
+      <AppRoute breadcrumb='Issuance' path={IssuanceRoute.insight}>
         <IssuanceLanding />
-      </NewAppRoute>
+      </AppRoute>
     </Switch>
   )
 }

@@ -12,70 +12,67 @@ import {
   authorizerLandingLinks,
   AuthorizerRoute
 } from 'app/pages/authorizer/router/config'
-import { NewAppRoute } from 'components/NewAppRoute'
+import { AppRoute } from 'components/AppRoute'
 import React from 'react'
 import { Switch } from 'react-router'
 
 export const AuthorizerRouter = () => {
   return (
     <Switch>
-      <NewAppRoute breadcrumb='Bank Accounts' path={AuthorizerRoute.banks}>
+      <AppRoute breadcrumb='Bank Accounts' path={AuthorizerRoute.banks}>
         <AuthorizerBanksRouter />
-      </NewAppRoute>
+      </AppRoute>
 
-      <NewAppRoute
-        breadcrumb='Cash Deposits'
-        path={AuthorizerRoute.cashDeposits}
-      >
+      <AppRoute breadcrumb='Cash Deposits' path={AuthorizerRoute.cashDeposits}>
         <AuthorizerCashDepositsRouter />
-      </NewAppRoute>
+      </AppRoute>
 
-      <NewAppRoute
+      <AppRoute
         breadcrumb='Cash Withdrawals'
         path={AuthorizerRoute.cashWithdrawals}
       >
         <AuthorizerCashWithdrawalsRouter />
-      </NewAppRoute>
+      </AppRoute>
 
-      <NewAppRoute
+      <AppRoute
         breadcrumb='Digital Security Withdrawals'
         path={AuthorizerRoute.dsWithdrawals}
       >
         <AuthorizerDSWithdrwalsRouter />
-      </NewAppRoute>
+      </AppRoute>
 
-      <NewAppRoute
+      <AppRoute
         breadcrumb='Individual Identities'
         path={AuthorizerRoute.individualIdentities}
       >
         <AuthorizerIndividualIdentitiesRouter />
-      </NewAppRoute>
+      </AppRoute>
 
-      <NewAppRoute
+      <AppRoute
         breadcrumb='Corporates Identities'
         path={AuthorizerRoute.corporateIdentities}
       >
         <AuthorizerCorporateIdentitiesRouter />
-      </NewAppRoute>
+      </AppRoute>
 
-      <NewAppRoute breadcrumb='Offerings' path={AuthorizerRoute.offerings}>
+      <AppRoute breadcrumb='Offerings' path={AuthorizerRoute.offerings}>
         <AuthorizerDSORouter />
-      </NewAppRoute>
+      </AppRoute>
 
-      <NewAppRoute breadcrumb='Commitments' path={AuthorizerRoute.commitments}>
+      <AppRoute breadcrumb='Commitments' path={AuthorizerRoute.commitments}>
         <AuthorizerCommitmentRouter />
-      </NewAppRoute>
+      </AppRoute>
 
-      <NewAppRoute
+      <AppRoute
         breadcrumb='Withdrawal Addresses'
         path={AuthorizerRoute.withdrawalAddresses}
       >
         <AuthorizerWithdrawalAddressesRouter />
-      </NewAppRoute>
+      </AppRoute>
 
-      <NewAppRoute exact path={AuthorizerRoute.landing}>
+      <AppRoute exact path={AuthorizerRoute.landing}>
         <LandingPage links={authorizerLandingLinks} title='Authorization' />
-      </NewAppRoute>
+      </AppRoute>
     </Switch>
   )
 }

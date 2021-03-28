@@ -1,6 +1,6 @@
 import React from 'react'
 import { Switch } from 'react-router'
-import { NewAppRoute } from 'components/NewAppRoute'
+import { AppRoute } from 'components/AppRoute'
 import { AuthorizerRoute } from 'app/pages/authorizer/router/config'
 import { DSWithdrawalAuthorization } from 'app/pages/authorizer/pages/dsWithdrawals/DSWithdrawalAuthorization'
 import { DSWithdrawals } from 'app/pages/authorizer/pages/dsWithdrawals/DSWithdrawals'
@@ -8,17 +8,17 @@ import { DSWithdrawals } from 'app/pages/authorizer/pages/dsWithdrawals/DSWithdr
 export const AuthorizerDSWithdrwalsRouter = () => {
   return (
     <Switch>
-      <NewAppRoute
+      <AppRoute
         exact
         breadcrumb='Digital Security Withdrawals'
         path='/app/authorizer/digital-security-withdrawals/:userId/:dsWithdrawalId/view'
       >
         <DSWithdrawalAuthorization />
-      </NewAppRoute>
+      </AppRoute>
 
-      <NewAppRoute exact path={AuthorizerRoute.dsWithdrawals}>
+      <AppRoute exact path={AuthorizerRoute.dsWithdrawals}>
         <DSWithdrawals />
-      </NewAppRoute>
+      </AppRoute>
     </Switch>
   )
 }

@@ -1,6 +1,6 @@
 import React from 'react'
 import { Switch } from 'react-router'
-import { NewAppRoute } from 'components/NewAppRoute'
+import { AppRoute } from 'components/AppRoute'
 import { AuthorizerRoute } from 'app/pages/authorizer/router/config'
 import { CashWithdrawalAuthorization } from 'app/pages/authorizer/pages/cashWithdrawals/CashWithdrawalAuthorization'
 import { CashWithdrawals } from 'app/pages/authorizer/pages/cashWithdrawals/CashWithdrawals'
@@ -8,17 +8,17 @@ import { CashWithdrawals } from 'app/pages/authorizer/pages/cashWithdrawals/Cash
 export const AuthorizerCashWithdrawalsRouter = () => {
   return (
     <Switch>
-      <NewAppRoute
+      <AppRoute
         exact
         breadcrumb='Cash Withdrawal Details'
         path='/app/authorizer/cash-withdrawals/:userId/:cashWithdrawalId/view'
       >
         <CashWithdrawalAuthorization />
-      </NewAppRoute>
+      </AppRoute>
 
-      <NewAppRoute exact path={AuthorizerRoute.cashWithdrawals}>
+      <AppRoute exact path={AuthorizerRoute.cashWithdrawals}>
         <CashWithdrawals />
-      </NewAppRoute>
+      </AppRoute>
     </Switch>
   )
 }

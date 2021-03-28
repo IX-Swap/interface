@@ -1,23 +1,20 @@
 import { CommitmentFormWrapper } from 'app/pages/invest/components/CommitmentFormWrapper'
 import { InvestRoute } from 'app/pages/invest/router/config'
 import { ViewDSO } from 'app/pages/invest/pages/ViewDSO'
-import { NewAppRoute } from 'components/NewAppRoute'
+import { AppRoute } from 'components/AppRoute'
 import React from 'react'
 import { Switch } from 'react-router'
 
 export const InvestDSORouter = () => {
   return (
     <Switch>
-      <NewAppRoute
-        breadcrumb='Make Commitment'
-        path={InvestRoute.makeInvestment}
-      >
+      <AppRoute breadcrumb='Make Commitment' path={InvestRoute.makeInvestment}>
         <CommitmentFormWrapper />
-      </NewAppRoute>
+      </AppRoute>
 
-      <NewAppRoute path={InvestRoute.view}>
+      <AppRoute path={InvestRoute.view}>
         <ViewDSO />
-      </NewAppRoute>
+      </AppRoute>
     </Switch>
   )
 }

@@ -5,26 +5,26 @@ import { LoginContainer } from 'auth/pages/login/LoginContainer'
 import { PasswordReset } from 'auth/pages/password-reset/PasswordReset'
 import { Register } from 'auth/pages/register/Register'
 import { AuthRoute } from 'auth/router/config'
-import { NewAppRoute } from 'components/NewAppRoute'
+import { AppRoute } from 'components/AppRoute'
 
 export const AuthRouter = () => {
   return (
     <Switch>
-      <NewAppRoute exact path={AuthRoute.login}>
+      <AppRoute exact path={AuthRoute.login}>
         <LoginContainer />
-      </NewAppRoute>
+      </AppRoute>
 
-      <NewAppRoute exact path={AuthRoute.signup}>
+      <AppRoute exact path={AuthRoute.signup}>
         <Register />
-      </NewAppRoute>
+      </AppRoute>
 
-      <NewAppRoute exact path={AuthRoute.passwordReset}>
+      <AppRoute exact path={AuthRoute.passwordReset}>
         <PasswordReset />
-      </NewAppRoute>
+      </AppRoute>
 
-      <NewAppRoute exact path={AuthRoute.confirm}>
+      <AppRoute exact path={AuthRoute.confirm}>
         <Confirmation />
-      </NewAppRoute>
+      </AppRoute>
 
       <Redirect to={AuthRoute.login} />
     </Switch>

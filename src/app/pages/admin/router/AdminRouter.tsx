@@ -2,28 +2,28 @@ import { AccessReports } from 'app/pages/admin/pages/AccessReports'
 import { Users } from 'app/pages/admin/pages/Users'
 import { ViewUser } from 'app/pages/admin/pages/ViewUser'
 import { AdminRoute } from 'app/pages/admin/router/config'
-import { NewAppRoute } from 'components/NewAppRoute'
+import { AppRoute } from 'components/AppRoute'
 import React from 'react'
 import { Switch } from 'react-router'
 
 export const AdminRouter = () => {
   return (
     <Switch>
-      <NewAppRoute breadcrumb='Users' exact path={AdminRoute.users}>
+      <AppRoute breadcrumb='Users' exact path={AdminRoute.users}>
         <Users />
-      </NewAppRoute>
+      </AppRoute>
 
-      <NewAppRoute
+      <AppRoute
         breadcrumb='Access Reports'
         exact
         path={AdminRoute.accessReports}
       >
         <AccessReports />
-      </NewAppRoute>
+      </AppRoute>
 
-      <NewAppRoute exact path={AdminRoute.view}>
+      <AppRoute exact path={AdminRoute.view}>
         <ViewUser />
-      </NewAppRoute>
+      </AppRoute>
     </Switch>
   )
 }

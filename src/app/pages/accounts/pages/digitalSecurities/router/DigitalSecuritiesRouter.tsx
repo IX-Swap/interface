@@ -4,22 +4,22 @@ import { DSList } from 'app/pages/accounts/pages/digitalSecurities/DSList/DSList
 import { DSWithdraw } from 'app/pages/accounts/pages/digitalSecurities/DSWithdraw/DSWithdraw'
 import { DSRoute } from 'app/pages/accounts/pages/digitalSecurities/router/config'
 import { Switch } from 'react-router-dom'
-import { NewAppRoute } from 'components/NewAppRoute'
+import { AppRoute } from 'components/AppRoute'
 
 export const DigitalSecuritiesRouter = () => {
   return (
     <Switch>
-      <NewAppRoute breadcrumb='Deposit' path={DSRoute.deposit}>
+      <AppRoute breadcrumb='Deposit' path={DSRoute.deposit}>
         <DSDeposit />
-      </NewAppRoute>
+      </AppRoute>
 
-      <NewAppRoute breadcrumb='Withdraw' path={DSRoute.withdraw}>
+      <AppRoute breadcrumb='Withdraw' path={DSRoute.withdraw}>
         <DSWithdraw />
-      </NewAppRoute>
+      </AppRoute>
 
-      <NewAppRoute path={DSRoute.list}>
+      <AppRoute path={DSRoute.list}>
         <DSList />
-      </NewAppRoute>
+      </AppRoute>
     </Switch>
   )
 }

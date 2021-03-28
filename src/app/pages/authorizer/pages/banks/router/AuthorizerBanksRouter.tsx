@@ -1,24 +1,24 @@
 import React from 'react'
 import { Banks } from 'app/pages/authorizer/pages/banks/Banks'
 import { Switch } from 'react-router'
-import { NewAppRoute } from 'components/NewAppRoute'
+import { AppRoute } from 'components/AppRoute'
 import { AuthorizerRoute } from 'app/pages/authorizer/router/config'
 import { BankAuthorization } from 'app/pages/authorizer/pages/banks/BankAuthorization'
 
 export const AuthorizerBanksRouter = () => {
   return (
     <Switch>
-      <NewAppRoute
+      <AppRoute
         exact
         breadcrumb='Bank Account Details'
         path='/app/authorizer/bank-accounts/:userId/:bankId/view'
       >
         <BankAuthorization />
-      </NewAppRoute>
+      </AppRoute>
 
-      <NewAppRoute exact path={AuthorizerRoute.banks}>
+      <AppRoute exact path={AuthorizerRoute.banks}>
         <Banks />
-      </NewAppRoute>
+      </AppRoute>
     </Switch>
   )
 }

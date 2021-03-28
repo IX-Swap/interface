@@ -6,7 +6,7 @@ export const useStyles = makeStyles(theme => ({
     padding: 0
   },
   header: {
-    padding: theme.spacing(0, 2),
+    padding: theme.spacing(5, 2, 0),
 
     [theme.breakpoints.up('md')]: {
       paddingLeft: 300

@@ -5,26 +5,26 @@ import { Switch } from 'react-router-dom'
 import { EditBank } from 'app/pages/accounts/pages/banks/pages/EditBank/EditBank'
 import { CreateBank } from 'app/pages/accounts/pages/banks/pages/CreateBank/CreateBank'
 import { BanksRoute } from 'app/pages/accounts/pages/banks/router/config'
-import { NewAppRoute } from 'components/NewAppRoute'
+import { AppRoute } from 'components/AppRoute'
 
 export const BanksRouter = () => {
   return (
     <Switch>
-      <NewAppRoute breadcrumb='View Bank' exact path={BanksRoute.view}>
+      <AppRoute breadcrumb='View Bank' exact path={BanksRoute.view}>
         <ViewBank />
-      </NewAppRoute>
+      </AppRoute>
 
-      <NewAppRoute breadcrumb='Edit Bank Details' exact path={BanksRoute.edit}>
+      <AppRoute breadcrumb='Edit Bank Details' exact path={BanksRoute.edit}>
         <EditBank />
-      </NewAppRoute>
+      </AppRoute>
 
-      <NewAppRoute breadcrumb='Add Bank Account' exact path={BanksRoute.create}>
+      <AppRoute breadcrumb='Add Bank Account' exact path={BanksRoute.create}>
         <CreateBank />
-      </NewAppRoute>
+      </AppRoute>
 
-      <NewAppRoute path={BanksRoute.list}>
+      <AppRoute path={BanksRoute.list}>
         <BanksList />
-      </NewAppRoute>
+      </AppRoute>
     </Switch>
   )
 }

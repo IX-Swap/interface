@@ -1,5 +1,5 @@
 import React from 'react'
-import { NewAppRoute } from 'components/NewAppRoute'
+import { AppRoute } from 'components/AppRoute'
 import { Switch } from 'react-router'
 import { IdentityRoute } from 'app/pages/_identity/router/config'
 import { ViewInvestor } from 'app/pages/_identity/pages/ViewInvestor/ViewInvestor'
@@ -12,53 +12,53 @@ import { ViewIssuer } from 'app/pages/_identity/pages/ViewIssuer/ViewIssuer'
 export const CorporateRouter = () => {
   return (
     <Switch>
-      <NewAppRoute
+      <AppRoute
         breadcrumb='View Corporate Investor'
         exact
         path={IdentityRoute.viewCorporate}
       >
         <ViewInvestor />
-      </NewAppRoute>
+      </AppRoute>
 
-      <NewAppRoute
+      <AppRoute
         breadcrumb='Create Corporate Investor'
         exact
         path={IdentityRoute.createCorporate}
       >
         <CreateInvestor />
-      </NewAppRoute>
+      </AppRoute>
 
-      <NewAppRoute
+      <AppRoute
         breadcrumb='Edit Corporate Investor'
         exact
         path={IdentityRoute.editCorporate}
       >
         <EditInvestor />
-      </NewAppRoute>
+      </AppRoute>
 
-      <NewAppRoute
+      <AppRoute
         breadcrumb='View Corporate Issuer'
         exact
         path={IdentityRoute.viewIssuer}
       >
         <ViewIssuer />
-      </NewAppRoute>
+      </AppRoute>
 
-      <NewAppRoute
+      <AppRoute
         breadcrumb='Create Corporate Issuer'
         exact
         path={IdentityRoute.createIssuer}
       >
         <CreateIssuer />
-      </NewAppRoute>
+      </AppRoute>
 
-      <NewAppRoute
+      <AppRoute
         breadcrumb='Edit Corporate Issuer'
         exact
         path={IdentityRoute.editIssuer}
       >
         <EditIssuer />
-      </NewAppRoute>
+      </AppRoute>
     </Switch>
   )
 }

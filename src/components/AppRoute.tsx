@@ -1,36 +1,24 @@
-import React, { createElement } from 'react'
-import { InternalRouteBase, InternalRouteProps } from 'types/util'
-import { Redirect, RouteComponentProps } from 'react-router-dom'
-import { safeGeneratePath } from 'helpers/router'
-import { useIsEnabled2FA, useIsAccredited } from 'helpers/acl'
-import { AppRoute as AppPath } from 'app/router/config'
-import { useCachedUser } from 'hooks/auth/useCachedUser'
-import { ScrollToTop } from './ScrollToTop'
 import { useOnboardingDialog } from 'app/components/OnboardingDialog/hooks/useOnboardingDialog'
+import { AppRoute as AppPath } from 'app/router/config'
+import { Breadcrumb } from 'components/Breadcrumb'
+import { SentryRoute } from 'components/SentryRoute'
+import { useIsAccredited, useIsEnabled2FA } from 'helpers/acl'
+import { useCachedUser } from 'hooks/auth/useCachedUser'
+import React, { memo } from 'react'
+import { RouteProps } from 'react-router'
+import { Redirect } from 'react-router-dom'
 
-export interface AppRouteProps extends RouteComponentProps {
-  route: InternalRouteProps
-  params: any
-  pushCrumb: (crumb: InternalRouteBase) => void
+export interface AppRouteProps extends RouteProps {
+  path: string
+  breadcrumb?: string
 }
 
-export const AppRoute = (props: AppRouteProps) => {
-  const { params, route, pushCrumb } = props
-  const { path, component } = route
+export const AppRoute = memo((props: AppRouteProps) => {
+  const { breadcrumb, path, children, ...rest } = props
   const user = useCachedUser()
   const is2FAEnabled = useIsEnabled2FA()
   const isAccredited = useIsAccredited()
-
-  pushCrumb({
-    label: route.label,
-    path: safeGeneratePath(route.path, params)
-  })
-
-  const { showCreateAccountDialog, showEnable2FADialog } = useOnboardingDialog()
-
-  if (component === undefined) {
-    return null
-  }
+  const { showEnable2FADialog, showCreateAccountDialog } = useOnboardingDialog()
 
   if (user === undefined) {
     if (!path.startsWith('/auth')) {
@@ -61,9 +49,11 @@ export const AppRoute = (props: AppRouteProps) => {
   }
 
   return (
-    <>
-      <ScrollToTop />
-      {createElement(component)}
-    </>
+    <SentryRoute {...rest} path={path}>
+      {breadcrumb !== undefined && (
+        <Breadcrumb label={breadcrumb} path={path} />
+      )}
+      {children}
+    </SentryRoute>
   )
-}
+})

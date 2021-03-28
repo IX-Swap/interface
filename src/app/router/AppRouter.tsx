@@ -1,6 +1,6 @@
 import React from 'react'
-import { AppRoute } from 'app/router/config'
-import { NewAppRoute } from 'components/NewAppRoute'
+import { AppRoute as AppPath } from 'app/router/config'
+import { AppRoute } from 'components/AppRoute'
 import { Redirect, Switch } from 'react-router-dom'
 import { HomeRoot } from 'app/pages/home/HomeRoot'
 import { IssuanceRoot } from 'app/pages/issuance/IssuanceRoot'
@@ -15,43 +15,43 @@ import { AuthorizerRoot } from 'app/pages/authorizer/AuthorizerRoot'
 export const AppRouter = () => {
   return (
     <Switch>
-      <NewAppRoute breadcrumb='Accounts' path={AppRoute.accounts}>
+      <AppRoute breadcrumb='Accounts' path={AppPath.accounts}>
         <AccountsRoot />
-      </NewAppRoute>
+      </AppRoute>
 
-      <NewAppRoute path={AppRoute.home}>
+      <AppRoute path={AppPath.home}>
         <HomeRoot />
-      </NewAppRoute>
+      </AppRoute>
 
-      <NewAppRoute breadcrumb='Identity' path={AppRoute.identity}>
+      <AppRoute breadcrumb='Identity' path={AppPath.identity}>
         <IdentityRoot />
-      </NewAppRoute>
+      </AppRoute>
 
-      <NewAppRoute breadcrumb='Issuance' path={AppRoute.issuance}>
+      <AppRoute breadcrumb='Issuance' path={AppPath.issuance}>
         <IssuanceRoot />
-      </NewAppRoute>
+      </AppRoute>
 
-      <NewAppRoute breadcrumb='Invest' path={AppRoute.invest}>
+      <AppRoute breadcrumb='Invest' path={AppPath.invest}>
         <InvestRoot />
-      </NewAppRoute>
+      </AppRoute>
 
-      <NewAppRoute breadcrumb='Admin' path={AppRoute.admin}>
+      <AppRoute breadcrumb='Admin' path={AppPath.admin}>
         <AdminRoot />
-      </NewAppRoute>
+      </AppRoute>
 
-      <NewAppRoute path={AppRoute.security}>
+      <AppRoute path={AppPath.security}>
         <SecurityRoot />
-      </NewAppRoute>
+      </AppRoute>
 
-      <NewAppRoute path={AppRoute.notifications}>
+      <AppRoute path={AppPath.notifications}>
         <NotificationsRoot />
-      </NewAppRoute>
+      </AppRoute>
 
-      <NewAppRoute breadcrumb='Authorization' path={AppRoute.authorizer}>
+      <AppRoute breadcrumb='Authorization' path={AppPath.authorizer}>
         <AuthorizerRoot />
-      </NewAppRoute>
+      </AppRoute>
 
-      <Redirect to={AppRoute.home} />
+      <Redirect to={AppPath.home} />
     </Switch>
   )
 }

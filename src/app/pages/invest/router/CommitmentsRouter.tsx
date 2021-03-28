@@ -3,18 +3,18 @@ import { Switch } from 'react-router-dom'
 import { CommitmentRoute } from 'app/pages/invest/router/config'
 import { InvestCommitmentView } from 'app/pages/invest/pages/InvestCommitmentView'
 import { MyCommitments } from 'app/pages/invest/components/MyCommitments'
-import { NewAppRoute } from 'components/NewAppRoute'
+import { AppRoute } from 'components/AppRoute'
 
 export const CommitmentsRouter = () => {
   return (
     <Switch>
-      <NewAppRoute breadcrumb='View Commitment' path={CommitmentRoute.view}>
+      <AppRoute breadcrumb='View Commitment' path={CommitmentRoute.view}>
         <InvestCommitmentView />
-      </NewAppRoute>
+      </AppRoute>
 
-      <NewAppRoute breadcrumb='My Commitments' path={CommitmentRoute.list}>
+      <AppRoute breadcrumb='My Commitments' path={CommitmentRoute.list}>
         <MyCommitments />
-      </NewAppRoute>
+      </AppRoute>
     </Switch>
   )
 }
