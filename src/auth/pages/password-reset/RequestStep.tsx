@@ -2,13 +2,13 @@ import React from 'react'
 import { Typography, Grid } from '@material-ui/core'
 import { RequestPasswordResetArgs } from 'types/auth'
 import { requestPasswordResetValidationSchema } from 'validation/auth'
-import { useAuthRouter } from 'auth/router'
 import { useRequestPasswordReset } from 'auth/hooks/useRequestPasswordReset'
 import { AppRouterLink } from 'components/AppRouterLink'
 import { usePasswordResetStore } from 'auth/context/password-reset'
 import { Form } from 'components/form/Form'
 import { RequestFields } from 'auth/pages/password-reset/components/RequestFields'
 import { Submit } from 'components/form/Submit'
+import { AuthRoute } from 'auth/router/config'
 
 export const requestPasswordResetInitialValues = {
   email: ''
@@ -17,7 +17,6 @@ export const requestPasswordResetInitialValues = {
 export const RequestStep: React.FC = () => {
   const [requestReset] = useRequestPasswordReset()
   const { setEmail } = usePasswordResetStore()
-  const { paths } = useAuthRouter()
 
   const handleSubmit = async (
     values: RequestPasswordResetArgs
@@ -42,7 +41,7 @@ export const RequestStep: React.FC = () => {
         </Grid>
         <Grid item>
           <Typography align='center'>
-            <AppRouterLink to={paths.login}>Back to Login</AppRouterLink>
+            <AppRouterLink to={AuthRoute.login}>Back to Login</AppRouterLink>
           </Typography>
         </Grid>
       </Grid>

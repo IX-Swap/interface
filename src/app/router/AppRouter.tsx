@@ -1,7 +1,7 @@
 import React from 'react'
 import { AppRoute } from 'app/router/config'
 import { NewAppRoute } from 'components/NewAppRoute'
-import { Switch } from 'react-router-dom'
+import { Redirect, Switch } from 'react-router-dom'
 import { HomeRoot } from 'app/pages/home/HomeRoot'
 import { IssuanceRoot } from 'app/pages/issuance/IssuanceRoot'
 import { SecurityRoot } from 'app/pages/security/SecurityRoot'
@@ -50,6 +50,8 @@ export const AppRouter = () => {
       <NewAppRoute breadcrumb='Authorization' path={AppRoute.authorizer}>
         <AuthorizerRoot />
       </NewAppRoute>
+
+      <Redirect to={AppRoute.home} />
     </Switch>
   )
 }

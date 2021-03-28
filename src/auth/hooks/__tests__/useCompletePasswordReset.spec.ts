@@ -2,16 +2,11 @@ import { act } from '@testing-library/react-hooks'
 import { waitFor, cleanup, renderHookWithServiceProvider } from 'test-utils'
 import { useCompletePasswordReset } from 'auth/hooks/useCompletePasswordReset'
 import { unsuccessfulResponse, successfulResponse } from '__fixtures__/api'
-import * as authRouter from 'auth/router'
 import { completePasswordResetArgs } from '__fixtures__/auth'
 import { authURL } from 'config/apiURL'
 
 describe('useCompletePasswordReset', () => {
   const push = jest.fn()
-
-  beforeEach(() => {
-    jest.spyOn(authRouter, 'useAuthRouter').mockReturnValue({ push } as any)
-  })
 
   afterEach(async () => {
     await cleanup()

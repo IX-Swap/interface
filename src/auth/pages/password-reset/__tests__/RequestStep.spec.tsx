@@ -9,7 +9,7 @@ import { requestPasswordResetArgs } from '__fixtures__/auth'
 import { history } from 'config/history'
 import * as useRequestPasswordResetHook from 'auth/hooks/useRequestPasswordReset'
 import { generateMutationResult } from '__fixtures__/useQuery'
-import { AuthRoute } from 'auth/router'
+import { AuthRoute } from 'auth/router/config'
 
 describe('RequestStep', () => {
   afterEach(async () => {
