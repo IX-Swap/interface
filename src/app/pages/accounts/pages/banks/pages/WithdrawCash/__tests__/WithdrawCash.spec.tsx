@@ -5,7 +5,7 @@ import { RecentWithdrawals } from 'app/pages/accounts/pages/banks/pages/Withdraw
 import { WithdrawView } from 'app/pages/accounts/pages/banks/pages/WithdrawCash/WithdrawView'
 
 jest.mock(
-  'app/pages/accounts/pages/banks/WithdrawCash/RecentWithdrawals',
+  'app/pages/accounts/pages/banks/pages/WithdrawCash/RecentWithdrawals',
   () => ({
     RecentWithdrawals: jest.fn(() => (
       <div data-testid='RecentWithdrawals'></div>
@@ -13,9 +13,12 @@ jest.mock(
   })
 )
 
-jest.mock('app/pages/accounts/pages/banks/WithdrawCash/WithdrawView', () => ({
-  WithdrawView: jest.fn(() => <div data-testid='WithdrawView'></div>)
-}))
+jest.mock(
+  'app/pages/accounts/pages/banks/pages/WithdrawCash/WithdrawView',
+  () => ({
+    WithdrawView: jest.fn(() => <div data-testid='WithdrawView'></div>)
+  })
+)
 
 describe('WithdrawCash', () => {
   afterEach(async () => {

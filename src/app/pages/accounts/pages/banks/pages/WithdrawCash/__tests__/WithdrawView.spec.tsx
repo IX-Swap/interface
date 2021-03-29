@@ -14,13 +14,19 @@ jest.mock('app/pages/accounts/pages/banks/components/BackButton', () => ({
   BackButton: jest.fn(() => null)
 }))
 
-jest.mock('app/pages/accounts/pages/banks/WithdrawCash/ContinueButton', () => ({
-  ContinueButton: jest.fn(() => null)
-}))
+jest.mock(
+  'app/pages/accounts/pages/banks/pages/WithdrawCash/ContinueButton',
+  () => ({
+    ContinueButton: jest.fn(() => null)
+  })
+)
 
-jest.mock('app/pages/accounts/pages/banks/WithdrawCash/BankPreview', () => ({
-  BankPreview: jest.fn(() => null)
-}))
+jest.mock(
+  'app/pages/accounts/pages/banks/pages/WithdrawCash/BankPreview',
+  () => ({
+    BankPreview: jest.fn(() => null)
+  })
+)
 
 jest.mock('app/pages/accounts/pages/banks/components/SuccessView', () => ({
   SuccessView: jest.fn(() => null)
@@ -41,11 +47,11 @@ jest.mock(
   })
 )
 
-jest.mock('app/pages/accounts/pages/banks/WithdrawCash/Preview', () => ({
+jest.mock('app/pages/accounts/pages/banks/pages/WithdrawCash/Preview', () => ({
   Preview: jest.fn(() => null)
 }))
 
-jest.mock('app/pages/accounts/pages/banks/WithdrawCash/Setup', () => ({
+jest.mock('app/pages/accounts/pages/banks/pages/WithdrawCash/Setup', () => ({
   Setup: jest.fn(() => null)
 }))
 

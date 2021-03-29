@@ -7,6 +7,9 @@ import { SearchFilter } from 'app/components/SearchFilter'
 import { TableView } from 'components/TableWithPagination/TableView'
 import { authURL } from 'config/apiURL'
 import { authQueryKeys } from 'config/queryKeys'
+import { AdminRoute } from 'app/pages/admin/router/config'
+import { generatePath, Route } from 'react-router-dom'
+import { history } from 'config/history'
 
 jest.mock('app/components/SearchFilter', () => ({
   SearchFilter: jest.fn(() => null)
@@ -22,6 +25,7 @@ jest.mock('app/pages/admin/components/columns', () => ({
 
 describe('AccountLoginHitory', () => {
   beforeEach(() => {
+    history.push(generatePath(AdminRoute.view, { userId: managedUser._id }))
     const getFilterValueFn = jest.fn(() => 'search-key')
 
     jest
@@ -39,7 +43,11 @@ describe('AccountLoginHitory', () => {
   })
 
   it('renders components correctly', () => {
-    render(<AccountLoginHistory />)
+    render(
+      <Route path={AdminRoute.view}>
+        <AccountLoginHistory />
+      </Route>
+    )
 
     expect(SearchFilter).toHaveBeenCalled()
     expect(TableView).toHaveBeenCalledWith(

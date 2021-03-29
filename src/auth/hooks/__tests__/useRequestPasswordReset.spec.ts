@@ -6,8 +6,6 @@ import { requestPasswordResetArgs } from '__fixtures__/auth'
 import { authURL } from 'config/apiURL'
 
 describe('useRequestPasswordReset', () => {
-  const replace = jest.fn()
-
   afterEach(async () => {
     await cleanup()
     jest.clearAllMocks()
@@ -33,8 +31,6 @@ describe('useRequestPasswordReset', () => {
           const [mutate] = result.current
           void mutate(requestPasswordResetArgs)
 
-          expect(replace).toHaveBeenCalled()
-          expect(replace).toHaveBeenCalledWith('login')
           expect(postFn).toHaveBeenNthCalledWith(
             1,
             authURL.resetPassword,

@@ -8,8 +8,8 @@ import { generateQueryResult } from '__fixtures__/useQuery'
 import * as useAuthHook from 'hooks/auth/useAuth'
 import { user } from '__fixtures__/user'
 import { generatePath, Route } from 'react-router-dom'
-import { DSORoute } from 'app/pages/invest/router/config'
 import { history } from 'config/history'
+import { InvestRoute } from 'app/pages/invest/router/config'
 
 jest.mock('components/AppRouterLink', () => ({
   AppRouterLinkComponent: jest.fn(({ children }) => children)
@@ -24,7 +24,7 @@ jest.spyOn(useDSOByIdHook, 'useDSOById').mockImplementation(() => ({
 describe('InvestLink', () => {
   beforeEach(() => {
     history.push(
-      generatePath(DSORoute.view, { dsoId: dso._id, issuerId: dso.user })
+      generatePath(InvestRoute.view, { dsoId: dso._id, issuerId: dso.user })
     )
   })
 
@@ -67,14 +67,14 @@ describe('InvestLink', () => {
       .mockReturnValue(generateQueryResult({ data: dso }))
 
     render(
-      <Route path={DSORoute.view}>
+      <Route path={InvestRoute.view}>
         <InvestLink />
       </Route>
     )
 
     expect(AppRouterLinkComponent).toHaveBeenCalledWith(
       expect.objectContaining({
-        to: DSORoute.makeInvestment,
+        to: InvestRoute.makeInvestment,
         params: { dsoId: dso._id, issuerId: dso.user }
       }),
       {}

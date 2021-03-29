@@ -1,9 +1,11 @@
 import React from 'react'
 import { render, cleanup } from 'test-utils'
-// import * as useIdentitiesRouter from 'app/pages/_identity/router'
 import { OnboardingLink } from 'app/pages/home/components/OnboardingLink'
 import { OnboardingLinks } from 'app/pages/home/components/OnboardingLinks'
 import * as useOnboardingJourneys from 'app/components/OnboardingPanel/hooks/useOnboardingJourneys'
+import { history } from 'config/history'
+import { AppRoute } from 'app/router/config'
+import { IdentityRoute } from 'app/pages/_identity/router/config'
 
 jest.mock('app/pages/home/components/OnboardingLink', () => ({
   OnboardingLink: jest.fn(() => null)
@@ -15,18 +17,11 @@ describe('OnboardingLinks', () => {
     jest.clearAllMocks()
   })
 
+  beforeEach(() => {
+    history.push(AppRoute.home)
+  })
+
   it('renders without errors', () => {
-    // const objResponse = {
-    //   paths: {
-    //     createIndividual: '/create/individuals',
-    //     createCorporate: '/create/corporate'
-    //   }
-    // }
-
-    // jest
-    //   .spyOn(useIdentitiesRouter, 'useIdentitiesRouter')
-    //   .mockImplementation(() => objResponse as any)
-
     render(<OnboardingLinks />)
   })
 
@@ -47,7 +42,7 @@ describe('OnboardingLinks', () => {
       1,
       expect.objectContaining({
         label: 'Individual',
-        to: '/create/individuals'
+        to: IdentityRoute.createIndividual
       }),
       {}
     )
@@ -55,7 +50,7 @@ describe('OnboardingLinks', () => {
       2,
       expect.objectContaining({
         label: 'Corporate',
-        to: '/create/corporate'
+        to: IdentityRoute.createCorporate
       }),
       {}
     )
@@ -63,7 +58,7 @@ describe('OnboardingLinks', () => {
       3,
       expect.objectContaining({
         label: 'Fundraise',
-        to: '/create/corporate'
+        to: IdentityRoute.createIssuer
       }),
       {}
     )
@@ -86,7 +81,7 @@ describe('OnboardingLinks', () => {
       1,
       expect.objectContaining({
         label: 'Individual',
-        to: '/create/individuals'
+        to: IdentityRoute.createIndividual
       }),
       {}
     )
@@ -110,7 +105,7 @@ describe('OnboardingLinks', () => {
       1,
       expect.objectContaining({
         label: 'Corporate',
-        to: '/create/corporate'
+        to: IdentityRoute.createCorporate
       }),
       {}
     )
@@ -118,7 +113,7 @@ describe('OnboardingLinks', () => {
       2,
       expect.objectContaining({
         label: 'Fundraise',
-        to: '/create/corporate'
+        to: IdentityRoute.createIssuer
       }),
       {}
     )
@@ -142,7 +137,7 @@ describe('OnboardingLinks', () => {
       1,
       expect.objectContaining({
         label: 'Corporate',
-        to: '/create/corporate'
+        to: IdentityRoute.createCorporate
       }),
       {}
     )
@@ -150,7 +145,7 @@ describe('OnboardingLinks', () => {
       2,
       expect.objectContaining({
         label: 'Fundraise',
-        to: '/create/corporate'
+        to: IdentityRoute.createIssuer
       }),
       {}
     )
@@ -174,7 +169,7 @@ describe('OnboardingLinks', () => {
       1,
       expect.objectContaining({
         label: 'Corporate',
-        to: '/create/corporate'
+        to: IdentityRoute.createCorporate
       }),
       {}
     )
@@ -182,7 +177,7 @@ describe('OnboardingLinks', () => {
       2,
       expect.objectContaining({
         label: 'Fundraise',
-        to: '/create/corporate'
+        to: IdentityRoute.createIssuer
       }),
       {}
     )

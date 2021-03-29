@@ -4,9 +4,16 @@ import { waitFor, cleanup, renderHookWithServiceProvider } from 'test-utils'
 import { successfulResponse } from '__fixtures__/api'
 import { managedUser } from '__fixtures__/user'
 import * as useSetRoles from 'app/pages/admin/hooks/useSetRoles'
+import { history } from 'config/history'
+import { generatePath } from 'react-router'
+import { AdminRoute } from 'app/pages/admin/router/config'
 
 describe('useRoleManagement', () => {
   const initialRoles = managedUser.roles.split(',')
+
+  beforeEach(() => {
+    history.push(generatePath(AdminRoute.view, { userId: managedUser._id }))
+  })
 
   afterEach(async () => {
     await cleanup()
@@ -27,7 +34,8 @@ describe('useRoleManagement', () => {
         () => useRoleManagement(initialRoles),
         {
           apiService: apiObj
-        }
+        },
+        AdminRoute.view
       )
 
       await waitFor(

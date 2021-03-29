@@ -5,12 +5,11 @@ import { Setup } from 'app/pages/accounts/pages/banks/pages/DepositCash/Setup'
 import { Preview } from 'app/pages/accounts/pages/banks/pages/DepositCash/Preview'
 import { BackButton } from 'app/pages/accounts/pages/banks/components/BackButton'
 import { ContinueButton } from 'app/pages/accounts/pages/banks/pages/DepositCash/ContinueButton'
-// import { BankDetails } from 'app/components/BankDetails'
 import { SuccessView } from 'app/pages/accounts/pages/banks/components/SuccessView'
 import { ResetButton } from 'app/pages/accounts/pages/banks/components/ResetButton'
 import { AlertAndOTP } from 'app/pages/accounts/pages/banks/components/AlertAndOTP'
 
-jest.mock('app/pages/accounts/pages/banks/DepositCash/Setup', () => ({
+jest.mock('app/pages/accounts/pages/banks/pages/DepositCash/Setup', () => ({
   Setup: jest.fn(() => null)
 }))
 
@@ -38,7 +37,7 @@ jest.mock('app/pages/accounts/pages/banks/components/ResetButton', () => ({
   ResetButton: jest.fn(() => null)
 }))
 
-jest.mock('app/pages/accounts/pages/banks/DepositCash/Preview', () => ({
+jest.mock('app/pages/accounts/pages/banks/pages/DepositCash/Preview', () => ({
   Preview: jest.fn(() => null)
 }))
 
@@ -46,9 +45,12 @@ jest.mock('app/pages/accounts/pages/banks/components/BackButton', () => ({
   BackButton: jest.fn(() => null)
 }))
 
-jest.mock('app/pages/accounts/pages/banks/DepositCash/ContinueButton', () => ({
-  ContinueButton: jest.fn(() => null)
-}))
+jest.mock(
+  'app/pages/accounts/pages/banks/pages/DepositCash/ContinueButton',
+  () => ({
+    ContinueButton: jest.fn(() => null)
+  })
+)
 
 describe('DepositView', () => {
   afterEach(async () => {

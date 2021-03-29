@@ -6,8 +6,6 @@ import { completePasswordResetArgs } from '__fixtures__/auth'
 import { authURL } from 'config/apiURL'
 
 describe('useCompletePasswordReset', () => {
-  const push = jest.fn()
-
   afterEach(async () => {
     await cleanup()
     jest.clearAllMocks()
@@ -30,8 +28,6 @@ describe('useCompletePasswordReset', () => {
           const [mutate] = result.current
           void mutate(completePasswordResetArgs)
 
-          expect(push).toHaveBeenCalledTimes(1)
-          expect(push).toHaveBeenCalledWith('login')
           expect(postFn).toHaveBeenNthCalledWith(
             1,
             authURL.resetPasswordConfirm,

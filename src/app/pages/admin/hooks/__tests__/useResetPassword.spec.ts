@@ -6,12 +6,16 @@ import * as ReactQuery from 'react-query'
 import { authURL } from 'config/apiURL'
 import { generateMutationResult } from '__fixtures__/useQuery'
 import { usersQueryKeys } from 'config/queryKeys'
+import { generatePath } from 'react-router-dom'
+import { history } from 'config/history'
+import { AdminRoute } from 'app/pages/admin/router/config'
 
 describe('useResetPassword', () => {
   const qc = ReactQuery.queryCache
   qc.invalidateQueries = jest.fn(() => null) as any
 
   beforeEach(() => {
+    history.push(generatePath(AdminRoute.view, { userId: managedUser._id }))
     jest.spyOn(ReactQuery, 'useQueryCache').mockReturnValue(qc)
   })
 
@@ -30,7 +34,8 @@ describe('useResetPassword', () => {
         () => useResetPassword(managedUser.email, successHandlerMock),
         {
           apiService: apiObj
-        }
+        },
+        AdminRoute.view
       )
 
       await waitFor(

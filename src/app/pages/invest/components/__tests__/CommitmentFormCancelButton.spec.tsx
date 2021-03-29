@@ -5,10 +5,10 @@ import {
   CommitmentFormCancelButtonProps
 } from 'app/pages/invest/components/CommitmentFormCancelButton'
 import { AppRouterLinkComponent } from 'components/AppRouterLink'
-import { DSORoute } from 'app/pages/invest/router/config'
 import { dso } from '__fixtures__/authorizer'
 import { history } from 'config/history'
 import { generatePath, Route } from 'react-router-dom'
+import { InvestRoute } from 'app/pages/invest/router/config'
 
 jest.mock('components/AppRouterLink', () => ({
   AppRouterLinkComponent: jest.fn(() => null)
@@ -19,7 +19,7 @@ describe('CommitmentFormCancelButton', () => {
 
   beforeEach(() => {
     history.push(
-      generatePath(DSORoute.makeInvestment, {
+      generatePath(InvestRoute.makeInvestment, {
         dsoId: dso._id,
         issuerId: dso.user
       })
@@ -37,7 +37,7 @@ describe('CommitmentFormCancelButton', () => {
 
   it('renders AppRouterLink with correct props', () => {
     render(
-      <Route path={DSORoute.makeInvestment}>
+      <Route path={InvestRoute.makeInvestment}>
         <CommitmentFormCancelButton {...props} />
       </Route>
     )
@@ -45,7 +45,7 @@ describe('CommitmentFormCancelButton', () => {
     expect(AppRouterLinkComponent).toHaveBeenCalledWith(
       expect.objectContaining({
         children: expect.anything(),
-        to: DSORoute.view,
+        to: InvestRoute.view,
         params: { dsoId: dso._id, issuerId: dso.user }
       }),
       {}

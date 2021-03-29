@@ -78,7 +78,12 @@ describe('useDSOFilter', () => {
       .mockReturnValue(generateInfiniteQueryResult({ list: [] }))
 
     await act(async () => {
-      history.push(generatePath(IssuanceRoute.insight, { dsoId: ':dsoId' }))
+      history.push(
+        generatePath(IssuanceRoute.insight, {
+          dsoId: ':dsoId',
+          issuerId: ':issuerId'
+        })
+      )
 
       const { result } = renderHook(() => useDSOFilter(), {
         wrapper: ({ children }: PropsWithChildren<any>) => (

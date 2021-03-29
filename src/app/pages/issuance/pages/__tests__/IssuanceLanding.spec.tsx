@@ -25,7 +25,9 @@ jest.mock('app/pages/issuance/components/IssuanceLanding/Activities', () => ({
 
 describe('IssuanceLanding', () => {
   beforeEach(() => {
-    history.push(generatePath(IssuanceRoute.view, { dsoId: dso._id }))
+    history.push(
+      generatePath(IssuanceRoute.view, { dsoId: dso._id, issuerId: dso.user })
+    )
   })
 
   afterEach(async () => {
