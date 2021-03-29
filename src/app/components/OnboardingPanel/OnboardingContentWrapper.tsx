@@ -30,6 +30,11 @@ export const OnboardingContentWrapper = ({
     isIdentitiesLoaded
   } = useOnboardingJourneys()
 
+  const isOnboardingPannelHidden =
+    isIndividualJourneyCompleted ||
+    isInvestorJourneyCompleted ||
+    isIssuerJourneyCompleted
+
   const onboardingBasePaths = [
     SecurityRoute.landing,
     HomeRoute.landing,
@@ -49,7 +54,8 @@ export const OnboardingContentWrapper = ({
     return <LoadingFullScreen />
   }
 
-  return onboardingBasePaths.includes(pathnameBase) ? (
+  return onboardingBasePaths.includes(pathnameBase) &&
+    !isOnboardingPannelHidden ? (
     <Box display='flex' width='100%'>
       <Box className={classnames(content, { [contentShift]: open })}>
         {children}
