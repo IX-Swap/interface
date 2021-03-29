@@ -1,25 +1,10 @@
-import React from 'react'
 import { act } from '@testing-library/react-hooks'
 import { waitFor, cleanup, renderHookWithServiceProvider } from 'test-utils'
-import * as SecurityRouter from 'app/pages/security/router'
 import { useChangePassword } from 'app/pages/security/pages/changePassword/hooks/useChangePassword'
 import { changePasswordArgs } from '__fixtures__/security'
 import { unsuccessfulResponse, successfulResponse } from '__fixtures__/api'
 
 describe('useChangePassword', () => {
-  beforeEach(() => {
-    jest.spyOn(SecurityRouter, 'useSecurityRouter').mockImplementation(() => ({
-      current: { path: '', label: '' },
-      paths: SecurityRouter.SecurityRoute,
-      renderRoutes: jest.fn(() => <div />),
-      routes: [],
-      push: jest.fn(),
-      replace: jest.fn(),
-      query: new URLSearchParams(),
-      params: {}
-    }))
-  })
-
   afterEach(async () => {
     await cleanup()
     jest.clearAllMocks()

@@ -5,7 +5,6 @@ import {
   IndividualAgreementsFormValues,
   IndividualDocumentsFormValues,
   IndividualFinancialInfoFormValues,
-  IndividualInvestorDeclarationFormValues,
   IndividualPersonalInfoFormValues,
   IndividualTaxDeclarationFormValues
 } from 'app/pages/_identity/types/forms'
@@ -112,8 +111,8 @@ export const taxDeclarationSchema = yup
   })
 
 export const individualInvestorStatusDeclarationSchema = yup
-  .object<IndividualInvestorDeclarationFormValues>()
-  .shape<IndividualInvestorDeclarationFormValues>({
+  .object()
+  .shape<any>({
     financialAsset: yup.bool().required('Required'),
     income: yup.bool().required('Required'),
     personalAssets: yup.bool().required('Required'),

@@ -1,7 +1,6 @@
 import React, { ReactElement } from 'react'
 import { Launch as LaunchIcon } from '@material-ui/icons'
 import { Grid, IconButton, Box } from '@material-ui/core'
-import { useAuthorizerRouter } from '../router'
 import User from 'types/user'
 import { AppRouterLinkComponent } from 'components/AppRouterLink'
 import { useApproveOrReject } from 'app/pages/authorizer/hooks/useApproveOrReject'
@@ -10,6 +9,7 @@ import { history } from 'config/history'
 import { Dropdown } from 'app/components/Dropdown/Dropdown'
 import { ActionsDropdownTrigger } from 'app/pages/authorizer/components/ActionsDropdownTrigger'
 import { ActionsDropdownContent } from 'app/pages/authorizer/components/ActionsDropdownContent'
+import { useLocation } from 'react-router'
 
 export interface ActionsProps<T> {
   item: T
@@ -24,10 +24,14 @@ export type Actions<T> = (props: ActionsProps<T>) => ReactElement
 
 export const Actions = <T,>(props: ActionsProps<T>): JSX.Element => {
   const { item, cacheQueryKey } = props
-  const { current } = useAuthorizerRouter()
-  const id = (item as any)._id
-  const splitted = current.path.split('/')
+  const { pathname } = useLocation()
+  const id: string = (item as any)._id
+  const splitted = pathname.split('/')
   const category = splitted[splitted.length - 1]
+  const userId: string =
+    typeof (item as any).user === 'string'
+      ? (item as any).user
+      : (item as any).user._id
   const [approve, { isLoading: isApproving }] = useApproveOrReject({
     id: getIdFromObj(item),
     action: 'approve',
@@ -39,7 +43,7 @@ export const Actions = <T,>(props: ActionsProps<T>): JSX.Element => {
     cacheQueryKey
   })
   const view = () =>
-    history.push(`/app/authorizer/${category}/${id as string}/view`)
+    history.push(`/app/authorizer/${category}/${userId}/${id}/view`)
   const isUnauthorized = (item as any).status === 'Submitted'
   const isLoading = isApproving || isRejecting
 
@@ -50,7 +54,7 @@ export const Actions = <T,>(props: ActionsProps<T>): JSX.Element => {
           component={AppRouterLinkComponent}
           size='small'
           data-testid='view-button'
-          to={`/app/authorizer/${category}/${id as string}/view`}
+          to={`/app/authorizer/${category}/${userId}/${id}/view`}
           params={{
             itemId: id,
             cacheQueryKey

@@ -1,6 +1,5 @@
 import React from 'react'
 import { render, cleanup } from 'test-utils'
-import * as useIssuanceRouterHook from 'app/pages/issuance/router'
 import { TargetFundraise } from 'app/pages/issuance/components/IssuanceLanding/TargetFundraise'
 import * as useDSOByIdHook from 'app/pages/invest/hooks/useDSOById'
 import { InsightValue } from 'app/pages/issuance/components/IssuanceLanding/InsightValue'
@@ -13,11 +12,6 @@ jest.mock('app/pages/issuance/components/IssuanceLanding/InsightValue', () => ({
 }))
 
 describe('TargetFundraise', () => {
-  beforeEach(() => {
-    jest
-      .spyOn(useIssuanceRouterHook, 'useIssuanceRouter')
-      .mockReturnValue({ params: { dsoId: dso._id } } as any)
-  })
   afterEach(async () => {
     await cleanup()
     jest.clearAllMocks()

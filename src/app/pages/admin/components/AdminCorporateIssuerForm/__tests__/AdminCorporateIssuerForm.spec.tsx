@@ -1,7 +1,6 @@
 import React from 'react'
 import { render, cleanup } from 'test-utils'
 import * as useAllCorporatesByUserId from 'app/pages/admin/hooks/useAllCorporatesByUserId'
-import * as useAdminRouter from 'app/pages/admin/router'
 import { corporate } from '__fixtures__/identity'
 import {
   generateInfiniteQueryResult,
@@ -15,7 +14,6 @@ import { AdminCorporateIssuerForm } from 'app/pages/admin/components/AdminCorpor
 window.URL.revokeObjectURL = jest.fn()
 
 describe('AdminCorporateIssuerForm', () => {
-  const useAdminRouterResponse = { params: { userId: corporate._id } }
   const useAllCorporatesByUserIdResponse = generateInfiniteQueryResult({
     list: [corporate],
     isLoading: false
@@ -30,9 +28,9 @@ describe('AdminCorporateIssuerForm', () => {
   const useSubmitCorporateByIdResponse = mutationResult
 
   beforeEach(() => {
-    jest
-      .spyOn(useAdminRouter, 'useAdminRouter')
-      .mockImplementation(() => useAdminRouterResponse as any)
+    // jest
+    //   .spyOn(useAdminRouter, 'useAdminRouter')
+    //   .mockImplementation(() => useAdminRouterResponse as any)
 
     jest
       .spyOn(useAllCorporatesByUserId, 'useAllCorporatesByUserId')

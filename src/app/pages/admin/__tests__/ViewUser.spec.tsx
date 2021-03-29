@@ -1,7 +1,6 @@
 import React from 'react'
 import { render, cleanup } from 'test-utils'
 import { ViewUser } from 'app/pages/admin/pages/ViewUser'
-import * as useAdminRouterHook from 'app/pages/admin/router'
 import { managedUser } from '__fixtures__/user'
 import * as useUserByIdHook from 'app/pages/admin/hooks/useUserById'
 import { generateQueryResult } from '__fixtures__/useQuery'
@@ -9,6 +8,9 @@ import { QueryStatus } from 'react-query'
 import { UserDetails } from 'app/pages/admin/components/UserDetails'
 import { UserStatus } from 'app/pages/admin/components/UserStatus'
 import { IndividualAccountSettings } from 'app/pages/admin/components/IndividualAccountSettings'
+import { history } from 'config/history'
+import { generatePath } from 'react-router'
+import { AdminRoute } from 'app/pages/admin/router/config'
 
 jest.mock('app/pages/admin/components/UserDetails', () => ({
   UserDetails: jest.fn(() => null)
@@ -34,9 +36,7 @@ describe('ViewUser', () => {
   })
 
   beforeEach(() => {
-    jest
-      .spyOn(useAdminRouterHook, 'useAdminRouter')
-      .mockImplementation(() => ({ params } as any))
+    history.push(generatePath(AdminRoute.view, params))
 
     jest
       .spyOn(useUserByIdHook, 'useUserById')

@@ -1,14 +1,13 @@
 import { useMutation } from 'react-query'
 import { useServices } from 'hooks/useServices'
 import { CommitmentIssuanceArgs } from 'types/commitment'
-import { useAuthorizerRouter } from 'app/pages/authorizer/router'
 import { issuanceURL } from 'config/apiURL'
+import { useParams } from 'react-router'
 
 export const useCommitmentIssuance = () => {
   const { apiService, snackbarService } = useServices()
-  const {
-    params: { commitmentId }
-  } = useAuthorizerRouter()
+  const { commitmentId } = useParams<{ commitmentId: string }>()
+  console.log(commitmentId)
   const uri = issuanceURL.commitments.overrideById(commitmentId)
   const updateCommitment = async (args: CommitmentIssuanceArgs) => {
     return await apiService.patch(uri, args)

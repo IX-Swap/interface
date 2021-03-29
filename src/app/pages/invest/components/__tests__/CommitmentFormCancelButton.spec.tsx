@@ -5,14 +5,11 @@ import {
   CommitmentFormCancelButtonProps
 } from 'app/pages/invest/components/CommitmentFormCancelButton'
 import { AppRouterLinkComponent } from 'components/AppRouterLink'
-import { useDSORouter, DSORoute } from 'app/pages/invest/routers/dsoRouter'
 import { dso } from '__fixtures__/authorizer'
+import { history } from 'config/history'
+import { generatePath, Route } from 'react-router-dom'
+import { InvestRoute } from 'app/pages/invest/router/config'
 
-jest.mock('app/pages/invest/routers/dsoRouter')
-
-const useDSORouterMock = useDSORouter as jest.Mock<
-  Partial<ReturnType<typeof useDSORouter>>
->
 jest.mock('components/AppRouterLink', () => ({
   AppRouterLinkComponent: jest.fn(() => null)
 }))
@@ -21,10 +18,12 @@ describe('CommitmentFormCancelButton', () => {
   const props: CommitmentFormCancelButtonProps = {}
 
   beforeEach(() => {
-    useDSORouterMock.mockReturnValue({
-      paths: DSORoute,
-      params: { dsoId: dso._id }
-    })
+    history.push(
+      generatePath(InvestRoute.makeInvestment, {
+        dsoId: dso._id,
+        issuerId: dso.user
+      })
+    )
   })
 
   afterEach(async () => {
@@ -37,13 +36,17 @@ describe('CommitmentFormCancelButton', () => {
   })
 
   it('renders AppRouterLink with correct props', () => {
-    render(<CommitmentFormCancelButton {...props} />)
+    render(
+      <Route path={InvestRoute.makeInvestment}>
+        <CommitmentFormCancelButton {...props} />
+      </Route>
+    )
 
     expect(AppRouterLinkComponent).toHaveBeenCalledWith(
       expect.objectContaining({
         children: expect.anything(),
-        to: DSORoute.view,
-        params: { dsoId: dso._id }
+        to: InvestRoute.view,
+        params: { dsoId: dso._id, issuerId: dso.user }
       }),
       {}
     )

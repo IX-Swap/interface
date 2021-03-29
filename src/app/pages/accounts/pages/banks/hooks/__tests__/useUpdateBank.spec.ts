@@ -2,19 +2,17 @@ import { act } from '@testing-library/react-hooks'
 import { waitFor, cleanup, renderHookWithServiceProvider } from 'test-utils'
 import { useUpdateBank } from 'app/pages/accounts/pages/banks/hooks/useUpdateBank'
 import { successfulResponse } from '__fixtures__/api'
-import * as banksRouter from 'app/pages/accounts/pages/banks/router'
 import * as useAuthHook from 'hooks/auth/useAuth'
+import { history } from 'config/history'
 import { user } from '__fixtures__/user'
 import { updateBankArgs } from '__fixtures__/bank'
+import { BanksRoute } from 'app/pages/accounts/pages/banks/router/config'
 
 describe('useUpdateBank', () => {
-  const push = jest.fn()
-
   beforeEach(() => {
     jest
       .spyOn(useAuthHook, 'useAuth')
       .mockImplementation(() => ({ user, isAuthenticated: true }))
-    jest.spyOn(banksRouter, 'useBanksRouter').mockReturnValue({ push } as any)
   })
 
   afterEach(async () => {
@@ -22,7 +20,7 @@ describe('useUpdateBank', () => {
     jest.clearAllMocks()
   })
 
-  it('it invokes push correctly when request was successful', async () => {
+  it('it redirects user back to the list when request was successful', async () => {
     await act(async () => {
       const putFn = jest.fn().mockResolvedValueOnce(successfulResponse)
 
@@ -42,7 +40,7 @@ describe('useUpdateBank', () => {
             `/accounts/banks/${user._id}/${updateBankArgs.bankId}`,
             argsWithoutBankId
           )
-          expect(push).toHaveBeenNthCalledWith(1, 'list')
+          expect(history.location.pathname).toBe(BanksRoute.list)
         },
         { timeout: 1000 }
       )

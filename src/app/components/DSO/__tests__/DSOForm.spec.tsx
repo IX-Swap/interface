@@ -7,7 +7,7 @@ import { DSOTerms } from 'app/components/DSO/components/DSOTerms'
 import { DSOTeam } from 'app/components/DSO/components/DSOTeam'
 import { dso } from '__fixtures__/authorizer'
 import { history } from 'config/history'
-import { IssuanceRoute } from 'app/pages/issuance/router'
+import { IssuanceRoute } from 'app/pages/issuance/router/config'
 import * as useParsedDataHook from 'hooks/useParsedData'
 
 jest.mock('app/components/DSO/components/DSOBaseFields', () => ({

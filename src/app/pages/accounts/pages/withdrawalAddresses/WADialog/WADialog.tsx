@@ -2,7 +2,8 @@ import React from 'react'
 import Dialog, { DialogProps } from '@material-ui/core/Dialog'
 import useMediaQuery from '@material-ui/core/useMediaQuery'
 import { useTheme } from '@material-ui/core/styles'
-import { useWithdrawalAddressesRouter } from 'app/pages/accounts/pages/withdrawalAddresses/router'
+import { WithdrawalAddressesRoute } from 'app/pages/accounts/pages/withdrawalAddresses/router/config'
+import { useHistory } from 'react-router-dom'
 
 export const WADialog: React.FC<DialogProps> = ({
   children,
@@ -10,7 +11,7 @@ export const WADialog: React.FC<DialogProps> = ({
   ...rest
 }) => {
   const theme = useTheme()
-  const { replace } = useWithdrawalAddressesRouter()
+  const { replace } = useHistory()
   const fullScreen = useMediaQuery(theme.breakpoints.down('sm'))
 
   return (
@@ -18,7 +19,7 @@ export const WADialog: React.FC<DialogProps> = ({
       fullWidth
       open={open}
       fullScreen={fullScreen}
-      onClose={() => replace('list')}
+      onClose={() => replace(WithdrawalAddressesRoute.list)}
       {...rest}
     >
       {children}

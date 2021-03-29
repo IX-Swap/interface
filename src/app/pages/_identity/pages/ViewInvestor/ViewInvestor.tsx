@@ -1,39 +1,38 @@
 import React from 'react'
 import { Grid } from '@material-ui/core'
-import { useAllCorporates } from 'app/pages/_identity/hooks/useAllCorporates'
-import { useIdentitiesRouter } from 'app/pages/_identity/router'
 import { EditButton } from 'app/pages/identity/components/EditButton'
 import { VSpacer } from 'components/VSpacer'
 import { RejectionMessage } from 'app/pages/authorizer/components/RejectionMessage'
 import { CorporateIdentityView } from 'app/pages/_identity/components/CorporateIdentityView/CorporateIdentityView'
+import { IdentityRoute } from 'app/pages/_identity/router/config'
+import { PageHeader } from 'app/components/PageHeader/PageHeader'
+import { CorporateIdentityContainer } from 'app/pages/_identity/containers/CorporateIdentityContainer'
 
 export const ViewInvestor = () => {
-  const { data, status } = useAllCorporates({})
-  const {
-    paths,
-    params: { identityId }
-  } = useIdentitiesRouter()
-
-  if (status === 'loading') {
-    return null
-  }
-
-  const identity = data.map[identityId]
-
   return (
-    <Grid container>
-      <Grid item>
-        <RejectionMessage data={identity} />
-      </Grid>
-      <Grid container item justify='flex-end' alignItems='center'>
-        <EditButton link={paths.editCorporate} params={{ identityId }} />
-      </Grid>
-      <Grid item container>
-        <VSpacer size='small' />
-      </Grid>
-      <Grid item>
-        <CorporateIdentityView />
-      </Grid>
-    </Grid>
+    <CorporateIdentityContainer
+      component={({ data }) => (
+        <Grid container>
+          <Grid item xs={12}>
+            <PageHeader title={data.companyLegalName} />
+          </Grid>
+          <Grid item xs={12}>
+            <RejectionMessage data={data} />
+          </Grid>
+          <Grid xs={12} container item justify='flex-end' alignItems='center'>
+            <EditButton
+              link={IdentityRoute.editCorporate}
+              params={{ identityId: data._id, userId: data.user._id }}
+            />
+          </Grid>
+          <Grid item xs={12} container>
+            <VSpacer size='small' />
+          </Grid>
+          <Grid item xs={12}>
+            <CorporateIdentityView data={data} />
+          </Grid>
+        </Grid>
+      )}
+    />
   )
 }

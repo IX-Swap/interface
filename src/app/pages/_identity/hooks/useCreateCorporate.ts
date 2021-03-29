@@ -4,13 +4,14 @@ import { useMutation, useQueryCache } from 'react-query'
 import { CorporateIdentity } from 'types/identity'
 import { getIdFromObj } from 'helpers/strings'
 import { identityURL } from 'config/apiURL'
-import { useIdentitiesRouter } from 'app/pages/_identity/router'
 import { identityQueryKeys } from 'config/queryKeys'
+import { generatePath, useHistory } from 'react-router'
+import { IdentityRoute } from 'app/pages/_identity/router/config'
 
 export const useCreateCorporate = (corporateType: string) => {
   const { snackbarService, apiService } = useServices()
   const queryCache = useQueryCache()
-  const { replace } = useIdentitiesRouter()
+  const { replace } = useHistory()
   const { user } = useAuth()
   const userId = getIdFromObj(user)
 
@@ -27,9 +28,16 @@ export const useCreateCorporate = (corporateType: string) => {
       void snackbarService.showSnackbar(data.message, 'success')
       await queryCache.invalidateQueries(identityQueryKeys.getAllCorporate)
 
-      replace(corporateType === 'issuer' ? 'editIssuer' : 'editCorporate', {
-        identityId: data.data._id
-      })
+      replace(
+        generatePath(
+          corporateType === 'issuer'
+            ? IdentityRoute.editIssuer
+            : IdentityRoute.editCorporate,
+          {
+            identityId: data.data._id
+          }
+        )
+      )
     },
     onError: (error: any) => {
       void snackbarService.showSnackbar(error.message, 'error')

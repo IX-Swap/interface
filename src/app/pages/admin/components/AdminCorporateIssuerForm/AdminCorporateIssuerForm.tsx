@@ -3,15 +3,13 @@ import { FormStepper } from 'app/components/FormStepper/FormStepper'
 import { getIdentityDefaultActiveStep } from 'app/pages/_identity/utils/shared'
 import { adminCorporateIssuerFormSteps } from 'app/pages/admin/components/AdminCorporateIssuerForm/steps'
 import { useAllCorporatesByUserId } from 'app/pages/admin/hooks/useAllCorporatesByUserId'
-import { useAdminRouter } from 'app/pages/admin/router'
 import { useCreateCorporateByUserId } from 'app/pages/admin/hooks/useCreateCorporateByUserId'
 import { useUpdateCorporateByUserId } from 'app/pages/admin/hooks/useUpdateCorporateByUserId'
 import { useSubmitCorporateById } from 'app/pages/admin/hooks/useSubmitCorporateById'
+import { useParams } from 'react-router-dom'
 
 export const AdminCorporateIssuerForm = () => {
-  const {
-    params: { userId }
-  } = useAdminRouter()
+  const { userId } = useParams<{ userId: string }>()
   const { data, isLoading } = useAllCorporatesByUserId({
     userId,
     type: 'issuer'

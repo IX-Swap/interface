@@ -1,0 +1,82 @@
+import { makeURL } from 'config/appURL'
+import { InternalRouteProps } from 'types/util'
+import { ReactComponent as AccountIcon } from 'assets/icons/navigation/account.svg'
+import { ReactComponent as CashDepositIcon } from 'assets/icons/navigation/cash-deposit.svg'
+import { ReactComponent as CashWithdrawalIcon } from 'assets/icons/navigation/cash-withdrawal.svg'
+import { ReactComponent as DSWithdrawalIcon } from 'assets/icons/navigation/ds-withdrawal.svg'
+import { ReactComponent as WithdrawalAddressIcon } from 'assets/icons/navigation/withdrawal-address.svg'
+import { ReactComponent as IndividualIcon } from 'assets/icons/navigation/individual.svg'
+import { ReactComponent as CorporateIcon } from 'assets/icons/navigation/corporate.svg'
+import { ReactComponent as OfferingIcon } from 'assets/icons/navigation/offering.svg'
+import { ReactComponent as CommitmentIcon } from 'assets/icons/navigation/commitment.svg'
+
+export const AuthorizerRoute = {
+  banks: makeURL(['app', 'authorizer', 'bankAccount']),
+  landing: makeURL(['app', 'authorizer']),
+  cashDeposits: makeURL(['app', 'authorizer', 'cashDeposit']),
+  cashWithdrawals: makeURL(['app', 'authorizer', 'cashWithdrawal']),
+  dsWithdrawals: makeURL(['app', 'authorizer', 'dsWithdrawal']),
+  individualIdentities: makeURL(['app', 'authorizer', 'individualIdentity']),
+  corporateIdentities: makeURL(['app', 'authorizer', 'corporateIdentity']),
+  offerings: makeURL(['app', 'authorizer', 'offerings']),
+  commitments: makeURL(['app', 'authorizer', 'commitments']),
+  withdrawalAddresses: makeURL(['app', 'authorizer', 'withdrawalAddresses']),
+  viewItem: makeURL(['app', 'authorizer', 'category', 'itemId'])
+}
+
+export const authorizerLandingLinks: InternalRouteProps[] = [
+  {
+    label: 'Bank Accounts',
+    path: AuthorizerRoute.banks,
+    color: '#2B78FD',
+    icon: AccountIcon
+  },
+  {
+    label: 'Cash Deposits',
+    path: AuthorizerRoute.cashDeposits,
+    color: '#43B526',
+    icon: CashDepositIcon
+  },
+  {
+    label: 'Cash Withdrawals',
+    path: AuthorizerRoute.cashWithdrawals,
+    color: '#E6D200',
+    icon: CashWithdrawalIcon
+  },
+  {
+    label: 'Digital Security Withdrawals',
+    path: AuthorizerRoute.dsWithdrawals,
+    color: '#8B3DFF',
+    icon: DSWithdrawalIcon
+  },
+  {
+    label: 'Individual Identities',
+    path: AuthorizerRoute.individualIdentities,
+    color: '#90A30F',
+    icon: IndividualIcon
+  },
+  {
+    label: 'Corporate Identities',
+    path: AuthorizerRoute.corporateIdentities,
+    color: '#E65133',
+    icon: CorporateIcon
+  },
+  {
+    label: 'Offerings',
+    path: AuthorizerRoute.offerings,
+    color: '#11BB93',
+    icon: OfferingIcon
+  },
+  {
+    label: 'Commitments',
+    path: AuthorizerRoute.commitments,
+    color: '#C17F53',
+    icon: CommitmentIcon
+  },
+  {
+    label: 'Withdrawal Addresses',
+    path: AuthorizerRoute.withdrawalAddresses,
+    color: '#e6d200',
+    icon: WithdrawalAddressIcon
+  }
+]

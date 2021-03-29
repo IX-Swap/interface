@@ -4,12 +4,10 @@ import { OnboardingLink } from 'app/pages/home/components/OnboardingLink'
 import { ReactComponent as IndividualIcon } from 'assets/icons/navigation/individual.svg'
 import { ReactComponent as CorporateIcon } from 'assets/icons/navigation/corporate.svg'
 import { ReactComponent as FundraiseIcon } from 'assets/icons/navigation/asset-balance.svg'
-import { useIdentitiesRouter } from 'app/pages/_identity/router'
+import { IdentityRoute } from 'app/pages/_identity/router/config'
 import { useOnboardingJourneys } from 'app/components/OnboardingPanel/hooks/useOnboardingJourneys'
 
 export const OnboardingLinks = () => {
-  const { paths: identityPaths } = useIdentitiesRouter()
-
   const {
     isIndividualJourneyCompleted,
     isInvestorJourneyCompleted,
@@ -23,36 +21,39 @@ export const OnboardingLinks = () => {
   const individualLink =
     isIdentitiesLoaded && individualIdentity !== undefined
       ? {
-          to: identityPaths.editIndividual,
+          to: IdentityRoute.editIndividual,
           params: {
-            identityId: individualIdentity._id
+            identityId: individualIdentity._id,
+            userId: individualIdentity.user._id
           }
         }
-      : { to: identityPaths.createIndividual }
+      : { to: IdentityRoute.createIndividual }
 
   const investorLink =
     isIdentitiesLoaded &&
     investorIdentities !== undefined &&
     investorIdentities.length > 0
       ? {
-          to: identityPaths.editCorporate,
+          to: IdentityRoute.editCorporate,
           params: {
-            identityId: investorIdentities[0]._id
+            identityId: investorIdentities[0]._id,
+            userId: investorIdentities[0].user._id
           }
         }
-      : { to: identityPaths.createCorporate }
+      : { to: IdentityRoute.createCorporate }
 
   const issuerLink =
     isIdentitiesLoaded &&
     issuerIdentities !== undefined &&
     issuerIdentities.length > 0
       ? {
-          to: identityPaths.editIssuer,
+          to: IdentityRoute.editIssuer,
           params: {
-            identityId: issuerIdentities[0]._id
+            identityId: issuerIdentities[0]._id,
+            userId: issuerIdentities[0].user._id
           }
         }
-      : { to: identityPaths.createIssuer }
+      : { to: IdentityRoute.createIssuer }
 
   const renderIndividualOnboardingLink = () => {
     if (isInvestorJourneyCompleted || isIssuerJourneyCompleted) {

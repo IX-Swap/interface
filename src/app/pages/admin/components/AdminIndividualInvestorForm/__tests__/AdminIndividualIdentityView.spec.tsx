@@ -1,7 +1,6 @@
 import React from 'react'
 import { render, cleanup } from 'test-utils'
 import { AdminIndividualIdentityView } from 'app/pages/admin/components/AdminIndividualInvestorForm/AdminIndividualIdentityView'
-import * as useAdminRouter from 'app/pages/admin/router'
 import * as useIndividualIdentityById from 'app/pages/admin/hooks/useIndividualIdentityById'
 import { individual } from '__fixtures__/identity'
 import { generateQueryResult } from '__fixtures__/useQuery'
@@ -9,12 +8,10 @@ import { generateQueryResult } from '__fixtures__/useQuery'
 window.URL.revokeObjectURL = jest.fn()
 
 describe('AdminIndividualIdentityView', () => {
-  const useAdminRouterResponse = { params: { userId: individual._id } }
-
   beforeEach(() => {
-    jest
-      .spyOn(useAdminRouter, 'useAdminRouter')
-      .mockImplementation(() => useAdminRouterResponse as any)
+    // jest
+    //   .spyOn(useAdminRouter, 'useAdminRouter')
+    //   .mockImplementation(() => useAdminRouterResponse as any)
   })
 
   afterEach(async () => {

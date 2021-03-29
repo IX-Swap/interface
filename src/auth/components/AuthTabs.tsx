@@ -3,10 +3,9 @@ import { Link } from 'react-router-dom'
 import { Tab, Tabs } from '@material-ui/core'
 import { useUserStore } from 'auth/context'
 import { observer } from 'mobx-react'
-import { useAuthRouter } from 'auth/router'
+import { AuthRoute } from 'auth/router/config'
 
 export const AuthTabs: React.FC = observer(() => {
-  const { paths } = useAuthRouter()
   const userStore = useUserStore()
 
   const handleChange = (_: React.ChangeEvent<{}>, index: number): void => {
@@ -27,12 +26,12 @@ export const AuthTabs: React.FC = observer(() => {
         label='Log in'
         component={Link}
         style={{ fontSize: 18 }}
-        to={paths.login}
+        to={AuthRoute.login}
         data-testid='login'
       />
       <Tab
         label='New User'
-        to={paths.signup}
+        to={AuthRoute.signup}
         style={{ fontSize: 18 }}
         component={Link}
         data-testid='register'

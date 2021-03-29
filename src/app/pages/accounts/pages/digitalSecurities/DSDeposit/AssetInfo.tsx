@@ -1,14 +1,12 @@
 import React from 'react'
-import { useDSRouter } from 'app/pages/accounts/pages/digitalSecurities/router'
+import { useParams } from 'react-router-dom'
 import { useAllBalances } from 'hooks/balance/useAllBalances'
 import { BalanceDetails } from 'app/components/BalanceDetails'
 
 export const AssetInfo: React.FC = () => {
-  const {
-    params: { balanceId }
-  } = useDSRouter()
   const { data, isLoading } = useAllBalances()
-  const balance = data.map[balanceId]
+  const params = useParams<{ balanceId: string }>()
+  const balance = data.map[params.balanceId]
 
   if (isLoading) {
     return null

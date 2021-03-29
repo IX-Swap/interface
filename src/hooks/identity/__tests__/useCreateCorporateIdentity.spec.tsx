@@ -1,30 +1,29 @@
-import React from 'react'
 import { act } from '@testing-library/react-hooks'
 import { waitFor, cleanup, renderHookWithServiceProvider } from 'test-utils'
 import { useCreateCorporateIdentity } from 'hooks/identity/useCreateCorporateIdentity'
 import { unsuccessfulResponse, successfulResponse } from '__fixtures__/api'
 import { createIndividualArgs } from '__fixtures__/identity'
-import * as identitiesRouter from 'app/pages/_identity/router'
+// import * as identitiesRouter from 'app/pages/_identity/router'
 import * as useAuthHook from 'hooks/auth/useAuth'
 import { user } from '__fixtures__/user'
 
 describe('useCreateCorporateIdentity', () => {
-  const renderRoutes = jest.fn(() => <div />)
+  // const renderRoutes = jest.fn(() => <div />)
 
   beforeEach(() => {
-    jest.spyOn(identitiesRouter, 'useIdentitiesRouter').mockReturnValue({
-      params: {},
-      replace: jest.fn(),
-      push: jest.fn(),
-      query: new URLSearchParams(),
-      current: {
-        path: '',
-        label: ''
-      },
-      paths: identitiesRouter.IdentityRoute,
-      renderRoutes,
-      routes: []
-    })
+    // jest.spyOn(identitiesRouter, 'useIdentitiesRouter').mockReturnValue({
+    //   params: {},
+    //   replace: jest.fn(),
+    //   push: jest.fn(),
+    //   query: new URLSearchParams(),
+    //   current: {
+    //     path: '',
+    //     label: ''
+    //   },
+    //   paths: identitiesRouter.IdentityRoute,
+    //   renderRoutes,
+    //   routes: []
+    // })
   })
 
   afterEach(async () => {

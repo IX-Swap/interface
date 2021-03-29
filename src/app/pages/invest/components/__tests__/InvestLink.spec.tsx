@@ -1,19 +1,19 @@
 import React from 'react'
 import { render, cleanup } from 'test-utils'
 import { InvestLink } from 'app/pages/invest/components/InvestLink'
-import * as dsoRouter from 'app/pages/invest/routers/dsoRouter'
 import { dso } from '__fixtures__/authorizer'
 import { AppRouterLinkComponent } from 'components/AppRouterLink'
 import * as useDSOByIdHook from 'app/pages/invest/hooks/useDSOById'
 import { generateQueryResult } from '__fixtures__/useQuery'
 import * as useAuthHook from 'hooks/auth/useAuth'
 import { user } from '__fixtures__/user'
+import { generatePath, Route } from 'react-router-dom'
+import { history } from 'config/history'
+import { InvestRoute } from 'app/pages/invest/router/config'
 
 jest.mock('components/AppRouterLink', () => ({
   AppRouterLinkComponent: jest.fn(({ children }) => children)
 }))
-
-jest.mock('app/pages/invest/routers/dsoRouter')
 
 jest.spyOn(useDSOByIdHook, 'useDSOById').mockImplementation(() => ({
   ...generateQueryResult({
@@ -21,18 +21,13 @@ jest.spyOn(useDSOByIdHook, 'useDSOById').mockImplementation(() => ({
   })
 }))
 
-jest.spyOn(dsoRouter, 'useDSORouter').mockImplementation(
-  () =>
-    ({
-      params: {
-        dsoId: dso._id,
-        issuerId: dso.user
-      },
-      paths: dsoRouter.DSORoute
-    } as any)
-)
-
 describe('InvestLink', () => {
+  beforeEach(() => {
+    history.push(
+      generatePath(InvestRoute.view, { dsoId: dso._id, issuerId: dso.user })
+    )
+  })
+
   afterEach(async () => {
     await cleanup()
     jest.clearAllMocks()
@@ -71,11 +66,15 @@ describe('InvestLink', () => {
       .spyOn(useDSOByIdHook, 'useDSOById')
       .mockReturnValue(generateQueryResult({ data: dso }))
 
-    render(<InvestLink />)
+    render(
+      <Route path={InvestRoute.view}>
+        <InvestLink />
+      </Route>
+    )
 
     expect(AppRouterLinkComponent).toHaveBeenCalledWith(
       expect.objectContaining({
-        to: dsoRouter.DSORoute.makeInvestment,
+        to: InvestRoute.makeInvestment,
         params: { dsoId: dso._id, issuerId: dso.user }
       }),
       {}

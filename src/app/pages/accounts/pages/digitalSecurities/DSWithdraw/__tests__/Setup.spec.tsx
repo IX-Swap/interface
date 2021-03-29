@@ -6,10 +6,11 @@ import * as balancesData from 'hooks/balance/useAllBalances'
 import { ContinueButton } from 'app/pages/accounts/pages/digitalSecurities/DSWithdraw/ContinueButton'
 import { generateInfiniteQueryResult } from '__fixtures__/useQuery'
 import { history } from 'config/history'
-import { DSRoute } from 'app/pages/accounts/pages/digitalSecurities/router'
+import { DSRoute } from 'app/pages/accounts/pages/digitalSecurities/router/config'
 import { Form } from 'components/form/Form'
 import { TypedField } from 'components/form/TypedField'
 import { moneyNumberFormat } from 'config/numberFormat'
+import { generatePath, Route } from 'react-router-dom'
 
 jest.mock('components/form/TypedField', () => ({
   TypedField: jest.fn(() => null)
@@ -24,7 +25,7 @@ describe('Setup', () => {
   const balanceId = 'testId'
 
   beforeEach(() => {
-    history.push(DSRoute.withdraw, { balanceId })
+    history.push(generatePath(DSRoute.withdraw, { balanceId }))
     jest
       .spyOn(balancesData, 'useAllBalances')
       .mockReturnValue(
@@ -37,12 +38,12 @@ describe('Setup', () => {
     jest.clearAllMocks()
   })
 
-  afterAll(() => history.push('/'))
-
   it('renders ContinueButton', () => {
     render(
       <Form>
-        <Setup />
+        <Route path={DSRoute.withdraw}>
+          <Setup />
+        </Route>
       </Form>
     )
 
@@ -52,7 +53,9 @@ describe('Setup', () => {
   it('renders EditableField with correct props', () => {
     render(
       <Form>
-        <Setup />
+        <Route path={DSRoute.withdraw}>
+          <Setup />
+        </Route>
       </Form>
     )
 

@@ -30,11 +30,11 @@ describe('WithdrawalAddressCreate', () => {
   })
 
   it('renders without error', () => {
-    render(<WithdrawalAddressCreate isOpen />)
+    render(<WithdrawalAddressCreate />)
   })
 
   it('renders WADialog with correct props', () => {
-    render(<WithdrawalAddressCreate isOpen />)
+    render(<WithdrawalAddressCreate />)
 
     expect(WADialog).toHaveBeenCalledTimes(1)
     expect(WADialog).toHaveBeenCalledWith(
@@ -44,7 +44,7 @@ describe('WithdrawalAddressCreate', () => {
   })
 
   it('renders WADialogTitle with correct props', () => {
-    render(<WithdrawalAddressCreate isOpen />)
+    render(<WithdrawalAddressCreate />)
 
     expect(WADialogTitle).toHaveBeenCalledTimes(1)
     expect(WADialogTitle).toHaveBeenCalledWith(
@@ -54,7 +54,7 @@ describe('WithdrawalAddressCreate', () => {
   })
 
   it('renders WADialogContent with correct props', () => {
-    render(<WithdrawalAddressCreate isOpen />)
+    render(<WithdrawalAddressCreate />)
 
     expect(WADialogContent).toHaveBeenCalledTimes(1)
     expect(WADialogContent).toHaveBeenCalledWith(
@@ -64,7 +64,7 @@ describe('WithdrawalAddressCreate', () => {
   })
 
   it('renders WAFormWrapper with correct props', () => {
-    render(<WithdrawalAddressCreate isOpen />)
+    render(<WithdrawalAddressCreate />)
 
     expect(WAFormWrapper).toHaveBeenCalledTimes(1)
   })

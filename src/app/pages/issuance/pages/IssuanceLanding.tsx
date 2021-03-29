@@ -1,33 +1,29 @@
 import React from 'react'
 import { Grid, Hidden } from '@material-ui/core'
-import { InvestmentGrowthChart } from 'app/pages/issuance/components/InvestmentGrowthChart'
-import { CommitmentStatsChart } from 'app/pages/issuance/components/CommitmentStatsChart'
-import { DSOInfo } from 'app/pages/issuance/components/DSOInfo'
-import { CountdownTimer } from 'app/pages/issuance/components/CountdownTimer/CountdownTimer'
-import { MoreOptions } from 'app/pages/issuance/components/MoreOptions'
-import { RegionalMap } from 'app/pages/issuance/components/IssuanceLanding/RegionalMap'
-import { Activities } from 'app/pages/issuance/components/IssuanceLanding/Activities'
-import { TopInvestors } from 'app/pages/issuance/components/IssuanceLanding/TopInvestors'
-import { TotalInvestors } from 'app/pages/issuance/components/IssuanceLanding/TotalInvestors'
-import { DSOFilter } from 'app/pages/issuance/components/IssuanceLanding/DSOFilter'
-import { AmountRaised } from 'app/pages/issuance/components/IssuanceLanding/AmountRaised'
-import { useSetPageTitle } from 'app/hooks/useSetPageTitle'
+import { InvestmentGrowthChart } from '../components/InvestmentGrowthChart'
+import { CommitmentStatsChart } from '../components/CommitmentStatsChart'
+import { DSOInfo } from '../components/DSOInfo'
+import { CountdownTimer } from '../components/CountdownTimer/CountdownTimer'
+import { MoreOptions } from '../components/MoreOptions'
+import { RegionalMap } from '../components/IssuanceLanding/RegionalMap'
+import { Activities } from '../components/IssuanceLanding/Activities'
+import { TopInvestors } from '../components/IssuanceLanding/TopInvestors'
+import { TotalInvestors } from '../components/IssuanceLanding/TotalInvestors'
+import { DSOFilter } from '../components/IssuanceLanding/DSOFilter'
+import { AmountRaised } from '../components/IssuanceLanding/AmountRaised'
 import { useDSOById } from 'app/pages/invest/hooks/useDSOById'
-import { useIssuanceRouter } from 'app/pages/issuance/router'
-import { TargetFundraise } from 'app/pages/issuance/components/IssuanceLanding/TargetFundraise'
 import { useAppBreakpoints } from 'hooks/useAppBreakpoints'
 import { VSpacer } from 'components/VSpacer'
 import { isValidDSOId } from 'helpers/isValidDSOId'
+import { useParams } from 'react-router-dom'
+import { TargetFundraise } from 'app/pages/issuance/components/IssuanceLanding/TargetFundraise'
+import { PageHeader } from 'app/components/PageHeader/PageHeader'
 import { IssuanceLandingCard } from 'ui/SecondaryCard'
 
 export const IssuanceLanding = () => {
-  const {
-    params: { dsoId, issuerId }
-  } = useIssuanceRouter()
+  const { dsoId, issuerId } = useParams<{ dsoId: string; issuerId: string }>()
   const { data } = useDSOById(dsoId, issuerId)
   const { theme, isTablet } = useAppBreakpoints()
-
-  useSetPageTitle(data?.tokenName ?? 'Issuance')
 
   const divider = (
     <Hidden mdUp>
@@ -39,6 +35,7 @@ export const IssuanceLanding = () => {
 
   return (
     <>
+      <PageHeader title={data?.tokenName} showBreadcrumbs={false} />
       <Grid
         container
         justify='space-between'

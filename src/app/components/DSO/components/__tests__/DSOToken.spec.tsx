@@ -4,7 +4,7 @@ import { DSOToken } from 'app/components/DSO/components/DSOToken'
 import * as useDSOByIdHook from 'app/pages/invest/hooks/useDSOById'
 import { dso } from '__fixtures__/authorizer'
 import { history } from 'config/history'
-import { IssuanceRoute } from 'app/pages/issuance/router'
+import { IssuanceRoute } from 'app/pages/issuance/router/config'
 
 describe('DSOToken', () => {
   beforeEach(() => {

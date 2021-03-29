@@ -3,7 +3,7 @@ import { render, cleanup } from 'test-utils'
 import { Actions } from 'app/pages/authorizer/components/Actions'
 import { bank } from '__fixtures__/authorizer'
 import { history } from 'config/history'
-import { AuthorizerRoute } from 'app/pages/authorizer/router'
+import { AuthorizerRoute } from 'app/pages/authorizer/router/config'
 
 describe('Actions', () => {
   const props = {

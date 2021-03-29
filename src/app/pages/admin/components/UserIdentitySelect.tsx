@@ -8,7 +8,7 @@ import {
   Typography
 } from '@material-ui/core'
 import { useStyles } from 'app/pages/admin/components/UserIdentitySelect.styles'
-import { useAdminRouter } from 'app/pages/admin/router'
+import { AdminRoute } from 'app/pages/admin/router/config'
 import { AppRouterLinkComponent } from 'components/AppRouterLink'
 import React, { useState } from 'react'
 import { UserIdentityCreatedStatus } from 'types/user'
@@ -27,7 +27,6 @@ export const UserIdentitySelect = ({
   const hasIssuer = userIdentities.issuers
   const hasIdentity = hasIndividual || hasInvestor || hasIssuer
 
-  const { paths: adminPaths } = useAdminRouter()
   const { active, root } = useStyles()
   const [identity, setIdentity] = useState(
     !hasIdentity ? 'no identity' : 'individual'
@@ -39,15 +38,15 @@ export const UserIdentitySelect = ({
 
   const getPath = () => {
     if (identity === 'issuers') {
-      return adminPaths.createIssuerIdentity
+      return AdminRoute.createIssuerIdentity
     }
     if (identity === 'investors') {
-      return adminPaths.createCorporateIdentity
+      return AdminRoute.createCorporateIdentity
     }
     if (identity === 'individual') {
-      return adminPaths.createIndividualIdentity
+      return AdminRoute.createIndividualIdentity
     }
-    return adminPaths.users
+    return AdminRoute.users
   }
 
   const issuerActive = identity === 'issuers'

@@ -8,7 +8,7 @@ import { Form } from 'components/form/Form'
 import { RegisterFields } from 'auth/pages/register/components/RegisterFields'
 import { Submit } from 'components/form/Submit'
 import { AppRouterLink } from 'components/AppRouterLink'
-import { AuthRoute } from 'auth/router'
+import { AuthRoute } from 'auth/router/config'
 
 export const registerFormInitialValues = {
   name: '',

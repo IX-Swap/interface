@@ -2,6 +2,7 @@ import { CorporateIdentityView } from 'app/pages/_identity/components/CorporateI
 import { history } from 'config/history'
 import React from 'react'
 import { render, cleanup } from 'test-utils'
+import { corporate } from '__fixtures__/authorizer'
 
 window.URL.revokeObjectURL = jest.fn()
 
@@ -16,6 +17,6 @@ describe('CorporateIdentityView', () => {
   })
 
   it('renders without errors', () => {
-    render(<CorporateIdentityView />)
+    render(<CorporateIdentityView data={corporate} />)
   })
 })

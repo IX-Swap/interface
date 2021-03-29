@@ -2,11 +2,13 @@ import React from 'react'
 import { render, cleanup } from 'test-utils'
 import { LabelledValue } from 'components/LabelledValue'
 import { WAViewContent } from 'app/pages/accounts/pages/withdrawalAddresses/WithdrawalAddressView/WAViewContent'
-import * as useWithdrawalAddressesRouterHook from 'app/pages/accounts/pages/withdrawalAddresses/router'
 import * as useWithdrawalAddressByIdHook from 'app/pages/accounts/pages/withdrawalAddresses/hooks/useWithdrawalAddressById'
 import { generateQueryResult } from '__fixtures__/useQuery'
 import { withdrawalAddress } from '__fixtures__/withdrawalAddress'
 import { QueryStatus } from 'react-query'
+import { history } from 'config/history'
+import { generatePath, Route } from 'react-router-dom'
+import { WithdrawalAddressesRoute } from 'app/pages/accounts/pages/withdrawalAddresses/router/config'
 
 jest.mock('components/LabelledValue', () => ({
   LabelledValue: jest.fn(() => null)
@@ -14,11 +16,11 @@ jest.mock('components/LabelledValue', () => ({
 
 describe('WithdrawalAddressViewContent', () => {
   beforeEach(() => {
-    jest
-      .spyOn(useWithdrawalAddressesRouterHook, 'useWithdrawalAddressesRouter')
-      .mockReturnValue({
-        params: { withdrawalAddress: withdrawalAddress._id }
-      } as any)
+    history.push(
+      generatePath(WithdrawalAddressesRoute.view, {
+        withdrawalAddressId: withdrawalAddress._id
+      })
+    )
   })
 
   afterEach(async () => {
@@ -30,7 +32,26 @@ describe('WithdrawalAddressViewContent', () => {
     jest
       .spyOn(useWithdrawalAddressByIdHook, 'useWithdrawalAddressById')
       .mockReturnValue(generateQueryResult({ data: withdrawalAddress }))
+
     render(<WAViewContent />)
+  })
+
+  it('passes correct withdrawal address id to the useWithdrawalAddressById hook', () => {
+    jest
+      .spyOn(useWithdrawalAddressByIdHook, 'useWithdrawalAddressById')
+      .mockImplementation(
+        jest.fn(() => generateQueryResult({ data: withdrawalAddress }))
+      )
+
+    render(
+      <Route path={WithdrawalAddressesRoute.view}>
+        <WAViewContent />
+      </Route>
+    )
+
+    expect(
+      useWithdrawalAddressByIdHook.useWithdrawalAddressById
+    ).toHaveBeenCalledWith(withdrawalAddress._id)
   })
 
   it('does not render LabelledValue if data not loaded', () => {
