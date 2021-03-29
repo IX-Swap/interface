@@ -2,6 +2,7 @@ import React from 'react'
 import { Grid } from '@material-ui/core'
 import { Meta, Story } from '@storybook/react/types-6-0'
 import { IndividualIdentityView } from 'app/pages/_identity/components/IndividualIdentityView/IndividualIdentityView'
+import { individual } from '__fixtures__/identity'
 
 const meta: Meta = {
   title: 'Pages/Identity/IndividualIdentityView',
@@ -13,7 +14,7 @@ export default meta
 const Template: Story = () => (
   <Grid container>
     <Grid item>
-      <IndividualIdentityView />
+      <IndividualIdentityView data={individual} />
     </Grid>
   </Grid>
 )

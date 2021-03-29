@@ -1,15 +1,20 @@
 import { act } from '@testing-library/react-hooks'
+import { history } from 'config/history'
+import { generatePath } from 'react-router-dom'
 import { waitFor, cleanup, renderHookWithServiceProvider } from 'test-utils'
 import { unsuccessfulResponse, successfulResponse } from '__fixtures__/api'
-import * as useAuthorizerRouterHook from 'app/pages/authorizer/router'
 import { commitment } from '__fixtures__/authorizer'
 import { useCommitmentIssuance } from '../useCommitmentIssuance'
 
 describe('useMarkAsRead', () => {
+  const path = `/app/authorizer/commitments/:userId/:commitmentId/view`
   beforeEach(() => {
-    jest
-      .spyOn(useAuthorizerRouterHook, 'useAuthorizerRouter')
-      .mockReturnValue({ params: { commitmentId: commitment._id } } as any)
+    history.push(
+      generatePath(path, {
+        userId: commitment.user._id,
+        commitmentId: commitment._id
+      })
+    )
   })
 
   afterEach(async () => {
@@ -26,7 +31,8 @@ describe('useMarkAsRead', () => {
       const snackbarObj = { showSnackbar }
       const { result } = renderHookWithServiceProvider(
         () => useCommitmentIssuance(),
-        { apiService: apiObj, snackbarService: snackbarObj }
+        { apiService: apiObj, snackbarService: snackbarObj },
+        path
       )
 
       await waitFor(

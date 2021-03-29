@@ -1,6 +1,5 @@
 import { useServices } from 'hooks/useServices'
 import { useMutation } from 'react-query'
-import { useIdentitiesRouter } from 'app/pages/_identity/router'
 import {
   prepareDocumentsForUpload,
   prepareDeclarationsForUpload
@@ -14,11 +13,13 @@ import {
 } from 'types/identity'
 import { getIdFromObj } from 'helpers/strings'
 import { identityURL } from 'config/apiURL'
+import { generatePath, useHistory } from 'react-router'
+import { IdentityRoute } from 'app/pages/_identity/router/config'
 
 export const useCreateOrUpdateIndividual = () => {
   const { snackbarService } = useServices()
   const { user } = useAuth()
-  const { push } = useIdentitiesRouter()
+  const { push } = useHistory()
   const createOrUpdateIndividual = async (
     values: IndividualIdentityFormValues
   ) => {
@@ -40,7 +41,11 @@ export const useCreateOrUpdateIndividual = () => {
   return useMutation(createOrUpdateIndividual, {
     onSuccess: data => {
       void snackbarService.showSnackbar(data.message, 'success')
-      push('individual')
+      push(
+        generatePath(IdentityRoute.viewIndividual, {
+          identityId: data.data._id
+        })
+      )
     },
     onError: (error: any) => {
       void snackbarService.showSnackbar(error.message, 'error')

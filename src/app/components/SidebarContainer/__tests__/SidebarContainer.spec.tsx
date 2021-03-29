@@ -7,11 +7,11 @@ import { ReactComponent as AccountsIcon } from 'assets/icons/navigation/account.
 import { ReactComponent as IssuanceIcon } from 'assets/icons/navigation/issuance.svg'
 import { ReactComponent as AuthorizerIcon } from 'assets/icons/navigation/authorizer.svg'
 import * as acl from 'helpers/acl'
-import * as useAuthorizerRouterHook from 'app/pages/authorizer/router'
-import * as useAccountsRouterHook from 'app/pages/accounts/router'
-import * as useInvestRouterHook from 'app/pages/invest/routers/router'
-import * as useIssuanceRouterHook from 'app/pages/issuance/router'
-import * as useHomeRouterHook from 'app/pages/home/router'
+import { AccountsRoute } from 'app/pages/accounts/router/config'
+import { InvestRoute } from 'app/pages/invest/router/config'
+import { IssuanceRoute } from 'app/pages/issuance/router/config'
+import { HomeRoute } from 'app/pages/home/router/config'
+import { AuthorizerRoute } from 'app/pages/authorizer/router/config'
 
 jest.mock('assets/icons/navigation/invest.svg', () => ({
   ReactComponent: jest.fn(() => null)
@@ -33,24 +33,6 @@ jest.mock(
 )
 
 describe('Sidebar', () => {
-  beforeEach(() => {
-    jest.spyOn(useAuthorizerRouterHook, 'useAuthorizerRouter').mockReturnValue({
-      paths: useAuthorizerRouterHook.AuthorizerRoute
-    } as any)
-    jest
-      .spyOn(useAccountsRouterHook, 'useAccountsRouter')
-      .mockReturnValue({ paths: useAccountsRouterHook.AccountsRoute } as any)
-    jest
-      .spyOn(useInvestRouterHook, 'useInvestRouter')
-      .mockReturnValue({ paths: useInvestRouterHook.InvestRoute } as any)
-    jest
-      .spyOn(useIssuanceRouterHook, 'useIssuanceRouter')
-      .mockReturnValue({ paths: useIssuanceRouterHook.IssuanceRoute } as any)
-    jest
-      .spyOn(useHomeRouterHook, 'useHomeRouter')
-      .mockReturnValue({ paths: useHomeRouterHook.HomeRoute } as any)
-  })
-
   afterEach(async () => {
     await cleanup()
     jest.clearAllMocks()
@@ -71,7 +53,7 @@ describe('Sidebar', () => {
       1,
       {
         label: 'Home',
-        link: useHomeRouterHook.HomeRoute.landing,
+        link: HomeRoute.landing,
         icon: expect.anything()
       },
       {}
@@ -80,7 +62,7 @@ describe('Sidebar', () => {
       2,
       {
         label: 'Accounts',
-        link: useAccountsRouterHook.AccountsRoute.landing,
+        link: AccountsRoute.landing,
         icon: AccountsIcon
       },
       {}
@@ -89,7 +71,7 @@ describe('Sidebar', () => {
       3,
       {
         label: 'Invest',
-        link: useInvestRouterHook.InvestRoute.landing,
+        link: InvestRoute.landing,
         icon: InvestIcon
       },
       {}
@@ -105,7 +87,7 @@ describe('Sidebar', () => {
       1,
       {
         label: 'Home',
-        link: useHomeRouterHook.HomeRoute.landing,
+        link: HomeRoute.landing,
         icon: expect.anything()
       },
       {}
@@ -114,7 +96,7 @@ describe('Sidebar', () => {
       2,
       {
         label: 'Accounts',
-        link: useAccountsRouterHook.AccountsRoute.landing,
+        link: AccountsRoute.landing,
         icon: AccountsIcon
       },
       {}
@@ -123,7 +105,7 @@ describe('Sidebar', () => {
       3,
       {
         label: 'Invest',
-        link: useInvestRouterHook.InvestRoute.landing,
+        link: InvestRoute.landing,
         icon: InvestIcon
       },
       {}
@@ -132,7 +114,7 @@ describe('Sidebar', () => {
       4,
       {
         label: 'Issuance',
-        link: useIssuanceRouterHook.IssuanceRoute.insight,
+        link: IssuanceRoute.insight,
         icon: IssuanceIcon
       },
       {}
@@ -149,7 +131,7 @@ describe('Sidebar', () => {
       1,
       {
         label: 'Home',
-        link: useHomeRouterHook.HomeRoute.landing,
+        link: HomeRoute.landing,
         icon: expect.anything()
       },
       {}
@@ -158,7 +140,7 @@ describe('Sidebar', () => {
       2,
       {
         label: 'Accounts',
-        link: useAccountsRouterHook.AccountsRoute.landing,
+        link: AccountsRoute.landing,
         icon: AccountsIcon
       },
       {}
@@ -167,7 +149,7 @@ describe('Sidebar', () => {
       3,
       {
         label: 'Invest',
-        link: useInvestRouterHook.InvestRoute.landing,
+        link: InvestRoute.landing,
         icon: InvestIcon
       },
       {}
@@ -176,7 +158,7 @@ describe('Sidebar', () => {
       4,
       {
         label: 'Authorizer',
-        link: useAuthorizerRouterHook.AuthorizerRoute.landing,
+        link: AuthorizerRoute.landing,
         icon: AuthorizerIcon
       },
       {}

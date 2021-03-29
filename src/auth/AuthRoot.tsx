@@ -1,14 +1,13 @@
 import React from 'react'
 import { Grid, Box } from '@material-ui/core'
 import { Copyright } from 'auth/components/Copyright'
-import { useAuthRouter } from 'auth/router'
 import { AuthWrapper } from 'ui/AuthWrapper'
 import { InfoPanel } from 'auth/components/InfoPanel'
 import { AppLogo } from 'app/components/AppLogo/AppLogo'
 import { useStyles } from 'auth/pages/AuthRootStyles.styles'
+import { AuthRouter } from 'auth/router/AuthRouter'
 
 export const AuthRoot: React.FC = () => {
-  const { renderRoutes } = useAuthRouter()
   const { container, formContainer } = useStyles()
 
   return (
@@ -33,7 +32,9 @@ export const AuthRoot: React.FC = () => {
                         </Grid>
                       </Grid>
                     </Grid>
-                    <Grid item>{renderRoutes()}</Grid>
+                    <Grid item>
+                      <AuthRouter />
+                    </Grid>
                   </Grid>
                 </Box>
               </Grid>

@@ -1,12 +1,10 @@
 import React from 'react'
 import { AppRouterLinkComponent } from 'components/AppRouterLink'
-import { useIssuanceRouter } from 'app/pages/issuance/router'
 import { Typography, Button } from '@material-ui/core'
 import { VSpacer } from 'components/VSpacer'
+import { IssuanceRoute } from 'app/pages/issuance/router/config'
 
 export const NoDeals = () => {
-  const { paths } = useIssuanceRouter()
-
   return (
     <>
       <Typography variant='body1' align='center'>
@@ -17,7 +15,7 @@ export const NoDeals = () => {
       <Button
         fullWidth
         component={AppRouterLinkComponent}
-        to={paths.create}
+        to={IssuanceRoute.create}
         size='large'
         color='primary'
         variant='contained'

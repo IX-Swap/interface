@@ -1,5 +1,5 @@
 import React from 'react'
-import { Grid, Card, Hidden } from '@material-ui/core'
+import { Grid, Hidden } from '@material-ui/core'
 import { InvestmentGrowthChart } from '../components/InvestmentGrowthChart'
 import { CommitmentStatsChart } from '../components/CommitmentStatsChart'
 import { DSOInfo } from '../components/DSOInfo'
@@ -11,22 +11,19 @@ import { TopInvestors } from '../components/IssuanceLanding/TopInvestors'
 import { TotalInvestors } from '../components/IssuanceLanding/TotalInvestors'
 import { DSOFilter } from '../components/IssuanceLanding/DSOFilter'
 import { AmountRaised } from '../components/IssuanceLanding/AmountRaised'
-import { useSetPageTitle } from 'app/hooks/useSetPageTitle'
 import { useDSOById } from 'app/pages/invest/hooks/useDSOById'
-import { useIssuanceRouter } from 'app/pages/issuance/router'
-import { TargetFundraise } from '../components/IssuanceLanding/TargetFundraise'
 import { useAppBreakpoints } from 'hooks/useAppBreakpoints'
 import { VSpacer } from 'components/VSpacer'
 import { isValidDSOId } from 'helpers/isValidDSOId'
+import { useParams } from 'react-router-dom'
+import { TargetFundraise } from 'app/pages/issuance/components/IssuanceLanding/TargetFundraise'
+import { PageHeader } from 'app/components/PageHeader/PageHeader'
+import { IssuanceLandingCard } from 'ui/SecondaryCard'
 
 export const IssuanceLanding = () => {
-  const {
-    params: { dsoId, issuerId }
-  } = useIssuanceRouter()
+  const { dsoId, issuerId } = useParams<{ dsoId: string; issuerId: string }>()
   const { data } = useDSOById(dsoId, issuerId)
   const { theme, isTablet } = useAppBreakpoints()
-
-  useSetPageTitle(data?.tokenName ?? 'Issuance')
 
   const divider = (
     <Hidden mdUp>
@@ -38,6 +35,7 @@ export const IssuanceLanding = () => {
 
   return (
     <>
+      <PageHeader title={data?.tokenName} showBreadcrumbs={false} />
       <Grid
         container
         justify='space-between'
@@ -53,57 +51,57 @@ export const IssuanceLanding = () => {
           md={8}
         >
           <Grid item xs={12} md={4} lg={4}>
-            <Card variant='outlined' style={{ height: '100%' }}>
+            <IssuanceLandingCard variant='outlined'>
               <TotalInvestors />
-            </Card>
+            </IssuanceLandingCard>
           </Grid>
 
           {divider}
 
           <Grid item xs={12} md={4} lg={4}>
-            <Card variant='outlined' style={{ height: '100%' }}>
+            <IssuanceLandingCard variant='outlined' style={{ height: '100%' }}>
               <AmountRaised />
-            </Card>
+            </IssuanceLandingCard>
           </Grid>
 
           {divider}
 
           <Grid item xs={12} md={4} lg={4}>
-            <Card variant='outlined' style={{ height: '100%' }}>
+            <IssuanceLandingCard variant='outlined' style={{ height: '100%' }}>
               <TargetFundraise />
-            </Card>
+            </IssuanceLandingCard>
           </Grid>
 
           {divider}
 
           <Grid item xs={12} lg={8}>
-            <Card variant='outlined' style={{ height: '100%' }}>
+            <IssuanceLandingCard variant='outlined' style={{ height: '100%' }}>
               <InvestmentGrowthChart />
-            </Card>
+            </IssuanceLandingCard>
           </Grid>
 
           {divider}
 
           <Grid item xs={12} lg={4}>
-            <Card variant='outlined' style={{ height: '100%' }}>
+            <IssuanceLandingCard variant='outlined' style={{ height: '100%' }}>
               <TopInvestors />
-            </Card>
+            </IssuanceLandingCard>
           </Grid>
 
           {divider}
 
           <Grid item xs={12} lg={6}>
-            <Card variant='outlined' style={{ height: '100%' }}>
+            <IssuanceLandingCard variant='outlined' style={{ height: '100%' }}>
               <CommitmentStatsChart />
-            </Card>
+            </IssuanceLandingCard>
           </Grid>
 
           {divider}
 
           <Grid item xs={12} lg={6}>
-            <Card variant='outlined' style={{ height: '100%' }}>
+            <IssuanceLandingCard variant='outlined' style={{ height: '100%' }}>
               <RegionalMap />
-            </Card>
+            </IssuanceLandingCard>
           </Grid>
         </Grid>
 
@@ -117,7 +115,7 @@ export const IssuanceLanding = () => {
           style={{ marginBottom: isTablet ? 0 : theme.spacing(3) }}
         >
           <Grid
-            component={Card}
+            component={IssuanceLandingCard}
             container
             item
             xs={12}
@@ -136,9 +134,9 @@ export const IssuanceLanding = () => {
 
       <Grid container>
         <Grid item xs={12} style={{ paddingTop: 0, paddingLeft: 0 }}>
-          <Card variant='outlined'>
+          <IssuanceLandingCard variant='outlined'>
             <Activities />
-          </Card>
+          </IssuanceLandingCard>
         </Grid>
       </Grid>
     </>

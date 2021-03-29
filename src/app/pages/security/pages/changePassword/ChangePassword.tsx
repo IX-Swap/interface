@@ -6,6 +6,7 @@ import { useChangePassword } from './hooks/useChangePassword'
 import { Form } from 'components/form/Form'
 import { Submit } from 'components/form/Submit'
 import { ChangePasswordFields } from 'app/pages/security/pages/changePassword/components/ChangePasswordFields'
+import { PageHeader } from 'app/components/PageHeader/PageHeader'
 
 const defaultValues = {
   oldPassword: '',
@@ -21,6 +22,7 @@ export const ChangePassword = () => {
 
   return (
     <Container>
+      <PageHeader title='Change Password' />
       <Grid container alignItems='center' justify='center'>
         <Grid container lg={4} item>
           <Form

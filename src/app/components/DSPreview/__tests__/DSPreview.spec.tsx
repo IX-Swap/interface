@@ -2,26 +2,28 @@ import React from 'react'
 import { render, cleanup } from 'test-utils'
 import { DSPreview } from 'app/components/DSPreview/DSPreview'
 import { history } from 'config/history'
-import { DSRoute } from 'app/pages/accounts/pages/digitalSecurities/router'
+import { DSRoute } from 'app/pages/accounts/pages/digitalSecurities/router/config'
 import { LabelledValue } from 'components/LabelledValue'
 import * as useBalancesByTypeHook from 'hooks/balance/useBalancesByType'
 import { generateInfiniteQueryResult } from '__fixtures__/useQuery'
 import { balance } from '__fixtures__/balance'
+import { generatePath, Route } from 'react-router-dom'
 
 jest.mock('components/LabelledValue', () => ({
   LabelledValue: jest.fn(() => null)
 }))
 
 describe('DSPreview', () => {
+  const balanceId = 'testBalanceId'
+
   beforeEach(() => {
-    history.push(DSRoute.view, { balanceId: 'testBalanceId' })
+    history.push(generatePath(DSRoute.withdraw, { balanceId }))
   })
 
   afterEach(async () => {
     await cleanup()
     jest.clearAllMocks()
   })
-  afterAll(() => history.push('/'))
 
   it('renders without error', () => {
     render(<DSPreview />)
@@ -45,7 +47,12 @@ describe('DSPreview', () => {
       .mockReturnValue(
         generateInfiniteQueryResult({ map: { testBalanceId: balance } })
       )
-    render(<DSPreview />)
+
+    render(
+      <Route path={DSRoute.withdraw}>
+        <DSPreview />
+      </Route>
+    )
 
     expect(LabelledValue).toHaveBeenNthCalledWith(
       1,

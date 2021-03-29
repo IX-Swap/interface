@@ -7,12 +7,17 @@ import { user } from '__fixtures__/user'
 import { createDSOArgs } from '__fixtures__/issuance'
 import { dso } from '__fixtures__/authorizer'
 import { history } from 'config/history'
+import { generatePath } from 'react-router-dom'
+import { IssuanceRoute } from 'app/pages/issuance/router/config'
 
 describe('useUpdateDSO', () => {
   const callbacks = { onSuccess: jest.fn(), onError: jest.fn() }
 
   beforeEach(() => {
-    history.push('/', { dsoId: dso._id, issuerId: dso.user })
+    history.push(
+      generatePath(IssuanceRoute.edit, { dsoId: dso._id, issuerId: dso.user })
+    )
+
     jest
       .spyOn(useAuthHook, 'useAuth')
       .mockReturnValue({ user: user, isAuthenticated: true })
@@ -32,7 +37,8 @@ describe('useUpdateDSO', () => {
       const snackbarObj = { showSnackbar }
       const { result } = renderHookWithServiceProvider(
         () => useUpdateDSO(dso._id, callbacks),
-        { apiService: apiObj, snackbarService: snackbarObj }
+        { apiService: apiObj, snackbarService: snackbarObj },
+        IssuanceRoute.edit
       )
 
       await waitFor(

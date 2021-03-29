@@ -16,6 +16,7 @@ export interface AuthorizerListProps<T>
 export const AuthorizerList = <T,>(props: AuthorizerListProps<T>) => {
   return (
     <LayoutWithSidebar
+      title={props.title}
       secret
       sidebar={Filters}
       sidebarToggle={FiltersToggle}

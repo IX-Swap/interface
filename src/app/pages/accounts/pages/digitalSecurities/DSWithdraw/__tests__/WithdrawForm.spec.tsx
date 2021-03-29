@@ -10,7 +10,7 @@ import {
 import { fireEvent, waitFor } from '@testing-library/react'
 import * as useWithdrawDSHook from 'app/pages/accounts/pages/banks/hooks/useWithdrawDS'
 import { history } from 'config/history'
-import { DSRoute } from 'app/pages/accounts/pages/digitalSecurities/router'
+import { DSRoute } from 'app/pages/accounts/pages/digitalSecurities/router/config'
 
 describe('WithdrawForm', () => {
   const withdrawDS = jest.fn()

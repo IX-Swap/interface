@@ -5,14 +5,17 @@ import { managedUser } from '__fixtures__/user'
 import * as ReactQuery from 'react-query'
 import { authURL } from 'config/apiURL'
 import { generateMutationResult } from '__fixtures__/useQuery'
-import * as useAdminRouter from 'app/pages/admin/router'
 import { usersQueryKeys } from 'config/queryKeys'
+import { generatePath } from 'react-router-dom'
+import { history } from 'config/history'
+import { AdminRoute } from 'app/pages/admin/router/config'
 
 describe('useResetPassword', () => {
   const qc = ReactQuery.queryCache
   qc.invalidateQueries = jest.fn(() => null) as any
 
   beforeEach(() => {
+    history.push(generatePath(AdminRoute.view, { userId: managedUser._id }))
     jest.spyOn(ReactQuery, 'useQueryCache').mockReturnValue(qc)
   })
 
@@ -23,12 +26,6 @@ describe('useResetPassword', () => {
 
   it('renders without errors', async () => {
     await act(async () => {
-      jest
-        .spyOn(useAdminRouter, 'useAdminRouter')
-        .mockImplementation(
-          () => ({ params: { userId: managedUser._id } } as any)
-        )
-
       const postFn = jest.fn().mockResolvedValueOnce(generateMutationResult({}))
       const apiObj = { post: postFn }
       const successHandlerMock = jest.fn()
@@ -37,7 +34,8 @@ describe('useResetPassword', () => {
         () => useResetPassword(managedUser.email, successHandlerMock),
         {
           apiService: apiObj
-        }
+        },
+        AdminRoute.view
       )
 
       await waitFor(

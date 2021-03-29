@@ -5,7 +5,10 @@ export const NavigationWrapper = styled(List)(({ theme }) => {
   return {
     marginTop: 0,
     width: 250,
-    backgroundColor: theme.palette.backgrounds.main,
+    backgroundColor:
+      theme.palette.type === 'light'
+        ? theme.palette.backgrounds.default
+        : theme.palette.backgrounds.light,
 
     [theme.breakpoints.up('md')]: {
       border: `1px solid ${theme.palette.divider}`,

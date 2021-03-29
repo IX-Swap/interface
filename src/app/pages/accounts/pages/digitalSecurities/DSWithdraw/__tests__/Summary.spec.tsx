@@ -12,7 +12,8 @@ import { formatMoney } from 'helpers/numbers'
 import { Form } from 'components/form/Form'
 import { generateInfiniteQueryResult } from '__fixtures__/useQuery'
 import { history } from 'config/history'
-import { DSRoute } from 'app/pages/accounts/pages/digitalSecurities/router'
+import { DSRoute } from 'app/pages/accounts/pages/digitalSecurities/router/config'
+import { generatePath, Route } from 'react-router-dom'
 
 jest.mock('app/components/GenericPreview/GenericPreview', () => ({
   GenericPreview: jest.fn(() => null)
@@ -20,14 +21,13 @@ jest.mock('app/components/GenericPreview/GenericPreview', () => ({
 
 describe('Summary', () => {
   beforeEach(() => {
-    history.push(DSRoute.withdraw, { balanceId: 'testId' })
+    history.push(generatePath(DSRoute.withdraw, { balanceId: 'testId' }))
   })
 
   afterEach(async () => {
     await cleanup()
     jest.clearAllMocks()
   })
-  afterAll(() => history.push('/'))
 
   it('renders without error', () => {
     jest
@@ -43,7 +43,9 @@ describe('Summary', () => {
 
     render(
       <Form defaultValues={{ memo: '', amount: dsWithdrawal.amount }}>
-        <Summary />
+        <Route path={DSRoute.withdraw}>
+          <Summary />
+        </Route>
       </Form>
     )
   })
@@ -67,7 +69,9 @@ describe('Summary', () => {
         data-testid='form'
         defaultValues={{ memo: '', amount: dsWithdrawal.amount }}
       >
-        <Summary />
+        <Route path={DSRoute.withdraw}>
+          <Summary />
+        </Route>
       </Form>
     )
     expect(getByTestId('form')).toBeEmptyDOMElement()
@@ -91,7 +95,9 @@ describe('Summary', () => {
         data-testid='form'
         defaultValues={{ memo: '', amount: dsWithdrawal.amount }}
       >
-        <Summary />
+        <Route path={DSRoute.withdraw}>
+          <Summary />
+        </Route>
       </Form>
     )
     expect(getByTestId('form')).toBeEmptyDOMElement()
@@ -132,7 +138,9 @@ describe('Summary', () => {
 
     render(
       <Form defaultValues={{ memo: 'hello', amount: dsWithdrawal.amount }}>
-        <Summary />
+        <Route path={DSRoute.withdraw}>
+          <Summary />
+        </Route>
       </Form>
     )
 
@@ -169,7 +177,9 @@ describe('Summary', () => {
 
     render(
       <Form defaultValues={{ memo: undefined, amount: dsWithdrawal.amount }}>
-        <Summary />
+        <Route path={DSRoute.withdraw}>
+          <Summary />
+        </Route>
       </Form>
     )
 

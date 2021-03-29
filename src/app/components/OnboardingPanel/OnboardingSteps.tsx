@@ -22,7 +22,7 @@ export const OnboardingSteps = ({
         <Step key={step.title} expanded>
           <StepLabel>{step.title}</StepLabel>
           {step.content.length > 0 ? (
-            <StepContent style={{ opacity: index > activeStep ? 0.6 : 1 }}>
+            <StepContent>
               {step.content.map((content, index) => (
                 <Typography
                   key={index}

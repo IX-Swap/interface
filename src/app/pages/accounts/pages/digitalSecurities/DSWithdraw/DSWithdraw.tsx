@@ -4,11 +4,15 @@ import { WithdrawForm } from 'app/pages/accounts/pages/digitalSecurities/DSWithd
 import { WithdrawView } from 'app/pages/accounts/pages/digitalSecurities/DSWithdraw/WithdrawView'
 import { RecentWithdrawals } from 'app/pages/accounts/pages/digitalSecurities/DSWithdraw/RecentWithdrawals'
 import { VSpacer } from 'components/VSpacer'
+import { PageHeader } from 'app/components/PageHeader/PageHeader'
 
 export const DSWithdraw: React.FC = () => {
   return (
     <WithdrawForm>
       <Grid container direction='column'>
+        <Grid item>
+          <PageHeader title='Digital Security Withdrawal' />
+        </Grid>
         <Grid item>
           <WithdrawView />
         </Grid>

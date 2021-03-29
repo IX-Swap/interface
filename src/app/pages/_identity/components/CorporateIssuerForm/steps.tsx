@@ -1,4 +1,4 @@
-import React, { Fragment } from 'react'
+import React from 'react'
 import { CorporateInformationForm } from 'app/pages/_identity/components/CorporateInformationForm/CorporateInformationForm'
 import { DirectorsAndBeneficialOwnerDetails } from 'app/pages/_identity/components/DirectorAndBeneficialOwnerDetails/DirectorsAndBeneficialOwnerDetails'
 import {
@@ -15,13 +15,13 @@ import {
 import { getTaxDeclarationRequestPayload } from '../../utils/individual/requests'
 import { TaxDeclarationForm } from '../TaxDeclarationForm/TaxDeclarationForm'
 import { CorporateUploadDocumentsForm } from '../UploadDocumentsForm/CorporateUploadDocumentsForm'
-import { CorporateIdentityView } from 'app/pages/_identity/components/CorporateIdentityView/CorporateIdentityView'
 import {
   corporateInvestorInfoSchema,
   corporateIssuerDocumentsSchema,
   corporateTaxDeclarationSchema,
   directorsAndBeneficialOwnersSchema
 } from 'app/pages/_identity/validation/corporate'
+import { CorporateIdentityContainer } from 'app/pages/_identity/containers/CorporateIdentityContainer'
 
 export const corporateIssuerFormSteps = [
   {
@@ -29,54 +29,34 @@ export const corporateIssuerFormSteps = [
     getFormValues: getCorporateInfoFormValues,
     getRequestPayload: getCorporateInfoRequestPayload,
     validationSchema: corporateInvestorInfoSchema,
-    component: () => (
-      <Fragment>
-        <CorporateInformationForm />
-      </Fragment>
-    )
+    component: () => <CorporateInformationForm />
   },
   {
     label: 'Directors and Beneficial Owner Details',
     getFormValues: getDirectorsAndBeneficialOwnersFormValues,
     getRequestPayload: getDirectorsAndBeneficialOwnerRequestPayload,
     validationSchema: directorsAndBeneficialOwnersSchema,
-    component: () => (
-      <Fragment>
-        <DirectorsAndBeneficialOwnerDetails />
-      </Fragment>
-    )
+    component: () => <DirectorsAndBeneficialOwnerDetails />
   },
   {
     label: 'Tax Declaration',
     getFormValues: getCorporateInvestorTaxDeclarationFormValues,
     getRequestPayload: getTaxDeclarationRequestPayload,
     validationSchema: corporateTaxDeclarationSchema,
-    component: () => (
-      <Fragment>
-        <TaxDeclarationForm identityType='corporate' />
-      </Fragment>
-    )
+    component: () => <TaxDeclarationForm identityType='corporate' />
   },
   {
     label: 'Upload Documents',
     getFormValues: getCorporateInvestorDocumentsFormValues,
     getRequestPayload: getCorporateInvestorDocumentsRequestPayload,
     validationSchema: corporateIssuerDocumentsSchema,
-    component: () => (
-      <Fragment>
-        <CorporateUploadDocumentsForm />
-      </Fragment>
-    )
+    component: () => <CorporateUploadDocumentsForm />
   },
   {
     label: 'Review & Submit',
     getFormValues: () => null,
     getRequestPayload: {},
     validationSchema: {},
-    component: () => (
-      <Fragment>
-        <CorporateIdentityView isCorporateIssuerForm />
-      </Fragment>
-    )
+    component: () => <CorporateIdentityContainer />
   }
 ]

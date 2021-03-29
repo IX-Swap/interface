@@ -9,6 +9,7 @@ import {
 } from '@material-ui/core'
 import { IndividualAvatar } from 'components/IndividualAvatar'
 import { CorporateAvatar } from 'components/CorporateAvatar'
+import { useTheme } from '@material-ui/core/styles'
 
 export interface TopListProps {
   items: Array<{ imageURL?: string; user?: string; label: string; _id: string }>
@@ -16,6 +17,8 @@ export interface TopListProps {
 
 export const TopList = (props: TopListProps) => {
   const { items } = props
+  const theme = useTheme()
+  const isLightThemeOn = theme.palette.type === 'light'
 
   return (
     <List>
@@ -31,7 +34,14 @@ export const TopList = (props: TopListProps) => {
             </ListItemAvatar>
             <Box mx={1.5} />
             <ListItemText>
-              <Typography>{label}</Typography>
+              <Typography
+                style={{
+                  color: theme.palette.secondary.main,
+                  opacity: isLightThemeOn ? 1 : 0.6
+                }}
+              >
+                {label}
+              </Typography>
             </ListItemText>
           </ListItem>
         )

@@ -1,13 +1,10 @@
 import { IdentityType } from 'app/pages/identity/utils'
-import { useInvestRouter } from 'app/pages/invest/routers/router'
-import { useSecurityRouter } from 'app/pages/security/router'
 import { useSnackbar } from 'hooks/useSnackbar'
 import { useOnboardingJourneys } from 'app/components/OnboardingPanel/hooks/useOnboardingJourneys'
+import { SecurityRoute } from 'app/pages/security/router/config'
 
 export const useOnboardingDialog = () => {
   const { showOnboardingDialog } = useSnackbar()
-  const { paths: securityPaths } = useSecurityRouter()
-  const { paths: investPaths } = useInvestRouter()
   const { getIsJourneyCompleted } = useOnboardingJourneys()
 
   const showEnable2FADialog = () => {
@@ -16,7 +13,7 @@ export const useOnboardingDialog = () => {
       message: [
         'Increase your account security by enabling two factor authentication when signing into platform'
       ],
-      action: securityPaths.setup2fa,
+      action: SecurityRoute.setup2fa,
       actionLabel: 'Enable 2FA',
       closeLabel: 'Skip',
       closeArrow: false
@@ -94,7 +91,8 @@ export const useOnboardingDialog = () => {
         'You have complete the Onboarding journey. Our authorizer has approved your identity. You can start looking our deals in the “Invest” panel. Happy Investing!'
       ],
       actionLabel: 'Start Investing',
-      action: investPaths.landing
+      action: ''
+      // action: investPaths.landing
     })
   }
 

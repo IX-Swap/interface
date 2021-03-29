@@ -55,7 +55,7 @@ export const AuthorizerView = <T,>(
     <Container className={privateClassNames()} style={{ paddingTop: 40 }}>
       <Grid container direction='column'>
         <Grid item>
-          <PageHeader />
+          <PageHeader title={title} />
         </Grid>
         <Grid item>
           <Grid container spacing={6} wrap='wrap-reverse'>

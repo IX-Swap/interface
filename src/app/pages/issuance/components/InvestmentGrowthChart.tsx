@@ -18,7 +18,7 @@ export const InvestmentGrowthChart = () => {
 
   const textStyle = {
     color: theme.palette.getContrastText(
-      theme.palette.backgrounds.main as string
+      theme.palette.backgrounds.default as string
     )
   }
   const options = {

@@ -1,7 +1,7 @@
 import React from 'react'
 import { render, cleanup } from 'test-utils'
 import { history } from 'config/history'
-import { IssuanceRoute } from '../../router'
+import { IssuanceRoute } from '../../router/config'
 import {
   DeployTokenMessagesList,
   DeployTokenMessagesListProps

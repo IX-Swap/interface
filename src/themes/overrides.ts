@@ -1,5 +1,5 @@
 import { Theme } from '@material-ui/core'
-import { green } from '@material-ui/core/colors'
+import { green, grey } from '@material-ui/core/colors'
 import { Overrides } from '@material-ui/core/styles/overrides'
 import { rte } from 'themes/rte'
 import tinycolor from 'tinycolor2'
@@ -9,7 +9,7 @@ export const getThemeOverrides = (theme: Theme): Overrides => ({
   MuiCssBaseline: {
     '@global': {
       html: {
-        background: theme.palette?.backgrounds.main
+        background: theme.palette?.backgrounds.default
       }
     }
   },
@@ -86,7 +86,7 @@ export const getThemeOverrides = (theme: Theme): Overrides => ({
     shrink: {
       paddingRight: 5,
       paddingLeft: 5,
-      backgroundColor: theme.palette?.backgrounds.main
+      backgroundColor: theme.palette?.backgrounds.default
     }
   },
   MuiOutlinedInput: {
@@ -138,20 +138,31 @@ export const getThemeOverrides = (theme: Theme): Overrides => ({
   },
   MuiStepContent: {
     root: {
-      borderLeftStyle: 'dashed'
+      borderLeftStyle: 'dashed',
+      color:
+        theme.palette.type === 'light' ? grey[600] : 'rgba(255, 255, 255, 0.6)'
     }
   },
   MuiStepIcon: {
     root: {
-      color: tinycolor(theme.palette.backgrounds.main)
-        .darken(12)
-        .toHex8String(),
+      color: '#DDDDDD',
       '&$completed': {
         color: green[400]
       },
       '&$active': {
-        color: tinycolor(theme.palette.primary.main).toHex8String()
+        color: tinycolor(theme.palette.primary.main).toHex8String(),
+        '& .MuiStepIcon-text': {
+          fill: '#ffffff'
+        }
       }
+    },
+    text: {
+      fill: '#444444'
+    }
+  },
+  MuiSvgIcon: {
+    colorDisabled: {
+      fill: '#DADADA'
     }
   },
   MuiToggleButton: {
@@ -202,16 +213,17 @@ export const getThemeOverrides = (theme: Theme): Overrides => ({
   },
   MuiChip: {
     root: {
-      backgroundColor: tinycolor(theme.palette.backgrounds.secondary)
+      backgroundColor: tinycolor(theme.palette.backgrounds.light)
         .darken(4)
         .toHex8String()
     }
   },
   MuiAvatar: {
     colorDefault: {
-      backgroundColor: tinycolor(theme.palette.backgrounds.secondary)
+      backgroundColor: tinycolor(theme.palette.backgrounds.light)
         .darken(3)
-        .toHex8String()
+        .toHex8String(),
+      color: theme.palette.text.primary
     }
   },
   MuiSlider: {

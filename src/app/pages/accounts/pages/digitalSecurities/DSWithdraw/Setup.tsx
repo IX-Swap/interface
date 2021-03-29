@@ -1,7 +1,7 @@
 import React from 'react'
+import { useParams } from 'react-router-dom'
 import { Grid, Input } from '@material-ui/core'
 import { useAllBalances } from 'hooks/balance/useAllBalances'
-import { useDSRouter } from 'app/pages/accounts/pages/digitalSecurities/router'
 import { Alert } from '@material-ui/lab'
 import { ContinueButton } from 'app/pages/accounts/pages/digitalSecurities/DSWithdraw/ContinueButton'
 import { TypedField } from 'components/form/TypedField'
@@ -14,11 +14,9 @@ import { privateClassNames } from 'helpers/classnames'
 
 export const Setup: React.FC = () => {
   const { control } = useFormContext<WithdrawDSFormValues>()
-  const {
-    params: { balanceId }
-  } = useDSRouter()
   const { data, isLoading } = useAllBalances()
-  const balance = data.map[balanceId]
+  const params = useParams<{ balanceId: string }>()
+  const balance = data.map[params.balanceId]
 
   if (isLoading) {
     return null

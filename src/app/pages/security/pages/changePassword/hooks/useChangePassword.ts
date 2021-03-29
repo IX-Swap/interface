@@ -1,14 +1,15 @@
 import { useServices } from 'hooks/useServices'
 import { useMutation } from 'react-query'
-import { useSecurityRouter } from 'app/pages/security/router'
 import { ChangePasswordFormValues } from '../types'
 import { useAuth } from 'hooks/auth/useAuth'
 import { getIdFromObj } from 'helpers/strings'
 import { authURL } from 'config/apiURL'
+import { useHistory } from 'react-router'
+import { SecurityRoute } from 'app/pages/security/router/config'
 
 export const useChangePassword = () => {
   const { apiService, snackbarService } = useServices()
-  const { push } = useSecurityRouter()
+  const { push } = useHistory()
   const { user } = useAuth()
 
   const changePassword = async (args: ChangePasswordFormValues) => {
@@ -20,7 +21,7 @@ export const useChangePassword = () => {
 
   return useMutation(changePassword, {
     onSuccess: () => {
-      push('landing')
+      push(SecurityRoute.landing)
       void snackbarService.showSnackbar(
         'Successfully changed password',
         'success'

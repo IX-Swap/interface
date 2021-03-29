@@ -2,17 +2,10 @@ import { act } from '@testing-library/react-hooks'
 import { waitFor, cleanup, renderHookWithServiceProvider } from 'test-utils'
 import { useRequestPasswordReset } from 'auth/hooks/useRequestPasswordReset'
 import { successfulResponse } from '__fixtures__/api'
-import * as authRouter from 'auth/router'
 import { requestPasswordResetArgs } from '__fixtures__/auth'
 import { authURL } from 'config/apiURL'
 
 describe('useRequestPasswordReset', () => {
-  const replace = jest.fn()
-
-  beforeEach(() => {
-    jest.spyOn(authRouter, 'useAuthRouter').mockReturnValue({ replace } as any)
-  })
-
   afterEach(async () => {
     await cleanup()
     jest.clearAllMocks()
@@ -38,8 +31,6 @@ describe('useRequestPasswordReset', () => {
           const [mutate] = result.current
           void mutate(requestPasswordResetArgs)
 
-          expect(replace).toHaveBeenCalled()
-          expect(replace).toHaveBeenCalledWith('login')
           expect(postFn).toHaveBeenNthCalledWith(
             1,
             authURL.resetPassword,

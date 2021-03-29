@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { forwardRef, Ref } from 'react'
 import {
   LinkProps as MUILinkProps,
   Typography,
@@ -16,7 +16,7 @@ export interface AppRouterLinkProps {
 
 export const AppRouterLink: React.FC<
   Omit<LinkProps, 'to'> & MUILinkProps & AppRouterLinkProps
-> = props => {
+> = forwardRef((props, ref: Ref<any>) => {
   const {
     to,
     params,
@@ -33,6 +33,7 @@ export const AppRouterLink: React.FC<
   return (
     <MUILink
       {...rest}
+      ref={ref}
       underline={underline}
       component={Link}
       to={{
@@ -43,8 +44,10 @@ export const AppRouterLink: React.FC<
       {children}
     </MUILink>
   )
-}
+})
 
-export const AppRouterLinkComponent = (props: AppRouterLinkProps) => {
-  return <AppRouterLink {...props} />
-}
+export const AppRouterLinkComponent = forwardRef(
+  (props: AppRouterLinkProps, ref: Ref<any>) => {
+    return <AppRouterLink {...props} ref={ref} />
+  }
+)

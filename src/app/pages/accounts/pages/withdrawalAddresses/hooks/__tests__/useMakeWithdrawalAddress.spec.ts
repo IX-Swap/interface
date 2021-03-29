@@ -5,7 +5,6 @@ import { user } from '__fixtures__/user'
 import { network } from '__fixtures__/network'
 import { unsuccessfulResponse, successfulResponse } from '__fixtures__/api'
 import { useMakeWithdrawalAddress } from 'app/pages/accounts/pages/withdrawalAddresses/hooks/useMakeWithdrawalAddress'
-import * as useWithdrawalAddressesRouterHook from 'app/pages/accounts/pages/withdrawalAddresses/router'
 import * as useAuthHook from 'hooks/auth/useAuth'
 
 describe('useMakeWithdrawalAddress', () => {
@@ -20,10 +19,6 @@ describe('useMakeWithdrawalAddress', () => {
     jest
       .spyOn(useAuthHook, 'useAuth')
       .mockReturnValue({ user: user, isAuthenticated: true })
-
-    jest
-      .spyOn(useWithdrawalAddressesRouterHook, 'useWithdrawalAddressesRouter')
-      .mockReturnValue({ replace: jest.fn() } as any)
   })
 
   afterEach(async () => {

@@ -1,8 +1,6 @@
 import React from 'react'
-import { useAuthorizerRouter } from 'app/pages/authorizer/router'
+import { AuthorizerRouter } from 'app/pages/authorizer/router/AuthorizerRouter'
 
 export const AuthorizerRoot: React.FC = () => {
-  const { renderRoutes } = useAuthorizerRouter()
-
-  return renderRoutes()
+  return <AuthorizerRouter />
 }
