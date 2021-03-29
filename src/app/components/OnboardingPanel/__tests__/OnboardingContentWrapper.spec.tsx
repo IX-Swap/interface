@@ -128,13 +128,14 @@ describe('ContentWrapper', () => {
       .spyOn(useOnboardingJourneys, 'useOnboardingJourneys')
       .mockImplementation(() => objResponse as any)
 
-    render(
+    const { container } = render(
       <OnboardingContentWrapper>
         <div />
       </OnboardingContentWrapper>
     )
 
-    expect(OnboardingPanel).toHaveBeenCalled()
+    expect(container.firstElementChild).toBeEmptyDOMElement()
+    expect(OnboardingPanel).not.toHaveBeenCalled()
   })
 
   it('renders wrapper if user completed corporate investor onboarding journey and started issuer onboarding journey', () => {
@@ -149,13 +150,14 @@ describe('ContentWrapper', () => {
       .spyOn(useOnboardingJourneys, 'useOnboardingJourneys')
       .mockImplementation(() => objResponse as any)
 
-    render(
+    const { container } = render(
       <OnboardingContentWrapper>
         <div />
       </OnboardingContentWrapper>
     )
 
-    expect(OnboardingPanel).toHaveBeenCalled()
+    expect(container.firstElementChild).toBeEmptyDOMElement()
+    expect(OnboardingPanel).not.toHaveBeenCalled()
   })
 
   it('renders wrapper if user started individual investor onboarding journey', () => {
