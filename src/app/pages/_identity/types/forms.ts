@@ -125,3 +125,14 @@ export interface CorporateInvestorAgreementsFormValues {
   custody: boolean
   disclosure: boolean
 }
+
+export interface IssuerDetailsFormValues {
+  fullName: string
+  companyName: string
+  companyRegistrationNumber: string
+  contactNumber?: string
+  email: string
+  industry: string
+  fundRaisingAmount: number
+  detail: string
+}
