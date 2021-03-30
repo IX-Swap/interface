@@ -37,6 +37,12 @@ export const identityURL = {
     update: (userId: string) => `/identity/individuals/${userId}`,
     get: (userId: string) => `/identity/individuals/${userId}`,
     submit: (id: string) => `/identity/individuals/${id}/submit`
+  },
+  detailsOfIssuance: {
+    create: (userId: string) => `/identity/issuance-detail/${userId}`,
+    update: (userId: string, issuanceId: string) =>
+      `/identity/issuance-detail/${userId}/${issuanceId}`,
+    get: (userId: string) => `/identity/issuance-detail/${userId}`
   }
 }
 
