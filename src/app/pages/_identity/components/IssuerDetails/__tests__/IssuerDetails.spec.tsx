@@ -31,6 +31,6 @@ describe('IssuerDetails', () => {
     expect(getByLabelText('Email Address')).toBeTruthy()
     expect(getByLabelText('Industry')).toBeTruthy()
     expect(getByLabelText('Fundraising Amount')).toBeTruthy()
-    expect(getByLabelText('Detail of Issuance')).toBeTruthy()
+    expect(getByLabelText('Details of Issuance')).toBeTruthy()
   })
 })
