@@ -4,11 +4,11 @@ export const getIssuerDetailsFormValues = (data: DetailsOfIssuance) => {
   return {
     fullName: data?.fullName,
     companyName: data?.companyName,
-    companyRegistrationNumber: data?.registrationNumber,
+    companyRegistrationNumber: data?.companyRegistrationNumber,
     contactNumber: data?.contactNumber,
-    email: data?.emailAddress,
+    email: data?.email,
     industry: data?.industry,
-    fundRaisingAmount: data?.fundrasingAmount,
-    detail: data?.detailsOfIssuance
+    fundRaisingAmount: data?.fundRaisingAmount,
+    detail: data?.detail
   }
 }

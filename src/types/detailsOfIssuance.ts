@@ -1,10 +1,10 @@
 export interface DetailsOfIssuance {
   fullName: string
   companyName: string
-  registrationNumber: string
+  companyRegistrationNumber: string
   contactNumber?: string
-  emailAddress: string
+  email: string
   industry: string
-  fundrasingAmount: number
-  detailsOfIssuance: string
+  fundRaisingAmount: number
+  detail: string
 }
