@@ -1,7 +1,7 @@
 import React, { Fragment } from 'react'
 import { VSpacer } from 'components/VSpacer'
 import { Typography } from '@material-ui/core'
-import { IndividualInfoFields } from 'app/pages/identity/components/IndividualInfoFields/IndividualInfoFields'
+import { IndividualInfoFields } from 'app/pages/_identity/components/IndividualInfoFields/IndividualInfoFields'
 import {
   getDocumentsFormValues,
   getFinancialInfoFormValues,

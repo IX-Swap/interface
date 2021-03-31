@@ -3,7 +3,7 @@ import { render, cleanup } from 'test-utils'
 import {
   IndividualInfoFields,
   IndividualInfoFieldsProps
-} from 'app/pages/identity/components/IndividualInfoFields/IndividualInfoFields'
+} from 'app/pages/_identity/components/IndividualInfoFields/IndividualInfoFields'
 import { TypedField } from 'components/form/TypedField'
 import { Form } from 'components/form/Form'
 
