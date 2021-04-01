@@ -82,7 +82,11 @@ export const agreementsAndDisclosures = {
 export const individual: IndividualIdentity = {
   photo: '',
   _id: '1',
-  taxResidencies: [],
+  taxResidencies: [
+    {
+      residentOfSingapore: true
+    }
+  ],
   email: 'email@example.com',
   annualIncome: '100000',
   contactNumber: '1234567890',

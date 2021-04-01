@@ -1,5 +1,5 @@
 import React from 'react'
-import { Router } from 'react-router-dom'
+import { Route, Router } from 'react-router-dom'
 import { render, RenderOptions, RenderResult } from '@testing-library/react'
 import {
   createGenerateClassName,
@@ -127,13 +127,16 @@ export const renderWithDepositStore = (
 
 export const renderHookWithServiceProvider = (
   hookFn: any,
-  store: object = {}
+  store: object = {},
+  path?: string
 ): RenderHookResult<any, any> => {
   const WithServiceProvider: React.FC = ({ children }) => (
     <BaseProviders>
-      <ServicesProvider value={store}>
-        <Form>{children}</Form>
-      </ServicesProvider>
+      <Route path={path}>
+        <ServicesProvider value={store}>
+          <Form>{children}</Form>
+        </ServicesProvider>
+      </Route>
     </BaseProviders>
   )
 

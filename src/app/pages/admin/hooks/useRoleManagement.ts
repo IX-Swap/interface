@@ -1,17 +1,15 @@
 import { useState } from 'react'
 import xor from 'lodash/xor'
 import { useSetRoles } from 'app/pages/admin/hooks/useSetRoles'
-import { useAdminRouter } from 'app/pages/admin/router'
 import { useServices } from 'hooks/useServices'
 import { useQueryCache } from 'react-query'
 import { usersQueryKeys } from 'config/queryKeys'
+import { useParams } from 'react-router-dom'
 
 export const useRoleManagement = (initialRoles: string[]) => {
   const { snackbarService } = useServices()
   const [selectedRoles, setSelectedRoles] = useState(initialRoles)
-  const {
-    params: { userId }
-  } = useAdminRouter()
+  const params = useParams<{ userId: string }>()
   const queryCache = useQueryCache()
 
   const onSuccess = async () => {
@@ -19,7 +17,9 @@ export const useRoleManagement = (initialRoles: string[]) => {
       'User roles update has been successful',
       'success'
     )
-    await queryCache.invalidateQueries(usersQueryKeys.getUserById(userId))
+    await queryCache.invalidateQueries(
+      usersQueryKeys.getUserById(params.userId)
+    )
   }
 
   const onError = (error: any) => [
@@ -33,7 +33,11 @@ export const useRoleManagement = (initialRoles: string[]) => {
   }
 
   const handleUpdate = async () => {
-    await requestUpdateRoles({ userId: userId, roles: selectedRoles.join(',') })
+    console.log(params)
+    await requestUpdateRoles({
+      userId: params.userId,
+      roles: selectedRoles.join(',')
+    })
   }
 
   return {

@@ -2,10 +2,8 @@ import {
   Address,
   BeneficialOwnerFormValues,
   CorporateInvestorAgreementsFormValues,
-  CorporateInvestorDeclarationFormValues,
   CorporateInvestorDocumentsFormValues,
   DirectorFormValues,
-  InvestorCorporateInfoFormValues,
   InvestorDirectorsAndBeneficialOwnersFormValues,
   RepresentativeFormValues
 } from 'app/pages/_identity/types/forms'
@@ -13,41 +11,40 @@ import { DataroomFile } from 'types/dataroomFile'
 import { addressSchema } from 'validation/shared'
 import * as yup from 'yup'
 
-export const corporateInvestorInfoSchema = yup
-  .object()
-  .shape<InvestorCorporateInfoFormValues>({
-    logo: yup.string(),
-    companyLegalName: yup.string().required('Required'),
-    registrationNumber: yup.string().required('Required'),
-    legalEntityStatus: yup.string().required('Required'),
-    otherLegalEntityStatus: yup.string().when('legalEntityStatus', {
-      is: 'others',
-      then: yup.string().required('Required'),
-      otherwise: yup.string()
-    }),
-    countryOfFormation: yup.string().required('Required'),
-    companyAddress: addressSchema.required('Required'),
-    isMailingAddressSame: yup.bool().required('Required'),
-    mailingAddress: yup.object<Address>().when('isMailingAddressSame', {
-      is: false,
-      then: addressSchema.required('Required'),
-      otherwise: yup.object().notRequired()
-    }),
-    representatives: yup
-      .array<RepresentativeFormValues>()
-      .of(
-        yup
-          .object<RepresentativeFormValues>({
-            fullName: yup.string().required('Required'),
-            designation: yup.string().required('Required'),
-            email: yup.string().required('Required'),
-            contactNumber: yup.string().required('Required'),
-            documents: yup.array<DataroomFile>().required('Required')
-          })
-          .required('Required')
-      )
-      .required('Required')
-  })
+// TODO: change to InvestorCorporateInfoFormValues (currently getting TS2589)
+export const corporateInvestorInfoSchema = yup.object().shape<any>({
+  logo: yup.string(),
+  companyLegalName: yup.string().required('Required'),
+  registrationNumber: yup.string().required('Required'),
+  legalEntityStatus: yup.string().required('Required'),
+  otherLegalEntityStatus: yup.string().when('legalEntityStatus', {
+    is: 'others',
+    then: yup.string().required('Required'),
+    otherwise: yup.string()
+  }),
+  countryOfFormation: yup.string().required('Required'),
+  companyAddress: addressSchema.required('Required'),
+  isMailingAddressSame: yup.bool().required('Required'),
+  mailingAddress: yup.object<Address>().when('isMailingAddressSame', {
+    is: false,
+    then: addressSchema.required('Required'),
+    otherwise: yup.object().notRequired()
+  }),
+  representatives: yup
+    .array<RepresentativeFormValues>()
+    .of(
+      yup
+        .object<RepresentativeFormValues>({
+          fullName: yup.string().required('Required'),
+          designation: yup.string().required('Required'),
+          email: yup.string().required('Required'),
+          contactNumber: yup.string().required('Required'),
+          documents: yup.array<DataroomFile>().required('Required')
+        })
+        .required('Required')
+    )
+    .required('Required')
+})
 
 export const directorsAndBeneficialOwnersSchema = yup
   .object()
@@ -119,7 +116,7 @@ export const corporateTaxDeclarationSchema = yup.object().shape({
 
 export const corporateInvestorStatusDeclarationSchema = yup
   .object()
-  .shape<CorporateInvestorDeclarationFormValues>({
+  .shape<any>({
     assets: yup.bool().oneOf([true, false]).required('Required'),
     trustee: yup.bool().oneOf([true, false]).required('Required'),
     accreditedBeneficiaries: yup

@@ -1,15 +1,15 @@
 import { useMutation, useQueryCache } from 'react-query'
 import { useServices } from 'hooks/useServices'
 import { userURL } from 'config/apiURL'
-import { useAdminRouter } from 'app/pages/admin/router'
 import { usersQueryKeys } from 'config/queryKeys'
+import { useParams } from 'react-router-dom'
 
 export const useEnabledToggle = (
   enabled: boolean,
   succesHandler: () => void
 ) => {
   const { apiService, snackbarService } = useServices()
-  const { params } = useAdminRouter()
+  const params = useParams<{ userId: string }>()
 
   const queryCache = useQueryCache()
 

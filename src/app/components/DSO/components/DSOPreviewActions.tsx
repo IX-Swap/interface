@@ -2,7 +2,9 @@ import React from 'react'
 import { Box, Button } from '@material-ui/core'
 import { DigitalSecurityOffering } from 'types/dso'
 import { DSOSubmitButton } from 'app/components/DSO/components/DSOSubmitButton'
-import { useIssuanceRouter } from 'app/pages/issuance/router'
+import { useHistory } from 'react-router'
+import { IssuanceRoute } from 'app/pages/issuance/router/config'
+import { generatePath } from 'react-router-dom'
 
 export interface DSOPreviewActionsProps {
   dso: DigitalSecurityOffering | undefined
@@ -10,7 +12,7 @@ export interface DSOPreviewActionsProps {
 
 export const DSOPreviewActions = (props: DSOPreviewActionsProps) => {
   const { dso } = props
-  const { push } = useIssuanceRouter()
+  const { push } = useHistory()
 
   return (
     <>
@@ -18,7 +20,14 @@ export const DSOPreviewActions = (props: DSOPreviewActionsProps) => {
         variant='outlined'
         color='primary'
         disableElevation
-        onClick={() => push('edit', { dsoId: dso?._id, issuerId: dso?.user })}
+        onClick={() =>
+          push(
+            generatePath(IssuanceRoute.edit, {
+              dsoId: dso?._id,
+              issuerId: dso?.user
+            })
+          )
+        }
       >
         Edit
       </Button>

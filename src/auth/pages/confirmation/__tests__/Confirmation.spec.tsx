@@ -1,7 +1,7 @@
 import React from 'react'
 import { cleanup, renderWithUserStore } from 'test-utils'
 import { Confirmation } from 'auth/pages/confirmation/Confirmation'
-import { AuthRoute } from 'auth/router'
+import { AuthRoute } from 'auth/router/config'
 import { history } from 'config/history'
 import * as useVerifySignupHook from 'auth/hooks/useVerifySignup'
 import {

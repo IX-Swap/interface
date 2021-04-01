@@ -2,12 +2,12 @@ import React, { Fragment } from 'react'
 import { Box, Grid, Typography } from '@material-ui/core'
 import { useAllCorporates } from 'app/pages/_identity/hooks/useAllCorporates'
 import { Section } from 'app/pages/_identity/components/Section/Section'
-import { useIdentitiesRouter } from 'app/pages/_identity/router'
 import { ViewButton } from 'app/pages/_identity/components/ViewButton/ViewButton'
 import { CompanyInfoView } from 'app/pages/_identity/components/CompanyInfoView/CompanyInfoView'
 import { VSpacer } from 'components/VSpacer'
 import { EditButton } from 'app/pages/_identity/components/EditButton/EditButton'
 import { NoIdentity } from 'app/pages/identity/components/NoIdentity'
+import { IdentityRoute } from 'app/pages/_identity/router/config'
 
 export interface CorporatesPreviewProps {
   type: 'investor' | 'issuer'
@@ -17,7 +17,6 @@ export const CorporatesPreview: React.FC<CorporatesPreviewProps> = props => {
   const { type } = props
   const isIssuer = type === 'issuer'
   const { data, status } = useAllCorporates({ type })
-  const { paths } = useIdentitiesRouter()
 
   if (status === 'loading') {
     return null
@@ -52,17 +51,27 @@ export const CorporatesPreview: React.FC<CorporatesPreviewProps> = props => {
             actions={
               <Fragment>
                 <ViewButton
-                  link={isIssuer ? paths.viewIssuer : paths.corporate}
+                  link={
+                    isIssuer
+                      ? IdentityRoute.viewIssuer
+                      : IdentityRoute.viewCorporate
+                  }
                   params={{
                     identityId: identity._id,
+                    userId: identity.user._id,
                     label: identity.companyLegalName
                   }}
                 />
                 <Box mx={1} component='span' />
                 <EditButton
-                  link={isIssuer ? paths.editIssuer : paths.editCorporate}
+                  link={
+                    isIssuer
+                      ? IdentityRoute.editIssuer
+                      : IdentityRoute.editCorporate
+                  }
                   params={{
                     identityId: identity._id,
+                    userId: identity.user._id,
                     label: identity.companyLegalName
                   }}
                 />

@@ -1,27 +1,32 @@
 import { useEffect } from 'react'
 import { useDSOsByUserId } from 'app/pages/issuance/hooks/useDSOsByUserId'
-import { useIssuanceRouter } from 'app/pages/issuance/router'
+import { IssuanceRoute } from 'app/pages/issuance/router/config'
 import { hasValue } from 'helpers/forms'
 import { isValidDSOId } from 'helpers/isValidDSOId'
+import { generatePath, useHistory, useParams } from 'react-router-dom'
 
 export const useDSOFilter = () => {
-  const { replace, params } = useIssuanceRouter()
+  const { dsoId, issuerId } = useParams<{ dsoId: string; issuerId: string }>()
+  const { replace } = useHistory()
   const { data, ...rest } = useDSOsByUserId()
-  const { dsoId, issuerId } = params
 
   useEffect(() => {
     if (!isValidDSOId(dsoId) && data.list.length > 0) {
-      const { _id: dso, user: issuer } = data.list[0]
-
-      replace('insight', { dsoId: dso, issuerId: issuer })
+      replace(
+        generatePath(IssuanceRoute.insight, {
+          dsoId: data.list[0]._id,
+          issuerId: data.list[0].user
+        })
+      )
     }
   }, [dsoId, issuerId, data.list, replace])
 
   const handleChange = (e: any) => {
     if (hasValue(e.target.value)) {
       const [dso, issuer] = e.target.value?.split(':')
-
-      replace('insight', { dsoId: dso, issuerId: issuer })
+      replace(
+        generatePath(IssuanceRoute.insight, { dsoId: dso, issuerId: issuer })
+      )
     }
   }
 

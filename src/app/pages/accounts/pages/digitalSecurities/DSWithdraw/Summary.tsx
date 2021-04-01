@@ -1,19 +1,17 @@
 import React from 'react'
+import { useParams } from 'react-router-dom'
 import { INVESTAX_BANK } from 'config'
 import { formatMoney } from 'helpers/numbers'
 import { GenericPreview } from 'app/components/GenericPreview/GenericPreview'
 import { useFormContext } from 'react-hook-form'
 import { WithdrawDSFormValues } from 'app/pages/accounts/types'
-import { useDSRouter } from 'app/pages/accounts/pages/digitalSecurities/router'
 import { useAllBalances } from 'hooks/balance/useAllBalances'
 import { useAssetsData } from 'hooks/asset/useAssetsData'
 import { Alert } from '@material-ui/lab'
 import { VSpacer } from 'components/VSpacer'
 
 export const Summary: React.FC = () => {
-  const {
-    params: { balanceId }
-  } = useDSRouter()
+  const params = useParams<{ balanceId: string }>()
   const { watch } = useFormContext<WithdrawDSFormValues>()
   const amount = watch('amount')
   const memo = watch('memo')
@@ -24,7 +22,7 @@ export const Summary: React.FC = () => {
     return null
   }
 
-  const asset = assets.map[balances.map[balanceId].assetId]
+  const asset = assets.map[balances.map[params.balanceId].assetId]
   const items = [
     {
       label: 'Name of Token',

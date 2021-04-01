@@ -5,14 +5,17 @@ import { managedUser } from '__fixtures__/user'
 import * as ReactQuery from 'react-query'
 import { userURL } from 'config/apiURL'
 import { generateMutationResult } from '__fixtures__/useQuery'
-import * as useAdminRouter from 'app/pages/admin/router'
 import { usersQueryKeys } from 'config/queryKeys'
+import { AdminRoute } from 'app/pages/admin/router/config'
+import { history } from 'config/history'
+import { generatePath } from 'react-router'
 
 describe('useEnabledToggle', () => {
   const qc = ReactQuery.queryCache
   qc.invalidateQueries = jest.fn(() => null) as any
 
   beforeEach(() => {
+    history.push(generatePath(AdminRoute.view, { userId: managedUser._id }))
     jest.spyOn(ReactQuery, 'useQueryCache').mockReturnValue(qc)
   })
 
@@ -23,12 +26,6 @@ describe('useEnabledToggle', () => {
 
   it('renders without errors', async () => {
     await act(async () => {
-      jest
-        .spyOn(useAdminRouter, 'useAdminRouter')
-        .mockImplementation(
-          () => ({ params: { userId: managedUser._id } } as any)
-        )
-
       const patchFn = jest
         .fn()
         .mockResolvedValueOnce(generateMutationResult({}))
@@ -39,7 +36,8 @@ describe('useEnabledToggle', () => {
         () => useEnabledToggle(true, successHandlerMock),
         {
           apiService: apiObj
-        }
+        },
+        AdminRoute.view
       )
 
       await waitFor(

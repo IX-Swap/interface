@@ -1,12 +1,12 @@
 import React from 'react'
+import { useParams } from 'react-router-dom'
 import { Grid } from '@material-ui/core'
 import { LabelledValue } from 'components/LabelledValue'
-import { useDSRouter } from 'app/pages/accounts/pages/digitalSecurities/router'
 import { useBalancesByType } from 'hooks/balance/useBalancesByType'
 
 export const DSPreview = () => {
-  const { params } = useDSRouter()
   const { data, isLoading } = useBalancesByType('Security')
+  const params = useParams<{ balanceId: string }>()
   const balance = data.map[params.balanceId]
 
   if (isLoading) {

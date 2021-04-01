@@ -6,7 +6,6 @@ import {
   IndividualAgreementsFormValues,
   IndividualDocumentsFormValues,
   IndividualFinancialInfoFormValues,
-  IndividualInvestorDeclarationFormValues,
   IndividualPersonalInfoFormValues,
   IndividualTaxDeclarationFormValues,
   TaxResidency
@@ -113,8 +112,8 @@ export const taxDeclarationSchema = yup
   })
 
 export const individualInvestorStatusDeclarationSchema = yup
-  .object<IndividualInvestorDeclarationFormValues>()
-  .shape<IndividualInvestorDeclarationFormValues>({
+  .object()
+  .shape<any>({
     financialAsset: yup.bool().required('Required'),
     income: yup.bool().required('Required'),
     personalAssets: yup.bool().required('Required'),

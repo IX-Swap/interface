@@ -23,13 +23,13 @@ import {
   personalInfoSchema,
   taxDeclarationSchema
 } from 'app/pages/_identity/validation/individual'
-import { IndividualIdentityView } from 'app/pages/_identity/components/IndividualIdentityView/IndividualIdentityView'
 import { InvestorDeclarationForm } from '../InvestorDeclarationForm/InvestorDeclarationForm'
 import { FinancialInformationForm } from 'app/pages/_identity/components/FinancialInformationForm/FinancialInformationForm'
 import { TaxDeclarationForm } from 'app/pages/_identity/components/TaxDeclarationForm/TaxDeclarationForm'
 import { IndividualUploadDocumentsForm } from 'app/pages/_identity/components/UploadDocumentsForm/IndividualUploadDocumentsForm'
 import { FormSectionHeader } from 'app/pages/_identity/components/FormSectionHeader'
 import { AddressFields } from 'app/pages/_identity/components/AddressFields/AddressFields'
+import { IndividualIdentityContainer } from 'app/pages/_identity/containers/IndividualIdentityContainer'
 
 export const individualInvestorFormSteps = [
   {
@@ -114,10 +114,6 @@ export const individualInvestorFormSteps = [
     getFormValues: () => {},
     getRequestPayload: () => {},
     validationSchema: null,
-    component: () => (
-      <Fragment>
-        <IndividualIdentityView />
-      </Fragment>
-    )
+    component: () => <IndividualIdentityContainer />
   }
 ]

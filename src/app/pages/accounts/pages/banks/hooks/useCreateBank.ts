@@ -1,15 +1,16 @@
 import { Bank } from 'types/bank'
 import { useMutation } from 'react-query'
 import { useServices } from 'hooks/useServices'
-import { useBanksRouter } from 'app/pages/accounts/pages/banks/router'
+import { BanksRoute } from 'app/pages/accounts/pages/banks/router/config'
 import { useAuth } from 'hooks/auth/useAuth'
 import { CreateBankArgs } from 'app/pages/accounts/types'
 import { getIdFromObj } from 'helpers/strings'
 import { accountsURL } from 'config/apiURL'
+import { useHistory } from 'react-router-dom'
 
 export const useCreateBank = () => {
   const { apiService, snackbarService } = useServices()
-  const { push } = useBanksRouter()
+  const history = useHistory()
   const { user } = useAuth()
   const uri = accountsURL.banks.create(getIdFromObj(user)) // `/accounts/banks/${getIdFromObj(user)}`
 
@@ -19,7 +20,7 @@ export const useCreateBank = () => {
 
   return useMutation(createBank, {
     onSuccess: data => {
-      push('list')
+      history.push(BanksRoute.list)
       void snackbarService.showSnackbar(data.message, 'success')
     },
     onError: (error: any) => {

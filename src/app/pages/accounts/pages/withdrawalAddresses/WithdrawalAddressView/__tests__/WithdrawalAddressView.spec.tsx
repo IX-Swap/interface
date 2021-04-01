@@ -5,7 +5,6 @@ import { WADialog } from 'app/pages/accounts/pages/withdrawalAddresses/WADialog/
 import { WADialogTitle } from 'app/pages/accounts/pages/withdrawalAddresses/WADialog/WADialogTitle'
 import { WADialogContent } from 'app/pages/accounts/pages/withdrawalAddresses/WADialog/WADialogContent'
 import { WADialogActions } from 'app/pages/accounts/pages/withdrawalAddresses/WADialog/WADialogActions'
-import { WAViewContent } from 'app/pages/accounts/pages/withdrawalAddresses/WithdrawalAddressView/WAViewContent'
 
 jest.mock(
   'app/pages/accounts/pages/withdrawalAddresses/WADialog/WADialog',
@@ -35,11 +34,11 @@ describe('WithdrawalAddressView', () => {
   })
 
   it('renders without error', () => {
-    render(<WithdrawalAddressView isOpen />)
+    render(<WithdrawalAddressView />)
   })
 
   it('renders WADialog with correct props', () => {
-    render(<WithdrawalAddressView isOpen />)
+    render(<WithdrawalAddressView />)
 
     expect(WADialog).toHaveBeenCalled()
     expect(WADialog).toHaveBeenCalledWith(
@@ -49,7 +48,7 @@ describe('WithdrawalAddressView', () => {
   })
 
   it('renders WADialogTitle with correct props', () => {
-    render(<WithdrawalAddressView isOpen />)
+    render(<WithdrawalAddressView />)
 
     expect(WADialogTitle).toHaveBeenCalled()
     expect(WADialogTitle).toHaveBeenCalledWith(
@@ -59,7 +58,7 @@ describe('WithdrawalAddressView', () => {
   })
 
   it('renders WADialogContent with correct props', () => {
-    render(<WithdrawalAddressView isOpen />)
+    render(<WithdrawalAddressView />)
 
     expect(WADialogContent).toHaveBeenCalled()
     expect(WADialogContent).toHaveBeenCalledWith(
@@ -69,18 +68,12 @@ describe('WithdrawalAddressView', () => {
   })
 
   it('renders WADialogActions with correct props', () => {
-    render(<WithdrawalAddressView isOpen />)
+    render(<WithdrawalAddressView />)
 
     expect(WADialogActions).toHaveBeenCalled()
     expect(WADialogActions).toHaveBeenCalledWith(
       { children: expect.anything() },
       {}
     )
-  })
-
-  it('renders WAViewContent with correct props', () => {
-    render(<WithdrawalAddressView isOpen />)
-
-    expect(WAViewContent).toHaveBeenCalled()
   })
 })

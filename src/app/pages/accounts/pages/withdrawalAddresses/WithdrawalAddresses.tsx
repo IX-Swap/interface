@@ -1,8 +1,6 @@
 import React from 'react'
-import { useWithdrawalAddressesRouter } from 'app/pages/accounts/pages/withdrawalAddresses/router'
+import { WithdrawalAddressesRouter } from 'app/pages/accounts/pages/withdrawalAddresses/router/WithdrawalAddressesRouter'
 
 export const WithdrawalAddresses: React.FC = () => {
-  const { renderRoutes } = useWithdrawalAddressesRouter()
-
-  return renderRoutes()
+  return <WithdrawalAddressesRouter />
 }

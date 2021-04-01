@@ -1,10 +1,10 @@
 import React from 'react'
 import { LinearProgress, List, Paper } from '@material-ui/core'
 import { useDeploymentMessages } from 'app/pages/issuance/hooks/useDeploymentMessages'
-import { useIssuanceRouter } from 'app/pages/issuance/router'
 import { FullHeight } from 'app/components/FullHeight'
 import { FixedSizeList } from 'react-window'
 import { DeployTokenMessageItem } from 'app/pages/issuance/components/DeployTokenMessageItem'
+import { useParams } from 'react-router-dom'
 
 export interface DeployTokenMessagesListProps {
   isInitializing: boolean
@@ -14,7 +14,7 @@ export const DeployTokenMessagesList = (
   props: DeployTokenMessagesListProps
 ) => {
   const { isInitializing } = props
-  const { params } = useIssuanceRouter()
+  const params = useParams<{ dsoId: string }>()
   const { data } = useDeploymentMessages(params.dsoId)
 
   return (

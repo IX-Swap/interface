@@ -16,7 +16,7 @@ export const AgreementsAndDisclosuresView = (
   props: AgreementsAndDisclosuresViewProps
 ) => {
   const { investor, custody, disclosure } =
-    props.data.declarations.agreements ?? {}
+    props.data.declarations?.agreements ?? {}
   const isCorporateIssuerForm = props.isCorporateIssuerForm ?? false
 
   const renderAgreementAndDisclosureLink = (label: string, href: string) => {

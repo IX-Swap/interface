@@ -2,7 +2,7 @@ import React from 'react'
 import { render, cleanup } from 'test-utils'
 import { DSOList } from 'app/pages/issuance/pages/DSOList'
 import { AppRouterLinkComponent } from 'components/AppRouterLink'
-import { IssuanceRoute } from 'app/pages/issuance/router'
+import { IssuanceRoute } from 'app/pages/issuance/router/config'
 import { MyDSOsTable } from '../../components/MyDSOsTable'
 
 jest.mock('app/pages/issuance/components/MyDSOsTable', () => ({

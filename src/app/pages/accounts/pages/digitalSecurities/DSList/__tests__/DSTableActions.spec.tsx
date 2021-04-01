@@ -3,7 +3,7 @@ import { render, cleanup } from 'test-utils'
 import { DSTableActions } from 'app/pages/accounts/pages/digitalSecurities/DSList/DSTableActions'
 import { balance } from '__fixtures__/balance'
 import { AppRouterLinkComponent } from 'components/AppRouterLink'
-import { DSRoute } from 'app/pages/accounts/pages/digitalSecurities/router'
+import { DSRoute } from 'app/pages/accounts/pages/digitalSecurities/router/config'
 
 jest.mock('components/AppRouterLink', () => ({
   AppRouterLinkComponent: jest.fn(() => null)

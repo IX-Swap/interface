@@ -7,28 +7,13 @@ import { CorporateInfo } from 'app/pages/_identity/components/CorporateIdentityV
 import React from 'react'
 import { IdentityDocumentsView } from 'app/pages/_identity/components/IdentityDocumentsView/IdentityDocumentsView'
 import { CountryTaxDeclaration } from 'app/pages/_identity/components/CountryTaxDeclarations/CountryTaxDeclaration'
-import { InvestorDeclarationView } from 'app/pages/_identity/components/IndividualIdentityView/InvestorDeclarationView/InvestorDeclarationView'
-import { useIdentitiesRouter } from 'app/pages/_identity/router'
-import { useAllCorporates } from 'app/pages/_identity/hooks/useAllCorporates'
+import { CorporateIdentity } from '../../types/forms'
 
 export interface CorporateIdentityViewProps {
-  isCorporateIssuerForm?: boolean
+  data: CorporateIdentity
 }
 
-export const CorporateIdentityView = ({
-  isCorporateIssuerForm = false
-}: CorporateIdentityViewProps) => {
-  const { params } = useIdentitiesRouter()
-  const {
-    data: { map },
-    isLoading
-  } = useAllCorporates({})
-  const data = map[params.identityId]
-
-  if (isLoading || data === undefined) {
-    return null
-  }
-
+export const CorporateIdentityView = ({ data }: CorporateIdentityViewProps) => {
   return (
     <Grid container spacing={6} direction='column'>
       <Grid item style={{ paddingBottom: 0 }}>
@@ -64,12 +49,6 @@ export const CorporateIdentityView = ({
         <FormSectionHeader title='Tax Declaration' />
         <CountryTaxDeclaration taxResidencies={data.taxResidencies} />
       </Grid>
-      {!isCorporateIssuerForm ? (
-        <Grid item>
-          <FormSectionHeader title='Investor Status Declaration' />
-          <InvestorDeclarationView data={data} identityType='corporate' />
-        </Grid>
-      ) : null}
       <Grid item>
         <FormSectionHeader title='Company Documents' />
         <IdentityDocumentsView data={data.documents} type='corporate' />

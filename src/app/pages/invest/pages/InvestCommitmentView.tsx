@@ -1,14 +1,13 @@
 import React from 'react'
 import { useCommitmentById } from 'app/pages/invest/hooks/useCommitmentById'
-import { useDSORouter } from 'app/pages/invest/routers/dsoRouter'
 import { CommitmentPreview } from 'app/components/CommitmentPreview/CommitmentPreview'
 import { RejectionMessage } from 'app/pages/authorizer/components/RejectionMessage'
+import { useParams } from 'react-router-dom'
+import { Grid } from '@material-ui/core'
+import { PageHeader } from 'app/components/PageHeader/PageHeader'
 
 export const InvestCommitmentView = () => {
-  const {
-    params: { commitmentId }
-  } = useDSORouter()
-
+  const { commitmentId } = useParams<{ commitmentId: string }>()
   const { data, isLoading } = useCommitmentById(commitmentId)
 
   if (isLoading || data === undefined) {
@@ -16,9 +15,18 @@ export const InvestCommitmentView = () => {
   }
 
   return (
-    <>
-      <RejectionMessage data={data} />
-      <CommitmentPreview data={data} isUserView />
-    </>
+    <Grid container direction='column'>
+      <Grid item>
+        <PageHeader title={data.dso.tokenName} />
+      </Grid>
+
+      <Grid item>
+        <RejectionMessage data={data} />
+      </Grid>
+
+      <Grid item>
+        <CommitmentPreview data={data} isUserView />
+      </Grid>
+    </Grid>
   )
 }

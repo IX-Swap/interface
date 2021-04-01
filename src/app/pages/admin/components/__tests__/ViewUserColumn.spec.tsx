@@ -3,7 +3,7 @@ import { ViewUserColumn } from 'app/pages/admin/components/ViewUserColumn'
 import { render, cleanup } from 'test-utils'
 import IconButton from '@material-ui/core/IconButton'
 import { AppRouterLinkComponent } from 'components/AppRouterLink'
-import * as useAdminRouterHook from 'app/pages/admin/router'
+import { AdminRoute } from 'app/pages/admin/router/config'
 
 jest.mock('@material-ui/core/IconButton', () => jest.fn(() => <button />))
 
@@ -12,10 +12,6 @@ jest.mock('components/AppRouterLink', () => ({
 }))
 
 describe('ViewUserColumn', () => {
-  jest
-    .spyOn(useAdminRouterHook, 'useAdminRouter')
-    .mockImplementation(() => ({ paths: { view: 'path/to/user/' } } as any))
-
   afterEach(async () => {
     await cleanup()
     jest.clearAllMocks()
@@ -32,7 +28,7 @@ describe('ViewUserColumn', () => {
       expect.objectContaining({
         component: AppRouterLinkComponent,
         size: 'small',
-        to: 'path/to/user/'
+        to: AdminRoute.view
       }),
       {}
     )
