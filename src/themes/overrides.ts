@@ -1,5 +1,5 @@
 import { Theme } from '@material-ui/core'
-import { green, grey } from '@material-ui/core/colors'
+import { green } from '@material-ui/core/colors'
 import { Overrides } from '@material-ui/core/styles/overrides'
 import { rte } from 'themes/rte'
 import tinycolor from 'tinycolor2'
@@ -138,9 +138,7 @@ export const getThemeOverrides = (theme: Theme): Overrides => ({
   },
   MuiStepContent: {
     root: {
-      borderLeftStyle: 'dashed',
-      color:
-        theme.palette.type === 'light' ? grey[600] : 'rgba(255, 255, 255, 0.6)'
+      borderLeftStyle: 'dashed'
     }
   },
   MuiStepIcon: {
