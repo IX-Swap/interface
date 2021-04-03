@@ -4,7 +4,7 @@ import { IndividualInfo } from './IndividualInfo'
 import {
   CorporateIdentity,
   IndividualIdentity
-} from 'app/pages/_identity/types/forms'
+} from 'app/pages/identity/types/forms'
 
 export interface AuthorizerIdentitiesProps {
   corporates?: CorporateIdentity[]

@@ -1,7 +1,7 @@
 import { AdminIndividualInvestorForm } from 'app/pages/admin/components/AdminIndividualInvestorForm/AdminIndividualInvestorForm'
 import * as useCreateIndividualByUserId from 'app/pages/admin/hooks/useCreateIndividualByUserId'
 import * as useIndividualIdentityById from 'app/pages/admin/hooks/useIndividualIdentityById'
-import * as useSubmitIndividual from 'app/pages/_identity/hooks/useSubmitIndividual'
+import * as useSubmitIndividual from 'app/pages/identity/hooks/useSubmitIndividual'
 import React from 'react'
 import { render, cleanup } from 'test-utils'
 import { individual } from '__fixtures__/identity'

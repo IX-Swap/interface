@@ -1,5 +1,5 @@
 import { DataroomFile, FileGuide, FormArray } from 'types/dataroomFile'
-import { IdentityType } from 'app/pages/identity/utils'
+import { IdentityType } from 'app/pages/identity/utils/shared'
 
 const documents: {
   individual: FileGuide[]

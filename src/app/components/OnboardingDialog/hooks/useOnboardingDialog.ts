@@ -1,7 +1,7 @@
-import { IdentityType } from 'app/pages/identity/utils'
 import { useSnackbar } from 'hooks/useSnackbar'
 import { useOnboardingJourneys } from 'app/components/OnboardingPanel/hooks/useOnboardingJourneys'
 import { SecurityRoute } from 'app/pages/security/router/config'
+import { IdentityType } from 'app/pages/identity/utils/shared'
 
 export const useOnboardingDialog = () => {
   const { showOnboardingDialog } = useSnackbar()

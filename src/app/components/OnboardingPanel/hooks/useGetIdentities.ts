@@ -1,6 +1,6 @@
-import { IdentityType } from 'app/pages/identity/utils'
-import { useAllCorporates } from 'app/pages/_identity/hooks/useAllCorporates'
+import { useAllCorporates } from 'app/pages/identity/hooks/useAllCorporates'
 import { useIndividualIdentity } from 'hooks/identity/useIndividualIdentity'
+import { IdentityType } from 'app/pages/identity/utils/shared'
 
 export const useGetIdentities = (corporateType?: 'issuer' | 'investor') => {
   const {

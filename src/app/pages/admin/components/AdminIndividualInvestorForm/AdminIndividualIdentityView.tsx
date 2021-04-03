@@ -2,7 +2,7 @@ import React from 'react'
 import { useSetPageTitle } from 'app/hooks/useSetPageTitle'
 import { getPersonName } from 'helpers/strings'
 import { useIndividualIdentityById } from 'app/pages/admin/hooks/useIndividualIdentityById'
-import { IndividualIdentityView } from 'app/pages/_identity/components/IndividualIdentityView/IndividualIdentityView'
+import { IndividualIdentityView } from 'app/pages/identity/components/IndividualIdentityView/IndividualIdentityView'
 import { useParams } from 'react-router-dom'
 
 export const AdminIndividualIdentityView = () => {

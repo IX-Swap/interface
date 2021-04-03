@@ -1,5 +1,5 @@
 import React from 'react'
-import { useAllCorporates } from 'app/pages/_identity/hooks/useAllCorporates'
+import { useAllCorporates } from 'app/pages/identity/hooks/useAllCorporates'
 import { MenuItem, Select } from '@material-ui/core'
 import { queryStatusRenderer } from './renderUtils'
 

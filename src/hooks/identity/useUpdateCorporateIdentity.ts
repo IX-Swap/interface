@@ -1,10 +1,5 @@
 import { useServices } from 'hooks/useServices'
 import { useAuth } from 'hooks/auth/useAuth'
-
-import {
-  prepareDeclarationsForUpload,
-  prepareDocumentsForUpload
-} from 'app/pages/identity/utils'
 import { useMutation } from 'react-query'
 
 import apiService from 'services/api'
@@ -14,7 +9,11 @@ import {
   CorporateIdentity,
   CorporateIdentityFormValues,
   UpdateCorporateIdentityArgs
-} from '../../app/pages/_identity/types/forms'
+} from '../../app/pages/identity/types/forms'
+import {
+  prepareDeclarationsForUpload,
+  prepareDocumentsForUpload
+} from 'app/pages/identity/utils/shared'
 
 export const useUpdateCorporateIdentity = (id: string) => {
   const { snackbarService } = useServices()

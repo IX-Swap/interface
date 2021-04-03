@@ -5,7 +5,7 @@ import { AuthorizableWithIdentity } from './authorizer'
 import {
   CorporateIdentity,
   IndividualIdentity
-} from 'app/pages/_identity/types/forms'
+} from 'app/pages/identity/types/forms'
 
 export interface CashDeposit extends AuthorizableWithIdentity {
   _id: string

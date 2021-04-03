@@ -2,7 +2,7 @@ import { useServices } from 'hooks/useServices'
 import { useMutation, useQueryCache } from 'react-query'
 import { identityURL } from 'config/apiURL'
 import { identityQueryKeys } from 'config/queryKeys'
-import { CorporateIdentity } from 'app/pages/_identity/types/forms'
+import { CorporateIdentity } from 'app/pages/identity/types/forms'
 
 export const useCreateCorporateByUserId = (
   userId: string,

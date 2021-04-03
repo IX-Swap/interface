@@ -9,7 +9,7 @@ import {
   CorporateIdentity,
   IndividualIdentity,
   IndividualIdentityFormValues
-} from 'app/pages/_identity/types/forms'
+} from 'app/pages/identity/types/forms'
 
 export const corporate: CorporateIdentity = {
   _id: '1',

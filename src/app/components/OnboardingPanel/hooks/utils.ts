@@ -1,5 +1,5 @@
-import { IdentityType } from 'app/pages/identity/utils'
 import { AuthorizableStatus } from 'types/util'
+import { IdentityType } from 'app/pages/identity/utils/shared'
 
 export const getIdentityStatus = (status?: AuthorizableStatus) => {
   switch (status) {
