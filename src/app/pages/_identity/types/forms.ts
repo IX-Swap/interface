@@ -136,3 +136,9 @@ export interface IssuerDetailsFormValues {
   fundRaisingAmount: number
   detail: string
 }
+
+export interface IssuerDocumentsFormValues {
+  companyRelated: DataroomFile[]
+  issuanceRelated: DataroomFile[]
+  financial: DataroomFile[]
+}

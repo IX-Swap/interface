@@ -15,8 +15,14 @@ describe('DetailsOfIssuanceForm', () => {
     data: detailsOfIssuance,
     isLoading: false
   })
-  const useCreateDetailsOfIssuanceResponse = [generateMutationResult({})]
-  const useUpdateDetailsOfIssuanceResponse = [generateMutationResult({})]
+  const useCreateDetailsOfIssuanceResponse = [
+    generateMutationResult({}),
+    { isLoading: false }
+  ]
+  const useUpdateDetailsOfIssuanceResponse = [
+    generateMutationResult({}),
+    { isLoading: false }
+  ]
 
   beforeEach(() => {
     jest
