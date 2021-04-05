@@ -85,6 +85,7 @@ export const IndividualInfoFields = (
               name='dob'
               label='Date of Birth'
               component={DatePicker}
+              openTo='year'
               customRenderer
               defaultValue={null as any}
               valueExtractor={dateTimeValueExtractor}
