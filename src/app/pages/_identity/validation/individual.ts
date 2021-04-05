@@ -118,7 +118,10 @@ export const individualInvestorStatusDeclarationSchema = yup
     personalAssets: yup.bool().required('Required'),
     jointlyHeldAccount: yup.bool().required('Required'),
 
-    optInAgreements: yup.bool().oneOf([true]).required('Required'),
+    optInAgreements: yup
+      .bool()
+      .oneOf([true], 'Opt-In Requirement is required')
+      .required('Required'),
 
     primaryOfferingServices: yup.bool(),
     digitalSecurities: yup.bool(),
