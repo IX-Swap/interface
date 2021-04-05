@@ -3,7 +3,7 @@ import { Box, Grid, Typography } from '@material-ui/core'
 import { DataroomHeader } from 'components/dataroom/DataroomHeader'
 import { DataroomViewRow } from 'components/dataroom/DataroomViewRow'
 import { LabelledValue } from 'components/LabelledValue'
-import { Personnel } from 'types/identity'
+import { Personnel } from 'app/pages/_identity/types/forms'
 
 export interface BeneficialOwnerProps {
   personnel: Personnel

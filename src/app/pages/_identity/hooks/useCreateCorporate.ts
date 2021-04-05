@@ -1,12 +1,12 @@
 import { useServices } from 'hooks/useServices'
 import { useAuth } from 'hooks/auth/useAuth'
 import { useMutation, useQueryCache } from 'react-query'
-import { CorporateIdentity } from 'types/identity'
 import { getIdFromObj } from 'helpers/strings'
 import { identityURL } from 'config/apiURL'
 import { identityQueryKeys } from 'config/queryKeys'
 import { generatePath, useHistory } from 'react-router'
 import { IdentityRoute } from 'app/pages/_identity/router/config'
+import { CorporateIdentity } from 'app/pages/_identity/types/forms'
 
 export const useCreateCorporate = (corporateType: string) => {
   const { snackbarService, apiService } = useServices()

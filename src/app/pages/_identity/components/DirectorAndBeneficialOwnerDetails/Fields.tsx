@@ -1,10 +1,9 @@
+import React from 'react'
 import { Grid, Button } from '@material-ui/core'
 import { DocumentFields } from 'app/pages/_identity/components/DirectorAndBeneficialOwnerDetails/DocumentsFields'
 import { FormSectionHeader } from 'app/pages/_identity/components/FormSectionHeader'
 import { VSpacer } from 'components/VSpacer'
-
-import React from 'react'
-import { Personnel } from 'types/identity'
+import { Personnel } from 'app/pages/_identity/types/forms'
 
 export interface FieldsProps {
   rootName: string

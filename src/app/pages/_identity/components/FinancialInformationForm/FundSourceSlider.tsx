@@ -4,7 +4,7 @@ import { sliderValueExtractor } from 'helpers/forms'
 import { Box, Slider, useTheme } from '@material-ui/core'
 import { useFormContext } from 'react-hook-form'
 import { SliderTooltip } from 'app/pages/_identity/components/FinancialInformationForm/SliderTooltip'
-import { FundSource } from 'types/identity'
+import { FundSource } from 'app/pages/_identity/types/forms'
 import { useFormError } from 'hooks/useFormError'
 
 export interface FundSourceSliderProps {

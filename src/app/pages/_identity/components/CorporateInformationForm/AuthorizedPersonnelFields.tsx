@@ -5,7 +5,7 @@ import { useFormContext } from 'react-hook-form'
 import { Grid } from '@material-ui/core'
 import { FormSectionHeader } from 'app/pages/_identity/components/FormSectionHeader'
 import { VSpacer } from 'components/VSpacer'
-import { Personnel } from 'types/identity'
+import { Personnel } from 'app/pages/_identity/types/forms'
 
 export const AuthorizedPersonnelFields = () => {
   const { control } = useFormContext()
