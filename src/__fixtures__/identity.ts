@@ -198,6 +198,7 @@ export const updateIndividualArgs: IndividualIdentityFormValues = {
 }
 
 export const detailsOfIssuance: DetailsOfIssuance = {
+  _id: '0',
   fullName: 'John Wick',
   companyName: 'Moogle',
   companyRegistrationNumber: '123456',
@@ -210,7 +211,8 @@ export const detailsOfIssuance: DetailsOfIssuance = {
     { ...document, _id: '1', type: 'Company-Related Documents' },
     { ...document, _id: '2', type: 'Issuance-Related Documents' },
     { ...document, _id: '3', type: 'Financial Documents' }
-  ]
+  ],
+  status: 'Submitted'
 }
 
 export const detailsOfIssuanceFormValues: DetailsOfIssuanceFormValues = {

@@ -7,7 +7,7 @@ import { IdentityType } from 'app/pages/identity/utils'
 
 export interface DocumentsViewProps {
   data: DataroomFile[]
-  type: IdentityType
+  type?: IdentityType
 }
 
 export const IdentityDocumentsView = (props: DocumentsViewProps) => {

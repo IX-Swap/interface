@@ -20,6 +20,6 @@ describe('requests', () => {
   it('returns correct getIssuerDocumentsRequestPayload data', () => {
     expect(
       getIssuerDocumentsRequestPayload(detailsOfIssuanceFormValues)
-    ).toEqual(['1', '2', '3'])
+    ).toEqual({ documents: ['1', '2', '3'] })
   })
 })
