@@ -18,7 +18,8 @@ export const useDetailsOfIssuance = () => {
 
   const { data, ...rest } = useQuery(
     [identityQueryKeys.getDetailsOfIssuance(userId)],
-    getDetailsOfIssuance
+    getDetailsOfIssuance,
+    { retry: false }
   )
 
   return {
