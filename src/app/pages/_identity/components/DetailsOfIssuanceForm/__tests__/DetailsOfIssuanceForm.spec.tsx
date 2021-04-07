@@ -57,6 +57,21 @@ describe('DetailsOfIssuanceForm', () => {
     render(<DetailsOfIssuanceForm />)
   })
 
+  it('shows create dialog box on render when details of issuance is undefined', () => {
+    const undefinedResponse = generateQueryResult({
+      data: undefined,
+      isLoading: false
+    })
+
+    jest
+      .spyOn(useDetailsOfIssuance, 'useDetailsOfIssuance')
+      .mockImplementation(() => undefinedResponse as any)
+
+    render(<DetailsOfIssuanceForm />)
+
+    expect(createDialogMock).toHaveBeenCalled()
+  })
+
   it('renders loading text when isLoading', () => {
     const useDetailsOfIssuanceLoading = generateQueryResult({
       data: undefined,

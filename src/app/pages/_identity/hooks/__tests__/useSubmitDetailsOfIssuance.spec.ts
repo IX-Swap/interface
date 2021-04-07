@@ -3,11 +3,12 @@ import { useSubmitDetailsOfIssuance } from 'app/pages/_identity/hooks/useSubmitD
 import { identityURL } from 'config/apiURL'
 import { waitFor, cleanup, renderHookWithServiceProvider } from 'test-utils'
 import * as useOnboardingDialog from 'app/components/OnboardingDialog/hooks/useOnboardingDialog'
+import { successfulResponse } from '__fixtures__/api'
 
 describe('useSubmitDetailsOfIssuance', () => {
-  const createDialogMock = jest.fn()
+  const submitDialogMock = jest.fn()
   const useOnboardingDialogResponse = {
-    showCreateDetailsOfIssuanceDialog: createDialogMock
+    showSubmitDetailsOfIssuanceDialog: submitDialogMock
   }
 
   beforeEach(() => {
@@ -23,13 +24,17 @@ describe('useSubmitDetailsOfIssuance', () => {
 
   it('invokes correct api service', async () => {
     await act(async () => {
-      const apiFn = jest.fn()
+      const apiFn = jest.fn().mockResolvedValueOnce(successfulResponse)
+      const showSnackbar = jest.fn()
+
       const apiObj = { patch: apiFn }
+      const snackbarObj = { showSnackbar }
 
       const { result } = renderHookWithServiceProvider(
         () => useSubmitDetailsOfIssuance('123'),
         {
-          apiService: apiObj
+          apiService: apiObj,
+          snackbarService: snackbarObj
         }
       )
 
@@ -42,6 +47,9 @@ describe('useSubmitDetailsOfIssuance', () => {
             identityURL.detailsOfIssuance.submit('123'),
             {}
           )
+
+          expect(showSnackbar).toHaveBeenCalled()
+          expect(submitDialogMock).toHaveBeenCalled()
         },
         { timeout: 1000 }
       )
