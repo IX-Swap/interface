@@ -65,7 +65,7 @@ describe('useOnboardingSteps', () => {
 
   it('returns correct values when corporate identity type is passed', async () => {
     await act(async () => {
-      const corporateSteps = getIdentityOnboardingSteps('corporate', 'Draft')
+      const corporateSteps = getIdentityOnboardingSteps('corporate', '')
       const { result } = renderHook(() => useOnboardingSteps('corporate'))
 
       await waitFor(

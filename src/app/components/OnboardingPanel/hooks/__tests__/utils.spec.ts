@@ -39,7 +39,10 @@ describe('getIdentityStatus', () => {
     const authorizedStepContent = getIdentityStatus('Approved')
     expect(authorizedStepContent).toEqual(['Verified!'])
 
+    const draftStepContent = getIdentityStatus('Draft')
+    expect(draftStepContent).toEqual(['In Progress'])
+
     const defaultStepContent = getIdentityStatus()
-    expect(defaultStepContent).toEqual(['In Progress'])
+    expect(defaultStepContent).toEqual([''])
   })
 })

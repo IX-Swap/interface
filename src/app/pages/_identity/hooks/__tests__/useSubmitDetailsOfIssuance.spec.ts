@@ -2,8 +2,20 @@ import { act } from '@testing-library/react-hooks'
 import { useSubmitDetailsOfIssuance } from 'app/pages/_identity/hooks/useSubmitDetailsOfIssuance'
 import { identityURL } from 'config/apiURL'
 import { waitFor, cleanup, renderHookWithServiceProvider } from 'test-utils'
+import * as useOnboardingDialog from 'app/components/OnboardingDialog/hooks/useOnboardingDialog'
 
 describe('useSubmitDetailsOfIssuance', () => {
+  const createDialogMock = jest.fn()
+  const useOnboardingDialogResponse = {
+    showCreateDetailsOfIssuanceDialog: createDialogMock
+  }
+
+  beforeEach(() => {
+    jest
+      .spyOn(useOnboardingDialog, 'useOnboardingDialog')
+      .mockImplementation(() => useOnboardingDialogResponse as any)
+  })
+
   afterEach(async () => {
     await cleanup()
     jest.clearAllMocks()

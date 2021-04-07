@@ -19,7 +19,8 @@ export const DetailsOfIssuanceForm = memo(() => {
     if (!isLoading && data === undefined) {
       showCreateDetailsOfIssuanceDialog()
     }
-  }, [data, isLoading]) // eslint-disable-line
+    // eslint-disable-next-line
+  }, [isLoading])
 
   if (isLoading) {
     return <div>Loading...</div>
