@@ -4,7 +4,7 @@ import { DataroomViewRow } from 'components/dataroom/DataroomViewRow'
 import { LabelledValue } from 'components/LabelledValue'
 import { hasValue } from 'helpers/forms'
 import React from 'react'
-import { Personnel } from 'types/identity'
+import { Personnel } from 'app/pages/_identity/types/forms'
 
 export interface PersonnelProps {
   personnel: Personnel

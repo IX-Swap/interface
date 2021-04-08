@@ -3,14 +3,12 @@ import { FormStepper } from 'app/components/FormStepper/FormStepper'
 import { useCreateIndividualByUserId } from 'app/pages/admin/hooks/useCreateIndividualByUserId'
 import { useSubmitIndividual } from 'app/pages/_identity/hooks/useSubmitIndividual'
 import { getIdentityDefaultActiveStep } from 'app/pages/_identity/utils/shared'
-import { useAdminRouter } from 'app/pages/admin/router'
 import { useIndividualIdentityById } from 'app/pages/admin/hooks/useIndividualIdentityById'
 import { adminIndividualInvestorFormSteps } from 'app/pages/admin/components/AdminIndividualInvestorForm/steps'
+import { useParams } from 'react-router-dom'
 
 export const AdminIndividualInvestorForm = memo(() => {
-  const {
-    params: { userId }
-  } = useAdminRouter()
+  const { userId } = useParams<{ userId: string }>()
   const { data, isLoading } = useIndividualIdentityById(userId)
   const mutation = useCreateIndividualByUserId(userId)
   const submitMutation = useSubmitIndividual()

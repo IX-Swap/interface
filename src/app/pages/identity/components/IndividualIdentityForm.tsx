@@ -1,4 +1,5 @@
-import { IndividualIdentity } from 'types/identity'
+import { IndividualIdentity } from 'app/pages/_identity/types/forms'
+
 export interface IndividualIdentityFormProps {
   data: IndividualIdentity | undefined
   isNew?: boolean

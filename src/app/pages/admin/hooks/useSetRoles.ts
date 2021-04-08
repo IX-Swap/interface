@@ -9,7 +9,7 @@ export const useSetRoles = (args: SetRolesArgs) => {
   const { onSuccess, onError } = args
   const { adminService } = useServices()
 
-  return useMutation(adminService.setUserRole.bind(adminService), {
+  return useMutation(adminService.setUserRole, {
     onSuccess: () => {
       onSuccess?.()
     },

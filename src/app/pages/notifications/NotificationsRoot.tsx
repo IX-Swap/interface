@@ -7,6 +7,7 @@ import { FiltersToggle } from 'app/components/FiltersToggle'
 export const NotificationsRoot = () => {
   return (
     <LayoutWithSidebar
+      title='Notifications'
       sidebar={NotificationsFilter}
       sidebarToggle={FiltersToggle}
       content={Notifications}

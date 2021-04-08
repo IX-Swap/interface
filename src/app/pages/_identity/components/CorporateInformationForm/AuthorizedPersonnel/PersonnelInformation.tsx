@@ -4,7 +4,7 @@ import { Grid, TextField } from '@material-ui/core'
 import { useFormContext } from 'react-hook-form'
 import { PhoneInput } from 'components/form/PhoneInput'
 import { plainValueExtractor } from 'helpers/forms'
-import { Personnel } from 'types/identity'
+import { Personnel } from 'app/pages/_identity/types/forms'
 
 export interface PersonnelInformationProps {
   fieldId: string

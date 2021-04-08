@@ -1,8 +1,11 @@
 import { Asset } from './asset'
 import { DataroomFile, FormArray } from './dataroomFile'
-import { CorporateIdentity, IndividualIdentity } from './identity'
 import { AuthorizableWithIdentity } from './authorizer'
 import { Network } from './networks'
+import {
+  CorporateIdentity,
+  IndividualIdentity
+} from 'app/pages/_identity/types/forms'
 
 export interface DsoTeamMember {
   _id?: string

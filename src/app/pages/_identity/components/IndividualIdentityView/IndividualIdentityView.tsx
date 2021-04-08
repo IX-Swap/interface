@@ -8,7 +8,7 @@ import { AddressView } from './AddressView/AddressView'
 import { FinancialView } from './FinancialView/FinancialView'
 import { TaxDeclarationView } from './TaxDeclarationView/TaxDeclarationView'
 import { InvestorDeclarationView } from './InvestorDeclarationView/InvestorDeclarationView'
-import { IndividualIdentity } from 'types/identity'
+import { IndividualIdentity } from '../../types/forms'
 
 export interface IndividualIdentityViewProps {
   data: IndividualIdentity

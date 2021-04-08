@@ -1,9 +1,9 @@
 import React from 'react'
 import { Grid } from '@material-ui/core'
-import { CorporateIdentity } from 'types/identity'
 import { LabelledValue } from 'components/LabelledValue'
 import { Avatar } from 'components/Avatar'
 import { privateClassNames } from 'helpers/classnames'
+import { CorporateIdentity } from 'app/pages/_identity/types/forms'
 
 export interface CompanyInfoViewProps {
   data: CorporateIdentity

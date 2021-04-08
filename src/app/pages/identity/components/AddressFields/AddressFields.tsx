@@ -1,10 +1,10 @@
 import React from 'react'
 import { Grid, Hidden, TextField } from '@material-ui/core'
-import { IdentityAddress } from 'types/identity'
 import { TypedField } from 'components/form/TypedField'
 import { CountrySelect } from 'components/form/CountrySelect'
 import { useFormContext } from 'react-hook-form'
 import { privateClassNames } from 'helpers/classnames'
+import { Address } from 'app/pages/_identity/types/forms'
 
 export interface AddressFieldsProps<FormType> {
   rootName?: 'address' | 'companyAddress' | 'mailingAddress'
@@ -14,7 +14,7 @@ export const AddressFields = <FormType,>(
   props: AddressFieldsProps<FormType>
 ): JSX.Element => {
   const { rootName = 'address' } = props
-  const { control } = useFormContext<IdentityAddress>()
+  const { control } = useFormContext<Address>()
 
   return (
     <Grid container spacing={6} className={privateClassNames()}>

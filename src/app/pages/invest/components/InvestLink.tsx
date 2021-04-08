@@ -1,12 +1,13 @@
 import React from 'react'
 import { Button } from '@material-ui/core'
 import { AppRouterLinkComponent } from 'components/AppRouterLink'
-import { useDSORouter } from 'app/pages/invest/routers/dsoRouter'
 import { useDSOById } from 'app/pages/invest/hooks/useDSOById'
 import { useAuth } from 'hooks/auth/useAuth'
+import { useParams } from 'react-router-dom'
+import { InvestRoute } from 'app/pages/invest/router/config'
 
 export const InvestLink = () => {
-  const { paths, params } = useDSORouter()
+  const params = useParams<{ dsoId: string; issuerId: string }>()
   const { data, isLoading } = useDSOById(params.dsoId, params.issuerId)
   const { user } = useAuth()
 
@@ -22,7 +23,7 @@ export const InvestLink = () => {
       component={AppRouterLinkComponent}
       color='primary'
       variant='contained'
-      to={paths.makeInvestment}
+      to={InvestRoute.makeInvestment}
       params={params}
       data-testid='invest-link'
       disabled={isDisabled}

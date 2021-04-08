@@ -1,6 +1,5 @@
 import { AdminCorporateIdentityView } from 'app/pages/admin/components/AdminCorporateInvestorForm/AdminCorporateIdentityView'
 import * as useAllCorporatesByUserId from 'app/pages/admin/hooks/useAllCorporatesByUserId'
-import * as useAdminRouter from 'app/pages/admin/router'
 import React from 'react'
 import { render, cleanup } from 'test-utils'
 import { corporate } from '__fixtures__/identity'
@@ -9,12 +8,10 @@ import { generateInfiniteQueryResult } from '__fixtures__/useQuery'
 window.URL.revokeObjectURL = jest.fn()
 
 describe('AdminCorporateIdentityView', () => {
-  const useAdminRouterResponse = { params: { userId: corporate._id } }
-
   beforeEach(() => {
-    jest
-      .spyOn(useAdminRouter, 'useAdminRouter')
-      .mockImplementation(() => useAdminRouterResponse as any)
+    // jest
+    //   .spyOn(useAdminRouter, 'useAdminRouter')
+    //   .mockImplementation(() => useAdminRouterResponse as any)
   })
 
   afterEach(async () => {

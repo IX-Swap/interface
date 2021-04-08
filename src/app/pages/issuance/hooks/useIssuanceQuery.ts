@@ -1,10 +1,10 @@
 import { useServices } from 'hooks/useServices'
-import { useIssuanceRouter } from 'app/pages/issuance/router'
 import { isValidDSOId } from 'helpers/isValidDSOId'
+import { useParams } from 'react-router-dom'
 
 export const useIssuanceQuery = () => {
   const { apiService } = useServices()
-  const { params } = useIssuanceRouter()
+  const params = useParams<{ dsoId: string }>()
   const queryEnabled = isValidDSOId(params.dsoId)
 
   return {

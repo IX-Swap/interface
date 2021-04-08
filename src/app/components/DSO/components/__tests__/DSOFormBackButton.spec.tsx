@@ -3,7 +3,7 @@ import { render, cleanup } from 'test-utils'
 import { DSOFormBackButton } from 'app/components/DSO/components/DSOFormBackButton'
 import { dso } from '__fixtures__/authorizer'
 import { history } from 'config/history'
-import { IssuanceRoute } from 'app/pages/issuance/router'
+import { IssuanceRoute } from 'app/pages/issuance/router/config'
 
 describe('DSOFormBackButton', () => {
   afterEach(async () => {

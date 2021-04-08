@@ -2,12 +2,9 @@ import React from 'react'
 import { render, cleanup } from 'test-utils'
 import { OnboardingContentWrapper } from 'app/components/OnboardingPanel/OnboardingContentWrapper'
 import { OnboardingPanel } from 'app/components/OnboardingPanel/OnboardingPanel'
-import * as useIdentitiesRouter from 'app/pages/_identity/router'
-import * as useSecurityRouter from 'app/pages/security/router'
-import * as useHomeRouter from 'app/pages/home/router'
 import { LoadingFullScreen } from 'auth/components/LoadingFullScreen'
-import { MemoryRouter } from 'react-router-dom'
 import * as useOnboardingJourneys from 'app/components/OnboardingPanel/hooks/useOnboardingJourneys'
+import { history } from 'config/history'
 
 jest.mock('app/components/OnboardingPanel/OnboardingPanel', () => ({
   OnboardingPanel: jest.fn(() => null)
@@ -18,35 +15,8 @@ jest.mock('auth/components/LoadingFullScreen', () => ({
 }))
 
 describe('ContentWrapper', () => {
-  const identitiesRouter = {
-    paths: {
-      createIndividual: '/individual',
-      createCorporate: '/corporate',
-      createIssuer: '/corporate'
-    }
-  }
-  const securityRouter = {
-    paths: {
-      setup2fa: '/setup2fa'
-    }
-  }
-
-  const homeRouter = {
-    paths: {
-      landing: '/home'
-    }
-  }
-
   beforeEach(() => {
-    jest
-      .spyOn(useIdentitiesRouter, 'useIdentitiesRouter')
-      .mockImplementation(() => identitiesRouter as any)
-    jest
-      .spyOn(useSecurityRouter, 'useSecurityRouter')
-      .mockImplementation(() => securityRouter as any)
-    jest
-      .spyOn(useHomeRouter, 'useHomeRouter')
-      .mockImplementation(() => homeRouter as any)
+    history.push('/app/home')
   })
 
   afterEach(async () => {
@@ -56,15 +26,15 @@ describe('ContentWrapper', () => {
 
   it('renders without errors', () => {
     render(
-      <MemoryRouter initialEntries={['/home']}>
-        <OnboardingContentWrapper>
-          <div />
-        </OnboardingContentWrapper>
-      </MemoryRouter>
+      <OnboardingContentWrapper>
+        <div />
+      </OnboardingContentWrapper>
     )
   })
 
   it('does not render wrapper when not in the onboardingPages path', () => {
+    history.push('/some/other/path')
+
     const objResponse = {
       isIssuerJourneyCompleted: false,
       isInvestorJourneyCompleted: false,
@@ -76,11 +46,9 @@ describe('ContentWrapper', () => {
       .mockImplementation(() => objResponse as any)
 
     const { container } = render(
-      <MemoryRouter initialEntries={['/accounts']}>
-        <OnboardingContentWrapper>
-          <div />
-        </OnboardingContentWrapper>
-      </MemoryRouter>
+      <OnboardingContentWrapper>
+        <div />
+      </OnboardingContentWrapper>
     )
 
     expect(container.firstElementChild).toBeEmptyDOMElement()
@@ -98,11 +66,9 @@ describe('ContentWrapper', () => {
       .mockImplementation(() => objResponse as any)
 
     const { container } = render(
-      <MemoryRouter initialEntries={['/home']}>
-        <OnboardingContentWrapper>
-          <div />
-        </OnboardingContentWrapper>
-      </MemoryRouter>
+      <OnboardingContentWrapper>
+        <div />
+      </OnboardingContentWrapper>
     )
 
     expect(container.firstElementChild).toBeEmptyDOMElement()
@@ -121,11 +87,9 @@ describe('ContentWrapper', () => {
       .mockImplementation(() => objResponse as any)
 
     const { container } = render(
-      <MemoryRouter initialEntries={['/home']}>
-        <OnboardingContentWrapper>
-          <div />
-        </OnboardingContentWrapper>
-      </MemoryRouter>
+      <OnboardingContentWrapper>
+        <div />
+      </OnboardingContentWrapper>
     )
 
     expect(container.firstElementChild).toBeEmptyDOMElement()
@@ -144,11 +108,9 @@ describe('ContentWrapper', () => {
       .mockImplementation(() => objResponse as any)
 
     const { container } = render(
-      <MemoryRouter initialEntries={['/home']}>
-        <OnboardingContentWrapper>
-          <div />
-        </OnboardingContentWrapper>
-      </MemoryRouter>
+      <OnboardingContentWrapper>
+        <div />
+      </OnboardingContentWrapper>
     )
 
     expect(container.firstElementChild).toBeEmptyDOMElement()
@@ -166,15 +128,14 @@ describe('ContentWrapper', () => {
       .spyOn(useOnboardingJourneys, 'useOnboardingJourneys')
       .mockImplementation(() => objResponse as any)
 
-    render(
-      <MemoryRouter initialEntries={['/home']}>
-        <OnboardingContentWrapper>
-          <div />
-        </OnboardingContentWrapper>
-      </MemoryRouter>
+    const { container } = render(
+      <OnboardingContentWrapper>
+        <div />
+      </OnboardingContentWrapper>
     )
 
-    expect(OnboardingPanel).toHaveBeenCalled()
+    expect(container.firstElementChild).toBeEmptyDOMElement()
+    expect(OnboardingPanel).not.toHaveBeenCalled()
   })
 
   it('renders wrapper if user completed corporate investor onboarding journey and started issuer onboarding journey', () => {
@@ -189,15 +150,14 @@ describe('ContentWrapper', () => {
       .spyOn(useOnboardingJourneys, 'useOnboardingJourneys')
       .mockImplementation(() => objResponse as any)
 
-    render(
-      <MemoryRouter initialEntries={['/home']}>
-        <OnboardingContentWrapper>
-          <div />
-        </OnboardingContentWrapper>
-      </MemoryRouter>
+    const { container } = render(
+      <OnboardingContentWrapper>
+        <div />
+      </OnboardingContentWrapper>
     )
 
-    expect(OnboardingPanel).toHaveBeenCalled()
+    expect(container.firstElementChild).toBeEmptyDOMElement()
+    expect(OnboardingPanel).not.toHaveBeenCalled()
   })
 
   it('renders wrapper if user started individual investor onboarding journey', () => {
@@ -210,11 +170,9 @@ describe('ContentWrapper', () => {
       .mockImplementation(() => objResponse as any)
 
     render(
-      <MemoryRouter initialEntries={['/home']}>
-        <OnboardingContentWrapper>
-          <div />
-        </OnboardingContentWrapper>
-      </MemoryRouter>
+      <OnboardingContentWrapper>
+        <div />
+      </OnboardingContentWrapper>
     )
 
     expect(OnboardingPanel).toHaveBeenCalled()
@@ -232,11 +190,9 @@ describe('ContentWrapper', () => {
       .mockImplementation(() => objResponse as any)
 
     render(
-      <MemoryRouter initialEntries={['/home']}>
-        <OnboardingContentWrapper>
-          <div />
-        </OnboardingContentWrapper>
-      </MemoryRouter>
+      <OnboardingContentWrapper>
+        <div />
+      </OnboardingContentWrapper>
     )
 
     expect(OnboardingPanel).toHaveBeenCalled()
@@ -253,11 +209,9 @@ describe('ContentWrapper', () => {
       .mockImplementation(() => objResponse as any)
 
     render(
-      <MemoryRouter initialEntries={['/home']}>
-        <OnboardingContentWrapper>
-          <div />
-        </OnboardingContentWrapper>
-      </MemoryRouter>
+      <OnboardingContentWrapper>
+        <div />
+      </OnboardingContentWrapper>
     )
 
     expect(OnboardingPanel).toHaveBeenCalled()
@@ -274,11 +228,9 @@ describe('ContentWrapper', () => {
       .mockImplementation(() => objResponse as any)
 
     render(
-      <MemoryRouter initialEntries={['/home']}>
-        <OnboardingContentWrapper>
-          <div />
-        </OnboardingContentWrapper>
-      </MemoryRouter>
+      <OnboardingContentWrapper>
+        <div />
+      </OnboardingContentWrapper>
     )
 
     expect(OnboardingPanel).toHaveBeenCalled()
@@ -295,11 +247,9 @@ describe('ContentWrapper', () => {
       .mockImplementation(() => objResponse as any)
 
     render(
-      <MemoryRouter initialEntries={['/home']}>
-        <OnboardingContentWrapper>
-          <div />
-        </OnboardingContentWrapper>
-      </MemoryRouter>
+      <OnboardingContentWrapper>
+        <div />
+      </OnboardingContentWrapper>
     )
 
     expect(OnboardingPanel).toHaveBeenCalled()
@@ -314,11 +264,9 @@ describe('ContentWrapper', () => {
       .mockImplementation(() => objResponse as any)
 
     render(
-      <MemoryRouter initialEntries={['/home']}>
-        <OnboardingContentWrapper>
-          <div />
-        </OnboardingContentWrapper>
-      </MemoryRouter>
+      <OnboardingContentWrapper>
+        <div />
+      </OnboardingContentWrapper>
     )
 
     expect(LoadingFullScreen).toHaveBeenCalled()

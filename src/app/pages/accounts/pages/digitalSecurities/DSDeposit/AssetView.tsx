@@ -1,23 +1,21 @@
 import React from 'react'
+import { useParams } from 'react-router-dom'
 import { useAllBalances } from 'hooks/balance/useAllBalances'
 import { Box, Button, Grid, Typography } from '@material-ui/core'
 import { ReactComponent as QRCode } from 'assets/qr.svg'
 import { useSnackbar } from 'hooks/useSnackbar'
-import { useDSRouter } from 'app/pages/accounts/pages/digitalSecurities/router'
 import { VSpacer } from 'components/VSpacer'
 import { Alert } from '@material-ui/lab'
 import { useSetPageTitle } from 'app/hooks/useSetPageTitle'
 import { privateClassNames } from 'helpers/classnames'
 
 export const AssetView: React.FC = () => {
-  const {
-    params: { balanceId }
-  } = useDSRouter()
   const { data, isLoading } = useAllBalances()
   const snackbar = useSnackbar()
-  const asset = data.map[balanceId]
+  const params = useParams<{ balanceId: string }>()
+  const asset = data.map[params.balanceId]
   const address = '12nfq3r45678900awn2noag3459an'
-  const handleCopy = async (): Promise<void> => {
+  const handleCopy = async () => {
     await navigator.clipboard.writeText(address)
     snackbar.showSnackbar('Copied to clipboard', 'info')
   }

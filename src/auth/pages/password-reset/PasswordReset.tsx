@@ -7,11 +7,11 @@ import {
 } from 'auth/context/password-reset'
 import { PasswordResetStep } from 'auth/context/password-reset/types'
 import { observer } from 'mobx-react'
-import { useAuthRouter } from 'auth/router'
+import { useSearchQuery } from 'hooks/useSearchQuery'
 
 export const PasswordReset: React.FC = observer(() => {
   const { currentStep, setToken } = usePasswordResetStore()
-  const { query } = useAuthRouter()
+  const query = useSearchQuery()
   let element
 
   useEffect(() => {

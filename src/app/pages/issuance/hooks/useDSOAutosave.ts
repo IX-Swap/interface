@@ -19,13 +19,14 @@ import { useDebounce } from 'use-debounce'
 import isEqual from 'lodash/isEqual'
 import { transformDSOToFormValues } from 'app/components/DSO/utils'
 import { useDSOById } from 'app/pages/invest/hooks/useDSOById'
-import { useIssuanceRouter } from 'app/pages/issuance/router'
+import { useHistory } from 'react-router'
+import { IssuanceRoute } from 'app/pages/issuance/router/config'
 
 export const useDSOAutosave = (
   initialDSO: DigitalSecurityOffering | undefined
 ) => {
   const { apiService } = useServices()
-  const { replace } = useIssuanceRouter()
+  const { replace } = useHistory()
   const { user } = useAuth()
   const userId = getIdFromObj(user)
   const dsoId = getIdFromObj(initialDSO)
@@ -60,7 +61,10 @@ export const useDSOAutosave = (
     },
     {
       onSuccess: data => {
-        replace('edit', { dsoId: data.data._id })
+        replace(IssuanceRoute.edit, {
+          dsoId: data.data._id,
+          issuerId: data.data.user
+        })
       }
     }
   )

@@ -1,8 +1,6 @@
 import React from 'react'
-import { useDSRouter } from 'app/pages/accounts/pages/digitalSecurities/router'
+import { DigitalSecuritiesRouter } from 'app/pages/accounts/pages/digitalSecurities/router/DigitalSecuritiesRouter'
 
 export const DigitalSecurities: React.FC = () => {
-  const { renderRoutes } = useDSRouter()
-
-  return renderRoutes()
+  return <DigitalSecuritiesRouter />
 }

@@ -1,9 +1,13 @@
 import * as yup from 'yup'
 import { passwordValidator } from 'validation/validators'
-import { PersonalProfile, Personnel, TaxResidency } from 'types/identity'
 import { DataroomFile, FormArrayElement } from 'types/dataroomFile'
 import { Maybe } from 'types/util'
 import { AddressValues } from 'app/pages/accounts/types'
+import {
+  PersonalProfile,
+  Personnel,
+  TaxResidency
+} from 'app/pages/_identity/types/forms'
 
 export const emailSchema = yup.string().email('Invalid email')
 

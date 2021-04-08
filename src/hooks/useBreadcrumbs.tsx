@@ -9,6 +9,7 @@ import { InternalRouteBase } from 'types/util'
 export interface BreadcrumbsState {
   crumbs: InternalRouteBase[]
   push: (crumb: InternalRouteBase) => void
+  remove: (crumb: InternalRouteBase) => void
   reset: () => void
 }
 
@@ -42,8 +43,16 @@ export const BreadcrumbsProvider = ({ children }: PropsWithChildren<any>) => {
     setData([])
   }
 
+  const remove = (crumb: InternalRouteBase) => {
+    setData(data => {
+      return data.filter(({ path }) => path !== crumb.path)
+    })
+  }
+
   return (
-    <BreadcrumbsContext.Provider value={{ crumbs: data, push, reset: replace }}>
+    <BreadcrumbsContext.Provider
+      value={{ crumbs: data, push, remove, reset: replace }}
+    >
       {children}
     </BreadcrumbsContext.Provider>
   )

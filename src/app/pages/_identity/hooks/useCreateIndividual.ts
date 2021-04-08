@@ -1,15 +1,17 @@
 import { useServices } from 'hooks/useServices'
 import { useMutation, useQueryCache } from 'react-query'
 import { useAuth } from 'hooks/auth/useAuth'
-import { IndividualIdentity } from 'types/identity'
 import { getIdFromObj } from 'helpers/strings'
 import { identityURL } from 'config/apiURL'
 import { identityQueryKeys } from 'config/queryKeys'
-import { useIdentitiesRouter } from 'app/pages/_identity/router'
+import { useHistory } from 'react-router'
+import { IdentityRoute } from 'app/pages/_identity/router/config'
+import { generatePath } from 'react-router-dom'
+import { IndividualIdentity } from 'app/pages/_identity/types/forms'
 
 export const useCreateIndividual = () => {
   const { snackbarService, apiService } = useServices()
-  const { replace, paths, current } = useIdentitiesRouter()
+  const { replace, location } = useHistory()
   const queryCache = useQueryCache()
   const { user } = useAuth()
   const userId = getIdFromObj(user)
@@ -24,8 +26,12 @@ export const useCreateIndividual = () => {
       void snackbarService.showSnackbar(data.message, 'success')
       await queryCache.invalidateQueries(identityQueryKeys.getIndividual)
 
-      if (current.path === paths.createIndividual) {
-        replace('editIndividual', { identityId: data.data._id })
+      if (location.pathname.endsWith('create')) {
+        replace(
+          generatePath(IdentityRoute.editIndividual, {
+            identityId: data.data._id
+          })
+        )
       }
     },
     onError: (error: any) => {

@@ -1,15 +1,11 @@
 import React from 'react'
-import { useInvestRouter } from 'app/pages/invest/routers/router'
-import { PageHeader } from 'app/components/PageHeader/PageHeader'
 import { RootContainer } from 'ui/RootContainer'
+import { InvestRouter } from 'app/pages/invest/router/InvestRouter'
 
 export const InvestRoot = () => {
-  const { renderRoutes } = useInvestRouter()
-
   return (
     <RootContainer>
-      <PageHeader alignment='flex-start' />
-      {renderRoutes()}
+      <InvestRouter />
     </RootContainer>
   )
 }

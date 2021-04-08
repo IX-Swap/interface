@@ -1,4 +1,5 @@
 import { Grid } from '@material-ui/core'
+import { PageHeader } from 'app/components/PageHeader/PageHeader'
 import { CorporateIssuerForm } from 'app/pages/_identity/components/CorporateIssuerForm/CorporateIssuerForm'
 import { VSpacer } from 'components/VSpacer'
 import React from 'react'
@@ -6,10 +7,13 @@ import React from 'react'
 export const CreateIssuer = () => {
   return (
     <Grid container>
-      <Grid container item>
+      <Grid item xs={12}>
+        <PageHeader title='Create Corporate Issuer Identity' />
+      </Grid>
+      <Grid container item xs={12}>
         <VSpacer size='medium' />
       </Grid>
-      <Grid item>
+      <Grid item xs={12}>
         <CorporateIssuerForm />
       </Grid>
     </Grid>

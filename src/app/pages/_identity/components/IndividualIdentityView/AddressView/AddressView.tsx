@@ -1,7 +1,7 @@
 import React from 'react'
 import { Grid } from '@material-ui/core'
 import { LabelledValue } from 'components/LabelledValue'
-import { IndividualIdentity } from 'types/identity'
+import { IndividualIdentity } from 'app/pages/_identity/types/forms'
 
 export interface AddressViewProps {
   data: IndividualIdentity['address']

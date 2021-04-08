@@ -1,11 +1,11 @@
 import { Grid } from '@material-ui/core'
 import React from 'react'
 import { useFormContext } from 'react-hook-form'
-import { FundSource } from 'types/identity'
 import { booleanValueExtractor } from 'helpers/forms'
 import { Checkbox } from 'components/form/Checkbox'
 import { TypedField } from 'components/form/TypedField'
 import { FundSourceSlider } from 'app/pages/_identity/components/FinancialInformationForm/FundSourceSlider'
+import { FundSource } from 'app/pages/_identity/types/forms'
 
 export interface FundSourceItemProps {
   field: Partial<FundSource>

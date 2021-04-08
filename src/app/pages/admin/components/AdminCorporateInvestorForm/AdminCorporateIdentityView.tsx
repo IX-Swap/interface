@@ -9,7 +9,7 @@ import { IdentityDocumentsView } from 'app/pages/_identity/components/IdentityDo
 import { CountryTaxDeclaration } from 'app/pages/_identity/components/CountryTaxDeclarations/CountryTaxDeclaration'
 import { InvestorDeclarationView } from 'app/pages/_identity/components/IndividualIdentityView/InvestorDeclarationView/InvestorDeclarationView'
 import { useAllCorporatesByUserId } from 'app/pages/admin/hooks/useAllCorporatesByUserId'
-import { useAdminRouter } from 'app/pages/admin/router'
+import { useParams } from 'react-router'
 
 export interface CorporateIdentityViewProps {
   isCorporateIssuerForm?: boolean
@@ -18,10 +18,7 @@ export interface CorporateIdentityViewProps {
 export const AdminCorporateIdentityView = ({
   isCorporateIssuerForm = false
 }: CorporateIdentityViewProps) => {
-  const {
-    params: { userId }
-  } = useAdminRouter()
-
+  const { userId } = useParams<{ userId: string }>()
   const { data, isLoading } = useAllCorporatesByUserId({
     userId,
     type: isCorporateIssuerForm ? 'issuer' : 'investor'

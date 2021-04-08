@@ -1,5 +1,5 @@
-import { DeclarationTemplate } from 'types/identity'
 import { Maybe } from 'types/util'
+import { DeclarationTemplate } from 'app/pages/_identity/types/forms'
 
 export enum DeclarationValue {
   Yes = 'Yes',

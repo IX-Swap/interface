@@ -9,6 +9,7 @@ import { useQueryFilter } from 'hooks/filters/useQueryFilter'
 import { Grid } from '@material-ui/core'
 import { SearchFilter } from 'app/components/SearchFilter'
 import { useSetPageTitle } from 'app/hooks/useSetPageTitle'
+import { PageHeader } from 'app/components/PageHeader/PageHeader'
 
 export const Users = () => {
   const { getFilterValue } = useQueryFilter()
@@ -21,6 +22,9 @@ export const Users = () => {
 
   return (
     <Grid container direction='column' spacing={3}>
+      <Grid item xs={12}>
+        <PageHeader title='Users' />
+      </Grid>
       <Grid item xs={12} md={6} lg={4}>
         <SearchFilter
           fullWidth

@@ -1,20 +1,19 @@
 import React, { useEffect } from 'react'
 import { FormStepper } from 'app/components/FormStepper/FormStepper'
-import { useAllCorporates } from 'app/pages/_identity/hooks/useAllCorporates'
 import { useCreateCorporate } from 'app/pages/_identity/hooks/useCreateCorporate'
 import { useUpdateCorporate } from 'app/pages/_identity/hooks/useUpdateCorporate'
 import { useOnboardingDialog } from 'app/components/OnboardingDialog/hooks/useOnboardingDialog'
-import { useIdentitiesRouter } from 'app/pages/_identity/router'
 import { useSubmitCorporate } from 'app/pages/_identity/hooks/useSubmitCorporate'
 import { getIdentityDefaultActiveStep } from 'app/pages/_identity/utils/shared'
 import { useOnboardingJourneys } from 'app/components/OnboardingPanel/hooks/useOnboardingJourneys'
 import { corporateIssuerFormSteps } from './steps'
+import { CorporateIdentity } from '../../types/forms'
 
-export const CorporateIssuerForm = () => {
-  const { data, isLoading } = useAllCorporates({ type: 'issuer' })
-  const { params, current, paths } = useIdentitiesRouter()
-  const isNew = current.path === paths.createCorporate
-  const identity = isNew ? undefined : data.map[params.identityId]
+export interface CorporateIssuerFormProps {
+  data?: CorporateIdentity
+}
+
+export const CorporateIssuerForm = ({ data }: CorporateIssuerFormProps) => {
   const { isIssuerJourneyCompleted } = useOnboardingJourneys()
 
   const createMutation = useCreateCorporate('issuer')
@@ -23,25 +22,20 @@ export const CorporateIssuerForm = () => {
   const { showPreIdentityCreateDialog } = useOnboardingDialog()
 
   useEffect(() => {
-    if (!isLoading && data.list.length === 0) {
+    if (data === undefined) {
       showPreIdentityCreateDialog('corporate')
     }
-    // eslint-disable-next-line
-  }, [isLoading])
-
-  if (isLoading) {
-    return <div>Loading...</div>
-  }
+  }, [data]) // eslint-disable-line
 
   const defaultActiveStep = getIdentityDefaultActiveStep({
-    isSubmitted: identity?.status === 'Submitted',
+    isSubmitted: data?.status === 'Submitted',
     lastStepIndex: corporateIssuerFormSteps.length - 1,
     isJourneyCompleted: isIssuerJourneyCompleted
   })
 
   return (
     <FormStepper
-      data={identity}
+      data={data}
       shouldSaveOnMove={!isIssuerJourneyCompleted}
       createMutation={createMutation}
       editMutation={updateMutation}

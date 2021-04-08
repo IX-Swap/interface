@@ -2,34 +2,25 @@ import React from 'react'
 import { Button, ButtonGroup } from '@material-ui/core'
 import { AssetBalance } from 'types/balance'
 import { AppRouterLinkComponent } from 'components/AppRouterLink'
-import { useDSRouter } from 'app/pages/accounts/pages/digitalSecurities/router'
+import { DSRoute } from 'app/pages/accounts/pages/digitalSecurities/router/config'
 
 interface DSTableActionsProps {
   item: AssetBalance
 }
 
 export const DSTableActions = ({ item }: DSTableActionsProps) => {
-  const { paths } = useDSRouter()
-
   return (
     <ButtonGroup size='small'>
-      {/* <Button */}
-      {/*  component={AppRouterLinkComponent} */}
-      {/*  to={paths.view} */}
-      {/*  params={{ balanceId: item.assetId }} */}
-      {/* > */}
-      {/*  View */}
-      {/* </Button> */}
       <Button
         component={AppRouterLinkComponent}
-        to={paths.deposit}
+        to={DSRoute.deposit}
         params={{ balanceId: item.assetId }}
       >
         Deposit
       </Button>
       <Button
         component={AppRouterLinkComponent}
-        to={paths.withdraw}
+        to={DSRoute.withdraw}
         params={{ balanceId: item.assetId }}
       >
         Withdraw

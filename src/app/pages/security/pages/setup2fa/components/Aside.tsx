@@ -3,10 +3,9 @@ import { Box, Typography } from '@material-ui/core'
 import { AppRouterLink } from 'components/AppRouterLink'
 import { VSpacer } from 'components/VSpacer'
 import { useStyles } from 'app/pages/security/pages/setup2fa/Setup2fa.styles'
-import { useSecurityRouter } from 'app/pages/security/router'
+import { SecurityRoute } from 'app/pages/security/router/config'
 
 export const Aside = () => {
-  const { paths } = useSecurityRouter()
   const { aside } = useStyles()
 
   return (
@@ -19,7 +18,7 @@ export const Aside = () => {
         Prime.
       </Typography>
       <VSpacer size='medium' />
-      <AppRouterLink variant='body1' to={paths.guide}>
+      <AppRouterLink variant='body1' to={SecurityRoute.guide}>
         Learn more
       </AppRouterLink>
     </Box>

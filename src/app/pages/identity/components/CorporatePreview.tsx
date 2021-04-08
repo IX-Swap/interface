@@ -2,14 +2,13 @@ import React from 'react'
 import { Grid, Typography } from '@material-ui/core'
 import { useAllCorporates } from 'app/pages/_identity/hooks/useAllCorporates'
 import { Section } from 'app/pages/identity/components/Section'
-import { useIdentitiesRouter } from 'app/pages/_identity/router'
 import { ViewButton } from 'app/pages/identity/components/ViewButton'
 import { CompanyInfoView } from 'app/pages/identity/components/CompanyInfoView'
 import { VSpacer } from 'components/VSpacer'
+import { IdentityRoute } from 'app/pages/_identity/router/config'
 
 export const CorporatePreview: React.FC = () => {
   const { data, status } = useAllCorporates({})
-  const { paths } = useIdentitiesRouter()
 
   if (status === 'loading') {
     return null
@@ -35,7 +34,7 @@ export const CorporatePreview: React.FC = () => {
             title={identity.companyLegalName}
             actions={
               <ViewButton
-                link={paths.corporate}
+                link={IdentityRoute.viewCorporate}
                 params={{
                   identityId: identity._id,
                   label: identity.companyLegalName
