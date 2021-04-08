@@ -1,10 +1,10 @@
 import { useServices } from 'hooks/useServices'
 import { useMutation, useQueryCache } from 'react-query'
-import { CorporateIdentity } from 'types/identity'
 import { identityURL } from 'config/apiURL'
 import { identityQueryKeys } from 'config/queryKeys'
 import { useOnboardingDialog } from 'app/components/OnboardingDialog/hooks/useOnboardingDialog'
 import { useParams } from 'react-router'
+import { CorporateIdentity } from 'app/pages/_identity/types/forms'
 
 export const useSubmitCorporate = () => {
   const { snackbarService, apiService, storageService } = useServices()

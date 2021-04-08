@@ -1,5 +1,4 @@
 import React from 'react'
-import { IndividualPersonalInformation } from 'types/identity'
 import { Grid, Box, TextField } from '@material-ui/core'
 import { useFormContext } from 'react-hook-form'
 import { TypedField } from 'components/form/TypedField'
@@ -12,6 +11,7 @@ import { privateClassNames } from 'helpers/classnames'
 import { Dropzone } from 'components/dataroom/Dropzone'
 import { useAppBreakpoints } from 'hooks/useAppBreakpoints'
 import { PhoneInput } from 'components/form/PhoneInput'
+import { IndividualPersonalInformation } from 'app/pages/_identity/types/forms'
 import { DatePicker } from 'components/form/DatePicker'
 
 export interface IndividualInfoFieldsProps {
@@ -23,7 +23,10 @@ export const IndividualInfoFields = (
 ): JSX.Element => {
   const { rootName } = props
   const { control } = useFormContext<IndividualPersonalInformation>()
-  const { email: defaultEmail } = useIndividualInfoDefaultEmail(rootName)
+  const {
+    email: defaultEmail,
+    isDisabled: isEmailDisabled
+  } = useIndividualInfoDefaultEmail(rootName)
   const { isMobile } = useAppBreakpoints()
 
   return (
@@ -111,7 +114,7 @@ export const IndividualInfoFields = (
               control={control}
               name='email'
               label='Email'
-              // disabled={isEmailDisabled}
+              disabled={isEmailDisabled}
               defaultValue={defaultEmail}
               variant='outlined'
             />

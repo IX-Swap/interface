@@ -1,7 +1,10 @@
 import React from 'react'
 import { CorporateInfo } from './CorporateInfo'
 import { IndividualInfo } from './IndividualInfo'
-import { CorporateIdentity, IndividualIdentity } from 'types/identity'
+import {
+  CorporateIdentity,
+  IndividualIdentity
+} from 'app/pages/_identity/types/forms'
 
 export interface AuthorizerIdentitiesProps {
   corporates?: CorporateIdentity[]

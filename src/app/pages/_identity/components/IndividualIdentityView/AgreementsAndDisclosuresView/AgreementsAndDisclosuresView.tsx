@@ -2,7 +2,10 @@ import React from 'react'
 import DoneIcon from '@material-ui/icons/Done'
 import CloseIcon from '@material-ui/icons/Close'
 import { Grid, Link, Box } from '@material-ui/core'
-import { CorporateIdentity, IndividualIdentity } from 'types/identity'
+import {
+  CorporateIdentity,
+  IndividualIdentity
+} from 'app/pages/_identity/types/forms'
 
 export interface AgreementsAndDisclosuresViewProps {
   data: IndividualIdentity | CorporateIdentity

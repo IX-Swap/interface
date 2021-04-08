@@ -2,13 +2,14 @@ import * as yup from 'yup'
 import 'yup-phone'
 import { addressSchema, dateSchema, emailSchema } from 'validation/shared'
 import {
+  FundSource,
   IndividualAgreementsFormValues,
   IndividualDocumentsFormValues,
   IndividualFinancialInfoFormValues,
   IndividualPersonalInfoFormValues,
-  IndividualTaxDeclarationFormValues
+  IndividualTaxDeclarationFormValues,
+  TaxResidency
 } from 'app/pages/_identity/types/forms'
-import { FundSource, TaxResidency } from 'types/identity'
 import { DataroomFile } from 'types/dataroomFile'
 
 export const personalInfoSchema = yup
@@ -118,7 +119,10 @@ export const individualInvestorStatusDeclarationSchema = yup
     personalAssets: yup.bool().required('Required'),
     jointlyHeldAccount: yup.bool().required('Required'),
 
-    optInAgreements: yup.bool().oneOf([true]).required('Required'),
+    optInAgreements: yup
+      .bool()
+      .oneOf([true], 'Opt-In Requirement is required')
+      .required('Required'),
 
     primaryOfferingServices: yup.bool(),
     digitalSecurities: yup.bool(),

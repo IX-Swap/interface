@@ -4,32 +4,9 @@ import { LabelledValue } from 'components/LabelledValue'
 import { DeclarationsListItem } from '../../DeclarationsListItem/DeclarationsListItem'
 import { VSpacer } from 'components/VSpacer'
 import { FormSectionHeader } from 'app/components/DSO/components/FormSectionHeader'
-import { IndividualIdentity } from 'types/identity'
 import { CountryTaxDeclaration } from 'app/pages/_identity/components/CountryTaxDeclarations/CountryTaxDeclaration'
 import { FatcaDialog } from 'app/pages/_identity/components/TaxDeclarationForm/FatcaDialog/FatcaDialog'
-
-// TODO Remove after added new interfaces
-export type Reason = 'A' | 'B' | 'C'
-
-// TODO Remove after added new interfaces
-export interface TaxResidencies {
-  countryOfResidence?: string
-  taxIdentificationNumber?: string
-  reason?: Reason
-  customReason?: string
-  taxIdAvailable?: boolean
-}
-
-// TODO Remove after added new interfaces
-export interface TaxDeclaration {
-  singaporeOnly: boolean
-  declarations: {
-    tax: {
-      fatca: boolean
-    }
-  }
-  taxResidencies: TaxResidencies[]
-}
+import { IndividualIdentity } from 'app/pages/_identity/types/forms'
 
 export interface TaxDeclarationViewProps {
   data: IndividualIdentity

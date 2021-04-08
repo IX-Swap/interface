@@ -1,15 +1,20 @@
 import { useServices } from 'hooks/useServices'
 import { useAuth } from 'hooks/auth/useAuth'
-import { CorporateIdentityFormValues } from 'app/pages/identity/components/types'
+
 import {
   prepareDeclarationsForUpload,
   prepareDocumentsForUpload
 } from 'app/pages/identity/utils'
 import { useMutation } from 'react-query'
-import { CorporateIdentity, UpdateCorporateIdentityArgs } from 'types/identity'
+
 import apiService from 'services/api'
 import { getIdFromObj } from 'helpers/strings'
 import { identityURL } from 'config/apiURL'
+import {
+  CorporateIdentity,
+  CorporateIdentityFormValues,
+  UpdateCorporateIdentityArgs
+} from '../../app/pages/_identity/types/forms'
 
 export const useUpdateCorporateIdentity = (id: string) => {
   const { snackbarService } = useServices()

@@ -2,7 +2,7 @@ import React, { ComponentType, createElement, FC } from 'react'
 import { IndividualIdentityView } from 'app/pages/_identity/components/IndividualIdentityView/IndividualIdentityView'
 import { useIndividualIdentity } from 'hooks/identity/useIndividualIdentity'
 import { useParams } from 'react-router'
-import { IndividualIdentity } from 'types/identity'
+import { IndividualIdentity } from '../types/forms'
 
 export interface IndividualIdentityContainerProps {
   component?: ComponentType<{ data: IndividualIdentity }>

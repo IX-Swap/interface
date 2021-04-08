@@ -5,7 +5,7 @@ import { percentageNumberFormat } from 'config/numberFormat'
 import { numericValueExtractor } from 'helpers/forms'
 import React from 'react'
 import { useFormContext } from 'react-hook-form'
-import { Personnel } from 'types/identity'
+import { Personnel } from 'app/pages/_identity/types/forms'
 
 export interface BeneficialOwnersInformationFieldsProps {
   rootName: string

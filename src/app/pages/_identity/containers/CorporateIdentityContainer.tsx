@@ -3,7 +3,7 @@ import { useCorporate } from 'app/pages/_identity/hooks/useCorporate'
 import { CorporateIdentityView } from 'app/pages/_identity/components/CorporateIdentityView/CorporateIdentityView'
 import { CorporateIssuerView } from 'app/pages/_identity/components/CorporateIssuerView/CorporateIssuerView'
 import { useParams } from 'react-router'
-import { CorporateIdentity } from 'types/identity'
+import { CorporateIdentity } from '../types/forms'
 
 export interface CorporateIdentityContainerProps {
   component?: ComponentType<{ data: CorporateIdentity }>

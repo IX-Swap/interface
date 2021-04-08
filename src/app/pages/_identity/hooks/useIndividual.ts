@@ -1,11 +1,14 @@
 import { useQuery } from 'react-query'
 import { UseQueryData } from 'hooks/useParsedData'
-import { IndividualIdentity, GetIndividualIdentityArgs } from 'types/identity'
 import { useAuth } from 'hooks/auth/useAuth'
 import { identityQueryKeys } from 'config/queryKeys'
 import { identityURL } from 'config/apiURL'
 import { getIdFromObj } from 'helpers/strings'
 import { useServices } from 'hooks/useServices'
+import {
+  GetIndividualIdentityArgs,
+  IndividualIdentity
+} from 'app/pages/_identity/types/forms'
 
 export const useIndividual = (): UseQueryData<IndividualIdentity> => {
   const { user } = useAuth()
