@@ -10,9 +10,14 @@ import { FundSource } from 'app/pages/_identity/types/forms'
 export interface FundSourceItemProps {
   field: Partial<FundSource>
   index: number
+  fundSourceSum?: number
 }
 
-export const FundSourceItem = ({ field, index }: FundSourceItemProps) => {
+export const FundSourceItem = ({
+  field,
+  index,
+  fundSourceSum
+}: FundSourceItemProps) => {
   const { control } = useFormContext()
 
   return (
@@ -31,7 +36,11 @@ export const FundSourceItem = ({ field, index }: FundSourceItemProps) => {
           />
         </Grid>
         <Grid item xs={7}>
-          <FundSourceSlider field={field} index={index} />
+          <FundSourceSlider
+            field={field}
+            index={index}
+            fundSourceSum={fundSourceSum}
+          />
         </Grid>
       </Grid>
     </Grid>
