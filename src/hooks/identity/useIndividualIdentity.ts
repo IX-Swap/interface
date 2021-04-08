@@ -5,7 +5,7 @@ import apiService from 'services/api'
 import { identityQueryKeys } from 'config/queryKeys'
 import { identityURL } from 'config/apiURL'
 import { getIdFromObj } from 'helpers/strings'
-import { IndividualIdentity } from '../../app/pages/_identity/types/forms'
+import { IndividualIdentity } from '../../app/pages/identity/types/forms'
 
 export const useIndividualIdentity = (
   userId?: string

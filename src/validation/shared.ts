@@ -7,7 +7,7 @@ import {
   PersonalProfile,
   Personnel,
   TaxResidency
-} from 'app/pages/_identity/types/forms'
+} from 'app/pages/identity/types/forms'
 
 export const emailSchema = yup.string().email('Invalid email')
 

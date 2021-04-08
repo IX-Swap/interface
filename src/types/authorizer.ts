@@ -4,7 +4,7 @@ import { AppFeature } from 'types/app'
 import {
   CorporateIdentity,
   IndividualIdentity
-} from 'app/pages/_identity/types/forms'
+} from 'app/pages/identity/types/forms'
 
 export interface AuthorizationInfo {
   authorizer: string

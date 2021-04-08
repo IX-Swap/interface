@@ -3,8 +3,8 @@ import {
   defaultOnboardingSteps,
   getIdentityOnboardingSteps
 } from 'app/components/OnboardingPanel/hooks/utils'
-import { IdentityType } from 'app/pages/identity/utils'
 import { AuthorizableStatus } from 'types/util'
+import { IdentityType } from 'app/pages/identity/utils/shared'
 
 export const useOnboardingSteps = (
   identityType?: IdentityType,

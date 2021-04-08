@@ -6,7 +6,7 @@ import { useOnboardingPanel } from 'app/components/OnboardingPanel/hooks/useOnbo
 import { OnboardingPanel } from 'app/components/OnboardingPanel/OnboardingPanel'
 import { useLocation } from 'react-router-dom'
 import { useOnboardingJourneys } from 'app/components/OnboardingPanel/hooks/useOnboardingJourneys'
-import { IdentityRoute } from 'app/pages/_identity/router/config'
+import { IdentityRoute } from 'app/pages/identity/router/config'
 import { SecurityRoute } from 'app/pages/security/router/config'
 import { HomeRoute } from 'app/pages/home/router/config'
 import { LoadingFullScreen } from 'auth/components/LoadingFullScreen'

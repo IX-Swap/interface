@@ -1,5 +1,5 @@
 import { useGetIdentities } from 'app/components/OnboardingPanel/hooks/useGetIdentities'
-import { IdentityType } from 'app/pages/identity/utils'
+import { IdentityType } from 'app/pages/identity/utils/shared'
 
 export const useOnboardingJourneys = () => {
   const {

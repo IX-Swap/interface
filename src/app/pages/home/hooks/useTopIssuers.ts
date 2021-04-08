@@ -2,7 +2,7 @@ import { useQuery } from 'react-query'
 import { useServices } from 'hooks/useServices'
 import { homeURL } from 'config/apiURL'
 import { homeQueryKeys } from 'config/queryKeys'
-import { IndividualIdentity } from 'app/pages/_identity/types/forms'
+import { IndividualIdentity } from 'app/pages/identity/types/forms'
 
 export type TopIssuers = Array<
   Pick<

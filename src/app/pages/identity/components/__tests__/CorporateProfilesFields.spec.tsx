@@ -1,6 +1,6 @@
 import React from 'react'
 import { render, cleanup } from 'test-utils'
-import { IndividualInfoFields } from 'app/pages/_identity/components/IndividualInfoFields/IndividualInfoFields'
+import { IndividualInfoFields } from 'app/pages/identity/components/IndividualInfoFields/IndividualInfoFields'
 import {
   CorporateProfilesFields,
   CorporateProfilesFieldsProps
@@ -8,7 +8,7 @@ import {
 import { Form } from 'components/form/Form'
 
 jest.mock(
-  'app/pages/_identity/components/IndividualInfoFields/IndividualInfoFields',
+  'app/pages/identity/components/IndividualInfoFields/IndividualInfoFields',
   () => ({
     IndividualInfoFields: jest.fn(() => null)
   })
