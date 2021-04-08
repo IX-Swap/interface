@@ -9,10 +9,10 @@ import { useIndividualInfoDefaultEmail } from 'hooks/auth/useIndividualInfoDefau
 import { DataroomFileType } from 'config/dataroom'
 import { privateClassNames } from 'helpers/classnames'
 import { Dropzone } from 'components/dataroom/Dropzone'
-import { DateTimePicker } from 'components/form/_DateTimePicker'
 import { useAppBreakpoints } from 'hooks/useAppBreakpoints'
 import { PhoneInput } from 'components/form/PhoneInput'
 import { IndividualPersonalInformation } from 'app/pages/identity/types/forms'
+import { DatePicker } from 'components/form/DatePicker'
 
 export interface IndividualInfoFieldsProps {
   rootName?: string
