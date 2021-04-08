@@ -1,6 +1,6 @@
 import React from 'react'
 import { Typography, Grid, ListItem } from '@material-ui/core'
-import { DeclarationTemplate } from 'types/identity'
+import { DeclarationTemplate } from 'app/pages/_identity/types/forms'
 
 interface DeclarationHeaderProps {
   header: Exclude<DeclarationTemplate['header'], undefined>

@@ -1,13 +1,13 @@
 import { useServices } from 'hooks/useServices'
 import { useMutation, useQueryCache } from 'react-query'
 import { useAuth } from 'hooks/auth/useAuth'
-import { IndividualIdentity } from 'types/identity'
 import { getIdFromObj } from 'helpers/strings'
 import { identityURL } from 'config/apiURL'
 import { identityQueryKeys } from 'config/queryKeys'
 import { useHistory } from 'react-router'
 import { IdentityRoute } from 'app/pages/_identity/router/config'
 import { generatePath } from 'react-router-dom'
+import { IndividualIdentity } from 'app/pages/_identity/types/forms'
 
 export const useCreateIndividual = () => {
   const { snackbarService, apiService } = useServices()

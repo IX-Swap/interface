@@ -2,7 +2,7 @@ import { identityURL } from 'config/apiURL'
 import { identityQueryKeys } from 'config/queryKeys'
 import { useServices } from 'hooks/useServices'
 import { useQuery } from 'react-query'
-import { CorporateIdentity } from 'types/identity'
+import { CorporateIdentity } from '../types/forms'
 
 export interface UseCorporateArgs {
   userId: string

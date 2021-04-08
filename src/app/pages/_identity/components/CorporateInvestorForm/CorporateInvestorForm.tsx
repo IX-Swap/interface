@@ -7,7 +7,7 @@ import { useSubmitCorporate } from 'app/pages/_identity/hooks/useSubmitCorporate
 import { corporateInvestorFormSteps } from './steps'
 import { useOnboardingJourneys } from 'app/components/OnboardingPanel/hooks/useOnboardingJourneys'
 import { getIdentityDefaultActiveStep } from 'app/pages/_identity/utils/shared'
-import { CorporateIdentity } from 'types/identity'
+import { CorporateIdentity } from '../../types/forms'
 
 export interface CorporateInvestorFormProps {
   data?: CorporateIdentity

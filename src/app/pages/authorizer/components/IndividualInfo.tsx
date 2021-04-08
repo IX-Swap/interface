@@ -1,5 +1,4 @@
 import React from 'react'
-import { IndividualIdentity } from 'types/identity'
 import { Grid, Typography } from '@material-ui/core'
 import { convertAddressToString } from './utils'
 import { LabelledValue } from 'components/LabelledValue'
@@ -7,6 +6,7 @@ import { renderName } from 'helpers/tables'
 import { AuthorizerIdentityLink } from 'app/components/AuthorizerIdentityLink'
 import { Avatar } from 'components/Avatar'
 import { getDataroomFileId } from 'helpers/dataroom'
+import { IndividualIdentity } from 'app/pages/_identity/types/forms'
 
 export interface IndividualInfoProps {
   data: IndividualIdentity

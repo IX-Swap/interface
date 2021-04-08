@@ -2,7 +2,7 @@ import { useQuery } from 'react-query'
 import { useServices } from 'hooks/useServices'
 import { homeURL } from 'config/apiURL'
 import { homeQueryKeys } from 'config/queryKeys'
-import { CorporateIdentity } from 'types/identity'
+import { CorporateIdentity } from 'app/pages/_identity/types/forms'
 
 export type TopCorporates = Array<
   Pick<CorporateIdentity, 'logo' | 'companyLegalName' | '_id'>

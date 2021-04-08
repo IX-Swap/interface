@@ -7,7 +7,7 @@ import { CorporateInfo } from 'app/pages/_identity/components/CorporateIdentityV
 import React from 'react'
 import { IdentityDocumentsView } from 'app/pages/_identity/components/IdentityDocumentsView/IdentityDocumentsView'
 import { CountryTaxDeclaration } from 'app/pages/_identity/components/CountryTaxDeclarations/CountryTaxDeclaration'
-import { CorporateIdentity } from 'types/identity'
+import { CorporateIdentity } from '../../types/forms'
 
 export interface CorporateIdentityViewProps {
   data: CorporateIdentity

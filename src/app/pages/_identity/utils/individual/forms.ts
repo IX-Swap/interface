@@ -2,11 +2,11 @@ import { getFundSource } from 'app/pages/identity/utils'
 import {
   IndividualDocumentsFormValues,
   IndividualFinancialInfoFormValues,
+  IndividualIdentity,
   IndividualInvestorDeclarationFormValues,
   IndividualPersonalInfoFormValues,
   IndividualTaxDeclarationFormValues
 } from 'app/pages/_identity/types/forms'
-import { IndividualIdentity } from 'types/identity'
 
 export const getPersonalInfoFormValues = (
   data: IndividualIdentity

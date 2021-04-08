@@ -5,7 +5,8 @@ import { ReasonFields } from 'app/pages/_identity/components/TaxDeclarationForm/
 import { Checkbox } from 'components/form/Checkbox'
 import { TypedField } from 'components/form/TypedField'
 import { reverseBooleanValueExtractor } from 'helpers/forms'
-import { TaxResidency } from 'types/identity'
+import { TaxResidency } from 'app/pages/_identity/types/forms'
+
 export interface TinUnavailableFieldsProps {
   index: number
   defaultValue: TaxResidency
