@@ -7,6 +7,7 @@ import {
 } from 'app/pages/identity/const/declarations'
 import { DataroomFile } from 'types/dataroomFile'
 import { IndividualIdentityFormValues } from 'app/pages/identity/components/types'
+import { DetailsOfIssuance } from 'types/detailsOfIssuance'
 
 export const corporate: CorporateIdentity = {
   _id: '1',
@@ -191,4 +192,15 @@ export const updateIndividualArgs: IndividualIdentityFormValues = {
   documents: [{ value: documents[0] }, { value: documents[1] }],
   declarations: checkedDeclarations,
   taxResidencies: []
+}
+
+export const detailsOfIssuance: DetailsOfIssuance = {
+  fullName: 'John Wick',
+  companyName: 'Moogle',
+  companyRegistrationNumber: '123456',
+  contactNumber: '+639571823',
+  email: 'john@moogle.org',
+  industry: 'Commerce',
+  fundRaisingAmount: 1234000,
+  detail: 'Details here'
 }

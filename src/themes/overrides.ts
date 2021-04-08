@@ -106,6 +106,13 @@ export const getThemeOverrides = (theme: Theme): Overrides => ({
     },
     adornedEnd: {
       paddingRight: 8
+    },
+    multiline: {
+      height: 'auto',
+      minHeight: 74
+    },
+    inputMultiline: {
+      minHeight: 38
     }
   },
   MuiSelect: {
@@ -182,7 +189,7 @@ export const getThemeOverrides = (theme: Theme): Overrides => ({
   },
   MuiTextField: {
     root: {
-      height: 38
+      minHeight: 38
     }
   },
   MuiFormHelperText: {
