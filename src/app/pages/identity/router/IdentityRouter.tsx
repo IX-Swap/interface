@@ -5,6 +5,7 @@ import { IdentityRoute } from './config'
 import { AppRoute } from 'components/AppRoute'
 import { IndividualRouter } from 'app/pages/identity/router/IndividualRouter'
 import { CorporateRouter } from 'app/pages/identity/router/CorporateRouter'
+import { DetailsOfIssuanceRouter } from 'app/pages/identity/router/DetailsOfIssuanceRouter'
 
 export const IdentityRouter = () => {
   return (
@@ -15,6 +16,10 @@ export const IdentityRouter = () => {
 
       <AppRoute path={IdentityRoute.corporate}>
         <CorporateRouter />
+      </AppRoute>
+
+      <AppRoute path={IdentityRoute.issuance}>
+        <DetailsOfIssuanceRouter />
       </AppRoute>
 
       <AppRoute path={IdentityRoute.list}>

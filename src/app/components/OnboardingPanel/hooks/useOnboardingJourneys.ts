@@ -5,7 +5,8 @@ export const useOnboardingJourneys = () => {
   const {
     individualIdentity,
     corporateIdentities,
-    isIdentitiesLoaded
+    isIdentitiesLoaded,
+    detailsOfIssuance
   } = useGetIdentities()
 
   const investorIdentities = corporateIdentities.list.filter(
@@ -78,6 +79,7 @@ export const useOnboardingJourneys = () => {
     issuerIdentities,
     individualIdentity,
     getIsJourneyCompleted,
-    isIdentitiesLoaded
+    isIdentitiesLoaded,
+    detailsOfIssuance
   }
 }

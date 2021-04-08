@@ -58,7 +58,7 @@ describe('OnboardingLinks', () => {
       3,
       expect.objectContaining({
         label: 'Fundraise',
-        to: IdentityRoute.createIssuer
+        to: IdentityRoute.createDetailsOfIssuance
       }),
       {}
     )
@@ -113,7 +113,7 @@ describe('OnboardingLinks', () => {
       2,
       expect.objectContaining({
         label: 'Fundraise',
-        to: IdentityRoute.createIssuer
+        to: IdentityRoute.createDetailsOfIssuance
       }),
       {}
     )
@@ -145,7 +145,7 @@ describe('OnboardingLinks', () => {
       2,
       expect.objectContaining({
         label: 'Fundraise',
-        to: IdentityRoute.createIssuer
+        to: IdentityRoute.createDetailsOfIssuance
       }),
       {}
     )
@@ -177,7 +177,7 @@ describe('OnboardingLinks', () => {
       2,
       expect.objectContaining({
         label: 'Fundraise',
-        to: IdentityRoute.createIssuer
+        to: IdentityRoute.createDetailsOfIssuance
       }),
       {}
     )

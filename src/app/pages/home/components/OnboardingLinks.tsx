@@ -15,7 +15,8 @@ export const OnboardingLinks = () => {
     individualIdentity,
     investorIdentities,
     isIdentitiesLoaded,
-    issuerIdentities
+    issuerIdentities,
+    detailsOfIssuance
   } = useOnboardingJourneys()
 
   const individualLink =
@@ -54,6 +55,15 @@ export const OnboardingLinks = () => {
           }
         }
       : { to: IdentityRoute.createIssuer }
+
+  const detailsOfIssuanceLink = { to: IdentityRoute.createDetailsOfIssuance }
+
+  const fundraiseLink =
+    isIdentitiesLoaded &&
+    detailsOfIssuance !== undefined &&
+    detailsOfIssuance.status === 'Approved'
+      ? issuerLink
+      : detailsOfIssuanceLink
 
   const renderIndividualOnboardingLink = () => {
     if (isInvestorJourneyCompleted || isIssuerJourneyCompleted) {
@@ -100,7 +110,7 @@ export const OnboardingLinks = () => {
         <Typography variant='h4'>Raise Capital</Typography>
         <Box my={2.5} />
         <OnboardingLink
-          {...issuerLink}
+          {...fundraiseLink}
           label='Fundraise'
           icon={FundraiseIcon}
           color='#2b78fd'

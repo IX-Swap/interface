@@ -11,8 +11,8 @@ import { privateClassNames } from 'helpers/classnames'
 import { Dropzone } from 'components/dataroom/Dropzone'
 import { useAppBreakpoints } from 'hooks/useAppBreakpoints'
 import { PhoneInput } from 'components/form/PhoneInput'
-import { IndividualPersonalInformation } from 'app/pages/identity/types/forms'
 import { DatePicker } from 'components/form/DatePicker'
+import { IndividualPersonalInformation } from 'app/pages/identity/types/forms'
 
 export interface IndividualInfoFieldsProps {
   rootName?: string
@@ -23,15 +23,12 @@ export const IndividualInfoFields = (
 ): JSX.Element => {
   const { rootName } = props
   const { control } = useFormContext<IndividualPersonalInformation>()
-  const {
-    email: defaultEmail,
-    isDisabled: isEmailDisabled
-  } = useIndividualInfoDefaultEmail(rootName)
+  const { email: defaultEmail } = useIndividualInfoDefaultEmail(rootName)
   const { isMobile } = useAppBreakpoints()
 
   return (
     <Grid container>
-      <Box display={'flex'} flexDirection={isMobile ? 'column' : 'row'}>
+      <Box>
         <Box marginRight={2}>
           {/* @ts-ignore */}
           <TypedField
@@ -48,8 +45,8 @@ export const IndividualInfoFields = (
             }}
           />
         </Box>
-        <Grid container spacing={2} style={{ marginTop: isMobile ? 8 : 20 }}>
-          <Grid item xs={12} sm={6}>
+        <Grid container spacing={6} style={{ marginTop: isMobile ? 8 : 20 }}>
+          <Grid item xs={12} sm={6} md={4}>
             <TypedField
               rootName={rootName}
               component={TextField}
@@ -59,7 +56,7 @@ export const IndividualInfoFields = (
               variant='outlined'
             />
           </Grid>
-          <Grid item xs={12} sm={6}>
+          <Grid item xs={12} sm={6} md={4}>
             <TypedField
               rootName={rootName}
               component={TextField}
@@ -69,7 +66,7 @@ export const IndividualInfoFields = (
               variant='outlined'
             />
           </Grid>
-          <Grid item xs={12} sm={6}>
+          <Grid item xs={12} sm={6} md={4}>
             <TypedField
               rootName={rootName}
               component={TextField}
@@ -79,7 +76,7 @@ export const IndividualInfoFields = (
               variant='outlined'
             />
           </Grid>
-          <Grid item xs={12} sm={6}>
+          <Grid item xs={12} sm={6} md={4}>
             {/* @ts-ignore */}
             <TypedField
               className={privateClassNames()}
@@ -90,11 +87,12 @@ export const IndividualInfoFields = (
               component={DatePicker}
               openTo='year'
               customRenderer
+              defaultValue={null as any}
               valueExtractor={dateTimeValueExtractor}
               inputVariant='outlined'
             />
           </Grid>
-          <Grid item xs={12} sm={6}>
+          <Grid item xs={12} sm={6} md={4}>
             <TypedField
               style={{ width: '100%' }}
               className={privateClassNames()}
@@ -107,19 +105,19 @@ export const IndividualInfoFields = (
               customRenderer
             />
           </Grid>
-          <Grid item xs={12} sm={6}>
+          <Grid item xs={12} sm={6} md={4}>
             <TypedField
               rootName={rootName}
               component={TextField}
               control={control}
               name='email'
               label='Email'
-              disabled={isEmailDisabled}
+              // disabled={isEmailDisabled}
               defaultValue={defaultEmail}
               variant='outlined'
             />
           </Grid>
-          <Grid item xs={12} sm={6}>
+          <Grid item xs={12} sm={6} md={4}>
             <TypedField
               rootName={rootName}
               component={NationalitySelect}

@@ -17,7 +17,7 @@ export const getPersonalInfoFormValues = (
     middleName: data?.middleName,
     lastName: data?.lastName,
     dob: data?.dob,
-    email: data?.email ?? '',
+    email: data?.email,
     contactNumber: data?.contactNumber,
     nationality: data?.nationality,
     address: {

@@ -55,6 +55,13 @@ export const financialInfoSchema = yup
       .test('noFundSourceSelected', 'Error', function (value) {
         return Boolean(value?.some(fundSource => fundSource.checked))
       })
+      .test('incorrectSumOfFundSourcesValues', 'Error', fundSources => {
+        const sumOfFundSourcesValues =
+          fundSources !== undefined && fundSources !== null
+            ? fundSources.reduce((acc, cur) => acc + cur.value, 0)
+            : 0
+        return sumOfFundSourcesValues === 100
+      })
       .required('Required')
   })
 

@@ -31,7 +31,8 @@ export const BottomPanel = () => {
         path={[
           IdentityRoute.viewIssuer,
           IdentityRoute.createIssuer,
-          IdentityRoute.editIssuer
+          IdentityRoute.editIssuer,
+          IdentityRoute.createDetailsOfIssuance
         ]}
       >
         <IssuerOnboardingSteps />

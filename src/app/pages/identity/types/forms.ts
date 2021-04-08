@@ -25,7 +25,7 @@ export interface IndividualPersonalInfoFormValues {
   lastName: string
   dob: string
   nationality: string
-  email: string
+  email?: string
   contactNumber: string
   address: Address
 }
@@ -185,6 +185,22 @@ export interface CorporateInvestorAgreementsFormValues {
   disclosure: boolean
 }
 
+export interface IssuerDetailsFormValues {
+  fullName: string
+  companyName: string
+  companyRegistrationNumber: string
+  contactNumber?: string
+  email: string
+  industry: string
+  fundRaisingAmount: number
+  detail: string
+}
+
+export interface IssuerDocumentsFormValues {
+  companyRelated: DataroomFile[]
+  issuanceRelated: DataroomFile[]
+  financial: DataroomFile[]
+}
 export interface FundSource {
   name: string
   checked: boolean
