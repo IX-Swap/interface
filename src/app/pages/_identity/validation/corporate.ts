@@ -130,7 +130,10 @@ export const corporateInvestorStatusDeclarationSchema = yup
       .required('Required'),
     partnership: yup.bool().oneOf([true, false]).required('Required'),
 
-    optInAgreements: yup.bool().oneOf([true]).required('Required'),
+    optInAgreements: yup
+      .bool()
+      .oneOf([true], 'Opt-In Requirement is required')
+      .required('Required'),
 
     primaryOfferingServices: yup.bool(),
     digitalSecurities: yup.bool(),

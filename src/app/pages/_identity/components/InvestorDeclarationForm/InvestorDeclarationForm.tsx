@@ -18,12 +18,16 @@ export const InvestorDeclarationForm = ({
   const { snackbarService } = useServices()
   const { errors } = useFormContext()
   const declarationsError = errors.investorDeclarations
+  const optInAgreementsError = errors.optInAgreements
 
   useEffect(() => {
     if (declarationsError !== undefined) {
       void snackbarService.showSnackbar(declarationsError.message, 'error')
     }
-  }, [declarationsError]) // eslint-disable-line
+    if (optInAgreementsError !== undefined) {
+      void snackbarService.showSnackbar(optInAgreementsError.message, 'error')
+    }
+  }, [declarationsError, optInAgreementsError]) // eslint-disable-line
 
   return (
     <>
