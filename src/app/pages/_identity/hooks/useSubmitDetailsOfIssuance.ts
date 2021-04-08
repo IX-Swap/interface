@@ -1,19 +1,15 @@
 import { identityURL } from 'config/apiURL'
 import { identityQueryKeys } from 'config/queryKeys'
-import { getIdFromObj } from 'helpers/strings'
-import { useAuth } from 'hooks/auth/useAuth'
 import { useServices } from 'hooks/useServices'
 import { useMutation, useQueryCache } from 'react-query'
 
-export const useUpdateDetailsOfIssuance = (issuanceId: string) => {
+export const useSubmitDetailsOfIssuance = (issuanceId: string) => {
   const { apiService, snackbarService } = useServices()
-  const { user } = useAuth()
-  const userId = getIdFromObj(user)
   const queryCache = useQueryCache()
 
-  const updateDetailsOfIssuance = async (values: any) => {
-    const uri = identityURL.detailsOfIssuance.update(userId, issuanceId)
-    return await apiService.put(uri, values)
+  const updateDetailsOfIssuance = async () => {
+    const uri = identityURL.detailsOfIssuance.submit(issuanceId)
+    return await apiService.patch(uri, {})
   }
 
   return useMutation(updateDetailsOfIssuance, {

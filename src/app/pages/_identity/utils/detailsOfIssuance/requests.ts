@@ -12,11 +12,16 @@ export const getIssuerDetailsRequestPayload = (
 export const getIssuerDocumentsRequestPayload = (
   values: IssuerDocumentsFormValues
 ) => {
-  return Object.values(values).reduce<string[]>((result, documents) => {
-    if (Array.isArray(documents)) {
-      return [...result, ...documents.map(document => document._id)]
-    }
+  const documents = Object.values(values).reduce<string[]>(
+    (result, documents) => {
+      if (Array.isArray(documents)) {
+        return [...result, ...documents.map(document => document._id)]
+      }
 
-    return result
-  }, [])
+      return result
+    },
+    []
+  )
+
+  return { documents }
 }

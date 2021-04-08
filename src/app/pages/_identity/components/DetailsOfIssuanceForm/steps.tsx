@@ -1,3 +1,4 @@
+import { DetailsOfIssuanceView } from 'app/pages/_identity/components/DetailsOfIssuanceView/DetailsOfIssuanceView'
 import { IssuerDetails } from 'app/pages/_identity/components/IssuerDetails/IssuerDetails'
 import { IssuerDocuments } from 'app/pages/_identity/components/IssuerDocuments/IssuerDocuments'
 import {
@@ -39,9 +40,13 @@ export const detailsOfIssuanceFormSteps = [
   },
   {
     label: 'Review & Submit',
-    getFormValues: () => {},
-    getRequestPayload: () => {},
+    getFormValues: () => null,
+    getRequestPayload: {},
     validationSchema: {},
-    component: () => <Fragment></Fragment>
+    component: () => (
+      <Fragment>
+        <DetailsOfIssuanceView />
+      </Fragment>
+    )
   }
 ]

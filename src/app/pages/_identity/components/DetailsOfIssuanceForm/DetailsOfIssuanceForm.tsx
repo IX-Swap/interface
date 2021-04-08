@@ -4,15 +4,24 @@ import { useCreateDetailsOfIssuance } from 'app/pages/_identity/hooks/useCreateD
 import { useDetailsOfIssuance } from 'app/pages/_identity/hooks/useDetailsOfIssuance'
 import { useUpdateDetailsOfIssuance } from 'app/pages/_identity/hooks/useUpdateDetailsOfIssuance'
 import React, { memo } from 'react'
+import { getIdentityDefaultActiveStep } from 'app/pages/_identity/utils/shared'
+import { useSubmitDetailsOfIssuance } from 'app/pages/_identity/hooks/useSubmitDetailsOfIssuance'
 
 export const DetailsOfIssuanceForm = memo(() => {
   const { data, isLoading } = useDetailsOfIssuance()
   const createMutation = useCreateDetailsOfIssuance()
-  const updateMutation = useUpdateDetailsOfIssuance()
+  const updateMutation = useUpdateDetailsOfIssuance(data?._id ?? '')
+  const submitMutation = useSubmitDetailsOfIssuance(data?._id ?? '')
 
   if (isLoading) {
     return <div>Loading...</div>
   }
+
+  const defaultActiveStep = getIdentityDefaultActiveStep({
+    isSubmitted: data?.status === 'Submitted',
+    lastStepIndex: detailsOfIssuanceFormSteps.length - 1,
+    isJourneyCompleted: false
+  })
 
   return (
     <FormStepper
@@ -20,8 +29,8 @@ export const DetailsOfIssuanceForm = memo(() => {
       shouldSaveOnMove={true}
       createMutation={createMutation}
       editMutation={updateMutation}
-      submitMutation={updateMutation}
-      defaultActiveStep={0}
+      submitMutation={submitMutation}
+      defaultActiveStep={defaultActiveStep}
       steps={detailsOfIssuanceFormSteps}
     />
   )

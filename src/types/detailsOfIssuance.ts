@@ -1,6 +1,7 @@
 import { DataroomFile } from 'types/dataroomFile'
 
 export interface DetailsOfIssuance {
+  _id: string
   fullName: string
   companyName: string
   companyRegistrationNumber: string
@@ -10,6 +11,7 @@ export interface DetailsOfIssuance {
   fundRaisingAmount: number
   detail: string
   documents: DataroomFile[]
+  status: 'Draft' | 'Submitted' | 'Approved'
 }
 
 export interface DetailsOfIssuanceFormValues {

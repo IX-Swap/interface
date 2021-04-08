@@ -6,20 +6,20 @@ import { numericValueExtractor } from 'helpers/forms'
 import React from 'react'
 import { useFormContext } from 'react-hook-form'
 
+export const basicInformationFields = [
+  {
+    name: 'fullName',
+    label: 'Full Name'
+  },
+  { name: 'companyName', label: 'Company Name' },
+  { name: 'companyRegistrationNumber', label: 'Registration Number / UEN' },
+  { name: 'contactNumber', label: 'Contact Number - (optional)' },
+  { name: 'email', label: 'Email Address' },
+  { name: 'industry', label: 'Industry' }
+]
+
 export const IssuerDetails = () => {
   const { control } = useFormContext()
-
-  const basicInformationFields = [
-    {
-      name: 'fullName',
-      label: 'Full Name'
-    },
-    { name: 'companyName', label: 'Company Name' },
-    { name: 'companyRegistrationNumber', label: 'Registration Number / UEN' },
-    { name: 'contactNumber', label: 'Contact Number - (optional)' },
-    { name: 'email', label: 'Email Address' },
-    { name: 'industry', label: 'Industry' }
-  ]
 
   return (
     <Grid container direction='column' spacing={6}>
