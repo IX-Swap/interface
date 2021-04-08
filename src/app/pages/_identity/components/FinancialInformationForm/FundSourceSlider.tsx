@@ -1,24 +1,47 @@
-import React, { useEffect } from 'react'
+import React, { ChangeEvent, useEffect } from 'react'
 import { TypedField } from 'components/form/TypedField'
 import { sliderValueExtractor } from 'helpers/forms'
-import { Box, Slider, useTheme } from '@material-ui/core'
+import { Box, Slider, SliderProps, useTheme } from '@material-ui/core'
 import { useFormContext } from 'react-hook-form'
 import { SliderTooltip } from 'app/pages/_identity/components/FinancialInformationForm/SliderTooltip'
 import { FundSource } from 'app/pages/_identity/types/forms'
 import { useFormError } from 'hooks/useFormError'
+import { TypedFieldRenderComponentProps } from 'components/form/types'
 
 export interface FundSourceSliderProps {
   field: Partial<FundSource>
   index: number
-  sumOfFundSourcesValues?: number
+  fundSourceSum?: number
+}
+
+export const CustomSlider = (
+  props: TypedFieldRenderComponentProps &
+    SliderProps & {
+      index: number
+      fundSourceSum: number | undefined
+    }
+) => {
+  const { getValues, setValue } = props.control
+  const handleChange = (
+    event: ChangeEvent<{}>,
+    newValue: number | number[]
+  ) => {
+    const oldValue = getValues(`sourceOfFund[${props.index}].value`)
+    const sum = Number(newValue) + Number(props.fundSourceSum) - oldValue
+    if (sum <= 100) {
+      return setValue(`sourceOfFund[${props.index}].value`, newValue)
+    }
+  }
+
+  return <Slider {...props} onChange={handleChange} />
 }
 
 export const FundSourceSlider = ({
   field,
   index,
-  sumOfFundSourcesValues
+  fundSourceSum
 }: FundSourceSliderProps) => {
-  const { control, watch, setValue, getValues } = useFormContext()
+  const { control, watch, setValue } = useFormContext()
   const isChecked: boolean = watch<string, boolean>(
     `sourceOfFund[${index}].checked`,
     false
@@ -32,20 +55,13 @@ export const FundSourceSlider = ({
     }
   }, [isChecked]) // eslint-disable-line
 
-  const handleChange = (newValue: any) => {
-    const oldValue = getValues(`sourceOfFund[${index}].value`)
-    const sum = Number(newValue) + Number(sumOfFundSourcesValues) - oldValue
-    if (sum <= 100) {
-      return setValue(`sourceOfFund[${index}].value`, newValue)
-    }
-  }
-
   return (
     <Box width={210} height={38}>
+      {/* @ts-expect-error */}
       <TypedField
         valueExtractor={sliderValueExtractor}
         customRenderer
-        component={Slider}
+        component={CustomSlider}
         name={['sourceOfFund', index, 'value']}
         label={field.name ?? ''}
         defaultValue={field.value}
@@ -59,7 +75,8 @@ export const FundSourceSlider = ({
         }}
         min={0}
         max={100}
-        onChange={handleChange}
+        index={index}
+        fundSourceSum={fundSourceSum}
         valueLabelDisplay='auto'
         ValueLabelComponent={SliderTooltip}
         disabled={!isChecked}

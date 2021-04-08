@@ -11,7 +11,7 @@ export const FundSourceFields = () => {
   const { control, getValues } = useFormContext()
 
   const fundSources: FundSource[] = getValues().sourceOfFund
-  const sumOfFundSourcesValues =
+  const fundSourceSum =
     fundSources !== null && fundSources !== undefined
       ? fundSources.reduce((acc, curr) => acc + curr.value, 0)
       : 0
@@ -28,7 +28,7 @@ export const FundSourceFields = () => {
                     <FundSourceItem
                       field={field}
                       index={index}
-                      sumOfFundSourcesValues={sumOfFundSourcesValues}
+                      fundSourceSum={fundSourceSum}
                     />
                   </Grid>
                 ))}
