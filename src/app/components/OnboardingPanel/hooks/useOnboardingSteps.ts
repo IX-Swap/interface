@@ -15,11 +15,23 @@ export const useOnboardingSteps = (
     identityLoaded,
     identityTypeLoaded,
     individualIdentity,
-    corporateIdentities
+    corporateIdentities,
+    detailsOfIssuance
   } = useGetIdentities(asIssuer ? 'issuer' : 'investor')
 
   const getIdentityActiveStep = (status?: AuthorizableStatus) => {
-    let indetityActiveStep = 2
+    let indetityActiveStep = 1
+
+    if (!asIssuer) {
+      indetityActiveStep = 2
+    }
+    if (
+      asIssuer &&
+      detailsOfIssuance !== undefined &&
+      detailsOfIssuance.status === 'Approved'
+    ) {
+      indetityActiveStep = 2
+    }
     if (status === 'Submitted') {
       indetityActiveStep = 3
     }

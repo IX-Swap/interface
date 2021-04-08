@@ -147,7 +147,7 @@ export const getThemeOverrides = (theme: Theme): Overrides => ({
     root: {
       borderLeftStyle: 'dashed',
       color:
-        theme.palette.type === 'light' ? grey[600] : 'rgba(255, 255, 255, 0.6)'
+        theme.palette.type === 'dark' ? 'rgba(255, 255, 255, 0.6)' : grey[600]
     }
   },
   MuiStepIcon: {

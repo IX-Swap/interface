@@ -3,15 +3,24 @@ import { detailsOfIssuanceFormSteps } from 'app/pages/_identity/components/Detai
 import { useCreateDetailsOfIssuance } from 'app/pages/_identity/hooks/useCreateDetailsOfIssuance'
 import { useDetailsOfIssuance } from 'app/pages/_identity/hooks/useDetailsOfIssuance'
 import { useUpdateDetailsOfIssuance } from 'app/pages/_identity/hooks/useUpdateDetailsOfIssuance'
-import React, { memo } from 'react'
+import React, { memo, useEffect } from 'react'
 import { getIdentityDefaultActiveStep } from 'app/pages/_identity/utils/shared'
 import { useSubmitDetailsOfIssuance } from 'app/pages/_identity/hooks/useSubmitDetailsOfIssuance'
+import { useOnboardingDialog } from 'app/components/OnboardingDialog/hooks/useOnboardingDialog'
 
 export const DetailsOfIssuanceForm = memo(() => {
   const { data, isLoading } = useDetailsOfIssuance()
   const createMutation = useCreateDetailsOfIssuance()
   const updateMutation = useUpdateDetailsOfIssuance(data?._id ?? '')
   const submitMutation = useSubmitDetailsOfIssuance(data?._id ?? '')
+  const { showCreateDetailsOfIssuanceDialog } = useOnboardingDialog()
+
+  useEffect(() => {
+    if (!isLoading && data === undefined) {
+      showCreateDetailsOfIssuanceDialog()
+    }
+    // eslint-disable-next-line
+  }, [isLoading])
 
   if (isLoading) {
     return <div>Loading...</div>

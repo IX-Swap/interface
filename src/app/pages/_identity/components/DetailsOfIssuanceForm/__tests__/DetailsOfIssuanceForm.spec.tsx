@@ -1,3 +1,4 @@
+import * as useOnboardingDialog from 'app/components/OnboardingDialog/hooks/useOnboardingDialog'
 import { DetailsOfIssuanceForm } from 'app/pages/_identity/components/DetailsOfIssuanceForm/DetailsOfIssuanceForm'
 import * as useCreateDetailsOfIssuance from 'app/pages/_identity/hooks/useCreateDetailsOfIssuance'
 import * as useDetailsOfIssuance from 'app/pages/_identity/hooks/useDetailsOfIssuance'
@@ -24,6 +25,11 @@ describe('DetailsOfIssuanceForm', () => {
     { isLoading: false }
   ]
 
+  const createDialogMock = jest.fn()
+  const useOnboardingDialogResponse = {
+    showCreateDetailsOfIssuanceDialog: createDialogMock
+  }
+
   beforeEach(() => {
     jest
       .spyOn(useDetailsOfIssuance, 'useDetailsOfIssuance')
@@ -36,6 +42,10 @@ describe('DetailsOfIssuanceForm', () => {
     jest
       .spyOn(useUpdateDetailsOfIssuance, 'useUpdateDetailsOfIssuance')
       .mockImplementation(() => useUpdateDetailsOfIssuanceResponse as any)
+
+    jest
+      .spyOn(useOnboardingDialog, 'useOnboardingDialog')
+      .mockImplementation(() => useOnboardingDialogResponse as any)
   })
 
   afterEach(async () => {
@@ -47,7 +57,22 @@ describe('DetailsOfIssuanceForm', () => {
     render(<DetailsOfIssuanceForm />)
   })
 
-  it('renders null when isLoading', () => {
+  it('shows create dialog box on render when details of issuance is undefined', () => {
+    const undefinedResponse = generateQueryResult({
+      data: undefined,
+      isLoading: false
+    })
+
+    jest
+      .spyOn(useDetailsOfIssuance, 'useDetailsOfIssuance')
+      .mockImplementation(() => undefinedResponse as any)
+
+    render(<DetailsOfIssuanceForm />)
+
+    expect(createDialogMock).toHaveBeenCalled()
+  })
+
+  it('renders loading text when isLoading', () => {
     const useDetailsOfIssuanceLoading = generateQueryResult({
       data: undefined,
       isLoading: true
