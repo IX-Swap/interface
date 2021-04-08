@@ -4,8 +4,8 @@ import { LabelledValue } from 'components/LabelledValue'
 import { useAppBreakpoints } from 'hooks/useAppBreakpoints'
 import { privateClassNames } from 'helpers/classnames'
 import React from 'react'
-import { CorporateIdentity } from 'types/identity'
 import { LEGAL_ENTITY_STATUS_LIST } from 'components/form/LegalEntityStatusSelect'
+import { CorporateIdentity } from 'app/pages/_identity/types/forms'
 
 export interface CorporateInfoProps {
   data: CorporateIdentity

@@ -1,6 +1,9 @@
 import { Asset } from './asset'
-import { IndividualIdentity, CorporateIdentity } from './identity'
 import { AuthorizableWithIdentity } from './authorizer'
+import {
+  CorporateIdentity,
+  IndividualIdentity
+} from 'app/pages/_identity/types/forms'
 
 export interface DSWithdrawal extends AuthorizableWithIdentity {
   _id: string

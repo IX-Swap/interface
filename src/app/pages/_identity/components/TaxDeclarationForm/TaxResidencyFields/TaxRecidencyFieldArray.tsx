@@ -4,8 +4,8 @@ import { FieldsArray } from 'components/form/FieldsArray'
 import { useFormContext } from 'react-hook-form'
 import { TaxResidencyField } from 'app/pages/_identity/components/TaxDeclarationForm/TaxResidencyFields/TaxResidencyField'
 import { MAX_TAX_RESIDENCIES } from 'app/pages/identity/utils'
-import { TaxResidency } from 'types/identity'
 import { VSpacer } from 'components/VSpacer'
+import { TaxResidency } from 'app/pages/_identity/types/forms'
 
 export const TaxResidencyFieldArray = () => {
   const { control } = useFormContext()

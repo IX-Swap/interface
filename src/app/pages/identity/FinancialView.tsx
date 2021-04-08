@@ -1,7 +1,7 @@
 import React from 'react'
-import { IndividualIdentity } from 'types/identity'
 import { Grid } from '@material-ui/core'
 import { LabelledValue } from 'components/LabelledValue'
+import { IndividualIdentity } from 'app/pages/_identity/types/forms'
 
 export interface FinancialViewProps {
   data: IndividualIdentity

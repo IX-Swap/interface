@@ -1,7 +1,7 @@
 import { Grid } from '@material-ui/core'
 import { BeneficialOwner } from 'app/pages/_identity/components/CorporateIdentityView/BeneficialOwner'
 import React from 'react'
-import { Personnel } from 'types/identity'
+import { Personnel } from 'app/pages/_identity/types/forms'
 
 export interface BeneficialOwnersListProps {
   personnel: Personnel[]

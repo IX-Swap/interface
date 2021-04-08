@@ -29,7 +29,9 @@ export const identityQueryKeys = {
   ],
   getAllCorporate: 'all-corporate-identities',
   getAllCorporateByUserId: (id: string) =>
-    generateQueryKey('all-corporate-identities', id)
+    generateQueryKey('all-corporate-identities', id),
+  getDetailsOfIssuance: (userId: string) =>
+    generateQueryKey('details-of-issuance', userId)
 }
 
 export const balanceQueryKeys = {

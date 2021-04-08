@@ -1,18 +1,23 @@
 import { Grid } from '@material-ui/core'
 import React from 'react'
 import { useFormContext } from 'react-hook-form'
-import { FundSource } from 'types/identity'
 import { booleanValueExtractor } from 'helpers/forms'
 import { Checkbox } from 'components/form/Checkbox'
 import { TypedField } from 'components/form/TypedField'
 import { FundSourceSlider } from 'app/pages/_identity/components/FinancialInformationForm/FundSourceSlider'
+import { FundSource } from 'app/pages/_identity/types/forms'
 
 export interface FundSourceItemProps {
   field: Partial<FundSource>
   index: number
+  fundSourceSum?: number
 }
 
-export const FundSourceItem = ({ field, index }: FundSourceItemProps) => {
+export const FundSourceItem = ({
+  field,
+  index,
+  fundSourceSum
+}: FundSourceItemProps) => {
   const { control } = useFormContext()
 
   return (
@@ -31,7 +36,11 @@ export const FundSourceItem = ({ field, index }: FundSourceItemProps) => {
           />
         </Grid>
         <Grid item xs={7}>
-          <FundSourceSlider field={field} index={index} />
+          <FundSourceSlider
+            field={field}
+            index={index}
+            fundSourceSum={fundSourceSum}
+          />
         </Grid>
       </Grid>
     </Grid>

@@ -2,7 +2,7 @@ import { Box, Grid, Typography } from '@material-ui/core'
 import { LabelledValue } from 'components/LabelledValue'
 import { VSpacer } from 'components/VSpacer'
 import React from 'react'
-import { TaxResidencies } from 'types/identity'
+import { TaxResidencies } from 'app/pages/_identity/types/forms'
 
 export interface CountryTaxDeclarationProps {
   taxResidencies?: TaxResidencies

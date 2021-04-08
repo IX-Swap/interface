@@ -6,7 +6,7 @@ import { TypedField } from 'components/form/TypedField'
 import { pathToString, plainValueExtractor } from 'helpers/forms'
 import React from 'react'
 import { useFormContext } from 'react-hook-form'
-import { Personnel } from 'types/identity'
+import { Personnel } from 'app/pages/_identity/types/forms'
 
 export interface DirectorsInformationFieldsProps {
   rootName: string

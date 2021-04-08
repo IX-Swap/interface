@@ -106,6 +106,13 @@ export const getThemeOverrides = (theme: Theme): Overrides => ({
     },
     adornedEnd: {
       paddingRight: 8
+    },
+    multiline: {
+      height: 'auto',
+      minHeight: 74
+    },
+    inputMultiline: {
+      minHeight: 38
     }
   },
   MuiSelect: {
@@ -140,7 +147,7 @@ export const getThemeOverrides = (theme: Theme): Overrides => ({
     root: {
       borderLeftStyle: 'dashed',
       color:
-        theme.palette.type === 'light' ? grey[600] : 'rgba(255, 255, 255, 0.6)'
+        theme.palette.type === 'dark' ? 'rgba(255, 255, 255, 0.6)' : grey[600]
     }
   },
   MuiStepIcon: {
@@ -182,7 +189,7 @@ export const getThemeOverrides = (theme: Theme): Overrides => ({
   },
   MuiTextField: {
     root: {
-      height: 38
+      minHeight: 38
     }
   },
   MuiFormHelperText: {

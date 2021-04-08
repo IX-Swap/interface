@@ -8,6 +8,7 @@ import { useServices } from 'hooks/useServices'
 export const FundSource = () => {
   const { error } = useFormError('sourceOfFund')
   const noFundSourceSelected = error?.type === 'noFundSourceSelected'
+  const invalidFundSourceSum = error?.type === 'incorrectSumOfFundSourcesValues'
   const { snackbarService } = useServices()
 
   useEffect(() => {
@@ -17,7 +18,13 @@ export const FundSource = () => {
         'error'
       )
     }
-  }, [noFundSourceSelected]) // eslint-disable-line
+    if (invalidFundSourceSum) {
+      void snackbarService.showSnackbar(
+        'Total of all investment should be 100%',
+        'error'
+      )
+    }
+  }, [noFundSourceSelected, invalidFundSourceSum]) // eslint-disable-line
 
   return (
     <Grid container direction='column'>

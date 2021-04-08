@@ -8,7 +8,8 @@ import { IdentityDocumentsView } from 'app/pages/_identity/components/IdentityDo
 import { CountryTaxDeclaration } from 'app/pages/_identity/components/CountryTaxDeclarations/CountryTaxDeclaration'
 import { AgreementsAndDisclosuresView } from 'app/pages/_identity/components/IndividualIdentityView/AgreementsAndDisclosuresView/AgreementsAndDisclosuresView'
 import { BeneficialOwnersList } from 'app/pages/_identity/components/CorporateIdentityView/BeneficialOwnersList'
-import { CorporateIdentity } from 'types/identity'
+import { CorporateIdentity } from '../../types/forms'
+
 export interface CorporateIssuerViewProps {
   data: CorporateIdentity
 }
