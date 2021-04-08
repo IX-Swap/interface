@@ -36,7 +36,7 @@ export const TopList = (props: TopListProps) => {
             <ListItemText>
               <Typography
                 style={{
-                  color: theme.palette.secondary.main,
+                  color: theme.palette.text.primary,
                   opacity: isLightThemeOn ? 1 : 0.6
                 }}
               >
