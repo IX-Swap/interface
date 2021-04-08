@@ -7,7 +7,10 @@ import {
 } from 'app/pages/identity/const/declarations'
 import { DataroomFile } from 'types/dataroomFile'
 import { IndividualIdentityFormValues } from 'app/pages/identity/components/types'
-import { DetailsOfIssuance } from 'types/detailsOfIssuance'
+import {
+  DetailsOfIssuance,
+  DetailsOfIssuanceFormValues
+} from 'types/detailsOfIssuance'
 
 export const corporate: CorporateIdentity = {
   _id: '1',
@@ -202,5 +205,28 @@ export const detailsOfIssuance: DetailsOfIssuance = {
   email: 'john@moogle.org',
   industry: 'Commerce',
   fundRaisingAmount: 1234000,
-  detail: 'Details here'
+  detail: 'Details here',
+  documents: [
+    { ...document, _id: '1', type: 'Company-Related Documents' },
+    { ...document, _id: '2', type: 'Issuance-Related Documents' },
+    { ...document, _id: '3', type: 'Financial Documents' }
+  ]
+}
+
+export const detailsOfIssuanceFormValues: DetailsOfIssuanceFormValues = {
+  fullName: 'John Wick',
+  companyName: 'Moogle',
+  companyRegistrationNumber: '123456',
+  contactNumber: '+639571823',
+  email: 'john@moogle.org',
+  industry: 'Commerce',
+  fundRaisingAmount: 1234000,
+  detail: 'Details here',
+  companyRelated: [
+    { ...document, _id: '1', type: 'Company-Related Documents' }
+  ],
+  issuanceRelated: [
+    { ...document, _id: '2', type: 'Issuance-Related Documents' }
+  ],
+  financial: [{ ...document, _id: '3', type: 'Financial Documents' }]
 }

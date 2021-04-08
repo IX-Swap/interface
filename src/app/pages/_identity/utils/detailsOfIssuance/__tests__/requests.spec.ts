@@ -1,6 +1,9 @@
-import { getIssuerDetailsRequestPayload } from 'app/pages/_identity/utils/detailsOfIssuance/requests'
+import {
+  getIssuerDetailsRequestPayload,
+  getIssuerDocumentsRequestPayload
+} from 'app/pages/_identity/utils/detailsOfIssuance/requests'
 import { cleanup } from 'test-utils'
-import { detailsOfIssuance } from '__fixtures__/identity'
+import { detailsOfIssuanceFormValues } from '__fixtures__/identity'
 
 describe('requests', () => {
   afterEach(async () => {
@@ -8,9 +11,15 @@ describe('requests', () => {
     jest.clearAllMocks()
   })
 
-  it('returns correct data', async () => {
-    expect(getIssuerDetailsRequestPayload(detailsOfIssuance)).toEqual(
-      detailsOfIssuance
+  it('returns correct getIssuerDetailsRequestPayload data', () => {
+    expect(getIssuerDetailsRequestPayload(detailsOfIssuanceFormValues)).toEqual(
+      detailsOfIssuanceFormValues
     )
+  })
+
+  it('returns correct getIssuerDocumentsRequestPayload data', () => {
+    expect(
+      getIssuerDocumentsRequestPayload(detailsOfIssuanceFormValues)
+    ).toEqual(['1', '2', '3'])
   })
 })
