@@ -25,7 +25,7 @@ export const CorporateIssuerForm = ({ data }: CorporateIssuerFormProps) => {
     if (data === undefined) {
       showPreIdentityCreateDialog('corporate')
     }
-  }, [data]) // eslint-disable-line
+  }, [data, showPreIdentityCreateDialog])
 
   const defaultActiveStep = getIdentityDefaultActiveStep({
     isSubmitted: data?.status === 'Submitted',
