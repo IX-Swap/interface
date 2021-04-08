@@ -25,7 +25,7 @@ export interface IndividualPersonalInfoFormValues {
   lastName: string
   dob: string
   nationality: string
-  email: string
+  email?: string
   contactNumber: string
   address: Address
 }
