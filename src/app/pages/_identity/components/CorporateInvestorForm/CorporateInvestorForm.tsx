@@ -8,7 +8,8 @@ import { corporateInvestorFormSteps } from './steps'
 import { useOnboardingJourneys } from 'app/components/OnboardingPanel/hooks/useOnboardingJourneys'
 import { getIdentityDefaultActiveStep } from 'app/pages/_identity/utils/shared'
 import { CorporateIdentity } from 'types/identity'
-
+import { generatePath, useHistory } from 'react-router'
+import { IdentityRoute } from 'app/pages/_identity/router/config'
 export interface CorporateInvestorFormProps {
   data?: CorporateIdentity
 }
@@ -18,13 +19,36 @@ export const CorporateInvestorForm = ({ data }: CorporateInvestorFormProps) => {
   const updateMutation = useUpdateCorporate('investor')
   const submitMutation = useSubmitCorporate()
   const { showPreIdentityCreateDialog } = useOnboardingDialog()
-  const { isInvestorJourneyCompleted } = useOnboardingJourneys()
+  const {
+    isInvestorJourneyCompleted,
+    investorIdentities
+  } = useOnboardingJourneys()
+  const { location, replace } = useHistory()
 
   useEffect(() => {
     if (data === undefined) {
       showPreIdentityCreateDialog('corporate')
     }
   }, [data]) // eslint-disable-line
+
+  useEffect(() => {
+    if (
+      investorIdentities.length > 0 &&
+      location.pathname === IdentityRoute.createCorporate
+    ) {
+      const {
+        _id: identityId,
+        user: { _id: userId }
+      } = investorIdentities[0]
+
+      replace(
+        generatePath(IdentityRoute.editCorporate, {
+          identityId,
+          userId
+        })
+      )
+    }
+  }, [location, replace, investorIdentities])
 
   const defaultActiveStep = getIdentityDefaultActiveStep({
     isSubmitted: data?.status === 'Submitted',
