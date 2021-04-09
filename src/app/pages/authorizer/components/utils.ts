@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/restrict-template-expressions */
 
-import { Address } from 'app/pages/_identity/types/forms'
+import { Address } from 'app/pages/identity/types/forms'
 
 export const convertAddressToString = (address: Address | undefined) => {
   if (address === undefined) {

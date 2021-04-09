@@ -6,10 +6,14 @@ import {
 } from 'app/pages/identity/const/declarations'
 import { DataroomFile } from 'types/dataroomFile'
 import {
+  DetailsOfIssuance,
+  DetailsOfIssuanceFormValues
+} from 'types/detailsOfIssuance'
+import {
   CorporateIdentity,
   IndividualIdentity,
   IndividualIdentityFormValues
-} from 'app/pages/_identity/types/forms'
+} from 'app/pages/identity/types/forms'
 
 export const corporate: CorporateIdentity = {
   _id: '1',
@@ -199,4 +203,40 @@ export const updateIndividualArgs: IndividualIdentityFormValues = {
   documents: [{ value: documents[0] }, { value: documents[1] }],
   declarations: checkedDeclarations,
   taxResidencies: []
+}
+
+export const detailsOfIssuance: DetailsOfIssuance = {
+  _id: '0',
+  fullName: 'John Wick',
+  companyName: 'Moogle',
+  companyRegistrationNumber: '123456',
+  contactNumber: '+639571823',
+  email: 'john@moogle.org',
+  industry: 'Commerce',
+  fundRaisingAmount: 1234000,
+  detail: 'Details here',
+  documents: [
+    { ...document, _id: '1', type: 'Company-Related Documents' },
+    { ...document, _id: '2', type: 'Issuance-Related Documents' },
+    { ...document, _id: '3', type: 'Financial Documents' }
+  ],
+  status: 'Submitted'
+}
+
+export const detailsOfIssuanceFormValues: DetailsOfIssuanceFormValues = {
+  fullName: 'John Wick',
+  companyName: 'Moogle',
+  companyRegistrationNumber: '123456',
+  contactNumber: '+639571823',
+  email: 'john@moogle.org',
+  industry: 'Commerce',
+  fundRaisingAmount: 1234000,
+  detail: 'Details here',
+  companyRelated: [
+    { ...document, _id: '1', type: 'Company-Related Documents' }
+  ],
+  issuanceRelated: [
+    { ...document, _id: '2', type: 'Issuance-Related Documents' }
+  ],
+  financial: [{ ...document, _id: '3', type: 'Financial Documents' }]
 }

@@ -4,7 +4,7 @@ import { OnboardingLink } from 'app/pages/home/components/OnboardingLink'
 import { ReactComponent as IndividualIcon } from 'assets/icons/navigation/individual.svg'
 import { ReactComponent as CorporateIcon } from 'assets/icons/navigation/corporate.svg'
 import { ReactComponent as FundraiseIcon } from 'assets/icons/navigation/asset-balance.svg'
-import { IdentityRoute } from 'app/pages/_identity/router/config'
+import { IdentityRoute } from 'app/pages/identity/router/config'
 import { useOnboardingJourneys } from 'app/components/OnboardingPanel/hooks/useOnboardingJourneys'
 
 export const OnboardingLinks = () => {
@@ -15,7 +15,8 @@ export const OnboardingLinks = () => {
     individualIdentity,
     investorIdentities,
     isIdentitiesLoaded,
-    issuerIdentities
+    issuerIdentities,
+    detailsOfIssuance
   } = useOnboardingJourneys()
 
   const individualLink =
@@ -54,6 +55,15 @@ export const OnboardingLinks = () => {
           }
         }
       : { to: IdentityRoute.createIssuer }
+
+  const detailsOfIssuanceLink = { to: IdentityRoute.createDetailsOfIssuance }
+
+  const fundraiseLink =
+    isIdentitiesLoaded &&
+    detailsOfIssuance !== undefined &&
+    detailsOfIssuance.status === 'Approved'
+      ? issuerLink
+      : detailsOfIssuanceLink
 
   const renderIndividualOnboardingLink = () => {
     if (isInvestorJourneyCompleted || isIssuerJourneyCompleted) {
@@ -100,7 +110,7 @@ export const OnboardingLinks = () => {
         <Typography variant='h4'>Raise Capital</Typography>
         <Box my={2.5} />
         <OnboardingLink
-          {...issuerLink}
+          {...fundraiseLink}
           label='Fundraise'
           icon={FundraiseIcon}
           color='#2b78fd'

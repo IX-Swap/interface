@@ -2,7 +2,7 @@ import { DigitalSecurityOffering } from 'types/dso'
 import { Commitment } from 'types/commitment'
 import { AssetBalance } from 'types/balance'
 import { DSWithdrawal } from 'types/dsWithdrawal'
-import { IndividualIdentity } from 'app/pages/_identity/types/forms'
+import { IndividualIdentity } from 'app/pages/identity/types/forms'
 
 interface GetIdFromObjProps extends Record<string, any> {
   _id?: string

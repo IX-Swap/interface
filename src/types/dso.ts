@@ -5,7 +5,7 @@ import { Network } from './networks'
 import {
   CorporateIdentity,
   IndividualIdentity
-} from 'app/pages/_identity/types/forms'
+} from 'app/pages/identity/types/forms'
 
 export interface DsoTeamMember {
   _id?: string

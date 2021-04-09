@@ -1,6 +1,6 @@
 import React, { Fragment } from 'react'
 import { AdminCorporateIdentityView } from 'app/pages/admin/components/AdminCorporateInvestorForm/AdminCorporateIdentityView'
-import { corporateIssuerFormSteps } from 'app/pages/_identity/components/CorporateIssuerForm/steps'
+import { corporateIssuerFormSteps } from 'app/pages/identity/components/CorporateIssuerForm/steps'
 
 export const adminCorporateIssuerFormSteps = [
   ...corporateIssuerFormSteps.slice(0, -1),

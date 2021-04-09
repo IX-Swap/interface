@@ -5,7 +5,7 @@ import { LabelledValue } from 'components/LabelledValue'
 import { Avatar } from 'components/Avatar'
 import { AuthorizerIdentityLink } from 'app/components/AuthorizerIdentityLink'
 import { getDataroomFileId } from 'helpers/dataroom'
-import { CorporateIdentity } from 'app/pages/_identity/types/forms'
+import { CorporateIdentity } from 'app/pages/identity/types/forms'
 
 export interface CorporateInfoProps {
   data: CorporateIdentity

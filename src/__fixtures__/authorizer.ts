@@ -14,7 +14,7 @@ import { withdrawalAddress } from './withdrawalAddress'
 import {
   CorporateIdentity,
   IndividualIdentity
-} from 'app/pages/_identity/types/forms'
+} from 'app/pages/identity/types/forms'
 
 export const asset: Asset = {
   _id: '5f732c538a568b50914d8372',

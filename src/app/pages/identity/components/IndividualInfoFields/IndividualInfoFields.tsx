@@ -12,7 +12,7 @@ import { Dropzone } from 'components/dataroom/Dropzone'
 import { useAppBreakpoints } from 'hooks/useAppBreakpoints'
 import { PhoneInput } from 'components/form/PhoneInput'
 import { DatePicker } from 'components/form/DatePicker'
-import { IndividualPersonalInformation } from 'app/pages/_identity/types/forms'
+import { IndividualPersonalInformation } from 'app/pages/identity/types/forms'
 
 export interface IndividualInfoFieldsProps {
   rootName?: string

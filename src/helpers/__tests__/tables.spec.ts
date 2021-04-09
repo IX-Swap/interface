@@ -11,7 +11,7 @@ import { network } from '__fixtures__/network'
 import {
   CorporateIdentity,
   IndividualIdentity
-} from 'app/pages/_identity/types/forms'
+} from 'app/pages/identity/types/forms'
 
 describe('renderIndividualOrCompanyName', () => {
   it('returns individual name for IndividualIdentity', () => {

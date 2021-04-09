@@ -1,5 +1,5 @@
 import { Theme } from '@material-ui/core'
-import { green } from '@material-ui/core/colors'
+import { green, grey } from '@material-ui/core/colors'
 import { Overrides } from '@material-ui/core/styles/overrides'
 import { rte } from 'themes/rte'
 import tinycolor from 'tinycolor2'
@@ -106,6 +106,13 @@ export const getThemeOverrides = (theme: Theme): Overrides => ({
     },
     adornedEnd: {
       paddingRight: 8
+    },
+    multiline: {
+      height: 'auto',
+      minHeight: 74
+    },
+    inputMultiline: {
+      minHeight: 38
     }
   },
   MuiSelect: {
@@ -138,7 +145,9 @@ export const getThemeOverrides = (theme: Theme): Overrides => ({
   },
   MuiStepContent: {
     root: {
-      borderLeftStyle: 'dashed'
+      borderLeftStyle: 'dashed',
+      color:
+        theme.palette.type === 'dark' ? 'rgba(255, 255, 255, 0.6)' : grey[600]
     }
   },
   MuiStepIcon: {
@@ -180,7 +189,7 @@ export const getThemeOverrides = (theme: Theme): Overrides => ({
   },
   MuiTextField: {
     root: {
-      height: 38
+      minHeight: 38
     }
   },
   MuiFormHelperText: {

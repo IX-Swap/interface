@@ -12,7 +12,7 @@ import { WithdrawalAddress } from 'types/withdrawalAddress'
 import {
   CorporateIdentity,
   IndividualIdentity
-} from 'app/pages/_identity/types/forms'
+} from 'app/pages/identity/types/forms'
 
 export const renderMinimumInvestment = (
   amount: number,

@@ -8,7 +8,7 @@ import { QueryStatus } from 'react-query'
 import { history } from 'config/history'
 import { BanksRoute } from 'app/pages/accounts/pages/banks/router/config'
 import { generateInfiniteQueryResult } from '__fixtures__/useQuery'
-import { Route } from 'react-router-dom'
+import { generatePath, Route } from 'react-router-dom'
 
 jest.mock('app/components/BankPreview/BankPreview', () => ({
   BankPreview: jest.fn(() => <div data-testid='bank-preview' />)
@@ -21,9 +21,7 @@ const useBanksDataMock = useBanksData as jest.Mock<
 
 describe('ViewBank', () => {
   beforeEach(() => {
-    history.push(`/app/accounts/bank-accounts/${bank._id}/view`, {
-      bankId: bank._id
-    })
+    history.push(generatePath(BanksRoute.view, { bankId: bank._id }))
   })
 
   afterEach(async () => {

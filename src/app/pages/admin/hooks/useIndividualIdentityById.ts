@@ -3,7 +3,7 @@ import { UseQueryData } from 'hooks/useParsedData'
 import apiService from 'services/api'
 import { identityQueryKeys } from 'config/queryKeys'
 import { identityURL } from 'config/apiURL'
-import { IndividualIdentity } from 'app/pages/_identity/types/forms'
+import { IndividualIdentity } from 'app/pages/identity/types/forms'
 
 export const useIndividualIdentityById = (
   userId: string

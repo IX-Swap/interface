@@ -2,8 +2,8 @@ import React from 'react'
 import { Grid } from '@material-ui/core'
 import { Form } from 'components/form/Form'
 import { Meta, Story } from '@storybook/react/types-6-0'
-import { AddressFields } from 'app/pages/identity/components/AddressFields/AddressFields'
 import { FormSectionHeader } from 'app/components/DSO/components/FormSectionHeader'
+import { AddressFields } from 'app/pages/identity/components/AddressFields/AddressFields'
 
 const meta: Meta = {
   title: 'Pages/Identity/AddressFields',

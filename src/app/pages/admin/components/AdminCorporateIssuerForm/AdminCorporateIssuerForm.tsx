@@ -1,6 +1,6 @@
 import React from 'react'
 import { FormStepper } from 'app/components/FormStepper/FormStepper'
-import { getIdentityDefaultActiveStep } from 'app/pages/_identity/utils/shared'
+import { getIdentityDefaultActiveStep } from 'app/pages/identity/utils/shared'
 import { adminCorporateIssuerFormSteps } from 'app/pages/admin/components/AdminCorporateIssuerForm/steps'
 import { useAllCorporatesByUserId } from 'app/pages/admin/hooks/useAllCorporatesByUserId'
 import { useCreateCorporateByUserId } from 'app/pages/admin/hooks/useCreateCorporateByUserId'

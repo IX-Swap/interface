@@ -6,7 +6,7 @@ import { PaginatedData } from 'services/api/types'
 import { identityQueryKeys } from 'config/queryKeys'
 import { identityURL } from 'config/apiURL'
 import { AuthorizableStatus } from 'types/util'
-import { CorporateIdentity } from '../../_identity/types/forms'
+import { CorporateIdentity } from '../../identity/types/forms'
 
 export interface UseAllCorporatesArgs {
   userId: string
