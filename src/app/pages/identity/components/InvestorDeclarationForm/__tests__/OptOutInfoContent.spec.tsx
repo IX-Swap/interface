@@ -1,4 +1,4 @@
-import { OptOutInfoContent } from 'app/pages/_identity/components/InvestorDeclarationForm/OptOutInfoDialog/OptOutInfoContent/OptOutInfoContent'
+import { OptOutInfoContent } from 'app/pages/identity/components/InvestorDeclarationForm/OptOutInfoDialog/OptOutInfoContent/OptOutInfoContent'
 import { Form } from 'components/form/Form'
 import React from 'react'
 import { render, cleanup } from 'test-utils'

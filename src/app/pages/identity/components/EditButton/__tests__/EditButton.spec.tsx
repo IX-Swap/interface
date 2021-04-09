@@ -1,4 +1,4 @@
-import { EditButton } from 'app/pages/_identity/components/EditButton/EditButton'
+import { EditButton } from 'app/pages/identity/components/EditButton/EditButton'
 import React from 'react'
 import { render, cleanup } from 'test-utils'
 

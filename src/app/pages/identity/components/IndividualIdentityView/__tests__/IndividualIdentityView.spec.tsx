@@ -1,4 +1,4 @@
-import { IndividualIdentityView } from 'app/pages/_identity/components/IndividualIdentityView/IndividualIdentityView'
+import { IndividualIdentityView } from 'app/pages/identity/components/IndividualIdentityView/IndividualIdentityView'
 import React from 'react'
 import { render, cleanup } from 'test-utils'
 import { individual } from '__fixtures__/identity'

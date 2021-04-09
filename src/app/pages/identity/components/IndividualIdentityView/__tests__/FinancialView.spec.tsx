@@ -1,4 +1,4 @@
-import { FinancialView } from 'app/pages/_identity/components/IndividualIdentityView/FinancialView/FinancialView'
+import { FinancialView } from 'app/pages/identity/components/IndividualIdentityView/FinancialView/FinancialView'
 import React from 'react'
 import { render, cleanup } from 'test-utils'
 import { individual } from '__fixtures__/identity'

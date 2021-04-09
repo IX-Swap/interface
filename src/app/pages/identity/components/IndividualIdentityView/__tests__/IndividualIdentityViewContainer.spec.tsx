@@ -1,4 +1,4 @@
-import { IndividualIdentityViewContainer } from 'app/pages/_identity/components/IndividualIdentityView/IndividualIdentityViewContainer'
+import { IndividualIdentityViewContainer } from 'app/pages/identity/components/IndividualIdentityView/IndividualIdentityViewContainer'
 import * as useIndividualIdentity from 'hooks/identity/useIndividualIdentity'
 import React from 'react'
 import { render, cleanup } from 'test-utils'

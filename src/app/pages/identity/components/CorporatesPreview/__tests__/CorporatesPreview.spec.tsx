@@ -1,6 +1,5 @@
-import { CorporatesPreview } from 'app/pages/_identity/components/CorporatesPreview/CorporatesPreview'
-import * as useAllCorporates from 'app/pages/_identity/hooks/useAllCorporates'
-import * as useIdentitiesRouter from 'app/pages/_identity/router'
+import { CorporatesPreview } from 'app/pages/identity/components/CorporatesPreview/CorporatesPreview'
+import * as useAllCorporates from 'app/pages/identity/hooks/useAllCorporates'
 import React from 'react'
 import { QueryStatus } from 'react-query'
 import { render, cleanup } from 'test-utils'
@@ -10,29 +9,11 @@ import { generateInfiniteQueryResult } from '__fixtures__/useQuery'
 window.URL.revokeObjectURL = jest.fn()
 
 describe('CorporatesPreview', () => {
-  const viewIssuerPath = '/view/issuer'
-  const editIssuerPath = '/edit/issuer'
-  const viewCorporatePath = '/view/corporate'
-  const editCorporatePath = '/edit/corporate'
-
-  const useIdentitiesRouterResponse = {
-    paths: {
-      corporate: viewCorporatePath,
-      editCorporate: editCorporatePath,
-      viewIssuer: viewIssuerPath,
-      editIssuer: editIssuerPath
-    }
-  }
-
   const useAllCorporatesResponse = generateInfiniteQueryResult({
     list: [corporate, { ...corporate, _id: 2 }]
   })
 
   beforeEach(() => {
-    jest
-      .spyOn(useIdentitiesRouter, 'useIdentitiesRouter')
-      .mockImplementation(() => useIdentitiesRouterResponse as any)
-
     jest
       .spyOn(useAllCorporates, 'useAllCorporates')
       .mockImplementation(() => useAllCorporatesResponse as any)

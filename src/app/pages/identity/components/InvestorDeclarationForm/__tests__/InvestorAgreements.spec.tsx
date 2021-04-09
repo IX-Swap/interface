@@ -1,4 +1,4 @@
-import { InvestorAgreements } from 'app/pages/_identity/components/InvestorDeclarationForm/InvestorAgreements/InvestorAgreements'
+import { InvestorAgreements } from 'app/pages/identity/components/InvestorDeclarationForm/InvestorAgreements/InvestorAgreements'
 import { Form } from 'components/form/Form'
 import React from 'react'
 import { render, cleanup } from 'test-utils'

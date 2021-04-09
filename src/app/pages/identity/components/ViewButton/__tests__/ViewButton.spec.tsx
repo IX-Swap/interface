@@ -1,4 +1,4 @@
-import { ViewButton } from 'app/pages/_identity/components/ViewButton/ViewButton'
+import { ViewButton } from 'app/pages/identity/components/ViewButton/ViewButton'
 import React from 'react'
 import { render, cleanup } from 'test-utils'
 

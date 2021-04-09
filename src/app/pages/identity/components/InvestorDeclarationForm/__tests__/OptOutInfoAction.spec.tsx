@@ -1,4 +1,4 @@
-import { OptOutInfoAction } from 'app/pages/_identity/components/InvestorDeclarationForm/OptOutInfoDialog/OptOutInfoAction/OptOutInfoAction'
+import { OptOutInfoAction } from 'app/pages/identity/components/InvestorDeclarationForm/OptOutInfoDialog/OptOutInfoAction/OptOutInfoAction'
 import React from 'react'
 import { render, cleanup } from 'test-utils'
 

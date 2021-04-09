@@ -1,4 +1,4 @@
-import { InvestorDeclarationForm } from 'app/pages/_identity/components/InvestorDeclarationForm/InvestorDeclarationForm'
+import { InvestorDeclarationForm } from 'app/pages/identity/components/InvestorDeclarationForm/InvestorDeclarationForm'
 import { Form } from 'components/form/Form'
 import * as useServices from 'hooks/useServices'
 import React from 'react'

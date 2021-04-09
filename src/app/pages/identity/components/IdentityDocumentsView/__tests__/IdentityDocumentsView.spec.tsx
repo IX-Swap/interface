@@ -1,7 +1,7 @@
 import {
   DocumentsViewProps,
   IdentityDocumentsView
-} from 'app/pages/_identity/components/IdentityDocumentsView/IdentityDocumentsView'
+} from 'app/pages/identity/components/IdentityDocumentsView/IdentityDocumentsView'
 import React from 'react'
 import { render, cleanup } from 'test-utils'
 import { documents } from '__fixtures__/identity'

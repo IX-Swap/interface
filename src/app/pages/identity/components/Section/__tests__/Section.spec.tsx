@@ -1,4 +1,4 @@
-import { Section } from 'app/pages/_identity/components/Section/Section'
+import { Section } from 'app/pages/identity/components/Section/Section'
 import React from 'react'
 import { render, cleanup } from 'test-utils'
 

@@ -1,7 +1,7 @@
 import {
   DeclarationsList,
   DeclarationsListProps
-} from 'app/pages/_identity/components/DeclarationsList/DeclarationsList'
+} from 'app/pages/identity/components/DeclarationsList/DeclarationsList'
 import React from 'react'
 import { render, cleanup } from 'test-utils'
 

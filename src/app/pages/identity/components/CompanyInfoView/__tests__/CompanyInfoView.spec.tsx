@@ -1,4 +1,4 @@
-import { CompanyInfoView } from 'app/pages/_identity/components/CompanyInfoView/CompanyInfoView'
+import { CompanyInfoView } from 'app/pages/identity/components/CompanyInfoView/CompanyInfoView'
 import React from 'react'
 import { render, cleanup } from 'test-utils'
 import { corporate } from '__fixtures__/identity'

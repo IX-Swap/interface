@@ -1,4 +1,4 @@
-import { TaxDeclarationView } from 'app/pages/_identity/components/IndividualIdentityView/TaxDeclarationView/TaxDeclarationView'
+import { TaxDeclarationView } from 'app/pages/identity/components/IndividualIdentityView/TaxDeclarationView/TaxDeclarationView'
 import React from 'react'
 import { render, cleanup } from 'test-utils'
 import { individual } from '__fixtures__/identity'

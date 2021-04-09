@@ -1,27 +1,22 @@
 import React from 'react'
 import { render, cleanup } from 'test-utils'
-import { CorporateInvestorForm } from 'app/pages/_identity/components/CorporateInvestorForm/CorporateInvestorForm'
+import { CorporateInvestorForm } from 'app/pages/identity/components/CorporateInvestorForm/CorporateInvestorForm'
 import {
   generateInfiniteQueryResult,
   generateMutationResult
 } from '__fixtures__/useQuery'
 import { corporate } from '__fixtures__/identity'
-import * as useAllCorporates from 'app/pages/_identity/hooks/useAllCorporates'
-import * as useIdentitiesRouter from 'app/pages/_identity/router'
-import * as useCreateCorporate from 'app/pages/_identity/hooks/useCreateCorporate'
-import * as useUpdateCorporate from 'app/pages/_identity/hooks/useUpdateCorporate'
-import * as useSubmitCorporate from 'app/pages/_identity/hooks/useSubmitCorporate'
+import * as useAllCorporates from 'app/pages/identity/hooks/useAllCorporates'
+import * as useCreateCorporate from 'app/pages/identity/hooks/useCreateCorporate'
+import * as useUpdateCorporate from 'app/pages/identity/hooks/useUpdateCorporate'
+import * as useSubmitCorporate from 'app/pages/identity/hooks/useSubmitCorporate'
 import * as useOnboardingDialog from 'app/components/OnboardingDialog/hooks/useOnboardingDialog'
 import * as useOnboardingJourneys from 'app/components/OnboardingPanel/hooks/useOnboardingJourneys'
+import { history } from 'config/history'
 
 window.URL.revokeObjectURL = jest.fn()
 
 describe('CorporateInvestorForm', () => {
-  const useIdentitiesRouterResponse = {
-    params: { userId: corporate._id },
-    paths: { createCorporate: '/corporate/path' },
-    current: { path: '/corporate/path' }
-  }
   const useAllCorporatesResponse = generateInfiniteQueryResult({
     map: {
       [corporate._id]: corporate
@@ -44,13 +39,12 @@ describe('CorporateInvestorForm', () => {
   }
 
   const useOnboardingJourneysResponse = {
-    isInvestorJourneyCompleted: true
+    isInvestorJourneyCompleted: true,
+    investorIdentities: [corporate]
   }
 
   beforeEach(() => {
-    jest
-      .spyOn(useIdentitiesRouter, 'useIdentitiesRouter')
-      .mockImplementation(() => useIdentitiesRouterResponse as any)
+    history.push('/app/identity/corporateIdentity/create')
 
     jest
       .spyOn(useAllCorporates, 'useAllCorporates')
@@ -83,27 +77,10 @@ describe('CorporateInvestorForm', () => {
   })
 
   it('renders without errors', () => {
-    render(<CorporateInvestorForm />)
+    render(<CorporateInvestorForm data={corporate} />)
   })
 
-  it('renders loading text when isLoading', () => {
-    const useAllCorporatesLoadingResponse = generateInfiniteQueryResult({
-      map: {
-        [corporate._id]: corporate
-      },
-      list: [corporate],
-      isLoading: true
-    })
-
-    jest
-      .spyOn(useAllCorporates, 'useAllCorporates')
-      .mockImplementation(() => useAllCorporatesLoadingResponse as any)
-
-    const { getByText } = render(<CorporateInvestorForm />)
-    expect(getByText('Loading...')).toBeTruthy()
-  })
-
-  it('invokes showPreIdentityCreateDialog when data list length is 0', () => {
+  it('invokes showPreIdentityCreateDialog when data undefined', () => {
     const useAllCorporatesZeroResponse = generateInfiniteQueryResult({
       map: {
         [corporate._id]: corporate

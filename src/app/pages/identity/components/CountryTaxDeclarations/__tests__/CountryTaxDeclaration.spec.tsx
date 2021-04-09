@@ -1,4 +1,4 @@
-import { CountryTaxDeclaration } from 'app/pages/_identity/components/CountryTaxDeclarations/CountryTaxDeclaration'
+import { CountryTaxDeclaration } from 'app/pages/identity/components/CountryTaxDeclarations/CountryTaxDeclaration'
 import React from 'react'
 import { render, cleanup } from 'test-utils'
 import { corporate } from '__fixtures__/identity'

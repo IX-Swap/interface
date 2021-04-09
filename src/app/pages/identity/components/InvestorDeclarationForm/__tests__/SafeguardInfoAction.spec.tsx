@@ -1,4 +1,4 @@
-import { SafeguardInfoAction } from 'app/pages/_identity/components/InvestorDeclarationForm/SafeguardInfoDialog/SafeguardInfoAction/SafeguardInfoAction'
+import { SafeguardInfoAction } from 'app/pages/identity/components/InvestorDeclarationForm/SafeguardInfoDialog/SafeguardInfoAction/SafeguardInfoAction'
 import React from 'react'
 import { render, cleanup } from 'test-utils'
 

@@ -1,5 +1,4 @@
-import { IndividualPreview } from 'app/pages/_identity/components/IndividualPreview/IndividualPreview'
-import * as useIdentitiesRouter from 'app/pages/_identity/router'
+import { IndividualPreview } from 'app/pages/identity/components/IndividualPreview/IndividualPreview'
 import * as useIndividualIdentity from 'hooks/identity/useIndividualIdentity'
 import React from 'react'
 import { QueryStatus } from 'react-query'
@@ -10,19 +9,6 @@ import { generateQueryResult } from '__fixtures__/useQuery'
 window.URL.revokeObjectURL = jest.fn()
 
 describe('IndividualPreview', () => {
-  beforeEach(() => {
-    const useIdentitiesRouterResponse = {
-      paths: {
-        individual: '/view',
-        editIndividual: '/edit'
-      }
-    }
-
-    jest
-      .spyOn(useIdentitiesRouter, 'useIdentitiesRouter')
-      .mockImplementation(() => useIdentitiesRouterResponse as any)
-  })
-
   afterEach(async () => {
     await cleanup()
     jest.clearAllMocks()
