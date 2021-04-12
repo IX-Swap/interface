@@ -4,7 +4,6 @@ import {
   CommitmentFormValues,
   CommitmentIssuanceFormValues
 } from 'types/commitment'
-import { addressValidator } from 'validation/validators'
 
 export const commitmentFormValidationSchema = yup
   .object()
@@ -20,9 +19,6 @@ export const commitmentFormValidationSchema = yup
 export const commitmentIssuanceValidationSchema = yup
   .object()
   .shape<CommitmentIssuanceFormValues>({
-    withdrawalAddress: yup
-      .string()
-      .test('address validity', 'Enter Valid Address', addressValidator)
-      .required('Required'),
+    withdrawalAddress: yup.string().required('Required'),
     releaseDate: yup.date().nullable()
   })
