@@ -42,6 +42,20 @@ export const MoreOptions = () => {
         </AppRouterLink>
 
         <AppRouterLink
+          to={IssuanceRoute.deployToken}
+          params={{
+            dsoId,
+            issuerId
+          }}
+          color='primary'
+          underline='hover'
+          className={link}
+          variant='body1'
+        >
+          Deploy Token
+        </AppRouterLink>
+
+        <AppRouterLink
           to={IssuanceRoute.list}
           color='primary'
           underline='hover'
