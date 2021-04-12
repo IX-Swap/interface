@@ -1,23 +1,9 @@
-import { withdrawalAddress } from '__fixtures__/withdrawalAddress'
 import {
-  addressValidator,
   corporateAccreditedInvestorValidator,
   individualAccreditedInvestorValidator,
   pastDateValidator
 } from 'validation/validators'
 import { DeclarationValue } from 'app/pages/identity/const/declarations'
-
-describe('addressValidator', () => {
-  it('returns false if address is invalid', () => {
-    expect(addressValidator(null)).toBe(false)
-    expect(addressValidator(undefined)).toBe(false)
-    expect(addressValidator('123')).toBe(false)
-  })
-
-  it('returns true if address is valid', () => {
-    expect(addressValidator(withdrawalAddress.address)).toBe(true)
-  })
-})
 
 describe('individualAccreditedInvestorValidator', () => {
   it('returns false if value is null or undefined', () => {
