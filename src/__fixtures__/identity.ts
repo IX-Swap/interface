@@ -87,9 +87,7 @@ export const individual: IndividualIdentity = {
   photo: '',
   _id: '1',
   taxResidencies: [
-    {
-      residentOfSingapore: true
-    }
+    { countryOfResidence: 'Singapore', residentOfSingapore: false }
   ],
   email: 'email@example.com',
   annualIncome: '100000',
@@ -138,7 +136,14 @@ export const individual: IndividualIdentity = {
   },
   documents: [],
   address,
-  user
+  user,
+  sourceOfFund: [
+    {
+      name: 'Inheritance/Gift',
+      checked: true,
+      value: 20
+    }
+  ]
 }
 
 export const document: DataroomFile = {

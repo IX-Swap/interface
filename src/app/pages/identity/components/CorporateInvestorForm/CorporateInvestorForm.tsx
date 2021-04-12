@@ -10,6 +10,7 @@ import { getIdentityDefaultActiveStep } from 'app/pages/identity/utils/shared'
 import { generatePath, useHistory } from 'react-router'
 import { IdentityRoute } from 'app/pages/identity/router/config'
 import { CorporateIdentity } from '../../types/forms'
+
 export interface CorporateInvestorFormProps {
   data?: CorporateIdentity
 }

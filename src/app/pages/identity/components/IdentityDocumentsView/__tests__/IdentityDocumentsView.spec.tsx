@@ -1,15 +1,23 @@
-import { IdentityDocumentsView } from 'app/pages/identity/components/IdentityDocumentsView/IdentityDocumentsView'
+import {
+  DocumentsViewProps,
+  IdentityDocumentsView
+} from 'app/pages/identity/components/IdentityDocumentsView/IdentityDocumentsView'
 import React from 'react'
 import { render, cleanup } from 'test-utils'
-import { individual } from '__fixtures__/identity'
+import { documents } from '__fixtures__/identity'
 
 describe('IdentityDocumentsView', () => {
+  const props: DocumentsViewProps = {
+    data: documents,
+    type: 'individual'
+  }
+
   afterEach(async () => {
     await cleanup()
     jest.clearAllMocks()
   })
 
   it('renders without errors', () => {
-    render(<IdentityDocumentsView data={individual.documents} />)
+    render(<IdentityDocumentsView {...props} />)
   })
 })
