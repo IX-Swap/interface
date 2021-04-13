@@ -1,13 +1,13 @@
 import React from 'react'
 import { render, cleanup } from 'test-utils'
 import { CorporateSelect } from 'components/form/CorporateSelect'
-import { useAllCorporates } from 'app/pages/_identity/hooks/useAllCorporates'
+import { useAllCorporates } from 'app/pages/identity/hooks/useAllCorporates'
 import { generateInfiniteQueryResult } from '__fixtures__/useQuery'
 import { QueryStatus } from 'react-query'
 import { corporate } from '__fixtures__/authorizer'
 import { LOADING_TEXT } from '../renderUtils'
 
-jest.mock('app/pages/_identity/hooks/useAllCorporates')
+jest.mock('app/pages/identity/hooks/useAllCorporates')
 
 const useAllCorporateIdentitiesMock = useAllCorporates as jest.Mock<
   Partial<ReturnType<typeof useAllCorporates>>

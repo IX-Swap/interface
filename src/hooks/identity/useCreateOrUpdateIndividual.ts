@@ -1,20 +1,20 @@
 import { useServices } from 'hooks/useServices'
 import { useMutation } from 'react-query'
-import {
-  prepareDocumentsForUpload,
-  prepareDeclarationsForUpload
-} from 'app/pages/identity/utils'
 import { useAuth } from 'hooks/auth/useAuth'
-import { IndividualIdentityFormValues } from 'app/pages/identity/components/types'
 import apiService from 'services/api'
-import {
-  CreateOrUpdateIndividualIdentityArgs,
-  IndividualIdentity
-} from 'types/identity'
 import { getIdFromObj } from 'helpers/strings'
 import { identityURL } from 'config/apiURL'
 import { generatePath, useHistory } from 'react-router'
-import { IdentityRoute } from 'app/pages/_identity/router/config'
+import { IdentityRoute } from 'app/pages/identity/router/config'
+import {
+  CreateOrUpdateIndividualIdentityArgs,
+  IndividualIdentity,
+  IndividualIdentityFormValues
+} from '../../app/pages/identity/types/forms'
+import {
+  prepareDeclarationsForUpload,
+  prepareDocumentsForUpload
+} from 'app/pages/identity/utils/shared'
 
 export const useCreateOrUpdateIndividual = () => {
   const { snackbarService } = useServices()

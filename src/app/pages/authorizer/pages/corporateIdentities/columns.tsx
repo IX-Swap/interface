@@ -1,7 +1,7 @@
 import { TableColumn } from 'types/util'
-import { CorporateIdentity } from 'types/identity'
 import { formatDateToMMDDYY } from 'helpers/dates'
 import { renderRepresentativeName } from 'helpers/tables'
+import { CorporateIdentity } from 'app/pages/identity/types/forms'
 
 export const columns: Array<TableColumn<CorporateIdentity>> = [
   {

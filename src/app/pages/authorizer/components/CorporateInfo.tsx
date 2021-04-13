@@ -1,11 +1,11 @@
 import React from 'react'
-import { CorporateIdentity } from 'types/identity'
 import { Grid, Typography } from '@material-ui/core'
 import { convertAddressToString } from './utils'
 import { LabelledValue } from 'components/LabelledValue'
 import { Avatar } from 'components/Avatar'
 import { AuthorizerIdentityLink } from 'app/components/AuthorizerIdentityLink'
 import { getDataroomFileId } from 'helpers/dataroom'
+import { CorporateIdentity } from 'app/pages/identity/types/forms'
 
 export interface CorporateInfoProps {
   data: CorporateIdentity

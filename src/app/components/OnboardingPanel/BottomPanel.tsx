@@ -2,7 +2,7 @@ import { CorporateOnboardingSteps } from 'app/components/OnboardingPanel/Corpora
 import { HomeOnboardingSteps } from 'app/components/OnboardingPanel/HomeOnboardingSteps'
 import { IndividualOnboardingSteps } from 'app/components/OnboardingPanel/IndividualOnboardingSteps'
 import { IssuerOnboardingSteps } from 'app/components/OnboardingPanel/IssuerOnboardingSteps'
-import { IdentityRoute } from 'app/pages/_identity/router/config'
+import { IdentityRoute } from 'app/pages/identity/router/config'
 import React from 'react'
 import { Switch, Route } from 'react-router-dom'
 
@@ -31,7 +31,8 @@ export const BottomPanel = () => {
         path={[
           IdentityRoute.viewIssuer,
           IdentityRoute.createIssuer,
-          IdentityRoute.editIssuer
+          IdentityRoute.editIssuer,
+          IdentityRoute.createDetailsOfIssuance
         ]}
       >
         <IssuerOnboardingSteps />

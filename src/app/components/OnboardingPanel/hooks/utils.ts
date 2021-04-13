@@ -1,5 +1,5 @@
-import { IdentityType } from 'app/pages/identity/utils'
 import { AuthorizableStatus } from 'types/util'
+import { IdentityType } from 'app/pages/identity/utils/shared'
 
 export const getIdentityStatus = (status?: AuthorizableStatus) => {
   switch (status) {
@@ -9,8 +9,10 @@ export const getIdentityStatus = (status?: AuthorizableStatus) => {
       return ['For Verification']
     case 'Approved':
       return ['Verified!']
-    default:
+    case 'Draft':
       return ['In Progress']
+    default:
+      return ['']
   }
 }
 
@@ -28,7 +30,7 @@ export const getIdentityOnboardingSteps = (
   asIssuer === true
     ? {
         title: 'To Raise Capital',
-        content: ['']
+        content: ['Issuance Detail']
       }
     : {
         title: 'To Invest',

@@ -2,7 +2,6 @@ import { CashDeposit } from 'types/cashDeposit'
 import { formatMoney } from 'helpers/numbers'
 import { CashWithdrawal } from 'types/cashWithdrawal'
 import { Commitment } from 'types/commitment'
-import { CorporateIdentity, IndividualIdentity } from 'types/identity'
 import { DSWithdrawal } from 'types/dsWithdrawal'
 import { Asset } from 'types/asset'
 import { DigitalSecurityOffering } from 'types/dso'
@@ -10,6 +9,10 @@ import { AssetBalance } from 'types/balance'
 import { PersonName } from './types'
 import { formatDateToMMDDYY } from 'helpers/dates'
 import { WithdrawalAddress } from 'types/withdrawalAddress'
+import {
+  CorporateIdentity,
+  IndividualIdentity
+} from 'app/pages/identity/types/forms'
 
 export const renderMinimumInvestment = (
   amount: number,

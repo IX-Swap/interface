@@ -1,12 +1,12 @@
 import { useInfiniteQuery } from 'react-query'
 import { UsePaginatedQueryData, useParsedData } from 'hooks/useParsedData'
 import { paginationArgs } from 'config/defaults'
-import { CorporateIdentity } from 'types/identity'
 import apiService from 'services/api'
 import { PaginatedData } from 'services/api/types'
 import { identityQueryKeys } from 'config/queryKeys'
 import { identityURL } from 'config/apiURL'
 import { AuthorizableStatus } from 'types/util'
+import { CorporateIdentity } from '../../identity/types/forms'
 
 export interface UseAllCorporatesArgs {
   userId: string

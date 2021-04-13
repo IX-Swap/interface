@@ -2,7 +2,6 @@ import { Bank } from 'types/bank'
 import { APIServiceResponse } from 'services/api/types'
 import { CashDeposit } from 'types/cashDeposit'
 import { Asset } from 'types/asset'
-import { CorporateIdentity, IndividualIdentity } from 'types/identity'
 import { user } from '__fixtures__/user'
 import { CashWithdrawal } from 'types/cashWithdrawal'
 import { DSWithdrawal } from 'types/dsWithdrawal'
@@ -12,6 +11,10 @@ import { Commitment } from 'types/commitment'
 import { emptyFile } from '__fixtures__/file'
 import { network } from './network'
 import { withdrawalAddress } from './withdrawalAddress'
+import {
+  CorporateIdentity,
+  IndividualIdentity
+} from 'app/pages/identity/types/forms'
 
 export const asset: Asset = {
   _id: '5f732c538a568b50914d8372',

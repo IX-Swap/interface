@@ -5,7 +5,7 @@ import { OnboardingLinks } from 'app/pages/home/components/OnboardingLinks'
 import * as useOnboardingJourneys from 'app/components/OnboardingPanel/hooks/useOnboardingJourneys'
 import { history } from 'config/history'
 import { AppRoute } from 'app/router/config'
-import { IdentityRoute } from 'app/pages/_identity/router/config'
+import { IdentityRoute } from 'app/pages/identity/router/config'
 
 jest.mock('app/pages/home/components/OnboardingLink', () => ({
   OnboardingLink: jest.fn(() => null)
@@ -58,7 +58,7 @@ describe('OnboardingLinks', () => {
       3,
       expect.objectContaining({
         label: 'Fundraise',
-        to: IdentityRoute.createIssuer
+        to: IdentityRoute.createDetailsOfIssuance
       }),
       {}
     )
@@ -113,7 +113,7 @@ describe('OnboardingLinks', () => {
       2,
       expect.objectContaining({
         label: 'Fundraise',
-        to: IdentityRoute.createIssuer
+        to: IdentityRoute.createDetailsOfIssuance
       }),
       {}
     )
@@ -145,7 +145,7 @@ describe('OnboardingLinks', () => {
       2,
       expect.objectContaining({
         label: 'Fundraise',
-        to: IdentityRoute.createIssuer
+        to: IdentityRoute.createDetailsOfIssuance
       }),
       {}
     )
@@ -177,7 +177,7 @@ describe('OnboardingLinks', () => {
       2,
       expect.objectContaining({
         label: 'Fundraise',
-        to: IdentityRoute.createIssuer
+        to: IdentityRoute.createDetailsOfIssuance
       }),
       {}
     )

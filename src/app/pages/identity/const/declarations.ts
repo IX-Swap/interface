@@ -1,5 +1,7 @@
-import { DeclarationTemplate } from 'types/identity'
 import { Maybe } from 'types/util'
+import { DeclarationTemplate } from 'app/pages/identity/types/forms'
+
+export const MAX_TAX_RESIDENCIES = 5
 
 export enum DeclarationValue {
   Yes = 'Yes',

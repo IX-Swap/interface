@@ -1,5 +1,6 @@
-import { IdentityType } from 'app/pages/identity/utils'
-import { useAllCorporates } from 'app/pages/_identity/hooks/useAllCorporates'
+import { IdentityType } from 'app/pages/identity/utils/shared'
+import { useAllCorporates } from 'app/pages/identity/hooks/useAllCorporates'
+import { useDetailsOfIssuance } from 'app/pages/identity/hooks/useDetailsOfIssuance'
 import { useIndividualIdentity } from 'hooks/identity/useIndividualIdentity'
 
 export const useGetIdentities = (corporateType?: 'issuer' | 'investor') => {
@@ -13,6 +14,12 @@ export const useGetIdentities = (corporateType?: 'issuer' | 'investor') => {
   } = useAllCorporates({
     type: corporateType
   })
+
+  const {
+    data: detailsOfIssuance,
+    isLoading: detailsOfIssuanceLoading
+  } = useDetailsOfIssuance()
+
   const hasIdentity =
     individualIdentity !== undefined || corporateIdentities.list.length > 0
 
@@ -25,7 +32,9 @@ export const useGetIdentities = (corporateType?: 'issuer' | 'investor') => {
       : corporateIdentities.list[0]
 
   const isIdentitiesLoaded =
-    !individualIdentityIsLoading && !corporateIdentitiesIsLoading
+    !individualIdentityIsLoading &&
+    !corporateIdentitiesIsLoading &&
+    !detailsOfIssuanceLoading
 
   return {
     hasIdentity,
@@ -33,6 +42,7 @@ export const useGetIdentities = (corporateType?: 'issuer' | 'investor') => {
     identityLoaded,
     individualIdentity,
     corporateIdentities,
-    isIdentitiesLoaded
+    isIdentitiesLoaded,
+    detailsOfIssuance
   }
 }

@@ -1,6 +1,5 @@
 import * as yup from 'yup'
 import { WithdrawalAddressFormValues } from 'types/withdrawalAddress'
-import { addressValidator } from 'validation/validators'
 
 export const waFormValidationSchema = yup
   .object()
@@ -8,10 +7,7 @@ export const waFormValidationSchema = yup
     network: yup.string().required('Required'),
     memo: yup.string(),
     label: yup.string().required('Required'),
-    address: yup
-      .string()
-      .test('address validity', 'Enter Valid Address', addressValidator)
-      .required('Required'),
+    address: yup.string().required('Required'),
     agree: yup
       .boolean()
       .test('consent', 'You must agree to these terms', value => value === true)

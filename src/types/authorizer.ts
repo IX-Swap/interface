@@ -1,7 +1,10 @@
 import { AuthorizableStatus } from './util'
 import { DataroomFile } from './dataroomFile'
-import { CorporateIdentity, IndividualIdentity } from './identity'
 import { AppFeature } from 'types/app'
+import {
+  CorporateIdentity,
+  IndividualIdentity
+} from 'app/pages/identity/types/forms'
 
 export interface AuthorizationInfo {
   authorizer: string

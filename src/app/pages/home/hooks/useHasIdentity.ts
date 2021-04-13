@@ -1,4 +1,4 @@
-import { useAllCorporates } from 'app/pages/_identity/hooks/useAllCorporates'
+import { useAllCorporates } from 'app/pages/identity/hooks/useAllCorporates'
 import { useIndividualIdentity } from 'hooks/identity/useIndividualIdentity'
 
 export const useHasIdentity = () => {

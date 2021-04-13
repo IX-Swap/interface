@@ -6,9 +6,12 @@ import {
 } from '../tables'
 import { individual, corporate } from '__fixtures__/identity'
 import { commitment, cashDeposit } from '__fixtures__/authorizer'
-import { IndividualIdentity, CorporateIdentity } from 'types/identity'
 import { WithdrawalAddress } from 'types/withdrawalAddress'
 import { network } from '__fixtures__/network'
+import {
+  CorporateIdentity,
+  IndividualIdentity
+} from 'app/pages/identity/types/forms'
 
 describe('renderIndividualOrCompanyName', () => {
   it('returns individual name for IndividualIdentity', () => {

@@ -1,9 +1,9 @@
 import React, { useEffect } from 'react'
 import { Grid } from '@material-ui/core'
-import { Section } from 'app/pages/identity/components/Section'
 import { IndividualInfoFields } from 'app/pages/identity/components/IndividualInfoFields/IndividualInfoFields'
 import { useFieldArray } from 'react-hook-form'
 import { privateClassNames } from 'helpers/classnames'
+import { Section } from 'app/pages/identity/components/Section/Section'
 
 export interface CorporateProfilesFieldsProps {
   title: string
