@@ -31,7 +31,8 @@ export const identityQueryKeys = {
   getAllCorporateByUserId: (id: string) =>
     generateQueryKey('all-corporate-identities', id),
   getDetailsOfIssuance: (userId: string) =>
-    generateQueryKey('details-of-issuance', userId)
+    generateQueryKey('details-of-issuance', userId),
+  getStats: 'admin-identity-stats'
 }
 
 export const balanceQueryKeys = {
