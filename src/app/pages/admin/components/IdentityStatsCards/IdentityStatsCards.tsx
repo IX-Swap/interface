@@ -40,7 +40,7 @@ export const IdentityStatsCards = () => {
   return (
     <Grid container spacing={6}>
       {stats.map(stat => (
-        <Grid item>
+        <Grid item key={stat.title}>
           <StatCard {...stat} />
         </Grid>
       ))}
