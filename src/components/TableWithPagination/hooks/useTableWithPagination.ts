@@ -19,13 +19,16 @@ export const useTableWithPagination = <TData>(
   queryKey: string,
   uri: string,
   defaultFilter: BaseFilter | undefined,
-  queryEnabled: boolean
+  queryEnabled: boolean,
+  defaultRowsPerPage?: number
 ): UseTableWithPaginationReturnType<TData> => {
   const queryCache = useQueryCache()
   const apiService = useAPIService()
   const [prevPage, setPrevPage] = useState(0)
   const [page, setPage] = useState(0)
-  const [rowsPerPage, setRowsPerPage] = useState(25)
+  const [rowsPerPage, setRowsPerPage] = useState(
+    defaultRowsPerPage !== undefined ? defaultRowsPerPage : 25
+  )
   const filter = defaultFilter
 
   useEffect(() => {
@@ -65,7 +68,11 @@ export const useTableWithPagination = <TData>(
   const currentPageData =
     data !== undefined
       ? data.map(page =>
-          page.data.length > 0 ? page.data[0].documents : []
+          page.data.length > 0
+            ? page.data[0].documents.length > 0
+              ? page.data[0].documents
+              : previousPageData
+            : []
         )[0]
       : []
   const total =
