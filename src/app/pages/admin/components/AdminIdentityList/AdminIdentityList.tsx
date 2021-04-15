@@ -19,7 +19,7 @@ export const AdminIdentityList = () => {
       actions={({ item }) => (
         <ViewIdentityAction
           identityType={item.type}
-          createdById={item.createdBy._id}
+          identityId={item._id}
           userId={item.user._id}
         />
       )}

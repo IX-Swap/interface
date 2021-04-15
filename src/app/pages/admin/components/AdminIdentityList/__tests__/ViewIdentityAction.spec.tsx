@@ -11,7 +11,7 @@ import { generatePath } from 'react-router'
 describe('ViewIdentityAction', () => {
   const props: ViewIdentityActionProps = {
     userId: '1234',
-    createdById: '12345',
+    identityId: '12345',
     identityType: 'individual'
   }
 
@@ -34,23 +34,15 @@ describe('ViewIdentityAction', () => {
     render(<ViewIdentityAction {...props} />)
   })
 
-  it('renders null when admin id does not match', () => {
-    const { container } = render(
-      <ViewIdentityAction
-        createdById='54321'
-        userId='1234'
-        identityType='individual'
-      />
-    )
-    expect(container).toBeEmptyDOMElement()
-  })
-
   it('renders view link correctly', () => {
     const { getByRole, rerender } = render(<ViewIdentityAction {...props} />)
     const viewButton = getByRole('button')
     expect(viewButton).toHaveAttribute(
       'href',
-      generatePath(AdminRoute.createIndividualIdentity, { userId: '1234' })
+      generatePath(AdminRoute.viewIndividualIdentity, {
+        userId: '1234',
+        identityId: '12345'
+      })
     )
 
     props.identityType = 'corporate'
@@ -58,7 +50,10 @@ describe('ViewIdentityAction', () => {
 
     expect(viewButton).toHaveAttribute(
       'href',
-      generatePath(AdminRoute.createCorporateIdentity, { userId: '1234' })
+      generatePath(AdminRoute.viewCorporateIdentity, {
+        userId: '1234',
+        identityId: '12345'
+      })
     )
 
     props.identityType = 'issuer'
@@ -66,7 +61,10 @@ describe('ViewIdentityAction', () => {
 
     expect(viewButton).toHaveAttribute(
       'href',
-      generatePath(AdminRoute.createIssuerIdentity, { userId: '1234' })
+      generatePath(AdminRoute.viewCorporateIdentity, {
+        userId: '1234',
+        identityId: '12345'
+      })
     )
   })
 })

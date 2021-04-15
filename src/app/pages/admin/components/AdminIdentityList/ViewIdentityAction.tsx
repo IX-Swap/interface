@@ -3,43 +3,30 @@ import { IconButton } from '@material-ui/core'
 import { Launch } from '@material-ui/icons'
 import { AppRouterLinkComponent } from 'components/AppRouterLink'
 import { AdminRoute } from 'app/pages/admin/router/config'
-import { useAuth } from 'hooks/auth/useAuth'
-import { getIdFromObj } from 'helpers/strings'
 
 export interface ViewIdentityActionProps {
   userId: string
-  createdById: string
+  identityId: string
   identityType: 'individual' | 'corporate' | 'issuer'
 }
 
 export const ViewIdentityAction = ({
   userId,
-  createdById,
+  identityId,
   identityType
 }: ViewIdentityActionProps) => {
-  const { user } = useAuth()
-  const adminId = getIdFromObj(user)
-
-  if (adminId !== createdById) {
-    return null
-  }
-
-  const {
-    createIndividualIdentity,
-    createCorporateIdentity,
-    createIssuerIdentity
-  } = AdminRoute
+  const { viewIndividualIdentity, viewCorporateIdentity } = AdminRoute
 
   const getViewRoute = () => {
     switch (identityType) {
       case 'individual':
-        return createIndividualIdentity
+        return viewIndividualIdentity
       case 'corporate':
-        return createCorporateIdentity
+        return viewCorporateIdentity
       case 'issuer':
-        return createIssuerIdentity
+        return viewCorporateIdentity
       default:
-        return createIndividualIdentity
+        return '/'
     }
   }
 
@@ -48,7 +35,7 @@ export const ViewIdentityAction = ({
       component={AppRouterLinkComponent}
       size='small'
       to={getViewRoute()}
-      params={{ userId: userId }}
+      params={{ userId: userId, identityId: identityId }}
     >
       <Launch color='disabled' />
     </IconButton>
