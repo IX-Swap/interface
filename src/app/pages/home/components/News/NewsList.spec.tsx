@@ -57,7 +57,12 @@ describe('NewsList', () => {
     news.forEach((item, index) => {
       expect(NewsItem).toHaveBeenNthCalledWith(
         index + 1,
-        expect.objectContaining(item),
+        expect.objectContaining({
+          title: item.title,
+          excerpt: item.excerpt,
+          link: item.link,
+          imageLink: item.imageLink
+        }),
         {}
       )
     })
