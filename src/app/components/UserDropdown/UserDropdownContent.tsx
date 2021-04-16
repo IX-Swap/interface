@@ -8,15 +8,11 @@ import { useLogout } from 'auth/hooks/useLogout'
 import { useIsAdmin } from 'helpers/acl'
 import {
   AccountCircleOutlined,
-  GroupOutlined,
   PowerSettingsNewOutlined,
-  SettingsOutlined,
-  Security,
-  PostAdd
+  SettingsOutlined
 } from '@material-ui/icons'
 import { Box, List } from '@material-ui/core'
 import { UserDropdownInfo } from 'app/components/UserDropdown/UserDropdownInfo'
-import { UserDropdownGroup } from 'app/components/UserDropdown/UserDropdownGroup'
 import { useTheme } from '@material-ui/core/styles'
 
 export const LIST_HORIZONTAL_PADDING = 32
@@ -51,22 +47,12 @@ export const UserDropdownContent = (props: DropdownContentProps) => {
             onClose={handleClose}
           />
           {isAdmin && (
-            <UserDropdownGroup label='Admin' icon={Security}>
-              <UserDropdownItem
-                icon={GroupOutlined}
-                label='Users'
-                link={AdminRoute.users}
-                onClose={handleClose}
-                level={1}
-              />
-              <UserDropdownItem
-                icon={PostAdd}
-                label='Access Reports'
-                link={AdminRoute.accessReports}
-                onClose={handleClose}
-                level={1}
-              />
-            </UserDropdownGroup>
+            <UserDropdownItem
+              icon={AccountCircleOutlined}
+              label='Admin'
+              link={AdminRoute.landing}
+              onClose={handleClose}
+            />
           )}
           <UserDropdownItem
             icon={SettingsOutlined}

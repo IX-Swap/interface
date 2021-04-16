@@ -36,8 +36,6 @@ export const AdminCorporateInvestorForm = () => {
     isJourneyCompleted: false
   })
 
-  console.log('identity: ', identity)
-
   return (
     <FormStepper
       data={identity}

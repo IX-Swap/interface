@@ -1,10 +1,12 @@
+import { LandingPage } from 'app/components/LandingPage/LandingPage'
 import { AccessReports } from 'app/pages/admin/pages/AccessReports'
 import { CreateCorporateAsAdmin } from 'app/pages/admin/pages/CreateCorporateAsAdmin'
 import { CreateIndividualAsAdmin } from 'app/pages/admin/pages/CreateIndividualAsAdmin'
 import { CreateIssuerAsAdmin } from 'app/pages/admin/pages/CreateIssuerAsAdmin'
+import { Identities } from 'app/pages/admin/pages/Identities'
 import { Users } from 'app/pages/admin/pages/Users'
 import { ViewUser } from 'app/pages/admin/pages/ViewUser'
-import { AdminRoute } from 'app/pages/admin/router/config'
+import { adminLandingLinks, AdminRoute } from 'app/pages/admin/router/config'
 import { AppRoute } from 'components/AppRoute'
 import React from 'react'
 import { Switch } from 'react-router'
@@ -38,6 +40,14 @@ export const AdminRouter = () => {
 
       <AppRoute exact path={AdminRoute.createIssuerIdentity}>
         <CreateIssuerAsAdmin />
+      </AppRoute>
+
+      <AppRoute exact path={AdminRoute.identities} breadcrumb='Identities'>
+        <Identities />
+      </AppRoute>
+
+      <AppRoute exact path={AdminRoute.landing}>
+        <LandingPage links={adminLandingLinks} title='Authorization' />
       </AppRoute>
     </Switch>
   )
