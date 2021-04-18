@@ -12,6 +12,7 @@ export const News = () => {
   const filter = {
     search: getFilterValue('search')
   }
+  // Remove after merge in story branch and use this variable together with news list
   console.log(filter)
 
   const theme = useTheme()
@@ -26,11 +27,10 @@ export const News = () => {
         <img
           width={106}
           height={34}
-          src={require('assets/icons/atlas_logo.png')}
+          src={require(theme.palette.type === 'light'
+            ? 'assets/icons/atlas_logo.png'
+            : 'assets/icons/atlas_logo_white.png')}
           alt={'Atlas One Logo'}
-          style={{
-            filter: theme.palette.type === 'dark' ? 'invert(100%)' : 'initial'
-          }}
         />
         <Grid item xs={12} md={6} lg={3} className={classes.input}>
           <SearchFilter
