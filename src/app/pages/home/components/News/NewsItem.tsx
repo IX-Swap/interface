@@ -8,25 +8,33 @@ import {
 import { ReactComponent as Arrow } from 'assets/icons/arrow.svg'
 import React from 'react'
 import { useStyles } from './NewsItem.style'
+import classNames from 'classnames'
 
 export interface NewsItemProps {
+  link: string
   title: string
   excerpt: string
-  link: string
   imageLink: string
+  color: 'primary' | 'secondary'
 }
 
 export const NewsItem = ({
+  link,
+  color = 'primary',
   title,
   excerpt,
-  link,
   imageLink
 }: NewsItemProps) => {
   const classes = useStyles()
 
   return (
     <Card className={classes.container}>
-      <CardContent className={classes.content}>
+      <CardContent
+        className={classNames(classes.content, {
+          [classes.fullWidth]: imageLink === null,
+          [classes.secondaryContent]: color === 'secondary'
+        })}
+      >
         <Typography
           gutterBottom
           variant='h5'
@@ -42,7 +50,13 @@ export const NewsItem = ({
         >
           {excerpt}
         </Typography>
-        <Link href={link} className={classes.button} target={'_blank'}>
+        <Link
+          href={link}
+          target={'_blank'}
+          className={classNames(classes.link, {
+            [classes.secondaryLink]: color === 'secondary'
+          })}
+        >
           <Typography
             variant='body1'
             component='p'
@@ -53,12 +67,14 @@ export const NewsItem = ({
           <Arrow />
         </Link>
       </CardContent>
-      <CardMedia
-        component={'div'}
-        className={classes.media}
-        image={imageLink}
-        title='News Image'
-      />
+      {imageLink !== null && (
+        <CardMedia
+          component={'div'}
+          className={classNames(classes.media)}
+          image={imageLink}
+          title='News Image'
+        />
+      )}
     </Card>
   )
 }

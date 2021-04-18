@@ -3,27 +3,40 @@ import { makeStyles } from '@material-ui/core/styles'
 export const useStyles = makeStyles(theme => ({
   container: {
     display: 'flex',
-    width: '50%',
-    borderRadius: 0
+    borderRadius: 0,
+    flexWrap: 'wrap'
   },
   content: {
     position: 'relative',
     display: 'flex',
     flexDirection: 'column',
-    width: '55%',
+    width: '50%',
     height: 352,
+    color: theme.palette.getContrastText(theme.palette.primary.main),
     backgroundColor: theme.palette.primary.main,
-    padding: theme.spacing(4, 5)
+    padding: theme.spacing(4, 5),
+    [theme.breakpoints.down('xs')]: {
+      width: '100%'
+    }
+  },
+  secondaryContent: {
+    backgroundColor: '#DADADA',
+    color:
+      theme.palette.type === 'light'
+        ? theme.palette.text.primary
+        : theme.palette.getContrastText(theme.palette.text.primary)
   },
   media: {
     height: 352,
-    width: '45%',
-    backgroundSize: 'cover'
+    width: '50%',
+    backgroundSize: 'cover',
+    [theme.breakpoints.down('xs')]: {
+      width: '100%'
+    }
   },
   title: {
     display: '-webkit-box',
     overflow: 'hidden',
-    color: theme.palette.getContrastText(theme.palette.primary.main),
     textOverflow: 'ellipsis',
     lineClamp: 4,
     boxOrient: 'vertical',
@@ -33,21 +46,49 @@ export const useStyles = makeStyles(theme => ({
   description: {
     display: '-webkit-box',
     overflow: 'hidden',
-    color: theme.palette.getContrastText(theme.palette.primary.main),
     textOverflow: 'ellipsis',
     lineClamp: 7,
     boxOrient: 'vertical',
     lineHeight: '138%'
   },
-  button: {
+  link: {
     display: 'flex',
     alignItems: 'center',
     marginTop: 'auto',
     textDecoration: 'underline',
-    color: '#8DC2FF',
-    stroke: '#8DC2FF'
+    color:
+      theme.palette.type === 'light' ? '#8DC2FF' : theme.palette.text.primary,
+    stroke:
+      theme.palette.type === 'light' ? '#8DC2FF' : theme.palette.text.primary,
+    textDecorationColor:
+      theme.palette.type === 'light'
+        ? '#8DC2FF'
+        : `${theme.palette.text.primary}!important`,
+    '&:hover': {
+      opacity: 0.4
+    }
+  },
+  secondaryLink: {
+    color:
+      theme.palette.type === 'light'
+        ? '#282730'
+        : theme.palette.getContrastText(theme.palette.text.primary),
+    stroke:
+      theme.palette.type === 'light'
+        ? '#282730'
+        : theme.palette.getContrastText(theme.palette.text.primary),
+    textDecorationColor:
+      theme.palette.type === 'light'
+        ? '#282730'
+        : `${theme.palette.getContrastText(
+            theme.palette.text.primary
+          )}!important`
   },
   linkText: {
-    marginRight: theme.spacing(1)
+    marginRight: theme.spacing(1),
+    color: 'inherit'
+  },
+  fullWidth: {
+    width: '100%'
   }
 }))

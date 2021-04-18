@@ -5,6 +5,8 @@ import { useStyles } from './NewsList.style'
 import { NewsItem } from 'app/pages/home/components/News/NewsItem'
 import { LinearProgress, TablePagination, Grid } from '@material-ui/core'
 import { useTableWithPagination } from 'components/TableWithPagination/hooks/useTableWithPagination'
+import { useTheme } from '@material-ui/core/styles'
+import useMediaQuery from '@material-ui/core/useMediaQuery'
 
 export interface NewsListProps<T> {
   name: string
@@ -19,7 +21,9 @@ export const NewsList = <T,>({
   filter,
   queryEnabled = true
 }: NewsListProps<T>): JSX.Element => {
+  const theme = useTheme()
   const classes = useStyles()
+  const isTablet = useMediaQuery(theme.breakpoints.down('md'))
   const {
     items,
     status,
@@ -27,20 +31,27 @@ export const NewsList = <T,>({
     setPage,
     rowsPerPage,
     total
-  } = useTableWithPagination<NewsItemType>(name, uri, filter, queryEnabled, 5)
+  } = useTableWithPagination<NewsItemType>(name, uri, filter, queryEnabled, 4)
+
+  const isSecondaryColor = (index: number) => {
+    return isTablet ? index === 1 || index === 3 : index === 1 || index === 2
+  }
 
   return (
     <Grid container>
       <Grid item className={classes.wrapper}>
         {status === 'loading' && <LinearProgress />}
-        {items.map(({ title, excerpt, imageLink, link, id }) => (
-          <NewsItem
-            key={id}
-            title={title}
-            excerpt={excerpt}
-            imageLink={imageLink}
-            link={link}
-          />
+        {items.map(({ title, excerpt, imageLink, link, id }, index) => (
+          <Grid item xs={12} md={12} lg={6}>
+            <NewsItem
+              key={id}
+              title={title}
+              excerpt={excerpt}
+              imageLink={imageLink}
+              link={link}
+              color={isSecondaryColor(index) ? 'secondary' : 'primary'}
+            />
+          </Grid>
         ))}
       </Grid>
 
