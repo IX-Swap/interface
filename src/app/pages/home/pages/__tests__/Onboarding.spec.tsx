@@ -46,6 +46,12 @@ describe('Onboarding', () => {
   })
 
   it('renders components correctly', () => {
+    const objResponse = {
+      user: user
+    }
+
+    jest.spyOn(useAuth, 'useAuth').mockImplementation(() => objResponse as any)
+
     render(<Onboarding />)
 
     expect(OnboardingLinks).toHaveBeenCalled()
