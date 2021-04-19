@@ -1,0 +1,46 @@
+import React from 'react'
+import { Box, Grid, Typography } from '@material-ui/core'
+import { SearchFilter } from 'app/components/SearchFilter'
+import { useQueryFilter } from 'hooks/filters/useQueryFilter'
+import { useStyles } from './News.style'
+import { useTheme } from '@material-ui/core/styles'
+
+export const News = () => {
+  const classes = useStyles()
+  const { getFilterValue } = useQueryFilter()
+
+  const filter = {
+    search: getFilterValue('search')
+  }
+  // Remove after merge in story branch and use this variable together with news list
+  console.log(filter)
+
+  const theme = useTheme()
+
+  return (
+    <>
+      <Grid container alignItems={'center'}>
+        <Typography variant='h4'>News</Typography>
+        <Typography variant='body2' className={classes.text}>
+          In Partnership With
+        </Typography>
+        <img
+          width={106}
+          height={34}
+          src={require(theme.palette.type === 'light'
+            ? 'assets/icons/atlas_logo.png'
+            : 'assets/icons/atlas_logo_white.png')}
+          alt={'Atlas One Logo'}
+        />
+        <Grid item xs={12} md={6} lg={3} className={classes.input}>
+          <SearchFilter
+            fullWidth
+            placeholder='Search'
+            inputAdormentPosition='end'
+          />
+        </Grid>
+      </Grid>
+      <Box my={5} />
+    </>
+  )
+}
