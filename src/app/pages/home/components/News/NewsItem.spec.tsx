@@ -13,7 +13,8 @@ describe('NewsItem', () => {
     title: 'Title',
     excerpt: 'Excerpt',
     link: 'Test link',
-    imageLink: 'Test image link'
+    imageLink: 'Test image link',
+    color: 'primary'
   }
 
   afterEach(async () => {
@@ -32,7 +33,7 @@ describe('NewsItem', () => {
     expect(getByText('Excerpt')).toBeTruthy()
     expect(Link).toBeCalledWith(
       expect.objectContaining({
-        href: 'Test link'
+        href: props.link
       }),
       {}
     )
