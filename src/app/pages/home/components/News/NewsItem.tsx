@@ -6,7 +6,7 @@ import {
   Typography
 } from '@material-ui/core'
 import { ReactComponent as Arrow } from 'assets/icons/arrow.svg'
-import React from 'react'
+import React, { useState } from 'react'
 import { useStyles } from './NewsItem.style'
 import classNames from 'classnames'
 
@@ -26,12 +26,13 @@ export const NewsItem = ({
   imageLink
 }: NewsItemProps) => {
   const classes = useStyles()
+  const [isImageLoaded, setIsImageLoaded] = useState(true)
 
   return (
     <Card className={classes.container}>
       <CardContent
         className={classNames(classes.content, {
-          [classes.fullWidth]: imageLink === null,
+          [classes.fullWidth]: imageLink === null || !isImageLoaded,
           [classes.secondaryContent]: color === 'secondary'
         })}
       >
@@ -67,12 +68,13 @@ export const NewsItem = ({
           <Arrow />
         </Link>
       </CardContent>
-      {imageLink !== null && (
+      {imageLink !== null && isImageLoaded && (
         <CardMedia
-          component={'div'}
+          component={'img'}
           className={classNames(classes.media)}
           image={imageLink}
           title='News Image'
+          onError={() => setIsImageLoaded(false)}
         />
       )}
     </Card>
