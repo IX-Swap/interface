@@ -1,4 +1,3 @@
-import { isAddress } from '@ethersproject/address'
 import isPast from 'date-fns/isPast'
 import {
   CorporateDeclarations,
@@ -41,14 +40,6 @@ export const passwordValidator = {
 
     return false
   }
-}
-
-export const addressValidator = (value: string | null | undefined) => {
-  if (value !== null && value !== undefined) {
-    return isAddress(value)
-  }
-
-  return false
 }
 
 export const individualAccreditedInvestorValidator = (
