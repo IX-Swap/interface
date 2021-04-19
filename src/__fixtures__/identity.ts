@@ -74,7 +74,8 @@ export const corporate: CorporateIdentity = {
   authorizationDocuments: [],
   authorization: authorizationInfo,
   authorizations: [],
-  mailingAddress: address
+  mailingAddress: address,
+  createdBy: '12345'
 }
 
 export const agreementsAndDisclosures = {
@@ -143,7 +144,8 @@ export const individual: IndividualIdentity = {
       checked: true,
       value: 20
     }
-  ]
+  ],
+  createdBy: '12345'
 }
 
 export const document: DataroomFile = {

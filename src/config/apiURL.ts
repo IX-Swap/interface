@@ -47,7 +47,8 @@ export const identityURL = {
       `/identity/issuance-detail/${issuanceId}/submit`
   },
   stats: {
-    get: `/identity/stats`
+    get: `/identity/stats`,
+    list: `/identity/list`
   }
 }
 

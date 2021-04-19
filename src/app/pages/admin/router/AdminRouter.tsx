@@ -3,9 +3,9 @@ import { AccessReports } from 'app/pages/admin/pages/AccessReports'
 import { CreateCorporateAsAdmin } from 'app/pages/admin/pages/CreateCorporateAsAdmin'
 import { CreateIndividualAsAdmin } from 'app/pages/admin/pages/CreateIndividualAsAdmin'
 import { CreateIssuerAsAdmin } from 'app/pages/admin/pages/CreateIssuerAsAdmin'
-import { Identities } from 'app/pages/admin/pages/Identities'
 import { Users } from 'app/pages/admin/pages/Users'
 import { ViewUser } from 'app/pages/admin/pages/ViewUser'
+import { AdminIdentitiesRouter } from 'app/pages/admin/router/AdminIdentitiesRouter'
 import { adminLandingLinks, AdminRoute } from 'app/pages/admin/router/config'
 import { AppRoute } from 'components/AppRoute'
 import React from 'react'
@@ -42,8 +42,8 @@ export const AdminRouter = () => {
         <CreateIssuerAsAdmin />
       </AppRoute>
 
-      <AppRoute exact path={AdminRoute.identities} breadcrumb='Identities'>
-        <Identities />
+      <AppRoute path={AdminRoute.identities} breadcrumb='Identities'>
+        <AdminIdentitiesRouter />
       </AppRoute>
 
       <AppRoute exact path={AdminRoute.landing}>
