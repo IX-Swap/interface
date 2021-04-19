@@ -13,14 +13,12 @@ export const News = () => {
   }
 
   return (
-    <>
-      <Grid container>
-        <NewsList
-          name={homeQueryKeys.getNewsList}
-          uri={homeURL.getNewsList}
-          filter={filter}
-        />
-      </Grid>
-    </>
+    <Grid container>
+      <NewsList
+        name={homeQueryKeys.getNewsList}
+        uri={homeURL.getNewsList}
+        filter={filter}
+      />
+    </Grid>
   )
 }
