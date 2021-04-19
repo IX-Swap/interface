@@ -11,14 +11,14 @@ import TablePagination from '@material-ui/core/TablePagination'
 import { news } from '__fixtures__/news'
 
 const useTableWithPaginationMockReturnValue: useTableWithPaginationHook.UseTableWithPaginationReturnType<any> = {
-  total: 5,
+  total: 4,
   items: news,
   setRowsPerPage: jest.fn(),
   setPage: jest.fn(),
   status: QueryStatus.Idle,
   fetchMore: jest.fn(),
   page: 0,
-  rowsPerPage: 5
+  rowsPerPage: 4
 }
 
 jest.mock('app/pages/home/components/News/NewsItem', () => ({
@@ -53,7 +53,7 @@ describe('NewsList', () => {
       .mockReturnValueOnce(useTableWithPaginationMockReturnValue)
 
     render(<NewsList {...props} />)
-    expect(NewsItem).toBeCalledTimes(5)
+    expect(NewsItem).toBeCalledTimes(4)
     news.forEach((item, index) => {
       expect(NewsItem).toHaveBeenNthCalledWith(
         index + 1,
@@ -61,7 +61,8 @@ describe('NewsList', () => {
           title: item.title,
           excerpt: item.excerpt,
           link: item.link,
-          imageLink: item.imageLink
+          imageLink: item.imageLink,
+          color: index === 1 || index === 2 ? 'secondary' : 'primary'
         }),
         {}
       )
@@ -80,7 +81,7 @@ describe('NewsList', () => {
         page: 0,
         component: 'div',
         rowsPerPageOptions: [],
-        rowsPerPage: 5,
+        rowsPerPage: 4,
         nextIconButtonProps: {
           disabled: false
         }

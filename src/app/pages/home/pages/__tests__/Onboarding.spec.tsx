@@ -8,6 +8,11 @@ import { OnboardingLinks } from 'app/pages/home/components/OnboardingLinks'
 import { TopIssuers } from 'app/pages/home/components/TopIssuers'
 import { TopCorporates } from 'app/pages/home/components/TopCorporates'
 import { PromoBanner } from 'app/pages/invest/components/PromoBanner'
+import { News } from 'app/pages/home/components/News/News'
+
+jest.mock('app/pages/home/components/News/News', () => ({
+  News: jest.fn(() => null)
+}))
 
 jest.mock('app/pages/home/components/AccessReports', () => ({
   AccessReports: jest.fn(() => null)
@@ -46,12 +51,6 @@ describe('Onboarding', () => {
   })
 
   it('renders components correctly', () => {
-    const objResponse = {
-      user: user
-    }
-
-    jest.spyOn(useAuth, 'useAuth').mockImplementation(() => objResponse as any)
-
     render(<Onboarding />)
 
     expect(OnboardingLinks).toHaveBeenCalled()
@@ -59,5 +58,6 @@ describe('Onboarding', () => {
     expect(TopIssuers).toHaveBeenCalled()
     expect(TopCorporates).toHaveBeenCalled()
     expect(PromoBanner).toHaveBeenCalled()
+    expect(News).toHaveBeenCalled()
   })
 })

@@ -54,18 +54,5 @@ export const news: NewsItemType[] = [
       'https://www.electricfatbikereview.com/wp-content/uploads/2020/09/Global-Market-Reseach-store11.jpg.jpg',
     source: 'Eurowire',
     publishedOn: '2:00.000Z'
-  },
-  {
-    _label_: '804b8c30-c75d-430e-9975-0b92ee6ed4ca',
-    id: '804b8c30-c75d-430e-9975-0b92ee6ed4ca',
-    title: 'Overstock expanding blockchain arm tZero in Ireland',
-    excerpt:
-      'The Emerald Isle is now a hotspot for talent in tech and a corporate tax haven.',
-    link:
-      'https://cointelegraph.com/news/overstock-expanding-blockchain-arm-tzero-in-ireland',
-    imageLink:
-      'https://images.cointelegraph.com/images/1434_aHR0cHM6Ly9zMy5jb2ludGVsZWdyYXBoLmNvbS91cGxvYWRzLzIwMjAtMTEvZjFlNzc1OTItNzZmYy00Yzk3LTg4MzctN2Y1NmM5ZmQ0NzVkLmpwZw==.jpg',
-    source: 'Cointelegraph',
-    publishedOn: '2020-11-10T20:00:00.000Z'
   }
 ]
