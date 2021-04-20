@@ -142,3 +142,7 @@ export const issuanceQueryKeys = {
   getActivitiesList: (dsoId: string) =>
     generateQueryKey('activities-list', dsoId)
 }
+
+export const virtualAccountQueryKeys = {
+  listUnassigned: 'unassigned-virtual-accounts'
+}

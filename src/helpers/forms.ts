@@ -17,6 +17,9 @@ export const numericValueExtractor = (
   values: NumberFormatValues
 ): number | undefined => values.floatValue
 
+export const numericStringValueExtractor = (values: NumberFormatValues) =>
+  values.value.toString()
+
 export const plainValueExtractor = (value: any) => value
 
 export const sliderValueExtractor = (_: any, value: any) => value

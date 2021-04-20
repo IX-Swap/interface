@@ -174,3 +174,7 @@ export const documentsURL = {
   getAccessReport: (fileId: string) =>
     `/dataroom/reports-and-newsletters/${fileId}`
 }
+
+export const virtualAccounts = {
+  add: '/virtual-accounts'
+}
