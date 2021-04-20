@@ -66,6 +66,7 @@ export const authorizerQueryKeys = {
 
 export const homeQueryKeys = {
   getAccessReports: 'access-reports',
+  getNewsList: 'news-list',
   getTopIssuers: 'top-issuers',
   getTopCoporates: 'top-corporate'
 }

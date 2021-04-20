@@ -3,6 +3,7 @@ import { InternalRouteProps } from 'types/util'
 import { ReactComponent as IndividualIcon } from 'assets/icons/navigation/individual.svg'
 import { ReactComponent as UsersIcon } from 'assets/icons/navigation/users.svg'
 import { ReactComponent as CashWithdrawalIcon } from 'assets/icons/navigation/cash-withdrawal.svg'
+import { ReactComponent as VirtualAccountIcon } from 'assets/icons/navigation/virtual-account.svg'
 
 export const AdminRoute = {
   landing: makeURL(['app', 'admin']),
@@ -15,7 +16,8 @@ export const AdminRoute = {
   identities: '/app/admin/identities',
   viewIndividualIdentity: '/app/admin/identies/individual/:userId/view',
   viewCorporateIdentity:
-    '/app/admin/identies/corporate/:userId/:identityId/view'
+    '/app/admin/identies/corporate/:userId/:identityId/view',
+  virtualAccount: '/app/admin/virtualAccount'
 }
 
 export const adminLandingLinks: InternalRouteProps[] = [
@@ -36,5 +38,11 @@ export const adminLandingLinks: InternalRouteProps[] = [
     path: AdminRoute.users,
     color: '#01A2FF',
     icon: UsersIcon
+  },
+  {
+    label: 'Virtual Account',
+    path: AdminRoute.virtualAccount,
+    color: '#0FA3A3',
+    icon: VirtualAccountIcon
   }
 ]

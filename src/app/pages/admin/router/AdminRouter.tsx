@@ -5,9 +5,11 @@ import { CreateIndividualAsAdmin } from 'app/pages/admin/pages/CreateIndividualA
 import { CreateIssuerAsAdmin } from 'app/pages/admin/pages/CreateIssuerAsAdmin'
 import { Users } from 'app/pages/admin/pages/Users'
 import { ViewUser } from 'app/pages/admin/pages/ViewUser'
-import { AdminIdentitiesRouter } from 'app/pages/admin/router/AdminIdentitiesRouter'
 import { adminLandingLinks, AdminRoute } from 'app/pages/admin/router/config'
 import { AppRoute } from 'components/AppRoute'
+import { Identities } from 'app/pages/admin/pages/Identities'
+import { ViewCorporateIdentity } from 'app/pages/admin/pages/ViewCorporateIdentity'
+import { ViewIndividualIdentity } from 'app/pages/admin/pages/ViewIndividualIdentity'
 import React from 'react'
 import { Switch } from 'react-router'
 
@@ -42,8 +44,22 @@ export const AdminRouter = () => {
         <CreateIssuerAsAdmin />
       </AppRoute>
 
+      <AppRoute
+        path={AdminRoute.viewIndividualIdentity}
+        breadcrumb='View Individual Identity'
+      >
+        <ViewIndividualIdentity />
+      </AppRoute>
+
+      <AppRoute
+        path={AdminRoute.viewCorporateIdentity}
+        breadcrumb='View Corporate Identity'
+      >
+        <ViewCorporateIdentity />
+      </AppRoute>
+
       <AppRoute path={AdminRoute.identities} breadcrumb='Identities'>
-        <AdminIdentitiesRouter />
+        <Identities />
       </AppRoute>
 
       <AppRoute exact path={AdminRoute.landing}>

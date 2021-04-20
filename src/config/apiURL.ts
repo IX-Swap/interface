@@ -6,6 +6,7 @@ export const apiURL = {
 
 export const homeURL = {
   getAccessReports: '/dataroom/reports-and-newsletters/list',
+  getNewsList: '/resources/news',
   getTopIssuers: '/issuance/top-issuers',
   getTopCorporates: '/issuance/top-corporates'
 }

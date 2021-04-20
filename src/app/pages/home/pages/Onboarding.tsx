@@ -8,6 +8,7 @@ import { TopIssuers } from 'app/pages/home/components/TopIssuers'
 import { TopCorporates } from 'app/pages/home/components/TopCorporates'
 import { PromoBanner } from 'app/pages/invest/components/PromoBanner'
 import { Divider } from 'ui/Divider'
+import { News } from 'app/pages/home/components/News/News'
 
 export const Onboarding = () => {
   const { user } = useAuth()
@@ -29,6 +30,10 @@ export const Onboarding = () => {
           <Typography variant='h4'>Access Reports</Typography>
           <Box my={2.5} />
           <AccessReports />
+        </Grid>
+
+        <Grid item xs={12}>
+          <News />
         </Grid>
 
         <Grid container item xs={12}>
