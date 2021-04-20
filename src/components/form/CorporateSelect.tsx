@@ -4,7 +4,7 @@ import { MenuItem, Select } from '@material-ui/core'
 import { queryStatusRenderer } from './renderUtils'
 
 export const CorporateSelect = (props: any) => {
-  const { data, status } = useAllCorporates({ all: true })
+  const { data, status } = useAllCorporates({ all: true, status: 'Approved' })
 
   const queryStatus = queryStatusRenderer(status)
   if (queryStatus !== undefined) return queryStatus

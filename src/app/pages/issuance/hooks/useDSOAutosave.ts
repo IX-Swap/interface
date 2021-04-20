@@ -30,8 +30,9 @@ export const useDSOAutosave = (
   const { user } = useAuth()
   const userId = getIdFromObj(user)
   const dsoId = getIdFromObj(initialDSO)
+  const issuerId = initialDSO?.user ?? userId
 
-  const { data: dso, isFetching, refetch } = useDSOById(dsoId, initialDSO?.user)
+  const { data: dso, isFetching, refetch } = useDSOById(dsoId, issuerId)
 
   const {
     watch,
@@ -75,7 +76,7 @@ export const useDSOAutosave = (
   ] = useMutation(
     async (payload: DSORequestArgs) => {
       return await apiService.put(
-        issuanceURL.dso.update(userId, dsoId),
+        issuanceURL.dso.update(issuerId, dsoId),
         payload
       )
     },
