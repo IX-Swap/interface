@@ -25,12 +25,9 @@ export interface AddVirtualAccountsFormProps {
 export const AddVirtualAccountsForm = ({
   closeDialog
 }: AddVirtualAccountsFormProps) => {
-  const [addVirtualAccount] = useAddVirtualAccount()
+  const [addVirtualAccount] = useAddVirtualAccount(closeDialog)
   const handleSubmit = async (values: any) => {
-    const res = await addVirtualAccount(values)
-    if (res?.status === 200) {
-      closeDialog()
-    }
+    await addVirtualAccount(values)
   }
 
   return (

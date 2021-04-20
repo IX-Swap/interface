@@ -4,7 +4,7 @@ import { virtualAccountQueryKeys } from 'config/queryKeys'
 import { useServices } from 'hooks/useServices'
 import { useMutation, useQueryCache } from 'react-query'
 
-export const useAddVirtualAccount = () => {
+export const useAddVirtualAccount = (onSuccessCallback: () => void) => {
   const { apiService, snackbarService } = useServices()
   const queryCache = useQueryCache()
 
@@ -19,6 +19,7 @@ export const useAddVirtualAccount = () => {
         'Virtual Accounts added successfully!',
         'success'
       )
+      onSuccessCallback()
       await queryCache.invalidateQueries(virtualAccountQueryKeys.listUnassigned)
     },
     onError: (error: any) => {
