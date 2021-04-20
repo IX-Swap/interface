@@ -4,6 +4,9 @@ import { SearchFilter } from 'app/components/SearchFilter'
 import { useQueryFilter } from 'hooks/filters/useQueryFilter'
 import { useStyles } from './News.style'
 import { useTheme } from '@material-ui/core/styles'
+import { NewsList } from 'app/pages/home/components/News/NewsList'
+import { homeURL } from 'config/apiURL'
+import { homeQueryKeys } from 'config/queryKeys'
 
 export const News = () => {
   const classes = useStyles()
@@ -12,8 +15,6 @@ export const News = () => {
   const filter = {
     search: getFilterValue('search')
   }
-  // Remove after merge in story branch and use this variable together with news list
-  console.log(filter)
 
   const theme = useTheme()
 
@@ -41,6 +42,11 @@ export const News = () => {
         </Grid>
       </Grid>
       <Box my={5} />
+      <NewsList
+        name={homeQueryKeys.getNewsList}
+        uri={homeURL.getNewsList}
+        filter={filter}
+      />
     </>
   )
 }
