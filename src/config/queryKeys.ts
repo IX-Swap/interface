@@ -143,3 +143,7 @@ export const issuanceQueryKeys = {
   getActivitiesList: (dsoId: string) =>
     generateQueryKey('activities-list', dsoId)
 }
+
+export const virtualAccountQueryKeys = {
+  listAssigned: 'assigned-virtual-accounts'
+}
