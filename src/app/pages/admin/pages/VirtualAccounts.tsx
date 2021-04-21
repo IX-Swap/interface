@@ -2,7 +2,7 @@ import { Grid } from '@material-ui/core'
 import { PageHeader } from 'app/components/PageHeader/PageHeader'
 import React from 'react'
 import { VSpacer } from 'components/VSpacer'
-import { UnassignedAccountTable } from 'app/pages/admin/components/UnassignedAccountTable/UnassignedAccountTable'
+import { UnassignedAccountsTable } from 'app/pages/admin/components/UnassignedAccountTable/UnassignedAccountsTable'
 import { SelectionHelper } from 'components/SelectionHelper'
 import { VirtualAccount as VirtualAccountType } from 'types/virtualAccount'
 
@@ -22,7 +22,7 @@ export const VirtualAccounts = () => {
       <VSpacer size='small' />
       <SelectionHelper itemComparator={itemComparator}>
         <Grid item>
-          <UnassignedAccountTable />
+          <UnassignedAccountsTable />
         </Grid>
       </SelectionHelper>
     </Grid>

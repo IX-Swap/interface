@@ -7,9 +7,9 @@ import { Actions } from 'app/pages/admin/components/UnassignedAccountTable/Actio
 import { columns } from 'app/pages/admin/components/UnassignedAccountTable/columns'
 import { VirtualAccount } from 'types/virtualAccount'
 import { useSelectionHelperContext } from 'components/SelectionHelper'
-import { fakeVirtualAccounts } from '__fixtures__/unassignedVirtualAccounts'
+import { fakeVirtualAccountsList } from '__fixtures__/unassignedVirtualAccounts'
 
-export const UnassignedAccountTable: React.FC = () => {
+export const UnassignedAccountsTable: React.FC = () => {
   const { user } = useAuth()
   const userId = getIdFromObj(user)
   const selectionHelperContext = useSelectionHelperContext()
@@ -24,7 +24,7 @@ export const UnassignedAccountTable: React.FC = () => {
       actions={Actions}
       selectionHelper={selectionHelperContext}
       // TODO Remove fakeItems after backend api to be ready
-      fakeItems={fakeVirtualAccounts as VirtualAccount[]}
+      fakeItems={fakeVirtualAccountsList as VirtualAccount[]}
     />
   )
 }

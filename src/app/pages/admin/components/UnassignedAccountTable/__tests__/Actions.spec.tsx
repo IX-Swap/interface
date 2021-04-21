@@ -1,7 +1,7 @@
 import React from 'react'
 import { render, cleanup } from 'test-utils'
 
-import { fakeVirtualAccounts } from '__fixtures__/unassignedVirtualAccounts'
+import { fakeVirtualAccountsList } from '__fixtures__/unassignedVirtualAccounts'
 import {
   Actions,
   ActionsProps
@@ -14,7 +14,9 @@ import { AdminRoute } from 'app/pages/admin/router/config'
 jest.mock('@material-ui/core/IconButton', () => jest.fn(() => null))
 
 describe('Actions', () => {
-  const props: ActionsProps = { item: fakeVirtualAccounts[0] as VirtualAccount }
+  const props: ActionsProps = {
+    item: fakeVirtualAccountsList[0] as VirtualAccount
+  }
 
   afterEach(async () => {
     await cleanup()

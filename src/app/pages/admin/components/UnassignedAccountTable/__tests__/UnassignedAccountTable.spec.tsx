@@ -1,6 +1,6 @@
 import React from 'react'
 import { render, cleanup } from 'test-utils'
-import { UnassignedAccountTable } from 'app/pages/admin/components/UnassignedAccountTable/UnassignedAccountTable'
+import { UnassignedAccountsTable } from 'app/pages/admin/components/UnassignedAccountTable/UnassignedAccountsTable'
 import { TableView } from 'components/TableWithPagination/TableView'
 import { columns } from 'app/pages/admin/components/UnassignedAccountTable/columns'
 
@@ -19,11 +19,11 @@ describe('UnassignedAccountTable', () => {
   })
 
   it('renders without error', () => {
-    render(<UnassignedAccountTable />)
+    render(<UnassignedAccountsTable />)
   })
 
   it('renders TableView with correct props', () => {
-    render(<UnassignedAccountTable />)
+    render(<UnassignedAccountsTable />)
 
     expect(TableView).toHaveBeenCalledWith(
       expect.objectContaining({

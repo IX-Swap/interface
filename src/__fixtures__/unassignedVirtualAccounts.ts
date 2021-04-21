@@ -1,4 +1,4 @@
-export const fakeVirtualAccounts = [
+export const fakeVirtualAccountsList = [
   {
     _id: '605ccb9c8e092311818e5af9',
     accountNumber: '000000000121',
