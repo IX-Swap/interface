@@ -10,6 +10,7 @@ import { adminLandingLinks, AdminRoute } from 'app/pages/admin/router/config'
 import { AppRoute } from 'components/AppRoute'
 import React from 'react'
 import { Switch } from 'react-router'
+import { VirtualAccounts } from 'app/pages/admin/pages/VirtualAccounts'
 
 export const AdminRouter = () => {
   return (
@@ -44,6 +45,14 @@ export const AdminRouter = () => {
 
       <AppRoute exact path={AdminRoute.identities} breadcrumb='Identities'>
         <Identities />
+      </AppRoute>
+
+      <AppRoute
+        exact
+        path={AdminRoute.virtualAccount}
+        breadcrumb='Virtual Accounts'
+      >
+        <VirtualAccounts />
       </AppRoute>
 
       <AppRoute exact path={AdminRoute.landing}>

@@ -13,7 +13,7 @@ export const ActionTableCell = <T,>({
   cacheQueryKey,
   actions
 }: ActionTableCellProps<T>) => (
-  <TableCell align='center'>
+  <TableCell align='right'>
     {actions?.({ item: row, cacheQueryKey }) ?? null}
   </TableCell>
 )
