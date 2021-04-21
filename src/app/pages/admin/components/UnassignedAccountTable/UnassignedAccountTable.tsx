@@ -24,7 +24,7 @@ export const UnassignedAccountTable: React.FC = () => {
       actions={Actions}
       selectionHelper={selectionHelperContext}
       // TODO Remove fakeItems after backend api to be ready
-      fakeItems={fakeVirtualAccounts}
+      fakeItems={fakeVirtualAccounts as VirtualAccount[]}
     />
   )
 }
