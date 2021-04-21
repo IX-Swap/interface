@@ -6,11 +6,14 @@ import { UnassignedAccountTable } from 'app/pages/admin/components/UnassignedAcc
 import { SelectionHelper } from 'components/SelectionHelper'
 import { VirtualAccount as VirtualAccountType } from 'types/virtualAccount'
 
-export const VirtualAccounts = () => {
-  const itemComparator = (a: VirtualAccountType, b: VirtualAccountType) => {
-    return a._id === b._id
-  }
+export const itemComparator = (
+  a: VirtualAccountType,
+  b: VirtualAccountType
+) => {
+  return a._id === b._id
+}
 
+export const VirtualAccounts = () => {
   return (
     <Grid container direction='column'>
       <Grid item>

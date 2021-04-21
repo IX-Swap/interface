@@ -1,7 +1,10 @@
 import React from 'react'
 import { render, cleanup } from 'test-utils'
 import { SelectionHelper } from 'components/SelectionHelper'
-import { VirtualAccounts } from 'app/pages/admin/pages/VirtualAccounts'
+import {
+  itemComparator,
+  VirtualAccounts
+} from 'app/pages/admin/pages/VirtualAccounts'
 
 jest.mock(
   'app/pages/admin/components/UnassignedAccountTable/UnassignedAccountTable',
@@ -24,9 +27,14 @@ describe('VirtualAccounts', () => {
     render(<VirtualAccounts />)
   })
 
-  it('renders with SelectionHelper', () => {
+  it('renders with SelectionHelper with correct props', () => {
     render(<VirtualAccounts />)
 
-    expect(SelectionHelper).toBeCalled()
+    expect(SelectionHelper).toBeCalledWith(
+      expect.objectContaining({
+        itemComparator: itemComparator
+      }),
+      {}
+    )
   })
 })

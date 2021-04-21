@@ -6,6 +6,12 @@ import {
 } from 'components/TableWithPagination/TableView'
 import * as useTableWithPaginationHook from 'components/TableWithPagination/hooks/useTableWithPagination'
 import { QueryStatus } from 'react-query'
+import { useSelectionHelperContext } from 'components/SelectionHelper'
+import { fakeVirtualAccounts } from '__fixtures__/unassignedVirtualAccounts'
+
+jest.mock('components/SelectionHelper', () => ({
+  useSelectionHelperContext: jest.fn(() => {})
+}))
 
 const useTableWithPaginationMockReturnValue: useTableWithPaginationHook.UseTableWithPaginationReturnType<any> = {
   total: 0,
@@ -30,6 +36,12 @@ describe('TableView', () => {
     uri: 'test/uri'
   }
 
+  const extraProps: TableViewProps<any> = {
+    ...props,
+    selectionHelper: useSelectionHelperContext(),
+    fakeItems: fakeVirtualAccounts
+  }
+
   afterEach(async () => {
     await cleanup()
     jest.clearAllMocks()
@@ -52,5 +64,13 @@ describe('TableView', () => {
     const table = getByTestId('table')
 
     expect(table).toBeTruthy()
+  })
+
+  it('renders with selectionHelper prop without error', () => {
+    jest
+      .spyOn(useTableWithPaginationHook, 'useTableWithPagination')
+      .mockReturnValueOnce(useTableWithPaginationMockReturnValue)
+
+    render(<TableView {...extraProps} />)
   })
 })
