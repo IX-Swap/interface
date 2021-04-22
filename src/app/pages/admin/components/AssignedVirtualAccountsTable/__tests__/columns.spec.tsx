@@ -10,7 +10,7 @@ describe('columns', () => {
     })
 
     it('renders correct date', () => {
-      const match = columns.find(el => el.key === 'assigned')
+      const match = columns.find(el => el.key === 'assignedAt')
       const renderer = match?.render as any
 
       const date = new Date()
@@ -24,6 +24,15 @@ describe('columns', () => {
 
       expect(container).toHaveTextContent('about 1 month ago')
     })
+
+    it('renders null when date is undefined', () => {
+      const match = columns.find(el => el.key === 'assignedAt')
+      const renderer = match?.render as any
+
+      const { container } = render(<>{renderer(undefined)}</>)
+
+      expect(container).toBeEmptyDOMElement()
+    })
   })
 
   describe('renderAmount', () => {
@@ -33,7 +42,7 @@ describe('columns', () => {
     })
 
     it('renders correct amount string', () => {
-      const match = columns.find(el => el.key === 'availableBalance')
+      const match = columns.find(el => el.key === 'balance.available')
       const renderer = match?.render as any
 
       const { container } = render(<>{renderer(10000)}</>)

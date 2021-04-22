@@ -1,11 +1,14 @@
 import { AssignedVirtualAccount } from 'app/pages/admin/components/AssignedVirtualAccountsTable/AssignedVirtualAccountsTable'
+import { user } from '__fixtures__/user'
 
 export const assignedVirtualAccount: AssignedVirtualAccount = {
-  assigned: '',
-  name: '',
-  virtualAccounts: '0000001',
+  assignedAt: '',
+  user: user,
+  accountNumber: '0000001',
   currency: 'SGD',
-  availableBalance: 10000,
-  balanceOnHold: 1000,
-  outstandingBalance: 1000
+  balance: {
+    available: 10000,
+    onHold: 1000,
+    outstanding: 1000
+  }
 }
