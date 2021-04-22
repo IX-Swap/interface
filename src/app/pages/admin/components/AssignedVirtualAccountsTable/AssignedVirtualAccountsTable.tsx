@@ -24,9 +24,17 @@ export interface AssignedVirtualAccount {
 export const AssignedVirtualAccountsTable = () => {
   const { getFilterValue } = useQueryFilter()
 
+  const currencyFilterValue = getFilterValue('currency')
+  const bothCurrency =
+    currencyFilterValue !== undefined &&
+    currencyFilterValue.split(',').length > 1
+
   const filter = {
     search: getFilterValue('search'),
-    isAssigned: true
+    currency:
+      currencyFilterValue === '' || bothCurrency
+        ? undefined
+        : currencyFilterValue
   }
 
   return (
