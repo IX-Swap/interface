@@ -177,5 +177,5 @@ export const documentsURL = {
 }
 
 export const virtualAccounts = {
-  getAll: '/virtual-accounts/listing'
+  getAll: '/virtual-accounts/list'
 }

@@ -6,6 +6,9 @@ import React from 'react'
 import { formatMoney } from 'helpers/numbers'
 
 export const renderAssignedDate = (value: any, row: AssignedVirtualAccount) => {
+  if (value === undefined) {
+    return null
+  }
   return <Typography noWrap>{getTimeFromNow(new Date(value))}</Typography>
 }
 
@@ -15,16 +18,16 @@ export const renderAmount = (value: any, row: AssignedVirtualAccount) => {
 
 export const columns: Array<TableColumn<AssignedVirtualAccount>> = [
   {
-    key: 'assigned',
+    key: 'assignedAt',
     label: 'Assigned',
     render: renderAssignedDate
   },
   {
-    key: 'name',
+    key: 'user.name',
     label: 'Name'
   },
   {
-    key: 'virtualAccounts',
+    key: 'accountNumber',
     label: 'Virtual Accounts'
   },
   {
@@ -32,21 +35,21 @@ export const columns: Array<TableColumn<AssignedVirtualAccount>> = [
     label: 'Currency'
   },
   {
-    key: 'availableBalance',
+    key: 'balance.available',
     label: 'Available Balance',
     headAlign: 'right',
     align: 'right',
     render: renderAmount
   },
   {
-    key: 'balanceOnHold',
+    key: 'balance.onHold',
     label: 'Balance on Hold',
     headAlign: 'right',
     align: 'right',
     render: renderAmount
   },
   {
-    key: 'outstandingBalance',
+    key: 'balance.outstanding',
     label: 'Outstanding Balance',
     headAlign: 'right',
     align: 'right',

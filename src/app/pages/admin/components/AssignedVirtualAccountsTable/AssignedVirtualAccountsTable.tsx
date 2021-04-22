@@ -4,18 +4,24 @@ import { TableView } from 'components/TableWithPagination/TableView'
 import { virtualAccounts } from 'config/apiURL'
 import { virtualAccountQueryKeys } from 'config/queryKeys'
 import React from 'react'
+import User from 'types/user'
 
 export interface AssignedVirtualAccount {
-  assigned: string
-  name: string
-  virtualAccounts: string
+  assignedAt: string
+  user: User
+  accountNumber: string
   currency: 'SGD' | 'USD'
-  availableBalance: number
-  balanceOnHold: number
-  outstandingBalance: number
+  balance: {
+    available: number
+    onHold: number
+    outstanding: number
+  }
 }
 
 export const AssignedVirtualAccountsTable = () => {
+  const filter = {
+    isAssigned: true
+  }
   return (
     <TableView<AssignedVirtualAccount>
       uri={virtualAccounts.getAll}
@@ -23,19 +29,7 @@ export const AssignedVirtualAccountsTable = () => {
       columns={columns}
       hasActions
       actions={Actions}
-      filter={{}}
-      fakeItems={[
-        {
-          assigned:
-            'Wed Apr 21 2021 15:03:47 GMT+0800 (Philippine Standard Time)',
-          name: 'Selmer',
-          virtualAccounts: '0000000000012',
-          currency: 'USD',
-          availableBalance: 10000,
-          balanceOnHold: 10000,
-          outstandingBalance: 1000
-        }
-      ]}
+      filter={filter}
     />
   )
 }
