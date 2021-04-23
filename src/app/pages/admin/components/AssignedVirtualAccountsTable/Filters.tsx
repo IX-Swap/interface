@@ -1,6 +1,7 @@
-import { Box, Grid } from '@material-ui/core'
+import { Box, Grid, Typography } from '@material-ui/core'
 import { SearchFilter } from 'app/components/SearchFilter'
 import { CurrencyFilter } from 'app/pages/admin/components/AssignedVirtualAccountsTable/CurrencyFilter'
+import { DateFilter } from 'app/pages/admin/components/AssignedVirtualAccountsTable/DateFilter'
 import React from 'react'
 
 export const Filters = () => {
@@ -16,7 +17,22 @@ export const Filters = () => {
         </Box>
       </Grid>
       <Grid item xs={12} md={6}>
-        <Grid container justify='flex-end' spacing={2}>
+        <Grid
+          container
+          direction='row'
+          justify='flex-end'
+          spacing={2}
+          alignItems='center'
+        >
+          <Grid item>
+            <Typography>Date:</Typography>
+          </Grid>
+          <Grid item>
+            <DateFilter name='fromDate' label='From' />
+          </Grid>
+          <Grid item>
+            <DateFilter name='toDate' label='To' />
+          </Grid>
           <Grid item>
             <CurrencyFilter currency='SGD' />
           </Grid>

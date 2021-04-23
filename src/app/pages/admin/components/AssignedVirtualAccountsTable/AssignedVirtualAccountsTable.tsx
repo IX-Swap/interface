@@ -31,6 +31,8 @@ export const AssignedVirtualAccountsTable = () => {
 
   const filter = {
     search: getFilterValue('search'),
+    to: getFilterValue('toDate'),
+    from: getFilterValue('fromDate'),
     currency:
       currencyFilterValue === '' || bothCurrency
         ? undefined
@@ -39,7 +41,7 @@ export const AssignedVirtualAccountsTable = () => {
 
   return (
     <Grid container direction='column' spacing={2}>
-      <Grid item>
+      <Grid item style={{ maxHeight: 70 }}>
         <Filters />
       </Grid>
       <Grid item>
