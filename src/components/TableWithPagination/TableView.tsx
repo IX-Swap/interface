@@ -41,7 +41,7 @@ export interface TableViewProps<T> {
   children?: (props: TableViewRendererProps<T>) => JSX.Element
   fakeItems?: T[]
   innerRef?: any
-  selectionHelper?: UseSelectionHelperReturnType<unknown>
+  selectionHelper?: UseSelectionHelperReturnType<T | unknown>
   paperProps?: PaperProps
 }
 

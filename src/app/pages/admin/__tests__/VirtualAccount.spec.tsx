@@ -27,7 +27,7 @@ describe('VirtualAccounts', () => {
     render(<VirtualAccounts />)
   })
 
-  it('renders with SelectionHelper with correct props', () => {
+  it('renders SelectionHelper with correct props', () => {
     render(<VirtualAccounts />)
 
     expect(SelectionHelper).toBeCalledWith(

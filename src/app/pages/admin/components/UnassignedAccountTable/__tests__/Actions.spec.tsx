@@ -27,7 +27,7 @@ describe('Actions', () => {
     render(<Actions {...props} />)
   })
 
-  it('renders with IconButton component with correct props', () => {
+  it('renders IconButton component with correct props', () => {
     render(<Actions {...props} />)
     expect(IconButton).toBeCalledWith(
       expect.objectContaining({
