@@ -1,7 +1,7 @@
 import React from 'react'
 import { render, cleanup } from 'test-utils'
 
-import { fakeVirtualAccountsList } from '__fixtures__/unassignedVirtualAccounts'
+import { fakeVirtualAccount } from '__fixtures__/unassignedVirtualAccounts'
 import {
   Actions,
   ActionsProps
@@ -15,7 +15,7 @@ jest.mock('@material-ui/core/IconButton', () => jest.fn(() => null))
 
 describe('Actions', () => {
   const props: ActionsProps = {
-    item: fakeVirtualAccountsList[0] as VirtualAccount
+    item: fakeVirtualAccount as VirtualAccount
   }
 
   afterEach(async () => {

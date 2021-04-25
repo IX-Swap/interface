@@ -6,13 +6,6 @@ import {
   VirtualAccounts
 } from 'app/pages/admin/pages/VirtualAccounts'
 
-jest.mock(
-  'app/pages/admin/components/UnassignedAccountTable/UnassignedAccountTable',
-  () => ({
-    UnassignedAccountTable: jest.fn(() => null)
-  })
-)
-
 jest.mock('components/SelectionHelper', () => ({
   SelectionHelper: jest.fn(() => null)
 }))

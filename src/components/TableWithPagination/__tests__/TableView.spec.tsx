@@ -7,7 +7,7 @@ import {
 import * as useTableWithPaginationHook from 'components/TableWithPagination/hooks/useTableWithPagination'
 import { QueryStatus } from 'react-query'
 import { useSelectionHelperContext } from 'components/SelectionHelper'
-import { fakeVirtualAccountsList } from '__fixtures__/unassignedVirtualAccounts'
+import { fakeVirtualAccount } from '__fixtures__/unassignedVirtualAccounts'
 
 jest.mock('components/SelectionHelper', () => ({
   useSelectionHelperContext: jest.fn(() => {})
@@ -39,7 +39,7 @@ describe('TableView', () => {
   const extraProps: TableViewProps<any> = {
     ...props,
     selectionHelper: useSelectionHelperContext(),
-    fakeItems: fakeVirtualAccountsList
+    fakeItems: [fakeVirtualAccount]
   }
 
   afterEach(async () => {
