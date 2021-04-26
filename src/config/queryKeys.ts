@@ -31,7 +31,9 @@ export const identityQueryKeys = {
   getAllCorporateByUserId: (id: string) =>
     generateQueryKey('all-corporate-identities', id),
   getDetailsOfIssuance: (userId: string) =>
-    generateQueryKey('details-of-issuance', userId)
+    generateQueryKey('details-of-issuance', userId),
+  getStats: 'admin-identity-stats',
+  getAdminIdentityList: 'admin-identity-list'
 }
 
 export const balanceQueryKeys = {
@@ -145,5 +147,6 @@ export const issuanceQueryKeys = {
 }
 
 export const virtualAccountQueryKeys = {
-  listAssigned: 'assigned-virtual-accounts'
+  listAssigned: 'assigned-virtual-accounts',
+  listUnassigned: 'unassigned-virtual-accounts'
 }

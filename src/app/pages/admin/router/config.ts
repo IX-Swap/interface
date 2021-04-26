@@ -14,6 +14,9 @@ export const AdminRoute = {
   createCorporateIdentity: '/app/admin/users/:userId/createCorporate',
   createIssuerIdentity: '/app/admin/users/:userId/createIssuer',
   identities: '/app/admin/identities',
+  viewIndividualIdentity: '/app/admin/identies/individual/:userId/view',
+  viewCorporateIdentity:
+    '/app/admin/identies/corporate/:userId/:identityId/view',
   virtualAccount: '/app/admin/virtualAccount'
 }
 
