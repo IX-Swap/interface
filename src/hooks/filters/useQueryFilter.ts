@@ -9,6 +9,7 @@ export interface QueryFilters {
   fromDate: string | undefined
   toDate: string | undefined
   currentSlide: string | undefined
+  currency: string | undefined
   identityType: string | undefined
   createdByAdmin: string | undefined
 }
