@@ -181,5 +181,6 @@ export const documentsURL = {
 }
 
 export const virtualAccounts = {
+  getAll: '/virtual-accounts/list',
   add: '/virtual-accounts'
 }
