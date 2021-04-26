@@ -30,3 +30,9 @@ export const moneyNumberFormat: NumberFormatProps = {
   isNumericString: true,
   allowNegative: false
 }
+
+export const leadingZerosNumberFormat: NumberFormatProps = {
+  ...positiveNumberFormat,
+  isNumericString: true,
+  allowLeadingZeros: true
+}

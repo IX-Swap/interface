@@ -10,6 +10,8 @@ export interface QueryFilters {
   toDate: string | undefined
   currentSlide: string | undefined
   currency: string | undefined
+  identityType: string | undefined
+  createdByAdmin: string | undefined
 }
 
 export type QueryFilter = keyof QueryFilters

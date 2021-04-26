@@ -46,6 +46,10 @@ export const identityURL = {
     get: (userId: string) => `/identity/issuance-detail/${userId}`,
     submit: (issuanceId: string) =>
       `/identity/issuance-detail/${issuanceId}/submit`
+  },
+  stats: {
+    get: `/identity/stats`,
+    list: `/identity/list`
   }
 }
 
@@ -177,5 +181,6 @@ export const documentsURL = {
 }
 
 export const virtualAccounts = {
-  getAll: '/virtual-accounts/list'
+  getAll: '/virtual-accounts/list',
+  add: '/virtual-accounts'
 }
