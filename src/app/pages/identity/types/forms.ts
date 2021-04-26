@@ -298,6 +298,7 @@ export interface BaseIdentity {
   documents: DataroomFile[]
   declarations: IdentityDeclarations
   step?: number
+  createdBy: string
 }
 
 export interface DeclarationTemplate {

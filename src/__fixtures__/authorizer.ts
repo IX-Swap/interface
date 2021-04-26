@@ -96,7 +96,8 @@ export const corporate: CorporateIdentity = {
   authorizationDocuments: [],
   authorization: authorizationInfo,
   authorizations: [],
-  mailingAddress: address
+  mailingAddress: address,
+  createdBy: '12345'
 }
 
 export const individual: IndividualIdentity = {
@@ -150,7 +151,8 @@ export const individual: IndividualIdentity = {
   },
   documents: [],
   address,
-  user
+  user,
+  createdBy: '12345'
 }
 
 export const dsWithdrawal: DSWithdrawal = {
