@@ -12,9 +12,9 @@ export interface SelectableDataroomUploaderProps
 export const SelectableDataroomUploader = (
   props: SelectableDataroomUploaderProps
 ) => {
-  const { isItemSelected, toggle, hasSelected } = useSelectionHelperContext()
+  const { getIsItemSelected, toggle, hasSelected } = useSelectionHelperContext()
   const toggleItem = () => toggle({ id: props.value?._id, index: props.index })
-  const isSelected = isItemSelected({
+  const isSelected = getIsItemSelected({
     id: props.value?._id,
     index: props.index
   })

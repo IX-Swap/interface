@@ -10,8 +10,11 @@ export interface UseSelectionHelperReturnType<TItem> {
   selected: TItem[]
   selectItem: (item: TItem) => void
   deselectItem: (item: TItem) => void
-  isItemSelected: (item: TItem) => boolean
+  getIsItemSelected: (item: TItem) => boolean
+  getIsItemsSelected: (items: TItem[]) => boolean
+  getIsIndeterminate: (items: TItem[]) => boolean
   toggle: (item: TItem) => void
+  toggleAll: (items: TItem[]) => void
   resetSelection: () => void
 }
 
@@ -27,11 +30,21 @@ export const useSelectionHelper = <TItem = any>(
   const deselectItem = (a: TItem) =>
     setSelected(prevSelected => prevSelected.filter(b => !itemComparator(a, b)))
 
-  const isItemSelected = (a: TItem) =>
+  const getIsItemSelected = (a: TItem) =>
     selected.findIndex(b => itemComparator(a, b)) !== -1
 
+  const getIsItemsSelected = (items: TItem[]) =>
+    selected.length === items.length
+
+  const getIsIndeterminate = (items: TItem[]) =>
+    selected.length > 0 && selected.length < items.length
+
   const toggle = (item: TItem) =>
-    isItemSelected(item) ? deselectItem(item) : selectItem(item)
+    getIsItemSelected(item) ? deselectItem(item) : selectItem(item)
+
+  const toggleAll = (items: TItem[]) => {
+    selected.length > 0 ? resetSelection() : setSelected(items)
+  }
 
   const resetSelection = () => setSelected([])
 
@@ -41,8 +54,11 @@ export const useSelectionHelper = <TItem = any>(
     selected,
     selectItem,
     deselectItem,
-    isItemSelected,
+    getIsItemSelected,
+    getIsItemsSelected,
+    getIsIndeterminate,
     resetSelection,
-    toggle
+    toggle,
+    toggleAll
   }
 }

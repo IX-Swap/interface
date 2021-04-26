@@ -12,6 +12,7 @@ import { ViewCorporateIdentity } from 'app/pages/admin/pages/ViewCorporateIdenti
 import { ViewIndividualIdentity } from 'app/pages/admin/pages/ViewIndividualIdentity'
 import React from 'react'
 import { Switch } from 'react-router'
+import { VirtualAccounts } from 'app/pages/admin/pages/VirtualAccounts'
 
 export const AdminRouter = () => {
   return (
@@ -60,6 +61,14 @@ export const AdminRouter = () => {
 
       <AppRoute path={AdminRoute.identities} breadcrumb='Identities'>
         <Identities />
+      </AppRoute>
+
+      <AppRoute
+        exact
+        path={AdminRoute.virtualAccount}
+        breadcrumb='Virtual Accounts'
+      >
+        <VirtualAccounts />
       </AppRoute>
 
       <AppRoute exact path={AdminRoute.landing}>
