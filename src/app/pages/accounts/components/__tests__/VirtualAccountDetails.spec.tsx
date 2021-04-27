@@ -6,8 +6,6 @@ import { generateQueryResult } from '__fixtures__/useQuery'
 import { virtualAccountsSample } from '__fixtures__/virtualAccounts'
 
 describe('VirtualAccountDetails', () => {
-  beforeEach(() => {})
-
   afterEach(async () => {
     await cleanup()
     jest.clearAllMocks()
