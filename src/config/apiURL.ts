@@ -182,5 +182,6 @@ export const documentsURL = {
 
 export const virtualAccounts = {
   getAll: '/virtual-accounts/list',
-  add: '/virtual-accounts'
+  add: '/virtual-accounts',
+  getByUserId: (userId: string) => `/virtual-accounts/${userId}`
 }
