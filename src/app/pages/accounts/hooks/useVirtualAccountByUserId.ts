@@ -4,7 +4,6 @@ import { getIdFromObj } from 'helpers/strings'
 import { useAuth } from 'hooks/auth/useAuth'
 import { useServices } from 'hooks/useServices'
 import { useQuery } from 'react-query'
-import { VirtualAccount } from 'types/virtualAccount'
 
 export const useVirtualAccountByUserId = () => {
   const { user } = useAuth()
@@ -13,7 +12,7 @@ export const useVirtualAccountByUserId = () => {
 
   const getVirtualAccount = async () => {
     const uri = virtualAccounts.getByUserId(userId)
-    return await apiService.get<VirtualAccount[]>(uri)
+    return await apiService.get(uri)
   }
 
   const { data, ...rest } = useQuery(
@@ -23,6 +22,6 @@ export const useVirtualAccountByUserId = () => {
 
   return {
     ...rest,
-    data: data?.data
+    data: data?.data[0].documents
   }
 }

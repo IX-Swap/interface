@@ -4,6 +4,7 @@ import { VirtualAccountCard } from 'app/pages/accounts/components/VirtualAccount
 import { VirtualAccountNumberInfo } from 'app/pages/accounts/components/VirtualAccountCard/VirtualAccountNumberInfo'
 import { useVirtualAccountByUserId } from 'app/pages/accounts/hooks/useVirtualAccountByUserId'
 import React from 'react'
+import { VirtualAccount } from 'types/virtualAccount'
 
 export const VirtualAccountDetails = () => {
   const { data, isLoading } = useVirtualAccountByUserId()
@@ -25,7 +26,7 @@ export const VirtualAccountDetails = () => {
           }
         />
       </Grid>
-      {data.map(virtualAccount => (
+      {data.map((virtualAccount: VirtualAccount) => (
         <Grid item key={virtualAccount._id}>
           <VirtualAccountCard
             label='Available Balance'
