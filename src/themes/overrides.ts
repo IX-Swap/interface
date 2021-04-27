@@ -34,13 +34,22 @@ export const getThemeOverrides = (theme: Theme): Overrides => ({
   MuiTableCell: {
     root: {
       paddingTop: 12,
-      paddingBottom: 12
+      paddingBottom: 12,
+      borderBottom: 'none'
     },
     head: {
       fontSize: '0.85rem'
     },
     body: {
       fontSize: '0.85rem'
+    }
+  },
+  MuiTableRow: {
+    root: {
+      borderBottom: `1px solid ${theme.palette.divider}`,
+      '&:last-child:not(.MuiTableRow-head)': {
+        borderBottom: 'none'
+      }
     }
   },
   MuiLink: {
