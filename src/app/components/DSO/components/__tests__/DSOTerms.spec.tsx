@@ -1,13 +1,33 @@
 import React from 'react'
 import { render, cleanup } from 'test-utils'
-import { DSOTerms } from 'app/components/DSO/components/DSOTerms'
+import { fireEvent } from '@testing-library/dom'
 import { Form } from 'components/form/Form'
-import { monthsNumberFormat, percentageNumberFormat } from 'config/numberFormat'
 import { TypedField } from 'components/form/TypedField'
+import { DSOTerms } from 'app/components/DSO/components/DSOTerms'
+import { DSOBaseFields } from 'app/components/DSO/components/DSOBaseFields'
+import { capitalStructures } from 'config/defaults'
+import { monthsNumberFormat, percentageNumberFormat } from 'config/numberFormat'
+import { generateQueryResult } from '__fixtures__/useQuery'
+import * as useDSOCapitalStructuresHook from 'hooks/useDSOCapitalStructures'
 
 jest.mock('components/form/TypedField', () => ({
   TypedField: jest.fn(() => <input />)
 }))
+
+jest.mock('components/form/CorporateSelect', () => ({
+  CorporateSelect: jest.fn(() => null)
+}))
+
+jest.mock('components/form/AssetSelect/AssetSelect', () => ({
+  AssetSelect: jest.fn(() => null)
+}))
+
+jest
+  .spyOn(useDSOCapitalStructuresHook, 'useDSOCapitalStructures')
+  .mockReturnValue(generateQueryResult({ data: capitalStructures }))
+
+window.URL.revokeObjectURL = jest.fn()
+window.URL.createObjectURL = jest.fn()
 
 describe('DSOTerms', () => {
   afterEach(async () => {
@@ -101,5 +121,57 @@ describe('DSOTerms', () => {
       }),
       {}
     )
+  })
+
+  it('disables leverage, interest rate fields when capital structure is "Equity"', () => {
+    ;(TypedField as any).mockImplementation(
+      jest.requireActual('components/form/TypedField').TypedField
+    )
+
+    const { getByTestId, getByLabelText } = render(
+      <Form>
+        <DSOBaseFields isNew={true} isLive={false} />
+        <DSOTerms />
+      </Form>
+    )
+
+    const capitalStructure = getByTestId('capital-structure')
+    const leverage = getByLabelText('Leverage')
+    const interestRate = getByLabelText('Interest Rate')
+
+    fireEvent.change(capitalStructure, { target: { value: 'Equity' } })
+
+    expect(leverage).toHaveAttribute('disabled')
+    expect(leverage).toHaveAttribute('value', '')
+    expect(interestRate).toHaveAttribute('disabled')
+    expect(interestRate).toHaveAttribute('value', '')
+  })
+
+  it('disables dividend yield, gross irr, equity multiple fields when capital structure is "Debt"', () => {
+    ;(TypedField as any).mockImplementation(
+      jest.requireActual('components/form/TypedField').TypedField
+    )
+
+    const { getByTestId, getByLabelText } = render(
+      <Form>
+        <DSOBaseFields isNew={true} isLive={false} />
+        <DSOTerms />
+      </Form>
+    )
+
+    const capitalStructure = getByTestId('capital-structure')
+
+    const dividendYield = getByLabelText('Dividend Yield')
+    const grossIRR = getByLabelText('Gross IRR')
+    const equityMultiple = getByLabelText('Equity Multiple')
+
+    fireEvent.change(capitalStructure, { target: { value: 'Debt' } })
+
+    expect(dividendYield).toHaveAttribute('disabled')
+    expect(dividendYield).toHaveAttribute('value', '')
+    expect(grossIRR).toHaveAttribute('disabled')
+    expect(grossIRR).toHaveAttribute('value', '')
+    expect(equityMultiple).toHaveAttribute('disabled')
+    expect(equityMultiple).toHaveAttribute('value', '')
   })
 })

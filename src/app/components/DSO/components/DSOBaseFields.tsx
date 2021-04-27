@@ -57,6 +57,7 @@ export const DSOBaseFields = (props: DSOBaseFieldsProps) => {
                 name='capitalStructure'
                 helperText='Offering terms will be changed based on your capital structure'
                 variant='outlined'
+                inputProps={{ 'data-testid': 'capital-structure' }}
               />
             </Grid>
             <Grid item xs={12} md={6}>
