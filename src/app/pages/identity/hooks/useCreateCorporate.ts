@@ -34,7 +34,8 @@ export const useCreateCorporate = (corporateType: string) => {
             ? IdentityRoute.editIssuer
             : IdentityRoute.editCorporate,
           {
-            identityId: data.data._id
+            identityId: data.data._id,
+            userId: data.data.user._id
           }
         )
       )
