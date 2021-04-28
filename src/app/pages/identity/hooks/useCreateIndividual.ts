@@ -29,7 +29,8 @@ export const useCreateIndividual = () => {
       if (location.pathname.endsWith('create')) {
         replace(
           generatePath(IdentityRoute.editIndividual, {
-            identityId: data.data._id
+            identityId: data.data._id,
+            userId: data.data.user._id
           })
         )
       }
