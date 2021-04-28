@@ -6,7 +6,7 @@ import { FormDialogTitle } from 'components/FormDialog/FormDialogTitle'
 import React, { useState } from 'react'
 
 export const CashDepositButton = () => {
-  const [open, setOpen] = useState(true)
+  const [open, setOpen] = useState(false)
 
   const openDialog = () => {
     setOpen(true)
