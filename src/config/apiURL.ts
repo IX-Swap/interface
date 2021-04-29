@@ -123,7 +123,6 @@ export const issuanceURL = {
       `/issuance/dso/${userId}/${dsoId}`,
     submit: (userId: string, dsoId: string) =>
       `/issuance/dso/${userId}/${dsoId}/submit`,
-    getCapitalStructureList: '/issuance/capital-structures',
     getActivitiesList: (userId: string, dsoId: string) =>
       `/issuance/dso/${userId}/${dsoId}/activities/list`,
     promote: (dsoId: string) => `/issuance/dso/${dsoId}/promote`,
