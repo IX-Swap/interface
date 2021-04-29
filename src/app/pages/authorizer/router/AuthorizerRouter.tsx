@@ -15,7 +15,7 @@ import {
 import { AppRoute } from 'components/AppRoute'
 import React from 'react'
 import { Switch } from 'react-router'
-import { AuthorizerIssuanceDetailsRouter } from 'app/pages/authorizer/pages/issuanceDetails/router/AuthorizerIssuaenceDetailsRouter'
+import { AuthorizerIssuanceDetailsRouter } from 'app/pages/authorizer/pages/issuanceDetails/router/AuthorizerIssuanceDetailsRouter'
 
 export const AuthorizerRouter = () => {
   return (
