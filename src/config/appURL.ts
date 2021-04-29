@@ -33,6 +33,7 @@ export const urlService = {
   account: `${AppService.Accounts}`,
   identity: `${AppService.Identity}`,
   issuance: `${AppService.Issuance}`,
+  issuanceDetails: `${AppService.IssuanceDetails}`,
   invest: `${AppService.Invest}`,
   authorizer: `${AppService.Authorizer}`,
   settings: 'settings',
