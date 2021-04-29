@@ -52,6 +52,7 @@ export const AssignedVirtualAccountsTable = () => {
           hasActions
           actions={Actions}
           filter={filter}
+          paperProps={{ variant: 'elevation', elevation: 0 }}
         />
       </Grid>
     </Grid>

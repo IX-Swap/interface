@@ -6,7 +6,11 @@ import React from 'react'
 
 export const Filters = () => {
   return (
-    <Grid container justify='space-between'>
+    <Grid
+      container
+      justify='space-between'
+      style={{ paddingLeft: 24, paddingRight: 24 }}
+    >
       <Grid item xs={12} md={6}>
         <Box width={300}>
           <SearchFilter
