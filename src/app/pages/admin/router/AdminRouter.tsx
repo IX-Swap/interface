@@ -72,7 +72,7 @@ export const AdminRouter = () => {
       </AppRoute>
 
       <AppRoute exact path={AdminRoute.landing}>
-        <LandingPage links={adminLandingLinks} title='Authorization' />
+        <LandingPage links={adminLandingLinks} title='Admin' />
       </AppRoute>
     </Switch>
   )
