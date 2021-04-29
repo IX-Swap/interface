@@ -2,6 +2,8 @@ import React, { Fragment, useState } from 'react'
 import { Box, Tab, Tabs } from '@material-ui/core'
 import { TabPanel } from 'components/TabPanel'
 import useStyles from './VirtualAccountsTabView.styles'
+import { AssignedVirtualAccountsTable } from 'app/pages/admin/components/AssignedVirtualAccountsTable/AssignedVirtualAccountsTable'
+import { UnassignedAccountsTable } from 'app/pages/admin/components/UnassignedAccountTable/UnassignedAccountsTable'
 
 export const VirtualAccountsTabView = () => {
   const [activeTab, setActiveTab] = useState(0)
@@ -26,7 +28,11 @@ export const VirtualAccountsTabView = () => {
 
       <Box className={classes.content}>
         <TabPanel index={0} value={activeTab}>
-          Assigned Accounts Table
+          <AssignedVirtualAccountsTable />
+        </TabPanel>
+
+        <TabPanel index={1} value={activeTab}>
+          <UnassignedAccountsTable />
         </TabPanel>
       </Box>
     </Fragment>
