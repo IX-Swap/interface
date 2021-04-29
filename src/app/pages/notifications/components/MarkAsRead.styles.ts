@@ -4,7 +4,7 @@ export const useStyles = makeStyles(theme => ({
   container: {
     width: 10,
     height: 10,
-    background: (isUnread: boolean) =>
+    background: ({ isUnread }: { isUnread: boolean }) =>
       isUnread
         ? 'transparent'
         : theme.palette.type === 'light'
