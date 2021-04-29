@@ -4,10 +4,15 @@ import { VirtualAccountCard } from 'app/pages/accounts/components/VirtualAccount
 import { VirtualAccountNumberInfo } from 'app/pages/accounts/components/VirtualAccountCard/VirtualAccountNumberInfo'
 import { useVirtualAccountByUserId } from 'app/pages/accounts/hooks/useVirtualAccountByUserId'
 import React from 'react'
-import { VirtualAccount } from 'types/virtualAccount'
 
-export const VirtualAccountDetails = () => {
-  const { data, isLoading } = useVirtualAccountByUserId()
+export interface VirtualAccountDetailsProps {
+  virtualAccountId?: string
+}
+
+export const VirtualAccountDetails = ({
+  virtualAccountId
+}: VirtualAccountDetailsProps) => {
+  const { data, isLoading } = useVirtualAccountByUserId(virtualAccountId)
 
   if (isLoading || data === undefined) {
     return null
@@ -17,28 +22,26 @@ export const VirtualAccountDetails = () => {
     <Grid container spacing={2}>
       <Grid item>
         <VirtualAccountCard
-          label={data[0].user.name}
+          label={data.user.name}
           info={
             <VirtualAccountNumberInfo
-              accountNumber={data[0].accountNumber}
-              currency={data[0].currency}
+              accountNumber={data.accountNumber}
+              currency={data.currency}
             />
           }
         />
       </Grid>
-      {data.map((virtualAccount: VirtualAccount) => (
-        <Grid item key={virtualAccount._id}>
-          <VirtualAccountCard
-            label='Available Balance'
-            info={
-              <AvailableBalanceInfo
-                currency={virtualAccount.currency}
-                amount={virtualAccount.balance.available}
-              />
-            }
-          />
-        </Grid>
-      ))}
+      <Grid item>
+        <VirtualAccountCard
+          label='Available Balance'
+          info={
+            <AvailableBalanceInfo
+              currency={data.currency}
+              amount={data.balance.available}
+            />
+          }
+        />
+      </Grid>
     </Grid>
   )
 }

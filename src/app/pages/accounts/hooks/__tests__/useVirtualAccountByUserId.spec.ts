@@ -38,7 +38,7 @@ describe('useVirtualAccountByUserId', () => {
 
       await waitFor(
         () => {
-          expect(result.current.data).toEqual(sampleResponse.data[0].documents)
+          expect(result.current.list).toEqual(sampleResponse.data[0].documents)
           expect(apiFn).toHaveBeenCalledWith(
             virtualAccounts.getByUserId(user._id)
           )

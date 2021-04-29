@@ -6,7 +6,6 @@ import { Setup } from 'app/pages/accounts/pages/banks/pages/WithdrawCash/Setup'
 import { Preview } from 'app/pages/accounts/pages/banks/pages/WithdrawCash/Preview'
 import { observer } from 'mobx-react'
 import { ContinueButton } from 'app/pages/accounts/pages/banks/pages/WithdrawCash/ContinueButton'
-import { BankPreview } from 'app/pages/accounts/pages/banks/pages/WithdrawCash/BankPreview'
 import { WithdrawCashAlert } from 'app/pages/accounts/pages/banks/components/WithdrawCashAlert'
 import { BackButton } from 'app/pages/accounts/pages/banks/components/BackButton'
 import { DisplayNone } from 'app/components/DisplayNone'
@@ -15,6 +14,7 @@ import { SuccessView } from 'app/pages/accounts/pages/banks/components/SuccessVi
 import { ResetButton } from 'app/pages/accounts/pages/banks/components/ResetButton'
 import { AlertAndOTP } from 'app/pages/accounts/pages/banks/components/AlertAndOTP'
 import { Submit } from 'components/form/Submit'
+import { VSpacer } from 'components/VSpacer'
 
 export const WithdrawView: React.FC = observer(() => {
   const { isSetup, isPreview, isSuccess, clear } = useDepositStore()
@@ -23,50 +23,51 @@ export const WithdrawView: React.FC = observer(() => {
 
   return (
     <WithdrawForm>
-      <Grid container justify='center'>
-        <Grid
-          item
-          xs={12}
-          sm={6}
-          md={5}
-          container
-          direction='column'
-          spacing={4}
-        >
+      <Grid
+        container
+        direction='column'
+        spacing={2}
+        style={{ display: 'table' }}
+      >
+        <Grid item xs={12}>
+          {(isSetup || isPreview) && (
+            <DisplayNone when={isPreview}>
+              <Setup />
+            </DisplayNone>
+          )}
+          {isPreview && <Preview />}
+          {isSuccess && <SuccessView title='Withdrawal Successful' />}
+        </Grid>
+
+        {isPreview && (
           <Grid item>
-            {(isSetup || isPreview) && (
-              <DisplayNone when={isPreview}>
-                <Setup />
-              </DisplayNone>
-            )}
-            {isPreview && <Preview />}
-            {isSuccess && <SuccessView title='Withdrawal Successful' />}
+            <AlertAndOTP alert={WithdrawCashAlert} />
           </Grid>
-          {(isSetup || isPreview) && <BankPreview />}
-          {isPreview && <AlertAndOTP alert={WithdrawCashAlert} />}
-          <Grid item>
-            <Grid container direction='column' spacing={1}>
-              {isPreview && (
-                <Grid item>
-                  <Submit fullWidth>Confirm Withdrawal</Submit>
-                </Grid>
-              )}
-              {isPreview && (
-                <Grid item>
-                  <BackButton fullWidth />
-                </Grid>
-              )}
-              {isSetup && (
-                <Grid item>
-                  <ContinueButton fullWidth />
-                </Grid>
-              )}
-              {isSuccess && (
-                <Grid item>
-                  <ResetButton fullWidth>Make Another Withdrawal</ResetButton>
-                </Grid>
-              )}
-            </Grid>
+        )}
+
+        <Grid item xs={12} sm={6} md={5}>
+          <VSpacer size='small' />
+          <Grid container direction='column' spacing={2}>
+            {isPreview && (
+              <Grid item>
+                <Submit>Confirm Withdrawal</Submit>
+              </Grid>
+            )}
+            {isPreview && (
+              <Grid item>
+                <BackButton />
+              </Grid>
+            )}
+            {isSetup && (
+              <Grid item>
+                <ContinueButton />
+              </Grid>
+            )}
+            {isSuccess && (
+              <Grid item>
+                <ResetButton>Make Another Withdrawal</ResetButton>
+              </Grid>
+            )}
           </Grid>
         </Grid>
       </Grid>

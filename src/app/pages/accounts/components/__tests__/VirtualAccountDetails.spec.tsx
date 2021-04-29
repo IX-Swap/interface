@@ -13,7 +13,7 @@ describe('VirtualAccountDetails', () => {
 
   it('renders without errors', () => {
     const useVirtualAccountByUserIdResponse = generateQueryResult({
-      data: virtualAccountsSample
+      data: virtualAccountsSample[0]
     })
 
     jest
@@ -24,7 +24,7 @@ describe('VirtualAccountDetails', () => {
 
   it('returns null when isLoading is true', () => {
     const useVirtualAccountByUserIdResponse = generateQueryResult({
-      data: virtualAccountsSample,
+      data: virtualAccountsSample[0],
       isLoading: true
     })
 

@@ -40,7 +40,8 @@ export const withdrawCashArgs: WithdrawCashArgs = {
   amount: 123,
   otp: '123145',
   memo: '123',
-  bank: bank._id
+  bank: bank._id,
+  virtualAccount: '098765432109'
 }
 
 export const withdrawDSArgs: WithdrawDSArgs = {

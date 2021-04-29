@@ -4,8 +4,9 @@ import { getIdFromObj } from 'helpers/strings'
 import { useAuth } from 'hooks/auth/useAuth'
 import { useServices } from 'hooks/useServices'
 import { useQuery } from 'react-query'
+import { VirtualAccount } from 'types/virtualAccount'
 
-export const useVirtualAccountByUserId = () => {
+export const useVirtualAccountByUserId = (virtualAccountId?: string) => {
   const { user } = useAuth()
   const userId = getIdFromObj(user)
   const { apiService } = useServices()
@@ -20,8 +21,14 @@ export const useVirtualAccountByUserId = () => {
     getVirtualAccount
   )
 
+  const list = data?.data[0].documents
+  const virtualAccount =
+    list?.find((item: VirtualAccount) => item._id === virtualAccountId) ??
+    list?.[0]
+
   return {
     ...rest,
-    data: data?.data[0].documents
+    list,
+    data: virtualAccount
   }
 }

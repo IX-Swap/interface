@@ -6,6 +6,7 @@ import { useBankById } from 'app/pages/accounts/pages/banks/hooks/useBankById'
 import { useBalancesByAssetId } from 'hooks/balance/useBalancesByAssetId'
 import { getIdFromObj } from 'helpers/strings'
 import { AssetBalance } from 'types/balance'
+import { useVirtualAccountByUserId } from 'app/pages/accounts/hooks/useVirtualAccountByUserId'
 
 interface BalancesByBankIdReturnObj {
   canSubmit: boolean
@@ -17,6 +18,7 @@ export const useValidateWithdrawCash = (): BalancesByBankIdReturnObj => {
   >()
   const bankId = watch('bank')
   const amount = watch('amount')
+  const virtualAccountId = watch('virtualAccount')
 
   const { data: bank, isSuccess: bankSuccess } = useBankById({ bankId })
 
@@ -26,12 +28,19 @@ export const useValidateWithdrawCash = (): BalancesByBankIdReturnObj => {
     assetId
   )
 
-  if (bankSuccess && assetSuccess && balancesSuccess) {
+  const {
+    data: virtualAccountData,
+    isSuccess: virtualAccountSuccess
+  } = useVirtualAccountByUserId(virtualAccountId)
+
+  if (bankSuccess && assetSuccess && balancesSuccess && virtualAccountSuccess) {
     if (bank !== undefined && asset !== undefined) {
       const assetId = bank.currency._id
       const balance: AssetBalance | undefined = balances.map[assetId]
       const minWithdraw = asset.amounts?.minimumWithdrawal
-      const maxWithdraw = asset.amounts?.maximumWithdrawal
+      const maxWithdraw =
+        virtualAccountData?.balance.available ??
+        asset.amounts?.maximumWithdrawal
 
       const { message } = withdrawValidator(
         amount,
