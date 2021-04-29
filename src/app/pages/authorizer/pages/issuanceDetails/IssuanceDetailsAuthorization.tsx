@@ -1,16 +1,16 @@
+import { Grid } from '@material-ui/core'
+import { IssuerDetailsView } from 'app/pages/identity/components/DetailsOfIssuanceView/IssuerDetailsView'
+import { IdentityDocumentsView } from 'app/pages/identity/components/IdentityDocumentsView/IdentityDocumentsView'
+import { useDetailsOfIssuance } from 'app/pages/identity/hooks/useDetailsOfIssuance'
 import React from 'react'
-import { AuthorizerView } from 'app/pages/authorizer/components/AuthorizerView'
 import { useParams } from 'react-router'
 import { AppFeature } from 'types/app'
-import { useWithdrawalAddressById } from 'app/pages/accounts/pages/withdrawalAddresses/hooks/useWithdrawalAddressById'
-import { WithdrawalAddressPreview } from 'app/components/WithdrawalAddressPreview/WithdrawalAddressPreview'
+
+import { AuthorizerView } from 'app/pages/authorizer/components/AuthorizerView'
 
 export const IssuanceDetailsAuthorization = () => {
-  const { addressId, userId } = useParams<{
-    addressId: string
-    userId: string
-  }>()
-  const { data, isLoading } = useWithdrawalAddressById(addressId, userId)
+  const { userId } = useParams<{ userId: string }>()
+  const { data, isLoading } = useDetailsOfIssuance(userId)
 
   if (isLoading || data === undefined) {
     return null
@@ -18,11 +18,18 @@ export const IssuanceDetailsAuthorization = () => {
 
   return (
     <AuthorizerView
-      title={data.label}
-      data={data}
-      feature={AppFeature.WithdrawalAddresses}
+      title={data.companyName}
+      data={data as any}
+      feature={AppFeature.IssuanceDetails}
     >
-      <WithdrawalAddressPreview data={data} />
+      <Grid container direction='column' spacing={8}>
+        <Grid item>
+          <IssuerDetailsView data={data} />
+        </Grid>
+        <Grid item>
+          <IdentityDocumentsView data={data.documents} />
+        </Grid>
+      </Grid>
     </AuthorizerView>
   )
 }
