@@ -5,10 +5,7 @@ import { Form } from 'components/form/Form'
 import { TypedField } from 'components/form/TypedField'
 import { DSOTerms } from 'app/components/DSO/components/DSOTerms'
 import { DSOBaseFields } from 'app/components/DSO/components/DSOBaseFields'
-import { capitalStructures } from 'config/defaults'
 import { monthsNumberFormat, percentageNumberFormat } from 'config/numberFormat'
-import { generateQueryResult } from '__fixtures__/useQuery'
-import * as useDSOCapitalStructuresHook from 'hooks/useDSOCapitalStructures'
 
 jest.mock('components/form/TypedField', () => ({
   TypedField: jest.fn(() => <input />)
@@ -21,10 +18,6 @@ jest.mock('components/form/CorporateSelect', () => ({
 jest.mock('components/form/AssetSelect/AssetSelect', () => ({
   AssetSelect: jest.fn(() => null)
 }))
-
-jest
-  .spyOn(useDSOCapitalStructuresHook, 'useDSOCapitalStructures')
-  .mockReturnValue(generateQueryResult({ data: capitalStructures }))
 
 window.URL.revokeObjectURL = jest.fn()
 window.URL.createObjectURL = jest.fn()
