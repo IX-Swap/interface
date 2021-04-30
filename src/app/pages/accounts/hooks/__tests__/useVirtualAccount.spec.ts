@@ -1,5 +1,5 @@
 import { act } from '@testing-library/react-hooks'
-import { useVirtualAccountByUserId } from 'app/pages/accounts/hooks/useVirtualAccountByUserId'
+import { useVirtualAccount } from 'app/pages/accounts/hooks/useVirtualAccount'
 import { virtualAccounts } from 'config/apiURL'
 import * as useAuth from 'hooks/auth/useAuth'
 import { waitFor, cleanup, renderHookWithServiceProvider } from 'test-utils'
@@ -7,7 +7,7 @@ import { generateQueryResult } from '__fixtures__/useQuery'
 import { user } from '__fixtures__/user'
 import { virtualAccountsSample } from '__fixtures__/virtualAccounts'
 
-describe('useVirtualAccountByUserId', () => {
+describe('useVirtualAccount', () => {
   const sampleResponse = generateQueryResult({
     data: [{ documents: virtualAccountsSample }]
   })
@@ -30,7 +30,7 @@ describe('useVirtualAccountByUserId', () => {
       const apiObj = { get: apiFn }
 
       const { result } = renderHookWithServiceProvider(
-        () => useVirtualAccountByUserId(),
+        () => useVirtualAccount(),
         {
           apiService: apiObj
         }

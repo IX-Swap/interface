@@ -2,12 +2,12 @@ import { Grid } from '@material-ui/core'
 import { AvailableBalanceInfo } from 'app/pages/accounts/components/VirtualAccountCard/AvailableBalanceInfo'
 import { VirtualAccountCard } from 'app/pages/accounts/components/VirtualAccountCard/VirtualAccountCard'
 import { VirtualAccountNumberInfo } from 'app/pages/accounts/components/VirtualAccountCard/VirtualAccountNumberInfo'
-import { useVirtualAccountByUserId } from 'app/pages/accounts/hooks/useVirtualAccountByUserId'
+import { useVirtualAccount } from 'app/pages/accounts/hooks/useVirtualAccount'
 import React from 'react'
 import { VirtualAccount } from 'types/virtualAccount'
 
 export const VirtualAccountDetails = () => {
-  const { data, isLoading } = useVirtualAccountByUserId()
+  const { data, isLoading } = useVirtualAccount()
 
   if (isLoading || data === undefined) {
     return null
