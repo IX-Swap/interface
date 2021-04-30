@@ -19,7 +19,7 @@ export const IssuanceDetailsAuthorization = () => {
   return (
     <AuthorizerView
       title={data.companyName}
-      data={data as any}
+      data={data}
       feature={AppFeature.IssuanceDetails}
     >
       <Grid container direction='column' spacing={8}>
