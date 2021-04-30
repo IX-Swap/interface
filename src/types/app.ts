@@ -3,6 +3,7 @@ export enum AppService {
   Accounts = 'accounts',
   Identity = 'identity',
   Issuance = 'issuance',
+  IssuanceDetails = 'issuance-details',
   Invest = 'invest',
   Authorizer = 'authorizer'
 }
@@ -18,6 +19,7 @@ export enum AppFeature {
   WithdrawalAddresses = 'withdrawal-addresses',
   Corporates = 'corporates',
   Individuals = 'individuals',
+  IssuanceDetails = 'issuance-details',
   Commitments = 'commitments',
   Offerings = 'offerings',
   Deployments = 'deployments',
@@ -48,6 +50,7 @@ export enum AuthorizerCategory {
   DigitalSecurityWithdrawals = 'digital-security-withdrawals',
   Corporates = 'corporates',
   Individuals = 'individuals',
+  IssuanceDetails = 'issuance-details',
   Commitments = 'commitments',
   Offerings = 'offerings',
   WithdrawalAddresses = 'withdrawal-addresses'
