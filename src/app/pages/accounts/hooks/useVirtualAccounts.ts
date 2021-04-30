@@ -5,7 +5,7 @@ import { useAuth } from 'hooks/auth/useAuth'
 import { useServices } from 'hooks/useServices'
 import { useQuery } from 'react-query'
 
-export const useVirtualAccount = () => {
+export const useVirtualAccounts = () => {
   const { user } = useAuth()
   const userId = getIdFromObj(user)
   const { apiService } = useServices()
