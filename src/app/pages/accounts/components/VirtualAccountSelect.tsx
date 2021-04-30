@@ -1,10 +1,10 @@
 import { MenuItem, Select, SelectProps } from '@material-ui/core'
-import { useVirtualAccountByUserId } from 'app/pages/accounts/hooks/useVirtualAccountByUserId'
+import { useVirtualAccounts } from 'app/pages/accounts/hooks/useVirtualAccounts'
 import React from 'react'
 import { VirtualAccount } from 'types/virtualAccount'
 
 export const VirtualAccountSelect = (props: Partial<SelectProps>) => {
-  const { list } = useVirtualAccountByUserId()
+  const { list } = useVirtualAccounts()
   return (
     <Select {...props}>
       <MenuItem disabled value={undefined}>
