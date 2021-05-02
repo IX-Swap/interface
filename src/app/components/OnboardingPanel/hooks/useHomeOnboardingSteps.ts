@@ -13,7 +13,8 @@ export const useHomeOnboardingSteps = () => {
     hasActiveIdentityJourney,
     individualIdentity,
     investorIdentities,
-    issuerIdentities
+    issuerIdentities,
+    isDetailsOfIssuanceComplete
   } = useOnboardingJourneys()
 
   const getIdentityActiveStep = (status?: AuthorizableStatus) => {
@@ -35,6 +36,13 @@ export const useHomeOnboardingSteps = () => {
     return {
       steps: defaultOnboardingSteps,
       activeStep: 1
+    }
+  }
+
+  if (isDetailsOfIssuanceComplete) {
+    return {
+      steps: getIdentityOnboardingSteps('corporate', '', true),
+      activeStep: getActiveStep()
     }
   }
 
