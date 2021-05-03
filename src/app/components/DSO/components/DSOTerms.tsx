@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { Grid, TextField } from '@material-ui/core'
 import { monthsNumberFormat, percentageNumberFormat } from 'config/numberFormat'
 import { TypedField } from 'components/form/TypedField'
@@ -10,7 +10,22 @@ import { DSOFormValues } from 'types/dso'
 import { FormSectionHeader } from 'app/components/DSO/components/FormSectionHeader'
 
 export const DSOTerms = () => {
-  const { control } = useFormContext<DSOFormValues>()
+  const { control, watch, setValue } = useFormContext<DSOFormValues>()
+
+  const capitalStructure = watch('capitalStructure')
+  const isEquity = capitalStructure === 'Equity'
+  const isDebt = capitalStructure === 'Debt'
+
+  useEffect(() => {
+    if (isEquity) {
+      setValue('interestRate', '')
+      setValue('leverage', '')
+    } else if (isDebt) {
+      setValue('dividendYield', '')
+      setValue('grossIRR', '')
+      setValue('equityMultiple', '')
+    }
+  }, [isEquity, isDebt, setValue])
 
   return (
     <Grid item>
@@ -42,6 +57,7 @@ export const DSOTerms = () => {
                 valueExtractor={numericValueExtractor}
                 helperText='in percent'
                 variant='outlined'
+                disabled={isDebt}
               />
             </Grid>
             <Grid item xs={12} sm={6} md={3}>
@@ -54,6 +70,7 @@ export const DSOTerms = () => {
                 valueExtractor={numericValueExtractor}
                 helperText='in percent'
                 variant='outlined'
+                disabled={isEquity}
               />
             </Grid>
             <Grid item xs={12} sm={6} md={3}>
@@ -66,6 +83,7 @@ export const DSOTerms = () => {
                 valueExtractor={numericValueExtractor}
                 helperText='in percent'
                 variant='outlined'
+                disabled={isDebt}
               />
             </Grid>
           </Grid>
@@ -106,6 +124,7 @@ export const DSOTerms = () => {
                 valueExtractor={numericValueExtractor}
                 variant='outlined'
                 helperText='In percent'
+                disabled={isEquity}
               />
             </Grid>
             <Grid item xs={12} sm={6} md={3}>
@@ -118,6 +137,7 @@ export const DSOTerms = () => {
                 valueExtractor={numericValueExtractor}
                 variant='outlined'
                 helperText='In percent'
+                disabled={isDebt}
               />
             </Grid>
           </Grid>
