@@ -8,7 +8,7 @@ import { BankSelect } from 'components/form/BankSelect'
 import { NumericInput } from 'components/form/NumericInput'
 import { numericValueExtractor } from 'helpers/forms'
 import { moneyNumberFormat } from 'config/numberFormat'
-import { useVirtualAccounts } from 'app/pages/accounts/hooks/useVirtualAccounts'
+import { useVirtualAccount } from 'app/pages/accounts/hooks/useVirtualAccount'
 import { MaxButton } from 'app/pages/accounts/pages/banks/pages/WithdrawCash/MaxButton/MaxButton'
 import { VirtualAccountSelect } from 'app/pages/accounts/components/VirtualAccountSelect'
 import { VirtualAccountDetails } from 'app/pages/accounts/components/VirtualAccountDetails'
@@ -21,7 +21,7 @@ export const Setup: React.FC = () => {
   const {
     data: virtualAccountData,
     isLoading: virtualAccountLoading
-  } = useVirtualAccounts(virtualAccountId)
+  } = useVirtualAccount(virtualAccountId)
   const { data: bankData, isLoading: bankLoading } = useBanksData()
   const bank = bankData.map[bankId]
 

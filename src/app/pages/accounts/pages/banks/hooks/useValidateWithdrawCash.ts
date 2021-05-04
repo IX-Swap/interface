@@ -6,7 +6,7 @@ import { useBankById } from 'app/pages/accounts/pages/banks/hooks/useBankById'
 import { useBalancesByAssetId } from 'hooks/balance/useBalancesByAssetId'
 import { getIdFromObj } from 'helpers/strings'
 import { AssetBalance } from 'types/balance'
-import { useVirtualAccounts } from 'app/pages/accounts/hooks/useVirtualAccounts'
+import { useVirtualAccount } from 'app/pages/accounts/hooks/useVirtualAccount'
 
 interface BalancesByBankIdReturnObj {
   canSubmit: boolean
@@ -31,7 +31,7 @@ export const useValidateWithdrawCash = (): BalancesByBankIdReturnObj => {
   const {
     data: virtualAccountData,
     isSuccess: virtualAccountSuccess
-  } = useVirtualAccounts(virtualAccountId)
+  } = useVirtualAccount(virtualAccountId)
 
   if (bankSuccess && assetSuccess && balancesSuccess && virtualAccountSuccess) {
     if (bank !== undefined && asset !== undefined) {

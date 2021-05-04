@@ -1,5 +1,5 @@
 import { VirtualAccountDetails } from 'app/pages/accounts/components/VirtualAccountDetails'
-import * as useVirtualAccounts from 'app/pages/accounts/hooks/useVirtualAccounts'
+import * as useVirtualAccount from 'app/pages/accounts/hooks/useVirtualAccount'
 import React from 'react'
 import { render, cleanup } from 'test-utils'
 import { generateQueryResult } from '__fixtures__/useQuery'
@@ -17,7 +17,7 @@ describe('VirtualAccountDetails', () => {
     })
 
     jest
-      .spyOn(useVirtualAccounts, 'useVirtualAccounts')
+      .spyOn(useVirtualAccount, 'useVirtualAccount')
       .mockImplementation(() => useVirtualsAccountResponse as any)
     render(<VirtualAccountDetails />)
   })
@@ -29,7 +29,7 @@ describe('VirtualAccountDetails', () => {
     })
 
     jest
-      .spyOn(useVirtualAccounts, 'useVirtualAccounts')
+      .spyOn(useVirtualAccount, 'useVirtualAccount')
       .mockImplementation(() => useVirtualAccountsResponse as any)
     const { container } = render(<VirtualAccountDetails />)
 
@@ -42,7 +42,7 @@ describe('VirtualAccountDetails', () => {
     })
 
     jest
-      .spyOn(useVirtualAccounts, 'useVirtualAccounts')
+      .spyOn(useVirtualAccount, 'useVirtualAccount')
       .mockImplementation(() => useVirtualAccountsResponse as any)
     const { container } = render(<VirtualAccountDetails />)
 
