@@ -1,5 +1,6 @@
-import { Box, Grid, Typography } from '@material-ui/core'
+import { Box, Grid, Link, Typography } from '@material-ui/core'
 import { CashDepositDetails } from 'app/pages/accounts/components/VirtualAccountCashDeposit/CashDepositDetails'
+import { useStyles } from 'app/pages/accounts/components/VirtualAccountCashDeposit/Fast.styles'
 import React from 'react'
 
 const fastDetails = [
@@ -34,6 +35,7 @@ const fastDetails = [
 ]
 
 export const Fast = () => {
+  const { footerInfo } = useStyles()
   return (
     <Grid direction='column'>
       <Grid item>
@@ -44,7 +46,7 @@ export const Fast = () => {
         </Box>
       </Grid>
       <Grid item>
-        <Box bgcolor='#FAFAFA' p={3}>
+        <Box className={footerInfo}>
           <Grid container spacing={1}>
             <Grid item xs={12} sm={6}>
               <Box fontWeight='bold'>Max Transaction Limit:</Box>
@@ -57,9 +59,12 @@ export const Fast = () => {
                 Please visit the link below to know more about the list of banks
                 that supports FAST
               </Box>
-              <a href='https://www.abs.org.sg/consumer-banking/fast'>
+              <Link
+                href='https://www.abs.org.sg/consumer-banking/fast'
+                target='_blank'
+              >
                 https://www.abs.org.sg/consumer-banking/fast
-              </a>
+              </Link>
             </Grid>
           </Grid>
         </Box>
