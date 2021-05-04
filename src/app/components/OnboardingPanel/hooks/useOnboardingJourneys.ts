@@ -70,9 +70,6 @@ export const useOnboardingJourneys = () => {
       : isIssuerJourneyCompleted
   }
 
-  const isDetailsOfIssuanceComplete =
-    detailsOfIssuance !== undefined && detailsOfIssuance.status === 'Approved'
-
   return {
     ...completedJourneys,
     ...startedJourneys,
@@ -83,7 +80,6 @@ export const useOnboardingJourneys = () => {
     individualIdentity,
     getIsJourneyCompleted,
     isIdentitiesLoaded,
-    detailsOfIssuance,
-    isDetailsOfIssuanceComplete
+    detailsOfIssuance
   }
 }

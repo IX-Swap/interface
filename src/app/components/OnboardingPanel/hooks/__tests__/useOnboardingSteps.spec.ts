@@ -29,10 +29,10 @@ describe('useOnboardingSteps', () => {
 
   it('returns correct values when no identity type is passed', async () => {
     await act(async () => {
-      const individualSteps = getIdentityOnboardingSteps(
-        'individual',
-        individual.status
-      )
+      const individualSteps = getIdentityOnboardingSteps({
+        identityType: 'individual',
+        identityStatus: individual.status
+      })
       const { result } = renderHook(() => useOnboardingSteps())
 
       await waitFor(
@@ -47,10 +47,10 @@ describe('useOnboardingSteps', () => {
 
   it('returns correct values when individual identity type is passed', async () => {
     await act(async () => {
-      const individualSteps = getIdentityOnboardingSteps(
-        'individual',
-        individual.status
-      )
+      const individualSteps = getIdentityOnboardingSteps({
+        identityType: 'individual',
+        identityStatus: individual.status
+      })
       const { result } = renderHook(() => useOnboardingSteps('individual'))
 
       await waitFor(
@@ -65,7 +65,10 @@ describe('useOnboardingSteps', () => {
 
   it('returns correct values when corporate identity type is passed', async () => {
     await act(async () => {
-      const corporateSteps = getIdentityOnboardingSteps('corporate', '')
+      const corporateSteps = getIdentityOnboardingSteps({
+        identityType: 'corporate',
+        identityStatus: ''
+      })
       const { result } = renderHook(() => useOnboardingSteps('corporate'))
 
       await waitFor(
@@ -80,7 +83,11 @@ describe('useOnboardingSteps', () => {
 
   it('returns correct values when corporate identity type is passed and asIssuer is true', async () => {
     await act(async () => {
-      const asIssuerSteps = getIdentityOnboardingSteps('corporate', '', true)
+      const asIssuerSteps = getIdentityOnboardingSteps({
+        identityType: 'corporate',
+        identityStatus: '',
+        asIssuer: true
+      })
       const { result } = renderHook(() => useOnboardingSteps('corporate', true))
 
       await waitFor(
