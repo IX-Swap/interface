@@ -35,6 +35,33 @@ describe('useHomeOnboardingSteps', () => {
     })
   })
 
+  it('returns correct values when details of issuance have no status', async () => {
+    const getOnboardingJourneysResponse = {
+      detailsOfIssuance: {}
+    }
+    jest
+      .spyOn(useOnboardingJourneys, 'useOnboardingJourneys')
+      .mockImplementation(() => getOnboardingJourneysResponse as any)
+
+    await act(async () => {
+      const asIssuerSteps = getIdentityOnboardingSteps({
+        identityType: 'corporate',
+        identityStatus: '',
+        asIssuer: true
+      })
+
+      const { result } = renderHook(() => useHomeOnboardingSteps())
+
+      await waitFor(
+        () => {
+          expect(result.current.steps).toEqual(asIssuerSteps)
+          expect(result.current.activeStep).toEqual(2)
+        },
+        { timeout: 1000 }
+      )
+    })
+  })
+
   it('returns correct values when details of issuance have submitted status', async () => {
     const getOnboardingJourneysResponse = {
       detailsOfIssuance: {
@@ -181,6 +208,68 @@ describe('useHomeOnboardingSteps', () => {
         () => {
           expect(result.current.steps).toEqual(asIssuerSteps)
           expect(result.current.activeStep).toEqual(2)
+        },
+        { timeout: 1000 }
+      )
+    })
+  })
+
+  it('returns correct values when individual identity journey completed and have status submitted', async () => {
+    const getOnboardingJourneysResponse = {
+      hasActiveIdentityJourney: true,
+      isIndividualJourneyStarted: true,
+      isIndividualJourneyCompleted: true,
+      individualIdentity: {
+        status: 'Submitted'
+      }
+    }
+    jest
+      .spyOn(useOnboardingJourneys, 'useOnboardingJourneys')
+      .mockImplementation(() => getOnboardingJourneysResponse as any)
+
+    await act(async () => {
+      const individualSteps = getIdentityOnboardingSteps({
+        identityType: 'individual',
+        identityStatus: 'Submitted'
+      })
+
+      const { result } = renderHook(() => useHomeOnboardingSteps())
+
+      await waitFor(
+        () => {
+          expect(result.current.steps).toEqual(individualSteps)
+          expect(result.current.activeStep).toEqual(3)
+        },
+        { timeout: 1000 }
+      )
+    })
+  })
+
+  it('returns correct values when individual identity journey completed and have status approved', async () => {
+    const getOnboardingJourneysResponse = {
+      hasActiveIdentityJourney: true,
+      isIndividualJourneyStarted: true,
+      isIndividualJourneyCompleted: true,
+      individualIdentity: {
+        status: 'Approved'
+      }
+    }
+    jest
+      .spyOn(useOnboardingJourneys, 'useOnboardingJourneys')
+      .mockImplementation(() => getOnboardingJourneysResponse as any)
+
+    await act(async () => {
+      const individualSteps = getIdentityOnboardingSteps({
+        identityType: 'individual',
+        identityStatus: 'Approved'
+      })
+
+      const { result } = renderHook(() => useHomeOnboardingSteps())
+
+      await waitFor(
+        () => {
+          expect(result.current.steps).toEqual(individualSteps)
+          expect(result.current.activeStep).toEqual(4)
         },
         { timeout: 1000 }
       )
