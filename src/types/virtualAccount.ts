@@ -18,7 +18,6 @@ export interface VirtualAccount {
     roles: string
     createdAt: string
     updatedAt: string
-    __v: number
   }
   createdAt: string
   assignedAt: string
