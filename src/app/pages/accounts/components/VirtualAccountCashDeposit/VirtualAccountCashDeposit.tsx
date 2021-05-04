@@ -3,10 +3,10 @@ import React, { useState } from 'react'
 import { RadioTabButton } from 'app/pages/accounts/components/VirtualAccountCashDeposit/RadioTabButton'
 import { VirtualAccountTabs } from 'app/pages/accounts/components/VirtualAccountCashDeposit/VirtualAccountTabs'
 import { Fast } from 'app/pages/accounts/components/VirtualAccountCashDeposit/Fast'
-import { VirtualAccountTabPanel } from 'app/pages/accounts/components/VirtualAccountCashDeposit/VirtualAccountTabPanel'
 import { Meps } from 'app/pages/accounts/components/VirtualAccountCashDeposit/Meps'
 import { Tt } from 'app/pages/accounts/components/VirtualAccountCashDeposit/Tt'
 import { AchCredits } from 'app/pages/accounts/components/VirtualAccountCashDeposit/AchCredit'
+import { TabPanel } from 'components/TabPanel'
 
 export const VirtualAccountCashDeposit = () => {
   const [activeTab, setActiveTab] = useState(0)
@@ -37,18 +37,18 @@ export const VirtualAccountCashDeposit = () => {
         </Box>
       </Grid>
       <Grid item>
-        <VirtualAccountTabPanel value={activeTab} index={0}>
+        <TabPanel value={activeTab} index={0} pt={0}>
           <Fast />
-        </VirtualAccountTabPanel>
-        <VirtualAccountTabPanel value={activeTab} index={1}>
+        </TabPanel>
+        <TabPanel value={activeTab} index={1} pt={0}>
           <Meps />
-        </VirtualAccountTabPanel>
-        <VirtualAccountTabPanel value={activeTab} index={2}>
+        </TabPanel>
+        <TabPanel value={activeTab} index={2} pt={0}>
           <Tt />
-        </VirtualAccountTabPanel>
-        <VirtualAccountTabPanel value={activeTab} index={3}>
+        </TabPanel>
+        <TabPanel value={activeTab} index={3} pt={0}>
           <AchCredits />
-        </VirtualAccountTabPanel>
+        </TabPanel>
       </Grid>
     </Grid>
   )
