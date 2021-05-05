@@ -17,8 +17,7 @@ export const getFinancialInfoRequestPayload = (
   values: IndividualFinancialInfoFormValues
 ) => {
   return {
-    ...values,
-    fundMajority: values.fundMajority === 'yes'
+    ...values
   }
 }
 

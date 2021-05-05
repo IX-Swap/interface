@@ -33,7 +33,6 @@ export const financialInfoSchema = yup
     employer: yup.string().required('Required'),
     employmentStatus: yup.string().required('Required'),
     annualIncome: yup.string().required('Required'),
-    fundMajority: yup.string().oneOf(['yes', 'no']).required('Required'),
     sourceOfFund: yup
       .array<FundSource>()
       .of(
