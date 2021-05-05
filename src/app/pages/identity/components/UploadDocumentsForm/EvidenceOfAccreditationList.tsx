@@ -53,7 +53,7 @@ export const EvidenceOfAccreditationList = () => {
             <Grid container spacing={0}>
               <Grid item xs={12} md={6}>
                 <EvidenceList
-                  title='Net Personal Assets**'
+                  title='Net Personal Assets'
                   list={personalAssets}
                 />
               </Grid>

@@ -9,7 +9,7 @@ export const EvidenceOfAccreditationHelper = () => {
       <Grid item>
         <Typography>
           <Box component='span' fontWeight='bold'>
-            Net Personal Assets**
+            Net Personal Asset
           </Box>{' '}
           Copy of latest investment portfolio holdings, e.g. bank, broker, fund
           manager account statemnts, copy bank statement, CPF statement
