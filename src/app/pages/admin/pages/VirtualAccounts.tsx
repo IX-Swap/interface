@@ -1,10 +1,11 @@
 import { Grid } from '@material-ui/core'
 import { PageHeader } from 'app/components/PageHeader/PageHeader'
 import React from 'react'
-import { VSpacer } from 'components/VSpacer'
-import { UnassignedAccountsTable } from 'app/pages/admin/components/UnassignedAccountTable/UnassignedAccountsTable'
 import { SelectionHelper } from 'components/SelectionHelper'
 import { VirtualAccount as VirtualAccountType } from 'types/virtualAccount'
+import { VirtualAccountsTabView } from 'app/pages/admin/components/VirtualAccountsTabView/VirtualAccountsTabView'
+import { AddVirtualAccountsButton } from 'app/pages/admin/components/AddVirtualAccountsButton/AddVirtualAccountsButton'
+import { VirtualAccountsStats } from 'app/pages/admin/components/VirtualAccountsStats/VirtualAccountsStats'
 
 export const itemComparator = (
   a: VirtualAccountType,
@@ -15,14 +16,19 @@ export const itemComparator = (
 
 export const VirtualAccounts = () => {
   return (
-    <Grid container direction='column'>
+    <Grid container direction='column' spacing={5}>
       <Grid item>
         <PageHeader title='Virtual Accounts' />
       </Grid>
-      <VSpacer size='small' />
+      <Grid item>
+        <VirtualAccountsStats />
+      </Grid>
+      <Grid item>
+        <AddVirtualAccountsButton />
+      </Grid>
       <SelectionHelper itemComparator={itemComparator}>
         <Grid item>
-          <UnassignedAccountsTable />
+          <VirtualAccountsTabView />
         </Grid>
       </SelectionHelper>
     </Grid>

@@ -68,7 +68,6 @@ describe('WithdrawView', () => {
     } = renderWithDepositStore(<WithdrawView />, { isSetup: true })
 
     expect(Setup).toBeCalled()
-    expect(BankPreview).toBeCalled()
     expect(ContinueButton).toBeCalled()
     expect(Preview).not.toBeCalled()
     expect(SuccessView).not.toBeCalled()
@@ -80,13 +79,11 @@ describe('WithdrawView', () => {
   })
 
   it('renders correct components on the PREVIEW step', () => {
-    const {
-      queryByText,
-      queryByLabelText
-    } = renderWithDepositStore(<WithdrawView />, { isPreview: true })
+    const { queryByText } = renderWithDepositStore(<WithdrawView />, {
+      isPreview: true
+    })
 
     expect(Setup).toBeCalled()
-    expect(BankPreview).toBeCalled()
     expect(ContinueButton).not.toBeCalled()
     expect(Preview).toBeCalled()
     expect(SuccessView).not.toBeCalled()
@@ -94,7 +91,7 @@ describe('WithdrawView', () => {
     expect(BackButton).toBeCalled()
     expect(ResetButton).not.toBeCalled()
     expect(queryByText('Confirm Withdrawal')).toBeTruthy()
-    expect(queryByLabelText('2-Factor Auth Code')).toBeTruthy()
+    expect(queryByText('2-Factor Auth Code')).toBeTruthy()
   })
 
   it('renders correct components on the SUCCESS step', () => {

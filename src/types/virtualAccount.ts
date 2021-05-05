@@ -3,9 +3,9 @@ export interface VirtualAccount {
   accountNumber: string
   currency: 'SGD' | 'USD'
   balance: {
-    available: string
-    onHold: string
-    outstanding: string
+    available: number
+    onHold: number
+    outstanding: number
   }
   createdBy: string
   user: {

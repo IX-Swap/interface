@@ -21,13 +21,11 @@ describe('DepositCash', () => {
     await cleanup()
   })
 
-  it('renders DepositView and RecentDeposits without error', () => {
+  it('renders RecentDeposits without error', () => {
     const { queryByTestId } = render(<DepositCash />)
 
-    const depositView = queryByTestId('deposit-view')
     const recentDeposits = queryByTestId('recent-deposits')
 
-    expect(depositView).not.toBeNull()
     expect(recentDeposits).not.toBeNull()
   })
 })

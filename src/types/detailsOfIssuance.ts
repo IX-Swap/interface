@@ -1,6 +1,7 @@
 import { DataroomFile } from 'types/dataroomFile'
+import { Authorizable } from 'types/authorizer'
 
-export interface DetailsOfIssuance {
+export interface DetailsOfIssuance extends Authorizable {
   _id: string
   fullName: string
   companyName: string
