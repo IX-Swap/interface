@@ -20,8 +20,8 @@ export const CountryTaxDeclaration = ({
       case 'A':
         reasonDescription = (
           <>
-            <strong>Reason A</strong> - The country/jurisdiction where the
-            Account Holder is resident does not issue TINs to its residents
+            <strong>Reason A</strong> - The country where the account holder is
+            resident does not issue TINs to its residents
           </>
         )
         break
