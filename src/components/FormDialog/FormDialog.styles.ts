@@ -8,13 +8,17 @@ export default makeStyles(theme => ({
     color: theme.palette.primary.contrastText,
     fontSize: '1.25em',
     textAlign: 'center',
-    position: 'relative'
+    position: 'relative',
+    fontWeight: 600
   },
   content: {
     paddingTop: theme.spacing(6),
     paddingBottom: theme.spacing(3),
     paddingLeft: theme.spacing(10),
     paddingRight: theme.spacing(10)
+  },
+  noPaddingContent: {
+    padding: 0
   },
   actions: {
     margin: 0,
