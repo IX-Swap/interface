@@ -51,7 +51,7 @@ describe('DocumentsFields', () => {
     expect(getByText('Proof of Address')).toBeTruthy()
     expect(
       getByText(
-        'Utility bills, bank statement/credit card statement, tenancy agreement, and telecom bill.'
+        'utility bills, bank statement/credit card statement, tenancy agreement, and telecom bill.'
       )
     ).toBeTruthy()
   })
