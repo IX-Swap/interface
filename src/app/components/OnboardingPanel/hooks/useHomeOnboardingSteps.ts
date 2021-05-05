@@ -45,10 +45,7 @@ export const useHomeOnboardingSteps = () => {
         identityType: 'corporate',
         identityStatus: '',
         asIssuer: true,
-        issuanceDetailsStatus:
-          detailsOfIssuance.status !== undefined
-            ? detailsOfIssuance.status
-            : undefined
+        issuanceDetailsStatus: detailsOfIssuance.status
       }),
       activeStep: detailsOfIssuance.status === 'Submitted' ? 1 : getActiveStep()
     }

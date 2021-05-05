@@ -50,7 +50,7 @@ export const useOnboardingSteps = (
       steps: getIdentityOnboardingSteps({
         identityType: identityTypeLoaded,
         identityStatus: identityLoaded?.status,
-        asIssuer: asIssuer
+        asIssuer
       }),
       activeStep: getActiveStep(identityLoaded?.status)
     }
@@ -73,8 +73,7 @@ export const useOnboardingSteps = (
       identityType: identityType,
       identityStatus: identityStatus,
       asIssuer: asIssuer,
-      issuanceDetailsStatus:
-        detailsOfIssuance !== undefined ? detailsOfIssuance.status : undefined
+      issuanceDetailsStatus: detailsOfIssuance?.status
     }),
     activeStep: getActiveStep(identityStatus)
   }
