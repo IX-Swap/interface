@@ -7,7 +7,7 @@ import { PageHeader } from 'app/components/PageHeader/PageHeader'
 
 export const WithdrawCash: React.FC = () => {
   return (
-    <Grid container direction='column'>
+    <Grid container direction='column' spacing={2} style={{ display: 'table' }}>
       <Grid item>
         <PageHeader title='Cash Withdrawals' />
       </Grid>
@@ -15,7 +15,7 @@ export const WithdrawCash: React.FC = () => {
         <WithdrawView />
       </Grid>
       <Grid item>
-        <VSpacer size='small' />
+        <VSpacer size='medium' />
       </Grid>
       <Grid item>
         <Typography variant='h5'>Recent Withdrawals</Typography>

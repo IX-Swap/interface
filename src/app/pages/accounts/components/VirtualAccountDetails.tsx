@@ -2,12 +2,17 @@ import { Grid } from '@material-ui/core'
 import { AvailableBalanceInfo } from 'app/pages/accounts/components/VirtualAccountCard/AvailableBalanceInfo'
 import { VirtualAccountCard } from 'app/pages/accounts/components/VirtualAccountCard/VirtualAccountCard'
 import { VirtualAccountNumberInfo } from 'app/pages/accounts/components/VirtualAccountCard/VirtualAccountNumberInfo'
-import { useVirtualAccounts } from 'app/pages/accounts/hooks/useVirtualAccounts'
+import { useVirtualAccount } from 'app/pages/accounts/hooks/useVirtualAccount'
 import React from 'react'
-import { VirtualAccount } from 'types/virtualAccount'
 
-export const VirtualAccountDetails = () => {
-  const { data, isLoading } = useVirtualAccounts()
+export interface VirtualAccountDetailsProps {
+  virtualAccountId?: string
+}
+
+export const VirtualAccountDetails = ({
+  virtualAccountId
+}: VirtualAccountDetailsProps) => {
+  const { data, isLoading } = useVirtualAccount(virtualAccountId)
 
   if (isLoading || data === undefined) {
     return null
@@ -17,28 +22,26 @@ export const VirtualAccountDetails = () => {
     <Grid container spacing={2}>
       <Grid item>
         <VirtualAccountCard
-          label={data[0].user.name}
+          label={data.user.name}
           info={
             <VirtualAccountNumberInfo
-              accountNumber={data[0].accountNumber}
-              currency={data[0].currency}
+              accountNumber={data.accountNumber}
+              currency={data.currency}
             />
           }
         />
       </Grid>
-      {data.map((virtualAccount: VirtualAccount) => (
-        <Grid item key={virtualAccount._id}>
-          <VirtualAccountCard
-            label='Available Balance'
-            info={
-              <AvailableBalanceInfo
-                currency={virtualAccount.currency}
-                amount={virtualAccount.balance.available}
-              />
-            }
-          />
-        </Grid>
-      ))}
+      <Grid item>
+        <VirtualAccountCard
+          label='Available Balance'
+          info={
+            <AvailableBalanceInfo
+              currency={data.currency}
+              amount={data.balance.available}
+            />
+          }
+        />
+      </Grid>
     </Grid>
   )
 }

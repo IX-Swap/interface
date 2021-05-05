@@ -1,5 +1,5 @@
 import { VirtualAccountDetails } from 'app/pages/accounts/components/VirtualAccountDetails'
-import * as useVirtualAccounts from 'app/pages/accounts/hooks/useVirtualAccounts'
+import * as useVirtualAccount from 'app/pages/accounts/hooks/useVirtualAccount'
 import React from 'react'
 import { render, cleanup } from 'test-utils'
 import { generateQueryResult } from '__fixtures__/useQuery'
@@ -13,23 +13,23 @@ describe('VirtualAccountDetails', () => {
 
   it('renders without errors', () => {
     const useVirtualsAccountResponse = generateQueryResult({
-      data: virtualAccountsSample
+      data: virtualAccountsSample[0]
     })
 
     jest
-      .spyOn(useVirtualAccounts, 'useVirtualAccounts')
+      .spyOn(useVirtualAccount, 'useVirtualAccount')
       .mockImplementation(() => useVirtualsAccountResponse as any)
     render(<VirtualAccountDetails />)
   })
 
   it('returns null when isLoading is true', () => {
     const useVirtualAccountsResponse = generateQueryResult({
-      data: virtualAccountsSample,
+      data: virtualAccountsSample[0],
       isLoading: true
     })
 
     jest
-      .spyOn(useVirtualAccounts, 'useVirtualAccounts')
+      .spyOn(useVirtualAccount, 'useVirtualAccount')
       .mockImplementation(() => useVirtualAccountsResponse as any)
     const { container } = render(<VirtualAccountDetails />)
 
@@ -42,7 +42,7 @@ describe('VirtualAccountDetails', () => {
     })
 
     jest
-      .spyOn(useVirtualAccounts, 'useVirtualAccounts')
+      .spyOn(useVirtualAccount, 'useVirtualAccount')
       .mockImplementation(() => useVirtualAccountsResponse as any)
     const { container } = render(<VirtualAccountDetails />)
 
