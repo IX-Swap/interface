@@ -13,7 +13,7 @@ export const IndividualUploadDocumentsForm = () => {
           label='Proof of Identity'
           helperElement={
             <Typography variant='body1'>
-              Passport, driving license, NRIC, government issued ID card and
+              passport, driving license, NRIC, government issued ID card and
               others
             </Typography>
           }

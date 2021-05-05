@@ -29,7 +29,7 @@ export const DocumentFields = ({
             <>
               <Box m={1} />
               <Typography variant='body1'>
-                Passport, driving license, NRIC and government issued ID card.
+                passport, driving license, NRIC and government issued ID card.
               </Typography>
             </>
           }
