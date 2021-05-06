@@ -12,7 +12,7 @@ export const MarkAsRead = (props: MarkAsReadProps) => {
   const { data } = props
   const { mutation, isLoading } = useMarkAsRead(data)
   const isButtonDisabled = data.read || isLoading
-  const classes = useStyles(isButtonDisabled)
+  const classes = useStyles({ isUnread: isButtonDisabled })
   const handleClick = async () => await mutation()
 
   return (
