@@ -19,18 +19,20 @@ export const corporateInvestorInfoSchema = yup.object().shape<any>({
     .string()
     .matches(
       /^[a-zA-Z0-9. , -?]*$/,
-      'Must have only letters, numbers and this characters.,-'
+      'Must include only letters, numbers and this special characters . , -'
     )
     .required('Required'),
   registrationNumber: yup.string().when('countryOfFormation', {
     is: 'Singapore',
-    then: yup.string().test('validateUEN', 'Must be UEN', function (value) {
-      const error = validateUEN(value)
-      if (typeof error === 'string') {
-        return new yup.ValidationError(error, value, 'registrationNumber')
-      }
-      return true
-    }),
+    then: yup
+      .string()
+      .test('validateUEN', 'Must be a valid UEN', function (value) {
+        const error = validateUEN(value)
+        if (typeof error === 'string') {
+          return new yup.ValidationError(error, value, 'registrationNumber')
+        }
+        return true
+      }),
     otherwise: yup.string().required('Required')
   }),
   legalEntityStatus: yup.string().required('Required'),
@@ -55,11 +57,11 @@ export const corporateInvestorInfoSchema = yup.object().shape<any>({
           fullName: yup
             .string()
             .required('Required')
-            .matches(/^[a-zA-Z\s]+$/g, 'Must have letters only'),
+            .matches(/^[a-zA-Z\s]+$/g, 'Must include letters only'),
           designation: yup
             .string()
             .required('Required')
-            .matches(/^[a-zA-Z\s]+$/g, 'Must have letters only'),
+            .matches(/^[a-zA-Z\s]+$/g, 'Must include letters only'),
           email: yup
             .string()
             .email('Must have email format')
