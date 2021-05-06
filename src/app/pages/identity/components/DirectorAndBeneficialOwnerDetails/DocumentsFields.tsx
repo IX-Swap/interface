@@ -45,7 +45,7 @@ export const DocumentFields = ({
             <>
               <Box m={1} />
               <Typography variant='body1'>
-                Utility bills, bank statement/credit card statement, tenancy
+                utility bills, bank statement/credit card statement, tenancy
                 agreement, and telecom bill.
               </Typography>
             </>

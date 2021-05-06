@@ -25,8 +25,8 @@ export const IndividualUploadDocumentsForm = () => {
           label='Proof of Address'
           helperElement={
             <Typography variant='body1'>
-              Utility bills, bank statement/credit card statement, tenancy/lease
-              and others agreement, telecom bill
+              utility bills, bank statement/credit card statement, tenancy
+              agreement, telecom bill
             </Typography>
           }
         />
