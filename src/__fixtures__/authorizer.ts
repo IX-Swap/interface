@@ -15,6 +15,7 @@ import {
   CorporateIdentity,
   IndividualIdentity
 } from 'app/pages/identity/types/forms'
+import { virtualAccount } from '__fixtures__/virtualAccount'
 
 export const asset: Asset = {
   _id: '5f732c538a568b50914d8372',
@@ -342,7 +343,8 @@ export const cashWithdrawal: CashWithdrawal = {
   },
   authorizations: [],
   authorizationDocuments: [],
-  authorization: undefined
+  authorization: undefined,
+  virtualAccount: virtualAccount
 }
 
 export const authorizerURLs = {

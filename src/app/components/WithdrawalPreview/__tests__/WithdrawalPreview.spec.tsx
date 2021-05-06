@@ -52,8 +52,8 @@ describe('WithdrawalPreview', () => {
     expect(LabelledValue).toHaveBeenNthCalledWith(
       3,
       {
-        label: 'Bank Account Number',
-        value: props.data.bank.bankAccountNumber
+        label: 'Virtual Account',
+        value: props.data.virtualAccount.accountNumber
       },
       {}
     )
@@ -83,6 +83,22 @@ describe('WithdrawalPreview', () => {
     )
     expect(LabelledValue).toHaveBeenNthCalledWith(
       7,
+      {
+        label: 'Bank Contact Number',
+        value: props.data.bank.bankAccountNumber
+      },
+      {}
+    )
+    expect(LabelledValue).toHaveBeenNthCalledWith(
+      8,
+      {
+        label: 'Transfer Method',
+        value: ''
+      },
+      {}
+    )
+    expect(LabelledValue).toHaveBeenNthCalledWith(
+      9,
       {
         label: 'Withdrawal Amount',
         value: formatMoney(props.data.amount, props.data.asset.symbol)
