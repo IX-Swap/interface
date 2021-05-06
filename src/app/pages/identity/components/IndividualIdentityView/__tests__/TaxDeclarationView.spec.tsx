@@ -19,7 +19,7 @@ describe('TaxDeclarationView', () => {
     expect(getByText('Singapore')).toBeTruthy()
     expect(
       getByText(
-        'NO, I’m currently tax resident in the following list of countries/ jurisdictions (including Singapore, if applicable):'
+        'NO, I’m currently tax resident in the following list of jurisdictions (including Singapore, if applicable):'
       )
     ).toBeTruthy()
   })

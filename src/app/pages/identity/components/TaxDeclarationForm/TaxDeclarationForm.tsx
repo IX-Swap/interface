@@ -1,6 +1,5 @@
 import React from 'react'
-import { Grid, Typography } from '@material-ui/core'
-import { TaxDeclarationInfoDialog } from 'app/pages/identity/components/TaxDeclarationForm/TaxDeclarationInfoDialog/TaxDeclarationInfoDialog'
+import { Grid } from '@material-ui/core'
 import { TaxResidencyFields } from 'app/pages/identity/components/TaxDeclarationForm/TaxResidencyFields/TaxResidencyFields'
 import { UsCitizenshipConfirmation } from 'app/pages/identity/components/TaxDeclarationForm/UsCitizenshipConfirmation/UsCitizenshipConfirmation'
 import { FormSectionHeader } from 'app/pages/identity/components/FormSectionHeader'
@@ -16,12 +15,6 @@ export const TaxDeclarationForm = ({
     <>
       <FormSectionHeader title='Tax Declaration' />
       <Grid container direction='column' spacing={6}>
-        <Grid item>
-          <Typography>
-            <TaxDeclarationInfoDialog /> to know why we need your tax
-            information.
-          </Typography>
-        </Grid>
         <Grid item>
           {identityType === 'individual' ? (
             <TaxResidencyFields />

@@ -94,7 +94,6 @@ export interface IndividualFinancialInfoFormValues {
   employer: string
   employmentStatus: string
   annualIncome: string
-  fundMajority: 'yes' | 'no'
 }
 
 export interface IndividualTaxDeclarationFormValues {
@@ -214,7 +213,6 @@ export interface IdentityFinancials {
   occupation: string
   sourceOfWealth: string
   sourceOfFund?: FundSource[]
-  fundMajority?: boolean
 }
 
 export interface CorporateFields {

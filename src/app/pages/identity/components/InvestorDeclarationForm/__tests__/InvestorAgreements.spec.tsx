@@ -48,7 +48,7 @@ describe('InvestorAgreements', () => {
 
     expect(
       getByText(
-        'My total net personal assets (including up to SGD1 million of your primary residence) exceed SGD2 million or its equivalent in foreign currency; or'
+        'My total net personal assets (including up to SGD 1 million of your primary residence) exceed SGD 2 million or its equivalent in foreign currency; or'
       )
     ).toBeTruthy()
   })

@@ -11,7 +11,7 @@ export const InternationalFields = () => {
     <Grid container direction='column' spacing={3}>
       <Grid item>
         <FormControlLabel
-          label='NO, I’m currently tax resident in the following list of countries/ jurisdictions (including Singapore, if applicable):'
+          label='NO, I’m currently tax resident in the following list of jurisdictions (including Singapore, if applicable):'
           value='no'
           control={<Radio />}
         />

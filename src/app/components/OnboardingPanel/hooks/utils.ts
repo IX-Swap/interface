@@ -21,21 +21,32 @@ export const defaultOnboardingSteps = [
   { title: 'Select Your Desired Option', content: ['Create your account.'] }
 ]
 
-export const getIdentityOnboardingSteps = (
-  indentityType: IdentityType,
-  status?: AuthorizableStatus,
+interface IdentityOnboardingSteps {
+  identityType: IdentityType
+  identityStatus?: AuthorizableStatus
   asIssuer?: boolean
-) => [
+  issuanceDetailsStatus?: AuthorizableStatus
+}
+
+export const getIdentityOnboardingSteps = ({
+  identityType,
+  identityStatus,
+  asIssuer,
+  issuanceDetailsStatus
+}: IdentityOnboardingSteps) => [
   defaultOnboardingSteps[0],
   asIssuer === true
     ? {
         title: 'To Raise Capital',
-        content: ['Issuance Detail']
+        content:
+          issuanceDetailsStatus !== undefined
+            ? getIdentityStatus(issuanceDetailsStatus)
+            : ['Issuance Detail']
       }
     : {
         title: 'To Invest',
-        content: [`As ${indentityType}`]
+        content: [`As ${identityType}`]
       },
-  { title: 'Create Identity', content: getIdentityStatus(status) },
+  { title: 'Create Identity', content: getIdentityStatus(identityStatus) },
   { title: 'Complete Onboarding', content: [''] }
 ]

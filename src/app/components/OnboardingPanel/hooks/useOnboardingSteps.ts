@@ -47,11 +47,11 @@ export const useOnboardingSteps = (
 
   if (identityType === undefined && hasIdentity) {
     return {
-      steps: getIdentityOnboardingSteps(
-        identityTypeLoaded,
-        identityLoaded?.status,
+      steps: getIdentityOnboardingSteps({
+        identityType: identityTypeLoaded,
+        identityStatus: identityLoaded?.status,
         asIssuer
-      ),
+      }),
       activeStep: getActiveStep(identityLoaded?.status)
     }
   }
@@ -69,7 +69,12 @@ export const useOnboardingSteps = (
       : corporateIdentities.list[0]?.status
 
   return {
-    steps: getIdentityOnboardingSteps(identityType, identityStatus, asIssuer),
+    steps: getIdentityOnboardingSteps({
+      identityType: identityType,
+      identityStatus: identityStatus,
+      asIssuer: asIssuer,
+      issuanceDetailsStatus: detailsOfIssuance?.status
+    }),
     activeStep: getActiveStep(identityStatus)
   }
 }

@@ -11,7 +11,8 @@ import { formatDateToMMDDYY } from 'helpers/dates'
 import { WithdrawalAddress } from 'types/withdrawalAddress'
 import {
   CorporateIdentity,
-  IndividualIdentity
+  IndividualIdentity,
+  Personnel
 } from 'app/pages/identity/types/forms'
 
 export const renderMinimumInvestment = (
@@ -39,12 +40,17 @@ export const renderName = (val: string, row: PersonName) => {
   return names.filter(s => s !== undefined).join(' ')
 }
 
-export const renderRepresentativeName = (val: string, row: any) => {
+export const renderRepresentativeName = (
+  val: string,
+  row: CorporateIdentity
+) => {
   if (row.representatives.length === 0) {
     return ''
   }
 
-  return row.representatives.map((r: any) => renderName(val, r)).join(', ')
+  return row.representatives
+    .map(({ fullName }: Personnel) => fullName)
+    .join(', ')
 }
 
 export const renderLastName = (
