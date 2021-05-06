@@ -51,7 +51,6 @@ export const InformationFields = () => {
         >
           <Grid item xs={12} sm={6} md={6}>
             <TypedField
-              customRenderer
               fullWidth
               component={TextField}
               control={control}
@@ -80,7 +79,6 @@ export const InformationFields = () => {
           </Grid>
           <Grid item xs={12} sm={6} md={6}>
             <TypedField
-              customRenderer
               fullWidth
               component={TextField}
               control={control}

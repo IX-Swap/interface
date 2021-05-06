@@ -10,12 +10,29 @@ import {
 import { DataroomFile } from 'types/dataroomFile'
 import { addressSchema } from 'validation/shared'
 import * as yup from 'yup'
+import { validateUEN } from 'validation/validators'
 
 // TODO: change to InvestorCorporateInfoFormValues (currently getting TS2589)
 export const corporateInvestorInfoSchema = yup.object().shape<any>({
   logo: yup.string(),
-  companyLegalName: yup.string().required('Required'),
-  registrationNumber: yup.string().required('Required'),
+  companyLegalName: yup
+    .string()
+    .matches(
+      /^[a-zA-Z0-9. , -?]*$/,
+      'Must have only letters, numbers and this characters.,-'
+    )
+    .required('Required'),
+  registrationNumber: yup.string().when('countryOfFormation', {
+    is: 'Singapore',
+    then: yup.string().test('validateUEN', 'Must be UEN', function (value) {
+      const error = validateUEN(value)
+      if (typeof error === 'string') {
+        return new yup.ValidationError(error, value, 'registrationNumber')
+      }
+      return true
+    }),
+    otherwise: yup.string().required('Required')
+  }),
   legalEntityStatus: yup.string().required('Required'),
   otherLegalEntityStatus: yup.string().when('legalEntityStatus', {
     is: 'others',
@@ -35,9 +52,18 @@ export const corporateInvestorInfoSchema = yup.object().shape<any>({
     .of(
       yup
         .object<RepresentativeFormValues>({
-          fullName: yup.string().required('Required'),
-          designation: yup.string().required('Required'),
-          email: yup.string().required('Required'),
+          fullName: yup
+            .string()
+            .required('Required')
+            .matches(/^[a-zA-Z\s]+$/g, 'Must have letters only'),
+          designation: yup
+            .string()
+            .required('Required')
+            .matches(/^[a-zA-Z\s]+$/g, 'Must have letters only'),
+          email: yup
+            .string()
+            .email('Must have email format')
+            .required('Required'),
           contactNumber: yup.string().required('Required'),
           documents: yup.array<DataroomFile>().required('Required')
         })
