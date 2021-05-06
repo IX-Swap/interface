@@ -32,6 +32,8 @@ export const DropzoneAcceptableFiles = ({
         style={{ fontSize: 14 }}
       >
         Notes: Type of document format supported is {acceptedFilesString}.
+        <br />
+        File size limit 10 MB.
       </Typography>
     </>
   )
