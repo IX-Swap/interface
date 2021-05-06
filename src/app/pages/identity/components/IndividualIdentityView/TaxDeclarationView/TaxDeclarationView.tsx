@@ -71,7 +71,7 @@ export const TaxDeclarationView = ({ data }: TaxDeclarationViewProps) => {
         <Typography>
           {singaporeOnly
             ? 'YES, I’m currently only tax resident in Singapore and do not have a foreign tax residency.'
-            : 'NO, I’m currently tax resident in the following list of countries/ jurisdictions (including Singapore, if applicable):'}
+            : 'NO, I’m currently tax resident in the following list of jurisdictions (including Singapore, if applicable):'}
         </Typography>
       </Grid>
       {singaporeOnly
