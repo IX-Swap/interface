@@ -94,20 +94,4 @@ describe('FundSourceFields', () => {
     expect(othersSlider).toBeInTheDocument()
     expect(othersSlider).toHaveValue('0')
   })
-
-  it('renders fundMajority field correctly', () => {
-    const { getByText } = render(
-      <Form defaultValues={defaultValue}>
-        <FundSourceFields />
-      </Form>
-    )
-
-    expect(
-      getByText(
-        'Will these source(s) be used to fund majority of your account?'
-      )
-    ).toBeInTheDocument()
-    expect(getByText('Yes')).toBeInTheDocument()
-    expect(getByText('No')).toBeInTheDocument()
-  })
 })
