@@ -24,8 +24,8 @@ export const IssuerDocuments = () => {
           label='Issuance-Related Documents'
           helperElement={
             <Typography variant='body1'>
-              Offering memorandum, One pager / Teaser of the issuance and Any
-              other marketing materials.
+              offering memorandum, one pager of the issuance or any other
+              marketing material
             </Typography>
           }
         />
