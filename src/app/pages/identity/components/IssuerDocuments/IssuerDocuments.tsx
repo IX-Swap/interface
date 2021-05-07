@@ -36,8 +36,7 @@ export const IssuerDocuments = () => {
           label='Financial Documents'
           helperElement={
             <Typography variant='body1'>
-              Please upload your balance sheet , P&amp;L statement or Annual
-              Returns
+              balance sheet, profit &amp; loss statement or annual returns
             </Typography>
           }
         />
