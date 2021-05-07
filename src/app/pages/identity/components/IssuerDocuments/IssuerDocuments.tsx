@@ -11,9 +11,9 @@ export const IssuerDocuments = () => {
           label='Company-Related Documents'
           helperElement={
             <Typography variant='body1'>
-              Certificate of Incorporation, Memorandum and Article Association,
-              Corporate Registry Profile, Company Organization Chart and
-              Register of Shareholders and Directors.
+              company registry profile, certificate of incorporation, memorandum
+              and articles of association, company organisation chart, register
+              of shareholders and directors, partnership deed and trust deed
             </Typography>
           }
         />
