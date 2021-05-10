@@ -11,9 +11,9 @@ export const virtualAccount: VirtualAccount = {
   updatedAt: '2021-04-27T04:21:39.140Z',
   assignedAt: '2021-04-27T04:21:39.139Z',
   balance: {
-    available: '123',
-    onHold: '235',
-    outstanding: '123'
+    available: 123,
+    onHold: 235,
+    outstanding: 123
   },
   user: managedUser
 }

@@ -25,12 +25,12 @@ describe('InvestorAgreements', () => {
     )
 
     expect(
-      getByText('I declare that I am corporate "Accredited Investor"')
+      getByText('I declare that I am "Corporate Accredited Investor"')
     ).toBeTruthy()
 
     expect(
       getByText(
-        'An entity or corporation with net assets exceeding $10 million or its equivalent in foreign currency; or'
+        'An entity or corporation with net assets exceeding SGD 10 million or its equivalent in foreign currency; or'
       )
     ).toBeTruthy()
   })
@@ -43,7 +43,7 @@ describe('InvestorAgreements', () => {
     )
 
     expect(
-      getByText('I declare that I am individual "Accredited Investor"')
+      getByText('I declare that I am "Individual Accredited Investor"')
     ).toBeTruthy()
 
     expect(

@@ -12,9 +12,9 @@ export interface InvestorAgreementsProps {
 
 export const InvestorAgreements = ({ type }: InvestorAgreementsProps) => {
   const isCorporate = type === 'corporate'
-  const title = `I declare that I am ${
-    isCorporate ? 'corporate' : 'individual'
-  } "Accredited Investor"`
+  const title = `I declare that I am "${
+    isCorporate ? 'Corporate' : 'Individual'
+  } Accredited Investor"`
   const agreements = isCorporate
     ? corporateInvestorAgreementsMap
     : individualInvestorAgreementsMap

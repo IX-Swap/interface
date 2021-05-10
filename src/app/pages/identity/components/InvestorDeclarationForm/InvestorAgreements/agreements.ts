@@ -1,8 +1,8 @@
 export const corporateInvestorAgreementsMap = {
   assets:
-    'An entity or corporation with net assets exceeding $10 million or its equivalent in foreign currency; or',
+    'An entity or corporation with net assets exceeding SGD 10 million or its equivalent in foreign currency; or',
   trustee:
-    'The trustee of a trust the subject matter of which exceeds $10 million or its equivalent in foreign currency; or',
+    'The trustee of a trust the subject matter of which exceeds SGD 10 million or its equivalent in foreign currency; or',
   accreditedShareholders:
     'A corporation where all the shareholders are Accredited Investors; or',
   partnership:
