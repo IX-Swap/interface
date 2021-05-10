@@ -21,10 +21,9 @@ export const renderDSOStatus = (
   dso: DigitalSecurityOffering
 ) => <DSORaised insight={i} dso={dso} />
 
-export const columns: Array<TableColumn<
-  DigitalSecurityOffering,
-  DSOTableColumn
->> = [
+export const columns: Array<
+  TableColumn<DigitalSecurityOffering, DSOTableColumn>
+> = [
   {
     key: 'favorite',
     label: '',

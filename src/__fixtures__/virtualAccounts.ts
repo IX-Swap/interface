@@ -15,8 +15,7 @@ export const virtualAccountsSample: VirtualAccount[] = [
       name: 'Christa Spencer',
       roles: 'admin,authorizer,user,issuer,accredited',
       createdAt: '2021-03-26T01:43:00.174Z',
-      updatedAt: '2021-04-14T14:57:04.789Z',
-      __v: 0
+      updatedAt: '2021-04-14T14:57:04.789Z'
     },
     balance: {
       available: 987654.321,
@@ -41,8 +40,7 @@ export const virtualAccountsSample: VirtualAccount[] = [
       name: 'Christa Spencer',
       roles: 'admin,authorizer,user,issuer,accredited',
       createdAt: '2021-03-26T01:43:00.174Z',
-      updatedAt: '2021-04-14T14:57:04.789Z',
-      __v: 0
+      updatedAt: '2021-04-14T14:57:04.789Z'
     },
     balance: {
       available: 0,
