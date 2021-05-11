@@ -1,6 +1,7 @@
 import React from 'react'
 import { render, cleanup } from 'test-utils'
 import { PlaceOrderForm } from 'app/components/PlaceOrderForm/PlaceOrderForm'
+import { Form } from 'components/form/Form'
 
 describe('PlaceOrderForm', () => {
   afterEach(async () => {
@@ -9,6 +10,10 @@ describe('PlaceOrderForm', () => {
   })
 
   it('renders without errors', () => {
-    render(<PlaceOrderForm />)
+    render(
+      <Form>
+        <PlaceOrderForm />
+      </Form>
+    )
   })
 })
