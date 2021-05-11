@@ -19,11 +19,18 @@ export const darkTheme: ThemeOptions = {
     backgrounds: {
       default: '#121212',
       light: '#2D2D2D',
-      lighter: 'rgba(255, 255, 255, 0.08)'
+      lighter: 'rgba(255, 255, 255, 0.08)',
+      alternative: '#56AA82',
+      alternativeLight: 'rgba(86, 170, 130, 0.06)'
     },
     sidebar: {
       activeBackground: 'rgba(137, 149, 252, 0.11)',
       activeColor: '#8995FC'
+    },
+    slider: {
+      background: '#C6D9FF',
+      activeColor: '#ffffff',
+      activeBackground: '#0c469c'
     },
     text: {
       primary: '#ffffff'

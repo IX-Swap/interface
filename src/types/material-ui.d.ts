@@ -5,11 +5,18 @@ export interface AppBackgrounds {
   default: CSSProperties['color']
   light: CSSProperties['color']
   lighter: CSSProperties['color']
+  alternativeLight: CSSProperties['color']
+  alternative: CSSProperties['color']
 }
 
 declare module '@material-ui/core/styles/createPalette' {
   export interface PaletteOptions {
     backgrounds: AppBackgrounds
+    slider: {
+      activeColor: CSSProperties['color']
+      background: CSSProperties['color']
+      activeBackground: CSSProperties['color']
+    }
     sidebar: {
       activeColor: CSSProperties['color']
       activeBackground: CSSProperties['color']
@@ -20,6 +27,11 @@ declare module '@material-ui/core/styles/createPalette' {
     backgrounds: AppBackgrounds
     sidebar: {
       activeColor: CSSProperties['color']
+      activeBackground: CSSProperties['color']
+    }
+    slider: {
+      activeColor: CSSProperties['color']
+      background: CSSProperties['color']
       activeBackground: CSSProperties['color']
     }
   }
