@@ -28,7 +28,7 @@ export const UploadDocumentsForm = ({
           label='Proof of Identity'
           helperElement={
             <Typography variant='body1'>
-              Passport, driving license, NRIC, government issued ID card
+              passport, driving license, NRIC, government issued ID card
             </Typography>
           }
         />
@@ -39,7 +39,7 @@ export const UploadDocumentsForm = ({
           label='Proof of Address'
           helperElement={
             <Typography variant='body1'>
-              Utility bills, bank statement/credit card statement, tenancy/lease
+              utility bills, bank statement/credit card statement, tenancy
               agreement, telecom bill
             </Typography>
           }

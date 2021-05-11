@@ -12,7 +12,10 @@ describe('getIdentityOnboardingSteps', () => {
   })
 
   it('returns correct steps and status', () => {
-    const steps = getIdentityOnboardingSteps('individual', individual.status)
+    const steps = getIdentityOnboardingSteps({
+      identityType: 'individual',
+      identityStatus: individual.status
+    })
 
     expect(steps).toEqual([
       { title: 'Get Started', content: ['Access platform and reports'] },

@@ -33,6 +33,7 @@ export interface WithdrawCashFormValues
     TransactionWithOTP {
   bank: string
   memo?: string
+  virtualAccount: string
 }
 
 export interface DepositDSFormValues {

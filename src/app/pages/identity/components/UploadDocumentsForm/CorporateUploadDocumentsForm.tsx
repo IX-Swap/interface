@@ -37,10 +37,9 @@ export const CorporateUploadDocumentsForm = (
           label='Corporate Documents'
           helperElement={
             <Typography variant='body1'>
-              Company Registry Profile, Certificate of Incorporation, Memorandum
-              and article association, Corporate registry profile, Company
-              Organization Chart, Register of shareholders and directors and
-              Partnership Deed, Trust Deed.
+              company registry profile, certificate of incorporation, memroandum
+              and articles of association, company organisation chart, register
+              of shareholders and directors, partnership deed and trust deed
             </Typography>
           }
         />
@@ -51,8 +50,7 @@ export const CorporateUploadDocumentsForm = (
           label='Financial Documents'
           helperElement={
             <Typography variant='body1'>
-              Please upload your balance sheet , P&amp;L statement or Annual
-              Returns
+              balance sheet, profit &amp; loss statement or annual returns
             </Typography>
           }
         />

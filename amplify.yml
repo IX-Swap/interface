@@ -1,0 +1,14 @@
+version: 0.1
+frontend:
+  phases:
+    preBuild:
+      commands:
+        - yarn pre-install
+        - yarn install
+    build:
+      commands:
+        - yarn run build
+  artifacts:
+    baseDirectory: build
+    files:
+      - '**/*'

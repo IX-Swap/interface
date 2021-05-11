@@ -3,7 +3,7 @@ import { VSpacer } from 'components/VSpacer'
 import React, { useState } from 'react'
 
 const personalAssets = [
-  'Copy of property title deed**',
+  'Copy of property title deed',
   'Copy of property valuation report (dated with 6 months)',
   'Latest statement from the Central Depository (Pte) Ltd. (CDP) showing personal assets.'
 ]
@@ -53,7 +53,7 @@ export const EvidenceOfAccreditationList = () => {
             <Grid container spacing={0}>
               <Grid item xs={12} md={6}>
                 <EvidenceList
-                  title='Net Personal Assets**'
+                  title='Net Personal Assets'
                   list={personalAssets}
                 />
               </Grid>

@@ -3,3 +3,5 @@ export interface PersonName {
   middleName?: string
   lastName: string
 }
+
+export type ValidCurrency = 'SGD' | 'USD'

@@ -36,7 +36,7 @@ describe('useUpdateDSO', () => {
       const apiObj = { put: putFn }
       const snackbarObj = { showSnackbar }
       const { result } = renderHookWithServiceProvider(
-        () => useUpdateDSO(dso._id, callbacks),
+        () => useUpdateDSO(dso._id, dso.user, callbacks),
         { apiService: apiObj, snackbarService: snackbarObj },
         IssuanceRoute.edit
       )
@@ -62,7 +62,7 @@ describe('useUpdateDSO', () => {
       const apiObj = { put: putFn }
       const snackbarObj = { showSnackbar }
       const { result } = renderHookWithServiceProvider(
-        () => useUpdateDSO(dso._id, callbacks),
+        () => useUpdateDSO(dso._id, '', callbacks),
         { apiService: apiObj, snackbarService: snackbarObj }
       )
 

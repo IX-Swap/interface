@@ -51,7 +51,6 @@ export const InformationFields = () => {
         >
           <Grid item xs={12} sm={6} md={6}>
             <TypedField
-              customRenderer
               fullWidth
               component={TextField}
               control={control}
@@ -60,15 +59,7 @@ export const InformationFields = () => {
               label='Corporate Name'
             />
           </Grid>
-          <Grid item xs={12} sm={6} md={6}>
-            <TypedField
-              component={LegalEntityStatusSelect}
-              control={control}
-              variant='outlined'
-              name='legalEntityStatus'
-              label='Legal Entity Status'
-            />
-          </Grid>
+          <Grid item xs={12} sm={6} md={6} />
           <Grid item xs={12} sm={6} md={6}>
             <TypedField
               component={CountrySelect}
@@ -80,13 +71,21 @@ export const InformationFields = () => {
           </Grid>
           <Grid item xs={12} sm={6} md={6}>
             <TypedField
-              customRenderer
               fullWidth
               component={TextField}
               control={control}
               variant='outlined'
               name='registrationNumber'
               label='Registration Number/UEN'
+            />
+          </Grid>
+          <Grid item xs={12} sm={6} md={6}>
+            <TypedField
+              component={LegalEntityStatusSelect}
+              control={control}
+              variant='outlined'
+              name='legalEntityStatus'
+              label='Legal Entity Status'
             />
           </Grid>
           <Grid item xs={12} sm={6} md={6}>

@@ -6,6 +6,7 @@ export const apiURL = {
 
 export const homeURL = {
   getAccessReports: '/dataroom/reports-and-newsletters/list',
+  getNewsList: '/resources/news',
   getTopIssuers: '/issuance/top-issuers',
   getTopCorporates: '/issuance/top-corporates'
 }
@@ -45,6 +46,10 @@ export const identityURL = {
     get: (userId: string) => `/identity/issuance-detail/${userId}`,
     submit: (issuanceId: string) =>
       `/identity/issuance-detail/${issuanceId}/submit`
+  },
+  stats: {
+    get: `/identity/stats`,
+    list: `/identity/list`
   }
 }
 
@@ -118,7 +123,6 @@ export const issuanceURL = {
       `/issuance/dso/${userId}/${dsoId}`,
     submit: (userId: string, dsoId: string) =>
       `/issuance/dso/${userId}/${dsoId}/submit`,
-    getCapitalStructureList: '/issuance/capital-structures',
     getActivitiesList: (userId: string, dsoId: string) =>
       `/issuance/dso/${userId}/${dsoId}/activities/list`,
     promote: (dsoId: string) => `/issuance/dso/${dsoId}/promote`,
@@ -173,4 +177,10 @@ export const documentsURL = {
   uploadAccessReport: '/dataroom/reports-and-newsletters',
   getAccessReport: (fileId: string) =>
     `/dataroom/reports-and-newsletters/${fileId}`
+}
+
+export const virtualAccounts = {
+  getAll: '/virtual-accounts/list',
+  add: '/virtual-accounts',
+  getByUserId: (userId: string) => `/virtual-accounts/${userId}`
 }

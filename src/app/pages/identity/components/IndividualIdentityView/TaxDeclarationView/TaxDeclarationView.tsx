@@ -14,11 +14,11 @@ export interface TaxDeclarationViewProps {
 
 export const TaxDeclarationView = ({ data }: TaxDeclarationViewProps) => {
   const { taxResidencies, declarations } = data
-  const singaporeOnly = taxResidencies?.[0].residentOfSingapore ?? false
+  const singaporeOnly = taxResidencies?.[0]?.residentOfSingapore ?? false
 
   const renderFatcaBlock = () => {
     const fatcaLabel =
-      declarations.tax?.fatca || false
+      declarations?.tax?.fatca || false
         ? 'I confirm that I am a US citizen* and/or resident in the US for tax purposes and my U.S. federal Taxpayer Identifying Number (US TIN) is as follows:'
         : 'I confirm that I am not a US citizen or resident in the US for tax purposes.'
 
@@ -71,7 +71,7 @@ export const TaxDeclarationView = ({ data }: TaxDeclarationViewProps) => {
         <Typography>
           {singaporeOnly
             ? 'YES, I’m currently only tax resident in Singapore and do not have a foreign tax residency.'
-            : 'NO, I’m currently tax resident in the following list of countries/ jurisdictions (including Singapore, if applicable):'}
+            : 'NO, I’m currently tax resident in the following list of jurisdictions (including Singapore, if applicable):'}
         </Typography>
       </Grid>
       {singaporeOnly

@@ -24,7 +24,7 @@ describe('Setup', () => {
 
     const amountInput = getByLabelText(/amount/i)
 
-    expect(AssetSelect).toHaveBeenCalledTimes(1)
+    expect(AssetSelect).toHaveBeenCalled()
     expect(amountInput).toBeTruthy()
   })
 

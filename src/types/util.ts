@@ -15,7 +15,7 @@ export interface LabelValue {
 
 export interface TableColumn<T, K = string> {
   key: K
-  label: string
+  label: string | JSX.Element
   secret?: boolean
   align?: 'inherit' | 'left' | 'center' | 'right' | 'justify'
   headAlign?: 'inherit' | 'left' | 'center' | 'right' | 'justify'
@@ -44,6 +44,7 @@ export interface BaseFilter {
   from?: string
   to?: string
   capitalStructure?: string
+  isAssigned?: boolean
 }
 
 export interface InternalRouteBase {

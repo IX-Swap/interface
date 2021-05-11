@@ -3,7 +3,7 @@ import * as useGetIdentities from 'app/components/OnboardingPanel/hooks/useGetId
 import { useOnboardingSteps } from 'app/components/OnboardingPanel/hooks/useOnboardingSteps'
 import { getIdentityOnboardingSteps } from 'app/components/OnboardingPanel/hooks/utils'
 import { waitFor, cleanup } from 'test-utils'
-import { individual } from '__fixtures__/identity'
+import { individual, corporate } from '__fixtures__/identity'
 
 describe('useOnboardingSteps', () => {
   const getIdentitiesResponse = {
@@ -16,23 +16,21 @@ describe('useOnboardingSteps', () => {
     }
   }
 
-  beforeEach(() => {
-    jest
-      .spyOn(useGetIdentities, 'useGetIdentities')
-      .mockImplementation(() => getIdentitiesResponse as any)
-  })
-
   afterEach(async () => {
     await cleanup()
     jest.clearAllMocks()
   })
 
   it('returns correct values when no identity type is passed', async () => {
+    jest
+      .spyOn(useGetIdentities, 'useGetIdentities')
+      .mockImplementation(() => getIdentitiesResponse as any)
+
     await act(async () => {
-      const individualSteps = getIdentityOnboardingSteps(
-        'individual',
-        individual.status
-      )
+      const individualSteps = getIdentityOnboardingSteps({
+        identityType: 'individual',
+        identityStatus: individual.status
+      })
       const { result } = renderHook(() => useOnboardingSteps())
 
       await waitFor(
@@ -46,11 +44,15 @@ describe('useOnboardingSteps', () => {
   })
 
   it('returns correct values when individual identity type is passed', async () => {
+    jest
+      .spyOn(useGetIdentities, 'useGetIdentities')
+      .mockImplementation(() => getIdentitiesResponse as any)
+
     await act(async () => {
-      const individualSteps = getIdentityOnboardingSteps(
-        'individual',
-        individual.status
-      )
+      const individualSteps = getIdentityOnboardingSteps({
+        identityType: 'individual',
+        identityStatus: individual.status
+      })
       const { result } = renderHook(() => useOnboardingSteps('individual'))
 
       await waitFor(
@@ -64,8 +66,15 @@ describe('useOnboardingSteps', () => {
   })
 
   it('returns correct values when corporate identity type is passed', async () => {
+    jest
+      .spyOn(useGetIdentities, 'useGetIdentities')
+      .mockImplementation(() => getIdentitiesResponse as any)
+
     await act(async () => {
-      const corporateSteps = getIdentityOnboardingSteps('corporate', '')
+      const corporateSteps = getIdentityOnboardingSteps({
+        identityType: 'corporate',
+        identityStatus: ''
+      })
       const { result } = renderHook(() => useOnboardingSteps('corporate'))
 
       await waitFor(
@@ -79,14 +88,84 @@ describe('useOnboardingSteps', () => {
   })
 
   it('returns correct values when corporate identity type is passed and asIssuer is true', async () => {
+    jest
+      .spyOn(useGetIdentities, 'useGetIdentities')
+      .mockImplementation(() => getIdentitiesResponse as any)
+
     await act(async () => {
-      const asIssuerSteps = getIdentityOnboardingSteps('corporate', '', true)
+      const asIssuerSteps = getIdentityOnboardingSteps({
+        identityType: 'corporate',
+        identityStatus: '',
+        asIssuer: true
+      })
       const { result } = renderHook(() => useOnboardingSteps('corporate', true))
 
       await waitFor(
         () => {
           expect(result.current.steps).toEqual(asIssuerSteps)
           expect(result.current.activeStep).toEqual(1)
+        },
+        { timeout: 1000 }
+      )
+    })
+  })
+
+  it('returns correct values when details of issuance have submitted status', async () => {
+    const extendedGetIdentitiesResponse = {
+      ...getIdentitiesResponse,
+      identityLoaded: corporate,
+      detailsOfIssuance: {
+        status: 'Submitted'
+      }
+    }
+    jest
+      .spyOn(useGetIdentities, 'useGetIdentities')
+      .mockImplementation(() => extendedGetIdentitiesResponse as any)
+
+    await act(async () => {
+      const asIssuerSteps = getIdentityOnboardingSteps({
+        identityType: 'corporate',
+        identityStatus: '',
+        asIssuer: true,
+        issuanceDetailsStatus: 'Submitted'
+      })
+      const { result } = renderHook(() => useOnboardingSteps('corporate', true))
+
+      await waitFor(
+        () => {
+          expect(result.current.steps).toEqual(asIssuerSteps)
+          expect(result.current.activeStep).toEqual(1)
+        },
+        { timeout: 1000 }
+      )
+    })
+  })
+
+  it('returns correct values when details of issuance have approved status', async () => {
+    const extendedGetIdentitiesResponse = {
+      ...getIdentitiesResponse,
+      identityLoaded: corporate,
+      detailsOfIssuance: {
+        status: 'Approved'
+      }
+    }
+    jest
+      .spyOn(useGetIdentities, 'useGetIdentities')
+      .mockImplementation(() => extendedGetIdentitiesResponse as any)
+
+    await act(async () => {
+      const asIssuerSteps = getIdentityOnboardingSteps({
+        identityType: 'corporate',
+        identityStatus: '',
+        asIssuer: true,
+        issuanceDetailsStatus: 'Approved'
+      })
+      const { result } = renderHook(() => useOnboardingSteps('corporate', true))
+
+      await waitFor(
+        () => {
+          expect(result.current.steps).toEqual(asIssuerSteps)
+          expect(result.current.activeStep).toEqual(2)
         },
         { timeout: 1000 }
       )

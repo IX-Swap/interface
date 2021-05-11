@@ -9,13 +9,16 @@ import {
   TablePagination,
   Paper,
   Grid,
-  PaperProps
+  PaperProps,
+  Checkbox,
+  FormControlLabel
 } from '@material-ui/core'
 import { TableColumn, BaseFilter } from 'types/util'
 import { Actions } from 'app/pages/authorizer/components/Actions'
 import { useTableWithPagination } from 'components/TableWithPagination/hooks/useTableWithPagination'
 import { TableRows } from 'components/TableWithPagination/TableRows'
 import { statusColumn } from 'app/pages/authorizer/hooks/useAuthorizerView'
+import { UseSelectionHelperReturnType } from 'hooks/useSelectionHelper'
 
 export interface TableViewRendererProps<T> {
   items: T[]
@@ -38,6 +41,7 @@ export interface TableViewProps<T> {
   children?: (props: TableViewRendererProps<T>) => JSX.Element
   fakeItems?: T[]
   innerRef?: any
+  selectionHelper?: UseSelectionHelperReturnType<T | unknown>
   paperProps?: PaperProps
 }
 
@@ -54,6 +58,7 @@ export const TableView = <T,>({
   children,
   fakeItems,
   innerRef,
+  selectionHelper,
   paperProps = {}
 }: TableViewProps<T>): JSX.Element => {
   const {
@@ -67,14 +72,57 @@ export const TableView = <T,>({
   } = useTableWithPagination<T>(name, uri, filter, queryEnabled)
   const cacheQueryKey = [name, page, rowsPerPage, filter]
 
+  const _items = Array.isArray(fakeItems) ? fakeItems : items
+
   if (innerRef !== undefined) {
     innerRef.current = { refresh: () => setPage(page) }
   }
 
-  const columns =
+  let columns =
     hasStatus && filter?.status === ''
       ? [...columnsProp, statusColumn]
       : columnsProp
+
+  if (selectionHelper !== undefined) {
+    const {
+      getIsItemSelected,
+      getIsItemsSelected,
+      getIsIndeterminate,
+      toggle,
+      toggleAll
+    } = selectionHelper
+    columns = [
+      {
+        ...columns[0],
+        label: (
+          <FormControlLabel
+            control={
+              <Checkbox
+                checked={getIsItemsSelected(_items)}
+                indeterminate={getIsIndeterminate(_items)}
+                onClick={() => toggleAll(_items)}
+              />
+            }
+            label={<b>{columns[0].label}</b>}
+            labelPlacement={'end'}
+          />
+        ),
+        render: (val: any, item: T) => (
+          <FormControlLabel
+            control={
+              <Checkbox
+                checked={getIsItemSelected(item)}
+                onClick={() => toggle(item)}
+              />
+            }
+            label={val}
+            labelPlacement={'end'}
+          />
+        )
+      },
+      ...columns.filter(col => col.label !== columns[0].label)
+    ]
+  }
 
   return (
     <Grid container direction='column'>
@@ -107,7 +155,7 @@ export const TableView = <T,>({
               ) : null}
               {typeof children === 'function' ? (
                 children({
-                  items: Array.isArray(fakeItems) ? fakeItems : items,
+                  items: _items,
                   columns,
                   hasActions,
                   actions,
@@ -115,7 +163,7 @@ export const TableView = <T,>({
                 })
               ) : (
                 <TableRows
-                  items={Array.isArray(fakeItems) ? fakeItems : items}
+                  items={_items}
                   bordered={bordered}
                   name={name}
                   uri={uri}

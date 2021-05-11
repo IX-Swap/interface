@@ -23,8 +23,8 @@ export const columns: Array<TableColumn<CashWithdrawal>> = [
     label: 'Bank name'
   },
   {
-    key: 'bank.bankAccountNumber',
-    label: 'Account #'
+    key: 'virtualAccount.accountNumber',
+    label: 'Virtual Account'
   },
   {
     key: 'amount',

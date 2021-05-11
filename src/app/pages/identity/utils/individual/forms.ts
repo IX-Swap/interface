@@ -39,12 +39,6 @@ export const getFinancialInfoFormValues = (
     employer: data?.employer,
     employmentStatus: data?.employmentStatus,
     annualIncome: data?.annualIncome,
-    fundMajority:
-      data.fundMajority === undefined
-        ? undefined
-        : data.fundMajority
-        ? 'yes'
-        : 'no',
     sourceOfFund: getFundSource(data)
   }
 }

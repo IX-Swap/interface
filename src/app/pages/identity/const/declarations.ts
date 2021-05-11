@@ -47,7 +47,7 @@ export const individualDeclarationsTemplate: IndividualDeclarations<DeclarationT
     header:
       'The Applicant qualifies as an "Individual Accredited Investor" (as defined in Section 4A (1)(a)(i) of the Securities and Futures Act (“SFA”), Chapter 289):',
     content:
-      'Individual total net personal assets (including up to SGD1 million of your primary residence) exceed SGD2 million or its equivalent in foreign currency ; or',
+      'Individual total net personal assets (including up to SGD 1 million of your primary residence) exceed SGD 2 million or its equivalent in foreign currency ; or',
     value: null,
     subLevel: true,
     answerable: true
@@ -63,7 +63,7 @@ export const individualDeclarationsTemplate: IndividualDeclarations<DeclarationT
   IndividualFinancialAsset: {
     key: 'IndividualFinancialAsset',
     content:
-      'Individual financial asset (e.g. deposits and investment products) exceed SGD1 million or its equivalent in foreign currency; or',
+      'Individual financial asset (e.g. deposits and investment products) exceed SGD 1 million or its equivalent in foreign currency; or',
     value: null,
     answerable: true,
     subLevel: true
