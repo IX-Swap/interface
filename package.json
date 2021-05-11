@@ -47,6 +47,7 @@
     "react-scroll": "^1.8.1",
     "react-toast-notifications": "^2.4.0",
     "react-window": "^1.8.5",
+    "rimraf": "^3.0.2",
     "socket.io-client": "^2.3.0",
     "standard": "^14.3.4",
     "tinycolor2": "^1.4.1",
@@ -118,6 +119,7 @@
   },
   "scripts": {
     "start": "react-app-rewired start",
+    "pre-install": "rimraf node_modules && yarn cache clean",
     "build": "react-app-rewired build",
     "test:watch": "react-scripts test --env=jest-environment-jsdom-sixteen --runInBand",
     "test": "CI=true react-scripts test --env=jest-environment-jsdom-sixteen --colors --silent --runInBand",
