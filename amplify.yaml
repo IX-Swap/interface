@@ -12,6 +12,3 @@ frontend:
     baseDirectory: build
     files:
       - '**/*'
-  cache:
-    paths:
-      - node_modules/**/*
