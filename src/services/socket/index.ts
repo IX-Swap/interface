@@ -63,6 +63,14 @@ const socketService = {
     } catch (error) {
       console.error(error)
     }
+  },
+
+  getSocket(token?: string) {
+    if (_socket === undefined || !_socket.connected) {
+      _socket = io(`${API_URL}?token=${token ?? ''}`)
+    }
+
+    return _socket
   }
 }
 
