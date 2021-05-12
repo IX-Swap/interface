@@ -1,25 +1,29 @@
 import React, { useState } from 'react'
 import { useFormContext } from 'react-hook-form'
-import {
-  Grid,
-  InputAdornment,
-  Slider,
-  Tab,
-  Tabs,
-  TextField
-} from '@material-ui/core'
+import { Grid, InputAdornment, Slider, Tab, Tabs } from '@material-ui/core'
 import { Submit } from 'components/form/Submit'
-import { sliderValueExtractor } from 'helpers/forms'
+import { numericValueExtractor, sliderValueExtractor } from 'helpers/forms'
 import { TypedField } from 'components/form/TypedField'
 import { LabelledValue } from 'components/LabelledValue'
 import { OrderTypeSelect } from 'app/components/PlaceOrderForm/components/OrderTypeSelect'
 import { TimeInForceSelect } from 'app/components/PlaceOrderForm/components/TimeInForceSelect'
 import { useStyles } from './PlaceOrderForm.style'
+import { formatMoney } from 'helpers/numbers'
+import { moneyNumberFormat } from 'config/numberFormat'
+import { NumericInput } from 'components/form/NumericInput'
 
 export const PlaceOrderForm = () => {
   const classes = useStyles()
-  const { control } = useFormContext()
+  const { control, setValue, watch } = useFormContext()
   const [selectedIdx, setSelectedIdx] = useState(0)
+  const price = watch('price')
+  const amount = watch('amount')
+
+  if (price !== undefined && amount !== undefined) {
+    setValue('total', price * amount)
+  } else {
+    setValue('total', 0)
+  }
 
   return (
     <Grid
@@ -63,11 +67,11 @@ export const PlaceOrderForm = () => {
         className={classes.balanceWrapper}
       >
         <Grid item>
-          <LabelledValue value={'SGD 15,000.00'} label='Balance:' />
+          <LabelledValue value={formatMoney(15000)} label='Balance:' />
         </Grid>
 
         <Grid item>
-          <LabelledValue value={'IXPS 300.00'} label='' />
+          <LabelledValue value={formatMoney(300, 'IXPS')} label='' />
         </Grid>
       </Grid>
       <Grid item container direction={'column'} className={classes.formWrapper}>
@@ -93,21 +97,25 @@ export const PlaceOrderForm = () => {
 
         <Grid item className={classes.inputGrid}>
           <TypedField
-            component={TextField}
+            component={NumericInput}
             name={'price'}
             label={'Price'}
             control={control}
             variant='outlined'
+            numberFormat={moneyNumberFormat}
+            valueExtractor={numericValueExtractor}
           />
         </Grid>
 
         <Grid item className={classes.inputGrid}>
           <TypedField
-            component={TextField}
+            component={NumericInput}
             name={'amount'}
             label={'Amount'}
             control={control}
             variant='outlined'
+            numberFormat={moneyNumberFormat}
+            valueExtractor={numericValueExtractor}
           />
         </Grid>
 
@@ -133,20 +141,23 @@ export const PlaceOrderForm = () => {
         </Grid>
 
         <Grid item className={classes.inputGrid}>
+          {/* @ts-ignore */}
           <TypedField
             fullWidth
             customRenderer
-            component={TextField}
-            name={'orderType'}
-            label={''}
+            component={NumericInput}
+            name={'total'}
             control={control}
             variant='outlined'
-            inputProps={{ style: { textAlign: 'end' } }}
-            InputProps={{
-              startAdornment: (
-                <InputAdornment position='start'>SGD</InputAdornment>
-              )
+            classes={{
+              input: classes.input
             }}
+            startAdornment={
+              <InputAdornment position='start'>SGD</InputAdornment>
+            }
+            numberFormat={moneyNumberFormat}
+            valueExtractor={numericValueExtractor}
+            disabled
           />
         </Grid>
 

@@ -67,6 +67,9 @@ export const useStyles = makeStyles(theme => ({
     opacity: 1,
     zIndex: 2
   },
+  input: {
+    textAlign: 'end'
+  },
   button: {
     width: '100%',
     backgroundColor: theme.palette.backgrounds.alternative,
