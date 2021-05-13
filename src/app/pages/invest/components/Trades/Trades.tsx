@@ -20,10 +20,10 @@ export const Trades = () => {
         </Tabs>
       </Grid>
       <Grid item>
-        <TabPanel value={activeTab} index={0}>
+        <TabPanel pt={1} value={activeTab} index={0}>
           <MyTrades />
         </TabPanel>
-        <TabPanel value={activeTab} index={1}>
+        <TabPanel pt={1} value={activeTab} index={1}>
           <MarketTrades />
         </TabPanel>
       </Grid>

@@ -6,7 +6,6 @@ import { useParams } from 'react-router'
 
 export const MyTrades = () => {
   const { dsoId } = useParams<{ dsoId: string }>()
-
   const { data } = useTradeHistory(dsoId)
 
   return <TradesTable data={data as TradesTableRowProps[]} />

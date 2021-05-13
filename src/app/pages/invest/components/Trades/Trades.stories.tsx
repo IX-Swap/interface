@@ -12,7 +12,7 @@ export default meta
 
 const Template: Story = () => {
   return (
-    <Box width={320}>
+    <Box width={240}>
       <Trades />
     </Box>
   )
