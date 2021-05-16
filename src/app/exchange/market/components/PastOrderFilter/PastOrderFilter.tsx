@@ -4,11 +4,13 @@ import { SearchQueryFilterGroup } from 'components/SearchQueryFilter/SearchQuery
 import { SearchQueryFilterGroupApply } from 'components/SearchQueryFilter/SearchQueryFilterGroupApply'
 import { SearchQueryFilterGroupReset } from 'components/SearchQueryFilter/SearchQueryFilterGroupReset'
 import { GroupedDateTimeFilter } from 'app/pages/authorizer/components/GroupedFromDateFilter'
+import { IssuanceRoute } from 'app/pages/issuance/router/config'
+import { AppRouterLink } from 'components/AppRouterLink'
 
 export const PastOrderFilter = () => {
   return (
     <SearchQueryFilterGroup>
-      <Grid container spacing={1} wrap={'nowrap'}>
+      <Grid container spacing={1} wrap={'nowrap'} alignItems={'center'}>
         <Grid item>
           <GroupedDateTimeFilter
             name='fromDate'
@@ -45,6 +47,20 @@ export const PastOrderFilter = () => {
           >
             Filter
           </SearchQueryFilterGroupApply>
+        </Grid>
+        <Grid item>
+          <AppRouterLink
+            style={{ whiteSpace: 'nowrap' }}
+            // TODO Correct after added new routes
+            to={IssuanceRoute.view}
+            color='primary'
+            underline='always'
+            className={'link'}
+            variant='body1'
+            target={'_blank'}
+          >
+            View History
+          </AppRouterLink>
         </Grid>
       </Grid>
     </SearchQueryFilterGroup>
