@@ -5,7 +5,8 @@ export enum AppService {
   Issuance = 'issuance',
   IssuanceDetails = 'issuance-details',
   Invest = 'invest',
-  Authorizer = 'authorizer'
+  Authorizer = 'authorizer',
+  Market = 'market'
 }
 
 export enum AppFeature {

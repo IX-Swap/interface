@@ -2,7 +2,7 @@ import React from 'react'
 import { MenuItem, Select, SelectProps } from '@material-ui/core'
 import { renderMenuItems } from 'helpers/rendering'
 import { TypedSelectProps } from 'types/util'
-import { orderTypesList } from 'app/components/PlaceOrderForm/consts'
+import { orderTypesList } from 'app/exchange/market/consts'
 
 export interface OrderTypeSelectProps extends TypedSelectProps {
   includeAll?: boolean
