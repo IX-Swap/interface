@@ -153,7 +153,9 @@ export const datafeed = {
     exchange: string,
     symbolType: string,
     onResult: SearchSymbolsCallback
-  ) => {},
+  ) => {
+    // This is intentional
+  },
 
   resolveSymbol: (
     symbolName: string,
@@ -182,6 +184,10 @@ export const datafeed = {
     onTick: SubscribeBarsCallback,
     listenerGuid: string,
     onResetCacheNeededCallback: () => void
-  ) => {},
-  unsubscribeBars: (subscriberUID: any) => {}
+  ) => {
+    // This is intentional
+  },
+  unsubscribeBars: (subscriberUID: any) => {
+    // This is intentional
+  }
 }

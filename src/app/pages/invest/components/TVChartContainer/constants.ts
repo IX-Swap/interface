@@ -12,7 +12,7 @@ export const disabledFeatures = [
   'remove_library_container_border'
 ]
 
-export const enabledFeatures = ['study_templates']
+export const enabledFeatures = ['study_templates', 'chart_crosshair_menu']
 
 export const overrides = {
   'mainSeriesProperties.style': 2,
@@ -29,7 +29,7 @@ export const sampleTVChartProps: ChartContainerProps = {
   fullscreen: false,
   height: 600,
   width: '100%',
-  theme: 'Dark',
+  theme: 'Light',
   tvWidget: null,
   setTradingChart: () => {}
 }
