@@ -18,7 +18,6 @@ export const ViewDSO = () => {
       <Grid item>
         <PageHeader title={data.tokenName} />
       </Grid>
-
       <Grid item>
         <DSOInvestorView dso={data} />
       </Grid>

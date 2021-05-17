@@ -151,3 +151,7 @@ export const virtualAccountQueryKeys = {
   listUnassigned: 'unassigned-virtual-accounts',
   getByUserId: 'virtual-account'
 }
+
+export const exchange = {
+  tradeHistory: 'trade-history'
+}
