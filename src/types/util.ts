@@ -45,6 +45,7 @@ export interface BaseFilter {
   to?: string
   capitalStructure?: string
   isAssigned?: boolean
+  sourceType?: string
 }
 
 export interface InternalRouteBase {

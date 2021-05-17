@@ -21,10 +21,11 @@ export const useVirtualAccount = (virtualAccountId?: string) => {
     getVirtualAccount
   )
 
-  const list = data?.data[0].documents
+  const list = data?.data[0]?.documents
   const virtualAccount =
-    list?.find((item: VirtualAccount) => item._id === virtualAccountId) ??
-    list?.[0]
+    list?.find(
+      (item: VirtualAccount) => item.accountNumber === virtualAccountId
+    ) ?? list?.[0]
 
   return {
     ...rest,
