@@ -1,30 +1,34 @@
 import { exchange } from 'config/apiURL'
-import { useAccessToken } from 'hooks/auth/useAccessToken'
+import { exchange as exchangeQueryKeys } from 'config/queryKeys'
 import { useServices } from 'hooks/useServices'
-import { useEffect, useState } from 'react'
+import { useEffect, useMemo, useState } from 'react'
+import { useQueryCache } from 'react-query'
 
 export const useTradeHistory = (id: string) => {
-  const accessToken = useAccessToken()
   const { socketService } = useServices()
+  const socket = useMemo(() => socketService.socket, [socketService.socket])
   const [data, setData] = useState<any>([])
+  const queryCache = useQueryCache()
+
+  const onDataReceived = (receivedData: any) => {
+    setData(receivedData ?? [])
+    queryCache.setQueryData(
+      [exchangeQueryKeys.tradeHistory, id],
+      (data: any) => [receivedData, ...(data ?? [])]
+    )
+  }
 
   useEffect(() => {
-    try {
-      const socket = socketService.getSocket(accessToken)
-      const onUrl = exchange.tradeHistory.on(id)
-      socket.emit(exchange.tradeHistory.emit, id)
-      socket.on(onUrl, (data: any) => {
-        setData(data ?? [])
-      })
+    const onUrl = exchange.tradeHistory.on(id)
+    socket?.on(onUrl, onDataReceived)
+    socket?.emit(exchange.tradeHistory.emit, id)
 
-      return () => {
-        socket.off(onUrl)
-      }
-    } catch (e) {
-      console.log(e)
+    return () => {
+      socket?.off(onUrl)
+      queryCache.setQueryData([exchangeQueryKeys.tradeHistory, id], [])
     }
     // eslint-disable-next-line
-  }, [])
+  }, [id, socket])
 
   return {
     data
