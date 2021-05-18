@@ -1,5 +1,5 @@
 import React from 'react'
-import { CancelOrderButton } from 'app/pages/exchange/components/OpenOrders/CancelOrderButton'
+import { CancelOrderButton } from 'app/pages/exchange/market/components/OpenOrders/CancelOrderButton'
 import { formatDateToMMDDYY } from 'helpers/dates'
 import { formatMoney } from 'helpers/numbers'
 import { renderPercentage } from 'helpers/rendering'

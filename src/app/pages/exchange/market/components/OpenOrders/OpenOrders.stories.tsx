@@ -1,4 +1,4 @@
-import { OpenOrders } from 'app/pages/exchange/components/OpenOrders/OpenOrders'
+import { OpenOrders } from 'app/pages/exchange/market/components/OpenOrders/OpenOrders'
 
 export default {
   title: 'Pages/Exchange/OpenOrders',

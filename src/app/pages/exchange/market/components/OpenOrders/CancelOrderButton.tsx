@@ -1,6 +1,6 @@
 import React from 'react'
 import { Box, Button } from '@material-ui/core'
-import { Order } from 'app/pages/exchange/components/OpenOrders/columns'
+import { Order } from 'app/pages/exchange/market/components/OpenOrders/columns'
 
 export interface CancelOrderButtonProps {
   order: Order
