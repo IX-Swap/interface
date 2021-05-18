@@ -1,8 +1,7 @@
 import { CashDeposit } from 'types/cashDeposit'
 import { TableColumn } from 'types/util'
-import { formatDateToMMDDYY } from 'helpers/dates'
+import { getTimeAgoFromString } from 'helpers/dates'
 import { renderAmount } from 'helpers/tables'
-import { renderStatusColumn } from 'app/pages/authorizer/hooks/useAuthorizerView'
 
 export const columns: Array<TableColumn<CashDeposit>> = [
   {
@@ -12,7 +11,7 @@ export const columns: Array<TableColumn<CashDeposit>> = [
   {
     key: 'createdAt',
     label: 'Date',
-    render: formatDateToMMDDYY
+    render: getTimeAgoFromString
   },
   {
     key: 'amount',
@@ -23,8 +22,11 @@ export const columns: Array<TableColumn<CashDeposit>> = [
     render: renderAmount
   },
   {
+    key: 'type',
+    label: 'Type'
+  },
+  {
     key: 'status',
-    label: 'Status',
-    render: renderStatusColumn
+    label: 'Status'
   }
 ]

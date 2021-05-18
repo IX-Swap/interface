@@ -78,7 +78,9 @@ export const banksQueryKeys = {
 }
 
 export const cashDepositsQueryKeys = {
-  getByUserId: (id: string) => generateQueryKey('cash-deposits', id)
+  getByUserId: (id: string) => generateQueryKey('cash-deposits', id),
+  getByVirtualAccount: (virtualAccountNumber: string) =>
+    generateQueryKey('cash-deposits', virtualAccountNumber)
 }
 
 export const cashWithdrawalsQueryKeys = {
