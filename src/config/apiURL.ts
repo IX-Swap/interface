@@ -195,3 +195,7 @@ export const exchange = {
 export const placeOrderURL = {
   create: '/exchange/orders'
 }
+
+export const exchangeMarket = {
+  getOrdersList: (userId: string) => `exchange/orders/list/${userId}`
+}
