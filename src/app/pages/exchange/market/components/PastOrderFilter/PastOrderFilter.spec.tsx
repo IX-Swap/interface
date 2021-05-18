@@ -1,6 +1,6 @@
 import React from 'react'
 import { render, cleanup } from 'test-utils'
-import { PastOrderFilter } from 'app/exchange/market/components/PastOrderFilter/PastOrderFilter'
+import { PastOrderFilter } from 'app/pages/exchange/market/components/PastOrderFilter/PastOrderFilter'
 
 describe('PastOrderFilter', () => {
   afterEach(async () => {

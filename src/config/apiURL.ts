@@ -184,3 +184,7 @@ export const virtualAccounts = {
   add: '/virtual-accounts',
   getByUserId: (userId: string) => `/virtual-accounts/${userId}`
 }
+
+export const exchangeMarket = {
+  getOrdersList: (userId: string) => `exchange/orders/list/${userId}`
+}
