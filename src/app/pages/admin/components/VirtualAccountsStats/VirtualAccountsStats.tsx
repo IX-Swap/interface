@@ -29,8 +29,8 @@ export const VirtualAccountsStats = () => {
           icon={TotalIcon}
           secondaryInfo={
             <CurrencyInfo
-              sgd={stats.total.currencies.SGD.count}
-              usd={stats.total.currencies.USD.count}
+              sgd={stats.total.currencies.SGD?.count ?? 0}
+              usd={stats.total.currencies.USD?.count ?? 0}
             />
           }
         />
@@ -43,8 +43,8 @@ export const VirtualAccountsStats = () => {
           icon={AssignedIcon}
           secondaryInfo={
             <CurrencyInfo
-              sgd={stats.totalAssigned.currencies.SGD.count}
-              usd={stats.totalAssigned.currencies.USD.count}
+              sgd={stats.totalAssigned.currencies.SGD?.count ?? 0}
+              usd={stats.totalAssigned.currencies.USD?.count ?? 0}
             />
           }
         />
@@ -57,8 +57,8 @@ export const VirtualAccountsStats = () => {
           icon={UnassignedIcon}
           secondaryInfo={
             <CurrencyInfo
-              sgd={stats.totalUnassigned.currencies.SGD.count}
-              usd={stats.totalUnassigned.currencies.USD.count}
+              sgd={stats.totalUnassigned.currencies.SGD?.count ?? 0}
+              usd={stats.totalUnassigned.currencies.USD?.count ?? 0}
             />
           }
         />
