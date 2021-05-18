@@ -74,3 +74,10 @@ export const getTimeAgo = (datetime: string) => {
 export const getTimeFromNow = (date: Date) => {
   return formatDistance(date, new Date(), { addSuffix: true })
 }
+
+export const getTimeAgoFromString = (date: string) => {
+  if (date === undefined) {
+    return null
+  }
+  return formatDistance(new Date(date), new Date(), { addSuffix: true })
+}

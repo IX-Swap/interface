@@ -25,16 +25,15 @@ export const RecentDeposits: React.FC<RecentDepositsProps> = ({
     return null
   }
 
+  console.log({ virtualAccountNumber })
+
   return (
     <>
       <Typography variant='h5'>Recent Deposits</Typography>
       <VSpacer size='small' />
       <TableView<CashDeposit>
-        uri={accountsURL.cashDeposits.getAllVirtualAccountTransactions(
-          userId,
-          data._id
-        )}
-        name={cashDepositsQueryKeys.getByUserId(userId)}
+        uri={accountsURL.virtualAccounts.getAllTransactions(userId, data._id)}
+        name={cashDepositsQueryKeys.getByVirtualAccount(virtualAccountNumber)}
         columns={columns}
         filter={{ sourceType: 'Deposit' }}
       />
