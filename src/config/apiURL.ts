@@ -63,11 +63,7 @@ export const accountsURL = {
       `/accounts/banks/${userId}/${bankId}`
   },
   cashDeposits: {
-    getAll: (userId: string) => `/accounts/cash/deposits/${userId}`,
-    getAllVirtualAccountTransactions: (
-      userId: string,
-      virtualAccountId: string
-    ) => `/virtual-accounts/transactions/list/${virtualAccountId}/${userId}`
+    getAll: (userId: string) => `/accounts/cash/deposits/${userId}`
   },
   cashWithdrawals: {
     create: (userId: string) => `/accounts/cash/withdrawals/${userId}`
@@ -91,6 +87,10 @@ export const accountsURL = {
     getByUserId: (userId: string) => `/accounts/balance/${userId}`,
     getByAssetId: (userId: string, assetId: string) =>
       `/accounts/balance/${userId}/${assetId}`
+  },
+  virtualAccounts: {
+    getAllTransactions: (userId: string, virtualAccountId: string) =>
+      `/virtual-accounts/transactions/list/${virtualAccountId}/${userId}`
   }
 }
 
