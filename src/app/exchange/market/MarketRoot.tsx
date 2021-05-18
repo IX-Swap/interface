@@ -4,6 +4,7 @@ import { PlaceOrderForm } from 'app/exchange/market/components/PlaceOrderForm/Pl
 import { useCreateOrder } from 'app/exchange/market/hooks/useCreateOrder'
 import { Box, Grid } from '@material-ui/core'
 import { useAppBreakpoints } from 'hooks/useAppBreakpoints'
+import { MyOrders } from 'app/pages/exchange/market/components/MyOrders/MyOrders'
 
 export const MarketRoot = () => {
   const [placeOrder] = useCreateOrder()
@@ -40,7 +41,7 @@ export const MarketRoot = () => {
             </Grid>
             <Grid item container xs={12}>
               <Grid item style={{ backgroundColor: '#fff' }} xs={12}>
-                Open/Past orders
+                <MyOrders />
               </Grid>
             </Grid>
           </Grid>
