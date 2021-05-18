@@ -14,6 +14,7 @@ export const OpenOrders = () => {
       <TableView
         name='open-orders'
         uri={`exchange/orders/list/${userId}`}
+        size='small'
         filter={
           {
             pair: '60a2340a804b8f3de6248b56'

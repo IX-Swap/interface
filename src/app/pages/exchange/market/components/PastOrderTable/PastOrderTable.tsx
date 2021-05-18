@@ -26,11 +26,11 @@ export const PastOrderTable = (props: PostOrderTableProps) => {
       <PastOrderFilter />
       <VSpacer size={'small'} />
       <TableView<Order>
+        size='small'
         name={exchangeMarketQueryKeys.getOrdersList(pairId)}
         uri={exchangeMarket.getOrdersList(userId)}
         columns={columns}
         filter={filter}
-        defaultRowsPerPage={5}
         // TODO Remove after complete backend api
         fakeItems={orders}
       />

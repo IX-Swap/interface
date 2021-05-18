@@ -19,11 +19,11 @@ export const MyOrders = () => {
         <Tab label='Past Orders' />
       </Tabs>
 
-      <TabPanel value={selectedIdx} index={0}>
+      <TabPanel pt={3} value={selectedIdx} index={0}>
         <OpenOrders />
       </TabPanel>
 
-      <TabPanel value={selectedIdx} index={1}>
+      <TabPanel pt={3} value={selectedIdx} index={1}>
         <PastOrderTable pairId='60a2340a804b8f3de6248b56' />
       </TabPanel>
     </Grid>
