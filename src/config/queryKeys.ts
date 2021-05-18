@@ -153,5 +153,6 @@ export const virtualAccountQueryKeys = {
 }
 
 export const exchange = {
-  tradeHistory: 'trade-history'
+  tradeHistory: 'trade-history',
+  orderBook: 'orderbook'
 }
