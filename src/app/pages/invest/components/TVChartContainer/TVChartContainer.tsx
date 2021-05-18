@@ -82,6 +82,14 @@ export const TVChartContainer: React.FC<
           .activeChart()
           // @ts-expect-error
           .createStudy(...getMovingAverageParams(26, '#0000FF'))
+        void tvWidget.headerReady().then(function () {
+          const button = tvWidget.createButton()
+          button.setAttribute('title', 'Reset Chart')
+          button.addEventListener('click', function () {
+            tvWidget.activeChart().executeActionById('chartReset')
+          })
+          button.textContent = 'Reset Chart'
+        })
       })
     }
   }, [tvWidget])
