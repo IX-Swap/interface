@@ -1,5 +1,3 @@
-import { Order } from 'types/order'
-
 export const addSymbol = (
   value: string | number | undefined,
   symbol: string = 'SGD',
@@ -18,10 +16,6 @@ export const formatAmount = (value: number) => {
   if (value === undefined || value === null) return ''
 
   return value.toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,')
-}
-
-export const formatOrderSide = (value: Order['side']) => {
-  return value === 'ASK' ? 'Buy' : 'Sell'
 }
 
 export const abbreviateNumber = (

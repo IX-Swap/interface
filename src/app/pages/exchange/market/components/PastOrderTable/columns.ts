@@ -1,12 +1,7 @@
-import React from 'react'
-import { Order } from 'types/order'
 import { formatDateToMMDDYY } from 'helpers/dates'
-import { formatAmount, formatOrderSide, toPercentage } from 'helpers/numbers'
-import { OrderStatus } from 'app/pages/exchange/market/components/PastOrderTable/OrderStatus'
-
-const renderOrderStatus = (status: Order['status']) => {
-  return <OrderStatus status={status} />
-}
+import { formatAmount, toPercentage } from 'helpers/numbers'
+import { getOrderSideName } from 'helpers/strings'
+import { renderOrderStatus } from 'helpers/rendering'
 
 export const columns = [
   {
@@ -25,7 +20,7 @@ export const columns = [
   {
     label: 'Side',
     key: 'side',
-    render: formatOrderSide
+    render: getOrderSideName
   },
   {
     label: 'Price',
