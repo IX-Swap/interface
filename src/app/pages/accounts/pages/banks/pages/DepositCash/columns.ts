@@ -1,6 +1,7 @@
 import { CashDeposit } from 'types/cashDeposit'
 import { TableColumn } from 'types/util'
 import { getTimeAgoFromString } from 'helpers/dates'
+import { renderAmount } from 'helpers/tables'
 
 export const columns: Array<TableColumn<CashDeposit>> = [
   {
@@ -17,7 +18,12 @@ export const columns: Array<TableColumn<CashDeposit>> = [
     label: 'Amount',
     align: 'right',
     headAlign: 'right',
-    secret: true
+    secret: true,
+    render: renderAmount
+  },
+  {
+    key: 'type',
+    label: 'Type'
   },
   {
     key: 'type',
