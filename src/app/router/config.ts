@@ -9,5 +9,6 @@ export const AppRoute = {
   admin: makeURL(['app', 'admin']),
   security: makeURL(['app', 'settings']),
   notifications: makeURL(['app', 'notifications']),
-  home: makeURL(['app', 'home'])
+  home: makeURL(['app', 'home']),
+  market: makeURL(['app', 'market'])
 }

@@ -11,6 +11,7 @@ import { IdentityRoot } from 'app/pages/identity/IdentityRoot'
 import { InvestRoot } from 'app/pages/invest/InvestRoot'
 import { AdminRoot } from 'app/pages/admin/AdminRoot'
 import { AuthorizerRoot } from 'app/pages/authorizer/AuthorizerRoot'
+import { MarketRoot } from 'app/exchange/market/MarketRoot'
 
 export const AppRouter = () => {
   return (
@@ -21,6 +22,10 @@ export const AppRouter = () => {
 
       <AppRoute path={AppPath.home}>
         <HomeRoot />
+      </AppRoute>
+
+      <AppRoute path={AppPath.market}>
+        <MarketRoot />
       </AppRoute>
 
       <AppRoute breadcrumb='Identity' path={AppPath.identity}>

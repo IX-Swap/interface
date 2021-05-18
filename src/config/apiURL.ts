@@ -191,3 +191,7 @@ export const exchange = {
     on: (tokenId: string) => `fills/${tokenId}`
   }
 }
+
+export const placeOrderURL = {
+  create: '/exchange/orders'
+}
