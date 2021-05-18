@@ -8,7 +8,7 @@ interface OrderStatusProps {
 
 export const OrderStatus = ({ status }: OrderStatusProps) => {
   return (
-    <Typography color={status === 'Canceled' ? 'error' : 'primary'}>
+    <Typography color={status === 'Canceled' ? 'error' : 'initial'}>
       {status}
     </Typography>
   )

@@ -1,7 +1,7 @@
 export interface Order {
   _id: string
   type: 'LIMIT'
-  side: 'ASK' | 'BUY'
+  side: 'ASK' | 'BID'
   price: number
   amount: number
   date: string

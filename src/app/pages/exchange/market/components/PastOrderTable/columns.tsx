@@ -1,7 +1,7 @@
 import React from 'react'
 import { Order } from 'types/order'
 import { formatDateToMMDDYY } from 'helpers/dates'
-import { formatAmount, formatCamelCase, toPercentage } from 'helpers/numbers'
+import { formatAmount, formatOrderSide, toPercentage } from 'helpers/numbers'
 import { OrderStatus } from 'app/pages/exchange/market/components/PastOrderTable/OrderStatus'
 
 const renderOrderStatus = (status: Order['status']) => {
@@ -25,7 +25,7 @@ export const columns = [
   {
     label: 'Side',
     key: 'side',
-    render: formatCamelCase
+    render: formatOrderSide
   },
   {
     label: 'Price',
