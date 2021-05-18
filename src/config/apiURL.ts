@@ -188,3 +188,14 @@ export const virtualAccounts = {
   add: '/virtual-accounts',
   getByUserId: (userId: string) => `/virtual-accounts/${userId}`
 }
+
+export const exchange = {
+  tradeHistory: {
+    emit: 'fills/get',
+    on: (tokenId: string) => `fills/${tokenId}`
+  },
+  orderBook: {
+    emit: 'orderbook/get',
+    on: (tokenId: string) => `orderbook/${tokenId}`
+  }
+}
