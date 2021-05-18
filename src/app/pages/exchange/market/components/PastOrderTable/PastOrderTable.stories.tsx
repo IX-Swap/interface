@@ -2,11 +2,11 @@ import React from 'react'
 import { Grid } from '@material-ui/core'
 import { Form } from 'components/form/Form'
 import { Meta, Story } from '@storybook/react/types-6-0'
-import { PastOrderFilter } from 'app/exchange/market/components/PastOrderFilter/PastOrderFilter'
+import { PastOrderTable } from 'app/pages/exchange/market/components/PastOrderTable/PastOrderTable'
 
 const meta: Meta = {
-  title: 'Pages/Market/PastOrderFilter',
-  component: PastOrderFilter
+  title: 'Pages/Market/PastOrderTable',
+  component: PastOrderTable
 }
 
 export default meta
@@ -16,7 +16,7 @@ const Template: Story = () => {
     <Form>
       <Grid container spacing={6}>
         <Grid item xs={12}>
-          <PastOrderFilter />
+          <PastOrderTable pairId={'60a2340a804b8f3de6248b56'} />
         </Grid>
       </Grid>
     </Form>
