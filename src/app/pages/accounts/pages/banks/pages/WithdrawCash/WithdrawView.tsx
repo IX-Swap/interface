@@ -15,6 +15,7 @@ import { ResetButton } from 'app/pages/accounts/pages/banks/components/ResetButt
 import { AlertAndOTP } from 'app/pages/accounts/pages/banks/components/AlertAndOTP'
 import { Submit } from 'components/form/Submit'
 import { VSpacer } from 'components/VSpacer'
+import { RecentWithdrawals } from 'app/pages/accounts/pages/banks/pages/WithdrawCash/RecentWithdrawals'
 
 export const WithdrawView: React.FC = observer(() => {
   const { isSetup, isPreview, isSuccess, clear } = useDepositStore()
@@ -29,18 +30,26 @@ export const WithdrawView: React.FC = observer(() => {
         spacing={2}
         style={{ display: 'table' }}
       >
-        <Grid item xs={12}>
-          {(isSetup || isPreview) && (
-            <DisplayNone when={isPreview}>
+        {(isSetup || isPreview) && (
+          <DisplayNone when={isPreview}>
+            <Grid item xs={12}>
               <Setup />
-            </DisplayNone>
-          )}
-          {isPreview && <Preview />}
-          {isSuccess && <SuccessView title='Withdrawal Successful' />}
-        </Grid>
+            </Grid>
+          </DisplayNone>
+        )}
+        {isPreview && (
+          <Grid item xs={12} sm={6} md={5}>
+            <Preview />
+          </Grid>
+        )}
+        {isSuccess && (
+          <Grid item>
+            <SuccessView title='Withdrawal Successful' />
+          </Grid>
+        )}
 
         {isPreview && (
-          <Grid item>
+          <Grid item xs={12} sm={6} md={5}>
             <AlertAndOTP alert={WithdrawCashAlert} />
           </Grid>
         )}
@@ -69,6 +78,12 @@ export const WithdrawView: React.FC = observer(() => {
               </Grid>
             )}
           </Grid>
+        </Grid>
+        <Grid item>
+          <VSpacer size='medium' />
+        </Grid>
+        <Grid item>
+          <RecentWithdrawals />
         </Grid>
       </Grid>
     </WithdrawForm>

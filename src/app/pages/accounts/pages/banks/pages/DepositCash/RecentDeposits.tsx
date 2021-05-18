@@ -25,8 +25,6 @@ export const RecentDeposits: React.FC<RecentDepositsProps> = ({
     return null
   }
 
-  console.log({ virtualAccountNumber })
-
   return (
     <>
       <Typography variant='h5'>Recent Deposits</Typography>

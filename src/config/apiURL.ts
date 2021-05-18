@@ -89,6 +89,8 @@ export const accountsURL = {
       `/accounts/balance/${userId}/${assetId}`
   },
   virtualAccounts: {
+    withdraw: (userId: string, virtualAccountId: string) =>
+      `/virtual-accounts/withdrawals/${virtualAccountId}/${userId}`,
     getAllTransactions: (userId: string, virtualAccountId: string) =>
       `/virtual-accounts/transactions/list/${virtualAccountId}/${userId}`
   }

@@ -13,10 +13,14 @@ interface BalancesByBankIdReturnObj {
 }
 
 export const useValidateWithdrawCash = (): BalancesByBankIdReturnObj => {
-  const { watch, setError, clearErrors, errors, formState } = useFormContext<
-    WithdrawCashFormValues
-  >()
-  const bankId = watch('bank')
+  const {
+    watch,
+    setError,
+    clearErrors,
+    errors,
+    formState
+  } = useFormContext<WithdrawCashFormValues>()
+  const bankId = watch('bankAccountId')
   const amount = watch('amount')
   const virtualAccountId = watch('virtualAccount')
 
