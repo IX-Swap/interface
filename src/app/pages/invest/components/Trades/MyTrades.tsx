@@ -8,5 +8,9 @@ export const MyTrades = () => {
   const { dsoId } = useParams<{ dsoId: string }>()
   const { data } = useTradeHistory(dsoId)
 
+  if (data === undefined) {
+    return null
+  }
+
   return <TradesTable data={data as TradesTableRowProps[]} />
 }
