@@ -189,5 +189,9 @@ export const exchange = {
   tradeHistory: {
     emit: 'fills/get',
     on: (tokenId: string) => `fills/${tokenId}`
+  },
+  orderBook: {
+    emit: 'orderbook/get',
+    on: (tokenId: string) => `orderbook/${tokenId}`
   }
 }

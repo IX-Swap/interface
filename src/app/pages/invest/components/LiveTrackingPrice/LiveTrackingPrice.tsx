@@ -1,30 +1,25 @@
-import { Grid, Typography } from '@material-ui/core'
-import { ArrowDownward, ArrowUpward } from '@material-ui/icons'
-import { useStyles } from 'app/pages/invest/components/LiveTrackingPrice/LiveTrackingPrice.styles'
-import classNames from 'classnames'
+import { TrackingPrice } from 'app/pages/invest/components/LiveTrackingPrice/TrackingPrice'
 import React from 'react'
+import { useTradeHistory } from 'app/pages/invest/hooks/useTradeHistory'
+import { useParams } from 'react-router'
 
-export interface LiveTrackingPriceProps {
-  price: number
-  trend: 'up' | 'down'
-}
+export const LiveTrackingPrice = () => {
+  const { dsoId } = useParams<{ dsoId: string }>()
+  const { data: tradeHistoryData } = useTradeHistory(dsoId)
 
-export const LiveTrackingPrice = ({ price, trend }: LiveTrackingPriceProps) => {
-  const { root, colorStyle, arrow } = useStyles({ trend })
-  return (
-    <Grid container spacing={1} alignContent='center'>
-      <Grid item>
-        <Typography className={classNames(root, colorStyle)}>
-          {price}
-        </Typography>
-      </Grid>
-      <Grid item>
-        {trend === 'up' ? (
-          <ArrowUpward className={classNames(colorStyle, arrow)} />
-        ) : (
-          <ArrowDownward className={classNames(colorStyle, arrow)} />
-        )}
-      </Grid>
-    </Grid>
-  )
+  if (tradeHistoryData === undefined || tradeHistoryData.length < 1) {
+    return null
+  }
+
+  const getTrend = () => {
+    if (tradeHistoryData.length === 1) {
+      return 'up'
+    }
+    if (tradeHistoryData[0].price > tradeHistoryData[1].price) {
+      return 'up'
+    }
+    return 'down'
+  }
+
+  return <TrackingPrice price={tradeHistoryData[0].price} trend={getTrend()} />
 }

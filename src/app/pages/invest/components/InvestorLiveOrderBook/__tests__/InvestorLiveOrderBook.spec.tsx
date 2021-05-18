@@ -1,4 +1,5 @@
 import { InvestorLiveOrderBook } from 'app/pages/invest/components/InvestorLiveOrderBook/InvestorLiveOrderBook'
+import * as useOrderBook from 'app/pages/invest/hooks/useOrderBook'
 import React from 'react'
 import { render, cleanup } from 'test-utils'
 
@@ -9,6 +10,27 @@ describe('InvestorLiveOrderBook', () => {
   })
 
   it('renders without errors', () => {
-    render(<InvestorLiveOrderBook />)
+    const objResponse = {
+      data: { asks: [], bids: [] }
+    }
+
+    jest
+      .spyOn(useOrderBook, 'useOrderBook')
+      .mockImplementation(() => objResponse as any)
+    render(<InvestorLiveOrderBook tokenSymbol='IXPS' currency='SGD' />)
+  })
+
+  it('renders null when data is undefined', () => {
+    const objResponse = {
+      data: undefined
+    }
+
+    jest
+      .spyOn(useOrderBook, 'useOrderBook')
+      .mockImplementation(() => objResponse as any)
+    const { container } = render(
+      <InvestorLiveOrderBook tokenSymbol='IXPS' currency='SGD' />
+    )
+    expect(container).toBeEmptyDOMElement()
   })
 })

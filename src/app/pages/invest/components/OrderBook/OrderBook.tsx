@@ -11,7 +11,7 @@ export interface OrderBookDataItem {
 }
 
 export interface OrderBookProps {
-  data: OrderBookDataItem[]
+  data?: OrderBookDataItem[]
   transaction: 'buy' | 'sell'
   tokenSymbol: string
   currency: ValidCurrency
@@ -22,7 +22,7 @@ export const OrderBook = ({
   transaction,
   tokenSymbol,
   currency,
-  data,
+  data = [],
   showHeader = false
 }: OrderBookProps) => {
   return (
