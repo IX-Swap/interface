@@ -38,7 +38,7 @@ export const TVChartContainer: React.FC<
       container_id: containerId ?? sampleTVChartProps.containerId,
       library_path: '/charting_library/',
       favorites: {
-        intervals: ['15', '60', '240', 'D', 'W'] as ResolutionString[],
+        intervals: ['15', '60', '240', '1D', 'W'] as ResolutionString[],
         chartTypes: ['Line', 'Candles']
       },
       locale: getLanguageFromURL() ?? 'en',
@@ -74,16 +74,14 @@ export const TVChartContainer: React.FC<
   React.useEffect(() => {
     if (tvWidget !== null && tvWidget !== undefined) {
       tvWidget.onChartReady(() => {
-        void tvWidget
-          .activeChart()
+        const activeChart = tvWidget.activeChart()
+        void activeChart
           // @ts-expect-error
           .createStudy(...getMovingAverageParams(12, '#FF0000'))
-        void tvWidget
-          .activeChart()
+        void activeChart
           // @ts-expect-error
           .createStudy(...getMovingAverageParams(20, '#00FF00'))
-        void tvWidget
-          .activeChart()
+        void activeChart
           // @ts-expect-error
           .createStudy(...getMovingAverageParams(26, '#0000FF'))
         void tvWidget.headerReady().then(function () {
