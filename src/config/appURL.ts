@@ -39,7 +39,8 @@ export const urlService = {
   settings: 'settings',
   admin: 'admin',
   home: 'home',
-  notifications: 'notifications'
+  notifications: 'notifications',
+  OTCMarket: `${AppService.OTCMarket}`
 }
 
 export const urlFeature = {
@@ -58,7 +59,11 @@ export const urlFeature = {
   deployments: 'deployments',
   users: AppFeature.Users,
   accessReports: 'access-reports',
-  guide2fa: 'guide-2fa'
+  guide2fa: 'guide-2fa',
+  holdings: `${AppFeature.Holdings}`,
+  market: `${AppFeature.Market}`,
+  myListings: `${AppFeature.MyListings}`,
+  buyerList: `${AppFeature.BuyerList}`
 }
 
 export const appURL = {
