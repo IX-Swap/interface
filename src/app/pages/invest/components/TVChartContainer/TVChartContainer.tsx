@@ -1,5 +1,6 @@
 import * as React from 'react'
 import { widget as Widget } from 'types/charting_library'
+import { ResolutionString } from 'types/charting_library/datafeed-api'
 import { ChartContainerProps } from 'types/tvChart'
 import {
   disabledFeatures,
@@ -36,7 +37,10 @@ export const TVChartContainer: React.FC<
       interval: interval ?? sampleTVChartProps.interval,
       container_id: containerId ?? sampleTVChartProps.containerId,
       library_path: '/charting_library/',
-
+      favorites: {
+        intervals: ['15', '60', '240', 'D', 'W'] as ResolutionString[],
+        chartTypes: ['Line', 'Candles']
+      },
       locale: getLanguageFromURL() ?? 'en',
       disabled_features: disabledFeatures,
       enabled_features: enabledFeatures,
@@ -82,6 +86,14 @@ export const TVChartContainer: React.FC<
           .activeChart()
           // @ts-expect-error
           .createStudy(...getMovingAverageParams(26, '#0000FF'))
+        void tvWidget.headerReady().then(function () {
+          const button = tvWidget.createButton()
+          button.setAttribute('title', 'Reset Chart')
+          button.addEventListener('click', function () {
+            tvWidget.activeChart().executeActionById('chartReset')
+          })
+          button.textContent = 'Reset Chart'
+        })
       })
     }
   }, [tvWidget])
