@@ -4,9 +4,9 @@ import {
   LibrarySymbolInfo,
   ResolutionString,
   ResolveCallback,
+  SearchSymbolsCallback,
   SubscribeBarsCallback
-} from 'types/charting_library/charting_library'
-import { SearchSymbolsCallback } from 'types/charting_library/datafeed-api'
+} from 'charting-library/charting_library'
 
 export const sampleMarketData = [
   {

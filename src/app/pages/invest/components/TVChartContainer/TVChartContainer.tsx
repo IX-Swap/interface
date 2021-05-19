@@ -1,6 +1,8 @@
 import * as React from 'react'
-import { widget as Widget } from 'types/charting_library'
-import { ResolutionString } from 'types/charting_library/datafeed-api'
+import {
+  widget as Widget,
+  ResolutionString
+} from 'charting-library/charting_library'
 import { ChartContainerProps } from 'types/tvChart'
 import {
   disabledFeatures,

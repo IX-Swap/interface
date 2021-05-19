@@ -1,7 +1,7 @@
 import {
   ChartingLibraryWidgetOptions,
   IChartingLibraryWidget
-} from 'types/charting_library'
+} from 'charting-library/charting_library'
 
 export interface ChartContainerProps {
   symbol?: ChartingLibraryWidgetOptions['symbol']
