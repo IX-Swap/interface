@@ -43,6 +43,7 @@ export interface TableViewProps<T> {
   innerRef?: any
   selectionHelper?: UseSelectionHelperReturnType<T | unknown>
   paperProps?: PaperProps
+  defaultRowsPerPage?: number
 }
 
 export const TableView = <T,>({
@@ -59,7 +60,8 @@ export const TableView = <T,>({
   fakeItems,
   innerRef,
   selectionHelper,
-  paperProps = {}
+  paperProps = {},
+  defaultRowsPerPage
 }: TableViewProps<T>): JSX.Element => {
   const {
     items,
@@ -69,7 +71,13 @@ export const TableView = <T,>({
     setRowsPerPage,
     rowsPerPage,
     total
-  } = useTableWithPagination<T>(name, uri, filter, queryEnabled)
+  } = useTableWithPagination<T>(
+    name,
+    uri,
+    filter,
+    queryEnabled,
+    defaultRowsPerPage
+  )
   const cacheQueryKey = [name, page, rowsPerPage, filter]
 
   const _items = Array.isArray(fakeItems) ? fakeItems : items
