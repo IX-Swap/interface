@@ -2,25 +2,40 @@ import React, { useState } from 'react'
 import { Grid, Tab, Tabs } from '@material-ui/core'
 import { Submit } from 'components/form/Submit'
 import { LabelledValue } from 'components/LabelledValue'
-import { useStyles } from 'app/exchange/market/components/PlaceOrderForm/PlaceOrderForm.style'
+import { useStyles } from 'app/pages/exchange/market/components/PlaceOrderForm/PlaceOrderForm.style'
 import { formatMoney } from 'helpers/numbers'
-import { PlaceOrderFields } from 'app/exchange/market/components/PlaceOrderFields/PlaceOrderFields'
+import { PlaceOrderFields } from 'app/pages/exchange/market/components/PlaceOrderFields/PlaceOrderFields'
 import { Form } from 'components/form/Form'
 import {
   PlaceOrderArgs,
   PlaceOrderFormValues
-} from 'app/exchange/market/types/form'
-import { transformPlaceOrderFormValuesToArgs } from 'app/exchange/market/utils'
+} from 'app/pages/exchange/market/types/form'
+import { transformPlaceOrderFormValuesToArgs } from 'app/pages/exchange/market/utils'
 
 export interface PlaceOrderFormProps {
+  currencyLabel: string
+  tokenLabel: string
+  balanceSGD: number
+  tokenBalance: number
   onSubmit: (bank: PlaceOrderArgs) => Promise<any>
 }
 
-export const PlaceOrderForm: React.FC<PlaceOrderFormProps> = ({ onSubmit }) => {
+export const PlaceOrderForm: React.FC<PlaceOrderFormProps> = ({
+  currencyLabel,
+  tokenLabel,
+  balanceSGD,
+  tokenBalance,
+  onSubmit
+}) => {
   const classes = useStyles()
   const [selectedIdx, setSelectedIdx] = useState(0)
   const handleSubmit = async (values: PlaceOrderFormValues) => {
-    await onSubmit(transformPlaceOrderFormValuesToArgs(values))
+    await onSubmit(
+      transformPlaceOrderFormValuesToArgs(
+        values,
+        selectedIdx === 0 ? 'ASK' : 'BID'
+      )
+    )
   }
 
   return (
@@ -65,14 +80,23 @@ export const PlaceOrderForm: React.FC<PlaceOrderFormProps> = ({ onSubmit }) => {
           className={classes.balanceWrapper}
         >
           <Grid item>
-            <LabelledValue value={formatMoney(15000)} label='Balance:' />
+            <LabelledValue
+              value={formatMoney(15000, currencyLabel)}
+              label='Balance:'
+            />
           </Grid>
 
           <Grid item>
-            <LabelledValue value={formatMoney(300, 'IXPS')} label='' />
+            <LabelledValue value={formatMoney(300, tokenLabel)} label='' />
           </Grid>
         </Grid>
-        <PlaceOrderFields />
+        <PlaceOrderFields
+          currencyLabel={currencyLabel}
+          tokenLabel={tokenLabel}
+          currencyBalance={balanceSGD}
+          tokenBalance={tokenBalance}
+          side={selectedIdx === 0 ? 'BUY' : 'SELL'}
+        />
         <Grid item className={classes.buttonWrapper}>
           <Submit
             data-testid='submit'

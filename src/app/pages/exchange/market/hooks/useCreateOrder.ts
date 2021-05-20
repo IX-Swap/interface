@@ -1,7 +1,7 @@
 import { useMutation } from 'react-query'
 import { useServices } from 'hooks/useServices'
 import { placeOrderURL } from 'config/apiURL'
-import { PlaceOrderArgs } from 'app/exchange/market/types/form'
+import { PlaceOrderArgs } from 'app/pages/exchange/market/types/form'
 
 export const useCreateOrder = () => {
   const { apiService, snackbarService } = useServices()

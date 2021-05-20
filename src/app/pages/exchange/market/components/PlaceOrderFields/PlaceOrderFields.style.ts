@@ -21,10 +21,10 @@ export const useStyles = makeStyles(theme => ({
     height: theme.spacing(0.25)
   },
   thumb: {
-    width: theme.spacing(1.25),
-    height: theme.spacing(1.25),
-    marginTop: -theme.spacing(0.5),
-    marginLeft: -theme.spacing(0.625),
+    width: `${theme.spacing(1.25)}px!important`,
+    height: `${theme.spacing(1.25)}px!important`,
+    marginTop: `${-theme.spacing(0.5)}px!important`,
+    marginLeft: `${-theme.spacing(0.625)}px!important`,
     border: `2px solid ${theme.palette.primary.main}`,
     backgroundColor: theme.palette.backgrounds.default,
     zIndex: 3

@@ -2,7 +2,7 @@ import React from 'react'
 import { MenuItem, Select, SelectProps } from '@material-ui/core'
 import { renderMenuItems } from 'helpers/rendering'
 import { TypedSelectProps } from 'types/util'
-import { timeInForceList } from 'app/exchange/market/consts'
+import { timeInForceList } from 'app/pages/exchange/market/consts'
 
 export interface TimeInForceSelectProps extends TypedSelectProps {
   includeAll?: boolean

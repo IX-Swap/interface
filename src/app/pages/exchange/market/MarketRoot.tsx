@@ -1,7 +1,7 @@
 import React from 'react'
 import { RootContainer } from 'ui/RootContainer'
-import { PlaceOrderForm } from 'app/exchange/market/components/PlaceOrderForm/PlaceOrderForm'
-import { useCreateOrder } from 'app/exchange/market/hooks/useCreateOrder'
+import { PlaceOrderForm } from 'app/pages/exchange/market/components/PlaceOrderForm/PlaceOrderForm'
+import { useCreateOrder } from 'app/pages/exchange/market/hooks/useCreateOrder'
 import { Box, Grid } from '@material-ui/core'
 import { useAppBreakpoints } from 'hooks/useAppBreakpoints'
 import { MyOrders } from 'app/pages/exchange/market/components/MyOrders/MyOrders'
@@ -47,7 +47,13 @@ export const MarketRoot = () => {
             </Grid>
           </Grid>
           <Grid item container xs={12} md={3}>
-            <PlaceOrderForm onSubmit={placeOrder} />
+            <PlaceOrderForm
+              currencyLabel={'SGD'}
+              tokenLabel={'IXPS'}
+              balanceSGD={15000}
+              tokenBalance={300}
+              onSubmit={placeOrder}
+            />
           </Grid>
         </Grid>
       </Grid>

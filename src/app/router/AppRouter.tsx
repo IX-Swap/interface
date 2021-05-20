@@ -11,7 +11,7 @@ import { IdentityRoot } from 'app/pages/identity/IdentityRoot'
 import { InvestRoot } from 'app/pages/invest/InvestRoot'
 import { AdminRoot } from 'app/pages/admin/AdminRoot'
 import { AuthorizerRoot } from 'app/pages/authorizer/AuthorizerRoot'
-import { MarketRoot } from 'app/exchange/market/MarketRoot'
+import { MarketRoot } from 'app/pages/exchange/market/MarketRoot'
 
 export const AppRouter = () => {
   return (
