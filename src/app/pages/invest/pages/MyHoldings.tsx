@@ -1,5 +1,7 @@
 import { Grid, Typography } from '@material-ui/core'
 import { PageHeader } from 'app/components/PageHeader/PageHeader'
+import { HoldingsTables } from 'app/pages/invest/components/HoldingsTables/HoldingsTables'
+import { VSpacer } from 'components/VSpacer'
 import React from 'react'
 
 export const MyHoldings = () => {
@@ -16,7 +18,10 @@ export const MyHoldings = () => {
           liquidity opportunities specific to your holdings.
         </Typography>
       </Grid>
-      <Grid item></Grid>
+      <Grid item>
+        <VSpacer size='small' />
+        <HoldingsTables />
+      </Grid>
     </Grid>
   )
 }

@@ -190,6 +190,8 @@ export const virtualAccounts = {
 }
 
 export const exchange = {
+  marketList: '/exchange/markets/list',
+  userTrades: (userId: string) => `/exchange/trades/list/${userId}`,
   tradeHistory: {
     emit: 'fills/get',
     on: (tokenId: string) => `fills/${tokenId}`
