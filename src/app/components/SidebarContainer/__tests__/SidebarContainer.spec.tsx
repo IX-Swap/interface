@@ -6,12 +6,14 @@ import { ReactComponent as InvestIcon } from 'assets/icons/navigation/invest.svg
 import { ReactComponent as AccountsIcon } from 'assets/icons/navigation/account.svg'
 import { ReactComponent as IssuanceIcon } from 'assets/icons/navigation/issuance.svg'
 import { ReactComponent as AuthorizerIcon } from 'assets/icons/navigation/authorizer.svg'
+import { ReactComponent as OTCMarketIcon } from 'assets/icons/navigation/otc-market.svg'
 import * as acl from 'helpers/acl'
 import { AccountsRoute } from 'app/pages/accounts/router/config'
 import { InvestRoute } from 'app/pages/invest/router/config'
 import { IssuanceRoute } from 'app/pages/issuance/router/config'
 import { HomeRoute } from 'app/pages/home/router/config'
 import { AuthorizerRoute } from 'app/pages/authorizer/router/config'
+import { OTCMarketRoute } from 'app/pages/exchange/router/config'
 
 jest.mock('assets/icons/navigation/invest.svg', () => ({
   ReactComponent: jest.fn(() => null)
@@ -20,6 +22,9 @@ jest.mock('assets/icons/navigation/account.svg', () => ({
   ReactComponent: jest.fn(() => null)
 }))
 jest.mock('assets/icons/navigation/issuance.svg', () => ({
+  ReactComponent: jest.fn(() => null)
+}))
+jest.mock('assets/icons/navigation/otc-market.svg', () => ({
   ReactComponent: jest.fn(() => null)
 }))
 jest.mock('assets/icons/navigation/authorizer.svg', () => ({
@@ -76,6 +81,15 @@ describe('Sidebar', () => {
       },
       {}
     )
+    expect(SidebarLinkContainer).toHaveBeenNthCalledWith(
+      4,
+      {
+        label: 'OTC Market',
+        link: OTCMarketRoute.landing,
+        icon: OTCMarketIcon
+      },
+      {}
+    )
   })
 
   it('renders SidebarLink correctly if user is issuer', () => {
@@ -112,6 +126,15 @@ describe('Sidebar', () => {
     )
     expect(SidebarLinkContainer).toHaveBeenNthCalledWith(
       4,
+      {
+        label: 'OTC Market',
+        link: OTCMarketRoute.landing,
+        icon: OTCMarketIcon
+      },
+      {}
+    )
+    expect(SidebarLinkContainer).toHaveBeenNthCalledWith(
+      5,
       {
         label: 'Issuance',
         link: IssuanceRoute.insight,
@@ -156,6 +179,15 @@ describe('Sidebar', () => {
     )
     expect(SidebarLinkContainer).toHaveBeenNthCalledWith(
       4,
+      {
+        label: 'OTC Market',
+        link: OTCMarketRoute.landing,
+        icon: OTCMarketIcon
+      },
+      {}
+    )
+    expect(SidebarLinkContainer).toHaveBeenNthCalledWith(
+      5,
       {
         label: 'Authorizer',
         link: AuthorizerRoute.landing,
