@@ -15,6 +15,7 @@ import { DSOLogo } from 'app/components/DSO/components/DSOLogo'
 import { Commitment } from 'types/commitment'
 import { Order } from 'types/order'
 import { OrderStatus } from 'app/pages/exchange/market/components/PastOrderTable/OrderStatus'
+import { Side } from 'app/pages/invest/components/TradeHistoryTable/Side'
 
 export const renderMenuItems = (
   items: Array<{ label: string; value: string | number }>
@@ -68,3 +69,5 @@ export const documentIcons = {
   docx: docxIcon,
   unknown: unknownIcon
 }
+
+export const renderSide = (side: 'BID' | 'ASK') => <Side side={side} />

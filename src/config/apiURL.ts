@@ -191,6 +191,7 @@ export const virtualAccounts = {
 
 export const exchange = {
   marketList: '/exchange/markets/list',
+  userOrders: (userId: string) => `/exchange/orders/list/${userId}`,
   userTrades: (userId: string) => `/exchange/trades/list/${userId}`,
   tradeHistory: {
     emit: 'fills/get',
@@ -199,7 +200,9 @@ export const exchange = {
   orderBook: {
     emit: 'orderbook/get',
     on: (tokenId: string) => `orderbook/${tokenId}`
-  }
+  },
+  cancelOrder: (userId: string, orderId: string) =>
+    `/exchange/orders/cancel/${userId}/${orderId}`
 }
 
 export const exchangeMarket = {

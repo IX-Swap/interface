@@ -3,10 +3,14 @@ import { useStyles } from 'app/pages/invest/components/TradeHistoryTable/Side.st
 import React from 'react'
 
 export interface SideProps {
-  side: 'BUY' | 'SELL'
+  side: 'BID' | 'ASK'
 }
 
 export const Side = ({ side }: SideProps) => {
   const { sideColor } = useStyles({ side })
-  return <Typography className={sideColor}>{side}</Typography>
+  return (
+    <Typography className={sideColor}>
+      {side === 'BID' ? 'SELL' : 'BUY'}
+    </Typography>
+  )
 }

@@ -1,13 +1,10 @@
-import { Side } from 'app/pages/invest/components/TradeHistoryTable/Side'
 import { formatDistance } from 'date-fns'
 import { formatAmount } from 'helpers/numbers'
-import React from 'react'
+import { renderSide } from 'helpers/rendering'
 import { TableColumn } from 'types/util'
 
-const renderAmount = (amount: number) => formatAmount(amount)
 const renderDate = (date: string) =>
   formatDistance(new Date(date), new Date(), { addSuffix: true })
-const renderSide = (side: 'BUY' | 'SELL') => <Side side={side} />
 
 export const columns: Array<TableColumn<any>> = [
   {
@@ -37,20 +34,20 @@ export const columns: Array<TableColumn<any>> = [
     label: 'Invested Amount',
     headAlign: 'right',
     align: 'right',
-    render: renderAmount
+    render: formatAmount
   },
   {
     key: 'unitPrice',
     label: 'Unit Price',
     headAlign: 'right',
     align: 'right',
-    render: renderAmount
+    render: formatAmount
   },
   {
     key: 'totalAmount',
     label: 'Total Amount',
     headAlign: 'right',
     align: 'right',
-    render: renderAmount
+    render: formatAmount
   }
 ]
