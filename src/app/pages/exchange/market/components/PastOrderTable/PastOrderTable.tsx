@@ -9,7 +9,6 @@ import { usePastOrderFilter } from 'app/pages/exchange/market/hooks/usePastOrder
 import { PastOrderFilter } from 'app/pages/exchange/market/components/PastOrderFilter/PastOrderFilter'
 import { exchangeMarketQueryKeys } from 'config/queryKeys'
 import { exchangeMarket } from 'config/apiURL'
-import { orders } from '__fixtures__/orders'
 
 export interface PostOrderTableProps {
   pairId: string
@@ -31,8 +30,6 @@ export const PastOrderTable = (props: PostOrderTableProps) => {
         uri={exchangeMarket.getOrdersList(userId)}
         columns={columns}
         filter={filter}
-        // TODO Remove after complete backend api
-        fakeItems={orders}
       />
     </>
   )

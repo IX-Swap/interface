@@ -18,13 +18,6 @@ export const formatAmount = (value: number) => {
   return value.toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,')
 }
 
-export const formatCamelCase = (value: string) => {
-  return (
-    value.slice(0, 1).toLocaleUpperCase() +
-    value.slice(1, value.length).toLocaleLowerCase()
-  )
-}
-
 export const abbreviateNumber = (
   value: number | null,
   symbol?: string,

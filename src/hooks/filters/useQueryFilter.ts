@@ -12,6 +12,7 @@ export interface QueryFilters {
   currency: string | undefined
   identityType: string | undefined
   createdByAdmin: string | undefined
+  pair: string | undefined
 }
 
 export type QueryFilter = keyof QueryFilters
