@@ -126,7 +126,7 @@ export const PlaceOrderFields: React.FC<PlaceOrderFieldsProps> = ({
             mark: classes.mark,
             markActive: classes.markActive
           }}
-          disabled={price === undefined}
+          disabled={price === null || price === undefined}
           onChange={(evt, value) => {
             setSlider(value as number)
             const newAmount = ((balance / 4) * (value as number)) / price

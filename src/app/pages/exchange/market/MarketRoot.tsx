@@ -50,7 +50,7 @@ export const MarketRoot = () => {
             <PlaceOrderForm
               currencyLabel={'SGD'}
               tokenLabel={'IXPS'}
-              balanceSGD={15000}
+              currencyBalance={15000}
               tokenBalance={300}
               onSubmit={placeOrder}
             />

@@ -21,7 +21,7 @@ const Template: Story = () => (
       currencyLabel={'SGD'}
       tokenLabel={'IXPS'}
       onSubmit={handleSubmit}
-      balanceSGD={15000}
+      currencyBalance={15000}
       tokenBalance={300}
     />
   </Form>

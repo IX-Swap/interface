@@ -12,6 +12,8 @@ import { InvestRoute } from 'app/pages/invest/router/config'
 import { IssuanceRoute } from 'app/pages/issuance/router/config'
 import { HomeRoute } from 'app/pages/home/router/config'
 import { AuthorizerRoute } from 'app/pages/authorizer/router/config'
+import { OTCMarketRoute } from 'app/pages/exchange/market/router/config'
+import { ReactComponent as OTCMarketIcon } from 'assets/icons/navigation/otc-market.svg'
 
 jest.mock('assets/icons/navigation/invest.svg', () => ({
   ReactComponent: jest.fn(() => null)
@@ -113,6 +115,15 @@ describe('Sidebar', () => {
     expect(SidebarLinkContainer).toHaveBeenNthCalledWith(
       4,
       {
+        label: 'OTC Market',
+        link: OTCMarketRoute.landing,
+        icon: OTCMarketIcon
+      },
+      {}
+    )
+    expect(SidebarLinkContainer).toHaveBeenNthCalledWith(
+      5,
+      {
         label: 'Issuance',
         link: IssuanceRoute.insight,
         icon: IssuanceIcon
@@ -156,6 +167,15 @@ describe('Sidebar', () => {
     )
     expect(SidebarLinkContainer).toHaveBeenNthCalledWith(
       4,
+      {
+        label: 'OTC Market',
+        link: OTCMarketRoute.landing,
+        icon: OTCMarketIcon
+      },
+      {}
+    )
+    expect(SidebarLinkContainer).toHaveBeenNthCalledWith(
+      5,
       {
         label: 'Authorizer',
         link: AuthorizerRoute.landing,

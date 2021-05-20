@@ -7,7 +7,7 @@ export const useStyles = makeStyles(theme => ({
   },
   tab: {
     color: theme.palette.backgrounds.alternative,
-    minWidth: 100
+    minWidth: 80
   },
   balanceWrapper: {
     marginTop: theme.spacing(2),

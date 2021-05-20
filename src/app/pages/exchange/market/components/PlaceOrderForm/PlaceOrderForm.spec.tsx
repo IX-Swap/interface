@@ -12,7 +12,13 @@ describe('PlaceOrderForm', () => {
   it('renders without errors', () => {
     render(
       <Form>
-        <PlaceOrderForm />
+        <PlaceOrderForm
+          tokenLabel={'IXPS'}
+          currencyLabel={'SGD'}
+          tokenBalance={300}
+          currencyBalance={15000}
+          onSubmit={async () => console.log('form')}
+        />
       </Form>
     )
   })

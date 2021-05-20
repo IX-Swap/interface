@@ -15,7 +15,7 @@ import { transformPlaceOrderFormValuesToArgs } from 'app/pages/exchange/market/u
 export interface PlaceOrderFormProps {
   currencyLabel: string
   tokenLabel: string
-  balanceSGD: number
+  currencyBalance: number
   tokenBalance: number
   onSubmit: (bank: PlaceOrderArgs) => Promise<any>
 }
@@ -23,7 +23,7 @@ export interface PlaceOrderFormProps {
 export const PlaceOrderForm: React.FC<PlaceOrderFormProps> = ({
   currencyLabel,
   tokenLabel,
-  balanceSGD,
+  currencyBalance,
   tokenBalance,
   onSubmit
 }) => {
@@ -54,8 +54,6 @@ export const PlaceOrderForm: React.FC<PlaceOrderFormProps> = ({
               indicator: classes.indicator
             }}
             TabIndicatorProps={{ children: <span /> }}
-            centered
-            variant={'fullWidth'}
           >
             <Tab
               label='BUY'
@@ -93,7 +91,7 @@ export const PlaceOrderForm: React.FC<PlaceOrderFormProps> = ({
         <PlaceOrderFields
           currencyLabel={currencyLabel}
           tokenLabel={tokenLabel}
-          currencyBalance={balanceSGD}
+          currencyBalance={currencyBalance}
           tokenBalance={tokenBalance}
           side={selectedIdx === 0 ? 'BUY' : 'SELL'}
         />
