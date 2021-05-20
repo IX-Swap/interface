@@ -5,7 +5,6 @@ import { InvestRoute } from 'app/pages/invest/router/config'
 import { CommitmentsRouter } from 'app/pages/invest/router/CommitmentsRouter'
 import { AppRoute } from 'components/AppRoute'
 import { InvestDSORouter } from 'app/pages/invest/router/InvestDSORouter'
-import { MyHoldings } from 'app/pages/invest/pages/MyHoldings'
 
 export const InvestRouter = () => {
   return (
@@ -19,10 +18,6 @@ export const InvestRouter = () => {
         path={InvestRoute.view}
       >
         <InvestDSORouter />
-      </AppRoute>
-
-      <AppRoute breadcrumb='My Holdings' path={InvestRoute.myHoldings}>
-        <MyHoldings />
       </AppRoute>
 
       <AppRoute path={InvestRoute.landing}>

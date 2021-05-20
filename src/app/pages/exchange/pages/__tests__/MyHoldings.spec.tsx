@@ -1,4 +1,4 @@
-import { MyHoldings } from 'app/pages/invest/pages/MyHoldings'
+import { MyHoldings } from 'app/pages/exchange/pages/MyHoldings'
 import React from 'react'
 import { render, cleanup } from 'test-utils'
 

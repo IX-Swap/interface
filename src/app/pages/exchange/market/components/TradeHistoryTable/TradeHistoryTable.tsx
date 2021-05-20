@@ -2,23 +2,25 @@ import React from 'react'
 import { TableView } from 'components/TableWithPagination/TableView'
 import { Grid } from '@material-ui/core'
 import { useQueryFilter } from 'hooks/filters/useQueryFilter'
-import { Filters } from 'app/pages/invest/components/TradeHistoryTable/Filter'
+import { columns } from 'app/pages/exchange/market/components/TradeHistoryTable/columns'
+import { Filters } from 'app/pages/exchange/market/components/TradeHistoryTable/Filter'
 import { useAuth } from 'hooks/auth/useAuth'
 import { getIdFromObj } from 'helpers/strings'
 import { exchange as exchangeUrl } from 'config/apiURL'
 import { exchange as exchangeQueryKeys } from 'config/queryKeys'
-import { columns } from 'app/pages/invest/components/CurrentHoldingsTable/columns'
 
-export interface Holding {
-  _id: string
+export interface TradeHistory {
+  date: string
   pair: string
   name: string
+  side: 'BUY' | 'SELL'
+  type: string
   investedAmount: number
   unitPrice: number
   totalAmount: number
 }
 
-export const CurrentHoldingsTable = () => {
+export const TradeHistoryTable = () => {
   const { user } = useAuth()
   const userId = getIdFromObj(user)
   const { getFilterValue } = useQueryFilter()
@@ -36,9 +38,9 @@ export const CurrentHoldingsTable = () => {
         <Filters />
       </Grid>
       <Grid item>
-        <TableView<Holding>
-          uri={exchangeUrl.currentHoldings(userId)}
-          name={exchangeQueryKeys.userHoldings(userId)}
+        <TableView<TradeHistory>
+          uri={exchangeUrl.userTrades(userId)}
+          name={exchangeQueryKeys.userTrades(userId)}
           columns={columns}
           filter={filter}
           paperProps={{ variant: 'elevation', elevation: 0 }}

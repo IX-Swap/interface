@@ -10,16 +10,16 @@ export interface TabsContent {
 
 export interface TableTabsViewProps {
   tabs: TabsContent[]
-  onChange?: () => void
+  onChange?: (event: object, value: any) => void
 }
 
 export const TableTabsView = ({ tabs, onChange }: TableTabsViewProps) => {
   const [activeTab, setActiveTab] = useState(0)
   const classes = useStyles()
 
-  const handleChange = (_: React.ChangeEvent<{}>, index: number) => {
+  const handleChange = (event: React.ChangeEvent<{}>, index: number) => {
     setActiveTab(index)
-    onChange?.()
+    onChange?.(event, index)
   }
 
   return (
