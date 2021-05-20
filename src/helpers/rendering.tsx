@@ -13,6 +13,8 @@ import { DigitalSecurityOffering } from 'types/dso'
 import { formatMoney } from './numbers'
 import { DSOLogo } from 'app/components/DSO/components/DSOLogo'
 import { Commitment } from 'types/commitment'
+import { Order } from 'types/order'
+import { OrderStatus } from 'app/pages/exchange/market/components/PastOrderTable/OrderStatus'
 
 export const renderMenuItems = (
   items: Array<{ label: string; value: string | number }>
@@ -42,6 +44,10 @@ export const renderAddressColumn = (address: string): JSX.Element => (
 
 export const wysiwygToHtml = (draft: string): string => {
   return draftToHtml(JSON.parse(draft))
+}
+
+export const renderOrderStatus = (status: Order['status']) => {
+  return <OrderStatus status={status} />
 }
 
 export const renderPercentage = (value?: Maybe<Number>) => {

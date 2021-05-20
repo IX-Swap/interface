@@ -9,7 +9,9 @@ import { authorizerURL, issuanceURL } from 'config/apiURL'
 import { DigitalSecurityOffering } from 'types/dso'
 import { useIsAuthorizer } from 'helpers/acl'
 
-export const useDSOsByUserId = (): UsePaginatedQueryData<DigitalSecurityOffering> => {
+export const useDSOsByUserId = (): UsePaginatedQueryData<
+  DigitalSecurityOffering
+> => {
   const { user } = useAuth()
   const isAuthorizer = useIsAuthorizer()
   const userId = getIdFromObj(user)

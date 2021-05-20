@@ -199,3 +199,7 @@ export const exchange = {
     on: (tokenId: string) => `orderbook/${tokenId}`
   }
 }
+
+export const exchangeMarket = {
+  getOrdersList: (userId: string) => `exchange/orders/list/${userId}`
+}
