@@ -5,7 +5,9 @@ import {
   ResolutionString,
   ResolveCallback,
   SearchSymbolsCallback,
-  SubscribeBarsCallback
+  SeriesFormat,
+  SubscribeBarsCallback,
+  Timezone
 } from 'charting-library/charting_library'
 
 export const sampleMarketData = [
@@ -114,12 +116,12 @@ const symbolData = {
   type: 'crypto',
   currency_code: 'BTC',
   session: '24x7',
-  timezone: 'UTC',
+  timezone: 'Europe/Athens' as Timezone,
   minmovement: 1,
   minmov: 1,
   minmovement2: 0,
   minmov2: 0,
-  format: 'price',
+  format: 'price' as SeriesFormat,
   pricescale: 1000000,
   supported_resolutions: [
     '1',

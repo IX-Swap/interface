@@ -24,7 +24,7 @@ export const sampleTVChartProps: ChartContainerProps = {
   dataFeedUrl: 'https://demo_feed.tradingview.com',
   fullscreen: false,
   height: 600,
-  width: '100%',
+  width: '100%' as any,
   theme: 'Light',
   tvWidget: null,
   setTradingChart: () => {}
