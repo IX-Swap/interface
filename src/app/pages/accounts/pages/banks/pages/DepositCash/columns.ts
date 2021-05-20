@@ -14,20 +14,16 @@ export const columns: Array<TableColumn<CashDeposit>> = [
     render: getTimeAgoFromString
   },
   {
+    key: 'virtualAccount.accountNumber',
+    label: 'To'
+  },
+  {
     key: 'amount',
     label: 'Amount',
     align: 'right',
     headAlign: 'right',
     secret: true,
     render: renderAmount
-  },
-  {
-    key: 'type',
-    label: 'Type'
-  },
-  {
-    key: 'type',
-    label: 'Type'
   },
   {
     key: 'status',
