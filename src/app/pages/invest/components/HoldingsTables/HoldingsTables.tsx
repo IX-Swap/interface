@@ -1,4 +1,5 @@
 import { TableTabsView } from 'app/components/TableTabsView/TableTabsView'
+import { CurrentHoldingsTable } from 'app/pages/invest/components/CurrentHoldingsTable/CurrentHoldingsTable'
 import { TradeHistoryTable } from 'app/pages/invest/components/TradeHistoryTable/TradeHistoryTable'
 import { YourOrdersTable } from 'app/pages/invest/components/YourOrdersTable/YourOrderstable'
 import { useQueryFilter } from 'hooks/filters/useQueryFilter'
@@ -7,7 +8,7 @@ import React from 'react'
 export const HoldingsTables = () => {
   const tabs = [
     {
-      panel: 'Current Holdings Table',
+      panel: <CurrentHoldingsTable />,
       label: 'Current Holdings'
     },
     {

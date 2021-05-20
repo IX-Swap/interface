@@ -202,7 +202,8 @@ export const exchange = {
     on: (tokenId: string) => `orderbook/${tokenId}`
   },
   cancelOrder: (userId: string, orderId: string) =>
-    `/exchange/orders/cancel/${userId}/${orderId}`
+    `/exchange/orders/cancel/${userId}/${orderId}`,
+  currentHoldings: (userId: string) => `/exchange/holdings/list/${userId}`
 }
 
 export const exchangeMarket = {
