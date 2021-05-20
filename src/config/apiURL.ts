@@ -63,7 +63,11 @@ export const accountsURL = {
       `/accounts/banks/${userId}/${bankId}`
   },
   cashDeposits: {
-    getAll: (userId: string) => `/accounts/cash/deposits/${userId}`
+    getAll: (userId: string) => `/accounts/cash/deposits/${userId}`,
+    getAllVirtualAccountTransactions: (
+      userId: string,
+      virtualAccountId: string
+    ) => `/virtual-accounts/transactions/list/${virtualAccountId}/${userId}`
   },
   cashWithdrawals: {
     create: (userId: string) => `/accounts/cash/withdrawals/${userId}`
@@ -189,5 +193,13 @@ export const exchange = {
   tradeHistory: {
     emit: 'fills/get',
     on: (tokenId: string) => `fills/${tokenId}`
+  },
+  orderBook: {
+    emit: 'orderbook/get',
+    on: (tokenId: string) => `orderbook/${tokenId}`
   }
+}
+
+export const exchangeMarket = {
+  getOrdersList: (userId: string) => `exchange/orders/list/${userId}`
 }
