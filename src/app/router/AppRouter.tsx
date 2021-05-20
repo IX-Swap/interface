@@ -12,6 +12,7 @@ import { InvestRoot } from 'app/pages/invest/InvestRoot'
 import { AdminRoot } from 'app/pages/admin/AdminRoot'
 import { AuthorizerRoot } from 'app/pages/authorizer/AuthorizerRoot'
 import { MarketRoot } from 'app/exchange/market/MarketRoot'
+import { OTCMarketRoot } from 'app/pages/exchange/OTCMarketRoot'
 
 export const AppRouter = () => {
   return (
@@ -46,6 +47,10 @@ export const AppRouter = () => {
 
       <AppRoute path={AppPath.security}>
         <SecurityRoot />
+      </AppRoute>
+
+      <AppRoute path={AppPath.OTCMarket}>
+        <OTCMarketRoot />
       </AppRoute>
 
       <AppRoute path={AppPath.notifications}>
