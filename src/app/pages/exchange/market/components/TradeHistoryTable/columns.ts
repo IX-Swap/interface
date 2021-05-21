@@ -30,21 +30,21 @@ export const columns: Array<TableColumn<any>> = [
     label: 'Type'
   },
   {
-    key: 'investedAmount',
+    key: 'amount',
     label: 'Invested Amount',
     headAlign: 'right',
     align: 'right',
     render: formatAmount
   },
   {
-    key: 'unitPrice',
+    key: 'price',
     label: 'Unit Price',
     headAlign: 'right',
     align: 'right',
     render: formatAmount
   },
   {
-    key: 'totalAmount',
+    key: 'total',
     label: 'Total Amount',
     headAlign: 'right',
     align: 'right',
