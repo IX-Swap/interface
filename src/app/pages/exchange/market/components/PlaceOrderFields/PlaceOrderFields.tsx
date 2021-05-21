@@ -23,20 +23,10 @@ export const PlaceOrderFields: React.FC<PlaceOrderFieldsProps> = ({
   side
 }) => {
   const classes = useStyles()
-  const {
-    control,
-    setValue,
-    watch,
-    setError,
-    clearErrors,
-    formState: { errors }
-  } = useFormContext()
-
-  console.log('errors', errors)
+  const { control, setValue, watch } = useFormContext()
 
   const price = watch('price')
   const amount = watch('amount')
-  // const total = watch('total')
   const [slider, setSlider] = useState(0)
   const balance = side === 'BUY' ? currencyBalance : tokenBalance
 
@@ -48,35 +38,9 @@ export const PlaceOrderFields: React.FC<PlaceOrderFieldsProps> = ({
       setSlider(newSliderValue)
     } else {
       setValue('total', 0)
+      setSlider(0)
     }
-  }, [amount, price, setValue, balance, setError])
-
-  useEffect(() => {
-    setValue('price', null)
-    setValue('amount', null)
-    setValue('total', null)
-    setSlider(0)
-    clearErrors()
-  }, [side, setValue, clearErrors])
-
-  // useEffect(() => {
-  //   if (total > balance) {
-  //     console.log('error')
-  //     setError('amount', {
-  //       message: 'This value exceeds the allowable balance'
-  //     })
-  //   }
-  // }, [total, setError, balance])
-
-  // useEffect(() => {
-  //   if (amount * price > balance) {
-  //     console.log('error')
-  //     setError('price', {
-  //       message: 'This value exceeds the allowable balance'
-  //     })
-  //     trigger('price')
-  //   }
-  // }, [price, setError, balance])
+  }, [amount, price, balance]) // eslint-disable-line
 
   return (
     <Grid item container direction={'column'} className={classes.container}>
@@ -101,15 +65,6 @@ export const PlaceOrderFields: React.FC<PlaceOrderFieldsProps> = ({
           variant='outlined'
           numberFormat={numberFormat}
           valueExtractor={numericValueExtractor}
-          // onChange={value => {
-          //   setValue('amount', value)
-          //   if (value * price > balance) {
-          //     setError('amount', { message: 'lol' })
-          //   } else {
-          //     console.log('clear')
-          //     clearErrors()
-          //   }
-          // }}
         />
       </Grid>
 

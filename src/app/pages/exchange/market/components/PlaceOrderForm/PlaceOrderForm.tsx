@@ -1,3 +1,4 @@
+import * as yup from 'yup'
 import React, { useState } from 'react'
 import { Grid, Tab, Tabs } from '@material-ui/core'
 import { Submit } from 'components/form/Submit'
@@ -11,6 +12,7 @@ import {
   PlaceOrderFormValues
 } from 'app/pages/exchange/market/types/form'
 import { transformPlaceOrderFormValuesToArgs } from 'app/pages/exchange/market/utils'
+import { TabPanel } from 'components/TabPanel'
 
 export interface PlaceOrderFormProps {
   currencyLabel: string
@@ -39,7 +41,30 @@ export const PlaceOrderForm: React.FC<PlaceOrderFormProps> = ({
   }
 
   return (
-    <Form onSubmit={handleSubmit}>
+    <Form
+      onSubmit={handleSubmit}
+      validationSchema={yup.object().shape({
+        amount: yup
+          .number()
+          .when(
+            ['total', 'price'],
+            (total: number, price: number, schema: yup.NumberSchema) =>
+              total > currencyBalance
+                ? schema.max(currencyBalance / price, 'Insufficient balance')
+                : schema
+          )
+          .required(),
+        price: yup
+          .number()
+          .when('total', (total: number, schema: yup.NumberSchema) =>
+            total > currencyBalance
+              ? schema.max(0, 'Insufficient balance')
+              : schema
+          )
+          .required(),
+        total: yup.number().required()
+      })}
+    >
       <Grid
         xs={12}
         container
@@ -88,13 +113,24 @@ export const PlaceOrderForm: React.FC<PlaceOrderFormProps> = ({
             <LabelledValue value={formatMoney(300, tokenLabel)} label='' />
           </Grid>
         </Grid>
-        <PlaceOrderFields
-          currencyLabel={currencyLabel}
-          tokenLabel={tokenLabel}
-          currencyBalance={currencyBalance}
-          tokenBalance={tokenBalance}
-          side={selectedIdx === 0 ? 'BUY' : 'SELL'}
-        />
+        <TabPanel index={0} value={selectedIdx} withoutSpacing={true}>
+          <PlaceOrderFields
+            currencyLabel={currencyLabel}
+            tokenLabel={tokenLabel}
+            currencyBalance={currencyBalance}
+            tokenBalance={tokenBalance}
+            side={'BUY'}
+          />
+        </TabPanel>
+        <TabPanel index={1} value={selectedIdx} withoutSpacing={true}>
+          <PlaceOrderFields
+            currencyLabel={currencyLabel}
+            tokenLabel={tokenLabel}
+            currencyBalance={currencyBalance}
+            tokenBalance={tokenBalance}
+            side={'SELL'}
+          />
+        </TabPanel>
         <Grid item className={classes.buttonWrapper}>
           <Submit
             data-testid='submit'
