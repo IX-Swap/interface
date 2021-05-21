@@ -17,7 +17,7 @@ describe('PlaceOrderForm', () => {
           currencyLabel={'SGD'}
           tokenBalance={300}
           currencyBalance={15000}
-          onSubmit={async () => console.log('form')}
+          onSubmit={async () => {}}
         />
       </Form>
     )

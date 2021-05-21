@@ -31,6 +31,7 @@ export const PlaceOrderForm: React.FC<PlaceOrderFormProps> = ({
 }) => {
   const classes = useStyles()
   const [selectedIdx, setSelectedIdx] = useState(0)
+  const balance = selectedIdx === 0 ? currencyBalance : tokenBalance
   const handleSubmit = async (values: PlaceOrderFormValues) => {
     await onSubmit(
       transformPlaceOrderFormValuesToArgs(
@@ -50,16 +51,14 @@ export const PlaceOrderForm: React.FC<PlaceOrderFormProps> = ({
             ['total', 'price'],
             (total: number, price: number, schema: yup.NumberSchema) =>
               total > currencyBalance
-                ? schema.max(currencyBalance / price, 'Insufficient balance')
+                ? schema.max(balance / price, 'Insufficient balance')
                 : schema
           )
           .required(),
         price: yup
           .number()
           .when('total', (total: number, schema: yup.NumberSchema) =>
-            total > currencyBalance
-              ? schema.max(0, 'Insufficient balance')
-              : schema
+            total > balance ? schema.max(0, 'Insufficient balance') : schema
           )
           .required(),
         total: yup.number().required()
