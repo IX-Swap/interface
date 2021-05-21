@@ -1,24 +1,26 @@
-import * as yup from 'yup'
 import React, { useState } from 'react'
 import { Grid, Tab, Tabs } from '@material-ui/core'
-import { Submit } from 'components/form/Submit'
-import { LabelledValue } from 'components/LabelledValue'
-import { useStyles } from 'app/pages/exchange/market/components/PlaceOrderForm/PlaceOrderForm.style'
-import { formatMoney } from 'helpers/numbers'
-import { PlaceOrderFields } from 'app/pages/exchange/market/components/PlaceOrderFields/PlaceOrderFields'
 import { Form } from 'components/form/Form'
+import { formatMoney } from 'helpers/numbers'
+import { TabPanel } from 'components/TabPanel'
+import { LabelledValue } from 'components/LabelledValue'
 import {
   PlaceOrderArgs,
   PlaceOrderFormValues
 } from 'app/pages/exchange/market/types/form'
 import { transformPlaceOrderFormValuesToArgs } from 'app/pages/exchange/market/utils'
-import { TabPanel } from 'components/TabPanel'
+// import { placeOrderFormValidationSchema } from 'app/pages/exchange/market/validation'
+import { PlaceOrderFields } from 'app/pages/exchange/market/components/PlaceOrderFields/PlaceOrderFields'
+import { useStyles } from 'app/pages/exchange/market/components/PlaceOrderForm/PlaceOrderForm.style'
+import { PlaceOrderSubmit } from 'app/pages/exchange/market/components/PlaceOrderSubmit/PlaceOrderSubmit'
+
+export type ActiveTabName = 'BUY' | 'SELL'
 
 export interface PlaceOrderFormProps {
-  currencyLabel: string
   tokenLabel: string
-  currencyBalance: number
   tokenBalance: number
+  currencyLabel: string
+  currencyBalance: number
   onSubmit: (bank: PlaceOrderArgs) => Promise<any>
 }
 
@@ -30,13 +32,15 @@ export const PlaceOrderForm: React.FC<PlaceOrderFormProps> = ({
   onSubmit
 }) => {
   const classes = useStyles()
-  const [selectedIdx, setSelectedIdx] = useState(0)
-  const balance = selectedIdx === 0 ? currencyBalance : tokenBalance
+  const tabs = ['BUY', 'SELL']
+  const [activeTabNameIdx, setActiveTabNameIdx] = useState(0)
+  const balance = activeTabNameIdx === 0 ? currencyBalance : tokenBalance
+  const totalCurrencyLabel = activeTabNameIdx === 0 ? currencyLabel : tokenLabel
   const handleSubmit = async (values: PlaceOrderFormValues) => {
     await onSubmit(
       transformPlaceOrderFormValuesToArgs(
         values,
-        selectedIdx === 0 ? 'ASK' : 'BID'
+        activeTabNameIdx === 0 ? 'ASK' : 'BID'
       )
     )
   }
@@ -44,53 +48,29 @@ export const PlaceOrderForm: React.FC<PlaceOrderFormProps> = ({
   return (
     <Form
       onSubmit={handleSubmit}
-      validationSchema={yup.object().shape({
-        amount: yup
-          .number()
-          .when(
-            ['total', 'price'],
-            (total: number, price: number, schema: yup.NumberSchema) =>
-              total > currencyBalance
-                ? schema.max(balance / price, 'Insufficient balance')
-                : schema
-          )
-          .required(),
-        price: yup
-          .number()
-          .when('total', (total: number, schema: yup.NumberSchema) =>
-            total > balance ? schema.max(0, 'Insufficient balance') : schema
-          )
-          .required(),
-        total: yup.number().required()
-      })}
+      // validationSchema={placeOrderFormValidationSchema(balance)}
     >
-      <Grid
-        xs={12}
-        container
-        direction={'column'}
-        className={classes.container}
-      >
+      <Grid container direction={'column'} className={classes.container}>
         <Grid item>
           <Tabs
-            value={selectedIdx}
-            onChange={(_, index) => setSelectedIdx(index)}
+            value={activeTabNameIdx}
+            onChange={(_, index) => setActiveTabNameIdx(index)}
             classes={{
               indicator: classes.indicator
             }}
             TabIndicatorProps={{ children: <span /> }}
           >
-            <Tab
-              label='BUY'
-              classes={{
-                root: classes.tab
-              }}
-            />
-            <Tab
-              label='SELL'
-              classes={{
-                root: classes.tab
-              }}
-            />
+            {tabs.map(tabName => {
+              return (
+                <Tab
+                  key={tabName}
+                  label={tabName}
+                  classes={{
+                    root: classes.tab
+                  }}
+                />
+              )
+            })}
           </Tabs>
         </Grid>
 
@@ -103,43 +83,37 @@ export const PlaceOrderForm: React.FC<PlaceOrderFormProps> = ({
         >
           <Grid item>
             <LabelledValue
+              // TODO Remove fake value after complete backend api
               value={formatMoney(15000, currencyLabel)}
               label='Balance:'
             />
           </Grid>
 
           <Grid item>
-            <LabelledValue value={formatMoney(300, tokenLabel)} label='' />
+            <LabelledValue
+              // TODO Remove fake value after complete backend api
+              value={formatMoney(300, tokenLabel)}
+              label=''
+            />
           </Grid>
         </Grid>
-        <TabPanel index={0} value={selectedIdx} withoutSpacing={true}>
-          <PlaceOrderFields
-            currencyLabel={currencyLabel}
-            tokenLabel={tokenLabel}
-            currencyBalance={currencyBalance}
-            tokenBalance={tokenBalance}
-            side={'BUY'}
-          />
-        </TabPanel>
-        <TabPanel index={1} value={selectedIdx} withoutSpacing={true}>
-          <PlaceOrderFields
-            currencyLabel={currencyLabel}
-            tokenLabel={tokenLabel}
-            currencyBalance={currencyBalance}
-            tokenBalance={tokenBalance}
-            side={'SELL'}
-          />
-        </TabPanel>
+        {tabs.map((tabName, index) => {
+          return (
+            <TabPanel
+              key={tabName}
+              index={index}
+              value={activeTabNameIdx}
+              withoutSpacing={true}
+            >
+              <PlaceOrderFields
+                balance={balance}
+                totalCurrencyLabel={totalCurrencyLabel}
+              />
+            </TabPanel>
+          )
+        })}
         <Grid item className={classes.buttonWrapper}>
-          <Submit
-            data-testid='submit'
-            size='large'
-            variant='contained'
-            disabled={false}
-            className={classes.button}
-          >
-            PLACE ORDER
-          </Submit>
+          <PlaceOrderSubmit />
         </Grid>
       </Grid>
     </Form>

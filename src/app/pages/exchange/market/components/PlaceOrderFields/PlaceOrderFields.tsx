@@ -1,46 +1,27 @@
-import React, { useEffect, useState } from 'react'
+import React from 'react'
 import { useFormContext } from 'react-hook-form'
-import { Grid, InputAdornment, Slider } from '@material-ui/core'
+import { Grid, InputAdornment } from '@material-ui/core'
 import { numericValueExtractor } from 'helpers/forms'
 import { TypedField } from 'components/form/TypedField'
 import { useStyles } from 'app/pages/exchange/market/components/PlaceOrderFields/PlaceOrderFields.style'
 import { moneyNumberFormat, numberFormat } from 'config/numberFormat'
 import { NumericInput } from 'components/form/NumericInput'
+import { PlaceOrderSlider } from 'app/pages/exchange/market/components/PlaceOrderSlider/PlaceOrderSlider'
 
 export interface PlaceOrderFieldsProps {
-  currencyLabel: string
-  tokenLabel: string
-  currencyBalance: number
-  tokenBalance: number
-  side: 'BUY' | 'SELL'
+  balance: number
+  totalCurrencyLabel: string
 }
 
 export const PlaceOrderFields: React.FC<PlaceOrderFieldsProps> = ({
-  currencyLabel,
-  tokenLabel,
-  currencyBalance,
-  tokenBalance,
-  side
+  totalCurrencyLabel,
+  balance
 }) => {
   const classes = useStyles()
-  const { control, setValue, watch } = useFormContext()
+  const { control, setValue, watch, setError, clearErrors } = useFormContext()
 
   const price = watch('price')
   const amount = watch('amount')
-  const [slider, setSlider] = useState(0)
-  const balance = side === 'BUY' ? currencyBalance : tokenBalance
-
-  useEffect(() => {
-    if (price !== undefined && amount !== undefined) {
-      const totalValue = price * amount
-      setValue('total', totalValue)
-      const newSliderValue = (100 / balance) * totalValue * (4 / 100)
-      setSlider(newSliderValue)
-    } else {
-      setValue('total', 0)
-      setSlider(0)
-    }
-  }, [amount, price, balance]) // eslint-disable-line
 
   return (
     <Grid item container direction={'column'} className={classes.container}>
@@ -53,6 +34,15 @@ export const PlaceOrderFields: React.FC<PlaceOrderFieldsProps> = ({
           variant='outlined'
           numberFormat={moneyNumberFormat}
           valueExtractor={numericValueExtractor}
+          defaultValue={null}
+          onChange={value => {
+            setValue('price', value)
+            if (amount * value > balance) {
+              setError('price', { message: 'Insufficient balance' })
+            } else {
+              clearErrors('price')
+            }
+          }}
         />
       </Grid>
 
@@ -64,30 +54,21 @@ export const PlaceOrderFields: React.FC<PlaceOrderFieldsProps> = ({
           control={control}
           variant='outlined'
           numberFormat={numberFormat}
+          defaultValue={null}
           valueExtractor={numericValueExtractor}
+          onChange={value => {
+            setValue('amount', value)
+            if (price * value > balance) {
+              setError('amount', { message: 'Insufficient balance' })
+            } else {
+              clearErrors('amount')
+            }
+          }}
         />
       </Grid>
 
       <Grid item className={classes.sliderWrapper}>
-        <Slider
-          value={slider}
-          min={0}
-          max={4}
-          marks
-          classes={{
-            rail: classes.rail,
-            track: classes.track,
-            thumb: classes.thumb,
-            mark: classes.mark,
-            markActive: classes.markActive
-          }}
-          disabled={price === null || price === undefined}
-          onChange={(evt, value) => {
-            setSlider(value as number)
-            const newAmount = ((balance / 4) * (value as number)) / price
-            setValue('amount', newAmount)
-          }}
-        />
+        <PlaceOrderSlider balance={balance} />
       </Grid>
 
       <Grid item className={classes.inputGrid}>
@@ -104,9 +85,10 @@ export const PlaceOrderFields: React.FC<PlaceOrderFieldsProps> = ({
           }}
           startAdornment={
             <InputAdornment position='start'>
-              {side === 'BUY' ? currencyLabel : tokenLabel}
+              {totalCurrencyLabel}
             </InputAdornment>
           }
+          defaultValue={null}
           numberFormat={moneyNumberFormat}
           valueExtractor={numericValueExtractor}
           disabled

@@ -24,6 +24,7 @@ export interface TypedFieldProps<
   defaultValue?: DeepPathValue<TFieldValues, TFieldName>
   valueExtractor?: (...args: any[]) => any
   customRenderer?: boolean
+  customBlur?: boolean
   helperText?: string
   onChange?: (
     value: DeepPathValue<TFieldValues, TFieldName>,
@@ -52,6 +53,7 @@ export const TypedField = <
     component,
     valueExtractor,
     customRenderer = false,
+    customBlur = false,
     rootName,
     helperText,
     onChange,
@@ -91,7 +93,9 @@ export const TypedField = <
           onFocus: () => setIsFocused(true),
           onBlur: () => {
             setIsFocused(false)
-            controllerProps.onBlur()
+            if (!customBlur) {
+              controllerProps.onBlur()
+            }
           }
         }
 
@@ -109,7 +113,9 @@ export const TypedField = <
             onFocus: () => setIsFocused(true),
             onBlur: () => {
               setIsFocused(false)
-              controllerProps.onBlur()
+              if (!customBlur) {
+                controllerProps.onBlur()
+              }
             }
           })
         }

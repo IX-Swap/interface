@@ -28,13 +28,5 @@ export const useStyles = makeStyles(theme => ({
       width: '100%',
       backgroundColor: theme.palette.backgrounds.alternative
     }
-  },
-  button: {
-    width: '100%',
-    backgroundColor: theme.palette.backgrounds.alternative,
-    '&:hover': {
-      backgroundColor: theme.palette.backgrounds.alternative,
-      opacity: 0.7
-    }
   }
 }))

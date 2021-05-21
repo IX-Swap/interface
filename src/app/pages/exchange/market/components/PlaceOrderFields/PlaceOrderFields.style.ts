@@ -13,36 +13,15 @@ export const useStyles = makeStyles(theme => ({
     paddingLeft: theme.spacing(0.5),
     paddingRight: theme.spacing(0.5)
   },
-  rail: {
-    height: theme.spacing(0.25),
-    backgroundColor: theme.palette.slider.background
-  },
-  track: {
-    height: theme.spacing(0.25)
-  },
-  thumb: {
-    width: `${theme.spacing(1.25)}px!important`,
-    height: `${theme.spacing(1.25)}px!important`,
-    marginTop: `${-theme.spacing(0.5)}px!important`,
-    marginLeft: `${-theme.spacing(0.625)}px!important`,
-    border: `2px solid ${theme.palette.primary.main}`,
-    backgroundColor: theme.palette.backgrounds.default,
-    zIndex: 3
-  },
-  mark: {
-    top: theme.spacing(1.875),
-    backgroundColor: theme.palette.slider.background,
-    width: theme.spacing(1),
-    height: theme.spacing(1),
-    borderRadius: '50%',
-    transform: 'translateX(-50%)'
-  },
-  markActive: {
-    backgroundColor: theme.palette.primary.main,
-    opacity: 1,
-    zIndex: 2
-  },
   input: {
     textAlign: 'end'
+  },
+  button: {
+    width: '100%',
+    backgroundColor: theme.palette.backgrounds.alternative,
+    '&:hover': {
+      backgroundColor: theme.palette.backgrounds.alternative,
+      opacity: 0.7
+    }
   }
 }))
