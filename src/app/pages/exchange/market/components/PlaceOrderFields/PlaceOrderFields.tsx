@@ -35,12 +35,13 @@ export const PlaceOrderFields: React.FC<PlaceOrderFieldsProps> = ({
           numberFormat={moneyNumberFormat}
           valueExtractor={numericValueExtractor}
           defaultValue={null}
+          customBlur={true}
           onChange={value => {
             setValue('price', value)
             if (amount * value > balance) {
               setError('price', { message: 'Insufficient balance' })
             } else {
-              clearErrors('price')
+              clearErrors()
             }
           }}
         />
@@ -52,6 +53,7 @@ export const PlaceOrderFields: React.FC<PlaceOrderFieldsProps> = ({
           name={'amount'}
           label={'Amount'}
           control={control}
+          customBlur={true}
           variant='outlined'
           numberFormat={numberFormat}
           defaultValue={null}
@@ -61,7 +63,7 @@ export const PlaceOrderFields: React.FC<PlaceOrderFieldsProps> = ({
             if (price * value > balance) {
               setError('amount', { message: 'Insufficient balance' })
             } else {
-              clearErrors('amount')
+              clearErrors()
             }
           }}
         />

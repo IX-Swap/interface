@@ -9,10 +9,10 @@ import {
   PlaceOrderFormValues
 } from 'app/pages/exchange/market/types/form'
 import { transformPlaceOrderFormValuesToArgs } from 'app/pages/exchange/market/utils'
-// import { placeOrderFormValidationSchema } from 'app/pages/exchange/market/validation'
+import { placeOrderFormValidationSchema } from 'app/pages/exchange/market/validation'
 import { PlaceOrderFields } from 'app/pages/exchange/market/components/PlaceOrderFields/PlaceOrderFields'
 import { useStyles } from 'app/pages/exchange/market/components/PlaceOrderForm/PlaceOrderForm.style'
-import { PlaceOrderSubmit } from 'app/pages/exchange/market/components/PlaceOrderSubmit/PlaceOrderSubmit'
+import { Submit } from 'components/form/Submit'
 
 export type ActiveTabName = 'BUY' | 'SELL'
 
@@ -48,7 +48,7 @@ export const PlaceOrderForm: React.FC<PlaceOrderFormProps> = ({
   return (
     <Form
       onSubmit={handleSubmit}
-      // validationSchema={placeOrderFormValidationSchema(balance)}
+      validationSchema={placeOrderFormValidationSchema(balance)}
     >
       <Grid container direction={'column'} className={classes.container}>
         <Grid item>
@@ -113,7 +113,15 @@ export const PlaceOrderForm: React.FC<PlaceOrderFormProps> = ({
           )
         })}
         <Grid item className={classes.buttonWrapper}>
-          <PlaceOrderSubmit />
+          <Submit
+            data-testid='submit'
+            size='large'
+            variant='contained'
+            className={classes.button}
+            disabled={false}
+          >
+            PLACE ORDER
+          </Submit>
         </Grid>
       </Grid>
     </Form>

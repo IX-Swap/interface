@@ -7,8 +7,8 @@ import { TableColumn } from 'types/util'
 
 export interface Order {
   createdAt: string
+  pair: string
   side: string
-  tif: string
   price: number
   amount: number
   total: number
@@ -22,12 +22,12 @@ export const columns: Array<TableColumn<Order>> = [
     render: formatDateToMMDDYY
   },
   {
-    key: 'side',
-    label: 'Side'
+    label: 'Pair',
+    key: 'pair'
   },
   {
-    key: 'tif',
-    label: 'Time-In-Force'
+    key: 'side',
+    label: 'Side'
   },
   {
     key: 'price',

@@ -1,62 +1,47 @@
 import React from 'react'
-import { RootContainer } from 'ui/RootContainer'
 import { PlaceOrderForm } from 'app/pages/exchange/market/components/PlaceOrderForm/PlaceOrderForm'
 import { useCreateOrder } from 'app/pages/exchange/market/hooks/useCreateOrder'
 import { Box, Grid } from '@material-ui/core'
-import { useAppBreakpoints } from 'hooks/useAppBreakpoints'
 import { MyOrders } from 'app/pages/exchange/market/components/MyOrders/MyOrders'
 import { FinancialSummary } from 'app/pages/invest/components/FinancialSummary/FinancialSummary'
+import { useStyles } from 'app/pages/exchange/market/MarketRoot.style'
 
 export const MarketRoot = () => {
+  const classes = useStyles()
   const [placeOrder] = useCreateOrder()
-  const { isMobile } = useAppBreakpoints()
 
   return (
-    <RootContainer
-      maxWidth={'xl'}
-      style={{ backgroundColor: 'rgb(249, 259, 249)' }}
-    >
-      <Grid container direction={'column'}>
+    <Box className={classes.container}>
+      <Grid item xs={12} className={classes.colorGrid}>
+        <FinancialSummary />
+      </Grid>
+
+      <Box my={2} />
+
+      <Grid container direction={'column'} className={classes.wrapper}>
+        <Grid item className={classes.colorGrid}>
+          Market Order
+        </Grid>
+
         <Grid item container>
-          <Grid item xs={12} style={{ backgroundColor: '#fff' }}>
-            <FinancialSummary />
+          <Grid item className={classes.middleBlock} xs={12}>
+            TradingView
+          </Grid>
+          <Grid item className={classes.colorGrid} xs={12}>
+            <MyOrders />
           </Grid>
         </Grid>
-        <Box my={1} />
-        <Grid
-          item
-          container
-          direction={isMobile ? 'column' : 'row'}
-          spacing={2}
-        >
-          <Grid item container xs={12} md={3}>
-            <Grid style={{ backgroundColor: '#fff' }} xs={12}>
-              Market Order
-            </Grid>
-          </Grid>
-          <Grid item container xs={12} md={6} direction={'row'} spacing={2}>
-            <Grid item container xs={12}>
-              <Grid item style={{ backgroundColor: '#fff' }} xs={12}>
-                TradingView
-              </Grid>
-            </Grid>
-            <Grid item container xs={12}>
-              <Grid item style={{ backgroundColor: '#fff' }} xs={12}>
-                <MyOrders />
-              </Grid>
-            </Grid>
-          </Grid>
-          <Grid item container xs={12} md={3}>
-            <PlaceOrderForm
-              currencyLabel={'SGD'}
-              tokenLabel={'IXPS'}
-              currencyBalance={15000}
-              tokenBalance={300}
-              onSubmit={placeOrder}
-            />
-          </Grid>
+
+        <Grid item container>
+          <PlaceOrderForm
+            currencyLabel={'SGD'}
+            tokenLabel={'IXPS'}
+            currencyBalance={15000}
+            tokenBalance={300}
+            onSubmit={placeOrder}
+          />
         </Grid>
       </Grid>
-    </RootContainer>
+    </Box>
   )
 }

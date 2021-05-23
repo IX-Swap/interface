@@ -15,10 +15,6 @@ export const useStyles = makeStyles(theme => ({
     paddingLeft: theme.spacing(2),
     paddingRight: theme.spacing(2)
   },
-  buttonWrapper: {
-    paddingLeft: theme.spacing(2),
-    paddingRight: theme.spacing(2)
-  },
   indicator: {
     display: 'flex',
     justifyContent: 'center',
@@ -27,6 +23,18 @@ export const useStyles = makeStyles(theme => ({
       maxWidth: theme.spacing(7),
       width: '100%',
       backgroundColor: theme.palette.backgrounds.alternative
+    }
+  },
+  buttonWrapper: {
+    paddingLeft: theme.spacing(2),
+    paddingRight: theme.spacing(2)
+  },
+  button: {
+    width: '100%',
+    backgroundColor: theme.palette.backgrounds.alternative,
+    '&:hover': {
+      backgroundColor: theme.palette.backgrounds.alternative,
+      opacity: 0.7
     }
   }
 }))
