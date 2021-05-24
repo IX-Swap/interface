@@ -3,6 +3,7 @@ import { exchange as exchangeQueryKeys } from 'config/queryKeys'
 import { useServices } from 'hooks/useServices'
 import { useEffect, useMemo } from 'react'
 import { useQuery, useQueryCache } from 'react-query'
+import { marketTradesData } from '__fixtures__/exchange'
 
 export const useTradeHistory = (id: string) => {
   const { socketService } = useServices()
@@ -27,8 +28,12 @@ export const useTradeHistory = (id: string) => {
     // eslint-disable-next-line
   }, [id, socket])
 
-  const { data } = useQuery<any>([exchangeQueryKeys.tradeHistory, id], () =>
-    queryCache.getQueryData([exchangeQueryKeys.tradeHistory, id])
+  const { data } = useQuery<any>(
+    [exchangeQueryKeys.tradeHistory, id],
+    () => queryCache.getQueryData([exchangeQueryKeys.tradeHistory, id]),
+    {
+      initialData: marketTradesData
+    }
   )
 
   return {

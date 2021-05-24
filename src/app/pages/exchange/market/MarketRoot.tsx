@@ -5,6 +5,9 @@ import { Box, Grid } from '@material-ui/core'
 import { MyOrders } from 'app/pages/exchange/market/components/MyOrders/MyOrders'
 import { FinancialSummary } from 'app/pages/invest/components/FinancialSummary/FinancialSummary'
 import { useStyles } from 'app/pages/exchange/market/MarketRoot.style'
+import { InvestorLiveOrderBook } from 'app/pages/invest/components/InvestorLiveOrderBook/InvestorLiveOrderBook'
+import { TVChartContainer } from 'app/pages/invest/components/TVChartContainer/TVChartContainer'
+import { Trades } from 'app/pages/invest/components/Trades/Trades'
 
 export const MarketRoot = () => {
   const classes = useStyles()
@@ -20,12 +23,12 @@ export const MarketRoot = () => {
 
       <Grid container direction={'column'} className={classes.wrapper}>
         <Grid item className={classes.colorGrid}>
-          Market Order
+          <InvestorLiveOrderBook currency='SGD' tokenSymbol='EUR' />
         </Grid>
 
         <Grid item container>
           <Grid item className={classes.middleBlock} xs={12}>
-            TradingView
+            <TVChartContainer />
           </Grid>
           <Grid item className={classes.colorGrid} xs={12}>
             <MyOrders />
@@ -40,6 +43,7 @@ export const MarketRoot = () => {
             tokenBalance={300}
             onSubmit={placeOrder}
           />
+          <Trades />
         </Grid>
       </Grid>
     </Box>
