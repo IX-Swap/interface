@@ -7,15 +7,11 @@ export const useStyles = makeStyles(theme => ({
   },
   tab: {
     color: theme.palette.backgrounds.alternative,
-    minWidth: 100
+    minWidth: 80
   },
   balanceWrapper: {
     marginTop: theme.spacing(2),
     marginBottom: theme.spacing(3),
-    paddingLeft: theme.spacing(2),
-    paddingRight: theme.spacing(2)
-  },
-  buttonWrapper: {
     paddingLeft: theme.spacing(2),
     paddingRight: theme.spacing(2)
   },
@@ -28,6 +24,10 @@ export const useStyles = makeStyles(theme => ({
       width: '100%',
       backgroundColor: theme.palette.backgrounds.alternative
     }
+  },
+  buttonWrapper: {
+    paddingLeft: theme.spacing(2),
+    paddingRight: theme.spacing(2)
   },
   button: {
     width: '100%',

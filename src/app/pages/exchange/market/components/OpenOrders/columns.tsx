@@ -7,8 +7,8 @@ import { getOrderSideName } from 'helpers/strings'
 
 export interface Order {
   createdAt: string
+  pair: string
   side: string
-  tif: string
   price: number
   amount: number
   total: number

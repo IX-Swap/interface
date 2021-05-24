@@ -14,16 +14,16 @@ import { BuyerList } from '../pages/buyer-list/BuyerList'
 export const OTCMarketRouter = () => {
   return (
     <Switch>
-      <AppRoute breadcrumb='Market' path={OTCMarketRoute.market}>
+      <AppRoute breadcrumb='Market' exact path={OTCMarketRoute.market}>
         <Market />
       </AppRoute>
-      <AppRoute breadcrumb='Holdings' path={OTCMarketRoute.holdings}>
+      <AppRoute breadcrumb='Holdings' exact path={OTCMarketRoute.holdings}>
         <Holdings />
       </AppRoute>
-      <AppRoute breadcrumb='My Listings' path={OTCMarketRoute.myListings}>
+      <AppRoute breadcrumb='My Listings' exact path={OTCMarketRoute.myListings}>
         <MyListings />
       </AppRoute>
-      <AppRoute breadcrumb='Buyer List' path={OTCMarketRoute.buyerList}>
+      <AppRoute breadcrumb='Buyer List' exact path={OTCMarketRoute.buyerList}>
         <BuyerList />
       </AppRoute>
       <AppRoute path={OTCMarketRoute.landing}>

@@ -1,9 +1,6 @@
 export interface PlaceOrderFormValues {
-  type: string
-  timeInForce: string
   price: number
   amount: number
-  slider: number
   total: number
 }
 

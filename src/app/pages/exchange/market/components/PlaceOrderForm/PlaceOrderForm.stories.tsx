@@ -1,8 +1,8 @@
 import { Meta, Story } from '@storybook/react/types-6-0'
 import React from 'react'
-import { PlaceOrderForm } from 'app/exchange/market/components/PlaceOrderForm/PlaceOrderForm'
+import { PlaceOrderForm } from 'app/pages/exchange/market/components/PlaceOrderForm/PlaceOrderForm'
 import { Form } from 'components/form/Form'
-import { PlaceOrderArgs } from 'app/exchange/market/types/form'
+import { PlaceOrderArgs } from 'app/pages/exchange/market/types/form'
 
 const meta: Meta = {
   title: 'Pages/PlaceOrderForm',
@@ -17,7 +17,13 @@ const handleSubmit = async (data: PlaceOrderArgs) => {
 
 const Template: Story = () => (
   <Form>
-    <PlaceOrderForm onSubmit={handleSubmit} />
+    <PlaceOrderForm
+      currencyLabel={'SGD'}
+      tokenLabel={'IXPS'}
+      onSubmit={handleSubmit}
+      currencyBalance={15000}
+      tokenBalance={300}
+    />
   </Form>
 )
 export const Default = Template.bind({})

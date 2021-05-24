@@ -5,8 +5,11 @@ import { useAppBreakpoints } from 'hooks/useAppBreakpoints'
 import { MyOrders } from 'app/pages/exchange/market/components/MyOrders/MyOrders'
 import { FinancialSummary } from 'app/pages/invest/components/FinancialSummary/FinancialSummary'
 import { TVChartContainer } from 'app/pages/invest/components/TVChartContainer/TVChartContainer'
+import { useCreateOrder } from './hooks/useCreateOrder'
+import { PlaceOrderForm } from './components/PlaceOrderForm/PlaceOrderForm'
 
 export const MarketRoot = () => {
+  const [placeOrder] = useCreateOrder()
   const { isMobile } = useAppBreakpoints()
 
   return (
@@ -29,7 +32,7 @@ export const MarketRoot = () => {
         >
           <Grid item container xs={12} md={3}>
             <Grid style={{ backgroundColor: '#fff' }} xs={12}>
-              Sidebar
+              <MarketRoot />
             </Grid>
           </Grid>
           <Grid item container xs={12} md={6} direction={'row'} spacing={2}>
@@ -44,7 +47,9 @@ export const MarketRoot = () => {
               </Grid>
             </Grid>
           </Grid>
-          <Grid item container xs={12} md={3}></Grid>
+          <Grid item container xs={12} md={3}>
+            <PlaceOrderForm onSubmit={placeOrder} />
+          </Grid>
         </Grid>
       </Grid>
     </RootContainer>
