@@ -29,3 +29,5 @@ export const sampleTVChartProps: ChartContainerProps = {
   tvWidget: null,
   setTradingChart: () => {}
 }
+
+export const SYMBOL_SEARCH_LIMIT = 30
