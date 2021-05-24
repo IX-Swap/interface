@@ -1,5 +1,5 @@
 import React from 'react'
-import { MarketRoot } from 'app/exchange/market/MarketRoot'
+import { MarketRoot } from '../../market/MarketRoot'
 
 export const Market = () => {
   return <MarketRoot />

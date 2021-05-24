@@ -3,6 +3,7 @@ import { useEffect, useMemo } from 'react'
 import { useQuery, useQueryCache } from 'react-query'
 import { exchange as exchangeQueryKeys } from 'config/queryKeys'
 import { exchange } from 'config/apiURL'
+import { orderBookData } from '__fixtures__/exchange'
 
 export const useOrderBook = (id: string) => {
   const { socketService } = useServices()
@@ -26,8 +27,12 @@ export const useOrderBook = (id: string) => {
     // eslint-disable-next-line
   }, [id, socket])
 
-  const { data } = useQuery<any>([exchangeQueryKeys.orderBook, id], () =>
-    queryCache.getQueryData([exchangeQueryKeys.orderBook, id])
+  const { data } = useQuery<any>(
+    [exchangeQueryKeys.orderBook, id],
+    () => queryCache.getQueryData([exchangeQueryKeys.orderBook, id]),
+    {
+      initialData: orderBookData
+    }
   )
 
   return {

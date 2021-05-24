@@ -1,14 +1,14 @@
 import React from 'react'
 import { render, cleanup } from 'test-utils'
-import { IdentityRoot } from 'app/pages/identity/IdentityRoot'
+import { MarketRoot } from 'app/pages/exchange/market/MarketRoot'
 
-describe('IdentityRoot', () => {
+describe('MarketRoot', () => {
   afterEach(async () => {
     await cleanup()
     jest.clearAllMocks()
   })
 
   it('renders without error', () => {
-    render(<IdentityRoot />)
+    render(<MarketRoot />)
   })
 })
