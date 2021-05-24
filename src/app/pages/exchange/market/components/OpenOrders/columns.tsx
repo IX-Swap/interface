@@ -1,9 +1,9 @@
 import React from 'react'
 import { CancelOrderButton } from 'app/pages/exchange/market/components/OpenOrders/CancelOrderButton'
 import { formatDateToMMDDYY } from 'helpers/dates'
-import { formatMoney } from 'helpers/numbers'
-import { renderPercentage } from 'helpers/rendering'
+import { formatMoney, toPercentage } from 'helpers/numbers'
 import { TableColumn } from 'types/util'
+import { getOrderSideName } from 'helpers/strings'
 
 export interface Order {
   createdAt: string
@@ -17,17 +17,18 @@ export interface Order {
 
 export const columns: Array<TableColumn<Order>> = [
   {
-    key: 'createdAt',
+    key: 'date',
     label: 'Date',
     render: formatDateToMMDDYY
   },
   {
-    key: 'side',
-    label: 'Side'
+    label: 'Ticker',
+    key: 'pair'
   },
   {
-    key: 'tif',
-    label: 'Time-In-Force'
+    key: 'side',
+    label: 'Side',
+    render: getOrderSideName
   },
   {
     key: 'price',
@@ -47,7 +48,7 @@ export const columns: Array<TableColumn<Order>> = [
   {
     key: 'filled',
     label: 'Filled',
-    render: renderPercentage
+    render: toPercentage
   },
   {
     key: 'cancel',

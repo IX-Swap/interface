@@ -55,7 +55,7 @@ export const TVChartContainer: React.FC<
       height: height ?? sampleTVChartProps.height,
       width: width ?? sampleTVChartProps.width,
       theme: theme ?? sampleTVChartProps.theme,
-      timezone: Intl.DateTimeFormat().resolvedOptions().timeZone,
+      timezone: Intl.DateTimeFormat().resolvedOptions().timeZone as any,
       overrides
     })
 

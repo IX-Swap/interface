@@ -6,6 +6,7 @@ import { Box, Grid } from '@material-ui/core'
 import { useAppBreakpoints } from 'hooks/useAppBreakpoints'
 import { MyOrders } from 'app/pages/exchange/market/components/MyOrders/MyOrders'
 import { FinancialSummary } from 'app/pages/invest/components/FinancialSummary/FinancialSummary'
+import { TVChartContainer } from 'app/pages/invest/components/TVChartContainer/TVChartContainer'
 
 export const MarketRoot = () => {
   const [placeOrder] = useCreateOrder()
@@ -13,7 +14,7 @@ export const MarketRoot = () => {
 
   return (
     <RootContainer
-      maxWidth={'xl'}
+      maxWidth={false}
       style={{ backgroundColor: 'rgb(249, 259, 249)' }}
     >
       <Grid container direction={'column'}>
@@ -37,7 +38,7 @@ export const MarketRoot = () => {
           <Grid item container xs={12} md={6} direction={'row'} spacing={2}>
             <Grid item container xs={12}>
               <Grid item style={{ backgroundColor: '#fff' }} xs={12}>
-                TradingView
+                <TVChartContainer />
               </Grid>
             </Grid>
             <Grid item container xs={12}>

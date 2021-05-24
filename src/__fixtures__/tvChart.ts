@@ -163,7 +163,7 @@ export const datafeed = {
     onError: ErrorCallback
   ) => {
     setTimeout(function () {
-      onResolve(symbolData)
+      onResolve(symbolData as any) // TODO: fix type
     }, 0)
   },
   getBars: function (

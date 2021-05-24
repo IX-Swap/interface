@@ -13,7 +13,7 @@ export const CancelOrderButton = ({ order }: CancelOrderButtonProps) => {
 
   return (
     <Box display='flex' justifyContent='center'>
-      <Button onClick={handleClick} variant='text' color='primary'>
+      <Button onClick={handleClick} variant='text' color='primary' size='small'>
         Cancel
       </Button>
     </Box>
