@@ -51,10 +51,10 @@ describe('PastOrderTable', () => {
 
     expect(TableView).toHaveBeenCalledWith(
       {
+        size: 'small',
         name: exchangeMarketQueryKeys.getOrdersList(initialFilterValues.pair),
         uri: exchangeMarket.getOrdersList(user._id),
         columns,
-        defaultRowsPerPage: 5,
         filter: initialFilterValues
       },
       {}

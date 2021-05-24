@@ -10,9 +10,10 @@ import { isSuperUser } from 'helpers/acl'
 import { documentsURL } from 'config/apiURL'
 
 export const useDeleteFilesArray = (name: string) => {
-  const { selected, resetSelection } = useSelectionHelperContext<
-    SelectedDocument
-  >()
+  const {
+    selected,
+    resetSelection
+  } = useSelectionHelperContext<SelectedDocument>()
   const { reset, getValues } = useFormContext()
   const { snackbarService, apiService } = useServices()
   const [isLoading, setIsLoading] = useState(false)

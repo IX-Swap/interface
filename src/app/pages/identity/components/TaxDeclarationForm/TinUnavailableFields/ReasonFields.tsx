@@ -25,9 +25,10 @@ export const ReasonFields = ({
   index,
   defaultValue
 }: ReasonFieldsProps) => {
-  const { control, watch } = useFormContext<
-    IndividualTaxDeclarationFormValues
-  >()
+  const {
+    control,
+    watch
+  } = useFormContext<IndividualTaxDeclarationFormValues>()
   const reason = watch(`taxResidencies[${index}].reason`)
   const isBReason = reason === 'B'
 

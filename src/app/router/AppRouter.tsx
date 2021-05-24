@@ -43,9 +43,6 @@ export const AppRouter = () => {
       <AppRoute path={AppPath.security}>
         <SecurityRoot />
       </AppRoute>
-      <AppRoute path={AppPath.OTCMarket}>
-        <OTCMarketRoot />
-      </AppRoute>
 
       <AppRoute path={AppPath.notifications}>
         <NotificationsRoot />
@@ -53,6 +50,10 @@ export const AppRouter = () => {
 
       <AppRoute breadcrumb='Authorization' path={AppPath.authorizer}>
         <AuthorizerRoot />
+      </AppRoute>
+
+      <AppRoute breadcrumb='Market' path={AppPath.OTCMarket}>
+        <OTCMarketRoot />
       </AppRoute>
 
       <Redirect to={AppPath.home} />

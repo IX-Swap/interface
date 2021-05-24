@@ -1,4 +1,5 @@
 import { Order } from 'types/order'
+import { PlaceOrderArgs } from 'app/pages/exchange/market/types/form'
 
 export const orders: Order[] = [
   {
@@ -28,3 +29,11 @@ export const orders: Order[] = [
     status: 'Filled'
   }
 ]
+
+export const createOrderArgument: PlaceOrderArgs = {
+  pair: '12',
+  side: 'ASK',
+  type: 'LIMIT',
+  price: 33,
+  amount: 230
+}

@@ -190,6 +190,9 @@ export const virtualAccounts = {
 }
 
 export const exchange = {
+  marketList: '/exchange/markets/list',
+  userOrders: (userId: string) => `/exchange/orders/list/${userId}`,
+  userTrades: (userId: string) => `/exchange/trades/list/${userId}`,
   tradeHistory: {
     emit: 'fills/get',
     on: (tokenId: string) => `fills/${tokenId}`
@@ -197,7 +200,14 @@ export const exchange = {
   orderBook: {
     emit: 'orderbook/get',
     on: (tokenId: string) => `orderbook/${tokenId}`
-  }
+  },
+  currentHoldings: (userId: string) => `/exchange/holdings/list/${userId}`,
+  cancelOrder: (userId: string, orderId: string) =>
+    `/exchange/orders/cancel/${userId}/${orderId}`
+}
+
+export const placeOrderURL = {
+  create: '/exchange/orders'
 }
 
 export const exchangeMarket = {
