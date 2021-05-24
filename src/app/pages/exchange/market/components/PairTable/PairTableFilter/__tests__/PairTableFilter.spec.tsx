@@ -1,14 +1,14 @@
-import { MoreDetails } from 'app/pages/invest/components/FinancialSummary/MoreDetails'
 import React from 'react'
 import { render, cleanup } from 'test-utils'
+import { PairTableFilter } from 'app/pages/exchange/market/components/PairTable/PairTableFilter/PairTableFilter'
 
-describe('MoreDetails', () => {
+describe('PairTableFilter', () => {
   afterEach(async () => {
     await cleanup()
     jest.clearAllMocks()
   })
 
   it('renders without errors', () => {
-    render(<MoreDetails />)
+    render(<PairTableFilter />)
   })
 })

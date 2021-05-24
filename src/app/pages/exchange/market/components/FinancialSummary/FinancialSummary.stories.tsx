@@ -1,6 +1,6 @@
 import React from 'react'
 import { Meta, Story } from '@storybook/react/types-6-0'
-import { FinancialSummary } from 'app/pages/invest/components/FinancialSummary/FinancialSummary'
+import { FinancialSummary } from 'app/pages/exchange/market/components/FinancialSummary/FinancialSummary'
 
 const meta: Meta = {
   title: 'Pages/Invest/FinancialSummary',

@@ -3,7 +3,7 @@ import { RootContainer } from 'ui/RootContainer'
 import { Box, Grid } from '@material-ui/core'
 import { useAppBreakpoints } from 'hooks/useAppBreakpoints'
 import { MyOrders } from 'app/pages/exchange/market/components/MyOrders/MyOrders'
-import { FinancialSummary } from 'app/pages/invest/components/FinancialSummary/FinancialSummary'
+import { FinancialSummary } from 'app/pages/exchange/market/components/FinancialSummary/FinancialSummary'
 import { TVChartContainer } from 'app/pages/invest/components/TVChartContainer/TVChartContainer'
 
 export const MarketRoot = () => {

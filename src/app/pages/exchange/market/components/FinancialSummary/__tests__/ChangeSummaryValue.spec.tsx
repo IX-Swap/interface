@@ -1,5 +1,5 @@
-import { ChangeSummaryValue } from 'app/pages/invest/components/FinancialSummary/ChangeSummaryValue'
-import { SummaryValueProps } from 'app/pages/invest/components/FinancialSummary/NumberSummaryValue'
+import { ChangeSummaryValue } from 'app/pages/exchange/market/components/FinancialSummary/ChangeSummaryValue'
+import { SummaryValueProps } from 'app/pages/exchange/market/components/FinancialSummary/NumberSummaryValue'
 import React from 'react'
 import { render, cleanup } from 'test-utils'
 

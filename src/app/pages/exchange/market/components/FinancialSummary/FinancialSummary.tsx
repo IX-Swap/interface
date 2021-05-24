@@ -1,15 +1,16 @@
-import { Grid, Typography } from '@material-ui/core'
-import { ChangeSummaryValue } from 'app/pages/invest/components/FinancialSummary/ChangeSummaryValue'
-import { MoreDetails } from 'app/pages/invest/components/FinancialSummary/MoreDetails'
-import { NumberSummaryValue } from 'app/pages/invest/components/FinancialSummary/NumberSummaryValue'
-import { SummaryItem } from 'app/pages/invest/components/FinancialSummary/SummaryItem'
+import { Grid } from '@material-ui/core'
+import { ChangeSummaryValue } from 'app/pages/exchange/market/components/FinancialSummary/ChangeSummaryValue'
+import { MoreDetails } from 'app/pages/exchange/market/components/FinancialSummary/MoreDetails'
+import { NumberSummaryValue } from 'app/pages/exchange/market/components/FinancialSummary/NumberSummaryValue'
+import { SummaryItem } from 'app/pages/exchange/market/components/FinancialSummary/SummaryItem'
+import { PairListDropdown } from 'app/pages/exchange/market/components/PairListDropdown/PairListDropdown'
 import React from 'react'
 
 export const FinancialSummary = () => {
   return (
     <Grid container spacing={1}>
       <Grid item container xs={12} md={3} alignContent='center'>
-        <Typography variant='subtitle1'>IXPS/SGD</Typography>
+        <PairListDropdown pairName='IXPS/SGD' />
       </Grid>
       <Grid item xs={12} md={6}>
         <Grid container justify='space-between'>

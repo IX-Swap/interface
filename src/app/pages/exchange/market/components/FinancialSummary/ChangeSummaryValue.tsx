@@ -1,7 +1,7 @@
 import { Grid, Typography } from '@material-ui/core'
 import { ArrowDownward, ArrowUpward } from '@material-ui/icons'
-import { useStyles } from 'app/pages/invest/components/FinancialSummary/FinancialSummary.styles'
-import { SummaryValueProps } from 'app/pages/invest/components/FinancialSummary/NumberSummaryValue'
+import { useStyles } from 'app/pages/exchange/market/components/FinancialSummary/FinancialSummary.styles'
+import { SummaryValueProps } from 'app/pages/exchange/market/components/FinancialSummary/NumberSummaryValue'
 import classNames from 'classnames'
 import React from 'react'
 

@@ -13,6 +13,7 @@ export interface QueryFilters {
   identityType: string | undefined
   createdByAdmin: string | undefined
   pair: string | undefined
+  pairFilter: string | undefined
 }
 
 export type QueryFilter = keyof QueryFilters

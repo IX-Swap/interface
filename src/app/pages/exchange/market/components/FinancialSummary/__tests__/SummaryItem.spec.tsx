@@ -1,7 +1,7 @@
 import {
   SummaryItem,
   SummaryItemProps
-} from 'app/pages/invest/components/FinancialSummary/SummaryItem'
+} from 'app/pages/exchange/market/components/FinancialSummary/SummaryItem'
 import React from 'react'
 import { render, cleanup } from 'test-utils'
 

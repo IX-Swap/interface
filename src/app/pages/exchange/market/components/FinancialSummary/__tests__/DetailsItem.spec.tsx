@@ -1,7 +1,7 @@
 import {
   DetailsItem,
   DetailsItemProps
-} from 'app/pages/invest/components/FinancialSummary/DetailsItem'
+} from 'app/pages/exchange/market/components/FinancialSummary/DetailsItem'
 import React from 'react'
 import { render, cleanup } from 'test-utils'
 
