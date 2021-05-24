@@ -24,6 +24,7 @@ export const useCancelOrder = (orderId: string) => {
       args
     )
   }
+
   return useMutation(cancelOrder, {
     onSuccess: async () => {
       snackbarService.showSnackbar('Order Cancelled', 'success')

@@ -1,6 +1,6 @@
 import { Button, Typography } from '@material-ui/core'
-import { Order } from 'app/pages/invest/components/YourOrdersTable/YourOrderstable'
-import { useCancelOrder } from 'app/pages/invest/hooks/useCancelOrder'
+import { Order } from 'app/pages/exchange/market/components/YourOrdersTable/YourOrderstable'
+import { useCancelOrder } from 'app/pages/exchange/market/hooks/useCancelOrder'
 import React from 'react'
 
 export interface ActionsProps {
@@ -24,7 +24,7 @@ export const Actions = ({ item }: ActionsProps) => {
         <Typography color='textSecondary'>CANCELLED</Typography>
       ) : (
         <Button onClick={handleClick}>
-          <Typography color='error'>Cancel</Typography>
+          <Typography color='error'>CANCEL</Typography>
         </Button>
       )}
     </>

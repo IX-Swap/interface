@@ -1,5 +1,5 @@
 import { Typography } from '@material-ui/core'
-import { useStyles } from 'app/pages/invest/components/TradeHistoryTable/Side.styles'
+import { useStyles } from 'app/pages/exchange/market/components/TradeHistoryTable/Side.styles'
 import React from 'react'
 
 export interface SideProps {

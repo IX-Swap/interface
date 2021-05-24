@@ -1,4 +1,4 @@
-import { PairSelect } from 'app/pages/invest/components/PairSelect/PairSelect'
+import { PairSelect } from 'app/pages/exchange/market/components/PairSelect/PairSelect'
 import { SearchQueryFilter } from 'components/SearchQueryFilter/SearchQueryFilter'
 import React from 'react'
 

@@ -1,7 +1,7 @@
 import { Box, Grid, Typography } from '@material-ui/core'
 import { SearchFilter } from 'app/components/SearchFilter'
 import { DateFilter } from 'app/pages/admin/components/AssignedVirtualAccountsTable/DateFilter'
-import { PairFilter } from 'app/pages/invest/components/TradeHistoryTable/PairFilter'
+import { PairFilter } from 'app/pages/exchange/market/components/TradeHistoryTable/PairFilter'
 import React from 'react'
 
 export const Filters = () => {

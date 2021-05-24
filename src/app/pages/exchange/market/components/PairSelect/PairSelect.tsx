@@ -5,7 +5,10 @@ import {
   Select,
   SelectProps
 } from '@material-ui/core'
-import { Pair, useMarketList } from 'app/pages/invest/hooks/useMarketList'
+import {
+  Pair,
+  useMarketList
+} from 'app/pages/exchange/market/hooks/useMarketList'
 import React from 'react'
 
 export const PairSelect = (props: Partial<SelectProps>) => {

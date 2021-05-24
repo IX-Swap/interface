@@ -7,9 +7,9 @@ import {
 import { AppRoute } from 'components/AppRoute'
 import { LandingPage } from 'app/components/LandingPage/LandingPage'
 import { Market } from '../pages/market/Market'
-import { Holdings } from '../pages/holdings/Holdings'
 import { MyListings } from '../pages/my-listings/MyListings'
 import { BuyerList } from '../pages/buyer-list/BuyerList'
+import { MyHoldings } from 'app/pages/exchange/pages/holdings/MyHoldings'
 
 export const OTCMarketRouter = () => {
   return (
@@ -17,8 +17,8 @@ export const OTCMarketRouter = () => {
       <AppRoute breadcrumb='Market' exact path={OTCMarketRoute.market}>
         <Market />
       </AppRoute>
-      <AppRoute breadcrumb='Holdings' exact path={OTCMarketRoute.holdings}>
-        <Holdings />
+      <AppRoute breadcrumb='Holdings' path={OTCMarketRoute.holdings}>
+        <MyHoldings />
       </AppRoute>
       <AppRoute breadcrumb='My Listings' exact path={OTCMarketRoute.myListings}>
         <MyListings />

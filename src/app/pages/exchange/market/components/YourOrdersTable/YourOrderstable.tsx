@@ -2,13 +2,13 @@ import React from 'react'
 import { TableView } from 'components/TableWithPagination/TableView'
 import { Grid } from '@material-ui/core'
 import { useQueryFilter } from 'hooks/filters/useQueryFilter'
-import { columns } from 'app/pages/invest/components/YourOrdersTable/columns'
-import { Filters } from 'app/pages/invest/components/TradeHistoryTable/Filter'
+import { columns } from 'app/pages/exchange/market/components/YourOrdersTable/columns'
+import { Filters } from 'app/pages/exchange/market/components/TradeHistoryTable/Filter'
 import { useAuth } from 'hooks/auth/useAuth'
 import { getIdFromObj } from 'helpers/strings'
 import { exchange as exchangeUrl } from 'config/apiURL'
 import { exchange as exchangeQueryKeys } from 'config/queryKeys'
-import { Actions } from 'app/pages/invest/components/YourOrdersTable/Actions'
+import { Actions } from 'app/pages/exchange/market/components/YourOrdersTable/Actions'
 
 export interface Order {
   _id: string
@@ -20,7 +20,7 @@ export interface Order {
   pair: string
   total: number
   filled: number
-  average?: string
+  average?: string | null
   status: string
 }
 
