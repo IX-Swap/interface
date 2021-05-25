@@ -28,7 +28,7 @@ describe('PersonnelList', () => {
     expect(container).toBeEmptyDOMElement()
   })
 
-  it('renders __tests__ correctly', () => {
+  it('renders components correctly', () => {
     render(<PersonnelList personnel={personnels} />)
 
     expect(CompanyPersonnel).toHaveBeenNthCalledWith(

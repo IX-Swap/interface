@@ -24,7 +24,7 @@ describe('UserDetails', () => {
     render(<UserDetails data={managedUser} />)
   })
 
-  it('renders __tests__ with correct props', () => {
+  it('renders components with correct props', () => {
     const { getByText } = render(<UserDetails data={managedUser} />)
 
     expect(getByText('selmer+1@investax.io')).toBeInTheDocument()

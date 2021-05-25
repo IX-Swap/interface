@@ -43,7 +43,7 @@ describe('DialogEnabledToggle', () => {
     )
   })
 
-  it('renders __tests__ with correct props when enabled is true', () => {
+  it('renders components with correct props when enabled is true', () => {
     const { getByText } = render(<DialogEnabledToggle {...props} />)
 
     expect(UserActionsDialog).toHaveBeenCalledWith(

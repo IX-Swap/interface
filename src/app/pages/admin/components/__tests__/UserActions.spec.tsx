@@ -28,7 +28,7 @@ describe('UserActions', () => {
     render(<UserActions data={managedUser} />)
   })
 
-  it('renders __tests__ with correct props', () => {
+  it('renders components with correct props', () => {
     render(<UserActions data={managedUser} />)
 
     expect(ActionReset2FA).toHaveBeenCalled()

@@ -40,7 +40,7 @@ describe('WithdrawView', () => {
     renderWithDepositStore(<WithdrawView />, { isPreview: true })
   })
 
-  it('renders correct __tests__ on the SETUP step', () => {
+  it('renders correct components on the SETUP step', () => {
     renderWithDepositStore(<WithdrawView />, { isSetup: true })
 
     expect(AssetInfo).toBeCalled()
@@ -50,7 +50,7 @@ describe('WithdrawView', () => {
     expect(ResetButton).not.toBeCalled()
   })
 
-  it('renders correct __tests__ on the PREVIEW step', () => {
+  it('renders correct components on the PREVIEW step', () => {
     renderWithDepositStore(<WithdrawView />, { isPreview: true })
 
     expect(AssetInfo).toBeCalled()
@@ -60,7 +60,7 @@ describe('WithdrawView', () => {
     expect(ResetButton).not.toBeCalled()
   })
 
-  it('renders correct __tests__ on the SUCCESS step', () => {
+  it('renders correct components on the SUCCESS step', () => {
     renderWithDepositStore(<WithdrawView />, { isSuccess: true })
 
     expect(AssetInfo).not.toBeCalled()

@@ -58,7 +58,7 @@ describe('DepositView', () => {
     jest.clearAllMocks()
   })
 
-  it('renders correct __tests__ on the SETUP step', () => {
+  it('renders correct components on the SETUP step', () => {
     const { queryByText } = renderWithDepositStore(<DepositView />, {
       isSetup: true
     })
@@ -74,7 +74,7 @@ describe('DepositView', () => {
     expect(AlertAndOTP).not.toBeCalled()
   })
 
-  it('renders correct __tests__ on the PREVIEW step', () => {
+  it('renders correct components on the PREVIEW step', () => {
     const { queryByText } = renderWithDepositStore(<DepositView />, {
       isPreview: true
     })
@@ -90,7 +90,7 @@ describe('DepositView', () => {
     expect(AlertAndOTP).toBeCalled()
   })
 
-  it('renders correct __tests__ on the SUCCESS step', () => {
+  it('renders correct components on the SUCCESS step', () => {
     const { queryByText } = renderWithDepositStore(<DepositView />, {
       isSuccess: true
     })

@@ -42,7 +42,7 @@ describe('AccountLoginHitory', () => {
     render(<AccountLoginHistory />)
   })
 
-  it('renders __tests__ correctly', () => {
+  it('renders components correctly', () => {
     render(
       <Route path={AdminRoute.view}>
         <AccountLoginHistory />

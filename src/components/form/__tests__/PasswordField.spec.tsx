@@ -22,7 +22,7 @@ describe('PasswordField', () => {
     )
   })
 
-  it('renders __tests__ correctly', () => {
+  it('renders components correctly', () => {
     const { rerender } = render(
       <Form>
         <PasswordField />

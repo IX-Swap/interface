@@ -61,7 +61,7 @@ describe('WithdrawView', () => {
     jest.clearAllMocks()
   })
 
-  it('renders correct __tests__ on the SETUP step', () => {
+  it('renders correct components on the SETUP step', () => {
     const {
       queryByText,
       queryByLabelText
@@ -78,7 +78,7 @@ describe('WithdrawView', () => {
     expect(queryByLabelText('2-Factor Auth Code')).toBeFalsy()
   })
 
-  it('renders correct __tests__ on the PREVIEW step', () => {
+  it('renders correct components on the PREVIEW step', () => {
     const { queryByText } = renderWithDepositStore(<WithdrawView />, {
       isPreview: true
     })
@@ -94,7 +94,7 @@ describe('WithdrawView', () => {
     expect(queryByText('2-Factor Auth Code')).toBeTruthy()
   })
 
-  it('renders correct __tests__ on the SUCCESS step', () => {
+  it('renders correct components on the SUCCESS step', () => {
     const {
       queryByText,
       queryByLabelText

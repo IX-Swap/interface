@@ -36,7 +36,7 @@ describe('DirectorsAndBeneficialOwnerFields', () => {
     )
   })
 
-  it('renders __tests__ correctly', () => {
+  it('renders components correctly', () => {
     render(
       <Form defaultValues={defaultValues}>
         <DirectorsAndBeneficialOwnerFields name='directors' />

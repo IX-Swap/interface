@@ -36,7 +36,7 @@ describe('ActionEnableToggle', () => {
     render(<ActionEnableToggle enabled={true} />)
   })
 
-  it('renders __tests__ with correct props when enabled is true', () => {
+  it('renders components with correct props when enabled is true', () => {
     const { getByText } = render(<ActionEnableToggle enabled={true} />)
 
     expect(getByText('DISABLE THIS USER')).toBeTruthy()
@@ -58,7 +58,7 @@ describe('ActionEnableToggle', () => {
     )
   })
 
-  it('renders __tests__ with correct props when enabled is false', () => {
+  it('renders components with correct props when enabled is false', () => {
     const { getByText } = render(<ActionEnableToggle enabled={false} />)
 
     expect(getByText('ENABLE THIS USER')).toBeTruthy()

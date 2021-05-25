@@ -31,7 +31,7 @@ describe('BeneficialOwnersFields', () => {
     )
   })
 
-  it('renders labels and __tests__ correctly', () => {
+  it('renders labels and components correctly', () => {
     const { getByLabelText } = render(
       <Form defaultValues={defaultValues}>
         <BeneficialOwnersInformationFields {...props} />

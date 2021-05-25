@@ -34,7 +34,7 @@ describe('DirectorsInformationFields', () => {
     )
   })
 
-  it('renders labels and __tests__ correctly', () => {
+  it('renders labels and components correctly', () => {
     const { getByLabelText } = render(
       <Form defaultValues={defaultValues}>
         <DirectorsInformationFields {...props} />

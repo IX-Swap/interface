@@ -28,7 +28,7 @@ describe('TaxDeclarationForm', () => {
     render(<TaxDeclarationForm />)
   })
 
-  it('renders child __tests__ correctly', () => {
+  it('renders child components correctly', () => {
     render(<TaxDeclarationForm />)
 
     expect(TaxResidencyFields).toHaveBeenCalled()

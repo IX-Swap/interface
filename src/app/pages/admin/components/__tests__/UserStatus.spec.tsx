@@ -18,7 +18,7 @@ describe('UserStatus', () => {
     render(<UserStatus data={managedUser} />)
   })
 
-  it('renders __tests__ with correct props', () => {
+  it('renders components with correct props', () => {
     render(<UserStatus data={managedUser} />)
 
     expect(Status).toHaveBeenNthCalledWith(1, { status: 'Enabled' }, {})
@@ -30,7 +30,7 @@ describe('UserStatus', () => {
     )
   })
 
-  it('does not render __tests__ with false values', () => {
+  it('does not render components with false values', () => {
     const { rerender } = render(
       <UserStatus data={{ ...managedUser, enabled: false }} />
     )

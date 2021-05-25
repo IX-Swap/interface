@@ -33,7 +33,7 @@ describe('TaxResidencyFields', () => {
     )
   })
 
-  it('renders __tests__ correctly', () => {
+  it('renders components correctly', () => {
     render(
       <Form>
         <TaxResidencyFields />

@@ -50,7 +50,7 @@ describe('Onboarding', () => {
     render(<Onboarding />)
   })
 
-  it('renders __tests__ correctly', () => {
+  it('renders components correctly', () => {
     render(<Onboarding />)
 
     expect(OnboardingLinks).toHaveBeenCalled()

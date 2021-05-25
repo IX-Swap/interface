@@ -44,7 +44,7 @@ describe('IndividualAccountSettings', () => {
     render(<IndividualAccountSettings activeRoles={roles} />)
   })
 
-  it('renders __tests__ with correct props', () => {
+  it('renders components with correct props', () => {
     const { getByText } = render(
       <IndividualAccountSettings activeRoles={roles} />
     )

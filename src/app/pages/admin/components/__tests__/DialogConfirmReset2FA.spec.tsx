@@ -53,7 +53,7 @@ describe('DialogConfirmReset2FA', () => {
     expect(useReset2FA.useReset2FA).toHaveBeenCalledWith(mockClose)
   })
 
-  it('renders __tests__ with correct props', () => {
+  it('renders components with correct props', () => {
     const { getByText } = render(<DialogConfirmReset2FA {...props} />)
 
     expect(UserActionsDialog).toHaveBeenCalledWith(

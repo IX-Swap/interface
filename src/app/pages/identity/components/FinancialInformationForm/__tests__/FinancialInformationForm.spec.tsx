@@ -28,7 +28,7 @@ describe('FinancialInformationForm', () => {
     render(<FinancialInformationForm />)
   })
 
-  it('renders __tests__ without errors', () => {
+  it('renders components without errors', () => {
     render(<FinancialInformationForm />)
 
     expect(EmploymentField).toHaveBeenCalled()
