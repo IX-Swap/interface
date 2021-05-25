@@ -6,6 +6,7 @@ export enum AppService {
   IssuanceDetails = 'issuance-details',
   Invest = 'invest',
   Authorizer = 'authorizer',
+  Market = 'market',
   OTCMarket = 'otc-market'
 }
 

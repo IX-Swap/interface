@@ -10,7 +10,7 @@ export const columns = [
     render: formatDateToMMDDYY
   },
   {
-    label: 'Ticker',
+    label: 'Pair',
     key: 'pair'
   },
   {

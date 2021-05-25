@@ -1,10 +1,9 @@
 import { TableColumn } from 'types/util'
 import { DigitalSecurityOffering, DSOTableColumn } from 'types/dso'
 
-export const mockColumns: Array<TableColumn<
-  DigitalSecurityOffering,
-  DSOTableColumn
->> = [
+export const mockColumns: Array<
+  TableColumn<DigitalSecurityOffering, DSOTableColumn>
+> = [
   {
     key: 'favorite',
     label: 'favorite'

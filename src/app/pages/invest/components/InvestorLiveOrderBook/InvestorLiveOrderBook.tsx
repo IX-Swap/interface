@@ -1,10 +1,10 @@
 import { Box, Grid, Typography } from '@material-ui/core'
 import { LiveTrackingPrice } from 'app/pages/invest/components/LiveTrackingPrice/LiveTrackingPrice'
 import { OrderBook } from 'app/pages/invest/components/OrderBook/OrderBook'
-import { useOrderBook } from 'app/pages/invest/hooks/useOrderBook'
 import { ValidCurrency } from 'helpers/types'
 import React from 'react'
-import { useParams } from 'react-router'
+import { useParams } from 'react-router-dom'
+import { useOrderBook } from '../../hooks/useOrderBook'
 
 export interface InvestorLiveOrderBookProps {
   tokenSymbol: string

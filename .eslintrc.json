@@ -8,7 +8,7 @@
     "globals": {
         "APP_VERSION": "readonly"
     },
-    "ignorePatterns": ["node_modules", "coverage", "reports", "public", ".github", ".scannerwork"],
+    "ignorePatterns": ["node_modules", "coverage", "reports", "public", ".github", ".scannerwork", "charting_library"],
     "plugins": ["prettier"],
     "extends": [
         "standard-with-typescript",
