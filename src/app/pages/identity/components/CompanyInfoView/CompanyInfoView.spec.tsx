@@ -8,7 +8,7 @@ import {
   CompanyInfoViewProps
 } from 'app/pages/identity/components/CompanyInfoView/CompanyInfoView'
 
-jest.mock('__tests__/Avatar', () => ({ Avatar: jest.fn(() => null) }))
+jest.mock('components/Avatar', () => ({ Avatar: jest.fn(() => null) }))
 
 describe('CompanyInfoView', () => {
   const props: CompanyInfoViewProps = { data: corporate }

@@ -5,13 +5,13 @@ import { Dropdown } from 'app/components/Dropdown/Dropdown'
 import { UserDropdownTrigger } from 'app/components/UserDropdown/UserDropdownTrigger'
 import { UserDropdownContent } from 'app/components/UserDropdown/UserDropdownContent'
 
-jest.mock('app/__tests__/Dropdown/Dropdown', () => ({
+jest.mock('app/components/Dropdown/Dropdown', () => ({
   Dropdown: jest.fn(() => null)
 }))
-jest.mock('app/__tests__/UserDropdown/UserDropdownTrigger', () => ({
+jest.mock('app/components/UserDropdown/UserDropdownTrigger', () => ({
   UserDropdownTrigger: jest.fn(() => null)
 }))
-jest.mock('app/__tests__/UserDropdown/UserDropdownContent', () => ({
+jest.mock('app/components/UserDropdown/UserDropdownContent', () => ({
   UserDropdownContent: jest.fn(() => null)
 }))
 

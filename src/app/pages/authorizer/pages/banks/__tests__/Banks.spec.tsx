@@ -2,11 +2,11 @@ import React from 'react'
 import { render, cleanup } from 'test-utils'
 import { Banks } from 'app/pages/authorizer/pages/banks/Banks'
 
-jest.mock('app/__tests__/BankPreview/BankPreview', () => ({
+jest.mock('app/components/BankPreview/BankPreview', () => ({
   BankPreview: jest.fn(() => null)
 }))
 
-jest.mock('app/pages/authorizer/__tests__/AuthorizerView', () => ({
+jest.mock('app/pages/authorizer/components/AuthorizerView', () => ({
   AuthorizerView: jest.fn(() => null)
 }))
 

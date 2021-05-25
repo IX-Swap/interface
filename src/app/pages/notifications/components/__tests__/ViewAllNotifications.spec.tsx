@@ -3,7 +3,7 @@ import { render, cleanup } from 'test-utils'
 import { ViewAllNotifications } from 'app/pages/notifications/components/ViewAllNotifications'
 import { AppRouterLinkComponent } from 'components/AppRouterLink'
 
-jest.mock('__tests__/AppRouterLink', () => ({
+jest.mock('components/AppRouterLink', () => ({
   AppRouterLinkComponent: jest.fn(({ children, ...rest }) => (
     <div {...rest}>{children}</div>
   ))

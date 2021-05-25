@@ -8,7 +8,7 @@ import { managedUser } from '__fixtures__/user'
 import { UserActionsDialog } from 'app/pages/admin/components/UserActionsDialog'
 import * as useResetPassword from 'app/pages/admin/hooks/useResetPassword'
 
-jest.mock('app/pages/admin/__tests__/UserActionsDialog', () => ({
+jest.mock('app/pages/admin/components/UserActionsDialog', () => ({
   UserActionsDialog: jest.fn(({ children }) => <>{children}</>)
 }))
 

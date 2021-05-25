@@ -4,11 +4,11 @@ import { UnassignedAccountsTable } from 'app/pages/admin/components/UnassignedAc
 import { TableView } from 'components/TableWithPagination/TableView'
 import { columns } from 'app/pages/admin/components/UnassignedAccountTable/columns'
 
-jest.mock('__tests__/TableWithPagination/TableView', () => ({
+jest.mock('components/TableWithPagination/TableView', () => ({
   TableView: jest.fn(() => null)
 }))
 
-jest.mock('__tests__/SelectionHelper', () => ({
+jest.mock('components/SelectionHelper', () => ({
   useSelectionHelperContext: jest.fn(() => null)
 }))
 

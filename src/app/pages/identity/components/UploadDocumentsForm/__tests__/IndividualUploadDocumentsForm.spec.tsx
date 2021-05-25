@@ -4,7 +4,7 @@ import { UploadDocumentField } from 'app/pages/identity/components/UploadDocumen
 import { IndividualUploadDocumentsForm } from 'app/pages/identity/components/UploadDocumentsForm/IndividualUploadDocumentsForm'
 
 jest.mock(
-  'app/pages/identity/__tests__/UploadDocumentsForm/UploadDocumentField/UploadDocumentField',
+  'app/pages/identity/components/UploadDocumentsForm/UploadDocumentField/UploadDocumentField',
   () => ({
     UploadDocumentField: jest.fn(() => null)
   })

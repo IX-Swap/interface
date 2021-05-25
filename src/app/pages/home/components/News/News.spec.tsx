@@ -6,11 +6,11 @@ import { homeURL } from 'config/apiURL'
 import { homeQueryKeys } from 'config/queryKeys'
 import { SearchFilter } from 'app/components/SearchFilter'
 
-jest.mock('app/pages/home/__tests__/News/NewsList', () => ({
+jest.mock('app/pages/home/components/News/NewsList', () => ({
   NewsList: jest.fn(() => null)
 }))
 
-jest.mock('app/__tests__/SearchFilter', () => ({
+jest.mock('app/components/SearchFilter', () => ({
   SearchFilter: jest.fn(() => null)
 }))
 

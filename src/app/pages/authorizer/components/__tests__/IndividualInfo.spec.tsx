@@ -10,11 +10,11 @@ import { LabelledValue } from 'components/LabelledValue'
 import { renderName } from 'helpers/tables'
 import { convertAddressToString } from '../utils'
 
-jest.mock('__tests__/LabelledValue', () => ({
+jest.mock('components/LabelledValue', () => ({
   LabelledValue: jest.fn(() => null)
 }))
 
-jest.mock('app/__tests__/DSO/__tests__/ViewDocument', () => ({
+jest.mock('app/components/DSO/components/ViewDocument', () => ({
   ViewDocument: jest.fn(({ children }) => children())
 }))
 

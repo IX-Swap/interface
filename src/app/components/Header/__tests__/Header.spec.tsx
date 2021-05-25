@@ -4,10 +4,10 @@ import { Header } from 'app/components/Header/Header'
 import { UserDropdown } from 'app/components/UserDropdown/UserDropdown'
 import { NotificationsDropdown } from 'app/pages/notifications/components/NotificationsDropdown'
 
-jest.mock('app/__tests__/UserDropdown/UserDropdown', () => ({
+jest.mock('app/components/UserDropdown/UserDropdown', () => ({
   UserDropdown: jest.fn(() => null)
 }))
-jest.mock('app/pages/notifications/__tests__/NotificationsDropdown', () => ({
+jest.mock('app/pages/notifications/components/NotificationsDropdown', () => ({
   NotificationsDropdown: jest.fn(() => null)
 }))
 

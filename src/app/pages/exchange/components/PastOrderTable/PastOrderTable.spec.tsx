@@ -9,12 +9,12 @@ import { columns } from 'app/pages/exchange/components/PastOrderTable/columns'
 import { exchangeMarket } from 'config/apiURL'
 import { PastOrderFilter } from 'app/pages/exchange/components/PastOrderFilter/PastOrderFilter'
 
-jest.mock('__tests__/TableWithPagination/TableView', () => ({
+jest.mock('components/TableWithPagination/TableView', () => ({
   TableView: jest.fn(() => null)
 }))
 
 jest.mock(
-  'app/pages/exchange/market/__tests__/PastOrderFilter/PastOrderFilter',
+  'app/pages/exchange/market/components/PastOrderFilter/PastOrderFilter',
   () => ({
     PastOrderFilter: jest.fn(() => null)
   })

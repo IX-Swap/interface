@@ -4,7 +4,7 @@ import { BankFields } from 'app/pages/accounts/pages/banks/components/BankFields
 import { TypedField } from 'components/form/TypedField'
 import { Form } from 'components/form/Form'
 
-jest.mock('__tests__/form/TypedField', () => ({
+jest.mock('components/form/TypedField', () => ({
   TypedField: jest.fn(() => <input />)
 }))
 

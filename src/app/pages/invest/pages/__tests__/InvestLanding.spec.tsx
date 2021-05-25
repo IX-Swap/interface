@@ -5,15 +5,15 @@ import { DSOTable } from 'app/pages/invest/components/DSOTable/DSOTable'
 import { PromotedDSOs } from 'app/components/DSO/components/PromotedDSOs'
 import { PromoBanner } from 'app/pages/invest/components/PromoBanner'
 
-jest.mock('app/__tests__/DSO/__tests__/PromotedDSOs', () => ({
+jest.mock('app/components/DSO/components/PromotedDSOs', () => ({
   PromotedDSOs: jest.fn(() => null)
 }))
 
-jest.mock('app/pages/invest/__tests__/PromoBanner', () => ({
+jest.mock('app/pages/invest/components/PromoBanner', () => ({
   PromoBanner: jest.fn(() => null)
 }))
 
-jest.mock('app/pages/invest/__tests__/DSOTable/DSOTable', () => ({
+jest.mock('app/pages/invest/components/DSOTable/DSOTable', () => ({
   DSOTable: jest.fn(() => null)
 }))
 

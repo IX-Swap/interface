@@ -4,7 +4,7 @@ import { DropdownContentProps } from 'app/components/Dropdown/Dropdown'
 import { NotificationsDropdownContent } from 'app/pages/notifications/components/NotificationsDropdownContent'
 import { ViewAllNotifications } from 'app/pages/notifications/components/ViewAllNotifications'
 
-jest.mock('app/pages/notifications/__tests__/ViewAllNotifications', () => ({
+jest.mock('app/pages/notifications/components/ViewAllNotifications', () => ({
   ViewAllNotifications: jest.fn(() => null)
 }))
 

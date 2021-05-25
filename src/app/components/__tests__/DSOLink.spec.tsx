@@ -5,7 +5,7 @@ import { AppRouterLink } from 'components/AppRouterLink'
 import { dso } from '__fixtures__/authorizer'
 import { InvestRoute } from 'app/pages/invest/router/config'
 
-jest.mock('__tests__/AppRouterLink', () => ({
+jest.mock('components/AppRouterLink', () => ({
   AppRouterLink: jest.fn(({ children }) => children)
 }))
 

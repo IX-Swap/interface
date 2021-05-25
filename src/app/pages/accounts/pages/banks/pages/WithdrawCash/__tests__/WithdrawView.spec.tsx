@@ -10,7 +10,7 @@ import { BankPreview } from 'app/pages/accounts/pages/banks/pages/WithdrawCash/B
 import { SuccessView } from 'app/pages/accounts/pages/banks/components/SuccessView'
 import { ResetButton } from 'app/pages/accounts/pages/banks/components/ResetButton'
 
-jest.mock('app/pages/accounts/pages/banks/__tests__/BackButton', () => ({
+jest.mock('app/pages/accounts/pages/banks/components/BackButton', () => ({
   BackButton: jest.fn(() => null)
 }))
 
@@ -28,21 +28,24 @@ jest.mock(
   })
 )
 
-jest.mock('app/pages/accounts/pages/banks/__tests__/SuccessView', () => ({
+jest.mock('app/pages/accounts/pages/banks/components/SuccessView', () => ({
   SuccessView: jest.fn(() => null)
 }))
 
-jest.mock('app/pages/accounts/pages/banks/__tests__/BackButton', () => ({
+jest.mock('app/pages/accounts/pages/banks/components/BackButton', () => ({
   BackButton: jest.fn(() => null)
 }))
 
-jest.mock('app/pages/accounts/pages/banks/__tests__/ResetButton', () => ({
+jest.mock('app/pages/accounts/pages/banks/components/ResetButton', () => ({
   ResetButton: jest.fn(() => null)
 }))
 
-jest.mock('app/pages/accounts/pages/banks/__tests__/WithdrawCashAlert', () => ({
-  WithdrawCashAlert: jest.fn(() => null)
-}))
+jest.mock(
+  'app/pages/accounts/pages/banks/components/WithdrawCashAlert',
+  () => ({
+    WithdrawCashAlert: jest.fn(() => null)
+  })
+)
 
 jest.mock('app/pages/accounts/pages/banks/pages/WithdrawCash/Preview', () => ({
   Preview: jest.fn(() => null)

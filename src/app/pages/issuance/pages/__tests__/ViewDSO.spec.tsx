@@ -6,7 +6,7 @@ import { dso } from '__fixtures__/authorizer'
 import { IssuanceRoute } from 'app/pages/issuance/router/config'
 import { generatePath } from 'react-router-dom'
 
-jest.mock('app/pages/issuance/__tests__/DSO', () => ({
+jest.mock('app/pages/issuance/components/DSO', () => ({
   DSO: jest.fn(() => null)
 }))
 

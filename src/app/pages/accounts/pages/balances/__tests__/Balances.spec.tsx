@@ -7,7 +7,7 @@ import { columns } from 'app/pages/accounts/pages/balances/columns'
 import * as useAuthHook from 'hooks/auth/useAuth'
 import { balanceQueryKeys } from 'config/queryKeys'
 
-jest.mock('__tests__/TableWithPagination/TableView', () => ({
+jest.mock('components/TableWithPagination/TableView', () => ({
   TableView: jest.fn(() => null)
 }))
 

@@ -12,19 +12,19 @@ import { history } from 'config/history'
 import { generatePath } from 'react-router'
 import { AdminRoute } from 'app/pages/admin/router/config'
 
-jest.mock('app/pages/admin/__tests__/UserDetails', () => ({
+jest.mock('app/pages/admin/components/UserDetails', () => ({
   UserDetails: jest.fn(() => null)
 }))
 
-jest.mock('app/pages/admin/__tests__/UserStatus', () => ({
+jest.mock('app/pages/admin/components/UserStatus', () => ({
   UserStatus: jest.fn(() => null)
 }))
 
-jest.mock('app/pages/admin/__tests__/IndividualAccountSettings', () => ({
+jest.mock('app/pages/admin/components/IndividualAccountSettings', () => ({
   IndividualAccountSettings: jest.fn(() => null)
 }))
 
-jest.mock('app/pages/admin/__tests__/UserIdentitiesStatus', () => ({
+jest.mock('app/pages/admin/components/UserIdentitiesStatus', () => ({
   UserIdentitiesStatus: jest.fn(() => null)
 }))
 

@@ -4,7 +4,7 @@ import { LabelledValue } from 'components/LabelledValue'
 import { DSOPricingView } from 'app/components/DSO/DSOPreview/DSOPricingView'
 import { dso } from '__fixtures__/authorizer'
 
-jest.mock('__tests__/LabelledValue', () => ({
+jest.mock('components/LabelledValue', () => ({
   LabelledValue: jest.fn(() => null)
 }))
 

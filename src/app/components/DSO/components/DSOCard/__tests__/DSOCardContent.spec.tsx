@@ -6,12 +6,12 @@ import {
 } from 'app/components/DSO/components/DSOCard/DSOCardContent'
 import { dso } from '__fixtures__/authorizer'
 import { DSOInvestLink } from 'app/components/DSO/components/DSOInvestLink'
-// import { DSOProgressBar } from 'app/__tests__/DSO/__tests__/DSOProgressBar'
+// import { DSOProgressBar } from 'app/components/DSO/components/DSOProgressBar'
 
-jest.mock('app/__tests__/DSO/__tests__/DSOInvestLink', () => ({
+jest.mock('app/components/DSO/components/DSOInvestLink', () => ({
   DSOInvestLink: jest.fn(() => null)
 }))
-jest.mock('app/__tests__/DSO/__tests__/DSOProgressBar', () => ({
+jest.mock('app/components/DSO/components/DSOProgressBar', () => ({
   DSOProgressBar: jest.fn(() => null)
 }))
 

@@ -7,11 +7,11 @@ import { LabelledValue } from 'components/LabelledValue'
 
 window.URL.revokeObjectURL = jest.fn()
 
-jest.mock('app/__tests__/DSO/__tests__/DSOLogo', () => ({
+jest.mock('app/components/DSO/components/DSOLogo', () => ({
   DSOLogo: jest.fn(() => null)
 }))
 
-jest.mock('__tests__/LabelledValue', () => ({
+jest.mock('components/LabelledValue', () => ({
   LabelledValue: jest.fn(() => null)
 }))
 

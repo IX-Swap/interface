@@ -7,7 +7,7 @@ import {
 import { LabelledValue } from 'components/LabelledValue'
 import { privateClassNames } from 'helpers/classnames'
 
-jest.mock('__tests__/LabelledValue', () => ({
+jest.mock('components/LabelledValue', () => ({
   LabelledValue: jest.fn(() => null)
 }))
 

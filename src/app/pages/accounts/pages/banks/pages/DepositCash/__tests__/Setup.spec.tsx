@@ -5,7 +5,7 @@ import { asset } from '__fixtures__/authorizer'
 import { Form } from 'components/form/Form'
 import { AssetSelect } from 'components/form/AssetSelect/AssetSelect'
 
-jest.mock('__tests__/form/AssetSelect/AssetSelect', () => ({
+jest.mock('components/form/AssetSelect/AssetSelect', () => ({
   AssetSelect: jest.fn(() => null)
 }))
 

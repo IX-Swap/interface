@@ -5,7 +5,7 @@ import { copyToClipboard } from 'helpers/clipboard'
 import { AppRouterLink } from 'components/AppRouterLink'
 
 jest.mock('helpers/clipboard', () => ({ copyToClipboard: jest.fn() }))
-jest.mock('__tests__/AppRouterLink', () => ({
+jest.mock('components/AppRouterLink', () => ({
   AppRouterLink: jest.fn(() => null)
 }))
 

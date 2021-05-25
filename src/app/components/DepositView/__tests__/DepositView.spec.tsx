@@ -10,10 +10,10 @@ import { formatMoney } from 'helpers/numbers'
 import { BankDetails } from 'app/components/BankDetails'
 import { INVESTAX_BANK } from 'config'
 
-jest.mock('__tests__/LabelledValue', () => ({
+jest.mock('components/LabelledValue', () => ({
   LabelledValue: jest.fn(() => null)
 }))
-jest.mock('app/__tests__/BankDetails', () => ({
+jest.mock('app/components/BankDetails', () => ({
   BankDetails: jest.fn(() => null)
 }))
 

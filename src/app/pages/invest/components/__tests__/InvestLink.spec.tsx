@@ -11,7 +11,7 @@ import { generatePath, Route } from 'react-router-dom'
 import { history } from 'config/history'
 import { InvestRoute } from 'app/pages/invest/router/config'
 
-jest.mock('__tests__/AppRouterLink', () => ({
+jest.mock('components/AppRouterLink', () => ({
   AppRouterLinkComponent: jest.fn(({ children }) => children)
 }))
 

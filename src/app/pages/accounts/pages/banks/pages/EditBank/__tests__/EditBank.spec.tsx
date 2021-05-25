@@ -11,7 +11,7 @@ import { BanksRoute } from 'app/pages/accounts/pages/banks/router/config'
 import { history } from 'config/history'
 
 jest.mock('app/pages/accounts/pages/banks/hooks/useBanksData')
-jest.mock('app/pages/accounts/pages/banks/__tests__/BankForm', () => ({
+jest.mock('app/pages/accounts/pages/banks/components/BankForm', () => ({
   BankForm: jest.fn(() => null)
 }))
 

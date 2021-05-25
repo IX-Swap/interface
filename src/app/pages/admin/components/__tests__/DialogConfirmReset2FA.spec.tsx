@@ -8,11 +8,11 @@ import { UserActionsDialog } from 'app/pages/admin/components/UserActionsDialog'
 import * as useReset2FA from 'app/pages/admin/hooks/useReset2FA'
 import { Reset2FAOTPField } from 'app/pages/admin/components/Reset2FAOTPField'
 
-jest.mock('app/pages/admin/__tests__/UserActionsDialog', () => ({
+jest.mock('app/pages/admin/components/UserActionsDialog', () => ({
   UserActionsDialog: jest.fn(({ children }) => <>{children}</>)
 }))
 
-jest.mock('app/pages/admin/__tests__/Reset2FAOTPField', () => ({
+jest.mock('app/pages/admin/components/Reset2FAOTPField', () => ({
   Reset2FAOTPField: jest.fn(() => null)
 }))
 

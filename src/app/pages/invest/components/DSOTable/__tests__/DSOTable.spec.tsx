@@ -7,7 +7,7 @@ import { columns } from '../columns'
 import { Actions } from '../Actions'
 import { issuanceURL } from 'config/apiURL'
 
-jest.mock('__tests__/TableWithPagination/TableView', () => ({
+jest.mock('components/TableWithPagination/TableView', () => ({
   TableView: jest.fn(() => 'TableView')
 }))
 

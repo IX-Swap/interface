@@ -11,15 +11,15 @@ import {
 import { dso } from '__fixtures__/authorizer'
 import { dsoInsight } from '__fixtures__/issuance'
 
-jest.mock('app/pages/invest/__tests__/DSOTable/DSONameAndStructure', () => ({
+jest.mock('app/pages/invest/components/DSOTable/DSONameAndStructure', () => ({
   DSONameAndStructure: jest.fn(() => null)
 }))
 
-jest.mock('app/pages/invest/__tests__/DSOTable/PriceWithCurrency', () => ({
+jest.mock('app/pages/invest/components/DSOTable/PriceWithCurrency', () => ({
   PriceWithCurrency: jest.fn(() => null)
 }))
 
-jest.mock('app/pages/invest/__tests__/DSOTable/DSORaised', () => ({
+jest.mock('app/pages/invest/components/DSOTable/DSORaised', () => ({
   DSORaised: jest.fn(() => null)
 }))
 

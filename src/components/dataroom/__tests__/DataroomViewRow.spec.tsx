@@ -8,11 +8,11 @@ import {
 import { document } from '__fixtures__/identity'
 import { DataroomColumns } from 'components/dataroom/DataroomColumns'
 
-jest.mock('__tests__/dataroom/DataroomColumns', () => ({
+jest.mock('components/dataroom/DataroomColumns', () => ({
   DataroomColumns: jest.fn(() => null)
 }))
 
-jest.mock('__tests__/dataroom/DownloadDocument', () => ({
+jest.mock('components/dataroom/DownloadDocument', () => ({
   DownloadDocument: jest.fn(() => null)
 }))
 

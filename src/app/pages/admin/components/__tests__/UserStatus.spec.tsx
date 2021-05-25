@@ -4,7 +4,7 @@ import { UserStatus } from 'app/pages/admin/components/UserStatus'
 import { managedUser } from '__fixtures__/user'
 import { Status } from 'app/pages/admin/components/Status'
 
-jest.mock('app/pages/admin/__tests__/Status', () => ({
+jest.mock('app/pages/admin/components/Status', () => ({
   Status: jest.fn(() => null)
 }))
 

@@ -7,7 +7,7 @@ import { dso } from '__fixtures__/authorizer'
 import { LOADING_TEXT } from 'components/form/renderUtils'
 import { abbreviateNumber } from 'helpers/numbers'
 
-jest.mock('app/pages/issuance/__tests__/IssuanceLanding/InsightValue', () => ({
+jest.mock('app/pages/issuance/components/IssuanceLanding/InsightValue', () => ({
   InsightValue: jest.fn(() => null)
 }))
 

@@ -11,7 +11,7 @@ jest.mock('../AuthorizerTable', () => ({
   AuthorizerTable: jest.fn(() => null)
 }))
 
-jest.mock('app/pages/authorizer/__tests__/Filters', () => ({
+jest.mock('app/pages/authorizer/components/Filters', () => ({
   Filters: jest.fn(() => null)
 }))
 

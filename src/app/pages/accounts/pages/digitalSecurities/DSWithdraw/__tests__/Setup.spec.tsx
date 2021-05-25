@@ -12,7 +12,7 @@ import { TypedField } from 'components/form/TypedField'
 import { moneyNumberFormat } from 'config/numberFormat'
 import { generatePath, Route } from 'react-router-dom'
 
-jest.mock('__tests__/form/TypedField', () => ({
+jest.mock('components/form/TypedField', () => ({
   TypedField: jest.fn(() => null)
 }))
 

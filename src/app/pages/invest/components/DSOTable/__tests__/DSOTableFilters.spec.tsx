@@ -8,7 +8,7 @@ import {
 } from 'app/pages/invest/hooks/useDSOTableColumns'
 import { mockColumns, mockDefaultColumns } from '__fixtures__/columnFilters'
 
-jest.mock('__tests__/form/CapitalStructureSelect', () => ({
+jest.mock('components/form/CapitalStructureSelect', () => ({
   CapitalStructureSelect: jest.fn(() => null)
 }))
 

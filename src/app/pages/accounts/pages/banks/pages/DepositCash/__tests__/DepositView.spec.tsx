@@ -13,27 +13,27 @@ jest.mock('app/pages/accounts/pages/banks/pages/DepositCash/Setup', () => ({
   Setup: jest.fn(() => null)
 }))
 
-jest.mock('app/pages/accounts/pages/banks/__tests__/DepositCashAlert', () => ({
+jest.mock('app/pages/accounts/pages/banks/components/DepositCashAlert', () => ({
   DepositCashAlert: jest.fn(() => null)
 }))
 
-jest.mock('app/__tests__/BankDetails', () => ({
+jest.mock('app/components/BankDetails', () => ({
   BankDetails: jest.fn(() => null)
 }))
 
-jest.mock('app/pages/accounts/pages/banks/__tests__/SuccessView', () => ({
+jest.mock('app/pages/accounts/pages/banks/components/SuccessView', () => ({
   SuccessView: jest.fn(() => null)
 }))
 
-jest.mock('app/pages/accounts/pages/banks/__tests__/AlertAndOTP', () => ({
+jest.mock('app/pages/accounts/pages/banks/components/AlertAndOTP', () => ({
   AlertAndOTP: jest.fn(() => null)
 }))
 
-jest.mock('app/pages/accounts/pages/banks/__tests__/BackButton', () => ({
+jest.mock('app/pages/accounts/pages/banks/components/BackButton', () => ({
   BackButton: jest.fn(() => null)
 }))
 
-jest.mock('app/pages/accounts/pages/banks/__tests__/ResetButton', () => ({
+jest.mock('app/pages/accounts/pages/banks/components/ResetButton', () => ({
   ResetButton: jest.fn(() => null)
 }))
 
@@ -41,7 +41,7 @@ jest.mock('app/pages/accounts/pages/banks/pages/DepositCash/Preview', () => ({
   Preview: jest.fn(() => null)
 }))
 
-jest.mock('app/pages/accounts/pages/banks/__tests__/BackButton', () => ({
+jest.mock('app/pages/accounts/pages/banks/components/BackButton', () => ({
   BackButton: jest.fn(() => null)
 }))
 

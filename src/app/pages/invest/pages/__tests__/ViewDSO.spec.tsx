@@ -7,11 +7,11 @@ import * as useDSOByIdHook from 'app/pages/invest/hooks/useDSOById'
 import { generatePath } from 'react-router-dom'
 import { InvestRoute } from 'app/pages/invest/router/config'
 
-jest.mock('app/__tests__/DSO/DSOView', () => ({
+jest.mock('app/components/DSO/DSOView', () => ({
   DSOView: jest.fn(() => null)
 }))
 
-jest.mock('app/pages/invest/__tests__/InvestLink', () => ({
+jest.mock('app/pages/invest/components/InvestLink', () => ({
   InvestLink: jest.fn(() => null)
 }))
 

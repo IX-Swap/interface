@@ -6,11 +6,11 @@ import { LoadingFullScreen } from 'auth/components/LoadingFullScreen'
 import * as useOnboardingJourneys from 'app/components/OnboardingPanel/hooks/useOnboardingJourneys'
 import { history } from 'config/history'
 
-jest.mock('app/__tests__/OnboardingPanel/OnboardingPanel', () => ({
+jest.mock('app/components/OnboardingPanel/OnboardingPanel', () => ({
   OnboardingPanel: jest.fn(() => null)
 }))
 
-jest.mock('auth/__tests__/LoadingFullScreen', () => ({
+jest.mock('auth/components/LoadingFullScreen', () => ({
   LoadingFullScreen: jest.fn(() => null)
 }))
 

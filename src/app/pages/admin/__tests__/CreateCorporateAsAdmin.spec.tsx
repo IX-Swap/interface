@@ -3,7 +3,7 @@ import React from 'react'
 import { render, cleanup } from 'test-utils'
 
 jest.mock(
-  'app/pages/admin/__tests__/AdminCorporateInvestorForm/AdminCorporateInvestorForm',
+  'app/pages/admin/components/AdminCorporateInvestorForm/AdminCorporateInvestorForm',
   () => ({
     AdminCorporateInvestorForm: jest.fn(() => null)
   })

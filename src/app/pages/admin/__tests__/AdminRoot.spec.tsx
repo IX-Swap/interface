@@ -2,7 +2,7 @@ import React from 'react'
 import { render, cleanup } from 'test-utils'
 import { AdminRoot } from 'app/pages/admin/AdminRoot'
 
-jest.mock('app/__tests__/PageHeader/PageHeader', () => ({
+jest.mock('app/components/PageHeader/PageHeader', () => ({
   PageHeader: jest.fn(() => null)
 }))
 

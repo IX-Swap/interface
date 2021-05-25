@@ -8,10 +8,10 @@ import { DSOLogo } from 'app/components/DSO/components/DSOLogo'
 import { AppRouterLinkComponent } from 'components/AppRouterLink'
 import { dso } from '__fixtures__/authorizer'
 
-jest.mock('app/__tests__/DSO/__tests__/DSOLogo', () => ({
+jest.mock('app/components/DSO/components/DSOLogo', () => ({
   DSOLogo: jest.fn(() => null)
 }))
-jest.mock('__tests__/AppRouterLink', () => ({
+jest.mock('components/AppRouterLink', () => ({
   AppRouterLinkComponent: jest.fn(() => null)
 }))
 

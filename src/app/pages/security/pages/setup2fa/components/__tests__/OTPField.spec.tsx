@@ -4,7 +4,7 @@ import { TypedField } from 'components/form/TypedField'
 import { Form } from 'components/form/Form'
 import { OTPField } from 'app/pages/security/pages/setup2fa/components/OTPField'
 
-jest.mock('__tests__/form/TypedField', () => ({
+jest.mock('components/form/TypedField', () => ({
   TypedField: jest.fn(() => null)
 }))
 

@@ -7,7 +7,7 @@ import {
 } from 'app/pages/invest/components/DSOTable/DSORaised'
 import { DSOProgressBar } from 'app/components/DSO/components/DSOProgressBar'
 
-jest.mock('app/__tests__/DSO/__tests__/DSOProgressBar', () => ({
+jest.mock('app/components/DSO/components/DSOProgressBar', () => ({
   DSOProgressBar: jest.fn(() => null)
 }))
 

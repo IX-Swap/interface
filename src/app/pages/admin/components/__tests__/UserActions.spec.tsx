@@ -6,15 +6,15 @@ import { ActionReset2FA } from 'app/pages/admin/components/ActionReset2FA'
 import { ActionEnableToggle } from 'app/pages/admin/components/ActionEnableToggle'
 import { ActionResetPassword } from 'app/pages/admin/components/ActionResetPassword'
 
-jest.mock('app/pages/admin/__tests__/ActionReset2FA', () => ({
+jest.mock('app/pages/admin/components/ActionReset2FA', () => ({
   ActionReset2FA: jest.fn(() => null)
 }))
 
-jest.mock('app/pages/admin/__tests__/ActionEnableToggle', () => ({
+jest.mock('app/pages/admin/components/ActionEnableToggle', () => ({
   ActionEnableToggle: jest.fn(() => null)
 }))
 
-jest.mock('app/pages/admin/__tests__/ActionResetPassword', () => ({
+jest.mock('app/pages/admin/components/ActionResetPassword', () => ({
   ActionResetPassword: jest.fn(() => null)
 }))
 

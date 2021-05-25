@@ -6,7 +6,7 @@ import { emptyFile } from '__fixtures__/file'
 import { DownloadAccessDocument } from 'app/pages/home/components/DownloadAccessDocument'
 import { fireEvent } from '@testing-library/react'
 
-jest.mock('app/pages/home/__tests__/DownloadAccessDocument', () => ({
+jest.mock('app/pages/home/components/DownloadAccessDocument', () => ({
   DownloadAccessDocument: jest.fn(() => null)
 }))
 

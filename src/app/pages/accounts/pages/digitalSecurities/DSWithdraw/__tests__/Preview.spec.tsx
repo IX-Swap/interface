@@ -6,11 +6,11 @@ import { Form } from 'components/form/Form'
 import { TypedField } from 'components/form/TypedField'
 import { Submit } from 'components/form/Submit'
 
-jest.mock('__tests__/form/TypedField', () => ({
+jest.mock('components/form/TypedField', () => ({
   TypedField: jest.fn(() => null)
 }))
 
-jest.mock('__tests__/form/Submit', () => ({ Submit: jest.fn(() => null) }))
+jest.mock('components/form/Submit', () => ({ Submit: jest.fn(() => null) }))
 
 jest.mock(
   'app/pages/accounts/pages/digitalSecurities/DSWithdraw/Summary',

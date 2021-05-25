@@ -3,7 +3,7 @@ import { render, cleanup } from 'test-utils'
 import { DSOForm } from 'app/components/DSO/DSOForm'
 import { CreateDSO } from 'app/pages/issuance/pages/CreateDSO'
 
-jest.mock('app/__tests__/DSO/DSOForm', () => ({
+jest.mock('app/components/DSO/DSOForm', () => ({
   DSOForm: jest.fn(() => null)
 }))
 

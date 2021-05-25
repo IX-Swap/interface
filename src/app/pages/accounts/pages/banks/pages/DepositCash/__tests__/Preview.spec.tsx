@@ -9,7 +9,7 @@ import * as useAssetsDataHook from 'hooks/asset/useAssetsData'
 import { generateInfiniteQueryResult } from '__fixtures__/useQuery'
 import { Form } from 'components/form/Form'
 
-jest.mock('app/__tests__/GenericPreview/GenericPreview', () => ({
+jest.mock('app/components/GenericPreview/GenericPreview', () => ({
   GenericPreview: jest.fn(() => null)
 }))
 

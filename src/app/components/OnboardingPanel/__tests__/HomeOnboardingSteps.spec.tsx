@@ -3,7 +3,7 @@ import * as useOnboardingSteps from 'app/components/OnboardingPanel/hooks/useOnb
 import React from 'react'
 import { render, cleanup } from 'test-utils'
 
-jest.mock('app/__tests__/OnboardingPanel/OnboardingSteps', () => ({
+jest.mock('app/components/OnboardingPanel/OnboardingSteps', () => ({
   OnboardingSteps: jest.fn(() => null)
 }))
 

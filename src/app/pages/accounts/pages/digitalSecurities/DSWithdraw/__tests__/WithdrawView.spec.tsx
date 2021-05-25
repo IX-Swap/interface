@@ -22,11 +22,11 @@ jest.mock(
   () => ({ Setup: jest.fn(() => null) })
 )
 
-jest.mock('app/pages/accounts/pages/banks/__tests__/SuccessView', () => ({
+jest.mock('app/pages/accounts/pages/banks/components/SuccessView', () => ({
   SuccessView: jest.fn(() => null)
 }))
 
-jest.mock('app/pages/accounts/pages/banks/__tests__/ResetButton', () => ({
+jest.mock('app/pages/accounts/pages/banks/components/ResetButton', () => ({
   ResetButton: jest.fn(() => null)
 }))
 

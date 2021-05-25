@@ -8,7 +8,7 @@ import { dso } from '__fixtures__/authorizer'
 import { LabelledValue } from 'components/LabelledValue'
 import { formatMoney } from 'helpers/numbers'
 
-jest.mock('__tests__/LabelledValue', () => ({
+jest.mock('components/LabelledValue', () => ({
   LabelledValue: jest.fn(() => null)
 }))
 

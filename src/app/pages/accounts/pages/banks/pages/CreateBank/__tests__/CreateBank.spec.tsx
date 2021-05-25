@@ -10,7 +10,7 @@ const useCreateBankMock = (useCreateBank as unknown) as jest.Mock<
   Partial<ReturnType<typeof useCreateBank>>
 >
 
-jest.mock('app/pages/accounts/pages/banks/__tests__/BankForm', () => ({
+jest.mock('app/pages/accounts/pages/banks/components/BankForm', () => ({
   BankForm: jest.fn(() => <div data-testid='bank-form' />)
 }))
 

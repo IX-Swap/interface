@@ -13,23 +13,23 @@ import { DSOTermsView } from 'app/components/DSO/DSOPreview/DSOTermsView'
 
 window.URL.revokeObjectURL = jest.fn()
 
-jest.mock('app/__tests__/DSO/DSOPreview/DSOBaseFieldsView', () => ({
+jest.mock('app/components/DSO/DSOPreview/DSOBaseFieldsView', () => ({
   DSOBaseFieldsView: jest.fn(() => null)
 }))
 
-jest.mock('app/__tests__/DSO/DSOPreview/DSOPricingView', () => ({
+jest.mock('app/components/DSO/DSOPreview/DSOPricingView', () => ({
   DSOPricingView: jest.fn(() => null)
 }))
 
-jest.mock('app/__tests__/DSO/DSOPreview/DSOInformationView', () => ({
+jest.mock('app/components/DSO/DSOPreview/DSOInformationView', () => ({
   DSOInformationView: jest.fn(() => null)
 }))
 
-jest.mock('app/__tests__/DSO/DSOPreview/DSOTermsView', () => ({
+jest.mock('app/components/DSO/DSOPreview/DSOTermsView', () => ({
   DSOTermsView: jest.fn(() => null)
 }))
 
-jest.mock('app/__tests__/DSO/DSOPreview/DSOTeamView', () => ({
+jest.mock('app/components/DSO/DSOPreview/DSOTeamView', () => ({
   DSOTeamView: jest.fn(() => null)
 }))
 

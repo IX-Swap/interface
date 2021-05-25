@@ -11,11 +11,11 @@ import { DropzoneFallback } from 'components/dataroom/DropzoneFallback'
 
 window.URL.revokeObjectURL = jest.fn()
 
-jest.mock('__tests__/dataroom/DropzoneFallback', () => ({
+jest.mock('components/dataroom/DropzoneFallback', () => ({
   DropzoneFallback: jest.fn(() => null)
 }))
 
-jest.mock('__tests__/Avatar', () => ({
+jest.mock('components/Avatar', () => ({
   Avatar: jest.fn(() => null)
 }))
 

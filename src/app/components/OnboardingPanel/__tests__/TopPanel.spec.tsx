@@ -5,11 +5,11 @@ import { Onboarding2FA } from 'app/components/OnboardingPanel/Onboarding2FA'
 import { OnboardingHome } from 'app/components/OnboardingPanel/OnboardingHome'
 import { MemoryRouter } from 'react-router-dom'
 
-jest.mock('app/__tests__/OnboardingPanel/OnboardingHome', () => ({
+jest.mock('app/components/OnboardingPanel/OnboardingHome', () => ({
   OnboardingHome: jest.fn(() => null)
 }))
 
-jest.mock('app/__tests__/OnboardingPanel/Onboarding2FA', () => ({
+jest.mock('app/components/OnboardingPanel/Onboarding2FA', () => ({
   Onboarding2FA: jest.fn(() => null)
 }))
 

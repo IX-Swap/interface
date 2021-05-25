@@ -12,7 +12,7 @@ import { plainValueExtractor } from 'helpers/forms'
 import { UploadSignedSubscriptionDocument } from 'components/dataroom/UploadSignedSubscriptionDocument'
 import { DataroomUploader } from 'components/dataroom/DataroomUploader'
 
-jest.mock('__tests__/form/TypedField', () => ({
+jest.mock('components/form/TypedField', () => ({
   TypedField: jest.fn(() => <input />)
 }))
 

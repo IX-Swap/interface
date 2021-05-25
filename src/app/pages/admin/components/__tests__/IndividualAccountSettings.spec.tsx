@@ -8,19 +8,19 @@ import { AccountLoginHistory } from 'app/pages/admin/components/AccountLoginHist
 import { RoleManagement } from 'app/pages/admin/components/RoleManagement'
 import { RevokeAccess } from 'app/pages/admin/components/RevokeAccess'
 
-jest.mock('app/pages/admin/__tests__/AccountLoginHistory', () => ({
+jest.mock('app/pages/admin/components/AccountLoginHistory', () => ({
   AccountLoginHistory: jest.fn(() => <></>)
 }))
 
-jest.mock('app/pages/admin/__tests__/RevokeAccess', () => ({
+jest.mock('app/pages/admin/components/RevokeAccess', () => ({
   RevokeAccess: jest.fn(() => null)
 }))
 
-jest.mock('app/pages/admin/__tests__/RoleManagement', () => ({
+jest.mock('app/pages/admin/components/RoleManagement', () => ({
   RoleManagement: jest.fn(() => null)
 }))
 
-jest.mock('app/pages/admin/__tests__/TabPanel', () => ({
+jest.mock('app/pages/admin/components/TabPanel', () => ({
   TabPanel: jest.fn(({ children }) => <div>{children}</div>)
 }))
 

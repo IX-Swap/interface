@@ -8,7 +8,7 @@ import { corporate } from '__fixtures__/authorizer'
 import { LabelledValue } from 'components/LabelledValue'
 import { convertAddressToString } from '../utils'
 
-jest.mock('__tests__/LabelledValue', () => ({
+jest.mock('components/LabelledValue', () => ({
   LabelledValue: jest.fn(() => null)
 }))
 

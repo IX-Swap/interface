@@ -7,15 +7,15 @@ import { DSOTerms } from 'app/components/DSO/components/DSOTerms'
 import { DSOBaseFields } from 'app/components/DSO/components/DSOBaseFields'
 import { monthsNumberFormat, percentageNumberFormat } from 'config/numberFormat'
 
-jest.mock('__tests__/form/TypedField', () => ({
+jest.mock('components/form/TypedField', () => ({
   TypedField: jest.fn(() => <input />)
 }))
 
-jest.mock('__tests__/form/CorporateSelect', () => ({
+jest.mock('components/form/CorporateSelect', () => ({
   CorporateSelect: jest.fn(() => null)
 }))
 
-jest.mock('__tests__/form/AssetSelect/AssetSelect', () => ({
+jest.mock('components/form/AssetSelect/AssetSelect', () => ({
   AssetSelect: jest.fn(() => null)
 }))
 
@@ -118,7 +118,7 @@ describe('DSOTerms', () => {
 
   it('disables leverage, interest rate fields when capital structure is "Equity"', () => {
     ;(TypedField as any).mockImplementation(
-      jest.requireActual('__tests__/form/TypedField').TypedField
+      jest.requireActual('components/form/TypedField').TypedField
     )
 
     const { getByTestId, getByLabelText } = render(
@@ -142,7 +142,7 @@ describe('DSOTerms', () => {
 
   it('disables dividend yield, gross irr, equity multiple fields when capital structure is "Debt"', () => {
     ;(TypedField as any).mockImplementation(
-      jest.requireActual('__tests__/form/TypedField').TypedField
+      jest.requireActual('components/form/TypedField').TypedField
     )
 
     const { getByTestId, getByLabelText } = render(

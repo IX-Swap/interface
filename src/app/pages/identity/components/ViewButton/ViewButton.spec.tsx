@@ -4,7 +4,7 @@ import { render, cleanup } from 'test-utils'
 import { AppRouterLinkComponent } from 'components/AppRouterLink'
 import { ViewButton } from 'app/pages/identity/components/ViewButton/ViewButton'
 
-jest.mock('__tests__/AppRouterLink', () => ({
+jest.mock('components/AppRouterLink', () => ({
   AppRouterLinkComponent: jest.fn(() => null)
 }))
 

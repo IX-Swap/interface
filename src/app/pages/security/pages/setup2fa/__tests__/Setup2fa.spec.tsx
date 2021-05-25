@@ -10,19 +10,19 @@ import { waitFor, fireEvent } from '@testing-library/react'
 import { Setup2faStore } from '../context/store'
 import { Enabled } from 'app/pages/security/pages/setup2fa/components/Enabled'
 
-jest.mock('../__tests__/Step1Download', () => ({
+jest.mock('../components/Step1Download', () => ({
   Step1Download: jest.fn(() => null)
 }))
-jest.mock('../__tests__/Step2Scan', () => ({
+jest.mock('../components/Step2Scan', () => ({
   Step2Scan: jest.fn(() => null)
 }))
-jest.mock('../__tests__/Step3Backup', () => ({
+jest.mock('../components/Step3Backup', () => ({
   Step3Backup: jest.fn(() => null)
 }))
-jest.mock('../__tests__/Step4Enable', () => ({
+jest.mock('../components/Step4Enable', () => ({
   Step4Enable: jest.fn(() => null)
 }))
-jest.mock('app/pages/security/pages/setup2fa/__tests__/Enabled', () => ({
+jest.mock('app/pages/security/pages/setup2fa/components/Enabled', () => ({
   Enabled: jest.fn(() => null)
 }))
 

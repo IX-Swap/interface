@@ -12,20 +12,20 @@ import { CommitmentFormCancelButton } from 'app/pages/invest/components/Commitme
 import { generatePath } from 'react-router-dom'
 import { InvestRoute } from 'app/pages/invest/router/config'
 
-jest.mock('app/pages/invest/__tests__/CommitmentHeader', () => ({
+jest.mock('app/pages/invest/components/CommitmentHeader', () => ({
   CommitmentHeader: jest.fn(() => null)
 }))
-jest.mock('app/pages/invest/__tests__/CommitmentFormFields', () => ({
+jest.mock('app/pages/invest/components/CommitmentFormFields', () => ({
   CommitmentFormFields: jest.fn(() => null)
 }))
 jest.mock(
-  'app/__tests__/DSO/__tests__/DownloadDSOSubscriptionDocument',
+  'app/components/DSO/components/DownloadDSOSubscriptionDocument',
   () => ({ DownloadDSOSubscriptionDocument: jest.fn(() => null) })
 )
-jest.mock('app/pages/invest/__tests__/CommitmentFormSubmitButton', () => ({
+jest.mock('app/pages/invest/components/CommitmentFormSubmitButton', () => ({
   CommitmentFormSubmitButton: jest.fn(() => null)
 }))
-jest.mock('app/pages/invest/__tests__/CommitmentFormCancelButton', () => ({
+jest.mock('app/pages/invest/components/CommitmentFormCancelButton', () => ({
   CommitmentFormCancelButton: jest.fn(() => null)
 }))
 

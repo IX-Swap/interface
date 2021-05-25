@@ -10,13 +10,13 @@ import { Form } from 'components/form/Form'
 import { EstimatedValue } from 'app/pages/invest/components/EstimatedValue'
 import { AssetBalance } from 'app/pages/invest/components/AssetBalance'
 
-jest.mock('app/__tests__/DSO/__tests__/DSOTitle', () => ({
+jest.mock('app/components/DSO/components/DSOTitle', () => ({
   DSOTitle: jest.fn(() => null)
 }))
-jest.mock('app/pages/invest/__tests__/EstimatedValue', () => ({
+jest.mock('app/pages/invest/components/EstimatedValue', () => ({
   EstimatedValue: jest.fn(() => null)
 }))
-jest.mock('app/pages/invest/__tests__/AssetBalance', () => ({
+jest.mock('app/pages/invest/components/AssetBalance', () => ({
   AssetBalance: jest.fn(() => null)
 }))
 

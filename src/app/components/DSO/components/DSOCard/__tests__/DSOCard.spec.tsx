@@ -8,10 +8,10 @@ import { dso } from '__fixtures__/authorizer'
 import { DSOCardCover } from 'app/components/DSO/components/DSOCard/DSOCardCover'
 import { DSOCardContent } from 'app/components/DSO/components/DSOCard/DSOCardContent'
 
-jest.mock('app/__tests__/DSO/__tests__/DSOCard/DSOCardCover', () => ({
+jest.mock('app/components/DSO/components/DSOCard/DSOCardCover', () => ({
   DSOCardCover: jest.fn(() => null)
 }))
-jest.mock('app/__tests__/DSO/__tests__/DSOCard/DSOCardContent', () => ({
+jest.mock('app/components/DSO/components/DSOCard/DSOCardContent', () => ({
   DSOCardContent: jest.fn(() => null)
 }))
 

@@ -7,10 +7,10 @@ import { generateInfiniteQueryResult } from '__fixtures__/useQuery'
 import { DSOSelect } from 'app/pages/issuance/components/IssuanceLanding/DSOSelect'
 import { NoDeals } from 'app/pages/issuance/components/IssuanceLanding/NoDeals'
 
-jest.mock('app/pages/issuance/__tests__/IssuanceLanding/NoDeals', () => ({
+jest.mock('app/pages/issuance/components/IssuanceLanding/NoDeals', () => ({
   NoDeals: jest.fn(() => null)
 }))
-jest.mock('app/pages/issuance/__tests__/IssuanceLanding/DSOSelect', () => ({
+jest.mock('app/pages/issuance/components/IssuanceLanding/DSOSelect', () => ({
   DSOSelect: jest.fn(() => null)
 }))
 

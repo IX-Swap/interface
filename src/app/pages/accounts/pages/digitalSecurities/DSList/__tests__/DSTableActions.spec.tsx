@@ -5,7 +5,7 @@ import { balance } from '__fixtures__/balance'
 import { AppRouterLinkComponent } from 'components/AppRouterLink'
 import { DSRoute } from 'app/pages/accounts/pages/digitalSecurities/router/config'
 
-jest.mock('__tests__/AppRouterLink', () => ({
+jest.mock('components/AppRouterLink', () => ({
   AppRouterLinkComponent: jest.fn(() => null)
 }))
 

@@ -7,7 +7,7 @@ import {
 import { UserActionsDialog } from 'app/pages/admin/components/UserActionsDialog'
 import * as useEnabledToggle from 'app/pages/admin/hooks/useEnabledToggle'
 
-jest.mock('app/pages/admin/__tests__/UserActionsDialog', () => ({
+jest.mock('app/pages/admin/components/UserActionsDialog', () => ({
   UserActionsDialog: jest.fn(({ children }) => <>{children}</>)
 }))
 

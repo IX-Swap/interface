@@ -7,7 +7,7 @@ import {
 import { commitment } from '__fixtures__/authorizer'
 import { DSOLogo } from 'app/components/DSO/components/DSOLogo'
 
-jest.mock('app/__tests__/DSO/__tests__/DSOLogo', () => ({
+jest.mock('app/components/DSO/components/DSOLogo', () => ({
   DSOLogo: jest.fn(() => null)
 }))
 

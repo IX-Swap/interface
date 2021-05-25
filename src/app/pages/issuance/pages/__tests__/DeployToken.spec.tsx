@@ -10,13 +10,13 @@ import { DeployTokenMessagesList } from 'app/pages/issuance/components/DeployTok
 import { DeployTokenButton } from 'app/pages/issuance/components/DeployTokenButton'
 import { DSOTitle } from 'app/components/DSO/components/DSOTitle'
 
-jest.mock('app/pages/issuance/__tests__/DeployTokenMessagesList', () => ({
+jest.mock('app/pages/issuance/components/DeployTokenMessagesList', () => ({
   DeployTokenMessagesList: jest.fn(() => null)
 }))
-jest.mock('app/__tests__/DSO/__tests__/DSOTitle', () => ({
+jest.mock('app/components/DSO/components/DSOTitle', () => ({
   DSOTitle: jest.fn(() => null)
 }))
-jest.mock('app/pages/issuance/__tests__/DeployTokenButton', () => ({
+jest.mock('app/pages/issuance/components/DeployTokenButton', () => ({
   DeployTokenButton: jest.fn(() => null)
 }))
 

@@ -2,10 +2,10 @@ import React from 'react'
 import { render, cleanup } from 'test-utils'
 import { Filters } from 'app/pages/authorizer/components/Filters'
 
-jest.mock('app/pages/authorizer/__tests__/StatusFilter', () => ({
+jest.mock('app/pages/authorizer/components/StatusFilter', () => ({
   StatusFilter: jest.fn(() => <div data-testid='status-filter' />)
 }))
-jest.mock('app/pages/authorizer/__tests__/SearchAndDateFilter', () => ({
+jest.mock('app/pages/authorizer/components/SearchAndDateFilter', () => ({
   SearchAndDateFilter: jest.fn(() => <div data-testid='search-date-filter' />)
 }))
 

@@ -10,10 +10,10 @@ import { formatDateAndTime } from 'helpers/dates'
 import { formatMoney } from 'helpers/numbers'
 import { Commitment } from 'types/commitment'
 
-jest.mock('__tests__/LabelledValue', () => ({
+jest.mock('components/LabelledValue', () => ({
   LabelledValue: jest.fn(() => null)
 }))
-jest.mock('app/__tests__/CommitmentIssuance/CommitmentIssuance', () => ({
+jest.mock('app/components/CommitmentIssuance/CommitmentIssuance', () => ({
   CommitmentIssuance: jest.fn(() => null)
 }))
 

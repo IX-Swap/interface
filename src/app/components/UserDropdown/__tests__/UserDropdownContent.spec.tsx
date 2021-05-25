@@ -11,7 +11,7 @@ import {
   SettingsOutlined
 } from '@material-ui/icons'
 
-jest.mock('app/__tests__/UserDropdown/UserDropdownItem', () => ({
+jest.mock('app/components/UserDropdown/UserDropdownItem', () => ({
   UserDropdownItem: jest.fn(() => null)
 }))
 

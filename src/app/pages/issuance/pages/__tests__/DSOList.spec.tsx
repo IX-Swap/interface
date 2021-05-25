@@ -5,11 +5,11 @@ import { AppRouterLinkComponent } from 'components/AppRouterLink'
 import { IssuanceRoute } from 'app/pages/issuance/router/config'
 import { MyDSOsTable } from '../../components/MyDSOsTable'
 
-jest.mock('app/pages/issuance/__tests__/MyDSOsTable', () => ({
+jest.mock('app/pages/issuance/components/MyDSOsTable', () => ({
   MyDSOsTable: jest.fn(() => null)
 }))
 
-jest.mock('__tests__/AppRouterLink', () => ({
+jest.mock('components/AppRouterLink', () => ({
   AppRouterLinkComponent: jest.fn(() => null)
 }))
 

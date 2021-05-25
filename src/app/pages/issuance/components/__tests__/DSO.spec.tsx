@@ -6,11 +6,11 @@ import * as useDSOByIdHook from 'app/pages/invest/hooks/useDSOById'
 import { DSOForm } from 'app/components/DSO/DSOForm'
 import { DSOView } from 'app/components/DSO/DSOView'
 
-jest.mock('app/__tests__/DSO/DSOForm', () => ({
+jest.mock('app/components/DSO/DSOForm', () => ({
   DSOForm: jest.fn(() => null)
 }))
 
-jest.mock('app/__tests__/DSO/DSOView', () => ({
+jest.mock('app/components/DSO/DSOView', () => ({
   DSOView: jest.fn(() => null)
 }))
 

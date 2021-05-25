@@ -6,7 +6,7 @@ import { CashTransactionAlert } from 'app/pages/accounts/pages/banks/components/
 import { asset } from '__fixtures__/authorizer'
 
 jest.mock(
-  'app/pages/accounts/pages/banks/__tests__/CashTransactionAlert',
+  'app/pages/accounts/pages/banks/components/CashTransactionAlert',
   () => ({
     CashTransactionAlert: jest.fn(({ children }) => (
       <div data-testid='cta-wrapper'>{children('money123')}</div>

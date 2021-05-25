@@ -3,7 +3,7 @@ import { render, cleanup } from 'test-utils'
 import { renderStatusColumn } from 'app/pages/authorizer/hooks/useAuthorizerView'
 import { AuthorizableStatus } from 'app/pages/authorizer/components/AuthorizableStatus'
 
-jest.mock('app/pages/authorizer/__tests__/AuthorizableStatus', () => ({
+jest.mock('app/pages/authorizer/components/AuthorizableStatus', () => ({
   AuthorizableStatus: jest.fn(() => null)
 }))
 

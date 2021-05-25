@@ -7,7 +7,7 @@ import {
   AddressFieldsProps
 } from 'app/pages/identity/components/AddressFields/AddressFields'
 
-jest.mock('__tests__/form/TypedField', () => ({
+jest.mock('components/form/TypedField', () => ({
   TypedField: jest.fn(() => <input />)
 }))
 

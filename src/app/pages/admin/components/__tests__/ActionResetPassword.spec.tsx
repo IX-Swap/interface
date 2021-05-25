@@ -6,7 +6,7 @@ import * as useUserActionsDialog from 'app/pages/admin/hooks/useUserActionsDialo
 import { DialogResetPassword } from 'app/pages/admin/components/DialogResetPassword'
 import { fireEvent } from '@testing-library/react'
 
-jest.mock('app/pages/admin/__tests__/DialogResetPassword', () => ({
+jest.mock('app/pages/admin/components/DialogResetPassword', () => ({
   DialogResetPassword: jest.fn(() => null)
 }))
 

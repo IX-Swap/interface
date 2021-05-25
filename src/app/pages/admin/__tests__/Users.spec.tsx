@@ -8,7 +8,7 @@ import { Actions } from '../components/Actions'
 import { usersQueryKeys } from 'config/queryKeys'
 import { userURL } from 'config/apiURL'
 
-jest.mock('__tests__/TableWithPagination/TableView', () => ({
+jest.mock('components/TableWithPagination/TableView', () => ({
   TableView: jest.fn(() => null)
 }))
 

@@ -5,11 +5,11 @@ import { DialogEnabledToggle } from 'app/pages/admin/components/DialogEnabledTog
 import { ButtonError } from 'app/components/ButtonError'
 import { ActionEnableToggle } from 'app/pages/admin/components/ActionEnableToggle'
 
-jest.mock('app/__tests__/ButtonError', () => ({
+jest.mock('app/components/ButtonError', () => ({
   ButtonError: jest.fn(({ children }) => <>{children}</>)
 }))
 
-jest.mock('app/pages/admin/__tests__/DialogEnabledToggle', () => ({
+jest.mock('app/pages/admin/components/DialogEnabledToggle', () => ({
   DialogEnabledToggle: jest.fn(() => null)
 }))
 

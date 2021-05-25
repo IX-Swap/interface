@@ -5,14 +5,14 @@ import { EmploymentField } from 'app/pages/identity/components/FinancialInformat
 import { FundSource } from 'app/pages/identity/components/FinancialInformationForm/FundSource'
 
 jest.mock(
-  'app/pages/identity/__tests__/FinancialInformationForm/EmploymentFields',
+  'app/pages/identity/components/FinancialInformationForm/EmploymentFields',
   () => ({
     EmploymentField: jest.fn(() => null)
   })
 )
 
 jest.mock(
-  'app/pages/identity/__tests__/FinancialInformationForm/FundSource',
+  'app/pages/identity/components/FinancialInformationForm/FundSource',
   () => ({
     FundSource: jest.fn(() => null)
   })

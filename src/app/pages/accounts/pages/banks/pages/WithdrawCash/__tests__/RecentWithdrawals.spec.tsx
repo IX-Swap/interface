@@ -6,7 +6,7 @@ import { user } from '__fixtures__/user'
 import * as useAuthHook from 'hooks/auth/useAuth'
 import { cashWithdrawalsQueryKeys } from 'config/queryKeys'
 
-jest.mock('__tests__/TableWithPagination/TableView', () => ({
+jest.mock('components/TableWithPagination/TableView', () => ({
   TableView: jest.fn(() => <div data-testid='TableView' />)
 }))
 

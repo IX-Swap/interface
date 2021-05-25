@@ -8,7 +8,7 @@ import { render, cleanup } from 'test-utils'
 import { TypedField } from 'components/form/TypedField'
 import * as useFormContext from 'react-hook-form'
 
-jest.mock('__tests__/form/TypedField', () => ({
+jest.mock('components/form/TypedField', () => ({
   TypedField: jest.fn(() => null)
 }))
 

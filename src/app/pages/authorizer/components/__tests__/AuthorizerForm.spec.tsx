@@ -6,7 +6,7 @@ import {
 } from 'app/pages/authorizer/components/AuthorizerForm'
 import { AuthorizerFormFields } from 'app/pages/authorizer/components/AuthorizerFormFields'
 
-jest.mock('app/pages/authorizer/__tests__/AuthorizerFormFields', () => ({
+jest.mock('app/pages/authorizer/components/AuthorizerFormFields', () => ({
   AuthorizerFormFields: jest.fn(() => null)
 }))
 

@@ -5,15 +5,15 @@ import { Dropdown } from 'app/components/Dropdown/Dropdown'
 import { NotificationsDropdownTrigger } from 'app/pages/notifications/components/NotificationsDropdownTrigger'
 import { NotificationsDropdownContent } from 'app/pages/notifications/components/NotificationsDropdownContent'
 
-jest.mock('app/__tests__/Dropdown/Dropdown', () => ({
+jest.mock('app/components/Dropdown/Dropdown', () => ({
   Dropdown: jest.fn(() => null)
 }))
 jest.mock(
-  'app/pages/notifications/__tests__/NotificationsDropdownTrigger',
+  'app/pages/notifications/components/NotificationsDropdownTrigger',
   () => ({ NotificationsDropdownTrigger: jest.fn(() => null) })
 )
 jest.mock(
-  'app/pages/notifications/__tests__/NotificationsDropdownContent',
+  'app/pages/notifications/components/NotificationsDropdownContent',
   () => ({ NotificationsDropdownContent: jest.fn(() => null) })
 )
 

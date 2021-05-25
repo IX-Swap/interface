@@ -9,7 +9,7 @@ import { QueryStatus } from 'react-query'
 import { useSelectionHelperContext } from 'components/SelectionHelper'
 import { fakeVirtualAccount } from '__fixtures__/unassignedVirtualAccounts'
 
-jest.mock('__tests__/SelectionHelper', () => ({
+jest.mock('components/SelectionHelper', () => ({
   useSelectionHelperContext: jest.fn(() => {})
 }))
 

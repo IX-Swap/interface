@@ -11,15 +11,15 @@ import { AdminRoute } from 'app/pages/admin/router/config'
 import { generatePath, Route } from 'react-router-dom'
 import { history } from 'config/history'
 
-jest.mock('app/__tests__/SearchFilter', () => ({
+jest.mock('app/components/SearchFilter', () => ({
   SearchFilter: jest.fn(() => null)
 }))
 
-jest.mock('__tests__/TableWithPagination/TableView', () => ({
+jest.mock('components/TableWithPagination/TableView', () => ({
   TableView: jest.fn(() => null)
 }))
 
-jest.mock('app/pages/admin/__tests__/columns', () => ({
+jest.mock('app/pages/admin/components/columns', () => ({
   columns: []
 }))
 

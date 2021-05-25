@@ -7,7 +7,7 @@ import DialogConfirmRoleChange from 'app/pages/admin/components/DialogConfirmRol
 import { AppRole } from 'helpers/acl'
 import { waitFor, fireEvent } from '@testing-library/react'
 
-jest.mock('app/pages/admin/__tests__/DialogConfirmRoleChange', () =>
+jest.mock('app/pages/admin/components/DialogConfirmRoleChange', () =>
   jest.fn(() => null)
 )
 

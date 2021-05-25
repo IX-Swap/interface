@@ -10,27 +10,27 @@ import { TopCorporates } from 'app/pages/home/components/TopCorporates'
 import { PromoBanner } from 'app/pages/invest/components/PromoBanner'
 import { News } from 'app/pages/home/components/News/News'
 
-jest.mock('app/pages/home/__tests__/News/News', () => ({
+jest.mock('app/pages/home/components/News/News', () => ({
   News: jest.fn(() => null)
 }))
 
-jest.mock('app/pages/home/__tests__/AccessReports', () => ({
+jest.mock('app/pages/home/components/AccessReports', () => ({
   AccessReports: jest.fn(() => null)
 }))
 
-jest.mock('app/pages/home/__tests__/OnboardingLinks', () => ({
+jest.mock('app/pages/home/components/OnboardingLinks', () => ({
   OnboardingLinks: jest.fn(() => null)
 }))
 
-jest.mock('app/pages/home/__tests__/TopIssuers', () => ({
+jest.mock('app/pages/home/components/TopIssuers', () => ({
   TopIssuers: jest.fn(() => null)
 }))
 
-jest.mock('app/pages/home/__tests__/TopCorporates', () => ({
+jest.mock('app/pages/home/components/TopCorporates', () => ({
   TopCorporates: jest.fn(() => null)
 }))
 
-jest.mock('app/pages/invest/__tests__/PromoBanner', () => ({
+jest.mock('app/pages/invest/components/PromoBanner', () => ({
   PromoBanner: jest.fn(() => null)
 }))
 

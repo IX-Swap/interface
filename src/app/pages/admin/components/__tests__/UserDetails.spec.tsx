@@ -6,11 +6,11 @@ import { LabelledValue } from 'components/LabelledValue'
 import { UserActions } from 'app/pages/admin/components/UserActions'
 import { getTimeFromNow } from 'helpers/dates'
 
-jest.mock('__tests__/LabelledValue', () => ({
+jest.mock('components/LabelledValue', () => ({
   LabelledValue: jest.fn(({ value }) => <>{value}</>)
 }))
 
-jest.mock('app/pages/admin/__tests__/UserActions', () => ({
+jest.mock('app/pages/admin/components/UserActions', () => ({
   UserActions: jest.fn(() => null)
 }))
 
