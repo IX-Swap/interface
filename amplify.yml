@@ -3,8 +3,6 @@ frontend:
   phases:
     preBuild:
       commands:
-        - npm install rimraf
-        - yarn pre-install
         - yarn install
     build:
       commands:
