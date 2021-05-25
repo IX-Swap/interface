@@ -2,6 +2,7 @@ import React, { Fragment } from 'react'
 import { VSpacer } from 'components/VSpacer'
 import { Element } from 'react-scroll'
 import { ListingFormSection } from 'app/pages/exchange/components/ListingForm/ListingScrollGuide'
+import { DSOTeam } from 'app/components/DSO/components/DSOTeam'
 
 export interface ListingFormFieldsProps {
   isNew: boolean
@@ -44,7 +45,7 @@ export const ListingFormFields = (props: ListingFormFieldsProps) => {
 
       <Element name={ListingFormSection['Team Members']}>
         <VSpacer size='large' />
-        Team Members
+        <DSOTeam />
       </Element>
     </Fragment>
   )
