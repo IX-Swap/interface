@@ -50,6 +50,7 @@ export const PlaceOrderSlider: React.FC<PlaceOrderFieldsProps> = ({
         markActive: classes.markActive
       }}
       disabled={price === null || price === undefined}
+      data-testid='slider'
       onChange={(evt, value) => {
         const newAmount =
           value !== 0
