@@ -8,7 +8,7 @@ import { DSO } from 'app/pages/issuance/components/DSO'
 import { generatePath, Route } from 'react-router-dom'
 import * as useDSOByIdHook from 'app/pages/invest/hooks/useDSOById'
 
-jest.mock('app/pages/issuance/components/DSO', () => ({
+jest.mock('app/pages/issuance/__tests__/DSO', () => ({
   DSO: jest.fn(() => null)
 }))
 

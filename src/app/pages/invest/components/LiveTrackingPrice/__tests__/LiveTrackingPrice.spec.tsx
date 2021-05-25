@@ -4,12 +4,9 @@ import React from 'react'
 import { render, cleanup } from 'test-utils'
 import { TrackingPrice } from 'app/pages/invest/components/LiveTrackingPrice/TrackingPrice'
 
-jest.mock(
-  'app/pages/invest/components/LiveTrackingPrice/TrackingPrice',
-  () => ({
-    TrackingPrice: jest.fn(() => null)
-  })
-)
+jest.mock('app/pages/invest/__tests__/LiveTrackingPrice/TrackingPrice', () => ({
+  TrackingPrice: jest.fn(() => null)
+}))
 
 describe('LiveTrackingPrice', () => {
   afterEach(async () => {

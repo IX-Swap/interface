@@ -6,11 +6,11 @@ import { DSOTeamAddButton } from 'app/components/DSO/components/DSOTeamAddButton
 import { DSOTeamMember } from 'app/components/DSO/components/DSOTeamMember'
 import { teamMember } from '__fixtures__/issuance'
 
-jest.mock('app/components/DSO/components/DSOTeamAddButton', () => ({
+jest.mock('app/__tests__/DSO/__tests__/DSOTeamAddButton', () => ({
   DSOTeamAddButton: jest.fn(() => null)
 }))
 
-jest.mock('app/components/DSO/components/DSOTeamMember', () => ({
+jest.mock('app/__tests__/DSO/__tests__/DSOTeamMember', () => ({
   DSOTeamMember: jest.fn(() => null)
 }))
 

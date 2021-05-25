@@ -11,16 +11,16 @@ import { AuthorizerIdentities } from 'app/pages/authorizer/components/Authorizer
 import { individual, corporate, bank } from '__fixtures__/authorizer'
 import { Bank } from 'types/bank'
 
-jest.mock('app/pages/authorizer/components/AuthorizerForm', () => ({
+jest.mock('app/pages/authorizer/__tests__/AuthorizerForm', () => ({
   AuthorizerForm: jest.fn(() => null)
 }))
-jest.mock('app/pages/authorizer/components/AuthorizableLevel', () => ({
+jest.mock('app/pages/authorizer/__tests__/AuthorizableLevel', () => ({
   AuthorizableLevel: jest.fn(() => null)
 }))
-jest.mock('app/pages/authorizer/components/AuthorizableStatus', () => ({
+jest.mock('app/pages/authorizer/__tests__/AuthorizableStatus', () => ({
   AuthorizableStatus: jest.fn(() => null)
 }))
-jest.mock('app/pages/authorizer/components/AuthorizerIdentities', () => ({
+jest.mock('app/pages/authorizer/__tests__/AuthorizerIdentities', () => ({
   AuthorizerIdentities: jest.fn(() => null)
 }))
 

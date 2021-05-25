@@ -3,7 +3,7 @@ import React from 'react'
 import { render, cleanup } from 'test-utils'
 
 jest.mock(
-  'app/pages/identity/components/FinancialInformationForm/FundSource',
+  'app/pages/identity/__tests__/FinancialInformationForm/FundSource',
   () => ({
     FundSource: jest.fn(() => null)
   })

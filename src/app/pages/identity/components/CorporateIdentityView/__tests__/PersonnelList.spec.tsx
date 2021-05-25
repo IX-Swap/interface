@@ -5,7 +5,7 @@ import { corporate } from '__fixtures__/identity'
 import { CompanyPersonnel } from 'app/pages/identity/components/CorporateIdentityView/CompanyPersonnel'
 
 jest.mock(
-  'app/pages/identity/components/CorporateIdentityView/CompanyPersonnel',
+  'app/pages/identity/__tests__/CorporateIdentityView/CompanyPersonnel',
   () => ({
     CompanyPersonnel: jest.fn(() => null)
   })
@@ -28,7 +28,7 @@ describe('PersonnelList', () => {
     expect(container).toBeEmptyDOMElement()
   })
 
-  it('renders components correctly', () => {
+  it('renders __tests__ correctly', () => {
     render(<PersonnelList personnel={personnels} />)
 
     expect(CompanyPersonnel).toHaveBeenNthCalledWith(

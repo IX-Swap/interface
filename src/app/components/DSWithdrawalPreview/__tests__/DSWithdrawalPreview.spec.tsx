@@ -9,7 +9,7 @@ import { LabelledValue } from 'components/LabelledValue'
 import { formatMoney } from 'helpers/numbers'
 import { renderName } from 'helpers/tables'
 
-jest.mock('components/LabelledValue', () => ({
+jest.mock('__tests__/LabelledValue', () => ({
   LabelledValue: jest.fn(() => null)
 }))
 

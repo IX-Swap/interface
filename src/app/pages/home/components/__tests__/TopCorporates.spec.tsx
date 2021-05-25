@@ -4,7 +4,7 @@ import { TopCorporates } from 'app/pages/home/components/TopCorporates'
 import * as useTopCorporates from 'app/pages/home/hooks/useTopCorporates'
 import { corporate } from '__fixtures__/identity'
 
-jest.mock('app/pages/home/components/TopList', () => ({
+jest.mock('app/pages/home/__tests__/TopList', () => ({
   TopList: jest.fn(() => null)
 }))
 

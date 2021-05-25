@@ -6,10 +6,10 @@ import { LoadingIndicator } from 'app/components/LoadingIndicator/LoadingIndicat
 import * as notificationsHook from 'app/pages/notifications/hooks/useNotifications'
 import { notification } from '__fixtures__/notification'
 
-jest.mock('app/components/NoData/NoData', () => ({
+jest.mock('app/__tests__/NoData/NoData', () => ({
   NoData: jest.fn(() => null)
 }))
-jest.mock('app/components/LoadingIndicator/LoadingIndicator', () => ({
+jest.mock('app/__tests__/LoadingIndicator/LoadingIndicator', () => ({
   LoadingIndicator: jest.fn(() => null)
 }))
 

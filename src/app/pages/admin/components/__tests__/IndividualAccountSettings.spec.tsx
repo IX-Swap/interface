@@ -8,19 +8,19 @@ import { AccountLoginHistory } from 'app/pages/admin/components/AccountLoginHist
 import { RoleManagement } from 'app/pages/admin/components/RoleManagement'
 import { RevokeAccess } from 'app/pages/admin/components/RevokeAccess'
 
-jest.mock('app/pages/admin/components/AccountLoginHistory', () => ({
+jest.mock('app/pages/admin/__tests__/AccountLoginHistory', () => ({
   AccountLoginHistory: jest.fn(() => <></>)
 }))
 
-jest.mock('app/pages/admin/components/RevokeAccess', () => ({
+jest.mock('app/pages/admin/__tests__/RevokeAccess', () => ({
   RevokeAccess: jest.fn(() => null)
 }))
 
-jest.mock('app/pages/admin/components/RoleManagement', () => ({
+jest.mock('app/pages/admin/__tests__/RoleManagement', () => ({
   RoleManagement: jest.fn(() => null)
 }))
 
-jest.mock('app/pages/admin/components/TabPanel', () => ({
+jest.mock('app/pages/admin/__tests__/TabPanel', () => ({
   TabPanel: jest.fn(({ children }) => <div>{children}</div>)
 }))
 
@@ -44,7 +44,7 @@ describe('IndividualAccountSettings', () => {
     render(<IndividualAccountSettings activeRoles={roles} />)
   })
 
-  it('renders components with correct props', () => {
+  it('renders __tests__ with correct props', () => {
     const { getByText } = render(
       <IndividualAccountSettings activeRoles={roles} />
     )

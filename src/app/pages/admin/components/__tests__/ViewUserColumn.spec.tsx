@@ -7,7 +7,7 @@ import { AdminRoute } from 'app/pages/admin/router/config'
 
 jest.mock('@material-ui/core/IconButton', () => jest.fn(() => <button />))
 
-jest.mock('components/AppRouterLink', () => ({
+jest.mock('__tests__/AppRouterLink', () => ({
   AppRouterLinkComponent: jest.fn(() => <span />)
 }))
 

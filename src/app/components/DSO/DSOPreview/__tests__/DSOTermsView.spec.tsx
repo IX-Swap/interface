@@ -4,7 +4,7 @@ import { render, cleanup } from 'test-utils'
 import { LabelledValue } from 'components/LabelledValue'
 import { dso } from '__fixtures__/authorizer'
 
-jest.mock('components/LabelledValue', () => ({
+jest.mock('__tests__/LabelledValue', () => ({
   LabelledValue: jest.fn(() => null)
 }))
 

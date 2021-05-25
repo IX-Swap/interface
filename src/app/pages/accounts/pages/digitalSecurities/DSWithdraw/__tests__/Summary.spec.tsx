@@ -15,7 +15,7 @@ import { history } from 'config/history'
 import { DSRoute } from 'app/pages/accounts/pages/digitalSecurities/router/config'
 import { generatePath, Route } from 'react-router-dom'
 
-jest.mock('app/components/GenericPreview/GenericPreview', () => ({
+jest.mock('app/__tests__/GenericPreview/GenericPreview', () => ({
   GenericPreview: jest.fn(() => null)
 }))
 

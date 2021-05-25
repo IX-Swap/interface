@@ -12,7 +12,7 @@ describe('Setup2FAGuide', () => {
     render(<Setup2FAGuide />)
   })
 
-  it('renders components correctly', () => {
+  it('renders __tests__ correctly', () => {
     const { queryAllByAltText, getByText } = render(<Setup2FAGuide />)
 
     expect(queryAllByAltText('Back to 2FA Setup')).toBeTruthy()

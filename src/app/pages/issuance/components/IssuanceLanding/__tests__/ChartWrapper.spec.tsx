@@ -3,7 +3,7 @@ import { render, cleanup } from 'test-utils'
 import { ChartWrapper } from 'app/pages/issuance/components/IssuanceLanding/ChartWrapper'
 import { ChartTitle } from 'app/pages/issuance/components/IssuanceLanding/ChartTitle'
 
-jest.mock('app/pages/issuance/components/IssuanceLanding/ChartTitle', () => ({
+jest.mock('app/pages/issuance/__tests__/IssuanceLanding/ChartTitle', () => ({
   ChartTitle: jest.fn(() => null)
 }))
 

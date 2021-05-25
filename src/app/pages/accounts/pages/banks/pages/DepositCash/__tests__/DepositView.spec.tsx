@@ -13,27 +13,27 @@ jest.mock('app/pages/accounts/pages/banks/pages/DepositCash/Setup', () => ({
   Setup: jest.fn(() => null)
 }))
 
-jest.mock('app/pages/accounts/pages/banks/components/DepositCashAlert', () => ({
+jest.mock('app/pages/accounts/pages/banks/__tests__/DepositCashAlert', () => ({
   DepositCashAlert: jest.fn(() => null)
 }))
 
-jest.mock('app/components/BankDetails', () => ({
+jest.mock('app/__tests__/BankDetails', () => ({
   BankDetails: jest.fn(() => null)
 }))
 
-jest.mock('app/pages/accounts/pages/banks/components/SuccessView', () => ({
+jest.mock('app/pages/accounts/pages/banks/__tests__/SuccessView', () => ({
   SuccessView: jest.fn(() => null)
 }))
 
-jest.mock('app/pages/accounts/pages/banks/components/AlertAndOTP', () => ({
+jest.mock('app/pages/accounts/pages/banks/__tests__/AlertAndOTP', () => ({
   AlertAndOTP: jest.fn(() => null)
 }))
 
-jest.mock('app/pages/accounts/pages/banks/components/BackButton', () => ({
+jest.mock('app/pages/accounts/pages/banks/__tests__/BackButton', () => ({
   BackButton: jest.fn(() => null)
 }))
 
-jest.mock('app/pages/accounts/pages/banks/components/ResetButton', () => ({
+jest.mock('app/pages/accounts/pages/banks/__tests__/ResetButton', () => ({
   ResetButton: jest.fn(() => null)
 }))
 
@@ -41,7 +41,7 @@ jest.mock('app/pages/accounts/pages/banks/pages/DepositCash/Preview', () => ({
   Preview: jest.fn(() => null)
 }))
 
-jest.mock('app/pages/accounts/pages/banks/components/BackButton', () => ({
+jest.mock('app/pages/accounts/pages/banks/__tests__/BackButton', () => ({
   BackButton: jest.fn(() => null)
 }))
 
@@ -58,7 +58,7 @@ describe('DepositView', () => {
     jest.clearAllMocks()
   })
 
-  it('renders correct components on the SETUP step', () => {
+  it('renders correct __tests__ on the SETUP step', () => {
     const { queryByText } = renderWithDepositStore(<DepositView />, {
       isSetup: true
     })
@@ -74,7 +74,7 @@ describe('DepositView', () => {
     expect(AlertAndOTP).not.toBeCalled()
   })
 
-  it('renders correct components on the PREVIEW step', () => {
+  it('renders correct __tests__ on the PREVIEW step', () => {
     const { queryByText } = renderWithDepositStore(<DepositView />, {
       isPreview: true
     })
@@ -90,7 +90,7 @@ describe('DepositView', () => {
     expect(AlertAndOTP).toBeCalled()
   })
 
-  it('renders correct components on the SUCCESS step', () => {
+  it('renders correct __tests__ on the SUCCESS step', () => {
     const { queryByText } = renderWithDepositStore(<DepositView />, {
       isSuccess: true
     })

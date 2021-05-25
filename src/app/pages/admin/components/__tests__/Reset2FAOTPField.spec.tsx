@@ -6,7 +6,7 @@ import {
 } from 'app/pages/admin/components/Reset2FAOTPField'
 import { OTPInputField } from 'components/form/OTPInputField'
 
-jest.mock('components/form/OTPInputField', () => ({
+jest.mock('__tests__/form/OTPInputField', () => ({
   OTPInputField: jest.fn(() => null)
 }))
 

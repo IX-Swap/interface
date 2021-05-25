@@ -6,7 +6,7 @@ import {
   VirtualAccounts
 } from 'app/pages/admin/pages/VirtualAccounts'
 
-jest.mock('components/SelectionHelper', () => ({
+jest.mock('__tests__/SelectionHelper', () => ({
   SelectionHelper: jest.fn(() => null)
 }))
 

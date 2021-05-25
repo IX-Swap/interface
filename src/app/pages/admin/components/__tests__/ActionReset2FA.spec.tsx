@@ -5,7 +5,7 @@ import { DialogConfirmReset2FA } from 'app/pages/admin/components/DialogConfirmR
 import { ActionReset2FA } from 'app/pages/admin/components/ActionReset2FA'
 import * as Button from '@material-ui/core/Button'
 
-jest.mock('app/pages/admin/components/DialogConfirmReset2FA', () => ({
+jest.mock('app/pages/admin/__tests__/DialogConfirmReset2FA', () => ({
   DialogConfirmReset2FA: jest.fn(() => null)
 }))
 
@@ -36,7 +36,7 @@ describe('ActionReset2FA', () => {
     render(<ActionReset2FA />)
   })
 
-  it('renders components with correct props', () => {
+  it('renders __tests__ with correct props', () => {
     const { getByText } = render(<ActionReset2FA />)
 
     expect(getByText('RESET 2FA')).toBeTruthy()

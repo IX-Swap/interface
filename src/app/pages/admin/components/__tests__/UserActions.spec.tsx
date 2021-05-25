@@ -6,15 +6,15 @@ import { ActionReset2FA } from 'app/pages/admin/components/ActionReset2FA'
 import { ActionEnableToggle } from 'app/pages/admin/components/ActionEnableToggle'
 import { ActionResetPassword } from 'app/pages/admin/components/ActionResetPassword'
 
-jest.mock('app/pages/admin/components/ActionReset2FA', () => ({
+jest.mock('app/pages/admin/__tests__/ActionReset2FA', () => ({
   ActionReset2FA: jest.fn(() => null)
 }))
 
-jest.mock('app/pages/admin/components/ActionEnableToggle', () => ({
+jest.mock('app/pages/admin/__tests__/ActionEnableToggle', () => ({
   ActionEnableToggle: jest.fn(() => null)
 }))
 
-jest.mock('app/pages/admin/components/ActionResetPassword', () => ({
+jest.mock('app/pages/admin/__tests__/ActionResetPassword', () => ({
   ActionResetPassword: jest.fn(() => null)
 }))
 
@@ -28,7 +28,7 @@ describe('UserActions', () => {
     render(<UserActions data={managedUser} />)
   })
 
-  it('renders components with correct props', () => {
+  it('renders __tests__ with correct props', () => {
     render(<UserActions data={managedUser} />)
 
     expect(ActionReset2FA).toHaveBeenCalled()

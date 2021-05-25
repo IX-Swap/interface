@@ -8,11 +8,11 @@ import { UserActionsDialog } from 'app/pages/admin/components/UserActionsDialog'
 import * as useReset2FA from 'app/pages/admin/hooks/useReset2FA'
 import { Reset2FAOTPField } from 'app/pages/admin/components/Reset2FAOTPField'
 
-jest.mock('app/pages/admin/components/UserActionsDialog', () => ({
+jest.mock('app/pages/admin/__tests__/UserActionsDialog', () => ({
   UserActionsDialog: jest.fn(({ children }) => <>{children}</>)
 }))
 
-jest.mock('app/pages/admin/components/Reset2FAOTPField', () => ({
+jest.mock('app/pages/admin/__tests__/Reset2FAOTPField', () => ({
   Reset2FAOTPField: jest.fn(() => null)
 }))
 
@@ -53,7 +53,7 @@ describe('DialogConfirmReset2FA', () => {
     expect(useReset2FA.useReset2FA).toHaveBeenCalledWith(mockClose)
   })
 
-  it('renders components with correct props', () => {
+  it('renders __tests__ with correct props', () => {
     const { getByText } = render(<DialogConfirmReset2FA {...props} />)
 
     expect(UserActionsDialog).toHaveBeenCalledWith(

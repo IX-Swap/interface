@@ -5,13 +5,13 @@ import { withExtraActions } from 'app/pages/authorizer/components/withExtraActio
 import { AuthorizerTable } from 'app/pages/authorizer/components/AuthorizerTable'
 import * as useAuthorizerFilterHook from 'app/pages/authorizer/hooks/useAuthorizerFilter'
 
-jest.mock('components/TableWithPagination/TableView', () => ({
+jest.mock('__tests__/TableWithPagination/TableView', () => ({
   TableView: jest.fn(() => null)
 }))
-jest.mock('app/pages/authorizer/components/withExtraActions', () => ({
+jest.mock('app/pages/authorizer/__tests__/withExtraActions', () => ({
   withExtraActions: jest.fn(() => null)
 }))
-jest.mock('app/pages/authorizer/components/Filters', () => ({
+jest.mock('app/pages/authorizer/__tests__/Filters', () => ({
   Filters: jest.fn(() => null)
 }))
 

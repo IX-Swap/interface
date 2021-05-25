@@ -18,7 +18,7 @@ describe('PasswordValidationItem', () => {
     render(<PasswordValidationItem invalid={true} label='Invalid' />)
   })
 
-  it('renders components correctly', () => {
+  it('renders __tests__ correctly', () => {
     const { getByText, rerender } = render(
       <PasswordValidationItem invalid={true} label='Invalid' />
     )

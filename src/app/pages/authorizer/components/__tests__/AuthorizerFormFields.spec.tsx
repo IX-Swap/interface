@@ -12,15 +12,15 @@ import { AuthorizerCategory } from 'types/app'
 import * as useAuthorizerCategoryHook from 'hooks/location/useAuthorizerCategory'
 import * as useAuthorizerAction from 'app/pages/authorizer/hooks/useAuthorizerAction'
 
-jest.mock('components/form/TypedField', () => ({
+jest.mock('__tests__/form/TypedField', () => ({
   TypedField: jest.fn(() => null)
 }))
 
-jest.mock('app/pages/authorizer/components/ApproveButton', () => ({
+jest.mock('app/pages/authorizer/__tests__/ApproveButton', () => ({
   ApproveButton: jest.fn(() => null)
 }))
 
-jest.mock('app/pages/authorizer/components/RejectButton', () => ({
+jest.mock('app/pages/authorizer/__tests__/RejectButton', () => ({
   RejectButton: jest.fn(() => null)
 }))
 

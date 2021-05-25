@@ -10,7 +10,7 @@ import { history } from 'config/history'
 import { generatePath, Route } from 'react-router-dom'
 import { WithdrawalAddressesRoute } from 'app/pages/accounts/pages/withdrawalAddresses/router/config'
 
-jest.mock('components/LabelledValue', () => ({
+jest.mock('__tests__/LabelledValue', () => ({
   LabelledValue: jest.fn(() => null)
 }))
 

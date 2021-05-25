@@ -8,13 +8,13 @@ import { commitment } from '__fixtures__/authorizer'
 import { CommitmentIssuanceForm } from 'app/components/CommitmentIssuance/CommitmentIssuanceForm'
 import { CommitmentIssuanceFields } from 'app/components/CommitmentIssuance/CommitmentIssuanceFields'
 
-jest.mock('app/components/CommitmentIssuance/CommitmentIssuanceForm', () => ({
+jest.mock('app/__tests__/CommitmentIssuance/CommitmentIssuanceForm', () => ({
   CommitmentIssuanceForm: jest.fn(({ children }) => children)
 }))
-jest.mock('app/components/CommitmentIssuance/CommitmentIssuanceFields', () => ({
+jest.mock('app/__tests__/CommitmentIssuance/CommitmentIssuanceFields', () => ({
   CommitmentIssuanceFields: jest.fn(() => null)
 }))
-jest.mock('components/form/Submit', () => ({
+jest.mock('__tests__/form/Submit', () => ({
   Submit: jest.fn(() => null)
 }))
 

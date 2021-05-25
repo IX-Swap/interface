@@ -5,14 +5,14 @@ import { TaxResidencyFields } from 'app/pages/identity/components/TaxDeclaration
 import { UsCitizenshipConfirmation } from 'app/pages/identity/components/TaxDeclarationForm/UsCitizenshipConfirmation/UsCitizenshipConfirmation'
 
 jest.mock(
-  'app/pages/identity/components/TaxDeclarationForm/TaxResidencyFields/TaxResidencyFields',
+  'app/pages/identity/__tests__/TaxDeclarationForm/TaxResidencyFields/TaxResidencyFields',
   () => ({
     TaxResidencyFields: jest.fn(() => null)
   })
 )
 
 jest.mock(
-  'app/pages/identity/components/TaxDeclarationForm/UsCitizenshipConfirmation/UsCitizenshipConfirmation',
+  'app/pages/identity/__tests__/TaxDeclarationForm/UsCitizenshipConfirmation/UsCitizenshipConfirmation',
   () => ({
     UsCitizenshipConfirmation: jest.fn(() => null)
   })
@@ -28,7 +28,7 @@ describe('TaxDeclarationForm', () => {
     render(<TaxDeclarationForm />)
   })
 
-  it('renders child components correctly', () => {
+  it('renders child __tests__ correctly', () => {
     render(<TaxDeclarationForm />)
 
     expect(TaxResidencyFields).toHaveBeenCalled()

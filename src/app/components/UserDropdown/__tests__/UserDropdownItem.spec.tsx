@@ -8,7 +8,7 @@ import { AppRouterLink } from 'components/AppRouterLink'
 import { fireEvent, waitFor } from '@testing-library/react'
 import { history } from 'config/history'
 
-jest.mock('components/AppRouterLink', () => ({
+jest.mock('__tests__/AppRouterLink', () => ({
   AppRouterLink: jest.fn(({ children, ...rest }) => (
     <li {...rest}>{children}</li>
   ))

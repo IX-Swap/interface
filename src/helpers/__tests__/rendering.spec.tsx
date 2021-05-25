@@ -4,7 +4,7 @@ import { wysiwygToHtml, renderAddressColumn } from 'helpers/rendering'
 import { WalletAddress } from 'app/components/WalletAddress'
 import { withdrawalAddress } from '__fixtures__/withdrawalAddress'
 
-jest.mock('app/components/WalletAddress', () => ({
+jest.mock('app/__tests__/WalletAddress', () => ({
   WalletAddress: jest.fn(() => null)
 }))
 

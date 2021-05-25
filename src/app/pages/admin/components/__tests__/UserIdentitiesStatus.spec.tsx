@@ -4,7 +4,7 @@ import { render, cleanup } from 'test-utils'
 import { managedUser } from '__fixtures__/user'
 import { UserIdentitySelect } from 'app/pages/admin/components/UserIdentitySelect'
 
-jest.mock('app/pages/admin/components/UserIdentitySelect', () => ({
+jest.mock('app/pages/admin/__tests__/UserIdentitySelect', () => ({
   UserIdentitySelect: jest.fn(() => null)
 }))
 

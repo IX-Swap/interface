@@ -9,10 +9,10 @@ import { LabelledValue } from 'components/LabelledValue'
 import { formatMoney } from 'helpers/numbers'
 import { convertAddressToString } from 'app/pages/authorizer/components/utils'
 
-jest.mock('components/LabelledValue', () => ({
+jest.mock('__tests__/LabelledValue', () => ({
   LabelledValue: jest.fn(() => null)
 }))
-jest.mock('app/components/BankDetails', () => ({
+jest.mock('app/__tests__/BankDetails', () => ({
   BankDetails: jest.fn(() => null)
 }))
 

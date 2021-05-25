@@ -5,14 +5,14 @@ import { Submit } from 'components/form/Submit'
 import { Form } from 'components/form/Form'
 import { ChangePasswordFields } from 'app/pages/security/pages/changePassword/components/ChangePasswordFields'
 
-jest.mock('components/form/Submit', () => ({ Submit: jest.fn(() => null) }))
+jest.mock('__tests__/form/Submit', () => ({ Submit: jest.fn(() => null) }))
 
-jest.mock('components/form/Form', () => ({
+jest.mock('__tests__/form/Form', () => ({
   Form: jest.fn(({ children }) => children)
 }))
 
 jest.mock(
-  'app/pages/security/pages/changePassword/components/ChangePasswordFields',
+  'app/pages/security/pages/changePassword/__tests__/ChangePasswordFields',
   () => ({ ChangePasswordFields: jest.fn(() => null) })
 )
 

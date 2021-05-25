@@ -8,7 +8,7 @@ import {
 import { Form } from 'components/form/Form'
 
 jest.mock(
-  'app/pages/identity/components/IndividualInfoFields/IndividualInfoFields',
+  'app/pages/identity/__tests__/IndividualInfoFields/IndividualInfoFields',
   () => ({
     IndividualInfoFields: jest.fn(() => null)
   })

@@ -6,7 +6,7 @@ import * as useUserActionsDialog from 'app/pages/admin/hooks/useUserActionsDialo
 import { DialogResetPassword } from 'app/pages/admin/components/DialogResetPassword'
 import { fireEvent } from '@testing-library/react'
 
-jest.mock('app/pages/admin/components/DialogResetPassword', () => ({
+jest.mock('app/pages/admin/__tests__/DialogResetPassword', () => ({
   DialogResetPassword: jest.fn(() => null)
 }))
 
@@ -33,7 +33,7 @@ describe('ActionResetPassword', () => {
     render(<ActionResetPassword data={managedUser} />)
   })
 
-  it('renders components with correct props', () => {
+  it('renders __tests__ with correct props', () => {
     const date = new Date()
 
     const { getByText } = render(

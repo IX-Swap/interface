@@ -7,7 +7,7 @@ import columns from 'app/pages/invest/components/columns'
 import * as useAuthHook from 'hooks/auth/useAuth'
 import { investQueryKeys } from 'config/queryKeys'
 
-jest.mock('components/TableWithPagination/TableView', () => ({
+jest.mock('__tests__/TableWithPagination/TableView', () => ({
   TableView: jest.fn(() => null)
 }))
 

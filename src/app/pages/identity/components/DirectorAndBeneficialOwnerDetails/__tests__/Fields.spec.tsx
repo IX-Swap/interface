@@ -9,20 +9,20 @@ import {
 } from 'app/pages/identity/components/DirectorAndBeneficialOwnerDetails/Fields'
 
 jest.mock(
-  'app/pages/identity/components/DirectorAndBeneficialOwnerDetails/DocumentsFields',
+  'app/pages/identity/__tests__/DirectorAndBeneficialOwnerDetails/DocumentsFields',
   () => ({
     DocumentFields: jest.fn(() => null)
   })
 )
 
 jest.mock(
-  'app/pages/identity/components/DirectorAndBeneficialOwnerDetails/DirectorsInformationFields',
+  'app/pages/identity/__tests__/DirectorAndBeneficialOwnerDetails/DirectorsInformationFields',
   () => ({
     DirectorsInformationFields: jest.fn(() => null)
   })
 )
 
-jest.mock('app/pages/identity/components/FormSectionHeader', () => ({
+jest.mock('app/pages/identity/__tests__/FormSectionHeader', () => ({
   FormSectionHeader: jest.fn(() => null)
 }))
 

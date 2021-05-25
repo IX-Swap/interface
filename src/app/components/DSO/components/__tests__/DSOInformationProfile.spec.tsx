@@ -7,19 +7,19 @@ import { DSOUseOfProceeds } from 'app/components/DSO/components/DSOUseOfProceeds
 import { DSOFundRaisingMilestone } from 'app/components/DSO/components/DSOFundRaisingMilestone'
 import { render } from 'test-utils'
 
-jest.mock('app/components/DSO/components/DSOIntroduction', () => ({
+jest.mock('app/__tests__/DSO/__tests__/DSOIntroduction', () => ({
   DSOIntroduction: jest.fn(() => <div />)
 }))
 
-jest.mock('app/components/DSO/components/DSOBusinessModel', () => ({
+jest.mock('app/__tests__/DSO/__tests__/DSOBusinessModel', () => ({
   DSOBusinessModel: jest.fn(() => <div />)
 }))
 
-jest.mock('app/components/DSO/components/DSOUseOfProceeds', () => ({
+jest.mock('app/__tests__/DSO/__tests__/DSOUseOfProceeds', () => ({
   DSOUseOfProceeds: jest.fn(() => <div />)
 }))
 
-jest.mock('app/components/DSO/components/DSOFundRaisingMilestone', () => ({
+jest.mock('app/__tests__/DSO/__tests__/DSOFundRaisingMilestone', () => ({
   DSOFundRaisingMilestone: jest.fn(() => <div />)
 }))
 
@@ -32,7 +32,7 @@ describe('DSOInformationProfile', () => {
     )
   })
 
-  it('renders components correctly', () => {
+  it('renders __tests__ correctly', () => {
     render(
       <Form>
         <DSOInformationProfile />

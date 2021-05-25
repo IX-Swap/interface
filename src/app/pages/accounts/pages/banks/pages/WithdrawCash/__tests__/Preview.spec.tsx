@@ -9,7 +9,7 @@ import { formatMoney } from 'helpers/numbers'
 import { generateInfiniteQueryResult } from '__fixtures__/useQuery'
 import { Form } from 'components/form/Form'
 
-jest.mock('app/components/GenericPreview/GenericPreview', () => ({
+jest.mock('app/__tests__/GenericPreview/GenericPreview', () => ({
   GenericPreview: jest.fn(() => null)
 }))
 jest.mock('app/pages/accounts/pages/banks/hooks/useBanksData')

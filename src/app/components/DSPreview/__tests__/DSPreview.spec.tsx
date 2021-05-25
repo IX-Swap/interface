@@ -9,7 +9,7 @@ import { generateInfiniteQueryResult } from '__fixtures__/useQuery'
 import { balance } from '__fixtures__/balance'
 import { generatePath, Route } from 'react-router-dom'
 
-jest.mock('components/LabelledValue', () => ({
+jest.mock('__tests__/LabelledValue', () => ({
   LabelledValue: jest.fn(() => null)
 }))
 

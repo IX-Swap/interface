@@ -13,7 +13,7 @@ const useBanksDataMock = useBanksData as jest.Mock<
   Partial<ReturnType<typeof useBanksData>>
 >
 
-jest.mock('app/components/BankDetails', () => ({
+jest.mock('app/__tests__/BankDetails', () => ({
   BankDetails: jest.fn(() => <div data-testid='bank-details' />)
 }))
 

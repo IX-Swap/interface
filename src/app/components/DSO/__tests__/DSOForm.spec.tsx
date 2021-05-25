@@ -10,19 +10,19 @@ import { history } from 'config/history'
 import { IssuanceRoute } from 'app/pages/issuance/router/config'
 import * as useParsedDataHook from 'hooks/useParsedData'
 
-jest.mock('app/components/DSO/components/DSOBaseFields', () => ({
+jest.mock('app/__tests__/DSO/__tests__/DSOBaseFields', () => ({
   DSOBaseFields: jest.fn(() => <div />)
 }))
 
-jest.mock('app/components/DSO/components/DSOPricing', () => ({
+jest.mock('app/__tests__/DSO/__tests__/DSOPricing', () => ({
   DSOPricing: jest.fn(() => <div />)
 }))
 
-jest.mock('app/components/DSO/components/DSOTerms', () => ({
+jest.mock('app/__tests__/DSO/__tests__/DSOTerms', () => ({
   DSOTerms: jest.fn(() => <div />)
 }))
 
-jest.mock('app/components/DSO/components/DSOTeam', () => ({
+jest.mock('app/__tests__/DSO/__tests__/DSOTeam', () => ({
   DSOTeam: jest.fn(() => <div />)
 }))
 
@@ -51,7 +51,7 @@ describe('DSOForm', () => {
     render(<DSOForm {...props} />)
   })
 
-  it('renders form field components', () => {
+  it('renders form field __tests__', () => {
     render(<DSOForm {...props} />)
     expect(DSOBaseFields).toHaveBeenCalled()
     expect(DSOPricing).toHaveBeenCalled()

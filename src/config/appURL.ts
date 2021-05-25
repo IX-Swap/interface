@@ -6,6 +6,7 @@ export const urlParams = {
   identityId: ':identityId',
   issuerId: ':issuerId',
   dsoId: ':dsoId',
+  listingId: ':listingId',
   commitmentId: ':commitmentId',
   withdrawalAddressId: ':withdrawalAddressId',
   itemId: ':itemId',

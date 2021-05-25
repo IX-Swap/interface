@@ -9,7 +9,7 @@ import { balance } from '__fixtures__/balance'
 import { BalanceDetails } from 'app/components/BalanceDetails'
 import { generatePath, Route } from 'react-router-dom'
 
-jest.mock('app/components/BalanceDetails', () => ({
+jest.mock('app/__tests__/BalanceDetails', () => ({
   BalanceDetails: jest.fn(() => <div />)
 }))
 

@@ -11,7 +11,7 @@ import { digitalSecuritiesQueryKeys } from 'config/queryKeys'
 import { generatePath, Route } from 'react-router-dom'
 import { DSRoute } from 'app/pages/accounts/pages/digitalSecurities/router/config'
 
-jest.mock('components/TableWithPagination/TableView', () => ({
+jest.mock('__tests__/TableWithPagination/TableView', () => ({
   TableView: jest.fn(() => null)
 }))
 

@@ -7,7 +7,7 @@ import {
 import { balance } from '__fixtures__/balance'
 import { LabelledValue } from 'components/LabelledValue'
 
-jest.mock('components/LabelledValue', () => ({
+jest.mock('__tests__/LabelledValue', () => ({
   LabelledValue: jest.fn(() => null)
 }))
 

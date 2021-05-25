@@ -8,15 +8,15 @@ import { moneyNumberFormat } from 'config/numberFormat'
 import { TypedField } from 'components/form/TypedField'
 import * as useParsedDataHook from 'hooks/useParsedData'
 
-jest.mock('components/form/TypedField', () => ({
+jest.mock('__tests__/form/TypedField', () => ({
   TypedField: jest.fn(() => <input />)
 }))
 
-jest.mock('app/components/DSO/components/DSOMinimumInvestment', () => ({
+jest.mock('app/__tests__/DSO/__tests__/DSOMinimumInvestment', () => ({
   DSOMinimumInvestment: jest.fn(() => <div />)
 }))
 
-jest.mock('app/components/DSO/components/DSOTotalUnits', () => ({
+jest.mock('app/__tests__/DSO/__tests__/DSOTotalUnits', () => ({
   DSOTotalUnits: jest.fn(() => <div />)
 }))
 

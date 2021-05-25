@@ -7,7 +7,7 @@ import {
 import { UserActionsDialog } from 'app/pages/admin/components/UserActionsDialog'
 import * as useEnabledToggle from 'app/pages/admin/hooks/useEnabledToggle'
 
-jest.mock('app/pages/admin/components/UserActionsDialog', () => ({
+jest.mock('app/pages/admin/__tests__/UserActionsDialog', () => ({
   UserActionsDialog: jest.fn(({ children }) => <>{children}</>)
 }))
 
@@ -43,7 +43,7 @@ describe('DialogEnabledToggle', () => {
     )
   })
 
-  it('renders components with correct props when enabled is true', () => {
+  it('renders __tests__ with correct props when enabled is true', () => {
     const { getByText } = render(<DialogEnabledToggle {...props} />)
 
     expect(UserActionsDialog).toHaveBeenCalledWith(

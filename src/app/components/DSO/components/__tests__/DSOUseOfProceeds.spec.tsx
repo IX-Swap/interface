@@ -5,7 +5,7 @@ import { wysiwygValueExtractor } from 'helpers/forms'
 import { DSOUseOfProceeds } from 'app/components/DSO/components/DSOUseOfProceeds'
 import { Form } from 'components/form/Form'
 
-jest.mock('components/form/TypedField', () => ({
+jest.mock('__tests__/form/TypedField', () => ({
   TypedField: jest.fn(() => <input />)
 }))
 

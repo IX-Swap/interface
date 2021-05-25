@@ -4,7 +4,7 @@ import { PasswordField } from 'components/form/PasswordField'
 import { Form } from 'components/form/Form'
 import { PasswordValidation } from 'components/form/PasswordValidation'
 
-jest.mock('components/form/PasswordValidation', () => ({
+jest.mock('__tests__/form/PasswordValidation', () => ({
   PasswordValidation: jest.fn(() => null)
 }))
 
@@ -22,7 +22,7 @@ describe('PasswordField', () => {
     )
   })
 
-  it('renders components correctly', () => {
+  it('renders __tests__ correctly', () => {
     const { rerender } = render(
       <Form>
         <PasswordField />

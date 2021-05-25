@@ -4,7 +4,7 @@ import { TopIssuers } from 'app/pages/home/components/TopIssuers'
 import * as useTopIssuers from 'app/pages/home/hooks/useTopIssuers'
 import { individual } from '__fixtures__/identity'
 
-jest.mock('app/pages/home/components/TopList', () => ({
+jest.mock('app/pages/home/__tests__/TopList', () => ({
   TopList: jest.fn(() => null)
 }))
 

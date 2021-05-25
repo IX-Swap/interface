@@ -6,7 +6,7 @@ import { ChangePasswordFields } from 'app/pages/security/pages/changePassword/co
 import { Form } from 'components/form/Form'
 import { TypedField } from 'components/form/TypedField'
 
-jest.mock('components/form/TypedField', () => ({
+jest.mock('__tests__/form/TypedField', () => ({
   TypedField: jest.fn(() => null)
 }))
 

@@ -17,7 +17,7 @@ describe('RevokeAccessFields', () => {
     )
   })
 
-  it('renders components correctly', () => {
+  it('renders __tests__ correctly', () => {
     const { getByText } = render(
       <Form>
         <RevokeAccessFields />

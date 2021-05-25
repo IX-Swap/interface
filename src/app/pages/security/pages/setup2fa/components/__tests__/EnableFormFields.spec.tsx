@@ -4,7 +4,7 @@ import React from 'react'
 import { render, cleanup } from 'test-utils'
 import { TypedField } from 'components/form/TypedField'
 
-jest.mock('components/form/TypedField', () => ({
+jest.mock('__tests__/form/TypedField', () => ({
   TypedField: jest.fn(() => null)
 }))
 

@@ -7,19 +7,19 @@ import { generatePath, Route } from 'react-router-dom'
 import { IssuanceRoute } from 'app/pages/issuance/router/config'
 import { history } from 'config/history'
 
-jest.mock('components/AppRouterLink', () => ({
+jest.mock('__tests__/AppRouterLink', () => ({
   AppRouterLinkComponent: jest.fn(() => null)
 }))
 
-jest.mock('app/pages/issuance/components/MoreOptions', () => ({
+jest.mock('app/pages/issuance/__tests__/MoreOptions', () => ({
   MoreOptions: jest.fn(() => null)
 }))
 
-jest.mock('app/components/DSO/components/DSOLogo', () => ({
+jest.mock('app/__tests__/DSO/__tests__/DSOLogo', () => ({
   DSOLogo: jest.fn(() => null)
 }))
 
-jest.mock('app/pages/issuance/components/IssuanceLanding/Activities', () => ({
+jest.mock('app/pages/issuance/__tests__/IssuanceLanding/Activities', () => ({
   Activities: jest.fn(() => null)
 }))
 

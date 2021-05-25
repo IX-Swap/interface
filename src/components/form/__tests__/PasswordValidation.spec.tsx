@@ -42,7 +42,7 @@ describe('PasswordValidationDisplay', () => {
     expect(container.firstChild).toBeEmptyDOMElement()
   })
 
-  it('renders components correctly when password has value and has errors', () => {
+  it('renders __tests__ correctly when password has value and has errors', () => {
     const objResponse = {
       watch: () => ({ password: 'password' }),
       errors: {

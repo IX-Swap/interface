@@ -4,7 +4,7 @@ import { render, cleanup } from 'test-utils'
 import { Form } from 'components/form/Form'
 
 jest.mock(
-  'app/pages/identity/components/TaxDeclarationForm/TinUnavailableFields/ReasonFields',
+  'app/pages/identity/__tests__/TaxDeclarationForm/TinUnavailableFields/ReasonFields',
   () => ({
     ReasonFields: jest.fn(() => null)
   })

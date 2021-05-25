@@ -31,7 +31,7 @@ jest.mock('assets/icons/navigation/authorizer.svg', () => ({
   ReactComponent: jest.fn(() => null)
 }))
 jest.mock(
-  'app/components/SidebarContainer/components/SidebarLinkContainer',
+  'app/__tests__/SidebarContainer/__tests__/SidebarLinkContainer',
   () => ({
     SidebarLinkContainer: jest.fn(() => null)
   })

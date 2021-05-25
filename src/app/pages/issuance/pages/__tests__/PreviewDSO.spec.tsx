@@ -7,7 +7,7 @@ import { PreviewDSO } from 'app/pages/issuance/pages/PreviewDSO'
 import { DSOPreview } from 'app/components/DSO/DSOPreview/DSOPreview'
 import * as useDSOByIdHook from 'app/pages/invest/hooks/useDSOById'
 
-jest.mock('app/components/DSO/DSOPreview/DSOPreview', () => ({
+jest.mock('app/__tests__/DSO/DSOPreview/DSOPreview', () => ({
   DSOPreview: jest.fn(() => null)
 }))
 

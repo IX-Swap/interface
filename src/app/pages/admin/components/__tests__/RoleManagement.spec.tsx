@@ -31,7 +31,7 @@ describe('RoleManagement', () => {
     render(<RoleManagement activeRoles={roles} />)
   })
 
-  it('renders components correctly', () => {
+  it('renders __tests__ correctly', () => {
     const { getByText } = render(<RoleManagement activeRoles={roles} />)
 
     expect(getByText(/user/i)).toBeTruthy()

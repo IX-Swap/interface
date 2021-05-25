@@ -5,11 +5,11 @@ import { DialogEnabledToggle } from 'app/pages/admin/components/DialogEnabledTog
 import { ButtonError } from 'app/components/ButtonError'
 import { ActionEnableToggle } from 'app/pages/admin/components/ActionEnableToggle'
 
-jest.mock('app/components/ButtonError', () => ({
+jest.mock('app/__tests__/ButtonError', () => ({
   ButtonError: jest.fn(({ children }) => <>{children}</>)
 }))
 
-jest.mock('app/pages/admin/components/DialogEnabledToggle', () => ({
+jest.mock('app/pages/admin/__tests__/DialogEnabledToggle', () => ({
   DialogEnabledToggle: jest.fn(() => null)
 }))
 
@@ -36,7 +36,7 @@ describe('ActionEnableToggle', () => {
     render(<ActionEnableToggle enabled={true} />)
   })
 
-  it('renders components with correct props when enabled is true', () => {
+  it('renders __tests__ with correct props when enabled is true', () => {
     const { getByText } = render(<ActionEnableToggle enabled={true} />)
 
     expect(getByText('DISABLE THIS USER')).toBeTruthy()
@@ -58,7 +58,7 @@ describe('ActionEnableToggle', () => {
     )
   })
 
-  it('renders components with correct props when enabled is false', () => {
+  it('renders __tests__ with correct props when enabled is false', () => {
     const { getByText } = render(<ActionEnableToggle enabled={false} />)
 
     expect(getByText('ENABLE THIS USER')).toBeTruthy()

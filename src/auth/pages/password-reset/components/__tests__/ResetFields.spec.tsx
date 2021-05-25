@@ -4,7 +4,7 @@ import { TypedField } from 'components/form/TypedField'
 import { Form } from 'components/form/Form'
 import { ResetFields } from 'auth/pages/password-reset/components/ResetFields'
 
-jest.mock('components/form/TypedField', () => ({
+jest.mock('__tests__/form/TypedField', () => ({
   TypedField: jest.fn(() => null)
 }))
 

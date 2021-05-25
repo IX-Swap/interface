@@ -11,15 +11,15 @@ import { AdminRoute } from 'app/pages/admin/router/config'
 import { generatePath, Route } from 'react-router-dom'
 import { history } from 'config/history'
 
-jest.mock('app/components/SearchFilter', () => ({
+jest.mock('app/__tests__/SearchFilter', () => ({
   SearchFilter: jest.fn(() => null)
 }))
 
-jest.mock('components/TableWithPagination/TableView', () => ({
+jest.mock('__tests__/TableWithPagination/TableView', () => ({
   TableView: jest.fn(() => null)
 }))
 
-jest.mock('app/pages/admin/components/columns', () => ({
+jest.mock('app/pages/admin/__tests__/columns', () => ({
   columns: []
 }))
 
@@ -42,7 +42,7 @@ describe('AccountLoginHitory', () => {
     render(<AccountLoginHistory />)
   })
 
-  it('renders components correctly', () => {
+  it('renders __tests__ correctly', () => {
     render(
       <Route path={AdminRoute.view}>
         <AccountLoginHistory />

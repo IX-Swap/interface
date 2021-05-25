@@ -4,7 +4,7 @@ import { UserStatus } from 'app/pages/admin/components/UserStatus'
 import { managedUser } from '__fixtures__/user'
 import { Status } from 'app/pages/admin/components/Status'
 
-jest.mock('app/pages/admin/components/Status', () => ({
+jest.mock('app/pages/admin/__tests__/Status', () => ({
   Status: jest.fn(() => null)
 }))
 
@@ -18,7 +18,7 @@ describe('UserStatus', () => {
     render(<UserStatus data={managedUser} />)
   })
 
-  it('renders components with correct props', () => {
+  it('renders __tests__ with correct props', () => {
     render(<UserStatus data={managedUser} />)
 
     expect(Status).toHaveBeenNthCalledWith(1, { status: 'Enabled' }, {})
@@ -30,7 +30,7 @@ describe('UserStatus', () => {
     )
   })
 
-  it('does not render components with false values', () => {
+  it('does not render __tests__ with false values', () => {
     const { rerender } = render(
       <UserStatus data={{ ...managedUser, enabled: false }} />
     )

@@ -10,7 +10,7 @@ import { BanksRoute } from 'app/pages/accounts/pages/banks/router/config'
 import { generateInfiniteQueryResult } from '__fixtures__/useQuery'
 import { generatePath, Route } from 'react-router-dom'
 
-jest.mock('app/components/BankPreview/BankPreview', () => ({
+jest.mock('app/__tests__/BankPreview/BankPreview', () => ({
   BankPreview: jest.fn(() => <div data-testid='bank-preview' />)
 }))
 jest.mock('app/pages/accounts/pages/banks/hooks/useBanksData')

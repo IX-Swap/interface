@@ -4,7 +4,7 @@ import React from 'react'
 import { render, cleanup } from 'test-utils'
 import { OnboardingSteps } from 'app/components/OnboardingPanel/OnboardingSteps'
 
-jest.mock('app/components/OnboardingPanel/OnboardingSteps', () => ({
+jest.mock('app/__tests__/OnboardingPanel/OnboardingSteps', () => ({
   OnboardingSteps: jest.fn(() => null)
 }))
 

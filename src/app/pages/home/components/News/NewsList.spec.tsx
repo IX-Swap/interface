@@ -21,7 +21,7 @@ const useTableWithPaginationMockReturnValue: useTableWithPaginationHook.UseTable
   rowsPerPage: 4
 }
 
-jest.mock('app/pages/home/components/News/NewsItem', () => ({
+jest.mock('app/pages/home/__tests__/News/NewsItem', () => ({
   NewsItem: jest.fn(() => null)
 }))
 

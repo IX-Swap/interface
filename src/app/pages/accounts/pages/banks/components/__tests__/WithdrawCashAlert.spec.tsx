@@ -9,7 +9,7 @@ import { generateInfiniteQueryResult } from '__fixtures__/useQuery'
 import { QueryStatus } from 'react-query'
 
 jest.mock(
-  'app/pages/accounts/pages/banks/components/CashTransactionAlert',
+  'app/pages/accounts/pages/banks/__tests__/CashTransactionAlert',
   () => ({
     CashTransactionAlert: jest.fn(({ children }) => (
       <div data-testid='cta-wrapper'>{children('money123')}</div>

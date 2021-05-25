@@ -3,7 +3,7 @@ import { render, cleanup } from 'test-utils'
 import { AppRouterLinkComponent } from 'components/AppRouterLink'
 import { EditButton } from 'app/pages/identity/components/EditButton/EditButton'
 
-jest.mock('components/AppRouterLink', () => ({
+jest.mock('__tests__/AppRouterLink', () => ({
   AppRouterLinkComponent: jest.fn(() => null)
 }))
 

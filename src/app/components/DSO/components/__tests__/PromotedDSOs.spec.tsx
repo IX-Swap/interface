@@ -8,7 +8,7 @@ import { dso } from '__fixtures__/authorizer'
 import { DSOCard } from 'app/components/DSO/components/DSOCard/DSOCard'
 import { InvestRoute } from 'app/pages/invest/router/config'
 
-jest.mock('app/components/DSO/components/DSOCard/DSOCard', () => ({
+jest.mock('app/__tests__/DSO/__tests__/DSOCard/DSOCard', () => ({
   DSOCard: jest.fn(() => null)
 }))
 

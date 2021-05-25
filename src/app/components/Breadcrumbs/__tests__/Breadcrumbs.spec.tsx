@@ -2,7 +2,7 @@ import React from 'react'
 import { render, cleanup } from 'test-utils'
 import { Breadcrumbs } from 'app/components/Breadcrumbs/Breadcrumbs'
 
-jest.mock('components/AppRouterLink', () => ({
+jest.mock('__tests__/AppRouterLink', () => ({
   AppRouterLink: jest.fn(() => null)
 }))
 

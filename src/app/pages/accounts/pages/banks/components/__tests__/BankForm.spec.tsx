@@ -9,19 +9,19 @@ import { BankFields } from 'app/pages/accounts/pages/banks/components/BankFields
 import { BankDocuments } from 'app/pages/accounts/pages/banks/components/BankDocuments'
 import { AddressFields } from 'app/pages/identity/components/AddressFields/AddressFields'
 
-jest.mock('components/form/Submit', () => ({
+jest.mock('__tests__/form/Submit', () => ({
   Submit: jest.fn(() => <div />)
 }))
 
-jest.mock('app/pages/identity/components/AddressFields/AddressFields', () => ({
+jest.mock('app/pages/identity/__tests__/AddressFields/AddressFields', () => ({
   AddressFields: jest.fn(() => <div />)
 }))
 
-jest.mock('app/pages/accounts/pages/banks/components/BankFields', () => ({
+jest.mock('app/pages/accounts/pages/banks/__tests__/BankFields', () => ({
   BankFields: jest.fn(() => <div />)
 }))
 
-jest.mock('app/pages/accounts/pages/banks/components/BankDocuments', () => ({
+jest.mock('app/pages/accounts/pages/banks/__tests__/BankDocuments', () => ({
   BankDocuments: jest.fn(() => <div />)
 }))
 

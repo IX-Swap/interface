@@ -4,7 +4,7 @@ import { render, cleanup } from 'test-utils'
 import { OTPInputField } from 'components/form/OTPInputField'
 import { ErrorMessage } from '@hookform/error-message'
 
-jest.mock('components/form/OTPInputField', () => ({
+jest.mock('__tests__/form/OTPInputField', () => ({
   OTPInputField: jest.fn(() => null)
 }))
 

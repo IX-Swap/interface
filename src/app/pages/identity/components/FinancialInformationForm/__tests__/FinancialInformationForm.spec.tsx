@@ -5,14 +5,14 @@ import { EmploymentField } from 'app/pages/identity/components/FinancialInformat
 import { FundSource } from 'app/pages/identity/components/FinancialInformationForm/FundSource'
 
 jest.mock(
-  'app/pages/identity/components/FinancialInformationForm/EmploymentFields',
+  'app/pages/identity/__tests__/FinancialInformationForm/EmploymentFields',
   () => ({
     EmploymentField: jest.fn(() => null)
   })
 )
 
 jest.mock(
-  'app/pages/identity/components/FinancialInformationForm/FundSource',
+  'app/pages/identity/__tests__/FinancialInformationForm/FundSource',
   () => ({
     FundSource: jest.fn(() => null)
   })
@@ -28,7 +28,7 @@ describe('FinancialInformationForm', () => {
     render(<FinancialInformationForm />)
   })
 
-  it('renders components without errors', () => {
+  it('renders __tests__ without errors', () => {
     render(<FinancialInformationForm />)
 
     expect(EmploymentField).toHaveBeenCalled()

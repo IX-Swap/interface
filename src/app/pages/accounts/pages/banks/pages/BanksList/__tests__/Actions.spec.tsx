@@ -8,7 +8,7 @@ import { bank } from '__fixtures__/authorizer'
 import { AppRouterLinkComponent } from 'components/AppRouterLink'
 import { BanksRoute } from 'app/pages/accounts/pages/banks/router/config'
 
-jest.mock('components/AppRouterLink', () => ({
+jest.mock('__tests__/AppRouterLink', () => ({
   AppRouterLinkComponent: jest.fn(() => null)
 }))
 

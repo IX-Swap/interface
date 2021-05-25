@@ -11,7 +11,7 @@ import * as useVirtualAccount from 'app/pages/accounts/hooks/useVirtualAccount'
 import { virtualAccount } from '__fixtures__/virtualAccount'
 import { getIdFromObj } from 'helpers/strings'
 
-jest.mock('components/TableWithPagination/TableView', () => ({
+jest.mock('__tests__/TableWithPagination/TableView', () => ({
   TableView: jest.fn(() => <div data-testid='TableView' />)
 }))
 

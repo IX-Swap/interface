@@ -6,7 +6,7 @@ import {
 } from 'app/components/LandingPage/LandingPage'
 import { LandingPageItem } from 'app/components/LandingPage/LandingPageItem'
 
-jest.mock('app/components/LandingPage/LandingPageItem', () => ({
+jest.mock('app/__tests__/LandingPage/LandingPageItem', () => ({
   LandingPageItem: jest.fn(() => null)
 }))
 

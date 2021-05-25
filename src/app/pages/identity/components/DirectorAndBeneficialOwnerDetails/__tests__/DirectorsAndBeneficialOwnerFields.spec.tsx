@@ -5,7 +5,7 @@ import React from 'react'
 import { render, cleanup } from 'test-utils'
 
 jest.mock(
-  'app/pages/identity/components/DirectorAndBeneficialOwnerDetails/Fields',
+  'app/pages/identity/__tests__/DirectorAndBeneficialOwnerDetails/Fields',
   () => ({
     Fields: jest.fn(() => null)
   })
@@ -36,7 +36,7 @@ describe('DirectorsAndBeneficialOwnerFields', () => {
     )
   })
 
-  it('renders components correctly', () => {
+  it('renders __tests__ correctly', () => {
     render(
       <Form defaultValues={defaultValues}>
         <DirectorsAndBeneficialOwnerFields name='directors' />

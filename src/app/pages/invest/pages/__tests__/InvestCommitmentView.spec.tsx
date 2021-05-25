@@ -8,7 +8,7 @@ import { CommitmentPreview } from 'app/components/CommitmentPreview/CommitmentPr
 import { commitment } from '__fixtures__/authorizer'
 import { generatePath } from 'react-router-dom'
 
-jest.mock('app/components/CommitmentPreview/CommitmentPreview', () => ({
+jest.mock('app/__tests__/CommitmentPreview/CommitmentPreview', () => ({
   CommitmentPreview: jest.fn(() => null)
 }))
 

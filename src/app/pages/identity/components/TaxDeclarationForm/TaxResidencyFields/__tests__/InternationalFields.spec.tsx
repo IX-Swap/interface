@@ -4,7 +4,7 @@ import { render, cleanup } from 'test-utils'
 import { Form } from 'components/form/Form'
 
 jest.mock(
-  'app/pages/identity/components/TaxDeclarationForm/TaxResidencyFields/TaxResidencyField',
+  'app/pages/identity/__tests__/TaxDeclarationForm/TaxResidencyFields/TaxResidencyField',
   () => ({
     TaxResidencyField: jest.fn(() => null)
   })

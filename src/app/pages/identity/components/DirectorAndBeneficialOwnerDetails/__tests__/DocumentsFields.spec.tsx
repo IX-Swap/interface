@@ -34,7 +34,7 @@ describe('DocumentsFields', () => {
     )
   })
 
-  it('renders labels and components correctly', () => {
+  it('renders labels and __tests__ correctly', () => {
     const { getByText } = render(
       <Form defaultValues={defaultValues}>
         <DocumentFields {...props} />

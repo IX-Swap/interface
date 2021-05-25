@@ -3,7 +3,7 @@ import { render, cleanup } from 'test-utils'
 import { Snackbar, SnackbarProps } from 'hooks/Snackbar'
 import { NotificationIcon } from 'app/pages/notifications/components/NotificationIcon'
 
-jest.mock('app/pages/notifications/components/NotificationIcon', () => ({
+jest.mock('app/pages/notifications/__tests__/NotificationIcon', () => ({
   NotificationIcon: jest.fn(() => null)
 }))
 

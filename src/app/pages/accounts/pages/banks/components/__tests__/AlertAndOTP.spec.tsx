@@ -7,7 +7,7 @@ import {
 } from 'app/pages/accounts/pages/banks/components/AlertAndOTP'
 import { TypedField } from 'components/form/TypedField'
 
-jest.mock('components/form/TypedField', () => ({
+jest.mock('__tests__/form/TypedField', () => ({
   TypedField: jest.fn(() => null)
 }))
 

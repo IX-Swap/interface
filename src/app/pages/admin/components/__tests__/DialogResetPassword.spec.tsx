@@ -8,7 +8,7 @@ import { managedUser } from '__fixtures__/user'
 import { UserActionsDialog } from 'app/pages/admin/components/UserActionsDialog'
 import * as useResetPassword from 'app/pages/admin/hooks/useResetPassword'
 
-jest.mock('app/pages/admin/components/UserActionsDialog', () => ({
+jest.mock('app/pages/admin/__tests__/UserActionsDialog', () => ({
   UserActionsDialog: jest.fn(({ children }) => <>{children}</>)
 }))
 
@@ -44,7 +44,7 @@ describe('DialogResetPassword', () => {
     )
   })
 
-  it('renders components with correct props', () => {
+  it('renders __tests__ with correct props', () => {
     const { getByText } = render(<DialogResetPassword {...props} />)
 
     expect(UserActionsDialog).toHaveBeenCalledWith(

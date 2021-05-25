@@ -10,27 +10,27 @@ import { TopCorporates } from 'app/pages/home/components/TopCorporates'
 import { PromoBanner } from 'app/pages/invest/components/PromoBanner'
 import { News } from 'app/pages/home/components/News/News'
 
-jest.mock('app/pages/home/components/News/News', () => ({
+jest.mock('app/pages/home/__tests__/News/News', () => ({
   News: jest.fn(() => null)
 }))
 
-jest.mock('app/pages/home/components/AccessReports', () => ({
+jest.mock('app/pages/home/__tests__/AccessReports', () => ({
   AccessReports: jest.fn(() => null)
 }))
 
-jest.mock('app/pages/home/components/OnboardingLinks', () => ({
+jest.mock('app/pages/home/__tests__/OnboardingLinks', () => ({
   OnboardingLinks: jest.fn(() => null)
 }))
 
-jest.mock('app/pages/home/components/TopIssuers', () => ({
+jest.mock('app/pages/home/__tests__/TopIssuers', () => ({
   TopIssuers: jest.fn(() => null)
 }))
 
-jest.mock('app/pages/home/components/TopCorporates', () => ({
+jest.mock('app/pages/home/__tests__/TopCorporates', () => ({
   TopCorporates: jest.fn(() => null)
 }))
 
-jest.mock('app/pages/invest/components/PromoBanner', () => ({
+jest.mock('app/pages/invest/__tests__/PromoBanner', () => ({
   PromoBanner: jest.fn(() => null)
 }))
 
@@ -50,7 +50,7 @@ describe('Onboarding', () => {
     render(<Onboarding />)
   })
 
-  it('renders components correctly', () => {
+  it('renders __tests__ correctly', () => {
     render(<Onboarding />)
 
     expect(OnboardingLinks).toHaveBeenCalled()

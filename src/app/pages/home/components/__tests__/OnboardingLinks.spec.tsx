@@ -7,7 +7,7 @@ import { history } from 'config/history'
 import { AppRoute } from 'app/router/config'
 import { IdentityRoute } from 'app/pages/identity/router/config'
 
-jest.mock('app/pages/home/components/OnboardingLink', () => ({
+jest.mock('app/pages/home/__tests__/OnboardingLink', () => ({
   OnboardingLink: jest.fn(() => null)
 }))
 

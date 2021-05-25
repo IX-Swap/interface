@@ -7,7 +7,7 @@ import * as useAuthHook from 'hooks/auth/useAuth'
 import { user } from '__fixtures__/user'
 import { digitalSecuritiesQueryKeys } from 'config/queryKeys'
 
-jest.mock('components/TableWithPagination/TableView', () => ({
+jest.mock('__tests__/TableWithPagination/TableView', () => ({
   TableView: jest.fn(() => null)
 }))
 

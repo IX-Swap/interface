@@ -5,11 +5,11 @@ import { individual } from '__fixtures__/identity'
 import { IndividualAvatar } from 'components/IndividualAvatar'
 import { CorporateAvatar } from 'components/CorporateAvatar'
 
-jest.mock('components/IndividualAvatar', () => ({
+jest.mock('__tests__/IndividualAvatar', () => ({
   IndividualAvatar: jest.fn(() => null)
 }))
 
-jest.mock('components/CorporateAvatar', () => ({
+jest.mock('__tests__/CorporateAvatar', () => ({
   CorporateAvatar: jest.fn(() => null)
 }))
 

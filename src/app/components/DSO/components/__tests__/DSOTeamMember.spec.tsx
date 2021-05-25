@@ -10,11 +10,11 @@ import {
 import { teamMember } from '__fixtures__/issuance'
 import { wysiwygValueExtractor } from 'helpers/forms'
 
-jest.mock('app/components/DSO/components/DSOTeamRemoveButton', () => ({
+jest.mock('app/__tests__/DSO/__tests__/DSOTeamRemoveButton', () => ({
   DSOTeamRemoveButton: jest.fn(() => <button />)
 }))
 
-jest.mock('components/form/TypedField', () => ({
+jest.mock('__tests__/form/TypedField', () => ({
   TypedField: jest.fn(() => <input />)
 }))
 

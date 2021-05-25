@@ -24,7 +24,7 @@ describe('AuthorizationDocuments', () => {
     )
   })
 
-  it('renders components and input fields correctly', () => {
+  it('renders __tests__ and input fields correctly', () => {
     const { container, getByText } = render(
       <Form
         defaultValues={{

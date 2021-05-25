@@ -7,7 +7,7 @@ import {
 } from 'app/components/WithdrawalAddressPreview/WithdrawalAddressPreview'
 import { LabelledValue } from 'components/LabelledValue'
 
-jest.mock('components/LabelledValue', () => ({
+jest.mock('__tests__/LabelledValue', () => ({
   LabelledValue: jest.fn(() => null)
 }))
 

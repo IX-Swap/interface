@@ -4,7 +4,7 @@ import { render, cleanup } from 'test-utils'
 import { dso } from '__fixtures__/authorizer'
 import { DSOTeamMemberView } from 'app/components/DSO/components/DSOTeamMemberView'
 
-jest.mock('app/components/DSO/components/DSOTeamMemberView', () => ({
+jest.mock('app/__tests__/DSO/__tests__/DSOTeamMemberView', () => ({
   DSOTeamMemberView: jest.fn(() => null)
 }))
 

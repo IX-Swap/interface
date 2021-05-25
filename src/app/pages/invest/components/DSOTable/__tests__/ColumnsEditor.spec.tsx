@@ -4,7 +4,7 @@ import { ColumnsEditor, ColumnsEditorProps } from '../ColumnsEditor'
 import { columns } from 'app/pages/invest/components/DSOTable/columns'
 import { ColumnsEditorItem } from 'app/pages/invest/components/DSOTable/ColumnsEditorItem'
 
-jest.mock('app/pages/invest/components/DSOTable/ColumnsEditorItem', () => ({
+jest.mock('app/pages/invest/__tests__/DSOTable/ColumnsEditorItem', () => ({
   ColumnsEditorItem: jest.fn(() => null)
 }))
 

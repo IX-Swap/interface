@@ -4,7 +4,7 @@ import { DSOInfo } from '../DSOInfo'
 import * as useDSOByIdHook from 'app/pages/invest/hooks/useDSOById'
 import { dso } from '__fixtures__/authorizer'
 
-jest.mock('app/components/DSO/components/DSOLogo', () => ({
+jest.mock('app/__tests__/DSO/__tests__/DSOLogo', () => ({
   DSOLogo: jest.fn(() => null)
 }))
 

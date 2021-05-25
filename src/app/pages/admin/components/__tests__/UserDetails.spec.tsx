@@ -6,11 +6,11 @@ import { LabelledValue } from 'components/LabelledValue'
 import { UserActions } from 'app/pages/admin/components/UserActions'
 import { getTimeFromNow } from 'helpers/dates'
 
-jest.mock('components/LabelledValue', () => ({
+jest.mock('__tests__/LabelledValue', () => ({
   LabelledValue: jest.fn(({ value }) => <>{value}</>)
 }))
 
-jest.mock('app/pages/admin/components/UserActions', () => ({
+jest.mock('app/pages/admin/__tests__/UserActions', () => ({
   UserActions: jest.fn(() => null)
 }))
 
@@ -24,7 +24,7 @@ describe('UserDetails', () => {
     render(<UserDetails data={managedUser} />)
   })
 
-  it('renders components with correct props', () => {
+  it('renders __tests__ with correct props', () => {
     const { getByText } = render(<UserDetails data={managedUser} />)
 
     expect(getByText('selmer+1@investax.io')).toBeInTheDocument()

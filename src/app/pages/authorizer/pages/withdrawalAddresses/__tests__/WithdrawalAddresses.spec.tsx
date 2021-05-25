@@ -2,7 +2,7 @@ import React from 'react'
 import { render, cleanup } from 'test-utils'
 import { WithdrawalAddresses } from 'app/pages/authorizer/pages/withdrawalAddresses/WithdrawalAddresses'
 
-jest.mock('app/pages/authorizer/components/AuthorizerList', () => ({
+jest.mock('app/pages/authorizer/__tests__/AuthorizerList', () => ({
   AuthorizerList: jest.fn(() => null)
 }))
 

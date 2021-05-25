@@ -7,7 +7,7 @@ import {
 } from 'components/dataroom/DataroomEditRow'
 import { document } from '__fixtures__/identity'
 
-jest.mock('components/dataroom/DataroomColumns', () => ({
+jest.mock('__tests__/dataroom/DataroomColumns', () => ({
   DataroomColumns: jest.fn(() => null)
 }))
 

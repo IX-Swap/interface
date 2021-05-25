@@ -4,7 +4,7 @@ import { RegisterFields } from 'auth/pages/register/components/RegisterFields'
 import { TypedField } from 'components/form/TypedField'
 import { Form } from 'components/form/Form'
 
-jest.mock('components/form/TypedField', () => ({
+jest.mock('__tests__/form/TypedField', () => ({
   TypedField: jest.fn(() => null)
 }))
 

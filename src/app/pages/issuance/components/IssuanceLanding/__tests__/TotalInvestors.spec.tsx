@@ -5,7 +5,7 @@ import * as useTotalInvestorsHook from 'app/pages/issuance/hooks/useTotalInvesto
 import { InsightValue } from 'app/pages/issuance/components/IssuanceLanding/InsightValue'
 import { generateQueryResult } from '__fixtures__/useQuery'
 
-jest.mock('app/pages/issuance/components/IssuanceLanding/InsightValue', () => ({
+jest.mock('app/pages/issuance/__tests__/IssuanceLanding/InsightValue', () => ({
   InsightValue: jest.fn(() => null)
 }))
 
