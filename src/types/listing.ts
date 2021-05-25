@@ -11,4 +11,5 @@ export interface Listing {
   explorer: string
   createdAt: string
   updatedAt: string
+  symbol: string
 }
