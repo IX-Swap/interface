@@ -50,7 +50,8 @@ export const onReady = (onReadyCallback: OnReadyCallback) => {
       console.error(error.message)
     })
 }
-const resolveSymbol = (
+
+export const resolveSymbol = (
   symbolName: string,
   onResolve: ResolveCallback,
   onError: ErrorCallback
@@ -69,7 +70,7 @@ const resolveSymbol = (
     })
 }
 
-const getBars = (
+export const getBars = (
   symbolInfo: LibrarySymbolInfo,
   resolution: ResolutionString,
   rangeStartDate: number,
@@ -179,9 +180,11 @@ export const getDataFeed = () => {
       onResetCacheNeededCallback: () => void
     ) => {
       // This is intentional
+      // To be implemented
     },
     unsubscribeBars: (subscriberUID: any) => {
       // This is intentional
+      // To be implemented
     }
   }
   return datafeed

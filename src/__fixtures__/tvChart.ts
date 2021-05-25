@@ -10,6 +10,57 @@ import {
   Timezone
 } from 'charting-library/charting_library'
 
+export const sampleResponse = {
+  s: 'ok',
+  t: [1621123200, 1621209600, 1621296000],
+  o: [11.401092213679004, 11.146026013215472, 10.012423098040488],
+  h: [14.995080373961207, 14.998159951905166, 14.975964168949814],
+  l: [10.012807456345774, 10.050266174050345, 10.012423098040488],
+  c: [10.176683975620463, 10.49146609655811, 11.128767610079938],
+  v: [1210, 1744, 1024]
+}
+export const sampleBars = [
+  {
+    time: 1621123200000,
+    open: 11.401092213679004,
+    high: 14.995080373961207,
+    low: 10.012807456345774,
+    close: 10.176683975620463,
+    volume: 1210
+  },
+  {
+    time: 1621209600000,
+    open: 11.146026013215472,
+    high: 14.998159951905166,
+    low: 10.050266174050345,
+    close: 10.49146609655811,
+    volume: 1744
+  },
+  {
+    time: 1621296000000,
+    open: 10.012423098040488,
+    high: 14.975964168949814,
+    low: 10.012423098040488,
+    close: 11.128767610079938,
+    volume: 1024
+  }
+]
+export const defaultSearchResult = [
+  {
+    symbol: 'ACI',
+    full_name: 'ACI',
+    description: 'Arch Coal Inc.',
+    exchange: 'NYSE',
+    type: 'stock'
+  },
+  {
+    symbol: 'ACN',
+    full_name: 'ACN',
+    description: 'Accenture plc',
+    exchange: 'NYSE',
+    type: 'stock'
+  }
+]
 export const sampleMarketData = [
   {
     time: 1620172800000,
@@ -95,7 +146,7 @@ export const sampleMarketData = [
   }
 ]
 
-const config = {
+export const config = {
   exchanges: [{ value: 'BINANCE', name: 'Binance', desc: 'Binance Exchange' }],
   symbols_types: [{ value: 'crypto', name: 'Cryptocurrency' }],
   supported_resolutions: ['1', '3', '5', '15', '30', '60', '120', '240', 'D'],
@@ -105,7 +156,7 @@ const config = {
   supports_timescale_marks: false,
   supports_time: true
 }
-const symbolData = {
+export const symbolData = {
   symbol: 'ETHBTC',
   ticker: 'ETHBTC',
   name: 'ETHBTC',

@@ -41,7 +41,7 @@ export const MarketRoot = () => {
               tvWidget={tvWidget}
               setTradingChart={setTradingChart}
               datafeed={datafeed}
-              symbol='ETH/USD'
+              symbol='EUR/SGD'
             />
           </Grid>
           <Grid item className={classes.colorGrid} xs={12}>
