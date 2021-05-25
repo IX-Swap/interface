@@ -203,3 +203,7 @@ export const exchange = {
 export const exchangeMarket = {
   getOrdersList: (userId: string) => `exchange/orders/list/${userId}`
 }
+
+export const listings = {
+  getByUserId: (userId: string) => `exchange/listings/${userId}`
+}

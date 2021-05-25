@@ -11,4 +11,8 @@ export interface Listing {
   explorer: string
   createdAt: string
   updatedAt: string
+  status: 'Draft' | 'Submitted' | 'Approved'
+  minTrade: number
+  maxTrade: number
+  availableMarket: string
 }
