@@ -31,3 +31,5 @@ export const sampleTVChartProps: ChartContainerProps = {
 }
 
 export const SYMBOL_SEARCH_LIMIT = 30
+// Chart data will update every 20 seconds
+export const UPDATE_FREQUENCY = 20000

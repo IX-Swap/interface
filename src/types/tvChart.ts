@@ -1,7 +1,11 @@
 import {
+  Bar,
   ChartingLibraryWidgetOptions,
+  HistoryMetadata,
   IChartingLibraryWidget,
-  ResolutionString
+  LibrarySymbolInfo,
+  ResolutionString,
+  SubscribeBarsCallback
 } from 'charting-library/charting_library'
 
 export interface ChartContainerProps {
@@ -52,3 +56,18 @@ export interface BarValue {
 }
 
 export const barsStatusNonError = [BarsStatus.OK, BarsStatus.NO_DATA]
+
+export interface GetBarsResult {
+  bars: Bar[]
+  meta: HistoryMetadata
+}
+
+export interface DataSubscriber {
+  symbolInfo: LibrarySymbolInfo
+  resolution: ResolutionString
+  lastBarTime: number | null
+  listener: SubscribeBarsCallback
+}
+export interface DataSubscribers {
+  [guid: string]: DataSubscriber
+}

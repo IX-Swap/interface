@@ -1,10 +1,7 @@
 import { AxiosResponse } from 'axios'
 import {
-  Bar,
   DatafeedConfiguration,
   ErrorCallback,
-  HistoryCallback,
-  HistoryMetadata,
   LibrarySymbolInfo,
   OnReadyCallback,
   ResolutionString,
@@ -15,31 +12,9 @@ import {
 } from 'charting-library/charting_library'
 import { charts } from 'config/apiURL'
 import apiService from 'services/api'
-import {
-  BarsStatus,
-  barsStatusNonError,
-  HistoryParams,
-  HistoryResponse
-} from 'types/tvChart'
-import { SYMBOL_SEARCH_LIMIT } from '../constants'
-
-const getHistoryParams = (
-  symbolInfo: LibrarySymbolInfo,
-  resolution: ResolutionString,
-  rangeStartDate: number,
-  rangeEndDate: number
-) => {
-  const params: HistoryParams = {
-    symbol: symbolInfo.ticker ?? '',
-    from: rangeStartDate,
-    to: rangeEndDate,
-    resolution
-  }
-  if (symbolInfo.currency_code !== undefined) {
-    params.currencyCode = symbolInfo.currency_code
-  }
-  return params
-}
+import { SYMBOL_SEARCH_LIMIT, UPDATE_FREQUENCY } from '../constants'
+import { DataPulseProvider } from './data-pulse-provider'
+import { getBars } from './history-provider'
 export const onReady = (onReadyCallback: OnReadyCallback) => {
   void apiService
     .get(charts.config)
@@ -68,67 +43,6 @@ export const resolveSymbol = (
     .catch(error => {
       onError(error.message)
     })
-}
-
-export const getBars = (
-  symbolInfo: LibrarySymbolInfo,
-  resolution: ResolutionString,
-  rangeStartDate: number,
-  rangeEndDate: number,
-  onResult: HistoryCallback,
-  onError: ErrorCallback,
-  isFirstCall: boolean
-) => {
-  void apiService
-    .get(charts.history, {
-      params: getHistoryParams(
-        symbolInfo,
-        resolution,
-        rangeStartDate,
-        rangeEndDate
-      )
-    })
-    .then((response: AxiosResponse<HistoryResponse>) => {
-      const { data } = response
-      if (!barsStatusNonError.includes(data.s)) {
-        onError(data.errmsg ?? '')
-      }
-      let bars: Bar[] = []
-      const meta: HistoryMetadata = { noData: false }
-      if (data.s === BarsStatus.NO_DATA) {
-        meta.noData = true
-        meta.nextTime = data.nextTime
-      } else {
-        bars = getProcessedBars(data)
-      }
-      onResult(bars, meta)
-    })
-    .catch(error => {
-      onError(error.message)
-    })
-}
-
-const getProcessedBars = (data: HistoryResponse): Bar[] => {
-  const bars = []
-  for (var i = 0; i < data.t.length; ++i) {
-    const barValue = {
-      time: data.t[i] * 1000,
-      close: data.c[i],
-      open: data.c[i],
-      high: data.c[i],
-      low: data.c[i]
-    } as any
-    if (data.o !== undefined && data.h !== undefined && data.l !== undefined) {
-      barValue.open = data.o[i]
-      barValue.high = data.h[i]
-      barValue.low = data.l[i]
-    }
-    if (data.v !== undefined) {
-      barValue.volume = data.v[i]
-    }
-    bars.push(barValue)
-  }
-  return bars
 }
 
 export const getServerTime = (callback: ServerTimeCallback) => {
@@ -166,6 +80,7 @@ export const searchSymbols = (
 }
 
 export const getDataFeed = () => {
+  const dataPulseProvider = new DataPulseProvider(UPDATE_FREQUENCY)
   const datafeed = {
     onReady,
     searchSymbols,
@@ -179,12 +94,15 @@ export const getDataFeed = () => {
       listenerGuid: string,
       onResetCacheNeededCallback: () => void
     ) => {
-      // This is intentional
-      // To be implemented
+      dataPulseProvider.subscribeBars(
+        symbolInfo,
+        resolution,
+        onTick,
+        listenerGuid
+      )
     },
     unsubscribeBars: (subscriberUID: any) => {
-      // This is intentional
-      // To be implemented
+      dataPulseProvider.unsubscribeBars(subscriberUID)
     }
   }
   return datafeed
