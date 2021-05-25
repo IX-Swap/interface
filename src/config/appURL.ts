@@ -37,6 +37,7 @@ export const urlService = {
   issuanceDetails: `${AppService.IssuanceDetails}`,
   invest: `${AppService.Invest}`,
   authorizer: `${AppService.Authorizer}`,
+  market: `${AppService.Market}`,
   settings: 'settings',
   admin: 'admin',
   home: 'home',

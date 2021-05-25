@@ -78,16 +78,18 @@ export const taxDeclarationSchema = yup
             taxIdentificationNumber: yup
               .string()
               .required('Required')
-              .test('nric', 'Invalid FIN/NRIC', function (
-                value: string | null | undefined
-              ) {
-                if (value === undefined || value === null) {
-                  return false
-                }
+              .test(
+                'nric',
+                'Invalid FIN/NRIC',
+                function (value: string | null | undefined) {
+                  if (value === undefined || value === null) {
+                    return false
+                  }
 
-                const isValid = /^[STFG]\d{7}[A-Z]$/.test(value)
-                return isValid
-              })
+                  const isValid = /^[STFG]\d{7}[A-Z]$/.test(value)
+                  return isValid
+                }
+              )
           })
         ),
         otherwise: yup.array().of(
