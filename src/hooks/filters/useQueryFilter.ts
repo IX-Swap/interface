@@ -14,6 +14,8 @@ export interface QueryFilters {
   createdByAdmin: string | undefined
   pair: string | undefined
   pairFilter: string | undefined
+  sortBy: string | undefined
+  orderBy: 'ASC' | 'DSC' | undefined
 }
 
 export type QueryFilter = keyof QueryFilters

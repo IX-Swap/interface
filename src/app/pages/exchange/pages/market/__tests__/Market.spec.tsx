@@ -2,7 +2,7 @@ import React from 'react'
 import { render, cleanup } from 'test-utils'
 import { Market } from '../Market'
 
-jest.mock('app/exchange/market/MarketRoot', () => ({
+jest.mock('app/pages/exchange/market/MarketRoot', () => ({
   MarketRoot: jest.fn(() => null)
 }))
 

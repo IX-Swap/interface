@@ -23,12 +23,17 @@ export const useMarketList = (showFilter: boolean | undefined = false) => {
     const isFavorite = pairFilterIsFavorite ? true : undefined
     const currency = pairFilterIsFavorite ? 'all' : pairFilter
     const search = getFilterValue('search')
+    const sortBy = getFilterValue('sortBy')
+    const orderBy = getFilterValue('orderBy')
+
     const filters = {
       skip: 0,
       limit: 500,
       search: showFilter ? search : undefined,
       isFavorite: showFilter ? isFavorite : undefined,
-      currency: showFilter ? currency : undefined
+      currency: showFilter ? currency : undefined,
+      sortBy: showFilter ? sortBy : undefined,
+      orderBy: showFilter ? orderBy : undefined
     }
 
     return filters
