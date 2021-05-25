@@ -34,7 +34,7 @@ describe('InvestLanding', () => {
     ).toBeInTheDocument()
   })
 
-  it('renders Promoted DSOs, PromoBanner and DSOTable __tests__', () => {
+  it('renders Promoted DSOs, PromoBanner and DSOTable components', () => {
     render(<InvestLanding />)
     expect(PromotedDSOs).toHaveBeenCalled()
     expect(PromoBanner).toHaveBeenCalled()
