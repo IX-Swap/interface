@@ -2,6 +2,7 @@ import React from 'react'
 
 import { RootContainer } from 'ui/RootContainer'
 import { PageHeader } from 'app/components/PageHeader/PageHeader'
+import { MyListingsTable } from '../../market/components/MyListingsTable/MyListingsTable'
 
 export const MyListings = () => {
   return (
@@ -11,6 +12,7 @@ export const MyListings = () => {
         alignment='center'
         showBreadcrumbs={true}
       />
+      <MyListingsTable />
     </RootContainer>
   )
 }

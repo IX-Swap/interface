@@ -1,13 +1,14 @@
 import { formatAmount } from 'helpers/numbers'
+import { renderMarketType } from 'helpers/rendering'
 
 export const columns = [
   {
     label: 'Pair',
-    key: 'asset.name'
+    key: 'tokenSymbol'
   },
   {
     label: 'Name',
-    key: 'name'
+    key: 'tokenName'
   },
   {
     label: 'Status',
@@ -15,21 +16,17 @@ export const columns = [
   },
   {
     label: 'Minimum Trade',
-    key: 'minTrade',
+    key: 'minimumTradeUnits',
     render: formatAmount
   },
   {
     label: 'Max Trade',
-    key: 'maxTrade',
+    key: 'maximumTradeUnits',
     render: formatAmount
   },
   {
     label: 'Available Market',
-    key: 'amount'
+    key: 'marketType',
+    render: renderMarketType
   }
-  // {
-  //   label: '',
-  //   key: '_id'
-  //   // render: renderLaunchButton
-  // }
 ]

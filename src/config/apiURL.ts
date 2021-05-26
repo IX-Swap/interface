@@ -215,5 +215,5 @@ export const exchangeMarket = {
 }
 
 export const listings = {
-  getByUserId: (userId: string) => `exchange/listings/${userId}`
+  getListByUser: (userId: string) => `exchange/listings/list${userId}`
 }

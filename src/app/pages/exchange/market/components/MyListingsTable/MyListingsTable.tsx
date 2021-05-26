@@ -1,5 +1,4 @@
 import React from 'react'
-// import { Order } from 'types/order'
 import { getIdFromObj } from 'helpers/strings'
 import { useAuth } from 'hooks/auth/useAuth'
 import { VSpacer } from 'components/VSpacer'
@@ -8,26 +7,41 @@ import { columns } from 'app/pages/exchange/market/components/MyListingsTable/co
 import { listings } from 'config/apiURL'
 import { Listing } from 'types/listing'
 import { Actions } from 'app/pages/exchange/market/components/MyListingsTable/Actions'
-
-// import { usePastOrderFilter } from 'app/pages/exchange/market/hooks/usePastOrderFilter'
-// import { PastOrderFilter } from 'app/pages/exchange/market/components/PastOrderFilter/PastOrderFilter'
-// import { exchangeMarketQueryKeys } from 'config/queryKeys'
-// import { exchangeMarket, listings } from 'config/apiURL'
+import { Box, Grid } from '@material-ui/core'
+import { AddListingButton } from './AddListingButton'
+import { SearchFilter } from 'app/components/SearchFilter'
+import { useSearchFilter } from 'hooks/filters/useSearchFilter'
+import { listingsQueryKeys } from 'config/queryKeys'
 
 export const MyListingsTable = () => {
   const { user } = useAuth()
   const userId = getIdFromObj(user)
-  // const { filter } = usePastOrderFilter(pairId)
-
+  const { filter } = useSearchFilter()
   return (
     <>
-      {/* <PastOrderFilter /> */}
+      <VSpacer size={'small'} />
+      <Grid container justify='space-between' alignItems='center'>
+        <Grid item xs={12} md={4}>
+          <Box width={256} pt={2}>
+            <SearchFilter
+              fullWidth
+              placeholder='Search'
+              inputAdormentPosition='start'
+            />
+          </Box>
+        </Grid>
+        <Grid item xs={12} md={2}>
+          <Box display='flex' pt={2} justifyContent='flex-end'>
+            <AddListingButton />
+          </Box>
+        </Grid>
+      </Grid>
       <VSpacer size={'small'} />
       <TableView<Listing>
-        name={'test'}
-        uri={listings.getByUserId(userId)}
+        name={listingsQueryKeys.getListingsList}
+        uri={listings.getListByUser(userId)}
         columns={columns}
-        // filter={filter}
+        filter={filter}
         defaultRowsPerPage={5}
         hasActions
         actions={Actions}

@@ -10,7 +10,8 @@ export const OTCMarketRoute = {
   market: makeURL(['app', 'OTCMarket', 'market']),
   holdings: makeURL(['app', 'OTCMarket', 'holdings']),
   myListings: makeURL(['app', 'OTCMarket', 'myListings']),
-  myListing: makeURL(['app', 'OTCMarket', 'myListings', 'listingId']),
+  viewListing: makeURL(['app', 'OTCMarket', 'myListings', 'listingId', 'view']),
+  createListing: makeURL(['app', 'OTCMarket', 'myListings', 'create']),
   buyerList: makeURL(['app', 'OTCMarket', 'buyerList'])
 }
 
