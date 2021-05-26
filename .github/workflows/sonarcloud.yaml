@@ -14,10 +14,6 @@ jobs:
         with:
           fetch-depth: 0
       
-      - uses: webfactory/ssh-agent@v0.5.2
-        with:
-          ssh-public-key: ${{ secrets.SSH_PRIVATE_KEY }}
-
       - name: Install packages
         run: yarn
 
