@@ -2,6 +2,7 @@ import React, { Fragment } from 'react'
 import { VSpacer } from 'components/VSpacer'
 import { Element } from 'react-scroll'
 import { ListingFormSection } from 'app/pages/exchange/components/ListingForm/ListingScrollGuide'
+import { ListingPricing } from 'app/pages/exchange/components/ListingForm/ListingPricing'
 
 export interface ListingFormFieldsProps {
   isNew: boolean
@@ -24,7 +25,7 @@ export const ListingFormFields = (props: ListingFormFieldsProps) => {
 
       <Element name={ListingFormSection.Pricing}>
         <VSpacer size='large' />
-        Pricing
+        <ListingPricing />
       </Element>
 
       <Element name={ListingFormSection['Offering Terms']}>
