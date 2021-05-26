@@ -8,11 +8,20 @@ import { useStyles } from 'app/pages/exchange/market/MarketRoot.style'
 import { InvestorLiveOrderBook } from 'app/pages/invest/components/InvestorLiveOrderBook/InvestorLiveOrderBook'
 import { TVChartContainer } from 'app/pages/invest/components/TVChartContainer/TVChartContainer'
 import { Trades } from 'app/pages/invest/components/Trades/Trades'
+import { getDataFeed } from 'app/pages/invest/components/TVChartContainer/services/datafeed'
+import {
+  IBasicDataFeed,
+  IChartingLibraryWidget
+} from 'charting-library/charting_library'
 
 export const MarketRoot = () => {
   const classes = useStyles()
   const [placeOrder] = useCreateOrder()
-
+  const [
+    tvWidget,
+    setTradingChart
+  ] = React.useState<IChartingLibraryWidget | null>(null)
+  const [datafeed] = React.useState<IBasicDataFeed>(() => getDataFeed())
   return (
     <Box className={classes.container}>
       <Grid item xs={12} className={classes.colorGrid}>
@@ -28,7 +37,12 @@ export const MarketRoot = () => {
 
         <Grid item container>
           <Grid item className={classes.middleBlock} xs={12}>
-            <TVChartContainer />
+            <TVChartContainer
+              tvWidget={tvWidget}
+              setTradingChart={setTradingChart}
+              datafeed={datafeed}
+              symbol='EUR/SGD'
+            />
           </Grid>
           <Grid item className={classes.colorGrid} xs={12}>
             <MyOrders />
