@@ -8,6 +8,7 @@ import { getOfferingName } from 'helpers/strings'
 import { ListingFormFields } from 'app/pages/exchange/components/ListingForm/ListingFormFields'
 import { ListingSidebar } from 'app/pages/exchange/components/ListingForm/ListingSidebar'
 import { ListingFormActions } from 'app/pages/exchange/components/ListingForm/ListingFormActions'
+import { ListingRadioButtons } from 'app/pages/exchange/components/ListingForm/ListingRadioButtons'
 
 export interface ListingFormProps {
   data?: DigitalSecurityOffering
@@ -23,6 +24,10 @@ export const ListingForm = (props: ListingFormProps) => {
   return (
     <Form data-testid='listing-form'>
       <Grid container>
+        <Grid item lg={9} container direction='column'>
+          <ListingRadioButtons />
+        </Grid>
+
         <Grid item lg={9} container direction='column'>
           <ListingFormFields isNew={isNew} isLive={isLive} />
         </Grid>

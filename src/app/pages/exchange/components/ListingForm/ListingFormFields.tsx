@@ -14,6 +14,7 @@ export const ListingFormFields = (props: ListingFormFieldsProps) => {
   return (
     <Fragment>
       <Element name={ListingFormSection['General Information']}>
+        <VSpacer size='large' />
         General Information
       </Element>
 
