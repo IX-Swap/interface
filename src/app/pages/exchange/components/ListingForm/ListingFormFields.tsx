@@ -2,6 +2,7 @@ import React, { Fragment } from 'react'
 import { VSpacer } from 'components/VSpacer'
 import { Element } from 'react-scroll'
 import { ListingFormSection } from 'app/pages/exchange/components/ListingForm/ListingScrollGuide'
+import { ListingBaseFields } from 'app/pages/exchange/components/ListingForm/ListingBaseFields'
 
 export interface ListingFormFieldsProps {
   isNew: boolean
@@ -9,12 +10,12 @@ export interface ListingFormFieldsProps {
 }
 
 export const ListingFormFields = (props: ListingFormFieldsProps) => {
-  // const { isNew, isLive } = props
+  const { isNew, isLive } = props
 
   return (
     <Fragment>
       <Element name={ListingFormSection['General Information']}>
-        General Information
+        <ListingBaseFields isNew={isNew} isLive={isLive} />
       </Element>
 
       <Element name={ListingFormSection.Market}>
