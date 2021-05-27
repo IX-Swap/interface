@@ -213,3 +213,11 @@ export const placeOrderURL = {
 export const exchangeMarket = {
   getOrdersList: (userId: string) => `exchange/orders/list/${userId}`
 }
+
+export const charts = {
+  config: 'exchange/udf/config',
+  symbols: 'exchange/udf/symbols',
+  history: 'exchange/udf/history',
+  time: 'exchange/udf/time',
+  search: 'exchange/udf/search'
+}

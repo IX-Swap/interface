@@ -1,6 +1,11 @@
 import {
+  Bar,
   ChartingLibraryWidgetOptions,
-  IChartingLibraryWidget
+  HistoryMetadata,
+  IChartingLibraryWidget,
+  LibrarySymbolInfo,
+  ResolutionString,
+  SubscribeBarsCallback
 } from 'charting-library/charting_library'
 
 export interface ChartContainerProps {
@@ -15,4 +20,54 @@ export interface ChartContainerProps {
   tvWidget: IChartingLibraryWidget | null
   setTradingChart: (tvWidget: IChartingLibraryWidget) => void
   dataFeedUrl?: string
+}
+export interface HistoryParams {
+  symbol: string
+  from: number
+  to: number
+  resolution: ResolutionString
+  currencyCode?: string
+}
+
+export enum BarsStatus {
+  OK = 'ok',
+  NO_DATA = 'no_data',
+  ERROR = 'error'
+}
+
+export interface HistoryResponse {
+  s: BarsStatus
+  errmsg?: string
+  t: number[]
+  c: number[]
+  o?: number[]
+  h?: number[]
+  l?: number[]
+  v?: number[]
+  nextTime?: number
+}
+
+export interface BarValue {
+  time: number
+  close: number
+  open: number
+  high: number
+  low: number
+}
+
+export const barsStatusNonError = [BarsStatus.OK, BarsStatus.NO_DATA]
+
+export interface GetBarsResult {
+  bars: Bar[]
+  meta: HistoryMetadata
+}
+
+export interface DataSubscriber {
+  symbolInfo: LibrarySymbolInfo
+  resolution: ResolutionString
+  lastBarTime: number | null
+  listener: SubscribeBarsCallback
+}
+export interface DataSubscribers {
+  [guid: string]: DataSubscriber
 }
