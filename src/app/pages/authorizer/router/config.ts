@@ -23,7 +23,8 @@ export const AuthorizerRoute = {
   commitments: makeURL(['app', 'authorizer', 'commitments']),
   withdrawalAddresses: makeURL(['app', 'authorizer', 'withdrawalAddresses']),
   viewItem: makeURL(['app', 'authorizer', 'category', 'itemId']),
-  issuanceDetails: makeURL(['app', 'authorizer', 'issuanceDetails'])
+  issuanceDetails: makeURL(['app', 'authorizer', 'issuanceDetails']),
+  listings: '/app/authorizer/listings'
 }
 
 export const authorizerLandingLinks: InternalRouteProps[] = [
@@ -85,6 +86,12 @@ export const authorizerLandingLinks: InternalRouteProps[] = [
     label: 'Detail of Issuance',
     path: AuthorizerRoute.issuanceDetails,
     color: '#11BB93',
+    icon: IssuanceDetailsIcon
+  },
+  {
+    label: 'Listings',
+    path: AuthorizerRoute.listings,
+    color: 'red',
     icon: IssuanceDetailsIcon
   }
 ]

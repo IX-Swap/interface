@@ -30,6 +30,7 @@ export enum AppFeature {
   Offerings = 'offerings',
   Deployments = 'deployments',
   Issuance = 'issuance',
+  Listings = 'listings',
   // backend
   Deposits = 'deposits',
   Withdrawals = 'withdrawals',
@@ -59,5 +60,6 @@ export enum AuthorizerCategory {
   IssuanceDetails = 'issuance-details',
   Commitments = 'commitments',
   Offerings = 'offerings',
-  WithdrawalAddresses = 'withdrawal-addresses'
+  WithdrawalAddresses = 'withdrawal-addresses',
+  Listings = 'listings'
 }
