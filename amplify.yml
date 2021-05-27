@@ -3,7 +3,6 @@ frontend:
   phases:
     preBuild:
       commands:
-        - yarn pre-install
         - yarn install
     build:
       commands:
