@@ -16,7 +16,7 @@ export const ListingMarketInfo = () => {
           <FormSectionHeader
             title={
               <>
-                <Typography variant={'h4'}>Market</Typography>
+                <Typography variant={'h3'}>Market</Typography>
                 <VSpacer size={'small'} />
                 <Typography>
                   Creating a market allows investors to trade this Digital
