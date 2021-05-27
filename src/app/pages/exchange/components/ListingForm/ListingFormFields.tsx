@@ -2,6 +2,7 @@ import React, { Fragment } from 'react'
 import { VSpacer } from 'components/VSpacer'
 import { Element } from 'react-scroll'
 import { ListingFormSection } from 'app/pages/exchange/components/ListingForm/ListingScrollGuide'
+import { ListingDataroom } from 'app/pages/exchange/components/ListingForm/ListingDataroom'
 import { DSOTeam } from 'app/components/DSO/components/DSOTeam'
 import { ListingInformationProfile } from 'app/pages/exchange/components/ListingForm/ListingInformationProfile'
 import { ListingPricing } from 'app/pages/exchange/components/ListingForm/ListingPricing'
@@ -40,7 +41,7 @@ export const ListingFormFields = (props: ListingFormFieldsProps) => {
 
       <Element name={ListingFormSection['Upload Documents']}>
         <VSpacer size='large' />
-        Upload Documents
+        <ListingDataroom />
       </Element>
 
       <Element name={ListingFormSection['Information Profile']}>
