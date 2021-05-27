@@ -21,7 +21,7 @@ yarn std // or npm run std
 
 **Hosted Instance**
 
-[https://www.mozork.com/](https://www.mozork.com/)
+[https://dev.mozork.com/](https://dev.mozork.com/)
 
 
 **Webhooks**
