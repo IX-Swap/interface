@@ -1,18 +1,27 @@
 import React from 'react'
+import { PlaceOrderForm } from 'app/pages/exchange/components/PlaceOrderForm/PlaceOrderForm'
 import { useCreateOrder } from 'app/pages/exchange/hooks/useCreateOrder'
 import { Box, Grid } from '@material-ui/core'
+import { MyOrders } from 'app/pages/exchange/components/MyOrders/MyOrders'
 import { FinancialSummary } from 'app/pages/invest/components/FinancialSummary/FinancialSummary'
+import { useStyles } from 'app/pages/exchange/pages/market/Market.style'
 import { InvestorLiveOrderBook } from 'app/pages/invest/components/InvestorLiveOrderBook/InvestorLiveOrderBook'
 import { TVChartContainer } from 'app/pages/invest/components/TVChartContainer/TVChartContainer'
-import { MyOrders } from 'app/pages/exchange/components/MyOrders/MyOrders'
-import { PlaceOrderForm } from 'app/pages/exchange/components/PlaceOrderForm/PlaceOrderForm'
 import { Trades } from 'app/pages/invest/components/Trades/Trades'
-import { useStyles } from 'app/pages/exchange/pages/market/Market.style'
+import { getDataFeed } from 'app/pages/invest/components/TVChartContainer/services/datafeed'
+import {
+  IBasicDataFeed,
+  IChartingLibraryWidget
+} from 'charting-library/charting_library'
 
 export const Market = () => {
   const classes = useStyles()
   const [placeOrder] = useCreateOrder()
-
+  const [
+    tvWidget,
+    setTradingChart
+  ] = React.useState<IChartingLibraryWidget | null>(null)
+  const [datafeed] = React.useState<IBasicDataFeed>(() => getDataFeed())
   return (
     <Box className={classes.container}>
       <Grid item xs={12} className={classes.colorGrid}>
@@ -28,7 +37,12 @@ export const Market = () => {
 
         <Grid item container>
           <Grid item className={classes.middleBlock} xs={12}>
-            <TVChartContainer />
+            <TVChartContainer
+              tvWidget={tvWidget}
+              setTradingChart={setTradingChart}
+              datafeed={datafeed}
+              symbol='EUR/SGD'
+            />
           </Grid>
           <Grid item className={classes.colorGrid} xs={12}>
             <MyOrders />

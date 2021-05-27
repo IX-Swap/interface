@@ -1,7 +1,8 @@
 import * as React from 'react'
 import {
   widget as Widget,
-  ResolutionString
+  ResolutionString,
+  Timezone
 } from 'charting-library/charting_library'
 import { ChartContainerProps } from 'types/tvChart'
 import {
@@ -10,7 +11,7 @@ import {
   overrides,
   sampleTVChartProps
 } from './constants'
-import { getLanguageFromURL, getMovingAverageParams } from './utils'
+import { getMovingAverageParams } from './utils'
 
 export const TVChartContainer: React.FC<
   Partial<ChartContainerProps>
@@ -43,7 +44,7 @@ export const TVChartContainer: React.FC<
         intervals: ['15', '60', '240', '1D', 'W'] as ResolutionString[],
         chartTypes: ['Line', 'Candles']
       },
-      locale: getLanguageFromURL() ?? 'en',
+      locale: 'en',
       disabled_features: disabledFeatures,
       enabled_features: enabledFeatures,
       charts_storage_url: 'https://saveload.tradingview.com',
@@ -55,7 +56,7 @@ export const TVChartContainer: React.FC<
       height: height ?? sampleTVChartProps.height,
       width: width ?? sampleTVChartProps.width,
       theme: theme ?? sampleTVChartProps.theme,
-      timezone: Intl.DateTimeFormat().resolvedOptions().timeZone as any,
+      timezone: Intl.DateTimeFormat().resolvedOptions().timeZone as Timezone,
       overrides
     })
 
