@@ -17,7 +17,6 @@ describe('VirtualAccountCard', () => {
       <VirtualAccountCard label='Virtual Account Number' info='1234567890' />
     )
 
-    expect(getByText('Virtual Account Number')).toBeTruthy()
     expect(getByText('1234567890')).toBeTruthy()
   })
 })
