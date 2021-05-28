@@ -4,8 +4,11 @@ import { RecentDeposits } from 'app/pages/accounts/pages/banks/pages/DepositCash
 import { PageHeader } from 'app/components/PageHeader/PageHeader'
 import { CashDepositButton } from 'app/pages/accounts/components/CashDepositButton/CashDepositButton'
 import { CashDepositVirtualAccountDetails } from 'app/pages/accounts/components/CashDepositVirtualAccountDetails/CashDepositVirtualAccountDetails'
+import { useVirtualAccount } from 'app/pages/accounts/hooks/useVirtualAccount'
+import { AutoAssignVirtualAccountForm } from 'app/pages/accounts/pages/banks/components/AutoAssignVirtualAccountForm/AutoAssignVirtualAccountForm'
 
 export const DepositCash: React.FC = () => {
+  const { data, isLoading } = useVirtualAccount()
   const [selectedAccount, setSelectedAccount] = useState<string | undefined>(
     undefined
   )
@@ -13,20 +16,32 @@ export const DepositCash: React.FC = () => {
     setSelectedAccount(event.target.value as string)
   }
 
+  if (isLoading) {
+    return null
+  }
+
   return (
     <Grid container direction='column' spacing={3}>
       <Grid item>
         <PageHeader title='Cash Deposits' />
       </Grid>
-      <Grid item>
-        <CashDepositVirtualAccountDetails
-          selectedAccount={selectedAccount}
-          handleChange={handleChange}
-        />
-      </Grid>
-      <Grid item>
-        <CashDepositButton />
-      </Grid>
+      {data === undefined ? (
+        <Grid item>
+          <AutoAssignVirtualAccountForm />
+        </Grid>
+      ) : (
+        <>
+          <Grid item>
+            <CashDepositVirtualAccountDetails
+              selectedAccount={selectedAccount}
+              handleChange={handleChange}
+            />
+          </Grid>
+          <Grid item>
+            <CashDepositButton />
+          </Grid>
+        </>
+      )}
       <Grid item>
         <RecentDeposits virtualAccountNumber={selectedAccount} />
       </Grid>
