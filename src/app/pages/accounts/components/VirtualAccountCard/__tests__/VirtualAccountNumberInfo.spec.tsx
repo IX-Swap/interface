@@ -13,6 +13,8 @@ describe('VirtualAccountNumberInfo', () => {
       <VirtualAccountNumberInfo
         currency='SGD'
         accountNumber='1234567890123456'
+        availableBalance={100000}
+        onHold={123}
       />
     )
   })
@@ -22,13 +24,14 @@ describe('VirtualAccountNumberInfo', () => {
       <VirtualAccountNumberInfo
         currency='SGD'
         accountNumber='1234567890123456'
+        availableBalance={100000}
+        onHold={123}
       />
     )
 
     expect(getByText('SGD')).toBeTruthy()
-    expect(getByText('1234')).toBeTruthy()
-    expect(getByText('5678')).toBeTruthy()
-    expect(getByText('9012')).toBeTruthy()
-    expect(getByText('3456')).toBeTruthy()
+    expect(getByText('1234567890123456')).toBeTruthy()
+    expect(getByText('100,000.00')).toBeTruthy()
+    expect(getByText('123.00')).toBeTruthy()
   })
 })

@@ -1,4 +1,3 @@
-import { Button, Grid } from '@material-ui/core'
 import { AutoAssignVirtualAccountFormFields } from 'app/pages/accounts/pages/banks/components/AutoAssignVirtualAccountForm/AutoAssignVirtualAccountFormFields'
 import { ConfirmationDialog } from 'app/pages/accounts/pages/banks/components/AutoAssignVirtualAccountForm/ConfirmationDialog'
 import { useAssignVirtualAccount } from 'app/pages/accounts/pages/banks/hooks/useAssignVirtualAccount'
@@ -22,23 +21,8 @@ export const AutoAssignVirtualAccountForm = () => {
   }
 
   return (
-    <Form onSubmit={handleSubmit} defaultValues={{ currency: 'SGD' }}>
-      <Grid container direction='column' spacing={2}>
-        <Grid item>
-          <AutoAssignVirtualAccountFormFields />
-        </Grid>
-        <Grid item>
-          <Button
-            onClick={handleOpen}
-            type='button'
-            variant='contained'
-            color='primary'
-            disableElevation
-          >
-            Confirm
-          </Button>
-        </Grid>
-      </Grid>
+    <Form onSubmit={handleSubmit}>
+      <AutoAssignVirtualAccountFormFields handleOpen={handleOpen} />
       <ConfirmationDialog
         onClose={handleClose}
         open={open}

@@ -6,6 +6,7 @@ import { CashDepositButton } from 'app/pages/accounts/components/CashDepositButt
 import { CashDepositVirtualAccountDetails } from 'app/pages/accounts/components/CashDepositVirtualAccountDetails/CashDepositVirtualAccountDetails'
 import { useVirtualAccount } from 'app/pages/accounts/hooks/useVirtualAccount'
 import { AutoAssignVirtualAccountForm } from 'app/pages/accounts/pages/banks/components/AutoAssignVirtualAccountForm/AutoAssignVirtualAccountForm'
+import { VSpacer } from 'components/VSpacer'
 
 export const DepositCash: React.FC = () => {
   const { data, isLoading } = useVirtualAccount()
@@ -35,6 +36,7 @@ export const DepositCash: React.FC = () => {
             <CashDepositVirtualAccountDetails
               selectedAccount={selectedAccount}
               handleChange={handleChange}
+              defaultValue={data.accountNumber}
             />
           </Grid>
           <Grid item>
@@ -43,6 +45,7 @@ export const DepositCash: React.FC = () => {
         </>
       )}
       <Grid item>
+        <VSpacer size='medium' />
         <RecentDeposits virtualAccountNumber={selectedAccount} />
       </Grid>
     </Grid>

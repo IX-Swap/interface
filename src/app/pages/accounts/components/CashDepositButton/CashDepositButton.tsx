@@ -24,7 +24,7 @@ export const CashDepositButton = ({
     setOpen(false)
   }
 
-  if (virtualAccountId === undefined || data === undefined || isLoading) {
+  if (data === undefined || isLoading) {
     return null
   }
 
