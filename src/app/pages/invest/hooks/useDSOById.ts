@@ -14,9 +14,9 @@ export const useDSOById = (dsoId: string, issuerId?: string) => {
   const fetchDSO = async () =>
     await apiService.get<DigitalSecurityOffering>(url)
   const { data, ...rest } = useQuery(
-    [investQueryKeys.getDSOById, dsoId],
+    investQueryKeys.getDSOById(dsoId, issuerId ?? getIdFromObj(user)),
     fetchDSO,
-    { enabled: isValidDSOId(dsoId) }
+    { enabled: isValidDSOId(dsoId), cacheTime: 0 }
   )
 
   return {

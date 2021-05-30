@@ -61,6 +61,10 @@ export const getUpdateDSOPayload = (values: Partial<DSOFormValues>) => {
   return payload
 }
 
+export const getIdFromDSOSelectValue = (value: string) => value.split(':')[0]
+export const getIssuerIdFromDSOSelectValue = (value: string) =>
+  value.split(':')[1]
+
 export const getActivityUserInfo = (activity: DSOActivity) => {
   const {
     identity: { individual, corporates }

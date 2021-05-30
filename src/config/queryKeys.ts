@@ -112,7 +112,8 @@ export const usersQueryKeys = {
 
 export const investQueryKeys = {
   getCommitmentById: 'commitment-by-id',
-  getDSOById: 'dso-by-id',
+  getDSOById: (dsoId: string, issuerId: string) =>
+    generateQueryKey('dso', dsoId, issuerId),
   getCommitmentsByUserId: (id: string) => generateQueryKey('commitments', id)
 }
 
