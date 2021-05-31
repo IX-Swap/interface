@@ -12,7 +12,7 @@ import { getDataFeed } from 'app/pages/invest/components/TVChartContainer/servic
 import {
   IBasicDataFeed,
   IChartingLibraryWidget
-} from 'charting-library/charting_library'
+} from 'charting_library/charting_library'
 
 export const MarketRoot = () => {
   const classes = useStyles()
