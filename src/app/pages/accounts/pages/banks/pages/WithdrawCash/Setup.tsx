@@ -16,7 +16,7 @@ import { FormSectionHeader } from 'app/pages/identity/components/FormSectionHead
 
 export const Setup: React.FC = () => {
   const { watch, control } = useFormContext<WithdrawCashFormValues>()
-  const bankId = watch('bank')
+  const bankId = watch('bankAccountId')
   const virtualAccountId = watch('virtualAccount')
   const {
     data: virtualAccountData,
@@ -64,7 +64,7 @@ export const Setup: React.FC = () => {
           control={control}
           variant='outlined'
           component={BankSelect}
-          name='bank'
+          name='bankAccountId'
           label='To Bank Account'
           helperText='Please select your bank account in which you want to transfer your fund'
         />

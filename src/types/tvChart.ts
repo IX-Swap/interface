@@ -6,7 +6,7 @@ import {
   LibrarySymbolInfo,
   ResolutionString,
   SubscribeBarsCallback
-} from 'charting-library/charting_library'
+} from 'charting_library/charting_library'
 
 export interface ChartContainerProps {
   symbol?: ChartingLibraryWidgetOptions['symbol']

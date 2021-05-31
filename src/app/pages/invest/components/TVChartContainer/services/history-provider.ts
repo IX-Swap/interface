@@ -6,7 +6,7 @@ import {
   HistoryMetadata,
   LibrarySymbolInfo,
   ResolutionString
-} from 'charting-library/charting_library'
+} from 'charting_library/charting_library'
 import { charts } from 'config/apiURL'
 import apiService from 'services/api'
 import {
