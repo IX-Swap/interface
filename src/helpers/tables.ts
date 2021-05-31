@@ -151,7 +151,7 @@ export const renderAmount = (
   } else if ('onHold' in row) {
     symbol = ''
   } else {
-    symbol = row.asset.symbol
+    symbol = row.asset?.symbol
   }
 
   return formatMoney(amount, symbol)
