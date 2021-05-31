@@ -3,7 +3,7 @@ frontend:
   phases:
     preBuild:
       commands:
-        - git config --global url."https://${{secrets.CHARTING_LIBRARY_TOKEN}}@github.com/".insteadOf git@github.com
+        - git config --global url."https://${CHARTING_LIBRARY_TOKEN}@github.com/".insteadOf git@github.com
         - yarn add InvestaX/charting_library --master
         - yarn install
     build:
