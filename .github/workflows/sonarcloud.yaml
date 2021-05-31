@@ -19,7 +19,7 @@ jobs:
           ssh-private-key: ${{ secrets.SSH_PRIVATE_KEY }}
 
       - name: Install packages
-        run: git config --global url."https://${GITHUB_SECRET}@github.com/".insteadOf git@github.com:
+        run: git config --global url."https://${CHARTING_LIBRARY_TOKEN}@github.com/".insteadOf git@github.com:
         run: yarn install git+https://github.com/InvestaX/charting_library.git#master
         run: yarn
 
