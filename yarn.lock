@@ -5104,7 +5104,11 @@ chardet@^0.7.0:
 
 "charting-library@git+ssh://git@github.com:InvestaX/charting_library.git#master":
   version "0.0.0"
-  resolved "git+ssh://git@github.com:InvestaX/charting_library.git#1e03692553a969d2716f7e91a0c4aef937547586"
+  resolved "git+ssh://git@github.com:InvestaX/charting_library.git#fa87930f3607ce15154852f8d921bdec4cbd46c6"
+
+"charting_library@git+https://github.com/InvestaX/charting_library.git#master":
+  version "0.0.0"
+  resolved "git+https://github.com/InvestaX/charting_library.git#fa87930f3607ce15154852f8d921bdec4cbd46c6"
 
 chokidar@^2.1.8:
   version "2.1.8"
