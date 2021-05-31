@@ -11,7 +11,8 @@ import {
   Grid,
   PaperProps,
   Checkbox,
-  FormControlLabel
+  FormControlLabel,
+  Size
 } from '@material-ui/core'
 import { TableColumn, BaseFilter } from 'types/util'
 import { Actions } from 'app/pages/authorizer/components/Actions'
@@ -43,6 +44,8 @@ export interface TableViewProps<T> {
   innerRef?: any
   selectionHelper?: UseSelectionHelperReturnType<T | unknown>
   paperProps?: PaperProps
+  defaultRowsPerPage?: number
+  size?: Size
 }
 
 export const TableView = <T,>({
@@ -59,7 +62,9 @@ export const TableView = <T,>({
   fakeItems,
   innerRef,
   selectionHelper,
-  paperProps = {}
+  paperProps = {},
+  defaultRowsPerPage,
+  size = 'medium'
 }: TableViewProps<T>): JSX.Element => {
   const {
     items,
@@ -69,7 +74,13 @@ export const TableView = <T,>({
     setRowsPerPage,
     rowsPerPage,
     total
-  } = useTableWithPagination<T>(name, uri, filter, queryEnabled)
+  } = useTableWithPagination<T>(
+    name,
+    uri,
+    filter,
+    queryEnabled,
+    defaultRowsPerPage
+  )
   const cacheQueryKey = [name, page, rowsPerPage, filter]
 
   const _items = Array.isArray(fakeItems) ? fakeItems : items
@@ -134,7 +145,7 @@ export const TableView = <T,>({
           {...paperProps}
         >
           <TableContainer>
-            <Table aria-label='table' data-testid='table'>
+            <Table aria-label='table' data-testid='table' size={size}>
               {columns.length > 0 ? (
                 <TableHead>
                   <TableRow>
