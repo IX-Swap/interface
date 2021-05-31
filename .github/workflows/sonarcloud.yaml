@@ -15,7 +15,7 @@ jobs:
           fetch-depth: 0
 
       - name: Install Charting Library
-        run: yarn add git+https://${{secrets.CHARTING_LIBRARY_TOKEN}}github.com/InvestaX/charting_library.git#master
+        run: yarn add git+https://${{secrets.CHARTING_LIBRARY_TOKEN}}@github.com/InvestaX/charting_library.git#master
       
       - name: Install packages
         run: yarn
