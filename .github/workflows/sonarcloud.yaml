@@ -17,7 +17,7 @@ jobs:
       - name: Install Charting Library
         run: |
           git config --global url."https://${{secrets.CHARTING_LIBRARY_TOKEN}}@github.com/".insteadOf git@github.com:
-          yarn add git+https://github.com/InvestaX/charting_library.git#master
+          yarn add InvestaX/charting_library --master
       
       - name: Install packages
         run: yarn
