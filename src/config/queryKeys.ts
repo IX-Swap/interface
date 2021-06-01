@@ -162,7 +162,8 @@ export const exchange = {
   orderBook: 'orderbook',
   userTrades: (userId: string) => generateQueryKey('user-trades', userId),
   userOrders: (userId: string) => generateQueryKey('user-orders', userId),
-  userHoldings: (userId: string) => generateQueryKey('user-holdings', userId)
+  userHoldings: (userId: string) => generateQueryKey('user-holdings', userId),
+  listing: (listingId: string) => generateQueryKey('listing', listingId)
 }
 
 export const exchangeMarketQueryKeys = {
