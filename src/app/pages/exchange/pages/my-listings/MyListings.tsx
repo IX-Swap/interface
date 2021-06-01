@@ -1,11 +1,7 @@
 import React from 'react'
-
 import { RootContainer } from 'ui/RootContainer'
 import { PageHeader } from 'app/components/PageHeader/PageHeader'
-import { MyListingsTable } from '../../market/components/MyListingsTable/MyListingsTable'
-import { Button } from '@material-ui/core'
-import { AppRouterLinkComponent } from 'components/AppRouterLink'
-import { OTCMarketRoute } from 'app/pages/exchange/router/config'
+import { MyListingsTable } from 'app/pages/exchange/market/components/MyListingsTable/MyListingsTable'
 
 export const MyListings = () => {
   return (
@@ -16,14 +12,6 @@ export const MyListings = () => {
         showBreadcrumbs={true}
       />
       <MyListingsTable />
-      <Button
-        component={AppRouterLinkComponent}
-        to={OTCMarketRoute.createListing}
-        variant='outlined'
-        color='primary'
-      >
-        create a new listing
-      </Button>
     </RootContainer>
   )
 }
