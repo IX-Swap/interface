@@ -40,7 +40,7 @@ export const DepositCash: React.FC = () => {
             />
           </Grid>
           <Grid item>
-            <CashDepositButton />
+            <CashDepositButton virtualAccountId={selectedAccount} />
           </Grid>
         </>
       )}

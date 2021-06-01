@@ -7,8 +7,15 @@ import { Meps } from 'app/pages/accounts/components/VirtualAccountCashDeposit/Me
 import { Tt } from 'app/pages/accounts/components/VirtualAccountCashDeposit/Tt'
 import { AchCredits } from 'app/pages/accounts/components/VirtualAccountCashDeposit/AchCredit'
 import { TabPanel } from 'components/TabPanel'
+import { VirtualAccount } from 'types/virtualAccount'
 
-export const VirtualAccountCashDeposit = () => {
+export interface VirtualAccountCashDepositProps {
+  virtualAccountDetails: VirtualAccount
+}
+
+export const VirtualAccountCashDeposit = ({
+  virtualAccountDetails
+}: VirtualAccountCashDepositProps) => {
   const [activeTab, setActiveTab] = useState(0)
   const handleChange = (event: React.ChangeEvent<{}>, newValue: number) => {
     setActiveTab(newValue)
@@ -30,24 +37,36 @@ export const VirtualAccountCashDeposit = () => {
             onChange={handleChange}
           >
             <RadioTabButton disableRipple label='FAST' />
-            <RadioTabButton disableRipple label='MEPS' />
-            <RadioTabButton disableRipple label='TT' />
             <RadioTabButton disableRipple label='ACH Credit' />
+            <RadioTabButton disableRipple label='TT' />
+            <RadioTabButton disableRipple label='MEPS' />
           </VirtualAccountTabs>
         </Box>
       </Grid>
       <Grid item>
         <TabPanel value={activeTab} index={0} pt={0}>
-          <Fast />
+          <Fast
+            accountId={virtualAccountDetails.accountNumber}
+            currency={virtualAccountDetails.currency}
+          />
         </TabPanel>
         <TabPanel value={activeTab} index={1} pt={0}>
-          <Meps />
+          <AchCredits
+            accountId={virtualAccountDetails.accountNumber}
+            currency={virtualAccountDetails.currency}
+          />
         </TabPanel>
         <TabPanel value={activeTab} index={2} pt={0}>
-          <Tt />
+          <Tt
+            accountId={virtualAccountDetails.accountNumber}
+            currency={virtualAccountDetails.currency}
+          />
         </TabPanel>
         <TabPanel value={activeTab} index={3} pt={0}>
-          <AchCredits />
+          <Meps
+            accountId={virtualAccountDetails.accountNumber}
+            currency={virtualAccountDetails.currency}
+          />
         </TabPanel>
       </Grid>
     </Grid>

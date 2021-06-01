@@ -1,39 +1,40 @@
 import { Box, Grid } from '@material-ui/core'
 import { CashDepositDetails } from 'app/pages/accounts/components/VirtualAccountCashDeposit/CashDepositDetails'
+import { DepositInfoProps } from 'app/pages/accounts/components/VirtualAccountCashDeposit/Fast'
 import React from 'react'
 
-const achDetails = [
-  {
-    label: 'Currency',
-    value: 'SGD'
-  },
-  {
-    label: 'Bank:',
-    value: 'Hongkong & Shanghai Banking Corporate (HSBC CORP)'
-  },
-  {
-    label: 'Beneficiary Account Name / Payee:',
-    value: 'IC SG Pte Ltd'
-  },
-  {
-    label: 'Beneficiary Account Number:',
-    value: '123456789012'
-  },
-  {
-    label: 'SWIFT Code:',
-    value: 'HSBCSGSGXXX'
-  },
-  {
-    label: 'My Initials:',
-    value: 'Indicate InvestaX Client Name/ID'
-  },
-  {
-    label: 'Message to receiver/beneficiary/Ref/Bill ref:',
-    value: 'InvestaX to recommend'
-  }
-]
+export const AchCredits = ({ accountId, currency }: DepositInfoProps) => {
+  const achDetails = [
+    {
+      label: 'Currency',
+      value: currency
+    },
+    {
+      label: 'Bank:',
+      value: 'Hongkong & Shanghai Banking Corporate (HSBC CORP)'
+    },
+    {
+      label: 'Beneficiary Account Name / Payee:',
+      value: 'IC SG Pte Ltd'
+    },
+    {
+      label: 'Beneficiary Account Number:',
+      value: accountId
+    },
+    {
+      label: 'SWIFT Code:',
+      value: 'HSBCSGSGXXX'
+    },
+    {
+      label: 'My Initials:',
+      value: 'Indicate InvestaX Client Name/ID'
+    },
+    {
+      label: 'Message to receiver/beneficiary/Ref/Bill ref:',
+      value: 'InvestaX to recommend'
+    }
+  ]
 
-export const AchCredits = () => {
   return (
     <Grid direction='column'>
       <Grid item>
