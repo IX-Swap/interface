@@ -14,7 +14,7 @@ jest.mock('components/TableWithPagination/TableView', () => ({
 }))
 
 jest.mock(
-  'app/pages/exchange/market/components/PastOrderFilter/PastOrderFilter',
+  'app/pages/exchange/components/PastOrderFilter/PastOrderFilter',
   () => ({
     PastOrderFilter: jest.fn(() => null)
   })

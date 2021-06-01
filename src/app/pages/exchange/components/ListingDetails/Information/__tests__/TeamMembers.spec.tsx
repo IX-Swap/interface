@@ -1,6 +1,7 @@
-import { TeamMembers } from 'app/pages/exchange/market/components/ListingDetails/Information/TeamMembers'
+import { TeamMembers } from 'app/pages/exchange/components/ListingDetails/Information/TeamMembers'
 import React from 'react'
 import { render, cleanup } from 'test-utils'
+import { listing } from '__fixtures__/listings'
 
 describe('TeamMembers', () => {
   afterEach(async () => {
@@ -9,6 +10,6 @@ describe('TeamMembers', () => {
   })
 
   it('renders without errors', () => {
-    render(<TeamMembers listing={{}} />)
+    render(<TeamMembers teamMembers={listing.team} listingId={listing._id} />)
   })
 })

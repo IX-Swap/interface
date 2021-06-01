@@ -1,4 +1,4 @@
-import { DetailsTab } from 'app/pages/exchange/market/components/ListingDetails/DetailsTab'
+import { DetailsTab } from 'app/pages/exchange/components/ListingDetails/DetailsTab'
 import React from 'react'
 import { render, cleanup } from 'test-utils'
 import { listing } from '__fixtures__/listings'

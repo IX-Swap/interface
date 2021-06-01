@@ -1,7 +1,7 @@
 import {
   ListingHeader,
   ListingHeaderProps
-} from 'app/pages/exchange/market/components/ListingDetails/ListingHeader'
+} from 'app/pages/exchange/components/ListingDetails/ListingHeader'
 import React from 'react'
 import { render, cleanup } from 'test-utils'
 import { listing } from '__fixtures__/listings'

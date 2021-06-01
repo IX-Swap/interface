@@ -1,4 +1,4 @@
-import { TeamMemberPhoto } from 'app/pages/exchange/market/components/ListingDetails/Information/TeamMemberPhoto'
+import { TeamMemberPhoto } from 'app/pages/exchange/components/ListingDetails/Information/TeamMemberPhoto'
 import React from 'react'
 import { render, cleanup } from 'test-utils'
 
@@ -9,13 +9,6 @@ describe('TeamMemberPhoto', () => {
   })
 
   it('renders without errors', () => {
-    render(
-      <TeamMemberPhoto
-        resourceId='123'
-        size={128}
-        resourceUri='/asset/uri'
-        photoId='123'
-      />
-    )
+    render(<TeamMemberPhoto size={128} photoId='123' />)
   })
 })

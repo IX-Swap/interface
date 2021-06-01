@@ -1,4 +1,4 @@
-import { Profile } from 'app/pages/exchange/market/components/ListingDetails/Information/Profile'
+import { Profile } from 'app/pages/exchange/components/ListingDetails/Information/Profile'
 import React from 'react'
 import { render, cleanup } from 'test-utils'
 
