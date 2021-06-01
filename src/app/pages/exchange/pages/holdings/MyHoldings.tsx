@@ -1,6 +1,6 @@
 import { Grid, Typography } from '@material-ui/core'
 import { PageHeader } from 'app/components/PageHeader/PageHeader'
-import { HoldingsTables } from 'app/pages/exchange/market/components/HoldingsTables/HoldingsTables'
+import { HoldingsTables } from 'app/pages/exchange/components/HoldingsTables/HoldingsTables'
 import { VSpacer } from 'components/VSpacer'
 import React, { useState } from 'react'
 import { RootContainer } from 'ui/RootContainer'
