@@ -5,7 +5,6 @@ import { dateTimeValueExtractor, numericValueExtractor } from 'helpers/forms'
 import { CorporateSelect } from 'components/form/CorporateSelect'
 import { NetworkSelect } from 'components/form/NetworkSelect'
 import { useFormContext } from 'react-hook-form'
-import { DSOFormValues } from 'types/dso'
 import { documentValueExtractor } from 'app/components/DSO/utils'
 import { DataroomFileType } from 'config/dataroom'
 import { DateTimePicker } from 'components/form/_DateTimePicker'
@@ -22,15 +21,14 @@ export interface ListingBaseFieldsProps {
 
 export const ListingBaseFields = (props: ListingBaseFieldsProps) => {
   const { isNew, isLive } = props
-  // TODO Change DSOFormValues
-  const { control, watch } = useFormContext<DSOFormValues>()
+  const { control, watch } = useFormContext()
   const capitalStructure = watch('capitalStructure')
 
   return (
     <Grid item>
       <Grid container direction='column' spacing={2}>
         <Grid item>
-          <FormSectionHeader title='DSO Information' />
+          <FormSectionHeader title='General Information' />
         </Grid>
         <Grid item>
           {/* @ts-ignore */}
@@ -138,7 +136,6 @@ export const ListingBaseFields = (props: ListingBaseFieldsProps) => {
                 control={control}
                 disabled={isLive}
                 valueExtractor={dateTimeValueExtractor}
-                // @ts-expect-error
                 defaultValue={null}
                 helperText='Offering launch date'
                 inputVariant='outlined'
@@ -153,7 +150,6 @@ export const ListingBaseFields = (props: ListingBaseFieldsProps) => {
                 name='completionDate'
                 control={control}
                 valueExtractor={dateTimeValueExtractor}
-                // @ts-expect-error
                 defaultValue={null}
                 helperText='Offering completion date'
                 inputVariant='outlined'

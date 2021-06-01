@@ -15,6 +15,8 @@ jobs:
           fetch-depth: 0
       
       - name: Install packages
+        run: git config --global url."https://${CHARTING_LIBRARY_TOKEN}@github.com/".insteadOf git@github.com
+        run: yarn install git+https://github.com/InvestaX/charting_library.git#master
         run: yarn
 
       - name: Build
