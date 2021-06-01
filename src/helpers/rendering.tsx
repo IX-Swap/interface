@@ -63,6 +63,10 @@ export const renderPercentage = (value?: Maybe<Number>) => {
 export const renderMonths = (value: string | number | undefined | null) =>
   value !== undefined ? `${value} months` : undefined
 
+export const renderMarketType = (marketType: string) => {
+  return marketType === '' ? 'Both' : marketType
+}
+
 export const documentIcons = {
   pdf: pdfIcon,
   txt: txtIcon,

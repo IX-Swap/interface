@@ -1,5 +1,5 @@
-import { ListingDetails } from 'app/pages/exchange/market/components/ListingDetails/ListingDetails'
-import { useListing } from 'app/pages/exchange/market/hooks/useListing'
+import { ListingDetails } from 'app/pages/exchange/components/ListingDetails/ListingDetails'
+import { useListing } from 'app/pages/exchange/hooks/useListing'
 import React from 'react'
 import { AppFeature } from 'types/app'
 import { AuthorizerView } from '../../components/AuthorizerView'
@@ -14,7 +14,7 @@ export const ListingAuthorization = () => {
   return (
     <AuthorizerView
       title={data.tokenName}
-      data={data as any} // TODO: fix types
+      data={data}
       feature={AppFeature.Listings}
     >
       <ListingDetails data={data} />

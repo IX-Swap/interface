@@ -5,11 +5,12 @@ import {
 } from 'app/pages/identity/types/forms'
 import { Asset } from './asset'
 import { DataroomFile } from './dataroomFile'
-import { DistributionFrequency } from 'types/distributionFrequency'
+import { DistributionFrequency } from './distributionFrequency'
 import { DigitalSecurityOffering, DsoTeamMember } from './dso'
-import { Market } from 'types/market'
-import { Network } from 'types/networks'
-import User from 'types/user'
+import { Market } from './market'
+import { Network } from './networks'
+import User from './user'
+import { AuthorizableWithIdentity } from './authorizer'
 
 export interface Listing {
   _id: string
@@ -59,7 +60,7 @@ export interface Listing {
   marketType: string
 }
 
-export interface ListingView {
+export interface ListingView extends AuthorizableWithIdentity {
   _id: string
   createdBy: string
   user: string
@@ -103,8 +104,6 @@ export interface ListingView {
     _id: string
     currency: string
   }>
-  authorizations: []
-  authorizationDocuments: Document[]
   team: DsoTeamMember[]
   promoted: boolean
   disabled: boolean
