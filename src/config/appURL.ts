@@ -6,13 +6,13 @@ export const urlParams = {
   identityId: ':identityId',
   issuerId: ':issuerId',
   dsoId: ':dsoId',
+  listingId: ':listingId',
   commitmentId: ':commitmentId',
   withdrawalAddressId: ':withdrawalAddressId',
   itemId: ':itemId',
   tokenId: ':tokenId',
   category: ':category',
-  userId: ':userId',
-  listingId: ':listingId'
+  userId: ':userId'
 }
 
 export const urlAction = {

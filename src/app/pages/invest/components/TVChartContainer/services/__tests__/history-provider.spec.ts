@@ -7,7 +7,7 @@ import {
   ErrorCallback,
   HistoryCallback,
   ResolutionString
-} from 'charting-library/charting_library'
+} from 'charting_library/charting_library'
 import { BarsStatus } from 'types/tvChart'
 
 describe('getBars', () => {

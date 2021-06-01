@@ -14,8 +14,8 @@ import { formatMoney } from './numbers'
 import { DSOLogo } from 'app/components/DSO/components/DSOLogo'
 import { Commitment } from 'types/commitment'
 import { Order } from 'types/order'
-import { OrderStatus } from 'app/pages/exchange/market/components/PastOrderTable/OrderStatus'
-import { Side } from 'app/pages/exchange/market/components/TradeHistoryTable/Side'
+import { OrderStatus } from 'app/pages/exchange/components/PastOrderTable/OrderStatus'
+import { Side } from 'app/pages/exchange/components/TradeHistoryTable/Side'
 
 export const renderMenuItems = (
   items: Array<{ label: string; value: string | number }>

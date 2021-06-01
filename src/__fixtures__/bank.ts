@@ -5,6 +5,7 @@ import {
   WithdrawCashArgs,
   WithdrawDSArgs
 } from 'app/pages/accounts/types'
+import { virtualAccount } from '__fixtures__/virtualAccount'
 import { address, asset, bank } from './authorizer'
 
 export const createBankArgs: CreateBankArgs = {
@@ -40,8 +41,8 @@ export const withdrawCashArgs: WithdrawCashArgs = {
   amount: 123,
   otp: '123145',
   memo: '123',
-  bank: bank._id,
-  virtualAccount: '098765432109'
+  bankAccountId: bank._id,
+  virtualAccount: virtualAccount.accountNumber
 }
 
 export const withdrawDSArgs: WithdrawDSArgs = {

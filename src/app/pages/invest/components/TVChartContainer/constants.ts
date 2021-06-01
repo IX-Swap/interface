@@ -1,4 +1,4 @@
-import { ResolutionString } from 'charting-library/charting_library'
+import { ResolutionString } from 'charting_library/charting_library'
 
 import { ChartContainerProps } from 'types/tvChart'
 
