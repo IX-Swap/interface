@@ -10,12 +10,15 @@ import { ListingView } from 'types/listing'
 export const useListing = () => {
   const { apiService } = useServices()
   const { user } = useAuth()
-  const userId = getIdFromObj(user)
-  const { listingId } = useParams<{ listingId: string }>()
+  const { listingId, userId } = useParams<{
+    listingId: string
+    userId?: string
+  }>()
+  const _userId = userId ?? getIdFromObj(user)
 
   const getListing = async () => {
     return await apiService.get<ListingView>(
-      exchangeApiUrl.getListing(userId, listingId)
+      exchangeApiUrl.getListing(_userId, listingId)
     )
   }
 
