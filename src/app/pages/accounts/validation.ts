@@ -47,7 +47,7 @@ export const withdrawCashFormValidationSchema = yup
   .object()
   .shape<WithdrawCashFormValues>({
     amount: yup.number().required('Required'),
-    bank: yup.string().required('Required'),
+    bankAccountId: yup.string().required('Required'),
     otp: yup.string().required('Required'),
     memo: yup.string(),
     virtualAccount: yup.string().required('Required')

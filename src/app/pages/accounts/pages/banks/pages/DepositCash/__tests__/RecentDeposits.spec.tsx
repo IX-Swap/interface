@@ -42,14 +42,18 @@ describe('RecentDeposits', () => {
 
   it('renders TableView with correct props', () => {
     const userId = getIdFromObj(user)
-    const uri = accountsURL.cashDeposits.getAllVirtualAccountTransactions(
+    const uri = accountsURL.virtualAccounts.getAllTransactions(
       userId,
       virtualAccount._id
     )
-    const name = cashDepositsQueryKeys.getByUserId(userId)
+    const name = cashDepositsQueryKeys.getByVirtualAccount(
+      virtualAccount.accountNumber
+    )
     const filter = { sourceType: 'Deposit' }
 
-    render(<RecentDeposits virtualAccountNumber='123456789012' />)
+    render(
+      <RecentDeposits virtualAccountNumber={virtualAccount.accountNumber} />
+    )
     expect(TableView).toHaveBeenCalledTimes(1)
     expect(TableView).toHaveBeenCalledWith(
       expect.objectContaining({ uri, name, columns, filter }),

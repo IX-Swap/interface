@@ -78,11 +78,15 @@ export const banksQueryKeys = {
 }
 
 export const cashDepositsQueryKeys = {
-  getByUserId: (id: string) => generateQueryKey('cash-deposits', id)
+  getByUserId: (id: string) => generateQueryKey('cash-deposits', id),
+  getByVirtualAccount: (virtualAccountNumber: string) =>
+    generateQueryKey('cash-deposits', virtualAccountNumber)
 }
 
 export const cashWithdrawalsQueryKeys = {
-  getByUserId: (id: string) => generateQueryKey('cash-withdrawals', id)
+  getByUserId: (id: string) => generateQueryKey('cash-withdrawals', id),
+  getByVirtualAccount: (virtualAccountNumber: string) =>
+    generateQueryKey('cash-deposits', virtualAccountNumber)
 }
 
 export const digitalSecuritiesQueryKeys = {
@@ -158,7 +162,8 @@ export const exchange = {
   orderBook: 'orderbook',
   userTrades: (userId: string) => generateQueryKey('user-trades', userId),
   userOrders: (userId: string) => generateQueryKey('user-orders', userId),
-  userHoldings: (userId: string) => generateQueryKey('user-holdings', userId)
+  userHoldings: (userId: string) => generateQueryKey('user-holdings', userId),
+  listing: (listingId: string) => generateQueryKey('listing', listingId)
 }
 
 export const exchangeMarketQueryKeys = {

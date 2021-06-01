@@ -1,7 +1,7 @@
 import React from 'react'
 import { Meta, Story } from '@storybook/react/types-6-0'
 import { TVChartContainer } from './TVChartContainer'
-import { IChartingLibraryWidget } from 'charting-library/charting_library'
+import { IChartingLibraryWidget } from 'charting_library/charting_library'
 
 const meta: Meta = {
   title: 'Pages/Invest/TVChartContainer',

@@ -9,9 +9,19 @@ export const OTCMarketRoute = {
   landing: makeURL(['app', 'OTCMarket']),
   market: makeURL(['app', 'OTCMarket', 'market']),
   holdings: makeURL(['app', 'OTCMarket', 'holdings']),
+  viewListing: makeURL(['app', 'OTCMarket', 'myListings', 'listingId', 'view']),
   myListings: makeURL(['app', 'OTCMarket', 'myListings']),
   viewListing: makeURL(['app', 'OTCMarket', 'myListings', 'listingId', 'view']),
   createListing: makeURL(['app', 'OTCMarket', 'myListings', 'create']),
+  createListing: makeURL(['app', 'OTCMarket', 'myListings', 'create']),
+  previewListing: makeURL([
+    'app',
+    'OTCMarket',
+    'myListings',
+    'issuerId',
+    'listingId',
+    'preview'
+  ]),
   buyerList: makeURL(['app', 'OTCMarket', 'buyerList'])
 }
 
