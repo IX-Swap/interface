@@ -1,6 +1,10 @@
-import { MarketOverview } from 'app/pages/exchange/market/components/ListingDetails/Overview/MarketOverview'
+import {
+  MarketOverview,
+  MarketOverviewProps
+} from 'app/pages/exchange/market/components/ListingDetails/Overview/MarketOverview'
 import React from 'react'
 import { render, cleanup } from 'test-utils'
+import { listing } from '__fixtures__/listings'
 
 describe('MarketOverview', () => {
   afterEach(async () => {
@@ -9,6 +13,10 @@ describe('MarketOverview', () => {
   })
 
   it('renders without errors', () => {
-    render(<MarketOverview />)
+    const props: MarketOverviewProps = {
+      availableMarket: listing.marketType,
+      markets: listing.exchange.markets
+    }
+    render(<MarketOverview {...props} />)
   })
 })

@@ -1,19 +1,46 @@
-import { Box, Grid, Typography } from '@material-ui/core'
+import { Grid, Typography } from '@material-ui/core'
 import { FormSectionHeader } from 'app/components/DSO/components/FormSectionHeader'
 import { LabelledValue } from 'components/LabelledValue'
+import { useAssetById } from 'hooks/asset/useAssetById'
 import React from 'react'
+import { ExchangeMarket } from 'types/listing'
 
-export const TradingPairs = () => {
+export interface DisplayMarketProps {
+  assetId: string
+}
+
+export const DisplayMarket = ({ assetId }: DisplayMarketProps) => {
+  const { data, isLoading } = useAssetById(assetId)
+  if (data === undefined || isLoading) {
+    return null
+  }
+
+  return <Typography>{`${data.name} (${data.symbol})`}</Typography>
+}
+
+export interface TradingPairsProps {
+  markets: ExchangeMarket[]
+}
+
+export const TradingPairs = ({ markets }: TradingPairsProps) => {
   return (
-    <Box>
-      <Typography>Singapore Dollar (SGD)</Typography>
-      <Box pb={1} />
-      <Typography>United States Dollar (USD)</Typography>
-    </Box>
+    <>
+      {markets.map(market => (
+        <DisplayMarket key={market._id} assetId={market.quote} />
+      ))}
+    </>
   )
 }
 
-export const MarketOverview = () => {
+export interface MarketOverviewProps {
+  availableMarket: string
+  markets: ExchangeMarket[]
+}
+
+export const MarketOverview = ({
+  availableMarket,
+  markets
+}: MarketOverviewProps) => {
   return (
     <Grid container spacing={2}>
       <Grid item xs={12}>
@@ -22,11 +49,11 @@ export const MarketOverview = () => {
       <Grid item xs={12} sm={6} md={4}>
         <LabelledValue
           label='Available Trading Pairs'
-          value={<TradingPairs />}
+          value={<TradingPairs markets={markets} />}
         />
       </Grid>
       <Grid item xs={12} sm={6} md={8}>
-        <LabelledValue label='Available Market' value='OTC' />
+        <LabelledValue label='Available Market' value={availableMarket} />
       </Grid>
     </Grid>
   )

@@ -3,8 +3,13 @@ import { Information } from 'app/pages/exchange/market/components/ListingDetails
 import { Overview } from 'app/pages/exchange/market/components/ListingDetails/Overview/Overview'
 import { TabPanel } from 'components/TabPanel'
 import React, { useState } from 'react'
+import { ListingView } from 'types/listing'
 
-export const DetailsTab = () => {
+export interface DetailsTabProps {
+  data: ListingView
+}
+
+export const DetailsTab = ({ data }: DetailsTabProps) => {
   const [tabValue, setTabValue] = useState(0)
 
   const handleChange = (event: React.ChangeEvent<{}>, newValue: number) => {
@@ -21,10 +26,10 @@ export const DetailsTab = () => {
       </Grid>
       <Grid item>
         <TabPanel index={0} value={tabValue}>
-          <Overview />
+          <Overview data={data} />
         </TabPanel>
         <TabPanel index={1} value={tabValue}>
-          <Information />
+          <Information data={data} />
         </TabPanel>
       </Grid>
     </Grid>

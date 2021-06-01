@@ -7,13 +7,11 @@ import { useAppBreakpoints } from 'hooks/useAppBreakpoints'
 import { TeamMemberPhoto } from 'app/pages/exchange/market/components/ListingDetails/Information/TeamMemberPhoto'
 
 export interface TeamMemberViewProps {
-  resourceId: string
-  resourceUri: string
   member: DsoTeamMember
 }
 
 export const TeamMemberView = (props: TeamMemberViewProps) => {
-  const { member, resourceId, resourceUri } = props
+  const { member } = props
   const { isTablet } = useAppBreakpoints()
 
   return (
@@ -28,9 +26,7 @@ export const TeamMemberView = (props: TeamMemberViewProps) => {
         <Grid container spacing={3}>
           <Grid item>
             <TeamMemberPhoto
-              resourceId={resourceId}
               photoId={member.photo}
-              resourceUri={resourceUri}
               variant='square'
               size={128}
             />

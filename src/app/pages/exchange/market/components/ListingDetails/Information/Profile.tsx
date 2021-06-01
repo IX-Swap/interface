@@ -1,15 +1,29 @@
-import { Grid } from '@material-ui/core'
+import { Box, Grid } from '@material-ui/core'
 import { FormSectionHeader } from 'app/components/DSO/components/FormSectionHeader'
 import { renderStringToHTML } from 'app/components/DSO/utils'
+import { useStyles } from 'app/pages/exchange/market/components/ListingDetails/Information/Profile.style'
 import React from 'react'
 
-export const Profile = () => {
+export interface ProfileProps {
+  profile?: string
+}
+
+export const Profile = ({ profile }: ProfileProps) => {
+  const { profileContent } = useStyles()
+  if (profile === undefined || profile.trim() === '') {
+    return null
+  }
+
   return (
-    <Grid direction='column' container spacing={2}>
-      <Grid item>
-        <FormSectionHeader title='Information Profile' />
+    <Grid item>
+      <Grid direction='column' container spacing={2}>
+        <Grid item>
+          <FormSectionHeader title='Information Profile' />
+        </Grid>
+        <Grid item>
+          <Box className={profileContent}>{renderStringToHTML(profile)}</Box>
+        </Grid>
       </Grid>
-      <Grid item>{renderStringToHTML('')}</Grid>
     </Grid>
   )
 }

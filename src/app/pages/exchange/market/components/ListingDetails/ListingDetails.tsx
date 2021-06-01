@@ -3,10 +3,10 @@ import { PageHeader } from 'app/components/PageHeader/PageHeader'
 import { DetailsTab } from 'app/pages/exchange/market/components/ListingDetails/DetailsTab'
 import { ListingHeader } from 'app/pages/exchange/market/components/ListingDetails/ListingHeader'
 import React from 'react'
-import { Listing } from 'types/listing'
+import { ListingView } from 'types/listing'
 
 export interface ListingDetailsProps {
-  data?: Listing
+  data?: ListingView
 }
 
 export const ListingDetails = ({ data }: ListingDetailsProps) => {
@@ -17,13 +17,19 @@ export const ListingDetails = ({ data }: ListingDetailsProps) => {
   return (
     <Grid container direction='column' spacing={4}>
       <Grid item>
-        <PageHeader title={data.name} showBreadcrumbs />
+        <PageHeader title={data.tokenName} showBreadcrumbs />
       </Grid>
       <Grid item>
-        <ListingHeader />
+        <ListingHeader
+          logoId={data.logo}
+          name={data.tokenName}
+          symbol={data.tokenSymbol}
+          companyName={data.corporate.companyLegalName}
+          markets={data.markets}
+        />
       </Grid>
       <Grid item>
-        <DetailsTab />
+        <DetailsTab data={data} />
       </Grid>
     </Grid>
   )

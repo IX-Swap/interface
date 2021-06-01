@@ -1,25 +1,66 @@
 import { Grid, Typography } from '@material-ui/core'
 import React from 'react'
 import { Avatar } from 'components/Avatar'
+import { useAssetById } from 'hooks/asset/useAssetById'
+import { useAuth } from 'hooks/auth/useAuth'
 
-export const ListingHeader = () => {
+export interface CurrencyDisplayProps {
+  assetId: string
+}
+
+export const CurrencyDisplay = ({ assetId }: CurrencyDisplayProps) => {
+  const { data, isLoading } = useAssetById(assetId)
+
+  if (data === undefined || isLoading) {
+    return null
+  }
+
+  return <>{data.symbol} </>
+}
+
+export interface ListingHeaderProps {
+  logoId: string
+  name: string
+  symbol: string
+  companyName: string
+  markets: any[]
+}
+
+export const ListingHeader = ({
+  logoId,
+  name,
+  symbol,
+  companyName,
+  markets
+}: ListingHeaderProps) => {
+  const { user } = useAuth()
   return (
     <Grid container spacing={2}>
       <Grid item>
-        <Avatar documentId={''} ownerId={''} variant='square' size={128} />
+        <Avatar
+          documentId={logoId}
+          ownerId={user?._id}
+          variant='square'
+          size={128}
+        />
       </Grid>
       <Grid item>
         <Grid container direction='column' spacing={1}>
           <Grid item>
             <Typography variant='h2'>
-              InvestaX Preferred Stock (IXPS)
+              {name} ({symbol})
             </Typography>
           </Grid>
           <Grid item>
-            <Typography variant='body1'>InvestaX Digital Securities</Typography>
+            <Typography variant='body1'>{companyName}</Typography>
           </Grid>
           <Grid item>
-            <Typography variant='subtitle1'>Currency: USD</Typography>
+            <Typography variant='subtitle1'>
+              Currency:{' '}
+              {markets.map(market => (
+                <CurrencyDisplay key={market._id} assetId={market.currency} />
+              ))}
+            </Typography>
           </Grid>
         </Grid>
       </Grid>

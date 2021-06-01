@@ -1,6 +1,7 @@
 import { Overview } from 'app/pages/exchange/market/components/ListingDetails/Overview/Overview'
 import React from 'react'
 import { render, cleanup } from 'test-utils'
+import { listing } from '__fixtures__/listings'
 
 describe('Overview', () => {
   afterEach(async () => {
@@ -9,6 +10,6 @@ describe('Overview', () => {
   })
 
   it('renders without errors', () => {
-    render(<Overview />)
+    render(<Overview data={listing} />)
   })
 })

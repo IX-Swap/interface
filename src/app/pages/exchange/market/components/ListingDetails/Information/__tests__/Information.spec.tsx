@@ -1,6 +1,7 @@
 import { Information } from 'app/pages/exchange/market/components/ListingDetails/Information/Information'
 import React from 'react'
 import { render, cleanup } from 'test-utils'
+import { listing } from '__fixtures__/listings'
 
 describe('Information', () => {
   afterEach(async () => {
@@ -9,6 +10,6 @@ describe('Information', () => {
   })
 
   it('renders without errors', () => {
-    render(<Information />)
+    render(<Information data={listing} />)
   })
 })
