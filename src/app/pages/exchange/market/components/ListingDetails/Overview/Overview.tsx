@@ -1,0 +1,51 @@
+import { Grid } from '@material-ui/core'
+import { BasicOverview } from 'app/pages/exchange/market/components/ListingDetails/Overview/BasicOverview'
+import { MarketOverview } from 'app/pages/exchange/market/components/ListingDetails/Overview/MarketOverview'
+import { OfferingTerms } from 'app/pages/exchange/market/components/ListingDetails/Overview/OfferingTerms'
+import { PricingOverview } from 'app/pages/exchange/market/components/ListingDetails/Overview/PricingOverview'
+import React from 'react'
+import { ListingView } from 'types/listing'
+
+export interface OverviewProps {
+  data: ListingView
+}
+
+export const Overview = ({ data }: OverviewProps) => {
+  return (
+    <Grid container spacing={6} direction='column'>
+      <Grid item xs={12}>
+        <BasicOverview
+          networkName={data.network.name}
+          capitalStructure={data.capitalStructure}
+          launchDate={data.launchDate}
+          completionDate={data.completionDate}
+          decimalPlaces={data.decimalPlaces}
+          tokenAddress='0xdAC17F958D2ee523a2206206994597C13D831ec7'
+        />
+      </Grid>
+      <Grid item xs={12}>
+        <MarketOverview
+          availableMarket={data.marketType}
+          markets={data.exchange.markets}
+        />
+      </Grid>
+      <Grid item xs={12}>
+        <PricingOverview
+          minTradeAmount={data.minimumTradeUnits}
+          maxTradeAmount={data.maximumTradeUnits}
+          raisedAmount={data.raisedAmount}
+        />
+      </Grid>
+      <Grid item xs={12}>
+        <OfferingTerms
+          investmentPeriod={data.investmentPeriod}
+          dividendYield={data.dividendYield}
+          investmentStructure={data.investmentStructure}
+          grssIrr={data.grossIRR}
+          equityMultiple={data.equityMultiple}
+          distributionFrequency={data.distributionFrequency}
+        />
+      </Grid>
+    </Grid>
+  )
+}
