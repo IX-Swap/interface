@@ -1,9 +1,8 @@
 import * as React from 'react'
 import {
   widget as Widget,
-  ResolutionString,
-  Timezone
-} from 'charting-library/charting_library'
+  ResolutionString
+} from 'charting_library/charting_library'
 import { ChartContainerProps } from 'types/tvChart'
 import {
   disabledFeatures,
@@ -56,7 +55,7 @@ export const TVChartContainer: React.FC<
       height: height ?? sampleTVChartProps.height,
       width: width ?? sampleTVChartProps.width,
       theme: theme ?? sampleTVChartProps.theme,
-      timezone: Intl.DateTimeFormat().resolvedOptions().timeZone as Timezone,
+      timezone: Intl.DateTimeFormat().resolvedOptions().timeZone,
       overrides
     })
 

@@ -8,7 +8,7 @@ import {
   SeriesFormat,
   SubscribeBarsCallback,
   Timezone
-} from 'charting-library/charting_library'
+} from 'charting_library/charting_library'
 
 export const sampleResponse = {
   s: 'ok',

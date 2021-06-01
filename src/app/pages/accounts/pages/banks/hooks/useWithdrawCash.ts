@@ -7,16 +7,28 @@ import { WithdrawCashArgs } from 'app/pages/accounts/types'
 import { getIdFromObj } from 'helpers/strings'
 import { accountsURL } from 'config/apiURL'
 import { cashWithdrawalsQueryKeys } from 'config/queryKeys'
+import { useVirtualAccount } from 'app/pages/accounts/hooks/useVirtualAccount'
 
 export const useWithdrawCash = () => {
   const { user } = useAuth()
   const { setCurrentStep } = useDepositStore()
   const { apiService, snackbarService } = useServices()
   const queryCache = useQueryCache()
-  const uri = accountsURL.cashWithdrawals.create(getIdFromObj(user))
+  const { list: virtualAccountsList } = useVirtualAccount()
 
   const withdrawCash = async (args: WithdrawCashArgs) => {
-    return await apiService.post(uri, args)
+    const virtualAccount = virtualAccountsList.find(
+      (item: any) => item.accountNumber === args.virtualAccount
+    )
+    const virtualAccountId = getIdFromObj(virtualAccount)
+    const uri = accountsURL.virtualAccounts.withdraw(
+      getIdFromObj(user),
+      virtualAccountId
+    )
+    return await apiService.post(uri, {
+      ...args,
+      virtualAccount: undefined
+    })
   }
 
   return useMutation(withdrawCash, {
