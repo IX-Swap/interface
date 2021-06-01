@@ -5,12 +5,15 @@ export enum AppService {
   Issuance = 'issuance',
   IssuanceDetails = 'issuance-details',
   Invest = 'invest',
-  Authorizer = 'authorizer'
+  Authorizer = 'authorizer',
+  Market = 'market',
+  OTCMarket = 'otc-market'
 }
 
 export enum AppFeature {
   Authentication = 'logins',
   BankAccounts = 'bank-accounts',
+  BuyerList = 'buyer-list',
   CashDeposits = 'cash-deposits',
   CashWithdrawals = 'cash-withdrawals',
   DigitalSecurity = 'digital-security',
@@ -18,12 +21,16 @@ export enum AppFeature {
   DigitalSecurityWithdrawals = 'digital-security-withdrawals',
   WithdrawalAddresses = 'withdrawal-addresses',
   Corporates = 'corporates',
+  Holdings = 'holdings',
   Individuals = 'individuals',
   IssuanceDetails = 'issuance-details',
   Commitments = 'commitments',
+  Market = 'market',
+  MyListings = 'my-listings',
   Offerings = 'offerings',
   Deployments = 'deployments',
   Issuance = 'issuance',
+  Listings = 'listings',
   // backend
   Deposits = 'deposits',
   Withdrawals = 'withdrawals',
@@ -53,5 +60,6 @@ export enum AuthorizerCategory {
   IssuanceDetails = 'issuance-details',
   Commitments = 'commitments',
   Offerings = 'offerings',
-  WithdrawalAddresses = 'withdrawal-addresses'
+  WithdrawalAddresses = 'withdrawal-addresses',
+  Listings = 'listings'
 }

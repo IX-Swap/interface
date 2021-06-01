@@ -11,7 +11,7 @@ import { VSpacer } from 'components/VSpacer'
 export const Preview: React.FC = () => {
   const { watch } = useFormContext<WithdrawCashFormValues>()
   const { data, isLoading } = useBanksData()
-  const bankId = watch('bank')
+  const bankId = watch('bankAccountId')
   const amountFormatted = watch('amount')
   const memo = watch('memo')
   const bank = data.map[bankId]

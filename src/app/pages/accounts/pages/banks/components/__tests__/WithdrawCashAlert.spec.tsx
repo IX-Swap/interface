@@ -33,7 +33,7 @@ describe('WithdrawCashAlert', () => {
       generateInfiniteQueryResult({ map: { [bank._id]: bank } })
     )
     const { getByTestId } = render(
-      <Form defaultValues={{ bank: bank._id }}>
+      <Form defaultValues={{ bankAccountId: bank._id }}>
         <WithdrawCashAlert />
       </Form>
     )
@@ -47,7 +47,7 @@ describe('WithdrawCashAlert', () => {
       generateInfiniteQueryResult({ queryStatus: QueryStatus.Loading })
     )
     const { getByTestId } = render(
-      <Form data-testid='form' defaultValues={{ bank: bank._id }}>
+      <Form data-testid='form' defaultValues={{ bankAccountId: bank._id }}>
         <WithdrawCashAlert />
       </Form>
     )

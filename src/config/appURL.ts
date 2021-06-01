@@ -6,6 +6,7 @@ export const urlParams = {
   identityId: ':identityId',
   issuerId: ':issuerId',
   dsoId: ':dsoId',
+  listingId: ':listingId',
   commitmentId: ':commitmentId',
   withdrawalAddressId: ':withdrawalAddressId',
   itemId: ':itemId',
@@ -36,10 +37,12 @@ export const urlService = {
   issuanceDetails: `${AppService.IssuanceDetails}`,
   invest: `${AppService.Invest}`,
   authorizer: `${AppService.Authorizer}`,
+  market: `${AppService.Market}`,
   settings: 'settings',
   admin: 'admin',
   home: 'home',
-  notifications: 'notifications'
+  notifications: 'notifications',
+  OTCMarket: `${AppService.OTCMarket}`
 }
 
 export const urlFeature = {
@@ -58,7 +61,11 @@ export const urlFeature = {
   deployments: 'deployments',
   users: AppFeature.Users,
   accessReports: 'access-reports',
-  guide2fa: 'guide-2fa'
+  guide2fa: 'guide-2fa',
+  holdings: `${AppFeature.Holdings}`,
+  market: `${AppFeature.Market}`,
+  myListings: `${AppFeature.MyListings}`,
+  buyerList: `${AppFeature.BuyerList}`
 }
 
 export const appURL = {

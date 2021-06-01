@@ -1,4 +1,4 @@
-import { getIdFromObj } from '../strings'
+import { getIdFromObj, getOrderSideName } from '../strings'
 
 describe('getIDString', () => {
   it('returns _id property of input value', () => {
@@ -15,5 +15,15 @@ describe('getIDString', () => {
 
   it('returns empty string if input value is undefined', () => {
     expect(getIdFromObj(undefined)).toEqual('')
+  })
+})
+
+describe('getOrderSideName', () => {
+  it('returns correct value when argument is ASK', () => {
+    expect(getOrderSideName('ASK')).toEqual('Buy')
+  })
+
+  it('returns correct value when argument is BID', () => {
+    expect(getOrderSideName('BID')).toEqual('Sell')
   })
 })

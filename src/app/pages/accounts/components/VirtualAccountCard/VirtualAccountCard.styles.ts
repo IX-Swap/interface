@@ -9,21 +9,9 @@ export const useStyles = makeStyles(() => ({
   infoContainer: {
     position: 'absolute',
     left: 0,
-    top: 100,
+    top: 0,
     width: '100%',
-    paddingLeft: 30,
-    paddingRight: 30
-  },
-  labelContainer: {
-    position: 'absolute',
-    left: 0,
-    bottom: 20,
-    paddingLeft: 30,
-    paddingRight: 30
-  },
-  labelText: {
-    color: '#FFF',
-    fontSize: 14,
-    fontWeight: 500
+    padding: '6% 11%',
+    height: '100%'
   }
 }))

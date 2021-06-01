@@ -87,6 +87,12 @@ export const accountsURL = {
     getByUserId: (userId: string) => `/accounts/balance/${userId}`,
     getByAssetId: (userId: string, assetId: string) =>
       `/accounts/balance/${userId}/${assetId}`
+  },
+  virtualAccounts: {
+    withdraw: (userId: string, virtualAccountId: string) =>
+      `/virtual-accounts/withdrawals/${virtualAccountId}/${userId}`,
+    getAllTransactions: (userId: string, virtualAccountId: string) =>
+      `/virtual-accounts/transactions/list/${virtualAccountId}/${userId}`
   }
 }
 
@@ -182,5 +188,45 @@ export const documentsURL = {
 export const virtualAccounts = {
   getAll: '/virtual-accounts/list',
   add: '/virtual-accounts',
-  getByUserId: (userId: string) => `/virtual-accounts/${userId}`
+  getByUserId: (userId: string) => `/virtual-accounts/${userId}`,
+  assign: '/virtual-accounts/assign'
+}
+
+export const exchange = {
+  marketList: '/exchange/markets/list',
+  userOrders: (userId: string) => `/exchange/orders/list/${userId}`,
+  userTrades: (userId: string) => `/exchange/trades/list/${userId}`,
+  tradeHistory: {
+    emit: 'fills/get',
+    on: (tokenId: string) => `fills/${tokenId}`
+  },
+  orderBook: {
+    emit: 'orderbook/get',
+    on: (tokenId: string) => `orderbook/${tokenId}`
+  },
+  currentHoldings: (userId: string) => `/exchange/holdings/list/${userId}`,
+  cancelOrder: (userId: string, orderId: string) =>
+    `/exchange/orders/cancel/${userId}/${orderId}`,
+  getListing: (userId: string, listingId: string) =>
+    `/exchange/listing/${userId}/${listingId}`
+}
+
+export const placeOrderURL = {
+  create: '/exchange/orders'
+}
+
+export const exchangeMarket = {
+  getOrdersList: (userId: string) => `exchange/orders/list/${userId}`
+}
+
+export const listings = {
+  getListByUser: (userId: string) => `exchange/listing/list/${userId}`
+}
+
+export const charts = {
+  config: 'exchange/udf/config',
+  symbols: 'exchange/udf/symbols',
+  history: 'exchange/udf/history',
+  time: 'exchange/udf/time',
+  search: 'exchange/udf/search'
 }
