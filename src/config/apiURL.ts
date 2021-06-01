@@ -63,11 +63,7 @@ export const accountsURL = {
       `/accounts/banks/${userId}/${bankId}`
   },
   cashDeposits: {
-    getAll: (userId: string) => `/accounts/cash/deposits/${userId}`,
-    getAllVirtualAccountTransactions: (
-      userId: string,
-      virtualAccountId: string
-    ) => `/virtual-accounts/transactions/list/${virtualAccountId}/${userId}`
+    getAll: (userId: string) => `/accounts/cash/deposits/${userId}`
   },
   cashWithdrawals: {
     create: (userId: string) => `/accounts/cash/withdrawals/${userId}`
@@ -91,6 +87,12 @@ export const accountsURL = {
     getByUserId: (userId: string) => `/accounts/balance/${userId}`,
     getByAssetId: (userId: string, assetId: string) =>
       `/accounts/balance/${userId}/${assetId}`
+  },
+  virtualAccounts: {
+    withdraw: (userId: string, virtualAccountId: string) =>
+      `/virtual-accounts/withdrawals/${virtualAccountId}/${userId}`,
+    getAllTransactions: (userId: string, virtualAccountId: string) =>
+      `/virtual-accounts/transactions/list/${virtualAccountId}/${userId}`
   }
 }
 
@@ -214,4 +216,12 @@ export const placeOrderURL = {
 
 export const exchangeMarket = {
   getOrdersList: (userId: string) => `exchange/orders/list/${userId}`
+}
+
+export const charts = {
+  config: 'exchange/udf/config',
+  symbols: 'exchange/udf/symbols',
+  history: 'exchange/udf/history',
+  time: 'exchange/udf/time',
+  search: 'exchange/udf/search'
 }

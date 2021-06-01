@@ -7,7 +7,7 @@ import { useBanksData } from 'app/pages/accounts/pages/banks/hooks/useBanksData'
 
 export const WithdrawCashAlert: React.FC = () => {
   const { watch } = useFormContext<WithdrawCashFormValues>()
-  const bankId = watch('bank')
+  const bankId = watch('bankAccountId')
   const { data, status } = useBanksData()
   const bank = data.map[bankId]
 
