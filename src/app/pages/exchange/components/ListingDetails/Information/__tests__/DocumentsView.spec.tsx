@@ -1,4 +1,4 @@
-import { DocumentsView } from 'app/pages/exchange/market/components/ListingDetails/Information/DocumentsView'
+import { DocumentsView } from 'app/pages/exchange/components/ListingDetails/Information/DocumentsView'
 import React from 'react'
 import { render, cleanup } from 'test-utils'
 

@@ -1,7 +1,7 @@
 import {
   MarketOverview,
   MarketOverviewProps
-} from 'app/pages/exchange/market/components/ListingDetails/Overview/MarketOverview'
+} from 'app/pages/exchange/components/ListingDetails/Overview/MarketOverview'
 import React from 'react'
 import { render, cleanup } from 'test-utils'
 import { listing } from '__fixtures__/listings'

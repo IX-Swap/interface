@@ -1,4 +1,4 @@
-import { Documents } from 'app/pages/exchange/market/components/ListingDetails/Information/Documents'
+import { Documents } from 'app/pages/exchange/components/ListingDetails/Information/Documents'
 import React from 'react'
 import { render, cleanup } from 'test-utils'
 
