@@ -31,7 +31,7 @@ export interface DepositCashFormValues
 export interface WithdrawCashFormValues
   extends TransactionBase,
     TransactionWithOTP {
-  bank: string
+  bankAccountId: string
   memo?: string
   virtualAccount: string
 }

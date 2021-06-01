@@ -63,11 +63,7 @@ export const accountsURL = {
       `/accounts/banks/${userId}/${bankId}`
   },
   cashDeposits: {
-    getAll: (userId: string) => `/accounts/cash/deposits/${userId}`,
-    getAllVirtualAccountTransactions: (
-      userId: string,
-      virtualAccountId: string
-    ) => `/virtual-accounts/transactions/list/${virtualAccountId}/${userId}`
+    getAll: (userId: string) => `/accounts/cash/deposits/${userId}`
   },
   cashWithdrawals: {
     create: (userId: string) => `/accounts/cash/withdrawals/${userId}`
@@ -91,6 +87,12 @@ export const accountsURL = {
     getByUserId: (userId: string) => `/accounts/balance/${userId}`,
     getByAssetId: (userId: string, assetId: string) =>
       `/accounts/balance/${userId}/${assetId}`
+  },
+  virtualAccounts: {
+    withdraw: (userId: string, virtualAccountId: string) =>
+      `/virtual-accounts/withdrawals/${virtualAccountId}/${userId}`,
+    getAllTransactions: (userId: string, virtualAccountId: string) =>
+      `/virtual-accounts/transactions/list/${virtualAccountId}/${userId}`
   }
 }
 
@@ -186,7 +188,8 @@ export const documentsURL = {
 export const virtualAccounts = {
   getAll: '/virtual-accounts/list',
   add: '/virtual-accounts',
-  getByUserId: (userId: string) => `/virtual-accounts/${userId}`
+  getByUserId: (userId: string) => `/virtual-accounts/${userId}`,
+  assign: '/virtual-accounts/assign'
 }
 
 export const exchange = {
@@ -203,7 +206,9 @@ export const exchange = {
   },
   currentHoldings: (userId: string) => `/exchange/holdings/list/${userId}`,
   cancelOrder: (userId: string, orderId: string) =>
-    `/exchange/orders/cancel/${userId}/${orderId}`
+    `/exchange/orders/cancel/${userId}/${orderId}`,
+  getListing: (userId: string, listingId: string) =>
+    `/exchange/listing/${userId}/${listingId}`
 }
 
 export const placeOrderURL = {
@@ -212,6 +217,10 @@ export const placeOrderURL = {
 
 export const exchangeMarket = {
   getOrdersList: (userId: string) => `exchange/orders/list/${userId}`
+}
+
+export const listings = {
+  getListByUser: (userId: string) => `exchange/listing/list/${userId}`
 }
 
 export const charts = {

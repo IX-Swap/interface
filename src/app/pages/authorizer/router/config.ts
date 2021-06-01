@@ -10,6 +10,7 @@ import { ReactComponent as IndividualIcon } from 'assets/icons/navigation/indivi
 import { ReactComponent as CorporateIcon } from 'assets/icons/navigation/corporate.svg'
 import { ReactComponent as OfferingIcon } from 'assets/icons/navigation/offering.svg'
 import { ReactComponent as CommitmentIcon } from 'assets/icons/navigation/commitment.svg'
+import { ReactComponent as ListingsIcon } from 'assets/icons/navigation/listings.svg'
 
 export const AuthorizerRoute = {
   banks: makeURL(['app', 'authorizer', 'bankAccount']),
@@ -23,7 +24,8 @@ export const AuthorizerRoute = {
   commitments: makeURL(['app', 'authorizer', 'commitments']),
   withdrawalAddresses: makeURL(['app', 'authorizer', 'withdrawalAddresses']),
   viewItem: makeURL(['app', 'authorizer', 'category', 'itemId']),
-  issuanceDetails: makeURL(['app', 'authorizer', 'issuanceDetails'])
+  issuanceDetails: makeURL(['app', 'authorizer', 'issuanceDetails']),
+  listings: '/app/authorizer/listings'
 }
 
 export const authorizerLandingLinks: InternalRouteProps[] = [
@@ -86,5 +88,11 @@ export const authorizerLandingLinks: InternalRouteProps[] = [
     path: AuthorizerRoute.issuanceDetails,
     color: '#11BB93',
     icon: IssuanceDetailsIcon
+  },
+  {
+    label: 'Listings',
+    path: AuthorizerRoute.listings,
+    color: '#90A30F',
+    icon: ListingsIcon
   }
 ]

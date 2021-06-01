@@ -40,7 +40,7 @@ describe('Setup', () => {
     const { getByLabelText } = render(
       <Form
         defaultValues={{
-          bank: bank._id,
+          bankAccountId: bank._id,
           virtualAccount: virtualAccountsSample[0].accountNumber
         }}
       >

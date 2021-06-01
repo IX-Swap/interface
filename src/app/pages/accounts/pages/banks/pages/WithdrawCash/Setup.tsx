@@ -16,7 +16,7 @@ import { FormSectionHeader } from 'app/pages/identity/components/FormSectionHead
 
 export const Setup: React.FC = () => {
   const { watch, control } = useFormContext<WithdrawCashFormValues>()
-  const bankId = watch('bank')
+  const bankId = watch('bankAccountId')
   const virtualAccountId = watch('virtualAccount')
   const {
     data: virtualAccountData,
@@ -36,16 +36,13 @@ export const Setup: React.FC = () => {
   return (
     <Grid container direction='column' spacing={2} justify='flex-start'>
       <Grid item xs={12} sm={6} md={5}>
-        <FormSectionHeader
-          title='Choose Your Virtual Account Number'
-          variant='subsection'
-        />
         <TypedField
+          customRenderer
           control={control}
-          variant='outlined'
           component={VirtualAccountSelect}
           name='virtualAccount'
-          label='Virtual Account'
+          label=''
+          customLabel='Choose Your Account'
         />
       </Grid>
 
@@ -64,7 +61,7 @@ export const Setup: React.FC = () => {
           control={control}
           variant='outlined'
           component={BankSelect}
-          name='bank'
+          name='bankAccountId'
           label='To Bank Account'
           helperText='Please select your bank account in which you want to transfer your fund'
         />

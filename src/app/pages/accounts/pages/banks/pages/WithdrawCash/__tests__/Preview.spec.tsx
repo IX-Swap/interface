@@ -20,7 +20,7 @@ const useBanksDataMock = useBanksData as jest.Mock<
 
 describe('Preview', () => {
   const formValues = {
-    bank: bank._id,
+    bankAccountId: bank._id,
     amount: cashDeposit.amount,
     memo: 'hello'
   }

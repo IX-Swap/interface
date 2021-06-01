@@ -21,7 +21,7 @@ export const RecentDeposits: React.FC<RecentDepositsProps> = ({
   const userId = getIdFromObj(user)
   const { data, isLoading } = useVirtualAccount(virtualAccountNumber)
 
-  if (isLoading || data === undefined || virtualAccountNumber === undefined) {
+  if (isLoading) {
     return null
   }
 
@@ -30,11 +30,10 @@ export const RecentDeposits: React.FC<RecentDepositsProps> = ({
       <Typography variant='h5'>Recent Deposits</Typography>
       <VSpacer size='small' />
       <TableView<CashDeposit>
-        uri={accountsURL.cashDeposits.getAllVirtualAccountTransactions(
-          userId,
-          data._id
+        uri={accountsURL.virtualAccounts.getAllTransactions(userId, data?._id)}
+        name={cashDepositsQueryKeys.getByVirtualAccount(
+          virtualAccountNumber ?? ''
         )}
-        name={cashDepositsQueryKeys.getByUserId(userId)}
         columns={columns}
         filter={{ sourceType: 'Deposit' }}
       />

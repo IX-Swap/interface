@@ -2,7 +2,7 @@ import apiService from 'services/api'
 import { cleanup } from 'test-utils'
 
 import { symbolData, sampleResponse, sampleBars } from '__fixtures__/tvChart'
-import { ResolutionString } from 'charting-library/charting_library'
+import { ResolutionString } from 'charting_library/charting_library'
 import { DataPulseProvider } from '../data-pulse-provider'
 
 describe('DataPulseProvider', () => {

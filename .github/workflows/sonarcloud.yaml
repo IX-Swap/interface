@@ -13,11 +13,12 @@ jobs:
       - uses: actions/checkout@v2
         with:
           fetch-depth: 0
-      
-      - uses: webfactory/ssh-agent@v0.5.2
-        with:
-          ssh-public-key: ${{ secrets.SSH_PRIVATE_KEY }}
 
+      - name: Install Charting Library
+        run: |
+          git config --global url."https://${{secrets.CHARTING_LIBRARY_TOKEN}}@github.com/".insteadOf git@github.com:
+          yarn add InvestaX/charting_library --master
+      
       - name: Install packages
         run: yarn
 

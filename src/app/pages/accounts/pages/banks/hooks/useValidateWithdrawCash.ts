@@ -20,7 +20,7 @@ export const useValidateWithdrawCash = (): BalancesByBankIdReturnObj => {
     errors,
     formState
   } = useFormContext<WithdrawCashFormValues>()
-  const bankId = watch('bank')
+  const bankId = watch('bankAccountId')
   const amount = watch('amount')
   const virtualAccountId = watch('virtualAccount')
 
