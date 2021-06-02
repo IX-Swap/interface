@@ -5104,7 +5104,7 @@ chardet@^0.7.0:
 
 "charting_library@git+https://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@github.com/InvestaX/charting_library.git#master":
   version "0.0.0"
-  resolved "git+https://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@github.com/InvestaX/charting_library.git#fa87930f3607ce15154852f8d921bdec4cbd46c6"
+  resolved "git+https://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@github.com/InvestaX/charting_library.git#416f035e7ff1bceb2574e5e57e92c67b401ef823"
 
 chokidar@^2.1.8:
   version "2.1.8"
