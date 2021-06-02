@@ -43,8 +43,7 @@ describe('GetWalletDialog', () => {
     render(<GetWalletDialog {...props} />)
     expect(IconButton).toHaveBeenCalledWith(
       expect.objectContaining({
-        'aria-label': 'close',
-        onClick: props.toggleOpen(false)
+        'aria-label': 'close'
       }),
       {}
     )

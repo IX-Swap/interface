@@ -230,3 +230,8 @@ export const charts = {
   time: 'exchange/udf/time',
   search: 'exchange/udf/search'
 }
+
+export const custodyAccount = {
+  get: (userId: string) => `/custody/account/${userId}`,
+  create: '/custody/account/assign'
+}

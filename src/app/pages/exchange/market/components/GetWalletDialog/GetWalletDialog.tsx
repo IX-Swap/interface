@@ -17,6 +17,8 @@ import useStyles from './GetWalletDialog.styles'
 import { LoadingMessage } from './LoadingMessage'
 import { DialogText } from './DialogText'
 import { useCreateCustodianWallet } from '../../hooks/useCreateCustodianWallet'
+import { useAuth } from 'hooks/auth/useAuth'
+import { getIdFromObj } from 'helpers/strings'
 
 export interface ModalProps extends Partial<DialogProps> {
   open?: boolean
@@ -27,8 +29,12 @@ export const GetWalletDialog = (props: ModalProps) => {
   const { open = false, toggleOpen } = props
   const classes = useStyles()
   const theme = useTheme()
+  const { user } = useAuth()
   const fullScreen = useMediaQuery(theme.breakpoints.down('sm'))
-  const [createCustodianWallet, { isLoading }] = useCreateCustodianWallet()
+  const [createCustodianWallet, { isLoading }] = useCreateCustodianWallet({
+    userId: getIdFromObj(user),
+    callback: () => toggleOpen(false)
+  })
 
   const handleCreateWallet = async () => await createCustodianWallet()
 
@@ -39,7 +45,8 @@ export const GetWalletDialog = (props: ModalProps) => {
       fullScreen={fullScreen}
       open={open}
       className={classes.root}
-      onClose={toggleOpen(false)}
+      onClose={() => toggleOpen(false)}
+      onBackdropClick={() => toggleOpen(false)}
       aria-labelledby='getwallet-modal-title'
       aria-describedby='getwallet-modal-description'
     >
@@ -51,7 +58,7 @@ export const GetWalletDialog = (props: ModalProps) => {
             </Typography>
             <IconButton
               aria-label='close'
-              onClick={toggleOpen(false)}
+              onClick={() => toggleOpen(false)}
               className={classes.closeButton}
             >
               <CloseIcon />
