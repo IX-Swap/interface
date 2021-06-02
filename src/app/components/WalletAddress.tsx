@@ -11,24 +11,26 @@ export interface WalletAddressProps {
   address: string
   link?: boolean
   network?: Network
+  long?: boolean
 }
 
 export const WalletAddress = ({
   address,
   network,
-  link = false
+  link = false,
+  long = false
 }: WalletAddressProps) => {
   const { showSnackbar } = useSnackbar()
   const handleCopy = () => {
     copyToClipboard(address)
-    showSnackbar('Copied!!')
+    showSnackbar('Copied!')
   }
 
   const addressUrl = getBlockchainUrl(address, network, 'address')
 
-  const textContent = `${address.slice(0, 4)}...${address.slice(
-    address.length - 4
-  )}`
+  const textContent = long
+    ? address
+    : `${address.slice(0, 4)}...${address.slice(address.length - 4)}`
 
   return (
     <span style={{ display: 'inline-flex', alignItems: 'center' }}>

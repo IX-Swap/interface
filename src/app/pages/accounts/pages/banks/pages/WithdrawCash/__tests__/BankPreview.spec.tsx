@@ -29,7 +29,7 @@ describe('BankPreview', () => {
     )
 
     const { queryByTestId } = render(
-      <Form defaultValues={{ bank: bank._id }}>
+      <Form defaultValues={{ bankAccountId: bank._id }}>
         <BankPreview />
       </Form>
     )
@@ -42,7 +42,7 @@ describe('BankPreview', () => {
     useBanksDataMock.mockReturnValue(generateInfiniteQueryResult({}))
 
     const { queryByTestId } = render(
-      <Form defaultValues={{ bank: bank._id }}>
+      <Form defaultValues={{ bankAccountId: bank._id }}>
         <BankPreview />
       </Form>
     )

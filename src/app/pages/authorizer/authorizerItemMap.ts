@@ -49,5 +49,9 @@ export const authorizerItemMap: Record<
   [AppFeature.WithdrawalAddresses]: {
     uri: '/accounts/withdrawal-addresses/list',
     listRoute: AuthorizerRoute.withdrawalAddresses
+  },
+  [AppFeature.Listings]: {
+    uri: '/exchange/listing/list',
+    listRoute: AuthorizerRoute.listings
   }
 }

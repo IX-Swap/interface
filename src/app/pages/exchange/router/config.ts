@@ -7,9 +7,19 @@ import { ReactComponent as BuyerListIcon } from 'assets/icons/navigation/buyer-l
 
 export const OTCMarketRoute = {
   landing: makeURL(['app', 'OTCMarket']),
-  market: makeURL(['app', 'OTCMarket', 'market']),
+  market: makeURL(['app', 'OTCMarket', 'market', 'pairId']),
   holdings: makeURL(['app', 'OTCMarket', 'holdings']),
+  viewListing: makeURL(['app', 'OTCMarket', 'myListings', 'listingId', 'view']),
   myListings: makeURL(['app', 'OTCMarket', 'myListings']),
+  createListing: makeURL(['app', 'OTCMarket', 'myListings', 'create']),
+  previewListing: makeURL([
+    'app',
+    'OTCMarket',
+    'myListings',
+    'issuerId',
+    'listingId',
+    'preview'
+  ]),
   buyerList: makeURL(['app', 'OTCMarket', 'buyerList'])
 }
 
