@@ -1,41 +1,47 @@
 import { Box, Grid, Link, Typography } from '@material-ui/core'
 import { CashDepositDetails } from 'app/pages/accounts/components/VirtualAccountCashDeposit/CashDepositDetails'
 import { useStyles } from 'app/pages/accounts/components/VirtualAccountCashDeposit/Fast.styles'
+import { ValidCurrency } from 'helpers/types'
 import React from 'react'
 
-const fastDetails = [
-  {
-    label: 'Currency',
-    value: 'SGD'
-  },
-  {
-    label: 'Bank:',
-    value: 'Hongkong & Shanghai Banking Corporate (HSBC CORP)'
-  },
-  {
-    label: 'Beneficiary Account Name / Payee:',
-    value: 'IC SG Pte Ltd'
-  },
-  {
-    label: 'Beneficiary Account Number:',
-    value: '123456789012'
-  },
-  {
-    label: 'SWIFT Code:',
-    value: 'HSBCSGSGXXX'
-  },
-  {
-    label: 'My Initials:',
-    value: 'Indicate InvestaX Client Name/ID'
-  },
-  {
-    label: 'Message to receiver/beneficiary/Ref/Bill ref:',
-    value: 'InvestaX to recommend'
-  }
-]
+export interface DepositInfoProps {
+  accountId: string
+  currency: ValidCurrency
+}
 
-export const Fast = () => {
+export const Fast = ({ accountId, currency }: DepositInfoProps) => {
   const { footerInfo } = useStyles()
+  const fastDetails = [
+    {
+      label: 'Currency',
+      value: currency
+    },
+    {
+      label: 'Bank:',
+      value: 'Hongkong & Shanghai Banking Corporate (HSBC CORP)'
+    },
+    {
+      label: 'Beneficiary Account Name / Payee:',
+      value: 'IC SG Pte Ltd'
+    },
+    {
+      label: 'Beneficiary Account Number:',
+      value: accountId
+    },
+    {
+      label: 'SWIFT Code:',
+      value: 'HSBCSGSGXXX'
+    },
+    {
+      label: 'My Initials:',
+      value: 'Indicate InvestaX Client Name/ID'
+    },
+    {
+      label: 'Message to receiver/beneficiary/Ref/Bill ref:',
+      value: 'InvestaX to recommend'
+    }
+  ]
+
   return (
     <Grid direction='column'>
       <Grid item>
