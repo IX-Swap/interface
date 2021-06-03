@@ -1,6 +1,8 @@
 import { Grid, IconButton } from '@material-ui/core'
 import { Star, StarBorder } from '@material-ui/icons'
+import { useFavoritePairs } from 'app/pages/exchange/hooks/useFavoritePairs'
 import { Pair } from 'app/pages/exchange/hooks/useMarketList'
+import { useMarkPairAsFavorite } from 'app/pages/exchange/hooks/useMarkPairAsFavorite'
 import { OTCMarketRoute } from 'app/pages/exchange/router/config'
 import { AppRouterLink } from 'components/AppRouterLink'
 import React from 'react'
@@ -11,11 +13,18 @@ export interface PairNameProps {
 }
 
 export const PairName = ({ pair }: PairNameProps) => {
+  const { markAsFavorite } = useMarkPairAsFavorite()
+  const { data: favoritePairs } = useFavoritePairs()
+
+  const handleClick = () => {
+    markAsFavorite(pair._id)
+  }
+
   return (
     <Grid container spacing={1} alignItems='center'>
       <Grid item>
-        <IconButton size='small'>
-          {pair.isFavorite ? (
+        <IconButton size='small' onClick={handleClick}>
+          {favoritePairs?.includes(pair._id) ?? false ? (
             <Star style={{ color: '#F0D400' }} />
           ) : (
             <StarBorder />

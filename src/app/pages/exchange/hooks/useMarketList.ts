@@ -1,3 +1,4 @@
+import { useFavoritePairs } from 'app/pages/exchange/hooks/useFavoritePairs'
 import { exchange as exchangeURL } from 'config/apiURL'
 import { exchange as exchangeQueryKeys } from 'config/queryKeys'
 import { useQueryFilter } from 'hooks/filters/useQueryFilter'
@@ -18,6 +19,7 @@ export interface Pair {
 export const useMarketList = (showFilter: boolean | undefined = false) => {
   const { apiService } = useServices()
   const { getFilterValue } = useQueryFilter()
+  const { data: favorites } = useFavoritePairs()
 
   const getMarketListFilter = () => {
     const pairFilter = getFilterValue('pairFilter')
@@ -59,9 +61,36 @@ export const useMarketList = (showFilter: boolean | undefined = false) => {
     }
   )
 
+  const sortByFavorite = (list: Pair[]) => {
+    const pairFilter = getFilterValue('pairFilter')
+    if (
+      pairFilter === 'favorite' &&
+      favorites !== undefined &&
+      favorites.length > 0
+    ) {
+      return list.sort((a: Pair, b: Pair) => {
+        if (
+          (favorites.includes(b._id) && favorites.includes(a._id)) ||
+          (!favorites.includes(b._id) && !favorites.includes(a._id))
+        ) {
+          return 0
+        }
+        if (favorites.includes(b._id) && !favorites.includes(a._id)) {
+          return 1
+        }
+        return -1
+      })
+    }
+    return list
+  }
+
+  const parsedData = useParsedData<Pair>(data, '_id')
+
   return {
     data: {
-      ...useParsedData<Pair>(data, '_id')
+      raw: parsedData.raw,
+      map: parsedData.map,
+      list: sortByFavorite(parsedData.list)
     },
     ...rest
   }
