@@ -16,6 +16,8 @@ import {
 import { generatePath, Redirect, useParams } from 'react-router'
 import { useMarketList } from 'app/pages/exchange/hooks/useMarketList'
 import { OTCMarketRoute } from 'app/pages/exchange/router/config'
+import { isMarketDataFalsy, isPairIdFalsy } from '../../utils'
+import { useSymbol } from '../../hooks/useSymbol'
 
 export const Market = () => {
   const classes = useStyles()
@@ -27,12 +29,13 @@ export const Market = () => {
   const [datafeed] = React.useState<IBasicDataFeed>(() => getDataFeed())
   const { pairId } = useParams<{ pairId: string }>()
   const { data, isLoading } = useMarketList()
+  const { symbol } = useSymbol(pairId, data)
 
-  if ((data === undefined || data.list.length < 1, isLoading)) {
+  if ((isMarketDataFalsy(data), isLoading)) {
     return null
   }
 
-  if (pairId === null || pairId === undefined || pairId === ':pairId') {
+  if (isPairIdFalsy(pairId)) {
     return (
       <Redirect
         to={generatePath(OTCMarketRoute.market, { pairId: data?.list[0]._id })}
@@ -55,12 +58,14 @@ export const Market = () => {
 
         <Grid item container>
           <Grid item className={classes.middleBlock} xs={12}>
-            <TVChartContainer
-              tvWidget={tvWidget}
-              setTradingChart={setTradingChart}
-              datafeed={datafeed}
-              symbol='EUR/SGD'
-            />
+            {symbol.length > 0 && (
+              <TVChartContainer
+                tvWidget={tvWidget}
+                setTradingChart={setTradingChart}
+                datafeed={datafeed}
+                symbol={symbol}
+              />
+            )}
           </Grid>
           <Grid item className={classes.colorGrid} xs={12}>
             <MyOrders />
