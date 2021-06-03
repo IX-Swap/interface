@@ -11,16 +11,18 @@ export interface PairTableRowProps {
 }
 
 export const PairTableRow = ({ item }: PairTableRowProps) => {
+  const isPositive =
+    item._24hChangePercentage !== 0 ? item._24hChangePercentage > 0 : undefined
   return (
     <TableRow>
       <PairTableCell>
         <PairName pair={item} />
       </PairTableCell>
       <PairTableCell>
-        <LastPrice value={item.lastPrice} trend={item.trend} />
+        <LastPrice value={item.latestPrice} isPositive={isPositive} />
       </PairTableCell>
       <PairTableCell align='right'>
-        <Change value={item.change} trend={item.trend} />
+        <Change value={item._24hChangePercentage} isPositive={isPositive} />
       </PairTableCell>
     </TableRow>
   )

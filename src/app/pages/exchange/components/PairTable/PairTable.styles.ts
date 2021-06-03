@@ -1,7 +1,7 @@
 import { makeStyles } from '@material-ui/core/styles'
 
 export interface Props {
-  trend?: 'up' | 'down'
+  isPositive?: boolean
 }
 
 export const useStyles = makeStyles(theme => ({
@@ -16,8 +16,10 @@ export const useStyles = makeStyles(theme => ({
   },
   trendColor: {
     color: (props: Props) =>
-      props.trend === 'up'
-        ? theme.palette.success.main
-        : theme.palette.error.main
+      props.isPositive !== undefined
+        ? props.isPositive
+          ? theme.palette.success.main
+          : theme.palette.error.main
+        : theme.palette.text.primary
   }
 }))

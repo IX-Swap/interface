@@ -11,9 +11,8 @@ export interface Pair {
   _id: string
   name: string
   isFavorite: boolean
-  lastPrice: number
-  change: number
-  trend: 'up' | 'down'
+  latestPrice: number
+  _24hChangePercentage: number
 }
 
 export const useMarketList = (showFilter: boolean | undefined = false) => {

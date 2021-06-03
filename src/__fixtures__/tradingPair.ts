@@ -4,7 +4,6 @@ export const pair: Pair = {
   _id: '123456',
   name: 'IXPS/SGD',
   isFavorite: true,
-  lastPrice: 100,
-  change: 2.34,
-  trend: 'up'
+  latestPrice: 100,
+  _24hChangePercentage: 2.34
 }

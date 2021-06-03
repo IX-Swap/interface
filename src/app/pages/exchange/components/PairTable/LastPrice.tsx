@@ -5,11 +5,11 @@ import { formatAmount } from 'helpers/numbers'
 
 export interface LastPriceProps {
   value: number
-  trend: 'up' | 'down'
+  isPositive?: boolean
 }
 
-export const LastPrice = ({ value, trend }: LastPriceProps) => {
-  const { trendColor } = useStyles({ trend })
+export const LastPrice = ({ value, isPositive }: LastPriceProps) => {
+  const { trendColor } = useStyles({ isPositive })
   return (
     <Box component='span' className={trendColor}>
       {formatAmount(value)}

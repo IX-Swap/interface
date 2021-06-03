@@ -16,17 +16,15 @@ const Template: Story = () => {
     {
       _id: '60a723d4bb71587cc1d144e6',
       name: 'PATTI OSINSKI',
-      lastPrice: 1000,
-      change: 3.45,
-      trend: 'up',
+      latestPrice: 1000,
+      _24hChangePercentage: -2.3,
       isFavorite: true
     },
     {
       _id: '60a2340a804b8f3de6248b56',
       name: 'EUR/SGD',
-      lastPrice: 230,
-      change: 6.78,
-      trend: 'down',
+      latestPrice: 230,
+      _24hChangePercentage: 1.3,
       isFavorite: false
     }
   ]
