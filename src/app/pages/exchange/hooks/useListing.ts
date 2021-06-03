@@ -16,6 +16,7 @@ export const useListing = () => {
   }>()
   const _userId = userId ?? getIdFromObj(user)
 
+  console.log(listingId)
   const getListing = async () => {
     return await apiService.get<ListingView>(
       exchangeApiUrl.getListing(_userId, listingId)

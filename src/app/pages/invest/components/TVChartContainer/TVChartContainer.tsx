@@ -1,8 +1,7 @@
 import * as React from 'react'
 import {
   widget as Widget,
-  ResolutionString,
-  Timezone
+  ResolutionString
 } from 'charting_library/charting_library'
 import { ChartContainerProps } from 'types/tvChart'
 import {
