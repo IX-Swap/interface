@@ -47,6 +47,7 @@
     "react-scripts": "^3.4.3",
     "react-scroll": "^1.8.1",
     "react-toast-notifications": "^2.4.0",
+    "react-waypoint": "^10.1.0",
     "react-window": "^1.8.5",
     "rimraf": "^3.0.2",
     "socket.io-client": "^4.1.1",
