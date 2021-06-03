@@ -33,7 +33,7 @@ export const GetWalletDialog = (props: ModalProps) => {
   const fullScreen = useMediaQuery(theme.breakpoints.down('sm'))
   const [createCustodianWallet, { isLoading }] = useCreateCustodianWallet({
     userId: getIdFromObj(user),
-    callback: () => toggleOpen(false)
+    onSuccess: () => toggleOpen(false)
   })
 
   const handleCreateWallet = async () => await createCustodianWallet()

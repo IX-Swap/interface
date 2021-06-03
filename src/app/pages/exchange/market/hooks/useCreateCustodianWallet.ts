@@ -4,9 +4,9 @@ import { custodyAccount } from 'config/apiURL'
 import { CustodyAccount } from 'types/custodyAccount'
 interface props {
   userId: string
-  callback: () => void
+  onSuccess: () => void
 }
-export const useCreateCustodianWallet = ({ userId, callback }: props) => {
+export const useCreateCustodianWallet = ({ userId, onSuccess }: props) => {
   const { apiService, snackbarService } = useServices()
   const url = `${custodyAccount.create}`
   const createCustodianWallet = async (args: any) => {
@@ -17,7 +17,7 @@ export const useCreateCustodianWallet = ({ userId, callback }: props) => {
 
   return useMutation(createCustodianWallet, {
     onSuccess: data => {
-      callback()
+      onSuccess()
       void snackbarService.showSnackbar(
         'You have been assigned with the withdrawal address',
         'success'

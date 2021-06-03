@@ -2,10 +2,10 @@ import { act } from '@testing-library/react-hooks'
 import { waitFor, cleanup, renderHookWithServiceProvider } from 'test-utils'
 import { unsuccessfulResponse } from '__fixtures__/api'
 import { user } from '__fixtures__/user'
-import { useExistsCustodianWallet } from '../useExistsCustodianWallet'
+import { useCreateCustodianWallet } from '../useCreateCustodianWallet'
 import { custodyAccountMock } from '__fixtures__/custodyAccount'
 
-describe('useExistsCustodianWallet', () => {
+describe('useCreateCustodianWallet', () => {
   const onSuccess = jest.fn()
   const userId = user._id
 
@@ -14,26 +14,30 @@ describe('useExistsCustodianWallet', () => {
     jest.clearAllMocks()
   })
 
-  it('it calls onSuccess with the result', async () => {
+  it('it calls onSuccess and snackbarService.showSnackbar', async () => {
     await act(async () => {
-      const getFn = jest
+      const postFn = jest
         .fn()
         .mockResolvedValueOnce({ data: custodyAccountMock })
       const showSnackbar = jest.fn()
-      const param = { response: custodyAccountMock }
-      const apiObj = { get: getFn }
+      const apiObj = { post: postFn }
       const snackbarObj = { showSnackbar }
       const { result } = renderHookWithServiceProvider(
-        () => useExistsCustodianWallet({ userId, onSuccess }),
+        () => useCreateCustodianWallet({ userId, onSuccess }),
         { apiService: apiObj, snackbarService: snackbarObj }
       )
 
       await waitFor(
         () => {
           const [mutate] = result.current
-          void mutate()
+          void mutate({ userId })
 
-          expect(onSuccess).toHaveBeenCalledWith(param)
+          expect(onSuccess).toHaveBeenCalledTimes(1)
+
+          expect(snackbarObj.showSnackbar).toHaveBeenCalledWith(
+            'You have been assigned with the withdrawal address',
+            'success'
+          )
         },
         { timeout: 1000 }
       )
@@ -42,20 +46,20 @@ describe('useExistsCustodianWallet', () => {
 
   it('it calls snackbarService.showSnackbar with error message', async () => {
     await act(async () => {
-      const getFn = jest.fn().mockRejectedValueOnce(unsuccessfulResponse)
+      const postFn = jest.fn().mockRejectedValueOnce(unsuccessfulResponse)
       const showSnackbar = jest.fn()
 
-      const apiObj = { get: getFn }
+      const apiObj = { post: postFn }
       const snackbarObj = { showSnackbar }
       const { result } = renderHookWithServiceProvider(
-        () => useExistsCustodianWallet({ userId, onSuccess }),
+        () => useCreateCustodianWallet({ userId, onSuccess }),
         { apiService: apiObj, snackbarService: snackbarObj }
       )
 
       await waitFor(
         () => {
           const [mutate] = result.current
-          void mutate()
+          void mutate({ userId })
 
           expect(showSnackbar).toHaveBeenCalledTimes(1)
           expect(showSnackbar).toHaveBeenNthCalledWith(
