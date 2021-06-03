@@ -1,39 +1,58 @@
 import React from 'react'
 import { DigitalSecurityOffering } from 'types/dso'
-import { isDSOLive, transformDSOToFormValues } from 'app/components/DSO/utils'
+import { isDSOLive } from 'app/components/DSO/utils'
 import { Grid } from '@material-ui/core'
 import { Form } from 'components/form/Form'
-import { useSetPageTitle } from 'app/hooks/useSetPageTitle'
-import { getOfferingName } from 'helpers/strings'
 import { ListingFormFields } from 'app/pages/exchange/components/ListingForm/ListingFormFields'
 import { ListingSidebar } from 'app/pages/exchange/components/ListingForm/ListingSidebar'
 import { ListingFormActions } from 'app/pages/exchange/components/ListingForm/ListingFormActions'
+import { Listing } from 'app/pages/exchange/types/listings'
+import {
+  transformDataFromDSOToListingFormValue,
+  transformListingToListingFormValue
+} from 'app/pages/exchange/utils/listing'
+// import { getDSOValidationSchema } from 'validation/dso'
 
 export interface ListingFormProps {
-  data?: DigitalSecurityOffering
+  data?: DigitalSecurityOffering | Listing
   isNew?: boolean
 }
 
 export const ListingFormContent = (props: ListingFormProps) => {
   const { data, isNew = false } = props
-  const isLive = isDSOLive(data)
-
-  useSetPageTitle(getOfferingName(data))
+  const isLive = isDSOLive(data as any)
+  const isDataFromDSO = data !== undefined && !('maximumTradeUnits' in data)
 
   return (
     <Form
       data-testid='listing-form'
-      defaultValues={transformDSOToFormValues(data)}
+      defaultValues={
+        data !== undefined && 'maximumTradeUnits' in data
+          ? transformListingToListingFormValue(data)
+          : transformDataFromDSOToListingFormValue(data)
+      }
+      // TODO Change validation schema
+      // validationSchema={getDSOValidationSchema(isNew, isLive)}
     >
       <Grid container>
         <Grid item lg={9} container direction='column'>
-          <ListingFormFields isNew={isNew} isLive={isLive} />
+          <ListingFormFields
+            isNew={isNew}
+            isLive={isLive}
+            isDataFromDSO={isDataFromDSO}
+          />
         </Grid>
 
         <Grid item lg={3}>
           <ListingSidebar
             dso={data}
-            footer={<ListingFormActions listing={data} />}
+            isDataFromDSO={isDataFromDSO}
+            footer={
+              <ListingFormActions
+                isDataFromDSO={isDataFromDSO}
+                listing={data}
+              />
+            }
           />
         </Grid>
       </Grid>

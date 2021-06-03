@@ -18,7 +18,7 @@ export interface NewListingRadioButtonsProps {
 export const ListingRadioButtons = ({
   onImportClick
 }: NewListingRadioButtonsProps) => {
-  const { data, isLoading } = useDSOsByUserId()
+  const { data, isLoading } = useDSOsByUserId('Approved')
   const [isNewListing, setIsNewListing] = useState(true)
   const [selectedDSOValue, setSelectedDSOValue] = useState<string>('')
 

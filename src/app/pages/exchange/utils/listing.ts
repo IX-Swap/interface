@@ -1,0 +1,149 @@
+import { numberToPercentage } from 'app/pages/issuance/utils'
+import { DigitalSecurityOffering, DSORequestArgs } from 'types/dso'
+import { ListingDataroomFile } from 'types/dataroomFile'
+import { hasValue } from 'helpers/forms'
+import { Listing, ListingFormValues } from 'app/pages/exchange/types/listings'
+import { initialListingFormValues } from 'app/pages/exchange/consts/listing'
+
+export const transformDataFromDSOToListingFormValue = (
+  data: DigitalSecurityOffering | undefined
+): ListingFormValues => {
+  if (data === undefined) {
+    return initialListingFormValues
+  }
+
+  return {
+    logo: data.logo,
+    corporate: data.corporate !== undefined ? data.corporate._id : '',
+    network: data.network?._id ?? '',
+    tokenName: data.tokenName,
+    tokenSymbol: data.tokenSymbol,
+    decimalPlaces: data.decimalPlaces,
+    minimumTradeUnits: data.pricePerUnit,
+    maximumTradeUnits: null,
+    raisedAmount: data.totalFundraisingAmount,
+    capitalStructure: data.capitalStructure,
+    investmentPeriod: data.investmentPeriod ?? null,
+    dividendYield: data.dividendYield,
+    interestRate: data.interestRate,
+    grossIRR: data.grossIRR,
+    investmentStructure: data.investmentStructure ?? '',
+    distributionFrequency: data.distributionFrequency,
+    leverage: data.leverage,
+    equityMultiple: data.equityMultiple,
+    currency: '',
+    markets: 'Exchange',
+    team: data.team.map(({ _id, ...person }) => person),
+    incomeStatement: [],
+    cashFlow: [],
+    balanceSheet: [],
+    launchDate: data.launchDate,
+    completionDate: data.completionDate
+  }
+}
+
+export const transformListingToListingFormValue = (
+  data: Listing | undefined
+): ListingFormValues => {
+  if (data === undefined) {
+    return initialListingFormValues
+  }
+
+  return {
+    logo: data.logo,
+    corporate: data.corporate.companyLegalName,
+    network: data.network._id,
+    tokenName: data.tokenName,
+    tokenSymbol: data.tokenSymbol,
+    decimalPlaces: data.decimalPlaces,
+    minimumTradeUnits: data.minimumTradeUnits,
+    maximumTradeUnits: data.maximumTradeUnits,
+    raisedAmount: data.raisedAmount,
+    capitalStructure: data.capitalStructure,
+    investmentPeriod: data.investmentPeriod,
+    dividendYield: data.dividendYield,
+    interestRate: data.interestRate,
+    grossIRR: data.grossIRR,
+    investmentStructure: data.investmentStructure,
+    distributionFrequency: data.distributionFrequency,
+    leverage: data.leverage,
+    equityMultiple: data.equityMultiple,
+    currency: '',
+    markets: 'Exchange',
+    team: data.team.map(({ _id, ...person }) => person),
+    incomeStatement: data.documents.filter(
+      item => item.type === 'incomeStatement'
+    ),
+    cashFlow: data.documents.filter(item => item.type === 'cashFlow'),
+    balanceSheet: data.documents.filter(item => item.type === 'balanceSheet'),
+    launchDate: data.launchDate,
+    completionDate: data.completionDate
+  }
+}
+
+export const getUpdateListingPayload = (values: Partial<ListingFormValues>) => {
+  const { status, ...payload } = getCreateListingPayload(values)
+
+  return payload
+}
+
+export const getCreateListingPayload = (values: Partial<ListingFormValues>) => {
+  return Object.keys(values).reduce((acc, key) => {
+    let value = values[key as keyof ListingFormValues]
+
+    if (
+      key === 'incomeStatement' ||
+      key === 'cashFlow' ||
+      key === 'balanceSheet'
+    ) {
+      console.log('payload with documents', {
+        ...acc,
+        documents: [
+          ...((acc as any).documents ?? []),
+          ...getDocumentsFieldPayload(value as any)
+        ]
+      })
+      return {
+        ...acc,
+        documents: [
+          ...((acc as any).documents ?? []),
+          ...getDocumentsFieldPayload(value as any)
+        ]
+      }
+    }
+
+    if (key === 'currency') {
+      return {
+        ...acc,
+        markets: getMarketsFieldPayload(value as any)
+      }
+    }
+
+    if (
+      key === 'dividendYield' ||
+      key === 'grossIRR' ||
+      key === 'equityMultiple' ||
+      key === 'interestRate' ||
+      key === 'leverage'
+    ) {
+      value = numberToPercentage(value as number)
+    }
+
+    return {
+      ...acc,
+      ...(hasValue(value) ? { [key]: value } : {})
+    }
+  }, {}) as DSORequestArgs
+}
+
+export const getDocumentsFieldPayload = (documents: ListingDataroomFile[]) => {
+  return documents.map(d => d.value._id)
+}
+
+export const getMarketsFieldPayload = (currency: string) => {
+  return [
+    {
+      currency: currency
+    }
+  ]
+}

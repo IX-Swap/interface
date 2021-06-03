@@ -56,7 +56,8 @@
     "uno-material-ui": "^2.0.4",
     "use-debounce": "^5.2.0",
     "yup": "^0.28.3",
-    "yup-phone": "^1.2.19"
+    "yup-phone": "^1.2.19",
+    "currency-symbol-map": "5.0.1"
   },
   "devDependencies": {
     "@babel/cli": "^7.8.4",

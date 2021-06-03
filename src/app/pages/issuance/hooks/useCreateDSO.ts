@@ -23,7 +23,10 @@ export const useCreateDSO = () => {
       replace(
         generatePath(IssuanceRoute.view, {
           dsoId: data.data._id,
-          issuerId: data.data.user
+          issuerId:
+            typeof data.data.user === 'string'
+              ? data.data.user
+              : getIdFromObj(data.data.user)
         })
       )
     },

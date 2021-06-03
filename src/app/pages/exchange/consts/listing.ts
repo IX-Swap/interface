@@ -1,0 +1,30 @@
+import { ListingFormValues } from 'app/pages/exchange/types/listings'
+
+export const initialListingFormValues: ListingFormValues = {
+  logo: '',
+  corporate: '',
+  network: '',
+  tokenName: '',
+  tokenSymbol: '',
+  decimalPlaces: null,
+  minimumTradeUnits: null,
+  maximumTradeUnits: null,
+  raisedAmount: null,
+  capitalStructure: '',
+  investmentPeriod: null,
+  dividendYield: null,
+  interestRate: null,
+  grossIRR: null,
+  investmentStructure: '',
+  distributionFrequency: '',
+  leverage: null,
+  equityMultiple: null,
+  currency: '',
+  markets: 'Exchange',
+  team: [],
+  incomeStatement: [],
+  cashFlow: [],
+  balanceSheet: [],
+  launchDate: '',
+  completionDate: ''
+}

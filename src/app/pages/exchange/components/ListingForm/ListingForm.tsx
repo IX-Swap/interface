@@ -1,5 +1,4 @@
 import React, { useState } from 'react'
-import { DigitalSecurityOffering } from 'types/dso'
 import { Grid } from '@material-ui/core'
 import { useDSOById } from 'app/pages/invest/hooks/useDSOById'
 import { ListingRadioButtons } from 'app/pages/exchange/components/ListingForm/ListingRadioButtons'
@@ -10,9 +9,10 @@ import {
   getIdFromDSOSelectValue,
   getIssuerIdFromDSOSelectValue
 } from 'app/pages/issuance/utils'
+import { Listing } from 'app/pages/exchange/types/listings'
 
 export interface ListingFormProps {
-  data?: DigitalSecurityOffering
+  data?: Listing
   isNew?: boolean
 }
 
@@ -21,7 +21,7 @@ export const ListingForm = (props: ListingFormProps) => {
   const [dsoId, setDsoId] = useState('')
   const [issuerId, setIssuerId] = useState('')
   const { data: dsoData, isLoading } = useDSOById(dsoId, issuerId)
-  const data = dsoData ?? initialData
+  const data = initialData ?? dsoData
 
   return (
     <>

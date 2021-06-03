@@ -1,38 +1,41 @@
 import { Button } from '@material-ui/core'
-import { useCreateDSO } from 'app/pages/issuance/hooks/useCreateDSO'
-import { useUpdateDSO } from 'app/pages/issuance/hooks/useUpdateDSO'
-import { getUpdateDSOPayload } from 'app/pages/issuance/utils'
 import { getIdFromObj } from 'helpers/strings'
 import React from 'react'
 import { useFormContext } from 'react-hook-form'
-import { DigitalSecurityOffering, DSOFormValues } from 'types/dso'
+import { DigitalSecurityOffering } from 'types/dso'
+import { Listing, ListingFormValues } from 'app/pages/exchange/types/listings'
+import { getUpdateListingPayload } from 'app/pages/exchange/utils/listing'
+import { useCreateListing } from 'app/pages/exchange/hooks/useCreateListing'
+import { useUpdateListing } from 'app/pages/exchange/hooks/useUpdateListing'
 
 export interface ListingFinishLaterButtonProps {
-  listing: DigitalSecurityOffering | undefined
+  listing: DigitalSecurityOffering | Listing | undefined
+  isDataFromDSO: boolean
 }
 
 export const ListingFinishLaterButton = (
   props: ListingFinishLaterButtonProps
 ) => {
-  const { listing } = props
+  const { listing, isDataFromDSO } = props
   const listingId = getIdFromObj(listing)
-  // TODO Change to listing API requests
-  const { getValues } = useFormContext<DSOFormValues>()
-  const [createDSO, { isLoading: isCreating }] = useCreateDSO()
-  const [updateDSO, { isLoading: isUpdating }] = useUpdateDSO(
+
+  const { watch } = useFormContext<ListingFormValues>()
+  const [createListing, { isLoading: isCreating }] = useCreateListing()
+  const [updateListing, { isLoading: isUpdating }] = useUpdateListing(
     listingId,
-    listing?.user ?? ''
+    typeof listing?.user === 'string'
+      ? listing?.user
+      : getIdFromObj(listing?.user) ?? listing?.createdBy ?? ''
   )
-  const formValues = getUpdateDSOPayload({
-    ...getValues(),
+  const formValues = getUpdateListingPayload({
+    ...watch(),
     status: 'Draft'
-  })
+  } as any)
 
   const handleClick =
-    listing === undefined
-      ? // TODO Change to listing API requests
-        async () => await createDSO(formValues)
-      : async () => await updateDSO(formValues)
+    listing === undefined || isDataFromDSO
+      ? async () => await createListing(formValues)
+      : async () => await updateListing(formValues)
 
   return (
     <Button
@@ -41,7 +44,7 @@ export const ListingFinishLaterButton = (
       onClick={handleClick}
       disabled={isCreating || isUpdating}
     >
-      Finish Later
+      {listing === undefined || isDataFromDSO ? 'Finish Later' : 'Save'}
     </Button>
   )
 }

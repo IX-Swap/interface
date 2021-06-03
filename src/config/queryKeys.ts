@@ -17,7 +17,8 @@ export const documentsQueryKeys = {
 
 export const assetsQueryKeys = {
   getById: 'asset-by-id',
-  getData: 'assets'
+  getData: 'assets',
+  getAssetsList: 'assets-list'
 }
 
 export const identityQueryKeys = {
@@ -173,4 +174,9 @@ export const exchangeMarketQueryKeys = {
 
 export const listingsQueryKeys = {
   getListingsList: 'listings-list'
+}
+
+export const exchangeListingsQueryKeys = {
+  getListingById: (listingId: string, issuerId: string) =>
+    generateQueryKey('listing', listingId, issuerId)
 }
