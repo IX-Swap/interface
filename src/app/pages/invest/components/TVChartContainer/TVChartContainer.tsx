@@ -39,7 +39,7 @@ export const TVChartContainer: React.FC<
         ),
       interval: interval ?? sampleTVChartProps.interval,
       container_id: containerId ?? sampleTVChartProps.containerId,
-      library_path: '/charting_library/',
+      library_path: `${process.env.PUBLIC_URL}/charting_library/`,
       favorites: {
         intervals: ['15', '60', '240', '1D', 'W'] as ResolutionString[],
         chartTypes: ['Line', 'Candles']
@@ -56,7 +56,7 @@ export const TVChartContainer: React.FC<
       height: height ?? sampleTVChartProps.height,
       width: width ?? sampleTVChartProps.width,
       theme: theme ?? sampleTVChartProps.theme,
-      timezone: Intl.DateTimeFormat().resolvedOptions().timeZone as Timezone,
+      timezone: Intl.DateTimeFormat().resolvedOptions().timeZone as any,
       overrides
     })
 
