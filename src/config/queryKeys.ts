@@ -159,7 +159,9 @@ export const virtualAccountQueryKeys = {
 export const exchange = {
   marketList: 'market-list',
   tradeHistory: 'trade-history',
+  myTradeHistory: 'my-trade-history',
   orderBook: 'orderbook',
+  lastPrice: 'last-price',
   userTrades: (userId: string) => generateQueryKey('user-trades', userId),
   userOrders: (userId: string) => generateQueryKey('user-orders', userId),
   userHoldings: (userId: string) => generateQueryKey('user-holdings', userId),

@@ -197,11 +197,16 @@ export const exchange = {
   userTrades: (userId: string) => `/exchange/trades/list/${userId}`,
   tradeHistory: {
     emit: 'fills/get',
+    onMyFills: (tokenId: string) => `myfills/${tokenId}`,
     on: (tokenId: string) => `fills/${tokenId}`
   },
   orderBook: {
     emit: 'orderbook/get',
     on: (tokenId: string) => `orderbook/${tokenId}`
+  },
+  lastPrice: {
+    emit: 'price/get',
+    on: (tokenId: string) => `price/${tokenId}`
   },
   currentHoldings: (userId: string) => `/exchange/holdings/list/${userId}`,
   cancelOrder: (userId: string, orderId: string) =>
