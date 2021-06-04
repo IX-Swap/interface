@@ -21,6 +21,7 @@ export default makeStyles(theme => ({
     padding: 0
   },
   actions: {
+    justifyContent: 'center',
     margin: 0,
     paddingTop: theme.spacing(3),
     paddingBottom: theme.spacing(6)
