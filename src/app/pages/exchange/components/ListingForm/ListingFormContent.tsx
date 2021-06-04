@@ -11,7 +11,6 @@ import {
   transformDataFromDSOToListingFormValue,
   transformListingToListingFormValue
 } from 'app/pages/exchange/utils/listing'
-// import { getDSOValidationSchema } from 'validation/dso'
 
 export interface ListingFormProps {
   data?: DigitalSecurityOffering | Listing
@@ -31,8 +30,6 @@ export const ListingFormContent = (props: ListingFormProps) => {
           ? transformListingToListingFormValue(data)
           : transformDataFromDSOToListingFormValue(data)
       }
-      // TODO Change validation schema
-      // validationSchema={getDSOValidationSchema(isNew, isLive)}
     >
       <Grid container>
         <Grid item lg={9} container direction='column'>

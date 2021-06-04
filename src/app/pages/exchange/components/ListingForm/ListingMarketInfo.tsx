@@ -78,18 +78,9 @@ export const ListingMarketInfo = () => {
             <Grid container spacing={3}>
               <Grid item>
                 <FormControlLabel
-                  label='OTC'
-                  value='OTC'
-                  control={<Radio />}
-                  disabled
-                />
-              </Grid>
-              <Grid item>
-                <FormControlLabel
                   label='Exchange'
                   value='Exchange'
                   control={<Radio />}
-                  disabled
                 />
               </Grid>
             </Grid>

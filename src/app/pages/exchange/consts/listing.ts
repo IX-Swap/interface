@@ -20,11 +20,12 @@ export const initialListingFormValues: ListingFormValues = {
   leverage: null,
   equityMultiple: null,
   currency: '',
-  markets: 'Exchange',
+  marketType: 'Exchange',
   team: [],
   incomeStatement: [],
   cashFlow: [],
   balanceSheet: [],
   launchDate: '',
-  completionDate: ''
+  completionDate: '',
+  introduction: ''
 }

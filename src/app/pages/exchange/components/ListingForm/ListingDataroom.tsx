@@ -1,7 +1,8 @@
 import React, { Fragment } from 'react'
-import { Grid } from '@material-ui/core'
+import { Grid, Typography } from '@material-ui/core'
 import { FormSectionHeader } from 'app/components/DSO/components/FormSectionHeader'
-import { ListingDocumentUploader } from 'app/pages/exchange/components/ListingForm/ListingDocumentUploader'
+import { UploadDocumentField } from 'app/pages/identity/components/UploadDocumentsForm/UploadDocumentField/UploadDocumentField'
+import { VSpacer } from 'components/VSpacer'
 
 export const ListingDataroom = () => {
   return (
@@ -9,23 +10,33 @@ export const ListingDataroom = () => {
       <FormSectionHeader title='Upload Documents' />
 
       <Grid container direction='column' spacing={3}>
-        <ListingDocumentUploader
-          name={'incomeStatement'}
-          label={'Income Statement'}
-          helperText={
-            'Please upload the cash income statements of multiple year'
+        <UploadDocumentField
+          name='incomeStatement'
+          label='Income Statement'
+          helperElement={
+            <Typography variant='body1'>
+              Please upload the cash income statements of multiple year
+            </Typography>
           }
         />
-        <ListingDocumentUploader
-          name={'cashFlow'}
-          label={'Cash Flow'}
-          helperText={'Please upload the cash flow statements of multiple year'}
+        <VSpacer size={'medium'} />
+        <UploadDocumentField
+          name='cashFlow'
+          label='Cash Flow'
+          helperElement={
+            <Typography variant='body1'>
+              Please upload the cash flow statements of multiple year
+            </Typography>
+          }
         />
-        <ListingDocumentUploader
-          name={'balanceSheet'}
-          label={'Balance Sheet'}
-          helperText={
-            'Please upload the balance sheet statements of multiple year'
+        <VSpacer size={'medium'} />
+        <UploadDocumentField
+          name='balanceSheet'
+          label='Balance Sheet'
+          helperElement={
+            <Typography variant='body1'>
+              Please upload the balance sheet statements of multiple year
+            </Typography>
           }
         />
       </Grid>

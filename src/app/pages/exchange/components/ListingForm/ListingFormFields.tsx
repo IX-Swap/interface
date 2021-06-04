@@ -9,7 +9,6 @@ import { ListingPricing } from 'app/pages/exchange/components/ListingForm/Listin
 import { DSOTerms } from 'app/components/DSO/components/DSOTerms'
 import { ListingMarketInfo } from 'app/pages/exchange/components/ListingForm/ListingMarketInfo'
 import { ListingBaseFields } from 'app/pages/exchange/components/ListingForm/ListingBaseFields'
-import { useFormContext } from 'react-hook-form'
 
 export interface ListingFormFieldsProps {
   isNew: boolean
@@ -19,8 +18,6 @@ export interface ListingFormFieldsProps {
 
 export const ListingFormFields = (props: ListingFormFieldsProps) => {
   const { isNew, isLive, isDataFromDSO } = props
-
-  const { watch } = useFormContext()
 
   return (
     <Fragment>
@@ -76,8 +73,6 @@ export const ListingFormFields = (props: ListingFormFieldsProps) => {
         <VSpacer size='large' />
         <DSOTeam />
       </Element>
-      {/* TODO Remove this after complete listing form */}
-      <pre>{JSON.stringify(watch(), null, 2)}</pre>
     </Fragment>
   )
 }

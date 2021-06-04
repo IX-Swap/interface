@@ -3,7 +3,10 @@ import { Network } from 'types/networks'
 import { DistributionFrequency } from 'types/distributionFrequency'
 import { DigitalSecurityOffering, DsoTeamMember } from 'types/dso'
 import User from 'types/user'
-import { CorporateFields } from 'app/pages/identity/types/forms'
+import {
+  CorporateFields,
+  CorporateIdentity
+} from 'app/pages/identity/types/forms'
 import { Asset } from 'types/asset'
 import { Market } from 'types/market'
 
@@ -27,13 +30,19 @@ export interface ListingFormValues {
   leverage?: number | null
   equityMultiple?: number | null
   currency: string
-  markets: string
   team: DsoTeamMember[]
   incomeStatement: DataroomFile[]
   cashFlow: DataroomFile[]
   balanceSheet: DataroomFile[]
   launchDate: Date | string
   completionDate: Date | string
+  introduction: string
+  marketType: string
+}
+
+export interface Currency {
+  _id: string
+  currency: string
 }
 
 export interface Listing {
@@ -41,7 +50,7 @@ export interface Listing {
   createdBy: string
   user: User
   dso: DigitalSecurityOffering
-  corporate: CorporateFields
+  corporate: CorporateIdentity
   logo: string
   banner: DataroomFile
   tokenName: string
@@ -73,11 +82,13 @@ export interface Listing {
   equityMultiple: number
   documents: DataroomFile[]
   introduction: string
-  exchange: {
-    markets: Market[]
-    listing: Listing
-  }
-  markets: Asset[]
+  exchange: [
+    {
+      markets: Market[]
+      listing: Listing
+    }
+  ]
+  markets: Currency[]
   team: DsoTeamMember[]
   promoted: boolean
   disabled: boolean

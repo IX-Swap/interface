@@ -24,8 +24,7 @@ export const useUpdateListing = (
 
   const url = listingsURL.update(issuerId ?? userId, listingId)
   const updateDSO = async (args: ListingRequestArgs) => {
-    const { network, ...rest } = args
-    return await apiService.put<ListingFormValuesForSubmit>(url, rest)
+    return await apiService.put<ListingFormValuesForSubmit>(url, args)
   }
 
   return useMutation(updateDSO, {

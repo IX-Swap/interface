@@ -1,6 +1,6 @@
 import { numberToPercentage } from 'app/pages/issuance/utils'
 import { DigitalSecurityOffering, DSORequestArgs } from 'types/dso'
-import { ListingDataroomFile } from 'types/dataroomFile'
+import { DataroomFile } from 'types/dataroomFile'
 import { hasValue } from 'helpers/forms'
 import { Listing, ListingFormValues } from 'app/pages/exchange/types/listings'
 import { initialListingFormValues } from 'app/pages/exchange/consts/listing'
@@ -14,7 +14,7 @@ export const transformDataFromDSOToListingFormValue = (
 
   return {
     logo: data.logo,
-    corporate: data.corporate !== undefined ? data.corporate._id : '',
+    corporate: data.corporate?._id !== undefined ? data.corporate._id : '',
     network: data.network?._id ?? '',
     tokenName: data.tokenName,
     tokenSymbol: data.tokenSymbol,
@@ -32,13 +32,14 @@ export const transformDataFromDSOToListingFormValue = (
     leverage: data.leverage,
     equityMultiple: data.equityMultiple,
     currency: '',
-    markets: 'Exchange',
     team: data.team.map(({ _id, ...person }) => person),
     incomeStatement: [],
     cashFlow: [],
     balanceSheet: [],
     launchDate: data.launchDate,
-    completionDate: data.completionDate
+    completionDate: data.completionDate ?? null,
+    introduction: data.introduction,
+    marketType: 'Exchange'
   }
 }
 
@@ -51,7 +52,7 @@ export const transformListingToListingFormValue = (
 
   return {
     logo: data.logo,
-    corporate: data.corporate.companyLegalName,
+    corporate: data.corporate._id,
     network: data.network._id,
     tokenName: data.tokenName,
     tokenSymbol: data.tokenSymbol,
@@ -68,16 +69,19 @@ export const transformListingToListingFormValue = (
     distributionFrequency: data.distributionFrequency,
     leverage: data.leverage,
     equityMultiple: data.equityMultiple,
-    currency: '',
-    markets: 'Exchange',
+    currency: data.markets[0].currency,
     team: data.team.map(({ _id, ...person }) => person),
     incomeStatement: data.documents.filter(
-      item => item.type === 'incomeStatement'
-    ),
-    cashFlow: data.documents.filter(item => item.type === 'cashFlow'),
-    balanceSheet: data.documents.filter(item => item.type === 'balanceSheet'),
+      item => item.type === 'Income Statement'
+    ) as any,
+    cashFlow: data.documents.filter(item => item.type === 'Cash Flow'),
+    balanceSheet: data.documents.filter(
+      item => item.type === 'Balance Sheet'
+    ) as any,
     launchDate: data.launchDate,
-    completionDate: data.completionDate
+    completionDate: data.completionDate,
+    introduction: data.introduction,
+    marketType: 'Exchange'
   }
 }
 
@@ -96,13 +100,6 @@ export const getCreateListingPayload = (values: Partial<ListingFormValues>) => {
       key === 'cashFlow' ||
       key === 'balanceSheet'
     ) {
-      console.log('payload with documents', {
-        ...acc,
-        documents: [
-          ...((acc as any).documents ?? []),
-          ...getDocumentsFieldPayload(value as any)
-        ]
-      })
       return {
         ...acc,
         documents: [
@@ -129,6 +126,12 @@ export const getCreateListingPayload = (values: Partial<ListingFormValues>) => {
       value = numberToPercentage(value as number)
     }
 
+    if (key === 'marketType') {
+      return {
+        ...acc
+      }
+    }
+
     return {
       ...acc,
       ...(hasValue(value) ? { [key]: value } : {})
@@ -136,8 +139,8 @@ export const getCreateListingPayload = (values: Partial<ListingFormValues>) => {
   }, {}) as DSORequestArgs
 }
 
-export const getDocumentsFieldPayload = (documents: ListingDataroomFile[]) => {
-  return documents.map(d => d.value._id)
+export const getDocumentsFieldPayload = (documents: DataroomFile[]) => {
+  return documents.map(d => d._id)
 }
 
 export const getMarketsFieldPayload = (currency: string) => {

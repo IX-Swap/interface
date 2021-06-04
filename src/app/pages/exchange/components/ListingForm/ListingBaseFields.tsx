@@ -143,9 +143,7 @@ export const ListingBaseFields = (props: ListingBaseFieldsProps) => {
                 name='launchDate'
                 control={control}
                 disabled={
-                  isLive ||
-                  (isDataFromDSO &&
-                    watch('launchDate') !== initialListingFormValues.launchDate)
+                  isLive || (isDataFromDSO && watch('launchDate') !== null)
                 }
                 valueExtractor={dateTimeValueExtractor}
                 defaultValue={null}
@@ -165,11 +163,7 @@ export const ListingBaseFields = (props: ListingBaseFieldsProps) => {
                 defaultValue={null}
                 helperText='Offering completion date'
                 inputVariant='outlined'
-                disabled={
-                  isDataFromDSO &&
-                  watch('completionDate') !==
-                    initialListingFormValues.completionDate
-                }
+                disabled={isDataFromDSO && watch('completionDate') !== null}
               />
             </Grid>
           </Grid>
