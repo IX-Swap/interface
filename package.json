@@ -18,7 +18,6 @@
     "@types/react-otp-input": "^2.0.0",
     "axios": "^0.21.1",
     "babel-loader": "^8.1.0",
-    "charting_library": "git+https://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@github.com/InvestaX/charting_library.git#master",
     "classnames": "^2.2.6",
     "country-json": "^1.1.0",
     "date-fns": "^2.14.0",

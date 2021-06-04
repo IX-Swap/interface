@@ -9,10 +9,7 @@ import { InvestorLiveOrderBook } from 'app/pages/invest/components/InvestorLiveO
 import { TVChartContainer } from 'app/pages/invest/components/TVChartContainer/TVChartContainer'
 import { Trades } from 'app/pages/invest/components/Trades/Trades'
 import { getDataFeed } from 'app/pages/invest/components/TVChartContainer/services/datafeed'
-import {
-  IBasicDataFeed,
-  IChartingLibraryWidget
-} from 'charting_library/charting_library'
+import { IBasicDataFeed } from 'types/charting_library'
 import { generatePath, Redirect, useParams } from 'react-router'
 import { useMarketList } from 'app/pages/exchange/hooks/useMarketList'
 import { OTCMarketRoute } from 'app/pages/exchange/router/config'
@@ -20,10 +17,6 @@ import { OTCMarketRoute } from 'app/pages/exchange/router/config'
 export const Market = () => {
   const classes = useStyles()
   const [placeOrder] = useCreateOrder()
-  const [
-    tvWidget,
-    setTradingChart
-  ] = React.useState<IChartingLibraryWidget | null>(null)
   const [datafeed] = React.useState<IBasicDataFeed>(() => getDataFeed())
   const { pairId } = useParams<{ pairId: string }>()
   const { data, isLoading } = useMarketList()
@@ -55,12 +48,7 @@ export const Market = () => {
 
         <Grid item container>
           <Grid item className={classes.middleBlock} xs={12}>
-            <TVChartContainer
-              tvWidget={tvWidget}
-              setTradingChart={setTradingChart}
-              datafeed={datafeed}
-              symbol='EUR/SGD'
-            />
+            <TVChartContainer datafeed={datafeed} symbol='EUR/SGD' />
           </Grid>
           <Grid item className={classes.colorGrid} xs={12}>
             <MyOrders />
