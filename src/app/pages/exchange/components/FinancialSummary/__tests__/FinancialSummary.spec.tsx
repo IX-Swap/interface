@@ -1,14 +1,14 @@
-import { MoreDetails } from 'app/pages/invest/components/FinancialSummary/MoreDetails'
+import { FinancialSummary } from 'app/pages/exchange/components/FinancialSummary/FinancialSummary'
 import React from 'react'
 import { render, cleanup } from 'test-utils'
 
-describe('MoreDetails', () => {
+describe('FinancialSummary', () => {
   afterEach(async () => {
     await cleanup()
     jest.clearAllMocks()
   })
 
   it('renders without errors', () => {
-    render(<MoreDetails />)
+    render(<FinancialSummary />)
   })
 })

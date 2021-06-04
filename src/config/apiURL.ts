@@ -208,7 +208,8 @@ export const exchange = {
   cancelOrder: (userId: string, orderId: string) =>
     `/exchange/orders/cancel/${userId}/${orderId}`,
   getListing: (userId: string, listingId: string) =>
-    `/exchange/listing/${userId}/${listingId}`
+    `/exchange/listing/${userId}/${listingId}`,
+  getMarket: (pairId: string) => `/exchange/markets/pair/${pairId}`
 }
 
 export const placeOrderURL = {

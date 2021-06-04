@@ -8,13 +8,13 @@ import {
   Typography
 } from '@material-ui/core'
 import { ArrowDropDown } from '@material-ui/icons'
-import { DetailsItem } from 'app/pages/invest/components/FinancialSummary/DetailsItem'
+import { DetailsItem } from 'app/pages/exchange/components/FinancialSummary/DetailsItem'
 import React from 'react'
 
 export const MoreDetails = () => {
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null)
   const handleClick = (event: React.MouseEvent<HTMLElement>) => {
-    setAnchorEl(anchorEl === null ? null : event.currentTarget)
+    setAnchorEl(anchorEl !== null ? null : event.currentTarget)
   }
 
   return (
@@ -30,7 +30,15 @@ export const MoreDetails = () => {
         open={anchorEl !== null}
         anchorEl={anchorEl}
       >
-        <Paper elevation={3} style={{ width: 280, padding: 16 }}>
+        <Paper
+          elevation={3}
+          style={{
+            width: 280,
+            padding: 16,
+            maxHeight: 'calc(100vh - 140px)',
+            overflow: 'scroll'
+          }}
+        >
           <Grid container direction='column' spacing={2}>
             <Grid item>
               <Typography variant='subtitle1'>More Details</Typography>

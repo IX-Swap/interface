@@ -1,15 +1,23 @@
-import { Grid, Typography } from '@material-ui/core'
-import { ChangeSummaryValue } from 'app/pages/invest/components/FinancialSummary/ChangeSummaryValue'
-import { MoreDetails } from 'app/pages/invest/components/FinancialSummary/MoreDetails'
-import { NumberSummaryValue } from 'app/pages/invest/components/FinancialSummary/NumberSummaryValue'
-import { SummaryItem } from 'app/pages/invest/components/FinancialSummary/SummaryItem'
+import { Grid } from '@material-ui/core'
+import { ChangeSummaryValue } from 'app/pages/exchange/components/FinancialSummary/ChangeSummaryValue'
+import { MoreDetails } from 'app/pages/exchange/components/FinancialSummary/MoreDetails'
+import { NumberSummaryValue } from 'app/pages/exchange/components/FinancialSummary/NumberSummaryValue'
+import { SummaryItem } from 'app/pages/exchange/components/FinancialSummary/SummaryItem'
+import { PairListDropdown } from 'app/pages/exchange/components/PairListDropdown/PairListDropdown'
+import { useMarket } from 'app/pages/exchange/hooks/useMarket'
 import React from 'react'
+import { useParams } from 'react-router'
 
 export const FinancialSummary = () => {
+  const { pairId } = useParams<{
+    pairId: string
+  }>()
+  const { data } = useMarket(pairId)
+
   return (
     <Grid container spacing={1}>
       <Grid item container xs={12} md={3} alignContent='center'>
-        <Typography variant='subtitle1'>IXPS/SGD</Typography>
+        <PairListDropdown pairName={data?.name} />
       </Grid>
       <Grid item xs={12} md={6}>
         <Grid container justify='space-between'>

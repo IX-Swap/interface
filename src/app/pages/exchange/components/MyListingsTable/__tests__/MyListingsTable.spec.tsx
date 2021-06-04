@@ -4,7 +4,7 @@ import { TableView } from 'components/TableWithPagination/TableView'
 import * as useAuthHook from 'hooks/auth/useAuth'
 import { user } from '__fixtures__/user'
 import { listingsQueryKeys } from 'config/queryKeys'
-import { columns } from 'app/pages/exchange/market/components/MyListingsTable/columns'
+import { columns } from 'app/pages/exchange/components/MyListingsTable/columns'
 import { listings } from 'config/apiURL'
 import { MyListingsTable } from '../MyListingsTable'
 import { SearchFilter } from 'app/components/SearchFilter'
@@ -18,12 +18,9 @@ jest.mock('app/components/SearchFilter', () => ({
   SearchFilter: jest.fn(() => null)
 }))
 
-jest.mock(
-  'app/pages/exchange/market/components/MyListingsTable/Actions',
-  () => ({
-    Actions: jest.fn(() => null)
-  })
-)
+jest.mock('app/pages/exchange/components/MyListingsTable/Actions', () => ({
+  Actions: jest.fn(() => null)
+}))
 
 describe('MyListingsTable', () => {
   const initialFilterValues = {

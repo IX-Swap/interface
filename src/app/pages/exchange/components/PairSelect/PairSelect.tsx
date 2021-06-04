@@ -11,7 +11,7 @@ import React from 'react'
 export const PairSelect = (props: Partial<SelectProps>) => {
   const { data } = useMarketList()
 
-  if (data === undefined || data.length < 1) {
+  if (data === undefined || data.list.length < 1) {
     return null
   }
 
@@ -23,7 +23,7 @@ export const PairSelect = (props: Partial<SelectProps>) => {
         <MenuItem disabled value={undefined}>
           Pair
         </MenuItem>
-        {data.map((item: Pair) => (
+        {data.list.map((item: Pair) => (
           <MenuItem key={item._id} value={item._id}>
             {item.name}
           </MenuItem>
