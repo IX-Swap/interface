@@ -1,15 +1,10 @@
 import { act } from '@testing-library/react-hooks'
 import { useMarketList } from 'app/pages/exchange/hooks/useMarketList'
 import { waitFor, cleanup, renderHookWithServiceProvider } from 'test-utils'
+import { generateInfiniteQueryResult } from '__fixtures__/useQuery'
 
 describe('useMarketList', () => {
-  const response = {
-    data: [
-      {
-        documents: []
-      }
-    ]
-  }
+  const response = generateInfiniteQueryResult({})
 
   afterEach(async () => {
     await cleanup()
@@ -27,7 +22,7 @@ describe('useMarketList', () => {
 
       await waitFor(
         () => {
-          expect(result.current.data).toEqual(response.data[0].documents)
+          expect(result.current.data).toEqual(response.data)
         },
         { timeout: 1000 }
       )

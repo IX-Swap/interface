@@ -3,7 +3,7 @@ import { PlaceOrderForm } from 'app/pages/exchange/components/PlaceOrderForm/Pla
 import { useCreateOrder } from 'app/pages/exchange/hooks/useCreateOrder'
 import { Box, Grid } from '@material-ui/core'
 import { MyOrders } from 'app/pages/exchange/components/MyOrders/MyOrders'
-import { FinancialSummary } from 'app/pages/invest/components/FinancialSummary/FinancialSummary'
+import { FinancialSummary } from 'app/pages/exchange/components/FinancialSummary/FinancialSummary'
 import { useStyles } from 'app/pages/exchange/pages/market/Market.style'
 import { InvestorLiveOrderBook } from 'app/pages/invest/components/InvestorLiveOrderBook/InvestorLiveOrderBook'
 import { TVChartContainer } from 'app/pages/invest/components/TVChartContainer/TVChartContainer'
@@ -13,6 +13,9 @@ import {
   IBasicDataFeed,
   IChartingLibraryWidget
 } from 'charting_library/charting_library'
+import { generatePath, Redirect, useParams } from 'react-router'
+import { useMarketList } from 'app/pages/exchange/hooks/useMarketList'
+import { OTCMarketRoute } from 'app/pages/exchange/router/config'
 
 export const Market = () => {
   const classes = useStyles()
@@ -22,6 +25,21 @@ export const Market = () => {
     setTradingChart
   ] = React.useState<IChartingLibraryWidget | null>(null)
   const [datafeed] = React.useState<IBasicDataFeed>(() => getDataFeed())
+  const { pairId } = useParams<{ pairId: string }>()
+  const { data, isLoading } = useMarketList()
+
+  if ((data === undefined || data.list.length < 1, isLoading)) {
+    return null
+  }
+
+  if (pairId === null || pairId === undefined || pairId === ':pairId') {
+    return (
+      <Redirect
+        to={generatePath(OTCMarketRoute.market, { pairId: data?.list[0]._id })}
+      />
+    )
+  }
+
   return (
     <Box className={classes.container}>
       <Grid item xs={12} className={classes.colorGrid}>

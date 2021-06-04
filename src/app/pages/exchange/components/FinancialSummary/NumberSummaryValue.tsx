@@ -1,5 +1,5 @@
 import { Box, Typography } from '@material-ui/core'
-import { useStyles } from 'app/pages/invest/components/FinancialSummary/FinancialSummary.styles'
+import { useStyles } from 'app/pages/exchange/components/FinancialSummary/FinancialSummary.styles'
 import classNames from 'classnames'
 import { formatAmount } from 'helpers/numbers'
 import React from 'react'

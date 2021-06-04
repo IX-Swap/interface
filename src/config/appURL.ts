@@ -12,7 +12,8 @@ export const urlParams = {
   itemId: ':itemId',
   tokenId: ':tokenId',
   category: ':category',
-  userId: ':userId'
+  userId: ':userId',
+  pairId: ':pairId'
 }
 
 export const urlAction = {
