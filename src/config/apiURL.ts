@@ -208,7 +208,7 @@ export const exchange = {
     emit: 'price/get',
     on: (tokenId: string) => `price/${tokenId}`
   },
-  currentHoldings: (userId: string) => `/exchange/holdings/list/${userId}`,
+  currentHoldings: (userId: string) => `/accounts/holdings/${userId}`,
   cancelOrder: (userId: string, orderId: string) =>
     `/exchange/orders/cancel/${userId}/${orderId}`,
   getListing: (userId: string, listingId: string) =>

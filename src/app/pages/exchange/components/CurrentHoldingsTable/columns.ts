@@ -1,6 +1,9 @@
 import { formatAmount } from 'helpers/numbers'
 import { TableColumn } from 'types/util'
 
+export const renderTotalAmount = (_: any, row: any) =>
+  formatAmount(row.balance * row.lastPrice)
+
 export const columns: Array<TableColumn<any>> = [
   {
     key: 'pair',
@@ -12,14 +15,14 @@ export const columns: Array<TableColumn<any>> = [
   },
 
   {
-    key: 'investedAmount',
+    key: 'balance',
     label: 'Invested Amount',
     headAlign: 'right',
     align: 'right',
     render: formatAmount
   },
   {
-    key: 'unitPrice',
+    key: 'lastPrice',
     label: 'Unit Price',
     headAlign: 'right',
     align: 'right',
@@ -30,6 +33,6 @@ export const columns: Array<TableColumn<any>> = [
     label: 'Total Amount',
     headAlign: 'right',
     align: 'right',
-    render: formatAmount
+    render: renderTotalAmount
   }
 ]
