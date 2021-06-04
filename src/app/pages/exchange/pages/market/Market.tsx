@@ -9,10 +9,7 @@ import { InvestorLiveOrderBook } from 'app/pages/invest/components/InvestorLiveO
 import { TVChartContainer } from 'app/pages/invest/components/TVChartContainer/TVChartContainer'
 import { Trades } from 'app/pages/invest/components/Trades/Trades'
 import { getDataFeed } from 'app/pages/invest/components/TVChartContainer/services/datafeed'
-import {
-  IBasicDataFeed,
-  IChartingLibraryWidget
-} from 'charting_library/charting_library'
+import { IBasicDataFeed, IChartingLibraryWidget } from 'types/charting_library'
 import { generatePath, Redirect, useParams } from 'react-router'
 import { useMarketList } from 'app/pages/exchange/hooks/useMarketList'
 import { OTCMarketRoute } from 'app/pages/exchange/router/config'

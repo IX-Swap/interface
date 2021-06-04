@@ -1,9 +1,5 @@
 import * as React from 'react'
-import {
-  widget as Widget,
-  ResolutionString,
-  Timezone
-} from 'charting_library/charting_library'
+import { widget as Widget, ResolutionString } from 'types/charting_library'
 import { ChartContainerProps } from 'types/tvChart'
 import {
   disabledFeatures,
