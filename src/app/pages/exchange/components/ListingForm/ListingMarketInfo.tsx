@@ -5,9 +5,17 @@ import { FormControlLabel, Grid, Radio, Typography } from '@material-ui/core'
 import { TypedField } from 'components/form/TypedField'
 import { RadioGroup } from 'components/form/RadioGroup'
 import { useFormContext } from 'react-hook-form'
+import { useAssetsData } from 'hooks/asset/useAssetsData'
+import getSymbolFromCurrency from 'currency-symbol-map'
+import { LoadingIndicator } from 'app/components/LoadingIndicator/LoadingIndicator'
 
 export const ListingMarketInfo = () => {
   const { control } = useFormContext()
+  const { data, isLoading } = useAssetsData('Currency')
+
+  if (isLoading) {
+    return <LoadingIndicator />
+  }
 
   return (
     <Grid item>
@@ -42,16 +50,16 @@ export const ListingMarketInfo = () => {
             label=''
             control={control}
           >
-            <FormControlLabel
-              label='Singapore Dollar (S$)'
-              value='SGD'
-              control={<Radio />}
-            />
-            <FormControlLabel
-              label='US Dollar ($)'
-              value='USD'
-              control={<Radio />}
-            />
+            {data.list.map(item => {
+              return (
+                <FormControlLabel
+                  // eslint-disable-next-line
+                  label={`${item.name} (${getSymbolFromCurrency(item.symbol)})`}
+                  value={item._id}
+                  control={<Radio />}
+                />
+              )
+            })}
           </TypedField>
         </Grid>
 
@@ -69,19 +77,9 @@ export const ListingMarketInfo = () => {
           >
             <Grid container spacing={3}>
               <Grid item>
-                <FormControlLabel label='OTC' value='OTC' control={<Radio />} />
-              </Grid>
-              <Grid item>
                 <FormControlLabel
                   label='Exchange'
                   value='Exchange'
-                  control={<Radio />}
-                />
-              </Grid>
-              <Grid item>
-                <FormControlLabel
-                  label='Both'
-                  value='Both'
                   control={<Radio />}
                 />
               </Grid>
