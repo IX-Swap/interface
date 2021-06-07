@@ -225,7 +225,9 @@ export const exchangeMarket = {
 }
 
 export const listings = {
-  getListByUser: (userId: string) => `exchange/listing/list/${userId}`
+  getListByUser: (userId: string) => `exchange/listing/list/${userId}`,
+  submitListing: (userId: string, listingId: string) =>
+    `/exchange/listing/${userId}/${listingId}/submit`
 }
 
 export const charts = {
