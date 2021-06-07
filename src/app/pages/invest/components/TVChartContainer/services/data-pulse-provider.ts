@@ -2,7 +2,7 @@ import {
   LibrarySymbolInfo,
   ResolutionString,
   SubscribeBarsCallback
-} from 'charting_library/charting_library'
+} from 'types/charting_library'
 import { GetBarsResult, DataSubscribers } from 'types/tvChart'
 import { periodLengthSeconds } from '../utils'
 import { getBarsData } from './history-provider'
