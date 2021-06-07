@@ -231,3 +231,15 @@ export const charts = {
   time: 'exchange/udf/time',
   search: 'exchange/udf/search'
 }
+
+export const listingsURL = {
+  getById: (userId: string, listingId: string) =>
+    `/exchange/listing/${userId}/${listingId}`,
+  create: (userId: string) => `/exchange/listing/${userId}`,
+  update: (userId: string, dsoId: string) =>
+    `/exchange/listing/${userId}/${dsoId}`
+}
+
+export const assetsURL = {
+  getAssetsList: () => '/accounts/assets/list'
+}

@@ -41,7 +41,10 @@ export const MyListingsTable = () => {
         name={listingsQueryKeys.getListingsList}
         uri={listings.getListByUser(userId)}
         columns={columns}
-        filter={filter}
+        filter={{
+          ...filter,
+          status: 'Draft,Submitted,Approved,Rejected' as any
+        }}
         defaultRowsPerPage={5}
         hasActions
         actions={Actions}
