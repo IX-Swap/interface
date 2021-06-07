@@ -1,8 +1,9 @@
 import * as React from 'react'
 import {
   widget as Widget,
-  ResolutionString
-} from 'charting_library/charting_library'
+  ResolutionString,
+  IChartingLibraryWidget
+} from 'types/charting_library'
 import { ChartContainerProps } from 'types/tvChart'
 import {
   disabledFeatures,
@@ -16,8 +17,6 @@ export const TVChartContainer: React.FC<
   Partial<ChartContainerProps>
 > = props => {
   const {
-    setTradingChart = sampleTVChartProps.setTradingChart,
-    tvWidget,
     symbol,
     datafeed,
     interval,
@@ -27,6 +26,7 @@ export const TVChartContainer: React.FC<
     theme,
     containerId
   } = props
+  const [tvWidget, setTradingChart] = React.useState<IChartingLibraryWidget>()
 
   const createChart = React.useCallback(() => {
     const chart = new Widget({

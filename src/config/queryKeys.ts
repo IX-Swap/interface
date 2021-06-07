@@ -17,7 +17,8 @@ export const documentsQueryKeys = {
 
 export const assetsQueryKeys = {
   getById: 'asset-by-id',
-  getData: 'assets'
+  getData: 'assets',
+  getAssetsList: 'assets-list'
 }
 
 export const identityQueryKeys = {
@@ -116,7 +117,8 @@ export const usersQueryKeys = {
 
 export const investQueryKeys = {
   getCommitmentById: 'commitment-by-id',
-  getDSOById: 'dso-by-id',
+  getDSOById: (dsoId: string, issuerId: string) =>
+    generateQueryKey('dso', dsoId, issuerId),
   getCommitmentsByUserId: (id: string) => generateQueryKey('commitments', id)
 }
 
@@ -159,7 +161,9 @@ export const virtualAccountQueryKeys = {
 export const exchange = {
   marketList: 'market-list',
   tradeHistory: 'trade-history',
+  myTradeHistory: 'my-trade-history',
   orderBook: 'orderbook',
+  lastPrice: 'last-price',
   userTrades: (userId: string) => generateQueryKey('user-trades', userId),
   userOrders: (userId: string) => generateQueryKey('user-orders', userId),
   userHoldings: (userId: string) => generateQueryKey('user-holdings', userId),
@@ -173,4 +177,9 @@ export const exchangeMarketQueryKeys = {
 
 export const listingsQueryKeys = {
   getListingsList: 'listings-list'
+}
+
+export const exchangeListingsQueryKeys = {
+  getListingById: (listingId: string, issuerId: string) =>
+    generateQueryKey('listing', listingId, issuerId)
 }

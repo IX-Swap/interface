@@ -198,13 +198,18 @@ export const exchange = {
   userTrades: (userId: string) => `/exchange/trades/list/${userId}`,
   tradeHistory: {
     emit: 'fills/get',
+    onMyFills: (tokenId: string) => `myfills/${tokenId}`,
     on: (tokenId: string) => `fills/${tokenId}`
   },
   orderBook: {
     emit: 'orderbook/get',
     on: (tokenId: string) => `orderbook/${tokenId}`
   },
-  currentHoldings: (userId: string) => `/exchange/holdings/list/${userId}`,
+  lastPrice: {
+    emit: 'price/get',
+    on: (tokenId: string) => `price/${tokenId}`
+  },
+  currentHoldings: (userId: string) => `/accounts/holdings/${userId}`,
   cancelOrder: (userId: string, orderId: string) =>
     `/exchange/orders/cancel/${userId}/${orderId}`,
   getListing: (userId: string, listingId: string) =>
@@ -221,7 +226,9 @@ export const exchangeMarket = {
 }
 
 export const listings = {
-  getListByUser: (userId: string) => `exchange/listing/list/${userId}`
+  getListByUser: (userId: string) => `exchange/listing/list/${userId}`,
+  submitListing: (userId: string, listingId: string) =>
+    `/exchange/listing/${userId}/${listingId}/submit`
 }
 
 export const charts = {
@@ -235,4 +242,15 @@ export const charts = {
 export const custodyAccount = {
   get: (userId: string) => `/custody/account/${userId}`,
   create: '/custody/account/assign'
+}
+export const listingsURL = {
+  getById: (userId: string, listingId: string) =>
+    `/exchange/listing/${userId}/${listingId}`,
+  create: (userId: string) => `/exchange/listing/${userId}`,
+  update: (userId: string, dsoId: string) =>
+    `/exchange/listing/${userId}/${dsoId}`
+}
+
+export const assetsURL = {
+  getAssetsList: () => '/accounts/assets/list'
 }

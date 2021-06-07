@@ -37,7 +37,7 @@ export const DSOFinishLaterButton = (props: DSOFinishLaterButtonProps) => {
       onClick={handleClick}
       disabled={isCreating || isUpdating}
     >
-      Finish Later
+      {dso === undefined ? 'Finish Later' : 'Save'}
     </Button>
   )
 }

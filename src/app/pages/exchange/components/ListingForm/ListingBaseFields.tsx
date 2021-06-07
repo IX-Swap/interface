@@ -1,7 +1,7 @@
 import React from 'react'
 import { Grid, TextField } from '@material-ui/core'
 import { TypedField } from 'components/form/TypedField'
-import { dateTimeValueExtractor, numericValueExtractor } from 'helpers/forms'
+import { dateTimeValueExtractor } from 'helpers/forms'
 import { CorporateSelect } from 'components/form/CorporateSelect'
 import { NetworkSelect } from 'components/form/NetworkSelect'
 import { useFormContext } from 'react-hook-form'
@@ -10,19 +10,18 @@ import { DataroomFileType } from 'config/dataroom'
 import { DateTimePicker } from 'components/form/_DateTimePicker'
 import { Dropzone } from 'components/dataroom/Dropzone'
 import { CapitalStructureSelect } from 'components/form/CapitalStructureSelect'
-import { NumericInput } from 'components/form/NumericInput'
-import { positiveNumberFormat } from 'config/numberFormat'
 import { FormSectionHeader } from 'app/components/DSO/components/FormSectionHeader'
+import { initialListingFormValues } from 'app/pages/exchange/consts/listing'
 
 export interface ListingBaseFieldsProps {
   isNew: boolean
   isLive: boolean
+  isDataFromDSO: boolean
 }
 
 export const ListingBaseFields = (props: ListingBaseFieldsProps) => {
-  const { isNew, isLive } = props
+  const { isNew, isLive, isDataFromDSO } = props
   const { control, watch } = useFormContext()
-  const capitalStructure = watch('capitalStructure')
 
   return (
     <Grid item>
@@ -56,6 +55,11 @@ export const ListingBaseFields = (props: ListingBaseFieldsProps) => {
                 helperText='Offering terms will be changed based on your capital structure'
                 variant='outlined'
                 inputProps={{ 'data-testid': 'capital-structure' }}
+                disabled={
+                  isDataFromDSO &&
+                  watch('capitalStructure') !==
+                    initialListingFormValues.capitalStructure
+                }
               />
             </Grid>
             <Grid item xs={12} md={6}>
@@ -63,7 +67,11 @@ export const ListingBaseFields = (props: ListingBaseFieldsProps) => {
                 component={NetworkSelect}
                 label='Network'
                 name='network'
-                disabled={!isNew}
+                disabled={
+                  !isNew ||
+                  (isDataFromDSO &&
+                    watch('network') !== initialListingFormValues.network)
+                }
                 control={control}
                 helperText='Select your blockchain network from the list'
                 variant='outlined'
@@ -78,34 +86,30 @@ export const ListingBaseFields = (props: ListingBaseFieldsProps) => {
                 component={TextField}
                 label='Token Name'
                 name='tokenName'
-                disabled={isLive}
+                disabled={
+                  isLive ||
+                  (isDataFromDSO &&
+                    watch('tokenName') !== initialListingFormValues.tokenName)
+                }
                 control={control}
                 helperText='Name of the token that describes your offering the best'
                 variant='outlined'
               />
             </Grid>
-            <Grid item xs={12} md={2}>
+            <Grid item xs={12} md={6}>
               <TypedField
                 component={TextField}
                 label='Symbol'
                 name='tokenSymbol'
-                disabled={isLive}
+                disabled={
+                  isLive ||
+                  (isDataFromDSO &&
+                    watch('tokenSymbol') !==
+                      initialListingFormValues.tokenSymbol)
+                }
                 control={control}
                 helperText='Token symbol'
                 variant='outlined'
-              />
-            </Grid>
-            <Grid item xs={12} md={4}>
-              <TypedField
-                component={NumericInput}
-                numberFormat={positiveNumberFormat}
-                label='Decimal Places'
-                name='decimalPlaces'
-                disabled={capitalStructure?.toLowerCase() === 'equity'}
-                control={control}
-                helperText='Decimal Places'
-                variant='outlined'
-                valueExtractor={numericValueExtractor}
               />
             </Grid>
           </Grid>
@@ -120,6 +124,10 @@ export const ListingBaseFields = (props: ListingBaseFieldsProps) => {
                 control={control}
                 helperText='Select your corporate from the list'
                 variant='outlined'
+                disabled={
+                  isDataFromDSO &&
+                  watch('corporate') !== initialListingFormValues.corporate
+                }
               />
             </Grid>
           </Grid>
@@ -134,7 +142,9 @@ export const ListingBaseFields = (props: ListingBaseFieldsProps) => {
                 label='Launch Date'
                 name='launchDate'
                 control={control}
-                disabled={isLive}
+                disabled={
+                  isLive || (isDataFromDSO && watch('launchDate') !== null)
+                }
                 valueExtractor={dateTimeValueExtractor}
                 defaultValue={null}
                 helperText='Offering launch date'
@@ -153,6 +163,7 @@ export const ListingBaseFields = (props: ListingBaseFieldsProps) => {
                 defaultValue={null}
                 helperText='Offering completion date'
                 inputVariant='outlined'
+                disabled={isDataFromDSO && watch('completionDate') !== null}
               />
             </Grid>
           </Grid>
