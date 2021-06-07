@@ -2,42 +2,50 @@ export const orderData = [
   {
     price: 123.14,
     amount: 1500.14,
-    total: 3000.14
+    total: 3000.14,
+    count: 1
   },
   {
     price: 456.14,
     amount: 1200.14,
-    total: 3000.14
+    total: 3000.14,
+    count: 1
   },
   {
     price: 123.14,
     amount: 1500.14,
-    total: 3000.14
+    total: 3000.14,
+    count: 1
   },
   {
     price: 789.14,
     amount: 2500.14,
-    total: 3000.14
+    total: 3000.14,
+    count: 1
   },
   {
     price: 789.14,
     amount: 2900.14,
-    total: 3000.14
+    total: 3000.14,
+    count: 1
   },
   {
     price: 789.14,
     amount: 2500.14,
-    total: 3000.14
+    total: 3000.14,
+    count: 1
   },
   {
     price: 123.14,
     amount: 1500.14,
-    total: 3000.14
+    total: 3000.14,
+    count: 1
   },
   {
     price: 456.14,
     amount: 1200.14,
-    total: 3000.14
+    total: 3000.14,
+    count: 1
   }
 ]
 

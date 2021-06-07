@@ -1,44 +1,48 @@
-import React from 'react'
-import { DigitalSecurityOffering } from 'types/dso'
-import { isDSOLive } from 'app/components/DSO/utils'
+import React, { useState } from 'react'
 import { Grid } from '@material-ui/core'
-import { Form } from 'components/form/Form'
-import { useSetPageTitle } from 'app/hooks/useSetPageTitle'
-import { getOfferingName } from 'helpers/strings'
-import { ListingFormFields } from 'app/pages/exchange/components/ListingForm/ListingFormFields'
-import { ListingSidebar } from 'app/pages/exchange/components/ListingForm/ListingSidebar'
-import { ListingFormActions } from 'app/pages/exchange/components/ListingForm/ListingFormActions'
+import { useDSOById } from 'app/pages/invest/hooks/useDSOById'
 import { ListingRadioButtons } from 'app/pages/exchange/components/ListingForm/ListingRadioButtons'
+import { LoadingIndicator } from 'app/components/LoadingIndicator/LoadingIndicator'
+import { ListingFormContent } from 'app/pages/exchange/components/ListingForm/ListingFormContent'
+import { VSpacer } from 'components/VSpacer'
+import {
+  getIdFromDSOSelectValue,
+  getIssuerIdFromDSOSelectValue
+} from 'app/pages/issuance/utils'
+import { Listing } from 'app/pages/exchange/types/listings'
 
 export interface ListingFormProps {
-  data?: DigitalSecurityOffering
+  data?: Listing
   isNew?: boolean
 }
 
 export const ListingForm = (props: ListingFormProps) => {
-  const { data, isNew = false } = props
-  const isLive = isDSOLive(data)
-
-  useSetPageTitle(getOfferingName(data))
+  const { data: initialData, isNew = false } = props
+  const [dsoId, setDsoId] = useState('')
+  const [issuerId, setIssuerId] = useState('')
+  const { data: dsoData, isLoading } = useDSOById(dsoId, issuerId)
+  const data = initialData ?? dsoData
 
   return (
-    <Form data-testid='listing-form'>
-      <Grid container>
+    <>
+      {!isNew ? null : (
         <Grid item lg={9} container direction='column'>
-          <ListingRadioButtons />
-        </Grid>
-
-        <Grid item lg={9} container direction='column'>
-          <ListingFormFields isNew={isNew} isLive={isLive} />
-        </Grid>
-
-        <Grid item lg={3}>
-          <ListingSidebar
-            dso={data}
-            footer={<ListingFormActions listing={data} />}
+          <VSpacer size='medium' />
+          <ListingRadioButtons
+            onImportClick={value => {
+              setDsoId(getIdFromDSOSelectValue(value))
+              setIssuerId(getIssuerIdFromDSOSelectValue(value))
+            }}
           />
+          <VSpacer size='large' />
         </Grid>
-      </Grid>
-    </Form>
+      )}
+
+      {isLoading ? (
+        <LoadingIndicator />
+      ) : (
+        <ListingFormContent data={data} isNew={isNew} />
+      )}
+    </>
   )
 }

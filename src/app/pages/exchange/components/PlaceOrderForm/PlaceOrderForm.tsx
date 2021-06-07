@@ -8,11 +8,11 @@ import {
   PlaceOrderArgs,
   PlaceOrderFormValues
 } from 'app/pages/exchange/types/form'
-import { transformPlaceOrderFormValuesToArgs } from 'app/pages/exchange/utils'
 import { placeOrderFormValidationSchema } from 'app/pages/exchange/validation'
 import { PlaceOrderFields } from 'app/pages/exchange/components/PlaceOrderFields/PlaceOrderFields'
 import { useStyles } from 'app/pages/exchange/components/PlaceOrderForm/PlaceOrderForm.style'
 import { Submit } from 'components/form/Submit'
+import { transformPlaceOrderFormValuesToArgs } from 'app/pages/exchange/utils/order'
 
 export type ActiveTabName = 'BUY' | 'SELL'
 

@@ -7,6 +7,7 @@ import {
 import { getPersonName } from 'helpers/strings'
 import { hasValue } from 'helpers/forms'
 import { DataroomFile, FormArray } from 'types/dataroomFile'
+import { ListingFormValues } from 'app/pages/exchange/types/listings'
 
 export const numberToPercentage = (value: any) => {
   if (value === null || value === undefined || value === '') {
@@ -61,6 +62,10 @@ export const getUpdateDSOPayload = (values: Partial<DSOFormValues>) => {
   return payload
 }
 
+export const getIdFromDSOSelectValue = (value: string) => value.split(':')[0]
+export const getIssuerIdFromDSOSelectValue = (value: string) =>
+  value.split(':')[1]
+
 export const getActivityUserInfo = (activity: DSOActivity) => {
   const {
     identity: { individual, corporates }
@@ -88,7 +93,9 @@ export const getActivityUserInfo = (activity: DSOActivity) => {
   }
 }
 
-export const validateTeamField = (formData: DSOFormValues) => {
+export const validateTeamField = (
+  formData: DSOFormValues | ListingFormValues
+) => {
   const { team } = formData
   if (team !== undefined && team.length > 0) {
     const filteredTeam: DsoTeamMember[] = team.reduce(
