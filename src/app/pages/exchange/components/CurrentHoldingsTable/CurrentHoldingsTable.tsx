@@ -1,13 +1,13 @@
 import React from 'react'
 import { TableView } from 'components/TableWithPagination/TableView'
-import { Grid } from '@material-ui/core'
+import { Box, Grid } from '@material-ui/core'
 import { useQueryFilter } from 'hooks/filters/useQueryFilter'
-import { Filters } from 'app/pages/exchange/components/TradeHistoryTable/Filter'
 import { useAuth } from 'hooks/auth/useAuth'
 import { getIdFromObj } from 'helpers/strings'
 import { exchange as exchangeUrl } from 'config/apiURL'
 import { exchange as exchangeQueryKeys } from 'config/queryKeys'
 import { columns } from 'app/pages/exchange/components/CurrentHoldingsTable/columns'
+import { SearchFilter } from 'app/components/SearchFilter'
 
 export interface Holding {
   _id: string
@@ -24,16 +24,27 @@ export const CurrentHoldingsTable = () => {
   const { getFilterValue } = useQueryFilter()
 
   const filter = {
-    search: getFilterValue('search'),
-    to: getFilterValue('toDate'),
-    from: getFilterValue('fromDate'),
-    pair: getFilterValue('pair')
+    search: getFilterValue('search')
   }
 
   return (
     <Grid container direction='column' spacing={2}>
       <Grid item style={{ maxHeight: 70 }}>
-        <Filters />
+        <Grid
+          container
+          justify='space-between'
+          style={{ paddingLeft: 24, paddingRight: 24 }}
+        >
+          <Grid item xs={12} md={6}>
+            <Box width={300}>
+              <SearchFilter
+                fullWidth
+                placeholder='Search'
+                inputAdormentPosition='end'
+              />
+            </Box>
+          </Grid>
+        </Grid>
       </Grid>
       <Grid item>
         <TableView<Holding>

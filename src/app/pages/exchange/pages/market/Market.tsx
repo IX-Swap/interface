@@ -5,9 +5,9 @@ import { Box, Grid } from '@material-ui/core'
 import { MyOrders } from 'app/pages/exchange/components/MyOrders/MyOrders'
 import { FinancialSummary } from 'app/pages/exchange/components/FinancialSummary/FinancialSummary'
 import { useStyles } from 'app/pages/exchange/pages/market/Market.style'
-import { InvestorLiveOrderBook } from 'app/pages/invest/components/InvestorLiveOrderBook/InvestorLiveOrderBook'
+import { InvestorLiveOrderBook } from 'app/pages/exchange/components/InvestorLiveOrderBook/InvestorLiveOrderBook'
 import { TVChartContainer } from 'app/pages/invest/components/TVChartContainer/TVChartContainer'
-import { Trades } from 'app/pages/invest/components/Trades/Trades'
+import { Trades } from 'app/pages/exchange/components/Trades/Trades'
 import { getDataFeed } from 'app/pages/invest/components/TVChartContainer/services/datafeed'
 import {
   IBasicDataFeed,
@@ -53,7 +53,7 @@ export const Market = () => {
 
       <Grid container direction={'column'} className={classes.wrapper}>
         <Grid item className={classes.colorGrid}>
-          <InvestorLiveOrderBook currency='SGD' tokenSymbol='EUR' />
+          <InvestorLiveOrderBook />
         </Grid>
 
         <Grid item container>
