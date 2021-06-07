@@ -29,6 +29,12 @@ export const MoreDetails = () => {
         id='financial-details'
         open={anchorEl !== null}
         anchorEl={anchorEl}
+        placement='bottom'
+        modifiers={{
+          flip: {
+            enabled: false
+          }
+        }}
       >
         <Paper
           elevation={3}
