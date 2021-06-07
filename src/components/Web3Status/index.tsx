@@ -1,7 +1,7 @@
+import React, { useMemo } from 'react'
 import { AbstractConnector } from '@web3-react/abstract-connector'
 import { UnsupportedChainIdError, useWeb3React } from '@web3-react/core'
-import { darken, lighten } from 'polished'
-import React, { useMemo } from 'react'
+import { darken } from 'polished'
 import { Activity } from 'react-feather'
 import { t, Trans } from '@lingui/macro'
 import styled, { css } from 'styled-components'
@@ -39,12 +39,23 @@ const Web3StatusGeneric = styled(ButtonSecondary)`
   ${({ theme }) => theme.flexRowNoWrap}
   width: 100%;
   align-items: center;
-  padding: 0.5rem;
+  padding: 0;
+  border: none;
+  opacity: unset;
   border-radius: 12px;
   cursor: pointer;
   user-select: none;
-  :focus {
+  outline: none;
+  :focus,
+  :hover,
+  :active,
+  :focus-within,
+  :target,
+  :visited,
+  :focus-visible {
+    border: 0;
     outline: none;
+    box-shadow: none;
   }
 `
 const Web3StatusError = styled(Web3StatusGeneric)`
@@ -59,44 +70,26 @@ const Web3StatusError = styled(Web3StatusGeneric)`
 `
 
 const Web3StatusConnect = styled(Web3StatusGeneric)<{ faded?: boolean }>`
-  background-color: ${({ theme }) => theme.primary4};
+  background: ${({ theme }) => theme.bgGradient};
   border: none;
-  color: ${({ theme }) => theme.primaryText1};
-  font-weight: 500;
-
-  :hover,
-  :focus {
-    border: 1px solid ${({ theme }) => darken(0.05, theme.primary4)};
-    color: ${({ theme }) => theme.primaryText1};
-  }
+  color: ${({ theme }) => theme.text2};
+  font-weight: 600;
+  border-radius: 40px;
 
   ${({ faded }) =>
     faded &&
     css`
-      background-color: ${({ theme }) => theme.primary5};
-      border: 1px solid ${({ theme }) => theme.primary5};
-      color: ${({ theme }) => theme.primaryText1};
-
-      :hover,
-      :focus {
-        border: 1px solid ${({ theme }) => darken(0.05, theme.primary4)};
-        color: ${({ theme }) => darken(0.05, theme.primaryText1)};
-      }
+      background-color: ${({ theme }) => theme.bgGradient};
+      color: ${({ theme }) => theme.text2};
     `}
 `
 
 const Web3StatusConnected = styled(Web3StatusGeneric)<{ pending?: boolean }>`
-  background-color: ${({ pending, theme }) => (pending ? theme.primary1 : theme.bg1)};
-  border: 1px solid ${({ pending, theme }) => (pending ? theme.primary1 : theme.bg2)};
+  background: ${({ theme }) => theme.bgGradient};
+  opacity: ${({ pending }) => (pending ? '0.7' : '1')};
+  padding-right: 10px;
   color: ${({ pending, theme }) => (pending ? theme.white : theme.text1)};
   font-weight: 500;
-  :hover,
-  :focus {
-    background-color: ${({ pending, theme }) => (pending ? darken(0.05, theme.primary1) : lighten(0.05, theme.bg1))};
-
-    :focus {
-      border: 1px solid ${({ pending, theme }) => (pending ? darken(0.1, theme.primary1) : darken(0.1, theme.bg2))};
-    }
   }
 `
 
@@ -105,10 +98,11 @@ const Text = styled.p`
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
-  margin: 0 0.5rem 0 0.25rem;
-  font-size: 1rem;
+  margin: 3px 0.5rem;
+  font-size: 14px;
   width: fit-content;
   font-weight: 500;
+  line-height: 17px;
 `
 
 const NetworkIcon = styled(Activity)`
@@ -211,7 +205,7 @@ function Web3StatusInner() {
     return (
       <Web3StatusConnect id="connect-wallet" onClick={toggleWalletModal} faded={!account}>
         <Text>
-          <Trans>Connect to a wallet</Trans>
+          <Trans>Connect Wallet</Trans>
         </Text>
       </Web3StatusConnect>
     )

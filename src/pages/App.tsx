@@ -40,24 +40,15 @@ const BodyWrapper = styled.div`
   display: flex;
   flex-direction: column;
   width: 100%;
-  padding-top: 120px;
+  margin-top: 120px;
   align-items: center;
   flex: 1;
   z-index: 1;
 
   ${({ theme }) => theme.mediaWidth.upToSmall`
     padding: 16px;
-    padding-top: 6rem;
+    margin-top: 9rem;
   `};
-`
-
-const HeaderWrapper = styled.div`
-  ${({ theme }) => theme.flexRowNoWrap}
-  width: 100%;
-  justify-content: space-between;
-  position: fixed;
-  top: 0;
-  z-index: 2;
 `
 
 const Marginer = styled.div`
@@ -77,9 +68,7 @@ export default function App() {
       <Route component={DarkModeQueryParamReader} />
       <Route component={ApeModeQueryParamReader} />
       <AppWrapper>
-        <HeaderWrapper>
-          <Header />
-        </HeaderWrapper>
+        <Header />
         <BodyWrapper>
           <Popups />
           <Polling />
