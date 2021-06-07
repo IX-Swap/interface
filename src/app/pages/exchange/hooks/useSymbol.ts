@@ -1,5 +1,9 @@
 import React from 'react'
-import { findSymbolById, isMarketDataFalsy, isPairIdFalsy } from '../utils'
+import {
+  findSymbolById,
+  isMarketDataFalsy,
+  isPairIdFalsy
+} from 'app/pages/exchange/utils/order'
 
 export const useSymbol = (pairId: string, data: any) => {
   const [symbol, setSymbol] = React.useState<string>('')

@@ -16,7 +16,10 @@ import {
 import { generatePath, Redirect, useParams } from 'react-router'
 import { useMarketList } from 'app/pages/exchange/hooks/useMarketList'
 import { OTCMarketRoute } from 'app/pages/exchange/router/config'
-import { isMarketDataFalsy, isPairIdFalsy } from '../../utils'
+import {
+  isMarketDataFalsy,
+  isPairIdFalsy
+} from 'app/pages/exchange/utils/order'
 import { useSymbol } from '../../hooks/useSymbol'
 
 export const Market = () => {

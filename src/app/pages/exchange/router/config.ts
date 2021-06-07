@@ -21,14 +21,6 @@ export const OTCMarketRoute = {
     'listingId',
     'preview'
   ]),
-  editListing: makeURL([
-    'app',
-    'OTCMarket',
-    'myListings',
-    'issuerId',
-    'listingId',
-    'edit'
-  ]),
   buyerList: makeURL(['app', 'OTCMarket', 'buyerList'])
 }
 
