@@ -40,6 +40,34 @@ describe('useDSOsByUserId', () => {
           expect(result.current.status).toBe('success')
           expect(postFn).toHaveBeenCalledWith(
             issuanceURL.dso.getByUserId(user._id),
+            { ...paginationArgs }
+          )
+          expect(parsedDataFn).toHaveBeenNthCalledWith(
+            2,
+            [{ data: [dso] }],
+            '_id'
+          )
+        },
+        { timeout: 1000 }
+      )
+    })
+  })
+
+  it('returns data with correct response from api with current status', async () => {
+    await act(async () => {
+      const postFn = jest.fn().mockResolvedValueOnce({ data: [dso] })
+      const apiObj = { post: postFn }
+
+      const { result } = renderHookWithServiceProvider(
+        () => useDSOsByUserId('Draft,Approved,Submitted,Rejected'),
+        { apiService: apiObj }
+      )
+
+      await waitFor(
+        () => {
+          expect(result.current.status).toBe('success')
+          expect(postFn).toHaveBeenCalledWith(
+            issuanceURL.dso.getByUserId(user._id),
             { ...paginationArgs, status: 'Draft,Approved,Submitted,Rejected' }
           )
           expect(parsedDataFn).toHaveBeenNthCalledWith(
