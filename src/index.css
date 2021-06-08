@@ -1,14 +1,14 @@
 @import '~inter-ui';
 @import '~@reach/dialog/styles.css';
-
+@import url('https://fonts.googleapis.com/css?family=Poppins:regular,bold,italic&subset=latin,latin-ext');
 * {
-    font-family: 'Inter', sans-serif;
+    font-family: 'Poppins', sans-serif;
     box-sizing: border-box;
 }
 
 @supports (font-variation-settings: normal) {
     * {
-        font-family: 'Inter var', sans-serif;
+        font-family: 'Poppins', sans-serif;
     }
 }
 
