@@ -53,7 +53,7 @@ describe('useWithdrawCash', () => {
           )
           expect(showSnackbar).toHaveBeenNthCalledWith(
             1,
-            successfulResponse.message,
+            'Cash withdrawal successfull',
             'success'
           )
         },
