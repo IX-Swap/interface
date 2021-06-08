@@ -18,6 +18,7 @@ import {
   isPairIdFalsy
 } from 'app/pages/exchange/utils/order'
 import { useSymbol } from '../../hooks/useSymbol'
+import { useVirtualAccount } from 'app/pages/accounts/hooks/useVirtualAccount'
 
 export const Market = () => {
   const classes = useStyles()
@@ -26,6 +27,19 @@ export const Market = () => {
   const { pairId } = useParams<{ pairId: string }>()
   const { data, isLoading } = useMarketList()
   const { symbol } = useSymbol(pairId, data)
+
+  const currencyName = symbol.split('/')[1]
+  const tokenName = symbol.split('/')[0]
+
+  const { list } = useVirtualAccount()
+  const virtualAccount =
+    list !== undefined
+      ? list.find(
+          (item: { currency: string }) => item.currency === currencyName
+        )
+      : undefined
+  const currencyBalance =
+    virtualAccount !== undefined ? virtualAccount.balance.available : 0
 
   if ((isMarketDataFalsy(data), isLoading)) {
     return null
@@ -55,10 +69,7 @@ export const Market = () => {
         <Grid item container>
           <Grid item className={classes.middleBlock} xs={12}>
             {symbol.length > 0 && (
-              <TVChartContainer
-                datafeed={datafeed}
-                symbol={symbol}
-              />
+              <TVChartContainer datafeed={datafeed} symbol={symbol} />
             )}
           </Grid>
           <Grid item className={classes.colorGrid} xs={12}>
@@ -68,10 +79,11 @@ export const Market = () => {
 
         <Grid item container>
           <PlaceOrderForm
-            currencyLabel={'SGD'}
-            tokenLabel={'IXPS'}
-            currencyBalance={15000}
-            tokenBalance={300}
+            currencyLabel={currencyName}
+            tokenLabel={tokenName}
+            currencyBalance={currencyBalance}
+            // TODO Past correct data after complete backend api
+            tokenBalance={0}
             onSubmit={placeOrder}
           />
           <Trades />
