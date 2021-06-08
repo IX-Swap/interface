@@ -47,6 +47,9 @@ export const PlaceOrderForm: React.FC<PlaceOrderFormProps> = ({
     )
   }
 
+  // TODO Use for get token balance
+  // const { data } = useBalance(pairId)
+
   return (
     <Form
       onSubmit={handleSubmit}

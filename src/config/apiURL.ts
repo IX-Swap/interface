@@ -209,6 +209,10 @@ export const exchange = {
     emit: 'price/get',
     on: (tokenId: string) => `price/${tokenId}`
   },
+  balances: {
+    emit: 'balances/get',
+    on: (tokenId: string) => `balances/${tokenId}`
+  },
   currentHoldings: (userId: string) => `/accounts/holdings/${userId}`,
   cancelOrder: (userId: string, orderId: string) =>
     `/exchange/orders/cancel/${userId}/${orderId}`,
