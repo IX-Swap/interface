@@ -7,8 +7,10 @@ import { RowBetween, RowFixed } from '../Row'
 import { TYPE } from '../../theme'
 
 const StyledSwapHeader = styled.div`
-  padding: 1rem 1.25rem 0.5rem 1.25rem;
+  padding: 0;
   width: 100%;
+  margin-bottom: 22px;
+  text-transform: uppercase;
   color: ${({ theme }) => theme.text2};
 `
 
@@ -17,7 +19,7 @@ export default function SwapHeader({ allowedSlippage }: { allowedSlippage: Perce
     <StyledSwapHeader>
       <RowBetween>
         <RowFixed>
-          <TYPE.black fontWeight={500} fontSize={16} style={{ marginRight: '8px' }}>
+          <TYPE.black fontWeight={600} fontSize={22} style={{ marginRight: '8px' }}>
             <Trans>Swap</Trans>
           </TYPE.black>
         </RowFixed>
