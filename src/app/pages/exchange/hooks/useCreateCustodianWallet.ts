@@ -5,8 +5,13 @@ import { CustodyAccount } from 'types/custodyAccount'
 interface props {
   userId: string
   onSuccess: () => void
+  onError: () => void
 }
-export const useCreateCustodianWallet = ({ userId, onSuccess }: props) => {
+export const useCreateCustodianWallet = ({
+  userId,
+  onSuccess,
+  onError
+}: props) => {
   const { apiService, snackbarService } = useServices()
   const url = `${custodyAccount.create}`
   const createCustodianWallet = async (args: any) => {
@@ -24,6 +29,7 @@ export const useCreateCustodianWallet = ({ userId, onSuccess }: props) => {
       )
     },
     onError: (error: any) => {
+      onError()
       void snackbarService.showSnackbar(error.message, 'error')
     }
   })

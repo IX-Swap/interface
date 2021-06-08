@@ -18,6 +18,9 @@ export const useCustodianWalletSubmit = () => {
       } else {
         await placeOrder(form)
       }
+    },
+    onError: () => {
+      setOpenDialog(true)
     }
   })
   const submitForm = useCallback(

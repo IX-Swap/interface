@@ -7,6 +7,7 @@ import { custodyAccountMock } from '__fixtures__/custodyAccount'
 
 describe('useCreateCustodianWallet', () => {
   const onSuccess = jest.fn()
+  const onError = jest.fn()
   const userId = user._id
 
   afterEach(async () => {
@@ -23,7 +24,7 @@ describe('useCreateCustodianWallet', () => {
       const apiObj = { post: postFn }
       const snackbarObj = { showSnackbar }
       const { result } = renderHookWithServiceProvider(
-        () => useCreateCustodianWallet({ userId, onSuccess }),
+        () => useCreateCustodianWallet({ userId, onSuccess, onError }),
         { apiService: apiObj, snackbarService: snackbarObj }
       )
 
@@ -52,7 +53,7 @@ describe('useCreateCustodianWallet', () => {
       const apiObj = { post: postFn }
       const snackbarObj = { showSnackbar }
       const { result } = renderHookWithServiceProvider(
-        () => useCreateCustodianWallet({ userId, onSuccess }),
+        () => useCreateCustodianWallet({ userId, onSuccess, onError }),
         { apiService: apiObj, snackbarService: snackbarObj }
       )
 
@@ -61,6 +62,7 @@ describe('useCreateCustodianWallet', () => {
           const [mutate] = result.current
           void mutate({ userId })
 
+          expect(onError).toHaveBeenCalledTimes(1)
           expect(showSnackbar).toHaveBeenCalledTimes(1)
           expect(showSnackbar).toHaveBeenNthCalledWith(
             1,
