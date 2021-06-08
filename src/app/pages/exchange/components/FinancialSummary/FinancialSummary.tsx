@@ -5,6 +5,8 @@ import { NumberSummaryValue } from 'app/pages/exchange/components/FinancialSumma
 import { SummaryItem } from 'app/pages/exchange/components/FinancialSummary/SummaryItem'
 import { PairListDropdown } from 'app/pages/exchange/components/PairListDropdown/PairListDropdown'
 import { useFinancialSummary } from 'app/pages/exchange/hooks/useFinancialSummary'
+import { useMarket } from 'app/pages/exchange/hooks/useMarket'
+import { useAssetById } from 'hooks/asset/useAssetById'
 import React from 'react'
 import { useParams } from 'react-router'
 
@@ -13,6 +15,10 @@ export const FinancialSummary = () => {
     pairId: string
   }>()
   const { data } = useFinancialSummary(pairId)
+  const { data: marketData } = useMarket(pairId)
+  const { data: assetData } = useAssetById(
+    marketData?.listing.markets[0].currency
+  )
 
   return (
     <Grid container spacing={1}>
@@ -57,7 +63,7 @@ export const FinancialSummary = () => {
           </Grid>
           <Grid item>
             <SummaryItem
-              label='24H Volume (SGD)'
+              label={`24H Volume (${assetData?.symbol ?? ''})`}
               value={<NumberSummaryValue value={data?._24h.volume} />}
             />
           </Grid>
