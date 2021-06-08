@@ -22,7 +22,7 @@ export const MoreDetails = () => {
       <Button color='primary' size='small' onClick={handleClick}>
         <Box style={{ fontSize: 14, textTransform: 'capitalize' }}>
           More Details
-        </Box>{' '}
+        </Box>
         <ArrowDropDown />
       </Button>
       <Popper
