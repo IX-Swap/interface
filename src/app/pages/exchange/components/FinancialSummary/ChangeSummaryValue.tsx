@@ -20,9 +20,9 @@ export const ChangeSummaryValue = ({
       <Grid item>
         {isNegative ? (
           <ArrowDownward className={classNames([isNegativeColor, boldText])} />
-        ) : (
+        ) : value !== 0 ? (
           <ArrowUpward className={classNames([isNegativeColor, boldText])} />
-        )}
+        ) : null}
       </Grid>
     </Grid>
   )

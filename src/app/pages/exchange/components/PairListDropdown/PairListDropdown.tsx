@@ -34,6 +34,11 @@ export const PairListDropdown = ({ pairName }: PairListDropdownProps) => {
           open={anchorEl !== null}
           anchorEl={anchorEl}
           placement='bottom-start'
+          modifiers={{
+            flip: {
+              enabled: false
+            }
+          }}
         >
           <Paper
             elevation={3}
