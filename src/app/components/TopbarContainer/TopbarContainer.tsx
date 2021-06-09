@@ -9,17 +9,16 @@ import { ReactComponent as InvestIcon } from 'assets/icons/navigation/invest.svg
 import { ReactComponent as AccountsIcon } from 'assets/icons/navigation/account.svg'
 import { ReactComponent as IssuanceIcon } from 'assets/icons/navigation/issuance.svg'
 import { ReactComponent as AuthorizerIcon } from 'assets/icons/navigation/authorizer.svg'
-import { ReactComponent as OTCMarketIcon } from 'assets/icons/navigation/otc-market.svg'
 import { HomeOutlined as HomeIcon } from '@material-ui/icons'
 import { Grid } from '@material-ui/core'
 import { useAppBreakpoints } from 'hooks/useAppBreakpoints'
-import { InvestRoute } from 'app/pages/invest/router/config'
+import { InvestLandingLinks, InvestRoute } from 'app/pages/invest/router/config'
 import { HomeRoute } from 'app/pages/home/router/config'
 import {
   authorizerLandingLinks,
   AuthorizerRoute
 } from 'app/pages/authorizer/router/config'
-import { OTCMarketRoute } from 'app/pages/exchange/router/config'
+import { OTCMarketLandingLinks } from 'app/pages/exchange/router/config'
 import { TopbarLinkContainer } from 'app/components/TopbarContainer/components/TopbarLinkContainer'
 import { TopbarLinkDropdown } from 'app/components/TopbarContainer/components/TopbarLinkDropdown'
 
@@ -44,11 +43,6 @@ export const TopbarContainer = () => {
       label: 'Invest',
       link: InvestRoute.landing,
       icon: InvestIcon
-    },
-    {
-      label: 'Exchange',
-      link: OTCMarketRoute.landing,
-      icon: OTCMarketIcon
     }
   ]
 
@@ -68,6 +62,24 @@ export const TopbarContainer = () => {
     })
   }
 
+  const newAccountsLandingLinks = [
+    ...accountsLandingLinks,
+    OTCMarketLandingLinks.reduce<any>((accum, item) => {
+      return { ...item, label: 'My Exchange Holdings' }
+    }, {})
+  ]
+
+  const dropdownLinksItems = (name: string) => {
+    switch (name) {
+      case 'Authorizer':
+        return authorizerLandingLinks
+      case 'Accounts':
+        return newAccountsLandingLinks
+      default:
+        return InvestLandingLinks
+    }
+  }
+
   const { isTablet } = useAppBreakpoints()
 
   if (isTablet) {
@@ -77,17 +89,17 @@ export const TopbarContainer = () => {
   return (
     <Grid style={{ display: 'flex' }}>
       {links.map(link => {
-        if (link.label === 'Accounts' || link.label === 'Authorizer') {
+        if (
+          link.label === 'Accounts' ||
+          link.label === 'Authorizer' ||
+          link.label === 'Invest'
+        ) {
           return (
             <TopbarLinkDropdown
               key={link.label}
               link={link.link}
               label={link.label}
-              linkItems={
-                link.label === 'Authorizer'
-                  ? authorizerLandingLinks
-                  : accountsLandingLinks
-              }
+              linkItems={dropdownLinksItems(link.label)}
             />
           )
         }
