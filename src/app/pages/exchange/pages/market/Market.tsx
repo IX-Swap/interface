@@ -48,11 +48,11 @@ export const Market = () => {
           <FinancialSummary />
         </Grid>
 
-        <Grid item container>
-          <Grid item className={classes.middleBlock} xs={12}>
-            {symbol.length > 0 && (
-              <TVChartContainer datafeed={datafeed} symbol={symbol} />
-            )}
+        <Box my={2} />
+
+        <Grid container direction={'column'} className={classes.wrapper}>
+          <Grid item className={classes.colorGrid}>
+            <InvestorLiveOrderBook />
           </Grid>
 
           <Grid item container>
