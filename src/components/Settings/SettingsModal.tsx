@@ -24,10 +24,8 @@ const StyledSettings = styled.div`
   text-align: left;
 `
 
-const MenuFlyout = styled.span`
-  min-width: 20.125rem;
-  background-color: ${({ theme }) => theme.bg2};
-  border: 1px solid ${({ theme }) => theme.bg3};
+const MenuFlyoutWrapper = styled.span`
+  background-color: ${({ theme }) => theme.bg8};
   box-shadow: 0px 0px 1px rgba(0, 0, 0, 0.01), 0px 4px 8px rgba(0, 0, 0, 0.04), 0px 16px 24px rgba(0, 0, 0, 0.04),
     0px 24px 32px rgba(0, 0, 0, 0.01);
   border-radius: 12px;
@@ -37,9 +35,34 @@ const MenuFlyout = styled.span`
   position: fixed;
   top: 138px;
   height: 380px;
-  min-width: 480px;
+  min-width: 30rem;
   z-index: 100;
-  right: calc(50% - (480px / 2));
+  right: calc(50% - (30rem / 2));
+  ${({ theme }) => theme.mediaWidth.upToSmall`
+     top: 11rem;
+  `};
+  ${({ theme }) => theme.mediaWidth.upToExtraSmall`
+    min-width: 90%;
+    max-width: 90%;
+    right: calc(50% - (90% / 2));
+  `};
+  user-select: none;
+`
+
+const MenuFlyout = styled.span`
+  background-color: ${({ theme }) => theme.bg8};
+  box-shadow: 0px 0px 1px rgba(0, 0, 0, 0.01), 0px 4px 8px rgba(0, 0, 0, 0.04), 0px 16px 24px rgba(0, 0, 0, 0.04),
+    0px 24px 32px rgba(0, 0, 0, 0.01);
+  border-radius: 12px;
+  display: flex;
+  flex-direction: column;
+  font-size: 1rem;
+  position: fixed;
+  top: 138px;
+  height: 380px;
+  min-width: 30rem;
+  z-index: 100;
+  right: calc(50% - (30rem / 2));
   ${({ theme }) => theme.mediaWidth.upToSmall`
      top: 11rem;
   `};
