@@ -2,7 +2,7 @@ import JSBI from 'jsbi'
 import { CurrencyAmount, Token } from '@uniswap/sdk-core'
 import { TransactionResponse } from '@ethersproject/providers'
 import { useEffect, useState } from 'react'
-import { UNI } from '../../constants/tokens'
+import { IXS } from '../../constants/tokens'
 import { useActiveWeb3React } from '../../hooks/web3'
 import { useMerkleDistributorContract } from '../../hooks/useContract'
 import { calculateGasMargin } from '../../utils/calculateGasMargin'
@@ -121,7 +121,7 @@ export function useUserClaimData(account: string | null | undefined): UserClaimD
   return account && chainId === 1 ? claimInfo[account] : null
 }
 
-// check if user is in blob and has not yet claimed UNI
+// check if user is in blob and has not yet claimed IXS
 export function useUserHasAvailableClaim(account: string | null | undefined): boolean {
   const userClaimData = useUserClaimData(account)
   const distributorContract = useMerkleDistributorContract()
@@ -135,7 +135,7 @@ export function useUserUnclaimedAmount(account: string | null | undefined): Curr
   const userClaimData = useUserClaimData(account)
   const canClaim = useUserHasAvailableClaim(account)
 
-  const uni = chainId ? UNI[chainId] : undefined
+  const uni = chainId ? IXS[chainId] : undefined
   if (!uni) return undefined
   if (!canClaim || !userClaimData) {
     return CurrencyAmount.fromRawAmount(uni, JSBI.BigInt(0))
@@ -165,7 +165,7 @@ export function useClaimCallback(account: string | null | undefined): {
         .claim(...args, { value: null, gasLimit: calculateGasMargin(estimatedGasLimit) })
         .then((response: TransactionResponse) => {
           addTransaction(response, {
-            summary: `Claimed ${unclaimedAmount?.toSignificant(4)} UNI`,
+            summary: `Claimed ${unclaimedAmount?.toSignificant(4)} IXS`,
             claim: { recipient: account },
           })
           return response.hash

@@ -1,7 +1,7 @@
 import React from 'react'
 import { AutoColumn } from '../../components/Column'
 import styled from 'styled-components/macro'
-import { UNI } from '../../constants/tokens'
+import { IXS } from '../../constants/tokens'
 import { ExternalLink, TYPE } from '../../theme'
 import { RowBetween, RowFixed } from '../../components/Row'
 import { Link } from 'react-router-dom'
@@ -125,7 +125,7 @@ export default function Vote() {
   const availableVotes: CurrencyAmount<Token> | undefined = useUserVotes()
   const uniBalance: CurrencyAmount<Token> | undefined = useTokenBalance(
     account ?? undefined,
-    chainId ? UNI[chainId] : undefined
+    chainId ? IXS[chainId] : undefined
   )
   const userDelegatee: string | undefined = useUserDelegatee()
 
@@ -149,13 +149,13 @@ export default function Vote() {
             <AutoColumn gap="md">
               <RowBetween>
                 <TYPE.white fontWeight={600}>
-                  <Trans>Uniswap Governance</Trans>
+                  <Trans>IXSwap Governance</Trans>
                 </TYPE.white>
               </RowBetween>
               <RowBetween>
                 <TYPE.white fontSize={14}>
                   <Trans>
-                    UNI tokens represent voting shares in Uniswap governance. You can vote on each proposal yourself or
+                    IXS tokens represent voting shares in IXSwap governance. You can vote on each proposal yourself or
                     delegate your votes to a third party.
                   </Trans>
                 </TYPE.white>
@@ -166,7 +166,7 @@ export default function Vote() {
                 target="_blank"
               >
                 <TYPE.white fontSize={14}>
-                  <Trans>Read more about Uniswap governance</Trans>
+                  <Trans>Read more about IXSwap governance</Trans>
                 </TYPE.white>
               </ExternalLink>
             </AutoColumn>
@@ -257,7 +257,7 @@ export default function Vote() {
         })}
       </TopSection>
       <TYPE.subHeader color="text3">
-        <Trans>A minimum threshold of 1% of the total UNI supply is required to submit proposals</Trans>
+        <Trans>A minimum threshold of 1% of the total IXS supply is required to submit proposals</Trans>
       </TYPE.subHeader>
     </PageWrapper>
   )

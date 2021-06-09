@@ -1,9 +1,9 @@
 import { FACTORY_ADDRESS as V3_FACTORY_ADDRESS } from '@uniswap/v3-sdk'
 import { constructSameAddressMap } from '../utils/constructSameAddressMap'
 
-export const UNI_ADDRESS = constructSameAddressMap('0x1f9840a85d5aF5bf1D1762F925BDADdC4201F984')
+export const IXS_ADDRESS = constructSameAddressMap('0x06b32e7eb6f818c859e69334ac75f9c3b9aecf62')
 export const MULTICALL2_ADDRESSES = constructSameAddressMap('0x5BA1e12693Dc8F9c48aAD8770482f4739bEeD696')
-export const V2_ROUTER_ADDRESS = constructSameAddressMap('0x7a250d5630B4cF539739dF2C5dAcb4c659F2488D')
+export const V2_ROUTER_ADDRESS = constructSameAddressMap('0x72c498975BC767Ad25E17f451d5aAf570262B8FA')
 export const GOVERNANCE_ADDRESS = constructSameAddressMap('0x5e4be8Bc9637f0EAA1A755019e06A68ce081D58F')
 export const TIMELOCK_ADDRESS = constructSameAddressMap('0x1a9C8182C09F50C8318d769245beA52c32BE35BC')
 export const MERKLE_DISTRIBUTOR_ADDRESS: { [chainId: number]: string } = {
@@ -13,7 +13,7 @@ export const ARGENT_WALLET_DETECTOR_ADDRESS: { [chainId: number]: string } = {
   [1]: '0xeca4B0bDBf7c55E9b7925919d03CbF8Dc82537E8',
 }
 export const V3_CORE_FACTORY_ADDRESSES = constructSameAddressMap(V3_FACTORY_ADDRESS)
-export const QUOTER_ADDRESSES = constructSameAddressMap('0xb27308f9F90D607463bb33eA1BeBb41C27CE5AB6')
+export const QUOTER_ADDRESSES = constructSameAddressMap('0x2FAaE0159FB0825e8eA3ec91dA108Def8D7Bb6D9')
 export const NONFUNGIBLE_POSITION_MANAGER_ADDRESSES = constructSameAddressMap(
   '0xC36442b4a4522E871399CD717aBDD847Ab11FE88'
 )

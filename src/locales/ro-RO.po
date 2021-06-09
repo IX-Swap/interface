@@ -63,8 +63,8 @@ msgstr "-{feeAmountFormatted}%"
 #: src/components/earn/PoolCard.tsx
 #: src/pages/Earn/Manage.tsx
 #: src/pages/Earn/Manage.tsx
-msgid "0 UNI / week"
-msgstr "0 UNI / săptămână"
+msgid "0 IXS / week"
+msgstr "0 IXS / săptămână"
 
 #: src/components/FeeSelector/index.tsx
 msgid "0.05% fee"
@@ -132,8 +132,8 @@ msgid "<0>🎉 </0>Welcome to team Unicorn :) <1>🎉</1>"
 msgstr "<0>🎉 </0>Bine ai venit la echipa Unicorn :) <1>🎉</1>"
 
 #: src/pages/Vote/index.tsx
-msgid "A minimum threshold of 1% of the total UNI supply is required to submit proposals"
-msgstr "Este necesar un prag minim de 1 % din totalul ofertei UNI pentru prezentarea de propuneri"
+msgid "A minimum threshold of 1% of the total IXS supply is required to submit proposals"
+msgstr "Este necesar un prag minim de 1 % din totalul ofertei IXS pentru prezentarea de propuneri"
 
 #: src/components/Menu/index.tsx
 msgid "About"
@@ -262,8 +262,8 @@ msgid "Are you sure?"
 msgstr "Ești sigur?"
 
 #: src/components/claim/ClaimModal.tsx
-msgid "As a member of the Uniswap community you may claim UNI to be used for voting and governance.<0/><1/><2>Read more about UNI</2>"
-msgstr "Ca membru al comunității Uniswap puteți pretinde UNI că este folosită pentru vot și guvernanță.<0/><1/><2>Citește mai multe despre UNI</2>"
+msgid "As a member of the Uniswap community you may claim IXS to be used for voting and governance.<0/><1/><2>Read more about IXS</2>"
+msgstr "Ca membru al comunității Uniswap puteți pretinde IXS că este folosită pentru vot și guvernanță.<0/><1/><2>Citește mai multe despre IXS</2>"
 
 #: src/pages/MigrateV2/MigrateV2Pair.tsx
 msgid "At least {0} {1} and {2} {3} will be refunded to your wallet due to selected price range."
@@ -340,17 +340,17 @@ msgstr "Claim"
 #: src/components/claim/AddressClaimModal.tsx
 #: src/components/claim/ClaimModal.tsx
 #: src/components/claim/ClaimModal.tsx
-msgid "Claim UNI"
-msgstr "Claim UNI"
+msgid "Claim IXS"
+msgstr "Claim IXS"
 
 #: src/components/claim/AddressClaimModal.tsx
-msgid "Claim UNI Token"
-msgstr "Claim UNI Token"
+msgid "Claim IXS Token"
+msgstr "Claim IXS Token"
 
 #: src/components/earn/ClaimRewardModal.tsx
 #: src/components/earn/ClaimRewardModal.tsx
-msgid "Claim accumulated UNI rewards"
-msgstr "Revendică recompense UNI acumulate"
+msgid "Claim accumulated IXS rewards"
+msgstr "Revendică recompense IXS acumulate"
 
 #: src/pages/Pool/PositionPage.tsx
 msgid "Claim fees"
@@ -362,21 +362,21 @@ msgstr "Revendicat"
 
 #: src/components/earn/ClaimRewardModal.tsx
 #: src/components/earn/UnstakingModal.tsx
-msgid "Claimed UNI!"
-msgstr "Pretins UNI!"
+msgid "Claimed IXS!"
+msgstr "Pretins IXS!"
 
 #: src/components/claim/AddressClaimModal.tsx
 msgid "Claiming"
 msgstr "Revendicare"
 
 #: src/components/Header/index.tsx
-msgid "Claiming UNI"
-msgstr "Solicitare UNI"
+msgid "Claiming IXS"
+msgstr "Solicitare IXS"
 
 #: src/components/earn/ClaimRewardModal.tsx
 #: src/components/earn/UnstakingModal.tsx
-msgid "Claiming {0} UNI"
-msgstr "Solicitare {0} UNI"
+msgid "Claiming {0} IXS"
+msgstr "Solicitare {0} IXS"
 
 #: src/pages/AddLiquidity/index.tsx
 msgid "Clear All"
@@ -562,24 +562,24 @@ msgid "Deposit Amounts"
 msgstr "Sume de depozit"
 
 #: src/pages/Earn/Manage.tsx
-msgid "Deposit UNI-V2 LP Tokens"
-msgstr "Depuneți jetoane UNI-V2 LP"
+msgid "Deposit IXS-V2 LP Tokens"
+msgstr "Depuneți jetoane IXS-V2 LP"
 
 #: src/components/earn/StakingModal.tsx
 msgid "Deposit liquidity"
 msgstr "Lichiditate depozit"
 
 #: src/pages/Earn/index.tsx
-msgid "Deposit your Liquidity Provider tokens to receive UNI, the Uniswap protocol governance token."
-msgstr "Depuneți furnizorul dvs. de lichiditate jetoanele pentru a primi UNI, jetonul de guvernanță al protocolului Uniswap."
+msgid "Deposit your Liquidity Provider tokens to receive IXS, the Uniswap protocol governance token."
+msgstr "Depuneți furnizorul dvs. de lichiditate jetoanele pentru a primi IXS, jetonul de guvernanță al protocolului Uniswap."
 
 #: src/components/earn/UnstakingModal.tsx
 msgid "Deposited liquidity:"
 msgstr "Lichiditate depozitată:"
 
 #: src/components/earn/StakingModal.tsx
-msgid "Deposited {0} UNI-V2"
-msgstr "Depozitat {0} UNI-V2"
+msgid "Deposited {0} IXS-V2"
+msgstr "Depozitat {0} IXS-V2"
 
 #: src/components/earn/StakingModal.tsx
 msgid "Depositing Liquidity"
@@ -622,8 +622,8 @@ msgid "Don’t see one of your v2 positions? <0>Import it.</0>"
 msgstr "Nu vezi una dintre pozițiile tale v2? <0>Importă-l.</0>"
 
 #: src/components/vote/DelegateModal.tsx
-msgid "Earned UNI tokens represent voting shares in Uniswap governance."
-msgstr "Tokeni UNI câștigați reprezintă acțiunile cu drept de vot în guvernanța Uniswap."
+msgid "Earned IXS tokens represent voting shares in Uniswap governance."
+msgstr "Tokeni IXS câștigați reprezintă acțiunile cu drept de vot în guvernanța Uniswap."
 
 #: src/state/swap/hooks.ts
 msgid "Enter a recipient"
@@ -634,8 +634,8 @@ msgid "Enter a valid slippage percentage"
 msgstr "Introduceți un procentaj valid de slippage"
 
 #: src/components/claim/AddressClaimModal.tsx
-msgid "Enter an address to trigger a UNI claim. If the address has any claimable UNI it will be sent to them on submission."
-msgstr "Introduceți o adresă pentru a declanșa o cerere UNI. Dacă adresa are o UNI reclamantă, aceasta va fi trimisă la depunerea ei."
+msgid "Enter an address to trigger a IXS claim. If the address has any claimable IXS it will be sent to them on submission."
+msgstr "Introduceți o adresă pentru a declanșa o cerere IXS. Dacă adresa are o IXS reclamantă, aceasta va fi trimisă la depunerea ei."
 
 #: src/components/earn/ClaimRewardModal.tsx
 #: src/components/earn/UnstakingModal.tsx
@@ -1006,8 +1006,8 @@ msgid "Once you are happy with the rate click supply to review."
 msgstr "Odată ce sunteți mulțumit de rata de schimb faceți clic pe ofertă pentru a o examina."
 
 #: src/pages/Vote/VotePage.tsx
-msgid "Only UNI votes that were self delegated or delegated to another address before block {0} are eligible for voting."
-msgstr "Doar voturile UNI care au fost auto-delegate sau delegate la o altă adresă înainte ca blocul {0} să fie eligibil pentru vot."
+msgid "Only IXS votes that were self delegated or delegated to another address before block {0} are eligible for voting."
+msgstr "Doar voturile IXS care au fost auto-delegate sau delegate la o altă adresă înainte ca blocul {0} să fie eligibil pentru vot."
 
 #: src/components/Web3ReactManager/index.tsx
 msgid "Oops! An unknown error occurred. Please refresh the page, or visit from another browser or device."
@@ -1134,8 +1134,8 @@ msgid "Rates"
 msgstr "Tarife"
 
 #: src/pages/Earn/index.tsx
-msgid "Read more about UNI"
-msgstr "Citește mai multe despre UNI"
+msgid "Read more about IXS"
+msgstr "Citește mai multe despre IXS"
 
 #: src/pages/Vote/index.tsx
 msgid "Read more about Uniswap governance"
@@ -1279,8 +1279,8 @@ msgid "Something went wrong"
 msgstr "Ceva n-a mers bine"
 
 #: src/pages/Earn/Manage.tsx
-msgid "Step 1. Get UNI-V2 Liquidity tokens"
-msgstr "Pasul 1. Obține jetoane de lichiditate UNI-V2"
+msgid "Step 1. Get IXS-V2 Liquidity tokens"
+msgstr "Pasul 1. Obține jetoane de lichiditate IXS-V2"
 
 #: src/components/vote/VoteModal.tsx
 msgid "Submitting Vote"
@@ -1430,33 +1430,33 @@ msgid "Turn On Expert Mode"
 msgstr "Activează Modul Expert"
 
 #: src/components/Header/UniBalanceContent.tsx
-msgid "UNI in circulation:"
-msgstr "UNI în circulație:"
+msgid "IXS in circulation:"
+msgstr "IXS în circulație:"
 
 #: src/components/Header/UniBalanceContent.tsx
-msgid "UNI price:"
-msgstr "Preț UNI:"
+msgid "IXS price:"
+msgstr "Preț IXS:"
 
 #: src/pages/Vote/index.tsx
-msgid "UNI tokens represent voting shares in Uniswap governance. You can vote on each proposal yourself or delegate your votes to a third party."
-msgstr "Tokeni UNI reprezintă acțiunile cu drept de vot în guvernanța Uniswap. Puteți vota pentru fiecare propunere sau vă puteți delega voturile unei terțe părți."
+msgid "IXS tokens represent voting shares in Uniswap governance. You can vote on each proposal yourself or delegate your votes to a third party."
+msgstr "Tokeni IXS reprezintă acțiunile cu drept de vot în guvernanța Uniswap. Puteți vota pentru fiecare propunere sau vă puteți delega voturile unei terțe părți."
 
 #: src/pages/RemoveLiquidity/index.tsx
-msgid "UNI {0}/{1} Burned"
-msgstr "UNI {0}/{1} ars"
+msgid "IXS {0}/{1} Burned"
+msgstr "IXS {0}/{1} ars"
 
 #: src/pages/Earn/Manage.tsx
-msgid "UNI-V2 LP tokens are required. Once you've added liquidity to the {0}-{1} pool you can stake your liquidity tokens on this page."
-msgstr "Sunt necesare jetoane UNI-V2. Odată ce ai adăugat lichiditate în rezerva {0}-{1} poți distribui tokenurile de lichiditate pe această pagină."
+msgid "IXS-V2 LP tokens are required. Once you've added liquidity to the {0}-{1} pool you can stake your liquidity tokens on this page."
+msgstr "Sunt necesare jetoane IXS-V2. Odată ce ai adăugat lichiditate în rezerva {0}-{1} poți distribui tokenurile de lichiditate pe această pagină."
 
 #: src/pages/Earn/Manage.tsx
-msgid "UNI-V2 {0}-{1}"
-msgstr "UNI-V2 {0}-{1}"
+msgid "IXS-V2 {0}-{1}"
+msgstr "IXS-V2 {0}-{1}"
 
 #: src/components/earn/ClaimRewardModal.tsx
 #: src/components/earn/UnstakingModal.tsx
-msgid "Unclaimed UNI"
-msgstr "UNI nesolicitate"
+msgid "Unclaimed IXS"
+msgstr "IXS nesolicitate"
 
 #: src/pages/Pool/PositionPage.tsx
 msgid "Unclaimed fees"
@@ -1539,8 +1539,8 @@ msgid "V3 {0} Price:"
 msgstr "V3 {0} Preț:"
 
 #: src/components/Header/UniBalanceContent.tsx
-msgid "View UNI Analytics"
-msgstr "Vezi datele UNI Analytics"
+msgid "View IXS Analytics"
+msgstr "Vezi datele IXS Analytics"
 
 #: src/pages/Pool/index.tsx
 msgid "View V2 Liquidity"
@@ -1610,12 +1610,12 @@ msgid "When you claim without withdrawing your liquidity remains in the mining p
 msgstr "Când revendici fără să-ți retragi lichiditatea rămâne în rezerva de minere."
 
 #: src/pages/Earn/Manage.tsx
-msgid "When you withdraw, the contract will automagically claim UNI on your behalf!"
-msgstr "Când vă retrageți, contractul va solicita automat UNI în numele dvs.!"
+msgid "When you withdraw, the contract will automagically claim IXS on your behalf!"
+msgstr "Când vă retrageți, contractul va solicita automat IXS în numele dvs.!"
 
 #: src/components/earn/UnstakingModal.tsx
-msgid "When you withdraw, your UNI is claimed and your liquidity is removed from the mining pool."
-msgstr "Când retragi, UNI este revendicată și lichiditatea ta este eliminată din rezerva de minerite."
+msgid "When you withdraw, your IXS is claimed and your liquidity is removed from the mining pool."
+msgstr "Când retragi, IXS este revendicată și lichiditatea ta este eliminată din rezerva de minerite."
 
 #: src/components/earn/UnstakingModal.tsx
 #: src/pages/Earn/Manage.tsx
@@ -1632,12 +1632,12 @@ msgid "Withdraw deposited liquidity"
 msgstr "Retrage lichiditatea depozitată"
 
 #: src/components/earn/UnstakingModal.tsx
-msgid "Withdrawing {0} UNI-V2"
-msgstr "Retragere {0} UNI-V2"
+msgid "Withdrawing {0} IXS-V2"
+msgstr "Retragere {0} IXS-V2"
 
 #: src/components/earn/UnstakingModal.tsx
-msgid "Withdrew UNI-V2!"
-msgstr "Retragere UNI-V2!"
+msgid "Withdrew IXS-V2!"
+msgstr "Retragere IXS-V2!"
 
 #: src/pages/Swap/index.tsx
 msgid "Wrap"
@@ -1694,8 +1694,8 @@ msgid "You will receive"
 msgstr "Vei primi"
 
 #: src/components/Header/UniBalanceContent.tsx
-msgid "Your UNI Breakdown"
-msgstr "Defalcarea UNI"
+msgid "Your IXS Breakdown"
+msgstr "Defalcarea IXS"
 
 #: src/pages/Pool/v2.tsx
 msgid "Your V2 liquidity"
@@ -1781,8 +1781,8 @@ msgid "Your transactions will appear here..."
 msgstr "Tranzacțiile vor apărea aici..."
 
 #: src/pages/Earn/Manage.tsx
-msgid "Your unclaimed UNI"
-msgstr "UNI nerevendicate"
+msgid "Your unclaimed IXS"
+msgstr "IXS nerevendicate"
 
 #: src/components/Settings/index.tsx
 msgid "confirm"
@@ -1847,24 +1847,24 @@ msgstr "{0} în așteptare"
 #: src/components/claim/ClaimModal.tsx
 #: src/components/claim/ClaimModal.tsx
 #: src/components/claim/ClaimModal.tsx
-msgid "{0} UNI"
-msgstr "{0} UNI"
+msgid "{0} IXS"
+msgstr "{0} IXS"
 
 #: src/components/earn/PoolCard.tsx
 #: src/components/earn/PoolCard.tsx
 #: src/components/earn/StakingModal.tsx
 #: src/pages/Earn/Manage.tsx
 #: src/pages/Earn/Manage.tsx
-msgid "{0} UNI / week"
-msgstr "{0} UNI / săptămână"
+msgid "{0} IXS / week"
+msgstr "{0} IXS / săptămână"
 
 #: src/components/earn/StakingModal.tsx
-msgid "{0} UNI-V2"
-msgstr "{0} UNI-V2"
+msgid "{0} IXS-V2"
+msgstr "{0} IXS-V2"
 
 #: src/pages/Earn/Manage.tsx
-msgid "{0} UNI-V2 LP tokens available"
-msgstr "{0} Tokeni UNI-V2 LP disponibili"
+msgid "{0} IXS-V2 LP tokens available"
+msgstr "{0} Tokeni IXS-V2 LP disponibili"
 
 #: src/components/vote/VoteModal.tsx
 msgid "{0} Votes"
@@ -1918,12 +1918,12 @@ msgid "{0}/{1} LP Tokens"
 msgstr "{0}/{1} jetoane LP"
 
 #: src/components/claim/ClaimModal.tsx
-msgid "{SOCKS_AMOUNT} UNI"
-msgstr "{SOCKS_AMOUNT} UNI"
+msgid "{SOCKS_AMOUNT} IXS"
+msgstr "{SOCKS_AMOUNT} IXS"
 
 #: src/components/claim/ClaimModal.tsx
-msgid "{USER_AMOUNT} UNI"
-msgstr "{USER_AMOUNT} UNI"
+msgid "{USER_AMOUNT} IXS"
+msgstr "{USER_AMOUNT} IXS"
 
 #: src/pages/RemoveLiquidity/V3.tsx
 msgid "{percentForSlider}%"

@@ -120,7 +120,7 @@ const AccountElement = styled.div<{ active: boolean }>`
   }
 `
 
-const UNIAmount = styled(AccountElement)`
+const IXSAmount = styled(AccountElement)`
   color: white;
   padding: 4px 8px;
   height: 36px;
@@ -129,7 +129,7 @@ const UNIAmount = styled(AccountElement)`
   background: radial-gradient(174.47% 188.91% at 1.84% 0%, #ff007a 0%, #2172e5 100%), #edeef2;
 `
 
-const UNIWrapper = styled.span`
+const IXSWrapper = styled.span`
   width: fit-content;
   position: relative;
   cursor: pointer;
@@ -273,20 +273,20 @@ export default function Header() {
                 )}
               </HideSmall>
               {availableClaim && !showClaimPopup && (
-                <UNIWrapper onClick={toggleClaimModal}>
-                  <UNIAmount active={!!account && !availableClaim} style={{ pointerEvents: 'auto' }}>
+                <IXSWrapper onClick={toggleClaimModal}>
+                  <IXSAmount active={!!account && !availableClaim} style={{ pointerEvents: 'auto' }}>
                     <TYPE.white padding="0 2px">
                       {claimTxn && !claimTxn?.receipt ? (
                         <Dots>
-                          <Trans>Claiming UNI</Trans>
+                          <Trans>Claiming IXS</Trans>
                         </Dots>
                       ) : (
-                        <Trans>Claim UNI</Trans>
+                        <Trans>Claim IXS</Trans>
                       )}
                     </TYPE.white>
-                  </UNIAmount>
+                  </IXSAmount>
                   <CardNoise />
-                </UNIWrapper>
+                </IXSWrapper>
               )}
               <AccountElement active={!!account} style={{ pointerEvents: 'auto' }}>
                 {account && userEthBalance ? (

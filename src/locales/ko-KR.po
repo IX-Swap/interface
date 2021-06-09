@@ -63,8 +63,8 @@ msgstr "{feeAmountFormatted}%"
 #: src/components/earn/PoolCard.tsx
 #: src/pages/Earn/Manage.tsx
 #: src/pages/Earn/Manage.tsx
-msgid "0 UNI / week"
-msgstr "0 UNI / 주"
+msgid "0 IXS / week"
+msgstr "0 IXS / 주"
 
 #: src/components/FeeSelector/index.tsx
 msgid "0.05% fee"
@@ -132,8 +132,8 @@ msgid "<0>🎉 </0>Welcome to team Unicorn :) <1>🎉</1>"
 msgstr "<0> 🎉</0> Unicorn 팀에 오신 것을 환영합니다. :) <1> 🎉</1>"
 
 #: src/pages/Vote/index.tsx
-msgid "A minimum threshold of 1% of the total UNI supply is required to submit proposals"
-msgstr "제안서를 제출하려면 총 UNI 공급량의 최소 1 %가 필요합니다."
+msgid "A minimum threshold of 1% of the total IXS supply is required to submit proposals"
+msgstr "제안서를 제출하려면 총 IXS 공급량의 최소 1 %가 필요합니다."
 
 #: src/components/Menu/index.tsx
 msgid "About"
@@ -262,8 +262,8 @@ msgid "Are you sure?"
 msgstr "확실합니까?"
 
 #: src/components/claim/ClaimModal.tsx
-msgid "As a member of the Uniswap community you may claim UNI to be used for voting and governance.<0/><1/><2>Read more about UNI</2>"
-msgstr "Uniswap 커뮤니티의 회원으로서 UNI가 투표 및 거버넌스에 사용된다고 주장 할 수 있습니다. <0 /> <1 /> <2> UN에 대해 자세히 알아보기</2>"
+msgid "As a member of the Uniswap community you may claim IXS to be used for voting and governance.<0/><1/><2>Read more about IXS</2>"
+msgstr "Uniswap 커뮤니티의 회원으로서 IXS가 투표 및 거버넌스에 사용된다고 주장 할 수 있습니다. <0 /> <1 /> <2> UN에 대해 자세히 알아보기</2>"
 
 #: src/pages/MigrateV2/MigrateV2Pair.tsx
 msgid "At least {0} {1} and {2} {3} will be refunded to your wallet due to selected price range."
@@ -340,17 +340,17 @@ msgstr "청구"
 #: src/components/claim/AddressClaimModal.tsx
 #: src/components/claim/ClaimModal.tsx
 #: src/components/claim/ClaimModal.tsx
-msgid "Claim UNI"
-msgstr "UNI 청구"
+msgid "Claim IXS"
+msgstr "IXS 청구"
 
 #: src/components/claim/AddressClaimModal.tsx
-msgid "Claim UNI Token"
-msgstr "UNI 토큰 청구"
+msgid "Claim IXS Token"
+msgstr "IXS 토큰 청구"
 
 #: src/components/earn/ClaimRewardModal.tsx
 #: src/components/earn/ClaimRewardModal.tsx
-msgid "Claim accumulated UNI rewards"
-msgstr "누적 된 UNI 보상 청구"
+msgid "Claim accumulated IXS rewards"
+msgstr "누적 된 IXS 보상 청구"
 
 #: src/pages/Pool/PositionPage.tsx
 msgid "Claim fees"
@@ -362,21 +362,21 @@ msgstr "청구 됨"
 
 #: src/components/earn/ClaimRewardModal.tsx
 #: src/components/earn/UnstakingModal.tsx
-msgid "Claimed UNI!"
-msgstr "UNI 획득!"
+msgid "Claimed IXS!"
+msgstr "IXS 획득!"
 
 #: src/components/claim/AddressClaimModal.tsx
 msgid "Claiming"
 msgstr "청구"
 
 #: src/components/Header/index.tsx
-msgid "Claiming UNI"
-msgstr "UNI 청구"
+msgid "Claiming IXS"
+msgstr "IXS 청구"
 
 #: src/components/earn/ClaimRewardModal.tsx
 #: src/components/earn/UnstakingModal.tsx
-msgid "Claiming {0} UNI"
-msgstr "{0} UNI 획득"
+msgid "Claiming {0} IXS"
+msgstr "{0} IXS 획득"
 
 #: src/pages/AddLiquidity/index.tsx
 msgid "Clear All"
@@ -562,24 +562,24 @@ msgid "Deposit Amounts"
 msgstr "입금액"
 
 #: src/pages/Earn/Manage.tsx
-msgid "Deposit UNI-V2 LP Tokens"
-msgstr "UNI-V2 LP 토큰 입금"
+msgid "Deposit IXS-V2 LP Tokens"
+msgstr "IXS-V2 LP 토큰 입금"
 
 #: src/components/earn/StakingModal.tsx
 msgid "Deposit liquidity"
 msgstr "예금 유동성"
 
 #: src/pages/Earn/index.tsx
-msgid "Deposit your Liquidity Provider tokens to receive UNI, the Uniswap protocol governance token."
-msgstr "유동성 공급자 토큰을 예치하여 Uniswap 프로토콜 거버넌스 토큰 인 UNI를 받으십시오."
+msgid "Deposit your Liquidity Provider tokens to receive IXS, the Uniswap protocol governance token."
+msgstr "유동성 공급자 토큰을 예치하여 Uniswap 프로토콜 거버넌스 토큰 인 IXS를 받으십시오."
 
 #: src/components/earn/UnstakingModal.tsx
 msgid "Deposited liquidity:"
 msgstr "예금 유동성 :"
 
 #: src/components/earn/StakingModal.tsx
-msgid "Deposited {0} UNI-V2"
-msgstr "{0} UNI-V2 입금"
+msgid "Deposited {0} IXS-V2"
+msgstr "{0} IXS-V2 입금"
 
 #: src/components/earn/StakingModal.tsx
 msgid "Depositing Liquidity"
@@ -622,8 +622,8 @@ msgid "Don’t see one of your v2 positions? <0>Import it.</0>"
 msgstr "v2 위치 중 하나가 보이지 않습니까? <0> 가져 오기.</0>"
 
 #: src/components/vote/DelegateModal.tsx
-msgid "Earned UNI tokens represent voting shares in Uniswap governance."
-msgstr "획득 한 UNI 토큰은 Uniswap 거버넌스의 의결권을 나타냅니다."
+msgid "Earned IXS tokens represent voting shares in Uniswap governance."
+msgstr "획득 한 IXS 토큰은 Uniswap 거버넌스의 의결권을 나타냅니다."
 
 #: src/state/swap/hooks.ts
 msgid "Enter a recipient"
@@ -634,8 +634,8 @@ msgid "Enter a valid slippage percentage"
 msgstr "유효한 미끄러짐 비율을 입력하세요."
 
 #: src/components/claim/AddressClaimModal.tsx
-msgid "Enter an address to trigger a UNI claim. If the address has any claimable UNI it will be sent to them on submission."
-msgstr "UNI 클레임을 트리거 할 주소를 입력하십시오. 주소에 청구 가능한 UNI가 있으면 제출시 전송됩니다."
+msgid "Enter an address to trigger a IXS claim. If the address has any claimable IXS it will be sent to them on submission."
+msgstr "IXS 클레임을 트리거 할 주소를 입력하십시오. 주소에 청구 가능한 IXS가 있으면 제출시 전송됩니다."
 
 #: src/components/earn/ClaimRewardModal.tsx
 #: src/components/earn/UnstakingModal.tsx
@@ -1006,8 +1006,8 @@ msgid "Once you are happy with the rate click supply to review."
 msgstr "요율에 만족하면 공급을 클릭하여 검토하십시오."
 
 #: src/pages/Vote/VotePage.tsx
-msgid "Only UNI votes that were self delegated or delegated to another address before block {0} are eligible for voting."
-msgstr "{0} 이전에 자체 위임되었거나 다른 주소로 위임 된 UNI 투표 만 투표 할 수 있습니다."
+msgid "Only IXS votes that were self delegated or delegated to another address before block {0} are eligible for voting."
+msgstr "{0} 이전에 자체 위임되었거나 다른 주소로 위임 된 IXS 투표 만 투표 할 수 있습니다."
 
 #: src/components/Web3ReactManager/index.tsx
 msgid "Oops! An unknown error occurred. Please refresh the page, or visit from another browser or device."
@@ -1134,8 +1134,8 @@ msgid "Rates"
 msgstr "요금"
 
 #: src/pages/Earn/index.tsx
-msgid "Read more about UNI"
-msgstr "UNI에 대해 자세히 알아보기"
+msgid "Read more about IXS"
+msgstr "IXS에 대해 자세히 알아보기"
 
 #: src/pages/Vote/index.tsx
 msgid "Read more about Uniswap governance"
@@ -1279,8 +1279,8 @@ msgid "Something went wrong"
 msgstr "문제가 발생했습니다"
 
 #: src/pages/Earn/Manage.tsx
-msgid "Step 1. Get UNI-V2 Liquidity tokens"
-msgstr "1 단계. UNI-V2 유동성 토큰 받기"
+msgid "Step 1. Get IXS-V2 Liquidity tokens"
+msgstr "1 단계. IXS-V2 유동성 토큰 받기"
 
 #: src/components/vote/VoteModal.tsx
 msgid "Submitting Vote"
@@ -1430,33 +1430,33 @@ msgid "Turn On Expert Mode"
 msgstr "전문가 모드 켜기"
 
 #: src/components/Header/UniBalanceContent.tsx
-msgid "UNI in circulation:"
-msgstr "유통중인 UNI :"
+msgid "IXS in circulation:"
+msgstr "유통중인 IXS :"
 
 #: src/components/Header/UniBalanceContent.tsx
-msgid "UNI price:"
-msgstr "UNI 가격 :"
+msgid "IXS price:"
+msgstr "IXS 가격 :"
 
 #: src/pages/Vote/index.tsx
-msgid "UNI tokens represent voting shares in Uniswap governance. You can vote on each proposal yourself or delegate your votes to a third party."
-msgstr "UNI 토큰은 Uniswap 거버넌스의 의결권을 나타냅니다. 각 제안에 대해 직접 투표하거나 제 3 자에게 투표를 위임 할 수 있습니다."
+msgid "IXS tokens represent voting shares in Uniswap governance. You can vote on each proposal yourself or delegate your votes to a third party."
+msgstr "IXS 토큰은 Uniswap 거버넌스의 의결권을 나타냅니다. 각 제안에 대해 직접 투표하거나 제 3 자에게 투표를 위임 할 수 있습니다."
 
 #: src/pages/RemoveLiquidity/index.tsx
-msgid "UNI {0}/{1} Burned"
-msgstr "UNI {0}/{1} 버닝"
+msgid "IXS {0}/{1} Burned"
+msgstr "IXS {0}/{1} 버닝"
 
 #: src/pages/Earn/Manage.tsx
-msgid "UNI-V2 LP tokens are required. Once you've added liquidity to the {0}-{1} pool you can stake your liquidity tokens on this page."
-msgstr "UNI-V2 LP 토큰이 필요합니다. 당신은 유동성을 추가 한 후에 {0}-{1} 이 페이지에 지분 당신의 유동성 토큰을 할 수있는 풀."
+msgid "IXS-V2 LP tokens are required. Once you've added liquidity to the {0}-{1} pool you can stake your liquidity tokens on this page."
+msgstr "IXS-V2 LP 토큰이 필요합니다. 당신은 유동성을 추가 한 후에 {0}-{1} 이 페이지에 지분 당신의 유동성 토큰을 할 수있는 풀."
 
 #: src/pages/Earn/Manage.tsx
-msgid "UNI-V2 {0}-{1}"
-msgstr "UNI-V2 {0}-{1}"
+msgid "IXS-V2 {0}-{1}"
+msgstr "IXS-V2 {0}-{1}"
 
 #: src/components/earn/ClaimRewardModal.tsx
 #: src/components/earn/UnstakingModal.tsx
-msgid "Unclaimed UNI"
-msgstr "미 청구 UNI"
+msgid "Unclaimed IXS"
+msgstr "미 청구 IXS"
 
 #: src/pages/Pool/PositionPage.tsx
 msgid "Unclaimed fees"
@@ -1539,8 +1539,8 @@ msgid "V3 {0} Price:"
 msgstr "V3 {0} 가격 :"
 
 #: src/components/Header/UniBalanceContent.tsx
-msgid "View UNI Analytics"
-msgstr "UNI 분석보기"
+msgid "View IXS Analytics"
+msgstr "IXS 분석보기"
 
 #: src/pages/Pool/index.tsx
 msgid "View V2 Liquidity"
@@ -1610,12 +1610,12 @@ msgid "When you claim without withdrawing your liquidity remains in the mining p
 msgstr "인출하지 않고 청구하면 유동성이 채굴 풀에 남아 있습니다."
 
 #: src/pages/Earn/Manage.tsx
-msgid "When you withdraw, the contract will automagically claim UNI on your behalf!"
-msgstr "철회하면 계약이 자동으로 귀하를 대신하여 UNI를 청구합니다!"
+msgid "When you withdraw, the contract will automagically claim IXS on your behalf!"
+msgstr "철회하면 계약이 자동으로 귀하를 대신하여 IXS를 청구합니다!"
 
 #: src/components/earn/UnstakingModal.tsx
-msgid "When you withdraw, your UNI is claimed and your liquidity is removed from the mining pool."
-msgstr "출금하면 UNI가 청구되고 유동성이 마이닝 풀에서 제거됩니다."
+msgid "When you withdraw, your IXS is claimed and your liquidity is removed from the mining pool."
+msgstr "출금하면 IXS가 청구되고 유동성이 마이닝 풀에서 제거됩니다."
 
 #: src/components/earn/UnstakingModal.tsx
 #: src/pages/Earn/Manage.tsx
@@ -1632,12 +1632,12 @@ msgid "Withdraw deposited liquidity"
 msgstr "예치 된 유동성 인출"
 
 #: src/components/earn/UnstakingModal.tsx
-msgid "Withdrawing {0} UNI-V2"
-msgstr "{0} UNI-V2 출금"
+msgid "Withdrawing {0} IXS-V2"
+msgstr "{0} IXS-V2 출금"
 
 #: src/components/earn/UnstakingModal.tsx
-msgid "Withdrew UNI-V2!"
-msgstr "UNI-V2 철수!"
+msgid "Withdrew IXS-V2!"
+msgstr "IXS-V2 철수!"
 
 #: src/pages/Swap/index.tsx
 msgid "Wrap"
@@ -1694,8 +1694,8 @@ msgid "You will receive"
 msgstr "당신은 받게 될 것입니다"
 
 #: src/components/Header/UniBalanceContent.tsx
-msgid "Your UNI Breakdown"
-msgstr "UNI 고장"
+msgid "Your IXS Breakdown"
+msgstr "IXS 고장"
 
 #: src/pages/Pool/v2.tsx
 msgid "Your V2 liquidity"
@@ -1781,8 +1781,8 @@ msgid "Your transactions will appear here..."
 msgstr "거래 내역이 여기에 표시됩니다 ..."
 
 #: src/pages/Earn/Manage.tsx
-msgid "Your unclaimed UNI"
-msgstr "귀하의 미 청구 UNI"
+msgid "Your unclaimed IXS"
+msgstr "귀하의 미 청구 IXS"
 
 #: src/components/Settings/index.tsx
 msgid "confirm"
@@ -1847,24 +1847,24 @@ msgstr "{0} 보류 중"
 #: src/components/claim/ClaimModal.tsx
 #: src/components/claim/ClaimModal.tsx
 #: src/components/claim/ClaimModal.tsx
-msgid "{0} UNI"
-msgstr "{0} UNI"
+msgid "{0} IXS"
+msgstr "{0} IXS"
 
 #: src/components/earn/PoolCard.tsx
 #: src/components/earn/PoolCard.tsx
 #: src/components/earn/StakingModal.tsx
 #: src/pages/Earn/Manage.tsx
 #: src/pages/Earn/Manage.tsx
-msgid "{0} UNI / week"
-msgstr "{0} UNI / 주"
+msgid "{0} IXS / week"
+msgstr "{0} IXS / 주"
 
 #: src/components/earn/StakingModal.tsx
-msgid "{0} UNI-V2"
-msgstr "{0} UNI-V2"
+msgid "{0} IXS-V2"
+msgstr "{0} IXS-V2"
 
 #: src/pages/Earn/Manage.tsx
-msgid "{0} UNI-V2 LP tokens available"
-msgstr "{0} UNI-V2 LP 토큰 사용 가능"
+msgid "{0} IXS-V2 LP tokens available"
+msgstr "{0} IXS-V2 LP 토큰 사용 가능"
 
 #: src/components/vote/VoteModal.tsx
 msgid "{0} Votes"
@@ -1918,12 +1918,12 @@ msgid "{0}/{1} LP Tokens"
 msgstr "{0}/{1} LP 토큰"
 
 #: src/components/claim/ClaimModal.tsx
-msgid "{SOCKS_AMOUNT} UNI"
-msgstr "{SOCKS_AMOUNT} UNI"
+msgid "{SOCKS_AMOUNT} IXS"
+msgstr "{SOCKS_AMOUNT} IXS"
 
 #: src/components/claim/ClaimModal.tsx
-msgid "{USER_AMOUNT} UNI"
-msgstr "{USER_AMOUNT} UNI"
+msgid "{USER_AMOUNT} IXS"
+msgstr "{USER_AMOUNT} IXS"
 
 #: src/pages/RemoveLiquidity/V3.tsx
 msgid "{percentForSlider}%"
