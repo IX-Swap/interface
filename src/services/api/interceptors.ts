@@ -1,23 +1,28 @@
 import { AxiosResponse } from 'axios'
 import { APIResponse } from 'services/api/types'
+import { errorCodes, errors } from './errorCodes'
 
 class APIError extends Error {
-  constructor(message: string) {
+  code: string
+  constructor(message: string, code?: string) {
     super()
     this.message = message
+    this.code = code ?? ''
   }
 }
 
 export const responseErrorInterceptor = (error: any) => {
   let message = 'Unknown error'
-
+  let code = 'Unknown code'
   if (error.response !== undefined) {
-    message = error.response.data.message
+    code = error.response.data.code
+    message = error.response.data.message ?? errors[code as errorCodes]?.message
   } else {
     message = error.message
+    code = error.code ?? error.name
   }
 
-  throw new APIError(message)
+  throw new APIError(message, code)
 }
 
 export const responseSuccessInterceptor = (

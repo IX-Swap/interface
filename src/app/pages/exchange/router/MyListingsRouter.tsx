@@ -18,6 +18,13 @@ export const MyListingsRouter = () => {
         <ViewListing />
       </AppRoute>
       <AppRoute
+        breadcrumb='Preview Listing'
+        exact
+        path={OTCMarketRoute.previewListing}
+      >
+        <ViewListing />
+      </AppRoute>
+      <AppRoute
         breadcrumb='Create Listing'
         exact
         path={OTCMarketRoute.createListing}

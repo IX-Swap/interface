@@ -244,6 +244,10 @@ export const charts = {
   search: 'exchange/udf/search'
 }
 
+export const custodyAccount = {
+  get: (userId: string) => `/custody/account/${userId}`,
+  create: '/custody/account/assign'
+}
 export const listingsURL = {
   getById: (userId: string, listingId: string) =>
     `/exchange/listing/${userId}/${listingId}`,
