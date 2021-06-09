@@ -209,6 +209,10 @@ export const exchange = {
     emit: 'price/get',
     on: (tokenId: string) => `price/${tokenId}`
   },
+  balances: {
+    emit: 'balances/get',
+    on: (tokenId: string) => `balances/${tokenId}`
+  },
   summary: {
     emit: 'metrics24h/get',
     on: (tokenId: string) => `metrics24h/${tokenId}`
@@ -248,6 +252,7 @@ export const custodyAccount = {
   get: (userId: string) => `/custody/account/${userId}`,
   create: '/custody/account/assign'
 }
+
 export const listingsURL = {
   getById: (userId: string, listingId: string) =>
     `/exchange/listing/${userId}/${listingId}`,

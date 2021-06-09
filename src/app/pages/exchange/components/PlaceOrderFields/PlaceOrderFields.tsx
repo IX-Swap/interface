@@ -18,10 +18,11 @@ export const PlaceOrderFields: React.FC<PlaceOrderFieldsProps> = ({
   balance
 }) => {
   const classes = useStyles()
-  const { control, setValue, watch, setError, clearErrors } = useFormContext()
+  const { control, setValue } = useFormContext()
 
-  const price = watch('price')
-  const amount = watch('amount')
+  // TODO Uncomment after testing
+  // const price = watch('price')
+  // const amount = watch('amount')
 
   return (
     <Grid item container direction={'column'} className={classes.container}>
@@ -37,11 +38,12 @@ export const PlaceOrderFields: React.FC<PlaceOrderFieldsProps> = ({
           defaultValue={null}
           onChange={value => {
             setValue('price', value)
-            if (amount * value > balance) {
-              setError('price', { message: 'Insufficient balance' })
-            } else {
-              clearErrors()
-            }
+            // TODO Uncomment after testing
+            // if (amount * value > balance) {
+            //   setError('price', { message: 'Insufficient balance' })
+            // } else {
+            //   clearErrors()
+            // }
           }}
         />
       </Grid>
@@ -58,11 +60,12 @@ export const PlaceOrderFields: React.FC<PlaceOrderFieldsProps> = ({
           valueExtractor={numericValueExtractor}
           onChange={value => {
             setValue('amount', value)
-            if (price * value > balance) {
-              setError('amount', { message: 'Insufficient balance' })
-            } else {
-              clearErrors()
-            }
+            // TODO Uncomment after testing
+            // if (price * value > balance) {
+            //   setError('amount', { message: 'Insufficient balance' })
+            // } else {
+            //   clearErrors()
+            // }
           }}
         />
       </Grid>

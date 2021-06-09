@@ -8,11 +8,11 @@ import {
   PlaceOrderArgs,
   PlaceOrderFormValues
 } from 'app/pages/exchange/types/form'
-import { placeOrderFormValidationSchema } from 'app/pages/exchange/validation'
 import { PlaceOrderFields } from 'app/pages/exchange/components/PlaceOrderFields/PlaceOrderFields'
 import { useStyles } from 'app/pages/exchange/components/PlaceOrderForm/PlaceOrderForm.style'
 import { Submit } from 'components/form/Submit'
 import { transformPlaceOrderFormValuesToArgs } from 'app/pages/exchange/utils/order'
+import { useParams } from 'react-router'
 
 export type ActiveTabName = 'BUY' | 'SELL'
 
@@ -36,19 +36,25 @@ export const PlaceOrderForm: React.FC<PlaceOrderFormProps> = ({
   const [activeTabNameIdx, setActiveTabNameIdx] = useState(0)
   const balance = activeTabNameIdx === 0 ? currencyBalance : tokenBalance
   const totalCurrencyLabel = activeTabNameIdx === 0 ? currencyLabel : tokenLabel
+  const { pairId } = useParams<{ pairId: string }>()
   const handleSubmit = async (values: PlaceOrderFormValues) => {
     await onSubmit(
       transformPlaceOrderFormValuesToArgs(
         values,
-        activeTabNameIdx === 0 ? 'ASK' : 'BID'
+        activeTabNameIdx === 0 ? 'ASK' : 'BID',
+        pairId
       )
     )
   }
 
+  // TODO Use for get token balance
+  // const { data } = useBalance(pairId)
+
   return (
     <Form
       onSubmit={handleSubmit}
-      validationSchema={placeOrderFormValidationSchema(balance)}
+      // TODO Uncomment after testing
+      // validationSchema={placeOrderFormValidationSchema(balance)}
     >
       <Grid container direction={'column'} className={classes.container}>
         <Grid item>
@@ -83,16 +89,14 @@ export const PlaceOrderForm: React.FC<PlaceOrderFormProps> = ({
         >
           <Grid item>
             <LabelledValue
-              // TODO Remove fake value after complete backend api
-              value={formatMoney(15000, currencyLabel)}
+              value={formatMoney(currencyBalance, currencyLabel)}
               label='Balance:'
             />
           </Grid>
 
           <Grid item>
             <LabelledValue
-              // TODO Remove fake value after complete backend api
-              value={formatMoney(300, tokenLabel)}
+              value={formatMoney(tokenBalance, tokenLabel)}
               label=''
             />
           </Grid>
