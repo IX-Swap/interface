@@ -40,9 +40,7 @@ export const Market = () => {
         )
       : undefined
   const currencyBalance =
-    virtualAccount !== undefined
-      ? virtualAccount.balance.available - virtualAccount.balance.hold
-      : 0
+    virtualAccount !== undefined ? virtualAccount.balance.outstanding : 0
 
   if ((isMarketDataFalsy(data), isLoading)) {
     return null
