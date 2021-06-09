@@ -17,7 +17,11 @@ export const TopbarLinkContainer = (props: TopbarLinkProps) => {
   const baseLink = link.split('/').slice(0, 3).join('/')
   const isActive = pathname.startsWith(baseLink)
   const { theme } = useAppBreakpoints()
-  const navColor = isActive ? blue[300] : theme.palette.background.default
+  const navColor = isActive
+    ? blue[300]
+    : theme.palette.type === 'dark'
+    ? theme.palette.getContrastText(theme.palette.background.default)
+    : theme.palette.background.default
   const menuColor = isActive
     ? theme.palette.background.default
     : theme.palette.slider.activeBackground
@@ -44,6 +48,10 @@ export const TopbarLinkContainer = (props: TopbarLinkProps) => {
             fill={
               colorVariant === 'nav' && isActive
                 ? blue[300]
+                : theme.palette.type === 'dark'
+                ? theme.palette.getContrastText(
+                    theme.palette.background.default
+                  )
                 : theme.palette.background.default
             }
           />

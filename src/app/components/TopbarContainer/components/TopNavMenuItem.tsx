@@ -10,10 +10,18 @@ export const TopNavMenuItem = styled(MenuItem)(({ theme }) => ({
   '&:hover': {
     backgroundColor: theme.palette.slider.activeBackground,
     '& span': {
-      color: `${theme.palette.background.default}!important`
+      color: `${
+        theme.palette.type === 'dark'
+          ? theme.palette.getContrastText(theme.palette.background.default)
+          : theme.palette.background.default
+      }!important`
     }
   },
   '& span': {
-    color: `${theme.palette.primary.main}!important`
+    color: `${
+      theme.palette.type === 'dark'
+        ? theme.palette.getContrastText(theme.palette.primary.main)
+        : theme.palette.primary.main
+    }!important`
   }
 }))
