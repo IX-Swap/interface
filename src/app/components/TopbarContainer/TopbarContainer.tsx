@@ -12,13 +12,16 @@ import { ReactComponent as AuthorizerIcon } from 'assets/icons/navigation/author
 import { HomeOutlined as HomeIcon } from '@material-ui/icons'
 import { Grid } from '@material-ui/core'
 import { useAppBreakpoints } from 'hooks/useAppBreakpoints'
-import { InvestLandingLinks, InvestRoute } from 'app/pages/invest/router/config'
+import { InvestRoute } from 'app/pages/invest/router/config'
 import { HomeRoute } from 'app/pages/home/router/config'
 import {
   authorizerLandingLinks,
   AuthorizerRoute
 } from 'app/pages/authorizer/router/config'
-import { OTCMarketLandingLinks } from 'app/pages/exchange/router/config'
+import {
+  OTCMarketLandingLinks,
+  OTCMarketRoute
+} from 'app/pages/exchange/router/config'
 import { TopbarLinkContainer } from 'app/components/TopbarContainer/components/TopbarLinkContainer'
 import { TopbarLinkDropdown } from 'app/components/TopbarContainer/components/TopbarLinkDropdown'
 
@@ -43,6 +46,10 @@ export const TopbarContainer = () => {
       label: 'Invest',
       link: InvestRoute.landing,
       icon: InvestIcon
+    },
+    {
+      label: 'Exchange',
+      link: OTCMarketRoute.landing
     }
   ]
 
@@ -76,7 +83,7 @@ export const TopbarContainer = () => {
       case 'Accounts':
         return newAccountsLandingLinks
       default:
-        return InvestLandingLinks
+        return authorizerLandingLinks
     }
   }
 
@@ -89,11 +96,7 @@ export const TopbarContainer = () => {
   return (
     <Grid style={{ display: 'flex' }}>
       {links.map(link => {
-        if (
-          link.label === 'Accounts' ||
-          link.label === 'Authorizer' ||
-          link.label === 'Invest'
-        ) {
+        if (link.label === 'Accounts' || link.label === 'Authorizer') {
           return (
             <TopbarLinkDropdown
               key={link.label}
