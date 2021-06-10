@@ -1,22 +1,22 @@
 import { Typography } from '@material-ui/core'
-import { AssignedVirtualAccount } from 'app/pages/admin/components/AssignedVirtualAccountsTable/AssignedVirtualAccountsTable'
 import { getTimeFromNow } from 'helpers/dates'
 import { TableColumn } from 'types/util'
 import React from 'react'
 import { formatMoney } from 'helpers/numbers'
+import { VirtualAccount } from 'types/virtualAccount'
 
-export const renderAssignedDate = (value: any, row: AssignedVirtualAccount) => {
+export const renderAssignedDate = (value: any, row: VirtualAccount) => {
   if (value === undefined) {
     return null
   }
   return <Typography noWrap>{getTimeFromNow(new Date(value))}</Typography>
 }
 
-export const renderAmount = (value: any, row: AssignedVirtualAccount) => {
+export const renderAmount = (value: any, row: VirtualAccount) => {
   return formatMoney(value, '')
 }
 
-export const columns: Array<TableColumn<AssignedVirtualAccount>> = [
+export const columns: Array<TableColumn<VirtualAccount>> = [
   {
     key: 'assignedAt',
     label: 'Assigned',
