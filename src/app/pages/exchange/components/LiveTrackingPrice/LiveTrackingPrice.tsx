@@ -14,7 +14,7 @@ export const LiveTrackingPrice = () => {
 
   const getTrend = () => {
     const lastTrade = marketTrades[0] ?? []
-    if (lastPriceData === lastTrade.price && lastTrade.side === 'ASK') {
+    if (lastPriceData === lastTrade.price && lastTrade.side === 'BID') {
       return 'up'
     }
     return 'down'

@@ -86,6 +86,7 @@ export const generateInfiniteQueryResult = ({
   isFetchedAfterMount: false,
   isInitialData: false,
   isPreviousData: false,
+  isPlaceholderData: false,
   remove: jest.fn(),
   error
 })
@@ -121,6 +122,7 @@ export const generateQueryResult = ({
   isFetchingMore: undefined,
   status: queryStatus,
   isPreviousData: false,
+  isPlaceholderData: false,
   isInitialData: false,
   isFetchedAfterMount: false,
   remove: jest.fn()
