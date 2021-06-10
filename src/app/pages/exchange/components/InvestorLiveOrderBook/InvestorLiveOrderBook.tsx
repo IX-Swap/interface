@@ -27,7 +27,7 @@ export const InvestorLiveOrderBook = () => {
       </Grid>
       <Grid item>
         <OrderBook
-          data={bids}
+          data={asks}
           currency={tradingPair?.listing.markets[0].currency}
           tokenSymbol={tradingPair?.listing.tokenSymbol}
           transaction='sell'
@@ -39,7 +39,7 @@ export const InvestorLiveOrderBook = () => {
       </Grid>
       <Grid item>
         <OrderBook
-          data={asks}
+          data={bids}
           currency={tradingPair?.listing.markets[0].currency}
           tokenSymbol={tradingPair?.listing.tokenSymbol}
           transaction='buy'
