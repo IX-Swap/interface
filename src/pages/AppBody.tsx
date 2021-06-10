@@ -12,6 +12,9 @@ export const BodyWrapper = styled.div<{ margin?: string }>`
   border-radius: 24px;
   margin-top: 1rem;
   padding: 26px 36px 52px 36px;
+  ${({ theme }) => theme.mediaWidth.upToExtraSmall`
+      padding: 1rem 0.7rem;
+  `};
 `
 
 /**

@@ -1,14 +1,12 @@
+import React, { useState, useCallback, ReactNode } from 'react'
 import { Pair } from '@uniswap/v2-sdk'
 import { Currency, CurrencyAmount, Percent, Token } from '@uniswap/sdk-core'
-import React, { useState, useCallback, ReactNode } from 'react'
 import styled from 'styled-components/macro'
 import { darken } from 'polished'
 import { useCurrencyBalance } from '../../state/wallet/hooks'
 import CurrencySearchModal from '../SearchModal/CurrencySearchModal'
-import CurrencyLogo from '../CurrencyLogo'
-import DoubleCurrencyLogo from '../DoubleLogo'
 import { ButtonEmpty } from '../Button'
-import { RowBetween, RowFixed, RowEnd } from '../Row'
+import { RowFixed, RowEnd } from '../Row'
 import { TYPE } from '../../theme'
 import { Input as NumericalInput } from '../NumericalInput'
 import { ReactComponent as DropDown } from '../../assets/images/dropdown.svg'
@@ -47,6 +45,9 @@ const Container = styled.div<{ hideInput: boolean }>`
   border-radius: 36px;
   background-color: ${({ theme }) => theme.bg7};
   width: ${({ hideInput }) => (hideInput ? '100%' : 'initial')};
+  ${({ theme }) => theme.mediaWidth.upToExtraSmall`
+      boder-radius: 1rem;
+  `};
 `
 
 const CurrencySelect = styled(ButtonEmpty)<{ selected: boolean; hideInput?: boolean }>`
@@ -76,6 +77,9 @@ const InputRow = styled.div<{ selected: boolean }>`
   ${({ theme }) => theme.flexRowNoWrap}
   align-items: center;
   padding: 14px 2rem 0 2.5rem;
+  ${({ theme }) => theme.mediaWidth.upToExtraSmall`
+      padding: 10px 10px 0 1rem;
+  `};
 `
 
 const LabelRow = styled.div`
@@ -85,6 +89,10 @@ const LabelRow = styled.div`
   font-size: 0.75rem;
   line-height: 1rem;
   padding: 0 2rem 9px 2.5rem;
+  ${({ theme }) => theme.mediaWidth.upToExtraSmall`
+      padding: 10px 1rem;
+      flex-wrap: wrap;
+  `};
   span:hover {
     cursor: pointer;
     color: ${({ theme }) => darken(0.2, theme.text2)};
@@ -115,6 +123,11 @@ const StyledDropDown = styled(DropDown)<{ selected: boolean }>`
 const StyledTokenName = styled.span<{ active?: boolean }>`
   ${({ active }) => (active ? '  margin: 0 0.25rem 0 0.25rem;' : '  margin: 0 0.25rem 0 0.25rem;')}
   font-size:  ${({ active }) => (active ? '18px' : '18px')};
+`
+const BalanceRow = styled(RowEnd)`
+  ${({ theme }) => theme.mediaWidth.upToExtraSmall`
+     margin-top: 0.5rem;
+  `};
 `
 
 const StyledBalanceMax = styled.button<{ disabled?: boolean }>`
@@ -255,7 +268,7 @@ export default function CurrencyInputPanel({
         {!hideInput && !hideBalance && (
           <FiatRow>
             <FiatValue fiatValue={fiatValue} priceImpact={priceImpact} />
-            <RowEnd>
+            <BalanceRow>
               {account ? (
                 <RowFixed style={{ height: '17px' }}>
                   <TYPE.body
@@ -279,7 +292,7 @@ export default function CurrencyInputPanel({
               ) : (
                 <span />
               )}
-            </RowEnd>
+            </BalanceRow>
           </FiatRow>
         )}
       </Container>
