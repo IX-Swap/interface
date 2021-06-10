@@ -24,7 +24,8 @@ jest.mock('app/pages/exchange/components/MyListingsTable/Actions', () => ({
 
 describe('MyListingsTable', () => {
   const initialFilterValues = {
-    search: undefined
+    search: undefined,
+    status: 'Draft,Submitted,Approved,Rejected'
   }
 
   afterEach(async () => {
