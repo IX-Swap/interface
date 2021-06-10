@@ -13,17 +13,16 @@ export const Wrapper = styled.div`
 `
 
 export const ArrowWrapper = styled.div<{ clickable: boolean }>`
-  padding: 4px;
-  border-radius: 12px;
+  padding: 7px;
+  border-radius: 100%;
   height: 32px;
   width: 32px;
   position: relative;
-  margin-top: -14px;
-  margin-bottom: -14px;
+  margin-top: 12px;
+  margin-bottom: 12px;
   left: calc(50% - 16px);
   /* transform: rotate(90deg); */
-  background-color: ${({ theme }) => theme.bg1};
-  border: 4px solid ${({ theme }) => theme.bg0};
+  background-color: ${({ theme }) => theme.bg9};
   z-index: 2;
   ${({ clickable }) =>
     clickable

@@ -1221,11 +1221,11 @@ msgstr "Выберите тип фонда на основе комиссии п
 #: src/pages/PoolFinder/index.tsx
 #: src/pages/PoolFinder/index.tsx
 #: src/state/swap/hooks.ts
-msgid "Select a token"
+msgid "Choose token"
 msgstr "Выберите токен"
 
 #: src/pages/PoolFinder/index.tsx
-msgid "Select a token to find your liquidity."
+msgid "Choose token to find your liquidity."
 msgstr "Выберите токен, чтобы найти вашу ликвидность."
 
 #: src/pages/AddLiquidity/index.tsx

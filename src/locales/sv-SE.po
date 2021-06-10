@@ -1221,11 +1221,11 @@ msgstr "Välj en biljardtyp baserat på önskad likviditetsleverantörsavgift."
 #: src/pages/PoolFinder/index.tsx
 #: src/pages/PoolFinder/index.tsx
 #: src/state/swap/hooks.ts
-msgid "Select a token"
+msgid "Choose token"
 msgstr "Välj en token"
 
 #: src/pages/PoolFinder/index.tsx
-msgid "Select a token to find your liquidity."
+msgid "Choose token to find your liquidity."
 msgstr "Välj en token för att hitta din likviditet."
 
 #: src/pages/AddLiquidity/index.tsx

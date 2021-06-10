@@ -1221,11 +1221,11 @@ msgstr "Виберіть тип пуску на основі необхідно�
 #: src/pages/PoolFinder/index.tsx
 #: src/pages/PoolFinder/index.tsx
 #: src/state/swap/hooks.ts
-msgid "Select a token"
+msgid "Choose token"
 msgstr "Вибрати токен"
 
 #: src/pages/PoolFinder/index.tsx
-msgid "Select a token to find your liquidity."
+msgid "Choose token to find your liquidity."
 msgstr "Виберіть маркер для пошуку вашої рідини."
 
 #: src/pages/AddLiquidity/index.tsx

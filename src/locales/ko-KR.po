@@ -1221,11 +1221,11 @@ msgstr "선호하는 유동성 공급자 수수료에 따라 풀 유형을 선�
 #: src/pages/PoolFinder/index.tsx
 #: src/pages/PoolFinder/index.tsx
 #: src/state/swap/hooks.ts
-msgid "Select a token"
+msgid "Choose token"
 msgstr "토큰 선택"
 
 #: src/pages/PoolFinder/index.tsx
-msgid "Select a token to find your liquidity."
+msgid "Choose token to find your liquidity."
 msgstr "유동성을 찾으려면 토큰을 선택하십시오."
 
 #: src/pages/AddLiquidity/index.tsx

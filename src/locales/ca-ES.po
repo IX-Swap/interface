@@ -1221,11 +1221,11 @@ msgstr "Seleccioneu un tipus de grup basat en la comissió del vostre proveïdor
 #: src/pages/PoolFinder/index.tsx
 #: src/pages/PoolFinder/index.tsx
 #: src/state/swap/hooks.ts
-msgid "Select a token"
+msgid "Choose token"
 msgstr "Seleccioneu un testimoni"
 
 #: src/pages/PoolFinder/index.tsx
-msgid "Select a token to find your liquidity."
+msgid "Choose token to find your liquidity."
 msgstr "Seleccioneu un testimoni per trobar la vostra liquiditat."
 
 #: src/pages/AddLiquidity/index.tsx

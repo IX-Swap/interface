@@ -1221,11 +1221,11 @@ msgstr "Επιλέξτε έναν τύπο πισίνας με βάση την �
 #: src/pages/PoolFinder/index.tsx
 #: src/pages/PoolFinder/index.tsx
 #: src/state/swap/hooks.ts
-msgid "Select a token"
+msgid "Choose token"
 msgstr "Επιλέξτε ένα διακριτικό"
 
 #: src/pages/PoolFinder/index.tsx
-msgid "Select a token to find your liquidity."
+msgid "Choose token to find your liquidity."
 msgstr "Επιλέξτε ένα διακριτικό για να βρείτε τη ρευστότητά σας."
 
 #: src/pages/AddLiquidity/index.tsx

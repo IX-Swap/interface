@@ -16,8 +16,8 @@ export default function useToggledVersion(): Version {
     case 'v2':
       return Version.v2
     case 'v3':
-      return Version.v3
+      return Version.v2
     default:
-      return Version.v3
+      return Version.v2
   }
 }

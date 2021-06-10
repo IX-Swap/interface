@@ -1,18 +1,19 @@
-import { Currency, CurrencyAmount, Token, TradeType } from '@uniswap/sdk-core'
+import React, { useCallback, useContext, useEffect, useMemo, useState } from 'react'
+import { Currency, CurrencyAmount, TradeType } from '@uniswap/sdk-core'
 import { Trade as V2Trade } from '@uniswap/v2-sdk'
 import { Trade as V3Trade } from '@uniswap/v3-sdk'
 import { AdvancedSwapDetails } from 'components/swap/AdvancedSwapDetails'
 import UnsupportedCurrencyFooter from 'components/swap/UnsupportedCurrencyFooter'
 import { MouseoverTooltip, MouseoverTooltipContent } from 'components/Tooltip'
 import JSBI from 'jsbi'
-import React, { useCallback, useContext, useEffect, useMemo, useState } from 'react'
-import { ArrowDown, CheckCircle, HelpCircle, Info, ArrowLeft } from 'react-feather'
+import { CheckCircle, HelpCircle, Info, ArrowLeft } from 'react-feather'
+import { ReactComponent as ArrowDown } from '../../assets/images/arrow.svg'
 import ReactGA from 'react-ga'
 import { Link, RouteComponentProps } from 'react-router-dom'
 import { Text } from 'rebass'
 import styled, { ThemeContext } from 'styled-components'
 import AddressInputPanel from '../../components/AddressInputPanel'
-import { ButtonConfirmed, ButtonError, ButtonGray, ButtonIXSWide, ButtonPrimary } from '../../components/Button'
+import { ButtonConfirmed, ButtonGray, ButtonIXSWide } from '../../components/Button'
 import { GreyCard } from '../../components/Card'
 import { AutoColumn } from '../../components/Column'
 import CurrencyInputPanel from '../../components/CurrencyInputPanel'
@@ -28,7 +29,6 @@ import SwapHeader from '../../components/swap/SwapHeader'
 import TradePrice from '../../components/swap/TradePrice'
 import TokenWarningModal from '../../components/TokenWarningModal'
 import { useActiveWeb3React } from '../../hooks/web3'
-import { useAllTokens, useCurrency } from '../../hooks/Tokens'
 import { ApprovalState, useApproveCallbackFromTrade } from '../../hooks/useApproveCallback'
 import { V3TradeState } from '../../hooks/useBestV3Trade'
 import useENSAddress from '../../hooks/useENSAddress'
@@ -42,8 +42,9 @@ import useWrapCallback, { WrapType } from '../../hooks/useWrapCallback'
 import { useWalletModalToggle } from '../../state/application/hooks'
 import { Field } from '../../state/swap/actions'
 import {
-  useDefaultsFromURLSearch,
   useDerivedSwapInfo,
+  useDismissTokenWarning,
+  useImportNonDefaultTokens,
   useSwapActionHandlers,
   useSwapState,
 } from '../../state/swap/hooks'
@@ -68,29 +69,8 @@ const StyledInfo = styled(Info)`
 `
 
 export default function Swap({ history }: RouteComponentProps) {
-  const loadedUrlParams = useDefaultsFromURLSearch()
-
-  // token warning stuff
-  const [loadedInputCurrency, loadedOutputCurrency] = [
-    useCurrency(loadedUrlParams?.inputCurrencyId),
-    useCurrency(loadedUrlParams?.outputCurrencyId),
-  ]
-  const [dismissTokenWarning, setDismissTokenWarning] = useState<boolean>(false)
-  const urlLoadedTokens: Token[] = useMemo(
-    () => [loadedInputCurrency, loadedOutputCurrency]?.filter((c): c is Token => c?.isToken ?? false) ?? [],
-    [loadedInputCurrency, loadedOutputCurrency]
-  )
-  const handleConfirmTokenWarning = useCallback(() => {
-    setDismissTokenWarning(true)
-  }, [])
-
-  // dismiss warning if all imported tokens are in active lists
-  const defaultTokens = useAllTokens()
-  const importTokensNotInDefault =
-    urlLoadedTokens &&
-    urlLoadedTokens.filter((token: Token) => {
-      return !Boolean(token.address in defaultTokens)
-    })
+  const { dismissTokenWarning, handleDismissTokenWarning, handleConfirmTokenWarning } = useDismissTokenWarning(history)
+  const { importTokensNotInDefault } = useImportNonDefaultTokens()
 
   const { account } = useActiveWeb3React()
   const theme = useContext(ThemeContext)
@@ -159,12 +139,6 @@ export default function Swap({ history }: RouteComponentProps) {
     },
     [onUserInput]
   )
-
-  // reset if they close warning without tokens in params
-  const handleDismissTokenWarning = useCallback(() => {
-    setDismissTokenWarning(true)
-    history.push('/swap/')
-  }, [history])
 
   // modal and loading
   const [{ showConfirm, tradeToConfirm, swapErrorMessage, attemptingTxn, txHash }, setSwapState] = useState<{
@@ -358,7 +332,7 @@ export default function Swap({ history }: RouteComponentProps) {
         onDismiss={handleDismissTokenWarning}
       />
       <AppBody>
-        <SwapHeader allowedSlippage={allowedSlippage} />
+        <SwapHeader />
         <Wrapper id="swap-page">
           <ConfirmSwapModal
             isOpen={showConfirm}
@@ -391,13 +365,16 @@ export default function Swap({ history }: RouteComponentProps) {
                 showCommonBases={true}
                 id="swap-currency-input"
               />
-              <ArrowWrapper clickable>
+              <ArrowWrapper
+                clickable
+                onClick={() => {
+                  setApprovalSubmitted(false) // reset 2 step UI for approvals
+                  onSwitchTokens()
+                }}
+              >
                 <ArrowDown
-                  size="16"
-                  onClick={() => {
-                    setApprovalSubmitted(false) // reset 2 step UI for approvals
-                    onSwitchTokens()
-                  }}
+                  width="16px"
+                  height="16px"
                   color={currencies[Field.INPUT] && currencies[Field.OUTPUT] ? theme.text1 : theme.text3}
                 />
               </ArrowWrapper>
@@ -421,7 +398,7 @@ export default function Swap({ history }: RouteComponentProps) {
               <>
                 <AutoRow justify="space-between" style={{ padding: '0 1rem' }}>
                   <ArrowWrapper clickable={false}>
-                    <ArrowDown size="16" color={theme.text2} />
+                    <ArrowDown width="16px" height="16px" color={theme.text2} />
                   </ArrowWrapper>
                   <LinkStyledButton id="remove-recipient-button" onClick={() => onChangeRecipient(null)}>
                     <Trans>- Remove send</Trans>
@@ -505,24 +482,24 @@ export default function Swap({ history }: RouteComponentProps) {
 
             <BottomGrouping>
               {swapIsUnsupported ? (
-                <ButtonPrimary disabled={true}>
+                <ButtonIXSWide disabled={true}>
                   <TYPE.main mb="4px">
                     <Trans>Unsupported Asset</Trans>
                   </TYPE.main>
-                </ButtonPrimary>
+                </ButtonIXSWide>
               ) : !account ? (
                 <ButtonIXSWide onClick={toggleWalletModal}>
                   <Trans>Connect Wallet</Trans>
                 </ButtonIXSWide>
               ) : showWrap ? (
-                <ButtonPrimary disabled={Boolean(wrapInputError)} onClick={onWrap}>
+                <ButtonIXSWide disabled={Boolean(wrapInputError)} onClick={onWrap}>
                   {wrapInputError ??
                     (wrapType === WrapType.WRAP ? (
                       <Trans>Wrap</Trans>
                     ) : wrapType === WrapType.UNWRAP ? (
                       <Trans>Unwrap</Trans>
                     ) : null)}
-                </ButtonPrimary>
+                </ButtonIXSWide>
               ) : routeNotFound && userHasSpecifiedInputOutput ? (
                 <GreyCard style={{ textAlign: 'center' }}>
                   <TYPE.main mb="4px">
@@ -586,7 +563,7 @@ export default function Swap({ history }: RouteComponentProps) {
                         )}
                       </AutoRow>
                     </ButtonConfirmed>
-                    <ButtonError
+                    <ButtonIXSWide
                       onClick={() => {
                         if (isExpertMode) {
                           handleSwap()
@@ -607,9 +584,9 @@ export default function Swap({ history }: RouteComponentProps) {
                         (approvalState !== ApprovalState.APPROVED && signatureState !== UseERC20PermitState.SIGNED) ||
                         priceImpactTooHigh
                       }
-                      error={isValid && priceImpactSeverity > 2}
+                      // error={isValid && priceImpactSeverity > 2}
                     >
-                      <Text fontSize={16} fontWeight={500}>
+                      <Text fontSize={18} fontWeight={600}>
                         {priceImpactTooHigh ? (
                           <Trans>High Price Impact</Trans>
                         ) : priceImpactSeverity > 2 ? (
@@ -618,11 +595,11 @@ export default function Swap({ history }: RouteComponentProps) {
                           <Trans>Swap</Trans>
                         )}
                       </Text>
-                    </ButtonError>
+                    </ButtonIXSWide>
                   </AutoColumn>
                 </AutoRow>
               ) : (
-                <ButtonError
+                <ButtonIXSWide
                   onClick={() => {
                     if (isExpertMode) {
                       handleSwap()
@@ -638,9 +615,10 @@ export default function Swap({ history }: RouteComponentProps) {
                   }}
                   id="swap-button"
                   disabled={!isValid || priceImpactTooHigh || !!swapCallbackError}
-                  error={isValid && priceImpactSeverity > 2 && !swapCallbackError}
+
+                  // error={isValid && priceImpactSeverity > 2 && !swapCallbackError}
                 >
-                  <Text fontSize={20} fontWeight={500}>
+                  <Text fontSize={18} fontWeight={600}>
                     {swapInputError ? (
                       swapInputError
                     ) : priceImpactTooHigh ? (
@@ -651,7 +629,7 @@ export default function Swap({ history }: RouteComponentProps) {
                       <Trans>Swap</Trans>
                     )}
                   </Text>
-                </ButtonError>
+                </ButtonIXSWide>
               )}
               {isExpertMode && swapErrorMessage ? <SwapCallbackError error={swapErrorMessage} /> : null}
             </BottomGrouping>

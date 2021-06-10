@@ -1,6 +1,6 @@
 import { parse } from 'qs'
 import { Field } from './actions'
-import { queryParametersToSwapState } from './hooks'
+import { queryParametersToSwapState } from './helpers'
 
 describe('hooks', () => {
   describe('#queryParametersToSwapState', () => {

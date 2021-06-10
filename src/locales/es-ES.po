@@ -1221,11 +1221,11 @@ msgstr "Seleccione un tipo de piscina basado en la tarifa de su proveedor de liq
 #: src/pages/PoolFinder/index.tsx
 #: src/pages/PoolFinder/index.tsx
 #: src/state/swap/hooks.ts
-msgid "Select a token"
+msgid "Choose token"
 msgstr "Seleccione un token"
 
 #: src/pages/PoolFinder/index.tsx
-msgid "Select a token to find your liquidity."
+msgid "Choose token to find your liquidity."
 msgstr "Seleccione una ficha para encontrar su liquidez."
 
 #: src/pages/AddLiquidity/index.tsx

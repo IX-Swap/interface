@@ -1221,11 +1221,11 @@ msgstr "Wählen Sie einen Pool-Typ basierend auf Ihrer bevorzugten Liquiditätsa
 #: src/pages/PoolFinder/index.tsx
 #: src/pages/PoolFinder/index.tsx
 #: src/state/swap/hooks.ts
-msgid "Select a token"
+msgid "Choose token"
 msgstr "Wählen Sie ein Token"
 
 #: src/pages/PoolFinder/index.tsx
-msgid "Select a token to find your liquidity."
+msgid "Choose token to find your liquidity."
 msgstr "Wählen Sie ein Token aus, um Ihre Liquidität zu finden."
 
 #: src/pages/AddLiquidity/index.tsx

@@ -1221,11 +1221,11 @@ msgstr "根據您的首選流動性提供商費用選擇一種池類型。"
 #: src/pages/PoolFinder/index.tsx
 #: src/pages/PoolFinder/index.tsx
 #: src/state/swap/hooks.ts
-msgid "Select a token"
+msgid "Choose token"
 msgstr "選擇一個令牌"
 
 #: src/pages/PoolFinder/index.tsx
-msgid "Select a token to find your liquidity."
+msgid "Choose token to find your liquidity."
 msgstr "選擇一個代幣以找到您的流動性。"
 
 #: src/pages/AddLiquidity/index.tsx

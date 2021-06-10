@@ -58,6 +58,7 @@ export function colors(darkMode: boolean): Colors {
     bg6: darkMode ? '#1A2028' : '#6C7284',
     bg7: darkMode ? '#372E5E' : '#372E5E',
     bg8: darkMode ? '#0F0518' : '#0F0518',
+    bg9: darkMode ? '#372E5D' : '#372E5D',
     bgGradient: darkMode
       ? 'radial-gradient(93.65% 93.65% at 58.57% 22.42%, rgba(206, 20, 132, 0.33) 0%, rgba(26, 18, 58, 0) 100%), #2C254A;'
       : 'radial-gradient(93.65% 93.65% at 58.57% 22.42%, rgba(206, 20, 132, 0.33) 0%, rgba(26, 18, 58, 0) 100%), #2C254A;',

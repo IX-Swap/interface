@@ -1221,11 +1221,11 @@ msgstr "Válassza ki a pool típusát a preferált likviditási szolgáltatói d
 #: src/pages/PoolFinder/index.tsx
 #: src/pages/PoolFinder/index.tsx
 #: src/state/swap/hooks.ts
-msgid "Select a token"
+msgid "Choose token"
 msgstr "Jelöljön ki egy tokent"
 
 #: src/pages/PoolFinder/index.tsx
-msgid "Select a token to find your liquidity."
+msgid "Choose token to find your liquidity."
 msgstr "Válasszon egy tokent a likviditás megtalálásához."
 
 #: src/pages/AddLiquidity/index.tsx

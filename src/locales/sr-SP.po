@@ -1221,11 +1221,11 @@ msgstr "Изаберите врсту базена на основу жељен�
 #: src/pages/PoolFinder/index.tsx
 #: src/pages/PoolFinder/index.tsx
 #: src/state/swap/hooks.ts
-msgid "Select a token"
+msgid "Choose token"
 msgstr "Изаберите жетон"
 
 #: src/pages/PoolFinder/index.tsx
-msgid "Select a token to find your liquidity."
+msgid "Choose token to find your liquidity."
 msgstr "Изаберите жетон да бисте пронашли своју ликвидност."
 
 #: src/pages/AddLiquidity/index.tsx

@@ -1,7 +1,6 @@
 import React from 'react'
 import { Trans } from '@lingui/macro'
 import styled from 'styled-components/macro'
-import { Percent } from '@uniswap/sdk-core'
 
 import { RowBetween, RowFixed } from '../Row'
 import { TYPE } from '../../theme'
@@ -14,7 +13,7 @@ const StyledSwapHeader = styled.div`
   color: ${({ theme }) => theme.text2};
 `
 
-export default function SwapHeader({ allowedSlippage }: { allowedSlippage: Percent }) {
+export default function SwapHeader() {
   return (
     <StyledSwapHeader>
       <RowBetween>

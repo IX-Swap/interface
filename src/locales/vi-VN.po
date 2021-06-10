@@ -1221,11 +1221,11 @@ msgstr "Chọn loại hồ bơi dựa trên phí nhà cung cấp thanh khoản �
 #: src/pages/PoolFinder/index.tsx
 #: src/pages/PoolFinder/index.tsx
 #: src/state/swap/hooks.ts
-msgid "Select a token"
+msgid "Choose token"
 msgstr "Chọn một mã thông báo"
 
 #: src/pages/PoolFinder/index.tsx
-msgid "Select a token to find your liquidity."
+msgid "Choose token to find your liquidity."
 msgstr "Chọn một mã thông báo để tìm thanh khoản của bạn."
 
 #: src/pages/AddLiquidity/index.tsx

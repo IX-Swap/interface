@@ -1221,11 +1221,11 @@ msgstr "ご希望の流動性プロバイダ手数料に基づいてプールタ
 #: src/pages/PoolFinder/index.tsx
 #: src/pages/PoolFinder/index.tsx
 #: src/state/swap/hooks.ts
-msgid "Select a token"
+msgid "Choose token"
 msgstr "トークンを選択"
 
 #: src/pages/PoolFinder/index.tsx
-msgid "Select a token to find your liquidity."
+msgid "Choose token to find your liquidity."
 msgstr "トークンを選択して流動性を見つけます。"
 
 #: src/pages/AddLiquidity/index.tsx

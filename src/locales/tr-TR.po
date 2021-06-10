@@ -1221,11 +1221,11 @@ msgstr "Tercih ettiğiniz likidite sağlayıcı ücretine göre bir havuz türü
 #: src/pages/PoolFinder/index.tsx
 #: src/pages/PoolFinder/index.tsx
 #: src/state/swap/hooks.ts
-msgid "Select a token"
+msgid "Choose token"
 msgstr "Bir jeton seçin"
 
 #: src/pages/PoolFinder/index.tsx
-msgid "Select a token to find your liquidity."
+msgid "Choose token to find your liquidity."
 msgstr "Likiditenizi bulmak için bir jeton seçin."
 
 #: src/pages/AddLiquidity/index.tsx

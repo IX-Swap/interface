@@ -1221,11 +1221,11 @@ msgstr "Vælg en pulje type baseret på din foretrukne likviditet udbyder gebyr.
 #: src/pages/PoolFinder/index.tsx
 #: src/pages/PoolFinder/index.tsx
 #: src/state/swap/hooks.ts
-msgid "Select a token"
+msgid "Choose token"
 msgstr "Vælg en token"
 
 #: src/pages/PoolFinder/index.tsx
-msgid "Select a token to find your liquidity."
+msgid "Choose token to find your liquidity."
 msgstr "Vælg en token for at finde din likviditet."
 
 #: src/pages/AddLiquidity/index.tsx

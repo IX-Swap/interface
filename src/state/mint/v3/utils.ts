@@ -7,7 +7,7 @@ import {
   TickMath,
 } from '@uniswap/v3-sdk/dist/'
 import { Price, Token } from '@uniswap/sdk-core'
-import { tryParseAmount } from 'state/swap/hooks'
+import { tryParseAmount } from 'state/swap/helpers'
 import JSBI from 'jsbi'
 
 export function tryParseTick(

@@ -9,7 +9,7 @@ import { useTotalSupply } from '../../hooks/useTotalSupply'
 
 import { useActiveWeb3React } from '../../hooks/web3'
 import { AppDispatch, AppState } from '../index'
-import { tryParseAmount } from '../swap/hooks'
+import { tryParseAmount } from '../swap/helpers'
 import { useTokenBalances } from '../wallet/hooks'
 import { Field, typeInput } from './actions'
 

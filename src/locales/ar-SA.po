@@ -1221,11 +1221,11 @@ msgstr "حدد نوع المجمع استنادًا إلى رسوم موفر ا�
 #: src/pages/PoolFinder/index.tsx
 #: src/pages/PoolFinder/index.tsx
 #: src/state/swap/hooks.ts
-msgid "Select a token"
+msgid "Choose token"
 msgstr "حدد الرمز المميز"
 
 #: src/pages/PoolFinder/index.tsx
-msgid "Select a token to find your liquidity."
+msgid "Choose token to find your liquidity."
 msgstr "حدد الرمز المميز للعثور على سيولتك."
 
 #: src/pages/AddLiquidity/index.tsx

@@ -24,6 +24,7 @@ export interface Colors {
   bg6: Color
   bg7: Color
   bg8: Color
+  bg9: Color
   bgGradient: Gradient
   bgGradientMuted: Gradient
   bgGradientBright: Gradient

@@ -10,7 +10,7 @@ import { PairState, useV2Pair } from '../../hooks/useV2Pairs'
 import { useTotalSupply } from '../../hooks/useTotalSupply'
 
 import { useActiveWeb3React } from '../../hooks/web3'
-import { tryParseAmount } from '../swap/hooks'
+import { tryParseAmount } from '../swap/helpers'
 import { useCurrencyBalances } from '../wallet/hooks'
 
 const ZERO = JSBI.BigInt(0)

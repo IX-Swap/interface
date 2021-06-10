@@ -1221,11 +1221,11 @@ msgstr "Wybierz typ puli na podstawie preferowanej opłaty dostawcy płynności.
 #: src/pages/PoolFinder/index.tsx
 #: src/pages/PoolFinder/index.tsx
 #: src/state/swap/hooks.ts
-msgid "Select a token"
+msgid "Choose token"
 msgstr "Wybierz token"
 
 #: src/pages/PoolFinder/index.tsx
-msgid "Select a token to find your liquidity."
+msgid "Choose token to find your liquidity."
 msgstr "Wybierz token, aby znaleźć płynność."
 
 #: src/pages/AddLiquidity/index.tsx

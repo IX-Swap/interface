@@ -1221,11 +1221,11 @@ msgstr "Vyberte typ bazénu na základě vašeho preferovaného poplatku za posk
 #: src/pages/PoolFinder/index.tsx
 #: src/pages/PoolFinder/index.tsx
 #: src/state/swap/hooks.ts
-msgid "Select a token"
+msgid "Choose token"
 msgstr "Vybrat token"
 
 #: src/pages/PoolFinder/index.tsx
-msgid "Select a token to find your liquidity."
+msgid "Choose token to find your liquidity."
 msgstr "Vyberte token pro nalezení Vaší likvidity."
 
 #: src/pages/AddLiquidity/index.tsx
