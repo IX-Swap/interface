@@ -8,6 +8,8 @@ import { DSOTable } from 'app/pages/invest/components/DSOTable/DSOTable'
 import { PromotedDSOs } from 'app/components/DSO/components/PromotedDSOs'
 import { PromoBanner } from 'app/pages/invest/components/PromoBanner'
 import { PageHeader } from 'app/components/PageHeader/PageHeader'
+// import { OTCMarket } from 'app/pages/invest/components/OTCMarkets'
+import { PrimaryOfferings } from 'app/pages/invest/components/PrimaryOfferings'
 
 export const InvestLanding = () => {
   const { user } = useAuth()
@@ -40,7 +42,12 @@ export const InvestLanding = () => {
         </Grid>
       </Grid>
       <VSpacer size='small' />
+      <PrimaryOfferings />
+      {/* <OTCMarket /> */}
+      <VSpacer size='small' />
       <PromotedDSOs />
+      <VSpacer size='medium' />
+      {/* <OTCMarket /> */}
       <VSpacer size='medium' />
       <PromoBanner />
       <VSpacer size='medium' />

@@ -36,6 +36,7 @@ const formatValue = (value: any): string => {
 export const labelWeightMap = {
   default: 400,
   thin: 500,
+  custom: 600,
   normal: 700,
   bold: 900
 }
@@ -43,6 +44,7 @@ export const labelWeightMap = {
 export const valueWeightMap = {
   default: 400,
   thin: 500,
+  custom: 600,
   normal: 700,
   bold: 900
 }
@@ -55,6 +57,8 @@ export interface LabelledValueProps {
   reverse?: boolean
   valueWeight?: keyof typeof valueWeightMap
   labelWeight?: keyof typeof labelWeightMap
+  labelFontSize?: number
+  valueFontSize?: number
   align?: TextAlignment
   labelColor?: 'default' | 'light'
 }
@@ -67,6 +71,8 @@ export const LabelledValue = (props: LabelledValueProps & GridProps) => {
     reverse = false,
     valueWeight = 'default',
     labelWeight = 'normal',
+    labelFontSize = 16,
+    valueFontSize = 24,
     align = 'left',
     labelColor = 'default',
     ...rest
@@ -80,7 +86,7 @@ export const LabelledValue = (props: LabelledValueProps & GridProps) => {
       text: label,
       styles: {
         fontWeight: labelWeightMap[labelWeight],
-        fontSize: reverse ? '16px' : undefined,
+        fontSize: reverse ? labelFontSize : undefined,
         color:
           labelColor === 'default'
             ? theme.palette.text.primary
@@ -91,7 +97,7 @@ export const LabelledValue = (props: LabelledValueProps & GridProps) => {
       text: formatValue(val),
       styles: {
         fontWeight: valueWeightMap[valueWeight],
-        fontSize: reverse ? '24px' : undefined
+        fontSize: reverse ? valueFontSize : undefined
       }
     }
   ]
