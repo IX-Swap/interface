@@ -55,10 +55,7 @@ export const Market = () => {
         <Grid item container>
           <Grid item className={classes.middleBlock} xs={12}>
             {symbol.length > 0 && (
-              <TVChartContainer
-                datafeed={datafeed}
-                symbol={symbol}
-              />
+              <TVChartContainer datafeed={datafeed} symbol={symbol} />
             )}
           </Grid>
           <Grid item className={classes.colorGrid} xs={12}>
