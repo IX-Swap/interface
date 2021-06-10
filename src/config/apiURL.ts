@@ -209,9 +209,9 @@ export const exchange = {
     emit: 'price/get',
     on: (tokenId: string) => `price/${tokenId}`
   },
-  balances: {
-    emit: 'balances/get',
-    on: (tokenId: string) => `balances/${tokenId}`
+  tokenBalance: {
+    emit: 'tokenBalance/get',
+    on: (userId: string) => `tokenBalance/${userId}`
   },
   summary: {
     emit: 'metrics24h/get',
