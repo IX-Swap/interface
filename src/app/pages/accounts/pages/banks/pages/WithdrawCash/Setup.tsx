@@ -43,7 +43,7 @@ export const Setup: React.FC = () => {
   const [open, setOpen] = useState(false)
 
   const setMaxValue = () => {
-    control.setValue('amount', virtualAccountData?.balance.available)
+    control.setValue('amount', virtualAccountData?.balance.outstanding)
   }
 
   const handleContinue = () => {
