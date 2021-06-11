@@ -1377,8 +1377,8 @@ msgid "To (at least)"
 msgstr "Ít nhất)"
 
 #: src/components/Settings/index.tsx
-msgid "Toggle Expert Mode"
-msgstr "Chuyển đổi Chế độ chuyên gia"
+msgid "Expert Mode"
+msgstr "Chế độ chuyên gia"
 
 #: src/components/SearchModal/Manage.tsx
 msgid "Tokens"
@@ -1801,8 +1801,8 @@ msgid "https:// or ipfs:// or ENS name"
 msgstr "https: // hoặc ipfs: // hoặc tên ENS"
 
 #: src/components/TransactionSettings/index.tsx
-msgid "minutes"
-msgstr "phút"
+msgid "Minutes"
+msgstr "Phút"
 
 #: src/components/SearchModal/ImportRow.tsx
 msgid "via {0}"

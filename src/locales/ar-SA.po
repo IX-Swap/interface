@@ -1377,7 +1377,7 @@ msgid "To (at least)"
 msgstr "إلى (على الأقل)"
 
 #: src/components/Settings/index.tsx
-msgid "Toggle Expert Mode"
+msgid "Expert Mode"
 msgstr "تبديل وضع الخبير"
 
 #: src/components/SearchModal/Manage.tsx
@@ -1801,7 +1801,7 @@ msgid "https:// or ipfs:// or ENS name"
 msgstr "https: // أو ipfs: // أو اسم ENS"
 
 #: src/components/TransactionSettings/index.tsx
-msgid "minutes"
+msgid "Minutes"
 msgstr "دقائق"
 
 #: src/components/SearchModal/ImportRow.tsx

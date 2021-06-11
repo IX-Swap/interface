@@ -1377,8 +1377,8 @@ msgid "To (at least)"
 msgstr "Mihin (ainakin)"
 
 #: src/components/Settings/index.tsx
-msgid "Toggle Expert Mode"
-msgstr "Vaihda Asiantuntijatilaa"
+msgid "Expert Mode"
+msgstr "Asiantuntijatilaa"
 
 #: src/components/SearchModal/Manage.tsx
 msgid "Tokens"
@@ -1801,7 +1801,7 @@ msgid "https:// or ipfs:// or ENS name"
 msgstr "https: // tai ipfs: // tai ENS-nimi"
 
 #: src/components/TransactionSettings/index.tsx
-msgid "minutes"
+msgid "Minutes"
 msgstr "minuuttia"
 
 #: src/components/SearchModal/ImportRow.tsx

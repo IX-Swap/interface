@@ -13,6 +13,7 @@ export interface Colors {
   text3: Color
   text4: Color
   text5: Color
+  text6: Color
 
   // backgrounds / greys
   bg0: Color
@@ -25,11 +26,13 @@ export interface Colors {
   bg7: Color
   bg8: Color
   bg9: Color
+  bg10: Color
   bgGradient: Gradient
   bgGradientMuted: Gradient
   bgGradientBright: Gradient
   bgGradientDark: Gradient
   bgGradientShadow: Gradient
+  bgHighlightGradient: Gradient
   modalBG: Color
   advancedBG: Color
 
@@ -61,6 +64,7 @@ export interface Colors {
   error: Color
   success: Color
   warning: Color
+  popUpInputBorder: Color
 }
 
 export interface Grids {

@@ -1377,8 +1377,8 @@ msgid "To (at least)"
 msgstr "(적어도)"
 
 #: src/components/Settings/index.tsx
-msgid "Toggle Expert Mode"
-msgstr "전문가 모드 전환"
+msgid "Expert Mode"
+msgstr "전문가 모드"
 
 #: src/components/SearchModal/Manage.tsx
 msgid "Tokens"
@@ -1801,7 +1801,7 @@ msgid "https:// or ipfs:// or ENS name"
 msgstr "https : // 또는 ipfs : // 또는 ENS 이름"
 
 #: src/components/TransactionSettings/index.tsx
-msgid "minutes"
+msgid "Minutes"
 msgstr "의사록"
 
 #: src/components/SearchModal/ImportRow.tsx

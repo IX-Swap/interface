@@ -47,7 +47,7 @@ export function colors(darkMode: boolean): Colors {
     text3: darkMode ? '#6C7284' : '#888D9B',
     text4: darkMode ? '#565A69' : '#C3C5CB',
     text5: darkMode ? '#2C2F36' : '#EDEEF2',
-
+    text6: darkMode ? '#8275BC' : '#8275BC',
     // backgrounds / greys
     bg0: darkMode ? '#0D0415' : '#FFF',
     bg1: darkMode ? '#1A123A' : '#F7F8FA',
@@ -59,6 +59,7 @@ export function colors(darkMode: boolean): Colors {
     bg7: darkMode ? '#372E5E' : '#372E5E',
     bg8: darkMode ? '#0F0518' : '#0F0518',
     bg9: darkMode ? '#372E5D' : '#372E5D',
+    bg10: darkMode ? '#EDCEFF' : '#EDCEFF',
     bgGradient: darkMode
       ? 'radial-gradient(93.65% 93.65% at 58.57% 22.42%, rgba(206, 20, 132, 0.33) 0%, rgba(26, 18, 58, 0) 100%), #2C254A;'
       : 'radial-gradient(93.65% 93.65% at 58.57% 22.42%, rgba(206, 20, 132, 0.33) 0%, rgba(26, 18, 58, 0) 100%), #2C254A;',
@@ -74,6 +75,9 @@ export function colors(darkMode: boolean): Colors {
     bgGradientShadow: darkMode
       ? 'radial-gradient(93.65% 93.65% at 58.57% 22.42%, rgba(206, 20, 132, 0.099) 0%, rgba(26, 18, 58, 0) 100%), rgba(44, 37, 74, 0.2);'
       : 'radial-gradient(93.65% 93.65% at 58.57% 22.42%, rgba(206, 20, 132, 0.099) 0%, rgba(26, 18, 58, 0) 100%), rgba(44, 37, 74, 0.2);',
+    bgHighlightGradient: darkMode
+      ? 'linear-gradient(0deg, #ED0376, #ED0376), linear-gradient(116.36deg, #7B42A9 33.43%, #ED0376 95.41%);'
+      : 'linear-gradient(0deg, #ED0376, #ED0376), linear-gradient(116.36deg, #7B42A9 33.43%, #ED0376 95.41%);',
     //specialty colors
     modalBG: darkMode ? 'rgba(0,0,0,.425)' : 'rgba(0,0,0,0.3)',
     advancedBG: darkMode ? 'rgba(0,0,0,0.1)' : 'rgba(255,255,255,0.6)',
@@ -107,6 +111,7 @@ export function colors(darkMode: boolean): Colors {
     error: '#FD4040',
     success: '#27AE60',
     warning: '#ff8f00',
+    popUpInputBorder: darkMode ? '#7A02E0' : '#7A02E0',
 
     // dont wanna forget these blue yet
     // blue4: darkMode ? '#153d6f70' : '#C4D9F8',

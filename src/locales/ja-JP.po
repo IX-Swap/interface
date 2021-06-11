@@ -1377,8 +1377,8 @@ msgid "To (at least)"
 msgstr "宛先（少なくとも）"
 
 #: src/components/Settings/index.tsx
-msgid "Toggle Expert Mode"
-msgstr "エキスパートモードの切り替え"
+msgid "Expert Mode"
+msgstr "エキスパートモード"
 
 #: src/components/SearchModal/Manage.tsx
 msgid "Tokens"
@@ -1801,7 +1801,7 @@ msgid "https:// or ipfs:// or ENS name"
 msgstr "https：//またはipfs：//またはENS名"
 
 #: src/components/TransactionSettings/index.tsx
-msgid "minutes"
+msgid "Minutes"
 msgstr "分"
 
 #: src/components/SearchModal/ImportRow.tsx

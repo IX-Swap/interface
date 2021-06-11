@@ -51,6 +51,10 @@ const BodyWrapper = styled.div`
   `};
 `
 
+const ToggleableBody = styled(BodyWrapper)<{ isVisible?: boolean }>`
+  visibility: ${({ isVisible }) => (isVisible ? 'visible' : 'hidden')};
+`
+
 const Marginer = styled.div`
   margin-top: 5rem;
 `
@@ -62,6 +66,7 @@ function TopLevelModals() {
 }
 
 export default function App() {
+  const isSettingsOpen = useModalOpen(ApplicationModal.SETTINGS)
   return (
     <ErrorBoundary>
       <Route component={GoogleAnalyticsReporter} />
@@ -69,7 +74,7 @@ export default function App() {
       <Route component={ApeModeQueryParamReader} />
       <AppWrapper>
         <Header />
-        <BodyWrapper>
+        <ToggleableBody isVisible={!isSettingsOpen}>
           <Popups />
           <Polling />
           <TopLevelModals />
@@ -115,7 +120,7 @@ export default function App() {
             </Switch>
           </Web3ReactManager>
           <Marginer />
-        </BodyWrapper>
+        </ToggleableBody>
       </AppWrapper>
     </ErrorBoundary>
   )

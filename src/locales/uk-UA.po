@@ -1377,8 +1377,8 @@ msgid "To (at least)"
 msgstr "До (не менше)"
 
 #: src/components/Settings/index.tsx
-msgid "Toggle Expert Mode"
-msgstr "Ввімкнути/вимкнути експериментальний режим"
+msgid "Expert Mode"
+msgstr "Експериментальний режим"
 
 #: src/components/SearchModal/Manage.tsx
 msgid "Tokens"
@@ -1801,8 +1801,8 @@ msgid "https:// or ipfs:// or ENS name"
 msgstr "https: // або ipfs: // або ім’я ENS"
 
 #: src/components/TransactionSettings/index.tsx
-msgid "minutes"
-msgstr "хвилин"
+msgid "Minutes"
+msgstr "Хвилин"
 
 #: src/components/SearchModal/ImportRow.tsx
 msgid "via {0}"

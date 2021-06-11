@@ -1377,8 +1377,8 @@ msgid "To (at least)"
 msgstr "(Legalább)"
 
 #: src/components/Settings/index.tsx
-msgid "Toggle Expert Mode"
-msgstr "Kapcsolja be a Szakértői módot"
+msgid "Expert Mode"
+msgstr "Szakértői módot"
 
 #: src/components/SearchModal/Manage.tsx
 msgid "Tokens"
@@ -1801,8 +1801,8 @@ msgid "https:// or ipfs:// or ENS name"
 msgstr "https: // vagy ipfs: // vagy ENS név"
 
 #: src/components/TransactionSettings/index.tsx
-msgid "minutes"
-msgstr "percek"
+msgid "Minutes"
+msgstr "Percek"
 
 #: src/components/SearchModal/ImportRow.tsx
 msgid "via {0}"
