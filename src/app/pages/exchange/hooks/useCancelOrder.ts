@@ -28,7 +28,7 @@ export const useCancelOrder = (orderId: string) => {
   return useMutation(cancelOrder, {
     onSuccess: async () => {
       snackbarService.showSnackbar('Order Cancelled', 'success')
-      void queryCache.invalidateQueries(exchangeQueryKeys.userOrders(userId))
+      await queryCache.invalidateQueries(exchangeQueryKeys.userOrders(userId))
     },
     onError: (error: any) => {
       snackbarService.showSnackbar(error.message, 'error')

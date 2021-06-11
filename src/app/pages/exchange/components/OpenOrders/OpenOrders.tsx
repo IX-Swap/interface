@@ -19,7 +19,8 @@ export const OpenOrders = () => {
         size='small'
         filter={
           {
-            pair: pairId
+            pair: pairId,
+            cancelled: false
           } as any
         }
         columns={columns}

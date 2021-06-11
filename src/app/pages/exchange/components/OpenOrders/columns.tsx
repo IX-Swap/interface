@@ -4,16 +4,7 @@ import { formatDateToMMDDYY } from 'helpers/dates'
 import { formatMoney, toPercentage } from 'helpers/numbers'
 import { TableColumn } from 'types/util'
 import { getOrderSideName } from 'helpers/strings'
-
-export interface Order {
-  createdAt: string
-  pair: string
-  side: string
-  price: number
-  amount: number
-  total: number
-  filled: number
-}
+import { Order } from 'types/order'
 
 export const columns: Array<TableColumn<Order>> = [
   {
