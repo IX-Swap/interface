@@ -102,6 +102,9 @@ export const TableView = <T,>({
       toggle,
       toggleAll
     } = selectionHelper
+
+    const firstColumnRender = columns[0].render
+
     columns = [
       {
         ...columns[0],
@@ -126,7 +129,7 @@ export const TableView = <T,>({
                 onClick={() => toggle(item)}
               />
             }
-            label={val}
+            label={firstColumnRender?.(val, item) ?? val}
             labelPlacement={'end'}
           />
         )

@@ -2,27 +2,19 @@ import { Grid } from '@material-ui/core'
 import { Actions } from 'app/pages/admin/components/AssignedVirtualAccountsTable/Actions'
 import { columns } from 'app/pages/admin/components/AssignedVirtualAccountsTable/columns'
 import { Filters } from 'app/pages/admin/components/AssignedVirtualAccountsTable/Filters'
+import { useResetSelectionOnUnmount } from 'app/pages/admin/hooks/useResetSelectionOnUnmount'
+import { useSelectionHelperContext } from 'components/SelectionHelper'
 import { TableView } from 'components/TableWithPagination/TableView'
 import { virtualAccounts } from 'config/apiURL'
 import { virtualAccountQueryKeys } from 'config/queryKeys'
 import { useQueryFilter } from 'hooks/filters/useQueryFilter'
 import React from 'react'
-import User from 'types/user'
-
-export interface AssignedVirtualAccount {
-  assignedAt: string
-  user: User
-  accountNumber: string
-  currency: 'SGD' | 'USD'
-  balance: {
-    available: number
-    onHold: number
-    outstanding: number
-  }
-}
+import { VirtualAccount } from 'types/virtualAccount'
 
 export const AssignedVirtualAccountsTable = () => {
+  useResetSelectionOnUnmount()
   const { getFilterValue } = useQueryFilter()
+  const selectionHelperContext = useSelectionHelperContext()
 
   const currencyFilterValue = getFilterValue('currency')
   const bothCurrency =
@@ -45,7 +37,7 @@ export const AssignedVirtualAccountsTable = () => {
         <Filters />
       </Grid>
       <Grid item>
-        <TableView<AssignedVirtualAccount>
+        <TableView<VirtualAccount>
           uri={virtualAccounts.getAll}
           name={virtualAccountQueryKeys.listAssigned}
           columns={columns}
@@ -53,6 +45,7 @@ export const AssignedVirtualAccountsTable = () => {
           actions={Actions}
           filter={filter}
           paperProps={{ variant: 'elevation', elevation: 0 }}
+          selectionHelper={selectionHelperContext}
         />
       </Grid>
     </Grid>

@@ -3,6 +3,7 @@ import { render, cleanup } from 'test-utils'
 import { UnassignedAccountsTable } from 'app/pages/admin/components/UnassignedAccountTable/UnassignedAccountsTable'
 import { TableView } from 'components/TableWithPagination/TableView'
 import { columns } from 'app/pages/admin/components/UnassignedAccountTable/columns'
+import * as useResetSelectionOnUnmount from 'app/pages/admin/hooks/useResetSelectionOnUnmount'
 
 jest.mock('components/TableWithPagination/TableView', () => ({
   TableView: jest.fn(() => null)
@@ -13,6 +14,12 @@ jest.mock('components/SelectionHelper', () => ({
 }))
 
 describe('UnassignedAccountTable', () => {
+  beforeEach(() => {
+    jest
+      .spyOn(useResetSelectionOnUnmount, 'useResetSelectionOnUnmount')
+      .mockImplementation(() => ({} as any))
+  })
+
   afterEach(async () => {
     await cleanup()
     jest.clearAllMocks()
