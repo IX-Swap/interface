@@ -48,7 +48,7 @@ const StyledMenuButton = styled.button`
   }
 `
 
-const UNIbutton = styled(ButtonPrimary)`
+const IXSbutton = styled(ButtonPrimary)`
   background-color: ${({ theme }) => theme.bg3};
   background: radial-gradient(174.47% 188.91% at 1.84% 0%, #ff007a 0%, #2172e5 100%), #edeef2;
   border: none;
@@ -172,9 +172,9 @@ export default function Menu() {
             </div>
           </MenuItem>
           {account && (
-            <UNIbutton onClick={openClaimModal} padding="8px 16px" width="100%" borderRadius="12px" mt="0.5rem">
-              <Trans>Claim UNI</Trans>
-            </UNIbutton>
+            <IXSbutton onClick={openClaimModal} padding="8px 16px" width="100%" borderRadius="12px" mt="0.5rem">
+              <Trans>Claim IXS</Trans>
+            </IXSbutton>
           )}
         </MenuFlyout>
       )}

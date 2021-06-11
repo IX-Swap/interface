@@ -1,28 +1,28 @@
-import { GOVERNANCE_ADDRESS, TIMELOCK_ADDRESS, UNI_ADDRESS } from './addresses'
+import { GOVERNANCE_ADDRESS, TIMELOCK_ADDRESS, IXS_ADDRESS } from './addresses'
 
 export const COMMON_CONTRACT_NAMES: { [chainId: number]: { [address: string]: string } } = {
   [1]: {
-    [UNI_ADDRESS[1]]: 'UNI',
+    [IXS_ADDRESS[1]]: 'IXS',
     [GOVERNANCE_ADDRESS[1]]: 'Governance',
     [TIMELOCK_ADDRESS[1]]: 'Timelock',
   },
   [4]: {
-    [UNI_ADDRESS[4]]: 'Rinkeby UNI',
+    [IXS_ADDRESS[4]]: 'Rinkeby IXS',
     [GOVERNANCE_ADDRESS[4]]: 'Rinkeby Governance',
     [TIMELOCK_ADDRESS[4]]: 'Rinkeby Timelock',
   },
   [3]: {
-    [UNI_ADDRESS[3]]: 'Ropsten UNI',
+    [IXS_ADDRESS[3]]: 'Ropsten IXS',
     [GOVERNANCE_ADDRESS[3]]: 'Ropsten Governance',
     [TIMELOCK_ADDRESS[3]]: 'Ropsten Timelock',
   },
   [42]: {
-    [UNI_ADDRESS[42]]: 'Kovan UNI',
+    [IXS_ADDRESS[42]]: 'Kovan IXS',
     [GOVERNANCE_ADDRESS[42]]: 'Kovan Governance',
     [TIMELOCK_ADDRESS[42]]: 'Kovan Timelock',
   },
   [5]: {
-    [UNI_ADDRESS[5]]: 'Goerli UNI',
+    [IXS_ADDRESS[5]]: 'Goerli IXS',
     [GOVERNANCE_ADDRESS[5]]: 'Goerli Governance',
     [TIMELOCK_ADDRESS[5]]: 'Goerli Timelock',
   },

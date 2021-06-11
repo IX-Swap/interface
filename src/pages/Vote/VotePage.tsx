@@ -22,7 +22,7 @@ import {
   DEFAULT_AVERAGE_BLOCK_TIME_IN_SECS,
 } from '../../constants/governance'
 import { ZERO_ADDRESS } from '../../constants/misc'
-import { UNI } from '../../constants/tokens'
+import { IXS } from '../../constants/tokens'
 import { useActiveWeb3React } from '../../hooks/web3'
 import { ApplicationModal } from '../../state/application/actions'
 import { useBlockNumber, useModalOpen, useToggleDelegateModal, useToggleVoteModal } from '../../state/application/hooks'
@@ -177,7 +177,7 @@ export default function VotePage({
 
   const uniBalance: CurrencyAmount<Token> | undefined = useTokenBalance(
     account ?? undefined,
-    chainId ? UNI[chainId] : undefined
+    chainId ? IXS[chainId] : undefined
   )
   const userDelegatee: string | undefined = useUserDelegatee()
 
@@ -230,7 +230,7 @@ export default function VotePage({
             <GreyCard>
               <TYPE.black>
                 <Trans>
-                  Only UNI votes that were self delegated or delegated to another address before block{' '}
+                  Only IXS votes that were self delegated or delegated to another address before block{' '}
                   {proposalData.startBlock} are eligible for voting.{' '}
                 </Trans>
                 {showLinkForUnlock && (

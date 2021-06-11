@@ -1,5 +1,5 @@
 import React, { ReactNode, useState } from 'react'
-import { UNI } from '../../constants/tokens'
+import { IXS } from '../../constants/tokens'
 
 import Modal from '../Modal'
 import { AutoColumn } from '../Column'
@@ -57,7 +57,7 @@ export default function DelegateModal({ isOpen, onDismiss, title }: VoteModalPro
   const { address: parsedAddress } = useENS(activeDelegate)
 
   // get the number of votes available to delegate
-  const uniBalance = useTokenBalance(account ?? undefined, chainId ? UNI[chainId] : undefined)
+  const uniBalance = useTokenBalance(account ?? undefined, chainId ? IXS[chainId] : undefined)
 
   const delegateCallback = useDelegateCallback()
 
@@ -99,7 +99,7 @@ export default function DelegateModal({ isOpen, onDismiss, title }: VoteModalPro
               <StyledClosed stroke="black" onClick={wrappedOndismiss} />
             </RowBetween>
             <TYPE.body>
-              <Trans>Earned UNI tokens represent voting shares in Uniswap governance.</Trans>
+              <Trans>Earned IXS tokens represent voting shares in Uniswap governance.</Trans>
             </TYPE.body>
             <TYPE.body>
               <Trans>You can either vote on each proposal yourself or delegate your votes to a third party.</Trans>

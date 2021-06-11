@@ -1,7 +1,7 @@
 import { Currency, Token, CurrencyAmount, Ether } from '@uniswap/sdk-core'
 import JSBI from 'jsbi'
 import { useMemo } from 'react'
-import { UNI } from '../../constants/tokens'
+import { IXS } from '../../constants/tokens'
 import { useActiveWeb3React } from '../../hooks/web3'
 import { useAllTokens } from '../../hooks/Tokens'
 import { useMulticall2Contract } from '../../hooks/useContract'
@@ -146,11 +146,11 @@ export function useAllTokenBalances(): { [tokenAddress: string]: CurrencyAmount<
   return balances ?? {}
 }
 
-// get the total owned, unclaimed, and unharvested UNI for account
+// get the total owned, unclaimed, and unharvested IXS for account
 export function useAggregateUniBalance(): CurrencyAmount<Token> | undefined {
   const { account, chainId } = useActiveWeb3React()
 
-  const uni = chainId ? UNI[chainId] : undefined
+  const uni = chainId ? IXS[chainId] : undefined
 
   const uniBalance: CurrencyAmount<Token> | undefined = useTokenBalance(account ?? undefined, uni)
   const uniUnclaimed: CurrencyAmount<Token> | undefined = useUserUnclaimedAmount(account)

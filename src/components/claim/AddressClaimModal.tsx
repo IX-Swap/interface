@@ -105,12 +105,12 @@ export default function AddressClaimModal({ isOpen, onDismiss }: { isOpen: boole
             <CardSection gap="md">
               <RowBetween>
                 <TYPE.white fontWeight={500}>
-                  <Trans>Claim UNI Token</Trans>
+                  <Trans>Claim IXS Token</Trans>
                 </TYPE.white>
                 <CloseIcon onClick={wrappedOnDismiss} style={{ zIndex: 99 }} stroke="white" />
               </RowBetween>
               <TYPE.white fontWeight={700} fontSize={36}>
-                <Trans>{unclaimedAmount?.toFixed(0, { groupSeparator: ',' } ?? '-')} UNI</Trans>
+                <Trans>{unclaimedAmount?.toFixed(0, { groupSeparator: ',' } ?? '-')} IXS</Trans>
               </TYPE.white>
             </CardSection>
             <Break />
@@ -118,7 +118,7 @@ export default function AddressClaimModal({ isOpen, onDismiss }: { isOpen: boole
           <AutoColumn gap="md" style={{ padding: '1rem', paddingTop: '0' }} justify="center">
             <TYPE.subHeader fontWeight={500}>
               <Trans>
-                Enter an address to trigger a UNI claim. If the address has any claimable UNI it will be sent to them on
+                Enter an address to trigger a IXS claim. If the address has any claimable IXS it will be sent to them on
                 submission.
               </Trans>
             </TYPE.subHeader>
@@ -136,7 +136,7 @@ export default function AddressClaimModal({ isOpen, onDismiss }: { isOpen: boole
               mt="1rem"
               onClick={onClaim}
             >
-              <Trans>Claim UNI</Trans>
+              <Trans>Claim IXS</Trans>
             </ButtonPrimary>
           </AutoColumn>
         </ContentWrapper>
@@ -153,7 +153,7 @@ export default function AddressClaimModal({ isOpen, onDismiss }: { isOpen: boole
             {!claimConfirmed ? (
               <CustomLightSpinner src={Circle} alt="loader" size={'90px'} />
             ) : (
-              <UniTokenAnimated width="72px" src={tokenLogo} alt="UNI logo" />
+              <UniTokenAnimated width="72px" src={tokenLogo} alt="IXS logo" />
             )}
           </ConfirmedIcon>
           <AutoColumn gap="100px" justify={'center'}>
@@ -163,7 +163,7 @@ export default function AddressClaimModal({ isOpen, onDismiss }: { isOpen: boole
               </TYPE.largeHeader>
               {!claimConfirmed && (
                 <Text fontSize={36} color={'#ff007a'} fontWeight={800}>
-                  <Trans>{unclaimedAmount?.toFixed(0, { groupSeparator: ',' } ?? '-')} UNI</Trans>
+                  <Trans>{unclaimedAmount?.toFixed(0, { groupSeparator: ',' } ?? '-')} IXS</Trans>
                 </Text>
               )}
               {parsedAddress && (

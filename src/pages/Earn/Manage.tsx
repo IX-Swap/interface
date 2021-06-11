@@ -186,10 +186,10 @@ export default function Manage({
               {stakingInfo.active ? (
                 <Trans>
                   {stakingInfo.totalRewardRate?.multiply(BIG_INT_SECONDS_IN_WEEK)?.toFixed(0, { groupSeparator: ',' })}{' '}
-                  UNI / week
+                  IXS / week
                 </Trans>
               ) : (
-                <Trans>0 UNI / week</Trans>
+                <Trans>0 IXS / week</Trans>
               )}
             </TYPE.body>
           </AutoColumn>
@@ -204,13 +204,13 @@ export default function Manage({
             <AutoColumn gap="md">
               <RowBetween>
                 <TYPE.white fontWeight={600}>
-                  <Trans>Step 1. Get UNI-V2 Liquidity tokens</Trans>
+                  <Trans>Step 1. Get IXS-V2 Liquidity tokens</Trans>
                 </TYPE.white>
               </RowBetween>
               <RowBetween style={{ marginBottom: '1rem' }}>
                 <TYPE.white fontSize={14}>
                   <Trans>
-                    UNI-V2 LP tokens are required. Once you&apos;ve added liquidity to the {currencyA?.symbol}-
+                    IXS-V2 LP tokens are required. Once you&apos;ve added liquidity to the {currencyA?.symbol}-
                     {currencyB?.symbol} pool you can stake your liquidity tokens on this page.
                   </Trans>
                 </TYPE.white>
@@ -272,7 +272,7 @@ export default function Manage({
                   </TYPE.white>
                   <TYPE.white>
                     <Trans>
-                      UNI-V2 {currencyA?.symbol}-{currencyB?.symbol}
+                      IXS-V2 {currencyA?.symbol}-{currencyB?.symbol}
                     </Trans>
                   </TYPE.white>
                 </RowBetween>
@@ -286,7 +286,7 @@ export default function Manage({
               <RowBetween>
                 <div>
                   <TYPE.black>
-                    <Trans>Your unclaimed UNI</Trans>
+                    <Trans>Your unclaimed IXS</Trans>
                   </TYPE.black>
                 </div>
                 {stakingInfo?.earnedAmount && JSBI.notEqual(BIG_INT_ZERO, stakingInfo?.earnedAmount?.quotient) && (
@@ -320,10 +320,10 @@ export default function Manage({
                   {stakingInfo.active ? (
                     <Trans>
                       {stakingInfo.rewardRate?.multiply(BIG_INT_SECONDS_IN_WEEK)?.toFixed(0, { groupSeparator: ',' })}{' '}
-                      UNI / week
+                      IXS / week
                     </Trans>
                   ) : (
-                    <Trans>0 UNI / week</Trans>
+                    <Trans>0 IXS / week</Trans>
                   )}
                 </TYPE.black>
               </RowBetween>
@@ -334,7 +334,7 @@ export default function Manage({
           <span role="img" aria-label="wizard-icon" style={{ marginRight: '8px' }}>
             ⭐️
           </span>
-          <Trans>When you withdraw, the contract will automagically claim UNI on your behalf!</Trans>
+          <Trans>When you withdraw, the contract will automagically claim IXS on your behalf!</Trans>
         </TYPE.main>
 
         {!showAddLiquidityButton && (
@@ -344,7 +344,7 @@ export default function Manage({
                 {stakingInfo?.stakedAmount?.greaterThan(JSBI.BigInt(0)) ? (
                   <Trans>Deposit</Trans>
                 ) : (
-                  <Trans>Deposit UNI-V2 LP Tokens</Trans>
+                  <Trans>Deposit IXS-V2 LP Tokens</Trans>
                 )}
               </ButtonPrimary>
             )}
@@ -365,7 +365,7 @@ export default function Manage({
         )}
         {!userLiquidityUnstaked ? null : userLiquidityUnstaked.equalTo('0') ? null : !stakingInfo?.active ? null : (
           <TYPE.main>
-            <Trans>{userLiquidityUnstaked.toSignificant(6)} UNI-V2 LP tokens available</Trans>
+            <Trans>{userLiquidityUnstaked.toSignificant(6)} IXS-V2 LP tokens available</Trans>
           </TYPE.main>
         )}
       </PositionInfo>

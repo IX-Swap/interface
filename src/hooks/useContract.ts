@@ -1,7 +1,7 @@
 import { Contract } from '@ethersproject/contracts'
 import { WETH9 } from '@uniswap/sdk-core'
 import { abi as GOVERNANCE_ABI } from '@uniswap/governance/build/GovernorAlpha.json'
-import { abi as UNI_ABI } from '@uniswap/governance/build/Uni.json'
+import { abi as IXS_ABI } from '@uniswap/governance/build/Uni.json'
 import { abi as STAKING_REWARDS_ABI } from '@uniswap/liquidity-staker/build/StakingRewards.json'
 import { abi as MERKLE_DISTRIBUTOR_ABI } from '@uniswap/merkle-distributor/build/MerkleDistributor.json'
 import { abi as IUniswapV2PairABI } from '@uniswap/v2-core/build/IUniswapV2Pair.json'
@@ -18,7 +18,7 @@ import ERC20_ABI from 'abis/erc20.json'
 import ERC20_BYTES32_ABI from 'abis/erc20_bytes32.json'
 import MULTICALL_ABI from 'abis/multicall2.json'
 import { Unisocks } from 'abis/types/Unisocks'
-import UNISOCKS_ABI from 'abis/unisocks.json'
+import IXSOCKS_ABI from 'abis/unisocks.json'
 import WETH_ABI from 'abis/weth.json'
 import EIP_2612 from 'abis/eip_2612.json'
 
@@ -42,7 +42,7 @@ import { NonfungiblePositionManager } from 'types/v3/NonfungiblePositionManager'
 import { V3Migrator } from 'types/v3/V3Migrator'
 import { getContract } from 'utils'
 import { Erc20, ArgentWalletDetector, EnsPublicResolver, EnsRegistrar, Multicall2, Weth } from '../abis/types'
-import { UNI } from '../constants/tokens'
+import { IXS } from '../constants/tokens'
 import { useActiveWeb3React } from './web3'
 
 // returns null on errors
@@ -123,7 +123,7 @@ export function useGovernanceContract() {
 
 export function useUniContract() {
   const { chainId } = useActiveWeb3React()
-  return useContract(chainId ? UNI[chainId]?.address : undefined, UNI_ABI, true)
+  return useContract(chainId ? IXS[chainId]?.address : undefined, IXS_ABI, true)
 }
 
 export function useStakingContract(stakingAddress?: string, withSignerIfPossible?: boolean) {
@@ -131,7 +131,7 @@ export function useStakingContract(stakingAddress?: string, withSignerIfPossible
 }
 
 export function useSocksController(): Unisocks | null {
-  return useContract<Unisocks>(SOCKS_CONTROLLER_ADDRESSES, UNISOCKS_ABI, false)
+  return useContract<Unisocks>(SOCKS_CONTROLLER_ADDRESSES, IXSOCKS_ABI, false)
 }
 
 export function useV3NFTPositionManagerContract(withSignerIfPossible?: boolean): NonfungiblePositionManager | null {
