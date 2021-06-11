@@ -3,9 +3,11 @@ import { OpenOrders } from 'app/pages/exchange/components/OpenOrders/OpenOrders'
 import { PastOrderTable } from 'app/pages/exchange/components/PastOrderTable/PastOrderTable'
 import { TabPanel } from 'components/TabPanel'
 import React, { useState } from 'react'
+import { useParams } from 'react-router'
 
 export const MyOrders = () => {
   const [selectedIdx, setSelectedIdx] = useState(0)
+  const { pairId } = useParams<{ pairId: string }>()
 
   return (
     <Grid>
@@ -24,7 +26,7 @@ export const MyOrders = () => {
       </TabPanel>
 
       <TabPanel pt={3} value={selectedIdx} index={1}>
-        <PastOrderTable pairId='60a2340a804b8f3de6248b56' />
+        <PastOrderTable pairId={pairId} />
       </TabPanel>
     </Grid>
   )

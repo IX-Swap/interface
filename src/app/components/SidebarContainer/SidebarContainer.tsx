@@ -84,7 +84,5 @@ export const SidebarContainer = () => {
     >
       {sidebar}
     </SwipeableDrawer>
-  ) : (
-    sidebar
-  )
+  ) : null
 }
