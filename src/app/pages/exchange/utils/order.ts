@@ -3,10 +3,11 @@ import { Pair } from '../hooks/useMarketList'
 
 export const transformPlaceOrderFormValuesToArgs = (
   values: PlaceOrderFormValues,
-  side: 'BID' | 'ASK'
+  side: 'BID' | 'ASK',
+  pairId: string
 ) => {
   return {
-    pair: '60a2340a804b8f3de6248b56',
+    pair: pairId,
     side: side,
     type: 'LIMIT',
     price: values.price,

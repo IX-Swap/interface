@@ -209,6 +209,15 @@ export const exchange = {
     emit: 'price/get',
     on: (tokenId: string) => `price/${tokenId}`
   },
+  balances: {
+    emit: 'balances/get',
+    on: (tokenId: string) => `balances/${tokenId}`
+  },
+  summary: {
+    emit: 'metrics24h/get',
+    on: (tokenId: string) => `metrics24h/${tokenId}`
+  },
+  getMetrics: (tokenId: string) => `/exchange/pair/financialMetrics/${tokenId}`,
   currentHoldings: (userId: string) => `/accounts/holdings/${userId}`,
   cancelOrder: (userId: string, orderId: string) =>
     `/exchange/orders/cancel/${userId}/${orderId}`,
@@ -237,6 +246,11 @@ export const charts = {
   history: 'exchange/udf/history',
   time: 'exchange/udf/time',
   search: 'exchange/udf/search'
+}
+
+export const custodyAccount = {
+  get: (userId: string) => `/custody/account/${userId}`,
+  create: '/custody/account/assign'
 }
 
 export const listingsURL = {

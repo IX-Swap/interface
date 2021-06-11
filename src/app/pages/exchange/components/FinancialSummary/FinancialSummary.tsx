@@ -4,7 +4,9 @@ import { MoreDetails } from 'app/pages/exchange/components/FinancialSummary/More
 import { NumberSummaryValue } from 'app/pages/exchange/components/FinancialSummary/NumberSummaryValue'
 import { SummaryItem } from 'app/pages/exchange/components/FinancialSummary/SummaryItem'
 import { PairListDropdown } from 'app/pages/exchange/components/PairListDropdown/PairListDropdown'
+import { useFinancialSummary } from 'app/pages/exchange/hooks/useFinancialSummary'
 import { useMarket } from 'app/pages/exchange/hooks/useMarket'
+import { useAssetById } from 'hooks/asset/useAssetById'
 import React from 'react'
 import { useParams } from 'react-router'
 
@@ -12,7 +14,11 @@ export const FinancialSummary = () => {
   const { pairId } = useParams<{
     pairId: string
   }>()
-  const { data } = useMarket(pairId)
+  const { data } = useFinancialSummary(pairId)
+  const { data: marketData } = useMarket(pairId)
+  const { data: assetData } = useAssetById(
+    marketData?.listing.markets[0].currency
+  )
 
   return (
     <Grid container spacing={1}>
@@ -24,31 +30,41 @@ export const FinancialSummary = () => {
           <Grid item>
             <SummaryItem
               label='Last Trade Price'
-              value={<NumberSummaryValue value={9780.7} isNegative />}
+              value={
+                <NumberSummaryValue
+                  value={data?.latestPrice}
+                  isNegative={data?.latestPrice < 0}
+                />
+              }
             />
           </Grid>
           <Grid item>
             <SummaryItem
               label='24H Change'
-              value={<ChangeSummaryValue value={-5.32} isNegative />}
+              value={
+                <ChangeSummaryValue
+                  value={data?._24hChangePercentage}
+                  isNegative={data?._24hChangePercentage < 0}
+                />
+              }
             />
           </Grid>
           <Grid item>
             <SummaryItem
               label='24H High'
-              value={<NumberSummaryValue value={9950.0} />}
+              value={<NumberSummaryValue value={data?._24h.high} />}
             />
           </Grid>
           <Grid item>
             <SummaryItem
               label='24H Low'
-              value={<NumberSummaryValue value={9200.0} />}
+              value={<NumberSummaryValue value={data?._24h.low} />}
             />
           </Grid>
           <Grid item>
             <SummaryItem
-              label='24H Volume (SGD)'
-              value={<NumberSummaryValue value={1000000} />}
+              label={`24H Volume (${assetData?.symbol ?? ''})`}
+              value={<NumberSummaryValue value={data?._24h.volume} />}
             />
           </Grid>
         </Grid>
