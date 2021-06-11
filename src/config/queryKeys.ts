@@ -160,7 +160,7 @@ export const virtualAccountQueryKeys = {
 
 export const exchange = {
   marketList: 'market-list',
-  balances: 'balances',
+  tokenBalance: 'tokenBalance',
   tradeHistory: 'trade-history',
   myTradeHistory: 'my-trade-history',
   orderBook: 'orderbook',

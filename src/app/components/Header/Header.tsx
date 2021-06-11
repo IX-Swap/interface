@@ -5,6 +5,7 @@ import { UserDropdown } from 'app/components/UserDropdown/UserDropdown'
 import { NotificationsDropdown } from 'app/pages/notifications/components/NotificationsDropdown'
 import { AppLogo } from 'app/components/AppLogo/AppLogo'
 import { NavDrawerToggle } from 'app/components/Header/components/NavDrawerToggle'
+import { TopbarContainer } from 'app/components/TopbarContainer/TopbarContainer'
 
 export const Header = () => {
   const classes = useStyles()
@@ -14,6 +15,8 @@ export const Header = () => {
       <Toolbar className={classes.toolbar}>
         <NavDrawerToggle />
         <AppLogo />
+        <Box className={classes.small} />
+        <TopbarContainer />
         <Box className={classes.grow} />
         <NotificationsDropdown />
         <UserDropdown />

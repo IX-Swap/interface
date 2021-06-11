@@ -15,7 +15,7 @@ export const SidebarWrapper = styled('div')(({ theme }) => ({
     width: SIDEBAR_WIDTH,
     position: 'fixed',
     top: 64,
-    left: 90,
+    left: 0,
     bottom: 0
   }
 }))

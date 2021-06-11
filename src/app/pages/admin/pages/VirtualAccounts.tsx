@@ -10,6 +10,7 @@ import { VirtualAccountsTabView } from 'app/pages/admin/components/VirtualAccoun
 import { AddVirtualAccountsButton } from 'app/pages/admin/components/AddVirtualAccountsButton/AddVirtualAccountsButton'
 import { VirtualAccountsStats } from 'app/pages/admin/components/VirtualAccountsStats/VirtualAccountsStats'
 import { DisableAccountsButton } from 'app/pages/admin/components/DisableAccountsButton/DisableAccountsButton'
+import { UploadCSVButton } from 'app/pages/admin/components/UploadCSVButton/UploadCSVButton'
 
 export const itemComparator = (
   a: VirtualAccountType,
@@ -34,6 +35,9 @@ export const VirtualAccounts = () => {
           </Grid>
           <Grid item>
             <DisableAccountsButton />
+          </Grid>
+          <Grid item>
+            <UploadCSVButton />
           </Grid>
         </Grid>
         <Grid item>

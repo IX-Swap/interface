@@ -190,7 +190,8 @@ export const virtualAccounts = {
   add: '/virtual-accounts',
   getByUserId: (userId: string) => `/virtual-accounts/${userId}`,
   assign: '/virtual-accounts/assign',
-  unassign: (accountId: string) => `/virtual-accounts/unassign/${accountId}`
+  unassign: (accountId: string) => `/virtual-accounts/unassign/${accountId}`,
+  uploadCSV: '/virtual-accounts/upload'
 }
 
 export const exchange = {
@@ -210,9 +211,9 @@ export const exchange = {
     emit: 'price/get',
     on: (tokenId: string) => `price/${tokenId}`
   },
-  balances: {
-    emit: 'balances/get',
-    on: (tokenId: string) => `balances/${tokenId}`
+  tokenBalance: {
+    emit: 'tokenBalance/get',
+    on: (userId: string) => `tokenBalance/${userId}`
   },
   summary: {
     emit: 'metrics24h/get',
