@@ -65,7 +65,12 @@ export const Market = () => {
 
       <Box my={2} />
 
-      <Grid container direction={'column'} className={classes.wrapper}>
+      <Grid
+        container
+        direction={'column'}
+        className={classes.wrapper}
+        alignItems={'flex-start'}
+      >
         <Grid item className={classes.colorGrid}>
           <InvestorLiveOrderBook />
         </Grid>

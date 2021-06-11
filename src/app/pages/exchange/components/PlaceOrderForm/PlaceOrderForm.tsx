@@ -41,14 +41,11 @@ export const PlaceOrderForm: React.FC<PlaceOrderFormProps> = ({
     await onSubmit(
       transformPlaceOrderFormValuesToArgs(
         values,
-        activeTabNameIdx === 0 ? 'ASK' : 'BID',
+        activeTabNameIdx === 0 ? 'BID' : 'ASK',
         pairId
       )
     )
   }
-
-  // TODO Use for get token balance
-  // const { data } = useBalance(pairId)
 
   return (
     <Form
