@@ -9,6 +9,7 @@ import {
 } from '@material-ui/core'
 import { ArrowDropDown } from '@material-ui/icons'
 import { DetailsItem } from 'app/pages/exchange/components/FinancialSummary/DetailsItem'
+import { useFinancialMetrics } from 'app/pages/exchange/hooks/useFinancialMetrics'
 import React from 'react'
 
 export const MoreDetails = () => {
@@ -17,18 +18,27 @@ export const MoreDetails = () => {
     setAnchorEl(anchorEl !== null ? null : event.currentTarget)
   }
 
+  const { data } = useFinancialMetrics()
+
   return (
     <>
       <Button color='primary' size='small' onClick={handleClick}>
         <Box style={{ fontSize: 14, textTransform: 'capitalize' }}>
           More Details
-        </Box>{' '}
+        </Box>
         <ArrowDropDown />
       </Button>
       <Popper
         id='financial-details'
         open={anchorEl !== null}
         anchorEl={anchorEl}
+        placement='bottom'
+        modifiers={{
+          flip: {
+            enabled: false
+          }
+        }}
+        style={{ zIndex: 10 }}
       >
         <Paper
           elevation={3}
@@ -47,43 +57,64 @@ export const MoreDetails = () => {
               <Divider />
             </Grid>
             <Grid item>
-              <DetailsItem label='Open' value='$1800.00' />
+              <DetailsItem label='Open' value={data?.open ?? '0.00'} />
             </Grid>
             <Grid item>
-              <DetailsItem label='Day Range' value='$1810.29 - 1830.00' />
+              <DetailsItem label='Day Range' value='-' />
             </Grid>
             <Grid item>
-              <DetailsItem label='52 Week Range' value='168.73 - 1900.54' />
+              <DetailsItem label='52 Week Range' value='-' />
             </Grid>
             <Grid item>
-              <DetailsItem label='Market Cap' value='$123.03B' />
+              <DetailsItem
+                label='Market Cap'
+                value={data?.marketCap ?? '0.00'}
+              />
             </Grid>
             <Grid item>
-              <DetailsItem label='Shares Outstanding' value='959.43M' />
+              <DetailsItem
+                label='Shares Outstanding'
+                value={data?.sharesOustanding ?? '0.00'}
+              />
             </Grid>
             <Grid item>
-              <DetailsItem label='Public Float' value='771.7M' />
+              <DetailsItem
+                label='Public Float'
+                value={data?.publicFloat ?? '0.00'}
+              />
             </Grid>
             <Grid item>
-              <DetailsItem label='Beta' value='1.32' />
+              <DetailsItem label='Beta' value={data?.beta ?? '0.00'} />
             </Grid>
             <Grid item>
-              <DetailsItem label='EPS' value='$0.63' />
+              <DetailsItem label='EPS' value={data?.eps ?? '0.00'} />
             </Grid>
             <Grid item>
-              <DetailsItem label='Rev. Per Employee' value='$445.78K' />
+              <DetailsItem
+                label='Rev. Per Employee'
+                value={data?.reservePerEmployee ?? '0.00'}
+              />
             </Grid>
             <Grid item>
-              <DetailsItem label='P/E Ratio' value='1,121.13' />
+              <DetailsItem label='P/E Ratio' value={data?.peRatio ?? '0.00'} />
             </Grid>
             <Grid item>
-              <DetailsItem label='Short Interest' value='51.13M' />
+              <DetailsItem
+                label='Short Interest'
+                value={data?.shortInterest ?? '0.00'}
+              />
             </Grid>
             <Grid item>
-              <DetailsItem label='% of Float Shorted' value='6.63%' />
+              <DetailsItem
+                label='% of Float Shorted'
+                value={data?.percentOfFloatShorted ?? '0.00'}
+              />
             </Grid>
             <Grid item>
-              <DetailsItem label='Average Volume' value='33.93M' />
+              <DetailsItem
+                label='Average Volume'
+                value={data?.averageVolume ?? '0.00'}
+              />
             </Grid>
             <Grid item>
               <DetailsItem label='Yield' value='N/A' />
