@@ -1,6 +1,12 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import { WithdrawCashFormValues } from 'app/pages/accounts/types'
-import { Box, Grid, InputAdornment } from '@material-ui/core'
+import {
+  Box,
+  Grid,
+  InputAdornment,
+  useMediaQuery,
+  useTheme
+} from '@material-ui/core'
 import { useFormContext } from 'react-hook-form'
 import { useBanksData } from 'app/pages/accounts/pages/banks/hooks/useBanksData'
 import { TypedField } from 'components/form/TypedField'
@@ -13,9 +19,17 @@ import { MaxButton } from 'app/pages/accounts/pages/banks/pages/WithdrawCash/Max
 import { VirtualAccountSelect } from 'app/pages/accounts/components/VirtualAccountSelect'
 import { VirtualAccountDetails } from 'app/pages/accounts/components/VirtualAccountDetails'
 import { FormSectionHeader } from 'app/pages/identity/components/FormSectionHeader'
+import { ContinueButton } from 'app/pages/accounts/pages/banks/pages/WithdrawCash/ContinueButton'
+import { OTPDialog } from 'app/pages/accounts/pages/banks/pages/WithdrawCash/OTPDialog'
 
 export const Setup: React.FC = () => {
-  const { watch, control } = useFormContext<WithdrawCashFormValues>()
+  const {
+    watch,
+    control,
+    formState,
+    reset,
+    getValues
+  } = useFormContext<WithdrawCashFormValues>()
   const bankId = watch('bankAccountId')
   const virtualAccountId = watch('virtualAccount')
   const {
@@ -23,19 +37,43 @@ export const Setup: React.FC = () => {
     isLoading: virtualAccountLoading
   } = useVirtualAccount(virtualAccountId)
   const { data: bankData, isLoading: bankLoading } = useBanksData()
-  const bank = bankData.map[bankId]
+  const bank = bankData.map[bankId ?? '']
+  const theme = useTheme()
+  const isTablet = useMediaQuery(theme.breakpoints.down('md'))
+  const [open, setOpen] = useState(false)
 
   const setMaxValue = () => {
     control.setValue('amount', virtualAccountData?.balance.available)
   }
+
+  const handleContinue = () => {
+    setOpen(true)
+  }
+
+  const close = () => {
+    setOpen(false)
+  }
+
+  useEffect(() => {
+    if (formState.isSubmitSuccessful) {
+      setOpen(false)
+      reset({
+        virtualAccount: getValues('virtualAccount'),
+        bankAccountId: null,
+        amount: null,
+        otp: null
+      })
+    }
+    // eslint-disable-next-line
+  }, [formState.isSubmitSuccessful])
 
   if (virtualAccountLoading || bankLoading) {
     return null
   }
 
   return (
-    <Grid container direction='column' spacing={2} justify='flex-start'>
-      <Grid item xs={12} sm={6} md={5}>
+    <Grid container direction='column' spacing={3}>
+      <Grid item>
         <TypedField
           customRenderer
           control={control}
@@ -47,50 +85,57 @@ export const Setup: React.FC = () => {
       </Grid>
 
       {virtualAccountId !== undefined ? (
-        <Grid item xs={12}>
+        <Grid item>
           <VirtualAccountDetails virtualAccountId={virtualAccountId} />
         </Grid>
       ) : null}
 
-      <Grid item xs={12} sm={6} md={5}>
+      <Grid item>
         <FormSectionHeader
           title='Withdraw Cash From Your Virtual Account'
           variant='subsection'
         />
         <TypedField
+          style={{ width: isTablet ? '100%' : '40%' }}
           control={control}
           variant='outlined'
+          customRenderer
           component={BankSelect}
           name='bankAccountId'
           label='To Bank Account'
           helperText='Please select your bank account in which you want to transfer your fund'
         />
       </Grid>
-      {bankId !== undefined && virtualAccountId !== undefined ? (
-        <>
-          <Grid item xs={12} sm={6} md={5}>
-            <TypedField
-              control={control}
-              variant='outlined'
-              component={NumericInput}
-              name='amount'
-              label='Amount'
-              valueExtractor={numericValueExtractor}
-              numberFormat={moneyNumberFormat}
-              startAdornment={
-                <InputAdornment position='start'>
-                  <Box mt='2px'>{bank.currency.numberFormat.currency}</Box>
-                </InputAdornment>
-              }
-              endAdornment={
-                <InputAdornment position='end'>
-                  <MaxButton onClick={setMaxValue} />
-                </InputAdornment>
-              }
-            />
-          </Grid>
-        </>
+      {bankId !== null &&
+      bankId !== undefined &&
+      virtualAccountId !== undefined ? (
+        <Grid item>
+          <TypedField
+            style={{ width: isTablet ? '100%' : '40%' }}
+            control={control}
+            variant='outlined'
+            component={NumericInput}
+            name='amount'
+            label='Amount'
+            valueExtractor={numericValueExtractor}
+            numberFormat={moneyNumberFormat}
+            startAdornment={
+              <InputAdornment position='start'>
+                <Box mt='2px'>{bank?.currency.numberFormat.currency}</Box>
+              </InputAdornment>
+            }
+            endAdornment={
+              <InputAdornment position='end'>
+                <MaxButton onClick={setMaxValue} />
+              </InputAdornment>
+            }
+          />
+        </Grid>
       ) : null}
+      <Grid item>
+        <ContinueButton onClick={handleContinue} />
+      </Grid>
+      <OTPDialog open={open} close={close} />
     </Grid>
   )
 }

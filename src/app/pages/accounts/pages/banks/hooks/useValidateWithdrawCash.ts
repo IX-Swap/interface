@@ -21,10 +21,12 @@ export const useValidateWithdrawCash = (): BalancesByBankIdReturnObj => {
     formState
   } = useFormContext<WithdrawCashFormValues>()
   const bankId = watch('bankAccountId')
-  const amount = watch('amount')
+  const amount = watch('amount', 0)
   const virtualAccountId = watch('virtualAccount')
 
-  const { data: bank, isSuccess: bankSuccess } = useBankById({ bankId })
+  const { data: bank, isSuccess: bankSuccess } = useBankById({
+    bankId: bankId ?? ''
+  })
 
   const assetId = getIdFromObj(bank?.currency)
   const { data: asset, isSuccess: assetSuccess } = useAssetById(assetId)
@@ -47,7 +49,7 @@ export const useValidateWithdrawCash = (): BalancesByBankIdReturnObj => {
         asset.amounts?.maximumWithdrawal
 
       const { message } = withdrawValidator(
-        amount,
+        amount ?? 0,
         balance?.available,
         minWithdraw,
         maxWithdraw

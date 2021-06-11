@@ -9,7 +9,7 @@ export const WithdrawCashAlert: React.FC = () => {
   const { watch } = useFormContext<WithdrawCashFormValues>()
   const bankId = watch('bankAccountId')
   const { data, status } = useBanksData()
-  const bank = data.map[bankId]
+  const bank = data.map[bankId ?? '']
 
   if (status === 'loading') {
     return null
