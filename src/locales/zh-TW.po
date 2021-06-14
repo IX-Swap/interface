@@ -325,10 +325,6 @@ msgstr "改變"
 msgid "Charts"
 msgstr "圖表"
 
-#: src/pages/Pool/CTACards.tsx
-msgid "Check out our v3 LP walkthrough and migration guides."
-msgstr "查看我們的v3 LP演練和遷移指南。"
-
 #: src/components/earn/ClaimRewardModal.tsx
 #: src/components/earn/ClaimRewardModal.tsx
 #: src/pages/Earn/Manage.tsx
@@ -685,10 +681,6 @@ msgstr "來自無效令牌列表的擴展結果"
 #: src/components/Settings/index.tsx
 msgid "Expert mode turns off the confirm transaction prompt and allows high slippage trades that often result in bad rates and lost funds."
 msgstr "專家模式會關閉確認交易提示，並允許高差價交易，這通常會導致匯率差和資金損失。"
-
-#: src/pages/Pool/CTACards.tsx
-msgid "Explore popular pools on Uniswap Analytics."
-msgstr "在Uniswap Analytics上探索熱門池。"
 
 #: src/components/PositionPreview/index.tsx
 msgid "Fee Tier"
@@ -1392,10 +1384,6 @@ msgstr "代幣"
 msgid "Tokens from inactive lists. Import specific tokens below or click Manage to activate more lists."
 msgstr "非活動列表中的令牌。在下面導入特定令牌或單擊“管理”以激活更多列表。"
 
-#: src/pages/Pool/CTACards.tsx
-msgid "Top pools"
-msgstr "頂級泳池"
-
 #: src/components/Header/UniBalanceContent.tsx
 msgid "Total Supply"
 msgstr "總供給"
@@ -1473,10 +1461,6 @@ msgstr "無人認領："
 #: src/pages/Vote/index.tsx
 msgid "Uniswap Governance"
 msgstr "Uniswap治理"
-
-#: src/pages/Pool/CTACards.tsx
-msgid "Uniswap V3 is here!"
-msgstr "Uniswap V3在這裡！"
 
 #: src/pages/Earn/index.tsx
 msgid "Uniswap liquidity mining"

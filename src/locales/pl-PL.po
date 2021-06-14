@@ -325,10 +325,6 @@ msgstr "Zmiana"
 msgid "Charts"
 msgstr "Wykresy"
 
-#: src/pages/Pool/CTACards.tsx
-msgid "Check out our v3 LP walkthrough and migration guides."
-msgstr "Sprawdź nasze v3 LP spackthrough i przewodniki migracji."
-
 #: src/components/earn/ClaimRewardModal.tsx
 #: src/components/earn/ClaimRewardModal.tsx
 #: src/pages/Earn/Manage.tsx
@@ -685,10 +681,6 @@ msgstr "Rozszerzone wyniki z nieaktywnych list tokenów"
 #: src/components/Settings/index.tsx
 msgid "Expert mode turns off the confirm transaction prompt and allows high slippage trades that often result in bad rates and lost funds."
 msgstr "Tryb ekspercki wyłącza monit potwierdzania transakcji i umożliwia transakcje o wysokim poślizgu, które często skutkują złymi stawkami i straconymi środkami."
-
-#: src/pages/Pool/CTACards.tsx
-msgid "Explore popular pools on Uniswap Analytics."
-msgstr "Przeglądaj popularne pule w Uniswap Analytics."
 
 #: src/components/PositionPreview/index.tsx
 msgid "Fee Tier"
@@ -1392,10 +1384,6 @@ msgstr "Tokeny"
 msgid "Tokens from inactive lists. Import specific tokens below or click Manage to activate more lists."
 msgstr "Tokeny z nieaktywnych list. Zaimportuj określone tokeny poniżej lub kliknij Zarządzaj, aby aktywować więcej list."
 
-#: src/pages/Pool/CTACards.tsx
-msgid "Top pools"
-msgstr "Najlepsze pule"
-
 #: src/components/Header/UniBalanceContent.tsx
 msgid "Total Supply"
 msgstr "Całkowite podaż"
@@ -1473,10 +1461,6 @@ msgstr "Niezgłoszony:"
 #: src/pages/Vote/index.tsx
 msgid "Uniswap Governance"
 msgstr "Zarządzanie Uniswap"
-
-#: src/pages/Pool/CTACards.tsx
-msgid "Uniswap V3 is here!"
-msgstr "Uniswap V3 jest tutaj!"
 
 #: src/pages/Earn/index.tsx
 msgid "Uniswap liquidity mining"

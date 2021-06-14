@@ -325,10 +325,6 @@ msgstr "Ändra"
 msgid "Charts"
 msgstr "Diagram"
 
-#: src/pages/Pool/CTACards.tsx
-msgid "Check out our v3 LP walkthrough and migration guides."
-msgstr "Kolla in våra v3 LP genomgång och migrationsguider."
-
 #: src/components/earn/ClaimRewardModal.tsx
 #: src/components/earn/ClaimRewardModal.tsx
 #: src/pages/Earn/Manage.tsx
@@ -685,10 +681,6 @@ msgstr "Utökade resultat från inaktiva tokenlistor"
 #: src/components/Settings/index.tsx
 msgid "Expert mode turns off the confirm transaction prompt and allows high slippage trades that often result in bad rates and lost funds."
 msgstr "Expert-läge stänger av bekräfta transaktion snabb och tillåter hög glidning avslut som ofta resulterar i dåliga räntor och förlorade medel."
-
-#: src/pages/Pool/CTACards.tsx
-msgid "Explore popular pools on Uniswap Analytics."
-msgstr "Utforska populära pooler på Uniswap Analytics."
 
 #: src/components/PositionPreview/index.tsx
 msgid "Fee Tier"
@@ -1392,10 +1384,6 @@ msgstr "Tokens"
 msgid "Tokens from inactive lists. Import specific tokens below or click Manage to activate more lists."
 msgstr "Tokens från inaktiva listor. Importera specifika tokens nedan eller klicka på Hantera för att aktivera fler listor."
 
-#: src/pages/Pool/CTACards.tsx
-msgid "Top pools"
-msgstr "Övre pooler"
-
 #: src/components/Header/UniBalanceContent.tsx
 msgid "Total Supply"
 msgstr "Totalt tilluft"
@@ -1473,10 +1461,6 @@ msgstr "Ohävdad:"
 #: src/pages/Vote/index.tsx
 msgid "Uniswap Governance"
 msgstr "Uniswap styrning"
-
-#: src/pages/Pool/CTACards.tsx
-msgid "Uniswap V3 is here!"
-msgstr "Uniswap V3 är här!"
 
 #: src/pages/Earn/index.tsx
 msgid "Uniswap liquidity mining"

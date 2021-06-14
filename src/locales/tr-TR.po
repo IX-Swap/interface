@@ -325,10 +325,6 @@ msgstr "Değişiklik"
 msgid "Charts"
 msgstr "Grafikler"
 
-#: src/pages/Pool/CTACards.tsx
-msgid "Check out our v3 LP walkthrough and migration guides."
-msgstr "V3 LP adım adım açıklamalı kılavuzumuza ve geçiş kılavuzlarımıza göz atın."
-
 #: src/components/earn/ClaimRewardModal.tsx
 #: src/components/earn/ClaimRewardModal.tsx
 #: src/pages/Earn/Manage.tsx
@@ -685,10 +681,6 @@ msgstr "Etkin olmayan Jeton Listelerinden genişletilmiş sonuçlar"
 #: src/components/Settings/index.tsx
 msgid "Expert mode turns off the confirm transaction prompt and allows high slippage trades that often result in bad rates and lost funds."
 msgstr "Uzman modu, işlem onayı istemini kapatır ve genellikle düşük oranlara ve kayıp fonlara neden olan yüksek kayma işlemlerine izin verir."
-
-#: src/pages/Pool/CTACards.tsx
-msgid "Explore popular pools on Uniswap Analytics."
-msgstr "Uniswap Analytics'teki popüler havuzları keşfedin."
 
 #: src/components/PositionPreview/index.tsx
 msgid "Fee Tier"
@@ -1392,10 +1384,6 @@ msgstr "Jetonlar"
 msgid "Tokens from inactive lists. Import specific tokens below or click Manage to activate more lists."
 msgstr "Etkin olmayan listelerden gelen belirteçler. Aşağıdan belirli jetonları içe aktarın veya daha fazla listeyi etkinleştirmek için Yönet'i tıklayın."
 
-#: src/pages/Pool/CTACards.tsx
-msgid "Top pools"
-msgstr "En iyi havuzlar"
-
 #: src/components/Header/UniBalanceContent.tsx
 msgid "Total Supply"
 msgstr "Toplam Arz"
@@ -1473,10 +1461,6 @@ msgstr "Sahipsiz:"
 #: src/pages/Vote/index.tsx
 msgid "Uniswap Governance"
 msgstr "Uniswap Yönetişimi"
-
-#: src/pages/Pool/CTACards.tsx
-msgid "Uniswap V3 is here!"
-msgstr "Uniswap V3 burada!"
 
 #: src/pages/Earn/index.tsx
 msgid "Uniswap liquidity mining"

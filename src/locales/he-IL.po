@@ -325,10 +325,6 @@ msgstr "שינוי"
 msgid "Charts"
 msgstr "תרשימים"
 
-#: src/pages/Pool/CTACards.tsx
-msgid "Check out our v3 LP walkthrough and migration guides."
-msgstr "עיין במדריכי ההדרכה וההעברה של v3 LP שלנו."
-
 #: src/components/earn/ClaimRewardModal.tsx
 #: src/components/earn/ClaimRewardModal.tsx
 #: src/pages/Earn/Manage.tsx
@@ -685,10 +681,6 @@ msgstr "תוצאות מורחבות מרשימות אסימון לא פעילו�
 #: src/components/Settings/index.tsx
 msgid "Expert mode turns off the confirm transaction prompt and allows high slippage trades that often result in bad rates and lost funds."
 msgstr "מצב מומחה מכבה את בקשת האישור לעסקה ומאפשר עסקאות החלקה גבוהות שלעתים קרובות גורמות לשיעורים גרועים ולאיבוד כספים."
-
-#: src/pages/Pool/CTACards.tsx
-msgid "Explore popular pools on Uniswap Analytics."
-msgstr "חקור בריכות פופולריות ב- Uniswap Analytics."
 
 #: src/components/PositionPreview/index.tsx
 msgid "Fee Tier"
@@ -1392,10 +1384,6 @@ msgstr "אסימונים"
 msgid "Tokens from inactive lists. Import specific tokens below or click Manage to activate more lists."
 msgstr "אסימונים מרשימות לא פעילות. ייבא אסימונים ספציפיים למטה או לחץ על נהל כדי להפעיל רשימות נוספות."
 
-#: src/pages/Pool/CTACards.tsx
-msgid "Top pools"
-msgstr "בריכות מובילות"
-
 #: src/components/Header/UniBalanceContent.tsx
 msgid "Total Supply"
 msgstr "סך ההיצע"
@@ -1473,10 +1461,6 @@ msgstr "ללא דרישה:"
 #: src/pages/Vote/index.tsx
 msgid "Uniswap Governance"
 msgstr "ממשל לא מוחלף"
-
-#: src/pages/Pool/CTACards.tsx
-msgid "Uniswap V3 is here!"
-msgstr "Un3wap V3 כבר כאן!"
 
 #: src/pages/Earn/index.tsx
 msgid "Uniswap liquidity mining"

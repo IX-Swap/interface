@@ -325,10 +325,6 @@ msgstr "Perubahan"
 msgid "Charts"
 msgstr "Grafik"
 
-#: src/pages/Pool/CTACards.tsx
-msgid "Check out our v3 LP walkthrough and migration guides."
-msgstr "Lihat panduan migrasi dan panduan v3 LP kami."
-
 #: src/components/earn/ClaimRewardModal.tsx
 #: src/components/earn/ClaimRewardModal.tsx
 #: src/pages/Earn/Manage.tsx
@@ -685,10 +681,6 @@ msgstr "Hasil yang diperluas dari Daftar Token yang tidak aktif"
 #: src/components/Settings/index.tsx
 msgid "Expert mode turns off the confirm transaction prompt and allows high slippage trades that often result in bad rates and lost funds."
 msgstr "Mode ahli mematikan permintaan konfirmasi transaksi dan memungkinkan perdagangan selip tinggi yang sering kali mengakibatkan suku bunga buruk dan dana hilang."
-
-#: src/pages/Pool/CTACards.tsx
-msgid "Explore popular pools on Uniswap Analytics."
-msgstr "Jelajahi kumpulan populer di Uniswap Analytics."
 
 #: src/components/PositionPreview/index.tsx
 msgid "Fee Tier"
@@ -1392,10 +1384,6 @@ msgstr "Token"
 msgid "Tokens from inactive lists. Import specific tokens below or click Manage to activate more lists."
 msgstr "Token dari daftar tidak aktif. Impor token tertentu di bawah atau klik Kelola untuk mengaktifkan lebih banyak daftar."
 
-#: src/pages/Pool/CTACards.tsx
-msgid "Top pools"
-msgstr "Kolam atas"
-
 #: src/components/Header/UniBalanceContent.tsx
 msgid "Total Supply"
 msgstr "Total Pasokan"
@@ -1473,10 +1461,6 @@ msgstr "Tidak diklaim:"
 #: src/pages/Vote/index.tsx
 msgid "Uniswap Governance"
 msgstr "Tata Kelola Uniswap"
-
-#: src/pages/Pool/CTACards.tsx
-msgid "Uniswap V3 is here!"
-msgstr "Uniswap V3 ada di sini!"
 
 #: src/pages/Earn/index.tsx
 msgid "Uniswap liquidity mining"

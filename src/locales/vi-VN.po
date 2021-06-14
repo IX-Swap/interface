@@ -325,10 +325,6 @@ msgstr "Thay đổi"
 msgid "Charts"
 msgstr "Biểu đồ"
 
-#: src/pages/Pool/CTACards.tsx
-msgid "Check out our v3 LP walkthrough and migration guides."
-msgstr "Xem hướng dẫn di chuyển và hướng dẫn v3 LP của chúng tôi."
-
 #: src/components/earn/ClaimRewardModal.tsx
 #: src/components/earn/ClaimRewardModal.tsx
 #: src/pages/Earn/Manage.tsx
@@ -685,10 +681,6 @@ msgstr "Kết quả mở rộng từ Danh sách mã thông báo không hoạt đ
 #: src/components/Settings/index.tsx
 msgid "Expert mode turns off the confirm transaction prompt and allows high slippage trades that often result in bad rates and lost funds."
 msgstr "Chế độ chuyên gia tắt nhắc nhở xác nhận giao dịch và cho phép các giao dịch trượt giá cao thường dẫn đến tỷ giá xấu và mất tiền."
-
-#: src/pages/Pool/CTACards.tsx
-msgid "Explore popular pools on Uniswap Analytics."
-msgstr "Khám phá các nhóm phổ biến trên Uniswap Analytics."
 
 #: src/components/PositionPreview/index.tsx
 msgid "Fee Tier"
@@ -1392,10 +1384,6 @@ msgstr "Mã thông báo"
 msgid "Tokens from inactive lists. Import specific tokens below or click Manage to activate more lists."
 msgstr "Mã thông báo từ danh sách không hoạt động. Nhập mã thông báo cụ thể bên dưới hoặc nhấp vào Quản lý để kích hoạt thêm danh sách."
 
-#: src/pages/Pool/CTACards.tsx
-msgid "Top pools"
-msgstr "Hồ bơi hàng đầu"
-
 #: src/components/Header/UniBalanceContent.tsx
 msgid "Total Supply"
 msgstr "Tổng cung"
@@ -1473,10 +1461,6 @@ msgstr "Không có người nhận:"
 #: src/pages/Vote/index.tsx
 msgid "Uniswap Governance"
 msgstr "Quản trị Uniswap"
-
-#: src/pages/Pool/CTACards.tsx
-msgid "Uniswap V3 is here!"
-msgstr "Uniswap V3 là ở đây!"
 
 #: src/pages/Earn/index.tsx
 msgid "Uniswap liquidity mining"

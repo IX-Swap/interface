@@ -325,10 +325,6 @@ msgstr "変更"
 msgid "Charts"
 msgstr "チャート"
 
-#: src/pages/Pool/CTACards.tsx
-msgid "Check out our v3 LP walkthrough and migration guides."
-msgstr "私たちのv3 LPウォークスルーと移行ガイドをご覧ください。"
-
 #: src/components/earn/ClaimRewardModal.tsx
 #: src/components/earn/ClaimRewardModal.tsx
 #: src/pages/Earn/Manage.tsx
@@ -685,10 +681,6 @@ msgstr "非アクティブなトークンリストから展開された結果"
 #: src/components/Settings/index.tsx
 msgid "Expert mode turns off the confirm transaction prompt and allows high slippage trades that often result in bad rates and lost funds."
 msgstr "エキスパートモードは確認トランザクションプロンプトをオフにし、多くの場合、不良率や資金を失う可能性が高いスリップページ取引を可能にします。"
-
-#: src/pages/Pool/CTACards.tsx
-msgid "Explore popular pools on Uniswap Analytics."
-msgstr "Uniswap Analyticsで人気のプールを探索します。"
 
 #: src/components/PositionPreview/index.tsx
 msgid "Fee Tier"
@@ -1392,10 +1384,6 @@ msgstr "トークン"
 msgid "Tokens from inactive lists. Import specific tokens below or click Manage to activate more lists."
 msgstr "非アクティブなリストからのトークン。以下の特定のトークンをインポートするか、[管理]をクリックしてさらにリストをアクティブにします。"
 
-#: src/pages/Pool/CTACards.tsx
-msgid "Top pools"
-msgstr "トッププール"
-
 #: src/components/Header/UniBalanceContent.tsx
 msgid "Total Supply"
 msgstr "総供給量"
@@ -1473,10 +1461,6 @@ msgstr "未請求："
 #: src/pages/Vote/index.tsx
 msgid "Uniswap Governance"
 msgstr "ガバナンスを一元化"
-
-#: src/pages/Pool/CTACards.tsx
-msgid "Uniswap V3 is here!"
-msgstr "ユニスワップV3はここにあります!"
 
 #: src/pages/Earn/index.tsx
 msgid "Uniswap liquidity mining"

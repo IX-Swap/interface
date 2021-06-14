@@ -325,10 +325,6 @@ msgstr "Muuta"
 msgid "Charts"
 msgstr "Kaaviot"
 
-#: src/pages/Pool/CTACards.tsx
-msgid "Check out our v3 LP walkthrough and migration guides."
-msgstr "Tutustu meidän v3 LP kävely- ja muuttooppaita."
-
 #: src/components/earn/ClaimRewardModal.tsx
 #: src/components/earn/ClaimRewardModal.tsx
 #: src/pages/Earn/Manage.tsx
@@ -685,10 +681,6 @@ msgstr "Laajennetut tulokset passiivisista Tokent-listoista"
 #: src/components/Settings/index.tsx
 msgid "Expert mode turns off the confirm transaction prompt and allows high slippage trades that often result in bad rates and lost funds."
 msgstr "Asiantuntijatila sammuttaa vahvistavan tapahtuman kehotuksen ja mahdollistaa korkean lipsumisen kaupat, jotka johtavat usein huonoihin hintoihin ja menetti varoja."
-
-#: src/pages/Pool/CTACards.tsx
-msgid "Explore popular pools on Uniswap Analytics."
-msgstr "Tutki suosittuja pooleja Uniswap Analyticsissä."
 
 #: src/components/PositionPreview/index.tsx
 msgid "Fee Tier"
@@ -1392,10 +1384,6 @@ msgstr "Tokenit"
 msgid "Tokens from inactive lists. Import specific tokens below or click Manage to activate more lists."
 msgstr "Tunnukset passiivisista luetteloista. Tuo tietyt tunnukset alla tai aktivoi lisää luetteloita napsauttamalla Hallitse."
 
-#: src/pages/Pool/CTACards.tsx
-msgid "Top pools"
-msgstr "Parhaat altaat"
-
 #: src/components/Header/UniBalanceContent.tsx
 msgid "Total Supply"
 msgstr "Tarjonta Yhteensä"
@@ -1473,10 +1461,6 @@ msgstr "Vaatettamaton:"
 #: src/pages/Vote/index.tsx
 msgid "Uniswap Governance"
 msgstr "Uniswap Hallinto"
-
-#: src/pages/Pool/CTACards.tsx
-msgid "Uniswap V3 is here!"
-msgstr "Uniswap V3 on täällä!"
 
 #: src/pages/Earn/index.tsx
 msgid "Uniswap liquidity mining"

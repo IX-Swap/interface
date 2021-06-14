@@ -1,11 +1,11 @@
 import {
   priceToClosestTick,
   nearestUsableTick,
-  FeeAmount,
   TICK_SPACINGS,
   encodeSqrtRatioX96,
   TickMath,
 } from '@uniswap/v3-sdk/dist/'
+import { FeeAmount } from 'constants/enums'
 import { Price, Token } from '@uniswap/sdk-core'
 import { tryParseAmount } from 'state/swap/helpers'
 import JSBI from 'jsbi'

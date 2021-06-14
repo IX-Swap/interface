@@ -5,7 +5,6 @@ import JSBI from 'jsbi'
 import { PoolState } from '../../../hooks/usePools'
 import {
   Pool,
-  FeeAmount,
   Position,
   priceToClosestTick,
   TickMath,
@@ -13,6 +12,7 @@ import {
   TICK_SPACINGS,
   encodeSqrtRatioX96,
 } from '@uniswap/v3-sdk/dist/'
+import { FeeAmount } from 'constants/enums'
 import { Currency, Token, CurrencyAmount, Price, Rounding } from '@uniswap/sdk-core'
 import { useCallback, useMemo } from 'react'
 import { useDispatch, useSelector } from 'react-redux'

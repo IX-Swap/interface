@@ -325,10 +325,6 @@ msgstr "تغيير"
 msgid "Charts"
 msgstr "الرسوم البيانية"
 
-#: src/pages/Pool/CTACards.tsx
-msgid "Check out our v3 LP walkthrough and migration guides."
-msgstr "تحقق من دلائل المشي والترحيل الخاصة بنا في v3 LP."
-
 #: src/components/earn/ClaimRewardModal.tsx
 #: src/components/earn/ClaimRewardModal.tsx
 #: src/pages/Earn/Manage.tsx
@@ -685,10 +681,6 @@ msgstr "النتائج الموسعة من قوائم الرموز غير الن
 #: src/components/Settings/index.tsx
 msgid "Expert mode turns off the confirm transaction prompt and allows high slippage trades that often result in bad rates and lost funds."
 msgstr "وضع الخبراء يلغي تأكيد سرعة المعاملات ويسمح بتداول صفحات التسلل المرتفعة التي غالبا ما تؤدي إلى معدلات رديئة والأموال المفقودة."
-
-#: src/pages/Pool/CTACards.tsx
-msgid "Explore popular pools on Uniswap Analytics."
-msgstr "استكشف المجمعات الشعبية على تحليلات Uniswap."
 
 #: src/components/PositionPreview/index.tsx
 msgid "Fee Tier"
@@ -1392,10 +1384,6 @@ msgstr "الرموز"
 msgid "Tokens from inactive lists. Import specific tokens below or click Manage to activate more lists."
 msgstr "الرموز من القوائم غير النشطة. قم باستيراد الرموز المميزة المحددة أدناه أو انقر فوق \"إدارة\" لتنشيط المزيد من القوائم."
 
-#: src/pages/Pool/CTACards.tsx
-msgid "Top pools"
-msgstr "أفضل المخازن"
-
 #: src/components/Header/UniBalanceContent.tsx
 msgid "Total Supply"
 msgstr "إجمالي الإمدادات"
@@ -1473,10 +1461,6 @@ msgstr "غير المطالبة:"
 #: src/pages/Vote/index.tsx
 msgid "Uniswap Governance"
 msgstr "إدارة Uniswitp"
-
-#: src/pages/Pool/CTACards.tsx
-msgid "Uniswap V3 is here!"
-msgstr "Uniswap V3 هنا!"
 
 #: src/pages/Earn/index.tsx
 msgid "Uniswap liquidity mining"

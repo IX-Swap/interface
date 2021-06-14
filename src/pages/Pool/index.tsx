@@ -17,7 +17,6 @@ import { LoadingRows } from './styleds'
 import Toggle from 'components/Toggle'
 import { useUserHideClosedPositions } from 'state/user/hooks'
 
-import CTACards from './CTACards'
 import { PositionDetails } from 'types/position'
 
 const PageWrapper = styled(AutoColumn)`
@@ -197,8 +196,6 @@ export default function Pool() {
                 </ResponsiveButtonPrimary>
               </ButtonRow>
             </TitleRow>
-
-            <CTACards />
 
             {closedPositions.length > 0 ? (
               <ShowInactiveToggle>

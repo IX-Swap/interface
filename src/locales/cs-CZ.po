@@ -325,10 +325,6 @@ msgstr "Změnit"
 msgid "Charts"
 msgstr "Grafy"
 
-#: src/pages/Pool/CTACards.tsx
-msgid "Check out our v3 LP walkthrough and migration guides."
-msgstr "Podívejte se na naše průvodce v3 LP a migrační průvodce."
-
 #: src/components/earn/ClaimRewardModal.tsx
 #: src/components/earn/ClaimRewardModal.tsx
 #: src/pages/Earn/Manage.tsx
@@ -685,10 +681,6 @@ msgstr "Rozšířené výsledky z neaktivních tokenů"
 #: src/components/Settings/index.tsx
 msgid "Expert mode turns off the confirm transaction prompt and allows high slippage trades that often result in bad rates and lost funds."
 msgstr "Expert režim vypne výzvu k potvrzení transakce a umožní velké skluzové obchody, které často vedou ke špatným sazbám a ztrátě finančních prostředků."
-
-#: src/pages/Pool/CTACards.tsx
-msgid "Explore popular pools on Uniswap Analytics."
-msgstr "Prozkoumejte populární bazény na Uniswap Analytics."
 
 #: src/components/PositionPreview/index.tsx
 msgid "Fee Tier"
@@ -1392,10 +1384,6 @@ msgstr "Tokeny"
 msgid "Tokens from inactive lists. Import specific tokens below or click Manage to activate more lists."
 msgstr "Tokeny z neaktivních seznamů. Níže importujte konkrétní tokeny nebo kliknutím na Spravovat aktivujte další seznamy."
 
-#: src/pages/Pool/CTACards.tsx
-msgid "Top pools"
-msgstr "Horní skupiny"
-
 #: src/components/Header/UniBalanceContent.tsx
 msgid "Total Supply"
 msgstr "Celkový přívod"
@@ -1473,10 +1461,6 @@ msgstr "Nenárokované:"
 #: src/pages/Vote/index.tsx
 msgid "Uniswap Governance"
 msgstr "Uniswapová správa"
-
-#: src/pages/Pool/CTACards.tsx
-msgid "Uniswap V3 is here!"
-msgstr "Uniswap V3 je tady!"
 
 #: src/pages/Earn/index.tsx
 msgid "Uniswap liquidity mining"
