@@ -12,7 +12,7 @@ import { useETHBalances } from '../../state/wallet/hooks'
 import { CardNoise } from '../earn/styled'
 import { TYPE } from '../../theme'
 
-import { YellowCard } from '../Card'
+import { VioletCard, YellowCard } from '../Card'
 
 import { RowFixed } from '../Row'
 import Web3Status from '../Web3Status'
@@ -149,9 +149,9 @@ const HideSmall = styled.span`
   `};
 `
 
-const NetworkCard = styled(YellowCard)`
+const NetworkCard = styled(VioletCard)`
   border-radius: 12px;
-  padding: 8px 12px;
+  padding: 2px 12px;
   ${({ theme }) => theme.mediaWidth.upToSmall`
     margin: 0;
     margin-right: 0.5rem;

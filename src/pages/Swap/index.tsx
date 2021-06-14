@@ -6,21 +6,19 @@ import { AdvancedSwapDetails } from 'components/swap/AdvancedSwapDetails'
 import UnsupportedCurrencyFooter from 'components/swap/UnsupportedCurrencyFooter'
 import { MouseoverTooltip, MouseoverTooltipContent } from 'components/Tooltip'
 import JSBI from 'jsbi'
-import { CheckCircle, HelpCircle, Info, ArrowLeft } from 'react-feather'
+import { CheckCircle, HelpCircle, Info } from 'react-feather'
 import { ReactComponent as ArrowDown } from '../../assets/images/arrow.svg'
 import ReactGA from 'react-ga'
-import { Link, RouteComponentProps } from 'react-router-dom'
+import { RouteComponentProps } from 'react-router-dom'
 import { Text } from 'rebass'
 import styled, { ThemeContext } from 'styled-components'
 import AddressInputPanel from '../../components/AddressInputPanel'
-import { ButtonConfirmed, ButtonGray, ButtonIXSWide } from '../../components/Button'
-import { GreyCard } from '../../components/Card'
+import { ButtonConfirmed, ButtonIXSWide } from '../../components/Button'
 import { AutoColumn } from '../../components/Column'
 import CurrencyInputPanel from '../../components/CurrencyInputPanel'
 import CurrencyLogo from '../../components/CurrencyLogo'
 import Loader from '../../components/Loader'
 import Row, { AutoRow, RowFixed } from '../../components/Row'
-import BetterTradeLink from '../../components/swap/BetterTradeLink'
 import confirmPriceImpactWithoutFee from '../../components/swap/confirmPriceImpactWithoutFee'
 import ConfirmSwapModal from '../../components/swap/ConfirmSwapModal'
 
@@ -49,10 +47,9 @@ import {
   useSwapState,
 } from '../../state/swap/hooks'
 import { useExpertModeManager, useUserSingleHopOnly } from '../../state/user/hooks'
-import { HideSmall, LinkStyledButton, TYPE } from '../../theme'
+import { LinkStyledButton, TYPE } from '../../theme'
 import { computeFiatValuePriceImpact } from '../../utils/computeFiatValuePriceImpact'
 import { getTradeVersion } from '../../utils/getTradeVersion'
-import { isTradeBetter } from '../../utils/isTradeBetter'
 import { maxAmountSpend } from '../../utils/maxAmountSpend'
 import { warningSeverity } from '../../utils/prices'
 import AppBody from '../AppBody'
@@ -67,7 +64,14 @@ const StyledInfo = styled(Info)`
     opacity: 0.8;
   }
 `
-
+const RateRow = styled(Row)<{ active: boolean }>`
+  justify-content: space-between;
+  opacity: ${({ active }) => (active ? 1 : 0.5)};
+  font-weight: 500;
+  font-size: 14px;
+  line-height: 21px;
+  color: ${({ theme }) => theme.text2};
+`
 export default function Swap({ history }: RouteComponentProps) {
   const { dismissTokenWarning, handleDismissTokenWarning, handleConfirmTokenWarning } = useDismissTokenWarning(history)
   const { importTokensNotInDefault } = useImportNonDefaultTokens()
@@ -348,7 +352,7 @@ export default function Swap({ history }: RouteComponentProps) {
             onDismiss={handleConfirmDismiss}
           />
 
-          <AutoColumn gap={'md'}>
+          <AutoColumn gap={'1.25rem'}>
             <div style={{ display: 'relative' }}>
               <CurrencyInputPanel
                 label={
@@ -409,59 +413,9 @@ export default function Swap({ history }: RouteComponentProps) {
             ) : null}
 
             {showWrap ? null : (
-              <Row style={{ justifyContent: !trade ? 'center' : 'space-between' }}>
+              <RateRow active={!!trade}>
                 <RowFixed>
-                  {[V3TradeState.VALID, V3TradeState.SYNCING, V3TradeState.NO_ROUTE_FOUND].includes(v3TradeState) &&
-                    (toggledVersion === Version.v3 && isTradeBetter(v3Trade, v2Trade) ? (
-                      <BetterTradeLink version={Version.v2} otherTradeNonexistent={!v3Trade} />
-                    ) : toggledVersion === Version.v2 && isTradeBetter(v2Trade, v3Trade) ? (
-                      <BetterTradeLink version={Version.v3} otherTradeNonexistent={!v2Trade} />
-                    ) : (
-                      toggledVersion === Version.v2 && (
-                        <ButtonGray
-                          width="fit-content"
-                          padding="0.1rem 0.5rem 0.1rem 0.35rem"
-                          as={Link}
-                          to="/swap"
-                          style={{
-                            display: 'flex',
-                            justifyContent: 'space-between',
-                            alignItems: 'center',
-                            height: '24px',
-                            opacity: 0.8,
-                            lineHeight: '120%',
-                            marginLeft: '0.75rem',
-                          }}
-                        >
-                          <ArrowLeft color={theme.text3} size={12} /> &nbsp;
-                          <TYPE.main style={{ lineHeight: '120%' }} fontSize={12}>
-                            <Trans>
-                              <HideSmall>Back to </HideSmall>
-                              V3
-                            </Trans>
-                          </TYPE.main>
-                        </ButtonGray>
-                      )
-                    ))}
-
-                  {toggledVersion === Version.v3 && trade && isTradeBetter(v2Trade, v3Trade) && (
-                    <ButtonGray
-                      width="fit-content"
-                      padding="0.1rem 0.5rem"
-                      disabled
-                      style={{
-                        display: 'flex',
-                        justifyContent: 'space-between',
-                        height: '24px',
-                        opacity: 0.4,
-                        marginLeft: '0.25rem',
-                      }}
-                    >
-                      <TYPE.black fontSize={12}>
-                        <Trans>V3</Trans>
-                      </TYPE.black>
-                    </ButtonGray>
-                  )}
+                  <Trans>Current Rate</Trans>
                 </RowFixed>
                 {trade ? (
                   <RowFixed>
@@ -476,8 +430,12 @@ export default function Swap({ history }: RouteComponentProps) {
                       <StyledInfo />
                     </MouseoverTooltipContent>
                   </RowFixed>
-                ) : null}
-              </Row>
+                ) : (
+                  <Row justify="center" maxWidth="5rem">
+                    -
+                  </Row>
+                )}
+              </RateRow>
             )}
 
             <BottomGrouping>
@@ -501,7 +459,7 @@ export default function Swap({ history }: RouteComponentProps) {
                     ) : null)}
                 </ButtonIXSWide>
               ) : routeNotFound && userHasSpecifiedInputOutput ? (
-                <GreyCard style={{ textAlign: 'center' }}>
+                <ButtonIXSWide style={{ textAlign: 'center' }}>
                   <TYPE.main mb="4px">
                     {isLoadingRoute ? (
                       <Dots>
@@ -513,7 +471,7 @@ export default function Swap({ history }: RouteComponentProps) {
                       <Trans>Insufficient liquidity for this trade.</Trans>
                     )}
                   </TYPE.main>
-                </GreyCard>
+                </ButtonIXSWide>
               ) : showApproveFlow ? (
                 <AutoRow style={{ flexWrap: 'nowrap', width: '100%' }}>
                   <AutoColumn style={{ width: '100%' }} gap="12px">
@@ -541,7 +499,7 @@ export default function Swap({ history }: RouteComponentProps) {
                           {approvalState === ApprovalState.APPROVED || signatureState === UseERC20PermitState.SIGNED ? (
                             <Trans>You can now trade {currencies[Field.INPUT]?.symbol}</Trans>
                           ) : (
-                            <Trans>Allow the Uniswap Protocol to use your {currencies[Field.INPUT]?.symbol}</Trans>
+                            <Trans>Allow the IXSwap Protocol to use your {currencies[Field.INPUT]?.symbol}</Trans>
                           )}
                         </span>
                         {approvalState === ApprovalState.PENDING ? (
@@ -553,7 +511,7 @@ export default function Swap({ history }: RouteComponentProps) {
                           <MouseoverTooltip
                             text={
                               <Trans>
-                                You must give the Uniswap smart contracts permission to use your{' '}
+                                You must give the IXSwap smart contracts permission to use your{' '}
                                 {currencies[Field.INPUT]?.symbol}. You only have to do this once per token.
                               </Trans>
                             }

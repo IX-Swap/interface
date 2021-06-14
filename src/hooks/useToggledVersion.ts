@@ -5,7 +5,7 @@ export enum Version {
   v3 = 'V3',
 }
 
-export const DEFAULT_VERSION: Version = Version.v3
+export const DEFAULT_VERSION: Version = Version.v2
 
 export default function useToggledVersion(): Version {
   const { use } = useParsedQueryString()
