@@ -12,7 +12,7 @@ import { useETHBalances } from '../../state/wallet/hooks'
 import { CardNoise } from '../earn/styled'
 import { TYPE } from '../../theme'
 
-import { VioletCard, YellowCard } from '../Card'
+import { VioletCard } from '../Card'
 
 import { RowFixed } from '../Row'
 import Web3Status from '../Web3Status'

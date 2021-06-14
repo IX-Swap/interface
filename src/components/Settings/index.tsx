@@ -66,7 +66,7 @@ export default function SettingsTab({ placeholderSlippage }: { placeholderSlippa
   const open = useModalOpen(ApplicationModal.SETTINGS)
   const toggle = useToggleSettingsMenu()
 
-  const [expertMode, toggleExpertMode] = useExpertModeManager()
+  const { expertMode } = useExpertModeManager()
 
   useOnClickOutside(node, open ? toggle : undefined)
 

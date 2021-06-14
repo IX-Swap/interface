@@ -86,7 +86,7 @@ const SettingsModal = React.forwardRef(({ placeholderSlippage }: { placeholderSl
 
   const theme = useContext(ThemeContext)
 
-  const [expertMode, toggleExpertMode] = useExpertModeManager()
+  const { expertMode, toggleExpertMode } = useExpertModeManager()
 
   const [singleHopOnly, setSingleHopOnly] = useUserSingleHopOnly()
 

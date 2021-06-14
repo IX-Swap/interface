@@ -165,8 +165,8 @@ msgid "Add Liquidity"
 msgstr "Liquidity toevoegen"
 
 #: src/pages/Pool/v2.tsx
-msgid "Add V2 Liquidity"
-msgstr "V2 Liquiditeit toevoegen"
+msgid "Add Liquidity"
+msgstr "Liquiditeit toevoegen"
 
 #: src/pages/PoolFinder/index.tsx
 msgid "Add liquidity."

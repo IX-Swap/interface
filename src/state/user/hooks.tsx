@@ -18,7 +18,6 @@ import {
   toggleURLWarning,
   updateUserDarkMode,
   updateUserDeadline,
-  updateHideClosedPositions,
   updateUserExpertMode,
   updateUserSingleHopOnly,
   updateUserSlippageTolerance,
@@ -94,7 +93,7 @@ export function useIsExpertMode(): boolean {
   return useSelector<AppState, AppState['user']['userExpertMode']>((state) => state.user.userExpertMode)
 }
 
-export function useExpertModeManager(): [boolean, () => void] {
+export function useExpertModeManager(): { expertMode: boolean; toggleExpertMode: () => void } {
   const dispatch = useDispatch<AppDispatch>()
   const expertMode = useIsExpertMode()
 
@@ -102,7 +101,7 @@ export function useExpertModeManager(): [boolean, () => void] {
     dispatch(updateUserExpertMode({ userExpertMode: !expertMode }))
   }, [expertMode, dispatch])
 
-  return [expertMode, toggleSetExpertMode]
+  return { expertMode, toggleExpertMode: toggleSetExpertMode }
 }
 
 export function useUserSingleHopOnly(): [boolean, (newSingleHopOnly: boolean) => void] {
@@ -156,23 +155,6 @@ export function useUserSlippageTolerance(): Percent | 'auto' {
     () => (userSlippageTolerance === 'auto' ? 'auto' : new Percent(userSlippageTolerance, 10_000)),
     [userSlippageTolerance]
   )
-}
-
-export function useUserHideClosedPositions(): [boolean, (newHideClosedPositions: boolean) => void] {
-  const dispatch = useDispatch<AppDispatch>()
-
-  const hideClosedPositions = useSelector<AppState, AppState['user']['userHideClosedPositions']>(
-    (state) => state.user.userHideClosedPositions
-  )
-
-  const setHideClosedPositions = useCallback(
-    (newHideClosedPositions: boolean) => {
-      dispatch(updateHideClosedPositions({ userHideClosedPositions: newHideClosedPositions }))
-    },
-    [dispatch]
-  )
-
-  return [hideClosedPositions, setHideClosedPositions]
 }
 
 /**

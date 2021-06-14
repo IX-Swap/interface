@@ -38,7 +38,7 @@ interface props {
   toggleConfirmation: (arg: boolean) => void
 }
 export const ExpertModeModal = ({ showConfirmation = false, toggleConfirmation }: props) => {
-  const [expertMode, toggleExpertMode] = useExpertModeManager()
+  const { toggleExpertMode } = useExpertModeManager()
 
   return (
     <Modal isOpen={showConfirmation} onDismiss={() => toggleConfirmation(false)} maxHeight={100}>

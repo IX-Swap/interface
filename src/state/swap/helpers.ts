@@ -1,5 +1,4 @@
 import JSBI from 'jsbi'
-import { Trade as V3Trade } from '@uniswap/v3-sdk'
 import { parseUnits } from '@ethersproject/units'
 import { Currency, CurrencyAmount, TradeType } from '@uniswap/sdk-core'
 import { Trade as V2Trade } from '@uniswap/v2-sdk'
@@ -32,11 +31,8 @@ export function tryParseAmount<T extends Currency>(value?: string, currency?: T)
  * @param trade to check for the given address
  * @param checksummedAddress address to check in the pairs and tokens
  */
-export const involvesAddress = (
-  trade: V2Trade<Currency, Currency, TradeType> | V3Trade<Currency, Currency, TradeType>,
-  checksummedAddress: string
-): boolean => {
-  const path = trade instanceof V2Trade ? trade.route.path : trade.route.tokenPath
+export const involvesAddress = (trade: V2Trade<Currency, Currency, TradeType>, checksummedAddress: string): boolean => {
+  const path = trade.route.path
   return (
     path.some((token) => token.address === checksummedAddress) ||
     (trade instanceof V2Trade

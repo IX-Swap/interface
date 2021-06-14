@@ -3,15 +3,11 @@ import styled from 'styled-components/macro'
 import { darken } from 'polished'
 import { Trans } from '@lingui/macro'
 import { NavLink, Link as HistoryLink } from 'react-router-dom'
-import { Percent } from '@uniswap/sdk-core'
-
 import { ArrowLeft } from 'react-feather'
-import { RowBetween } from '../Row'
-import SettingsTab from '../Settings'
+import { RowBetween, RowStart } from '../Row'
 import { useDispatch } from 'react-redux'
 import { AppDispatch } from 'state'
 import { resetMintState } from 'state/mint/actions'
-import { resetMintState as resetMintV3State } from 'state/mint/v3/actions'
 import { TYPE } from 'theme'
 import useTheme from 'hooks/useTheme'
 
@@ -91,12 +87,10 @@ export function AddRemoveTabs({
   adding,
   creating,
   positionID,
-  defaultSlippage,
 }: {
   adding: boolean
   creating: boolean
   positionID?: string | undefined
-  defaultSlippage: Percent
 }) {
   const theme = useTheme()
 
@@ -105,14 +99,12 @@ export function AddRemoveTabs({
 
   return (
     <Tabs>
-      <RowBetween style={{ padding: '1rem 1rem 0 1rem' }}>
+      <RowStart style={{ padding: '1rem 1rem 0 1rem' }}>
         <HistoryLink
           to={'/pool' + (!!positionID ? `/${positionID.toString()}` : '')}
           onClick={() => {
             if (adding) {
-              // not 100% sure both of these are needed
               dispatch(resetMintState())
-              dispatch(resetMintV3State())
             }
           }}
         >
@@ -127,8 +119,7 @@ export function AddRemoveTabs({
             <Trans>Remove Liquidity</Trans>
           )}
         </TYPE.mediumHeader>
-        <SettingsTab placeholderSlippage={defaultSlippage} />
-      </RowBetween>
+      </RowStart>
     </Tabs>
   )
 }

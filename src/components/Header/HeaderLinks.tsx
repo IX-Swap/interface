@@ -7,7 +7,6 @@ import styled from 'styled-components/macro'
 import Row from '../Row'
 import SettingsTab from 'components/Settings'
 import { useDerivedSwapInfo } from 'state/swap/hooks'
-import useToggledVersion from 'hooks/useToggledVersion'
 
 const activeClassName = 'ACTIVE'
 enum Side {
@@ -77,8 +76,7 @@ const StyledJointLink = styled(StyledNavLink)<{ side: Side }>`
 `
 
 export const HeaderLinks = () => {
-  const toggledVersion = useToggledVersion()
-  const { allowedSlippage } = useDerivedSwapInfo(toggledVersion)
+  const { allowedSlippage } = useDerivedSwapInfo()
   return (
     <HeaderLinksWrap>
       <StyledJointLinkWrapper>

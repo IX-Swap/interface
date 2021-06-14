@@ -22,6 +22,9 @@ const Row = styled(Box)<{
 export const RowBetween = styled(Row)`
   justify-content: space-between;
 `
+export const RowStart = styled(Row)`
+  justify-content: flex-start;
+`
 export const RowEnd = styled(Row)`
   justify-content: flex-end;
 `
