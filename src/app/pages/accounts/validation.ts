@@ -22,7 +22,7 @@ export const withdrawValidator = (
   } else if (amount === 0) {
     message = `Can't be zero`
   } else if (amount > available) {
-    message = `Inssuficient balance`
+    message = `Insufficient balance`
   } else if (amount < minWithdraw) {
     message = `Minimum amount is ${minWithdraw}`
   } else if (amount > maxWithdraw) {

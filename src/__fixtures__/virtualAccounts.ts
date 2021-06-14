@@ -20,7 +20,7 @@ export const virtualAccountsSample: VirtualAccount[] = [
     balance: {
       available: 987654.321,
       onHold: 0,
-      outstanding: 0
+      outstanding: 987654.321
     },
     createdBy: '234',
     createdAt: '123',
