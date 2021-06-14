@@ -1,6 +1,7 @@
 import { makeURL } from 'config/appURL'
 
 export const IssuanceRoute = {
+  landing: makeURL(['app', 'issuance']),
   list: makeURL(['app', 'issuance', 'offerings']),
   view: makeURL(['app', 'issuance', 'offerings', 'issuerId', 'dsoId', 'view']),
   preview: makeURL([

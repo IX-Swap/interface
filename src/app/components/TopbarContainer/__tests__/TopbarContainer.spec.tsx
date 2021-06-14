@@ -126,7 +126,7 @@ describe('Topbar', () => {
       5,
       expect.objectContaining({
         label: 'Issuance',
-        link: IssuanceRoute.insight
+        link: IssuanceRoute.landing
       }),
       {}
     )
