@@ -538,6 +538,10 @@ msgstr "Mevcut fiyat"
 msgid "Current {0} Price:"
 msgstr "Güncel {0} Fiyatı:"
 
+#: src/pages/Swap/index.tsx
+msgid "Current Rate"
+msgstr "Geçerli oran"
+
 #: src/components/vote/DelegateModal.tsx
 msgid "Delegate Votes"
 msgstr "Delege Oyları"

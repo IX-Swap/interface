@@ -538,6 +538,10 @@ msgstr "Текущая цена"
 msgid "Current {0} Price:"
 msgstr "Текущая цена: {0}"
 
+#: src/pages/Swap/index.tsx
+msgid "Current Rate"
+msgstr "Текущая ставка"
+
 #: src/components/vote/DelegateModal.tsx
 msgid "Delegate Votes"
 msgstr "Делегировать голоса"

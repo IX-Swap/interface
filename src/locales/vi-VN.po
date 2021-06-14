@@ -538,6 +538,10 @@ msgstr "Giá hiện tại"
 msgid "Current {0} Price:"
 msgstr "Giá {0} hiện tại:"
 
+#: src/pages/Swap/index.tsx
+msgid "Current Rate"
+msgstr "Tỷ lệ hiện tại"
+
 #: src/components/vote/DelegateModal.tsx
 msgid "Delegate Votes"
 msgstr "Phiếu bầu ủy quyền"

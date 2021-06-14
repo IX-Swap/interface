@@ -538,6 +538,10 @@ msgstr "Huidige prijs"
 msgid "Current {0} Price:"
 msgstr "Huidige {0} prijs:"
 
+#: src/pages/Swap/index.tsx
+msgid "Current Rate"
+msgstr "Huidig tarief"
+
 #: src/components/vote/DelegateModal.tsx
 msgid "Delegate Votes"
 msgstr "Stemmen overdragen"

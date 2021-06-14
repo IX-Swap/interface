@@ -538,6 +538,10 @@ msgstr "Τρέχουσα τιμή"
 msgid "Current {0} Price:"
 msgstr "Τρέχουσα τιμή {0}:"
 
+#: src/pages/Swap/index.tsx
+msgid "Current Rate"
+msgstr "Τρέχουσα τιμή"
+
 #: src/components/vote/DelegateModal.tsx
 msgid "Delegate Votes"
 msgstr "Αντιπροσωπευτικές Ψηφοφορίες"

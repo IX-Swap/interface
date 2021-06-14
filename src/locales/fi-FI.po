@@ -538,6 +538,10 @@ msgstr "Nykyinen hinta"
 msgid "Current {0} Price:"
 msgstr "Nykyinen {0} hinta:"
 
+#: src/pages/Swap/index.tsx
+msgid "Current Rate"
+msgstr "Nykyinen korko"
+
 #: src/components/vote/DelegateModal.tsx
 msgid "Delegate Votes"
 msgstr "Delegoi Äänet"

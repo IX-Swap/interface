@@ -538,6 +538,10 @@ msgstr "Jelenlegi ár"
 msgid "Current {0} Price:"
 msgstr "Jelenlegi {0} ár:"
 
+#: src/pages/Swap/index.tsx
+msgid "Current Rate"
+msgstr "Jelenlegi arány"
+
 #: src/components/vote/DelegateModal.tsx
 msgid "Delegate Votes"
 msgstr "Küldött szavazatok"

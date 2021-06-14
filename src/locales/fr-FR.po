@@ -538,6 +538,10 @@ msgstr "Prix actuel"
 msgid "Current {0} Price:"
 msgstr "Prix actuel de {0}:"
 
+#: src/pages/Swap/index.tsx
+msgid "Current Rate"
+msgstr "Taux actuel"
+
 #: src/components/vote/DelegateModal.tsx
 msgid "Delegate Votes"
 msgstr "Votes délégués"

@@ -538,6 +538,10 @@ msgstr "Harga sekarang"
 msgid "Current {0} Price:"
 msgstr "Harga {0} saat ini:"
 
+#: src/pages/Swap/index.tsx
+msgid "Current Rate"
+msgstr "Tarif Saat Ini"
+
 #: src/components/vote/DelegateModal.tsx
 msgid "Delegate Votes"
 msgstr "Delegasikan Suara"

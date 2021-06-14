@@ -538,6 +538,10 @@ msgstr "Aktuální cena"
 msgid "Current {0} Price:"
 msgstr "Aktuální {0} cena:"
 
+#: src/pages/Swap/index.tsx
+msgid "Current Rate"
+msgstr "Aktuální kurz"
+
 #: src/components/vote/DelegateModal.tsx
 msgid "Delegate Votes"
 msgstr "Delegovat hlasování"

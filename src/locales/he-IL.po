@@ -538,6 +538,10 @@ msgstr "מחיר נוכחי"
 msgid "Current {0} Price:"
 msgstr "מחיר {0} נוכחי:"
 
+#: src/pages/Swap/index.tsx
+msgid "Current Rate"
+msgstr "שיעור נוכחי"
+
 #: src/components/vote/DelegateModal.tsx
 msgid "Delegate Votes"
 msgstr "נציג הצבעות"

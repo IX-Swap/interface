@@ -538,6 +538,10 @@ msgstr "السعر الحالي"
 msgid "Current {0} Price:"
 msgstr "السعر {0} الحالي:"
 
+#: src/pages/Swap/index.tsx
+msgid "Current Rate"
+msgstr "المعدل الحالي"
+
 #: src/components/vote/DelegateModal.tsx
 msgid "Delegate Votes"
 msgstr "صوت المندوب"

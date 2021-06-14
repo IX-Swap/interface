@@ -538,6 +538,10 @@ msgstr "현재 가격"
 msgid "Current {0} Price:"
 msgstr "현재 {0} 가격 :"
 
+#: src/pages/Swap/index.tsx
+msgid "Current Rate"
+msgstr "현재 비율"
+
 #: src/components/vote/DelegateModal.tsx
 msgid "Delegate Votes"
 msgstr "위임 투표"
