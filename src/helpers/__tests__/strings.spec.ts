@@ -20,10 +20,10 @@ describe('getIDString', () => {
 
 describe('getOrderSideName', () => {
   it('returns correct value when argument is ASK', () => {
-    expect(getOrderSideName('ASK')).toEqual('Buy')
+    expect(getOrderSideName('BID')).toEqual('Buy')
   })
 
   it('returns correct value when argument is BID', () => {
-    expect(getOrderSideName('BID')).toEqual('Sell')
+    expect(getOrderSideName('ASK')).toEqual('Sell')
   })
 })
