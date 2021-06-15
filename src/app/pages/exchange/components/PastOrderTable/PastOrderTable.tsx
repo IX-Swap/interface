@@ -29,7 +29,7 @@ export const PastOrderTable = (props: PostOrderTableProps) => {
         name={exchangeMarketQueryKeys.getOrdersList(userId, pairId)}
         uri={exchangeMarket.getOrdersList(userId)}
         columns={columns}
-        filter={{ ...filter, status: 'FILLED, CANCELLED' } as any}
+        filter={{ ...filter, orderType: 'PAST' } as any}
       />
     </>
   )

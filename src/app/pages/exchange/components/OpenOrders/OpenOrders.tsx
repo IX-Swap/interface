@@ -23,7 +23,7 @@ export const OpenOrders = () => {
         filter={
           {
             pair: pairId,
-            status: 'OPEN'
+            orderType: 'OPEN'
           } as any
         }
         columns={columns}

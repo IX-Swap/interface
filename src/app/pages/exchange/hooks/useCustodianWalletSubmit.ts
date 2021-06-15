@@ -9,8 +9,11 @@ export const useCustodianWalletSubmit = () => {
   const { user } = useAuth()
   const [openDialog, setOpenDialog] = useState<boolean>(false)
   const [form, setForm] = useState<PlaceOrderArgs>()
-  const [placeOrder] = useCreateOrder()
-  const [checkExistsCustodianWallet] = useExistsCustodianWallet({
+  const [placeOrder, { status: createOrderStatus }] = useCreateOrder()
+  const [
+    checkExistsCustodianWallet,
+    { status: existCustodianWalletStatus }
+  ] = useExistsCustodianWallet({
     userId: getIdFromObj(user),
     onSuccess: async ({ response }) => {
       if (response === null) {
@@ -30,5 +33,13 @@ export const useCustodianWalletSubmit = () => {
     },
     [checkExistsCustodianWallet]
   )
-  return { openDialog, setOpenDialog, submitForm }
+  return {
+    openDialog,
+    setOpenDialog,
+    isFetching:
+      createOrderStatus === 'loading' ||
+      existCustodianWalletStatus === 'loading',
+    createOrderStatus: createOrderStatus,
+    submitForm
+  }
 }

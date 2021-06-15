@@ -8,7 +8,7 @@ export interface CancelOrderButtonProps {
 }
 
 export const CancelOrderButton = ({ order }: CancelOrderButtonProps) => {
-  const [cancelOrder] = useCancelOrder(order._id)
+  const [cancelOrder, { status }] = useCancelOrder(order._id)
   const handleClick = async () => {
     void cancelOrder({
       pair: order.pair,
@@ -21,7 +21,13 @@ export const CancelOrderButton = ({ order }: CancelOrderButtonProps) => {
 
   return (
     <Box display='flex' justifyContent='center'>
-      <Button onClick={handleClick} variant='text' color='primary' size='small'>
+      <Button
+        disabled={status === 'loading'}
+        onClick={handleClick}
+        variant='text'
+        color='primary'
+        size='small'
+      >
         Cancel
       </Button>
     </Box>
