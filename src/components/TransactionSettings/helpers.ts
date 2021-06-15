@@ -1,5 +1,5 @@
 import { DEFAULT_DEADLINE_FROM_NOW } from 'constants/misc'
-import { Percent } from '@uniswap/sdk-core'
+import { Percent } from '@ixswap1/sdk-core'
 
 export const displayDeadline = ({ deadlineInput, deadline }: { deadlineInput: string; deadline: number }) => {
   return deadlineInput.length > 0

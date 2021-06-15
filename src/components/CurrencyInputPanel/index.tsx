@@ -1,6 +1,6 @@
 import React, { useState, useCallback, ReactNode } from 'react'
-import { Pair } from '@uniswap/v2-sdk'
-import { Currency, CurrencyAmount, Percent, Token } from '@uniswap/sdk-core'
+import { Pair } from '@ixswap1/v2-sdk'
+import { Currency, CurrencyAmount, Percent, Token } from '@ixswap1/sdk-core'
 import styled from 'styled-components/macro'
 import { darken } from 'polished'
 import { useCurrencyBalance } from '../../state/wallet/hooks'

@@ -13,7 +13,7 @@ import QuestionHelper from '../QuestionHelper'
 import { RowBetween, RowFixed } from '../Row'
 import Toggle from '../Toggle'
 import TransactionSettings from '../TransactionSettings'
-import { Percent } from '@uniswap/sdk-core'
+import { Percent } from '@ixswap1/sdk-core'
 import { ExpertModeModal } from './ExpertModeModal'
 
 const StyledSettings = styled.div`

@@ -1,6 +1,6 @@
 import { Trans } from '@lingui/macro'
-import { Currency, Percent, TradeType } from '@uniswap/sdk-core'
-import { Trade as V2Trade } from '@uniswap/v2-sdk'
+import { Currency, Percent, TradeType } from '@ixswap1/sdk-core'
+import { Trade as V2Trade } from '@ixswap1/v2-sdk'
 import React, { ReactNode, useCallback, useMemo } from 'react'
 import TransactionConfirmationModal, {
   ConfirmationModalContent,

@@ -1,6 +1,6 @@
 import { Trans } from '@lingui/macro'
-import { Percent, Currency, TradeType } from '@uniswap/sdk-core'
-import { Trade as V2Trade } from '@uniswap/v2-sdk'
+import { Percent, Currency, TradeType } from '@ixswap1/sdk-core'
+import { Trade as V2Trade } from '@ixswap1/v2-sdk'
 import React, { useContext, useMemo } from 'react'
 import { ThemeContext } from 'styled-components'
 import { TYPE } from '../../theme'

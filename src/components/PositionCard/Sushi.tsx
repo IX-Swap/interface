@@ -1,5 +1,5 @@
 import React from 'react'
-import { Token } from '@uniswap/sdk-core'
+import { Token } from '@ixswap1/sdk-core'
 import { Link } from 'react-router-dom'
 import { Text } from 'rebass'
 import styled from 'styled-components/macro'
@@ -60,17 +60,6 @@ export default function SushiPositionCard({ tokenA, tokenB, liquidityToken, bord
 
             <Badge variant={BadgeVariant.WARNING}>Sushi</Badge>
           </AutoRow>
-          <RowFixed gap="8px">
-            <ButtonEmpty
-              padding="0px 35px 0px 0px"
-              borderRadius="12px"
-              width="fit-content"
-              as={Link}
-              to={`/migrate/v2/${liquidityToken.address}`}
-            >
-              <Trans>Migrate</Trans>
-            </ButtonEmpty>
-          </RowFixed>
         </FixedHeightRow>
       </AutoColumn>
     </StyledPositionCard>

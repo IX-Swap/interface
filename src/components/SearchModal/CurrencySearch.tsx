@@ -1,4 +1,4 @@
-import { Currency, Ether, Token } from '@uniswap/sdk-core'
+import { Currency, Ether, Token } from '@ixswap1/sdk-core'
 import React, { KeyboardEvent, RefObject, useCallback, useEffect, useMemo, useRef, useState } from 'react'
 import ReactGA from 'react-ga'
 import { t, Trans } from '@lingui/macro'

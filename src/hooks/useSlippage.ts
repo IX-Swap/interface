@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { Percent } from '@uniswap/sdk-core'
+import { Percent } from '@ixswap1/sdk-core'
 
 import { useSetUserSlippageTolerance, useUserSlippageTolerance } from 'state/user/hooks'
 

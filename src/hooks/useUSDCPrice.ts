@@ -1,8 +1,7 @@
-import { Currency, CurrencyAmount, Price, Token } from '@uniswap/sdk-core'
+import { Currency, CurrencyAmount, Price, Token } from '@ixswap1/sdk-core'
 import { useMemo } from 'react'
 import { USDC } from '../constants/tokens'
 import { useV2TradeExactOut } from './useV2Trade'
-import { useBestV3TradeExactOut } from './useBestV3Trade'
 import { useActiveWeb3React } from './web3'
 
 // USDC amount used when calculating spot price for a given currency.
@@ -19,7 +18,6 @@ export default function useUSDCPrice(currency?: Currency): Price<Currency, Token
   const v2USDCTrade = useV2TradeExactOut(currency, chainId === 1 ? USDC_CURRENCY_AMOUNT_OUT : undefined, {
     maxHops: 2,
   })
-  const v3USDCTrade = useBestV3TradeExactOut(currency, chainId === 1 ? USDC_CURRENCY_AMOUNT_OUT : undefined)
 
   return useMemo(() => {
     if (!currency || !chainId) {
@@ -42,17 +40,13 @@ export default function useUSDCPrice(currency?: Currency): Price<Currency, Token
       return new Price(USDC, USDC, '1', '1')
     }
 
-    // use v2 price if available, v3 as fallback
     if (v2USDCTrade) {
       const { numerator, denominator } = v2USDCTrade.route.midPrice
-      return new Price(currency, USDC, denominator, numerator)
-    } else if (v3USDCTrade.trade) {
-      const { numerator, denominator } = v3USDCTrade.trade.route.midPrice
       return new Price(currency, USDC, denominator, numerator)
     }
 
     return undefined
-  }, [chainId, currency, v2USDCTrade, v3USDCTrade])
+  }, [chainId, currency, v2USDCTrade])
 }
 
 export function useUSDCValue(currencyAmount: CurrencyAmount<Currency> | undefined | null) {

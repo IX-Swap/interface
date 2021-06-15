@@ -1,6 +1,6 @@
 import React from 'react'
-import { Pair } from '@uniswap/v2-sdk'
-import { Currency } from '@uniswap/sdk-core'
+import { Pair } from '@ixswap1/v2-sdk'
+import { Currency } from '@ixswap1/sdk-core'
 import CurrencyLogo from '../CurrencyLogo'
 import DoubleCurrencyLogo from '../DoubleLogo'
 interface props {

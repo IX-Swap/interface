@@ -1,5 +1,5 @@
-import { Percent, Token } from '@uniswap/sdk-core'
-import { Pair } from '@uniswap/v2-sdk'
+import { Percent, Token } from '@ixswap1/sdk-core'
+import { Pair } from '@ixswap1/v2-sdk'
 import JSBI from 'jsbi'
 import flatMap from 'lodash.flatmap'
 import { useCallback, useMemo } from 'react'

@@ -5,7 +5,7 @@ import { useOnClickOutside } from '../../hooks/useOnClickOutside'
 import { ApplicationModal } from '../../state/application/actions'
 import { useModalOpen, useToggleSettingsMenu } from '../../state/application/hooks'
 import { useExpertModeManager } from '../../state/user/hooks'
-import { Percent } from '@uniswap/sdk-core'
+import { Percent } from '@ixswap1/sdk-core'
 import SettingsModal from './SettingsModal'
 
 const StyledMenuIcon = styled(Settings)`

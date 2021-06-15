@@ -1,4 +1,4 @@
-import { Currency, WETH9 } from '@uniswap/sdk-core'
+import { Currency, WETH9 } from '@ixswap1/sdk-core'
 import { useMemo } from 'react'
 import { tryParseAmount } from '../state/swap/helpers'
 import { useTransactionAdder } from '../state/transactions/hooks'

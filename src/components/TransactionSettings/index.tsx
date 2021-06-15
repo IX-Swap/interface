@@ -1,6 +1,6 @@
 import React, { useContext } from 'react'
 import { t, Trans } from '@lingui/macro'
-import { Percent } from '@uniswap/sdk-core'
+import { Percent } from '@ixswap1/sdk-core'
 import styled, { ThemeContext } from 'styled-components'
 
 import QuestionHelper from '../QuestionHelper'

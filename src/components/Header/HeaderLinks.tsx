@@ -91,7 +91,6 @@ export const HeaderLinks = () => {
             Boolean(match) ||
             pathname.startsWith('/add') ||
             pathname.startsWith('/remove') ||
-            pathname.startsWith('/increase') ||
             pathname.startsWith('/find')
           }
         >

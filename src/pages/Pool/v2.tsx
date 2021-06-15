@@ -5,13 +5,12 @@ import { Link } from 'react-router-dom'
 import { SwapPoolTabs } from '../../components/NavigationTabs'
 import FullPositionCard from '../../components/PositionCard'
 import { useTokenBalancesWithLoadingIndicator } from '../../state/wallet/hooks'
-import { ExternalLink, TYPE, HideSmall } from '../../theme'
+import { ExternalLink, TYPE } from '../../theme'
 import { Text } from 'rebass'
 import Card from '../../components/Card'
-import { RowBetween, RowFixed } from '../../components/Row'
-import { ButtonPrimary, ButtonSecondary, ButtonOutlined } from '../../components/Button'
-import { ChevronsRight } from 'react-feather'
-
+import { RowBetween, RowCenter } from '../../components/Row'
+import { ButtonSecondary } from '../../components/Button'
+import { ButtonIXSWide } from '../../components/Button'
 import { AutoColumn } from '../../components/Column'
 
 import { useActiveWeb3React } from '../../hooks/web3'
@@ -20,45 +19,11 @@ import { toV2LiquidityToken, useTrackedTokenPairs } from '../../state/user/hooks
 import { Dots } from '../../components/swap/styleds'
 import { useStakingInfo } from '../../state/stake/hooks'
 import { BIG_INT_ZERO } from '../../constants/misc'
-import { Pair } from '@uniswap/v2-sdk'
+import { Pair } from '@ixswap1/v2-sdk'
 import { Trans } from '@lingui/macro'
-
-const PageWrapper = styled(AutoColumn)`
-  max-width: 640px;
-  width: 100%;
-`
-
-const TitleRow = styled(RowBetween)`
-  ${({ theme }) => theme.mediaWidth.upToSmall`
-    flex-wrap: wrap;
-    gap: 12px;
-    width: 100%;
-    flex-direction: column-reverse;
-  `};
-`
-
-const ButtonRow = styled(RowFixed)`
-  gap: 8px;
-  ${({ theme }) => theme.mediaWidth.upToSmall`
-    width: 100%;
-    flex-direction: row-reverse;
-    justify-content: space-between;
-  `};
-`
-
-const ResponsiveButtonPrimary = styled(ButtonPrimary)`
-  width: fit-content;
-  ${({ theme }) => theme.mediaWidth.upToSmall`
-    width: 48%;
-  `};
-`
-
-const ResponsiveButtonSecondary = styled(ButtonSecondary)`
-  width: fit-content;
-  ${({ theme }) => theme.mediaWidth.upToSmall`
-    width: 48%;
-  `};
-`
+import AppBody from 'pages/AppBody'
+import { EmptyLiquidity } from './EmptyLiquidity'
+import { LiquidityTitle } from './LiquidityTitle'
 
 const EmptyProposals = styled.div`
   border: 1px solid ${({ theme }) => theme.text4};
@@ -122,34 +87,18 @@ export default function Pool() {
 
   return (
     <>
-      <PageWrapper>
+      <AppBody>
         <SwapPoolTabs active={'pool'} />
-        <AutoColumn gap="lg" justify="center">
+        <AutoColumn gap="1.5rem" justify="center">
           <AutoColumn gap="md" style={{ width: '100%' }}>
-            <TitleRow style={{ marginTop: '1rem' }} padding={'0'}>
-              <HideSmall>
-                <TYPE.mediumHeader style={{ marginTop: '0.5rem', justifySelf: 'flex-start' }}>
-                  <Trans>Your V2 liquidity</Trans>
-                </TYPE.mediumHeader>
-              </HideSmall>
-              <ButtonRow>
-                <ResponsiveButtonSecondary as={Link} padding="6px 8px" to="/add/v2/ETH">
-                  <Trans>Create a pair</Trans>
-                </ResponsiveButtonSecondary>
-                <ResponsiveButtonPrimary
-                  id="join-pool-button"
-                  as={Link}
-                  padding="6px 8px"
-                  borderRadius="12px"
-                  to="/add/v2/ETH"
-                >
-                  <Text fontWeight={500} fontSize={16}>
-                    <Trans>Add Liquidity</Trans>
-                  </Text>
-                </ResponsiveButtonPrimary>
-              </ButtonRow>
-            </TitleRow>
-
+            <LiquidityTitle />
+            <RowCenter>
+              <ButtonIXSWide id="join-pool-button" as={Link} to="/add/ETH">
+                <Text>
+                  <Trans>Add Liquidity</Trans>
+                </Text>
+              </ButtonIXSWide>
+            </RowCenter>
             {!account ? (
               <Card padding="40px">
                 <TYPE.body color={theme.text3} textAlign="center">
@@ -189,34 +138,13 @@ export default function Pool() {
                       />
                     )
                 )}
-                <RowFixed justify="center" style={{ width: '100%' }}>
-                  <ButtonOutlined
-                    as={Link}
-                    to="/migrate/v2"
-                    id="import-pool-link"
-                    style={{
-                      padding: '8px 16px',
-                      margin: '0 4px',
-                      borderRadius: '12px',
-                      width: 'fit-content',
-                      fontSize: '14px',
-                    }}
-                  >
-                    <ChevronsRight size={16} style={{ marginRight: '8px' }} />
-                    <Trans>Migrate Liquidity to V3</Trans>
-                  </ButtonOutlined>
-                </RowFixed>
               </>
             ) : (
-              <EmptyProposals>
-                <TYPE.body color={theme.text3} textAlign="center">
-                  <Trans>No liquidity found.</Trans>
-                </TYPE.body>
-              </EmptyProposals>
+              <EmptyLiquidity />
             )}
           </AutoColumn>
         </AutoColumn>
-      </PageWrapper>
+      </AppBody>
     </>
   )
 }

@@ -10,8 +10,6 @@ import { NetworkConnector } from './NetworkConnector'
 import IXSWAP_LOGO_URL from '../assets/svg/logo.svg'
 
 const INFURA_KEY = process.env.REACT_APP_INFURA_KEY
-const FORMATIC_KEY = process.env.REACT_APP_FORTMATIC_KEY
-const PORTIS_ID = process.env.REACT_APP_PORTIS_ID
 
 if (typeof INFURA_KEY === 'undefined') {
   throw new Error(`REACT_APP_INFURA_KEY must be a defined environment variable`)
@@ -20,8 +18,8 @@ if (typeof INFURA_KEY === 'undefined') {
 const NETWORK_URLS: {
   [chainId: number]: string
 } = {
-  [1]: `https://eth-mainnet.alchemyapi.io/v2/xn1ulKnMejnDlx6fXs0ev3IeG_F4j_0X`,
-  [4]: `https://eth-rinkeby.alchemyapi.io/v2/8JFEW-2t5Mg5vLdM03X_bBDs037292vi`,
+  [1]: `https://mainet.infura.io/v2/${INFURA_KEY}`,
+  [4]: `https://rinkeby.infura.io/v2/${INFURA_KEY}`,
   [3]: `https://ropsten.infura.io/v2/${INFURA_KEY}`,
   [5]: `https://goerli.infura.io/v2/${INFURA_KEY}`,
   [42]: `https://kovan.infura.io/v2/${INFURA_KEY}`,
@@ -52,13 +50,13 @@ export const walletconnect = new WalletConnectConnector({
 
 // mainnet only
 export const fortmatic = new FortmaticConnector({
-  apiKey: FORMATIC_KEY ?? '',
+  apiKey: '',
   chainId: 1,
 })
 
 // mainnet only
 export const portis = new PortisConnector({
-  dAppId: PORTIS_ID ?? '',
+  dAppId: '',
   networks: [1],
 })
 
