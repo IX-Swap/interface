@@ -7,12 +7,9 @@ import getLibrary from '../utils/getLibrary'
 
 import { FortmaticConnector } from './Fortmatic'
 import { NetworkConnector } from './NetworkConnector'
-import UNISWAP_LOGO_URL from '../assets/svg/logo.svg'
+import IXSWAP_LOGO_URL from '../assets/svg/logo.svg'
 
 const INFURA_KEY = process.env.REACT_APP_INFURA_KEY
-const FORMATIC_KEY = process.env.REACT_APP_FORTMATIC_KEY
-const PORTIS_ID = process.env.REACT_APP_PORTIS_ID
-const WALLETCONNECT_BRIDGE_URL = process.env.REACT_APP_WALLETCONNECT_BRIDGE_URL
 
 if (typeof INFURA_KEY === 'undefined') {
   throw new Error(`REACT_APP_INFURA_KEY must be a defined environment variable`)
@@ -21,11 +18,11 @@ if (typeof INFURA_KEY === 'undefined') {
 const NETWORK_URLS: {
   [chainId: number]: string
 } = {
-  [1]: `https://mainnet.infura.io/v3/${INFURA_KEY}`,
-  [4]: `https://rinkeby.infura.io/v3/${INFURA_KEY}`,
-  [3]: `https://ropsten.infura.io/v3/${INFURA_KEY}`,
-  [5]: `https://goerli.infura.io/v3/${INFURA_KEY}`,
-  [42]: `https://kovan.infura.io/v3/${INFURA_KEY}`,
+  [1]: `https://mainet.infura.io/v2/${INFURA_KEY}`,
+  [4]: `https://rinkeby.infura.io/v2/${INFURA_KEY}`,
+  [3]: `https://ropsten.infura.io/v2/${INFURA_KEY}`,
+  [5]: `https://goerli.infura.io/v2/${INFURA_KEY}`,
+  [42]: `https://kovan.infura.io/v2/${INFURA_KEY}`,
 }
 
 const SUPPORTED_CHAIN_IDS = [1, 4, 3, 42, 5]
@@ -47,20 +44,19 @@ export const injected = new InjectedConnector({
 export const walletconnect = new WalletConnectConnector({
   supportedChainIds: SUPPORTED_CHAIN_IDS,
   infuraId: INFURA_KEY, // obviously a hack
-  bridge: WALLETCONNECT_BRIDGE_URL,
   qrcode: true,
   pollingInterval: 15000,
 })
 
 // mainnet only
 export const fortmatic = new FortmaticConnector({
-  apiKey: FORMATIC_KEY ?? '',
+  apiKey: '',
   chainId: 1,
 })
 
 // mainnet only
 export const portis = new PortisConnector({
-  dAppId: PORTIS_ID ?? '',
+  dAppId: '',
   networks: [1],
 })
 
@@ -68,5 +64,5 @@ export const portis = new PortisConnector({
 export const walletlink = new WalletLinkConnector({
   url: NETWORK_URLS[1],
   appName: 'Uniswap',
-  appLogoUrl: UNISWAP_LOGO_URL,
+  appLogoUrl: IXSWAP_LOGO_URL,
 })

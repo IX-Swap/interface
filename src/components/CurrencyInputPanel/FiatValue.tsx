@@ -1,11 +1,14 @@
-import { Currency, CurrencyAmount, Percent } from '@uniswap/sdk-core'
+import { Currency, CurrencyAmount, Percent } from '@ixswap1/sdk-core'
 import React, { useMemo } from 'react'
 import useTheme from '../../hooks/useTheme'
 import { TYPE } from '../../theme'
 import { warningSeverity } from '../../utils/prices'
-import HoverInlineText from 'components/HoverInlineText'
 import { Trans } from '@lingui/macro'
+import styled from 'styled-components'
 
+const WidthFit = styled.span`
+  min-width: fit-content;
+`
 export function FiatValue({
   fiatValue,
   priceImpact,
@@ -24,20 +27,16 @@ export function FiatValue({
   }, [priceImpact, theme.green1, theme.red1, theme.text4, theme.yellow1])
 
   return (
-    <TYPE.body fontSize={14} color={fiatValue ? theme.text2 : theme.text4}>
-      {fiatValue ? (
-        <Trans>
-          ~$ <HoverInlineText text={fiatValue?.toSignificant(6, { groupSeparator: ',' })} />
-        </Trans>
-      ) : (
-        ''
-      )}
-      {priceImpact ? (
-        <span style={{ color: priceImpactColor }}>
-          {' '}
-          (<Trans>{priceImpact.multiply(-1).toSignificant(3)}%</Trans>)
-        </span>
-      ) : null}
-    </TYPE.body>
+    <WidthFit>
+      <TYPE.body fontSize={14} color={fiatValue ? theme.text2 : theme.text4}>
+        {fiatValue ? <Trans>~$ {fiatValue?.toSignificant(6, { groupSeparator: ',' })}</Trans> : ''}
+        {priceImpact ? (
+          <span style={{ color: priceImpactColor }}>
+            {' '}
+            (<Trans>{priceImpact.multiply(-1).toSignificant(3)}%</Trans>)
+          </span>
+        ) : null}
+      </TYPE.body>
+    </WidthFit>
   )
 }

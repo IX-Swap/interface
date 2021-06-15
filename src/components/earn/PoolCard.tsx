@@ -4,7 +4,7 @@ import { RowBetween } from '../Row'
 import styled from 'styled-components/macro'
 import { TYPE, StyledInternalLink } from '../../theme'
 import DoubleCurrencyLogo from '../DoubleLogo'
-import { CurrencyAmount, Token } from '@uniswap/sdk-core'
+import { CurrencyAmount, Token } from '@ixswap1/sdk-core'
 import JSBI from 'jsbi'
 import { ButtonPrimary } from '../Button'
 import { StakingInfo } from '../../state/stake/hooks'
@@ -148,10 +148,10 @@ export default function PoolCard({ stakingInfo }: { stakingInfo: StakingInfo }) 
               stakingInfo.active ? (
                 <Trans>
                   {stakingInfo.totalRewardRate?.multiply(BIG_INT_SECONDS_IN_WEEK)?.toFixed(0, { groupSeparator: ',' })}{' '}
-                  UNI / week
+                  IXS / week
                 </Trans>
               ) : (
-                <Trans>0 UNI / week</Trans>
+                <Trans>0 IXS / week</Trans>
               )
             ) : (
               '-'
@@ -180,10 +180,10 @@ export default function PoolCard({ stakingInfo }: { stakingInfo: StakingInfo }) 
                     {stakingInfo.rewardRate
                       ?.multiply(BIG_INT_SECONDS_IN_WEEK)
                       ?.toSignificant(4, { groupSeparator: ',' })}{' '}
-                    UNI / week
+                    IXS / week
                   </Trans>
                 ) : (
-                  <Trans>0 UNI / week</Trans>
+                  <Trans>0 IXS / week</Trans>
                 )
               ) : (
                 '-'

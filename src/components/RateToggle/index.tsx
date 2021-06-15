@@ -1,5 +1,5 @@
 import React from 'react'
-import { Currency } from '@uniswap/sdk-core'
+import { Currency } from '@ixswap1/sdk-core'
 import { ToggleElement, ToggleWrapper } from 'components/Toggle/MultiToggle'
 
 // the order of displayed base currencies from left to right is always in sort order

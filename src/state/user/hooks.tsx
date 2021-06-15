@@ -1,5 +1,5 @@
-import { Percent, Token } from '@uniswap/sdk-core'
-import { Pair } from '@uniswap/v2-sdk'
+import { Percent, Token } from '@ixswap1/sdk-core'
+import { Pair } from '@ixswap1/v2-sdk'
 import JSBI from 'jsbi'
 import flatMap from 'lodash.flatmap'
 import { useCallback, useMemo } from 'react'
@@ -18,7 +18,6 @@ import {
   toggleURLWarning,
   updateUserDarkMode,
   updateUserDeadline,
-  updateHideClosedPositions,
   updateUserExpertMode,
   updateUserSingleHopOnly,
   updateUserSlippageTolerance,
@@ -94,7 +93,7 @@ export function useIsExpertMode(): boolean {
   return useSelector<AppState, AppState['user']['userExpertMode']>((state) => state.user.userExpertMode)
 }
 
-export function useExpertModeManager(): [boolean, () => void] {
+export function useExpertModeManager(): { expertMode: boolean; toggleExpertMode: () => void } {
   const dispatch = useDispatch<AppDispatch>()
   const expertMode = useIsExpertMode()
 
@@ -102,7 +101,7 @@ export function useExpertModeManager(): [boolean, () => void] {
     dispatch(updateUserExpertMode({ userExpertMode: !expertMode }))
   }, [expertMode, dispatch])
 
-  return [expertMode, toggleSetExpertMode]
+  return { expertMode, toggleExpertMode: toggleSetExpertMode }
 }
 
 export function useUserSingleHopOnly(): [boolean, (newSingleHopOnly: boolean) => void] {
@@ -156,23 +155,6 @@ export function useUserSlippageTolerance(): Percent | 'auto' {
     () => (userSlippageTolerance === 'auto' ? 'auto' : new Percent(userSlippageTolerance, 10_000)),
     [userSlippageTolerance]
   )
-}
-
-export function useUserHideClosedPositions(): [boolean, (newHideClosedPositions: boolean) => void] {
-  const dispatch = useDispatch<AppDispatch>()
-
-  const hideClosedPositions = useSelector<AppState, AppState['user']['userHideClosedPositions']>(
-    (state) => state.user.userHideClosedPositions
-  )
-
-  const setHideClosedPositions = useCallback(
-    (newHideClosedPositions: boolean) => {
-      dispatch(updateHideClosedPositions({ userHideClosedPositions: newHideClosedPositions }))
-    },
-    [dispatch]
-  )
-
-  return [hideClosedPositions, setHideClosedPositions]
 }
 
 /**
@@ -266,7 +248,7 @@ export function useURLWarningToggle(): () => void {
  * @param tokenB the other token
  */
 export function toV2LiquidityToken([tokenA, tokenB]: [Token, Token]): Token {
-  return new Token(tokenA.chainId, Pair.getAddress(tokenA, tokenB), 18, 'UNI-V2', 'Uniswap V2')
+  return new Token(tokenA.chainId, Pair.getAddress(tokenA, tokenB), 18, 'IXS-V2', 'IXSwap V2')
 }
 
 /**

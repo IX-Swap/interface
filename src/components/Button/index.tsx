@@ -196,6 +196,19 @@ export const ButtonUNIGradient = styled(ButtonPrimary)`
     opacity: 0.9;
   }
 `
+export const ButtonIXSGradient = styled(ButtonUNIGradient)`
+  padding: 25px 8px;
+  text-transform: uppercase;
+  border-radius: 40px;
+  font-weight: 600;
+  font-size: 18px;
+  line-height: 20px;
+  background-color: ${({ theme }) => theme.bg3};
+  background: ${({ theme }) => theme.bgGradientBright};
+`
+export const ButtonIXSWide = styled(ButtonIXSGradient)`
+  width: 100%;
+`
 
 export const ButtonOutlined = styled(Base)`
   border: 1px solid ${({ theme }) => theme.bg2};

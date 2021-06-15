@@ -46,7 +46,7 @@ export default function ClaimRewardModal({ isOpen, onDismiss, stakingInfo }: Sta
       await stakingContract
         .getReward({ gasLimit: 350000 })
         .then((response: TransactionResponse) => {
-          addTransaction(response, { summary: t`Claim accumulated UNI rewards` })
+          addTransaction(response, { summary: t`Claim accumulated IXS rewards` })
           setHash(response.hash)
         })
         .catch((error: any) => {
@@ -80,7 +80,7 @@ export default function ClaimRewardModal({ isOpen, onDismiss, stakingInfo }: Sta
                 {stakingInfo?.earnedAmount?.toSignificant(6)}
               </TYPE.body>
               <TYPE.body>
-                <Trans>Unclaimed UNI</Trans>
+                <Trans>Unclaimed IXS</Trans>
               </TYPE.body>
             </AutoColumn>
           )}
@@ -96,7 +96,7 @@ export default function ClaimRewardModal({ isOpen, onDismiss, stakingInfo }: Sta
         <LoadingView onDismiss={wrappedOnDismiss}>
           <AutoColumn gap="12px" justify={'center'}>
             <TYPE.body fontSize={20}>
-              <Trans>Claiming {stakingInfo?.earnedAmount?.toSignificant(6)} UNI</Trans>
+              <Trans>Claiming {stakingInfo?.earnedAmount?.toSignificant(6)} IXS</Trans>
             </TYPE.body>
           </AutoColumn>
         </LoadingView>
@@ -108,7 +108,7 @@ export default function ClaimRewardModal({ isOpen, onDismiss, stakingInfo }: Sta
               <Trans>Transaction Submitted</Trans>
             </TYPE.largeHeader>
             <TYPE.body fontSize={20}>
-              <Trans>Claimed UNI!</Trans>
+              <Trans>Claimed IXS!</Trans>
             </TYPE.body>
           </AutoColumn>
         </SubmittedView>

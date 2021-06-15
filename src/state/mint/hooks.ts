@@ -3,14 +3,14 @@ import { useCallback, useMemo } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { AppDispatch, AppState } from '../index'
 import { Field, typeInput } from './actions'
-import { Pair } from '@uniswap/v2-sdk'
-import { Currency, Token, Percent, Price, CurrencyAmount } from '@uniswap/sdk-core'
+import { Pair } from '@ixswap1/v2-sdk'
+import { Currency, Token, Percent, Price, CurrencyAmount } from '@ixswap1/sdk-core'
 import JSBI from 'jsbi'
 import { PairState, useV2Pair } from '../../hooks/useV2Pairs'
 import { useTotalSupply } from '../../hooks/useTotalSupply'
 
 import { useActiveWeb3React } from '../../hooks/web3'
-import { tryParseAmount } from '../swap/hooks'
+import { tryParseAmount } from '../swap/helpers'
 import { useCurrencyBalances } from '../wallet/hooks'
 
 const ZERO = JSBI.BigInt(0)

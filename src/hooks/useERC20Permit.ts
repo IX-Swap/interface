@@ -1,11 +1,9 @@
 import JSBI from 'jsbi'
-import { Percent, CurrencyAmount, Currency, TradeType, Token } from '@uniswap/sdk-core'
-import { Trade as V2Trade } from '@uniswap/v2-sdk'
-import { Trade as V3Trade } from '@uniswap/v3-sdk'
+import { Percent, CurrencyAmount, Currency, TradeType, Token } from '@ixswap1/sdk-core'
+import { Trade as V2Trade } from '@ixswap1/v2-sdk'
 import { splitSignature } from 'ethers/lib/utils'
 import { useMemo, useState } from 'react'
-import { SWAP_ROUTER_ADDRESSES } from '../constants/addresses'
-import { DAI, UNI, USDC } from '../constants/tokens'
+import { DAI, IXS, USDC } from '../constants/tokens'
 import { useSingleCallResult } from '../state/multicall/hooks'
 import { useActiveWeb3React } from './web3'
 import { useEIP2612Contract } from './useContract'
@@ -36,21 +34,21 @@ const PERMITTABLE_TOKENS: {
   [1]: {
     [USDC.address]: { type: PermitType.AMOUNT, name: 'USD Coin', version: '2' },
     [DAI.address]: { type: PermitType.ALLOWED, name: 'Dai Stablecoin', version: '1' },
-    [UNI[1].address]: { type: PermitType.AMOUNT, name: 'Uniswap' },
+    [IXS[1].address]: { type: PermitType.AMOUNT, name: 'Uniswap' },
   },
   [4]: {
     ['0xc7AD46e0b8a400Bb3C915120d284AafbA8fc4735']: { type: PermitType.ALLOWED, name: 'Dai Stablecoin', version: '1' },
-    [UNI[4].address]: { type: PermitType.AMOUNT, name: 'Uniswap' },
+    [IXS[4].address]: { type: PermitType.AMOUNT, name: 'Uniswap' },
   },
   [3]: {
-    [UNI[3].address]: { type: PermitType.AMOUNT, name: 'Uniswap' },
+    [IXS[3].address]: { type: PermitType.AMOUNT, name: 'Uniswap' },
     ['0x07865c6E87B9F70255377e024ace6630C1Eaa37F']: { type: PermitType.AMOUNT, name: 'USD Coin', version: '2' },
   },
   [5]: {
-    [UNI[5].address]: { type: PermitType.AMOUNT, name: 'Uniswap' },
+    [IXS[5].address]: { type: PermitType.AMOUNT, name: 'Uniswap' },
   },
   [42]: {
-    [UNI[42].address]: { type: PermitType.AMOUNT, name: 'Uniswap' },
+    [IXS[42].address]: { type: PermitType.AMOUNT, name: 'Uniswap' },
   },
 }
 
@@ -271,11 +269,9 @@ export function useV2LiquidityTokenPermit(
 }
 
 export function useERC20PermitFromTrade(
-  trade: V2Trade<Currency, Currency, TradeType> | V3Trade<Currency, Currency, TradeType> | undefined,
+  trade: V2Trade<Currency, Currency, TradeType> | undefined,
   allowedSlippage: Percent
 ) {
-  const { chainId } = useActiveWeb3React()
-  const swapRouterAddress = chainId ? SWAP_ROUTER_ADDRESSES[chainId] : undefined
   const amountToApprove = useMemo(
     () => (trade ? trade.maximumAmountIn(allowedSlippage) : undefined),
     [trade, allowedSlippage]
@@ -284,7 +280,7 @@ export function useERC20PermitFromTrade(
   return useERC20Permit(
     amountToApprove,
     // v2 router does not support
-    trade instanceof V2Trade ? undefined : trade instanceof V3Trade ? swapRouterAddress : undefined,
+    undefined,
     null
   )
 }

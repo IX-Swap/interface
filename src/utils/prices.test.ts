@@ -1,6 +1,6 @@
 import JSBI from 'jsbi'
-import { Percent, Token, CurrencyAmount, TradeType } from '@uniswap/sdk-core'
-import { Trade, Pair, Route } from '@uniswap/v2-sdk'
+import { Percent, Token, CurrencyAmount, TradeType } from '@ixswap1/sdk-core'
+import { Trade, Pair, Route } from '@ixswap1/v2-sdk'
 import { computeRealizedLPFeeAmount, warningSeverity } from './prices'
 
 describe('prices', () => {

@@ -1,4 +1,4 @@
-import { Currency, CurrencyAmount, Ether, Token } from '@uniswap/sdk-core'
+import { Currency, CurrencyAmount, Ether, Token } from '@ixswap1/sdk-core'
 import JSBI from 'jsbi'
 import React, { useCallback, useEffect, useState } from 'react'
 import { Plus } from 'react-feather'
@@ -85,7 +85,7 @@ export default function PoolFinder() {
         {!account ? (
           <Trans>Connect to a wallet to find pools</Trans>
         ) : (
-          <Trans>Select a token to find your liquidity.</Trans>
+          <Trans>Choose token to find your liquidity.</Trans>
         )}
       </Text>
     </LightCard>
@@ -119,7 +119,7 @@ export default function PoolFinder() {
             </Row>
           ) : (
             <Text fontWeight={500} fontSize={20} marginLeft={'12px'}>
-              <Trans>Select a token</Trans>
+              <Trans>Choose token</Trans>
             </Text>
           )}
         </ButtonDropdownLight>
@@ -143,7 +143,7 @@ export default function PoolFinder() {
             </Row>
           ) : (
             <Text fontWeight={500} fontSize={20} marginLeft={'12px'}>
-              <Trans>Select a token</Trans>
+              <Trans>Choose token</Trans>
             </Text>
           )}
         </ButtonDropdownLight>

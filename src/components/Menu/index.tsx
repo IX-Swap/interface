@@ -10,7 +10,7 @@ import { useModalOpen, useToggleModal } from '../../state/application/hooks'
 import { Trans } from '@lingui/macro'
 
 import { ExternalLink } from '../../theme'
-import { ButtonPrimary } from '../Button'
+import { ButtonIXSWide } from '../Button'
 
 export enum FlyoutAlignment {
   LEFT = 'LEFT',
@@ -46,12 +46,6 @@ const StyledMenuButton = styled.button`
   svg {
     margin-top: 2px;
   }
-`
-
-const UNIbutton = styled(ButtonPrimary)`
-  background-color: ${({ theme }) => theme.bg3};
-  background: radial-gradient(174.47% 188.91% at 1.84% 0%, #ff007a 0%, #2172e5 100%), #edeef2;
-  border: none;
 `
 
 const StyledMenu = styled.div`
@@ -172,9 +166,9 @@ export default function Menu() {
             </div>
           </MenuItem>
           {account && (
-            <UNIbutton onClick={openClaimModal} padding="8px 16px" width="100%" borderRadius="12px" mt="0.5rem">
-              <Trans>Claim UNI</Trans>
-            </UNIbutton>
+            <ButtonIXSWide onClick={openClaimModal} padding="8px 16px" width="100%" borderRadius="12px" mt="0.5rem">
+              <Trans>Claim IXS</Trans>
+            </ButtonIXSWide>
           )}
         </MenuFlyout>
       )}

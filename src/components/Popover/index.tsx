@@ -1,6 +1,6 @@
+import React, { useCallback, useState } from 'react'
 import { Placement } from '@popperjs/core'
 import { transparentize } from 'polished'
-import React, { useCallback, useState } from 'react'
 import { usePopper } from 'react-popper'
 import styled from 'styled-components/macro'
 import useInterval from '../../hooks/useInterval'
@@ -11,7 +11,7 @@ const PopoverContainer = styled.div<{ show: boolean }>`
   visibility: ${(props) => (props.show ? 'visible' : 'hidden')};
   opacity: ${(props) => (props.show ? 1 : 0)};
   transition: visibility 150ms linear, opacity 150ms linear;
-  background: ${({ theme }) => theme.bg2};
+  background: ${({ theme }) => theme.bg7};
   border: 1px solid ${({ theme }) => theme.bg3};
   box-shadow: 0 4px 8px 0 ${({ theme }) => transparentize(0.9, theme.shadow1)};
   color: ${({ theme }) => theme.text2};
@@ -36,7 +36,7 @@ const Arrow = styled.div`
     content: '';
     border: 1px solid ${({ theme }) => theme.bg3};
     transform: rotate(45deg);
-    background: ${({ theme }) => theme.bg2};
+    background: ${({ theme }) => theme.bg7};
   }
 
   &.arrow-top {

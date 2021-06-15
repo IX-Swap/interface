@@ -10,8 +10,8 @@ import { TYPE, CloseIcon } from '../../theme'
 import { ButtonConfirmed, ButtonError } from '../Button'
 import ProgressCircles from '../ProgressSteps'
 import CurrencyInputPanel from '../CurrencyInputPanel'
-import { Pair } from '@uniswap/v2-sdk'
-import { Token, CurrencyAmount } from '@uniswap/sdk-core'
+import { Pair } from '@ixswap1/v2-sdk'
+import { Token, CurrencyAmount } from '@ixswap1/sdk-core'
 import { useActiveWeb3React } from '../../hooks/web3'
 import { maxAmountSpend } from '../../utils/maxAmountSpend'
 import { usePairContract, useStakingContract, useV2RouterContract } from '../../hooks/useContract'
@@ -184,7 +184,7 @@ export default function StakingModal({ isOpen, onDismiss, stakingInfo, userLiqui
                 {hypotheticalRewardRate
                   .multiply((60 * 60 * 24 * 7).toString())
                   .toSignificant(4, { groupSeparator: ',' })}{' '}
-                UNI / week
+                IXS / week
               </Trans>
             </TYPE.black>
           </HypotheticalRewardRate>
@@ -216,7 +216,7 @@ export default function StakingModal({ isOpen, onDismiss, stakingInfo, userLiqui
               <Trans>Depositing Liquidity</Trans>
             </TYPE.largeHeader>
             <TYPE.body fontSize={20}>
-              <Trans>{parsedAmount?.toSignificant(4)} UNI-V2</Trans>
+              <Trans>{parsedAmount?.toSignificant(4)} IXS-V2</Trans>
             </TYPE.body>
           </AutoColumn>
         </LoadingView>
@@ -228,7 +228,7 @@ export default function StakingModal({ isOpen, onDismiss, stakingInfo, userLiqui
               <Trans>Transaction Submitted</Trans>
             </TYPE.largeHeader>
             <TYPE.body fontSize={20}>
-              <Trans>Deposited {parsedAmount?.toSignificant(4)} UNI-V2</Trans>
+              <Trans>Deposited {parsedAmount?.toSignificant(4)} IXS-V2</Trans>
             </TYPE.body>
           </AutoColumn>
         </SubmittedView>

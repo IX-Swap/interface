@@ -1,4 +1,4 @@
-import { Token, CurrencyAmount, Percent } from '@uniswap/sdk-core'
+import { Token, CurrencyAmount, Percent } from '@ixswap1/sdk-core'
 import JSBI from 'jsbi'
 import { ONE_HUNDRED_PERCENT } from '../constants/misc'
 

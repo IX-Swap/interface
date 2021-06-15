@@ -1,5 +1,5 @@
 import React, { useCallback } from 'react'
-import { Price, Currency } from '@uniswap/sdk-core'
+import { Price, Currency } from '@ixswap1/sdk-core'
 import { useContext } from 'react'
 import { Text } from 'rebass'
 import styled, { ThemeContext } from 'styled-components'
@@ -37,12 +37,12 @@ export default function TradePrice({ price, showInverted, setShowInverted }: Tra
   const labelInverted = showInverted ? `${price.baseCurrency?.symbol} ` : `${price.quoteCurrency?.symbol}`
   const flipPrice = useCallback(() => setShowInverted(!showInverted), [setShowInverted, showInverted])
 
-  const text = `${'1 ' + labelInverted + ' = ' + formattedPrice ?? '-'} ${label}`
+  const text = `${'1 ' + labelInverted + ' PER ' + formattedPrice ?? '-'} ${label}`
 
   return (
     <StyledPriceContainer onClick={flipPrice} title={text}>
       <div style={{ alignItems: 'center', display: 'flex', width: 'fit-content' }}>
-        <Text fontWeight={500} fontSize={14} color={theme.text1}>
+        <Text fontWeight={500} fontSize={14} color={theme.text7}>
           {text}
         </Text>
       </div>

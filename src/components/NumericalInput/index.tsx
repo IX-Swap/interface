@@ -6,20 +6,20 @@ const StyledInput = styled.input<{ error?: boolean; fontSize?: string; align?: s
   color: ${({ error, theme }) => (error ? theme.red1 : theme.text1)};
   width: 0;
   position: relative;
-  font-weight: 500;
   outline: none;
   border: none;
   flex: 1 1 auto;
-  background-color: ${({ theme }) => theme.bg1};
-  font-size: ${({ fontSize }) => fontSize ?? '24px'};
+  font-weight: 600;
+  background-color: ${({ theme }) => theme.bg7};
   text-align: ${({ align }) => align && align};
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
   padding: 0px;
   -webkit-appearance: textfield;
-  text-align: right;
-
+  text-align: left;
+  font-size: 22px;
+  line-height: 40px;
   ::-webkit-search-decoration {
     -webkit-appearance: none;
   }
@@ -34,7 +34,9 @@ const StyledInput = styled.input<{ error?: boolean; fontSize?: string; align?: s
   }
 
   ::placeholder {
-    color: ${({ theme }) => theme.text4};
+    color: ${({ theme }) => theme.text2};
+    opacity: 0.5;
+    font-style: normal;
   }
 `
 

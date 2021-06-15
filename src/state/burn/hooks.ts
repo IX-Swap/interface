@@ -1,7 +1,7 @@
 import { t } from '@lingui/macro'
 import JSBI from 'jsbi'
-import { Token, Currency, Percent, CurrencyAmount } from '@uniswap/sdk-core'
-import { Pair } from '@uniswap/v2-sdk'
+import { Token, Currency, Percent, CurrencyAmount } from '@ixswap1/sdk-core'
+import { Pair } from '@ixswap1/v2-sdk'
 import { useCallback } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { useV2Pair } from '../../hooks/useV2Pairs'
@@ -9,7 +9,7 @@ import { useTotalSupply } from '../../hooks/useTotalSupply'
 
 import { useActiveWeb3React } from '../../hooks/web3'
 import { AppDispatch, AppState } from '../index'
-import { tryParseAmount } from '../swap/hooks'
+import { tryParseAmount } from '../swap/helpers'
 import { useTokenBalances } from '../wallet/hooks'
 import { Field, typeInput } from './actions'
 

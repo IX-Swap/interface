@@ -15,15 +15,10 @@ msgstr ""
 "Project-Id-Version: uniswap-interface\n"
 "Language-Team: Japanese\n"
 "PO-Revision-Date: 2021-06-01 01:34\n"
-
-#: src/pages/Pool/PositionPage.tsx
-#: src/pages/Pool/PositionPage.tsx
-msgid "$-"
-msgstr "$-"
+"Report-Msgid-Bugs-To: \n"
+"Last-Translator: \n"
 
 #: src/components/earn/PoolCard.tsx
-#: src/pages/Pool/PositionPage.tsx
-#: src/pages/Pool/PositionPage.tsx
 msgid "${0}"
 msgstr "${0}"
 
@@ -31,21 +26,9 @@ msgstr "${0}"
 msgid "${0} ETH"
 msgstr "${0} ETH"
 
-#: src/components/CurrencyInputPanel/index.tsx
-msgid "(Max)"
-msgstr "(最大)"
-
-#: src/components/Header/UniBalanceContent.tsx
-msgid "(claim)"
-msgstr "(請求)"
-
 #: src/components/AccountDetails/index.tsx
 msgid "(clear all)"
 msgstr "(すべてクリア)"
-
-#: src/pages/Vote/index.tsx
-msgid "(edit)"
-msgstr "(編集)"
 
 #: src/components/InputStepCounter/InputStepCounter.tsx
 msgid "+{feeAmountFormatted}%"
@@ -61,10 +44,8 @@ msgstr "-{feeAmountFormatted}%"
 
 #: src/components/earn/PoolCard.tsx
 #: src/components/earn/PoolCard.tsx
-#: src/pages/Earn/Manage.tsx
-#: src/pages/Earn/Manage.tsx
-msgid "0 UNI / week"
-msgstr "0 UNI/週"
+msgid "0 IXS / week"
+msgstr "0 IXS/週"
 
 #: src/components/FeeSelector/index.tsx
 msgid "0.05% fee"
@@ -78,38 +59,9 @@ msgstr "0.3%の手数料"
 msgid "1% fee"
 msgstr "1% の手数料"
 
-#: src/pages/RemoveLiquidity/V3.tsx
-msgid "25%"
-msgstr "25%"
-
-#: src/pages/RemoveLiquidity/V3.tsx
-msgid "50%"
-msgstr "50%"
-
-#: src/pages/RemoveLiquidity/V3.tsx
-msgid "75%"
-msgstr "75%"
-
-#: src/pages/Vote/VotePage.tsx
-msgid "<0/> All Proposals"
-msgstr "<0/>すべての提案"
-
-#: src/pages/Vote/index.tsx
-#: src/pages/Vote/index.tsx
-msgid "<0/> Votes"
-msgstr "<0/>投票"
-
 #: src/pages/Pool/v2.tsx
 msgid "<0>Account analytics and accrued fees</0><1> ↗ </1>"
 msgstr "<0>アカウント分析と発生した手数料</0><1>↗ </1>"
-
-#: src/pages/Swap/index.tsx
-msgid "<0>Back to </0>V3"
-msgstr "<0>戻る</0>V3"
-
-#: src/pages/Vote/VotePage.tsx
-msgid "<0>For</0><1>{0}</1>"
-msgstr "<0></0><1>{0}</1>"
 
 #: src/pages/RemoveLiquidity/index.tsx
 msgid "<0>Tip:</0> Removing pool tokens converts your position back into underlying tokens at the current rate, proportional to your share of the pool. Accrued fees are included in the amounts you receive."
@@ -122,18 +74,6 @@ msgstr "<0>ヒント:</0>このツールを使用して、インターフェイ�
 #: src/pages/AddLiquidityV2/index.tsx
 msgid "<0>Tip:</0> When you add liquidity, you will receive pool tokens representing your position. These tokens automatically earn fees proportional to your share of the pool, and can be redeemed at any time."
 msgstr "<0>ヒント:</0>流動性を追加すると、あなたのポジションを表すプールトークンを受け取ります。 プールトークンは自動的にプールのシェアに比例して手数料を獲得し、いつでも償還することができます。"
-
-#: src/pages/Vote/VotePage.tsx
-msgid "<0>Unlock voting</0> to prepare for the next proposal."
-msgstr "<0>投票のロックを解除</0>次の提案に備えてください。"
-
-#: src/components/claim/ClaimModal.tsx
-msgid "<0>🎉 </0>Welcome to team Unicorn :) <1>🎉</1>"
-msgstr "<0>🎉 </0>チームユニコーンにようこそ <1>🎉</1>"
-
-#: src/pages/Vote/index.tsx
-msgid "A minimum threshold of 1% of the total UNI supply is required to submit proposals"
-msgstr "提案を提出するには、UNI総供給量の1%以上の閾値が必要です"
 
 #: src/components/Menu/index.tsx
 msgid "About"
@@ -152,21 +92,13 @@ msgid "Active"
 msgstr "アクティブ"
 
 #: src/components/PositionCard/index.tsx
-#: src/pages/AddLiquidity/index.tsx
 msgid "Add"
 msgstr "追加"
 
-#: src/components/vote/DelegateModal.tsx
-msgid "Add Delegate +"
-msgstr "代理を追加 +"
-
 #: src/components/NavigationTabs/index.tsx
+#: src/pages/Pool/v2.tsx
 msgid "Add Liquidity"
 msgstr "流動性を追加"
-
-#: src/pages/Pool/v2.tsx
-msgid "Add V2 Liquidity"
-msgstr "V2の流動性を追加"
 
 #: src/pages/PoolFinder/index.tsx
 msgid "Add liquidity."
@@ -181,49 +113,21 @@ msgstr "{0} をメタマスクに追加 <0/>"
 msgid "Add {0} {1} and {2} {3}"
 msgstr "{0} {1} と {2} {3} の追加"
 
-#: src/pages/Earn/Manage.tsx
-msgid "Add {0}-{1} liquidity"
-msgstr "{0}-{1} の流動性を追加"
-
-#: src/pages/AddLiquidity/index.tsx
-msgid "Add {0}/{1} V3 liquidity"
-msgstr "{0}/{1} V3流動性を追加"
-
 #: src/components/TransactionConfirmationModal/index.tsx
 msgid "Added {0}"
 msgstr "{0} を追加"
 
-#: src/components/claim/AddressClaimModal.tsx
-msgid "Address has no available claim"
-msgstr "請求可能なアドレスではありません"
-
-#: src/pages/Vote/VotePage.tsx
-msgid "Against"
-msgstr "<unk>"
-
-#: src/pages/MigrateV2/MigrateV2Pair.tsx
-msgid "Allow LP token migration"
-msgstr "LPトークンの移行を許可する"
-
-#: src/components/Settings/index.tsx
+#: src/components/Settings/SettingsModal.tsx
 msgid "Allow high price impact trades and skip the confirm screen. Use at your own risk."
 msgstr "価格への大きな影響がある取引を許可し、確認画面をスキップします。自己責任で使用してください。"
 
 #: src/pages/Swap/index.tsx
-msgid "Allow the Uniswap Protocol to use your {0}"
-msgstr "{0} の使用をユニスワッププロトコルに許可する"
-
-#: src/pages/MigrateV2/MigrateV2Pair.tsx
-msgid "Allowed"
-msgstr "許可"
+msgid "Allow the IXSwap Protocol to use your {0}"
+msgstr ""
 
 #: src/components/Header/URLWarning.tsx
 msgid "Always make sure the URL is<0>app.uniswap.org</0> - bookmark it to be safe."
 msgstr "URLが<0> app.uniswap.org</0>であることを常に確認してください。安全のためにこのURLをブックマークしてください。"
-
-#: src/pages/RemoveLiquidity/V3.tsx
-msgid "Amount"
-msgstr "金額"
 
 #: src/hooks/useSwapCallback.ts
 msgid "An error occurred when trying to execute this swap. You may need to increase your slippage tolerance. If that does not work, there may be an incompatibility with the token you are trading. Note fee on transfer and rebase tokens are incompatible with Uniswap V3."
@@ -247,7 +151,6 @@ msgstr "承認 {0}"
 msgid "Approved"
 msgstr "承認済み"
 
-#: src/pages/MigrateV2/MigrateV2Pair.tsx
 #: src/pages/RemoveLiquidity/index.tsx
 msgid "Approving"
 msgstr "承認中"
@@ -257,21 +160,9 @@ msgstr "承認中"
 msgid "Approving {0}"
 msgstr "承認中 {0}"
 
-#: src/components/Settings/index.tsx
+#: src/components/Settings/ExpertModeModal.tsx
 msgid "Are you sure?"
 msgstr "よろしいですか？"
-
-#: src/components/claim/ClaimModal.tsx
-msgid "As a member of the Uniswap community you may claim UNI to be used for voting and governance.<0/><1/><2>Read more about UNI</2>"
-msgstr "Uniswapコミュニティのメンバーとして、投票とガバナンスのためにUNIを使用することを主張することができます。<0/><1/><2>UNIについてもっと読む</2>"
-
-#: src/pages/MigrateV2/MigrateV2Pair.tsx
-msgid "At least {0} {1} and {2} {3} will be refunded to your wallet due to selected price range."
-msgstr "少なくとも {0} の {1} と {2} の {3} は選択された価格範囲のため、ウォレットに返金されます。"
-
-#: src/components/TransactionSettings/index.tsx
-msgid "Auto"
-msgstr "自動"
 
 #: src/components/earn/StakingModal.tsx
 msgid "Available to deposit: {0}"
@@ -280,10 +171,6 @@ msgstr "入金可能： {0}"
 #: src/components/WalletModal/index.tsx
 msgid "Back"
 msgstr "戻る"
-
-#: src/components/Header/UniBalanceContent.tsx
-msgid "Balance:"
-msgstr "残高:"
 
 #: src/components/CurrencyInputPanel/index.tsx
 msgid "Balance: {0} {1}"
@@ -321,66 +208,41 @@ msgstr "ウォレットを接続することにより、Uniswap Labs' <0>サー�
 msgid "Change"
 msgstr "変更"
 
-#: src/components/Header/index.tsx
-msgid "Charts"
-msgstr "チャート"
+#: src/components/CurrencyInputPanel/index.tsx
+#: src/components/SearchModal/CurrencySearch.tsx
+#: src/pages/PoolFinder/index.tsx
+#: src/pages/PoolFinder/index.tsx
+#: src/state/swap/hooks.ts
+msgid "Choose token"
+msgstr "トークンを選択"
 
-#: src/pages/Pool/CTACards.tsx
-msgid "Check out our v3 LP walkthrough and migration guides."
-msgstr "私たちのv3 LPウォークスルーと移行ガイドをご覧ください。"
+#: src/pages/PoolFinder/index.tsx
+msgid "Choose token to find your liquidity."
+msgstr "トークンを選択して流動性を見つけます。"
 
 #: src/components/earn/ClaimRewardModal.tsx
 #: src/components/earn/ClaimRewardModal.tsx
-#: src/pages/Earn/Manage.tsx
 msgid "Claim"
 msgstr "Claim"
 
-#: src/components/Header/index.tsx
 #: src/components/Menu/index.tsx
-#: src/components/claim/AddressClaimModal.tsx
-#: src/components/claim/ClaimModal.tsx
-#: src/components/claim/ClaimModal.tsx
-msgid "Claim UNI"
-msgstr "Claim UNI"
-
-#: src/components/claim/AddressClaimModal.tsx
-msgid "Claim UNI Token"
-msgstr "Claim UNI Token"
+msgid "Claim IXS"
+msgstr "Claim IXS"
 
 #: src/components/earn/ClaimRewardModal.tsx
 #: src/components/earn/ClaimRewardModal.tsx
-msgid "Claim accumulated UNI rewards"
-msgstr "UNI報酬を受け取ることができます。"
-
-#: src/pages/Pool/PositionPage.tsx
-msgid "Claim fees"
-msgstr "手数料を請求する"
-
-#: src/components/claim/AddressClaimModal.tsx
-msgid "Claimed"
-msgstr "請求済み"
+msgid "Claim accumulated IXS rewards"
+msgstr "IXS報酬を受け取ることができます。"
 
 #: src/components/earn/ClaimRewardModal.tsx
 #: src/components/earn/UnstakingModal.tsx
-msgid "Claimed UNI!"
-msgstr "UNIを主張しました！"
-
-#: src/components/claim/AddressClaimModal.tsx
-msgid "Claiming"
-msgstr "請求中"
-
-#: src/components/Header/index.tsx
-msgid "Claiming UNI"
-msgstr "UNIを請求中"
+msgid "Claimed IXS!"
+msgstr "IXSを主張しました！"
 
 #: src/components/earn/ClaimRewardModal.tsx
 #: src/components/earn/UnstakingModal.tsx
-msgid "Claiming {0} UNI"
-msgstr "UNIを {0} 個要求中"
-
-#: src/pages/AddLiquidity/index.tsx
-msgid "Clear All"
-msgstr "すべてクリア"
+msgid "Claiming {0} IXS"
+msgstr "IXSを {0} 個要求中"
 
 #: src/components/SearchModal/ManageTokens.tsx
 msgid "Clear all"
@@ -393,35 +255,6 @@ msgstr "閉じる"
 #: src/components/Menu/index.tsx
 msgid "Code"
 msgstr "コード"
-
-#: src/pages/Pool/PositionPage.tsx
-msgid "Collect"
-msgstr "回収する"
-
-#: src/pages/Pool/PositionPage.tsx
-#: src/pages/RemoveLiquidity/V3.tsx
-msgid "Collect as WETH"
-msgstr "ウェットとして収集"
-
-#: src/pages/Pool/PositionPage.tsx
-msgid "Collect fees"
-msgstr "手数料を徴収する"
-
-#: src/pages/Pool/PositionPage.tsx
-msgid "Collected"
-msgstr "集められた"
-
-#: src/pages/Pool/PositionPage.tsx
-msgid "Collecting"
-msgstr "回収中"
-
-#: src/pages/Pool/PositionPage.tsx
-msgid "Collecting fees"
-msgstr "手数料の収集"
-
-#: src/pages/Pool/PositionPage.tsx
-msgid "Collecting fees will withdraw currently available fees for you."
-msgstr "徴収手数料は現在利用可能な手数料を引き出します。"
 
 #: src/components/SearchModal/CommonBases.tsx
 msgid "Common bases"
@@ -442,18 +275,15 @@ msgstr "スワップの確認"
 
 #: src/components/ModalViews/index.tsx
 #: src/components/TransactionConfirmationModal/index.tsx
-#: src/components/claim/AddressClaimModal.tsx
-#: src/components/claim/ClaimModal.tsx
-#: src/components/vote/VoteModal.tsx
 msgid "Confirm this transaction in your wallet"
 msgstr "ウォレット内でこの取引を確認する"
 
+#: src/components/Web3Status/index.tsx
 #: src/pages/AddLiquidityV2/index.tsx
 #: src/pages/RemoveLiquidity/index.tsx
 #: src/pages/Swap/index.tsx
 #: src/state/burn/hooks.ts
 #: src/state/mint/hooks.ts
-#: src/state/mint/v3/hooks.ts
 #: src/state/stake/hooks.ts
 #: src/state/stake/hooks.ts
 #: src/state/swap/hooks.ts
@@ -461,12 +291,10 @@ msgid "Connect Wallet"
 msgstr "ウォレットに接続"
 
 #: src/components/earn/UnstakingModal.tsx
-#: src/pages/Pool/index.tsx
 msgid "Connect a wallet"
 msgstr "ウォレットに接続"
 
 #: src/components/WalletModal/index.tsx
-#: src/components/Web3Status/index.tsx
 msgid "Connect to a wallet"
 msgstr "ウォレットに接続"
 
@@ -474,16 +302,11 @@ msgstr "ウォレットに接続"
 msgid "Connect to a wallet to find pools"
 msgstr "プールを見つけるにはウォレットに接続してください"
 
-#: src/pages/MigrateV2/index.tsx
-msgid "Connect to a wallet to view your V2 liquidity."
-msgstr "ウォレットに接続してV2流動性を確認します。"
-
 #: src/pages/Pool/v2.tsx
 msgid "Connect to a wallet to view your liquidity."
 msgstr "ウォレットに接続して流動性を確認します。"
 
 #: src/components/earn/ClaimRewardModal.tsx
-#: src/pages/AddLiquidity/index.tsx
 msgid "Connect wallet"
 msgstr "ウォレットに接続"
 
@@ -505,99 +328,52 @@ msgid "Create Pool & Supply"
 msgstr "プールと供給を作成"
 
 #: src/components/NavigationTabs/index.tsx
-#: src/pages/Pool/v2.tsx
 msgid "Create a pair"
 msgstr "ペアを作成"
-
-#: src/pages/Pool/index.tsx
-msgid "Create a pool"
-msgstr "プールを作成"
 
 #: src/components/ErrorBoundary/index.tsx
 msgid "Create an issue on GitHub"
 msgstr "GitHubで問題を作成する"
 
-#: src/pages/AddLiquidity/index.tsx
-msgid "Create pool and add {0}/{1} V3 liquidity"
-msgstr "プールを作成し、 {0}/{1} V3流動性を追加"
-
 #: src/pages/PoolFinder/index.tsx
 msgid "Create pool."
 msgstr "プールを作成"
 
-#: src/pages/AddLiquidity/index.tsx
-msgid "Current Price"
-msgstr "現在の価格"
+#: src/pages/Swap/index.tsx
+msgid "Current Rate"
+msgstr "現在のレート"
 
-#: src/components/PositionPreview/index.tsx
-#: src/pages/Pool/PositionPage.tsx
-msgid "Current price"
-msgstr "現在の価格"
-
-#: src/pages/AddLiquidity/index.tsx
-msgid "Current {0} Price:"
-msgstr "現在の {0} 価格:"
-
-#: src/components/vote/DelegateModal.tsx
-msgid "Delegate Votes"
-msgstr "投票を委任する"
-
-#: src/pages/Vote/index.tsx
-msgid "Delegated to:"
-msgstr "委任先:"
-
-#: src/components/vote/DelegateModal.tsx
-msgid "Delegating votes"
-msgstr "投票を委任中"
+#: src/components/Header/HeaderLinks.tsx
+msgid "Custodian"
+msgstr ""
 
 #: src/components/earn/PoolCard.tsx
 #: src/components/earn/StakingModal.tsx
 #: src/components/earn/StakingModal.tsx
-#: src/pages/Earn/Manage.tsx
 msgid "Deposit"
 msgstr "Deposit（預金）"
-
-#: src/pages/AddLiquidity/index.tsx
-msgid "Deposit Amounts"
-msgstr "預金金額"
-
-#: src/pages/Earn/Manage.tsx
-msgid "Deposit UNI-V2 LP Tokens"
-msgstr "デポジットUNI-V2 LP トークン"
 
 #: src/components/earn/StakingModal.tsx
 msgid "Deposit liquidity"
 msgstr "預金流動性format@@0"
-
-#: src/pages/Earn/index.tsx
-msgid "Deposit your Liquidity Provider tokens to receive UNI, the Uniswap protocol governance token."
-msgstr "流動性プロバイダトークンをデポジットして、UNI、Uniswapプロトコルガバナンストークンを受け取ります。"
 
 #: src/components/earn/UnstakingModal.tsx
 msgid "Deposited liquidity:"
 msgstr "預金流動性:"
 
 #: src/components/earn/StakingModal.tsx
-msgid "Deposited {0} UNI-V2"
-msgstr "{0} UNI-V2"
+msgid "Deposited {0} IXS-V2"
+msgstr "{0} IXS-V2"
 
 #: src/components/earn/StakingModal.tsx
 msgid "Depositing Liquidity"
 msgstr "デポジットの流動性"
 
-#: src/pages/Vote/VotePage.tsx
-msgid "Description"
-msgstr "説明"
-
 #: src/pages/RemoveLiquidity/index.tsx
 msgid "Detailed"
 msgstr "詳細情報"
 
-#: src/pages/Vote/VotePage.tsx
-msgid "Details"
-msgstr "詳細"
-
-#: src/components/Settings/index.tsx
+#: src/components/Settings/SettingsModal.tsx
 msgid "Disable Multihops"
 msgstr "マルチホップを無効にする"
 
@@ -617,14 +393,6 @@ msgstr "却下する"
 msgid "Docs"
 msgstr "ドキュメント"
 
-#: src/pages/MigrateV2/index.tsx
-msgid "Don’t see one of your v2 positions? <0>Import it.</0>"
-msgstr "あなたのv2ポジションのいずれかが表示されませんか? <0>インポートしてください</0>"
-
-#: src/components/vote/DelegateModal.tsx
-msgid "Earned UNI tokens represent voting shares in Uniswap governance."
-msgstr "獲得されたUNIトークンは、Uniswapガバナンスの投票株式を表します。"
-
 #: src/state/swap/hooks.ts
 msgid "Enter a recipient"
 msgstr "受信者を入力してください"
@@ -633,15 +401,10 @@ msgstr "受信者を入力してください"
 msgid "Enter a valid slippage percentage"
 msgstr "有効なスリップページのパーセンテージを入力してください"
 
-#: src/components/claim/AddressClaimModal.tsx
-msgid "Enter an address to trigger a UNI claim. If the address has any claimable UNI it will be sent to them on submission."
-msgstr "UNIクレームを発生させるアドレスを入力します。アドレスに請求可能なUNIがある場合は、送信時に送信されます。"
-
 #: src/components/earn/ClaimRewardModal.tsx
 #: src/components/earn/UnstakingModal.tsx
 #: src/state/burn/hooks.ts
 #: src/state/mint/hooks.ts
-#: src/state/mint/v3/hooks.ts
 #: src/state/stake/hooks.ts
 #: src/state/stake/hooks.ts
 #: src/state/swap/hooks.ts
@@ -678,21 +441,13 @@ msgstr "リストのインポートエラー"
 msgid "Expanded results from inactive Token Lists"
 msgstr "非アクティブなトークンリストから展開された結果"
 
-#: src/components/Settings/index.tsx
+#: src/components/Settings/SettingsModal.tsx
+msgid "Expert Mode"
+msgstr "エキスパートモード"
+
+#: src/components/Settings/ExpertModeModal.tsx
 msgid "Expert mode turns off the confirm transaction prompt and allows high slippage trades that often result in bad rates and lost funds."
 msgstr "エキスパートモードは確認トランザクションプロンプトをオフにし、多くの場合、不良率や資金を失う可能性が高いスリップページ取引を可能にします。"
-
-#: src/pages/Pool/CTACards.tsx
-msgid "Explore popular pools on Uniswap Analytics."
-msgstr "Uniswap Analyticsで人気のプールを探索します。"
-
-#: src/components/PositionPreview/index.tsx
-msgid "Fee Tier"
-msgstr "手数料段階"
-
-#: src/pages/MigrateV2/index.tsx
-msgid "For each pool shown below, click migrate to remove your liquidity from Uniswap V2 and deposit it into Uniswap V3."
-msgstr "以下に示す各プールについては、format@@0をクリックしてUniswap V2から流動性を削除し、Uniswap V3に入金します。"
 
 #: src/components/swap/SwapModalHeader.tsx
 #: src/pages/Swap/index.tsx
@@ -707,10 +462,6 @@ msgstr "（最大）から"
 msgid "Get support on Discord"
 msgstr "Discordのサポートを受ける"
 
-#: src/pages/Pool/index.tsx
-msgid "Hide closed positions"
-msgstr "閉じた位置を隠す"
-
 #: src/pages/Swap/index.tsx
 msgid "High Price Impact"
 msgstr "価格への影響"
@@ -718,6 +469,10 @@ msgstr "価格への影響"
 #: src/components/SearchModal/ImportList.tsx
 msgid "I understand"
 msgstr "了解しました"
+
+#: src/pages/RemoveLiquidity/index.tsx
+msgid "IXS {0}/{1} Burned"
+msgstr "IXS {0}/{1} が消費されました"
 
 #: src/components/SearchModal/ImportList.tsx
 msgid "If you purchase a token from this list, you may not be able to sell it back."
@@ -746,13 +501,8 @@ msgid "In range"
 msgstr "範囲内"
 
 #: src/components/Badge/RangeBadge.tsx
-#: src/pages/RemoveLiquidity/V3.tsx
 msgid "Inactive"
 msgstr "非アクティブ"
-
-#: src/pages/Pool/PositionPage.tsx
-msgid "Increase Liquidity"
-msgstr "流動性を上げる"
 
 #: src/pages/AddLiquidityV2/index.tsx
 msgid "Initial prices and pool share"
@@ -780,18 +530,15 @@ msgstr "この取引には流動性が不足しています。マルチホップ
 
 #: src/state/mint/hooks.ts
 #: src/state/mint/hooks.ts
-#: src/state/mint/v3/hooks.ts
-#: src/state/mint/v3/hooks.ts
 #: src/state/swap/hooks.ts
 msgid "Insufficient {0} balance"
 msgstr "不十分な {0} バランス"
 
-#: src/components/Settings/index.tsx
+#: src/components/Settings/SettingsModal.tsx
 msgid "Interface Settings"
 msgstr "インターフェイスの設定"
 
 #: src/state/mint/hooks.ts
-#: src/state/mint/v3/hooks.ts
 msgid "Invalid pair"
 msgstr "無効なペア"
 
@@ -799,39 +546,17 @@ msgstr "無効なペア"
 msgid "Invalid pair."
 msgstr "無効なペアです。"
 
-#: src/state/mint/v3/hooks.ts
-msgid "Invalid price input"
-msgstr "無効な価格入力"
-
-#: src/pages/AddLiquidity/index.tsx
-#: src/pages/MigrateV2/MigrateV2Pair.tsx
-msgid "Invalid range selected. The min price must be lower than the max price."
-msgstr "不正な範囲が選択されています。最小価格は最大価格よりも低くなければなりません。"
-
 #: src/state/swap/hooks.ts
 msgid "Invalid recipient"
 msgstr "無効な受信者"
 
-#: src/pages/Pool/index.tsx
-msgid "Learn"
-msgstr "詳細情報"
-
-#: src/components/claim/ClaimModal.tsx
-#: src/pages/Pool/PositionPage.tsx
-msgid "Liquidity"
-msgstr "<unk>"
+#: src/pages/Pool/LiquidityTitle.tsx
+msgid "Liquidity Pool"
+msgstr "流動性プール"
 
 #: src/components/swap/AdvancedSwapDetails.tsx
 msgid "Liquidity Provider Fee"
 msgstr "流動性プロバイダー手数料"
-
-#: src/pages/Pool/v2.tsx
-msgid "Liquidity provider rewards"
-msgstr "流動性プロバイダ報酬"
-
-#: src/pages/Pool/v2.tsx
-msgid "Liquidity providers earn a 0.3% fee on all trades proportional to their share of the pool. Fees are added to the pool, accrue in real time and can be claimed by withdrawing your liquidity."
-msgstr "流動性プロバイダは、プールのシェアに比例したすべての取引で0.3%の手数料を得ます。 手数料はプールに追加され、リアルタイムで補償され、あなたの流動性を引き出すことによって請求することができます。"
 
 #: src/components/SearchModal/Manage.tsx
 msgid "Lists"
@@ -844,11 +569,8 @@ msgstr "読み込まれました"
 #: src/components/PositionCard/Sushi.tsx
 #: src/components/PositionCard/V2.tsx
 #: src/components/PositionCard/index.tsx
-#: src/pages/MigrateV2/MigrateV2Pair.tsx
-#: src/pages/MigrateV2/index.tsx
 #: src/pages/Pool/v2.tsx
 #: src/pages/PoolFinder/index.tsx
-#: src/pages/Swap/index.tsx
 msgid "Loading"
 msgstr "読み込み中"
 
@@ -877,105 +599,37 @@ msgstr "トークンリストの管理"
 msgid "Manage this pool."
 msgstr "このプールを管理します"
 
-#: src/pages/RemoveLiquidity/V3.tsx
+#: src/components/CurrencyInputPanel/index.tsx
 msgid "Max"
 msgstr "最大値"
 
-#: src/components/PositionPreview/index.tsx
 #: src/components/RangeSelector/index.tsx
 msgid "Max Price"
 msgstr "最大価格"
-
-#: src/pages/Pool/PositionPage.tsx
-msgid "Max price"
-msgstr "最大価格"
-
-#: src/components/PositionListItem/index.tsx
-msgid "Max:"
-msgstr "最大："
 
 #: src/components/swap/AdvancedSwapDetails.tsx
 msgid "Maximum sent"
 msgstr "最大送信数"
 
-#: src/components/PositionCard/Sushi.tsx
-#: src/components/PositionCard/V2.tsx
-#: src/components/PositionCard/index.tsx
-#: src/pages/MigrateV2/MigrateV2Pair.tsx
-#: src/pages/Pool/index.tsx
-msgid "Migrate"
-msgstr "移行"
-
-#: src/pages/Pool/index.tsx
-msgid "Migrate Liquidity"
-msgstr "流動性の移行"
-
-#: src/pages/Pool/v2.tsx
-msgid "Migrate Liquidity to V3"
-msgstr "流動性をV3に移行"
-
-#: src/pages/MigrateV2/MigrateV2Pair.tsx
-#: src/pages/MigrateV2/index.tsx
-msgid "Migrate V2 Liquidity"
-msgstr "V2の流動性を移行"
-
-#: src/pages/Pool/index.tsx
-msgid "Migrate V2 liquidity"
-msgstr "V2流動性の移行"
-
-#: src/pages/MigrateV2/index.tsx
-msgid "Migrate your liquidity tokens from Uniswap V2 to Uniswap V3."
-msgstr "Uniswap V2からUniswap V3に流動性トークンを移行します。"
-
-#: src/pages/MigrateV2/MigrateV2Pair.tsx
-msgid "Migrating"
-msgstr "移行中"
-
-#: src/components/PositionPreview/index.tsx
 #: src/components/RangeSelector/index.tsx
 msgid "Min Price"
 msgstr "最小価格"
-
-#: src/pages/Pool/PositionPage.tsx
-msgid "Min price"
-msgstr "最小価格"
-
-#: src/components/PositionListItem/index.tsx
-msgid "Min:"
-msgstr "最小:"
 
 #: src/components/swap/AdvancedSwapDetails.tsx
 msgid "Minimum received"
 msgstr "受け取った最小値"
 
-#: src/pages/Pool/index.tsx
-msgid "More"
-msgstr "もっと見る"
+#: src/components/TransactionSettings/index.tsx
+msgid "Minutes"
+msgstr "分"
 
-#: src/pages/Pool/index.tsx
-msgid "New Position"
-msgstr "新しいポジション"
-
-#: src/pages/MigrateV2/index.tsx
-msgid "No V2 Liquidity found."
-msgstr "V2流動性が見つかりません。"
-
-#: src/pages/Earn/index.tsx
-#: src/pages/Earn/index.tsx
-msgid "No active pools"
-msgstr "アクティブなプールがありません"
-
-#: src/pages/Pool/v2.tsx
+#: src/pages/Pool/EmptyLiquidity.tsx
 msgid "No liquidity found."
 msgstr "流動性が見つかりません。"
 
 #: src/pages/PoolFinder/index.tsx
 msgid "No pool found."
 msgstr "プールが見つかりません。"
-
-#: src/pages/Vote/index.tsx
-msgid "No proposals found."
-msgstr "提案が見つかりません。"
 
 #: src/components/SearchModal/CurrencySearch.tsx
 msgid "No results found."
@@ -989,25 +643,13 @@ msgstr "オフ"
 msgid "ON"
 msgstr "オン"
 
-#: src/components/Settings/index.tsx
+#: src/components/Settings/ExpertModeModal.tsx
 msgid "ONLY USE THIS MODE IF YOU KNOW WHAT YOU ARE DOING."
 msgstr "あなたが何をしているか分かっている場合にのみ、このモードを使用してください。"
-
-#: src/components/Toggle/index.tsx
-msgid "Off"
-msgstr "オフ"
-
-#: src/components/Toggle/index.tsx
-msgid "On"
-msgstr "オン"
 
 #: src/pages/AddLiquidityV2/index.tsx
 msgid "Once you are happy with the rate click supply to review."
 msgstr "あなたがレビューするためにレート供給をクリックして満足している一度。"
-
-#: src/pages/Vote/VotePage.tsx
-msgid "Only UNI votes that were self delegated or delegated to another address before block {0} are eligible for voting."
-msgstr "ブロック {0} が投票の対象となる前に自己委任または他のアドレスに委任されたUNI投票のみ。"
 
 #: src/components/Web3ReactManager/index.tsx
 msgid "Oops! An unknown error occurred. Please refresh the page, or visit from another browser or device."
@@ -1030,23 +672,15 @@ msgstr "出力が推定されています。少なくとも <0>{0} {1}</0> を�
 msgid "Output will be sent to <0>{0}</0>"
 msgstr "出力は <0>{0}</0> に送信されます"
 
-#: src/pages/Pool/PositionPage.tsx
-msgid "Owner"
-msgstr "所有者"
-
-#: src/pages/Earn/index.tsx
-msgid "Participating pools"
-msgstr "参加するプール"
-
 #: src/components/WalletModal/index.tsx
 msgid "Please connect to the appropriate Ethereum network."
 msgstr "適切なEthereumネットワークに接続してください。"
 
-#: src/components/Settings/index.tsx
+#: src/components/Settings/ExpertModeModal.tsx
 msgid "Please type the word \"{confirmWord}\" to enable expert mode."
 msgstr "エキスパートモードを有効にするには、単語\"{confirmWord}\"を入力してください。"
 
-#: src/components/Header/index.tsx
+#: src/components/Header/HeaderLinks.tsx
 #: src/components/NavigationTabs/index.tsx
 msgid "Pool"
 msgstr "プール"
@@ -1054,10 +688,6 @@ msgstr "プール"
 #: src/pages/PoolFinder/index.tsx
 msgid "Pool Found!"
 msgstr "プールが見つかりました！"
-
-#: src/pages/Earn/Manage.tsx
-msgid "Pool Rate"
-msgstr "プールレート"
 
 #: src/components/earn/PoolCard.tsx
 msgid "Pool rate"
@@ -1072,25 +702,13 @@ msgstr "報酬プール内のプールトークン:"
 #: src/components/PositionCard/V2.tsx
 #: src/components/PositionCard/index.tsx
 #: src/components/PositionCard/index.tsx
-#: src/pages/RemoveLiquidity/V3.tsx
-#: src/pages/RemoveLiquidity/V3.tsx
-#: src/pages/RemoveLiquidity/V3.tsx
-#: src/pages/RemoveLiquidity/V3.tsx
 msgid "Pooled {0}:"
 msgstr "プールされた {0}:"
-
-#: src/pages/Pool/index.tsx
-msgid "Pools Overview"
-msgstr "プールの概要"
 
 #: src/components/swap/SwapModalHeader.tsx
 #: src/pages/RemoveLiquidity/index.tsx
 msgid "Price"
 msgstr "価格"
-
-#: src/pages/MigrateV2/MigrateV2Pair.tsx
-msgid "Price Difference:"
-msgstr "価格差:"
 
 #: src/components/swap/AdvancedSwapDetails.tsx
 msgid "Price Impact"
@@ -1104,11 +722,6 @@ msgstr "価格の影響が高すぎます"
 msgid "Price Updated"
 msgstr "価格更新"
 
-#: src/components/PositionList/index.tsx
-#: src/pages/Pool/PositionPage.tsx
-msgid "Price range"
-msgstr "価格範囲"
-
 #: src/pages/RemoveLiquidity/index.tsx
 msgid "Price:"
 msgstr "価格:"
@@ -1117,33 +730,9 @@ msgstr "価格:"
 msgid "Prices and pool share"
 msgstr "価格とプールのシェア"
 
-#: src/pages/Vote/index.tsx
-msgid "Proposals"
-msgstr "提案"
-
-#: src/pages/Vote/index.tsx
-msgid "Proposals submitted by community members will appear here."
-msgstr "コミュニティメンバーが提出した提案はここに表示されます。"
-
-#: src/pages/Vote/VotePage.tsx
-msgid "Proposer"
-msgstr "提案"
-
 #: src/pages/AddLiquidityV2/ConfirmAddModalBottom.tsx
 msgid "Rates"
 msgstr "レート"
-
-#: src/pages/Earn/index.tsx
-msgid "Read more about UNI"
-msgstr "UNIについてもっと読む"
-
-#: src/pages/Vote/index.tsx
-msgid "Read more about Uniswap governance"
-msgstr "Uniswapガバナンスについてもっと読む"
-
-#: src/pages/Pool/v2.tsx
-msgid "Read more about providing liquidity"
-msgstr "流動性の提供についてもっと読む"
 
 #: src/components/swap/UnsupportedCurrencyFooter.tsx
 msgid "Read more about unsupported assets"
@@ -1155,8 +744,6 @@ msgstr "最近の取引"
 
 #: src/components/PositionCard/V2.tsx
 #: src/components/PositionCard/index.tsx
-#: src/pages/RemoveLiquidity/V3.tsx
-#: src/pages/RemoveLiquidity/V3.tsx
 #: src/pages/RemoveLiquidity/index.tsx
 msgid "Remove"
 msgstr "削除"
@@ -1165,13 +752,7 @@ msgstr "削除"
 msgid "Remove Amount"
 msgstr "金額を削除"
 
-#: src/components/vote/DelegateModal.tsx
-msgid "Remove Delegate"
-msgstr "委任を削除"
-
 #: src/components/NavigationTabs/index.tsx
-#: src/pages/Pool/PositionPage.tsx
-#: src/pages/RemoveLiquidity/V3.tsx
 msgid "Remove Liquidity"
 msgstr "流動性を削除"
 
@@ -1184,15 +765,11 @@ msgstr "リストを削除"
 msgid "Remove {0} {1} and {2} {3}"
 msgstr "{0} {1} と {2} {3} を削除"
 
-#: src/pages/RemoveLiquidity/V3.tsx
-msgid "Remove {0}/{1} V3 liquidity"
-msgstr "{0}/{1} V3流動性を削除"
-
 #: src/pages/RemoveLiquidity/index.tsx
 msgid "Removing {0} {1} and {2} {3}"
 msgstr "{0} {1} と {2} {3} を削除しています"
 
-#: src/components/Settings/index.tsx
+#: src/components/Settings/SettingsModal.tsx
 msgid "Restricts swaps to direct pairs only."
 msgstr "スワップをダイレクトペアのみに制限します。"
 
@@ -1215,43 +792,6 @@ msgstr "プールを選択"
 #: src/components/FeeSelector/index.tsx
 msgid "Select a pool type based on your preferred liquidity provider fee."
 msgstr "ご希望の流動性プロバイダ手数料に基づいてプールタイプを選択してください。"
-
-#: src/components/CurrencyInputPanel/index.tsx
-#: src/components/SearchModal/CurrencySearch.tsx
-#: src/pages/PoolFinder/index.tsx
-#: src/pages/PoolFinder/index.tsx
-#: src/state/swap/hooks.ts
-msgid "Select a token"
-msgstr "トークンを選択"
-
-#: src/pages/PoolFinder/index.tsx
-msgid "Select a token to find your liquidity."
-msgstr "トークンを選択して流動性を見つけます。"
-
-#: src/pages/AddLiquidity/index.tsx
-msgid "Select pair"
-msgstr "ペアを選択"
-
-#: src/pages/AddLiquidity/index.tsx
-msgid "Selected Range"
-msgstr "選択した範囲"
-
-#: src/pages/Vote/index.tsx
-msgid "Self"
-msgstr "自己|自分format@@0"
-
-#: src/components/vote/DelegateModal.tsx
-msgid "Self Delegate"
-msgstr "自己委任する"
-
-#: src/pages/AddLiquidity/index.tsx
-#: src/pages/MigrateV2/MigrateV2Pair.tsx
-msgid "Set Price Range"
-msgstr "価格範囲を設定"
-
-#: src/pages/AddLiquidity/index.tsx
-msgid "Set Starting Price"
-msgstr "開始価格を設定"
 
 #: src/pages/AddLiquidityV2/ConfirmAddModalBottom.tsx
 msgid "Share of Pool:"
@@ -1278,14 +818,6 @@ msgstr "一部の資産は、スマートコントラクトでうまく動作し
 msgid "Something went wrong"
 msgstr "何かがうまくいかなかった"
 
-#: src/pages/Earn/Manage.tsx
-msgid "Step 1. Get UNI-V2 Liquidity tokens"
-msgstr "ステップ1. UNI-V2流動性トークンを入手"
-
-#: src/components/vote/VoteModal.tsx
-msgid "Submitting Vote"
-msgstr "投票を送信中"
-
 #: src/pages/AddLiquidityV2/index.tsx
 msgid "Supply"
 msgstr "Suprimentos"
@@ -1294,7 +826,7 @@ msgstr "Suprimentos"
 msgid "Supplying {0} {1} and {2} {3}"
 msgstr "{0} {1} と {2} {3} を供給しています"
 
-#: src/components/Header/index.tsx
+#: src/components/Header/HeaderLinks.tsx
 #: src/components/NavigationTabs/index.tsx
 #: src/components/swap/SwapHeader.tsx
 #: src/pages/Swap/index.tsx
@@ -1351,10 +883,6 @@ msgstr "期限が過ぎたため、取引を送信できませんでした。取
 msgid "These tokens are commonly paired with other tokens."
 msgstr "これらのトークンは一般的に他のトークンとペアになっています。"
 
-#: src/pages/MigrateV2/MigrateV2Pair.tsx
-msgid "This tool will safely migrate your {0} liquidity to V3. The process is completely trustless thanks to the"
-msgstr "このツールはあなたの {0} 流動性をV3に安全に移行します。このプロセスは、"
-
 #: src/hooks/useSwapCallback.ts
 msgid "This transaction will not succeed due to price movement. Try increasing your slippage tolerance. Note fee on transfer and rebase tokens are incompatible with Uniswap V3."
 msgstr "価格変動により、この取引は成功しません。スリッページの許容範囲を広げてみてください。転送およびリベーストークンの料金は、UniswapV3と互換性がないことに注意してください。"
@@ -1376,10 +904,6 @@ msgstr "終了日"
 msgid "To (at least)"
 msgstr "宛先（少なくとも）"
 
-#: src/components/Settings/index.tsx
-msgid "Toggle Expert Mode"
-msgstr "エキスパートモードの切り替え"
-
 #: src/components/SearchModal/Manage.tsx
 msgid "Tokens"
 msgstr "トークン"
@@ -1388,23 +912,11 @@ msgstr "トークン"
 msgid "Tokens from inactive lists. Import specific tokens below or click Manage to activate more lists."
 msgstr "非アクティブなリストからのトークン。以下の特定のトークンをインポートするか、[管理]をクリックしてさらにリストをアクティブにします。"
 
-#: src/pages/Pool/CTACards.tsx
-msgid "Top pools"
-msgstr "トッププール"
-
-#: src/components/Header/UniBalanceContent.tsx
-msgid "Total Supply"
-msgstr "総供給量"
-
 #: src/components/earn/PoolCard.tsx
 msgid "Total deposited"
 msgstr "合計入金額"
 
-#: src/pages/Earn/Manage.tsx
-msgid "Total deposits"
-msgstr "合計<unk>"
-
-#: src/components/Settings/index.tsx
+#: src/components/Settings/SettingsModal.tsx
 msgid "Transaction Settings"
 msgstr "トランザクション設定"
 
@@ -1412,8 +924,6 @@ msgstr "トランザクション設定"
 #: src/components/earn/ClaimRewardModal.tsx
 #: src/components/earn/StakingModal.tsx
 #: src/components/earn/UnstakingModal.tsx
-#: src/components/vote/DelegateModal.tsx
-#: src/components/vote/VoteModal.tsx
 msgid "Transaction Submitted"
 msgstr "取引が送信されました"
 
@@ -1425,81 +935,19 @@ msgstr "取引の期限"
 msgid "Try Again"
 msgstr "もう一度試す"
 
-#: src/components/Settings/index.tsx
+#: src/components/Settings/ExpertModeModal.tsx
 msgid "Turn On Expert Mode"
 msgstr "エキスパートモードをオンにする"
 
-#: src/components/Header/UniBalanceContent.tsx
-msgid "UNI in circulation:"
-msgstr "流通しているUNI:"
-
-#: src/components/Header/UniBalanceContent.tsx
-msgid "UNI price:"
-msgstr "UNI価格:"
-
-#: src/pages/Vote/index.tsx
-msgid "UNI tokens represent voting shares in Uniswap governance. You can vote on each proposal yourself or delegate your votes to a third party."
-msgstr "UNIトークンはUniswapガバナンスにおける投票シェアを表します。各提案に自分で投票するか、もしくは投票を第三者に委任することができます。"
-
-#: src/pages/RemoveLiquidity/index.tsx
-msgid "UNI {0}/{1} Burned"
-msgstr "UNI {0}/{1} が消費されました"
-
-#: src/pages/Earn/Manage.tsx
-msgid "UNI-V2 LP tokens are required. Once you've added liquidity to the {0}-{1} pool you can stake your liquidity tokens on this page."
-msgstr "UNI-V2 LP トークンが必要です。 {0}-{1} プールに流動性を追加したら、このページに流動性トークンを投資できます。"
-
-#: src/pages/Earn/Manage.tsx
-msgid "UNI-V2 {0}-{1}"
-msgstr "UNI-V2 {0}-{1}"
-
 #: src/components/earn/ClaimRewardModal.tsx
 #: src/components/earn/UnstakingModal.tsx
-msgid "Unclaimed UNI"
-msgstr "UNI未請求"
-
-#: src/pages/Pool/PositionPage.tsx
-msgid "Unclaimed fees"
-msgstr "未請求手数料"
-
-#: src/components/Header/UniBalanceContent.tsx
-msgid "Unclaimed:"
-msgstr "未請求："
-
-#: src/pages/Vote/index.tsx
-msgid "Uniswap Governance"
-msgstr "ガバナンスを一元化"
-
-#: src/pages/Pool/CTACards.tsx
-msgid "Uniswap V3 is here!"
-msgstr "ユニスワップV3はここにあります!"
-
-#: src/pages/Earn/index.tsx
-msgid "Uniswap liquidity mining"
-msgstr "流動性マイニングを<unk>"
-
-#: src/pages/MigrateV2/MigrateV2Pair.tsx
-msgid "Uniswap migration contract↗"
-msgstr "移行コントラクト↗"
+msgid "Unclaimed IXS"
+msgstr "IXS未請求"
 
 #: src/hooks/useSwapCallback.ts
 msgid "Unknown error{0}. Try increasing your slippage tolerance. Note fee on transfer and rebase tokens are incompatible with Uniswap V3."
 msgstr "不明なエラー{0}。スリッページの許容範囲を広げてみてください。転送およびリベーストークンの料金は、UniswapV3と互換性がないことに注意してください。"
 
-#: src/pages/Vote/VotePage.tsx
-#: src/pages/Vote/index.tsx
-msgid "Unlock Votes"
-msgstr "投票のロックを解除"
-
-#: src/pages/Vote/index.tsx
-msgid "Unlock Voting"
-msgstr "投票をアンロック"
-
-#: src/components/vote/DelegateModal.tsx
-msgid "Unlocking Votes"
-msgstr "投票のロックを解除"
-
-#: src/pages/AddLiquidity/index.tsx
 #: src/pages/AddLiquidityV2/index.tsx
 #: src/pages/Swap/index.tsx
 msgid "Unsupported Asset"
@@ -1513,38 +961,9 @@ msgstr "サポートされていないアセット"
 msgid "Unwrap"
 msgstr "Unwrap"
 
-#: src/pages/Vote/index.tsx
-msgid "Update Delegation"
-msgstr "委任を更新"
-
 #: src/components/SearchModal/ManageLists.tsx
 msgid "Update list"
 msgstr "リストを更新"
-
-#: src/components/claim/ClaimModal.tsx
-msgid "User"
-msgstr "ユーザー"
-
-#: src/pages/Pool/index.tsx
-msgid "V2 liquidity"
-msgstr "V2 流動性情報"
-
-#: src/pages/Swap/index.tsx
-msgid "V3"
-msgstr "v3"
-
-#: src/pages/MigrateV2/MigrateV2Pair.tsx
-#: src/pages/MigrateV2/MigrateV2Pair.tsx
-msgid "V3 {0} Price:"
-msgstr "v3 {0} 価格:"
-
-#: src/components/Header/UniBalanceContent.tsx
-msgid "View UNI Analytics"
-msgstr "UNIX アナリティクスを表示"
-
-#: src/pages/Pool/index.tsx
-msgid "View V2 Liquidity"
-msgstr "V2 の流動性を表示"
 
 #: src/components/PositionCard/index.tsx
 msgid "View accrued fees and analytics<0>↗</0>"
@@ -1561,37 +980,8 @@ msgid "View on Etherscan"
 msgstr "Etherscan で表示"
 
 #: src/components/ModalViews/index.tsx
-#: src/components/claim/AddressClaimModal.tsx
-#: src/components/claim/ClaimModal.tsx
-#: src/components/vote/VoteModal.tsx
 msgid "View transaction on Etherscan"
 msgstr "Etherscan で取引を表示"
-
-#: src/components/Header/index.tsx
-msgid "Vote"
-msgstr "投票"
-
-#: src/pages/Vote/VotePage.tsx
-msgid "Vote Against"
-msgstr "反対投票"
-
-#: src/components/vote/VoteModal.tsx
-#: src/components/vote/VoteModal.tsx
-msgid "Vote against proposal {proposalId}"
-msgstr "提案 {proposalId} に投票する"
-
-#: src/components/vote/VoteModal.tsx
-#: src/components/vote/VoteModal.tsx
-msgid "Vote for proposal {proposalId}"
-msgstr "提案 {proposalId} に投票"
-
-#: src/pages/Vote/VotePage.tsx
-msgid "Voting ended {0}"
-msgstr "投票が終了しました {0}"
-
-#: src/pages/Vote/VotePage.tsx
-msgid "Voting ends approximately {0}"
-msgstr "投票は約 {0} で終了します"
 
 #: src/components/TransactionConfirmationModal/index.tsx
 msgid "Waiting For Confirmation"
@@ -1601,24 +991,15 @@ msgstr "確認待ち"
 msgid "Weekly Rewards"
 msgstr "週間ボーナス"
 
-#: src/components/claim/AddressClaimModal.tsx
-msgid "Welcome to team Unicorn :)"
-msgstr "チームユニコーンへようこそ :)"
-
 #: src/components/earn/ClaimRewardModal.tsx
 msgid "When you claim without withdrawing your liquidity remains in the mining pool."
 msgstr "あなたの流動性を撤回せずに請求すると、マイニングプールに残ります。"
 
-#: src/pages/Earn/Manage.tsx
-msgid "When you withdraw, the contract will automagically claim UNI on your behalf!"
-msgstr "撤回すると、契約は自動的にあなたの代わりにUNIを主張します!"
+#: src/components/earn/UnstakingModal.tsx
+msgid "When you withdraw, your IXS is claimed and your liquidity is removed from the mining pool."
+msgstr "撤退すると、IXSが請求され、あなたの流動性はマイニングプールから削除されます。"
 
 #: src/components/earn/UnstakingModal.tsx
-msgid "When you withdraw, your UNI is claimed and your liquidity is removed from the mining pool."
-msgstr "撤退すると、UNIが請求され、あなたの流動性はマイニングプールから削除されます。"
-
-#: src/components/earn/UnstakingModal.tsx
-#: src/pages/Earn/Manage.tsx
 msgid "Withdraw"
 msgstr "出金する"
 
@@ -1632,12 +1013,12 @@ msgid "Withdraw deposited liquidity"
 msgstr "入金された流動性を引き出します"
 
 #: src/components/earn/UnstakingModal.tsx
-msgid "Withdrawing {0} UNI-V2"
-msgstr "UNI-V2を {0} 回引き出しています"
+msgid "Withdrawing {0} IXS-V2"
+msgstr "IXS-V2を {0} 回引き出しています"
 
 #: src/components/earn/UnstakingModal.tsx
-msgid "Withdrew UNI-V2!"
-msgstr "UNI-V2を撤回しました！"
+msgid "Withdrew IXS-V2!"
+msgstr "IXS-V2を撤回しました！"
 
 #: src/pages/Swap/index.tsx
 msgid "Wrap"
@@ -1652,17 +1033,9 @@ msgstr "ネットワークが間違っています"
 msgid "You are creating a pool"
 msgstr "プールを作成しています"
 
-#: src/pages/MigrateV2/MigrateV2Pair.tsx
-msgid "You are the first liquidity provider for this Uniswap V3 pool. Your liquidity will migrate at the current {0} price."
-msgstr "あなたはこのユニスワップV3プールの最初の流動性プロバイダーです。あなたの流動性は現在の {0} 価格で移行されます。"
-
 #: src/pages/AddLiquidityV2/index.tsx
 msgid "You are the first liquidity provider."
 msgstr "あなたは最初の流動性プロバイダーです。"
-
-#: src/components/vote/DelegateModal.tsx
-msgid "You can either vote on each proposal yourself or delegate your votes to a third party."
-msgstr "各提案に自分自身で投票するか、またはあなたの投票を第三者に委任することができます。"
 
 #: src/pages/Swap/index.tsx
 msgid "You can now trade {0}"
@@ -1672,46 +1045,14 @@ msgstr "{0}を取引できるようになりました"
 msgid "You don’t have liquidity in this pool yet."
 msgstr "このプールにはまだ流動性がありません。"
 
-#: src/pages/MigrateV2/MigrateV2Pair.tsx
-msgid "You must connect an account."
-msgstr "アカウントに接続してください。"
-
 #: src/pages/Swap/index.tsx
-msgid "You must give the Uniswap smart contracts permission to use your {0}. You only have to do this once per token."
-msgstr "{0}を使用するには、ユニスワップスマートコントラクトの権限を与える必要があります。トークンごとに1回だけ行う必要があります。"
-
-#: src/pages/MigrateV2/MigrateV2Pair.tsx
-msgid "You should only deposit liquidity into Uniswap V3 at a price you believe is correct. <0/>If the price seems incorrect, you can either make a swap to move the price or wait for someone else to do so."
-msgstr "あなたが正しいと信じる価格でUniswap V3にのみ流動性を入金する必要があります。 <0/>価格が正しくないと思われる場合は、スワップを作成して価格を移動するか、他の誰かがそうするのを待つことができます。"
-
-#: src/pages/RemoveLiquidity/V3.tsx
-msgid "You will also collect fees earned from this position."
-msgstr "また、このポジションから獲得した料金も徴収されます。"
+msgid "You must give the IXSwap smart contracts permission to use your {0}. You only have to do this once per token."
+msgstr ""
 
 #: src/pages/AddLiquidityV2/index.tsx
 #: src/pages/RemoveLiquidity/index.tsx
 msgid "You will receive"
 msgstr "受け取ります。"
-
-#: src/components/Header/UniBalanceContent.tsx
-msgid "Your UNI Breakdown"
-msgstr "あなたのUNIの破壊"
-
-#: src/pages/Pool/v2.tsx
-msgid "Your V2 liquidity"
-msgstr "V2流動性format@@0"
-
-#: src/pages/Pool/index.tsx
-msgid "Your V3 liquidity positions will appear here."
-msgstr "V3流動性ポジションがここに表示されます。"
-
-#: src/pages/Earn/Manage.tsx
-msgid "Your liquidity deposits"
-msgstr "あなたの流動性預金"
-
-#: src/pages/AddLiquidity/index.tsx
-msgid "Your liquidity will only earn fees when the market price of the pair is within your range. <0>Need help picking a range?</0>"
-msgstr "あなたの流動性は、ペアの市場価格があなたの範囲内にある場合にのみ手数料を獲得します。 <0>範囲の選択についてサポートが必要ですか？</0>"
 
 #: src/components/PositionCard/V2.tsx
 #: src/components/PositionCard/index.tsx
@@ -1727,26 +1068,6 @@ msgstr "自分の位置"
 msgid "Your position has 0 liquidity, and is not earning fees."
 msgstr "あなたのポジションには0の流動性があり、手数料を稼ぐことはできません。"
 
-#: src/components/PositionPreview/index.tsx
-#: src/components/PositionPreview/index.tsx
-msgid "Your position will be 100% composed of {0} at this price"
-msgstr "あなたのポジションはこの価格で {0} で構成されている 100% になります"
-
-#: src/pages/Pool/PositionPage.tsx
-#: src/pages/Pool/PositionPage.tsx
-msgid "Your position will be 100% {0} at this price."
-msgstr "あなたのポジションはこの価格で100% {0} になります。"
-
-#: src/pages/AddLiquidity/index.tsx
-#: src/pages/MigrateV2/MigrateV2Pair.tsx
-msgid "Your position will not earn fees or be used in trades until the market price moves into your range."
-msgstr "市場価格が範囲に移るまで、あなたのポジションは手数料を獲得したり、取引で使用されることはありません。"
-
-#: src/components/PositionList/index.tsx
-#: src/components/PositionList/index.tsx
-msgid "Your positions"
-msgstr "あなたの位置"
-
 #: src/components/earn/PoolCard.tsx
 msgid "Your rate"
 msgstr "あなたのレート"
@@ -1755,10 +1076,6 @@ msgstr "あなたのレート"
 #: src/components/PositionCard/index.tsx
 msgid "Your total pool tokens:"
 msgstr "あなたのプールトークンの合計："
-
-#: src/pages/MigrateV2/MigrateV2Pair.tsx
-msgid "Your transaction cost will be much higher as it includes the gas to create the pool."
-msgstr "プールを作るガスが含まれているため、取引コストははるかに高くなります。"
 
 #: src/components/TransactionSettings/index.tsx
 msgid "Your transaction may be frontrun"
@@ -1780,17 +1097,9 @@ msgstr "価格がこのパーセンテージよりも不利に変更された場
 msgid "Your transactions will appear here..."
 msgstr "取引がここに表示されます..."
 
-#: src/pages/Earn/Manage.tsx
-msgid "Your unclaimed UNI"
-msgstr "あなたの未請求のUNI（UNI）"
-
-#: src/components/Settings/index.tsx
+#: src/components/Settings/ExpertModeModal.tsx
 msgid "confirm"
 msgstr "確認する"
-
-#: src/components/claim/AddressClaimModal.tsx
-msgid "for {0}"
-msgstr "{0} 用"
 
 #: src/components/Web3Status/index.tsx
 msgid "has socks emoji"
@@ -1800,24 +1109,17 @@ msgstr "ソックスの絵文字があります"
 msgid "https:// or ipfs:// or ENS name"
 msgstr "https：//またはipfs：//またはENS名"
 
-#: src/components/TransactionSettings/index.tsx
-msgid "minutes"
-msgstr "分"
-
 #: src/components/SearchModal/ImportRow.tsx
 msgid "via {0}"
 msgstr "{0} 経由で"
 
+#: src/components/Toggle/index.tsx
+msgid "{0}"
+msgstr ""
+
 #: src/components/PositionCard/index.tsx
-#: src/pages/Vote/VotePage.tsx
-#: src/pages/Vote/VotePage.tsx
 msgid "{0} %"
 msgstr "{0} %"
-
-#: src/components/PositionListItem/index.tsx
-#: src/components/PositionListItem/index.tsx
-msgid "{0} <0/> per <1/>"
-msgstr "{0} <0/> / <1/>"
 
 #: src/components/SearchModal/ManageTokens.tsx
 msgid "{0} Custom Tokens"
@@ -1832,52 +1134,19 @@ msgstr "{0} 預金済み"
 msgid "{0} ETH"
 msgstr "{0} ETH"
 
-#: src/pages/RemoveLiquidity/V3.tsx
-#: src/pages/RemoveLiquidity/V3.tsx
-#: src/pages/RemoveLiquidity/V3.tsx
-msgid "{0} Fees Earned:"
-msgstr "{0} の手数料を獲得："
+#: src/components/earn/PoolCard.tsx
+#: src/components/earn/PoolCard.tsx
+#: src/components/earn/StakingModal.tsx
+msgid "{0} IXS / week"
+msgstr "{0} IXS/週"
+
+#: src/components/earn/StakingModal.tsx
+msgid "{0} IXS-V2"
+msgstr "{0} IXS-V2"
 
 #: src/components/Web3Status/index.tsx
 msgid "{0} Pending"
 msgstr "{0} 保留中"
-
-#: src/components/claim/AddressClaimModal.tsx
-#: src/components/claim/AddressClaimModal.tsx
-#: src/components/claim/ClaimModal.tsx
-#: src/components/claim/ClaimModal.tsx
-#: src/components/claim/ClaimModal.tsx
-msgid "{0} UNI"
-msgstr "{0} UNI"
-
-#: src/components/earn/PoolCard.tsx
-#: src/components/earn/PoolCard.tsx
-#: src/components/earn/StakingModal.tsx
-#: src/pages/Earn/Manage.tsx
-#: src/pages/Earn/Manage.tsx
-msgid "{0} UNI / week"
-msgstr "{0} UNI/週"
-
-#: src/components/earn/StakingModal.tsx
-msgid "{0} UNI-V2"
-msgstr "{0} UNI-V2"
-
-#: src/pages/Earn/Manage.tsx
-msgid "{0} UNI-V2 LP tokens available"
-msgstr "{0} UNI-V2 LP tokens available"
-
-#: src/components/vote/VoteModal.tsx
-msgid "{0} Votes"
-msgstr "{0} 件の投票"
-
-#: src/components/PositionPreview/index.tsx
-#: src/components/PositionPreview/index.tsx
-#: src/components/PositionPreview/index.tsx
-#: src/pages/AddLiquidity/index.tsx
-#: src/pages/Pool/PositionPage.tsx
-#: src/pages/Pool/PositionPage.tsx
-msgid "{0} per {1}"
-msgstr "{0} あたり {1}"
 
 #: src/components/SearchModal/ImportList.tsx
 #: src/components/SearchModal/ManageLists.tsx
@@ -1885,59 +1154,19 @@ msgstr "{0} あたり {1}"
 msgid "{0} tokens"
 msgstr "{0} トークン"
 
-#: src/pages/MigrateV2/MigrateV2Pair.tsx
-#: src/pages/MigrateV2/MigrateV2Pair.tsx
-msgid "{0} {1} Price:"
-msgstr "{0} {1} 価格:"
-
 #: src/components/SearchModal/CurrencyList.tsx
 msgid "{0} • Added by user"
 msgstr "{0} •ユーザーが追加"
 
 #: src/components/CurrencyInputPanel/FiatValue.tsx
-#: src/components/PositionListItem/index.tsx
-#: src/components/PositionPreview/index.tsx
 #: src/pages/AddLiquidityV2/ConfirmAddModalBottom.tsx
-#: src/pages/MigrateV2/MigrateV2Pair.tsx
-#: src/pages/Pool/PositionPage.tsx
-#: src/pages/Pool/PositionPage.tsx
-#: src/pages/Pool/PositionPage.tsx
 msgid "{0}%"
 msgstr "{0}%"
-
-#: src/pages/Earn/Manage.tsx
-msgid "{0}-{1} Liquidity Mining"
-msgstr "{0}-{1} の流動性"
-
-#: src/pages/MigrateV2/MigrateV2Pair.tsx
-msgid "{0}/{1} LP NFT"
-msgstr "{0}/{1} LP NFT"
-
-#: src/pages/MigrateV2/MigrateV2Pair.tsx
-msgid "{0}/{1} LP Tokens"
-msgstr "{0}/{1} LPトークン"
-
-#: src/components/claim/ClaimModal.tsx
-msgid "{SOCKS_AMOUNT} UNI"
-msgstr "{SOCKS_AMOUNT} UNI"
-
-#: src/components/claim/ClaimModal.tsx
-msgid "{USER_AMOUNT} UNI"
-msgstr "{USER_AMOUNT} UNI"
-
-#: src/pages/RemoveLiquidity/V3.tsx
-msgid "{percentForSlider}%"
-msgstr "{percentForSlider}%"
 
 #: src/components/InputStepCounter/InputStepCounter.tsx
 msgid "{tokenB} per {tokenA}"
 msgstr "{tokenB} あたり {tokenA}"
 
 #: src/components/CurrencyInputPanel/FiatValue.tsx
-msgid "~$ <0/>"
-msgstr "~$ <0/>"
-
-#: src/pages/Pool/PositionPage.tsx
-msgid "← Back to Pools Overview"
-msgstr "荷物の概要に戻る"
-
+msgid "~$ {0}"
+msgstr ""
