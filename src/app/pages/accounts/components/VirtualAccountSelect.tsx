@@ -22,7 +22,11 @@ export const VirtualAccountSelect = (props: VirtualAccountSelectProps) => {
   }
 
   return (
-    <RadioGroup defaultValue={props.defaultValue} onChange={props.onChange}>
+    <RadioGroup
+      defaultValue={props.defaultValue}
+      onChange={props.onChange}
+      value={props.value}
+    >
       <Grid container spacing={2} alignContent='center'>
         <Grid item xs={12}>
           <Typography variant='subtitle1'>{props.customLabel}</Typography>

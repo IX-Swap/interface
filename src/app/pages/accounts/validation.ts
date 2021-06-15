@@ -22,7 +22,7 @@ export const withdrawValidator = (
   } else if (amount === 0) {
     message = `Can't be zero`
   } else if (amount > available) {
-    message = `Inssuficient balance`
+    message = `Insufficient balance`
   } else if (amount < minWithdraw) {
     message = `Minimum amount is ${minWithdraw}`
   } else if (amount > maxWithdraw) {
@@ -46,9 +46,9 @@ export const depositCashFormValidationSchema = yup
 export const withdrawCashFormValidationSchema = yup
   .object()
   .shape<WithdrawCashFormValues>({
-    amount: yup.number().required('Required'),
-    bankAccountId: yup.string().required('Required'),
-    otp: yup.string().required('Required'),
+    amount: yup.number().nullable().required('Required'),
+    bankAccountId: yup.string().nullable().required('Required'),
+    otp: yup.string().nullable().required('Required'),
     memo: yup.string(),
     virtualAccount: yup.string().required('Required')
   })

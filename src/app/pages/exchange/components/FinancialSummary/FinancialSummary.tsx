@@ -21,7 +21,7 @@ export const FinancialSummary = () => {
   )
 
   return (
-    <Grid container spacing={1}>
+    <Grid container spacing={1} style={{ paddingLeft: 11, paddingRight: 24 }}>
       <Grid item container xs={12} md={3} alignContent='center'>
         <PairListDropdown pairName={data?.name} />
       </Grid>

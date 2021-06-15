@@ -1,30 +1,19 @@
 import React from 'react'
-import { useAuth } from 'hooks/auth/useAuth'
 import { Grid, Button, Typography, useTheme } from '@material-ui/core'
 import { AppRouterLinkComponent } from 'components/AppRouterLink'
 import { InvestRoute } from 'app/pages/invest/router/config'
 import { VSpacer } from 'components/VSpacer'
-import { DSOTable } from 'app/pages/invest/components/DSOTable/DSOTable'
 import { PromotedDSOs } from 'app/components/DSO/components/PromotedDSOs'
-import { PageHeader } from 'app/components/PageHeader/PageHeader'
+import { PromoBanner } from 'app/pages/invest/components/PromoBanner'
+import { SecondaryMarketTable } from 'app/pages/invest/components/SecondaryMarketTable/SecondaryMarketTable'
 
-export const IssuanceLanding = () => {
-  const { user } = useAuth()
+export const InvestOverview = () => {
   const theme = useTheme()
 
   return (
     <>
       <Grid container justify='space-between'>
-        <Grid item xs={12}>
-          <PageHeader
-            title={`Welcome, ${user?.name ?? 'Unknown'}`}
-            showBreadcrumbs={false}
-          />
-        </Grid>
-        <Grid item>
-          <Typography variant='h4'>Top Offers</Typography>
-        </Grid>
-        <Grid item>
+        <Grid item container justify={'flex-end'}>
           <Button
             component={AppRouterLinkComponent}
             to={InvestRoute.commitments}
@@ -34,19 +23,22 @@ export const IssuanceLanding = () => {
             disableElevation
             style={{ color: theme.palette.primary.main }}
           >
-            View my commitments
+            My commitments
           </Button>
         </Grid>
+        <PromoBanner />
+        <VSpacer size='medium' />
       </Grid>
       <VSpacer size='small' />
       <PromotedDSOs />
       <VSpacer size='medium' />
+
       <Grid container direction='column' spacing={4}>
         <Grid item>
-          <Typography variant='h4'>More Offers for You</Typography>
+          <Typography variant='h4'>Secondary Market</Typography>
         </Grid>
         <Grid item>
-          <DSOTable />
+          <SecondaryMarketTable />
         </Grid>
       </Grid>
     </>

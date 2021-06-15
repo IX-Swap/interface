@@ -20,6 +20,7 @@ import {
 import { useCustodianWalletSubmit } from 'app/pages/exchange/hooks/useCustodianWalletSubmit'
 import { useSymbol } from '../../hooks/useSymbol'
 import { useVirtualAccount } from 'app/pages/accounts/hooks/useVirtualAccount'
+import { useTokenBalance } from 'app/pages/exchange/hooks/useTokenBalance'
 
 export const Market = () => {
   const classes = useStyles()
@@ -28,6 +29,7 @@ export const Market = () => {
   const { pairId } = useParams<{ pairId: string }>()
   const { data, isLoading } = useMarketList()
   const { symbol } = useSymbol(pairId, data)
+  const { data: tokenBalance } = useTokenBalance(pairId)
 
   const currencyName = symbol.split('/')[1]
   const tokenName = symbol.split('/')[0]
@@ -63,7 +65,12 @@ export const Market = () => {
 
       <Box my={2} />
 
-      <Grid container direction={'column'} className={classes.wrapper}>
+      <Grid
+        container
+        direction={'column'}
+        className={classes.wrapper}
+        alignItems={'flex-start'}
+      >
         <Grid item className={classes.colorGrid}>
           <InvestorLiveOrderBook />
         </Grid>
@@ -84,8 +91,9 @@ export const Market = () => {
             currencyLabel={currencyName}
             tokenLabel={tokenName}
             currencyBalance={currencyBalance}
-            // TODO Past correct data after complete backend api
-            tokenBalance={0}
+            tokenBalance={
+              tokenBalance?.data !== undefined ? tokenBalance.data.amount : 0
+            }
             onSubmit={submitForm}
           />
           <Trades />

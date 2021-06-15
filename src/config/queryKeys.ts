@@ -160,10 +160,10 @@ export const virtualAccountQueryKeys = {
 
 export const exchange = {
   marketList: 'market-list',
-  balances: 'balances',
+  tokenBalance: 'tokenBalance',
   tradeHistory: 'trade-history',
   myTradeHistory: 'my-trade-history',
-  orderBook: 'orderbook',
+  orderBook: 'order-book',
   lastPrice: 'last-price',
   summary: 'summary',
   getMetrics: (tokenId: string) => generateQueryKey('metrics', tokenId),

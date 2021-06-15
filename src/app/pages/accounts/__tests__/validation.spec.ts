@@ -12,9 +12,9 @@ describe('withdrawValidator', () => {
     })
   })
 
-  it('returns `Inssuficient balance` if amount is greater than available', () => {
+  it('returns `Insufficient balance` if amount is greater than available', () => {
     expect(withdrawValidator(200, 100)).toEqual({
-      message: `Inssuficient balance`
+      message: `Insufficient balance`
     })
   })
 
