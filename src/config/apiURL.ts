@@ -190,6 +190,7 @@ export const virtualAccounts = {
   add: '/virtual-accounts',
   getByUserId: (userId: string) => `/virtual-accounts/${userId}`,
   assign: '/virtual-accounts/assign',
+  unassign: (accountId: string) => `/virtual-accounts/unassign/${accountId}`,
   uploadCSV: '/virtual-accounts/upload'
 }
 

@@ -8,13 +8,13 @@ import { useSelectionHelperContext } from 'components/SelectionHelper'
 import { Filters } from 'app/pages/admin/components/AssignedVirtualAccountsTable/Filters'
 import { Grid } from '@material-ui/core'
 import { useQueryFilter } from 'hooks/filters/useQueryFilter'
-import { useResetSelectionOnUnmount } from 'app/pages/admin/hooks/useResetSelectionOnUnmount'
+import { useUnmountCallback } from 'hooks/useUnmountCallback'
 
 export const UnassignedAccountsTable: React.FC = () => {
-  useResetSelectionOnUnmount()
   const selectionHelperContext = useSelectionHelperContext<
     VirtualAccount | unknown
   >()
+  useUnmountCallback(selectionHelperContext.resetSelection)
   const { getFilterValue } = useQueryFilter()
 
   const currencyFilterValue = getFilterValue('currency')
