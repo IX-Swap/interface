@@ -85,8 +85,6 @@ export const TableView = <T,>({
 
   const _items = Array.isArray(fakeItems) ? fakeItems : items
 
-  console.log('_items', _items)
-
   if (innerRef !== undefined) {
     innerRef.current = { refresh: () => setPage(page) }
   }
