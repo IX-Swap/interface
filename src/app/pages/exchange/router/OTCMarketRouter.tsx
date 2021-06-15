@@ -35,7 +35,7 @@ export const OTCMarketRouter = () => {
         <BuyerList />
       </AppRoute>
       <AppRoute path={OTCMarketRoute.landing}>
-        <LandingPage title='OTC Market' links={OTCMarketLandingLinks} />
+        <LandingPage title='Exchange' links={OTCMarketLandingLinks} />
       </AppRoute>
     </Switch>
   )
