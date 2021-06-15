@@ -92,7 +92,7 @@ export const Setup: React.FC = () => {
 
       <Grid item>
         <FormSectionHeader
-          title='Withdraw Cash From Your Virtual Account'
+          title='Withdraw Cash From Your Account'
           variant='subsection'
         />
         <TypedField
