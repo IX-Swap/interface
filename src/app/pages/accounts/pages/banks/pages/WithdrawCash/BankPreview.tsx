@@ -10,7 +10,7 @@ export const BankPreview: React.FC = () => {
   const { watch } = useFormContext<WithdrawCashFormValues>()
   const { data } = useBanksData()
   const bankId = watch('bankAccountId')
-  const bank = data.map[bankId]
+  const bank = data.map[bankId ?? '']
 
   if (bank === undefined) {
     return null

@@ -38,7 +38,7 @@ describe('ContinueButton', () => {
         </Form>
       </DepositStoreProvider>
     )
-    const continueButton = getByText(/continue/i)
+    const continueButton = getByText(/confirm withdrawal/i)
 
     expect(continueButton.parentElement).toBeDisabled()
   })
@@ -54,7 +54,7 @@ describe('ContinueButton', () => {
         </Form>
       </DepositStoreProvider>
     )
-    const continueButton = getByText(/continue/i)
+    const continueButton = getByText(/confirm withdrawal/i)
 
     expect(continueButton.parentElement).not.toBeDisabled()
   })

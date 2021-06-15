@@ -44,7 +44,7 @@ export const SidebarContainer = () => {
       icon: InvestIcon
     },
     {
-      label: 'OTC Market',
+      label: 'Exchange',
       link: OTCMarketRoute.landing,
       icon: OTCMarketIcon
     }

@@ -18,7 +18,7 @@ export const Onboarding = () => {
 
   return (
     <Fragment>
-      <Typography variant='subtitle1'>Please, create your account</Typography>
+      <Typography variant='subtitle1'>Please create your account</Typography>
       <Box my={5} />
 
       <Grid container direction='column' spacing={10}>

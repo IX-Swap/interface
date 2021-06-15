@@ -11,6 +11,7 @@ import { UploadSignedSubscriptionDocument } from 'components/dataroom/UploadSign
 import { privateClassNames } from 'helpers/classnames'
 import { WithdrawalAddressSelect } from 'components/form/WithdrawalAddressSelect'
 import { ETHEREUM_DECIMAL_PLACES } from 'config'
+import { CreateCustodyWithdrawalAddressButton } from 'app/pages/invest/components/CreateCustodyWithdrawalAddressButton/CreateCustodyWithdrawalAddressButton'
 
 export interface CommitmentFormFieldsProps {
   symbol: string
@@ -98,6 +99,10 @@ export const CommitmentFormFields = (props: CommitmentFormFieldsProps) => {
           displayEmpty
           network={props.network}
         />
+      </Grid>
+
+      <Grid item>
+        <CreateCustodyWithdrawalAddressButton />
       </Grid>
 
       <Grid item>

@@ -46,17 +46,13 @@ export const TopbarContainer = () => {
       label: 'Invest',
       link: InvestRoute.landing,
       icon: InvestIcon
-    },
-    {
-      label: 'Exchange',
-      link: OTCMarketRoute.landing
     }
   ]
 
   if (isIssuer) {
     links.push({
       label: 'Issuance',
-      link: IssuanceRoute.insight,
+      link: IssuanceRoute.landing,
       icon: IssuanceIcon
     })
   }
@@ -76,14 +72,27 @@ export const TopbarContainer = () => {
     }, {})
   ]
 
+  const newInvestLandingLinks = [
+    {
+      label: 'Primary',
+      path: InvestRoute.landing
+    },
+    {
+      label: 'Exchange',
+      path: OTCMarketRoute.landing
+    }
+  ]
+
   const dropdownLinksItems = (name: string) => {
     switch (name) {
       case 'Authorizer':
         return authorizerLandingLinks
       case 'Accounts':
         return newAccountsLandingLinks
+      case 'Invest':
+        return newInvestLandingLinks
       default:
-        return authorizerLandingLinks
+        return []
     }
   }
 
@@ -96,7 +105,11 @@ export const TopbarContainer = () => {
   return (
     <Grid style={{ display: 'flex' }}>
       {links.map(link => {
-        if (link.label === 'Accounts' || link.label === 'Authorizer') {
+        if (
+          link.label === 'Accounts' ||
+          link.label === 'Authorizer' ||
+          link.label === 'Invest'
+        ) {
           return (
             <TopbarLinkDropdown
               key={link.label}
