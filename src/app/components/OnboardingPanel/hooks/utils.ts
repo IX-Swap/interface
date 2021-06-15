@@ -6,11 +6,11 @@ export const getIdentityStatus = (status?: AuthorizableStatus) => {
     case 'Rejected':
       return ['Rejected']
     case 'Submitted':
-      return ['For Verification']
+      return ['For verification']
     case 'Approved':
       return ['Verified!']
     case 'Draft':
-      return ['In Progress']
+      return ['In progress']
     default:
       return ['']
   }
@@ -41,11 +41,11 @@ export const getIdentityOnboardingSteps = ({
         content:
           issuanceDetailsStatus !== undefined
             ? getIdentityStatus(issuanceDetailsStatus)
-            : ['Issuance Detail']
+            : ['Issuance detail']
       }
     : {
         title: 'To Invest',
-        content: [`As ${identityType}`]
+        content: [`As ${identityType.toLowerCase()}`]
       },
   { title: 'Create Identity', content: getIdentityStatus(identityStatus) },
   { title: 'Complete Onboarding', content: [''] }

@@ -1,4 +1,4 @@
-import { ResolutionString } from 'charting_library/charting_library'
+import { ResolutionString } from 'types/charting_library'
 
 import { ChartContainerProps } from 'types/tvChart'
 
@@ -25,9 +25,7 @@ export const sampleTVChartProps: ChartContainerProps = {
   fullscreen: false,
   height: 600,
   width: '100%' as any,
-  theme: 'Light',
-  tvWidget: null,
-  setTradingChart: () => {}
+  theme: 'Light'
 }
 
 export const SYMBOL_SEARCH_LIMIT = 30

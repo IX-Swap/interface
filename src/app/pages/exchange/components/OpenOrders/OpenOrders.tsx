@@ -4,10 +4,12 @@ import { TableView } from 'components/TableWithPagination/TableView'
 import { columns } from 'app/pages/exchange/components/OpenOrders/columns'
 import { useAuth } from 'hooks/auth/useAuth'
 import { getIdFromObj } from 'helpers/strings'
+import { useParams } from 'react-router'
 
 export const OpenOrders = () => {
   const { user } = useAuth()
   const userId = getIdFromObj(user)
+  const { pairId } = useParams<{ pairId: string }>()
 
   return (
     <Grid>
@@ -17,7 +19,7 @@ export const OpenOrders = () => {
         size='small'
         filter={
           {
-            pair: '60a2340a804b8f3de6248b56'
+            pair: pairId
           } as any
         }
         columns={columns}

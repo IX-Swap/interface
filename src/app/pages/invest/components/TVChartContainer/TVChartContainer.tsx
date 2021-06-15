@@ -1,8 +1,9 @@
 import * as React from 'react'
 import {
   widget as Widget,
-  ResolutionString
-} from 'charting_library/charting_library'
+  ResolutionString,
+  IChartingLibraryWidget
+} from 'types/charting_library'
 import { ChartContainerProps } from 'types/tvChart'
 import {
   disabledFeatures,
@@ -16,8 +17,6 @@ export const TVChartContainer: React.FC<
   Partial<ChartContainerProps>
 > = props => {
   const {
-    setTradingChart = sampleTVChartProps.setTradingChart,
-    tvWidget,
     symbol,
     datafeed,
     interval,
@@ -27,6 +26,7 @@ export const TVChartContainer: React.FC<
     theme,
     containerId
   } = props
+  const [tvWidget, setTradingChart] = React.useState<IChartingLibraryWidget>()
 
   const createChart = React.useCallback(() => {
     const chart = new Widget({
@@ -38,7 +38,7 @@ export const TVChartContainer: React.FC<
         ),
       interval: interval ?? sampleTVChartProps.interval,
       container_id: containerId ?? sampleTVChartProps.containerId,
-      library_path: '/charting_library/',
+      library_path: `${process.env.PUBLIC_URL}/charting_library/`,
       favorites: {
         intervals: ['15', '60', '240', '1D', 'W'] as ResolutionString[],
         chartTypes: ['Line', 'Candles']
@@ -55,7 +55,7 @@ export const TVChartContainer: React.FC<
       height: height ?? sampleTVChartProps.height,
       width: width ?? sampleTVChartProps.width,
       theme: theme ?? sampleTVChartProps.theme,
-      timezone: Intl.DateTimeFormat().resolvedOptions().timeZone,
+      timezone: Intl.DateTimeFormat().resolvedOptions().timeZone as any,
       overrides
     })
 

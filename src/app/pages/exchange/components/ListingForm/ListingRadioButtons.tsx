@@ -1,36 +1,32 @@
-import { TypedField } from 'components/form/TypedField'
-import { RadioGroup } from 'components/form/RadioGroup'
 import {
   FormControl,
   FormControlLabel,
   Grid,
   InputLabel,
   Radio,
+  RadioGroup,
   Typography
 } from '@material-ui/core'
 import React, { useState } from 'react'
-import { useFormContext } from 'react-hook-form'
 import { DSOSelect } from 'app/pages/issuance/components/IssuanceLanding/DSOSelect'
 import { useDSOsByUserId } from 'app/pages/issuance/hooks/useDSOsByUserId'
 
-export const ListingRadioButtons = () => {
-  const { control, getValues } = useFormContext()
-  const isNewListing = getValues('isNewListing')
-  const { data, isLoading } = useDSOsByUserId()
-  const [selectedDSO, setSelectedDSO] = useState<string>('')
-  const selectedDSOData = data.list.find(
-    item => item._id === selectedDSO.split(':')[0]
-  )
+export interface NewListingRadioButtonsProps {
+  onImportClick: (value: string) => void
+}
+
+export const ListingRadioButtons = ({
+  onImportClick
+}: NewListingRadioButtonsProps) => {
+  const { data, isLoading } = useDSOsByUserId('Approved')
+  const [isNewListing, setIsNewListing] = useState(true)
+  const [selectedDSOValue, setSelectedDSOValue] = useState<string>('')
 
   return (
-    // @ts-expect-error
-    <TypedField
-      customRenderer
-      component={RadioGroup}
-      name='isNewListing'
-      label=''
-      control={control}
-      defaultValue={'yes'}
+    <RadioGroup
+      name={'isNewListing'}
+      value={isNewListing ? 'yes' : 'no'}
+      onChange={value => setIsNewListing(value.target.value === 'yes')}
     >
       <Grid container alignItems={'center'} spacing={2}>
         <Grid item>
@@ -51,13 +47,11 @@ export const ListingRadioButtons = () => {
           <FormControl variant='outlined' style={{ width: 294 }}>
             <InputLabel htmlFor='my-dso'>My DSO</InputLabel>
             <DSOSelect
-              disabled={isLoading || isNewListing === 'yes'}
+              disabled={isLoading || isNewListing}
               options={data.list}
-              inputProps={{
-                name: 'dso',
-                id: 'dso'
-              }}
-              onChange={value => setSelectedDSO(value.target.value as string)}
+              onChange={value =>
+                setSelectedDSOValue(value.target.value as string)
+              }
             />
           </FormControl>
         </Grid>
@@ -67,8 +61,8 @@ export const ListingRadioButtons = () => {
             color={'secondary'}
             variant={'body1'}
             onClick={() => {
-              if (isNewListing === 'no' && selectedDSOData !== undefined) {
-                // TODO Import data from selected DSO
+              if (!isNewListing && selectedDSOValue.length > 0) {
+                onImportClick(selectedDSOValue)
               }
             }}
           >
@@ -76,6 +70,6 @@ export const ListingRadioButtons = () => {
           </Typography>
         </Grid>
       </Grid>
-    </TypedField>
+    </RadioGroup>
   )
 }

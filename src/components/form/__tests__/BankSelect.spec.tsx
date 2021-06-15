@@ -6,6 +6,7 @@ import { generateInfiniteQueryResult } from '__fixtures__/useQuery'
 import { QueryStatus } from 'react-query'
 import { bank } from '__fixtures__/authorizer'
 import { LOADING_TEXT } from '../renderUtils'
+import { Form } from 'components/form/Form'
 
 jest.mock('app/pages/accounts/pages/banks/hooks/useBanksData')
 
@@ -23,14 +24,22 @@ describe('BankSelect', () => {
     useBanksDataMock.mockReturnValue(
       generateInfiniteQueryResult({ list: [bank] })
     )
-    render(<BankSelect />)
+    render(
+      <Form>
+        <BankSelect />
+      </Form>
+    )
   })
 
   it('renders loading if loading', () => {
     useBanksDataMock.mockReturnValue(
       generateInfiniteQueryResult({ queryStatus: QueryStatus.Loading })
     )
-    const { container } = render(<BankSelect />)
+    const { container } = render(
+      <Form>
+        <BankSelect />
+      </Form>
+    )
 
     expect(container).toHaveTextContent(LOADING_TEXT)
   })

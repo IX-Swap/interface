@@ -38,8 +38,13 @@ export const AddVirtualAccountsForm = ({
     >
       <AddVirtualAccountsFormFields />
       <FormDialogActions>
-        <Button type='button' onClick={closeDialog}>
-          Close
+        <Button
+          disableElevation
+          variant='outlined'
+          type='button'
+          onClick={closeDialog}
+        >
+          Cancel
         </Button>
         <Button
           type='submit'

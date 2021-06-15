@@ -10,6 +10,8 @@ import {
   generateQueryResult
 } from '__fixtures__/useQuery'
 import { QueryStatus } from 'react-query'
+import * as useVirtualAccount from 'app/pages/accounts/hooks/useVirtualAccount'
+import { virtualAccountsSample } from '__fixtures__/virtualAccounts'
 
 describe('useValidateWithdrawCash', () => {
   afterEach(async () => {
@@ -24,14 +26,18 @@ describe('useValidateWithdrawCash', () => {
     jest
       .spyOn(assetHook, 'useAssetById')
       .mockReturnValue(generateQueryResult({ data: asset }))
+
+    const useVirtualAccountResponse = generateQueryResult({
+      data: virtualAccountsSample[0]
+    })
+
     jest
-      .spyOn(balancesHook, 'useBalancesByAssetId')
-      .mockReturnValue(
-        generateInfiniteQueryResult({ map: { [bank.currency._id]: balance } })
-      )
+      .spyOn(useVirtualAccount, 'useVirtualAccount')
+      .mockImplementation(() => useVirtualAccountResponse as any)
+
     await act(async () => {
       const { result } = renderHookWithForm(() => useValidateWithdrawCash(), {
-        amount: 1500
+        amount: 10000
       })
 
       await waitFor(

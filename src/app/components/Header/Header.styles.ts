@@ -31,6 +31,9 @@ export default makeStyles(theme => ({
   grow: {
     flexGrow: 1
   },
+  small: {
+    flexGrow: 0.2
+  },
   search: {
     position: 'relative',
     borderRadius: 25,

@@ -24,11 +24,7 @@ export const OnboardingSteps = ({
           {step.content.length > 0 ? (
             <StepContent>
               {step.content.map((content, index) => (
-                <Typography
-                  key={index}
-                  variant='body2'
-                  style={{ textTransform: 'capitalize' }}
-                >
+                <Typography key={index} variant='body2'>
                   {content}
                 </Typography>
               ))}

@@ -6,6 +6,7 @@ import { VirtualAccount as VirtualAccountType } from 'types/virtualAccount'
 import { VirtualAccountsTabView } from 'app/pages/admin/components/VirtualAccountsTabView/VirtualAccountsTabView'
 import { AddVirtualAccountsButton } from 'app/pages/admin/components/AddVirtualAccountsButton/AddVirtualAccountsButton'
 import { VirtualAccountsStats } from 'app/pages/admin/components/VirtualAccountsStats/VirtualAccountsStats'
+import { UploadCSVButton } from 'app/pages/admin/components/UploadCSVButton/UploadCSVButton'
 
 export const itemComparator = (
   a: VirtualAccountType,
@@ -23,8 +24,13 @@ export const VirtualAccounts = () => {
       <Grid item>
         <VirtualAccountsStats />
       </Grid>
-      <Grid item>
-        <AddVirtualAccountsButton />
+      <Grid item container spacing={2}>
+        <Grid item>
+          <AddVirtualAccountsButton />
+        </Grid>
+        <Grid item>
+          <UploadCSVButton />
+        </Grid>
       </Grid>
       <SelectionHelper itemComparator={itemComparator}>
         <Grid item>

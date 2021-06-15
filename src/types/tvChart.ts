@@ -2,11 +2,10 @@ import {
   Bar,
   ChartingLibraryWidgetOptions,
   HistoryMetadata,
-  IChartingLibraryWidget,
   LibrarySymbolInfo,
   ResolutionString,
   SubscribeBarsCallback
-} from 'charting_library/charting_library'
+} from 'types/charting_library'
 
 export interface ChartContainerProps {
   symbol?: ChartingLibraryWidgetOptions['symbol']
@@ -17,8 +16,8 @@ export interface ChartContainerProps {
   fullscreen?: ChartingLibraryWidgetOptions['fullscreen']
   containerId: ChartingLibraryWidgetOptions['container_id']
   theme?: ChartingLibraryWidgetOptions['theme']
-  tvWidget: IChartingLibraryWidget | null
-  setTradingChart: (tvWidget: IChartingLibraryWidget) => void
+  // tvWidget: IChartingLibraryWidget | null
+  // setTradingChart: (tvWidget: IChartingLibraryWidget) => void
   dataFeedUrl?: string
 }
 export interface HistoryParams {

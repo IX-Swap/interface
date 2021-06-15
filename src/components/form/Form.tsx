@@ -1,4 +1,4 @@
-import React, { PropsWithChildren } from 'react'
+import React, { PropsWithChildren, useMemo } from 'react'
 import { SubmitHandler, useForm, FormProvider } from 'react-hook-form'
 import { ObjectSchema, Shape, object } from 'yup'
 import { yupResolver } from '@hookform/resolvers'
@@ -23,7 +23,7 @@ export const Form = <T,>(props: PropsWithChildren<FormProps<T>>) => {
 
   const form = useForm({
     mode: 'onBlur',
-    defaultValues: defaultValues as any,
+    defaultValues: useMemo(() => defaultValues as any, [defaultValues]),
     resolver: yupResolver(validationSchema),
     criteriaMode: criteriaMode
   })

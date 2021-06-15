@@ -5,14 +5,16 @@ import { DigitalSecurityOffering } from 'types/dso'
 import { Maybe } from 'types/util'
 import { LabelledValue } from 'components/LabelledValue'
 import { ListingScrollGuide } from 'app/pages/exchange/components/ListingForm/ListingScrollGuide'
+import { Listing } from 'app/pages/exchange/types/listings'
 
-export interface DSOSidebarProps {
-  dso: DigitalSecurityOffering | undefined
+export interface ListingSidebarProps {
+  dso: DigitalSecurityOffering | Listing | undefined
   footer: Maybe<JSX.Element>
+  isDataFromDSO: boolean
 }
 
-export const ListingSidebar = (props: DSOSidebarProps) => {
-  const { dso, footer } = props
+export const ListingSidebar = (props: ListingSidebarProps) => {
+  const { dso, footer, isDataFromDSO } = props
 
   return (
     <Box position='sticky' top={90} marginLeft={8}>
@@ -20,7 +22,12 @@ export const ListingSidebar = (props: DSOSidebarProps) => {
         <Grid item>
           <LabelledValue
             label='Status:'
-            value={<AuthorizableStatus status={dso?.status} compact={false} />}
+            value={
+              <AuthorizableStatus
+                status={isDataFromDSO ? 'Draft' : dso?.status}
+                compact={false}
+              />
+            }
             labelColor='light'
           />
         </Grid>

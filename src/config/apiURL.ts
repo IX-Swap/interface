@@ -189,7 +189,8 @@ export const virtualAccounts = {
   getAll: '/virtual-accounts/list',
   add: '/virtual-accounts',
   getByUserId: (userId: string) => `/virtual-accounts/${userId}`,
-  assign: '/virtual-accounts/assign'
+  assign: '/virtual-accounts/assign',
+  uploadCSV: '/virtual-accounts/upload'
 }
 
 export const exchange = {
@@ -198,17 +199,32 @@ export const exchange = {
   userTrades: (userId: string) => `/exchange/trades/list/${userId}`,
   tradeHistory: {
     emit: 'fills/get',
+    onMyFills: (tokenId: string) => `myfills/${tokenId}`,
     on: (tokenId: string) => `fills/${tokenId}`
   },
   orderBook: {
     emit: 'orderbook/get',
     on: (tokenId: string) => `orderbook/${tokenId}`
   },
-  currentHoldings: (userId: string) => `/exchange/holdings/list/${userId}`,
+  lastPrice: {
+    emit: 'price/get',
+    on: (tokenId: string) => `price/${tokenId}`
+  },
+  tokenBalance: {
+    emit: 'tokenBalance/get',
+    on: (userId: string) => `tokenBalance/${userId}`
+  },
+  summary: {
+    emit: 'metrics24h/get',
+    on: (tokenId: string) => `metrics24h/${tokenId}`
+  },
+  getMetrics: (tokenId: string) => `/exchange/pair/financialMetrics/${tokenId}`,
+  currentHoldings: (userId: string) => `/accounts/holdings/${userId}`,
   cancelOrder: (userId: string, orderId: string) =>
     `/exchange/orders/cancel/${userId}/${orderId}`,
   getListing: (userId: string, listingId: string) =>
-    `/exchange/listing/${userId}/${listingId}`
+    `/exchange/listing/${userId}/${listingId}`,
+  getMarket: (pairId: string) => `/exchange/markets/pair/${pairId}`
 }
 
 export const placeOrderURL = {
@@ -220,7 +236,9 @@ export const exchangeMarket = {
 }
 
 export const listings = {
-  getListByUser: (userId: string) => `exchange/listing/list/${userId}`
+  getListByUser: (userId: string) => `exchange/listing/list/${userId}`,
+  submitListing: (userId: string, listingId: string) =>
+    `/exchange/listing/${userId}/${listingId}/submit`
 }
 
 export const charts = {
@@ -229,4 +247,21 @@ export const charts = {
   history: 'exchange/udf/history',
   time: 'exchange/udf/time',
   search: 'exchange/udf/search'
+}
+
+export const custodyAccount = {
+  get: (userId: string) => `/custody/account/${userId}`,
+  create: '/custody/account/assign'
+}
+
+export const listingsURL = {
+  getById: (userId: string, listingId: string) =>
+    `/exchange/listing/${userId}/${listingId}`,
+  create: (userId: string) => `/exchange/listing/${userId}`,
+  update: (userId: string, dsoId: string) =>
+    `/exchange/listing/${userId}/${dsoId}`
+}
+
+export const assetsURL = {
+  getAssetsList: () => '/accounts/assets/list'
 }
