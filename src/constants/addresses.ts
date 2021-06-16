@@ -1,9 +1,9 @@
 import { FACTORY_ADDRESS } from '@ixswap1/v2-sdk'
 import { constructSameAddressMap } from '../utils/constructSameAddressMap'
 
-export const IXS_ADDRESS = constructSameAddressMap('0x06b32e7eb6f818c859e69334ac75f9c3b9aecf62')
+export const IXS_ADDRESS = constructSameAddressMap('0x735d77FC94FC5C41E68Ca0bb486F3d4AE3eEfdd9')
 export const MULTICALL2_ADDRESSES = constructSameAddressMap('0x5BA1e12693Dc8F9c48aAD8770482f4739bEeD696')
-export const V2_ROUTER_ADDRESS = constructSameAddressMap('0x57Db463adfEAeD3ead51f32af40A231d667eB8cd')
+export const V2_ROUTER_ADDRESS = constructSameAddressMap('0x17bBC92732eeC28ee1d64A923073DdEf7f26FFE2')
 export const MERKLE_DISTRIBUTOR_ADDRESS: { [chainId: number]: string } = {
   [1]: '0x090D4613473dEE047c3f2706764f49E0821D256e',
 }
