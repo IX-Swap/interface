@@ -2065,10 +2065,10 @@
     "@ixswap1/lib" "1.x.x"
     "@ixswap1/v2-core" "1.x.x"
 
-"@ixswap1/v2-sdk@1.0.1":
-  version "1.0.1"
-  resolved "https://registry.yarnpkg.com/@ixswap1/v2-sdk/-/v2-sdk-1.0.1.tgz#870c1fdcdbae2cc81cecec186a8237664224a9f1"
-  integrity sha512-t5CebudiNK9jafi3PyMP/2XjX5qP00NpPzu5iXggBx8kEWCDGuu4ALI6EvWPPbW+yVmr4ZAeoBA94KQCoVejUg==
+"@ixswap1/v2-sdk@1.0.2":
+  version "1.0.2"
+  resolved "https://registry.yarnpkg.com/@ixswap1/v2-sdk/-/v2-sdk-1.0.2.tgz#238915d30bec3c33b840f4e39f1b3fc2abd21763"
+  integrity sha512-9jG/PFBaRJP/q6b16moimxf+bKk50JtEjW8X49GCuuyWJjLGzAJbpGlSynqs+pLlLvT36pjT2GBQYl8RM9Jq3w==
   dependencies:
     "@ethersproject/address" "^5.0.0"
     "@ethersproject/solidity" "^5.0.0"
