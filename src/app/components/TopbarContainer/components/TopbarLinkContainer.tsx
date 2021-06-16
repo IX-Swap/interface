@@ -14,8 +14,10 @@ export interface TopbarLinkProps {
 export const TopbarLinkContainer = (props: TopbarLinkProps) => {
   const { link, label, disabled = false, colorVariant = 'nav' } = props
   const { pathname } = useLocation()
+
   const baseLink = link.split('/').slice(0, 3).join('/')
   const isActive = pathname.startsWith(baseLink)
+
   const { theme } = useAppBreakpoints()
   const navColor = isActive
     ? blue[300]
@@ -34,7 +36,7 @@ export const TopbarLinkContainer = (props: TopbarLinkProps) => {
       }}
       onClick={e => (disabled ? e.preventDefault() : null)}
     >
-      <span>{label}</span>
+      <span style={{ whiteSpace: 'nowrap' }}>{label}</span>
       {disabled ? (
         <svg
           width='7'

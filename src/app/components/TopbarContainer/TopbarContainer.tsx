@@ -46,13 +46,17 @@ export const TopbarContainer = () => {
       label: 'Invest',
       link: InvestRoute.landing,
       icon: InvestIcon
+    },
+    {
+      label: 'Funds Management',
+      link: IssuanceRoute.insight
     }
   ]
 
   if (isIssuer) {
     links.push({
       label: 'Issuance',
-      link: IssuanceRoute.insight,
+      link: IssuanceRoute.list,
       icon: IssuanceIcon
     })
   }
@@ -83,12 +87,21 @@ export const TopbarContainer = () => {
     }
   ]
 
+  const newIssuanceLandingLinks = [
+    { label: 'Create New DSO', path: IssuanceRoute.create },
+    { label: 'View DSO Listings', path: IssuanceRoute.list },
+    { label: 'Create Exchange Listings', path: OTCMarketRoute.createListing },
+    { label: 'View Exchange Listings', path: OTCMarketRoute.myListings }
+  ]
+
   const dropdownLinksItems = (name: string) => {
     switch (name) {
       case 'Authorizer':
         return authorizerLandingLinks
       case 'Accounts':
         return newAccountsLandingLinks
+      case 'Issuance':
+        return newIssuanceLandingLinks
       case 'Invest':
         return newInvestLandingLinks
       default:
@@ -108,7 +121,8 @@ export const TopbarContainer = () => {
         if (
           link.label === 'Accounts' ||
           link.label === 'Authorizer' ||
-          link.label === 'Invest'
+          link.label === 'Invest' ||
+          link.label === 'Issuance'
         ) {
           return (
             <TopbarLinkDropdown
