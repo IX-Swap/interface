@@ -7,6 +7,7 @@ export default makeStyles(theme => ({
     '-webkit-line-clamp': '3',
     '-webkit-box-orient': 'vertical',
     maxHeight: '4.5em',
-    '& p': { margin: 0 }
+    '& p': { margin: 0 },
+    minHeight: '4.5em'
   }
 }))

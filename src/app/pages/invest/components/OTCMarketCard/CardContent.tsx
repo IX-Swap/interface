@@ -11,11 +11,13 @@ import { VSpacer } from 'components/VSpacer'
 import getSymbolFromCurrency from 'currency-symbol-map'
 
 export interface CardContentProps {
-  dso: DigitalSecurityOffering
+  // TODO Add interface after complete final version backend api
+  data: DigitalSecurityOffering | any
+  type: 'Primary' | 'OTC'
 }
 
 export const CardContent = (props: CardContentProps) => {
-  const { dso } = props
+  const { data, type } = props
   const classes = useStyles()
 
   return (
@@ -24,7 +26,9 @@ export const CardContent = (props: CardContentProps) => {
         <Grid item>
           <Typography>
             <div className={classes.introduction}>
-              {renderStringToHTML(dso.introduction)}
+              {renderStringToHTML(
+                type === 'Primary' ? data.introduction : data.description
+              )}
             </div>
           </Typography>
         </Grid>
@@ -38,7 +42,7 @@ export const CardContent = (props: CardContentProps) => {
             valueFontSize={16}
             labelFontSize={14}
             label='Token Symbol'
-            value={dso.tokenSymbol}
+            value={data.tokenSymbol}
           />
         </Grid>
 
@@ -51,8 +55,18 @@ export const CardContent = (props: CardContentProps) => {
             labelWeight='default'
             valueFontSize={16}
             labelFontSize={14}
-            label='Minimum Investment'
-            value={dso.minimumInvestment}
+            label={
+              type === 'Primary' ? 'Minimum Investment' : 'Min. Trade Amount'
+            }
+            // TODO Remove this after add new interface for data prop
+            // eslint-disable-next-line
+            value={`${data.tokenSymbol} ${
+              // TODO Remove this after add new interface for data prop
+              // eslint-disable-next-line
+              type === 'Primary'
+                ? data.minimumInvestment
+                : data.minimumTradeUnits
+            }`}
           />
         </Grid>
 
@@ -65,10 +79,15 @@ export const CardContent = (props: CardContentProps) => {
             labelWeight='default'
             valueFontSize={16}
             labelFontSize={14}
-            label='Raised Amount'
+            label={type === 'Primary' ? 'Raised Amount' : 'Target Fundraise'}
             value={formatMoney(
-              dso.totalFundraisingAmount,
-              getSymbolFromCurrency(dso.currency.symbol)
+              type === 'Primary'
+                ? data.totalFundraisingAmount
+                : data.raisedAmount,
+              // TODO Remove fake data after added new field on backend api
+              getSymbolFromCurrency(
+                type === 'Primary' ? data.currency.symbol : 'SGD'
+              )
             )}
           />
         </Grid>

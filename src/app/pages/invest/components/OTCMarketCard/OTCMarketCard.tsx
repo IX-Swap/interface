@@ -5,16 +5,17 @@ import Card from '@material-ui/core/Card'
 import useStyles from 'app/pages/invest/components/OTCMarketCard/OTCMarketCard.styles'
 import { CardCover } from 'app/pages/invest/components/OTCMarketCard/CardCover'
 import { CardContent } from 'app/pages/invest/components/OTCMarketCard/CardContent'
-import { DSOInvestLink } from 'app/components/DSO/components/DSOInvestLink'
 import { Grid } from '@material-ui/core'
+import { PrimaryInvestLink } from 'app/pages/invest/components/OTCMarketCard/PrimaryInvestLink'
 
 export interface OTCMarketCardProps {
-  dso: DigitalSecurityOffering
+  type: 'Primary' | 'OTC'
+  data: DigitalSecurityOffering
   viewURL: string
 }
 
 export const OTCMarketCard = (props: OTCMarketCardProps) => {
-  const { dso, viewURL } = props
+  const { data, viewURL, type } = props
   const classes = useStyles()
 
   return (
@@ -25,10 +26,10 @@ export const OTCMarketCard = (props: OTCMarketCardProps) => {
       style={{ flexDirection: 'column' }}
     >
       <Box px={3} pt={2.5} pb={5} height='100%'>
-        <CardCover dso={dso} viewURL={viewURL} />
-        <CardContent dso={dso} />
+        <CardCover type={type} data={data} viewURL={viewURL} />
+        <CardContent type={type} data={data} />
         <Grid container item justify='flex-end'>
-          <DSOInvestLink dso={dso} variant={'text'} />
+          <PrimaryInvestLink type={type} data={data} />
         </Grid>
       </Box>
     </Card>

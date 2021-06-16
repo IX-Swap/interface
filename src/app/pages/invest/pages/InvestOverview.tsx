@@ -6,6 +6,7 @@ import { VSpacer } from 'components/VSpacer'
 import { PromoBanner } from 'app/pages/invest/components/PromoBanner'
 import { SecondaryMarketTable } from 'app/pages/invest/components/SecondaryMarketTable/SecondaryMarketTable'
 import { PrimaryOfferings } from 'app/pages/invest/components/PrimaryOfferings'
+import { OTCMarket } from 'app/pages/invest/components/OTCMarkets'
 
 export const InvestOverview = () => {
   const theme = useTheme()
@@ -29,6 +30,7 @@ export const InvestOverview = () => {
         <PromoBanner />
         <VSpacer size='medium' />
       </Grid>
+
       <VSpacer size='medium' />
 
       <Grid container direction='column' spacing={4}>
@@ -39,7 +41,20 @@ export const InvestOverview = () => {
           <PrimaryOfferings />
         </Grid>
       </Grid>
+
       <VSpacer size='large' />
+
+      <Grid container direction='column' spacing={4}>
+        <Grid item>
+          <Typography variant='h4'>OTC Market</Typography>
+        </Grid>
+        <Grid item>
+          <OTCMarket />
+        </Grid>
+      </Grid>
+
+      <VSpacer size='large' />
+
       <Grid container direction='column' spacing={4}>
         <Grid item>
           <Typography variant='h4'>Secondary Market</Typography>

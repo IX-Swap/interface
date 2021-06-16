@@ -19,7 +19,11 @@ export const PrimaryOfferings = () => {
     <Grid container wrap={'wrap'} className={classes.container}>
       {promotedDSOs.map((dso, i) => (
         <Grid item key={dso._id}>
-          <OTCMarketCard dso={dso} viewURL={InvestRoute.view} />
+          <OTCMarketCard
+            type={'Primary'}
+            data={dso}
+            viewURL={InvestRoute.view}
+          />
         </Grid>
       ))}
     </Grid>

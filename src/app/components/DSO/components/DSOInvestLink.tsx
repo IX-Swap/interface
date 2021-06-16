@@ -7,13 +7,9 @@ import { InvestRoute } from 'app/pages/invest/router/config'
 
 export interface DSOInvestLinkProps {
   dso: DigitalSecurityOffering
-  variant?: 'text' | 'outlined' | 'contained'
 }
 
-export const DSOInvestLink = ({
-  dso,
-  variant = 'contained'
-}: DSOInvestLinkProps) => {
+export const DSOInvestLink = ({ dso }: DSOInvestLinkProps) => {
   const { user } = useAuth()
 
   const isDisabled =
@@ -23,7 +19,7 @@ export const DSOInvestLink = ({
     <Button
       component={AppRouterLinkComponent}
       color='primary'
-      variant={variant}
+      variant='contained'
       to={InvestRoute.makeInvestment}
       params={{
         issuerId: dso.createdBy,
@@ -31,7 +27,6 @@ export const DSOInvestLink = ({
       }}
       data-testid='invest-link'
       disabled={isDisabled}
-      style={{ fontSize: variant === 'text' ? 16 : 12 }}
     >
       Invest
     </Button>
