@@ -52,7 +52,7 @@ export const TopbarContainer = () => {
   if (isIssuer) {
     links.push({
       label: 'Issuance',
-      link: IssuanceRoute.landing,
+      link: IssuanceRoute.insight,
       icon: IssuanceIcon
     })
   }
