@@ -1,6 +1,6 @@
 import React from 'react'
 import { render, cleanup } from 'test-utils'
-import { DSOStats } from 'app/pages/issuance/pages/DSOStats'
+import { IssuanceLanding } from 'app/pages/issuance/pages/IssuanceLanding'
 import * as useDSOByIdHook from 'app/pages/invest/hooks/useDSOById'
 import { dso } from '__fixtures__/authorizer'
 import { generatePath, Route } from 'react-router-dom'
@@ -42,7 +42,7 @@ describe('IssuanceLanding', () => {
 
     render(
       <Route path={IssuanceRoute.insight}>
-        <DSOStats />
+        <IssuanceLanding />
       </Route>
     )
   })
