@@ -8,6 +8,7 @@ export interface Order {
   pair: string
   total: number
   filled: number
+  filledPercent?: number
   average: number
-  status: 'Filled' | 'Open' | 'Canceled'
+  status: 'FILLED' | 'OPEN' | 'CANCELLED'
 }

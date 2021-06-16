@@ -1,19 +1,10 @@
 import React from 'react'
 import { CancelOrderButton } from 'app/pages/exchange/components/OpenOrders/CancelOrderButton'
 import { formatDateToMMDDYY } from 'helpers/dates'
-import { formatMoney, toPercentage } from 'helpers/numbers'
+import { formatMoney, formatPercent } from 'helpers/numbers'
 import { TableColumn } from 'types/util'
 import { getOrderSideName } from 'helpers/strings'
-
-export interface Order {
-  createdAt: string
-  pair: string
-  side: string
-  price: number
-  amount: number
-  total: number
-  filled: number
-}
+import { Order } from 'types/order'
 
 export const columns: Array<TableColumn<Order>> = [
   {
@@ -46,9 +37,9 @@ export const columns: Array<TableColumn<Order>> = [
     render: (_, value) => formatMoney(value.total, '')
   },
   {
-    key: 'filled',
+    key: 'filledPercent',
     label: 'Filled',
-    render: toPercentage
+    render: formatPercent
   },
   {
     key: 'cancel',

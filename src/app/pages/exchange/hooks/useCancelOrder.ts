@@ -1,9 +1,10 @@
 import { exchange as exchangeApiUrls } from 'config/apiURL'
-import { exchange as exchangeQueryKeys } from 'config/queryKeys'
+import { exchangeMarketQueryKeys } from 'config/queryKeys'
 import { getIdFromObj } from 'helpers/strings'
 import { useAuth } from 'hooks/auth/useAuth'
 import { useServices } from 'hooks/useServices'
 import { useMutation, useQueryCache } from 'react-query'
+import { useParams } from 'react-router'
 
 export interface CancelOrderArgs {
   pair: string
@@ -16,6 +17,7 @@ export interface CancelOrderArgs {
 export const useCancelOrder = (orderId: string) => {
   const { user } = useAuth()
   const userId = getIdFromObj(user)
+  const { pairId } = useParams<{ pairId: string }>()
   const queryCache = useQueryCache()
   const { apiService, snackbarService } = useServices()
   const cancelOrder = async (args: CancelOrderArgs) => {
@@ -28,7 +30,9 @@ export const useCancelOrder = (orderId: string) => {
   return useMutation(cancelOrder, {
     onSuccess: async () => {
       snackbarService.showSnackbar('Order Cancelled', 'success')
-      void queryCache.invalidateQueries(exchangeQueryKeys.userOrders(userId))
+      await queryCache.invalidateQueries(
+        exchangeMarketQueryKeys.getOrdersList(userId, pairId)
+      )
     },
     onError: (error: any) => {
       snackbarService.showSnackbar(error.message, 'error')

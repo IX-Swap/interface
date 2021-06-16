@@ -13,7 +13,7 @@ export const orders: Order[] = [
     amount: 50,
     total: 46500,
     filled: 0,
-    status: 'Canceled'
+    status: 'CANCELLED'
   },
   {
     _id: '609d1d93c54af74af46c128c',
@@ -26,7 +26,7 @@ export const orders: Order[] = [
     amount: 40,
     total: 47500,
     filled: 0,
-    status: 'Filled'
+    status: 'FILLED'
   }
 ]
 
