@@ -41,7 +41,7 @@ jobs:
       - run: yarn build
         env:
           CI: false
-          REACT_APP_NETWORK_URL: "https://mainet.infura.io/v2/7f00ea5349e64a078e7a9533c9126cef"
+          REACT_APP_NETWORK_URL: "https://mainnet.infura.io/v2/7f00ea5349e64a078e7a9533c9126cef"
 
       - run: yarn integration-test
         env:
