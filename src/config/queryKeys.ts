@@ -136,6 +136,10 @@ export const dsoQueryKeys = {
   getApprovedList: 'dso-approved-list'
 }
 
+export const otcQueryKeys = {
+  getApprovedListingsList: 'otc-approved-listings-list'
+}
+
 export const issuanceQueryKeys = {
   commitmentsStats: (dsoId: string) =>
     generateQueryKey('commitment-stats', dsoId),
