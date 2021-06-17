@@ -118,7 +118,8 @@ export default function FullPositionCard({ pair, border, stakedBalance }: Positi
                 ) : null
               }
             />
-            <PoolInformation />
+            {/* TODO: unhide when we have the link */}
+            {/* <PoolInformation /> */}
             {userDefaultPoolBalance && JSBI.greaterThan(userDefaultPoolBalance.quotient, BIG_INT_ZERO) && (
               <ButtonRow marginTop="10px">
                 <ButtonGradient as={Link} to={routes.add(currency0, currency1)}>
