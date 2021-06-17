@@ -2028,10 +2028,10 @@
   resolved "https://registry.npmjs.org/@istanbuljs/schema/-/schema-0.1.3.tgz"
   integrity sha512-ZXRY4jNvVgSVQ8DL3LTcakaAtXwTVUxE81hslsyD2AtoXW/wVob10HkOJ1X/pAlcI7D+2YoZKg5do8G/w6RYgA==
 
-"@ixswap1/default-token-list@1.x.x":
-  version "1.0.0"
-  resolved "https://registry.yarnpkg.com/@ixswap1/default-token-list/-/default-token-list-1.0.0.tgz#f5eb8edbd0a92e09cca9372e444f392c184be9d6"
-  integrity sha512-EVrI+ZLJUbi/oMaCQtnHA6kcNosMpTKvAkA+K7KJyu89b66Itzwiwv8iy15rVi26c8CHSTxgsOXISsVDWwnZPQ==
+"@ixswap1/default-token-list@1.0.2":
+  version "1.0.2"
+  resolved "https://registry.yarnpkg.com/@ixswap1/default-token-list/-/default-token-list-1.0.2.tgz#a8fc8b2a0d3aafff7b3bf8d087813a8884a3cff7"
+  integrity sha512-qqn5fIAxhdfvf5E8hXTxNDG+3fanbrVQGeTsMz4GGRM5SDWzsokhAjk6B36QKV6JvuO2Gsi2YTBXWwtwBT9sQw==
 
 "@ixswap1/lib@1.x.x":
   version "1.0.0"
