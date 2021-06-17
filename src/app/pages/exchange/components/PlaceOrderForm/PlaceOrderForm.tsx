@@ -39,7 +39,7 @@ export const PlaceOrderForm: React.FC<PlaceOrderFormProps> = ({
   const tabs = ['BUY', 'SELL']
   const [activeTabNameIdx, setActiveTabNameIdx] = useState(0)
   const balance = activeTabNameIdx === 0 ? currencyBalance : tokenBalance
-  const totalCurrencyLabel = activeTabNameIdx === 0 ? currencyLabel : tokenLabel
+  const totalCurrencyLabel = currencyLabel
   const { pairId } = useParams<{ pairId: string }>()
   const handleSubmit = async (values: PlaceOrderFormValues) => {
     await onSubmit(
