@@ -59,9 +59,9 @@ msgstr "0,3% de cuota"
 msgid "1% fee"
 msgstr "1% de comisión"
 
-#: src/pages/Pool/v2.tsx
-msgid "<0>Account analytics and accrued fees</0><1> ↗ </1>"
-msgstr "<0>Análisis de cuentas y comisiones acumuladas</0><1> ↗ </1>"
+#: 
+#~ msgid "<0>Account analytics and accrued fees</0><1> ↗ </1>"
+#~ msgstr "<0>Análisis de cuentas y comisiones acumuladas</0><1> ↗ </1>"
 
 #: src/pages/RemoveLiquidity/index.tsx
 msgid "<0>Tip:</0> Removing pool tokens converts your position back into underlying tokens at the current rate, proportional to your share of the pool. Accrued fees are included in the amounts you receive."
@@ -96,7 +96,7 @@ msgid "Add"
 msgstr "Añadir"
 
 #: src/components/NavigationTabs/index.tsx
-#: src/pages/Pool/v2.tsx
+#: src/pages/Pool/AddLiquidityButton.tsx
 msgid "Add Liquidity"
 msgstr "Añadir liquidez"
 
@@ -192,7 +192,7 @@ msgstr "Lo mejor para parejas estables."
 msgid "Blocked address"
 msgstr "Dirección bloqueada"
 
-#: src/components/PositionCard/index.tsx
+#: src/components/PositionCard/MinimalPositionCard.tsx
 msgid "By adding liquidity you'll earn 0.3% of all trades on this pair proportional to your share of the pool. Fees are added to the pool, accrue in real time and can be claimed by withdrawing your liquidity."
 msgstr "Al añadir liquidez, ganarás el 0,3% de todas las operaciones en este par proporcionalmente a tu parte del pozo. Las tarifas se añaden a la piscina, se acumulan en tiempo real y se pueden reclamar retirando su liquidez."
 
@@ -294,6 +294,10 @@ msgstr "Conectar cartera"
 msgid "Connect a wallet"
 msgstr "Conectar una cartera"
 
+#: src/pages/Pool/NoPairs.tsx
+msgid "Connect a wallet to view your Liquidity."
+msgstr ""
+
 #: src/components/WalletModal/index.tsx
 msgid "Connect to a wallet"
 msgstr "Conectar a una cartera"
@@ -302,9 +306,9 @@ msgstr "Conectar a una cartera"
 msgid "Connect to a wallet to find pools"
 msgstr "Conectarse a una cartera para encontrar piscinas"
 
-#: src/pages/Pool/v2.tsx
-msgid "Connect to a wallet to view your liquidity."
-msgstr "Conéctese a una cartera para ver su liquidez."
+#: 
+#~ msgid "Connect to a wallet to view your liquidity."
+#~ msgstr "Conéctese a una cartera para ver su liquidez."
 
 #: src/components/earn/ClaimRewardModal.tsx
 msgid "Connect wallet"
@@ -393,6 +397,10 @@ msgstr "Descartar"
 msgid "Docs"
 msgstr "Documentos"
 
+#: src/pages/Pool/ImportPool.tsx
+msgid "Don't see a pool you joined?"
+msgstr ""
+
 #: src/state/swap/hooks.ts
 msgid "Enter a recipient"
 msgstr "Ingrese un destinatario"
@@ -470,6 +478,10 @@ msgstr "Impacto de precios altos"
 msgid "I understand"
 msgstr "Entiendo"
 
+#: src/components/PositionCard/index.tsx
+msgid "IXS Rewards (on quit)"
+msgstr ""
+
 #: src/pages/RemoveLiquidity/index.tsx
 msgid "IXS {0}/{1} Burned"
 msgstr "IXS {0}/{1} quemado"
@@ -495,6 +507,10 @@ msgstr "Importar Pool"
 #: src/components/SearchModal/ImportList.tsx
 msgid "Import at your own risk"
 msgstr "Importar bajo su propio riesgo"
+
+#: src/pages/Pool/ImportPool.tsx
+msgid "Import it."
+msgstr ""
 
 #: src/components/Badge/RangeBadge.tsx
 msgid "In range"
@@ -566,10 +582,8 @@ msgstr "Listas"
 msgid "Loaded"
 msgstr "Cargado"
 
-#: src/components/PositionCard/Sushi.tsx
-#: src/components/PositionCard/V2.tsx
-#: src/components/PositionCard/index.tsx
-#: src/pages/Pool/v2.tsx
+#: src/components/PositionCard/CurrencyHeader.tsx
+#: src/pages/Pool/NoPairs.tsx
 #: src/pages/PoolFinder/index.tsx
 msgid "Loading"
 msgstr "Cargando"
@@ -578,10 +592,6 @@ msgstr "Cargando"
 msgid "Make sure the URL is<0>app.uniswap.org</0>"
 msgstr "Asegúrese de que la URL es<0>app.uniswap.org</0>"
 
-#: src/components/PositionCard/V2.tsx
-#: src/components/PositionCard/V2.tsx
-#: src/components/PositionCard/index.tsx
-#: src/components/PositionCard/index.tsx
 #: src/components/SearchModal/Manage.tsx
 #: src/components/earn/PoolCard.tsx
 msgid "Manage"
@@ -622,6 +632,11 @@ msgstr "Mínimo recibido"
 #: src/components/TransactionSettings/index.tsx
 msgid "Minutes"
 msgstr "Minutos"
+
+#: src/pages/Pool/NoPairs.tsx
+#: src/pages/Pool/v2.tsx
+msgid "My Liquidity"
+msgstr ""
 
 #: src/pages/Pool/EmptyLiquidity.tsx
 msgid "No liquidity found."
@@ -693,17 +708,22 @@ msgstr "¡Palanca encontrada!"
 msgid "Pool rate"
 msgstr "Tasa de lata"
 
-#: src/components/PositionCard/V2.tsx
-#: src/components/PositionCard/index.tsx
-msgid "Pool tokens in rewards pool:"
-msgstr "Herramientas en el grupo de recompensas:"
+#: 
+#: 
+#~ msgid "Pool tokens in rewards pool:"
+#~ msgstr "Herramientas en el grupo de recompensas:"
 
-#: src/components/PositionCard/V2.tsx
-#: src/components/PositionCard/V2.tsx
 #: src/components/PositionCard/index.tsx
 #: src/components/PositionCard/index.tsx
-msgid "Pooled {0}:"
-msgstr "Conjunto {0}:"
+msgid "Pooled {0}"
+msgstr ""
+
+#: 
+#: 
+#: 
+#: 
+#~ msgid "Pooled {0}:"
+#~ msgstr "Conjunto {0}:"
 
 #: src/components/swap/SwapModalHeader.tsx
 #: src/pages/RemoveLiquidity/index.tsx
@@ -742,8 +762,6 @@ msgstr "Leer más sobre activos no soportados"
 msgid "Recent Transactions"
 msgstr "Transacciones recientes"
 
-#: src/components/PositionCard/V2.tsx
-#: src/components/PositionCard/index.tsx
 #: src/pages/RemoveLiquidity/index.tsx
 msgid "Remove"
 msgstr "Eliminar"
@@ -753,6 +771,7 @@ msgid "Remove Amount"
 msgstr "Eliminar cantidad"
 
 #: src/components/NavigationTabs/index.tsx
+#: src/components/PositionCard/index.tsx
 msgid "Remove Liquidity"
 msgstr "Quitar liquidez"
 
@@ -965,9 +984,9 @@ msgstr "Unwrap"
 msgid "Update list"
 msgstr "Actualizar lista"
 
-#: src/components/PositionCard/index.tsx
-msgid "View accrued fees and analytics<0>↗</0>"
-msgstr "Ver comisiones acumuladas y analíticas<0>↗</0>"
+#: 
+#~ msgid "View accrued fees and analytics<0>↗</0>"
+#~ msgstr "Ver comisiones acumuladas y analíticas<0>↗</0>"
 
 #: src/components/SearchModal/ManageLists.tsx
 msgid "View list"
@@ -978,6 +997,10 @@ msgstr "Ver lista"
 #: src/components/TransactionConfirmationModal/index.tsx
 msgid "View on Etherscan"
 msgstr "Ver en Etherscan"
+
+#: src/components/PositionCard/PoolInformation.tsx
+msgid "View pool information<0>↗</0>"
+msgstr ""
 
 #: src/components/ModalViews/index.tsx
 msgid "View transaction on Etherscan"
@@ -1054,13 +1077,19 @@ msgstr ""
 msgid "You will receive"
 msgstr "Recibirás"
 
-#: src/components/PositionCard/V2.tsx
 #: src/components/PositionCard/index.tsx
-#: src/components/PositionCard/index.tsx
+msgid "Your pool share"
+msgstr ""
+
+#: src/components/PositionCard/MinimalPositionCard.tsx
 msgid "Your pool share:"
 msgstr "Tu porción de billar:"
 
 #: src/components/PositionCard/index.tsx
+msgid "Your pool tokens"
+msgstr ""
+
+#: src/components/PositionCard/MinimalPositionCard.tsx
 msgid "Your position"
 msgstr "Tu posición"
 
@@ -1072,10 +1101,10 @@ msgstr "Su posición tiene 0 liquidez y no está cobrando tasas."
 msgid "Your rate"
 msgstr "Su tarifa"
 
-#: src/components/PositionCard/V2.tsx
-#: src/components/PositionCard/index.tsx
-msgid "Your total pool tokens:"
-msgstr "Tus fichas totales de albergue:"
+#: 
+#: 
+#~ msgid "Your total pool tokens:"
+#~ msgstr "Tus fichas totales de albergue:"
 
 #: src/components/TransactionSettings/index.tsx
 msgid "Your transaction may be frontrun"

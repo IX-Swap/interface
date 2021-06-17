@@ -59,9 +59,9 @@ msgstr "0.3 % 수수료"
 msgid "1% fee"
 msgstr "1 % 수수료"
 
-#: src/pages/Pool/v2.tsx
-msgid "<0>Account analytics and accrued fees</0><1> ↗ </1>"
-msgstr "<0> 계정 분석 및 발생 수수료</0> <1> ↗</1>"
+#: 
+#~ msgid "<0>Account analytics and accrued fees</0><1> ↗ </1>"
+#~ msgstr "<0> 계정 분석 및 발생 수수료</0> <1> ↗</1>"
 
 #: src/pages/RemoveLiquidity/index.tsx
 msgid "<0>Tip:</0> Removing pool tokens converts your position back into underlying tokens at the current rate, proportional to your share of the pool. Accrued fees are included in the amounts you receive."
@@ -96,7 +96,7 @@ msgid "Add"
 msgstr "더하다"
 
 #: src/components/NavigationTabs/index.tsx
-#: src/pages/Pool/v2.tsx
+#: src/pages/Pool/AddLiquidityButton.tsx
 msgid "Add Liquidity"
 msgstr "유동성 추가"
 
@@ -192,7 +192,7 @@ msgstr "안정적인 쌍에 가장 적합합니다."
 msgid "Blocked address"
 msgstr "차단 된 주소"
 
-#: src/components/PositionCard/index.tsx
+#: src/components/PositionCard/MinimalPositionCard.tsx
 msgid "By adding liquidity you'll earn 0.3% of all trades on this pair proportional to your share of the pool. Fees are added to the pool, accrue in real time and can be claimed by withdrawing your liquidity."
 msgstr "유동성을 추가하면 풀 점유율에 비례하여이 쌍에 대한 모든 거래의 0.3 %를 벌 수 있습니다. 수수료는 풀에 추가되고 실시간으로 발생하며 유동성을 인출하여 청구 할 수 있습니다."
 
@@ -294,6 +294,10 @@ msgstr "지갑 연결"
 msgid "Connect a wallet"
 msgstr "지갑 연결"
 
+#: src/pages/Pool/NoPairs.tsx
+msgid "Connect a wallet to view your Liquidity."
+msgstr ""
+
 #: src/components/WalletModal/index.tsx
 msgid "Connect to a wallet"
 msgstr "지갑에 연결"
@@ -302,9 +306,9 @@ msgstr "지갑에 연결"
 msgid "Connect to a wallet to find pools"
 msgstr "지갑에 연결하여 풀 찾기"
 
-#: src/pages/Pool/v2.tsx
-msgid "Connect to a wallet to view your liquidity."
-msgstr "유동성을 보려면 지갑에 연결하십시오."
+#: 
+#~ msgid "Connect to a wallet to view your liquidity."
+#~ msgstr "유동성을 보려면 지갑에 연결하십시오."
 
 #: src/components/earn/ClaimRewardModal.tsx
 msgid "Connect wallet"
@@ -393,6 +397,10 @@ msgstr "버리다"
 msgid "Docs"
 msgstr "문서"
 
+#: src/pages/Pool/ImportPool.tsx
+msgid "Don't see a pool you joined?"
+msgstr ""
+
 #: src/state/swap/hooks.ts
 msgid "Enter a recipient"
 msgstr "수신자를 입력하세요."
@@ -470,6 +478,10 @@ msgstr "높은 가격 영향"
 msgid "I understand"
 msgstr "이해 했어요"
 
+#: src/components/PositionCard/index.tsx
+msgid "IXS Rewards (on quit)"
+msgstr ""
+
 #: src/pages/RemoveLiquidity/index.tsx
 msgid "IXS {0}/{1} Burned"
 msgstr "IXS {0}/{1} 버닝"
@@ -495,6 +507,10 @@ msgstr "풀 가져 오기"
 #: src/components/SearchModal/ImportList.tsx
 msgid "Import at your own risk"
 msgstr "자신의 책임하에 수입"
+
+#: src/pages/Pool/ImportPool.tsx
+msgid "Import it."
+msgstr ""
 
 #: src/components/Badge/RangeBadge.tsx
 msgid "In range"
@@ -566,10 +582,8 @@ msgstr "기울기"
 msgid "Loaded"
 msgstr "짐을 실은"
 
-#: src/components/PositionCard/Sushi.tsx
-#: src/components/PositionCard/V2.tsx
-#: src/components/PositionCard/index.tsx
-#: src/pages/Pool/v2.tsx
+#: src/components/PositionCard/CurrencyHeader.tsx
+#: src/pages/Pool/NoPairs.tsx
 #: src/pages/PoolFinder/index.tsx
 msgid "Loading"
 msgstr "로딩 중"
@@ -578,10 +592,6 @@ msgstr "로딩 중"
 msgid "Make sure the URL is<0>app.uniswap.org</0>"
 msgstr "URL이 <0> app.uniswap.org인지 확인하십시오.</0>"
 
-#: src/components/PositionCard/V2.tsx
-#: src/components/PositionCard/V2.tsx
-#: src/components/PositionCard/index.tsx
-#: src/components/PositionCard/index.tsx
 #: src/components/SearchModal/Manage.tsx
 #: src/components/earn/PoolCard.tsx
 msgid "Manage"
@@ -622,6 +632,11 @@ msgstr "최소 수령"
 #: src/components/TransactionSettings/index.tsx
 msgid "Minutes"
 msgstr "의사록"
+
+#: src/pages/Pool/NoPairs.tsx
+#: src/pages/Pool/v2.tsx
+msgid "My Liquidity"
+msgstr ""
 
 #: src/pages/Pool/EmptyLiquidity.tsx
 msgid "No liquidity found."
@@ -693,17 +708,22 @@ msgstr "풀을 찾았습니다!"
 msgid "Pool rate"
 msgstr "풀 요금"
 
-#: src/components/PositionCard/V2.tsx
-#: src/components/PositionCard/index.tsx
-msgid "Pool tokens in rewards pool:"
-msgstr "보상 풀의 풀 토큰 :"
+#: 
+#: 
+#~ msgid "Pool tokens in rewards pool:"
+#~ msgstr "보상 풀의 풀 토큰 :"
 
-#: src/components/PositionCard/V2.tsx
-#: src/components/PositionCard/V2.tsx
 #: src/components/PositionCard/index.tsx
 #: src/components/PositionCard/index.tsx
-msgid "Pooled {0}:"
-msgstr "풀링 됨 {0}:"
+msgid "Pooled {0}"
+msgstr ""
+
+#: 
+#: 
+#: 
+#: 
+#~ msgid "Pooled {0}:"
+#~ msgstr "풀링 됨 {0}:"
 
 #: src/components/swap/SwapModalHeader.tsx
 #: src/pages/RemoveLiquidity/index.tsx
@@ -742,8 +762,6 @@ msgstr "지원되지 않는 자산에 대해 자세히 알아보기"
 msgid "Recent Transactions"
 msgstr "최근 거래"
 
-#: src/components/PositionCard/V2.tsx
-#: src/components/PositionCard/index.tsx
 #: src/pages/RemoveLiquidity/index.tsx
 msgid "Remove"
 msgstr "없애다"
@@ -753,6 +771,7 @@ msgid "Remove Amount"
 msgstr "금액 제거"
 
 #: src/components/NavigationTabs/index.tsx
+#: src/components/PositionCard/index.tsx
 msgid "Remove Liquidity"
 msgstr "유동성 제거"
 
@@ -965,9 +984,9 @@ msgstr "풀다"
 msgid "Update list"
 msgstr "목록 업데이트"
 
-#: src/components/PositionCard/index.tsx
-msgid "View accrued fees and analytics<0>↗</0>"
-msgstr "발생한 수수료 및 분석보기 <0> ↗</0>"
+#: 
+#~ msgid "View accrued fees and analytics<0>↗</0>"
+#~ msgstr "발생한 수수료 및 분석보기 <0> ↗</0>"
 
 #: src/components/SearchModal/ManageLists.tsx
 msgid "View list"
@@ -978,6 +997,10 @@ msgstr "목록보기"
 #: src/components/TransactionConfirmationModal/index.tsx
 msgid "View on Etherscan"
 msgstr "Etherscan에서보기"
+
+#: src/components/PositionCard/PoolInformation.tsx
+msgid "View pool information<0>↗</0>"
+msgstr ""
 
 #: src/components/ModalViews/index.tsx
 msgid "View transaction on Etherscan"
@@ -1054,13 +1077,19 @@ msgstr ""
 msgid "You will receive"
 msgstr "당신은 받게 될 것입니다"
 
-#: src/components/PositionCard/V2.tsx
 #: src/components/PositionCard/index.tsx
-#: src/components/PositionCard/index.tsx
+msgid "Your pool share"
+msgstr ""
+
+#: src/components/PositionCard/MinimalPositionCard.tsx
 msgid "Your pool share:"
 msgstr "귀하의 수영장 점유율 :"
 
 #: src/components/PositionCard/index.tsx
+msgid "Your pool tokens"
+msgstr ""
+
+#: src/components/PositionCard/MinimalPositionCard.tsx
 msgid "Your position"
 msgstr "너의 위치"
 
@@ -1072,10 +1101,10 @@ msgstr "귀하의 포지션은 유동성이 없으며 수수료를받지 않습�
 msgid "Your rate"
 msgstr "귀하의 요금"
 
-#: src/components/PositionCard/V2.tsx
-#: src/components/PositionCard/index.tsx
-msgid "Your total pool tokens:"
-msgstr "총 풀 토큰 :"
+#: 
+#: 
+#~ msgid "Your total pool tokens:"
+#~ msgstr "총 풀 토큰 :"
 
 #: src/components/TransactionSettings/index.tsx
 msgid "Your transaction may be frontrun"

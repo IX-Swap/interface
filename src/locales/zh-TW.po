@@ -59,9 +59,9 @@ msgstr "手續費0.3％"
 msgid "1% fee"
 msgstr "1％的費用"
 
-#: src/pages/Pool/v2.tsx
-msgid "<0>Account analytics and accrued fees</0><1> ↗ </1>"
-msgstr "<0>帳戶分析和應計費用</0><1>↗</1>"
+#: 
+#~ msgid "<0>Account analytics and accrued fees</0><1> ↗ </1>"
+#~ msgstr "<0>帳戶分析和應計費用</0><1>↗</1>"
 
 #: src/pages/RemoveLiquidity/index.tsx
 msgid "<0>Tip:</0> Removing pool tokens converts your position back into underlying tokens at the current rate, proportional to your share of the pool. Accrued fees are included in the amounts you receive."
@@ -96,7 +96,7 @@ msgid "Add"
 msgstr "添加"
 
 #: src/components/NavigationTabs/index.tsx
-#: src/pages/Pool/v2.tsx
+#: src/pages/Pool/AddLiquidityButton.tsx
 msgid "Add Liquidity"
 msgstr "增加流動性"
 
@@ -192,7 +192,7 @@ msgstr "最適合穩定的配對。"
 msgid "Blocked address"
 msgstr "地址被封鎖"
 
-#: src/components/PositionCard/index.tsx
+#: src/components/PositionCard/MinimalPositionCard.tsx
 msgid "By adding liquidity you'll earn 0.3% of all trades on this pair proportional to your share of the pool. Fees are added to the pool, accrue in real time and can be claimed by withdrawing your liquidity."
 msgstr "通過增加流動性，您將獲得這對貨幣對所有交易的0.3％，與您的總份額成正比。費用會實時添加到池中，並且可以通過提取流動資金來索取費用。"
 
@@ -294,6 +294,10 @@ msgstr "連接錢包"
 msgid "Connect a wallet"
 msgstr "連接錢包"
 
+#: src/pages/Pool/NoPairs.tsx
+msgid "Connect a wallet to view your Liquidity."
+msgstr ""
+
 #: src/components/WalletModal/index.tsx
 msgid "Connect to a wallet"
 msgstr "連接到錢包"
@@ -302,9 +306,9 @@ msgstr "連接到錢包"
 msgid "Connect to a wallet to find pools"
 msgstr "連接到錢包以查找池"
 
-#: src/pages/Pool/v2.tsx
-msgid "Connect to a wallet to view your liquidity."
-msgstr "連接到錢包以查看您的流動性。"
+#: 
+#~ msgid "Connect to a wallet to view your liquidity."
+#~ msgstr "連接到錢包以查看您的流動性。"
 
 #: src/components/earn/ClaimRewardModal.tsx
 msgid "Connect wallet"
@@ -393,6 +397,10 @@ msgstr "解僱"
 msgid "Docs"
 msgstr "文件"
 
+#: src/pages/Pool/ImportPool.tsx
+msgid "Don't see a pool you joined?"
+msgstr ""
+
 #: src/state/swap/hooks.ts
 msgid "Enter a recipient"
 msgstr "輸入收件人"
@@ -470,6 +478,10 @@ msgstr "高價格影響"
 msgid "I understand"
 msgstr "我明白"
 
+#: src/components/PositionCard/index.tsx
+msgid "IXS Rewards (on quit)"
+msgstr ""
+
 #: src/pages/RemoveLiquidity/index.tsx
 msgid "IXS {0}/{1} Burned"
 msgstr "IXS {0}/{1} 燒"
@@ -495,6 +507,10 @@ msgstr "進口池"
 #: src/components/SearchModal/ImportList.tsx
 msgid "Import at your own risk"
 msgstr "進口風險自負"
+
+#: src/pages/Pool/ImportPool.tsx
+msgid "Import it."
+msgstr ""
 
 #: src/components/Badge/RangeBadge.tsx
 msgid "In range"
@@ -566,10 +582,8 @@ msgstr "清單"
 msgid "Loaded"
 msgstr "已加載"
 
-#: src/components/PositionCard/Sushi.tsx
-#: src/components/PositionCard/V2.tsx
-#: src/components/PositionCard/index.tsx
-#: src/pages/Pool/v2.tsx
+#: src/components/PositionCard/CurrencyHeader.tsx
+#: src/pages/Pool/NoPairs.tsx
 #: src/pages/PoolFinder/index.tsx
 msgid "Loading"
 msgstr "載入中"
@@ -578,10 +592,6 @@ msgstr "載入中"
 msgid "Make sure the URL is<0>app.uniswap.org</0>"
 msgstr "確保URL為<0> app.uniswap.org</0>"
 
-#: src/components/PositionCard/V2.tsx
-#: src/components/PositionCard/V2.tsx
-#: src/components/PositionCard/index.tsx
-#: src/components/PositionCard/index.tsx
 #: src/components/SearchModal/Manage.tsx
 #: src/components/earn/PoolCard.tsx
 msgid "Manage"
@@ -622,6 +632,11 @@ msgstr "最低收到"
 #: src/components/TransactionSettings/index.tsx
 msgid "Minutes"
 msgstr "分鐘"
+
+#: src/pages/Pool/NoPairs.tsx
+#: src/pages/Pool/v2.tsx
+msgid "My Liquidity"
+msgstr ""
 
 #: src/pages/Pool/EmptyLiquidity.tsx
 msgid "No liquidity found."
@@ -693,17 +708,22 @@ msgstr "找到游泳池！"
 msgid "Pool rate"
 msgstr "池率"
 
-#: src/components/PositionCard/V2.tsx
-#: src/components/PositionCard/index.tsx
-msgid "Pool tokens in rewards pool:"
-msgstr "獎勵池中的代幣池："
+#: 
+#: 
+#~ msgid "Pool tokens in rewards pool:"
+#~ msgstr "獎勵池中的代幣池："
 
-#: src/components/PositionCard/V2.tsx
-#: src/components/PositionCard/V2.tsx
 #: src/components/PositionCard/index.tsx
 #: src/components/PositionCard/index.tsx
-msgid "Pooled {0}:"
-msgstr "匯集 {0}："
+msgid "Pooled {0}"
+msgstr ""
+
+#: 
+#: 
+#: 
+#: 
+#~ msgid "Pooled {0}:"
+#~ msgstr "匯集 {0}："
 
 #: src/components/swap/SwapModalHeader.tsx
 #: src/pages/RemoveLiquidity/index.tsx
@@ -742,8 +762,6 @@ msgstr "閱讀有關不支持資產的更多信息"
 msgid "Recent Transactions"
 msgstr "最近交易"
 
-#: src/components/PositionCard/V2.tsx
-#: src/components/PositionCard/index.tsx
 #: src/pages/RemoveLiquidity/index.tsx
 msgid "Remove"
 msgstr "去掉"
@@ -753,6 +771,7 @@ msgid "Remove Amount"
 msgstr "刪除金額"
 
 #: src/components/NavigationTabs/index.tsx
+#: src/components/PositionCard/index.tsx
 msgid "Remove Liquidity"
 msgstr "消除流動性"
 
@@ -965,9 +984,9 @@ msgstr "開卷"
 msgid "Update list"
 msgstr "更新清單"
 
-#: src/components/PositionCard/index.tsx
-msgid "View accrued fees and analytics<0>↗</0>"
-msgstr "查看應計費用和分析<0>↗</0>"
+#: 
+#~ msgid "View accrued fees and analytics<0>↗</0>"
+#~ msgstr "查看應計費用和分析<0>↗</0>"
 
 #: src/components/SearchModal/ManageLists.tsx
 msgid "View list"
@@ -978,6 +997,10 @@ msgstr "查看清單"
 #: src/components/TransactionConfirmationModal/index.tsx
 msgid "View on Etherscan"
 msgstr "在Etherscan上查看"
+
+#: src/components/PositionCard/PoolInformation.tsx
+msgid "View pool information<0>↗</0>"
+msgstr ""
 
 #: src/components/ModalViews/index.tsx
 msgid "View transaction on Etherscan"
@@ -1054,13 +1077,19 @@ msgstr ""
 msgid "You will receive"
 msgstr "您將收到"
 
-#: src/components/PositionCard/V2.tsx
 #: src/components/PositionCard/index.tsx
-#: src/components/PositionCard/index.tsx
+msgid "Your pool share"
+msgstr ""
+
+#: src/components/PositionCard/MinimalPositionCard.tsx
 msgid "Your pool share:"
 msgstr "您的共享池："
 
 #: src/components/PositionCard/index.tsx
+msgid "Your pool tokens"
+msgstr ""
+
+#: src/components/PositionCard/MinimalPositionCard.tsx
 msgid "Your position"
 msgstr "您現在的位置"
 
@@ -1072,10 +1101,10 @@ msgstr "您的頭寸流動性為0，並且不賺取費用。"
 msgid "Your rate"
 msgstr "您的費率"
 
-#: src/components/PositionCard/V2.tsx
-#: src/components/PositionCard/index.tsx
-msgid "Your total pool tokens:"
-msgstr "您的總池令牌："
+#: 
+#: 
+#~ msgid "Your total pool tokens:"
+#~ msgstr "您的總池令牌："
 
 #: src/components/TransactionSettings/index.tsx
 msgid "Your transaction may be frontrun"

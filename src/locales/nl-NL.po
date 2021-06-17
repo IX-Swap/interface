@@ -59,9 +59,9 @@ msgstr "0,3% vergoeding"
 msgid "1% fee"
 msgstr "1% vergoeding"
 
-#: src/pages/Pool/v2.tsx
-msgid "<0>Account analytics and accrued fees</0><1> ↗ </1>"
-msgstr "<0>Account analytics en inkomsten </0><1>↗ </1>"
+#: 
+#~ msgid "<0>Account analytics and accrued fees</0><1> ↗ </1>"
+#~ msgstr "<0>Account analytics en inkomsten </0><1>↗ </1>"
 
 #: src/pages/RemoveLiquidity/index.tsx
 msgid "<0>Tip:</0> Removing pool tokens converts your position back into underlying tokens at the current rate, proportional to your share of the pool. Accrued fees are included in the amounts you receive."
@@ -96,7 +96,7 @@ msgid "Add"
 msgstr "Toevoegen"
 
 #: src/components/NavigationTabs/index.tsx
-#: src/pages/Pool/v2.tsx
+#: src/pages/Pool/AddLiquidityButton.tsx
 msgid "Add Liquidity"
 msgstr "Liquiditeit toevoegen"
 
@@ -192,7 +192,7 @@ msgstr "Het beste voor stabiele paren."
 msgid "Blocked address"
 msgstr "Geblokkeerd adres"
 
-#: src/components/PositionCard/index.tsx
+#: src/components/PositionCard/MinimalPositionCard.tsx
 msgid "By adding liquidity you'll earn 0.3% of all trades on this pair proportional to your share of the pool. Fees are added to the pool, accrue in real time and can be claimed by withdrawing your liquidity."
 msgstr "Door liquiditeit toe te voegen, verdien je 0,3% van alle transacties op dit paar in verhouding tot je aandeel in de pool. Vergoedingen worden toegevoegd aan de pool, worden in realtime opgebouwd en kunnen worden opgeëist door je liquiditeit terug te trekken."
 
@@ -294,6 +294,10 @@ msgstr "Verbind Portemonnee"
 msgid "Connect a wallet"
 msgstr "Verbind een portemonnee"
 
+#: src/pages/Pool/NoPairs.tsx
+msgid "Connect a wallet to view your Liquidity."
+msgstr ""
+
 #: src/components/WalletModal/index.tsx
 msgid "Connect to a wallet"
 msgstr "Verbind met een portemonnee"
@@ -302,9 +306,9 @@ msgstr "Verbind met een portemonnee"
 msgid "Connect to a wallet to find pools"
 msgstr "Verbind met een portemonnee om pools te vinden"
 
-#: src/pages/Pool/v2.tsx
-msgid "Connect to a wallet to view your liquidity."
-msgstr "Maak verbinding met een portemonnee om uw liquiditeit te bekijken."
+#: 
+#~ msgid "Connect to a wallet to view your liquidity."
+#~ msgstr "Maak verbinding met een portemonnee om uw liquiditeit te bekijken."
 
 #: src/components/earn/ClaimRewardModal.tsx
 msgid "Connect wallet"
@@ -393,6 +397,10 @@ msgstr "Uitschakelen"
 msgid "Docs"
 msgstr "Documentatie"
 
+#: src/pages/Pool/ImportPool.tsx
+msgid "Don't see a pool you joined?"
+msgstr ""
+
 #: src/state/swap/hooks.ts
 msgid "Enter a recipient"
 msgstr "Voer een ontvanger in"
@@ -470,6 +478,10 @@ msgstr "Hoge prijs impact"
 msgid "I understand"
 msgstr "Ik begrijp het"
 
+#: src/components/PositionCard/index.tsx
+msgid "IXS Rewards (on quit)"
+msgstr ""
+
 #: src/pages/RemoveLiquidity/index.tsx
 msgid "IXS {0}/{1} Burned"
 msgstr "IXS {0}/{1} verbrand"
@@ -495,6 +507,10 @@ msgstr "Vragenset importeren"
 #: src/components/SearchModal/ImportList.tsx
 msgid "Import at your own risk"
 msgstr "Importeer op eigen risico"
+
+#: src/pages/Pool/ImportPool.tsx
+msgid "Import it."
+msgstr ""
 
 #: src/components/Badge/RangeBadge.tsx
 msgid "In range"
@@ -566,10 +582,8 @@ msgstr "Lijsten"
 msgid "Loaded"
 msgstr "Geladen"
 
-#: src/components/PositionCard/Sushi.tsx
-#: src/components/PositionCard/V2.tsx
-#: src/components/PositionCard/index.tsx
-#: src/pages/Pool/v2.tsx
+#: src/components/PositionCard/CurrencyHeader.tsx
+#: src/pages/Pool/NoPairs.tsx
 #: src/pages/PoolFinder/index.tsx
 msgid "Loading"
 msgstr "Laden..."
@@ -578,10 +592,6 @@ msgstr "Laden..."
 msgid "Make sure the URL is<0>app.uniswap.org</0>"
 msgstr "Zorg ervoor dat de URL is<0>app.uniswap.org</0>"
 
-#: src/components/PositionCard/V2.tsx
-#: src/components/PositionCard/V2.tsx
-#: src/components/PositionCard/index.tsx
-#: src/components/PositionCard/index.tsx
 #: src/components/SearchModal/Manage.tsx
 #: src/components/earn/PoolCard.tsx
 msgid "Manage"
@@ -622,6 +632,11 @@ msgstr "Minimum ontvangen"
 #: src/components/TransactionSettings/index.tsx
 msgid "Minutes"
 msgstr "Minuten"
+
+#: src/pages/Pool/NoPairs.tsx
+#: src/pages/Pool/v2.tsx
+msgid "My Liquidity"
+msgstr ""
 
 #: src/pages/Pool/EmptyLiquidity.tsx
 msgid "No liquidity found."
@@ -693,17 +708,22 @@ msgstr "Zwembad gevonden!"
 msgid "Pool rate"
 msgstr "Pool tarief"
 
-#: src/components/PositionCard/V2.tsx
-#: src/components/PositionCard/index.tsx
-msgid "Pool tokens in rewards pool:"
-msgstr "Zwembad tokens in beloningenpool:"
+#: 
+#: 
+#~ msgid "Pool tokens in rewards pool:"
+#~ msgstr "Zwembad tokens in beloningenpool:"
 
-#: src/components/PositionCard/V2.tsx
-#: src/components/PositionCard/V2.tsx
 #: src/components/PositionCard/index.tsx
 #: src/components/PositionCard/index.tsx
-msgid "Pooled {0}:"
-msgstr "Gemaakt {0}:"
+msgid "Pooled {0}"
+msgstr ""
+
+#: 
+#: 
+#: 
+#: 
+#~ msgid "Pooled {0}:"
+#~ msgstr "Gemaakt {0}:"
 
 #: src/components/swap/SwapModalHeader.tsx
 #: src/pages/RemoveLiquidity/index.tsx
@@ -742,8 +762,6 @@ msgstr "Lees meer over niet-ondersteunde assets"
 msgid "Recent Transactions"
 msgstr "Recente Transacties"
 
-#: src/components/PositionCard/V2.tsx
-#: src/components/PositionCard/index.tsx
 #: src/pages/RemoveLiquidity/index.tsx
 msgid "Remove"
 msgstr "Verwijderen"
@@ -753,6 +771,7 @@ msgid "Remove Amount"
 msgstr "Bedrag verwijderen"
 
 #: src/components/NavigationTabs/index.tsx
+#: src/components/PositionCard/index.tsx
 msgid "Remove Liquidity"
 msgstr "Liquidity verwijderen"
 
@@ -965,9 +984,9 @@ msgstr "Unwrap"
 msgid "Update list"
 msgstr "Update lijst"
 
-#: src/components/PositionCard/index.tsx
-msgid "View accrued fees and analytics<0>↗</0>"
-msgstr "Opgebouwde kosten en analytics weergeven<0>↗</0>"
+#: 
+#~ msgid "View accrued fees and analytics<0>↗</0>"
+#~ msgstr "Opgebouwde kosten en analytics weergeven<0>↗</0>"
 
 #: src/components/SearchModal/ManageLists.tsx
 msgid "View list"
@@ -978,6 +997,10 @@ msgstr "Lijst bekijken"
 #: src/components/TransactionConfirmationModal/index.tsx
 msgid "View on Etherscan"
 msgstr "Bekijk op Etherscan"
+
+#: src/components/PositionCard/PoolInformation.tsx
+msgid "View pool information<0>↗</0>"
+msgstr ""
 
 #: src/components/ModalViews/index.tsx
 msgid "View transaction on Etherscan"
@@ -1054,13 +1077,19 @@ msgstr ""
 msgid "You will receive"
 msgstr "Je zult ontvangen"
 
-#: src/components/PositionCard/V2.tsx
 #: src/components/PositionCard/index.tsx
-#: src/components/PositionCard/index.tsx
+msgid "Your pool share"
+msgstr ""
+
+#: src/components/PositionCard/MinimalPositionCard.tsx
 msgid "Your pool share:"
 msgstr "Jouw pool deel:"
 
 #: src/components/PositionCard/index.tsx
+msgid "Your pool tokens"
+msgstr ""
+
+#: src/components/PositionCard/MinimalPositionCard.tsx
 msgid "Your position"
 msgstr "Jouw positie"
 
@@ -1072,10 +1101,10 @@ msgstr "Je positie heeft 0 liquiditeit en verdient geen kosten."
 msgid "Your rate"
 msgstr "Uw tarief"
 
-#: src/components/PositionCard/V2.tsx
-#: src/components/PositionCard/index.tsx
-msgid "Your total pool tokens:"
-msgstr "Uw totale pool tokens:"
+#: 
+#: 
+#~ msgid "Your total pool tokens:"
+#~ msgstr "Uw totale pool tokens:"
 
 #: src/components/TransactionSettings/index.tsx
 msgid "Your transaction may be frontrun"

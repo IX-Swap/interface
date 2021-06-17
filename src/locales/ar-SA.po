@@ -59,9 +59,9 @@ msgstr "رسم 0.3%"
 msgid "1% fee"
 msgstr "1% رسوم"
 
-#: src/pages/Pool/v2.tsx
-msgid "<0>Account analytics and accrued fees</0><1> ↗ </1>"
-msgstr "<0>تحليلات الحساب والرسوم المتراكمة</0><1> ↗ </1>"
+#: 
+#~ msgid "<0>Account analytics and accrued fees</0><1> ↗ </1>"
+#~ msgstr "<0>تحليلات الحساب والرسوم المتراكمة</0><1> ↗ </1>"
 
 #: src/pages/RemoveLiquidity/index.tsx
 msgid "<0>Tip:</0> Removing pool tokens converts your position back into underlying tokens at the current rate, proportional to your share of the pool. Accrued fees are included in the amounts you receive."
@@ -96,7 +96,7 @@ msgid "Add"
 msgstr "إضافة"
 
 #: src/components/NavigationTabs/index.tsx
-#: src/pages/Pool/v2.tsx
+#: src/pages/Pool/AddLiquidityButton.tsx
 msgid "Add Liquidity"
 msgstr "إضافة سيولة"
 
@@ -192,7 +192,7 @@ msgstr "الأفضل لأزواج مستقرة."
 msgid "Blocked address"
 msgstr "عنوان محظور"
 
-#: src/components/PositionCard/index.tsx
+#: src/components/PositionCard/MinimalPositionCard.tsx
 msgid "By adding liquidity you'll earn 0.3% of all trades on this pair proportional to your share of the pool. Fees are added to the pool, accrue in real time and can be claimed by withdrawing your liquidity."
 msgstr "من خلال إضافة السيولة ستكسب 0.3٪ من جميع المعاملات على هذا الزوج بما يتناسب مع نصيبك من الحزب. تضاف الرسوم إلى المجمع، تتراكم في الوقت الحقيقي ويمكن المطالبة بها بسحب السيولة الخاصة بك."
 
@@ -294,6 +294,10 @@ msgstr "توصيل المحفظة"
 msgid "Connect a wallet"
 msgstr "قم بتوصيل محفظة"
 
+#: src/pages/Pool/NoPairs.tsx
+msgid "Connect a wallet to view your Liquidity."
+msgstr ""
+
 #: src/components/WalletModal/index.tsx
 msgid "Connect to a wallet"
 msgstr "الاتصال بالمحفظة"
@@ -302,9 +306,9 @@ msgstr "الاتصال بالمحفظة"
 msgid "Connect to a wallet to find pools"
 msgstr "الاتصال بالمحفظة للعثور على المخازن"
 
-#: src/pages/Pool/v2.tsx
-msgid "Connect to a wallet to view your liquidity."
-msgstr "اتصل بالمحفظة لعرض السيولة الخاصة بك."
+#: 
+#~ msgid "Connect to a wallet to view your liquidity."
+#~ msgstr "اتصل بالمحفظة لعرض السيولة الخاصة بك."
 
 #: src/components/earn/ClaimRewardModal.tsx
 msgid "Connect wallet"
@@ -393,6 +397,10 @@ msgstr "تجاهل"
 msgid "Docs"
 msgstr "الوثائق"
 
+#: src/pages/Pool/ImportPool.tsx
+msgid "Don't see a pool you joined?"
+msgstr ""
+
 #: src/state/swap/hooks.ts
 msgid "Enter a recipient"
 msgstr "أدخل المستلم"
@@ -470,6 +478,10 @@ msgstr "ارتفاع تأثير السعر"
 msgid "I understand"
 msgstr "أنا أفهم"
 
+#: src/components/PositionCard/index.tsx
+msgid "IXS Rewards (on quit)"
+msgstr ""
+
 #: src/pages/RemoveLiquidity/index.tsx
 msgid "IXS {0}/{1} Burned"
 msgstr "IXS {0}/{1} محروق"
@@ -495,6 +507,10 @@ msgstr "استيراد مخزن"
 #: src/components/SearchModal/ImportList.tsx
 msgid "Import at your own risk"
 msgstr "استيراد على مسؤوليتك الخاصة"
+
+#: src/pages/Pool/ImportPool.tsx
+msgid "Import it."
+msgstr ""
 
 #: src/components/Badge/RangeBadge.tsx
 msgid "In range"
@@ -566,10 +582,8 @@ msgstr "القوائم"
 msgid "Loaded"
 msgstr "تحميل"
 
-#: src/components/PositionCard/Sushi.tsx
-#: src/components/PositionCard/V2.tsx
-#: src/components/PositionCard/index.tsx
-#: src/pages/Pool/v2.tsx
+#: src/components/PositionCard/CurrencyHeader.tsx
+#: src/pages/Pool/NoPairs.tsx
 #: src/pages/PoolFinder/index.tsx
 msgid "Loading"
 msgstr "جاري التحميل"
@@ -578,10 +592,6 @@ msgstr "جاري التحميل"
 msgid "Make sure the URL is<0>app.uniswap.org</0>"
 msgstr "تأكد من أن عنوان URL هو <0>app.uniswap.org</0>"
 
-#: src/components/PositionCard/V2.tsx
-#: src/components/PositionCard/V2.tsx
-#: src/components/PositionCard/index.tsx
-#: src/components/PositionCard/index.tsx
 #: src/components/SearchModal/Manage.tsx
 #: src/components/earn/PoolCard.tsx
 msgid "Manage"
@@ -622,6 +632,11 @@ msgstr "تلقى الحد الأدنى"
 #: src/components/TransactionSettings/index.tsx
 msgid "Minutes"
 msgstr "دقائق"
+
+#: src/pages/Pool/NoPairs.tsx
+#: src/pages/Pool/v2.tsx
+msgid "My Liquidity"
+msgstr ""
 
 #: src/pages/Pool/EmptyLiquidity.tsx
 msgid "No liquidity found."
@@ -693,17 +708,22 @@ msgstr "تم العثور على مخزن"
 msgid "Pool rate"
 msgstr "معدل المخزن"
 
-#: src/components/PositionCard/V2.tsx
-#: src/components/PositionCard/index.tsx
-msgid "Pool tokens in rewards pool:"
-msgstr "رموز التجميع في مجمع المكافآت:"
+#: 
+#: 
+#~ msgid "Pool tokens in rewards pool:"
+#~ msgstr "رموز التجميع في مجمع المكافآت:"
 
-#: src/components/PositionCard/V2.tsx
-#: src/components/PositionCard/V2.tsx
 #: src/components/PositionCard/index.tsx
 #: src/components/PositionCard/index.tsx
-msgid "Pooled {0}:"
-msgstr "المجمع {0}:"
+msgid "Pooled {0}"
+msgstr ""
+
+#: 
+#: 
+#: 
+#: 
+#~ msgid "Pooled {0}:"
+#~ msgstr "المجمع {0}:"
 
 #: src/components/swap/SwapModalHeader.tsx
 #: src/pages/RemoveLiquidity/index.tsx
@@ -742,8 +762,6 @@ msgstr "اقرأ المزيد عن الأصول غير المدعومة"
 msgid "Recent Transactions"
 msgstr "المعاملات الأخيرة"
 
-#: src/components/PositionCard/V2.tsx
-#: src/components/PositionCard/index.tsx
 #: src/pages/RemoveLiquidity/index.tsx
 msgid "Remove"
 msgstr "إزالة"
@@ -753,6 +771,7 @@ msgid "Remove Amount"
 msgstr "إزالة المبلغ"
 
 #: src/components/NavigationTabs/index.tsx
+#: src/components/PositionCard/index.tsx
 msgid "Remove Liquidity"
 msgstr "إزالة السيولة"
 
@@ -965,9 +984,9 @@ msgstr "Unwrap"
 msgid "Update list"
 msgstr "قائمة التحديث"
 
-#: src/components/PositionCard/index.tsx
-msgid "View accrued fees and analytics<0>↗</0>"
-msgstr "عرض الرسوم المتراكمة والتحليلات <0>↗</0>"
+#: 
+#~ msgid "View accrued fees and analytics<0>↗</0>"
+#~ msgstr "عرض الرسوم المتراكمة والتحليلات <0>↗</0>"
 
 #: src/components/SearchModal/ManageLists.tsx
 msgid "View list"
@@ -978,6 +997,10 @@ msgstr "عرض القائمة"
 #: src/components/TransactionConfirmationModal/index.tsx
 msgid "View on Etherscan"
 msgstr "عرض على المسح الضوئي"
+
+#: src/components/PositionCard/PoolInformation.tsx
+msgid "View pool information<0>↗</0>"
+msgstr ""
 
 #: src/components/ModalViews/index.tsx
 msgid "View transaction on Etherscan"
@@ -1054,13 +1077,19 @@ msgstr ""
 msgid "You will receive"
 msgstr "سوف تستقبل"
 
-#: src/components/PositionCard/V2.tsx
 #: src/components/PositionCard/index.tsx
-#: src/components/PositionCard/index.tsx
+msgid "Your pool share"
+msgstr ""
+
+#: src/components/PositionCard/MinimalPositionCard.tsx
 msgid "Your pool share:"
 msgstr "مشاركة المجمّع الخاص بك:"
 
 #: src/components/PositionCard/index.tsx
+msgid "Your pool tokens"
+msgstr ""
+
+#: src/components/PositionCard/MinimalPositionCard.tsx
 msgid "Your position"
 msgstr "موقعك"
 
@@ -1072,10 +1101,10 @@ msgstr "مركزك لديه سيولة صفر, ولا يحصل على رسوم."
 msgid "Your rate"
 msgstr "معدلاتك"
 
-#: src/components/PositionCard/V2.tsx
-#: src/components/PositionCard/index.tsx
-msgid "Your total pool tokens:"
-msgstr "مجموع رموز المجمع الخاص بك:"
+#: 
+#: 
+#~ msgid "Your total pool tokens:"
+#~ msgstr "مجموع رموز المجمع الخاص بك:"
 
 #: src/components/TransactionSettings/index.tsx
 msgid "Your transaction may be frontrun"

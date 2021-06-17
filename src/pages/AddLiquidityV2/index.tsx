@@ -7,14 +7,14 @@ import ReactGA from 'react-ga'
 import { RouteComponentProps } from 'react-router-dom'
 import { Text } from 'rebass'
 import { ThemeContext } from 'styled-components'
-import { ButtonError, ButtonLight, ButtonPrimary } from '../../components/Button'
+import { ButtonError, ButtonIXSGradient, ButtonLight, ButtonPrimary } from '../../components/Button'
 import { BlueCard, LightCard } from '../../components/Card'
 import { AutoColumn, ColumnCenter } from '../../components/Column'
 import TransactionConfirmationModal, { ConfirmationModalContent } from '../../components/TransactionConfirmationModal'
 import CurrencyInputPanel from '../../components/CurrencyInputPanel'
 import DoubleCurrencyLogo from '../../components/DoubleLogo'
 import { AddRemoveTabs } from '../../components/NavigationTabs'
-import { MinimalPositionCard } from '../../components/PositionCard'
+import { MinimalPositionCard } from '../../components/PositionCard/MinimalPositionCard'
 import Row, { RowBetween, RowFlat } from '../../components/Row'
 
 import { ZERO_PERCENT } from '../../constants/misc'
@@ -434,7 +434,7 @@ export default function AddLiquidity({
                   isValid && (
                     <RowBetween>
                       {approvalA !== ApprovalState.APPROVED && (
-                        <ButtonPrimary
+                        <ButtonIXSGradient
                           onClick={approveACallback}
                           disabled={approvalA === ApprovalState.PENDING}
                           width={approvalB !== ApprovalState.APPROVED ? '48%' : '100%'}
@@ -446,10 +446,10 @@ export default function AddLiquidity({
                           ) : (
                             <Trans>Approve {currencies[Field.CURRENCY_A]?.symbol}</Trans>
                           )}
-                        </ButtonPrimary>
+                        </ButtonIXSGradient>
                       )}
                       {approvalB !== ApprovalState.APPROVED && (
-                        <ButtonPrimary
+                        <ButtonIXSGradient
                           onClick={approveBCallback}
                           disabled={approvalB === ApprovalState.PENDING}
                           width={approvalA !== ApprovalState.APPROVED ? '48%' : '100%'}
@@ -461,7 +461,7 @@ export default function AddLiquidity({
                           ) : (
                             <Trans>Approve {currencies[Field.CURRENCY_B]?.symbol}</Trans>
                           )}
-                        </ButtonPrimary>
+                        </ButtonIXSGradient>
                       )}
                     </RowBetween>
                   )}

@@ -1,7 +1,7 @@
 import React from 'react'
 import styled from 'styled-components/macro'
 
-export const BodyWrapper = styled.div<{ margin?: string }>`
+export const BodyWrapper = styled.div<{ margin?: string; padding?: string; paddingXS?: string }>`
   position: relative;
   margin-top: ${({ margin }) => margin ?? '0px'};
   max-width: 592px;
@@ -11,9 +11,9 @@ export const BodyWrapper = styled.div<{ margin?: string }>`
     0px 24px 32px rgba(0, 0, 0, 0.01);
   border-radius: 24px;
   margin-top: 1rem;
-  padding: 26px 36px 52px 36px;
-  ${({ theme }) => theme.mediaWidth.upToExtraSmall`
-      padding: 1rem 0.7rem;
+  padding: ${({ padding }) => padding ?? '26px 36px 52px 36px;'};
+  ${({ theme, paddingXS }) => theme.mediaWidth.upToExtraSmall`
+      padding: ${paddingXS ?? '1rem 0.7rem'};
   `};
 `
 

@@ -209,6 +209,16 @@ export const ButtonIXSGradient = styled(ButtonUNIGradient)`
 export const ButtonIXSWide = styled(ButtonIXSGradient)`
   width: 100%;
 `
+export const ButtonGradient = styled(Base)`
+  background: ${({ theme }) => theme.bgGradient};
+  border-radius: 40px;
+  font-weight: 600;
+  font-size: 14px;
+  line-height: 21px;
+  text-align: center;
+  text-transform: uppercase;
+  padding: 7px 0;
+`
 
 export const ButtonOutlined = styled(Base)`
   border: 1px solid ${({ theme }) => theme.bg2};

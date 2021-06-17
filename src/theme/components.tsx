@@ -322,3 +322,6 @@ export const ExtraSmallOnly = styled.span`
     display: block;
   `};
 `
+export const SemiTransparent = styled.div`
+  opacity: 0.5;
+`

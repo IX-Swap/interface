@@ -59,9 +59,9 @@ msgstr "Comissió del 0,3%"
 msgid "1% fee"
 msgstr "1% de quota"
 
-#: src/pages/Pool/v2.tsx
-msgid "<0>Account analytics and accrued fees</0><1> ↗ </1>"
-msgstr "<0> Anàlisi del compte i comissions acumulades</0> <1> ↗</1>"
+#: 
+#~ msgid "<0>Account analytics and accrued fees</0><1> ↗ </1>"
+#~ msgstr "<0> Anàlisi del compte i comissions acumulades</0> <1> ↗</1>"
 
 #: src/pages/RemoveLiquidity/index.tsx
 msgid "<0>Tip:</0> Removing pool tokens converts your position back into underlying tokens at the current rate, proportional to your share of the pool. Accrued fees are included in the amounts you receive."
@@ -96,7 +96,7 @@ msgid "Add"
 msgstr "Afegeix"
 
 #: src/components/NavigationTabs/index.tsx
-#: src/pages/Pool/v2.tsx
+#: src/pages/Pool/AddLiquidityButton.tsx
 msgid "Add Liquidity"
 msgstr "Afegiu liquiditat"
 
@@ -192,7 +192,7 @@ msgstr "El millor per a parelles estables."
 msgid "Blocked address"
 msgstr "Adreça bloquejada"
 
-#: src/components/PositionCard/index.tsx
+#: src/components/PositionCard/MinimalPositionCard.tsx
 msgid "By adding liquidity you'll earn 0.3% of all trades on this pair proportional to your share of the pool. Fees are added to the pool, accrue in real time and can be claimed by withdrawing your liquidity."
 msgstr "Si afegiu liquiditat, guanyareu el 0,3% de totes les operacions d’aquest parell proporcional a la vostra quota de fons. Les comissions s’afegeixen al fons, s’acumulen en temps real i es poden reclamar retirant la vostra liquiditat."
 
@@ -294,6 +294,10 @@ msgstr "Connect Wallet"
 msgid "Connect a wallet"
 msgstr "Connecteu una cartera"
 
+#: src/pages/Pool/NoPairs.tsx
+msgid "Connect a wallet to view your Liquidity."
+msgstr ""
+
 #: src/components/WalletModal/index.tsx
 msgid "Connect to a wallet"
 msgstr "Connecteu-vos a una cartera"
@@ -302,9 +306,9 @@ msgstr "Connecteu-vos a una cartera"
 msgid "Connect to a wallet to find pools"
 msgstr "Connecteu-vos a una cartera per trobar piscines"
 
-#: src/pages/Pool/v2.tsx
-msgid "Connect to a wallet to view your liquidity."
-msgstr "Connecteu-vos a una cartera per veure la vostra liquiditat."
+#: 
+#~ msgid "Connect to a wallet to view your liquidity."
+#~ msgstr "Connecteu-vos a una cartera per veure la vostra liquiditat."
 
 #: src/components/earn/ClaimRewardModal.tsx
 msgid "Connect wallet"
@@ -393,6 +397,10 @@ msgstr "Destitueix"
 msgid "Docs"
 msgstr "Documents"
 
+#: src/pages/Pool/ImportPool.tsx
+msgid "Don't see a pool you joined?"
+msgstr ""
+
 #: src/state/swap/hooks.ts
 msgid "Enter a recipient"
 msgstr "Introduïu un destinatari"
@@ -470,6 +478,10 @@ msgstr "Alt impacte en els preus"
 msgid "I understand"
 msgstr "entenc"
 
+#: src/components/PositionCard/index.tsx
+msgid "IXS Rewards (on quit)"
+msgstr ""
+
 #: src/pages/RemoveLiquidity/index.tsx
 msgid "IXS {0}/{1} Burned"
 msgstr "IXS {0}/{1} Cremat"
@@ -495,6 +507,10 @@ msgstr "Importa el grup"
 #: src/components/SearchModal/ImportList.tsx
 msgid "Import at your own risk"
 msgstr "Importeu al vostre propi risc"
+
+#: src/pages/Pool/ImportPool.tsx
+msgid "Import it."
+msgstr ""
 
 #: src/components/Badge/RangeBadge.tsx
 msgid "In range"
@@ -566,10 +582,8 @@ msgstr "Llistes"
 msgid "Loaded"
 msgstr "Carregat"
 
-#: src/components/PositionCard/Sushi.tsx
-#: src/components/PositionCard/V2.tsx
-#: src/components/PositionCard/index.tsx
-#: src/pages/Pool/v2.tsx
+#: src/components/PositionCard/CurrencyHeader.tsx
+#: src/pages/Pool/NoPairs.tsx
 #: src/pages/PoolFinder/index.tsx
 msgid "Loading"
 msgstr "S'està carregant"
@@ -578,10 +592,6 @@ msgstr "S'està carregant"
 msgid "Make sure the URL is<0>app.uniswap.org</0>"
 msgstr "Assegureu-vos que l'URL sigui <0> app.uniswap.org</0>"
 
-#: src/components/PositionCard/V2.tsx
-#: src/components/PositionCard/V2.tsx
-#: src/components/PositionCard/index.tsx
-#: src/components/PositionCard/index.tsx
 #: src/components/SearchModal/Manage.tsx
 #: src/components/earn/PoolCard.tsx
 msgid "Manage"
@@ -622,6 +632,11 @@ msgstr "Mínim rebut"
 #: src/components/TransactionSettings/index.tsx
 msgid "Minutes"
 msgstr "minuts"
+
+#: src/pages/Pool/NoPairs.tsx
+#: src/pages/Pool/v2.tsx
+msgid "My Liquidity"
+msgstr ""
 
 #: src/pages/Pool/EmptyLiquidity.tsx
 msgid "No liquidity found."
@@ -693,17 +708,22 @@ msgstr "Piscina trobada"
 msgid "Pool rate"
 msgstr "Tarifa de la piscina"
 
-#: src/components/PositionCard/V2.tsx
-#: src/components/PositionCard/index.tsx
-msgid "Pool tokens in rewards pool:"
-msgstr "Fitxes de pool a la piscina de recompenses:"
+#: 
+#: 
+#~ msgid "Pool tokens in rewards pool:"
+#~ msgstr "Fitxes de pool a la piscina de recompenses:"
 
-#: src/components/PositionCard/V2.tsx
-#: src/components/PositionCard/V2.tsx
 #: src/components/PositionCard/index.tsx
 #: src/components/PositionCard/index.tsx
-msgid "Pooled {0}:"
-msgstr "Agrupat {0}:"
+msgid "Pooled {0}"
+msgstr ""
+
+#: 
+#: 
+#: 
+#: 
+#~ msgid "Pooled {0}:"
+#~ msgstr "Agrupat {0}:"
 
 #: src/components/swap/SwapModalHeader.tsx
 #: src/pages/RemoveLiquidity/index.tsx
@@ -742,8 +762,6 @@ msgstr "Obteniu més informació sobre els recursos no compatibles"
 msgid "Recent Transactions"
 msgstr "Transaccions recents"
 
-#: src/components/PositionCard/V2.tsx
-#: src/components/PositionCard/index.tsx
 #: src/pages/RemoveLiquidity/index.tsx
 msgid "Remove"
 msgstr "Elimina"
@@ -753,6 +771,7 @@ msgid "Remove Amount"
 msgstr "Elimina la quantitat"
 
 #: src/components/NavigationTabs/index.tsx
+#: src/components/PositionCard/index.tsx
 msgid "Remove Liquidity"
 msgstr "Elimineu la liquiditat"
 
@@ -965,9 +984,9 @@ msgstr "Desembolicar"
 msgid "Update list"
 msgstr "Llista d'actualitzacions"
 
-#: src/components/PositionCard/index.tsx
-msgid "View accrued fees and analytics<0>↗</0>"
-msgstr "Consulteu els honoraris i les taxes acumulades <0> ↗</0>"
+#: 
+#~ msgid "View accrued fees and analytics<0>↗</0>"
+#~ msgstr "Consulteu els honoraris i les taxes acumulades <0> ↗</0>"
 
 #: src/components/SearchModal/ManageLists.tsx
 msgid "View list"
@@ -978,6 +997,10 @@ msgstr "Veure llista"
 #: src/components/TransactionConfirmationModal/index.tsx
 msgid "View on Etherscan"
 msgstr "Veure a Etherscan"
+
+#: src/components/PositionCard/PoolInformation.tsx
+msgid "View pool information<0>↗</0>"
+msgstr ""
 
 #: src/components/ModalViews/index.tsx
 msgid "View transaction on Etherscan"
@@ -1054,13 +1077,19 @@ msgstr ""
 msgid "You will receive"
 msgstr "Rebràs"
 
-#: src/components/PositionCard/V2.tsx
 #: src/components/PositionCard/index.tsx
-#: src/components/PositionCard/index.tsx
+msgid "Your pool share"
+msgstr ""
+
+#: src/components/PositionCard/MinimalPositionCard.tsx
 msgid "Your pool share:"
 msgstr "La vostra quota compartida:"
 
 #: src/components/PositionCard/index.tsx
+msgid "Your pool tokens"
+msgstr ""
+
+#: src/components/PositionCard/MinimalPositionCard.tsx
 msgid "Your position"
 msgstr "La teva posició"
 
@@ -1072,10 +1101,10 @@ msgstr "La vostra posició té 0 liquiditat i no cobra comissions."
 msgid "Your rate"
 msgstr "La seva tarifa"
 
-#: src/components/PositionCard/V2.tsx
-#: src/components/PositionCard/index.tsx
-msgid "Your total pool tokens:"
-msgstr "El vostre total de fitxes de grup:"
+#: 
+#: 
+#~ msgid "Your total pool tokens:"
+#~ msgstr "El vostre total de fitxes de grup:"
 
 #: src/components/TransactionSettings/index.tsx
 msgid "Your transaction may be frontrun"

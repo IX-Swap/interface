@@ -59,9 +59,9 @@ msgstr "0.3% poplatek"
 msgid "1% fee"
 msgstr "1 % poplatek"
 
-#: src/pages/Pool/v2.tsx
-msgid "<0>Account analytics and accrued fees</0><1> ↗ </1>"
-msgstr "<0>Analýza účtu a naběhlé poplatky</0><1> ↗ </1>"
+#: 
+#~ msgid "<0>Account analytics and accrued fees</0><1> ↗ </1>"
+#~ msgstr "<0>Analýza účtu a naběhlé poplatky</0><1> ↗ </1>"
 
 #: src/pages/RemoveLiquidity/index.tsx
 msgid "<0>Tip:</0> Removing pool tokens converts your position back into underlying tokens at the current rate, proportional to your share of the pool. Accrued fees are included in the amounts you receive."
@@ -96,7 +96,7 @@ msgid "Add"
 msgstr "Přidat"
 
 #: src/components/NavigationTabs/index.tsx
-#: src/pages/Pool/v2.tsx
+#: src/pages/Pool/AddLiquidityButton.tsx
 msgid "Add Liquidity"
 msgstr "Přidat likviditu"
 
@@ -192,7 +192,7 @@ msgstr "Nejlepší pro stabilní páry."
 msgid "Blocked address"
 msgstr "Blokovaná adresa"
 
-#: src/components/PositionCard/index.tsx
+#: src/components/PositionCard/MinimalPositionCard.tsx
 msgid "By adding liquidity you'll earn 0.3% of all trades on this pair proportional to your share of the pool. Fees are added to the pool, accrue in real time and can be claimed by withdrawing your liquidity."
 msgstr "Přidáním likvidity získáte 0,3% všech obchodů na tomto dvojici úměrně k vašemu podílu ve skupině. Poplatky jsou připočteny do bazálu, nabíhají v reálném čase a lze je požadovat výběrem Vaší likvidity."
 
@@ -294,6 +294,10 @@ msgstr "Připojit peněženku"
 msgid "Connect a wallet"
 msgstr "Připojit peněženku"
 
+#: src/pages/Pool/NoPairs.tsx
+msgid "Connect a wallet to view your Liquidity."
+msgstr ""
+
 #: src/components/WalletModal/index.tsx
 msgid "Connect to a wallet"
 msgstr "Připojit k peněžence"
@@ -302,9 +306,9 @@ msgstr "Připojit k peněžence"
 msgid "Connect to a wallet to find pools"
 msgstr "Připojte se k peněžence pro nalezení bazénů"
 
-#: src/pages/Pool/v2.tsx
-msgid "Connect to a wallet to view your liquidity."
-msgstr "Připojte se k peněžence pro zobrazení Vaší likvidity."
+#: 
+#~ msgid "Connect to a wallet to view your liquidity."
+#~ msgstr "Připojte se k peněžence pro zobrazení Vaší likvidity."
 
 #: src/components/earn/ClaimRewardModal.tsx
 msgid "Connect wallet"
@@ -393,6 +397,10 @@ msgstr "Odmítnout"
 msgid "Docs"
 msgstr "Dokumenty"
 
+#: src/pages/Pool/ImportPool.tsx
+msgid "Don't see a pool you joined?"
+msgstr ""
+
 #: src/state/swap/hooks.ts
 msgid "Enter a recipient"
 msgstr "Zadejte příjemce"
@@ -470,6 +478,10 @@ msgstr "Vysoký dopad na cenu"
 msgid "I understand"
 msgstr "Chápu"
 
+#: src/components/PositionCard/index.tsx
+msgid "IXS Rewards (on quit)"
+msgstr ""
+
 #: src/pages/RemoveLiquidity/index.tsx
 msgid "IXS {0}/{1} Burned"
 msgstr "IXS {0}/{1} vypálen"
@@ -495,6 +507,10 @@ msgstr "Importovat soubor"
 #: src/components/SearchModal/ImportList.tsx
 msgid "Import at your own risk"
 msgstr "Importovat na vlastní riziko"
+
+#: src/pages/Pool/ImportPool.tsx
+msgid "Import it."
+msgstr ""
 
 #: src/components/Badge/RangeBadge.tsx
 msgid "In range"
@@ -566,10 +582,8 @@ msgstr "Seznamy"
 msgid "Loaded"
 msgstr "Načteno"
 
-#: src/components/PositionCard/Sushi.tsx
-#: src/components/PositionCard/V2.tsx
-#: src/components/PositionCard/index.tsx
-#: src/pages/Pool/v2.tsx
+#: src/components/PositionCard/CurrencyHeader.tsx
+#: src/pages/Pool/NoPairs.tsx
 #: src/pages/PoolFinder/index.tsx
 msgid "Loading"
 msgstr "Načítání"
@@ -578,10 +592,6 @@ msgstr "Načítání"
 msgid "Make sure the URL is<0>app.uniswap.org</0>"
 msgstr "Ujistěte se, že URL je<0>app.uniswap.org</0>"
 
-#: src/components/PositionCard/V2.tsx
-#: src/components/PositionCard/V2.tsx
-#: src/components/PositionCard/index.tsx
-#: src/components/PositionCard/index.tsx
 #: src/components/SearchModal/Manage.tsx
 #: src/components/earn/PoolCard.tsx
 msgid "Manage"
@@ -622,6 +632,11 @@ msgstr "Minimum přijato"
 #: src/components/TransactionSettings/index.tsx
 msgid "Minutes"
 msgstr "Minuty"
+
+#: src/pages/Pool/NoPairs.tsx
+#: src/pages/Pool/v2.tsx
+msgid "My Liquidity"
+msgstr ""
 
 #: src/pages/Pool/EmptyLiquidity.tsx
 msgid "No liquidity found."
@@ -693,17 +708,22 @@ msgstr "Skupina nalezena!"
 msgid "Pool rate"
 msgstr "Sazba bazénu"
 
-#: src/components/PositionCard/V2.tsx
-#: src/components/PositionCard/index.tsx
-msgid "Pool tokens in rewards pool:"
-msgstr "Pool žetony v odměňovaném bazénu:"
+#: 
+#: 
+#~ msgid "Pool tokens in rewards pool:"
+#~ msgstr "Pool žetony v odměňovaném bazénu:"
 
-#: src/components/PositionCard/V2.tsx
-#: src/components/PositionCard/V2.tsx
 #: src/components/PositionCard/index.tsx
 #: src/components/PositionCard/index.tsx
-msgid "Pooled {0}:"
-msgstr "Sestaveno {0}:"
+msgid "Pooled {0}"
+msgstr ""
+
+#: 
+#: 
+#: 
+#: 
+#~ msgid "Pooled {0}:"
+#~ msgstr "Sestaveno {0}:"
 
 #: src/components/swap/SwapModalHeader.tsx
 #: src/pages/RemoveLiquidity/index.tsx
@@ -742,8 +762,6 @@ msgstr "Přečtěte si více o nepodporovaných aktivech"
 msgid "Recent Transactions"
 msgstr "Poslední transakce"
 
-#: src/components/PositionCard/V2.tsx
-#: src/components/PositionCard/index.tsx
 #: src/pages/RemoveLiquidity/index.tsx
 msgid "Remove"
 msgstr "Odebrat"
@@ -753,6 +771,7 @@ msgid "Remove Amount"
 msgstr "Odebrat částku"
 
 #: src/components/NavigationTabs/index.tsx
+#: src/components/PositionCard/index.tsx
 msgid "Remove Liquidity"
 msgstr "Odstranit likviditu"
 
@@ -965,9 +984,9 @@ msgstr "Unwrap"
 msgid "Update list"
 msgstr "Aktualizovat seznam"
 
-#: src/components/PositionCard/index.tsx
-msgid "View accrued fees and analytics<0>↗</0>"
-msgstr "Zobrazit naběhlé poplatky a analýzy<0>↗</0>"
+#: 
+#~ msgid "View accrued fees and analytics<0>↗</0>"
+#~ msgstr "Zobrazit naběhlé poplatky a analýzy<0>↗</0>"
 
 #: src/components/SearchModal/ManageLists.tsx
 msgid "View list"
@@ -978,6 +997,10 @@ msgstr "Zobrazit seznam"
 #: src/components/TransactionConfirmationModal/index.tsx
 msgid "View on Etherscan"
 msgstr "Zobrazit při Etherscan"
+
+#: src/components/PositionCard/PoolInformation.tsx
+msgid "View pool information<0>↗</0>"
+msgstr ""
 
 #: src/components/ModalViews/index.tsx
 msgid "View transaction on Etherscan"
@@ -1054,13 +1077,19 @@ msgstr ""
 msgid "You will receive"
 msgstr "Obdržíte"
 
-#: src/components/PositionCard/V2.tsx
 #: src/components/PositionCard/index.tsx
-#: src/components/PositionCard/index.tsx
+msgid "Your pool share"
+msgstr ""
+
+#: src/components/PositionCard/MinimalPositionCard.tsx
 msgid "Your pool share:"
 msgstr "Vaše sdílení:"
 
 #: src/components/PositionCard/index.tsx
+msgid "Your pool tokens"
+msgstr ""
+
+#: src/components/PositionCard/MinimalPositionCard.tsx
 msgid "Your position"
 msgstr "Vaše pozice"
 
@@ -1072,10 +1101,10 @@ msgstr "Vaše pozice má 0 likviditu a nezískává poplatky."
 msgid "Your rate"
 msgstr "Váš kurz"
 
-#: src/components/PositionCard/V2.tsx
-#: src/components/PositionCard/index.tsx
-msgid "Your total pool tokens:"
-msgstr "Váš celkový tokens:"
+#: 
+#: 
+#~ msgid "Your total pool tokens:"
+#~ msgstr "Váš celkový tokens:"
 
 #: src/components/TransactionSettings/index.tsx
 msgid "Your transaction may be frontrun"

@@ -1,42 +1,29 @@
-import React, { useContext, useMemo } from 'react'
-import styled, { ThemeContext } from 'styled-components'
+import React, { useMemo } from 'react'
 import JSBI from 'jsbi'
-import { Link } from 'react-router-dom'
 import { SwapPoolTabs } from '../../components/NavigationTabs'
 import FullPositionCard from '../../components/PositionCard'
 import { useTokenBalancesWithLoadingIndicator } from '../../state/wallet/hooks'
-import { ExternalLink, TYPE } from '../../theme'
-import { Text } from 'rebass'
-import Card from '../../components/Card'
-import { RowBetween, RowCenter } from '../../components/Row'
-import { ButtonSecondary } from '../../components/Button'
-import { ButtonIXSWide } from '../../components/Button'
 import { AutoColumn } from '../../components/Column'
-
 import { useActiveWeb3React } from '../../hooks/web3'
 import { useV2Pairs } from '../../hooks/useV2Pairs'
 import { toV2LiquidityToken, useTrackedTokenPairs } from '../../state/user/hooks'
-import { Dots } from '../../components/swap/styleds'
 import { useStakingInfo } from '../../state/stake/hooks'
 import { BIG_INT_ZERO } from '../../constants/misc'
 import { Pair } from '@ixswap1/v2-sdk'
 import { Trans } from '@lingui/macro'
 import AppBody from 'pages/AppBody'
-import { EmptyLiquidity } from './EmptyLiquidity'
+import { NoPairs } from './NoPairs'
 import { LiquidityTitle } from './LiquidityTitle'
+import { AddLiquidityButton } from './AddLiquidityButton'
+import { ImportPool } from './ImportPool'
+import { MarginerTitle, StraightLiquidityWrapper, LiquidityInnerTitle } from './styleds'
 
-const EmptyProposals = styled.div`
-  border: 1px solid ${({ theme }) => theme.text4};
-  padding: 16px 12px;
-  border-radius: 12px;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-`
+const bodyProps = {
+  padding: '0',
+  paddingXS: '0',
+}
 
 export default function Pool() {
-  const theme = useContext(ThemeContext)
   const { account } = useActiveWeb3React()
 
   // fetch the user's balances of all tracked V2 LP tokens
@@ -74,7 +61,12 @@ export default function Pool() {
   const stakingInfosWithBalance = stakingInfo?.filter((pool) =>
     JSBI.greaterThan(pool.stakedAmount.quotient, BIG_INT_ZERO)
   )
+
   const stakingPairs = useV2Pairs(stakingInfosWithBalance?.map((stakingInfo) => stakingInfo.tokens))
+  const dataIsLoaded = account && !v2IsLoading
+  const dataIsLoading = account && v2IsLoading
+  const pairsPresent = allV2PairsWithLiquidity?.length > 0 || stakingPairs?.length > 0
+  const showEmptyLiquidity = Boolean(dataIsLoaded && !pairsPresent)
 
   // remove any pairs that also are included in pairs with stake in mining pool
   const v2PairsWithoutStakedAmount = allV2PairsWithLiquidity.filter((v2Pair) => {
@@ -87,60 +79,41 @@ export default function Pool() {
 
   return (
     <>
-      <AppBody>
+      <AppBody {...bodyProps}>
         <SwapPoolTabs active={'pool'} />
         <AutoColumn gap="1.5rem" justify="center">
           <AutoColumn gap="md" style={{ width: '100%' }}>
-            <LiquidityTitle />
-            <RowCenter>
-              <ButtonIXSWide id="join-pool-button" as={Link} to="/add/ETH">
-                <Text>
-                  <Trans>Add Liquidity</Trans>
-                </Text>
-              </ButtonIXSWide>
-            </RowCenter>
-            {!account ? (
-              <Card padding="40px">
-                <TYPE.body color={theme.text3} textAlign="center">
-                  <Trans>Connect to a wallet to view your liquidity.</Trans>
-                </TYPE.body>
-              </Card>
-            ) : v2IsLoading ? (
-              <EmptyProposals>
-                <TYPE.body color={theme.text3} textAlign="center">
-                  <Dots>
-                    <Trans>Loading</Trans>
-                  </Dots>
-                </TYPE.body>
-              </EmptyProposals>
-            ) : allV2PairsWithLiquidity?.length > 0 || stakingPairs?.length > 0 ? (
-              <>
-                <ButtonSecondary>
-                  <RowBetween>
-                    <Trans>
-                      <ExternalLink href={'https://v2.info.uniswap.org/account/' + account}>
-                        Account analytics and accrued fees
-                      </ExternalLink>
-                      <span> ↗ </span>
-                    </Trans>
-                  </RowBetween>
-                </ButtonSecondary>
-                {v2PairsWithoutStakedAmount.map((v2Pair) => (
-                  <FullPositionCard key={v2Pair.liquidityToken.address} pair={v2Pair} />
-                ))}
-                {stakingPairs.map(
-                  (stakingPair, i) =>
-                    stakingPair[1] && ( // skip pairs that arent loaded
-                      <FullPositionCard
-                        key={stakingInfosWithBalance[i].stakingRewardAddress}
-                        pair={stakingPair[1]}
-                        stakedBalance={stakingInfosWithBalance[i].stakedAmount}
-                      />
-                    )
-                )}
-              </>
-            ) : (
-              <EmptyLiquidity />
+            <MarginerTitle>
+              <AutoColumn gap="md" style={{ width: '100%' }}>
+                <LiquidityTitle />
+                <AddLiquidityButton />
+              </AutoColumn>
+            </MarginerTitle>
+            {(!account || dataIsLoading || showEmptyLiquidity) && (
+              <NoPairs account={account} v2IsLoading={v2IsLoading} showEmptyLiquidity={showEmptyLiquidity} />
+            )}
+            {dataIsLoaded && pairsPresent && (
+              <StraightLiquidityWrapper>
+                <LiquidityInnerTitle>
+                  <Trans>My Liquidity</Trans>
+                </LiquidityInnerTitle>
+                <>
+                  {v2PairsWithoutStakedAmount.map((v2Pair) => (
+                    <FullPositionCard key={v2Pair.liquidityToken.address} pair={v2Pair} />
+                  ))}
+                  {stakingPairs.map(
+                    (stakingPair, i) =>
+                      stakingPair[1] && ( // skip pairs that arent loaded
+                        <FullPositionCard
+                          key={stakingInfosWithBalance[i].stakingRewardAddress}
+                          pair={stakingPair[1]}
+                          stakedBalance={stakingInfosWithBalance[i].stakedAmount}
+                        />
+                      )
+                  )}
+                </>
+                <ImportPool />
+              </StraightLiquidityWrapper>
             )}
           </AutoColumn>
         </AutoColumn>

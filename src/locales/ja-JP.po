@@ -59,9 +59,9 @@ msgstr "0.3%の手数料"
 msgid "1% fee"
 msgstr "1% の手数料"
 
-#: src/pages/Pool/v2.tsx
-msgid "<0>Account analytics and accrued fees</0><1> ↗ </1>"
-msgstr "<0>アカウント分析と発生した手数料</0><1>↗ </1>"
+#: 
+#~ msgid "<0>Account analytics and accrued fees</0><1> ↗ </1>"
+#~ msgstr "<0>アカウント分析と発生した手数料</0><1>↗ </1>"
 
 #: src/pages/RemoveLiquidity/index.tsx
 msgid "<0>Tip:</0> Removing pool tokens converts your position back into underlying tokens at the current rate, proportional to your share of the pool. Accrued fees are included in the amounts you receive."
@@ -96,7 +96,7 @@ msgid "Add"
 msgstr "追加"
 
 #: src/components/NavigationTabs/index.tsx
-#: src/pages/Pool/v2.tsx
+#: src/pages/Pool/AddLiquidityButton.tsx
 msgid "Add Liquidity"
 msgstr "流動性を追加"
 
@@ -192,7 +192,7 @@ msgstr "安定ペアに最適です。"
 msgid "Blocked address"
 msgstr "ブロックされたアドレス"
 
-#: src/components/PositionCard/index.tsx
+#: src/components/PositionCard/MinimalPositionCard.tsx
 msgid "By adding liquidity you'll earn 0.3% of all trades on this pair proportional to your share of the pool. Fees are added to the pool, accrue in real time and can be claimed by withdrawing your liquidity."
 msgstr "流動性を追加することにより、あなたはプールのあなたのシェアに比例して、このペアのすべての取引の0.3%を得ることができます。 手数料はプールに追加され、リアルタイムで補償され、あなたの流動性を引き出すことによって請求することができます。"
 
@@ -294,6 +294,10 @@ msgstr "ウォレットに接続"
 msgid "Connect a wallet"
 msgstr "ウォレットに接続"
 
+#: src/pages/Pool/NoPairs.tsx
+msgid "Connect a wallet to view your Liquidity."
+msgstr ""
+
 #: src/components/WalletModal/index.tsx
 msgid "Connect to a wallet"
 msgstr "ウォレットに接続"
@@ -302,9 +306,9 @@ msgstr "ウォレットに接続"
 msgid "Connect to a wallet to find pools"
 msgstr "プールを見つけるにはウォレットに接続してください"
 
-#: src/pages/Pool/v2.tsx
-msgid "Connect to a wallet to view your liquidity."
-msgstr "ウォレットに接続して流動性を確認します。"
+#: 
+#~ msgid "Connect to a wallet to view your liquidity."
+#~ msgstr "ウォレットに接続して流動性を確認します。"
 
 #: src/components/earn/ClaimRewardModal.tsx
 msgid "Connect wallet"
@@ -393,6 +397,10 @@ msgstr "却下する"
 msgid "Docs"
 msgstr "ドキュメント"
 
+#: src/pages/Pool/ImportPool.tsx
+msgid "Don't see a pool you joined?"
+msgstr ""
+
 #: src/state/swap/hooks.ts
 msgid "Enter a recipient"
 msgstr "受信者を入力してください"
@@ -470,6 +478,10 @@ msgstr "価格への影響"
 msgid "I understand"
 msgstr "了解しました"
 
+#: src/components/PositionCard/index.tsx
+msgid "IXS Rewards (on quit)"
+msgstr ""
+
 #: src/pages/RemoveLiquidity/index.tsx
 msgid "IXS {0}/{1} Burned"
 msgstr "IXS {0}/{1} が消費されました"
@@ -495,6 +507,10 @@ msgstr "プールをインポート"
 #: src/components/SearchModal/ImportList.tsx
 msgid "Import at your own risk"
 msgstr "自己責任でインポート"
+
+#: src/pages/Pool/ImportPool.tsx
+msgid "Import it."
+msgstr ""
 
 #: src/components/Badge/RangeBadge.tsx
 msgid "In range"
@@ -566,10 +582,8 @@ msgstr "リスト"
 msgid "Loaded"
 msgstr "読み込まれました"
 
-#: src/components/PositionCard/Sushi.tsx
-#: src/components/PositionCard/V2.tsx
-#: src/components/PositionCard/index.tsx
-#: src/pages/Pool/v2.tsx
+#: src/components/PositionCard/CurrencyHeader.tsx
+#: src/pages/Pool/NoPairs.tsx
 #: src/pages/PoolFinder/index.tsx
 msgid "Loading"
 msgstr "読み込み中"
@@ -578,10 +592,6 @@ msgstr "読み込み中"
 msgid "Make sure the URL is<0>app.uniswap.org</0>"
 msgstr "URLが<0>app.uniswap.org</0>であることを確認してください"
 
-#: src/components/PositionCard/V2.tsx
-#: src/components/PositionCard/V2.tsx
-#: src/components/PositionCard/index.tsx
-#: src/components/PositionCard/index.tsx
 #: src/components/SearchModal/Manage.tsx
 #: src/components/earn/PoolCard.tsx
 msgid "Manage"
@@ -622,6 +632,11 @@ msgstr "受け取った最小値"
 #: src/components/TransactionSettings/index.tsx
 msgid "Minutes"
 msgstr "分"
+
+#: src/pages/Pool/NoPairs.tsx
+#: src/pages/Pool/v2.tsx
+msgid "My Liquidity"
+msgstr ""
 
 #: src/pages/Pool/EmptyLiquidity.tsx
 msgid "No liquidity found."
@@ -693,17 +708,22 @@ msgstr "プールが見つかりました！"
 msgid "Pool rate"
 msgstr "プールレート"
 
-#: src/components/PositionCard/V2.tsx
-#: src/components/PositionCard/index.tsx
-msgid "Pool tokens in rewards pool:"
-msgstr "報酬プール内のプールトークン:"
+#: 
+#: 
+#~ msgid "Pool tokens in rewards pool:"
+#~ msgstr "報酬プール内のプールトークン:"
 
-#: src/components/PositionCard/V2.tsx
-#: src/components/PositionCard/V2.tsx
 #: src/components/PositionCard/index.tsx
 #: src/components/PositionCard/index.tsx
-msgid "Pooled {0}:"
-msgstr "プールされた {0}:"
+msgid "Pooled {0}"
+msgstr ""
+
+#: 
+#: 
+#: 
+#: 
+#~ msgid "Pooled {0}:"
+#~ msgstr "プールされた {0}:"
 
 #: src/components/swap/SwapModalHeader.tsx
 #: src/pages/RemoveLiquidity/index.tsx
@@ -742,8 +762,6 @@ msgstr "サポートされていないアセットの詳細を読む"
 msgid "Recent Transactions"
 msgstr "最近の取引"
 
-#: src/components/PositionCard/V2.tsx
-#: src/components/PositionCard/index.tsx
 #: src/pages/RemoveLiquidity/index.tsx
 msgid "Remove"
 msgstr "削除"
@@ -753,6 +771,7 @@ msgid "Remove Amount"
 msgstr "金額を削除"
 
 #: src/components/NavigationTabs/index.tsx
+#: src/components/PositionCard/index.tsx
 msgid "Remove Liquidity"
 msgstr "流動性を削除"
 
@@ -965,9 +984,9 @@ msgstr "Unwrap"
 msgid "Update list"
 msgstr "リストを更新"
 
-#: src/components/PositionCard/index.tsx
-msgid "View accrued fees and analytics<0>↗</0>"
-msgstr "発生した手数料と分析を表示<0>↗</0>"
+#: 
+#~ msgid "View accrued fees and analytics<0>↗</0>"
+#~ msgstr "発生した手数料と分析を表示<0>↗</0>"
 
 #: src/components/SearchModal/ManageLists.tsx
 msgid "View list"
@@ -978,6 +997,10 @@ msgstr "リストを表示"
 #: src/components/TransactionConfirmationModal/index.tsx
 msgid "View on Etherscan"
 msgstr "Etherscan で表示"
+
+#: src/components/PositionCard/PoolInformation.tsx
+msgid "View pool information<0>↗</0>"
+msgstr ""
 
 #: src/components/ModalViews/index.tsx
 msgid "View transaction on Etherscan"
@@ -1054,13 +1077,19 @@ msgstr ""
 msgid "You will receive"
 msgstr "受け取ります。"
 
-#: src/components/PositionCard/V2.tsx
 #: src/components/PositionCard/index.tsx
-#: src/components/PositionCard/index.tsx
+msgid "Your pool share"
+msgstr ""
+
+#: src/components/PositionCard/MinimalPositionCard.tsx
 msgid "Your pool share:"
 msgstr "あなたのプールシェア:"
 
 #: src/components/PositionCard/index.tsx
+msgid "Your pool tokens"
+msgstr ""
+
+#: src/components/PositionCard/MinimalPositionCard.tsx
 msgid "Your position"
 msgstr "自分の位置"
 
@@ -1072,10 +1101,10 @@ msgstr "あなたのポジションには0の流動性があり、手数料を�
 msgid "Your rate"
 msgstr "あなたのレート"
 
-#: src/components/PositionCard/V2.tsx
-#: src/components/PositionCard/index.tsx
-msgid "Your total pool tokens:"
-msgstr "あなたのプールトークンの合計："
+#: 
+#: 
+#~ msgid "Your total pool tokens:"
+#~ msgstr "あなたのプールトークンの合計："
 
 #: src/components/TransactionSettings/index.tsx
 msgid "Your transaction may be frontrun"

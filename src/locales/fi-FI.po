@@ -59,9 +59,9 @@ msgstr "0,3 prosentin maksu"
 msgid "1% fee"
 msgstr "1% maksu"
 
-#: src/pages/Pool/v2.tsx
-msgid "<0>Account analytics and accrued fees</0><1> ↗ </1>"
-msgstr "<0>Tilin analytiikka ja kertynyt maksu</0><1> ↗ </1>"
+#: 
+#~ msgid "<0>Account analytics and accrued fees</0><1> ↗ </1>"
+#~ msgstr "<0>Tilin analytiikka ja kertynyt maksu</0><1> ↗ </1>"
 
 #: src/pages/RemoveLiquidity/index.tsx
 msgid "<0>Tip:</0> Removing pool tokens converts your position back into underlying tokens at the current rate, proportional to your share of the pool. Accrued fees are included in the amounts you receive."
@@ -96,7 +96,7 @@ msgid "Add"
 msgstr "Lisää"
 
 #: src/components/NavigationTabs/index.tsx
-#: src/pages/Pool/v2.tsx
+#: src/pages/Pool/AddLiquidityButton.tsx
 msgid "Add Liquidity"
 msgstr "Lisää likviditeetti"
 
@@ -192,7 +192,7 @@ msgstr "Paras vakaille pareille."
 msgid "Blocked address"
 msgstr "Estetty osoite"
 
-#: src/components/PositionCard/index.tsx
+#: src/components/PositionCard/MinimalPositionCard.tsx
 msgid "By adding liquidity you'll earn 0.3% of all trades on this pair proportional to your share of the pool. Fees are added to the pool, accrue in real time and can be claimed by withdrawing your liquidity."
 msgstr "Lisäämällä likviditeettiä ansaitset 0.3% kaikista kaupoista tämän parin suhteessa osuutesi poolista. Maksut lisätään altaaseen, kertyy reaaliajassa ja voidaan vaatia vetämällä pois likviditeetti."
 
@@ -294,6 +294,10 @@ msgstr "Yhdistä Lompakko"
 msgid "Connect a wallet"
 msgstr "Yhdistä lompakko"
 
+#: src/pages/Pool/NoPairs.tsx
+msgid "Connect a wallet to view your Liquidity."
+msgstr ""
+
 #: src/components/WalletModal/index.tsx
 msgid "Connect to a wallet"
 msgstr "Yhdistä lompakkoon"
@@ -302,9 +306,9 @@ msgstr "Yhdistä lompakkoon"
 msgid "Connect to a wallet to find pools"
 msgstr "Yhdistä lompakkoon löytääksesi altaita"
 
-#: src/pages/Pool/v2.tsx
-msgid "Connect to a wallet to view your liquidity."
-msgstr "Yhdistä lompakkoon nähdäksesi sinun maksuvalmiutesi."
+#: 
+#~ msgid "Connect to a wallet to view your liquidity."
+#~ msgstr "Yhdistä lompakkoon nähdäksesi sinun maksuvalmiutesi."
 
 #: src/components/earn/ClaimRewardModal.tsx
 msgid "Connect wallet"
@@ -393,6 +397,10 @@ msgstr "Hylkää"
 msgid "Docs"
 msgstr "Asiakirjat"
 
+#: src/pages/Pool/ImportPool.tsx
+msgid "Don't see a pool you joined?"
+msgstr ""
+
 #: src/state/swap/hooks.ts
 msgid "Enter a recipient"
 msgstr "Kirjoita vastaanottaja"
@@ -470,6 +478,10 @@ msgstr "Korkean Hinnan Vaikutus"
 msgid "I understand"
 msgstr "Minä ymmärrän"
 
+#: src/components/PositionCard/index.tsx
+msgid "IXS Rewards (on quit)"
+msgstr ""
+
 #: src/pages/RemoveLiquidity/index.tsx
 msgid "IXS {0}/{1} Burned"
 msgstr "IXS {0}/{1} Kirjoitettu"
@@ -495,6 +507,10 @@ msgstr "Tuontipooli"
 #: src/components/SearchModal/ImportList.tsx
 msgid "Import at your own risk"
 msgstr "Tuo omalla vastuulla"
+
+#: src/pages/Pool/ImportPool.tsx
+msgid "Import it."
+msgstr ""
 
 #: src/components/Badge/RangeBadge.tsx
 msgid "In range"
@@ -566,10 +582,8 @@ msgstr "Listat"
 msgid "Loaded"
 msgstr "Ladattu"
 
-#: src/components/PositionCard/Sushi.tsx
-#: src/components/PositionCard/V2.tsx
-#: src/components/PositionCard/index.tsx
-#: src/pages/Pool/v2.tsx
+#: src/components/PositionCard/CurrencyHeader.tsx
+#: src/pages/Pool/NoPairs.tsx
 #: src/pages/PoolFinder/index.tsx
 msgid "Loading"
 msgstr "Ladataan"
@@ -578,10 +592,6 @@ msgstr "Ladataan"
 msgid "Make sure the URL is<0>app.uniswap.org</0>"
 msgstr "Varmista, että URL-osoite on <0>app.uniswap.org</0>"
 
-#: src/components/PositionCard/V2.tsx
-#: src/components/PositionCard/V2.tsx
-#: src/components/PositionCard/index.tsx
-#: src/components/PositionCard/index.tsx
 #: src/components/SearchModal/Manage.tsx
 #: src/components/earn/PoolCard.tsx
 msgid "Manage"
@@ -622,6 +632,11 @@ msgstr "Minimi vastaanotettu"
 #: src/components/TransactionSettings/index.tsx
 msgid "Minutes"
 msgstr "minuuttia"
+
+#: src/pages/Pool/NoPairs.tsx
+#: src/pages/Pool/v2.tsx
+msgid "My Liquidity"
+msgstr ""
 
 #: src/pages/Pool/EmptyLiquidity.tsx
 msgid "No liquidity found."
@@ -693,17 +708,22 @@ msgstr "Pool Löydetty!"
 msgid "Pool rate"
 msgstr "Poolin hinta"
 
-#: src/components/PositionCard/V2.tsx
-#: src/components/PositionCard/index.tsx
-msgid "Pool tokens in rewards pool:"
-msgstr "Allas poletteja palkintoja allas:"
+#: 
+#: 
+#~ msgid "Pool tokens in rewards pool:"
+#~ msgstr "Allas poletteja palkintoja allas:"
 
-#: src/components/PositionCard/V2.tsx
-#: src/components/PositionCard/V2.tsx
 #: src/components/PositionCard/index.tsx
 #: src/components/PositionCard/index.tsx
-msgid "Pooled {0}:"
-msgstr "Yhdistetty {0}:"
+msgid "Pooled {0}"
+msgstr ""
+
+#: 
+#: 
+#: 
+#: 
+#~ msgid "Pooled {0}:"
+#~ msgstr "Yhdistetty {0}:"
 
 #: src/components/swap/SwapModalHeader.tsx
 #: src/pages/RemoveLiquidity/index.tsx
@@ -742,8 +762,6 @@ msgstr "Lue lisää ei-tuetuista assetteista"
 msgid "Recent Transactions"
 msgstr "Viimeisimmät Tapahtumat"
 
-#: src/components/PositionCard/V2.tsx
-#: src/components/PositionCard/index.tsx
 #: src/pages/RemoveLiquidity/index.tsx
 msgid "Remove"
 msgstr "Poista"
@@ -753,6 +771,7 @@ msgid "Remove Amount"
 msgstr "Poista Summa"
 
 #: src/components/NavigationTabs/index.tsx
+#: src/components/PositionCard/index.tsx
 msgid "Remove Liquidity"
 msgstr "Poista Likviditeetti"
 
@@ -965,9 +984,9 @@ msgstr "Unwrap"
 msgid "Update list"
 msgstr "Päivitä lista"
 
-#: src/components/PositionCard/index.tsx
-msgid "View accrued fees and analytics<0>↗</0>"
-msgstr "Näytä kertynyt maksu ja analytiikka<0>↗</0>"
+#: 
+#~ msgid "View accrued fees and analytics<0>↗</0>"
+#~ msgstr "Näytä kertynyt maksu ja analytiikka<0>↗</0>"
 
 #: src/components/SearchModal/ManageLists.tsx
 msgid "View list"
@@ -978,6 +997,10 @@ msgstr "Näytä lista"
 #: src/components/TransactionConfirmationModal/index.tsx
 msgid "View on Etherscan"
 msgstr "Näytä Etherscanissa"
+
+#: src/components/PositionCard/PoolInformation.tsx
+msgid "View pool information<0>↗</0>"
+msgstr ""
 
 #: src/components/ModalViews/index.tsx
 msgid "View transaction on Etherscan"
@@ -1054,13 +1077,19 @@ msgstr ""
 msgid "You will receive"
 msgstr "Tulet vastaanottamaan"
 
-#: src/components/PositionCard/V2.tsx
 #: src/components/PositionCard/index.tsx
-#: src/components/PositionCard/index.tsx
+msgid "Your pool share"
+msgstr ""
+
+#: src/components/PositionCard/MinimalPositionCard.tsx
 msgid "Your pool share:"
 msgstr "Sinun biljardi:"
 
 #: src/components/PositionCard/index.tsx
+msgid "Your pool tokens"
+msgstr ""
+
+#: src/components/PositionCard/MinimalPositionCard.tsx
 msgid "Your position"
 msgstr "Oma sijainti"
 
@@ -1072,10 +1101,10 @@ msgstr "Asemaasi on 0 likviditeettiä, eikä se ansaitse maksuja."
 msgid "Your rate"
 msgstr "Oma hinta"
 
-#: src/components/PositionCard/V2.tsx
-#: src/components/PositionCard/index.tsx
-msgid "Your total pool tokens:"
-msgstr "Kaikki uima-altaasi tunnisteet:"
+#: 
+#: 
+#~ msgid "Your total pool tokens:"
+#~ msgstr "Kaikki uima-altaasi tunnisteet:"
 
 #: src/components/TransactionSettings/index.tsx
 msgid "Your transaction may be frontrun"

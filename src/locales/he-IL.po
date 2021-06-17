@@ -59,9 +59,9 @@ msgstr "עמלה של 0.3%"
 msgid "1% fee"
 msgstr "עמלה של 1%"
 
-#: src/pages/Pool/v2.tsx
-msgid "<0>Account analytics and accrued fees</0><1> ↗ </1>"
-msgstr "<0> ניתוח חשבונות ועמלות שנצברו</0> <1> ↗</1>"
+#: 
+#~ msgid "<0>Account analytics and accrued fees</0><1> ↗ </1>"
+#~ msgstr "<0> ניתוח חשבונות ועמלות שנצברו</0> <1> ↗</1>"
 
 #: src/pages/RemoveLiquidity/index.tsx
 msgid "<0>Tip:</0> Removing pool tokens converts your position back into underlying tokens at the current rate, proportional to your share of the pool. Accrued fees are included in the amounts you receive."
@@ -96,7 +96,7 @@ msgid "Add"
 msgstr "לְהוֹסִיף"
 
 #: src/components/NavigationTabs/index.tsx
-#: src/pages/Pool/v2.tsx
+#: src/pages/Pool/AddLiquidityButton.tsx
 msgid "Add Liquidity"
 msgstr "הוסף נזילות"
 
@@ -192,7 +192,7 @@ msgstr "הטוב ביותר לזוגות יציבים."
 msgid "Blocked address"
 msgstr "כתובת חסומה"
 
-#: src/components/PositionCard/index.tsx
+#: src/components/PositionCard/MinimalPositionCard.tsx
 msgid "By adding liquidity you'll earn 0.3% of all trades on this pair proportional to your share of the pool. Fees are added to the pool, accrue in real time and can be claimed by withdrawing your liquidity."
 msgstr "על ידי הוספת נזילות תרוויח 0.3% מכלל העסקאות בזוג זה ביחס לחלק שלך במאגר. העמלות מתווספות לבריכה, נצברות בזמן אמת וניתן לתבוע אותן באמצעות משיכת הנזילות שלך."
 
@@ -294,6 +294,10 @@ msgstr "חבר ארנק"
 msgid "Connect a wallet"
 msgstr "חבר ארנק"
 
+#: src/pages/Pool/NoPairs.tsx
+msgid "Connect a wallet to view your Liquidity."
+msgstr ""
+
 #: src/components/WalletModal/index.tsx
 msgid "Connect to a wallet"
 msgstr "התחבר לארנק"
@@ -302,9 +306,9 @@ msgstr "התחבר לארנק"
 msgid "Connect to a wallet to find pools"
 msgstr "התחבר לארנק כדי למצוא בריכות"
 
-#: src/pages/Pool/v2.tsx
-msgid "Connect to a wallet to view your liquidity."
-msgstr "התחבר לארנק כדי להציג את הנזילות שלך."
+#: 
+#~ msgid "Connect to a wallet to view your liquidity."
+#~ msgstr "התחבר לארנק כדי להציג את הנזילות שלך."
 
 #: src/components/earn/ClaimRewardModal.tsx
 msgid "Connect wallet"
@@ -393,6 +397,10 @@ msgstr "לשחרר"
 msgid "Docs"
 msgstr "מסמכים"
 
+#: src/pages/Pool/ImportPool.tsx
+msgid "Don't see a pool you joined?"
+msgstr ""
+
 #: src/state/swap/hooks.ts
 msgid "Enter a recipient"
 msgstr "הזן נמען"
@@ -470,6 +478,10 @@ msgstr "השפעה על מחיר גבוה"
 msgid "I understand"
 msgstr "אני מבין"
 
+#: src/components/PositionCard/index.tsx
+msgid "IXS Rewards (on quit)"
+msgstr ""
+
 #: src/pages/RemoveLiquidity/index.tsx
 msgid "IXS {0}/{1} Burned"
 msgstr "IXS {0}/{1} שרופה"
@@ -495,6 +507,10 @@ msgstr "יבוא בריכה"
 #: src/components/SearchModal/ImportList.tsx
 msgid "Import at your own risk"
 msgstr "ייבא על אחריותך בלבד"
+
+#: src/pages/Pool/ImportPool.tsx
+msgid "Import it."
+msgstr ""
 
 #: src/components/Badge/RangeBadge.tsx
 msgid "In range"
@@ -566,10 +582,8 @@ msgstr "רשימות"
 msgid "Loaded"
 msgstr "עמוס"
 
-#: src/components/PositionCard/Sushi.tsx
-#: src/components/PositionCard/V2.tsx
-#: src/components/PositionCard/index.tsx
-#: src/pages/Pool/v2.tsx
+#: src/components/PositionCard/CurrencyHeader.tsx
+#: src/pages/Pool/NoPairs.tsx
 #: src/pages/PoolFinder/index.tsx
 msgid "Loading"
 msgstr "טוען"
@@ -578,10 +592,6 @@ msgstr "טוען"
 msgid "Make sure the URL is<0>app.uniswap.org</0>"
 msgstr "וודא שכתובת האתר היא <0> app.uniswap.org</0>"
 
-#: src/components/PositionCard/V2.tsx
-#: src/components/PositionCard/V2.tsx
-#: src/components/PositionCard/index.tsx
-#: src/components/PositionCard/index.tsx
 #: src/components/SearchModal/Manage.tsx
 #: src/components/earn/PoolCard.tsx
 msgid "Manage"
@@ -622,6 +632,11 @@ msgstr "מינימום שהתקבל"
 #: src/components/TransactionSettings/index.tsx
 msgid "Minutes"
 msgstr "דקות"
+
+#: src/pages/Pool/NoPairs.tsx
+#: src/pages/Pool/v2.tsx
+msgid "My Liquidity"
+msgstr ""
 
 #: src/pages/Pool/EmptyLiquidity.tsx
 msgid "No liquidity found."
@@ -693,17 +708,22 @@ msgstr "בריכה נמצאה!"
 msgid "Pool rate"
 msgstr "תעריף בריכה"
 
-#: src/components/PositionCard/V2.tsx
-#: src/components/PositionCard/index.tsx
-msgid "Pool tokens in rewards pool:"
-msgstr "אסימונים לבריכה בבריכת תגמולים:"
+#: 
+#: 
+#~ msgid "Pool tokens in rewards pool:"
+#~ msgstr "אסימונים לבריכה בבריכת תגמולים:"
 
-#: src/components/PositionCard/V2.tsx
-#: src/components/PositionCard/V2.tsx
 #: src/components/PositionCard/index.tsx
 #: src/components/PositionCard/index.tsx
-msgid "Pooled {0}:"
-msgstr "מאוגד {0}:"
+msgid "Pooled {0}"
+msgstr ""
+
+#: 
+#: 
+#: 
+#: 
+#~ msgid "Pooled {0}:"
+#~ msgstr "מאוגד {0}:"
 
 #: src/components/swap/SwapModalHeader.tsx
 #: src/pages/RemoveLiquidity/index.tsx
@@ -742,8 +762,6 @@ msgstr "קרא עוד על נכסים שאינם נתמכים"
 msgid "Recent Transactions"
 msgstr "תנועות אחרונות"
 
-#: src/components/PositionCard/V2.tsx
-#: src/components/PositionCard/index.tsx
 #: src/pages/RemoveLiquidity/index.tsx
 msgid "Remove"
 msgstr "לְהַסִיר"
@@ -753,6 +771,7 @@ msgid "Remove Amount"
 msgstr "הסר את הסכום"
 
 #: src/components/NavigationTabs/index.tsx
+#: src/components/PositionCard/index.tsx
 msgid "Remove Liquidity"
 msgstr "הסר נזילות"
 
@@ -965,9 +984,9 @@ msgstr "לְגוֹלֵל"
 msgid "Update list"
 msgstr "רשימת עדכונים"
 
-#: src/components/PositionCard/index.tsx
-msgid "View accrued fees and analytics<0>↗</0>"
-msgstr "צפו בעמלות וניתוחים צבורים <0> ↗</0>"
+#: 
+#~ msgid "View accrued fees and analytics<0>↗</0>"
+#~ msgstr "צפו בעמלות וניתוחים צבורים <0> ↗</0>"
 
 #: src/components/SearchModal/ManageLists.tsx
 msgid "View list"
@@ -978,6 +997,10 @@ msgstr "רשימת צפיה"
 #: src/components/TransactionConfirmationModal/index.tsx
 msgid "View on Etherscan"
 msgstr "מבט על אתרסקאן"
+
+#: src/components/PositionCard/PoolInformation.tsx
+msgid "View pool information<0>↗</0>"
+msgstr ""
 
 #: src/components/ModalViews/index.tsx
 msgid "View transaction on Etherscan"
@@ -1054,13 +1077,19 @@ msgstr ""
 msgid "You will receive"
 msgstr "אתה תקבל"
 
-#: src/components/PositionCard/V2.tsx
 #: src/components/PositionCard/index.tsx
-#: src/components/PositionCard/index.tsx
+msgid "Your pool share"
+msgstr ""
+
+#: src/components/PositionCard/MinimalPositionCard.tsx
 msgid "Your pool share:"
 msgstr "נתח הבריכה שלך:"
 
 #: src/components/PositionCard/index.tsx
+msgid "Your pool tokens"
+msgstr ""
+
+#: src/components/PositionCard/MinimalPositionCard.tsx
 msgid "Your position"
 msgstr "העמדה שלך"
 
@@ -1072,10 +1101,10 @@ msgstr "לתפקיד שלך יש 0 נזילות, והיא לא מרוויחה ע
 msgid "Your rate"
 msgstr "השיעור שלך"
 
-#: src/components/PositionCard/V2.tsx
-#: src/components/PositionCard/index.tsx
-msgid "Your total pool tokens:"
-msgstr "סך כל אסימוני הבריכה שלך:"
+#: 
+#: 
+#~ msgid "Your total pool tokens:"
+#~ msgstr "סך כל אסימוני הבריכה שלך:"
 
 #: src/components/TransactionSettings/index.tsx
 msgid "Your transaction may be frontrun"
