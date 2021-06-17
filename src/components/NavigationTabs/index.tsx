@@ -3,13 +3,13 @@ import styled from 'styled-components/macro'
 import { darken } from 'polished'
 import { Trans } from '@lingui/macro'
 import { NavLink, Link as HistoryLink } from 'react-router-dom'
-import { ArrowLeft } from 'react-feather'
+import { ReactComponent as ArrowLeft } from '../../assets/images/arrow-back.svg'
 import { RowBetween, RowStart } from '../Row'
 import { useDispatch } from 'react-redux'
 import { AppDispatch } from 'state'
 import { resetMintState } from 'state/mint/actions'
-import { TYPE } from 'theme'
-import useTheme from 'hooks/useTheme'
+import { StyledPageHeader } from 'theme'
+import { Box } from 'rebass'
 
 const Tabs = styled.div`
   ${({ theme }) => theme.flexRowNoWrap}
@@ -51,10 +51,6 @@ const ActiveText = styled.div`
   font-size: 20px;
 `
 
-const StyledArrowLeft = styled(ArrowLeft)`
-  color: ${({ theme }) => theme.text1};
-`
-
 export function SwapPoolTabs({ active }: { active: 'swap' | 'pool' }) {
   return (
     <Tabs style={{ marginBottom: '20px', display: 'none', padding: '1rem 1rem 0 1rem' }}>
@@ -73,7 +69,9 @@ export function FindPoolTabs({ origin }: { origin: string }) {
     <Tabs>
       <RowBetween style={{ padding: '1rem 1rem 0 1rem' }}>
         <HistoryLink to={origin}>
-          <StyledArrowLeft />
+          <Box marginRight={'0.5rem'}>
+            <ArrowLeft />
+          </Box>
         </HistoryLink>
         <ActiveText>
           <Trans>Import Pool</Trans>
@@ -92,25 +90,26 @@ export function AddRemoveTabs({
   creating: boolean
   positionID?: string | undefined
 }) {
-  const theme = useTheme()
-
   // reset states on back
   const dispatch = useDispatch<AppDispatch>()
 
   return (
     <Tabs>
-      <RowStart style={{ padding: '1rem 1rem 0 1rem' }}>
-        <HistoryLink
-          to={'/pool' + (!!positionID ? `/${positionID.toString()}` : '')}
-          onClick={() => {
-            if (adding) {
-              dispatch(resetMintState())
-            }
-          }}
-        >
-          <StyledArrowLeft stroke={theme.text2} />
-        </HistoryLink>
-        <TYPE.mediumHeader fontWeight={500} fontSize={20}>
+      <StyledPageHeader>
+        <RowStart style={{ padding: '1rem 1rem 0 1rem' }}>
+          <HistoryLink
+            to={'/pool' + (!!positionID ? `/${positionID.toString()}` : '')}
+            onClick={() => {
+              if (adding) {
+                dispatch(resetMintState())
+              }
+            }}
+          >
+            <Box marginRight={'0.5rem'}>
+              <ArrowLeft />
+            </Box>
+          </HistoryLink>
+
           {creating ? (
             <Trans>Create a pair</Trans>
           ) : adding ? (
@@ -118,8 +117,8 @@ export function AddRemoveTabs({
           ) : (
             <Trans>Remove Liquidity</Trans>
           )}
-        </TYPE.mediumHeader>
-      </RowStart>
+        </RowStart>
+      </StyledPageHeader>
     </Tabs>
   )
 }

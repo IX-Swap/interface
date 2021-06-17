@@ -1,14 +1,14 @@
+import React, { useCallback, useContext, useState } from 'react'
 import { BigNumber } from '@ethersproject/bignumber'
 import { TransactionResponse } from '@ethersproject/providers'
 import { Currency, CurrencyAmount, Percent, WETH9 } from '@ixswap1/sdk-core'
-import React, { useCallback, useContext, useState } from 'react'
 import { Plus } from 'react-feather'
 import ReactGA from 'react-ga'
 import { RouteComponentProps } from 'react-router-dom'
 import { Text } from 'rebass'
 import { ThemeContext } from 'styled-components'
-import { ButtonError, ButtonIXSGradient, ButtonLight, ButtonPrimary } from '../../components/Button'
-import { BlueCard, LightCard } from '../../components/Card'
+import { ButtonIXSGradient, ButtonIXSWide } from '../../components/Button'
+import { LightCard } from '../../components/Card'
 import { AutoColumn, ColumnCenter } from '../../components/Column'
 import TransactionConfirmationModal, { ConfirmationModalContent } from '../../components/TransactionConfirmationModal'
 import CurrencyInputPanel from '../../components/CurrencyInputPanel'
@@ -42,6 +42,7 @@ import { currencyId } from '../../utils/currencyId'
 import { PoolPriceBar } from './PoolPriceBar'
 import UnsupportedCurrencyFooter from 'components/swap/UnsupportedCurrencyFooter'
 import { t, Trans } from '@lingui/macro'
+import { Tip } from './Tip'
 
 const DEFAULT_ADD_V2_SLIPPAGE_TOLERANCE = new Percent(50, 10_000)
 
@@ -309,6 +310,7 @@ export default function AddLiquidity({
 
   return (
     <>
+      <Tip noLiquidity={noLiquidity} isCreate={isCreate} />
       <AppBody>
         <AddRemoveTabs creating={isCreate} adding={true} />
         <Wrapper>
@@ -329,41 +331,6 @@ export default function AddLiquidity({
             currencyToAdd={pair?.liquidityToken}
           />
           <AutoColumn gap="20px">
-            {noLiquidity ||
-              (isCreate ? (
-                <ColumnCenter>
-                  <BlueCard>
-                    <AutoColumn gap="10px">
-                      <TYPE.link fontWeight={600} color={'primaryText1'}>
-                        <Trans>You are the first liquidity provider.</Trans>
-                      </TYPE.link>
-                      <TYPE.link fontWeight={400} color={'primaryText1'}>
-                        <Trans>The ratio of tokens you add will set the price of this pool.</Trans>
-                      </TYPE.link>
-                      <TYPE.link fontWeight={400} color={'primaryText1'}>
-                        <Trans>Once you are happy with the rate click supply to review.</Trans>
-                      </TYPE.link>
-                    </AutoColumn>
-                  </BlueCard>
-                </ColumnCenter>
-              ) : (
-                <ColumnCenter>
-                  <BlueCard>
-                    <AutoColumn gap="10px">
-                      <TYPE.link fontWeight={400} color={'primaryText1'}>
-                        <Trans>
-                          <b>
-                            <Trans>Tip:</Trans>
-                          </b>{' '}
-                          When you add liquidity, you will receive pool tokens representing your position. These tokens
-                          automatically earn fees proportional to your share of the pool, and can be redeemed at any
-                          time.
-                        </Trans>
-                      </TYPE.link>
-                    </AutoColumn>
-                  </BlueCard>
-                </ColumnCenter>
-              ))}
             <CurrencyInputPanel
               value={formattedAmounts[Field.CURRENCY_A]}
               onUserInput={onFieldAInput}
@@ -416,15 +383,15 @@ export default function AddLiquidity({
             )}
 
             {addIsUnsupported ? (
-              <ButtonPrimary disabled={true}>
+              <ButtonIXSWide disabled={true}>
                 <TYPE.main mb="4px">
                   <Trans>Unsupported Asset</Trans>
                 </TYPE.main>
-              </ButtonPrimary>
+              </ButtonIXSWide>
             ) : !account ? (
-              <ButtonLight onClick={toggleWalletModal}>
+              <ButtonIXSWide onClick={toggleWalletModal}>
                 <Trans>Connect Wallet</Trans>
-              </ButtonLight>
+              </ButtonIXSWide>
             ) : (
               <AutoColumn gap={'md'}>
                 {(approvalA === ApprovalState.NOT_APPROVED ||
@@ -465,17 +432,14 @@ export default function AddLiquidity({
                       )}
                     </RowBetween>
                   )}
-                <ButtonError
+                <ButtonIXSWide
                   onClick={() => {
                     expertMode ? onAdd() : setShowConfirm(true)
                   }}
                   disabled={!isValid || approvalA !== ApprovalState.APPROVED || approvalB !== ApprovalState.APPROVED}
-                  error={!isValid && !!parsedAmounts[Field.CURRENCY_A] && !!parsedAmounts[Field.CURRENCY_B]}
                 >
-                  <Text fontSize={20} fontWeight={500}>
-                    {error ?? <Trans>Supply</Trans>}
-                  </Text>
-                </ButtonError>
+                  <Text>{error ?? <Trans>Supply</Trans>}</Text>
+                </ButtonIXSWide>
               </AutoColumn>
             )}
           </AutoColumn>

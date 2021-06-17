@@ -325,3 +325,12 @@ export const ExtraSmallOnly = styled.span`
 export const SemiTransparent = styled.div`
   opacity: 0.5;
 `
+export const StyledPageHeader = styled.div`
+  padding: 0;
+  width: 100%;
+  margin-bottom: 22px;
+  text-transform: uppercase;
+  font-weight: 600;
+  font-size: 22px;
+  color: ${({ theme }) => theme.text1};
+`
