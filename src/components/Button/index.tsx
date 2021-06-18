@@ -177,13 +177,9 @@ export const ButtonPink = styled(Base)`
   }
 `
 
-export const ButtonUNIGradient = styled(ButtonPrimary)`
+export const ButtonIXSGradient = styled(ButtonPrimary)`
   color: white;
-  padding: 4px 8px;
   height: 36px;
-  font-weight: 500;
-  background-color: ${({ theme }) => theme.bg3};
-  background: radial-gradient(174.47% 188.91% at 1.84% 0%, #ff007a 0%, #2172e5 100%), #edeef2;
   width: fit-content;
   position: relative;
   cursor: pointer;
@@ -195,8 +191,6 @@ export const ButtonUNIGradient = styled(ButtonPrimary)`
   :active {
     opacity: 0.9;
   }
-`
-export const ButtonIXSGradient = styled(ButtonUNIGradient)`
   padding: 25px 8px;
   text-transform: uppercase;
   border-radius: 40px;

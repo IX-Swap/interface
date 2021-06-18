@@ -17,7 +17,7 @@ export default {
     },
   },
   args: {
-    children: '🦄 UNISWAP 🦄',
+    children: 'IXS',
   },
 }
 

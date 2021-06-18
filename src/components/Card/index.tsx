@@ -59,7 +59,7 @@ export const BlueCard = styled(Card)`
 `
 
 export const TipCard = styled(Card)`
-  opacity: 0.4;
+  opacity: 0.7;
   border-radius: 45px;
   font-size: 12px;
   line-height: 18px;

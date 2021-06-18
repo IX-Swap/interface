@@ -122,13 +122,13 @@ export default function FullPositionCard({ pair, border, stakedBalance }: Positi
                 </ButtonGradient>
               </ButtonRow>
             )}
-            {stakedBalance && JSBI.greaterThan(stakedBalance.quotient, BIG_INT_ZERO) && (
+            {/* {stakedBalance && JSBI.greaterThan(stakedBalance.quotient, BIG_INT_ZERO) && (
               <RowBetween marginTop="10px">
                 <ButtonGradient as={Link} to={`/uni/${currencyId(currency0)}/${currencyId(currency1)}`} width="100%">
                   <Trans>Manage Liquidity in Rewards Pool</Trans>
                 </ButtonGradient>
               </RowBetween>
-            )}
+            )} */}
           </AutoColumn>
         )}
       </AutoColumn>

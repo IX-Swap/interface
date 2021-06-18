@@ -146,7 +146,7 @@ const Title = styled.a`
   }
 `
 
-const UniIcon = styled.div`
+const IXSIcon = styled.div`
   transition: transform 0.3s ease;
   :hover {
     transform: rotate(-5deg);
@@ -208,9 +208,9 @@ export default function Header() {
         <HeaderFrame showBackground={scrollY > 45}>
           <HeaderRow>
             <Title href=".">
-              <UniIcon>
+              <IXSIcon>
                 <img width={'160px'} src={LogoDark} alt="logo" />
-              </UniIcon>
+              </IXSIcon>
             </Title>
           </HeaderRow>
           <HeaderLinks />

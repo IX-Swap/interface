@@ -274,9 +274,9 @@ export default function WalletModal({
               <TYPE.main fontSize={14}>
                 <Trans>
                   By connecting a wallet, you agree to IXSwap’{' '}
-                  <ExternalLink href="https://uniswap.org/terms-of-service/">Terms of Service</ExternalLink> and
+                  <ExternalLink href="https://ixswap.io/terms-and-conditions/">Terms and Conditions</ExternalLink> and
                   acknowledge that you have read and understand the{' '}
-                  <ExternalLink href="https://uniswap.org/disclaimer/">IXSwap protocol disclaimer</ExternalLink>.
+                  <ExternalLink href="https://ixswap.io/privacy-policy/">IXSwap Privacy Policy</ExternalLink>.
                 </Trans>
               </TYPE.main>
             </AutoRow>

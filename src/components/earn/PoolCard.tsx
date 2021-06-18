@@ -112,8 +112,7 @@ export default function PoolCard({ stakingInfo }: { stakingInfo: StakingInfo }) 
     <Wrapper showBackground={isStaking} bgColor={backgroundColor}>
       <CardBGImage desaturate />
       <CardNoise />
-
-      <TopSection>
+      {/* <TopSection>
         <DoubleCurrencyLogo currency0={currency0} currency1={currency1} size={24} />
         <TYPE.white fontWeight={600} fontSize={24} style={{ marginLeft: '8px' }}>
           {currency0.symbol}-{currency1.symbol}
@@ -124,8 +123,7 @@ export default function PoolCard({ stakingInfo }: { stakingInfo: StakingInfo }) 
             {isStaking ? <Trans>Manage</Trans> : <Trans>Deposit</Trans>}
           </ButtonPrimary>
         </StyledInternalLink>
-      </TopSection>
-
+      </TopSection> */}
       <StatContainer>
         <RowBetween>
           <TYPE.white>
