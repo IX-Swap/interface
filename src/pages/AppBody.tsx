@@ -15,6 +15,7 @@ export const BodyWrapper = styled.div<{ margin?: string; padding?: string; paddi
   ${({ theme, paddingXS }) => theme.mediaWidth.upToExtraSmall`
       padding: ${paddingXS ?? '1rem 0.7rem'};
   `};
+  z-index: 1;
 `
 
 /**

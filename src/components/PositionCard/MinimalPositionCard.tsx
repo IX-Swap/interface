@@ -1,20 +1,21 @@
+import React, { useState } from 'react'
 import JSBI from 'jsbi'
 import { Percent } from '@ixswap1/sdk-core'
 import { darken } from 'polished'
-import React, { useState } from 'react'
 import { Text } from 'rebass'
 import styled from 'styled-components/macro'
-import { useTotalSupply } from '../../hooks/useTotalSupply'
 import { Trans } from '@lingui/macro'
+import { useTotalSupply } from '../../hooks/useTotalSupply'
 import { useActiveWeb3React } from '../../hooks/web3'
 import { useTokenBalance } from '../../state/wallet/hooks'
 import { unwrappedToken } from '../../utils/unwrappedToken'
-import Card, { GreyCard, LightCard } from '../Card'
 import { AutoColumn } from '../Column'
 import DoubleCurrencyLogo from '../DoubleLogo'
 import { RowBetween, RowFixed } from '../Row'
 import { PositionCardProps } from './interfaces'
-import { TYPE } from 'theme'
+import useTheme from 'hooks/useTheme'
+import { TextRow } from 'components/TextRow/TextRow'
+import Card from '../Card'
 
 export const FixedHeightRow = styled(RowBetween)`
   height: 24px;
@@ -26,10 +27,28 @@ export const HoverCard = styled(Card)`
     border: 1px solid ${({ theme }) => darken(0.06, theme.bg2)};
   }
 `
+const Title = styled(Text)`
+  font-weight: 600;
+  font-size: 16px;
+  line-height: 24px;
+  text-transform: uppercase;
+  color: ${({ theme }) => theme.text2};
+`
+
+const MinimalPositionWrapper = styled.div`
+  background: ${({ theme }) => theme.bgGradient};
+  padding: 42px 40px 20px 40px;
+  border-radius: 45px;
+  opacity: 0.3;
+  margin-top: -1.5rem;
+  z-index: -5;
+  max-width: 592px;
+  width: 100%;
+`
 
 export function MinimalPositionCard({ pair, showUnwrapped = false, border }: PositionCardProps) {
   const { account } = useActiveWeb3React()
-
+  const theme = useTheme()
   const currency0 = showUnwrapped ? pair.token0 : unwrappedToken(pair.token0)
   const currency1 = showUnwrapped ? pair.token1 : unwrappedToken(pair.token1)
   const [showMore, setShowMore] = useState(false)
@@ -55,85 +74,43 @@ export function MinimalPositionCard({ pair, showUnwrapped = false, border }: Pos
           pair.getLiquidityValue(pair.token1, totalPoolTokens, userPoolBalance, false),
         ]
       : [undefined, undefined]
-
+  const showMinimalPositionCard = userPoolBalance && JSBI.greaterThan(userPoolBalance.quotient, JSBI.BigInt(0))
   return (
     <>
-      {userPoolBalance && JSBI.greaterThan(userPoolBalance.quotient, JSBI.BigInt(0)) ? (
-        <GreyCard border={border}>
+      {showMinimalPositionCard ? (
+        <MinimalPositionWrapper>
           <AutoColumn gap="12px">
             <FixedHeightRow>
               <RowFixed>
-                <Text fontWeight={500} fontSize={16}>
+                <Title>
                   <Trans>Your position</Trans>
-                </Text>
+                </Title>
               </RowFixed>
             </FixedHeightRow>
             <FixedHeightRow onClick={() => setShowMore(!showMore)}>
               <RowFixed>
-                <DoubleCurrencyLogo currency0={currency0} currency1={currency1} margin={true} size={20} />
-                <Text fontWeight={500} fontSize={20}>
+                <DoubleCurrencyLogo currency0={currency0} currency1={currency1} margin={false} size={20} />
+                <Text fontWeight={600} fontSize={16} lineHeight={'24px'} color={theme.text2} marginLeft={'20px'}>
                   {currency0.symbol}/{currency1.symbol}
                 </Text>
               </RowFixed>
               <RowFixed>
-                <Text fontWeight={500} fontSize={20}>
-                  {userPoolBalance ? userPoolBalance.toSignificant(4) : '-'}
+                <Text fontWeight={600} fontSize={16} lineHeight={'20px'} color={theme.text2}>
+                  {userPoolBalance ? userPoolBalance.toSignificant(9) : '-'}
                 </Text>
               </RowFixed>
             </FixedHeightRow>
             <AutoColumn gap="4px">
-              <FixedHeightRow>
-                <Text fontSize={16} fontWeight={500}>
-                  <Trans>Your pool share:</Trans>
-                </Text>
-                <Text fontSize={16} fontWeight={500}>
-                  {poolTokenPercentage ? poolTokenPercentage.toFixed(6) + '%' : '-'}
-                </Text>
-              </FixedHeightRow>
-              <FixedHeightRow>
-                <Text fontSize={16} fontWeight={500}>
-                  {currency0.symbol}:
-                </Text>
-                {token0Deposited ? (
-                  <RowFixed>
-                    <Text fontSize={16} fontWeight={500} marginLeft={'6px'}>
-                      {token0Deposited?.toSignificant(6)}
-                    </Text>
-                  </RowFixed>
-                ) : (
-                  '-'
-                )}
-              </FixedHeightRow>
-              <FixedHeightRow>
-                <Text fontSize={16} fontWeight={500}>
-                  {currency1.symbol}:
-                </Text>
-                {token1Deposited ? (
-                  <RowFixed>
-                    <Text fontSize={16} fontWeight={500} marginLeft={'6px'}>
-                      {token1Deposited?.toSignificant(6)}
-                    </Text>
-                  </RowFixed>
-                ) : (
-                  '-'
-                )}
-              </FixedHeightRow>
+              <TextRow
+                textLeft={<Trans>My pool share</Trans>}
+                textRight={<>{poolTokenPercentage ? poolTokenPercentage.toFixed(6) + '%' : '-'}</>}
+              />
+              <TextRow textLeft={<>{currency0.symbol}</>} textRight={token0Deposited?.toSignificant(6) ?? ''} />
+              <TextRow textLeft={<>{currency1.symbol}</>} textRight={token1Deposited?.toSignificant(6) ?? ''} />
             </AutoColumn>
           </AutoColumn>
-        </GreyCard>
-      ) : (
-        <LightCard>
-          <TYPE.subHeader style={{ textAlign: 'center' }}>
-            <span role="img" aria-label="wizard-icon">
-              ⭐️
-            </span>{' '}
-            <Trans>
-              By adding liquidity you&apos;ll earn 0.3% of all trades on this pair proportional to your share of the
-              pool. Fees are added to the pool, accrue in real time and can be claimed by withdrawing your liquidity.
-            </Trans>{' '}
-          </TYPE.subHeader>
-        </LightCard>
-      )}
+        </MinimalPositionWrapper>
+      ) : null}
     </>
   )
 }
