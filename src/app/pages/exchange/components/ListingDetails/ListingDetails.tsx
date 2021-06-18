@@ -8,9 +8,13 @@ import { ListingView } from 'types/listing'
 
 export interface ListingDetailsProps {
   data?: ListingView
+  withoutActions?: boolean
 }
 
-export const ListingDetails = ({ data }: ListingDetailsProps) => {
+export const ListingDetails = ({
+  data,
+  withoutActions = false
+}: ListingDetailsProps) => {
   if (data === undefined) {
     return null
   }
@@ -31,7 +35,7 @@ export const ListingDetails = ({ data }: ListingDetailsProps) => {
           />
         </Grid>
         <Grid item xs={12} sm={4}>
-          <ListingStatusAndActions data={data} />
+          {!withoutActions ? <ListingStatusAndActions data={data} /> : null}
         </Grid>
       </Grid>
       <Grid item>

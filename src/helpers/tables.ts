@@ -14,6 +14,7 @@ import {
   IndividualIdentity,
   Personnel
 } from 'app/pages/identity/types/forms'
+import { useUserById } from 'app/pages/admin/hooks/useUserById'
 
 export const renderMinimumInvestment = (
   amount: number,
@@ -161,4 +162,15 @@ export const renderLatestDate = (val: string, row: any): string => {
   const latest = row.lastTransaction ?? row.updatedAt ?? row.createdAt ?? val
 
   return typeof latest === 'string' ? formatDateToMMDDYY(latest) : ''
+}
+
+export const getUserNameById = (userId: string) => {
+  // eslint-disable-next-line react-hooks/rules-of-hooks
+  const { data, isLoading } = useUserById(userId)
+
+  if (isLoading) {
+    return ''
+  }
+
+  return data?.name
 }
