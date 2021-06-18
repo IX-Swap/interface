@@ -1,13 +1,11 @@
+import React, { useEffect, useState } from 'react'
 import { AbstractConnector } from '@web3-react/abstract-connector'
 import { UnsupportedChainIdError, useWeb3React } from '@web3-react/core'
 import { WalletConnectConnector } from '@web3-react/walletconnect-connector'
 import { AutoRow } from 'components/Row'
-import React, { useEffect, useState } from 'react'
 import { isMobile } from 'react-device-detect'
 import ReactGA from 'react-ga'
-import styled from 'styled-components/macro'
 import MetamaskIcon from '../../assets/images/metamask.png'
-import { ReactComponent as Close } from '../../assets/images/x.svg'
 import { fortmatic, injected, portis } from '../../connectors'
 import { OVERLAY_READY } from '../../connectors/Fortmatic'
 import { SUPPORTED_WALLETS } from '../../constants/wallet'
@@ -21,89 +19,17 @@ import { Trans } from '@lingui/macro'
 import Modal from '../Modal'
 import Option from './Option'
 import PendingView from './PendingView'
-import { LightCard } from '../Card'
-
-const CloseIcon = styled.div`
-  position: absolute;
-  right: 1rem;
-  top: 14px;
-  &:hover {
-    cursor: pointer;
-    opacity: 0.6;
-  }
-`
-
-const CloseColor = styled(Close)`
-  path {
-    stroke: ${({ theme }) => theme.text4};
-  }
-`
-
-const Wrapper = styled.div`
-  ${({ theme }) => theme.flexColumnNoWrap}
-  margin: 0;
-  padding: 0;
-  width: 100%;
-`
-
-const HeaderRow = styled.div`
-  ${({ theme }) => theme.flexRowNoWrap};
-  padding: 1rem 1rem;
-  font-weight: 500;
-  color: ${(props) => (props.color === 'blue' ? ({ theme }) => theme.primary1 : 'inherit')};
-  ${({ theme }) => theme.mediaWidth.upToMedium`
-    padding: 1rem;
-  `};
-`
-
-const ContentWrapper = styled.div`
-  background-color: ${({ theme }) => theme.bg0};
-  padding: 0 1rem 1rem 1rem;
-  border-bottom-left-radius: 20px;
-  border-bottom-right-radius: 20px;
-
-  ${({ theme }) => theme.mediaWidth.upToMedium`padding: 0 1rem 1rem 1rem`};
-`
-
-const UpperSection = styled.div`
-  position: relative;
-
-  h5 {
-    margin: 0;
-    margin-bottom: 0.5rem;
-    font-size: 1rem;
-    font-weight: 400;
-  }
-
-  h5:last-child {
-    margin-bottom: 0px;
-  }
-
-  h4 {
-    margin-top: 0;
-    font-weight: 500;
-  }
-`
-
-const OptionGrid = styled.div`
-  display: grid;
-  grid-gap: 10px;
-  ${({ theme }) => theme.mediaWidth.upToMedium`
-    grid-template-columns: 1fr;
-    grid-gap: 10px;
-  `};
-`
-
-const HoverText = styled.div`
-  text-decoration: none;
-  color: ${({ theme }) => theme.text1};
-  display: flex;
-  align-items: center;
-
-  :hover {
-    cursor: pointer;
-  }
-`
+import {
+  UpperSection,
+  CloseIcon,
+  HeaderRow,
+  ContentWrapper,
+  CloseColor,
+  OptionGrid,
+  HoverText,
+  TermsCard,
+  Wrapper,
+} from './styleds'
 
 const WALLET_VIEWS = {
   OPTIONS: 'options',
@@ -160,6 +86,7 @@ export default function WalletModal({
   }, [setWalletView, active, error, connector, walletModalOpen, activePrevious, connectorPrevious])
 
   const tryActivation = async (connector: AbstractConnector | undefined) => {
+    console.log({ connector })
     let name = ''
     Object.keys(SUPPORTED_WALLETS).map((key) => {
       if (connector === SUPPORTED_WALLETS[key].connector) {
@@ -342,18 +269,18 @@ export default function WalletModal({
         )}
 
         <ContentWrapper>
-          <LightCard style={{ marginBottom: '16px' }}>
+          <TermsCard style={{ marginBottom: '16px' }}>
             <AutoRow style={{ flexWrap: 'nowrap' }}>
               <TYPE.main fontSize={14}>
                 <Trans>
-                  By connecting a wallet, you agree to Uniswap Labs’{' '}
+                  By connecting a wallet, you agree to IXSwap’{' '}
                   <ExternalLink href="https://uniswap.org/terms-of-service/">Terms of Service</ExternalLink> and
                   acknowledge that you have read and understand the{' '}
-                  <ExternalLink href="https://uniswap.org/disclaimer/">Uniswap protocol disclaimer</ExternalLink>.
+                  <ExternalLink href="https://uniswap.org/disclaimer/">IXSwap protocol disclaimer</ExternalLink>.
                 </Trans>
               </TYPE.main>
             </AutoRow>
-          </LightCard>
+          </TermsCard>
           {walletView === WALLET_VIEWS.PENDING ? (
             <PendingView
               connector={pendingWallet}

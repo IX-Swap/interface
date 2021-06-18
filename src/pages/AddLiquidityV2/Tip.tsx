@@ -17,41 +17,45 @@ const TipWrapper = styled.div`
 
 export const Tip = ({ noLiquidity, isCreate }: Props) => {
   return (
-    <TipWrapper>
+    <>
       {noLiquidity ||
         (isCreate ? (
-          <ColumnCenter>
-            <TipCard>
-              <AutoColumn gap="10px">
-                <Text fontWeight={400}>
-                  <b>
-                    <Trans>Tip:</Trans>
-                  </b>{' '}
-                  <Trans>
-                    When you add liquidity, you will receive pool tokens representing your position. These tokens
-                    automatically earn fees proportional to your share of the pool, and can be redeemed at any time.
-                  </Trans>
-                </Text>
-              </AutoColumn>
-            </TipCard>
-          </ColumnCenter>
-        ) : (
-          <ColumnCenter>
-            <TipCard>
-              <AutoColumn gap="10px">
-                <Text fontWeight={400}>
-                  <Trans>
+          <TipWrapper>
+            <ColumnCenter>
+              <TipCard>
+                <AutoColumn gap="10px">
+                  <Text fontWeight={400}>
                     <b>
                       <Trans>Tip:</Trans>
                     </b>{' '}
-                    When you add liquidity, you will receive pool tokens representing your position. These tokens
-                    automatically earn fees proportional to your share of the pool, and can be redeemed at any time.
-                  </Trans>
-                </Text>
-              </AutoColumn>
-            </TipCard>
-          </ColumnCenter>
+                    <Trans>
+                      When you add liquidity, you will receive pool tokens representing your position. These tokens
+                      automatically earn fees proportional to your share of the pool, and can be redeemed at any time.
+                    </Trans>
+                  </Text>
+                </AutoColumn>
+              </TipCard>
+            </ColumnCenter>
+          </TipWrapper>
+        ) : (
+          <TipWrapper>
+            <ColumnCenter>
+              <TipCard>
+                <AutoColumn gap="10px">
+                  <Text fontWeight={400}>
+                    <Trans>
+                      <b>
+                        <Trans>Tip:</Trans>
+                      </b>{' '}
+                      When you add liquidity, you will receive pool tokens representing your position. These tokens
+                      automatically earn fees proportional to your share of the pool, and can be redeemed at any time.
+                    </Trans>
+                  </Text>
+                </AutoColumn>
+              </TipCard>
+            </ColumnCenter>
+          </TipWrapper>
         ))}
-    </TipWrapper>
+    </>
   )
 }

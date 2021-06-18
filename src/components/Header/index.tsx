@@ -1,17 +1,12 @@
 import React from 'react'
 import useScrollPosition from '@react-hook/window-scroll'
 import { Text } from 'rebass'
-
 import { Trans } from '@lingui/macro'
 import styled from 'styled-components/macro'
-
 import LogoDark from '../../assets/svg/logo_white.svg'
-
 import { useActiveWeb3React } from '../../hooks/web3'
 import { useETHBalances } from '../../state/wallet/hooks'
-
 import { VioletCard } from '../Card'
-
 import { RowFixed } from '../Row'
 import Web3Status from '../Web3Status'
 import { HeaderLinks } from './HeaderLinks'
@@ -27,14 +22,14 @@ const HeaderFrame = styled.div<{ showBackground: boolean }>`
   top: 0;
   position: relative;
   padding: 1rem;
-  z-index: 21;
+  z-index: 21;  
   position: relative;
 
   /* Background slide effect on scroll. */
   background-image: ${({ theme }) => `linear-gradient(to bottom, transparent 50%, ${theme.bg0} 50% )}}`}
   background-position: ${({ showBackground }) => (showBackground ? '0 -100%' : '0 0')};
   background-size: 100% 200%;
-  box-shadow: 0px 0px 0px 1px ${({ theme, showBackground }) => (showBackground ? theme.bg2 : 'transparent;')};
+  /* box-shadow: 0px 0px 0px 1px ${({ theme, showBackground }) => (showBackground ? theme.bg2 : 'transparent;')}; */
   transition: background-position .1s, box-shadow .1s;
 
   ${({ theme }) => theme.mediaWidth.upToMedium`

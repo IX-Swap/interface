@@ -123,8 +123,6 @@ export const LiquidityWrapper = styled.div`
 export const StraightLiquidityWrapper = styled(LiquidityWrapper)`
   border-top-left-radius: 0;
   border-top-right-radius: 0;
-  border-bottom-right-radius: 24px;
-  border-bottom-left-radius: 24px;
 `
 
 export const LiquidityInnerTitle = styled.span`

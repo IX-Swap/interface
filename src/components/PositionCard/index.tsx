@@ -15,13 +15,13 @@ import { ButtonGradient } from '../Button'
 import { useColor } from '../../hooks/useColor'
 import Card, { LightCard } from '../Card'
 import { AutoColumn } from '../Column'
-import { RowBetween } from '../Row'
+import { RowBetween, ButtonRow } from '../Row'
 import { BIG_INT_ZERO } from '../../constants/misc'
 import { PositionCardProps } from './interfaces'
 import { CurrencyHeader } from './CurrencyHeader'
 import { ChevronElement } from './ChevronElement'
 import { routes } from 'utils/routes'
-import { TextRow } from './TextRow'
+import { TextRow } from '../TextRow/TextRow'
 import { PoolInformation } from './PoolInformation'
 
 export const FixedHeightRow = styled(RowBetween)`
@@ -41,14 +41,6 @@ const StyledPositionCard = styled(LightCard)<{ bgColor: any }>`
   overflow: hidden;
   padding: 2rem 2rem 1.5rem 2rem;
   margin-bottom: 0.5rem;
-`
-
-const ButtonRow = styled(RowBetween)`
-  grid-gap: 1.5rem;
-  ${({ theme }) => theme.mediaWidth.upToExtraSmall`
-      flex-direction: column;
-      grid-gap: 1rem;
-  `};
 `
 
 export default function FullPositionCard({ pair, border, stakedBalance }: PositionCardProps) {
