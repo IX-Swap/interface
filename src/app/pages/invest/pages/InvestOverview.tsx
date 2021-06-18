@@ -3,9 +3,10 @@ import { Grid, Button, Typography, useTheme } from '@material-ui/core'
 import { AppRouterLinkComponent } from 'components/AppRouterLink'
 import { InvestRoute } from 'app/pages/invest/router/config'
 import { VSpacer } from 'components/VSpacer'
-import { PromotedDSOs } from 'app/components/DSO/components/PromotedDSOs'
 import { PromoBanner } from 'app/pages/invest/components/PromoBanner'
 import { SecondaryMarketTable } from 'app/pages/invest/components/SecondaryMarketTable/SecondaryMarketTable'
+import { PrimaryOfferings } from 'app/pages/invest/components/PrimaryOfferings'
+import { OTCMarket } from 'app/pages/invest/components/OTCMarkets'
 
 export const InvestOverview = () => {
   const theme = useTheme()
@@ -29,9 +30,30 @@ export const InvestOverview = () => {
         <PromoBanner />
         <VSpacer size='medium' />
       </Grid>
-      <VSpacer size='small' />
-      <PromotedDSOs />
+
       <VSpacer size='medium' />
+
+      <Grid container direction='column' spacing={4}>
+        <Grid item>
+          <Typography variant='h4'>Primary Offerings</Typography>
+        </Grid>
+        <Grid item>
+          <PrimaryOfferings />
+        </Grid>
+      </Grid>
+
+      <VSpacer size='large' />
+
+      <Grid container direction='column' spacing={4}>
+        <Grid item>
+          <Typography variant='h4'>OTC Market</Typography>
+        </Grid>
+        <Grid item>
+          <OTCMarket />
+        </Grid>
+      </Grid>
+
+      <VSpacer size='large' />
 
       <Grid container direction='column' spacing={4}>
         <Grid item>

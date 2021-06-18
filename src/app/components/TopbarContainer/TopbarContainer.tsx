@@ -72,7 +72,7 @@ export const TopbarContainer = () => {
 
   const newInvestLandingLinks = [
     {
-      label: 'Secondary',
+      label: 'Overview',
       path: InvestRoute.overview
     },
     {

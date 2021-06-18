@@ -23,7 +23,7 @@ export const InvestRouter = () => {
         <InvestDSORouter />
       </AppRoute>
 
-      <AppRoute breadcrumb='View Listing' exact path={InvestRoute.viewListing}>
+      <AppRoute exact path={InvestRoute.viewListing}>
         <ViewListing />
       </AppRoute>
 
