@@ -1,20 +1,9 @@
-import React from 'react'
 import { Currency } from '@ixswap1/sdk-core'
+import React from 'react'
 import { Text } from 'rebass'
-import styled from 'styled-components/macro'
 import CurrencyLogo from '../CurrencyLogo'
-import { RowBetween, RowFixed } from '../Row'
-
-export const FixedHeightRow = styled(RowBetween)`
-  height: 24px;
-  font-size: 16px;
-  line-height: 24px;
-  font-weight: normal;
-  color: ${({ theme }) => theme.text2};
-  ${({ theme }) => theme.mediaWidth.upToExtraSmall`
-    font-size: 14px;
-  `};
-`
+import { RowFixed } from '../Row'
+import { FixedHeightRow } from './styleds'
 interface Props {
   textLeft: React.ReactNode
   textRight?: React.ReactNode

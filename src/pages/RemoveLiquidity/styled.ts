@@ -34,7 +34,7 @@ export const RemoveAmountTitle = styled(Text)`
   color: ${({ theme }) => theme.text2};
 `
 export const RemoveAmountWrapper = styled(Card)`
-  background: ${({ theme }) => theme.bgGradientDark}
+  background: ${({ theme }) => theme.bgGradientDark};
   backdrop-filter: blur(4px);
   border-radius: 20px;
   padding: 26px 36px 40px 36px;
@@ -46,4 +46,18 @@ export const RemovedLiquidityWrapper = styled(RemoveAmountWrapper)`
 
 export const RemoveLiquidityBody = styled(AppBody)`
   background: ${({ theme }) => theme.bgGradientDarkAppBody};
+`
+export const ModalHeaderWrapper = styled.div`
+  padding-bottom: 1rem;
+  margin-left: 40px;
+  margin-right: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+`
+export const ModalBottomWrapper = styled.div`
+  padding: 27px 40px 27px 40px;
+  background: ${({ theme }) => theme.bgGradientGray};
+  border-bottom-left-radius: 20px;
+  border-bottom-right-radius: 20px;
 `

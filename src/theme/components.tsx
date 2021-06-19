@@ -328,3 +328,23 @@ export const StyledPageHeader = styled.div`
   font-size: 22px;
   color: ${({ theme }) => theme.text1};
 `
+export const ModalBlurWrapper = styled.span`
+  background: ${({ theme }) => theme.bgGradientShadow};
+  border-radius: 45px;
+  display: flex;
+  flex-direction: column;
+  font-size: 1rem;
+  display: flex;
+  min-width: 622px;
+  z-index: 5;
+  padding: 34px;
+  backdrop-filter: blur(20px);
+  ${({ theme }) => theme.mediaWidth.upToSmall`
+    padding: 0;
+  `};
+  ${({ theme }) => theme.mediaWidth.upToExtraSmall`
+    min-width: 100%;
+    max-width: 100%;
+  `};
+  user-select: none;
+`

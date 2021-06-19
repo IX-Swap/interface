@@ -30,18 +30,18 @@ import { useDerivedMintInfo, useMintActionHandlers, useMintState } from '../../s
 
 import { useTransactionAdder } from '../../state/transactions/hooks'
 import { useIsExpertMode, useUserSlippageToleranceWithDefault } from '../../state/user/hooks'
-import { TYPE } from '../../theme'
+import { ModalBlurWrapper, TYPE } from '../../theme'
 import { calculateGasMargin } from '../../utils/calculateGasMargin'
 import { calculateSlippageAmount } from '../../utils/calculateSlippageAmount'
 import { maxAmountSpend } from '../../utils/maxAmountSpend'
 import AppBody from '../AppBody'
-import { Dots, Wrapper } from '../Pool/styleds'
+import { Dots } from '../Pool/styleds'
 import { ModalBottom } from './ModalBottom'
 import UnsupportedCurrencyFooter from 'components/swap/UnsupportedCurrencyFooter'
 import { t, Trans } from '@lingui/macro'
 import { Tip } from './Tip'
 import { useHandleCurrencySelect } from './useHandleCurrencySelect'
-import { ToggleableBody, MenuFlyoutWrapper } from './styleds'
+import { ToggleableBody } from './styleds'
 import { ModalHeader } from './ModalHeader'
 import { PricesAndPoolShare } from './PricesAndPoolShare'
 
@@ -266,14 +266,14 @@ export default function AddLiquidity({
           attemptingTxn={attemptingTxn}
           hash={txHash}
           content={() => (
-            <MenuFlyoutWrapper>
+            <ModalBlurWrapper>
               <ConfirmationModalContent
                 title={noLiquidity ? <Trans>You are creating a pool</Trans> : <Trans>You will receive</Trans>}
                 onDismiss={handleDismissConfirmation}
                 topContent={modalHeader}
                 bottomContent={modalBottom}
               />
-            </MenuFlyoutWrapper>
+            </ModalBlurWrapper>
           )}
           pendingText={pendingText}
           currencyToAdd={pair?.liquidityToken}
