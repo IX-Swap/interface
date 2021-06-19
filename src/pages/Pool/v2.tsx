@@ -84,7 +84,7 @@ export default function Pool() {
         <AutoColumn gap="1.5rem" justify="center">
           <AutoColumn gap="md" style={{ width: '100%' }}>
             <MarginerTitle>
-              <AutoColumn gap="md" style={{ width: '100%' }}>
+              <AutoColumn gap="20px" style={{ width: '100%' }}>
                 <LiquidityTitle />
                 <AddLiquidityButton />
               </AutoColumn>

@@ -5,7 +5,7 @@ import { Currency, CurrencyAmount, Percent, WETH9 } from '@ixswap1/sdk-core'
 import { Plus } from 'react-feather'
 import ReactGA from 'react-ga'
 import { RouteComponentProps } from 'react-router-dom'
-import { Text } from 'rebass'
+import { Box, Text } from 'rebass'
 import { ThemeContext } from 'styled-components'
 import { ButtonIXSWide, ButtonGradient } from '../../components/Button'
 import { AutoColumn, ColumnCenter } from '../../components/Column'
@@ -283,7 +283,7 @@ export default function AddLiquidity({
         <Tip noLiquidity={noLiquidity} isCreate={isCreate} />
         <AppBody>
           <AddRemoveTabs creating={isCreate} adding={true} />
-          <Wrapper>
+          <>
             <AutoColumn gap="17px">
               <CurrencyInputPanel
                 value={formattedAmounts[Field.CURRENCY_A]}
@@ -312,69 +312,74 @@ export default function AddLiquidity({
                 id="add-liquidity-input-tokenb"
                 showCommonBases
               />
-            </AutoColumn>
-            {currencies[Field.CURRENCY_A] && currencies[Field.CURRENCY_B] && pairState !== PairState.INVALID && (
-              <PricesAndPoolShare
-                noLiquidity={noLiquidity}
-                currencies={currencies}
-                poolTokenPercentage={poolTokenPercentage}
-                price={price}
-              />
-            )}
-
-            {addIsUnsupported ? (
-              <ButtonIXSWide disabled={true}>
-                <TYPE.main mb="4px">
-                  <Trans>Unsupported Asset</Trans>
-                </TYPE.main>
-              </ButtonIXSWide>
-            ) : !account ? (
-              <ButtonIXSWide onClick={toggleWalletModal}>
-                <Trans>Connect Wallet</Trans>
-              </ButtonIXSWide>
-            ) : (
-              <AutoColumn gap={'md'}>
-                {(approvalA === ApprovalState.NOT_APPROVED ||
-                  approvalA === ApprovalState.PENDING ||
-                  approvalB === ApprovalState.NOT_APPROVED ||
-                  approvalB === ApprovalState.PENDING) &&
-                  isValid && (
-                    <ButtonRow marginBottom={'0.5rem'}>
-                      {approvalA !== ApprovalState.APPROVED && (
-                        <ButtonGradient onClick={approveACallback} disabled={approvalA === ApprovalState.PENDING}>
-                          {approvalA === ApprovalState.PENDING ? (
-                            <Dots>
-                              <Trans>Approving {currencies[Field.CURRENCY_A]?.symbol}</Trans>
-                            </Dots>
-                          ) : (
-                            <Trans>Approve {currencies[Field.CURRENCY_A]?.symbol}</Trans>
-                          )}
-                        </ButtonGradient>
-                      )}
-                      {approvalB !== ApprovalState.APPROVED && (
-                        <ButtonGradient onClick={approveBCallback} disabled={approvalB === ApprovalState.PENDING}>
-                          {approvalB === ApprovalState.PENDING ? (
-                            <Dots>
-                              <Trans>Approving {currencies[Field.CURRENCY_B]?.symbol}</Trans>
-                            </Dots>
-                          ) : (
-                            <Trans>Approve {currencies[Field.CURRENCY_B]?.symbol}</Trans>
-                          )}
-                        </ButtonGradient>
-                      )}
-                    </ButtonRow>
+              <AutoColumn gap="20px">
+                {currencies[Field.CURRENCY_A] && currencies[Field.CURRENCY_B] && pairState !== PairState.INVALID && (
+                  <PricesAndPoolShare
+                    noLiquidity={noLiquidity}
+                    currencies={currencies}
+                    poolTokenPercentage={poolTokenPercentage}
+                    price={price}
+                  />
+                )}
+                <Box marginTop={'23px'}>
+                  {addIsUnsupported ? (
+                    <ButtonIXSWide disabled={true}>
+                      <TYPE.main mb="4px">
+                        <Trans>Unsupported Asset</Trans>
+                      </TYPE.main>
+                    </ButtonIXSWide>
+                  ) : !account ? (
+                    <ButtonIXSWide onClick={toggleWalletModal}>
+                      <Trans>Connect Wallet</Trans>
+                    </ButtonIXSWide>
+                  ) : (
+                    <AutoColumn gap={'md'}>
+                      {(approvalA === ApprovalState.NOT_APPROVED ||
+                        approvalA === ApprovalState.PENDING ||
+                        approvalB === ApprovalState.NOT_APPROVED ||
+                        approvalB === ApprovalState.PENDING) &&
+                        isValid && (
+                          <ButtonRow marginBottom={'0.5rem'}>
+                            {approvalA !== ApprovalState.APPROVED && (
+                              <ButtonGradient onClick={approveACallback} disabled={approvalA === ApprovalState.PENDING}>
+                                {approvalA === ApprovalState.PENDING ? (
+                                  <Dots>
+                                    <Trans>Approving {currencies[Field.CURRENCY_A]?.symbol}</Trans>
+                                  </Dots>
+                                ) : (
+                                  <Trans>Approve {currencies[Field.CURRENCY_A]?.symbol}</Trans>
+                                )}
+                              </ButtonGradient>
+                            )}
+                            {approvalB !== ApprovalState.APPROVED && (
+                              <ButtonGradient onClick={approveBCallback} disabled={approvalB === ApprovalState.PENDING}>
+                                {approvalB === ApprovalState.PENDING ? (
+                                  <Dots>
+                                    <Trans>Approving {currencies[Field.CURRENCY_B]?.symbol}</Trans>
+                                  </Dots>
+                                ) : (
+                                  <Trans>Approve {currencies[Field.CURRENCY_B]?.symbol}</Trans>
+                                )}
+                              </ButtonGradient>
+                            )}
+                          </ButtonRow>
+                        )}
+                      <ButtonIXSWide
+                        onClick={() => {
+                          expertMode ? onAdd() : setShowConfirm(true)
+                        }}
+                        disabled={
+                          !isValid || approvalA !== ApprovalState.APPROVED || approvalB !== ApprovalState.APPROVED
+                        }
+                      >
+                        <Text>{error ?? <Trans>Supply</Trans>}</Text>
+                      </ButtonIXSWide>
+                    </AutoColumn>
                   )}
-                <ButtonIXSWide
-                  onClick={() => {
-                    expertMode ? onAdd() : setShowConfirm(true)
-                  }}
-                  disabled={!isValid || approvalA !== ApprovalState.APPROVED || approvalB !== ApprovalState.APPROVED}
-                >
-                  <Text>{error ?? <Trans>Supply</Trans>}</Text>
-                </ButtonIXSWide>
+                </Box>
               </AutoColumn>
-            )}
-          </Wrapper>
+            </AutoColumn>
+          </>
         </AppBody>
         {!addIsUnsupported ? (
           pair && !noLiquidity && pairState !== PairState.INVALID ? (

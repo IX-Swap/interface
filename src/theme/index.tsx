@@ -82,6 +82,9 @@ export function colors(darkMode: boolean): Colors {
     bgGradientGray: darkMode
       ? 'linear-gradient(0deg, #272046, #272046), #170E20;'
       : 'linear-gradient(0deg, #272046, #272046), #170E20;',
+    bgGradientDarkAppBody: darkMode
+      ? 'linear-gradient(0deg, #1A123A, #1A123A), #170E20;'
+      : 'linear-gradient(0deg, #1A123A, #1A123A), #170E20;',
     //specialty colors
     modalBG: darkMode ? 'rgba(0,0,0,.425)' : 'rgba(0,0,0,0.3)',
     advancedBG: darkMode ? 'rgba(0,0,0,0.1)' : 'rgba(255,255,255,0.6)',

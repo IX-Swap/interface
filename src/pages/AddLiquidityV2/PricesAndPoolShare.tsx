@@ -10,8 +10,7 @@ const PricesWrapper = styled.div`
   backdrop-filter: blur(4px);
   border-radius: 34px;
   padding: 1.5rem 2rem;
-  margin-top: 2rem;
-  margin-bottom: 3rem;
+  margin-top: 1rem;
 `
 const TitleWrapper = styled.div`
   font-weight: 600;
