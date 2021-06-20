@@ -63,21 +63,21 @@ msgstr "Biaya 1%"
 #~ msgid "<0>Account analytics and accrued fees</0><1> ↗ </1>"
 #~ msgstr "<0> Analisis akun dan biaya yang dikenakan</0> <1> ↗</1>"
 
-#: src/pages/RemoveLiquidity/index.tsx
-msgid "<0>Tip:</0> Removing pool tokens converts your position back into underlying tokens at the current rate, proportional to your share of the pool. Accrued fees are included in the amounts you receive."
-msgstr "<0> Tip:</0> Menghapus token kumpulan akan mengubah posisi Anda kembali menjadi token yang mendasari pada tarif saat ini, sebanding dengan bagian Anda dari kumpulan. Biaya yang masih harus dibayar termasuk dalam jumlah yang Anda terima."
+#: 
+#~ msgid "<0>Tip:</0> Removing pool tokens converts your position back into underlying tokens at the current rate, proportional to your share of the pool. Accrued fees are included in the amounts you receive."
+#~ msgstr "<0> Tip:</0> Menghapus token kumpulan akan mengubah posisi Anda kembali menjadi token yang mendasari pada tarif saat ini, sebanding dengan bagian Anda dari kumpulan. Biaya yang masih harus dibayar termasuk dalam jumlah yang Anda terima."
 
 #: src/pages/PoolFinder/index.tsx
 msgid "<0>Tip:</0> Use this tool to find pairs that don't automatically appear in the interface."
 msgstr "<0> Tip:</0> Gunakan alat ini untuk menemukan pasangan yang tidak otomatis muncul di antarmuka."
 
-#: src/pages/AddLiquidityV2/index.tsx
-msgid "<0>Tip:</0> When you add liquidity, you will receive pool tokens representing your position. These tokens automatically earn fees proportional to your share of the pool, and can be redeemed at any time."
-msgstr "<0> Tip:</0> Saat Anda menambahkan likuiditas, Anda akan menerima token kumpulan yang mewakili posisi Anda. Token ini secara otomatis mendapatkan biaya yang sebanding dengan bagian Anda dari kumpulan, dan dapat ditebus kapan saja."
+#: 
+#~ msgid "<0>Tip:</0> When you add liquidity, you will receive pool tokens representing your position. These tokens automatically earn fees proportional to your share of the pool, and can be redeemed at any time."
+#~ msgstr "<0> Tip:</0> Saat Anda menambahkan likuiditas, Anda akan menerima token kumpulan yang mewakili posisi Anda. Token ini secara otomatis mendapatkan biaya yang sebanding dengan bagian Anda dari kumpulan, dan dapat ditebus kapan saja."
 
-#: src/components/Menu/index.tsx
-msgid "About"
-msgstr "Tentang"
+#: 
+#~ msgid "About"
+#~ msgstr "Tentang"
 
 #: src/components/swap/SwapModalHeader.tsx
 msgid "Accept"
@@ -126,16 +126,20 @@ msgid "Allow the IXSwap Protocol to use your {0}"
 msgstr ""
 
 #: src/components/Header/URLWarning.tsx
-msgid "Always make sure the URL is<0>app.uniswap.org</0> - bookmark it to be safe."
-msgstr "Selalu pastikan URL-nya adalah <0> app.uniswap.org</0> - tandai agar aman."
+msgid "Always make sure the URL is<0>app.ixswap.io</0> - bookmark it to be safe."
+msgstr ""
+
+#: 
+#~ msgid "Always make sure the URL is<0>app.uniswap.org</0> - bookmark it to be safe."
+#~ msgstr "Selalu pastikan URL-nya adalah <0> app.uniswap.org</0> - tandai agar aman."
 
 #: src/hooks/useSwapCallback.ts
 msgid "An error occurred when trying to execute this swap. You may need to increase your slippage tolerance. If that does not work, there may be an incompatibility with the token you are trading. Note fee on transfer and rebase tokens are incompatible with Uniswap V3."
 msgstr "Terjadi kesalahan saat mencoba menjalankan swap ini. Anda mungkin perlu meningkatkan toleransi selip Anda. Jika itu tidak berhasil, mungkin ada ketidakcocokan dengan token yang Anda perdagangkan. Catatan biaya transfer dan token rebase tidak sesuai dengan Uniswap V3."
 
-#: src/components/Menu/index.tsx
-msgid "Analytics"
-msgstr "Analytics"
+#: 
+#~ msgid "Analytics"
+#~ msgstr "Analytics"
 
 #: src/components/earn/StakingModal.tsx
 #: src/pages/RemoveLiquidity/index.tsx
@@ -192,17 +196,21 @@ msgstr "Terbaik untuk pasangan stabil."
 msgid "Blocked address"
 msgstr "Alamat diblokir"
 
-#: src/components/PositionCard/MinimalPositionCard.tsx
-msgid "By adding liquidity you'll earn 0.3% of all trades on this pair proportional to your share of the pool. Fees are added to the pool, accrue in real time and can be claimed by withdrawing your liquidity."
-msgstr "Dengan menambahkan likuiditas, Anda akan mendapatkan 0,3% dari semua perdagangan pada pasangan ini sebanding dengan bagian pool Anda. Biaya ditambahkan ke kumpulan, bertambah secara real time dan dapat diklaim dengan menarik likuiditas Anda."
+#: 
+#~ msgid "By adding liquidity you'll earn 0.3% of all trades on this pair proportional to your share of the pool. Fees are added to the pool, accrue in real time and can be claimed by withdrawing your liquidity."
+#~ msgstr "Dengan menambahkan likuiditas, Anda akan mendapatkan 0,3% dari semua perdagangan pada pasangan ini sebanding dengan bagian pool Anda. Biaya ditambahkan ke kumpulan, bertambah secara real time dan dapat diklaim dengan menarik likuiditas Anda."
 
 #: src/components/SearchModal/ImportList.tsx
 msgid "By adding this list you are implicitly trusting that the data is correct. Anyone can create a list, including creating fake versions of existing lists and lists that claim to represent projects that do not have one."
 msgstr "Dengan menambahkan daftar ini Anda secara implisit mempercayai bahwa datanya benar. Siapa pun dapat membuat daftar, termasuk membuat versi palsu dari daftar yang sudah ada dan daftar yang mengklaim mewakili proyek yang tidak memilikinya."
 
 #: src/components/WalletModal/index.tsx
-msgid "By connecting a wallet, you agree to Uniswap Labs’ <0>Terms of Service</0> and acknowledge that you have read and understand the <1>Uniswap protocol disclaimer</1>."
-msgstr "Dengan menghubungkan dompet, Anda menyetujui Persyaratan Layanan <0> Uniswap Labs</0> dan mengakui bahwa Anda telah membaca dan memahami <1> penafian protokol Uniswap</1> ."
+msgid "By connecting a wallet, you agree to IXSwap’ <0>Terms and Conditions</0> and acknowledge that you have read and understand the <1>IXSwap Privacy Policy</1>."
+msgstr ""
+
+#: 
+#~ msgid "By connecting a wallet, you agree to Uniswap Labs’ <0>Terms of Service</0> and acknowledge that you have read and understand the <1>Uniswap protocol disclaimer</1>."
+#~ msgstr "Dengan menghubungkan dompet, Anda menyetujui Persyaratan Layanan <0> Uniswap Labs</0> dan mengakui bahwa Anda telah membaca dan memahami <1> penafian protokol Uniswap</1> ."
 
 #: src/components/AccountDetails/index.tsx
 msgid "Change"
@@ -252,19 +260,19 @@ msgstr "Bersihkan semua"
 msgid "Close"
 msgstr "Menutup"
 
-#: src/components/Menu/index.tsx
-msgid "Code"
-msgstr "Kode"
+#: 
+#~ msgid "Code"
+#~ msgstr "Kode"
 
 #: src/components/SearchModal/CommonBases.tsx
 msgid "Common bases"
 msgstr "Basis umum"
 
-#: src/pages/RemoveLiquidity/index.tsx
+#: src/pages/RemoveLiquidity/ModalBottom.tsx
 msgid "Confirm"
 msgstr "Konfirmasi"
 
-#: src/pages/AddLiquidityV2/ConfirmAddModalBottom.tsx
+#: src/pages/AddLiquidityV2/ModalBottom.tsx
 msgid "Confirm Supply"
 msgstr "Konfirmasikan Pasokan"
 
@@ -327,7 +335,7 @@ msgstr "Disalin"
 msgid "Copy Address"
 msgstr "Salin Alamat"
 
-#: src/pages/AddLiquidityV2/ConfirmAddModalBottom.tsx
+#: src/pages/AddLiquidityV2/ModalBottom.tsx
 msgid "Create Pool & Supply"
 msgstr "Buat Pool & Supply"
 
@@ -335,9 +343,9 @@ msgstr "Buat Pool & Supply"
 msgid "Create a pair"
 msgstr "Buat pasangan"
 
-#: src/components/ErrorBoundary/index.tsx
-msgid "Create an issue on GitHub"
-msgstr "Buat masalah di GitHub"
+#: 
+#~ msgid "Create an issue on GitHub"
+#~ msgstr "Buat masalah di GitHub"
 
 #: src/pages/PoolFinder/index.tsx
 msgid "Create pool."
@@ -351,7 +359,6 @@ msgstr "Tarif Saat Ini"
 msgid "Custodian"
 msgstr ""
 
-#: src/components/earn/PoolCard.tsx
 #: src/components/earn/StakingModal.tsx
 #: src/components/earn/StakingModal.tsx
 msgid "Deposit"
@@ -373,9 +380,9 @@ msgstr "Disetor {0} IXS-V2"
 msgid "Depositing Liquidity"
 msgstr "Menyimpan Likuiditas"
 
-#: src/pages/RemoveLiquidity/index.tsx
-msgid "Detailed"
-msgstr "Terperinci"
+#: 
+#~ msgid "Detailed"
+#~ msgstr "Terperinci"
 
 #: src/components/Settings/SettingsModal.tsx
 msgid "Disable Multihops"
@@ -385,17 +392,17 @@ msgstr "Nonaktifkan Multihops"
 msgid "Disconnect"
 msgstr "Memutuskan"
 
-#: src/components/Menu/index.tsx
-msgid "Discord"
-msgstr "Perselisihan"
+#: 
+#~ msgid "Discord"
+#~ msgstr "Perselisihan"
 
 #: src/components/TransactionConfirmationModal/index.tsx
 msgid "Dismiss"
 msgstr "Memberhentikan"
 
-#: src/components/Menu/index.tsx
-msgid "Docs"
-msgstr "Docs"
+#: 
+#~ msgid "Docs"
+#~ msgstr "Docs"
 
 #: src/pages/Pool/ImportPool.tsx
 msgid "Don't see a pool you joined?"
@@ -466,9 +473,9 @@ msgstr "Dari"
 msgid "From (at most)"
 msgstr "Dari (paling banyak)"
 
-#: src/components/ErrorBoundary/index.tsx
-msgid "Get support on Discord"
-msgstr "Dapatkan dukungan untuk Discord"
+#: 
+#~ msgid "Get support on Discord"
+#~ msgstr "Dapatkan dukungan untuk Discord"
 
 #: src/pages/Swap/index.tsx
 msgid "High Price Impact"
@@ -478,11 +485,15 @@ msgstr "Dampak Harga Tinggi"
 msgid "I understand"
 msgstr "saya mengerti"
 
+#: src/pages/RemoveLiquidity/RemovedLiquidity.tsx
+msgid "IXS Rewards"
+msgstr ""
+
 #: src/components/PositionCard/index.tsx
 msgid "IXS Rewards (on quit)"
 msgstr ""
 
-#: src/pages/RemoveLiquidity/index.tsx
+#: src/pages/RemoveLiquidity/ModalBottom.tsx
 msgid "IXS {0}/{1} Burned"
 msgstr "IXS {0}/{1} Terbakar"
 
@@ -520,7 +531,7 @@ msgstr "Dalam lingkup"
 msgid "Inactive"
 msgstr "Tidak aktif"
 
-#: src/pages/AddLiquidityV2/index.tsx
+#: src/pages/AddLiquidityV2/PricesAndPoolShare.tsx
 msgid "Initial prices and pool share"
 msgstr "Harga awal dan pembagian kumpulan"
 
@@ -588,18 +599,25 @@ msgstr "Sarat"
 msgid "Loading"
 msgstr "Memuat"
 
+#: src/pages/RemoveLiquidity/RemoveAmount.tsx
+msgid "MAX"
+msgstr ""
+
 #: src/components/Header/URLWarning.tsx
-msgid "Make sure the URL is<0>app.uniswap.org</0>"
-msgstr "Pastikan URL-nya adalah <0> app.uniswap.org</0>"
+msgid "Make sure the URL is<0>app.ixswap.io</0>"
+msgstr ""
+
+#: 
+#~ msgid "Make sure the URL is<0>app.uniswap.org</0>"
+#~ msgstr "Pastikan URL-nya adalah <0> app.uniswap.org</0>"
 
 #: src/components/SearchModal/Manage.tsx
-#: src/components/earn/PoolCard.tsx
 msgid "Manage"
 msgstr "Mengelola"
 
-#: src/components/PositionCard/index.tsx
-msgid "Manage Liquidity in Rewards Pool"
-msgstr "Kelola Likuiditas di Pool Hadiah"
+#: 
+#~ msgid "Manage Liquidity in Rewards Pool"
+#~ msgstr "Kelola Likuiditas di Pool Hadiah"
 
 #: src/components/SearchModal/CurrencySearch.tsx
 msgid "Manage Token Lists"
@@ -638,6 +656,10 @@ msgstr "Menit"
 msgid "My Liquidity"
 msgstr ""
 
+#: src/components/PositionCard/MinimalPositionCard.tsx
+msgid "My pool share"
+msgstr ""
+
 #: src/pages/Pool/EmptyLiquidity.tsx
 msgid "No liquidity found."
 msgstr "Likuiditas tidak ditemukan."
@@ -662,9 +684,9 @@ msgstr "DI"
 msgid "ONLY USE THIS MODE IF YOU KNOW WHAT YOU ARE DOING."
 msgstr "GUNAKAN MODE INI HANYA JIKA ANDA TAHU APA YANG ANDA LAKUKAN."
 
-#: src/pages/AddLiquidityV2/index.tsx
-msgid "Once you are happy with the rate click supply to review."
-msgstr "Setelah Anda puas dengan penawaran harga klik untuk meninjau."
+#: 
+#~ msgid "Once you are happy with the rate click supply to review."
+#~ msgstr "Setelah Anda puas dengan penawaran harga klik untuk meninjau."
 
 #: src/components/Web3ReactManager/index.tsx
 msgid "Oops! An unknown error occurred. Please refresh the page, or visit from another browser or device."
@@ -674,8 +696,8 @@ msgstr "Ups! Terjadi kesalahan yang tidak diketahui. Harap segarkan halaman, ata
 msgid "Out of range"
 msgstr "Diluar jangkauan"
 
-#: src/pages/AddLiquidityV2/index.tsx
-#: src/pages/RemoveLiquidity/index.tsx
+#: src/pages/AddLiquidityV2/ModalHeader.tsx
+#: src/pages/RemoveLiquidity/ModalHeader.tsx
 msgid "Output is estimated. If the price changes by more than {0}% your transaction will revert."
 msgstr "Output diperkirakan. Jika harga berubah lebih dari {0}%, transaksi Anda akan dikembalikan."
 
@@ -726,6 +748,7 @@ msgstr ""
 #~ msgstr "Dikumpulkan {0}:"
 
 #: src/components/swap/SwapModalHeader.tsx
+#: src/pages/RemoveLiquidity/ModalBottom.tsx
 #: src/pages/RemoveLiquidity/index.tsx
 msgid "Price"
 msgstr "Harga"
@@ -742,15 +765,15 @@ msgstr "Dampak Harga Terlalu Tinggi"
 msgid "Price Updated"
 msgstr "Harga Diperbarui"
 
-#: src/pages/RemoveLiquidity/index.tsx
-msgid "Price:"
-msgstr "Harga:"
+#: 
+#~ msgid "Price:"
+#~ msgstr "Harga:"
 
-#: src/pages/AddLiquidityV2/index.tsx
+#: src/pages/AddLiquidityV2/PricesAndPoolShare.tsx
 msgid "Prices and pool share"
 msgstr "Harga dan pool share"
 
-#: src/pages/AddLiquidityV2/ConfirmAddModalBottom.tsx
+#: src/pages/AddLiquidityV2/ModalBottom.tsx
 msgid "Rates"
 msgstr "Tarif"
 
@@ -766,7 +789,7 @@ msgstr "transaksi terkini"
 msgid "Remove"
 msgstr "Menghapus"
 
-#: src/pages/RemoveLiquidity/index.tsx
+#: src/pages/RemoveLiquidity/RemoveAmount.tsx
 msgid "Remove Amount"
 msgstr "Hapus Jumlah"
 
@@ -783,6 +806,10 @@ msgstr "Hapus daftar"
 #: src/pages/RemoveLiquidity/index.tsx
 msgid "Remove {0} {1} and {2} {3}"
 msgstr "Hapus {0} {1} dan {2} {3}"
+
+#: src/pages/RemoveLiquidity/index.tsx
+msgid "Removing pool tokens converts your position back into underlying tokens at the current rate, proportional to your share of the pool. Accrued fees are included in the amounts you receive."
+msgstr ""
 
 #: src/pages/RemoveLiquidity/index.tsx
 msgid "Removing {0} {1} and {2} {3}"
@@ -812,17 +839,21 @@ msgstr "Pilih Pool"
 msgid "Select a pool type based on your preferred liquidity provider fee."
 msgstr "Pilih jenis kumpulan berdasarkan biaya penyedia likuiditas pilihan Anda."
 
-#: src/pages/AddLiquidityV2/ConfirmAddModalBottom.tsx
-msgid "Share of Pool:"
-msgstr "Pangsa Pool:"
+#: src/pages/AddLiquidityV2/ModalBottom.tsx
+msgid "Share of Pool"
+msgstr ""
+
+#: 
+#~ msgid "Share of Pool:"
+#~ msgstr "Pangsa Pool:"
 
 #: src/components/AccountDetails/index.tsx
 msgid "Show Portis"
 msgstr "Tunjukkan Portis"
 
-#: src/pages/RemoveLiquidity/index.tsx
-msgid "Simple"
-msgstr "Sederhana"
+#: 
+#~ msgid "Simple"
+#~ msgstr "Sederhana"
 
 #: src/components/TransactionSettings/index.tsx
 #: src/components/swap/AdvancedSwapDetails.tsx
@@ -890,9 +921,9 @@ msgstr "Harga kolam ini di luar kisaran yang Anda pilih. Posisi Anda saat ini ti
 msgid "The price of this pool is within your selected range. Your position is currently earning fees."
 msgstr "Harga kolam ini berada dalam kisaran yang Anda pilih. Posisi Anda saat ini mendapatkan bayaran."
 
-#: src/pages/AddLiquidityV2/index.tsx
-msgid "The ratio of tokens you add will set the price of this pool."
-msgstr "Rasio token yang Anda tambahkan akan menetapkan harga kumpulan ini."
+#: 
+#~ msgid "The ratio of tokens you add will set the price of this pool."
+#~ msgstr "Rasio token yang Anda tambahkan akan menetapkan harga kumpulan ini."
 
 #: src/hooks/useSwapCallback.ts
 msgid "The transaction could not be sent because the deadline has passed. Please check that your transaction deadline is not too low."
@@ -909,6 +940,10 @@ msgstr "Transaksi ini tidak akan berhasil karena pergerakan harga. Coba tingkatk
 #: src/hooks/useSwapCallback.ts
 msgid "This transaction will not succeed either due to price movement or fee on transfer. Try increasing your slippage tolerance."
 msgstr "Transaksi ini tidak akan berhasil baik karena pergerakan harga atau biaya transfer. Coba tingkatkan toleransi selip Anda."
+
+#: src/components/TipWithMessage/index.tsx
+msgid "Tip:"
+msgstr ""
 
 #: src/components/SearchModal/ManageTokens.tsx
 msgid "Tip: Custom tokens are stored locally in your browser"
@@ -1014,6 +1049,11 @@ msgstr "Menunggu konfirmasi"
 msgid "Weekly Rewards"
 msgstr "Imbalan Mingguan"
 
+#: src/pages/AddLiquidityV2/Tip.tsx
+#: src/pages/AddLiquidityV2/Tip.tsx
+msgid "When you add liquidity, you will receive pool tokens representing your position. These tokens automatically earn fees proportional to your share of the pool, and can be redeemed at any time."
+msgstr ""
+
 #: src/components/earn/ClaimRewardModal.tsx
 msgid "When you claim without withdrawing your liquidity remains in the mining pool."
 msgstr "Ketika Anda mengklaim tanpa menarik, likuiditas Anda tetap berada di kolam penambangan."
@@ -1056,9 +1096,9 @@ msgstr "Jaringan Salah"
 msgid "You are creating a pool"
 msgstr "Anda sedang membuat pangkalan"
 
-#: src/pages/AddLiquidityV2/index.tsx
-msgid "You are the first liquidity provider."
-msgstr "Anda adalah penyedia likuiditas pertama."
+#: 
+#~ msgid "You are the first liquidity provider."
+#~ msgstr "Anda adalah penyedia likuiditas pertama."
 
 #: src/pages/Swap/index.tsx
 msgid "You can now trade {0}"
@@ -1081,9 +1121,9 @@ msgstr "Anda akan menerima"
 msgid "Your pool share"
 msgstr ""
 
-#: src/components/PositionCard/MinimalPositionCard.tsx
-msgid "Your pool share:"
-msgstr "Bagian kolam Anda:"
+#: 
+#~ msgid "Your pool share:"
+#~ msgstr "Bagian kolam Anda:"
 
 #: src/components/PositionCard/index.tsx
 msgid "Your pool tokens"
@@ -1154,8 +1194,8 @@ msgstr "{0} %"
 msgid "{0} Custom Tokens"
 msgstr "{0} Token Kustom"
 
-#: src/pages/AddLiquidityV2/ConfirmAddModalBottom.tsx
-#: src/pages/AddLiquidityV2/ConfirmAddModalBottom.tsx
+#: src/pages/AddLiquidityV2/ModalBottom.tsx
+#: src/pages/AddLiquidityV2/ModalBottom.tsx
 msgid "{0} Deposited"
 msgstr "{0} Disetor"
 
@@ -1188,7 +1228,7 @@ msgid "{0} • Added by user"
 msgstr "{0} • Ditambahkan oleh pengguna"
 
 #: src/components/CurrencyInputPanel/FiatValue.tsx
-#: src/pages/AddLiquidityV2/ConfirmAddModalBottom.tsx
+#: src/pages/AddLiquidityV2/ModalBottom.tsx
 msgid "{0}%"
 msgstr "{0}%"
 

@@ -63,21 +63,21 @@ msgstr "1% Gebühr"
 #~ msgid "<0>Account analytics and accrued fees</0><1> ↗ </1>"
 #~ msgstr "<0>Kontoanalyse und anfallende Gebühren</0><1> :up-right_Pfeile: </1>"
 
-#: src/pages/RemoveLiquidity/index.tsx
-msgid "<0>Tip:</0> Removing pool tokens converts your position back into underlying tokens at the current rate, proportional to your share of the pool. Accrued fees are included in the amounts you receive."
-msgstr "<0>Tipp:</0> Entfernen von Pool-Token wandelt deine Position zurück in zugrunde liegende Token zum aktuellen Kurs, proportional zum Anteil am Pool. Die angesammelten Gebühren sind in den Beträgen enthalten, die Sie erhalten."
+#: 
+#~ msgid "<0>Tip:</0> Removing pool tokens converts your position back into underlying tokens at the current rate, proportional to your share of the pool. Accrued fees are included in the amounts you receive."
+#~ msgstr "<0>Tipp:</0> Entfernen von Pool-Token wandelt deine Position zurück in zugrunde liegende Token zum aktuellen Kurs, proportional zum Anteil am Pool. Die angesammelten Gebühren sind in den Beträgen enthalten, die Sie erhalten."
 
 #: src/pages/PoolFinder/index.tsx
 msgid "<0>Tip:</0> Use this tool to find pairs that don't automatically appear in the interface."
 msgstr "<0>Tipp:</0> Benutzen Sie dieses Werkzeug, um Paare zu finden, die nicht automatisch in der Schnittstelle erscheinen."
 
-#: src/pages/AddLiquidityV2/index.tsx
-msgid "<0>Tip:</0> When you add liquidity, you will receive pool tokens representing your position. These tokens automatically earn fees proportional to your share of the pool, and can be redeemed at any time."
-msgstr "<0>Tipp:</0> Wenn Sie Liquidität hinzufügen, erhalten Sie Pool-Token, die Ihre Position repräsentieren. Diese Tokens verdienen automatisch im Verhältnis zu Ihrem Anteil am Pool, und können jederzeit eingelöst werden."
+#: 
+#~ msgid "<0>Tip:</0> When you add liquidity, you will receive pool tokens representing your position. These tokens automatically earn fees proportional to your share of the pool, and can be redeemed at any time."
+#~ msgstr "<0>Tipp:</0> Wenn Sie Liquidität hinzufügen, erhalten Sie Pool-Token, die Ihre Position repräsentieren. Diese Tokens verdienen automatisch im Verhältnis zu Ihrem Anteil am Pool, und können jederzeit eingelöst werden."
 
-#: src/components/Menu/index.tsx
-msgid "About"
-msgstr "Über"
+#: 
+#~ msgid "About"
+#~ msgstr "Über"
 
 #: src/components/swap/SwapModalHeader.tsx
 msgid "Accept"
@@ -126,16 +126,20 @@ msgid "Allow the IXSwap Protocol to use your {0}"
 msgstr ""
 
 #: src/components/Header/URLWarning.tsx
-msgid "Always make sure the URL is<0>app.uniswap.org</0> - bookmark it to be safe."
-msgstr "Stellen Sie immer sicher, dass die URL <0>app.uniswap.org</0> - Lesezeichen markieren, um sicher zu sein."
+msgid "Always make sure the URL is<0>app.ixswap.io</0> - bookmark it to be safe."
+msgstr ""
+
+#: 
+#~ msgid "Always make sure the URL is<0>app.uniswap.org</0> - bookmark it to be safe."
+#~ msgstr "Stellen Sie immer sicher, dass die URL <0>app.uniswap.org</0> - Lesezeichen markieren, um sicher zu sein."
 
 #: src/hooks/useSwapCallback.ts
 msgid "An error occurred when trying to execute this swap. You may need to increase your slippage tolerance. If that does not work, there may be an incompatibility with the token you are trading. Note fee on transfer and rebase tokens are incompatible with Uniswap V3."
 msgstr "Beim Versuch, diesen Swap auszuführen, ist ein Fehler aufgetreten. Möglicherweise müssen Sie Ihre Schlupftoleranz erhöhen. Wenn dies nicht funktioniert, liegt möglicherweise eine Inkompatibilität mit dem Token vor, mit dem Sie handeln. Beachten Sie, dass die Gebühr für Transfer- und Rebase-Token nicht mit Uniswap V3 kompatibel ist."
 
-#: src/components/Menu/index.tsx
-msgid "Analytics"
-msgstr "Analytik"
+#: 
+#~ msgid "Analytics"
+#~ msgstr "Analytik"
 
 #: src/components/earn/StakingModal.tsx
 #: src/pages/RemoveLiquidity/index.tsx
@@ -192,17 +196,21 @@ msgstr "Am besten für stabile Paare."
 msgid "Blocked address"
 msgstr "Gesperrte Adresse"
 
-#: src/components/PositionCard/MinimalPositionCard.tsx
-msgid "By adding liquidity you'll earn 0.3% of all trades on this pair proportional to your share of the pool. Fees are added to the pool, accrue in real time and can be claimed by withdrawing your liquidity."
-msgstr "Durch das Hinzufügen von Liquidität verdienen Sie 0,3% aller Transaktionen an diesem Paar, proportional zu Ihrem Anteil am Pool. Die Gebühren werden dem Pool zugerechnet, in Echtzeit anfallen und können durch Abzug der Liquidität in Anspruch genommen werden."
+#: 
+#~ msgid "By adding liquidity you'll earn 0.3% of all trades on this pair proportional to your share of the pool. Fees are added to the pool, accrue in real time and can be claimed by withdrawing your liquidity."
+#~ msgstr "Durch das Hinzufügen von Liquidität verdienen Sie 0,3% aller Transaktionen an diesem Paar, proportional zu Ihrem Anteil am Pool. Die Gebühren werden dem Pool zugerechnet, in Echtzeit anfallen und können durch Abzug der Liquidität in Anspruch genommen werden."
 
 #: src/components/SearchModal/ImportList.tsx
 msgid "By adding this list you are implicitly trusting that the data is correct. Anyone can create a list, including creating fake versions of existing lists and lists that claim to represent projects that do not have one."
 msgstr "Durch das Hinzufügen dieser Liste vertrauen Sie implizit darauf, dass die Daten korrekt sind. Jeder kann eine Liste erstellen, einschließlich der Erstellung gefälschter Versionen bestehender Listen und Listen, die vorgeben, Projekte zu repräsentieren, die keine haben."
 
 #: src/components/WalletModal/index.tsx
-msgid "By connecting a wallet, you agree to Uniswap Labs’ <0>Terms of Service</0> and acknowledge that you have read and understand the <1>Uniswap protocol disclaimer</1>."
-msgstr "Durch das Verbinden einer Brieftasche erklären Sie sich mit den <0>Nutzungsbedingungen</0> von Uniswap Labs einverstanden und bestätigen, dass Sie den <1>Uniswap Protokoll Haftungsausschluss gelesen und verstanden haben</1>."
+msgid "By connecting a wallet, you agree to IXSwap’ <0>Terms and Conditions</0> and acknowledge that you have read and understand the <1>IXSwap Privacy Policy</1>."
+msgstr ""
+
+#: 
+#~ msgid "By connecting a wallet, you agree to Uniswap Labs’ <0>Terms of Service</0> and acknowledge that you have read and understand the <1>Uniswap protocol disclaimer</1>."
+#~ msgstr "Durch das Verbinden einer Brieftasche erklären Sie sich mit den <0>Nutzungsbedingungen</0> von Uniswap Labs einverstanden und bestätigen, dass Sie den <1>Uniswap Protokoll Haftungsausschluss gelesen und verstanden haben</1>."
 
 #: src/components/AccountDetails/index.tsx
 msgid "Change"
@@ -252,19 +260,19 @@ msgstr "Alles löschen"
 msgid "Close"
 msgstr "Schließen"
 
-#: src/components/Menu/index.tsx
-msgid "Code"
-msgstr "Code"
+#: 
+#~ msgid "Code"
+#~ msgstr "Code"
 
 #: src/components/SearchModal/CommonBases.tsx
 msgid "Common bases"
 msgstr "Gemeinsame Basen"
 
-#: src/pages/RemoveLiquidity/index.tsx
+#: src/pages/RemoveLiquidity/ModalBottom.tsx
 msgid "Confirm"
 msgstr "Bestätigen"
 
-#: src/pages/AddLiquidityV2/ConfirmAddModalBottom.tsx
+#: src/pages/AddLiquidityV2/ModalBottom.tsx
 msgid "Confirm Supply"
 msgstr "Angebot bestätigen"
 
@@ -327,7 +335,7 @@ msgstr "Kopiert"
 msgid "Copy Address"
 msgstr "Adresse kopieren"
 
-#: src/pages/AddLiquidityV2/ConfirmAddModalBottom.tsx
+#: src/pages/AddLiquidityV2/ModalBottom.tsx
 msgid "Create Pool & Supply"
 msgstr "Pool & Versorgung erstellen"
 
@@ -335,9 +343,9 @@ msgstr "Pool & Versorgung erstellen"
 msgid "Create a pair"
 msgstr "Paar erstellen"
 
-#: src/components/ErrorBoundary/index.tsx
-msgid "Create an issue on GitHub"
-msgstr "Erstellen Sie ein Problem auf GitHub"
+#: 
+#~ msgid "Create an issue on GitHub"
+#~ msgstr "Erstellen Sie ein Problem auf GitHub"
 
 #: src/pages/PoolFinder/index.tsx
 msgid "Create pool."
@@ -351,7 +359,6 @@ msgstr "Aktueller Preis"
 msgid "Custodian"
 msgstr ""
 
-#: src/components/earn/PoolCard.tsx
 #: src/components/earn/StakingModal.tsx
 #: src/components/earn/StakingModal.tsx
 msgid "Deposit"
@@ -373,9 +380,9 @@ msgstr "{0} IXS-V2 eingelöst"
 msgid "Depositing Liquidity"
 msgstr "Liquidität einzahlen"
 
-#: src/pages/RemoveLiquidity/index.tsx
-msgid "Detailed"
-msgstr "Detailliert"
+#: 
+#~ msgid "Detailed"
+#~ msgstr "Detailliert"
 
 #: src/components/Settings/SettingsModal.tsx
 msgid "Disable Multihops"
@@ -385,17 +392,17 @@ msgstr "Multihops deaktivieren"
 msgid "Disconnect"
 msgstr "Verbindung trennen"
 
-#: src/components/Menu/index.tsx
-msgid "Discord"
-msgstr "Discord"
+#: 
+#~ msgid "Discord"
+#~ msgstr "Discord"
 
 #: src/components/TransactionConfirmationModal/index.tsx
 msgid "Dismiss"
 msgstr "Verwerfen"
 
-#: src/components/Menu/index.tsx
-msgid "Docs"
-msgstr "Texte"
+#: 
+#~ msgid "Docs"
+#~ msgstr "Texte"
 
 #: src/pages/Pool/ImportPool.tsx
 msgid "Don't see a pool you joined?"
@@ -466,9 +473,9 @@ msgstr "Von"
 msgid "From (at most)"
 msgstr "Von (höchsten)"
 
-#: src/components/ErrorBoundary/index.tsx
-msgid "Get support on Discord"
-msgstr "Holen Sie sich Unterstützung bei Discord"
+#: 
+#~ msgid "Get support on Discord"
+#~ msgstr "Holen Sie sich Unterstützung bei Discord"
 
 #: src/pages/Swap/index.tsx
 msgid "High Price Impact"
@@ -478,11 +485,15 @@ msgstr "Hohe Preisbelastung"
 msgid "I understand"
 msgstr "Ich verstehe"
 
+#: src/pages/RemoveLiquidity/RemovedLiquidity.tsx
+msgid "IXS Rewards"
+msgstr ""
+
 #: src/components/PositionCard/index.tsx
 msgid "IXS Rewards (on quit)"
 msgstr ""
 
-#: src/pages/RemoveLiquidity/index.tsx
+#: src/pages/RemoveLiquidity/ModalBottom.tsx
 msgid "IXS {0}/{1} Burned"
 msgstr "IXS {0}/{1} verbrannt"
 
@@ -520,7 +531,7 @@ msgstr "Im Bereich"
 msgid "Inactive"
 msgstr "Inaktiv"
 
-#: src/pages/AddLiquidityV2/index.tsx
+#: src/pages/AddLiquidityV2/PricesAndPoolShare.tsx
 msgid "Initial prices and pool share"
 msgstr "Erste Preise und Pool-Anteil"
 
@@ -588,18 +599,25 @@ msgstr "Geladen"
 msgid "Loading"
 msgstr "Lädt"
 
+#: src/pages/RemoveLiquidity/RemoveAmount.tsx
+msgid "MAX"
+msgstr ""
+
 #: src/components/Header/URLWarning.tsx
-msgid "Make sure the URL is<0>app.uniswap.org</0>"
-msgstr "Stelle sicher, dass die URL <0>app.uniswap.org</0> ist"
+msgid "Make sure the URL is<0>app.ixswap.io</0>"
+msgstr ""
+
+#: 
+#~ msgid "Make sure the URL is<0>app.uniswap.org</0>"
+#~ msgstr "Stelle sicher, dass die URL <0>app.uniswap.org</0> ist"
 
 #: src/components/SearchModal/Manage.tsx
-#: src/components/earn/PoolCard.tsx
 msgid "Manage"
 msgstr "Verwalten"
 
-#: src/components/PositionCard/index.tsx
-msgid "Manage Liquidity in Rewards Pool"
-msgstr "Liquidität im Belohnungspool verwalten"
+#: 
+#~ msgid "Manage Liquidity in Rewards Pool"
+#~ msgstr "Liquidität im Belohnungspool verwalten"
 
 #: src/components/SearchModal/CurrencySearch.tsx
 msgid "Manage Token Lists"
@@ -638,6 +656,10 @@ msgstr "Minuten"
 msgid "My Liquidity"
 msgstr ""
 
+#: src/components/PositionCard/MinimalPositionCard.tsx
+msgid "My pool share"
+msgstr ""
+
 #: src/pages/Pool/EmptyLiquidity.tsx
 msgid "No liquidity found."
 msgstr "Keine Liquidität gefunden."
@@ -662,9 +684,9 @@ msgstr "AUF"
 msgid "ONLY USE THIS MODE IF YOU KNOW WHAT YOU ARE DOING."
 msgstr "NUR NUR NUTZUNG DIESER MODUS WENN SIE WENN SIE WENN SIE ERHALTEN."
 
-#: src/pages/AddLiquidityV2/index.tsx
-msgid "Once you are happy with the rate click supply to review."
-msgstr "Sobald Sie mit dem Preis zufrieden sind, klicken Sie auf die Schaltfläche zum Überprüfen."
+#: 
+#~ msgid "Once you are happy with the rate click supply to review."
+#~ msgstr "Sobald Sie mit dem Preis zufrieden sind, klicken Sie auf die Schaltfläche zum Überprüfen."
 
 #: src/components/Web3ReactManager/index.tsx
 msgid "Oops! An unknown error occurred. Please refresh the page, or visit from another browser or device."
@@ -674,8 +696,8 @@ msgstr "Hoppla! Ein unbekannter Fehler ist aufgetreten. Bitte aktualisieren Sie 
 msgid "Out of range"
 msgstr "Außerhalb des Bereichs"
 
-#: src/pages/AddLiquidityV2/index.tsx
-#: src/pages/RemoveLiquidity/index.tsx
+#: src/pages/AddLiquidityV2/ModalHeader.tsx
+#: src/pages/RemoveLiquidity/ModalHeader.tsx
 msgid "Output is estimated. If the price changes by more than {0}% your transaction will revert."
 msgstr "Die Ausgabe wird geschätzt. Wenn sich die Preisänderung um mehr als {0}% ändert, wird Ihre Transaktion rückgängig gemacht."
 
@@ -726,6 +748,7 @@ msgstr ""
 #~ msgstr "{0} gepackt:"
 
 #: src/components/swap/SwapModalHeader.tsx
+#: src/pages/RemoveLiquidity/ModalBottom.tsx
 #: src/pages/RemoveLiquidity/index.tsx
 msgid "Price"
 msgstr "Preis"
@@ -742,15 +765,15 @@ msgstr "Preisauswirkung zu hoch"
 msgid "Price Updated"
 msgstr "Preis aktualisiert"
 
-#: src/pages/RemoveLiquidity/index.tsx
-msgid "Price:"
-msgstr "Preis:"
+#: 
+#~ msgid "Price:"
+#~ msgstr "Preis:"
 
-#: src/pages/AddLiquidityV2/index.tsx
+#: src/pages/AddLiquidityV2/PricesAndPoolShare.tsx
 msgid "Prices and pool share"
 msgstr "Preise und Pool-Anteil"
 
-#: src/pages/AddLiquidityV2/ConfirmAddModalBottom.tsx
+#: src/pages/AddLiquidityV2/ModalBottom.tsx
 msgid "Rates"
 msgstr "Tarife"
 
@@ -766,7 +789,7 @@ msgstr "Letzte Transaktionen"
 msgid "Remove"
 msgstr "Entfernen"
 
-#: src/pages/RemoveLiquidity/index.tsx
+#: src/pages/RemoveLiquidity/RemoveAmount.tsx
 msgid "Remove Amount"
 msgstr "Betrag entfernen"
 
@@ -783,6 +806,10 @@ msgstr "Liste entfernen"
 #: src/pages/RemoveLiquidity/index.tsx
 msgid "Remove {0} {1} and {2} {3}"
 msgstr "Entferne {0} {1} und {2} {3}"
+
+#: src/pages/RemoveLiquidity/index.tsx
+msgid "Removing pool tokens converts your position back into underlying tokens at the current rate, proportional to your share of the pool. Accrued fees are included in the amounts you receive."
+msgstr ""
 
 #: src/pages/RemoveLiquidity/index.tsx
 msgid "Removing {0} {1} and {2} {3}"
@@ -812,17 +839,21 @@ msgstr "Pool auswählen"
 msgid "Select a pool type based on your preferred liquidity provider fee."
 msgstr "Wählen Sie einen Pool-Typ basierend auf Ihrer bevorzugten Liquiditätsanbietergebühr."
 
-#: src/pages/AddLiquidityV2/ConfirmAddModalBottom.tsx
-msgid "Share of Pool:"
-msgstr "Anteil am Pool:"
+#: src/pages/AddLiquidityV2/ModalBottom.tsx
+msgid "Share of Pool"
+msgstr ""
+
+#: 
+#~ msgid "Share of Pool:"
+#~ msgstr "Anteil am Pool:"
 
 #: src/components/AccountDetails/index.tsx
 msgid "Show Portis"
 msgstr "Show Portis"
 
-#: src/pages/RemoveLiquidity/index.tsx
-msgid "Simple"
-msgstr "Einfach"
+#: 
+#~ msgid "Simple"
+#~ msgstr "Einfach"
 
 #: src/components/TransactionSettings/index.tsx
 #: src/components/swap/AdvancedSwapDetails.tsx
@@ -890,9 +921,9 @@ msgstr "Der Preis für diesen Pool liegt außerhalb des gewählten Bereichs. Ihr
 msgid "The price of this pool is within your selected range. Your position is currently earning fees."
 msgstr "Der Preis für diesen Pool liegt innerhalb des gewählten Bereichs. Ihre Position erhebt derzeit Gebühren."
 
-#: src/pages/AddLiquidityV2/index.tsx
-msgid "The ratio of tokens you add will set the price of this pool."
-msgstr "Das Verhältnis der von Ihnen hinzugefügten Tokens legt den Preis für diesen Pool fest."
+#: 
+#~ msgid "The ratio of tokens you add will set the price of this pool."
+#~ msgstr "Das Verhältnis der von Ihnen hinzugefügten Tokens legt den Preis für diesen Pool fest."
 
 #: src/hooks/useSwapCallback.ts
 msgid "The transaction could not be sent because the deadline has passed. Please check that your transaction deadline is not too low."
@@ -909,6 +940,10 @@ msgstr "Diese Transaktion wird aufgrund von Preisbewegungen nicht erfolgreich se
 #: src/hooks/useSwapCallback.ts
 msgid "This transaction will not succeed either due to price movement or fee on transfer. Try increasing your slippage tolerance."
 msgstr "Diese Transaktion wird weder aufgrund von Preisbewegungen noch aufgrund von Überweisungsgebühren erfolgreich sein. Versuchen Sie, Ihre Schlupftoleranz zu erhöhen."
+
+#: src/components/TipWithMessage/index.tsx
+msgid "Tip:"
+msgstr ""
 
 #: src/components/SearchModal/ManageTokens.tsx
 msgid "Tip: Custom tokens are stored locally in your browser"
@@ -1014,6 +1049,11 @@ msgstr "Warten auf Bestätigung"
 msgid "Weekly Rewards"
 msgstr "Wöchentliche Belohnungen"
 
+#: src/pages/AddLiquidityV2/Tip.tsx
+#: src/pages/AddLiquidityV2/Tip.tsx
+msgid "When you add liquidity, you will receive pool tokens representing your position. These tokens automatically earn fees proportional to your share of the pool, and can be redeemed at any time."
+msgstr ""
+
 #: src/components/earn/ClaimRewardModal.tsx
 msgid "When you claim without withdrawing your liquidity remains in the mining pool."
 msgstr "Wenn Sie ohne Abzug beanspruchen, bleibt Ihre Liquidität im Bergbau-Pool."
@@ -1056,9 +1096,9 @@ msgstr "Falsches Netzwerk"
 msgid "You are creating a pool"
 msgstr "Sie erstellen einen Pool"
 
-#: src/pages/AddLiquidityV2/index.tsx
-msgid "You are the first liquidity provider."
-msgstr "Sie sind der erste Liquiditätsanbieter."
+#: 
+#~ msgid "You are the first liquidity provider."
+#~ msgstr "Sie sind der erste Liquiditätsanbieter."
 
 #: src/pages/Swap/index.tsx
 msgid "You can now trade {0}"
@@ -1081,9 +1121,9 @@ msgstr "Sie werden erhalten"
 msgid "Your pool share"
 msgstr ""
 
-#: src/components/PositionCard/MinimalPositionCard.tsx
-msgid "Your pool share:"
-msgstr "Ihre Poolfreigabe:"
+#: 
+#~ msgid "Your pool share:"
+#~ msgstr "Ihre Poolfreigabe:"
 
 #: src/components/PositionCard/index.tsx
 msgid "Your pool tokens"
@@ -1154,8 +1194,8 @@ msgstr "{0} %"
 msgid "{0} Custom Tokens"
 msgstr "{0} Benutzerdefinierte Token"
 
-#: src/pages/AddLiquidityV2/ConfirmAddModalBottom.tsx
-#: src/pages/AddLiquidityV2/ConfirmAddModalBottom.tsx
+#: src/pages/AddLiquidityV2/ModalBottom.tsx
+#: src/pages/AddLiquidityV2/ModalBottom.tsx
 msgid "{0} Deposited"
 msgstr "{0} hinterlegt"
 
@@ -1188,7 +1228,7 @@ msgid "{0} • Added by user"
 msgstr "{0} • Vom Benutzer hinzugefügt"
 
 #: src/components/CurrencyInputPanel/FiatValue.tsx
-#: src/pages/AddLiquidityV2/ConfirmAddModalBottom.tsx
+#: src/pages/AddLiquidityV2/ModalBottom.tsx
 msgid "{0}%"
 msgstr "{0}%"
 
