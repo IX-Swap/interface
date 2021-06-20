@@ -54,10 +54,10 @@ function withVesting(before: JSBI, time: BigNumber, amount: number, start: numbe
   return before
 }
 
-export function computeUniCirculation(
-  uni: Token,
+export function computeIxsCirculation(
+  ixs: Token,
   blockTimestamp: BigNumber,
-  unclaimedUni: CurrencyAmount<Token> | undefined
+  unclaimedIxs: CurrencyAmount<Token> | undefined
 ): CurrencyAmount<Token> {
   let wholeAmount = JSBI.BigInt(USERS_AMOUNT)
 
@@ -109,8 +109,8 @@ export function computeUniCirculation(
   wholeAmount = withVesting(wholeAmount, blockTimestamp, TEAM_YEAR_4_AMOUNT, TREASURY_BEGIN_YEAR_4, TREASURY_END_YEAR_4)
 
   const total = CurrencyAmount.fromRawAmount(
-    uni,
+    ixs,
     JSBI.multiply(wholeAmount, JSBI.exponentiate(JSBI.BigInt(10), JSBI.BigInt(18)))
   )
-  return unclaimedUni ? total.subtract(unclaimedUni) : total
+  return unclaimedIxs ? total.subtract(unclaimedIxs) : total
 }

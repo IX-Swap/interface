@@ -57,3 +57,14 @@ export const BlueCard = styled(Card)`
   color: ${({ theme }) => theme.blue2};
   border-radius: 12px;
 `
+
+export const TipCard = styled(Card)`
+  opacity: 0.7;
+  border-radius: 45px;
+  font-size: 12px;
+  line-height: 18px;
+  padding: 20px 35px;
+  text-align: left;
+  background: ${({ theme }) => theme.bgGradient};
+  color: ${({ theme }) => theme.text2};
+`

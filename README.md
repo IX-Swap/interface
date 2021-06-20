@@ -1,45 +1,16 @@
-# Uniswap Interface
+# IXswap Interface
 
-[![Unit Tests](https://github.com/Uniswap/uniswap-interface/actions/workflows/unit-tests.yaml/badge.svg)](https://github.com/Uniswap/uniswap-interface/actions/workflows/unit-tests.yaml)
-[![Integration Tests](https://github.com/Uniswap/uniswap-interface/actions/workflows/integration-tests.yaml/badge.svg)](https://github.com/Uniswap/uniswap-interface/actions/workflows/integration-tests.yaml)
-[![Lint](https://github.com/Uniswap/uniswap-interface/actions/workflows/lint.yml/badge.svg)](https://github.com/Uniswap/uniswap-interface/actions/workflows/lint.yml)
-[![Release](https://github.com/Uniswap/uniswap-interface/actions/workflows/release.yaml/badge.svg)](https://github.com/Uniswap/uniswap-interface/actions/workflows/release.yaml)
-[![Crowdin](https://badges.crowdin.net/uniswap-interface/localized.svg)](https://crowdin.com/project/uniswap-interface)
+- Website: [ixswap.io](https://ixswap.io)
+- Interface: [app.ixswap.io](https://app.ixswap.io)
+- Telegram: [ixswapofficial](https://t.me/ixswapofficial)
+- Twitter: [@IxSwap](https://twitter.com/IxSwap)
+- Linkedin: [IX Swap](https://www.linkedin.com/company/ixswap)
+- Mediun: [IX Swap](https://ixswap.medium.com/)
 
-An open source interface for Uniswap -- a protocol for decentralized exchange of Ethereum tokens.
+## Accessing IXswap
 
-- Website: [uniswap.org](https://uniswap.org/)
-- Interface: [app.uniswap.org](https://app.uniswap.org)
-- Docs: [uniswap.org/docs/](https://uniswap.org/docs/)
-- Twitter: [@Uniswap](https://twitter.com/Uniswap)
-- Reddit: [/r/Uniswap](https://www.reddit.com/r/Uniswap/)
-- Email: [contact@uniswap.org](mailto:contact@uniswap.org)
-- Discord: [Uniswap](https://discord.gg/FCfyBSbCU5)
-- Whitepapers:
-  - [V1](https://hackmd.io/C-DvwDSfSxuh-Gd4WKE_ig)
-  - [V2](https://uniswap.org/whitepaper.pdf)
-  - [V3](https://uniswap.org/whitepaper-v3.pdf)
+The IXswap App supports swapping, adding liquidity, removing liquidity.
 
-## Accessing the Uniswap Interface
-
-To access the Uniswap Interface, use an IPFS gateway link from the
-[latest release](https://github.com/Uniswap/uniswap-interface/releases/latest),
-or visit [app.uniswap.org](https://app.uniswap.org).
-
-## Contributions
-
-See [CONTRIBUTING](./CONTRIBUTING.md).
-
-## Accessing Uniswap V2
-
-The Uniswap Interface supports swapping, adding liquidity, removing liquidity and migrating liquidity for 
-Uniswap protocol V2.
-
-- Swap on Uniswap V2: https://app.uniswap.org/#/swap?use=v2
-- View V2 liquidity: https://app.uniswap.org/#/pool
-- Add Liquidity: https://app.uniswap.org/#/add
-
-## Accessing Uniswap V1
- 
-The Uniswap V1 interface for mainnet and testnets is accessible via IPFS gateways 
-linked from the [v1.0.0 release](https://github.com/Uniswap/uniswap-interface/releases/tag/v1.0.0).
+- Swap on IXswap: https://app.ixswap.io/#/swap
+- View IXswap liquidity: https://app.ixswap.io/#/pool
+- Add Liquidity: https://app.ixswap.io/#/add

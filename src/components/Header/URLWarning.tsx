@@ -33,18 +33,18 @@ export default function URLWarning() {
         <AlertTriangle style={{ marginRight: 6 }} size={12} />
         <Trans>
           Make sure the URL is
-          <code style={{ padding: '0 4px', display: 'inline', fontWeight: 'bold' }}>app.uniswap.org</code>
+          <code style={{ padding: '0 4px', display: 'inline', fontWeight: 'bold' }}>app.ixswap.io</code>
         </Trans>
       </div>
       <StyledClose size={12} onClick={toggleURLWarning} />
     </PhishAlert>
-  ) : window.location.hostname === 'app.uniswap.org' ? (
+  ) : window.location.hostname === 'app.ixswap.io' ? (
     <PhishAlert isActive={showURLWarning}>
       <div style={{ display: 'flex' }}>
         <AlertTriangle style={{ marginRight: 6 }} size={12} />
         <Trans>
           Always make sure the URL is
-          <code style={{ padding: '0 4px', display: 'inline', fontWeight: 'bold' }}>app.uniswap.org</code> - bookmark it
+          <code style={{ padding: '0 4px', display: 'inline', fontWeight: 'bold' }}>app.ixswap.io</code> - bookmark it
           to be safe.
         </Trans>
       </div>

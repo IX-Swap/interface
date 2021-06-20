@@ -2,8 +2,8 @@ import { Contract } from '@ethersproject/contracts'
 import { WETH9 } from '@ixswap1/sdk-core'
 import { abi as STAKING_REWARDS_ABI } from '@uniswap/liquidity-staker/build/StakingRewards.json'
 import { abi as MERKLE_DISTRIBUTOR_ABI } from '@uniswap/merkle-distributor/build/MerkleDistributor.json'
-import { abi as IUniswapV2PairABI } from '@ixswap1/v2-core/build/IIxsV2Pair.json'
-import { abi as IUniswapV2Router02ABI } from '@ixswap1/v2-periphery/build/IIxsV2Router02.json'
+import { abi as IIxsV2PairABI } from '@ixswap1/v2-core/build/IIxsV2Pair.json'
+import { abi as IIxsV2Router02ABI } from '@ixswap1/v2-periphery/build/IIxsV2Router02.json'
 
 import ARGENT_WALLET_DETECTOR_ABI from 'abis/argent-wallet-detector.json'
 import ENS_PUBLIC_RESOLVER_ABI from 'abis/ens-public-resolver.json'
@@ -82,11 +82,11 @@ export function useEIP2612Contract(tokenAddress?: string): Contract | null {
 }
 
 export function usePairContract(pairAddress?: string, withSignerIfPossible?: boolean): Contract | null {
-  return useContract(pairAddress, IUniswapV2PairABI, withSignerIfPossible)
+  return useContract(pairAddress, IIxsV2PairABI, withSignerIfPossible)
 }
 
 export function useV2RouterContract(): Contract | null {
-  return useContract(V2_ROUTER_ADDRESS, IUniswapV2Router02ABI, true)
+  return useContract(V2_ROUTER_ADDRESS, IIxsV2Router02ABI, true)
 }
 
 export function useMulticall2Contract() {

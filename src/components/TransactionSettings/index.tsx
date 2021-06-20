@@ -5,52 +5,14 @@ import styled, { ThemeContext } from 'styled-components'
 
 import QuestionHelper from '../QuestionHelper'
 import { AutoColumn } from '../Column'
-import { RowBetween, RowFixed, RowCenter } from '../Row'
+import { RowBetween, RowFixed } from '../Row'
 import { DEFAULT_DEADLINE_FROM_NOW } from 'constants/misc'
 import { displayDeadline, displayUserSlippageTolerance } from './helpers'
 import { useDeadline } from 'hooks/useDeadline'
 import { useSlippage } from 'hooks/useSlippage'
 import { RECOMMENDED_SLIPPAGE_OPTIONS } from './constants'
 import { TYPE } from 'theme'
-
-const FancyButton = styled.button`
-  color: ${({ theme }) => theme.text1};
-  align-items: center;
-  height: 2rem;
-  border-radius: 36px;
-  font-size: 1rem;
-  width: auto;
-  min-width: 3.5rem;
-  border: 1px solid ${({ theme }) => theme.bg3};
-  outline: none;
-  background: ${({ theme }) => theme.bg1};
-  :hover {
-    border: 1px solid ${({ theme }) => theme.bg4};
-  }
-  :focus {
-    border: 1px solid ${({ theme }) => theme.primary1};
-  }
-`
-
-const Option = styled(FancyButton)<{ active: boolean }>`
-  margin-right: 8px;
-  font-weight: 600;
-  font-size: 22px;
-  line-height: 40px;
-  width: fit-content;
-  height: fit-content;
-  border: none;
-  padding: 10px 22px;
-  :hover,
-  :focus {
-    cursor: pointer;
-    border: none;
-    outline: none;
-    background: ${({ theme }) => theme.bgHighlightGradient};
-  }
-  background: ${({ active, theme }) => (active ? theme.bgHighlightGradient : theme.bg7)};
-  color: ${({ active, theme }) => (active ? theme.white : theme.text1)};
-`
+import { FancyButton, Option, OptionRow } from 'components/OptionButton'
 
 const Input = styled.input`
   background: ${({ theme }) => theme.bg1};
@@ -97,12 +59,6 @@ const SlippageEmojiContainer = styled.span`
   `}
 `
 
-const OptionRow = styled(RowCenter)`
-  grid-gap: 0.5rem;
-  ${({ theme }) => theme.mediaWidth.upToSmall`
-    flex-wrap: wrap;  
-  `}
-`
 const MinuteLabel = styled.span`
   font-weight: 300;
   font-size: 22px;

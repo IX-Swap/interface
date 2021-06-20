@@ -34,21 +34,21 @@ const PERMITTABLE_TOKENS: {
   [1]: {
     [USDC.address]: { type: PermitType.AMOUNT, name: 'USD Coin', version: '2' },
     [DAI.address]: { type: PermitType.ALLOWED, name: 'Dai Stablecoin', version: '1' },
-    [IXS[1].address]: { type: PermitType.AMOUNT, name: 'Uniswap' },
+    [IXS[1].address]: { type: PermitType.AMOUNT, name: 'Ixs Token' },
   },
   [4]: {
     ['0xc7AD46e0b8a400Bb3C915120d284AafbA8fc4735']: { type: PermitType.ALLOWED, name: 'Dai Stablecoin', version: '1' },
-    [IXS[4].address]: { type: PermitType.AMOUNT, name: 'Uniswap' },
+    [IXS[4].address]: { type: PermitType.AMOUNT, name: 'Ixs Token' },
   },
   [3]: {
-    [IXS[3].address]: { type: PermitType.AMOUNT, name: 'Uniswap' },
+    [IXS[3].address]: { type: PermitType.AMOUNT, name: 'Ixs Token' },
     ['0x07865c6E87B9F70255377e024ace6630C1Eaa37F']: { type: PermitType.AMOUNT, name: 'USD Coin', version: '2' },
   },
   [5]: {
-    [IXS[5].address]: { type: PermitType.AMOUNT, name: 'Uniswap' },
+    [IXS[5].address]: { type: PermitType.AMOUNT, name: 'Ixs Token' },
   },
   [42]: {
-    [IXS[42].address]: { type: PermitType.AMOUNT, name: 'Uniswap' },
+    [IXS[42].address]: { type: PermitType.AMOUNT, name: 'Ixs Token' },
   },
 }
 
@@ -257,7 +257,7 @@ export function useERC20Permit(
 
 const REMOVE_V2_LIQUIDITY_PERMIT_INFO: PermitInfo = {
   version: '1',
-  name: 'Uniswap V2',
+  name: 'Ixs Liquidity Token',
   type: PermitType.AMOUNT,
 }
 

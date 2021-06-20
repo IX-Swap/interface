@@ -35,6 +35,13 @@ export const RowFlat = styled.div`
   display: flex;
   align-items: flex-end;
 `
+export const ButtonRow = styled(RowBetween)`
+  grid-gap: 1.5rem;
+  ${({ theme }) => theme.mediaWidth.upToExtraSmall`
+      flex-direction: column;
+      grid-gap: 1rem;
+  `};
+`
 
 export const AutoRow = styled(Row)<{ gap?: string; justify?: string }>`
   flex-wrap: wrap;

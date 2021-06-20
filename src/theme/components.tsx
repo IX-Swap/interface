@@ -99,8 +99,8 @@ export const LinkStyledButton = styled.button<{ disabled?: boolean }>`
 export const StyledInternalLink = styled(Link)`
   text-decoration: none;
   cursor: pointer;
-  color: ${({ theme }) => theme.primary1};
-  font-weight: 500;
+  color: ${({ theme }) => theme.text2};
+  font-weight: 600;
 
   :hover {
     text-decoration: underline;
@@ -189,12 +189,6 @@ const rotateImg = keyframes`
   100% {
     transform: perspective(1000px) rotateY(360deg);
   }
-`
-
-export const UniTokenAnimated = styled.img`
-  animation: ${rotateImg} 5s cubic-bezier(0.83, 0, 0.17, 1) infinite;
-  padding: 2rem 0 0 0;
-  filter: drop-shadow(0px 2px 4px rgba(0, 0, 0, 0.15));
 `
 
 const ETHERSCAN_HOSTNAMES: { [hostname: string]: true } = {
@@ -321,4 +315,36 @@ export const ExtraSmallOnly = styled.span`
   ${({ theme }) => theme.mediaWidth.upToExtraSmall`
     display: block;
   `};
+`
+export const SemiTransparent = styled.div`
+  opacity: 0.5;
+`
+export const StyledPageHeader = styled.div`
+  padding: 0;
+  width: 100%;
+  margin-bottom: 22px;
+  text-transform: uppercase;
+  font-weight: 600;
+  font-size: 22px;
+  color: ${({ theme }) => theme.text1};
+`
+export const ModalBlurWrapper = styled.span`
+  background: ${({ theme }) => theme.bgGradientShadow};
+  border-radius: 45px;
+  display: flex;
+  flex-direction: column;
+  font-size: 1rem;
+  display: flex;
+  min-width: 622px;
+  z-index: 5;
+  padding: 34px;
+  backdrop-filter: blur(20px);
+  ${({ theme }) => theme.mediaWidth.upToSmall`
+    padding: 0;
+  `};
+  ${({ theme }) => theme.mediaWidth.upToExtraSmall`
+    min-width: 100%;
+    max-width: 100%;
+  `};
+  user-select: none;
 `

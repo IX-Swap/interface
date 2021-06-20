@@ -2,10 +2,8 @@ import { Trans } from '@lingui/macro'
 import { Currency, Percent, TradeType } from '@ixswap1/sdk-core'
 import { Trade as V2Trade } from '@ixswap1/v2-sdk'
 import React, { ReactNode, useCallback, useMemo } from 'react'
-import TransactionConfirmationModal, {
-  ConfirmationModalContent,
-  TransactionErrorContent,
-} from '../TransactionConfirmationModal'
+import TransactionConfirmationModal, { TransactionErrorContent } from '../TransactionConfirmationModal'
+import { ConfirmationModalContent } from 'components/TransactionConfirmationModal/ConfirmationModalContent'
 import SwapModalFooter from './SwapModalFooter'
 import SwapModalHeader from './SwapModalHeader'
 
