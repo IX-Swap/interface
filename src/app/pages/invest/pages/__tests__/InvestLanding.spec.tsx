@@ -3,14 +3,9 @@ import { render, cleanup } from 'test-utils'
 import { InvestLanding } from 'app/pages/invest/pages/InvestLanding'
 import { DSOTable } from 'app/pages/invest/components/DSOTable/DSOTable'
 import { PromotedDSOs } from 'app/components/DSO/components/PromotedDSOs'
-import { PromoBanner } from 'app/pages/invest/components/PromoBanner'
 
 jest.mock('app/components/DSO/components/PromotedDSOs', () => ({
   PromotedDSOs: jest.fn(() => null)
-}))
-
-jest.mock('app/pages/invest/components/PromoBanner', () => ({
-  PromoBanner: jest.fn(() => null)
 }))
 
 jest.mock('app/pages/invest/components/DSOTable/DSOTable', () => ({
@@ -37,7 +32,6 @@ describe('InvestLanding', () => {
   it('renders Promoted DSOs, PromoBanner and DSOTable components', () => {
     render(<InvestLanding />)
     expect(PromotedDSOs).toHaveBeenCalled()
-    expect(PromoBanner).toHaveBeenCalled()
     expect(DSOTable).toHaveBeenCalled()
   })
 })

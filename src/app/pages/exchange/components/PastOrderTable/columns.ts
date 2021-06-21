@@ -1,5 +1,5 @@
 import { formatDateToMMDDYY } from 'helpers/dates'
-import { formatAmount, toPercentage } from 'helpers/numbers'
+import { formatAmount, formatPercent } from 'helpers/numbers'
 import { getOrderSideName } from 'helpers/strings'
 import { renderOrderStatus } from 'helpers/rendering'
 
@@ -38,8 +38,8 @@ export const columns = [
   },
   {
     label: 'Filled',
-    key: 'filled',
-    render: toPercentage
+    key: 'filledPercent',
+    render: formatPercent
   },
   {
     label: 'Status',

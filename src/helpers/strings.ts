@@ -44,7 +44,7 @@ export const getOfferingName = (
 }
 
 export const getOrderSideName = (value: Order['side']) => {
-  return value === 'ASK' ? 'Buy' : 'Sell'
+  return value === 'ASK' ? 'Sell' : 'Buy'
 }
 
 export const getPersonName = (data: IndividualIdentity | null | undefined) => {

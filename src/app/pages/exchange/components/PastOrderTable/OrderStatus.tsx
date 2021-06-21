@@ -8,8 +8,9 @@ interface OrderStatusProps {
 
 export const OrderStatus = ({ status }: OrderStatusProps) => {
   return (
-    <Typography color={status === 'Canceled' ? 'error' : 'initial'}>
-      {status}
+    <Typography color={status === 'CANCELLED' ? 'error' : 'initial'}>
+      {status[0].toLocaleUpperCase() +
+        status.slice(1, status.length).toLowerCase()}
     </Typography>
   )
 }

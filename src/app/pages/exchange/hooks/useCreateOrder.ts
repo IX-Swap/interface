@@ -2,9 +2,13 @@ import { useMutation, useQueryCache } from 'react-query'
 import { useServices } from 'hooks/useServices'
 import { placeOrderURL } from 'config/apiURL'
 import { PlaceOrderArgs } from 'app/pages/exchange/types/form'
-import { virtualAccountQueryKeys } from 'config/queryKeys'
+import {
+  exchangeMarketQueryKeys,
+  virtualAccountQueryKeys
+} from 'config/queryKeys'
 import { useAuth } from 'hooks/auth/useAuth'
 import { getIdFromObj } from 'helpers/strings'
+import { useParams } from 'react-router'
 
 export const useCreateOrder = () => {
   const { apiService, snackbarService } = useServices()
@@ -12,6 +16,7 @@ export const useCreateOrder = () => {
   const queryCache = useQueryCache()
   const { user } = useAuth()
   const userId = getIdFromObj(user)
+  const { pairId } = useParams<{ pairId: string }>()
 
   const createOrder = async (args: PlaceOrderArgs) => {
     return await apiService.post(uri, args)
@@ -23,6 +28,9 @@ export const useCreateOrder = () => {
         virtualAccountQueryKeys.getByUserId,
         { userId }
       ])
+      void queryCache.invalidateQueries(
+        exchangeMarketQueryKeys.getOrdersList(userId, pairId)
+      )
       void snackbarService.showSnackbar(data.message, 'success')
     },
     onError: (error: any) => {
