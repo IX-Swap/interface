@@ -1,4 +1,4 @@
-import Card from 'components/Card'
+import { DarkCard } from 'components/Card'
 import { MaxButton } from 'pages/Pool/styleds'
 import { Text } from 'rebass'
 import styled from 'styled-components/macro'
@@ -33,14 +33,8 @@ export const RemoveAmountTitle = styled(Text)`
   text-transform: uppercase;
   color: ${({ theme }) => theme.text2};
 `
-export const RemoveAmountWrapper = styled(Card)`
-  background: ${({ theme }) => theme.bgGradientDark};
-  backdrop-filter: blur(4px);
-  border-radius: 20px;
-  padding: 26px 36px 40px 36px;
-`
 
-export const RemovedLiquidityWrapper = styled(RemoveAmountWrapper)`
+export const RemovedLiquidityWrapper = styled(DarkCard)`
   padding-bottom: 5px;
 `
 

@@ -169,14 +169,16 @@ export const ButtonPink = styled(Base)`
   }
 `
 
-export const ButtonIXSGradient = styled(ButtonPrimary)`
+export const ButtonIXSGradient = styled(ButtonPrimary)<{ confirmed?: boolean }>`
   color: white;
   height: 36px;
+  opacity: ${({ confirmed }) => (confirmed ? 0.5 : 1)};
   width: fit-content;
   position: relative;
   cursor: pointer;
   border: none;
   white-space: no-wrap;
+
   :hover {
     opacity: 0.8;
   }

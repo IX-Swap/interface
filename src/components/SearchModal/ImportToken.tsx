@@ -1,21 +1,22 @@
-import { TokenList } from '@uniswap/token-lists/dist/types'
 import React from 'react'
-import { Token, Currency } from '@ixswap1/sdk-core'
-import styled from 'styled-components/macro'
-import { TYPE, CloseIcon } from 'theme'
-import Card from 'components/Card'
+import { Currency, Token } from '@ixswap1/sdk-core'
+import { Trans } from '@lingui/macro'
+import { TokenList } from '@uniswap/token-lists/dist/types'
+import { ButtonIXSWide } from 'components/Button'
+import Card, { VioletCard } from 'components/Card'
 import { AutoColumn } from 'components/Column'
-import { RowBetween, RowFixed } from 'components/Row'
 import CurrencyLogo from 'components/CurrencyLogo'
-import { ArrowLeft, AlertCircle } from 'react-feather'
-import { transparentize } from 'polished'
-import useTheme from 'hooks/useTheme'
-import { ButtonPrimary } from 'components/Button'
-import { SectionBreak } from 'components/swap/styleds'
-import { useAddUserToken } from 'state/user/hooks'
-import { useActiveWeb3React } from 'hooks/web3'
-import { ExternalLink } from '../../theme/components'
 import ListLogo from 'components/ListLogo'
+import { RowBetween, RowFixed } from 'components/Row'
+import useTheme from 'hooks/useTheme'
+import { useActiveWeb3React } from 'hooks/web3'
+import { transparentize } from 'polished'
+import { AlertCircle, ArrowLeft } from 'react-feather'
+import { Text } from 'rebass'
+import { useAddUserToken } from 'state/user/hooks'
+import styled from 'styled-components/macro'
+import { CloseIcon, TYPE } from 'theme'
+import { ExternalLink } from '../../theme/components'
 import { ExplorerDataType, getExplorerLink } from '../../utils/getExplorerLink'
 import { PaddedColumn } from './styleds'
 
@@ -31,7 +32,7 @@ const WarningWrapper = styled(Card)<{ highWarning: boolean }>`
   width: fit-content;
 `
 
-const AddressText = styled(TYPE.blue)`
+const AddressText = styled(Text)`
   font-size: 12px;
 
   ${({ theme }) => theme.mediaWidth.upToSmall`
@@ -63,19 +64,19 @@ export function ImportToken({ tokens, list, onBack, onDismiss, handleCurrencySel
           {onDismiss ? <CloseIcon onClick={onDismiss} /> : <div />}
         </RowBetween>
       </PaddedColumn>
-      <SectionBreak />
       <AutoColumn gap="md" style={{ marginBottom: '32px', padding: '1rem' }}>
         <AutoColumn justify="center" style={{ textAlign: 'center', gap: '16px', padding: '1rem' }}>
           <AlertCircle size={48} stroke={theme.text2} strokeWidth={1} />
-          <TYPE.body fontWeight={400} fontSize={16}>
-            {
-              "This token doesn't appear on the active token list(s). Make sure this is the token that you want to trade."
-            }
-          </TYPE.body>
+          <Text color={theme.text2}>
+            <Trans>
+              This token doesn&apos;t appear on the active token list(s). Make sure this is the token that you want to
+              trade.
+            </Trans>
+          </Text>
         </AutoColumn>
         {tokens.map((token) => {
           return (
-            <Card
+            <VioletCard
               backgroundColor={theme.bg2}
               key={'import' + token.address}
               className=".token-warning-container"
@@ -88,9 +89,9 @@ export function ImportToken({ tokens, list, onBack, onDismiss, handleCurrencySel
                   <TYPE.body ml="8px" mr="8px" fontWeight={500} fontSize={20}>
                     {token.symbol}
                   </TYPE.body>
-                  <TYPE.darkGray fontWeight={400} fontSize={14}>
+                  <Text color={theme.text1} fontWeight={400} fontSize={14}>
                     {token.name}
-                  </TYPE.darkGray>
+                  </Text>
                 </AutoColumn>
                 {chainId && (
                   <ExternalLink href={getExplorerLink(chainId, token.address, ExplorerDataType.ADDRESS)}>
@@ -115,14 +116,12 @@ export function ImportToken({ tokens, list, onBack, onDismiss, handleCurrencySel
                   </WarningWrapper>
                 )}
               </AutoColumn>
-            </Card>
+            </VioletCard>
           )
         })}
 
-        <ButtonPrimary
+        <ButtonIXSWide
           altDisabledStyle={true}
-          borderRadius="20px"
-          padding="10px 1rem"
           onClick={() => {
             tokens.map((token) => addToken(token))
             handleCurrencySelect && handleCurrencySelect(tokens[0])
@@ -130,7 +129,7 @@ export function ImportToken({ tokens, list, onBack, onDismiss, handleCurrencySel
           className=".token-dismiss-button"
         >
           Import
-        </ButtonPrimary>
+        </ButtonIXSWide>
       </AutoColumn>
     </Wrapper>
   )

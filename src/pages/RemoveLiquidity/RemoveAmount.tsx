@@ -7,8 +7,9 @@ import useDebouncedChangeHandler from '../../hooks/useDebouncedChangeHandler'
 import { Field } from '../../state/burn/actions'
 import { Trans } from '@lingui/macro'
 import { FormattedAmounts, ParsedAmounts } from './interfaces'
-import { RemoveAmountTitle, RemoveAmountWrapper } from './styled'
+import { RemoveAmountTitle } from './styled'
 import { Option, OptionRow } from 'components/OptionButton'
+import { DarkCard } from 'components/Card'
 
 interface Props {
   formattedAmounts: FormattedAmounts
@@ -29,7 +30,7 @@ export const RemoveAmount = ({ parsedAmounts, formattedAmounts, onUserInput }: P
   )
 
   return (
-    <RemoveAmountWrapper>
+    <DarkCard>
       <AutoColumn gap="30px">
         <RowBetween>
           <RemoveAmountTitle>
@@ -58,6 +59,6 @@ export const RemoveAmount = ({ parsedAmounts, formattedAmounts, onUserInput }: P
           </OptionRow>
         </AutoColumn>
       </Box>
-    </RemoveAmountWrapper>
+    </DarkCard>
   )
 }
