@@ -34,6 +34,10 @@ export const ArrowWrapper = styled.div<{ clickable: boolean }>`
         `
       : null}
 `
+export const IconWrapper = styled(ArrowWrapper)`
+  margin-left: 10px;
+  left: unset;
+`
 
 export const SectionBreak = styled.div`
   height: 1px;
