@@ -123,6 +123,7 @@ export type DSOFormValues = Omit<
   | 'subscriptionDocument'
   | 'insight'
   | 'disabled'
+  | 'decimalPlaces'
 > & {
   subscriptionDocument?: DataroomFile
   status?: string
@@ -131,7 +132,6 @@ export type DSOFormValues = Omit<
   corporate: string
   documents: FormArray<DataroomFile>
   team: DsoTeamMember[]
-  decimalPlaces?: number
 }
 
 export type DSORequestArgs = Partial<

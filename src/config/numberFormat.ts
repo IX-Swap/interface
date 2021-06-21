@@ -6,6 +6,11 @@ export const positiveNumberFormat: NumberFormatProps = {
   decimalScale: 0
 }
 
+export const numberFormat: NumberFormatProps = {
+  allowNegative: false,
+  inputMode: 'numeric'
+}
+
 export const percentageNumberFormat: NumberFormatProps = {
   allowNegative: false,
   decimalScale: 2,
@@ -29,4 +34,10 @@ export const moneyNumberFormat: NumberFormatProps = {
   allowEmptyFormatting: true,
   isNumericString: true,
   allowNegative: false
+}
+
+export const leadingZerosNumberFormat: NumberFormatProps = {
+  ...positiveNumberFormat,
+  isNumericString: true,
+  allowLeadingZeros: true
 }

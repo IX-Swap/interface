@@ -19,7 +19,7 @@ import { useDebounce } from 'use-debounce'
 import isEqual from 'lodash/isEqual'
 import { transformDSOToFormValues } from 'app/components/DSO/utils'
 import { useDSOById } from 'app/pages/invest/hooks/useDSOById'
-import { useHistory } from 'react-router'
+import { generatePath, useHistory } from 'react-router'
 import { IssuanceRoute } from 'app/pages/issuance/router/config'
 
 export const useDSOAutosave = (
@@ -30,8 +30,9 @@ export const useDSOAutosave = (
   const { user } = useAuth()
   const userId = getIdFromObj(user)
   const dsoId = getIdFromObj(initialDSO)
+  const issuerId = initialDSO?.user ?? userId
 
-  const { data: dso, isFetching, refetch } = useDSOById(dsoId, initialDSO?.user)
+  const { data: dso, isFetching, refetch } = useDSOById(dsoId, issuerId)
 
   const {
     watch,
@@ -61,10 +62,12 @@ export const useDSOAutosave = (
     },
     {
       onSuccess: data => {
-        replace(IssuanceRoute.edit, {
-          dsoId: data.data._id,
-          issuerId: data.data.user
-        })
+        replace(
+          generatePath(IssuanceRoute.edit, {
+            dsoId: data.data._id,
+            issuerId: data.data.user
+          })
+        )
       }
     }
   )
@@ -75,7 +78,7 @@ export const useDSOAutosave = (
   ] = useMutation(
     async (payload: DSORequestArgs) => {
       return await apiService.put(
-        issuanceURL.dso.update(userId, dsoId),
+        issuanceURL.dso.update(issuerId, dsoId),
         payload
       )
     },
@@ -118,9 +121,9 @@ export const useDSOAutosave = (
     if (!isTouched) return
 
     if (wasSaved) {
-      void updateDSODraft(getUpdateDSOPayload(debouncedFormValues))
+      void updateDSODraft(getUpdateDSOPayload(debouncedFormValues as any))
     } else {
-      void createDSODraft(getCreateDSOPayload(debouncedFormValues))
+      void createDSODraft(getCreateDSOPayload(debouncedFormValues as any))
     }
   }, [debouncedFormValues]) // eslint-disable-line
 

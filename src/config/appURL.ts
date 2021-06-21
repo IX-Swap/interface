@@ -6,12 +6,14 @@ export const urlParams = {
   identityId: ':identityId',
   issuerId: ':issuerId',
   dsoId: ':dsoId',
+  listingId: ':listingId',
   commitmentId: ':commitmentId',
   withdrawalAddressId: ':withdrawalAddressId',
   itemId: ':itemId',
   tokenId: ':tokenId',
   category: ':category',
-  userId: ':userId'
+  userId: ':userId',
+  pairId: ':pairId'
 }
 
 export const urlAction = {
@@ -33,12 +35,15 @@ export const urlService = {
   account: `${AppService.Accounts}`,
   identity: `${AppService.Identity}`,
   issuance: `${AppService.Issuance}`,
+  issuanceDetails: `${AppService.IssuanceDetails}`,
   invest: `${AppService.Invest}`,
   authorizer: `${AppService.Authorizer}`,
+  market: `${AppService.Market}`,
   settings: 'settings',
   admin: 'admin',
   home: 'home',
-  notifications: 'notifications'
+  notifications: 'notifications',
+  OTCMarket: `${AppService.OTCMarket}`
 }
 
 export const urlFeature = {
@@ -57,7 +62,11 @@ export const urlFeature = {
   deployments: 'deployments',
   users: AppFeature.Users,
   accessReports: 'access-reports',
-  guide2fa: 'guide-2fa'
+  guide2fa: 'guide-2fa',
+  holdings: `${AppFeature.Holdings}`,
+  market: `${AppFeature.Market}`,
+  myListings: `${AppFeature.MyListings}`,
+  buyerList: `${AppFeature.BuyerList}`
 }
 
 export const appURL = {

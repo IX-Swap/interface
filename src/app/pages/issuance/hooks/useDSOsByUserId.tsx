@@ -9,9 +9,9 @@ import { authorizerURL, issuanceURL } from 'config/apiURL'
 import { DigitalSecurityOffering } from 'types/dso'
 import { useIsAuthorizer } from 'helpers/acl'
 
-export const useDSOsByUserId = (): UsePaginatedQueryData<
-  DigitalSecurityOffering
-> => {
+export const useDSOsByUserId = (
+  status?: string
+): UsePaginatedQueryData<DigitalSecurityOffering> => {
   const { user } = useAuth()
   const isAuthorizer = useIsAuthorizer()
   const userId = getIdFromObj(user)
@@ -26,7 +26,14 @@ export const useDSOsByUserId = (): UsePaginatedQueryData<
   const { data, ...rest } = useInfiniteQuery(
     [
       dsoQueryKeys.getDSOsById(userId),
-      { ...paginationArgs, status: 'Draft,Approved,Submitted,Rejected' }
+      status !== undefined
+        ? {
+            ...paginationArgs,
+            status: status
+          }
+        : {
+            ...paginationArgs
+          }
     ],
     getDSOsByUserId,
     { enabled: (userId ?? '') !== '' }

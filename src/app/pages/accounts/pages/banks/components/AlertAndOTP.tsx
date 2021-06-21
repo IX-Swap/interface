@@ -1,10 +1,12 @@
 import React, { createElement, ElementType } from 'react'
-import { Grid, Input } from '@material-ui/core'
+import { Grid } from '@material-ui/core'
 import { VSpacer } from 'components/VSpacer'
 import { TypedField } from 'components/form/TypedField'
 import { useFormContext } from 'react-hook-form'
 import { DepositCashFormValues } from 'app/pages/accounts/types'
 import { privateClassNames } from 'helpers/classnames'
+import { OTPField } from 'components/form/OTPField'
+import { plainValueExtractor } from 'helpers/forms'
 
 export interface AlertAndOTPProps {
   alert: ElementType
@@ -21,12 +23,13 @@ export const AlertAndOTP = (props: AlertAndOTPProps) => {
         <VSpacer size='small' />
         <TypedField
           control={control}
-          component={Input}
+          customRenderer
+          component={OTPField}
           name='otp'
           label='2-Factor Auth Code'
-          inputProps={{
-            autoComplete: 'off'
-          }}
+          variant='outlined'
+          valueExtractor={plainValueExtractor}
+          shouldAutoFocus
         />
         <VSpacer size='small' />
       </Grid>

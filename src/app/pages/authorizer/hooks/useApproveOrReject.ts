@@ -16,7 +16,7 @@ export const useApproveOrReject = (args: UseApproveOrRejectArgs) => {
   const queryCache = useQueryCache()
   const category = useAuthorizerCategory()
   const { uri, listRoute } = authorizerItemMap[category]
-  const _uri = uri.replace(/\/list.*/, '')
+  const _uri = uri.replace(/\/list$/, '')
   const url = `${_uri}/${id}/${action}`
 
   const { search } = useLocation()

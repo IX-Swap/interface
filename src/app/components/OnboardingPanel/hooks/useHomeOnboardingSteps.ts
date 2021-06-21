@@ -13,7 +13,8 @@ export const useHomeOnboardingSteps = () => {
     hasActiveIdentityJourney,
     individualIdentity,
     investorIdentities,
-    issuerIdentities
+    issuerIdentities,
+    detailsOfIssuance
   } = useOnboardingJourneys()
 
   const getIdentityActiveStep = (status?: AuthorizableStatus) => {
@@ -38,6 +39,18 @@ export const useHomeOnboardingSteps = () => {
     }
   }
 
+  if (detailsOfIssuance !== undefined) {
+    return {
+      steps: getIdentityOnboardingSteps({
+        identityType: 'corporate',
+        identityStatus: '',
+        asIssuer: true,
+        issuanceDetailsStatus: detailsOfIssuance.status
+      }),
+      activeStep: detailsOfIssuance.status === 'Submitted' ? 1 : getActiveStep()
+    }
+  }
+
   if (hasActiveIdentityJourney) {
     const activeJourneyIdentityStatus = isIndividualJourneyStarted
       ? individualIdentity?.status
@@ -46,11 +59,11 @@ export const useHomeOnboardingSteps = () => {
       : investorIdentities[0].status
 
     return {
-      steps: getIdentityOnboardingSteps(
-        isIndividualJourneyStarted ? 'individual' : 'corporate',
-        activeJourneyIdentityStatus,
-        isIssuerJourneyStarted
-      ),
+      steps: getIdentityOnboardingSteps({
+        identityType: isIndividualJourneyStarted ? 'individual' : 'corporate',
+        identityStatus: activeJourneyIdentityStatus,
+        asIssuer: isIssuerJourneyStarted
+      }),
       activeStep: getActiveStep(activeJourneyIdentityStatus)
     }
   }

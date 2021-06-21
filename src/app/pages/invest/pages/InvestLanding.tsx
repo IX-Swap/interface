@@ -6,7 +6,6 @@ import { InvestRoute } from 'app/pages/invest/router/config'
 import { VSpacer } from 'components/VSpacer'
 import { DSOTable } from 'app/pages/invest/components/DSOTable/DSOTable'
 import { PromotedDSOs } from 'app/components/DSO/components/PromotedDSOs'
-import { PromoBanner } from 'app/pages/invest/components/PromoBanner'
 import { PageHeader } from 'app/components/PageHeader/PageHeader'
 
 export const InvestLanding = () => {
@@ -41,8 +40,6 @@ export const InvestLanding = () => {
       </Grid>
       <VSpacer size='small' />
       <PromotedDSOs />
-      <VSpacer size='medium' />
-      <PromoBanner />
       <VSpacer size='medium' />
       <Grid container direction='column' spacing={4}>
         <Grid item>

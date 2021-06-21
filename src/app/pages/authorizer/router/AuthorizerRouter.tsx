@@ -15,6 +15,8 @@ import {
 import { AppRoute } from 'components/AppRoute'
 import React from 'react'
 import { Switch } from 'react-router'
+import { AuthorizerIssuanceDetailsRouter } from 'app/pages/authorizer/pages/issuanceDetails/router/AuthorizerIssuanceDetailsRouter'
+import { AuthorizerListingsRouter } from '../pages/listings/router/AuthorizerListingsRouter'
 
 export const AuthorizerRouter = () => {
   return (
@@ -68,6 +70,17 @@ export const AuthorizerRouter = () => {
         path={AuthorizerRoute.withdrawalAddresses}
       >
         <AuthorizerWithdrawalAddressesRouter />
+      </AppRoute>
+
+      <AppRoute
+        breadcrumb='Issuance Details'
+        path={AuthorizerRoute.issuanceDetails}
+      >
+        <AuthorizerIssuanceDetailsRouter />
+      </AppRoute>
+
+      <AppRoute breadcrumb='Listings' path={AuthorizerRoute.listings}>
+        <AuthorizerListingsRouter />
       </AppRoute>
 
       <AppRoute exact path={AuthorizerRoute.landing}>

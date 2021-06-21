@@ -6,6 +6,7 @@ export const apiURL = {
 
 export const homeURL = {
   getAccessReports: '/dataroom/reports-and-newsletters/list',
+  getNewsList: '/resources/news',
   getTopIssuers: '/issuance/top-issuers',
   getTopCorporates: '/issuance/top-corporates'
 }
@@ -45,6 +46,10 @@ export const identityURL = {
     get: (userId: string) => `/identity/issuance-detail/${userId}`,
     submit: (issuanceId: string) =>
       `/identity/issuance-detail/${issuanceId}/submit`
+  },
+  stats: {
+    get: `/identity/stats`,
+    list: `/identity/list`
   }
 }
 
@@ -82,6 +87,12 @@ export const accountsURL = {
     getByUserId: (userId: string) => `/accounts/balance/${userId}`,
     getByAssetId: (userId: string, assetId: string) =>
       `/accounts/balance/${userId}/${assetId}`
+  },
+  virtualAccounts: {
+    withdraw: (userId: string, virtualAccountId: string) =>
+      `/virtual-accounts/withdrawals/${virtualAccountId}/${userId}`,
+    getAllTransactions: (userId: string, virtualAccountId: string) =>
+      `/virtual-accounts/transactions/list/${virtualAccountId}/${userId}`
   }
 }
 
@@ -118,7 +129,6 @@ export const issuanceURL = {
       `/issuance/dso/${userId}/${dsoId}`,
     submit: (userId: string, dsoId: string) =>
       `/issuance/dso/${userId}/${dsoId}/submit`,
-    getCapitalStructureList: '/issuance/capital-structures',
     getActivitiesList: (userId: string, dsoId: string) =>
       `/issuance/dso/${userId}/${dsoId}/activities/list`,
     promote: (dsoId: string) => `/issuance/dso/${dsoId}/promote`,
@@ -173,4 +183,85 @@ export const documentsURL = {
   uploadAccessReport: '/dataroom/reports-and-newsletters',
   getAccessReport: (fileId: string) =>
     `/dataroom/reports-and-newsletters/${fileId}`
+}
+
+export const virtualAccounts = {
+  getAll: '/virtual-accounts/list',
+  add: '/virtual-accounts',
+  getByUserId: (userId: string) => `/virtual-accounts/${userId}`,
+  assign: '/virtual-accounts/assign',
+  uploadCSV: '/virtual-accounts/upload'
+}
+
+export const exchange = {
+  marketList: '/exchange/markets/list',
+  userOrders: (userId: string) => `/exchange/orders/list/${userId}`,
+  userTrades: (userId: string) => `/exchange/trades/list/${userId}`,
+  tradeHistory: {
+    emit: 'fills/get',
+    onMyFills: (tokenId: string) => `myfills/${tokenId}`,
+    on: (tokenId: string) => `fills/${tokenId}`
+  },
+  orderBook: {
+    emit: 'orderbook/get',
+    on: (tokenId: string) => `orderbook/${tokenId}`
+  },
+  lastPrice: {
+    emit: 'price/get',
+    on: (tokenId: string) => `price/${tokenId}`
+  },
+  tokenBalance: {
+    emit: 'tokenBalance/get',
+    on: (userId: string) => `tokenBalance/${userId}`
+  },
+  summary: {
+    emit: 'metrics24h/get',
+    on: (tokenId: string) => `metrics24h/${tokenId}`
+  },
+  getMetrics: (tokenId: string) => `/exchange/pair/financialMetrics/${tokenId}`,
+  currentHoldings: (userId: string) => `/accounts/holdings/${userId}`,
+  cancelOrder: (userId: string, orderId: string) =>
+    `/exchange/orders/cancel/${userId}/${orderId}`,
+  getListing: (userId: string, listingId: string) =>
+    `/exchange/listing/${userId}/${listingId}`,
+  getMarket: (pairId: string) => `/exchange/markets/pair/${pairId}`
+}
+
+export const placeOrderURL = {
+  create: '/exchange/orders'
+}
+
+export const exchangeMarket = {
+  getOrdersList: (userId: string) => `exchange/orders/list/${userId}`
+}
+
+export const listings = {
+  getListByUser: (userId: string) => `exchange/listing/list/${userId}`,
+  submitListing: (userId: string, listingId: string) =>
+    `/exchange/listing/${userId}/${listingId}/submit`
+}
+
+export const charts = {
+  config: 'exchange/udf/config',
+  symbols: 'exchange/udf/symbols',
+  history: 'exchange/udf/history',
+  time: 'exchange/udf/time',
+  search: 'exchange/udf/search'
+}
+
+export const custodyAccount = {
+  get: (userId: string) => `/custody/account/${userId}`,
+  create: '/custody/account/assign'
+}
+
+export const listingsURL = {
+  getById: (userId: string, listingId: string) =>
+    `/exchange/listing/${userId}/${listingId}`,
+  create: (userId: string) => `/exchange/listing/${userId}`,
+  update: (userId: string, dsoId: string) =>
+    `/exchange/listing/${userId}/${dsoId}`
+}
+
+export const assetsURL = {
+  getAssetsList: () => '/accounts/assets/list'
 }

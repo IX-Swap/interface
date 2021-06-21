@@ -30,6 +30,10 @@ export const authorizerItemMap: Record<
     uri: '/identity/corporates/list',
     listRoute: AuthorizerRoute.corporateIdentities
   },
+  [AppFeature.IssuanceDetails]: {
+    uri: '/identity/issuance-detail/list',
+    listRoute: AuthorizerRoute.issuanceDetails
+  },
   [AppFeature.Individuals]: {
     uri: '/identity/individuals/list',
     listRoute: AuthorizerRoute.individualIdentities
@@ -45,5 +49,9 @@ export const authorizerItemMap: Record<
   [AppFeature.WithdrawalAddresses]: {
     uri: '/accounts/withdrawal-addresses/list',
     listRoute: AuthorizerRoute.withdrawalAddresses
+  },
+  [AppFeature.Listings]: {
+    uri: '/exchange/listing/list',
+    listRoute: AuthorizerRoute.listings
   }
 }

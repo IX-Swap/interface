@@ -33,8 +33,8 @@ export const WithdrawalPreview = (props: WithdrawalViewProps) => {
       <Grid item container spacing={4}>
         <Grid item xs={4}>
           <LabelledValue
-            label='Bank Account Number'
-            value={data.bank.bankAccountNumber}
+            label='Virtual Account'
+            value={data.virtualAccount?.accountNumber}
           />
         </Grid>
 
@@ -53,6 +53,15 @@ export const WithdrawalPreview = (props: WithdrawalViewProps) => {
             label='Bank Address'
             value={convertAddressToString(data.bank.address)}
           />
+        </Grid>
+        <Grid item xs={4}>
+          <LabelledValue
+            label='Bank Contact Number'
+            value={data.bank.bankAccountNumber}
+          />
+        </Grid>
+        <Grid item xs={4}>
+          <LabelledValue label='Transfer Method' value='' />
         </Grid>
       </Grid>
 

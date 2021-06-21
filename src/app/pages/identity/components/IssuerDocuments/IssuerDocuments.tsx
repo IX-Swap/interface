@@ -11,9 +11,9 @@ export const IssuerDocuments = () => {
           label='Company-Related Documents'
           helperElement={
             <Typography variant='body1'>
-              Certificate of Incorporation, Memorandum and Article Association,
-              Corporate Registry Profile, Company Organization Chart and
-              Register of Shareholders and Directors.
+              company registry profile, certificate of incorporation, memorandum
+              and articles of association, company organisation chart, register
+              of shareholders and directors, partnership deed and trust deed
             </Typography>
           }
         />
@@ -24,8 +24,8 @@ export const IssuerDocuments = () => {
           label='Issuance-Related Documents'
           helperElement={
             <Typography variant='body1'>
-              Offering memorandum, One pager / Teaser of the issuance and Any
-              other marketing materials.
+              offering memorandum, one pager of the issuance or any other
+              marketing material
             </Typography>
           }
         />
@@ -36,8 +36,7 @@ export const IssuerDocuments = () => {
           label='Financial Documents'
           helperElement={
             <Typography variant='body1'>
-              Please upload your balance sheet , P&amp;L statement or Annual
-              Returns
+              balance sheet, profit &amp; loss statement or annual returns
             </Typography>
           }
         />

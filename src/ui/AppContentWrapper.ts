@@ -12,7 +12,6 @@ export const AppContentWrapper = styled(Grid)(({ theme }) => ({
   background: theme.palette.backgrounds.default,
 
   [theme.breakpoints.up('md')]: {
-    paddingLeft: 90,
     marginTop: 64
   }
 }))

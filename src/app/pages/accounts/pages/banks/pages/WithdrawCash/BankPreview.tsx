@@ -9,8 +9,8 @@ import { privateClassNames } from 'helpers/classnames'
 export const BankPreview: React.FC = () => {
   const { watch } = useFormContext<WithdrawCashFormValues>()
   const { data } = useBanksData()
-  const bankId = watch('bank')
-  const bank = data.map[bankId]
+  const bankId = watch('bankAccountId')
+  const bank = data.map[bankId ?? '']
 
   if (bank === undefined) {
     return null

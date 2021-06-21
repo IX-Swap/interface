@@ -12,9 +12,10 @@ export interface DataroomDeleteSelectedProps extends ButtonProps {
 export const DataroomDeleteSelected = (props: DataroomDeleteSelectedProps) => {
   const { name, ...rest } = props
   const { isLoading, deleteMultiple } = useDeleteFilesArray(name)
-  const { hasSelected, selectedCount } = useSelectionHelperContext<
-    SelectedDocument
-  >()
+  const {
+    hasSelected,
+    selectedCount
+  } = useSelectionHelperContext<SelectedDocument>()
 
   if (!hasSelected) {
     return <div />

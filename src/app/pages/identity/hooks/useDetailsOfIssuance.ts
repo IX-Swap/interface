@@ -6,18 +6,18 @@ import { useServices } from 'hooks/useServices'
 import { useQuery } from 'react-query'
 import { DetailsOfIssuance } from 'types/detailsOfIssuance'
 
-export const useDetailsOfIssuance = () => {
+export const useDetailsOfIssuance = (userId?: string) => {
   const { apiService } = useServices()
   const { user } = useAuth()
-  const userId = getIdFromObj(user)
+  const _userId = userId ?? getIdFromObj(user)
 
-  const uri = identityURL.detailsOfIssuance.get(userId)
+  const uri = identityURL.detailsOfIssuance.get(_userId)
   const getDetailsOfIssuance = async () => {
     return await apiService.get<DetailsOfIssuance>(uri)
   }
 
   const { data, ...rest } = useQuery(
-    [identityQueryKeys.getDetailsOfIssuance(userId)],
+    [identityQueryKeys.getDetailsOfIssuance(_userId)],
     getDetailsOfIssuance,
     { retry: false, refetchOnMount: false }
   )

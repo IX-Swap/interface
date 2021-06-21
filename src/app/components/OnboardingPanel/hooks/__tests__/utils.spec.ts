@@ -12,12 +12,15 @@ describe('getIdentityOnboardingSteps', () => {
   })
 
   it('returns correct steps and status', () => {
-    const steps = getIdentityOnboardingSteps('individual', individual.status)
+    const steps = getIdentityOnboardingSteps({
+      identityType: 'individual',
+      identityStatus: individual.status
+    })
 
     expect(steps).toEqual([
       { title: 'Get Started', content: ['Access platform and reports'] },
       { title: 'To Invest', content: ['As individual'] },
-      { title: 'Create Identity', content: ['For Verification'] },
+      { title: 'Create Identity', content: ['For verification'] },
       { title: 'Complete Onboarding', content: [''] }
     ])
   })
@@ -34,13 +37,13 @@ describe('getIdentityStatus', () => {
     expect(rejectedStepContent).toEqual(['Rejected'])
 
     const submittedStepContent = getIdentityStatus('Submitted')
-    expect(submittedStepContent).toEqual(['For Verification'])
+    expect(submittedStepContent).toEqual(['For verification'])
 
     const authorizedStepContent = getIdentityStatus('Approved')
     expect(authorizedStepContent).toEqual(['Verified!'])
 
     const draftStepContent = getIdentityStatus('Draft')
-    expect(draftStepContent).toEqual(['In Progress'])
+    expect(draftStepContent).toEqual(['In progress'])
 
     const defaultStepContent = getIdentityStatus()
     expect(defaultStepContent).toEqual([''])

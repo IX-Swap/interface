@@ -11,6 +11,7 @@ import { IdentityRoot } from 'app/pages/identity/IdentityRoot'
 import { InvestRoot } from 'app/pages/invest/InvestRoot'
 import { AdminRoot } from 'app/pages/admin/AdminRoot'
 import { AuthorizerRoot } from 'app/pages/authorizer/AuthorizerRoot'
+import { OTCMarketRoot } from 'app/pages/exchange/OTCMarketRoot'
 
 export const AppRouter = () => {
   return (
@@ -49,6 +50,10 @@ export const AppRouter = () => {
 
       <AppRoute breadcrumb='Authorization' path={AppPath.authorizer}>
         <AuthorizerRoot />
+      </AppRoute>
+
+      <AppRoute breadcrumb='Market' path={AppPath.OTCMarket}>
+        <OTCMarketRoot />
       </AppRoute>
 
       <Redirect to={AppPath.home} />

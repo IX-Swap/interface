@@ -1,7 +1,9 @@
+import { NumberFormatValues } from 'react-number-format'
 import {
   hasValue,
   plainValueExtractor,
-  reverseBooleanValueExtractor
+  reverseBooleanValueExtractor,
+  numericStringValueExtractor
 } from '../forms'
 
 describe('plainValueExtractor', () => {
@@ -36,5 +38,16 @@ describe('reverseBooleanValueExtractor', () => {
     const event = undefined as any
     expect(reverseBooleanValueExtractor(event, true)).toEqual(false)
     expect(reverseBooleanValueExtractor(event, false)).toEqual(true)
+  })
+})
+
+describe('numericStringValueExtractor', () => {
+  it('returns the correct value', () => {
+    const values: NumberFormatValues = {
+      value: '123',
+      floatValue: 123,
+      formattedValue: '123'
+    }
+    expect(numericStringValueExtractor(values)).toEqual('123')
   })
 })

@@ -8,6 +8,7 @@ import { ReactComponent as InvestIcon } from 'assets/icons/navigation/invest.svg
 import { ReactComponent as AccountsIcon } from 'assets/icons/navigation/account.svg'
 import { ReactComponent as IssuanceIcon } from 'assets/icons/navigation/issuance.svg'
 import { ReactComponent as AuthorizerIcon } from 'assets/icons/navigation/authorizer.svg'
+import { ReactComponent as OTCMarketIcon } from 'assets/icons/navigation/otc-market.svg'
 import { HomeOutlined as HomeIcon } from '@material-ui/icons'
 import { SwipeableDrawer } from '@material-ui/core'
 import { useAppActions, useAppState } from 'app/hooks/useAppState'
@@ -15,6 +16,7 @@ import { useAppBreakpoints } from 'hooks/useAppBreakpoints'
 import { InvestRoute } from 'app/pages/invest/router/config'
 import { HomeRoute } from 'app/pages/home/router/config'
 import { AuthorizerRoute } from 'app/pages/authorizer/router/config'
+import { OTCMarketRoute } from 'app/pages/exchange/router/config'
 
 export const SidebarContainer = () => {
   const { isNavDrawerOpened } = useAppState()
@@ -40,6 +42,11 @@ export const SidebarContainer = () => {
       label: 'Invest',
       link: InvestRoute.landing,
       icon: InvestIcon
+    },
+    {
+      label: 'Exchange',
+      link: OTCMarketRoute.landing,
+      icon: OTCMarketIcon
     }
   ]
 
@@ -77,7 +84,5 @@ export const SidebarContainer = () => {
     >
       {sidebar}
     </SwipeableDrawer>
-  ) : (
-    sidebar
-  )
+  ) : null
 }

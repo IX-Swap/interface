@@ -20,7 +20,14 @@ export const lightTheme: ThemeOptions = {
     backgrounds: {
       default: '#ffffff',
       light: '#fafafa',
-      lighter: '#e3e3e3'
+      lighter: '#e3e3e3',
+      alternative: '#56AA82',
+      alternativeLight: 'rgba(86, 170, 130, 0.06)'
+    },
+    slider: {
+      background: '#C6D9FF',
+      activeColor: '#ffffff',
+      activeBackground: '#0c469c'
     },
     sidebar: {
       activeBackground: tinycolor(themeColors.primary)

@@ -11,10 +11,10 @@ import { VSpacer } from 'components/VSpacer'
 export const Preview: React.FC = () => {
   const { watch } = useFormContext<WithdrawCashFormValues>()
   const { data, isLoading } = useBanksData()
-  const bankId = watch('bank')
-  const amountFormatted = watch('amount')
+  const bankId = watch('bankAccountId')
+  const amountFormatted = watch('amount', 0)
   const memo = watch('memo')
-  const bank = data.map[bankId]
+  const bank = data.map[bankId ?? '']
 
   if (isLoading) {
     return null
@@ -36,7 +36,10 @@ export const Preview: React.FC = () => {
     },
     {
       label: 'Withdraw Amount',
-      value: formatMoney(amountFormatted, bank.currency.numberFormat.currency),
+      value: formatMoney(
+        amountFormatted ?? 0,
+        bank.currency.numberFormat.currency
+      ),
       secret: true
     }
   ]

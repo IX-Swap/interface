@@ -17,7 +17,8 @@ export const documentsQueryKeys = {
 
 export const assetsQueryKeys = {
   getById: 'asset-by-id',
-  getData: 'assets'
+  getData: 'assets',
+  getAssetsList: 'assets-list'
 }
 
 export const identityQueryKeys = {
@@ -31,7 +32,9 @@ export const identityQueryKeys = {
   getAllCorporateByUserId: (id: string) =>
     generateQueryKey('all-corporate-identities', id),
   getDetailsOfIssuance: (userId: string) =>
-    generateQueryKey('details-of-issuance', userId)
+    generateQueryKey('details-of-issuance', userId),
+  getStats: 'admin-identity-stats',
+  getAdminIdentityList: 'admin-identity-list'
 }
 
 export const balanceQueryKeys = {
@@ -64,6 +67,7 @@ export const authorizerQueryKeys = {
 
 export const homeQueryKeys = {
   getAccessReports: 'access-reports',
+  getNewsList: 'news-list',
   getTopIssuers: 'top-issuers',
   getTopCoporates: 'top-corporate'
 }
@@ -75,11 +79,15 @@ export const banksQueryKeys = {
 }
 
 export const cashDepositsQueryKeys = {
-  getByUserId: (id: string) => generateQueryKey('cash-deposits', id)
+  getByUserId: (id: string) => generateQueryKey('cash-deposits', id),
+  getByVirtualAccount: (virtualAccountNumber: string) =>
+    generateQueryKey('cash-deposits', virtualAccountNumber)
 }
 
 export const cashWithdrawalsQueryKeys = {
-  getByUserId: (id: string) => generateQueryKey('cash-withdrawals', id)
+  getByUserId: (id: string) => generateQueryKey('cash-withdrawals', id),
+  getByVirtualAccount: (virtualAccountNumber: string) =>
+    generateQueryKey('cash-deposits', virtualAccountNumber)
 }
 
 export const digitalSecuritiesQueryKeys = {
@@ -109,7 +117,8 @@ export const usersQueryKeys = {
 
 export const investQueryKeys = {
   getCommitmentById: 'commitment-by-id',
-  getDSOById: 'dso-by-id',
+  getDSOById: (dsoId: string, issuerId: string) =>
+    generateQueryKey('dso', dsoId, issuerId),
   getCommitmentsByUserId: (id: string) => generateQueryKey('commitments', id)
 }
 
@@ -141,4 +150,40 @@ export const issuanceQueryKeys = {
   getCapitalStructureList: 'capital-structures-list',
   getActivitiesList: (dsoId: string) =>
     generateQueryKey('activities-list', dsoId)
+}
+
+export const virtualAccountQueryKeys = {
+  listAssigned: 'assigned-virtual-accounts',
+  listUnassigned: 'unassigned-virtual-accounts',
+  getByUserId: 'virtual-account'
+}
+
+export const exchange = {
+  marketList: 'market-list',
+  tokenBalance: 'tokenBalance',
+  tradeHistory: 'trade-history',
+  myTradeHistory: 'my-trade-history',
+  orderBook: 'order-book',
+  lastPrice: 'last-price',
+  summary: 'summary',
+  getMetrics: (tokenId: string) => generateQueryKey('metrics', tokenId),
+  userTrades: (userId: string) => generateQueryKey('user-trades', userId),
+  userOrders: (userId: string) => generateQueryKey('user-orders', userId),
+  userHoldings: (userId: string) => generateQueryKey('user-holdings', userId),
+  listing: (listingId: string) => generateQueryKey('listing', listingId),
+  market: (pairId: string) => generateQueryKey('market', pairId)
+}
+
+export const exchangeMarketQueryKeys = {
+  getOrdersList: (userId: string, pairId: string) =>
+    generateQueryKey('orders-list', userId, pairId)
+}
+
+export const listingsQueryKeys = {
+  getListingsList: 'listings-list'
+}
+
+export const exchangeListingsQueryKeys = {
+  getListingById: (listingId: string, issuerId: string) =>
+    generateQueryKey('listing', listingId, issuerId)
 }
