@@ -3,8 +3,6 @@ import { AccessReports } from 'app/pages/admin/pages/AccessReports'
 import { CreateCorporateAsAdmin } from 'app/pages/admin/pages/CreateCorporateAsAdmin'
 import { CreateIndividualAsAdmin } from 'app/pages/admin/pages/CreateIndividualAsAdmin'
 import { CreateIssuerAsAdmin } from 'app/pages/admin/pages/CreateIssuerAsAdmin'
-import { Users } from 'app/pages/admin/pages/Users'
-import { ViewUser } from 'app/pages/admin/pages/ViewUser'
 import { adminLandingLinks, AdminRoute } from 'app/pages/admin/router/config'
 import { AppRoute } from 'components/AppRoute'
 import { Identities } from 'app/pages/admin/pages/Identities'
@@ -13,12 +11,13 @@ import { ViewIndividualIdentity } from 'app/pages/admin/pages/ViewIndividualIden
 import React from 'react'
 import { Switch } from 'react-router'
 import { VirtualAccounts } from 'app/pages/admin/pages/VirtualAccounts'
+import { UserRouter } from 'app/pages/admin/router/UserRouter'
 
 export const AdminRouter = () => {
   return (
     <Switch>
-      <AppRoute breadcrumb='Users' exact path={AdminRoute.users}>
-        <Users />
+      <AppRoute breadcrumb='Users' path={AdminRoute.users}>
+        <UserRouter />
       </AppRoute>
 
       <AppRoute
@@ -27,10 +26,6 @@ export const AdminRouter = () => {
         path={AdminRoute.accessReports}
       >
         <AccessReports />
-      </AppRoute>
-
-      <AppRoute exact path={AdminRoute.view}>
-        <ViewUser />
       </AppRoute>
 
       <AppRoute exact path={AdminRoute.createIndividualIdentity}>
