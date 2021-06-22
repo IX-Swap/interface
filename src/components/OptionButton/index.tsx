@@ -45,3 +45,16 @@ export const OptionRow = styled(RowCenter)`
     flex-wrap: wrap;  
   `}
 `
+
+export const OptionCustom = styled(FancyButton)<{ active?: boolean; warning?: boolean }>`
+  max-width: 130px;
+  height: 60px;
+  position: relative;
+  padding: 10px 22px;
+  flex: 1;
+  border: ${({ theme, active, warning }) =>
+    warning ? `1px solid ${theme.red1}` : active ? `1px solid ${theme.popUpInputBorder}` : 'none'};
+  :hover {
+    border: ${({ theme, warning }) => (warning ? `1px solid ${theme.red1}` : `1px solid ${theme.popUpInputBorder}`)};
+  }
+`

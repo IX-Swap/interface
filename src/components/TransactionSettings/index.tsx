@@ -12,7 +12,7 @@ import { useDeadline } from 'hooks/useDeadline'
 import { useSlippage } from 'hooks/useSlippage'
 import { RECOMMENDED_SLIPPAGE_OPTIONS } from './constants'
 import { TYPE } from 'theme'
-import { FancyButton, Option, OptionRow } from 'components/OptionButton'
+import { Option, OptionRow, OptionCustom } from 'components/OptionButton'
 
 const Input = styled.input`
   background: ${({ theme }) => theme.bg1};
@@ -32,26 +32,6 @@ const Input = styled.input`
 const Marginer = styled.div`
   margin-bottom: 1rem;
 `
-const OptionCustom = styled(FancyButton)<{ active?: boolean; warning?: boolean }>`
-  max-width: 130px;
-  height: 60px;
-  position: relative;
-  padding: 10px 22px;
-  flex: 1;
-  border: ${({ theme, active, warning }) =>
-    warning ? `1px solid ${theme.red1}` : active ? `1px solid ${theme.popUpInputBorder}` : 'none'};
-  :hover {
-    border: ${({ theme, warning }) => (warning ? `1px solid ${theme.red1}` : `1px solid ${theme.popUpInputBorder}`)};
-  }
-
-  input {
-    width: 100%;
-    height: 100%;
-    border: 0px;
-    border-radius: 2rem;
-  }
-`
-
 const SlippageEmojiContainer = styled.span`
   color: #f3841e;
   ${({ theme }) => theme.mediaWidth.upToSmall`

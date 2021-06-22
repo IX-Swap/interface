@@ -1,4 +1,5 @@
 import styled from 'styled-components/macro'
+import { hexToRGBA } from 'utils/themeHelper'
 import { AutoColumn } from '../Column'
 import { RowBetween, RowFixed } from '../Row'
 
@@ -69,7 +70,8 @@ export const MenuItem = styled(RowBetween)`
   cursor: ${({ disabled }) => !disabled && 'pointer'};
   pointer-events: ${({ disabled }) => disabled && 'none'};
   :hover {
-    background-color: ${({ theme, disabled }) => !disabled && theme.bg2};
+    background: ${({ theme, disabled }) => !disabled && `${hexToRGBA(theme.bg10, 0.1)}`};
+    backdrop-filter: blur(4px);
   }
   opacity: ${({ disabled, selected }) => (disabled || selected ? 0.5 : 1)};
 `
@@ -104,7 +106,8 @@ export const SearchInput = styled.input`
 export const Separator = styled.div`
   width: 100%;
   height: 1px;
-  background-color: ${({ theme }) => theme.bg2};
+  background-color: ${({ theme }) => theme.text2};
+  opacity: 0.4;
 `
 
 export const SeparatorDark = styled.div`

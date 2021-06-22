@@ -1,33 +1,34 @@
 import { Currency, Ether, Token } from '@ixswap1/sdk-core'
+import { t, Trans } from '@lingui/macro'
+import useDebounce from 'hooks/useDebounce'
+import { useOnClickOutside } from 'hooks/useOnClickOutside'
+import useTheme from 'hooks/useTheme'
+import useToggle from 'hooks/useToggle'
 import React, { KeyboardEvent, RefObject, useCallback, useEffect, useMemo, useRef, useState } from 'react'
 import ReactGA from 'react-ga'
-import { t, Trans } from '@lingui/macro'
+import AutoSizer from 'react-virtualized-auto-sizer'
 import { FixedSizeList } from 'react-window'
-import { Text } from 'rebass'
+import { Box } from 'rebass'
+import styled from 'styled-components/macro'
+import { ReactComponent as Edit } from '../../assets/images/edit-circle.svg'
+import { useAllTokens, useIsUserAddedToken, useSearchInactiveTokenLists, useToken } from '../../hooks/Tokens'
 import { useActiveWeb3React } from '../../hooks/web3'
-import { useAllTokens, useToken, useIsUserAddedToken, useSearchInactiveTokenLists } from '../../hooks/Tokens'
-import { CloseIcon, TYPE, ButtonText, IconWrapper } from '../../theme'
+import { ButtonText, CloseIcon, TYPE } from '../../theme'
 import { isAddress } from '../../utils'
 import Column from '../Column'
 import Row, { RowBetween, RowFixed } from '../Row'
 import CommonBases from './CommonBases'
 import CurrencyList from './CurrencyList'
 import { filterTokens, useSortedTokensByQuery } from './filtering'
+import ImportRow from './ImportRow'
 import { useTokenComparator } from './sorting'
 import { PaddedColumn, SearchInput, Separator } from './styleds'
-import AutoSizer from 'react-virtualized-auto-sizer'
-import styled from 'styled-components/macro'
-import useToggle from 'hooks/useToggle'
-import { useOnClickOutside } from 'hooks/useOnClickOutside'
-import useTheme from 'hooks/useTheme'
-import ImportRow from './ImportRow'
-import { Edit } from 'react-feather'
-import useDebounce from 'hooks/useDebounce'
 
 const ContentWrapper = styled(Column)`
   width: 100%;
   flex: 1 1;
   position: relative;
+  background: ${({ theme }) => theme.bgGradientDark};
 `
 
 const Footer = styled.div`
@@ -36,10 +37,17 @@ const Footer = styled.div`
   padding: 20px;
   border-top-left-radius: 0;
   border-top-right-radius: 0;
-  background-color: ${({ theme }) => theme.bg1};
+  background: ${({ theme }) => theme.bgGradientGray};
   border-top: 1px solid ${({ theme }) => theme.bg2};
 `
-
+const Title = styled.span`
+  font-weight: 600;
+  font-size: 18px;
+  line-height: 20px;
+  text-align: center;
+  text-transform: uppercase;
+  color: ${({ theme }) => theme.text1};
+`
 interface CurrencySearchProps {
   isOpen: boolean
   onDismiss: () => void
@@ -170,9 +178,9 @@ export function CurrencySearch({
     <ContentWrapper>
       <PaddedColumn gap="16px">
         <RowBetween>
-          <Text fontWeight={500} fontSize={16}>
-            <Trans>Choose token</Trans>
-          </Text>
+          <Title>
+            <Trans>Select a token to swap</Trans>
+          </Title>
           <CloseIcon onClick={onDismiss} />
         </RowBetween>
         <Row>
@@ -223,14 +231,15 @@ export function CurrencySearch({
       )}
       <Footer>
         <Row justify="center">
-          <ButtonText onClick={showManageView} color={theme.blue1} className="list-token-manage-button">
+          <ButtonText onClick={showManageView} color={theme.text1} className="list-token-manage-button">
             <RowFixed>
-              <IconWrapper size="16px" marginRight="6px">
+              <Box marginRight={'6px'} display="flex" justifyContent="center">
                 <Edit />
-              </IconWrapper>
-              <TYPE.main color={theme.blue1}>
-                <Trans>Manage Token Lists</Trans>
-              </TYPE.main>
+              </Box>
+
+              <Title>
+                <Trans>Manage Token List</Trans>
+              </Title>
             </RowFixed>
           </ButtonText>
         </Row>

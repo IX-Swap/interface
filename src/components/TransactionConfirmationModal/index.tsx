@@ -179,7 +179,7 @@ export function TransactionErrorContent({ message, onDismiss }: { message: React
   )
 }
 
-interface ConfirmationModalProps {
+export interface ConfirmationModalProps {
   isOpen: boolean
   onDismiss: () => void
   hash: string | undefined
