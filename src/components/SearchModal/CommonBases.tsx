@@ -36,8 +36,9 @@ export default function CommonBases({
   selectedCurrency?: Currency | null
   onSelect: (currency: Currency) => void
 }) {
-  const bases = typeof chainId !== 'undefined' ? COMMON_BASES[chainId] ?? [] : []
-
+  const bases =
+    typeof chainId !== 'undefined' ? COMMON_BASES[chainId].filter((base) => base.symbol !== 'WETH9') ?? [] : []
+  console.log({ bases })
   return bases.length > 0 ? (
     <AutoColumn gap="md">
       <AutoRow>

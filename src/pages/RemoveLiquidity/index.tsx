@@ -283,9 +283,9 @@ export default function RemoveLiquidity({
     // if there was a tx hash, we want to clear the input
     if (txHash) {
       onUserInput(Field.LIQUIDITY_PERCENT, '0')
+      history.push(routes.pool)
     }
     setTxHash('')
-    history.push(routes.pool)
   }, [onUserInput, txHash, history])
 
   return (
