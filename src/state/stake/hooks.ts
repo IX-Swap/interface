@@ -74,7 +74,6 @@ export interface StakingInfo {
 // gets the staking info from the network for the active chain id
 export function useStakingInfo(pairToFilterBy?: Pair | null): StakingInfo[] {
   const { chainId, account } = useActiveWeb3React()
-
   // detect if staking is ended
   const currentBlockTimestamp = useCurrentBlockTimestamp()
 
@@ -93,7 +92,7 @@ export function useStakingInfo(pairToFilterBy?: Pair | null): StakingInfo[] {
     [chainId, pairToFilterBy]
   )
 
-  const uni = chainId ? IXS[chainId] : undefined
+  const ixs = chainId ? IXS[chainId] : undefined
 
   const rewardsAddresses = useMemo(() => info.map(({ stakingRewardAddress }) => stakingRewardAddress), [info])
 
@@ -121,7 +120,7 @@ export function useStakingInfo(pairToFilterBy?: Pair | null): StakingInfo[] {
   )
 
   return useMemo(() => {
-    if (!chainId || !uni) return []
+    if (!chainId || !ixs) return []
 
     return rewardsAddresses.reduce<StakingInfo[]>((memo, rewardsAddress, index) => {
       // these two are dependent on account
@@ -173,7 +172,7 @@ export function useStakingInfo(pairToFilterBy?: Pair | null): StakingInfo[] {
           dummyPair.liquidityToken,
           JSBI.BigInt(totalSupplyState.result?.[0])
         )
-        const totalRewardRate = CurrencyAmount.fromRawAmount(uni, JSBI.BigInt(rewardRateState.result?.[0]))
+        const totalRewardRate = CurrencyAmount.fromRawAmount(ixs, JSBI.BigInt(rewardRateState.result?.[0]))
 
         const getHypotheticalRewardRate = (
           stakedAmount: CurrencyAmount<Token>,
@@ -181,7 +180,7 @@ export function useStakingInfo(pairToFilterBy?: Pair | null): StakingInfo[] {
           totalRewardRate: CurrencyAmount<Token>
         ): CurrencyAmount<Token> => {
           return CurrencyAmount.fromRawAmount(
-            uni,
+            ixs,
             JSBI.greaterThan(totalStakedAmount.quotient, JSBI.BigInt(0))
               ? JSBI.divide(JSBI.multiply(totalRewardRate.quotient, stakedAmount.quotient), totalStakedAmount.quotient)
               : JSBI.BigInt(0)
@@ -201,7 +200,7 @@ export function useStakingInfo(pairToFilterBy?: Pair | null): StakingInfo[] {
           stakingRewardAddress: rewardsAddress,
           tokens: info[index].tokens,
           periodFinish: periodFinishMs > 0 ? new Date(periodFinishMs) : undefined,
-          earnedAmount: CurrencyAmount.fromRawAmount(uni, JSBI.BigInt(earnedAmountState?.result?.[0] ?? 0)),
+          earnedAmount: CurrencyAmount.fromRawAmount(ixs, JSBI.BigInt(earnedAmountState?.result?.[0] ?? 0)),
           rewardRate: individualRewardRate,
           totalRewardRate: totalRewardRate,
           stakedAmount: stakedAmount,
@@ -222,24 +221,24 @@ export function useStakingInfo(pairToFilterBy?: Pair | null): StakingInfo[] {
     rewardRates,
     rewardsAddresses,
     totalSupplies,
-    uni,
+    ixs,
   ])
 }
 
-export function useTotalUniEarned(): CurrencyAmount<Token> | undefined {
+export function useTotalIXsEarned(): CurrencyAmount<Token> | undefined {
   const { chainId } = useActiveWeb3React()
-  const uni = chainId ? IXS[chainId] : undefined
+  const ixs = chainId ? IXS[chainId] : undefined
   const stakingInfos = useStakingInfo()
 
   return useMemo(() => {
-    if (!uni) return undefined
+    if (!ixs) return undefined
     return (
       stakingInfos?.reduce(
         (accumulator, stakingInfo) => accumulator.add(stakingInfo.earnedAmount),
-        CurrencyAmount.fromRawAmount(uni, '0')
-      ) ?? CurrencyAmount.fromRawAmount(uni, '0')
+        CurrencyAmount.fromRawAmount(ixs, '0')
+      ) ?? CurrencyAmount.fromRawAmount(ixs, '0')
     )
-  }, [stakingInfos, uni])
+  }, [stakingInfos, ixs])
 }
 
 // based on typed value

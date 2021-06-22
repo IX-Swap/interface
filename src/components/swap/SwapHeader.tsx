@@ -1,21 +1,12 @@
 import React from 'react'
 import { Trans } from '@lingui/macro'
-import styled from 'styled-components/macro'
 
 import { RowBetween, RowFixed } from '../Row'
-import { TYPE } from '../../theme'
-
-const StyledSwapHeader = styled.div`
-  padding: 0;
-  width: 100%;
-  margin-bottom: 22px;
-  text-transform: uppercase;
-  color: ${({ theme }) => theme.text2};
-`
+import { StyledPageHeader, TYPE } from '../../theme'
 
 export default function SwapHeader() {
   return (
-    <StyledSwapHeader>
+    <StyledPageHeader>
       <RowBetween>
         <RowFixed>
           <TYPE.black fontWeight={600} fontSize={22} style={{ marginRight: '8px' }}>
@@ -24,6 +15,6 @@ export default function SwapHeader() {
         </RowFixed>
         <RowFixed></RowFixed>
       </RowBetween>
-    </StyledSwapHeader>
+    </StyledPageHeader>
   )
 }

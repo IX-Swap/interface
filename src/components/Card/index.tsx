@@ -28,10 +28,6 @@ export const DarkGreyCard = styled(Card)`
   background-color: ${({ theme }) => theme.bg2};
 `
 
-export const DarkCard = styled(Card)`
-  background-color: ${({ theme }) => theme.bg0};
-`
-
 export const OutlineCard = styled(Card)`
   border: 1px solid ${({ theme }) => theme.bg3};
 `
@@ -56,4 +52,25 @@ export const BlueCard = styled(Card)`
   background-color: ${({ theme }) => theme.primary5};
   color: ${({ theme }) => theme.blue2};
   border-radius: 12px;
+`
+
+export const TipCard = styled(Card)`
+  opacity: 0.7;
+  border-radius: 45px;
+  font-size: 12px;
+  line-height: 18px;
+  padding: 20px 35px;
+  text-align: left;
+  background: ${({ theme }) => theme.bgGradient};
+  color: ${({ theme }) => theme.text2};
+`
+export const DarkCard = styled(Card)`
+  background: ${({ theme }) => theme.bgGradientDark};
+  backdrop-filter: blur(4px);
+  border-radius: 20px;
+  padding: 26px 36px 40px 36px;
+`
+export const SwapErrorCard = styled(DarkCard)`
+  padding: 20px 36px;
+  text-align: left;
 `

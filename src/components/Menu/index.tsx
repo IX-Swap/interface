@@ -115,8 +115,6 @@ const InternalMenuItem = styled(Link)`
   }
 `
 
-const CODE_LINK = 'https://github.com/Uniswap/uniswap-interface'
-
 export default function Menu() {
   const { account } = useActiveWeb3React()
 
@@ -135,36 +133,6 @@ export default function Menu() {
 
       {open && (
         <MenuFlyout>
-          <MenuItem href="https://uniswap.org/">
-            <Info size={14} />
-            <div>
-              <Trans>About</Trans>
-            </div>
-          </MenuItem>
-          <MenuItem href="https://docs.uniswap.org/">
-            <BookOpen size={14} />
-            <div>
-              <Trans>Docs</Trans>
-            </div>
-          </MenuItem>
-          <MenuItem href={CODE_LINK}>
-            <Code size={14} />
-            <div>
-              <Trans>Code</Trans>
-            </div>
-          </MenuItem>
-          <MenuItem href="https://discord.gg/FCfyBSbCU5">
-            <MessageCircle size={14} />
-            <div>
-              <Trans>Discord</Trans>
-            </div>
-          </MenuItem>
-          <MenuItem href="https://info.uniswap.org/">
-            <PieChart size={14} />
-            <div>
-              <Trans>Analytics</Trans>
-            </div>
-          </MenuItem>
           {account && (
             <ButtonIXSWide onClick={openClaimModal} padding="8px 16px" width="100%" borderRadius="12px" mt="0.5rem">
               <Trans>Claim IXS</Trans>

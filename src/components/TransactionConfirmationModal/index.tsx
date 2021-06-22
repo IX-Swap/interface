@@ -2,19 +2,19 @@ import { Currency } from '@ixswap1/sdk-core'
 import React, { ReactNode, useContext } from 'react'
 import styled, { ThemeContext } from 'styled-components'
 import { getExplorerLink, ExplorerDataType } from '../../utils/getExplorerLink'
-import Modal from '../Modal'
 import { ExternalLink } from '../../theme'
 import { Text } from 'rebass'
 import { CloseIcon, CustomLightSpinner } from '../../theme/components'
 import { RowBetween, RowFixed } from '../Row'
 import { AlertTriangle, ArrowUpCircle, CheckCircle } from 'react-feather'
-import { ButtonPrimary, ButtonLight } from '../Button'
+import { ButtonPrimary, ButtonIXSWide, ButtonGradient } from '../Button'
 import { AutoColumn, ColumnCenter } from '../Column'
 import Circle from '../../assets/images/blue-loader.svg'
 import MetaMaskLogo from '../../assets/images/metamask.png'
 import { useActiveWeb3React } from '../../hooks/web3'
 import useAddTokenToMetamask from 'hooks/useAddTokenToMetamask'
 import { Trans } from '@lingui/macro'
+import RedesignedWideModal from 'components/Modal/RedesignedWideModal'
 
 const Wrapper = styled.div`
   width: 100%;
@@ -121,7 +121,7 @@ export function TransactionSubmittedContent({
             </ExternalLink>
           )}
           {currencyToAdd && library?.provider?.isMetaMask && (
-            <ButtonLight mt="12px" padding="6px 12px" width="fit-content" onClick={addToken}>
+            <ButtonGradient mt="12px" onClick={addToken}>
               {!success ? (
                 <RowFixed>
                   <Trans>
@@ -134,42 +134,15 @@ export function TransactionSubmittedContent({
                   <CheckCircle size={'16px'} stroke={theme.green1} style={{ marginLeft: '6px' }} />
                 </RowFixed>
               )}
-            </ButtonLight>
+            </ButtonGradient>
           )}
-          <ButtonPrimary onClick={onDismiss} style={{ margin: '20px 0 0 0' }}>
+          <ButtonIXSWide onClick={onDismiss} style={{ margin: '20px 0 0 0' }}>
             <Text fontWeight={500} fontSize={20}>
               {inline ? <Trans>Return</Trans> : <Trans>Close</Trans>}
             </Text>
-          </ButtonPrimary>
+          </ButtonIXSWide>
         </AutoColumn>
       </Section>
-    </Wrapper>
-  )
-}
-
-export function ConfirmationModalContent({
-  title,
-  bottomContent,
-  onDismiss,
-  topContent,
-}: {
-  title: ReactNode
-  onDismiss: () => void
-  topContent: () => ReactNode
-  bottomContent?: () => ReactNode | undefined
-}) {
-  return (
-    <Wrapper>
-      <Section>
-        <RowBetween>
-          <Text fontWeight={500} fontSize={16}>
-            {title}
-          </Text>
-          <CloseIcon onClick={onDismiss} />
-        </RowBetween>
-        {topContent()}
-      </Section>
-      {bottomContent && <BottomSection gap="12px">{bottomContent()}</BottomSection>}
     </Wrapper>
   )
 }
@@ -206,7 +179,7 @@ export function TransactionErrorContent({ message, onDismiss }: { message: React
   )
 }
 
-interface ConfirmationModalProps {
+export interface ConfirmationModalProps {
   isOpen: boolean
   onDismiss: () => void
   hash: string | undefined
@@ -216,7 +189,7 @@ interface ConfirmationModalProps {
   currencyToAdd?: Currency | undefined
 }
 
-export default function TransactionConfirmationModal({
+export default function ConfirmationModalContent({
   isOpen,
   onDismiss,
   attemptingTxn,
@@ -231,7 +204,7 @@ export default function TransactionConfirmationModal({
 
   // confirmation screen
   return (
-    <Modal isOpen={isOpen} onDismiss={onDismiss} maxHeight={90}>
+    <RedesignedWideModal isOpen={isOpen} onDismiss={onDismiss} maxHeight={90}>
       {attemptingTxn ? (
         <ConfirmationPendingContent onDismiss={onDismiss} pendingText={pendingText} />
       ) : hash ? (
@@ -244,6 +217,6 @@ export default function TransactionConfirmationModal({
       ) : (
         content()
       )}
-    </Modal>
+    </RedesignedWideModal>
   )
 }

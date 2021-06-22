@@ -34,6 +34,8 @@ export interface Colors {
   bgGradientDark: Gradient
   bgGradientShadow: Gradient
   bgHighlightGradient: Gradient
+  bgGradientGray: Gradient
+  bgGradientDarkAppBody: Gradient
   modalBG: Color
   advancedBG: Color
 

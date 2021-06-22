@@ -82,30 +82,7 @@ export default class ErrorBoundary extends React.Component<unknown, ErrorBoundar
                   <TYPE.main fontSize={10}>{error.stack}</TYPE.main>
                 </code>
               </CodeBlockWrapper>
-              <AutoRow>
-                <LinkWrapper>
-                  <ExternalLink
-                    id="create-github-issue-link"
-                    href={`https://github.com/Uniswap/uniswap-interface/issues/new?assignees=&labels=bug&body=${encodedBody}&title=${encodeURIComponent(
-                      `Crash report: \`${error.name}${error.message && `: ${error.message}`}\``
-                    )}`}
-                    target="_blank"
-                  >
-                    <TYPE.link fontSize={16}>
-                      <Trans>Create an issue on GitHub</Trans>
-                      <span>↗</span>
-                    </TYPE.link>
-                  </ExternalLink>
-                </LinkWrapper>
-                <LinkWrapper>
-                  <ExternalLink id="get-support-on-discord" href="https://discord.gg/FCfyBSbCU5" target="_blank">
-                    <TYPE.link fontSize={16}>
-                      <Trans>Get support on Discord</Trans>
-                      <span>↗</span>
-                    </TYPE.link>
-                  </ExternalLink>
-                </LinkWrapper>
-              </AutoRow>
+              <AutoRow></AutoRow>
             </AutoColumn>
           </BodyWrapper>
         </FallbackWrapper>

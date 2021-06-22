@@ -63,6 +63,6 @@ export const portis = new PortisConnector({
 // mainnet only
 export const walletlink = new WalletLinkConnector({
   url: NETWORK_URLS[1],
-  appName: 'Uniswap',
+  appName: 'IX Swap',
   appLogoUrl: IXSWAP_LOGO_URL,
 })

@@ -1,8 +1,9 @@
-import React, { useCallback } from 'react'
-import { Price, Currency } from '@ixswap1/sdk-core'
-import { useContext } from 'react'
+import { Currency, Price } from '@ixswap1/sdk-core'
+import React, { useCallback, useContext } from 'react'
 import { Text } from 'rebass'
 import styled, { ThemeContext } from 'styled-components'
+import { ReactComponent as Switch } from '../../assets/images/switch.svg'
+import { IconWrapper } from './styleds'
 
 interface TradePriceProps {
   price: Price<Currency, Currency>
@@ -45,6 +46,9 @@ export default function TradePrice({ price, showInverted, setShowInverted }: Tra
         <Text fontWeight={500} fontSize={14} color={theme.text7}>
           {text}
         </Text>
+        <IconWrapper clickable>
+          <Switch width="16px" height="16px" color={theme.text3} />
+        </IconWrapper>
       </div>
     </StyledPriceContainer>
   )

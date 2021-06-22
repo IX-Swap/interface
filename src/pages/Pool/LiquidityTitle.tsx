@@ -20,7 +20,7 @@ const Title = styled.span`
 `
 export const LiquidityTitle = () => {
   return (
-    <TitleRow style={{ marginTop: '1rem' }} padding={'0'}>
+    <TitleRow padding={'0'}>
       <HideSmall>
         <Title>
           <Trans>Liquidity Pool</Trans>
