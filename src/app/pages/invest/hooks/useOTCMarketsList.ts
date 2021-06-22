@@ -7,7 +7,9 @@ import { useParsedData, UsePaginatedQueryData } from 'hooks/useParsedData'
 import { otcQueryKeys } from 'config/queryKeys'
 import { OTCUrl } from 'config/apiURL'
 
-export const useOTCMarketsList = (): UsePaginatedQueryData<DigitalSecurityOffering> => {
+export const useOTCMarketsList = (
+  filter?: string
+): UsePaginatedQueryData<DigitalSecurityOffering> => {
   const { apiService } = useServices()
 
   const getOTCMarketsList = async (queryKey: string, args: PaginationArgs) => {
@@ -18,7 +20,10 @@ export const useOTCMarketsList = (): UsePaginatedQueryData<DigitalSecurityOfferi
     )
   }
   const { data, ...queryResult } = useInfiniteQuery(
-    [otcQueryKeys.getApprovedListingsList, paginationArgs],
+    [
+      otcQueryKeys.getApprovedListingsList,
+      { ...paginationArgs, search: filter }
+    ],
     getOTCMarketsList
   )
 
