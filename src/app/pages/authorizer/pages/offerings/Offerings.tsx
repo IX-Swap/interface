@@ -5,7 +5,7 @@ import { authorizerQueryKeys } from 'config/queryKeys'
 
 export const Offerings: React.FC = () => (
   <AuthorizerList
-    title='Authorize IssuanceRoot'
+    title='Authorize Issuance Offerings'
     uri='/issuance/dso/list'
     name={authorizerQueryKeys.getDSOList}
     columns={columns}
