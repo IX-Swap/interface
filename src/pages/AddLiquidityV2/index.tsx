@@ -44,6 +44,7 @@ import { useHandleCurrencySelect } from './useHandleCurrencySelect'
 import { ToggleableBody } from './styleds'
 import { ModalHeader } from './ModalHeader'
 import { PricesAndPoolShare } from './PricesAndPoolShare'
+import { routes } from 'utils/routes'
 
 const DEFAULT_ADD_V2_SLIPPAGE_TOLERANCE = new Percent(50, 10_000)
 
@@ -249,9 +250,10 @@ export default function AddLiquidity({
     // if there was a tx hash, we want to clear the input
     if (txHash) {
       onFieldAInput('')
+      history.push(routes.pool)
     }
     setTxHash('')
-  }, [onFieldAInput, txHash])
+  }, [onFieldAInput, txHash, history])
 
   const isCreate = history.location.pathname.includes('/create')
 
