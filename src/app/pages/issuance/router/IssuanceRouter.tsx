@@ -61,7 +61,7 @@ export const IssuanceRouter = () => {
         <DSOList />
       </AppRoute>
 
-      <AppRoute breadcrumb='Issuance' path={IssuanceRoute.landing}>
+      <AppRoute breadcrumb='Issuance' path={IssuanceRoute.insight}>
         <IssuanceLanding />
       </AppRoute>
     </Switch>

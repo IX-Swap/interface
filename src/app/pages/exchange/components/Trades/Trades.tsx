@@ -26,10 +26,10 @@ export const Trades = () => {
       </Grid>
       <Grid item>
         <TabPanel pt={1} value={activeTab} index={0}>
-          <MyTrades />
+          <MarketTrades />
         </TabPanel>
         <TabPanel pt={1} value={activeTab} index={1}>
-          <MarketTrades />
+          <MyTrades />
         </TabPanel>
       </Grid>
     </Grid>

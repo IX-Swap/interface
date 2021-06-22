@@ -11,11 +11,11 @@ describe('OrderStatus', () => {
   })
 
   it('renders without error', () => {
-    render(<OrderStatus status={'Open'} />)
+    render(<OrderStatus status={'OPEN'} />)
   })
 
   it('renders Typography with filled status and correct prop', () => {
-    render(<OrderStatus status={'Filled'} />)
+    render(<OrderStatus status={'FILLED'} />)
 
     expect(Typography).toBeCalledWith(
       expect.objectContaining({ color: 'initial' }),
@@ -24,7 +24,7 @@ describe('OrderStatus', () => {
   })
 
   it('renders Typography with canceled status and correct prop', () => {
-    render(<OrderStatus status={'Canceled'} />)
+    render(<OrderStatus status={'CANCELLED'} />)
 
     expect(Typography).toBeCalledWith(
       expect.objectContaining({ color: 'error' }),

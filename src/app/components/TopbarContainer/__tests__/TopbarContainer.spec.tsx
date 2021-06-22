@@ -6,7 +6,6 @@ import { InvestRoute } from 'app/pages/invest/router/config'
 import { IssuanceRoute } from 'app/pages/issuance/router/config'
 import { HomeRoute } from 'app/pages/home/router/config'
 import { AuthorizerRoute } from 'app/pages/authorizer/router/config'
-import { OTCMarketRoute } from 'app/pages/exchange/router/config'
 import { TopbarContainer } from 'app/components/TopbarContainer/TopbarContainer'
 import { TopbarLinkContainer } from 'app/components/TopbarContainer/components/TopbarLinkContainer'
 
@@ -74,14 +73,6 @@ describe('Topbar', () => {
       }),
       {}
     )
-    expect(TopbarLinkContainer).toHaveBeenNthCalledWith(
-      4,
-      expect.objectContaining({
-        label: 'Exchange',
-        link: OTCMarketRoute.landing
-      }),
-      {}
-    )
   })
 
   it('renders TopbarLink correctly if user is issuer', () => {
@@ -117,16 +108,8 @@ describe('Topbar', () => {
     expect(TopbarLinkContainer).toHaveBeenNthCalledWith(
       4,
       expect.objectContaining({
-        label: 'Exchange',
-        link: OTCMarketRoute.landing
-      }),
-      {}
-    )
-    expect(TopbarLinkContainer).toHaveBeenNthCalledWith(
-      5,
-      expect.objectContaining({
         label: 'Issuance',
-        link: IssuanceRoute.landing
+        link: IssuanceRoute.insight
       }),
       {}
     )
@@ -165,14 +148,6 @@ describe('Topbar', () => {
     )
     expect(TopbarLinkContainer).toHaveBeenNthCalledWith(
       4,
-      expect.objectContaining({
-        label: 'Exchange',
-        link: OTCMarketRoute.landing
-      }),
-      {}
-    )
-    expect(TopbarLinkContainer).toHaveBeenNthCalledWith(
-      5,
       expect.objectContaining({
         label: 'Authorizer',
         link: AuthorizerRoute.landing,

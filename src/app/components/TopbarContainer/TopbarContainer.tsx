@@ -52,7 +52,7 @@ export const TopbarContainer = () => {
   if (isIssuer) {
     links.push({
       label: 'Issuance',
-      link: IssuanceRoute.landing,
+      link: IssuanceRoute.insight,
       icon: IssuanceIcon
     })
   }
@@ -67,9 +67,7 @@ export const TopbarContainer = () => {
 
   const newAccountsLandingLinks = [
     ...accountsLandingLinks,
-    OTCMarketLandingLinks.reduce<any>((accum, item) => {
-      return { ...item, label: 'My Exchange Holdings' }
-    }, {})
+    { ...OTCMarketLandingLinks[1], label: 'My Exchange Holdings' }
   ]
 
   const newInvestLandingLinks = [
