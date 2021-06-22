@@ -6,9 +6,13 @@ import { useStyles } from './Dropzone.styles'
 
 export interface DropzoneFallbackProps {
   hasError: boolean
+  multiple?: boolean
 }
 
-export const DropzoneFallback = ({ hasError }: DropzoneFallbackProps) => {
+export const DropzoneFallback = ({
+  hasError,
+  multiple = false
+}: DropzoneFallbackProps) => {
   const theme = useTheme()
   const { icon } = useStyles()
 
@@ -30,7 +34,9 @@ export const DropzoneFallback = ({ hasError }: DropzoneFallbackProps) => {
     >
       <BackupOutlinedIcon className={icon} />
       <Typography align='center' variant='caption' color='textSecondary'>
-        Drop or Upload
+        {multiple ? 'You can drag and drop multiple files at once' : 'Drop'}{' '}
+        <br /> or <br />
+        Upload
       </Typography>
     </Box>
   )

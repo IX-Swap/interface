@@ -1,5 +1,5 @@
 import { Theme } from '@material-ui/core'
-import { green } from '@material-ui/core/colors'
+import { green, grey } from '@material-ui/core/colors'
 import { Overrides } from '@material-ui/core/styles/overrides'
 import { rte } from 'themes/rte'
 import tinycolor from 'tinycolor2'
@@ -9,13 +9,16 @@ export const getThemeOverrides = (theme: Theme): Overrides => ({
   MuiCssBaseline: {
     '@global': {
       html: {
-        background: theme.palette?.backgrounds.main
+        background: theme.palette?.backgrounds.default
       }
     }
   },
   MuiDialog: {
     paper: {
       borderRadius: 0
+    },
+    paperWidthMd: {
+      maxWidth: 800
     }
   },
   MuiListItem: {
@@ -34,13 +37,22 @@ export const getThemeOverrides = (theme: Theme): Overrides => ({
   MuiTableCell: {
     root: {
       paddingTop: 12,
-      paddingBottom: 12
+      paddingBottom: 12,
+      borderBottom: 'none'
     },
     head: {
       fontSize: '0.85rem'
     },
     body: {
       fontSize: '0.85rem'
+    }
+  },
+  MuiTableRow: {
+    root: {
+      borderBottom: `1px solid ${theme.palette.divider}`,
+      '&:last-child:not(.MuiTableRow-head)': {
+        borderBottom: 'none'
+      }
     }
   },
   MuiLink: {
@@ -86,7 +98,7 @@ export const getThemeOverrides = (theme: Theme): Overrides => ({
     shrink: {
       paddingRight: 5,
       paddingLeft: 5,
-      backgroundColor: theme.palette?.backgrounds.main
+      backgroundColor: theme.palette?.backgrounds.default
     }
   },
   MuiOutlinedInput: {
@@ -106,6 +118,13 @@ export const getThemeOverrides = (theme: Theme): Overrides => ({
     },
     adornedEnd: {
       paddingRight: 8
+    },
+    multiline: {
+      height: 'auto',
+      minHeight: 74
+    },
+    inputMultiline: {
+      minHeight: 38
     }
   },
   MuiSelect: {
@@ -138,20 +157,31 @@ export const getThemeOverrides = (theme: Theme): Overrides => ({
   },
   MuiStepContent: {
     root: {
-      borderLeftStyle: 'dashed'
+      borderLeftStyle: 'dashed',
+      color:
+        theme.palette.type === 'dark' ? 'rgba(255, 255, 255, 0.6)' : grey[600]
     }
   },
   MuiStepIcon: {
     root: {
-      color: tinycolor(theme.palette.backgrounds.main)
-        .darken(12)
-        .toHex8String(),
+      color: '#DDDDDD',
       '&$completed': {
         color: green[400]
       },
       '&$active': {
-        color: tinycolor(theme.palette.primary.main).toHex8String()
+        color: tinycolor(theme.palette.primary.main).toHex8String(),
+        '& .MuiStepIcon-text': {
+          fill: '#ffffff'
+        }
       }
+    },
+    text: {
+      fill: '#444444'
+    }
+  },
+  MuiSvgIcon: {
+    colorDisabled: {
+      fill: '#DADADA'
     }
   },
   MuiToggleButton: {
@@ -171,7 +201,7 @@ export const getThemeOverrides = (theme: Theme): Overrides => ({
   },
   MuiTextField: {
     root: {
-      height: 38
+      minHeight: 38
     }
   },
   MuiFormHelperText: {
@@ -193,6 +223,7 @@ export const getThemeOverrides = (theme: Theme): Overrides => ({
   MuiTabs: {
     flexContainer: {
       display: 'inline-flex',
+      width: '100%',
       borderBottom: `1px solid ${theme.palette.divider}`
     },
     indicator: {
@@ -201,16 +232,37 @@ export const getThemeOverrides = (theme: Theme): Overrides => ({
   },
   MuiChip: {
     root: {
-      backgroundColor: tinycolor(theme.palette.backgrounds.secondary)
+      backgroundColor: tinycolor(theme.palette.backgrounds.light)
         .darken(4)
         .toHex8String()
     }
   },
   MuiAvatar: {
     colorDefault: {
-      backgroundColor: tinycolor(theme.palette.backgrounds.secondary)
+      backgroundColor: tinycolor(theme.palette.backgrounds.light)
         .darken(3)
-        .toHex8String()
+        .toHex8String(),
+      color: theme.palette.text.primary
+    }
+  },
+  MuiSlider: {
+    root: {
+      padding: '18px 0'
+    },
+    rail: {
+      height: 5,
+      borderRadius: 5
+    },
+    track: {
+      height: 5,
+      borderRadius: 5
+    },
+    thumb: {
+      height: 14,
+      width: 14,
+      '&.Mui-disabled': {
+        marginTop: -2
+      }
     }
   }
 })

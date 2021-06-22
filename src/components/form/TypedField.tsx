@@ -18,7 +18,7 @@ export interface TypedFieldProps<
   TControl extends Control
 > {
   name: TFieldName
-  label: string
+  label: string | JSX.Element
   control: TControl
   rootName?: string
   defaultValue?: DeepPathValue<TFieldValues, TFieldName>
@@ -81,7 +81,7 @@ export const TypedField = <
 
   return (
     <TypedController
-      name={path}
+      name={path as any}
       defaultValue={defaultValue as any}
       render={controllerProps => {
         const elementProps = {
@@ -100,7 +100,8 @@ export const TypedField = <
             ...rest,
             control,
             label,
-            value: controllerProps.value as any,
+            helperText,
+            value: controllerProps.value,
             id: path,
             name: path,
             error: hasError,

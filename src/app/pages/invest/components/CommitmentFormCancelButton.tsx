@@ -1,14 +1,17 @@
 import React from 'react'
 import { Button, ButtonProps } from '@material-ui/core'
 import { AppRouterLinkComponent } from 'components/AppRouterLink'
-import { useDSORouter } from 'app/pages/invest/routers/dsoRouter'
+import { useParams } from 'react-router-dom'
+import { InvestRoute } from 'app/pages/invest/router/config'
+import { useTheme } from '@material-ui/core/styles'
 
 export interface CommitmentFormCancelButtonProps extends ButtonProps {}
 
 export const CommitmentFormCancelButton = (
   props: CommitmentFormCancelButtonProps
 ) => {
-  const { paths, params } = useDSORouter()
+  const params = useParams<{ dsoId: string; issuerId: string }>()
+  const theme = useTheme()
 
   return (
     <Button
@@ -17,8 +20,10 @@ export const CommitmentFormCancelButton = (
       fullWidth
       disableElevation
       component={AppRouterLinkComponent}
-      to={paths.view}
+      to={InvestRoute.view}
       params={params}
+      replace
+      style={{ color: theme.palette.primary.main }}
     >
       Cancel
     </Button>

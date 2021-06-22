@@ -1,14 +1,14 @@
 import React from 'react'
 import { TableView } from 'components/TableWithPagination/TableView'
 import { columns } from 'app/pages/accounts/pages/digitalSecurities/DSDeposit/columns'
-import { useDSRouter } from 'app/pages/accounts/pages/digitalSecurities/router'
 import { useAuth } from 'hooks/auth/useAuth'
 import { getIdFromObj } from 'helpers/strings'
 import { Card, CardContent } from '@material-ui/core'
 import { digitalSecuritiesQueryKeys } from 'config/queryKeys'
+import { useParams } from 'react-router-dom'
 
 export const RecentWithdrawals: React.FC = () => {
-  const { params } = useDSRouter()
+  const params = useParams<{ balanceId: string }>()
   const { user } = useAuth()
   const userId = getIdFromObj(user)
 

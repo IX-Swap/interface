@@ -10,7 +10,6 @@ import {
 import { Bank } from 'types/bank'
 import { BankFormValues, BankArgs } from 'app/pages/accounts/types'
 import { bankFormValidationSchema } from 'app/pages/accounts/validation'
-import { useBanksRouter } from 'app/pages/accounts/pages/banks/router'
 import { AppRouterLinkComponent } from 'components/AppRouterLink'
 import {
   getBankFormDefaultValues,
@@ -18,11 +17,13 @@ import {
 } from 'app/pages/accounts/pages/banks/utils'
 import { Form } from 'components/form/Form'
 import { Submit } from 'components/form/Submit'
-import { AddressFields } from 'app/pages/identity/components/AddressFields'
+
 import { BankFields } from 'app/pages/accounts/pages/banks/components/BankFields'
 import { BankDocuments } from 'app/pages/accounts/pages/banks/components/BankDocuments'
 import { VSpacer } from 'components/VSpacer'
 import { useSetPageTitle } from 'app/hooks/useSetPageTitle'
+import { BanksRoute } from 'app/pages/accounts/pages/banks/router/config'
+import { AddressFields } from 'app/pages/identity/components/AddressFields/AddressFields'
 
 export interface BankFormProps {
   submitButtonLabel: string
@@ -32,7 +33,6 @@ export interface BankFormProps {
 
 export const BankForm: React.FC<BankFormProps> = props => {
   const { submitButtonLabel, onSubmit, bank } = props
-  const { paths } = useBanksRouter()
   const handleSubmit = async (values: BankFormValues) => {
     await onSubmit(transformBankFormValuesToArgs(values))
   }
@@ -100,7 +100,7 @@ export const BankForm: React.FC<BankFormProps> = props => {
         <Grid container item xs={12} justify='center'>
           <Button
             component={AppRouterLinkComponent}
-            to={paths.list}
+            to={BanksRoute.list}
             color='default'
           >
             Cancel

@@ -1,20 +1,55 @@
 import { user } from './user'
 import { address, authorizationInfo } from './authorizer'
-import { CorporateIdentity, IndividualIdentity } from 'types/identity'
 import {
   DeclarationValue,
   IndividualDeclarations
 } from 'app/pages/identity/const/declarations'
 import { DataroomFile } from 'types/dataroomFile'
-import { IndividualIdentityFormValues } from 'app/pages/identity/components/types'
+import {
+  DetailsOfIssuance,
+  DetailsOfIssuanceFormValues
+} from 'types/detailsOfIssuance'
+import {
+  CorporateIdentity,
+  IndividualIdentity,
+  IndividualIdentityFormValues
+} from 'app/pages/identity/types/forms'
 
 export const corporate: CorporateIdentity = {
   _id: '1',
   logo: '',
+  type: 'investor',
+  legalEntityStatus: 'others',
+  isMailingAddressSame: false,
   createdAt: '01-01-2000',
   updatedAt: '01-01-2000',
   documents: [],
-  declarations: [],
+  taxResidencies: [],
+  declarations: {
+    agreements: {
+      investor: false,
+      custody: false,
+      disclosure: false
+    },
+    tax: { fatca: false },
+    investorsStatus: {
+      jointlyHeldAccount: false,
+      financialAsset: false,
+      personalAssets: false,
+      income: false,
+      assets: false,
+      optInAgreements: false,
+      trustee: false,
+      accreditedShareholders: false,
+      partnership: false,
+      accreditedBeneficiaries: false,
+      accreditedSettlors: false,
+      digitalSecurities: false,
+      digitalSecuritiesIssuance: false,
+      allServices: false,
+      primaryOfferingServices: false
+    }
+  },
   status: 'Submitted',
   beneficialOwners: [],
   companyAddress: address,
@@ -24,12 +59,13 @@ export const corporate: CorporateIdentity = {
   registrationNumber: '123456',
   representatives: [
     {
-      contactNumber: '1234',
-      countryOfResidence: 'Singapore',
-      dob: '2020-12-12',
-      firstName: 'John',
-      lastName: 'Doe',
-      nationality: 'S'
+      fullName: 'John Doe',
+      designation: 'CEO',
+      email: 'johnsemail',
+      contactNumber: '+6512345678901',
+      documents: [],
+      address: address,
+      percentageShareholding: 0
     }
   ],
   email: '',
@@ -37,12 +73,23 @@ export const corporate: CorporateIdentity = {
   user,
   authorizationDocuments: [],
   authorization: authorizationInfo,
-  authorizations: []
+  authorizations: [],
+  mailingAddress: address,
+  createdBy: '12345'
+}
+
+export const agreementsAndDisclosures = {
+  investorAgreement: false,
+  custodyAgreement: false,
+  disclosures: false
 }
 
 export const individual: IndividualIdentity = {
   photo: '',
   _id: '1',
+  taxResidencies: [
+    { countryOfResidence: 'Singapore', residentOfSingapore: false }
+  ],
   email: 'email@example.com',
   annualIncome: '100000',
   contactNumber: '1234567890',
@@ -63,24 +110,42 @@ export const individual: IndividualIdentity = {
   authorization: authorizationInfo,
   authorizationDocuments: [],
   authorizations: [],
-  declarations: [
-    { IndividualAccreditedInvestor: DeclarationValue.Yes },
-    { NetPersonalAssets: DeclarationValue.Yes },
-    { IndividualIncome: DeclarationValue.Yes },
-    { IndividualFinancialAsset: DeclarationValue.Yes },
-    { JointlyHeldAccount: DeclarationValue.Yes },
-    { InvestaXPrivacyPolicy: DeclarationValue.Yes },
-    { InvestaXTermsOfUse: DeclarationValue.Yes },
-    { USPerson: DeclarationValue.Yes },
-    { TreatAsAccreditedInvestor: DeclarationValue.Yes },
-    { PrimaryIssuancePlatform: DeclarationValue.Yes },
-    { SecondaryTradingPlatform: DeclarationValue.Yes },
-    { TrueAndCorrectInformation: DeclarationValue.Yes },
-    { InformAnyChanges: DeclarationValue.Yes }
-  ],
+  declarations: {
+    agreements: {
+      investor: false,
+      custody: false,
+      disclosure: false
+    },
+    tax: { fatca: false },
+    investorsStatus: {
+      jointlyHeldAccount: false,
+      financialAsset: false,
+      personalAssets: false,
+      income: false,
+      optInAgreements: false,
+      assets: false,
+      trustee: false,
+      accreditedShareholders: false,
+      partnership: false,
+      accreditedBeneficiaries: false,
+      accreditedSettlors: false,
+      digitalSecurities: false,
+      digitalSecuritiesIssuance: false,
+      allServices: false,
+      primaryOfferingServices: false
+    }
+  },
   documents: [],
   address,
-  user
+  user,
+  sourceOfFund: [
+    {
+      name: 'Inheritance/Gift',
+      checked: true,
+      value: 20
+    }
+  ],
+  createdBy: '12345'
 }
 
 export const document: DataroomFile = {
@@ -128,12 +193,55 @@ export const unCheckedDeclarations: IndividualDeclarations = {
 
 export const createIndividualArgs: IndividualIdentityFormValues = {
   ...individual,
+  ...agreementsAndDisclosures,
   documents: [{ value: documents[0] }, { value: documents[1] }],
-  declarations: checkedDeclarations
+  declarations: checkedDeclarations,
+  taxResidencies: []
 }
 
 export const updateIndividualArgs: IndividualIdentityFormValues = {
   ...individual,
+  ...agreementsAndDisclosures,
   documents: [{ value: documents[0] }, { value: documents[1] }],
-  declarations: checkedDeclarations
+  declarations: checkedDeclarations,
+  taxResidencies: []
+}
+
+export const detailsOfIssuance: DetailsOfIssuance = {
+  _id: '0',
+  fullName: 'John Wick',
+  companyName: 'Moogle',
+  companyRegistrationNumber: '123456',
+  createdAt: '34434',
+  updatedAt: '43434',
+  contactNumber: '+639571823',
+  authorizations: [],
+  email: 'john@moogle.org',
+  industry: 'Commerce',
+  fundRaisingAmount: 1234000,
+  detail: 'Details here',
+  documents: [
+    { ...document, _id: '1', type: 'Company-Related Documents' },
+    { ...document, _id: '2', type: 'Issuance-Related Documents' },
+    { ...document, _id: '3', type: 'Financial Documents' }
+  ],
+  status: 'Submitted'
+}
+
+export const detailsOfIssuanceFormValues: DetailsOfIssuanceFormValues = {
+  fullName: 'John Wick',
+  companyName: 'Moogle',
+  companyRegistrationNumber: '123456',
+  contactNumber: '+639571823',
+  email: 'john@moogle.org',
+  industry: 'Commerce',
+  fundRaisingAmount: 1234000,
+  detail: 'Details here',
+  companyRelated: [
+    { ...document, _id: '1', type: 'Company-Related Documents' }
+  ],
+  issuanceRelated: [
+    { ...document, _id: '2', type: 'Issuance-Related Documents' }
+  ],
+  financial: [{ ...document, _id: '3', type: 'Financial Documents' }]
 }

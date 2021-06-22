@@ -1,5 +1,5 @@
 export const typography = {
-  fontFamily: '"Bai Jamjuree", "Helvetica Neue", sans-serif !important',
+  fontFamily: '"Poppins", "Helvetica Neue", sans-serif !important',
   fontSize: 12,
   h1: {
     fontSize: '3rem',

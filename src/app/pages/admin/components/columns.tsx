@@ -8,7 +8,7 @@ import { withStyles } from '@material-ui/core/styles'
 
 const UserAgentTooltip = withStyles(theme => ({
   tooltip: {
-    backgroundColor: theme.palette.backgrounds.main,
+    backgroundColor: theme.palette.backgrounds.default,
     maxWidth: 480,
     color: theme.palette.text.primary,
     fontSize: theme.typography.pxToRem(12),

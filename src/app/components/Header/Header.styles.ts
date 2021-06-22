@@ -18,7 +18,8 @@ export default makeStyles(theme => ({
     transition: theme.transitions.create(['margin'], {
       easing: theme.transitions.easing.sharp,
       duration: theme.transitions.duration.leavingScreen
-    })
+    }),
+    backgroundColor: '#0c469c'
   },
   toolbar: {
     paddingLeft: theme.spacing(3.25),
@@ -29,6 +30,9 @@ export default makeStyles(theme => ({
   },
   grow: {
     flexGrow: 1
+  },
+  small: {
+    flexGrow: 0.2
   },
   search: {
     position: 'relative',

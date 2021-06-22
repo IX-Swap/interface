@@ -5,7 +5,7 @@ import {
   RejectButtonProps
 } from 'app/pages/authorizer/components/RejectButton'
 import { history } from 'config/history'
-import { AuthorizerRoute } from 'app/pages/authorizer/router'
+import { AuthorizerRoute } from 'app/pages/authorizer/router/config'
 import { bank } from '__fixtures__/authorizer'
 import { AuthorizerCategory } from 'types/app'
 import { Form } from 'components/form/Form'

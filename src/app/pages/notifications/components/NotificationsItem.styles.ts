@@ -1,7 +1,9 @@
 import { makeStyles } from '@material-ui/core/styles'
 
 export const useStyles = makeStyles(theme => ({
-  container: {},
+  container: {
+    border: `1px solid ${theme.palette.divider}`
+  },
   inner: {
     padding: '10px 14px',
     minHeight: 65,
@@ -14,7 +16,7 @@ export const useStyles = makeStyles(theme => ({
     flex: '1 1 0'
   },
   unread: {
-    backgroundColor: theme.palette.backgrounds.secondary
+    backgroundColor: theme.palette.backgrounds.light
   },
   icon: {
     '& svg': {

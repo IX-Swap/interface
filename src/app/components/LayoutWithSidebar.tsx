@@ -13,6 +13,7 @@ import { useAppBreakpoints } from 'hooks/useAppBreakpoints'
 import { RootContainer } from 'ui/RootContainer'
 
 export interface LayoutWithSidebarProps {
+  title?: string
   sidebar: ComponentType<any>
   content: ComponentType<any>
   sidebarToggle: ComponentType<SidebarToggleRenderProps>
@@ -21,7 +22,7 @@ export interface LayoutWithSidebarProps {
 
 export const LayoutWithSidebar = memo(
   (props: LayoutWithSidebarProps) => {
-    const { sidebar, content, sidebarToggle, secret = false } = props
+    const { title, sidebar, content, sidebarToggle, secret = false } = props
     const classes = useStyles()
     const { isSidebarOpened } = useAppState()
     const { isTablet } = useAppBreakpoints()
@@ -34,7 +35,7 @@ export const LayoutWithSidebar = memo(
       <RootContainer className={containerClass}>
         <Grid container direction='column'>
           <Grid item className={classes.header}>
-            <PageHeader />
+            <PageHeader title={title} />
           </Grid>
           <Grid item container className={classes.wrapper}>
             {isTablet && (

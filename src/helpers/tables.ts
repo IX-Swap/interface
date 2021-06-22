@@ -2,7 +2,6 @@ import { CashDeposit } from 'types/cashDeposit'
 import { formatMoney } from 'helpers/numbers'
 import { CashWithdrawal } from 'types/cashWithdrawal'
 import { Commitment } from 'types/commitment'
-import { CorporateIdentity, IndividualIdentity } from 'types/identity'
 import { DSWithdrawal } from 'types/dsWithdrawal'
 import { Asset } from 'types/asset'
 import { DigitalSecurityOffering } from 'types/dso'
@@ -10,6 +9,11 @@ import { AssetBalance } from 'types/balance'
 import { PersonName } from './types'
 import { formatDateToMMDDYY } from 'helpers/dates'
 import { WithdrawalAddress } from 'types/withdrawalAddress'
+import {
+  CorporateIdentity,
+  IndividualIdentity,
+  Personnel
+} from 'app/pages/identity/types/forms'
 
 export const renderMinimumInvestment = (
   amount: number,
@@ -44,12 +48,14 @@ export const renderRepresentativeName = (
     return ''
   }
 
-  return row.representatives.map(r => renderName(val, r)).join(', ')
+  return row.representatives
+    .map(({ fullName }: Personnel) => fullName)
+    .join(', ')
 }
 
 export const renderLastName = (
   val: string,
-  row: CorporateIdentity | DSWithdrawal | IndividualIdentity | Commitment
+  row: CorporateIdentity | DSWithdrawal | IndividualIdentity | Commitment | any
 ): string => {
   let lastName: string
 
@@ -81,9 +87,7 @@ export const getCorporateLegalName = (corporate: CorporateIdentity): string => {
   return ''
 }
 
-export const getCorporateRepresentativeName = (
-  corporate: CorporateIdentity
-): string => {
+export const getCorporateRepresentativeName = (corporate: any): string => {
   if (corporate !== undefined) {
     return corporate.representatives?.[0]?.lastName ?? ''
   }
@@ -147,7 +151,7 @@ export const renderAmount = (
   } else if ('onHold' in row) {
     symbol = ''
   } else {
-    symbol = row.asset.symbol
+    symbol = row.asset?.symbol
   }
 
   return formatMoney(amount, symbol)

@@ -13,6 +13,9 @@ import { DigitalSecurityOffering } from 'types/dso'
 import { formatMoney } from './numbers'
 import { DSOLogo } from 'app/components/DSO/components/DSOLogo'
 import { Commitment } from 'types/commitment'
+import { Order } from 'types/order'
+import { OrderStatus } from 'app/pages/exchange/components/PastOrderTable/OrderStatus'
+import { Side } from 'app/pages/exchange/components/TradeHistoryTable/Side'
 
 export const renderMenuItems = (
   items: Array<{ label: string; value: string | number }>
@@ -44,6 +47,10 @@ export const wysiwygToHtml = (draft: string): string => {
   return draftToHtml(JSON.parse(draft))
 }
 
+export const renderOrderStatus = (status: Order['status']) => {
+  return <OrderStatus status={status} />
+}
+
 export const renderPercentage = (value?: Maybe<Number>) => {
   // TODO: remove when backend is fixed
   if (value === null || value === undefined || value === 0) {
@@ -56,9 +63,15 @@ export const renderPercentage = (value?: Maybe<Number>) => {
 export const renderMonths = (value: string | number | undefined | null) =>
   value !== undefined ? `${value} months` : undefined
 
+export const renderMarketType = (marketType: string) => {
+  return marketType === '' ? 'Both' : marketType
+}
+
 export const documentIcons = {
   pdf: pdfIcon,
   txt: txtIcon,
   docx: docxIcon,
   unknown: unknownIcon
 }
+
+export const renderSide = (side: 'BID' | 'ASK') => <Side side={side} />

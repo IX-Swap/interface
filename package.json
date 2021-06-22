@@ -4,7 +4,6 @@
   "private": true,
   "dependencies": {
     "@date-io/date-fns": "^1.3.13",
-    "@ethersproject/address": "^5.0.5",
     "@fullstory/browser": "^1.4.5",
     "@hookform/error-message": "^0.0.4",
     "@hookform/resolvers": "^0.1.0",
@@ -26,6 +25,7 @@
     "draftjs-to-html": "^0.9.1",
     "eslint-config-react-app": "^5.2.1",
     "lodash": "^4.17.15",
+    "material-ui-phone-number": "^2.2.6",
     "material-ui-popup-state": "^1.6.1",
     "mobx": "^5.15.4",
     "mobx-react": "^6.2.2",
@@ -33,8 +33,8 @@
     "prettier": "^2.1.2",
     "prop-types": "^15.7.2",
     "pure-react-carousel": "^1.27.6",
-    "react": "^16.13.1",
-    "react-dom": "^16.13.1",
+    "react": "17.0.2",
+    "react-dom": "17.0.2",
     "react-dropzone": "^11.2.4",
     "react-error-boundary": "^3.0.2",
     "react-google-charts": "^3.0.15",
@@ -46,14 +46,19 @@
     "react-scripts": "^3.4.3",
     "react-scroll": "^1.8.1",
     "react-toast-notifications": "^2.4.0",
+    "react-waypoint": "^10.1.0",
     "react-window": "^1.8.5",
-    "socket.io-client": "^2.3.0",
+    "rimraf": "^3.0.2",
+    "serve-handler": "^6.1.3",
+    "socket.io-client": "^4.1.1",
     "standard": "^14.3.4",
     "tinycolor2": "^1.4.1",
     "typescript": "^3.9.7",
     "uno-material-ui": "^2.0.4",
     "use-debounce": "^5.2.0",
-    "yup": "^0.28.3"
+    "yup": "^0.28.3",
+    "yup-phone": "^1.2.19",
+    "currency-symbol-map": "5.0.1"
   },
   "devDependencies": {
     "@babel/cli": "^7.8.4",
@@ -69,6 +74,12 @@
     "@babel/preset-react": "^7.9.4",
     "@babel/preset-typescript": "^7.10.1",
     "@fullstory/babel-plugin-annotate-react": "^2.0.1",
+    "@storybook/addon-actions": "^6.1.17",
+    "@storybook/addon-essentials": "^6.1.17",
+    "@storybook/addon-links": "^6.1.17",
+    "@storybook/node-logger": "^6.1.17",
+    "@storybook/preset-create-react-app": "^3.1.5",
+    "@storybook/react": "^6.1.17",
     "@testing-library/jest-dom": "^5.11.2",
     "@testing-library/react": "^10.4.8",
     "@testing-library/react-hooks": "^3.4.1",
@@ -103,6 +114,7 @@
     "jest-environment-jsdom-sixteen": "^1.0.3",
     "jest-localstorage-mock": "^2.4.3",
     "jest-sonar-reporter": "^2.0.0",
+    "lint-staged": "^10.5.4",
     "react-app-rewired": "^2.1.6",
     "react-query-devtools": "^2.6.0",
     "react-test-renderer": "^16.13.1",
@@ -110,13 +122,16 @@
   },
   "scripts": {
     "start": "react-app-rewired start",
+    "pre-install": "rimraf node_modules && yarn cache clean",
     "build": "react-app-rewired build",
     "test:watch": "react-scripts test --env=jest-environment-jsdom-sixteen --runInBand",
-    "test": "CI=true react-scripts test --env=jest-environment-jsdom-sixteen --silent --runInBand",
+    "test": "CI=true react-scripts test --env=jest-environment-jsdom-sixteen --colors --silent --runInBand",
     "test:ci": "CI=true react-scripts test --env=jest-environment-jsdom-sixteen --silent --coverage --testResultsProcessor jest-sonar-reporter --maxWorkers=75%",
     "eject": "react-scripts eject",
     "lint": "eslint --cache --fix \"src/**/*.{ts,tsx}\"",
-    "format": "prettier --write \"src/**/*.tsx\""
+    "format": "prettier --write \"src/**/*.tsx\"",
+    "storybook": "start-storybook -p 6006 -s public",
+    "build-storybook": "build-storybook -s public"
   },
   "jest": {
     "collectCoverageFrom": [
@@ -140,10 +155,15 @@
     "reportPath": "coverage",
     "reportFile": "test-report.xml"
   },
+  "lint-staged": {
+    "src/**/*.{ts,tsx}": [
+      "yarn lint",
+      "yarn format"
+    ]
+  },
   "husky": {
     "hooks": {
-      "pre-commit": "tsc --noEmit && yarn lint",
-      "pre-push": "yarn test"
+      "pre-commit": "lint-staged"
     }
   },
   "babel": {

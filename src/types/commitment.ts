@@ -1,10 +1,13 @@
 import { DigitalSecurityOffering } from './dso'
 import { Asset } from './asset'
-import { CorporateIdentity, IndividualIdentity } from './identity'
 import { Authorizable, AuthorizationOverride } from 'types/authorizer'
 import User from 'types/user'
 import { DataroomFile } from 'types/dataroomFile'
 import { WithdrawalAddress } from './withdrawalAddress'
+import {
+  CorporateIdentity,
+  IndividualIdentity
+} from 'app/pages/identity/types/forms'
 
 export interface Commitment extends Authorizable {
   _id: string

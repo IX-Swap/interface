@@ -2,7 +2,6 @@ import { Bank } from 'types/bank'
 import { APIServiceResponse } from 'services/api/types'
 import { CashDeposit } from 'types/cashDeposit'
 import { Asset } from 'types/asset'
-import { CorporateIdentity, IndividualIdentity } from 'types/identity'
 import { user } from '__fixtures__/user'
 import { CashWithdrawal } from 'types/cashWithdrawal'
 import { DSWithdrawal } from 'types/dsWithdrawal'
@@ -12,6 +11,11 @@ import { Commitment } from 'types/commitment'
 import { emptyFile } from '__fixtures__/file'
 import { network } from './network'
 import { withdrawalAddress } from './withdrawalAddress'
+import {
+  CorporateIdentity,
+  IndividualIdentity
+} from 'app/pages/identity/types/forms'
+import { virtualAccount } from '__fixtures__/virtualAccount'
 
 export const asset: Asset = {
   _id: '5f732c538a568b50914d8372',
@@ -46,12 +50,39 @@ export const authorizationInfo: AuthorizationInfo = {
 
 export const corporate: CorporateIdentity = {
   _id: '1',
-
   logo: '',
+  type: 'investor',
+  legalEntityStatus: 'other',
+  isMailingAddressSame: false,
   createdAt: '01-01-2000',
   updatedAt: '01-01-2000',
   documents: [],
-  declarations: [],
+  taxResidencies: [],
+  declarations: {
+    agreements: {
+      investor: false,
+      custody: false,
+      disclosure: false
+    },
+    tax: { fatca: false },
+    investorsStatus: {
+      jointlyHeldAccount: false,
+      financialAsset: false,
+      personalAssets: false,
+      income: false,
+      assets: false,
+      optInAgreements: false,
+      trustee: false,
+      accreditedShareholders: false,
+      partnership: false,
+      accreditedBeneficiaries: false,
+      accreditedSettlors: false,
+      digitalSecurities: false,
+      digitalSecuritiesIssuance: false,
+      allServices: false,
+      primaryOfferingServices: false
+    }
+  },
   status: 'Submitted',
   beneficialOwners: [],
   companyAddress: address,
@@ -65,12 +96,15 @@ export const corporate: CorporateIdentity = {
   user,
   authorizationDocuments: [],
   authorization: authorizationInfo,
-  authorizations: []
+  authorizations: [],
+  mailingAddress: address,
+  createdBy: '12345'
 }
 
 export const individual: IndividualIdentity = {
   photo: '',
   _id: '1',
+  taxResidencies: [],
   email: 'email@example.com',
   annualIncome: '100000',
   contactNumber: '1234567890',
@@ -91,10 +125,35 @@ export const individual: IndividualIdentity = {
   authorization: authorizationInfo,
   authorizationDocuments: [],
   authorizations: [],
-  declarations: [],
+  declarations: {
+    agreements: {
+      investor: false,
+      custody: false,
+      disclosure: false
+    },
+    tax: { fatca: false },
+    investorsStatus: {
+      jointlyHeldAccount: false,
+      financialAsset: false,
+      personalAssets: false,
+      income: false,
+      assets: false,
+      optInAgreements: false,
+      trustee: false,
+      accreditedShareholders: false,
+      partnership: false,
+      accreditedBeneficiaries: false,
+      accreditedSettlors: false,
+      digitalSecurities: false,
+      digitalSecuritiesIssuance: false,
+      allServices: false,
+      primaryOfferingServices: false
+    }
+  },
   documents: [],
   address,
-  user
+  user,
+  createdBy: '12345'
 }
 
 export const dsWithdrawal: DSWithdrawal = {
@@ -284,7 +343,8 @@ export const cashWithdrawal: CashWithdrawal = {
   },
   authorizations: [],
   authorizationDocuments: [],
-  authorization: undefined
+  authorization: undefined,
+  virtualAccount: virtualAccount
 }
 
 export const authorizerURLs = {

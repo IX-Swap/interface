@@ -1,0 +1,60 @@
+<svg
+        width='84'
+        height='50'
+        viewBox='0 0 84 50'
+        fill='none'
+        xmlns='http://www.w3.org/2000/svg'
+>
+    <circle cx='3.22581' cy='17.7419' r='3.22581' fill='#9BB8EF' />
+    <circle cx='16.129' cy='17.7419' r='3.22581' fill='#9BB8EF' />
+    <circle cx='29.0322' cy='17.7419' r='3.22581' fill='#9BB8EF' />
+    <circle cx='41.9355' cy='17.7419' r='3.22581' fill='#D0E1EF' />
+    <circle cx='54.8387' cy='17.7419' r='3.22581' fill='#D0E1EF' />
+    <circle cx='67.7419' cy='17.7419' r='3.22581' fill='#D0E1EF' />
+    <circle cx='3.22581' cy='46.7741' r='3.22581' fill='#9BB8EF' />
+    <circle cx='3.22581' cy='3.22581' r='3.22581' fill='#9BB8EF' />
+    <circle cx='16.129' cy='46.7741' r='3.22581' fill='#9BB8EF' />
+    <circle cx='16.129' cy='3.22581' r='3.22581' fill='#9BB8EF' />
+    <circle cx='29.0322' cy='46.7741' r='3.22581' fill='#9BB8EF' />
+    <circle cx='29.0322' cy='3.22581' r='3.22581' fill='#9BB8EF' />
+    <circle cx='3.22581' cy='32.258' r='3.22581' fill='#9BB8EF' />
+    <circle cx='41.9355' cy='46.7741' r='3.22581' fill='#D0E1EF' />
+    <circle cx='41.9355' cy='3.22581' r='3.22581' fill='#D0E1EF' />
+    <circle cx='16.129' cy='32.258' r='3.22581' fill='#9BB8EF' />
+    <circle cx='54.8387' cy='46.7741' r='3.22581' fill='#D0E1EF' />
+    <circle cx='54.8387' cy='3.22581' r='3.22581' fill='#D0E1EF' />
+    <circle cx='29.0322' cy='32.258' r='3.22581' fill='#9BB8EF' />
+    <circle cx='67.7419' cy='46.7741' r='3.22581' fill='#D0E1EF' />
+    <circle cx='67.7419' cy='3.22581' r='3.22581' fill='#D0E1EF' />
+    <circle cx='41.9355' cy='32.258' r='3.22581' fill='#D0E1EF' />
+    <circle
+            cx='80.6451'
+            cy='32.2581'
+            r='3.22581'
+            transform='rotate(-90 80.6451 32.2581)'
+            fill='#D0E1EF'
+    />
+    <circle
+            cx='80.6451'
+            cy='46.7742'
+            r='3.22581'
+            transform='rotate(-90 80.6451 46.7742)'
+            fill='#D0E1EF'
+    />
+    <circle
+            cx='80.6451'
+            cy='3.22585'
+            r='3.22581'
+            transform='rotate(-90 80.6451 3.22585)'
+            fill='#D0E1EF'
+    />
+    <circle cx='54.8387' cy='32.258' r='3.22581' fill='#D0E1EF' />
+    <circle
+            cx='80.6451'
+            cy='17.742'
+            r='3.22581'
+            transform='rotate(-90 80.6451 17.742)'
+            fill='#D0E1EF'
+    />
+    <circle cx='67.7419' cy='32.258' r='3.22581' fill='#D0E1EF' />
+</svg>

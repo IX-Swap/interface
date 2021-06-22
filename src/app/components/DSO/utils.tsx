@@ -27,7 +27,6 @@ export const transformDSOToFormValues = (
       totalFundraisingAmount: '',
       pricePerUnit: '',
       currency: '',
-      decimalPlaces: null,
       tokenSymbol: '',
       tokenName: '',
       network: '',
@@ -49,7 +48,6 @@ export const transformDSOToFormValues = (
     capitalStructure: dso.capitalStructure,
     totalFundraisingAmount: dso.totalFundraisingAmount,
     pricePerUnit: dso.pricePerUnit,
-    decimalPlaces: dso.decimalPlaces,
     distributionFrequency: dso.distributionFrequency,
     logo: dso.logo,
     investmentPeriod: dso.investmentPeriod,
@@ -81,7 +79,7 @@ export const transformDSOToFormValues = (
 export const documentValueExtractor = (
   value?: DataroomFile | DataroomFile[]
 ) => {
-  return Array.isArray(value) ? value?.[0]._id : value?._id
+  return Array.isArray(value) ? value : value?._id
 }
 
 const dsoStatusColors = {

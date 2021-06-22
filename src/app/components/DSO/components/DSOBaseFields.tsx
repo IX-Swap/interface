@@ -1,10 +1,10 @@
 import React from 'react'
 import { Grid, TextField } from '@material-ui/core'
 import { TypedField } from 'components/form/TypedField'
-import { dateTimeValueExtractor, numericValueExtractor } from 'helpers/forms'
+import { dateTimeValueExtractor } from 'helpers/forms'
 import { CorporateSelect } from 'components/form/CorporateSelect'
 import { NetworkSelect } from 'components/form/NetworkSelect'
-import { AssetSelect } from 'components/form/AssetSelect'
+import { AssetSelect } from 'components/form/AssetSelect/AssetSelect'
 import { useFormContext } from 'react-hook-form'
 import { DSOFormValues } from 'types/dso'
 import { documentValueExtractor } from 'app/components/DSO/utils'
@@ -12,8 +12,6 @@ import { DataroomFileType } from 'config/dataroom'
 import { DateTimePicker } from 'components/form/_DateTimePicker'
 import { Dropzone } from 'components/dataroom/Dropzone'
 import { CapitalStructureSelect } from 'components/form/CapitalStructureSelect'
-import { NumericInput } from 'components/form/NumericInput'
-import { positiveNumberFormat } from 'config/numberFormat'
 import { FormSectionHeader } from 'app/components/DSO/components/FormSectionHeader'
 
 export interface DSOBaseFieldsProps {
@@ -23,8 +21,7 @@ export interface DSOBaseFieldsProps {
 
 export const DSOBaseFields = (props: DSOBaseFieldsProps) => {
   const { isNew, isLive } = props
-  const { control, watch } = useFormContext<DSOFormValues>()
-  const capitalStructure = watch('capitalStructure')
+  const { control } = useFormContext<DSOFormValues>()
 
   return (
     <Grid item>
@@ -57,6 +54,7 @@ export const DSOBaseFields = (props: DSOBaseFieldsProps) => {
                 name='capitalStructure'
                 helperText='Offering terms will be changed based on your capital structure'
                 variant='outlined'
+                inputProps={{ 'data-testid': 'capital-structure' }}
               />
             </Grid>
             <Grid item xs={12} md={6}>
@@ -94,19 +92,6 @@ export const DSOBaseFields = (props: DSOBaseFieldsProps) => {
                 control={control}
                 helperText='Token symbol'
                 variant='outlined'
-              />
-            </Grid>
-            <Grid item xs={12} md={4}>
-              <TypedField
-                component={NumericInput}
-                numberFormat={positiveNumberFormat}
-                label='Decimal Places'
-                name='decimalPlaces'
-                disabled={capitalStructure?.toLowerCase() === 'equity'}
-                control={control}
-                helperText='Decimal Places'
-                variant='outlined'
-                valueExtractor={numericValueExtractor}
               />
             </Grid>
           </Grid>

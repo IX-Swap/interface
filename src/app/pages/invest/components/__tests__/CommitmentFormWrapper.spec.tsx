@@ -4,12 +4,13 @@ import { CommitmentFormWrapper } from 'app/pages/invest/components/CommitmentFor
 import * as useDSOByIdHook from 'app/pages/invest/hooks/useDSOById'
 import { history } from 'config/history'
 import { dso } from '__fixtures__/authorizer'
-import { DSORoute } from 'app/pages/invest/routers/dsoRouter'
 import { CommitmentHeader } from 'app/pages/invest/components/CommitmentHeader'
 import { CommitmentFormFields } from 'app/pages/invest/components/CommitmentFormFields'
 import { DownloadDSOSubscriptionDocument } from 'app/components/DSO/components/DownloadDSOSubscriptionDocument'
 import { CommitmentFormSubmitButton } from 'app/pages/invest/components/CommitmentFormSubmitButton'
 import { CommitmentFormCancelButton } from 'app/pages/invest/components/CommitmentFormCancelButton'
+import { generatePath } from 'react-router-dom'
+import { InvestRoute } from 'app/pages/invest/router/config'
 
 jest.mock('app/pages/invest/components/CommitmentHeader', () => ({
   CommitmentHeader: jest.fn(() => null)
@@ -30,14 +31,15 @@ jest.mock('app/pages/invest/components/CommitmentFormCancelButton', () => ({
 
 describe('CommitmentFormWrapper', () => {
   beforeEach(() => {
-    history.push(DSORoute.view, { dsoId: dso._id, issuerId: dso.user })
+    history.push(
+      generatePath(InvestRoute.view, { dsoId: dso._id, issuerId: dso.user })
+    )
   })
 
   afterEach(async () => {
     await cleanup()
     jest.clearAllMocks()
   })
-  afterAll(() => history.push('/'))
 
   it('renders without error', () => {
     render(<CommitmentFormWrapper />)

@@ -1,29 +1,80 @@
-import { useAuth } from 'hooks/auth/useAuth'
+import { useGetIdentities } from 'app/components/OnboardingPanel/hooks/useGetIdentities'
+import {
+  defaultOnboardingSteps,
+  getIdentityOnboardingSteps
+} from 'app/components/OnboardingPanel/hooks/utils'
+import { AuthorizableStatus } from 'types/util'
+import { IdentityType } from 'app/pages/identity/utils/shared'
 
-const onboardingSteps = [
-  { title: 'Get Started', content: ['Access platform and reports'] },
-  { title: 'Select Your Desired Option', content: ['Create your account.'] }
-]
+export const useOnboardingSteps = (
+  identityType?: IdentityType,
+  asIssuer = false
+) => {
+  const {
+    hasIdentity,
+    identityLoaded,
+    identityTypeLoaded,
+    individualIdentity,
+    corporateIdentities,
+    detailsOfIssuance
+  } = useGetIdentities(asIssuer ? 'issuer' : 'investor')
 
-export const useOnboardingSteps = () => {
-  const { user } = useAuth()
+  const getIdentityActiveStep = (status?: AuthorizableStatus) => {
+    let indetityActiveStep = 1
 
-  const getActiveSteps = () => {
-    let init = 0
-
-    if (user === undefined) {
-      return init
+    if (!asIssuer) {
+      indetityActiveStep = 2
     }
-
-    if (user?.totpConfirmed) {
-      init++
+    if (
+      asIssuer &&
+      detailsOfIssuance !== undefined &&
+      detailsOfIssuance.status === 'Approved'
+    ) {
+      indetityActiveStep = 2
     }
-
-    return init
+    if (status === 'Submitted') {
+      indetityActiveStep = 3
+    }
+    if ((status as AuthorizableStatus) === 'Approved') {
+      indetityActiveStep = 4
+    }
+    return indetityActiveStep
   }
 
+  const getActiveStep = (status?: AuthorizableStatus) => {
+    return getIdentityActiveStep(status)
+  }
+
+  if (identityType === undefined && hasIdentity) {
+    return {
+      steps: getIdentityOnboardingSteps({
+        identityType: identityTypeLoaded,
+        identityStatus: identityLoaded?.status,
+        asIssuer
+      }),
+      activeStep: getActiveStep(identityLoaded?.status)
+    }
+  }
+
+  if (identityType === undefined) {
+    return {
+      steps: defaultOnboardingSteps,
+      activeStep: 1
+    }
+  }
+
+  const identityStatus =
+    identityType === 'individual'
+      ? individualIdentity?.status
+      : corporateIdentities.list[0]?.status
+
   return {
-    activeStep: getActiveSteps(),
-    onboardingSteps: onboardingSteps
+    steps: getIdentityOnboardingSteps({
+      identityType: identityType,
+      identityStatus: identityStatus,
+      asIssuer: asIssuer,
+      issuanceDetailsStatus: detailsOfIssuance?.status
+    }),
+    activeStep: getActiveStep(identityStatus)
   }
 }

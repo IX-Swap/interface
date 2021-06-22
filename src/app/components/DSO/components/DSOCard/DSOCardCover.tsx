@@ -41,6 +41,7 @@ export const DSOCardCover = (props: DSOCardCoverProps) => {
         </Grid>
         <Grid item>
           <Button
+            className={classes.link}
             component={AppRouterLinkComponent}
             to={viewURL}
             params={{ dsoId: dso._id, issuerId: dso.createdBy }}

@@ -1,5 +1,5 @@
 import React from 'react'
-import { Router } from 'react-router-dom'
+import { Route, Router } from 'react-router-dom'
 import { render, RenderOptions, RenderResult } from '@testing-library/react'
 import {
   createGenerateClassName,
@@ -33,24 +33,25 @@ export const BaseProviders: React.FC = ({ children }) => {
       <AppThemeProvider>
         {theme => (
           <ThemeProvider theme={theme}>
-            <ToastProvider
-              components={{ Toast: Toast, ToastContainer: () => null }}
-            >
-              <BreadcrumbsProvider>
-                <AppStateProvider>
+            <AppStateProvider>
+              <ToastProvider
+                components={{ Toast: Toast, ToastContainer: () => null }}
+              >
+                <BreadcrumbsProvider>
                   <ServicesProvider
                     value={{
                       snackbarService: {
                         showSnackbar: jest.fn(),
-                        showNotification: jest.fn()
+                        showNotification: jest.fn(),
+                        showOnboardingDialog: jest.fn()
                       }
                     }}
                   >
                     <Router history={history}>{children}</Router>
                   </ServicesProvider>
-                </AppStateProvider>
-              </BreadcrumbsProvider>
-            </ToastProvider>
+                </BreadcrumbsProvider>
+              </ToastProvider>
+            </AppStateProvider>
           </ThemeProvider>
         )}
       </AppThemeProvider>
@@ -126,13 +127,16 @@ export const renderWithDepositStore = (
 
 export const renderHookWithServiceProvider = (
   hookFn: any,
-  store: object = {}
+  store: object = {},
+  path?: string
 ): RenderHookResult<any, any> => {
   const WithServiceProvider: React.FC = ({ children }) => (
     <BaseProviders>
-      <ServicesProvider value={store}>
-        <Form>{children}</Form>
-      </ServicesProvider>
+      <Route path={path}>
+        <ServicesProvider value={store}>
+          <Form>{children}</Form>
+        </ServicesProvider>
+      </Route>
     </BaseProviders>
   )
 

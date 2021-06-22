@@ -5,16 +5,26 @@ import { columns } from 'app/pages/accounts/pages/balances/columns'
 import { useAuth } from 'hooks/auth/useAuth'
 import { getIdFromObj } from 'helpers/strings'
 import { balanceQueryKeys } from 'config/queryKeys'
+import { PageHeader } from 'app/components/PageHeader/PageHeader'
+import { Grid } from '@material-ui/core'
 
 export const Balances: React.FC = () => {
   const { user } = useAuth()
 
   return (
-    <TableView<AssetBalance>
-      uri={`/accounts/balance/${getIdFromObj(user)}`}
-      name={balanceQueryKeys.getByUserId(getIdFromObj(user))}
-      filter={{ type: 'Currency' }}
-      columns={columns}
-    />
+    <Grid container direction='column'>
+      <Grid item>
+        <PageHeader title='Asset Balances' />
+      </Grid>
+
+      <Grid item>
+        <TableView<AssetBalance>
+          uri={`/accounts/balance/${getIdFromObj(user)}`}
+          name={balanceQueryKeys.getByUserId(getIdFromObj(user))}
+          filter={{ type: 'Currency' }}
+          columns={columns}
+        />
+      </Grid>
+    </Grid>
   )
 }

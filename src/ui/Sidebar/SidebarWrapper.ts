@@ -3,7 +3,7 @@ import { styled } from '@material-ui/core/styles'
 export const SIDEBAR_WIDTH = 300
 
 export const SidebarWrapper = styled('div')(({ theme }) => ({
-  backgroundColor: theme.palette.backgrounds.secondary,
+  backgroundColor: theme.palette.backgrounds.light,
   padding: theme.spacing(3, 0),
   marginTop: theme.spacing(2),
 
@@ -15,7 +15,7 @@ export const SidebarWrapper = styled('div')(({ theme }) => ({
     width: SIDEBAR_WIDTH,
     position: 'fixed',
     top: 64,
-    left: 90,
+    left: 0,
     bottom: 0
   }
 }))

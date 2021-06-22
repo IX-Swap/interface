@@ -13,7 +13,7 @@ export const useStyles = makeStyles(theme => ({
     top: 0,
     right: 0,
     lineHeight: '100%',
-    backgroundColor: theme.palette.backgrounds.secondary,
+    backgroundColor: theme.palette.backgrounds.light,
     borderRadius: '0 6px 6px 0',
     display: 'flex',
     justifyContent: 'center',

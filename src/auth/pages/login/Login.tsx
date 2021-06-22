@@ -3,7 +3,7 @@ import { Grid, Typography, Box } from '@material-ui/core'
 import { Submit } from 'components/form/Submit'
 import { LoginFields } from 'auth/pages/login/components/LoginFields'
 import { AppRouterLink } from 'components/AppRouterLink'
-import { AuthRoute } from 'auth/router'
+import { AuthRoute } from 'auth/router/config'
 
 export interface LoginProps {
   hidden: boolean

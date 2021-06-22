@@ -28,11 +28,12 @@ export interface DepositCashFormValues
   asset: string
 }
 
-export interface WithdrawCashFormValues
-  extends TransactionBase,
-    TransactionWithOTP {
-  bank: string
+export interface WithdrawCashFormValues {
+  amount?: number | null
+  otp?: string | null
+  bankAccountId?: string | null
   memo?: string
+  virtualAccount: string
 }
 
 export interface DepositDSFormValues {

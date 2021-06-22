@@ -27,7 +27,12 @@ export const useStyles = makeStyles((theme: any) => ({
     borderColor: '#D20000'
   },
   rejectedButton: {
-    backgroundColor: themeColors.error
+    backgroundColor: themeColors.error,
+    color: '#ffffff',
+    '&:hover': {
+      backgroundColor: themeColors.error,
+      opacity: 0.8
+    }
   },
   unauthorized: {
     color: '#666666',

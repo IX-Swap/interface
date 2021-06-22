@@ -18,8 +18,16 @@ export const lightTheme: ThemeOptions = {
       paper: '#ffffff'
     },
     backgrounds: {
-      main: '#ffffff',
-      secondary: '#fafafa'
+      default: '#ffffff',
+      light: '#fafafa',
+      lighter: '#e3e3e3',
+      alternative: '#56AA82',
+      alternativeLight: 'rgba(86, 170, 130, 0.06)'
+    },
+    slider: {
+      background: '#C6D9FF',
+      activeColor: '#ffffff',
+      activeBackground: '#0c469c'
     },
     sidebar: {
       activeBackground: tinycolor(themeColors.primary)
@@ -27,6 +35,9 @@ export const lightTheme: ThemeOptions = {
         .toHexString(),
       activeColor: themeColors.primary
     },
-    divider: '#dddddd'
+    divider: '#dddddd',
+    text: {
+      primary: '#444444'
+    }
   }
 }

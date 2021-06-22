@@ -3,19 +3,24 @@ import { useAuth } from 'hooks/auth/useAuth'
 import { DigitalSecurityOffering, DSORequestArgs } from 'types/dso'
 import { queryCache, useMutation } from 'react-query'
 import { QueryOrMutationCallbacks } from 'hooks/types'
-import { useIssuanceRouter } from 'app/pages/issuance/router'
+import { IssuanceRoute } from 'app/pages/issuance/router/config'
 import { investQueryKeys } from 'config/queryKeys'
 import { getIdFromObj } from 'helpers/strings'
 import { issuanceURL } from 'config/apiURL'
+import { generatePath, useHistory, useParams } from 'react-router-dom'
 
 export const useUpdateDSO = (
   dsoId: string,
+  issuerId: string,
   callbacks?: QueryOrMutationCallbacks<DigitalSecurityOffering>
 ) => {
   const { apiService, snackbarService } = useServices()
-  const { params, replace } = useIssuanceRouter()
+  const params = useParams<{ dsoId: string; issuerId: string }>()
+  const { replace } = useHistory()
   const { user } = useAuth()
-  const url = issuanceURL.dso.update(getIdFromObj(user), dsoId)
+  const userId = getIdFromObj(user)
+
+  const url = issuanceURL.dso.update(issuerId ?? userId, dsoId)
   const updateDSO = async (args: DSORequestArgs) => {
     const { network, ...rest } = args
     return await apiService.put<DigitalSecurityOffering>(url, rest)
@@ -24,14 +29,10 @@ export const useUpdateDSO = (
   return useMutation(updateDSO, {
     onSuccess: data => {
       callbacks?.onSuccess?.(data)
-      replace('view', params)
+      replace(generatePath(IssuanceRoute.view, params))
 
       void snackbarService.showSnackbar('Success', 'success')
-      void queryCache.invalidateQueries([
-        investQueryKeys.getDSOById,
-        params.dsoId
-      ])
-      void queryCache.refetchQueries([investQueryKeys.getDSOById, params.dsoId])
+      void queryCache.invalidateQueries([investQueryKeys.getDSOById, dsoId])
     },
     onError: (error: any) => {
       void snackbarService.showSnackbar(error.message, 'error')

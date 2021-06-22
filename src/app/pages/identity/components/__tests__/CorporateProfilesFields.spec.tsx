@@ -1,15 +1,18 @@
 import React from 'react'
 import { render, cleanup } from 'test-utils'
-import { IndividualInfoFields } from 'app/pages/identity/components/IndividualInfoFields'
+import { IndividualInfoFields } from 'app/pages/identity/components/IndividualInfoFields/IndividualInfoFields'
 import {
   CorporateProfilesFields,
   CorporateProfilesFieldsProps
 } from 'app/pages/identity/components/CorporateProfilesFields'
 import { Form } from 'components/form/Form'
 
-jest.mock('app/pages/identity/components/IndividualInfoFields', () => ({
-  IndividualInfoFields: jest.fn(() => null)
-}))
+jest.mock(
+  'app/pages/identity/components/IndividualInfoFields/IndividualInfoFields',
+  () => ({
+    IndividualInfoFields: jest.fn(() => null)
+  })
+)
 
 describe('CorporateProfiles', () => {
   const props: CorporateProfilesFieldsProps = {

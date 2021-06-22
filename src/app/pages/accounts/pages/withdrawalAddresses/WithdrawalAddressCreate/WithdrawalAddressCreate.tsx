@@ -4,9 +4,9 @@ import { WADialogTitle } from 'app/pages/accounts/pages/withdrawalAddresses/WADi
 import { WADialogContent } from 'app/pages/accounts/pages/withdrawalAddresses/WADialog/WADialogContent'
 import { WAFormWrapper } from 'app/pages/accounts/pages/withdrawalAddresses/WithdrawalAddressCreate/WAFormWrapper'
 
-export const WithdrawalAddressCreate = ({ isOpen }: { isOpen: boolean }) => {
+export const WithdrawalAddressCreate = () => {
   return (
-    <WADialog open={isOpen}>
+    <WADialog open>
       <WADialogTitle label='Add Withdrawal Address' />
       <WADialogContent>
         <WAFormWrapper />

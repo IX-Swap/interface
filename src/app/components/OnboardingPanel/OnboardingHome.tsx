@@ -1,11 +1,10 @@
 import React from 'react'
 import { Grid, Typography, Box } from '@material-ui/core'
 import { AppRouterLink } from 'components/AppRouterLink'
-import { useSecurityRouter } from 'app/pages/security/router'
 import { useAuth } from 'hooks/auth/useAuth'
+import { SecurityRoute } from 'app/pages/security/router/config'
 
 export const OnboardingHome = () => {
-  const { paths } = useSecurityRouter()
   const { user } = useAuth()
 
   if (user === undefined) {
@@ -26,7 +25,7 @@ export const OnboardingHome = () => {
             Verified!
           </Box>
         ) : (
-          <AppRouterLink to={paths.setup2fa}>Enable 2FA</AppRouterLink>
+          <AppRouterLink to={SecurityRoute.setup2fa}>Enable 2FA</AppRouterLink>
         )}
       </Grid>
     </Grid>

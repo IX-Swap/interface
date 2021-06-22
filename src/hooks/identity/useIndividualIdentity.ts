@@ -1,26 +1,25 @@
 import { useQuery } from 'react-query'
 import { UseQueryData } from 'hooks/useParsedData'
-import { IndividualIdentity, GetIndividualIdentityArgs } from 'types/identity'
 import { useAuth } from 'hooks/auth/useAuth'
 import apiService from 'services/api'
 import { identityQueryKeys } from 'config/queryKeys'
 import { identityURL } from 'config/apiURL'
+import { getIdFromObj } from 'helpers/strings'
+import { IndividualIdentity } from '../../app/pages/identity/types/forms'
 
-export const useIndividualIdentity = (): UseQueryData<IndividualIdentity> => {
+export const useIndividualIdentity = (
+  userId?: string
+): UseQueryData<IndividualIdentity> => {
   const { user } = useAuth()
-  const payload = { userId: user?._id }
-  const getIndividual = async (
-    queryKey: string,
-    args: GetIndividualIdentityArgs
-  ) => {
-    const { userId } = args
+
+  const getIndividual = async (queryKey: string, userId: string) => {
     const uri = identityURL.individuals.get(userId)
 
     return await apiService.get<IndividualIdentity>(uri)
   }
 
   const { data, ...rest } = useQuery(
-    [identityQueryKeys.getIndividual, payload],
+    [identityQueryKeys.getIndividual, userId ?? getIdFromObj(user)],
     getIndividual
   )
 

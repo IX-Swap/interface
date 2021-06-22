@@ -3,10 +3,16 @@ import { useRevokeAccess } from 'app/pages/admin/hooks/useRevokeAccess'
 import { waitFor, cleanup, renderHookWithServiceProvider } from 'test-utils'
 import { authURL } from 'config/apiURL'
 import { managedUser } from '__fixtures__/user'
-import * as useAdminRouter from 'app/pages/admin/router'
 import { generateMutationResult } from '__fixtures__/useQuery'
+import { history } from 'config/history'
+import { generatePath } from 'react-router'
+import { AdminRoute } from 'app/pages/admin/router/config'
 
 describe('useRevokeAccess', () => {
+  beforeEach(() => {
+    history.push(generatePath(AdminRoute.view, { userId: managedUser._id }))
+  })
+
   afterEach(async () => {
     await cleanup()
     jest.clearAllMocks()
@@ -14,12 +20,6 @@ describe('useRevokeAccess', () => {
 
   it('renders without errors', async () => {
     await act(async () => {
-      jest
-        .spyOn(useAdminRouter, 'useAdminRouter')
-        .mockImplementation(
-          () => ({ params: { userId: managedUser._id } } as any)
-        )
-
       const deleteFn = jest
         .fn()
         .mockResolvedValueOnce(generateMutationResult({}))
@@ -29,7 +29,8 @@ describe('useRevokeAccess', () => {
         () => useRevokeAccess(),
         {
           apiService: apiObj
-        }
+        },
+        AdminRoute.view
       )
 
       await waitFor(

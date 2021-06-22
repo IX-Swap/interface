@@ -2,17 +2,14 @@ import React from 'react'
 import { Box, Grid, Typography } from '@material-ui/core'
 import { VSpacer } from 'components/VSpacer'
 import { useCountdown } from 'app/pages/issuance/hooks/useCountdown'
-import { useIssuanceRouter } from 'app/pages/issuance/router'
 import { useDSOById } from 'app/pages/invest/hooks/useDSOById'
 import { TimeDisplay } from 'app/pages/issuance/components/CountdownTimer/TimeDisplay'
 import { getTimeUnitsToDisplay, getEndDate } from 'helpers/countdownTimer'
+import { useParams } from 'react-router-dom'
 
 export const CountdownTimer = () => {
-  const {
-    params: { dsoId }
-  } = useIssuanceRouter()
-
-  const { data } = useDSOById(dsoId)
+  const { dsoId, issuerId } = useParams<{ dsoId: string; issuerId: string }>()
+  const { data } = useDSOById(dsoId, issuerId)
   const { units } = useCountdown(getEndDate(data))
 
   const unitsToDisplay = getTimeUnitsToDisplay(units)

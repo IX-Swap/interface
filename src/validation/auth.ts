@@ -23,11 +23,11 @@ export const registerFormValidationSchema = yup.object<SignupArgs>({
     .required('You must agree to these terms')
 })
 
-export const requestPasswordResetValidationSchema = yup.object<
-  RequestPasswordResetArgs
->({
-  email: emailSchema.required('Required')
-})
+export const requestPasswordResetValidationSchema = yup.object<RequestPasswordResetArgs>(
+  {
+    email: emailSchema.required('Required')
+  }
+)
 
 export const completePasswordResetValidationSchema = yup.object<
   Omit<CompletePasswordResetArgs, 'resetToken'>

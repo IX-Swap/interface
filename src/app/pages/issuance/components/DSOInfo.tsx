@@ -1,17 +1,14 @@
 import React from 'react'
 import { Box, Grid } from '@material-ui/core'
 import { DSONameAndStructure } from 'app/pages/invest/components/DSOTable/DSONameAndStructure'
-import { useIssuanceRouter } from 'app/pages/issuance/router'
 import { useDSOById } from 'app/pages/invest/hooks/useDSOById'
 import { AuthorizableStatus } from 'app/pages/authorizer/components/AuthorizableStatus'
+import { useParams } from 'react-router-dom'
 import { DisabledStatus } from 'app/pages/issuance/components/DisabledStatus'
 
 export const DSOInfo = () => {
-  const {
-    params: { dsoId }
-  } = useIssuanceRouter()
-
-  const { data } = useDSOById(dsoId)
+  const { dsoId, issuerId } = useParams<{ dsoId: string; issuerId: string }>()
+  const { data } = useDSOById(dsoId, issuerId)
 
   if (data === undefined) {
     return null

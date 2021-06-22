@@ -1,8 +1,12 @@
 import { AuthorizableStatus } from './util'
 import { Asset } from './asset'
-import { IndividualIdentity, CorporateIdentity } from './identity'
 import { Bank } from './bank'
 import { AuthorizableWithIdentity } from './authorizer'
+import {
+  CorporateIdentity,
+  IndividualIdentity
+} from 'app/pages/identity/types/forms'
+import { VirtualAccount } from 'types/virtualAccount'
 
 export interface CashWithdrawal extends AuthorizableWithIdentity {
   _id: string
@@ -18,4 +22,5 @@ export interface CashWithdrawal extends AuthorizableWithIdentity {
   level: string
   createdAt: string
   updatedAt: string
+  virtualAccount: VirtualAccount
 }

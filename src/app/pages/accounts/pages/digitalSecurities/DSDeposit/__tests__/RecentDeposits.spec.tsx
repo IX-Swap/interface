@@ -8,6 +8,8 @@ import { balance } from '__fixtures__/balance'
 import { user } from '__fixtures__/user'
 import { columns } from 'app/pages/accounts/pages/digitalSecurities/DSDeposit/columns'
 import { digitalSecuritiesQueryKeys } from 'config/queryKeys'
+import { generatePath, Route } from 'react-router-dom'
+import { DSRoute } from 'app/pages/accounts/pages/digitalSecurities/router/config'
 
 jest.mock('components/TableWithPagination/TableView', () => ({
   TableView: jest.fn(() => null)
@@ -15,7 +17,7 @@ jest.mock('components/TableWithPagination/TableView', () => ({
 
 describe('RecentDeposits', () => {
   beforeEach(() => {
-    history.push('/', { balanceId: balance.assetId })
+    history.push(generatePath(DSRoute.deposit, { balanceId: balance.assetId }))
   })
 
   afterEach(async () => {
@@ -36,7 +38,11 @@ describe('RecentDeposits', () => {
     const uri = `/accounts/security/deposits/list/${userId}`
     const name = digitalSecuritiesQueryKeys.getDepositByUserId(userId)
 
-    render(<RecentDeposits />)
+    render(
+      <Route path={DSRoute.deposit}>
+        <RecentDeposits />
+      </Route>
+    )
 
     expect(TableView).toHaveBeenCalledWith(
       expect.objectContaining({

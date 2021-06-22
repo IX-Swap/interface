@@ -8,13 +8,13 @@ import { getIdFromObj } from 'helpers/strings'
 import { issuanceQueryKeys } from 'config/queryKeys'
 import { DSOActivity } from 'types/dso'
 import { issuanceURL } from 'config/apiURL'
-import { useIssuanceRouter } from 'app/pages/issuance/router'
 import { isValidDSOId } from 'helpers/isValidDSOId'
+import { useParams } from 'react-router-dom'
 
 export const Activities = () => {
   const { user } = useAuth()
   const userId = getIdFromObj(user)
-  const { params } = useIssuanceRouter()
+  const params = useParams<{ dsoId: string }>()
 
   return (
     <ChartWrapper title='Activities'>

@@ -4,18 +4,7 @@ import { DSOLogo } from 'app/components/DSO/components/DSOLogo'
 import { AppRouterLinkComponent } from 'components/AppRouterLink'
 import { useAppBreakpoints } from 'hooks/useAppBreakpoints'
 import { DigitalSecurityOffering } from 'types/dso'
-import { makeURL } from 'config/appURL'
-
-// Had to hack this one. There is a problem with circular references, will address this issue with the next release.
-const makeInvestment = makeURL([
-  'app',
-  'invest',
-  'offerings',
-  'issuerId',
-  'dsoId',
-  'makeInvestment'
-])
-
+import { InvestRoute } from 'app/pages/invest/router/config'
 export interface DSOInvestorViewHeaderProps {
   dso: DigitalSecurityOffering
 }
@@ -75,7 +64,7 @@ export const DSOInvestorViewHeader = (props: DSOInvestorViewHeaderProps) => {
           disableElevation
           style={{ minWidth: 140, marginTop: isTablet ? 30 : 0 }}
           component={AppRouterLinkComponent}
-          to={makeInvestment}
+          to={InvestRoute.makeInvestment}
           params={{ dsoId: dso._id, issuerId: dso.user }}
         >
           Invest

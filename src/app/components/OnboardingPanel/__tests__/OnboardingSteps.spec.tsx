@@ -1,22 +1,12 @@
 import React from 'react'
 import { render, cleanup } from 'test-utils'
 import { OnboardingSteps } from 'app/components/OnboardingPanel/OnboardingSteps'
-import * as useOnboardingSteps from 'app/components/OnboardingPanel/hooks/useOnboardingSteps'
 
 describe('OnboardingSteps', () => {
-  const objResponse = {
-    activeStep: 0,
-    onboardingSteps: [
-      { title: 'Step One', content: ['This is step one'] },
-      { title: 'Step Two', content: ['This is step two'] }
-    ]
-  }
-
-  beforeEach(() => {
-    jest
-      .spyOn(useOnboardingSteps, 'useOnboardingSteps')
-      .mockImplementation(() => objResponse as any)
-  })
+  const onboardingSteps = [
+    { title: 'Step One', content: ['This is step one'] },
+    { title: 'Step Two', content: ['This is step two'] }
+  ]
 
   afterEach(async () => {
     await cleanup()
@@ -24,11 +14,13 @@ describe('OnboardingSteps', () => {
   })
 
   it('renders without errors', () => {
-    render(<OnboardingSteps />)
+    render(<OnboardingSteps steps={onboardingSteps} activeStep={0} />)
   })
 
   it('renders steps correctly', () => {
-    const { getByText } = render(<OnboardingSteps />)
+    const { getByText } = render(
+      <OnboardingSteps steps={onboardingSteps} activeStep={0} />
+    )
 
     expect(getByText('Step One')).toBeTruthy()
     expect(getByText('This is step one')).toBeTruthy()

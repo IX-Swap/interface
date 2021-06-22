@@ -10,8 +10,9 @@ export interface MarkAsReadProps {
 
 export const MarkAsRead = (props: MarkAsReadProps) => {
   const { data } = props
-  const classes = useStyles()
   const { mutation, isLoading } = useMarkAsRead(data)
+  const isButtonDisabled = data.read || isLoading
+  const classes = useStyles({ isUnread: isButtonDisabled })
   const handleClick = async () => await mutation()
 
   return (
@@ -20,7 +21,7 @@ export const MarkAsRead = (props: MarkAsReadProps) => {
         className={classes.container}
         component='div'
         onClick={handleClick}
-        disabled={data.read || isLoading}
+        disabled={isButtonDisabled}
       />
     </Tooltip>
   )

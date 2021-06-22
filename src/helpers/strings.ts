@@ -2,7 +2,8 @@ import { DigitalSecurityOffering } from 'types/dso'
 import { Commitment } from 'types/commitment'
 import { AssetBalance } from 'types/balance'
 import { DSWithdrawal } from 'types/dsWithdrawal'
-import { IndividualIdentity } from 'types/identity'
+import { IndividualIdentity } from 'app/pages/identity/types/forms'
+import { Order } from 'types/order'
 
 interface GetIdFromObjProps extends Record<string, any> {
   _id?: string
@@ -40,6 +41,10 @@ export const getOfferingName = (
   if ('symbol' in data) {
     return `${data.name} (${data.symbol})`
   }
+}
+
+export const getOrderSideName = (value: Order['side']) => {
+  return value === 'ASK' ? 'Sell' : 'Buy'
 }
 
 export const getPersonName = (data: IndividualIdentity | null | undefined) => {

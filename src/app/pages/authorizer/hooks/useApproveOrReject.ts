@@ -1,8 +1,8 @@
 import { useAuthorizerCategory } from 'hooks/location/useAuthorizerCategory'
 import { authorizerItemMap } from 'app/pages/authorizer/authorizerItemMap'
-import { useAuthorizerRouter } from 'app/pages/authorizer/router'
 import { useServices } from 'hooks/useServices'
 import { useMutation, useQueryCache } from 'react-query'
+import { useHistory, useLocation } from 'react-router'
 
 export interface UseApproveOrRejectArgs {
   id: string
@@ -16,10 +16,11 @@ export const useApproveOrReject = (args: UseApproveOrRejectArgs) => {
   const queryCache = useQueryCache()
   const category = useAuthorizerCategory()
   const { uri, listRoute } = authorizerItemMap[category]
-  const _uri = uri.replace(/\/list.*/, '')
+  const _uri = uri.replace(/\/list$/, '')
   const url = `${_uri}/${id}/${action}`
 
-  const { replace, params } = useAuthorizerRouter()
+  const { search } = useLocation()
+  const { replace } = useHistory()
   const { apiService, snackbarService } = useServices()
   const canInvalidate =
     cacheQueryKey !== undefined &&
@@ -37,7 +38,7 @@ export const useApproveOrReject = (args: UseApproveOrRejectArgs) => {
       }
 
       void snackbarService.showSnackbar(data.message, 'success')
-      replace(listRoute, params)
+      replace({ pathname: listRoute, search })
     },
     onError: (error: any) => {
       void snackbarService.showSnackbar(error.message, 'error')

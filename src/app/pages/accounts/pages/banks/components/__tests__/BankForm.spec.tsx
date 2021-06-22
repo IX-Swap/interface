@@ -5,15 +5,15 @@ import {
   BankFormProps
 } from 'app/pages/accounts/pages/banks/components/BankForm'
 import { Submit } from 'components/form/Submit'
-import { AddressFields } from 'app/pages/identity/components/AddressFields'
 import { BankFields } from 'app/pages/accounts/pages/banks/components/BankFields'
 import { BankDocuments } from 'app/pages/accounts/pages/banks/components/BankDocuments'
+import { AddressFields } from 'app/pages/identity/components/AddressFields/AddressFields'
 
 jest.mock('components/form/Submit', () => ({
   Submit: jest.fn(() => <div />)
 }))
 
-jest.mock('app/pages/identity/components/AddressFields', () => ({
+jest.mock('app/pages/identity/components/AddressFields/AddressFields', () => ({
   AddressFields: jest.fn(() => <div />)
 }))
 

@@ -1,8 +1,11 @@
 import { Asset } from './asset'
 import { DataroomFile, FormArray } from './dataroomFile'
-import { CorporateIdentity, IndividualIdentity } from './identity'
 import { AuthorizableWithIdentity } from './authorizer'
 import { Network } from './networks'
+import {
+  CorporateIdentity,
+  IndividualIdentity
+} from 'app/pages/identity/types/forms'
 
 export interface DsoTeamMember {
   _id?: string
@@ -120,6 +123,7 @@ export type DSOFormValues = Omit<
   | 'subscriptionDocument'
   | 'insight'
   | 'disabled'
+  | 'decimalPlaces'
 > & {
   subscriptionDocument?: DataroomFile
   status?: string
@@ -128,7 +132,6 @@ export type DSOFormValues = Omit<
   corporate: string
   documents: FormArray<DataroomFile>
   team: DsoTeamMember[]
-  decimalPlaces?: number
 }
 
 export type DSORequestArgs = Partial<

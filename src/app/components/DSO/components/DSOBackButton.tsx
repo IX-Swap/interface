@@ -1,14 +1,18 @@
 import React from 'react'
 import { AppRouterLinkComponent } from 'components/AppRouterLink'
 import { Button } from '@material-ui/core'
-import { useIssuanceRouter } from 'app/pages/issuance/router'
+import { IssuanceRoute } from 'app/pages/issuance/router/config'
+import { useParams } from 'react-router-dom'
 
 export const DSOBackButton = () => {
-  const { paths, params, current } = useIssuanceRouter()
-  const to = current.path === paths.create ? paths.list : paths.view
+  const params = useParams()
 
   return (
-    <Button component={AppRouterLinkComponent} to={to} params={params}>
+    <Button
+      component={AppRouterLinkComponent}
+      to={IssuanceRoute.list} // TODO: add logic for the create DSO screen
+      params={params}
+    >
       Cancel
     </Button>
   )

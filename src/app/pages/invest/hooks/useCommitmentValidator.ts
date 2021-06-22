@@ -18,9 +18,13 @@ export const useCommitmentValidator = (
   const { assetId, minInvestment } = props
   const minimumUnits = minInvestment ?? 0
 
-  const { watch, setError, clearErrors, errors, formState } = useFormContext<
-    CommitmentFormValues
-  >()
+  const {
+    watch,
+    setError,
+    clearErrors,
+    errors,
+    formState
+  } = useFormContext<CommitmentFormValues>()
   const investmentUnits = watch('numberOfUnits') ?? 0
   const investmentAmount = watch('totalAmount') ?? 0
 

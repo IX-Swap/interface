@@ -16,7 +16,10 @@ export const DSOFinishLaterButton = (props: DSOFinishLaterButtonProps) => {
   const dsoId = getIdFromObj(dso)
   const { getValues } = useFormContext<DSOFormValues>()
   const [createDSO, { isLoading: isCreating }] = useCreateDSO()
-  const [updateDSO, { isLoading: isUpdating }] = useUpdateDSO(dsoId)
+  const [updateDSO, { isLoading: isUpdating }] = useUpdateDSO(
+    dsoId,
+    dso?.user ?? ''
+  )
   const formValues = getUpdateDSOPayload({
     ...getValues(),
     status: 'Draft'
@@ -34,7 +37,7 @@ export const DSOFinishLaterButton = (props: DSOFinishLaterButtonProps) => {
       onClick={handleClick}
       disabled={isCreating || isUpdating}
     >
-      Finish Later
+      {dso === undefined ? 'Finish Later' : 'Save'}
     </Button>
   )
 }

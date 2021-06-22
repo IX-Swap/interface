@@ -5,6 +5,7 @@ import { DSOView } from 'app/components/DSO/DSOView'
 
 export interface DSOProps {
   dsoId: string
+  issuerId: string
   isEditing?: boolean
   showAuthorizations?: boolean
   showSidebar?: boolean
@@ -13,11 +14,12 @@ export interface DSOProps {
 export const DSO: React.FC<DSOProps> = (props: DSOProps) => {
   const {
     dsoId,
+    issuerId,
     showSidebar = false,
     showAuthorizations = false,
     isEditing = false
   } = props
-  const { isLoading, data } = useDSOById(dsoId)
+  const { isLoading, data } = useDSOById(dsoId, issuerId)
 
   if (isLoading || data === undefined) {
     return null

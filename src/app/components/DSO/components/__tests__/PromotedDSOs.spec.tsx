@@ -6,7 +6,7 @@ import { generateInfiniteQueryResult } from '__fixtures__/useQuery'
 import { QueryStatus } from 'react-query'
 import { dso } from '__fixtures__/authorizer'
 import { DSOCard } from 'app/components/DSO/components/DSOCard/DSOCard'
-import { DSORoute } from 'app/pages/invest/routers/dsoRouter'
+import { InvestRoute } from 'app/pages/invest/router/config'
 
 jest.mock('app/components/DSO/components/DSOCard/DSOCard', () => ({
   DSOCard: jest.fn(() => null)
@@ -53,7 +53,7 @@ describe('PromotedDSOs', () => {
     expect(DSOCard).toHaveBeenCalledWith(
       {
         dso: dso,
-        viewURL: DSORoute.view
+        viewURL: InvestRoute.view
       },
       {}
     )

@@ -1,17 +1,7 @@
 import React from 'react'
 import { render, cleanup } from 'test-utils'
 import { AuthorizerRoot } from 'app/pages/authorizer/AuthorizerRoot'
-import {
-  AuthorizerRoute,
-  useAuthorizerRouter
-} from 'app/pages/authorizer/router'
 import { history } from 'config/history'
-
-jest.mock('app/pages/authorizer/router')
-
-const useAuthorizerRouterMock = useAuthorizerRouter as jest.Mock<
-  Partial<ReturnType<typeof useAuthorizerRouter>>
->
 
 describe('AuthorizerRoot', () => {
   beforeEach(() => {
@@ -23,19 +13,7 @@ describe('AuthorizerRoot', () => {
     jest.clearAllMocks()
   })
 
-  it('renders routes from hook', () => {
-    const renderRoutes = jest.fn(() => <div />)
-    useAuthorizerRouterMock.mockImplementation(() => ({
-      renderRoutes,
-      paths: AuthorizerRoute,
-      current: {
-        label: '',
-        path: ''
-      }
-    }))
-
+  it('renders without error', () => {
     render(<AuthorizerRoot />)
-
-    expect(renderRoutes).toHaveBeenCalledTimes(1)
   })
 })

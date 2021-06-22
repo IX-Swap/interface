@@ -1,15 +1,11 @@
+import { IdentityRouter } from 'app/pages/identity/router/IdentityRouter'
 import React from 'react'
-import { useIdentitiesRouter } from 'app/pages/identity/router'
 import { RootContainer } from 'ui/RootContainer'
-import { PageHeader } from 'app/components/PageHeader/PageHeader'
 
-export const IdentityRoot: React.FC = () => {
-  const { renderRoutes } = useIdentitiesRouter()
-
+export const IdentityRoot = () => {
   return (
     <RootContainer>
-      <PageHeader alignment='flex-start' />
-      {renderRoutes()}
+      <IdentityRouter />
     </RootContainer>
   )
 }

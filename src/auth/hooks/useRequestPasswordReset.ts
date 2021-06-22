@@ -1,12 +1,13 @@
 import { useMutation } from 'react-query'
 import { RequestPasswordResetArgs } from 'types/auth'
 import { useServices } from 'hooks/useServices'
-import { useAuthRouter } from 'auth/router'
 import { authURL } from 'config/apiURL'
+import { useHistory } from 'react-router'
+import { AuthRoute } from 'auth/router/config'
 
 export const useRequestPasswordReset = () => {
   const { apiService, snackbarService } = useServices()
-  const { replace } = useAuthRouter()
+  const { replace } = useHistory()
   const url = authURL.resetPassword
   const mutateFn = async (args: RequestPasswordResetArgs) => {
     return await apiService.post<{ email: string }>(url, args)
@@ -14,10 +15,10 @@ export const useRequestPasswordReset = () => {
 
   return useMutation(mutateFn, {
     onSuccess: data => {
+      replace(AuthRoute.login)
       void snackbarService.showSnackbar(
         `Email has been sent to ${data.data.email}`
       )
-      replace('login')
     }
   })
 }
