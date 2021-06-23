@@ -45,6 +45,11 @@ export const documentsArraySchema = yup.array<
   FormArrayElement<Maybe<DataroomFile>>
 >()
 
+export const nameSchema = yup
+  .string()
+  .max(50, 'Minimum of 1 characters and maximum of 50 characters')
+  .matches(/^$|^[aA-zZ\s]+$/, 'Letters only')
+
 export const addressSchema = yup.object().shape<AddressValues>({
   line1: yup.string().required('Required'),
   line2: yup.string(),
@@ -56,9 +61,9 @@ export const addressSchema = yup.object().shape<AddressValues>({
 
 export const personalProfileSchema = yup.object().shape<PersonalProfile>({
   photo: yup.string(),
-  firstName: yup.string().required('Required'),
-  middleName: yup.string(),
-  lastName: yup.string().required('Required'),
+  firstName: nameSchema.required('This field is required'),
+  middleName: nameSchema,
+  lastName: nameSchema.required('This field is required'),
   nationality: yup.string().required('Required'),
   dob: dateSchema.required('Required'),
   countryOfResidence: yup.string().required('Required'),
