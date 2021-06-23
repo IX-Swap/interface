@@ -9,7 +9,10 @@ import {
   TaxResidency
 } from 'app/pages/identity/types/forms'
 
-export const emailSchema = yup.string().email('Invalid email')
+export const emailSchema = yup
+  .string()
+  .email('This must be a valid email format')
+  .max(50, 'Minimum of 1 characters and maximum of 50 characters')
 
 export const passwordSchema = yup
   .string()
@@ -60,7 +63,7 @@ export const personalProfileSchema = yup.object().shape<PersonalProfile>({
   dob: dateSchema.required('Required'),
   countryOfResidence: yup.string().required('Required'),
   contactNumber: yup.string().required('Required'),
-  email: emailSchema.required('Required')
+  email: emailSchema.required('This field is required')
 })
 
 export const personalProfileArraySchema = yup
@@ -70,7 +73,7 @@ export const personalProfileArraySchema = yup
 export const personnelProfileSchema = yup.object().shape<Personnel>({
   fullName: yup.string().required('Required'),
   designation: yup.string().required('Required'),
-  email: emailSchema.required('Required'),
+  email: emailSchema.required('This field is required'),
   contactNumber: yup.string().required('Required'),
   documents: yup.mixed<DataroomFile[], object>().required('Required'),
   address: addressSchema.required('Required'),

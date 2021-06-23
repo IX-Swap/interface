@@ -8,7 +8,7 @@ import {
   RepresentativeFormValues
 } from 'app/pages/identity/types/forms'
 import { DataroomFile } from 'types/dataroomFile'
-import { addressSchema } from 'validation/shared'
+import { addressSchema, emailSchema } from 'validation/shared'
 import * as yup from 'yup'
 import { validateUEN } from 'validation/validators'
 
@@ -62,10 +62,7 @@ export const corporateInvestorInfoSchema = yup.object().shape<any>({
             .string()
             .required('Required')
             .matches(/^[a-zA-Z\s]+$/g, 'Must include letters only'),
-          email: yup
-            .string()
-            .email('Must have email format')
-            .required('Required'),
+          email: emailSchema.required('This field is required'),
           contactNumber: yup.string().required('Required'),
           documents: yup.array<DataroomFile>().required('Required')
         })
@@ -84,7 +81,7 @@ export const directorsAndBeneficialOwnersSchema = yup
           .object<DirectorFormValues>({
             fullName: yup.string().required('Required'),
             designation: yup.string().required('Required'),
-            email: yup.string().required('Required'),
+            email: emailSchema.required('This field is required'),
             contactNumber: yup.string().required('Required'),
             address: addressSchema.required('Required'),
             documents: yup

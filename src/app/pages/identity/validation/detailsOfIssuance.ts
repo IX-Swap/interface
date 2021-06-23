@@ -7,7 +7,7 @@ export const issuerDetailsSchema = yup.object().shape<any>({
   companyName: yup.string().required('Required'),
   companyRegistrationNumber: yup.string().required('Required'),
   contactNumber: yup.string(),
-  email: emailSchema.required('Required'),
+  email: emailSchema.required('This field is required'),
   industry: yup.string().required('Required'),
   fundRaisingAmount: yup.number().required('Required'),
   detail: yup.string().required('Required')
