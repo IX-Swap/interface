@@ -110,7 +110,7 @@ const Aligner = styled.span`
   width: 100%;
 `
 
-const StyledDropDown = styled(DropDown)<{ selected: boolean }>`
+export const StyledDropDown = styled(DropDown)<{ selected: boolean }>`
   margin: 0 0.25rem 0 0.35rem;
   height: 35%;
 
@@ -174,6 +174,7 @@ interface CurrencyInputPanelProps {
   showCommonBases?: boolean
   renderBalance?: (amount: CurrencyAmount<Currency>) => ReactNode
   locked?: boolean
+  title?: ReactNode
 }
 
 export default function CurrencyInputPanel({
@@ -193,6 +194,7 @@ export default function CurrencyInputPanel({
   pair = null, // used for double token logo
   hideInput = false,
   locked = false,
+  title,
   ...rest
 }: CurrencyInputPanelProps) {
   const [modalOpen, setModalOpen] = useState(false)
@@ -299,6 +301,7 @@ export default function CurrencyInputPanel({
       {onCurrencySelect && (
         <CurrencySearchModal
           isOpen={modalOpen}
+          title={title}
           onDismiss={handleDismissSearch}
           onCurrencySelect={onCurrencySelect}
           selectedCurrency={currency}

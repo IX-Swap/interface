@@ -102,6 +102,7 @@ export const CurrencyInput = ({
         onCurrencySelect={handleInputSelect}
         otherCurrency={currencies[Field.OUTPUT]}
         showCommonBases={true}
+        title={<Trans>Select a token to swap</Trans>}
         id="swap-currency-input"
       />
       <ArrowWrapper

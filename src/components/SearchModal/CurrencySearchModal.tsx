@@ -1,5 +1,5 @@
 import { Currency, Token } from '@ixswap1/sdk-core'
-import React, { useCallback, useEffect, useState } from 'react'
+import React, { ReactNode, useCallback, useEffect, useState } from 'react'
 import useLast from '../../hooks/useLast'
 import { WrappedTokenInfo } from '../../state/lists/wrappedTokenInfo'
 import Modal from '../Modal'
@@ -17,6 +17,7 @@ interface CurrencySearchModalProps {
   onCurrencySelect: (currency: Currency) => void
   otherSelectedCurrency?: Currency | null
   showCommonBases?: boolean
+  title?: ReactNode
 }
 
 export enum CurrencyModalView {
@@ -33,6 +34,7 @@ export default function CurrencySearchModal({
   selectedCurrency,
   otherSelectedCurrency,
   showCommonBases = false,
+  title,
 }: CurrencySearchModalProps) {
   const [modalView, setModalView] = useState<CurrencyModalView>(CurrencyModalView.manage)
   const lastOpen = useLast(isOpen)
@@ -69,6 +71,7 @@ export default function CurrencySearchModal({
       {modalView === CurrencyModalView.search ? (
         <CurrencySearch
           isOpen={isOpen}
+          title={title}
           onDismiss={onDismiss}
           onCurrencySelect={handleCurrencySelect}
           selectedCurrency={selectedCurrency}
