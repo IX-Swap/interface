@@ -38,6 +38,8 @@ export interface ListingFormValues {
   completionDate: Date | string
   introduction: string
   marketType: string
+  asset: string
+  dso: string
 }
 
 export interface Currency {
@@ -62,7 +64,7 @@ export interface Listing {
   minimumTradeUnits: number
   maximumTradeUnits: number
   deleted: boolean
-  asset: Asset
+  asset: string
   description: string
   companyName: string
   explorer: string
@@ -98,7 +100,7 @@ export interface ListingFormValuesForSubmit {
   _id: string
   createdBy: string
   user: User
-  dso: DigitalSecurityOffering
+  dso: string
   corporate: CorporateFields
   logo: DataroomFile
   banner: DataroomFile
@@ -111,7 +113,7 @@ export interface ListingFormValuesForSubmit {
   minimumTradeUnits: number
   maximumTradeUnits: number
   deleted: boolean
-  asset: Asset
+  asset: string
   description: string
   companyName: string
   explorer: string
