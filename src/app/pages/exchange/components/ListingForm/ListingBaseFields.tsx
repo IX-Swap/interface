@@ -1,5 +1,5 @@
 import React from 'react'
-import { Grid, TextField } from '@material-ui/core'
+import { Box, Grid, TextField } from '@material-ui/core'
 import { TypedField } from 'components/form/TypedField'
 import { dateTimeValueExtractor } from 'helpers/forms'
 import { CorporateSelect } from 'components/form/CorporateSelect'
@@ -12,6 +12,7 @@ import { Dropzone } from 'components/dataroom/Dropzone'
 import { CapitalStructureSelect } from 'components/form/CapitalStructureSelect'
 import { FormSectionHeader } from 'app/components/DSO/components/FormSectionHeader'
 import { initialListingFormValues } from 'app/pages/exchange/consts/listing'
+import { ListingHiddenFields } from 'app/pages/exchange/components/ListingForm/ListingHiddenFields'
 
 export interface ListingBaseFieldsProps {
   isNew: boolean
@@ -169,6 +170,9 @@ export const ListingBaseFields = (props: ListingBaseFieldsProps) => {
           </Grid>
         </Grid>
       </Grid>
+      <Box display='none'>
+        <ListingHiddenFields />
+      </Box>
     </Grid>
   )
 }
