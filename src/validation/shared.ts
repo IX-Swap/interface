@@ -8,6 +8,7 @@ import {
   Personnel,
   TaxResidency
 } from 'app/pages/identity/types/forms'
+import { differenceInYears } from 'date-fns'
 
 export const emailSchema = yup
   .string()
@@ -41,6 +42,12 @@ export const passwordSchema = yup
 
 export const dateSchema = yup.string().nullable()
 
+export const birthdaySchema = dateSchema.test(
+  'dob',
+  'Should be 18 years old',
+  dateString => differenceInYears(new Date(), new Date(dateString ?? '')) >= 18
+)
+
 export const documentsArraySchema = yup.array<
   FormArrayElement<Maybe<DataroomFile>>
 >()
@@ -65,7 +72,7 @@ export const personalProfileSchema = yup.object().shape<PersonalProfile>({
   middleName: nameSchema,
   lastName: nameSchema.required('This field is required'),
   nationality: yup.string().required('Required'),
-  dob: dateSchema.required('Required'),
+  dob: birthdaySchema.required('This field is required'),
   countryOfResidence: yup.string().required('Required'),
   contactNumber: yup.string().required('Required'),
   email: emailSchema.required('This field is required')

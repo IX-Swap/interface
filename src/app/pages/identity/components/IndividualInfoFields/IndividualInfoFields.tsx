@@ -13,6 +13,7 @@ import { useAppBreakpoints } from 'hooks/useAppBreakpoints'
 import { PhoneInput } from 'components/form/PhoneInput'
 import { DatePicker } from 'components/form/DatePicker'
 import { IndividualPersonalInformation } from 'app/pages/identity/types/forms'
+import { subYears } from 'date-fns'
 
 export interface IndividualInfoFieldsProps {
   rootName?: string
@@ -90,6 +91,7 @@ export const IndividualInfoFields = (
               defaultValue={null as any}
               valueExtractor={dateTimeValueExtractor}
               inputVariant='outlined'
+              maxDate={subYears(new Date(), 18)}
             />
           </Grid>
           <Grid item xs={12} sm={6} md={4}>
