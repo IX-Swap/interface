@@ -14,7 +14,7 @@ import { differenceInYears } from 'date-fns'
 export const emailSchema = yup
   .string()
   .email('This must be a valid email format')
-  .max(50, 'Minimum of 1 characters and maximum of 50 characters')
+  .max(50, 'Maximum of 50 characters')
 
 export const passwordSchema = yup
   .string()
@@ -55,8 +55,8 @@ export const documentsArraySchema = yup.array<
 
 export const nameSchema = yup
   .string()
-  .max(50, 'Minimum of 1 characters and maximum of 50 characters')
-  .matches(/^$|^[aA-zZ\s]+$/, 'Letters only')
+  .max(50, 'Maximum of 50 characters')
+  .matches(/^$|^[aA-zZ\s]+$/, 'Must include letters only')
 
 export const addressSchema = yup.object().shape<AddressValues>({
   line1: yup.string().required('Required'),
