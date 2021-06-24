@@ -17,18 +17,22 @@ import { useParams } from 'react-router'
 export type ActiveTabName = 'BUY' | 'SELL'
 
 export interface PlaceOrderFormProps {
+  createOrderStatus?: string
   tokenLabel: string
   tokenBalance: number
   currencyLabel: string
   currencyBalance: number
+  isFetching?: boolean
   onSubmit: (bank: PlaceOrderArgs) => Promise<any>
 }
 
 export const PlaceOrderForm: React.FC<PlaceOrderFormProps> = ({
+  createOrderStatus = '',
   currencyLabel,
   tokenLabel,
   currencyBalance,
   tokenBalance,
+  isFetching = false,
   onSubmit
 }) => {
   const classes = useStyles()
@@ -41,14 +45,11 @@ export const PlaceOrderForm: React.FC<PlaceOrderFormProps> = ({
     await onSubmit(
       transformPlaceOrderFormValuesToArgs(
         values,
-        activeTabNameIdx === 0 ? 'ASK' : 'BID',
+        activeTabNameIdx === 0 ? 'BID' : 'ASK',
         pairId
       )
     )
   }
-
-  // TODO Use for get token balance
-  // const { data } = useBalance(pairId)
 
   return (
     <Form
@@ -118,11 +119,12 @@ export const PlaceOrderForm: React.FC<PlaceOrderFormProps> = ({
         })}
         <Grid item className={classes.buttonWrapper}>
           <Submit
+            createOrderStatus={createOrderStatus}
+            disabled={isFetching}
             data-testid='submit'
             size='large'
             variant='contained'
             className={classes.button}
-            disabled={false}
           >
             PLACE ORDER
           </Submit>

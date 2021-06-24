@@ -24,7 +24,13 @@ import { useTokenBalance } from 'app/pages/exchange/hooks/useTokenBalance'
 
 export const Market = () => {
   const classes = useStyles()
-  const { openDialog, setOpenDialog, submitForm } = useCustodianWalletSubmit()
+  const {
+    openDialog,
+    setOpenDialog,
+    submitForm,
+    isFetching,
+    createOrderStatus
+  } = useCustodianWalletSubmit()
   const [datafeed] = React.useState<IBasicDataFeed>(() => getDataFeed())
   const { pairId } = useParams<{ pairId: string }>()
   const { data, isLoading } = useMarketList()
@@ -65,7 +71,12 @@ export const Market = () => {
 
       <Box my={2} />
 
-      <Grid container direction={'column'} className={classes.wrapper}>
+      <Grid
+        container
+        direction={'column'}
+        className={classes.wrapper}
+        alignItems={'flex-start'}
+      >
         <Grid item className={classes.colorGrid}>
           <InvestorLiveOrderBook />
         </Grid>
@@ -83,6 +94,8 @@ export const Market = () => {
 
         <Grid item container>
           <PlaceOrderForm
+            createOrderStatus={createOrderStatus}
+            isFetching={isFetching}
             currencyLabel={currencyName}
             tokenLabel={tokenName}
             currencyBalance={currencyBalance}

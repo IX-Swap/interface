@@ -26,10 +26,10 @@ export const PastOrderTable = (props: PostOrderTableProps) => {
       <VSpacer size={'small'} />
       <TableView<Order>
         size='small'
-        name={exchangeMarketQueryKeys.getOrdersList(pairId)}
+        name={exchangeMarketQueryKeys.getOrdersList(userId, pairId)}
         uri={exchangeMarket.getOrdersList(userId)}
         columns={columns}
-        filter={filter}
+        filter={{ ...filter, orderType: 'PAST' } as any}
       />
     </>
   )

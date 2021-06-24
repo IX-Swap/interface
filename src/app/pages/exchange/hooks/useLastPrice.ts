@@ -11,7 +11,7 @@ export const useLastPrice = (id: string) => {
 
   const onDataReceived = (receivedData: any) => {
     queryCache.setQueryData(
-      [exchangeQueryKeys.orderBook, id],
+      [exchangeQueryKeys.lastPrice, id],
       () => receivedData ?? { bids: [], asks: [] }
     )
   }

@@ -12,7 +12,12 @@ export const Trades = () => {
     setActiveTab(newValue)
   }
   return (
-    <Grid container spacing={0} direction='column'>
+    <Grid
+      container
+      spacing={0}
+      direction='column'
+      style={{ backgroundColor: '#ffffff', marginTop: 10 }}
+    >
       <Grid item>
         <Tabs variant='fullWidth' value={activeTab} onChange={handleChange}>
           <Tab className={tab} label='Market Trades' />
@@ -21,10 +26,10 @@ export const Trades = () => {
       </Grid>
       <Grid item>
         <TabPanel pt={1} value={activeTab} index={0}>
-          <MyTrades />
+          <MarketTrades />
         </TabPanel>
         <TabPanel pt={1} value={activeTab} index={1}>
-          <MarketTrades />
+          <MyTrades />
         </TabPanel>
       </Grid>
     </Grid>

@@ -43,7 +43,7 @@ export const Setup: React.FC = () => {
   const [open, setOpen] = useState(false)
 
   const setMaxValue = () => {
-    control.setValue('amount', virtualAccountData?.balance.available)
+    control.setValue('amount', virtualAccountData?.balance.outstanding)
   }
 
   const handleContinue = () => {
@@ -92,7 +92,7 @@ export const Setup: React.FC = () => {
 
       <Grid item>
         <FormSectionHeader
-          title='Withdraw Cash From Your Virtual Account'
+          title='Withdraw Cash From Your Account'
           variant='subsection'
         />
         <TypedField

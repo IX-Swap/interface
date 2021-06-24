@@ -24,6 +24,7 @@ describe('PastOrderTable', () => {
   const initialFilterValues = {
     to: undefined,
     from: undefined,
+    orderType: 'PAST',
     pair: '1'
   }
 
@@ -52,7 +53,10 @@ describe('PastOrderTable', () => {
     expect(TableView).toHaveBeenCalledWith(
       {
         size: 'small',
-        name: exchangeMarketQueryKeys.getOrdersList(initialFilterValues.pair),
+        name: exchangeMarketQueryKeys.getOrdersList(
+          user._id,
+          initialFilterValues.pair
+        ),
         uri: exchangeMarket.getOrdersList(user._id),
         columns,
         filter: initialFilterValues
