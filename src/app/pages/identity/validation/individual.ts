@@ -2,9 +2,9 @@ import * as yup from 'yup'
 import 'yup-phone'
 import {
   addressSchema,
-  dateSchema,
   emailSchema,
-  nameSchema
+  nameSchema,
+  birthdaySchema
 } from 'validation/shared'
 import {
   FundSource,
@@ -25,8 +25,8 @@ export const personalInfoSchema = yup
     middleName: nameSchema,
     lastName: nameSchema.required('This field is required'),
     nationality: yup.string().required('Required'),
-    dob: dateSchema.required('Required'),
-    contactNumber: yup.string().phone().required('Required'),
+    dob: birthdaySchema.required('This field is required'),
+    contactNumber: yup.string().phone().required('This field is required'),
     email: emailSchema.required('This field is required'),
     address: addressSchema.required('Required')
   })
