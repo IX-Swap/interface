@@ -18,11 +18,13 @@ export const corporateInvestorInfoSchema = yup.object().shape<any>({
   logo: yup.string(),
   companyLegalName: yup
     .string()
+    .max(50, 'Maximum of 50 characters')
+    .required('This field is required')
     .matches(
-      /^[a-zA-Z0-9. , -?]*$/,
+      /^[a-zA-Z0-9.,-;]+([a-zA-Z0-9.,-; ]+)*$/,
       'Must include only letters, numbers and this special characters . , -'
-    )
-    .required('Required'),
+    ),
+
   registrationNumber: yup.string().when('countryOfFormation', {
     is: 'Singapore',
     then: yup
