@@ -1,6 +1,11 @@
 import * as yup from 'yup'
 import 'yup-phone'
-import { addressSchema, dateSchema, emailSchema } from 'validation/shared'
+import {
+  addressSchema,
+  emailSchema,
+  nameSchema,
+  birthdaySchema
+} from 'validation/shared'
 import {
   FundSource,
   IndividualAgreementsFormValues,
@@ -16,12 +21,12 @@ export const personalInfoSchema = yup
   .object()
   .shape<IndividualPersonalInfoFormValues>({
     photo: yup.string(),
-    firstName: yup.string().required('Required'),
-    middleName: yup.string(),
-    lastName: yup.string().required('Required'),
+    firstName: nameSchema.required('This field is required'),
+    middleName: nameSchema,
+    lastName: nameSchema.required('This field is required'),
     nationality: yup.string().required('Required'),
-    dob: dateSchema.required('Required'),
-    contactNumber: yup.string().phone().required('Required'),
+    dob: birthdaySchema.required('This field is required'),
+    contactNumber: yup.string().phone().required('This field is required'),
     email: emailSchema.required('This field is required'),
     address: addressSchema.required('Required')
   })

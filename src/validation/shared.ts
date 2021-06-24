@@ -1,4 +1,5 @@
 import * as yup from 'yup'
+import 'yup-phone'
 import { passwordValidator } from 'validation/validators'
 import { DataroomFile, FormArrayElement } from 'types/dataroomFile'
 import { Maybe } from 'types/util'
@@ -8,6 +9,7 @@ import {
   Personnel,
   TaxResidency
 } from 'app/pages/identity/types/forms'
+import { differenceInYears } from 'date-fns'
 
 export const emailSchema = yup
   .string()
@@ -41,9 +43,20 @@ export const passwordSchema = yup
 
 export const dateSchema = yup.string().nullable()
 
+export const birthdaySchema = dateSchema.test(
+  'dob',
+  'Should be 18 years old',
+  dateString => differenceInYears(new Date(), new Date(dateString ?? '')) >= 18
+)
+
 export const documentsArraySchema = yup.array<
   FormArrayElement<Maybe<DataroomFile>>
 >()
+
+export const nameSchema = yup
+  .string()
+  .max(50, 'Minimum of 1 characters and maximum of 50 characters')
+  .matches(/^$|^[aA-zZ\s]+$/, 'Letters only')
 
 export const addressSchema = yup.object().shape<AddressValues>({
   line1: yup.string().required('Required'),
@@ -56,13 +69,13 @@ export const addressSchema = yup.object().shape<AddressValues>({
 
 export const personalProfileSchema = yup.object().shape<PersonalProfile>({
   photo: yup.string(),
-  firstName: yup.string().required('Required'),
-  middleName: yup.string(),
-  lastName: yup.string().required('Required'),
+  firstName: nameSchema.required('This field is required'),
+  middleName: nameSchema,
+  lastName: nameSchema.required('This field is required'),
   nationality: yup.string().required('Required'),
-  dob: dateSchema.required('Required'),
+  dob: birthdaySchema.required('This field is required'),
   countryOfResidence: yup.string().required('Required'),
-  contactNumber: yup.string().required('Required'),
+  contactNumber: yup.string().phone().required('This field is required'),
   email: emailSchema.required('This field is required')
 })
 
@@ -74,7 +87,7 @@ export const personnelProfileSchema = yup.object().shape<Personnel>({
   fullName: yup.string().required('Required'),
   designation: yup.string().required('Required'),
   email: emailSchema.required('This field is required'),
-  contactNumber: yup.string().required('Required'),
+  contactNumber: yup.string().phone().required('This field is required'),
   documents: yup.mixed<DataroomFile[], object>().required('Required'),
   address: addressSchema.required('Required'),
   percentageShareholding: yup.number().required('Required')
