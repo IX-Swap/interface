@@ -3,23 +3,28 @@ import { render, cleanup } from 'test-utils'
 import { UnassignedAccountsTable } from 'app/pages/admin/components/UnassignedAccountTable/UnassignedAccountsTable'
 import { TableView } from 'components/TableWithPagination/TableView'
 import { columns } from 'app/pages/admin/components/UnassignedAccountTable/columns'
-import * as useResetSelectionOnUnmount from 'app/pages/admin/hooks/useResetSelectionOnUnmount'
 
 jest.mock('components/TableWithPagination/TableView', () => ({
   TableView: jest.fn(() => null)
 }))
 
 jest.mock('components/SelectionHelper', () => ({
-  useSelectionHelperContext: jest.fn(() => null)
+  useSelectionHelperContext: jest.fn(() => ({
+    selectedCount: 0,
+    hasSelected: false,
+    selected: [],
+    selectItem: jest.fn(),
+    deselectItem: jest.fn(),
+    getIsItemSelected: jest.fn(),
+    getIsItemsSelected: jest.fn(),
+    getIsIndeterminate: jest.fn(),
+    toggle: jest.fn(),
+    toggleAll: jest.fn(),
+    resetSelection: jest.fn()
+  }))
 }))
 
 describe('UnassignedAccountTable', () => {
-  beforeEach(() => {
-    jest
-      .spyOn(useResetSelectionOnUnmount, 'useResetSelectionOnUnmount')
-      .mockImplementation(() => ({} as any))
-  })
-
   afterEach(async () => {
     await cleanup()
     jest.clearAllMocks()

@@ -22,12 +22,12 @@ export const ConfirmDisableDialogBox = ({
 }: ConfirmDisableDialogBoxProps) => {
   return (
     <Dialog open={open}>
-      <Box p={4}>
+      <Box py={4} px={3}>
         <Typography variant='subtitle1' align='center'>
           Are You Sure You Want to Disable the Virtual Account(s)?
         </Typography>
         <DialogContent>
-          <Typography variant='body1'>
+          <Typography variant='body1' align='center'>
             User linked to the selected virtual account will no longer be able
             to use it.
           </Typography>

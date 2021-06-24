@@ -1,5 +1,4 @@
 import { AssignedVirtualAccountsTable } from 'app/pages/admin/components/AssignedVirtualAccountsTable/AssignedVirtualAccountsTable'
-import * as useResetSelectionOnUnmount from 'app/pages/admin/hooks/useResetSelectionOnUnmount'
 import React from 'react'
 import { render, cleanup } from 'test-utils'
 
@@ -20,12 +19,6 @@ jest.mock('components/SelectionHelper', () => ({
 }))
 
 describe('AssignedVirtualAccountsTable', () => {
-  beforeEach(() => {
-    jest
-      .spyOn(useResetSelectionOnUnmount, 'useResetSelectionOnUnmount')
-      .mockImplementation(() => ({} as any))
-  })
-
   afterEach(async () => {
     await cleanup()
     jest.clearAllMocks()
