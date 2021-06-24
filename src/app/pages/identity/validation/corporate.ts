@@ -10,6 +10,7 @@ import {
 import { DataroomFile } from 'types/dataroomFile'
 import { addressSchema, emailSchema } from 'validation/shared'
 import * as yup from 'yup'
+import 'yup-phone'
 import { validateUEN } from 'validation/validators'
 
 // TODO: change to InvestorCorporateInfoFormValues (currently getting TS2589)
@@ -63,7 +64,10 @@ export const corporateInvestorInfoSchema = yup.object().shape<any>({
             .required('Required')
             .matches(/^[a-zA-Z\s]+$/g, 'Must include letters only'),
           email: emailSchema.required('This field is required'),
-          contactNumber: yup.string().required('Required'),
+          contactNumber: yup
+            .string()
+            .phone()
+            .required('This field is required'),
           documents: yup.array<DataroomFile>().required('Required')
         })
         .required('Required')
@@ -82,7 +86,7 @@ export const directorsAndBeneficialOwnersSchema = yup
             fullName: yup.string().required('Required'),
             designation: yup.string().required('Required'),
             email: emailSchema.required('This field is required'),
-            contactNumber: yup.string().required('Required'),
+            contactNumber: yup.string().phone().required(),
             address: addressSchema.required('Required'),
             documents: yup
               .object({

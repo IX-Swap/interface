@@ -1,4 +1,5 @@
 import * as yup from 'yup'
+import 'yup-phone'
 import { passwordValidator } from 'validation/validators'
 import { DataroomFile, FormArrayElement } from 'types/dataroomFile'
 import { Maybe } from 'types/util'
@@ -74,7 +75,7 @@ export const personalProfileSchema = yup.object().shape<PersonalProfile>({
   nationality: yup.string().required('Required'),
   dob: birthdaySchema.required('This field is required'),
   countryOfResidence: yup.string().required('Required'),
-  contactNumber: yup.string().required('Required'),
+  contactNumber: yup.string().phone().required('This field is required'),
   email: emailSchema.required('This field is required')
 })
 
@@ -86,7 +87,7 @@ export const personnelProfileSchema = yup.object().shape<Personnel>({
   fullName: yup.string().required('Required'),
   designation: yup.string().required('Required'),
   email: emailSchema.required('This field is required'),
-  contactNumber: yup.string().required('Required'),
+  contactNumber: yup.string().phone().required('This field is required'),
   documents: yup.mixed<DataroomFile[], object>().required('Required'),
   address: addressSchema.required('Required'),
   percentageShareholding: yup.number().required('Required')
