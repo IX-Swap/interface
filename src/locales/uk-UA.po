@@ -34,10 +34,6 @@ msgstr "(очистити все)"
 msgid "+{feeAmountFormatted}%"
 msgstr "+{feeAmountFormatted}%"
 
-#: src/pages/Swap/index.tsx
-msgid "- Remove send"
-msgstr "- Видалити відправку"
-
 #: src/components/InputStepCounter/InputStepCounter.tsx
 msgid "-{feeAmountFormatted}%"
 msgstr "-{feeAmountFormatted}%"
@@ -59,26 +55,11 @@ msgstr "0.3% комісія"
 msgid "1% fee"
 msgstr "1% Плата"
 
-#: 
-#~ msgid "<0>Account analytics and accrued fees</0><1> ↗ </1>"
-#~ msgstr "<0>Аналітика облікових записів та накопичена комісія</0><1> ↗ </1>"
-
-#: 
-#~ msgid "<0>Tip:</0> Removing pool tokens converts your position back into underlying tokens at the current rate, proportional to your share of the pool. Accrued fees are included in the amounts you receive."
-#~ msgstr "<0>Порада:</0> Видалення токенів наповнення токенів перетворює вашу позицію в необхідну частину токену, пропорційно обміну басейну. Нараховані платежі включені в суми, які ви отримуєте."
-
 #: src/pages/PoolFinder/index.tsx
-msgid "<0>Tip:</0> Use this tool to find pairs that don't automatically appear in the interface."
-msgstr "<0>Порада:</0> Використовуйте цей інструмент для пошуку пар що не з'являються автоматично в інтерфейсі."
+msgid "<0>Loading</0>"
+msgstr "<0>Завантаження</0>"
 
-#: 
-#~ msgid "<0>Tip:</0> When you add liquidity, you will receive pool tokens representing your position. These tokens automatically earn fees proportional to your share of the pool, and can be redeemed at any time."
-#~ msgstr "<0>Порада:</0> При додаванні рідини, ви отримаєте токени пулу, що представляє вашу позицію. Ці токени автоматично заробляють плату пропорційно вашій вкладці басейну, і можуть бути викуплені в будь-який час."
-
-#: 
-#~ msgid "About"
-#~ msgstr "Про програму"
-
+#: src/components/swap/AcceptChanges.tsx
 #: src/components/swap/SwapModalHeader.tsx
 msgid "Accept"
 msgstr "Прийняти"
@@ -101,8 +82,8 @@ msgid "Add Liquidity"
 msgstr "Додати ліквідність"
 
 #: src/pages/PoolFinder/index.tsx
-msgid "Add liquidity."
-msgstr "Додайте ліквідність."
+msgid "Add liquidity"
+msgstr "Додати ліквідність"
 
 #: src/components/TransactionConfirmationModal/index.tsx
 msgid "Add {0} to Metamask <0/>"
@@ -117,29 +98,21 @@ msgstr "Додати {0} {1} і {2} {3}"
 msgid "Added {0}"
 msgstr "Додано {0}"
 
+#: src/pages/Swap/index.tsx
+msgid "Allow IXSwap to use your {0}"
+msgstr "Дозвольте IXSwap використовувати ваш {0}"
+
 #: src/components/Settings/SettingsModal.tsx
 msgid "Allow high price impact trades and skip the confirm screen. Use at your own risk."
 msgstr "Дозвольте високі ціни угоди і пропустити екран підтвердження. Використовуйте на свій страх і ризик."
 
-#: src/pages/Swap/index.tsx
-msgid "Allow the IXSwap Protocol to use your {0}"
-msgstr ""
-
 #: src/components/Header/URLWarning.tsx
 msgid "Always make sure the URL is<0>app.ixswap.io</0> - bookmark it to be safe."
-msgstr ""
-
-#: 
-#~ msgid "Always make sure the URL is<0>app.uniswap.org</0> - bookmark it to be safe."
-#~ msgstr "Завжди переконайтеся, що URL для<0>app.uniswap.org</0> - закладка має бути в безпеці."
+msgstr "Завжди переконайтесь, що URL-адреса <0>app.ixswap.io</0> - додайте її в закладки, щоб бути безпечною."
 
 #: src/hooks/useSwapCallback.ts
 msgid "An error occurred when trying to execute this swap. You may need to increase your slippage tolerance. If that does not work, there may be an incompatibility with the token you are trading. Note fee on transfer and rebase tokens are incompatible with Uniswap V3."
 msgstr "Під час спроби виконати цей обмін сталася помилка. Можливо, вам доведеться збільшити толерантність до ковзання. Якщо це не спрацює, можливо, існує несумісність з токеном, яким ви торгуєте. Зверніть увагу, плата за перенесення та перебазування токенів несумісна з Uniswap V3."
-
-#: 
-#~ msgid "Analytics"
-#~ msgstr "Аналітика"
 
 #: src/components/earn/StakingModal.tsx
 #: src/pages/RemoveLiquidity/index.tsx
@@ -196,35 +169,25 @@ msgstr "Найкраще для стабільних пар."
 msgid "Blocked address"
 msgstr "Адреса заблокована"
 
-#: 
-#~ msgid "By adding liquidity you'll earn 0.3% of all trades on this pair proportional to your share of the pool. Fees are added to the pool, accrue in real time and can be claimed by withdrawing your liquidity."
-#~ msgstr "Додаючи ліквідність, ви отримаєте 0,3% від усіх торгів на цю пару пропорційно вашій частці в басейні. Комісія додається в басейн, накопичується в реальному часі і можна стверджувати, виключивши вашу ліквідність."
-
 #: src/components/SearchModal/ImportList.tsx
 msgid "By adding this list you are implicitly trusting that the data is correct. Anyone can create a list, including creating fake versions of existing lists and lists that claim to represent projects that do not have one."
 msgstr "Додаючи цей список, ви неявно довіряєте, що дані правильні. Будь-хто може створити список, включаючи створення підроблених версій існуючих списків і списків, які претендують на представлення проектів, яких ще немає."
 
 #: src/components/WalletModal/index.tsx
 msgid "By connecting a wallet, you agree to IXSwap’ <0>Terms and Conditions</0> and acknowledge that you have read and understand the <1>IXSwap Privacy Policy</1>."
-msgstr ""
-
-#: 
-#~ msgid "By connecting a wallet, you agree to Uniswap Labs’ <0>Terms of Service</0> and acknowledge that you have read and understand the <1>Uniswap protocol disclaimer</1>."
-#~ msgstr "Підключивши гаманець, ви погоджуєтеся з Uniswap Labs <0>Умовами користування</0> і підтверджуєте, що ви прочитали та зрозуміли <1>Uniswap protocol disclaimer</1>."
+msgstr "Підключаючи гаманець, ви погоджуєтесь з <0> Загальними положеннями та умовами </0> IXSwap та підтверджуєте, що прочитали та розумієте <1> Політику конфіденційності IXSwap </1>."
 
 #: src/components/AccountDetails/index.tsx
 msgid "Change"
 msgstr "Змінити"
 
 #: src/components/CurrencyInputPanel/index.tsx
-#: src/components/SearchModal/CurrencySearch.tsx
-#: src/pages/PoolFinder/index.tsx
-#: src/pages/PoolFinder/index.tsx
+#: src/pages/PoolFinder/CurrencyRow.tsx
 #: src/state/swap/hooks.ts
 msgid "Choose token"
 msgstr "Вибрати токен"
 
-#: src/pages/PoolFinder/index.tsx
+#: src/pages/PoolFinder/PrerequisiteMessage.tsx
 msgid "Choose token to find your liquidity."
 msgstr "Виберіть маркер для пошуку вашої рідини."
 
@@ -260,10 +223,6 @@ msgstr "Очистити все"
 msgid "Close"
 msgstr "Закрити"
 
-#: 
-#~ msgid "Code"
-#~ msgstr "Код"
-
 #: src/components/SearchModal/CommonBases.tsx
 msgid "Common bases"
 msgstr "Бази"
@@ -278,6 +237,7 @@ msgstr "Підтвердити постачання"
 
 #: src/components/swap/ConfirmSwapModal.tsx
 #: src/components/swap/SwapModalFooter.tsx
+#: src/pages/Swap/index.tsx
 msgid "Confirm Swap"
 msgstr "Підтвердьте обмін"
 
@@ -304,19 +264,15 @@ msgstr "Підключити гаманець"
 
 #: src/pages/Pool/NoPairs.tsx
 msgid "Connect a wallet to view your Liquidity."
-msgstr ""
+msgstr "Підключіть гаманець, щоб переглянути свою ліквідність."
 
 #: src/components/WalletModal/index.tsx
 msgid "Connect to a wallet"
 msgstr "Підключення до гаманця"
 
-#: src/pages/PoolFinder/index.tsx
+#: src/pages/PoolFinder/PrerequisiteMessage.tsx
 msgid "Connect to a wallet to find pools"
 msgstr "Під'єднайтеся до гаманця для пошуку басейнів"
-
-#: 
-#~ msgid "Connect to a wallet to view your liquidity."
-#~ msgstr "Підключіться до гаманця для перегляду вашої ліквідності."
 
 #: src/components/earn/ClaimRewardModal.tsx
 msgid "Connect wallet"
@@ -343,21 +299,17 @@ msgstr "Створити басейн та пропозицію"
 msgid "Create a pair"
 msgstr "Створити пару"
 
-#: 
-#~ msgid "Create an issue on GitHub"
-#~ msgstr "Створіть випуск на GitHub"
-
 #: src/pages/PoolFinder/index.tsx
-msgid "Create pool."
-msgstr "Створити басейн."
+msgid "Create pool"
+msgstr "Створити басейн"
 
-#: src/pages/Swap/index.tsx
+#: src/components/swap/CurrentRate.tsx
 msgid "Current Rate"
 msgstr "Поточна ставка"
 
 #: src/components/Header/HeaderLinks.tsx
 msgid "Custodian"
-msgstr ""
+msgstr "Зберігач"
 
 #: src/components/earn/StakingModal.tsx
 #: src/components/earn/StakingModal.tsx
@@ -380,10 +332,6 @@ msgstr "Зараховано {0} IXS-V2"
 msgid "Depositing Liquidity"
 msgstr "Зарахування ліквідності"
 
-#: 
-#~ msgid "Detailed"
-#~ msgstr "Докладно"
-
 #: src/components/Settings/SettingsModal.tsx
 msgid "Disable Multihops"
 msgstr "Вимкнути мульти-хопи"
@@ -392,21 +340,13 @@ msgstr "Вимкнути мульти-хопи"
 msgid "Disconnect"
 msgstr "Від'єднатись"
 
-#: 
-#~ msgid "Discord"
-#~ msgstr "Discord"
-
 #: src/components/TransactionConfirmationModal/index.tsx
 msgid "Dismiss"
 msgstr "Відхилити"
 
-#: 
-#~ msgid "Docs"
-#~ msgstr "Документація"
-
 #: src/pages/Pool/ImportPool.tsx
 msgid "Don't see a pool you joined?"
-msgstr ""
+msgstr "Не бачите пулу, до якого ви приєдналися?"
 
 #: src/state/swap/hooks.ts
 msgid "Enter a recipient"
@@ -464,18 +404,14 @@ msgstr "Експериментальний режим"
 msgid "Expert mode turns off the confirm transaction prompt and allows high slippage trades that often result in bad rates and lost funds."
 msgstr "Експертний режим вимикає підтвердження запиту транзакцій і дає змогу торгувати з високими відхиленнями, які часто призводять до поганих ставок та втрачених коштів."
 
+#: src/components/swap/CurrencyInput.tsx
 #: src/components/swap/SwapModalHeader.tsx
-#: src/pages/Swap/index.tsx
 msgid "From"
 msgstr "Від"
 
-#: src/pages/Swap/index.tsx
+#: src/components/swap/CurrencyInput.tsx
 msgid "From (at most)"
 msgstr "Від (максимум)"
-
-#: 
-#~ msgid "Get support on Discord"
-#~ msgstr "Отримайте підтримку щодо Discord"
 
 #: src/pages/Swap/index.tsx
 msgid "High Price Impact"
@@ -487,11 +423,11 @@ msgstr "Я розумію"
 
 #: src/pages/RemoveLiquidity/RemovedLiquidity.tsx
 msgid "IXS Rewards"
-msgstr ""
+msgstr "Нагороди IXS"
 
 #: src/components/PositionCard/index.tsx
 msgid "IXS Rewards (on quit)"
-msgstr ""
+msgstr "Нагороди IXS (на виході)"
 
 #: src/pages/RemoveLiquidity/ModalBottom.tsx
 msgid "IXS {0}/{1} Burned"
@@ -521,7 +457,7 @@ msgstr "Імпорт на Ваш страх і ризик"
 
 #: src/pages/Pool/ImportPool.tsx
 msgid "Import it."
-msgstr ""
+msgstr "Імпортуйте його."
 
 #: src/components/Badge/RangeBadge.tsx
 msgid "In range"
@@ -548,8 +484,8 @@ msgid "Install Metamask"
 msgstr "Встановити Metamask"
 
 #: src/pages/Swap/index.tsx
-msgid "Insufficient liquidity for this trade."
-msgstr "Недостатньо ліквідності для цієї торгівлі."
+msgid "Insufficient liquidity for this trade"
+msgstr "Недостатня ліквідність для цієї торгівлі"
 
 #: src/pages/Swap/index.tsx
 msgid "Insufficient liquidity for this trade. Try enabling multi-hop trades."
@@ -565,13 +501,10 @@ msgstr "Недостатній баланс {0}"
 msgid "Interface Settings"
 msgstr "Налаштування інтерфейсу"
 
+#: src/pages/PoolFinder/index.tsx
 #: src/state/mint/hooks.ts
 msgid "Invalid pair"
 msgstr "Недійсна пара"
-
-#: src/pages/PoolFinder/index.tsx
-msgid "Invalid pair."
-msgstr "Недійсна пара."
 
 #: src/state/swap/hooks.ts
 msgid "Invalid recipient"
@@ -579,9 +512,10 @@ msgstr "Недійсний одержувач"
 
 #: src/pages/Pool/LiquidityTitle.tsx
 msgid "Liquidity Pool"
-msgstr ""
+msgstr "Пул ліквідності"
 
 #: src/components/swap/AdvancedSwapDetails.tsx
+#: src/components/swap/ConfirmSwapInfo.tsx
 msgid "Liquidity Provider Fee"
 msgstr "Плата за надання ліквідності"
 
@@ -595,33 +529,24 @@ msgstr "Завантажено"
 
 #: src/components/PositionCard/CurrencyHeader.tsx
 #: src/pages/Pool/NoPairs.tsx
-#: src/pages/PoolFinder/index.tsx
 msgid "Loading"
 msgstr "Завантаження"
 
 #: src/pages/RemoveLiquidity/RemoveAmount.tsx
 msgid "MAX"
-msgstr ""
+msgstr "МАКС"
 
 #: src/components/Header/URLWarning.tsx
 msgid "Make sure the URL is<0>app.ixswap.io</0>"
-msgstr ""
-
-#: 
-#~ msgid "Make sure the URL is<0>app.uniswap.org</0>"
-#~ msgstr "Переконайтеся, що URL-адреса є<0>app.uniswap.org</0>"
+msgstr "Переконайтеся, що URL-адреса <0> app.ixswap.io </0>"
 
 #: src/components/SearchModal/Manage.tsx
 msgid "Manage"
 msgstr "Керування"
 
-#: 
-#~ msgid "Manage Liquidity in Rewards Pool"
-#~ msgstr "Управління ліквідністю в басейні нагород"
-
 #: src/components/SearchModal/CurrencySearch.tsx
-msgid "Manage Token Lists"
-msgstr "Керувати списками токенів"
+msgid "Manage Token List"
+msgstr "Керування списком токенів"
 
 #: src/pages/PoolFinder/index.tsx
 msgid "Manage this pool."
@@ -636,6 +561,7 @@ msgid "Max Price"
 msgstr "Максимальна ціна"
 
 #: src/components/swap/AdvancedSwapDetails.tsx
+#: src/components/swap/ConfirmSwapInfo.tsx
 msgid "Maximum sent"
 msgstr "Максимум відправлених"
 
@@ -644,6 +570,7 @@ msgid "Min Price"
 msgstr "Мінімальна ціна"
 
 #: src/components/swap/AdvancedSwapDetails.tsx
+#: src/components/swap/ConfirmSwapInfo.tsx
 msgid "Minimum received"
 msgstr "Мінімум отриманих"
 
@@ -654,19 +581,19 @@ msgstr "Хвилин"
 #: src/pages/Pool/NoPairs.tsx
 #: src/pages/Pool/v2.tsx
 msgid "My Liquidity"
-msgstr ""
+msgstr "Моя ліквідність"
 
 #: src/components/PositionCard/MinimalPositionCard.tsx
 msgid "My pool share"
-msgstr ""
+msgstr "Моя частка в басейні"
 
 #: src/pages/Pool/EmptyLiquidity.tsx
 msgid "No liquidity found."
 msgstr "Ніякої ліквідності не знайдено."
 
 #: src/pages/PoolFinder/index.tsx
-msgid "No pool found."
-msgstr "Пул не знайдено."
+msgid "No pool found"
+msgstr "Басейн не знайдено"
 
 #: src/components/SearchModal/CurrencySearch.tsx
 msgid "No results found."
@@ -683,10 +610,6 @@ msgstr "УВІМК"
 #: src/components/Settings/ExpertModeModal.tsx
 msgid "ONLY USE THIS MODE IF YOU KNOW WHAT YOU ARE DOING."
 msgstr "ТІЛЬКИ ВИКОРИСТОВУЙТЕ ЦЕЙ РЕЖИМ ЯКЩО ВИ ЗНАЄТЕ ЯКТИ."
-
-#: 
-#~ msgid "Once you are happy with the rate click supply to review."
-#~ msgstr "Як тільки ви будете задоволені швидким натисканням на пропозицію, щоб переглянути."
 
 #: src/components/Web3ReactManager/index.tsx
 msgid "Oops! An unknown error occurred. Please refresh the page, or visit from another browser or device."
@@ -730,22 +653,10 @@ msgstr "Знайдена пул!"
 msgid "Pool rate"
 msgstr "Швидкість пула"
 
-#: 
-#: 
-#~ msgid "Pool tokens in rewards pool:"
-#~ msgstr "Токени басейну у пулі:"
-
 #: src/components/PositionCard/index.tsx
 #: src/components/PositionCard/index.tsx
 msgid "Pooled {0}"
-msgstr ""
-
-#: 
-#: 
-#: 
-#: 
-#~ msgid "Pooled {0}:"
-#~ msgstr "Завантажено {0}:"
+msgstr "Об’єднано {0}"
 
 #: src/components/swap/SwapModalHeader.tsx
 #: src/pages/RemoveLiquidity/ModalBottom.tsx
@@ -754,6 +665,7 @@ msgid "Price"
 msgstr "Ціна"
 
 #: src/components/swap/AdvancedSwapDetails.tsx
+#: src/components/swap/ConfirmSwapInfo.tsx
 msgid "Price Impact"
 msgstr "Вплив на ціну"
 
@@ -761,13 +673,15 @@ msgstr "Вплив на ціну"
 msgid "Price Impact Too High"
 msgstr "Занадто високий вплив ціни"
 
+#: src/pages/Swap/index.tsx
+#: src/pages/Swap/index.tsx
+msgid "Price Impact is high. Swap Anyway"
+msgstr "Вплив на ціну високий. Поміняйся в будь-якому випадку"
+
+#: src/components/swap/AcceptChanges.tsx
 #: src/components/swap/SwapModalHeader.tsx
 msgid "Price Updated"
 msgstr "Ціну оновлено"
-
-#: 
-#~ msgid "Price:"
-#~ msgstr "Ціна:"
 
 #: src/pages/AddLiquidityV2/PricesAndPoolShare.tsx
 msgid "Prices and pool share"
@@ -802,6 +716,10 @@ msgstr "Видалити ліквідність"
 msgid "Remove list"
 msgstr "Видалити список"
 
+#: src/components/swap/EditRecipient.tsx
+msgid "Remove send"
+msgstr "Видалити надсилання"
+
 #: src/pages/RemoveLiquidity/index.tsx
 #: src/pages/RemoveLiquidity/index.tsx
 msgid "Remove {0} {1} and {2} {3}"
@@ -809,7 +727,7 @@ msgstr "Видалити {0} {1} і {2} {3}"
 
 #: src/pages/RemoveLiquidity/index.tsx
 msgid "Removing pool tokens converts your position back into underlying tokens at the current rate, proportional to your share of the pool. Accrued fees are included in the amounts you receive."
-msgstr ""
+msgstr "Видалення маркерів пулу перетворює вашу позицію назад на базові токени за поточним курсом, пропорційним вашій частці пулу. Нараховані збори включаються до суми, яку ви отримуєте."
 
 #: src/pages/RemoveLiquidity/index.tsx
 msgid "Removing {0} {1} and {2} {3}"
@@ -824,12 +742,13 @@ msgid "Return"
 msgstr "Повернення товару"
 
 #: src/components/swap/AdvancedSwapDetails.tsx
+#: src/components/swap/ConfirmSwapInfo.tsx
 msgid "Route"
 msgstr "Маршрут"
 
 #: src/components/SearchModal/CurrencySearch.tsx
-msgid "Search name or paste address"
-msgstr "Знайдіть ім'я або вставку адресу"
+msgid "Search or paste address"
+msgstr "Шукайте або вставте адресу"
 
 #: src/components/FeeSelector/index.tsx
 msgid "Select Pool"
@@ -839,24 +758,25 @@ msgstr "Вибрати басейн"
 msgid "Select a pool type based on your preferred liquidity provider fee."
 msgstr "Виберіть тип пуску на основі необхідної комісії провайдера ліквідності."
 
+#: src/components/SearchModal/CurrencySearch.tsx
+msgid "Select a token"
+msgstr "Виберіть маркер"
+
+#: src/components/swap/CurrencyInput.tsx
+msgid "Select a token to swap"
+msgstr "Виберіть маркер для обміну"
+
 #: src/pages/AddLiquidityV2/ModalBottom.tsx
 msgid "Share of Pool"
-msgstr ""
-
-#: 
-#~ msgid "Share of Pool:"
-#~ msgstr "Розповсюдження пулу:"
+msgstr "Частка пулу"
 
 #: src/components/AccountDetails/index.tsx
 msgid "Show Portis"
 msgstr "Show Portis"
 
-#: 
-#~ msgid "Simple"
-#~ msgstr "Просте"
-
 #: src/components/TransactionSettings/index.tsx
 #: src/components/swap/AdvancedSwapDetails.tsx
+#: src/components/swap/ConfirmSwapInfo.tsx
 msgid "Slippage tolerance"
 msgstr "Насиченість слизу"
 
@@ -884,12 +804,8 @@ msgstr "Постачання {0} {1} та {2} {3}"
 msgid "Swap"
 msgstr "Поміняти"
 
-#: src/pages/Swap/index.tsx
-#: src/pages/Swap/index.tsx
-msgid "Swap Anyway"
-msgstr "Поміняти місцями все одно"
-
 #: src/components/swap/ConfirmSwapModal.tsx
+#: src/components/swap/PendingSuccesModals.tsx
 msgid "Swapping {0} {1} for {2} {3}"
 msgstr "Обмін {0} {1} на {2} {3}"
 
@@ -921,10 +837,6 @@ msgstr "Ціна цього басейну знаходиться за межа�
 msgid "The price of this pool is within your selected range. Your position is currently earning fees."
 msgstr "Ціна цього басейну знаходиться в межах вашого вибраного діапазону. Ваша позиція заробляє дохід."
 
-#: 
-#~ msgid "The ratio of tokens you add will set the price of this pool."
-#~ msgstr "Співвідношення токенів, які ви додаєте, встановить ціну цього басейну."
-
 #: src/hooks/useSwapCallback.ts
 msgid "The transaction could not be sent because the deadline has passed. Please check that your transaction deadline is not too low."
 msgstr "Транзакцію надіслати не вдалося, оскільки термін минув. Будь ласка, перевірте, щоб термін трансакції не був занадто низьким."
@@ -932,6 +844,10 @@ msgstr "Транзакцію надіслати не вдалося, оскіл�
 #: src/components/SearchModal/CommonBases.tsx
 msgid "These tokens are commonly paired with other tokens."
 msgstr "Ці токени зазвичай поєднані з іншими токенами."
+
+#: src/components/SearchModal/ImportToken.tsx
+msgid "This token doesn't appear on the active token list(s). Make sure this is the token that you want to trade."
+msgstr "Цей маркер не відображається у списку активних маркерів. Переконайтеся, що це маркер, яким ви хочете торгувати."
 
 #: src/hooks/useSwapCallback.ts
 msgid "This transaction will not succeed due to price movement. Try increasing your slippage tolerance. Note fee on transfer and rebase tokens are incompatible with Uniswap V3."
@@ -943,18 +859,18 @@ msgstr "Ця транзакція не буде успішною ні через
 
 #: src/components/TipWithMessage/index.tsx
 msgid "Tip:"
-msgstr ""
+msgstr "Порада:"
 
 #: src/components/SearchModal/ManageTokens.tsx
 msgid "Tip: Custom tokens are stored locally in your browser"
 msgstr "Порада: користувацькі токени зберігаються локально в браузері"
 
+#: src/components/swap/CurrencyInput.tsx
 #: src/components/swap/SwapModalHeader.tsx
-#: src/pages/Swap/index.tsx
 msgid "To"
 msgstr "На"
 
-#: src/pages/Swap/index.tsx
+#: src/components/swap/CurrencyInput.tsx
 msgid "To (at least)"
 msgstr "До (не менше)"
 
@@ -1019,9 +935,9 @@ msgstr "Unwrap"
 msgid "Update list"
 msgstr "Оновити список"
 
-#: 
-#~ msgid "View accrued fees and analytics<0>↗</0>"
-#~ msgstr "Перегляд нарахованих комісій і аналітики<0>↗</0>"
+#: src/pages/PoolFinder/index.tsx
+msgid "Use this tool to find pairs that don't automatically appear in the interface."
+msgstr "Використовуйте цей інструмент, щоб знайти пари, які не відображаються автоматично в інтерфейсі."
 
 #: src/components/SearchModal/ManageLists.tsx
 msgid "View list"
@@ -1035,7 +951,7 @@ msgstr "Дивитись на Etherscan"
 
 #: src/components/PositionCard/PoolInformation.tsx
 msgid "View pool information<0>↗</0>"
-msgstr ""
+msgstr "Переглянути інформацію про пул <0>↗</0>"
 
 #: src/components/ModalViews/index.tsx
 msgid "View transaction on Etherscan"
@@ -1052,7 +968,7 @@ msgstr "Щотижневі Нагороди"
 #: src/pages/AddLiquidityV2/Tip.tsx
 #: src/pages/AddLiquidityV2/Tip.tsx
 msgid "When you add liquidity, you will receive pool tokens representing your position. These tokens automatically earn fees proportional to your share of the pool, and can be redeemed at any time."
-msgstr ""
+msgstr "Коли ви додасте ліквідність, ви отримаєте жетони пулу, що відображають вашу позицію. Ці токени автоматично заробляють комісію, пропорційну вашій частці пулу, і можуть бути використані в будь-який час."
 
 #: src/components/earn/ClaimRewardModal.tsx
 msgid "When you claim without withdrawing your liquidity remains in the mining pool."
@@ -1096,21 +1012,17 @@ msgstr "Некоректна мережа"
 msgid "You are creating a pool"
 msgstr "Ви створюєте басейн"
 
-#: 
-#~ msgid "You are the first liquidity provider."
-#~ msgstr "Ви перший постачальник ліквідності."
-
 #: src/pages/Swap/index.tsx
 msgid "You can now trade {0}"
 msgstr "Тепер ви можете торгувати {0}"
 
 #: src/pages/PoolFinder/index.tsx
-msgid "You don’t have liquidity in this pool yet."
-msgstr "У вас поки що немає ліквідності."
+msgid "You don’t have liquidity in this pool yet"
+msgstr "У вас ще немає ліквідності в цьому пулі"
 
 #: src/pages/Swap/index.tsx
-msgid "You must give the IXSwap smart contracts permission to use your {0}. You only have to do this once per token."
-msgstr ""
+msgid "You must give the IXS smart contracts permission to use your {0}. You only have to do this once per token."
+msgstr "Ви повинні дати дозвіл на використання смарт-контрактів IXS для використання вашого {0}. Це потрібно зробити лише один раз за токен."
 
 #: src/pages/AddLiquidityV2/index.tsx
 #: src/pages/RemoveLiquidity/index.tsx
@@ -1119,15 +1031,11 @@ msgstr "Ви отримаєте"
 
 #: src/components/PositionCard/index.tsx
 msgid "Your pool share"
-msgstr ""
-
-#: 
-#~ msgid "Your pool share:"
-#~ msgstr "Ваш спільний доступ до басейну:"
+msgstr "Ваша частка в пулі"
 
 #: src/components/PositionCard/index.tsx
 msgid "Your pool tokens"
-msgstr ""
+msgstr "Ваші жетони пулу"
 
 #: src/components/PositionCard/MinimalPositionCard.tsx
 msgid "Your position"
@@ -1140,11 +1048,6 @@ msgstr "Ваша позиція має 0 ліквідності і не заро
 #: src/components/earn/PoolCard.tsx
 msgid "Your rate"
 msgstr "Ваша оцінка"
-
-#: 
-#: 
-#~ msgid "Your total pool tokens:"
-#~ msgstr "Ваш токени басейну:"
 
 #: src/components/TransactionSettings/index.tsx
 msgid "Your transaction may be frontrun"
@@ -1184,7 +1087,7 @@ msgstr "через {0}"
 
 #: src/components/Toggle/index.tsx
 msgid "{0}"
-msgstr ""
+msgstr "{0}"
 
 #: src/components/PositionCard/index.tsx
 msgid "{0} %"
@@ -1238,4 +1141,4 @@ msgstr "{tokenB} в {tokenA}"
 
 #: src/components/CurrencyInputPanel/FiatValue.tsx
 msgid "~$ {0}"
-msgstr ""
+msgstr "~$ {0}"

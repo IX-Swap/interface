@@ -34,10 +34,6 @@ msgstr "(tyhjennä kaikki)"
 msgid "+{feeAmountFormatted}%"
 msgstr "+{feeAmountFormatted}%"
 
-#: src/pages/Swap/index.tsx
-msgid "- Remove send"
-msgstr "- Poista lähetys"
-
 #: src/components/InputStepCounter/InputStepCounter.tsx
 msgid "-{feeAmountFormatted}%"
 msgstr "-{feeAmountFormatted}%"
@@ -59,26 +55,11 @@ msgstr "0,3 prosentin maksu"
 msgid "1% fee"
 msgstr "1% maksu"
 
-#: 
-#~ msgid "<0>Account analytics and accrued fees</0><1> ↗ </1>"
-#~ msgstr "<0>Tilin analytiikka ja kertynyt maksu</0><1> ↗ </1>"
-
-#: 
-#~ msgid "<0>Tip:</0> Removing pool tokens converts your position back into underlying tokens at the current rate, proportional to your share of the pool. Accrued fees are included in the amounts you receive."
-#~ msgstr "<0>Vinkki:</0> Poistaminen poolin poletteja muuntaa sijaintisi takaisin taustalla oleviin poletteihin nykyisellä nopeudella, suhteutettuna oman osuuden poolista. Kertyneet palkkiot sisältyvät saamiisi määriin."
-
 #: src/pages/PoolFinder/index.tsx
-msgid "<0>Tip:</0> Use this tool to find pairs that don't automatically appear in the interface."
-msgstr "<0>Vinkki:</0> Käytä tätä työkalua löytääksesi pareja, jotka eivät näy automaattisesti käyttöliittymässä."
+msgid "<0>Loading</0>"
+msgstr "<0>Ladataan</0>"
 
-#: 
-#~ msgid "<0>Tip:</0> When you add liquidity, you will receive pool tokens representing your position. These tokens automatically earn fees proportional to your share of the pool, and can be redeemed at any time."
-#~ msgstr "<0>Vinkki:</0> Kun lisäät likviditeettiä, saat poolin poletteja, jotka edustavat sijaintiasi. Nämä rahakkeet automaattisesti ansaita palkkioita suhteessa osuutesi altaasta, ja voidaan lunastaa milloin tahansa."
-
-#: 
-#~ msgid "About"
-#~ msgstr "Tietoja"
-
+#: src/components/swap/AcceptChanges.tsx
 #: src/components/swap/SwapModalHeader.tsx
 msgid "Accept"
 msgstr "Hyväksy"
@@ -101,8 +82,8 @@ msgid "Add Liquidity"
 msgstr "Lisää likviditeetti"
 
 #: src/pages/PoolFinder/index.tsx
-msgid "Add liquidity."
-msgstr "Lisää likviditeettiä."
+msgid "Add liquidity"
+msgstr Lisää likviditeettiä"
 
 #: src/components/TransactionConfirmationModal/index.tsx
 msgid "Add {0} to Metamask <0/>"
@@ -117,29 +98,21 @@ msgstr "Lisää {0} {1} ja {2} {3}"
 msgid "Added {0}"
 msgstr "Lisätty {0}"
 
+#: src/pages/Swap/index.tsx
+msgid "Allow IXSwap to use your {0}"
+msgstr "Salli IXSwapin käyttää {0}"
+
 #: src/components/Settings/SettingsModal.tsx
 msgid "Allow high price impact trades and skip the confirm screen. Use at your own risk."
 msgstr "Salli korkean hinnan vaikutus kauppojen ja ohita vahvistusnäyttö. Käytä omalla vastuulla."
 
-#: src/pages/Swap/index.tsx
-msgid "Allow the IXSwap Protocol to use your {0}"
-msgstr ""
-
 #: src/components/Header/URLWarning.tsx
 msgid "Always make sure the URL is<0>app.ixswap.io</0> - bookmark it to be safe."
-msgstr ""
-
-#: 
-#~ msgid "Always make sure the URL is<0>app.uniswap.org</0> - bookmark it to be safe."
-#~ msgstr "Varmista aina, että URL-osoite on <0>app.uniswap.org</0> - kirjanmerkki on turvallinen."
+msgstr "Varmista aina, että URL-osoite on <0> app.ixswap.io </0> - lisää se kirjanmerkkeihin turvalliseksi."
 
 #: src/hooks/useSwapCallback.ts
 msgid "An error occurred when trying to execute this swap. You may need to increase your slippage tolerance. If that does not work, there may be an incompatibility with the token you are trading. Note fee on transfer and rebase tokens are incompatible with Uniswap V3."
 msgstr "Tapahtui virhe yritettäessä suorittaa tämä vaihto. Saatat joutua lisäämään luistonsietokykyäsi. Jos se ei toimi, kaupankäynnin kohteena olevan tunnuksen kanssa saattaa olla ristiriita. Huomautuspalkkio siirto- ja uudelleenasennustunnuksista ei ole yhteensopiva Uniswap V3: n kanssa."
-
-#: 
-#~ msgid "Analytics"
-#~ msgstr "Analytiikka"
 
 #: src/components/earn/StakingModal.tsx
 #: src/pages/RemoveLiquidity/index.tsx
@@ -196,35 +169,25 @@ msgstr "Paras vakaille pareille."
 msgid "Blocked address"
 msgstr "Estetty osoite"
 
-#: 
-#~ msgid "By adding liquidity you'll earn 0.3% of all trades on this pair proportional to your share of the pool. Fees are added to the pool, accrue in real time and can be claimed by withdrawing your liquidity."
-#~ msgstr "Lisäämällä likviditeettiä ansaitset 0.3% kaikista kaupoista tämän parin suhteessa osuutesi poolista. Maksut lisätään altaaseen, kertyy reaaliajassa ja voidaan vaatia vetämällä pois likviditeetti."
-
 #: src/components/SearchModal/ImportList.tsx
 msgid "By adding this list you are implicitly trusting that the data is correct. Anyone can create a list, including creating fake versions of existing lists and lists that claim to represent projects that do not have one."
 msgstr "Lisäämällä tämän listan luotat implisiittisesti, että tiedot ovat oikeita. Kuka tahansa voi luoda listan, mukaan lukien luoda väärennettyjä versioita olemassa olevista listoista ja listoista, jotka väittävät edustavansa hankkeita, joilla ei ole sellaista."
 
 #: src/components/WalletModal/index.tsx
 msgid "By connecting a wallet, you agree to IXSwap’ <0>Terms and Conditions</0> and acknowledge that you have read and understand the <1>IXSwap Privacy Policy</1>."
-msgstr ""
-
-#: 
-#~ msgid "By connecting a wallet, you agree to Uniswap Labs’ <0>Terms of Service</0> and acknowledge that you have read and understand the <1>Uniswap protocol disclaimer</1>."
-#~ msgstr "Yhdistämällä lompakon hyväksyt Uniswap Labsin <0>Käyttöehdot</0> ja hyväksyt, että olet lukenut ja ymmärtänyt <1>Uniswap protokollan vastuuvapaus</1>."
+msgstr "Yhdistämällä lompakon, hyväksyt IXSwapin <0> käyttöehdot </0> ja hyväksyt, että olet lukenut ja ymmärtänyt <1> IXSwapin tietosuojakäytännön </1>."
 
 #: src/components/AccountDetails/index.tsx
 msgid "Change"
 msgstr "Muuta"
 
 #: src/components/CurrencyInputPanel/index.tsx
-#: src/components/SearchModal/CurrencySearch.tsx
-#: src/pages/PoolFinder/index.tsx
-#: src/pages/PoolFinder/index.tsx
+#: src/pages/PoolFinder/CurrencyRow.tsx
 #: src/state/swap/hooks.ts
 msgid "Choose token"
 msgstr "Valitse tunnus"
 
-#: src/pages/PoolFinder/index.tsx
+#: src/pages/PoolFinder/PrerequisiteMessage.tsx
 msgid "Choose token to find your liquidity."
 msgstr "Valitse tunnus löytääksesi maksuvalmiuden."
 
@@ -260,10 +223,6 @@ msgstr "Tyhjennä kaikki"
 msgid "Close"
 msgstr "Sulje"
 
-#: 
-#~ msgid "Code"
-#~ msgstr "Koodi"
-
 #: src/components/SearchModal/CommonBases.tsx
 msgid "Common bases"
 msgstr "Yhteiset tukikohdat"
@@ -278,6 +237,7 @@ msgstr "Vahvista Tulo"
 
 #: src/components/swap/ConfirmSwapModal.tsx
 #: src/components/swap/SwapModalFooter.tsx
+#: src/pages/Swap/index.tsx
 msgid "Confirm Swap"
 msgstr "Vahvista vaihtaminen"
 
@@ -304,19 +264,15 @@ msgstr "Yhdistä lompakko"
 
 #: src/pages/Pool/NoPairs.tsx
 msgid "Connect a wallet to view your Liquidity."
-msgstr ""
+msgstr "Yhdistä lompakko nähdäksesi likviditeettisi."
 
 #: src/components/WalletModal/index.tsx
 msgid "Connect to a wallet"
 msgstr "Yhdistä lompakkoon"
 
-#: src/pages/PoolFinder/index.tsx
+#: src/pages/PoolFinder/PrerequisiteMessage.tsx
 msgid "Connect to a wallet to find pools"
 msgstr "Yhdistä lompakkoon löytääksesi altaita"
-
-#: 
-#~ msgid "Connect to a wallet to view your liquidity."
-#~ msgstr "Yhdistä lompakkoon nähdäksesi sinun maksuvalmiutesi."
 
 #: src/components/earn/ClaimRewardModal.tsx
 msgid "Connect wallet"
@@ -343,21 +299,17 @@ msgstr "Luo Uima-allas Ja Tulo"
 msgid "Create a pair"
 msgstr "Luo pari"
 
-#: 
-#~ msgid "Create an issue on GitHub"
-#~ msgstr "Luo ongelma GitHubiin"
-
 #: src/pages/PoolFinder/index.tsx
-msgid "Create pool."
-msgstr "Luo allas."
+msgid "Create pool"
+msgstr "Luo uima-allas"
 
-#: src/pages/Swap/index.tsx
+#: src/components/swap/CurrentRate.tsx
 msgid "Current Rate"
 msgstr "Nykyinen korko"
 
 #: src/components/Header/HeaderLinks.tsx
 msgid "Custodian"
-msgstr ""
+msgstr "Huoltaja"
 
 #: src/components/earn/StakingModal.tsx
 #: src/components/earn/StakingModal.tsx
@@ -380,10 +332,6 @@ msgstr "Tallennettu {0} IXS-V2"
 msgid "Depositing Liquidity"
 msgstr "Likviditeetin Talletus"
 
-#: 
-#~ msgid "Detailed"
-#~ msgstr "Yksityiskohtainen"
-
 #: src/components/Settings/SettingsModal.tsx
 msgid "Disable Multihops"
 msgstr "Poista Multihops Käytöstä"
@@ -392,21 +340,13 @@ msgstr "Poista Multihops Käytöstä"
 msgid "Disconnect"
 msgstr "Katkaise"
 
-#: 
-#~ msgid "Discord"
-#~ msgstr "Discord"
-
 #: src/components/TransactionConfirmationModal/index.tsx
 msgid "Dismiss"
 msgstr "Hylkää"
 
-#: 
-#~ msgid "Docs"
-#~ msgstr "Asiakirjat"
-
 #: src/pages/Pool/ImportPool.tsx
 msgid "Don't see a pool you joined?"
-msgstr ""
+msgstr "Etkö näe uima-allasta, johon liityit?"
 
 #: src/state/swap/hooks.ts
 msgid "Enter a recipient"
@@ -464,18 +404,14 @@ msgstr "Asiantuntijatilaa"
 msgid "Expert mode turns off the confirm transaction prompt and allows high slippage trades that often result in bad rates and lost funds."
 msgstr "Asiantuntijatila sammuttaa vahvistavan tapahtuman kehotuksen ja mahdollistaa korkean lipsumisen kaupat, jotka johtavat usein huonoihin hintoihin ja menetti varoja."
 
+#: src/components/swap/CurrencyInput.tsx
 #: src/components/swap/SwapModalHeader.tsx
-#: src/pages/Swap/index.tsx
 msgid "From"
 msgstr "Alkaen"
 
-#: src/pages/Swap/index.tsx
+#: src/components/swap/CurrencyInput.tsx
 msgid "From (at most)"
 msgstr "Alkaen (enintään)"
-
-#: 
-#~ msgid "Get support on Discord"
-#~ msgstr "Hanki tukea Discordista"
 
 #: src/pages/Swap/index.tsx
 msgid "High Price Impact"
@@ -487,11 +423,11 @@ msgstr "Minä ymmärrän"
 
 #: src/pages/RemoveLiquidity/RemovedLiquidity.tsx
 msgid "IXS Rewards"
-msgstr ""
+msgstr "IXS-palkinnot"
 
 #: src/components/PositionCard/index.tsx
 msgid "IXS Rewards (on quit)"
-msgstr ""
+msgstr "IXS Rewards (lopetettu)"
 
 #: src/pages/RemoveLiquidity/ModalBottom.tsx
 msgid "IXS {0}/{1} Burned"
@@ -521,7 +457,7 @@ msgstr "Tuo omalla vastuulla"
 
 #: src/pages/Pool/ImportPool.tsx
 msgid "Import it."
-msgstr ""
+msgstr "Tuo se."
 
 #: src/components/Badge/RangeBadge.tsx
 msgid "In range"
@@ -548,8 +484,8 @@ msgid "Install Metamask"
 msgstr "Asenna Metamaski"
 
 #: src/pages/Swap/index.tsx
-msgid "Insufficient liquidity for this trade."
-msgstr "Tähän kauppaan ei ole riittävästi likviditeettiä."
+msgid "Insufficient liquidity for this trade"
+msgstr "Riittämätön likviditeetti tälle kaupalle"
 
 #: src/pages/Swap/index.tsx
 msgid "Insufficient liquidity for this trade. Try enabling multi-hop trades."
@@ -565,13 +501,10 @@ msgstr "Riittämätön {0} saldo"
 msgid "Interface Settings"
 msgstr "Käyttöliittymän Asetukset"
 
+#: src/pages/PoolFinder/index.tsx
 #: src/state/mint/hooks.ts
 msgid "Invalid pair"
 msgstr "Virheellinen pari"
-
-#: src/pages/PoolFinder/index.tsx
-msgid "Invalid pair."
-msgstr "Virheellinen pari."
 
 #: src/state/swap/hooks.ts
 msgid "Invalid recipient"
@@ -582,6 +515,7 @@ msgid "Liquidity Pool"
 msgstr "Maksuvalmiuspooli"
 
 #: src/components/swap/AdvancedSwapDetails.tsx
+#: src/components/swap/ConfirmSwapInfo.tsx
 msgid "Liquidity Provider Fee"
 msgstr "Likviditeetin tarjoajan maksu"
 
@@ -595,33 +529,24 @@ msgstr "Ladattu"
 
 #: src/components/PositionCard/CurrencyHeader.tsx
 #: src/pages/Pool/NoPairs.tsx
-#: src/pages/PoolFinder/index.tsx
 msgid "Loading"
 msgstr "Ladataan"
 
 #: src/pages/RemoveLiquidity/RemoveAmount.tsx
 msgid "MAX"
-msgstr ""
+msgstr "MAX"
 
 #: src/components/Header/URLWarning.tsx
 msgid "Make sure the URL is<0>app.ixswap.io</0>"
-msgstr ""
-
-#: 
-#~ msgid "Make sure the URL is<0>app.uniswap.org</0>"
-#~ msgstr "Varmista, että URL-osoite on <0>app.uniswap.org</0>"
+msgstr "Make sure the URL is<0>app.ixswap.io</0>"
 
 #: src/components/SearchModal/Manage.tsx
 msgid "Manage"
 msgstr "Hallitse"
 
-#: 
-#~ msgid "Manage Liquidity in Rewards Pool"
-#~ msgstr "Hallinnoi likviditeettiä Palkinnot -lohkossa"
-
 #: src/components/SearchModal/CurrencySearch.tsx
-msgid "Manage Token Lists"
-msgstr "Hallitse Pääsyluetteloita"
+msgid "Manage Token List"
+msgstr "Hallitse tunnuslistaa"
 
 #: src/pages/PoolFinder/index.tsx
 msgid "Manage this pool."
@@ -636,6 +561,7 @@ msgid "Max Price"
 msgstr "Maksimi Hinta"
 
 #: src/components/swap/AdvancedSwapDetails.tsx
+#: src/components/swap/ConfirmSwapInfo.tsx
 msgid "Maximum sent"
 msgstr "Lähetetty enimmäismäärä"
 
@@ -644,6 +570,7 @@ msgid "Min Price"
 msgstr "Minimi Hinta"
 
 #: src/components/swap/AdvancedSwapDetails.tsx
+#: src/components/swap/ConfirmSwapInfo.tsx
 msgid "Minimum received"
 msgstr "Minimi vastaanotettu"
 
@@ -654,19 +581,19 @@ msgstr "minuuttia"
 #: src/pages/Pool/NoPairs.tsx
 #: src/pages/Pool/v2.tsx
 msgid "My Liquidity"
-msgstr ""
+msgstr "Oma maksuvalmius"
 
 #: src/components/PositionCard/MinimalPositionCard.tsx
 msgid "My pool share"
-msgstr ""
+msgstr "Oma uima-allasosuus"
 
 #: src/pages/Pool/EmptyLiquidity.tsx
 msgid "No liquidity found."
 msgstr "Likviditeettiä ei löytynyt."
 
 #: src/pages/PoolFinder/index.tsx
-msgid "No pool found."
-msgstr "Ryhmää ei löytynyt."
+msgid "No pool found"
+msgstr "Uima-allasta ei löytynyt"
 
 #: src/components/SearchModal/CurrencySearch.tsx
 msgid "No results found."
@@ -683,10 +610,6 @@ msgstr "PÄÄLLÄ"
 #: src/components/Settings/ExpertModeModal.tsx
 msgid "ONLY USE THIS MODE IF YOU KNOW WHAT YOU ARE DOING."
 msgstr "KÄYTÄ TÄMÄ TIETÄ, MITEN SINÄ SINÄ OLET DOING."
-
-#: 
-#~ msgid "Once you are happy with the rate click supply to review."
-#~ msgstr "Kun olet tyytyväinen korko klikkaa tarjonta tarkistaa."
 
 #: src/components/Web3ReactManager/index.tsx
 msgid "Oops! An unknown error occurred. Please refresh the page, or visit from another browser or device."
@@ -730,22 +653,10 @@ msgstr "Pool Löydetty!"
 msgid "Pool rate"
 msgstr "Poolin hinta"
 
-#: 
-#: 
-#~ msgid "Pool tokens in rewards pool:"
-#~ msgstr "Allas poletteja palkintoja allas:"
-
 #: src/components/PositionCard/index.tsx
 #: src/components/PositionCard/index.tsx
 msgid "Pooled {0}"
-msgstr ""
-
-#: 
-#: 
-#: 
-#: 
-#~ msgid "Pooled {0}:"
-#~ msgstr "Yhdistetty {0}:"
+msgstr "Yhdistetty {0}"
 
 #: src/components/swap/SwapModalHeader.tsx
 #: src/pages/RemoveLiquidity/ModalBottom.tsx
@@ -754,6 +665,7 @@ msgid "Price"
 msgstr "Hinta"
 
 #: src/components/swap/AdvancedSwapDetails.tsx
+#: src/components/swap/ConfirmSwapInfo.tsx
 msgid "Price Impact"
 msgstr "Hintavaikutus"
 
@@ -761,13 +673,15 @@ msgstr "Hintavaikutus"
 msgid "Price Impact Too High"
 msgstr "Liian Suuri Hintavaikutus"
 
+#: src/pages/Swap/index.tsx
+#: src/pages/Swap/index.tsx
+msgid "Price Impact is high. Swap Anyway"
+msgstr "Hintavaikutus on korkea. Vaihda joka tapauksessa"
+
+#: src/components/swap/AcceptChanges.tsx
 #: src/components/swap/SwapModalHeader.tsx
 msgid "Price Updated"
 msgstr "Hinta Päivitetty"
-
-#: 
-#~ msgid "Price:"
-#~ msgstr "Hinta:"
 
 #: src/pages/AddLiquidityV2/PricesAndPoolShare.tsx
 msgid "Prices and pool share"
@@ -802,6 +716,10 @@ msgstr "Poista Likviditeetti"
 msgid "Remove list"
 msgstr "Poista lista"
 
+#: src/components/swap/EditRecipient.tsx
+msgid "Remove send"
+msgstr "Poista lähetys"
+
 #: src/pages/RemoveLiquidity/index.tsx
 #: src/pages/RemoveLiquidity/index.tsx
 msgid "Remove {0} {1} and {2} {3}"
@@ -809,7 +727,7 @@ msgstr "Poista {0} {1} ja {2} {3}"
 
 #: src/pages/RemoveLiquidity/index.tsx
 msgid "Removing pool tokens converts your position back into underlying tokens at the current rate, proportional to your share of the pool. Accrued fees are included in the amounts you receive."
-msgstr ""
+msgstr "Pool-tunnusten poistaminen muuntaa sijaintisi takaisin alla oleviksi rahakkeiksi nykyisellä nopeudella suhteessa omaan osuukseesi. Kertyneet palkkiot sisältyvät saamiisi summiin."
 
 #: src/pages/RemoveLiquidity/index.tsx
 msgid "Removing {0} {1} and {2} {3}"
@@ -824,12 +742,13 @@ msgid "Return"
 msgstr "Palautus"
 
 #: src/components/swap/AdvancedSwapDetails.tsx
+#: src/components/swap/ConfirmSwapInfo.tsx
 msgid "Route"
 msgstr "Reitti"
 
 #: src/components/SearchModal/CurrencySearch.tsx
-msgid "Search name or paste address"
-msgstr "Etsi nimi tai liitä osoite"
+msgid "Search or paste address"
+msgstr "Etsi tai liitä osoite"
 
 #: src/components/FeeSelector/index.tsx
 msgid "Select Pool"
@@ -839,24 +758,25 @@ msgstr "Valitse Uima-allas"
 msgid "Select a pool type based on your preferred liquidity provider fee."
 msgstr "Valitse poolin tyyppi, joka perustuu haluamaasi likviditeetin tarjoajamaksuun."
 
+#: src/components/SearchModal/CurrencySearch.tsx
+msgid "Select a token"
+msgstr "Valitse tunnus"
+
+#: src/components/swap/CurrencyInput.tsx
+msgid "Select a token to swap"
+msgstr "Valitse vaihdettava tunnus"
+
 #: src/pages/AddLiquidityV2/ModalBottom.tsx
 msgid "Share of Pool"
-msgstr ""
-
-#: 
-#~ msgid "Share of Pool:"
-#~ msgstr "Poolin osuus:"
+msgstr "Poolin osuus"
 
 #: src/components/AccountDetails/index.tsx
 msgid "Show Portis"
 msgstr "Show Portis"
 
-#: 
-#~ msgid "Simple"
-#~ msgstr "Yksinkertainen"
-
 #: src/components/TransactionSettings/index.tsx
 #: src/components/swap/AdvancedSwapDetails.tsx
+#: src/components/swap/ConfirmSwapInfo.tsx
 msgid "Slippage tolerance"
 msgstr "Liu'utuksen toleranssi"
 
@@ -884,12 +804,8 @@ msgstr "Toimitetaan {0} {1} ja {2} {3}"
 msgid "Swap"
 msgstr "Vaihda"
 
-#: src/pages/Swap/index.tsx
-#: src/pages/Swap/index.tsx
-msgid "Swap Anyway"
-msgstr "Vaihda Silti"
-
 #: src/components/swap/ConfirmSwapModal.tsx
+#: src/components/swap/PendingSuccesModals.tsx
 msgid "Swapping {0} {1} for {2} {3}"
 msgstr "Vaihdetaan {0} {1} kohtaan {2} {3}"
 
@@ -921,10 +837,6 @@ msgstr "Tämän poolin hinta on valitsemasi alueen ulkopuolella. Sijaintisi ei o
 msgid "The price of this pool is within your selected range. Your position is currently earning fees."
 msgstr "Tämän poolin hinta on valitun alueen sisällä. Sijaintisi on tällä hetkellä ansaitseva maksu."
 
-#: 
-#~ msgid "The ratio of tokens you add will set the price of this pool."
-#~ msgstr "Kuponkien suhde jonka lisäät asettaa tämän poolin hinnan."
-
 #: src/hooks/useSwapCallback.ts
 msgid "The transaction could not be sent because the deadline has passed. Please check that your transaction deadline is not too low."
 msgstr "Tapahtumaa ei voitu lähettää, koska määräaika on ohi. Tarkista, että tapahtumasi määräaika ei ole liian lyhyt."
@@ -932,6 +844,10 @@ msgstr "Tapahtumaa ei voitu lähettää, koska määräaika on ohi. Tarkista, et
 #: src/components/SearchModal/CommonBases.tsx
 msgid "These tokens are commonly paired with other tokens."
 msgstr "Nämä kuponkia ovat yleensä pariksi muiden kuponkien."
+
+#: src/components/SearchModal/ImportToken.tsx
+msgid "This token doesn't appear on the active token list(s). Make sure this is the token that you want to trade."
+msgstr "Tätä tunnusta ei näy aktiivisissa tunnuslistoissa. Varmista, että tämä on merkki, jonka haluat vaihtaa."
 
 #: src/hooks/useSwapCallback.ts
 msgid "This transaction will not succeed due to price movement. Try increasing your slippage tolerance. Note fee on transfer and rebase tokens are incompatible with Uniswap V3."
@@ -943,18 +859,18 @@ msgstr "Tämä liiketoimi ei onnistu joko hinnanmuutoksen tai siirtomaksun vuoks
 
 #: src/components/TipWithMessage/index.tsx
 msgid "Tip:"
-msgstr ""
+msgstr "Tip:"
 
 #: src/components/SearchModal/ManageTokens.tsx
 msgid "Tip: Custom tokens are stored locally in your browser"
 msgstr "Vihje: Mukautetut tokenit tallennetaan paikallisesti selaimellesi"
 
+#: src/components/swap/CurrencyInput.tsx
 #: src/components/swap/SwapModalHeader.tsx
-#: src/pages/Swap/index.tsx
 msgid "To"
 msgstr "Vastaanottaja"
 
-#: src/pages/Swap/index.tsx
+#: src/components/swap/CurrencyInput.tsx
 msgid "To (at least)"
 msgstr "Mihin (ainakin)"
 
@@ -1019,9 +935,9 @@ msgstr "Unwrap"
 msgid "Update list"
 msgstr "Päivitä lista"
 
-#: 
-#~ msgid "View accrued fees and analytics<0>↗</0>"
-#~ msgstr "Näytä kertynyt maksu ja analytiikka<0>↗</0>"
+#: src/pages/PoolFinder/index.tsx
+msgid "Use this tool to find pairs that don't automatically appear in the interface."
+msgstr "Käytä tätä työkalua parien löytämiseen, jotka eivät näy automaattisesti käyttöliittymässä."
 
 #: src/components/SearchModal/ManageLists.tsx
 msgid "View list"
@@ -1035,7 +951,7 @@ msgstr "Näytä Etherscanissa"
 
 #: src/components/PositionCard/PoolInformation.tsx
 msgid "View pool information<0>↗</0>"
-msgstr ""
+msgstr "View pool information<0>↗</0>"
 
 #: src/components/ModalViews/index.tsx
 msgid "View transaction on Etherscan"
@@ -1052,7 +968,7 @@ msgstr "Viikoittaiset Palkinnot"
 #: src/pages/AddLiquidityV2/Tip.tsx
 #: src/pages/AddLiquidityV2/Tip.tsx
 msgid "When you add liquidity, you will receive pool tokens representing your position. These tokens automatically earn fees proportional to your share of the pool, and can be redeemed at any time."
-msgstr ""
+msgstr "Kun lisäät likviditeettiä, saat positiosi edustavat poolitunnukset. Nämä rahakkeet ansaitsevat automaattisesti maksuja, jotka ovat verrannollisia osuutesi altaasta, ja ne voidaan lunastaa milloin tahansa."
 
 #: src/components/earn/ClaimRewardModal.tsx
 msgid "When you claim without withdrawing your liquidity remains in the mining pool."
@@ -1096,21 +1012,17 @@ msgstr "Väärä Verkko"
 msgid "You are creating a pool"
 msgstr "Olet luomassa allasta"
 
-#: 
-#~ msgid "You are the first liquidity provider."
-#~ msgstr "Olet ensimmäinen likviditeetin tarjoaja."
-
 #: src/pages/Swap/index.tsx
 msgid "You can now trade {0}"
 msgstr "Voit nyt käydä kauppaa {0}"
 
 #: src/pages/PoolFinder/index.tsx
-msgid "You don’t have liquidity in this pool yet."
-msgstr "Sinulla ei ole vielä likviditeettiä tässä poolissa."
+msgid "You don’t have liquidity in this pool yet"
+msgstr "Sinulla ei vielä ole likviditeettiä tässä poolissa"
 
 #: src/pages/Swap/index.tsx
-msgid "You must give the IXSwap smart contracts permission to use your {0}. You only have to do this once per token."
-msgstr ""
+msgid "You must give the IXS smart contracts permission to use your {0}. You only have to do this once per token."
+msgstr "Sinun on annettava IXS-älykkäille sopimuksille lupa käyttää {0}. Sinun on tehtävä tämä vain kerran tunnusta kohti."
 
 #: src/pages/AddLiquidityV2/index.tsx
 #: src/pages/RemoveLiquidity/index.tsx
@@ -1119,15 +1031,11 @@ msgstr "Tulet vastaanottamaan"
 
 #: src/components/PositionCard/index.tsx
 msgid "Your pool share"
-msgstr ""
-
-#: 
-#~ msgid "Your pool share:"
-#~ msgstr "Sinun biljardi:"
+msgstr "Allasosuutesi"
 
 #: src/components/PositionCard/index.tsx
 msgid "Your pool tokens"
-msgstr ""
+msgstr "Pool-tunnuksesi"
 
 #: src/components/PositionCard/MinimalPositionCard.tsx
 msgid "Your position"
@@ -1140,11 +1048,6 @@ msgstr "Asemaasi on 0 likviditeettiä, eikä se ansaitse maksuja."
 #: src/components/earn/PoolCard.tsx
 msgid "Your rate"
 msgstr "Oma hinta"
-
-#: 
-#: 
-#~ msgid "Your total pool tokens:"
-#~ msgstr "Kaikki uima-altaasi tunnisteet:"
 
 #: src/components/TransactionSettings/index.tsx
 msgid "Your transaction may be frontrun"
@@ -1184,7 +1087,7 @@ msgstr "kohteen {0} kautta"
 
 #: src/components/Toggle/index.tsx
 msgid "{0}"
-msgstr ""
+msgstr "{0}"
 
 #: src/components/PositionCard/index.tsx
 msgid "{0} %"
@@ -1238,4 +1141,4 @@ msgstr "{tokenB} per {tokenA}"
 
 #: src/components/CurrencyInputPanel/FiatValue.tsx
 msgid "~$ {0}"
-msgstr ""
+msgstr "~$ {0}"
