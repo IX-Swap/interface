@@ -26,7 +26,7 @@ export const personalInfoSchema = yup
     lastName: nameSchema.required('This field is required'),
     nationality: yup.string().required('Required'),
     dob: birthdaySchema.required('This field is required'),
-    contactNumber: yup.string().phone().required('Required'),
+    contactNumber: yup.string().phone().required('This field is required'),
     email: emailSchema.required('This field is required'),
     address: addressSchema.required('Required')
   })
