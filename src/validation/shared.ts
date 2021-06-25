@@ -49,6 +49,11 @@ export const birthdaySchema = dateSchema.test(
   dateString => differenceInYears(new Date(), new Date(dateString ?? '')) >= 18
 )
 
+export const taxIdentificationNumberSchema = yup
+  .string()
+  .max(20, 'Maximum of 20 chracters')
+  .matches(/^[a-zA-Z0-9]*$/, 'Must include only letters and numbers only')
+
 export const documentsArraySchema = yup.array<
   FormArrayElement<Maybe<DataroomFile>>
 >()
@@ -100,7 +105,9 @@ export const personnelArraySchema = yup
 export const taxResidenciesSchema = yup.object().shape<TaxResidency>({
   residentOfSingapore: yup.boolean(),
   countryOfResidence: yup.string().required('Required'),
-  taxIdentificationNumber: yup.string().required('Required'),
+  taxIdentificationNumber: taxIdentificationNumberSchema.required(
+    'This field is required'
+  ),
   taxIdAvailable: yup.boolean(),
   reason: yup.string().oneOf(['A', 'B', 'C']).required('Required'),
   customReason: yup.string()

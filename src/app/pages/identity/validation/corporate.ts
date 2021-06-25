@@ -8,7 +8,11 @@ import {
   RepresentativeFormValues
 } from 'app/pages/identity/types/forms'
 import { DataroomFile } from 'types/dataroomFile'
-import { addressSchema, emailSchema } from 'validation/shared'
+import {
+  addressSchema,
+  emailSchema,
+  taxIdentificationNumberSchema
+} from 'validation/shared'
 import * as yup from 'yup'
 import 'yup-phone'
 import { validateUEN } from 'validation/validators'
@@ -125,11 +129,16 @@ export const corporateTaxDeclarationSchema = yup.object().shape({
       .object({
         taxIdAvailable: yup.boolean(),
         countryOfResidence: yup.string().required('Required'),
-        taxIdentificationNumber: yup.string().when('taxIdAvailable', {
-          is: true,
-          then: yup.string().required('Required'),
-          otherwise: yup.string()
-        }),
+        taxIdentificationNumber: taxIdentificationNumberSchema.when(
+          'taxIdAvailable',
+          {
+            is: true,
+            then: taxIdentificationNumberSchema.required(
+              'This field is required'
+            ),
+            otherwise: taxIdentificationNumberSchema
+          }
+        ),
         reason: yup.string().when('taxIdAvailable', {
           is: false,
           then: yup.string().oneOf(['A', 'B', 'C']).required('Required'),

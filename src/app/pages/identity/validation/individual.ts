@@ -4,7 +4,8 @@ import {
   addressSchema,
   emailSchema,
   nameSchema,
-  birthdaySchema
+  birthdaySchema,
+  taxIdentificationNumberSchema
 } from 'validation/shared'
 import {
   FundSource,
@@ -87,9 +88,8 @@ export const taxDeclarationSchema = yup
         is: 'yes',
         then: yup.array().of(
           yup.object({
-            taxIdentificationNumber: yup
-              .string()
-              .required('Required')
+            taxIdentificationNumber: taxIdentificationNumberSchema
+              .required('This field is required')
               .test(
                 'nric',
                 'Invalid FIN/NRIC',
@@ -109,11 +109,16 @@ export const taxDeclarationSchema = yup
             .object({
               taxIdAvailable: yup.boolean(),
               countryOfResidence: yup.string().required('Required'),
-              taxIdentificationNumber: yup.string().when('taxIdAvailable', {
-                is: true,
-                then: yup.string().required('Required'),
-                otherwise: yup.string()
-              }),
+              taxIdentificationNumber: taxIdentificationNumberSchema.when(
+                'taxIdAvailable',
+                {
+                  is: true,
+                  then: taxIdentificationNumberSchema.required(
+                    'This field is required'
+                  ),
+                  otherwise: taxIdentificationNumberSchema
+                }
+              ),
               reason: yup.string().when('taxIdAvailable', {
                 is: false,
                 then: yup.string().oneOf(['A', 'B', 'C']).required('Required'),
