@@ -6,7 +6,8 @@ export const useStyles = makeStyles(theme => ({
     width: '100%',
     paddingTop: theme.spacing(5),
     paddingRight: theme.spacing(2),
-    paddingLeft: theme.spacing(3)
+    paddingLeft: theme.spacing(3),
+    paddingBottom: theme.spacing(5)
   },
   colorGrid: {
     backgroundColor: theme.palette.background.paper
