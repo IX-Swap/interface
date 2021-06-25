@@ -31,16 +31,18 @@ export const corporateInvestorInfoSchema = yup.object().shape<any>({
 
   registrationNumber: yup.string().when('countryOfFormation', {
     is: 'Singapore',
-    then: yup
-      .string()
-      .test('validateUEN', 'Must be a valid UEN', function (value) {
+    then: taxIdentificationNumberSchema.test(
+      'validateUEN',
+      'Must be a valid UEN',
+      function (value) {
         const error = validateUEN(value)
         if (typeof error === 'string') {
           return new yup.ValidationError(error, value, 'registrationNumber')
         }
         return true
-      }),
-    otherwise: yup.string().required('Required')
+      }
+    ),
+    otherwise: taxIdentificationNumberSchema.required('This field is required')
   }),
   legalEntityStatus: yup.string().required('Required'),
   otherLegalEntityStatus: yup.string().when('legalEntityStatus', {
