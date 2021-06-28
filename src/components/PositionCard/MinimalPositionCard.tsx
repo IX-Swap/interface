@@ -46,7 +46,7 @@ const MinimalPositionWrapper = styled.div`
   width: 100%;
 `
 
-export function MinimalPositionCard({ pair, showUnwrapped = false, border }: PositionCardProps) {
+export function MinimalPositionCard({ pair, showUnwrapped = false }: PositionCardProps) {
   const { account } = useActiveWeb3React()
   const theme = useTheme()
   const currency0 = showUnwrapped ? pair.token0 : unwrappedToken(pair.token0)
