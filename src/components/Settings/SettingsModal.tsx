@@ -32,7 +32,7 @@ const StyledClose = styled(X)`
 `
 
 const MenuFlyoutWrapper = styled.span`
-  background: ${({ theme }) => theme.bgGradientShadow};
+  background: ${({ theme }) => theme.bgG5};
   border-radius: 45px;
   display: flex;
   flex-direction: column;

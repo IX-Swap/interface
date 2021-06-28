@@ -17,7 +17,7 @@ export const ModalHeaderWrapper = styled.div`
 
 export const ModalBottomWrapper = styled.div`
   padding: 27px 40px 27px 40px;
-  background: ${({ theme }) => theme.bgGradientGray};
+  background: ${({ theme }) => theme.bgG7};
   border-bottom-left-radius: 20px;
   border-bottom-right-radius: 20px;
 `

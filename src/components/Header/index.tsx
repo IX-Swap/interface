@@ -64,7 +64,7 @@ const HeaderControls = styled.div`
     z-index: 99;
     height: 72px;
     border-radius: 12px 12px 0 0;
-    background-color: ${({ theme }) => theme.bgGradient};
+    background-color: ${({ theme }) => theme.bgG1};
   `};
   ${({ theme }) => theme.mediaWidth.upToExtraSmall`
     padding-top: 3rem;
@@ -96,7 +96,7 @@ const AccountElement = styled.div<{ active: boolean }>`
   display: flex;
   flex-direction: row;
   align-items: center;
-  background: ${({ theme }) => theme.bgGradientMuted};
+  background: ${({ theme }) => theme.bgG2};
   border-radius: 12px;
   white-space: nowrap;
   width: 100%;

@@ -7,9 +7,9 @@ import { Box } from 'rebass'
 import { AppDispatch } from 'state'
 import { resetMintState } from 'state/mint/actions'
 import styled from 'styled-components/macro'
-import { StyledPageHeader } from 'theme'
+import { CloseIcon, StyledPageHeader } from 'theme'
 import { ReactComponent as ArrowLeft } from '../../assets/images/arrow-back.svg'
-import { RowStart } from '../Row'
+import { RowBetween, RowStart } from '../Row'
 
 const Tabs = styled.div`
   ${({ theme }) => theme.flexRowNoWrap}
@@ -45,7 +45,9 @@ const StyledNavLink = styled(NavLink).attrs({
     color: ${({ theme }) => darken(0.1, theme.text1)};
   }
 `
-
+const ManageHeaderRow = styled(RowBetween)`
+  padding: 28px 38px 0 38px;
+`
 export function SwapPoolTabs({ active }: { active: 'swap' | 'pool' }) {
   return (
     <Tabs style={{ marginBottom: '20px', display: 'none', padding: '1rem 1rem 0 1rem' }}>
@@ -71,6 +73,24 @@ export function FindPoolTabs({ origin }: { origin: string }) {
           </HistoryLink>
           <Trans>Import Pool</Trans>
         </RowStart>
+      </StyledPageHeader>
+    </Tabs>
+  )
+}
+export function ManageTabs({ onClick, onDismiss }: { onClick: () => void; onDismiss: () => void }) {
+  return (
+    <Tabs>
+      <StyledPageHeader>
+        <ManageHeaderRow>
+          <Box display="flex">
+            <Box marginRight={'0.5rem'} style={{ cursor: 'pointer' }} onClick={onClick}>
+              <ArrowLeft />
+            </Box>
+            <Trans>Manage Tokens</Trans>
+          </Box>
+
+          <CloseIcon onClick={onDismiss} />
+        </ManageHeaderRow>
       </StyledPageHeader>
     </Tabs>
   )

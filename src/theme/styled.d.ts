@@ -30,14 +30,15 @@ export interface Colors {
   bg9: Color
   bg10: Color
   bg11: Color
-  bgGradient: Gradient
-  bgGradientMuted: Gradient
-  bgGradientBright: Gradient
-  bgGradientDark: Gradient
-  bgGradientShadow: Gradient
-  bgHighlightGradient: Gradient
-  bgGradientGray: Gradient
-  bgGradientDarkAppBody: Gradient
+  bgG1: Gradient
+  bgG2: Gradient
+  bgG3: Gradient
+  bgG4: Gradient
+  bgG5: Gradient
+  bgG6: Gradient
+  bgG7: Gradient
+  bgG8: Gradient
+  bgG9: Gradient
   modalBG: Color
   advancedBG: Color
 

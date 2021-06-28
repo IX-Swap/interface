@@ -1,40 +1,30 @@
-import React, { useRef, RefObject, useCallback, useState, useMemo } from 'react'
-import Column from 'components/Column'
-import { ExplorerDataType, getExplorerLink } from '../../utils/getExplorerLink'
-import { PaddedColumn, Separator, SearchInput } from './styleds'
-import Row, { RowBetween, RowFixed } from 'components/Row'
-import { TYPE, ExternalLinkIcon, TrashIcon, ButtonText, ExternalLink } from 'theme'
-import { useToken } from 'hooks/Tokens'
-import styled from 'styled-components/macro'
-import { useUserAddedTokens, useRemoveUserAddedToken } from 'state/user/hooks'
 import { Token } from '@ixswap1/sdk-core'
-import CurrencyLogo from 'components/CurrencyLogo'
-import { isAddress } from 'utils'
-import { useActiveWeb3React } from 'hooks/web3'
-import Card from 'components/Card'
-import ImportRow from './ImportRow'
-import useTheme from '../../hooks/useTheme'
 import { Trans } from '@lingui/macro'
-
+import Card from 'components/Card'
+import Column from 'components/Column'
+import CurrencyLogo from 'components/CurrencyLogo'
+import Row, { RowBetween, RowFixed } from 'components/Row'
+import { useToken } from 'hooks/Tokens'
+import { useActiveWeb3React } from 'hooks/web3'
+import React, { RefObject, useCallback, useMemo, useRef, useState } from 'react'
+import { Box } from 'rebass'
+import { useRemoveUserAddedToken, useUserAddedTokens } from 'state/user/hooks'
+import styled from 'styled-components/macro'
+import { ButtonText, ExternalLink, SemiTransparent, TYPE } from 'theme'
+import { isAddress } from 'utils'
+import { ReactComponent as DeleteIcon } from '../../assets/images/delete.svg'
+import { ReactComponent as ExternalIcon } from '../../assets/images/external.svg'
+import useTheme from '../../hooks/useTheme'
+import { ExplorerDataType, getExplorerLink } from '../../utils/getExplorerLink'
 import { CurrencyModalView } from './CurrencySearchModal'
+import ImportRow from './ImportRow'
+import { PaddedColumn40, PaddedColumnList, SearchInput } from './styleds'
 
 const Wrapper = styled.div`
   width: 100%;
   height: calc(100% - 60px);
   position: relative;
   padding-bottom: 80px;
-`
-
-const Footer = styled.div`
-  position: absolute;
-  bottom: 0;
-  width: 100%;
-  border-radius: 20px;
-  border-top-right-radius: 0;
-  border-top-left-radius: 0;
-  border-top: 1px solid ${({ theme }) => theme.bg3};
-  padding: 20px;
-  text-align: center;
 `
 
 export default function ManageTokens({
@@ -76,19 +66,17 @@ export default function ManageTokens({
   const tokenList = useMemo(() => {
     return (
       chainId &&
-      userAddedTokens.map((token) => (
-        <RowBetween key={token.address} width="100%">
-          <RowFixed>
+      userAddedTokens.map((token, index) => (
+        <RowBetween key={`${token.address}-${index}`}>
+          <RowFixed style={{ gap: '8px' }}>
             <CurrencyLogo currency={token} size={'20px'} />
             <ExternalLink href={getExplorerLink(chainId, token.address, ExplorerDataType.ADDRESS)}>
-              <TYPE.main ml={'10px'} fontWeight={600}>
-                {token.symbol}
-              </TYPE.main>
+              <TYPE.main1>{token.symbol}</TYPE.main1>
             </ExternalLink>
           </RowFixed>
-          <RowFixed>
-            <TrashIcon onClick={() => removeToken(chainId, token.address)} />
-            <ExternalLinkIcon href={getExplorerLink(chainId, token.address, ExplorerDataType.ADDRESS)} />
+          <RowFixed style={{ gap: '8px', paddingRight: '1rem' }}>
+            <DeleteIcon onClick={() => removeToken(chainId, token.address)} />
+            <ExternalIcon href={getExplorerLink(chainId, token.address, ExplorerDataType.ADDRESS)} />
           </RowFixed>
         </RowBetween>
       ))
@@ -98,7 +86,7 @@ export default function ManageTokens({
   return (
     <Wrapper>
       <Column style={{ width: '100%', height: '100%', flex: '1 1' }}>
-        <PaddedColumn gap="14px">
+        <PaddedColumn40 gap="14px">
           <Row>
             <SearchInput
               type="text"
@@ -125,29 +113,28 @@ export default function ManageTokens({
               />
             </Card>
           )}
-        </PaddedColumn>
-        <Separator />
-        <PaddedColumn gap="lg" style={{ overflow: 'auto', marginBottom: '10px' }}>
-          <RowBetween>
-            <TYPE.main fontWeight={600}>
+        </PaddedColumn40>
+
+        <PaddedColumnList gap="lg" style={{ overflow: 'auto', marginBottom: '10px', marginRight: '1rem' }}>
+          <RowBetween style={{ paddingLeft: '1rem', paddingRight: '1rem' }}>
+            <TYPE.subHeader1 color={theme.text2}>
               <Trans>{userAddedTokens?.length} Custom Tokens</Trans>
-            </TYPE.main>
+            </TYPE.subHeader1>
             {userAddedTokens.length > 0 && (
-              <ButtonText onClick={handleRemoveAll}>
-                <TYPE.blue>
-                  <Trans>Clear all</Trans>
-                </TYPE.blue>
-              </ButtonText>
+              <Box style={{ paddingRight: '0.5rem' }}>
+                <SemiTransparent>
+                  <ButtonText onClick={handleRemoveAll}>
+                    <TYPE.buttonMuted color={theme.text2}>
+                      <Trans>Clear all</Trans>
+                    </TYPE.buttonMuted>
+                  </ButtonText>
+                </SemiTransparent>
+              </Box>
             )}
           </RowBetween>
-          {tokenList}
-        </PaddedColumn>
+          <Box style={{ paddingLeft: '1rem', paddingRight: '0.5rem' }}>{tokenList}</Box>
+        </PaddedColumnList>
       </Column>
-      <Footer>
-        <TYPE.darkGray>
-          <Trans>Tip: Custom tokens are stored locally in your browser</Trans>
-        </TYPE.darkGray>
-      </Footer>
     </Wrapper>
   )
 }

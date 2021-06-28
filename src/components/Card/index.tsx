@@ -61,11 +61,11 @@ export const TipCard = styled(Card)`
   line-height: 18px;
   padding: 20px 35px;
   text-align: left;
-  background: ${({ theme }) => theme.bgGradient};
+  background: ${({ theme }) => theme.bgG1};
   color: ${({ theme }) => theme.text2};
 `
 export const DarkCard = styled(Card)`
-  background: ${({ theme }) => theme.bgGradientDark};
+  background: ${({ theme }) => theme.bgG4};
   backdrop-filter: blur(4px);
   border-radius: 20px;
   padding: 26px 36px 40px 36px;
