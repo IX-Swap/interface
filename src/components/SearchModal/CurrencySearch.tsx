@@ -4,7 +4,7 @@ import useDebounce from 'hooks/useDebounce'
 import { useOnClickOutside } from 'hooks/useOnClickOutside'
 import useTheme from 'hooks/useTheme'
 import useToggle from 'hooks/useToggle'
-import React, { KeyboardEvent, RefObject, useCallback, useEffect, useMemo, useRef, useState } from 'react'
+import React, { KeyboardEvent, ReactNode, RefObject, useCallback, useEffect, useMemo, useRef, useState } from 'react'
 import ReactGA from 'react-ga'
 import AutoSizer from 'react-virtualized-auto-sizer'
 import { FixedSizeList } from 'react-window'
@@ -22,14 +22,7 @@ import CurrencyList from './CurrencyList'
 import { filterTokens, useSortedTokensByQuery } from './filtering'
 import ImportRow from './ImportRow'
 import { useTokenComparator } from './sorting'
-import { PaddedColumn, SearchInput, Separator } from './styleds'
-
-const ContentWrapper = styled(Column)`
-  width: 100%;
-  flex: 1 1;
-  position: relative;
-  background: ${({ theme }) => theme.bgGradientDark};
-`
+import { PaddedColumn, SearchInput, ModalContentWrapper } from './styleds'
 
 const Footer = styled.div`
   width: 100%;
@@ -37,7 +30,7 @@ const Footer = styled.div`
   padding: 20px;
   border-top-left-radius: 0;
   border-top-right-radius: 0;
-  background: ${({ theme }) => theme.bgGradientGray};
+  background: ${({ theme }) => theme.bgG7};
   border-top: 1px solid ${({ theme }) => theme.bg2};
 `
 const Title = styled.span`
@@ -48,6 +41,7 @@ const Title = styled.span`
   text-transform: uppercase;
   color: ${({ theme }) => theme.text1};
 `
+
 interface CurrencySearchProps {
   isOpen: boolean
   onDismiss: () => void
@@ -58,6 +52,7 @@ interface CurrencySearchProps {
   showManageView: () => void
   showImportView: () => void
   setImportToken: (token: Token) => void
+  title?: ReactNode
 }
 
 export function CurrencySearch({
@@ -70,6 +65,7 @@ export function CurrencySearch({
   showManageView,
   showImportView,
   setImportToken,
+  title,
 }: CurrencySearchProps) {
   const { chainId } = useActiveWeb3React()
   const theme = useTheme()
@@ -175,19 +171,17 @@ export function CurrencySearch({
   )
 
   return (
-    <ContentWrapper>
+    <ModalContentWrapper>
       <PaddedColumn gap="16px">
         <RowBetween>
-          <Title>
-            <Trans>Select a token to swap</Trans>
-          </Title>
+          <Title>{title ?? <Trans>Select a token</Trans>}</Title>
           <CloseIcon onClick={onDismiss} />
         </RowBetween>
         <Row>
           <SearchInput
             type="text"
             id="token-search-input"
-            placeholder={t`Search name or paste address`}
+            placeholder={t`Search or paste address`}
             autoComplete="off"
             value={searchQuery}
             ref={inputRef as RefObject<HTMLInputElement>}
@@ -199,13 +193,12 @@ export function CurrencySearch({
           <CommonBases chainId={chainId} onSelect={handleCurrencySelect} selectedCurrency={selectedCurrency} />
         )}
       </PaddedColumn>
-      <Separator />
       {searchToken && !searchTokenIsAdded ? (
         <Column style={{ padding: '20px 0', height: '100%' }}>
           <ImportRow token={searchToken} showImportView={showImportView} setImportToken={setImportToken} />
         </Column>
       ) : filteredSortedTokens?.length > 0 || filteredInactiveTokens?.length > 0 ? (
-        <div style={{ flex: '1' }}>
+        <div style={{ flex: '1', paddingRight: '15px' }}>
           <AutoSizer disableWidth>
             {({ height }) => (
               <CurrencyList
@@ -244,6 +237,6 @@ export function CurrencySearch({
           </ButtonText>
         </Row>
       </Footer>
-    </ContentWrapper>
+    </ModalContentWrapper>
   )
 }

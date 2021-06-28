@@ -39,7 +39,7 @@ export const RemovedLiquidityWrapper = styled(DarkCard)`
 `
 
 export const RemoveLiquidityBody = styled(AppBody)`
-  background: ${({ theme }) => theme.bgGradientDarkAppBody};
+  background: ${({ theme }) => theme.bgG8};
 `
 export const ModalHeaderWrapper = styled.div`
   padding-bottom: 1rem;
@@ -51,7 +51,7 @@ export const ModalHeaderWrapper = styled.div`
 `
 export const ModalBottomWrapper = styled.div`
   padding: 27px 40px 27px 40px;
-  background: ${({ theme }) => theme.bgGradientGray};
+  background: ${({ theme }) => theme.bgG7};
   border-bottom-left-radius: 20px;
   border-bottom-right-radius: 20px;
 `

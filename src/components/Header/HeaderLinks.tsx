@@ -49,7 +49,7 @@ const StyledNavLink = styled(NavLink).attrs({
   font-weight: 500;
   padding: 9px 34px;
   word-break: break-word;
-  background: ${({ theme }) => theme.bgGradient};
+  background: ${({ theme }) => theme.bgG1};
   opacity: 0.3;
   border-radius: 45px;
   font-weight: 600;

@@ -49,6 +49,7 @@ export function colors(darkMode: boolean): Colors {
     text5: darkMode ? '#2C2F36' : '#EDEEF2',
     text6: darkMode ? '#8275BC' : '#8275BC',
     text7: darkMode ? '#9184C4' : '#9184C4',
+    text8: darkMode ? '#9184C3' : '#9184C3',
     // backgrounds / greys
     bg0: darkMode ? '#0D0415' : '#FFF',
     bg1: darkMode ? '#1A123A' : '#F7F8FA',
@@ -61,30 +62,34 @@ export function colors(darkMode: boolean): Colors {
     bg8: darkMode ? '#0F0518' : '#0F0518',
     bg9: darkMode ? '#372E5D' : '#372E5D',
     bg10: darkMode ? '#EDCEFF' : '#EDCEFF',
-    bgGradient: darkMode
+    bg11: darkMode ? '#272046' : '#272046',
+    bgG1: darkMode
       ? 'radial-gradient(93.65% 93.65% at 58.57% 22.42%, rgba(206, 20, 132, 0.33) 0%, rgba(26, 18, 58, 0) 100%), #2C254A;'
       : 'radial-gradient(93.65% 93.65% at 58.57% 22.42%, rgba(206, 20, 132, 0.33) 0%, rgba(26, 18, 58, 0) 100%), #2C254A;',
-    bgGradientMuted: darkMode
+    bgG2: darkMode
       ? 'radial-gradient(93.65% 93.65% at 58.57% 22.42%,rgba(206,20,132,0.1) 0%,rgba(26,18,58,0.4) 100%),rgb(44,37,74,0.6);'
       : 'radial-gradient(93.65% 93.65% at 58.57% 22.42%,rgba(206,20,132,0.1) 0%,rgba(26,18,58,0.4) 100%),rgb(44,37,74,0.6);',
-    bgGradientBright: darkMode
+    bgG3: darkMode
       ? 'linear-gradient(116.36deg, #7B42A9 33.43%, #ED0376 95.41%), #0C469C;'
       : 'linear-gradient(116.36deg, #7B42A9 33.43%, #ED0376 95.41%), #0C469C;',
-    bgGradientDark: darkMode
+    bgG4: darkMode
       ? 'radial-gradient(53.24% 225.7% at 49.91% 82.11%, rgba(123, 66, 169, 0.04) 0%, rgba(237, 3, 118, 0.02) 100%), #0F0518;'
       : 'radial-gradient(53.24% 225.7% at 49.91% 82.11%, rgba(123, 66, 169, 0.04) 0%, rgba(237, 3, 118, 0.02) 100%), #0F0518;',
-    bgGradientShadow: darkMode
+    bgG5: darkMode
       ? 'radial-gradient(93.65% 93.65% at 58.57% 22.42%, rgba(206, 20, 132, 0.099) 0%, rgba(26, 18, 58, 0) 100%), rgba(44, 37, 74, 0.2);'
       : 'radial-gradient(93.65% 93.65% at 58.57% 22.42%, rgba(206, 20, 132, 0.099) 0%, rgba(26, 18, 58, 0) 100%), rgba(44, 37, 74, 0.2);',
-    bgHighlightGradient: darkMode
+    bgG6: darkMode
       ? 'linear-gradient(0deg, #ED0376, #ED0376), linear-gradient(116.36deg, #7B42A9 33.43%, #ED0376 95.41%);'
       : 'linear-gradient(0deg, #ED0376, #ED0376), linear-gradient(116.36deg, #7B42A9 33.43%, #ED0376 95.41%);',
-    bgGradientGray: darkMode
+    bgG7: darkMode
       ? 'linear-gradient(0deg, #272046, #272046), #170E20;'
       : 'linear-gradient(0deg, #272046, #272046), #170E20;',
-    bgGradientDarkAppBody: darkMode
+    bgG8: darkMode
       ? 'linear-gradient(0deg, #1A123A, #1A123A), #170E20;'
       : 'linear-gradient(0deg, #1A123A, #1A123A), #170E20;',
+    bgG9: darkMode
+      ? 'linear-gradient(0deg, #14051B 0%, rgba(20, 5, 27, 0) 82.89%);'
+      : 'linear-gradient(0deg, #14051B 0%, rgba(20, 5, 27, 0) 82.89%);',
     //specialty colors
     modalBG: darkMode ? 'rgba(0,0,0,.425)' : 'rgba(0,0,0,0.3)',
     advancedBG: darkMode ? 'rgba(0,0,0,0.1)' : 'rgba(255,255,255,0.6)',
@@ -170,6 +175,9 @@ export const TYPE = {
   main(props: TextProps) {
     return <TextWrapper fontWeight={500} color={'text2'} {...props} />
   },
+  main1(props: TextProps) {
+    return <TextWrapper fontWeight={600} fontSize={20} lineHeight={'30px'} color={'text1'} {...props} />
+  },
   link(props: TextProps) {
     return <TextWrapper fontWeight={500} color={'primary1'} {...props} />
   },
@@ -185,6 +193,9 @@ export const TYPE = {
   body(props: TextProps) {
     return <TextWrapper fontWeight={400} fontSize={16} color={'text1'} {...props} />
   },
+  popOver(props: TextProps) {
+    return <TextWrapper fontWeight={400} fontSize={14} color={'text2'} lineHeight={'17px'} {...props} />
+  },
   largeHeader(props: TextProps) {
     return <TextWrapper fontWeight={600} fontSize={24} {...props} />
   },
@@ -193,6 +204,12 @@ export const TYPE = {
   },
   subHeader(props: TextProps) {
     return <TextWrapper fontWeight={400} fontSize={14} {...props} />
+  },
+  subHeader1(props: TextProps) {
+    return <TextWrapper fontWeight={500} fontSize={14} lineHeight={'21px'} {...props} />
+  },
+  buttonMuted(props: TextProps) {
+    return <TextWrapper fontWeight={600} fontSize={14} lineHeight={'21px'} {...props} />
   },
   small(props: TextProps) {
     return <TextWrapper fontWeight={500} fontSize={11} {...props} />

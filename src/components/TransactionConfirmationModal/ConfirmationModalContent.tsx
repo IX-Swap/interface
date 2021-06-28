@@ -8,7 +8,7 @@ import { AutoColumn } from '../Column'
 const Wrapper = styled.div`
   width: 100%;
   border-radius: 24px;
-  background: ${({ theme }) => theme.bgGradientDark};
+  background: ${({ theme }) => theme.bgG4};
 `
 const Section = styled(AutoColumn)<{ inline?: boolean }>`
   padding: ${({ inline }) => (inline ? '0' : '0')};

@@ -1,39 +1,44 @@
-import { Trans } from '@lingui/macro'
-import React, { useState } from 'react'
-import { PaddedColumn, Separator } from './styleds'
-import { RowBetween } from 'components/Row'
-import { ArrowLeft } from 'react-feather'
-import { Text } from 'rebass'
-import { CloseIcon } from 'theme'
-import styled from 'styled-components/macro'
 import { Token } from '@ixswap1/sdk-core'
+import { Trans } from '@lingui/macro'
+import { TokenList } from '@uniswap/token-lists'
+import { AutoColumn } from 'components/Column'
+import { ManageTabs } from 'components/NavigationTabs'
+import { RowCenter } from 'components/Row'
+import React, { useState } from 'react'
+import styled from 'styled-components/macro'
+import { CurrencyModalView } from './CurrencySearchModal'
 import { ManageLists } from './ManageLists'
 import ManageTokens from './ManageTokens'
-import { TokenList } from '@uniswap/token-lists'
-import { CurrencyModalView } from './CurrencySearchModal'
+import { ModalContentWrapper } from './styleds'
 
-const Wrapper = styled.div`
-  width: 100%;
-  position: relative;
-  padding-bottom: 80px;
+const Wrapper = styled(ModalContentWrapper)`
+  max-height: 100%;
+  border-radius: 20px;
+  ${({ theme }) => theme.mediaWidth.upToExtraSmall`
+  `};
 `
 
-const ToggleWrapper = styled(RowBetween)`
-  background-color: ${({ theme }) => theme.bg3};
+const ToggleWrapper = styled(RowCenter)`
+  background-color: transparent;
   border-radius: 12px;
-  padding: 6px;
+  padding: 0px 6px;
+  grid-gap: 6px;
 `
 
 const ToggleOption = styled.div<{ active?: boolean }>`
-  width: 48%;
-  padding: 10px;
+  width: 120px;
+  padding: 2px 5px;
   display: flex;
   align-items: center;
   justify-content: center;
+  position: relative;
   border-radius: 12px;
   font-weight: 600;
-  background-color: ${({ theme, active }) => (active ? theme.bg1 : theme.bg3)};
-  color: ${({ theme, active }) => (active ? theme.text1 : theme.text2)};
+  font-size: 16px;
+  line-height: 24px;
+  text-transform: uppercase;
+  background-color: transparent;
+  color: ${({ theme }) => theme.text2};
   user-select: none;
 
   :hover {
@@ -41,7 +46,13 @@ const ToggleOption = styled.div<{ active?: boolean }>`
     opacity: 0.7;
   }
 `
-
+const Border = styled.div<{ active?: boolean }>`
+  height: 2px;
+  width: 100%;
+  position: absolute;
+  top: 100%;
+  background: ${({ theme, active }) => (active ? theme.bgG3 : 'transparent')};
+`
 export default function Manage({
   onDismiss,
   setModalView,
@@ -60,26 +71,19 @@ export default function Manage({
 
   return (
     <Wrapper>
-      <PaddedColumn>
-        <RowBetween>
-          <ArrowLeft style={{ cursor: 'pointer' }} onClick={() => setModalView(CurrencyModalView.search)} />
-          <Text fontWeight={500} fontSize={20}>
-            <Trans>Manage</Trans>
-          </Text>
-          <CloseIcon onClick={onDismiss} />
-        </RowBetween>
-      </PaddedColumn>
-      <Separator />
-      <PaddedColumn style={{ paddingBottom: 0 }}>
+      <ManageTabs onClick={() => setModalView(CurrencyModalView.search)} onDismiss={onDismiss} />
+      <AutoColumn style={{ paddingBottom: 0 }}>
         <ToggleWrapper>
           <ToggleOption onClick={() => setShowLists(!showLists)} active={showLists}>
             <Trans>Lists</Trans>
+            <Border active={showLists} />
           </ToggleOption>
           <ToggleOption onClick={() => setShowLists(!showLists)} active={!showLists}>
             <Trans>Tokens</Trans>
+            <Border active={!showLists} />
           </ToggleOption>
         </ToggleWrapper>
-      </PaddedColumn>
+      </AutoColumn>
       {showLists ? (
         <ManageLists setModalView={setModalView} setImportList={setImportList} setListUrl={setListUrl} />
       ) : (

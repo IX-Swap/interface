@@ -34,9 +34,9 @@ export const Option = styled(FancyButton)<{ active: boolean }>`
     cursor: pointer;
     border: none;
     outline: none;
-    background: ${({ theme }) => theme.bgHighlightGradient};
+    background: ${({ theme }) => theme.bgG6};
   }
-  background: ${({ active, theme }) => (active ? theme.bgHighlightGradient : theme.bg7)};
+  background: ${({ active, theme }) => (active ? theme.bgG6 : theme.bg7)};
   color: ${({ active, theme }) => (active ? theme.white : theme.text1)};
 `
 export const OptionRow = styled(RowCenter)`

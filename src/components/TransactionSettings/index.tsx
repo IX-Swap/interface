@@ -22,6 +22,7 @@ const Input = styled.input`
   width: 100%;
   height: 100%;
   outline: none;
+  border: none;
   &::-webkit-outer-spin-button,
   &::-webkit-inner-spin-button {
     -webkit-appearance: none;

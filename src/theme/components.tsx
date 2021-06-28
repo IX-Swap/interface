@@ -78,7 +78,7 @@ export const LinkStyledButton = styled.button<{ disabled?: boolean }>`
   background: none;
 
   cursor: ${({ disabled }) => (disabled ? 'default' : 'pointer')};
-  color: ${({ theme, disabled }) => (disabled ? theme.text2 : theme.primary1)};
+  color: ${({ theme, disabled }) => (disabled ? theme.text2 : theme.text2)};
   font-weight: 500;
 
   :hover {
@@ -180,17 +180,6 @@ export const TrashIcon = styled(Trash)`
     opacity: 0.7;
   }
 `
-
-const rotateImg = keyframes`
-  0% {
-    transform: perspective(1000px) rotateY(0deg);
-  }
-
-  100% {
-    transform: perspective(1000px) rotateY(360deg);
-  }
-`
-
 const ETHERSCAN_HOSTNAMES: { [hostname: string]: true } = {
   'etherscan.io': true,
   'ropsten.etherscan.io': true,
@@ -329,7 +318,7 @@ export const StyledPageHeader = styled.div`
   color: ${({ theme }) => theme.text1};
 `
 export const ModalBlurWrapper = styled.span`
-  background: ${({ theme }) => theme.bgGradientShadow};
+  background: ${({ theme }) => theme.bgG5};
   border-radius: 45px;
   display: flex;
   flex-direction: column;
@@ -341,10 +330,12 @@ export const ModalBlurWrapper = styled.span`
   backdrop-filter: blur(20px);
   ${({ theme }) => theme.mediaWidth.upToSmall`
     padding: 0;
+  min-width: fit-content;
   `};
   ${({ theme }) => theme.mediaWidth.upToExtraSmall`
     min-width: 100%;
     max-width: 100%;
+    border-radius: 0;
   `};
   user-select: none;
 `

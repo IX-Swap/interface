@@ -1,4 +1,3 @@
-import React from 'react'
 import styled from 'styled-components/macro'
 import { ReactComponent as Close } from '../../assets/images/x.svg'
 import { TipCard } from '../Card'

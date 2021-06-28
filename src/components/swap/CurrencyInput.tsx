@@ -101,7 +101,8 @@ export const CurrencyInput = ({
         fiatValue={fiatValueInput ?? undefined}
         onCurrencySelect={handleInputSelect}
         otherCurrency={currencies[Field.OUTPUT]}
-        showCommonBases={true}
+        showCommonBases={false}
+        title={<Trans>Select a token to swap</Trans>}
         id="swap-currency-input"
       />
       <ArrowWrapper
@@ -128,7 +129,7 @@ export const CurrencyInput = ({
         currency={currencies[Field.OUTPUT]}
         onCurrencySelect={handleOutputSelect}
         otherCurrency={currencies[Field.INPUT]}
-        showCommonBases={true}
+        showCommonBases={false}
         id="swap-currency-output"
       />
     </div>

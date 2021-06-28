@@ -36,7 +36,7 @@ const Title = styled(Text)`
 `
 
 const MinimalPositionWrapper = styled.div`
-  background: ${({ theme }) => theme.bgGradient};
+  background: ${({ theme }) => theme.bgG1};
   padding: 42px 40px 20px 40px;
   border-radius: 45px;
   opacity: 0.3;
@@ -46,7 +46,7 @@ const MinimalPositionWrapper = styled.div`
   width: 100%;
 `
 
-export function MinimalPositionCard({ pair, showUnwrapped = false, border }: PositionCardProps) {
+export function MinimalPositionCard({ pair, showUnwrapped = false }: PositionCardProps) {
   const { account } = useActiveWeb3React()
   const theme = useTheme()
   const currency0 = showUnwrapped ? pair.token0 : unwrappedToken(pair.token0)

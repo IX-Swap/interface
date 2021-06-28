@@ -1,15 +1,15 @@
 import React from 'react'
-import styled from 'styled-components/macro'
-import { darken } from 'polished'
 import { Trans } from '@lingui/macro'
-import { NavLink, Link as HistoryLink } from 'react-router-dom'
-import { ReactComponent as ArrowLeft } from '../../assets/images/arrow-back.svg'
-import { RowBetween, RowStart } from '../Row'
+import { darken } from 'polished'
 import { useDispatch } from 'react-redux'
+import { Link as HistoryLink, NavLink } from 'react-router-dom'
+import { Box } from 'rebass'
 import { AppDispatch } from 'state'
 import { resetMintState } from 'state/mint/actions'
-import { StyledPageHeader } from 'theme'
-import { Box } from 'rebass'
+import styled from 'styled-components/macro'
+import { CloseIcon, StyledPageHeader } from 'theme'
+import { ReactComponent as ArrowLeft } from '../../assets/images/arrow-back.svg'
+import { RowBetween, RowStart } from '../Row'
 
 const Tabs = styled.div`
   ${({ theme }) => theme.flexRowNoWrap}
@@ -45,12 +45,9 @@ const StyledNavLink = styled(NavLink).attrs({
     color: ${({ theme }) => darken(0.1, theme.text1)};
   }
 `
-
-const ActiveText = styled.div`
-  font-weight: 500;
-  font-size: 20px;
+const ManageHeaderRow = styled(RowBetween)`
+  padding: 28px 38px 0 38px;
 `
-
 export function SwapPoolTabs({ active }: { active: 'swap' | 'pool' }) {
   return (
     <Tabs style={{ marginBottom: '20px', display: 'none', padding: '1rem 1rem 0 1rem' }}>
@@ -67,16 +64,34 @@ export function SwapPoolTabs({ active }: { active: 'swap' | 'pool' }) {
 export function FindPoolTabs({ origin }: { origin: string }) {
   return (
     <Tabs>
-      <RowBetween style={{ padding: '1rem 1rem 0 1rem' }}>
-        <HistoryLink to={origin}>
-          <Box marginRight={'0.5rem'}>
-            <ArrowLeft />
-          </Box>
-        </HistoryLink>
-        <ActiveText>
+      <StyledPageHeader>
+        <RowStart style={{ padding: '0' }}>
+          <HistoryLink to={origin}>
+            <Box marginRight={'0.5rem'}>
+              <ArrowLeft />
+            </Box>
+          </HistoryLink>
           <Trans>Import Pool</Trans>
-        </ActiveText>
-      </RowBetween>
+        </RowStart>
+      </StyledPageHeader>
+    </Tabs>
+  )
+}
+export function ManageTabs({ onClick, onDismiss }: { onClick: () => void; onDismiss: () => void }) {
+  return (
+    <Tabs>
+      <StyledPageHeader>
+        <ManageHeaderRow>
+          <Box display="flex">
+            <Box marginRight={'0.5rem'} style={{ cursor: 'pointer' }} onClick={onClick}>
+              <ArrowLeft />
+            </Box>
+            <Trans>Manage Tokens</Trans>
+          </Box>
+
+          <CloseIcon onClick={onDismiss} />
+        </ManageHeaderRow>
+      </StyledPageHeader>
     </Tabs>
   )
 }

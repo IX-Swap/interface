@@ -1,11 +1,10 @@
 import React from 'react'
-import styled from 'styled-components/macro'
-import { darken } from 'polished'
-
-import { RowBetween } from '../Row'
-import { ChevronDown, Check } from 'react-feather'
-import { Button as RebassButton, ButtonProps as ButtonPropsOriginal } from 'rebass/styled-components'
 import useTheme from 'hooks/useTheme'
+import { darken } from 'polished'
+import { Check, ChevronDown } from 'react-feather'
+import { Button as RebassButton, ButtonProps as ButtonPropsOriginal } from 'rebass/styled-components'
+import styled from 'styled-components/macro'
+import { RowBetween } from '../Row'
 
 type ButtonProps = Omit<ButtonPropsOriginal, 'css'>
 
@@ -192,13 +191,13 @@ export const ButtonIXSGradient = styled(ButtonPrimary)<{ confirmed?: boolean }>`
   font-size: 18px;
   line-height: 20px;
   background-color: ${({ theme }) => theme.bg3};
-  background: ${({ theme }) => theme.bgGradientBright};
+  background: ${({ theme }) => theme.bgG3};
 `
 export const ButtonIXSWide = styled(ButtonIXSGradient)`
   width: 100%;
 `
 export const ButtonGradient = styled(Base)`
-  background: ${({ theme }) => theme.bgGradient};
+  background: ${({ theme }) => theme.bgG1};
   border-radius: 40px;
   font-weight: 600;
   font-size: 14px;

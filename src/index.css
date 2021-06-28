@@ -59,3 +59,34 @@ html {
     }
 }
 
+body {
+    scrollbar-color: rgba(237, 206, 255, 0.1) transparent;
+  }
+
+/* Adjust native scrollbars */
+::-webkit-scrollbar {
+    background: transparent;
+}
+::-webkit-scrollbar-thumb {
+    background: rgba(237, 206, 255, 0.1);
+    border-radius: 40px;
+    background-clip: padding-box;
+    width: 12px;
+    min-height: 40px;
+}
+::-moz-scrollbar {
+    background: transparent; 
+}
+
+::-o-scrollbar {
+    background: transparent;
+}
+
+@media only screen and (max-width: 400px) {
+  ::-webkit-scrollbar-thumb {
+    display: none;
+  }
+  ::-webkit-scrollbar {
+    display: none;
+  }
+}

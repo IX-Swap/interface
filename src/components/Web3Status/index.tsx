@@ -70,7 +70,7 @@ const Web3StatusError = styled(Web3StatusGeneric)`
 `
 
 const Web3StatusConnect = styled(Web3StatusGeneric)<{ faded?: boolean }>`
-  background: ${({ theme }) => theme.bgGradient};
+  background: ${({ theme }) => theme.bgG1};
   border: none;
   color: ${({ theme }) => theme.text2};
   font-weight: 600;
@@ -79,13 +79,13 @@ const Web3StatusConnect = styled(Web3StatusGeneric)<{ faded?: boolean }>`
   ${({ faded }) =>
     faded &&
     css`
-      background-color: ${({ theme }) => theme.bgGradient};
+      background-color: ${({ theme }) => theme.bgG1};
       color: ${({ theme }) => theme.text2};
     `}
 `
 
 const Web3StatusConnected = styled(Web3StatusGeneric)<{ pending?: boolean }>`
-  background: ${({ theme }) => theme.bgGradient};
+  background: ${({ theme }) => theme.bgG1};
   opacity: ${({ pending }) => (pending ? '0.7' : '1')};
   padding-right: 10px;
   color: ${({ pending, theme }) => (pending ? theme.white : theme.text1)};

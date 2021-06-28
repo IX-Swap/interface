@@ -19,7 +19,7 @@ const StyledRangeInput = styled.input<{ size: number }>`
     -webkit-appearance: none;
     height: ${({ size }) => size}px;
     width: ${({ size }) => size}px;
-    background: ${({ theme }) => theme.bgGradientBright};
+    background: ${({ theme }) => theme.bgG3};
     border-radius: 100%;
     border: none;
     transform: translateY(-50%);
@@ -35,7 +35,7 @@ const StyledRangeInput = styled.input<{ size: number }>`
   &::-moz-range-thumb {
     height: ${({ size }) => size}px;
     width: ${({ size }) => size}px;
-    background: ${({ theme }) => theme.bgGradientBright};
+    background: ${({ theme }) => theme.bgG3};
     border-radius: 100%;
     border: none;
     color: ${({ theme }) => theme.bg1};
@@ -50,7 +50,7 @@ const StyledRangeInput = styled.input<{ size: number }>`
   &::-ms-thumb {
     height: ${({ size }) => size}px;
     width: ${({ size }) => size}px;
-    background: ${({ theme }) => theme.bgGradientBright};
+    background: ${({ theme }) => theme.bgG3};
     border-radius: 100%;
     color: ${({ theme }) => theme.bg1};
 
@@ -62,12 +62,12 @@ const StyledRangeInput = styled.input<{ size: number }>`
   }
 
   &::-webkit-slider-runnable-track {
-    background: ${({ theme }) => theme.bgGradientBright};
+    background: ${({ theme }) => theme.bgG3};
     height: 2px;
   }
 
   &::-moz-range-track {
-    background: ${({ theme }) => theme.bgGradientBright};
+    background: ${({ theme }) => theme.bgG3};
     height: 2px;
   }
 
@@ -76,14 +76,14 @@ const StyledRangeInput = styled.input<{ size: number }>`
     border-color: transparent;
     color: transparent;
 
-    background: ${({ theme }) => theme.bgGradientBright};
+    background: ${({ theme }) => theme.bgG3};
     height: 2px;
   }
   &::-ms-fill-lower {
-    background: ${({ theme }) => theme.bgGradientBright};
+    background: ${({ theme }) => theme.bgG3};
   }
   &::-ms-fill-upper {
-    background: ${({ theme }) => theme.bgGradientBright};
+    background: ${({ theme }) => theme.bgG3};
   }
 `
 
