@@ -22,14 +22,7 @@ import CurrencyList from './CurrencyList'
 import { filterTokens, useSortedTokensByQuery } from './filtering'
 import ImportRow from './ImportRow'
 import { useTokenComparator } from './sorting'
-import { PaddedColumn, SearchInput } from './styleds'
-
-const ContentWrapper = styled(Column)`
-  width: 100%;
-  flex: 1 1;
-  position: relative;
-  background: ${({ theme }) => theme.bgGradientDark};
-`
+import { PaddedColumn, SearchInput, ModalContentWrapper } from './styleds'
 
 const Footer = styled.div`
   width: 100%;
@@ -37,7 +30,7 @@ const Footer = styled.div`
   padding: 20px;
   border-top-left-radius: 0;
   border-top-right-radius: 0;
-  background: ${({ theme }) => theme.bgGradientGray};
+  background: ${({ theme }) => theme.bgG7};
   border-top: 1px solid ${({ theme }) => theme.bg2};
 `
 const Title = styled.span`
@@ -178,7 +171,7 @@ export function CurrencySearch({
   )
 
   return (
-    <ContentWrapper>
+    <ModalContentWrapper>
       <PaddedColumn gap="16px">
         <RowBetween>
           <Title>{title ?? <Trans>Select a token</Trans>}</Title>
@@ -244,6 +237,6 @@ export function CurrencySearch({
           </ButtonText>
         </Row>
       </Footer>
-    </ContentWrapper>
+    </ModalContentWrapper>
   )
 }

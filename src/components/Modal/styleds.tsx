@@ -9,6 +9,7 @@ export const StyledDialogOverlay = styled(AnimatedDialogOverlay)`
     z-index: 2;
     background-color: transparent;
     overflow: hidden;
+    overflow-y: hidden;
 
     display: flex;
     align-items: center;

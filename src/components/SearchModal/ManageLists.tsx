@@ -1,37 +1,44 @@
-import React, { memo, useCallback, useMemo, useRef, useState, useEffect } from 'react'
-import { Settings, CheckCircle } from 'react-feather'
+import { t, Trans } from '@lingui/macro'
+import { TokenList } from '@uniswap/token-lists'
+import Card from 'components/Card'
+import Toggle from 'components/Toggle'
+import { UNSUPPORTED_LIST_URLS } from 'constants/lists'
+import { useListColor } from 'hooks/useColor'
+import React, { memo, useCallback, useEffect, useMemo, useRef, useState } from 'react'
+import { CheckCircle } from 'react-feather'
 import ReactGA from 'react-ga'
-import { useAppDispatch, useAppSelector } from 'state/hooks'
 import { usePopper } from 'react-popper'
+import { useAppDispatch, useAppSelector } from 'state/hooks'
 import styled from 'styled-components/macro'
+import { ReactComponent as Settings } from '../../assets/images/settings.svg'
 import { useFetchListCallback } from '../../hooks/useFetchListCallback'
 import { useOnClickOutside } from '../../hooks/useOnClickOutside'
-import { TokenList } from '@uniswap/token-lists'
-import { t, Trans } from '@lingui/macro'
-
+import useTheme from '../../hooks/useTheme'
 import useToggle from '../../hooks/useToggle'
-import { acceptListUpdate, removeList, disableList, enableList } from '../../state/lists/actions'
-import { useIsListActive, useAllLists, useActiveListUrls } from '../../state/lists/hooks'
-import { ExternalLink, LinkStyledButton, TYPE, IconWrapper } from '../../theme'
+import { acceptListUpdate, disableList, enableList, removeList } from '../../state/lists/actions'
+import { useActiveListUrls, useAllLists, useIsListActive } from '../../state/lists/hooks'
+import { ExternalLink, IconWrapper, LinkStyledButton, SemiTransparent, TYPE } from '../../theme'
 import listVersionLabel from '../../utils/listVersionLabel'
 import { parseENSAddress } from '../../utils/parseENSAddress'
 import uriToHttp from '../../utils/uriToHttp'
 import { ButtonEmpty, ButtonPrimary } from '../Button'
-
 import Column, { AutoColumn } from '../Column'
 import ListLogo from '../ListLogo'
-import Row, { RowFixed, RowBetween } from '../Row'
-import { PaddedColumn, SearchInput, Separator, SeparatorDark } from './styleds'
-import { useListColor } from 'hooks/useColor'
-import useTheme from '../../hooks/useTheme'
-import ListToggle from '../Toggle/ListToggle'
-import Card from 'components/Card'
+import Row, { RowBetween, RowFixed } from '../Row'
 import { CurrencyModalView } from './CurrencySearchModal'
-import { UNSUPPORTED_LIST_URLS } from 'constants/lists'
+import { PaddedColumn40, PaddedColumnList, SearchInput, SeparatorDark } from './styleds'
 
 const Wrapper = styled(Column)`
   width: 100%;
-  height: 100%;
+  max-height: 100%;
+  :after {
+    position: absolute;
+    content: '';
+    width: 100%;
+    height: 30px;
+    top: 95%;
+    background: ${({ theme }) => theme.bgG9};
+  }
 `
 
 const UnpaddedLinkStyledButton = styled(LinkStyledButton)`
@@ -67,25 +74,48 @@ const StyledMenu = styled.div`
   border: none;
 `
 
-const StyledTitleText = styled.div<{ active: boolean }>`
-  font-size: 16px;
+const StyledTitleText = styled.div`
   overflow: hidden;
   text-overflow: ellipsis;
   font-weight: 600;
-  color: ${({ theme, active }) => (active ? theme.white : theme.text2)};
+  font-size: 20px;
+  color: ${({ theme }) => theme.text1};
+  ${({ theme }) => theme.mediaWidth.upToExtraSmall`
+      font-size: 1rem;
+  `};
 `
 
-const StyledListUrlText = styled(TYPE.main)<{ active: boolean }>`
+const StyledListUrlText = styled(TYPE.main)`
   font-size: 12px;
-  color: ${({ theme, active }) => (active ? theme.white : theme.text2)};
+  font-size: 14px;
+  line-height: 17px;
+  color: ${({ theme }) => theme.text2};
 `
 
-const RowWrapper = styled(Row)<{ bgColor: string; active: boolean }>`
-  background-color: ${({ bgColor, active, theme }) => (active ? bgColor ?? 'transparent' : theme.bg2)};
+const RowWrapper = styled(Row)<{ bgColor: string }>`
+  background-color: ${({ bgColor }) => bgColor ?? 'transparent'};
   transition: 200ms;
   align-items: center;
   padding: 1rem;
+  padding-bottom: 16px;
   border-radius: 20px;
+`
+const ListContainer = styled.div`
+  padding: 0.5rem 1rem;
+  max-height: 537px;
+  height: auto;
+  width: 100%;
+  overflow: auto;
+  will-change: transform;
+  direction: ltr;
+  margin-right: 12px;
+  position: relative;
+  ${({ theme }) => theme.mediaWidth.upToLarge`
+   
+  `};
+  ${({ theme }) => theme.mediaWidth.upToExtraSmall`
+    padding: 0 6px 0 0;
+  `};
 `
 
 function listUrlRowHTMLId(listUrl: string) {
@@ -161,7 +191,7 @@ const ListRow = memo(function ListRow({ listUrl }: { listUrl: string }) {
   if (!list) return null
 
   return (
-    <RowWrapper active={isActive} bgColor={listColor} key={listUrl} id={listUrlRowHTMLId(listUrl)}>
+    <RowWrapper bgColor={theme.bg11} key={listUrl} id={listUrlRowHTMLId(listUrl)}>
       {list.logoURI ? (
         <ListLogo size="40px" style={{ marginRight: '1rem' }} logoURI={list.logoURI} alt={`${list.name} list logo`} />
       ) : (
@@ -169,15 +199,17 @@ const ListRow = memo(function ListRow({ listUrl }: { listUrl: string }) {
       )}
       <Column style={{ flex: '1' }}>
         <Row>
-          <StyledTitleText active={isActive}>{list.name}</StyledTitleText>
+          <StyledTitleText>{list.name}</StyledTitleText>
         </Row>
-        <RowFixed mt="4px">
-          <StyledListUrlText active={isActive} mr="6px">
+        <RowFixed style={{ lineHeight: '17px' }}>
+          <StyledListUrlText mr="6px">
             <Trans>{list.tokens.length} tokens</Trans>
           </StyledListUrlText>
           <StyledMenu ref={node as any}>
             <ButtonEmpty onClick={toggle} ref={setReferenceElement} padding="0">
-              <Settings stroke={isActive ? theme.bg1 : theme.text1} size={12} />
+              <SemiTransparent>
+                <Settings style={{ height: '10px', width: '10px ' }} />
+              </SemiTransparent>
             </ButtonEmpty>
             {open && (
               <PopoverContainer show={true} ref={setPopperElement as any} style={styles.popper} {...attributes.popper}>
@@ -199,23 +231,16 @@ const ListRow = memo(function ListRow({ listUrl }: { listUrl: string }) {
           </StyledMenu>
         </RowFixed>
       </Column>
-      <ListToggle
+      <Toggle
         isActive={isActive}
-        bgColor={listColor}
         toggle={() => {
           isActive ? handleDisableList() : handleEnableList()
         }}
+        showLabel={false}
       />
     </RowWrapper>
   )
 })
-
-const ListContainer = styled.div`
-  padding: 1rem;
-  height: 100%;
-  overflow: auto;
-  padding-bottom: 80px;
-`
 
 export function ManageLists({
   setModalView,
@@ -320,7 +345,7 @@ export function ManageLists({
 
   return (
     <Wrapper>
-      <PaddedColumn gap="14px">
+      <PaddedColumn40 gap="14px">
         <Row>
           <SearchInput
             type="text"
@@ -335,9 +360,9 @@ export function ManageLists({
             {addError}
           </TYPE.error>
         ) : null}
-      </PaddedColumn>
+      </PaddedColumn40>
       {tempList && (
-        <PaddedColumn style={{ paddingTop: 0 }}>
+        <PaddedColumn40 style={{ paddingTop: 0 }}>
           <Card backgroundColor={theme.bg2} padding="12px 20px">
             <RowBetween>
               <RowFixed>
@@ -370,15 +395,14 @@ export function ManageLists({
               )}
             </RowBetween>
           </Card>
-        </PaddedColumn>
+        </PaddedColumn40>
       )}
-      <Separator />
       <ListContainer>
-        <AutoColumn gap="md">
-          {sortedLists.map((listUrl) => (
-            <ListRow key={listUrl} listUrl={listUrl} />
+        <PaddedColumnList gap="md">
+          {sortedLists.map((listUrl, index) => (
+            <ListRow key={`${listUrl}-${index}`} listUrl={listUrl} />
           ))}
-        </AutoColumn>
+        </PaddedColumnList>
       </ListContainer>
     </Wrapper>
   )

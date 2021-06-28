@@ -36,7 +36,7 @@ const Title = styled(Text)`
 `
 
 const MinimalPositionWrapper = styled.div`
-  background: ${({ theme }) => theme.bgGradient};
+  background: ${({ theme }) => theme.bgG1};
   padding: 42px 40px 20px 40px;
   border-radius: 45px;
   opacity: 0.3;

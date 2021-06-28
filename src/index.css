@@ -81,3 +81,12 @@ body {
 ::-o-scrollbar {
     background: transparent;
 }
+
+@media only screen and (max-width: 400px) {
+  ::-webkit-scrollbar-thumb {
+    display: none;
+  }
+  ::-webkit-scrollbar {
+    display: none;
+  }
+}

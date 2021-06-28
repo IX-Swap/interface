@@ -46,7 +46,7 @@ const StyledMenuButton = styled.button`
   width: 100%;
   height: 100%;
   border: none;
-  background: ${({ theme }) => theme.bgGradient};
+  background: ${({ theme }) => theme.bgG1};
   margin: 0;
   padding: 13px;
   border-radius: 100%;

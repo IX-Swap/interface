@@ -52,8 +52,6 @@ export default function RemoveLiquidity({
   const { account, chainId, library } = useActiveWeb3React()
   const [tokenA, tokenB] = useMemo(() => [currencyA?.wrapped, currencyB?.wrapped], [currencyA, currencyB])
 
-  const theme = useContext(ThemeContext)
-
   // toggle wallet when disconnected
   const toggleWalletModal = useWalletModalToggle()
 
