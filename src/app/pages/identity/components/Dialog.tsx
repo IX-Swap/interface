@@ -1,4 +1,4 @@
-import React, { cloneElement, useState } from 'react'
+import React, { cloneElement, CSSProperties, useState } from 'react'
 import {
   Dialog as MUIDialog,
   DialogTitle,
@@ -13,10 +13,19 @@ export interface ModalProps extends Partial<DialogProps> {
   title: string
   content: JSX.Element | string
   actions?: JSX.Element | JSX.Element[]
+  titleStyle?: CSSProperties
 }
 
 export const Dialog = (props: ModalProps) => {
-  const { button, title, content, actions, maxWidth, ...rest } = props
+  const {
+    button,
+    title,
+    content,
+    actions,
+    titleStyle,
+    maxWidth,
+    ...rest
+  } = props
   const [isOpened, setIsOpened] = useState(false)
   const handleOpen = (e: Event) => {
     e.preventDefault()
@@ -46,7 +55,7 @@ export const Dialog = (props: ModalProps) => {
         aria-describedby='simple-modal-description'
       >
         <Box p={maxWidth === undefined || maxWidth === 'xs' ? 2 : 8}>
-          <DialogTitle>{title}</DialogTitle>
+          <DialogTitle style={titleStyle}>{title}</DialogTitle>
           <DialogContent style={{ overflowY: 'initial' }}>
             {content}
           </DialogContent>
