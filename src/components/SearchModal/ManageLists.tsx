@@ -1,13 +1,12 @@
+import React, { memo, useCallback, useEffect, useMemo, useRef, useState } from 'react'
 import { t, Trans } from '@lingui/macro'
 import { TokenList } from '@uniswap/token-lists'
 import Card from 'components/Card'
+import Popover from 'components/Popover'
 import Toggle from 'components/Toggle'
 import { UNSUPPORTED_LIST_URLS } from 'constants/lists'
-import { useListColor } from 'hooks/useColor'
-import React, { memo, useCallback, useEffect, useMemo, useRef, useState } from 'react'
 import { CheckCircle } from 'react-feather'
 import ReactGA from 'react-ga'
-import { usePopper } from 'react-popper'
 import { useAppDispatch, useAppSelector } from 'state/hooks'
 import styled from 'styled-components/macro'
 import { ReactComponent as Settings } from '../../assets/images/settings.svg'
@@ -18,7 +17,6 @@ import useToggle from '../../hooks/useToggle'
 import { acceptListUpdate, disableList, enableList, removeList } from '../../state/lists/actions'
 import { useActiveListUrls, useAllLists, useIsListActive } from '../../state/lists/hooks'
 import { ExternalLink, IconWrapper, LinkStyledButton, SemiTransparent, TYPE } from '../../theme'
-import listVersionLabel from '../../utils/listVersionLabel'
 import { parseENSAddress } from '../../utils/parseENSAddress'
 import uriToHttp from '../../utils/uriToHttp'
 import { ButtonEmpty, ButtonPrimary } from '../Button'
@@ -26,7 +24,7 @@ import Column, { AutoColumn } from '../Column'
 import ListLogo from '../ListLogo'
 import Row, { RowBetween, RowFixed } from '../Row'
 import { CurrencyModalView } from './CurrencySearchModal'
-import { PaddedColumn40, PaddedColumnList, SearchInput, SeparatorDark } from './styleds'
+import { PaddedColumn40, PaddedColumnList, SearchInput } from './styleds'
 
 const Wrapper = styled(Column)`
   width: 100%;
@@ -47,25 +45,12 @@ const UnpaddedLinkStyledButton = styled(LinkStyledButton)`
   opacity: ${({ disabled }) => (disabled ? '0.4' : '1')};
 `
 
-const PopoverContainer = styled.div<{ show: boolean }>`
-  z-index: 100;
-  visibility: ${(props) => (props.show ? 'visible' : 'hidden')};
-  opacity: ${(props) => (props.show ? 1 : 0)};
-  transition: visibility 150ms linear, opacity 150ms linear;
-  background: ${({ theme }) => theme.bg2};
-  border: 1px solid ${({ theme }) => theme.bg3};
-  box-shadow: 0px 0px 1px rgba(0, 0, 0, 0.01), 0px 4px 8px rgba(0, 0, 0, 0.04), 0px 16px 24px rgba(0, 0, 0, 0.04),
-    0px 24px 32px rgba(0, 0, 0, 0.01);
-  color: ${({ theme }) => theme.text2};
-  border-radius: 0.5rem;
-  padding: 1rem;
-  display: grid;
-  grid-template-rows: 1fr;
-  grid-gap: 8px;
-  font-size: 1rem;
-  text-align: left;
+const PopOverContent = styled.div`
+  display: flex;
+  gap: 6px;
+  flex-direction: column;
+  padding: 15px 20px;
 `
-
 const StyledMenu = styled.div`
   display: flex;
   justify-content: center;
@@ -128,19 +113,10 @@ const ListRow = memo(function ListRow({ listUrl }: { listUrl: string }) {
   const { current: list, pendingUpdate: pending } = listsByUrl[listUrl]
 
   const theme = useTheme()
-  const listColor = useListColor(list?.logoURI)
   const isActive = useIsListActive(listUrl)
 
   const [open, toggle] = useToggle(false)
   const node = useRef<HTMLDivElement>()
-  const [referenceElement, setReferenceElement] = useState<HTMLDivElement>()
-  const [popperElement, setPopperElement] = useState<HTMLDivElement>()
-
-  const { styles, attributes } = usePopper(referenceElement, popperElement, {
-    placement: 'auto',
-    strategy: 'fixed',
-    modifiers: [{ name: 'offset', options: { offset: [8, 8] } }],
-  })
 
   useOnClickOutside(node, open ? toggle : undefined)
 
@@ -189,7 +165,25 @@ const ListRow = memo(function ListRow({ listUrl }: { listUrl: string }) {
   }, [dispatch, listUrl])
 
   if (!list) return null
-
+  const popOverContent = () => (
+    <PopOverContent>
+      <ExternalLink href={`https://tokenlists.org/token-list?url=${listUrl}`}>
+        <TYPE.popOver>
+          <Trans>View list</Trans>
+        </TYPE.popOver>
+      </ExternalLink>
+      <UnpaddedLinkStyledButton onClick={handleRemoveList} disabled={Object.keys(listsByUrl).length === 1}>
+        <TYPE.popOver>
+          <Trans>Remove list</Trans>
+        </TYPE.popOver>
+      </UnpaddedLinkStyledButton>
+      {pending && (
+        <UnpaddedLinkStyledButton onClick={handleAcceptListUpdate}>
+          <Trans>Update list</Trans>
+        </UnpaddedLinkStyledButton>
+      )}
+    </PopOverContent>
+  )
   return (
     <RowWrapper bgColor={theme.bg11} key={listUrl} id={listUrlRowHTMLId(listUrl)}>
       {list.logoURI ? (
@@ -206,28 +200,13 @@ const ListRow = memo(function ListRow({ listUrl }: { listUrl: string }) {
             <Trans>{list.tokens.length} tokens</Trans>
           </StyledListUrlText>
           <StyledMenu ref={node as any}>
-            <ButtonEmpty onClick={toggle} ref={setReferenceElement} padding="0">
-              <SemiTransparent>
-                <Settings style={{ height: '10px', width: '10px ' }} />
-              </SemiTransparent>
-            </ButtonEmpty>
-            {open && (
-              <PopoverContainer show={true} ref={setPopperElement as any} style={styles.popper} {...attributes.popper}>
-                <div>{list && listVersionLabel(list.version)}</div>
-                <SeparatorDark />
-                <ExternalLink href={`https://tokenlists.org/token-list?url=${listUrl}`}>
-                  <Trans>View list</Trans>
-                </ExternalLink>
-                <UnpaddedLinkStyledButton onClick={handleRemoveList} disabled={Object.keys(listsByUrl).length === 1}>
-                  <Trans>Remove list</Trans>
-                </UnpaddedLinkStyledButton>
-                {pending && (
-                  <UnpaddedLinkStyledButton onClick={handleAcceptListUpdate}>
-                    <Trans>Update list</Trans>
-                  </UnpaddedLinkStyledButton>
-                )}
-              </PopoverContainer>
-            )}
+            <Popover show={open} content={popOverContent()} placement={'right'}>
+              <ButtonEmpty onClick={toggle} padding="0">
+                <SemiTransparent>
+                  <Settings style={{ height: '10px', width: '10px ' }} />
+                </SemiTransparent>
+              </ButtonEmpty>
+            </Popover>
           </StyledMenu>
         </RowFixed>
       </Column>
