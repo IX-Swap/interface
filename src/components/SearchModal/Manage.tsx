@@ -1,10 +1,10 @@
+import React, { useState } from 'react'
 import { Token } from '@ixswap1/sdk-core'
 import { Trans } from '@lingui/macro'
 import { TokenList } from '@uniswap/token-lists'
 import { AutoColumn } from 'components/Column'
 import { ManageTabs } from 'components/NavigationTabs'
-import { RowCenter } from 'components/Row'
-import React, { useState } from 'react'
+import { Border, ToggleOption, ToggleWrapper } from 'components/Tabs'
 import styled from 'styled-components/macro'
 import { CurrencyModalView } from './CurrencySearchModal'
 import { ManageLists } from './ManageLists'
@@ -18,41 +18,6 @@ const Wrapper = styled(ModalContentWrapper)`
   `};
 `
 
-const ToggleWrapper = styled(RowCenter)`
-  background-color: transparent;
-  border-radius: 12px;
-  padding: 0px 6px;
-  grid-gap: 6px;
-`
-
-const ToggleOption = styled.div<{ active?: boolean }>`
-  width: 120px;
-  padding: 2px 5px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  position: relative;
-  border-radius: 12px;
-  font-weight: 600;
-  font-size: 16px;
-  line-height: 24px;
-  text-transform: uppercase;
-  background-color: transparent;
-  color: ${({ theme }) => theme.text2};
-  user-select: none;
-
-  :hover {
-    cursor: pointer;
-    opacity: 0.7;
-  }
-`
-const Border = styled.div<{ active?: boolean }>`
-  height: 2px;
-  width: 100%;
-  position: absolute;
-  top: 100%;
-  background: ${({ theme, active }) => (active ? theme.bgG3 : 'transparent')};
-`
 export default function Manage({
   onDismiss,
   setModalView,

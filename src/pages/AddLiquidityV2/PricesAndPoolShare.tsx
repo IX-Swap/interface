@@ -6,7 +6,7 @@ import { Field } from '../../state/mint/actions'
 import { PoolPriceBar } from './PoolPriceBar'
 
 const PricesWrapper = styled.div`
-  background: ${({ theme }) => theme.bgG7};
+  background: ${({ theme }) => theme.bg12};
   backdrop-filter: blur(4px);
   border-radius: 34px;
   padding: 1.5rem 2rem;

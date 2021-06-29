@@ -1,27 +1,27 @@
-import { Trans } from '@lingui/macro'
-import { Currency, CurrencyAmount, Token } from '@ixswap1/sdk-core'
 import React, { CSSProperties, MutableRefObject, useCallback, useMemo } from 'react'
+import { Currency, CurrencyAmount, Token } from '@ixswap1/sdk-core'
+import { Trans } from '@lingui/macro'
+import { VioletCard } from 'components/Card'
+import QuestionHelper from 'components/QuestionHelper'
+import useTheme from 'hooks/useTheme'
 import { FixedSizeList } from 'react-window'
 import { Text } from 'rebass'
 import styled from 'styled-components/macro'
+import TokenListLogo from '../../assets/svg/tokenlist.svg'
+import { useIsUserAddedToken } from '../../hooks/Tokens'
 import { useActiveWeb3React } from '../../hooks/web3'
 import { useCombinedActiveList } from '../../state/lists/hooks'
 import { WrappedTokenInfo } from '../../state/lists/wrappedTokenInfo'
 import { useCurrencyBalance } from '../../state/wallet/hooks'
 import { TYPE } from '../../theme'
-import { useIsUserAddedToken } from '../../hooks/Tokens'
-import Column from '../Column'
-import { RowFixed, RowBetween } from '../Row'
-import CurrencyLogo from '../CurrencyLogo'
-import { MouseoverTooltip } from '../Tooltip'
-import { MenuItem } from './styleds'
-import Loader from '../Loader'
 import { isTokenOnList } from '../../utils'
+import Column from '../Column'
+import CurrencyLogo from '../CurrencyLogo'
+import Loader from '../Loader'
+import { RowBetween, RowFixed } from '../Row'
+import { MouseoverTooltip } from '../Tooltip'
 import ImportRow from './ImportRow'
-import { LightGreyCard } from 'components/Card'
-import TokenListLogo from '../../assets/svg/tokenlist.svg'
-import QuestionHelper from 'components/QuestionHelper'
-import useTheme from 'hooks/useTheme'
+import { MenuItem } from './styleds'
 
 function currencyKey(currency: Currency): string {
   return currency.isToken ? currency.address : 'ETHER'
@@ -158,7 +158,7 @@ function BreakLineComponent({ style }: { style: CSSProperties }) {
   const theme = useTheme()
   return (
     <FixedContentRow style={style}>
-      <LightGreyCard padding="8px 12px" borderRadius="8px">
+      <VioletCard padding="8px 12px" borderRadius="8px">
         <RowBetween>
           <RowFixed>
             <TokenListLogoWrapper src={TokenListLogo} />
@@ -174,7 +174,7 @@ function BreakLineComponent({ style }: { style: CSSProperties }) {
             }
           />
         </RowBetween>
-      </LightGreyCard>
+      </VioletCard>
     </FixedContentRow>
   )
 }

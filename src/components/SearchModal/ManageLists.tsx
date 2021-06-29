@@ -185,7 +185,7 @@ const ListRow = memo(function ListRow({ listUrl }: { listUrl: string }) {
     </PopOverContent>
   )
   return (
-    <RowWrapper bgColor={theme.bg11} key={listUrl} id={listUrlRowHTMLId(listUrl)}>
+    <RowWrapper bgColor={theme.bg12} key={listUrl} id={listUrlRowHTMLId(listUrl)}>
       {list.logoURI ? (
         <ListLogo size="40px" style={{ marginRight: '1rem' }} logoURI={list.logoURI} alt={`${list.name} list logo`} />
       ) : (
