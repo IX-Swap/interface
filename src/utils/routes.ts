@@ -6,4 +6,5 @@ export const routes = {
   remove: (currency0: Currency, currency1: Currency) => `/remove/${currencyId(currency0)}/${currencyId(currency1)}`,
   find: '/find',
   pool: '/pool',
+  securityTokens: (currency?: Currency) => `/security-tokens${currency ? `/${currencyId(currency)}` : ''}`,
 }
