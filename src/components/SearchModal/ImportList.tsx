@@ -1,26 +1,25 @@
-import React, { useState, useCallback } from 'react'
-import styled from 'styled-components/macro'
-import ReactGA from 'react-ga'
-import { TYPE, CloseIcon } from 'theme'
+import { Trans } from '@lingui/macro'
+import { TokenList } from '@uniswap/token-lists'
+import { ButtonGradient } from 'components/Button'
 import Card from 'components/Card'
 import { AutoColumn } from 'components/Column'
-import { RowBetween, RowFixed, AutoRow } from 'components/Row'
-import { ArrowLeft, AlertTriangle } from 'react-feather'
+import ListLogo from 'components/ListLogo'
+import { AutoRow, RowBetween, RowFixed } from 'components/Row'
+import { SectionBreak } from 'components/swap/styleds'
+import { useFetchListCallback } from 'hooks/useFetchListCallback'
 import useTheme from 'hooks/useTheme'
 import { transparentize } from 'polished'
-import { ButtonPrimary } from 'components/Button'
-import { SectionBreak } from 'components/swap/styleds'
-import { ExternalLink } from '../../theme/components'
-import ListLogo from 'components/ListLogo'
-import { PaddedColumn, Checkbox, TextDot } from './styleds'
-import { TokenList } from '@uniswap/token-lists'
-
+import React, { useCallback, useState } from 'react'
+import { AlertTriangle, ArrowLeft } from 'react-feather'
+import ReactGA from 'react-ga'
 import { useAppDispatch } from 'state/hooks'
-import { useFetchListCallback } from 'hooks/useFetchListCallback'
-import { removeList, enableList } from 'state/lists/actions'
-import { CurrencyModalView } from './CurrencySearchModal'
+import { enableList, removeList } from 'state/lists/actions'
 import { useAllLists } from 'state/lists/hooks'
-import { Trans } from '@lingui/macro'
+import styled from 'styled-components/macro'
+import { CloseIcon, TYPE } from 'theme'
+import { ExternalLink } from '../../theme/components'
+import { CurrencyModalView } from './CurrencySearchModal'
+import { Checkbox, PaddedColumn, TextDot } from './styleds'
 
 const Wrapper = styled.div`
   position: relative;
@@ -146,7 +145,7 @@ export function ImportList({ listURL, list, setModalView, onDismiss }: ImportPro
             </AutoRow>
           </Card>
 
-          <ButtonPrimary
+          <ButtonGradient
             disabled={!confirmed}
             altDisabledStyle={true}
             borderRadius="20px"
@@ -154,14 +153,13 @@ export function ImportList({ listURL, list, setModalView, onDismiss }: ImportPro
             onClick={handleAddList}
           >
             <Trans>Import</Trans>
-          </ButtonPrimary>
+          </ButtonGradient>
           {addError ? (
             <TYPE.error title={addError} style={{ textOverflow: 'ellipsis', overflow: 'hidden' }} error>
               {addError}
             </TYPE.error>
           ) : null}
         </AutoColumn>
-        {/* </Card> */}
       </PaddedColumn>
     </Wrapper>
   )

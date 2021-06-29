@@ -1,28 +1,19 @@
-import { Currency, Ether, Token } from '@ixswap1/sdk-core'
+import React, { KeyboardEvent, ReactNode, RefObject, useCallback, useEffect } from 'react'
+import { Currency, Token } from '@ixswap1/sdk-core'
 import { t, Trans } from '@lingui/macro'
-import useDebounce from 'hooks/useDebounce'
-import { useOnClickOutside } from 'hooks/useOnClickOutside'
 import useTheme from 'hooks/useTheme'
-import useToggle from 'hooks/useToggle'
-import React, { KeyboardEvent, ReactNode, RefObject, useCallback, useEffect, useMemo, useRef, useState } from 'react'
-import ReactGA from 'react-ga'
 import AutoSizer from 'react-virtualized-auto-sizer'
-import { FixedSizeList } from 'react-window'
 import { Box } from 'rebass'
 import styled from 'styled-components/macro'
 import { ReactComponent as Edit } from '../../assets/images/edit-circle.svg'
-import { useAllTokens, useIsUserAddedToken, useSearchInactiveTokenLists, useToken } from '../../hooks/Tokens'
-import { useActiveWeb3React } from '../../hooks/web3'
 import { ButtonText, CloseIcon, TYPE } from '../../theme'
-import { isAddress } from '../../utils'
 import Column from '../Column'
 import Row, { RowBetween, RowFixed } from '../Row'
 import CommonBases from './CommonBases'
 import CurrencyList from './CurrencyList'
-import { filterTokens, useSortedTokensByQuery } from './filtering'
 import ImportRow from './ImportRow'
-import { useTokenComparator } from './sorting'
-import { PaddedColumn, SearchInput, ModalContentWrapper } from './styleds'
+import { ModalContentWrapper, PaddedColumn, SearchInput } from './styleds'
+import { useCurrencySearch } from './useCurrencySearch'
 
 const Footer = styled.div`
   width: 100%;
@@ -67,57 +58,27 @@ export function CurrencySearch({
   setImportToken,
   title,
 }: CurrencySearchProps) {
-  const { chainId } = useActiveWeb3React()
   const theme = useTheme()
 
-  // refs for fixed size lists
-  const fixedList = useRef<FixedSizeList>()
-
-  const [searchQuery, setSearchQuery] = useState<string>('')
-  const debouncedQuery = useDebounce(searchQuery, 200)
-
-  const [invertSearchOrder] = useState<boolean>(false)
-
-  const allTokens = useAllTokens()
-
-  // if they input an address, use it
-  const isAddressSearch = isAddress(debouncedQuery)
-
-  const searchToken = useToken(debouncedQuery)
-
-  const searchTokenIsAdded = useIsUserAddedToken(searchToken)
+  const {
+    searchQuery,
+    setSearchQuery,
+    inputRef,
+    debouncedQuery,
+    handleInput,
+    chainId,
+    ether,
+    searchTokenIsAdded,
+    searchToken,
+    filteredSortedTokens,
+    filteredInactiveTokens,
+    filteredSortedTokensWithETH,
+    fixedList,
+  } = useCurrencySearch()
 
   useEffect(() => {
-    if (isAddressSearch) {
-      ReactGA.event({
-        category: 'Currency Select',
-        action: 'Search by address',
-        label: isAddressSearch,
-      })
-    }
-  }, [isAddressSearch])
-
-  const tokenComparator = useTokenComparator(invertSearchOrder)
-
-  const filteredTokens: Token[] = useMemo(() => {
-    return filterTokens(Object.values(allTokens), debouncedQuery)
-  }, [allTokens, debouncedQuery])
-
-  const sortedTokens: Token[] = useMemo(() => {
-    return filteredTokens.sort(tokenComparator)
-  }, [filteredTokens, tokenComparator])
-
-  const filteredSortedTokens = useSortedTokensByQuery(sortedTokens, debouncedQuery)
-
-  const ether = useMemo(() => chainId && Ether.onChain(chainId), [chainId])
-
-  const filteredSortedTokensWithETH: Currency[] = useMemo(() => {
-    const s = debouncedQuery.toLowerCase().trim()
-    if (s === '' || s === 'e' || s === 'et' || s === 'eth') {
-      return ether ? [ether, ...filteredSortedTokens] : filteredSortedTokens
-    }
-    return filteredSortedTokens
-  }, [debouncedQuery, ether, filteredSortedTokens])
+    if (isOpen) setSearchQuery('')
+  }, [isOpen, setSearchQuery])
 
   const handleCurrencySelect = useCallback(
     (currency: Currency) => {
@@ -126,20 +87,6 @@ export function CurrencySearch({
     },
     [onDismiss, onCurrencySelect]
   )
-
-  // clear the input on open
-  useEffect(() => {
-    if (isOpen) setSearchQuery('')
-  }, [isOpen])
-
-  // manage focus on modal show
-  const inputRef = useRef<HTMLInputElement>()
-  const handleInput = useCallback((event) => {
-    const input = event.target.value
-    const checksummedInput = isAddress(input)
-    setSearchQuery(checksummedInput || input)
-    fixedList.current?.scrollTo(0)
-  }, [])
 
   const handleEnter = useCallback(
     (e: KeyboardEvent<HTMLInputElement>) => {
@@ -158,16 +105,6 @@ export function CurrencySearch({
       }
     },
     [debouncedQuery, ether, filteredSortedTokensWithETH, handleCurrencySelect]
-  )
-
-  // menu ui
-  const [open, toggle] = useToggle(false)
-  const node = useRef<HTMLDivElement>()
-  useOnClickOutside(node, open ? toggle : undefined)
-
-  // if no results on main list, show option to expand into inactive
-  const filteredInactiveTokens = useSearchInactiveTokenLists(
-    filteredTokens.length === 0 || (debouncedQuery.length > 2 && !isAddressSearch) ? debouncedQuery : undefined
   )
 
   return (
@@ -217,7 +154,7 @@ export function CurrencySearch({
         </div>
       ) : (
         <Column style={{ padding: '20px', height: '100%' }}>
-          <TYPE.main color={theme.text3} textAlign="center" mb="20px">
+          <TYPE.main color={theme.text2} textAlign="center" mb="20px">
             <Trans>No results found.</Trans>
           </TYPE.main>
         </Column>
@@ -229,7 +166,6 @@ export function CurrencySearch({
               <Box marginRight={'6px'} display="flex" justifyContent="center">
                 <Edit />
               </Box>
-
               <Title>
                 <Trans>Manage Token List</Trans>
               </Title>

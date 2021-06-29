@@ -63,6 +63,7 @@ export function colors(darkMode: boolean): Colors {
     bg9: darkMode ? '#372E5D' : '#372E5D',
     bg10: darkMode ? '#EDCEFF' : '#EDCEFF',
     bg11: darkMode ? '#272046' : '#272046',
+    bg12: darkMode ? '#271F4A' : '#271F4A',
     bgG1: darkMode
       ? 'radial-gradient(93.65% 93.65% at 58.57% 22.42%, rgba(206, 20, 132, 0.33) 0%, rgba(26, 18, 58, 0) 100%), #2C254A;'
       : 'radial-gradient(93.65% 93.65% at 58.57% 22.42%, rgba(206, 20, 132, 0.33) 0%, rgba(26, 18, 58, 0) 100%), #2C254A;',
@@ -195,6 +196,9 @@ export const TYPE = {
   },
   popOver(props: TextProps) {
     return <TextWrapper fontWeight={400} fontSize={14} color={'text2'} lineHeight={'17px'} {...props} />
+  },
+  status(props: TextProps) {
+    return <TextWrapper fontWeight={400} fontSize={14} color={'text2'} lineHeight={'32px'} {...props} />
   },
   largeHeader(props: TextProps) {
     return <TextWrapper fontWeight={600} fontSize={24} {...props} />

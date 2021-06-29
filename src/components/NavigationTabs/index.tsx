@@ -96,6 +96,17 @@ export function ManageTabs({ onClick, onDismiss }: { onClick: () => void; onDism
   )
 }
 
+export function CustodianTabs() {
+  return (
+    <Tabs style={{ width: '100%' }}>
+      <StyledPageHeader>
+        <RowStart style={{ padding: '0' }}>
+          <Trans>Custodian</Trans>
+        </RowStart>
+      </StyledPageHeader>
+    </Tabs>
+  )
+}
 export function AddRemoveTabs({
   adding,
   creating,

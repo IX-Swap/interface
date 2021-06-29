@@ -97,7 +97,7 @@ export const HeaderLinks = () => {
           <Trans>Pool</Trans>
         </StyledJointLink>
       </StyledJointLinkWrapper>
-      <StyledNavLink id={`stake-nav-link`} to={'/vote'}>
+      <StyledNavLink id={`stake-nav-link`} to={'/custodian'}>
         <Trans>Custodian</Trans>
       </StyledNavLink>
       <SettingsTab placeholderSlippage={allowedSlippage} />

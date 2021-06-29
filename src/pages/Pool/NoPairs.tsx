@@ -5,10 +5,11 @@ import { ButtonEmpty } from '../../components/Button'
 import { Dots } from '../../components/swap/styleds'
 import { Trans } from '@lingui/macro'
 import { EmptyLiquidity } from './EmptyLiquidity'
-import { MarginerCard, LiquidityWrapper, LiquidityInnerTitle } from './styleds'
+import { MarginerCard, LiquidityInnerTitle } from './styleds'
 import useTheme from 'hooks/useTheme'
 import { ImportPool } from './ImportPool'
 import { useWalletModalToggle } from 'state/application/hooks'
+import { BackgroundWrapper } from 'components/BottomHalfWrapper'
 
 interface Props {
   account?: string | null
@@ -21,7 +22,7 @@ export const NoPairs = ({ account, v2IsLoading, showEmptyLiquidity }: Props) => 
   return (
     <>
       <MarginerCard>
-        <LiquidityWrapper>
+        <BackgroundWrapper>
           <LiquidityInnerTitle>
             <Trans>My Liquidity</Trans>
           </LiquidityInnerTitle>
@@ -44,7 +45,7 @@ export const NoPairs = ({ account, v2IsLoading, showEmptyLiquidity }: Props) => 
             )}
             {showEmptyLiquidity && <EmptyLiquidity />}
           </SemiTransparent>
-        </LiquidityWrapper>
+        </BackgroundWrapper>
       </MarginerCard>
       <ImportPool />
     </>

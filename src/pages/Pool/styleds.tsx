@@ -111,20 +111,6 @@ export const MarginerTitle = styled.div`
 export const MarginerCard = styled.div`
   margin: 0px 36px 8px 36px;
 `
-export const LiquidityWrapper = styled.div`
-  background: ${({ theme }) => theme.bgG7};
-  border-radius: 34px;
-  backdrop-filter: blur(4px);
-  padding: 1.5rem 2rem;
-  display: flex;
-  flex-direction: column;
-}
-`
-
-export const StraightLiquidityWrapper = styled(LiquidityWrapper)`
-  border-top-left-radius: 0;
-  border-top-right-radius: 0;
-`
 
 export const LiquidityInnerTitle = styled.span`
   font-weight: 600;
