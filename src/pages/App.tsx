@@ -19,11 +19,13 @@ import { RedirectDuplicateTokenIdsV2 } from './AddLiquidityV2/redirects'
 import ApeModeQueryParamReader from 'hooks/useApeModeQueryParamReader'
 import Custodian from './Custodian'
 import { routes } from 'utils/routes'
+import { AppBackground } from 'components/AppBackground'
 
 const AppWrapper = styled.div`
   display: flex;
   flex-flow: column;
   align-items: flex-start;
+  position: relative;
 `
 
 const BodyWrapper = styled.div`
@@ -56,6 +58,7 @@ export default function App() {
       <Route component={GoogleAnalyticsReporter} />
       <Route component={DarkModeQueryParamReader} />
       <Route component={ApeModeQueryParamReader} />
+      <AppBackground />
       <AppWrapper>
         <Header />
         <ToggleableBody isVisible={!isSettingsOpen}>
