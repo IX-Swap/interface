@@ -101,7 +101,7 @@ export function CustodianTabs() {
     <Tabs style={{ width: '100%' }}>
       <StyledPageHeader>
         <RowStart style={{ padding: '0' }}>
-          <Trans>Custodian</Trans>
+          <Trans>Security Tokens</Trans>
         </RowStart>
       </StyledPageHeader>
     </Tabs>

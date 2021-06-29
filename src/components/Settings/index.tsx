@@ -1,5 +1,4 @@
 import React, { useRef } from 'react'
-import { Settings } from 'react-feather'
 import styled from 'styled-components'
 import { useOnClickOutside } from '../../hooks/useOnClickOutside'
 import { ApplicationModal } from '../../state/application/actions'
@@ -7,23 +6,20 @@ import { useModalOpen, useToggleSettingsMenu } from '../../state/application/hoo
 import { useExpertModeManager } from '../../state/user/hooks'
 import { Percent } from '@ixswap1/sdk-core'
 import SettingsModal from './SettingsModal'
+import { ReactComponent as SettingsFull } from 'assets/images/settings-full.svg'
+import { ReactComponent as SettingsEmpty } from 'assets/images/settings-empty.svg'
 
-const StyledMenuIcon = styled(Settings)`
-  height: 20px;
-  width: 20px;
-
-  > * {
-    stroke: ${({ theme }) => theme.text2};
-  }
-
+const SettingsIcon = ({ open }: { open: boolean }) => <>{open ? <SettingsFull /> : <SettingsEmpty />}</>
+const StyledMenuIcon = styled(SettingsIcon)`
+  height: 22px;
+  width: 22px;
   :hover {
     opacity: 0.7;
   }
 `
-
 const EmojiWrapper = styled.div`
   position: absolute;
-  bottom: 0px;
+  bottom: 4px;
   right: 3px;
   font-size: 14px;
 `
@@ -46,18 +42,17 @@ const StyledMenuButton = styled.button`
   width: 100%;
   height: 100%;
   border: none;
-  background: ${({ theme }) => theme.bgG1};
+  background: transparent;
   margin: 0;
   padding: 13px;
   border-radius: 100%;
   height: fit-content;
   display: flex;
-  opacity: 0.3;
   :hover,
   :focus {
     cursor: pointer;
     outline: none;
-    opacity: 1;
+    opacity: 0.8;
   }
 `
 
@@ -74,7 +69,7 @@ export default function SettingsTab({ placeholderSlippage }: { placeholderSlippa
     // https://github.com/DefinitelyTyped/DefinitelyTyped/issues/30451
     <StyledMenu ref={node as any}>
       <StyledMenuButton id="open-settings-dialog-button" onClick={toggle}>
-        <StyledMenuIcon />
+        <StyledMenuIcon open={open} />
         {expertMode ? (
           <EmojiWrapper>
             <span role="img" aria-label="wizard-icon">
