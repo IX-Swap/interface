@@ -5,7 +5,7 @@ import CurrencyLogo from 'components/CurrencyLogo'
 import { FixedSizeList } from 'react-window'
 import { Box, Text } from 'rebass'
 import { WrappedTokenInfo } from '../../state/lists/wrappedTokenInfo'
-import { MenuItem } from './styleds'
+import { MenuItem, MenuRow } from './styleds'
 import { Trans } from '@lingui/macro'
 import { ButtonGradient } from '../../components/Button'
 import { routes } from 'utils/routes'
@@ -19,21 +19,23 @@ function CurrencyRow({ currency, style }: { currency: Currency; style: CSSProper
   const key = currencyKey(currency)
   // only show add or remove buttons if not on selected list
   return (
-    <MenuItem style={style} className={`token-item-${key}`}>
-      <Box style={{ display: 'flex', gap: '8px', alignItems: 'center' }}>
-        <CurrencyLogo currency={currency} size={'33px'} />
-        <Column>
-          <Text title={currency.name} fontWeight={500}>
-            {currency.symbol}
-          </Text>
-        </Column>
-      </Box>
-      <Box width="100%">
-        <ButtonGradient as={Link} to={routes.pool}>
-          <Trans>Info</Trans>
-        </ButtonGradient>
-      </Box>
-    </MenuItem>
+    <MenuRow style={style} className={`token-item-${key}`}>
+      <MenuItem>
+        <Box style={{ display: 'flex', gap: '8px', alignItems: 'center' }}>
+          <CurrencyLogo currency={currency} size={'33px'} />
+          <Column>
+            <Text title={currency.name} fontWeight={500}>
+              {currency.symbol}
+            </Text>
+          </Column>
+        </Box>
+        <Box width="100%">
+          <ButtonGradient as={Link} to={routes.pool}>
+            <Trans>Info</Trans>
+          </ButtonGradient>
+        </Box>
+      </MenuItem>
+    </MenuRow>
   )
 }
 

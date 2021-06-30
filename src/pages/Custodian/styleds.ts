@@ -1,4 +1,4 @@
-import { RowBetween } from 'components/Row'
+import Row, { RowBetween } from 'components/Row'
 import styled from 'styled-components'
 import { hexToRGBA } from 'utils/themeHelper'
 
@@ -15,4 +15,7 @@ export const MenuItem = styled(RowBetween)`
     backdrop-filter: blur(4px);
   }
   opacity: ${({ disabled, selected }) => (disabled || selected ? 0.5 : 1)};
+`
+export const MenuRow = styled(Row)`
+  padding-right: 10px;
 `
