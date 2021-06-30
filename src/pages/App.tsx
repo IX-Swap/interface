@@ -1,25 +1,26 @@
+import { AppBackground } from 'components/AppBackground'
+import ApeModeQueryParamReader from 'hooks/useApeModeQueryParamReader'
 import React from 'react'
 import { Route, Switch } from 'react-router-dom'
 import styled from 'styled-components/macro'
+import { routes } from 'utils/routes'
 import GoogleAnalyticsReporter from '../components/analytics/GoogleAnalyticsReporter'
+import ErrorBoundary from '../components/ErrorBoundary'
 import Header from '../components/Header'
 import Polling from '../components/Header/Polling'
 import Popups from '../components/Popups'
 import Web3ReactManager from '../components/Web3ReactManager'
-import ErrorBoundary from '../components/ErrorBoundary'
 import { ApplicationModal } from '../state/application/actions'
 import { useModalOpen } from '../state/application/hooks'
 import DarkModeQueryParamReader from '../theme/DarkModeQueryParamReader'
+import { RedirectDuplicateTokenIdsV2 } from './AddLiquidityV2/redirects'
+import Custodian from './Custodian'
 import PoolV2 from './Pool/v2'
 import PoolFinder from './PoolFinder'
 import RemoveLiquidity from './RemoveLiquidity'
+import SecTokenDetails from './SecTokenDetails'
 import Swap from './Swap'
 import { RedirectPathToSwapOnly, RedirectToSwap } from './Swap/redirects'
-import { RedirectDuplicateTokenIdsV2 } from './AddLiquidityV2/redirects'
-import ApeModeQueryParamReader from 'hooks/useApeModeQueryParamReader'
-import Custodian from './Custodian'
-import { routes } from 'utils/routes'
-import { AppBackground } from 'components/AppBackground'
 
 const AppWrapper = styled.div`
   display: flex;
@@ -53,6 +54,7 @@ const Marginer = styled.div`
 
 export default function App() {
   const isSettingsOpen = useModalOpen(ApplicationModal.SETTINGS)
+
   return (
     <ErrorBoundary>
       <Route component={GoogleAnalyticsReporter} />
@@ -76,6 +78,7 @@ export default function App() {
               <Route exact strict path="/add/:currencyIdA?/:currencyIdB?" component={RedirectDuplicateTokenIdsV2} />
 
               <Route exact strict path="/remove/:currencyIdA/:currencyIdB" component={RemoveLiquidity} />
+              <Route exact strict path="/security-tokens/:currencyId" component={SecTokenDetails} />
               <Route exact strict path={routes.securityTokens()} component={Custodian} />
               <Route component={RedirectPathToSwapOnly} />
             </Switch>
