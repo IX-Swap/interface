@@ -62,13 +62,16 @@ export const useTableWithPagination = <TData>(
   const previousPageData =
     cached !== undefined
       ? cached.map(page =>
-          page.data.length > 0 ? page.data[0].documents : []
+          page.data !== undefined && page.data.length > 0
+            ? page.data[0].documents
+            : []
         )[0]
       : []
+
   const currentPageData =
     data !== undefined
       ? data.map(page =>
-          page.data.length > 0
+          page.data !== undefined && page.data.length > 0
             ? page.data[0].documents.length > 0
               ? page.data[0].documents
               : previousPageData
@@ -78,6 +81,7 @@ export const useTableWithPagination = <TData>(
   const total =
     data !== undefined &&
     data.length > 0 &&
+    data[data.length - 1].data !== undefined &&
     data[data.length - 1].data.length > 0
       ? data[data.length - 1].data[0].count ?? 0
       : 0
