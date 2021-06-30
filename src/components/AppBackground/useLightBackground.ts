@@ -1,10 +1,12 @@
 import { useState } from 'react'
 import { routes } from 'utils/routes'
 
+const isSecurityTokenInfoPage = () => window.location.hash.startsWith(`#${routes.securityTokens()}/`)
+
 const useLightBackground = () => {
-  const [hasLightBackground, setHasLightBackground] = useState(false)
+  const [hasLightBackground, setHasLightBackground] = useState(isSecurityTokenInfoPage())
   window.onhashchange = () => {
-    setHasLightBackground(window.location.hash.startsWith(`#${routes.securityTokens()}/`))
+    setHasLightBackground(isSecurityTokenInfoPage())
   }
   return { hasLightBackground }
 }

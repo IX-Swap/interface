@@ -215,6 +215,12 @@ export const TYPE = {
   buttonMuted(props: TextProps) {
     return <TextWrapper fontWeight={600} fontSize={14} lineHeight={'21px'} {...props} />
   },
+  titleBig(props: TextProps) {
+    return <TextWrapper fontWeight={400} fontSize={36} lineHeight={'56px'} {...props} />
+  },
+  descriptionThin(props: TextProps) {
+    return <TextWrapper fontWeight={300} fontSize={16} lineHeight={'24px'} color={'text2'} {...props} />
+  },
   small(props: TextProps) {
     return <TextWrapper fontWeight={500} fontSize={11} {...props} />
   },
