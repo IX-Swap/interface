@@ -6,7 +6,10 @@ import { useMutation, useQueryCache } from 'react-query'
 import { virtualAccounts } from 'config/apiURL'
 import { virtualAccountQueryKeys } from 'config/queryKeys'
 
-export const useAssignVirtualAccount = (callback?: () => void) => {
+export const useAssignVirtualAccount = (
+  callback?: () => void,
+  isAdditional: boolean | undefined = false
+) => {
   const queryCache = useQueryCache()
   const { apiService, snackbarService } = useServices()
   const { user } = useAuth()
@@ -24,7 +27,9 @@ export const useAssignVirtualAccount = (callback?: () => void) => {
     onSuccess: async () => {
       callback?.()
       void snackbarService.showSnackbar(
-        'Account has been assigned successfully.',
+        isAdditional
+          ? 'Request to add new account sent'
+          : 'Account has been assigned successfully!',
         'success'
       )
       await queryCache.invalidateQueries(virtualAccountQueryKeys.getByUserId)
