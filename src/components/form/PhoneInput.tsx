@@ -9,6 +9,7 @@ export const PhoneInput = (props: InputProps): JSX.Element => {
       data-cy='user-phone'
       defaultCountry={'us'}
       variant='outlined'
+      disableAreaCodes
       onChange={(...args: any[]) => {
         props.onChange?.(args[0])
       }}

@@ -8,8 +8,13 @@ import {
   RepresentativeFormValues
 } from 'app/pages/identity/types/forms'
 import { DataroomFile } from 'types/dataroomFile'
-import { addressSchema } from 'validation/shared'
+import {
+  addressSchema,
+  emailSchema,
+  taxIdentificationNumberSchema
+} from 'validation/shared'
 import * as yup from 'yup'
+import 'yup-phone'
 import { validateUEN } from 'validation/validators'
 
 // TODO: change to InvestorCorporateInfoFormValues (currently getting TS2589)
@@ -17,23 +22,27 @@ export const corporateInvestorInfoSchema = yup.object().shape<any>({
   logo: yup.string(),
   companyLegalName: yup
     .string()
+    .max(50, 'Maximum of 50 characters')
+    .required('This field is required')
     .matches(
-      /^[a-zA-Z0-9. , -?]*$/,
+      /^[a-zA-Z0-9.,-;]+([a-zA-Z0-9.,-; ]+)*$/,
       'Must include only letters, numbers and this special characters . , -'
-    )
-    .required('Required'),
+    ),
+
   registrationNumber: yup.string().when('countryOfFormation', {
     is: 'Singapore',
-    then: yup
-      .string()
-      .test('validateUEN', 'Must be a valid UEN', function (value) {
+    then: taxIdentificationNumberSchema.test(
+      'validateUEN',
+      'Must be a valid UEN',
+      function (value) {
         const error = validateUEN(value)
         if (typeof error === 'string') {
           return new yup.ValidationError(error, value, 'registrationNumber')
         }
         return true
-      }),
-    otherwise: yup.string().required('Required')
+      }
+    ),
+    otherwise: taxIdentificationNumberSchema.required('This field is required')
   }),
   legalEntityStatus: yup.string().required('Required'),
   otherLegalEntityStatus: yup.string().when('legalEntityStatus', {
@@ -62,11 +71,11 @@ export const corporateInvestorInfoSchema = yup.object().shape<any>({
             .string()
             .required('Required')
             .matches(/^[a-zA-Z\s]+$/g, 'Must include letters only'),
-          email: yup
+          email: emailSchema.required('This field is required'),
+          contactNumber: yup
             .string()
-            .email('Must have email format')
-            .required('Required'),
-          contactNumber: yup.string().required('Required'),
+            .phone()
+            .required('This field is required'),
           documents: yup.array<DataroomFile>().required('Required')
         })
         .required('Required')
@@ -84,8 +93,8 @@ export const directorsAndBeneficialOwnersSchema = yup
           .object<DirectorFormValues>({
             fullName: yup.string().required('Required'),
             designation: yup.string().required('Required'),
-            email: yup.string().required('Required'),
-            contactNumber: yup.string().required('Required'),
+            email: emailSchema.required('This field is required'),
+            contactNumber: yup.string().phone().required(),
             address: addressSchema.required('Required'),
             documents: yup
               .object({
@@ -122,11 +131,16 @@ export const corporateTaxDeclarationSchema = yup.object().shape({
       .object({
         taxIdAvailable: yup.boolean(),
         countryOfResidence: yup.string().required('Required'),
-        taxIdentificationNumber: yup.string().when('taxIdAvailable', {
-          is: true,
-          then: yup.string().required('Required'),
-          otherwise: yup.string()
-        }),
+        taxIdentificationNumber: taxIdentificationNumberSchema.when(
+          'taxIdAvailable',
+          {
+            is: true,
+            then: taxIdentificationNumberSchema.required(
+              'This field is required'
+            ),
+            otherwise: taxIdentificationNumberSchema
+          }
+        ),
         reason: yup.string().when('taxIdAvailable', {
           is: false,
           then: yup.string().oneOf(['A', 'B', 'C']).required('Required'),
