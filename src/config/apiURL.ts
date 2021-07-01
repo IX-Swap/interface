@@ -190,7 +190,9 @@ export const virtualAccounts = {
   add: '/virtual-accounts',
   getByUserId: (userId: string) => `/virtual-accounts/${userId}`,
   assign: '/virtual-accounts/assign',
-  uploadCSV: '/virtual-accounts/upload'
+  unassign: (accountId: string) => `/virtual-accounts/unassign/${accountId}`,
+  uploadCSV: '/virtual-accounts/upload',
+  disable: '/virtual-accounts/disable'
 }
 
 export const exchange = {
