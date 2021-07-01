@@ -71,7 +71,7 @@ describe('PlaceOrderForm', () => {
     expect(PlaceOrderFields).toBeCalledWith(
       expect.objectContaining({
         balance: 300,
-        totalCurrencyLabel: 'IXPS'
+        totalCurrencyLabel: 'SGD'
       }),
       {}
     )
