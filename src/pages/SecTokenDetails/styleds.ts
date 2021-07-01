@@ -25,7 +25,7 @@ export const DescriptionTitle = styled(TYPE.titleSmall)`
 export const Description = styled.span``
 export const Details = styled.div`
   margin-top: 26px;
-  margin-bottom: 8vh;
+  margin-bottom: 60px;
   display: flex;
   flex-wrap: wrap;
   gap: 15px;

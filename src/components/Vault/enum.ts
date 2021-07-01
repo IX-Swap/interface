@@ -1,0 +1,6 @@
+export enum VaultState {
+  NOT_SUBMITTED = 'NOT_SUBMITTED',
+  PENDING = 'PENDING',
+  APPROVED = 'APPROVED',
+  REJECTED = 'REJECTED',
+}

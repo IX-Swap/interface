@@ -1,6 +1,8 @@
 import { t } from '@lingui/macro'
 import CurrencyLogo from 'components/CurrencyLogo'
 import { ReadMore } from 'components/ReadMore'
+import { Vault } from 'components/Vault'
+import { VaultState } from 'components/Vault/enum'
 import { useCurrency } from 'hooks/Tokens'
 import React from 'react'
 import { RouteComponentProps } from 'react-router-dom'
@@ -46,6 +48,7 @@ export default function SecTokenDetails({
           </DescriptionText>
         </Description>
         <TokenDetails />
+        <Vault status={VaultState.NOT_SUBMITTED} currency={currency} />
       </Container>
     </>
   )
