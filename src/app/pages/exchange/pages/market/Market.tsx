@@ -77,7 +77,7 @@ export const Market = () => {
         className={classes.wrapper}
         alignItems={'flex-start'}
       >
-        <Grid item className={classes.colorGrid}>
+        <Grid item className={classes.colorGrid} style={{ height: '100%' }}>
           <InvestorLiveOrderBook />
         </Grid>
 
