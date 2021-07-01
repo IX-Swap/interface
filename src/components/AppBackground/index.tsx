@@ -4,7 +4,7 @@ import styled from 'styled-components'
 import useLightBackground from './useLightBackground'
 
 const Background = styled.div<{ lightBackground: boolean }>`
-  position: absolute;
+  position: fixed;
   z-index: -100;
   width: 100%;
   height: 100%;

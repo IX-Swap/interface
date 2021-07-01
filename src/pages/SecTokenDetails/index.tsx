@@ -8,6 +8,7 @@ import { Box } from 'rebass'
 import { TYPE } from 'theme'
 import { InfoBackground } from './Background'
 import { Container, Description, DescriptionText, InfoTitle } from './styleds'
+import { TokenDetails } from './TokenDetails'
 
 export default function SecTokenDetails({
   history,
@@ -19,7 +20,7 @@ export default function SecTokenDetails({
   return (
     <>
       <InfoBackground />
-      <Container width={['100%', '65%', '65%']}>
+      <Container width={['100%', '65%', '65%']} maxWidth={'920px'}>
         <InfoTitle>
           <CurrencyLogo currency={currency} size="72px" />
           <Box display="flex">
@@ -44,6 +45,7 @@ export default function SecTokenDetails({
             </ReadMore>
           </DescriptionText>
         </Description>
+        <TokenDetails />
       </Container>
     </>
   )

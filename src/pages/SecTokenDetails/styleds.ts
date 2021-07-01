@@ -19,8 +19,21 @@ export const TitleText = styled.span`
   line-height: 56px;
   color: ${({ theme }) => theme.text1};
 `
+export const DescriptionTitle = styled(TYPE.titleSmall)`
+  text-transform: uppercase;
+`
 export const Description = styled.span``
-
+export const Details = styled.div`
+  margin-top: 26px;
+  margin-bottom: 8vh;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 15px;
+  justify-content: space-between;
+`
+export const GridElement = styled.div`
+  width: 260px;
+`
 export const ReadMoreButton = styled(ButtonEmpty)`
   display: inline-block;
   width: fit-content;
@@ -35,4 +48,13 @@ export const ReadMoreButton = styled(ButtonEmpty)`
 export const DescriptionText = styled(TYPE.descriptionThin)`
   display: inline;
   color: ${({ theme }) => theme.text2};
+`
+export const IconWrapper = styled.div<{ size?: number }>`
+  ${({ theme }) => theme.flexColumnNoWrap};
+  align-items: center;
+  justify-content: center;
+  & > * {
+    height: ${({ size }) => (size ? size + 'px' : '32px')};
+    width: ${({ size }) => (size ? size + 'px' : '32px')};
+  }
 `

@@ -218,6 +218,9 @@ export const TYPE = {
   titleBig(props: TextProps) {
     return <TextWrapper fontWeight={400} fontSize={36} lineHeight={'56px'} {...props} />
   },
+  titleSmall(props: TextProps) {
+    return <TextWrapper fontWeight={500} fontSize={18} lineHeight={'27px'} color={'text1'} {...props} />
+  },
   descriptionThin(props: TextProps) {
     return <TextWrapper fontWeight={300} fontSize={16} lineHeight={'24px'} color={'text2'} {...props} />
   },
