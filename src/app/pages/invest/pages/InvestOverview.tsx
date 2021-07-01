@@ -5,6 +5,7 @@ import { InvestRoute } from 'app/pages/invest/router/config'
 import { VSpacer } from 'components/VSpacer'
 import { PromoBanner } from 'app/pages/invest/components/PromoBanner'
 import { SecondaryMarketTable } from 'app/pages/invest/components/SecondaryMarketTable/SecondaryMarketTable'
+import { OverviewPageFilters } from 'app/pages/invest/components/OverviwPageFilters'
 import { PrimaryOfferings } from 'app/pages/invest/components/PrimaryOfferings'
 import { OTCMarket } from 'app/pages/invest/components/OTCMarkets'
 
@@ -15,17 +16,22 @@ export const InvestOverview = () => {
     <>
       <Grid container justify='space-between'>
         <Grid item container justify={'flex-end'}>
-          <Button
-            component={AppRouterLinkComponent}
-            to={InvestRoute.commitments}
-            color='primary'
-            variant='outlined'
-            size='large'
-            disableElevation
-            style={{ color: theme.palette.primary.main }}
-          >
-            My commitments
-          </Button>
+          <Grid item xs={4}>
+            <OverviewPageFilters />
+          </Grid>
+          <Grid item>
+            <Button
+              component={AppRouterLinkComponent}
+              to={InvestRoute.commitments}
+              color='primary'
+              variant='outlined'
+              size='large'
+              disableElevation
+              style={{ color: theme.palette.primary.main }}
+            >
+              My commitments
+            </Button>
+          </Grid>
         </Grid>
         <PromoBanner />
         <VSpacer size='medium' />

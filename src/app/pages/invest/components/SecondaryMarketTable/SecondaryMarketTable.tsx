@@ -14,7 +14,8 @@ import { OTCMarketRoute } from 'app/pages/exchange/router/config'
 export const SecondaryMarketTable = () => {
   const theme = useTheme()
   const { getFilterValue } = useQueryFilter()
-  const search = getFilterValue('search', undefined)
+  const search = getFilterValue('search')
+  const secondaryMarketSearch = getFilterValue('secondaryMarketSearch')
 
   return (
     <Grid container direction='column' spacing={3}>
@@ -22,6 +23,7 @@ export const SecondaryMarketTable = () => {
         <Grid item xs={3}>
           <SearchFilter
             fullWidth
+            filterValue={'secondaryMarketSearch'}
             inputAdormentPosition='end'
             placeholder='Search'
           />
@@ -47,7 +49,7 @@ export const SecondaryMarketTable = () => {
           columns={columns}
           hasActions
           actions={Actions}
-          filter={{ search } as any}
+          filter={{ search: search ?? secondaryMarketSearch } as any}
         />
       </Grid>
     </Grid>

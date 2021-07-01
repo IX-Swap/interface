@@ -4,9 +4,13 @@ import { InvestRoute } from 'app/pages/invest/router/config'
 import { Grid } from '@material-ui/core'
 import { OTCMarketCard } from 'app/pages/invest/components/OTCMarketCard/OTCMarketCard'
 import useStyles from 'app/pages/invest/components/styles/OTCMarket.style'
+import { useQueryFilter } from 'hooks/filters/useQueryFilter'
 
 export const PrimaryOfferings = () => {
-  const { data, status } = usePromotedDSOs()
+  const { getFilterValue } = useQueryFilter()
+  const search = getFilterValue('search')
+  const primaryOfferingSearch = getFilterValue('primaryOfferingSearch')
+  const { data, status } = usePromotedDSOs(search ?? primaryOfferingSearch)
   const classes = useStyles()
 
   if (status === 'loading' || data.list.length === undefined) {
