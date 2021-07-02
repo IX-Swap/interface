@@ -1,11 +1,11 @@
 import React from 'react'
-import { AssignedVirtualAccount } from 'app/pages/admin/components/AssignedVirtualAccountsTable/AssignedVirtualAccountsTable'
-import { ViewAssignedVirtualAccountAction } from 'app/pages/admin/components/AssignedVirtualAccountsTable/ViewAssignedVirtualAccountAction'
+import { UnassignVirtualAccount } from 'app/pages/admin/components/AssignedVirtualAccountsTable/UnassignVirtualAccountButton'
+import { VirtualAccount } from 'types/virtualAccount'
 
 export interface ActionsProps {
-  item: AssignedVirtualAccount
+  item: VirtualAccount
 }
 
 export const Actions = ({ item }: ActionsProps) => {
-  return <ViewAssignedVirtualAccountAction item={item} />
+  return <UnassignVirtualAccount item={item} />
 }

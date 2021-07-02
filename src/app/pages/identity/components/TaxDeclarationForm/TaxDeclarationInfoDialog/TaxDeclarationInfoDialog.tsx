@@ -19,6 +19,9 @@ export const TaxDeclarationInfoDialog = () => {
           Click here
         </Typography>
       }
+      titleStyle={{
+        textAlign: 'center'
+      }}
       title='Why we need your Tax Declaration?'
       content={<TaxDeclarationInfoContent />}
       actions={<TaxDeclarationInfoAction />}

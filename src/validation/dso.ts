@@ -18,7 +18,13 @@ export const dsoTeamMemberSchema = object().shape<DsoTeamMember>({
 export const dsoFormBaseValidationSchema = {
   businessModel: string().required('Required'),
   capitalStructure: string().required('Required'),
-  corporate: string().required('Required'),
+  corporate: string()
+    .max(50, 'Maximum of 50 characters')
+    .required('This field is required')
+    .matches(
+      /^[a-zA-Z0-9.,-;]+([a-zA-Z0-9.,-; ]+)*$/,
+      'Must include only letters, numbers and this special characters . , -'
+    ),
   currency: string().required('Required'),
   distributionFrequency: string().when('capitalStructure', {
     is: capitalStructure =>

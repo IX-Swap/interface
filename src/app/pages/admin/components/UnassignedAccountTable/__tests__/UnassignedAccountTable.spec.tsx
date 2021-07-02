@@ -9,7 +9,19 @@ jest.mock('components/TableWithPagination/TableView', () => ({
 }))
 
 jest.mock('components/SelectionHelper', () => ({
-  useSelectionHelperContext: jest.fn(() => null)
+  useSelectionHelperContext: jest.fn(() => ({
+    selectedCount: 0,
+    hasSelected: false,
+    selected: [],
+    selectItem: jest.fn(),
+    deselectItem: jest.fn(),
+    getIsItemSelected: jest.fn(),
+    getIsItemsSelected: jest.fn(),
+    getIsIndeterminate: jest.fn(),
+    toggle: jest.fn(),
+    toggleAll: jest.fn(),
+    resetSelection: jest.fn()
+  }))
 }))
 
 describe('UnassignedAccountTable', () => {

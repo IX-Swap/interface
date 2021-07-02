@@ -15,10 +15,12 @@ export const OrderBookRow = ({
   price,
   amount,
   total,
-  count,
   transaction = 'buy'
 }: OrderBookRowProps) => {
-  const { tableRow } = useStyles({ value: (count / 100) * 100, transaction })
+  const { tableRow } = useStyles({
+    value: (total / 10000) * 100,
+    transaction
+  })
   return (
     <TableRow className={tableRow}>
       <OrderBookCell transaction={transaction}>{price}</OrderBookCell>
