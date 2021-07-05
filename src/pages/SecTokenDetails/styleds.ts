@@ -5,7 +5,6 @@ import styled from 'styled-components'
 import { TYPE } from 'theme'
 
 export const Container = styled(Box)`
-  border: 1px solid white;
   height: fit-content;
 `
 export const InfoTitle = styled(RowStart)`

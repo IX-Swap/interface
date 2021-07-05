@@ -1,5 +1,6 @@
-import { RowCenter } from 'components/Row'
+import { RowBetween, RowCenter } from 'components/Row'
 import styled from 'styled-components'
+import { TYPE } from 'theme'
 
 export const NotSubmittedWrapper = styled.div`
   background: ${({ theme }) => theme.bgG10};
@@ -22,9 +23,17 @@ export const NotSubmittedWrapper = styled.div`
     background: ${({ theme }) => theme.borderG1};
   }
 `
+export const ExistingWrapper = styled.div`
+  background: ${({ theme }) => theme.bgG11};
+  border-radius: 45px;
+  padding: 62px 56px 36px 56px;
+`
 export const NotSubmittedTitle = styled.span`
   text-transform: uppercase;
   text-align: center;
+`
+export const ExistingTitle = styled.span`
+  text-align: left;
 `
 export const NotSubmittedDescription = styled.span`
   text-align: center;
@@ -36,3 +45,12 @@ export const ButtonRow = styled(RowCenter)`
   margin: auto;
   margin-top: 3rem;
 `
+
+export const TitleStatusRow = styled(RowBetween)`
+  margin-bottom: 2rem;
+`
+export const StatusTitle = styled(TYPE.titleSmall)`
+  text-transform: uppercase;
+`
+
+export const HistoryWrapper = styled.div``

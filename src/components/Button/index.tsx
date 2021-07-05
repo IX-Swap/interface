@@ -184,14 +184,33 @@ export const ButtonIXSGradient = styled(ButtonPrimary)<{ confirmed?: boolean }>`
   :active {
     opacity: 0.9;
   }
-  padding: 25px 8px;
-  text-transform: uppercase;
+  padding: 25px;
+  text-transform: capitalize;
   border-radius: 40px;
   font-weight: 600;
   font-size: 18px;
   line-height: 20px;
   background-color: ${({ theme }) => theme.bg3};
   background: ${({ theme }) => theme.bgG3};
+`
+export const ButtonGradientBorder = styled(ButtonIXSGradient)`
+  background-color: transparent;
+  background: transparent;
+  :before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    border-radius: 45px;
+    -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+    mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+    -webkit-mask-composite: destination-out;
+    mask-composite: exclude;
+    padding: 2px;
+    background: ${({ theme }) => theme.borderG1};
+  }
 `
 export const ButtonIXSWide = styled(ButtonIXSGradient)`
   width: 100%;
