@@ -1,6 +1,8 @@
-import { RowBetween, RowCenter } from 'components/Row'
+import Column from 'components/Column'
+import Row, { RowBetween, RowCenter, RowEnd } from 'components/Row'
 import styled from 'styled-components'
 import { TYPE } from 'theme'
+import { hexToRGBA } from 'utils/themeHelper'
 
 export const NotSubmittedWrapper = styled.div`
   background: ${({ theme }) => theme.bgG10};
@@ -48,9 +50,45 @@ export const ButtonRow = styled(RowCenter)`
 
 export const TitleStatusRow = styled(RowBetween)`
   margin-bottom: 2rem;
+  flex-wrap: wrap;
 `
 export const StatusTitle = styled(TYPE.titleSmall)`
   text-transform: uppercase;
 `
 
 export const HistoryWrapper = styled.div``
+
+export const RowAndDetailsWrapper = styled(Column)<{ showMore: boolean }>`
+  padding-right: 13px;
+  background: ${({ theme, showMore }) => (showMore ? hexToRGBA(theme.bg10, 0.05) : 'transparent')};
+`
+export const HistoryRowWraper = styled(RowBetween)``
+
+export const HistoryDetailsWrapper = styled(RowEnd)`
+  height: 50px;
+  align-items: center;
+`
+
+export const HistoryRowElement = styled.div`
+  gap: 10px;
+`
+export const ActionNameColumn = styled(Column)`
+  width: 10vw;
+`
+export const TransactionNameColumn = styled(Column)`
+  width: 80px;
+`
+export const NameAndSumnColumn = styled(RowBetween)`
+  width: 15vw;
+`
+export const SumColumn = styled(Column)`
+  margin-left: 'auto';
+  margin-right: 0;
+`
+export const StatusColumn = styled(Column)`
+  width: 96px;
+`
+export const DateColumn = styled(Row)`
+  width: 150px;
+`
+export const ChevronColumn = styled(Column)``

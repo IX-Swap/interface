@@ -5,19 +5,18 @@ import { useActiveWeb3React } from 'hooks/web3'
 import React, { useMemo } from 'react'
 import { TYPE } from 'theme'
 import { AccreditationStatus } from './AccreditationStatus'
-import { ActionHistoryList } from './ActionHistoryList'
+import { ActionHistoryBlock } from './ActionHistoryBlock'
 import { BalanceRow } from './BalanceRow'
 import { VaultState } from './enum'
 import { ExistingTitle, ExistingWrapper, TitleStatusRow } from './styleds'
 interface Props {
   currency?: Currency
-  status: VaultState
+  status: Exclude<VaultState, VaultState.NOT_SUBMITTED>
 }
 export const ExistingVault = ({ currency, status }: Props) => {
   const symbolText = useMemo(() => currency?.symbol ?? '', [currency?.symbol])
   const { account, chainId, library } = useActiveWeb3React()
   const isApproved = status === VaultState.APPROVED
-
   return (
     <ExistingWrapper>
       <TitleStatusRow>
@@ -39,7 +38,7 @@ export const ExistingVault = ({ currency, status }: Props) => {
         )}
       </TitleStatusRow>
       {isApproved && <BalanceRow currency={currency} account={account} />}
-      <ActionHistoryList />
+      <ActionHistoryBlock currency={currency} status={status} />
     </ExistingWrapper>
   )
 }

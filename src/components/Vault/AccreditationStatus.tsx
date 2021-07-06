@@ -31,7 +31,7 @@ export const AccreditationStatus = ({ status }: Props) => {
           tooltip: t`Your accreditation is rejected! Please apply again`,
         }
   return (
-    <Row width="fit-content">
+    <Row width="fit-content" flexWrap="wrap">
       <StatusTitle>
         <Trans>Status:</Trans>
       </StatusTitle>
