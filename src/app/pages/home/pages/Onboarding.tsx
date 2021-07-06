@@ -1,6 +1,5 @@
 import React, { Fragment } from 'react'
 import { Box, Grid, Typography } from '@material-ui/core'
-import { useSetPageTitle } from 'app/hooks/useSetPageTitle'
 import { useAuth } from 'hooks/auth/useAuth'
 import { AccessReports } from 'app/pages/home/components/AccessReports'
 import { TopIssuers } from 'app/pages/home/components/TopIssuers'
@@ -13,9 +12,6 @@ import { PageHeader } from 'app/components/PageHeader/PageHeader'
 
 export const Onboarding = () => {
   const { user } = useAuth()
-  const label = `Welcome, ${user?.name ?? 'Unknown'}`
-
-  useSetPageTitle(label)
 
   return (
     <RootContainer>

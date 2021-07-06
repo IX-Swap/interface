@@ -54,4 +54,15 @@ describe('Onboarding', () => {
     expect(PromoBanner).toHaveBeenCalled()
     expect(News).toHaveBeenCalled()
   })
+
+  it('renders correct user name', () => {
+    const objResponse = {
+      user: user
+    }
+
+    jest.spyOn(useAuth, 'useAuth').mockImplementation(() => objResponse as any)
+    const { getByText } = render(<Onboarding />)
+
+    expect(getByText(`Welcome, ${user.name}`)).toBeTruthy()
+  })
 })
