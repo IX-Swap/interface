@@ -24,6 +24,7 @@ import {
 } from 'app/pages/exchange/router/config'
 import { TopbarLinkContainer } from 'app/components/TopbarContainer/components/TopbarLinkContainer'
 import { TopbarLinkDropdown } from 'app/components/TopbarContainer/components/TopbarLinkDropdown'
+import { AppRoute } from 'app/router/config'
 
 export const TopbarContainer = () => {
   const isAuthorizer = useIsAuthorizer()
@@ -69,6 +70,17 @@ export const TopbarContainer = () => {
     })
   }
 
+  const homeLinks = [
+    {
+      label: 'Create Identity',
+      path: AppRoute.identity
+    },
+    {
+      label: 'News',
+      path: HomeRoute.landing
+    }
+  ]
+
   const newAccountsLandingLinks = [
     ...accountsLandingLinks,
     { ...OTCMarketLandingLinks[1], label: 'My Exchange Holdings' }
@@ -94,6 +106,8 @@ export const TopbarContainer = () => {
 
   const dropdownLinksItems = (name: string) => {
     switch (name) {
+      case 'Home':
+        return homeLinks
       case 'Authorizer':
         return authorizerLandingLinks
       case 'Accounts':
@@ -117,6 +131,7 @@ export const TopbarContainer = () => {
     <Grid style={{ display: 'flex' }}>
       {links.map(link => {
         if (
+          link.label === 'Home' ||
           link.label === 'Accounts' ||
           link.label === 'Authorizer' ||
           link.label === 'Invest' ||

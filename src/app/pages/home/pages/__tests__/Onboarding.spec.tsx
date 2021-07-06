@@ -4,7 +4,6 @@ import React from 'react'
 import { render, cleanup } from 'test-utils'
 import { user } from '__fixtures__/user'
 import { AccessReports } from 'app/pages/home/components/AccessReports'
-import { OnboardingLinks } from 'app/pages/home/components/OnboardingLinks'
 import { TopIssuers } from 'app/pages/home/components/TopIssuers'
 import { TopCorporates } from 'app/pages/home/components/TopCorporates'
 import { PromoBanner } from 'app/pages/invest/components/PromoBanner'
@@ -16,10 +15,6 @@ jest.mock('app/pages/home/components/News/News', () => ({
 
 jest.mock('app/pages/home/components/AccessReports', () => ({
   AccessReports: jest.fn(() => null)
-}))
-
-jest.mock('app/pages/home/components/OnboardingLinks', () => ({
-  OnboardingLinks: jest.fn(() => null)
 }))
 
 jest.mock('app/pages/home/components/TopIssuers', () => ({
@@ -53,7 +48,6 @@ describe('Onboarding', () => {
   it('renders components correctly', () => {
     render(<Onboarding />)
 
-    expect(OnboardingLinks).toHaveBeenCalled()
     expect(AccessReports).toHaveBeenCalled()
     expect(TopIssuers).toHaveBeenCalled()
     expect(TopCorporates).toHaveBeenCalled()
