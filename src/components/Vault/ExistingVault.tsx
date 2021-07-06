@@ -5,7 +5,7 @@ import { useActiveWeb3React } from 'hooks/web3'
 import React, { useMemo } from 'react'
 import { TYPE } from 'theme'
 import { AccreditationStatus } from './AccreditationStatus'
-import { ActionHistoryBlock } from './ActionHistoryBlock'
+import { HistoryBlock } from './HistoryBlock'
 import { BalanceRow } from './BalanceRow'
 import { VaultState } from './enum'
 import { ExistingTitle, ExistingWrapper, TitleStatusRow } from './styleds'
@@ -38,7 +38,7 @@ export const ExistingVault = ({ currency, status }: Props) => {
         )}
       </TitleStatusRow>
       {isApproved && <BalanceRow currency={currency} account={account} />}
-      <ActionHistoryBlock currency={currency} status={status} />
+      <HistoryBlock currency={currency} status={status} />
     </ExistingWrapper>
   )
 }

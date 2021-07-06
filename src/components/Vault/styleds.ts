@@ -62,7 +62,9 @@ export const RowAndDetailsWrapper = styled(Column)<{ showMore: boolean }>`
   padding-right: 13px;
   background: ${({ theme, showMore }) => (showMore ? hexToRGBA(theme.bg10, 0.05) : 'transparent')};
 `
-export const HistoryRowWraper = styled(RowBetween)``
+export const HistoryRowWraper = styled(RowBetween)`
+  height: fit-content;
+`
 
 export const HistoryDetailsWrapper = styled(RowEnd)`
   height: 50px;

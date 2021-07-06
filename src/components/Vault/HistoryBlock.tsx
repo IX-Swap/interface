@@ -31,7 +31,7 @@ const actionMap: ActionMap = {
   [VaultState.REJECTED]: accreditationHistoryRejected,
   [VaultState.APPROVED]: accreditationHistoryApproved,
 }
-export const ActionHistoryBlock = ({ status, currency }: Props) => {
+export const HistoryBlock = ({ status, currency }: Props) => {
   const actions = actionMap[status]
   const transactions = transactionHistory
   // refs for fixed size lists
