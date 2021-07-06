@@ -20,7 +20,8 @@ export const useTableWithPagination = <TData>(
   uri: string,
   defaultFilter: BaseFilter | undefined,
   queryEnabled: boolean,
-  defaultRowsPerPage?: number
+  defaultRowsPerPage?: number,
+  disabledUseEffect?: boolean
 ): UseTableWithPaginationReturnType<TData> => {
   const queryCache = useQueryCache()
   const apiService = useAPIService()
@@ -32,9 +33,11 @@ export const useTableWithPagination = <TData>(
   const filter = defaultFilter
 
   useEffect(() => {
-    setPage(0)
-    setPrevPage(0)
-  }, [filter])
+    if (disabledUseEffect !== undefined && !disabledUseEffect) {
+      setPage(0)
+      setPrevPage(0)
+    }
+  }, [filter, disabledUseEffect])
 
   // eslint-disable-next-line @typescript-eslint/explicit-function-return-type
   const fetcher = async (key: string, p: number, r: number, f?: BaseFilter) => {
