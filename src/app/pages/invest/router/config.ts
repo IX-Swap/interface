@@ -4,7 +4,16 @@ import { OTCMarketRoute } from 'app/pages/exchange/router/config'
 
 export const InvestRoute = {
   landing: makeURL(['app', 'invest']),
+  overview: makeURL(['app', 'invest', 'overview']),
   view: makeURL(['app', 'invest', 'offerings', 'issuerId', 'dsoId', 'view']),
+  viewListing: makeURL([
+    'app',
+    'invest',
+    'listings',
+    'userId',
+    'listingId',
+    'view'
+  ]),
   makeInvestment: makeURL([
     'app',
     'invest',

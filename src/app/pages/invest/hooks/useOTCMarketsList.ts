@@ -4,29 +4,33 @@ import { PaginatedData, PaginationArgs } from 'services/api/types'
 import { paginationArgs } from 'config/defaults'
 import { DigitalSecurityOffering } from 'types/dso'
 import { useParsedData, UsePaginatedQueryData } from 'hooks/useParsedData'
-import { dsoQueryKeys } from 'config/queryKeys'
-import { issuanceURL } from 'config/apiURL'
+import { otcQueryKeys } from 'config/queryKeys'
+import { OTCUrl } from 'config/apiURL'
 
-export const usePromotedDSOs = (
+export const useOTCMarketsList = (
   filter?: string
 ): UsePaginatedQueryData<DigitalSecurityOffering> => {
   const { apiService } = useServices()
 
-  const getPromotedDSOs = async (queryKey: string, args: PaginationArgs) => {
-    return await apiService.post<PaginatedData<DigitalSecurityOffering>>(
-      issuanceURL.dso.getAllPromoted,
+  const getOTCMarketsList = async (queryKey: string, args: PaginationArgs) => {
+    // TODO Add interface for OTCMarket item
+    return await apiService.post<PaginatedData<any>>(
+      OTCUrl.getApprovedListingsList,
       args
     )
   }
   const { data, ...queryResult } = useInfiniteQuery(
-    [dsoQueryKeys.getPromoted, { ...paginationArgs, search: filter }],
-    getPromotedDSOs
+    [
+      otcQueryKeys.getApprovedListingsList,
+      { ...paginationArgs, search: filter }
+    ],
+    getOTCMarketsList
   )
 
   return {
     ...queryResult,
     data: {
-      ...useParsedData<DigitalSecurityOffering>(data, '_id')
+      ...useParsedData<any>(data, '_id')
     }
   }
 }
