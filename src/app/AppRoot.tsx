@@ -12,7 +12,7 @@ import { AppRouter } from 'app/router/AppRouter'
 
 export const AppRoot = () => {
   const theme = useTheme()
-  const backgroundColor = theme.palette.backgrounds.default
+  const backgroundColor = theme.palette.backgrounds.light
 
   useDataFromURL()
 

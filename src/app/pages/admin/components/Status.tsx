@@ -5,7 +5,7 @@ import { useStyles } from 'app/pages/admin/components/Status.styles'
 
 export interface StatusProp {
   status: string
-  variant?: 'default' | 'success'
+  variant?: 'default' | 'success' | 'draft'
 }
 
 export const Status = ({ status, variant = 'default' }: StatusProp) => {
