@@ -10,8 +10,9 @@ import { VioletCard } from '../Card'
 import { RowFixed } from '../Row'
 import Web3Status from '../Web3Status'
 import { HeaderLinks } from './HeaderLinks'
+import useLightBackground from 'components/AppBackground/useLightBackground'
 
-const HeaderFrame = styled.div<{ showBackground: boolean }>`
+const HeaderFrame = styled.div<{ showBackground: boolean; lightBackground: boolean }>`
   display: grid;
   grid-template-columns: 120px 1fr 120px;
   align-items: center;
@@ -26,7 +27,8 @@ const HeaderFrame = styled.div<{ showBackground: boolean }>`
   position: relative;
 
   /* Background slide effect on scroll. */
-  background-image: ${({ theme }) => `linear-gradient(to bottom, transparent 50%, ${theme.bg0} 50% )}}`}
+  background-image: ${({ theme, lightBackground }) =>
+    `linear-gradient(to bottom, transparent 50%, ${lightBackground ? theme.bg1 : theme.bg0} 50% )}}`}
   background-position: ${({ showBackground }) => (showBackground ? '0 -100%' : '0 0')};
   background-size: 100% 200%;
   /* box-shadow: 0px 0px 0px 1px ${({ theme, showBackground }) => (showBackground ? theme.bg2 : 'transparent;')}; */
@@ -198,14 +200,14 @@ const HeaderWrapper = styled.div`
 `
 export default function Header() {
   const { account, chainId } = useActiveWeb3React()
-
+  const { hasLightBackground } = useLightBackground()
   const userEthBalance = useETHBalances(account ? [account] : [])?.[account ?? '']
 
   const scrollY = useScrollPosition()
   return (
     <>
       <HeaderWrapper>
-        <HeaderFrame showBackground={scrollY > 45}>
+        <HeaderFrame showBackground={scrollY > 45} lightBackground={hasLightBackground}>
           <HeaderRow>
             <Title href=".">
               <IXSIcon>
