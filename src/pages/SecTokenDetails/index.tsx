@@ -22,7 +22,7 @@ export default function SecTokenDetails({
   return (
     <>
       <InfoBackground />
-      <Container width={['100%', '65%', '65%']} maxWidth={'920px'}>
+      <Container width={['100%', '90%', '65%']} maxWidth={'920px'}>
         <InfoTitle>
           <CurrencyLogo currency={currency} size="72px" />
           <Box display="flex">

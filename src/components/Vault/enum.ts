@@ -12,7 +12,18 @@ export enum ActionHistoryStatus {
   APPROVED = 'APPROVED',
   REJECTED = 'REJECTED',
 }
-
+export enum ActionTypes {
+  WITHDRAW = 'WITHDRAW',
+  DEPOSIT = 'DEPOSIT',
+  KYC = 'KYC',
+  ACCREDITATION = 'ACCREDITATION',
+}
+export const isAction = (action: ActionTypes) => {
+  return [ActionTypes.KYC, ActionTypes.ACCREDITATION].includes(action)
+}
+export const isTransaction = (action: ActionTypes) => {
+  return [ActionTypes.DEPOSIT, ActionTypes.WITHDRAW].includes(action)
+}
 export const ActionHistoryStatusText = {
   [ActionHistoryStatus.PENDING]: t`In progress...`,
   [ActionHistoryStatus.APPROVED]: t`Approved`,
@@ -27,4 +38,11 @@ export const StatusColors = {
   [ActionHistoryStatus.PENDING]: 'text2',
   [ActionHistoryStatus.APPROVED]: 'green1',
   [ActionHistoryStatus.REJECTED]: 'error',
+}
+
+export const ActionTypeText = {
+  [ActionTypes.DEPOSIT]: t`Deposit`,
+  [ActionTypes.WITHDRAW]: t`Withdraw`,
+  [ActionTypes.KYC]: t`KYC`,
+  [ActionTypes.ACCREDITATION]: t`Pass accreditation`,
 }

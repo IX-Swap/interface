@@ -1,9 +1,9 @@
-import { ActionHistoryStatus } from './enum'
+import { ActionHistoryStatus, ActionTypes } from './enum'
 
 export interface ActionHistory {
-  name: string
   status: ActionHistoryStatus
   date: number
+  type: ActionTypes
 }
 
 export interface TransactionHistory extends ActionHistory {

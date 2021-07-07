@@ -3,7 +3,7 @@ import { Line } from 'components/Line'
 import { RowStart } from 'components/Row'
 import React, { useRef } from 'react'
 import AutoSizer from 'react-virtualized-auto-sizer'
-import { FixedSizeList } from 'react-window'
+import { VariableSizeList as List } from 'react-window'
 import { TYPE } from 'theme'
 import { VaultState } from './enum'
 import {
@@ -15,7 +15,6 @@ import {
 import { ActionHistory } from './interfaces'
 import { HistoryWrapper } from './styleds'
 import ActionHistoryList from './ActionHistoryList'
-import TransactionHistoryList from './TransactionHistoryList'
 import { Currency } from '@ixswap1/sdk-core'
 
 interface Props {
@@ -35,8 +34,7 @@ export const HistoryBlock = ({ status, currency }: Props) => {
   const actions = actionMap[status]
   const transactions = transactionHistory
   // refs for fixed size lists
-  const actionList = useRef<FixedSizeList>()
-  const transactionList = useRef<FixedSizeList>()
+  const actionList = useRef<List>()
   return (
     <HistoryWrapper>
       <Line />
@@ -47,17 +45,12 @@ export const HistoryBlock = ({ status, currency }: Props) => {
       </RowStart>
       <div style={{ flex: '1 1 auto', height: '200px', marginBottom: '35px' }}>
         <AutoSizer disableWidth>
-          {({ height }) => <ActionHistoryList height={height} listRef={actionList} actions={actions} />}
-        </AutoSizer>
-      </div>
-      <Line />
-      <div style={{ flex: '1 1 auto', minHeight: '150px', marginTop: '2rem', marginBottom: '35px' }}>
-        <AutoSizer disableWidth>
           {({ height }) => (
-            <TransactionHistoryList
+            <ActionHistoryList
               height={height}
-              listRef={transactionList}
-              actions={transactions}
+              listRef={actionList}
+              actions={actions}
+              transactions={transactions}
               currency={currency}
             />
           )}

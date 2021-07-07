@@ -1,119 +1,119 @@
-import { ActionHistoryStatus } from './enum'
+import { ActionHistoryStatus, ActionTypes } from './enum'
 import { ActionHistory, TransactionHistory } from './interfaces'
 
 export const accreditationHistoryRejected: ActionHistory[] = [
   {
-    name: 'Pass Accreditation',
     status: ActionHistoryStatus.REJECTED,
-    date: new Date().getTime(),
+    date: new Date().getTime() - 1,
+    type: ActionTypes.ACCREDITATION,
   },
   {
-    name: 'Pass Accreditation',
     status: ActionHistoryStatus.REJECTED,
-    date: new Date().getTime() - 1000,
+    date: new Date().getTime() - 2,
+    type: ActionTypes.ACCREDITATION,
   },
   {
-    name: 'KYC',
     status: ActionHistoryStatus.REJECTED,
-    date: new Date().getTime() - 2000,
+    date: new Date().getTime() - 3,
+    type: ActionTypes.KYC,
   },
 ]
 
 export const accreditationHistoryPending: ActionHistory[] = [
   {
-    name: 'Pass Accreditation',
     status: ActionHistoryStatus.PENDING,
-    date: new Date().getTime(),
+    date: new Date().getTime() - 4,
+    type: ActionTypes.ACCREDITATION,
   },
   {
-    name: 'Pass Accreditation',
     status: ActionHistoryStatus.REJECTED,
-    date: new Date().getTime() - 1000,
+    date: new Date().getTime() - 5,
+    type: ActionTypes.ACCREDITATION,
   },
   {
-    name: 'KYC',
     status: ActionHistoryStatus.REJECTED,
-    date: new Date().getTime() - 2000,
+    date: new Date().getTime() - 6,
+    type: ActionTypes.KYC,
   },
   {
-    name: 'Pass Accreditation',
     status: ActionHistoryStatus.REJECTED,
-    date: new Date().getTime() - 100,
+    date: new Date().getTime() - 7,
+    type: ActionTypes.ACCREDITATION,
   },
   {
-    name: 'KYC',
     status: ActionHistoryStatus.REJECTED,
-    date: new Date().getTime() - 200,
+    date: new Date().getTime() - 8,
+    type: ActionTypes.KYC,
   },
   {
-    name: 'Pass Accreditation',
+    status: ActionHistoryStatus.REJECTED,
+    date: new Date().getTime() - 9,
+    type: ActionTypes.ACCREDITATION,
+  },
+  {
     status: ActionHistoryStatus.REJECTED,
     date: new Date().getTime() - 10,
+    type: ActionTypes.KYC,
   },
   {
-    name: 'KYC',
     status: ActionHistoryStatus.REJECTED,
-    date: new Date().getTime() - 20,
+    date: new Date().getTime() - 11,
+    type: ActionTypes.ACCREDITATION,
   },
   {
-    name: 'Pass Accreditation',
     status: ActionHistoryStatus.REJECTED,
-    date: new Date().getTime() - 1,
-  },
-  {
-    name: 'KYC',
-    status: ActionHistoryStatus.REJECTED,
-    date: new Date().getTime() - 2,
+    date: new Date().getTime() - 12,
+    type: ActionTypes.KYC,
   },
 ]
 
 export const accreditationHistoryApproved: ActionHistory[] = [
   {
-    name: 'Pass Accreditation',
     status: ActionHistoryStatus.APPROVED,
-    date: new Date().getTime(),
+    date: new Date().getTime() - 13,
+    type: ActionTypes.ACCREDITATION,
   },
   {
-    name: 'Pass Accreditation',
     status: ActionHistoryStatus.REJECTED,
-    date: new Date().getTime() - 1000,
+    date: new Date().getTime() - 14,
+    type: ActionTypes.ACCREDITATION,
   },
   {
-    name: 'KYC',
     status: ActionHistoryStatus.APPROVED,
-    date: new Date().getTime() - 2000,
+    date: new Date().getTime() - 15,
+    type: ActionTypes.KYC,
   },
 ]
 
 export const transactionHistory: TransactionHistory[] = [
   {
-    name: 'Deposit',
     status: ActionHistoryStatus.APPROVED,
     sum: '+820',
-    sender: '234235y372rtfto3478bf84tr9743t',
-    receiver: '0x38374773247348339393939393 ',
-    date: new Date().getTime(),
+    sender: '0xceD04c7926eA0a240e1fC5FD2BeFDAB924F26962',
+    receiver: '0xceD04c7926eA0a240e1fC5FD2BeFDAB924F26962',
+    date: new Date().getTime() - 16,
+    type: ActionTypes.DEPOSIT,
   },
   {
-    name: 'Withdraw',
     sum: '-820',
-    receiver: '0x38374773247348339393939393 ',
+    receiver: '0xceD04c7926eA0a240e1fC5FD2BeFDAB924F26962',
     status: ActionHistoryStatus.PENDING,
-    date: new Date().getTime() - 1000,
+    date: new Date().getTime() - 17,
+    type: ActionTypes.WITHDRAW,
   },
   {
-    name: 'Deposit',
     status: ActionHistoryStatus.REJECTED,
     sum: '+820',
-    sender: '234235y372rtfto3478bf84tr9743t',
-    receiver: '0x38374773247348339393939393 ',
-    date: new Date().getTime() - 2000,
+    sender: '0xceD04c7926eA0a240e1fC5FD2BeFDAB924F26962',
+    receiver: '0xceD04c7926eA0a240e1fC5FD2BeFDAB924F26962',
+    date: new Date().getTime() - 18,
+    type: ActionTypes.DEPOSIT,
   },
   {
-    name: 'Withdraw',
     sum: '-820',
-    receiver: '0x38374773247348339393939393 ',
+    receiver: '0xceD04c7926eA0a240e1fC5FD2BeFDAB924F26962',
     status: ActionHistoryStatus.APPROVED,
-    date: new Date().getTime() - 3000,
+    date: new Date().getTime() - 19,
+    type: ActionTypes.WITHDRAW,
   },
 ]
