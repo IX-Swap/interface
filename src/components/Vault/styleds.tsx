@@ -150,7 +150,16 @@ export const TransparentWrapper = styled.div`
   display: flex;
   align-items: center;
 `
-
+export const AccreditationButtonRow = styled.div`
+  display: flex;
+  margin-top: 42px;
+  justify-content: flex-end;
+  align-items: center;
+  ${({ theme }) => theme.mediaWidth.upToSmall`
+    justify-content: center;
+    margin-top: 22px;
+  `};
+`
 /* eslint-disable react/display-name */
 export const StatusIcons = {
   [ActionHistoryStatus.PENDING]: () => <Clock />,

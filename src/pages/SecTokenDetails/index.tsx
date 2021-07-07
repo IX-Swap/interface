@@ -48,7 +48,7 @@ export default function SecTokenDetails({
           </DescriptionText>
         </Description>
         <TokenDetails />
-        <Vault status={VaultState.PENDING} currency={currency} />
+        <Vault status={VaultState.REJECTED} currency={currency} />
       </Container>
     </>
   )
