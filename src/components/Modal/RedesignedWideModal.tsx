@@ -9,7 +9,7 @@ import { AnimatedDialogContent, StyledDialogOverlay } from './styleds'
 
 // destructure to not pass custom props to Dialog DOM element
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
-const StyledDialogContent = styled(({ minHeight, maxHeight, mobile, isOpen, ...rest }) => (
+const StyledDialogContent = styled(({ minHeight, maxHeight, mobile, isOpen, isRight, ...rest }) => (
   <AnimatedDialogContent {...rest} />
 )).attrs({
   'aria-label': 'dialog',
@@ -17,7 +17,7 @@ const StyledDialogContent = styled(({ minHeight, maxHeight, mobile, isOpen, ...r
   overflow-y: ${({ mobile }) => (mobile ? 'scroll' : 'hidden')};
 
   &[data-reach-dialog-content] {
-    margin: 0 0 2rem 0;
+    margin: ${({ isRight }) => (isRight ? '4rem 0 2rem 0' : '0 0 2rem 0')};
     background-color: ${({ theme }) => theme.bg0};
     box-shadow: 0 4px 8px 0 ${({ theme }) => transparentize(0.95, theme.shadow1)};
     padding: 0px;
@@ -27,7 +27,7 @@ const StyledDialogContent = styled(({ minHeight, maxHeight, mobile, isOpen, ...r
 
     overflow-y: ${({ mobile }) => (mobile ? 'scroll' : 'hidden')};
     overflow-x: hidden;
-    align-self: ${({ mobile }) => (mobile ? 'flex-end' : 'center')};
+    align-self: ${({ mobile, isRight }) => (mobile ? 'flex-end' : isRight ? 'flex-start' : 'center')};
     ${({ maxHeight }) =>
       maxHeight &&
       css`
@@ -57,6 +57,7 @@ export default function RedesignedWideModal({
   maxHeight = 90,
   initialFocusRef,
   children,
+  isRight = false,
 }: ModalProps) {
   const fadeTransition = useTransition(isOpen, null, {
     config: { duration: 200 },
@@ -88,6 +89,7 @@ export default function RedesignedWideModal({
               onDismiss={onDismiss}
               initialFocusRef={initialFocusRef}
               unstable_lockFocusAcrossFrames={false}
+              isRight={isRight}
             >
               <StyledDialogContent
                 {...(isMobile
@@ -100,6 +102,7 @@ export default function RedesignedWideModal({
                 minHeight={minHeight}
                 maxHeight={maxHeight}
                 mobile={isMobile}
+                isRight={isRight}
               >
                 {/* prevents the automatic focusing of inputs on mobile by the reach dialog */}
                 {!initialFocusRef && isMobile ? <div tabIndex={1} /> : null}
