@@ -6,4 +6,5 @@ export interface ModalProps {
   initialFocusRef?: React.RefObject<any>
   children?: React.ReactNode
   isRight?: boolean
+  mobileMaxHeight?: number | false
 }

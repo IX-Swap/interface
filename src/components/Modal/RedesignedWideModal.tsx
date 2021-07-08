@@ -9,7 +9,7 @@ import { AnimatedDialogContent, StyledDialogOverlay } from './styleds'
 
 // destructure to not pass custom props to Dialog DOM element
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
-const StyledDialogContent = styled(({ minHeight, maxHeight, mobile, isOpen, isRight, ...rest }) => (
+const StyledDialogContent = styled(({ minHeight, maxHeight, mobile, isOpen, isRight, mobileMaxHeight, ...rest }) => (
   <AnimatedDialogContent {...rest} />
 )).attrs({
   'aria-label': 'dialog',
@@ -44,9 +44,15 @@ const StyledDialogContent = styled(({ minHeight, maxHeight, mobile, isOpen, isRi
       width: 100vw;
       
     `}
-    ${({ theme }) => theme.mediaWidth.upToSmall`
+    ${({ theme, mobileMaxHeight }) => theme.mediaWidth.upToSmall`
           border-radius: 0px;
           top: 0;
+         ${
+           mobileMaxHeight &&
+           css`
+             max-height: ${mobileMaxHeight}vh;
+           `
+         }}
     `}
   }
 `
@@ -55,6 +61,7 @@ export default function RedesignedWideModal({
   onDismiss,
   minHeight = false,
   maxHeight = 90,
+  mobileMaxHeight = false,
   initialFocusRef,
   children,
   isRight = false,
@@ -103,6 +110,7 @@ export default function RedesignedWideModal({
                 maxHeight={maxHeight}
                 mobile={isMobile}
                 isRight={isRight}
+                mobileMaxHeight={mobileMaxHeight}
               >
                 {/* prevents the automatic focusing of inputs on mobile by the reach dialog */}
                 {!initialFocusRef && isMobile ? <div tabIndex={1} /> : null}

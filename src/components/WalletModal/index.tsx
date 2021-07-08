@@ -268,7 +268,14 @@ export default function WalletModal({
   }
   if (account && walletView === WALLET_VIEWS.ACCOUNT) {
     return (
-      <RedesignedWideModal isOpen={walletModalOpen} onDismiss={toggleWalletModal} minHeight={40} maxHeight={60} isRight>
+      <RedesignedWideModal
+        isOpen={walletModalOpen}
+        onDismiss={toggleWalletModal}
+        minHeight={50}
+        maxHeight={50}
+        mobileMaxHeight={80}
+        isRight
+      >
         <Wrapper>
           {' '}
           <AccountDetails
