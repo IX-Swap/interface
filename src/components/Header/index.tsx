@@ -23,7 +23,7 @@ const HeaderFrame = styled.div<{ showBackground: boolean; lightBackground: boole
   top: 0;
   position: relative;
   padding: 1rem;
-  z-index: 21;  
+  z-index: 21;
   position: relative;
 
   /* Background slide effect on scroll. */
@@ -32,13 +32,13 @@ const HeaderFrame = styled.div<{ showBackground: boolean; lightBackground: boole
   background-position: ${({ showBackground }) => (showBackground ? '0 -100%' : '0 0')};
   background-size: 100% 200%;
   /* box-shadow: 0px 0px 0px 1px ${({ theme, showBackground }) => (showBackground ? theme.bg2 : 'transparent;')}; */
-  transition: background-position .1s, box-shadow .1s;
+  transition: background-position 0.1s, box-shadow 0.1s;
 
   ${({ theme }) => theme.mediaWidth.upToMedium`
     padding:  1rem;
     grid-template-columns: auto 1fr;
   `};
- ${({ theme }) => theme.mediaWidth.upToSmall`
+  ${({ theme }) => theme.mediaWidth.upToSmall`
     grid-template-columns: repeat(1, 1fr);
   `};
   ${({ theme }) => theme.mediaWidth.upToExtraSmall`
