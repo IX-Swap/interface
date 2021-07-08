@@ -228,7 +228,7 @@ export default function AccountDetails({
         </LowerSection>
       ) : (
         <LowerSection>
-          <TYPE.body color={theme.text1}>
+          <TYPE.body color={theme.text2}>
             <Trans>Your transactions will appear here...</Trans>
           </TYPE.body>
         </LowerSection>
