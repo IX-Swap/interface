@@ -123,7 +123,7 @@ export default function ManageTokens({
             {userAddedTokens.length > 0 && (
               <Box style={{ paddingRight: '0.5rem' }}>
                 <SemiTransparent>
-                  <ButtonText onClick={handleRemoveAll}>
+                  <ButtonText onClick={handleRemoveAll} data-testid="clear-user-added-tokens">
                     <TYPE.buttonMuted color={theme.text2}>
                       <Trans>Clear all</Trans>
                     </TYPE.buttonMuted>

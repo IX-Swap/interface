@@ -30,7 +30,7 @@ function CurrencyRow({ currency, style }: { currency: Currency; style: CSSProper
           </Column>
         </Box>
         <Box width="100%">
-          <ButtonGradient as={Link} to={routes.securityTokens(currency)}>
+          <ButtonGradient as={Link} to={routes.securityTokens(currency)} data-testid="custodian-sec-token-info">
             <Trans>Info</Trans>
           </ButtonGradient>
         </Box>

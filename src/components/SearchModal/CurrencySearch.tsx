@@ -161,7 +161,12 @@ export function CurrencySearch({
       )}
       <Footer>
         <Row justify="center">
-          <ButtonText onClick={showManageView} color={theme.text1} className="list-token-manage-button">
+          <ButtonText
+            onClick={showManageView}
+            color={theme.text1}
+            className="list-token-manage-button"
+            data-testid="list-token-manage-button"
+          >
             <RowFixed>
               <Box marginRight={'6px'} display="flex" justifyContent="center">
                 <Edit />

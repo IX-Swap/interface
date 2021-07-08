@@ -121,7 +121,7 @@ export function TransactionSubmittedContent({
             </ExternalLink>
           )}
           {currencyToAdd && library?.provider?.isMetaMask && (
-            <ButtonGradient mt="12px" onClick={addToken}>
+            <ButtonGradient mt="12px" onClick={addToken} data-testid="add-currency-to-metamask">
               {!success ? (
                 <RowFixed>
                   <Trans>
@@ -136,7 +136,7 @@ export function TransactionSubmittedContent({
               )}
             </ButtonGradient>
           )}
-          <ButtonIXSWide onClick={onDismiss} style={{ margin: '20px 0 0 0' }}>
+          <ButtonIXSWide onClick={onDismiss} style={{ margin: '20px 0 0 0' }} data-testid="return-close">
             <Text fontWeight={500} fontSize={20}>
               {inline ? <Trans>Return</Trans> : <Trans>Close</Trans>}
             </Text>
@@ -171,7 +171,7 @@ export function TransactionErrorContent({ message, onDismiss }: { message: React
         </AutoColumn>
       </Section>
       <BottomSection gap="12px">
-        <ButtonPrimary onClick={onDismiss}>
+        <ButtonPrimary onClick={onDismiss} data-testid="dismiss">
           <Trans>Dismiss</Trans>
         </ButtonPrimary>
       </BottomSection>

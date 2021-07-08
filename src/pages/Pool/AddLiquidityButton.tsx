@@ -8,7 +8,7 @@ import { Trans } from '@lingui/macro'
 export const AddLiquidityButton = () => {
   return (
     <RowCenter>
-      <ButtonIXSWide id="join-pool-button" as={Link} to="/add/ETH">
+      <ButtonIXSWide id="add-liquidity" data-testid="add-liquidity" as={Link} to="/add/ETH">
         <Text>
           <Trans>Add Liquidity</Trans>
         </Text>

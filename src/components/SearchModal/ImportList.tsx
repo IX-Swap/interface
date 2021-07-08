@@ -150,6 +150,7 @@ export function ImportList({ listURL, list, setModalView, onDismiss }: ImportPro
             altDisabledStyle={true}
             borderRadius="20px"
             padding="10px 1rem"
+            data-testid="import-tokens"
             onClick={handleAddList}
           >
             <Trans>Import</Trans>
