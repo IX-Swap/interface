@@ -7,9 +7,7 @@ import { useParsedData, UsePaginatedQueryData } from 'hooks/useParsedData'
 import { dsoQueryKeys } from 'config/queryKeys'
 import { issuanceURL } from 'config/apiURL'
 
-export const usePromotedDSOs = (
-  filter?: string
-): UsePaginatedQueryData<DigitalSecurityOffering> => {
+export const usePromotedDSOs = (): UsePaginatedQueryData<DigitalSecurityOffering> => {
   const { apiService } = useServices()
 
   const getPromotedDSOs = async (queryKey: string, args: PaginationArgs) => {
@@ -19,7 +17,7 @@ export const usePromotedDSOs = (
     )
   }
   const { data, ...queryResult } = useInfiniteQuery(
-    [dsoQueryKeys.getPromoted, { ...paginationArgs, search: filter }],
+    [dsoQueryKeys.getPromoted, { ...paginationArgs }],
     getPromotedDSOs
   )
 

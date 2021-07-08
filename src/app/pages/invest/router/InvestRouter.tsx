@@ -16,7 +16,6 @@ export const InvestRouter = () => {
       </AppRoute>
 
       <AppRoute
-        exact
         breadcrumb='View Digital Security Offering'
         path={InvestRoute.view}
       >

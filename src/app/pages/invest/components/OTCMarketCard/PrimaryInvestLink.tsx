@@ -38,7 +38,7 @@ export const PrimaryInvestLink = ({ data, type }: PrimaryInvestLinkProps) => {
     <Button
       component={AppRouterLinkComponent}
       color='primary'
-      variant={'text'}
+      variant={'contained'}
       to={link}
       params={params}
       data-testid='otc-card-link'

@@ -12,5 +12,35 @@ export default makeStyles(theme => ({
     [theme.breakpoints.up('md')]: {
       flexDirection: 'row'
     }
+  },
+  link: {
+    padding: 0,
+    fontWeight: 500,
+    fontSize: 16,
+    '&:hover': {
+      backgroundColor: 'initial',
+      opacity: 0.6
+    }
+  },
+  capitalStructure: {
+    marginRight: 'auto',
+    paddingTop: 5,
+    paddingBottom: 5,
+    paddingLeft: 8,
+    paddingRight: 8,
+    borderRadius: 32,
+    fontWeight: 'bold'
+  },
+  equity: {
+    backgroundColor: '#E5E9CB',
+    color: '#90A30F'
+  },
+  hybrid: {
+    backgroundColor: '#EEF7F1',
+    color: '#8DCA82'
+  },
+  debt: {
+    backgroundColor: '#F2F2FE',
+    color: '#8084F7'
   }
 }))
