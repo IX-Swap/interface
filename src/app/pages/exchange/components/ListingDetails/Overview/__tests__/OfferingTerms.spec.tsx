@@ -17,7 +17,7 @@ describe('OfferingTerms', () => {
       investmentPeriod: listing.investmentPeriod,
       dividendYield: listing.dividendYield,
       investmentStructure: listing.investmentStructure,
-      grssIrr: listing.grossIRR,
+      grossIrr: listing.grossIRR,
       equityMultiple: listing.equityMultiple,
       distributionFrequency: listing.distributionFrequency
     }

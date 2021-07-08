@@ -7,7 +7,7 @@ export interface OfferingTermsProps {
   investmentPeriod: number
   dividendYield: number
   investmentStructure: string
-  grssIrr: number
+  grossIrr: number
   equityMultiple: number
   distributionFrequency: string
 }
@@ -16,7 +16,7 @@ export const OfferingTerms = ({
   investmentPeriod,
   dividendYield,
   investmentStructure,
-  grssIrr,
+  grossIrr,
   equityMultiple,
   distributionFrequency
 }: OfferingTermsProps) => {
@@ -38,7 +38,7 @@ export const OfferingTerms = ({
         />
       </Grid>
       <Grid item xs={12} sm={6} md={8}>
-        <LabelledValue label='Gross IRR (%)' value={grssIrr} />
+        <LabelledValue label='Gross IRR (%)' value={grossIrr} />
       </Grid>
       <Grid item xs={12} sm={6} md={4}>
         <LabelledValue label='Equity Multiple' value={equityMultiple} />
