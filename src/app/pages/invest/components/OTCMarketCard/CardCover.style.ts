@@ -18,7 +18,8 @@ export default makeStyles(theme => ({
   company: {
     fontSize: theme.typography.h6.fontSize,
     fontWeight: theme.typography.h5.fontWeight,
-    letterSpacing: 0
+    letterSpacing: 0,
+    minHeight: theme.typography.h6.fontSize
   },
   cover: {
     position: 'relative',
@@ -28,5 +29,10 @@ export default makeStyles(theme => ({
     marginBottom: 42,
     textAlign: 'center',
     backgroundColor: theme.palette.backgrounds.light
+  },
+  favorite: {
+    position: 'absolute',
+    right: 5,
+    top: -3
   }
 }))
