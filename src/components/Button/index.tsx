@@ -211,6 +211,11 @@ export const ButtonGradientBorder = styled(ButtonIXSGradient)`
     padding: 2px;
     background: ${({ theme }) => theme.borderG1};
   }
+  :focus,
+  :hover {
+    background-color: transparent;
+    background: transparent;
+  }
 `
 export const ButtonIXSWide = styled(ButtonIXSGradient)`
   width: 100%;

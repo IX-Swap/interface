@@ -59,6 +59,7 @@ export const ModalBottom = ({ currencyA, currencyB, approval, signatureData, onR
         style={{ margin: '30px 0 0 0' }}
         disabled={!(approval === ApprovalState.APPROVED || signatureData !== null)}
         onClick={onRemove}
+        data-testid="confirm-remove"
       >
         <Trans>Confirm</Trans>
       </ButtonIXSWide>

@@ -201,7 +201,7 @@ const ListRow = memo(function ListRow({ listUrl }: { listUrl: string }) {
           </StyledListUrlText>
           <StyledMenu ref={node as any}>
             <Popover show={open} content={popOverContent()} placement={'right'}>
-              <ButtonEmpty onClick={toggle} padding="0">
+              <ButtonEmpty onClick={toggle} padding="0" data-testid="token-list-settings">
                 <SemiTransparent>
                   <Settings style={{ height: '10px', width: '10px ' }} />
                 </SemiTransparent>
@@ -368,6 +368,7 @@ export function ManageLists({
                   padding="6px 8px"
                   width="fit-content"
                   onClick={handleImport}
+                  data-testid="import-list"
                 >
                   <Trans>Import</Trans>
                 </ButtonPrimary>

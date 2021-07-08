@@ -284,9 +284,9 @@ export default function Swap({ history }: RouteComponentProps) {
             {showAcceptChanges ? <AcceptChanges handleAcceptChanges={handleAcceptChanges} /> : null}
             {showConfirm && (
               <>
-                <ConfirmSwapInfo trade={trade} allowedSlippage={allowedSlippage} />
+                <ConfirmSwapInfo data-testid="confirm-swap-card-info" trade={trade} allowedSlippage={allowedSlippage} />
                 <BottomGrouping>
-                  <ButtonIXSWide onClick={handleSwap} disabled={showAcceptChanges}>
+                  <ButtonIXSWide onClick={handleSwap} disabled={showAcceptChanges} data-testid="confirm-swap">
                     <Trans>Confirm Swap</Trans>
                   </ButtonIXSWide>
                 </BottomGrouping>
@@ -295,15 +295,15 @@ export default function Swap({ history }: RouteComponentProps) {
             {!showConfirm && (
               <BottomGrouping>
                 {swapIsUnsupported ? (
-                  <ButtonIXSWide disabled={true}>
+                  <ButtonIXSWide disabled={true} data-testid="unsupported-asset">
                     <Trans>Unsupported Asset</Trans>
                   </ButtonIXSWide>
                 ) : !account ? (
-                  <ButtonIXSWide onClick={toggleWalletModal}>
+                  <ButtonIXSWide onClick={toggleWalletModal} data-testid="connect-wallet-from-swap">
                     <Trans>Connect Wallet</Trans>
                   </ButtonIXSWide>
                 ) : showWrap ? (
-                  <ButtonIXSWide disabled={Boolean(wrapInputError)} onClick={onWrap}>
+                  <ButtonIXSWide disabled={Boolean(wrapInputError)} onClick={onWrap} data-testid="wrap">
                     {wrapInputError ??
                       (wrapType === WrapType.WRAP ? (
                         <Trans>Wrap</Trans>
@@ -330,6 +330,7 @@ export default function Swap({ history }: RouteComponentProps) {
                           signatureState === UseERC20PermitState.SIGNED
                         }
                         width="100%"
+                        data-testid="approve-use-token"
                         altDisabledStyle={approvalState === ApprovalState.PENDING} // show solid button while waiting
                         confirmed={
                           approvalState === ApprovalState.APPROVED || signatureState === UseERC20PermitState.SIGNED
@@ -384,6 +385,7 @@ export default function Swap({ history }: RouteComponentProps) {
                           }
                         }}
                         width="100%"
+                        data-testid="swap-button"
                         id="swap-button"
                         disabled={
                           !isValid ||
@@ -418,6 +420,7 @@ export default function Swap({ history }: RouteComponentProps) {
                         })
                       }
                     }}
+                    data-testid="swap-button"
                     id="swap-button"
                     disabled={!isValid || priceImpactTooHigh || !!swapCallbackError}
                   >

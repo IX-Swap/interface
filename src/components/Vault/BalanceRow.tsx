@@ -23,6 +23,7 @@ export const BalanceRow = ({ currency, account }: Props) => {
       </ExistingTitle>
 
       <ButtonGradientBorder
+        data-testid="withdraw"
         style={{ width: '230px' }}
         onClick={() => {
           console.log(0)

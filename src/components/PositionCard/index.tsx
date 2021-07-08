@@ -85,10 +85,10 @@ export default function FullPositionCard({ pair, stakedBalance }: PositionCardPr
             {/* <PoolInformation /> */}
             {userDefaultPoolBalance && JSBI.greaterThan(userDefaultPoolBalance.quotient, BIG_INT_ZERO) && (
               <ButtonRow marginTop="10px">
-                <ButtonGradient as={Link} to={routes.add(currency0, currency1)}>
+                <ButtonGradient as={Link} to={routes.add(currency0, currency1)} data-testid="add-liquidity">
                   <Trans>Add</Trans>
                 </ButtonGradient>
-                <ButtonGradient as={Link} to={routes.remove(currency0, currency1)}>
+                <ButtonGradient as={Link} to={routes.remove(currency0, currency1)} data-testid="remove-liquidity">
                   <Trans>Remove Liquidity</Trans>
                 </ButtonGradient>
               </ButtonRow>

@@ -30,6 +30,7 @@ export const ExistingVault = ({ currency, status }: Props) => {
         {!isApproved && <AccreditationStatus status={status} />}
         {isApproved && (
           <ButtonIXSGradient
+            data-testid="deposit"
             style={{ width: '230px' }}
             onClick={() => {
               console.log(0)
@@ -46,6 +47,7 @@ export const ExistingVault = ({ currency, status }: Props) => {
           <Line />
           <AccreditationButtonRow>
             <ButtonIXSGradient
+              data-testid="pass-accreditation"
               style={{ width: '400px' }}
               onClick={() => {
                 console.log(0)

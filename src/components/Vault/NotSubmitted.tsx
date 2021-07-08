@@ -27,11 +27,12 @@ export const NotSubmitted = ({ currency }: Props) => {
         </TYPE.descriptionThin>
       </NotSubmittedDescription>
       <ButtonRow>
-        <ButtonIXSGradient onClick={toggleWalletModal} disabled={!!account}>
+        <ButtonIXSGradient onClick={toggleWalletModal} disabled={!!account} data-testid="connect-wallet-in-vault">
           <Trans>Connect Wallet</Trans>
         </ButtonIXSGradient>
 
         <ButtonIXSGradient
+          data-testid="pass-kyc-and-accreditation"
           onClick={() => {
             console.log('pass')
           }}

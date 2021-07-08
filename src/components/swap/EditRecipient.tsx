@@ -13,7 +13,11 @@ export const EditRecipient = ({ recipient, onChangeRecipient }: Props) => {
   return (
     <>
       <AutoRow justify="space-between" style={{ padding: '0 1rem' }}>
-        <ButtonGradient id="remove-recipient-button" onClick={() => onChangeRecipient(null)}>
+        <ButtonGradient
+          data-testid="remove-recipient-button"
+          id="remove-recipient-button"
+          onClick={() => onChangeRecipient(null)}
+        >
           <Trans>Remove send</Trans>
         </ButtonGradient>
       </AutoRow>

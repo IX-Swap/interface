@@ -102,7 +102,7 @@ export default function UnsupportedCurrencyFooter({
         </Card>
       </Modal>
       <RowCenter>
-        <ButtonEmpty padding={'0'} onClick={() => setShowDetails(true)}>
+        <ButtonEmpty padding={'0'} onClick={() => setShowDetails(true)} data-testid="unsupported-assets-details">
           <Text color={theme.text2}>
             <Trans>Read more about unsupported assets</Trans>
           </Text>
