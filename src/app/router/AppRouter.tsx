@@ -1,7 +1,7 @@
 import React from 'react'
 import { AppRoute as AppPath } from 'app/router/config'
 import { AppRoute } from 'components/AppRoute'
-import { Redirect, Switch } from 'react-router-dom'
+import { Switch } from 'react-router-dom'
 import { HomeRoot } from 'app/pages/home/HomeRoot'
 import { IssuanceRoot } from 'app/pages/issuance/IssuanceRoot'
 import { SecurityRoot } from 'app/pages/security/SecurityRoot'
@@ -12,6 +12,7 @@ import { InvestRoot } from 'app/pages/invest/InvestRoot'
 import { AdminRoot } from 'app/pages/admin/AdminRoot'
 import { AuthorizerRoot } from 'app/pages/authorizer/AuthorizerRoot'
 import { OTCMarketRoot } from 'app/pages/exchange/OTCMarketRoot'
+import { RedirectToDefaultPage } from 'app/RedirectToDefaultPage'
 
 export const AppRouter = () => {
   return (
@@ -56,7 +57,7 @@ export const AppRouter = () => {
         <OTCMarketRoot />
       </AppRoute>
 
-      <Redirect to={AppPath.home} />
+      <RedirectToDefaultPage />
     </Switch>
   )
 }
