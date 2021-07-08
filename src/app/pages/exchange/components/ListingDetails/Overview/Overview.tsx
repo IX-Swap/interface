@@ -41,7 +41,7 @@ export const Overview = ({ data }: OverviewProps) => {
           investmentPeriod={data.investmentPeriod}
           dividendYield={data.dividendYield}
           investmentStructure={data.investmentStructure}
-          grssIrr={data.grossIRR}
+          grossIrr={data.grossIRR}
           equityMultiple={data.equityMultiple}
           distributionFrequency={data.distributionFrequency}
         />

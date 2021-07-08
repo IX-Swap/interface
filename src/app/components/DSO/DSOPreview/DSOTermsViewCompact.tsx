@@ -9,6 +9,7 @@ export interface DSOTermsViewCompactProps {
 }
 
 export const DSOTermsViewCompact = ({ dso }: DSOTermsViewCompactProps) => {
+  const isDebt = dso.capitalStructure === 'Debt'
   return (
     <Grid container spacing={2} direction='column'>
       <Grid item>
@@ -24,7 +25,10 @@ export const DSOTermsViewCompact = ({ dso }: DSOTermsViewCompactProps) => {
         </Grid>
 
         <Grid item xs={12} md={4}>
-          <LabelledValue label='Dividend Yield (%)' value={dso.dividendYield} />
+          <LabelledValue
+            label={isDebt ? 'Interest Rate' : 'Dividend Yield (%)'}
+            value={isDebt ? dso.interestRate : dso.dividendYield}
+          />
         </Grid>
       </Grid>
 
@@ -37,17 +41,22 @@ export const DSOTermsViewCompact = ({ dso }: DSOTermsViewCompactProps) => {
         </Grid>
 
         <Grid item xs={12} md={4}>
-          <LabelledValue label='Gross IRR (%)' value={dso.grossIRR} />
+          <LabelledValue
+            label={isDebt ? 'Leverage' : 'Gross IRR (%)'}
+            value={isDebt ? dso.leverage : dso.grossIRR}
+          />
         </Grid>
       </Grid>
 
       <Grid item container spacing={3}>
-        <Grid item xs={12} md={4}>
-          <LabelledValue
-            label='Equity Multiple (%)'
-            value={dso.equityMultiple}
-          />
-        </Grid>
+        {isDebt ? null : (
+          <Grid item xs={12} md={4}>
+            <LabelledValue
+              label='Equity Multiple (%)'
+              value={dso.equityMultiple}
+            />
+          </Grid>
+        )}
 
         <Grid item xs={12} md={4}>
           <LabelledValue
