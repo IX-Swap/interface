@@ -4,6 +4,7 @@ import { getIdFromObj } from 'helpers/strings'
 import { DigitalSecurityOffering } from 'types/dso'
 import { issuanceURL } from 'config/apiURL'
 import { dsoQueryKeys } from 'config/queryKeys'
+import { paginationArgs } from 'config/defaults'
 
 export const useToggleDSOFavorite = (dso: DigitalSecurityOffering) => {
   const queryCache = useQueryCache()
@@ -48,6 +49,10 @@ export const useToggleDSOFavorite = (dso: DigitalSecurityOffering) => {
     },
     onSuccess: async () => {
       await queryCache.invalidateQueries(dsoQueryKeys.getApprovedList)
+      await queryCache.invalidateQueries([
+        dsoQueryKeys.getPromoted,
+        { ...paginationArgs }
+      ])
       void snackbarService.showSnackbar('Success', 'success')
     },
     onError: (error: any) => {

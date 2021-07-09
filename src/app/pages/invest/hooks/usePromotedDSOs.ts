@@ -17,7 +17,7 @@ export const usePromotedDSOs = (): UsePaginatedQueryData<DigitalSecurityOffering
     )
   }
   const { data, ...queryResult } = useInfiniteQuery(
-    [dsoQueryKeys.getPromoted, paginationArgs],
+    [dsoQueryKeys.getPromoted, { ...paginationArgs }],
     getPromotedDSOs
   )
 

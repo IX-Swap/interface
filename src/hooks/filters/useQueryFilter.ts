@@ -4,6 +4,9 @@ import { AuthorizableStatus } from 'types/util'
 
 export interface QueryFilters {
   search: string | undefined
+  primaryOfferingSearch: string | undefined
+  otcMarketSearch: string | undefined
+  secondaryMarketSearch: string | undefined
   capitalStructure: string | undefined
   authorizationStatus: AuthorizableStatus | undefined
   fromDate: string | undefined

@@ -229,6 +229,10 @@ export const exchange = {
   getMarket: (pairId: string) => `/exchange/markets/pair/${pairId}`
 }
 
+export const OTCUrl = {
+  getApprovedListingsList: '/otc/listing/approved/list'
+}
+
 export const placeOrderURL = {
   create: '/exchange/orders'
 }

@@ -17,5 +17,10 @@ export const useStyles = makeStyles(theme => ({
     backgroundColor: 'transparent',
     borderColor: themeColors.success,
     color: themeColors.success
+  },
+  draft: {
+    backgroundColor: 'transparent',
+    borderColor: theme.palette.grey[500],
+    color: theme.palette.grey[500]
   }
 }))
