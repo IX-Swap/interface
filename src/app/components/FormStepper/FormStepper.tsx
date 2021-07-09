@@ -1,5 +1,5 @@
 import React, { ComponentType, useMemo, useState } from 'react'
-import { Grid, Step, StepLabel, Stepper } from '@material-ui/core'
+import { Grid, Step, StepButton, StepLabel, Stepper } from '@material-ui/core'
 import { MutationResultPair } from 'react-query'
 import { FormStep } from 'app/components/FormStepper/FormStep'
 
@@ -19,6 +19,7 @@ export interface FormStepperProps {
   submitMutation: MutationResultPair<any, any, any, any>
   defaultActiveStep?: number
   shouldSaveOnMove?: boolean
+  nonLinear?: boolean
 }
 
 export const FormStepper = (props: FormStepperProps) => {
@@ -29,20 +30,57 @@ export const FormStepper = (props: FormStepperProps) => {
     editMutation,
     submitMutation,
     shouldSaveOnMove = true,
-    defaultActiveStep
+    defaultActiveStep,
+    nonLinear = false
   } = props
-  const [activeStep, setActiveStep] = useState(
+  const [activeStep, setActiveStep] = useState<number>(
     defaultActiveStep ?? data?.step ?? 0
   )
   const stepsMemo = useMemo(() => steps, []) // eslint-disable-line
+  const [completed, setCompleted] = React.useState<number[]>(
+    Array.from(
+      {
+        length: shouldSaveOnMove
+          ? defaultActiveStep ?? data?.step ?? 0
+          : steps.length
+      },
+      (x, i) => i
+    )
+  )
+
+  const handleStepButtonClick = (step: number) => () => {
+    if (completed.includes(step) || step === Math.max(...completed) + 1) {
+      setActiveStep(step)
+    }
+  }
+
+  const handleComplete = () => {
+    if (!completed.includes(activeStep)) {
+      setCompleted([...completed, activeStep])
+    }
+  }
 
   return (
     <Grid container direction='column' spacing={2}>
       <Grid item>
-        <Stepper activeStep={activeStep} alternativeLabel>
+        <Stepper activeStep={activeStep} alternativeLabel nonLinear={nonLinear}>
           {steps.map((step, index) => (
             <Step key={`step-${index}`}>
-              <StepLabel>{step.label}</StepLabel>
+              {nonLinear ? (
+                <StepButton
+                  onClick={handleStepButtonClick(index)}
+                  completed={completed.includes(index)}
+                  disableRipple
+                  disabled={
+                    !completed.includes(index) &&
+                    index !== Math.max(...completed) + 1
+                  }
+                >
+                  <StepLabel>{step.label}</StepLabel>
+                </StepButton>
+              ) : (
+                <StepLabel>{step.label}</StepLabel>
+              )}
             </Step>
           ))}
         </Stepper>
@@ -56,6 +94,7 @@ export const FormStepper = (props: FormStepperProps) => {
             totalSteps={steps.length}
             activeStep={activeStep}
             setActiveStep={setActiveStep}
+            setCompleted={handleComplete}
             data={data}
             createMutation={createMutation}
             editMutation={editMutation}
