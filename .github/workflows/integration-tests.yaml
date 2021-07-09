@@ -16,5 +16,6 @@ jobs:
     runs-on: ubuntu-18.04
     steps:
       - uses: microsoft/playwright-github-action@v1
+      - uses: ./
       - name: Run your tests
         run: yarn integration-test
