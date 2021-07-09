@@ -16,6 +16,7 @@ import { Commitment } from 'types/commitment'
 import { Order } from 'types/order'
 import { OrderStatus } from 'app/pages/exchange/components/PastOrderTable/OrderStatus'
 import { Side } from 'app/pages/exchange/components/TradeHistoryTable/Side'
+import { dsoQueryKeys } from 'config/queryKeys'
 
 export const renderMenuItems = (
   items: Array<{ label: string; value: string | number }>
@@ -37,7 +38,15 @@ export const renderCommitmentAvatar = (_: any, row: Commitment) => (
 export const renderDSOFavorite = (
   _: any,
   dso: DigitalSecurityOffering
-): JSX.Element => <DSOFavorite dso={dso} />
+): JSX.Element => (
+  <DSOFavorite
+    dependentQueryKeys={[
+      dsoQueryKeys.getPromoted,
+      dsoQueryKeys.getApprovedList
+    ]}
+    dso={dso}
+  />
+)
 
 export const renderAddressColumn = (address: string): JSX.Element => (
   <WalletAddress address={address} />

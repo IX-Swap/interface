@@ -12,7 +12,7 @@ import { VSpacer } from 'components/VSpacer'
 export interface CardContentProps {
   // TODO Add interface after complete final version backend api
   data: DigitalSecurityOffering | any
-  type: 'Primary' | 'OTC'
+  type: 'Primary' | 'OTC' | 'TopOffers'
 }
 
 export const CardContent = (props: CardContentProps) => {
@@ -83,12 +83,10 @@ export const CardContent = (props: CardContentProps) => {
             valueFontSize={16}
             labelFontSize={14}
             label={
-              type === 'Primary'
-                ? 'Min. Investment Amount'
-                : 'Min. Trade Amount'
+              type !== 'OTC' ? 'Min. Investment Amount' : 'Min. Trade Amount'
             }
             value={
-              type === 'Primary'
+              type !== 'OTC'
                 ? minimumInvestmentPrice
                 : // TODO Remove this after add new interface for data prop
                   // eslint-disable-next-line
@@ -106,13 +104,11 @@ export const CardContent = (props: CardContentProps) => {
             labelWeight='default'
             valueFontSize={16}
             labelFontSize={14}
-            label={type === 'Primary' ? 'Raised Amount' : 'Target Fundraise'}
+            label={type !== 'OTC' ? 'Raised Amount' : 'Target Fundraise'}
             value={formatMoney(
-              type === 'Primary'
-                ? data.totalFundraisingAmount
-                : data.raisedAmount,
+              type !== 'OTC' ? data.totalFundraisingAmount : data.raisedAmount,
               // TODO Remove fake data after added new field on backend api
-              type === 'Primary' ? data.currency.symbol : 'SGD'
+              type !== 'OTC' ? data.currency.symbol : 'SGD'
             )}
           />
         </Grid>
