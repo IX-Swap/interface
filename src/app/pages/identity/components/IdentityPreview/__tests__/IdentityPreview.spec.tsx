@@ -6,6 +6,7 @@ import { corporate, individual } from '__fixtures__/identity'
 import { LoadingIndicator } from 'app/components/LoadingIndicator/LoadingIndicator'
 import { CorporateIdentityButton } from 'app/pages/identity/components/IdentityPreview/CorporateIdentityButton'
 import { IndividualIdentityButton } from 'app/pages/identity/components/IdentityPreview/IndividualIdentityButton'
+import { IssuerIdentityButton } from 'app/pages/identity/components/IdentityPreview/IssuerIdentityButton'
 
 jest.mock('app/components/LoadingIndicator/LoadingIndicator', () => ({
   LoadingIndicator: jest.fn(() => null)
@@ -15,6 +16,13 @@ jest.mock(
   'app/pages/identity/components/IdentityPreview/CorporateIdentityButton',
   () => ({
     CorporateIdentityButton: jest.fn(() => null)
+  })
+)
+
+jest.mock(
+  'app/pages/identity/components/IdentityPreview/IssuerIdentityButton',
+  () => ({
+    IssuerIdentityButton: jest.fn(() => null)
   })
 )
 
@@ -95,6 +103,23 @@ describe('IdentityPreview', () => {
     render(<IdentityPreview />)
 
     expect(CorporateIdentityButton).toHaveBeenCalled()
+  })
+
+  it('renders IssuerIdentityButton when corporateIdentities is not undefined and is type issuer', () => {
+    const objResponse = {
+      hasIdentity: true,
+      isLoadingIdentities: false,
+      individualIdentity: undefined,
+      corporateIdentities: { list: [{ ...corporate, type: 'issuer' }] }
+    }
+
+    jest
+      .spyOn(useGetIdentities, 'useGetIdentities')
+      .mockImplementation(() => objResponse as any)
+
+    render(<IdentityPreview />)
+
+    expect(IssuerIdentityButton).toHaveBeenCalled()
   })
 
   it('renders IndividualIdentityButton when individualIdentity is not undefined', () => {

@@ -6,7 +6,7 @@ import { Link } from 'react-router-dom'
 export interface CreateIdentityCardProps {
   title: string
   content: string
-  cardColor: 'red' | 'green'
+  cardColor: 'red' | 'green' | 'blue'
   active?: boolean
   contentIcon?: React.ReactElement
   isLink?: boolean
@@ -32,6 +32,10 @@ export const CreateIdentityCard = ({
     green: {
       primary: '#90A30F',
       light: '#E5E9CB'
+    },
+    blue: {
+      primary: '#4891FF',
+      light: '#D1E4FF'
     }
   }
 

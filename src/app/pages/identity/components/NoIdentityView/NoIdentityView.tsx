@@ -1,6 +1,7 @@
 import { Grid } from '@material-ui/core'
 import { CreateCorporateIdentityButton } from 'app/pages/identity/components/NoIdentityView/CreateCorporateIdentityButton'
 import { CreateIndividualIdentityButton } from 'app/pages/identity/components/NoIdentityView/CreateIndividualIdentityButton'
+import { CreateIssuerIdentityButton } from 'app/pages/identity/components/NoIdentityView/CreateIssuerIdentityButton'
 import { NoIdentityCard } from 'app/pages/identity/components/NoIdentityView/NoIdentityCard'
 import React from 'react'
 
@@ -13,6 +14,9 @@ export const NoIdentityView = () => {
         </Grid>
         <Grid item xs={12} md={4}>
           <CreateCorporateIdentityButton />
+        </Grid>
+        <Grid item xs={12} md={4}>
+          <CreateIssuerIdentityButton />
         </Grid>
       </Grid>
       <Grid item xs={12}>
