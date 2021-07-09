@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import { FormStepper } from 'app/components/FormStepper/FormStepper'
 import { useCreateCorporate } from 'app/pages/identity/hooks/useCreateCorporate'
 import { useUpdateCorporate } from 'app/pages/identity/hooks/useUpdateCorporate'
@@ -8,17 +8,26 @@ import { getIdentityDefaultActiveStep } from 'app/pages/identity/utils/shared'
 import { useOnboardingJourneys } from 'app/components/OnboardingPanel/hooks/useOnboardingJourneys'
 import { corporateIssuerFormSteps } from './steps'
 import { CorporateIdentity } from '../../types/forms'
+import { IdentitySubmitConfirmationDialog } from 'app/pages/identity/components/IdentitySubmitConfirmationDialog/IdentitySubmitConfirmationDialog'
 
 export interface CorporateIssuerFormProps {
   data?: CorporateIdentity
 }
 
 export const CorporateIssuerForm = ({ data }: CorporateIssuerFormProps) => {
+  const [confirmSubmitOpen, setConfirmSubmitOpen] = useState(false)
+  const closeConfirmSubmitDialog = () => {
+    setConfirmSubmitOpen(false)
+  }
+  const openConfirmSubmitDialog = () => {
+    setConfirmSubmitOpen(true)
+  }
+
   const { isIssuerJourneyCompleted } = useOnboardingJourneys()
 
   const createMutation = useCreateCorporate('issuer')
   const updateMutation = useUpdateCorporate('issuer')
-  const submitMutation = useSubmitCorporate()
+  const submitMutation = useSubmitCorporate(openConfirmSubmitDialog)
   const { showPreIdentityCreateDialog } = useOnboardingDialog()
 
   useEffect(() => {
@@ -34,14 +43,20 @@ export const CorporateIssuerForm = ({ data }: CorporateIssuerFormProps) => {
   })
 
   return (
-    <FormStepper
-      data={data}
-      shouldSaveOnMove={!isIssuerJourneyCompleted}
-      createMutation={createMutation}
-      editMutation={updateMutation}
-      submitMutation={submitMutation}
-      defaultActiveStep={defaultActiveStep}
-      steps={corporateIssuerFormSteps}
-    />
+    <>
+      <IdentitySubmitConfirmationDialog
+        open={confirmSubmitOpen}
+        closeDialog={closeConfirmSubmitDialog}
+      />
+      <FormStepper
+        data={data}
+        shouldSaveOnMove={!isIssuerJourneyCompleted}
+        createMutation={createMutation}
+        editMutation={updateMutation}
+        submitMutation={submitMutation}
+        defaultActiveStep={defaultActiveStep}
+        steps={corporateIssuerFormSteps}
+      />
+    </>
   )
 }

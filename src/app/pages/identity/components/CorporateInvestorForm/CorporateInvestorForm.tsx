@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import { FormStepper } from 'app/components/FormStepper/FormStepper'
 import { useCreateCorporate } from 'app/pages/identity/hooks/useCreateCorporate'
 import { useUpdateCorporate } from 'app/pages/identity/hooks/useUpdateCorporate'
@@ -10,15 +10,24 @@ import { getIdentityDefaultActiveStep } from 'app/pages/identity/utils/shared'
 import { generatePath, useHistory } from 'react-router'
 import { IdentityRoute } from 'app/pages/identity/router/config'
 import { CorporateIdentity } from '../../types/forms'
+import { IdentitySubmitConfirmationDialog } from 'app/pages/identity/components/IdentitySubmitConfirmationDialog/IdentitySubmitConfirmationDialog'
 
 export interface CorporateInvestorFormProps {
   data?: CorporateIdentity
 }
 
 export const CorporateInvestorForm = ({ data }: CorporateInvestorFormProps) => {
+  const [confirmSubmitOpen, setConfirmSubmitOpen] = useState(false)
+  const closeConfirmSubmitDialog = () => {
+    setConfirmSubmitOpen(false)
+  }
+  const openConfirmSubmitDialog = () => {
+    setConfirmSubmitOpen(true)
+  }
+
   const createMutation = useCreateCorporate('investor')
   const updateMutation = useUpdateCorporate('investor')
-  const submitMutation = useSubmitCorporate()
+  const submitMutation = useSubmitCorporate(openConfirmSubmitDialog)
   const { showPreIdentityCreateDialog } = useOnboardingDialog()
   const {
     isInvestorJourneyCompleted,
@@ -58,14 +67,20 @@ export const CorporateInvestorForm = ({ data }: CorporateInvestorFormProps) => {
   })
 
   return (
-    <FormStepper
-      data={data}
-      createMutation={createMutation}
-      editMutation={updateMutation}
-      submitMutation={submitMutation}
-      steps={corporateInvestorFormSteps}
-      defaultActiveStep={defaultActiveStep}
-      shouldSaveOnMove={!isInvestorJourneyCompleted}
-    />
+    <>
+      <IdentitySubmitConfirmationDialog
+        open={confirmSubmitOpen}
+        closeDialog={closeConfirmSubmitDialog}
+      />
+      <FormStepper
+        data={data}
+        createMutation={createMutation}
+        editMutation={updateMutation}
+        submitMutation={submitMutation}
+        steps={corporateInvestorFormSteps}
+        defaultActiveStep={defaultActiveStep}
+        shouldSaveOnMove={!isInvestorJourneyCompleted}
+      />
+    </>
   )
 }

@@ -1,4 +1,4 @@
-import React, { useEffect, memo } from 'react'
+import React, { useEffect, memo, useState } from 'react'
 import { FormStepper } from 'app/components/FormStepper/FormStepper'
 import { useIndividualIdentity } from 'hooks/identity/useIndividualIdentity'
 import { useCreateIndividual } from 'app/pages/identity/hooks/useCreateIndividual'
@@ -9,11 +9,20 @@ import { individualInvestorFormSteps } from './steps'
 import { getIdentityDefaultActiveStep } from 'app/pages/identity/utils/shared'
 import { generatePath, useHistory } from 'react-router'
 import { IdentityRoute } from 'app/pages/identity/router/config'
+import { IdentitySubmitConfirmationDialog } from 'app/pages/identity/components/IdentitySubmitConfirmationDialog/IdentitySubmitConfirmationDialog'
 
 export const IndividualInvestorForm = memo(() => {
+  const [confirmSubmitOpen, setConfirmSubmitOpen] = useState(false)
+  const closeConfirmSubmitDialog = () => {
+    setConfirmSubmitOpen(false)
+  }
+  const openConfirmSubmitDialog = () => {
+    setConfirmSubmitOpen(true)
+  }
+
   const { data, isLoading } = useIndividualIdentity()
   const mutation = useCreateIndividual()
-  const submitMutation = useSubmitIndividual()
+  const submitMutation = useSubmitIndividual(openConfirmSubmitDialog)
   const { showPreIdentityCreateDialog } = useOnboardingDialog()
   const { isIndividualJourneyCompleted } = useOnboardingJourneys()
   const { location, replace } = useHistory()
@@ -47,14 +56,20 @@ export const IndividualInvestorForm = memo(() => {
   })
 
   return (
-    <FormStepper
-      data={data}
-      shouldSaveOnMove={!isIndividualJourneyCompleted}
-      createMutation={mutation}
-      editMutation={mutation}
-      submitMutation={submitMutation}
-      defaultActiveStep={defaultActiveStep}
-      steps={individualInvestorFormSteps}
-    />
+    <>
+      <IdentitySubmitConfirmationDialog
+        open={confirmSubmitOpen}
+        closeDialog={closeConfirmSubmitDialog}
+      />
+      <FormStepper
+        data={data}
+        shouldSaveOnMove={!isIndividualJourneyCompleted}
+        createMutation={mutation}
+        editMutation={mutation}
+        submitMutation={submitMutation}
+        defaultActiveStep={defaultActiveStep}
+        steps={individualInvestorFormSteps}
+      />
+    </>
   )
 })
