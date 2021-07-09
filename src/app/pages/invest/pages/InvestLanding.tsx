@@ -1,25 +1,20 @@
 import React from 'react'
-import { useAuth } from 'hooks/auth/useAuth'
 import { Grid, Button, Typography, useTheme } from '@material-ui/core'
 import { AppRouterLinkComponent } from 'components/AppRouterLink'
 import { InvestRoute } from 'app/pages/invest/router/config'
 import { VSpacer } from 'components/VSpacer'
 import { DSOTable } from 'app/pages/invest/components/DSOTable/DSOTable'
 import { PromotedDSOs } from 'app/components/DSO/components/PromotedDSOs'
-import { PageHeader } from 'app/components/PageHeader/PageHeader'
+import { VirtualAccountBalance } from 'app/pages/invest/components/VirtualAccountBalance/VirtualAccountBalance'
 
 export const InvestLanding = () => {
-  const { user } = useAuth()
   const theme = useTheme()
 
   return (
     <>
-      <Grid container justify='space-between'>
+      <Grid container justify='space-between' spacing={4}>
         <Grid item xs={12}>
-          <PageHeader
-            title={`Welcome, ${user?.name ?? 'Unknown'}`}
-            showBreadcrumbs={false}
-          />
+          <VirtualAccountBalance />
         </Grid>
         <Grid item>
           <Typography variant='h4'>Top Offers</Typography>
@@ -38,7 +33,7 @@ export const InvestLanding = () => {
           </Button>
         </Grid>
       </Grid>
-      <VSpacer size='small' />
+      <VSpacer size='medium' />
       <PromotedDSOs />
       <VSpacer size='medium' />
       <Grid container direction='column' spacing={4}>

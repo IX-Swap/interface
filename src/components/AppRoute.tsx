@@ -26,17 +26,6 @@ export const AppRoute = memo((props: AppRouteProps) => {
     }
   } else {
     if (
-      !is2FAEnabled &&
-      !path.startsWith(AppPath.security) &&
-      !path.startsWith(AppPath.home) &&
-      !path.startsWith(AppPath.notifications) &&
-      !path.startsWith(AppPath.identity)
-    ) {
-      showEnable2FADialog()
-      return <Redirect to={AppPath.home} />
-    }
-
-    if (
       !isAccredited &&
       !path.startsWith(AppPath.home) &&
       !path.startsWith(AppPath.identity) &&
@@ -44,6 +33,17 @@ export const AppRoute = memo((props: AppRouteProps) => {
       !path.startsWith(AppPath.notifications)
     ) {
       showCreateAccountDialog()
+      return <Redirect to={AppPath.identity} />
+    }
+
+    if (
+      !is2FAEnabled &&
+      !path.startsWith(AppPath.security) &&
+      !path.startsWith(AppPath.home) &&
+      !path.startsWith(AppPath.notifications) &&
+      !path.startsWith(AppPath.identity)
+    ) {
+      showEnable2FADialog()
       return <Redirect to={AppPath.home} />
     }
   }
