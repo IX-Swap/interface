@@ -5,6 +5,7 @@ import Grid from '@material-ui/core/Grid'
 import Typography from '@material-ui/core/Typography'
 import { DSOLogo } from 'app/components/DSO/components/DSOLogo'
 import useStyles from 'app/pages/invest/components/OTCMarketCard/CardCover.style'
+import { DSOFavorite } from 'app/components/DSOFavorite'
 
 export interface CardCoverProps {
   type: 'Primary' | 'OTC'
@@ -19,13 +20,17 @@ export const CardCover = (props: CardCoverProps) => {
   return (
     <Box>
       <Grid container direction='column' className={classes.cover}>
+        {type === 'Primary' ? (
+          <Grid item className={classes.favorite}>
+            <DSOFavorite dso={data} />
+          </Grid>
+        ) : null}
         <Grid item>
           <Typography className={classes.title}>{data.tokenName}</Typography>
         </Grid>
         <Grid item>
           <Typography className={classes.company}>
             {/* TODO Add value for OTC when backend api extends */}
-            {data.corporate.companyLegalName}
           </Typography>
         </Grid>
         <Grid item>
