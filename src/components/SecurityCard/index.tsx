@@ -63,7 +63,7 @@ export default function SecurityCard({ pair }: { pair: Pair }) {
             <TextRow textLeft={<Trans>Deadline</Trans>} />
             {userDefaultPoolBalance && JSBI.greaterThan(userDefaultPoolBalance.quotient, BIG_INT_ZERO) && (
               <RowCenter marginTop="10px">
-                <ButtonGradient as={Link} to={routes.securityTokens(currency0)} width={'50%'}>
+                <ButtonGradient as={Link} to={routes.securityTokens(currency0)} width={'50%'} data-testid="token-info">
                   <Trans>Info</Trans>
                 </ButtonGradient>
               </RowCenter>

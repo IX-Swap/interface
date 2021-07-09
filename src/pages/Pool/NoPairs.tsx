@@ -28,7 +28,7 @@ export const NoPairs = ({ account, v2IsLoading, showEmptyLiquidity }: Props) => 
           </LiquidityInnerTitle>
           <SemiTransparent>
             {!account && (
-              <ButtonEmpty padding="40px" onClick={toggleWalletModal}>
+              <ButtonEmpty padding="40px" onClick={toggleWalletModal} data-testid="connect-wallet-pool">
                 <TYPE.body color={theme.text2} textAlign="center">
                   <Trans>Connect a wallet to view your Liquidity.</Trans>
                 </TYPE.body>

@@ -63,7 +63,7 @@ export function ModalBottom({
           textRight={<Trans>{noLiquidity ? '100' : poolTokenPercentage?.toSignificant(4)}%</Trans>}
         />
       </AutoColumn>
-      <ButtonIXSWide style={{ margin: '30px 0 0 0' }} onClick={onAdd}>
+      <ButtonIXSWide style={{ margin: '30px 0 0 0' }} onClick={onAdd} data-testid="create-or-supply">
         {noLiquidity ? <Trans>Create Pool & Supply</Trans> : <Trans>Confirm Supply</Trans>}
       </ButtonIXSWide>
     </ModalBottomWrapper>

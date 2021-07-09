@@ -126,6 +126,7 @@ export function ImportToken({ tokens, list, onBack, onDismiss, handleCurrencySel
             tokens.map((token) => addToken(token))
             handleCurrencySelect && handleCurrencySelect(tokens[0])
           }}
+          data-testid="token-dismiss-button"
           className=".token-dismiss-button"
         >
           Import

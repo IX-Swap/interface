@@ -85,6 +85,7 @@ export default function ImportRow({
           <ButtonGradient
             width={'100%'}
             fontSize={'13px'}
+            data-testid="import-token-in-row"
             onClick={() => {
               setImportToken && setImportToken(token)
               showImportView()

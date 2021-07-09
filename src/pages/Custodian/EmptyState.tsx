@@ -21,7 +21,7 @@ export const EmptyState = ({ account, v2IsLoading, showEmptyLiquidity }: Props) 
       <TopStraightBackgroundWrapper>
         <SemiTransparent>
           {!account && (
-            <ButtonEmpty padding="40px" onClick={toggleWalletModal}>
+            <ButtonEmpty padding="40px" onClick={toggleWalletModal} data-testid="connect-wallet-custodian">
               <TYPE.body color={theme.text2} textAlign="center">
                 <Trans>Connect a wallet to view your Securities.</Trans>
               </TYPE.body>

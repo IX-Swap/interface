@@ -9,7 +9,7 @@ export const PoolInformation = () => {
   const theme = useTheme()
   return (
     <SemiTransparent>
-      <ButtonEmpty padding="8px">
+      <ButtonEmpty padding="8px" data-testid="view-pool-information">
         <ExternalLink style={{ width: '100%', textAlign: 'center' }} href={`https://ixswap.io/`}>
           <Text fontWeight={600} fontSize={'12px'} lineHeight={'18px'} color={theme.text2}>
             <Trans>
