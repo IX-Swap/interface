@@ -34,7 +34,9 @@ export function useCloseModals(): () => void {
 export function useWalletModalToggle(): () => void {
   return useToggleModal(ApplicationModal.WALLET)
 }
-
+export function useDepositModalToggle(): () => void {
+  return useToggleModal(ApplicationModal.DEPOSIT)
+}
 export function useToggleSettingsMenu(): () => void {
   return useToggleModal(ApplicationModal.SETTINGS)
 }
