@@ -5,11 +5,11 @@ import * as usePromotedDSOsHook from 'app/pages/invest/hooks/usePromotedDSOs'
 import { generateInfiniteQueryResult } from '__fixtures__/useQuery'
 import { QueryStatus } from 'react-query'
 import { dso } from '__fixtures__/authorizer'
-import { DSOCard } from 'app/components/DSO/components/DSOCard/DSOCard'
 import { InvestRoute } from 'app/pages/invest/router/config'
+import { OTCMarketCard } from 'app/pages/invest/components/OTCMarketCard/OTCMarketCard'
 
-jest.mock('app/components/DSO/components/DSOCard/DSOCard', () => ({
-  DSOCard: jest.fn(() => null)
+jest.mock('app/pages/invest/components/OTCMarketCard/OTCMarketCard', () => ({
+  OTCMarketCard: jest.fn(() => null)
 }))
 
 describe('PromotedDSOs', () => {
@@ -40,7 +40,7 @@ describe('PromotedDSOs', () => {
     expect(container).toBeEmptyDOMElement()
   })
 
-  it('renders DSOCard with correct props', () => {
+  it('renders OTCMarketCard with correct props', () => {
     jest.spyOn(usePromotedDSOsHook, 'usePromotedDSOs').mockReturnValue(
       generateInfiniteQueryResult({
         list: [dso]
@@ -49,11 +49,12 @@ describe('PromotedDSOs', () => {
 
     render(<PromotedDSOs />)
 
-    expect(DSOCard).toHaveBeenCalledTimes(1)
-    expect(DSOCard).toHaveBeenCalledWith(
+    expect(OTCMarketCard).toHaveBeenCalledTimes(1)
+    expect(OTCMarketCard).toHaveBeenCalledWith(
       {
-        dso: dso,
-        viewURL: InvestRoute.view
+        data: dso,
+        viewURL: InvestRoute.view,
+        type: 'Primary'
       },
       {}
     )

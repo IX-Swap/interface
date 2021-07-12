@@ -4,6 +4,7 @@ import { useGetIdentities } from 'app/components/OnboardingPanel/hooks/useGetIde
 import { CorporatesPreview } from 'app/pages/identity/components/CorporatesPreview/CorporatesPreview'
 import { CorporateIdentityButton } from 'app/pages/identity/components/IdentityPreview/CorporateIdentityButton'
 import { IndividualIdentityButton } from 'app/pages/identity/components/IdentityPreview/IndividualIdentityButton'
+import { IssuerIdentityButton } from 'app/pages/identity/components/IdentityPreview/IssuerIdentityButton'
 import { IndividualPreview } from 'app/pages/identity/components/IndividualPreview/IndividualPreview'
 import React, { useState } from 'react'
 
@@ -44,10 +45,17 @@ export const IdentityPreview = () => {
         )}
         {hasCorporate && (
           <Grid item xs={12} md={4}>
-            <CorporateIdentityButton
-              active={selectedIdentity === 'corporate'}
-              onClick={() => setSelectedIdentity('corporate')}
-            />
+            {corporateIdentities.list[0].type === 'investor' ? (
+              <CorporateIdentityButton
+                active={selectedIdentity === 'corporate'}
+                onClick={() => setSelectedIdentity('corporate')}
+              />
+            ) : (
+              <IssuerIdentityButton
+                active={selectedIdentity === 'corporate'}
+                onClick={() => setSelectedIdentity('corporate')}
+              />
+            )}
           </Grid>
         )}
       </Grid>

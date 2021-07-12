@@ -69,6 +69,7 @@ export const IndividualInvestorForm = memo(() => {
         submitMutation={submitMutation}
         defaultActiveStep={defaultActiveStep}
         steps={individualInvestorFormSteps}
+        nonLinear
       />
     </>
   )

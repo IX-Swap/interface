@@ -8,7 +8,6 @@ import useStyles from 'app/pages/invest/components/OTCMarketCard/CardContent.sty
 import { LabelledValue } from 'components/LabelledValue'
 import { formatMoney } from 'helpers/numbers'
 import { VSpacer } from 'components/VSpacer'
-import getSymbolFromCurrency from 'currency-symbol-map'
 
 export interface CardContentProps {
   // TODO Add interface after complete final version backend api
@@ -19,18 +18,37 @@ export interface CardContentProps {
 export const CardContent = (props: CardContentProps) => {
   const { data, type } = props
   const classes = useStyles()
+  const minimumInvestmentPrice =
+    data.minimumInvestment !== undefined
+      ? formatMoney(
+          data.minimumInvestment * data.pricePerUnit,
+          data.currency.symbol
+        )
+      : 0
 
   return (
     <Box>
       <Grid container direction='column'>
         <Grid item>
-          <Typography>
-            <div className={classes.introduction}>
-              {renderStringToHTML(
-                type === 'Primary' ? data.introduction : data.description
-              )}
-            </div>
-          </Typography>
+          {type === 'OTC' ? (
+            <Typography className={classes.introduction}>
+              {renderStringToHTML(data.description)}
+            </Typography>
+          ) : (
+            <>
+              <VSpacer size='small' />
+              <LabelledValue
+                item
+                row
+                valueWeight='custom'
+                labelWeight='default'
+                valueFontSize={16}
+                labelFontSize={14}
+                label='Closing Date:'
+                value={data.completionDate}
+              />
+            </>
+          )}
         </Grid>
         <Grid item>
           <VSpacer size='small' />
@@ -41,8 +59,17 @@ export const CardContent = (props: CardContentProps) => {
             labelWeight='default'
             valueFontSize={16}
             labelFontSize={14}
-            label='Token Symbol'
-            value={data.tokenSymbol}
+            label={type === 'OTC' ? 'Token Symbol' : 'Expected Return'}
+            value={
+              type === 'OTC'
+                ? data.tokenSymbol
+                : (data.capitalStructure === 'Debt'
+                    ? data.interestRate
+                    : data.grossIRR
+                  )
+                    .toString()
+                    .concat('%')
+            }
           />
         </Grid>
 
@@ -56,17 +83,17 @@ export const CardContent = (props: CardContentProps) => {
             valueFontSize={16}
             labelFontSize={14}
             label={
-              type === 'Primary' ? 'Minimum Investment' : 'Min. Trade Amount'
-            }
-            // TODO Remove this after add new interface for data prop
-            // eslint-disable-next-line
-            value={`${data.tokenSymbol} ${
-              // TODO Remove this after add new interface for data prop
-              // eslint-disable-next-line
               type === 'Primary'
-                ? data.minimumInvestment
-                : data.minimumTradeUnits
-            }`}
+                ? 'Min. Investment Amount'
+                : 'Min. Trade Amount'
+            }
+            value={
+              type === 'Primary'
+                ? minimumInvestmentPrice
+                : // TODO Remove this after add new interface for data prop
+                  // eslint-disable-next-line
+                  `${data.tokenSymbol} ${data.minimumTradeUnits}`
+            }
           />
         </Grid>
 
@@ -85,9 +112,7 @@ export const CardContent = (props: CardContentProps) => {
                 ? data.totalFundraisingAmount
                 : data.raisedAmount,
               // TODO Remove fake data after added new field on backend api
-              getSymbolFromCurrency(
-                type === 'Primary' ? data.currency.symbol : 'SGD'
-              )
+              type === 'Primary' ? data.currency.symbol : 'SGD'
             )}
           />
         </Grid>
