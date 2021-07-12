@@ -16,6 +16,9 @@ jobs:
     runs-on: ubuntu-latest # or macos-latest, windows-latest
 
     steps:
+      - name: Build the IPFS bundle
+        run: yarn start
+
       - uses: actions/checkout@v2
 
       - uses: actions/setup-node@v1
