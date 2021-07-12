@@ -4,18 +4,17 @@ on:
   push:
     branches:
       - main
-      - development
-  pull_request:
-    branches:
-      - main
-      - development
 
 jobs:
   integration-tests:
-    name: Playwright
-    runs-on: ubuntu-18.04
+    runs-on: ubuntu-latest # or macos-latest, windows-latest
+
     steps:
-      - uses: ./
+      - uses: actions/checkout@v2
+
+      - uses: actions/setup-node@v1
+
       - uses: microsoft/playwright-github-action@v1
-      - name: Run your tests
+
+      - name: Install dependencies and run tests
         run: yarn integration-test
