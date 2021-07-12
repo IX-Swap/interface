@@ -33,7 +33,7 @@ describe('useToggleDSOFavorite', () => {
   it('calls delete endpoint when isFav = true', async () => {
     await act(async () => {
       const { result } = renderHookWithServiceProvider(
-        () => useToggleDSOFavorite(dso),
+        () => useToggleDSOFavorite(dso, []),
         {
           apiService: apiObj,
           snackbarService: snackbarObj
@@ -58,7 +58,7 @@ describe('useToggleDSOFavorite', () => {
   it('calls put endpoint when isFav = false', async () => {
     await act(async () => {
       const { result } = renderHookWithServiceProvider(
-        () => useToggleDSOFavorite(dso),
+        () => useToggleDSOFavorite(dso, []),
         {
           apiService: apiObj,
           snackbarService: snackbarObj

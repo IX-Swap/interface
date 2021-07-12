@@ -54,7 +54,7 @@ describe('PromotedDSOs', () => {
       {
         data: dso,
         viewURL: InvestRoute.view,
-        type: 'Primary'
+        type: 'TopOffers'
       },
       {}
     )
