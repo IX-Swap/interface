@@ -102,6 +102,7 @@ const LabelRow = styled.div`
 
 const FiatRow = styled(LabelRow)`
   justify-content: space-between;
+  gap: 16px;
 `
 
 const Aligner = styled.span`
