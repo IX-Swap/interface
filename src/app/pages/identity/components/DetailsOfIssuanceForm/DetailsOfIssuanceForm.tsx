@@ -41,6 +41,7 @@ export const DetailsOfIssuanceForm = memo(() => {
       submitMutation={submitMutation}
       defaultActiveStep={defaultActiveStep}
       steps={detailsOfIssuanceFormSteps}
+      nonLinear
     />
   )
 })

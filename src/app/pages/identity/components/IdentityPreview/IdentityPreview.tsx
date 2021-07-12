@@ -6,6 +6,8 @@ import { CorporateIdentityButton } from 'app/pages/identity/components/IdentityP
 import { IndividualIdentityButton } from 'app/pages/identity/components/IdentityPreview/IndividualIdentityButton'
 import { IssuerIdentityButton } from 'app/pages/identity/components/IdentityPreview/IssuerIdentityButton'
 import { IndividualPreview } from 'app/pages/identity/components/IndividualPreview/IndividualPreview'
+import { CreateDetailsOfIssuanceButton } from 'app/pages/identity/components/NoIdentityView/CreateDetailsOfIssuanceButton copy'
+import { CreateIssuerIdentityButton } from 'app/pages/identity/components/NoIdentityView/CreateIssuerIdentityButton'
 import React, { useState } from 'react'
 
 export const IdentityPreview = () => {
@@ -13,13 +15,16 @@ export const IdentityPreview = () => {
     hasIdentity,
     isLoadingIdentities,
     individualIdentity,
-    corporateIdentities
+    corporateIdentities,
+    detailsOfIssuance
   } = useGetIdentities()
 
   const hasIndividual = individualIdentity !== undefined
   const hasCorporate =
     corporateIdentities !== undefined && corporateIdentities.list.length > 0
-
+  const hasDetailsOfIssuance = detailsOfIssuance !== undefined
+  const detailsOfIssuanceApproved =
+    detailsOfIssuance?.status === 'Approved' ?? false
   const [selectedIdentity, setSelectedIdentity] = useState<
     'individual' | 'corporate'
   >(hasIndividual ? 'individual' : 'corporate')
@@ -28,7 +33,7 @@ export const IdentityPreview = () => {
     return <LoadingIndicator />
   }
 
-  if (!hasIdentity) {
+  if (!hasIdentity && !hasDetailsOfIssuance) {
     return null
   }
 
@@ -43,7 +48,7 @@ export const IdentityPreview = () => {
             />
           </Grid>
         )}
-        {hasCorporate && (
+        {hasCorporate ? (
           <Grid item xs={12} md={4}>
             {corporateIdentities.list[0].type === 'investor' ? (
               <CorporateIdentityButton
@@ -57,6 +62,13 @@ export const IdentityPreview = () => {
               />
             )}
           </Grid>
+        ) : (
+          hasDetailsOfIssuance &&
+          (detailsOfIssuanceApproved ? (
+            <CreateIssuerIdentityButton />
+          ) : (
+            <CreateDetailsOfIssuanceButton />
+          ))
         )}
       </Grid>
       <Grid item xs={12}>
