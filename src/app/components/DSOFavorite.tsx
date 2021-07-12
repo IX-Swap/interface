@@ -31,6 +31,7 @@ export const DSOFavorite = (props: DSOFavoriteProps) => {
             size='small'
             onClick={handleFav}
             style={{ color: isFav ? '#F0D400' : '#000000' }}
+            data-testid='icon-button'
           >
             {isFav ? (
               <StarIcon color='inherit' />
