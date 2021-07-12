@@ -1,4 +1,4 @@
-import { CreateDetailsOfIssuanceButton } from 'app/pages/identity/components/NoIdentityView/CreateDetailsOfIssuanceButton copy'
+import { CreateDetailsOfIssuanceButton } from 'app/pages/identity/components/NoIdentityView/CreateDetailsOfIssuanceButton'
 import React from 'react'
 import { render, cleanup } from 'test-utils'
 
