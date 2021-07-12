@@ -23,15 +23,18 @@ const StyledDialogContent = styled(({ minHeight, maxHeight, mobile, isOpen, isRi
     padding: 0px;
     width: 622px;
     max-width: fit-content;
-    height: 785px;
-
     overflow-y: ${({ mobile }) => (mobile ? 'scroll' : 'hidden')};
     overflow-x: hidden;
     align-self: ${({ mobile, isRight }) => (mobile ? 'flex-end' : isRight ? 'flex-start' : 'center')};
     ${({ maxHeight }) =>
       maxHeight &&
       css`
-        max-height: ${maxHeight}vh;
+        max-height: ${!isNaN(maxHeight) ? `${maxHeight}vh` : maxHeight};
+      `}
+    ${({ maxHeight }) =>
+      !maxHeight &&
+      css`
+        height: 785px;
       `}
     ${({ minHeight }) =>
       minHeight &&

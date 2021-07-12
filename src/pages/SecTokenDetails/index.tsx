@@ -11,7 +11,7 @@ import { TYPE } from 'theme'
 import { InfoBackground } from './Background'
 import { Container, Description, DescriptionText, InfoTitle } from './styleds'
 import { TokenDetails } from './TokenDetails'
-
+import { DepositPopup } from 'components/Vault/DepositPopup'
 export default function SecTokenDetails({
   history,
   match: {
@@ -21,6 +21,7 @@ export default function SecTokenDetails({
   const currency = useCurrency(currencyId) ?? undefined
   return (
     <>
+      <DepositPopup currency={currency} />
       <InfoBackground />
       <Container width={['100%', '90%', '65%']} maxWidth={'920px'}>
         <InfoTitle>
@@ -48,7 +49,7 @@ export default function SecTokenDetails({
           </DescriptionText>
         </Description>
         <TokenDetails />
-        <Vault status={VaultState.REJECTED} currency={currency} />
+        <Vault status={VaultState.APPROVED} currency={currency} />
       </Container>
     </>
   )

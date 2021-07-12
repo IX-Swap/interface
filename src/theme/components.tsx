@@ -339,3 +339,40 @@ export const ModalBlurWrapper = styled.span`
   `};
   user-select: none;
 `
+export const StyledNumberInput = styled.input<{ error?: boolean; fontSize?: string; align?: string }>`
+  color: ${({ error, theme }) => (error ? theme.red1 : theme.text1)};
+  width: 0;
+  position: relative;
+  outline: none;
+  border: none;
+  flex: 1 1 auto;
+  font-weight: 600;
+  background-color: ${({ theme }) => theme.bg7};
+  text-align: ${({ align }) => align && align};
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  padding: 0px;
+  -webkit-appearance: textfield;
+  text-align: left;
+  font-size: 22px;
+  line-height: 40px;
+  ::-webkit-search-decoration {
+    -webkit-appearance: none;
+  }
+
+  [type='number'] {
+    -moz-appearance: textfield;
+  }
+
+  ::-webkit-outer-spin-button,
+  ::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+  }
+
+  ::placeholder {
+    color: ${({ theme }) => theme.text2};
+    opacity: 0.5;
+    font-style: normal;
+  }
+`
