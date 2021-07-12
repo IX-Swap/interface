@@ -6,7 +6,7 @@ import Row from 'components/Row'
 import useENS from 'hooks/useENS'
 import { useActiveWeb3React } from 'hooks/web3'
 import React, { useEffect } from 'react'
-import { useDepositActionHandlers, useDepositState, useDerivedDepositInfo } from 'state/deposit/hooks'
+import { useDerivedWithdrawInfo, useWithdrawActionHandlers, useWithdrawState } from 'state/withdraw/hooks'
 import { TYPE } from 'theme'
 import { currencyId } from 'utils/currencyId'
 import { AddressInput } from '../AddressInputPanel/AddressInput'
@@ -16,19 +16,19 @@ interface Props {
   currency?: Currency
   changeModal: () => void
 }
-export const DepositRequestForm = ({ currency, changeModal }: Props) => {
+export const WithdrawRequestForm = ({ currency, changeModal }: Props) => {
   const { account } = useActiveWeb3React()
-  const { amount, sender, currencyId: cid } = useDepositState()
-  const { inputError } = useDerivedDepositInfo()
-  const { onTypeAmount, onTypeSender, onCurrencySet } = useDepositActionHandlers()
-  const { address, loading } = useENS(sender)
-  const error = Boolean(sender.length > 0 && !loading && !address)
+  const { amount, receiver, currencyId: cid } = useWithdrawState()
+  const { inputError } = useDerivedWithdrawInfo()
+  const { onTypeAmount, onTypeReceiver, onCurrencySet } = useWithdrawActionHandlers()
+  const { address, loading } = useENS(receiver)
+  const error = Boolean(receiver.length > 0 && !loading && !address)
 
   useEffect(() => {
     if (account) {
-      onTypeSender(account ?? '')
+      onTypeReceiver(account ?? '')
     }
-  }, [account, onTypeSender])
+  }, [account, onTypeReceiver])
 
   useEffect(() => {
     const id = currencyId(currency)
@@ -38,6 +38,19 @@ export const DepositRequestForm = ({ currency, changeModal }: Props) => {
   return (
     <div style={{ position: 'relative' }}>
       <Column style={{ gap: '25px', marginTop: '18px' }}>
+        <Row style={{ marginTop: '18px' }}>
+          <TYPE.description3>
+            <b>
+              <Trans>Wrap to Sec info:</Trans>
+            </b>
+            &nbsp;
+            <Trans>
+              Donec sollicitudin molestie malesuada. Proin eget tortor risus. Curabitur arcu erat, accumsan id imperdiet
+              et, porttitor at sem. Vivamus suscipit tortor eget felis porttitor volutpat. Pellentesque in ipsum id orci
+              porta dapibus. Donec sollicitudin molestie malesuada
+            </Trans>
+          </TYPE.description3>
+        </Row>
         <Column style={{ gap: '11px' }}>
           <Row>
             <TYPE.body1>
@@ -49,26 +62,16 @@ export const DepositRequestForm = ({ currency, changeModal }: Props) => {
         <Column style={{ gap: '11px' }}>
           <Row>
             <TYPE.body1>
-              <Trans>Sender&apos;s wallet</Trans>
+              <Trans>Where to send?</Trans>
             </TYPE.body1>
           </Row>
-          <AddressInput {...{ id: 'sender-input', value: sender ?? '', error, onChange: onTypeSender }} />
+          <AddressInput {...{ id: 'receiver-input', value: receiver ?? '', error, onChange: onTypeReceiver }} />
         </Column>
       </Column>
-      <Row style={{ marginTop: '18px', padding: '0 22px' }}>
-        <TYPE.description3>
-          <b>
-            <Trans>Info:</Trans>
-          </b>
-          &nbsp;
-          <Trans>
-            Please provide sender’s address in order to approve this transaction. Other adresses will be rejected.
-          </Trans>
-        </TYPE.description3>
-      </Row>
+
       <Row style={{ marginTop: '37px', marginBottom: '24px' }}>
         <ButtonIXSWide style={{ textTransform: 'unset' }} disabled={!!inputError} onClick={changeModal}>
-          {inputError ?? <Trans>Create deposit request</Trans>}
+          {inputError ?? <Trans>Send</Trans>}
         </ButtonIXSWide>
       </Row>
     </div>

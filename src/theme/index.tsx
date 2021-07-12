@@ -256,6 +256,12 @@ export const TYPE = {
   title7(props: TextProps) {
     return <TextWrapper fontWeight={500} fontSize={18} lineHeight={'40px'} color={'text1'} {...props} />
   },
+  title8(props: TextProps) {
+    return <TextWrapper fontWeight={600} fontSize={28} lineHeight={'42px'} color={'text2'} {...props} />
+  },
+  title9(props: TextProps) {
+    return <TextWrapper fontWeight={600} fontSize={18} lineHeight={'40px'} color={'text1'} {...props} />
+  },
   descriptionThin(props: TextProps) {
     return <TextWrapper fontWeight={300} fontSize={16} lineHeight={'24px'} color={'text2'} {...props} />
   },

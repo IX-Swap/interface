@@ -47,9 +47,9 @@ interface Props {
   value: string
   onUserInput: (typedValue: string) => void
 }
-export const DepositInput = ({ currency, value, onUserInput, ...rest }: Props) => {
+export const AmountInput = ({ currency, value, onUserInput, ...rest }: Props) => {
   return (
-    <InputPanel id={'deposit-input'} {...rest}>
+    <InputPanel id={'amount-input'} {...rest}>
       <Container>
         <InputRow style={{}}>
           <Aligner>
