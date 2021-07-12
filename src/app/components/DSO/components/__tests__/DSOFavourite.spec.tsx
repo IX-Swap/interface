@@ -7,13 +7,10 @@ import { generateQueryResult } from '__fixtures__/useQuery'
 import StarIcon from '@material-ui/icons/Star'
 import StarBorderOutlinedIcon from '@material-ui/icons/StarBorderOutlined'
 import CircularProgress from '@material-ui/core/CircularProgress'
-// import * as IconButton from '@material-ui/core'
 
 jest.mock('@material-ui/core/CircularProgress', () => jest.fn(() => null))
 jest.mock('@material-ui/icons/Star', () => jest.fn(() => null))
 jest.mock('@material-ui/icons/StarBorderOutlined', () => jest.fn(() => null))
-
-// jest.mock('@material-ui/core/IconButton', () => jest.fn(() => null))
 
 const useToggleDSOFavoriteResponse = generateQueryResult({
   isLoading: false
@@ -40,24 +37,10 @@ describe('DSOFavourite', () => {
   })
 
   it('renders IconButton with correct props when isStarred is true', () => {
-    // const handleFav = async () => {
-    //   await mutationFn(dso.isStarred)
-    // }
-
     const { getByTestId } = render(
       <DSOFavorite dependentQueryKeys={[]} dso={dso} />
     )
 
-    // expect(IconButton).toHaveBeenCalledTimes(1)
-    // expect(getByTestId('icon-button')).toHaveBeenCalledWith(
-    //   expect.objectContaining({
-    //     size: 'small',
-    //     style: { color: '#F0D400' },
-    //     children: <StarIcon color={'inherit'} />,
-    //     onClick: handleFav
-    //   }),
-    //   {}
-    // )
     expect(getByTestId('icon-button')).toHaveAttribute(
       'style',
       'color: rgb(240, 212, 0);'
