@@ -1,4 +1,4 @@
-import React, { useEffect, memo, useState } from 'react'
+import React, { useEffect, memo } from 'react'
 import { FormStepper } from 'app/components/FormStepper/FormStepper'
 import { useIndividualIdentity } from 'hooks/identity/useIndividualIdentity'
 import { useCreateIndividual } from 'app/pages/identity/hooks/useCreateIndividual'
@@ -10,19 +10,14 @@ import { getIdentityDefaultActiveStep } from 'app/pages/identity/utils/shared'
 import { generatePath, useHistory } from 'react-router'
 import { IdentityRoute } from 'app/pages/identity/router/config'
 import { IdentitySubmitConfirmationDialog } from 'app/pages/identity/components/IdentitySubmitConfirmationDialog/IdentitySubmitConfirmationDialog'
+import { useConfirmSubmitDialog } from 'app/pages/identity/hooks/useConfirmSubmitDialog'
 
 export const IndividualInvestorForm = memo(() => {
-  const [confirmSubmitOpen, setConfirmSubmitOpen] = useState(false)
-  const closeConfirmSubmitDialog = () => {
-    setConfirmSubmitOpen(false)
-  }
-  const openConfirmSubmitDialog = () => {
-    setConfirmSubmitOpen(true)
-  }
+  const { open, closeDialog, openDialog } = useConfirmSubmitDialog()
 
   const { data, isLoading } = useIndividualIdentity()
   const mutation = useCreateIndividual()
-  const submitMutation = useSubmitIndividual(openConfirmSubmitDialog)
+  const submitMutation = useSubmitIndividual(openDialog)
   const { showPreIdentityCreateDialog } = useOnboardingDialog()
   const { isIndividualJourneyCompleted } = useOnboardingJourneys()
   const { location, replace } = useHistory()
@@ -57,10 +52,7 @@ export const IndividualInvestorForm = memo(() => {
 
   return (
     <>
-      <IdentitySubmitConfirmationDialog
-        open={confirmSubmitOpen}
-        closeDialog={closeConfirmSubmitDialog}
-      />
+      <IdentitySubmitConfirmationDialog open={open} closeDialog={closeDialog} />
       <FormStepper
         data={data}
         shouldSaveOnMove={!isIndividualJourneyCompleted}

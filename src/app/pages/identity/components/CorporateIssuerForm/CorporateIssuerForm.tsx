@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect } from 'react'
 import { FormStepper } from 'app/components/FormStepper/FormStepper'
 import { useCreateCorporate } from 'app/pages/identity/hooks/useCreateCorporate'
 import { useUpdateCorporate } from 'app/pages/identity/hooks/useUpdateCorporate'
@@ -9,25 +9,20 @@ import { useOnboardingJourneys } from 'app/components/OnboardingPanel/hooks/useO
 import { corporateIssuerFormSteps } from './steps'
 import { CorporateIdentity } from '../../types/forms'
 import { IdentitySubmitConfirmationDialog } from 'app/pages/identity/components/IdentitySubmitConfirmationDialog/IdentitySubmitConfirmationDialog'
+import { useConfirmSubmitDialog } from 'app/pages/identity/hooks/useConfirmSubmitDialog'
 
 export interface CorporateIssuerFormProps {
   data?: CorporateIdentity
 }
 
 export const CorporateIssuerForm = ({ data }: CorporateIssuerFormProps) => {
-  const [confirmSubmitOpen, setConfirmSubmitOpen] = useState(false)
-  const closeConfirmSubmitDialog = () => {
-    setConfirmSubmitOpen(false)
-  }
-  const openConfirmSubmitDialog = () => {
-    setConfirmSubmitOpen(true)
-  }
+  const { open, openDialog, closeDialog } = useConfirmSubmitDialog()
 
   const { isIssuerJourneyCompleted } = useOnboardingJourneys()
 
   const createMutation = useCreateCorporate('issuer')
   const updateMutation = useUpdateCorporate('issuer')
-  const submitMutation = useSubmitCorporate(openConfirmSubmitDialog)
+  const submitMutation = useSubmitCorporate(openDialog)
   const { showPreIdentityCreateDialog } = useOnboardingDialog()
 
   useEffect(() => {
@@ -44,10 +39,7 @@ export const CorporateIssuerForm = ({ data }: CorporateIssuerFormProps) => {
 
   return (
     <>
-      <IdentitySubmitConfirmationDialog
-        open={confirmSubmitOpen}
-        closeDialog={closeConfirmSubmitDialog}
-      />
+      <IdentitySubmitConfirmationDialog open={open} closeDialog={closeDialog} />
       <FormStepper
         data={data}
         shouldSaveOnMove={!isIssuerJourneyCompleted}

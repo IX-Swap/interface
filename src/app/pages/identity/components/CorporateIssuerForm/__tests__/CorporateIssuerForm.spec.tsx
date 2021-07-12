@@ -13,6 +13,7 @@ import {
   generateMutationResult
 } from '__fixtures__/useQuery'
 import { history } from 'config/history'
+import * as useConfirmSubmitDialog from 'app/pages/identity/hooks/useConfirmSubmitDialog'
 
 window.URL.revokeObjectURL = jest.fn()
 
@@ -42,6 +43,14 @@ describe('CorporateIssuerForm', () => {
     isInvestorJourneyCompleted: true
   }
 
+  const closeDialog = jest.fn()
+  const openDialog = jest.fn()
+  const useConfirmSubmitDialogResponse = {
+    open: false,
+    closeDialog,
+    openDialog
+  }
+
   beforeEach(() => {
     history.push('/app/identity/corporates/create-issuer')
 
@@ -68,6 +77,10 @@ describe('CorporateIssuerForm', () => {
     jest
       .spyOn(useOnboardingJourneys, 'useOnboardingJourneys')
       .mockImplementation(() => useOnboardingJourneysResponse as any)
+
+    jest
+      .spyOn(useConfirmSubmitDialog, 'useConfirmSubmitDialog')
+      .mockImplementation(() => useConfirmSubmitDialogResponse as any)
   })
 
   afterEach(async () => {
