@@ -13,6 +13,8 @@ import * as useSubmitCorporate from 'app/pages/identity/hooks/useSubmitCorporate
 import * as useOnboardingDialog from 'app/components/OnboardingDialog/hooks/useOnboardingDialog'
 import * as useOnboardingJourneys from 'app/components/OnboardingPanel/hooks/useOnboardingJourneys'
 import { history } from 'config/history'
+import { generatePath } from 'react-router-dom'
+import { IdentityRoute } from 'app/pages/identity/router/config'
 
 window.URL.revokeObjectURL = jest.fn()
 
@@ -95,5 +97,17 @@ describe('CorporateInvestorForm', () => {
 
     render(<CorporateInvestorForm />)
     expect(showPreIdentityCreateDialogMock).toHaveBeenCalled()
+  })
+
+  it('redirects path to editCorporate when identity exists', () => {
+    history.push(IdentityRoute.createCorporate)
+    render(<CorporateInvestorForm />)
+
+    expect(history.location.pathname).toEqual(
+      generatePath(IdentityRoute.editCorporate, {
+        identityId: corporate._id,
+        userId: corporate.user._id
+      })
+    )
   })
 })
