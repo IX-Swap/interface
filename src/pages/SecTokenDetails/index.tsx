@@ -12,6 +12,7 @@ import { InfoBackground } from './Background'
 import { Container, Description, DescriptionText, InfoTitle } from './styleds'
 import { TokenDetails } from './TokenDetails'
 import { DepositPopup } from 'components/Vault/DepositPopup'
+import { WithdrawPopup } from 'components/Vault/WithdrawPopup'
 export default function SecTokenDetails({
   history,
   match: {
@@ -22,6 +23,7 @@ export default function SecTokenDetails({
   return (
     <>
       <DepositPopup currency={currency} />
+      <WithdrawPopup currency={currency} />
       <InfoBackground />
       <Container width={['100%', '90%', '65%']} maxWidth={'920px'}>
         <InfoTitle>

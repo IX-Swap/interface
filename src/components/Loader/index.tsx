@@ -27,10 +27,12 @@ const StyledSVG = styled.svg<{ size: string; stroke?: string }>`
 export default function Loader({
   size = '16px',
   stroke = '#7A02E0',
+
   ...rest
 }: {
   size?: string
   stroke?: string
+
   [k: string]: any
 }) {
   return (
