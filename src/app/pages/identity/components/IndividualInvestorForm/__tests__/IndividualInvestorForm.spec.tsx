@@ -3,16 +3,28 @@ import * as useOnboardingJourneys from 'app/components/OnboardingPanel/hooks/use
 import { IndividualInvestorForm } from 'app/pages/identity/components/IndividualInvestorForm/IndividualInvestorForm'
 import * as useCreateIndividual from 'app/pages/identity/hooks/useCreateIndividual'
 import * as useSubmitIndividual from 'app/pages/identity/hooks/useSubmitIndividual'
+import { IdentityRoute } from 'app/pages/identity/router/config'
+import { history } from 'config/history'
 import * as useIndividualIdentity from 'hooks/identity/useIndividualIdentity'
 import React from 'react'
+import { generatePath } from 'react-router-dom'
 import { render, cleanup } from 'test-utils'
 import { individual } from '__fixtures__/identity'
 import {
   generateMutationResult,
   generateQueryResult
 } from '__fixtures__/useQuery'
+import { IdentitySubmitConfirmationDialog } from 'app/pages/identity/components/IdentitySubmitConfirmationDialog/IdentitySubmitConfirmationDialog'
+import * as useConfirmSubmitDialog from 'app/pages/identity/hooks/useConfirmSubmitDialog'
 
 window.URL.revokeObjectURL = jest.fn()
+
+jest.mock(
+  'app/pages/identity/components/IdentitySubmitConfirmationDialog/IdentitySubmitConfirmationDialog',
+  () => ({
+    IdentitySubmitConfirmationDialog: jest.fn(() => null)
+  })
+)
 
 describe('IndividualInvestorForm', () => {
   const useIndividualIdentityResponse = generateQueryResult({
@@ -29,6 +41,14 @@ describe('IndividualInvestorForm', () => {
     showPreIdentityCreateDialog: showPreIdentityCreateDialogFn
   }
   const useOnboardingJourneysResponse = { isIndividualJourneyCompleted: true }
+
+  const closeDialog = jest.fn()
+  const openDialog = jest.fn()
+  const useConfirmSubmitDialogResponse = {
+    open: false,
+    closeDialog,
+    openDialog
+  }
 
   beforeEach(() => {
     jest
@@ -50,6 +70,10 @@ describe('IndividualInvestorForm', () => {
     jest
       .spyOn(useOnboardingJourneys, 'useOnboardingJourneys')
       .mockImplementation(() => useOnboardingJourneysResponse as any)
+
+    jest
+      .spyOn(useConfirmSubmitDialog, 'useConfirmSubmitDialog')
+      .mockImplementation(() => useConfirmSubmitDialogResponse as any)
   })
   afterEach(async () => {
     await cleanup()
@@ -88,5 +112,25 @@ describe('IndividualInvestorForm', () => {
     render(<IndividualInvestorForm />)
 
     expect(showPreIdentityCreateDialogFn).toHaveBeenCalled()
+  })
+
+  it('redirects path to editIndividual when identity exists', () => {
+    history.push(IdentityRoute.createIndividual)
+    render(<IndividualInvestorForm />)
+
+    expect(history.location.pathname).toEqual(
+      generatePath(IdentityRoute.editIndividual, {
+        identityId: individual._id,
+        userId: individual.user._id
+      })
+    )
+  })
+
+  it('renders dialog box as hidden on component mount', () => {
+    render(<IndividualInvestorForm />)
+    expect(IdentitySubmitConfirmationDialog).toHaveBeenCalledWith(
+      expect.objectContaining({ open: false }),
+      {}
+    )
   })
 })
