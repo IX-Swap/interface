@@ -3,7 +3,13 @@ name: Integration Tests
 on:
   push:
     branches:
+      - metamask-tests
       - main
+      - development
+  pull_request:
+    branches:
+      - main
+      - development
 
 jobs:
   integration-tests:
