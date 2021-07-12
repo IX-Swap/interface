@@ -17,12 +17,12 @@ interface Props {
   changeModal: () => void
 }
 export const DepositRequestForm = ({ currency, changeModal }: Props) => {
+  const { account } = useActiveWeb3React()
   const { amount, sender, currencyId: cid } = useDepositState()
   const { inputError } = useDerivedDepositInfo()
   const { onTypeAmount, onTypeSender, onCurrencySet } = useDepositActionHandlers()
   const { address, loading } = useENS(sender)
   const error = Boolean(sender.length > 0 && !loading && !address)
-  const { account } = useActiveWeb3React()
 
   useEffect(() => {
     if (account) {
@@ -66,7 +66,7 @@ export const DepositRequestForm = ({ currency, changeModal }: Props) => {
           </Trans>
         </TYPE.description3>
       </Row>
-      <Row style={{ marginTop: '37px' }}>
+      <Row style={{ marginTop: '37px', marginBottom: '24px' }}>
         <ButtonIXSWide style={{ textTransform: 'unset' }} disabled={!!inputError} onClick={changeModal}>
           {inputError ?? <Trans>Create deposit request</Trans>}
         </ButtonIXSWide>

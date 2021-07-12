@@ -10,6 +10,7 @@ import { ModalBlurWrapper } from 'theme'
 import { CloseIcon, TYPE } from '../../theme'
 import { DepositRequestForm } from './DepositRequestForm'
 import { ModalPadding } from './styleds'
+import { DepositSendInfo } from './DepositSendInfo'
 
 export enum DepositModalView {
   CREATE_REQUEST,
@@ -23,7 +24,13 @@ export const DepositPopup = ({ currency }: Props) => {
   const toggleModal = useDepositModalToggle()
   const [modalView, setModalView] = useState<DepositModalView>(DepositModalView.CREATE_REQUEST)
   return (
-    <RedesignedWideModal isOpen={isOpen} onDismiss={toggleModal} minHeight={50} maxHeight={55} mobileMaxHeight={80}>
+    <RedesignedWideModal
+      isOpen={isOpen}
+      onDismiss={toggleModal}
+      minHeight={false}
+      maxHeight={'fit-content'}
+      mobileMaxHeight={90}
+    >
       <ModalBlurWrapper>
         <ModalContentWrapper>
           <ModalPadding>
@@ -36,7 +43,7 @@ export const DepositPopup = ({ currency }: Props) => {
             {modalView === DepositModalView.CREATE_REQUEST && (
               <DepositRequestForm currency={currency} changeModal={() => setModalView(DepositModalView.SEND_INFO)} />
             )}
-            {modalView === DepositModalView.SEND_INFO && <>info</>}
+            {modalView === DepositModalView.SEND_INFO && <DepositSendInfo />}
           </ModalPadding>
         </ModalContentWrapper>
       </ModalBlurWrapper>

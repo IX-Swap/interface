@@ -208,6 +208,12 @@ export const TYPE = {
   body1(props: TextProps) {
     return <TextWrapper fontWeight={400} fontSize={16} color={'text2'} lineHeight={'24px'} {...props} />
   },
+  body2(props: TextProps) {
+    return <TextWrapper fontWeight={400} fontSize={17} color={'text1'} lineHeight={'24px'} {...props} />
+  },
+  body3(props: TextProps) {
+    return <TextWrapper fontWeight={400} fontSize={14} lineHeight={'21px'} color={'text2'} {...props} />
+  },
   popOver(props: TextProps) {
     return <TextWrapper fontWeight={400} fontSize={14} color={'text2'} lineHeight={'17px'} {...props} />
   },
@@ -246,6 +252,9 @@ export const TYPE = {
   },
   title6(props: TextProps) {
     return <TextWrapper fontWeight={600} fontSize={16} lineHeight={'24px'} color={'text1'} {...props} />
+  },
+  title7(props: TextProps) {
+    return <TextWrapper fontWeight={500} fontSize={18} lineHeight={'40px'} color={'text1'} {...props} />
   },
   descriptionThin(props: TextProps) {
     return <TextWrapper fontWeight={300} fontSize={16} lineHeight={'24px'} color={'text2'} {...props} />
