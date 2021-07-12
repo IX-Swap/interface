@@ -7,11 +7,15 @@ import { useToggleDSOFavorite } from 'app/pages/invest/hooks/useToggleDSOFavorit
 
 export interface DSOFavoriteProps {
   dso: DigitalSecurityOffering
+  dependentQueryKeys: string[]
 }
 
 export const DSOFavorite = (props: DSOFavoriteProps) => {
   const isFav = props.dso.isStarred
-  const [toggleDSOFavorite, { isLoading }] = useToggleDSOFavorite(props.dso)
+  const [toggleDSOFavorite, { isLoading }] = useToggleDSOFavorite(
+    props.dso,
+    props.dependentQueryKeys
+  )
 
   const handleFav = async () => {
     await toggleDSOFavorite(isFav)
@@ -27,6 +31,7 @@ export const DSOFavorite = (props: DSOFavoriteProps) => {
             size='small'
             onClick={handleFav}
             style={{ color: isFav ? '#F0D400' : '#000000' }}
+            data-testid='icon-button'
           >
             {isFav ? (
               <StarIcon color='inherit' />

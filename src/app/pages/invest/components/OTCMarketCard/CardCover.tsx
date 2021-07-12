@@ -6,9 +6,10 @@ import Typography from '@material-ui/core/Typography'
 import { DSOLogo } from 'app/components/DSO/components/DSOLogo'
 import useStyles from 'app/pages/invest/components/OTCMarketCard/CardCover.style'
 import { DSOFavorite } from 'app/components/DSOFavorite'
+import { dsoQueryKeys } from 'config/queryKeys'
 
 export interface CardCoverProps {
-  type: 'Primary' | 'OTC'
+  type: 'Primary' | 'OTC' | 'TopOffers'
   data: DigitalSecurityOffering
   viewURL: string
 }
@@ -16,13 +17,23 @@ export interface CardCoverProps {
 export const CardCover = (props: CardCoverProps) => {
   const { data, type } = props
   const classes = useStyles()
+  const queryKeys = []
+
+  if (type === 'Primary') {
+    queryKeys.push(dsoQueryKeys.getPromoted)
+  }
+
+  if (type === 'TopOffers') {
+    queryKeys.push(dsoQueryKeys.getPromoted)
+    queryKeys.push(dsoQueryKeys.getApprovedList)
+  }
 
   return (
     <Box>
       <Grid container direction='column' className={classes.cover}>
-        {type === 'Primary' ? (
+        {type !== 'OTC' ? (
           <Grid item className={classes.favorite}>
-            <DSOFavorite dso={data} />
+            <DSOFavorite dependentQueryKeys={queryKeys} dso={data} />
           </Grid>
         ) : null}
         <Grid item>

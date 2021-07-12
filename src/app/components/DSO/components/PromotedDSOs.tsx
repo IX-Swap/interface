@@ -21,7 +21,7 @@ export const PromotedDSOs = () => {
         <Slide index={i} key={dso._id} className='custom'>
           <Box px={2} height='100%'>
             <OTCMarketCard
-              type={'Primary'}
+              type={'TopOffers'}
               data={dso}
               viewURL={InvestRoute.view}
             />
