@@ -42,6 +42,7 @@ export const CorporateIssuerForm = ({ data }: CorporateIssuerFormProps) => {
       submitMutation={submitMutation}
       defaultActiveStep={defaultActiveStep}
       steps={corporateIssuerFormSteps}
+      nonLinear
     />
   )
 }

@@ -66,6 +66,7 @@ export const CorporateInvestorForm = ({ data }: CorporateInvestorFormProps) => {
       steps={corporateInvestorFormSteps}
       defaultActiveStep={defaultActiveStep}
       shouldSaveOnMove={!isInvestorJourneyCompleted}
+      nonLinear
     />
   )
 }

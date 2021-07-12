@@ -21,6 +21,7 @@ export interface FormStepProps {
   editMutation: MutationResultPair<any, any, any, any>
   submitMutation: MutationResultPair<any, any, any, any>
   shouldSaveOnMove: boolean
+  setCompleted?: () => void
 }
 
 export const FormStep = (props: FormStepProps) => {
@@ -34,7 +35,8 @@ export const FormStep = (props: FormStepProps) => {
     createMutation,
     editMutation,
     submitMutation,
-    shouldSaveOnMove
+    shouldSaveOnMove,
+    setCompleted
   } = props
 
   const isCurrentStep = activeStep === index
@@ -66,6 +68,7 @@ export const FormStep = (props: FormStepProps) => {
 
     const onSubmitSuccess = (data: any) => {
       if (data?.message === 'OK' && !isLastStep) {
+        setCompleted?.()
         setActiveStep(activeStep + 1)
       }
     }

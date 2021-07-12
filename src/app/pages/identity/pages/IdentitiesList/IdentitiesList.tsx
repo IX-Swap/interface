@@ -12,7 +12,11 @@ export const IdentitiesList: React.FC = () => {
   const theme = useTheme()
   const backgroundColor = theme.palette.backgrounds.light
 
-  const { hasIdentity, isLoadingIdentities } = useGetIdentities()
+  const {
+    hasIdentity,
+    isLoadingIdentities,
+    detailsOfIssuance
+  } = useGetIdentities()
 
   if (isLoadingIdentities) {
     return <LoadingIndicator />
@@ -30,7 +34,11 @@ export const IdentitiesList: React.FC = () => {
             />
           </Grid>
           <Grid item xs={12}>
-            {hasIdentity ? <IdentityPreview /> : <NoIdentityView />}
+            {hasIdentity || detailsOfIssuance !== undefined ? (
+              <IdentityPreview />
+            ) : (
+              <NoIdentityView />
+            )}
           </Grid>
         </Grid>
       </RootContainer>

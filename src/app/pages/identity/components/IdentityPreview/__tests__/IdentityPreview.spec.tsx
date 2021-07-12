@@ -2,11 +2,13 @@ import * as useGetIdentities from 'app/components/OnboardingPanel/hooks/useGetId
 import { IdentityPreview } from 'app/pages/identity/components/IdentityPreview/IdentityPreview'
 import React from 'react'
 import { render, cleanup } from 'test-utils'
-import { corporate, individual } from '__fixtures__/identity'
+import { corporate, detailsOfIssuance, individual } from '__fixtures__/identity'
 import { LoadingIndicator } from 'app/components/LoadingIndicator/LoadingIndicator'
 import { CorporateIdentityButton } from 'app/pages/identity/components/IdentityPreview/CorporateIdentityButton'
 import { IndividualIdentityButton } from 'app/pages/identity/components/IdentityPreview/IndividualIdentityButton'
 import { IssuerIdentityButton } from 'app/pages/identity/components/IdentityPreview/IssuerIdentityButton'
+import { CreateDetailsOfIssuanceButton } from 'app/pages/identity/components/NoIdentityView/CreateDetailsOfIssuanceButton'
+import { CreateIssuerIdentityButton } from 'app/pages/identity/components/NoIdentityView/CreateIssuerIdentityButton'
 
 jest.mock('app/components/LoadingIndicator/LoadingIndicator', () => ({
   LoadingIndicator: jest.fn(() => null)
@@ -30,6 +32,20 @@ jest.mock(
   'app/pages/identity/components/IdentityPreview/IndividualIdentityButton',
   () => ({
     IndividualIdentityButton: jest.fn(() => null)
+  })
+)
+
+jest.mock(
+  'app/pages/identity/components/NoIdentityView/CreateDetailsOfIssuanceButton',
+  () => ({
+    CreateDetailsOfIssuanceButton: jest.fn(() => null)
+  })
+)
+
+jest.mock(
+  'app/pages/identity/components/NoIdentityView/CreateIssuerIdentityButton',
+  () => ({
+    CreateIssuerIdentityButton: jest.fn(() => null)
   })
 )
 
@@ -71,12 +87,13 @@ describe('IdentityPreview', () => {
     expect(LoadingIndicator).toHaveBeenCalled()
   })
 
-  it('renders null when hasIdentity is false', () => {
+  it('renders null when hasIdentity is false && details of Issuance is undefined', () => {
     const objResponse = {
       hasIdentity: false,
       isLoadingIdentities: true,
       individualIdentity: individual,
-      corporateIdentities: { list: [corporate] }
+      corporateIdentities: { list: [corporate] },
+      detailsOfIssuance: undefined
     }
 
     jest
@@ -137,5 +154,39 @@ describe('IdentityPreview', () => {
     render(<IdentityPreview />)
 
     expect(IndividualIdentityButton).toHaveBeenCalled()
+  })
+
+  it('renders CreateDetailsOfIssuanceButton when identity is undefined but detailsOfIssuance is not undefined and is not Approved', () => {
+    const objResponse = {
+      hasIdentity: true,
+      isLoadingIdentities: false,
+      individualIdentity: individual,
+      corporateIdentities: undefined,
+      detailsOfIssuance: detailsOfIssuance
+    }
+
+    jest
+      .spyOn(useGetIdentities, 'useGetIdentities')
+      .mockImplementation(() => objResponse as any)
+
+    render(<IdentityPreview />)
+    expect(CreateDetailsOfIssuanceButton).toHaveBeenCalled()
+  })
+
+  it('renders CreateIssuerButton when identity is undefined and detailOfIssuance is Approved', () => {
+    const objResponse = {
+      hasIdentity: true,
+      isLoadingIdentities: false,
+      individualIdentity: individual,
+      corporateIdentities: undefined,
+      detailsOfIssuance: { ...detailsOfIssuance, status: 'Approved' }
+    }
+
+    jest
+      .spyOn(useGetIdentities, 'useGetIdentities')
+      .mockImplementation(() => objResponse as any)
+
+    render(<IdentityPreview />)
+    expect(CreateIssuerIdentityButton).toHaveBeenCalled()
   })
 })
