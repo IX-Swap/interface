@@ -14,16 +14,16 @@ on:
 jobs:
   integration-tests:
     runs-on: ubuntu-latest # or macos-latest, windows-latest
-
     steps:
       - uses: actions/checkout@v2
 
       - name: Set up node
-        run: npm config set '//registry.npmjs.org/:_authToken' "de90c270-9627-40cf-b0b2-8ba913f3f2bd"
-
-      - uses: actions/setup-node@v1
-
+        run: npm config set '//registry.npmjs.org/:_authToken' "token"
+      - name: Set up node
+        uses: actions/setup-node@v1
+        with:
+          node-version: 14
+          registry-url: https://registry.npmjs.org
       - uses: microsoft/playwright-github-action@v1
-
       - name: Install dependencies and run tests
         run: yarn install && yarn integration-test
