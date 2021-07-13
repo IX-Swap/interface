@@ -31,6 +31,7 @@ export const DSOTable = () => {
             hasActions
             actions={Actions}
             filter={{ search, capitalStructure }}
+            isNewThemeOn
           />
         </Box>
       </Grid>

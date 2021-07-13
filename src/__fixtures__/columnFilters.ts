@@ -32,10 +32,12 @@ export const mockColumns: Array<
 
 export const mockDefaultColumns: Record<DSOTableColumn, boolean> = {
   favorite: true,
+  completionDate: true,
   tokenName: true,
   insight: true,
   pricePerUnit: true,
   totalFundraisingAmount: true,
   minimumInvestment: true,
-  distributionFrequency: true
+  distributionFrequency: true,
+  interestRate: true
 }

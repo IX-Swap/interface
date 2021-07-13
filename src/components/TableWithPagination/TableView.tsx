@@ -20,6 +20,7 @@ import { useTableWithPagination } from 'components/TableWithPagination/hooks/use
 import { TableRows } from 'components/TableWithPagination/TableRows'
 import { statusColumn } from 'app/pages/authorizer/hooks/useAuthorizerView'
 import { UseSelectionHelperReturnType } from 'hooks/useSelectionHelper'
+import { useTheme } from '@material-ui/core/styles'
 
 export interface TableViewRendererProps<T> {
   items: T[]
@@ -46,6 +47,7 @@ export interface TableViewProps<T> {
   paperProps?: PaperProps
   defaultRowsPerPage?: number
   size?: Size
+  isNewThemeOn?: boolean
 }
 
 export const TableView = <T,>({
@@ -64,7 +66,8 @@ export const TableView = <T,>({
   selectionHelper,
   paperProps = {},
   defaultRowsPerPage,
-  size = 'medium'
+  size = 'medium',
+  isNewThemeOn = false
 }: TableViewProps<T>): JSX.Element => {
   const {
     items,
@@ -81,6 +84,10 @@ export const TableView = <T,>({
     queryEnabled,
     defaultRowsPerPage
   )
+
+  const theme = useTheme()
+  const headColor = isNewThemeOn ? theme.palette.primary.main : 'initial'
+  const headHeight = isNewThemeOn ? 50 : 'initial'
   const cacheQueryKey = [name, page, rowsPerPage, filter]
 
   const _items = Array.isArray(fakeItems) ? fakeItems : items
@@ -150,7 +157,12 @@ export const TableView = <T,>({
           <TableContainer>
             <Table aria-label='table' data-testid='table' size={size}>
               {columns.length > 0 ? (
-                <TableHead>
+                <TableHead
+                  style={{
+                    backgroundColor: headColor,
+                    height: headHeight
+                  }}
+                >
                   <TableRow>
                     {columns.map(e => (
                       <TableCell
@@ -158,7 +170,15 @@ export const TableView = <T,>({
                         align={e.headAlign ?? 'left'}
                         style={{ borderBottom: 'none' }}
                       >
-                        <b>{e.label}</b>
+                        <b
+                          style={{
+                            color: isNewThemeOn
+                              ? theme.palette.slider.activeColor
+                              : 'initial'
+                          }}
+                        >
+                          {e.label}
+                        </b>
                       </TableCell>
                     ))}
                     {hasActions && (
@@ -185,6 +205,7 @@ export const TableView = <T,>({
                   hasActions={hasActions}
                   actions={actions}
                   cacheQueryKey={cacheQueryKey}
+                  isNewThemeOn={isNewThemeOn}
                 />
               )}
             </Table>
