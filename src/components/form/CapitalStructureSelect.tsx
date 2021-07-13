@@ -6,14 +6,19 @@ import { capitalStructures } from 'config/defaults'
 
 export interface CapitalStructureSelectProps extends TypedSelectProps {
   includeAll?: boolean
+  labelBetweenAll?: string
 }
 
 export const CapitalStructureSelect = (props: CapitalStructureSelectProps) => {
-  const { includeAll = false, label, ...rest } = props
+  const { includeAll = false, label, labelBetweenAll, ...rest } = props
 
   return (
     <Select {...(rest as SelectProps)} label={label}>
-      {includeAll && <MenuItem value='All'>All</MenuItem>}
+      {includeAll && (
+        <MenuItem value='All'>
+          {labelBetweenAll !== undefined ? labelBetweenAll : 'All'}
+        </MenuItem>
+      )}
       {renderMenuItems(
         capitalStructures.map(option => ({ label: option, value: option }))
       )}
