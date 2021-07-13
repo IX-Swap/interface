@@ -14,17 +14,10 @@ on:
 jobs:
   integration-tests:
     runs-on: ubuntu-latest # or macos-latest, windows-latest
-
     steps:
-      - uses: actions/checkout@v2
-
-      - name: Set up node
       - name: npm config
         run: npm config set '//registry.npmjs.org/:_authToken' "de90c270-9627-40cf-b0b2-8ba913f3f2bd"
-        
-      - uses: actions/setup-node@v1
-
       - uses: microsoft/playwright-github-action@v1
 
-      - name: run tests
-        run: yarn integration-test
+      - name: Install dependencies and run tests
+        run: npm install && npm test
