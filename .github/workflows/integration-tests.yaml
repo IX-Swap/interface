@@ -22,6 +22,5 @@ jobs:
         with:
           node-version: '14'
           registry-url: https://registry.npmjs.org
-          cache: 'yarn'
-      - run: yarn install
+      - run: npm install
       - run: yarn integration-test
