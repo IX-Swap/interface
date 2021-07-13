@@ -6,7 +6,7 @@ export const CreateIndividualIdentityButton = () => {
   return (
     <CreateIdentityCard
       title='Individual'
-      content='Information about the individual section will be placed here.'
+      content='Suitable for users who want to invest in personal capacity'
       cardColor='green'
       isLink
       linkLabel='CREATE INDIVIDUAL IDENTITY'

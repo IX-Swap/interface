@@ -21,7 +21,7 @@ export const IssuerIdentityButton = ({
     >
       <CreateIdentityCard
         title='Issuer'
-        content='Suitable for users who want to use InvestaX platform for fundraising.'
+        content='Suitable for users who want to use InvestaX platform for fundraising'
         active={active}
         cardColor='blue'
         contentIcon={<DomainIcon />}
