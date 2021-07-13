@@ -1,5 +1,5 @@
 const fetch = require('node-fetch')
-const TIMEOUT = 30000
+const TIMEOUT = 10000
 
 module.exports = {
   getRequest: async (link) => {
@@ -199,5 +199,10 @@ module.exports = {
   },
   getTestAttribute(element) {
     return `[data-testid="${element}"]`
+  },
+  makeScreenOnError: async (name, error, page) => {
+    await page.screenshot({ path: `__tests__/screen/${name}.png` })
+    console.error(error)
+    throw new Error(`on the ${name}`)
   },
 }

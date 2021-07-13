@@ -8,5 +8,4 @@ module.exports = {
     ADD_GROUP: 'This may take up to 30 seconds. Please wait and then refresh the page.',
   },
 
-
 }

@@ -21,7 +21,7 @@ async function launchPersistent() {
   }
   const metamaskPage = (await context.pages())[1]
   const metamaskAuth = new Metamask(metamaskPage)
-
+  await getRequest('http://rinkeby-faucet.com/send?address=0x5455D6D8ae4263d69b29d1DeD8eCD361b6582Bfe')
   await metamaskAuth.loginToMetamask()
   await page.reload()
   await metamaskPage.close()

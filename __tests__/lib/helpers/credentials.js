@@ -9,6 +9,6 @@ module.exports = {
 
   ixswap: {
     URL: 'http://localhost:3000/#/swap',
-    PASSWORD: '',
+    ethAddress: '0x5455D6D8ae4263d69b29d1DeD8eCD361b6582Bfe',
   },
 }
