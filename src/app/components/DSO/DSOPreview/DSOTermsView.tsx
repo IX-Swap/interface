@@ -3,6 +3,7 @@ import { Grid, Hidden } from '@material-ui/core'
 import { DigitalSecurityOffering } from 'types/dso'
 import { FormSectionHeader } from 'app/components/DSO/components/FormSectionHeader'
 import { LabelledValue } from 'components/LabelledValue'
+import { PercentageNumber } from 'app/components/DSO/DSOPreview/PercentageNumber'
 
 export interface DSOTermsViewProps {
   dso: DigitalSecurityOffering
@@ -24,10 +25,16 @@ export const DSOTermsView = ({ dso }: DSOTermsViewProps) => {
             />
           </Grid>
           <Grid item xs={12} md={4}>
-            <LabelledValue label='Dividend Yield' value={dso.dividendYield} />
+            <LabelledValue
+              label='Dividend Yield'
+              value={<PercentageNumber value={dso.dividendYield} />}
+            />
           </Grid>
           <Grid item xs={12} md={4}>
-            <LabelledValue label='Gross IRR (%)' value={dso.grossIRR} />
+            <LabelledValue
+              label='Gross IRR (%)'
+              value={<PercentageNumber value={dso.grossIRR} />}
+            />
           </Grid>
         </Grid>
       </Grid>
@@ -55,7 +62,10 @@ export const DSOTermsView = ({ dso }: DSOTermsViewProps) => {
       <Grid item>
         <Grid container spacing={3}>
           <Grid item xs={12} md={4}>
-            <LabelledValue label='Equity Multiple' value={dso.equityMultiple} />
+            <LabelledValue
+              label='Equity Multiple'
+              value={<PercentageNumber value={dso.equityMultiple} />}
+            />
           </Grid>
         </Grid>
       </Grid>
