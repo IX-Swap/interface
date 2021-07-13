@@ -20,10 +20,11 @@ jobs:
 
       - name: Set up node
         uses: actions/setup-node@v1
-        env:
-          NPM_AUTH_TOKEN: de90c270-9627-40cf-b0b2-8ba913f3f2bd
 
       - uses: microsoft/playwright-github-action@v1
-
-      - name: Install dependencies and run tests
-        run: npm install && yarn integration-test
+      - name: npm install
+            run: npm install
+            env:
+              NPM_AUTH_TOKEN: de90c270-9627-40cf-b0b2-8ba913f3f2bd
+      - name: run tests
+        run:  yarn integration-test
