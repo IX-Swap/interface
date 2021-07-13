@@ -1,6 +1,7 @@
 import React from 'react'
 import LoadingThin from 'assets/images/loader_thin.svg'
 import styled, { keyframes } from 'styled-components'
+import { SvgIconWrapper } from 'theme'
 
 const rotate = keyframes`
   from {
@@ -13,19 +14,6 @@ const rotate = keyframes`
 
 const StyledRotate = styled.div`
   animation: 2s ${rotate} linear infinite;
-`
-export const IconWrapper = styled.div<{ size?: number }>`
-  ${({ theme }) => theme.flexColumnNoWrap};
-  align-items: center;
-  justify-content: center;
-  & > img,
-  span {
-    height: ${({ size }) => (size ? size + 'px' : '32px')};
-    width: ${({ size }) => (size ? size + 'px' : '32px')};
-  }
-  ${({ theme }) => theme.mediaWidth.upToMedium`
-    align-items: flex-end;
-  `};
 `
 
 /**
@@ -43,9 +31,9 @@ export const LoaderThin = ({
 }) => {
   return (
     <StyledRotate>
-      <IconWrapper size={size}>
+      <SvgIconWrapper size={size}>
         <img src={LoadingThin} alt={'Loading...'} />
-      </IconWrapper>
+      </SvgIconWrapper>
     </StyledRotate>
   )
 }

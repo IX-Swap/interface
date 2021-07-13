@@ -376,3 +376,16 @@ export const StyledNumberInput = styled.input<{ error?: boolean; fontSize?: stri
     font-style: normal;
   }
 `
+export const SvgIconWrapper = styled.div<{ size?: number }>`
+  ${({ theme }) => theme.flexColumnNoWrap};
+  align-items: center;
+  justify-content: center;
+  & > img,
+  span {
+    height: ${({ size }) => (size ? size + 'px' : '32px')};
+    width: ${({ size }) => (size ? size + 'px' : '32px')};
+  }
+  ${({ theme }) => theme.mediaWidth.upToMedium`
+    align-items: flex-end;
+  `};
+`
