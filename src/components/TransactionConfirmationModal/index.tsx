@@ -159,7 +159,7 @@ export function TransactionErrorContent({ message, onDismiss }: { message: React
               <img src={Attention} alt={'Error'} />
             </SvgIconWrapper>
           </RowCenter>
-          <RowCenter style={{ marginTop: 14, marginBottom: 53 }}>
+          <RowCenter style={{ marginTop: 14, marginBottom: 53, textAlign: 'center' }}>
             <TYPE.error error={!!message}>{message}</TYPE.error>
           </RowCenter>
           <RowCenter style={{ marginBottom: 35 }}>
