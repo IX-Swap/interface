@@ -14,15 +14,14 @@ on:
 jobs:
   integration-tests:
     runs-on: ubuntu-latest # or macos-latest, windows-latest
-        steps:
-          - uses: actions/checkout@v2
-          - name: Set up node
-            run: npm config set '//registry.npmjs.org/:_authToken' "de90c270-9627-40cf-b0b2-8ba913f3f2bd"
-          - uses: actions/setup-node@v2
-            with:
-              node-version: '14'
-              registry-url: https://registry.npmjs.org
-              cache: 'yarn'
-          - run: yarn install
-          - run: yarn integration-test
-
+    steps:
+      - uses: actions/checkout@v2
+      - name: Set up node
+        run: npm config set '//registry.npmjs.org/:_authToken' "de90c270-9627-40cf-b0b2-8ba913f3f2bd"
+      - uses: actions/setup-node@v2
+        with:
+          node-version: '14'
+          registry-url: https://registry.npmjs.org
+          cache: 'yarn'
+      - run: yarn install
+      - run: yarn integration-test
