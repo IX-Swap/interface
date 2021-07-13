@@ -9,11 +9,15 @@ import { individualInvestorFormSteps } from './steps'
 import { getIdentityDefaultActiveStep } from 'app/pages/identity/utils/shared'
 import { generatePath, useHistory } from 'react-router'
 import { IdentityRoute } from 'app/pages/identity/router/config'
+import { IdentitySubmitConfirmationDialog } from 'app/pages/identity/components/IdentitySubmitConfirmationDialog/IdentitySubmitConfirmationDialog'
+import { useConfirmSubmitDialog } from 'app/pages/identity/hooks/useConfirmSubmitDialog'
 
 export const IndividualInvestorForm = memo(() => {
+  const { open, closeDialog, openDialog } = useConfirmSubmitDialog()
+
   const { data, isLoading } = useIndividualIdentity()
   const mutation = useCreateIndividual()
-  const submitMutation = useSubmitIndividual()
+  const submitMutation = useSubmitIndividual(openDialog)
   const { showPreIdentityCreateDialog } = useOnboardingDialog()
   const { isIndividualJourneyCompleted } = useOnboardingJourneys()
   const { location, replace } = useHistory()
@@ -47,15 +51,18 @@ export const IndividualInvestorForm = memo(() => {
   })
 
   return (
-    <FormStepper
-      data={data}
-      shouldSaveOnMove={!isIndividualJourneyCompleted}
-      createMutation={mutation}
-      editMutation={mutation}
-      submitMutation={submitMutation}
-      defaultActiveStep={defaultActiveStep}
-      steps={individualInvestorFormSteps}
-      nonLinear
-    />
+    <>
+      <IdentitySubmitConfirmationDialog open={open} closeDialog={closeDialog} />
+      <FormStepper
+        data={data}
+        shouldSaveOnMove={!isIndividualJourneyCompleted}
+        createMutation={mutation}
+        editMutation={mutation}
+        submitMutation={submitMutation}
+        defaultActiveStep={defaultActiveStep}
+        steps={individualInvestorFormSteps}
+        nonLinear
+      />
+    </>
   )
 })

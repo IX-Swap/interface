@@ -2,12 +2,10 @@ import { useServices } from 'hooks/useServices'
 import { useMutation, useQueryCache } from 'react-query'
 import { identityURL } from 'config/apiURL'
 import { identityQueryKeys } from 'config/queryKeys'
-import { useOnboardingDialog } from 'app/components/OnboardingDialog/hooks/useOnboardingDialog'
 import { IndividualIdentity } from 'app/pages/identity/types/forms'
 
-export const useSubmitIndividual = () => {
+export const useSubmitIndividual = (callback?: () => void) => {
   const { snackbarService, apiService, storageService } = useServices()
-  const { showPostIdentityCreateDialog } = useOnboardingDialog()
   const queryCache = useQueryCache()
 
   const submitIndividual = async (id: string) => {
@@ -18,7 +16,7 @@ export const useSubmitIndividual = () => {
   return useMutation(submitIndividual, {
     onSuccess: data => {
       void snackbarService.showSnackbar(data.message, 'success')
-      showPostIdentityCreateDialog('individual')
+      callback?.()
       void queryCache.invalidateQueries(identityQueryKeys.getIndividual)
 
       // TODO: remove this once we come up with a better solution to determine what kind of identity has been submitted and whether user is still in the onboarding proces

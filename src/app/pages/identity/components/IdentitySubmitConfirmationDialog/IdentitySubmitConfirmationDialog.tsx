@@ -1,0 +1,51 @@
+import {
+  Box,
+  Dialog,
+  DialogContent,
+  DialogActions,
+  Typography,
+  Button
+} from '@material-ui/core'
+import React from 'react'
+
+export interface IdentitySubmitConfirmationDialogProps {
+  open: boolean
+  closeDialog: () => void
+}
+
+export const IdentitySubmitConfirmationDialog = ({
+  open,
+  closeDialog
+}: IdentitySubmitConfirmationDialogProps) => {
+  const handleClick = () => {
+    closeDialog()
+  }
+
+  return (
+    <Dialog open={open}>
+      <Box p={6}>
+        <Typography variant='h5' style={{ textAlign: 'center' }}>
+          Thanks For Submitting Your Identity!
+        </Typography>
+        <DialogContent>
+          <Typography>
+            You will receive an e-mail shortly confirming your identity status.
+          </Typography>
+        </DialogContent>
+        <DialogActions
+          style={{ display: 'flex', paddingTop: 30, justifyContent: 'center' }}
+        >
+          <Button
+            variant='contained'
+            color='primary'
+            disableRipple
+            disableElevation
+            onClick={handleClick}
+          >
+            OK
+          </Button>
+        </DialogActions>
+      </Box>
+    </Dialog>
+  )
+}

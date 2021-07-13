@@ -13,7 +13,7 @@ import { VSpacer } from 'components/VSpacer'
 import classNames from 'classnames'
 
 export interface OTCMarketCardProps {
-  type: 'Primary' | 'OTC'
+  type: 'Primary' | 'OTC' | 'TopOffers'
   data: DigitalSecurityOffering
   viewURL: string
 }
@@ -41,7 +41,7 @@ export const OTCMarketCard = (props: OTCMarketCardProps) => {
       <Box px={3} pt={2.5} pb={5} height='100%'>
         <CardCover type={type} data={data} viewURL={viewURL} />
         <CardContent type={type} data={data} />
-        {type === 'Primary' ? (
+        {type !== 'OTC' ? (
           <>
             <VSpacer size='small' />
             <Button
@@ -59,7 +59,7 @@ export const OTCMarketCard = (props: OTCMarketCardProps) => {
         ) : null}
 
         <Grid container item justify='flex-end' alignItems={'center'}>
-          {type === 'Primary' ? (
+          {type !== 'OTC' ? (
             <Typography
               className={classNames(
                 classes.capitalStructure,

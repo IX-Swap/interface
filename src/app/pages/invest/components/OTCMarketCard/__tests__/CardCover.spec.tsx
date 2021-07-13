@@ -7,6 +7,7 @@ import {
   CardCoverProps
 } from 'app/pages/invest/components/OTCMarketCard/CardCover'
 import { DSOFavorite } from 'app/components/DSOFavorite'
+import { dsoQueryKeys } from 'config/queryKeys'
 
 jest.mock('app/components/DSO/components/DSOLogo', () => ({
   DSOLogo: jest.fn(() => null)
@@ -25,6 +26,11 @@ describe('CardCover', () => {
     data: dso,
     viewURL: 'foo',
     type: 'OTC'
+  }
+  const TopOffersProps: CardCoverProps = {
+    data: dso,
+    viewURL: 'foo',
+    type: 'TopOffers'
   }
   afterEach(async () => {
     await cleanup()
@@ -67,7 +73,24 @@ describe('CardCover', () => {
     expect(DSOFavorite).toHaveBeenCalledTimes(1)
     expect(DSOFavorite).toHaveBeenCalledWith(
       {
-        dso: dso
+        dso: dso,
+        dependentQueryKeys: [dsoQueryKeys.getPromoted]
+      },
+      {}
+    )
+  })
+
+  it('renders DSOFavorite with correct props when type is TopOffers', () => {
+    render(<CardCover {...TopOffersProps} />)
+
+    expect(DSOFavorite).toHaveBeenCalledTimes(1)
+    expect(DSOFavorite).toHaveBeenCalledWith(
+      {
+        dso: dso,
+        dependentQueryKeys: [
+          dsoQueryKeys.getPromoted,
+          dsoQueryKeys.getApprovedList
+        ]
       },
       {}
     )

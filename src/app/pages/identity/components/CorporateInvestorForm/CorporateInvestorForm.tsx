@@ -10,15 +10,19 @@ import { getIdentityDefaultActiveStep } from 'app/pages/identity/utils/shared'
 import { generatePath, useHistory } from 'react-router'
 import { IdentityRoute } from 'app/pages/identity/router/config'
 import { CorporateIdentity } from '../../types/forms'
+import { IdentitySubmitConfirmationDialog } from 'app/pages/identity/components/IdentitySubmitConfirmationDialog/IdentitySubmitConfirmationDialog'
+import { useConfirmSubmitDialog } from 'app/pages/identity/hooks/useConfirmSubmitDialog'
 
 export interface CorporateInvestorFormProps {
   data?: CorporateIdentity
 }
 
 export const CorporateInvestorForm = ({ data }: CorporateInvestorFormProps) => {
+  const { open, openDialog, closeDialog } = useConfirmSubmitDialog()
+
   const createMutation = useCreateCorporate('investor')
   const updateMutation = useUpdateCorporate('investor')
-  const submitMutation = useSubmitCorporate()
+  const submitMutation = useSubmitCorporate(openDialog)
   const { showPreIdentityCreateDialog } = useOnboardingDialog()
   const {
     isInvestorJourneyCompleted,
@@ -58,15 +62,18 @@ export const CorporateInvestorForm = ({ data }: CorporateInvestorFormProps) => {
   })
 
   return (
-    <FormStepper
-      data={data}
-      createMutation={createMutation}
-      editMutation={updateMutation}
-      submitMutation={submitMutation}
-      steps={corporateInvestorFormSteps}
-      defaultActiveStep={defaultActiveStep}
-      shouldSaveOnMove={!isInvestorJourneyCompleted}
-      nonLinear
-    />
+    <>
+      <IdentitySubmitConfirmationDialog open={open} closeDialog={closeDialog} />
+      <FormStepper
+        data={data}
+        createMutation={createMutation}
+        editMutation={updateMutation}
+        submitMutation={submitMutation}
+        steps={corporateInvestorFormSteps}
+        defaultActiveStep={defaultActiveStep}
+        shouldSaveOnMove={!isInvestorJourneyCompleted}
+        nonLinear
+      />
+    </>
   )
 }
