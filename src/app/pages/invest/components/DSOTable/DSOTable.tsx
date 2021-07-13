@@ -37,7 +37,7 @@ export const DSOTable = () => {
               search,
               capitalStructure,
               network,
-              currency: currency,
+              currency: currency !== '' ? currency : undefined,
               isPriceAscending:
                 isPriceAscending !== undefined
                   ? isPriceAscending === 'yes'

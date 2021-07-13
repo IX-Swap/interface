@@ -55,13 +55,11 @@ describe('DSOTableFilters', () => {
   })
 
   it('renders ColumnEditor correctly', async () => {
-    const { getByRole, getByText, queryByText, getAllByRole } = render(
-      <DSOTableFilters />
-    )
-    const showColumnsButton = getByRole('button')
+    const { getByText, queryByText, getAllByRole } = render(<DSOTableFilters />)
+    const showColumnsButton = getAllByRole('button')[1]
     expect(showColumnsButton).toBeInTheDocument()
     expect(queryByText('Add more columns')).not.toBeInTheDocument()
-    expect(getAllByRole('button')).toHaveLength(1)
+    expect(getAllByRole('button')).toHaveLength(2)
 
     fireEvent.click(showColumnsButton)
     await waitFor(() => {
@@ -72,7 +70,7 @@ describe('DSOTableFilters', () => {
     fireEvent.click(showColumnsButton)
     await waitFor(() => {
       expect(queryByText('Add more columns')).not.toBeInTheDocument()
-      expect(getAllByRole('button')).toHaveLength(1)
+      expect(getAllByRole('button')).toHaveLength(2)
     })
   })
 })

@@ -57,6 +57,7 @@ export const PrimaryOfferings = () => {
             rowsPerPageOptions={[5, 10, 25, 50]}
             count={total}
             rowsPerPage={rowsPerPage}
+            labelRowsPerPage={'Items per page'}
             page={page}
             onChangeRowsPerPage={evt => {
               setPage(0)

@@ -13,6 +13,10 @@ export const mockColumns: Array<
     label: 'Offer Name'
   },
   {
+    key: 'completionDate',
+    label: 'Closing Date'
+  },
+  {
     key: 'pricePerUnit',
     label: 'pricePerUnit'
   },
@@ -27,6 +31,10 @@ export const mockColumns: Array<
   {
     key: 'distributionFrequency',
     label: 'distributionFrequency'
+  },
+  {
+    key: 'interestRate',
+    label: 'Expected Return'
   }
 ]
 

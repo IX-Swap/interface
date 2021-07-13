@@ -54,10 +54,10 @@ export const DSOTableFilters = () => {
             value={
               <Grid container>
                 <Grid>
-                  <CurrencyFilter currency={'SGD'} />
+                  <CurrencyFilter defaultValue={null} currency={'SGD'} />
                 </Grid>
                 <Grid style={{ marginLeft: theme.spacing(1) }}>
-                  <CurrencyFilter currency={'USD'} />
+                  <CurrencyFilter defaultValue={null} currency={'USD'} />
                 </Grid>
               </Grid>
             }
