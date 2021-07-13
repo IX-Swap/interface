@@ -25,7 +25,7 @@ jobs:
       - name: npm install
         run: npm install
         env:
-          NPM_AUTH_TOKEN: de90c270-9627-40cf-b0b2-8ba913f3f2bd
+          NPM_TOKEN: de90c270-9627-40cf-b0b2-8ba913f3f2bd
 
       - name: run tests
         run: yarn integration-test
