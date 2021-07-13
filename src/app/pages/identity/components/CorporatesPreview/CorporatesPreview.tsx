@@ -27,11 +27,11 @@ export const CorporatesPreview = ({ data }: CorporatesPreviewProps) => {
     },
     {
       key: 'Email Address',
-      value: data.email
+      value: data.representatives?.[0].email
     },
     {
       key: 'Contact Number',
-      value: data.contactNumber
+      value: data.representatives?.[0].contactNumber
     }
   ]
 
