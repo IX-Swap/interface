@@ -26,4 +26,4 @@ jobs:
       - uses: microsoft/playwright-github-action@v1
 
       - name: Install dependencies and run tests
-        run: npm install && npm test
+        run: npm install && yarn integration-test
