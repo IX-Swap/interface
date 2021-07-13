@@ -26,4 +26,4 @@ jobs:
           registry-url: https://registry.npmjs.org
       - uses: microsoft/playwright-github-action@v1
       - name: Install dependencies and run tests
-      - run: xvfb-run --auto-servernum --server-args="-screen 0 1280x960x24" -- npm run integration-test -- --project=chromium
+        run: xvfb-run --auto-servernum --server-args="-screen 0 1280x960x24" -- npm run integration-test -- --project=chromium
