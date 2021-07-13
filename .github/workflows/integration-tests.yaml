@@ -19,11 +19,11 @@ jobs:
       - uses: actions/checkout@v2
 
       - name: Set up node
-        uses: actions/setup-node@v1
       - name: npm config
         run: npm config set '//registry.npmjs.org/:_authToken' "de90c270-9627-40cf-b0b2-8ba913f3f2bd"
+        uses: actions/setup-node@v1
 
       - uses: microsoft/playwright-github-action@v1
 
       - name: run tests
-        run: npm install && yarn integration-test
+        run: yarn integration-test
