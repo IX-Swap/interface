@@ -7,7 +7,7 @@ async function launchPersistent() {
   const ARGS = [`--disable-extensions-except=${__dirname + '/metamask'}`, `--load-extension=${__dirname + '/metamask'}`]
   const userDataDir = ''
   const context = await chromium.launchPersistentContext(userDataDir, {
-    headless: false,
+    headless: true,
     args: ARGS,
     timeout: 50000,
     viewport: { width: 1720, height: 880 },

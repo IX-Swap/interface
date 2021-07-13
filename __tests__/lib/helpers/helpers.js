@@ -1,5 +1,5 @@
 const fetch = require('node-fetch')
-const TIMEOUT = 10000
+const TIMEOUT = 30000
 
 module.exports = {
   getRequest: async (link) => {

@@ -19,6 +19,7 @@ class SwapIX {
   setTypeOfCurrency = async (page = this.page) => {
     // await click(swap.field.CURRENCY_INPUT , page)
     // await click(swap.button.ETH_CRYPTO, page)
+
     await click(swap.button.OUT_CURRENCY, page)
     await click(swap.button.DAI_CRYPTO, page)
   }

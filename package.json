@@ -68,7 +68,6 @@
     "cids": "^1.0.0",
     "copy-to-clipboard": "^3.2.0",
     "cross-env": "^7.0.2",
-    "cypress": "^4.11.0",
     "dayjs": "^1.10.5",
     "eslint": "^7.11.0",
     "eslint-config-prettier": "^6.11.0",
@@ -128,7 +127,7 @@
     "build": "yarn compile-contract-types && yarn i18n:extract && yarn i18n:compile && react-scripts build",
     "i18n:extract": "lingui extract --locale en-US",
     "i18n:compile": "lingui compile",
-    "integration-test": "start-server-and-test 'serve build -l 3000' http://localhost:3000 'npx playwright test __tests__/tests'",
+    "integration-test": "npx playwright test __tests__/tests",
     "postinstall": "yarn compile-contract-types",
     "start": "yarn compile-contract-types && react-scripts start",
     "storybook": "start-storybook -p 6006",
@@ -152,5 +151,10 @@
       "last 1 safari version"
     ]
   },
-  "license": "GPL-3.0-or-later"
+  "license": "GPL-3.0-or-later",
+  "dependencies": {
+    "eth-provider": "^0.7.0",
+    "truffle-privatekey-provider": "^1.2.0",
+    "web3": "^1.4.0"
+  }
 }
