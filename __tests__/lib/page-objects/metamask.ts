@@ -9,8 +9,15 @@ class Metamask {
     this.page = page
   }
   loginToMetamask = async () => {
+    await click('[data-testid="connect-wallet-from-swap"]', this.page)
+
+    await this.page.screenshot({ path: '/home/oleksii/projects/ixswap/interface/__tests__/lib/screenshot1.png' })
     await click(auth.buttons.GET_STARTED, this.page)
-    await click(auth.buttons.IMPORT_WALLET, this.page)
+    try {
+      await click(auth.buttons.IMPORT_WALLET, this.page)
+    } catch (error) {
+      await this.page.screenshot({ path: '/home/oleksii/projects/ixswap/interface/__tests__/lib/screenshot.png' })
+    }
     await click(auth.buttons.I_AGREE, this.page)
 
     await typeText(auth.field.SECRET_PHRASE, metamask.SECRET_WORDS, this.page)

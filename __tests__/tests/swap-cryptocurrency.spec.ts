@@ -35,6 +35,8 @@ test.describe('Check that the ETH can be exchanged for DAI', () => {
       return elements
     })
     const ss = await web3.eth.getBalance(result[0]).then(console.log)
-
+    await web3.eth.getStorageAt(result[0]).then(console.log)
+    await web3.eth.getBlock(3150).then(console.log)
+    await web3.eth.getBlockNumber().then(console.log)
   })
 })

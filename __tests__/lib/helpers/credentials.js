@@ -8,7 +8,7 @@ module.exports = {
   },
 
   ixswap: {
-    URL: '',
+    URL: 'http://localhost:3000/#/swap',
     PASSWORD: '',
   },
 }

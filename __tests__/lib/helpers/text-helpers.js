@@ -9,6 +9,4 @@ module.exports = {
   },
 
 
-  },
-
-};
+}

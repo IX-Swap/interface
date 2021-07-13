@@ -13,6 +13,8 @@ const config: PlaywrightTestConfig = {
       retries: 0,
       timeout: 50000,
       use: {
+        headless: true,
+
         // Configure the browser to use.
         browserName: 'chromium',
         screenshot: 'only-on-failure',
