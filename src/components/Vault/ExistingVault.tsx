@@ -1,16 +1,17 @@
 import { Currency } from '@ixswap1/sdk-core'
 import { Trans } from '@lingui/macro'
 import { ButtonIXSGradient } from 'components/Button'
+import { Line } from 'components/Line'
 import { useActiveWeb3React } from 'hooks/web3'
 import React, { useMemo } from 'react'
+import { ApplicationModal } from 'state/application/actions'
+import { useDepositModalToggle, useModalOpen } from 'state/application/hooks'
 import { TYPE } from 'theme'
 import { AccreditationStatus } from './AccreditationStatus'
-import { HistoryBlock } from './HistoryBlock'
 import { BalanceRow } from './BalanceRow'
 import { VaultState } from './enum'
+import { HistoryBlock } from './HistoryBlock'
 import { AccreditationButtonRow, ExistingTitle, ExistingWrapper, TitleStatusRow } from './styleds'
-import { Line } from 'components/Line'
-import { RowEnd } from 'components/Row'
 interface Props {
   currency?: Currency
   status: Exclude<VaultState, VaultState.NOT_SUBMITTED>
@@ -18,6 +19,7 @@ interface Props {
 export const ExistingVault = ({ currency, status }: Props) => {
   const symbolText = useMemo(() => currency?.symbol ?? '', [currency?.symbol])
   const { account, chainId, library } = useActiveWeb3React()
+  const toggle = useDepositModalToggle()
   const isApproved = status === VaultState.APPROVED
   return (
     <ExistingWrapper>
@@ -29,13 +31,7 @@ export const ExistingVault = ({ currency, status }: Props) => {
         </ExistingTitle>
         {!isApproved && <AccreditationStatus status={status} />}
         {isApproved && (
-          <ButtonIXSGradient
-            data-testid="deposit"
-            style={{ width: '230px' }}
-            onClick={() => {
-              console.log(0)
-            }}
-          >
+          <ButtonIXSGradient data-testid="deposit" style={{ width: '230px' }} onClick={() => toggle()}>
             <Trans>Deposit</Trans>
           </ButtonIXSGradient>
         )}

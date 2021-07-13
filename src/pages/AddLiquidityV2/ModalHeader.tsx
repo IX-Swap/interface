@@ -19,11 +19,11 @@ interface Props {
 export const ModalHeader = ({ noLiquidity, currencies, liquidityMinted, allowedSlippage }: Props) => {
   const text = noLiquidity
     ? currencies[Field.CURRENCY_A]?.symbol + '/' + currencies[Field.CURRENCY_B]?.symbol
-    : liquidityMinted?.toSignificant(12)
+    : liquidityMinted?.toSignificant(10)
   return (
     <ModalHeaderWrapper>
       <AutoColumn gap="12px">
-        <RowBetween>
+        <RowBetween style={{ flexWrap: 'wrap' }}>
           <Text fontSize="40px" fontWeight={600} lineHeight="60px" marginRight={10}>
             {text}
           </Text>

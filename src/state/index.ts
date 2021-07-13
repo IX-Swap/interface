@@ -10,6 +10,8 @@ import mint from './mint/reducer'
 import lists from './lists/reducer'
 import burn from './burn/reducer'
 import multicall from './multicall/reducer'
+import deposit from './deposit/reducer'
+import withdraw from './withdraw/reducer'
 
 const PERSISTED_KEYS: string[] = ['user', 'transactions', 'lists']
 
@@ -23,6 +25,8 @@ const store = configureStore({
     burn,
     multicall,
     lists,
+    deposit,
+    withdraw,
   },
   middleware: [...getDefaultMiddleware({ thunk: false }), save({ states: PERSISTED_KEYS, debounce: 1000 })],
   preloadedState: load({ states: PERSISTED_KEYS }),

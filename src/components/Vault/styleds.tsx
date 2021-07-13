@@ -1,12 +1,12 @@
-import React from 'react'
-import Column from 'components/Column'
-import Row, { RowBetween, RowCenter, RowEnd, RowFixed } from 'components/Row'
-import styled from 'styled-components'
-import { TYPE } from 'theme'
-import { hexToRGBA } from 'utils/themeHelper'
 import { ReactComponent as Attention } from 'assets/images/attention.svg'
 import { ReactComponent as Clock } from 'assets/images/clock.svg'
 import { ReactComponent as Passed } from 'assets/images/passed.svg'
+import Column from 'components/Column'
+import { RowBetween, RowCenter, RowEnd, RowFixed } from 'components/Row'
+import React from 'react'
+import styled from 'styled-components'
+import { TYPE } from 'theme'
+import { hexToRGBA } from 'utils/themeHelper'
 import { ActionHistoryStatus } from './enum'
 
 export const NotSubmittedWrapper = styled.div`
@@ -160,6 +160,14 @@ export const AccreditationButtonRow = styled.div`
     margin-top: 22px;
   `};
 `
+
+export const ModalPadding = styled.div`
+  padding: 37px 40px 19px 40px;
+  ${({ theme }) => theme.mediaWidth.upToSmall`
+   padding: 1rem;
+  `};
+`
+
 /* eslint-disable react/display-name */
 export const StatusIcons = {
   [ActionHistoryStatus.PENDING]: () => <Clock />,

@@ -49,7 +49,7 @@ import AppBody from '../AppBody'
 export default function Swap({ history }: RouteComponentProps) {
   const { account } = useActiveWeb3React()
   const theme = useContext(ThemeContext)
-
+  const [openModal, setOpenModal] = useState<boolean>(false)
   // toggle wallet when disconnected
   const toggleWalletModal = useWalletModalToggle()
 
@@ -160,6 +160,7 @@ export default function Swap({ history }: RouteComponentProps) {
       return
     }
     setSwapState({ attemptingTxn: true, tradeToConfirm, showConfirm, swapErrorMessage: undefined, txHash: undefined })
+    setOpenModal(true)
     swapCallback()
       .then((hash) => {
         setSwapState({
@@ -243,6 +244,7 @@ export default function Swap({ history }: RouteComponentProps) {
     if (txHash) {
       onUserInput(Field.INPUT, '')
     }
+    setOpenModal(false)
   }, [onUserInput, txHash, handleHideConfirm])
   const handleAcceptChanges = useCallback(() => {
     setSwapState({ tradeToConfirm: trade, swapErrorMessage, txHash, attemptingTxn, showConfirm })
@@ -271,7 +273,7 @@ export default function Swap({ history }: RouteComponentProps) {
             onDismiss={handleConfirmDismiss}
             attemptingTxn={attemptingTxn}
             txHash={txHash}
-            isOpen={showConfirm && (attemptingTxn || Boolean(txHash))}
+            isOpen={openModal}
           />
           <AutoColumn gap={'1.25rem'}>
             <CurrencyInput

@@ -205,6 +205,15 @@ export const TYPE = {
   body(props: TextProps) {
     return <TextWrapper fontWeight={400} fontSize={16} color={'text1'} {...props} />
   },
+  body1(props: TextProps) {
+    return <TextWrapper fontWeight={400} fontSize={16} color={'text2'} lineHeight={'24px'} {...props} />
+  },
+  body2(props: TextProps) {
+    return <TextWrapper fontWeight={400} fontSize={17} color={'text1'} lineHeight={'24px'} {...props} />
+  },
+  body3(props: TextProps) {
+    return <TextWrapper fontWeight={400} fontSize={14} lineHeight={'21px'} color={'text2'} {...props} />
+  },
   popOver(props: TextProps) {
     return <TextWrapper fontWeight={400} fontSize={14} color={'text2'} lineHeight={'17px'} {...props} />
   },
@@ -244,6 +253,15 @@ export const TYPE = {
   title6(props: TextProps) {
     return <TextWrapper fontWeight={600} fontSize={16} lineHeight={'24px'} color={'text1'} {...props} />
   },
+  title7(props: TextProps) {
+    return <TextWrapper fontWeight={500} fontSize={18} lineHeight={'40px'} color={'text1'} {...props} />
+  },
+  title8(props: TextProps) {
+    return <TextWrapper fontWeight={600} fontSize={28} lineHeight={'42px'} color={'text2'} {...props} />
+  },
+  title9(props: TextProps) {
+    return <TextWrapper fontWeight={600} fontSize={18} lineHeight={'40px'} color={'text1'} {...props} />
+  },
   descriptionThin(props: TextProps) {
     return <TextWrapper fontWeight={300} fontSize={16} lineHeight={'24px'} color={'text2'} {...props} />
   },
@@ -272,7 +290,7 @@ export const TYPE = {
     return <TextWrapper fontWeight={500} fontSize={12} fontStyle={'italic'} color={'text2'} {...props} />
   },
   error({ error, ...props }: { error: boolean } & TextProps) {
-    return <TextWrapper fontWeight={500} color={error ? 'red1' : 'text2'} {...props} />
+    return <TextWrapper fontWeight={500} color={error ? 'error' : 'text2'} {...props} />
   },
 }
 

@@ -18,6 +18,8 @@ export enum ApplicationModal {
   DELEGATE,
   VOTE,
   POOL_OVERVIEW_OPTIONS,
+  DEPOSIT,
+  WITHDRAW,
 }
 
 export const updateBlockNumber = createAction<{ chainId: number; blockNumber: number }>('application/updateBlockNumber')
