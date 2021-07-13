@@ -20,15 +20,19 @@ export const DSOFinishLaterButton = (props: DSOFinishLaterButtonProps) => {
     dsoId,
     dso?.user ?? ''
   )
-  const formValues = getUpdateDSOPayload({
-    ...getValues(),
-    status: 'Draft'
-  })
 
-  const handleClick =
-    dso === undefined
-      ? async () => await createDSO(formValues)
-      : async () => await updateDSO(formValues)
+  const handleClick = async () => {
+    const formValues = getUpdateDSOPayload({
+      ...getValues(),
+      status: 'Draft'
+    })
+
+    if (dso === undefined) {
+      await createDSO(formValues)
+    } else {
+      await updateDSO(formValues)
+    }
+  }
 
   return (
     <Button
