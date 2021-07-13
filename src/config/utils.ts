@@ -11,3 +11,7 @@ export const getAPIUrl = (value: string | undefined) => {
 
   return value
 }
+
+export const getPercentageValue = (value: number) => {
+  return value * 100
+}
