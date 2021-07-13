@@ -32,18 +32,12 @@ describe('DSOTermsView', () => {
     )
 
     expect(LabelledValue).toHaveBeenCalledWith(
-      {
-        label: 'Dividend Yield',
-        value: dso.dividendYield
-      },
+      expect.objectContaining({ label: 'Dividend Yield' }),
       {}
     )
 
     expect(LabelledValue).toHaveBeenCalledWith(
-      {
-        label: 'Gross IRR (%)',
-        value: dso.grossIRR
-      },
+      expect.objectContaining({ label: 'Gross IRR (%)' }),
       {}
     )
 
@@ -64,10 +58,7 @@ describe('DSOTermsView', () => {
     )
 
     expect(LabelledValue).toHaveBeenCalledWith(
-      {
-        label: 'Equity Multiple',
-        value: dso.equityMultiple
-      },
+      expect.objectContaining({ label: 'Equity Multiple' }),
       {}
     )
   })
