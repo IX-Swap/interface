@@ -20,6 +20,8 @@ jobs:
 
       - name: Set up node
         uses: actions/setup-node@v1
+      - name: npm install
+        run: npm install
         env:
           NPM_AUTH_TOKEN: de90c270-9627-40cf-b0b2-8ba913f3f2bd
 
