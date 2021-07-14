@@ -8,7 +8,8 @@ import { Percent } from '@ixswap1/sdk-core'
 import SettingsModal from './SettingsModal'
 import { ReactComponent as SettingsFull } from 'assets/images/settings-full.svg'
 import { ReactComponent as SettingsEmpty } from 'assets/images/settings-empty.svg'
-
+import Astronaut from 'assets/images/astronaut.svg'
+import { SvgIconWrapper } from 'theme'
 const SettingsIcon = ({ open }: { open: boolean }) => <>{open ? <SettingsFull /> : <SettingsEmpty />}</>
 const StyledMenuIcon = styled(SettingsIcon)`
   height: 22px;
@@ -18,10 +19,7 @@ const StyledMenuIcon = styled(SettingsIcon)`
   }
 `
 const EmojiWrapper = styled.div`
-  position: absolute;
-  bottom: 4px;
-  right: 3px;
-  font-size: 14px;
+  position: relative;
 `
 
 const StyledMenu = styled.div`
@@ -72,9 +70,9 @@ export default function SettingsTab({ placeholderSlippage }: { placeholderSlippa
         <StyledMenuIcon open={open} />
         {expertMode ? (
           <EmojiWrapper>
-            <span role="img" aria-label="wizard-icon">
-              🧙
-            </span>
+            <SvgIconWrapper size={25}>
+              <img src={Astronaut} aria-label="astronaut-icon" />
+            </SvgIconWrapper>
           </EmojiWrapper>
         ) : null}
       </StyledMenuButton>
