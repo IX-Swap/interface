@@ -12,6 +12,7 @@ import { TokenAddressMap, useUnsupportedTokenList } from './../state/lists/hooks
 
 import { useActiveWeb3React } from './web3'
 import { useBytes32TokenContract, useTokenContract } from './useContract'
+import { useSecTokens } from 'state/secTokens/hooks'
 
 // reduce token map into standard address <-> Token mapping, optionally include user added tokens
 function useTokensFromMap(tokenMap: TokenAddressMap, includeUserAdded: boolean): { [address: string]: Token } {
@@ -49,7 +50,9 @@ function useTokensFromMap(tokenMap: TokenAddressMap, includeUserAdded: boolean):
 
 export function useAllTokens(): { [address: string]: Token } {
   const allTokens = useCombinedActiveList()
-  return useTokensFromMap(allTokens, true)
+  const tokens = useTokensFromMap(allTokens, true)
+  const { tokens: secTokens } = useSecTokens()
+  return tokens
 }
 
 export function useUnsupportedTokens(): { [address: string]: Token } {

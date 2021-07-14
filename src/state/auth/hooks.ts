@@ -24,7 +24,6 @@ export function useAuthToken() {
   const { saveAuthorization } = useSaveAuthorization()
   const { fetchToken } = useFetchToken()
   const getToken = useCallback(async () => {
-    console.log({ token })
     if (!token || shouldRenewToken(expiresAt ?? 0)) {
       const authData = await fetchToken()
       if (authData) {

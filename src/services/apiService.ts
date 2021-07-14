@@ -1,8 +1,8 @@
-import axios, { AxiosRequestConfig } from 'axios'
+import axios from 'axios'
 import { API_URL } from 'config'
 import store from 'state'
 import { responseErrorInterceptor, responseSuccessInterceptor } from './interceptors'
-import { APIServiceRequestConfig, KeyValueMap } from './types'
+import { APIServiceRequestConfig, KeyValueMap, RequestConfig } from './types'
 
 const _axios = axios.create()
 _axios.defaults.baseURL = API_URL
@@ -21,7 +21,7 @@ const apiService = {
     return await _axios.request<T>(this._prepareRequestConfig(requestConfig))
   },
 
-  get: async function get<T = any>(uri: string, config?: AxiosRequestConfig) {
+  get: async function get<T = any>(uri: string, config?: RequestConfig) {
     return await this.request<T>({
       method: 'get',
       uri,
@@ -30,7 +30,7 @@ const apiService = {
     })
   },
 
-  async patch<T = any>(uri: string, data: any, axiosConfig: AxiosRequestConfig = {}) {
+  async patch<T = any>(uri: string, data: any, axiosConfig: RequestConfig = {}) {
     return await this.request<T>({
       method: 'patch',
       uri,
@@ -39,7 +39,7 @@ const apiService = {
     })
   },
 
-  async delete<T = any>(uri: string, data: any, axiosConfig: AxiosRequestConfig = {}) {
+  async delete<T = any>(uri: string, data: any, axiosConfig: RequestConfig = {}) {
     return await this.request<T>({
       method: 'delete',
       uri,
@@ -48,7 +48,7 @@ const apiService = {
     })
   },
 
-  async post<T = any>(uri: string, data: any, axiosConfig: AxiosRequestConfig = {}) {
+  async post<T = any>(uri: string, data: any, axiosConfig: RequestConfig = {}) {
     return await this.request<T>({
       method: 'post',
       uri,
@@ -57,7 +57,7 @@ const apiService = {
     })
   },
 
-  async put<T = any>(uri: string, data: any, config?: AxiosRequestConfig) {
+  async put<T = any>(uri: string, data: any, config?: RequestConfig) {
     return await this.request<T>({
       method: 'put',
       uri,
@@ -78,10 +78,10 @@ const apiService = {
     return message
   },
 
-  _prepareRequestConfig({ uri, axiosConfig, data, method }: APIServiceRequestConfig): AxiosRequestConfig {
+  _prepareRequestConfig({ uri, axiosConfig, data, method }: APIServiceRequestConfig): RequestConfig {
     const body = this._prepareBody(data)
     const headers = this._prepareHeaders(data)
-    const requestConfig: AxiosRequestConfig = {
+    const requestConfig: RequestConfig = {
       ...axiosConfig,
       url: uri,
       headers,
