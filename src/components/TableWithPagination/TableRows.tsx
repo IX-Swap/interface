@@ -5,7 +5,7 @@ import { ActionTableCell } from './ActionTableCell'
 import { TableCellWrapper } from './TableCellWrapper'
 import { useTheme } from '@material-ui/core/styles'
 
-interface TableRowsProps<T> extends TableViewProps<T> {
+export interface TableRowsProps<T> extends TableViewProps<T> {
   items: T[]
   cacheQueryKey: any
   bordered: boolean
