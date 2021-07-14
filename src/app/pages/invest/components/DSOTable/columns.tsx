@@ -43,21 +43,24 @@ const abbreviateNumber = (
   return addSymbol(num, symbol, right)
 }
 
-const renderTotalFundraisingAmount = (
-  i: DSOInsight,
+export const renderTotalFundraisingAmount = (
+  raising: number,
   dso: DigitalSecurityOffering
 ) => {
-  return abbreviateNumber(dso.totalFundraisingAmount, dso.currency.symbol)
+  return abbreviateNumber(raising, dso.currency.symbol)
 }
 
-const renderMinimumInvestment = (
-  i: DSOInsight,
+export const renderMinimumInvestment = (
+  minimumInvestment: number,
   dso: DigitalSecurityOffering
 ) => {
-  return formatMoney(dso.minimumInvestment, dso.currency.symbol)
+  return formatMoney(minimumInvestment, dso.currency.symbol)
 }
 
-const renderExpectedReturn = (i: DSOInsight, dso: DigitalSecurityOffering) => {
+export const renderExpectedReturn = (
+  interestRate: number,
+  dso: DigitalSecurityOffering
+) => {
   return (dso !== undefined && dso.capitalStructure === 'Debt'
     ? dso.interestRate ?? 0
     : dso.grossIRR ?? 0
