@@ -12,8 +12,9 @@ import burn from './burn/reducer'
 import multicall from './multicall/reducer'
 import deposit from './deposit/reducer'
 import withdraw from './withdraw/reducer'
+import auth from './auth/reducer'
 
-const PERSISTED_KEYS: string[] = ['user', 'transactions', 'lists']
+const PERSISTED_KEYS: string[] = ['user', 'transactions', 'lists', 'auth']
 
 const store = configureStore({
   reducer: {
@@ -27,8 +28,9 @@ const store = configureStore({
     lists,
     deposit,
     withdraw,
+    auth,
   },
-  middleware: [...getDefaultMiddleware({ thunk: false }), save({ states: PERSISTED_KEYS, debounce: 1000 })],
+  middleware: [...getDefaultMiddleware({ thunk: true }), save({ states: PERSISTED_KEYS, debounce: 1000 })],
   preloadedState: load({ states: PERSISTED_KEYS }),
 })
 
