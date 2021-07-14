@@ -6,7 +6,7 @@ import { PriceWithCurrency } from './PriceWithCurrency'
 import { DSORaised } from './DSORaised'
 import { renderDSOFavorite } from 'helpers/rendering'
 import { formatDateToMMDDYY } from 'helpers/dates'
-import { addSymbol, formatMoney } from 'helpers/numbers'
+import { abbreviateNumber, formatMoney } from 'helpers/numbers'
 
 export const renderDSONameAndStructure = (
   tokenName: string,
@@ -23,13 +23,10 @@ export const renderDSOStatus = (
   dso: DigitalSecurityOffering
 ) => <DSORaised insight={i} dso={dso} />
 
-const abbreviateNumber = (
-  value: number | null,
-  symbol?: string,
-  right?: boolean
+export const renderTotalFundraisingAmount = (
+  raising: number,
+  dso: DigitalSecurityOffering
 ) => {
-  // https://stackoverflow.com/a/60980688
-
   const formatter = new Intl.NumberFormat('en-US', {
     maximumFractionDigits: 2,
     minimumFractionDigits: 2,
@@ -37,17 +34,7 @@ const abbreviateNumber = (
     notation: 'compact',
     compactDisplay: 'short'
   })
-
-  const num = formatter.format(value ?? 0)
-
-  return addSymbol(num, symbol, right)
-}
-
-export const renderTotalFundraisingAmount = (
-  raising: number,
-  dso: DigitalSecurityOffering
-) => {
-  return abbreviateNumber(raising, dso.currency.symbol)
+  return abbreviateNumber(raising, dso.currency.symbol, false, formatter)
 }
 
 export const renderMinimumInvestment = (

@@ -21,18 +21,22 @@ export const formatAmount = (value: number) => {
 export const abbreviateNumber = (
   value: number | null,
   symbol?: string,
-  right?: boolean
+  right?: boolean,
+  formatter?: any
 ) => {
   // https://stackoverflow.com/a/60980688
 
-  const formatter = new Intl.NumberFormat('en-US', {
+  const defaultFormatter = new Intl.NumberFormat('en-US', {
     maximumFractionDigits: 1,
     // @ts-expect-error
     notation: 'compact',
     compactDisplay: 'short'
   })
 
-  const num = formatter.format(value ?? 0)
+  const num =
+    formatter !== undefined
+      ? formatter.format(value ?? 0)
+      : defaultFormatter.format(value ?? 0)
 
   return addSymbol(num, symbol, right)
 }
