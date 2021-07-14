@@ -29,9 +29,7 @@ export const TableRows = <T,>(props: TableRowsProps<T>): JSX.Element => {
     return isNewThemeOn
       ? count % 2 === 0
         ? theme.palette.backgrounds.default
-        : theme.palette.type === 'light'
-        ? theme.palette.grey[100]
-        : theme.palette.grey[900]
+        : theme.palette.grey[theme.palette.type === 'light' ? 100 : 900]
       : 'initial'
   }
 
