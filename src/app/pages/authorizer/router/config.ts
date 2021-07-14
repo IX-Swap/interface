@@ -66,7 +66,7 @@ export const authorizerLandingLinks: InternalRouteProps[] = [
     icon: CorporateIcon
   },
   {
-    label: 'Offerings',
+    label: 'Issuance Offerings',
     path: AuthorizerRoute.offerings,
     color: '#11BB93',
     icon: OfferingIcon
@@ -84,7 +84,7 @@ export const authorizerLandingLinks: InternalRouteProps[] = [
     icon: WithdrawalAddressIcon
   },
   {
-    label: 'Detail of Issuance',
+    label: 'Proposed Fundraising Details',
     path: AuthorizerRoute.issuanceDetails,
     color: '#11BB93',
     icon: IssuanceDetailsIcon

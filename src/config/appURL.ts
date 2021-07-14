@@ -66,6 +66,7 @@ export const urlFeature = {
   holdings: `${AppFeature.Holdings}`,
   market: `${AppFeature.Market}`,
   myListings: `${AppFeature.MyListings}`,
+  listings: `${AppFeature.Listings}`,
   buyerList: `${AppFeature.BuyerList}`
 }
 

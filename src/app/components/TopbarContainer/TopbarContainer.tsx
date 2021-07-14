@@ -24,6 +24,7 @@ import {
 } from 'app/pages/exchange/router/config'
 import { TopbarLinkContainer } from 'app/components/TopbarContainer/components/TopbarLinkContainer'
 import { TopbarLinkDropdown } from 'app/components/TopbarContainer/components/TopbarLinkDropdown'
+import { AppRoute } from 'app/router/config'
 
 export const TopbarContainer = () => {
   const isAuthorizer = useIsAuthorizer()
@@ -46,13 +47,17 @@ export const TopbarContainer = () => {
       label: 'Invest',
       link: InvestRoute.landing,
       icon: InvestIcon
+    },
+    {
+      label: 'Funds Management',
+      link: IssuanceRoute.insight
     }
   ]
 
   if (isIssuer) {
     links.push({
       label: 'Issuance',
-      link: IssuanceRoute.insight,
+      link: IssuanceRoute.list,
       icon: IssuanceIcon
     })
   }
@@ -65,12 +70,27 @@ export const TopbarContainer = () => {
     })
   }
 
+  const homeLinks = [
+    {
+      label: 'Create Identity',
+      path: AppRoute.identity
+    },
+    {
+      label: 'News',
+      path: HomeRoute.landing
+    }
+  ]
+
   const newAccountsLandingLinks = [
     ...accountsLandingLinks,
     { ...OTCMarketLandingLinks[1], label: 'My Exchange Holdings' }
   ]
 
   const newInvestLandingLinks = [
+    {
+      label: 'Overview',
+      path: InvestRoute.overview
+    },
     {
       label: 'Primary',
       path: InvestRoute.landing
@@ -81,12 +101,23 @@ export const TopbarContainer = () => {
     }
   ]
 
+  const newIssuanceLandingLinks = [
+    { label: 'Create New DSO', path: IssuanceRoute.create },
+    { label: 'View DSO Listings', path: IssuanceRoute.list },
+    { label: 'Create Exchange Listings', path: OTCMarketRoute.createListing },
+    { label: 'View Exchange Listings', path: OTCMarketRoute.myListings }
+  ]
+
   const dropdownLinksItems = (name: string) => {
     switch (name) {
+      case 'Home':
+        return homeLinks
       case 'Authorizer':
         return authorizerLandingLinks
       case 'Accounts':
         return newAccountsLandingLinks
+      case 'Issuance':
+        return newIssuanceLandingLinks
       case 'Invest':
         return newInvestLandingLinks
       default:
@@ -104,9 +135,11 @@ export const TopbarContainer = () => {
     <Grid style={{ display: 'flex' }}>
       {links.map(link => {
         if (
+          link.label === 'Home' ||
           link.label === 'Accounts' ||
           link.label === 'Authorizer' ||
-          link.label === 'Invest'
+          link.label === 'Invest' ||
+          link.label === 'Issuance'
         ) {
           return (
             <TopbarLinkDropdown

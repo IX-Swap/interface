@@ -2,13 +2,11 @@ import { useServices } from 'hooks/useServices'
 import { useMutation, useQueryCache } from 'react-query'
 import { identityURL } from 'config/apiURL'
 import { identityQueryKeys } from 'config/queryKeys'
-import { useOnboardingDialog } from 'app/components/OnboardingDialog/hooks/useOnboardingDialog'
 import { useParams } from 'react-router'
 import { CorporateIdentity } from 'app/pages/identity/types/forms'
 
-export const useSubmitCorporate = () => {
+export const useSubmitCorporate = (callback?: () => void) => {
   const { snackbarService, apiService, storageService } = useServices()
-  const { showPostIdentityCreateDialog } = useOnboardingDialog()
   const params = useParams<{ identityId: string }>()
   const queryCache = useQueryCache()
 
@@ -20,7 +18,7 @@ export const useSubmitCorporate = () => {
   return useMutation(submitCorporate, {
     onSuccess: data => {
       void snackbarService.showSnackbar(data.message, 'success')
-      showPostIdentityCreateDialog('corporate', data.data.type)
+      callback?.()
       void queryCache.invalidateQueries(identityQueryKeys.getAllCorporate)
 
       // TODO: remove this once we come up with a better solution to determine what kind of identity has been submitted and whether user is still in the onboarding proces

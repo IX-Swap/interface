@@ -20,7 +20,8 @@ export const useTableWithPagination = <TData>(
   uri: string,
   defaultFilter: BaseFilter | undefined,
   queryEnabled: boolean,
-  defaultRowsPerPage?: number
+  defaultRowsPerPage?: number,
+  disabledUseEffect?: boolean
 ): UseTableWithPaginationReturnType<TData> => {
   const queryCache = useQueryCache()
   const apiService = useAPIService()
@@ -32,9 +33,11 @@ export const useTableWithPagination = <TData>(
   const filter = defaultFilter
 
   useEffect(() => {
-    setPage(0)
-    setPrevPage(0)
-  }, [filter])
+    if (disabledUseEffect !== undefined && !disabledUseEffect) {
+      setPage(0)
+      setPrevPage(0)
+    }
+  }, [filter, disabledUseEffect])
 
   // eslint-disable-next-line @typescript-eslint/explicit-function-return-type
   const fetcher = async (key: string, p: number, r: number, f?: BaseFilter) => {
@@ -62,13 +65,16 @@ export const useTableWithPagination = <TData>(
   const previousPageData =
     cached !== undefined
       ? cached.map(page =>
-          page.data.length > 0 ? page.data[0].documents : []
+          page.data !== undefined && page.data.length > 0
+            ? page.data[0].documents
+            : []
         )[0]
       : []
+
   const currentPageData =
     data !== undefined
       ? data.map(page =>
-          page.data.length > 0
+          page.data !== undefined && page.data.length > 0
             ? page.data[0].documents.length > 0
               ? page.data[0].documents
               : previousPageData
@@ -78,6 +84,7 @@ export const useTableWithPagination = <TData>(
   const total =
     data !== undefined &&
     data.length > 0 &&
+    data[data.length - 1].data !== undefined &&
     data[data.length - 1].data.length > 0
       ? data[data.length - 1].data[0].count ?? 0
       : 0

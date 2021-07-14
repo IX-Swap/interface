@@ -36,6 +36,11 @@ export const useGetIdentities = (corporateType?: 'issuer' | 'investor') => {
     !corporateIdentitiesIsLoading &&
     !detailsOfIssuanceLoading
 
+  const isLoadingIdentities =
+    individualIdentityIsLoading ||
+    corporateIdentitiesIsLoading ||
+    detailsOfIssuanceLoading
+
   return {
     hasIdentity,
     identityTypeLoaded,
@@ -43,6 +48,7 @@ export const useGetIdentities = (corporateType?: 'issuer' | 'investor') => {
     individualIdentity,
     corporateIdentities,
     isIdentitiesLoaded,
-    detailsOfIssuance
+    detailsOfIssuance,
+    isLoadingIdentities
   }
 }

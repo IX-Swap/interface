@@ -7,31 +7,41 @@ export interface ConfirmationDialogProps {
   onClose: () => void
   open: boolean
   assigning: boolean
+  isAdditional?: boolean
 }
 
 export const ConfirmationDialog = ({
   onClose,
   open,
-  assigning
+  assigning,
+  isAdditional = false
 }: ConfirmationDialogProps) => {
   const { watch } = useFormContext()
   const currency: string = watch('currency', '')
+
+  const title = isAdditional
+    ? 'Request for New Account'
+    : `We are about to assign you an account in ${currency}`
+
+  const bodyText = isAdditional
+    ? 'You can have a new account in a different currency. Click on “send request” to continue.'
+    : 'Would you like to continue?'
+
+  const confirmLabel = isAdditional ? 'Send request' : 'Yes'
 
   return (
     <Dialog open={open} disablePortal>
       <Box py='40px' px='60px' textAlign='center'>
         <Grid container direction='column' spacing={2}>
           <Grid item>
-            <Typography variant='subtitle1'>
-              {`We are about to assign you an account in ${currency}`}
-            </Typography>
+            <Typography variant='subtitle1'>{title}</Typography>
           </Grid>
           <Grid item>
-            <Typography variant='body1'>Would you like to continue?</Typography>
+            <Typography variant='body1'>{bodyText}</Typography>
           </Grid>
           <Grid item>
             <VSpacer size='small' />
-            <Grid container spacing={1} justify='flex-end'>
+            <Grid container spacing={1} justify='center'>
               <Grid item>
                 <Button
                   onClick={onClose}
@@ -52,7 +62,7 @@ export const ConfirmationDialog = ({
                   disableElevation
                   disabled={assigning}
                 >
-                  Yes
+                  {confirmLabel}
                 </Button>
               </Grid>
             </Grid>

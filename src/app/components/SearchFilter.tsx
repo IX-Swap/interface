@@ -7,15 +7,22 @@ import {
 import { Search } from '@material-ui/icons'
 import { SearchQueryFilter } from 'components/SearchQueryFilter/SearchQueryFilter'
 import debounce from 'lodash/debounce'
+import { QueryFilter } from 'hooks/filters/useQueryFilter'
 
 interface SearchFilterProps extends OutlinedInputProps {
   inputAdormentPosition?: 'start' | 'end'
+  filterValue?: QueryFilter
 }
 
 export const SearchFilter = (props: SearchFilterProps) => {
-  const { inputAdormentPosition = 'start', ...rest } = props
+  const {
+    inputAdormentPosition = 'start',
+    filterValue = 'search',
+    ...rest
+  } = props
+
   return (
-    <SearchQueryFilter<'search'> name='search'>
+    <SearchQueryFilter<'search'> name={filterValue}>
       {({ value, onChange, onClear }) => (
         <OutlinedInput
           {...rest}

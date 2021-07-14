@@ -29,7 +29,7 @@ export const DSOCarousel = (props: any) => {
   )
 
   const isMobile = useMediaQuery(theme.breakpoints.down('md'))
-  const slidesCount = isMobile ? 1 : 2
+  const slidesCount = isMobile ? 1 : 3
 
   const { children, totalSlides, ...rest } = props
 

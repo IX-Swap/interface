@@ -1,63 +1,97 @@
-import React, { Fragment } from 'react'
-import { Box, Grid, Typography } from '@material-ui/core'
-import { Section } from 'app/pages/identity/components/Section/Section'
-import { useIndividualIdentity } from 'hooks/identity/useIndividualIdentity'
-import { IndividualInfoView } from 'app/pages/identity/components/IndividualIdentityView/IndividualInfoView/IndividualInfoView'
-import { VSpacer } from 'components/VSpacer'
+import React from 'react'
+import { Box, Card, CardContent, CardActions } from '@material-ui/core'
 import { EditButton } from 'app/pages/identity/components/EditButton/EditButton'
-import { NoIdentity } from 'app/pages/identity/components/NoIdentity/NoIdentity'
 import { IdentityRoute } from 'app/pages/identity/router/config'
 import { ViewButton } from 'app/pages/identity/components/ViewButton/ViewButton'
+import { IndividualIdentity } from 'app/pages/identity/types/forms'
+import { PreviewHeader } from 'app/pages/identity/components/IndividualPreview/PreviewHeader'
+import { DataPreview } from 'app/pages/identity/components/IndividualPreview/DataPreview'
 
-export const IndividualPreview = () => {
-  const { data, status } = useIndividualIdentity()
+export interface IndividualPreviewProps {
+  data?: IndividualIdentity
+}
 
-  if (status === 'loading') {
-    return <div>Loading...</div>
-  }
-
+export const IndividualPreview = ({ data }: IndividualPreviewProps) => {
   if (data === undefined) {
-    return <NoIdentity text='You have not created individual identity yet' />
+    return null
   }
+
+  const individualIdentityFields = [
+    {
+      key: 'First Name',
+      value: data.firstName
+    },
+    {
+      key: 'Middle Name',
+      value: data.middleName
+    },
+    {
+      key: 'Last Name',
+      value: data.lastName
+    },
+    {
+      key: 'Date of Birth',
+      value: data.dob
+    },
+    {
+      key: 'Citizenship',
+      value: data.nationality
+    },
+    {
+      key: '',
+      value: ''
+    },
+    {
+      key: 'Email',
+      value: data.email
+    },
+    {
+      key: 'Contact Number',
+      value: data.contactNumber
+    }
+  ]
 
   const name = `[${data.status}] ${data.firstName} ${data.lastName}`
 
   return (
-    <Grid container item direction='column'>
-      <Grid item>
-        <Typography variant='h4'>Individual Investor</Typography>
-      </Grid>
-      <Grid item>
-        <VSpacer size='medium' />
-      </Grid>
-      <Grid item>
-        <Section
-          title={name}
-          actions={
-            <Fragment>
-              <ViewButton
-                link={IdentityRoute.viewIndividual}
-                params={{
-                  label: name,
-                  identityId: data._id,
-                  userId: data.user._id
-                }}
-              />
-              <Box mx={1} component='span' />
-              <EditButton
-                link={IdentityRoute.editIndividual}
-                params={{
-                  label: name,
-                  identityId: data._id,
-                  userId: data.user._id
-                }}
-              />
-            </Fragment>
-          }
+    <Card elevation={0}>
+      <CardContent>
+        <Box px={5} pt={2} pb={2}>
+          <PreviewHeader title='Individual Investor' status={data.status} />
+          <DataPreview
+            avatar={data.photo}
+            userId={data.user._id}
+            fields={individualIdentityFields}
+          />
+        </Box>
+      </CardContent>
+      <CardActions>
+        <Box
+          display='flex'
+          justifyContent='flex-end'
+          width='100%'
+          px={5}
+          pb={5}
         >
-          <IndividualInfoView data={data} />
-        </Section>
-      </Grid>
-    </Grid>
+          <EditButton
+            link={IdentityRoute.editIndividual}
+            params={{
+              label: name,
+              identityId: data._id,
+              userId: data.user._id
+            }}
+          />
+          <Box mx={1} component='span' />
+          <ViewButton
+            link={IdentityRoute.viewIndividual}
+            params={{
+              label: name,
+              identityId: data._id,
+              userId: data.user._id
+            }}
+          />
+        </Box>
+      </CardActions>
+    </Card>
   )
 }

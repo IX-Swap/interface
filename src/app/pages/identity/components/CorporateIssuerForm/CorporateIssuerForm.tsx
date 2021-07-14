@@ -8,17 +8,21 @@ import { getIdentityDefaultActiveStep } from 'app/pages/identity/utils/shared'
 import { useOnboardingJourneys } from 'app/components/OnboardingPanel/hooks/useOnboardingJourneys'
 import { corporateIssuerFormSteps } from './steps'
 import { CorporateIdentity } from '../../types/forms'
+import { IdentitySubmitConfirmationDialog } from 'app/pages/identity/components/IdentitySubmitConfirmationDialog/IdentitySubmitConfirmationDialog'
+import { useConfirmSubmitDialog } from 'app/pages/identity/hooks/useConfirmSubmitDialog'
 
 export interface CorporateIssuerFormProps {
   data?: CorporateIdentity
 }
 
 export const CorporateIssuerForm = ({ data }: CorporateIssuerFormProps) => {
+  const { open, openDialog, closeDialog } = useConfirmSubmitDialog()
+
   const { isIssuerJourneyCompleted } = useOnboardingJourneys()
 
   const createMutation = useCreateCorporate('issuer')
   const updateMutation = useUpdateCorporate('issuer')
-  const submitMutation = useSubmitCorporate()
+  const submitMutation = useSubmitCorporate(openDialog)
   const { showPreIdentityCreateDialog } = useOnboardingDialog()
 
   useEffect(() => {
@@ -34,14 +38,18 @@ export const CorporateIssuerForm = ({ data }: CorporateIssuerFormProps) => {
   })
 
   return (
-    <FormStepper
-      data={data}
-      shouldSaveOnMove={!isIssuerJourneyCompleted}
-      createMutation={createMutation}
-      editMutation={updateMutation}
-      submitMutation={submitMutation}
-      defaultActiveStep={defaultActiveStep}
-      steps={corporateIssuerFormSteps}
-    />
+    <>
+      <IdentitySubmitConfirmationDialog open={open} closeDialog={closeDialog} />
+      <FormStepper
+        data={data}
+        shouldSaveOnMove={!isIssuerJourneyCompleted}
+        createMutation={createMutation}
+        editMutation={updateMutation}
+        submitMutation={submitMutation}
+        defaultActiveStep={defaultActiveStep}
+        steps={corporateIssuerFormSteps}
+        nonLinear
+      />
+    </>
   )
 }

@@ -3,9 +3,11 @@ import { useMutation, useQueryCache } from 'react-query'
 import { getIdFromObj } from 'helpers/strings'
 import { DigitalSecurityOffering } from 'types/dso'
 import { issuanceURL } from 'config/apiURL'
-import { dsoQueryKeys } from 'config/queryKeys'
 
-export const useToggleDSOFavorite = (dso: DigitalSecurityOffering) => {
+export const useToggleDSOFavorite = (
+  dso: DigitalSecurityOffering,
+  dependentQueryKeys: string[]
+) => {
   const queryCache = useQueryCache()
   const { apiService, snackbarService } = useServices()
   const dsoId = getIdFromObj(dso)
@@ -22,32 +24,32 @@ export const useToggleDSOFavorite = (dso: DigitalSecurityOffering) => {
   return useMutation(mutateFn, {
     onMutate: async () => {
       // TODO: logic needs to be revisited
-      const queryKey = queryCache.getQueries(dsoQueryKeys.getApprovedList)[0]
-        .queryKey
-      queryCache.setQueryData(queryKey, (old: any) => {
-        const list = old[0].data[0].documents
+      dependentQueryKeys.forEach(currentQueryKey => {
+        const queryKey = queryCache.getQueries(currentQueryKey)[0].queryKey
+        queryCache.setQueryData(queryKey, (old: any) => {
+          const list = old[0].data[0].documents
 
-        return [
-          {
-            data: [
-              {
-                documents: list.map((dso: DigitalSecurityOffering) => {
-                  if (getIdFromObj(dso) === dsoId) {
-                    return {
-                      ...dso,
-                      isStarred: !dso.isStarred
+          return [
+            {
+              data: [
+                {
+                  documents: list.map((dso: DigitalSecurityOffering) => {
+                    if (getIdFromObj(dso) === dsoId) {
+                      return {
+                        ...dso,
+                        isStarred: !dso.isStarred
+                      }
                     }
-                  }
-                  return dso
-                })
-              }
-            ]
-          }
-        ]
+                    return dso
+                  })
+                }
+              ]
+            }
+          ]
+        })
       })
     },
     onSuccess: async () => {
-      await queryCache.invalidateQueries(dsoQueryKeys.getApprovedList)
       void snackbarService.showSnackbar('Success', 'success')
     },
     onError: (error: any) => {

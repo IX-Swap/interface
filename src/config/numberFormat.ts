@@ -13,7 +13,7 @@ export const numberFormat: NumberFormatProps = {
 
 export const percentageNumberFormat: NumberFormatProps = {
   allowNegative: false,
-  decimalScale: 2,
+  decimalScale: 3,
   inputMode: 'numeric',
   suffix: ' %',
   isNumericString: true

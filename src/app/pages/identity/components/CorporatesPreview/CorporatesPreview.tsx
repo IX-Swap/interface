@@ -1,88 +1,87 @@
-import React, { Fragment } from 'react'
-import { Box, Grid, Typography } from '@material-ui/core'
-import { useAllCorporates } from 'app/pages/identity/hooks/useAllCorporates'
-
-import { ViewButton } from 'app/pages/identity/components/ViewButton/ViewButton'
-import { CompanyInfoView } from 'app/pages/identity/components/CompanyInfoView/CompanyInfoView'
-import { VSpacer } from 'components/VSpacer'
+import React from 'react'
+import { Box, Card, CardContent, CardActions } from '@material-ui/core'
 import { EditButton } from 'app/pages/identity/components/EditButton/EditButton'
-import { NoIdentity } from 'app/pages/identity/components/NoIdentity/NoIdentity'
 import { IdentityRoute } from 'app/pages/identity/router/config'
-import { Section } from 'app/pages/identity/components/Section/Section'
+import { ViewButton } from 'app/pages/identity/components/ViewButton/ViewButton'
+import { CorporateIdentity } from 'app/pages/identity/types/forms'
+import { PreviewHeader } from 'app/pages/identity/components/IndividualPreview/PreviewHeader'
+import { DataPreview } from 'app/pages/identity/components/IndividualPreview/DataPreview'
 
 export interface CorporatesPreviewProps {
-  type: 'investor' | 'issuer'
+  data?: CorporateIdentity
 }
 
-export const CorporatesPreview: React.FC<CorporatesPreviewProps> = props => {
-  const { type } = props
-  const isIssuer = type === 'issuer'
-  const { data, status } = useAllCorporates({ type })
-
-  if (status === 'loading') {
+export const CorporatesPreview = ({ data }: CorporatesPreviewProps) => {
+  if (data === undefined) {
     return null
   }
 
-  if (data.list.length === 0) {
-    return (
-      <NoIdentity
-        text={`You have not created corporate ${
-          isIssuer ? 'issuer' : 'investor'
-        } identity yet`}
-      />
-    )
-  }
+  const corporateIdentityFields = [
+    {
+      key: 'Company Name',
+      value: data.companyLegalName
+    },
+    {
+      key: 'Company Registration Number',
+      value: data.registrationNumber
+    },
+    {
+      key: 'Email Address',
+      value: data.representatives?.[0].email
+    },
+    {
+      key: 'Contact Number',
+      value: data.representatives?.[0].contactNumber
+    }
+  ]
 
+  const isIssuer = data.type === 'issuer'
   return (
-    <Grid data-testid='corporate-preview' container item>
-      <Grid item xs={12}>
-        <Typography variant='h4'>
-          Corporate {isIssuer ? 'Issuer' : 'Investor'}
-        </Typography>
-      </Grid>
-
-      <Grid item>
-        <VSpacer size='medium' />
-      </Grid>
-
-      {data.list.map(identity => (
-        <Grid item xs={12} key={identity._id} style={{ marginBottom: 20 }}>
-          <Section
-            title={`[${identity.status}] ${identity.companyLegalName}`}
-            actions={
-              <Fragment>
-                <ViewButton
-                  link={
-                    isIssuer
-                      ? IdentityRoute.viewIssuer
-                      : IdentityRoute.viewCorporate
-                  }
-                  params={{
-                    identityId: identity._id,
-                    userId: identity.user._id,
-                    label: identity.companyLegalName
-                  }}
-                />
-                <Box mx={1} component='span' />
-                <EditButton
-                  link={
-                    isIssuer
-                      ? IdentityRoute.editIssuer
-                      : IdentityRoute.editCorporate
-                  }
-                  params={{
-                    identityId: identity._id,
-                    userId: identity.user._id,
-                    label: identity.companyLegalName
-                  }}
-                />
-              </Fragment>
+    <Card elevation={0}>
+      <CardContent>
+        <Box px={5} pt={2} pb={2}>
+          <PreviewHeader
+            title={`Corporate ${isIssuer ? 'Issuer' : 'Investor'}`}
+            status={data.status}
+          />
+          <DataPreview
+            avatar={data.logo}
+            userId={data.user._id}
+            fields={corporateIdentityFields}
+          />
+        </Box>
+      </CardContent>
+      <CardActions>
+        <Box
+          display='flex'
+          justifyContent='flex-end'
+          width='100%'
+          px={5}
+          pb={5}
+        >
+          <EditButton
+            link={
+              isIssuer ? IdentityRoute.editIssuer : IdentityRoute.editCorporate
             }
-          >
-            <CompanyInfoView data={identity} />
-          </Section>
-        </Grid>
-      ))}
-    </Grid>
+            params={{
+              identityId: data._id,
+              userId: data.user._id,
+              label: data.companyLegalName
+            }}
+          />
+          <Box mx={1} component='span' />
+          <ViewButton
+            link={
+              isIssuer ? IdentityRoute.viewIssuer : IdentityRoute.viewCorporate
+            }
+            params={{
+              identityId: data._id,
+              userId: data.user._id,
+              label: data.companyLegalName
+            }}
+          />
+        </Box>
+      </CardActions>
+    </Card>
   )
 }

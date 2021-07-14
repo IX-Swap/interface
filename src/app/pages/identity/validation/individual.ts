@@ -1,6 +1,12 @@
 import * as yup from 'yup'
 import 'yup-phone'
-import { addressSchema, dateSchema, emailSchema } from 'validation/shared'
+import {
+  addressSchema,
+  emailSchema,
+  nameSchema,
+  birthdaySchema,
+  taxIdentificationNumberSchema
+} from 'validation/shared'
 import {
   FundSource,
   IndividualAgreementsFormValues,
@@ -16,21 +22,28 @@ export const personalInfoSchema = yup
   .object()
   .shape<IndividualPersonalInfoFormValues>({
     photo: yup.string(),
-    firstName: yup.string().required('Required'),
-    middleName: yup.string(),
-    lastName: yup.string().required('Required'),
+    firstName: nameSchema.required('This field is required'),
+    middleName: nameSchema,
+    lastName: nameSchema.required('This field is required'),
     nationality: yup.string().required('Required'),
-    dob: dateSchema.required('Required'),
-    contactNumber: yup.string().phone().required('Required'),
-    email: emailSchema.required('Required'),
+    dob: birthdaySchema.required('This field is required'),
+    contactNumber: yup.string().phone().required('This field is required'),
+    email: emailSchema.required('This field is required'),
     address: addressSchema.required('Required')
   })
 
 export const financialInfoSchema = yup
   .object()
   .shape<IndividualFinancialInfoFormValues>({
-    occupation: yup.string().required('Required'),
-    employer: yup.string().required('Required'),
+    occupation: yup
+      .string()
+      .max(50, 'Maximum of 50 characters')
+      .required('This field is required')
+      .matches(/^[a-zA-Z\s]+$/g, 'Must include letters only'),
+    employer: yup
+      .string()
+      .max(50, 'Maximum of 50 characters')
+      .required('This field is required'),
     employmentStatus: yup.string().required('Required'),
     annualIncome: yup.string().required('Required'),
     sourceOfFund: yup
@@ -75,9 +88,8 @@ export const taxDeclarationSchema = yup
         is: 'yes',
         then: yup.array().of(
           yup.object({
-            taxIdentificationNumber: yup
-              .string()
-              .required('Required')
+            taxIdentificationNumber: taxIdentificationNumberSchema
+              .required('This field is required')
               .test(
                 'nric',
                 'Invalid FIN/NRIC',
@@ -97,11 +109,16 @@ export const taxDeclarationSchema = yup
             .object({
               taxIdAvailable: yup.boolean(),
               countryOfResidence: yup.string().required('Required'),
-              taxIdentificationNumber: yup.string().when('taxIdAvailable', {
-                is: true,
-                then: yup.string().required('Required'),
-                otherwise: yup.string()
-              }),
+              taxIdentificationNumber: taxIdentificationNumberSchema.when(
+                'taxIdAvailable',
+                {
+                  is: true,
+                  then: taxIdentificationNumberSchema.required(
+                    'This field is required'
+                  ),
+                  otherwise: taxIdentificationNumberSchema
+                }
+              ),
               reason: yup.string().when('taxIdAvailable', {
                 is: false,
                 then: yup.string().oneOf(['A', 'B', 'C']).required('Required'),

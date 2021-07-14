@@ -57,6 +57,7 @@ export const getCreateDSOPayload = (values: Partial<DSOFormValues>) => {
 }
 
 export const getUpdateDSOPayload = (values: Partial<DSOFormValues>) => {
+  console.log(getCreateDSOPayload(values))
   const { status, ...payload } = getCreateDSOPayload(values)
 
   return payload

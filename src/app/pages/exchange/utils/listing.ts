@@ -39,7 +39,9 @@ export const transformDataFromDSOToListingFormValue = (
     launchDate: data.launchDate,
     completionDate: data.completionDate ?? null,
     introduction: data.introduction,
-    marketType: 'Exchange'
+    marketType: 'Exchange',
+    asset: data.asset,
+    dso: data._id
   }
 }
 
@@ -81,7 +83,9 @@ export const transformListingToListingFormValue = (
     launchDate: data.launchDate,
     completionDate: data.completionDate,
     introduction: data.introduction,
-    marketType: 'Exchange'
+    marketType: 'Exchange',
+    asset: data.asset,
+    dso: data.dso._id
   }
 }
 
