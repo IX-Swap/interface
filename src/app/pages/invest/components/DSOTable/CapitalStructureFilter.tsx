@@ -26,7 +26,6 @@ export const CapitalStructureFilter = () => {
     <CapitalStructureSelect
       includeAll
       fullWidth
-      data-testId={'selectWrapper'}
       inputProps={{ 'data-testid': 'select' }}
       style={{
         borderTopLeftRadius: isMobile ? theme.spacing(0.5) : 0,
