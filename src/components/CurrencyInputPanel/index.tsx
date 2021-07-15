@@ -131,7 +131,14 @@ const BalanceRow = styled(RowEnd)`
      margin-top: 0.5rem;
   `};
 `
-
+const BalanceWrap = styled(RowFixed)`
+  display: -webkit-box;
+  -webkit-line-clamp: 1;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  height: 17px;
+  text-align: center;
+`
 const StyledBalanceMax = styled.button<{ disabled?: boolean }>`
   background-color: transparent;
   border: none;
@@ -270,7 +277,7 @@ export default function CurrencyInputPanel({
             <FiatValue fiatValue={fiatValue} priceImpact={priceImpact} />
             <BalanceRow>
               {account ? (
-                <RowFixed style={{ height: '17px' }}>
+                <BalanceWrap>
                   <TYPE.body
                     onClick={onMax}
                     color={theme.text2}
@@ -288,7 +295,7 @@ export default function CurrencyInputPanel({
                       )
                     ) : null}
                   </TYPE.body>
-                </RowFixed>
+                </BalanceWrap>
               ) : (
                 <span />
               )}

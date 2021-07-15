@@ -66,6 +66,7 @@ export function colors(darkMode: boolean): Colors {
     bg12: darkMode ? '#271F4A' : '#271F4A',
     bg13: darkMode ? '#2F254E' : '#2F254E',
     bg14: darkMode ? '#ED0376' : '#ED0376',
+    bg15: darkMode ? '#2C254A' : '#2C254A',
     bgG1: darkMode
       ? 'radial-gradient(93.65% 93.65% at 58.57% 22.42%, rgba(206, 20, 132, 0.33) 0%, rgba(26, 18, 58, 0) 100%), #2C254A;'
       : 'radial-gradient(93.65% 93.65% at 58.57% 22.42%, rgba(206, 20, 132, 0.33) 0%, rgba(26, 18, 58, 0) 100%), #2C254A;',
@@ -273,6 +274,12 @@ export const TYPE = {
   },
   description3(props: TextProps) {
     return <TextWrapper fontWeight={400} fontSize={12} lineHeight={'18px'} color={'text2'} {...props} />
+  },
+  description4(props: TextProps) {
+    return <TextWrapper fontWeight={300} fontSize={18} lineHeight={'29px'} color={'text2'} {...props} />
+  },
+  description5(props: TextProps) {
+    return <TextWrapper fontWeight={400} fontSize={22} lineHeight={'33px'} color={'text2'} {...props} />
   },
   small(props: TextProps) {
     return <TextWrapper fontWeight={500} fontSize={11} {...props} />
