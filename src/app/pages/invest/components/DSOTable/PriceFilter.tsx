@@ -3,7 +3,7 @@ import React, { ChangeEvent } from 'react'
 import { FormControlLabel, Grid, Radio, RadioGroup } from '@material-ui/core'
 
 export const PriceFilter = () => {
-  const { getFilterValue, updateFilter, removeFilter } = useQueryFilter()
+  const { getFilterValue, updateFilter } = useQueryFilter()
   const value = getFilterValue('isPriceAscending')
 
   const handleChange = (event: ChangeEvent<{ value: string }>) => {
@@ -11,11 +11,7 @@ export const PriceFilter = () => {
       target: { value }
     } = event
 
-    if (value === '') {
-      removeFilter('isPriceAscending')
-    } else {
-      updateFilter('isPriceAscending', event.target.value)
-    }
+    updateFilter('isPriceAscending', event.target.value)
   }
 
   return (
