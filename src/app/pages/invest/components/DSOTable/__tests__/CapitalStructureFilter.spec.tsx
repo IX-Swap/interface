@@ -1,15 +1,16 @@
 import React from 'react'
 import { render, cleanup } from 'test-utils'
 import { CapitalStructureFilter } from 'app/pages/invest/components/DSOTable/CapitalStructureFilter'
-// import { CapitalStructureSelect } from 'components/form/CapitalStructureSelect'
 import { fireEvent, waitFor } from '@testing-library/dom'
 import { history } from 'config/history'
-
-// jest.mock('components/form/CapitalStructureSelect', () => ({
-//   CapitalStructureSelect: jest.fn(() => null)
-// }))
+import { generatePath } from 'react-router'
+import { capitalStructures } from 'config/defaults'
 
 describe('Capital Structure Filter', () => {
+  beforeEach(() => {
+    history.replace(generatePath('/', { search: '' }))
+  })
+
   afterEach(async () => {
     await cleanup()
     jest.clearAllMocks()
@@ -19,26 +20,23 @@ describe('Capital Structure Filter', () => {
     render(<CapitalStructureFilter />)
   })
 
-  // it('renders CapitalStructureSelect with correct props', () => {
-  //   render(<CapitalStructureFilter />)
-  //   expect(CapitalStructureSelect).toHaveBeenCalledWith(
-  //     expect.objectContaining({
-  //       style: {
-  //         backgroundColor: '#eeeeee',
-  //         borderBottomLeftRadius: 0,
-  //         borderTopLeftRadius: 0
-  //       }
-  //     }),
-  //     {}
-  //   )
-  // })
-
-  it('invokes updateFilter on select change value to Equity', async () => {
+  it('invokes removeFilter on change select value to default', async () => {
     const { getByTestId } = render(<CapitalStructureFilter />)
     const select = getByTestId('select')
-    fireEvent.change(select, { target: { value: 'Equity' } })
+    fireEvent.change(select, { target: { value: 'All' } })
     await waitFor(() => {
-      expect(history.location.search).toBe('?capitalStructure=Equity')
+      expect(history.location.search).toBe('')
+    })
+  })
+
+  it('invokes updateFilter on change select value', async () => {
+    const { getByTestId } = render(<CapitalStructureFilter />)
+    const select = getByTestId('select')
+    fireEvent.change(select, { target: { value: `${capitalStructures[0]}` } })
+    await waitFor(() => {
+      expect(history.location.search).toBe(
+        `?capitalStructure=${capitalStructures[0]}`
+      )
     })
   })
 })
