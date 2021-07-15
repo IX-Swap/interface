@@ -19,6 +19,10 @@ export interface QueryFilters {
   pairFilter: string | undefined
   sortBy: string | undefined
   orderBy: 'ASC' | 'DSC' | undefined
+  industry: string | undefined
+  securityType: string | undefined
+  country: string | undefined
+  protocol: string | undefined
 }
 
 export type QueryFilter = keyof QueryFilters
