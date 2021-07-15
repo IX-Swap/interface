@@ -5,7 +5,7 @@ import styled, { ThemeContext } from 'styled-components'
 
 import QuestionHelper from '../QuestionHelper'
 import { AutoColumn } from '../Column'
-import { RowBetween, RowFixed } from '../Row'
+import { RowBetween, RowFixed, RowStart } from '../Row'
 import { DEFAULT_DEADLINE_FROM_NOW } from 'constants/misc'
 import { displayDeadline, displayUserSlippageTolerance } from './helpers'
 import { useDeadline } from 'hooks/useDeadline'
@@ -13,6 +13,7 @@ import { useSlippage } from 'hooks/useSlippage'
 import { RECOMMENDED_SLIPPAGE_OPTIONS } from './constants'
 import { TYPE } from 'theme'
 import { Option, OptionRow, OptionCustom } from 'components/OptionButton'
+import { Text } from 'rebass'
 
 const Input = styled.input`
   background: ${({ theme }) => theme.bg1};
@@ -67,7 +68,8 @@ export default function TransactionSettings({ placeholderSlippage }: Transaction
             <QuestionHelper
               text={
                 <Trans>
-                  Your transaction will revert if the price changes unfavorably by more than this percentage.
+                  Your transaction will revert if the price changes unfavorably by more than this percentage. Value
+                  range 0-50%
                 </Trans>
               }
             />
@@ -84,16 +86,8 @@ export default function TransactionSettings({ placeholderSlippage }: Transaction
                 {slippageOption}%
               </Option>
             ))}
-
             <OptionCustom active={userSlippageTolerance !== 'auto'} warning={!!slippageError} tabIndex={-1}>
               <RowBetween>
-                {tooLow || tooHigh ? (
-                  <SlippageEmojiContainer>
-                    <span role="img" aria-label="warning">
-                      ⚠️
-                    </span>
-                  </SlippageEmojiContainer>
-                ) : null}
                 <Input
                   placeholder={placeholderSlippage.toFixed(2)}
                   value={displayUserSlippageTolerance({ slippageInput, userSlippageTolerance })}
@@ -103,18 +97,28 @@ export default function TransactionSettings({ placeholderSlippage }: Transaction
                   onBlur={() => resetSlippage()}
                   color={slippageError ? 'red' : ''}
                 />
-                %
               </RowBetween>
             </OptionCustom>
+            <Text color={theme.text8} fontWeight={500} fontSize={22} lineHeight={'33px'}>
+              %
+            </Text>
           </OptionRow>
           {slippageError || tooLow || tooHigh ? (
-            <RowBetween
+            <RowStart
               style={{
                 fontSize: '14px',
                 paddingTop: '7px',
+                gap: '5px',
                 color: slippageError ? 'red' : '#F3841E',
               }}
             >
+              {tooLow || tooHigh ? (
+                <SlippageEmojiContainer>
+                  <span role="img" aria-label="warning">
+                    ⚠️
+                  </span>
+                </SlippageEmojiContainer>
+              ) : null}
               {slippageError ? (
                 <Trans>Enter a valid slippage percentage</Trans>
               ) : tooLow ? (
@@ -122,7 +126,7 @@ export default function TransactionSettings({ placeholderSlippage }: Transaction
               ) : (
                 <Trans>Your transaction may be frontrun</Trans>
               )}
-            </RowBetween>
+            </RowStart>
           ) : null}
         </AutoColumn>
       </Marginer>
@@ -133,7 +137,7 @@ export default function TransactionSettings({ placeholderSlippage }: Transaction
               <Trans>Transaction deadline</Trans>
             </TYPE.black>
             <QuestionHelper
-              text={t`Your transaction will revert if it is pending for more than this period of time.`}
+              text={t`Your transaction will revert if it is pending for more than this period of time. Value range 1 - 180 min.`}
             />
           </RowFixed>
           <RowFixed>

@@ -6,6 +6,7 @@ import { AcceptChanges } from 'components/swap/AcceptChanges'
 import { ConfirmSwapInfo } from 'components/swap/ConfirmSwapInfo'
 import { CurrentRate } from 'components/swap/CurrentRate'
 import { EditRecipient } from 'components/swap/EditRecipient'
+import { OutputInfo } from 'components/swap/OutputInfo'
 import { PendingSuccesModals } from 'components/swap/PendingSuccesModals'
 import { tradeMeaningfullyDiffers } from 'components/swap/tradeMeaningfullyDiffers'
 import UnsupportedCurrencyFooter from 'components/swap/UnsupportedCurrencyFooter'
@@ -287,6 +288,7 @@ export default function Swap({ history }: RouteComponentProps) {
             {showConfirm && (
               <>
                 <ConfirmSwapInfo data-testid="confirm-swap-card-info" trade={trade} allowedSlippage={allowedSlippage} />
+                {trade && <OutputInfo {...{ trade, recipient, allowedSlippage }} />}
                 <BottomGrouping>
                   <ButtonIXSWide onClick={handleSwap} disabled={showAcceptChanges} data-testid="confirm-swap">
                     <Trans>Confirm Swap</Trans>

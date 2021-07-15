@@ -55,13 +55,12 @@ export const BlueCard = styled(Card)`
 `
 
 export const TipCard = styled(Card)`
-  opacity: 0.7;
   border-radius: 45px;
   font-size: 12px;
   line-height: 18px;
   padding: 20px 35px;
   text-align: left;
-  background: ${({ theme }) => theme.bgG1};
+  background: ${({ theme }) => theme.bgG12};
   color: ${({ theme }) => theme.text2};
 `
 export const DarkCard = styled(Card)`
