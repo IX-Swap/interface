@@ -1,4 +1,7 @@
-import { numberToPercentage } from 'app/pages/issuance/utils'
+import {
+  numberToPercentage,
+  percentageToNumber
+} from 'app/pages/issuance/utils'
 import { DigitalSecurityOffering, DSORequestArgs } from 'types/dso'
 import { DataroomFile } from 'types/dataroomFile'
 import { hasValue } from 'helpers/forms'
@@ -24,13 +27,13 @@ export const transformDataFromDSOToListingFormValue = (
     raisedAmount: data.totalFundraisingAmount,
     capitalStructure: data.capitalStructure,
     investmentPeriod: data.investmentPeriod ?? null,
-    dividendYield: data.dividendYield,
-    interestRate: data.interestRate,
-    grossIRR: data.grossIRR,
+    dividendYield: percentageToNumber(data.dividendYield),
+    interestRate: percentageToNumber(data.interestRate),
+    grossIRR: percentageToNumber(data.grossIRR),
     investmentStructure: data.investmentStructure ?? '',
     distributionFrequency: data.distributionFrequency,
-    leverage: data.leverage,
-    equityMultiple: data.equityMultiple,
+    leverage: percentageToNumber(data.leverage),
+    equityMultiple: percentageToNumber(data.equityMultiple),
     currency: '',
     team: data.team.map(({ _id, ...person }) => person),
     incomeStatement: [],
@@ -64,13 +67,13 @@ export const transformListingToListingFormValue = (
     raisedAmount: data.raisedAmount,
     capitalStructure: data.capitalStructure,
     investmentPeriod: data.investmentPeriod,
-    dividendYield: data.dividendYield,
-    interestRate: data.interestRate,
-    grossIRR: data.grossIRR,
+    dividendYield: percentageToNumber(data.dividendYield),
+    interestRate: percentageToNumber(data.interestRate),
+    grossIRR: percentageToNumber(data.grossIRR),
     investmentStructure: data.investmentStructure,
     distributionFrequency: data.distributionFrequency,
-    leverage: data.leverage,
-    equityMultiple: data.equityMultiple,
+    leverage: percentageToNumber(data.leverage),
+    equityMultiple: percentageToNumber(data.equityMultiple),
     currency: data.markets[0].currency,
     team: data.team.map(({ _id, ...person }) => person),
     incomeStatement: data.documents.filter(
@@ -85,7 +88,7 @@ export const transformListingToListingFormValue = (
     introduction: data.introduction,
     marketType: 'Exchange',
     asset: data.asset,
-    dso: data.dso._id
+    dso: data.dso?._id
   }
 }
 

@@ -1,5 +1,6 @@
 import { Grid } from '@material-ui/core'
 import { FormSectionHeader } from 'app/components/DSO/components/FormSectionHeader'
+import { PercentageNumber } from 'app/components/DSO/DSOPreview/PercentageNumber'
 import { LabelledValue } from 'components/LabelledValue'
 import React from 'react'
 
@@ -26,10 +27,16 @@ export const OfferingTerms = ({
         <FormSectionHeader title='Offering Terms' />
       </Grid>
       <Grid item xs={12} sm={6} md={4}>
-        <LabelledValue label='Investment Period' value={investmentPeriod} />
+        <LabelledValue
+          label='Investment Period'
+          value={<PercentageNumber value={investmentPeriod} />}
+        />
       </Grid>
       <Grid item xs={12} sm={6} md={8}>
-        <LabelledValue label='Dividend Yield' value={dividendYield} />
+        <LabelledValue
+          label='Dividend Yield'
+          value={<PercentageNumber value={dividendYield} />}
+        />
       </Grid>
       <Grid item xs={12} sm={6} md={4}>
         <LabelledValue
@@ -38,10 +45,16 @@ export const OfferingTerms = ({
         />
       </Grid>
       <Grid item xs={12} sm={6} md={8}>
-        <LabelledValue label='Gross IRR (%)' value={grossIrr} />
+        <LabelledValue
+          label='Gross IRR (%)'
+          value={<PercentageNumber value={grossIrr} />}
+        />
       </Grid>
       <Grid item xs={12} sm={6} md={4}>
-        <LabelledValue label='Equity Multiple' value={equityMultiple} />
+        <LabelledValue
+          label='Equity Multiple'
+          value={<PercentageNumber value={equityMultiple} />}
+        />
       </Grid>
       <Grid item xs={12} sm={6} md={8}>
         <LabelledValue
