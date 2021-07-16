@@ -4,7 +4,7 @@ import React from 'react'
 
 export const SecurityTypeFilter = () => {
   return (
-    <SearchQueryFilter<'securityType'> name='securityType' defaultValue=''>
+    <SearchQueryFilter<'assetClass'> name='assetClass' defaultValue=''>
       {({ value, onChange }) => (
         <FormControl variant='outlined' style={{ width: 140 }}>
           <InputLabel shrink>Security Type</InputLabel>
@@ -17,11 +17,11 @@ export const SecurityTypeFilter = () => {
             label='Security Type'
           >
             <MenuItem value=''>All Types</MenuItem>
-            <MenuItem value='equity'>Equity</MenuItem>
-            <MenuItem value='debt'>Debt</MenuItem>
-            <MenuItem value='investment-fund'>Investment Fund</MenuItem>
-            <MenuItem value='revenue-sharing'>Revenue Sharing</MenuItem>
-            <MenuItem value='convertible-security'>
+            <MenuItem value='Equity'>Equity</MenuItem>
+            <MenuItem value='Debt'>Debt</MenuItem>
+            <MenuItem value='Investment Fund'>Investment Fund</MenuItem>
+            <MenuItem value='Revenue Sharing'>Revenue Sharing</MenuItem>
+            <MenuItem value='Convertible Security'>
               Convertible Security
             </MenuItem>
           </Select>

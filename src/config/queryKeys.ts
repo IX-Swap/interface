@@ -191,3 +191,7 @@ export const exchangeListingsQueryKeys = {
   getListingById: (listingId: string, issuerId: string) =>
     generateQueryKey('listing', listingId, issuerId)
 }
+
+export const atlasOneQueryKeys = {
+  getSecurities: 'atlas-one-securities'
+}

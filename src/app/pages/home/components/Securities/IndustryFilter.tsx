@@ -17,11 +17,11 @@ export const IndustryFilter = () => {
             label='Industry'
           >
             <MenuItem value=''>All Industries</MenuItem>
-            <MenuItem value='diverse-industries'>Diverse Industries</MenuItem>
-            <MenuItem value='real-estate'>Real Estate</MenuItem>
-            <MenuItem value='technology'>Technology</MenuItem>
-            <MenuItem value='finance'>Finance</MenuItem>
-            <MenuItem value='energy-and-mining'>Energy &amp; Mining</MenuItem>
+            <MenuItem value='Diverse Industries'>Diverse Industries</MenuItem>
+            <MenuItem value='Real Estate'>Real Estate</MenuItem>
+            <MenuItem value='Technology'>Technology</MenuItem>
+            <MenuItem value='Finance'>Finance</MenuItem>
+            <MenuItem value='Energy & Mining'>Energy &amp; Mining</MenuItem>
           </Select>
         </FormControl>
       )}

@@ -18,6 +18,7 @@ export const ProtocolFilter = () => {
           >
             <MenuItem value=''>All Protocols</MenuItem>
             <MenuItem value='ERC-20'>ERC-20</MenuItem>
+            <MenuItem value='Algorand'>Algorand</MenuItem>
             <MenuItem value='ERC-1400'>ERC-1400</MenuItem>
             <MenuItem value='Tezos'>Tezos</MenuItem>
             <MenuItem value='INPR-18'>INPR-18</MenuItem>
