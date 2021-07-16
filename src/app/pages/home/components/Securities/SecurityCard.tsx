@@ -30,6 +30,10 @@ export interface Security {
   country: string
   status: string
   currentPrice: number
+  issuePrice: string
+  fundingGoal: string
+  totalCapitalization: string
+  website: string
 }
 
 export const SecurityCard = ({

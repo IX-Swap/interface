@@ -1,12 +1,19 @@
-import { Grid } from '@material-ui/core'
+import { Grid, IconButton } from '@material-ui/core'
 import { SearchFilter } from 'app/components/SearchFilter'
 import { CountryFilter } from 'app/pages/home/components/Securities/CountryFilter'
 import { IndustryFilter } from 'app/pages/home/components/Securities/IndustryFilter'
 import { ProtocolFilter } from 'app/pages/home/components/Securities/ProtocolFilter'
 import { SecurityTypeFilter } from 'app/pages/home/components/Securities/SecurityTypeFilter'
+import AppsIcon from '@material-ui/icons/Apps'
+import ViewListIcon from '@material-ui/icons/ViewList'
 import React from 'react'
 
-export const Filters = () => {
+export interface FiltersProps {
+  view: 'grid' | 'list'
+  toggleView: () => void
+}
+
+export const Filters = ({ view, toggleView }: FiltersProps) => {
   return (
     <Grid container spacing={0} justify='space-between'>
       <Grid item xs={12} md={4}>
@@ -36,6 +43,11 @@ export const Filters = () => {
         </Grid>
         <Grid item>
           <ProtocolFilter />
+        </Grid>
+        <Grid item>
+          <IconButton onClick={toggleView}>
+            {view === 'grid' ? <AppsIcon /> : <ViewListIcon />}
+          </IconButton>
         </Grid>
       </Grid>
     </Grid>
