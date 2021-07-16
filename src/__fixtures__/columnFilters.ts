@@ -13,6 +13,10 @@ export const mockColumns: Array<
     label: 'Offer Name'
   },
   {
+    key: 'completionDate',
+    label: 'Closing Date'
+  },
+  {
     key: 'pricePerUnit',
     label: 'pricePerUnit'
   },
@@ -27,15 +31,21 @@ export const mockColumns: Array<
   {
     key: 'distributionFrequency',
     label: 'distributionFrequency'
+  },
+  {
+    key: 'interestRate',
+    label: 'Expected Return'
   }
 ]
 
 export const mockDefaultColumns: Record<DSOTableColumn, boolean> = {
   favorite: true,
+  completionDate: true,
   tokenName: true,
   insight: true,
   pricePerUnit: true,
   totalFundraisingAmount: true,
   minimumInvestment: true,
-  distributionFrequency: true
+  distributionFrequency: true,
+  interestRate: true
 }

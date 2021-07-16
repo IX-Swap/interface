@@ -44,6 +44,9 @@ export const Overview = ({ data }: OverviewProps) => {
           grossIrr={data.grossIRR}
           equityMultiple={data.equityMultiple}
           distributionFrequency={data.distributionFrequency}
+          leverage={data.leverage}
+          interestRate={data.interestRate}
+          capitalStructure={data.capitalStructure}
         />
       </Grid>
     </Grid>

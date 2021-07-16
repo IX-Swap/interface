@@ -46,6 +46,9 @@ export interface BaseFilter {
   capitalStructure?: string
   isAssigned?: boolean
   sourceType?: string
+  currency?: string
+  network?: string
+  isPriceAscending?: boolean
 }
 
 export interface InternalRouteBase {

@@ -24,6 +24,8 @@ export interface QueryFilters {
   country: string | undefined
   protocol: string | undefined
   status: string | undefined
+  network: string | undefined
+  isPriceAscending: string | undefined
 }
 
 export type QueryFilter = keyof QueryFilters
