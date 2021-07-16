@@ -80,7 +80,7 @@ export function ImportToken({ tokens, list, onBack, onDismiss, handleCurrencySel
           return (
             <>
               <AutoColumn gap="10px" justify="center">
-                <RowCenter style={{ gap: '11px' }}>
+                <RowCenter style={{ gap: '11px', flexWrap: 'wrap' }}>
                   <CurrencyLogo currency={token} size={'33px'} />
                   <TYPE.title5>{token.symbol}</TYPE.title5>
                   <SemiTransparent>

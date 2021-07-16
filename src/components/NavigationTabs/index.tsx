@@ -63,7 +63,7 @@ export function SwapPoolTabs({ active }: { active: 'swap' | 'pool' }) {
 
 export function FindPoolTabs({ origin }: { origin: string }) {
   return (
-    <Tabs>
+    <Tabs style={{ padding: '26px 37px 0 37px' }}>
       <StyledPageHeader>
         <RowStart style={{ padding: '0' }}>
           <HistoryLink to={origin}>
