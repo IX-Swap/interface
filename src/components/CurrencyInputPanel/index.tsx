@@ -77,7 +77,7 @@ const CurrencySelect = styled(ButtonEmpty)<{ selected: boolean; hideInput?: bool
 const InputRow = styled.div<{ selected: boolean }>`
   ${({ theme }) => theme.flexRowNoWrap}
   align-items: center;
-  padding: 14px 2rem 0 2.5rem;
+  padding: 14px 2rem 0 2rem;
   ${({ theme }) => theme.mediaWidth.upToExtraSmall`
       padding: 10px 10px 0 1rem;
   `};
