@@ -27,8 +27,13 @@ describe('DSO Table', () => {
         hasActions: true,
         uri: issuanceURL.dso.getAllApproved,
         filter: {
-          search: undefined
-        }
+          search: undefined,
+          capitalStructure: undefined,
+          currency: undefined,
+          isPriceAscending: undefined,
+          network: undefined
+        },
+        isNewThemeOn: true
       },
       {}
     )

@@ -4,9 +4,13 @@ import React from 'react'
 
 export interface CurrencyFilterProps {
   currency: 'SGD' | 'USD'
+  defaultValue?: string | null
 }
 
-export const CurrencyFilter = ({ currency }: CurrencyFilterProps) => {
+export const CurrencyFilter = ({
+  currency,
+  defaultValue = 'SGD,USD'
+}: CurrencyFilterProps) => {
   const getStringValue = (value: string | undefined) => {
     const valueArray = value?.split(',')
 
@@ -26,7 +30,10 @@ export const CurrencyFilter = ({ currency }: CurrencyFilterProps) => {
     return value.includes(currency)
   }
   return (
-    <SearchQueryFilter<'currency'> name='currency' defaultValue='SGD,USD'>
+    <SearchQueryFilter<'currency'>
+      name='currency'
+      defaultValue={defaultValue !== null ? defaultValue : undefined}
+    >
       {({ value, onChange }) => (
         <FormControlLabel
           style={{ marginRight: 0 }}
