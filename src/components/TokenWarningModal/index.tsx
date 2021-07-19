@@ -1,19 +1,22 @@
 import { ImportToken } from 'components/SearchModal/ImportToken'
 import React from 'react'
 import { useDismissTokenWarning, useImportNonDefaultTokens } from 'state/swap/hooks'
-import Modal from '../Modal'
 import * as H from 'history'
+import RedesignedWideModal from 'components/Modal/RedesignedWideModal'
+import { ModalBlurWrapper } from 'theme'
 
 export default function TokenWarningModal({ history }: { history: H.History }) {
   const { dismissTokenWarning, handleDismissTokenWarning, handleConfirmTokenWarning } = useDismissTokenWarning(history)
   const { importTokensNotInDefault } = useImportNonDefaultTokens()
   return (
-    <Modal
+    <RedesignedWideModal
       isOpen={importTokensNotInDefault.length > 0 && !dismissTokenWarning}
       onDismiss={handleDismissTokenWarning}
       maxHeight={100}
     >
-      <ImportToken tokens={importTokensNotInDefault} handleCurrencySelect={handleConfirmTokenWarning} />
-    </Modal>
+      <ModalBlurWrapper>
+        <ImportToken tokens={importTokensNotInDefault} handleCurrencySelect={handleConfirmTokenWarning} />
+      </ModalBlurWrapper>
+    </RedesignedWideModal>
   )
 }

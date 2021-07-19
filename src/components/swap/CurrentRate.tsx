@@ -5,7 +5,7 @@ import { Trans } from '@lingui/macro'
 import { AdvancedSwapDetails } from 'components/swap/AdvancedSwapDetails'
 import { MouseoverTooltipContent } from 'components/Tooltip'
 import styled from 'styled-components'
-import Row, { RowFixed } from '../../components/Row'
+import Row, { RowEnd, RowFixed } from '../../components/Row'
 import TradePrice from '../../components/swap/TradePrice'
 
 interface Props {
@@ -20,6 +20,10 @@ const RateRow = styled(Row)<{ active: boolean }>`
   font-size: 14px;
   line-height: 21px;
   color: ${({ theme }) => theme.text2};
+  padding: 0 0 0 2rem;
+  ${({ theme }) => theme.mediaWidth.upToExtraSmall`
+      padding: 0 10px 0 1rem;
+  `};
 `
 
 export const CurrentRate = ({ trade, allowedSlippage }: Props) => {
@@ -36,9 +40,7 @@ export const CurrentRate = ({ trade, allowedSlippage }: Props) => {
           </MouseoverTooltipContent>
         </RowFixed>
       ) : (
-        <Row justify="center" maxWidth="5rem">
-          -
-        </Row>
+        <RowEnd style={{ maxWidth: '10px', paddingRight: '36px' }}>-</RowEnd>
       )}
     </RateRow>
   )

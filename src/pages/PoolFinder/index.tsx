@@ -1,33 +1,42 @@
 import { Currency, CurrencyAmount, Ether, Token } from '@ixswap1/sdk-core'
 import { Trans } from '@lingui/macro'
+import { ButtonGradient } from 'components/Button'
+import { EmptyStateInfoCard } from 'components/Card'
 import FullPositionCard from 'components/PositionCard'
 import { TipWithMessage } from 'components/TipWithMessage'
+import useTheme from 'hooks/useTheme'
 import JSBI from 'jsbi'
 import React, { useCallback, useEffect, useState } from 'react'
 import { useLocation } from 'react-router'
+import { Link } from 'react-router-dom'
 import { Text } from 'rebass'
-import { AutoColumn, ColumnCenter } from '../../components/Column'
+import Column, { AutoColumn } from '../../components/Column'
 import { FindPoolTabs } from '../../components/NavigationTabs'
 import CurrencySearchModal from '../../components/SearchModal/CurrencySearchModal'
 import { PairState, useV2Pair } from '../../hooks/useV2Pairs'
 import { useActiveWeb3React } from '../../hooks/web3'
 import { usePairAdder } from '../../state/user/hooks'
 import { useTokenBalance } from '../../state/wallet/hooks'
-import { StyledInternalLink } from '../../theme'
+import { SemiTransparent, StyledInternalLink, TYPE } from '../../theme'
 import { currencyId } from '../../utils/currencyId'
 import AppBody from '../AppBody'
 import { Dots } from '../Pool/styleds'
 import { Fields } from './enums'
-import { LightMessage } from './LightMessage'
 import { PrerequisiteMessage } from './PrerequisiteMessage'
 import { SelectCurrency } from './SelectCurrency'
+import { FoundPoolWrapper } from './styleds'
 
 function useQuery() {
   return new URLSearchParams(useLocation().search)
 }
+const bodyProps = {
+  padding: '0',
+  paddingXS: '0',
+}
 
 export default function PoolFinder() {
   const query = useQuery()
+  const theme = useTheme()
   const { account, chainId } = useActiveWeb3React()
 
   const [showSearch, setShowSearch] = useState<boolean>(false)
@@ -75,75 +84,88 @@ export default function PoolFinder() {
   const handleSearchDismiss = useCallback(() => {
     setShowSearch(false)
   }, [setShowSearch])
-
+  const currenciesExist = currency0 && currency1
+  const poolFound = currenciesExist && pairState === PairState.EXISTS && hasPosition && pair
+  const noLiquidityInPool = currenciesExist && pairState === PairState.EXISTS && !(hasPosition && pair)
+  const noPool = currenciesExist && !(pairState === PairState.EXISTS) && validPairNoLiquidity
+  const invalidPair = currenciesExist && !(pairState === PairState.EXISTS) && pairState === PairState.INVALID
+  const loadingPair = currenciesExist && !(pairState === PairState.EXISTS) && pairState === PairState.LOADING
+  const prerequesiteState = !currenciesExist
   return (
     <>
       <TipWithMessage
         message={<Trans>Use this tool to find pairs that don&apos;t automatically appear in the interface.</Trans>}
       />
-      <AppBody>
+      <AppBody {...bodyProps}>
         <FindPoolTabs origin={query.get('origin') ?? '/pool'} />
-        <AutoColumn style={{ padding: '1rem' }} gap="md">
-          <SelectCurrency {...{ currency0, currency1, chooseToken }} />
-
-          {hasPosition && (
-            <ColumnCenter
-              style={{ justifyItems: 'center', backgroundColor: '', padding: '12px 0px', borderRadius: '12px' }}
-            >
-              <Text textAlign="center" fontWeight={500}>
-                <Trans>Pool Found!</Trans>
-              </Text>
-              <StyledInternalLink to={`/pool`}>
-                <Text textAlign="center">
-                  <Trans>Manage this pool.</Trans>
-                </Text>
-              </StyledInternalLink>
-            </ColumnCenter>
-          )}
-
-          {currency0 && currency1 ? (
-            pairState === PairState.EXISTS ? (
-              hasPosition && pair ? (
-                <FullPositionCard pair={pair} />
-              ) : (
-                <LightMessage>
-                  <AutoColumn gap="sm" justify="center">
-                    <Text textAlign="center">
-                      <Trans>You don’t have liquidity in this pool yet</Trans>
+        <AutoColumn>
+          <AutoColumn style={{ padding: '0 37px', marginBottom: '10px' }} gap="md">
+            <SelectCurrency {...{ currency0, currency1, chooseToken }} />
+          </AutoColumn>
+          {poolFound && (
+            <FoundPoolWrapper>
+              <Column>
+                <TYPE.title9>
+                  <Trans>Pool Found!</Trans>
+                </TYPE.title9>
+                <StyledInternalLink to={`/pool`}>
+                  <SemiTransparent>
+                    <Text fontSize={12} lineHeight={'18px'}>
+                      <Trans>Manage this Pool</Trans>
                     </Text>
-                    <StyledInternalLink to={`/add/${currencyId(currency0)}/${currencyId(currency1)}`}>
-                      <Text textAlign="center">
-                        <Trans>Add liquidity</Trans>
-                      </Text>
-                    </StyledInternalLink>
-                  </AutoColumn>
-                </LightMessage>
-              )
-            ) : validPairNoLiquidity ? (
-              <LightMessage>
-                <AutoColumn gap="sm" justify="center">
-                  <Text textAlign="center">
-                    <Trans>No pool found</Trans>
-                  </Text>
-                  <StyledInternalLink to={`/add/${currencyId(currency0)}/${currencyId(currency1)}`}>
-                    <Trans>Create pool</Trans>
-                  </StyledInternalLink>
-                </AutoColumn>
-              </LightMessage>
-            ) : pairState === PairState.INVALID ? (
-              <LightMessage>
-                <Trans>Invalid pair</Trans>
-              </LightMessage>
-            ) : pairState === PairState.LOADING ? (
-              <LightMessage>
-                <Trans>
-                  <Dots>Loading</Dots>
-                </Trans>
-              </LightMessage>
-            ) : null
-          ) : (
-            <PrerequisiteMessage account={account} />
+                  </SemiTransparent>
+                </StyledInternalLink>
+              </Column>
+              <FullPositionCard pair={pair!} />
+            </FoundPoolWrapper>
           )}
+          {!poolFound && !prerequesiteState && (
+            <Column style={{ padding: '37px' }}>
+              {noLiquidityInPool && (
+                <EmptyStateInfoCard>
+                  <TYPE.title9 fontWeight={500}>
+                    <Trans>You don’t have liquidity in this pool yet</Trans>
+                  </TYPE.title9>
+                  <ButtonGradient style={{ width: '214px' }}>
+                    <Link
+                      to={`/add/${currencyId(currency0!)}/${currencyId(currency1!)}`}
+                      style={{ color: theme.text1 }}
+                    >
+                      <Trans>Add liquidity</Trans>
+                    </Link>
+                  </ButtonGradient>
+                </EmptyStateInfoCard>
+              )}
+              {noPool && (
+                <EmptyStateInfoCard>
+                  <TYPE.title9 fontWeight={500}>
+                    <Trans>No pool found</Trans>
+                  </TYPE.title9>
+                  <ButtonGradient style={{ width: '214px' }}>
+                    <Link
+                      to={`/add/${currencyId(currency0!)}/${currencyId(currency1!)}`}
+                      style={{ color: theme.text1 }}
+                    >
+                      <Trans>Create pool</Trans>
+                    </Link>
+                  </ButtonGradient>
+                </EmptyStateInfoCard>
+              )}
+              {invalidPair && (
+                <EmptyStateInfoCard>
+                  <Trans>Invalid pair</Trans>
+                </EmptyStateInfoCard>
+              )}
+              {loadingPair && (
+                <EmptyStateInfoCard>
+                  <Trans>
+                    <Dots>Loading</Dots>
+                  </Trans>
+                </EmptyStateInfoCard>
+              )}
+            </Column>
+          )}
+          {prerequesiteState && <PrerequisiteMessage account={account} />}
         </AutoColumn>
 
         <CurrencySearchModal
