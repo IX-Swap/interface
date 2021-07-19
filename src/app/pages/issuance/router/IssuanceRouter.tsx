@@ -9,8 +9,11 @@ import { ViewDSO } from 'app/pages/issuance/pages/ViewDSO'
 import { IssuanceRoute } from 'app/pages/issuance/router/config'
 import { PreviewDSO } from 'app/pages/issuance/pages/PreviewDSO'
 import { AppRoute } from 'components/AppRoute'
+import { Commitments } from 'app/pages/issuance/pages/Commitments'
+import { useIsIssuer } from 'helpers/acl'
 
 export const IssuanceRouter = () => {
+  const isIssuer = useIsIssuer()
   return (
     <Switch>
       <AppRoute
@@ -64,6 +67,16 @@ export const IssuanceRouter = () => {
       <AppRoute breadcrumb='Issuance' path={IssuanceRoute.insight}>
         <IssuanceLanding />
       </AppRoute>
+
+      {isIssuer ? (
+        <AppRoute
+          breadcrumb='Commitments'
+          exact
+          path={IssuanceRoute.commitments}
+        >
+          <Commitments />
+        </AppRoute>
+      ) : null}
     </Switch>
   )
 }
