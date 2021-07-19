@@ -23,6 +23,10 @@ export const Wrapper = styled.div`
   margin: 0;
   padding: 0;
   width: 100%;
+  min-width: 400px;
+  ${({ theme }) => theme.mediaWidth.upToExtraSmall`
+     min-width: unset;
+  `};
 `
 
 export const HeaderRow = styled.div`

@@ -330,7 +330,7 @@ export const ModalBlurWrapper = styled.span`
   backdrop-filter: blur(20px);
   ${({ theme }) => theme.mediaWidth.upToSmall`
     padding: 0;
-  min-width: fit-content;
+    min-width: fit-content;
   `};
   ${({ theme }) => theme.mediaWidth.upToExtraSmall`
     min-width: 100%;

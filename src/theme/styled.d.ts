@@ -33,6 +33,7 @@ export interface Colors {
   bg12: Color
   bg13: Color
   bg14: Color
+  bg15: Color
   bgG1: Gradient
   bgG2: Gradient
   bgG3: Gradient
@@ -44,6 +45,8 @@ export interface Colors {
   bgG9: Gradient
   bgG10: Gradient
   bgG11: Gradient
+  bgG12: Gradient
+  bgG13: Gradient
   borderG1: Gradient
   modalBG: Color
   advancedBG: Color
