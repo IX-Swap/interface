@@ -1,5 +1,6 @@
 const fetch = require('node-fetch')
 const TIMEOUT = 10000
+const waitUntil = require('async-wait-until')
 
 module.exports = {
   getRequest: async (link) => {
@@ -197,12 +198,18 @@ module.exports = {
   clickIfElementDoesNotDisappears: async (selector, page, forClick = selector) => {
     if ((await page.$(selector)) !== null) await page.click(forClick)
   },
+
   getTestAttribute(element) {
     return `[data-testid="${element}"]`
   },
+
   makeScreenOnError: async (name, error, page) => {
     await page.screenshot({ path: `__tests__/screen/${name}.png` })
     console.error(error)
     throw new Error(`on the ${name}`)
+  },
+
+  waitUntil: async (page, timeout = '10000') => {
+    await waitUntil(() => page != undefined, { timeout: timeout })
   },
 }

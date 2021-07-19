@@ -8,6 +8,10 @@ async function launchPersistent() {
     args: ARGS,
     timeout: 90000,
     viewport: { width: 1720, height: 880 },
+    httpCredentials: {
+      username: 'ixswapio',
+      password: '2theM0on',
+    },
   })
   return context
   // Connect ot the Metamask

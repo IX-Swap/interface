@@ -1,6 +1,7 @@
 import { click, typeText, makeScreenOnError, navigate, getCount } from '../helpers/helpers.js'
 import { expect } from '@playwright/test'
-import { swap, pool } from '../selectors/ixswap'
+
+import { pool, swap } from '../selectors/ixswap'
 import { auth } from '../selectors/metamask'
 
 import { metamask, ixswap } from '../helpers/credentials'
@@ -11,14 +12,17 @@ class SwapIX {
     this.page = page
   }
 
-  addToCurrentLiquidityPool = async (page) => {
+  addToCurrentLiquidityPool = async (amount, forNewLiquidity = true) => {
     try {
-      await click(pool.button.POOL_SECTION, page)
-      await click(pool.button.OPEN_TABLE, page)
-      await click(pool.button.ADD_TO_LIQUIDITY, page)
-      await typeText(pool.field.TOKEN_AMOUNT, '0.00001', page)
-      await click(pool.button.SUPPLY, page)
-      await click(pool.button.CREATE_OR_SUPPLY, page)
+      await click(pool.button.POOL_SECTION, this.page)
+      await click(pool.button.OPEN_TABLE, this.page)
+      await click(pool.button.ADD_TO_LIQUIDITY, this.page)
+      await typeText(pool.field.TOKEN_AMOUNT, amount, this.page)
+      if (forNewLiquidity === true) {
+        await click('text="Choose token"', this.page)
+        await click(swap.button.DAI_CRYPTO, this.page)
+      }
+      await click(pool.button.SUPPLY, this.page)
     } catch (error) {
       await makeScreenOnError('addToCurrentLiquidityPool', error, this.page)
     }
@@ -53,7 +57,6 @@ class SwapIX {
     await click('text="Choose token"', page)
     await click(swap.button.DAI_CRYPTO, page)
     await click(pool.button.SUPPLY, page)
-    await click(pool.button.CREATE_OR_SUPPLY, page)
   }
 
   removePool = async (page = this.page) => {
@@ -68,16 +71,23 @@ class SwapIX {
     }
   }
   setExpertMode = async (page = this.page) => {
-    try {
-      page.on('dialog', async (dialog) => {
-        await dialog.accept('confirm')
-      })
-      await click('[id="open-settings-dialog-button"]', page)
-      await click('[id="toggle-expert-mode-button"]', page)
-      await click('[data-testid="turn-on-expert-mode"]', page)
-    } catch (error) {
-      await makeScreenOnError('setExpertMode', error, page)
-    }
+    page.on('dialog', async (dialog) => {
+      await dialog.accept('confirm')
+    })
+    await page.waitForTimeout(3000)
+
+    await click('[id="open-settings-dialog-button"]', page)
+    await page.waitForTimeout(3000)
+
+    await click('[id="toggle-expert-mode-button"]', page)
+    await page.waitForTimeout(3000)
+
+    await click('[data-testid="turn-on-expert-mode"]', page)
+    await page.waitForTimeout(3000)
+
+    // } catch (error) {
+    // await makeScreenOnError('setExpertMode', error, page)
+    // }
   }
 }
 export { SwapIX }
