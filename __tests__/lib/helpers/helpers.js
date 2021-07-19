@@ -92,7 +92,7 @@ module.exports = {
 
   click: async (selector, page) => {
     try {
-      await page.waitForSelector(selector, { timeout: TIMEOUT })
+      await page.waitForSelector(selector, { timeout: 30000 })
       await page.click(selector)
     } catch {
       throw new Error(`Could not click on selector: ${selector}`)

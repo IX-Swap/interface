@@ -11,7 +11,7 @@ const config: PlaywrightTestConfig = {
     {
       name: 'Chromium',
       retries: 0,
-      timeout: 50000,
+      timeout: 90000,
       use: {
         headless: true,
 

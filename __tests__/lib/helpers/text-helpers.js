@@ -7,5 +7,24 @@ module.exports = {
   notifications: {
     ADD_GROUP: 'This may take up to 30 seconds. Please wait and then refresh the page.',
   },
+  amounts: { base: '0.00001' },
 
+  Abi: [
+    // balanceOf
+    {
+      constant: true,
+      inputs: [{ name: '_owner', type: 'address' }],
+      name: 'balanceOf',
+      outputs: [{ name: 'balance', type: 'uint256' }],
+      type: 'function',
+    },
+    // decimals
+    {
+      constant: true,
+      inputs: [],
+      name: 'decimals',
+      outputs: [{ name: '', type: 'uint8' }],
+      type: 'function',
+    },
+  ],
 }
