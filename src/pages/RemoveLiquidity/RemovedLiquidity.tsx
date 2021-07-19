@@ -30,6 +30,11 @@ interface RemovedLiquidityProps {
 }
 
 const RemovedLiquidityRow = ({ textLeft, textRight, currency, id }: RemovedLiquidityProps) => {
+  // ask Cucer why there is no staking info
+  const stakingInfo = useStakingInfo()
+  const stakingInfosWithBalance = stakingInfo?.filter((pool) =>
+    JSBI.greaterThan(pool.stakedAmount.quotient, BIG_INT_ZERO)
+  )
   return (
     <RowBetween>
       <Text fontSize={20} fontWeight={600} lineHeight={'30px'}>
@@ -51,11 +56,6 @@ export const RemovedLiquidity = ({ currencyIdA, currencyIdB, chainId, formattedA
   const oneCurrencyIsWETH = Boolean(
     chainId && WETH9[chainId] && (currencyA?.equals(WETH9[chainId]) || currencyB?.equals(WETH9[chainId]))
   )
-  // ask Cucer why there is no staking info
-  const stakingInfo = useStakingInfo()
-  const stakingInfosWithBalance = stakingInfo?.filter((pool) =>
-    JSBI.greaterThan(pool.stakedAmount.quotient, BIG_INT_ZERO)
-  )
   return (
     <RemovedLiquidityWrapper>
       <AutoColumn gap="10px">
@@ -71,7 +71,7 @@ export const RemovedLiquidity = ({ currencyIdA, currencyIdB, chainId, formattedA
           currency={currencyB}
           id={'remove-liquidity-tokenb-symbol'}
         />
-        <TextRow textLeft={<Trans>IXS Rewards</Trans>} textRight={<>-</>} />
+        <TextRow textLeft={<Trans>IXS Rewards</Trans>} textRight={<>{'-'}</>} />
         {chainId && (oneCurrencyIsWETH || oneCurrencyIsETH) ? (
           <SemiTransparent>
             <RowBetween style={{ justifyContent: 'flex-end' }}>

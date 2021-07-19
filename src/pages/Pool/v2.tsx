@@ -11,7 +11,6 @@ import { LiquidityTitle } from './LiquidityTitle'
 import { NoPairs } from './NoPairs'
 import { LiquidityInnerTitle, MarginerTitle } from './styleds'
 import { useTokens } from './useTokens'
-import { ConnectWallet } from './ConnectWallet'
 
 const bodyProps = {
   padding: '0',
@@ -42,8 +41,7 @@ export default function Pool() {
                 <AddLiquidityButton />
               </AutoColumn>
             </MarginerTitle>
-            {!account && <ConnectWallet message={<Trans>Connect a wallet to view your Liquidity.</Trans>} />}
-            {account && (dataIsLoading || showEmptyLiquidity) && (
+            {(!account || dataIsLoading || showEmptyLiquidity) && (
               <NoPairs account={account} v2IsLoading={v2IsLoading} showEmptyLiquidity={showEmptyLiquidity} />
             )}
             {dataIsLoaded && pairsPresent && (

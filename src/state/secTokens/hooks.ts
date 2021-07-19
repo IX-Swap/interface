@@ -10,12 +10,7 @@ export function useSecTokenState(): AppState['secTokens'] {
   return useSelector<AppState, AppState['secTokens']>((state) => state.secTokens)
 }
 export const useFetchSecTokens = () => {
-  const { result, loading, request } = useApiService<SecToken[]>({
-    method: 'get',
-    uri: tokens.all,
-    data: {},
-    config: { needsAuth: true },
-  })
+  const { result, loading, request } = useApiService<SecToken[]>({ method: 'get', uri: tokens.all, data: {} })
   return { result, loading, request }
 }
 export const useSecTokens = () => {

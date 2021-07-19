@@ -63,20 +63,6 @@ export const TipCard = styled(Card)`
   background: ${({ theme }) => theme.bgG12};
   color: ${({ theme }) => theme.text2};
 `
-
-export const EmptyStateInfoCard = styled(Card)`
-  border-radius: 45px;
-  padding: 0 17px;
-  justify-content: center;
-  align-items: center;
-  display: flex;
-  gap: 10px;
-  min-height: 177px;
-  flex-direction: column;
-  background: ${({ theme }) => theme.bgG13};
-  color: ${({ theme }) => theme.text2};
-`
-
 export const DarkCard = styled(Card)`
   background: ${({ theme }) => theme.bgG4};
   backdrop-filter: blur(4px);

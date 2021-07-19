@@ -344,8 +344,8 @@ export default function RemoveLiquidity({
                   <Trans>Connect Wallet</Trans>
                 </ButtonIXSWide>
               ) : (
-                <>
-                  <RowBetween style={{ gap: '16px' }}>
+                <RowBetween>
+                  {showApproveButton && (
                     <ButtonIXSWide
                       data-testid="approve-currency-a-remove"
                       onClick={onAttemptToApprove}
@@ -361,6 +361,8 @@ export default function RemoveLiquidity({
                         <>{error || <Trans>Approve</Trans>}</>
                       )}
                     </ButtonIXSWide>
+                  )}
+                  {showRemoveButton && (
                     <ButtonIXSWide
                       data-testid="approve-currency-b-remove"
                       onClick={() => {
@@ -370,8 +372,8 @@ export default function RemoveLiquidity({
                     >
                       <Text>{<Trans>Remove</Trans>}</Text>
                     </ButtonIXSWide>
-                  </RowBetween>
-                </>
+                  )}
+                </RowBetween>
               )}
             </div>
           </AutoColumn>
