@@ -1,43 +1,46 @@
-import React from 'react'
 import { Currency, Token } from '@ixswap1/sdk-core'
 import { Trans } from '@lingui/macro'
 import { TokenList } from '@uniswap/token-lists/dist/types'
 import { ButtonIXSWide } from 'components/Button'
-import Card, { VioletCard } from 'components/Card'
 import { AutoColumn } from 'components/Column'
 import CurrencyLogo from 'components/CurrencyLogo'
 import ListLogo from 'components/ListLogo'
-import { RowBetween, RowFixed } from 'components/Row'
+import { RowBetween, RowCenter, RowFixed, RowStart } from 'components/Row'
 import useTheme from 'hooks/useTheme'
 import { useActiveWeb3React } from 'hooks/web3'
-import { transparentize } from 'polished'
-import { AlertCircle, ArrowLeft } from 'react-feather'
-import { Text } from 'rebass'
+import React from 'react'
+import { ArrowLeft } from 'react-feather'
 import { useAddUserToken } from 'state/user/hooks'
 import styled from 'styled-components/macro'
 import { CloseIcon, TYPE } from 'theme'
-import { ExternalLink } from '../../theme/components'
+import { shortenAddress } from 'utils'
+import { ExternalLink, SemiTransparent } from '../../theme/components'
 import { ExplorerDataType, getExplorerLink } from '../../utils/getExplorerLink'
-import { PaddedColumn } from './styleds'
 
 const Wrapper = styled.div`
-  position: relative;
   width: 100%;
-  overflow: auto;
+  border-radius: 20px;
+  background: ${({ theme }) => theme.bgG4};
+`
+const Section = styled(AutoColumn)`
+  border-top-left-radius: 20px;
+  border-top-right-radius: 20px;
+  padding: 37px 44px 37px 40px;
 `
 
-const WarningWrapper = styled(Card)<{ highWarning: boolean }>`
-  background-color: ${({ theme, highWarning }) =>
-    highWarning ? transparentize(0.8, theme.red1) : transparentize(0.8, theme.yellow2)};
+const BottomSection = styled(AutoColumn)`
+  background: ${({ theme }) => theme.bg11};
+  border-bottom-right-radius: 20px;
+  border-bottom-left-radius: 20px;
+  padding: 36px 40px 51px 40px;
+`
+const SourceWrapper = styled.span`
   width: fit-content;
-`
-
-const AddressText = styled(Text)`
-  font-size: 12px;
-
-  ${({ theme }) => theme.mediaWidth.upToSmall`
-    font-size: 10px;
-`}
+  border-radius: 40px;
+  margin-top: 33px;
+  margin-bottom: 41px;
+  padding: 4px 16px;
+  background: ${({ theme }) => theme.bg15};
 `
 
 interface ImportProps {
@@ -50,73 +53,61 @@ interface ImportProps {
 
 export function ImportToken({ tokens, list, onBack, onDismiss, handleCurrencySelect }: ImportProps) {
   const theme = useTheme()
-
   const { chainId } = useActiveWeb3React()
 
   const addToken = useAddUserToken()
 
   return (
     <Wrapper>
-      <PaddedColumn gap="14px" style={{ width: '100%', flex: '1 1' }}>
+      <Section>
         <RowBetween>
-          {onBack ? <ArrowLeft style={{ cursor: 'pointer' }} onClick={onBack} /> : <div />}
-          <TYPE.mediumHeader>Import {tokens.length > 1 ? 'Tokens' : 'Token'}</TYPE.mediumHeader>
+          <RowStart style={{ gap: '5px' }}>
+            {onBack ? <ArrowLeft style={{ cursor: 'pointer' }} onClick={onBack} /> : <div />}
+            <TYPE.title5>Import {tokens.length > 1 ? 'Tokens' : 'Token'}</TYPE.title5>
+          </RowStart>
           {onDismiss ? <CloseIcon onClick={onDismiss} /> : <div />}
         </RowBetween>
-      </PaddedColumn>
-      <AutoColumn gap="md" style={{ marginBottom: '32px', padding: '1rem' }}>
-        <AutoColumn justify="center" style={{ textAlign: 'center', gap: '16px', padding: '1rem' }}>
-          <AlertCircle size={48} stroke={theme.text2} strokeWidth={1} />
-          <Text color={theme.text2}>
+        <AutoColumn justify="center" style={{ textAlign: 'left', marginTop: '30px' }}>
+          <TYPE.description4>
             <Trans>
-              This token doesn&apos;t appear on the active token list(s). Make sure this is the token that you want to
-              trade.
+              This token doesn&apos;t appear on the active list(s). Make sure this is the token that you want to trade
             </Trans>
-          </Text>
+          </TYPE.description4>
         </AutoColumn>
+      </Section>
+      <BottomSection>
         {tokens.map((token) => {
           return (
-            <VioletCard
-              backgroundColor={theme.bg2}
-              key={'import' + token.address}
-              className=".token-warning-container"
-              padding="2rem"
-            >
+            <>
               <AutoColumn gap="10px" justify="center">
-                <CurrencyLogo currency={token} size={'32px'} />
+                <RowCenter style={{ gap: '11px', flexWrap: 'wrap' }}>
+                  <CurrencyLogo currency={token} size={'33px'} />
+                  <TYPE.title5>{token.symbol}</TYPE.title5>
+                  <SemiTransparent>
+                    <TYPE.description5>{token.name}</TYPE.description5>
+                  </SemiTransparent>
+                </RowCenter>
 
-                <AutoColumn gap="4px" justify="center">
-                  <TYPE.body ml="8px" mr="8px" fontWeight={500} fontSize={20}>
-                    {token.symbol}
-                  </TYPE.body>
-                  <Text color={theme.text1} fontWeight={400} fontSize={14}>
-                    {token.name}
-                  </Text>
-                </AutoColumn>
+                <AutoColumn gap="4px" justify="center"></AutoColumn>
                 {chainId && (
                   <ExternalLink href={getExplorerLink(chainId, token.address, ExplorerDataType.ADDRESS)}>
-                    <AddressText fontSize={12}>{token.address}</AddressText>
+                    <TYPE.main1 fontWeight={'400'}>{shortenAddress(token.address)}</TYPE.main1>
                   </ExternalLink>
                 )}
-                {list !== undefined ? (
-                  <RowFixed>
-                    {list.logoURI && <ListLogo logoURI={list.logoURI} size="16px" />}
-                    <TYPE.small ml="6px" fontSize={14} color={theme.text3}>
-                      via {list.name} token list
-                    </TYPE.small>
-                  </RowFixed>
-                ) : (
-                  <WarningWrapper borderRadius="4px" padding="4px" highWarning={true}>
+                <SourceWrapper>
+                  {list !== undefined ? (
                     <RowFixed>
-                      <AlertCircle stroke={theme.red1} size="10px" />
-                      <TYPE.body color={theme.red1} ml="4px" fontSize="10px" fontWeight={500}>
-                        Unknown Source
-                      </TYPE.body>
+                      {list.logoURI && <ListLogo logoURI={list.logoURI} size="16px" />}
+                      <TYPE.small ml="6px" fontSize={14} color={theme.text2}>
+                        via {list.name} token list
+                      </TYPE.small>
                     </RowFixed>
-                  </WarningWrapper>
-                )}
+                  ) : (
+                    <TYPE.buttonMuted color={theme.text2}>Unknown Source</TYPE.buttonMuted>
+                  )}
+                </SourceWrapper>
               </AutoColumn>
-            </VioletCard>
+            </>
           )
         })}
 
@@ -131,7 +122,7 @@ export function ImportToken({ tokens, list, onBack, onDismiss, handleCurrencySel
         >
           Import
         </ButtonIXSWide>
-      </AutoColumn>
+      </BottomSection>
     </Wrapper>
   )
 }
