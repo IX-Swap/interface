@@ -52,6 +52,7 @@ export const RemoveAmount = ({ parsedAmounts, formattedAmounts, onUserInput }: P
                 key={percentage}
                 onClick={() => onUserInput(Field.LIQUIDITY_PERCENT, percentage)}
                 active={formattedAmounts[Field.LIQUIDITY_PERCENT] === percentage}
+                data-testid={'percentage_' + percentage}
               >
                 {percentage !== '100' ? `${percentage}%` : <Trans>MAX</Trans>}
               </Option>

@@ -106,6 +106,7 @@ export const CurrencyInput = ({
         id="swap-currency-input"
       />
       <ArrowWrapper
+        data-testid="currencyReplace"
         clickable
         onClick={() => {
           setApprovalSubmitted(false) // reset 2 step UI for approvals

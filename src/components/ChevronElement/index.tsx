@@ -19,7 +19,13 @@ export const ChevronElement = ({ showMore, setShowMore }: Props) => {
   const theme = useTheme()
   return (
     <RowFixed gap="8px">
-      <ButtonEmpty padding="6px 8px" borderRadius="12px" width="100%" onClick={() => setShowMore(!showMore)}>
+      <ButtonEmpty
+        data-testid="openTable"
+        padding="6px 8px"
+        borderRadius="12px"
+        width="100%"
+        onClick={() => setShowMore(!showMore)}
+      >
         <StyledChevron
           size="20"
           color={theme.text2}
