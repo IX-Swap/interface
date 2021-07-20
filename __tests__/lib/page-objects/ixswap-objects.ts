@@ -22,7 +22,6 @@ class SwapIX {
         await click('text="Choose token"', this.page)
         await click(swap.button.DAI_CRYPTO, this.page)
       }
-      await click(pool.button.SUPPLY, this.page)
     } catch (error) {
       await makeScreenOnError('addToCurrentLiquidityPool', error, this.page)
     }
@@ -56,7 +55,6 @@ class SwapIX {
     await typeText(pool.field.TOKEN_AMOUNT, sum, page)
     await click('text="Choose token"', page)
     await click(swap.button.DAI_CRYPTO, page)
-    await click(pool.button.SUPPLY, page)
   }
 
   removePool = async (page = this.page) => {
@@ -74,16 +72,10 @@ class SwapIX {
     page.on('dialog', async (dialog) => {
       await dialog.accept('confirm')
     })
-    await page.waitForTimeout(3000)
-
     await click('[id="open-settings-dialog-button"]', page)
-    await page.waitForTimeout(3000)
-
     await click('[id="toggle-expert-mode-button"]', page)
-    await page.waitForTimeout(3000)
-
     await click('[data-testid="turn-on-expert-mode"]', page)
-    await page.waitForTimeout(3000)
+    await page.waitForTimeout(1000)
 
     // } catch (error) {
     // await makeScreenOnError('setExpertMode', error, page)

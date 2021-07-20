@@ -1,7 +1,9 @@
+const { getTestAttribute } = require('../helpers/helpers')
+
 module.exports = {
   auth: {
     buttons: {
-      GET_STARTED: '(//button)',
+      GET_STARTED: '(//*[@id="app-content"]//button)',
       IMPORT_WALLET: '[class="button btn-primary first-time-flow__button"]',
       LOGOUT: '[data-placement="bottom-end"]',
       SUBMIT: "[type='submit']",
@@ -11,6 +13,7 @@ module.exports = {
       NEXT: '//button[text()="Next"]',
       CONFIRM: '[data-testid="page-container-footer-next"]',
       ADD_TOKEN: 'text="Add Token"',
+      CANCEL: getTestAttribute('page-container-footer-cancel'),
     },
 
     field: {

@@ -39,14 +39,16 @@ class Metamask {
       await makeScreenOnError('confirmOperation', error, page)
     }
   }
-  fullConnection = async (context, secretWords, address) => {
+  fullConnection = async (context, secretWords, address, topUp = true) => {
     const page = await context.newPage()
     await navigate(ixswap.URL, page)
     if ((await context.pages()).length === 3) {
       await context.pages()[0].close()
     }
     const metamaskPage = (await context.pages())[1]
-    await getRequest(`http://rinkeby-faucet.com/send?address=${address}`)
+    if (topUp) {
+      await getRequest(`http://rinkeby-faucet.com/send?address=${address}`)
+    }
     await this.loginToMetamask(secretWords, metamaskPage)
     await page.reload()
     await metamaskPage.close()

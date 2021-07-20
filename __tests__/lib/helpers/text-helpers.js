@@ -7,8 +7,10 @@ module.exports = {
   notifications: {
     ADD_GROUP: 'This may take up to 30 seconds. Please wait and then refresh the page.',
   },
-  amounts: { base: '0.00001' },
 
+  amounts: { base: '0.00001', moreThaCurrent: '10000' },
+
+  // Default ABI setting for get balance ERC20 type
   Abi: [
     // balanceOf
     {
