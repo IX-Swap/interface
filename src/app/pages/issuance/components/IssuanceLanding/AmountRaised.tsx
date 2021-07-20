@@ -38,7 +38,7 @@ export const AmountRaised = ({ isNewThemeOn = false }: AmountRaisedProps) => {
   const percentRaised = data !== undefined ? getDSOStats(data).percentRaised : 0
 
   return (
-    <ChartWrapper py={2.5}>
+    <ChartWrapper py={isNewThemeOn ? 2.5 : undefined}>
       <Grid container justify='space-between' alignItems='center'>
         <Grid item>
           <ChartTitle title='Amount Raised' small />
