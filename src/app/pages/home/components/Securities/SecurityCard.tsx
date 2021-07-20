@@ -34,6 +34,8 @@ export interface Security {
   fundingGoal: string
   totalCapitalization: string
   website: string
+  amountRaised?: string
+  protocol: string
 }
 
 export const SecurityCard = ({

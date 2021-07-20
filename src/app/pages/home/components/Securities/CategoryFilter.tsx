@@ -2,32 +2,24 @@ import { FormControl, InputLabel, MenuItem, Select } from '@material-ui/core'
 import { SearchQueryFilter } from 'components/SearchQueryFilter/SearchQueryFilter'
 import React from 'react'
 
-export const assetClasses = [
-  'Equity',
-  'Debt',
-  'Investment Fund',
-  'Revenue Sharing',
-  'Convertible Security'
-]
-
-export const SecurityTypeFilter = () => {
+export const CategoryFilter = () => {
   return (
-    <SearchQueryFilter<'assetClass'> name='assetClass' defaultValue=''>
+    <SearchQueryFilter<'category'> name='category' defaultValue='Industry'>
       {({ value, onChange }) => (
         <FormControl variant='outlined' style={{ width: 140 }}>
-          <InputLabel shrink>Security Type</InputLabel>
+          <InputLabel shrink>Filter By</InputLabel>
           <Select
             displayEmpty
             value={value ?? ''}
             onChange={(event: React.ChangeEvent<{ value: unknown }>) => {
               onChange(event.target.value as string)
             }}
-            label='Security Type'
+            label='Filter By'
           >
-            <MenuItem value=''>All Types</MenuItem>
-            {assetClasses.map(assetClass => (
-              <MenuItem value={assetClass}>{assetClass}</MenuItem>
-            ))}
+            <MenuItem value='Industry'>Industry</MenuItem>
+            <MenuItem value='Country'>Country</MenuItem>
+            <MenuItem value='Securities'>Securities</MenuItem>
+            <MenuItem value='Protocol'>Protocol</MenuItem>
           </Select>
         </FormControl>
       )}

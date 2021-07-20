@@ -2,6 +2,17 @@ import { FormControl, InputLabel, MenuItem, Select } from '@material-ui/core'
 import { SearchQueryFilter } from 'components/SearchQueryFilter/SearchQueryFilter'
 import React from 'react'
 
+export const protocols = [
+  'ERC-20',
+  'Algorand',
+  'ERC-1400',
+  'Tezos',
+  'INPR-18',
+  'DS',
+  'Stellar',
+  'Liquid'
+]
+
 export const ProtocolFilter = () => {
   return (
     <SearchQueryFilter<'protocol'> name='protocol' defaultValue=''>
@@ -17,14 +28,9 @@ export const ProtocolFilter = () => {
             label='Protocol'
           >
             <MenuItem value=''>All Protocols</MenuItem>
-            <MenuItem value='ERC-20'>ERC-20</MenuItem>
-            <MenuItem value='Algorand'>Algorand</MenuItem>
-            <MenuItem value='ERC-1400'>ERC-1400</MenuItem>
-            <MenuItem value='Tezos'>Tezos</MenuItem>
-            <MenuItem value='INPR-18'>INPR-18</MenuItem>
-            <MenuItem value='DS'>DS</MenuItem>
-            <MenuItem value='Stellar'>Stellar</MenuItem>
-            <MenuItem value='Liquid'>Liquid</MenuItem>
+            {protocols.map(protocol => (
+              <MenuItem value={protocol}>{protocol}</MenuItem>
+            ))}
           </Select>
         </FormControl>
       )}

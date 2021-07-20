@@ -2,6 +2,14 @@ import { FormControl, InputLabel, MenuItem, Select } from '@material-ui/core'
 import { SearchQueryFilter } from 'components/SearchQueryFilter/SearchQueryFilter'
 import React from 'react'
 
+export const industries = [
+  'Diverse Industries',
+  'Real Estate',
+  'Technology',
+  'Finance',
+  'Energy & Mining'
+]
+
 export const IndustryFilter = () => {
   return (
     <SearchQueryFilter<'industry'> name='industry' defaultValue=''>
@@ -17,11 +25,9 @@ export const IndustryFilter = () => {
             label='Industry'
           >
             <MenuItem value=''>All Industries</MenuItem>
-            <MenuItem value='Diverse Industries'>Diverse Industries</MenuItem>
-            <MenuItem value='Real Estate'>Real Estate</MenuItem>
-            <MenuItem value='Technology'>Technology</MenuItem>
-            <MenuItem value='Finance'>Finance</MenuItem>
-            <MenuItem value='Energy & Mining'>Energy &amp; Mining</MenuItem>
+            {industries.map(industry => (
+              <MenuItem value={industry}>{industry}</MenuItem>
+            ))}
           </Select>
         </FormControl>
       )}

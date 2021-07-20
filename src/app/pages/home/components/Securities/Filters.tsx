@@ -11,9 +11,14 @@ import React from 'react'
 export interface FiltersProps {
   view: 'grid' | 'list'
   toggleView: () => void
+  showViewToggle?: boolean
 }
 
-export const Filters = ({ view, toggleView }: FiltersProps) => {
+export const Filters = ({
+  view,
+  toggleView,
+  showViewToggle = false
+}: FiltersProps) => {
   return (
     <Grid container spacing={0} justify='space-between'>
       <Grid item xs={12} md={4}>
@@ -44,11 +49,13 @@ export const Filters = ({ view, toggleView }: FiltersProps) => {
         <Grid item>
           <ProtocolFilter />
         </Grid>
-        <Grid item>
-          <IconButton onClick={toggleView}>
-            {view === 'grid' ? <AppsIcon /> : <ViewListIcon />}
-          </IconButton>
-        </Grid>
+        {showViewToggle && (
+          <Grid item>
+            <IconButton onClick={toggleView}>
+              {view === 'grid' ? <AppsIcon /> : <ViewListIcon />}
+            </IconButton>
+          </Grid>
+        )}
       </Grid>
     </Grid>
   )
