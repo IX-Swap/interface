@@ -67,7 +67,7 @@ export const Commitments = () => {
               variant='outlined'
               style={{ backgroundColor: theme.palette.backgrounds.default }}
             >
-              <TargetFundraise />
+              <TargetFundraise isNewThemeOn />
             </Card>
           </Grid>
         </Grid>

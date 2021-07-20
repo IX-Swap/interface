@@ -5,8 +5,15 @@ import { ChartWrapper } from 'app/pages/issuance/components/IssuanceLanding/Char
 import { InsightValue } from 'app/pages/issuance/components/IssuanceLanding/InsightValue'
 import { LOADING_TEXT } from 'components/form/renderUtils'
 import { useParams } from 'react-router-dom'
+import { VSpacer } from 'components/VSpacer'
 
-export const TargetFundraise = () => {
+export interface TargetFundraiseProps {
+  isNewThemeOn?: boolean
+}
+
+export const TargetFundraise = ({
+  isNewThemeOn = false
+}: TargetFundraiseProps) => {
   const { dsoId, issuerId } = useParams<{ dsoId: string; issuerId: string }>()
   const { data, isSuccess } = useDSOById(dsoId, issuerId)
 
@@ -17,11 +24,22 @@ export const TargetFundraise = () => {
   }
 
   if (isSuccess && data !== undefined && data.status !== 'Draft') {
-    value = abbreviateNumber(data.totalFundraisingAmount, data.currency.symbol)
+    value = abbreviateNumber(
+      data.totalFundraisingAmount,
+      data.currency.symbol,
+      false,
+      undefined,
+      isNewThemeOn
+    )
   }
 
   return (
-    <ChartWrapper title='Target Fundraise' small>
+    <ChartWrapper
+      title='Target Fundraise'
+      small
+      py={isNewThemeOn ? 2.5 : undefined}
+    >
+      {isNewThemeOn ? <VSpacer size={'extraSmall'} /> : null}
       <InsightValue value={value} />
     </ChartWrapper>
   )
