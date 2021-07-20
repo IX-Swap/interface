@@ -41,6 +41,7 @@ export const useLogin = () => {
   const { account } = useActiveWeb3React()
   const usesSecTokens = useUsesSecTokens()
   const { getToken } = useAuthToken()
+
   useEffect(() => {
     if (account && usesSecTokens) {
       getToken()
