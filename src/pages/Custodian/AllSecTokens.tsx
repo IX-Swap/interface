@@ -12,15 +12,8 @@ import { TYPE } from 'theme'
 import SecTokensList from './SecTokensList'
 
 export const AllSecTokens = () => {
-  const {
-    searchQuery,
-    inputRef,
-    handleInput,
-    filteredSortedTokens,
-    filteredInactiveTokens,
-    filteredSortedTokensWithETH,
-    fixedList,
-  } = useCurrencySearch()
+  const { searchQuery, inputRef, handleInput, filteredSortedTokens, filteredInactiveTokens, fixedList } =
+    useCurrencySearch(true)
   const theme = useTheme()
   return (
     <>
@@ -52,7 +45,7 @@ export const AllSecTokens = () => {
               {({ height }) => (
                 <SecTokensList
                   height={height}
-                  currencies={filteredSortedTokensWithETH}
+                  currencies={filteredSortedTokens}
                   otherListTokens={filteredInactiveTokens}
                   fixedListRef={fixedList}
                 />

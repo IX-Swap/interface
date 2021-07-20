@@ -17,6 +17,7 @@ function currencyKey(currency: Currency): string {
 
 function CurrencyRow({ currency, style }: { currency: Currency; style: CSSProperties }) {
   const key = currencyKey(currency)
+
   // only show add or remove buttons if not on selected list
   return (
     <MenuRow style={style} className={`token-item-${key}`}>

@@ -17,6 +17,7 @@ import {
   updateUserSingleHopOnly,
   updateHideClosedPositions,
   updateUserLocale,
+  setUsesSecTokens,
 } from './actions'
 import { SupportedLocale } from 'constants/locales'
 
@@ -44,6 +45,8 @@ export interface UserState {
 
   // deadline set by user in minutes, used in all txns
   userDeadline: number
+
+  usesSecTokens: boolean
 
   tokens: {
     [chainId: number]: {
@@ -80,6 +83,7 @@ export const initialState: UserState = {
   pairs: {},
   timestamp: currentTimestamp(),
   URLWarningVisible: true,
+  usesSecTokens: false,
 }
 
 export default createReducer(initialState, (builder) =>
@@ -184,5 +188,8 @@ export default createReducer(initialState, (builder) =>
     })
     .addCase(toggleURLWarning, (state) => {
       state.URLWarningVisible = !state.URLWarningVisible
+    })
+    .addCase(setUsesSecTokens, (state, { payload: { usesTokens } }) => {
+      state.usesSecTokens = usesTokens
     })
 )

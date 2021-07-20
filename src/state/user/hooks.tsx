@@ -92,7 +92,9 @@ export function useUserLocaleManager(): [SupportedLocale | null, (newLocale: Sup
 export function useIsExpertMode(): boolean {
   return useSelector<AppState, AppState['user']['userExpertMode']>((state) => state.user.userExpertMode)
 }
-
+export function useUsesSecTokens(): boolean {
+  return useSelector<AppState, AppState['user']['usesSecTokens']>((state) => state.user.usesSecTokens)
+}
 export function useExpertModeManager(): { expertMode: boolean; toggleExpertMode: () => void } {
   const dispatch = useDispatch<AppDispatch>()
   const expertMode = useIsExpertMode()
