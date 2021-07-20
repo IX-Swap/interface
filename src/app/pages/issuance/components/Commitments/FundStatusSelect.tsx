@@ -1,0 +1,27 @@
+import React from 'react'
+import { MenuItem, Select, SelectProps } from '@material-ui/core'
+import { renderMenuItems } from 'helpers/rendering'
+import { TypedSelectProps } from 'types/util'
+import { fundStatuses } from 'config/defaults'
+
+export interface FundStatusSelectSelectProps extends TypedSelectProps {
+  includeAll?: boolean
+  labelBetweenAll?: string
+}
+
+export const FundStatusSelect = (props: FundStatusSelectSelectProps) => {
+  const { includeAll = false, label, labelBetweenAll, ...rest } = props
+
+  return (
+    <Select {...(rest as SelectProps)} label={label}>
+      {includeAll && (
+        <MenuItem value='All'>
+          {labelBetweenAll !== undefined ? labelBetweenAll : 'All'}
+        </MenuItem>
+      )}
+      {renderMenuItems(
+        fundStatuses.map(option => ({ label: option, value: option }))
+      )}
+    </Select>
+  )
+}

@@ -1,7 +1,6 @@
 import React, { useEffect } from 'react'
 import { Card, Grid, Hidden } from '@material-ui/core'
 import { CountdownTimer } from '../components/CountdownTimer/CountdownTimer'
-import { Activities } from '../components/IssuanceLanding/Activities'
 import { AmountRaised } from '../components/IssuanceLanding/AmountRaised'
 import { useDSOById } from 'app/pages/invest/hooks/useDSOById'
 import { useAppBreakpoints } from 'hooks/useAppBreakpoints'
@@ -11,6 +10,7 @@ import { TargetFundraise } from 'app/pages/issuance/components/IssuanceLanding/T
 import { generatePath } from 'react-router'
 import { history } from 'config/history'
 import { PageHeader } from 'app/pages/issuance/components/Commitments/PageHeader'
+import { InvestorCommitmentTable } from 'app/pages/issuance/components/Commitments/InvestorCommitmentTable'
 
 export const Commitments = () => {
   // TODO Remove this after complete backend api endpoints
@@ -87,7 +87,7 @@ export const Commitments = () => {
 
       <Grid container>
         <Grid item xs={12} style={{ paddingTop: 0, paddingLeft: 0 }}>
-          <Activities />
+          <InvestorCommitmentTable />
         </Grid>
       </Grid>
     </>
