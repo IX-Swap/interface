@@ -2,17 +2,16 @@ import React, { useEffect } from 'react'
 import { Grid, Hidden } from '@material-ui/core'
 import { CountdownTimer } from '../components/CountdownTimer/CountdownTimer'
 import { Activities } from '../components/IssuanceLanding/Activities'
-import { TotalInvestors } from '../components/IssuanceLanding/TotalInvestors'
 import { AmountRaised } from '../components/IssuanceLanding/AmountRaised'
 import { useDSOById } from 'app/pages/invest/hooks/useDSOById'
 import { useAppBreakpoints } from 'hooks/useAppBreakpoints'
 import { VSpacer } from 'components/VSpacer'
 import { useParams } from 'react-router-dom'
 import { TargetFundraise } from 'app/pages/issuance/components/IssuanceLanding/TargetFundraise'
-import { PageHeader } from 'app/components/PageHeader/PageHeader'
 import { IssuanceLandingCard } from 'ui/SecondaryCard'
 import { generatePath } from 'react-router'
 import { history } from 'config/history'
+import { PageHeader } from 'app/pages/issuance/components/Commitments/PageHeader'
 
 export const Commitments = () => {
   // TODO Remove this after complete backend api endpoints
@@ -38,7 +37,7 @@ export const Commitments = () => {
 
   return (
     <>
-      <PageHeader title={data?.tokenName} showBreadcrumbs={false} />
+      <PageHeader title={data?.tokenName} />
       <Grid
         container
         justify='space-between'
@@ -53,14 +52,6 @@ export const Commitments = () => {
           xs={12}
           md={8}
         >
-          <Grid item xs={12} md={4} lg={4}>
-            <IssuanceLandingCard variant='outlined'>
-              <TotalInvestors />
-            </IssuanceLandingCard>
-          </Grid>
-
-          {divider}
-
           <Grid item xs={12} md={4} lg={4}>
             <IssuanceLandingCard variant='outlined' style={{ height: '100%' }}>
               <AmountRaised />
