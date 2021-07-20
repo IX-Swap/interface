@@ -6,6 +6,7 @@ on:
       - metamask-tests
       - main
       - development
+      - ci-update
   pull_request:
     branches:
       - main
@@ -13,7 +14,9 @@ on:
 
 jobs:
   integration-tests:
+    name: Integration Tests
     runs-on: ubuntu-latest # or macos-latest, windows-latest
+
     steps:
       - uses: actions/checkout@v2
 
