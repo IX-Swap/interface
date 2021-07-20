@@ -1,3 +1,5 @@
+import getSymbolFromCurrency from 'currency-symbol-map'
+
 export const addSymbol = (
   value: string | number | undefined,
   symbol: string = 'SGD',
@@ -22,7 +24,8 @@ export const abbreviateNumber = (
   value: number | null,
   symbol?: string,
   right?: boolean,
-  formatter?: any
+  formatter?: any,
+  isCustomSymbol?: boolean
 ) => {
   // https://stackoverflow.com/a/60980688
 
@@ -33,10 +36,19 @@ export const abbreviateNumber = (
     compactDisplay: 'short'
   })
 
-  const num =
+  const num: string | number =
     formatter !== undefined
       ? formatter.format(value ?? 0)
       : defaultFormatter.format(value ?? 0)
+
+  if (
+    isCustomSymbol !== undefined &&
+    isCustomSymbol &&
+    symbol !== undefined &&
+    num !== undefined
+  ) {
+    return `${getSymbolFromCurrency(symbol) ?? 'S$'} ${num ?? 0}`
+  }
 
   return addSymbol(num, symbol, right)
 }

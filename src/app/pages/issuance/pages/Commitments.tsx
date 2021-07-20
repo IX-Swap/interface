@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react'
-import { Grid, Hidden } from '@material-ui/core'
+import { Card, Grid, Hidden } from '@material-ui/core'
 import { CountdownTimer } from '../components/CountdownTimer/CountdownTimer'
 import { Activities } from '../components/IssuanceLanding/Activities'
 import { AmountRaised } from '../components/IssuanceLanding/AmountRaised'
@@ -8,7 +8,6 @@ import { useAppBreakpoints } from 'hooks/useAppBreakpoints'
 import { VSpacer } from 'components/VSpacer'
 import { useParams } from 'react-router-dom'
 import { TargetFundraise } from 'app/pages/issuance/components/IssuanceLanding/TargetFundraise'
-import { IssuanceLandingCard } from 'ui/SecondaryCard'
 import { generatePath } from 'react-router'
 import { history } from 'config/history'
 import { PageHeader } from 'app/pages/issuance/components/Commitments/PageHeader'
@@ -53,17 +52,23 @@ export const Commitments = () => {
           md={8}
         >
           <Grid item xs={12} md={4} lg={4}>
-            <IssuanceLandingCard variant='outlined' style={{ height: '100%' }}>
-              <AmountRaised />
-            </IssuanceLandingCard>
+            <Card
+              variant='outlined'
+              style={{ backgroundColor: theme.palette.backgrounds.default }}
+            >
+              <AmountRaised isNewThemeOn />
+            </Card>
           </Grid>
 
           {divider}
 
           <Grid item xs={12} md={4} lg={4}>
-            <IssuanceLandingCard variant='outlined' style={{ height: '100%' }}>
+            <Card
+              variant='outlined'
+              style={{ backgroundColor: theme.palette.backgrounds.default }}
+            >
               <TargetFundraise />
-            </IssuanceLandingCard>
+            </Card>
           </Grid>
         </Grid>
 
