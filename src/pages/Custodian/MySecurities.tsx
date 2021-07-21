@@ -1,38 +1,27 @@
-import React from 'react'
+import React, { useMemo } from 'react'
 import { TopStraightBackgroundWrapper } from 'components/BottomHalfWrapper'
 import SecurityCard from 'components/SecurityCard'
-import { useTokens } from 'pages/Pool/useTokens'
 import { EmptyState } from './EmptyState'
+import { useUserSecTokenLoading, useUserSecTokens } from 'state/user/hooks'
+import { useActiveWeb3React } from 'hooks/web3'
 
 export const MySecurities = () => {
-  const {
-    account,
-    dataIsLoading,
-    dataIsLoaded,
-    v2IsLoading,
-    showEmptyLiquidity,
-    pairsPresent,
-    v2PairsWithoutStakedAmount,
-    stakingPairs,
-    stakingInfosWithBalance,
-  } = useTokens()
-
+  const { secTokens } = useUserSecTokens()
+  const { account } = useActiveWeb3React()
+  const loading = useUserSecTokenLoading()
+  const showEmptyLiquidity = useMemo(() => {
+    return Object.keys(secTokens).length === 0
+  }, [secTokens])
   return (
     <>
-      {(!account || dataIsLoading || showEmptyLiquidity) && (
-        <EmptyState account={account} v2IsLoading={v2IsLoading} showEmptyLiquidity={showEmptyLiquidity} />
+      {(!account || loading || showEmptyLiquidity) && (
+        <EmptyState hasAccount={!!account} loading={loading} showEmptyLiquidity={showEmptyLiquidity} />
       )}
-      {dataIsLoaded && pairsPresent && (
+      {!loading && !showEmptyLiquidity && (
         <TopStraightBackgroundWrapper>
-          {v2PairsWithoutStakedAmount.map((v2Pair) => (
-            <SecurityCard key={v2Pair.liquidityToken.address} pair={v2Pair} />
+          {Object.keys(secTokens).map((tokenAddress) => (
+            <SecurityCard key={tokenAddress} currency={secTokens[tokenAddress]} />
           ))}
-          {stakingPairs.map(
-            (stakingPair, i) =>
-              stakingPair[1] && ( // skip pairs that arent loaded
-                <SecurityCard key={stakingInfosWithBalance[i].stakingRewardAddress} pair={stakingPair[1]} />
-              )
-          )}
         </TopStraightBackgroundWrapper>
       )}
     </>

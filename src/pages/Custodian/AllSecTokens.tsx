@@ -3,7 +3,7 @@ import { TopStraightBackgroundWrapper } from 'components/BottomHalfWrapper'
 import Column from 'components/Column'
 import { RowCenter, RowStart } from 'components/Row'
 import { PaddedColumn, SearchInput } from 'components/SearchModal/styleds'
-import { useCurrencySearch } from 'components/SearchModal/useCurrencySearch'
+import { ListType, useCurrencySearch } from 'components/SearchModal/useCurrencySearch'
 import useTheme from 'hooks/useTheme'
 import React, { RefObject } from 'react'
 import AutoSizer from 'react-virtualized-auto-sizer'
@@ -13,7 +13,7 @@ import SecTokensList from './SecTokensList'
 
 export const AllSecTokens = () => {
   const { searchQuery, inputRef, handleInput, filteredSortedTokens, filteredInactiveTokens, fixedList } =
-    useCurrencySearch(true)
+    useCurrencySearch(ListType.SEC_TOKENS)
   const theme = useTheme()
   return (
     <>
@@ -43,12 +43,7 @@ export const AllSecTokens = () => {
           <div style={{ flex: '1 1 auto', height: '400px' }}>
             <AutoSizer disableWidth>
               {({ height }) => (
-                <SecTokensList
-                  height={height}
-                  currencies={filteredSortedTokens}
-                  otherListTokens={filteredInactiveTokens}
-                  fixedListRef={fixedList}
-                />
+                <SecTokensList height={height} currencies={filteredSortedTokens} fixedListRef={fixedList} />
               )}
             </AutoSizer>
           </div>

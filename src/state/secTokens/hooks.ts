@@ -27,9 +27,14 @@ export const getSecTokensList = async () => {
   return result.data
 }
 
+const listCache: WeakMap<SecToken[], SecTokenAddressMap> | null =
+  typeof WeakMap !== 'undefined' ? new WeakMap<SecToken[], SecTokenAddressMap>() : null
+
 export const useSecTokens = () => {
   const { tokens } = useSecTokenState()
-  return { tokens }
+  const secMap = listToSecTokenMap(listCache, tokens)
+  const secTokens = useSecTokensFromMap(secMap)
+  return { secTokens }
 }
 
 export function useFetchSecTokenListCallback(): (sendDispatch?: boolean) => Promise<SecToken[]> {
@@ -41,7 +46,6 @@ export function useFetchSecTokenListCallback(): (sendDispatch?: boolean) => Prom
       sendDispatch && dispatch(fetchSecTokenList.pending())
       return getSecTokensList()
         .then((tokenList) => {
-          console.log('I received token list', { tokenList })
           sendDispatch && dispatch(fetchSecTokenList.fulfilled({ tokenList }))
           return tokenList
         })
@@ -54,23 +58,24 @@ export function useFetchSecTokenListCallback(): (sendDispatch?: boolean) => Prom
     [dispatch]
   )
 }
-type SecTokenAddressMap = {
+
+export type SecTokenAddressMap = {
   readonly [x: number]: Readonly<{
     [tokenAddress: string]: {
       token: WrappedTokenInfo
     }
   }>
 }
-const listCache: WeakMap<SecToken[], SecTokenAddressMap> | null =
-  typeof WeakMap !== 'undefined' ? new WeakMap<SecToken[], SecTokenAddressMap>() : null
 
-export function listToSecTokenMap(list?: null | SecToken[]): SecTokenAddressMap {
+export function listToSecTokenMap(
+  cache: WeakMap<SecToken[], SecTokenAddressMap> | null,
+  list?: null | SecToken[]
+): SecTokenAddressMap {
   if (!list) return {}
-  const result = listCache?.get(list)
+  const result = cache?.get(list)
   if (result) return result
   const map = list.reduce<SecTokenAddressMap>((tokenMap, tokenInfo) => {
     const token = new WrappedTokenInfo(tokenInfo, undefined)
-    console.log('listToSecTokenWrap', { token })
     if (tokenMap[token.chainId]?.[token.address] !== undefined) {
       console.error(new Error(`Duplicate token! ${token.address}`))
       return tokenMap
@@ -86,7 +91,7 @@ export function listToSecTokenMap(list?: null | SecToken[]): SecTokenAddressMap 
       },
     }
   }, {})
-  listCache?.set(list, map)
+  cache?.set(list, map)
   return map
 }
 
@@ -95,8 +100,8 @@ export function useSecTokensFromMap(tokenMap: SecTokenAddressMap): { [address: s
   const { chainId } = useActiveWeb3React()
 
   return useMemo(() => {
-    if (!chainId) return {}
-    if (Object.keys(tokenMap).length === 0) return {}
+    if (!tokenMap || chainId === undefined) return {}
+    if (!tokenMap[chainId]) return {}
     // reduce to just tokens
     const mapWithoutUrls = Object.keys(tokenMap[chainId]).reduce<{ [address: string]: Token }>((newMap, address) => {
       newMap[address] = tokenMap[chainId][address].token
@@ -104,5 +109,5 @@ export function useSecTokensFromMap(tokenMap: SecTokenAddressMap): { [address: s
     }, {})
 
     return mapWithoutUrls
-  }, [chainId, tokenMap])
+  }, [tokenMap, chainId])
 }

@@ -2,17 +2,18 @@ import { t } from '@lingui/macro'
 import CurrencyLogo from 'components/CurrencyLogo'
 import { ReadMore } from 'components/ReadMore'
 import { Vault } from 'components/Vault'
-import { VaultState } from 'components/Vault/enum'
+import { DepositPopup } from 'components/Vault/DepositPopup'
+import { getVaultState } from 'components/Vault/enum'
+import { WithdrawPopup } from 'components/Vault/WithdrawPopup'
 import { useCurrency } from 'hooks/Tokens'
 import React, { useMemo } from 'react'
 import { RouteComponentProps } from 'react-router-dom'
 import { Box } from 'rebass'
+import { useUserSecTokens } from 'state/user/hooks'
 import { TYPE } from 'theme'
 import { InfoBackground } from './Background'
 import { Container, Description, DescriptionText, InfoTitle } from './styleds'
 import { TokenDetails } from './TokenDetails'
-import { DepositPopup } from 'components/Vault/DepositPopup'
-import { WithdrawPopup } from 'components/Vault/WithdrawPopup'
 export default function SecTokenDetails({
   history,
   match: {
@@ -20,6 +21,13 @@ export default function SecTokenDetails({
   },
 }: RouteComponentProps<{ currencyId: string }>) {
   const currency = (useCurrency(currencyId) as any) ?? undefined
+  const { secTokens } = useUserSecTokens()
+
+  const vaultState = useMemo(() => {
+    const status = (secTokens[currencyId] as any)?.tokenInfo?.status ?? ''
+    return getVaultState(status)
+  }, [secTokens, currencyId])
+
   const description = useMemo(() => {
     return (currency as any)?.tokenInfo?.description
   }, [currency])
@@ -44,7 +52,7 @@ export default function SecTokenDetails({
           </DescriptionText>
         </Description>
         <TokenDetails currency={currency} />
-        <Vault status={VaultState.NOT_SUBMITTED} currency={currency} />
+        <Vault status={vaultState} currency={currency} />
       </Container>
     </>
   )

@@ -1,5 +1,6 @@
-import { createAction } from '@reduxjs/toolkit'
+import { ActionCreatorWithoutPayload, ActionCreatorWithPayload, createAction } from '@reduxjs/toolkit'
 import { SupportedLocale } from 'constants/locales'
+import { SecToken } from 'types/secToken'
 
 export interface SerializedToken {
   chainId: number
@@ -31,3 +32,13 @@ export const removeSerializedPair =
   createAction<{ chainId: number; tokenAAddress: string; tokenBAddress: string }>('user/removeSerializedPair')
 export const toggleURLWarning = createAction<void>('app/toggleURLWarning')
 export const setUsesSecTokens = createAction<{ usesTokens: boolean }>('user/setUsesSecTokens')
+
+export const fetchUserSecTokenList: Readonly<{
+  pending: ActionCreatorWithoutPayload
+  fulfilled: ActionCreatorWithPayload<{ tokenList: SecToken[] }>
+  rejected: ActionCreatorWithPayload<{ errorMessage: string }>
+}> = {
+  pending: createAction('user/fetchUserSecTokenList/pending'),
+  fulfilled: createAction('user/fetchUserSecTokenList/fulfilled'),
+  rejected: createAction('user/fetchUserSecTokenList/rejected'),
+}

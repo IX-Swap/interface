@@ -9,6 +9,7 @@ import {
   useAllTokens,
   useIsUserAddedToken,
   useOnlySecurityTokens,
+  useOnlyUserSecurityTokens,
   useSearchInactiveTokenLists,
   useToken,
 } from '../../hooks/Tokens'
@@ -17,7 +18,12 @@ import { isAddress } from '../../utils'
 import { filterTokens, useSortedTokensByQuery } from './filtering'
 import { useTokenComparator } from './sorting'
 
-export const useCurrencySearch = (securityTokens = false) => {
+export enum ListType {
+  ALL,
+  SEC_TOKENS,
+  USER_TOKENS,
+}
+export const useCurrencySearch = (list = ListType.ALL) => {
   const { chainId } = useActiveWeb3React()
   // refs for fixed size lists
   const fixedList = useRef<FixedSizeList>()
@@ -28,7 +34,13 @@ export const useCurrencySearch = (securityTokens = false) => {
   const [invertSearchOrder] = useState<boolean>(false)
   const simpleTokensAndSecTokens = useAllTokens()
   const secTokens = useOnlySecurityTokens()
-  const allTokens = securityTokens ? secTokens : simpleTokensAndSecTokens
+  const userSecTokens = useOnlyUserSecurityTokens()
+  const tokenType = {
+    [ListType.SEC_TOKENS]: secTokens,
+    [ListType.USER_TOKENS]: userSecTokens,
+    [ListType.ALL]: simpleTokensAndSecTokens,
+  }
+  const allTokens = tokenType[list] ?? simpleTokensAndSecTokens
   // if they input an address, use it
   const isAddressSearch = isAddress(debouncedQuery)
 

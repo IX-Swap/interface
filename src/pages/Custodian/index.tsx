@@ -2,6 +2,7 @@ import { Trans } from '@lingui/macro'
 import { AutoColumn, ColumnCenter } from 'components/Column'
 import { CustodianTabs } from 'components/NavigationTabs'
 import { Border, ToggleOption, ToggleWrapper } from 'components/Tabs'
+import { useActiveWeb3React } from 'hooks/web3'
 import AppBody from 'pages/AppBody'
 import React, { useState } from 'react'
 import { useAuthState } from 'state/auth/hooks'
@@ -14,7 +15,8 @@ const bodyProps = {
 }
 export default function Custodian() {
   const { token } = useAuthState()
-  const isLoggedIn = !!token
+  const { account } = useActiveWeb3React()
+  const isLoggedIn = !!token && !!account
   const [showAllSecTokens, setShowAllSecTokens] = useState<boolean>(!isLoggedIn)
   return (
     <>
