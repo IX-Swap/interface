@@ -1,4 +1,5 @@
 import styled from 'styled-components/macro'
+import { gradientBorder } from 'theme'
 import { hexToRGBA } from 'utils/themeHelper'
 import Column, { AutoColumn } from '../Column'
 import { RowBetween, RowFixed } from '../Row'
@@ -131,4 +132,7 @@ export const ModalContentWrapper = styled(Column)`
   flex: 1 1;
   position: relative;
   background: ${({ theme }) => theme.bgG4};
+`
+export const UnapprovedTokenWrapper = styled.div`
+  ${gradientBorder}
 `

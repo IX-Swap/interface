@@ -5,13 +5,25 @@ import useToggle from 'hooks/useToggle'
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react'
 import ReactGA from 'react-ga'
 import { FixedSizeList } from 'react-window'
-import { useAllTokens, useIsUserAddedToken, useSearchInactiveTokenLists, useToken } from '../../hooks/Tokens'
+import {
+  useAllTokens,
+  useIsUserAddedToken,
+  useOnlySecurityTokens,
+  useOnlyUserSecurityTokens,
+  useSearchInactiveTokenLists,
+  useToken,
+} from '../../hooks/Tokens'
 import { useActiveWeb3React } from '../../hooks/web3'
 import { isAddress } from '../../utils'
 import { filterTokens, useSortedTokensByQuery } from './filtering'
 import { useTokenComparator } from './sorting'
 
-export const useCurrencySearch = () => {
+export enum ListType {
+  ALL,
+  SEC_TOKENS,
+  USER_TOKENS,
+}
+export const useCurrencySearch = (list = ListType.ALL) => {
   const { chainId } = useActiveWeb3React()
   // refs for fixed size lists
   const fixedList = useRef<FixedSizeList>()
@@ -20,9 +32,15 @@ export const useCurrencySearch = () => {
   const debouncedQuery = useDebounce(searchQuery, 200)
 
   const [invertSearchOrder] = useState<boolean>(false)
-
-  const allTokens = useAllTokens()
-
+  const simpleTokensAndSecTokens = useAllTokens()
+  const secTokens = useOnlySecurityTokens()
+  const userSecTokens = useOnlyUserSecurityTokens()
+  const tokenType = {
+    [ListType.SEC_TOKENS]: secTokens,
+    [ListType.USER_TOKENS]: userSecTokens,
+    [ListType.ALL]: simpleTokensAndSecTokens,
+  }
+  const allTokens = tokenType[list] ?? simpleTokensAndSecTokens
   // if they input an address, use it
   const isAddressSearch = isAddress(debouncedQuery)
 

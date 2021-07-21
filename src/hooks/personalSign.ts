@@ -12,7 +12,6 @@ export const sign = async ({ hash, account, library }: Props) => {
         method: 'personal_sign',
         params: [hash, account],
       })
-      console.log({ result })
       return result
     } catch (e) {
       console.error({ ERROR: e })

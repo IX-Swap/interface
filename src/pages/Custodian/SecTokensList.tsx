@@ -1,15 +1,14 @@
-import React, { CSSProperties, MutableRefObject, useCallback, useMemo } from 'react'
 import { Currency } from '@ixswap1/sdk-core'
+import { Trans } from '@lingui/macro'
 import Column from 'components/Column'
 import CurrencyLogo from 'components/CurrencyLogo'
+import React, { CSSProperties, MutableRefObject, useCallback, useMemo } from 'react'
+import { Link } from 'react-router-dom'
 import { FixedSizeList } from 'react-window'
 import { Box, Text } from 'rebass'
-import { WrappedTokenInfo } from '../../state/lists/wrappedTokenInfo'
-import { MenuItem, MenuRow } from './styleds'
-import { Trans } from '@lingui/macro'
-import { ButtonGradient } from '../../components/Button'
 import { routes } from 'utils/routes'
-import { Link } from 'react-router-dom'
+import { ButtonGradient } from '../../components/Button'
+import { MenuItem, MenuRow } from './styleds'
 
 function currencyKey(currency: Currency): string {
   return currency.isToken ? currency.address : 'ETHER'
@@ -17,6 +16,7 @@ function currencyKey(currency: Currency): string {
 
 function CurrencyRow({ currency, style }: { currency: Currency; style: CSSProperties }) {
   const key = currencyKey(currency)
+
   // only show add or remove buttons if not on selected list
   return (
     <MenuRow style={style} className={`token-item-${key}`}>
@@ -25,7 +25,7 @@ function CurrencyRow({ currency, style }: { currency: Currency; style: CSSProper
           <CurrencyLogo currency={currency} size={'33px'} />
           <Column>
             <Text title={currency.name} fontWeight={500}>
-              {currency.symbol}
+              {currency.symbol ?? currency.name}
             </Text>
           </Column>
         </Box>
@@ -42,22 +42,17 @@ function CurrencyRow({ currency, style }: { currency: Currency; style: CSSProper
 export default function SecTokensList({
   height,
   currencies,
-  otherListTokens,
   fixedListRef,
 }: {
   height: number
   currencies: Currency[]
-  otherListTokens?: WrappedTokenInfo[]
   selectedCurrency?: Currency | null
   otherCurrency?: Currency | null
   fixedListRef?: MutableRefObject<FixedSizeList | undefined>
 }) {
   const itemData: Currency[] = useMemo(() => {
-    if (otherListTokens && otherListTokens?.length > 0) {
-      return [...currencies, ...otherListTokens]
-    }
     return currencies
-  }, [currencies, otherListTokens])
+  }, [currencies])
 
   const Row = useCallback(function TokenRow({ data, index, style }) {
     const row: Currency = data[index]

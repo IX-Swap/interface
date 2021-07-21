@@ -17,8 +17,11 @@ import {
   updateUserSingleHopOnly,
   updateHideClosedPositions,
   updateUserLocale,
+  setUsesSecTokens,
+  fetchUserSecTokenList,
 } from './actions'
 import { SupportedLocale } from 'constants/locales'
+import { SecToken } from 'types/secToken'
 
 const currentTimestamp = () => new Date().getTime()
 
@@ -45,6 +48,10 @@ export interface UserState {
   // deadline set by user in minutes, used in all txns
   userDeadline: number
 
+  usesSecTokens: boolean
+  userSecTokens: SecToken[]
+  loadingSecTokenRequest: boolean
+  secTokenError: string | null
   tokens: {
     [chainId: number]: {
       [address: string]: SerializedToken
@@ -80,6 +87,10 @@ export const initialState: UserState = {
   pairs: {},
   timestamp: currentTimestamp(),
   URLWarningVisible: true,
+  usesSecTokens: false,
+  userSecTokens: [],
+  loadingSecTokenRequest: false,
+  secTokenError: null,
 }
 
 export default createReducer(initialState, (builder) =>
@@ -184,5 +195,21 @@ export default createReducer(initialState, (builder) =>
     })
     .addCase(toggleURLWarning, (state) => {
       state.URLWarningVisible = !state.URLWarningVisible
+    })
+    .addCase(setUsesSecTokens, (state, { payload: { usesTokens } }) => {
+      state.usesSecTokens = usesTokens
+    })
+    .addCase(fetchUserSecTokenList.pending, (state) => {
+      state.loadingSecTokenRequest = true
+      state.secTokenError = null
+    })
+    .addCase(fetchUserSecTokenList.fulfilled, (state, { payload: { tokenList } }) => {
+      state.loadingSecTokenRequest = false
+      state.secTokenError = null
+      state.userSecTokens = tokenList
+    })
+    .addCase(fetchUserSecTokenList.rejected, (state, { payload: { errorMessage } }) => {
+      state.loadingSecTokenRequest = false
+      state.secTokenError = errorMessage
     })
 )
