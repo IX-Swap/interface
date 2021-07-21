@@ -130,7 +130,7 @@ export const SecuritiesTableView = ({
                       {columns.map(column => (
                         <TableCell>
                           {column.id === 'website' ? (
-                            <Link target='_blank' href={item[column.id]}>
+                            <Link target='_blank' href={item[column.id] ?? ''}>
                               visit
                             </Link>
                           ) : (

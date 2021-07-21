@@ -18,13 +18,13 @@ describe('Filters', () => {
   })
 
   it('renders AppIcon when view === grid', () => {
-    render(<Filters view='grid' toggleView={() => {}} />)
+    render(<Filters view='grid' toggleView={() => {}} showViewToggle />)
 
     expect(AppsIcon).toHaveBeenCalled()
   })
 
   it('renders ViewListIcon when view === list', () => {
-    render(<Filters view='list' toggleView={() => {}} />)
+    render(<Filters view='list' toggleView={() => {}} showViewToggle />)
 
     expect(ViewListIcon).toHaveBeenCalled()
   })

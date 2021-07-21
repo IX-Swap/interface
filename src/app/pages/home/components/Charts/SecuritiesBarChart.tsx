@@ -12,7 +12,7 @@ export const SecuritiesBarChart = ({ data }: SecuritiesBarChartProps) => {
   const { getFilterValue } = useQueryFilter()
   const category = getFilterValue('category')
   const chartData = getChartData(data, category as any)
-  console.log(chartData)
+
   return (
     <Chart
       chartType='ColumnChart'

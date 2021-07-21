@@ -4,6 +4,7 @@ import React from 'react'
 import { render, cleanup } from 'test-utils'
 import { SecuritiesGrid } from 'app/pages/home/components/Securities/SecuritiesGrid'
 import { SecuritiesTableView } from 'app/pages/home/components/Securities/SecuritiesTableView'
+import { sampleSecurity } from 'app/pages/home/components/Securities/__tests__/SecurityCard.spec'
 
 jest.mock('app/pages/home/components/Securities/SecuritiesGrid', () => ({
   SecuritiesGrid: jest.fn(() => null)
@@ -31,26 +32,17 @@ describe('Securities', () => {
   })
 
   it('renders without errors', () => {
-    render(<Securities />)
+    render(<Securities data={[sampleSecurity]} isLoading={false} view='grid' />)
   })
 
   it('renders SecuritiesGrid when view === grid', () => {
-    render(<Securities />)
+    render(<Securities data={[sampleSecurity]} isLoading={false} view='grid' />)
 
     expect(SecuritiesGrid).toHaveBeenCalled()
   })
 
   it('renders SecuritiesTableView when view === list', () => {
-    const objResponse = {
-      view: 'list',
-      toggleView: jest.fn()
-    }
-
-    jest
-      .spyOn(useToggleView, 'useToggleView')
-      .mockImplementation(() => objResponse as any)
-
-    render(<Securities />)
+    render(<Securities data={[sampleSecurity]} isLoading={false} view='list' />)
 
     expect(SecuritiesTableView).toHaveBeenCalled()
   })

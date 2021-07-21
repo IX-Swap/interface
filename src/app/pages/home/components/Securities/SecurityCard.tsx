@@ -6,11 +6,14 @@ import {
   Grid,
   Typography
 } from '@material-ui/core'
+import { HomeRoute } from 'app/pages/home/router/config'
+import { AppRouterLink } from 'components/AppRouterLink'
 import { LabelledValue } from 'components/LabelledValue'
 import { stringTruncate } from 'config/utils'
 import { hasValue } from 'helpers/forms'
 import { formatMoney } from 'helpers/numbers'
 import React from 'react'
+import { generatePath } from 'react-router-dom'
 
 export interface Activity {
   date: string
@@ -18,24 +21,40 @@ export interface Activity {
 }
 
 export interface Security {
-  ticker: string
+  ticker?: string | null
   logo?: {
-    publicUrl: string
+    publicUrl?: string | null
   }
-  description: string
-  firm: string
-  priceChange24Hours: number
-  assetClass: string
-  industry: string
-  country: string
-  status: string
-  currentPrice: number
-  issuePrice: string
-  fundingGoal: string
-  totalCapitalization: string
-  website: string
-  amountRaised?: string
-  protocol: string
+  description: string | null
+  firm?: string | null
+  priceChange24Hours?: number | null
+  priceChange1Month?: number | null
+  priceChange1Week?: number | null
+  priceChange1Year?: number | null
+  priceChangeYTD?: number | null
+  assetClass?: string | null
+  industry?: string | null
+  country?: string | null
+  status?: string | null
+  currentPrice?: number | null
+  issuePrice?: string | null
+  fundingGoal?: string | null
+  totalCapitalization?: string | null
+  website?: string | null
+  amountRaised?: string | null
+  protocol?: string | null
+  issuancePlatform?: string | null
+  exchange?: string | null
+  oneYearAverageDailyVolume?: number | null
+  oneYearMedianPrice?: number | null
+  oneYearLowPrice?: number | null
+  oneYearHighPrice?: number | null
+  oneYearAveragePrice?: number | null
+  marketCapitalization?: number | null
+  issuanceDate?: string | null
+  tokenSupply?: string | null
+  tokensOffered?: string | null
+  reserved?: string | null
 }
 
 export const SecurityCard = ({
@@ -59,7 +78,11 @@ export const SecurityCard = ({
         height: '100%'
       }}
     >
-      <CardActionArea style={{ height: '100%' }}>
+      <CardActionArea
+        style={{ height: '100%', color: '#FFF' }}
+        component={AppRouterLink}
+        to={generatePath(HomeRoute.security, { ticker: ticker ?? '' })}
+      >
         <Box padding={4} height='100%' display='flex'>
           <Grid
             container
@@ -79,8 +102,8 @@ export const SecurityCard = ({
                   {logo !== undefined ? (
                     <Avatar
                       variant='square'
-                      src={logo?.publicUrl}
-                      alt={ticker}
+                      src={logo?.publicUrl ?? ''}
+                      alt={ticker ?? ''}
                       style={{
                         width: '100%',
                         height: '100%',
@@ -135,13 +158,14 @@ export const SecurityCard = ({
                             style={{ color: '#FFF' }}
                             noWrap
                           >
-                            {formatMoney(currentPrice, '$')}
+                            {hasValue(currentPrice) &&
+                              formatMoney(currentPrice ?? 0, '$')}
                           </Typography>
                         </Grid>
                         <Grid item>
                           <Typography variant='body1' align='right' noWrap>
                             {hasValue(priceChange24Hours)
-                              ? `${priceChange24Hours}%`
+                              ? `${priceChange24Hours ?? 0}%`
                               : null}
                           </Typography>
                         </Grid>
@@ -153,7 +177,7 @@ export const SecurityCard = ({
             </Grid>
             <Grid item>
               <Typography variant='body1'>
-                {stringTruncate(description, 190)}
+                {stringTruncate(description ?? '', 190)}
               </Typography>
             </Grid>
             <Grid item>
