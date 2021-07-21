@@ -15,7 +15,6 @@ import { VSpacer } from 'components/VSpacer'
 export const Commitments = () => {
   // TODO Remove this after complete backend api endpoints
   useEffect(() => {
-    console.log('useEffect')
     history.replace(
       generatePath(
         '/app/issuance/commitments/5f769b4caf160a120953a3ca/5fd772bcabc2557b8798de5f'
