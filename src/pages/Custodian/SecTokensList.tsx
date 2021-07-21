@@ -4,7 +4,7 @@ import Column from 'components/Column'
 import CurrencyLogo from 'components/CurrencyLogo'
 import React, { CSSProperties, MutableRefObject, useCallback, useMemo } from 'react'
 import { Link } from 'react-router-dom'
-import { FixedSizeList } from 'react-window'
+import { VariableSizeList as List } from 'react-window'
 import { Box, Text } from 'rebass'
 import { routes } from 'utils/routes'
 import { ButtonGradient } from '../../components/Button'
@@ -42,13 +42,13 @@ function CurrencyRow({ currency, style }: { currency: Currency; style: CSSProper
 export default function SecTokensList({
   height,
   currencies,
-  fixedListRef,
+  listRef,
 }: {
   height: number
   currencies: Currency[]
   selectedCurrency?: Currency | null
   otherCurrency?: Currency | null
-  fixedListRef?: MutableRefObject<FixedSizeList | undefined>
+  listRef?: MutableRefObject<List | undefined>
 }) {
   const itemData: Currency[] = useMemo(() => {
     return currencies
@@ -70,16 +70,16 @@ export default function SecTokensList({
   }, [])
 
   return (
-    <FixedSizeList
+    <List
       height={height}
-      ref={fixedListRef as any}
+      ref={listRef as any}
       width="100%"
       itemData={itemData}
       itemCount={itemData.length}
-      itemSize={56}
+      itemSize={() => 56}
       itemKey={itemKey}
     >
       {Row}
-    </FixedSizeList>
+    </List>
   )
 }

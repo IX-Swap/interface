@@ -51,7 +51,7 @@ export function useAllTokens(): { [address: string]: Token } {
   const allTokens = useCombinedActiveList()
   const tokens = useTokensFromMap(allTokens, true)
   const { secTokens } = useSecTokens()
-  return useMemo(() => ({ ...tokens, ...secTokens }), [tokens, secTokens])
+  return useMemo(() => ({ ...secTokens, ...tokens }), [tokens, secTokens])
 }
 export function useOnlySecurityTokens(): { [address: string]: Token } {
   const { secTokens } = useSecTokens()

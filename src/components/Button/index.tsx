@@ -214,7 +214,6 @@ export const ButtonGradient = styled(Base)`
   font-size: 14px;
   line-height: 21px;
   text-align: center;
-  text-transform: uppercase;
   padding: 7px 0;
 `
 
