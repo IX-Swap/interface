@@ -20,6 +20,10 @@ let page: any
 let wallet: any
 let metamaskObj: any
 
+test.beforeEach(async () => {
+  await navigate(ixswap.URL, page)
+})
+
 test.beforeAll(async () => {
   context = await launchPersistent()
   metamaskObj = new Metamask(context)
@@ -48,8 +52,8 @@ test.describe('Check swap and pool functions', () => {
     await wallet.createPool(amounts.base)
     await click(pool.button.SUPPLY, page)
     await click(pool.button.CREATE_OR_SUPPLY, page)
-    await waitUntil(() => context.pages()[1] != undefined, { timeout: 10000 })
-    await metamaskObj.confirmOperation(context.pages()[1])
+    const [secondPage] = await Promise.all([context.waitForEvent('page'), page.click(pool.button.CREATE_OR_SUPPLY)])
+    await metamaskObj.confirmOperation(secondPage)
   })
 
   test('Check that crypto can be add to the pool', async () => {

@@ -60,7 +60,6 @@ test.describe('Cancel transaction', () => {
     await click(auth.buttons.CANCEL, secondPage)
     const after = await getEthBalance()
     expect(before).toEqual(after)
-    // await page.waitForTimeout(100000)
   })
 
   test('Check that the SWAP can`t be created when not enough funds', async () => {
