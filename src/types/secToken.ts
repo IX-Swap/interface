@@ -1,5 +1,6 @@
-export interface SecToken {
-  name: string
+import { TokenInfo } from '@uniswap/token-lists'
+
+export interface SecToken extends TokenInfo {
   ticker: string
   status: string
   network: string
@@ -10,6 +11,8 @@ export interface SecToken {
   createdAt: string
   updatedAt: string
   deletedAt: string | null
+  isSecToken: true
+  contractAddress?: string
 }
 
 export interface TokenUser {

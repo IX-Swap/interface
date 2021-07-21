@@ -5,7 +5,7 @@ import Column from 'components/Column'
 import { RowBetween, RowCenter, RowEnd, RowFixed } from 'components/Row'
 import React from 'react'
 import styled from 'styled-components'
-import { TYPE } from 'theme'
+import { gradientBorder, TYPE } from 'theme'
 import { hexToRGBA } from 'utils/themeHelper'
 import { ActionHistoryStatus } from './enum'
 
@@ -14,21 +14,7 @@ export const NotSubmittedWrapper = styled.div`
   border-radius: 45px;
   padding: 2rem 14px 3rem;
   position: relative;
-  :before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    border-radius: 45px;
-    -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
-    mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
-    -webkit-mask-composite: destination-out;
-    mask-composite: exclude;
-    padding: 2px;
-    background: ${({ theme }) => theme.borderG1};
-  }
+  ${gradientBorder}
 `
 export const ExistingWrapper = styled.div`
   background: ${({ theme }) => theme.bgG11};

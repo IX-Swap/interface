@@ -1,7 +1,7 @@
-import React from 'react'
+import React, { useMemo } from 'react'
 import { Trans } from '@lingui/macro'
 import { Text } from 'rebass'
-import { Currency } from '@ixswap1/sdk-core'
+import { Currency, Token } from '@ixswap1/sdk-core'
 import styled from 'styled-components/macro'
 
 import { COMMON_BASES } from '../../constants/routing'
@@ -10,20 +10,22 @@ import { AutoColumn } from '../Column'
 import QuestionHelper from '../QuestionHelper'
 import { AutoRow } from '../Row'
 import CurrencyLogo from '../CurrencyLogo'
+import { SemiTransparent, TYPE } from 'theme'
+import useTheme from 'hooks/useTheme'
+import { useUserSecTokens } from 'state/user/hooks'
+import { useSecTokens } from 'state/secTokens/hooks'
+import { STO_STATUS_APPROVED, STO_STATUS_CREATED } from 'components/SecurityCard/STOStatus'
 
 const BaseWrapper = styled.div<{ disable?: boolean }>`
-  border: 1px solid ${({ theme, disable }) => (disable ? 'transparent' : theme.bg3)};
-  border-radius: 10px;
+  border-radius: 40px;
   display: flex;
-  padding: 6px;
-
+  padding: 0 6px;
+  background: ${({ theme }) => theme.bgG1};
   align-items: center;
   :hover {
     cursor: ${({ disable }) => !disable && 'pointer'};
-    background-color: ${({ theme, disable }) => !disable && theme.bg2};
+    padding: 1px 7px;
   }
-
-  background-color: ${({ theme, disable }) => disable && theme.bg3};
   opacity: ${({ disable }) => disable && '0.4'};
 `
 
@@ -36,18 +38,31 @@ export default function CommonBases({
   selectedCurrency?: Currency | null
   onSelect: (currency: Currency) => void
 }) {
-  const bases =
-    typeof chainId !== 'undefined' ? COMMON_BASES[chainId].filter((base) => base.symbol !== 'WETH9') ?? [] : []
-  return bases.length > 0 ? (
+  const theme = useTheme()
+  const { secTokens } = useUserSecTokens()
+  const visibleTokens = useMemo(() => {
+    return Object.keys(secTokens)
+      .filter((tokenId) => (secTokens[tokenId] as any).tokenInfo.status === STO_STATUS_APPROVED)
+      .reduce<{
+        [address: string]: Token
+      }>((obj, key) => {
+        obj[key] = secTokens[key]
+        return obj
+      }, {})
+  }, [secTokens])
+
+  return Object.keys(visibleTokens).length > 0 ? (
     <AutoColumn gap="md">
       <AutoRow>
-        <Text fontWeight={500} fontSize={14}>
-          <Trans>Common bases</Trans>
-        </Text>
-        <QuestionHelper text={<Trans>These tokens are commonly paired with other tokens.</Trans>} />
+        <SemiTransparent>
+          <TYPE.title6 color={theme.text2} style={{ textTransform: 'uppercase' }}>
+            <Trans>Featured Tokens</Trans>
+          </TYPE.title6>
+        </SemiTransparent>
       </AutoRow>
       <AutoRow gap="4px">
-        {bases.map((currency: Currency) => {
+        {Object.keys(visibleTokens).map((id: string) => {
+          const currency = secTokens[id]
           const isSelected = selectedCurrency?.equals(currency)
           return (
             <BaseWrapper
@@ -55,10 +70,8 @@ export default function CommonBases({
               disable={isSelected}
               key={currencyId(currency)}
             >
-              <CurrencyLogo currency={currency} style={{ marginRight: 8 }} />
-              <Text fontWeight={500} fontSize={16}>
-                {currency.symbol}
-              </Text>
+              <CurrencyLogo currency={currency} style={{ marginRight: 7 }} />
+              <TYPE.body4>{currency?.symbol ?? currency?.name}</TYPE.body4>
             </BaseWrapper>
           )
         })}

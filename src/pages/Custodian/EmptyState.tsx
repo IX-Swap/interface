@@ -9,25 +9,25 @@ import { Dots } from '../../components/swap/styleds'
 import { SemiTransparent, TYPE } from '../../theme'
 
 interface Props {
-  account?: string | null
-  v2IsLoading: boolean
+  hasAccount?: boolean
+  loading: boolean
   showEmptyLiquidity: boolean
 }
-export const EmptyState = ({ account, v2IsLoading, showEmptyLiquidity }: Props) => {
+export const EmptyState = ({ hasAccount, loading, showEmptyLiquidity }: Props) => {
   const toggleWalletModal = useWalletModalToggle()
   const theme = useTheme()
   return (
     <>
       <TopStraightBackgroundWrapper>
         <SemiTransparent>
-          {!account && (
+          {!hasAccount && (
             <ButtonEmpty padding="40px" onClick={toggleWalletModal} data-testid="connect-wallet-custodian">
               <TYPE.body color={theme.text2} textAlign="center">
                 <Trans>Connect a wallet to view your Securities.</Trans>
               </TYPE.body>
             </ButtonEmpty>
           )}
-          {account && v2IsLoading && (
+          {hasAccount && loading && (
             <Card padding="40px">
               <TYPE.body color={theme.text2} textAlign="center">
                 <Dots>

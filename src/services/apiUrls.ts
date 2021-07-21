@@ -4,5 +4,6 @@ export const metamask = {
 }
 
 export const tokens = {
-  all: `/token/list`,
+  fromUser: `/token/list`,
+  all: `/token/list/all`,
 }

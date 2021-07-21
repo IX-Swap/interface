@@ -2,17 +2,16 @@ import { parseBytes32String } from '@ethersproject/strings'
 import { Currency, Ether, Token } from '@ixswap1/sdk-core'
 import { arrayify } from 'ethers/lib/utils'
 import { useMemo } from 'react'
+import { useSecTokens } from 'state/secTokens/hooks'
 import { createTokenFilterFunction } from '../components/SearchModal/filtering'
 import { useAllLists, useCombinedActiveList, useInactiveListUrls } from '../state/lists/hooks'
 import { WrappedTokenInfo } from '../state/lists/wrappedTokenInfo'
 import { NEVER_RELOAD, useSingleCallResult } from '../state/multicall/hooks'
-import { useUserAddedTokens } from '../state/user/hooks'
+import { useUserAddedTokens, useUserSecTokens } from '../state/user/hooks'
 import { isAddress } from '../utils'
 import { TokenAddressMap, useUnsupportedTokenList } from './../state/lists/hooks'
-
-import { useActiveWeb3React } from './web3'
 import { useBytes32TokenContract, useTokenContract } from './useContract'
-import { useSecTokens } from 'state/secTokens/hooks'
+import { useActiveWeb3React } from './web3'
 
 // reduce token map into standard address <-> Token mapping, optionally include user added tokens
 function useTokensFromMap(tokenMap: TokenAddressMap, includeUserAdded: boolean): { [address: string]: Token } {
@@ -51,10 +50,17 @@ function useTokensFromMap(tokenMap: TokenAddressMap, includeUserAdded: boolean):
 export function useAllTokens(): { [address: string]: Token } {
   const allTokens = useCombinedActiveList()
   const tokens = useTokensFromMap(allTokens, true)
-  const { tokens: secTokens } = useSecTokens()
-  return tokens
+  const { secTokens } = useSecTokens()
+  return useMemo(() => ({ ...tokens, ...secTokens }), [tokens, secTokens])
 }
-
+export function useOnlySecurityTokens(): { [address: string]: Token } {
+  const { secTokens } = useSecTokens()
+  return secTokens
+}
+export function useOnlyUserSecurityTokens(): { [address: string]: Token } {
+  const { secTokens } = useUserSecTokens()
+  return secTokens
+}
 export function useUnsupportedTokens(): { [address: string]: Token } {
   const unsupportedTokensMap = useUnsupportedTokenList()
   return useTokensFromMap(unsupportedTokensMap, false)

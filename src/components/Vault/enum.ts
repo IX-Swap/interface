@@ -1,10 +1,17 @@
 import { t } from '@lingui/macro'
+import { STO_STATUS_APPROVED, STO_STATUS_CREATED } from 'components/SecurityCard/STOStatus'
 
 export enum VaultState {
   NOT_SUBMITTED = 'NOT_SUBMITTED',
   PENDING = 'PENDING',
   APPROVED = 'APPROVED',
   REJECTED = 'REJECTED',
+}
+
+export const getVaultState = (status: string) => {
+  if (status === STO_STATUS_APPROVED) return VaultState.APPROVED
+  if (status === STO_STATUS_CREATED) return VaultState.PENDING
+  return VaultState.NOT_SUBMITTED
 }
 
 export enum ActionHistoryStatus {

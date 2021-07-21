@@ -2,24 +2,35 @@ import { t } from '@lingui/macro'
 import CurrencyLogo from 'components/CurrencyLogo'
 import { ReadMore } from 'components/ReadMore'
 import { Vault } from 'components/Vault'
-import { VaultState } from 'components/Vault/enum'
+import { DepositPopup } from 'components/Vault/DepositPopup'
+import { getVaultState } from 'components/Vault/enum'
+import { WithdrawPopup } from 'components/Vault/WithdrawPopup'
 import { useCurrency } from 'hooks/Tokens'
-import React from 'react'
+import React, { useMemo } from 'react'
 import { RouteComponentProps } from 'react-router-dom'
 import { Box } from 'rebass'
+import { useUserSecTokens } from 'state/user/hooks'
 import { TYPE } from 'theme'
 import { InfoBackground } from './Background'
 import { Container, Description, DescriptionText, InfoTitle } from './styleds'
 import { TokenDetails } from './TokenDetails'
-import { DepositPopup } from 'components/Vault/DepositPopup'
-import { WithdrawPopup } from 'components/Vault/WithdrawPopup'
 export default function SecTokenDetails({
   history,
   match: {
     params: { currencyId },
   },
 }: RouteComponentProps<{ currencyId: string }>) {
-  const currency = useCurrency(currencyId) ?? undefined
+  const currency = (useCurrency(currencyId) as any) ?? undefined
+  const { secTokens } = useUserSecTokens()
+
+  const vaultState = useMemo(() => {
+    const status = (secTokens[currencyId] as any)?.tokenInfo?.status ?? ''
+    return getVaultState(status)
+  }, [secTokens, currencyId])
+
+  const description = useMemo(() => {
+    return (currency as any)?.tokenInfo?.description
+  }, [currency])
   return (
     <>
       <DepositPopup currency={currency} />
@@ -36,22 +47,12 @@ export default function SecTokenDetails({
         <Description>
           <DescriptionText>
             <ReadMore lines={7} more={t`Read More`} less={t`Hide`}>
-              Vestibulum ac diam sit amet quam vehicula elementum sed sit amet dui. Mauris blandit aliquet elit, eget
-              tincidunt nibh pulvinar a. Curabitur arcu erat, accumsan id imperdiet et, porttitor at sem. Cras ultricies
-              ligula sed magna dictum porta. Pellentesque in ipsum id orci porta dapibus. Vestibulum ac diam sit amet
-              quam vehicula elementum sed sit amet dui. Curabitur aliquet quam id dui posuere blandit. Quisque velit
-              nisi, pretium ut lacinia in, elementum id enim. Praesent sapien massa, convallis a pellentesque nec,
-              egestas non nisi. Vivamus magna justo, lacinia eget consectetur sed, convallis at tellus. Nulla quis lorem
-              ut libero malesuada feugiat. Cras ultricies ligula sed magna dictum porta. Proin eget tortor risus. Nulla
-              porttitor accumsan tincidunt. Nulla quis lorem ut libero malesuada feugiat 4567 457 457 457 457 4574567
-              457 457 457 457 4574567 457 457 457 457 4574567 457 457 457 457 457 111 1111 11111111 111 111 1111
-              11111111 111 111 1111 11111111 111 111 1111 11111111 111 222 222 222 222 222 222 222 222 222 222 222 222
-              222 222 222 222 222 222
+              {description}
             </ReadMore>
           </DescriptionText>
         </Description>
-        <TokenDetails />
-        <Vault status={VaultState.NOT_SUBMITTED} currency={currency} />
+        <TokenDetails currency={currency} />
+        <Vault status={vaultState} currency={currency} />
       </Container>
     </>
   )

@@ -12,7 +12,7 @@ export const CurrencyHeader = ({ currency }: { currency: Currency }) => {
       <CurrencyLogo currency={currency} size={'33px'} style={{ margin: 0 }} />
       <Text fontWeight={600} fontSize={20} style={{ marginLeft: '8px', lineHeight: '30px' }}>
         {currency ? (
-          `${currency.symbol}`
+          `${currency.symbol ?? currency.name}`
         ) : (
           <Dots>
             <Trans>Loading</Trans>
