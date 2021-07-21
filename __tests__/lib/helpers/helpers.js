@@ -212,6 +212,9 @@ module.exports = {
   waitUntil: async (page, timeout = '10000') => {
     await waitUntil(() => page != undefined, { timeout: timeout })
   },
-  // getTheSecondPage:
-  // const [secondPage] = await Promise.all([context.waitForEvent('page'), page.click(pool.button.CREATE_OR_SUPPLY)])
+
+  waitNewPage: async (page, context, element) => {
+    const [secondPage] = await Promise.all([context.waitForEvent('page'), page.click(element)])
+    return secondPage
+  },
 }

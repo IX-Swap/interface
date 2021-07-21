@@ -44,19 +44,22 @@ test.describe('Check swap and pool functions', () => {
     await click(swap.button.CLOSE_ADD_CURRENCY_POPOVER, page)
     await waitForText(`Swap ${amounts.base} ETH for`, page)
     const after = await getEthBalance()
-    const res = Number(before) - Number(after)
-    expect(res.toFixed(7)).toBe('0.0001408')
+    expect((Number(before) - Number(after)).toFixed(7)).toBe('0.0001408')
   })
 
-  test('Check that the pool can be created', async () => {
+  test.only('Check that the pool can be created', async () => {
+    const before = await getEthBalance()
     await wallet.createPool(amounts.base)
     await click(pool.button.SUPPLY, page)
-    await click(pool.button.CREATE_OR_SUPPLY, page)
     const [secondPage] = await Promise.all([context.waitForEvent('page'), page.click(pool.button.CREATE_OR_SUPPLY)])
     await metamaskObj.confirmOperation(secondPage)
+    await waitForText(`Add ${amounts.base} ETH and`, page)
+    const after = await getEthBalance()
+    expect(Number(before)).toBeGreaterThan(Number(after))
   })
 
   test('Check that crypto can be add to the pool', async () => {
+    const before = await getEthBalance()
     await click(swap.button.CLOSE_ADD_CURRENCY_POPOVER, page)
     await wallet.addToCurrentLiquidityPool(amounts.base, page)
     await click(pool.button.SUPPLY, page)
@@ -64,6 +67,8 @@ test.describe('Check swap and pool functions', () => {
     await waitUntil(() => context.pages()[1] != undefined)
     await metamaskObj.confirmOperation(context.pages()[1])
     await waitForText(`Add ${amounts.base} ETH and`, page)
+    const after = await getEthBalance()
+    expect(Number(before)).toBeGreaterThan(Number(after))
   })
 
   test('Check that the pool can be removed', async () => {
