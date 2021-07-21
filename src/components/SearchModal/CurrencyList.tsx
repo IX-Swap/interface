@@ -13,15 +13,18 @@ import { useActiveWeb3React } from '../../hooks/web3'
 import { useCombinedActiveList } from '../../state/lists/hooks'
 import { WrappedTokenInfo } from '../../state/lists/wrappedTokenInfo'
 import { useCurrencyBalance } from '../../state/wallet/hooks'
-import { TYPE } from '../../theme'
+import { SemiTransparent, theme, TYPE } from '../../theme'
 import { isTokenOnList } from '../../utils'
 import Column from '../Column'
 import CurrencyLogo from '../CurrencyLogo'
 import Loader from '../Loader'
-import { RowBetween, RowFixed } from '../Row'
+import Row, { RowBetween, RowFixed } from '../Row'
 import { MouseoverTooltip } from '../Tooltip'
 import ImportRow from './ImportRow'
 import { MenuItem } from './styleds'
+import { useUserSecTokens } from 'state/user/hooks'
+import { STO_STATUS_APPROVED } from 'components/SecurityCard/STOStatus'
+import { useSecTokens } from 'state/secTokens/hooks'
 
 function currencyKey(currency: Currency): string {
   return currency.isToken ? currency.address : 'ETHER'
@@ -103,12 +106,14 @@ function CurrencyRow({
   onSelect,
   isSelected,
   otherSelected,
+  isUnapprovedSecToken,
   style,
 }: {
   currency: Currency
   onSelect: () => void
   isSelected: boolean
   otherSelected: boolean
+  isUnapprovedSecToken: boolean
   style: CSSProperties
 }) {
   const { account } = useActiveWeb3React()
@@ -117,32 +122,56 @@ function CurrencyRow({
   const isOnSelectedList = isTokenOnList(selectedTokenList, currency.isToken ? currency : undefined)
   const customAdded = useIsUserAddedToken(currency)
   const balance = useCurrencyBalance(account ?? undefined, currency)
+  const theme = useTheme()
   // only show add or remove buttons if not on selected list
+  const unapprovedSecToken = useMemo(() => {
+    if (!isUnapprovedSecToken) return null
+    return (
+      <>
+        <CurrencyLogo currency={currency} size={'24px'} />
+      </>
+    )
+  }, [currency, isUnapprovedSecToken])
+  const tokenDetails = useMemo(() => {
+    if (isUnapprovedSecToken) return null
+    return (
+      <>
+        <CurrencyLogo currency={currency} size={'24px'} />
+        <Column>
+          <Text title={currency.name} fontWeight={500}>
+            {currency.symbol}
+          </Text>
+          <TYPE.darkGray ml="0px" fontSize={'12px'} fontWeight={300}>
+            {!currency.isNative && !isOnSelectedList && customAdded ? (
+              <Trans>{currency.name} • Added by user</Trans>
+            ) : (
+              currency.name
+            )}
+          </TYPE.darkGray>
+        </Column>
+        <TokenTags currency={currency} />
+        <RowFixed style={{ justifySelf: 'flex-end' }}>
+          {balance ? <Balance balance={balance} /> : account ? <Loader /> : null}
+        </RowFixed>
+      </>
+    )
+  }, [account, balance, currency, customAdded, isOnSelectedList, isUnapprovedSecToken])
+  const onClick = useCallback(() => {
+    if (isSelected || isUnapprovedSecToken) {
+      return
+    }
+    onSelect()
+  }, [isSelected, onSelect, isUnapprovedSecToken])
   return (
     <MenuItem
       style={style}
       className={`token-item-${key}`}
-      onClick={() => (isSelected ? null : onSelect())}
+      onClick={() => onClick()}
       disabled={isSelected}
       selected={otherSelected}
     >
-      <CurrencyLogo currency={currency} size={'24px'} />
-      <Column>
-        <Text title={currency.name} fontWeight={500}>
-          {currency.symbol}
-        </Text>
-        <TYPE.darkGray ml="0px" fontSize={'12px'} fontWeight={300}>
-          {!currency.isNative && !isOnSelectedList && customAdded ? (
-            <Trans>{currency.name} • Added by user</Trans>
-          ) : (
-            currency.name
-          )}
-        </TYPE.darkGray>
-      </Column>
-      <TokenTags currency={currency} />
-      <RowFixed style={{ justifySelf: 'flex-end' }}>
-        {balance ? <Balance balance={balance} /> : account ? <Loader /> : null}
-      </RowFixed>
+      {isUnapprovedSecToken && unapprovedSecToken}
+      {!isUnapprovedSecToken && tokenDetails}
     </MenuItem>
   )
 }
@@ -205,7 +234,8 @@ export default function CurrencyList({
     }
     return currencies
   }, [currencies, otherListTokens])
-
+  const { secTokens: userSecTokens } = useUserSecTokens()
+  const { secTokens } = useSecTokens()
   const Row = useCallback(
     function TokenRow({ data, index, style }) {
       const row: Currency | BreakLine = data[index]
@@ -222,7 +252,10 @@ export default function CurrencyList({
       const token = currency?.wrapped
 
       const showImport = index > currencies.length
-
+      const isUnapprovedToken =
+        token && secTokens[token.address]
+          ? (userSecTokens[token.address] as any)?.status !== STO_STATUS_APPROVED
+          : false
       if (showImport && token) {
         return (
           <ImportRow style={style} token={token} showImportView={showImportView} setImportToken={setImportToken} dim />
@@ -235,13 +268,23 @@ export default function CurrencyList({
             isSelected={isSelected}
             onSelect={handleSelect}
             otherSelected={otherSelected}
+            isUnapprovedSecToken={isUnapprovedToken}
           />
         )
       } else {
         return null
       }
     },
-    [currencies.length, onCurrencySelect, otherCurrency, selectedCurrency, setImportToken, showImportView]
+    [
+      currencies.length,
+      onCurrencySelect,
+      otherCurrency,
+      selectedCurrency,
+      setImportToken,
+      showImportView,
+      secTokens,
+      userSecTokens,
+    ]
   )
 
   const itemKey = useCallback((index: number, data: typeof itemData) => {
