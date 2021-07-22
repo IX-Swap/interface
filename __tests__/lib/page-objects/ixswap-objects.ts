@@ -1,4 +1,4 @@
-import { click, typeText, makeScreenOnError, navigate, getCount } from '../helpers/helpers.js'
+import { click, typeText, makeScreenOnError, navigate, waitNewPage } from '../helpers/helpers.js'
 import { expect } from '@playwright/test'
 
 import { pool, swap } from '../selectors/ixswap'
@@ -19,6 +19,7 @@ class SwapIX {
       await click(pool.button.ADD_TO_LIQUIDITY, this.page)
       await typeText(pool.field.TOKEN_AMOUNT, amount, this.page)
       if (forNewLiquidity === true) {
+        await click(pool.button.SUPPLY, this.page)
         await click('text="Choose token"', this.page)
         await click(swap.button.DAI_CRYPTO, this.page)
       }
@@ -46,7 +47,6 @@ class SwapIX {
     await click(swap.button.SWAP, page)
     // const rowSum = await getCount(swap.button.TABLE_ROW, page)
     // expect(rowSum).toBe(5)
-    await click(swap.button.CONFIRM_SWAP, page)
   }
   createPool = async (sum, page = this.page) => {
     await navigate(ixswap.URL, this.page)
@@ -63,7 +63,6 @@ class SwapIX {
       await click(pool.button.OPEN_TABLE, page)
       await click(pool.button.REMOVE_LIQUIDITY, page)
       await click(pool.button.MAX_PERCENTAGE, page)
-      await click(pool.button.APPROVE_REMOVE_LIQUIDITY, page)
     } catch (error) {
       await makeScreenOnError('removePool', error, page)
     }
@@ -74,12 +73,20 @@ class SwapIX {
     })
     await click('[id="open-settings-dialog-button"]', page)
     await click('[id="toggle-expert-mode-button"]', page)
+    await page.waitForTimeout(1000)
     await click('[data-testid="turn-on-expert-mode"]', page)
     await page.waitForTimeout(1000)
 
     // } catch (error) {
     // await makeScreenOnError('setExpertMode', error, page)
     // }
+  }
+  removePoolFull = async ({ page, context }) => {
+    let secondPage = await waitNewPage(page, context, pool.button.APPROVE_REMOVE_LIQUIDITY)
+    await click(auth.buttons.GET_STARTED + '[2]', secondPage)
+    await click(pool.button.REMOVE, page)
+    secondPage = await waitNewPage(page, context, pool.button.CONFIRM_REMOVE)
+    return secondPage
   }
 }
 export { SwapIX }

@@ -188,7 +188,7 @@ module.exports = {
 
   waitForText: async (text, page) => {
     try {
-      await page.waitForSelector(`//*[contains(text(),"${text}")]`)
+      await page.waitForSelector(`//*[contains(text(),"${text}")]`, { timeout: 70000 })
     } catch (error) {
       console.error(error)
       throw new Error(`No text appears ${text} `)
@@ -207,10 +207,6 @@ module.exports = {
     await page.screenshot({ path: `__tests__/screen/${name}.png` })
     console.error(error)
     throw new Error(`on the ${name}`)
-  },
-
-  waitUntil: async (page, timeout = '10000') => {
-    await waitUntil(() => page != undefined, { timeout: timeout })
   },
 
   waitNewPage: async (page, context, element) => {

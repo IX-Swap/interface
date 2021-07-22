@@ -9,7 +9,7 @@ const web3 = new Web3(new Web3.providers.HttpProvider(`https://rinkeby.infura.io
 
 async function getBalanceOtherCurrency(address) {
   try {
-    const omisegoContract = new web3.eth.Contract(Abi, '0xfad34cb4dda1b8667e1409933023d8d5c367cde4')
+    const omisegoContract = new web3.eth.Contract(Abi, address)
     let balance = await omisegoContract.methods.balanceOf('0x5455D6D8ae4263d69b29d1DeD8eCD361b6582Bfe').call()
     balance = web3.utils.fromWei(balance, 'ether')
     return balance
