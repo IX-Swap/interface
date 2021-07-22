@@ -6,24 +6,44 @@ import Row from 'components/Row'
 import useENS from 'hooks/useENS'
 import { useActiveWeb3React } from 'hooks/web3'
 import React, { useEffect } from 'react'
-import { useDepositActionHandlers, useDepositState, useDerivedDepositInfo } from 'state/deposit/hooks'
+import {
+  useDepositActionHandlers,
+  useDepositCallback,
+  useDepositState,
+  useDerivedDepositInfo,
+} from 'state/deposit/hooks'
+import { useUserSecTokens } from 'state/user/hooks'
 import { TYPE } from 'theme'
 import { currencyId } from 'utils/currencyId'
 import { AddressInput } from '../AddressInputPanel/AddressInput'
 import { AmountInput } from './AmountInput'
+import { DepositModalView } from './DepositPopup'
 
 interface Props {
   currency?: Currency
-  changeModal: () => void
+  setModalView: (param: DepositModalView) => void
 }
-export const DepositRequestForm = ({ currency, changeModal }: Props) => {
+export const DepositRequestForm = ({ currency, setModalView }: Props) => {
   const { account } = useActiveWeb3React()
   const { amount, sender, currencyId: cid } = useDepositState()
-  const { inputError } = useDerivedDepositInfo()
+  const { inputError, parsedAmount } = useDerivedDepositInfo()
   const { onTypeAmount, onTypeSender, onCurrencySet } = useDepositActionHandlers()
   const { address, loading } = useENS(sender)
+  const { secTokens } = useUserSecTokens()
+  const deposit = useDepositCallback()
   const error = Boolean(sender.length > 0 && !loading && !address)
-
+  const onSuccess = () => {
+    setModalView(DepositModalView.SEND_INFO)
+  }
+  const onError = () => {
+    setModalView(DepositModalView.ERROR)
+  }
+  const onClick = () => {
+    const tokenId = (secTokens[cid ?? ''] as any)?.tokenInfo?.id
+    if (tokenId && !error && parsedAmount && !inputError && address) {
+      deposit({ id: tokenId, amount: Number(parsedAmount?.toSignificant(5)), onSuccess, onError, fromAddress: address })
+    }
+  }
   useEffect(() => {
     if (account) {
       onTypeSender(account ?? '')
@@ -67,7 +87,7 @@ export const DepositRequestForm = ({ currency, changeModal }: Props) => {
         </TYPE.description3>
       </Row>
       <Row style={{ marginTop: '37px', marginBottom: '24px' }}>
-        <ButtonIXSWide style={{ textTransform: 'unset' }} disabled={!!inputError} onClick={changeModal}>
+        <ButtonIXSWide style={{ textTransform: 'unset' }} disabled={!!inputError} onClick={onClick}>
           {inputError ?? <Trans>Create deposit request</Trans>}
         </ButtonIXSWide>
       </Row>

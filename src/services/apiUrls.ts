@@ -8,3 +8,7 @@ export const tokens = {
   all: `/token/list/all`,
   withdraw: (tokenId: number) => `/token/allowance-digest/${tokenId}`,
 }
+
+export const custody = {
+  deposit: '/custody/deposit/request',
+}
