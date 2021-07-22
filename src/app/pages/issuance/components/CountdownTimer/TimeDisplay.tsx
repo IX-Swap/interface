@@ -34,7 +34,7 @@ export const TimeDisplay = ({
               <Typography variant='h3'>:</Typography>
             </Box>
           ) : null}
-          {isNewThemeOn ? <Box width={8} /> : null}
+          {isNewThemeOn && i < 2 ? <Box width={8} /> : null}
         </React.Fragment>
       ))}
     </Grid>
