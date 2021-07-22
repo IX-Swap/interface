@@ -24,7 +24,7 @@ export default function SecTokenDetails({
   const { secTokens } = useUserSecTokens()
 
   const vaultState = useMemo(() => {
-    const status = (secTokens[currencyId] as any)?.tokenInfo?.status ?? ''
+    const status = (secTokens[currencyId] as any)?.tokenInfo?.tokenUser?.status ?? ''
     return getVaultState(status)
   }, [secTokens, currencyId])
 

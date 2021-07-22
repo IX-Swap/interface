@@ -6,4 +6,5 @@ export const metamask = {
 export const tokens = {
   fromUser: `/token/list`,
   all: `/token/list/all`,
+  withdraw: (tokenId: number) => `/token/allowance-digest/${tokenId}`,
 }

@@ -62,7 +62,8 @@ const FixedContentRow = styled.div`
 `
 
 const UNAPPROVED_ROW = 72
-
+const NORMAL_ROW = 56
+const BREAK_HEIGHT = 36
 function Balance({ balance }: { balance: CurrencyAmount<Currency> }) {
   return <StyledBalanceText title={balance.toExact()}>{balance.toSignificant(4)}</StyledBalanceText>
 }
@@ -306,7 +307,7 @@ export default function CurrencyList({
 
       const isUnapprovedToken =
         token && secTokens[token.address]
-          ? (userSecTokens[token.address] as any)?.status !== STO_STATUS_APPROVED
+          ? (userSecTokens[token.address] as any)?.tokenInfo?.tokenUser?.status !== STO_STATUS_APPROVED
           : false
       if (showImport && token) {
         return (
@@ -345,6 +346,18 @@ export default function CurrencyList({
     return currencyKey(currency)
   }, [])
 
+  const itemSize = (index: number) => {
+    const currency: Currency | BreakLine = itemData[index]
+    if (isBreakLine(currency)) {
+      return BREAK_HEIGHT
+    }
+    const token = currency?.wrapped
+    const isUnapprovedToken =
+      token && secTokens[token.address]
+        ? (userSecTokens[token.address] as any)?.tokenInfo?.tokenUser?.status !== STO_STATUS_APPROVED
+        : false
+    return isUnapprovedToken ? UNAPPROVED_ROW : NORMAL_ROW
+  }
   return (
     <List
       height={height}
@@ -352,7 +365,7 @@ export default function CurrencyList({
       width="100%"
       itemData={itemData}
       itemCount={itemData.length}
-      itemSize={() => UNAPPROVED_ROW}
+      itemSize={itemSize}
       itemKey={itemKey}
     >
       {Row}
