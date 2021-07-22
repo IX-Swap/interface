@@ -47,9 +47,12 @@ describe('LoginContainer', () => {
 
   it('handles submit', async () => {
     const login = jest.fn()
+    const resetAttempts = jest.fn()
     jest.spyOn(useLoginHook, 'useLogin').mockReturnValue({
       mutation: [login, generateMutationResult({ data: user })],
-      step: 'login'
+      step: 'login',
+      attempts: 0,
+      resetAttempts: resetAttempts
     })
 
     const { getByText, getByLabelText } = render(<LoginContainer />)
@@ -72,6 +75,15 @@ describe('LoginContainer', () => {
   })
 
   it('handles click on "Forgot Password?"', async () => {
+    const login = jest.fn()
+    const resetAttempts = jest.fn()
+    jest.spyOn(useLoginHook, 'useLogin').mockReturnValue({
+      mutation: [login, generateMutationResult({ data: user })],
+      step: 'login',
+      attempts: 0,
+      resetAttempts: resetAttempts
+    })
+
     const { getByText } = render(<LoginContainer />)
     const forgotPasswordButton = getByText(/forgot password/i)
 

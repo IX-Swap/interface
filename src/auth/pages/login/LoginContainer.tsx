@@ -5,6 +5,7 @@ import { LoginArgs } from 'types/auth'
 import { useLogin } from 'auth/hooks/useLogin'
 import { Login } from 'auth/pages/login/Login'
 import { OTPFields } from 'auth/pages/login/components/OTPFields'
+import { Recaptcha } from 'auth/pages/login/components/Recaptcha'
 
 export const loginFormInitialValues = {
   email: '',
@@ -15,8 +16,11 @@ export const loginFormInitialValues = {
 export const LoginContainer = () => {
   const {
     mutation: [login, { isLoading }],
-    step
+    step,
+    attempts,
+    resetAttempts
   } = useLogin()
+
   const handleSubmit = async (values: LoginArgs) => {
     await login(values)
   }
@@ -30,8 +34,14 @@ export const LoginContainer = () => {
       validationSchema={loginFormValidationSchema}
       onSubmit={handleSubmit}
     >
-      <Login hidden={isOtpStep} isLoading={isLoading} />
-      {isOtpStep ? <OTPFields isLoading={isLoading} /> : null}
+      {attempts < 3 ? (
+        <>
+          <Login hidden={isOtpStep} isLoading={isLoading} />
+          {isOtpStep ? <OTPFields isLoading={isLoading} /> : null}
+        </>
+      ) : (
+        <Recaptcha onVerify={resetAttempts} />
+      )}
     </Form>
   )
 }
