@@ -7,23 +7,43 @@ import { TimeDisplay } from 'app/pages/issuance/components/CountdownTimer/TimeDi
 import { getTimeUnitsToDisplay, getEndDate } from 'helpers/countdownTimer'
 import { useParams } from 'react-router-dom'
 
-export const CountdownTimer = () => {
+export interface CountdownTimerProps {
+  my?: number
+  mx?: number | string
+  isNewThemeOn?: boolean
+}
+
+export const CountdownTimer = ({
+  my = 4,
+  mx = 'auto',
+  isNewThemeOn = false
+}: CountdownTimerProps) => {
   const { dsoId, issuerId } = useParams<{ dsoId: string; issuerId: string }>()
   const { data } = useDSOById(dsoId, issuerId)
   const { units } = useCountdown(getEndDate(data))
 
-  const unitsToDisplay = getTimeUnitsToDisplay(units)
+  const unitsToDisplay = getTimeUnitsToDisplay(
+    !isNewThemeOn
+      ? units
+      : { years: 0, months: 0, days: 1, hours: 1, minutes: 1, seconds: 0 }
+  )
 
   if (data === undefined) {
     return null
   }
 
   return (
-    <Box my={4} mx='auto'>
+    <Box my={my} mx={mx} style={{ width: 'max-content' }}>
       <Grid container alignItems='center' justify='center' direction='column'>
-        <Typography>Time Remaining</Typography>
-        <VSpacer size='small' />
-        <TimeDisplay unitsToDisplay={unitsToDisplay} units={units} />
+        <Typography style={{ fontWeight: isNewThemeOn ? 500 : 'initial' }}>
+          Time Remaining
+        </Typography>
+        <VSpacer size={'small'} />
+        <TimeDisplay
+          unitsToDisplay={unitsToDisplay}
+          units={units}
+          isNewThemeOn={isNewThemeOn}
+        />
       </Grid>
     </Box>
   )
