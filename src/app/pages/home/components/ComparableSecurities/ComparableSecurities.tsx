@@ -2,10 +2,10 @@ import { SecuritiesGrid } from 'app/pages/home/components/Securities/SecuritiesG
 import { Security } from 'app/pages/home/components/Securities/SecurityCard'
 import React from 'react'
 
-export interface ComporableSecuritiesProps {
+export interface ComparableSecuritiesProps {
   data: Security[]
 }
 
-export const ComporableSecurities = ({ data }: ComporableSecuritiesProps) => {
+export const ComparableSecurities = ({ data }: ComparableSecuritiesProps) => {
   return <SecuritiesGrid data={data} />
 }

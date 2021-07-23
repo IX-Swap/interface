@@ -1,6 +1,6 @@
 import { Grid, Tab } from '@material-ui/core'
 import { AboutTheFirm } from 'app/pages/home/components/AboutTheFirm/AboutTheFirm'
-import { ComporableSecurities } from 'app/pages/home/components/ComparableSecurities/ComparableSecurities'
+import { ComparableSecurities } from 'app/pages/home/components/ComparableSecurities/ComparableSecurities'
 import { Funding } from 'app/pages/home/components/Funding/Funding'
 import { KeyData } from 'app/pages/home/components/KeyData/KeyData'
 import { Security } from 'app/pages/home/components/Securities/SecurityCard'
@@ -59,7 +59,7 @@ export const SecurityDetails = ({
           <Funding data={security} />
         </TabPanel>
         <TabPanel value={tabValue} index={4}>
-          <ComporableSecurities data={comparableSecurities} />
+          <ComparableSecurities data={comparableSecurities} />
         </TabPanel>
       </Grid>
     </Grid>
