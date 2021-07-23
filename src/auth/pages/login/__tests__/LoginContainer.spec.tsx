@@ -8,6 +8,10 @@ import * as useLoginHook from 'auth/hooks/useLogin'
 import { generateMutationResult } from '__fixtures__/useQuery'
 import { user } from '__fixtures__/user'
 
+jest.mock('config', () => ({
+  RECAPTCHA_KEY: '123'
+}))
+
 describe('LoginContainer', () => {
   beforeEach(() => {
     history.push('/')
@@ -98,7 +102,7 @@ describe('LoginContainer', () => {
     jest.spyOn(useLoginHook, 'useLogin').mockReturnValue({
       mutation: [login, generateMutationResult({ data: user })],
       step: 'login',
-      attempts: 3,
+      attempts: 4,
       resetAttempts: resetAttempts
     })
 
@@ -111,7 +115,7 @@ describe('LoginContainer', () => {
     ).toBeTruthy()
   })
 
-  it('show top field when step is otp', () => {
+  it('show otp field when step is otp', () => {
     const login = jest.fn()
     const resetAttempts = jest.fn()
     jest.spyOn(useLoginHook, 'useLogin').mockReturnValue({
