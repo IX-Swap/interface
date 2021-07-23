@@ -60,7 +60,6 @@ export default function SecurityCard({ currency }: { currency: Currency }) {
             <TextRow textLeft={<Trans>Token ID</Trans>} textRight={shortenAddress((currency as any).address)} />
             <TextRow textLeft={<Trans>Deposit address wallet</Trans>} />
             <TextRow textLeft={<Trans>Amount</Trans>} textRight={formatCurrencyAmount(balance, 4)} />
-            <TextRow textLeft={<Trans>Deadline</Trans>} />
             <RowCenter marginTop="10px">
               <ButtonGradient as={Link} to={routes.securityTokens(currency)} width={'50%'} data-testid="token-info">
                 <Trans>Info</Trans>

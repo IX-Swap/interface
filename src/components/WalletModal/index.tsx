@@ -4,12 +4,14 @@ import { UnsupportedChainIdError, useWeb3React } from '@web3-react/core'
 import { WalletConnectConnector } from '@web3-react/walletconnect-connector'
 import RedesignedWideModal from 'components/Modal/RedesignedWideModal'
 import { AutoRow } from 'components/Row'
+import { useFetchToken } from 'hooks/useFetchToken'
 import React, { useEffect, useState } from 'react'
 import { isMobile } from 'react-device-detect'
 import ReactGA from 'react-ga'
 import { useDispatch } from 'react-redux'
 import { AppDispatch } from 'state'
 import { saveToken } from 'state/auth/actions'
+import { useSaveAuthorization } from 'state/auth/hooks'
 import MetamaskIcon from '../../assets/images/metamask.png'
 import { fortmatic, injected, portis } from '../../connectors'
 import { OVERLAY_READY } from '../../connectors/Fortmatic'
@@ -80,7 +82,8 @@ export default function WalletModal({
       setWalletView(WALLET_VIEWS.ACCOUNT)
     }
   }, [walletModalOpen])
-
+  const { fetchToken } = useFetchToken()
+  const { saveAuthorization } = useSaveAuthorization()
   // close modal when a connection is successful
   const activePrevious = usePrevious(active)
   const connectorPrevious = usePrevious(connector)
@@ -111,19 +114,23 @@ export default function WalletModal({
     if (connector instanceof WalletConnectConnector && connector.walletConnectProvider?.wc?.uri) {
       connector.walletConnectProvider = undefined
     }
+    if (connector) {
+      try {
+        await activate(connector, undefined, true)
 
-    connector &&
-      activate(connector, undefined, true)
-        .then(() => {
-          dispatch(saveToken({ value: { token: '', expiresAt: 0 } }))
-        })
-        .catch((error) => {
-          if (error instanceof UnsupportedChainIdError) {
-            activate(connector) // a little janky...can't use setError because the connector isn't set
-          } else {
-            setPendingError(true)
-          }
-        })
+        dispatch(saveToken({ value: { token: '', expiresAt: 0 } }))
+        const authData = await fetchToken()
+        if (authData) {
+          saveAuthorization(authData)
+        }
+      } catch (error) {
+        if (error instanceof UnsupportedChainIdError) {
+          activate(connector) // a little janky...can't use setError because the connector isn't set
+        } else {
+          setPendingError(true)
+        }
+      }
+    }
   }
 
   // close wallet modal if fortmatic modal is active

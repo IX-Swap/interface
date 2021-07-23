@@ -19,6 +19,7 @@ import {
   updateUserLocale,
   setUsesSecTokens,
   fetchUserSecTokenList,
+  passAccreditation,
 } from './actions'
 import { SupportedLocale } from 'constants/locales'
 import { SecToken } from 'types/secToken'
@@ -52,6 +53,8 @@ export interface UserState {
   userSecTokens: SecToken[]
   loadingSecTokenRequest: boolean
   secTokenError: string | null
+  loadingAccreditation: boolean
+  accreditationError: string | null
   tokens: {
     [chainId: number]: {
       [address: string]: SerializedToken
@@ -91,6 +94,8 @@ export const initialState: UserState = {
   userSecTokens: [],
   loadingSecTokenRequest: false,
   secTokenError: null,
+  accreditationError: null,
+  loadingAccreditation: false,
 }
 
 export default createReducer(initialState, (builder) =>
@@ -209,6 +214,18 @@ export default createReducer(initialState, (builder) =>
       state.userSecTokens = tokenList
     })
     .addCase(fetchUserSecTokenList.rejected, (state, { payload: { errorMessage } }) => {
+      state.loadingSecTokenRequest = false
+      state.secTokenError = errorMessage
+    })
+    .addCase(passAccreditation.pending, (state) => {
+      state.loadingAccreditation = true
+      state.accreditationError = null
+    })
+    .addCase(passAccreditation.fulfilled, (state) => {
+      state.loadingAccreditation = false
+      state.accreditationError = null
+    })
+    .addCase(passAccreditation.rejected, (state, { payload: { errorMessage } }) => {
       state.loadingSecTokenRequest = false
       state.secTokenError = errorMessage
     })
