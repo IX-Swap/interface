@@ -90,4 +90,39 @@ describe('LoginContainer', () => {
     fireEvent.click(forgotPasswordButton)
     expect(history.location.pathname).toBe(AuthRoute.passwordReset)
   })
+
+  it('shows recaptcha when attempt >= 3', () => {
+    const login = jest.fn()
+    const resetAttempts = jest.fn()
+
+    jest.spyOn(useLoginHook, 'useLogin').mockReturnValue({
+      mutation: [login, generateMutationResult({ data: user })],
+      step: 'login',
+      attempts: 3,
+      resetAttempts: resetAttempts
+    })
+
+    const { getByText } = render(<LoginContainer />)
+
+    expect(
+      getByText(
+        'We notice multiple failed attempts. Please verify you are not a robot.'
+      )
+    ).toBeTruthy()
+  })
+
+  it('show top field when step is otp', () => {
+    const login = jest.fn()
+    const resetAttempts = jest.fn()
+    jest.spyOn(useLoginHook, 'useLogin').mockReturnValue({
+      mutation: [login, generateMutationResult({ data: user })],
+      step: 'otp',
+      attempts: 0,
+      resetAttempts: resetAttempts
+    })
+
+    const { getByText } = render(<LoginContainer />)
+
+    expect(getByText('Two-factor authentication')).toBeTruthy()
+  })
 })
