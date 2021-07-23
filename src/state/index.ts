@@ -14,6 +14,7 @@ import deposit from './deposit/reducer'
 import withdraw from './withdraw/reducer'
 import auth from './auth/reducer'
 import secTokens from './secTokens/reducer'
+import eventLog from './eventLog/reducer'
 
 const PERSISTED_KEYS: string[] = ['user', 'transactions', 'lists', 'auth']
 
@@ -31,6 +32,7 @@ const store = configureStore({
     withdraw,
     auth,
     secTokens,
+    eventLog,
   },
   middleware: [...getDefaultMiddleware({ thunk: true }), save({ states: PERSISTED_KEYS, debounce: 1000 })],
   preloadedState: load({ states: PERSISTED_KEYS }),

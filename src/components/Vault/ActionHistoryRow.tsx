@@ -3,10 +3,10 @@ import dayjs from 'dayjs'
 import { IconWrapper } from 'pages/SecTokenDetails/styleds'
 import React, { CSSProperties } from 'react'
 import { Box } from 'rebass'
+import { LogItem } from 'state/eventLog/actions'
 import { TYPE } from 'theme'
 import { ChevronElement } from '../ChevronElement'
-import { ActionHistoryStatusText, ActionTypeText, StatusColors } from './enum'
-import { ActionHistory } from './interfaces'
+import { ActionHistoryStatus, ActionHistoryStatusText, ActionTypeText, StatusColors } from './enum'
 import {
   ActionNameColumn,
   DateColumn,
@@ -21,7 +21,7 @@ import {
 } from './styleds'
 
 interface Props {
-  row: ActionHistory
+  row: LogItem
   style: CSSProperties
   key: any
   show: boolean
@@ -32,9 +32,9 @@ interface Props {
 const dateFormat = 'MMM D, YYYY hh:mm'
 
 export const ActionHistoryRow = ({ row, style, key, toggleShow, show, icon }: Props) => {
-  const statusText = ActionHistoryStatusText[row.status]
-  const formattedDate = dayjs(row.date).format(dateFormat)
-  const textColor = StatusColors[row.status]
+  const statusText = ActionHistoryStatusText[row?.params?.status ?? ActionHistoryStatus.PENDING]
+  const formattedDate = dayjs(row.createdAt).format(dateFormat)
+  const textColor = StatusColors[row?.params?.status ?? ActionHistoryStatus.PENDING]
 
   return (
     <TransparentWrapper style={style}>

@@ -4,8 +4,7 @@ import { ButtonIXSGradient } from 'components/Button'
 import { Line } from 'components/Line'
 import { useActiveWeb3React } from 'hooks/web3'
 import React, { useMemo } from 'react'
-import { ApplicationModal } from 'state/application/actions'
-import { useDepositModalToggle, useModalOpen } from 'state/application/hooks'
+import { useDepositModalToggle } from 'state/application/hooks'
 import { TYPE } from 'theme'
 import { AccreditationStatus } from './AccreditationStatus'
 import { BalanceRow } from './BalanceRow'
@@ -37,7 +36,7 @@ export const ExistingVault = ({ currency, status }: Props) => {
         )}
       </TitleStatusRow>
       {isApproved && <BalanceRow currency={currency} account={account} />}
-      <HistoryBlock currency={currency} status={status} />
+      {isApproved && <HistoryBlock currency={currency} />}
       {status === VaultState.REJECTED && (
         <>
           <Line />

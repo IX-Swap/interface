@@ -1,0 +1,37 @@
+import { ActionCreatorWithoutPayload, ActionCreatorWithPayload, createAction } from '@reduxjs/toolkit'
+import { ActionHistoryStatus, ActionTypes } from 'components/Vault/enum'
+import { PaginateResponse, PaginationDetails } from 'types/pagination'
+
+export interface LogItem {
+  id: number
+  type: ActionTypes
+  userId: number
+  params?: {
+    token: string
+    amount: number
+    status: ActionHistoryStatus
+    fromAddress?: string
+    toAddress?: string
+  }
+  createdAt: string
+  updatedAt: string | null
+  deletedAt: string | null
+}
+
+export const setEventLog = createAction<{ eventLog: Array<LogItem> }>('eventLog/setLog')
+export const setFilter = createAction<{ filter: ActionTypes }>('eventLog/setFilter')
+export const setPage = createAction<{ page: number }>('eventLog/setPage')
+export const resetPage = createAction<void>('eventLog/resetPage')
+export const setPaginationDetails = createAction<{ paginationDetails: PaginationDetails }>(
+  'eventLog/setPaginationDetails'
+)
+
+export const getLog: Readonly<{
+  pending: ActionCreatorWithoutPayload
+  fulfilled: ActionCreatorWithPayload<{ response: PaginateResponse<LogItem> }>
+  rejected: ActionCreatorWithPayload<{ errorMessage: string }>
+}> = {
+  pending: createAction('eventLog/getLog/pending'),
+  fulfilled: createAction('eventLog/getLog/fulfilled'),
+  rejected: createAction('eventLog/getLog/rejected'),
+}

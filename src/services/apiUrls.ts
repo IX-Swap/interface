@@ -12,3 +12,7 @@ export const tokens = {
 export const custody = {
   deposit: '/custody/deposit/request',
 }
+
+export const eventLog = {
+  list: '/event-log/list',
+}
