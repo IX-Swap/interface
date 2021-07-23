@@ -14,4 +14,10 @@ describe('SecurityTradingView', () => {
   it('renders without errors', () => {
     render(<SecurityTradingView data={sampleSecurity} />)
   })
+
+  it('renders currentPrice correctly', () => {
+    const { getByText } = render(<SecurityTradingView data={sampleSecurity} />)
+
+    expect(getByText('$ 81.00')).toBeTruthy()
+  })
 })

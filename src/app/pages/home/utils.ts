@@ -64,7 +64,7 @@ export const getChartData = (
 
 export const timeRange = (
   range: '1W' | '1M' | '6M' | 'YTD' | '1Y' | 'MAX',
-  data: TimeSeries[]
+  data?: TimeSeries[]
 ) => {
   const today = new Date()
   const dayToday = today.getUTCDate()

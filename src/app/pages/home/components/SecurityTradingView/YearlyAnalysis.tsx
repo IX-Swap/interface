@@ -35,15 +35,15 @@ export const YearlyAnalysis = ({ data }: YearlyAnalysisProps) => {
             <TableRow>
               <TableCell>Low</TableCell>
               <TableCell align='right'>
-                {hasValue(data.oneYearLowPrice)
-                  ? formatMoney(data.oneYearLowPrice ?? 0, '$')
+                {hasValue(data.oneYearHighPrice)
+                  ? formatMoney(data.oneYearHighPrice ?? 0, '$')
                   : '-'}
               </TableCell>
             </TableRow>
             <TableRow>
               <TableCell>Median </TableCell>
               <TableCell align='right'>
-                {hasValue(data.oneYearLowPrice)
+                {hasValue(data.oneYearMedianPrice)
                   ? formatMoney(data.oneYearMedianPrice ?? 0, '$')
                   : '-'}
               </TableCell>
@@ -51,19 +51,19 @@ export const YearlyAnalysis = ({ data }: YearlyAnalysisProps) => {
             <TableRow>
               <TableCell>Average</TableCell>
               <TableCell align='right'>
-                {hasValue(data.oneYearLowPrice)
+                {hasValue(data.oneYearAveragePrice)
                   ? formatMoney(data.oneYearAveragePrice ?? 0, '$')
                   : '-'}
               </TableCell>
             </TableRow>
             <TableRow>
               <TableCell>Average Monthly Return </TableCell>
-              <TableCell align='right'>-</TableCell>
+              <TableCell align='right'></TableCell>
             </TableRow>
             <TableRow>
               <TableCell>Average Daily Volume </TableCell>
               <TableCell align='right'>
-                {hasValue(data.oneYearLowPrice)
+                {hasValue(data.oneYearAverageDailyVolume)
                   ? formatMoney(data.oneYearAverageDailyVolume ?? 0, '$')
                   : '-'}
               </TableCell>
