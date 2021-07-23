@@ -3,10 +3,10 @@ import { Line } from 'components/Line'
 import { useWindowSize } from 'hooks/useWindowSize'
 import React, { MutableRefObject, useCallback, useMemo, useState } from 'react'
 import { VariableSizeList as List } from 'react-window'
+import { LogItem } from 'state/eventLog/actions'
 import { MEDIA_WIDTHS } from 'theme'
 import { ActionHistoryRow } from './ActionHistoryRow'
-import { ActionTypes, isAction } from './enum'
-import { ActionHistory, TransactionHistory } from './interfaces'
+import { ActionHistoryStatus, ActionTypes, isAction } from './enum'
 import { Break, StatusIcons } from './styleds'
 import { TransactionHistoryRow } from './TransactionHistoryRow'
 
@@ -23,22 +23,20 @@ type Sizes = { [index: number]: number }
 export default function ActionHistoryList({
   height,
   listRef,
-  actions,
-  transactions,
+  events,
   currency,
 }: {
   height: number
   listRef?: MutableRefObject<List | undefined>
-  actions: ActionHistory[]
-  transactions: TransactionHistory[]
+  events: LogItem[]
   currency?: Currency
 }) {
   const { width = 0 } = useWindowSize()
   const ACTION_VISIBLE = width < MEDIA_WIDTHS.upToMedium ? 150 : 105
   const TRANSACTION_VISIBLE = width < MEDIA_WIDTHS.upToMedium ? 160 : 125
-  const itemData: (ActionHistory | TransactionHistory | BreakLine)[] = useMemo(() => {
-    return [...actions, BREAK_LINE, ...transactions]
-  }, [actions, transactions])
+  const itemData: LogItem[] = useMemo(() => {
+    return events
+  }, [events])
 
   const [sizes, setSizes] = useState<Sizes>(
     itemData.reduce<Sizes>((acc, item, i) => {
@@ -48,7 +46,7 @@ export default function ActionHistoryList({
   )
   const Row = useCallback(
     function HistoryRowInner({ data, index, style, toggleShow }) {
-      const row: ActionHistory | TransactionHistory | BreakLine = data[index]
+      const row: LogItem = data[index]
       const show = sizes[index] > STANDART_ROW
 
       if (row) {
@@ -59,13 +57,13 @@ export default function ActionHistoryList({
             </Break>
           )
         }
-        const statusIcon = StatusIcons[row.status]
-        if ('sum' in row) {
+        const statusIcon = StatusIcons[row?.params?.status ?? ActionHistoryStatus.PENDING]
+        if ([ActionTypes.WITHDRAW, ActionTypes.DEPOSIT].includes(row.type)) {
           return (
             <TransactionHistoryRow
               style={style}
               row={row}
-              key={row.date}
+              key={row.createdAt}
               toggleShow={() => toggleShow(index)}
               show={show}
               currency={currency}
@@ -77,7 +75,7 @@ export default function ActionHistoryList({
           <ActionHistoryRow
             style={style}
             row={row}
-            key={row.date}
+            key={row.createdAt}
             toggleShow={() => toggleShow(index)}
             show={show}
             icon={statusIcon}
@@ -91,7 +89,7 @@ export default function ActionHistoryList({
 
   const itemKey = useCallback((index: number, data: typeof itemData) => {
     const item = data[index]
-    return isBreakLine(item) ? item : item.date
+    return isBreakLine(item) ? item : item.createdAt
   }, [])
 
   const getSize = useCallback(

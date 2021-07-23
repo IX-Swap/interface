@@ -1,38 +1,27 @@
+import { Currency } from '@ixswap1/sdk-core'
 import { Trans } from '@lingui/macro'
 import { Line } from 'components/Line'
-import { RowStart } from 'components/Row'
-import React, { useRef } from 'react'
+import { LoaderThin } from 'components/Loader/LoaderThin'
+import { RowCenter, RowStart } from 'components/Row'
+import React, { useEffect, useRef } from 'react'
 import AutoSizer from 'react-virtualized-auto-sizer'
 import { VariableSizeList as List } from 'react-window'
+import { useEventState, useGetEventCallback } from 'state/eventLog/hooks'
 import { TYPE } from 'theme'
-import { VaultState } from './enum'
-import {
-  accreditationHistoryApproved,
-  accreditationHistoryPending,
-  accreditationHistoryRejected,
-  transactionHistory,
-} from './fixtures'
-import { ActionHistory } from './interfaces'
-import { HistoryWrapper } from './styleds'
 import ActionHistoryList from './ActionHistoryList'
-import { Currency } from '@ixswap1/sdk-core'
+import { HistoryWrapper } from './styleds'
 
 interface Props {
-  status: Exclude<VaultState, VaultState.NOT_SUBMITTED>
   currency?: Currency
 }
 
-type ActionMap = {
-  [key in Exclude<VaultState, VaultState.NOT_SUBMITTED>]: ActionHistory[]
-}
-const actionMap: ActionMap = {
-  [VaultState.PENDING]: accreditationHistoryPending,
-  [VaultState.REJECTED]: accreditationHistoryRejected,
-  [VaultState.APPROVED]: accreditationHistoryApproved,
-}
-export const HistoryBlock = ({ status, currency }: Props) => {
-  const actions = actionMap[status]
-  const transactions = transactionHistory
+export const HistoryBlock = ({ currency }: Props) => {
+  const { eventLog, eventLogError, eventLogLoading } = useEventState()
+
+  const getEvents = useGetEventCallback()
+  useEffect(() => {
+    getEvents()
+  }, [getEvents])
   // refs for fixed size lists
   const actionList = useRef<List>()
   return (
@@ -43,19 +32,20 @@ export const HistoryBlock = ({ status, currency }: Props) => {
           <Trans>History</Trans>
         </TYPE.title5>
       </RowStart>
-      <div style={{ flex: '1 1 auto', height: '200px', marginBottom: '35px' }}>
-        <AutoSizer disableWidth>
-          {({ height }) => (
-            <ActionHistoryList
-              height={height}
-              listRef={actionList}
-              actions={actions}
-              transactions={transactions}
-              currency={currency}
-            />
-          )}
-        </AutoSizer>
-      </div>
+      {eventLog.length > 0 && !eventLogError && !eventLogLoading && (
+        <div style={{ flex: '1 1 auto', height: '200px', marginBottom: '35px' }}>
+          <AutoSizer disableWidth>
+            {({ height }) => (
+              <ActionHistoryList height={height} listRef={actionList} events={eventLog} currency={currency} />
+            )}
+          </AutoSizer>
+        </div>
+      )}
+      {eventLogLoading && (
+        <RowCenter style={{ marginTop: '53px', marginBottom: '84px' }}>
+          <LoaderThin size={64} />
+        </RowCenter>
+      )}
     </HistoryWrapper>
   )
 }

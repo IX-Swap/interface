@@ -15,15 +15,16 @@ export const getVaultState = (status: string) => {
 }
 
 export enum ActionHistoryStatus {
-  PENDING = 'PENDING',
-  APPROVED = 'APPROVED',
-  REJECTED = 'REJECTED',
+  PENDING = 'pending',
+  APPROVED = 'approved',
+  REJECTED = 'rejected',
+  SETTLED = 'settled',
 }
 export enum ActionTypes {
-  WITHDRAW = 'WITHDRAW',
-  DEPOSIT = 'DEPOSIT',
-  KYC = 'KYC',
-  ACCREDITATION = 'ACCREDITATION',
+  WITHDRAW = 'withdraw',
+  DEPOSIT = 'deposit',
+  KYC = 'kyc',
+  ACCREDITATION = 'accreditation',
 }
 export const isAction = (action: ActionTypes) => {
   return [ActionTypes.KYC, ActionTypes.ACCREDITATION].includes(action)
@@ -34,16 +35,19 @@ export const isTransaction = (action: ActionTypes) => {
 export const ActionHistoryStatusText = {
   [ActionHistoryStatus.PENDING]: t`In progress...`,
   [ActionHistoryStatus.APPROVED]: t`Approved`,
+  [ActionHistoryStatus.SETTLED]: t`Approved`,
   [ActionHistoryStatus.REJECTED]: t`Rejected`,
 }
 export const TransactionHistoryStatusText = {
   [ActionHistoryStatus.PENDING]: t`Pending...`,
   [ActionHistoryStatus.APPROVED]: t`Completed`,
+  [ActionHistoryStatus.SETTLED]: t`Completed`,
   [ActionHistoryStatus.REJECTED]: t`Declined`,
 }
 export const StatusColors = {
   [ActionHistoryStatus.PENDING]: 'text2',
   [ActionHistoryStatus.APPROVED]: 'green1',
+  [ActionHistoryStatus.SETTLED]: 'green1',
   [ActionHistoryStatus.REJECTED]: 'error',
 }
 

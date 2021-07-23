@@ -12,7 +12,7 @@ import { TYPE } from 'theme'
 import SecTokensList from './SecTokensList'
 
 export const AllSecTokens = () => {
-  const { searchQuery, inputRef, handleInput, filteredSortedTokens, filteredInactiveTokens, fixedList } =
+  const { searchQuery, inputRef, handleInput, filteredSortedTokens, filteredInactiveTokens, listRef } =
     useCurrencySearch(ListType.SEC_TOKENS)
   const theme = useTheme()
   return (
@@ -42,9 +42,7 @@ export const AllSecTokens = () => {
         {filteredSortedTokens?.length > 0 || filteredInactiveTokens?.length > 0 ? (
           <div style={{ flex: '1 1 auto', height: '400px' }}>
             <AutoSizer disableWidth>
-              {({ height }) => (
-                <SecTokensList height={height} currencies={filteredSortedTokens} fixedListRef={fixedList} />
-              )}
+              {({ height }) => <SecTokensList height={height} currencies={filteredSortedTokens} listRef={listRef} />}
             </AutoSizer>
           </div>
         ) : (

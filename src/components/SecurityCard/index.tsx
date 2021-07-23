@@ -50,7 +50,7 @@ export default function SecurityCard({ currency }: { currency: Currency }) {
         <FixedHeightRow>
           <CurrencyHeader currency={currency} />
           <Box style={{ gap: '6px', display: 'flex', width: 'fit-content' }}>
-            <Status status={getStoStatus((currency as any).tokenInfo.status)} />
+            <Status status={getStoStatus((currency as any).tokenInfo?.tokenUser?.status)} />
             <ChevronElement showMore={showMore} setShowMore={setShowMore} />
           </Box>
         </FixedHeightRow>

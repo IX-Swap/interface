@@ -4,10 +4,12 @@ import { useCurrency } from 'hooks/Tokens'
 import { useActiveWeb3React } from 'hooks/web3'
 import { useCallback } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
+import apiService from 'services/apiService'
+import { custody } from 'services/apiUrls'
 import { AppDispatch, AppState } from 'state'
 import { tryParseAmount } from 'state/swap/helpers'
 import { isAddress } from 'utils'
-import { setCurrency, typeAmount, typeSender } from './actions'
+import { depositSecTokens, setCurrency, typeAmount, typeSender } from './actions'
 
 export function useDepositState(): AppState['deposit'] {
   return useSelector<AppState, AppState['deposit']>((state) => state.deposit)
@@ -81,4 +83,44 @@ export function useDerivedDepositInfo(): {
     formattedFrom,
     inputError,
   }
+}
+
+export const depositToken = async ({
+  tokenId,
+  amount,
+  fromAddress,
+}: {
+  tokenId: number
+  amount: number
+  fromAddress: string
+}) => {
+  const response = await apiService.post(custody.deposit, { tokenId, amount, fromAddress })
+  return response
+}
+interface DepositProps {
+  id: number
+  amount: number
+  fromAddress: string
+  onSuccess: () => void
+  onError: () => void
+}
+export function useDepositCallback(): ({ id, amount, onSuccess, onError }: DepositProps) => Promise<void> {
+  const dispatch = useDispatch<AppDispatch>()
+  return useCallback(
+    async ({ id, amount, fromAddress, onSuccess, onError }: DepositProps) => {
+      dispatch(depositSecTokens.pending())
+      try {
+        const response = await depositToken({ tokenId: id, amount, fromAddress })
+        const { data } = response
+        console.log({ data })
+        dispatch(depositSecTokens.fulfilled())
+        onSuccess()
+      } catch (error) {
+        console.error(`Could not deposit amount`, error)
+        dispatch(depositSecTokens.rejected({ errorMessage: error.message }))
+        onError()
+      }
+    },
+    [dispatch]
+  )
 }

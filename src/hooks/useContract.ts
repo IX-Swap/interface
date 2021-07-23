@@ -4,6 +4,7 @@ import { abi as STAKING_REWARDS_ABI } from '@uniswap/liquidity-staker/build/Stak
 import { abi as MERKLE_DISTRIBUTOR_ABI } from '@uniswap/merkle-distributor/build/MerkleDistributor.json'
 import { abi as IIxsV2PairABI } from '@ixswap1/v2-core/build/IIxsV2Pair.json'
 import { abi as IIxsV2Router02ABI } from '@ixswap1/v2-periphery/build/IIxsV2Router02.json'
+import { abi as IIxsWSecABI } from '@ixswap1/v2-core/build/IIxsWSec.json'
 
 import ARGENT_WALLET_DETECTOR_ABI from 'abis/argent-wallet-detector.json'
 import ENS_PUBLIC_RESOLVER_ABI from 'abis/ens-public-resolver.json'
@@ -95,6 +96,10 @@ export function useMulticall2Contract() {
 
 export function useMerkleDistributorContract() {
   return useContract(MERKLE_DISTRIBUTOR_ADDRESS, MERKLE_DISTRIBUTOR_ABI, true)
+}
+
+export function useBurnWSecContract(address: string | undefined) {
+  return useContract(address, IIxsWSecABI, true)
 }
 
 export function useStakingContract(stakingAddress?: string, withSignerIfPossible?: boolean) {

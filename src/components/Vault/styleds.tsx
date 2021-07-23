@@ -157,6 +157,7 @@ export const ModalPadding = styled.div`
 /* eslint-disable react/display-name */
 export const StatusIcons = {
   [ActionHistoryStatus.PENDING]: () => <Clock />,
+  [ActionHistoryStatus.SETTLED]: () => <Passed />,
   [ActionHistoryStatus.APPROVED]: () => <Passed />,
   [ActionHistoryStatus.REJECTED]: () => <Attention />,
 }

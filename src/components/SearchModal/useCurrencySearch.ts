@@ -4,7 +4,7 @@ import { useOnClickOutside } from 'hooks/useOnClickOutside'
 import useToggle from 'hooks/useToggle'
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react'
 import ReactGA from 'react-ga'
-import { FixedSizeList } from 'react-window'
+import { VariableSizeList } from 'react-window'
 import {
   useAllTokens,
   useIsUserAddedToken,
@@ -26,7 +26,7 @@ export enum ListType {
 export const useCurrencySearch = (list = ListType.ALL) => {
   const { chainId } = useActiveWeb3React()
   // refs for fixed size lists
-  const fixedList = useRef<FixedSizeList>()
+  const listRef = useRef<VariableSizeList>()
 
   const [searchQuery, setSearchQuery] = useState<string>('')
   const debouncedQuery = useDebounce(searchQuery, 200)
@@ -86,7 +86,7 @@ export const useCurrencySearch = (list = ListType.ALL) => {
     const input = event.target.value
     const checksummedInput = isAddress(input)
     setSearchQuery(checksummedInput || input)
-    fixedList.current?.scrollTo(0)
+    listRef.current?.scrollTo(0)
   }, [])
 
   // menu ui
@@ -111,6 +111,6 @@ export const useCurrencySearch = (list = ListType.ALL) => {
     filteredSortedTokens,
     filteredInactiveTokens,
     filteredSortedTokensWithETH,
-    fixedList,
+    listRef,
   }
 }

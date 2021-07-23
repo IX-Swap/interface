@@ -42,7 +42,7 @@ export default function CommonBases({
   const { secTokens } = useUserSecTokens()
   const visibleTokens = useMemo(() => {
     return Object.keys(secTokens)
-      .filter((tokenId) => (secTokens[tokenId] as any).tokenInfo.status === STO_STATUS_APPROVED)
+      .filter((tokenId) => (secTokens[tokenId] as any).tokenInfo?.tokenUser?.status === STO_STATUS_APPROVED)
       .reduce<{
         [address: string]: Token
       }>((obj, key) => {
