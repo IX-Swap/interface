@@ -158,6 +158,6 @@ export const ModalPadding = styled.div`
 export const StatusIcons = {
   [ActionHistoryStatus.PENDING]: () => <Clock />,
   [ActionHistoryStatus.SETTLED]: () => <Passed />,
-  [ActionHistoryStatus.APPROVED]: () => <Passed />,
+  [ActionHistoryStatus.APPROVED]: () => <Clock />,
   [ActionHistoryStatus.REJECTED]: () => <Attention />,
 }

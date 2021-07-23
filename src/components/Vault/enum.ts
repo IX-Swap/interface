@@ -34,19 +34,19 @@ export const isTransaction = (action: ActionTypes) => {
 }
 export const ActionHistoryStatusText = {
   [ActionHistoryStatus.PENDING]: t`In progress...`,
-  [ActionHistoryStatus.APPROVED]: t`Approved`,
+  [ActionHistoryStatus.APPROVED]: t`In progress...`,
   [ActionHistoryStatus.SETTLED]: t`Approved`,
   [ActionHistoryStatus.REJECTED]: t`Rejected`,
 }
 export const TransactionHistoryStatusText = {
   [ActionHistoryStatus.PENDING]: t`Pending...`,
-  [ActionHistoryStatus.APPROVED]: t`Completed`,
+  [ActionHistoryStatus.APPROVED]: t`Pending...`,
   [ActionHistoryStatus.SETTLED]: t`Completed`,
   [ActionHistoryStatus.REJECTED]: t`Declined`,
 }
 export const StatusColors = {
   [ActionHistoryStatus.PENDING]: 'text2',
-  [ActionHistoryStatus.APPROVED]: 'green1',
+  [ActionHistoryStatus.APPROVED]: 'text2',
   [ActionHistoryStatus.SETTLED]: 'green1',
   [ActionHistoryStatus.REJECTED]: 'error',
 }
