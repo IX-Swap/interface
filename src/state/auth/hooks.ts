@@ -41,12 +41,12 @@ export const useLogin = () => {
   const { account } = useActiveWeb3React()
   const usesSecTokens = useUsesSecTokens()
   const { getToken } = useAuthToken()
-
+  const { token, expiresAt } = useAuthState()
   useEffect(() => {
-    if (account && usesSecTokens) {
+    if (account && usesSecTokens && (!token || shouldRenewToken(expiresAt ?? 0))) {
       getToken()
     }
-  }, [account, usesSecTokens, getToken])
+  }, [account, usesSecTokens, getToken, token, expiresAt])
 }
 
 export const useFirstLogin = () => {

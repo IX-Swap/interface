@@ -7,6 +7,7 @@ import React, { useEffect, useRef } from 'react'
 import AutoSizer from 'react-virtualized-auto-sizer'
 import { VariableSizeList as List } from 'react-window'
 import { useEventState, useGetEventCallback } from 'state/eventLog/hooks'
+import { useSecTokenId } from 'state/secTokens/hooks'
 import { TYPE } from 'theme'
 import ActionHistoryList from './ActionHistoryList'
 import { HistoryWrapper } from './styleds'
@@ -17,8 +18,8 @@ interface Props {
 
 export const HistoryBlock = ({ currency }: Props) => {
   const { eventLog, eventLogError, eventLogLoading } = useEventState()
-
-  const getEvents = useGetEventCallback()
+  const tokenId = useSecTokenId({ currencyId: (currency as any)?.address })
+  const getEvents = useGetEventCallback({ tokenId })
   useEffect(() => {
     getEvents()
   }, [getEvents])

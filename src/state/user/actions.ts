@@ -42,3 +42,13 @@ export const fetchUserSecTokenList: Readonly<{
   fulfilled: createAction('user/fetchUserSecTokenList/fulfilled'),
   rejected: createAction('user/fetchUserSecTokenList/rejected'),
 }
+
+export const passAccreditation: Readonly<{
+  pending: ActionCreatorWithoutPayload
+  fulfilled: ActionCreatorWithoutPayload
+  rejected: ActionCreatorWithPayload<{ errorMessage: string }>
+}> = {
+  pending: createAction('user/passAccreditation/pending'),
+  fulfilled: createAction('user/passAccreditation/fulfilled'),
+  rejected: createAction('user/passAccreditation/rejected'),
+}

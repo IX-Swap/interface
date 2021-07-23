@@ -4,9 +4,8 @@ import { ButtonIXSGradient } from 'components/Button'
 import { useActiveWeb3React } from 'hooks/web3'
 import React, { useMemo } from 'react'
 import { useWalletModalToggle } from 'state/application/hooks'
-import { useFirstLogin } from 'state/auth/hooks'
-import { WrappedTokenInfo } from 'state/lists/wrappedTokenInfo'
-import { useSecTokens } from 'state/secTokens/hooks'
+import { useSecTokenId } from 'state/secTokens/hooks'
+import { usePassAccreditation } from 'state/user/hooks'
 import { TYPE } from 'theme'
 import { ButtonRow, NotSubmittedDescription, NotSubmittedTitle, NotSubmittedWrapper } from './styleds'
 
@@ -16,13 +15,9 @@ interface Props {
 export const NotSubmitted = ({ currency }: Props) => {
   const symbolText = useMemo(() => currency?.symbol ?? currency?.name ?? '', [currency])
   const { account } = useActiveWeb3React()
-  const { secTokens } = useSecTokens()
-  const tokenId = useMemo(() => {
-    const id = (secTokens[(currency as any)?.address] as any)?.tokenInfo?.id ?? ''
-    return id
-  }, [secTokens, currency])
-  const login = useFirstLogin()
   const toggleWalletModal = useWalletModalToggle()
+  const tokenId = useSecTokenId({ currencyId: (currency as any)?.address })
+  const passAccreditation = usePassAccreditation({ tokenId })
   return (
     <NotSubmittedWrapper>
       <NotSubmittedTitle>
@@ -43,7 +38,7 @@ export const NotSubmitted = ({ currency }: Props) => {
         <ButtonIXSGradient
           data-testid="pass-kyc-and-accreditation"
           onClick={() => {
-            login()
+            passAccreditation()
           }}
           disabled={!account}
         >

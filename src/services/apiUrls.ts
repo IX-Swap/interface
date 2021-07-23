@@ -7,6 +7,7 @@ export const tokens = {
   fromUser: `/token/list`,
   all: `/token/list/all`,
   withdraw: (tokenId: number) => `/token/allowance-digest/${tokenId}`,
+  accreditation: (tokenId: number) => `token/accreditation/${tokenId}`,
 }
 
 export const custody = {
