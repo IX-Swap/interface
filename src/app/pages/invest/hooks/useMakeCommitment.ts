@@ -12,18 +12,36 @@ export const useMakeCommitment = () => {
   const params = useParams<{ dsoId: string; issuerId: string }>()
   const { replace } = useHistory()
   const { user } = useAuth()
-  const uri = issuanceURL.commitments.getAll(getIdFromObj(user))
+  const uri = issuanceURL.commitments.invest(getIdFromObj(user))
   const mutateFn = async (args: MakeInvestmentArgs) => {
     return await apiService.post(uri, args)
   }
 
-  return useMutation(mutateFn, {
-    onSuccess: () => {
-      void snackbarService.showSnackbar('Success', 'success')
-      replace(generatePath(InvestRoute.view, params))
-    },
-    onError: (error: any) => {
-      void snackbarService.showSnackbar(error.message, 'error')
-    }
-  })
+  const commitUri = issuanceURL.commitments.commit(getIdFromObj(user))
+  const commitMutateFn = async (args: MakeInvestmentArgs) => {
+    return await apiService.post(commitUri, args)
+  }
+
+  const successHandler = () => {
+    void snackbarService.showSnackbar('Success', 'success')
+    replace(generatePath(InvestRoute.view, params))
+  }
+
+  const errorHandler = (error: any) => {
+    void snackbarService.showSnackbar(
+      error.message ?? 'Something went wrong',
+      'error'
+    )
+  }
+
+  return {
+    invest: useMutation(mutateFn, {
+      onSuccess: successHandler,
+      onError: errorHandler
+    }),
+    commit: useMutation(commitMutateFn, {
+      onSuccess: successHandler,
+      onError: errorHandler
+    })
+  }
 }

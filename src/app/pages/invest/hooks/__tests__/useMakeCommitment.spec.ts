@@ -42,7 +42,7 @@ describe('useMakeCommitment', () => {
 
       await waitFor(
         () => {
-          const [mutate] = result.current
+          const [mutate] = result.current.invest
           void mutate(makeInvestmentArgs)
 
           expect(showSnackbar).toHaveBeenCalledWith('Success', 'success')
@@ -66,7 +66,7 @@ describe('useMakeCommitment', () => {
 
       await waitFor(
         () => {
-          const [mutate] = result.current
+          const [mutate] = result.current.invest
           void mutate(makeInvestmentArgs)
 
           expect(showSnackbar).toHaveBeenCalledWith(

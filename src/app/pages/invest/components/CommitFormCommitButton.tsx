@@ -1,31 +1,31 @@
 import React from 'react'
 import { useCommitmentValidator } from 'app/pages/invest/hooks/useCommitmentValidator'
-import { Button } from '@material-ui/core'
 import { useFormContext } from 'react-hook-form'
-import { useMakeCommitment } from 'app/pages/invest/hooks/useMakeCommitment'
+import { Button } from '@material-ui/core'
 import { CommitmentFormValues } from 'types/commitment'
+import { useMakeCommitment } from 'app/pages/invest/hooks/useMakeCommitment'
 
-export interface CommitmentFormSubmitButtonProps {
+export interface CommitmentFormCommitButtonProps {
   assetId: string
   minInvestment: number | null
   dsoId: string
   currency: string
 }
 
-export const CommitmentFormSubmitButton = ({
+export const CommitmentFormCommitButton = ({
   assetId,
   minInvestment,
   dsoId,
   currency
-}: CommitmentFormSubmitButtonProps) => {
+}: CommitmentFormCommitButtonProps) => {
   const { isValid } = useCommitmentValidator({ assetId, minInvestment })
-  const {
-    invest: [makeInvestment]
-  } = useMakeCommitment()
   const { handleSubmit } = useFormContext()
+  const {
+    commit: [makeCommitment]
+  } = useMakeCommitment()
 
   const submit = handleSubmit(async (data: CommitmentFormValues) => {
-    await makeInvestment({
+    await makeCommitment({
       ...data,
       withdrawalAddress:
         data.withdrawalAddress === '' ? undefined : data.withdrawalAddress,
@@ -41,15 +41,15 @@ export const CommitmentFormSubmitButton = ({
 
   return (
     <Button
+      onClick={handleClick}
+      data-type='commit'
       color='primary'
-      variant='contained'
+      variant='outlined'
       fullWidth
       disabled={!isValid}
-      disableElevation
       type='button'
-      onClick={handleClick}
     >
-      Invest
+      Commit
     </Button>
   )
 }

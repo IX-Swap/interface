@@ -104,7 +104,8 @@ export const issuanceURL = {
       `/issuance/dso/${userId}/${dsoId}/activities`,
     getById: (userId: string, commitmentId: string) =>
       `/issuance/commitments/${userId}/${commitmentId}`,
-    getAll: (userId: string) => `/issuance/commitments/${userId}`
+    invest: (userId: string) => `/issuance/commitments/${userId}`,
+    commit: (userId: string) => `/issuance/commitments/${userId}/commit`
   },
   dso: {
     getAllPromoted: '/issuance/dso/promoted/list',
