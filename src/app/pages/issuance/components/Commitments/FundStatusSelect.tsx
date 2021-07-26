@@ -9,6 +9,12 @@ export interface FundStatusSelectSelectProps extends TypedSelectProps {
   labelBetweenAll?: string
 }
 
+const getValueForFundStatus = (value: string) => {
+  const firstDigit = value.slice(0, 1)
+  const restDigits = value.slice(1, value.length).toLowerCase()
+  return firstDigit.concat(restDigits)
+}
+
 export const FundStatusSelect = (props: FundStatusSelectSelectProps) => {
   const { includeAll = false, label, labelBetweenAll, ...rest } = props
 
@@ -20,7 +26,10 @@ export const FundStatusSelect = (props: FundStatusSelectSelectProps) => {
         </MenuItem>
       )}
       {renderMenuItems(
-        fundStatuses.map(option => ({ label: option, value: option }))
+        fundStatuses.map(option => ({
+          label: option,
+          value: getValueForFundStatus(option)
+        }))
       )}
     </Select>
   )

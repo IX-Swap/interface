@@ -104,12 +104,12 @@ export const issuanceURL = {
       `/issuance/dso/${userId}/${dsoId}/activities`,
     getById: (userId: string, commitmentId: string) =>
       `/issuance/commitments/${userId}/${commitmentId}`,
-    getAll: (userId: string) => `/issuance/commitments/${userId}`
+    getAll: (userId: string) => `/issuance/commitments/${userId}`,
+    getByDSOId: (dsoId: string) => `/issuance/dso/${dsoId}/commitments/list`
   },
   dso: {
     getAllPromoted: '/issuance/dso/promoted/list',
     getAllApproved: '/issuance/dso/approved/list',
-    getAllByUserId: (userId: string) => `/issuance/dso/list/${userId}`,
     favorite: (dsoId: string) => `/issuance/dso/favorites/${dsoId}`,
     topCountries: (dsoId: string) =>
       `/issuance/dso/${dsoId}/charts/top-countries`,
