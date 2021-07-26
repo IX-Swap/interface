@@ -25,7 +25,9 @@ export const CommitmentFormSubmitButton = ({
   const { handleSubmit } = useFormContext()
 
   const submit = handleSubmit(async (data: CommitmentFormValues) => {
-    console.log({ data })
+    delete data.pricePerUnit
+    delete data.totalAmount
+
     await makeInvestment({
       ...data,
       withdrawalAddress:
