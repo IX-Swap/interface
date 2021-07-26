@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import { Button, Card, Grid } from '@material-ui/core'
 import { CountdownTimer } from '../components/CountdownTimer/CountdownTimer'
 import { AmountRaised } from '../components/IssuanceLanding/AmountRaised'
@@ -12,6 +12,7 @@ import { PageHeader } from 'app/pages/issuance/components/Commitments/PageHeader
 import { InvestorCommitmentTable } from 'app/pages/issuance/components/Commitments/InvestorCommitmentTable'
 import { VSpacer } from 'components/VSpacer'
 import { getEndDate } from 'helpers/countdownTimer'
+import { CloseDealDialog } from 'app/pages/issuance/components/Commitments/CloseDealDialog/CloseDealDialog'
 
 export const Commitments = () => {
   // TODO Remove this after complete backend api endpoints
@@ -22,6 +23,8 @@ export const Commitments = () => {
       )
     )
   }, [])
+
+  const [isModalOpen, setIsModalOpen] = useState<boolean>(false)
   const { dsoId, issuerId } = useParams<{ dsoId: string; issuerId: string }>()
   const { data } = useDSOById(dsoId, issuerId)
   const { theme, isTablet, isMobile } = useAppBreakpoints()
@@ -47,6 +50,7 @@ export const Commitments = () => {
           variant={'outlined'}
           color={'primary'}
           disabled={!isCloseDealTimerCompleted}
+          onClick={() => setIsModalOpen(true)}
         >
           CLOSE DEAL
         </Button>
@@ -107,6 +111,10 @@ export const Commitments = () => {
           <InvestorCommitmentTable />
         </Grid>
       </Grid>
+      <CloseDealDialog
+        open={isModalOpen}
+        toggleOpen={() => setIsModalOpen(!isModalOpen)}
+      />
     </>
   )
 }
