@@ -9,6 +9,7 @@ export interface FormProps<T extends {}> {
   onSubmit?: SubmitHandler<T>
   validationSchema?: ObjectSchema<Shape<object | undefined, T>>
   criteriaMode?: 'all' | 'firstError'
+  shouldUnregister?: boolean
 }
 
 export const Form = <T,>(props: PropsWithChildren<FormProps<T>>) => {
@@ -17,6 +18,7 @@ export const Form = <T,>(props: PropsWithChildren<FormProps<T>>) => {
     onSubmit = console.log,
     validationSchema = object({}),
     criteriaMode = 'firstError',
+    shouldUnregister,
     children,
     ...rest
   } = props
@@ -25,7 +27,8 @@ export const Form = <T,>(props: PropsWithChildren<FormProps<T>>) => {
     mode: 'onBlur',
     defaultValues: useMemo(() => defaultValues as any, [defaultValues]),
     resolver: yupResolver(validationSchema),
-    criteriaMode: criteriaMode
+    criteriaMode: criteriaMode,
+    shouldUnregister: shouldUnregister
   })
 
   useUnmountCallback(() => {

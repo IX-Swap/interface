@@ -23,4 +23,5 @@ export interface CashWithdrawal extends AuthorizableWithIdentity {
   createdAt: string
   updatedAt: string
   virtualAccount: VirtualAccount
+  paymentMethodName?: string
 }
