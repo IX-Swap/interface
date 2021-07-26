@@ -1,9 +1,9 @@
 import React from 'react'
 import { render, cleanup } from 'test-utils'
-import { CommitmentFormSubmitButton } from 'app/pages/invest/components/CommitmentFormSubmitButton'
 import { Form } from 'components/form/Form'
+import { CommitmentFormCommitButton } from 'app/pages/invest/components/CommitFormCommitButton'
 
-describe('CommitmentFormSubmitButton', () => {
+describe('CommitmentFormCommitButton', () => {
   afterEach(async () => {
     await cleanup()
     jest.clearAllMocks()
@@ -12,7 +12,7 @@ describe('CommitmentFormSubmitButton', () => {
   it('renders without error', () => {
     render(
       <Form>
-        <CommitmentFormSubmitButton
+        <CommitmentFormCommitButton
           assetId='123'
           minInvestment={100}
           dsoId='123'
