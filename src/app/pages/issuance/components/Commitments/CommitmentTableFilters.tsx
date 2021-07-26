@@ -1,13 +1,16 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { Button, Grid } from '@material-ui/core'
 import { SearchFilter } from 'app/components/SearchFilter'
 import useMediaQuery from '@material-ui/core/useMediaQuery'
 import { useTheme } from '@material-ui/core/styles'
 import { FundStatusFilter } from 'app/pages/issuance/components/Commitments/FundStatusFilter'
+import { CapitalCallDialog } from 'app/pages/issuance/components/Commitments/CapitalCallPopup/CapitalCallPopup'
 
 export const CommitmentTableFilter = () => {
   const theme = useTheme()
   const isMobile = useMediaQuery(theme.breakpoints.down('sm'))
+
+  const [isEmailPopupVisible, setIsEmailPopupVisible] = useState<boolean>(false)
 
   return (
     <Grid container direction='column' spacing={3}>
@@ -29,12 +32,17 @@ export const CommitmentTableFilter = () => {
                 fontWeight: 400,
                 marginTop: isMobile ? theme.spacing(2) : 0
               }}
+              onClick={() => setIsEmailPopupVisible(true)}
             >
               Capital Call
             </Button>
           </Grid>
         </Grid>
       </Grid>
+      <CapitalCallDialog
+        open={isEmailPopupVisible}
+        toggleOpen={() => setIsEmailPopupVisible(!isEmailPopupVisible)}
+      />
     </Grid>
   )
 }
