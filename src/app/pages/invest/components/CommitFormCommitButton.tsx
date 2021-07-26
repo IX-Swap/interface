@@ -29,7 +29,7 @@ export const CommitmentFormCommitButton = ({
       ...data,
       withdrawalAddress:
         data.withdrawalAddress === '' ? undefined : data.withdrawalAddress,
-      signedSubscriptionDocument: data.signedSubscriptionDocument._id,
+      signedSubscriptionDocument: data.signedSubscriptionDocument?._id,
       dso: dsoId,
       currency
     })

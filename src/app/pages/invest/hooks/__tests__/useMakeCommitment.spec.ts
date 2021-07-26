@@ -6,6 +6,7 @@ import { MakeInvestmentArgs } from 'types/commitment'
 import { commitment, dso } from '__fixtures__/authorizer'
 import * as useAuthHook from 'hooks/auth/useAuth'
 import { user } from '__fixtures__/user'
+import { issuanceURL } from 'config/apiURL'
 
 describe('useMakeCommitment', () => {
   const makeInvestmentArgs: MakeInvestmentArgs = {
@@ -26,6 +27,33 @@ describe('useMakeCommitment', () => {
   afterEach(async () => {
     await cleanup()
     jest.clearAllMocks()
+  })
+
+  it('calls api with correct data', async () => {
+    await act(async () => {
+      const postFn = jest.fn().mockResolvedValueOnce(successfulResponse)
+      const showSnackbar = jest.fn()
+
+      const apiObj = { post: postFn }
+      const snackbarObj = { showSnackbar }
+      const { result } = renderHookWithServiceProvider(
+        () => useMakeCommitment(),
+        { apiService: apiObj, snackbarService: snackbarObj }
+      )
+
+      await waitFor(
+        () => {
+          const [mutate] = result.current.invest
+          void mutate(makeInvestmentArgs)
+
+          expect(postFn).toHaveBeenCalledWith(
+            issuanceURL.commitments.invest(user._id),
+            makeInvestmentArgs
+          )
+        },
+        { timeout: 1000 }
+      )
+    })
   })
 
   it('it calls snackbarService.showSnackbar with success message', async () => {
