@@ -1,17 +1,25 @@
-import React, { useMemo } from 'react'
 import { TopStraightBackgroundWrapper } from 'components/BottomHalfWrapper'
-import SecurityCard from 'components/SecurityCard'
-import { EmptyState } from './EmptyState'
-import { useUserSecTokenLoading, useUserSecTokens } from 'state/user/hooks'
+import { ListType, useCurrencySearch } from 'components/SearchModal/useCurrencySearch'
 import { useActiveWeb3React } from 'hooks/web3'
+import React, { useMemo, useRef } from 'react'
+import AutoSizer from 'react-virtualized-auto-sizer'
+import { FixedSizeList } from 'react-window'
+import { useUserSecTokenLoading } from 'state/user/hooks'
+import { EmptyState } from './EmptyState'
+import SecTokensList from './SecTokensList'
 
 export const MySecurities = () => {
-  const { secTokens } = useUserSecTokens()
   const { account } = useActiveWeb3React()
   const loading = useUserSecTokenLoading()
+
+  const listRef = useRef<FixedSizeList>()
+  const { filteredSortedTokens } = useCurrencySearch({
+    listRef,
+    list: ListType.USER_TOKENS,
+  })
   const showEmptyLiquidity = useMemo(() => {
-    return Object.keys(secTokens).length === 0
-  }, [secTokens])
+    return filteredSortedTokens.length === 0
+  }, [filteredSortedTokens])
   return (
     <>
       {(!account || loading || showEmptyLiquidity) && (
@@ -19,9 +27,11 @@ export const MySecurities = () => {
       )}
       {!loading && !showEmptyLiquidity && (
         <TopStraightBackgroundWrapper>
-          {Object.keys(secTokens).map((tokenAddress) => (
-            <SecurityCard key={tokenAddress} currency={secTokens[tokenAddress]} />
-          ))}
+          <div style={{ flex: '1 1 auto', height: '400px' }}>
+            <AutoSizer disableWidth>
+              {({ height }) => <SecTokensList height={height} currencies={filteredSortedTokens} listRef={listRef} />}
+            </AutoSizer>
+          </div>
         </TopStraightBackgroundWrapper>
       )}
     </>

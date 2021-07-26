@@ -2,13 +2,14 @@ import { Currency, Ether, Token } from '@ixswap1/sdk-core'
 import useDebounce from 'hooks/useDebounce'
 import { useOnClickOutside } from 'hooks/useOnClickOutside'
 import useToggle from 'hooks/useToggle'
-import { useCallback, useEffect, useMemo, useRef, useState } from 'react'
+import { MutableRefObject, useCallback, useEffect, useMemo, useRef, useState } from 'react'
 import ReactGA from 'react-ga'
-import { VariableSizeList } from 'react-window'
+import { FixedSizeList, VariableSizeList } from 'react-window'
 import {
   useAllTokens,
   useIsUserAddedToken,
   useOnlySecurityTokens,
+  useOnlyUnOwnedSecurityTokens,
   useOnlyUserSecurityTokens,
   useSearchInactiveTokenLists,
   useToken,
@@ -22,12 +23,17 @@ export enum ListType {
   ALL,
   SEC_TOKENS,
   USER_TOKENS,
+  OTHER,
 }
-export const useCurrencySearch = (list = ListType.ALL) => {
+export const useCurrencySearch = ({
+  listRef,
+  list = ListType.ALL,
+}: {
+  listRef?: MutableRefObject<FixedSizeList | VariableSizeList | undefined>
+  list?: ListType
+}) => {
   const { chainId } = useActiveWeb3React()
   // refs for fixed size lists
-  const listRef = useRef<VariableSizeList>()
-
   const [searchQuery, setSearchQuery] = useState<string>('')
   const debouncedQuery = useDebounce(searchQuery, 200)
 
@@ -35,10 +41,12 @@ export const useCurrencySearch = (list = ListType.ALL) => {
   const simpleTokensAndSecTokens = useAllTokens()
   const secTokens = useOnlySecurityTokens()
   const userSecTokens = useOnlyUserSecurityTokens()
+  const nonOwnedSecTokens = useOnlyUnOwnedSecurityTokens()
   const tokenType = {
     [ListType.SEC_TOKENS]: secTokens,
     [ListType.USER_TOKENS]: userSecTokens,
     [ListType.ALL]: simpleTokensAndSecTokens,
+    [ListType.OTHER]: nonOwnedSecTokens,
   }
   const allTokens = tokenType[list] ?? simpleTokensAndSecTokens
   // if they input an address, use it
@@ -82,12 +90,15 @@ export const useCurrencySearch = (list = ListType.ALL) => {
 
   // manage focus on modal show
   const inputRef = useRef<HTMLInputElement>()
-  const handleInput = useCallback((event) => {
-    const input = event.target.value
-    const checksummedInput = isAddress(input)
-    setSearchQuery(checksummedInput || input)
-    listRef.current?.scrollTo(0)
-  }, [])
+  const handleInput = useCallback(
+    (event) => {
+      const input = event.target.value
+      const checksummedInput = isAddress(input)
+      setSearchQuery(checksummedInput || input)
+      listRef?.current?.scrollTo(0)
+    },
+    [listRef]
+  )
 
   // menu ui
   const [open, toggle] = useToggle(false)

@@ -31,7 +31,7 @@ export default function Custodian() {
                   <Border active={!showAllSecTokens} />
                 </ToggleOption>
                 <ToggleOption onClick={() => setShowAllSecTokens(!showAllSecTokens)} active={showAllSecTokens}>
-                  <Trans>All Sec tokens</Trans>
+                  <Trans>Other Sec tokens</Trans>
                   <Border active={showAllSecTokens} />
                 </ToggleOption>
               </ToggleWrapper>
