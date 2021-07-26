@@ -4,7 +4,12 @@ const config: PlaywrightTestConfig = {
   // Put any shared options on the top level.
 
   use: {
-    // Artifacts
+    headless: false,
+    viewport: { width: 1720, height: 880 },
+    // Configure the browser to use.
+    browserName: 'chromium',
+    screenshot: 'only-on-failure',
+    video: 'retry-with-video',
   },
 
   projects: [
@@ -13,8 +18,8 @@ const config: PlaywrightTestConfig = {
       retries: 0,
       timeout: 90000,
       use: {
-        headless: true,
-
+        headless: false,
+        viewport: { width: 1720, height: 880 },
         // Configure the browser to use.
         browserName: 'chromium',
         screenshot: 'only-on-failure',

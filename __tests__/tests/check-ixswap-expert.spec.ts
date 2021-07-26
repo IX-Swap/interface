@@ -1,7 +1,8 @@
-import { test, expect } from '@playwright/test'
+import { test } from '../lib/fixture'
 
-import { ixswap, metamask, metamask2 } from '../lib/helpers/credentials'
-import { click, typeText, navigate, waitForText, waitNewPage } from '../lib/helpers/helpers'
+import { expect } from '@playwright/test'
+import { ixswap, metamask } from '../lib/helpers/credentials'
+import { click, typeText, navigate, waitForText, waitNewPage, screenshotMatching } from '../lib/helpers/helpers'
 import { amounts } from '../lib/helpers/text-helpers'
 
 import { getBalanceOtherCurrency, getEthBalance } from '../lib/helpers/web3-helpers'
@@ -17,17 +18,15 @@ let context: any
 let page: any
 let wallet: any
 let metamaskObj: any
+let before: any
 
-test.beforeAll(async () => {
-  context = await launchPersistent()
-  metamaskObj = new Metamask(context)
-  page = await metamaskObj.fullConnection(context, metamask.SECRET_WORDS, metamask.contractAddresses.eth)
-  wallet = new SwapIX(page)
-  await wallet.setExpertMode(page)
-})
-
-test.beforeEach(async () => {
-  await navigate(ixswap.URL, page)
+test.afterAll(async () => {
+  // context = await launchPersistent()
+  // metamaskObj = new Metamask(context)
+  // page = await metamaskObj.fullConnection(context, metamask.SECRET_WORDS, metamask.contractAddresses.eth)
+  // wallet = new SwapIX(page)
+  // await wallet.setExpertMode(page)
+  await context.close()
 })
 
 test.afterAll(async () => {
@@ -35,9 +34,19 @@ test.afterAll(async () => {
 })
 
 test.describe('Run tests in expert mode', () => {
+  test.beforeEach(async ({ context }) => {
+    metamaskObj = new Metamask(context)
+    page = await metamaskObj.fullConnection(context, metamask.SECRET_WORDS, metamask.contractAddresses.eth)
+    wallet = new SwapIX(page)
+    await wallet.setExpertMode(page)
+    await navigate(ixswap.URL, page)
+    before = await getEthBalance()
+  })
+
   test('Check that the DAI added to the output ', async () => {
     const outPutField = await wallet.setTypeOfCurrency()
     expect(outPutField).toContain('DAI')
+    await screenshotMatching('swapPage', expect, page)
   })
 
   test('Check that the crypto currency exchange successful', async () => {
@@ -51,8 +60,8 @@ test.describe('Run tests in expert mode', () => {
     await waitForText(`Swap ${amounts.base} ETH for`, page)
   })
 
-  test('Check that the pool can be created', async () => {
-    const before = await getEthBalance()
+  test.only('Check that the pool can be created', async () => {
+    before = await getEthBalance()
     await wallet.createPool(amounts.base)
     const secondPage = await waitNewPage(page, context, pool.button.SUPPLY)
     await metamaskObj.confirmOperation(secondPage)
@@ -63,7 +72,7 @@ test.describe('Run tests in expert mode', () => {
 
   test('Check that crypto can be add to the pool', async () => {
     await navigate(ixswap.URL, page)
-    const before = await getEthBalance()
+    before = await getEthBalance()
     await wallet.addToCurrentLiquidityPool(amounts.addToPool, false)
     const secondPage = await waitNewPage(page, context, pool.button.SUPPLY)
     await metamaskObj.confirmOperation(secondPage)
@@ -72,8 +81,8 @@ test.describe('Run tests in expert mode', () => {
     expect(Number(after)).toBeLessThan(Number(before))
   })
 
-  test('Check that the pool can be removed', async () => {
-    const before = await getEthBalance()
+  test.only('Check that the pool can be removed', async () => {
+    before = await getEthBalance()
     await wallet.removePool()
     let secondPage = await waitNewPage(page, context, pool.button.APPROVE_REMOVE_LIQUIDITY)
     await click(auth.buttons.GET_STARTED + '[2]', secondPage)
@@ -81,6 +90,7 @@ test.describe('Run tests in expert mode', () => {
     secondPage = await waitNewPage(page, context, pool.button.CONFIRM_REMOVE)
     await metamaskObj.confirmOperation(secondPage)
     await waitForText(`Remove 0.0`, page)
+    await page.waitForTimeout(5000)
     const after = await getEthBalance()
     expect(Number(after)).toBeGreaterThan(Number(before))
   })

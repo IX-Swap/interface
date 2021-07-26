@@ -1,6 +1,5 @@
 const fetch = require('node-fetch')
-const TIMEOUT = 10000
-const waitUntil = require('async-wait-until')
+const TIMEOUT = 20000
 
 module.exports = {
   getRequest: async (link) => {
@@ -179,7 +178,7 @@ module.exports = {
     }
   },
 
-  screenshotMatching: async (name, expect, page, range = 0.5) => {
+  screenshotMatching: async function (name, expect, page, range = 0.9) {
     const screenshot = await page.screenshot()
     expect(screenshot).toMatchSnapshot(`${name}.png`, {
       threshold: range,

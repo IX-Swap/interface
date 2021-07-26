@@ -38,4 +38,6 @@ module.exports = {
     },
     field: { TOKEN_AMOUNT: '[class*="token-amount-input"]' },
   },
+  settings: { button: { OPEN_SETTINGS: '[id="open-settings-dialog-button"]' } },
+  securityToken: { button: { OPEN_SECURITY: '[id="stake-nav-link"]' } },
 }
