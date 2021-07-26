@@ -2,28 +2,37 @@ import React, { useEffect } from 'react'
 import { Card, Grid, Hidden } from '@material-ui/core'
 import { CountdownTimer } from '../components/CountdownTimer/CountdownTimer'
 import { AmountRaised } from '../components/IssuanceLanding/AmountRaised'
-import { useDSOById } from 'app/pages/invest/hooks/useDSOById'
+// import { useDSOById } from 'app/pages/invest/hooks/useDSOById'
 import { useAppBreakpoints } from 'hooks/useAppBreakpoints'
 import { VSpacer } from 'components/VSpacer'
-import { useParams } from 'react-router-dom'
+import { useHistory, useParams } from 'react-router-dom'
 import { TargetFundraise } from 'app/pages/issuance/components/IssuanceLanding/TargetFundraise'
 import { generatePath } from 'react-router'
-import { history } from 'config/history'
 import { PageHeader } from 'app/pages/issuance/components/Commitments/PageHeader'
 import { InvestorCommitmentTable } from 'app/pages/issuance/components/Commitments/InvestorCommitmentTable'
+import { useDSOsByUserId } from 'app/pages/issuance/hooks/useDSOsByUserId'
+import { isValidDSOId } from 'helpers/isValidDSOId'
+import { IssuanceRoute } from 'app/pages/issuance/router/config'
+// import { DSOFilter } from 'app/pages/issuance/components/IssuanceLanding/DSOFilter'
 
 export const Commitments = () => {
-  // TODO Remove this after complete backend api endpoints
-  useEffect(() => {
-    console.log('useEffect')
-    history.replace(
-      generatePath(
-        '/app/issuance/commitments/5f769b4caf160a120953a3ca/5fd772bcabc2557b8798de5f'
-      )
-    )
-  }, [])
+  const { data: listData, isLoading } = useDSOsByUserId()
   const { dsoId, issuerId } = useParams<{ dsoId: string; issuerId: string }>()
-  const { data } = useDSOById(dsoId, issuerId)
+  const { replace } = useHistory()
+  // TODO Do refactoring after complete design with DSO Select
+  useEffect(() => {
+    if (!isValidDSOId(dsoId) && listData.list.length > 0) {
+      replace(
+        generatePath(IssuanceRoute.commitments, {
+          dsoId: listData.list[0]._id,
+          issuerId: listData.list[0].user
+        })
+      )
+    }
+  }, [dsoId, issuerId, listData.list, replace])
+
+  // const { data } = useDSOById(dsoId, issuerId)
+  const data = listData.list[0]
   const { theme, isTablet } = useAppBreakpoints()
 
   const divider = (
@@ -34,9 +43,14 @@ export const Commitments = () => {
     </Hidden>
   )
 
+  if (isLoading) {
+    return null
+  }
+
   return (
     <>
       <PageHeader title={data?.tokenName} />
+      {/* <DSOFilter urlForReplace={IssuanceRoute.commitments} /> */}
       <Grid
         container
         justify='space-between'

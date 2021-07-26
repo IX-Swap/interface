@@ -133,7 +133,9 @@ export const dsoQueryKeys = {
   getDSOsById: (id: string) => generateQueryKey('dso-list', id),
   getCapitalStructureList: 'capital-structures-list',
   getPromoted: 'promoted-dsos',
-  getApprovedList: 'dso-approved-list'
+  getApprovedList: 'dso-approved-list',
+  getCommitmentsListByDSOId: (dsoId: string) =>
+    generateQueryKey('commitments-list', dsoId)
 }
 
 export const otcQueryKeys = {
