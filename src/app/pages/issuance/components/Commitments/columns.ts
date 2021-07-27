@@ -1,36 +1,38 @@
 import { abbreviateNumber } from 'helpers/numbers'
 import { formatDateToMMDDYY } from 'helpers/dates'
 
-// TODO Do refactoring after complete backend api endpoint
 export const renderCommitment = (commitmentValue: number, commitment: any) => {
-  const formatter = new Intl.NumberFormat('en-US', {
-    maximumFractionDigits: 2,
-    minimumFractionDigits: 2,
-    // @ts-expect-error
-    notation: 'compact',
-    compactDisplay: 'short'
-  })
-  return abbreviateNumber(commitmentValue, commitment.symbol, false, formatter)
+  return abbreviateNumber(
+    commitmentValue,
+    commitment.symbol,
+    false,
+    new Intl.NumberFormat('en-US', {
+      maximumFractionDigits: 2,
+      minimumFractionDigits: 2,
+      // @ts-expect-error
+      notation: 'compact',
+      compactDisplay: 'short'
+    })
+  )
 }
 
-// TODO Do refactoring after complete backend api endpoint
 export const columns = [
   {
     label: 'Date',
-    key: 'date',
+    key: 'createdAt',
     render: formatDateToMMDDYY
   },
   {
     label: 'Name',
-    key: 'name'
+    key: 'user.name'
   },
   {
     label: 'Commitment',
-    key: 'commitment',
+    key: 'totalAmount',
     render: renderCommitment
   },
   {
-    label: 'FundStatus',
+    label: 'Fund Status',
     key: 'fundStatus'
   },
   {

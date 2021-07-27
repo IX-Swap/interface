@@ -6,7 +6,7 @@ import { useParams } from 'react-router-dom'
 import { useTheme } from '@material-ui/core/styles'
 
 export interface PageHeaderProps {
-  title?: string
+  title: string
 }
 
 export const PageHeader = (props: PageHeaderProps) => {

@@ -33,9 +33,7 @@ export const InvestorCommitmentTable = () => {
       </Grid>
       <Grid item>
         <Box style={{ backgroundColor: theme.palette.backgrounds.light }}>
-          {/* TODO Add type and do refactoring after complete backend api endpoint */}
           <TableView<any>
-            // fakeItems={commitments}
             uri={issuanceURL.commitments.getByDSOId(dsoId)}
             name={dsoQueryKeys.getCommitmentsListByDSOId(dsoId)}
             columns={columns}
