@@ -12,7 +12,8 @@ import { isAddress } from '../utils'
 import { TokenAddressMap, useUnsupportedTokenList } from './../state/lists/hooks'
 import { useBytes32TokenContract, useTokenContract } from './useContract'
 import { useActiveWeb3React } from './web3'
-
+import omit from 'lodash.omit'
+import keys from 'lodash.keys'
 // reduce token map into standard address <-> Token mapping, optionally include user added tokens
 function useTokensFromMap(tokenMap: TokenAddressMap, includeUserAdded: boolean): { [address: string]: Token } {
   const { chainId } = useActiveWeb3React()
@@ -56,6 +57,11 @@ export function useAllTokens(): { [address: string]: Token } {
 export function useOnlySecurityTokens(): { [address: string]: Token } {
   const { secTokens } = useSecTokens()
   return secTokens
+}
+export function useOnlyUnOwnedSecurityTokens(): { [address: string]: Token } {
+  const { secTokens: userSecTokens } = useUserSecTokens()
+  const { secTokens } = useSecTokens()
+  return omit(secTokens, keys(userSecTokens))
 }
 export function useOnlyUserSecurityTokens(): { [address: string]: Token } {
   const { secTokens } = useUserSecTokens()

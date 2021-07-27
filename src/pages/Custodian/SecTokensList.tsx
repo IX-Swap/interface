@@ -1,14 +1,9 @@
 import { Currency } from '@ixswap1/sdk-core'
-import { Trans } from '@lingui/macro'
-import Column from 'components/Column'
-import CurrencyLogo from 'components/CurrencyLogo'
+import SecurityCard from 'components/SecurityCard'
+import { useWindowSize } from 'hooks/useWindowSize'
 import React, { CSSProperties, MutableRefObject, useCallback, useMemo } from 'react'
-import { Link } from 'react-router-dom'
-import { VariableSizeList as List } from 'react-window'
-import { Box, Text } from 'rebass'
-import { routes } from 'utils/routes'
-import { ButtonGradient } from '../../components/Button'
-import { MenuItem, MenuRow } from './styleds'
+import { FixedSizeList as List } from 'react-window'
+import { MEDIA_WIDTHS } from 'theme'
 
 function currencyKey(currency: Currency): string {
   return currency.isToken ? currency.address : 'ETHER'
@@ -16,27 +11,8 @@ function currencyKey(currency: Currency): string {
 
 function CurrencyRow({ currency, style }: { currency: Currency; style: CSSProperties }) {
   const key = currencyKey(currency)
-
   // only show add or remove buttons if not on selected list
-  return (
-    <MenuRow style={style} className={`token-item-${key}`}>
-      <MenuItem>
-        <Box style={{ display: 'flex', gap: '8px', alignItems: 'center' }}>
-          <CurrencyLogo currency={currency} size={'33px'} />
-          <Column>
-            <Text title={currency.name} fontWeight={500}>
-              {currency.symbol ?? currency.name}
-            </Text>
-          </Column>
-        </Box>
-        <Box width="100%">
-          <ButtonGradient as={Link} to={routes.securityTokens(currency)} data-testid="custodian-sec-token-info">
-            <Trans>Info</Trans>
-          </ButtonGradient>
-        </Box>
-      </MenuItem>
-    </MenuRow>
-  )
+  return <SecurityCard key={key} currency={currency} style={style} />
 }
 
 export default function SecTokensList({
@@ -68,6 +44,8 @@ export default function SecTokensList({
     const currency = data[index]
     return currencyKey(currency)
   }, [])
+  const { width = 0 } = useWindowSize()
+  const itemHeight = width < MEDIA_WIDTHS.upToExtraSmall ? 100 : 80
 
   return (
     <List
@@ -76,7 +54,7 @@ export default function SecTokensList({
       width="100%"
       itemData={itemData}
       itemCount={itemData.length}
-      itemSize={() => 56}
+      itemSize={itemHeight}
       itemKey={itemKey}
     >
       {Row}

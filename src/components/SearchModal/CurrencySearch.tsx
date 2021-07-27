@@ -1,8 +1,9 @@
 import { Currency, Token } from '@ixswap1/sdk-core'
 import { t, Trans } from '@lingui/macro'
 import useTheme from 'hooks/useTheme'
-import React, { KeyboardEvent, ReactNode, RefObject, useCallback, useEffect } from 'react'
+import React, { KeyboardEvent, ReactNode, RefObject, useCallback, useEffect, useRef } from 'react'
 import AutoSizer from 'react-virtualized-auto-sizer'
+import { VariableSizeList } from 'react-window'
 import { Box } from 'rebass'
 import styled from 'styled-components/macro'
 import { ReactComponent as Edit } from '../../assets/images/edit-circle.svg'
@@ -58,6 +59,7 @@ export function CurrencySearch({
   title,
 }: CurrencySearchProps) {
   const theme = useTheme()
+  const listRef = useRef<VariableSizeList>()
 
   const {
     searchQuery,
@@ -72,8 +74,7 @@ export function CurrencySearch({
     filteredSortedTokens,
     filteredInactiveTokens,
     filteredSortedTokensWithETH,
-    listRef,
-  } = useCurrencySearch()
+  } = useCurrencySearch({ listRef })
 
   useEffect(() => {
     if (isOpen) setSearchQuery('')
