@@ -2,7 +2,6 @@ import React, { useEffect } from 'react'
 import { Card, Grid, Hidden } from '@material-ui/core'
 import { CountdownTimer } from '../components/CountdownTimer/CountdownTimer'
 import { AmountRaised } from '../components/IssuanceLanding/AmountRaised'
-// import { useDSOById } from 'app/pages/invest/hooks/useDSOById'
 import { useAppBreakpoints } from 'hooks/useAppBreakpoints'
 import { VSpacer } from 'components/VSpacer'
 import { useHistory, useParams } from 'react-router-dom'
@@ -13,7 +12,8 @@ import { InvestorCommitmentTable } from 'app/pages/issuance/components/Commitmen
 import { useDSOsByUserId } from 'app/pages/issuance/hooks/useDSOsByUserId'
 import { isValidDSOId } from 'helpers/isValidDSOId'
 import { IssuanceRoute } from 'app/pages/issuance/router/config'
-// import { DSOFilter } from 'app/pages/issuance/components/IssuanceLanding/DSOFilter'
+import { LoadingIndicator } from 'app/components/LoadingIndicator/LoadingIndicator'
+import { useDSOById } from 'app/pages/invest/hooks/useDSOById'
 
 export const Commitments = () => {
   const { data: listData, isLoading } = useDSOsByUserId()
@@ -31,8 +31,8 @@ export const Commitments = () => {
     }
   }, [dsoId, issuerId, listData.list, replace])
 
-  // const { data } = useDSOById(dsoId, issuerId)
-  const data = listData.list[0]
+  const { data } = useDSOById(dsoId, issuerId)
+  // const data = listData.list[0]
   const { theme, isTablet } = useAppBreakpoints()
 
   const divider = (
@@ -44,13 +44,12 @@ export const Commitments = () => {
   )
 
   if (isLoading) {
-    return null
+    return <LoadingIndicator />
   }
 
   return (
     <>
       <PageHeader title={data?.tokenName} />
-      {/* <DSOFilter urlForReplace={IssuanceRoute.commitments} /> */}
       <Grid
         container
         justify='space-between'
