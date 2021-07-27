@@ -13,6 +13,7 @@ import { tryParseAmount } from 'state/swap/helpers'
 import { isAddress } from 'utils'
 import { setCurrency, setTransaction, typeAmount, typeReceiver, withdrawCurrency } from './actions'
 import { BigNumber, utils } from 'ethers'
+import { useTransactionAdder } from 'state/transactions/hooks'
 
 export function useWithdrawState(): AppState['withdraw'] {
   return useSelector<AppState, AppState['withdraw']>((state) => state.withdraw)
@@ -98,10 +99,13 @@ interface WithdrawProps {
   onError: () => void
 }
 export function useWithdrawCallback(
-  currencyId?: string
+  currencyId?: string,
+  currencySymbol?: string
 ): ({ id, amount, onSuccess, onError }: WithdrawProps) => Promise<void> {
   const dispatch = useDispatch<AppDispatch>()
   const router = useBurnWSecContract(currencyId)
+
+  const addTransaction = useTransactionAdder()
   return useCallback(
     async ({ id, amount, onSuccess, onError }: WithdrawProps) => {
       dispatch(withdrawCurrency.pending())
@@ -117,7 +121,14 @@ export function useWithdrawCallback(
           utils.hexlify(r.data),
           utils.hexlify(s.data)
         )
-        dispatch(setTransaction({ tx: burned.hash }))
+
+        if (!burned.hash) {
+          dispatch(withdrawCurrency.rejected({ errorMessage: t`Could not submit withdraw request` }))
+        } else {
+          addTransaction(burned, { summary: t`Withdraw ${amount} ${currencySymbol}` })
+          dispatch(setTransaction({ tx: burned.hash }))
+        }
+
         dispatch(withdrawCurrency.fulfilled())
         onSuccess()
       } catch (error) {
@@ -126,6 +137,6 @@ export function useWithdrawCallback(
         onError()
       }
     },
-    [dispatch, router]
+    [dispatch, router, addTransaction, currencySymbol]
   )
 }

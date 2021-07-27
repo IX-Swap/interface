@@ -29,7 +29,7 @@ export const WithdrawRequestForm = ({ currency, changeModal }: Props) => {
   const { onTypeAmount, onTypeReceiver, onCurrencySet } = useWithdrawActionHandlers()
   const { address, loading } = useENS(receiver)
   const error = Boolean(receiver.length > 0 && !loading && !address)
-  const withdraw = useWithdrawCallback(cid)
+  const withdraw = useWithdrawCallback(cid, currency?.symbol)
   const { parsedAmount, inputError } = useDerivedWithdrawInfo()
 
   useEffect(() => {

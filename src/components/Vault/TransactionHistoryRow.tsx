@@ -17,7 +17,7 @@ interface Props {
 export const TransactionHistoryRow = ({ row, key, currency, icon }: Props) => {
   const status = (row?.params?.status as ActionHistoryStatus) ?? ActionHistoryStatus.PENDING
   const statusText = TransactionHistoryStatusText[status]
-  const formattedDate = dayjs(row.createdAt).format('MMM D, YYYY hh:mm')
+  const formattedDate = dayjs(row.createdAt).format('MMM D, YYYY HH:mm')
   const textColor = StatusColors[status]
   return (
     <HistoryRowWraper key={`history-item-${key}`}>

@@ -13,7 +13,7 @@ interface Props {
   icon: () => React.ReactElement
 }
 
-const dateFormat = 'MMM D, YYYY hh:mm'
+const dateFormat = 'MMM D, YYYY HH:mm'
 
 export const ActionHistoryRow = ({ row, key, icon }: Props) => {
   const statusText = ActionHistoryStatusText[row?.params?.status ?? ActionHistoryStatus.PENDING]
