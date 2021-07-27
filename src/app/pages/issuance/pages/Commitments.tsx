@@ -32,7 +32,6 @@ export const Commitments = () => {
   }, [dsoId, issuerId, listData.list, replace])
 
   const { data } = useDSOById(dsoId, issuerId)
-  // const data = listData.list[0]
   const { theme, isTablet } = useAppBreakpoints()
 
   const divider = (
