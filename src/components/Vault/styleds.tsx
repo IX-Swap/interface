@@ -6,7 +6,7 @@ import Row, { RowBetween, RowCenter, RowEnd, RowFixed } from 'components/Row'
 import React from 'react'
 import styled from 'styled-components'
 import { gradientBorder, TYPE } from 'theme'
-import { ActionHistoryStatus } from './enum'
+import { ActionHistoryStatus, ActionTypes } from './enum'
 
 export const NotSubmittedWrapper = styled.div`
   background: ${({ theme }) => theme.bgG10};
@@ -148,6 +148,13 @@ export const ModalPadding = styled.div`
 export const StatusIcons = {
   [ActionHistoryStatus.PENDING]: () => <LoaderThin size={20} />,
   [ActionHistoryStatus.SETTLED]: () => <Passed />,
-  [ActionHistoryStatus.APPROVED]: () => <LoaderThin size={20} />,
+  [ActionHistoryStatus.APPROVED]: () => <Passed />,
   [ActionHistoryStatus.REJECTED]: () => <Attention />,
+}
+
+export const getStatusIcon = (action: ActionTypes, status: ActionHistoryStatus) => {
+  if (action === ActionTypes.DEPOSIT && status === ActionHistoryStatus.APPROVED) {
+    return StatusIcons[ActionHistoryStatus.PENDING]
+  }
+  return StatusIcons[status]
 }

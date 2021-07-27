@@ -5,9 +5,8 @@ import React, { useMemo } from 'react'
 import { Box } from 'rebass'
 import { useEventState } from 'state/eventLog/hooks'
 import { TYPE } from 'theme'
-import { ActionHistoryRow } from './ActionHistoryRow'
 import { ActionHistoryStatus, ActionTypes } from './enum'
-import { DateColumn, DateDesktop, HistoryRowWraper, NameAndSumColumn, StatusColumn, StatusIcons } from './styleds'
+import { DateColumn, DateDesktop, getStatusIcon, HistoryRowWraper, NameAndSumColumn, StatusColumn } from './styleds'
 import { TransactionHistoryRow } from './TransactionHistoryRow'
 
 export const HistoryHeader = ({
@@ -59,11 +58,8 @@ export const HistoryTable = ({ currency }: { currency?: Currency }) => {
         {currency &&
           eventLog.map((row) => {
             const status = row?.params?.status ?? ActionHistoryStatus.PENDING
-            const statusIcon = StatusIcons[status]
-            if (isTransaction) {
-              return <TransactionHistoryRow row={row} key={row.createdAt} currency={currency} icon={statusIcon} />
-            }
-            return <ActionHistoryRow row={row} key={row.createdAt} icon={statusIcon} />
+            const statusIcon = getStatusIcon(row?.type, status)
+            return <TransactionHistoryRow row={row} key={row.createdAt} icon={statusIcon} />
           })}
       </Column>
     </Column>

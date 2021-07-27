@@ -41,19 +41,20 @@ export const isTransaction = (action: ActionTypes) => {
 }
 export const ActionHistoryStatusText = {
   [ActionHistoryStatus.PENDING]: t`In progress...`,
-  [ActionHistoryStatus.APPROVED]: t`In progress...`,
+  [ActionHistoryStatus.APPROVED]: t`Approved`,
   [ActionHistoryStatus.SETTLED]: t`Approved`,
   [ActionHistoryStatus.REJECTED]: t`Rejected`,
 }
 export const TransactionHistoryStatusText = {
   [ActionHistoryStatus.PENDING]: t`Pending...`,
-  [ActionHistoryStatus.APPROVED]: t`Pending...`,
+  [ActionHistoryStatus.APPROVED]: t`Completed`,
   [ActionHistoryStatus.SETTLED]: t`Completed`,
   [ActionHistoryStatus.REJECTED]: t`Declined`,
 }
+
 export const StatusColors = {
   [ActionHistoryStatus.PENDING]: 'text2',
-  [ActionHistoryStatus.APPROVED]: 'text2',
+  [ActionHistoryStatus.APPROVED]: 'green1',
   [ActionHistoryStatus.SETTLED]: 'green1',
   [ActionHistoryStatus.REJECTED]: 'error',
 }
@@ -63,4 +64,20 @@ export const ActionTypeText = {
   [ActionTypes.WITHDRAW]: t`Withdraw`,
   [ActionTypes.KYC]: t`KYC`,
   [ActionTypes.ACCREDITATION]: t`Pass accreditation`,
+}
+
+export const getStatusColor = (action: ActionTypes, status: ActionHistoryStatus) => {
+  if (action === ActionTypes.DEPOSIT && status === ActionHistoryStatus.APPROVED) {
+    return StatusColors[ActionHistoryStatus.PENDING]
+  }
+  return StatusColors[status]
+}
+export const getActionStatusText = (action: ActionTypes, status: ActionHistoryStatus) => {
+  if (action === ActionTypes.DEPOSIT && status === ActionHistoryStatus.APPROVED) {
+    return TransactionHistoryStatusText[ActionHistoryStatus.PENDING]
+  }
+  if (isAction(action)) {
+    return ActionHistoryStatusText[status]
+  }
+  return TransactionHistoryStatusText[status]
 }

@@ -5,7 +5,7 @@ import React from 'react'
 import { Box } from 'rebass'
 import { LogItem } from 'state/eventLog/actions'
 import { TYPE } from 'theme'
-import { ActionHistoryStatus, ActionTypeText, StatusColors, TransactionHistoryStatusText } from './enum'
+import { ActionHistoryStatus, ActionTypeText, getActionStatusText, getStatusColor } from './enum'
 import { DateColumn, DateDesktop, HistoryRowWraper, IconColumn, NameAndSumColumn, StatusColumn } from './styleds'
 
 interface Props {
@@ -14,16 +14,17 @@ interface Props {
   currency?: Currency
   icon: () => React.ReactElement
 }
-export const TransactionHistoryRow = ({ row, key, currency, icon }: Props) => {
+export const TransactionHistoryRow = ({ row, key, icon }: Props) => {
   const status = (row?.params?.status as ActionHistoryStatus) ?? ActionHistoryStatus.PENDING
-  const statusText = TransactionHistoryStatusText[status]
+  const statusText = getActionStatusText(row.type, status)
   const formattedDate = dayjs(row.createdAt).format('MMM D, YYYY HH:mm')
-  const textColor = StatusColors[status]
+  const textColor = getStatusColor(row.type, status)
+
   return (
     <HistoryRowWraper key={`history-item-${key}`}>
       <NameAndSumColumn>
         <TYPE.subHeader1 color={'text1'}>{ActionTypeText[row.type]}</TYPE.subHeader1>
-        <TYPE.subHeader1 color={'text2'}>{row?.params?.amount}</TYPE.subHeader1>{' '}
+        {row?.params?.amount && <TYPE.subHeader1 color={'text2'}>{row?.params?.amount}</TYPE.subHeader1>}
       </NameAndSumColumn>
       <StatusColumn>
         <IconColumn>
