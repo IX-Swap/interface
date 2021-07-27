@@ -159,7 +159,8 @@ export const issuanceQueryKeys = {
 export const virtualAccountQueryKeys = {
   listAssigned: 'assigned-virtual-accounts',
   listUnassigned: 'unassigned-virtual-accounts',
-  getByUserId: 'virtual-account'
+  getByUserId: 'virtual-account',
+  paymentMethod: 'payment-method'
 }
 
 export const exchange = {
