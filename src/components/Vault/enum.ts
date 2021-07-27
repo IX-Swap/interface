@@ -26,6 +26,13 @@ export enum ActionTypes {
   KYC = 'kyc',
   ACCREDITATION = 'accreditation',
 }
+export const filterTabs = [ActionTypes.WITHDRAW, ActionTypes.DEPOSIT, ActionTypes.ACCREDITATION]
+export const ActionTypeTextHeader: { [key in ActionTypes]: string } = {
+  [ActionTypes.DEPOSIT]: t`Deposit`,
+  [ActionTypes.WITHDRAW]: t`Withdraw`,
+  [ActionTypes.KYC]: t`KYC`,
+  [ActionTypes.ACCREDITATION]: t`Accreditation`,
+}
 export const isAction = (action: ActionTypes) => {
   return [ActionTypes.KYC, ActionTypes.ACCREDITATION].includes(action)
 }

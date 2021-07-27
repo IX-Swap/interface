@@ -21,14 +21,21 @@ export interface LogItem {
 export const setEventLog = createAction<{ eventLog: Array<LogItem> }>('eventLog/setLog')
 export const setFilter = createAction<{ filter: ActionTypes }>('eventLog/setFilter')
 export const setPage = createAction<{ page: number }>('eventLog/setPage')
+export const setTokenId = createAction<{ tokenId: number }>('eventLog/setTokenId')
+export const setMultiFilters =
+  createAction<{ tokenId: number; page: number; filter: ActionTypes }>('eventLog/setMultiFilters')
 export const resetPage = createAction<void>('eventLog/resetPage')
+
 export const setPaginationDetails = createAction<{ paginationDetails: PaginationDetails }>(
   'eventLog/setPaginationDetails'
 )
 
 export const getLog: Readonly<{
   pending: ActionCreatorWithoutPayload
-  fulfilled: ActionCreatorWithPayload<{ response: PaginateResponse<LogItem> }>
+  fulfilled: ActionCreatorWithPayload<{
+    response: PaginateResponse<LogItem>
+    params: { page?: number; filter?: ActionTypes; tokenId?: number | null }
+  }>
   rejected: ActionCreatorWithPayload<{ errorMessage: string }>
 }> = {
   pending: createAction('eventLog/getLog/pending'),
