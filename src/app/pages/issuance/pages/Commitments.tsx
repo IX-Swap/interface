@@ -2,30 +2,38 @@ import React, { useEffect, useState } from 'react'
 import { Button, Card, Grid } from '@material-ui/core'
 import { CountdownTimer } from '../components/CountdownTimer/CountdownTimer'
 import { AmountRaised } from '../components/IssuanceLanding/AmountRaised'
-import { useDSOById } from 'app/pages/invest/hooks/useDSOById'
 import { useAppBreakpoints } from 'hooks/useAppBreakpoints'
-import { useParams } from 'react-router-dom'
+import { VSpacer } from 'components/VSpacer'
+import { useHistory, useParams } from 'react-router-dom'
 import { TargetFundraise } from 'app/pages/issuance/components/IssuanceLanding/TargetFundraise'
 import { generatePath } from 'react-router'
-import { history } from 'config/history'
 import { PageHeader } from 'app/pages/issuance/components/Commitments/PageHeader'
 import { InvestorCommitmentTable } from 'app/pages/issuance/components/Commitments/InvestorCommitmentTable'
-import { VSpacer } from 'components/VSpacer'
+import { useDSOsByUserId } from 'app/pages/issuance/hooks/useDSOsByUserId'
+import { isValidDSOId } from 'helpers/isValidDSOId'
+import { IssuanceRoute } from 'app/pages/issuance/router/config'
+import { LoadingIndicator } from 'app/components/LoadingIndicator/LoadingIndicator'
+import { useDSOById } from 'app/pages/invest/hooks/useDSOById'
 import { getEndDate } from 'helpers/countdownTimer'
 import { CloseDealDialog } from 'app/pages/issuance/components/Commitments/CloseDealDialog/CloseDealDialog'
 
 export const Commitments = () => {
-  // TODO Remove this after complete backend api endpoints
-  useEffect(() => {
-    history.replace(
-      generatePath(
-        '/app/issuance/commitments/5f769b4caf160a120953a3ca/5fd772bcabc2557b8798de5f'
-      )
-    )
-  }, [])
-
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false)
+  const { data: listData, isLoading } = useDSOsByUserId()
   const { dsoId, issuerId } = useParams<{ dsoId: string; issuerId: string }>()
+  const { replace } = useHistory()
+  // TODO Do refactoring after complete design with DSO Select
+  useEffect(() => {
+    if (!isValidDSOId(dsoId) && listData.list.length > 0) {
+      replace(
+        generatePath(IssuanceRoute.commitments, {
+          dsoId: listData.list[0]._id,
+          issuerId: listData.list[0].user
+        })
+      )
+    }
+  }, [dsoId, issuerId, listData.list, replace])
+
   const { data } = useDSOById(dsoId, issuerId)
   const { theme, isTablet, isMobile } = useAppBreakpoints()
   const isCloseDealTimerCompleted =
@@ -33,6 +41,10 @@ export const Commitments = () => {
       ? // @ts-expect-error
         new Date(getEndDate(data)) <= new Date()
       : false
+
+  if (isLoading) {
+    return <LoadingIndicator />
+  }
 
   return (
     <>
