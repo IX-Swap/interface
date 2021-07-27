@@ -40,3 +40,12 @@ package-lock.json
 cypress/videos
 cypress/screenshots
 cypress/fixtures/example.json
+
+# terraform
+.terraform
+*.tfstate*
+# generated dynamically by terraform
+terraform/containers.json
+
+# docker
+./Dockerfile
