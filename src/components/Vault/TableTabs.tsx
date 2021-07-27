@@ -13,11 +13,7 @@ export const TableTabs = () => {
     <AutoColumn style={{ paddingBottom: 0 }}>
       <ToggleWrapper>
         {filterTabs.map((option) => (
-          <ToggleOption
-            key={option}
-            onClick={() => getEvents({ filter: option, page: 1, tokenId })}
-            active={filter === option}
-          >
+          <ToggleOption key={option} onClick={() => getEvents({ filter: option, tokenId })} active={filter === option}>
             <Trans>{ActionTypeTextHeader[option]}</Trans>
             <Border active={filter === option} />
           </ToggleOption>

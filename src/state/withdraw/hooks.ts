@@ -14,6 +14,8 @@ import { isAddress } from 'utils'
 import { setCurrency, setTransaction, typeAmount, typeReceiver, withdrawCurrency } from './actions'
 import { BigNumber, utils } from 'ethers'
 import { useTransactionAdder } from 'state/transactions/hooks'
+import { useEventState, useGetEventCallback } from 'state/eventLog/hooks'
+import { ActionTypes } from 'components/Vault/enum'
 
 export function useWithdrawState(): AppState['withdraw'] {
   return useSelector<AppState, AppState['withdraw']>((state) => state.withdraw)
@@ -104,7 +106,8 @@ export function useWithdrawCallback(
 ): ({ id, amount, onSuccess, onError }: WithdrawProps) => Promise<void> {
   const dispatch = useDispatch<AppDispatch>()
   const router = useBurnWSecContract(currencyId)
-
+  const getEvents = useGetEventCallback()
+  const { tokenId } = useEventState()
   const addTransaction = useTransactionAdder()
   return useCallback(
     async ({ id, amount, onSuccess, onError }: WithdrawProps) => {
@@ -122,6 +125,7 @@ export function useWithdrawCallback(
           utils.hexlify(s.data)
         )
 
+        getEvents({ tokenId, filter: ActionTypes.WITHDRAW })
         if (!burned.hash) {
           dispatch(withdrawCurrency.rejected({ errorMessage: t`Could not submit withdraw request` }))
         } else {
@@ -137,6 +141,6 @@ export function useWithdrawCallback(
         onError()
       }
     },
-    [dispatch, router, addTransaction, currencySymbol]
+    [dispatch, router, addTransaction, currencySymbol, tokenId, getEvents]
   )
 }

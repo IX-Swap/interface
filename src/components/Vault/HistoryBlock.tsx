@@ -24,7 +24,7 @@ export const HistoryBlock = ({ currency }: Props) => {
   const getEvents = useGetEventCallback()
   const theme = useTheme()
   useEffect(() => {
-    getEvents({ tokenId, page: 1, filter: ActionTypes.DEPOSIT })
+    getEvents({ tokenId, filter: ActionTypes.DEPOSIT })
   }, [getEvents, tokenId])
   return (
     <HistoryWrapper>

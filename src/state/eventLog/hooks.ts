@@ -36,8 +36,8 @@ export const getEventLog = async ({
 
 export function useGetEventCallback(): ({
   tokenId,
-  page,
   filter,
+  page,
 }: {
   tokenId?: number | null
   page?: number
@@ -45,7 +45,7 @@ export function useGetEventCallback(): ({
 }) => Promise<void> {
   const dispatch = useDispatch<AppDispatch>()
   return useCallback(
-    async ({ tokenId, filter, page }) => {
+    async ({ tokenId, filter, page = 1 }) => {
       dispatch(getLog.pending())
       try {
         const params = { page, tokenId, filter }
