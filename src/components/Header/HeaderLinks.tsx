@@ -84,9 +84,9 @@ export const HeaderLinks = () => {
         <Trans>Pool</Trans>
       </StyledNavLink>
 
-      {/* <StyledNavLink id={`stake-nav-link`} to={routes.securityTokens()}>
+      <StyledNavLink id={`stake-nav-link`} to={routes.securityTokens()}>
         <Trans>Security tokens</Trans>
-      </StyledNavLink> */}
+      </StyledNavLink>
       <SettingsTab placeholderSlippage={allowedSlippage} />
     </HeaderLinksWrap>
   )
