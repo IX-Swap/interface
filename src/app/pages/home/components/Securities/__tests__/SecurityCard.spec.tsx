@@ -38,10 +38,10 @@ export const sampleSecurity: Security = {
   priceChange24Hours: 6,
   priceChangeYTD: 10,
   protocol: 'ERC-20',
-  reserved: '0',
+  reserved: '100',
   ticker: 'REALTOKEN-S-3432-HARDING-ST-DETROIT-MI',
   tokenSupply: '1300',
-  tokensOffered: '1300',
+  tokensOffered: '1200',
   website: 'https://realt.co/product/3432-harding-street-detroit-mi-48214/'
 }
 

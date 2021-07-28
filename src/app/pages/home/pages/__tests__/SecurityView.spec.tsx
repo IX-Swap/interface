@@ -22,6 +22,7 @@ describe('SecurityView', () => {
   })
 
   it('renders null when data is undefined', () => {
+    history.push('/app?ticker=REALTOKEN-S-3432-HARDING-ST-DETROIT-MI')
     const objResponse = generateQueryResult({ data: undefined })
 
     jest
