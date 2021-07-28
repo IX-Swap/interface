@@ -1,8 +1,9 @@
-import React, { KeyboardEvent, ReactNode, RefObject, useCallback, useEffect } from 'react'
 import { Currency, Token } from '@ixswap1/sdk-core'
 import { t, Trans } from '@lingui/macro'
 import useTheme from 'hooks/useTheme'
+import React, { KeyboardEvent, ReactNode, RefObject, useCallback, useEffect, useRef } from 'react'
 import AutoSizer from 'react-virtualized-auto-sizer'
+import { VariableSizeList } from 'react-window'
 import { Box } from 'rebass'
 import styled from 'styled-components/macro'
 import { ReactComponent as Edit } from '../../assets/images/edit-circle.svg'
@@ -12,7 +13,7 @@ import Row, { RowBetween, RowFixed } from '../Row'
 import CommonBases from './CommonBases'
 import CurrencyList from './CurrencyList'
 import ImportRow from './ImportRow'
-import { ModalContentWrapper, PaddedColumn, SearchInput } from './styleds'
+import { ModalContentWrapper, PaddedColumn40, SearchInput } from './styleds'
 import { useCurrencySearch } from './useCurrencySearch'
 
 const Footer = styled.div`
@@ -29,7 +30,6 @@ const Title = styled.span`
   font-size: 18px;
   line-height: 20px;
   text-align: center;
-  text-transform: uppercase;
   color: ${({ theme }) => theme.text1};
 `
 
@@ -59,6 +59,7 @@ export function CurrencySearch({
   title,
 }: CurrencySearchProps) {
   const theme = useTheme()
+  const listRef = useRef<VariableSizeList>()
 
   const {
     searchQuery,
@@ -73,8 +74,7 @@ export function CurrencySearch({
     filteredSortedTokens,
     filteredInactiveTokens,
     filteredSortedTokensWithETH,
-    fixedList,
-  } = useCurrencySearch()
+  } = useCurrencySearch({ listRef })
 
   useEffect(() => {
     if (isOpen) setSearchQuery('')
@@ -108,10 +108,10 @@ export function CurrencySearch({
   )
 
   return (
-    <ModalContentWrapper>
-      <PaddedColumn gap="16px">
+    <ModalContentWrapper style={{ borderRadius: '20px' }}>
+      <PaddedColumn40 gap="16px">
         <RowBetween>
-          <Title>{title ?? <Trans>Select a token</Trans>}</Title>
+          <Title>{title ?? <Trans>Select a token to swap</Trans>}</Title>
           <CloseIcon onClick={onDismiss} />
         </RowBetween>
         <Row>
@@ -129,7 +129,7 @@ export function CurrencySearch({
         {showCommonBases && (
           <CommonBases chainId={chainId} onSelect={handleCurrencySelect} selectedCurrency={selectedCurrency} />
         )}
-      </PaddedColumn>
+      </PaddedColumn40>
       {searchToken && !searchTokenIsAdded ? (
         <Column style={{ padding: '20px 0', height: '100%' }}>
           <ImportRow token={searchToken} showImportView={showImportView} setImportToken={setImportToken} />
@@ -145,7 +145,7 @@ export function CurrencySearch({
                 onCurrencySelect={handleCurrencySelect}
                 otherCurrency={otherSelectedCurrency}
                 selectedCurrency={selectedCurrency}
-                fixedListRef={fixedList}
+                listRef={listRef}
                 showImportView={showImportView}
                 setImportToken={setImportToken}
               />

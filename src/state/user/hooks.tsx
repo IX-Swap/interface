@@ -23,6 +23,8 @@ import {
   updateUserSlippageTolerance,
   updateUserLocale,
   fetchUserSecTokenList,
+  passAccreditation,
+  setUsesSecTokens,
 } from './actions'
 import { SupportedLocale } from 'constants/locales'
 import apiService from 'services/apiService'
@@ -30,6 +32,9 @@ import { tokens } from 'services/apiUrls'
 import { SecToken } from 'types/secToken'
 import { listToSecTokenMap, SecTokenAddressMap, useSecTokensFromMap } from 'state/secTokens/hooks'
 import { WrappedTokenInfo } from 'state/lists/wrappedTokenInfo'
+import { useAuthState, useSaveAuthorization } from 'state/auth/hooks'
+import { useFetchToken } from 'hooks/useFetchToken'
+import { shouldRenewToken } from 'utils/time'
 
 function serializeToken(token: Token): SerializedToken {
   return {
@@ -366,4 +371,36 @@ export function useFetchUserSecTokenListCallback(): (sendDispatch?: boolean) => 
     },
     [dispatch]
   )
+}
+
+export const postPassAccreditation = async ({ tokenId }: { tokenId: number }) => {
+  const result = await apiService.post(tokens.accreditation(tokenId), {})
+  return result.data
+}
+
+export function usePassAccreditation({ tokenId }: { tokenId: number }): () => Promise<void> {
+  const dispatch = useDispatch<AppDispatch>()
+  const { token, expiresAt } = useAuthState()
+  const { saveAuthorization } = useSaveAuthorization()
+  const { fetchToken } = useFetchToken()
+  const fetchTokens = useFetchUserSecTokenListCallback()
+  // note: prevent dispatch if using for list search or unsupported list
+  return useCallback(async () => {
+    dispatch(passAccreditation.pending())
+    try {
+      if (!token || shouldRenewToken(expiresAt ?? 0)) {
+        const authData = await fetchToken()
+        if (authData) {
+          saveAuthorization(authData)
+        }
+      }
+      await postPassAccreditation({ tokenId })
+      dispatch(setUsesSecTokens({ usesTokens: true }))
+      await fetchTokens()
+      dispatch(passAccreditation.fulfilled())
+    } catch (error) {
+      console.debug(`Failed to pass accreditation`, error)
+      dispatch(passAccreditation.rejected({ errorMessage: error.message }))
+    }
+  }, [dispatch, tokenId, token, expiresAt, fetchToken, saveAuthorization, fetchTokens])
 }

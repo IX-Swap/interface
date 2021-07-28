@@ -1,24 +1,20 @@
 import { Currency } from '@ixswap1/sdk-core'
-import { Trans } from '@lingui/macro'
-import { ChevronElement } from 'components/ChevronElement'
+import useTheme from 'hooks/useTheme'
 import { useActiveWeb3React } from 'hooks/web3'
 import { darken } from 'polished'
-import React, { useState } from 'react'
+import React, { useMemo } from 'react'
 import { Link } from 'react-router-dom'
 import { Box } from 'rebass'
 import { useCurrencyBalance } from 'state/wallet/hooks'
-import styled from 'styled-components/macro'
+import styled, { CSSProperties } from 'styled-components/macro'
+import { SemiTransparent, TYPE } from 'theme'
 import { formatCurrencyAmount } from 'utils/formatCurrencyAmount'
 import { routes } from 'utils/routes'
-import { shortenAddress } from '../../utils'
-import { ButtonGradient } from '../Button'
 import Card, { LightCard } from '../Card'
-import { AutoColumn } from '../Column'
-import { RowBetween, RowCenter } from '../Row'
-import { TextRow } from '../TextRow/TextRow'
+import Row, { RowBetween, RowStart } from '../Row'
 import { CurrencyHeader } from './CurrencyHeader'
 import { Status } from './Status'
-import { getStoStatus } from './STOStatus'
+import { getStoStatus, STOStatus } from './STOStatus'
 
 export const FixedHeightRow = styled(RowBetween)`
   height: 24px;
@@ -35,40 +31,44 @@ const StyledPositionCard = styled(LightCard)`
   background: ${({ theme }) => theme.bgG4};
   position: relative;
   overflow: hidden;
-  padding: 2rem 2rem 1.5rem 2rem;
-  margin-bottom: 0.5rem;
+  padding: 18px 20px 18px 22px;
+  text-decoration: none;
+  ${({ theme }) => theme.mediaWidth.upToExtraSmall`
+      min-height: 85px
+  `};
 `
 
-export default function SecurityCard({ currency }: { currency: Currency }) {
-  const [showMore, setShowMore] = useState(false)
+export default function SecurityCard({ currency, style }: { currency: Currency; style?: CSSProperties }) {
+  const theme = useTheme()
   const { account } = useActiveWeb3React()
   const balance = useCurrencyBalance(account ?? undefined, currency ?? undefined)
+  const status = useMemo(() => {
+    const statusText = (currency as any).tokenInfo?.tokenUser?.status
+    return statusText ? getStoStatus(statusText) : ''
+  }, [currency])
   // TODO: adjust status when you will have the data
   return (
-    <StyledPositionCard>
-      <AutoColumn gap="12px">
-        <FixedHeightRow>
-          <CurrencyHeader currency={currency} />
-          <Box style={{ gap: '6px', display: 'flex', width: 'fit-content' }}>
-            <Status status={getStoStatus((currency as any).tokenInfo.status)} />
-            <ChevronElement showMore={showMore} setShowMore={setShowMore} />
-          </Box>
-        </FixedHeightRow>
-
-        {showMore && (
-          <AutoColumn gap="8px">
-            <TextRow textLeft={<Trans>Token ID</Trans>} textRight={shortenAddress((currency as any).address)} />
-            <TextRow textLeft={<Trans>Deposit address wallet</Trans>} />
-            <TextRow textLeft={<Trans>Amount</Trans>} textRight={formatCurrencyAmount(balance, 4)} />
-            <TextRow textLeft={<Trans>Deadline</Trans>} />
-            <RowCenter marginTop="10px">
-              <ButtonGradient as={Link} to={routes.securityTokens(currency)} width={'50%'} data-testid="token-info">
-                <Trans>Info</Trans>
-              </ButtonGradient>
-            </RowCenter>
-          </AutoColumn>
-        )}
-      </AutoColumn>
-    </StyledPositionCard>
+    <Row style={style}>
+      <Row style={{ paddingBottom: '10px' }}>
+        <StyledPositionCard as={Link} to={routes.securityTokens(currency)} data-testid="custodian-sec-token-info">
+          <RowBetween style={{ flexWrap: 'wrap' }}>
+            <RowStart style={{ width: 'fit-content' }}>
+              <CurrencyHeader currency={currency} />
+              <SemiTransparent>
+                <TYPE.body4 style={{ marginLeft: '12px', fontWeight: 'normal' }} color={theme.text2}>
+                  {currency.name}
+                </TYPE.body4>
+              </SemiTransparent>
+            </RowStart>
+            {status && (
+              <Box style={{ width: 'fit-content' }}>
+                {status === STOStatus.PASSED && <TYPE.body4>{formatCurrencyAmount(balance, 10)}</TYPE.body4>}
+                {status !== STOStatus.PASSED && <Status status={status} />}
+              </Box>
+            )}
+          </RowBetween>
+        </StyledPositionCard>
+      </Row>
+    </Row>
   )
 }

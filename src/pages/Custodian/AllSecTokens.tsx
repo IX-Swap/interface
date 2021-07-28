@@ -1,19 +1,23 @@
 import { t, Trans } from '@lingui/macro'
 import { TopStraightBackgroundWrapper } from 'components/BottomHalfWrapper'
 import Column from 'components/Column'
-import { RowCenter, RowStart } from 'components/Row'
+import { RowCenter } from 'components/Row'
 import { PaddedColumn, SearchInput } from 'components/SearchModal/styleds'
 import { ListType, useCurrencySearch } from 'components/SearchModal/useCurrencySearch'
 import useTheme from 'hooks/useTheme'
-import React, { RefObject } from 'react'
+import React, { RefObject, useRef } from 'react'
 import AutoSizer from 'react-virtualized-auto-sizer'
+import { FixedSizeList } from 'react-window'
 import { Box } from 'rebass'
 import { TYPE } from 'theme'
 import SecTokensList from './SecTokensList'
 
 export const AllSecTokens = () => {
-  const { searchQuery, inputRef, handleInput, filteredSortedTokens, filteredInactiveTokens, fixedList } =
-    useCurrencySearch(ListType.SEC_TOKENS)
+  const listRef = useRef<FixedSizeList>()
+  const { searchQuery, inputRef, handleInput, filteredSortedTokens, filteredInactiveTokens } = useCurrencySearch({
+    listRef,
+    list: ListType.OTHER,
+  })
   const theme = useTheme()
   return (
     <>
@@ -34,17 +38,10 @@ export const AllSecTokens = () => {
       </PaddedColumn>
 
       <TopStraightBackgroundWrapper>
-        <RowStart style={{ paddingLeft: '1.5rem', paddingRight: '1rem' }}>
-          <TYPE.subHeader1 color={theme.text2}>
-            <Trans>{filteredSortedTokens?.length} Security tokens</Trans>
-          </TYPE.subHeader1>
-        </RowStart>
         {filteredSortedTokens?.length > 0 || filteredInactiveTokens?.length > 0 ? (
           <div style={{ flex: '1 1 auto', height: '400px' }}>
             <AutoSizer disableWidth>
-              {({ height }) => (
-                <SecTokensList height={height} currencies={filteredSortedTokens} fixedListRef={fixedList} />
-              )}
+              {({ height }) => <SecTokensList height={height} currencies={filteredSortedTokens} listRef={listRef} />}
             </AutoSizer>
           </div>
         ) : (

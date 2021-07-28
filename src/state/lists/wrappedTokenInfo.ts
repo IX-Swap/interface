@@ -37,9 +37,6 @@ export class WrappedTokenInfo implements Token {
   }
 
   public get chainId(): number {
-    if (this.isSecToken) {
-      return 4
-    }
     return this.tokenInfo.chainId
   }
 

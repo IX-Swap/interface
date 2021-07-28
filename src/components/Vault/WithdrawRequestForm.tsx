@@ -6,23 +6,31 @@ import Row from 'components/Row'
 import useENS from 'hooks/useENS'
 import { useActiveWeb3React } from 'hooks/web3'
 import React, { useEffect } from 'react'
-import { useDerivedWithdrawInfo, useWithdrawActionHandlers, useWithdrawState } from 'state/withdraw/hooks'
+import { useUserSecTokens } from 'state/user/hooks'
+import {
+  useDerivedWithdrawInfo,
+  useWithdrawActionHandlers,
+  useWithdrawCallback,
+  useWithdrawState,
+} from 'state/withdraw/hooks'
 import { TYPE } from 'theme'
 import { currencyId } from 'utils/currencyId'
 import { AddressInput } from '../AddressInputPanel/AddressInput'
 import { AmountInput } from './AmountInput'
-
+import { WithdrawModalView } from './WithdrawPopup'
 interface Props {
   currency?: Currency
-  changeModal: () => void
+  changeModal: (param: WithdrawModalView) => void
 }
 export const WithdrawRequestForm = ({ currency, changeModal }: Props) => {
   const { account } = useActiveWeb3React()
   const { amount, receiver, currencyId: cid } = useWithdrawState()
-  const { inputError } = useDerivedWithdrawInfo()
+  const { secTokens } = useUserSecTokens()
   const { onTypeAmount, onTypeReceiver, onCurrencySet } = useWithdrawActionHandlers()
   const { address, loading } = useENS(receiver)
   const error = Boolean(receiver.length > 0 && !loading && !address)
+  const withdraw = useWithdrawCallback(cid, currency?.symbol)
+  const { parsedAmount, inputError } = useDerivedWithdrawInfo()
 
   useEffect(() => {
     if (account) {
@@ -30,6 +38,18 @@ export const WithdrawRequestForm = ({ currency, changeModal }: Props) => {
     }
   }, [account, onTypeReceiver])
 
+  const onClick = () => {
+    const tokenId = (secTokens[cid ?? ''] as any)?.tokenInfo?.id
+    if (tokenId && !error && parsedAmount && !inputError) {
+      withdraw({ id: tokenId, amount: Number(parsedAmount?.toSignificant(5)), onSuccess, onError })
+    }
+  }
+  const onSuccess = () => {
+    changeModal(WithdrawModalView.SUCCESS)
+  }
+  const onError = () => {
+    changeModal(WithdrawModalView.ERROR)
+  }
   useEffect(() => {
     const id = currencyId(currency)
     onCurrencySet(id)
@@ -38,7 +58,7 @@ export const WithdrawRequestForm = ({ currency, changeModal }: Props) => {
   return (
     <div style={{ position: 'relative' }}>
       <Column style={{ gap: '25px', marginTop: '18px' }}>
-        <Row style={{ marginTop: '18px' }}>
+        {/* <Row style={{ marginTop: '18px' }}>
           <TYPE.description3>
             <b>
               <Trans>Wrap to Sec info:</Trans>
@@ -50,7 +70,7 @@ export const WithdrawRequestForm = ({ currency, changeModal }: Props) => {
               porta dapibus. Donec sollicitudin molestie malesuada
             </Trans>
           </TYPE.description3>
-        </Row>
+        </Row> */}
         <Column style={{ gap: '11px' }}>
           <Row>
             <TYPE.body1>
@@ -70,7 +90,7 @@ export const WithdrawRequestForm = ({ currency, changeModal }: Props) => {
       </Column>
 
       <Row style={{ marginTop: '37px', marginBottom: '24px' }}>
-        <ButtonIXSWide style={{ textTransform: 'unset' }} disabled={!!inputError} onClick={changeModal}>
+        <ButtonIXSWide style={{ textTransform: 'unset' }} disabled={!!inputError} onClick={onClick}>
           {inputError ?? <Trans>Send</Trans>}
         </ButtonIXSWide>
       </Row>

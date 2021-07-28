@@ -1,13 +1,12 @@
 import { ReactComponent as Attention } from 'assets/images/attention.svg'
-import { ReactComponent as Clock } from 'assets/images/clock.svg'
-import { ReactComponent as Passed } from 'assets/images/passed.svg'
+import { ReactComponent as Passed } from 'assets/images/check-success.svg'
 import Column from 'components/Column'
-import { RowBetween, RowCenter, RowEnd, RowFixed } from 'components/Row'
+import { LoaderThin } from 'components/Loader/LoaderThin'
+import Row, { RowBetween, RowCenter, RowEnd, RowFixed } from 'components/Row'
 import React from 'react'
 import styled from 'styled-components'
 import { gradientBorder, TYPE } from 'theme'
-import { hexToRGBA } from 'utils/themeHelper'
-import { ActionHistoryStatus } from './enum'
+import { ActionHistoryStatus, ActionTypes } from './enum'
 
 export const NotSubmittedWrapper = styled.div`
   background: ${({ theme }) => theme.bgG10};
@@ -52,9 +51,7 @@ export const StatusTitle = styled(TYPE.titleSmall)`
 
 export const HistoryWrapper = styled.div``
 
-export const RowAndDetailsWrapper = styled.div<{ showMore: boolean }>`
-  border-radius: 8px;
-  padding: 10px;
+export const RowAndDetailsWrapper = styled.div`
   gap: 16px;
   display: flex;
   flex-direction: column;
@@ -62,13 +59,22 @@ export const RowAndDetailsWrapper = styled.div<{ showMore: boolean }>`
   position: relative;
   height: 100%;
   width: 100%;
-  background: ${({ theme, showMore }) => (showMore ? hexToRGBA(theme.bg10, 0.05) : 'transparent')};
+  background: transparent;
 `
 export const HistoryRowWraper = styled(RowBetween)`
+  display: flex;
+  gap: 15px;
+  cursor: pointer;
+  :hover {
+    border-radius: 10px;
+    padding: 1px;
+    background: ${({ theme }) => theme.bgG2};
+  }
+`
+export const TransactionRowWrapper = styled.div`
   height: fit-content;
   align-items: center;
 `
-
 export const HistoryDetailsWrapper = styled(RowEnd)`
   height: 50px;
   justify-content: center;
@@ -94,18 +100,14 @@ export const SumColumn = styled(Column)`
   width: 160px;
   margin-right: 0;
 `
-export const StatusColumn = styled(Column)`
-  width: 96px;
+export const StatusColumn = styled(Row)`
+  width: 120px;
   ${({ theme }) => theme.mediaWidth.upToMedium`
     display: none;
   `};
 `
-export const IconColumn = styled(Column)`
+export const IconColumn = styled.span`
   width: fit-content;
-  display: none;
-  ${({ theme }) => theme.mediaWidth.upToMedium`
-    display: block;
-  `};
 `
 export const DateColumn = styled(RowFixed)`
   width: fit-content;
@@ -129,13 +131,7 @@ export const Break = styled(Column)`
   padding-bottom: 32px;
   padding-right: 13px;
 `
-export const TransparentWrapper = styled.div`
-  padding-right: 13px;
-  padding-bottom: 5px;
-  padding-top: 20px;
-  display: flex;
-  align-items: center;
-`
+
 export const AccreditationButtonRow = styled.div`
   display: flex;
   margin-top: 42px;
@@ -156,7 +152,15 @@ export const ModalPadding = styled.div`
 
 /* eslint-disable react/display-name */
 export const StatusIcons = {
-  [ActionHistoryStatus.PENDING]: () => <Clock />,
+  [ActionHistoryStatus.PENDING]: () => <LoaderThin size={20} />,
+  [ActionHistoryStatus.SETTLED]: () => <Passed />,
   [ActionHistoryStatus.APPROVED]: () => <Passed />,
   [ActionHistoryStatus.REJECTED]: () => <Attention />,
+}
+
+export const getStatusIcon = (action: ActionTypes, status: ActionHistoryStatus) => {
+  if (action === ActionTypes.DEPOSIT && status === ActionHistoryStatus.APPROVED) {
+    return StatusIcons[ActionHistoryStatus.PENDING]
+  }
+  return StatusIcons[status]
 }

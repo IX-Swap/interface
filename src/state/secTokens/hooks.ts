@@ -27,6 +27,13 @@ export const getSecTokensList = async () => {
   return result.data
 }
 
+export const useSecTokenId = ({ currencyId }: { currencyId: string }) => {
+  const { secTokens } = useSecTokens()
+  const token = secTokens[currencyId]
+
+  return (token as any)?.tokenInfo?.id
+}
+
 const listCache: WeakMap<SecToken[], SecTokenAddressMap> | null =
   typeof WeakMap !== 'undefined' ? new WeakMap<SecToken[], SecTokenAddressMap>() : null
 
