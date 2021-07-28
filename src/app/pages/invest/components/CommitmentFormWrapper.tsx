@@ -54,19 +54,22 @@ export const CommitmentFormWrapper = () => {
                 symbol={data.currency.symbol}
                 network={data.network?._id}
               />
-              <VSpacer size='small' />
-              <Grid container spacing={2}>
+              <VSpacer size='medium' />
+              <Grid container spacing={2} justify='center'>
                 <Grid item xs={4}>
                   <CommitmentFormCancelButton />
                 </Grid>
-                <Grid item xs={4}>
-                  <CommitmentFormCommitButton
-                    assetId={data.currency._id}
-                    minInvestment={data.minimumInvestment}
-                    dsoId={params.dsoId}
-                    currency={data.currency._id}
-                  />
-                </Grid>
+                {data.capitalStructure === 'Fund' && (
+                  <Grid item xs={4}>
+                    <CommitmentFormCommitButton
+                      assetId={data.currency._id}
+                      minInvestment={data.minimumInvestment}
+                      dsoId={params.dsoId}
+                      currency={data.currency._id}
+                    />
+                  </Grid>
+                )}
+
                 <Grid item xs={4}>
                   <CommitmentFormSubmitButton
                     assetId={data.currency._id}
