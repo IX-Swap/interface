@@ -2,15 +2,14 @@
 import { PlaywrightTestConfig } from '@playwright/test'
 const config: PlaywrightTestConfig = {
   // Put any shared options on the top level.
-
-  use: {
-    headless: false,
-    viewport: { width: 1720, height: 880 },
-    // Configure the browser to use.
-    browserName: 'chromium',
-    screenshot: 'only-on-failure',
-    video: 'retry-with-video',
-  },
+  // use: {
+  //   headless: false,
+  //   viewport: { width: 1720, height: 880 },
+  //   ignoreHTTPSErrors: true,
+  //   browserName: 'chromium',
+  //   screenshot: 'only-on-failure',
+  //   video: 'retry-with-video',
+  // },
 
   projects: [
     {
@@ -20,22 +19,12 @@ const config: PlaywrightTestConfig = {
       use: {
         headless: false,
         viewport: { width: 1720, height: 880 },
-        // Configure the browser to use.
+        ignoreHTTPSErrors: true,
         browserName: 'chromium',
         screenshot: 'only-on-failure',
         video: 'retry-with-video',
       },
     },
-
-    // {
-    //   name: 'Firefox',
-    //   use: { browserName: 'firefox' },
-    // },
-
-    // {
-    //   name: 'WebKit',
-    //   use: { browserName: 'webkit' },
-    // },
   ],
 }
 export default config

@@ -1,8 +1,10 @@
-import { click, typeText, makeScreenOnError, navigate, waitNewPage } from '../helpers/helpers.js'
+import { click, typeText, waitForText, navigate, waitNewPage } from '../helpers/helpers.js'
 import { expect } from '@playwright/test'
+import { amounts } from '../helpers/text-helpers'
 
 import { pool, swap } from '../selectors/ixswap'
 import { auth } from '../selectors/metamask'
+import { Metamask } from '../page-objects/metamask-objects'
 
 import { metamask, ixswap } from '../helpers/credentials'
 
@@ -13,27 +15,19 @@ class SwapIX {
   }
 
   addToCurrentLiquidityPool = async (amount, forNewLiquidity = true) => {
-    try {
-      await click(pool.button.POOL_SECTION, this.page)
-      await click(pool.button.OPEN_TABLE, this.page)
-      await click(pool.button.ADD_TO_LIQUIDITY, this.page)
-      await typeText(pool.field.TOKEN_AMOUNT, amount, this.page)
-      if (forNewLiquidity === true) {
-        await click(pool.button.SUPPLY, this.page)
-        await click('text="Choose token"', this.page)
-        await click(swap.button.DAI_CRYPTO, this.page)
-      }
-    } catch (error) {
-      await makeScreenOnError('addToCurrentLiquidityPool', error, this.page)
+    await click(pool.button.POOL_SECTION, this.page)
+    await click(pool.button.OPEN_TABLE, this.page)
+    await click(pool.button.ADD_TO_LIQUIDITY, this.page)
+    await typeText(pool.field.TOKEN_AMOUNT, amount, this.page)
+    if (forNewLiquidity === true) {
+      await click(pool.button.SUPPLY, this.page)
+      await click('text="Choose token"', this.page)
+      await click(swap.button.DAI_CRYPTO, this.page)
     }
   }
   connectToWallet = async () => {
-    try {
-      await click(swap.button.CONNECT_WALLET, this.page)
-      await click(swap.button.METAMASK_CONNECT, this.page)
-    } catch (error) {
-      await makeScreenOnError('connectToWallet', error, this.page)
-    }
+    await click(swap.button.CONNECT_WALLET, this.page)
+    await click(swap.button.METAMASK_CONNECT, this.page)
   }
   setTypeOfCurrency = async (page = this.page) => {
     await click(swap.button.OUT_CURRENCY, page)
@@ -58,14 +52,10 @@ class SwapIX {
   }
 
   removePool = async (page = this.page) => {
-    try {
-      await click(pool.button.POOL_SECTION, page)
-      await click(pool.button.OPEN_TABLE, page)
-      await click(pool.button.REMOVE_LIQUIDITY, page)
-      await click(pool.button.MAX_PERCENTAGE, page)
-    } catch (error) {
-      await makeScreenOnError('removePool', error, page)
-    }
+    await click(pool.button.POOL_SECTION, page)
+    await click(pool.button.OPEN_TABLE, page)
+    await click(pool.button.REMOVE_LIQUIDITY, page)
+    await click(pool.button.MAX_PERCENTAGE, page)
   }
   setExpertMode = async (page = this.page) => {
     page.on('dialog', async (dialog) => {
@@ -88,5 +78,7 @@ class SwapIX {
     secondPage = await waitNewPage(page, context, pool.button.CONFIRM_REMOVE)
     return secondPage
   }
+
+
 }
 export { SwapIX }

@@ -132,10 +132,10 @@ module.exports = {
     }
   },
 
-  waitForValue: async (selector, value, page) => {
+  getValue: async (selector, page) => {
     await page.waitForSelector(selector, { timeout: TIMEOUT })
     const result = await page.evaluate((selector) => document.querySelector(selector).getAttribute('value'), selector)
-    if (result !== value) throw new Error(`Value: ${value} not found for selector: ${selector}`)
+    return result
   },
 
   shouldExist: async (selector, page) => {
@@ -203,9 +203,8 @@ module.exports = {
   },
 
   makeScreenOnError: async (name, error, page) => {
-    await page.screenshot({ path: `__tests__/screen/${name}.png` })
-    console.error(error)
-    throw new Error(`on the ${name}`)
+    // name = name.replace(/ /g, '')
+    await page.screenshot({ path: `__tests__/screen-test-failed/${name}.png` })
   },
 
   waitNewPage: async (page, context, element) => {

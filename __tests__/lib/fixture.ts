@@ -10,7 +10,6 @@ export const test = base.extend({
       `--disable-extensions-except=${__dirname + '/metamask'}`,
       `--load-extension=${__dirname + '/metamask'}`,
     ]
-    // const userDataDir = path.join(os.tmpdir(), 'playwright-test-persistent-context')
     const context = await chromium.launchPersistentContext('', {
       headless: false,
       args: ARGS,
@@ -23,6 +22,5 @@ export const test = base.extend({
     })
     await use(context)
     await context.close()
-    // await fs.promises.rmdir(userDataDir)
   },
 })

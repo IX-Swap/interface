@@ -20,6 +20,7 @@ module.exports = {
       ETH_CRYPTO: '[title="Ether"]',
       REPLACE_CRYPTO: getTestAttribute('currencyReplace'),
       TABLE_ROW: getTestAttribute('tableRow'),
+      MAX: 'button >> text="Max"',
     },
   },
   pool: {

@@ -11,36 +11,31 @@ class Metamask {
     this.page = page
   }
   loginToMetamask = async (secretWords, page = this.page) => {
+    await click(auth.buttons.GET_STARTED, page)
     try {
-      await click(auth.buttons.GET_STARTED, page)
-      await click(auth.buttons.IMPORT_WALLET, page)
+      await page.waitForSelector('text="All Done"', { timeout: 2000 })
+      await click('text="All Done"', page)
+    } catch {}
+    await click(auth.buttons.IMPORT_WALLET, page)
 
-      await click(auth.buttons.CONFIRM, page)
+    await click(auth.buttons.CONFIRM, page)
 
-      await typeText(auth.field.SECRET_PHRASE, secretWords, page)
-      await typeText(auth.field.PASSWORD, metamask.PASSWORD, page)
-      await typeText(auth.field.PASSWORD_CONF, metamask.PASSWORD, page)
+    await typeText(auth.field.SECRET_PHRASE, secretWords, page)
+    await typeText(auth.field.PASSWORD, metamask.PASSWORD, page)
+    await typeText(auth.field.PASSWORD_CONF, metamask.PASSWORD, page)
 
-      await click(auth.checkbox.I_READ_AGREE, page)
-      await click(auth.buttons.SUBMIT, page)
-      await click(auth.buttons.GET_STARTED, page)
-      await click(auth.buttons.QR_POPOVER_CLOSE, page)
-      await click(auth.buttons.ETH_ENV, page)
-      await click(auth.buttons.RINKEBY_ENV, page)
-    } catch (error) {
-      await makeScreenOnError('loginToMetamask', error, page)
-    }
+    await click(auth.checkbox.I_READ_AGREE, page)
+    await click(auth.buttons.SUBMIT, page)
+    await click(auth.buttons.GET_STARTED, page)
+    await click(auth.buttons.QR_POPOVER_CLOSE, page)
+    await click(auth.buttons.ETH_ENV, page)
+    await click(auth.buttons.RINKEBY_ENV, page)
   }
 
   confirmOperation = async (page = this.page) => {
-    try {
-      await click(auth.buttons.CONFIRM, page)
-    } catch (error) {
-      await makeScreenOnError('confirmOperation', error, page)
-    }
+    await click(auth.buttons.CONFIRM, page)
   }
-  fullConnection = async (context, secretWords, address, topUp = true) => {
-    const page = await context.newPage()
+  fullConnection = async (context, page, secretWords, address, topUp = true) => {
     await navigate(ixswap.URL, page)
     if ((await context.pages()).length === 3) {
       await context.pages()[0].close()
