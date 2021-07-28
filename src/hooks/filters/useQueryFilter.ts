@@ -27,6 +27,7 @@ export interface QueryFilters {
   network: string | undefined
   isPriceAscending: string | undefined
   category: string | undefined
+  fundStatus: string | undefined
 }
 
 export type QueryFilter = keyof QueryFilters

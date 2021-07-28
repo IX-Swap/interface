@@ -133,7 +133,9 @@ export const dsoQueryKeys = {
   getDSOsById: (id: string) => generateQueryKey('dso-list', id),
   getCapitalStructureList: 'capital-structures-list',
   getPromoted: 'promoted-dsos',
-  getApprovedList: 'dso-approved-list'
+  getApprovedList: 'dso-approved-list',
+  getCommitmentsListByDSOId: (dsoId: string) =>
+    generateQueryKey('commitments-list', dsoId)
 }
 
 export const otcQueryKeys = {
@@ -159,7 +161,8 @@ export const issuanceQueryKeys = {
 export const virtualAccountQueryKeys = {
   listAssigned: 'assigned-virtual-accounts',
   listUnassigned: 'unassigned-virtual-accounts',
-  getByUserId: 'virtual-account'
+  getByUserId: 'virtual-account',
+  paymentMethod: 'payment-method'
 }
 
 export const exchange = {

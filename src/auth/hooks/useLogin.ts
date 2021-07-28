@@ -8,6 +8,10 @@ import { useState } from 'react'
 
 export const useLogin = () => {
   const [step, setStep] = useState<'login' | 'otp'>('login')
+  const [attempts, setAttempts] = useState(0)
+  const resetAttempts = () => {
+    setAttempts(0)
+  }
   const { storageService, snackbarService } = useServices()
   const url = authURL.login
   const mutateFn = async (args: LoginArgs) => {
@@ -17,6 +21,7 @@ export const useLogin = () => {
   return {
     mutation: useMutation(mutateFn, {
       onSuccess: response => {
+        resetAttempts()
         if (response.status === 202) {
           setStep('otp')
         } else {
@@ -30,9 +35,12 @@ export const useLogin = () => {
         }
       },
       onError: (error: any) => {
+        setAttempts(attempts + 1)
         void snackbarService.showSnackbar(error.message, 'error')
       }
     }),
-    step: step
+    step: step,
+    attempts: attempts,
+    resetAttempts: resetAttempts
   }
 }

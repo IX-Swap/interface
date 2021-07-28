@@ -1,11 +1,7 @@
 import React from 'react'
-import { Switch } from 'react-router-dom'
-import {
-  OTCMarketLandingLinks,
-  OTCMarketRoute
-} from 'app/pages/exchange/router/config'
+import { Redirect, Switch } from 'react-router-dom'
+import { OTCMarketRoute } from 'app/pages/exchange/router/config'
 import { AppRoute } from 'components/AppRoute'
-import { LandingPage } from 'app/components/LandingPage/LandingPage'
 import { Market } from '../pages/market/Market'
 import { BuyerList } from '../pages/buyer-list/BuyerList'
 import { MyHoldings } from 'app/pages/exchange/pages/holdings/MyHoldings'
@@ -35,7 +31,7 @@ export const OTCMarketRouter = () => {
         <BuyerList />
       </AppRoute>
       <AppRoute path={OTCMarketRoute.landing}>
-        <LandingPage title='Exchange' links={OTCMarketLandingLinks} />
+        <Redirect to={OTCMarketRoute.market} />
       </AppRoute>
     </Switch>
   )

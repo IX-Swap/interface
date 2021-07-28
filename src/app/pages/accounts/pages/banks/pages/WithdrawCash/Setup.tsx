@@ -4,6 +4,7 @@ import {
   Box,
   Grid,
   InputAdornment,
+  Typography,
   useMediaQuery,
   useTheme
 } from '@material-ui/core'
@@ -21,6 +22,8 @@ import { VirtualAccountDetails } from 'app/pages/accounts/components/VirtualAcco
 import { FormSectionHeader } from 'app/pages/identity/components/FormSectionHeader'
 import { ContinueButton } from 'app/pages/accounts/pages/banks/pages/WithdrawCash/ContinueButton'
 import { OTPDialog } from 'app/pages/accounts/pages/banks/pages/WithdrawCash/OTPDialog'
+import { usePaymentMethod } from 'app/pages/accounts/pages/banks/hooks/usePaymentMethods'
+import { VSpacer } from 'components/VSpacer'
 
 export const Setup: React.FC = () => {
   const {
@@ -36,11 +39,20 @@ export const Setup: React.FC = () => {
     data: virtualAccountData,
     isLoading: virtualAccountLoading
   } = useVirtualAccount(virtualAccountId)
+
   const { data: bankData, isLoading: bankLoading } = useBanksData()
+
   const bank = bankData.map[bankId ?? '']
   const theme = useTheme()
+
   const isTablet = useMediaQuery(theme.breakpoints.down('md'))
+
   const [open, setOpen] = useState(false)
+
+  const { data: paymentMethodData } = usePaymentMethod(
+    bank?.address.country ?? '',
+    bank?.swiftCode ?? ''
+  )
 
   const setMaxValue = () => {
     control.setValue('amount', virtualAccountData?.balance.outstanding)
@@ -66,6 +78,22 @@ export const Setup: React.FC = () => {
     }
     // eslint-disable-next-line
   }, [formState.isSubmitSuccessful])
+
+  useEffect(() => {
+    control.setValue('paymentMethodName', paymentMethodData?.name, {
+      shouldDirty: true,
+      shouldValidate: true
+    })
+    // eslint-disable-next-line
+  }, [paymentMethodData?.name])
+
+  useEffect(() => {
+    control.setValue('bankAccountId', null, {
+      shouldDirty: true,
+      shouldValidate: true
+    })
+    // eslint-disable-next-line
+  }, [virtualAccountId])
 
   if (virtualAccountLoading || bankLoading) {
     return null
@@ -101,6 +129,7 @@ export const Setup: React.FC = () => {
           variant='outlined'
           customRenderer
           component={BankSelect}
+          currency={virtualAccountData?.currency}
           name='bankAccountId'
           label='To Bank Account'
           helperText='Please select your bank account in which you want to transfer your fund'
@@ -109,28 +138,35 @@ export const Setup: React.FC = () => {
       {bankId !== null &&
       bankId !== undefined &&
       virtualAccountId !== undefined ? (
-        <Grid item>
-          <TypedField
-            style={{ width: isTablet ? '100%' : '40%' }}
-            control={control}
-            variant='outlined'
-            component={NumericInput}
-            name='amount'
-            label='Amount'
-            valueExtractor={numericValueExtractor}
-            numberFormat={moneyNumberFormat}
-            startAdornment={
-              <InputAdornment position='start'>
-                <Box mt='2px'>{bank?.currency.numberFormat.currency}</Box>
-              </InputAdornment>
-            }
-            endAdornment={
-              <InputAdornment position='end'>
-                <MaxButton onClick={setMaxValue} />
-              </InputAdornment>
-            }
-          />
-        </Grid>
+        <>
+          <Grid item>
+            <FormSectionHeader title='Withdrawal Method' variant='subsection' />
+            <Typography variant='body1'>{paymentMethodData?.name}</Typography>
+            <VSpacer size='small' />
+          </Grid>
+          <Grid item>
+            <TypedField
+              style={{ width: isTablet ? '100%' : '40%' }}
+              control={control}
+              variant='outlined'
+              component={NumericInput}
+              name='amount'
+              label='Amount'
+              valueExtractor={numericValueExtractor}
+              numberFormat={moneyNumberFormat}
+              startAdornment={
+                <InputAdornment position='start'>
+                  <Box mt='2px'>{bank?.currency.numberFormat.currency}</Box>
+                </InputAdornment>
+              }
+              endAdornment={
+                <InputAdornment position='end'>
+                  <MaxButton onClick={setMaxValue} />
+                </InputAdornment>
+              }
+            />
+          </Grid>
+        </>
       ) : null}
       <Grid item>
         <ContinueButton onClick={handleContinue} />
