@@ -1,14 +1,16 @@
 import React from 'react'
 import styled from 'styled-components/macro'
-import { CheckCircle, Triangle } from 'react-feather'
 
 import { useActiveWeb3React } from '../../hooks/web3'
-import { ExternalLink } from '../../theme'
+import { ExternalLink, TYPE } from '../../theme'
 import { useAllTransactions } from '../../state/transactions/hooks'
 import { ExplorerDataType, getExplorerLink } from '../../utils/getExplorerLink'
 import { RowFixed } from '../Row'
+import { ReactComponent as Check } from 'assets/images/check.svg'
+import { ReactComponent as Failed } from 'assets/images/attention.svg'
 import Loader from '../Loader'
-
+import { IconWrapperWithBg, IconWrapper } from './styleds'
+import useTheme from 'hooks/useTheme'
 const TransactionWrapper = styled.div``
 
 const TransactionStatusText = styled.div`
@@ -29,17 +31,13 @@ const TransactionState = styled(ExternalLink)<{ pending: boolean; success?: bool
   padding: 0.25rem 0rem;
   font-weight: 500;
   font-size: 0.825rem;
-  color: ${({ theme }) => theme.primary1};
-`
-
-const IconWrapper = styled.div<{ pending: boolean; success?: boolean }>`
-  color: ${({ pending, success, theme }) => (pending ? theme.primary1 : success ? theme.green1 : theme.red1)};
+  color: ${({ theme }) => theme.text2};
 `
 
 export default function Transaction({ hash }: { hash: string }) {
   const { chainId } = useActiveWeb3React()
   const allTransactions = useAllTransactions()
-
+  const theme = useTheme()
   const tx = allTransactions?.[hash]
   const summary = tx?.summary
   const pending = !tx?.receipt
@@ -55,11 +53,22 @@ export default function Transaction({ hash }: { hash: string }) {
         success={success}
       >
         <RowFixed>
-          <TransactionStatusText>{summary ?? hash} ↗</TransactionStatusText>
+          <TransactionStatusText>
+            <TYPE.description3>{summary ?? hash}</TYPE.description3>
+          </TransactionStatusText>
         </RowFixed>
-        <IconWrapper pending={pending} success={success}>
-          {pending ? <Loader /> : success ? <CheckCircle size="16" /> : <Triangle size="16" />}
-        </IconWrapper>
+
+        {pending ? (
+          <Loader />
+        ) : success ? (
+          <IconWrapperWithBg size={16} bg={theme.popUpInputBorder} padding="4px">
+            <Check />
+          </IconWrapperWithBg>
+        ) : (
+          <IconWrapper size={16}>
+            <Failed />
+          </IconWrapper>
+        )}
       </TransactionState>
     </TransactionWrapper>
   )

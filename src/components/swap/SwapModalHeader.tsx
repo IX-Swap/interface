@@ -139,6 +139,7 @@ export default function SwapModalHeader({
               </TYPE.main>
             </RowFixed>
             <ButtonPrimary
+              data-testid="accept-changes-header"
               style={{ padding: '.5rem', width: 'fit-content', fontSize: '0.825rem', borderRadius: '12px' }}
               onClick={onAcceptChanges}
             >

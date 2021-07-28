@@ -1,7 +1,7 @@
 import React, { HTMLProps } from 'react'
 import ReactGA from 'react-ga'
 import { Link } from 'react-router-dom'
-import styled, { keyframes } from 'styled-components'
+import styled, { css, keyframes } from 'styled-components'
 import { darken } from 'polished'
 import { ArrowLeft, X, ExternalLink as LinkIconFeather, Trash } from 'react-feather'
 
@@ -78,7 +78,7 @@ export const LinkStyledButton = styled.button<{ disabled?: boolean }>`
   background: none;
 
   cursor: ${({ disabled }) => (disabled ? 'default' : 'pointer')};
-  color: ${({ theme, disabled }) => (disabled ? theme.text2 : theme.primary1)};
+  color: ${({ theme, disabled }) => (disabled ? theme.text2 : theme.text2)};
   font-weight: 500;
 
   :hover {
@@ -99,8 +99,8 @@ export const LinkStyledButton = styled.button<{ disabled?: boolean }>`
 export const StyledInternalLink = styled(Link)`
   text-decoration: none;
   cursor: pointer;
-  color: ${({ theme }) => theme.primary1};
-  font-weight: 500;
+  color: ${({ theme }) => theme.text2};
+  font-weight: 600;
 
   :hover {
     text-decoration: underline;
@@ -119,7 +119,7 @@ export const StyledInternalLink = styled(Link)`
 const StyledLink = styled.a`
   text-decoration: none;
   cursor: pointer;
-  color: ${({ theme }) => theme.primary1};
+  color: ${({ theme }) => theme.text2};
   font-weight: 500;
 
   :hover {
@@ -180,23 +180,6 @@ export const TrashIcon = styled(Trash)`
     opacity: 0.7;
   }
 `
-
-const rotateImg = keyframes`
-  0% {
-    transform: perspective(1000px) rotateY(0deg);
-  }
-
-  100% {
-    transform: perspective(1000px) rotateY(360deg);
-  }
-`
-
-export const UniTokenAnimated = styled.img`
-  animation: ${rotateImg} 5s cubic-bezier(0.83, 0, 0.17, 1) infinite;
-  padding: 2rem 0 0 0;
-  filter: drop-shadow(0px 2px 4px rgba(0, 0, 0, 0.15));
-`
-
 const ETHERSCAN_HOSTNAMES: { [hostname: string]: true } = {
   'etherscan.io': true,
   'ropsten.etherscan.io': true,
@@ -321,4 +304,105 @@ export const ExtraSmallOnly = styled.span`
   ${({ theme }) => theme.mediaWidth.upToExtraSmall`
     display: block;
   `};
+`
+export const SemiTransparent = styled.div`
+  opacity: 0.5;
+`
+export const StyledPageHeader = styled.div`
+  padding: 0;
+  width: 100%;
+  margin-bottom: 22px;
+  text-transform: uppercase;
+  font-weight: 600;
+  font-size: 22px;
+  color: ${({ theme }) => theme.text1};
+`
+export const ModalBlurWrapper = styled.span`
+  background: ${({ theme }) => theme.bgG5};
+  border-radius: 45px;
+  display: flex;
+  flex-direction: column;
+  font-size: 1rem;
+  display: flex;
+  min-width: 622px;
+  z-index: 5;
+  padding: 34px;
+  backdrop-filter: blur(20px);
+  ${({ theme }) => theme.mediaWidth.upToSmall`
+    padding: 0;
+    min-width: fit-content;
+  `};
+  ${({ theme }) => theme.mediaWidth.upToExtraSmall`
+    min-width: 100%;
+    max-width: 100%;
+    border-radius: 0;
+  `};
+  user-select: none;
+`
+export const StyledNumberInput = styled.input<{ error?: boolean; fontSize?: string; align?: string }>`
+  color: ${({ error, theme }) => (error ? theme.red1 : theme.text1)};
+  width: 0;
+  position: relative;
+  outline: none;
+  border: none;
+  flex: 1 1 auto;
+  font-weight: 600;
+  background-color: ${({ theme }) => theme.bg7};
+  text-align: ${({ align }) => align && align};
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  padding: 0px;
+  -webkit-appearance: textfield;
+  text-align: left;
+  font-size: 22px;
+  line-height: 40px;
+  ::-webkit-search-decoration {
+    -webkit-appearance: none;
+  }
+
+  [type='number'] {
+    -moz-appearance: textfield;
+  }
+
+  ::-webkit-outer-spin-button,
+  ::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+  }
+
+  ::placeholder {
+    color: ${({ theme }) => theme.text2};
+    opacity: 0.5;
+    font-style: normal;
+  }
+`
+export const SvgIconWrapper = styled.div<{ size?: number }>`
+  ${({ theme }) => theme.flexColumnNoWrap};
+  align-items: center;
+  justify-content: center;
+  & > img,
+  span {
+    height: ${({ size }) => (size ? size + 'px' : '32px')};
+    width: ${({ size }) => (size ? size + 'px' : '32px')};
+  }
+  ${({ theme }) => theme.mediaWidth.upToMedium`
+    align-items: flex-end;
+  `};
+`
+export const gradientBorder = css`
+  :before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    border-radius: 45px;
+    -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+    mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+    -webkit-mask-composite: destination-out;
+    mask-composite: exclude;
+    padding: 2px;
+    background: ${({ theme }) => theme.borderG1};
+  }
 `

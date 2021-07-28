@@ -1,14 +1,15 @@
 import { Currency, Token } from '@ixswap1/sdk-core'
-import React, { useCallback, useEffect, useState } from 'react'
+import { TokenList } from '@uniswap/token-lists'
+import RedesignedWideModal from 'components/Modal/RedesignedWideModal'
+import usePrevious from 'hooks/usePrevious'
+import React, { ReactNode, useCallback, useEffect, useState } from 'react'
+import { ModalBlurWrapper } from 'theme'
 import useLast from '../../hooks/useLast'
 import { WrappedTokenInfo } from '../../state/lists/wrappedTokenInfo'
-import Modal from '../Modal'
 import { CurrencySearch } from './CurrencySearch'
-import { ImportToken } from './ImportToken'
-import usePrevious from 'hooks/usePrevious'
-import Manage from './Manage'
-import { TokenList } from '@uniswap/token-lists'
 import { ImportList } from './ImportList'
+import { ImportToken } from './ImportToken'
+import Manage from './Manage'
 
 interface CurrencySearchModalProps {
   isOpen: boolean
@@ -17,6 +18,7 @@ interface CurrencySearchModalProps {
   onCurrencySelect: (currency: Currency) => void
   otherSelectedCurrency?: Currency | null
   showCommonBases?: boolean
+  title?: ReactNode
 }
 
 export enum CurrencyModalView {
@@ -33,6 +35,7 @@ export default function CurrencySearchModal({
   selectedCurrency,
   otherSelectedCurrency,
   showCommonBases = false,
+  title,
 }: CurrencySearchModalProps) {
   const [modalView, setModalView] = useState<CurrencyModalView>(CurrencyModalView.manage)
   const lastOpen = useLast(isOpen)
@@ -65,42 +68,45 @@ export default function CurrencySearchModal({
   const minHeight = modalView === CurrencyModalView.importToken || modalView === CurrencyModalView.importList ? 40 : 80
 
   return (
-    <Modal isOpen={isOpen} onDismiss={onDismiss} maxHeight={80} minHeight={minHeight}>
-      {modalView === CurrencyModalView.search ? (
-        <CurrencySearch
-          isOpen={isOpen}
-          onDismiss={onDismiss}
-          onCurrencySelect={handleCurrencySelect}
-          selectedCurrency={selectedCurrency}
-          otherSelectedCurrency={otherSelectedCurrency}
-          showCommonBases={showCommonBases}
-          showImportView={() => setModalView(CurrencyModalView.importToken)}
-          setImportToken={setImportToken}
-          showManageView={() => setModalView(CurrencyModalView.manage)}
-        />
-      ) : modalView === CurrencyModalView.importToken && importToken ? (
-        <ImportToken
-          tokens={[importToken]}
-          onDismiss={onDismiss}
-          list={importToken instanceof WrappedTokenInfo ? importToken.list : undefined}
-          onBack={() =>
-            setModalView(prevView && prevView !== CurrencyModalView.importToken ? prevView : CurrencyModalView.search)
-          }
-          handleCurrencySelect={handleCurrencySelect}
-        />
-      ) : modalView === CurrencyModalView.importList && importList && listURL ? (
-        <ImportList list={importList} listURL={listURL} onDismiss={onDismiss} setModalView={setModalView} />
-      ) : modalView === CurrencyModalView.manage ? (
-        <Manage
-          onDismiss={onDismiss}
-          setModalView={setModalView}
-          setImportToken={setImportToken}
-          setImportList={setImportList}
-          setListUrl={setListUrl}
-        />
-      ) : (
-        ''
-      )}
-    </Modal>
+    <RedesignedWideModal isOpen={isOpen} onDismiss={onDismiss} maxHeight={100} minHeight={minHeight}>
+      <ModalBlurWrapper>
+        {modalView === CurrencyModalView.search ? (
+          <CurrencySearch
+            isOpen={isOpen}
+            title={title}
+            onDismiss={onDismiss}
+            onCurrencySelect={handleCurrencySelect}
+            selectedCurrency={selectedCurrency}
+            otherSelectedCurrency={otherSelectedCurrency}
+            showCommonBases={showCommonBases}
+            showImportView={() => setModalView(CurrencyModalView.importToken)}
+            setImportToken={setImportToken}
+            showManageView={() => setModalView(CurrencyModalView.manage)}
+          />
+        ) : modalView === CurrencyModalView.importToken && importToken ? (
+          <ImportToken
+            tokens={[importToken]}
+            onDismiss={onDismiss}
+            list={importToken instanceof WrappedTokenInfo ? importToken.list : undefined}
+            onBack={() =>
+              setModalView(prevView && prevView !== CurrencyModalView.importToken ? prevView : CurrencyModalView.search)
+            }
+            handleCurrencySelect={handleCurrencySelect}
+          />
+        ) : modalView === CurrencyModalView.importList && importList && listURL ? (
+          <ImportList list={importList} listURL={listURL} onDismiss={onDismiss} setModalView={setModalView} />
+        ) : modalView === CurrencyModalView.manage ? (
+          <Manage
+            onDismiss={onDismiss}
+            setModalView={setModalView}
+            setImportToken={setImportToken}
+            setImportList={setImportList}
+            setListUrl={setListUrl}
+          />
+        ) : (
+          ''
+        )}
+      </ModalBlurWrapper>
+    </RedesignedWideModal>
   )
 }

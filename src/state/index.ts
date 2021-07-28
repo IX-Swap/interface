@@ -10,8 +10,13 @@ import mint from './mint/reducer'
 import lists from './lists/reducer'
 import burn from './burn/reducer'
 import multicall from './multicall/reducer'
+import deposit from './deposit/reducer'
+import withdraw from './withdraw/reducer'
+import auth from './auth/reducer'
+import secTokens from './secTokens/reducer'
+import eventLog from './eventLog/reducer'
 
-const PERSISTED_KEYS: string[] = ['user', 'transactions', 'lists']
+const PERSISTED_KEYS: string[] = ['user', 'transactions', 'lists', 'auth']
 
 const store = configureStore({
   reducer: {
@@ -23,8 +28,13 @@ const store = configureStore({
     burn,
     multicall,
     lists,
+    deposit,
+    withdraw,
+    auth,
+    secTokens,
+    eventLog,
   },
-  middleware: [...getDefaultMiddleware({ thunk: false }), save({ states: PERSISTED_KEYS, debounce: 1000 })],
+  middleware: [...getDefaultMiddleware({ thunk: true }), save({ states: PERSISTED_KEYS, debounce: 1000 })],
   preloadedState: load({ states: PERSISTED_KEYS }),
 })
 

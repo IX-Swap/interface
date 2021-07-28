@@ -34,10 +34,6 @@ msgstr "(alles wissen)"
 msgid "+{feeAmountFormatted}%"
 msgstr "+{feeAmountFormatted}%"
 
-#: src/pages/Swap/index.tsx
-msgid "- Remove send"
-msgstr "- Verwijder verzending"
-
 #: src/components/InputStepCounter/InputStepCounter.tsx
 msgid "-{feeAmountFormatted}%"
 msgstr "-{feeAmountFormatted}%"
@@ -59,26 +55,11 @@ msgstr "0,3% vergoeding"
 msgid "1% fee"
 msgstr "1% vergoeding"
 
-#: src/pages/Pool/v2.tsx
-msgid "<0>Account analytics and accrued fees</0><1> ↗ </1>"
-msgstr "<0>Account analytics en inkomsten </0><1>↗ </1>"
-
-#: src/pages/RemoveLiquidity/index.tsx
-msgid "<0>Tip:</0> Removing pool tokens converts your position back into underlying tokens at the current rate, proportional to your share of the pool. Accrued fees are included in the amounts you receive."
-msgstr "<0>Tip:</0> Verwijderde pool tokens omzetten je positie tegen de huidige koers terug naar onderliggende tokens in verhouding tot je deel van de pool. Verhoogde kosten zijn opgenomen in de bedragen die u ontvangt."
-
 #: src/pages/PoolFinder/index.tsx
-msgid "<0>Tip:</0> Use this tool to find pairs that don't automatically appear in the interface."
-msgstr "<0>Tip:</0> Gebruik dit gereedschap om paren te vinden die niet automatisch in de interface verschijnen."
+msgid "<0>Loading</0>"
+msgstr "<0>Bezig met laden</0>"
 
-#: src/pages/AddLiquidityV2/index.tsx
-msgid "<0>Tip:</0> When you add liquidity, you will receive pool tokens representing your position. These tokens automatically earn fees proportional to your share of the pool, and can be redeemed at any time."
-msgstr "<0>Tip:</0> Wanneer je liquiditeit toevoegt, ontvang je tokens die je positie vertegenwoordigen. Deze tokens verdienen automatisch kosten in verhouding tot uw aandeel in de pool, en kunnen op elk moment worden ingewisseld."
-
-#: src/components/Menu/index.tsx
-msgid "About"
-msgstr "Informatie"
-
+#: src/components/swap/AcceptChanges.tsx
 #: src/components/swap/SwapModalHeader.tsx
 msgid "Accept"
 msgstr "Accepteren"
@@ -96,13 +77,13 @@ msgid "Add"
 msgstr "Toevoegen"
 
 #: src/components/NavigationTabs/index.tsx
-#: src/pages/Pool/v2.tsx
+#: src/pages/Pool/AddLiquidityButton.tsx
 msgid "Add Liquidity"
 msgstr "Liquiditeit toevoegen"
 
 #: src/pages/PoolFinder/index.tsx
-msgid "Add liquidity."
-msgstr "Voeg liquiditeit toe."
+msgid "Add liquidity"
+msgstr "Liquiditeit toevoegen"
 
 #: src/components/TransactionConfirmationModal/index.tsx
 msgid "Add {0} to Metamask <0/>"
@@ -117,25 +98,21 @@ msgstr "Voeg {0} {1} en {2} {3} toe"
 msgid "Added {0}"
 msgstr "Toegevoegd {0}"
 
+#: src/pages/Swap/index.tsx
+msgid "Allow IXSwap to use your {0}"
+msgstr "Sta IXSwap toe uw {0} te gebruiken"
+
 #: src/components/Settings/SettingsModal.tsx
 msgid "Allow high price impact trades and skip the confirm screen. Use at your own risk."
 msgstr "Hoog prijsimpact transacties toestaan en het bevestigingsscherm overslaan. Gebruik op eigen risico."
 
-#: src/pages/Swap/index.tsx
-msgid "Allow the IXSwap Protocol to use your {0}"
-msgstr ""
-
 #: src/components/Header/URLWarning.tsx
-msgid "Always make sure the URL is<0>app.uniswap.org</0> - bookmark it to be safe."
-msgstr "Zorg er altijd voor dat de URL is<0>app.uniswap.org</0> - bladwijzer om veilig te zijn."
+msgid "Always make sure the URL is<0>app.ixswap.io</0> - bookmark it to be safe."
+msgstr "Zorg er altijd voor dat de URL <0>app.ixswap.io</0> is - maak er voor de zekerheid een bladwijzer voor."
 
 #: src/hooks/useSwapCallback.ts
 msgid "An error occurred when trying to execute this swap. You may need to increase your slippage tolerance. If that does not work, there may be an incompatibility with the token you are trading. Note fee on transfer and rebase tokens are incompatible with Uniswap V3."
 msgstr "Er is een fout opgetreden bij het uitvoeren van deze wissel. Mogelijk moet u uw sliptolerantie vergroten. Als dat niet werkt, is er mogelijk een incompatibiliteit met het token dat u verhandelt. Let op: kosten voor transfer- en rebase-tokens zijn niet compatibel met Uniswap V3."
-
-#: src/components/Menu/index.tsx
-msgid "Analytics"
-msgstr "Analyses"
 
 #: src/components/earn/StakingModal.tsx
 #: src/pages/RemoveLiquidity/index.tsx
@@ -192,31 +169,25 @@ msgstr "Het beste voor stabiele paren."
 msgid "Blocked address"
 msgstr "Geblokkeerd adres"
 
-#: src/components/PositionCard/index.tsx
-msgid "By adding liquidity you'll earn 0.3% of all trades on this pair proportional to your share of the pool. Fees are added to the pool, accrue in real time and can be claimed by withdrawing your liquidity."
-msgstr "Door liquiditeit toe te voegen, verdien je 0,3% van alle transacties op dit paar in verhouding tot je aandeel in de pool. Vergoedingen worden toegevoegd aan de pool, worden in realtime opgebouwd en kunnen worden opgeëist door je liquiditeit terug te trekken."
-
 #: src/components/SearchModal/ImportList.tsx
 msgid "By adding this list you are implicitly trusting that the data is correct. Anyone can create a list, including creating fake versions of existing lists and lists that claim to represent projects that do not have one."
 msgstr "Door deze lijst toe te voegen, vertrouwt u er impliciet op dat de gegevens juist zijn. Iedereen kan een lijst maken, inclusief het maken van nep-versies van bestaande lijsten en lijsten die beweren projecten te vertegenwoordigen die er geen hebben."
 
 #: src/components/WalletModal/index.tsx
-msgid "By connecting a wallet, you agree to Uniswap Labs’ <0>Terms of Service</0> and acknowledge that you have read and understand the <1>Uniswap protocol disclaimer</1>."
-msgstr "Door het verbinden van een portemonnee, gaat u akkoord met Uniswap Labs’ <0>Servicevoorwaarden</0> en erkent u dat u de <1>Uniswap protocoldisclaimer</1> hebt gelezen en begrepen."
+msgid "By connecting a wallet, you agree to IXSwap’ <0>Terms and Conditions</0> and acknowledge that you have read and understand the <1>IXSwap Privacy Policy</1>."
+msgstr "Door een portemonnee te koppelen, ga je akkoord met de <0>Algemene voorwaarden</0> van IXSwap en bevestig je dat je het <1>IXSwap Privacybeleid</1> hebt gelezen en begrepen."
 
 #: src/components/AccountDetails/index.tsx
 msgid "Change"
 msgstr "Veranderen"
 
 #: src/components/CurrencyInputPanel/index.tsx
-#: src/components/SearchModal/CurrencySearch.tsx
-#: src/pages/PoolFinder/index.tsx
-#: src/pages/PoolFinder/index.tsx
+#: src/pages/PoolFinder/CurrencyRow.tsx
 #: src/state/swap/hooks.ts
 msgid "Choose token"
 msgstr "Selecteer een token"
 
-#: src/pages/PoolFinder/index.tsx
+#: src/pages/PoolFinder/PrerequisiteMessage.tsx
 msgid "Choose token to find your liquidity."
 msgstr "Selecteer een token om uw liquiditeit te vinden."
 
@@ -252,24 +223,21 @@ msgstr "Alles wissen"
 msgid "Close"
 msgstr "Afsluiten"
 
-#: src/components/Menu/index.tsx
-msgid "Code"
-msgstr "Code"
-
 #: src/components/SearchModal/CommonBases.tsx
 msgid "Common bases"
 msgstr "Gemeenschappelijke bases"
 
-#: src/pages/RemoveLiquidity/index.tsx
+#: src/pages/RemoveLiquidity/ModalBottom.tsx
 msgid "Confirm"
 msgstr "Bevestigen"
 
-#: src/pages/AddLiquidityV2/ConfirmAddModalBottom.tsx
+#: src/pages/AddLiquidityV2/ModalBottom.tsx
 msgid "Confirm Supply"
 msgstr "Bevestig Voorraad"
 
 #: src/components/swap/ConfirmSwapModal.tsx
 #: src/components/swap/SwapModalFooter.tsx
+#: src/pages/Swap/index.tsx
 msgid "Confirm Swap"
 msgstr "Bevestig Swap"
 
@@ -294,17 +262,17 @@ msgstr "Verbind Portemonnee"
 msgid "Connect a wallet"
 msgstr "Verbind een portemonnee"
 
+#: src/pages/Pool/NoPairs.tsx
+msgid "Connect a wallet to view your Liquidity."
+msgstr "Koppel een portemonnee om uw liquiditeit te bekijken."
+
 #: src/components/WalletModal/index.tsx
 msgid "Connect to a wallet"
 msgstr "Verbind met een portemonnee"
 
-#: src/pages/PoolFinder/index.tsx
+#: src/pages/PoolFinder/PrerequisiteMessage.tsx
 msgid "Connect to a wallet to find pools"
 msgstr "Verbind met een portemonnee om pools te vinden"
-
-#: src/pages/Pool/v2.tsx
-msgid "Connect to a wallet to view your liquidity."
-msgstr "Maak verbinding met een portemonnee om uw liquiditeit te bekijken."
 
 #: src/components/earn/ClaimRewardModal.tsx
 msgid "Connect wallet"
@@ -323,7 +291,7 @@ msgstr "Gekoppeld"
 msgid "Copy Address"
 msgstr "Adres kopiëren"
 
-#: src/pages/AddLiquidityV2/ConfirmAddModalBottom.tsx
+#: src/pages/AddLiquidityV2/ModalBottom.tsx
 msgid "Create Pool & Supply"
 msgstr "Maak Zwembad & Toevoer"
 
@@ -331,23 +299,18 @@ msgstr "Maak Zwembad & Toevoer"
 msgid "Create a pair"
 msgstr "Maak een paar"
 
-#: src/components/ErrorBoundary/index.tsx
-msgid "Create an issue on GitHub"
-msgstr "Maak een probleem op GitHub"
-
 #: src/pages/PoolFinder/index.tsx
-msgid "Create pool."
-msgstr "Creëer zwembad."
+msgid "Create pool"
+msgstr "Pool maken"
 
-#: src/pages/Swap/index.tsx
+#: src/components/swap/CurrentRate.tsx
 msgid "Current Rate"
 msgstr "Huidig tarief"
 
 #: src/components/Header/HeaderLinks.tsx
 msgid "Custodian"
-msgstr ""
+msgstr "Conciërge"
 
-#: src/components/earn/PoolCard.tsx
 #: src/components/earn/StakingModal.tsx
 #: src/components/earn/StakingModal.tsx
 msgid "Deposit"
@@ -369,10 +332,6 @@ msgstr "Afgeschreven {0} IXS-V2"
 msgid "Depositing Liquidity"
 msgstr "Schitterende Liquidity"
 
-#: src/pages/RemoveLiquidity/index.tsx
-msgid "Detailed"
-msgstr "Gedetailleerd"
-
 #: src/components/Settings/SettingsModal.tsx
 msgid "Disable Multihops"
 msgstr "Multihops uitschakelen"
@@ -381,17 +340,13 @@ msgstr "Multihops uitschakelen"
 msgid "Disconnect"
 msgstr "Verbreek"
 
-#: src/components/Menu/index.tsx
-msgid "Discord"
-msgstr "Onenigheid"
-
 #: src/components/TransactionConfirmationModal/index.tsx
 msgid "Dismiss"
 msgstr "Uitschakelen"
 
-#: src/components/Menu/index.tsx
-msgid "Docs"
-msgstr "Documentatie"
+#: src/pages/Pool/ImportPool.tsx
+msgid "Don't see a pool you joined?"
+msgstr "Zie je geen pool waar je lid van bent geworden?"
 
 #: src/state/swap/hooks.ts
 msgid "Enter a recipient"
@@ -449,18 +404,14 @@ msgstr "Expert modus"
 msgid "Expert mode turns off the confirm transaction prompt and allows high slippage trades that often result in bad rates and lost funds."
 msgstr "Expert modus schakelt de bevestigings transactie prompt uit en laat hoge slippage trades toe die vaak leiden tot slechte tarieven en verloren geld."
 
+#: src/components/swap/CurrencyInput.tsx
 #: src/components/swap/SwapModalHeader.tsx
-#: src/pages/Swap/index.tsx
 msgid "From"
 msgstr "van"
 
-#: src/pages/Swap/index.tsx
+#: src/components/swap/CurrencyInput.tsx
 msgid "From (at most)"
 msgstr "Van (hoogst)"
-
-#: src/components/ErrorBoundary/index.tsx
-msgid "Get support on Discord"
-msgstr "Krijg ondersteuning bij Discord"
 
 #: src/pages/Swap/index.tsx
 msgid "High Price Impact"
@@ -470,7 +421,15 @@ msgstr "Hoge prijs impact"
 msgid "I understand"
 msgstr "Ik begrijp het"
 
-#: src/pages/RemoveLiquidity/index.tsx
+#: src/pages/RemoveLiquidity/RemovedLiquidity.tsx
+msgid "IXS Rewards"
+msgstr "IXS-beloningen"
+
+#: src/components/PositionCard/index.tsx
+msgid "IXS Rewards (on quit)"
+msgstr "IXS-beloningen (bij stoppen)"
+
+#: src/pages/RemoveLiquidity/ModalBottom.tsx
 msgid "IXS {0}/{1} Burned"
 msgstr "IXS {0}/{1} verbrand"
 
@@ -496,6 +455,10 @@ msgstr "Vragenset importeren"
 msgid "Import at your own risk"
 msgstr "Importeer op eigen risico"
 
+#: src/pages/Pool/ImportPool.tsx
+msgid "Import it."
+msgstr "Importeer het."
+
 #: src/components/Badge/RangeBadge.tsx
 msgid "In range"
 msgstr "In bereik"
@@ -504,7 +467,7 @@ msgstr "In bereik"
 msgid "Inactive"
 msgstr "Inactief"
 
-#: src/pages/AddLiquidityV2/index.tsx
+#: src/pages/AddLiquidityV2/PricesAndPoolShare.tsx
 msgid "Initial prices and pool share"
 msgstr "Initiële prijzen en aandeel"
 
@@ -521,8 +484,8 @@ msgid "Install Metamask"
 msgstr "Metamask installeren"
 
 #: src/pages/Swap/index.tsx
-msgid "Insufficient liquidity for this trade."
-msgstr "Onvoldoende liquiditeit voor deze handel."
+msgid "Insufficient liquidity for this trade"
+msgstr "Onvoldoende liquiditeit voor deze transactie"
 
 #: src/pages/Swap/index.tsx
 msgid "Insufficient liquidity for this trade. Try enabling multi-hop trades."
@@ -538,13 +501,10 @@ msgstr "Onvoldoende saldo {0}"
 msgid "Interface Settings"
 msgstr "Interface Instellingen"
 
+#: src/pages/PoolFinder/index.tsx
 #: src/state/mint/hooks.ts
 msgid "Invalid pair"
 msgstr "Ongeldig paar"
-
-#: src/pages/PoolFinder/index.tsx
-msgid "Invalid pair."
-msgstr "Ongeldig paar."
 
 #: src/state/swap/hooks.ts
 msgid "Invalid recipient"
@@ -555,6 +515,7 @@ msgid "Liquidity Pool"
 msgstr "Liquiditeitspool"
 
 #: src/components/swap/AdvancedSwapDetails.tsx
+#: src/components/swap/ConfirmSwapInfo.tsx
 msgid "Liquidity Provider Fee"
 msgstr "Vergoeding voor liquiditeitsverschaffer"
 
@@ -566,34 +527,26 @@ msgstr "Lijsten"
 msgid "Loaded"
 msgstr "Geladen"
 
-#: src/components/PositionCard/Sushi.tsx
-#: src/components/PositionCard/V2.tsx
-#: src/components/PositionCard/index.tsx
-#: src/pages/Pool/v2.tsx
-#: src/pages/PoolFinder/index.tsx
+#: src/components/PositionCard/CurrencyHeader.tsx
+#: src/pages/Pool/NoPairs.tsx
 msgid "Loading"
 msgstr "Laden..."
 
-#: src/components/Header/URLWarning.tsx
-msgid "Make sure the URL is<0>app.uniswap.org</0>"
-msgstr "Zorg ervoor dat de URL is<0>app.uniswap.org</0>"
+#: src/pages/RemoveLiquidity/RemoveAmount.tsx
+msgid "MAX"
+msgstr "MAX"
 
-#: src/components/PositionCard/V2.tsx
-#: src/components/PositionCard/V2.tsx
-#: src/components/PositionCard/index.tsx
-#: src/components/PositionCard/index.tsx
+#: src/components/Header/URLWarning.tsx
+msgid "Make sure the URL is<0>app.ixswap.io</0>"
+msgstr "Zorg ervoor dat de URL <0>app.ixswap.io</0> is"
+
 #: src/components/SearchModal/Manage.tsx
-#: src/components/earn/PoolCard.tsx
 msgid "Manage"
 msgstr "Beheren"
 
-#: src/components/PositionCard/index.tsx
-msgid "Manage Liquidity in Rewards Pool"
-msgstr "Liquidity beheren in Beloningen Vragenset"
-
 #: src/components/SearchModal/CurrencySearch.tsx
-msgid "Manage Token Lists"
-msgstr "Beheer tokenlijsten"
+msgid "Manage Token List"
+msgstr "Tokenlijst beheren"
 
 #: src/pages/PoolFinder/index.tsx
 msgid "Manage this pool."
@@ -608,6 +561,7 @@ msgid "Max Price"
 msgstr "Max. prijs"
 
 #: src/components/swap/AdvancedSwapDetails.tsx
+#: src/components/swap/ConfirmSwapInfo.tsx
 msgid "Maximum sent"
 msgstr "Maximaal verzonden"
 
@@ -616,6 +570,7 @@ msgid "Min Price"
 msgstr "Min. prijs"
 
 #: src/components/swap/AdvancedSwapDetails.tsx
+#: src/components/swap/ConfirmSwapInfo.tsx
 msgid "Minimum received"
 msgstr "Minimum ontvangen"
 
@@ -623,13 +578,22 @@ msgstr "Minimum ontvangen"
 msgid "Minutes"
 msgstr "Minuten"
 
+#: src/pages/Pool/NoPairs.tsx
+#: src/pages/Pool/v2.tsx
+msgid "My Liquidity"
+msgstr "Mijn liquiditeit"
+
+#: src/components/PositionCard/MinimalPositionCard.tsx
+msgid "My pool share"
+msgstr "Mijn zwembadaandeel"
+
 #: src/pages/Pool/EmptyLiquidity.tsx
 msgid "No liquidity found."
 msgstr "Geen liquiditeit gevonden."
 
 #: src/pages/PoolFinder/index.tsx
-msgid "No pool found."
-msgstr "Geen pool gevonden."
+msgid "No pool found"
+msgstr "Geen zwembad gevonden"
 
 #: src/components/SearchModal/CurrencySearch.tsx
 msgid "No results found."
@@ -647,10 +611,6 @@ msgstr "AAN"
 msgid "ONLY USE THIS MODE IF YOU KNOW WHAT YOU ARE DOING."
 msgstr "ALLEEN GEBRUIK DEZE MODUS ALS JE WAT U BENT DOEN."
 
-#: src/pages/AddLiquidityV2/index.tsx
-msgid "Once you are happy with the rate click supply to review."
-msgstr "Zodra u tevreden bent met de koers klik om deze te bekijken."
-
 #: src/components/Web3ReactManager/index.tsx
 msgid "Oops! An unknown error occurred. Please refresh the page, or visit from another browser or device."
 msgstr "Oeps! Er is een onbekende fout opgetreden. Ververs de pagina of bezoek vanaf een andere browser of apparaat."
@@ -659,8 +619,8 @@ msgstr "Oeps! Er is een onbekende fout opgetreden. Ververs de pagina of bezoek v
 msgid "Out of range"
 msgstr "Buiten bereik"
 
-#: src/pages/AddLiquidityV2/index.tsx
-#: src/pages/RemoveLiquidity/index.tsx
+#: src/pages/AddLiquidityV2/ModalHeader.tsx
+#: src/pages/RemoveLiquidity/ModalHeader.tsx
 msgid "Output is estimated. If the price changes by more than {0}% your transaction will revert."
 msgstr "Uitvoer wordt geschat. Als de prijs met meer dan {0}% wijzigt, wordt uw transactie teruggedraaid."
 
@@ -693,24 +653,19 @@ msgstr "Zwembad gevonden!"
 msgid "Pool rate"
 msgstr "Pool tarief"
 
-#: src/components/PositionCard/V2.tsx
-#: src/components/PositionCard/index.tsx
-msgid "Pool tokens in rewards pool:"
-msgstr "Zwembad tokens in beloningenpool:"
-
-#: src/components/PositionCard/V2.tsx
-#: src/components/PositionCard/V2.tsx
 #: src/components/PositionCard/index.tsx
 #: src/components/PositionCard/index.tsx
-msgid "Pooled {0}:"
-msgstr "Gemaakt {0}:"
+msgid "Pooled {0}"
+msgstr "Gepoold {0}"
 
 #: src/components/swap/SwapModalHeader.tsx
+#: src/pages/RemoveLiquidity/ModalBottom.tsx
 #: src/pages/RemoveLiquidity/index.tsx
 msgid "Price"
 msgstr "Prijs"
 
 #: src/components/swap/AdvancedSwapDetails.tsx
+#: src/components/swap/ConfirmSwapInfo.tsx
 msgid "Price Impact"
 msgstr "Prijsimpact"
 
@@ -718,19 +673,21 @@ msgstr "Prijsimpact"
 msgid "Price Impact Too High"
 msgstr "Prijs impact te hoog"
 
+#: src/pages/Swap/index.tsx
+#: src/pages/Swap/index.tsx
+msgid "Price Impact is high. Swap Anyway"
+msgstr "Prijs Impact is hoog. Hoe dan ook ruilen"
+
+#: src/components/swap/AcceptChanges.tsx
 #: src/components/swap/SwapModalHeader.tsx
 msgid "Price Updated"
 msgstr "Prijs bijgewerkt"
 
-#: src/pages/RemoveLiquidity/index.tsx
-msgid "Price:"
-msgstr "Prijs:"
-
-#: src/pages/AddLiquidityV2/index.tsx
+#: src/pages/AddLiquidityV2/PricesAndPoolShare.tsx
 msgid "Prices and pool share"
 msgstr "Prijzen en aandelen pool"
 
-#: src/pages/AddLiquidityV2/ConfirmAddModalBottom.tsx
+#: src/pages/AddLiquidityV2/ModalBottom.tsx
 msgid "Rates"
 msgstr "Prijzen"
 
@@ -742,17 +699,16 @@ msgstr "Lees meer over niet-ondersteunde assets"
 msgid "Recent Transactions"
 msgstr "Recente Transacties"
 
-#: src/components/PositionCard/V2.tsx
-#: src/components/PositionCard/index.tsx
 #: src/pages/RemoveLiquidity/index.tsx
 msgid "Remove"
 msgstr "Verwijderen"
 
-#: src/pages/RemoveLiquidity/index.tsx
+#: src/pages/RemoveLiquidity/RemoveAmount.tsx
 msgid "Remove Amount"
 msgstr "Bedrag verwijderen"
 
 #: src/components/NavigationTabs/index.tsx
+#: src/components/PositionCard/index.tsx
 msgid "Remove Liquidity"
 msgstr "Liquidity verwijderen"
 
@@ -760,10 +716,18 @@ msgstr "Liquidity verwijderen"
 msgid "Remove list"
 msgstr "Lijst verwijderen"
 
+#: src/components/swap/EditRecipient.tsx
+msgid "Remove send"
+msgstr "Verwijder verzenden"
+
 #: src/pages/RemoveLiquidity/index.tsx
 #: src/pages/RemoveLiquidity/index.tsx
 msgid "Remove {0} {1} and {2} {3}"
 msgstr "Verwijder {0} {1} en {2} {3}"
+
+#: src/pages/RemoveLiquidity/index.tsx
+msgid "Removing pool tokens converts your position back into underlying tokens at the current rate, proportional to your share of the pool. Accrued fees are included in the amounts you receive."
+msgstr "Door pooltokens te verwijderen, wordt uw positie weer omgezet in onderliggende tokens tegen de huidige koers, evenredig met uw aandeel in de pool. Opgebouwde kosten zijn inbegrepen in de bedragen die u ontvangt."
 
 #: src/pages/RemoveLiquidity/index.tsx
 msgid "Removing {0} {1} and {2} {3}"
@@ -778,12 +742,13 @@ msgid "Return"
 msgstr "Retourneren"
 
 #: src/components/swap/AdvancedSwapDetails.tsx
+#: src/components/swap/ConfirmSwapInfo.tsx
 msgid "Route"
 msgstr "Route"
 
 #: src/components/SearchModal/CurrencySearch.tsx
-msgid "Search name or paste address"
-msgstr "Zoek naam of plak adres"
+msgid "Search or paste address"
+msgstr "Adres zoeken of plakken"
 
 #: src/components/FeeSelector/index.tsx
 msgid "Select Pool"
@@ -793,20 +758,25 @@ msgstr "Selecteer pool"
 msgid "Select a pool type based on your preferred liquidity provider fee."
 msgstr "Selecteer een pool type op basis van uw voorkeur liquiditeit provider."
 
-#: src/pages/AddLiquidityV2/ConfirmAddModalBottom.tsx
-msgid "Share of Pool:"
-msgstr "Delen van Pool:"
+#: src/components/SearchModal/CurrencySearch.tsx
+msgid "Select a token"
+msgstr "Selecteer een token"
+
+#: src/components/swap/CurrencyInput.tsx
+msgid "Select a token to swap"
+msgstr "Selecteer een token om te ruilen"
+
+#: src/pages/AddLiquidityV2/ModalBottom.tsx
+msgid "Share of Pool"
+msgstr "Aandeel van zwembad"
 
 #: src/components/AccountDetails/index.tsx
 msgid "Show Portis"
 msgstr "Show Portis"
 
-#: src/pages/RemoveLiquidity/index.tsx
-msgid "Simple"
-msgstr "Eenvoudig"
-
 #: src/components/TransactionSettings/index.tsx
 #: src/components/swap/AdvancedSwapDetails.tsx
+#: src/components/swap/ConfirmSwapInfo.tsx
 msgid "Slippage tolerance"
 msgstr "Slippage tolerantie"
 
@@ -834,12 +804,8 @@ msgstr "{0} {1} en {2} {3} aanbieden"
 msgid "Swap"
 msgstr "Wisselen"
 
-#: src/pages/Swap/index.tsx
-#: src/pages/Swap/index.tsx
-msgid "Swap Anyway"
-msgstr "Toch wisselen"
-
 #: src/components/swap/ConfirmSwapModal.tsx
+#: src/components/swap/PendingSuccesModals.tsx
 msgid "Swapping {0} {1} for {2} {3}"
 msgstr "{0} {1} ruilen voor {2} {3}"
 
@@ -871,10 +837,6 @@ msgstr "De prijs van deze pool ligt buiten je geselecteerde bereik. Je positie v
 msgid "The price of this pool is within your selected range. Your position is currently earning fees."
 msgstr "De prijs van deze pool valt binnen je geselecteerde bereik. Je positie verdient momenteel kosten."
 
-#: src/pages/AddLiquidityV2/index.tsx
-msgid "The ratio of tokens you add will set the price of this pool."
-msgstr "De verhouding van tokens die je toevoegt zal de prijs van deze pool instellen."
-
 #: src/hooks/useSwapCallback.ts
 msgid "The transaction could not be sent because the deadline has passed. Please check that your transaction deadline is not too low."
 msgstr "De transactie kan niet worden verzonden omdat de deadline is verstreken. Controleer of uw transactiedeadline niet te laag is."
@@ -882,6 +844,10 @@ msgstr "De transactie kan niet worden verzonden omdat de deadline is verstreken.
 #: src/components/SearchModal/CommonBases.tsx
 msgid "These tokens are commonly paired with other tokens."
 msgstr "Deze tokens zijn meestal gekoppeld aan andere tokens."
+
+#: src/components/SearchModal/ImportToken.tsx
+msgid "This token doesn't appear on the active token list(s). Make sure this is the token that you want to trade."
+msgstr "Deze token verschijnt niet op de actieve tokenlijst(en). Zorg ervoor dat dit het token is dat u wilt verhandelen."
 
 #: src/hooks/useSwapCallback.ts
 msgid "This transaction will not succeed due to price movement. Try increasing your slippage tolerance. Note fee on transfer and rebase tokens are incompatible with Uniswap V3."
@@ -891,16 +857,20 @@ msgstr "Deze transactie zal niet slagen vanwege prijsbewegingen. Probeer uw slip
 msgid "This transaction will not succeed either due to price movement or fee on transfer. Try increasing your slippage tolerance."
 msgstr "Deze transactie zal niet slagen vanwege prijsbewegingen of kosten bij overdracht. Probeer uw sliptolerantie te vergroten."
 
+#: src/components/TipWithMessage/index.tsx
+msgid "Tip:"
+msgstr "Tip:"
+
 #: src/components/SearchModal/ManageTokens.tsx
 msgid "Tip: Custom tokens are stored locally in your browser"
 msgstr "Tip: Aangepaste tokens worden lokaal opgeslagen in uw browser"
 
+#: src/components/swap/CurrencyInput.tsx
 #: src/components/swap/SwapModalHeader.tsx
-#: src/pages/Swap/index.tsx
 msgid "To"
 msgstr "tot"
 
-#: src/pages/Swap/index.tsx
+#: src/components/swap/CurrencyInput.tsx
 msgid "To (at least)"
 msgstr "Naar (ten minste)"
 
@@ -965,9 +935,9 @@ msgstr "Unwrap"
 msgid "Update list"
 msgstr "Update lijst"
 
-#: src/components/PositionCard/index.tsx
-msgid "View accrued fees and analytics<0>↗</0>"
-msgstr "Opgebouwde kosten en analytics weergeven<0>↗</0>"
+#: src/pages/PoolFinder/index.tsx
+msgid "Use this tool to find pairs that don't automatically appear in the interface."
+msgstr "Gebruik deze tool om paren te vinden die niet automatisch in de interface verschijnen."
 
 #: src/components/SearchModal/ManageLists.tsx
 msgid "View list"
@@ -978,6 +948,10 @@ msgstr "Lijst bekijken"
 #: src/components/TransactionConfirmationModal/index.tsx
 msgid "View on Etherscan"
 msgstr "Bekijk op Etherscan"
+
+#: src/components/PositionCard/PoolInformation.tsx
+msgid "View pool information<0>↗</0>"
+msgstr "Zwembadinformatie bekijken<0>↗</0>"
 
 #: src/components/ModalViews/index.tsx
 msgid "View transaction on Etherscan"
@@ -990,6 +964,11 @@ msgstr "Wachten op bevestiging"
 #: src/components/earn/StakingModal.tsx
 msgid "Weekly Rewards"
 msgstr "Wekelijkse Beloningen"
+
+#: src/pages/AddLiquidityV2/Tip.tsx
+#: src/pages/AddLiquidityV2/Tip.tsx
+msgid "When you add liquidity, you will receive pool tokens representing your position. These tokens automatically earn fees proportional to your share of the pool, and can be redeemed at any time."
+msgstr "Wanneer u liquiditeit toevoegt, ontvangt u pooltokens die uw positie vertegenwoordigen. Deze tokens verdienen automatisch vergoedingen die evenredig zijn aan uw aandeel in de pool en kunnen op elk moment worden ingewisseld."
 
 #: src/components/earn/ClaimRewardModal.tsx
 msgid "When you claim without withdrawing your liquidity remains in the mining pool."
@@ -1033,34 +1012,32 @@ msgstr "Verkeerd netwerk"
 msgid "You are creating a pool"
 msgstr "Je maakt een zwembad aan"
 
-#: src/pages/AddLiquidityV2/index.tsx
-msgid "You are the first liquidity provider."
-msgstr "U bent de eerste liquiditeitsverschaffer."
-
 #: src/pages/Swap/index.tsx
 msgid "You can now trade {0}"
 msgstr "U kunt nu {0} ruilen"
 
 #: src/pages/PoolFinder/index.tsx
-msgid "You don’t have liquidity in this pool yet."
-msgstr "Je hebt nog geen liquiditeit in deze pool."
+msgid "You don’t have liquidity in this pool yet"
+msgstr "U heeft nog geen liquiditeit in deze pool"
 
 #: src/pages/Swap/index.tsx
-msgid "You must give the IXSwap smart contracts permission to use your {0}. You only have to do this once per token."
-msgstr ""
+msgid "You must give the IXS smart contracts permission to use your {0}. You only have to do this once per token."
+msgstr "U moet de slimme contracten van IXS toestemming geven om uw {0} te gebruiken. Je hoeft dit maar één keer per token te doen."
 
 #: src/pages/AddLiquidityV2/index.tsx
 #: src/pages/RemoveLiquidity/index.tsx
 msgid "You will receive"
 msgstr "Je zult ontvangen"
 
-#: src/components/PositionCard/V2.tsx
 #: src/components/PositionCard/index.tsx
-#: src/components/PositionCard/index.tsx
-msgid "Your pool share:"
-msgstr "Jouw pool deel:"
+msgid "Your pool share"
+msgstr "Uw zwembadaandeel"
 
 #: src/components/PositionCard/index.tsx
+msgid "Your pool tokens"
+msgstr "Uw pooltokens"
+
+#: src/components/PositionCard/MinimalPositionCard.tsx
 msgid "Your position"
 msgstr "Jouw positie"
 
@@ -1071,11 +1048,6 @@ msgstr "Je positie heeft 0 liquiditeit en verdient geen kosten."
 #: src/components/earn/PoolCard.tsx
 msgid "Your rate"
 msgstr "Uw tarief"
-
-#: src/components/PositionCard/V2.tsx
-#: src/components/PositionCard/index.tsx
-msgid "Your total pool tokens:"
-msgstr "Uw totale pool tokens:"
 
 #: src/components/TransactionSettings/index.tsx
 msgid "Your transaction may be frontrun"
@@ -1115,7 +1087,7 @@ msgstr "via {0}"
 
 #: src/components/Toggle/index.tsx
 msgid "{0}"
-msgstr ""
+msgstr "{0}"
 
 #: src/components/PositionCard/index.tsx
 msgid "{0} %"
@@ -1125,8 +1097,8 @@ msgstr "{0} %"
 msgid "{0} Custom Tokens"
 msgstr "{0} aangepaste tokens"
 
-#: src/pages/AddLiquidityV2/ConfirmAddModalBottom.tsx
-#: src/pages/AddLiquidityV2/ConfirmAddModalBottom.tsx
+#: src/pages/AddLiquidityV2/ModalBottom.tsx
+#: src/pages/AddLiquidityV2/ModalBottom.tsx
 msgid "{0} Deposited"
 msgstr "{0} opgeschort"
 
@@ -1159,7 +1131,7 @@ msgid "{0} • Added by user"
 msgstr "{0} • Toegevoegd door gebruiker"
 
 #: src/components/CurrencyInputPanel/FiatValue.tsx
-#: src/pages/AddLiquidityV2/ConfirmAddModalBottom.tsx
+#: src/pages/AddLiquidityV2/ModalBottom.tsx
 msgid "{0}%"
 msgstr "{0}%"
 
@@ -1169,4 +1141,4 @@ msgstr "{tokenB} per {tokenA}"
 
 #: src/components/CurrencyInputPanel/FiatValue.tsx
 msgid "~$ {0}"
-msgstr ""
+msgstr "~$ {0}"

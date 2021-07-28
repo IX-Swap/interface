@@ -34,10 +34,6 @@ msgstr "(すべてクリア)"
 msgid "+{feeAmountFormatted}%"
 msgstr "+{feeAmountFormatted}%"
 
-#: src/pages/Swap/index.tsx
-msgid "- Remove send"
-msgstr "- 送信を削除"
-
 #: src/components/InputStepCounter/InputStepCounter.tsx
 msgid "-{feeAmountFormatted}%"
 msgstr "-{feeAmountFormatted}%"
@@ -59,26 +55,11 @@ msgstr "0.3%の手数料"
 msgid "1% fee"
 msgstr "1% の手数料"
 
-#: src/pages/Pool/v2.tsx
-msgid "<0>Account analytics and accrued fees</0><1> ↗ </1>"
-msgstr "<0>アカウント分析と発生した手数料</0><1>↗ </1>"
-
-#: src/pages/RemoveLiquidity/index.tsx
-msgid "<0>Tip:</0> Removing pool tokens converts your position back into underlying tokens at the current rate, proportional to your share of the pool. Accrued fees are included in the amounts you receive."
-msgstr "<0>ヒント:</0>プールトークンを削除すると、あなたのポジションは、プールのシェアに比例して、現在のレートで元のトークンに戻ります。受け取った手数料は、あなたが受け取るトークンに含まれます。"
-
 #: src/pages/PoolFinder/index.tsx
-msgid "<0>Tip:</0> Use this tool to find pairs that don't automatically appear in the interface."
-msgstr "<0>ヒント:</0>このツールを使用して、インターフェイスに自動的に表示されないペアを見つけます。"
+msgid "<0>Loading</0>"
+msgstr "<0>読み込み中</ 0>"
 
-#: src/pages/AddLiquidityV2/index.tsx
-msgid "<0>Tip:</0> When you add liquidity, you will receive pool tokens representing your position. These tokens automatically earn fees proportional to your share of the pool, and can be redeemed at any time."
-msgstr "<0>ヒント:</0>流動性を追加すると、あなたのポジションを表すプールトークンを受け取ります。 プールトークンは自動的にプールのシェアに比例して手数料を獲得し、いつでも償還することができます。"
-
-#: src/components/Menu/index.tsx
-msgid "About"
-msgstr "概要"
-
+#: src/components/swap/AcceptChanges.tsx
 #: src/components/swap/SwapModalHeader.tsx
 msgid "Accept"
 msgstr "同意する"
@@ -96,12 +77,12 @@ msgid "Add"
 msgstr "追加"
 
 #: src/components/NavigationTabs/index.tsx
-#: src/pages/Pool/v2.tsx
+#: src/pages/Pool/AddLiquidityButton.tsx
 msgid "Add Liquidity"
 msgstr "流動性を追加"
 
 #: src/pages/PoolFinder/index.tsx
-msgid "Add liquidity."
+msgid "Add liquidity"
 msgstr "流動性を追加"
 
 #: src/components/TransactionConfirmationModal/index.tsx
@@ -117,25 +98,21 @@ msgstr "{0} {1} と {2} {3} の追加"
 msgid "Added {0}"
 msgstr "{0} を追加"
 
+#: src/pages/Swap/index.tsx
+msgid "Allow IXSwap to use your {0}"
+msgstr "IXSwapに{0}の使用を許可する"
+
 #: src/components/Settings/SettingsModal.tsx
 msgid "Allow high price impact trades and skip the confirm screen. Use at your own risk."
 msgstr "価格への大きな影響がある取引を許可し、確認画面をスキップします。自己責任で使用してください。"
 
-#: src/pages/Swap/index.tsx
-msgid "Allow the IXSwap Protocol to use your {0}"
-msgstr ""
-
 #: src/components/Header/URLWarning.tsx
-msgid "Always make sure the URL is<0>app.uniswap.org</0> - bookmark it to be safe."
-msgstr "URLが<0> app.uniswap.org</0>であることを常に確認してください。安全のためにこのURLをブックマークしてください。"
+msgid "Always make sure the URL is<0>app.ixswap.io</0> - bookmark it to be safe."
+msgstr "URLが<0> app.ixswap.io </ 0>であることを常に確認してください-安全のためにブックマークしてください。"
 
 #: src/hooks/useSwapCallback.ts
 msgid "An error occurred when trying to execute this swap. You may need to increase your slippage tolerance. If that does not work, there may be an incompatibility with the token you are trading. Note fee on transfer and rebase tokens are incompatible with Uniswap V3."
 msgstr "このスワップを実行しようとしたときにエラーが発生しました。スリッページの許容範囲を増やす必要があるかもしれません。それでも上手くいかない場合は、取引しているトークンとの互換性がない可能性があります。転送時に手数料が発生するトークンおよびリベーストークンは、UniswapV3と互換性がないことにご注意ください。"
-
-#: src/components/Menu/index.tsx
-msgid "Analytics"
-msgstr "分析"
 
 #: src/components/earn/StakingModal.tsx
 #: src/pages/RemoveLiquidity/index.tsx
@@ -192,31 +169,25 @@ msgstr "安定ペアに最適です。"
 msgid "Blocked address"
 msgstr "ブロックされたアドレス"
 
-#: src/components/PositionCard/index.tsx
-msgid "By adding liquidity you'll earn 0.3% of all trades on this pair proportional to your share of the pool. Fees are added to the pool, accrue in real time and can be claimed by withdrawing your liquidity."
-msgstr "流動性を追加することにより、あなたはプールのあなたのシェアに比例して、このペアのすべての取引の0.3%を得ることができます。 手数料はプールに追加され、リアルタイムで補償され、あなたの流動性を引き出すことによって請求することができます。"
-
 #: src/components/SearchModal/ImportList.tsx
 msgid "By adding this list you are implicitly trusting that the data is correct. Anyone can create a list, including creating fake versions of existing lists and lists that claim to represent projects that do not have one."
 msgstr "このリストを追加することで、データが正しいことを暗黙的に信頼することになります。 既存のリストの偽のバージョンや、プロジェクトを持たないプロジェクトを表すと主張するリストを作成するなど、誰でもリストを作成できます。"
 
 #: src/components/WalletModal/index.tsx
-msgid "By connecting a wallet, you agree to Uniswap Labs’ <0>Terms of Service</0> and acknowledge that you have read and understand the <1>Uniswap protocol disclaimer</1>."
-msgstr "ウォレットを接続することにより、Uniswap Labs' <0>サービス利用規約</0>に同意し、<1>Uniswapプロトコル免責事項</1>を読み、理解したことに同意します。"
+msgid "By connecting a wallet, you agree to IXSwap’ <0>Terms and Conditions</0> and acknowledge that you have read and understand the <1>IXSwap Privacy Policy</1>."
+msgstr "ウォレットを接続することにより、IXSwapの<0>利用規約</ 0>に同意し、<1> IXSwapプライバシーポリシー</ 1>を読んで理解したことに同意したことになります。"
 
 #: src/components/AccountDetails/index.tsx
 msgid "Change"
 msgstr "変更"
 
 #: src/components/CurrencyInputPanel/index.tsx
-#: src/components/SearchModal/CurrencySearch.tsx
-#: src/pages/PoolFinder/index.tsx
-#: src/pages/PoolFinder/index.tsx
+#: src/pages/PoolFinder/CurrencyRow.tsx
 #: src/state/swap/hooks.ts
 msgid "Choose token"
 msgstr "トークンを選択"
 
-#: src/pages/PoolFinder/index.tsx
+#: src/pages/PoolFinder/PrerequisiteMessage.tsx
 msgid "Choose token to find your liquidity."
 msgstr "トークンを選択して流動性を見つけます。"
 
@@ -252,24 +223,21 @@ msgstr "すべてクリア"
 msgid "Close"
 msgstr "閉じる"
 
-#: src/components/Menu/index.tsx
-msgid "Code"
-msgstr "コード"
-
 #: src/components/SearchModal/CommonBases.tsx
 msgid "Common bases"
 msgstr "共通のベース"
 
-#: src/pages/RemoveLiquidity/index.tsx
+#: src/pages/RemoveLiquidity/ModalBottom.tsx
 msgid "Confirm"
 msgstr "確認する"
 
-#: src/pages/AddLiquidityV2/ConfirmAddModalBottom.tsx
+#: src/pages/AddLiquidityV2/ModalBottom.tsx
 msgid "Confirm Supply"
 msgstr "供給を確認"
 
 #: src/components/swap/ConfirmSwapModal.tsx
 #: src/components/swap/SwapModalFooter.tsx
+#: src/pages/Swap/index.tsx
 msgid "Confirm Swap"
 msgstr "スワップの確認"
 
@@ -294,17 +262,17 @@ msgstr "ウォレットに接続"
 msgid "Connect a wallet"
 msgstr "ウォレットに接続"
 
+#: src/pages/Pool/NoPairs.tsx
+msgid "Connect a wallet to view your Liquidity."
+msgstr "ウォレットを接続して流動性を表示します。"
+
 #: src/components/WalletModal/index.tsx
 msgid "Connect to a wallet"
 msgstr "ウォレットに接続"
 
-#: src/pages/PoolFinder/index.tsx
+#: src/pages/PoolFinder/PrerequisiteMessage.tsx
 msgid "Connect to a wallet to find pools"
 msgstr "プールを見つけるにはウォレットに接続してください"
-
-#: src/pages/Pool/v2.tsx
-msgid "Connect to a wallet to view your liquidity."
-msgstr "ウォレットに接続して流動性を確認します。"
 
 #: src/components/earn/ClaimRewardModal.tsx
 msgid "Connect wallet"
@@ -323,7 +291,7 @@ msgstr "コピーしました"
 msgid "Copy Address"
 msgstr "アドレスをコピー"
 
-#: src/pages/AddLiquidityV2/ConfirmAddModalBottom.tsx
+#: src/pages/AddLiquidityV2/ModalBottom.tsx
 msgid "Create Pool & Supply"
 msgstr "プールと供給を作成"
 
@@ -331,23 +299,18 @@ msgstr "プールと供給を作成"
 msgid "Create a pair"
 msgstr "ペアを作成"
 
-#: src/components/ErrorBoundary/index.tsx
-msgid "Create an issue on GitHub"
-msgstr "GitHubで問題を作成する"
-
 #: src/pages/PoolFinder/index.tsx
-msgid "Create pool."
-msgstr "プールを作成"
+msgid "Create pool"
+msgstr "プールを作成する"
 
-#: src/pages/Swap/index.tsx
+#: src/components/swap/CurrentRate.tsx
 msgid "Current Rate"
 msgstr "現在のレート"
 
 #: src/components/Header/HeaderLinks.tsx
 msgid "Custodian"
-msgstr ""
+msgstr "カストディアン"
 
-#: src/components/earn/PoolCard.tsx
 #: src/components/earn/StakingModal.tsx
 #: src/components/earn/StakingModal.tsx
 msgid "Deposit"
@@ -369,10 +332,6 @@ msgstr "{0} IXS-V2"
 msgid "Depositing Liquidity"
 msgstr "デポジットの流動性"
 
-#: src/pages/RemoveLiquidity/index.tsx
-msgid "Detailed"
-msgstr "詳細情報"
-
 #: src/components/Settings/SettingsModal.tsx
 msgid "Disable Multihops"
 msgstr "マルチホップを無効にする"
@@ -381,17 +340,13 @@ msgstr "マルチホップを無効にする"
 msgid "Disconnect"
 msgstr "接続を解除"
 
-#: src/components/Menu/index.tsx
-msgid "Discord"
-msgstr "Discord"
-
 #: src/components/TransactionConfirmationModal/index.tsx
 msgid "Dismiss"
 msgstr "却下する"
 
-#: src/components/Menu/index.tsx
-msgid "Docs"
-msgstr "ドキュメント"
+#: src/pages/Pool/ImportPool.tsx
+msgid "Don't see a pool you joined?"
+msgstr "参加したプールが表示されませんか？"
 
 #: src/state/swap/hooks.ts
 msgid "Enter a recipient"
@@ -449,18 +404,14 @@ msgstr "エキスパートモード"
 msgid "Expert mode turns off the confirm transaction prompt and allows high slippage trades that often result in bad rates and lost funds."
 msgstr "エキスパートモードは確認トランザクションプロンプトをオフにし、多くの場合、不良率や資金を失う可能性が高いスリップページ取引を可能にします。"
 
+#: src/components/swap/CurrencyInput.tsx
 #: src/components/swap/SwapModalHeader.tsx
-#: src/pages/Swap/index.tsx
 msgid "From"
 msgstr "差出人:"
 
-#: src/pages/Swap/index.tsx
+#: src/components/swap/CurrencyInput.tsx
 msgid "From (at most)"
 msgstr "（最大）から"
-
-#: src/components/ErrorBoundary/index.tsx
-msgid "Get support on Discord"
-msgstr "Discordのサポートを受ける"
 
 #: src/pages/Swap/index.tsx
 msgid "High Price Impact"
@@ -470,7 +421,15 @@ msgstr "価格への影響"
 msgid "I understand"
 msgstr "了解しました"
 
-#: src/pages/RemoveLiquidity/index.tsx
+#: src/pages/RemoveLiquidity/RemovedLiquidity.tsx
+msgid "IXS Rewards"
+msgstr "IXSリワード"
+
+#: src/components/PositionCard/index.tsx
+msgid "IXS Rewards (on quit)"
+msgstr "IXSリワード（終了時）"
+
+#: src/pages/RemoveLiquidity/ModalBottom.tsx
 msgid "IXS {0}/{1} Burned"
 msgstr "IXS {0}/{1} が消費されました"
 
@@ -496,6 +455,10 @@ msgstr "プールをインポート"
 msgid "Import at your own risk"
 msgstr "自己責任でインポート"
 
+#: src/pages/Pool/ImportPool.tsx
+msgid "Import it."
+msgstr "インポートします。"
+
 #: src/components/Badge/RangeBadge.tsx
 msgid "In range"
 msgstr "範囲内"
@@ -504,7 +467,7 @@ msgstr "範囲内"
 msgid "Inactive"
 msgstr "非アクティブ"
 
-#: src/pages/AddLiquidityV2/index.tsx
+#: src/pages/AddLiquidityV2/PricesAndPoolShare.tsx
 msgid "Initial prices and pool share"
 msgstr "初期価格とプールシェア"
 
@@ -521,8 +484,8 @@ msgid "Install Metamask"
 msgstr "メタマスクのインストール"
 
 #: src/pages/Swap/index.tsx
-msgid "Insufficient liquidity for this trade."
-msgstr "この取引には流動性が不足しています。"
+msgid "Insufficient liquidity for this trade"
+msgstr "この取引のための不十分な流動性"
 
 #: src/pages/Swap/index.tsx
 msgid "Insufficient liquidity for this trade. Try enabling multi-hop trades."
@@ -538,13 +501,10 @@ msgstr "不十分な {0} バランス"
 msgid "Interface Settings"
 msgstr "インターフェイスの設定"
 
+#: src/pages/PoolFinder/index.tsx
 #: src/state/mint/hooks.ts
 msgid "Invalid pair"
 msgstr "無効なペア"
-
-#: src/pages/PoolFinder/index.tsx
-msgid "Invalid pair."
-msgstr "無効なペアです。"
 
 #: src/state/swap/hooks.ts
 msgid "Invalid recipient"
@@ -555,6 +515,7 @@ msgid "Liquidity Pool"
 msgstr "流動性プール"
 
 #: src/components/swap/AdvancedSwapDetails.tsx
+#: src/components/swap/ConfirmSwapInfo.tsx
 msgid "Liquidity Provider Fee"
 msgstr "流動性プロバイダー手数料"
 
@@ -566,33 +527,25 @@ msgstr "リスト"
 msgid "Loaded"
 msgstr "読み込まれました"
 
-#: src/components/PositionCard/Sushi.tsx
-#: src/components/PositionCard/V2.tsx
-#: src/components/PositionCard/index.tsx
-#: src/pages/Pool/v2.tsx
-#: src/pages/PoolFinder/index.tsx
+#: src/components/PositionCard/CurrencyHeader.tsx
+#: src/pages/Pool/NoPairs.tsx
 msgid "Loading"
 msgstr "読み込み中"
 
-#: src/components/Header/URLWarning.tsx
-msgid "Make sure the URL is<0>app.uniswap.org</0>"
-msgstr "URLが<0>app.uniswap.org</0>であることを確認してください"
+#: src/pages/RemoveLiquidity/RemoveAmount.tsx
+msgid "MAX"
+msgstr "MAX"
 
-#: src/components/PositionCard/V2.tsx
-#: src/components/PositionCard/V2.tsx
-#: src/components/PositionCard/index.tsx
-#: src/components/PositionCard/index.tsx
+#: src/components/Header/URLWarning.tsx
+msgid "Make sure the URL is<0>app.ixswap.io</0>"
+msgstr "URLが<0> app.ixswap.io </ 0>であることを確認してください"
+
 #: src/components/SearchModal/Manage.tsx
-#: src/components/earn/PoolCard.tsx
 msgid "Manage"
 msgstr "管理"
 
-#: src/components/PositionCard/index.tsx
-msgid "Manage Liquidity in Rewards Pool"
-msgstr "リワードプールで流動性を管理"
-
 #: src/components/SearchModal/CurrencySearch.tsx
-msgid "Manage Token Lists"
+msgid "Manage Token List"
 msgstr "トークンリストの管理"
 
 #: src/pages/PoolFinder/index.tsx
@@ -608,6 +561,7 @@ msgid "Max Price"
 msgstr "最大価格"
 
 #: src/components/swap/AdvancedSwapDetails.tsx
+#: src/components/swap/ConfirmSwapInfo.tsx
 msgid "Maximum sent"
 msgstr "最大送信数"
 
@@ -616,6 +570,7 @@ msgid "Min Price"
 msgstr "最小価格"
 
 #: src/components/swap/AdvancedSwapDetails.tsx
+#: src/components/swap/ConfirmSwapInfo.tsx
 msgid "Minimum received"
 msgstr "受け取った最小値"
 
@@ -623,13 +578,22 @@ msgstr "受け取った最小値"
 msgid "Minutes"
 msgstr "分"
 
+#: src/pages/Pool/NoPairs.tsx
+#: src/pages/Pool/v2.tsx
+msgid "My Liquidity"
+msgstr "私の流動性"
+
+#: src/components/PositionCard/MinimalPositionCard.tsx
+msgid "My pool share"
+msgstr "私のプールシェア"
+
 #: src/pages/Pool/EmptyLiquidity.tsx
 msgid "No liquidity found."
 msgstr "流動性が見つかりません。"
 
 #: src/pages/PoolFinder/index.tsx
-msgid "No pool found."
-msgstr "プールが見つかりません。"
+msgid "No pool found"
+msgstr "プールが見つかりません"
 
 #: src/components/SearchModal/CurrencySearch.tsx
 msgid "No results found."
@@ -647,10 +611,6 @@ msgstr "オン"
 msgid "ONLY USE THIS MODE IF YOU KNOW WHAT YOU ARE DOING."
 msgstr "あなたが何をしているか分かっている場合にのみ、このモードを使用してください。"
 
-#: src/pages/AddLiquidityV2/index.tsx
-msgid "Once you are happy with the rate click supply to review."
-msgstr "あなたがレビューするためにレート供給をクリックして満足している一度。"
-
 #: src/components/Web3ReactManager/index.tsx
 msgid "Oops! An unknown error occurred. Please refresh the page, or visit from another browser or device."
 msgstr "おっと！不明なエラーが発生しました。ページを更新するか、別のブラウザまたはデバイスからアクセスしてください。"
@@ -659,8 +619,8 @@ msgstr "おっと！不明なエラーが発生しました。ページを更新
 msgid "Out of range"
 msgstr "範囲外です"
 
-#: src/pages/AddLiquidityV2/index.tsx
-#: src/pages/RemoveLiquidity/index.tsx
+#: src/pages/AddLiquidityV2/ModalHeader.tsx
+#: src/pages/RemoveLiquidity/ModalHeader.tsx
 msgid "Output is estimated. If the price changes by more than {0}% your transaction will revert."
 msgstr "出力が推定されます。価格が {0}%以上変更された場合、取引は元に戻ります。"
 
@@ -693,24 +653,19 @@ msgstr "プールが見つかりました！"
 msgid "Pool rate"
 msgstr "プールレート"
 
-#: src/components/PositionCard/V2.tsx
-#: src/components/PositionCard/index.tsx
-msgid "Pool tokens in rewards pool:"
-msgstr "報酬プール内のプールトークン:"
-
-#: src/components/PositionCard/V2.tsx
-#: src/components/PositionCard/V2.tsx
 #: src/components/PositionCard/index.tsx
 #: src/components/PositionCard/index.tsx
-msgid "Pooled {0}:"
-msgstr "プールされた {0}:"
+msgid "Pooled {0}"
+msgstr "プールされた{0}"
 
 #: src/components/swap/SwapModalHeader.tsx
+#: src/pages/RemoveLiquidity/ModalBottom.tsx
 #: src/pages/RemoveLiquidity/index.tsx
 msgid "Price"
 msgstr "価格"
 
 #: src/components/swap/AdvancedSwapDetails.tsx
+#: src/components/swap/ConfirmSwapInfo.tsx
 msgid "Price Impact"
 msgstr "価格への影響"
 
@@ -718,19 +673,21 @@ msgstr "価格への影響"
 msgid "Price Impact Too High"
 msgstr "価格の影響が高すぎます"
 
+#: src/pages/Swap/index.tsx
+#: src/pages/Swap/index.tsx
+msgid "Price Impact is high. Swap Anyway"
+msgstr "価格への影響は大きい。 とにかくスワップ"
+
+#: src/components/swap/AcceptChanges.tsx
 #: src/components/swap/SwapModalHeader.tsx
 msgid "Price Updated"
 msgstr "価格更新"
 
-#: src/pages/RemoveLiquidity/index.tsx
-msgid "Price:"
-msgstr "価格:"
-
-#: src/pages/AddLiquidityV2/index.tsx
+#: src/pages/AddLiquidityV2/PricesAndPoolShare.tsx
 msgid "Prices and pool share"
 msgstr "価格とプールのシェア"
 
-#: src/pages/AddLiquidityV2/ConfirmAddModalBottom.tsx
+#: src/pages/AddLiquidityV2/ModalBottom.tsx
 msgid "Rates"
 msgstr "レート"
 
@@ -742,17 +699,16 @@ msgstr "サポートされていないアセットの詳細を読む"
 msgid "Recent Transactions"
 msgstr "最近の取引"
 
-#: src/components/PositionCard/V2.tsx
-#: src/components/PositionCard/index.tsx
 #: src/pages/RemoveLiquidity/index.tsx
 msgid "Remove"
 msgstr "削除"
 
-#: src/pages/RemoveLiquidity/index.tsx
+#: src/pages/RemoveLiquidity/RemoveAmount.tsx
 msgid "Remove Amount"
 msgstr "金額を削除"
 
 #: src/components/NavigationTabs/index.tsx
+#: src/components/PositionCard/index.tsx
 msgid "Remove Liquidity"
 msgstr "流動性を削除"
 
@@ -760,10 +716,18 @@ msgstr "流動性を削除"
 msgid "Remove list"
 msgstr "リストを削除"
 
+#: src/components/swap/EditRecipient.tsx
+msgid "Remove send"
+msgstr "送信を削除"
+
 #: src/pages/RemoveLiquidity/index.tsx
 #: src/pages/RemoveLiquidity/index.tsx
 msgid "Remove {0} {1} and {2} {3}"
 msgstr "{0} {1} と {2} {3} を削除"
+
+#: src/pages/RemoveLiquidity/index.tsx
+msgid "Removing pool tokens converts your position back into underlying tokens at the current rate, proportional to your share of the pool. Accrued fees are included in the amounts you receive."
+msgstr "プールトークンを削除すると、プールのシェアに比例して、現在のレートでポジションが基になるトークンに変換されます。 未払料金は、受け取る金額に含まれています。"
 
 #: src/pages/RemoveLiquidity/index.tsx
 msgid "Removing {0} {1} and {2} {3}"
@@ -778,12 +742,13 @@ msgid "Return"
 msgstr "Return"
 
 #: src/components/swap/AdvancedSwapDetails.tsx
+#: src/components/swap/ConfirmSwapInfo.tsx
 msgid "Route"
 msgstr "ルート"
 
 #: src/components/SearchModal/CurrencySearch.tsx
-msgid "Search name or paste address"
-msgstr "名前またはアドレスを貼り付けてください"
+msgid "Search or paste address"
+msgstr "アドレスを検索または貼り付けます"
 
 #: src/components/FeeSelector/index.tsx
 msgid "Select Pool"
@@ -793,20 +758,25 @@ msgstr "プールを選択"
 msgid "Select a pool type based on your preferred liquidity provider fee."
 msgstr "ご希望の流動性プロバイダ手数料に基づいてプールタイプを選択してください。"
 
-#: src/pages/AddLiquidityV2/ConfirmAddModalBottom.tsx
-msgid "Share of Pool:"
-msgstr "プールの共有:"
+#: src/components/SearchModal/CurrencySearch.tsx
+msgid "Select a token"
+msgstr "トークンを選択してください"
+
+#: src/components/swap/CurrencyInput.tsx
+msgid "Select a token to swap"
+msgstr "交換するトークンを選択します"
+
+#: src/pages/AddLiquidityV2/ModalBottom.tsx
+msgid "Share of Pool"
+msgstr "プールのシェア"
 
 #: src/components/AccountDetails/index.tsx
 msgid "Show Portis"
 msgstr "Show Portis"
 
-#: src/pages/RemoveLiquidity/index.tsx
-msgid "Simple"
-msgstr "単純な"
-
 #: src/components/TransactionSettings/index.tsx
 #: src/components/swap/AdvancedSwapDetails.tsx
+#: src/components/swap/ConfirmSwapInfo.tsx
 msgid "Slippage tolerance"
 msgstr "スリップページの許容差"
 
@@ -834,12 +804,8 @@ msgstr "{0} {1} と {2} {3} を供給しています"
 msgid "Swap"
 msgstr "入れ替え"
 
-#: src/pages/Swap/index.tsx
-#: src/pages/Swap/index.tsx
-msgid "Swap Anyway"
-msgstr "とにかく入れ替え"
-
 #: src/components/swap/ConfirmSwapModal.tsx
+#: src/components/swap/PendingSuccesModals.tsx
 msgid "Swapping {0} {1} for {2} {3}"
 msgstr "スワップ {0} {1} 用の {2} {3}"
 
@@ -871,10 +837,6 @@ msgstr "このプールの価格は選択した範囲外です。あなたのポ
 msgid "The price of this pool is within your selected range. Your position is currently earning fees."
 msgstr "このプールの価格は選択した範囲内です。あなたのポジションは現在手数料を獲得しています。"
 
-#: src/pages/AddLiquidityV2/index.tsx
-msgid "The ratio of tokens you add will set the price of this pool."
-msgstr "追加したトークンの割合は、このプールの価格を設定します。"
-
 #: src/hooks/useSwapCallback.ts
 msgid "The transaction could not be sent because the deadline has passed. Please check that your transaction deadline is not too low."
 msgstr "期限が過ぎたため、取引を送信できませんでした。取引期限が短すぎないことを確認してください。"
@@ -882,6 +844,10 @@ msgstr "期限が過ぎたため、取引を送信できませんでした。取
 #: src/components/SearchModal/CommonBases.tsx
 msgid "These tokens are commonly paired with other tokens."
 msgstr "これらのトークンは一般的に他のトークンとペアになっています。"
+
+#: src/components/SearchModal/ImportToken.tsx
+msgid "This token doesn't appear on the active token list(s). Make sure this is the token that you want to trade."
+msgstr "このトークンは、アクティブなトークンリストに表示されません。 これが取引したいトークンであることを確認してください。"
 
 #: src/hooks/useSwapCallback.ts
 msgid "This transaction will not succeed due to price movement. Try increasing your slippage tolerance. Note fee on transfer and rebase tokens are incompatible with Uniswap V3."
@@ -891,16 +857,20 @@ msgstr "価格変動により、この取引は成功しません。スリッペ
 msgid "This transaction will not succeed either due to price movement or fee on transfer. Try increasing your slippage tolerance."
 msgstr "この取引は、価格変動または振込手数料のいずれかにより成功しません。スリッページの許容範囲を広げてみてください。"
 
+#: src/components/TipWithMessage/index.tsx
+msgid "Tip:"
+msgstr "ヒント："
+
 #: src/components/SearchModal/ManageTokens.tsx
 msgid "Tip: Custom tokens are stored locally in your browser"
 msgstr "ヒント：カスタムトークンはブラウザにローカルに保存されます"
 
+#: src/components/swap/CurrencyInput.tsx
 #: src/components/swap/SwapModalHeader.tsx
-#: src/pages/Swap/index.tsx
 msgid "To"
 msgstr "終了日"
 
-#: src/pages/Swap/index.tsx
+#: src/components/swap/CurrencyInput.tsx
 msgid "To (at least)"
 msgstr "宛先（少なくとも）"
 
@@ -965,9 +935,9 @@ msgstr "Unwrap"
 msgid "Update list"
 msgstr "リストを更新"
 
-#: src/components/PositionCard/index.tsx
-msgid "View accrued fees and analytics<0>↗</0>"
-msgstr "発生した手数料と分析を表示<0>↗</0>"
+#: src/pages/PoolFinder/index.tsx
+msgid "Use this tool to find pairs that don't automatically appear in the interface."
+msgstr "このツールを使用して、インターフェイスに自動的に表示されないペアを見つけます。"
 
 #: src/components/SearchModal/ManageLists.tsx
 msgid "View list"
@@ -978,6 +948,10 @@ msgstr "リストを表示"
 #: src/components/TransactionConfirmationModal/index.tsx
 msgid "View on Etherscan"
 msgstr "Etherscan で表示"
+
+#: src/components/PositionCard/PoolInformation.tsx
+msgid "View pool information<0>↗</0>"
+msgstr "プール情報を表示する<0>↗</0>"
 
 #: src/components/ModalViews/index.tsx
 msgid "View transaction on Etherscan"
@@ -990,6 +964,11 @@ msgstr "確認待ち"
 #: src/components/earn/StakingModal.tsx
 msgid "Weekly Rewards"
 msgstr "週間ボーナス"
+
+#: src/pages/AddLiquidityV2/Tip.tsx
+#: src/pages/AddLiquidityV2/Tip.tsx
+msgid "When you add liquidity, you will receive pool tokens representing your position. These tokens automatically earn fees proportional to your share of the pool, and can be redeemed at any time."
+msgstr "流動性を追加すると、自分のポジションを表すプールトークンを受け取ります。 これらのトークンは、プールのシェアに比例した料金を自動的に獲得し、いつでも利用できます。"
 
 #: src/components/earn/ClaimRewardModal.tsx
 msgid "When you claim without withdrawing your liquidity remains in the mining pool."
@@ -1033,34 +1012,32 @@ msgstr "ネットワークが間違っています"
 msgid "You are creating a pool"
 msgstr "プールを作成しています"
 
-#: src/pages/AddLiquidityV2/index.tsx
-msgid "You are the first liquidity provider."
-msgstr "あなたは最初の流動性プロバイダーです。"
-
 #: src/pages/Swap/index.tsx
 msgid "You can now trade {0}"
 msgstr "{0}を取引できるようになりました"
 
 #: src/pages/PoolFinder/index.tsx
-msgid "You don’t have liquidity in this pool yet."
-msgstr "このプールにはまだ流動性がありません。"
+msgid "You don’t have liquidity in this pool yet"
+msgstr "このプールにはまだ流動性がありません"
 
 #: src/pages/Swap/index.tsx
-msgid "You must give the IXSwap smart contracts permission to use your {0}. You only have to do this once per token."
-msgstr ""
+msgid "You must give the IXS smart contracts permission to use your {0}. You only have to do this once per token."
+msgstr "{0}を使用するには、IXSスマートコントラクトに許可を与える必要があります。 これは、トークンごとに1回だけ実行する必要があります。"
 
 #: src/pages/AddLiquidityV2/index.tsx
 #: src/pages/RemoveLiquidity/index.tsx
 msgid "You will receive"
 msgstr "受け取ります。"
 
-#: src/components/PositionCard/V2.tsx
 #: src/components/PositionCard/index.tsx
-#: src/components/PositionCard/index.tsx
-msgid "Your pool share:"
-msgstr "あなたのプールシェア:"
+msgid "Your pool share"
+msgstr "あなたのプールシェア"
 
 #: src/components/PositionCard/index.tsx
+msgid "Your pool tokens"
+msgstr "あなたのプールトークン"
+
+#: src/components/PositionCard/MinimalPositionCard.tsx
 msgid "Your position"
 msgstr "自分の位置"
 
@@ -1071,11 +1048,6 @@ msgstr "あなたのポジションには0の流動性があり、手数料を�
 #: src/components/earn/PoolCard.tsx
 msgid "Your rate"
 msgstr "あなたのレート"
-
-#: src/components/PositionCard/V2.tsx
-#: src/components/PositionCard/index.tsx
-msgid "Your total pool tokens:"
-msgstr "あなたのプールトークンの合計："
 
 #: src/components/TransactionSettings/index.tsx
 msgid "Your transaction may be frontrun"
@@ -1115,7 +1087,7 @@ msgstr "{0} 経由で"
 
 #: src/components/Toggle/index.tsx
 msgid "{0}"
-msgstr ""
+msgstr "{0}"
 
 #: src/components/PositionCard/index.tsx
 msgid "{0} %"
@@ -1125,8 +1097,8 @@ msgstr "{0} %"
 msgid "{0} Custom Tokens"
 msgstr "{0} カスタムトークン"
 
-#: src/pages/AddLiquidityV2/ConfirmAddModalBottom.tsx
-#: src/pages/AddLiquidityV2/ConfirmAddModalBottom.tsx
+#: src/pages/AddLiquidityV2/ModalBottom.tsx
+#: src/pages/AddLiquidityV2/ModalBottom.tsx
 msgid "{0} Deposited"
 msgstr "{0} 預金済み"
 
@@ -1159,7 +1131,7 @@ msgid "{0} • Added by user"
 msgstr "{0} •ユーザーが追加"
 
 #: src/components/CurrencyInputPanel/FiatValue.tsx
-#: src/pages/AddLiquidityV2/ConfirmAddModalBottom.tsx
+#: src/pages/AddLiquidityV2/ModalBottom.tsx
 msgid "{0}%"
 msgstr "{0}%"
 
@@ -1169,4 +1141,4 @@ msgstr "{tokenB} あたり {tokenA}"
 
 #: src/components/CurrencyInputPanel/FiatValue.tsx
 msgid "~$ {0}"
-msgstr ""
+msgstr "~$ {0}"

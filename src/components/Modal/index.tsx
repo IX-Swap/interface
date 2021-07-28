@@ -1,28 +1,12 @@
 import React from 'react'
 import styled, { css } from 'styled-components'
-import { animated, useTransition, useSpring } from 'react-spring'
-import { DialogOverlay, DialogContent } from '@reach/dialog'
+import { useTransition, useSpring } from 'react-spring'
 import { isMobile } from 'react-device-detect'
 import { transparentize } from 'polished'
 import { useGesture } from 'react-use-gesture'
+import { ModalProps } from './interfaces'
+import { AnimatedDialogContent, StyledDialogOverlay } from './styleds'
 
-const AnimatedDialogOverlay = animated(DialogOverlay)
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
-const StyledDialogOverlay = styled(AnimatedDialogOverlay)`
-  &[data-reach-dialog-overlay] {
-    z-index: 2;
-    background-color: transparent;
-    overflow: hidden;
-
-    display: flex;
-    align-items: center;
-    justify-content: center;
-
-    background-color: ${({ theme }) => theme.modalBG};
-  }
-`
-
-const AnimatedDialogContent = animated(DialogContent)
 // destructure to not pass custom props to Dialog DOM element
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 const StyledDialogContent = styled(({ minHeight, maxHeight, mobile, isOpen, ...rest }) => (
@@ -35,7 +19,6 @@ const StyledDialogContent = styled(({ minHeight, maxHeight, mobile, isOpen, ...r
   &[data-reach-dialog-content] {
     margin: 0 0 2rem 0;
     background-color: ${({ theme }) => theme.bg0};
-    border: 1px solid ${({ theme }) => theme.bg1};
     box-shadow: 0 4px 8px 0 ${({ theme }) => transparentize(0.95, theme.shadow1)};
     padding: 0px;
     width: 50vw;
@@ -75,16 +58,6 @@ const StyledDialogContent = styled(({ minHeight, maxHeight, mobile, isOpen, ...r
     `}
   }
 `
-
-interface ModalProps {
-  isOpen: boolean
-  onDismiss: () => void
-  minHeight?: number | false
-  maxHeight?: number
-  initialFocusRef?: React.RefObject<any>
-  children?: React.ReactNode
-}
-
 export default function Modal({
   isOpen,
   onDismiss,
@@ -128,7 +101,11 @@ export default function Modal({
                 {...(isMobile
                   ? {
                       ...bind(),
-                      style: { transform: y.interpolate((y) => `translateY(${(y as number) > 0 ? y : 0}px)`) },
+                      style: {
+                        transform: y.interpolate(
+                          (y) => `translateY(${(y as number) > 0 ? `calc(${y}px + 25px)` : `25px`})`
+                        ),
+                      },
                     }
                   : {})}
                 aria-label="dialog content"

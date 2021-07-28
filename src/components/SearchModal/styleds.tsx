@@ -1,6 +1,8 @@
 import styled from 'styled-components/macro'
-import { AutoColumn } from '../Column'
-import { RowBetween, RowFixed } from '../Row'
+import { gradientBorder } from 'theme'
+import { hexToRGBA } from 'utils/themeHelper'
+import Column, { AutoColumn } from '../Column'
+import Row, { RowBetween, RowFixed } from '../Row'
 
 export const ModalInfo = styled.div`
   ${({ theme }) => theme.flexRowNoWrap}
@@ -59,17 +61,43 @@ export const Checkbox = styled.input`
 export const PaddedColumn = styled(AutoColumn)`
   padding: 20px;
 `
-
+export const PaddedColumnList = styled(AutoColumn)`
+  padding: 0 0 0 24px;
+  ${({ theme }) => theme.mediaWidth.upToExtraSmall`
+      padding: 0 0 0 1rem;
+  `};
+`
+export const PaddedColumn40 = styled(PaddedColumn)`
+  padding-left: 40px;
+  padding-right: 40px;
+  ${({ theme }) => theme.mediaWidth.upToExtraSmall`
+      padding-left: 1rem;
+      padding-right: 1rem;
+  `};
+`
 export const MenuItem = styled(RowBetween)`
-  padding: 4px 20px;
+  padding: 4px 40px;
   height: 56px;
   display: grid;
   grid-template-columns: auto minmax(auto, 1fr) auto minmax(0, 72px);
+  grid-gap: 8px;
+  cursor: ${({ disabled }) => !disabled && 'pointer'};
+  pointer-events: ${({ disabled }) => disabled && 'none'};
+  :hover {
+    background: ${({ theme, disabled }) => !disabled && `${hexToRGBA(theme.bg10, 0.1)}`};
+    backdrop-filter: blur(4px);
+  }
+  opacity: ${({ disabled, selected }) => (disabled || selected ? 0.5 : 1)};
+`
+export const UnapprovedMenuItem = styled(Row)`
+  padding: 4px 16px;
+  height: 56px;
   grid-gap: 16px;
   cursor: ${({ disabled }) => !disabled && 'pointer'};
   pointer-events: ${({ disabled }) => disabled && 'none'};
   :hover {
-    background-color: ${({ theme, disabled }) => !disabled && theme.bg2};
+    background: ${({ theme, disabled }) => !disabled && `${hexToRGBA(theme.bg10, 0.1)}`};
+    backdrop-filter: blur(4px);
   }
   opacity: ${({ disabled, selected }) => (disabled || selected ? 0.5 : 1)};
 `
@@ -77,38 +105,52 @@ export const MenuItem = styled(RowBetween)`
 export const SearchInput = styled.input`
   position: relative;
   display: flex;
-  padding: 16px;
+  padding: 15px 22px;
   align-items: center;
-  width: 100%;
   white-space: nowrap;
-  background: none;
   border: none;
   outline: none;
-  border-radius: 20px;
-  color: ${({ theme }) => theme.text1};
-  border-style: solid;
-  border: 1px solid ${({ theme }) => theme.bg3};
+  border-radius: 36px;
+  color: ${({ theme }) => theme.text8};
+  border: none;
   -webkit-appearance: none;
-
-  font-size: 18px;
-
+  background: ${({ theme }) => theme.bg11};
+  font-size: 20px;
+  line-height: 40px;
+  width: 100%;
+  height: 100%;
   ::placeholder {
-    color: ${({ theme }) => theme.text3};
+    color: ${({ theme }) => theme.text8};
   }
   transition: border 100ms;
   :focus {
-    border: 1px solid ${({ theme }) => theme.primary1};
     outline: none;
   }
 `
 export const Separator = styled.div`
   width: 100%;
   height: 1px;
-  background-color: ${({ theme }) => theme.bg2};
+  background-color: ${({ theme }) => theme.text2};
+  opacity: 0.4;
 `
 
 export const SeparatorDark = styled.div`
   width: 100%;
   height: 1px;
   background-color: ${({ theme }) => theme.bg3};
+`
+export const ModalContentWrapper = styled(Column)`
+  width: 100%;
+  flex: 1 1;
+  position: relative;
+  background: ${({ theme }) => theme.bgG4};
+`
+export const UnapprovedTokenWrapper = styled.div`
+  ${gradientBorder}
+  padding-left: 24px;
+  padding-right: 21px;
+  align-items: center;
+  display: grid;
+  width: 100%;
+  grid-template-columns: auto minmax(auto, 1fr) minmax(0, 72px);
 `

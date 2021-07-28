@@ -4,7 +4,7 @@ import { TYPE, CloseIcon, ExternalLink } from 'theme'
 import { ButtonEmpty } from 'components/Button'
 import Modal from 'components/Modal'
 import Card, { OutlineCard } from 'components/Card'
-import { RowBetween, AutoRow } from 'components/Row'
+import { RowBetween, AutoRow, RowCenter } from 'components/Row'
 import { AutoColumn } from 'components/Column'
 import CurrencyLogo from 'components/CurrencyLogo'
 import { useActiveWeb3React } from 'hooks/web3'
@@ -12,6 +12,8 @@ import { Currency, Token } from '@ixswap1/sdk-core'
 import { useUnsupportedTokens } from '../../hooks/Tokens'
 import { ExplorerDataType, getExplorerLink } from '../../utils/getExplorerLink'
 import { Trans } from '@lingui/macro'
+import { Text } from 'rebass'
+import useTheme from 'hooks/useTheme'
 
 const DetailsFooter = styled.div<{ show: boolean }>`
   padding-top: calc(16px + 2rem);
@@ -47,7 +49,7 @@ export default function UnsupportedCurrencyFooter({
 }) {
   const { chainId } = useActiveWeb3React()
   const [showDetails, setShowDetails] = useState(false)
-
+  const theme = useTheme()
   const tokens =
     chainId && currencies
       ? currencies.map((currency) => {
@@ -56,16 +58,15 @@ export default function UnsupportedCurrencyFooter({
       : []
 
   const unsupportedTokens: { [address: string]: Token } = useUnsupportedTokens()
-
   return (
     <DetailsFooter show={show}>
       <Modal isOpen={showDetails} onDismiss={() => setShowDetails(false)}>
         <Card padding="2rem">
           <AutoColumn gap="lg">
             <RowBetween>
-              <TYPE.mediumHeader>
+              <Text>
                 <Trans>Unsupported Assets</Trans>
-              </TYPE.mediumHeader>
+              </Text>
               <CloseIcon onClick={() => setShowDetails(false)} />
             </RowBetween>
             {tokens.map((token) => {
@@ -100,11 +101,13 @@ export default function UnsupportedCurrencyFooter({
           </AutoColumn>
         </Card>
       </Modal>
-      <ButtonEmpty padding={'0'} onClick={() => setShowDetails(true)}>
-        <TYPE.blue>
-          <Trans>Read more about unsupported assets</Trans>
-        </TYPE.blue>
-      </ButtonEmpty>
+      <RowCenter>
+        <ButtonEmpty padding={'0'} onClick={() => setShowDetails(true)} data-testid="unsupported-assets-details">
+          <Text color={theme.text2}>
+            <Trans>Read more about unsupported assets</Trans>
+          </Text>
+        </ButtonEmpty>
+      </RowCenter>
     </DetailsFooter>
   )
 }

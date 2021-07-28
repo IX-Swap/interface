@@ -1,23 +1,23 @@
-import React, { CSSProperties } from 'react'
 import { Token } from '@ixswap1/sdk-core'
-import { AutoRow, RowFixed } from 'components/Row'
+import { Trans } from '@lingui/macro'
+import { ButtonGradient } from 'components/Button'
 import { AutoColumn } from 'components/Column'
 import CurrencyLogo from 'components/CurrencyLogo'
-import { TYPE } from 'theme'
 import ListLogo from 'components/ListLogo'
+import { AutoRow, RowFixed } from 'components/Row'
+import { useIsTokenActive, useIsUserAddedToken } from 'hooks/Tokens'
 import useTheme from 'hooks/useTheme'
-import { ButtonPrimary } from 'components/Button'
-import styled from 'styled-components/macro'
-import { useIsUserAddedToken, useIsTokenActive } from 'hooks/Tokens'
+import React, { CSSProperties } from 'react'
 import { CheckCircle } from 'react-feather'
+import styled from 'styled-components/macro'
+import { TYPE } from 'theme'
 import { WrappedTokenInfo } from '../../state/lists/wrappedTokenInfo'
-import { Trans } from '@lingui/macro'
 
 const TokenSection = styled.div<{ dim?: boolean }>`
   padding: 4px 20px;
   height: 56px;
   display: grid;
-  grid-template-columns: auto minmax(auto, 1fr) auto;
+  grid-template-columns: auto minmax(auto, 0.9fr) auto;
   grid-gap: 16px;
   align-items: center;
 
@@ -80,27 +80,28 @@ export default function ImportRow({
           </RowFixed>
         )}
       </AutoColumn>
-      {!isActive && !isAdded ? (
-        <ButtonPrimary
-          width="fit-content"
-          padding="6px 12px"
-          fontWeight={500}
-          fontSize="14px"
-          onClick={() => {
-            setImportToken && setImportToken(token)
-            showImportView()
-          }}
-        >
-          <Trans>Import</Trans>
-        </ButtonPrimary>
-      ) : (
-        <RowFixed style={{ minWidth: 'fit-content' }}>
-          <CheckIcon />
-          <TYPE.main color={theme.green1}>
-            <Trans>Active</Trans>
-          </TYPE.main>
-        </RowFixed>
-      )}
+      <AutoColumn>
+        {!isActive && !isAdded ? (
+          <ButtonGradient
+            width={'100%'}
+            fontSize={'13px'}
+            data-testid="import-token-in-row"
+            onClick={() => {
+              setImportToken && setImportToken(token)
+              showImportView()
+            }}
+          >
+            <Trans>Import</Trans>
+          </ButtonGradient>
+        ) : (
+          <RowFixed style={{ minWidth: 'fit-content' }}>
+            <CheckIcon />
+            <TYPE.main color={theme.green1}>
+              <Trans>Active</Trans>
+            </TYPE.main>
+          </RowFixed>
+        )}
+      </AutoColumn>
     </TokenSection>
   )
 }

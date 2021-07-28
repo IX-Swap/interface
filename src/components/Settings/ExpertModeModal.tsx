@@ -63,6 +63,7 @@ export const ExpertModeModal = ({ showConfirmation = false, toggleConfirmation }
               <Trans>ONLY USE THIS MODE IF YOU KNOW WHAT YOU ARE DOING.</Trans>
             </Text>
             <ButtonError
+              data-testid="turn-on-expert-mode"
               error={true}
               padding={'12px'}
               onClick={() => {

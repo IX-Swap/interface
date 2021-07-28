@@ -9,6 +9,14 @@ const TooltipContainer = styled.div`
   word-break: break-word;
 `
 
+const TooltipContainerFit = styled(TooltipContainer)`
+  width: fit-content;
+  max-width: 40vw;
+  min-width: 256px;
+  font-weight: 500;
+  font-size: 16px;
+  line-height: 24px;
+`
 interface TooltipProps extends Omit<PopoverProps, 'content'> {
   text: ReactNode
 }
@@ -19,6 +27,10 @@ interface TooltipContentProps extends Omit<PopoverProps, 'content'> {
 
 export default function Tooltip({ text, ...rest }: TooltipProps) {
   return <Popover content={<TooltipContainer>{text}</TooltipContainer>} {...rest} />
+}
+
+export function TooltipLight({ text, ...rest }: TooltipProps) {
+  return <Popover offset={[-180, 10]} content={<TooltipContainerFit>{text}</TooltipContainerFit>} {...rest} />
 }
 
 export function TooltipContent({ content, ...rest }: TooltipContentProps) {
@@ -35,6 +47,19 @@ export function MouseoverTooltip({ children, ...rest }: Omit<TooltipProps, 'show
         {children}
       </div>
     </Tooltip>
+  )
+}
+
+export function MouseoverLightTooltip({ children, ...rest }: Omit<TooltipProps, 'show'>) {
+  const [show, setShow] = useState(false)
+  const open = useCallback(() => setShow(true), [setShow])
+  const close = useCallback(() => setShow(false), [setShow])
+  return (
+    <TooltipLight {...rest} show={show}>
+      <div onMouseEnter={open} onMouseLeave={close}>
+        {children}
+      </div>
+    </TooltipLight>
   )
 }
 

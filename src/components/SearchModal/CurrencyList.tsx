@@ -1,32 +1,37 @@
-import { Trans } from '@lingui/macro'
 import { Currency, CurrencyAmount, Token } from '@ixswap1/sdk-core'
+import { Trans } from '@lingui/macro'
+import Attention from 'assets/images/attention-clear.svg'
+import { ButtonGradient } from 'components/Button'
+import { VioletCard } from 'components/Card'
+import QuestionHelper from 'components/QuestionHelper'
+import { STO_STATUS_APPROVED } from 'components/SecurityCard/STOStatus'
+import useTheme from 'hooks/useTheme'
 import React, { CSSProperties, MutableRefObject, useCallback, useMemo } from 'react'
-import { FixedSizeList } from 'react-window'
-import { Text } from 'rebass'
+import { Link } from 'react-router-dom'
+import { VariableSizeList as List } from 'react-window'
+import { Box, Text } from 'rebass'
+import { useSecTokens } from 'state/secTokens/hooks'
+import { useUserSecTokens } from 'state/user/hooks'
 import styled from 'styled-components/macro'
+import { routes } from 'utils/routes'
+import TokenListLogo from '../../assets/svg/tokenlist.svg'
+import { useIsUserAddedToken } from '../../hooks/Tokens'
 import { useActiveWeb3React } from '../../hooks/web3'
 import { useCombinedActiveList } from '../../state/lists/hooks'
 import { WrappedTokenInfo } from '../../state/lists/wrappedTokenInfo'
 import { useCurrencyBalance } from '../../state/wallet/hooks'
-import { TYPE } from '../../theme'
-import { useIsUserAddedToken } from '../../hooks/Tokens'
-import Column from '../Column'
-import { RowFixed, RowBetween } from '../Row'
-import CurrencyLogo from '../CurrencyLogo'
-import { MouseoverTooltip } from '../Tooltip'
-import { MenuItem } from './styleds'
-import Loader from '../Loader'
+import { SvgIconWrapper, TYPE } from '../../theme'
 import { isTokenOnList } from '../../utils'
+import Column from '../Column'
+import CurrencyLogo from '../CurrencyLogo'
+import Loader from '../Loader'
+import Row, { RowBetween, RowFixed } from '../Row'
+import { MouseoverTooltip } from '../Tooltip'
 import ImportRow from './ImportRow'
-import { LightGreyCard } from 'components/Card'
-import TokenListLogo from '../../assets/svg/tokenlist.svg'
-import QuestionHelper from 'components/QuestionHelper'
-import useTheme from 'hooks/useTheme'
-
+import { MenuItem, UnapprovedMenuItem, UnapprovedTokenWrapper } from './styleds'
 function currencyKey(currency: Currency): string {
   return currency.isToken ? currency.address : 'ETHER'
 }
-
 const StyledBalanceText = styled(Text)`
   white-space: nowrap;
   overflow: hidden;
@@ -56,6 +61,9 @@ const FixedContentRow = styled.div`
   align-items: center;
 `
 
+const UNAPPROVED_ROW = 72
+const NORMAL_ROW = 56
+const BREAK_HEIGHT = 36
 function Balance({ balance }: { balance: CurrencyAmount<Currency> }) {
   return <StyledBalanceText title={balance.toExact()}>{balance.toSignificant(4)}</StyledBalanceText>
 }
@@ -103,12 +111,14 @@ function CurrencyRow({
   onSelect,
   isSelected,
   otherSelected,
+  isUnapprovedSecToken,
   style,
 }: {
   currency: Currency
   onSelect: () => void
   isSelected: boolean
   otherSelected: boolean
+  isUnapprovedSecToken: boolean
   style: CSSProperties
 }) {
   const { account } = useActiveWeb3React()
@@ -117,33 +127,103 @@ function CurrencyRow({
   const isOnSelectedList = isTokenOnList(selectedTokenList, currency.isToken ? currency : undefined)
   const customAdded = useIsUserAddedToken(currency)
   const balance = useCurrencyBalance(account ?? undefined, currency)
-
+  const theme = useTheme()
   // only show add or remove buttons if not on selected list
+  const unapprovedSecToken = useMemo(() => {
+    if (!isUnapprovedSecToken) return null
+    return (
+      <Row style={{ position: 'relative', height: '100%', alignItems: 'center' }}>
+        <UnapprovedTokenWrapper>
+          <CurrencyLogo currency={currency} size={'24px'} />
+          <Column style={{ marginLeft: '8px' }}>
+            <RowFixed style={{ gap: '8px' }}>
+              <Text title={currency.name} fontWeight={500}>
+                {currency.symbol}
+              </Text>
+              <TYPE.darkGray ml="0px" fontSize={'12px'} fontWeight={300}>
+                {!currency.isNative && !isOnSelectedList && customAdded ? (
+                  <Trans>{currency.name} • Added by user</Trans>
+                ) : (
+                  currency.name
+                )}
+              </TYPE.darkGray>
+            </RowFixed>
+            <RowFixed>
+              <SvgIconWrapper size={20} style={{ marginLeft: '-6px' }}>
+                <img src={Attention} alt={'Attention'} />
+              </SvgIconWrapper>
+              <TYPE.popOver>
+                <Trans>Needs accreditation</Trans>
+              </TYPE.popOver>
+            </RowFixed>
+          </Column>
+          <Column>
+            <Box width="100%">
+              <ButtonGradient
+                as={Link}
+                to={routes.securityTokens(currency)}
+                data-testid="currency-search-sec-token-info"
+              >
+                <Trans>Info</Trans>
+              </ButtonGradient>
+            </Box>
+          </Column>
+        </UnapprovedTokenWrapper>
+      </Row>
+    )
+  }, [currency, isUnapprovedSecToken, customAdded, isOnSelectedList])
+  const tokenDetails = useMemo(() => {
+    if (isUnapprovedSecToken) return null
+    return (
+      <>
+        <CurrencyLogo currency={currency} size={'24px'} />
+        <Column>
+          <Text title={currency.name} fontWeight={500}>
+            {currency.symbol}
+          </Text>
+          <TYPE.darkGray ml="0px" fontSize={'12px'} fontWeight={300}>
+            {!currency.isNative && !isOnSelectedList && customAdded ? (
+              <Trans>{currency.name} • Added by user</Trans>
+            ) : (
+              currency.name
+            )}
+          </TYPE.darkGray>
+        </Column>
+        <TokenTags currency={currency} />
+        <RowFixed style={{ justifySelf: 'flex-end' }}>
+          {balance ? <Balance balance={balance} /> : account ? <Loader /> : null}
+        </RowFixed>
+      </>
+    )
+  }, [account, balance, currency, customAdded, isOnSelectedList, isUnapprovedSecToken])
+  const onClick = useCallback(() => {
+    if (isSelected || isUnapprovedSecToken) {
+      return
+    }
+    onSelect()
+  }, [isSelected, onSelect, isUnapprovedSecToken])
+  if (isUnapprovedSecToken) {
+    return (
+      <UnapprovedMenuItem
+        style={style}
+        className={`token-item-${key}`}
+        onClick={() => onClick()}
+        disabled={isSelected}
+        selected={otherSelected}
+      >
+        {unapprovedSecToken}
+      </UnapprovedMenuItem>
+    )
+  }
   return (
     <MenuItem
       style={style}
       className={`token-item-${key}`}
-      onClick={() => (isSelected ? null : onSelect())}
+      onClick={() => onClick()}
       disabled={isSelected}
       selected={otherSelected}
     >
-      <CurrencyLogo currency={currency} size={'24px'} />
-      <Column>
-        <Text title={currency.name} fontWeight={500}>
-          {currency.symbol}
-        </Text>
-        <TYPE.darkGray ml="0px" fontSize={'12px'} fontWeight={300}>
-          {!currency.isNative && !isOnSelectedList && customAdded ? (
-            <Trans>{currency.name} • Added by user</Trans>
-          ) : (
-            currency.name
-          )}
-        </TYPE.darkGray>
-      </Column>
-      <TokenTags currency={currency} />
-      <RowFixed style={{ justifySelf: 'flex-end' }}>
-        {balance ? <Balance balance={balance} /> : account ? <Loader /> : null}
-      </RowFixed>
+      {tokenDetails}
     </MenuItem>
   )
 }
@@ -158,7 +238,7 @@ function BreakLineComponent({ style }: { style: CSSProperties }) {
   const theme = useTheme()
   return (
     <FixedContentRow style={style}>
-      <LightGreyCard padding="8px 12px" borderRadius="8px">
+      <VioletCard padding="8px 12px" borderRadius="8px">
         <RowBetween>
           <RowFixed>
             <TokenListLogoWrapper src={TokenListLogo} />
@@ -174,7 +254,7 @@ function BreakLineComponent({ style }: { style: CSSProperties }) {
             }
           />
         </RowBetween>
-      </LightGreyCard>
+      </VioletCard>
     </FixedContentRow>
   )
 }
@@ -186,7 +266,7 @@ export default function CurrencyList({
   selectedCurrency,
   onCurrencySelect,
   otherCurrency,
-  fixedListRef,
+  listRef,
   showImportView,
   setImportToken,
 }: {
@@ -196,7 +276,7 @@ export default function CurrencyList({
   selectedCurrency?: Currency | null
   onCurrencySelect: (currency: Currency) => void
   otherCurrency?: Currency | null
-  fixedListRef?: MutableRefObject<FixedSizeList | undefined>
+  listRef?: MutableRefObject<List | undefined>
   showImportView: () => void
   setImportToken: (token: Token) => void
 }) {
@@ -206,6 +286,8 @@ export default function CurrencyList({
     }
     return currencies
   }, [currencies, otherListTokens])
+  const { secTokens: userSecTokens } = useUserSecTokens()
+  const { secTokens } = useSecTokens()
 
   const Row = useCallback(
     function TokenRow({ data, index, style }) {
@@ -216,15 +298,17 @@ export default function CurrencyList({
       }
 
       const currency = row
-
       const isSelected = Boolean(currency && selectedCurrency && selectedCurrency.equals(currency))
       const otherSelected = Boolean(currency && otherCurrency && otherCurrency.equals(currency))
       const handleSelect = () => currency && onCurrencySelect(currency)
 
+      const showImport = index > currencies.length
       const token = currency?.wrapped
 
-      const showImport = index > currencies.length
-
+      const isUnapprovedToken =
+        token && secTokens[token.address]
+          ? (userSecTokens[token.address] as any)?.tokenInfo?.tokenUser?.status !== STO_STATUS_APPROVED
+          : false
       if (showImport && token) {
         return (
           <ImportRow style={style} token={token} showImportView={showImportView} setImportToken={setImportToken} dim />
@@ -237,13 +321,23 @@ export default function CurrencyList({
             isSelected={isSelected}
             onSelect={handleSelect}
             otherSelected={otherSelected}
+            isUnapprovedSecToken={isUnapprovedToken}
           />
         )
       } else {
         return null
       }
     },
-    [currencies.length, onCurrencySelect, otherCurrency, selectedCurrency, setImportToken, showImportView]
+    [
+      currencies.length,
+      onCurrencySelect,
+      otherCurrency,
+      selectedCurrency,
+      setImportToken,
+      showImportView,
+      secTokens,
+      userSecTokens,
+    ]
   )
 
   const itemKey = useCallback((index: number, data: typeof itemData) => {
@@ -252,17 +346,29 @@ export default function CurrencyList({
     return currencyKey(currency)
   }, [])
 
+  const itemSize = (index: number) => {
+    const currency: Currency | BreakLine = itemData[index]
+    if (isBreakLine(currency)) {
+      return BREAK_HEIGHT
+    }
+    const token = currency?.wrapped
+    const isUnapprovedToken =
+      token && secTokens[token.address]
+        ? (userSecTokens[token.address] as any)?.tokenInfo?.tokenUser?.status !== STO_STATUS_APPROVED
+        : false
+    return isUnapprovedToken ? UNAPPROVED_ROW : NORMAL_ROW
+  }
   return (
-    <FixedSizeList
+    <List
       height={height}
-      ref={fixedListRef as any}
+      ref={listRef as any}
       width="100%"
       itemData={itemData}
       itemCount={itemData.length}
-      itemSize={56}
+      itemSize={itemSize}
       itemKey={itemKey}
     >
       {Row}
-    </FixedSizeList>
+    </List>
   )
 }

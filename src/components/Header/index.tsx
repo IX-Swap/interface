@@ -1,22 +1,18 @@
 import React from 'react'
 import useScrollPosition from '@react-hook/window-scroll'
 import { Text } from 'rebass'
-
 import { Trans } from '@lingui/macro'
 import styled from 'styled-components/macro'
-
 import LogoDark from '../../assets/svg/logo_white.svg'
-
 import { useActiveWeb3React } from '../../hooks/web3'
 import { useETHBalances } from '../../state/wallet/hooks'
-
 import { VioletCard } from '../Card'
-
 import { RowFixed } from '../Row'
 import Web3Status from '../Web3Status'
 import { HeaderLinks } from './HeaderLinks'
+import useLightBackground from 'components/AppBackground/useLightBackground'
 
-const HeaderFrame = styled.div<{ showBackground: boolean }>`
+const HeaderFrame = styled.div<{ showBackground: boolean; lightBackground: boolean }>`
   display: grid;
   grid-template-columns: 120px 1fr 120px;
   align-items: center;
@@ -31,17 +27,18 @@ const HeaderFrame = styled.div<{ showBackground: boolean }>`
   position: relative;
 
   /* Background slide effect on scroll. */
-  background-image: ${({ theme }) => `linear-gradient(to bottom, transparent 50%, ${theme.bg0} 50% )}}`}
+  background-image: ${({ theme, lightBackground }) =>
+    `linear-gradient(to bottom, transparent 50%, ${lightBackground ? theme.bg1 : theme.bg0} 50% )}}`}
   background-position: ${({ showBackground }) => (showBackground ? '0 -100%' : '0 0')};
   background-size: 100% 200%;
-  box-shadow: 0px 0px 0px 1px ${({ theme, showBackground }) => (showBackground ? theme.bg2 : 'transparent;')};
-  transition: background-position .1s, box-shadow .1s;
+  /* box-shadow: 0px 0px 0px 1px ${({ theme, showBackground }) => (showBackground ? theme.bg2 : 'transparent;')}; */
+  transition: background-position 0.1s, box-shadow 0.1s;
 
   ${({ theme }) => theme.mediaWidth.upToMedium`
     padding:  1rem;
     grid-template-columns: auto 1fr;
   `};
- ${({ theme }) => theme.mediaWidth.upToSmall`
+  ${({ theme }) => theme.mediaWidth.upToSmall`
     grid-template-columns: repeat(1, 1fr);
   `};
   ${({ theme }) => theme.mediaWidth.upToExtraSmall`
@@ -69,7 +66,7 @@ const HeaderControls = styled.div`
     z-index: 99;
     height: 72px;
     border-radius: 12px 12px 0 0;
-    background-color: ${({ theme }) => theme.bgGradient};
+    background-color: ${({ theme }) => theme.bgG1};
   `};
   ${({ theme }) => theme.mediaWidth.upToExtraSmall`
     padding-top: 3rem;
@@ -101,7 +98,7 @@ const AccountElement = styled.div<{ active: boolean }>`
   display: flex;
   flex-direction: row;
   align-items: center;
-  background: ${({ theme }) => theme.bgGradientMuted};
+  background: ${({ theme }) => theme.bgG2};
   border-radius: 12px;
   white-space: nowrap;
   width: 100%;
@@ -151,7 +148,7 @@ const Title = styled.a`
   }
 `
 
-const UniIcon = styled.div`
+const IXSIcon = styled.div`
   transition: transform 0.3s ease;
   :hover {
     transform: rotate(-5deg);
@@ -203,19 +200,19 @@ const HeaderWrapper = styled.div`
 `
 export default function Header() {
   const { account, chainId } = useActiveWeb3React()
-
+  const { hasLightBackground } = useLightBackground()
   const userEthBalance = useETHBalances(account ? [account] : [])?.[account ?? '']
 
   const scrollY = useScrollPosition()
   return (
     <>
       <HeaderWrapper>
-        <HeaderFrame showBackground={scrollY > 45}>
+        <HeaderFrame showBackground={scrollY > 45} lightBackground={hasLightBackground}>
           <HeaderRow>
             <Title href=".">
-              <UniIcon>
+              <IXSIcon>
                 <img width={'160px'} src={LogoDark} alt="logo" />
-              </UniIcon>
+              </IXSIcon>
             </Title>
           </HeaderRow>
           <HeaderLinks />

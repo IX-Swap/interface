@@ -1,42 +1,29 @@
 import { Currency } from '@ixswap1/sdk-core'
-import React, { ReactNode, useContext } from 'react'
-import styled, { ThemeContext } from 'styled-components'
-import { getExplorerLink, ExplorerDataType } from '../../utils/getExplorerLink'
-import Modal from '../Modal'
-import { ExternalLink } from '../../theme'
-import { Text } from 'rebass'
-import { CloseIcon, CustomLightSpinner } from '../../theme/components'
-import { RowBetween, RowFixed } from '../Row'
-import { AlertTriangle, ArrowUpCircle, CheckCircle } from 'react-feather'
-import { ButtonPrimary, ButtonLight } from '../Button'
-import { AutoColumn, ColumnCenter } from '../Column'
-import Circle from '../../assets/images/blue-loader.svg'
-import MetaMaskLogo from '../../assets/images/metamask.png'
-import { useActiveWeb3React } from '../../hooks/web3'
-import useAddTokenToMetamask from 'hooks/useAddTokenToMetamask'
 import { Trans } from '@lingui/macro'
+import { LoaderThin } from 'components/Loader/LoaderThin'
+import RedesignedWideModal from 'components/Modal/RedesignedWideModal'
+import useAddTokenToMetamask from 'hooks/useAddTokenToMetamask'
+import React, { ReactNode } from 'react'
+import styled from 'styled-components'
+import Attention from '../../assets/images/attention.svg'
+import Success from '../../assets/images/success.svg'
+import { useActiveWeb3React } from '../../hooks/web3'
+import { ExternalLink, TYPE } from '../../theme'
+import { CloseIcon, ModalBlurWrapper, SvgIconWrapper } from '../../theme/components'
+import { ExplorerDataType, getExplorerLink } from '../../utils/getExplorerLink'
+import { ButtonGradient, ButtonGradientBorder } from '../Button'
+import Column, { AutoColumn } from '../Column'
+import { RowBetween, RowCenter, RowFixed } from '../Row'
 
-const Wrapper = styled.div`
+export const ModalContentWrapper = styled(Column)`
   width: 100%;
-  padding: 1rem;
-`
-const Section = styled(AutoColumn)<{ inline?: boolean }>`
-  padding: ${({ inline }) => (inline ? '0' : '0')};
-`
-
-const BottomSection = styled(Section)`
-  border-bottom-left-radius: 20px;
-  border-bottom-right-radius: 20px;
-`
-
-const ConfirmedIcon = styled(ColumnCenter)<{ inline?: boolean }>`
-  padding: ${({ inline }) => (inline ? '20px 0' : '60px 0;')};
-`
-
-const StyledLogo = styled.img`
-  height: 16px;
-  width: 16px;
-  margin-left: 6px;
+  flex: 1 1;
+  position: relative;
+  background: ${({ theme }) => theme.bgG4};
+  padding: 37px 40px 19px 40px;
+  ${({ theme }) => theme.mediaWidth.upToSmall`
+   padding: 1rem;
+  `};
 `
 
 export function ConfirmationPendingContent({
@@ -49,32 +36,33 @@ export function ConfirmationPendingContent({
   inline?: boolean // not in modal
 }) {
   return (
-    <Wrapper>
-      <AutoColumn gap="md">
-        {!inline && (
+    <ModalBlurWrapper>
+      <ModalContentWrapper>
+        <Column>
           <RowBetween>
             <div />
             <CloseIcon onClick={onDismiss} />
           </RowBetween>
-        )}
-        <ConfirmedIcon inline={inline}>
-          <CustomLightSpinner src={Circle} alt="loader" size={inline ? '40px' : '90px'} />
-        </ConfirmedIcon>
-        <AutoColumn gap="12px" justify={'center'}>
-          <Text fontWeight={500} fontSize={20} textAlign="center">
-            <Trans>Waiting For Confirmation</Trans>
-          </Text>
-          <AutoColumn gap="12px" justify={'center'}>
-            <Text fontWeight={600} fontSize={14} color="" textAlign="center">
-              {pendingText}
-            </Text>
-          </AutoColumn>
-          <Text fontSize={12} color="#565A69" textAlign="center" marginBottom={12}>
-            <Trans>Confirm this transaction in your wallet</Trans>
-          </Text>
-        </AutoColumn>
-      </AutoColumn>
-    </Wrapper>
+          <RowCenter>
+            <TYPE.title4>
+              <Trans>Waiting For Confirmation</Trans>
+            </TYPE.title4>
+          </RowCenter>
+          <RowCenter style={{ marginTop: '20px' }}>
+            <TYPE.title9>{pendingText}</TYPE.title9>
+          </RowCenter>
+          <RowCenter style={{ marginTop: '53px', marginBottom: '84px' }}>
+            <LoaderThin size={128} />
+          </RowCenter>
+
+          <RowCenter style={{ opacity: '0.7' }}>
+            <TYPE.description2>
+              <Trans>Confirm this transaction in your wallet</Trans>
+            </TYPE.description2>
+          </RowCenter>
+        </Column>
+      </ModalContentWrapper>
+    </ModalBlurWrapper>
   )
 }
 
@@ -83,7 +71,6 @@ export function TransactionSubmittedContent({
   chainId,
   hash,
   currencyToAdd,
-  inline,
 }: {
   onDismiss: () => void
   hash: string | undefined
@@ -91,122 +78,102 @@ export function TransactionSubmittedContent({
   currencyToAdd?: Currency | undefined
   inline?: boolean // not in modal
 }) {
-  const theme = useContext(ThemeContext)
-
   const { library } = useActiveWeb3React()
 
   const { addToken, success } = useAddTokenToMetamask(currencyToAdd)
 
   return (
-    <Wrapper>
-      <Section inline={inline}>
-        {!inline && (
+    <ModalBlurWrapper>
+      <ModalContentWrapper>
+        <Column>
           <RowBetween>
             <div />
             <CloseIcon onClick={onDismiss} />
           </RowBetween>
-        )}
-        <ConfirmedIcon inline={inline}>
-          <ArrowUpCircle strokeWidth={0.5} size={inline ? '40px' : '90px'} color={theme.primary1} />
-        </ConfirmedIcon>
-        <AutoColumn gap="12px" justify={'center'}>
-          <Text fontWeight={500} fontSize={20} textAlign="center">
-            <Trans>Transaction Submitted</Trans>
-          </Text>
-          {chainId && hash && (
-            <ExternalLink href={getExplorerLink(chainId, hash, ExplorerDataType.TRANSACTION)}>
-              <Text fontWeight={500} fontSize={14} color={theme.primary1}>
-                <Trans>View on Etherscan</Trans>
-              </Text>
-            </ExternalLink>
-          )}
+          <RowCenter>
+            <TYPE.title4>
+              <Trans>Transaction Submitted</Trans>
+            </TYPE.title4>
+          </RowCenter>
           {currencyToAdd && library?.provider?.isMetaMask && (
-            <ButtonLight mt="12px" padding="6px 12px" width="fit-content" onClick={addToken}>
-              {!success ? (
-                <RowFixed>
-                  <Trans>
-                    Add {currencyToAdd.symbol} to Metamask <StyledLogo src={MetaMaskLogo} />
-                  </Trans>
-                </RowFixed>
-              ) : (
-                <RowFixed>
-                  <Trans>Added {currencyToAdd.symbol} </Trans>
-                  <CheckCircle size={'16px'} stroke={theme.green1} style={{ marginLeft: '6px' }} />
-                </RowFixed>
-              )}
-            </ButtonLight>
+            <RowCenter>
+              <ButtonGradient
+                mt="12px"
+                style={{ width: 'fit-content', padding: '7px 45px' }}
+                onClick={addToken}
+                data-testid="add-currency-to-metamask"
+              >
+                {!success ? (
+                  <RowFixed>
+                    <Trans>Add {currencyToAdd.symbol} to Metamask</Trans>
+                  </RowFixed>
+                ) : (
+                  <RowFixed>
+                    <Trans>Added {currencyToAdd.symbol} </Trans>
+                  </RowFixed>
+                )}
+              </ButtonGradient>
+            </RowCenter>
           )}
-          <ButtonPrimary onClick={onDismiss} style={{ margin: '20px 0 0 0' }}>
-            <Text fontWeight={500} fontSize={20}>
-              {inline ? <Trans>Return</Trans> : <Trans>Close</Trans>}
-            </Text>
-          </ButtonPrimary>
-        </AutoColumn>
-      </Section>
-    </Wrapper>
-  )
-}
-
-export function ConfirmationModalContent({
-  title,
-  bottomContent,
-  onDismiss,
-  topContent,
-}: {
-  title: ReactNode
-  onDismiss: () => void
-  topContent: () => ReactNode
-  bottomContent?: () => ReactNode | undefined
-}) {
-  return (
-    <Wrapper>
-      <Section>
-        <RowBetween>
-          <Text fontWeight={500} fontSize={16}>
-            {title}
-          </Text>
-          <CloseIcon onClick={onDismiss} />
-        </RowBetween>
-        {topContent()}
-      </Section>
-      {bottomContent && <BottomSection gap="12px">{bottomContent()}</BottomSection>}
-    </Wrapper>
+          <RowCenter style={{ marginTop: '61px', marginBottom: '53px' }}>
+            <SvgIconWrapper size={128}>
+              <img src={Success} alt={'Success!'} />
+            </SvgIconWrapper>
+          </RowCenter>
+          <AutoColumn gap="12px" justify={'center'}>
+            {chainId && hash && (
+              <ExternalLink href={getExplorerLink(chainId, hash, ExplorerDataType.TRANSACTION)}>
+                <Trans>View on Etherscan</Trans>
+              </ExternalLink>
+            )}
+            <ButtonGradientBorder
+              onClick={onDismiss}
+              data-testid="return-close"
+              style={{ width: '211px', marginBottom: '35px' }}
+            >
+              <Trans>Close</Trans>
+            </ButtonGradientBorder>
+          </AutoColumn>
+        </Column>
+      </ModalContentWrapper>
+    </ModalBlurWrapper>
   )
 }
 
 export function TransactionErrorContent({ message, onDismiss }: { message: ReactNode; onDismiss: () => void }) {
-  const theme = useContext(ThemeContext)
   return (
-    <Wrapper>
-      <Section>
-        <RowBetween>
-          <Text fontWeight={500} fontSize={20}>
-            <Trans>Error</Trans>
-          </Text>
-          <CloseIcon onClick={onDismiss} />
-        </RowBetween>
-        <AutoColumn style={{ marginTop: 20, padding: '2rem 0' }} gap="24px" justify="center">
-          <AlertTriangle color={theme.red1} style={{ strokeWidth: 1.5 }} size={64} />
-          <Text
-            fontWeight={500}
-            fontSize={16}
-            color={theme.red1}
-            style={{ textAlign: 'center', width: '85%', wordBreak: 'break-word' }}
-          >
-            {message}
-          </Text>
-        </AutoColumn>
-      </Section>
-      <BottomSection gap="12px">
-        <ButtonPrimary onClick={onDismiss}>
-          <Trans>Dismiss</Trans>
-        </ButtonPrimary>
-      </BottomSection>
-    </Wrapper>
+    <ModalBlurWrapper>
+      <ModalContentWrapper>
+        <Column>
+          <RowBetween>
+            <div></div>
+            <CloseIcon onClick={onDismiss} />
+          </RowBetween>
+          <RowCenter>
+            <TYPE.title4>
+              <Trans>Error Occurred</Trans>
+            </TYPE.title4>
+          </RowCenter>
+          <RowCenter style={{ marginTop: 61 }}>
+            <SvgIconWrapper size={128}>
+              <img src={Attention} alt={'Error'} />
+            </SvgIconWrapper>
+          </RowCenter>
+          <RowCenter style={{ marginTop: 14, marginBottom: 53, textAlign: 'center' }}>
+            <TYPE.error error={!!message}>{message}</TYPE.error>
+          </RowCenter>
+          <RowCenter style={{ marginBottom: 35 }}>
+            <ButtonGradientBorder onClick={onDismiss} data-testid="close" style={{ width: '112px' }}>
+              <Trans>Close</Trans>
+            </ButtonGradientBorder>
+          </RowCenter>
+        </Column>
+      </ModalContentWrapper>
+    </ModalBlurWrapper>
   )
 }
 
-interface ConfirmationModalProps {
+export interface ConfirmationModalProps {
   isOpen: boolean
   onDismiss: () => void
   hash: string | undefined
@@ -216,7 +183,7 @@ interface ConfirmationModalProps {
   currencyToAdd?: Currency | undefined
 }
 
-export default function TransactionConfirmationModal({
+export default function ConfirmationModalContent({
   isOpen,
   onDismiss,
   attemptingTxn,
@@ -231,7 +198,7 @@ export default function TransactionConfirmationModal({
 
   // confirmation screen
   return (
-    <Modal isOpen={isOpen} onDismiss={onDismiss} maxHeight={90}>
+    <RedesignedWideModal isOpen={isOpen} onDismiss={onDismiss} maxHeight={90}>
       {attemptingTxn ? (
         <ConfirmationPendingContent onDismiss={onDismiss} pendingText={pendingText} />
       ) : hash ? (
@@ -244,6 +211,6 @@ export default function TransactionConfirmationModal({
       ) : (
         content()
       )}
-    </Modal>
+    </RedesignedWideModal>
   )
 }

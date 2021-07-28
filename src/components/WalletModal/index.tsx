@@ -1,13 +1,18 @@
+import { Trans } from '@lingui/macro'
 import { AbstractConnector } from '@web3-react/abstract-connector'
 import { UnsupportedChainIdError, useWeb3React } from '@web3-react/core'
 import { WalletConnectConnector } from '@web3-react/walletconnect-connector'
+import RedesignedWideModal from 'components/Modal/RedesignedWideModal'
 import { AutoRow } from 'components/Row'
+import { useFetchToken } from 'hooks/useFetchToken'
 import React, { useEffect, useState } from 'react'
 import { isMobile } from 'react-device-detect'
 import ReactGA from 'react-ga'
-import styled from 'styled-components/macro'
+import { useDispatch } from 'react-redux'
+import { AppDispatch } from 'state'
+import { saveToken } from 'state/auth/actions'
+import { useSaveAuthorization } from 'state/auth/hooks'
 import MetamaskIcon from '../../assets/images/metamask.png'
-import { ReactComponent as Close } from '../../assets/images/x.svg'
 import { fortmatic, injected, portis } from '../../connectors'
 import { OVERLAY_READY } from '../../connectors/Fortmatic'
 import { SUPPORTED_WALLETS } from '../../constants/wallet'
@@ -16,94 +21,21 @@ import { ApplicationModal } from '../../state/application/actions'
 import { useModalOpen, useWalletModalToggle } from '../../state/application/hooks'
 import { ExternalLink, TYPE } from '../../theme'
 import AccountDetails from '../AccountDetails'
-import { Trans } from '@lingui/macro'
-
 import Modal from '../Modal'
+import { ErrorSection } from './ErrorSection'
 import Option from './Option'
 import PendingView from './PendingView'
-import { LightCard } from '../Card'
-
-const CloseIcon = styled.div`
-  position: absolute;
-  right: 1rem;
-  top: 14px;
-  &:hover {
-    cursor: pointer;
-    opacity: 0.6;
-  }
-`
-
-const CloseColor = styled(Close)`
-  path {
-    stroke: ${({ theme }) => theme.text4};
-  }
-`
-
-const Wrapper = styled.div`
-  ${({ theme }) => theme.flexColumnNoWrap}
-  margin: 0;
-  padding: 0;
-  width: 100%;
-`
-
-const HeaderRow = styled.div`
-  ${({ theme }) => theme.flexRowNoWrap};
-  padding: 1rem 1rem;
-  font-weight: 500;
-  color: ${(props) => (props.color === 'blue' ? ({ theme }) => theme.primary1 : 'inherit')};
-  ${({ theme }) => theme.mediaWidth.upToMedium`
-    padding: 1rem;
-  `};
-`
-
-const ContentWrapper = styled.div`
-  background-color: ${({ theme }) => theme.bg0};
-  padding: 0 1rem 1rem 1rem;
-  border-bottom-left-radius: 20px;
-  border-bottom-right-radius: 20px;
-
-  ${({ theme }) => theme.mediaWidth.upToMedium`padding: 0 1rem 1rem 1rem`};
-`
-
-const UpperSection = styled.div`
-  position: relative;
-
-  h5 {
-    margin: 0;
-    margin-bottom: 0.5rem;
-    font-size: 1rem;
-    font-weight: 400;
-  }
-
-  h5:last-child {
-    margin-bottom: 0px;
-  }
-
-  h4 {
-    margin-top: 0;
-    font-weight: 500;
-  }
-`
-
-const OptionGrid = styled.div`
-  display: grid;
-  grid-gap: 10px;
-  ${({ theme }) => theme.mediaWidth.upToMedium`
-    grid-template-columns: 1fr;
-    grid-gap: 10px;
-  `};
-`
-
-const HoverText = styled.div`
-  text-decoration: none;
-  color: ${({ theme }) => theme.text1};
-  display: flex;
-  align-items: center;
-
-  :hover {
-    cursor: pointer;
-  }
-`
+import {
+  CloseColor,
+  CloseIcon,
+  ContentWrapper,
+  HeaderRow,
+  HoverText,
+  OptionGrid,
+  TermsCard,
+  UpperSection,
+  Wrapper,
+} from './styleds'
 
 const WALLET_VIEWS = {
   OPTIONS: 'options',
@@ -123,6 +55,7 @@ export default function WalletModal({
 }) {
   // important that these are destructed from the account-specific web3-react context
   const { active, account, connector, activate, error } = useWeb3React()
+  const dispatch = useDispatch<AppDispatch>()
 
   const [walletView, setWalletView] = useState(WALLET_VIEWS.ACCOUNT)
 
@@ -149,7 +82,8 @@ export default function WalletModal({
       setWalletView(WALLET_VIEWS.ACCOUNT)
     }
   }, [walletModalOpen])
-
+  const { fetchToken } = useFetchToken()
+  const { saveAuthorization } = useSaveAuthorization()
   // close modal when a connection is successful
   const activePrevious = usePrevious(active)
   const connectorPrevious = usePrevious(connector)
@@ -180,15 +114,23 @@ export default function WalletModal({
     if (connector instanceof WalletConnectConnector && connector.walletConnectProvider?.wc?.uri) {
       connector.walletConnectProvider = undefined
     }
+    if (connector) {
+      try {
+        await activate(connector, undefined, true)
 
-    connector &&
-      activate(connector, undefined, true).catch((error) => {
+        dispatch(saveToken({ value: { token: '', expiresAt: 0 } }))
+        const authData = await fetchToken()
+        if (authData) {
+          saveAuthorization(authData)
+        }
+      } catch (error) {
         if (error instanceof UnsupportedChainIdError) {
           activate(connector) // a little janky...can't use setError because the connector isn't set
         } else {
           setPendingError(true)
         }
-      })
+      }
+    }
   }
 
   // close wallet modal if fortmatic modal is active
@@ -286,36 +228,7 @@ export default function WalletModal({
 
   function getModalContent() {
     if (error) {
-      return (
-        <UpperSection>
-          <CloseIcon onClick={toggleWalletModal}>
-            <CloseColor />
-          </CloseIcon>
-          <HeaderRow>
-            {error instanceof UnsupportedChainIdError ? <Trans>Wrong Network</Trans> : <Trans>Error connecting</Trans>}
-          </HeaderRow>
-          <ContentWrapper>
-            {error instanceof UnsupportedChainIdError ? (
-              <h5>
-                <Trans>Please connect to the appropriate Ethereum network.</Trans>
-              </h5>
-            ) : (
-              <Trans>Error connecting. Try refreshing the page.</Trans>
-            )}
-          </ContentWrapper>
-        </UpperSection>
-      )
-    }
-    if (account && walletView === WALLET_VIEWS.ACCOUNT) {
-      return (
-        <AccountDetails
-          toggleWalletModal={toggleWalletModal}
-          pendingTransactions={pendingTransactions}
-          confirmedTransactions={confirmedTransactions}
-          ENSName={ENSName}
-          openOptions={() => setWalletView(WALLET_VIEWS.OPTIONS)}
-        />
-      )
+      return <ErrorSection error={error} toggleWalletModal={toggleWalletModal} />
     }
     return (
       <UpperSection>
@@ -342,18 +255,18 @@ export default function WalletModal({
         )}
 
         <ContentWrapper>
-          <LightCard style={{ marginBottom: '16px' }}>
+          <TermsCard style={{ marginBottom: '16px' }}>
             <AutoRow style={{ flexWrap: 'nowrap' }}>
               <TYPE.main fontSize={14}>
                 <Trans>
-                  By connecting a wallet, you agree to Uniswap Labs’{' '}
-                  <ExternalLink href="https://uniswap.org/terms-of-service/">Terms of Service</ExternalLink> and
+                  By connecting a wallet, you agree to IXSwap’{' '}
+                  <ExternalLink href="https://ixswap.io/terms-and-conditions/">Terms and Conditions</ExternalLink> and
                   acknowledge that you have read and understand the{' '}
-                  <ExternalLink href="https://uniswap.org/disclaimer/">Uniswap protocol disclaimer</ExternalLink>.
+                  <ExternalLink href="https://ixswap.io/privacy-policy/">IXSwap Privacy Policy</ExternalLink>.
                 </Trans>
               </TYPE.main>
             </AutoRow>
-          </LightCard>
+          </TermsCard>
           {walletView === WALLET_VIEWS.PENDING ? (
             <PendingView
               connector={pendingWallet}
@@ -368,7 +281,29 @@ export default function WalletModal({
       </UpperSection>
     )
   }
-
+  if (account && walletView === WALLET_VIEWS.ACCOUNT) {
+    return (
+      <RedesignedWideModal
+        isOpen={walletModalOpen}
+        onDismiss={toggleWalletModal}
+        minHeight={50}
+        maxHeight={50}
+        mobileMaxHeight={80}
+        isRight
+      >
+        <Wrapper>
+          {' '}
+          <AccountDetails
+            toggleWalletModal={toggleWalletModal}
+            pendingTransactions={pendingTransactions}
+            confirmedTransactions={confirmedTransactions}
+            ENSName={ENSName}
+            openOptions={() => setWalletView(WALLET_VIEWS.OPTIONS)}
+          />
+        </Wrapper>
+      </RedesignedWideModal>
+    )
+  }
   return (
     <Modal isOpen={walletModalOpen} onDismiss={toggleWalletModal} minHeight={false} maxHeight={90}>
       <Wrapper>{getModalContent()}</Wrapper>

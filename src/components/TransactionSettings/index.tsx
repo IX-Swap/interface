@@ -5,52 +5,15 @@ import styled, { ThemeContext } from 'styled-components'
 
 import QuestionHelper from '../QuestionHelper'
 import { AutoColumn } from '../Column'
-import { RowBetween, RowFixed, RowCenter } from '../Row'
+import { RowBetween, RowFixed, RowStart } from '../Row'
 import { DEFAULT_DEADLINE_FROM_NOW } from 'constants/misc'
 import { displayDeadline, displayUserSlippageTolerance } from './helpers'
 import { useDeadline } from 'hooks/useDeadline'
 import { useSlippage } from 'hooks/useSlippage'
 import { RECOMMENDED_SLIPPAGE_OPTIONS } from './constants'
 import { TYPE } from 'theme'
-
-const FancyButton = styled.button`
-  color: ${({ theme }) => theme.text1};
-  align-items: center;
-  height: 2rem;
-  border-radius: 36px;
-  font-size: 1rem;
-  width: auto;
-  min-width: 3.5rem;
-  border: 1px solid ${({ theme }) => theme.bg3};
-  outline: none;
-  background: ${({ theme }) => theme.bg1};
-  :hover {
-    border: 1px solid ${({ theme }) => theme.bg4};
-  }
-  :focus {
-    border: 1px solid ${({ theme }) => theme.primary1};
-  }
-`
-
-const Option = styled(FancyButton)<{ active: boolean }>`
-  margin-right: 8px;
-  font-weight: 600;
-  font-size: 22px;
-  line-height: 40px;
-  width: fit-content;
-  height: fit-content;
-  border: none;
-  padding: 10px 22px;
-  :hover,
-  :focus {
-    cursor: pointer;
-    border: none;
-    outline: none;
-    background: ${({ theme }) => theme.bgHighlightGradient};
-  }
-  background: ${({ active, theme }) => (active ? theme.bgHighlightGradient : theme.bg7)};
-  color: ${({ active, theme }) => (active ? theme.white : theme.text1)};
-`
+import { Option, OptionRow, OptionCustom } from 'components/OptionButton'
+import { Text } from 'rebass'
 
 const Input = styled.input`
   background: ${({ theme }) => theme.bg1};
@@ -60,6 +23,7 @@ const Input = styled.input`
   width: 100%;
   height: 100%;
   outline: none;
+  border: none;
   &::-webkit-outer-spin-button,
   &::-webkit-inner-spin-button {
     -webkit-appearance: none;
@@ -70,26 +34,6 @@ const Input = styled.input`
 const Marginer = styled.div`
   margin-bottom: 1rem;
 `
-const OptionCustom = styled(FancyButton)<{ active?: boolean; warning?: boolean }>`
-  max-width: 130px;
-  height: 60px;
-  position: relative;
-  padding: 10px 22px;
-  flex: 1;
-  border: ${({ theme, active, warning }) =>
-    warning ? `1px solid ${theme.red1}` : active ? `1px solid ${theme.popUpInputBorder}` : 'none'};
-  :hover {
-    border: ${({ theme, warning }) => (warning ? `1px solid ${theme.red1}` : `1px solid ${theme.popUpInputBorder}`)};
-  }
-
-  input {
-    width: 100%;
-    height: 100%;
-    border: 0px;
-    border-radius: 2rem;
-  }
-`
-
 const SlippageEmojiContainer = styled.span`
   color: #f3841e;
   ${({ theme }) => theme.mediaWidth.upToSmall`
@@ -97,12 +41,6 @@ const SlippageEmojiContainer = styled.span`
   `}
 `
 
-const OptionRow = styled(RowCenter)`
-  grid-gap: 0.5rem;
-  ${({ theme }) => theme.mediaWidth.upToSmall`
-    flex-wrap: wrap;  
-  `}
-`
 const MinuteLabel = styled.span`
   font-weight: 300;
   font-size: 22px;
@@ -130,7 +68,8 @@ export default function TransactionSettings({ placeholderSlippage }: Transaction
             <QuestionHelper
               text={
                 <Trans>
-                  Your transaction will revert if the price changes unfavorably by more than this percentage.
+                  Your transaction will revert if the price changes unfavorably by more than this percentage. Value
+                  range 0-50%
                 </Trans>
               }
             />
@@ -147,16 +86,8 @@ export default function TransactionSettings({ placeholderSlippage }: Transaction
                 {slippageOption}%
               </Option>
             ))}
-
             <OptionCustom active={userSlippageTolerance !== 'auto'} warning={!!slippageError} tabIndex={-1}>
               <RowBetween>
-                {tooLow || tooHigh ? (
-                  <SlippageEmojiContainer>
-                    <span role="img" aria-label="warning">
-                      ⚠️
-                    </span>
-                  </SlippageEmojiContainer>
-                ) : null}
                 <Input
                   placeholder={placeholderSlippage.toFixed(2)}
                   value={displayUserSlippageTolerance({ slippageInput, userSlippageTolerance })}
@@ -166,18 +97,28 @@ export default function TransactionSettings({ placeholderSlippage }: Transaction
                   onBlur={() => resetSlippage()}
                   color={slippageError ? 'red' : ''}
                 />
-                %
               </RowBetween>
             </OptionCustom>
+            <Text color={theme.text8} fontWeight={500} fontSize={22} lineHeight={'33px'}>
+              %
+            </Text>
           </OptionRow>
           {slippageError || tooLow || tooHigh ? (
-            <RowBetween
+            <RowStart
               style={{
                 fontSize: '14px',
                 paddingTop: '7px',
+                gap: '5px',
                 color: slippageError ? 'red' : '#F3841E',
               }}
             >
+              {tooLow || tooHigh ? (
+                <SlippageEmojiContainer>
+                  <span role="img" aria-label="warning">
+                    ⚠️
+                  </span>
+                </SlippageEmojiContainer>
+              ) : null}
               {slippageError ? (
                 <Trans>Enter a valid slippage percentage</Trans>
               ) : tooLow ? (
@@ -185,7 +126,7 @@ export default function TransactionSettings({ placeholderSlippage }: Transaction
               ) : (
                 <Trans>Your transaction may be frontrun</Trans>
               )}
-            </RowBetween>
+            </RowStart>
           ) : null}
         </AutoColumn>
       </Marginer>
@@ -196,7 +137,7 @@ export default function TransactionSettings({ placeholderSlippage }: Transaction
               <Trans>Transaction deadline</Trans>
             </TYPE.black>
             <QuestionHelper
-              text={t`Your transaction will revert if it is pending for more than this period of time.`}
+              text={t`Your transaction will revert if it is pending for more than this period of time. Value range 1 - 180 min.`}
             />
           </RowFixed>
           <RowFixed>

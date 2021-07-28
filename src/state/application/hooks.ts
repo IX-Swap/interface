@@ -34,9 +34,18 @@ export function useCloseModals(): () => void {
 export function useWalletModalToggle(): () => void {
   return useToggleModal(ApplicationModal.WALLET)
 }
-
+export function useDepositModalToggle(): () => void {
+  return useToggleModal(ApplicationModal.DEPOSIT)
+}
+export function useWithdrawModalToggle(): () => void {
+  return useToggleModal(ApplicationModal.WITHDRAW)
+}
 export function useToggleSettingsMenu(): () => void {
   return useToggleModal(ApplicationModal.SETTINGS)
+}
+
+export function useToggleTransactionModal(): () => void {
+  return useToggleModal(ApplicationModal.TRANSACTION_DETAILS)
 }
 
 // returns a function that allows adding a popup

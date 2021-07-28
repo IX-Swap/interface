@@ -7,7 +7,7 @@ const ToggleElement = styled.span<{ isActive?: boolean; isOnSwitch?: boolean }>`
   border-radius: 100%;
   opacity: ${({ isActive, isOnSwitch }) => (isActive ? (isOnSwitch ? 1 : 0.3) : 0)};
   background: ${({ theme, isActive, isOnSwitch }) =>
-    isActive ? (isOnSwitch ? theme.bgHighlightGradient : theme.bg10) : 'transparent'};
+    isActive ? (isOnSwitch ? theme.bgG6 : theme.bg10) : 'transparent'};
   :hover {
     user-select: ${({ isOnSwitch }) => (isOnSwitch ? 'none' : 'initial')};
   }
@@ -16,7 +16,7 @@ const ToggleElement = styled.span<{ isActive?: boolean; isOnSwitch?: boolean }>`
 const StyledToggle = styled.button<{ isActive?: boolean; activeElement?: boolean }>`
   border-radius: 36px;
   box-shadow: 0px 0px 4px rgba(182, 111, 242, 0.25);
-  border: ${({ theme }) => theme.popUpInputBorder};
+  border: 1px solid ${({ theme }) => theme.popUpInputBorder};
   background: ${({ theme }) => theme.bg7};
   padding: 2px;
   display: flex;
@@ -44,14 +44,17 @@ export interface ToggleProps {
   id?: string
   isActive: boolean
   toggle: () => void
+  showLabel?: boolean
 }
 
-export default function Toggle({ id, isActive, toggle }: ToggleProps) {
+export default function Toggle({ id, isActive, toggle, showLabel = true }: ToggleProps) {
   return (
     <ToggleContainer>
-      <LabelContainer isActive={isActive}>
-        <Trans>{isActive ? 'On' : 'Off'}</Trans>
-      </LabelContainer>
+      {showLabel && (
+        <LabelContainer isActive={isActive}>
+          <Trans>{isActive ? 'On' : 'Off'}</Trans>
+        </LabelContainer>
+      )}
       <MirrorImage>
         <StyledToggle id={id} isActive={isActive} onClick={toggle}>
           <ToggleElement isActive={isActive} isOnSwitch={true}></ToggleElement>

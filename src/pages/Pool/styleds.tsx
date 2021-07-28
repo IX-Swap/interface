@@ -94,3 +94,29 @@ export const LoadingRows = styled.div`
     margin-bottom: 2em;
   }
 `
+
+export const EmptyProposals = styled.div`
+  border: 1px solid ${({ theme }) => theme.text4};
+  padding: 16px 12px;
+  border-radius: 12px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+`
+export const MarginerTitle = styled.div`
+  margin: 26px 36px 36px 36px;
+`
+
+export const MarginerCard = styled.div`
+  margin: 0px 36px 8px 36px;
+`
+
+export const LiquidityInnerTitle = styled.span`
+  font-weight: 600;
+  font-size: 16px;
+  line-height: 24px;
+  text-transform: uppercase;
+  color: ${({ theme }) => theme.text2};
+  margin-bottom: 1.5rem;
+`

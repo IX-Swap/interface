@@ -1,22 +1,22 @@
-import { Token } from '@ixswap1/sdk-core'
-import React from 'react'
-import Modal from '../Modal'
 import { ImportToken } from 'components/SearchModal/ImportToken'
+import React from 'react'
+import { useDismissTokenWarning, useImportNonDefaultTokens } from 'state/swap/hooks'
+import * as H from 'history'
+import RedesignedWideModal from 'components/Modal/RedesignedWideModal'
+import { ModalBlurWrapper } from 'theme'
 
-export default function TokenWarningModal({
-  isOpen,
-  tokens,
-  onConfirm,
-  onDismiss,
-}: {
-  isOpen: boolean
-  tokens: Token[]
-  onConfirm: () => void
-  onDismiss: () => void
-}) {
+export default function TokenWarningModal({ history }: { history: H.History }) {
+  const { dismissTokenWarning, handleDismissTokenWarning, handleConfirmTokenWarning } = useDismissTokenWarning(history)
+  const { importTokensNotInDefault } = useImportNonDefaultTokens()
   return (
-    <Modal isOpen={isOpen} onDismiss={onDismiss} maxHeight={100}>
-      <ImportToken tokens={tokens} handleCurrencySelect={onConfirm} />
-    </Modal>
+    <RedesignedWideModal
+      isOpen={importTokensNotInDefault.length > 0 && !dismissTokenWarning}
+      onDismiss={handleDismissTokenWarning}
+      maxHeight={100}
+    >
+      <ModalBlurWrapper>
+        <ImportToken tokens={importTokensNotInDefault} handleCurrencySelect={handleConfirmTokenWarning} />
+      </ModalBlurWrapper>
+    </RedesignedWideModal>
   )
 }
