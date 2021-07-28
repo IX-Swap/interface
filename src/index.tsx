@@ -55,7 +55,7 @@ function Updaters() {
       <ApplicationUpdater />
       <TransactionUpdater />
       <MulticallUpdater />
-      {/* <SecTokenListUpdater /> */}
+      <SecTokenListUpdater />
     </>
   )
 }

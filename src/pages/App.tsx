@@ -79,8 +79,8 @@ export default function App() {
               <Route exact strict path="/add/:currencyIdA?/:currencyIdB?" component={RedirectDuplicateTokenIdsV2} />
 
               <Route exact strict path="/remove/:currencyIdA/:currencyIdB" component={RemoveLiquidity} />
-              {/* <Route exact strict path="/security-tokens/:currencyId" component={SecTokenDetails} /> */}
-              {/* <Route exact strict path={routes.securityTokens()} component={Custodian} /> */}
+              <Route exact strict path="/security-tokens/:currencyId" component={SecTokenDetails} />
+              <Route exact strict path={routes.securityTokens()} component={Custodian} />
               <Route component={RedirectPathToSwapOnly} />
             </Switch>
           </Web3ReactManager>
