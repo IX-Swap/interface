@@ -5,12 +5,16 @@ import { GridJustification } from '@material-ui/core/Grid/Grid'
 import { useBreadcrumbs } from 'hooks/useBreadcrumbs'
 import { useStyles } from './PageHeader.styles'
 import { BackButton } from 'components/BackButton'
+import { Variant } from '@material-ui/core/styles/createTypography'
+import classnames from 'classnames'
 
 export interface PageHeaderProps {
   title?: string
   alignment?: GridJustification
   showBreadcrumbs?: boolean
   hasBackButton?: boolean
+  variant?: Variant | 'inherit'
+  noMargin?: boolean
 }
 
 export const PageHeader = (props: PageHeaderProps) => {
@@ -18,18 +22,31 @@ export const PageHeader = (props: PageHeaderProps) => {
     title,
     alignment = 'flex-start',
     hasBackButton = false,
-    showBreadcrumbs = true
+    showBreadcrumbs = true,
+    variant = 'h2',
+    noMargin = false
   } = props
   const { crumbs } = useBreadcrumbs()
   const justify = alignment ?? (crumbs.length === 1 ? 'center' : 'flex-start')
   const classes = useStyles()
 
   return (
-    <Grid container direction='column' className={classes.container}>
-      <Grid container className={classes.header}>
+    <Grid
+      container
+      direction='column'
+      className={classnames(classes.container, {
+        [classes.noMargin]: noMargin
+      })}
+    >
+      <Grid
+        container
+        className={classnames(classes.header, {
+          [classes.noMargin]: noMargin
+        })}
+      >
         <Grid item container alignItems='center' justify={justify}>
           {hasBackButton && <BackButton className={classes.backButton} />}
-          <Typography variant='h2'>{title}</Typography>
+          <Typography variant={variant}>{title}</Typography>
         </Grid>
       </Grid>
       {showBreadcrumbs && (

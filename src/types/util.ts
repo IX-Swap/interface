@@ -49,6 +49,7 @@ export interface BaseFilter {
   currency?: string
   network?: string
   isPriceAscending?: boolean
+  fundStatus?: string
 }
 
 export interface InternalRouteBase {
