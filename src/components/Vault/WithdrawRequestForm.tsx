@@ -29,7 +29,7 @@ export const WithdrawRequestForm = ({ currency, changeModal }: Props) => {
   const { onTypeAmount, onTypeReceiver, onCurrencySet } = useWithdrawActionHandlers()
   const { address, loading } = useENS(receiver)
   const error = Boolean(receiver.length > 0 && !loading && !address)
-  const withdraw = useWithdrawCallback(cid)
+  const withdraw = useWithdrawCallback(cid, currency?.symbol)
   const { parsedAmount, inputError } = useDerivedWithdrawInfo()
 
   useEffect(() => {
@@ -58,7 +58,7 @@ export const WithdrawRequestForm = ({ currency, changeModal }: Props) => {
   return (
     <div style={{ position: 'relative' }}>
       <Column style={{ gap: '25px', marginTop: '18px' }}>
-        <Row style={{ marginTop: '18px' }}>
+        {/* <Row style={{ marginTop: '18px' }}>
           <TYPE.description3>
             <b>
               <Trans>Wrap to Sec info:</Trans>
@@ -70,7 +70,7 @@ export const WithdrawRequestForm = ({ currency, changeModal }: Props) => {
               porta dapibus. Donec sollicitudin molestie malesuada
             </Trans>
           </TYPE.description3>
-        </Row>
+        </Row> */}
         <Column style={{ gap: '11px' }}>
           <Row>
             <TYPE.body1>

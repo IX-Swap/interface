@@ -1,21 +1,35 @@
 import { createReducer } from '@reduxjs/toolkit'
 import { ActionTypes } from 'components/Vault/enum'
 import { PaginationDetails } from 'types/pagination'
-import { getLog, LogItem, resetPage, setEventLog, setFilter, setPage, setPaginationDetails } from './actions'
+import {
+  getLog,
+  LogItem,
+  resetPage,
+  setEventLog,
+  setFilter,
+  setLogItem,
+  setMultiFilters,
+  setPage,
+  setPaginationDetails,
+  setTokenId,
+} from './actions'
 
 export interface EventLogState {
   eventLog: Array<LogItem>
   filter: ActionTypes | null
   page: number
+  activeEvent: LogItem | null
   paginationDetails: PaginationDetails
   eventLogLoading: boolean
   eventLogError: string | null
+  tokenId: number | null
 }
 
 const initialState: EventLogState = {
   eventLog: [],
   filter: null,
   page: 1,
+  tokenId: null,
   paginationDetails: {
     offset: 0,
     totalItems: 0,
@@ -26,6 +40,7 @@ const initialState: EventLogState = {
   },
   eventLogLoading: false,
   eventLogError: null,
+  activeEvent: null,
 }
 
 export default createReducer<EventLogState>(initialState, (builder) =>
@@ -48,8 +63,22 @@ export default createReducer<EventLogState>(initialState, (builder) =>
         page,
       }
     })
+    .addCase(setTokenId, (state, { payload: { tokenId } }) => {
+      return {
+        ...state,
+        tokenId,
+      }
+    })
+    .addCase(setMultiFilters, (state, { payload: { tokenId, page, filter } }) => {
+      state.tokenId = tokenId
+      state.page = page
+      state.filter = filter
+    })
     .addCase(resetPage, (state) => {
       state.page = 1
+    })
+    .addCase(setLogItem, (state, { payload: { logItem } }) => {
+      state.activeEvent = logItem
     })
     .addCase(setPaginationDetails, (state, { payload: { paginationDetails } }) => {
       return {
@@ -61,12 +90,22 @@ export default createReducer<EventLogState>(initialState, (builder) =>
       state.eventLogLoading = true
       state.eventLogError = null
     })
-    .addCase(getLog.fulfilled, (state, { payload: { response } }) => {
+    .addCase(getLog.fulfilled, (state, { payload: { response, params } }) => {
       state.eventLogLoading = false
       state.eventLog = response.items
       const { offset, totalItems, totalPages, itemCount, nextPage, prevPage } = response
       state.paginationDetails = { offset, totalItems, totalPages, itemCount, nextPage, prevPage }
       state.eventLogError = null
+      const { page, filter, tokenId } = params
+      if (page) {
+        state.page = page
+      }
+      if (filter) {
+        state.filter = filter
+      }
+      if (tokenId) {
+        state.tokenId = tokenId
+      }
     })
     .addCase(getLog.rejected, (state, { payload: { errorMessage } }) => {
       state.eventLogLoading = false

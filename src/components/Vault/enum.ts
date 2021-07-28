@@ -26,27 +26,44 @@ export enum ActionTypes {
   KYC = 'kyc',
   ACCREDITATION = 'accreditation',
 }
+export const filterTabs = [ActionTypes.WITHDRAW, ActionTypes.DEPOSIT, ActionTypes.ACCREDITATION]
+export const ActionTypeTextHeader: { [key in ActionTypes]: string } = {
+  [ActionTypes.DEPOSIT]: t`Deposit`,
+  [ActionTypes.WITHDRAW]: t`Withdraw`,
+  [ActionTypes.KYC]: t`KYC`,
+  [ActionTypes.ACCREDITATION]: t`Accreditation`,
+}
 export const isAction = (action: ActionTypes) => {
   return [ActionTypes.KYC, ActionTypes.ACCREDITATION].includes(action)
 }
 export const isTransaction = (action: ActionTypes) => {
   return [ActionTypes.DEPOSIT, ActionTypes.WITHDRAW].includes(action)
 }
+export const isPendingDeposit = (status: ActionHistoryStatus) => {
+  return [ActionHistoryStatus.PENDING, ActionHistoryStatus.APPROVED].includes(status)
+}
+export const isSuccessTransaction = (action: ActionTypes, status: ActionHistoryStatus) => {
+  if (action == ActionTypes.DEPOSIT) {
+    return status === ActionHistoryStatus.SETTLED
+  }
+  return status === ActionHistoryStatus.APPROVED
+}
 export const ActionHistoryStatusText = {
   [ActionHistoryStatus.PENDING]: t`In progress...`,
-  [ActionHistoryStatus.APPROVED]: t`In progress...`,
+  [ActionHistoryStatus.APPROVED]: t`Approved`,
   [ActionHistoryStatus.SETTLED]: t`Approved`,
   [ActionHistoryStatus.REJECTED]: t`Rejected`,
 }
 export const TransactionHistoryStatusText = {
   [ActionHistoryStatus.PENDING]: t`Pending...`,
-  [ActionHistoryStatus.APPROVED]: t`Pending...`,
+  [ActionHistoryStatus.APPROVED]: t`Completed`,
   [ActionHistoryStatus.SETTLED]: t`Completed`,
   [ActionHistoryStatus.REJECTED]: t`Declined`,
 }
+
 export const StatusColors = {
   [ActionHistoryStatus.PENDING]: 'text2',
-  [ActionHistoryStatus.APPROVED]: 'text2',
+  [ActionHistoryStatus.APPROVED]: 'green1',
   [ActionHistoryStatus.SETTLED]: 'green1',
   [ActionHistoryStatus.REJECTED]: 'error',
 }
@@ -56,4 +73,20 @@ export const ActionTypeText = {
   [ActionTypes.WITHDRAW]: t`Withdraw`,
   [ActionTypes.KYC]: t`KYC`,
   [ActionTypes.ACCREDITATION]: t`Pass accreditation`,
+}
+
+export const getStatusColor = (action: ActionTypes, status: ActionHistoryStatus) => {
+  if (action === ActionTypes.DEPOSIT && status === ActionHistoryStatus.APPROVED) {
+    return StatusColors[ActionHistoryStatus.PENDING]
+  }
+  return StatusColors[status]
+}
+export const getActionStatusText = (action: ActionTypes, status: ActionHistoryStatus) => {
+  if (action === ActionTypes.DEPOSIT && status === ActionHistoryStatus.APPROVED) {
+    return TransactionHistoryStatusText[ActionHistoryStatus.PENDING]
+  }
+  if (isAction(action)) {
+    return ActionHistoryStatusText[status]
+  }
+  return TransactionHistoryStatusText[status]
 }

@@ -1,5 +1,7 @@
 import { Currency, CurrencyAmount } from '@ixswap1/sdk-core'
 import { t } from '@lingui/macro'
+import { ActionTypes } from 'components/Vault/enum'
+import { BigNumber, utils } from 'ethers'
 import { useCurrency } from 'hooks/Tokens'
 import { useBurnWSecContract } from 'hooks/useContract'
 import { useActiveWeb3React } from 'hooks/web3'
@@ -8,11 +10,12 @@ import { useDispatch, useSelector } from 'react-redux'
 import apiService from 'services/apiService'
 import { tokens } from 'services/apiUrls'
 import { AppDispatch, AppState } from 'state'
-import { useWithdrawModalToggle } from 'state/application/hooks'
+import { useEventState, useGetEventCallback } from 'state/eventLog/hooks'
 import { tryParseAmount } from 'state/swap/helpers'
+import { useTransactionAdder } from 'state/transactions/hooks'
+import { useCurrencyBalance } from 'state/wallet/hooks'
 import { isAddress } from 'utils'
 import { setCurrency, setTransaction, typeAmount, typeReceiver, withdrawCurrency } from './actions'
-import { BigNumber, utils } from 'ethers'
 
 export function useWithdrawState(): AppState['withdraw'] {
   return useSelector<AppState, AppState['withdraw']>((state) => state.withdraw)
@@ -64,6 +67,7 @@ export function useDerivedWithdrawInfo(): {
   const inputCurrency = useCurrency(currencyId)
 
   const parsedAmount = tryParseAmount(amount, inputCurrency ?? undefined)
+  const balance = useCurrencyBalance(account ?? undefined, inputCurrency ?? undefined)
 
   let inputError: string | undefined
   if (!account) {
@@ -80,7 +84,10 @@ export function useDerivedWithdrawInfo(): {
   } else if (!formattedTo) {
     inputError = inputError ?? t`Receiver is invalid`
   }
-
+  const sufficientBalance = parsedAmount && balance && !balance.lessThan(parsedAmount)
+  if (!sufficientBalance) {
+    inputError = inputError ?? t`Insufficient balance`
+  }
   return {
     parsedAmount,
     formattedTo,
@@ -98,10 +105,14 @@ interface WithdrawProps {
   onError: () => void
 }
 export function useWithdrawCallback(
-  currencyId?: string
+  currencyId?: string,
+  currencySymbol?: string
 ): ({ id, amount, onSuccess, onError }: WithdrawProps) => Promise<void> {
   const dispatch = useDispatch<AppDispatch>()
   const router = useBurnWSecContract(currencyId)
+  const getEvents = useGetEventCallback()
+  const { tokenId } = useEventState()
+  const addTransaction = useTransactionAdder()
   return useCallback(
     async ({ id, amount, onSuccess, onError }: WithdrawProps) => {
       dispatch(withdrawCurrency.pending())
@@ -117,7 +128,15 @@ export function useWithdrawCallback(
           utils.hexlify(r.data),
           utils.hexlify(s.data)
         )
-        dispatch(setTransaction({ tx: burned.hash }))
+
+        getEvents({ tokenId, filter: ActionTypes.WITHDRAW })
+        if (!burned.hash) {
+          dispatch(withdrawCurrency.rejected({ errorMessage: t`Could not submit withdraw request` }))
+        } else {
+          addTransaction(burned, { summary: t`Withdraw ${amount} ${currencySymbol}` })
+          dispatch(setTransaction({ tx: burned.hash }))
+        }
+
         dispatch(withdrawCurrency.fulfilled())
         onSuccess()
       } catch (error) {
@@ -126,6 +145,6 @@ export function useWithdrawCallback(
         onError()
       }
     },
-    [dispatch, router]
+    [dispatch, router, addTransaction, currencySymbol, tokenId, getEvents]
   )
 }
