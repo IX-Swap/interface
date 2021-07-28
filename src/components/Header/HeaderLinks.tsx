@@ -7,15 +7,13 @@ import styled from 'styled-components/macro'
 import Row from '../Row'
 import SettingsTab from 'components/Settings'
 import { useDerivedSwapInfo } from 'state/swap/hooks'
+import { routes } from 'utils/routes'
 
 const activeClassName = 'ACTIVE'
-enum Side {
-  left = 'left',
-  right = 'right',
-}
+
 const HeaderLinksWrap = styled(Row)`
   justify-self: center;
-  background-color: ${({ theme }) => theme.bg0};
+  background-color: 'transparent';
   width: fit-content;
   display: flex;
   flex-wrap: wrap;
@@ -46,10 +44,8 @@ const StyledNavLink = styled(NavLink).attrs({
   font-size: 20px;
   line-height: 30px;
   width: fit-content;
-  font-weight: 500;
-  padding: 9px 34px;
+  padding: 0 25px;
   word-break: break-word;
-  background: ${({ theme }) => theme.bgG1};
   opacity: 0.3;
   border-radius: 45px;
   font-weight: 600;
@@ -59,7 +55,7 @@ const StyledNavLink = styled(NavLink).attrs({
 
   :hover,
   :focus {
-    color: ${({ theme }) => darken(0.1, theme.text1)};
+    color: ${({ theme }) => darken(0.05, theme.text2)};
   }
   ${({ theme }) => theme.mediaWidth.upToExtraSmall`
    font-size: 1rem;
@@ -67,39 +63,30 @@ const StyledNavLink = styled(NavLink).attrs({
 
   `};
 `
-const StyledJointLinkWrapper = styled.div`
-  display: flex;
-`
-
-const StyledJointLink = styled(StyledNavLink)<{ side: Side }>`
-  border-radius: ${({ side }) => (side === Side.left ? '45px 0 0 45px' : '0 45px 45px 0')};
-`
 
 export const HeaderLinks = () => {
   const { allowedSlippage } = useDerivedSwapInfo()
   return (
     <HeaderLinksWrap>
-      <StyledJointLinkWrapper>
-        <StyledJointLink id={`swap-nav-link`} to={'/swap'} side={Side.left}>
-          <Trans>Swap</Trans>
-        </StyledJointLink>
-        <StyledJointLink
-          side={Side.right}
-          id={`pool-nav-link`}
-          to={'/pool'}
-          isActive={(match, { pathname }) =>
-            Boolean(match) ||
-            pathname.startsWith('/add') ||
-            pathname.startsWith('/remove') ||
-            pathname.startsWith('/find')
-          }
-        >
-          <Trans>Pool</Trans>
-        </StyledJointLink>
-      </StyledJointLinkWrapper>
-      <StyledNavLink id={`stake-nav-link`} to={'/vote'}>
-        <Trans>Custodian</Trans>
+      <StyledNavLink id={`swap-nav-link`} to={'/swap'}>
+        <Trans>Swap</Trans>
       </StyledNavLink>
+      <StyledNavLink
+        id={`pool-nav-link`}
+        to={'/pool'}
+        isActive={(match, { pathname }) =>
+          Boolean(match) ||
+          pathname.startsWith('/add') ||
+          pathname.startsWith('/remove') ||
+          pathname.startsWith('/find')
+        }
+      >
+        <Trans>Pool</Trans>
+      </StyledNavLink>
+
+      {/* <StyledNavLink id={`stake-nav-link`} to={routes.securityTokens()}>
+        <Trans>Security tokens</Trans>
+      </StyledNavLink> */}
       <SettingsTab placeholderSlippage={allowedSlippage} />
     </HeaderLinksWrap>
   )

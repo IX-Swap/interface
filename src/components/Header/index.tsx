@@ -10,8 +10,9 @@ import { VioletCard } from '../Card'
 import { RowFixed } from '../Row'
 import Web3Status from '../Web3Status'
 import { HeaderLinks } from './HeaderLinks'
+import useLightBackground from 'components/AppBackground/useLightBackground'
 
-const HeaderFrame = styled.div<{ showBackground: boolean }>`
+const HeaderFrame = styled.div<{ showBackground: boolean; lightBackground: boolean }>`
   display: grid;
   grid-template-columns: 120px 1fr 120px;
   align-items: center;
@@ -22,21 +23,22 @@ const HeaderFrame = styled.div<{ showBackground: boolean }>`
   top: 0;
   position: relative;
   padding: 1rem;
-  z-index: 21;  
+  z-index: 21;
   position: relative;
 
   /* Background slide effect on scroll. */
-  background-image: ${({ theme }) => `linear-gradient(to bottom, transparent 50%, ${theme.bg0} 50% )}}`}
+  background-image: ${({ theme, lightBackground }) =>
+    `linear-gradient(to bottom, transparent 50%, ${lightBackground ? theme.bg1 : theme.bg0} 50% )}}`}
   background-position: ${({ showBackground }) => (showBackground ? '0 -100%' : '0 0')};
   background-size: 100% 200%;
   /* box-shadow: 0px 0px 0px 1px ${({ theme, showBackground }) => (showBackground ? theme.bg2 : 'transparent;')}; */
-  transition: background-position .1s, box-shadow .1s;
+  transition: background-position 0.1s, box-shadow 0.1s;
 
   ${({ theme }) => theme.mediaWidth.upToMedium`
     padding:  1rem;
     grid-template-columns: auto 1fr;
   `};
- ${({ theme }) => theme.mediaWidth.upToSmall`
+  ${({ theme }) => theme.mediaWidth.upToSmall`
     grid-template-columns: repeat(1, 1fr);
   `};
   ${({ theme }) => theme.mediaWidth.upToExtraSmall`
@@ -198,14 +200,14 @@ const HeaderWrapper = styled.div`
 `
 export default function Header() {
   const { account, chainId } = useActiveWeb3React()
-
+  const { hasLightBackground } = useLightBackground()
   const userEthBalance = useETHBalances(account ? [account] : [])?.[account ?? '']
 
   const scrollY = useScrollPosition()
   return (
     <>
       <HeaderWrapper>
-        <HeaderFrame showBackground={scrollY > 45}>
+        <HeaderFrame showBackground={scrollY > 45} lightBackground={hasLightBackground}>
           <HeaderRow>
             <Title href=".">
               <IXSIcon>

@@ -18,6 +18,7 @@ import { AutoColumn } from 'components/Column'
 import { FiatValue } from './FiatValue'
 import { formatCurrencyAmount } from 'utils/formatCurrencyAmount'
 import { AssetLogo } from './AssetLogo'
+import { formatCurrencySymbol } from 'utils/formatCurrencySymbol'
 
 const InputPanel = styled.div<{ hideInput?: boolean }>`
   ${({ theme }) => theme.flexColumnNoWrap}
@@ -76,7 +77,7 @@ const CurrencySelect = styled(ButtonEmpty)<{ selected: boolean; hideInput?: bool
 const InputRow = styled.div<{ selected: boolean }>`
   ${({ theme }) => theme.flexRowNoWrap}
   align-items: center;
-  padding: 14px 2rem 0 2.5rem;
+  padding: 14px 2rem 0 2rem;
   ${({ theme }) => theme.mediaWidth.upToExtraSmall`
       padding: 10px 10px 0 1rem;
   `};
@@ -101,6 +102,7 @@ const LabelRow = styled.div`
 
 const FiatRow = styled(LabelRow)`
   justify-content: space-between;
+  gap: 16px;
 `
 
 const Aligner = styled.span`
@@ -129,7 +131,14 @@ const BalanceRow = styled(RowEnd)`
      margin-top: 0.5rem;
   `};
 `
-
+const BalanceWrap = styled(RowFixed)`
+  display: -webkit-box;
+  -webkit-line-clamp: 1;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  height: 17px;
+  text-align: center;
+`
 const StyledBalanceMax = styled.button<{ disabled?: boolean }>`
   background-color: transparent;
   border: none;
@@ -255,11 +264,7 @@ export default function CurrencyInputPanel({
                   </StyledTokenName>
                 ) : (
                   <StyledTokenName className="token-symbol-container" active={Boolean(currency && currency.symbol)}>
-                    {(currency && currency.symbol && currency.symbol.length > 20
-                      ? currency.symbol.slice(0, 4) +
-                        '...' +
-                        currency.symbol.slice(currency.symbol.length - 5, currency.symbol.length)
-                      : currency?.symbol) || <Trans>Choose token</Trans>}
+                    {formatCurrencySymbol({ currency }) || <Trans>Choose token</Trans>}
                   </StyledTokenName>
                 )}
               </RowFixed>
@@ -272,7 +277,7 @@ export default function CurrencyInputPanel({
             <FiatValue fiatValue={fiatValue} priceImpact={priceImpact} />
             <BalanceRow>
               {account ? (
-                <RowFixed style={{ height: '17px' }}>
+                <BalanceWrap>
                   <TYPE.body
                     onClick={onMax}
                     color={theme.text2}
@@ -290,7 +295,7 @@ export default function CurrencyInputPanel({
                       )
                     ) : null}
                   </TYPE.body>
-                </RowFixed>
+                </BalanceWrap>
               ) : (
                 <span />
               )}

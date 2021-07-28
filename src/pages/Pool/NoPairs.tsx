@@ -1,39 +1,30 @@
-import React from 'react'
-import { SemiTransparent, TYPE } from '../../theme'
-import Card from '../../components/Card'
-import { ButtonEmpty } from '../../components/Button'
-import { Dots } from '../../components/swap/styleds'
 import { Trans } from '@lingui/macro'
-import { EmptyLiquidity } from './EmptyLiquidity'
-import { MarginerCard, LiquidityWrapper, LiquidityInnerTitle } from './styleds'
+import { BackgroundWrapper } from 'components/BottomHalfWrapper'
 import useTheme from 'hooks/useTheme'
+import React from 'react'
+import Card from '../../components/Card'
+import { Dots } from '../../components/swap/styleds'
+import { SemiTransparent, TYPE } from '../../theme'
+import { EmptyLiquidity } from './EmptyLiquidity'
 import { ImportPool } from './ImportPool'
-import { useWalletModalToggle } from 'state/application/hooks'
+import { LiquidityInnerTitle, MarginerCard } from './styleds'
 
 interface Props {
   account?: string | null
   v2IsLoading: boolean
   showEmptyLiquidity: boolean
 }
-export const NoPairs = ({ account, v2IsLoading, showEmptyLiquidity }: Props) => {
-  const toggleWalletModal = useWalletModalToggle()
+export const NoPairs = ({ v2IsLoading, showEmptyLiquidity }: Props) => {
   const theme = useTheme()
   return (
     <>
       <MarginerCard>
-        <LiquidityWrapper>
+        <BackgroundWrapper>
           <LiquidityInnerTitle>
             <Trans>My Liquidity</Trans>
           </LiquidityInnerTitle>
           <SemiTransparent>
-            {!account && (
-              <ButtonEmpty padding="40px" onClick={toggleWalletModal}>
-                <TYPE.body color={theme.text2} textAlign="center">
-                  <Trans>Connect a wallet to view your Liquidity.</Trans>
-                </TYPE.body>
-              </ButtonEmpty>
-            )}
-            {account && v2IsLoading && (
+            {v2IsLoading && (
               <Card padding="40px">
                 <TYPE.body color={theme.text2} textAlign="center">
                   <Dots>
@@ -44,7 +35,7 @@ export const NoPairs = ({ account, v2IsLoading, showEmptyLiquidity }: Props) => 
             )}
             {showEmptyLiquidity && <EmptyLiquidity />}
           </SemiTransparent>
-        </LiquidityWrapper>
+        </BackgroundWrapper>
       </MarginerCard>
       <ImportPool />
     </>

@@ -6,6 +6,7 @@ import { AcceptChanges } from 'components/swap/AcceptChanges'
 import { ConfirmSwapInfo } from 'components/swap/ConfirmSwapInfo'
 import { CurrentRate } from 'components/swap/CurrentRate'
 import { EditRecipient } from 'components/swap/EditRecipient'
+import { OutputInfo } from 'components/swap/OutputInfo'
 import { PendingSuccesModals } from 'components/swap/PendingSuccesModals'
 import { tradeMeaningfullyDiffers } from 'components/swap/tradeMeaningfullyDiffers'
 import UnsupportedCurrencyFooter from 'components/swap/UnsupportedCurrencyFooter'
@@ -49,7 +50,7 @@ import AppBody from '../AppBody'
 export default function Swap({ history }: RouteComponentProps) {
   const { account } = useActiveWeb3React()
   const theme = useContext(ThemeContext)
-
+  const [openModal, setOpenModal] = useState<boolean>(false)
   // toggle wallet when disconnected
   const toggleWalletModal = useWalletModalToggle()
 
@@ -160,6 +161,7 @@ export default function Swap({ history }: RouteComponentProps) {
       return
     }
     setSwapState({ attemptingTxn: true, tradeToConfirm, showConfirm, swapErrorMessage: undefined, txHash: undefined })
+    setOpenModal(true)
     swapCallback()
       .then((hash) => {
         setSwapState({
@@ -243,6 +245,7 @@ export default function Swap({ history }: RouteComponentProps) {
     if (txHash) {
       onUserInput(Field.INPUT, '')
     }
+    setOpenModal(false)
   }, [onUserInput, txHash, handleHideConfirm])
   const handleAcceptChanges = useCallback(() => {
     setSwapState({ tradeToConfirm: trade, swapErrorMessage, txHash, attemptingTxn, showConfirm })
@@ -271,7 +274,7 @@ export default function Swap({ history }: RouteComponentProps) {
             onDismiss={handleConfirmDismiss}
             attemptingTxn={attemptingTxn}
             txHash={txHash}
-            isOpen={showConfirm && (attemptingTxn || Boolean(txHash))}
+            isOpen={openModal}
           />
           <AutoColumn gap={'1.25rem'}>
             <CurrencyInput
@@ -284,9 +287,10 @@ export default function Swap({ history }: RouteComponentProps) {
             {showAcceptChanges ? <AcceptChanges handleAcceptChanges={handleAcceptChanges} /> : null}
             {showConfirm && (
               <>
-                <ConfirmSwapInfo trade={trade} allowedSlippage={allowedSlippage} />
+                <ConfirmSwapInfo data-testid="confirm-swap-card-info" trade={trade} allowedSlippage={allowedSlippage} />
+                {trade && <OutputInfo {...{ trade, recipient, allowedSlippage }} />}
                 <BottomGrouping>
-                  <ButtonIXSWide onClick={handleSwap} disabled={showAcceptChanges}>
+                  <ButtonIXSWide onClick={handleSwap} disabled={showAcceptChanges} data-testid="confirm-swap">
                     <Trans>Confirm Swap</Trans>
                   </ButtonIXSWide>
                 </BottomGrouping>
@@ -295,15 +299,15 @@ export default function Swap({ history }: RouteComponentProps) {
             {!showConfirm && (
               <BottomGrouping>
                 {swapIsUnsupported ? (
-                  <ButtonIXSWide disabled={true}>
+                  <ButtonIXSWide disabled={true} data-testid="unsupported-asset">
                     <Trans>Unsupported Asset</Trans>
                   </ButtonIXSWide>
                 ) : !account ? (
-                  <ButtonIXSWide onClick={toggleWalletModal}>
+                  <ButtonIXSWide onClick={toggleWalletModal} data-testid="connect-wallet-from-swap">
                     <Trans>Connect Wallet</Trans>
                   </ButtonIXSWide>
                 ) : showWrap ? (
-                  <ButtonIXSWide disabled={Boolean(wrapInputError)} onClick={onWrap}>
+                  <ButtonIXSWide disabled={Boolean(wrapInputError)} onClick={onWrap} data-testid="wrap">
                     {wrapInputError ??
                       (wrapType === WrapType.WRAP ? (
                         <Trans>Wrap</Trans>
@@ -330,6 +334,7 @@ export default function Swap({ history }: RouteComponentProps) {
                           signatureState === UseERC20PermitState.SIGNED
                         }
                         width="100%"
+                        data-testid="approve-use-token"
                         altDisabledStyle={approvalState === ApprovalState.PENDING} // show solid button while waiting
                         confirmed={
                           approvalState === ApprovalState.APPROVED || signatureState === UseERC20PermitState.SIGNED
@@ -384,6 +389,7 @@ export default function Swap({ history }: RouteComponentProps) {
                           }
                         }}
                         width="100%"
+                        data-testid="swap-button"
                         id="swap-button"
                         disabled={
                           !isValid ||
@@ -418,6 +424,7 @@ export default function Swap({ history }: RouteComponentProps) {
                         })
                       }
                     }}
+                    data-testid="swap-button"
                     id="swap-button"
                     disabled={!isValid || priceImpactTooHigh || !!swapCallbackError}
                   >

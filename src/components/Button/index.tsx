@@ -5,6 +5,7 @@ import { Check, ChevronDown } from 'react-feather'
 import { Button as RebassButton, ButtonProps as ButtonPropsOriginal } from 'rebass/styled-components'
 import styled from 'styled-components/macro'
 import { RowBetween } from '../Row'
+import { gradientBorder } from 'theme'
 
 type ButtonProps = Omit<ButtonPropsOriginal, 'css'>
 
@@ -184,14 +185,24 @@ export const ButtonIXSGradient = styled(ButtonPrimary)<{ confirmed?: boolean }>`
   :active {
     opacity: 0.9;
   }
-  padding: 25px 8px;
-  text-transform: uppercase;
+  padding: 25px;
+  text-transform: capitalize;
   border-radius: 40px;
   font-weight: 600;
   font-size: 18px;
   line-height: 20px;
   background-color: ${({ theme }) => theme.bg3};
   background: ${({ theme }) => theme.bgG3};
+`
+export const ButtonGradientBorder = styled(ButtonIXSGradient)`
+  background-color: transparent;
+  background: transparent;
+  ${gradientBorder}
+  :focus,
+  :hover {
+    background-color: transparent;
+    background: transparent;
+  }
 `
 export const ButtonIXSWide = styled(ButtonIXSGradient)`
   width: 100%;
@@ -203,7 +214,6 @@ export const ButtonGradient = styled(Base)`
   font-size: 14px;
   line-height: 21px;
   text-align: center;
-  text-transform: uppercase;
   padding: 7px 0;
 `
 

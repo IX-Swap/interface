@@ -101,11 +101,12 @@ export const CurrencyInput = ({
         fiatValue={fiatValueInput ?? undefined}
         onCurrencySelect={handleInputSelect}
         otherCurrency={currencies[Field.OUTPUT]}
-        showCommonBases={false}
+        showCommonBases={true}
         title={<Trans>Select a token to swap</Trans>}
         id="swap-currency-input"
       />
       <ArrowWrapper
+        data-testid="currencyReplace"
         clickable
         onClick={() => {
           setApprovalSubmitted(false) // reset 2 step UI for approvals
@@ -129,7 +130,7 @@ export const CurrencyInput = ({
         currency={currencies[Field.OUTPUT]}
         onCurrencySelect={handleOutputSelect}
         otherCurrency={currencies[Field.INPUT]}
-        showCommonBases={false}
+        showCommonBases={true}
         id="swap-currency-output"
       />
     </div>

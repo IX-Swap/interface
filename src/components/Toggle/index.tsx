@@ -16,7 +16,7 @@ const ToggleElement = styled.span<{ isActive?: boolean; isOnSwitch?: boolean }>`
 const StyledToggle = styled.button<{ isActive?: boolean; activeElement?: boolean }>`
   border-radius: 36px;
   box-shadow: 0px 0px 4px rgba(182, 111, 242, 0.25);
-  border: ${({ theme }) => theme.popUpInputBorder};
+  border: 1px solid ${({ theme }) => theme.popUpInputBorder};
   background: ${({ theme }) => theme.bg7};
   padding: 2px;
   display: flex;

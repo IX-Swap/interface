@@ -1,7 +1,7 @@
 import React, { HTMLProps } from 'react'
 import ReactGA from 'react-ga'
 import { Link } from 'react-router-dom'
-import styled, { keyframes } from 'styled-components'
+import styled, { css, keyframes } from 'styled-components'
 import { darken } from 'polished'
 import { ArrowLeft, X, ExternalLink as LinkIconFeather, Trash } from 'react-feather'
 
@@ -330,7 +330,7 @@ export const ModalBlurWrapper = styled.span`
   backdrop-filter: blur(20px);
   ${({ theme }) => theme.mediaWidth.upToSmall`
     padding: 0;
-  min-width: fit-content;
+    min-width: fit-content;
   `};
   ${({ theme }) => theme.mediaWidth.upToExtraSmall`
     min-width: 100%;
@@ -338,4 +338,71 @@ export const ModalBlurWrapper = styled.span`
     border-radius: 0;
   `};
   user-select: none;
+`
+export const StyledNumberInput = styled.input<{ error?: boolean; fontSize?: string; align?: string }>`
+  color: ${({ error, theme }) => (error ? theme.red1 : theme.text1)};
+  width: 0;
+  position: relative;
+  outline: none;
+  border: none;
+  flex: 1 1 auto;
+  font-weight: 600;
+  background-color: ${({ theme }) => theme.bg7};
+  text-align: ${({ align }) => align && align};
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  padding: 0px;
+  -webkit-appearance: textfield;
+  text-align: left;
+  font-size: 22px;
+  line-height: 40px;
+  ::-webkit-search-decoration {
+    -webkit-appearance: none;
+  }
+
+  [type='number'] {
+    -moz-appearance: textfield;
+  }
+
+  ::-webkit-outer-spin-button,
+  ::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+  }
+
+  ::placeholder {
+    color: ${({ theme }) => theme.text2};
+    opacity: 0.5;
+    font-style: normal;
+  }
+`
+export const SvgIconWrapper = styled.div<{ size?: number }>`
+  ${({ theme }) => theme.flexColumnNoWrap};
+  align-items: center;
+  justify-content: center;
+  & > img,
+  span {
+    height: ${({ size }) => (size ? size + 'px' : '32px')};
+    width: ${({ size }) => (size ? size + 'px' : '32px')};
+  }
+  ${({ theme }) => theme.mediaWidth.upToMedium`
+    align-items: flex-end;
+  `};
+`
+export const gradientBorder = css`
+  :before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    border-radius: 45px;
+    -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+    mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+    -webkit-mask-composite: destination-out;
+    mask-composite: exclude;
+    padding: 2px;
+    background: ${({ theme }) => theme.borderG1};
+  }
 `

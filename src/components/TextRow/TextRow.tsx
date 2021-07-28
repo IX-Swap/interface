@@ -12,7 +12,7 @@ interface Props {
 
 export const TextRow = ({ textLeft, textRight, currency }: Props) => {
   return (
-    <FixedHeightRow>
+    <FixedHeightRow data-testid="tableRow">
       <RowFixed>
         <Text>{textLeft}</Text>
       </RowFixed>

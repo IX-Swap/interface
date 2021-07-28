@@ -15,6 +15,7 @@ export const AcceptChanges = ({ handleAcceptChanges }: { handleAcceptChanges: ()
           <Trans>Price Updated</Trans>
         </RowFixed>
         <ButtonGradient
+          data-testid="accept-swap-changes"
           style={{ padding: '.5rem', width: 'fit-content', fontSize: '0.825rem', borderRadius: '12px' }}
           onClick={handleAcceptChanges}
         >

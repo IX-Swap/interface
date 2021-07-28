@@ -22,8 +22,19 @@ import {
   updateUserSingleHopOnly,
   updateUserSlippageTolerance,
   updateUserLocale,
+  fetchUserSecTokenList,
+  passAccreditation,
+  setUsesSecTokens,
 } from './actions'
 import { SupportedLocale } from 'constants/locales'
+import apiService from 'services/apiService'
+import { tokens } from 'services/apiUrls'
+import { SecToken } from 'types/secToken'
+import { listToSecTokenMap, SecTokenAddressMap, useSecTokensFromMap } from 'state/secTokens/hooks'
+import { WrappedTokenInfo } from 'state/lists/wrappedTokenInfo'
+import { useAuthState, useSaveAuthorization } from 'state/auth/hooks'
+import { useFetchToken } from 'hooks/useFetchToken'
+import { shouldRenewToken } from 'utils/time'
 
 function serializeToken(token: Token): SerializedToken {
   return {
@@ -74,7 +85,12 @@ export function useDarkModeManager(): [boolean, () => void] {
 export function useUserLocale(): SupportedLocale | null {
   return useSelector<AppState, AppState['user']['userLocale']>((state) => state.user.userLocale)
 }
-
+export function useUserSecTokenState(): SecToken[] | null {
+  return useSelector<AppState, AppState['user']['userSecTokens']>((state) => state.user.userSecTokens)
+}
+export function useUserSecTokenLoading(): boolean {
+  return useSelector<AppState, AppState['user']['loadingSecTokenRequest']>((state) => state.user.loadingSecTokenRequest)
+}
 export function useUserLocaleManager(): [SupportedLocale | null, (newLocale: SupportedLocale) => void] {
   const dispatch = useDispatch<AppDispatch>()
   const locale = useUserLocale()
@@ -92,7 +108,9 @@ export function useUserLocaleManager(): [SupportedLocale | null, (newLocale: Sup
 export function useIsExpertMode(): boolean {
   return useSelector<AppState, AppState['user']['userExpertMode']>((state) => state.user.userExpertMode)
 }
-
+export function useUsesSecTokens(): boolean {
+  return useSelector<AppState, AppState['user']['usesSecTokens']>((state) => state.user.usesSecTokens)
+}
 export function useExpertModeManager(): { expertMode: boolean; toggleExpertMode: () => void } {
   const dispatch = useDispatch<AppDispatch>()
   const expertMode = useIsExpertMode()
@@ -316,4 +334,73 @@ export function useTrackedTokenPairs(): [Token, Token][] {
 
     return Object.keys(keyed).map((key) => keyed[key])
   }, [combinedList])
+}
+
+export const getUserSecTokensList = async () => {
+  const result = await apiService.get(tokens.fromUser)
+  return result.data
+}
+
+const listCache: WeakMap<SecToken[], SecTokenAddressMap> | null =
+  typeof WeakMap !== 'undefined' ? new WeakMap<SecToken[], SecTokenAddressMap>() : null
+
+export const useUserSecTokens = () => {
+  const userSecTokens = useUserSecTokenState()
+  const secMap = listToSecTokenMap(listCache, userSecTokens)
+  const secTokens = useSecTokensFromMap(secMap)
+  return { secTokens }
+}
+
+export function useFetchUserSecTokenListCallback(): (sendDispatch?: boolean) => Promise<SecToken[]> {
+  const dispatch = useDispatch<AppDispatch>()
+
+  // note: prevent dispatch if using for list search or unsupported list
+  return useCallback(
+    async (sendDispatch = true) => {
+      sendDispatch && dispatch(fetchUserSecTokenList.pending())
+      return getUserSecTokensList()
+        .then((tokenList) => {
+          sendDispatch && dispatch(fetchUserSecTokenList.fulfilled({ tokenList }))
+          return tokenList
+        })
+        .catch((error) => {
+          console.debug(`Failed to get sec token list`, error)
+          sendDispatch && dispatch(fetchUserSecTokenList.rejected({ errorMessage: error.message }))
+          throw error
+        })
+    },
+    [dispatch]
+  )
+}
+
+export const postPassAccreditation = async ({ tokenId }: { tokenId: number }) => {
+  const result = await apiService.post(tokens.accreditation(tokenId), {})
+  return result.data
+}
+
+export function usePassAccreditation({ tokenId }: { tokenId: number }): () => Promise<void> {
+  const dispatch = useDispatch<AppDispatch>()
+  const { token, expiresAt } = useAuthState()
+  const { saveAuthorization } = useSaveAuthorization()
+  const { fetchToken } = useFetchToken()
+  const fetchTokens = useFetchUserSecTokenListCallback()
+  // note: prevent dispatch if using for list search or unsupported list
+  return useCallback(async () => {
+    dispatch(passAccreditation.pending())
+    try {
+      if (!token || shouldRenewToken(expiresAt ?? 0)) {
+        const authData = await fetchToken()
+        if (authData) {
+          saveAuthorization(authData)
+        }
+      }
+      await postPassAccreditation({ tokenId })
+      dispatch(setUsesSecTokens({ usesTokens: true }))
+      await fetchTokens()
+      dispatch(passAccreditation.fulfilled())
+    } catch (error) {
+      console.debug(`Failed to pass accreditation`, error)
+      dispatch(passAccreditation.rejected({ errorMessage: error.message }))
+    }
+  }, [dispatch, tokenId, token, expiresAt, fetchToken, saveAuthorization, fetchTokens])
 }

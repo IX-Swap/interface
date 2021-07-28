@@ -1,6 +1,5 @@
 import { Token } from '@ixswap1/sdk-core'
 import { Trans } from '@lingui/macro'
-import Card from 'components/Card'
 import Column from 'components/Column'
 import CurrencyLogo from 'components/CurrencyLogo'
 import Row, { RowBetween, RowFixed } from 'components/Row'
@@ -104,14 +103,12 @@ export default function ManageTokens({
             </TYPE.error>
           )}
           {searchToken && (
-            <Card backgroundColor={theme.bg2} padding="10px 0">
-              <ImportRow
-                token={searchToken}
-                showImportView={() => setModalView(CurrencyModalView.importToken)}
-                setImportToken={setImportToken}
-                style={{ height: 'fit-content' }}
-              />
-            </Card>
+            <ImportRow
+              token={searchToken}
+              showImportView={() => setModalView(CurrencyModalView.importToken)}
+              setImportToken={setImportToken}
+              style={{ height: 'fit-content' }}
+            />
           )}
         </PaddedColumn40>
 
@@ -123,7 +120,7 @@ export default function ManageTokens({
             {userAddedTokens.length > 0 && (
               <Box style={{ paddingRight: '0.5rem' }}>
                 <SemiTransparent>
-                  <ButtonText onClick={handleRemoveAll}>
+                  <ButtonText onClick={handleRemoveAll} data-testid="clear-user-added-tokens">
                     <TYPE.buttonMuted color={theme.text2}>
                       <Trans>Clear all</Trans>
                     </TYPE.buttonMuted>

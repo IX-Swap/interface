@@ -325,13 +325,13 @@ export default function AddLiquidity({
                 )}
                 <Box marginTop={'23px'}>
                   {addIsUnsupported ? (
-                    <ButtonIXSWide disabled={true}>
+                    <ButtonIXSWide disabled={true} data-testid="unsupported-asset">
                       <TYPE.main mb="4px">
                         <Trans>Unsupported Asset</Trans>
                       </TYPE.main>
                     </ButtonIXSWide>
                   ) : !account ? (
-                    <ButtonIXSWide onClick={toggleWalletModal}>
+                    <ButtonIXSWide onClick={toggleWalletModal} data-testid="connect-wallet-add-liquidity">
                       <Trans>Connect Wallet</Trans>
                     </ButtonIXSWide>
                   ) : (
@@ -343,7 +343,11 @@ export default function AddLiquidity({
                         isValid && (
                           <ButtonRow marginBottom={'0.5rem'}>
                             {approvalA !== ApprovalState.APPROVED && (
-                              <ButtonGradient onClick={approveACallback} disabled={approvalA === ApprovalState.PENDING}>
+                              <ButtonGradient
+                                onClick={approveACallback}
+                                disabled={approvalA === ApprovalState.PENDING}
+                                data-testid="approve-currency-a"
+                              >
                                 {approvalA === ApprovalState.PENDING ? (
                                   <Dots>
                                     <Trans>Approving {currencies[Field.CURRENCY_A]?.symbol}</Trans>
@@ -354,7 +358,11 @@ export default function AddLiquidity({
                               </ButtonGradient>
                             )}
                             {approvalB !== ApprovalState.APPROVED && (
-                              <ButtonGradient onClick={approveBCallback} disabled={approvalB === ApprovalState.PENDING}>
+                              <ButtonGradient
+                                onClick={approveBCallback}
+                                disabled={approvalB === ApprovalState.PENDING}
+                                data-testid="approve-currency-b"
+                              >
                                 {approvalB === ApprovalState.PENDING ? (
                                   <Dots>
                                     <Trans>Approving {currencies[Field.CURRENCY_B]?.symbol}</Trans>
@@ -367,6 +375,7 @@ export default function AddLiquidity({
                           </ButtonRow>
                         )}
                       <ButtonIXSWide
+                        data-testid="supply"
                         onClick={() => {
                           expertMode ? onAdd() : setShowConfirm(true)
                         }}

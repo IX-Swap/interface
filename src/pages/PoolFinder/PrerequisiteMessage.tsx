@@ -1,15 +1,21 @@
-import React from 'react'
 import { Trans } from '@lingui/macro'
-import { LightMessage } from './LightMessage'
+import { EmptyStateInfoCard } from 'components/Card'
+import Column from 'components/Column'
+import { ConnectWallet } from 'pages/Pool/ConnectWallet'
+import React from 'react'
 
 export const PrerequisiteMessage = ({ account }: { account?: string | null }) => {
   return (
-    <LightMessage>
+    <Column style={{ paddingTop: '36px' }}>
       {!account ? (
-        <Trans>Connect to a wallet to find pools</Trans>
+        <ConnectWallet message={<Trans>Connect to a wallet to find pools</Trans>} />
       ) : (
-        <Trans>Choose token to find your liquidity.</Trans>
+        <Column style={{ padding: '0 36px 36px 36px', alignItems: 'center', gap: '20px' }}>
+          <EmptyStateInfoCard>
+            <Trans>Choose token to find your liquidity</Trans>
+          </EmptyStateInfoCard>
+        </Column>
       )}
-    </LightMessage>
+    </Column>
   )
 }

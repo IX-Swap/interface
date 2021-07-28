@@ -63,7 +63,7 @@ export function SwapPoolTabs({ active }: { active: 'swap' | 'pool' }) {
 
 export function FindPoolTabs({ origin }: { origin: string }) {
   return (
-    <Tabs>
+    <Tabs style={{ padding: '26px 37px 0 37px' }}>
       <StyledPageHeader>
         <RowStart style={{ padding: '0' }}>
           <HistoryLink to={origin}>
@@ -96,6 +96,17 @@ export function ManageTabs({ onClick, onDismiss }: { onClick: () => void; onDism
   )
 }
 
+export function CustodianTabs() {
+  return (
+    <Tabs style={{ width: '100%' }}>
+      <StyledPageHeader>
+        <RowStart style={{ padding: '0' }}>
+          <Trans>Security Tokens</Trans>
+        </RowStart>
+      </StyledPageHeader>
+    </Tabs>
+  )
+}
 export function AddRemoveTabs({
   adding,
   creating,

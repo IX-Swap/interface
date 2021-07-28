@@ -75,7 +75,9 @@ export default function PopupItem({
     const {
       txn: { hash, success, summary },
     } = content
-    popupContent = <TransactionPopup hash={hash} success={success} summary={summary} />
+    popupContent = (
+      <TransactionPopup hash={hash} success={success} summary={summary} data-testid="transaction-confirmed-pop-up" />
+    )
   }
 
   const faderStyle = useSpring({

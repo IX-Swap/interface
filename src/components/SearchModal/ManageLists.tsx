@@ -9,7 +9,7 @@ import { CheckCircle } from 'react-feather'
 import ReactGA from 'react-ga'
 import { useAppDispatch, useAppSelector } from 'state/hooks'
 import styled from 'styled-components/macro'
-import { ReactComponent as Settings } from '../../assets/images/settings.svg'
+import { ReactComponent as Settings } from '../../assets/images/settings-full.svg'
 import { useFetchListCallback } from '../../hooks/useFetchListCallback'
 import { useOnClickOutside } from '../../hooks/useOnClickOutside'
 import useTheme from '../../hooks/useTheme'
@@ -185,7 +185,7 @@ const ListRow = memo(function ListRow({ listUrl }: { listUrl: string }) {
     </PopOverContent>
   )
   return (
-    <RowWrapper bgColor={theme.bg11} key={listUrl} id={listUrlRowHTMLId(listUrl)}>
+    <RowWrapper bgColor={theme.bg12} key={listUrl} id={listUrlRowHTMLId(listUrl)}>
       {list.logoURI ? (
         <ListLogo size="40px" style={{ marginRight: '1rem' }} logoURI={list.logoURI} alt={`${list.name} list logo`} />
       ) : (
@@ -201,7 +201,7 @@ const ListRow = memo(function ListRow({ listUrl }: { listUrl: string }) {
           </StyledListUrlText>
           <StyledMenu ref={node as any}>
             <Popover show={open} content={popOverContent()} placement={'right'}>
-              <ButtonEmpty onClick={toggle} padding="0">
+              <ButtonEmpty onClick={toggle} padding="0" data-testid="token-list-settings">
                 <SemiTransparent>
                   <Settings style={{ height: '10px', width: '10px ' }} />
                 </SemiTransparent>
@@ -368,6 +368,7 @@ export function ManageLists({
                   padding="6px 8px"
                   width="fit-content"
                   onClick={handleImport}
+                  data-testid="import-list"
                 >
                   <Trans>Import</Trans>
                 </ButtonPrimary>

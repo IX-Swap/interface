@@ -7,7 +7,14 @@ import { Trans } from '@lingui/macro'
 import styled from 'styled-components'
 
 const WidthFit = styled.span`
-  min-width: fit-content;
+  flex: 1 1;
+  > div {
+    min-width: 0;
+    width: 180px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
 `
 export function FiatValue({
   fiatValue,

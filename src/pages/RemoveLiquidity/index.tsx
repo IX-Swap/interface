@@ -340,13 +340,14 @@ export default function RemoveLiquidity({
             )}
             <div style={{ position: 'relative' }}>
               {!account ? (
-                <ButtonIXSWide onClick={toggleWalletModal}>
+                <ButtonIXSWide onClick={toggleWalletModal} data-testid="connect-wallet-remove-liquidity">
                   <Trans>Connect Wallet</Trans>
                 </ButtonIXSWide>
               ) : (
-                <RowBetween>
-                  {showApproveButton && (
+                <>
+                  <RowBetween style={{ gap: '16px' }}>
                     <ButtonIXSWide
+                      data-testid="approve-currency-a-remove"
                       onClick={onAttemptToApprove}
                       disabled={approval !== ApprovalState.NOT_APPROVED || signatureData !== null}
                     >
@@ -360,9 +361,8 @@ export default function RemoveLiquidity({
                         <>{error || <Trans>Approve</Trans>}</>
                       )}
                     </ButtonIXSWide>
-                  )}
-                  {showRemoveButton && (
                     <ButtonIXSWide
+                      data-testid="approve-currency-b-remove"
                       onClick={() => {
                         setShowConfirm(true)
                       }}
@@ -370,8 +370,8 @@ export default function RemoveLiquidity({
                     >
                       <Text>{<Trans>Remove</Trans>}</Text>
                     </ButtonIXSWide>
-                  )}
-                </RowBetween>
+                  </RowBetween>
+                </>
               )}
             </div>
           </AutoColumn>

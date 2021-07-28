@@ -1,10 +1,17 @@
-import React, { useEffect, useState } from 'react'
+import { Trans } from '@lingui/macro'
 import { AbstractConnector } from '@web3-react/abstract-connector'
 import { UnsupportedChainIdError, useWeb3React } from '@web3-react/core'
 import { WalletConnectConnector } from '@web3-react/walletconnect-connector'
+import RedesignedWideModal from 'components/Modal/RedesignedWideModal'
 import { AutoRow } from 'components/Row'
+import { useFetchToken } from 'hooks/useFetchToken'
+import React, { useEffect, useState } from 'react'
 import { isMobile } from 'react-device-detect'
 import ReactGA from 'react-ga'
+import { useDispatch } from 'react-redux'
+import { AppDispatch } from 'state'
+import { saveToken } from 'state/auth/actions'
+import { useSaveAuthorization } from 'state/auth/hooks'
 import MetamaskIcon from '../../assets/images/metamask.png'
 import { fortmatic, injected, portis } from '../../connectors'
 import { OVERLAY_READY } from '../../connectors/Fortmatic'
@@ -14,20 +21,19 @@ import { ApplicationModal } from '../../state/application/actions'
 import { useModalOpen, useWalletModalToggle } from '../../state/application/hooks'
 import { ExternalLink, TYPE } from '../../theme'
 import AccountDetails from '../AccountDetails'
-import { Trans } from '@lingui/macro'
-
 import Modal from '../Modal'
+import { ErrorSection } from './ErrorSection'
 import Option from './Option'
 import PendingView from './PendingView'
 import {
-  UpperSection,
-  CloseIcon,
-  HeaderRow,
-  ContentWrapper,
   CloseColor,
-  OptionGrid,
+  CloseIcon,
+  ContentWrapper,
+  HeaderRow,
   HoverText,
+  OptionGrid,
   TermsCard,
+  UpperSection,
   Wrapper,
 } from './styleds'
 
@@ -49,6 +55,7 @@ export default function WalletModal({
 }) {
   // important that these are destructed from the account-specific web3-react context
   const { active, account, connector, activate, error } = useWeb3React()
+  const dispatch = useDispatch<AppDispatch>()
 
   const [walletView, setWalletView] = useState(WALLET_VIEWS.ACCOUNT)
 
@@ -75,7 +82,8 @@ export default function WalletModal({
       setWalletView(WALLET_VIEWS.ACCOUNT)
     }
   }, [walletModalOpen])
-
+  const { fetchToken } = useFetchToken()
+  const { saveAuthorization } = useSaveAuthorization()
   // close modal when a connection is successful
   const activePrevious = usePrevious(active)
   const connectorPrevious = usePrevious(connector)
@@ -106,15 +114,23 @@ export default function WalletModal({
     if (connector instanceof WalletConnectConnector && connector.walletConnectProvider?.wc?.uri) {
       connector.walletConnectProvider = undefined
     }
+    if (connector) {
+      try {
+        await activate(connector, undefined, true)
 
-    connector &&
-      activate(connector, undefined, true).catch((error) => {
+        dispatch(saveToken({ value: { token: '', expiresAt: 0 } }))
+        const authData = await fetchToken()
+        if (authData) {
+          saveAuthorization(authData)
+        }
+      } catch (error) {
         if (error instanceof UnsupportedChainIdError) {
           activate(connector) // a little janky...can't use setError because the connector isn't set
         } else {
           setPendingError(true)
         }
-      })
+      }
+    }
   }
 
   // close wallet modal if fortmatic modal is active
@@ -212,36 +228,7 @@ export default function WalletModal({
 
   function getModalContent() {
     if (error) {
-      return (
-        <UpperSection>
-          <CloseIcon onClick={toggleWalletModal}>
-            <CloseColor />
-          </CloseIcon>
-          <HeaderRow>
-            {error instanceof UnsupportedChainIdError ? <Trans>Wrong Network</Trans> : <Trans>Error connecting</Trans>}
-          </HeaderRow>
-          <ContentWrapper>
-            {error instanceof UnsupportedChainIdError ? (
-              <h5>
-                <Trans>Please connect to the appropriate Ethereum network.</Trans>
-              </h5>
-            ) : (
-              <Trans>Error connecting. Try refreshing the page.</Trans>
-            )}
-          </ContentWrapper>
-        </UpperSection>
-      )
-    }
-    if (account && walletView === WALLET_VIEWS.ACCOUNT) {
-      return (
-        <AccountDetails
-          toggleWalletModal={toggleWalletModal}
-          pendingTransactions={pendingTransactions}
-          confirmedTransactions={confirmedTransactions}
-          ENSName={ENSName}
-          openOptions={() => setWalletView(WALLET_VIEWS.OPTIONS)}
-        />
-      )
+      return <ErrorSection error={error} toggleWalletModal={toggleWalletModal} />
     }
     return (
       <UpperSection>
@@ -294,7 +281,29 @@ export default function WalletModal({
       </UpperSection>
     )
   }
-
+  if (account && walletView === WALLET_VIEWS.ACCOUNT) {
+    return (
+      <RedesignedWideModal
+        isOpen={walletModalOpen}
+        onDismiss={toggleWalletModal}
+        minHeight={50}
+        maxHeight={50}
+        mobileMaxHeight={80}
+        isRight
+      >
+        <Wrapper>
+          {' '}
+          <AccountDetails
+            toggleWalletModal={toggleWalletModal}
+            pendingTransactions={pendingTransactions}
+            confirmedTransactions={confirmedTransactions}
+            ENSName={ENSName}
+            openOptions={() => setWalletView(WALLET_VIEWS.OPTIONS)}
+          />
+        </Wrapper>
+      </RedesignedWideModal>
+    )
+  }
   return (
     <Modal isOpen={walletModalOpen} onDismiss={toggleWalletModal} minHeight={false} maxHeight={90}>
       <Wrapper>{getModalContent()}</Wrapper>

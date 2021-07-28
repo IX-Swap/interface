@@ -1,7 +1,8 @@
 import styled from 'styled-components/macro'
+import { gradientBorder } from 'theme'
 import { hexToRGBA } from 'utils/themeHelper'
 import Column, { AutoColumn } from '../Column'
-import { RowBetween, RowFixed } from '../Row'
+import Row, { RowBetween, RowFixed } from '../Row'
 
 export const ModalInfo = styled.div`
   ${({ theme }) => theme.flexRowNoWrap}
@@ -75,10 +76,22 @@ export const PaddedColumn40 = styled(PaddedColumn)`
   `};
 `
 export const MenuItem = styled(RowBetween)`
-  padding: 4px 20px;
+  padding: 4px 40px;
   height: 56px;
   display: grid;
   grid-template-columns: auto minmax(auto, 1fr) auto minmax(0, 72px);
+  grid-gap: 8px;
+  cursor: ${({ disabled }) => !disabled && 'pointer'};
+  pointer-events: ${({ disabled }) => disabled && 'none'};
+  :hover {
+    background: ${({ theme, disabled }) => !disabled && `${hexToRGBA(theme.bg10, 0.1)}`};
+    backdrop-filter: blur(4px);
+  }
+  opacity: ${({ disabled, selected }) => (disabled || selected ? 0.5 : 1)};
+`
+export const UnapprovedMenuItem = styled(Row)`
+  padding: 4px 16px;
+  height: 56px;
   grid-gap: 16px;
   cursor: ${({ disabled }) => !disabled && 'pointer'};
   pointer-events: ${({ disabled }) => disabled && 'none'};
@@ -131,4 +144,13 @@ export const ModalContentWrapper = styled(Column)`
   flex: 1 1;
   position: relative;
   background: ${({ theme }) => theme.bgG4};
+`
+export const UnapprovedTokenWrapper = styled.div`
+  ${gradientBorder}
+  padding-left: 24px;
+  padding-right: 21px;
+  align-items: center;
+  display: grid;
+  width: 100%;
+  grid-template-columns: auto minmax(auto, 1fr) minmax(0, 72px);
 `
