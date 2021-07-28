@@ -15,7 +15,6 @@ export const useCapitalCall = () => {
   return {
     mutation: useMutation(mutateFn, {
       onSuccess: response => {
-        console.log('response', response.data)
         void snackbarService.showSnackbar(
           'Email has been sent to investors',
           'success'
@@ -23,7 +22,8 @@ export const useCapitalCall = () => {
       },
       onError: (error: any) => {
         void snackbarService.showSnackbar(
-          error.message ?? 'Capital Call Error',
+          error.message ??
+            'There was an error sending an email. Please try again in few minutes.',
           'error'
         )
       }

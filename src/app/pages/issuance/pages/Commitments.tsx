@@ -32,6 +32,7 @@ export const Commitments = () => {
   return (
     <>
       <Grid
+        item
         container
         justify={'space-between'}
         alignItems={'center'}
