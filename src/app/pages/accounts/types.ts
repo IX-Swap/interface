@@ -34,6 +34,7 @@ export interface WithdrawCashFormValues {
   bankAccountId?: string | null
   memo?: string
   virtualAccount: string
+  paymentMethodName: string | null
 }
 
 export interface DepositDSFormValues {

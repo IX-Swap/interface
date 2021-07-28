@@ -11,8 +11,7 @@ export const AppError = (_props: FallbackProps) => {
           <Alert severity='error'>
             <AlertTitle>Sorry, an error has occurred!</AlertTitle>
             <Typography>
-              We've already send our best engineers to deal with it, hang in
-              there.
+              We will have our engineering team deal with it, hang in there.
             </Typography>
             <Typography>In the meantime try to reload the page.</Typography>
           </Alert>

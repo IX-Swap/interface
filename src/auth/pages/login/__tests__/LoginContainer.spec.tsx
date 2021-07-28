@@ -8,6 +8,10 @@ import * as useLoginHook from 'auth/hooks/useLogin'
 import { generateMutationResult } from '__fixtures__/useQuery'
 import { user } from '__fixtures__/user'
 
+jest.mock('config', () => ({
+  RECAPTCHA_KEY: '123'
+}))
+
 describe('LoginContainer', () => {
   beforeEach(() => {
     history.push('/')
@@ -47,9 +51,12 @@ describe('LoginContainer', () => {
 
   it('handles submit', async () => {
     const login = jest.fn()
+    const resetAttempts = jest.fn()
     jest.spyOn(useLoginHook, 'useLogin').mockReturnValue({
       mutation: [login, generateMutationResult({ data: user })],
-      step: 'login'
+      step: 'login',
+      attempts: 0,
+      resetAttempts: resetAttempts
     })
 
     const { getByText, getByLabelText } = render(<LoginContainer />)
@@ -72,10 +79,54 @@ describe('LoginContainer', () => {
   })
 
   it('handles click on "Forgot Password?"', async () => {
+    const login = jest.fn()
+    const resetAttempts = jest.fn()
+    jest.spyOn(useLoginHook, 'useLogin').mockReturnValue({
+      mutation: [login, generateMutationResult({ data: user })],
+      step: 'login',
+      attempts: 0,
+      resetAttempts: resetAttempts
+    })
+
     const { getByText } = render(<LoginContainer />)
     const forgotPasswordButton = getByText(/forgot password/i)
 
     fireEvent.click(forgotPasswordButton)
     expect(history.location.pathname).toBe(AuthRoute.passwordReset)
+  })
+
+  it('shows recaptcha when attempt >= 3', () => {
+    const login = jest.fn()
+    const resetAttempts = jest.fn()
+
+    jest.spyOn(useLoginHook, 'useLogin').mockReturnValue({
+      mutation: [login, generateMutationResult({ data: user })],
+      step: 'login',
+      attempts: 4,
+      resetAttempts: resetAttempts
+    })
+
+    const { getByText } = render(<LoginContainer />)
+
+    expect(
+      getByText(
+        'We notice multiple failed attempts. Please verify you are not a robot.'
+      )
+    ).toBeTruthy()
+  })
+
+  it('show otp field when step is otp', () => {
+    const login = jest.fn()
+    const resetAttempts = jest.fn()
+    jest.spyOn(useLoginHook, 'useLogin').mockReturnValue({
+      mutation: [login, generateMutationResult({ data: user })],
+      step: 'otp',
+      attempts: 0,
+      resetAttempts: resetAttempts
+    })
+
+    const { getByText } = render(<LoginContainer />)
+
+    expect(getByText('Two-factor authentication')).toBeTruthy()
   })
 })

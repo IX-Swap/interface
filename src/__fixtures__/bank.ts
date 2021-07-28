@@ -42,7 +42,8 @@ export const withdrawCashArgs: WithdrawCashArgs = {
   otp: '123145',
   memo: '123',
   bankAccountId: bank._id,
-  virtualAccount: virtualAccount.accountNumber
+  virtualAccount: virtualAccount.accountNumber,
+  paymentMethodName: 'GIRO'
 }
 
 export const withdrawDSArgs: WithdrawDSArgs = {
