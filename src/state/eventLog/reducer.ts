@@ -7,6 +7,7 @@ import {
   resetPage,
   setEventLog,
   setFilter,
+  setLogItem,
   setMultiFilters,
   setPage,
   setPaginationDetails,
@@ -17,6 +18,7 @@ export interface EventLogState {
   eventLog: Array<LogItem>
   filter: ActionTypes | null
   page: number
+  activeEvent: LogItem | null
   paginationDetails: PaginationDetails
   eventLogLoading: boolean
   eventLogError: string | null
@@ -38,6 +40,7 @@ const initialState: EventLogState = {
   },
   eventLogLoading: false,
   eventLogError: null,
+  activeEvent: null,
 }
 
 export default createReducer<EventLogState>(initialState, (builder) =>
@@ -73,6 +76,9 @@ export default createReducer<EventLogState>(initialState, (builder) =>
     })
     .addCase(resetPage, (state) => {
       state.page = 1
+    })
+    .addCase(setLogItem, (state, { payload: { logItem } }) => {
+      state.activeEvent = logItem
     })
     .addCase(setPaginationDetails, (state, { payload: { paginationDetails } }) => {
       return {

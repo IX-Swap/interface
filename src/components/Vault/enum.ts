@@ -39,6 +39,15 @@ export const isAction = (action: ActionTypes) => {
 export const isTransaction = (action: ActionTypes) => {
   return [ActionTypes.DEPOSIT, ActionTypes.WITHDRAW].includes(action)
 }
+export const isPendingDeposit = (status: ActionHistoryStatus) => {
+  return [ActionHistoryStatus.PENDING, ActionHistoryStatus.APPROVED].includes(status)
+}
+export const isSuccessTransaction = (action: ActionTypes, status: ActionHistoryStatus) => {
+  if (action == ActionTypes.DEPOSIT) {
+    return status === ActionHistoryStatus.SETTLED
+  }
+  return status === ActionHistoryStatus.APPROVED
+}
 export const ActionHistoryStatusText = {
   [ActionHistoryStatus.PENDING]: t`In progress...`,
   [ActionHistoryStatus.APPROVED]: t`Approved`,

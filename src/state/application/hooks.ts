@@ -44,6 +44,10 @@ export function useToggleSettingsMenu(): () => void {
   return useToggleModal(ApplicationModal.SETTINGS)
 }
 
+export function useToggleTransactionModal(): () => void {
+  return useToggleModal(ApplicationModal.TRANSACTION_DETAILS)
+}
+
 // returns a function that allows adding a popup
 export function useAddPopup(): (content: PopupContent, key?: string) => void {
   const dispatch = useDispatch()

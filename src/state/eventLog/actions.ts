@@ -25,6 +25,7 @@ export const setTokenId = createAction<{ tokenId: number }>('eventLog/setTokenId
 export const setMultiFilters =
   createAction<{ tokenId: number; page: number; filter: ActionTypes }>('eventLog/setMultiFilters')
 export const resetPage = createAction<void>('eventLog/resetPage')
+export const setLogItem = createAction<{ logItem: LogItem | null }>('eventLog/setLogItem')
 
 export const setPaginationDetails = createAction<{ paginationDetails: PaginationDetails }>(
   'eventLog/setPaginationDetails'

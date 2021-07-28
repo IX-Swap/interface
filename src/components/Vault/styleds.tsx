@@ -64,6 +64,12 @@ export const RowAndDetailsWrapper = styled.div`
 export const HistoryRowWraper = styled(RowBetween)`
   display: flex;
   gap: 15px;
+  cursor: pointer;
+  :hover {
+    border-radius: 10px;
+    padding: 1px;
+    background: ${({ theme }) => theme.bgG2};
+  }
 `
 export const TransactionRowWrapper = styled.div`
   height: fit-content;
