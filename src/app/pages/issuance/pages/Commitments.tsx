@@ -1,41 +1,24 @@
-import React, { useEffect, useState } from 'react'
+import React, { useState } from 'react'
 import { Button, Card, Grid } from '@material-ui/core'
 import { CountdownTimer } from '../components/CountdownTimer/CountdownTimer'
 import { AmountRaised } from '../components/IssuanceLanding/AmountRaised'
 import { useAppBreakpoints } from 'hooks/useAppBreakpoints'
 import { VSpacer } from 'components/VSpacer'
-import { useHistory, useParams } from 'react-router-dom'
+import { useParams } from 'react-router-dom'
 import { TargetFundraise } from 'app/pages/issuance/components/IssuanceLanding/TargetFundraise'
-import { generatePath } from 'react-router'
 import { PageHeader } from 'app/pages/issuance/components/Commitments/PageHeader'
 import { InvestorCommitmentTable } from 'app/pages/issuance/components/Commitments/InvestorCommitmentTable'
-import { useDSOsByUserId } from 'app/pages/issuance/hooks/useDSOsByUserId'
-import { isValidDSOId } from 'helpers/isValidDSOId'
-import { IssuanceRoute } from 'app/pages/issuance/router/config'
 import { LoadingIndicator } from 'app/components/LoadingIndicator/LoadingIndicator'
 import { useDSOById } from 'app/pages/invest/hooks/useDSOById'
 import { getEndDate } from 'helpers/countdownTimer'
 import { CloseDealDialog } from 'app/pages/issuance/components/Commitments/CloseDealDialog/CloseDealDialog'
+import { DSOFilter } from 'app/pages/issuance/components/Commitments/DSOFilter'
 
 export const Commitments = () => {
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false)
-  const { data: listData, isLoading } = useDSOsByUserId()
   const { dsoId, issuerId } = useParams<{ dsoId: string; issuerId: string }>()
-  const { replace } = useHistory()
-  // TODO Do refactoring after complete design with DSO Select
-  useEffect(() => {
-    if (!isValidDSOId(dsoId) && listData.list.length > 0) {
-      replace(
-        generatePath(IssuanceRoute.commitments, {
-          dsoId: listData.list[0]._id,
-          issuerId: listData.list[0].user
-        })
-      )
-    }
-  }, [dsoId, issuerId, listData.list, replace])
-
-  const { data } = useDSOById(dsoId, issuerId)
-  const { theme, isTablet, isMobile } = useAppBreakpoints()
+  const { data, isLoading } = useDSOById(dsoId, issuerId)
+  const { theme, isTablet, isMobile, isMiniLaptop } = useAppBreakpoints()
   const isCloseDealTimerCompleted =
     data !== undefined && getEndDate(data) !== undefined
       ? // @ts-expect-error
@@ -56,16 +39,36 @@ export const Commitments = () => {
           marginTop: theme.spacing(3.5),
           marginBottom: theme.spacing(5)
         }}
+        xs={12}
       >
-        <PageHeader title={data?.tokenName} />
-        <Button
-          variant={'outlined'}
-          color={'primary'}
-          disabled={!isCloseDealTimerCompleted}
-          onClick={() => setIsModalOpen(true)}
-        >
-          CLOSE DEAL
-        </Button>
+        <Grid item xs={12} lg={9}>
+          <PageHeader title={data?.tokenName} />
+          {(isMobile || isTablet || isMiniLaptop) && <VSpacer size={'small'} />}
+        </Grid>
+        <Grid item container xs={12} lg={3} justify={'space-between'}>
+          <Grid item xs={12} sm={6} md={4} lg={7}>
+            <DSOFilter />
+            {isMobile && <VSpacer size={'small'} />}
+          </Grid>
+          <Grid
+            item
+            container
+            justify={'flex-end'}
+            xs={12}
+            sm={6}
+            md={6}
+            lg={5}
+          >
+            <Button
+              variant={'outlined'}
+              color={'primary'}
+              disabled={!isCloseDealTimerCompleted}
+              onClick={() => setIsModalOpen(true)}
+            >
+              CLOSE DEAL
+            </Button>
+          </Grid>
+        </Grid>
       </Grid>
 
       <Grid
@@ -81,7 +84,14 @@ export const Commitments = () => {
           xs={12}
           justify={'space-between'}
         >
-          <Grid item container xs={12} md={8} lg={5} spacing={3}>
+          <Grid
+            item
+            container
+            xs={12}
+            md={8}
+            lg={5}
+            spacing={isTablet || isMobile ? 0 : 3}
+          >
             <Grid item xs={12} md={6}>
               <Card
                 variant='outlined'
@@ -92,6 +102,7 @@ export const Commitments = () => {
             </Grid>
 
             <Grid item xs={12} md={6}>
+              {(isMobile || isTablet) && <VSpacer size={'small'} />}
               <Card
                 variant='outlined'
                 style={{
