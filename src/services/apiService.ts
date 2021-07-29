@@ -68,9 +68,9 @@ const apiService = {
 
   _getErrorMessage(error: any) {
     let message = 'Unknown error'
-
+    console.log({ error })
     if (error.response !== undefined) {
-      message = error.response.data.message
+      message = error.response.data.message ?? error.response.message
     } else {
       message = error.message
     }

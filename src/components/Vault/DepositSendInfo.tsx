@@ -2,13 +2,15 @@ import { Trans } from '@lingui/macro'
 import { IconWrapper } from 'components/AccountDetails/styleds'
 import { ButtonGradientBorder } from 'components/Button'
 import Column from 'components/Column'
+import { LoaderThin } from 'components/Loader/LoaderThin'
 import { QRCodeWrap } from 'components/QRCodeWrap'
 import Row, { RowBetween, RowCenter } from 'components/Row'
 import { useCurrency } from 'hooks/Tokens'
 import useCopyClipboard from 'hooks/useCopyClipboard'
-import React from 'react'
+import React, { useCallback } from 'react'
 import { Copy } from 'react-feather'
-import { useDepositState } from 'state/deposit/hooks'
+import { useCancelDepositCallback, useDepositState } from 'state/deposit/hooks'
+import { useEventState } from 'state/eventLog/hooks'
 import styled from 'styled-components'
 import { TYPE } from 'theme'
 import { shortenAddress } from '../../utils'
@@ -18,11 +20,19 @@ const StyledCopy = styled(Copy)`
   width: 17px;
   height: 17px;
 `
-export const DepositSendInfo = () => {
-  const { amount, sender, currencyId } = useDepositState()
+export interface Props {
+  onClose: () => void
+}
+export const DepositSendInfo = ({ onClose }: Props) => {
+  const { amount, sender, currencyId, loadingDeposit, depositError } = useDepositState()
   const currency = useCurrency(currencyId)
   const [isCopied, setCopied] = useCopyClipboard()
   const receiver = '0x2966adb1F526069cACac849FDd00C41334652238'
+  const cancelDeposit = useCancelDepositCallback()
+  const { activeEvent } = useEventState()
+  const onSuccess = useCallback(() => {
+    onClose()
+  }, [onClose])
   return (
     <div style={{ position: 'relative' }}>
       <Column>
@@ -73,13 +83,25 @@ export const DepositSendInfo = () => {
           </TYPE.buttonMuted>
           <TYPE.body3>{shortenAddress(sender)}</TYPE.body3>
         </Row>
-        <RowCenter style={{ marginTop: '18px' }}>
-          <ButtonGradientBorder style={{ width: '211px' }}>
-            <Trans>Cancel</Trans>
-          </ButtonGradientBorder>
-        </RowCenter>
+        {activeEvent?.id && !loadingDeposit && (
+          <RowCenter style={{ marginTop: '18px' }}>
+            <ButtonGradientBorder
+              style={{ width: '211px' }}
+              onClick={() => cancelDeposit({ requestId: activeEvent?.id, onSuccess })}
+            >
+              <Trans>Cancel</Trans>
+            </ButtonGradientBorder>
+          </RowCenter>
+        )}
+        {loadingDeposit && (
+          <RowCenter style={{ marginTop: '18px' }}>
+            <LoaderThin size={32} />
+          </RowCenter>
+        )}
         <RowCenter style={{ marginTop: '16px', opacity: '0.7' }}>
-          <TYPE.description2>Will be cancelled automatically in 72h</TYPE.description2>
+          <TYPE.description2>
+            {depositError ?? <Trans>Will be cancelled automatically in 72 hours</Trans>}
+          </TYPE.description2>
         </RowCenter>
       </Column>
     </div>

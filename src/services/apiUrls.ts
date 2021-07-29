@@ -12,6 +12,7 @@ export const tokens = {
 export const custody = {
   deposit: '/custody/deposit/request',
   withdraw: `/custody/withdraw/request`,
+  cancelDeposit: (requestId: number) => `/custody/deposit/cancel/${requestId}`,
 }
 
 export const eventLog = {
