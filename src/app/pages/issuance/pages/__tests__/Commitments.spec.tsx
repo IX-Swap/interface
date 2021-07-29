@@ -251,7 +251,7 @@ describe('Commitments', () => {
       </BaseProviders>
     )
 
-    expect(VSpacer).toHaveBeenCalledTimes(4)
+    expect(VSpacer).toHaveBeenCalledTimes(2)
     expect(VSpacer).toHaveBeenNthCalledWith(
       1,
       expect.objectContaining({
@@ -261,20 +261,6 @@ describe('Commitments', () => {
     )
     expect(VSpacer).toHaveBeenNthCalledWith(
       2,
-      expect.objectContaining({
-        size: 'small'
-      }),
-      {}
-    )
-    expect(VSpacer).toHaveBeenNthCalledWith(
-      3,
-      expect.objectContaining({
-        size: 'small'
-      }),
-      {}
-    )
-    expect(VSpacer).toHaveBeenNthCalledWith(
-      4,
       expect.objectContaining({
         size: 'extraMedium'
       }),
@@ -334,7 +320,7 @@ describe('Commitments', () => {
       </BaseProviders>
     )
 
-    expect(VSpacer).toHaveBeenCalledTimes(2)
+    expect(VSpacer).toHaveBeenCalledTimes(4)
     expect(VSpacer).toHaveBeenNthCalledWith(
       1,
       expect.objectContaining({
@@ -344,6 +330,21 @@ describe('Commitments', () => {
     )
     expect(VSpacer).toHaveBeenNthCalledWith(
       2,
+      expect.objectContaining({
+        size: 'small'
+      }),
+      {}
+    )
+    expect(VSpacer).toHaveBeenNthCalledWith(
+      3,
+      expect.objectContaining({
+        size: 'small'
+      }),
+      {}
+    )
+
+    expect(VSpacer).toHaveBeenNthCalledWith(
+      4,
       expect.objectContaining({
         size: 'extraMedium'
       }),

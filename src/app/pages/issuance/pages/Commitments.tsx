@@ -44,7 +44,7 @@ export const Commitments = () => {
       >
         <Grid item xs={12} lg={9}>
           <PageHeader title={data?.tokenName} />
-          {(isMobile || isTablet || isMiniLaptop) && <VSpacer size={'small'} />}
+          {isMiniLaptop && <VSpacer size={'small'} />}
         </Grid>
         <Grid item container xs={12} lg={3} justify={'space-between'}>
           <Grid item xs={12} sm={6} md={4} lg={7}>
@@ -85,14 +85,7 @@ export const Commitments = () => {
           xs={12}
           justify={'space-between'}
         >
-          <Grid
-            item
-            container
-            xs={12}
-            md={8}
-            lg={5}
-            spacing={isTablet || isMobile ? 0 : 3}
-          >
+          <Grid item container xs={12} md={8} lg={5} spacing={isTablet ? 0 : 3}>
             <Grid item xs={12} md={6}>
               <Card
                 variant='outlined'
@@ -103,7 +96,7 @@ export const Commitments = () => {
             </Grid>
 
             <Grid item xs={12} md={6}>
-              {(isMobile || isTablet) && <VSpacer size={'small'} />}
+              {isTablet && <VSpacer size={'small'} />}
               <Card
                 variant='outlined'
                 style={{
@@ -118,10 +111,10 @@ export const Commitments = () => {
           <Grid
             item
             container
-            justify={isMobile || isTablet ? 'center' : 'flex-end'}
+            justify={isTablet ? 'center' : 'flex-end'}
             xs={12}
             md={2}
-            style={{ marginTop: isMobile || isTablet ? theme.spacing(2) : 0 }}
+            style={{ marginTop: isTablet ? theme.spacing(2) : 0 }}
           >
             <CountdownTimer my={0} mx={0} isNewThemeOn />
           </Grid>
