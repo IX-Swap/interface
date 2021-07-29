@@ -1,5 +1,6 @@
 import { AppFeature, AuthorizerCategory } from 'types/app'
 import { AuthorizerRoute } from 'app/pages/authorizer/router/config'
+import { virtualAccounts } from 'config/apiURL'
 
 export interface AuthorizerMapItem {
   uri: string
@@ -53,5 +54,9 @@ export const authorizerItemMap: Record<
   [AppFeature.Listings]: {
     uri: '/exchange/listing/list',
     listRoute: AuthorizerRoute.listings
+  },
+  [AppFeature.VirtualAccounts]: {
+    uri: virtualAccounts.getAll,
+    listRoute: AuthorizerRoute.virtualAccounts
   }
 }

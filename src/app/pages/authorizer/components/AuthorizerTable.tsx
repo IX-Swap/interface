@@ -6,6 +6,7 @@ import {
   TableViewProps
 } from 'components/TableWithPagination/TableView'
 import { useAuthorizerFilter } from '../hooks/useAuthorizerFilter'
+import { useAuthorizerCategory } from 'hooks/location/useAuthorizerCategory'
 
 interface AuthorizerViewProps<T>
   extends Omit<TableViewProps<T>, 'actions'>,
@@ -18,7 +19,16 @@ export const AuthorizerTable = <T,>(
   props: AuthorizerViewProps<T>
 ): JSX.Element => {
   const { columns, name, uri } = props
-  const { filter } = useAuthorizerFilter()
+  const { filter: authFilter } = useAuthorizerFilter()
+  const category = useAuthorizerCategory()
+
+  const mergedFilters = {
+    ...authFilter,
+    isAssigned:
+      category === 'virtual-accounts'
+        ? authFilter.status !== 'Rejected'
+        : undefined
+  }
 
   return (
     <TableView<T>
@@ -26,7 +36,7 @@ export const AuthorizerTable = <T,>(
       uri={uri}
       columns={columns}
       actions={withExtraActions<T>()}
-      filter={filter}
+      filter={mergedFilters}
       hasActions
       hasStatus
     />

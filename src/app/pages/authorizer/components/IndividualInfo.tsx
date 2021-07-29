@@ -31,7 +31,11 @@ export const IndividualInfo = (props: IndividualInfoProps) => {
       </Grid>
 
       <Grid item>
-        <AuthorizerIdentityLink identityId={data._id} type='individual' />
+        <AuthorizerIdentityLink
+          userId={getDataroomFileId(data.user)}
+          identityId={data._id}
+          type='individual'
+        />
       </Grid>
 
       <Grid item>

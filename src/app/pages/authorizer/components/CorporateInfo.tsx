@@ -36,7 +36,11 @@ export const CorporateInfo = (props: CorporateInfoProps) => {
       </Grid>
 
       <Grid item>
-        <AuthorizerIdentityLink identityId={data._id} type='corporate' />
+        <AuthorizerIdentityLink
+          userId={getDataroomFileId(data.user)}
+          identityId={data._id}
+          type='corporate'
+        />
       </Grid>
 
       <Grid item>

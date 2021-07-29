@@ -14,7 +14,9 @@ export const virtualAccount: VirtualAccount = {
     onHold: 235,
     outstanding: 123
   },
-  user: managedUser
+  user: managedUser,
+  status: 'Submitted',
+  authorizations: []
 }
 
 export const assignedVirtualAccount: VirtualAccount = {
@@ -30,5 +32,7 @@ export const assignedVirtualAccount: VirtualAccount = {
   updatedAt: '2021-04-27T04:21:39.140Z',
   assignedAt: '2021-04-27T04:21:39.139Z',
   _id: '608108b8f23f7412a9ba1cd3',
-  createdBy: '605d3c24fef70845f9be4cf1'
+  createdBy: '605d3c24fef70845f9be4cf1',
+  status: 'Submitted',
+  authorizations: []
 }
