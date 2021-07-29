@@ -20,10 +20,9 @@ export const useCapitalCall = () => {
           'success'
         )
       },
-      onError: (error: any) => {
+      onError: () => {
         void snackbarService.showSnackbar(
-          error.message ??
-            'There was an error sending an email. Please try again in few minutes.',
+          'There was an error sending an email. Please try again in few minutes.',
           'error'
         )
       }
