@@ -61,7 +61,6 @@ jobs:
       - name: Install dep's & build
         run: |
           export CI=false   && \
-          rm -vf yarn.lock  && \
           yarn install --frozen-lockfile  &&\
           npm run build
 
