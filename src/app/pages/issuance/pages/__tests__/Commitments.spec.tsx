@@ -284,7 +284,7 @@ describe('Commitments', () => {
 
   it('renders VSpacer when isTablet is true', () => {
     jest.spyOn(useAppBreakpoints, 'useAppBreakpoints').mockReturnValueOnce({
-      isMobile: false,
+      isMobile: true,
       isTablet: true,
       isMiniLaptop: false,
       theme: { spacing: jest.fn(), palette: { backgrounds: { default: '' } } }
@@ -322,8 +322,8 @@ describe('Commitments', () => {
 
   it('renders VSpacer when isMiniLaptop is true', () => {
     jest.spyOn(useAppBreakpoints, 'useAppBreakpoints').mockReturnValueOnce({
-      isMobile: false,
-      isTablet: false,
+      isMobile: true,
+      isTablet: true,
       isMiniLaptop: true,
       theme: { spacing: jest.fn(), palette: { backgrounds: { default: '' } } }
     } as any)
