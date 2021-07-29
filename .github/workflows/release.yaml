@@ -81,8 +81,8 @@ jobs:
           npm ls babel-loader
           yarn run build
 
-      - name: Init terraform
-        run: ./bin/tf-init.sh
+#      - name: Init terraform
+#        run: ./bin/tf-init.sh
 
       - name: Sync AWS S3 Bucket
 #        run: ./bin/s3-web-sync.sh
