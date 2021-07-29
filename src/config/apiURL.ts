@@ -92,7 +92,9 @@ export const accountsURL = {
     withdraw: (userId: string, virtualAccountId: string) =>
       `/virtual-accounts/withdrawals/${virtualAccountId}/${userId}`,
     getAllTransactions: (userId: string, virtualAccountId: string) =>
-      `/virtual-accounts/transactions/list/${virtualAccountId}/${userId}`
+      `/virtual-accounts/transactions/list/${virtualAccountId}/${userId}`,
+    getPaymentMethods: (country: string, swiftCode: string) =>
+      `/accounts/banks/payment-method?country=${country}&swiftCode=${swiftCode}`
   }
 }
 
@@ -104,12 +106,12 @@ export const issuanceURL = {
       `/issuance/dso/${userId}/${dsoId}/activities`,
     getById: (userId: string, commitmentId: string) =>
       `/issuance/commitments/${userId}/${commitmentId}`,
-    getAll: (userId: string) => `/issuance/commitments/${userId}`
+    getAll: (userId: string) => `/issuance/commitments/${userId}`,
+    getByDSOId: (dsoId: string) => `/issuance/dso/${dsoId}/commitments/list`
   },
   dso: {
     getAllPromoted: '/issuance/dso/promoted/list',
     getAllApproved: '/issuance/dso/approved/list',
-    getAllByUserId: (userId: string) => `/issuance/dso/list/${userId}`,
     favorite: (dsoId: string) => `/issuance/dso/favorites/${dsoId}`,
     topCountries: (dsoId: string) =>
       `/issuance/dso/${dsoId}/charts/top-countries`,
@@ -132,7 +134,9 @@ export const issuanceURL = {
     getActivitiesList: (userId: string, dsoId: string) =>
       `/issuance/dso/${userId}/${dsoId}/activities/list`,
     promote: (dsoId: string) => `/issuance/dso/${dsoId}/promote`,
-    disable: (dsoId: string) => `/issuance/dso/${dsoId}/disable`
+    disable: (dsoId: string) => `/issuance/dso/${dsoId}/disable`,
+    capitalCall: (userId: string, dsoId: string) =>
+      `/issuance/dso/${userId}/${dsoId}/capitalCall`
   }
 }
 
