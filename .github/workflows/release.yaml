@@ -35,7 +35,7 @@ jobs:
         uses: actions/checkout@v2
 
       - name: create .npmrc file
-        run: echo "//registry.npmjs.org/:_authToken=${{NPM_TOKEN}}" > .npmrc
+        run: echo "//registry.npmjs.org/:_authToken=${{ secrets.NPM_TOKEN }}" > .npmrc
 
       - name: Add .env infrastructure variables            # ${{ secrets.ENVPRODUCTION }} must be without spaces
         run: |
