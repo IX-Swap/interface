@@ -64,6 +64,7 @@ export const CloseDealDialog = (props: ModalProps) => {
         <VSpacer size={'small'} />
         <DialogActions>
           <OTPForm
+            data-testid='otp-form'
             onClose={() => toggleOpen()}
             // TODO Do refactoring after complete backend api endpoints
             onSubmit={values => {

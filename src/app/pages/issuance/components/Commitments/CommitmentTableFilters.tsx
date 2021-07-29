@@ -4,7 +4,7 @@ import { SearchFilter } from 'app/components/SearchFilter'
 import useMediaQuery from '@material-ui/core/useMediaQuery'
 import { useTheme } from '@material-ui/core/styles'
 import { FundStatusFilter } from 'app/pages/issuance/components/Commitments/FundStatusFilter'
-import { CapitalCallDialog } from 'app/pages/issuance/components/Commitments/CapitalCallPopup/CapitalCallPopup'
+import { CapitalCallDialog } from 'app/pages/issuance/components/Commitments/CapitalCallDialog/CapitalCallDialog'
 
 export const CommitmentTableFilter = () => {
   const theme = useTheme()
