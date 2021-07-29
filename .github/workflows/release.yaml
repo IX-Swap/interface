@@ -58,12 +58,10 @@ jobs:
       - name: create .npmrc file
         run: echo "//registry.npmjs.org/:_authToken=${{ secrets.NPM_TOKEN }}" > .npmrc
 
-      - name: Install dependencies
-        run: yarn install
-
-      - name: Build release
+      - name: Install dep's & build
         run: |
           export CI=false   && \
+          rm -vf yarn.lock  && \
           yarn install    &&\
           yarn run build
 
