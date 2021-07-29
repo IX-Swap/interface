@@ -21,7 +21,7 @@ class SwapIX {
     await typeText(pool.field.TOKEN_AMOUNT, amount, this.page)
     if (forNewLiquidity === true) {
       await click(pool.button.SUPPLY, this.page)
-      await click('text="Choose token"', this.page)
+      await click(swap.button.CHOOSE_TOKEN, this.page)
       await click(swap.button.DAI_CRYPTO, this.page)
     }
   }
@@ -47,7 +47,7 @@ class SwapIX {
     await click(pool.button.POOL_SECTION, page)
     await click(pool.button.ADD_LIQUIDITY, page)
     await typeText(pool.field.TOKEN_AMOUNT, sum, page)
-    await click('text="Choose token"', page)
+    await click(swap.button.CHOOSE_TOKEN, page)
     await click(swap.button.DAI_CRYPTO, page)
   }
 
@@ -78,7 +78,5 @@ class SwapIX {
     secondPage = await waitNewPage(page, context, pool.button.CONFIRM_REMOVE)
     return secondPage
   }
-
-
 }
 export { SwapIX }

@@ -2,7 +2,16 @@ import { test as base } from '../lib/fixture'
 
 import { expect } from '@playwright/test'
 import { ixswap, metamask } from '../lib/helpers/credentials'
-import { click, navigate, waitForText, waitNewPage, makeScreenOnError, getValue } from '../lib/helpers/helpers'
+import {
+  click,
+  navigate,
+  waitForText,
+  waitNewPage,
+  makeScreenOnError,
+  getValue,
+  screenshotMatching,
+  typeText,
+} from '../lib/helpers/helpers'
 import { amounts } from '../lib/helpers/text-helpers'
 
 import { getBalanceOtherCurrency, getEthBalance } from '../lib/helpers/web3-helpers'
@@ -56,8 +65,6 @@ test.describe('Check pool functions', () => {
   test('Check that crypto can be add to the pool', async ({ page, context, metaMask, ixSwap }) => {
     const before = await getEthBalance()
     await navigate(ixswap.URL, page)
-
-    // await click(swap.button.CLOSE_ADD_CURRENCY_POPOVER, page)
     await ixSwap.addToCurrentLiquidityPool(amounts.addToPool, false)
     await click(pool.button.SUPPLY, page)
     const secondPage = await waitNewPage(page, context, pool.button.CREATE_OR_SUPPLY)
@@ -83,7 +90,7 @@ test.describe('Check pool functions', () => {
   })
 })
 
-test.describe('Check swap functions', () => {
+test.describe.only('Check swap functions', () => {
   test('Check that the ETH can be exchanged for DAI', async ({ page, context, metaMask, ixSwap }) => {
     await ixSwap.setTypeOfCurrency()
     await ixSwap.currencyExchange(amounts.base)
@@ -99,5 +106,18 @@ test.describe('Check swap functions', () => {
     const value = await getValue(pool.field.TOKEN_AMOUNT, page)
     const after = await getEthBalance()
     expect((Number(after) - Number(value)).toFixed(5)).toBe('0.01000')
+  })
+
+  test('Check Manage token list section', async ({ page }, testInfo) => {
+    await click(swap.button.CHOOSE_TOKEN, page)
+    await click(swap.button.MANAGE_LIST_TOKEN, page)
+    await screenshotMatching(testInfo.title, expect, page)
+  })
+
+  test.only('Check token search on the Swap page', async ({ page }) => {
+    await click(swap.button.OUT_CURRENCY, page)
+    await typeText(swap.field.SEARCH_INPUT, 'KEKWU', page)
+    const tokenTitle = await page.isVisible('[title="KEKWU"]')
+    expect(tokenTitle).toBe(true)
   })
 })

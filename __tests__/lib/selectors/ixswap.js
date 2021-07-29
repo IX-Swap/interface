@@ -22,6 +22,8 @@ module.exports = {
       REPLACE_CRYPTO: getTestAttribute('currencyReplace'),
       TABLE_ROW: getTestAttribute('tableRow'),
       MAX: 'button >> text="Max"',
+      CHOOSE_TOKEN: "text ='Choose token'",
+      MANAGE_LIST_TOKEN: getTestAttribute('list-token-manage-button'),
     },
   },
   pool: {

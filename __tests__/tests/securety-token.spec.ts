@@ -1,16 +1,8 @@
 import { test as base } from '../lib/fixture'
 
 import { expect } from '@playwright/test'
-import { ixswap, metamask2 } from '../lib/helpers/credentials'
-import {
-  click,
-  navigate,
-  waitForText,
-  waitNewPage,
-  makeScreenOnError,
-  getValue,
-  typeText,
-} from '../lib/helpers/helpers'
+import { ixswap, metamask2, metamask } from '../lib/helpers/credentials'
+import { click, navigate, makeScreenOnError, typeText } from '../lib/helpers/helpers'
 import { amounts } from '../lib/helpers/text-helpers'
 
 import { getBalanceOtherCurrency, getEthBalance } from '../lib/helpers/web3-helpers'
@@ -33,28 +25,29 @@ const test = base.extend<{ metaMask: Metamask; ixSwap: SwapIX }>({
 
 let before
 
-test.beforeEach(async ({ context, page, metaMask }) => {
-  await metaMask.fullConnection(context, page, metamask2.SECRET_WORDS, metamask2.contractAddresses.eth)
-  before = await getEthBalance()
-  await navigate(ixswap.URL, page)
-})
-
 test.afterEach(async ({ page }, testInfo) => {
   if (testInfo.status === 'failed') {
     await makeScreenOnError(testInfo.title, 'error', page)
   }
 })
 
+test.describe('Functionality testing', () => {
+  test.beforeEach(async ({ context, page, metaMask }) => {
+    await metaMask.fullConnection(context, page, metamask.SECRET_WORDS, metamask.contractAddresses.eth)
+    await navigate(ixswap.URL, page)
+    await click(securityToken.button.OPEN_SECURITY, page)
+  })
+  test('deposity test', async ({ page }) => {})
+})
+
 test.describe('Check without accreditation', () => {
-  test('The the needs accreditation notification appears', async ({ page }) => {
+  test.beforeEach(async ({ context, page, metaMask }) => {
+    await metaMask.fullConnection(context, page, metamask2.SECRET_WORDS, metamask2.contractAddresses.eth)
+    await navigate(ixswap.URL, page)
+  })
+  test('The "Needs accreditation" notification appears', async ({ page }) => {
     await click(swap.button.OUT_CURRENCY, page)
     const notification = await page.isVisible('text="Needs accreditation"')
     expect(notification).toBe(true)
-  })
-  test('Check token search on the Swap page', async ({ page }) => {
-    await click(swap.button.OUT_CURRENCY, page)
-    await typeText(swap.field.SEARCH_INPUT, 'KEKWU', page)
-    const tokenTitle = await page.isVisible('[title="KEKWU"]')
-    expect(tokenTitle).toBe(true)
   })
 })
