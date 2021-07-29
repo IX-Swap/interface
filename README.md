@@ -1,5 +1,6 @@
 # IXswap Interface
 
+[![RELEASE - AWS build & deploy](https://github.com/IX-Swap/interface/actions/workflows/release.yaml/badge.svg?branch=main)](https://github.com/IX-Swap/interface/actions/workflows/release.yaml)
 [![Unit Tests](https://github.com/IX-Swap/interface/actions/workflows/unit-tests.yaml/badge.svg)](https://github.com/IX-Swap/interface/actions/workflows/unit-tests.yaml)
 [![Integration Tests](https://github.com/IX-Swap/interface/actions/workflows/integration-tests.yaml/badge.svg)](https://github.com/IX-Swap/interface/actions/workflows/integration-tests.yaml)
 [![Run linters](https://github.com/IX-Swap/interface/actions/workflows/lint.yaml/badge.svg)](https://github.com/IX-Swap/interface/actions/workflows/lint.yaml)
