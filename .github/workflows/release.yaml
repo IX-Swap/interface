@@ -35,6 +35,21 @@ jobs:
       - name: Diplay environments
         run: env
 
+      - name: Config terraform
+        run: |
+          mkdir $HOME/terraform/  && \
+          curl  -v -k -L https://releases.hashicorp.com/terraform/0.12.26/terraform_0.12.26_linux_amd64.zip -o  $HOME/terraform/terraform_0.12.26_linux_amd64.zip  && \
+          unzip  $HOME/terraform/terraform_0.12.26_linux_amd64.zip -d  $HOME/terraform/  && \
+          cp -fv $HOME/terraform/terraform /usr/local/bin/  && \
+          terraform --version
+
+      - name: Configure AWS credentials
+        uses: aws-actions/configure-aws-credentials@v1
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: ap-southeast-1
+
       - name: Checkout
         uses: actions/checkout@v2
 
@@ -46,6 +61,7 @@ jobs:
           echo '' > .env
           for (( n=0; n < ${#strarr[*]}; n++)); do echo "${strarr[n]}" >> .env; done
           echo '' >> .env
+          source .env
           echo''; echo " === cat .env === "
           cat .env
 
@@ -62,14 +78,8 @@ jobs:
         run: |
           export CI=false   && \
           yarn install --frozen-lockfile  &&\
-          npm run build
-
-      - name: Configure AWS credentials
-        uses: aws-actions/configure-aws-credentials@v1
-        with:
-          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
-          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-          aws-region: ap-southeast-1
+          npm ls babel-loader
+          yarn run build
 
       - name: Init terraform
         run: ./bin/tf-init.sh
