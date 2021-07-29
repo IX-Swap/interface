@@ -42,7 +42,6 @@ export const useDeployToken = (tokenId: string) => {
     }
 
     socket?.on(`x-token-lite/${tokenId}`, onMessageReceived)
-    /* socket?.emit('x-token-lite/deploy/initialize', tokenId) */
     socket?.emit('x-token-lite/deploy/begin', tokenId)
   }
 
