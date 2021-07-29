@@ -33,19 +33,19 @@ const test = base.extend<{ metaMask: Metamask; ixSwap: SwapIX }>({
 
 let before
 
-test.beforeEach(async ({ context, page, metaMask, ixSwap }) => {
-  await metaMask.fullConnection(context, page, metamask.SECRET_WORDS, metamask.contractAddresses.eth)
-  await ixSwap.setExpertMode(page)
-  before = await getEthBalance()
-})
-
-test.afterEach(async ({ page }, testInfo) => {
-  if (testInfo.status === 'failed') {
-    await makeScreenOnError(testInfo.title, 'error', page)
-  }
-})
-
 test.describe('Run tests in expert mode', () => {
+  test.beforeEach(async ({ context, page, metaMask, ixSwap }) => {
+    await metaMask.fullConnection(context, page, metamask.SECRET_WORDS, metamask.contractAddresses.eth)
+    await ixSwap.setExpertMode(page)
+    before = await getEthBalance()
+  })
+
+  test.afterEach(async ({ page }, testInfo) => {
+    if (testInfo.status === 'failed') {
+      await makeScreenOnError(testInfo.title, 'error', page)
+    }
+  })
+
   test('Check that the DAI added to the output ', async ({ page, ixSwap }) => {
     const outPutField = await ixSwap.setTypeOfCurrency(page)
     expect(outPutField).toContain('DAI')

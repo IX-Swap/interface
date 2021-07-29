@@ -5,6 +5,7 @@ module.exports = {
     field: {
       CURRENCY_OUTPUT: '//*[@id="swap-currency-output"]//INPUT',
       CURRENCY_INPUT: '//*[@id="swap-currency-input"]//INPUT',
+      SEARCH_INPUT: '[id="token-search-input"]',
     },
     button: {
       ADD_CURRENCY_TO_MASK: getTestAttribute('add-currency-to-metamask'),

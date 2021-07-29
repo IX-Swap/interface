@@ -94,7 +94,7 @@ test.describe('Check swap functions', () => {
     const after = await getEthBalance()
     expect((Number(before) - Number(after)).toFixed(7)).toBe('0.0002308')
   })
-  test.only('Check that the ETH added with MAX button', async ({ page }) => {
+  test('Check that the ETH added with MAX button', async ({ page }) => {
     await click(swap.button.MAX, page)
     const value = await getValue(pool.field.TOKEN_AMOUNT, page)
     const after = await getEthBalance()
