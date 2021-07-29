@@ -8,6 +8,17 @@ source "$SCRIPT_DIR/_helpers.sh"
 _info "Accessing working directory"
 cd "$PROJECT_ROOT/" || _fail
 
+_info "Loading .env configuration"
+source $(_env_file "prod") || _fail
+
+_info "Exporting TF_VAR_*"
+declare -a ENV_VARS=( "AWS_REGION" "AWS_APP_NAME" "ENVIRONMENT" )
+
+for _var in ${ENV_VARS[@]}; do
+  echo "export ${_var}=${!_var}"
+  export "${_var}=${!_var}"
+done
+
 if [ -z "${ENVIRONMENT}" ] | [ -z "${AWS_APP_NAME}" ]; then
   _info "Check .env file"
   if [ -f .env ]; then
