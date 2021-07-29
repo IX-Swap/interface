@@ -52,6 +52,16 @@ describe('CapitalCallDialog', () => {
     )
   })
 
+  it('invokes toggle function on header close button click', async () => {
+    const { getAllByRole } = render(
+      <CapitalCallDialog open={true} toggleOpen={handleToggle} />
+    )
+    fireEvent.click(getAllByRole('button')[0])
+    await waitFor(() => {
+      expect(handleToggle).toBeCalled()
+    })
+  })
+
   it('invokes toggle function on close button click', async () => {
     const { getByText } = render(
       <CapitalCallDialog open={true} toggleOpen={handleToggle} />
