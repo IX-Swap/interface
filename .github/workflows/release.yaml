@@ -60,7 +60,6 @@ jobs:
 
       - name: Install dep's & build
         run: |
-          npm uninstall babel-loader@8.1.0
           export CI=false   && \
           rm -vf yarn.lock  && \
           yarn install --frozen-lockfile  &&\
