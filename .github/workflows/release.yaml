@@ -15,6 +15,7 @@ jobs:
       new_tag: ${{ steps.github_tag_action.outputs.new_tag }}
       changelog: ${{ steps.github_tag_action.outputs.changelog }}
     steps:
+
       - name: Checkout
         uses: actions/checkout@v2
 
@@ -31,6 +32,9 @@ jobs:
     needs: bump_version
     if: ${{ needs.bump_version.outputs.new_tag != null }}
     steps:
+      - name: Diplay environments
+        run: env
+
       - name: Checkout
         uses: actions/checkout@v2
 
@@ -58,7 +62,7 @@ jobs:
         run: yarn install
 
       - name: Build release
-        run: yarn run build
+        run: export CI=false && yarn run build
 
       - name: Configure AWS credentials
         uses: aws-actions/configure-aws-credentials@v1
