@@ -38,7 +38,13 @@ output "cdn_status" {
   description = "CDN Status"
   value       = module.cdn.cf_status
 }
+
 output "cdn_domain_name" {
   description = "CDN domain Name"
   value       = module.cdn.cf_domain_name
+}
+
+output "cf_id" {
+  description = "CDN - ID of CloudFront distribution"
+  value       = module.cdn.cf_id
 }
