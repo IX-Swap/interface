@@ -20,11 +20,10 @@ export const useDeployToken = (tokenId: string) => {
       setIsInitializing(false)
     }
 
-    if (message.message.toLowerCase().includes('deploying')) {
-      setIsDeploying(true)
-    }
-
-    if (message.message === 'OK') {
+    if (
+      message.message.startsWith('Success') ||
+      message.message.startsWith('Error')
+    ) {
       setIsDeploying(false)
     }
 
@@ -43,7 +42,7 @@ export const useDeployToken = (tokenId: string) => {
     }
 
     socket?.on(`x-token-lite/${tokenId}`, onMessageReceived)
-    socket?.emit('x-token-lite/deploy/initialize', tokenId)
+    /* socket?.emit('x-token-lite/deploy/initialize', tokenId) */
     socket?.emit('x-token-lite/deploy/begin', tokenId)
   }
 
