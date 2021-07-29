@@ -62,8 +62,8 @@ jobs:
         run: |
           export CI=false   && \
           rm -vf yarn.lock  && \
-          yarn install    &&\
-          yarn run build
+          yarn install --frozen-lockfile  &&\
+          npm run build
 
       - name: Configure AWS credentials
         uses: aws-actions/configure-aws-credentials@v1
@@ -77,3 +77,11 @@ jobs:
 
       - name: Sync AWS S3 Bucket
         run: ./bin/s3-web-sync.sh
+
+      - name: Sync AWS S3 Bucket
+        uses: shallwefootball/s3-upload-action@master
+        with:
+          aws_key_id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws_secret_access_key: ${{ secrets.AWS_SECRET_ACCESS_KEY}}
+          aws_bucket: "s3-${var.ENVIRONMENT}-${var.AWS_APP_NAME}"
+          source_dir: 'build'
