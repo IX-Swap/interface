@@ -1,7 +1,8 @@
 import React from 'react'
-import { render, cleanup } from 'test-utils'
+import { render, cleanup, BaseProviders } from 'test-utils'
 import * as useDSOByIdHook from 'app/pages/invest/hooks/useDSOById'
 import * as useTableWithPaginationHook from 'components/TableWithPagination/hooks/useTableWithPagination'
+import * as useAppBreakpoints from 'hooks/useAppBreakpoints'
 import { dso } from '__fixtures__/authorizer'
 import { Commitments } from 'app/pages/issuance/pages/Commitments'
 import { LoadingIndicator } from 'app/components/LoadingIndicator/LoadingIndicator'
@@ -14,6 +15,7 @@ import { CountdownTimer } from 'app/pages/issuance/components/CountdownTimer/Cou
 import { InvestorCommitmentTable } from 'app/pages/issuance/components/Commitments/InvestorCommitmentTable'
 import { CloseDealDialog } from 'app/pages/issuance/components/Commitments/CloseDealDialog/CloseDealDialog'
 import Button from '@material-ui/core/Button'
+import { VSpacer } from 'components/VSpacer'
 
 const useTableWithPaginationMockReturnValue: useTableWithPaginationHook.UseTableWithPaginationReturnType<any> = {
   total: 4,
@@ -69,6 +71,10 @@ jest.mock(
     CloseDealDialog: jest.fn(() => null)
   })
 )
+
+jest.mock('components/VSpacer', () => ({
+  VSpacer: jest.fn(() => null)
+}))
 
 jest.mock('@material-ui/core/Button', () => jest.fn(() => null))
 
@@ -208,6 +214,143 @@ describe('Commitments', () => {
     )
   })
 
+  it('renders VSpacer when isDesktop is true', () => {
+    jest.spyOn(useAppBreakpoints, 'useAppBreakpoints').mockReturnValueOnce({
+      isMobile: false,
+      isTablet: false,
+      isMiniLaptop: false,
+      theme: { spacing: jest.fn(), palette: { backgrounds: { default: '' } } }
+    } as any)
+
+    render(
+      <BaseProviders>
+        <Commitments />
+      </BaseProviders>
+    )
+
+    expect(VSpacer).toHaveBeenCalledTimes(1)
+    expect(VSpacer).toHaveBeenCalledWith(
+      expect.objectContaining({
+        size: 'extraMedium'
+      }),
+      {}
+    )
+  })
+
+  it('renders VSpacer when isMobile is true', () => {
+    jest.spyOn(useAppBreakpoints, 'useAppBreakpoints').mockReturnValueOnce({
+      isMobile: true,
+      isTablet: false,
+      isMiniLaptop: false,
+      theme: { spacing: jest.fn(), palette: { backgrounds: { default: '' } } }
+    } as any)
+
+    render(
+      <BaseProviders>
+        <Commitments />
+      </BaseProviders>
+    )
+
+    expect(VSpacer).toHaveBeenCalledTimes(4)
+    expect(VSpacer).toHaveBeenNthCalledWith(
+      1,
+      expect.objectContaining({
+        size: 'small'
+      }),
+      {}
+    )
+    expect(VSpacer).toHaveBeenNthCalledWith(
+      2,
+      expect.objectContaining({
+        size: 'small'
+      }),
+      {}
+    )
+    expect(VSpacer).toHaveBeenNthCalledWith(
+      3,
+      expect.objectContaining({
+        size: 'small'
+      }),
+      {}
+    )
+    expect(VSpacer).toHaveBeenNthCalledWith(
+      4,
+      expect.objectContaining({
+        size: 'extraMedium'
+      }),
+      {}
+    )
+  })
+
+  it('renders VSpacer when isTablet is true', () => {
+    jest.spyOn(useAppBreakpoints, 'useAppBreakpoints').mockReturnValueOnce({
+      isMobile: false,
+      isTablet: true,
+      isMiniLaptop: false,
+      theme: { spacing: jest.fn(), palette: { backgrounds: { default: '' } } }
+    } as any)
+
+    render(
+      <BaseProviders>
+        <Commitments />
+      </BaseProviders>
+    )
+
+    expect(VSpacer).toHaveBeenCalledTimes(3)
+    expect(VSpacer).toHaveBeenNthCalledWith(
+      1,
+      expect.objectContaining({
+        size: 'small'
+      }),
+      {}
+    )
+    expect(VSpacer).toHaveBeenNthCalledWith(
+      2,
+      expect.objectContaining({
+        size: 'small'
+      }),
+      {}
+    )
+    expect(VSpacer).toHaveBeenNthCalledWith(
+      3,
+      expect.objectContaining({
+        size: 'extraMedium'
+      }),
+      {}
+    )
+  })
+
+  it('renders VSpacer when isMiniLaptop is true', () => {
+    jest.spyOn(useAppBreakpoints, 'useAppBreakpoints').mockReturnValueOnce({
+      isMobile: false,
+      isTablet: false,
+      isMiniLaptop: true,
+      theme: { spacing: jest.fn(), palette: { backgrounds: { default: '' } } }
+    } as any)
+
+    render(
+      <BaseProviders>
+        <Commitments />
+      </BaseProviders>
+    )
+
+    expect(VSpacer).toHaveBeenCalledTimes(2)
+    expect(VSpacer).toHaveBeenNthCalledWith(
+      1,
+      expect.objectContaining({
+        size: 'small'
+      }),
+      {}
+    )
+    expect(VSpacer).toHaveBeenNthCalledWith(
+      2,
+      expect.objectContaining({
+        size: 'extraMedium'
+      }),
+      {}
+    )
+  })
+
   it('renders CloseDeal button with correct props', () => {
     jest
       .spyOn(useDSOByIdHook, 'useDSOById')
@@ -218,7 +361,6 @@ describe('Commitments', () => {
       .mockReturnValueOnce(useTableWithPaginationMockReturnValue)
 
     render(<Commitments />)
-
     expect(Button).toHaveBeenCalledTimes(1)
     expect(Button).toHaveBeenCalledWith(
       expect.objectContaining({
