@@ -17,6 +17,7 @@ import { useCancelDepositCallback, useDepositState } from 'state/deposit/hooks'
 import { setLogItem } from 'state/eventLog/actions'
 import { useEventState } from 'state/eventLog/hooks'
 import { ModalBlurWrapper, SvgIconWrapper, TYPE } from 'theme'
+import { shortenAddress } from 'utils'
 import Success from '../../assets/images/success.svg'
 import { CloseIcon } from '../../theme'
 import {
@@ -59,7 +60,8 @@ export const TransactionDetails = ({ currency }: Props) => {
     <RedesignedWideModal
       isOpen={isOpen}
       onDismiss={onClose}
-      minHeight={false}
+      // minHeight={false}
+      minHeight={100}
       maxHeight={'fit-content'}
       mobileMaxHeight={90}
     >
@@ -98,15 +100,15 @@ export const TransactionDetails = ({ currency }: Props) => {
                     </TYPE.body3>
                   </Row>
                 )}
-                {activeEvent.type === ActionTypes.DEPOSIT && (
+                {activeEvent.type === ActionTypes.DEPOSIT && activeEvent.params?.fromAddress && (
                   <Row style={{ marginTop: '16px', flexWrap: 'wrap' }}>
                     <TYPE.buttonMuted>
                       <Trans>Deposit from:</Trans>&nbsp;&nbsp;
                     </TYPE.buttonMuted>
-                    <TYPE.body3>{activeEvent.params?.fromAddress}</TYPE.body3>
+                    <TYPE.body3>{shortenAddress(activeEvent.params?.fromAddress)}</TYPE.body3>
                   </Row>
                 )}
-                {isTransaction(activeEvent.type) && (
+                {isTransaction(activeEvent.type) && activeEvent.params?.toAddress && (
                   <Row
                     style={{ marginTop: '16px', flexWrap: 'wrap' }}
                     onClick={() => setCopied(activeEvent.params?.toAddress ?? receiver)}
@@ -114,7 +116,9 @@ export const TransactionDetails = ({ currency }: Props) => {
                     <TYPE.buttonMuted>
                       <Trans>{currency?.symbol} sent to: </Trans>&nbsp;&nbsp;
                     </TYPE.buttonMuted>
-                    <TYPE.body3>{isCopied ? t`Copied` : activeEvent.params?.toAddress ?? receiver}</TYPE.body3>
+                    <TYPE.body3>
+                      {isCopied ? t`Copied` : shortenAddress(activeEvent.params?.toAddress) ?? shortenAddress(receiver)}
+                    </TYPE.body3>
                   </Row>
                 )}
                 {activeEvent.type === ActionTypes.DEPOSIT && isPendingDeposit(status) && (

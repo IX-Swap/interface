@@ -148,12 +148,7 @@ const Title = styled.a`
   }
 `
 
-const IXSIcon = styled.div`
-  transition: transform 0.3s ease;
-  :hover {
-    transform: rotate(-5deg);
-  }
-`
+const IXSIcon = styled.div``
 
 export const StyledMenuButton = styled.button`
   position: relative;
