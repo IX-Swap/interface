@@ -134,7 +134,9 @@ export const issuanceURL = {
     getActivitiesList: (userId: string, dsoId: string) =>
       `/issuance/dso/${userId}/${dsoId}/activities/list`,
     promote: (dsoId: string) => `/issuance/dso/${dsoId}/promote`,
-    disable: (dsoId: string) => `/issuance/dso/${dsoId}/disable`
+    disable: (dsoId: string) => `/issuance/dso/${dsoId}/disable`,
+    capitalCall: (userId: string, dsoId: string) =>
+      `/issuance/dso/${userId}/${dsoId}/capitalCall`
   }
 }
 

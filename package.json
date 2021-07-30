@@ -61,7 +61,8 @@
     "use-debounce": "^5.2.0",
     "yarn": "^1.22.10",
     "yup": "^0.28.3",
-    "yup-phone": "^1.2.19"
+    "yup-phone": "^1.2.19",
+    "react-multi-email": "0.5.3"
   },
   "devDependencies": {
     "@babel/cli": "^7.8.4",

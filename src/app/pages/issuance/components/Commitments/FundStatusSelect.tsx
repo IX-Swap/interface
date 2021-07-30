@@ -7,6 +7,7 @@ import { fundStatuses } from 'config/defaults'
 export interface FundStatusSelectSelectProps extends TypedSelectProps {
   includeAll?: boolean
   labelBetweenAll?: string
+  valueBetweenAll?: string
 }
 
 const getValueForFundStatus = (value: string) => {
@@ -16,12 +17,18 @@ const getValueForFundStatus = (value: string) => {
 }
 
 export const FundStatusSelect = (props: FundStatusSelectSelectProps) => {
-  const { includeAll = false, label, labelBetweenAll, ...rest } = props
+  const {
+    includeAll = false,
+    label,
+    labelBetweenAll,
+    valueBetweenAll = 'All',
+    ...rest
+  } = props
 
   return (
     <Select {...(rest as SelectProps)} label={label}>
       {includeAll && (
-        <MenuItem value='All'>
+        <MenuItem value={valueBetweenAll}>
           {labelBetweenAll !== undefined ? labelBetweenAll : 'All'}
         </MenuItem>
       )}
