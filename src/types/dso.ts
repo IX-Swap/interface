@@ -145,12 +145,14 @@ export type DSOLaunchStatus = 'live' | 'completed' | 'upcoming'
 
 export type DSOTableColumn =
   | 'favorite'
+  | 'completionDate'
   | 'tokenName'
   | 'insight'
   | 'pricePerUnit'
   | 'totalFundraisingAmount'
   | 'minimumInvestment'
   | 'distributionFrequency'
+  | 'interestRate'
 
 export interface DSOActivity {
   _id: string

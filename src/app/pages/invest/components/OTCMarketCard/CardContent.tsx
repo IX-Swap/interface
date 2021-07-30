@@ -8,6 +8,7 @@ import useStyles from 'app/pages/invest/components/OTCMarketCard/CardContent.sty
 import { LabelledValue } from 'components/LabelledValue'
 import { formatMoney } from 'helpers/numbers'
 import { VSpacer } from 'components/VSpacer'
+import { percentageToNumber } from 'app/pages/issuance/utils'
 
 export interface CardContentProps {
   // TODO Add interface after complete final version backend api
@@ -63,9 +64,10 @@ export const CardContent = (props: CardContentProps) => {
             value={
               type === 'OTC'
                 ? data.tokenSymbol
-                : (data.capitalStructure === 'Debt'
-                    ? data.interestRate
-                    : data.grossIRR
+                : percentageToNumber(
+                    data.capitalStructure === 'Debt'
+                      ? data.interestRate
+                      : data.grossIRR
                   )
                     ?.toString()
                     .concat('%')

@@ -2,8 +2,23 @@ import {
   formatMoney,
   toPercentage,
   generateRandom,
-  formatAmount
+  formatAmount,
+  addSymbol
 } from 'helpers/numbers'
+
+describe('addSymbol', () => {
+  it('returns value with symbol', () => {
+    expect(addSymbol(123, 'SGD')).toEqual('SGD 123')
+  })
+
+  it('returns value with symbol when right is true', () => {
+    expect(addSymbol(123, 'SGD', true)).toEqual('123 SGD')
+  })
+
+  it('returns empty string when value is undefined', () => {
+    expect(addSymbol(undefined, 'SGD', true)).toEqual('')
+  })
+})
 
 describe('formatAmount', () => {
   it('returns formatted amount', () => {

@@ -2,13 +2,19 @@ import React from 'react'
 import { Chart } from 'react-google-charts'
 import useStyles from 'app/pages/issuance/components/IssuanceLanding/DonutChart.styles'
 import { Box, Typography } from '@material-ui/core'
+import classnames from 'classnames'
 
 export interface DonutChartProps {
   percent: number
   text?: number | string
+  isNewThemeOn?: boolean
 }
 
-export const DonutChart = ({ percent, text }: DonutChartProps) => {
+export const DonutChart = ({
+  percent,
+  text,
+  isNewThemeOn = false
+}: DonutChartProps) => {
   const classes = useStyles()
 
   const completed = isNaN(percent) ? 0 : Math.floor(percent ?? 0)
@@ -27,20 +33,26 @@ export const DonutChart = ({ percent, text }: DonutChartProps) => {
         options={{
           pieHole: 0.75,
           pieStartAngle: 0,
-          colors: ['rgb(245,189,37)', 'lightgrey'],
+          colors: isNewThemeOn
+            ? ['#F5BD25', '#EFF0F4']
+            : ['rgb(245,189,37)', 'lightgrey'],
           legend: 'none',
           chartArea: {
-            width: 48,
-            height: 48
+            width: isNewThemeOn ? 58 : 48,
+            height: isNewThemeOn ? 58 : 48
           },
-          width: 48,
-          height: 48,
+          width: isNewThemeOn ? 58 : 48,
+          height: isNewThemeOn ? 58 : 48,
           tooltip: { trigger: 'none' },
           enableInteractivity: false,
           backgroundColor: 'transparent'
         }}
       />
-      <Typography className={classes.percent}>
+      <Typography
+        className={classnames(classes.percent, {
+          [classes.percentNew]: isNewThemeOn
+        })}
+      >
         {text !== undefined ? text : `${completed}%`}
       </Typography>
     </Box>

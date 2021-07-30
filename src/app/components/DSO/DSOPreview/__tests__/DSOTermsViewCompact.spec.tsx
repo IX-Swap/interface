@@ -49,7 +49,9 @@ describe('DSOTermsViewCompact', () => {
 
     expect(LabelledValue).toHaveBeenNthCalledWith(
       2,
-      { label: 'Interest Rate', value: dso.interestRate },
+      expect.objectContaining({
+        label: 'Interest Rate'
+      }),
       {}
     )
   })
@@ -59,7 +61,7 @@ describe('DSOTermsViewCompact', () => {
 
     expect(LabelledValue).toHaveBeenNthCalledWith(
       2,
-      { label: 'Dividend Yield (%)', value: dso.dividendYield },
+      expect.objectContaining({ label: 'Dividend Yield (%)' }),
       {}
     )
   })
@@ -69,7 +71,9 @@ describe('DSOTermsViewCompact', () => {
 
     expect(LabelledValue).toHaveBeenNthCalledWith(
       2,
-      { label: 'Dividend Yield (%)', value: dso.dividendYield },
+      expect.objectContaining({
+        label: 'Dividend Yield (%)'
+      }),
       {}
     )
   })
@@ -78,7 +82,7 @@ describe('DSOTermsViewCompact', () => {
     render(<DSOTermsViewCompact {...props} />)
 
     expect(LabelledValue).toHaveBeenNthCalledWith(
-      3,
+      4,
       { label: 'Investment Structure', value: dso.investmentStructure },
       {}
     )
@@ -89,7 +93,7 @@ describe('DSOTermsViewCompact', () => {
 
     expect(LabelledValue).toHaveBeenNthCalledWith(
       4,
-      { label: 'Leverage', value: dso.leverage },
+      expect.objectContaining({ label: 'Leverage' }),
       {}
     )
   })
@@ -99,7 +103,7 @@ describe('DSOTermsViewCompact', () => {
 
     expect(LabelledValue).toHaveBeenNthCalledWith(
       4,
-      { label: 'Gross IRR (%)', value: dso.grossIRR },
+      expect.objectContaining({ label: 'Gross IRR (%)' }),
       {}
     )
   })
@@ -108,8 +112,8 @@ describe('DSOTermsViewCompact', () => {
     render(<DSOTermsViewCompact {...hybridProps} />)
 
     expect(LabelledValue).toHaveBeenNthCalledWith(
-      4,
-      { label: 'Gross IRR (%)', value: dso.grossIRR },
+      5,
+      expect.objectContaining({ label: 'Gross IRR (%)' }),
       {}
     )
   })
@@ -119,7 +123,7 @@ describe('DSOTermsViewCompact', () => {
 
     expect(LabelledValue).toHaveBeenNthCalledWith(
       5,
-      { label: 'Equity Multiple (%)', value: dso.equityMultiple },
+      expect.objectContaining({ label: 'Equity Multiple (%)' }),
       {}
     )
   })
@@ -128,8 +132,10 @@ describe('DSOTermsViewCompact', () => {
     render(<DSOTermsViewCompact {...hybridProps} />)
 
     expect(LabelledValue).toHaveBeenNthCalledWith(
-      5,
-      { label: 'Equity Multiple (%)', value: dso.equityMultiple },
+      7,
+      expect.objectContaining({
+        label: 'Equity Multiple (%)'
+      }),
       {}
     )
   })
@@ -158,7 +164,7 @@ describe('DSOTermsViewCompact', () => {
     render(<DSOTermsViewCompact {...hybridProps} />)
 
     expect(LabelledValue).toHaveBeenNthCalledWith(
-      6,
+      8,
       { label: 'Distribution Frequency', value: dso.distributionFrequency },
       {}
     )

@@ -21,7 +21,7 @@ export const CorporateIdentityButton = ({
     >
       <CreateIdentityCard
         title='Corporate'
-        content='Suitable for the users planning to invest as a corporate investor.'
+        content='Suitable for users who want to invest via a corporate capacity'
         active={active}
         cardColor='red'
         contentIcon={<DomainIcon />}

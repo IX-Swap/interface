@@ -6,7 +6,7 @@ export const CreateCorporateIdentityButton = () => {
   return (
     <CreateIdentityCard
       title='Corporate'
-      content='Suitable for the users planning to invest as a corporate investor.'
+      content='Suitable for users who want to invest via a corporate capacity'
       cardColor='red'
       isLink
       linkLabel='CREATE CORPORATE IDENTITY'

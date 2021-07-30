@@ -1,7 +1,7 @@
 import { useServices } from 'hooks/useServices'
 import { useAuth } from 'hooks/auth/useAuth'
 import { DigitalSecurityOffering } from 'types/dso'
-import { queryCache, useMutation } from 'react-query'
+import { useMutation, useQueryCache } from 'react-query'
 import { investQueryKeys } from 'config/queryKeys'
 import { getIdFromObj } from 'helpers/strings'
 import { issuanceURL } from 'config/apiURL'
@@ -15,6 +15,7 @@ export const useSubmitDSO = (dsoId: string) => {
   const { replace } = useHistory()
   const { user } = useAuth()
   const url = issuanceURL.dso.submit(getIdFromObj(user), dsoId)
+  const queryCache = useQueryCache()
   const submitDSO = async () => {
     return await apiService.patch<DigitalSecurityOffering>(url, {})
   }
@@ -24,11 +25,9 @@ export const useSubmitDSO = (dsoId: string) => {
       replace(generatePath(IssuanceRoute.view, params))
 
       void snackbarService.showSnackbar('Success', 'success')
-      void queryCache.invalidateQueries([
-        investQueryKeys.getDSOById,
-        params.dsoId
-      ])
-      void queryCache.refetchQueries([investQueryKeys.getDSOById, params.dsoId])
+      void queryCache.invalidateQueries(
+        investQueryKeys.getDSOById(dsoId, params.issuerId)
+      )
     },
     onError: (error: any) => {
       void snackbarService.showSnackbar(error.message, 'error')

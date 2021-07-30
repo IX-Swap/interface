@@ -9,8 +9,13 @@ import { InsightValue } from 'app/pages/issuance/components/IssuanceLanding/Insi
 import { DonutChart } from 'app/pages/issuance/components/IssuanceLanding/DonutChart'
 import { getDSOStats } from 'app/components/DSO/utils'
 import { useParams } from 'react-router-dom'
+import { VSpacer } from 'components/VSpacer'
 
-export const AmountRaised = () => {
+export interface AmountRaisedProps {
+  isNewThemeOn?: boolean
+}
+
+export const AmountRaised = ({ isNewThemeOn = false }: AmountRaisedProps) => {
   const { dsoId, issuerId } = useParams<{ dsoId: string; issuerId: string }>()
   const { data, isSuccess } = useDSOById(dsoId, issuerId)
 
@@ -21,20 +26,27 @@ export const AmountRaised = () => {
   }
 
   if (isSuccess && data !== undefined && data.status !== 'Draft') {
-    value = abbreviateNumber(data.insight.raisedTotal, data.currency.symbol)
+    value = abbreviateNumber(
+      data.insight.raisedTotal,
+      data.currency.symbol,
+      false,
+      undefined,
+      isNewThemeOn
+    )
   }
 
   const percentRaised = data !== undefined ? getDSOStats(data).percentRaised : 0
 
   return (
-    <ChartWrapper>
+    <ChartWrapper py={isNewThemeOn ? 2.5 : undefined}>
       <Grid container justify='space-between' alignItems='center'>
         <Grid item>
           <ChartTitle title='Amount Raised' small />
+          {isNewThemeOn ? <VSpacer size={'extraSmall'} /> : null}
           <InsightValue value={value} />
         </Grid>
         <Grid item>
-          <DonutChart percent={percentRaised} />
+          <DonutChart percent={percentRaised} isNewThemeOn={isNewThemeOn} />
         </Grid>
       </Grid>
     </ChartWrapper>

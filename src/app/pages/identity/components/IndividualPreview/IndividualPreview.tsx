@@ -34,8 +34,8 @@ export const IndividualPreview = ({ data }: IndividualPreviewProps) => {
       value: data.dob
     },
     {
-      key: 'Country Of Residence',
-      value: data.countryOfResidence
+      key: 'Citizenship',
+      value: data.nationality
     },
     {
       key: '',

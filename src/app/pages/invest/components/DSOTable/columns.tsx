@@ -5,6 +5,8 @@ import { DigitalSecurityOffering, DSOInsight, DSOTableColumn } from 'types/dso'
 import { PriceWithCurrency } from './PriceWithCurrency'
 import { DSORaised } from './DSORaised'
 import { renderDSOFavorite } from 'helpers/rendering'
+import { formatDateToMMDDYY } from 'helpers/dates'
+import { abbreviateNumber, formatMoney } from 'helpers/numbers'
 
 export const renderDSONameAndStructure = (
   tokenName: string,
@@ -21,6 +23,39 @@ export const renderDSOStatus = (
   dso: DigitalSecurityOffering
 ) => <DSORaised insight={i} dso={dso} />
 
+export const renderTotalFundraisingAmount = (
+  raising: number,
+  dso: DigitalSecurityOffering
+) => {
+  const formatter = new Intl.NumberFormat('en-US', {
+    maximumFractionDigits: 2,
+    minimumFractionDigits: 2,
+    // @ts-expect-error
+    notation: 'compact',
+    compactDisplay: 'short'
+  })
+  return abbreviateNumber(raising, dso.currency.symbol, false, formatter)
+}
+
+export const renderMinimumInvestment = (
+  minimumInvestment: number,
+  dso: DigitalSecurityOffering
+) => {
+  return formatMoney(minimumInvestment, dso.currency.symbol)
+}
+
+export const renderExpectedReturn = (
+  interestRate: number,
+  dso: DigitalSecurityOffering
+) => {
+  return (dso !== undefined && dso.capitalStructure === 'Debt'
+    ? dso.interestRate ?? 0
+    : dso.grossIRR ?? 0
+  )
+    .toString()
+    .concat('%')
+}
+
 export const columns: Array<
   TableColumn<DigitalSecurityOffering, DSOTableColumn>
 > = [
@@ -32,41 +67,50 @@ export const columns: Array<
   {
     key: 'tokenName',
     label: 'Offer Name',
-    render: renderDSONameAndStructure
+    render: renderDSONameAndStructure,
+    headAlign: 'left',
+    align: 'left'
   },
   {
-    key: 'pricePerUnit',
-    label: 'Price',
-    render: renderPriceWithCurrency,
-    headAlign: 'right',
-    align: 'right'
+    key: 'completionDate',
+    label: 'Closing Date',
+    render: formatDateToMMDDYY,
+    headAlign: 'left',
+    align: 'left'
   },
   {
     key: 'totalFundraisingAmount',
     label: 'Raising',
-    render: renderPriceWithCurrency,
-    headAlign: 'right',
-    align: 'right'
+    render: renderTotalFundraisingAmount,
+    headAlign: 'left',
+    align: 'left'
   },
   {
     key: 'minimumInvestment',
-    label: 'Minimum',
-    render: renderPriceWithCurrency,
-    headAlign: 'right',
-    align: 'right'
+    label: 'Min. Investment',
+    render: renderMinimumInvestment,
+    headAlign: 'left',
+    align: 'left'
   },
   {
     key: 'distributionFrequency',
     label: 'Distribution Frequency'
+  },
+  {
+    key: 'interestRate',
+    label: 'Expected Return',
+    render: renderExpectedReturn
   }
 ]
 
 export const defaultSelectedColumns: Record<DSOTableColumn, boolean> = {
   tokenName: true,
+  completionDate: true,
   distributionFrequency: true,
   favorite: true,
   insight: true,
   minimumInvestment: true,
   pricePerUnit: true,
-  totalFundraisingAmount: true
+  totalFundraisingAmount: true,
+  interestRate: true
 }

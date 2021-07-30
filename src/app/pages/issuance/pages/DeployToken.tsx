@@ -10,7 +10,9 @@ import { DeployTokenButton } from 'app/pages/issuance/components/DeployTokenButt
 export const DeployToken = () => {
   const params = useParams<{ dsoId: string; issuerId: string }>()
   const { data, isLoading } = useDSOById(params.dsoId, params.issuerId)
-  const { deploy, isInitializing, isDeploying } = useDeployToken(params.dsoId)
+  const { deploy, isInitializing, isDeploying, isDeployed } = useDeployToken(
+    params.dsoId
+  )
 
   if (isLoading || data === undefined) {
     return null
@@ -32,6 +34,7 @@ export const DeployToken = () => {
         >
           <DeployTokenButton
             isInitializing={isInitializing}
+            isDeployed={isDeployed}
             isDeploying={isDeploying}
             deploymentInfo={data.deploymentInfo}
             onClick={deploy}
