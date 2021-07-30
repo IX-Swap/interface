@@ -20,6 +20,7 @@ import SecTokenListUpdater from './state/secTokens/updater'
 import UserUpdater from './state/user/updater'
 import ThemeProvider, { ThemedGlobalStyle } from './theme'
 import getLibrary from './utils/getLibrary'
+import { SECURITY_TOKENS } from 'config'
 
 const Web3ProviderNetwork = createWeb3ReactRoot(NetworkContextName)
 
@@ -55,7 +56,7 @@ function Updaters() {
       <ApplicationUpdater />
       <TransactionUpdater />
       <MulticallUpdater />
-      {/* <SecTokenListUpdater /> */}
+      {SECURITY_TOKENS && <SecTokenListUpdater />}
     </>
   )
 }

@@ -47,5 +47,6 @@ cypress/fixtures/example.json
 # generated dynamically by terraform
 terraform/containers.json
 
-# docker
+#
 ./Dockerfile
+.npmrc

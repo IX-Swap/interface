@@ -1,3 +1,4 @@
+import { SECURITY_TOKENS } from 'config'
 import useInterval from 'hooks/useInterval'
 import useIsWindowVisible from 'hooks/useIsWindowVisible'
 import { useCallback, useEffect } from 'react'
@@ -11,12 +12,13 @@ export default function Updater(): null {
   const dispatch = useDispatch<AppDispatch>()
   const isWindowVisible = useIsWindowVisible()
   const { token } = useAuthState()
-  // const fetchList = useFetchUserSecTokenListCallback()
-  // const fetchListCallback = useCallback(() => {
-  //   if (!isWindowVisible) return
-  //   fetchList().catch((error) => console.debug('interval user sec token list fetching error', error))
-  // }, [fetchList, isWindowVisible])
-  // useInterval(fetchListCallback, token ? 1000 * 60 * 2 : null)
+  const fetchList = useFetchUserSecTokenListCallback()
+  const fetchListCallback = useCallback(() => {
+    if (!isWindowVisible) return
+    if (!SECURITY_TOKENS) return
+    fetchList().catch((error) => console.debug('interval user sec token list fetching error', error))
+  }, [fetchList, isWindowVisible])
+  useInterval(fetchListCallback, token ? 1000 * 60 * 2 : null)
   // keep dark mode in sync with the system
   useEffect(() => {
     const darkHandler = (match: MediaQueryListEvent) => {

@@ -8,6 +8,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import apiService from 'services/apiService'
 import { custody } from 'services/apiUrls'
 import { AppDispatch, AppState } from 'state'
+import { setLogItem } from 'state/eventLog/actions'
 import { useEventState, useGetEventCallback } from 'state/eventLog/hooks'
 import { tryParseAmount } from 'state/swap/helpers'
 import { isAddress } from 'utils'
@@ -99,6 +100,12 @@ export const depositToken = async ({
   const response = await apiService.post(custody.deposit, { tokenId, amount, fromAddress })
   return response
 }
+
+export const cancelDeposit = async ({ requestId }: { requestId: number }) => {
+  const response = await apiService.post(custody.cancelDeposit(requestId), {})
+  return response
+}
+
 interface DepositProps {
   id: number
   amount: number
@@ -106,6 +113,11 @@ interface DepositProps {
   onSuccess: () => void
   onError: () => void
 }
+interface CancelDepositProps {
+  requestId: number
+  onSuccess: () => void
+}
+
 export function useDepositCallback(): ({ id, amount, onSuccess, onError }: DepositProps) => Promise<void> {
   const dispatch = useDispatch<AppDispatch>()
   const getEvents = useGetEventCallback()
@@ -114,7 +126,8 @@ export function useDepositCallback(): ({ id, amount, onSuccess, onError }: Depos
     async ({ id, amount, fromAddress, onSuccess, onError }: DepositProps) => {
       dispatch(depositSecTokens.pending())
       try {
-        await depositToken({ tokenId: id, amount, fromAddress })
+        const response = await depositToken({ tokenId: id, amount, fromAddress })
+        dispatch(setLogItem({ logItem: response.data }))
         getEvents({ tokenId, filter: ActionTypes.DEPOSIT })
         dispatch(depositSecTokens.fulfilled())
         onSuccess()
@@ -124,6 +137,27 @@ export function useDepositCallback(): ({ id, amount, onSuccess, onError }: Depos
         onError()
       }
     },
-    [dispatch]
+    [dispatch, getEvents, tokenId]
+  )
+}
+
+export function useCancelDepositCallback(): ({ requestId }: CancelDepositProps) => Promise<void> {
+  const dispatch = useDispatch<AppDispatch>()
+  const getEvents = useGetEventCallback()
+  const { tokenId } = useEventState()
+  return useCallback(
+    async ({ requestId, onSuccess }: CancelDepositProps) => {
+      dispatch(depositSecTokens.pending())
+      try {
+        await cancelDeposit({ requestId })
+        getEvents({ tokenId, filter: ActionTypes.DEPOSIT })
+        dispatch(depositSecTokens.fulfilled())
+        onSuccess()
+      } catch (error) {
+        console.error(`Could not cancel deposit`, error)
+        dispatch(depositSecTokens.rejected({ errorMessage: error.message }))
+      }
+    },
+    [dispatch, getEvents, tokenId]
   )
 }

@@ -330,7 +330,7 @@ export const ModalBlurWrapper = styled.span`
   backdrop-filter: blur(20px);
   ${({ theme }) => theme.mediaWidth.upToSmall`
     padding: 0;
-    min-width: fit-content;
+    min-width: 100%;
   `};
   ${({ theme }) => theme.mediaWidth.upToExtraSmall`
     min-width: 100%;
@@ -405,4 +405,27 @@ export const gradientBorder = css`
     padding: 2px;
     background: ${({ theme }) => theme.borderG1};
   }
+`
+export const DesktopOnly = styled.span`
+  ${({ theme }) => theme.mediaWidth.upToMedium`
+    display: none;
+  `};
+`
+export const DesktopAndTablet = styled.span`
+  ${({ theme }) => theme.mediaWidth.upToSmall`
+    display: none;
+  `};
+`
+
+export const MobileAndTablet = styled.span`
+  display: none;
+  ${({ theme }) => theme.mediaWidth.upToMedium`
+    display: block;
+  `};
+`
+export const MobileOnly = styled.span`
+  display: none;
+  ${({ theme }) => theme.mediaWidth.upToSmall`
+    display: block;
+  `};
 `
