@@ -1,12 +1,10 @@
 import { Currency } from '@ixswap1/sdk-core'
 import { Trans } from '@lingui/macro'
-import Column from 'components/Column'
 import React, { useMemo } from 'react'
-import { Box } from 'rebass'
 import { useEventState } from 'state/eventLog/hooks'
-import { TYPE } from 'theme'
+import { DesktopAndTablet, TYPE } from 'theme'
 import { ActionHistoryStatus, ActionTypes } from './enum'
-import { DateColumn, DateDesktop, getStatusIcon, HistoryRowWraper, NameAndSumColumn, StatusColumn } from './styleds'
+import { getStatusIcon, HistoryHeaderWrapper } from './styleds'
 import { TransactionHistoryRow } from './TransactionHistoryRow'
 
 export const HistoryHeader = ({
@@ -17,34 +15,37 @@ export const HistoryHeader = ({
   isTransaction: boolean
 }) => {
   return (
-    <HistoryRowWraper>
-      <NameAndSumColumn>
-        <TYPE.description2>
-          <Trans>Action</Trans>
-        </TYPE.description2>
+    <HistoryHeaderWrapper>
+      <tr>
+        <th>
+          <TYPE.description2>
+            <Trans>Action</Trans>
+          </TYPE.description2>
+        </th>
         {isTransaction && (
-          <TYPE.description2>
-            <Trans>Value {currencySymbol}</Trans>
-          </TYPE.description2>
+          <th>
+            <TYPE.description2>
+              <Trans>Value {currencySymbol}</Trans>
+            </TYPE.description2>
+          </th>
         )}
-      </NameAndSumColumn>
-      <StatusColumn>
-        <Box marginRight="28px" display="flex" justifyContent="center"></Box>
-        <TYPE.description2>
-          <Trans>Status</Trans>
-        </TYPE.description2>
-      </StatusColumn>
-      <DateColumn style={{ width: '120px;' }}>
-        <DateDesktop>
+        <th>
           <TYPE.description2>
-            <Trans>Date</Trans>
+            <Trans>Status</Trans>
           </TYPE.description2>
-        </DateDesktop>
-        {/* <ChevronElement showMore={show} setShowMore={() => toggleShow()} /> */}
-      </DateColumn>
-    </HistoryRowWraper>
+        </th>
+        <th>
+          <DesktopAndTablet>
+            <TYPE.description2>
+              <Trans>Date</Trans>
+            </TYPE.description2>
+          </DesktopAndTablet>
+        </th>
+      </tr>
+    </HistoryHeaderWrapper>
   )
 }
+
 export const HistoryTable = ({ currency }: { currency?: Currency }) => {
   const { eventLog } = useEventState()
   const isTransaction = useMemo(
@@ -52,16 +53,18 @@ export const HistoryTable = ({ currency }: { currency?: Currency }) => {
     [eventLog]
   )
   return (
-    <Column style={{ marginTop: '26px', gap: '18px' }}>
-      {eventLog.length > 0 && <HistoryHeader currencySymbol={currency?.symbol ?? ''} isTransaction={isTransaction} />}
-      <Column style={{ gap: '11px' }}>
-        {currency &&
-          eventLog.map((row) => {
-            const status = row?.params?.status ?? ActionHistoryStatus.PENDING
-            const statusIcon = getStatusIcon(row?.type, status)
-            return <TransactionHistoryRow row={row} key={row.createdAt} icon={statusIcon} />
-          })}
-      </Column>
-    </Column>
+    <>
+      {eventLog.length > 0 && (
+        <table style={{ marginTop: '26px', width: '100%', border: 'none' }} cellSpacing="0" cellPadding="0">
+          <HistoryHeader currencySymbol={currency?.symbol ?? ''} isTransaction={isTransaction} />
+          {currency &&
+            eventLog.map((row) => {
+              const status = row?.params?.status ?? ActionHistoryStatus.PENDING
+              const statusIcon = getStatusIcon(row?.type, status)
+              return <TransactionHistoryRow row={row} key={row.createdAt} icon={statusIcon} />
+            })}
+        </table>
+      )}
+    </>
   )
 }

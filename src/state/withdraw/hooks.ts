@@ -8,7 +8,7 @@ import { useActiveWeb3React } from 'hooks/web3'
 import { useCallback } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import apiService from 'services/apiService'
-import { tokens } from 'services/apiUrls'
+import { custody } from 'services/apiUrls'
 import { AppDispatch, AppState } from 'state'
 import { useEventState, useGetEventCallback } from 'state/eventLog/hooks'
 import { tryParseAmount } from 'state/swap/helpers'
@@ -94,13 +94,14 @@ export function useDerivedWithdrawInfo(): {
     inputError,
   }
 }
-export const withdrawToken = async ({ id, amount }: { id: number; amount: number }) => {
-  const response = await apiService.post(tokens.withdraw(id), { amount })
+export const withdrawToken = async ({ id, amount, receiver }: { id: number; amount: number; receiver: string }) => {
+  const response = await apiService.post(custody.withdraw, { amount, tokenId: id, fromAddress: receiver })
   return response
 }
 interface WithdrawProps {
   id: number
   amount: number
+  receiver: string
   onSuccess: () => void
   onError: () => void
 }
@@ -114,10 +115,10 @@ export function useWithdrawCallback(
   const { tokenId } = useEventState()
   const addTransaction = useTransactionAdder()
   return useCallback(
-    async ({ id, amount, onSuccess, onError }: WithdrawProps) => {
+    async ({ id, amount, onSuccess, onError, receiver }: WithdrawProps) => {
       dispatch(withdrawCurrency.pending())
       try {
-        const response = await withdrawToken({ id, amount })
+        const response = await withdrawToken({ id, amount, receiver })
         const { data } = response
         const { operator, amount: sum, deadline, v, r, s } = data
         const burned = await router?.burn(

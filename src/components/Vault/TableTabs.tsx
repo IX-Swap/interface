@@ -6,8 +6,7 @@ import { useEventState, useGetEventCallback } from 'state/eventLog/hooks'
 import { ActionTypeTextHeader, filterTabs } from './enum'
 
 export const TableTabs = () => {
-  const { filter } = useEventState()
-  const { tokenId } = useEventState()
+  const { filter, tokenId } = useEventState()
   const getEvents = useGetEventCallback()
   return (
     <AutoColumn style={{ paddingBottom: 0 }}>

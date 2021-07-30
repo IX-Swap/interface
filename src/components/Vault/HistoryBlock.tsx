@@ -11,10 +11,10 @@ import { useSecTokenId } from 'state/secTokens/hooks'
 import { TYPE } from 'theme'
 import { ActionTypes } from './enum'
 import { HistoryTable } from './HistoryTable'
+import { Pagination } from './Pagination'
 import { HistoryWrapper } from './styleds'
 import { TableTabs } from './TableTabs'
 import { TransactionDetails } from './TransactionDetails'
-
 interface Props {
   currency?: Currency
 }
@@ -38,7 +38,12 @@ export const HistoryBlock = ({ currency }: Props) => {
           </TYPE.title5>
         </RowStart>
         <TableTabs />
-        {eventLog.length > 0 && !eventLogLoading && <HistoryTable currency={currency} />}
+        {eventLog.length > 0 && !eventLogLoading && (
+          <Column>
+            <HistoryTable currency={currency} />
+            <Pagination />
+          </Column>
+        )}
         {eventLog.length === 0 && !eventLogLoading && (
           <Column style={{ padding: '20px', height: '100%' }}>
             <TYPE.main color={theme.text2} textAlign="center" mb="20px">

@@ -45,7 +45,7 @@ const StyledDialogContent = styled(({ minHeight, maxHeight, mobile, isOpen, isRi
     border-radius: 45px;
     ${({ theme }) => theme.mediaWidth.upToMedium`
       width: 100vw;
-      
+
     `}
     ${({ theme, mobileMaxHeight }) => theme.mediaWidth.upToSmall`
           border-radius: 0px;
