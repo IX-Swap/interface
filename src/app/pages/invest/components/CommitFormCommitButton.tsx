@@ -26,7 +26,8 @@ export const CommitmentFormCommitButton = ({
 
   const submit = handleSubmit(async (data: CommitmentFormValues) => {
     await makeCommitment({
-      ...data,
+      numberOfUnits: data.numberOfUnits,
+      otp: data.otp,
       withdrawalAddress:
         data.withdrawalAddress === '' ? undefined : data.withdrawalAddress,
       signedSubscriptionDocument: data.signedSubscriptionDocument?._id,
