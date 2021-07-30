@@ -13,6 +13,7 @@ import {
 import useStyles from './CloseDealDialog.styles'
 import { OTPForm } from 'app/pages/issuance/components/Commitments/CloseDealDialog/OTPForm'
 import { VSpacer } from 'components/VSpacer'
+import { useCloseDeal } from 'app/pages/issuance/hooks/useCloseDeal'
 
 export interface ModalProps extends Partial<DialogProps> {
   open?: boolean
@@ -24,6 +25,9 @@ export const CloseDealDialog = (props: ModalProps) => {
   const classes = useStyles()
   const theme = useTheme()
   const fullScreen = useMediaQuery(theme.breakpoints.down('sm'))
+  const {
+    mutation: [closeDeal, { isLoading, status }]
+  } = useCloseDeal()
 
   return (
     <MUIDialog
@@ -65,10 +69,13 @@ export const CloseDealDialog = (props: ModalProps) => {
         <DialogActions>
           <OTPForm
             data-testid='otp-form'
+            isLoading={isLoading}
             onClose={() => toggleOpen()}
-            // TODO Do refactoring after complete backend api endpoints
-            onSubmit={values => {
-              toggleOpen()
+            onSubmit={async values => {
+              await closeDeal(values)
+              if (status === 'success') {
+                toggleOpen()
+              }
             }}
           />
         </DialogActions>

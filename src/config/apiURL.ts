@@ -136,7 +136,9 @@ export const issuanceURL = {
     promote: (dsoId: string) => `/issuance/dso/${dsoId}/promote`,
     disable: (dsoId: string) => `/issuance/dso/${dsoId}/disable`,
     capitalCall: (userId: string, dsoId: string) =>
-      `/issuance/dso/${userId}/${dsoId}/capitalCall`
+      `/issuance/dso/${userId}/${dsoId}/capitalCall`,
+    closeDeal: (userId: string, dsoId: string) =>
+      `/issuance/dso/${userId}/${dsoId}/closeDeal`
   }
 }
 

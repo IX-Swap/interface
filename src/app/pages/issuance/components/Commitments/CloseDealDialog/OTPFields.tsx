@@ -12,7 +12,8 @@ export interface OTPFieldsProps {
 }
 
 export const OTPFields = ({ isLoading, onClose }: OTPFieldsProps) => {
-  const { control } = useFormContext()
+  const { control, watch } = useFormContext()
+  const otp = watch('otp')
 
   return (
     <Grid container direction='column' spacing={4}>
@@ -44,7 +45,7 @@ export const OTPFields = ({ isLoading, onClose }: OTPFieldsProps) => {
             size='large'
             variant='contained'
             color='primary'
-            disabled={isLoading}
+            disabled={isLoading || otp.length < 6}
           >
             Confirm
           </Submit>
