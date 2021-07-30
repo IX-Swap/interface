@@ -11,6 +11,7 @@ describe('DeployTokenButton', () => {
   const props: DeployTokenButtonProps = {
     isDeploying: false,
     isInitializing: false,
+    isDeployed: false,
     onClick: jest.fn()
   }
 

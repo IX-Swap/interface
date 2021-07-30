@@ -13,6 +13,7 @@ export const useDeployToken = (tokenId: string) => {
   const socket = useMemo(() => socketService.socket, [socketService.socket])
   const [isInitializing, setIsInitializing] = useState(true)
   const [isDeploying, setIsDeploying] = useState(false)
+  const [isDeployed, setIsDeployed] = useState(false)
   const queryCache = useQueryCache()
 
   const onMessageReceived = (message: DeployTokenMessage) => {
@@ -20,10 +21,12 @@ export const useDeployToken = (tokenId: string) => {
       setIsInitializing(false)
     }
 
-    if (
-      message.message.startsWith('Success') ||
-      message.message.startsWith('Error')
-    ) {
+    if (message.message.startsWith('Success')) {
+      setIsDeploying(false)
+      setIsDeployed(true)
+    }
+
+    if (message.message.startsWith('Error')) {
       setIsDeploying(false)
     }
 
@@ -61,6 +64,7 @@ export const useDeployToken = (tokenId: string) => {
   return {
     isInitializing,
     isDeploying,
+    isDeployed,
     deploy
   }
 }
