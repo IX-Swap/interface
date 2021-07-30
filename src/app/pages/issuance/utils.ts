@@ -17,7 +17,7 @@ export const numberToPercentage = (value: any) => {
   return Number(value) / 100
 }
 
-export const percentageToNumber = (value: any) => {
+export const percentageToNumber = (value?: any) => {
   if (value === null || value === undefined || value === '') {
     return undefined
   }

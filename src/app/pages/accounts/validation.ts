@@ -50,7 +50,8 @@ export const withdrawCashFormValidationSchema = yup
     bankAccountId: yup.string().nullable().required('Required'),
     otp: yup.string().nullable().required('Required'),
     memo: yup.string(),
-    virtualAccount: yup.string().required('Required')
+    virtualAccount: yup.string().required('Required'),
+    paymentMethodName: yup.string()
   })
 
 export const depositDSFormValidationSchema = yup

@@ -10,14 +10,16 @@ import { DigitalSecurityOffering } from 'types/dso'
 import { useIsAuthorizer } from 'helpers/acl'
 
 export const useDSOsByUserId = (
-  status?: string
+  status?: string,
+  onlyByUserId?: boolean
 ): UsePaginatedQueryData<DigitalSecurityOffering> => {
   const { user } = useAuth()
   const isAuthorizer = useIsAuthorizer()
   const userId = getIdFromObj(user)
-  const uri = isAuthorizer
-    ? authorizerURL.offerings
-    : issuanceURL.dso.getByUserId(userId)
+  const uri =
+    isAuthorizer && (onlyByUserId === undefined || !onlyByUserId)
+      ? authorizerURL.offerings
+      : issuanceURL.dso.getByUserId(userId)
 
   const getDSOsByUserId = async (_queryKey: string, args: any) => {
     return await apiService.post(uri, args)

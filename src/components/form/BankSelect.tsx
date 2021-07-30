@@ -12,10 +12,12 @@ import { queryStatusRenderer } from 'components/form/renderUtils'
 import { AuthorizableStatus } from 'types/util'
 import { privateClassNames } from 'helpers/classnames'
 import { useFormError } from 'hooks/useFormError'
+import { ValidCurrency } from 'helpers/types'
 
 export const BankSelect = (
   props: Partial<SelectProps> & { status?: AuthorizableStatus } & {
     helperText?: string
+    currency?: ValidCurrency
   }
 ): JSX.Element => {
   const { data, status } = useBanksData()
@@ -31,7 +33,12 @@ export const BankSelect = (
   const queryStatus = queryStatusRenderer(status)
   if (queryStatus !== undefined) return queryStatus
 
-  const filteredBanks = data.list.filter(({ status }) => status === bankStatus)
+  const filteredBanks = data.list.filter(
+    ({ status, currency }) =>
+      status === bankStatus &&
+      (props.currency !== undefined ? currency.symbol === props.currency : true)
+  )
+
   return (
     <FormControl fullWidth variant='outlined'>
       <InputLabel shrink={value !== undefined && value !== null}>
@@ -39,7 +46,7 @@ export const BankSelect = (
       </InputLabel>
       <Select {...rest} value={value} className={privateClassNames()}>
         <MenuItem disabled value={undefined}>
-          Bank
+          {filteredBanks.length > 0 ? 'Bank' : 'No available banks'}
         </MenuItem>
         {filteredBanks.map(({ _id, bankName, bankAccountNumber }) => (
           <MenuItem key={_id} value={_id} className={privateClassNames()}>
