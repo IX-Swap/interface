@@ -59,7 +59,7 @@ export const DepositPopup = ({ currency }: Props) => {
             {modalView === DepositModalView.CREATE_REQUEST && (
               <DepositRequestForm currency={currency} setModalView={setModalView} />
             )}
-            {modalView === DepositModalView.SEND_INFO && <DepositSendInfo />}
+            {modalView === DepositModalView.SEND_INFO && <DepositSendInfo onClose={onClose} />}
           </ModalPadding>
         </ModalContentWrapper>
       </ModalBlurWrapper>

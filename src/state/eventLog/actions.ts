@@ -13,6 +13,7 @@ export interface LogItem {
     fromAddress?: string
     toAddress?: string
   }
+  custodianType?: string
   createdAt: string
   updatedAt: string | null
   deletedAt: string | null
