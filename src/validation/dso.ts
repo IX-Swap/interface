@@ -1,4 +1,4 @@
-import { CloseDealArgs, DSOFormValues, DsoTeamMember } from 'types/dso'
+import { DSOFormValues, DsoTeamMember } from 'types/dso'
 import { DataroomFile, FormArrayElement } from 'types/dataroomFile'
 import { string, number, array, object } from 'yup'
 import { dateSchema } from './shared'
@@ -136,7 +136,3 @@ export const getDSOValidationSchema = (isNew: boolean, isLive: boolean) => {
 
   return isLive ? editLiveDSOValidationSchema : editDSOValidationSchema
 }
-
-export const closeDealFormValidationSchema = object<CloseDealArgs>({
-  otp: string().required()
-})

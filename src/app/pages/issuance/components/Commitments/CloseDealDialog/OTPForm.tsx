@@ -1,7 +1,6 @@
 import React from 'react'
 import { Form } from 'components/form/Form'
 import { OTPFields } from 'app/pages/issuance/components/Commitments/CloseDealDialog/OTPFields'
-import { closeDealFormValidationSchema } from 'validation/dso'
 import { CloseDealArgs } from 'types/dso'
 
 export const initialValues = {
@@ -18,7 +17,6 @@ export const OTPForm = ({ isLoading, onClose, onSubmit }: OTPFormProps) => {
   return (
     <Form
       data-testid='otp-form'
-      validationSchema={closeDealFormValidationSchema}
       defaultValues={initialValues}
       onSubmit={onSubmit}
     >

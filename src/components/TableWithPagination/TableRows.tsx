@@ -29,7 +29,9 @@ export const TableRows = <T,>(props: TableRowsProps<T>): JSX.Element => {
     return isNewThemeOn
       ? count % 2 === 0
         ? theme.palette.backgrounds.default
-        : theme.palette.grey[theme.palette.type === 'light' ? 100 : 900]
+        : theme.palette.type === 'light'
+        ? '#F8F8FD'
+        : theme.palette.grey[900]
       : 'initial'
   }
 
@@ -37,7 +39,13 @@ export const TableRows = <T,>(props: TableRowsProps<T>): JSX.Element => {
     <TableBody>
       {items.length > 0 ? (
         items.map((row, i) => (
-          <TableRow key={i} style={{ backgroundColor: rowColor(i) }}>
+          <TableRow
+            key={i}
+            style={{
+              backgroundColor: rowColor(i),
+              border: isNewThemeOn ? 'none' : 'initial'
+            }}
+          >
             {columns.map(column => (
               <TableCellWrapper
                 bordered={bordered}

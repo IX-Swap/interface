@@ -13,7 +13,7 @@ export interface OTPFieldsProps {
 
 export const OTPFields = ({ isLoading, onClose }: OTPFieldsProps) => {
   const { control, watch } = useFormContext()
-  const otp = watch('otp')
+  const isOTPFull = watch('otp').length === 6
 
   return (
     <Grid container direction='column' spacing={4}>
@@ -24,6 +24,7 @@ export const OTPFields = ({ isLoading, onClose }: OTPFieldsProps) => {
           component={OTPField}
           name='otp'
           label=''
+          isInputNum={true}
           variant='outlined'
           valueExtractor={plainValueExtractor}
           shouldAutoFocus
@@ -45,7 +46,7 @@ export const OTPFields = ({ isLoading, onClose }: OTPFieldsProps) => {
             size='large'
             variant='contained'
             color='primary'
-            disabled={isLoading || otp.length < 6}
+            disabled={isLoading || !isOTPFull}
           >
             Confirm
           </Submit>
