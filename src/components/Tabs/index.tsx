@@ -6,6 +6,10 @@ export const ToggleWrapper = styled(RowCenter)`
   border-radius: 12px;
   padding: 0px 6px;
   grid-gap: 6px;
+  ${({ theme }) => theme.mediaWidth.upToSmall`
+   flex-direction:column;
+   gap: 10px;
+  `};
 `
 
 export const ToggleOption = styled.div<{ active?: boolean }>`

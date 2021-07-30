@@ -1,4 +1,5 @@
 import { AppBackground } from 'components/AppBackground'
+import { SECURITY_TOKENS } from 'config'
 import ApeModeQueryParamReader from 'hooks/useApeModeQueryParamReader'
 import React from 'react'
 import { Route, Switch } from 'react-router-dom'
@@ -79,8 +80,10 @@ export default function App() {
               <Route exact strict path="/add/:currencyIdA?/:currencyIdB?" component={RedirectDuplicateTokenIdsV2} />
 
               <Route exact strict path="/remove/:currencyIdA/:currencyIdB" component={RemoveLiquidity} />
-              <Route exact strict path="/security-tokens/:currencyId" component={SecTokenDetails} />
-              <Route exact strict path={routes.securityTokens()} component={Custodian} />
+              {SECURITY_TOKENS && (
+                <Route exact strict path="/security-tokens/:currencyId" component={SecTokenDetails} />
+              )}
+              {SECURITY_TOKENS && <Route exact strict path={routes.securityTokens()} component={Custodian} />}
               <Route component={RedirectPathToSwapOnly} />
             </Switch>
           </Web3ReactManager>
