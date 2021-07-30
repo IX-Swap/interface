@@ -17,8 +17,18 @@ const metamask2 = {
     eth: '0x269EB66f58752c7BF0E7A7cdD4ce71bBFDb9408c',
   },
 }
+
+const metamask3 = {
+  SECRET_WORDS: 'document thrive equal adapt question bracket fire oblige catalog deposit team brisk',
+  PASSWORD: 'i1iarydotat!!!111',
+  contractAddresses: {
+    eth: '0x2203004aBaCADda2E561380dD863FC479a90A43e',
+  },
+}
 const ixswap = {
   URL: 'http://localhost:3000/#/swap',
+  // URL: 'http://dev.ixswap.io/',
+  // URL: 'https://app.ixswap.io/#/swap',
 }
 
-export { metamask, ixswap, metamask2 }
+export { metamask, ixswap, metamask2, metamask3 }

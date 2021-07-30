@@ -1,7 +1,7 @@
 import { test as base } from '../lib/fixture'
 
 import { expect } from '@playwright/test'
-import { ixswap, metamask2, metamask } from '../lib/helpers/credentials'
+import { ixswap, metamask2, metamask, metamask3 } from '../lib/helpers/credentials'
 import { click, navigate, makeScreenOnError, typeText } from '../lib/helpers/helpers'
 import { amounts } from '../lib/helpers/text-helpers'
 
@@ -31,13 +31,19 @@ test.afterEach(async ({ page }, testInfo) => {
   }
 })
 
-test.describe('Functionality testing', () => {
+test.describe.only('Functionality testing', () => {
   test.beforeEach(async ({ context, page, metaMask }) => {
-    await metaMask.fullConnection(context, page, metamask.SECRET_WORDS, metamask.contractAddresses.eth)
+    await metaMask.fullConnection(context, page, metamask.SECRET_WORDS, metamask3.contractAddresses.eth)
     await navigate(ixswap.URL, page)
     await click(securityToken.button.OPEN_SECURITY, page)
   })
-  test('deposity test', async ({ page }) => {})
+  test('Create deposit', async ({ page }) => {
+    await click('[data-testid="custodian-sec-token-info"]', page)
+    await click('[data-testid="deposit"]', page)
+    await typeText(pool.field.TOKEN_AMOUNT, '10000', page)
+    await click('text="Create deposit request"', page)
+    await page.waitForTimeout(10000)
+  })
 })
 
 test.describe('Check without accreditation', () => {
