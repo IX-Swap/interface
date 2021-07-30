@@ -8,6 +8,7 @@ import Row from '../Row'
 import SettingsTab from 'components/Settings'
 import { useDerivedSwapInfo } from 'state/swap/hooks'
 import { routes } from 'utils/routes'
+import { SECURITY_TOKENS } from 'config'
 
 const activeClassName = 'ACTIVE'
 
@@ -83,10 +84,11 @@ export const HeaderLinks = () => {
       >
         <Trans>Pool</Trans>
       </StyledNavLink>
-
-      <StyledNavLink id={`stake-nav-link`} to={routes.securityTokens()}>
-        <Trans>Security tokens</Trans>
-      </StyledNavLink>
+      {SECURITY_TOKENS && (
+        <StyledNavLink id={`stake-nav-link`} to={routes.securityTokens()}>
+          <Trans>Security tokens</Trans>
+        </StyledNavLink>
+      )}
       <SettingsTab placeholderSlippage={allowedSlippage} />
     </HeaderLinksWrap>
   )
