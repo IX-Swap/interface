@@ -16,10 +16,10 @@ export const useCloseDeal = () => {
   return {
     mutation: useMutation(mutateFn, {
       onSuccess: response => {
-        void snackbarService.showSnackbar('Deal closed successfully', 'success')
+        snackbarService.showSnackbar('Deal closed successfully', 'success')
       },
       onError: (error: any) => {
-        void snackbarService.showSnackbar(error.message, 'error')
+        snackbarService.showSnackbar(error.message, 'error')
       }
     })
   }
