@@ -61,7 +61,7 @@ describe('useCloseDeal', () => {
 
           expect(showSnackbar).toHaveBeenNthCalledWith(
             1,
-            unsuccessfulResponse.message,
+            'There was an error closing the deal. Please try again in few minutes',
             'error'
           )
         },

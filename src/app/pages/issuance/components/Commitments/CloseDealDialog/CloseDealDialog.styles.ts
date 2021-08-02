@@ -9,7 +9,8 @@ export default makeStyles(theme => ({
       width: 'max-content',
       [theme.breakpoints.up('md')]: {
         padding: '2rem'
-      }
+      },
+      height: 'auto'
     }
   },
   titleRoot: {

@@ -18,8 +18,11 @@ export const useCloseDeal = () => {
       onSuccess: response => {
         snackbarService.showSnackbar('Deal closed successfully', 'success')
       },
-      onError: (error: any) => {
-        snackbarService.showSnackbar(error.message, 'error')
+      onError: () => {
+        snackbarService.showSnackbar(
+          'There was an error closing the deal. Please try again in few minutes',
+          'error'
+        )
       }
     })
   }
