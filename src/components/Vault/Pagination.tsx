@@ -42,18 +42,19 @@ export const Pagination = () => {
     page,
   } = useEventState()
   const onChange = ({ selected }: { selected: number }) => {
-    console.log({ selected })
     getEvents({ filter: filter ?? ActionTypes.DEPOSIT, tokenId, page: selected + 1 })
   }
   return (
     <PaginationContainer>
-      <ReactPaginate
-        pageCount={totalPages}
-        forcePage={page - 1}
-        pageRangeDisplayed={3}
-        marginPagesDisplayed={2}
-        onPageChange={(e) => onChange(e)}
-      />
+      {totalPages > 1 && (
+        <ReactPaginate
+          pageCount={totalPages}
+          forcePage={page - 1}
+          pageRangeDisplayed={3}
+          marginPagesDisplayed={2}
+          onPageChange={(e) => onChange(e)}
+        />
+      )}
     </PaginationContainer>
   )
 }
