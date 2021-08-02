@@ -20,12 +20,7 @@ export const VirtualAccountAuthorization = () => {
     isLoadingIdentities
   } = useGetIdentities(undefined, virtualAccount?.user?._id)
 
-  if (
-    isLoading ||
-    isLoadingIdentities ||
-    id === undefined ||
-    virtualAccount === undefined
-  ) {
+  if (isLoading || isLoadingIdentities || virtualAccount === undefined) {
     return null
   }
 
