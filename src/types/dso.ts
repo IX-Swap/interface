@@ -164,3 +164,7 @@ export interface DSOActivity {
     corporates: CorporateIdentity[]
   }
 }
+
+export interface CloseDealArgs {
+  otp: string
+}

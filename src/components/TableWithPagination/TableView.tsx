@@ -21,6 +21,7 @@ import { TableRows } from 'components/TableWithPagination/TableRows'
 import { statusColumn } from 'app/pages/authorizer/hooks/useAuthorizerView'
 import { UseSelectionHelperReturnType } from 'hooks/useSelectionHelper'
 import { useTheme } from '@material-ui/core/styles'
+import useStyles from './TableView.styles'
 
 export interface TableViewRendererProps<T> {
   items: T[]
@@ -86,7 +87,12 @@ export const TableView = <T,>({
   )
 
   const theme = useTheme()
-  const headColor = isNewThemeOn ? theme.palette.primary.main : 'initial'
+  const classes = useStyles()
+  const headColor = isNewThemeOn
+    ? theme.palette.type === 'light'
+      ? '#141272'
+      : theme.palette.primary.main
+    : 'initial'
   const headHeight = isNewThemeOn ? 50 : 'initial'
   const cacheQueryKey = [name, page, rowsPerPage, filter]
 
@@ -222,6 +228,7 @@ export const TableView = <T,>({
             count={total}
             rowsPerPage={rowsPerPage}
             page={page}
+            classes={{ toolbar: classes.toolbar }}
             onChangeRowsPerPage={evt => {
               setPage(0)
               setRowsPerPage(parseInt(evt.target.value))

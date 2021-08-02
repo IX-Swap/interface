@@ -24,7 +24,7 @@ describe('OTPFields', () => {
 
   it('renders without error', () => {
     render(
-      <Form>
+      <Form defaultValues={{ otp: '' }}>
         <OTPFields isLoading={false} onClose={handleClose} />
       </Form>
     )
@@ -32,7 +32,7 @@ describe('OTPFields', () => {
 
   it('renders OTP with correct props', () => {
     render(
-      <Form>
+      <Form defaultValues={{ otp: '' }}>
         <OTPFields isLoading={false} onClose={handleClose} />
       </Form>
     )
@@ -52,7 +52,7 @@ describe('OTPFields', () => {
 
   it('renders Cancel button', () => {
     const { getByText } = render(
-      <Form>
+      <Form defaultValues={{ otp: '' }}>
         <OTPFields isLoading={false} onClose={handleClose} />
       </Form>
     )
@@ -63,7 +63,7 @@ describe('OTPFields', () => {
 
   it('invokes close function on close button click', async () => {
     const { getByText } = render(
-      <Form>
+      <Form defaultValues={{ otp: '' }}>
         <OTPFields isLoading={false} onClose={handleClose} />
       </Form>
     )
@@ -77,7 +77,7 @@ describe('OTPFields', () => {
 
   it('renders Submit button with correct props', () => {
     render(
-      <Form>
+      <Form defaultValues={{ otp: '' }}>
         <OTPFields isLoading={false} onClose={handleClose} />
       </Form>
     )

@@ -45,19 +45,7 @@ describe('TableRows', () => {
     expect(TableRow).toHaveBeenCalledTimes(2)
     expect(TableRow).toHaveBeenCalledWith(
       expect.objectContaining({
-        style: { backgroundColor: 'initial' }
-      }),
-      {}
-    )
-  })
-
-  it('renders TableRow with correct props when isNewThemeOn is false', async () => {
-    const extraProps = { ...props, items: ['1', '2'] }
-    render(<TableRows {...extraProps} />)
-
-    expect(TableRow).toHaveBeenCalledWith(
-      expect.objectContaining({
-        style: { backgroundColor: 'initial' }
+        style: { backgroundColor: 'initial', border: 'initial' }
       }),
       {}
     )
@@ -70,7 +58,7 @@ describe('TableRows', () => {
     expect(TableRow).toHaveBeenNthCalledWith(
       1,
       expect.objectContaining({
-        style: { backgroundColor: '#ffffff' }
+        style: { backgroundColor: '#ffffff', border: 'none' }
       }),
       {}
     )
@@ -78,7 +66,7 @@ describe('TableRows', () => {
     expect(TableRow).toHaveBeenNthCalledWith(
       2,
       expect.objectContaining({
-        style: { backgroundColor: '#f5f5f5' }
+        style: { backgroundColor: '#F8F8FD', border: 'none' }
       }),
       {}
     )
@@ -86,7 +74,7 @@ describe('TableRows', () => {
     expect(TableRow).toHaveBeenNthCalledWith(
       3,
       expect.objectContaining({
-        style: { backgroundColor: '#ffffff' }
+        style: { backgroundColor: '#ffffff', border: 'none' }
       }),
       {}
     )

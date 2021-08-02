@@ -27,7 +27,9 @@ export const useDSOsByUserId = (
 
   const { data, ...rest } = useInfiniteQuery(
     [
-      dsoQueryKeys.getDSOsById(userId),
+      dsoQueryKeys.getDSOsById(
+        onlyByUserId !== undefined && onlyByUserId ? userId : userId.concat('!')
+      ),
       status !== undefined
         ? {
             ...paginationArgs,
