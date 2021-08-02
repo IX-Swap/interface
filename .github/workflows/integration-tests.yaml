@@ -26,6 +26,7 @@ jobs:
         with:
           node-version: 14
           registry-url: https://registry.npmjs.org
+      - uses: microsoft/playwright-github-action@v2
       - run: npx playwright install-deps
       - run: npx playwright install
       - run: xvfb-run npx playwright test without-metamask.spec.ts
