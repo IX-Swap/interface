@@ -28,5 +28,4 @@ jobs:
           registry-url: https://registry.npmjs.org
       - run: npx playwright install-deps
       - run: npx playwright install
-      - run: yarn
       - run: yarn integration-test
