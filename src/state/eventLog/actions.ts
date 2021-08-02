@@ -2,21 +2,30 @@ import { ActionCreatorWithoutPayload, ActionCreatorWithPayload, createAction } f
 import { ActionHistoryStatus, ActionTypes } from 'components/Vault/enum'
 import { PaginateResponse, PaginationDetails } from 'types/pagination'
 
-export interface LogItem {
-  id: number
-  type: ActionTypes
-  userId: number
-  params?: {
-    token: string
-    amount: number
-    status: ActionHistoryStatus
-    fromAddress?: string
-    toAddress?: string
-  }
-  custodianType?: string
+export interface TimeStamps {
   createdAt: string
   updatedAt: string | null
   deletedAt: string | null
+}
+export interface LogItem extends TimeStamps {
+  id: number
+  type: ActionTypes
+  userId?: number | null
+  params?: {
+    token: string
+    tokenId: number
+    status: ActionHistoryStatus
+  }
+  amount?: string | null
+  tokenId?: number
+  status?: ActionHistoryStatus
+  custodianAccountId?: number | null
+  custodianType?: string
+  deadline?: string
+  depositAddress?: string | null
+  ethTransactionId?: number | null
+  fromAddress?: string | null
+  requestId?: null | number
 }
 
 export const setEventLog = createAction<{ eventLog: Array<LogItem> }>('eventLog/setLog')

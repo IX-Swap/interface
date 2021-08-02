@@ -4,7 +4,7 @@ import Row, { RowStart } from 'components/Row'
 import dayjs from 'dayjs'
 import { useWindowSize } from 'hooks/useWindowSize'
 import { IconWrapper } from 'pages/SecTokenDetails/styleds'
-import React, { useCallback } from 'react'
+import React, { useCallback, useMemo } from 'react'
 import { useDispatch } from 'react-redux'
 import { Box } from 'rebass'
 import { AppDispatch } from 'state'
@@ -22,10 +22,12 @@ interface Props {
 }
 
 export const TransactionHistoryRow = ({ row, key, icon }: Props) => {
-  const status = (row?.params?.status as ActionHistoryStatus) ?? ActionHistoryStatus.PENDING
+  const status = row?.status ?? row?.params?.status ?? ActionHistoryStatus.PENDING
   const statusText = getActionStatusText(row.type, status)
   const { width } = useWindowSize()
-
+  const amount = useMemo(() => {
+    return row.amount
+  }, [row])
   const dateFormat = width && width <= MEDIA_WIDTHS.upToLarge ? 'MMM D, YYYY' : 'MMM D, YYYY HH:mm'
   const formattedDate = dayjs(row.createdAt).format(dateFormat)
   const textColor = getStatusColor(row.type, status)
@@ -41,9 +43,9 @@ export const TransactionHistoryRow = ({ row, key, icon }: Props) => {
       <td>
         <TYPE.subHeader1 color={'text1'}>{ActionTypeText[row.type]}</TYPE.subHeader1>
       </td>
-      {row?.params?.amount && (
+      {amount && (
         <td>
-          <TYPE.subHeader1 color={'text2'}>{row?.params?.amount}</TYPE.subHeader1>
+          <TYPE.subHeader1 color={'text2'}>{amount}</TYPE.subHeader1>
         </td>
       )}
       <td>

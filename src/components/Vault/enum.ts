@@ -19,6 +19,10 @@ export enum ActionHistoryStatus {
   APPROVED = 'approved',
   REJECTED = 'rejected',
   SETTLED = 'settled',
+  FAILED = 'failed',
+  REQUESTED = 'requested',
+  CANCELLED = 'cancelled',
+  PROCESSING = 'processing',
 }
 export enum ActionTypes {
   WITHDRAW = 'withdraw',
@@ -48,17 +52,27 @@ export const isSuccessTransaction = (action: ActionTypes, status: ActionHistoryS
   }
   return status === ActionHistoryStatus.APPROVED
 }
+
 export const ActionHistoryStatusText = {
   [ActionHistoryStatus.PENDING]: t`In progress...`,
   [ActionHistoryStatus.APPROVED]: t`Approved`,
   [ActionHistoryStatus.SETTLED]: t`Approved`,
   [ActionHistoryStatus.REJECTED]: t`Rejected`,
+  [ActionHistoryStatus.FAILED]: t`Failed`,
+  [ActionHistoryStatus.REQUESTED]: t`Requested`,
+  [ActionHistoryStatus.CANCELLED]: t`Cancelled`,
+  [ActionHistoryStatus.PROCESSING]: t`Processing`,
 }
+
 export const TransactionHistoryStatusText = {
   [ActionHistoryStatus.PENDING]: t`Pending...`,
   [ActionHistoryStatus.APPROVED]: t`Completed`,
   [ActionHistoryStatus.SETTLED]: t`Completed`,
   [ActionHistoryStatus.REJECTED]: t`Declined`,
+  [ActionHistoryStatus.FAILED]: t`Failed`,
+  [ActionHistoryStatus.REQUESTED]: t`Requested`,
+  [ActionHistoryStatus.CANCELLED]: t`Cancelled`,
+  [ActionHistoryStatus.PROCESSING]: t`Processing`,
 }
 
 export const StatusColors = {
@@ -66,6 +80,10 @@ export const StatusColors = {
   [ActionHistoryStatus.APPROVED]: 'green1',
   [ActionHistoryStatus.SETTLED]: 'green1',
   [ActionHistoryStatus.REJECTED]: 'error',
+  [ActionHistoryStatus.FAILED]: 'error',
+  [ActionHistoryStatus.REQUESTED]: t`text2`,
+  [ActionHistoryStatus.CANCELLED]: t`error`,
+  [ActionHistoryStatus.PROCESSING]: t`text2`,
 }
 
 export const ActionTypeText = {
@@ -86,6 +104,7 @@ export const getActionStatusText = (action: ActionTypes, status: ActionHistorySt
     return TransactionHistoryStatusText[ActionHistoryStatus.PENDING]
   }
   if (isAction(action)) {
+    console.log({ isAction: isAction(action) })
     return ActionHistoryStatusText[status]
   }
   return TransactionHistoryStatusText[status]
