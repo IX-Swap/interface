@@ -49,7 +49,7 @@ export default function SecurityCard({ currency, style }: { currency: Currency; 
   // TODO: adjust status when you will have the data
   return (
     <Row style={style}>
-      <Row style={{ paddingBottom: '10px' }}>
+      <Row style={{ paddingBottom: '10px', paddingRight: '10px' }}>
         <StyledPositionCard as={Link} to={routes.securityTokens(currency)} data-testid="custodian-sec-token-info">
           <RowBetween style={{ flexWrap: 'wrap' }}>
             <RowStart style={{ width: 'fit-content' }}>

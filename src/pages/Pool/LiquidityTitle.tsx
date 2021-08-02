@@ -16,7 +16,6 @@ const Title = styled.span`
   font-weight: 600;
   font-size: 22px;
   line-height: 33px;
-  text-transform: uppercase;
 `
 export const LiquidityTitle = () => {
   return (

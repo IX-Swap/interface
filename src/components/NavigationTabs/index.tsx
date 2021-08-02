@@ -86,7 +86,7 @@ export function ManageTabs({ onClick, onDismiss }: { onClick: () => void; onDism
             <Box marginRight={'0.5rem'} style={{ cursor: 'pointer' }} onClick={onClick}>
               <ArrowLeft />
             </Box>
-            <Trans>Manage Tokens</Trans>
+            <Trans>Manage tokens</Trans>
           </Box>
 
           <CloseIcon onClick={onDismiss} />
