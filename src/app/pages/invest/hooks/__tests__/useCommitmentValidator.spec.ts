@@ -132,4 +132,26 @@ describe('useCommitmentValidator', () => {
       )
     })
   })
+
+  it('returns validates with minimumUnits as 1 when minimumInvestment is null', async () => {
+    jest.spyOn(balancesHook, 'useBalancesByAssetId').mockReturnValue(
+      generateInfiniteQueryResult({
+        map: { [asset._id]: balance }
+      })
+    )
+    await act(async () => {
+      const { result } = renderHookWithForm(
+        () =>
+          useCommitmentValidator({ minInvestment: null, assetId: asset._id }),
+        { totalAmount: 1000, numberOfUnits: 0 }
+      )
+
+      await waitFor(
+        () => {
+          expect(result.current.isValid).toBe(false)
+        },
+        { timeout: 1000 }
+      )
+    })
+  })
 })

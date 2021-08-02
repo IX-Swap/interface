@@ -23,7 +23,7 @@ export const CommitmentFormFields = (props: CommitmentFormFieldsProps) => {
   const { control } = useFormContext<CommitmentFormValues>()
   const handleNumOfUnitsChange = (value: number, path: string) => {
     const { pricePerUnit } = control.getValues()
-    const nextValue = value * pricePerUnit
+    const nextValue = value * (pricePerUnit ?? 1)
 
     control.setValue(path, value, { shouldValidate: true })
     control.setValue('totalAmount', nextValue)

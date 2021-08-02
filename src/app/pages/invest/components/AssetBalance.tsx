@@ -18,7 +18,7 @@ export const AssetBalance = (props: AssetBalanceProps) => {
 
   return (
     <LabelledValue
-      label='Account Balance'
+      label='Available Balance'
       value={formatMoney(
         data.map[assetId]?.available ?? 0,
         data.map[assetId]?.symbol ?? symbol
