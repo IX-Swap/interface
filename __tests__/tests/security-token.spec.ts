@@ -33,11 +33,11 @@ test.afterEach(async ({ page }, testInfo) => {
 
 test.describe('Functionality testing', () => {
   test.beforeEach(async ({ context, page, metaMask }) => {
-    await metaMask.fullConnection(context, page, metamask.SECRET_WORDS, metamask3.contractAddresses.eth)
+    await metaMask.fullConnection(context, page, metamask.SECRET_WORDS, metamask.contractAddresses.eth)
     await navigate(ixswap.URL, page)
     await click(securityToken.button.OPEN_SECURITY, page)
   })
-  test.only('Create deposit', async ({ page, context }) => {
+  test('Create deposit', async ({ page, context }) => {
     await click(securityToken.button.TOKEN_ROW, page)
     //accreditation
     const metamaskPage = await waitNewPage(page, context, securityToken.button.ACCREDITATION)
