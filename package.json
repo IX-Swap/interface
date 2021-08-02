@@ -162,6 +162,7 @@
   "license": "GPL-3.0-or-later",
   "dependencies": {
     "async-wait-until": "^2.0.7",
+    "concurrently": "^6.2.0",
     "eth-provider": "^0.7.0",
     "playwright": "^1.13.0",
     "truffle-privatekey-provider": "^1.2.0",
