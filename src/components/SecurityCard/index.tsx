@@ -62,7 +62,7 @@ export default function SecurityCard({ currency, style }: { currency: Currency; 
             </RowStart>
             {status && (
               <Box style={{ width: 'fit-content' }}>
-                {status === STOStatus.PASSED && <TYPE.body4>{formatCurrencyAmount(balance, 10)}</TYPE.body4>}
+                {status === STOStatus.PASSED && <TYPE.body4>{formatCurrencyAmount(balance, 12)}</TYPE.body4>}
                 {status !== STOStatus.PASSED && <Status status={status} />}
               </Box>
             )}
