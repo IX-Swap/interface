@@ -26,7 +26,9 @@ jobs:
         with:
           node-version: 14
           registry-url: https://registry.npmjs.org
-      - run: yarn install
+      - run: yarn
       - run: npx playwright install-deps
       - run: npx playwright install
-      - run: yarn integration-test
+      - run: yarn build
+      - run: yarn start
+      - run: xvfb-run npx playwright test without-metamask.spec.ts
