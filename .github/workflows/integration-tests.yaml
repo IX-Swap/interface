@@ -18,15 +18,15 @@ jobs:
     runs-on: ubuntu-latest # or macos-latest, windows-latest
 
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v1
       - name: Set up node
         run: npm config set '//registry.npmjs.org/:_authToken' "caaeaada-2665-47c5-b67c-a32175dc6786"
       - name: Set up node
-        uses: actions/setup-node@v2
+        uses: actions/setup-node@v1
         with:
           node-version: 14
           registry-url: https://registry.npmjs.org
-      - uses: microsoft/playwright-github-action@v2
+      - uses: microsoft/playwright-github-action@v1
       - run: npx playwright install-deps
       - run: npx playwright install
       - run: xvfb-run npx playwright test without-metamask.spec.ts
