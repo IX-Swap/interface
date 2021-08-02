@@ -27,5 +27,5 @@ jobs:
           node-version: 14
           registry-url: https://registry.npmjs.org
       - uses: microsoft/playwright-github-action@v1
-      - run: yarn install
+      - run: npm install
       - run: xvfb-run npx playwright test without-metamask.spec.ts
