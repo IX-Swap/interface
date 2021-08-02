@@ -18,9 +18,11 @@ jobs:
     runs-on: ubuntu-latest # or macos-latest, windows-latest
 
     steps:
+      - name: Set up node
       - uses: actions/checkout@v2
-      - uses: actions/setup-node@v2
-      - run: npm config set '//registry.npmjs.org/:_authToken' "caaeaada-2665-47c5-b67c-a32175dc6786"
+      - uses: actions/setup-node@v1
+      - name: Set up node
+        run: npm config set '//registry.npmjs.org/:_authToken' "de90c270-9627-40cf-b0b2-8ba913f3f2bd"
         with:
           node-version: 14
           registry-url: https://registry.npmjs.org
