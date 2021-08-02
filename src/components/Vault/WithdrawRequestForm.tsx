@@ -77,7 +77,13 @@ export const WithdrawRequestForm = ({ currency, changeModal }: Props) => {
               <Trans>Amount</Trans>
             </TYPE.body1>
           </Row>
-          <AmountInput currency={currency} value={amount ?? ''} onUserInput={onTypeAmount} />
+          <AmountInput
+            amount={parsedAmount}
+            showMax={true}
+            currency={currency}
+            value={amount ?? ''}
+            onUserInput={onTypeAmount}
+          />
         </Column>
         <Column style={{ gap: '11px' }}>
           <Row>
