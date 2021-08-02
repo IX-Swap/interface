@@ -62,7 +62,10 @@ export const authorizerQueryKeys = {
   getSecurityWithdrawals: 'authorizer-security-withdrawals',
   getIndividualIdentityList: 'authorizer-individual-identitiesList',
   getDSOList: 'authorizer-dso-list',
-  getWithdrawalAddresses: 'authorizer-withdrawal-addresses-list'
+  getWithdrawalAddresses: 'authorizer-withdrawal-addresses-list',
+  getVirtualAccounts: 'authorizer-virtual-accounts',
+  getVirtualAccountById: (id: string) =>
+    generateQueryKey('authorizer-virtual-account', id)
 }
 
 export const homeQueryKeys = {

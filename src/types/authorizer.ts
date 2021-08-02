@@ -35,6 +35,7 @@ export interface Authorizable {
   authorizationDocuments?: DataroomFile[]
   authorization?: AuthorizationInfo
   level?: string
+  assignedAt?: string
 }
 
 export interface AuthorizableWithIdentity extends Authorizable {

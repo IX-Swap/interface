@@ -34,7 +34,8 @@ export enum AppFeature {
   // backend
   Deposits = 'deposits',
   Withdrawals = 'withdrawals',
-  Users = 'users'
+  Users = 'users',
+  VirtualAccounts = 'virtual-accounts'
 }
 
 export enum NotificationFilter {
@@ -61,5 +62,6 @@ export enum AuthorizerCategory {
   Commitments = 'commitments',
   Offerings = 'offerings',
   WithdrawalAddresses = 'withdrawal-addresses',
-  Listings = 'listings'
+  Listings = 'listings',
+  VirtualAccounts = 'virtual-accounts'
 }
