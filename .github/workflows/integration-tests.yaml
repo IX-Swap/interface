@@ -3,7 +3,7 @@ name: Integration Tests
 on:
   push:
     branches:
-      - metamask-tests
+      - expert-mode-tests
       - main
       - development
       - ci-update
@@ -19,7 +19,7 @@ jobs:
 
     steps:
       - uses: actions/checkout@v2
-      - name: npm login
+      - name: Npm login
         run: echo "//registry.npmjs.org/:_authToken=${{ secrets.NPM_TOKEN }}" > .npmrc
       - name: Set up node
         uses: actions/setup-node@v2
