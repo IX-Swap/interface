@@ -64,7 +64,7 @@ export const DepositRequestForm = ({ currency, setModalView }: Props) => {
               <Trans>Amount</Trans>
             </TYPE.body1>
           </Row>
-          <AmountInput currency={currency} value={amount ?? ''} onUserInput={onTypeAmount} />
+          <AmountInput currency={currency} value={amount ?? ''} onUserInput={onTypeAmount} amount={parsedAmount} />
         </Column>
         <Column style={{ gap: '11px' }}>
           <Row>

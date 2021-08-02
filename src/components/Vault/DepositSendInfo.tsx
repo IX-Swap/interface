@@ -50,7 +50,7 @@ export const DepositSendInfo = ({ onClose }: Props) => {
             <Trans>Send {currency?.symbol} here</Trans>
           </TYPE.body1>
         </Row>
-        <RowBetween style={{ marginTop: '4px', flexWrap: 'wrap' }} onClick={() => setCopied(sender)}>
+        <RowBetween style={{ marginTop: '4px', flexWrap: 'wrap' }} onClick={() => setCopied(receiver)}>
           <TYPE.body2>{shortenAddress(receiver)}</TYPE.body2>
           {isCopied ? (
             <Trans>Copied</Trans>

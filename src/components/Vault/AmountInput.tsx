@@ -1,4 +1,5 @@
-import { Currency } from '@ixswap1/sdk-core'
+import { Currency, CurrencyAmount } from '@ixswap1/sdk-core'
+import { MaxButton } from 'components/CurrencyInputPanel/MaxButton'
 import { RowFixed } from 'components/Row'
 import React from 'react'
 import styled from 'styled-components'
@@ -45,9 +46,11 @@ const Aligner = styled.span`
 interface Props {
   currency?: Currency
   value: string
+  amount?: CurrencyAmount<Currency>
+  showMax?: boolean
   onUserInput: (typedValue: string) => void
 }
-export const AmountInput = ({ currency, value, onUserInput, ...rest }: Props) => {
+export const AmountInput = ({ currency, value, amount, onUserInput, showMax = false, ...rest }: Props) => {
   return (
     <InputPanel id={'amount-input'} {...rest}>
       <Container>
@@ -62,6 +65,7 @@ export const AmountInput = ({ currency, value, onUserInput, ...rest }: Props) =>
                 }}
               />
             </>
+            {showMax && <MaxButton currency={currency} onInput={onUserInput} amount={amount} />}
             <RowFixed>
               <CurrencyLogo style={{ marginRight: '0.5rem' }} currency={currency} size={'24px'} />
               <StyledTokenName className="token-symbol-container" active={Boolean(currency && currency.symbol)}>
