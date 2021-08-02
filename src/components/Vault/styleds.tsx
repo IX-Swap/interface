@@ -2,7 +2,7 @@ import { ReactComponent as Attention } from 'assets/images/attention.svg'
 import { ReactComponent as Passed } from 'assets/images/check-success.svg'
 import Column from 'components/Column'
 import { LoaderThin } from 'components/Loader/LoaderThin'
-import Row, { RowBetween, RowCenter, RowEnd, RowFixed } from 'components/Row'
+import { RowBetween, RowCenter } from 'components/Row'
 import React from 'react'
 import styled from 'styled-components'
 import { gradientBorder, TYPE } from 'theme'
@@ -29,6 +29,11 @@ export const NotSubmittedTitle = styled.span`
 `
 export const ExistingTitle = styled.span`
   text-align: left;
+  white-space: pre-wrap; /* CSS3 */
+  white-space: -moz-pre-wrap; /* Firefox */
+  white-space: -pre-wrap; /* Opera <7 */
+  white-space: -o-pre-wrap; /* Opera 7 */
+  word-wrap: break-word;
 `
 export const NotSubmittedDescription = styled.span`
   text-align: center;
@@ -51,81 +56,29 @@ export const StatusTitle = styled(TYPE.titleSmall)`
 
 export const HistoryWrapper = styled.div``
 
-export const RowAndDetailsWrapper = styled.div`
-  gap: 16px;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  position: relative;
-  height: 100%;
-  width: 100%;
-  background: transparent;
-`
-export const HistoryRowWraper = styled(RowBetween)`
-  display: flex;
-  gap: 15px;
+export const HistoryRowWraper = styled.tr`
+  height: 30px;
   cursor: pointer;
-  :hover {
-    border-radius: 10px;
+  :hover,
+  :active {
     padding: 1px;
     background: ${({ theme }) => theme.bgG2};
   }
 `
-export const TransactionRowWrapper = styled.div`
-  height: fit-content;
-  align-items: center;
-`
-export const HistoryDetailsWrapper = styled(RowEnd)`
-  height: 50px;
-  justify-content: center;
-  align-items: flex-end;
-  display: flex;
-  flex-direction: column;
+
+export const HistoryHeaderWrapper = styled.thead`
+  text-align: left;
+  height: 30px;
 `
 
-export const HistoryRowElement = styled.div`
-  gap: 10px;
+export const StyledTableCell = styled.td`
+  display: flex;
 `
-export const ActionNameColumn = styled(Column)`
-  width: 200px;
-`
-export const TransactionNameColumn = styled(Column)`
-  width: 80px;
-`
-export const NameAndSumColumn = styled(RowBetween)`
-  width: 200px;
-`
-export const SumColumn = styled(Column)`
-  margin-left: 'auto';
-  width: 160px;
-  margin-right: 0;
-`
-export const StatusColumn = styled(Row)`
-  width: 120px;
-  ${({ theme }) => theme.mediaWidth.upToMedium`
-    display: none;
-  `};
-`
+
 export const IconColumn = styled.span`
   width: fit-content;
 `
-export const DateColumn = styled(RowFixed)`
-  width: fit-content;
-  align-items: center;
-`
-export const DateDesktop = styled.span`
-  display: block;
-  ${({ theme }) => theme.mediaWidth.upToMedium`
-    display: none;
-  `};
-`
-export const DateMobile = styled.span`
-  display: none;
-  ${({ theme }) => theme.mediaWidth.upToMedium`
-    display: block;
-  `};
-`
-export const ChevronColumn = styled(Column)``
+
 export const Break = styled(Column)`
   padding-top: 35px;
   padding-bottom: 32px;

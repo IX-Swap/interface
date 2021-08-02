@@ -16,8 +16,8 @@ export const test = base.extend({
       timeout: 90000,
       viewport: { width: 1720, height: 880 },
       httpCredentials: {
-        username: '',
-        password: '',
+        username: 'ixswapio',
+        password: '2theM0on',
       },
     })
     await use(context)

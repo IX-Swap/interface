@@ -1,5 +1,4 @@
 import { test as base } from '../lib/fixture'
-import { launchPersistent } from '../lib/launch-settings.ts'
 import { expect } from '@playwright/test'
 import { ixswap, metamask, metamask2 } from '../lib/helpers/credentials'
 import { click, waitForText, typeText, waitNewPage, makeScreenOnError, navigate } from '../lib/helpers/helpers'

@@ -18,3 +18,13 @@ export const depositSecTokens: Readonly<{
   fulfilled: createAction('deposit/depositSecTokens/fulfilled'),
   rejected: createAction('deposit/depositSecTokens/rejected'),
 }
+
+export const cancelDeposit: Readonly<{
+  pending: ActionCreatorWithoutPayload
+  fulfilled: ActionCreatorWithoutPayload
+  rejected: ActionCreatorWithPayload<{ errorMessage: string }>
+}> = {
+  pending: createAction('deposit/cancelDeposit/pending'),
+  fulfilled: createAction('deposit/cancelDeposit/fulfilled'),
+  rejected: createAction('deposit/cancelDeposit/rejected'),
+}

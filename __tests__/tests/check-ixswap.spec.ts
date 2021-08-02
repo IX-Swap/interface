@@ -90,7 +90,12 @@ test.describe('Check pool functions', () => {
   })
 })
 
-test.describe.only('Check swap functions', () => {
+test.describe('Check swap functions', () => {
+  test.afterEach(async ({ page }, testInfo) => {
+    if (testInfo.status === 'failed') {
+      await makeScreenOnError(testInfo.title, 'error', page)
+    }
+  })
   test('Check that the ETH can be exchanged for DAI', async ({ page, context, metaMask, ixSwap }) => {
     await ixSwap.setTypeOfCurrency()
     await ixSwap.currencyExchange(amounts.base)
@@ -114,7 +119,7 @@ test.describe.only('Check swap functions', () => {
     await screenshotMatching(testInfo.title, expect, page)
   })
 
-  test.only('Check token search on the Swap page', async ({ page }) => {
+  test('Check token search on the Swap page', async ({ page }) => {
     await click(swap.button.OUT_CURRENCY, page)
     await typeText(swap.field.SEARCH_INPUT, 'KEKWU', page)
     const tokenTitle = await page.isVisible('[title="KEKWU"]')

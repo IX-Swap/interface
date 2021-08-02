@@ -43,5 +43,13 @@ module.exports = {
     field: { TOKEN_AMOUNT: '[class*="token-amount-input"]' },
   },
   settings: { button: { OPEN_SETTINGS: '[id="open-settings-dialog-button"]' } },
-  securityToken: { button: { OPEN_SECURITY: '[id="stake-nav-link"]' } },
+  securityToken: {
+    button: {
+      OPEN_SECURITY: '[id="stake-nav-link"]',
+      TOKEN_ROW: getTestAttribute('custodian-sec-token-info'),
+      ACCREDITATION: getTestAttribute('pass-kyc-and-accreditation'),
+      DEPOSIT: getTestAttribute('deposit'),
+      CREATE_DEPOSIT: 'text="Create deposit request"',
+    },
+  },
 }

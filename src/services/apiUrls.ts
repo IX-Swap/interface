@@ -6,12 +6,13 @@ export const metamask = {
 export const tokens = {
   fromUser: `/token/list`,
   all: `/token/list/all`,
-  withdraw: (tokenId: number) => `/token/allowance-digest/${tokenId}`,
   accreditation: (tokenId: number) => `token/accreditation/${tokenId}`,
 }
 
 export const custody = {
   deposit: '/custody/deposit/request',
+  withdraw: `/custody/withdraw/request`,
+  cancelDeposit: (requestId: number) => `/custody/deposit/cancel/${requestId}`,
 }
 
 export const eventLog = {
