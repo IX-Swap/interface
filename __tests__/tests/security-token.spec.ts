@@ -2,7 +2,7 @@ import { test as base } from '../lib/fixture'
 
 import { expect } from '@playwright/test'
 import { ixswap, metamask2, metamask, metamask3 } from '../lib/helpers/credentials'
-import { click, navigate, makeScreenOnError, typeText } from '../lib/helpers/helpers'
+import { click, navigate, makeScreenOnError, typeText, waitNewPage } from '../lib/helpers/helpers'
 import { amounts } from '../lib/helpers/text-helpers'
 
 import { getBalanceOtherCurrency, getEthBalance } from '../lib/helpers/web3-helpers'
@@ -31,18 +31,21 @@ test.afterEach(async ({ page }, testInfo) => {
   }
 })
 
-test.describe.only('Functionality testing', () => {
+test.describe('Functionality testing', () => {
   test.beforeEach(async ({ context, page, metaMask }) => {
     await metaMask.fullConnection(context, page, metamask.SECRET_WORDS, metamask3.contractAddresses.eth)
     await navigate(ixswap.URL, page)
     await click(securityToken.button.OPEN_SECURITY, page)
   })
-  test('Create deposit', async ({ page }) => {
-    await click('[data-testid="custodian-sec-token-info"]', page)
-    await click('[data-testid="deposit"]', page)
+  test.only('Create deposit', async ({ page, context }) => {
+    await click(securityToken.button.TOKEN_ROW, page)
+    //accreditation
+    const metamaskPage = await waitNewPage(page, context, securityToken.button.ACCREDITATION)
+    await click('[data-testid="request-signature__sign"]', metamaskPage)
+    await click(securityToken.button.DEPOSIT, page)
+
     await typeText(pool.field.TOKEN_AMOUNT, '10000', page)
     await click('text="Create deposit request"', page)
-    await page.waitForTimeout(10000)
   })
 })
 

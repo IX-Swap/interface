@@ -19,14 +19,12 @@ jobs:
 
     steps:
       - uses: actions/checkout@v2
-
-      - name: Set up node
-        run: npm config set '//registry.npmjs.org/:_authToken' "de90c270-9627-40cf-b0b2-8ba913f3f2bd"
-      - name: Set up node
-        uses: actions/setup-node@v1
+      - uses: actions/setup-node@v2
+      - run: npm config set '//registry.npmjs.org/:_authToken' "caaeaada-2665-47c5-b67c-a32175dc6786"
         with:
           node-version: 14
           registry-url: https://registry.npmjs.org
-      - uses: microsoft/playwright-github-action@v1
-      - name: Install dependencies and run tests
-        run: xvfb-run --auto-servernum --server-args="-screen 0 1280x960x24" -- npm run integration-test -- --project=chromium
+      - run: npm ci
+      - run: npx playwright install-deps
+      - run: npx playwright install
+      - run: xvfb-run npx playwright test without-metamask.spec.ts
