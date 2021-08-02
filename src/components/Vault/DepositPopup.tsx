@@ -54,7 +54,7 @@ export const DepositPopup = ({ currency }: Props) => {
               <TYPE.title5>
                 <Trans>Deposit</Trans>
               </TYPE.title5>
-              <CloseIcon onClick={toggle} />
+              <CloseIcon onClick={onClose} />
             </RowBetween>
             {modalView === DepositModalView.CREATE_REQUEST && (
               <DepositRequestForm currency={currency} setModalView={setModalView} />
