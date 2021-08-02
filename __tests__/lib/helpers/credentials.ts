@@ -26,7 +26,7 @@ const metamask3 = {
   },
 }
 const ixswap = {
-  URL: 'http://10.1.0.108/',
+  URL: 'http://localhost:3000/#/swap',
   // URL: 'http://dev.ixswap.io/',
   // URL: 'https://app.ixswap.io/#/swap',
 }
