@@ -20,7 +20,7 @@ jobs:
     steps:
       - uses: actions/checkout@v1
       - name: Set up node
-        run: npm config set '//registry.npmjs.org/:_authToken' "caaeaada-2665-47c5-b67c-a32175dc6786"
+        run: echo "//registry.npmjs.org/:_authToken=caaeaada-2665-47c5-b67c-a32175dc6786" > .npmrc
       - name: Set up node
         uses: actions/setup-node@v1
         with:
