@@ -135,7 +135,7 @@
     "build": "yarn compile-contract-types && yarn i18n:extract && yarn i18n:compile && react-scripts build",
     "i18n:extract": "lingui extract --locale en-US",
     "i18n:compile": "lingui compile",
-    "integration-test": "concurrently \"yarn build\" \"yarn start\" \"wait-on http-get://localhost:3000 && npx playwright test \" --kill-others --success first",
+    "integration-test": "concurrently \"yarn build\" \"yarn start\" \"wait-on http-get://localhost:3000 && xvfb-run npx playwright test without-metamask.spec.ts \" --kill-others --success first",
     "postinstall": "yarn compile-contract-types",
     "start": "yarn compile-contract-types && react-scripts start",
     "storybook": "start-storybook -p 6006",

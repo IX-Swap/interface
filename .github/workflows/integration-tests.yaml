@@ -29,5 +29,4 @@ jobs:
       - run: yarn install
       - run: npx playwright install-deps
       - run: npx playwright install
-      - run: yarn start
-      - run: xvfb-run npx playwright test without-metamask.spec.ts
+      - run: yarn integration-test
