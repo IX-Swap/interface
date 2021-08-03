@@ -5,6 +5,8 @@ import { Line } from 'components/Line'
 import { useActiveWeb3React } from 'hooks/web3'
 import React, { useMemo } from 'react'
 import { useDepositModalToggle } from 'state/application/hooks'
+import { useSecTokenId } from 'state/secTokens/hooks'
+import { usePassAccreditation } from 'state/user/hooks'
 import { TYPE } from 'theme'
 import { AccreditationStatus } from './AccreditationStatus'
 import { BalanceRow } from './BalanceRow'
@@ -19,6 +21,8 @@ export const ExistingVault = ({ currency, status }: Props) => {
   const symbolText = useMemo(() => currency?.symbol ?? '', [currency?.symbol])
   const { account, chainId, library } = useActiveWeb3React()
   const toggle = useDepositModalToggle()
+  const tokenId = useSecTokenId({ currencyId: (currency as any)?.address })
+  const passAccreditation = usePassAccreditation({ tokenId })
   const isApproved = status === VaultState.APPROVED
   return (
     <ExistingWrapper>
@@ -45,7 +49,7 @@ export const ExistingVault = ({ currency, status }: Props) => {
               data-testid="pass-accreditation"
               style={{ width: '400px' }}
               onClick={() => {
-                console.log(0)
+                passAccreditation()
               }}
             >
               <Trans>Pass Accreditation</Trans>

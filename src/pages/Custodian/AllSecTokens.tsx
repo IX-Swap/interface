@@ -1,14 +1,12 @@
 import { t, Trans } from '@lingui/macro'
-import { TopStraightBackgroundWrapper } from 'components/BottomHalfWrapper'
-import Column from 'components/Column'
+import Column, { AutoColumn } from 'components/Column'
 import { RowCenter } from 'components/Row'
-import { PaddedColumn, SearchInput } from 'components/SearchModal/styleds'
+import { SearchInput } from 'components/SearchModal/styleds'
 import { ListType, useCurrencySearch } from 'components/SearchModal/useCurrencySearch'
 import useTheme from 'hooks/useTheme'
 import React, { RefObject, useRef } from 'react'
 import AutoSizer from 'react-virtualized-auto-sizer'
 import { FixedSizeList } from 'react-window'
-import { Box } from 'rebass'
 import { TYPE } from 'theme'
 import SecTokensList from './SecTokensList'
 
@@ -21,23 +19,21 @@ export const AllSecTokens = () => {
   const theme = useTheme()
   return (
     <>
-      <PaddedColumn gap="16px">
+      <AutoColumn style={{ padding: '0 20px 30px 0' }}>
         <RowCenter>
-          <Box maxWidth="475px">
-            <SearchInput
-              type="text"
-              id="token-search-input"
-              placeholder={t`Search or paste address`}
-              autoComplete="off"
-              value={searchQuery}
-              ref={inputRef as RefObject<HTMLInputElement>}
-              onChange={handleInput}
-            />
-          </Box>
+          <SearchInput
+            type="text"
+            id="token-search-input"
+            placeholder={t`Search or paste address`}
+            autoComplete="off"
+            value={searchQuery}
+            ref={inputRef as RefObject<HTMLInputElement>}
+            onChange={handleInput}
+          />
         </RowCenter>
-      </PaddedColumn>
+      </AutoColumn>
 
-      <TopStraightBackgroundWrapper>
+      <div>
         {filteredSortedTokens?.length > 0 || filteredInactiveTokens?.length > 0 ? (
           <div style={{ flex: '1 1 auto', height: '400px' }}>
             <AutoSizer disableWidth>
@@ -51,7 +47,7 @@ export const AllSecTokens = () => {
             </TYPE.main>
           </Column>
         )}
-      </TopStraightBackgroundWrapper>
+      </div>
     </>
   )
 }

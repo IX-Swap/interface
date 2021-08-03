@@ -19,7 +19,7 @@ export const BalanceRow = ({ currency, account }: Props) => {
       <ExistingTitle>
         <TYPE.titleBig>
           <Trans>
-            {formatCurrencyAmount(currencyBalance, 4)} {currency?.symbol}
+            {formatCurrencyAmount(currencyBalance, 18)} {currency?.symbol}
           </Trans>
         </TYPE.titleBig>
       </ExistingTitle>

@@ -2,7 +2,7 @@ import { ActionTypes } from 'components/Vault/enum'
 import { useCallback } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import apiService from 'services/apiService'
-import { eventLog } from 'services/apiUrls'
+import { custody, eventLog } from 'services/apiUrls'
 import { AppDispatch, AppState } from 'state'
 import { getLog, setFilter } from './actions'
 
@@ -19,19 +19,19 @@ export const getEventLog = async ({
   page?: number
   filter?: ActionTypes
 }) => {
-  let filters = ''
-  if (tokenId) {
-    filters += `tokenId=${tokenId}`
-  }
-  if (filter) {
-    const filterText = filter === ActionTypes.ACCREDITATION ? `${filter},kyc` : filter
-    filters += `${tokenId ? '&' : ''}eventType=${filterText}`
-  }
-  if (page) {
-    filters += `${tokenId || filter ? '&' : ''}page=${page}`
-  }
-  const response = await apiService.get(`${eventLog.list}?${filters}`)
-  return response
+  return await apiService.get(eventLog.list({ tokenId, filter, page }))
+}
+
+export const getTransactionLog = async ({
+  page,
+  filter,
+  tokenId,
+}: {
+  tokenId?: number | null
+  page?: number
+  filter?: ActionTypes
+}) => {
+  return await apiService.get(custody.requests({ tokenId, filter, page }))
 }
 
 export function useGetEventCallback(): ({
@@ -49,10 +49,15 @@ export function useGetEventCallback(): ({
       dispatch(getLog.pending())
       try {
         const params = { page, tokenId, filter }
-        const response = await getEventLog(params)
+        let response
+        if (!filter || [ActionTypes.DEPOSIT, ActionTypes.WITHDRAW].includes(filter)) {
+          response = await getTransactionLog(params)
+        } else {
+          response = await getEventLog(params)
+        }
         dispatch(getLog.fulfilled({ response: response.data, params }))
       } catch (error) {
-        console.error(`Could not fetch event log`, error)
+        console.error(`Could not fetch event list`, error)
         dispatch(getLog.rejected({ errorMessage: error.message }))
       }
     },
