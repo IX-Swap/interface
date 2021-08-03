@@ -31,7 +31,7 @@ export const Market = () => {
     config !== undefined ? config.hasReadMasDisclosure : false
 
   useEffect(() => {
-    if (hasReadMasDisclosure) {
+    if (!hasReadMasDisclosure) {
       setIsDisclosureVisible(true)
     } else {
       setIsDisclosureVisible(false)
