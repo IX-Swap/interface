@@ -30,8 +30,7 @@ jobs:
       - run: npx playwright install
       - run: yarn
       - run: CI=false yarn build
-      - run: yarn start
-      - run: xvfb-run npx playwright test /__tests__  --workers=1
+      - run: yarn integration-tests
       - name: Download a single artifact
         uses: actions/download-artifact@v2
         with:
