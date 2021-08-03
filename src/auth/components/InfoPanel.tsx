@@ -13,7 +13,10 @@ export const InfoPanel = () => {
           <Info title='As an Investor' info={['Invest', 'Trade']} />
         </Grid>
         <Grid item>
-          <Info title='As an Issuer' info={['Raise Capital', 'Sell Assets']} />
+          <Info
+            title='As an Issuer'
+            info={['Raise Capital', 'Sell Assets', 'VCC Funds']}
+          />
         </Grid>
       </Grid>
     </Box>
