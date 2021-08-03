@@ -1,3 +1,5 @@
+const dotenv = require('dotenv')
+dotenv.config()
 const metamask = {
   SECRET_WORDS: 'prosper weasel indicate flock candy person there buyer direct repeat detail ahead',
   PASSWORD: 'i1iarydotat!!!111',

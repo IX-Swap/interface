@@ -17,8 +17,6 @@ import { amounts } from '../lib/helpers/text-helpers'
 import { getBalanceOtherCurrency, getEthBalance } from '../lib/helpers/web3-helpers'
 import { SwapIX } from '../lib/page-objects/ixswap-objects'
 import { Metamask } from '../lib/page-objects/metamask-objects'
-
-import { auth } from '../lib/selectors/metamask'
 import { swap, pool } from '../lib/selectors/ixswap'
 
 const test = base.extend<{ metaMask: Metamask; ixSwap: SwapIX }>({
@@ -74,8 +72,8 @@ test.describe('Check pool functions', () => {
     expect(Number(after)).toBeLessThan(Number(before))
   })
 
-  test.only('Check that the pool can be removed', async ({ page, context, metaMask, ixSwap }) => {
-    before = await getEthBalance()
+  test('Check that the pool can be removed', async ({ page, context, metaMask, ixSwap }) => {
+    const before = await getEthBalance()
     await ixSwap.removePool()
     const secondPage = await ixSwap.removePoolFull({ page, context })
     await metaMask.confirmOperation(secondPage)

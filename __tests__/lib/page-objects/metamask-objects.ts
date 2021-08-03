@@ -1,5 +1,4 @@
 import { click, typeText, getRequest, navigate, makeScreenOnError } from '../helpers/helpers'
-import { groups, notifications } from '../helpers/text-helpers'
 import { auth } from '../selectors/metamask'
 import { metamask, ixswap } from '../helpers/credentials'
 import { waitUntil } from 'async-wait-until'
