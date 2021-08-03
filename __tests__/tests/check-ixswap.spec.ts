@@ -74,8 +74,8 @@ test.describe('Check pool functions', () => {
     expect(Number(after)).toBeLessThan(Number(before))
   })
 
-  test('Check that the pool can be removed', async ({ page, context, metaMask, ixSwap }) => {
-    const before = await getEthBalance()
+  test.only('Check that the pool can be removed', async ({ page, context, metaMask, ixSwap }) => {
+    before = await getEthBalance()
     await ixSwap.removePool()
     const secondPage = await ixSwap.removePoolFull({ page, context })
     await metaMask.confirmOperation(secondPage)

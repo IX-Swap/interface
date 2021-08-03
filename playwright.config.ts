@@ -20,7 +20,7 @@ const config: PlaywrightTestConfig = {
         headless: false,
         viewport: { width: 1720, height: 880 },
         ignoreHTTPSErrors: true,
-        browserName: 'firefox',
+        browserName: 'chromium',
         screenshot: 'only-on-failure',
         video: 'retry-with-video',
       },

@@ -36,4 +36,4 @@ jobs:
       - name: Download a single artifact
         uses: actions/download-artifact@v2
         with:
-          name: ./test-results
+          name: ./screen-test-failed
