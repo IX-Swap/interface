@@ -29,7 +29,6 @@ jobs:
       - run: npx playwright install-deps
       - run: npx playwright install
       - run: yarn
-      - run: yarn build
       - run: yarn start
       - run: xvfb-run npx playwright test /__tests__  --workers=1
       - name: Download a single artifact

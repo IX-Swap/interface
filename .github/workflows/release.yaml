@@ -74,7 +74,7 @@ jobs:
 
       - name: Install dep's & build
         run: |
-          export CI=true   && \
+          export CI=false   && \
           yarn install --frozen-lockfile  &&\
           npm ls babel-loader
           yarn run build
