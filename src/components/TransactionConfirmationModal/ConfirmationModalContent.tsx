@@ -37,7 +37,7 @@ export function ConfirmationModalContent({
 }) {
   const defaultTitle = () => (
     <TitleRow>
-      <Text fontWeight={600} fontSize={22} lineHeight={'33px'} style={{ textTransform: 'uppercase' }}>
+      <Text fontWeight={600} fontSize={22} lineHeight={'33px'}>
         {title}
       </Text>
       <CloseIcon onClick={onDismiss} />

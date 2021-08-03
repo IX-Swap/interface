@@ -1,6 +1,9 @@
 import dayjs from 'dayjs'
 import utc from 'dayjs/plugin/utc'
+import duration from 'dayjs/plugin/duration'
+
 dayjs.extend(utc)
+dayjs.extend(duration)
 
 export enum timePeriods {
   '1 year' = 31536000,
@@ -21,4 +24,10 @@ export const getTokenExpiration = (time: keyof typeof timePeriods) => {
 export const shouldRenewToken = (time: number) => {
   const currentUTCTime = dayjs.utc().unix().valueOf()
   return currentUTCTime >= time
+}
+
+export const durationInHours = (deadline?: null | string) => {
+  const currentTime = dayjs()
+  const deadlineTime = dayjs(deadline ?? '')
+  return deadline && deadlineTime.isAfter(currentTime) ? deadlineTime.diff(currentTime, 'h') : null
 }

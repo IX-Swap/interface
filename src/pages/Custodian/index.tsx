@@ -9,10 +9,6 @@ import { useAuthState } from 'state/auth/hooks'
 import { AllSecTokens } from './AllSecTokens'
 import { MySecurities } from './MySecurities'
 
-const bodyProps = {
-  padding: '0',
-  paddingXS: '0',
-}
 export default function Custodian() {
   const { token } = useAuthState()
   const { account } = useActiveWeb3React()
@@ -20,8 +16,8 @@ export default function Custodian() {
   const [showAllSecTokens, setShowAllSecTokens] = useState<boolean>(!isLoggedIn)
   return (
     <>
-      <AppBody {...bodyProps}>
-        <ColumnCenter style={{ padding: '26px 37px' }}>
+      <AppBody>
+        <ColumnCenter style={{ padding: '26px 0' }}>
           <CustodianTabs />
           {isLoggedIn && (
             <AutoColumn style={{ paddingBottom: 0 }}>

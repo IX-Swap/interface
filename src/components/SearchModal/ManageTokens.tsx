@@ -73,9 +73,14 @@ export default function ManageTokens({
               <TYPE.main1>{token.symbol}</TYPE.main1>
             </ExternalLink>
           </RowFixed>
-          <RowFixed style={{ gap: '8px', paddingRight: '1rem' }}>
+          <RowFixed style={{ gap: '8px', paddingRight: '1rem', justifyContent: 'center', cursor: 'pointer' }}>
             <DeleteIcon onClick={() => removeToken(chainId, token.address)} />
-            <ExternalIcon href={getExplorerLink(chainId, token.address, ExplorerDataType.ADDRESS)} />
+            <ExternalLink
+              href={getExplorerLink(chainId, token.address, ExplorerDataType.ADDRESS)}
+              style={{ display: 'flex' }}
+            >
+              <ExternalIcon />
+            </ExternalLink>
           </RowFixed>
         </RowBetween>
       ))

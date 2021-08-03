@@ -19,6 +19,7 @@ export const PaginationContainer = styled.div`
         color: ${({ theme }) => theme.text2};
         :hover {
           text-decoration: underline;
+          cursor: pointer;
         }
       }
       &.selected {
