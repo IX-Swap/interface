@@ -14,7 +14,7 @@ export const AllSecTokens = () => {
   const listRef = useRef<FixedSizeList>()
   const { searchQuery, inputRef, handleInput, filteredSortedTokens, filteredInactiveTokens } = useCurrencySearch({
     listRef,
-    list: ListType.ALL,
+    list: ListType.OTHER,
   })
   const theme = useTheme()
   return (
