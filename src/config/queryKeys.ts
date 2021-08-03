@@ -197,3 +197,7 @@ export const exchangeListingsQueryKeys = {
   getListingById: (listingId: string, issuerId: string) =>
     generateQueryKey('listing', listingId, issuerId)
 }
+
+export const resourcesQueryKeys = {
+  getSiteConfig: () => 'site-config'
+}
