@@ -1,12 +1,13 @@
-import React, { memo, useCallback, useEffect, useMemo, useRef, useState } from 'react'
 import { t, Trans } from '@lingui/macro'
 import { TokenList } from '@uniswap/token-lists'
-import Card from 'components/Card'
+import { Line } from 'components/Line'
 import Popover from 'components/Popover'
 import Toggle from 'components/Toggle'
 import { UNSUPPORTED_LIST_URLS } from 'constants/lists'
+import React, { memo, useCallback, useEffect, useMemo, useRef, useState } from 'react'
 import { CheckCircle } from 'react-feather'
 import ReactGA from 'react-ga'
+import { Box } from 'rebass'
 import { useAppDispatch, useAppSelector } from 'state/hooks'
 import styled from 'styled-components/macro'
 import { ReactComponent as Settings } from '../../assets/images/settings-full.svg'
@@ -19,10 +20,10 @@ import { useActiveListUrls, useAllLists, useIsListActive } from '../../state/lis
 import { ExternalLink, IconWrapper, LinkStyledButton, SemiTransparent, TYPE } from '../../theme'
 import { parseENSAddress } from '../../utils/parseENSAddress'
 import uriToHttp from '../../utils/uriToHttp'
-import { ButtonEmpty, ButtonPrimary } from '../Button'
-import Column, { AutoColumn } from '../Column'
+import { ButtonEmpty, ButtonIXSGradient } from '../Button'
+import Column from '../Column'
 import ListLogo from '../ListLogo'
-import Row, { RowBetween, RowFixed } from '../Row'
+import Row, { RowFixed } from '../Row'
 import { CurrencyModalView } from './CurrencySearchModal'
 import { PaddedColumn40, PaddedColumnList, SearchInput } from './styleds'
 
@@ -106,19 +107,125 @@ const ListContainer = styled.div`
 function listUrlRowHTMLId(listUrl: string) {
   return `list-row-${listUrl.replace(/\./g, '-')}`
 }
+export interface RowListLayoutProps {
+  list: TokenList | null
+  pending: TokenList | null
+  listUrl: string | undefined
+  handleRemoveList?: () => void
+  isDisabled: boolean
+  isActive: boolean
+  handleAcceptListUpdate?: () => void
+  handleDisableList?: () => void
+  handleEnableList?: () => void
+  isImported?: boolean
+  handleImport?: () => void
+}
+const ListRowLayout = ({
+  list,
+  listUrl,
+  handleRemoveList,
+  isActive,
+  isDisabled,
+  handleAcceptListUpdate,
+  pending,
+  handleEnableList,
+  handleDisableList,
+  handleImport,
+  isImported,
+}: RowListLayoutProps) => {
+  const [open, toggle] = useToggle(false)
+  const node = useRef<HTMLDivElement>()
+  const theme = useTheme()
 
+  useOnClickOutside(node, open ? toggle : undefined)
+
+  const popOverContent = () => (
+    <PopOverContent>
+      <ExternalLink href={`https://tokenlists.org/token-list?url=${listUrl}`}>
+        <TYPE.popOver>
+          <Trans>View list</Trans>
+        </TYPE.popOver>
+      </ExternalLink>
+      {handleRemoveList && (
+        <UnpaddedLinkStyledButton onClick={handleRemoveList} disabled={isDisabled}>
+          <TYPE.popOver>
+            <Trans>Remove list</Trans>
+          </TYPE.popOver>
+        </UnpaddedLinkStyledButton>
+      )}
+      {pending && (
+        <UnpaddedLinkStyledButton onClick={handleAcceptListUpdate}>
+          <Trans>Update list</Trans>
+        </UnpaddedLinkStyledButton>
+      )}
+    </PopOverContent>
+  )
+  return (
+    <RowWrapper bgColor={theme.bg12} key={listUrl} id={listUrlRowHTMLId(listUrl ?? '')}>
+      {list?.logoURI ? (
+        <ListLogo size="40px" style={{ marginRight: '1rem' }} logoURI={list.logoURI} alt={`${list.name} list logo`} />
+      ) : (
+        <div style={{ width: '24px', height: '24px', marginRight: '1rem' }} />
+      )}
+      <Column style={{ flex: '1' }}>
+        <Row>
+          <StyledTitleText>{list?.name}</StyledTitleText>
+        </Row>
+        <RowFixed style={{ lineHeight: '17px' }}>
+          <StyledListUrlText mr="6px">
+            <Trans>{list?.tokens?.length} tokens</Trans>
+          </StyledListUrlText>
+          <StyledMenu ref={node as any}>
+            <Popover show={open} content={popOverContent()} placement={'right'}>
+              <ButtonEmpty onClick={toggle} padding="0" data-testid="token-list-settings">
+                <SemiTransparent>
+                  <Settings style={{ height: '10px', width: '10px ' }} />
+                </SemiTransparent>
+              </ButtonEmpty>
+            </Popover>
+          </StyledMenu>
+        </RowFixed>
+      </Column>
+      {!handleImport && handleDisableList && handleEnableList && (
+        <Toggle
+          isActive={isActive}
+          toggle={() => {
+            isActive ? handleDisableList() : handleEnableList()
+          }}
+          showLabel={false}
+        />
+      )}
+      {handleImport && (
+        <>
+          {isImported ? (
+            <RowFixed>
+              <IconWrapper stroke={theme.text2} size="16px" marginRight={'10px'}>
+                <CheckCircle />
+              </IconWrapper>
+              <TYPE.body color={theme.text2}>
+                <Trans>Loaded</Trans>
+              </TYPE.body>
+            </RowFixed>
+          ) : (
+            <ButtonIXSGradient
+              style={{ fontSize: '14px', padding: '1px 21px' }}
+              width="fit-content"
+              onClick={handleImport}
+              data-testid="import-list"
+            >
+              <Trans>Import</Trans>
+            </ButtonIXSGradient>
+          )}
+        </>
+      )}
+    </RowWrapper>
+  )
+}
 const ListRow = memo(function ListRow({ listUrl }: { listUrl: string }) {
   const listsByUrl = useAppSelector((state) => state.lists.byUrl)
   const dispatch = useAppDispatch()
   const { current: list, pendingUpdate: pending } = listsByUrl[listUrl]
-
-  const theme = useTheme()
   const isActive = useIsListActive(listUrl)
-
-  const [open, toggle] = useToggle(false)
-  const node = useRef<HTMLDivElement>()
-
-  useOnClickOutside(node, open ? toggle : undefined)
 
   const handleAcceptListUpdate = useCallback(() => {
     if (!pending) return
@@ -165,59 +272,22 @@ const ListRow = memo(function ListRow({ listUrl }: { listUrl: string }) {
   }, [dispatch, listUrl])
 
   if (!list) return null
-  const popOverContent = () => (
-    <PopOverContent>
-      <ExternalLink href={`https://tokenlists.org/token-list?url=${listUrl}`}>
-        <TYPE.popOver>
-          <Trans>View list</Trans>
-        </TYPE.popOver>
-      </ExternalLink>
-      <UnpaddedLinkStyledButton onClick={handleRemoveList} disabled={Object.keys(listsByUrl).length === 1}>
-        <TYPE.popOver>
-          <Trans>Remove list</Trans>
-        </TYPE.popOver>
-      </UnpaddedLinkStyledButton>
-      {pending && (
-        <UnpaddedLinkStyledButton onClick={handleAcceptListUpdate}>
-          <Trans>Update list</Trans>
-        </UnpaddedLinkStyledButton>
-      )}
-    </PopOverContent>
-  )
+  const isDisabled = Object.keys(listsByUrl).length === 1
+
   return (
-    <RowWrapper bgColor={theme.bg12} key={listUrl} id={listUrlRowHTMLId(listUrl)}>
-      {list.logoURI ? (
-        <ListLogo size="40px" style={{ marginRight: '1rem' }} logoURI={list.logoURI} alt={`${list.name} list logo`} />
-      ) : (
-        <div style={{ width: '24px', height: '24px', marginRight: '1rem' }} />
-      )}
-      <Column style={{ flex: '1' }}>
-        <Row>
-          <StyledTitleText>{list.name}</StyledTitleText>
-        </Row>
-        <RowFixed style={{ lineHeight: '17px' }}>
-          <StyledListUrlText mr="6px">
-            <Trans>{list.tokens.length} tokens</Trans>
-          </StyledListUrlText>
-          <StyledMenu ref={node as any}>
-            <Popover show={open} content={popOverContent()} placement={'right'}>
-              <ButtonEmpty onClick={toggle} padding="0" data-testid="token-list-settings">
-                <SemiTransparent>
-                  <Settings style={{ height: '10px', width: '10px ' }} />
-                </SemiTransparent>
-              </ButtonEmpty>
-            </Popover>
-          </StyledMenu>
-        </RowFixed>
-      </Column>
-      <Toggle
-        isActive={isActive}
-        toggle={() => {
-          isActive ? handleDisableList() : handleEnableList()
-        }}
-        showLabel={false}
-      />
-    </RowWrapper>
+    <ListRowLayout
+      {...{
+        list,
+        listUrl,
+        handleRemoveList,
+        isActive,
+        isDisabled,
+        handleAcceptListUpdate,
+        pending,
+        handleEnableList,
+        handleDisableList,
+      }}
+    />
   )
 })
 
@@ -230,8 +300,6 @@ export function ManageLists({
   setImportList: (list: TokenList) => void
   setListUrl: (url: string) => void
 }) {
-  const theme = useTheme()
-
   const [listUrlInput, setListUrlInput] = useState<string>('')
 
   const lists = useAllLists()
@@ -341,41 +409,26 @@ export function ManageLists({
         ) : null}
       </PaddedColumn40>
       {tempList && (
-        <PaddedColumn40 style={{ paddingTop: 0 }}>
-          <Card backgroundColor={theme.bg2} padding="12px 20px">
-            <RowBetween>
-              <RowFixed>
-                {tempList.logoURI && <ListLogo logoURI={tempList.logoURI} size="40px" />}
-                <AutoColumn gap="4px" style={{ marginLeft: '20px' }}>
-                  <TYPE.body fontWeight={600}>{tempList.name}</TYPE.body>
-                  <TYPE.main fontSize={'12px'}>
-                    <Trans>{tempList.tokens.length} tokens</Trans>
-                  </TYPE.main>
-                </AutoColumn>
-              </RowFixed>
-              {isImported ? (
-                <RowFixed>
-                  <IconWrapper stroke={theme.text2} size="16px" marginRight={'10px'}>
-                    <CheckCircle />
-                  </IconWrapper>
-                  <TYPE.body color={theme.text2}>
-                    <Trans>Loaded</Trans>
-                  </TYPE.body>
-                </RowFixed>
-              ) : (
-                <ButtonPrimary
-                  style={{ fontSize: '14px' }}
-                  padding="6px 8px"
-                  width="fit-content"
-                  onClick={handleImport}
-                  data-testid="import-list"
-                >
-                  <Trans>Import</Trans>
-                </ButtonPrimary>
-              )}
-            </RowBetween>
-          </Card>
-        </PaddedColumn40>
+        <ListContainer>
+          <PaddedColumnList gap="20px">
+            <ListRowLayout
+              {...{
+                list: tempList,
+                listUrl: tempList.logoURI,
+                isActive: false,
+                isDisabled: true,
+                pending: null,
+                isImported,
+                handleImport,
+              }}
+            />
+            <SemiTransparent>
+              <Box paddingX="5px">
+                <Line />
+              </Box>
+            </SemiTransparent>
+          </PaddedColumnList>
+        </ListContainer>
       )}
       <ListContainer>
         <PaddedColumnList gap="md">

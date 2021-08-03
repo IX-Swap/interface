@@ -95,7 +95,24 @@ export function ManageTabs({ onClick, onDismiss }: { onClick: () => void; onDism
     </Tabs>
   )
 }
+export function ImportListTabs({ onClick, onDismiss }: { onClick: () => void; onDismiss: () => void }) {
+  return (
+    <Tabs>
+      <StyledPageHeader>
+        <ManageHeaderRow>
+          <Box display="flex">
+            <Box marginRight={'0.5rem'} style={{ cursor: 'pointer' }} onClick={onClick}>
+              <ArrowLeft />
+            </Box>
+            <Trans>Import List</Trans>
+          </Box>
 
+          <CloseIcon onClick={onDismiss} />
+        </ManageHeaderRow>
+      </StyledPageHeader>
+    </Tabs>
+  )
+}
 export function CustodianTabs() {
   return (
     <Tabs style={{ width: '100%' }}>
